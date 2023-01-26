@@ -1,0 +1,63 @@
+#game-ui.modern .window,
+#game-ui.modern button,
+#game-ui.modern input,
+#game-ui.modern label,
+#game-ui.modern textarea,
+#game-ui.modern select,
+#game-ui.modern option,
+#game-ui.modern ul.tree-view {
+   font-family: Tahoma, sans-serif;
+   font-size: 14px;
+}
+
+#game-ui.modern ul.tree-view details > summary:before {
+   width: 14px;
+   height: 15px;
+   line-height: 14px;
+}
+
+#game-ui.modern ul.tree-view ul {
+   margin-left: 23px;
+}
+
+#game-ui.modern ul.tree-view ul > li:before {
+   top: 8px;
+}
+
+#game-ui.modern .menu-button .menu-popover {
+   top: 25px;
+}
+
+#game-ui.modern ul.tree-view ul > li:after {
+   top: 9px;
+}
+
+#game-ui.modern input[type="text"] {
+   height: 30px;
+}
+
+#game-ui.modern select {
+   background-size: 23px 23px;
+   height: 27px;
+   padding-left: 5px;
+}
+
+#game-ui.modern .title-bar {
+   font-size: 14px;
+}
+
+#game-ui.modern .text-small {
+   font-size: 90%;
+}
+
+#game-ui.modern button {
+   min-height: 27px;
+}
+
+#game-ui.modern .separator.has-title > div {
+   top: -10px;
+}
+
+#game-ui.modern .m-icon.small {
+   font-size: 17px;
+}

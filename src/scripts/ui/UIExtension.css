@@ -1,0 +1,358 @@
+.menus {
+   display: flex;
+   background: silver;
+}
+
+.menu-button {
+   padding: 4px 6px;
+   background: silver;
+   position: relative;
+}
+
+.menu-popover {
+   box-shadow: inset -1px -1px #0a0a0a, inset 1px 1px #dfdfdf, inset -2px -2px grey, inset 2px 2px #fff;
+   background: silver;
+   padding: 3px;
+}
+
+.menu-button .menu-popover {
+   position: absolute;
+   z-index: 1;
+   top: 20px;
+   left: 0;
+   display: none;
+}
+
+.menu-button .menu-popover.active {
+   display: block;
+}
+
+.menu-popover-item {
+   padding: 3px 20px 3px 0;
+   white-space: nowrap;
+}
+
+.menu-popover-item:hover {
+   background: #000080;
+   color: #fff;
+}
+
+.separator {
+   border-top: 1px solid #808080;
+   border-bottom: 1px solid #fff;
+   margin: 0 2px;
+   height: 2px;
+   position: relative;
+}
+
+.separator.has-title > div {
+   background: silver;
+   position: absolute;
+   left: 10px;
+   top: -6px;
+   padding: 0 2px;
+}
+
+fieldset .separator {
+   border-top: 1px solid #808080;
+   border-bottom: 1px solid #fff;
+   margin: 10px -10px;
+   height: 2px;
+}
+
+.menu-button:hover {
+   box-shadow: 1px 1px 0 rgb(255, 255, 255) inset, -1px -1px 0 rgb(128, 128, 128) inset;
+}
+
+.menu-button.active {
+   box-shadow: 1px 1px 0 rgb(128, 128, 128) inset, -1px -1px 0 rgb(255, 255, 255) inset;
+}
+
+.menu-hotkey {
+   text-decoration: underline;
+}
+
+.inset-deep {
+   box-shadow: inset -1px -1px #fff, inset 1px 1px grey, inset -2px -2px #dfdfdf, inset 2px 2px #0a0a0a;
+}
+
+.inset-deep.white {
+   background: #fff;
+}
+
+.p5 {
+   padding: 5px;
+}
+
+.pv5 {
+   padding-top: 5px;
+   padding-bottom: 5px;
+}
+
+.pv10 {
+   padding-top: 10px;
+   padding-bottom: 10px;
+}
+
+.ph5 {
+   padding-left: 5px;
+   padding-right: 5px;
+}
+
+.ph10 {
+   padding-left: 10px;
+   padding-right: 10px;
+}
+
+.p10 {
+   padding: 10px;
+}
+
+.inset-shallow {
+   border-style: solid;
+   border-width: 1px;
+   border-color: rgb(128, 128, 128) rgb(255, 255, 255) rgb(255, 255, 255) rgb(128, 128, 128);
+   background-color: rgb(192, 192, 192);
+   color: rgb(0, 0, 0);
+}
+
+.text-green {
+   color: #047e00;
+}
+
+.text-orange {
+   color: #ffcc00;
+}
+
+.text-red {
+   color: #fe0000;
+}
+
+.text-right {
+   text-align: right;
+}
+
+.text-strong {
+   font-weight: bold;
+}
+
+.text-desc {
+   color: rgba(16, 16, 16, 0.6);
+}
+
+@font-face {
+   font-family: "Material Symbols Outlined";
+   font-style: normal;
+   font-weight: 400;
+   src: url(../../fonts/MaterialIcons.woff2) format("woff2");
+}
+
+.m-icon {
+   font-family: "Material Symbols Outlined";
+   font-weight: normal;
+   font-style: normal;
+   font-size: 24px;
+   line-height: 1;
+   letter-spacing: normal;
+   text-transform: none;
+   white-space: nowrap;
+   word-wrap: normal;
+   direction: ltr;
+   -webkit-font-feature-settings: "liga";
+   -webkit-font-smoothing: antialiased;
+}
+
+.m-icon.small {
+   font-size: 12px;
+}
+
+.mr5 {
+   margin-right: 5px;
+}
+
+.mr10 {
+   margin-right: 10px;
+}
+
+.mr20 {
+   margin-right: 20px;
+}
+
+.ml5 {
+   margin-left: 5px;
+}
+
+.ml10 {
+   margin-left: 10px;
+}
+
+.ml20 {
+   margin-left: 20px;
+}
+
+.row {
+   display: flex;
+   flex-direction: row;
+   align-items: center;
+}
+
+.row .f1 {
+   flex: 1;
+}
+
+.mv5 {
+   margin-top: 5px;
+   margin-bottom: 5px;
+}
+
+.mv10 {
+   margin-top: 10px;
+   margin-bottom: 10px;
+}
+
+.mh0 {
+   margin-left: 0;
+   margin-right: 0;
+}
+
+.sep5 {
+   height: 5px;
+}
+
+.sep10 {
+   height: 10px;
+}
+
+.sep15 {
+   height: 15px;
+}
+
+.sep20 {
+   height: 20px;
+}
+
+.text-blue,
+.text-link,
+a {
+   color: #0000ff;
+}
+
+.text-link,
+.pointer {
+   cursor: pointer;
+}
+
+.lh2 {
+   line-height: 2;
+}
+
+.meter {
+   height: 18px;
+   position: relative;
+   box-shadow: inset -1px -1px #fff, inset 1px 1px grey, inset -2px -2px #dfdfdf, inset 2px 2px #0a0a0a;
+   padding: 4px 4px 3px;
+   border: none;
+   background-color: #fff;
+   box-sizing: border-box;
+   -webkit-appearance: none;
+   -moz-appearance: none;
+   appearance: none;
+   border-radius: 0;
+}
+
+.meter > .fill {
+   display: block;
+   height: 100%;
+   background-color: #00289e;
+   position: relative;
+   overflow: hidden;
+   background-image: linear-gradient(90deg, #00289e 40%, #fff 0, #fff 50%, #00289e 0, #00289e 90%, #fff 0, #fff);
+   background-size: 24px 24px;
+}
+
+ul.tree-view > li:first-child {
+   margin-top: 0;
+}
+
+.warning-banner {
+   background: #ffc;
+   padding: 5px;
+   border: 1px solid grey;
+   color: #333;
+   border-radius: 3px;
+}
+
+.table-view {
+   background: #fff;
+   box-shadow: inset -1px -1px #fff, inset 1px 1px grey, inset -2px -2px #dfdfdf, inset 2px 2px #404040;
+   padding: 2px;
+}
+
+.table-view table {
+   width: 100%;
+   border-collapse: collapse;
+}
+
+.table-view th {
+   background-color: rgb(192, 192, 192);
+   font-weight: normal;
+   text-align: left;
+   box-shadow: inset -1px -1px #404040, inset 1px 1px #fff, inset -2px -2px grey, inset 2px 2px #dfdfdf;
+}
+
+.table-view th,
+.table-view td {
+   vertical-align: middle;
+   padding: 3px 6px;
+}
+
+.table-view tr:nth-child(even) {
+   background: #efefef;
+}
+
+.table-view tr.selected {
+   position: relative;
+   background-color: #0a246a;
+   color: #fff;
+}
+
+.table-view tr.selected:after {
+   content: " ";
+   position: absolute;
+   left: 0;
+   right: 0;
+   top: 0;
+   bottom: 0;
+   border: 1px dotted #f5db95;
+   pointer-events: none;
+}
+
+.table-view tr.selected .text-link {
+   color: #fff;
+}
+
+.table-view .right {
+   text-align: right;
+}
+
+.modal-overlay {
+   position: fixed;
+   top: 0;
+   left: 0;
+   right: 0;
+   bottom: 0;
+   background: rgba(0, 0, 0, 0.75);
+}
+
+.modal-content {
+   position: absolute;
+   top: min(200px, 10%);
+   left: min(200px, 10%);
+   right: min(200px, 10%);
+   bottom: min(200px, 10%);
+   outline: none;
+}
+
+.nowrap {
+   white-space: nowrap;
+}

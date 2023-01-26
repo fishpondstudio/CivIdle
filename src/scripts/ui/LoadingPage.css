@@ -1,0 +1,26 @@
+@font-face {
+   font-family: "UniVGA16";
+   font-style: normal;
+   font-weight: 400;
+   src: url(../../fonts/UniVGA16.woff2) format("woff2");
+}
+
+.loading-page {
+   font-family: "UniVGA16", monospace;
+   font-size: 32px;
+   background: #000;
+   position: fixed;
+   top: 0;
+   left: 0;
+   right: 0;
+   bottom: 0;
+   color: #808080;
+   padding: 25px;
+}
+
+.energy-star {
+   width: 300px;
+   position: fixed;
+   top: 50px;
+   right: 50px;
+}

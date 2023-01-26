@@ -1,0 +1,40 @@
+@import "xp.css/dist/98.css";
+
+body {
+   cursor: url("../images/w98normal.png"), default;
+   user-select: none;
+   overflow: hidden;
+}
+
+* {
+   box-sizing: border-box;
+}
+
+#game-ui {
+   position: absolute;
+   width: 400px;
+   right: 0;
+   top: 0;
+   bottom: 0;
+}
+
+#game-canvas {
+   position: absolute;
+   left: 0;
+   top: 0;
+   bottom: 0;
+   right: 400px;
+}
+
+#game-ui .window {
+   height: 100%;
+   display: flex;
+   flex-direction: column;
+}
+
+#game-ui .window .window-body {
+   padding: 8px;
+   margin: 0;
+   overflow-x: hidden;
+   overflow-y: auto;
+}

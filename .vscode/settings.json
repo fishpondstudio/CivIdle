@@ -1,0 +1,5 @@
+{
+  "cSpell.words": ["hitmap", "unlockable"],
+  "task.allowAutomaticTasks": "on",
+  "typescript.tsdk": "node_modules\\typescript\\lib",
+}
