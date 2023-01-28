@@ -3,4 +3,4 @@ export const Fonts = {
    CabinMedium: "CabinMedium",
    MarcellusRegular: "MarcellusRegular",
 };
-export const fontBundle = { CabinMedium: "/fonts/CabinMedium.fnt", MarcellusRegular: "/fonts/MarcellusRegular.fnt" };
+export const fontBundle = { CabinMedium: "./fonts/CabinMedium.fnt", MarcellusRegular: "./fonts/MarcellusRegular.fnt" };

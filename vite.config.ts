@@ -5,6 +5,7 @@ import Spritesmith from "vite-plugin-spritesmith";
 // https://vitejs.dev/config/
 export default defineConfig(({ command }) => {
    return {
+      base: "",
       plugins: [
          react(),
          Spritesmith({
@@ -26,9 +27,5 @@ export default defineConfig(({ command }) => {
          port: 3000,
          host: true,
       },
-      optimizeDeps: {
-         disabled: false,
-      },
-      esbuild: { jsx: "automatic" },
    };
 });
