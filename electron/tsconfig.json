@@ -1,0 +1,11 @@
+{
+   "compilerOptions": {
+      "module": "commonjs",
+      "noImplicitAny": true,
+      "forceConsistentCasingInFileNames": true,
+      "esModuleInterop": true,
+      "outDir": "compiled",
+      "strict": true
+   },
+   "include": ["src/**/*"]
+}

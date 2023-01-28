@@ -32,7 +32,7 @@ glob("./assets/*.ttf", (err, files) => {
    });
    scriptContent.push("};");
    scriptContent.push(
-      `export const fontBundle = { ${preferredNames.map((f) => `${f}:"/fonts/${f}.fnt"`).join(",")} };`
+      `export const fontBundle = { ${preferredNames.map((f) => `${f}:"./fonts/${f}.fnt"`).join(",")} };`
    );
    writeFileSync("./src/scripts/generated/FontBundle.ts", scriptContent.join("\n"));
    execSync("npx prettier --config .prettierrc.json --write ./src/scripts/generated/FontBundle.ts");
