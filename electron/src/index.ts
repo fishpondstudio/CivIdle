@@ -1,4 +1,6 @@
-import { app, BrowserWindow, dialog, Menu } from "electron";
+import { app, BrowserWindow, dialog, ipcMain, Menu } from "electron";
+import { outputFile } from "fs-extra";
+import { readFile } from "fs/promises";
 import path from "path";
 import { SteamAPI } from "./steam";
 
@@ -16,11 +18,25 @@ const createWindow = () => {
          show: false,
       });
       // and load the index.html of the app.
-      mainWindow.loadFile(path.join(__dirname, "../dist/index.html"));
+      app.isPackaged
+         ? mainWindow.loadFile(path.join(__dirname, "../dist/index.html"))
+         : mainWindow.loadURL("http://localhost:3000");
+
+      if (!app.isPackaged) {
+         mainWindow.webContents.openDevTools();
+      }
 
       mainWindow.removeMenu();
       mainWindow.maximize();
       mainWindow.show();
+
+      ipcMain.handle("writeTextToFile", (e, name: string, content: string) => {
+         return outputFile(path.join(app.getAppPath(), "save", api.getSteamId().toString(), name), content);
+      });
+
+      ipcMain.handle("readTextFromFile", (e, name: string) => {
+         return readFile(path.join(app.getAppPath(), "save", api.getSteamId().toString(), name));
+      });
    } catch (error) {
       dialog.showErrorBox("Failed to Start Game", String(error));
       quit();

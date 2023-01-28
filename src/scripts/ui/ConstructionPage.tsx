@@ -49,7 +49,7 @@ export function ConstructionPage({ tile }: { tile: ITileData }): JSX.Element | n
                      <button
                         onClick={() => {
                            delete tile.building;
-                           Singleton().sceneManager.getCurrent(WorldScene)?.getTileVisual(tile.xy)?.update(gs, 0);
+                           Singleton().sceneManager.getCurrent(WorldScene)?.getTileVisual(tile.xy)?.dispose();
                            notifyGameStateUpdate();
                         }}
                      >

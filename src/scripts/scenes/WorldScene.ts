@@ -14,6 +14,7 @@ class TransportPool extends ObjectPool<Sprite> {
 
    constructor(texture: Texture) {
       super();
+      console.assert(texture instanceof Texture, "Texture is not valid");
       this._texture = texture;
    }
 

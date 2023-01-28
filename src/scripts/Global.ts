@@ -84,10 +84,23 @@ export function syncUITheme(): void {
 const SAVE_KEY = "CivIdle";
 
 export function saveGame() {
+   if (typeof Steamworks !== "undefined") {
+      Steamworks.writeTextToFile(SAVE_KEY, JSON.stringify(savedGame));
+      return;
+   }
    idbSet(SAVE_KEY, savedGame).catch(console.error);
 }
 
-export async function loadGame() {
+export async function loadGame(): Promise<SavedGame | undefined> {
+   if (typeof Steamworks !== "undefined") {
+      try {
+         const content = await Steamworks.readTextFromFile(SAVE_KEY);
+         return JSON.parse(content) as SavedGame;
+      } catch (e) {
+         console.warn("loadGame failed", e);
+         return;
+      }
+   }
    return await idbGet<SavedGame>(SAVE_KEY);
 }
 

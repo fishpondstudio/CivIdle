@@ -133,6 +133,9 @@ export class TileVisual extends Container implements IDisposable {
 
    public dispose() {
       this._world.viewport.off("zoomed-end", this.onZoomed, this);
+      this._constructionTween.stop();
+      this._upgradeTween.stop();
+      this.destroy({ children: true });
    }
 
    public async reveal(): Promise<TileVisual> {

@@ -16,9 +16,11 @@ if (process.platform === "win32") {
 const ISteamUtils = koffi.opaque("ISteamUtils");
 const ISteamRemoteStorage = koffi.opaque("ISteamRemoteStorage");
 const ISteamApps = koffi.opaque("ISteamApps");
+const ISteamUser = koffi.opaque("ISteamUser");
 koffi.alias("HSteamPipe", "int");
 koffi.alias("HSteamUser", "int");
 koffi.alias("SteamAPICall_t", "uint64");
+koffi.alias("uint64_steamid", "uint64");
 
 const CallbackMsg_t = koffi.struct("CallbackMsg_t", {
    m_hSteamUser: "HSteamUser",
@@ -44,11 +46,15 @@ const SteamAPI_Init = steamworks.cdecl("bool SteamAPI_Init()");
 const SteamAPI_SteamUtils = steamworks.cdecl("ISteamUtils *SteamAPI_SteamUtils_v010()");
 const SteamAPI_SteamRemoteStorage = steamworks.cdecl("ISteamRemoteStorage *SteamAPI_SteamRemoteStorage_v016()");
 const SteamAPI_SteamApps = steamworks.cdecl("ISteamApps *SteamAPI_SteamApps_v008()");
+const SteamAPI_SteamUser = steamworks.cdecl("ISteamUser *SteamAPI_SteamUser_v021()");
 
 const SteamAPI_ISteamUtils_IsSteamRunningOnSteamDeck = steamworks.cdecl(
    "bool SteamAPI_ISteamUtils_IsSteamRunningOnSteamDeck(ISteamUtils * self)"
 );
 const SteamAPI_ISteamUtils_GetAppID = steamworks.cdecl("uint32 SteamAPI_ISteamUtils_GetAppID(ISteamUtils* self)");
+const SteamAPI_ISteamUser_GetSteamID = steamworks.cdecl(
+   "uint64_steamid SteamAPI_ISteamUser_GetSteamID(ISteamUser* self)"
+);
 const SteamAPI_RestartAppIfNecessary = steamworks.cdecl("bool SteamAPI_RestartAppIfNecessary(uint32 unOwnAppID)");
 
 const SteamAPI_ISteamRemoteStorage_FileRead = steamworks.cdecl(
@@ -97,6 +103,8 @@ export class SteamAPI {
    private _steamUtils: any;
    private _steamRemoteStorage: any;
    private _steamApps: any;
+   private _steamUser: any;
+
    private callResults: Record<number, (err: Error | null, b: Buffer) => void> = {};
    private callbacks: Record<number, (b: Buffer) => void> = {};
 
@@ -108,6 +116,7 @@ export class SteamAPI {
       this._steamUtils = SteamAPI_SteamUtils();
       this._steamRemoteStorage = SteamAPI_SteamRemoteStorage();
       this._steamApps = SteamAPI_SteamApps();
+      this._steamUser = SteamAPI_SteamUser();
 
       console.log(`Steamworks Initialized for App: ${this.getAppId()}`);
 
@@ -147,6 +156,10 @@ export class SteamAPI {
          }
          SteamAPI_ManualDispatch_FreeLastCallback(pipe);
       }
+   }
+
+   getSteamId(): number {
+      return SteamAPI_ISteamUser_GetSteamID(this._steamUser);
    }
 
    getDlcCount(): number {
