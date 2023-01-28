@@ -89,3 +89,5 @@ typings/
 
 # Electron-Forge
 out/
+
+save/
