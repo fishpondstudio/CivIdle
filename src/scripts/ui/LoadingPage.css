@@ -16,6 +16,7 @@
    bottom: 0;
    color: #808080;
    padding: 25px;
+   z-index: 1;
 }
 
 .energy-star {

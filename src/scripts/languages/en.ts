@@ -447,4 +447,5 @@ export const EN = {
    ProvinceAfrica: "Africa",
    ProvinceNumidia: "Numidia",
    ProvinceMauretania: "Mauretania",
+   Chat: "Chat",
 };

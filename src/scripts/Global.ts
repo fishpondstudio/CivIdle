@@ -74,11 +74,7 @@ export function getGameOptions(): GameOptions {
 }
 
 export function syncUITheme(): void {
-   const uiElement = document.getElementById("game-ui");
-   if (!uiElement) {
-      return;
-   }
-   getGameOptions().useModernUI ? uiElement.classList.add("modern") : uiElement.classList.remove("modern");
+   getGameOptions().useModernUI ? document.body.classList.add("modern") : document.body.classList.remove("modern");
 }
 
 const SAVE_KEY = "CivIdle";
