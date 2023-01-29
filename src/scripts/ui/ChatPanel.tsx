@@ -5,10 +5,13 @@ import { L, t } from "../utilities/i18n";
 export function ChatPanel() {
    const [chat, setChat] = useState("");
    const messages = useChatMessages();
+   const latestMessage =
+      messages.length > 0
+         ? `${messages[messages.length - 1].name}: ${messages[messages.length - 1].message}`
+         : "No Message";
    return (
       <div className="chat-bar window">
-         <div className="m-icon small text-green mr5">chat</div>{" "}
-         <div className="chat-message">Admin: I am a chat message, I can be very longgggggggggggggggg</div>
+         <div className="m-icon small text-green mr5">chat</div> <div className="chat-message">{latestMessage}</div>
          <div className="chat-content window">
             <div className="title-bar">
                <div className="title-bar-text">{t(L.Chat)}</div>
