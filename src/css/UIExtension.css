@@ -37,6 +37,12 @@
    color: #fff;
 }
 
+input[type="email"],
+input[type="password"],
+input[type="text"] {
+   border: 0 none;
+}
+
 .separator {
    border-top: 1px solid #808080;
    border-bottom: 1px solid #fff;
@@ -144,7 +150,7 @@ fieldset .separator {
    font-family: "Material Symbols Outlined";
    font-style: normal;
    font-weight: 400;
-   src: url(../../fonts/MaterialIcons.woff2) format("woff2");
+   src: url(../fonts/MaterialIcons.woff2) format("woff2");
 }
 
 .m-icon {
@@ -355,4 +361,10 @@ ul.tree-view > li:first-child {
 
 .nowrap {
    white-space: nowrap;
+}
+
+.window-content {
+   background: #fff;
+   padding: 6px;
+   flex: 1;
 }

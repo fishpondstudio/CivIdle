@@ -3,6 +3,7 @@ import { update } from "@tweenjs/tween.js";
 import * as debug_PIXI from "pixi.js";
 import { Application, Spritesheet } from "pixi.js";
 import ReactDOM from "react-dom";
+import "../css/Main.css";
 import altasDef from "../images/textures.json";
 import atlas from "../images/textures.png";
 import { BG_COLOR } from "./Colors";
@@ -25,18 +26,20 @@ import { calculateTierAndPrice, Config } from "./logic/Constants";
 import { initializeGameState } from "./logic/GameState";
 import { ITileData } from "./logic/Tile";
 import { tickEveryFrame, tickEverySecond } from "./logic/Update";
-import "./main.css";
 import { Route, RouteChangeEvent } from "./Route";
 import { Grid } from "./scenes/Grid";
 import { WorldScene } from "./scenes/WorldScene";
+import { ChatPanel } from "./ui/ChatPanel";
 import { forEach } from "./utilities/Helper";
 import { SceneManager, Textures } from "./utilities/SceneManager";
 import { TypedEvent } from "./utilities/TypedEvent";
 
 const ui = document.getElementById("game-ui");
+const chat = document.getElementById("chat-panel");
 const routeChanged = new TypedEvent<RouteChangeEvent>();
 
 ReactDOM.render(<Route event={routeChanged} />, ui);
+ReactDOM.render(<ChatPanel />, chat);
 
 const canvas = document.getElementById("game-canvas");
 const mainBundle = {

@@ -1,0 +1,65 @@
+.modern .window,
+.modern button,
+.modern input,
+.modern label,
+.modern textarea,
+.modern select,
+.modern option,
+.modern ul.tree-view {
+   font-family: Tahoma, sans-serif;
+   font-size: 14px;
+}
+
+.modern ul.tree-view details > summary:before {
+   width: 14px;
+   height: 15px;
+   line-height: 14px;
+}
+
+.modern ul.tree-view ul {
+   margin-left: 23px;
+}
+
+.modern ul.tree-view ul > li:before {
+   top: 8px;
+}
+
+.modern .menu-button .menu-popover {
+   top: 25px;
+}
+
+.modern ul.tree-view ul > li:after {
+   top: 9px;
+}
+
+.modern input[type="text"],
+.modern input[type="email"],
+.modern input[type="password"] {
+   height: 27px;
+}
+
+.modern select {
+   background-size: 23px 23px;
+   height: 27px;
+   padding-left: 5px;
+}
+
+.modern .title-bar {
+   font-size: 14px;
+}
+
+.modern .text-small {
+   font-size: 90%;
+}
+
+.modern button {
+   min-height: 27px;
+}
+
+.modern .separator.has-title > div {
+   top: -10px;
+}
+
+.modern .m-icon.small {
+   font-size: 17px;
+}

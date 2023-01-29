@@ -2,8 +2,6 @@ import { isSingletonReady, useGameState } from "../Global";
 import { BuildingPage } from "./BuildingPage";
 import { ConstructionPage } from "./ConstructionPage";
 import { EmptyTilePage } from "./EmptyTilePage";
-import "./Modern.css";
-import "./UIExtension.css";
 import { UnexploredTile } from "./UnexploredTile";
 import { UpgradingPage } from "./UpgradingPage";
 

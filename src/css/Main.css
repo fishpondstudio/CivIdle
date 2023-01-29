@@ -1,4 +1,7 @@
 @import "xp.css/dist/98.css";
+@import "Modern.css";
+@import "UIExtension.css";
+@import "ChatPanel.css";
 
 body {
    cursor: url("../images/w98normal.png"), default;
