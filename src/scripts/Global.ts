@@ -1,10 +1,10 @@
-import { useEffect, useState } from "react";
 import { Config } from "./logic/Constants";
 import { GameOptions, GameState, SavedGame } from "./logic/GameState";
 import { ITileData, makeBuilding } from "./logic/Tile";
 import { Grid } from "./scenes/Grid";
 import { idbClear, idbGet, idbSet } from "./utilities/BrowserStorage";
 import { forEach } from "./utilities/Helper";
+import { makeObservableHook } from "./utilities/Hook";
 import { SceneManager } from "./utilities/SceneManager";
 import { TypedEvent } from "./utilities/TypedEvent";
 
@@ -73,8 +73,11 @@ export function getGameOptions(): GameOptions {
    return savedGame.options;
 }
 
+export const OnUIThemeChanged = new TypedEvent<boolean>();
+
 export function syncUITheme(): void {
    getGameOptions().useModernUI ? document.body.classList.add("modern") : document.body.classList.remove("modern");
+   OnUIThemeChanged.emit(getGameOptions().useModernUI);
 }
 
 const SAVE_KEY = "CivIdle";
@@ -121,20 +124,8 @@ export function watchGameState(cb: (gs: GameState) => void): () => void {
    };
 }
 
-export function useGameState() {
-   const [_getGameState, _setGameState] = useState(getGameState());
-   useEffect(() => {
-      function handleGameStateChanged(gs: GameState) {
-         _setGameState(gs);
-      }
-      handleGameStateChanged(getGameState());
-      GameStateChanged.on(handleGameStateChanged);
-      return () => {
-         GameStateChanged.off(handleGameStateChanged);
-      };
-   }, []);
-   return _getGameState;
-}
+export const useGameState = makeObservableHook(GameStateChanged, getGameState());
+
 function migrateSavedGame(gs: SavedGame) {
    forEach(gs.current.tiles, (xy, tile) => {
       if (tile.building) {
