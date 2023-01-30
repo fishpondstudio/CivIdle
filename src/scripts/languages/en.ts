@@ -448,4 +448,6 @@ export const EN = {
    ProvinceNumidia: "Numidia",
    ProvinceMauretania: "Mauretania",
    Chat: "Chat",
+   ChatReconnect: "Disconnected, reconnecting...",
+   ChatNoMessage: "No Chat Messages",
 };

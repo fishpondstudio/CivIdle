@@ -18,6 +18,10 @@
    left: 0px;
 }
 
+#chat-panel .chat-content .window-content {
+   overflow: auto;
+}
+
 #chat-panel .chat-message {
    white-space: nowrap;
    overflow: hidden;

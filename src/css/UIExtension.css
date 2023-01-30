@@ -146,6 +146,10 @@ fieldset .separator {
    color: rgba(16, 16, 16, 0.6);
 }
 
+.text-center {
+   text-align: center;
+}
+
 @font-face {
    font-family: "Material Symbols Outlined";
    font-style: normal;
@@ -367,4 +371,8 @@ ul.tree-view > li:first-child {
    background: #fff;
    padding: 6px;
    flex: 1;
+}
+
+button {
+   min-width: unset;
 }
