@@ -52,6 +52,11 @@
    font-size: 90%;
 }
 
+.modern .title-bar button {
+   min-width: 16px;
+   min-height: 14px;
+}
+
 .modern button {
    min-height: 27px;
 }

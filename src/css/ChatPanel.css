@@ -20,10 +20,20 @@
 
 #chat-panel .chat-content .window-content {
    overflow: auto;
+   padding: 0;
 }
 
 #chat-panel .chat-message {
    white-space: nowrap;
    overflow: hidden;
    text-overflow: ellipsis;
+   flex: 1;
+}
+
+#chat-panel .chat-message-item {
+   padding: 6px 8px;
+}
+
+#chat-panel .chat-message-item:nth-child(even) {
+   background: #efefef;
 }
