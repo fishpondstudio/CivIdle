@@ -450,4 +450,5 @@ export const EN = {
    Chat: "Chat",
    ChatReconnect: "Disconnected, reconnecting...",
    ChatNoMessage: "No Chat Messages",
+   ChatSend: "Send",
 };
