@@ -3498,6 +3498,13 @@ export interface ISteamUser {
 }
 koffi.opaque("ISteamUser");
 export const SteamAPI_SteamUser_v021: KoffiFunc<() => ISteamUser> = lib.cdecl("ISteamUser* SteamAPI_SteamUser_v021()");
+let ISteamUser_instance: ISteamUser = null;
+export function SteamAPI_ISteamUser(): ISteamUser {
+   if (ISteamUser_instance) {
+      return ISteamUser_instance;
+   }
+   return SteamAPI_SteamUser_v021();
+}
 export const SteamAPI_ISteamUser_GetHSteamUser: KoffiFunc<(self: ISteamUser) => number> = lib.cdecl(
    "HSteamUser SteamAPI_ISteamUser_GetHSteamUser(ISteamUser * self)"
 );
@@ -3657,6 +3664,13 @@ koffi.opaque("ISteamFriends");
 export const SteamAPI_SteamFriends_v017: KoffiFunc<() => ISteamFriends> = lib.cdecl(
    "ISteamFriends* SteamAPI_SteamFriends_v017()"
 );
+let ISteamFriends_instance: ISteamFriends = null;
+export function SteamAPI_ISteamFriends(): ISteamFriends {
+   if (ISteamFriends_instance) {
+      return ISteamFriends_instance;
+   }
+   return SteamAPI_SteamFriends_v017();
+}
 export const SteamAPI_ISteamFriends_GetPersonaName: KoffiFunc<(self: ISteamFriends) => string> = lib.cdecl(
    "const char * SteamAPI_ISteamFriends_GetPersonaName(ISteamFriends * self)"
 );
@@ -3953,9 +3967,13 @@ koffi.opaque("ISteamUtils");
 export const SteamAPI_SteamUtils_v010: KoffiFunc<() => ISteamUtils> = lib.cdecl(
    "ISteamUtils* SteamAPI_SteamUtils_v010()"
 );
-export const SteamAPI_SteamGameServerUtils_v010: KoffiFunc<() => ISteamUtils> = lib.cdecl(
-   "ISteamUtils* SteamAPI_SteamGameServerUtils_v010()"
-);
+let ISteamUtils_instance: ISteamUtils = null;
+export function SteamAPI_ISteamUtils(): ISteamUtils {
+   if (ISteamUtils_instance) {
+      return ISteamUtils_instance;
+   }
+   return SteamAPI_SteamUtils_v010();
+}
 export const SteamAPI_ISteamUtils_GetSecondsSinceAppActive: KoffiFunc<(self: ISteamUtils) => number> = lib.cdecl(
    "uint32 SteamAPI_ISteamUtils_GetSecondsSinceAppActive(ISteamUtils * self)"
 );
@@ -4116,6 +4134,13 @@ koffi.opaque("ISteamMatchmaking");
 export const SteamAPI_SteamMatchmaking_v009: KoffiFunc<() => ISteamMatchmaking> = lib.cdecl(
    "ISteamMatchmaking* SteamAPI_SteamMatchmaking_v009()"
 );
+let ISteamMatchmaking_instance: ISteamMatchmaking = null;
+export function SteamAPI_ISteamMatchmaking(): ISteamMatchmaking {
+   if (ISteamMatchmaking_instance) {
+      return ISteamMatchmaking_instance;
+   }
+   return SteamAPI_SteamMatchmaking_v009();
+}
 export const SteamAPI_ISteamMatchmaking_GetFavoriteGameCount: KoffiFunc<(self: ISteamMatchmaking) => number> =
    lib.cdecl("int SteamAPI_ISteamMatchmaking_GetFavoriteGameCount(ISteamMatchmaking * self)");
 export const SteamAPI_ISteamMatchmaking_GetFavoriteGame: KoffiFunc<
@@ -4397,6 +4422,13 @@ koffi.opaque("ISteamMatchmakingServers");
 export const SteamAPI_SteamMatchmakingServers_v002: KoffiFunc<() => ISteamMatchmakingServers> = lib.cdecl(
    "ISteamMatchmakingServers* SteamAPI_SteamMatchmakingServers_v002()"
 );
+let ISteamMatchmakingServers_instance: ISteamMatchmakingServers = null;
+export function SteamAPI_ISteamMatchmakingServers(): ISteamMatchmakingServers {
+   if (ISteamMatchmakingServers_instance) {
+      return ISteamMatchmakingServers_instance;
+   }
+   return SteamAPI_SteamMatchmakingServers_v002();
+}
 export const SteamAPI_ISteamMatchmakingServers_ReleaseRequest: KoffiFunc<
    (self: ISteamMatchmakingServers, hServerListRequest: Buffer) => void
 > = lib.cdecl(
@@ -4439,6 +4471,13 @@ koffi.opaque("ISteamGameSearch");
 export const SteamAPI_SteamGameSearch_v001: KoffiFunc<() => ISteamGameSearch> = lib.cdecl(
    "ISteamGameSearch* SteamAPI_SteamGameSearch_v001()"
 );
+let ISteamGameSearch_instance: ISteamGameSearch = null;
+export function SteamAPI_ISteamGameSearch(): ISteamGameSearch {
+   if (ISteamGameSearch_instance) {
+      return ISteamGameSearch_instance;
+   }
+   return SteamAPI_SteamGameSearch_v001();
+}
 export const SteamAPI_ISteamGameSearch_AddGameSearchParams: KoffiFunc<
    (self: ISteamGameSearch, pchKeyToFind: string, pchValuesToFind: string) => EGameSearchErrorCode_t
 > = lib.cdecl(
@@ -4515,6 +4554,13 @@ koffi.opaque("ISteamParties");
 export const SteamAPI_SteamParties_v002: KoffiFunc<() => ISteamParties> = lib.cdecl(
    "ISteamParties* SteamAPI_SteamParties_v002()"
 );
+let ISteamParties_instance: ISteamParties = null;
+export function SteamAPI_ISteamParties(): ISteamParties {
+   if (ISteamParties_instance) {
+      return ISteamParties_instance;
+   }
+   return SteamAPI_SteamParties_v002();
+}
 export const SteamAPI_ISteamParties_GetNumActiveBeacons: KoffiFunc<(self: ISteamParties) => number> = lib.cdecl(
    "uint32 SteamAPI_ISteamParties_GetNumActiveBeacons(ISteamParties * self)"
 );
@@ -4551,6 +4597,13 @@ koffi.opaque("ISteamRemoteStorage");
 export const SteamAPI_SteamRemoteStorage_v016: KoffiFunc<() => ISteamRemoteStorage> = lib.cdecl(
    "ISteamRemoteStorage* SteamAPI_SteamRemoteStorage_v016()"
 );
+let ISteamRemoteStorage_instance: ISteamRemoteStorage = null;
+export function SteamAPI_ISteamRemoteStorage(): ISteamRemoteStorage {
+   if (ISteamRemoteStorage_instance) {
+      return ISteamRemoteStorage_instance;
+   }
+   return SteamAPI_SteamRemoteStorage_v016();
+}
 export const SteamAPI_ISteamRemoteStorage_FileWrite: KoffiFunc<
    (self: ISteamRemoteStorage, pchFile: string, pvData: Buffer, cubData: number) => boolean
 > = lib.cdecl(
@@ -4798,6 +4851,13 @@ koffi.opaque("ISteamUserStats");
 export const SteamAPI_SteamUserStats_v012: KoffiFunc<() => ISteamUserStats> = lib.cdecl(
    "ISteamUserStats* SteamAPI_SteamUserStats_v012()"
 );
+let ISteamUserStats_instance: ISteamUserStats = null;
+export function SteamAPI_ISteamUserStats(): ISteamUserStats {
+   if (ISteamUserStats_instance) {
+      return ISteamUserStats_instance;
+   }
+   return SteamAPI_SteamUserStats_v012();
+}
 export const SteamAPI_ISteamUserStats_RequestCurrentStats: KoffiFunc<(self: ISteamUserStats) => boolean> = lib.cdecl(
    "bool SteamAPI_ISteamUserStats_RequestCurrentStats(ISteamUserStats * self)"
 );
@@ -5026,6 +5086,13 @@ export interface ISteamApps {
 }
 koffi.opaque("ISteamApps");
 export const SteamAPI_SteamApps_v008: KoffiFunc<() => ISteamApps> = lib.cdecl("ISteamApps* SteamAPI_SteamApps_v008()");
+let ISteamApps_instance: ISteamApps = null;
+export function SteamAPI_ISteamApps(): ISteamApps {
+   if (ISteamApps_instance) {
+      return ISteamApps_instance;
+   }
+   return SteamAPI_SteamApps_v008();
+}
 export const SteamAPI_ISteamApps_BIsSubscribed: KoffiFunc<(self: ISteamApps) => boolean> = lib.cdecl(
    "bool SteamAPI_ISteamApps_BIsSubscribed(ISteamApps * self)"
 );
@@ -5137,9 +5204,13 @@ koffi.opaque("ISteamNetworking");
 export const SteamAPI_SteamNetworking_v006: KoffiFunc<() => ISteamNetworking> = lib.cdecl(
    "ISteamNetworking* SteamAPI_SteamNetworking_v006()"
 );
-export const SteamAPI_SteamGameServerNetworking_v006: KoffiFunc<() => ISteamNetworking> = lib.cdecl(
-   "ISteamNetworking* SteamAPI_SteamGameServerNetworking_v006()"
-);
+let ISteamNetworking_instance: ISteamNetworking = null;
+export function SteamAPI_ISteamNetworking(): ISteamNetworking {
+   if (ISteamNetworking_instance) {
+      return ISteamNetworking_instance;
+   }
+   return SteamAPI_SteamNetworking_v006();
+}
 export const SteamAPI_ISteamNetworking_SendP2PPacket: KoffiFunc<
    (
       self: ISteamNetworking,
@@ -5243,6 +5314,13 @@ koffi.opaque("ISteamScreenshots");
 export const SteamAPI_SteamScreenshots_v003: KoffiFunc<() => ISteamScreenshots> = lib.cdecl(
    "ISteamScreenshots* SteamAPI_SteamScreenshots_v003()"
 );
+let ISteamScreenshots_instance: ISteamScreenshots = null;
+export function SteamAPI_ISteamScreenshots(): ISteamScreenshots {
+   if (ISteamScreenshots_instance) {
+      return ISteamScreenshots_instance;
+   }
+   return SteamAPI_SteamScreenshots_v003();
+}
 export const SteamAPI_ISteamScreenshots_WriteScreenshot: KoffiFunc<
    (self: ISteamScreenshots, pubRGB: Buffer, cubRGB: number, nWidth: number, nHeight: number) => number
 > = lib.cdecl(
@@ -5293,6 +5371,13 @@ koffi.opaque("ISteamMusic");
 export const SteamAPI_SteamMusic_v001: KoffiFunc<() => ISteamMusic> = lib.cdecl(
    "ISteamMusic* SteamAPI_SteamMusic_v001()"
 );
+let ISteamMusic_instance: ISteamMusic = null;
+export function SteamAPI_ISteamMusic(): ISteamMusic {
+   if (ISteamMusic_instance) {
+      return ISteamMusic_instance;
+   }
+   return SteamAPI_SteamMusic_v001();
+}
 export const SteamAPI_ISteamMusic_BIsEnabled: KoffiFunc<(self: ISteamMusic) => boolean> = lib.cdecl(
    "bool SteamAPI_ISteamMusic_BIsEnabled(ISteamMusic * self)"
 );
@@ -5327,6 +5412,13 @@ koffi.opaque("ISteamMusicRemote");
 export const SteamAPI_SteamMusicRemote_v001: KoffiFunc<() => ISteamMusicRemote> = lib.cdecl(
    "ISteamMusicRemote* SteamAPI_SteamMusicRemote_v001()"
 );
+let ISteamMusicRemote_instance: ISteamMusicRemote = null;
+export function SteamAPI_ISteamMusicRemote(): ISteamMusicRemote {
+   if (ISteamMusicRemote_instance) {
+      return ISteamMusicRemote_instance;
+   }
+   return SteamAPI_SteamMusicRemote_v001();
+}
 export const SteamAPI_ISteamMusicRemote_RegisterSteamMusicRemote: KoffiFunc<
    (self: ISteamMusicRemote, pchName: string) => boolean
 > = lib.cdecl(
@@ -5431,9 +5523,13 @@ export interface ISteamHTTP {
 }
 koffi.opaque("ISteamHTTP");
 export const SteamAPI_SteamHTTP_v003: KoffiFunc<() => ISteamHTTP> = lib.cdecl("ISteamHTTP* SteamAPI_SteamHTTP_v003()");
-export const SteamAPI_SteamGameServerHTTP_v003: KoffiFunc<() => ISteamHTTP> = lib.cdecl(
-   "ISteamHTTP* SteamAPI_SteamGameServerHTTP_v003()"
-);
+let ISteamHTTP_instance: ISteamHTTP = null;
+export function SteamAPI_ISteamHTTP(): ISteamHTTP {
+   if (ISteamHTTP_instance) {
+      return ISteamHTTP_instance;
+   }
+   return SteamAPI_SteamHTTP_v003();
+}
 export const SteamAPI_ISteamHTTP_CreateHTTPRequest: KoffiFunc<
    (self: ISteamHTTP, eHTTPRequestMethod: EHTTPMethod, pchAbsoluteURL: string) => number
 > = lib.cdecl(
@@ -5563,6 +5659,13 @@ koffi.opaque("ISteamInput");
 export const SteamAPI_SteamInput_v006: KoffiFunc<() => ISteamInput> = lib.cdecl(
    "ISteamInput* SteamAPI_SteamInput_v006()"
 );
+let ISteamInput_instance: ISteamInput = null;
+export function SteamAPI_ISteamInput(): ISteamInput {
+   if (ISteamInput_instance) {
+      return ISteamInput_instance;
+   }
+   return SteamAPI_SteamInput_v006();
+}
 export const SteamAPI_ISteamInput_Init: KoffiFunc<(self: ISteamInput, bExplicitlyCallRunFrame: boolean) => boolean> =
    lib.cdecl("bool SteamAPI_ISteamInput_Init(ISteamInput * self, bool bExplicitlyCallRunFrame)");
 export const SteamAPI_ISteamInput_Shutdown: KoffiFunc<(self: ISteamInput) => boolean> = lib.cdecl(
@@ -5786,6 +5889,13 @@ koffi.opaque("ISteamController");
 export const SteamAPI_SteamController_v008: KoffiFunc<() => ISteamController> = lib.cdecl(
    "ISteamController* SteamAPI_SteamController_v008()"
 );
+let ISteamController_instance: ISteamController = null;
+export function SteamAPI_ISteamController(): ISteamController {
+   if (ISteamController_instance) {
+      return ISteamController_instance;
+   }
+   return SteamAPI_SteamController_v008();
+}
 export const SteamAPI_ISteamController_Init: KoffiFunc<(self: ISteamController) => boolean> = lib.cdecl(
    "bool SteamAPI_ISteamController_Init(ISteamController * self)"
 );
@@ -5976,9 +6086,13 @@ export interface ISteamUGC {
 }
 koffi.opaque("ISteamUGC");
 export const SteamAPI_SteamUGC_v016: KoffiFunc<() => ISteamUGC> = lib.cdecl("ISteamUGC* SteamAPI_SteamUGC_v016()");
-export const SteamAPI_SteamGameServerUGC_v016: KoffiFunc<() => ISteamUGC> = lib.cdecl(
-   "ISteamUGC* SteamAPI_SteamGameServerUGC_v016()"
-);
+let ISteamUGC_instance: ISteamUGC = null;
+export function SteamAPI_ISteamUGC(): ISteamUGC {
+   if (ISteamUGC_instance) {
+      return ISteamUGC_instance;
+   }
+   return SteamAPI_SteamUGC_v016();
+}
 export const SteamAPI_ISteamUGC_CreateQueryUserUGCRequest: KoffiFunc<
    (
       self: ISteamUGC,
@@ -6422,6 +6536,13 @@ koffi.opaque("ISteamAppList");
 export const SteamAPI_SteamAppList_v001: KoffiFunc<() => ISteamAppList> = lib.cdecl(
    "ISteamAppList* SteamAPI_SteamAppList_v001()"
 );
+let ISteamAppList_instance: ISteamAppList = null;
+export function SteamAPI_ISteamAppList(): ISteamAppList {
+   if (ISteamAppList_instance) {
+      return ISteamAppList_instance;
+   }
+   return SteamAPI_SteamAppList_v001();
+}
 export const SteamAPI_ISteamAppList_GetNumInstalledApps: KoffiFunc<(self: ISteamAppList) => number> = lib.cdecl(
    "uint32 SteamAPI_ISteamAppList_GetNumInstalledApps(ISteamAppList * self)"
 );
@@ -6449,6 +6570,13 @@ koffi.opaque("ISteamHTMLSurface");
 export const SteamAPI_SteamHTMLSurface_v005: KoffiFunc<() => ISteamHTMLSurface> = lib.cdecl(
    "ISteamHTMLSurface* SteamAPI_SteamHTMLSurface_v005()"
 );
+let ISteamHTMLSurface_instance: ISteamHTMLSurface = null;
+export function SteamAPI_ISteamHTMLSurface(): ISteamHTMLSurface {
+   if (ISteamHTMLSurface_instance) {
+      return ISteamHTMLSurface_instance;
+   }
+   return SteamAPI_SteamHTMLSurface_v005();
+}
 export const SteamAPI_ISteamHTMLSurface_Init: KoffiFunc<(self: ISteamHTMLSurface) => boolean> = lib.cdecl(
    "bool SteamAPI_ISteamHTMLSurface_Init(ISteamHTMLSurface * self)"
 );
@@ -6601,9 +6729,13 @@ koffi.opaque("ISteamInventory");
 export const SteamAPI_SteamInventory_v003: KoffiFunc<() => ISteamInventory> = lib.cdecl(
    "ISteamInventory* SteamAPI_SteamInventory_v003()"
 );
-export const SteamAPI_SteamGameServerInventory_v003: KoffiFunc<() => ISteamInventory> = lib.cdecl(
-   "ISteamInventory* SteamAPI_SteamGameServerInventory_v003()"
-);
+let ISteamInventory_instance: ISteamInventory = null;
+export function SteamAPI_ISteamInventory(): ISteamInventory {
+   if (ISteamInventory_instance) {
+      return ISteamInventory_instance;
+   }
+   return SteamAPI_SteamInventory_v003();
+}
 export const SteamAPI_ISteamInventory_GetResultStatus: KoffiFunc<
    (self: ISteamInventory, resultHandle: number) => EResult
 > = lib.cdecl(
@@ -6847,6 +6979,13 @@ koffi.opaque("ISteamVideo");
 export const SteamAPI_SteamVideo_v002: KoffiFunc<() => ISteamVideo> = lib.cdecl(
    "ISteamVideo* SteamAPI_SteamVideo_v002()"
 );
+let ISteamVideo_instance: ISteamVideo = null;
+export function SteamAPI_ISteamVideo(): ISteamVideo {
+   if (ISteamVideo_instance) {
+      return ISteamVideo_instance;
+   }
+   return SteamAPI_SteamVideo_v002();
+}
 export const SteamAPI_ISteamVideo_GetVideoURL: KoffiFunc<(self: ISteamVideo, unVideoAppID: number) => void> = lib.cdecl(
    "void SteamAPI_ISteamVideo_GetVideoURL(ISteamVideo * self, AppId_t unVideoAppID)"
 );
@@ -6866,6 +7005,13 @@ koffi.opaque("ISteamParentalSettings");
 export const SteamAPI_SteamParentalSettings_v001: KoffiFunc<() => ISteamParentalSettings> = lib.cdecl(
    "ISteamParentalSettings* SteamAPI_SteamParentalSettings_v001()"
 );
+let ISteamParentalSettings_instance: ISteamParentalSettings = null;
+export function SteamAPI_ISteamParentalSettings(): ISteamParentalSettings {
+   if (ISteamParentalSettings_instance) {
+      return ISteamParentalSettings_instance;
+   }
+   return SteamAPI_SteamParentalSettings_v001();
+}
 export const SteamAPI_ISteamParentalSettings_BIsParentalLockEnabled: KoffiFunc<
    (self: ISteamParentalSettings) => boolean
 > = lib.cdecl("bool SteamAPI_ISteamParentalSettings_BIsParentalLockEnabled(ISteamParentalSettings * self)");
@@ -6895,6 +7041,13 @@ koffi.opaque("ISteamRemotePlay");
 export const SteamAPI_SteamRemotePlay_v001: KoffiFunc<() => ISteamRemotePlay> = lib.cdecl(
    "ISteamRemotePlay* SteamAPI_SteamRemotePlay_v001()"
 );
+let ISteamRemotePlay_instance: ISteamRemotePlay = null;
+export function SteamAPI_ISteamRemotePlay(): ISteamRemotePlay {
+   if (ISteamRemotePlay_instance) {
+      return ISteamRemotePlay_instance;
+   }
+   return SteamAPI_SteamRemotePlay_v001();
+}
 export const SteamAPI_ISteamRemotePlay_GetSessionCount: KoffiFunc<(self: ISteamRemotePlay) => number> = lib.cdecl(
    "uint32 SteamAPI_ISteamRemotePlay_GetSessionCount(ISteamRemotePlay * self)"
 );
@@ -6935,8 +7088,13 @@ koffi.opaque("ISteamNetworkingMessages");
 export const SteamAPI_SteamNetworkingMessages_SteamAPI_v002: KoffiFunc<() => ISteamNetworkingMessages> = lib.cdecl(
    "ISteamNetworkingMessages* SteamAPI_SteamNetworkingMessages_SteamAPI_v002()"
 );
-export const SteamAPI_SteamGameServerNetworkingMessages_SteamAPI_v002: KoffiFunc<() => ISteamNetworkingMessages> =
-   lib.cdecl("ISteamNetworkingMessages* SteamAPI_SteamGameServerNetworkingMessages_SteamAPI_v002()");
+let ISteamNetworkingMessages_instance: ISteamNetworkingMessages = null;
+export function SteamAPI_ISteamNetworkingMessages(): ISteamNetworkingMessages {
+   if (ISteamNetworkingMessages_instance) {
+      return ISteamNetworkingMessages_instance;
+   }
+   return SteamAPI_SteamNetworkingMessages_SteamAPI_v002();
+}
 export interface ISteamNetworkingSockets {
    __brand: "ISteamNetworkingSockets";
 }
@@ -6944,8 +7102,13 @@ koffi.opaque("ISteamNetworkingSockets");
 export const SteamAPI_SteamNetworkingSockets_SteamAPI_v012: KoffiFunc<() => ISteamNetworkingSockets> = lib.cdecl(
    "ISteamNetworkingSockets* SteamAPI_SteamNetworkingSockets_SteamAPI_v012()"
 );
-export const SteamAPI_SteamGameServerNetworkingSockets_SteamAPI_v012: KoffiFunc<() => ISteamNetworkingSockets> =
-   lib.cdecl("ISteamNetworkingSockets* SteamAPI_SteamGameServerNetworkingSockets_SteamAPI_v012()");
+let ISteamNetworkingSockets_instance: ISteamNetworkingSockets = null;
+export function SteamAPI_ISteamNetworkingSockets(): ISteamNetworkingSockets {
+   if (ISteamNetworkingSockets_instance) {
+      return ISteamNetworkingSockets_instance;
+   }
+   return SteamAPI_SteamNetworkingSockets_SteamAPI_v012();
+}
 export const SteamAPI_ISteamNetworkingSockets_AcceptConnection: KoffiFunc<
    (self: ISteamNetworkingSockets, hConn: number) => EResult
 > = lib.cdecl(
@@ -7050,9 +7213,6 @@ export interface ISteamNetworkingUtils {
    __brand: "ISteamNetworkingUtils";
 }
 koffi.opaque("ISteamNetworkingUtils");
-export const SteamAPI_SteamNetworkingUtils_SteamAPI_v004: KoffiFunc<() => ISteamNetworkingUtils> = lib.cdecl(
-   "ISteamNetworkingUtils* SteamAPI_SteamNetworkingUtils_SteamAPI_v004()"
-);
 export const SteamAPI_ISteamNetworkingUtils_InitRelayNetworkAccess: KoffiFunc<(self: ISteamNetworkingUtils) => void> =
    lib.cdecl("void SteamAPI_ISteamNetworkingUtils_InitRelayNetworkAccess(ISteamNetworkingUtils * self)");
 export const SteamAPI_ISteamNetworkingUtils_CheckPingDataUpToDate: KoffiFunc<
@@ -7173,9 +7333,6 @@ export interface ISteamGameServer {
    __brand: "ISteamGameServer";
 }
 koffi.opaque("ISteamGameServer");
-export const SteamAPI_SteamGameServer_v014: KoffiFunc<() => ISteamGameServer> = lib.cdecl(
-   "ISteamGameServer* SteamAPI_SteamGameServer_v014()"
-);
 export const SteamAPI_ISteamGameServer_SetProduct: KoffiFunc<(self: ISteamGameServer, pszProduct: string) => void> =
    lib.cdecl("void SteamAPI_ISteamGameServer_SetProduct(ISteamGameServer * self, const char * pszProduct)");
 export const SteamAPI_ISteamGameServer_SetGameDescription: KoffiFunc<
@@ -7316,9 +7473,6 @@ export interface ISteamGameServerStats {
    __brand: "ISteamGameServerStats";
 }
 koffi.opaque("ISteamGameServerStats");
-export const SteamAPI_SteamGameServerStats_v001: KoffiFunc<() => ISteamGameServerStats> = lib.cdecl(
-   "ISteamGameServerStats* SteamAPI_SteamGameServerStats_v001()"
-);
 export const SteamAPI_ISteamGameServerStats_RequestUserStats: KoffiFunc<
    (self: ISteamGameServerStats, steamIDUser: number) => number
 > = lib.cdecl(

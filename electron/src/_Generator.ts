@@ -188,11 +188,17 @@ result.push("// Functions");
 SteamAPIDef.interfaces.forEach((i) => {
    result.push(`export interface ${i.classname} { __brand: "${i.classname}" }`);
    result.push(`koffi.opaque("${i.classname}");`);
-   i.accessors?.forEach((a) => {
-      result.push(
-         `export const ${a.name_flat}: KoffiFunc<() => ${i.classname}> = lib.cdecl("${i.classname}* ${a.name_flat}()");`
-      );
-   });
+   i.accessors
+      ?.filter((a) => a.kind === "user")
+      .forEach((a) => {
+         result.push(
+            `export const ${a.name_flat}: KoffiFunc<() => ${i.classname}> = lib.cdecl("${i.classname}* ${a.name_flat}()");`
+         );
+         result.push(`let ${i.classname}_instance: ${i.classname} = null;`);
+         result.push(
+            `export function SteamAPI_${i.classname}(): ${i.classname} {  if (${i.classname}_instance) {return ${i.classname}_instance;} return ${a.name_flat}(); }`
+         );
+      });
 
    i.methods.forEach((m: IMethod) => {
       const params = [`${i.classname} * self`];
