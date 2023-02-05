@@ -20,7 +20,7 @@ import {
    SteamAPI_ISteamUtils_GetAppID,
    SteamAPI_ISteamUtils_IsSteamRunningOnSteamDeck,
    SteamLib,
-} from "./_Steamworks.Generated";
+} from "./Steamworks.Generated";
 
 koffi.struct("CallbackMsg_t", {
    m_hSteamUser: "HSteamUser",
