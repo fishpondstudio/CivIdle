@@ -140,6 +140,7 @@ export const EN = {
    House: "House",
    ViewMenu: "View",
    OptionsMenu: "Options",
+   HelpMenu: "Help",
    OptionsUseModernUI: "Eye Protection UI",
    TechnologyMenu: "Technology",
    ResearchMenu: "Research",

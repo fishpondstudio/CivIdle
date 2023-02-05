@@ -7,6 +7,13 @@ body {
    cursor: url("../images/w98normal.png"), default;
    user-select: none;
    overflow: hidden;
+   position: fixed;
+   left: 0;
+   top: 0;
+   bottom: 0;
+   right: 0;
+   margin: 0;
+   padding: 0;
 }
 
 * {
@@ -22,7 +29,7 @@ body {
 }
 
 #game-canvas {
-   position: fixed;
+   position: absolute;
    left: 0;
    top: 0;
    bottom: 0;
@@ -40,4 +47,22 @@ body {
    margin: 0;
    overflow-x: hidden;
    overflow-y: auto;
+}
+
+#global-modal .overlay {
+   position: absolute;
+   left: 0;
+   right: 0;
+   top: 0;
+   bottom: 0;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   background: rgba(0, 0, 0, 0.5);
+}
+
+#global-modal .window {
+   margin: 0 auto;
+   min-width: 350px;
+   min-height: 150px;
 }
