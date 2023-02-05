@@ -5,7 +5,7 @@
 import type { App } from "electron";
 import { outputFile, readFile } from "fs-extra";
 import path from "path";
-import type { SteamAPI } from "./steam";
+import type { SteamAPI } from "./SteamAPI";
 
 //  ipcMain.handle("readTextFromFile", (e, name: string) => {
 //     return readFile(path.join(app.getAppPath(), "save", api.getSteamID().toString(), name));

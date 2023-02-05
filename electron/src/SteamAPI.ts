@@ -24,7 +24,7 @@ import {
    SteamAPI_SteamUser_v021,
    SteamAPI_SteamUtils_v010,
    SteamLib,
-} from "./steamworks.generated";
+} from "./Steamworks.Generated";
 
 koffi.struct("CallbackMsg_t", {
    m_hSteamUser: "HSteamUser",
