@@ -1,3 +1,4 @@
+import { execSync } from "child_process";
 import { writeFileSync } from "fs";
 import path from "path";
 import { SteamAPIDef } from "./steam-api";
@@ -102,19 +103,90 @@ if (process.platform === "win32") {
 } else {
    throw new Error("Unsupported platform: " + process.platform);
 }
+export const SteamLib = lib;
+export type KoffiFunc<T extends (...args:any) => any> = T & {
+   async: (...args: [...Parameters<T>, (err: any, result: ReturnType<T>) => void]) => void;
+};
+`);
 
-type KoffiFunc<T extends (...args:any) => any> = T & {
-   async: T;
-};`);
+SteamAPIDef.enums.forEach((e) => {
+   alias[e.enumname] = "int";
+   koffiTypes[e.enumname] = e.enumname;
+   result.push(`export enum ${e.enumname} {${e.values.map((v) => [v.name, "=", v.value].join(""))}}`);
+});
 
 result.push("// Typedefs");
 Object.keys(alias).forEach((k) => {
    result.push(`koffi.alias("${k}", "${alias[k]}");`);
 });
 
+result.push("// Consts");
+SteamAPIDef.consts.forEach(handleConst);
+
+interface IConst {
+   constname: string;
+   consttype: string;
+   constval: string;
+}
+
+function handleConst(v: IConst) {
+   const [success, type] = getReturnType(v.consttype);
+   if (!success) {
+      console.warn(`Cannot handle const: ${v.constname} because of its type: ${v.consttype}`);
+      return;
+   }
+   if (v.constval == "0xffffffffffffffffull") {
+      result.push(`export const ${v.constname} = BigInt("0xffffffffffffffff");`);
+      return;
+   }
+   if (v.constval.includes("<<") || v.constval.includes("SteamItemInstanceID_t")) {
+      return;
+   }
+   result.push(`export const ${v.constname} = ${v.constval};`);
+}
+
+result.push("// Callbacks");
+const callbackIdToStruct: Record<string, string> = {};
+const callbackStructToId: Record<string, number> = {};
+SteamAPIDef.callback_structs.forEach((c) => {
+   if (c.consts) {
+      c.consts.forEach(handleConst);
+   }
+   const fields: Record<string, string> = {};
+   const jsFields: Record<string, string> = {};
+   c.fields.forEach((f) => {
+      const [success, type] = getReturnType(f.fieldtype);
+      if (success) {
+         fields[f.fieldname] = type;
+         jsFields[f.fieldname] = getJSType(f.fieldtype);
+      } else {
+         console.warn(`Cannot handle ${c.struct} because of field ${f.fieldname} has unknown type ${f.fieldtype}`);
+      }
+   });
+   if (Object.keys(fields).length == Object.keys(c.fields).length) {
+      if (Object.keys(fields).length > 0) {
+         result.push(
+            `export interface ICallback_${c.struct} { ${Object.keys(jsFields).map((j) => `${j}:${jsFields[j]}`)} };`
+         );
+         result.push(`koffi.struct("${c.struct}", ${JSON.stringify(fields)});`);
+      }
+      callbackIdToStruct[c.callback_id] = c.struct;
+      callbackStructToId[c.struct] = c.callback_id;
+   }
+});
+
+result.push(
+   `export const CallbackIdToStruct = { ${Object.keys(callbackIdToStruct).map((i) => {
+      return [i, ":", '"', callbackIdToStruct[i], '"'].join("");
+   })} } as const;`
+);
+result.push(`export const CallbackStructToId = ${JSON.stringify(callbackStructToId)} as const;`);
+result.push(`export type CallbackId = keyof typeof CallbackIdToStruct`);
+result.push(`export type CallbackStruct = keyof typeof CallbackStructToId`);
+
 result.push("// Functions");
 SteamAPIDef.interfaces.forEach((i) => {
-   result.push(`interface ${i.classname} { __brand: "${i.classname}" }`);
+   result.push(`export interface ${i.classname} { __brand: "${i.classname}" }`);
    result.push(`koffi.opaque("${i.classname}");`);
    i.accessors?.forEach((a) => {
       result.push(
@@ -123,7 +195,7 @@ SteamAPIDef.interfaces.forEach((i) => {
    });
 
    i.methods.forEach((m: IMethod) => {
-      const params = [`${`${i.classname} * self`}${m.params.length > 0 ? ", " : ""}`];
+      const params = [`${i.classname} * self`];
 
       const [success, returnType] = getReturnType(m.returntype_flat ?? m.returntype);
       if (!success) {
@@ -142,41 +214,49 @@ SteamAPIDef.interfaces.forEach((i) => {
       const def = `${returnType} ${m.methodname_flat}(${params.join(", ")})`;
       if (allValid) {
          const params = [`self: ${i.classname}`];
-         m.params.forEach((p) => params.push(`${p.paramname}: ${getTSType(p.paramtype_flat ?? p.paramtype)}`));
+         m.params.forEach((p) => params.push(`${p.paramname}: ${getJSType(p.paramtype_flat ?? p.paramtype)}`));
          result.push(
-            `export const ${m.methodname_flat}: (${params.join(", ")}) => ${getTSType(
+            `export const ${m.methodname_flat}: KoffiFunc<(${params.join(", ")}) => ${getJSType(
                returnType
-            )} = lib.cdecl("${def}");`
+            )}> = lib.cdecl("${def}");`
          );
       }
    });
 });
 
-writeFileSync(path.join(__dirname, "../src/steamworks.generated.ts"), result.join("\n"));
-
-function getReturnType(type: string): [boolean, string] {
-   const t = getCleanType(type);
-   const known = !!koffiTypes[t] || !!alias[t];
-   return [known, type];
-}
+const outputFile = path.join(__dirname, "../src/steamworks.generated.ts");
+writeFileSync(outputFile, result.join("\n"));
+execSync(`npx prettier --write ${outputFile}`);
 
 function getCleanType(type: string): string {
    type = type.replace("const ", "");
    if (type == "char *") {
       return type;
    }
+   if (type == "void *") {
+      return type;
+   }
    return type.replace(" *", "").trim();
 }
 
-function getTSType(type: string): string {
+function getJSType(type: string): string {
    const t = getCleanType(type);
+   if (type == "void *") {
+      return "Buffer";
+   }
    if (koffiTypes[t]) {
       return isOutType(type) ? `[${koffiTypes[t]}]` : koffiTypes[t];
    }
    if (koffiTypes[alias[t]]) {
       return isOutType(type) ? `[${koffiTypes[alias[t]]}]` : koffiTypes[alias[t]];
    }
-   throw new Error(`Cannot find TS type for ${type}`);
+   throw new Error(`Cannot find JS type for ${type}`);
+}
+
+function getReturnType(type: string): [boolean, string] {
+   const t = getCleanType(type);
+   const known = !!koffiTypes[t] || !!alias[t];
+   return [known, type];
 }
 
 function getParamType(type: string): [boolean, string] {

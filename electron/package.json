@@ -7,7 +7,7 @@
    "scripts": {
       "build": "tsc",
       "start": "npm run build && electron-forge start",
-      "generate": "tsc && node compiled/generator.js",
+      "generate": "tsc src/generator.ts --esModuleInterop true --outDir compiled/ && node compiled/generator.js",
       "package": "npm run build && electron-forge package",
       "make": "npm run build && electron-forge make",
       "publish": "npm run build && electron-forge publish",

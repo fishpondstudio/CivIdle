@@ -84,7 +84,7 @@ const SAVE_KEY = "CivIdle";
 
 export function saveGame() {
    if (typeof Steamworks !== "undefined") {
-      Steamworks.writeTextToFile(SAVE_KEY, JSON.stringify(savedGame));
+      Steamworks.rpcCall("writeTextToFile", SAVE_KEY, JSON.stringify(savedGame));
       return;
    }
    idbSet(SAVE_KEY, savedGame).catch(console.error);

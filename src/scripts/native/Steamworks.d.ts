@@ -1,6 +1,5 @@
-declare const Steamworks:
+declare const IPCBridge:
    | {
-        writeTextToFile: (name: string, content: string) => Promise<void>;
-        readTextFromFile: (name: string) => Promise<string>;
+        rpcCall: (method: string, ...args: any[]) => Promise<any>;
      }
    | undefined;
