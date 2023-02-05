@@ -6,25 +6,21 @@ import {
    EResult,
    ICallback_GetAuthSessionTicketResponse_t,
    ICallback_SteamAPICallCompleted_t,
-   ISteamApps,
-   ISteamRemoteStorage,
-   ISteamUser,
-   ISteamUtils,
    KoffiFunc,
+   SteamAPI_ISteamApps,
    SteamAPI_ISteamApps_GetDLCCount,
+   SteamAPI_ISteamRemoteStorage,
    SteamAPI_ISteamRemoteStorage_FileRead,
    SteamAPI_ISteamRemoteStorage_FileWrite,
    SteamAPI_ISteamRemoteStorage_GetFileSize,
+   SteamAPI_ISteamUser,
    SteamAPI_ISteamUser_GetAuthSessionTicket,
    SteamAPI_ISteamUser_GetSteamID,
+   SteamAPI_ISteamUtils,
    SteamAPI_ISteamUtils_GetAppID,
    SteamAPI_ISteamUtils_IsSteamRunningOnSteamDeck,
-   SteamAPI_SteamApps_v008,
-   SteamAPI_SteamRemoteStorage_v016,
-   SteamAPI_SteamUser_v021,
-   SteamAPI_SteamUtils_v010,
    SteamLib,
-} from "./Steamworks.Generated";
+} from "./_Steamworks.Generated";
 
 koffi.struct("CallbackMsg_t", {
    m_hSteamUser: "HSteamUser",
@@ -75,20 +71,10 @@ const fileWritePromises: Record<string, Promise<boolean>> = {};
 export class SteamAPI {
    private callResults: Record<number, (err: Error | null, b: Buffer) => void> = {};
    private callbacks: Record<number, (result: any) => void> = {};
-   private _steamUtils: ISteamUtils;
-   private _steamRemoteStorage: ISteamRemoteStorage;
-   private _steamApps: ISteamApps;
-   private _steamUser: ISteamUser;
-
    constructor() {
       if (!SteamAPI_Init()) {
          throw new Error("Steamworks SDK fails to initialize. Is Steam running? Are you launching the game via Steam?");
       }
-
-      this._steamUtils = SteamAPI_SteamUtils_v010();
-      this._steamRemoteStorage = SteamAPI_SteamRemoteStorage_v016();
-      this._steamApps = SteamAPI_SteamApps_v008();
-      this._steamUser = SteamAPI_SteamUser_v021();
 
       console.log(`Steamworks Initialized for App: ${this.getAppID()}`);
 
@@ -166,28 +152,28 @@ export class SteamAPI {
                reject(new Error(result.m_eResult.toString()));
             }
          };
-         SteamAPI_ISteamUser_GetAuthSessionTicket(this._steamUser, buffer, buffer.length, length);
+         SteamAPI_ISteamUser_GetAuthSessionTicket(SteamAPI_ISteamUser(), buffer, buffer.length, length);
       });
    }
 
    getSteamID(): number {
-      return SteamAPI_ISteamUser_GetSteamID(this._steamUser);
+      return SteamAPI_ISteamUser_GetSteamID(SteamAPI_ISteamUser());
    }
 
    getDLCCount(): number {
-      return SteamAPI_ISteamApps_GetDLCCount(this._steamApps);
+      return SteamAPI_ISteamApps_GetDLCCount(SteamAPI_ISteamApps());
    }
 
    getAppID(): number {
-      return SteamAPI_ISteamUtils_GetAppID(this._steamUtils);
+      return SteamAPI_ISteamUtils_GetAppID(SteamAPI_ISteamUtils());
    }
 
    isSteamRunningOnSteamDeck(): boolean {
-      return SteamAPI_ISteamUtils_IsSteamRunningOnSteamDeck(this._steamUtils);
+      return SteamAPI_ISteamUtils_IsSteamRunningOnSteamDeck(SteamAPI_ISteamUtils());
    }
 
    getFileSize(name: string): number {
-      return SteamAPI_ISteamRemoteStorage_GetFileSize(this._steamRemoteStorage, name);
+      return SteamAPI_ISteamRemoteStorage_GetFileSize(SteamAPI_ISteamRemoteStorage(), name);
    }
 
    // readFileContent(name: string): Promise<string> {
@@ -240,14 +226,20 @@ export class SteamAPI {
             return;
          }
          const buffer = Buffer.allocUnsafe(fileSize);
-         SteamAPI_ISteamRemoteStorage_FileRead.async(this._steamRemoteStorage, name, buffer, fileSize, (err: any) => {
-            delete fileReadPromises[name];
-            if (err) {
-               reject(err);
-               return;
+         SteamAPI_ISteamRemoteStorage_FileRead.async(
+            SteamAPI_ISteamRemoteStorage(),
+            name,
+            buffer,
+            fileSize,
+            (err: any) => {
+               delete fileReadPromises[name];
+               if (err) {
+                  reject(err);
+                  return;
+               }
+               resolve(buffer.toString("utf8"));
             }
-            resolve(buffer.toString("utf8"));
-         });
+         );
       });
       fileReadPromises[name] = promise;
       return promise;
@@ -261,7 +253,7 @@ export class SteamAPI {
       const promise = new Promise<boolean>((resolve, reject) => {
          const buffer = Buffer.from(new TextEncoder().encode(content));
          SteamAPI_ISteamRemoteStorage_FileWrite.async(
-            this._steamRemoteStorage,
+            SteamAPI_ISteamRemoteStorage(),
             name,
             buffer,
             buffer.byteLength,
