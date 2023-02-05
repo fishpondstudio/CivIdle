@@ -1,8 +1,8 @@
 import { app, BrowserWindow, dialog, ipcMain, Menu } from "electron";
-import { outputFile } from "fs-extra";
-import { readFile } from "fs/promises";
 import path from "path";
+import { IPCService } from "./ipc";
 import { SteamAPI } from "./steam";
+// import { SteamAPI } from "./steam";
 
 const createWindow = () => {
    try {
@@ -30,12 +30,11 @@ const createWindow = () => {
       mainWindow.maximize();
       mainWindow.show();
 
-      ipcMain.handle("writeTextToFile", (e, name: string, content: string) => {
-         return outputFile(path.join(app.getAppPath(), "save", api.getSteamId().toString(), name), content);
-      });
+      const service = new IPCService(app, api);
 
-      ipcMain.handle("readTextFromFile", (e, name: string) => {
-         return readFile(path.join(app.getAppPath(), "save", api.getSteamId().toString(), name));
+      ipcMain.handle("__RPCCall", (e, method, ...args) => {
+         // eslint-disable-next-line prefer-spread
+         return service[method as keyof typeof service].apply(service, args as any);
       });
    } catch (error) {
       dialog.showErrorBox("Failed to Start Game", String(error));
@@ -54,11 +53,10 @@ app.on("ready", createWindow);
 // for applications and their menu bar to stay active until the user quits
 // explicitly with Cmd + Q.
 app.on("window-all-closed", () => {
-   SteamAPI.shutdown();
    quit();
 });
 
 function quit() {
-   SteamAPI.shutdown();
+   // SteamAPI.shutdown();
    app.quit();
 }
