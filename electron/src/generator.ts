@@ -1,7 +1,7 @@
 import { execSync } from "child_process";
 import { writeFileSync } from "fs";
 import path from "path";
-import { SteamAPIDef } from "./steam-api";
+import { SteamAPIDef } from "./SteamAPIDef";
 
 const koffiTypes: Record<string, string> = {
    bool: "boolean",
@@ -224,7 +224,7 @@ SteamAPIDef.interfaces.forEach((i) => {
    });
 });
 
-const outputFile = path.join(__dirname, "../src/steamworks.generated.ts");
+const outputFile = path.join(__dirname, "../src/Steamworks.Generated.ts");
 writeFileSync(outputFile, result.join("\n"));
 execSync(`npx prettier --write ${outputFile}`);
 

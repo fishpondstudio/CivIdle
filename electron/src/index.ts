@@ -1,7 +1,7 @@
 import { app, BrowserWindow, dialog, ipcMain, Menu } from "electron";
 import path from "path";
-import { IPCService } from "./ipc";
-import { SteamAPI } from "./steam";
+import { IPCService } from "./IPCService";
+import { SteamAPI } from "./SteamAPI";
 // import { SteamAPI } from "./steam";
 
 const createWindow = () => {
