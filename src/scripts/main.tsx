@@ -31,7 +31,7 @@ import { signIn } from "./rpc/RPCClient";
 import { Grid } from "./scenes/Grid";
 import { WorldScene } from "./scenes/WorldScene";
 import { ChatPanel } from "./ui/ChatPanel";
-import { GlobalModal } from "./ui/GlobalModa";
+import { GlobalModal, GlobalToast } from "./ui/GlobalModal";
 import { forEach } from "./utilities/Helper";
 import { SceneManager, Textures } from "./utilities/SceneManager";
 import { TypedEvent } from "./utilities/TypedEvent";
@@ -41,6 +41,7 @@ const routeChanged = new TypedEvent<RouteChangeEvent>();
 ReactDOM.render(<Route event={routeChanged} />, document.getElementById("game-ui"));
 ReactDOM.render(<ChatPanel />, document.getElementById("chat-panel"));
 ReactDOM.render(<GlobalModal />, document.getElementById("global-modal"));
+ReactDOM.render(<GlobalToast />, document.getElementById("global-toast"));
 
 const canvas = document.getElementById("game-canvas");
 const mainBundle = {

@@ -5,6 +5,7 @@
 .modern textarea,
 .modern select,
 .modern option,
+.modern .toast,
 .modern ul.tree-view {
    font-family: Tahoma, sans-serif;
    font-size: 14px;

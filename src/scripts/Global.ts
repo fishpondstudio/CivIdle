@@ -1,6 +1,8 @@
 import { Config } from "./logic/Constants";
 import { GameOptions, GameState, SavedGame } from "./logic/GameState";
 import { ITileData, makeBuilding } from "./logic/Tile";
+import { hasIPCBridge } from "./native/IPCClient";
+import { ipcClient } from "./rpc/RPCClient";
 import { Grid } from "./scenes/Grid";
 import { idbClear, idbGet, idbSet } from "./utilities/BrowserStorage";
 import { forEach } from "./utilities/Helper";
@@ -83,22 +85,22 @@ export function syncUITheme(): void {
 const SAVE_KEY = "CivIdle";
 
 export function saveGame() {
-   if (typeof Steamworks !== "undefined") {
-      Steamworks.rpcCall("writeTextToFile", SAVE_KEY, JSON.stringify(savedGame));
+   if (hasIPCBridge()) {
+      ipcClient.writeTextToFile(SAVE_KEY, JSON.stringify(savedGame));
       return;
    }
    idbSet(SAVE_KEY, savedGame).catch(console.error);
 }
 
 export async function loadGame(): Promise<SavedGame | undefined> {
-   if (typeof Steamworks !== "undefined") {
+   if (hasIPCBridge()) {
       try {
-         const content = await Steamworks.readTextFromFile(SAVE_KEY);
+         const content = await ipcClient.readTextFromFile(SAVE_KEY);
          return JSON.parse(content) as SavedGame;
       } catch (e) {
          console.warn("loadGame failed", e);
-         return;
       }
+      return;
    }
    return await idbGet<SavedGame>(SAVE_KEY);
 }

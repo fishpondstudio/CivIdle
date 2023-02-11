@@ -22,3 +22,25 @@ export function GlobalModal() {
 
    return <div className="overlay">{content}</div>;
 }
+
+export const ShowToast = new TypedEvent<string>();
+export const HideToast = new TypedEvent<void>();
+
+export function GlobalToast() {
+   const [content, setContent] = useState<string | null>(null);
+
+   useTypedEvent(ShowToast, (e) => {
+      setContent(e);
+      setTimeout(() => setContent(null), 3500);
+   });
+
+   useTypedEvent(HideToast, (e) => {
+      setContent(null);
+   });
+
+   if (!content) {
+      return null;
+   }
+
+   return <div className="toast">{content}</div>;
+}

@@ -63,6 +63,16 @@ body {
 
 #global-modal .window {
    margin: 0 auto;
-   min-width: 350px;
-   min-height: 150px;
+   width: 350px;
+}
+
+#global-toast {
+   display: flex;
+   align-items: center;
+   justify-content: center;
+}
+
+#global-toast .toast {
+   position: absolute;
+   top: 20px;
 }

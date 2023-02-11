@@ -5,7 +5,6 @@ import { RomeProvinceScene } from "../scenes/RomeProvinceScene";
 import { TechTreeScene } from "../scenes/TechTreeScene";
 import { WorldScene } from "../scenes/WorldScene";
 import { L, t } from "../utilities/i18n";
-import { HideModal, ShowModal } from "./GlobalModa";
 
 type MenuItemOptions = "view" | "options" | null;
 
@@ -159,21 +158,7 @@ export function MenuComponent() {
                   </div>
                </div>
             </div>
-            <div
-               className="menu-button"
-               onClick={() => {
-                  // if (import.meta.env.PROD) {
-                  //    return;
-                  // }
-                  ShowModal.emit(
-                     <div className="window" onClick={() => HideModal.emit()}>
-                        <div className="title-bar">
-                           <div className="title-bar-text">Hello</div>
-                        </div>
-                     </div>
-                  );
-               }}
-            >
+            <div className="menu-button" onClick={() => {}}>
                <MenuButton name={t(L.HelpMenu)}></MenuButton>
             </div>
          </div>
