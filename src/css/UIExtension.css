@@ -122,6 +122,10 @@ fieldset .separator {
    color: rgb(0, 0, 0);
 }
 
+.inset-shallow.white {
+   background-color: #fff;
+}
+
 .text-green {
    color: #047e00;
 }
@@ -282,6 +286,16 @@ a {
 
 ul.tree-view > li:first-child {
    margin-top: 0;
+}
+
+.toast {
+   background: #ffc;
+   padding: 5px 10px;
+   border: 1px solid grey;
+   color: #333;
+   border-radius: 3px;
+   font-family: "Pixelated MS Sans Serif", Arial;
+   font-size: 11px;
 }
 
 .warning-banner {

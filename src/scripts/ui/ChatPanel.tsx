@@ -32,7 +32,7 @@ export function ChatPanel() {
       );
    const sendChat = () => {
       if (chat) {
-         client.chat("FishPond", chat);
+         client.chat(chat);
          setChat("");
       }
    };

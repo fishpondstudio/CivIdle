@@ -2,12 +2,15 @@ import { Singleton } from "../Global";
 import { getScienceFromWorkers } from "../logic/BuildingLogic";
 import { getCurrentTechAge, getScienceAmount, getTechTree, getUnlockCost, unlockableTechs } from "../logic/TechLogic";
 import { Tick } from "../logic/TickLogic";
+import { getHandle } from "../rpc/RPCClient";
 import { TechTreeScene } from "../scenes/TechTreeScene";
 import { formatPercent } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
+import { greatPersonImage } from "../visuals/GreatPersonVisual";
 import { IBuildingComponentProps } from "./BuildingPage";
 import { BuildingProduceComponent } from "./BuildingProduceComponent";
 import { BuildingStorageComponent } from "./BuildingStorageComponent";
+import { ShowModal } from "./GlobalModal";
 import { FormatNumber } from "./HelperComponents";
 
 export function HeadquarterBuildingBody({ gameState, xy }: IBuildingComponentProps) {
@@ -26,8 +29,9 @@ export function HeadquarterBuildingBody({ gameState, xy }: IBuildingComponentPro
    return (
       <div className="window-body">
          <BuildingProduceComponent gameState={gameState} xy={xy} />
+         <BuildingStorageComponent xy={xy} gameState={gameState} />
          <fieldset>
-            <legend>Census</legend>
+            <legend>{t(L.Census)}</legend>
             <div className="row mv5">
                <div className="f1">{t(L.WorkersAvailable)}</div>
                <div className="text-strong">
@@ -156,7 +160,19 @@ export function HeadquarterBuildingBody({ gameState, xy }: IBuildingComponentPro
                </table>
             </div>
          </fieldset>
-         <BuildingStorageComponent xy={xy} gameState={gameState} />
+         <fieldset>
+            <legend>{t(L.PlayerHandle)}</legend>
+            <div className="row mv5">
+               <div className="f1">
+                  <b>{getHandle()}</b>
+               </div>
+               <div>
+                  <button onClick={() => ShowModal.emit(<ChangePlayerHandleModal />)}>{t(L.ChangePlayerHandle)}</button>
+               </div>
+            </div>
+            <div className="text-desc text-small">{t(L.ChangePlayerHandledDesc)}</div>
+         </fieldset>
+         <button onClick={() => ShowModal.emit(<ChooseGreatPersonModal />)}>Choose Great Person</button>
          {/* {jsxMapOf(Config.GreatPerson, (k) => {
                 return (
                     <img
@@ -166,6 +182,46 @@ export function HeadquarterBuildingBody({ gameState, xy }: IBuildingComponentPro
                     />
                 );
             })} */}
+      </div>
+   );
+}
+
+function ChooseGreatPersonModal() {
+   return (
+      <div className="window" style={{ width: "650px" }}>
+         <div className="title-bar">
+            <div className="title-bar-text">{t(L.AGreatPersonIsBorn)}</div>
+         </div>
+         <div className="window-body">
+            <div className="row" style={{ alignItems: "stretch" }}>
+               <div className="inset-shallow white p10 f1 text-center">
+                  <img
+                     src={greatPersonImage("Cincinnatus", Singleton().sceneManager.getContext())}
+                     style={{ width: "100%" }}
+                  />
+                  <div className="sep5"></div>
+                  {t(L.CincinnatusDesc)}
+               </div>
+               <div style={{ width: "5px" }} />
+               <div className="inset-shallow white p10 f1 text-center">
+                  <img
+                     src={greatPersonImage("Cincinnatus", Singleton().sceneManager.getContext())}
+                     style={{ width: "100%" }}
+                  />
+                  <div className="sep5"></div>
+                  {t(L.CincinnatusDesc)}
+               </div>
+               <div style={{ width: "5px" }} />
+               <div className="inset-shallow white p10 f1 text-center">
+                  <img
+                     src={greatPersonImage("Cincinnatus", Singleton().sceneManager.getContext())}
+                     style={{ width: "100%" }}
+                  />
+                  <div className="sep5"></div>
+                  {t(L.CincinnatusDesc)}
+               </div>
+            </div>
+         </div>
       </div>
    );
 }

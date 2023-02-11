@@ -546,7 +546,7 @@
         },
         "Paper": {
             "frame": {
-                "x": 2808,
+                "x": 3510,
                 "y": 3256,
                 "w": 300,
                 "h": 300
@@ -616,9 +616,17 @@
                 "h": 350
             }
         },
-        "PersonCleopatra": {
+        "PersonCincinnatus": {
             "frame": {
                 "x": 2808,
+                "y": 2554,
+                "w": 350,
+                "h": 350
+            }
+        },
+        "PersonCleopatra": {
+            "frame": {
+                "x": 3159,
                 "y": 2554,
                 "w": 350,
                 "h": 350
@@ -626,7 +634,7 @@
         },
         "PersonConfucius": {
             "frame": {
-                "x": 3159,
+                "x": 3510,
                 "y": 2554,
                 "w": 350,
                 "h": 350
@@ -634,7 +642,7 @@
         },
         "PersonCyrusII": {
             "frame": {
-                "x": 3510,
+                "x": 3861,
                 "y": 2554,
                 "w": 350,
                 "h": 350
@@ -642,15 +650,15 @@
         },
         "PersonDariusI": {
             "frame": {
-                "x": 3861,
-                "y": 2554,
+                "x": 0,
+                "y": 2905,
                 "w": 350,
                 "h": 350
             }
         },
         "PersonDido": {
             "frame": {
-                "x": 0,
+                "x": 351,
                 "y": 2905,
                 "w": 350,
                 "h": 350
@@ -658,7 +666,7 @@
         },
         "PersonDukeOfZhou": {
             "frame": {
-                "x": 351,
+                "x": 702,
                 "y": 2905,
                 "w": 350,
                 "h": 350
@@ -666,7 +674,7 @@
         },
         "PersonHammurabi": {
             "frame": {
-                "x": 702,
+                "x": 1053,
                 "y": 2905,
                 "w": 350,
                 "h": 350
@@ -674,7 +682,7 @@
         },
         "PersonHannibal": {
             "frame": {
-                "x": 1053,
+                "x": 1404,
                 "y": 2905,
                 "w": 350,
                 "h": 350
@@ -682,7 +690,7 @@
         },
         "PersonHerodotus": {
             "frame": {
-                "x": 1404,
+                "x": 1755,
                 "y": 2905,
                 "w": 350,
                 "h": 350
@@ -690,7 +698,7 @@
         },
         "PersonHippocrates": {
             "frame": {
-                "x": 1755,
+                "x": 2106,
                 "y": 2905,
                 "w": 350,
                 "h": 350
@@ -698,7 +706,7 @@
         },
         "PersonHomer": {
             "frame": {
-                "x": 2106,
+                "x": 2457,
                 "y": 2905,
                 "w": 350,
                 "h": 350
@@ -706,7 +714,7 @@
         },
         "PersonJuliusCaesar": {
             "frame": {
-                "x": 2457,
+                "x": 2808,
                 "y": 2905,
                 "w": 350,
                 "h": 350
@@ -714,7 +722,7 @@
         },
         "PersonKhufu": {
             "frame": {
-                "x": 2808,
+                "x": 3159,
                 "y": 2905,
                 "w": 350,
                 "h": 350
@@ -722,7 +730,7 @@
         },
         "PersonLaoZi": {
             "frame": {
-                "x": 3159,
+                "x": 3510,
                 "y": 2905,
                 "w": 350,
                 "h": 350
@@ -730,7 +738,7 @@
         },
         "PersonNebuchadnezzarII": {
             "frame": {
-                "x": 3510,
+                "x": 3861,
                 "y": 2905,
                 "w": 350,
                 "h": 350
@@ -738,21 +746,13 @@
         },
         "PersonPlato": {
             "frame": {
-                "x": 3861,
-                "y": 2905,
-                "w": 350,
-                "h": 350
-            }
-        },
-        "PersonProtagoras": {
-            "frame": {
                 "x": 0,
                 "y": 3256,
                 "w": 350,
                 "h": 350
             }
         },
-        "PersonQinShiHuang": {
+        "PersonProtagoras": {
             "frame": {
                 "x": 351,
                 "y": 3256,
@@ -760,7 +760,7 @@
                 "h": 350
             }
         },
-        "PersonRamessesII": {
+        "PersonQinShiHuang": {
             "frame": {
                 "x": 702,
                 "y": 3256,
@@ -768,7 +768,7 @@
                 "h": 350
             }
         },
-        "PersonSargonOfAkkad": {
+        "PersonRamessesII": {
             "frame": {
                 "x": 1053,
                 "y": 3256,
@@ -776,7 +776,7 @@
                 "h": 350
             }
         },
-        "PersonSimaQian": {
+        "PersonSargonOfAkkad": {
             "frame": {
                 "x": 1404,
                 "y": 3256,
@@ -784,7 +784,7 @@
                 "h": 350
             }
         },
-        "PersonSocrates": {
+        "PersonScipioAfricanus": {
             "frame": {
                 "x": 1755,
                 "y": 3256,
@@ -792,7 +792,7 @@
                 "h": 350
             }
         },
-        "PersonSolon": {
+        "PersonSimaQian": {
             "frame": {
                 "x": 2106,
                 "y": 3256,
@@ -800,9 +800,25 @@
                 "h": 350
             }
         },
-        "PersonTangOfShang": {
+        "PersonSocrates": {
             "frame": {
                 "x": 2457,
+                "y": 3256,
+                "w": 350,
+                "h": 350
+            }
+        },
+        "PersonSolon": {
+            "frame": {
+                "x": 2808,
+                "y": 3256,
+                "w": 350,
+                "h": 350
+            }
+        },
+        "PersonTangOfShang": {
+            "frame": {
+                "x": 3159,
                 "y": 3256,
                 "w": 350,
                 "h": 350
@@ -834,8 +850,8 @@
         },
         "RomeBithynia": {
             "frame": {
-                "x": 240,
-                "y": 3607,
+                "x": 4127,
+                "y": 3256,
                 "w": 289,
                 "h": 216
             }
@@ -850,8 +866,8 @@
         },
         "RomeCappadocia": {
             "frame": {
-                "x": 3425,
-                "y": 3256,
+                "x": 240,
+                "y": 3607,
                 "w": 350,
                 "h": 213
             }
@@ -938,7 +954,7 @@
         },
         "RomeIllyricum": {
             "frame": {
-                "x": 3109,
+                "x": 3811,
                 "y": 3256,
                 "w": 315,
                 "h": 255

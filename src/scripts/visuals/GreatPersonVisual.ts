@@ -35,14 +35,9 @@ export function greatPersonSprite(greatPerson: GreatPerson, context: ISceneConte
 
    const bg = new Sprite(textures.GreatPersonBackground);
 
-   const ageText = bg.addChild(makeText("Placeholder", 30, 0x34495e));
-   ageText.anchor.set(0.5, 0.5);
-   ageText.alpha = 0.8;
-   ageText.position.set(bg.width / 2, 40);
-
    const frame = bg.addChild(new Sprite(textures.GreatPersonFrame));
    frame.anchor.set(0.5, 0.5);
-   frame.position.set(bg.width / 2, 250);
+   frame.position.set(bg.width / 2, 225);
 
    const sprite = frame.addChild(new Sprite(textures[`Person${greatPerson}`]));
    const graphics = sprite.addChild(new SmoothGraphics());
@@ -76,7 +71,7 @@ export function greatPersonImage(greatPerson: GreatPerson, context: ISceneContex
       return cache;
    }
    const canvas = context.app.renderer.plugins.extract.canvas(
-      greatPersonSprite(greatPerson, context)
+      greatPersonSprite(greatPerson, context),
    ) as HTMLCanvasElement;
    const dataURL = canvas.toDataURL();
    greatPersonImageCache[greatPerson] = dataURL;

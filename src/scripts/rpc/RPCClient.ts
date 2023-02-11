@@ -1,6 +1,6 @@
 import { rpcClient } from "typed-rpc";
 import { v4 } from "uuid";
-import type { IPCService } from "../../../electron/src/ipc";
+import type { IPCService } from "../../../electron/src/IPCService";
 import { IChat, IChatMessage, MessageType } from "../../../server/src/Database";
 import { ServerImpl } from "../../../server/src/Server";
 import { hasIPCBridge, IPCClient } from "../native/IPCClient";
@@ -15,17 +15,36 @@ export const client = rpcClient<ServerImpl>("http://localhost:8000/rpc", {
    },
 });
 
-const ipcClient = IPCClient<IPCService>();
+export const ipcClient = IPCClient<IPCService>();
+
+let handle = "Offline";
+let isAuthenticated = false;
+export function getHandle() {
+   return handle;
+}
+
+export async function changeHandle(newHandle: string) {
+   await client.changeHandle(newHandle);
+   handle = newHandle;
+}
 
 export async function signIn() {
-   if (hasIPCBridge()) {
-      const appId = await ipcClient.getAppID();
-      const ticket = await ipcClient.getAuthSessionTicket();
-      sessionId = await client.signIn({ platform: "steam", appId, ticket });
-   } else {
+   try {
+      if (hasIPCBridge()) {
+         const appId = await ipcClient.getAppID();
+         const ticket = await ipcClient.getAuthSessionTicket();
+         sessionId = await client.signIn({ platform: "steam", appId, ticket });
+         handle = await client.getHandle();
+         isAuthenticated = true;
+      } else {
+         sessionId = v4();
+      }
+   } catch (error) {
       sessionId = v4();
+      console.error(error);
+   } finally {
+      connectWebSocket();
    }
-   connectWebSocket();
 }
 
 export const OnChatMessage = new TypedEvent<IChat[]>();
