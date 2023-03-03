@@ -1,6 +1,22 @@
 import { L, t } from "../utilities/i18n";
 
 export class GreatPersonDefinitions {
+   Cincinnatus: IGreatPersonDefinition = {
+      name: () => t(L.Cincinnatus),
+      desc: () => t(L.CincinnatusDesc),
+      value: (level) => level,
+      maxLevel: Infinity,
+      time: "c. 500s BC",
+   };
+
+   ScipioAfricanus: IGreatPersonDefinition = {
+      name: () => t(L.ScipioAfricanus),
+      desc: () => t(L.ScipioAfricanusDesc),
+      value: (level) => level,
+      maxLevel: Infinity,
+      time: "c. 200s BC",
+   };
+
    // Hammurabi: IGreatPersonDefinition = {
    //    name: () => t(L.Hammurabi),
    //    time: "c. 1800s BC",
@@ -81,12 +97,6 @@ export class GreatPersonDefinitions {
    //    time: "c. 500s BC",
    // };
 
-   Cincinnatus: IGreatPersonDefinition = {
-      name: () => t(L.Cincinnatus),
-      desc: () => t(L.CincinnatusDesc),
-      time: "c. 500s BC",
-   };
-
    // Socrates: IGreatPersonDefinition = {
    //    name: () => t(L.Socrates),
    //    time: "c. 400s BC",
@@ -132,11 +142,6 @@ export class GreatPersonDefinitions {
    //    time: "c. 200s BC",
    // };
 
-   // ScipioAfricanus: IGreatPersonDefinition = {
-   //    name: () => t(L.ScipioAfricanus),
-   //    time: "c. 200s BC",
-   // };
-
    // Hannibal: IGreatPersonDefinition = {
    //    name: () => t(L.Hannibal),
    //    time: "c. 200s BC",
@@ -178,5 +183,7 @@ export type GreatPerson = keyof GreatPersonDefinitions;
 export interface IGreatPersonDefinition {
    name: () => string;
    desc: () => string;
+   value: (level: number) => number;
    time: string;
+   maxLevel: number;
 }

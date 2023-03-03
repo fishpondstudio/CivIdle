@@ -199,8 +199,8 @@ function ChooseGreatPersonModal() {
                      src={greatPersonImage("Cincinnatus", Singleton().sceneManager.getContext())}
                      style={{ width: "100%" }}
                   />
-                  <div className="sep5"></div>
-                  {t(L.CincinnatusDesc)}
+                  <div className="sep5" />
+                  {t(L.CincinnatusDesc, { level: 1 })}
                </div>
                <div style={{ width: "5px" }} />
                <div className="inset-shallow white p10 f1 text-center">
@@ -208,8 +208,8 @@ function ChooseGreatPersonModal() {
                      src={greatPersonImage("Cincinnatus", Singleton().sceneManager.getContext())}
                      style={{ width: "100%" }}
                   />
-                  <div className="sep5"></div>
-                  {t(L.CincinnatusDesc)}
+                  <div className="sep5" />
+                  {t(L.CincinnatusDesc, { level: 1 })}
                </div>
                <div style={{ width: "5px" }} />
                <div className="inset-shallow white p10 f1 text-center">
@@ -217,8 +217,8 @@ function ChooseGreatPersonModal() {
                      src={greatPersonImage("Cincinnatus", Singleton().sceneManager.getContext())}
                      style={{ width: "100%" }}
                   />
-                  <div className="sep5"></div>
-                  {t(L.CincinnatusDesc)}
+                  <div className="sep5" />
+                  {t(L.CincinnatusDesc, { level: 1 })}
                </div>
             </div>
          </div>

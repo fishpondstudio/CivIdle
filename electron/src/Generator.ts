@@ -90,20 +90,9 @@ interface IMethod {
    params: IParam[];
 }
 
-const result: string[] = ["// This file is generated", `import koffi from "koffi";`, `import path from "path";`];
+const result: string[] = ["// This file is generated", `import koffi from "koffi";`];
 
 result.push(`
-let lib;
-if (process.platform === "win32") {
-   lib = koffi.load(path.join(__dirname, "../steamworks/steam_api64.dll"));
-} else if (process.platform === "linux") {
-   lib = koffi.load(path.join(__dirname, "../steamworks/libsteam_api.so"));
-} else if (process.platform === "darwin") {
-   lib = koffi.load(path.join(__dirname, "../steamworks/libsteam_api.dylib"));
-} else {
-   throw new Error("Unsupported platform: " + process.platform);
-}
-export const SteamLib = lib;
 export type KoffiFunc<T extends (...args:any) => any> = T & {
    async: (...args: [...Parameters<T>, (err: any, result: ReturnType<T>) => void]) => void;
 };
@@ -185,20 +174,25 @@ result.push(`export type CallbackId = keyof typeof CallbackIdToStruct`);
 result.push(`export type CallbackStruct = keyof typeof CallbackStructToId`);
 
 result.push("// Functions");
+const funcBody: string[] = [];
+const funcReturn: string[] = [];
 SteamAPIDef.interfaces.forEach((i) => {
    result.push(`export interface ${i.classname} { __brand: "${i.classname}" }`);
    result.push(`koffi.opaque("${i.classname}");`);
    i.accessors
       ?.filter((a) => a.kind === "user")
       .forEach((a) => {
-         result.push(
-            `export const ${a.name_flat}: KoffiFunc<() => ${i.classname}> = lib.cdecl("${i.classname}* ${a.name_flat}()");`
+         const jsFunctionName = a.name_flat.replace("SteamAPI_", "");
+         funcBody.push(
+            `const ${jsFunctionName}: KoffiFunc<() => ${i.classname}> = SteamLib.cdecl("${i.classname}* ${a.name_flat}()");`
          );
-         result.push(`let ${i.classname}_Instance: ${i.classname} | null = null;`);
-         result.push(`export function SteamAPI_${i.classname}(): ${i.classname} {`);
-         result.push(`if (!${i.classname}_Instance) {${i.classname}_Instance = ${a.name_flat}();}`);
-         result.push(`return ${i.classname}_Instance;`);
-         result.push(`}`);
+         funcReturn.push(jsFunctionName);
+         funcBody.push(`let ${i.classname}_Instance: ${i.classname} | null = null;`);
+         funcBody.push(`const ${i.classname}: () => ${i.classname} = () => {`);
+         funcBody.push(`if (!${i.classname}_Instance) {${i.classname}_Instance = ${jsFunctionName}();}`);
+         funcBody.push(`return ${i.classname}_Instance;`);
+         funcBody.push(`}`);
+         funcReturn.push(`${i.classname}`);
       });
 
    i.methods.forEach((m: IMethod) => {
@@ -222,14 +216,27 @@ SteamAPIDef.interfaces.forEach((i) => {
       if (allValid) {
          const params = [`self: ${i.classname}`];
          m.params.forEach((p) => params.push(`${p.paramname}: ${getJSType(p.paramtype_flat ?? p.paramtype)}`));
-         result.push(
-            `export const ${m.methodname_flat}: KoffiFunc<(${params.join(", ")}) => ${getJSType(
+         const jsFunctionName = m.methodname_flat.replace("SteamAPI_", "");
+         funcBody.push(
+            `const ${jsFunctionName}: KoffiFunc<(${params.join(", ")}) => ${getJSType(
                returnType
-            )}> = lib.cdecl("${def}");`
+            )}> = SteamLib.cdecl("${def}");`
          );
+         funcReturn.push(jsFunctionName);
       }
    });
 });
+
+result.push("export function InitializeSteamInterfaces(libPath: string) {");
+result.push(`
+const SteamLib = koffi.load(libPath);
+`);
+funcReturn.push("SteamLib");
+result.push(funcBody.join("\n"));
+result.push("return {");
+result.push(funcReturn.join(","));
+result.push("};");
+result.push("}");
 
 const outputFile = path.join(__dirname, "../src/Steamworks.Generated.ts");
 writeFileSync(outputFile, result.join("\n"));
@@ -252,10 +259,10 @@ function getJSType(type: string): string {
       return "Buffer";
    }
    if (koffiTypes[t]) {
-      return isOutType(type) ? `[${koffiTypes[t]}]` : koffiTypes[t];
+      return isOutType(type) ? `${koffiTypes[t]}[]` : koffiTypes[t];
    }
    if (koffiTypes[alias[t]]) {
-      return isOutType(type) ? `[${koffiTypes[alias[t]]}]` : koffiTypes[alias[t]];
+      return isOutType(type) ? `${koffiTypes[alias[t]]}[]` : koffiTypes[alias[t]];
    }
    throw new Error(`Cannot find JS type for ${type}`);
 }

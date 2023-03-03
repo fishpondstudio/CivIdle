@@ -1,4 +1,5 @@
 import koffi from "koffi";
+import path from "path";
 import {
    CallbackId,
    CallbackIdToStruct,
@@ -6,20 +7,8 @@ import {
    EResult,
    ICallback_GetAuthSessionTicketResponse_t,
    ICallback_SteamAPICallCompleted_t,
+   InitializeSteamInterfaces,
    KoffiFunc,
-   SteamAPI_ISteamApps,
-   SteamAPI_ISteamApps_GetDLCCount,
-   SteamAPI_ISteamRemoteStorage,
-   SteamAPI_ISteamRemoteStorage_FileRead,
-   SteamAPI_ISteamRemoteStorage_FileWrite,
-   SteamAPI_ISteamRemoteStorage_GetFileSize,
-   SteamAPI_ISteamUser,
-   SteamAPI_ISteamUser_GetAuthSessionTicket,
-   SteamAPI_ISteamUser_GetSteamID,
-   SteamAPI_ISteamUtils,
-   SteamAPI_ISteamUtils_GetAppID,
-   SteamAPI_ISteamUtils_IsSteamRunningOnSteamDeck,
-   SteamLib,
 } from "./Steamworks.Generated";
 
 koffi.struct("CallbackMsg_t", {
@@ -36,19 +25,35 @@ interface ICallback_CallbackMsg_t {
    m_cubParam: number;
 }
 
-const SteamAPI_Init: KoffiFunc<() => boolean> = SteamLib.cdecl("bool SteamAPI_Init()");
-const SteamAPI_Shutdown: KoffiFunc<() => void> = SteamLib.cdecl("void SteamAPI_Shutdown()");
+let dll = "steam_api64.dll";
 
-const SteamAPI_GetHSteamPipe: KoffiFunc<() => number> = SteamLib.cdecl("HSteamPipe SteamAPI_GetHSteamPipe()");
-const SteamAPI_ManualDispatch_Init: KoffiFunc<() => void> = SteamLib.cdecl("void SteamAPI_ManualDispatch_Init()");
-const SteamAPI_ManualDispatch_RunFrame: KoffiFunc<(hSteamPipe: number) => void> = SteamLib.cdecl(
+if (process.platform === "darwin") {
+   dll = "libsteam_api.dylib";
+} else if (process.platform === "linux") {
+   dll = "libsteam_api.so";
+}
+
+const dllPath = path.resolve(path.join(__dirname, "../", "steamworks", dll));
+
+const SteamInterface = InitializeSteamInterfaces(dllPath);
+
+const SteamAPI_Init: KoffiFunc<() => boolean> = SteamInterface.SteamLib.cdecl("bool SteamAPI_Init()");
+const SteamAPI_Shutdown: KoffiFunc<() => void> = SteamInterface.SteamLib.cdecl("void SteamAPI_Shutdown()");
+
+const SteamAPI_GetHSteamPipe: KoffiFunc<() => number> = SteamInterface.SteamLib.cdecl(
+   "HSteamPipe SteamAPI_GetHSteamPipe()"
+);
+const SteamAPI_ManualDispatch_Init: KoffiFunc<() => void> = SteamInterface.SteamLib.cdecl(
+   "void SteamAPI_ManualDispatch_Init()"
+);
+const SteamAPI_ManualDispatch_RunFrame: KoffiFunc<(hSteamPipe: number) => void> = SteamInterface.SteamLib.cdecl(
    "void SteamAPI_ManualDispatch_RunFrame(HSteamPipe hSteamPipe)"
 );
 const SteamAPI_ManualDispatch_GetNextCallback: KoffiFunc<(hSteamPipe: number, pCallbackMsg: object) => boolean> =
-   SteamLib.cdecl(
+   SteamInterface.SteamLib.cdecl(
       "bool SteamAPI_ManualDispatch_GetNextCallback(HSteamPipe hSteamPipe, _Out_ CallbackMsg_t *pCallbackMsg)"
    );
-const SteamAPI_ManualDispatch_FreeLastCallback: KoffiFunc<(hSteamPipe: number) => void> = SteamLib.cdecl(
+const SteamAPI_ManualDispatch_FreeLastCallback: KoffiFunc<(hSteamPipe: number) => void> = SteamInterface.SteamLib.cdecl(
    "void SteamAPI_ManualDispatch_FreeLastCallback(HSteamPipe hSteamPipe)"
 );
 
@@ -61,7 +66,7 @@ const SteamAPI_ManualDispatch_GetAPICallResult: KoffiFunc<
       iCallbackExpected: number,
       pbFailed: [boolean]
    ) => boolean
-> = SteamLib.cdecl(
+> = SteamInterface.SteamLib.cdecl(
    "bool SteamAPI_ManualDispatch_GetAPICallResult(HSteamPipe hSteamPipe, SteamAPICall_t hSteamAPICall, _Out_ void * pCallback, int cubCallback, int iCallbackExpected, _Out_ bool *pbFailed)"
 );
 
@@ -152,39 +157,39 @@ export class SteamAPI {
                reject(new Error(result.m_eResult.toString()));
             }
          };
-         SteamAPI_ISteamUser_GetAuthSessionTicket(SteamAPI_ISteamUser(), buffer, buffer.length, length);
+         SteamInterface.ISteamUser_GetAuthSessionTicket(SteamInterface.ISteamUser(), buffer, buffer.length, length);
       });
    }
 
    getSteamID(): number {
-      return SteamAPI_ISteamUser_GetSteamID(SteamAPI_ISteamUser());
+      return SteamInterface.ISteamUser_GetSteamID(SteamInterface.ISteamUser());
    }
 
    getDLCCount(): number {
-      return SteamAPI_ISteamApps_GetDLCCount(SteamAPI_ISteamApps());
+      return SteamInterface.ISteamApps_GetDLCCount(SteamInterface.ISteamApps());
    }
 
    getAppID(): number {
-      return SteamAPI_ISteamUtils_GetAppID(SteamAPI_ISteamUtils());
+      return SteamInterface.ISteamUtils_GetAppID(SteamInterface.ISteamUtils());
    }
 
    isSteamRunningOnSteamDeck(): boolean {
-      return SteamAPI_ISteamUtils_IsSteamRunningOnSteamDeck(SteamAPI_ISteamUtils());
+      return SteamInterface.ISteamUtils_IsSteamRunningOnSteamDeck(SteamInterface.ISteamUtils());
    }
 
    getFileSize(name: string): number {
-      return SteamAPI_ISteamRemoteStorage_GetFileSize(SteamAPI_ISteamRemoteStorage(), name);
+      return SteamInterface.ISteamRemoteStorage_GetFileSize(SteamInterface.ISteamRemoteStorage(), name);
    }
 
    // readFileContent(name: string): Promise<string> {
-   //    const handle = SteamAPI_ISteamRemoteStorage_FileReadAsync(
+   //    const handle = ISteamRemoteStorage_FileReadAsync(
    //       this._steamRemoteStorage,
    //       name,
    //       0,
    //       this.getFileSize(name)
    //    );
    //    if (!handle) {
-   //       return Promise.reject("SteamAPI_ISteamRemoteStorage_FileReadAsync return false");
+   //       return Promise.reject("ISteamRemoteStorage_FileReadAsync return false");
    //    }
    //    if (this.callResults[handle]) {
    //       return Promise.reject(`Call result handle: ${handle} already exists`);
@@ -197,7 +202,7 @@ export class SteamAPI {
    //          }
    //          const result = koffi.decode(buffer, "RemoteStorageFileReadAsyncComplete_t");
    //          const content = Buffer.allocUnsafe(result.m_cubRead);
-   //          const success = SteamAPI_ISteamRemoteStorage_FileReadAsyncComplete(
+   //          const success = ISteamRemoteStorage_FileReadAsyncComplete(
    //             this._steamRemoteStorage,
    //             result.m_hFileReadAsync,
    //             content,
@@ -208,7 +213,7 @@ export class SteamAPI {
    //             console.log(fileText);
    //             resolve(fileText);
    //          } else {
-   //             reject(new Error("SteamAPI_ISteamRemoteStorage_FileReadAsyncComplete failed"));
+   //             reject(new Error("ISteamRemoteStorage_FileReadAsyncComplete failed"));
    //          }
    //       };
    //    });
@@ -226,8 +231,8 @@ export class SteamAPI {
             return;
          }
          const buffer = Buffer.allocUnsafe(fileSize);
-         SteamAPI_ISteamRemoteStorage_FileRead.async(
-            SteamAPI_ISteamRemoteStorage(),
+         SteamInterface.ISteamRemoteStorage_FileRead.async(
+            SteamInterface.ISteamRemoteStorage(),
             name,
             buffer,
             fileSize,
@@ -252,8 +257,8 @@ export class SteamAPI {
       }
       const promise = new Promise<boolean>((resolve, reject) => {
          const buffer = Buffer.from(new TextEncoder().encode(content));
-         SteamAPI_ISteamRemoteStorage_FileWrite.async(
-            SteamAPI_ISteamRemoteStorage(),
+         SteamInterface.ISteamRemoteStorage_FileWrite.async(
+            SteamInterface.ISteamRemoteStorage(),
             name,
             buffer,
             buffer.byteLength,

@@ -27,7 +27,7 @@ import { initializeGameState } from "./logic/GameState";
 import { ITileData } from "./logic/Tile";
 import { tickEveryFrame, tickEverySecond } from "./logic/Update";
 import { Route, RouteChangeEvent } from "./Route";
-import { signIn } from "./rpc/RPCClient";
+import { connectWebSocket } from "./rpc/RPCClient";
 import { Grid } from "./scenes/Grid";
 import { WorldScene } from "./scenes/WorldScene";
 import { ChatPanel } from "./ui/ChatPanel";
@@ -122,7 +122,7 @@ async function startGame(app: Application, resources: MainBundleAssets, textures
    };
 
    initializeSingletons(singletons);
-   await signIn();
+   await connectWebSocket();
 
    // Singleton is initialized
 

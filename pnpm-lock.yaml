@@ -1,6 +1,7 @@
 lockfileVersion: 5.4
 
 specifiers:
+  '@msgpack/msgpack': ^2.8.0
   '@pixi/assets': 6.5.9
   '@pixi/filter-outline': ^4.2.0
   '@pixi/graphics-smooth': ^0.0.30
@@ -28,12 +29,12 @@ specifiers:
   pixi-viewport: ^4.37.0
   pixi.js: 6.5.9
   prettier: 2.8.0
-  react: ^17.0.2
-  react-dom: ^17.0.2
+  react: ^18.2.0
+  react-dom: ^18.2.0
   react-modal: ^3.15.1
   rome: ^11.0.0
   sharp: ^0.31.2
-  typed-rpc: ^3.0.0
+  typed-rpc: insraq/typed-rpc
   typescript: ^4.9.3
   uuid: ^9.0.0
   vite: '4'
@@ -41,6 +42,7 @@ specifiers:
   xp.css: ^0.3.0
 
 dependencies:
+  '@msgpack/msgpack': 2.8.0
   '@pixi/assets': 6.5.9_dlegtbwspiic3es727n263wb6m
   '@pixi/filter-outline': 4.2.0_w2lcn7hofes4dna4evbtydbuee
   '@pixi/graphics-smooth': 0.0.30_lqw7xosf4opdxcojxmy5bherxe
@@ -50,10 +52,10 @@ dependencies:
   classnames: 2.3.2
   pixi-viewport: 4.38.0_2b6vrnoi2lcae47kikfquthhfu
   pixi.js: 6.5.9
-  react: 17.0.2
-  react-dom: 17.0.2_react@17.0.2
-  react-modal: 3.16.1_sfoxds7t5ydpegc3knd667wn6m
-  typed-rpc: 3.0.0
+  react: 18.2.0
+  react-dom: 18.2.0_react@18.2.0
+  react-modal: 3.16.1_biqbaboplfbrettd7655fr4n2y
+  typed-rpc: github.com/insraq/typed-rpc/70d12974f02d95de15b7bceeb455b718041af271
   uuid: 9.0.0
   xp.css: 0.3.0
 
@@ -948,6 +950,11 @@ packages:
       '@jridgewell/resolve-uri': 3.1.0
       '@jridgewell/sourcemap-codec': 1.4.14
     dev: true
+
+  /@msgpack/msgpack/2.8.0:
+    resolution: {integrity: sha512-h9u4u/jiIRKbq25PM+zymTyW6bhTzELvOoUd+AvYriWOAKpLGnIamaET3pnHYoI5iYphAHBI4ayx0MehR+VVPQ==}
+    engines: {node: '>= 10'}
+    dev: false
 
   /@nodelib/fs.scandir/2.1.5:
     resolution: {integrity: sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g==}
@@ -4191,15 +4198,14 @@ packages:
       strip-json-comments: 2.0.1
     dev: true
 
-  /react-dom/17.0.2_react@17.0.2:
-    resolution: {integrity: sha512-s4h96KtLDUQlsENhMn1ar8t2bEa+q/YAtj8pPPdIjPDGBDIVNsrD9aXNWqspUe6AzKCIG0C1HZZLqLV7qpOBGA==}
+  /react-dom/18.2.0_react@18.2.0:
+    resolution: {integrity: sha512-6IMTriUmvsjHUjNtEDudZfuDQUoWXVxKHhlEGSk81n4YFS+r/Kl99wXiwlVXtPBtJenozv2P+hxDsw9eA7Xo6g==}
     peerDependencies:
-      react: 17.0.2
+      react: ^18.2.0
     dependencies:
       loose-envify: 1.4.0
-      object-assign: 4.1.1
-      react: 17.0.2
-      scheduler: 0.20.2
+      react: 18.2.0
+      scheduler: 0.23.0
     dev: false
 
   /react-is/16.13.1:
@@ -4209,7 +4215,7 @@ packages:
     resolution: {integrity: sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==}
     dev: false
 
-  /react-modal/3.16.1_sfoxds7t5ydpegc3knd667wn6m:
+  /react-modal/3.16.1_biqbaboplfbrettd7655fr4n2y:
     resolution: {integrity: sha512-VStHgI3BVcGo7OXczvnJN7yT2TWHJPDXZWyI/a0ssFNhGZWsPmB8cF0z33ewDXq4VfYMO1vXgiv/g8Nj9NDyWg==}
     engines: {node: '>=8'}
     peerDependencies:
@@ -4218,8 +4224,8 @@ packages:
     dependencies:
       exenv: 1.2.2
       prop-types: 15.8.1
-      react: 17.0.2
-      react-dom: 17.0.2_react@17.0.2
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
       react-lifecycles-compat: 3.0.4
       warning: 4.0.3
     dev: false
@@ -4229,12 +4235,11 @@ packages:
     engines: {node: '>=0.10.0'}
     dev: true
 
-  /react/17.0.2:
-    resolution: {integrity: sha512-gnhPt75i/dq/z3/6q/0asP78D0u592D5L1pd7M8P+dck6Fu/jJeL6iVVK23fptSUZj8Vjf++7wXA8UNclGQcbA==}
+  /react/18.2.0:
+    resolution: {integrity: sha512-/3IjMdb2L9QbBdWiW5e3P2/npwMBaU9mHCSCUzNln0ZCYbcfTsGbTJrU/kGemdH2IWmB2ioZ+zkxtmq6g09fGQ==}
     engines: {node: '>=0.10.0'}
     dependencies:
       loose-envify: 1.4.0
-      object-assign: 4.1.1
     dev: false
 
   /readable-stream/1.0.34:
@@ -4456,11 +4461,10 @@ packages:
     resolution: {integrity: sha512-NqVDv9TpANUjFm0N8uM5GxL36UgKi9/atZw+x7YFnQ8ckwFGKrl4xX4yWtrey3UJm5nP1kUbnYgLopqWNSRhWw==}
     dev: true
 
-  /scheduler/0.20.2:
-    resolution: {integrity: sha512-2eWfGgAqqWFGqtdMmcL5zCMK1U8KlXv8SQFGglL3CEtd0aDVDWgeF/YoCmvln55m5zSk3J/20hTaSBeSObsQDQ==}
+  /scheduler/0.23.0:
+    resolution: {integrity: sha512-CtuThmgHNg7zIZWAXi3AsyIzA3n4xx7aNyjwC2VJldO2LMVDhFK+63xGqq6CsJH4rTAt6/M+N4GhZiDYPx9eUw==}
     dependencies:
       loose-envify: 1.4.0
-      object-assign: 4.1.1
     dev: false
 
   /semver-diff/3.1.1:
@@ -4813,10 +4817,6 @@ packages:
     engines: {node: '>=10'}
     dev: true
 
-  /typed-rpc/3.0.0:
-    resolution: {integrity: sha512-SaejFNKERSBKHLgNybZ+bUylQjqtbLU2Y4DjpGLIzibruTxzzWq0RLw2CYI2HHtGs3k0Q20y1L+ogh8de3Rahg==}
-    dev: false
-
   /typedarray-to-buffer/3.1.5:
     resolution: {integrity: sha512-zdu8XMNEDepKKR+XYOXAVPtWui0ly0NtohUscw+UmaHiAWT8hrV1rr//H6V+0DvJ3OQ19S979M0laLfX8rm82Q==}
     dependencies:
@@ -5138,3 +5138,11 @@ packages:
       spritesheet-templates: 10.5.2
       spritesmith: 3.4.0
     dev: true
+
+  github.com/insraq/typed-rpc/70d12974f02d95de15b7bceeb455b718041af271:
+    resolution: {tarball: https://codeload.github.com/insraq/typed-rpc/tar.gz/70d12974f02d95de15b7bceeb455b718041af271}
+    name: typed-rpc
+    version: 3.0.0
+    prepare: true
+    requiresBuild: true
+    dev: false

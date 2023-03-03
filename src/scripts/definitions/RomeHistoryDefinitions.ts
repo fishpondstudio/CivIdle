@@ -79,7 +79,7 @@ export class RomeHistoryDefinitions {
    Legion: IRomeHistoryDefinitions = {
       name: () => t(L.Legion),
       column: 2,
-      unlockBuilding: ["Armory", "Barrack"],
+      unlockBuilding: ["Armory", "Castrum"],
       require: ["Metallurgy"],
    };
    TribalAssembly: IRomeHistoryDefinitions = {
@@ -115,7 +115,7 @@ export class RomeHistoryDefinitions {
       additionalUpgrades: [() => t(L.TechProductionPriority)],
       buildingMultiplier: {
          Armory: { worker: 1 },
-         Barrack: { worker: 1 },
+         Castrum: { worker: 1 },
       },
       require: ["Republic", "TribalAssembly"],
    };
@@ -139,7 +139,7 @@ export class RomeHistoryDefinitions {
       name: () => t(L.FirstPunicWar),
       requireProvince: ["Sicillia", "SardiniaAndCorsica"],
       buildingModifier: { Armory: { input: { Iron: 1 }, output: { Weapon: 1 } } },
-      buildingMultiplier: { Barrack: { storage: 1 } },
+      buildingMultiplier: { Castrum: { storage: 1 } },
       column: 4,
       require: ["Dictator", "PyrrhicWar"],
    };
@@ -147,7 +147,7 @@ export class RomeHistoryDefinitions {
       name: () => t(L.IllyrianWar),
       column: 4,
       requireProvince: ["Illyricum"],
-      buildingMultiplier: { Armory: { worker: 1 }, Barrack: { worker: 1 }, Aqueduct: { output: 1, storage: 1 } },
+      buildingMultiplier: { Armory: { worker: 1 }, Castrum: { worker: 1 }, Aqueduct: { output: 1, storage: 1 } },
       require: ["Dictator"],
    };
    TribuneOfThePlebs: IRomeHistoryDefinitions = {
@@ -163,7 +163,7 @@ export class RomeHistoryDefinitions {
       buildingMultiplier: {
          Blacksmith: { input: 1, output: 1 },
          Armory: { input: 1, output: 1 },
-         Barrack: { storage: 1 },
+         Castrum: { storage: 1 },
       },
       require: ["FirstPunicWar", "IllyrianWar"],
    };
@@ -178,7 +178,7 @@ export class RomeHistoryDefinitions {
       name: () => t(L.SecondPunicWar),
       column: 6,
       requireProvince: ["Hispania"],
-      buildingMultiplier: { Armory: { input: 1, output: 1 }, Barrack: { input: 1, output: 1 } },
+      buildingMultiplier: { Armory: { input: 1, output: 1 }, Castrum: { input: 1, output: 1 } },
       require: ["FabianStrategy"],
    };
    MacedonianWar: IRomeHistoryDefinitions = {
@@ -224,7 +224,7 @@ export class RomeHistoryDefinitions {
       column: 8,
       buildingMultiplier: {
          Armory: { output: 1, storage: 1, worker: 1 },
-         Barrack: { output: 1, storage: 1, worker: 1 },
+         Castrum: { output: 1, storage: 1, worker: 1 },
       },
       require: ["ThirdPunicWar", "Optimates", "Populares"],
    };
