@@ -32,14 +32,6 @@
                 "h": 100
             }
         },
-        "BuildingBarrack": {
-            "frame": {
-                "x": 3218,
-                "y": 1040,
-                "w": 100,
-                "h": 90
-            }
-        },
         "BuildingBlacksmith": {
             "frame": {
                 "x": 3016,
@@ -66,7 +58,7 @@
         },
         "BuildingBrandenburgGate": {
             "frame": {
-                "x": 3319,
+                "x": 3218,
                 "y": 1040,
                 "w": 100,
                 "h": 90
@@ -78,6 +70,14 @@
                 "y": 1562,
                 "w": 100,
                 "h": 100
+            }
+        },
+        "BuildingCastrum": {
+            "frame": {
+                "x": 3319,
+                "y": 1040,
+                "w": 100,
+                "h": 90
             }
         },
         "BuildingChichenItza": {

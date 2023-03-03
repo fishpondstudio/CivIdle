@@ -94,8 +94,8 @@ export class BuildingDefinitions {
       construction: { Tool: 2, Stone: 2 },
    };
 
-   Barrack: IBuildingDefinition = {
-      name: () => t(L.Barrack),
+   Castrum: IBuildingDefinition = {
+      name: () => t(L.Castrum),
       input: { Weapon: 2 },
       output: { Legion: 1 },
       construction: { Weapon: 2, Stone: 2 },

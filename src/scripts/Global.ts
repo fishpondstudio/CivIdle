@@ -1,8 +1,7 @@
 import { Config } from "./logic/Constants";
 import { GameOptions, GameState, SavedGame } from "./logic/GameState";
 import { ITileData, makeBuilding } from "./logic/Tile";
-import { hasIPCBridge } from "./native/IPCClient";
-import { ipcClient } from "./rpc/RPCClient";
+import { hasIPCBridge, ipcClient } from "./rpc/RPCClient";
 import { Grid } from "./scenes/Grid";
 import { idbClear, idbGet, idbSet } from "./utilities/BrowserStorage";
 import { forEach } from "./utilities/Helper";
