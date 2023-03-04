@@ -8,3 +8,5 @@ jobs:
     steps:
       - run: npm run release
         working-directory: /home/insraq/CivIdle
+        env:
+          STEAMWORKS_PATH: /home/insraq/steamworks/tools/ContentBuilder/
