@@ -7,4 +7,4 @@ jobs:
     runs-on: [self-hosted]
     steps:
       - run: npm run release
-      - working-directory: /home/insraq/CivIdle
+        working-directory: /home/insraq/CivIdle
