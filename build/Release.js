@@ -6,11 +6,12 @@ console.log("========== Building CivIdle ==========");
 
 const rootPath = path.resolve(path.join(__dirname, "../"));
 
-run(`npm run build`, rootPath);
+cmd(`npm run build`, rootPath);
 
 console.log("========== Building Electron ==========");
 
-run(`npm run package -- --platform=win32`, path.join(rootPath, "electron"));
+fs.copySync(path.join(rootPath, "dist"), path.join(rootPath, "electron", "dist"));
+cmd(`npm run package -- --platform=win32`, path.join(rootPath, "electron"));
 
 console.log("========== Uploading to Steam ==========");
 
@@ -24,9 +25,12 @@ fs.copySync(
    path.join(process.env.STEAMWORKS_PATH, "cividle-win32-x64")
 );
 
-run(path.join(process.env.STEAMWORKS_PATH, "cividle.sh"), process.env.STEAMWORKS_PATH);
+cmd(
+   path.join(process.env.STEAMWORKS_PATH, "builder_linux", "steamcmd.sh") + " +runscript ../cividle.txt",
+   process.env.STEAMWORKS_PATH
+);
 
-function run(command, cwd = null) {
+function cmd(command, cwd = null) {
    console.log(`>> Command: ${command} (CWD: ${cwd})`);
    execSync(command, { stdio: "inherit", cwd: cwd });
 }

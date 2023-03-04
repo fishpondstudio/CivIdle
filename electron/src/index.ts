@@ -57,6 +57,6 @@ app.on("window-all-closed", () => {
 });
 
 function quit() {
-   // SteamAPI.shutdown();
+   SteamAPI.shutdown();
    app.quit();
 }
