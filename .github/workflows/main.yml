@@ -10,13 +10,9 @@ jobs:
           git pull
           pnpm install
         working-directory: /home/insraq/CivIdle      
-      - run: |
-          git pull
-          npm install
+      - run: npm install
         working-directory: /home/insraq/CivIdle/electron
-      - run: |
-          git pull
-          npm install
+      - run: npm install
         working-directory: /home/insraq/CivIdle/server
       - run: npm run release
         working-directory: /home/insraq/CivIdle
