@@ -167,7 +167,7 @@ export function HeadquarterBuildingBody({ gameState, xy }: IBuildingComponentPro
                   <b>{getHandle()}</b>
                </div>
                <div>
-                  <button onClick={() => ShowModal.emit(<ChangePlayerHandleModal />)}>{t(L.ChangePlayerHandle)}</button>
+                  {/* <button onClick={() => ShowModal.emit(<ChangePlayerHandleModal />)}>{t(L.ChangePlayerHandle)}</button> */}
                </div>
             </div>
             <div className="text-desc text-small">{t(L.ChangePlayerHandledDesc)}</div>
