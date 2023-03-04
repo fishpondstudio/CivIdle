@@ -6,6 +6,14 @@ jobs:
   run-script:
     runs-on: [self-hosted]
     steps:
+      - run: |
+          git pull
+          pnpm install
+        working-directory: /home/insraq/CivIdle      
+      - run: npm install
+        working-directory: /home/insraq/CivIdle/electron
+      - run: npm install
+        working-directory: /home/insraq/CivIdle/server
       - run: npm run release
         working-directory: /home/insraq/CivIdle
         env:
