@@ -8,7 +8,7 @@ import { ServerImpl } from "../../../server/src/Server";
 import { makeObservableHook } from "../utilities/Hook";
 import { TypedEvent } from "../utilities/TypedEvent";
 
-const serverAddress = "localhost:8000";
+const serverAddress = import.meta.env.DEV ? "localhost:8000" : "api.cividle.com";
 
 export function hasIPCBridge() {
    return typeof IPCBridge !== "undefined";
