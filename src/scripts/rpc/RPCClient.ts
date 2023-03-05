@@ -8,7 +8,8 @@ import { ServerImpl } from "../../../server/src/Server";
 import { makeObservableHook } from "../utilities/Hook";
 import { TypedEvent } from "../utilities/TypedEvent";
 
-const serverAddress = import.meta.env.DEV ? "localhost:8000" : "api.cividle.com";
+// const serverAddress = import.meta.env.DEV ? "ws://localhost:8000" : "wss://api.cividle.com";
+const serverAddress = "wss://api.cividle.com";
 
 export function hasIPCBridge() {
    return typeof IPCBridge !== "undefined";
@@ -75,9 +76,9 @@ export async function connectWebSocket() {
    if (hasIPCBridge()) {
       const appId = await ipcClient.getAppID();
       const ticket = await ipcClient.getAuthSessionTicket();
-      ws = new WebSocket(`ws://${serverAddress}/?appId=${appId}&ticket=${ticket}&platform=steam`);
+      ws = new WebSocket(`${serverAddress}/?appId=${appId}&ticket=${ticket}&platform=steam`);
    } else {
-      ws = new WebSocket(`ws://${serverAddress}/?platform=web&ticket=${v4()}`);
+      ws = new WebSocket(`${serverAddress}/?platform=web&ticket=${v4()}`);
    }
 
    ws.binaryType = "arraybuffer";
