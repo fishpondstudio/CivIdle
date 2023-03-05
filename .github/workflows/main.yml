@@ -15,7 +15,8 @@ jobs:
       - run: | 
           npm install
           npm run build
-          sudo service cividle restart
+          sudo systemctl restart cividle
+          sudo systemctl status cividle
         working-directory: /home/insraq/CivIdle/server
       - run: npm run release
         working-directory: /home/insraq/CivIdle
