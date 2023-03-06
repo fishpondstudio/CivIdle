@@ -6,10 +6,10 @@ import { getHandle } from "../rpc/RPCClient";
 import { TechTreeScene } from "../scenes/TechTreeScene";
 import { formatPercent } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
-import { greatPersonImage } from "../visuals/GreatPersonVisual";
 import { IBuildingComponentProps } from "./BuildingPage";
 import { BuildingProduceComponent } from "./BuildingProduceComponent";
 import { BuildingStorageComponent } from "./BuildingStorageComponent";
+import { ChooseGreatPersonModal } from "./ChooseGreatPersonModal";
 import { ShowModal } from "./GlobalModal";
 import { FormatNumber } from "./HelperComponents";
 
@@ -182,46 +182,6 @@ export function HeadquarterBuildingBody({ gameState, xy }: IBuildingComponentPro
                     />
                 );
             })} */}
-      </div>
-   );
-}
-
-function ChooseGreatPersonModal() {
-   return (
-      <div className="window" style={{ width: "650px" }}>
-         <div className="title-bar">
-            <div className="title-bar-text">{t(L.AGreatPersonIsBorn)}</div>
-         </div>
-         <div className="window-body">
-            <div className="row" style={{ alignItems: "stretch" }}>
-               <div className="inset-shallow white p10 f1 text-center">
-                  <img
-                     src={greatPersonImage("Cincinnatus", Singleton().sceneManager.getContext())}
-                     style={{ width: "100%" }}
-                  />
-                  <div className="sep5" />
-                  {t(L.CincinnatusDesc, { level: 1 })}
-               </div>
-               <div style={{ width: "5px" }} />
-               <div className="inset-shallow white p10 f1 text-center">
-                  <img
-                     src={greatPersonImage("Cincinnatus", Singleton().sceneManager.getContext())}
-                     style={{ width: "100%" }}
-                  />
-                  <div className="sep5" />
-                  {t(L.CincinnatusDesc, { level: 1 })}
-               </div>
-               <div style={{ width: "5px" }} />
-               <div className="inset-shallow white p10 f1 text-center">
-                  <img
-                     src={greatPersonImage("Cincinnatus", Singleton().sceneManager.getContext())}
-                     style={{ width: "100%" }}
-                  />
-                  <div className="sep5" />
-                  {t(L.CincinnatusDesc, { level: 1 })}
-               </div>
-            </div>
-         </div>
       </div>
    );
 }

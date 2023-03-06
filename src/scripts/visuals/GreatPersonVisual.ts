@@ -71,7 +71,7 @@ export function greatPersonImage(greatPerson: GreatPerson, context: ISceneContex
       return cache;
    }
    const canvas = context.app.renderer.plugins.extract.canvas(
-      greatPersonSprite(greatPerson, context),
+      greatPersonSprite(greatPerson, context)
    ) as HTMLCanvasElement;
    const dataURL = canvas.toDataURL();
    greatPersonImageCache[greatPerson] = dataURL;
