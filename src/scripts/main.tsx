@@ -2,7 +2,7 @@ import { Assets } from "@pixi/assets";
 import { update } from "@tweenjs/tween.js";
 import * as debug_PIXI from "pixi.js";
 import { Application, Spritesheet } from "pixi.js";
-import ReactDOM from "react-dom";
+import { createRoot } from "react-dom/client";
 import "../css/Main.css";
 import altasDef from "../images/textures.json";
 import atlas from "../images/textures.png";
@@ -31,17 +31,16 @@ import { connectWebSocket } from "./rpc/RPCClient";
 import { Grid } from "./scenes/Grid";
 import { WorldScene } from "./scenes/WorldScene";
 import { ChatPanel } from "./ui/ChatPanel";
-import { GlobalModal, GlobalToast } from "./ui/GlobalModal";
+import { GlobalToast } from "./ui/GlobalModal";
 import { forEach } from "./utilities/Helper";
 import { SceneManager, Textures } from "./utilities/SceneManager";
 import { TypedEvent } from "./utilities/TypedEvent";
 
 const routeChanged = new TypedEvent<RouteChangeEvent>();
 
-ReactDOM.render(<Route event={routeChanged} />, document.getElementById("game-ui"));
-ReactDOM.render(<ChatPanel />, document.getElementById("chat-panel"));
-ReactDOM.render(<GlobalModal />, document.getElementById("global-modal"));
-ReactDOM.render(<GlobalToast />, document.getElementById("global-toast"));
+createRoot(document.getElementById("game-ui")!).render(<Route event={routeChanged} />);
+createRoot(document.getElementById("chat-panel")!).render(<ChatPanel />);
+createRoot(document.getElementById("global-toast")!).render(<GlobalToast />);
 
 const canvas = document.getElementById("game-canvas");
 const mainBundle = {
