@@ -252,7 +252,7 @@ export const EN = {
    AlexanderIII: "Alexander III",
    Ashoka: "Ashoka",
    ScipioAfricanus: "Scipio Africanus",
-   ScipioAfricanusDesc: "Scipio Africanus",
+   ScipioAfricanusDesc: "+%{level} Castrum Production Multiplier",
    Hannibal: "Hannibal",
    QinShiHuang: "Qin Shi Huang",
    JuliusCaesar: "Julius Caesar",
