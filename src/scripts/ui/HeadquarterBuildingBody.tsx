@@ -9,8 +9,9 @@ import { L, t } from "../utilities/i18n";
 import { IBuildingComponentProps } from "./BuildingPage";
 import { BuildingProduceComponent } from "./BuildingProduceComponent";
 import { BuildingStorageComponent } from "./BuildingStorageComponent";
+import { ChangePlayerHandleModal } from "./ChangePlayerHandleModal";
 import { ChooseGreatPersonModal } from "./ChooseGreatPersonModal";
-import { ShowModal } from "./GlobalModal";
+import { showModal } from "./GlobalModal";
 import { FormatNumber } from "./HelperComponents";
 
 export function HeadquarterBuildingBody({ gameState, xy }: IBuildingComponentProps) {
@@ -167,12 +168,12 @@ export function HeadquarterBuildingBody({ gameState, xy }: IBuildingComponentPro
                   <b>{getHandle()}</b>
                </div>
                <div>
-                  {/* <button onClick={() => ShowModal.emit(<ChangePlayerHandleModal />)}>{t(L.ChangePlayerHandle)}</button> */}
+                  <button onClick={() => showModal(<ChangePlayerHandleModal />)}>{t(L.ChangePlayerHandle)}</button>
                </div>
             </div>
             <div className="text-desc text-small">{t(L.ChangePlayerHandledDesc)}</div>
          </fieldset>
-         <button onClick={() => ShowModal.emit(<ChooseGreatPersonModal />)}>Choose Great Person</button>
+         <button onClick={() => showModal(<ChooseGreatPersonModal />)}>Choose Great Person</button>
          {/* {jsxMapOf(Config.GreatPerson, (k) => {
                 return (
                     <img

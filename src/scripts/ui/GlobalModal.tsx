@@ -1,18 +1,26 @@
-import { useState } from "react";
+import { ReactNode, useState } from "react";
 import { useTypedEvent } from "../utilities/Hook";
 import { TypedEvent } from "../utilities/TypedEvent";
 
-export const ShowModal = new TypedEvent<JSX.Element>();
-export const HideModal = new TypedEvent<void>();
+const showModalEvent = new TypedEvent<ReactNode>();
+const hideModalEvent = new TypedEvent<void>();
+
+export function showModal(modal: ReactNode) {
+   showModalEvent.emit(modal);
+}
+
+export function hideModal() {
+   hideModalEvent.emit();
+}
 
 export function GlobalModal() {
-   const [content, setContent] = useState<JSX.Element | null>(null);
+   const [content, setContent] = useState<ReactNode>(null);
 
-   useTypedEvent(ShowModal, (e) => {
+   useTypedEvent(showModalEvent, (e) => {
       setContent(e);
    });
 
-   useTypedEvent(HideModal, () => {
+   useTypedEvent(hideModalEvent, () => {
       setContent(null);
    });
 
@@ -23,18 +31,22 @@ export function GlobalModal() {
    return <div className="overlay">{content}</div>;
 }
 
-export const ShowToast = new TypedEvent<string>();
-export const HideToast = new TypedEvent<void>();
+const showToastEvent = new TypedEvent<string>();
+const hideToastEvent = new TypedEvent<void>();
+
+export function showToast(toast: string) {
+   showToastEvent.emit(toast);
+}
 
 export function GlobalToast() {
    const [content, setContent] = useState<string | null>(null);
 
-   useTypedEvent(ShowToast, (e) => {
+   useTypedEvent(showToastEvent, (e) => {
       setContent(e);
       setTimeout(() => setContent(null), 3500);
    });
 
-   useTypedEvent(HideToast, (e) => {
+   useTypedEvent(hideToastEvent, (e) => {
       setContent(null);
    });
 
