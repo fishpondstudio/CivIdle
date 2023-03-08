@@ -31,7 +31,7 @@ import { connectWebSocket } from "./rpc/RPCClient";
 import { Grid } from "./scenes/Grid";
 import { WorldScene } from "./scenes/WorldScene";
 import { ChatPanel } from "./ui/ChatPanel";
-import { GlobalToast } from "./ui/GlobalModal";
+import { GlobalModal, GlobalToast } from "./ui/GlobalModal";
 import { forEach } from "./utilities/Helper";
 import { SceneManager, Textures } from "./utilities/SceneManager";
 import { TypedEvent } from "./utilities/TypedEvent";
@@ -40,6 +40,7 @@ const routeChanged = new TypedEvent<RouteChangeEvent>();
 
 createRoot(document.getElementById("game-ui")!).render(<Route event={routeChanged} />);
 createRoot(document.getElementById("chat-panel")!).render(<ChatPanel />);
+createRoot(document.getElementById("global-modal")!).render(<GlobalModal />);
 createRoot(document.getElementById("global-toast")!).render(<GlobalToast />);
 
 const canvas = document.getElementById("game-canvas");
