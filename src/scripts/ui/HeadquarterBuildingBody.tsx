@@ -2,7 +2,7 @@ import { Singleton } from "../Global";
 import { getScienceFromWorkers } from "../logic/BuildingLogic";
 import { getCurrentTechAge, getScienceAmount, getTechTree, getUnlockCost, unlockableTechs } from "../logic/TechLogic";
 import { Tick } from "../logic/TickLogic";
-import { getHandle } from "../rpc/RPCClient";
+import { getHandle, useIsConnected } from "../rpc/RPCClient";
 import { TechTreeScene } from "../scenes/TechTreeScene";
 import { formatPercent } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
@@ -27,6 +27,7 @@ export function HeadquarterBuildingBody({ gameState, xy }: IBuildingComponentPro
    const scienceAmount = getScienceAmount();
    const config = getTechTree(gameState);
    const techAge = getCurrentTechAge(gameState);
+   const connected = useIsConnected();
    return (
       <div className="window-body">
          <BuildingProduceComponent gameState={gameState} xy={xy} />
@@ -168,7 +169,9 @@ export function HeadquarterBuildingBody({ gameState, xy }: IBuildingComponentPro
                   <b>{getHandle()}</b>
                </div>
                <div>
-                  <button onClick={() => showModal(<ChangePlayerHandleModal />)}>{t(L.ChangePlayerHandle)}</button>
+                  <button disabled={!connected} onClick={() => showModal(<ChangePlayerHandleModal />)}>
+                     {t(L.ChangePlayerHandle)}
+                  </button>
                </div>
             </div>
             <div className="text-desc text-small">{t(L.ChangePlayerHandledDesc)}</div>

@@ -1,3 +1,31 @@
+@font-face {
+   font-family: "Inter";
+   font-style: normal;
+   font-weight: 400;
+   src: url(../fonts/InterTight-Medium.ttf) format("woff2");
+}
+
+@font-face {
+   font-family: "Inter";
+   font-style: normal;
+   font-weight: 700;
+   src: url(../fonts/InterTight-Bold.ttf) format("woff2");
+}
+
+@font-face {
+   font-family: "Inter";
+   font-style: italic;
+   font-weight: 700;
+   src: url(../fonts/InterTight-BoldItalic.ttf) format("woff2");
+}
+
+@font-face {
+   font-family: "Inter";
+   font-style: italic;
+   font-weight: 400;
+   src: url(../fonts/InterTight-MediumItalic.ttf) format("woff2");
+}
+
 .modern .window,
 .modern button,
 .modern input,
@@ -7,7 +35,7 @@
 .modern option,
 .modern .toast,
 .modern ul.tree-view {
-   font-family: Tahoma, sans-serif;
+   font-family: "Inter", sans-serif;
    font-size: 14px;
 }
 

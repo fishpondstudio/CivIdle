@@ -17,6 +17,14 @@ export class GreatPersonDefinitions {
       time: "c. 200s BC",
    };
 
+   JuliusCaesar: IGreatPersonDefinition = {
+      name: () => t(L.JuliusCaesar),
+      desc: () => t(L.JuliusCaesarDesc),
+      value: (level) => level,
+      maxLevel: Infinity,
+      time: "100 BC ~ 44 BC",
+   };
+
    // Hammurabi: IGreatPersonDefinition = {
    //    name: () => t(L.Hammurabi),
    //    time: "c. 1800s BC",
@@ -150,11 +158,6 @@ export class GreatPersonDefinitions {
    // QinShiHuang: IGreatPersonDefinition = {
    //    name: () => t(L.QinShiHuang),
    //    time: "c. 200s BC",
-   // };
-
-   // JuliusCaesar: IGreatPersonDefinition = {
-   //    name: () => t(L.JuliusCaesar),
-   //    time: "100 BC ~ 44 BC",
    // };
 
    // SimaQian: IGreatPersonDefinition = {

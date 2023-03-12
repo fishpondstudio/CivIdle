@@ -21,7 +21,7 @@ export function ChooseGreatPersonModal() {
                </div>
                <div style={{ width: "5px" }} />
                <div className="inset-shallow white p10 f1 text-center">
-                  <GreatPersonCard greatPerson="Cincinnatus" />
+                  <GreatPersonCard greatPerson="JuliusCaesar" />
                </div>
             </div>
          </div>
@@ -35,7 +35,7 @@ function GreatPersonCard({ greatPerson }: { greatPerson: GreatPerson }) {
       <>
          <img src={greatPersonImage(greatPerson, Singleton().sceneManager.getContext())} style={{ width: "100%" }} />
          <div className="sep5" />
-         {t(desc(), { level: 1 })}
+         {t(desc(), { value: 1 })}
       </>
    );
 }

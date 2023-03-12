@@ -1,5 +1,5 @@
+import "../../css/LoadingPage.css";
 import energyStar from "../../images/energy_star.png";
-import "./LoadingPage.css";
 
 export function LoadingPage() {
    return (

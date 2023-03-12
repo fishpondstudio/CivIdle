@@ -156,8 +156,8 @@ export function getStorageFor(xy: string, gs: GameState): IStorageResult {
       return isTransportable(k) ? prev + v : prev;
    };
    const base =
-      10 * reduceOf(getBuildingIO(xy, "input", {}, gs), accumulate, 0) +
-      100 * reduceOf(getBuildingIO(xy, "output", {}, gs), accumulate, 0);
+      100 * reduceOf(getBuildingIO(xy, "input", {}, gs), accumulate, 0) +
+      1000 * reduceOf(getBuildingIO(xy, "output", {}, gs), accumulate, 0);
    const multiplier = totalMultiplierFor(xy, "storage", gs);
    const used = reduceOf(gs.tiles[xy].building?.resources, accumulate, 0);
    return { base, multiplier, total: base * multiplier, used };
