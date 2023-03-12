@@ -1,11 +1,11 @@
-import { Singleton, notifyGameStateUpdate, saveGame } from "../Global";
 import { Building } from "../definitions/BuildingDefinitions";
 import { IUnlockableDefinition } from "../definitions/ITechDefinition";
 import { Resource } from "../definitions/ResourceDefinitions";
+import { notifyGameStateUpdate, saveGame, Singleton } from "../Global";
 import { WorldScene } from "../scenes/WorldScene";
 import { filterOf, forEach, isEmpty, keysOf, safeAdd, safePush, sizeOf, sum } from "../utilities/Helper";
-import { v2 } from "../utilities/Vector2";
 import { L, t } from "../utilities/i18n";
+import { v2 } from "../utilities/Vector2";
 import {
    addResources,
    deductResources,
@@ -37,7 +37,7 @@ export function tickEveryFrame(gs: GameState, dt: number) {
    for (const xy in gs.tiles) {
       const tile = gs.tiles[xy];
       if (tile.building != null) {
-         worldScene?.getTileVisual(xy)?.update(gs, dt);
+         worldScene?.getTile(xy)?.update(gs, dt);
       }
    }
 
@@ -296,7 +296,7 @@ export function transportResource(
    amount: number,
    workerCapacity: number,
    targetXy: string,
-   gs: GameState,
+   gs: GameState
 ) {
    const buildingPosition = Singleton().grid.xyToPosition(targetXy);
    let amountLeft = amount;
