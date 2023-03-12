@@ -8,7 +8,7 @@ export function ChangePlayerHandleModal() {
    return (
       <div className="window">
          <div className="title-bar">
-            <div className="title-bar-text">{t(L.ChangePlayerHandle)}</div>
+            <div className="title-bar-text">{t(L.PlayerHandle)}</div>
             <div className="title-bar-controls">
                <button onClick={hideModal} aria-label="Close"></button>
             </div>

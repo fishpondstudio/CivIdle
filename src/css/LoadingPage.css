@@ -2,7 +2,7 @@
    font-family: "UniVGA16";
    font-style: normal;
    font-weight: 400;
-   src: url(../../fonts/UniVGA16.woff2) format("woff2");
+   src: url(../fonts/UniVGA16.woff2) format("woff2");
 }
 
 .loading-page {
