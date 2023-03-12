@@ -13,7 +13,7 @@ import { Tick } from "./TickLogic";
 
 export function onBuildingComplete(xy: string, gs: GameState) {
    ensureTileFogOfWar(xy, gs, Singleton().grid).forEach((xy) => {
-      Singleton().sceneManager.getCurrent(WorldScene)?.getTileVisual(xy)?.reveal().catch(console.error);
+      Singleton().sceneManager.getCurrent(WorldScene)?.getTile(xy)?.reveal().catch(console.error);
    });
 
    const building = gs.tiles[xy].building;

@@ -134,8 +134,13 @@ export class WorldScene extends Scene {
       Singleton().routeTo(TilePage, { xy: key });
    }
 
-   getTileVisual(xy: string): TileVisual | undefined {
+   getTile(xy: string): TileVisual | undefined {
       return this._tiles[xy];
+   }
+
+   resetTile(xy: string): void {
+      this._tiles[xy]?.dispose();
+      this._tiles[xy] = this._viewport.addChild(new TileVisual(this, xyToPoint(xy)));
    }
 
    updateTransportVisual(gs: GameState) {
