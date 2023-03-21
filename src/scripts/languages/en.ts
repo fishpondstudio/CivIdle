@@ -464,4 +464,7 @@ export const EN = {
    ChangePlayerHandledDesc: "Your player handle can only contain 5 ~ 16 alphabets and numbers and has to be unique",
    ChangePlayerHandleTitle: "Change Your Player Handle",
    AGreatPersonIsBorn: "A Great Person Is Born",
+   BuildingName: "Name",
+   BuildingTier: "Tier",
+   BuildingCost: "Cost",
 };

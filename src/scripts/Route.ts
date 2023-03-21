@@ -3,6 +3,7 @@ import { getGameState } from "./Global";
 import { LoadingPage } from "./ui/LoadingPage";
 import { TilePage } from "./ui/TilePage";
 import { TypedEvent } from "./utilities/TypedEvent";
+import { playClick } from "./visuals/Sound";
 
 export function Route({ event }: { event: TypedEvent<RouteChangeEvent> }) {
    const [{ component, params }, setRoute] = useState<RouteChangeEvent>({ component: LoadingPage, params: {} });
@@ -13,6 +14,7 @@ export function Route({ event }: { event: TypedEvent<RouteChangeEvent> }) {
                console.log(getGameState().tiles[e.params.xy as string]);
             }
          }
+         playClick();
          setRoute(e);
       }
       event.on(handleRouteChanged);

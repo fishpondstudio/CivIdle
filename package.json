@@ -17,6 +17,7 @@
       "@pixi/assets": "6.5.9",
       "@pixi/filter-outline": "^4.2.0",
       "@pixi/graphics-smooth": "^0.0.30",
+      "@pixi/sound": "^4.3.0",
       "@pixi/ticker": "^6.5.9",
       "@pixi/utils": "^6.5.9",
       "@tweenjs/tween.js": "^18.6.4",
