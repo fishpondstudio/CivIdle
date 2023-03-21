@@ -5,6 +5,7 @@ specifiers:
   '@pixi/assets': 6.5.9
   '@pixi/filter-outline': ^4.2.0
   '@pixi/graphics-smooth': ^0.0.30
+  '@pixi/sound': ^4.3.0
   '@pixi/ticker': ^6.5.9
   '@pixi/utils': ^6.5.9
   '@tweenjs/tween.js': ^18.6.4
@@ -46,6 +47,7 @@ dependencies:
   '@pixi/assets': 6.5.9_dlegtbwspiic3es727n263wb6m
   '@pixi/filter-outline': 4.2.0_w2lcn7hofes4dna4evbtydbuee
   '@pixi/graphics-smooth': 0.0.30_lqw7xosf4opdxcojxmy5bherxe
+  '@pixi/sound': 4.3.3_ibovozuixmwpaojz5y223iwifi
   '@pixi/ticker': 6.5.9_3ywbupy267ddqakwfvxdxsi3ce
   '@pixi/utils': 6.5.9_56wmgtaor3g36gitvwiown43he
   '@tweenjs/tween.js': 18.6.4
@@ -1378,6 +1380,21 @@ packages:
       '@pixi/constants': 6.5.9
     dependencies:
       '@pixi/constants': 6.5.9
+    dev: false
+
+  /@pixi/sound/4.3.3_ibovozuixmwpaojz5y223iwifi:
+    resolution: {integrity: sha512-sLATyf9B3KKQrM43ypzYisLviuQLKdL0w73tf3ge4WwJKPAxiChC3gCIXYBaFd+6iB9/oeq6tc8zHh9HGGoRAw==}
+    engines: {node: '>=12', npm: '>=7', yarn: please-use-npm}
+    peerDependencies:
+      '@pixi/core': '>=5 <7'
+      '@pixi/loaders': '>=5 <7'
+      '@pixi/ticker': '>=5 <7'
+      '@pixi/utils': '>=5 <7'
+    dependencies:
+      '@pixi/core': 6.5.9_yc3lyad5jwyinmndak3aswu4u4
+      '@pixi/loaders': 6.5.9_w2lcn7hofes4dna4evbtydbuee
+      '@pixi/ticker': 6.5.9_3ywbupy267ddqakwfvxdxsi3ce
+      '@pixi/utils': 6.5.9_56wmgtaor3g36gitvwiown43he
     dev: false
 
   /@pixi/sprite-animated/6.5.9_ikexsnkmokgvp6waqasuk5ecke:

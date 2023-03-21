@@ -1,6 +1,5 @@
 import { Assets } from "@pixi/assets";
 import { update } from "@tweenjs/tween.js";
-import * as debug_PIXI from "pixi.js";
 import { Application, Spritesheet } from "pixi.js";
 import { createRoot } from "react-dom/client";
 import "../css/Main.css";
@@ -47,6 +46,7 @@ const canvas = document.getElementById("game-canvas");
 const mainBundle = {
    atlas,
 };
+
 export type MainBundle = keyof typeof mainBundle;
 export type MainBundleAssets = Record<MainBundle, any>;
 
@@ -56,8 +56,9 @@ if (canvas) {
       backgroundColor: BG_COLOR,
    });
    canvas.appendChild(app.view);
+   // playBeep();
    printWebglVendorInfo(app.view);
-   registerPixiInspector();
+   registerPixiInspector(app);
    Assets.addBundle("main", mainBundle);
    Assets.addBundle("font", fontBundle);
    Assets.loadBundle(["main", "font"])
@@ -150,12 +151,9 @@ function verifyBuildingTextures(textures: Textures, city: City) {
    });
 }
 
-function registerPixiInspector() {
+function registerPixiInspector(app: Application) {
    // @ts-expect-error
-   if (window.__PIXI_INSPECTOR_GLOBAL_HOOK__) {
-      // @ts-expect-error
-      window.__PIXI_INSPECTOR_GLOBAL_HOOK__.register({ PIXI: debug_PIXI });
-   }
+   globalThis.__PIXI_APP__ = app;
 }
 
 function printWebglVendorInfo(canvas: HTMLCanvasElement) {

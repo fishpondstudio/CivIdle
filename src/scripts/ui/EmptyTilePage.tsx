@@ -6,7 +6,7 @@ import { Config } from "../logic/Constants";
 import { getBuildingsByType, unlockedBuildings } from "../logic/IntraTickCache";
 import { Tick } from "../logic/TickLogic";
 import { ITileData, makeBuilding } from "../logic/Tile";
-import { jsxMapOf, keysOf, setContains } from "../utilities/Helper";
+import { jsxMapOf, keysOf, numberToRoman, setContains } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
 import { MenuComponent } from "./MenuComponent";
 
@@ -52,8 +52,9 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): JSX.Element {
                <table>
                   <thead>
                      <tr>
-                        <th>Name</th>
-                        <th className="right">Cost</th>
+                        <th>{t(L.BuildingName)}</th>
+                        <th>{t(L.BuildingTier)}</th>
+                        <th className="right">{t(L.BuildingCost)}</th>
                         <th />
                      </tr>
                   </thead>
@@ -82,6 +83,7 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): JSX.Element {
                                        ) : null}
                                     </div>
                                  </td>
+                                 <td>{numberToRoman(Config.BuildingTier[k] ?? 1)}</td>
                                  <td className="right">
                                     {jsxMapOf(getBuildingCost({ type: k, level: 1 }), (res, amount) => {
                                        return (
