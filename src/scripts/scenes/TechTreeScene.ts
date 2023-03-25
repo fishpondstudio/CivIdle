@@ -1,5 +1,4 @@
 import { SmoothGraphics } from "@pixi/graphics-smooth";
-import { Easing, Tween } from "@tweenjs/tween.js";
 import { Viewport } from "pixi-viewport";
 import { BitmapText, Container, LINE_CAP, LINE_JOIN, Rectangle } from "pixi.js";
 import { BG_COLOR } from "../Colors";
@@ -8,6 +7,8 @@ import { Singleton } from "../Global";
 import { getTechTree, isAgeUnlocked, unlockableTechs } from "../logic/TechLogic";
 import { TechPage } from "../ui/TechPage";
 import { forEach } from "../utilities/Helper";
+import Actions from "../utilities/pixi-actions/Actions";
+import { Easing } from "../utilities/pixi-actions/Easing";
 import { Scene } from "../utilities/SceneManager";
 
 const BOX_WIDTH = 300;
@@ -206,17 +207,17 @@ export class TechTreeScene extends Scene {
       }
       const targetX = this._boxPositions[tech]?.x ?? this._viewport.center.x;
       if (cutToTech === "animate") {
-         new Tween(this).to({ scrollX: targetX }, 500).easing(Easing.Quadratic.InOut).start();
+         Actions.to<TechTreeScene>(this, { scrollX: targetX }, 0.5, Easing.InOutQuad).play();
       } else if (cutToTech === "jump") {
          this.scrollX = targetX;
       }
    }
 
-   private get scrollX(): number {
+   public get scrollX(): number {
       return this._viewport.center.x;
    }
 
-   private set scrollX(value: number) {
+   public set scrollX(value: number) {
       this._viewport.moveCenter(value, this._viewport.center.y);
    }
 

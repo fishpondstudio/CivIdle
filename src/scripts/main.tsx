@@ -1,5 +1,4 @@
 import { Assets } from "@pixi/assets";
-import { update } from "@tweenjs/tween.js";
 import { Application, Spritesheet } from "pixi.js";
 import { createRoot } from "react-dom/client";
 import "../css/Main.css";
@@ -32,6 +31,7 @@ import { WorldScene } from "./scenes/WorldScene";
 import { ChatPanel } from "./ui/ChatPanel";
 import { GlobalModal, GlobalToast } from "./ui/GlobalModal";
 import { forEach } from "./utilities/Helper";
+import Actions from "./utilities/pixi-actions/Actions";
 import { SceneManager, Textures } from "./utilities/SceneManager";
 import { TypedEvent } from "./utilities/TypedEvent";
 
@@ -133,11 +133,11 @@ async function startGame(app: Application, resources: MainBundleAssets, textures
    // Singleton().sceneManager.loadScene(TechTreeScene);
 
    GameStateChanged.emit(getGameState());
-   app.ticker.add(() => {
+   app.ticker.add((frame) => {
       if (document.visibilityState !== "visible") {
          return;
       }
-      update();
+      Actions.tick(frame / app.ticker.FPS);
       tickEveryFrame(gameState, app.ticker.elapsedMS / 1000);
    });
    setInterval(tickEverySecond.bind(null, gameState), 1000);
