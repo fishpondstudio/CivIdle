@@ -8,7 +8,6 @@ specifiers:
   '@pixi/sound': ^4.3.0
   '@pixi/ticker': ^6.5.9
   '@pixi/utils': ^6.5.9
-  '@tweenjs/tween.js': ^18.6.4
   '@types/gaze': ^1.1.2
   '@types/node': ^18.7.23
   '@types/react': ^18.0.0
@@ -50,7 +49,6 @@ dependencies:
   '@pixi/sound': 4.3.3_ibovozuixmwpaojz5y223iwifi
   '@pixi/ticker': 6.5.9_3ywbupy267ddqakwfvxdxsi3ce
   '@pixi/utils': 6.5.9_56wmgtaor3g36gitvwiown43he
-  '@tweenjs/tween.js': 18.6.4
   classnames: 2.3.2
   pixi-viewport: 4.38.0_2b6vrnoi2lcae47kikfquthhfu
   pixi.js: 6.5.9
@@ -1384,7 +1382,6 @@ packages:
 
   /@pixi/sound/4.3.3_ibovozuixmwpaojz5y223iwifi:
     resolution: {integrity: sha512-sLATyf9B3KKQrM43ypzYisLviuQLKdL0w73tf3ge4WwJKPAxiChC3gCIXYBaFd+6iB9/oeq6tc8zHh9HGGoRAw==}
-    engines: {node: '>=12', npm: '>=7', yarn: please-use-npm}
     peerDependencies:
       '@pixi/core': '>=5 <7'
       '@pixi/loaders': '>=5 <7'
@@ -1698,10 +1695,6 @@ packages:
     dependencies:
       defer-to-connect: 1.1.3
     dev: true
-
-  /@tweenjs/tween.js/18.6.4:
-    resolution: {integrity: sha512-lB9lMjuqjtuJrx7/kOkqQBtllspPIN+96OvTCeJ2j5FEzinoAXTdAMFnDAQT1KVPRlnYfBrqxtqP66vDM40xxQ==}
-    dev: false
 
   /@types/css-font-loading-module/0.0.7:
     resolution: {integrity: sha512-nl09VhutdjINdWyXxHWN/w9zlNCfr60JUqJbd24YXUuCwgeL0TpFSdElCwb6cxfB6ybE19Gjj4g0jsgkXxKv1Q==}

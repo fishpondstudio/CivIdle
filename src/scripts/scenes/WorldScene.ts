@@ -139,7 +139,7 @@ export class WorldScene extends Scene {
    }
 
    resetTile(xy: string): void {
-      this._tiles[xy]?.dispose();
+      this._tiles[xy]?.destroy({ children: true });
       this._tiles[xy] = this._viewport.addChild(new TileVisual(this, xyToPoint(xy)));
    }
 

@@ -1,4 +1,3 @@
-import { Easing, Tween } from "@tweenjs/tween.js";
 import { Viewport } from "pixi-viewport";
 import { BitmapText, Container, IPointData, Sprite } from "pixi.js";
 import { Resource } from "../definitions/ResourceDefinitions";
@@ -8,14 +7,13 @@ import { getBuildingLevelLabel, getBuildingTexture, getTileTexture } from "../lo
 import { GameState } from "../logic/GameState";
 import { ITileData } from "../logic/Tile";
 import { clamp, forEach, layoutCenter, pointToXy, sizeOf } from "../utilities/Helper";
+import Actions from "../utilities/pixi-actions/Actions";
+import Action from "../utilities/pixi-actions/actions/Action";
+import { Easing } from "../utilities/pixi-actions/Easing";
 import { v2 } from "../utilities/Vector2";
 import { WorldScene } from "./WorldScene";
 
-interface IDisposable {
-   dispose: () => void;
-}
-
-export class TileVisual extends Container implements IDisposable {
+export class TileVisual extends Container {
    private readonly _world: WorldScene;
    private _fog: Sprite;
    private _spinner: Sprite;
@@ -24,12 +22,10 @@ export class TileVisual extends Container implements IDisposable {
    private readonly _deposits: Partial<Record<Resource, Sprite>> = {};
    private readonly _tile: ITileData;
    private readonly _construction: Sprite;
-   private readonly _constructionTween: Tween<Sprite>;
-   private _constructionTweenPlaying = false;
-   private _upgradeTweenPlaying = false;
    private readonly _upgrade: Sprite;
-   private readonly _upgradeTween: Tween<Sprite>;
    private readonly _level: BitmapText;
+   private _constructionAnimation: Action;
+   private _upgradeAnimation: Action;
 
    constructor(world: WorldScene, grid: IPointData) {
       super();
@@ -53,10 +49,13 @@ export class TileVisual extends Container implements IDisposable {
       this._construction.anchor.set(0, 1);
       this._construction.scale.set(0.5);
       this._construction.visible = false;
-      this._constructionTween = new Tween(this._construction).to({ angle: 45 }, 500).easing(Easing.Bounce.Out);
-      const tween1 = new Tween(this._construction).to({ angle: 0 }, 500).easing(Easing.Sinusoidal.Out);
-      this._constructionTween.chain(tween1);
-      tween1.chain(this._constructionTween);
+
+      this._constructionAnimation = Actions.repeat(
+         Actions.sequence(
+            Actions.to(this._construction, { angle: 45 }, 0.5, Easing.OutBounce),
+            Actions.to(this._construction, { angle: 0 }, 0.5, Easing.OutSine)
+         )
+      );
 
       this._upgrade = this.addChild(new Sprite(textures.Upgrade));
       this._upgrade.position.set(-25, 10);
@@ -64,10 +63,17 @@ export class TileVisual extends Container implements IDisposable {
       this._upgrade.scale.set(0.5);
       this._upgrade.alpha = 0;
       this._upgrade.visible = false;
-      this._upgradeTween = new Tween(this._upgrade).to({ y: 0, alpha: 1 }, 750).easing(Easing.Sinusoidal.In);
-      const tween2 = new Tween(this._upgrade).to({ y: -10, alpha: 0 }, 750).easing(Easing.Sinusoidal.Out);
-      this._upgradeTween.chain(tween2);
-      tween2.chain(this._upgradeTween);
+
+      this._upgradeAnimation = Actions.repeat(
+         Actions.sequence(
+            Actions.runFunc(() => {
+               this._upgrade.y = 10;
+               this._upgrade.alpha = 0;
+            }),
+            Actions.to(this._upgrade, { y: 0, alpha: 1 }, 0.75, Easing.InSine),
+            Actions.to(this._upgrade, { y: -10, alpha: 0 }, 0.75, Easing.OutSine)
+         )
+      );
 
       this._level = this.addChild(
          new BitmapText("", {
@@ -100,6 +106,7 @@ export class TileVisual extends Container implements IDisposable {
 
       this.update(getGameState(), 0);
       world.viewport.on("zoomed-end", this.onZoomed, this);
+      this.on("destroy", this.onDestroyed);
    }
 
    public updateLayout() {
@@ -131,21 +138,17 @@ export class TileVisual extends Container implements IDisposable {
       });
    }
 
-   public dispose() {
+   public onDestroyed() {
       this._world.viewport.off("zoomed-end", this.onZoomed, this);
-      this._constructionTween.stop();
-      this._upgradeTween.stop();
-      this.destroy({ children: true });
    }
 
    public async reveal(): Promise<TileVisual> {
       this.updateLayout();
       return await new Promise((resolve) => {
-         new Tween(this._fog)
-            .to({ alpha: 0, scale: { x: 0.8, y: 0.8 } }, 1000)
-            .easing(Easing.Quadratic.In)
-            .onComplete(() => resolve(this))
-            .start();
+         Actions.sequence(
+            Actions.to(this._fog, { alpha: 0, scale: { x: 0.8, y: 0.8 } }, 1, Easing.InQuad),
+            Actions.runFunc(() => resolve(this))
+         ).play();
       });
    }
 
@@ -210,24 +213,20 @@ export class TileVisual extends Container implements IDisposable {
    }
 
    private toggleConstructionTween(on: boolean) {
-      if (on && !this._constructionTweenPlaying) {
-         this._constructionTweenPlaying = true;
-         this._constructionTween.start();
+      if (on && !this._constructionAnimation.isPlaying()) {
+         this._constructionAnimation.play();
       }
       if (!on) {
-         this._constructionTweenPlaying = false;
-         this._constructionTween.stop();
+         this._constructionAnimation.stop();
       }
    }
 
    private toggleUpgradeTween(on: boolean) {
-      if (on && !this._upgradeTweenPlaying) {
-         this._upgradeTweenPlaying = true;
-         this._upgradeTween.start();
+      if (on && !this._upgradeAnimation.isPlaying()) {
+         this._upgradeAnimation.play();
       }
       if (!on) {
-         this._upgradeTweenPlaying = false;
-         this._upgradeTween.stop();
+         this._upgradeAnimation.stop();
       }
    }
 }
