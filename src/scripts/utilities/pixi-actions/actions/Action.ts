@@ -1,9 +1,17 @@
 import Actions from "../Actions";
 
+let id = 0;
+
 export default abstract class Action {
-   done = false;
-   queued: Array<Action> = [];
+   public done = false;
+   public queued: Array<Action> = [];
+   public readonly id: number;
+
    abstract tick(progress: number): boolean;
+
+   constructor() {
+      this.id = ++id;
+   }
 
    queue(after: Action) {
       this.queued.push(after);

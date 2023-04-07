@@ -8,7 +8,7 @@ export class TargetAction<T extends Record<string, any>> extends Action {
    private readonly targetValue: Partial<T>;
    private time = 0;
    private readonly seconds: number;
-   private readonly target: T;
+   public readonly target: T;
 
    constructor(target: T, to: Partial<T>, seconds: number, interpolation: EasingFunction = Easing.Linear) {
       super();

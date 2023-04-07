@@ -70,8 +70,8 @@ export class TileVisual extends Container {
                this._upgrade.y = 10;
                this._upgrade.alpha = 0;
             }),
-            Actions.to(this._upgrade, { y: 0, alpha: 1 }, 0.75, Easing.InSine),
-            Actions.to(this._upgrade, { y: -10, alpha: 0 }, 0.75, Easing.OutSine)
+            Actions.to(this._upgrade, { y: 0, alpha: 1 }, 0.5, Easing.OutSine),
+            Actions.to(this._upgrade, { y: -10, alpha: 0 }, 0.5, Easing.InSine)
          )
       );
 

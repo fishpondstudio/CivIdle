@@ -1,5 +1,4 @@
 import { L, t } from "../utilities/i18n";
-import { Building } from "./BuildingDefinitions";
 import { ITechTree, IUnlockableDefinition, IUnlockableGroup } from "./ITechDefinition";
 import { Deposit } from "./ResourceDefinitions";
 import { RomeHistoryDefinitions, RomeHistoryStageDefinitions } from "./RomeHistoryDefinitions";
@@ -17,9 +16,6 @@ export class CityDefinitions {
          Stone: 0.02,
       },
       size: 40,
-      buildingTexture: {
-         Headquarter: "BuildingHeadquarterRome",
-      },
       techTree: "Rome",
       unlockable: { ...Object.freeze(new RomeProvinceDefinitions()) },
    };
@@ -33,9 +29,6 @@ export class CityDefinitions {
          Stone: 0.02,
       },
       size: 40,
-      buildingTexture: {
-         Headquarter: "BuildingHeadquarterRome",
-      },
       techTree: "Rome",
       unlockable: {},
    };
@@ -74,7 +67,6 @@ interface ICityDefinition {
    deposits: Record<Deposit, number>;
    size: number;
    name: () => string;
-   buildingTexture: Partial<Record<Building, string>>;
    techTree: keyof typeof TechTree;
    unlockable: Record<string, IUnlockableDefinition>;
 }
