@@ -11,11 +11,7 @@ import { Multiplier, MultiplierWithSource, Tick } from "./TickLogic";
 import { IBuildingData, IHaveTypeAndLevel } from "./Tile";
 
 export function getBuildingTexture(b: Building, textures: Textures, city: City) {
-   const override = Config.City[city].buildingTexture[b];
-   if (override) {
-      return textures[override];
-   }
-   return textures[`Building${b}`];
+   return textures[`Building${b}_${city}`] ?? textures[`Building${b}`];
 }
 
 export function getTileTexture(r: Resource, textures: Textures) {

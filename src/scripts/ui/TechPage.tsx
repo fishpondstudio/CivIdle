@@ -6,7 +6,7 @@ import { notifyGameStateUpdate, Singleton, useGameState } from "../Global";
 import { Config } from "../logic/Constants";
 import { onUnlockableUnlocked } from "../logic/LogicCallback";
 import { getResourceAmount, trySpendResources } from "../logic/ResourceLogic";
-import { getTechTree } from "../logic/TechLogic";
+import { getTechTree, unlockTech } from "../logic/TechLogic";
 import { RomeProvinceScene } from "../scenes/RomeProvinceScene";
 import { TechTreeScene } from "../scenes/TechTreeScene";
 import { forEach, jsxMapOf, reduceOf } from "../utilities/Helper";
@@ -116,7 +116,7 @@ export function TechPage({ id, type }: { id: string; type?: keyof typeof Unlocka
                               if (!trySpendResources(unlockCost, gs)) {
                                  return;
                               }
-                              gs.unlocked[tech] = true;
+                              unlockTech(tech, gs);
                               notifyGameStateUpdate();
                               onUnlockableUnlocked(tech, type, gs);
                            }}

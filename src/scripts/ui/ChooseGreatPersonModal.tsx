@@ -12,15 +12,15 @@ export function ChooseGreatPersonModal() {
          </div>
          <div className="window-body">
             <div className="row" style={{ alignItems: "stretch" }}>
-               <div className="inset-shallow white p10 f1 text-center">
+               <div className="inset-shallow white p10 f1 text-center pointer">
                   <GreatPersonCard greatPerson="Cincinnatus" />
                </div>
                <div style={{ width: "5px" }} />
-               <div className="inset-shallow white p10 f1 text-center">
+               <div className="inset-shallow white p10 f1 text-center pointer">
                   <GreatPersonCard greatPerson="ScipioAfricanus" />
                </div>
                <div style={{ width: "5px" }} />
-               <div className="inset-shallow white p10 f1 text-center">
+               <div className="inset-shallow white p10 f1 text-center pointer">
                   <GreatPersonCard greatPerson="JuliusCaesar" />
                </div>
             </div>

@@ -70,12 +70,13 @@ export function unlockTech(tech: string, gs: GameState): void {
    const td = getTechTree(gs).definitions[tech];
    td.revealDeposit?.forEach((deposit) => {
       const tileCount = getDepositTileCount(deposit, gs);
-      const tiles = shuffle(keysOf(gs.tiles)).slice(0, tileCount);
+      const depositTiles = shuffle(keysOf(gs.tiles)).slice(0, tileCount);
       const exploredEmptyTiles = Object.values(gs.tiles).filter((t) => t.explored && !t.building && isEmpty(t.deposit));
-      if (tiles.every((xy) => !gs.tiles[xy].explored) && exploredEmptyTiles.length > 0) {
-         tiles[0] = shuffle(exploredEmptyTiles)[0].xy;
+      // We want to guarantee at least one of the deposit tile is spawned on explored tile.
+      if (depositTiles.every((xy) => !gs.tiles[xy].explored) && exploredEmptyTiles.length > 0) {
+         depositTiles[0] = shuffle(exploredEmptyTiles)[0].xy;
       }
-      tiles.forEach((xy) => (gs.tiles[xy].deposit[deposit] = true));
+      depositTiles.forEach((xy) => (gs.tiles[xy].deposit[deposit] = true));
    });
 }
 

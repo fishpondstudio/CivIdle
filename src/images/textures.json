@@ -208,20 +208,20 @@
                 "h": 70
             }
         },
+        "BuildingHeadquarter_Rome": {
+            "frame": {
+                "x": 3766,
+                "y": 1562,
+                "w": 100,
+                "h": 100
+            }
+        },
         "BuildingHeadquarter": {
             "frame": {
                 "x": 3723,
                 "y": 1040,
                 "w": 100,
                 "h": 90
-            }
-        },
-        "BuildingHeadquarterRome": {
-            "frame": {
-                "x": 3766,
-                "y": 1562,
-                "w": 100,
-                "h": 100
             }
         },
         "BuildingHimejiCastle": {

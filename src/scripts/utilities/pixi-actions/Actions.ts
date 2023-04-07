@@ -9,7 +9,7 @@ import { TargetAction } from "./actions/TargetAction";
 import { Easing, EasingFunction } from "./Easing";
 
 export default class Actions {
-   static actions: Array<Action> = [];
+   static actions: Record<number, Action> = {};
 
    static to<T extends Record<string, any>>(
       target: T,
@@ -47,39 +47,33 @@ export default class Actions {
    }
 
    static play(action: Action) {
-      this.actions.push(action);
+      this.actions[action.id] = action;
    }
 
    static isPlaying(action: Action): boolean {
-      return this.actions.indexOf(action) >= 0;
+      return !!this.actions[action.id];
    }
 
    static pause(action: Action) {
-      const index = this.actions.indexOf(action);
-      if (index >= 0) {
-         this.actions.splice(index, 1);
-      }
+      delete this.actions[action.id];
    }
 
    static clear(target: object) {
-      for (let i = this.actions.length - 1; i >= 0; i--) {
-         const action: Action = this.actions[i];
-
-         if (!target || (action instanceof TargetAction && action.target == target)) {
-            this.actions.splice(i, 1);
+      for (const id in this.actions) {
+         const action = this.actions[id];
+         if (action instanceof TargetAction && action.target == target) {
+            delete this.actions[id];
          }
       }
    }
 
    static tick(delta: number) {
-      for (let i = this.actions.length - 1; i >= 0; i--) {
-         const action: Action = this.actions[i];
-         // Otherwise, we tick the action
+      for (const id in this.actions) {
+         const action = this.actions[id];
          const done = action.tick(delta);
          if (done) {
             action.done = true;
-            this.actions.splice(i, 1);
-
+            delete this.actions[id];
             // Are there any queued events?
             for (let j = 0; j < action.queued.length; j++) {
                Actions.play(action.queued[j]);
