@@ -1,17 +1,21 @@
+import classNames from "classnames";
 import { Singleton } from "../Global";
 import { getScienceFromWorkers } from "../logic/BuildingLogic";
+import { Config } from "../logic/Constants";
 import { getCurrentTechAge, getScienceAmount, getTechTree, getUnlockCost, unlockableTechs } from "../logic/TechLogic";
 import { Tick } from "../logic/TickLogic";
 import { getHandle, useIsConnected } from "../rpc/RPCClient";
 import { TechTreeScene } from "../scenes/TechTreeScene";
-import { formatPercent } from "../utilities/Helper";
+import { formatPercent, jsxMapOf } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
+import { playError } from "../visuals/Sound";
 import { IBuildingComponentProps } from "./BuildingPage";
 import { BuildingProduceComponent } from "./BuildingProduceComponent";
 import { BuildingStorageComponent } from "./BuildingStorageComponent";
 import { ChangePlayerHandleModal } from "./ChangePlayerHandleModal";
 import { ChooseGreatPersonModal } from "./ChooseGreatPersonModal";
 import { showModal } from "./GlobalModal";
+import { GreatPersonPage } from "./GreatPersonPage";
 import { FormatNumber } from "./HelperComponents";
 
 export function HeadquarterBuildingBody({ gameState, xy }: IBuildingComponentProps) {
@@ -163,18 +167,42 @@ export function HeadquarterBuildingBody({ gameState, xy }: IBuildingComponentPro
             </div>
          </fieldset>
          <fieldset>
+            <legend>{t(L.GreatPeople)}</legend>
+            {jsxMapOf(gameState.greatPeople, (person, v) => {
+               return (
+                  <div key={person} className="row mv5">
+                     <div className="f1">{Config.GreatPerson[person].name()}</div>
+                     <div className="text-strong">
+                        <FormatNumber value={v} />
+                     </div>
+                  </div>
+               );
+            })}
+            <div className="mv5 text-link" onClick={() => Singleton().routeTo(GreatPersonPage, {})}>
+               {t(L.ManageGreatPeople)}
+            </div>
+         </fieldset>
+         <fieldset>
             <legend>{t(L.PlayerHandle)}</legend>
             <div className="row mv5">
                <div className="f1">
                   <b>{getHandle()}</b>
+                  <br />
+                  <div className="text-desc text-small">{t(L.ChangePlayerHandledDesc)}</div>
                </div>
-               <div>
-                  <span className="text-link text-strong" onClick={() => showModal(<ChangePlayerHandleModal />)}>
-                     {t(L.ChangePlayerHandle)}
-                  </span>
+               <div
+                  className={classNames("text-link text-strong", { disabled: !connected })}
+                  onClick={() => {
+                     if (connected) {
+                        showModal(<ChangePlayerHandleModal />);
+                     } else {
+                        playError();
+                     }
+                  }}
+               >
+                  {t(L.ChangePlayerHandle)}
                </div>
             </div>
-            <div className="text-desc text-small">{t(L.ChangePlayerHandledDesc)}</div>
          </fieldset>
          <button onClick={() => showModal(<ChooseGreatPersonModal />)}>Choose Great Person</button>
          {/* {jsxMapOf(Config.GreatPerson, (k) => {

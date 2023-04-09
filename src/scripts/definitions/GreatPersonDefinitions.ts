@@ -1,5 +1,3 @@
-import { Tick } from "../logic/TickLogic";
-import { addMultiplier } from "../logic/Update";
 import { L, t } from "../utilities/i18n";
 
 export class GreatPersonDefinitions {
@@ -7,13 +5,6 @@ export class GreatPersonDefinitions {
       name: () => t(L.Cincinnatus),
       desc: () => t(L.CincinnatusDesc),
       value: (level) => level,
-      tick: (level) => {
-         addMultiplier(
-            "Farmland",
-            { input: level, output: level },
-            t(L.SourceGreatPerson, { person: t(L.Cincinnatus) })
-         );
-      },
       maxLevel: Infinity,
       time: "c. 500s BC",
    };
@@ -22,13 +13,6 @@ export class GreatPersonDefinitions {
       name: () => t(L.ScipioAfricanus),
       desc: () => t(L.ScipioAfricanusDesc),
       value: (level) => level,
-      tick: (level) => {
-         addMultiplier(
-            "Castrum",
-            { input: level, output: level },
-            t(L.SourceGreatPerson, { person: t(L.ScipioAfricanus) })
-         );
-      },
       maxLevel: Infinity,
       time: "c. 200s BC",
    };
@@ -39,12 +23,6 @@ export class GreatPersonDefinitions {
       value: (level) => level,
       maxLevel: Infinity,
       time: "100 BC ~ 44 BC",
-      tick: (level) => {
-         Tick.next.globalMultipliers.sciencePerIdleWorker.push({
-            value: level,
-            source: t(L.SourceGreatPerson, { tech: t(L.JuliusCaesar) }),
-         });
-      },
    };
 
    // Hammurabi: IGreatPersonDefinition = {
@@ -211,5 +189,4 @@ export interface IGreatPersonDefinition {
    value: (level: number) => number;
    time: string;
    maxLevel: number;
-   tick: (level: number) => void;
 }

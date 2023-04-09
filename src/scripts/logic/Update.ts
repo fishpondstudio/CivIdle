@@ -1,4 +1,5 @@
 import { Building } from "../definitions/BuildingDefinitions";
+import { GreatPersonLogic } from "../definitions/GreatPersonLogic";
 import { IUnlockableDefinition } from "../definitions/ITechDefinition";
 import { Resource } from "../definitions/ResourceDefinitions";
 import { notifyGameStateUpdate, saveGame, Singleton } from "../Global";
@@ -79,7 +80,7 @@ export function tickEverySecond(gs: GameState) {
       console.warn(`Unlockable: ${tech} is not ticked. Check your definition in City.techTree or City.unlockable`);
    });
    forEach(gs.greatPeople, (person, level) => {
-      Config.GreatPerson[person].tick(level);
+      GreatPersonLogic[person]?.(level);
    });
    tickTileTech(gs);
    tickTransportation(gs);
