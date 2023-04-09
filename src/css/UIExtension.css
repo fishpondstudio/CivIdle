@@ -256,7 +256,7 @@ a {
    cursor: pointer;
 }
 
-text-link.disabled {
+.text-link.disabled {
    color: #666;
 }
 

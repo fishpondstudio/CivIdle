@@ -468,4 +468,9 @@ export const EN = {
    BuildingName: "Name",
    BuildingTier: "Tier",
    BuildingCost: "Cost",
+   GreatPeople: "Great People",
+   ManageGreatPeople: "Manage Great People",
+   GreatPeopleEffect: "Effect",
+   GreatPeopleName: "Name",
+   GreatPeopleThisRun: "Great People From This Run",
 };
