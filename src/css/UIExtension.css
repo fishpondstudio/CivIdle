@@ -256,6 +256,10 @@ a {
    cursor: pointer;
 }
 
+text-link.disabled {
+   color: #666;
+}
+
 .lh2 {
    line-height: 2;
 }

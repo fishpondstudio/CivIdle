@@ -78,6 +78,9 @@ export function tickEverySecond(gs: GameState) {
       }
       console.warn(`Unlockable: ${tech} is not ticked. Check your definition in City.techTree or City.unlockable`);
    });
+   forEach(gs.greatPeople, (person, level) => {
+      Config.GreatPerson[person].tick(level);
+   });
    tickTileTech(gs);
    tickTransportation(gs);
    tickTiles(gs);
