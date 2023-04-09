@@ -157,6 +157,7 @@ export const EN = {
    ConsumptionMultiplier: "Consumption Multiplier",
    WorkerMultiplier: "Worker Capacity",
    SourceResearch: "Research: %{tech}",
+   SourceGreatPerson: "Great Person: %{person}",
    SourceProvince: "Province: %{province}",
    LevelX: "Level %{level}",
    Level: "Level",
