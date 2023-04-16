@@ -1,6 +1,8 @@
 const { execSync } = require("child_process");
 const path = require("path");
 const fs = require("fs-extra");
+const sevenBin = require("7zip-bin");
+const sevenZip = require("node-7z");
 
 console.log("========== Building CivIdle ==========");
 
@@ -10,6 +12,9 @@ cmd(`npm run build`, rootPath);
 
 console.log("========== Building Qt ==========");
 
+sevenZip.extractFull(path.join(rootPath, "qt", "cividle-win32-x64.7z"), path.join(rootPath, "qt"), {
+   $bin: sevenBin.path7za,
+});
 fs.copySync(path.join(rootPath, "dist"), path.join(rootPath, "qt", "cividle-win32-x64", "dist"));
 
 console.log("========== Uploading to Steam ==========");
