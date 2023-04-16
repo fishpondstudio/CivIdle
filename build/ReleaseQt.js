@@ -27,10 +27,11 @@ if (!process.env.STEAMWORKS_PATH) {
    return;
 }
 
-fs.copySync(
-   path.join(rootPath, "qt", "cividle-win32-x64"),
-   path.join(process.env.STEAMWORKS_PATH, "cividle-win32-x64")
-);
+const gameFilePath = path.join(process.env.STEAMWORKS_PATH, "cividle-win32-x64");
+
+fs.removeSync(gameFilePath);
+console.log(`Copying game files to ${gameFilePath}`);
+fs.copySync(path.join(rootPath, "qt", "cividle-win32-x64"), gameFilePath);
 
 cmd(
    path.join(process.env.STEAMWORKS_PATH, "builder_linux", "steamcmd.sh") + " +runscript ../cividle.txt",
