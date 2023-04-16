@@ -12,9 +12,12 @@ cmd(`npm run build`, rootPath);
 
 console.log("========== Building Qt ==========");
 
+fs.emptyDirSync(path.join(rootPath, "qt", "cividle-win32-x64"));
+
 sevenZip.extractFull(path.join(rootPath, "qt", "cividle-win32-x64.7z"), path.join(rootPath, "qt"), {
    $bin: sevenBin.path7za,
 });
+
 fs.copySync(path.join(rootPath, "dist"), path.join(rootPath, "qt", "cividle-win32-x64", "dist"));
 
 console.log("========== Uploading to Steam ==========");
