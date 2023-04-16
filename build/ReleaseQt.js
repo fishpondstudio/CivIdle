@@ -14,29 +14,31 @@ console.log("========== Building Qt ==========");
 
 fs.emptyDirSync(path.join(rootPath, "qt", "cividle-win32-x64"));
 
-sevenZip.extractFull(path.join(rootPath, "qt", "cividle-win32-x64.7z"), path.join(rootPath, "qt"), {
+const stream = sevenZip.extractFull(path.join(rootPath, "qt", "cividle-win32-x64.7z"), path.join(rootPath, "qt"), {
    $bin: sevenBin.path7za,
 });
 
-fs.copySync(path.join(rootPath, "dist"), path.join(rootPath, "qt", "cividle-win32-x64", "dist"));
+stream.on("end", () => {
+   fs.copySync(path.join(rootPath, "dist"), path.join(rootPath, "qt", "cividle-win32-x64", "dist"));
 
-console.log("========== Uploading to Steam ==========");
+   console.log("========== Uploading to Steam ==========");
 
-if (!process.env.STEAMWORKS_PATH) {
-   console.error("STEAMWORKS_PATH is not defined");
-   return;
-}
+   if (!process.env.STEAMWORKS_PATH) {
+      console.error("STEAMWORKS_PATH is not defined");
+      return;
+   }
 
-const gameFilePath = path.join(process.env.STEAMWORKS_PATH, "cividle-win32-x64");
+   const gameFilePath = path.join(process.env.STEAMWORKS_PATH, "cividle-win32-x64");
 
-fs.removeSync(gameFilePath);
-console.log(`Copying game files to ${gameFilePath}`);
-fs.copySync(path.join(rootPath, "qt", "cividle-win32-x64"), gameFilePath);
+   fs.removeSync(gameFilePath);
+   console.log(`Copying game files to ${gameFilePath}`);
+   fs.copySync(path.join(rootPath, "qt", "cividle-win32-x64"), gameFilePath);
 
-cmd(
-   path.join(process.env.STEAMWORKS_PATH, "builder_linux", "steamcmd.sh") + " +runscript ../cividle.txt",
-   process.env.STEAMWORKS_PATH
-);
+   cmd(
+      path.join(process.env.STEAMWORKS_PATH, "builder_linux", "steamcmd.sh") + " +runscript ../cividle.txt",
+      process.env.STEAMWORKS_PATH
+   );
+});
 
 function cmd(command, cwd = null) {
    console.log(`>> Command: ${command} (CWD: ${cwd})`);
