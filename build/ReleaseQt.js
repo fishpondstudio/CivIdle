@@ -25,7 +25,7 @@ if (!process.env.STEAMWORKS_PATH) {
 }
 
 fs.copySync(
-   path.join(rootPath, "qt", "out", "cividle-win32-x64"),
+   path.join(rootPath, "qt", "cividle-win32-x64"),
    path.join(process.env.STEAMWORKS_PATH, "cividle-win32-x64")
 );
 
