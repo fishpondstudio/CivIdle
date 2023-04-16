@@ -1,6 +1,7 @@
 import { TechTree } from "../definitions/CityDefinitions";
 import { ITechDefinition, IUnlockableDefinition } from "../definitions/ITechDefinition";
 import { Deposit } from "../definitions/ResourceDefinitions";
+import { IRomeHistoryDefinitions } from "../definitions/RomeHistoryDefinitions";
 import { Singleton } from "../Global";
 import { forEach, isEmpty, keysOf, shuffle } from "../utilities/Helper";
 import { Config } from "./Constants";
@@ -60,6 +61,16 @@ export function getAgeForTech(tech: string, gs: GameState): string | null {
       }
    }
    return null;
+}
+
+export function getUnlockRequirement(def: IUnlockableDefinition): string[] {
+   const result: string[] = [];
+   def.require.forEach((r) => result.push(r));
+   const requireProvince = (def as IRomeHistoryDefinitions).requireProvince;
+   if (requireProvince) {
+      requireProvince.forEach((p) => result.push(p));
+   }
+   return result;
 }
 
 export function unlockTech(tech: string, gs: GameState): void {

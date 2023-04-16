@@ -91,7 +91,10 @@ export function tickEverySecond(gs: GameState) {
 
    ++gs.tick;
    notifyGameStateUpdate();
-   saveGame();
+
+   if (gs.tick % 5 === 0) {
+      saveGame();
+   }
 }
 
 function tickUnlockable(td: IUnlockableDefinition) {

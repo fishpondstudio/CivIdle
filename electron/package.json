@@ -6,7 +6,7 @@
    "main": "compiled/index.js",
    "scripts": {
       "build": "tsc",
-      "start": "npm run build && electron-forge start",
+      "start": "npm run build && electron-forge start -- --in-process-gpu --disable-direct-composition",
       "generate": "tsc src/Generator.ts --esModuleInterop true --outDir compiled/ && node compiled/Generator.js",
       "package": "npm run build && electron-forge package",
       "make": "npm run build && electron-forge make",

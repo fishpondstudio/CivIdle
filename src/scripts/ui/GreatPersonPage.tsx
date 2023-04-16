@@ -1,8 +1,9 @@
-import { useGameState } from "../Global";
+import { Singleton, useGameState } from "../Global";
 import { Config } from "../logic/Constants";
 import { jsxMapOf } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
 import { MenuComponent } from "./MenuComponent";
+import { TilePage } from "./TilePage";
 
 export function GreatPersonPage(): JSX.Element | null {
    const gs = useGameState();
@@ -37,6 +38,14 @@ export function GreatPersonPage(): JSX.Element | null {
                   </table>
                </div>
             </fieldset>
+            <button onClick={() => Singleton().routeTo(TilePage, { xy: Singleton().buildings.Headquarter.xy })}>
+               <div className="row">
+                  <div className="m-icon" style={{ margin: "0 5px 0 -5px", fontSize: "18px" }}>
+                     arrow_back
+                  </div>
+                  <div className="f1">{t(L.BackToHeadquarter)}</div>
+               </div>
+            </button>
          </div>
       </div>
    );

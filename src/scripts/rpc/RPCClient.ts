@@ -1,7 +1,7 @@
+/* eslint-disable no-case-declarations */
 import { decode, encode } from "@msgpack/msgpack";
 import { removeTrailingUndefs, rpcClient, RpcError } from "typed-rpc";
 import { v4 } from "uuid";
-import type { IPCService } from "../../../electron/src/IPCService";
 import type { AllMessageTypes, IChat, IChatMessage, IRPCMessage, IWelcomeMessage } from "../../../server/src/Database";
 import { MessageType } from "../../../server/src/Database";
 import { ServerImpl } from "../../../server/src/Server";
@@ -11,18 +11,14 @@ import { TypedEvent } from "../utilities/TypedEvent";
 const serverAddress = import.meta.env.DEV ? "ws://localhost:8000" : "wss://api.cividle.com";
 // const serverAddress = "wss://api.cividle.com";
 
-export function hasIPCBridge() {
-   return typeof IPCBridge !== "undefined";
-}
-
-export const ipcClient = rpcClient<IPCService>({
-   request: (method: string, params: any[]) => {
-      if (typeof IPCBridge === "undefined") {
-         throw new Error(`IPCBridge is not defined: ${method}(${params})`);
-      }
-      return IPCBridge.rpcCall(method, params);
-   },
-});
+// export const ipcClient = rpcClient<IPCService>({
+//    request: (method: string, params: any[]) => {
+//       if (typeof IPCBridge === "undefined") {
+//          throw new Error(`IPCBridge is not defined: ${method}(${params})`);
+//       }
+//       return IPCBridge.rpcCall(method, params);
+//    },
+// });
 
 let handle = "Offline";
 export function getHandle() {
@@ -70,13 +66,16 @@ export const useChatMessages = makeObservableHook(OnChatMessage, chatMessages);
 
 let reconnect = 0;
 let requestId = 0;
+// eslint-disable-next-line @typescript-eslint/ban-types
 const rpcRequests: Record<number, { resolve: Function; reject: Function; time: number }> = {};
 
+const STEAM_APP_ID = 2181940;
+
 export async function connectWebSocket() {
-   if (hasIPCBridge()) {
-      const appId = await ipcClient.getAppID();
-      const ticket = await ipcClient.getAuthSessionTicket();
-      ws = new WebSocket(`${serverAddress}/?appId=${appId}&ticket=${ticket}&platform=steam`);
+   if (window.__STEAM_API_PORT) {
+      const resp = await fetch(`http://localhost:${window.__STEAM_API_PORT}/auth`);
+      const ticket = await resp.text();
+      ws = new WebSocket(`${serverAddress}/?appId=${STEAM_APP_ID}&ticket=${ticket}&platform=steam`);
    } else {
       ws = new WebSocket(`${serverAddress}/?platform=web&ticket=${v4()}`);
    }

@@ -5,9 +5,9 @@ export function LoadingPage() {
    return (
       <div className="loading-page">
          <img className="energy-star" src={energyStar} />
-         Build Rome in One Day
+         CivIdle
          <br />
-         Powered by CivIdle engine, proudly Presented by Fish Pond Studio
+         Proudly Presented by Fish Pond Studio
          <br />
          <br />
          Loading Asset &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...

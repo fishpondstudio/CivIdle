@@ -10,7 +10,8 @@
       "preview": "vite preview",
       "font": "node ./build/GenerateBitmapFont.js",
       "image": "node ./build/OptimizeImage.js",
-      "release": "node ./build/Release.js"
+      "release": "node ./build/Release.js",
+      "update-qt": "node ./build/UpdateQt.js"
    },
    "dependencies": {
       "@msgpack/msgpack": "^2.8.0",

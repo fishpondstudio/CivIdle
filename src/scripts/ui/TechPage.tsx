@@ -6,11 +6,13 @@ import { notifyGameStateUpdate, Singleton, useGameState } from "../Global";
 import { Config } from "../logic/Constants";
 import { onUnlockableUnlocked } from "../logic/LogicCallback";
 import { getResourceAmount, trySpendResources } from "../logic/ResourceLogic";
-import { getTechTree, unlockTech } from "../logic/TechLogic";
+import { getCurrentTechAge, getTechTree, getUnlockRequirement, unlockTech } from "../logic/TechLogic";
 import { RomeProvinceScene } from "../scenes/RomeProvinceScene";
 import { TechTreeScene } from "../scenes/TechTreeScene";
 import { forEach, jsxMapOf, reduceOf } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
+import { ChooseGreatPersonModal } from "./ChooseGreatPersonModal";
+import { showModal } from "./GlobalModal";
 import { FormatNumber } from "./HelperComponents";
 import { MenuComponent } from "./MenuComponent";
 import { ProgressBarComponent } from "./ProgressBarComponent";
@@ -22,7 +24,7 @@ export function TechPage({ id, type }: { id: string; type?: keyof typeof Unlocka
    const config = type ? Unlockable[type] : getTechTree(gs);
    const tech = id as keyof typeof config.definitions;
    const definition = config.definitions[tech];
-   const prerequisitesSatisfied = definition.require.every((t) => gs.unlocked[t]);
+   const prerequisitesSatisfied = getUnlockRequirement(definition).every((t) => gs.unlocked[t]);
    const unlockCost = config.unlockCost(tech);
    const availableResources: PartialTabulate<Resource> = {};
    forEach(unlockCost, (k, v) => {
@@ -116,7 +118,15 @@ export function TechPage({ id, type }: { id: string; type?: keyof typeof Unlocka
                               if (!trySpendResources(unlockCost, gs)) {
                                  return;
                               }
+                              const oldAge = getCurrentTechAge(gs);
                               unlockTech(tech, gs);
+                              const newAge = getCurrentTechAge(gs);
+                              if (oldAge !== newAge) {
+                                 gs.greatPeopleChoices.push(["Cincinnatus", "JuliusCaesar", "ScipioAfricanus"]);
+                              }
+                              if (gs.greatPeopleChoices.length > 0) {
+                                 showModal(<ChooseGreatPersonModal greatPeopleChoice={gs.greatPeopleChoices[0]} />);
+                              }
                               notifyGameStateUpdate();
                               onUnlockableUnlocked(tech, type, gs);
                            }}

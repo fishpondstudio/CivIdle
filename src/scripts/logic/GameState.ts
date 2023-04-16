@@ -30,8 +30,11 @@ export class GameState {
    transportation: Record<string, ITransportationData[]> = {};
    tick = 0;
    greatPeople: PartialTabulate<GreatPerson> = {};
+   greatPeopleChoices: GreatPeopleChoice[] = [];
    transportId = 0;
 }
+
+export type GreatPeopleChoice = [GreatPerson, GreatPerson, GreatPerson];
 
 export class SavedGame {
    current = new GameState();

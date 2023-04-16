@@ -473,4 +473,5 @@ export const EN = {
    GreatPeopleEffect: "Effect",
    GreatPeopleName: "Name",
    GreatPeopleThisRun: "Great People From This Run",
+   BackToHeadquarter: "Back To Headquarter",
 };

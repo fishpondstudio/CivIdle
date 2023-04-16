@@ -8,10 +8,9 @@ const rootPath = path.resolve(path.join(__dirname, "../"));
 
 cmd(`npm run build`, rootPath);
 
-console.log("========== Building Electron ==========");
+console.log("========== Building Qt ==========");
 
-fs.copySync(path.join(rootPath, "dist"), path.join(rootPath, "electron", "dist"));
-cmd(`npm run package -- --platform=win32`, path.join(rootPath, "electron"));
+fs.copySync(path.join(rootPath, "dist"), path.join(rootPath, "qt", "cividle-win32-x64", "dist"));
 
 console.log("========== Uploading to Steam ==========");
 
@@ -21,7 +20,7 @@ if (!process.env.STEAMWORKS_PATH) {
 }
 
 fs.copySync(
-   path.join(rootPath, "electron", "out", "cividle-win32-x64"),
+   path.join(rootPath, "qt", "out", "cividle-win32-x64"),
    path.join(process.env.STEAMWORKS_PATH, "cividle-win32-x64")
 );
 
@@ -34,3 +33,5 @@ function cmd(command, cwd = null) {
    console.log(`>> Command: ${command} (CWD: ${cwd})`);
    execSync(command, { stdio: "inherit", cwd: cwd });
 }
+
+module.exports = { cmd };

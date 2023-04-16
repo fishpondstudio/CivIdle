@@ -1,7 +1,6 @@
 import { Config } from "./logic/Constants";
 import { GameOptions, GameState, SavedGame } from "./logic/GameState";
 import { ITileData, makeBuilding } from "./logic/Tile";
-import { hasIPCBridge, ipcClient } from "./rpc/RPCClient";
 import { Grid } from "./scenes/Grid";
 import { idbClear, idbGet, idbSet } from "./utilities/BrowserStorage";
 import { forEach } from "./utilities/Helper";
@@ -48,6 +47,12 @@ if (import.meta.env.DEV) {
    window.savedGame = savedGame;
    // @ts-expect-error
    window.clearGame = () => {
+      if (window.__STEAM_API_PORT) {
+         fetch(`http://localhost:${window.__STEAM_API_PORT}/fileDelete/${SAVE_KEY}`)
+            .then(() => window.location.reload())
+            .catch(console.error);
+         return;
+      }
       idbClear()
          .then(() => window.location.reload())
          .catch(console.error);
@@ -83,19 +88,39 @@ export function syncUITheme(): void {
 
 const SAVE_KEY = "CivIdle";
 
+declare global {
+   interface Window {
+      __STEAM_API_PORT: undefined | number;
+   }
+}
+
+let saving = false;
+
 export function saveGame() {
-   if (hasIPCBridge()) {
-      ipcClient.writeTextToFile(SAVE_KEY, JSON.stringify(savedGame));
+   if (saving) {
+      console.warn("Received a save request while another one is ongoing, will ignore the new request");
       return;
    }
-   idbSet(SAVE_KEY, savedGame).catch(console.error);
+   saving = true;
+   if (window.__STEAM_API_PORT) {
+      fetch(`http://localhost:${window.__STEAM_API_PORT}/fileWrite/${SAVE_KEY}`, {
+         method: "post",
+         body: JSON.stringify(savedGame),
+      })
+         .catch(console.error)
+         .finally(() => (saving = false));
+      return;
+   }
+   idbSet(SAVE_KEY, savedGame)
+      .catch(console.error)
+      .finally(() => (saving = false));
 }
 
 export async function loadGame(): Promise<SavedGame | undefined> {
-   if (hasIPCBridge()) {
+   if (window.__STEAM_API_PORT) {
       try {
-         const content = await ipcClient.readTextFromFile(SAVE_KEY);
-         return JSON.parse(content) as SavedGame;
+         const resp = await fetch(`http://localhost:${window.__STEAM_API_PORT}/fileRead/${SAVE_KEY}`);
+         return JSON.parse(await resp.text()) as SavedGame;
       } catch (e) {
          console.warn("loadGame failed", e);
       }

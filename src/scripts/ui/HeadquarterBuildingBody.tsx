@@ -13,7 +13,6 @@ import { IBuildingComponentProps } from "./BuildingPage";
 import { BuildingProduceComponent } from "./BuildingProduceComponent";
 import { BuildingStorageComponent } from "./BuildingStorageComponent";
 import { ChangePlayerHandleModal } from "./ChangePlayerHandleModal";
-import { ChooseGreatPersonModal } from "./ChooseGreatPersonModal";
 import { showModal } from "./GlobalModal";
 import { GreatPersonPage } from "./GreatPersonPage";
 import { FormatNumber } from "./HelperComponents";
@@ -204,7 +203,6 @@ export function HeadquarterBuildingBody({ gameState, xy }: IBuildingComponentPro
                </div>
             </div>
          </fieldset>
-         <button onClick={() => showModal(<ChooseGreatPersonModal />)}>Choose Great Person</button>
          {/* {jsxMapOf(Config.GreatPerson, (k) => {
                 return (
                     <img
