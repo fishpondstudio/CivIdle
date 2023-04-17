@@ -143,6 +143,7 @@ export const EN = {
    HelpMenu: "Help",
    Census: "Census",
    OptionsUseModernUI: "Eye Protection UI",
+   About: "About CivIdle",
    TechnologyMenu: "Technology",
    ResearchMenu: "Research",
    CityViewMap: "City",
@@ -474,4 +475,10 @@ export const EN = {
    GreatPeopleName: "Name",
    GreatPeopleThisRun: "Great People From This Run",
    BackToHeadquarter: "Back To Headquarter",
+   CivIdle: "CivIdle",
+   CivIdleInfo: "Proudly presented by Fish Pond Studio",
+   CivIdleBuild: "Build: %{build}",
+   GraphicsDriver: "Graphics Driver: %{driver}",
+   UserAgent: "User Agent: %{driver}",
+   FullScreen: "Full Screen",
 };

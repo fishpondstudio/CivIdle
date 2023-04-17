@@ -5,8 +5,10 @@ import { RomeProvinceScene } from "../scenes/RomeProvinceScene";
 import { TechTreeScene } from "../scenes/TechTreeScene";
 import { WorldScene } from "../scenes/WorldScene";
 import { L, t } from "../utilities/i18n";
+import { AboutModal } from "./AboutModal";
+import { showModal } from "./GlobalModal";
 
-type MenuItemOptions = "view" | "options" | null;
+type MenuItemOptions = "view" | "options" | "help" | null;
 
 function MenuButton({ name }: { name: string }) {
    return (
@@ -158,8 +160,29 @@ export function MenuComponent() {
                   </div>
                </div>
             </div>
-            <div className="menu-button" onClick={() => {}}>
+            <div
+               className="menu-button"
+               onClick={(e) => {
+                  e.nativeEvent.stopPropagation();
+                  active === "help" ? setActive(null) : setActive("help");
+               }}
+            >
                <MenuButton name={t(L.HelpMenu)}></MenuButton>
+               <div
+                  className={classNames({
+                     "menu-popover": true,
+                     active: active === "help",
+                  })}
+               >
+                  <div
+                     className="menu-popover-item"
+                     onPointerDown={() => {
+                        showModal(<AboutModal />);
+                     }}
+                  >
+                     <MenuItem check={false}>{t(L.About)}</MenuItem>
+                  </div>
+               </div>
             </div>
          </div>
          <div className="separator"></div>

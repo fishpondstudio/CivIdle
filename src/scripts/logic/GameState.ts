@@ -89,6 +89,11 @@ export function initializeGameState(gameState: GameState, grid: Grid) {
       gameState.tiles[stone.xy].building = makeBuilding({ type: "StoneQuarry", status: "completed" });
    }
 
+   const water = findNearest((tile) => !!tile.deposit.Water, center, grid, gameState);
+   if (water) {
+      gameState.tiles[water.xy].building = makeBuilding({ type: "Aqueduct", status: "completed" });
+   }
+
    // gameState.tiles[pointToXy({ x: center.x + 1, y: center.y + 1 })].building = makeBuilding({ type: "Hut" });
 
    // gameState.tiles[pointToXy({ x: center.x + 1, y: center.y })].building = makeBuilding({

@@ -56,8 +56,6 @@ if (canvas) {
       backgroundColor: BG_COLOR,
    });
    canvas.appendChild(app.view);
-   // playBeep();
-   printWebglVendorInfo(app.view);
    registerPixiInspector(app);
    Assets.addBundle("main", mainBundle);
    Assets.addBundle("font", fontBundle);
@@ -154,18 +152,4 @@ function verifyBuildingTextures(textures: Textures, city: City) {
 function registerPixiInspector(app: Application) {
    // @ts-expect-error
    globalThis.__PIXI_APP__ = app;
-}
-
-function printWebglVendorInfo(canvas: HTMLCanvasElement) {
-   const gl = canvas.getContext("webgl2");
-   if (!gl) {
-      return;
-   }
-   const debugInfo = gl.getExtension("WEBGL_debug_renderer_info");
-   if (!debugInfo) {
-      return;
-   }
-   const vendor = gl.getParameter(debugInfo.UNMASKED_VENDOR_WEBGL);
-   const renderer = gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL);
-   console.log(vendor, renderer);
 }
