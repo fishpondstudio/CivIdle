@@ -22,7 +22,7 @@ jobs:
            env:
               STEAMWORKS_PATH: /home/insraq/steamworks/tools/ContentBuilder/
          - run: |
-              git add src/Version.json
+              git add src/scripts/Version.json
               git commit -m "[skip ci] New build"
               git push
            working-directory: /home/insraq/CivIdle
