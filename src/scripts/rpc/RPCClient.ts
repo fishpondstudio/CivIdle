@@ -72,8 +72,8 @@ const rpcRequests: Record<number, { resolve: Function; reject: Function; time: n
 const STEAM_APP_ID = 2181940;
 
 export async function connectWebSocket() {
-   if (window.__STEAM_API_PORT) {
-      const resp = await fetch(`http://localhost:${window.__STEAM_API_PORT}/auth`);
+   if (window.__STEAM_API_URL) {
+      const resp = await fetch(`${window.__STEAM_API_URL}/auth`);
       const ticket = await resp.text();
       ws = new WebSocket(`${serverAddress}/?appId=${STEAM_APP_ID}&ticket=${ticket}&platform=steam`);
    } else {

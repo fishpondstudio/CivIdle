@@ -47,8 +47,8 @@ if (import.meta.env.DEV) {
    window.savedGame = savedGame;
    // @ts-expect-error
    window.clearGame = () => {
-      if (window.__STEAM_API_PORT) {
-         fetch(`http://localhost:${window.__STEAM_API_PORT}/fileDelete/${SAVE_KEY}`)
+      if (window.__STEAM_API_URL) {
+         fetch(`${window.__STEAM_API_URL}/fileDelete/${SAVE_KEY}`)
             .then(() => window.location.reload())
             .catch(console.error);
          return;
@@ -90,7 +90,7 @@ const SAVE_KEY = "CivIdle";
 
 declare global {
    interface Window {
-      __STEAM_API_PORT: undefined | number;
+      __STEAM_API_URL: string | number;
    }
 }
 
@@ -102,8 +102,8 @@ export function saveGame() {
       return;
    }
    saving = true;
-   if (window.__STEAM_API_PORT) {
-      fetch(`http://localhost:${window.__STEAM_API_PORT}/fileWrite/${SAVE_KEY}`, {
+   if (window.__STEAM_API_URL) {
+      fetch(`${window.__STEAM_API_URL}/fileWrite/${SAVE_KEY}`, {
          method: "post",
          body: JSON.stringify(savedGame),
       })
@@ -117,9 +117,9 @@ export function saveGame() {
 }
 
 export async function loadGame(): Promise<SavedGame | undefined> {
-   if (window.__STEAM_API_PORT) {
+   if (window.__STEAM_API_URL) {
       try {
-         const resp = await fetch(`http://localhost:${window.__STEAM_API_PORT}/fileRead/${SAVE_KEY}`);
+         const resp = await fetch(`${window.__STEAM_API_URL}/fileRead/${SAVE_KEY}`);
          return JSON.parse(await resp.text()) as SavedGame;
       } catch (e) {
          console.warn("loadGame failed", e);
