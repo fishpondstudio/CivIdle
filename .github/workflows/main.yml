@@ -1,23 +1,27 @@
 name: build-win-steam-beta
 on:
-  push:
-  workflow_dispatch:
+   push:
+   workflow_dispatch:
 jobs:
-  run-script:
-    runs-on: [self-hosted]
-    steps:
-      - run: |
-          git checkout .
-          git pull
-          pnpm install
-        working-directory: /home/insraq/CivIdle
-      - run: | 
-          npm install
-          npm run build
-          sudo systemctl restart cividle
-          sudo systemctl status cividle
-        working-directory: /home/insraq/CivIdle/server
-      - run: npm run release
-        working-directory: /home/insraq/CivIdle
-        env:
-          STEAMWORKS_PATH: /home/insraq/steamworks/tools/ContentBuilder/
+   run-script:
+      runs-on: [self-hosted]
+      steps:
+         - run: |
+              git checkout .
+              git pull
+              pnpm install
+           working-directory: /home/insraq/CivIdle
+         - run: |
+              npm install
+              npm run build
+              sudo systemctl restart cividle
+              sudo systemctl status cividle
+           working-directory: /home/insraq/CivIdle/server
+         - run: npm run release
+           working-directory: /home/insraq/CivIdle
+           env:
+              STEAMWORKS_PATH: /home/insraq/steamworks/tools/ContentBuilder/
+         - run: |
+              git commit -m "New build"
+              git push
+           working-directory: /home/insraq/CivIdle
