@@ -36,6 +36,7 @@ export const OnConnectionChanged = new TypedEvent<boolean>();
 let chatMessages: IChat[] = [];
 
 let ws: WebSocket | null = null;
+let steamWs: WebSocket | null = null;
 
 export const client = rpcClient<ServerImpl>({
    request: (method: string, params: any[]) => {
@@ -57,6 +58,14 @@ export const client = rpcClient<ServerImpl>({
    },
 });
 
+interface ISteamClient {
+   player(): { steamId: string; name: string; phoneVerified: boolean; isSteamDeck: boolean };
+   auth(): string;
+   fileRead(name: string): string;
+   fileWrite(name: string, content: string): void;
+   fileDelete(name: string): void;
+}
+
 function isConnected() {
    return ws !== null;
 }
@@ -71,10 +80,25 @@ const rpcRequests: Record<number, { resolve: Function; reject: Function; time: n
 
 const STEAM_APP_ID = 2181940;
 
+export function initSteamClient(url: string): Promise<void> {
+   return new Promise((resolve, reject) => {
+      steamWs = new WebSocket(url);
+      steamWs.onopen = () => {
+         resolve();
+      };
+      steamWs.onmessage = (e) => {
+         handleRpcResponse(JSON.parse(e.data));
+      };
+      steamWs.onclose = () => {
+         steamWs = null;
+         reject();
+      };
+   });
+}
+
 export async function connectWebSocket() {
    if (window.__STEAM_API_URL) {
-      const resp = await fetch(`${window.__STEAM_API_URL}/auth`);
-      const ticket = await resp.text();
+      const ticket = await steamClient.auth();
       ws = new WebSocket(`${serverAddress}/?appId=${STEAM_APP_ID}&ticket=${ticket}&platform=steam`);
    } else {
       ws = new WebSocket(`${serverAddress}/?platform=web&ticket=${v4()}`);
@@ -105,20 +129,7 @@ export async function connectWebSocket() {
             break;
          case MessageType.RPC:
             const r = message as IRPCMessage;
-            if (!r.data || !r.data.id) {
-               throw new Error(`Invalid RPC Response received: ${r}`);
-            }
-            if (!rpcRequests[r.data.id]) {
-               throw new Error(`RPC Request ${r.data.id} is already handled`);
-            }
-            const { resolve, reject } = rpcRequests[r.data.id];
-            delete rpcRequests[r.data.id];
-            const { result, error } = r.data;
-            if (error) {
-               const { code, message, data } = error;
-               reject(new RpcError(message, code, data));
-            }
-            resolve(result);
+            handleRpcResponse(r.data);
             break;
       }
    };
@@ -129,3 +140,40 @@ export async function connectWebSocket() {
       setTimeout(connectWebSocket, Math.min(++reconnect * 1000, 5000));
    };
 }
+
+function handleRpcResponse(response: any) {
+   if (!response || !response.id) {
+      throw new Error(`Invalid RPC Response received: ${response}`);
+   }
+   if (!rpcRequests[response.id]) {
+      throw new Error(`RPC Request ${response.id} is already handled`);
+   }
+   const { resolve, reject } = rpcRequests[response.id];
+   delete rpcRequests[response.id];
+   const { result, error } = response;
+   if (error) {
+      const { code, message, data } = error;
+      reject(new RpcError(message, code, data));
+   }
+   resolve(result);
+}
+
+export const steamClient = rpcClient<ISteamClient>({
+   request: (method: string, params: any[]) => {
+      const id = ++requestId;
+      if (!steamWs) {
+         return Promise.reject("WebSocket is not ready yet");
+      }
+      steamWs.send(
+         JSON.stringify({
+            jsonrpc: "2.0",
+            id: id,
+            method,
+            params: removeTrailingUndefs(params),
+         })
+      );
+      return new Promise((resolve, reject) => {
+         rpcRequests[id] = { resolve, reject, time: Date.now() };
+      });
+   },
+});

@@ -1,6 +1,7 @@
 import { Config } from "./logic/Constants";
 import { GameOptions, GameState, SavedGame } from "./logic/GameState";
 import { ITileData, makeBuilding } from "./logic/Tile";
+import { steamClient } from "./rpc/RPCClient";
 import { Grid } from "./scenes/Grid";
 import { idbClear, idbGet, idbSet } from "./utilities/BrowserStorage";
 import { forEach } from "./utilities/Helper";
@@ -48,9 +49,7 @@ if (import.meta.env.DEV) {
    // @ts-expect-error
    window.clearGame = () => {
       if (window.__STEAM_API_URL) {
-         fetch(`${window.__STEAM_API_URL}/fileDelete/${SAVE_KEY}`)
-            .then(() => window.location.reload())
-            .catch(console.error);
+         steamClient.fileDelete(SAVE_KEY);
          return;
       }
       idbClear()
@@ -90,7 +89,7 @@ const SAVE_KEY = "CivIdle";
 
 declare global {
    interface Window {
-      __STEAM_API_URL: string | number;
+      __STEAM_API_URL: string | undefined;
    }
 }
 
@@ -103,10 +102,8 @@ export function saveGame() {
    }
    saving = true;
    if (window.__STEAM_API_URL) {
-      fetch(`${window.__STEAM_API_URL}/fileWrite/${SAVE_KEY}`, {
-         method: "post",
-         body: JSON.stringify(savedGame),
-      })
+      steamClient
+         .fileWrite(SAVE_KEY, JSON.stringify(savedGame))
          .catch(console.error)
          .finally(() => (saving = false));
       return;
@@ -119,8 +116,7 @@ export function saveGame() {
 export async function loadGame(): Promise<SavedGame | undefined> {
    if (window.__STEAM_API_URL) {
       try {
-         const resp = await fetch(`${window.__STEAM_API_URL}/fileRead/${SAVE_KEY}`);
-         return JSON.parse(await resp.text()) as SavedGame;
+         return JSON.parse(await await steamClient.fileRead(SAVE_KEY)) as SavedGame;
       } catch (e) {
          console.warn("loadGame failed", e);
       }

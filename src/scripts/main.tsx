@@ -25,7 +25,7 @@ import { initializeGameState } from "./logic/GameState";
 import { ITileData } from "./logic/Tile";
 import { tickEveryFrame, tickEverySecond } from "./logic/Update";
 import { Route, RouteChangeEvent } from "./Route";
-import { connectWebSocket } from "./rpc/RPCClient";
+import { connectWebSocket, initSteamClient } from "./rpc/RPCClient";
 import { Grid } from "./scenes/Grid";
 import { WorldScene } from "./scenes/WorldScene";
 import { ChatPanel } from "./ui/ChatPanel";
@@ -76,6 +76,9 @@ if (canvas) {
 }
 
 async function startGame(app: Application, resources: MainBundleAssets, textures: Textures) {
+   if (window.__STEAM_API_URL) {
+      await initSteamClient(window.__STEAM_API_URL);
+   }
    let isNewPlayer = false;
    const data = await loadGame();
    if (data) {

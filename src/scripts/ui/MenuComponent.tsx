@@ -161,10 +161,19 @@ export function MenuComponent() {
                </div>
             </div>
             <div
-               className="menu-button"
-               onClick={(e) => {
+               ref={buttonRef}
+               className={classNames({
+                  "menu-button": true,
+                  active: active === "help",
+               })}
+               onPointerDown={(e) => {
                   e.nativeEvent.stopPropagation();
                   active === "help" ? setActive(null) : setActive("help");
+               }}
+               onPointerOver={(e) => {
+                  if (active !== null && active !== "help") {
+                     setActive("help");
+                  }
                }}
             >
                <MenuButton name={t(L.HelpMenu)}></MenuButton>
