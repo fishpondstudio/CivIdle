@@ -6,6 +6,7 @@ import { BuildingDescriptionComponent } from "./BuildingDescriptionComponent";
 import { IBuildingComponentProps } from "./BuildingPage";
 import { BuildingProduceComponent } from "./BuildingProduceComponent";
 import { BuildingProductionPriorityComponent } from "./BuildingProductionPriorityComponent";
+import { BuildingSellComponent } from "./BuildingSellComponent";
 import { BuildingStockpileComponent } from "./BuildingStockpileComponent";
 import { BuildingStorageComponent } from "./BuildingStorageComponent";
 import { BuildingUpgradeComponent } from "./BuildingUpgradeComponent";
@@ -32,6 +33,7 @@ export function DefaultBuildingBody({ gameState, xy }: IBuildingComponentProps) 
          <BuildingWikipediaComponent gameState={gameState} xy={xy} />
          <BuildingProductionPriorityComponent gameState={gameState} xy={xy} />
          <BuildingStockpileComponent gameState={gameState} xy={xy} />
+         <BuildingSellComponent gameState={gameState} xy={xy} />
       </div>
    );
 }

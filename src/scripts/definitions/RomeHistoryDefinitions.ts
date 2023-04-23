@@ -113,6 +113,7 @@ export class RomeHistoryDefinitions {
       name: () => t(L.Dictator),
       column: 3,
       additionalUpgrades: [() => t(L.TechProductionPriority)],
+      unlockFeature: ["BuildingProductionPriority"],
       buildingMultiplier: {
          Armory: { worker: 1 },
          Castrum: { worker: 1 },
@@ -123,6 +124,7 @@ export class RomeHistoryDefinitions {
       name: () => t(L.Consul),
       column: 3,
       additionalUpgrades: [() => t(L.TechStockpileMode)],
+      unlockFeature: ["BuildingProductionPriority"],
       buildingMultiplier: {
          Blacksmith: { worker: 1 },
          StonemasonsWorkshop: { worker: 1 },

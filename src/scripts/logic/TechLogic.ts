@@ -89,6 +89,7 @@ export function unlockTech(tech: string, gs: GameState): void {
       }
       depositTiles.forEach((xy) => (gs.tiles[xy].deposit[deposit] = true));
    });
+   td.unlockFeature?.forEach((f) => (gs.features[f] = true));
 }
 
 export function getDepositUnlockTech<T extends string>(deposit: Deposit, definitions: Record<T, ITechDefinition>): T {

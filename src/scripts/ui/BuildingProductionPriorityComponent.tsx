@@ -10,7 +10,7 @@ export function BuildingProductionPriorityComponent({ gameState, xy }: IBuilding
    if (building == null || isEmpty(Tick.current.buildings[building.type].output)) {
       return null;
    }
-   if (!gameState.unlocked.Counting && !gameState.unlocked.Dictator) {
+   if (!gameState.features.BuildingProductionPriority) {
       return null;
    }
    return (

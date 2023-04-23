@@ -10,7 +10,7 @@ export function BuildingStockpileComponent({ gameState, xy }: IBuildingComponent
    if (building == null || isEmpty(Tick.current.buildings[building.type].input)) {
       return null;
    }
-   if (!gameState.unlocked.Pictograph && !gameState.unlocked.Consul) {
+   if (!gameState.features.BuildingStockpileMode) {
       return null;
    }
    return (

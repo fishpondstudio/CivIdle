@@ -1,8 +1,9 @@
 import { IPointData } from "pixi.js";
 import { City } from "../definitions/CityDefinitions";
+import { Feature } from "../definitions/FeatureDefinitions";
 import { GreatPerson } from "../definitions/GreatPersonDefinitions";
 import { Resource } from "../definitions/ResourceDefinitions";
-import { PartialTabulate } from "../definitions/TypeDefinitions";
+import { PartialSet, PartialTabulate } from "../definitions/TypeDefinitions";
 import { Grid } from "../scenes/Grid";
 import { forEach, pointToXy } from "../utilities/Helper";
 import { getTechTree, unlockTech } from "./TechLogic";
@@ -26,6 +27,7 @@ interface ITransportationData {
 export class GameState {
    city: City = "Rome";
    unlocked: Record<string, true> = {};
+   features: PartialSet<Feature> = {};
    tiles: Record<string, ITileData> = {};
    transportation: Record<string, ITransportationData[]> = {};
    tick = 0;

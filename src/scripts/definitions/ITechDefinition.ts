@@ -1,11 +1,13 @@
 import { GlobalMultipliers, IModifier, Multiplier } from "../logic/TickLogic";
 import { Building } from "./BuildingDefinitions";
+import { Feature } from "./FeatureDefinitions";
 import { Deposit, Resource } from "./ResourceDefinitions";
 import { PartialTabulate } from "./TypeDefinitions";
 
 export interface IUnlockableDefinition {
    name: () => string;
    require: string[];
+   unlockFeature?: Feature[];
    unlockBuilding?: Building[];
    revealDeposit?: Deposit[];
    buildingModifier?: Partial<Record<Building, IModifier>>;
