@@ -1,5 +1,3 @@
-import { FunctionComponent } from "react";
-import { Building } from "../definitions/BuildingDefinitions";
 import { BuildingConsumeComponent } from "./BuildingConsumeComponent";
 import { BuildingDepositComponent } from "./BuildingDepositComponent";
 import { BuildingDescriptionComponent } from "./BuildingDescriptionComponent";
@@ -13,11 +11,6 @@ import { BuildingUpgradeComponent } from "./BuildingUpgradeComponent";
 import { BuildingWarningComponent } from "./BuildingWarningComponent";
 import { BuildingWikipediaComponent } from "./BuildingWikipediaComponent";
 import { BuildingWorkerComponent } from "./BuildingWorkerComponent";
-import { HeadquarterBuildingBody } from "./HeadquarterBuildingBody";
-
-export const BuildingBodyOverride: Partial<Record<Building, FunctionComponent<IBuildingComponentProps>>> = {
-   Headquarter: HeadquarterBuildingBody,
-};
 
 export function DefaultBuildingBody({ gameState, xy }: IBuildingComponentProps) {
    return (

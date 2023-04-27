@@ -1,10 +1,19 @@
+import { FunctionComponent } from "react";
+import { Building } from "../definitions/BuildingDefinitions";
 import { Singleton, useGameState } from "../Global";
 import { GameState } from "../logic/GameState";
 import { Tick } from "../logic/TickLogic";
 import { ITileData } from "../logic/Tile";
-import { BuildingBodyOverride, DefaultBuildingBody } from "./BuildingBody";
+import { DefaultBuildingBody } from "./BuildingBody";
+import { HeadquarterBuildingBody } from "./HeadquarterBuildingBody";
 import { LoadingPage } from "./LoadingPage";
+import { MarketBuildingBody } from "./MarketBuildingBody";
 import { MenuComponent } from "./MenuComponent";
+
+const BuildingBodyOverride: Partial<Record<Building, FunctionComponent<IBuildingComponentProps>>> = {
+   Headquarter: HeadquarterBuildingBody,
+   Market: MarketBuildingBody,
+};
 
 export function BuildingPage({ tile }: { tile: ITileData }): JSX.Element | null {
    if (tile.building == null) {

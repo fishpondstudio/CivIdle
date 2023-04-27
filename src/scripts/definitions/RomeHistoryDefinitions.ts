@@ -129,6 +129,7 @@ export class RomeHistoryDefinitions {
          Blacksmith: { worker: 1 },
          StonemasonsWorkshop: { worker: 1 },
       },
+      unlockBuilding: ["Market"],
       require: ["Republic"],
    };
    PontifexMaximus: IRomeHistoryDefinitions = {

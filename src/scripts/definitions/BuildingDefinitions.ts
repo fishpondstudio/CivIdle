@@ -152,6 +152,13 @@ export class BuildingDefinitions {
       construction: { Brick: 1, Iron: 1, Copper: 1, Stone: 1 },
    };
 
+   Market: IBuildingDefinition = {
+      name: () => t(L.Market),
+      input: {},
+      output: {},
+      construction: { Brick: 2, Copper: 2, Wood: 2 },
+   };
+
    Colosseum: IBuildingDefinition = {
       name: () => t(L.Colosseum),
       desc: () => t(L.ColosseumDesc),

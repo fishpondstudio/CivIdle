@@ -482,4 +482,7 @@ export const EN = {
    GraphicsDriver: "Graphics Driver: %{driver}",
    UserAgent: "User Agent: %{driver}",
    FullScreen: "Full Screen",
+   MarketPrice: "Price",
+   MarketAmount: "Amount",
+   MarketSell: "Sell",
 };
