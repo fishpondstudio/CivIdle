@@ -27,6 +27,11 @@ export interface IBuildingData {
    priority: number;
 }
 
+export interface IMarketBuildingData extends IBuildingData {
+   type: "Market";
+   sellResources: PartialSet<Resource>;
+}
+
 export interface IHaveTypeAndLevel {
    type: Building;
    level: number;
@@ -64,6 +69,13 @@ export function makeBuilding(data: Pick<IBuildingData, "type"> & Partial<IBuildi
       priority: PRIORITY_MIN,
       ...data,
    };
+
+   if (building.type == "Market") {
+      const market = building as IMarketBuildingData;
+      if (!market.sellResources) {
+         market.sellResources = {};
+      }
+   }
 
    building.stockpileCapacity = clamp(building.stockpileCapacity, STOCKPILE_CAPACITY_MIN, STOCKPILE_CAPACITY_MAX);
    building.stockpileMax = clamp(building.stockpileMax, STOCKPILE_MAX_MIN, STOCKPILE_MAX_MAX);

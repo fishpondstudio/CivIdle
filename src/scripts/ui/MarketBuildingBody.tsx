@@ -1,7 +1,11 @@
+import { notifyGameStateUpdate } from "../Global";
 import { Config } from "../logic/Constants";
+import { getCash } from "../logic/ResourceLogic";
 import { Tick } from "../logic/TickLogic";
+import { IMarketBuildingData } from "../logic/Tile";
 import { jsxMapOf } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
+import { playClick } from "../visuals/Sound";
 import { IBuildingComponentProps } from "./BuildingPage";
 import { BuildingProductionPriorityComponent } from "./BuildingProductionPriorityComponent";
 import { BuildingSellComponent } from "./BuildingSellComponent";
@@ -13,8 +17,21 @@ import { BuildingWorkerComponent } from "./BuildingWorkerComponent";
 import { FormatNumber } from "./HelperComponents";
 
 export function MarketBuildingBody({ gameState, xy }: IBuildingComponentProps) {
+   const building = gameState.tiles[xy].building as IMarketBuildingData;
+   if (building == null || !building.sellResources) {
+      return null;
+   }
    return (
       <div className="window-body">
+         <BuildingWarningComponent gameState={gameState} xy={xy} />
+         <fieldset>
+            <div className="text-strong row">
+               <div className="f1">{t(L.Cash)}</div>
+               <div>
+                  <FormatNumber value={getCash()} />
+               </div>
+            </div>
+         </fieldset>
          <div className="table-view">
             <table>
                <thead>
@@ -32,7 +49,7 @@ export function MarketBuildingBody({ gameState, xy }: IBuildingComponentProps) {
                         return null;
                      }
                      return (
-                        <tr>
+                        <tr key={res}>
                            <td>{r.name()}</td>
                            <td className="right">
                               $<FormatNumber value={Config.ResourcePrice[res]} />
@@ -45,9 +62,23 @@ export function MarketBuildingBody({ gameState, xy }: IBuildingComponentProps) {
                                  )}
                               />
                            </td>
-                           <td>
-                              <div className="m-icon text-green">toggle_on</div>
-                              {/* <div className="m-icon text-grey">toggle_off</div> */}
+                           <td
+                              className="pointer"
+                              onClick={() => {
+                                 playClick();
+                                 if (building.sellResources[res]) {
+                                    delete building.sellResources[res];
+                                 } else {
+                                    building.sellResources[res] = true;
+                                 }
+                                 notifyGameStateUpdate();
+                              }}
+                           >
+                              {building.sellResources[res] ? (
+                                 <div className="m-icon text-green">toggle_on</div>
+                              ) : (
+                                 <div className="m-icon text-grey">toggle_off</div>
+                              )}
                            </td>
                         </tr>
                      );
@@ -56,7 +87,6 @@ export function MarketBuildingBody({ gameState, xy }: IBuildingComponentProps) {
             </table>
          </div>
          <div className="sep10"></div>
-         <BuildingWarningComponent gameState={gameState} xy={xy} />
          <BuildingUpgradeComponent gameState={gameState} xy={xy} />
          <BuildingWorkerComponent gameState={gameState} xy={xy} />
          <BuildingStorageComponent gameState={gameState} xy={xy} />

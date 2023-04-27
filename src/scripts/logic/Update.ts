@@ -29,7 +29,7 @@ import { Config } from "./Constants";
 import { GameState } from "./GameState";
 import { clearIntraTickCache } from "./IntraTickCache";
 import { onBuildingComplete, onBuildingProductionComplete } from "./LogicCallback";
-import { getAmountInTransit } from "./ResourceLogic";
+import { addCash, getAmountInTransit } from "./ResourceLogic";
 import { getTechTree } from "./TechLogic";
 import { EmptyTickData, IModifier, Multiplier, Tick } from "./TickLogic";
 
@@ -241,6 +241,9 @@ function tileTile(xy: string, gs: GameState): void {
    const inputWorkerCapacity = totalMultiplierFor(xy, "worker", gs);
    const { total, used } = getStorageFor(xy, gs);
 
+   //////////////////////////////////////////////////
+   // Transport
+   //////////////////////////////////////////////////
    forEach(input, (res, amount) => {
       amount = amount * building.stockpileCapacity;
       if (amount <= 0) {
@@ -254,6 +257,22 @@ function tileTile(xy: string, gs: GameState): void {
       }
       transportResource(res, amount, inputWorkerCapacity, xy, gs);
    });
+
+   //////////////////////////////////////////////////
+   // Production
+   //////////////////////////////////////////////////
+
+   if (building.type === "Market") {
+      forEach(input, (res, amount) => {
+         amount = Math.min(amount, building.resources[res] ?? 0);
+         safeAdd(building.resources, res, -amount);
+         addCash(amount * (Config.ResourcePrice[res] ?? 0));
+         if (amount > 0) {
+            building.notProducingReason = null;
+         }
+      });
+      return;
+   }
 
    const hasEnoughStorage = isEmpty(output) || used + getStorageRequired(output) <= total;
    const hasEnoughWorker = hasEnoughWorkers("Worker", worker.output);

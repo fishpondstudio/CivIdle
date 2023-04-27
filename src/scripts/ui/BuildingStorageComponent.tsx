@@ -9,7 +9,7 @@ import { ProgressBarComponent } from "./ProgressBarComponent";
 export function BuildingStorageComponent({ gameState, xy }: IBuildingComponentProps) {
    const storage = getStorageFor(xy, gameState);
    const building = gameState.tiles[xy].building;
-   if (building == null || storage.total <= 0) {
+   if (building == null || !isFinite(storage.total) || storage.total <= 0) {
       return null;
    }
    const percentage = storage.used / storage.total;

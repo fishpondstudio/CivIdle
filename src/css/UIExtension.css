@@ -150,6 +150,10 @@ fieldset .separator {
    color: rgba(16, 16, 16, 0.6);
 }
 
+.text-grey {
+   color: #999;
+}
+
 .text-center {
    text-align: center;
 }

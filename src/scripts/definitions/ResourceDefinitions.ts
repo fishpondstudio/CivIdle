@@ -21,6 +21,7 @@ export class ResourceDefinitions {
    Weapon: IResourceDefinition = { name: () => t(L.Weapon), canStore: true, canPrice: true };
    Legion: IResourceDefinition = { name: () => t(L.Legion), canStore: true, canPrice: true };
    Science: IResourceDefinition = { name: () => t(L.Science), canStore: true, canPrice: false };
+   Cash: IResourceDefinition = { name: () => t(L.Cash), canStore: true, canPrice: false };
 }
 
 export type Resource = keyof ResourceDefinitions;

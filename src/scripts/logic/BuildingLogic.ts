@@ -8,7 +8,7 @@ import { Textures } from "../utilities/SceneManager";
 import { Config } from "./Constants";
 import { GameState } from "./GameState";
 import { Multiplier, MultiplierWithSource, Tick } from "./TickLogic";
-import { IBuildingData, IHaveTypeAndLevel } from "./Tile";
+import { IBuildingData, IHaveTypeAndLevel, IMarketBuildingData } from "./Tile";
 
 export function getBuildingTexture(b: Building, textures: Textures, city: City) {
    return textures[`Building${b}_${city}`] ?? textures[`Building${b}`];
@@ -47,7 +47,13 @@ export function getBuildingIO(
    const result: PartialTabulate<Resource> = {};
    const b = gs.tiles[xy].building;
    if (b) {
-      forEach(Tick.current.buildings[b.type][type], (k, v) => {
+      const resources = Tick.current.buildings[b.type][type];
+      if (b.type === "Market" && type === "input") {
+         forEach((b as IMarketBuildingData).sellResources, (k) => {
+            resources[k] = 1;
+         });
+      }
+      forEach(resources, (k, v) => {
          let value = v * b.level;
          if (options.capacity) {
             value *= b.capacity;
@@ -151,11 +157,16 @@ export function getStorageFor(xy: string, gs: GameState): IStorageResult {
    const accumulate = (prev: number, k: Resource, v: number): number => {
       return isTransportable(k) ? prev + v : prev;
    };
+   const building = gs.tiles[xy].building;
+   if (building?.type == "Market") {
+      return { base: Infinity, multiplier: 1, total: Infinity, used: 0 };
+   }
    const base =
       100 * reduceOf(getBuildingIO(xy, "input", {}, gs), accumulate, 0) +
       1000 * reduceOf(getBuildingIO(xy, "output", {}, gs), accumulate, 0);
    const multiplier = totalMultiplierFor(xy, "storage", gs);
-   const used = reduceOf(gs.tiles[xy].building?.resources, accumulate, 0);
+
+   const used = reduceOf(building?.resources, accumulate, 0);
    return { base, multiplier, total: base * multiplier, used };
 }
 

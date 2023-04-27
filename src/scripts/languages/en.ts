@@ -201,6 +201,7 @@ export const EN = {
    IronMiningCamp: "Iron Mining Camp",
    CopperMiningCamp: "Copper Mining Camp",
    Science: "Science",
+   Cash: "Cash",
    WorkersAvailable: "Workers Available",
    WorkersBusy: "Workers Busy",
    WorkerScienceProduction: "Worker Science Production",

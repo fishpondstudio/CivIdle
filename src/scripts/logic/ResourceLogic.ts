@@ -1,5 +1,7 @@
 import { Resource } from "../definitions/ResourceDefinitions";
 import { PartialTabulate } from "../definitions/TypeDefinitions";
+import { Singleton } from "../Global";
+import { safeAdd } from "../utilities/Helper";
 import { GameState } from "./GameState";
 import { Tick } from "./TickLogic";
 
@@ -51,4 +53,12 @@ export function getAmountInTransit(xy: string, res: Resource, gs: GameState) {
          return prev + (curr.resource === res ? curr.amount : 0);
       }, 0) ?? 0
    );
+}
+
+export function getCash(): number {
+   return Singleton().buildings.Headquarter.building.resources.Cash ?? 0;
+}
+
+export function addCash(amount: number): void {
+   safeAdd(Singleton().buildings.Headquarter.building.resources, "Cash", amount);
 }
