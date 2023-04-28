@@ -64,7 +64,6 @@ interface ISteamClient {
    fileRead(name: string): string;
    fileWrite(name: string, content: string): void;
    fileDelete(name: string): void;
-   restart(): void;
 }
 
 function isConnected() {
