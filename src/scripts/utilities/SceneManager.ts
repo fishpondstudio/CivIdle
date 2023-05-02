@@ -1,4 +1,5 @@
 import { Dict } from "@pixi/utils";
+import { Viewport } from "pixi-viewport";
 import { Application, Resource, Texture } from "pixi.js";
 import { watchGameState } from "../Global";
 import { GameState } from "../logic/GameState";
@@ -12,7 +13,32 @@ export class Scene {
 
    onLoad(): void {}
    onDestroy(): void {}
+   onResize(width: number, height: number): void {}
    onGameStateChanged(gameState: GameState): void {}
+}
+
+export class ViewportScene extends Scene {
+   public readonly viewport: Viewport;
+
+   constructor(context: ISceneContext) {
+      super(context);
+      const { app, gameState } = context;
+      this.viewport = new Viewport({
+         interaction: app.renderer.plugins.interaction,
+         disableOnContextMenu: true,
+         screenWidth: app.screen.width,
+         screenHeight: app.screen.height,
+      });
+      app.stage.addChild(this.viewport);
+   }
+
+   override onResize(width: number, height: number): void {
+      this.viewport.resize(width, height);
+   }
+
+   override onDestroy(): void {
+      this.viewport.destroy({ children: true, texture: false, baseTexture: false });
+   }
 }
 
 export type Textures = Dict<Texture<Resource>>;
@@ -31,6 +57,9 @@ export class SceneManager {
 
    constructor(context: ISceneContext) {
       this.context = context;
+      context.app.renderer.on("resize", (width: number, height: number) => {
+         this.currentScene?.onResize(width, height);
+      });
    }
 
    public getContext(): ISceneContext {
@@ -47,7 +76,10 @@ export class SceneManager {
       if (this.gameStateWatcher) {
          this.gameStateWatcher();
       }
-      this.context.app.stage.removeChildren();
+
+      for (let i = 0; i < this.context.app.stage.children.length; i++) {
+         this.context.app.stage.children[i].destroy({ children: true, texture: false, baseTexture: false });
+      }
 
       this.currentScene = new SceneClass(this.context);
       this.currentScene.onLoad();

@@ -5,6 +5,7 @@ import { PartialTabulate } from "../definitions/TypeDefinitions";
 import { Singleton } from "../Global";
 import { forEach, isEmpty, keysOf, reduceOf, safeAdd, safePush, sum } from "../utilities/Helper";
 import { Textures } from "../utilities/SceneManager";
+import { v2 } from "../utilities/Vector2";
 import { Config } from "./Constants";
 import { GameState } from "./GameState";
 import { Multiplier, MultiplierWithSource, Tick } from "./TickLogic";
@@ -47,7 +48,7 @@ export function getBuildingIO(
    const result: PartialTabulate<Resource> = {};
    const b = gs.tiles[xy].building;
    if (b) {
-      const resources = Tick.current.buildings[b.type][type];
+      const resources = { ...Tick.current.buildings[b.type][type] };
       if (b.type === "Market" && type === "input") {
          forEach((b as IMarketBuildingData).sellResources, (k) => {
             resources[k] = 1;
@@ -252,12 +253,12 @@ export function tryAddTransportation(
       toXy,
       fromPosition,
       toPosition,
-      position: fromPosition,
+      ticksRequired: Math.ceil(v2(fromPosition).subtract(toPosition).length() / 100),
+      ticksSpent: 0,
       resource,
       amount,
       fuel: "Worker",
       fuelAmount,
-      hasEnoughFuel: true,
    });
    return true;
 }
@@ -321,4 +322,18 @@ export function getBuildingLevelLabel(b: IBuildingData): string {
       return "";
    }
    return String(b.level);
+}
+
+export function levelToNext10s(b: IBuildingData) {
+   const l = Math.ceil(b.level / 10) * 10 - b.level;
+   return l > 0 ? l : 10;
+}
+
+export function getBuildingUpgradeLevels(b: IBuildingData): number[] {
+   const next10s = levelToNext10s(b);
+   const levels = [1, 2, 3, 4, 5];
+   if (!levels.includes(next10s)) {
+      levels.push(next10s);
+   }
+   return levels;
 }

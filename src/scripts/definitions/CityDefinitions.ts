@@ -1,3 +1,4 @@
+import { deepFreeze } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
 import { ITechTree, IUnlockableDefinition, IUnlockableGroup } from "./ITechDefinition";
 import { Deposit } from "./ResourceDefinitions";
@@ -17,7 +18,7 @@ export class CityDefinitions {
       },
       size: 40,
       techTree: "Rome",
-      unlockable: { ...Object.freeze(new RomeProvinceDefinitions()) },
+      unlockable: { ...deepFreeze(new RomeProvinceDefinitions()) },
    };
    Athens: ICityDefinition = {
       name: () => t(L.Rome),
@@ -34,12 +35,12 @@ export class CityDefinitions {
    };
 }
 
-const RomeHistory = Object.freeze(new RomeHistoryDefinitions());
+const RomeHistory = deepFreeze(new RomeHistoryDefinitions());
 
 export const TechTree = {
    Rome: {
       definitions: RomeHistory,
-      ages: Object.freeze(new RomeHistoryStageDefinitions()),
+      ages: deepFreeze(new RomeHistoryStageDefinitions()),
       verb: () => t(L.Research),
       unlockCost: (k: keyof RomeHistoryDefinitions) => {
          const def = RomeHistory[k];
@@ -48,7 +49,7 @@ export const TechTree = {
    } as ITechTree,
 } as const;
 
-const RomeProvince = Object.freeze(new RomeProvinceDefinitions());
+const RomeProvince = deepFreeze(new RomeProvinceDefinitions());
 
 export const Unlockable = {
    RomeProvince: {

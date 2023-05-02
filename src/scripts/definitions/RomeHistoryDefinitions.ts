@@ -79,7 +79,7 @@ export class RomeHistoryDefinitions {
    Legion: IRomeHistoryDefinitions = {
       name: () => t(L.Legion),
       column: 2,
-      unlockBuilding: ["Armory", "Castrum"],
+      unlockBuilding: ["Armory"],
       require: ["Metallurgy"],
    };
    TribalAssembly: IRomeHistoryDefinitions = {
@@ -91,6 +91,7 @@ export class RomeHistoryDefinitions {
    Republic: IRomeHistoryDefinitions = {
       name: () => t(L.Republic),
       column: 2,
+      unlockBuilding: ["Castrum"],
       globalMultiplier: { sciencePerIdleWorker: 1 },
       buildingMultiplier: { Farmland: { storage: 1, output: 1 } },
       require: ["Election"],

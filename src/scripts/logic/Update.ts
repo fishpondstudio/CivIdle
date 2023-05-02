@@ -32,8 +32,12 @@ import { onBuildingComplete, onBuildingProductionComplete } from "./LogicCallbac
 import { addCash, getAmountInTransit } from "./ResourceLogic";
 import { getTechTree } from "./TechLogic";
 import { EmptyTickData, IModifier, Multiplier, Tick } from "./TickLogic";
+import { IBuildingData } from "./Tile";
+
+let timeSinceLastTick = 0;
 
 export function tickEveryFrame(gs: GameState, dt: number) {
+   timeSinceLastTick += dt;
    const worldScene = Singleton().sceneManager.getCurrent(WorldScene);
    for (const xy in gs.tiles) {
       const tile = gs.tiles[xy];
@@ -41,29 +45,10 @@ export function tickEveryFrame(gs: GameState, dt: number) {
          worldScene?.getTile(xy)?.update(gs, dt);
       }
    }
-
-   const dist = 100 * dt;
-   forEach(gs.transportation, (xy, queue) => {
-      gs.transportation[xy] = queue.filter((transport) => {
-         const hasArrived = v2(transport.position).subtract(transport.toPosition).lengthSqr() <= dist * dist;
-         if (hasArrived) {
-            const building = gs.tiles[transport.toXy].building;
-            if (building) {
-               safeAdd(building.resources, transport.resource, transport.amount);
-            }
-            return false;
-         }
-         if (transport.hasEnoughFuel) {
-            const delta = v2(transport.toPosition).subtract(transport.fromPosition).normalize().multiply(dist);
-            transport.position = v2(transport.position).add(delta);
-         }
-         return true;
-      });
-   });
-
-   worldScene?.updateTransportVisual(gs);
+   worldScene?.updateTransportVisual(gs, timeSinceLastTick);
 }
 export function tickEverySecond(gs: GameState) {
+   timeSinceLastTick = 0;
    if (document.visibilityState !== "visible") {
       return;
    }
@@ -133,32 +118,51 @@ function tickTileTech(gs: GameState) {
 
 function tickTransportation(gs: GameState) {
    forEach(gs.transportation, (xy, queue) => {
-      queue.forEach((transport) => {
+      gs.transportation[xy] = queue.filter((transport) => {
+         // TODO: This needs to be done!
          if (isTransportable(transport.fuel)) {
-            transport.hasEnoughFuel = true;
+            transport.ticksSpent++;
          } else {
             if (hasEnoughWorkers(transport.fuel, transport.fuelAmount)) {
                useWorkers(transport.fuel, transport.fuelAmount, null);
-               transport.hasEnoughFuel = true;
-            } else {
-               transport.hasEnoughFuel = false;
+               transport.ticksSpent++;
             }
          }
+         // Has arrived!
+         if (transport.ticksSpent >= transport.ticksRequired) {
+            const building = gs.tiles[transport.toXy].building;
+            if (building) {
+               safeAdd(building.resources, transport.resource, transport.amount);
+            }
+            return false;
+         }
+
+         return true;
       });
    });
+}
+
+function isBuildingOrUpgrading(b: IBuildingData): boolean {
+   return b.status === "building" || b.status === "upgrading";
 }
 
 function tickTiles(gs: GameState) {
    keysOf(gs.tiles)
       .filter((xy) => gs.tiles[xy].building)
       .sort((a, b) => {
-         const buildingA = gs.tiles[a].building!.type;
-         const buildingB = gs.tiles[b].building!.type;
+         const buildingA = gs.tiles[a].building!;
+         const buildingB = gs.tiles[b].building!;
+         if (isBuildingOrUpgrading(buildingA) && !isBuildingOrUpgrading(buildingB)) {
+            return -1;
+         }
+         if (isBuildingOrUpgrading(buildingB) && !isBuildingOrUpgrading(buildingA)) {
+            return 1;
+         }
          const diff = gs.tiles[b].building!.priority - gs.tiles[a].building!.priority;
          if (diff !== 0) {
             return diff;
          }
-         return (Config.BuildingTier[buildingA] ?? 0) - (Config.BuildingTier[buildingB] ?? 0);
+         return (Config.BuildingTier[buildingA.type] ?? 0) - (Config.BuildingTier[buildingB.type] ?? 0);
       })
       .forEach((xy) => tileTile(xy, gs));
 }
@@ -168,6 +172,11 @@ function tileTile(xy: string, gs: GameState): void {
    const building = tile.building!;
    if (building.status === "paused") {
       return;
+   }
+   if (building.desiredLevel > building.level) {
+      building.status = "upgrading";
+   } else {
+      building.desiredLevel = building.level;
    }
    if (building.status === "building" || building.status === "upgrading") {
       const cost = getBuildingCost(building);
@@ -199,7 +208,12 @@ function tileTile(xy: string, gs: GameState): void {
          if (building.status === "upgrading") {
             building.level++;
          }
-         building.status = "completed";
+         if (
+            building.status === "building" ||
+            (building.status === "upgrading" && building.level >= building.desiredLevel)
+         ) {
+            building.status = "completed";
+         }
          forEach(cost, (res, amount) => {
             safeAdd(building.resources, res, -amount);
          });
@@ -263,14 +277,21 @@ function tileTile(xy: string, gs: GameState): void {
    //////////////////////////////////////////////////
 
    if (building.type === "Market") {
-      forEach(input, (res, amount) => {
-         amount = Math.min(amount, building.resources[res] ?? 0);
+      building.notProducingReason = "NotEnoughResources";
+      let totalCash = 0;
+      forEach(input, (res) => {
+         const amount = building.resources[res] ?? 0;
          safeAdd(building.resources, res, -amount);
-         addCash(amount * (Config.ResourcePrice[res] ?? 0));
+         const cash = amount * (Config.ResourcePrice[res] ?? 0);
+         addCash(cash);
+         totalCash += cash;
          if (amount > 0) {
             building.notProducingReason = null;
          }
       });
+      if (totalCash > 0) {
+         Singleton().sceneManager.getCurrent(WorldScene)?.getTile(xy)?.showText(`+$${totalCash}`);
+      }
       return;
    }
 

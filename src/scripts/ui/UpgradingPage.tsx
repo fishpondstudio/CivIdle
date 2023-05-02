@@ -23,7 +23,15 @@ export function UpgradingPage({ tile }: { tile: ITileData }) {
             <BuildingWarningComponent xy={tile.xy} gameState={gs} />
             <BuildingConstructionProgressComponent xy={tile.xy} gameState={gs} />
             <fieldset>
-               <legend>{t(L.CancelUpgrade)}</legend>
+               <div className="row text-strong">
+                  <div className="f1">{t(L.UpgradeBuilding)}</div>
+                  <div>{building.level}</div>
+                  <div className="m-icon" style={{ fontSize: "17px", margin: "0 5px" }}>
+                     keyboard_double_arrow_right
+                  </div>
+                  <div>{building.desiredLevel}</div>
+               </div>
+               <div className="separator"></div>
                <div className="row">
                   <div>{t(L.CancelUpgradeDesc)}</div>
                   <div className="ml10">
@@ -31,6 +39,7 @@ export function UpgradingPage({ tile }: { tile: ITileData }) {
                         className="nowrap"
                         onClick={() => {
                            building.status = "completed";
+                           building.desiredLevel = building.level;
                            notifyGameStateUpdate();
                         }}
                      >

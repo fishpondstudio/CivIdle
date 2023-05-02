@@ -1,4 +1,3 @@
-import { Viewport } from "pixi-viewport";
 import { InteractionEvent, Sprite } from "pixi.js";
 import { ROMAN_MAP_BG_COLOR } from "../Colors";
 import { Unlockable } from "../definitions/CityDefinitions";
@@ -6,7 +5,7 @@ import { IProvinceVisual, RomeProvince } from "../definitions/RomeProvinceDefini
 import { Singleton } from "../Global";
 import { TechPage } from "../ui/TechPage";
 import { forEach } from "../utilities/Helper";
-import { Scene } from "../utilities/SceneManager";
+import { ViewportScene } from "../utilities/SceneManager";
 import { ProvinceVisual } from "./ProvinceVisual";
 
 const WIDTH = 3000;
@@ -18,22 +17,15 @@ const UNKNOWN: Record<string, IProvinceVisual> = {
    RomeUnknown3: { x: 1172, y: 1516 },
 };
 
-export class RomeProvinceScene extends Scene {
-   private _viewport!: Viewport;
+export class RomeProvinceScene extends ViewportScene {
    private readonly _provinces: ProvinceVisual[] = [];
    private _selectedProvince: ProvinceVisual | null = null;
 
    override async onLoad(): Promise<void> {
       const { app, textures, gameState } = this.context;
-      this._viewport = new Viewport({
-         interaction: app.renderer.plugins.interaction,
-         disableOnContextMenu: true,
-         screenWidth: app.screen.width,
-         screenHeight: app.screen.height,
-         worldWidth: WIDTH,
-         worldHeight: HEIGHT,
-      });
-      this._viewport
+      this.viewport.worldWidth = WIDTH;
+      this.viewport.worldHeight = HEIGHT;
+      this.viewport
          .drag()
          .wheel({ smooth: 10 })
          .clamp({
@@ -45,20 +37,19 @@ export class RomeProvinceScene extends Scene {
          })
          .setZoom(0);
 
-      app.stage.addChild(this._viewport);
       app.renderer.backgroundColor = ROMAN_MAP_BG_COLOR;
       app.renderer.plugins.interaction.moveWhenInside = true;
 
       forEach(UNKNOWN, (name, config) => {
-         const sprite = this._viewport.addChild(new Sprite(textures[name]));
+         const sprite = this.viewport.addChild(new Sprite(textures[name]));
          sprite.anchor.set(0.5, 0.5);
          sprite.tint = 0xcccccc;
          sprite.position.set(config.x, config.y);
       });
 
-      this._viewport.sortableChildren = true;
+      this.viewport.sortableChildren = true;
 
-      this._viewport.on("pointerdown", (e: InteractionEvent) => {
+      this.viewport.on("pointerdown", (e: InteractionEvent) => {
          this._selectedProvince = null;
          this._provinces.forEach((s) => {
             if (s.isClicked(e) && this._selectedProvince === null) {
@@ -78,10 +69,22 @@ export class RomeProvinceScene extends Scene {
             province.annex();
          }
          this._provinces.push(province);
-         this._viewport.addChild(province);
+         this.viewport.addChild(province);
       });
 
       this.selectProvince("Italia");
+   }
+
+   override onResize(width: number, height: number): void {
+      this.viewport.resize(width, height);
+   }
+
+   public annexProvince(id: RomeProvince): void {
+      this._provinces.forEach((s) => {
+         if (s.province === id) {
+            s.annex();
+         }
+      });
    }
 
    public selectProvince(id: RomeProvince): ProvinceVisual | null {

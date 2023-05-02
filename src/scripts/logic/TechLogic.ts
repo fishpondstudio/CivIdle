@@ -77,19 +77,28 @@ export function unlockTech(tech: string, gs: GameState): void {
    if (gs.unlocked[tech]) {
       return;
    }
-   gs.unlocked[tech] = true;
-   const td = getTechTree(gs).definitions[tech];
-   td.revealDeposit?.forEach((deposit) => {
-      const tileCount = getDepositTileCount(deposit, gs);
-      const depositTiles = shuffle(keysOf(gs.tiles)).slice(0, tileCount);
-      const exploredEmptyTiles = Object.values(gs.tiles).filter((t) => t.explored && !t.building && isEmpty(t.deposit));
-      // We want to guarantee at least one of the deposit tile is spawned on explored tile.
-      if (depositTiles.every((xy) => !gs.tiles[xy].explored) && exploredEmptyTiles.length > 0) {
-         depositTiles[0] = shuffle(exploredEmptyTiles)[0].xy;
-      }
-      depositTiles.forEach((xy) => (gs.tiles[xy].deposit[deposit] = true));
-   });
-   td.unlockFeature?.forEach((f) => (gs.features[f] = true));
+
+   let td: IUnlockableDefinition = getTechTree(gs).definitions[tech];
+   if (!td) {
+      td = Config.City[gs.city].unlockable[tech];
+   }
+
+   if (td) {
+      gs.unlocked[tech] = true;
+      td.revealDeposit?.forEach((deposit) => {
+         const tileCount = getDepositTileCount(deposit, gs);
+         const depositTiles = shuffle(keysOf(gs.tiles)).slice(0, tileCount);
+         const exploredEmptyTiles = Object.values(gs.tiles).filter(
+            (t) => t.explored && !t.building && isEmpty(t.deposit)
+         );
+         // We want to guarantee at least one of the deposit tile is spawned on explored tile.
+         if (depositTiles.every((xy) => !gs.tiles[xy].explored) && exploredEmptyTiles.length > 0) {
+            depositTiles[0] = shuffle(exploredEmptyTiles)[0].xy;
+         }
+         depositTiles.forEach((xy) => (gs.tiles[xy].deposit[deposit] = true));
+      });
+      td.unlockFeature?.forEach((f) => (gs.features[f] = true));
+   }
 }
 
 export function getDepositUnlockTech<T extends string>(deposit: Deposit, definitions: Record<T, ITechDefinition>): T {

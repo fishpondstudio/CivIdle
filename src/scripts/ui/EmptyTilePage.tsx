@@ -67,6 +67,7 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): JSX.Element {
                               return null;
                            }
                            const building = Tick.current.buildings[k];
+                           const buildCost = getBuildingCost({ type: k, level: 1 });
                            return (
                               <tr
                                  key={k}
@@ -85,7 +86,7 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): JSX.Element {
                                  </td>
                                  <td>{numberToRoman(Config.BuildingTier[k] ?? 1)}</td>
                                  <td className="right">
-                                    {jsxMapOf(getBuildingCost({ type: k, level: 1 }), (res, amount) => {
+                                    {jsxMapOf(buildCost, (res, amount) => {
                                        return (
                                           <div key={res}>
                                              {Tick.current.resources[res].name()} x{amount}

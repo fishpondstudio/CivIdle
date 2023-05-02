@@ -1,5 +1,4 @@
 import { SmoothGraphics } from "@pixi/graphics-smooth";
-import { Viewport } from "pixi-viewport";
 import { BitmapText, Container, LINE_CAP, LINE_JOIN, Rectangle } from "pixi.js";
 import { BG_COLOR } from "../Colors";
 import { Fonts } from "../generated/FontBundle";
@@ -9,7 +8,7 @@ import { TechPage } from "../ui/TechPage";
 import { forEach } from "../utilities/Helper";
 import Actions from "../utilities/pixi-actions/Actions";
 import { Easing } from "../utilities/pixi-actions/Easing";
-import { Scene } from "../utilities/SceneManager";
+import { ViewportScene } from "../utilities/SceneManager";
 
 const BOX_WIDTH = 300;
 const BOX_HEIGHT = 100;
@@ -30,8 +29,7 @@ const LINE_STYLE = {
 
 type AnimateType = "animate" | "jump" | "no";
 
-export class TechTreeScene extends Scene {
-   private _viewport!: Viewport;
+export class TechTreeScene extends ViewportScene {
    private _selectedContainer: Container | undefined;
    private readonly _selectedGraphics = new SmoothGraphics();
    private _boxPositions: Partial<Record<string, Rectangle>> = {};
@@ -50,20 +48,15 @@ export class TechTreeScene extends Scene {
       });
 
       const width = this._layout.length * COLUMN_WIDTH;
-      this._viewport = new Viewport({
-         interaction: app.renderer.plugins.interaction,
-         disableOnContextMenu: true,
-         worldWidth: width,
-         worldHeight: PAGE_HEIGHT,
-         screenWidth: app.screen.width,
-         screenHeight: app.screen.height,
-      });
+
+      this.viewport.worldWidth = width;
+      this.viewport.worldHeight = PAGE_HEIGHT;
 
       app.renderer.backgroundColor = BG_COLOR;
       app.renderer.plugins.interaction.moveWhenInside = true;
 
       const preferredZoom = Math.max(app.screen.width / width, app.screen.height / PAGE_HEIGHT);
-      this._viewport
+      this.viewport
          .drag()
          .wheel({ smooth: 10 })
          .clamp({
@@ -74,7 +67,7 @@ export class TechTreeScene extends Scene {
             minScale: preferredZoom / 5,
          });
 
-      this._viewport.on("clicked", (e) => {
+      this.viewport.on("clicked", (e) => {
          const pos = e.world;
          forEach(this._boxPositions, (k, v) => {
             if (v?.contains(pos.x, pos.y)) {
@@ -85,22 +78,23 @@ export class TechTreeScene extends Scene {
          });
       });
 
-      app.stage.addChild(this._viewport);
-      this.renderTechTree("no");
-      this._viewport.setZoom(Math.max(app.screen.width / width, app.screen.height / PAGE_HEIGHT));
+      this.renderTechTree("jump");
+      this.viewport.setZoom(Math.max(app.screen.width / width, app.screen.height / PAGE_HEIGHT));
    }
 
-   override onDestroy(): void {}
+   override onDestroy(): void {
+      this.viewport.destroy({ children: true });
+   }
 
    public renderTechTree(cutTo: AnimateType): void {
-      if (!this._viewport) {
+      if (!this.viewport) {
          return;
       }
       const techTree = getTechTree(this.context.gameState);
-      this._viewport.removeChildren();
+      this.viewport.removeChildren();
       const g = new SmoothGraphics();
-      this._viewport.addChild(g).lineStyle(LINE_STYLE);
-      this._viewport.addChild(this._selectedGraphics);
+      this.viewport.addChild(g).lineStyle(LINE_STYLE);
+      this.viewport.addChild(this._selectedGraphics);
       this._boxPositions = {};
       this._layout.forEach((column, columnIdx) => {
          const height = (PAGE_HEIGHT - HEADER_TOTAL_HEIGHT) / column.length;
@@ -112,7 +106,7 @@ export class TechTreeScene extends Scene {
                (height / 2 - BOX_HEIGHT / 2 - (HEADER_TOTAL_HEIGHT - HEADER_BOX_HEIGHT) / 2);
             const rect = new Rectangle(x, y, BOX_WIDTH, BOX_HEIGHT);
             this._boxPositions[item] = rect;
-            this._viewport.addChild(
+            this.viewport.addChild(
                this.drawBox(
                   g,
                   rect,
@@ -124,7 +118,7 @@ export class TechTreeScene extends Scene {
       });
 
       forEach(techTree.ages, (k, v) => {
-         this._viewport.addChild(
+         this.viewport.addChild(
             this.drawHeader(
                g,
                v.from,
@@ -150,7 +144,7 @@ export class TechTreeScene extends Scene {
          });
       });
 
-      this._selectedContainer = this._viewport.addChild(new Container());
+      this._selectedContainer = this.viewport.addChild(new Container());
       this.selectNode(this._selectedTech, cutTo);
    }
 
@@ -205,7 +199,7 @@ export class TechTreeScene extends Scene {
          });
          targets = newTo;
       }
-      const targetX = this._boxPositions[tech]?.x ?? this._viewport.center.x;
+      const targetX = this._boxPositions[tech]?.x ?? this.viewport.center.x;
       if (cutToTech === "animate") {
          Actions.to<TechTreeScene>(this, { scrollX: targetX }, 0.5, Easing.InOutQuad).play();
       } else if (cutToTech === "jump") {
@@ -214,11 +208,11 @@ export class TechTreeScene extends Scene {
    }
 
    public get scrollX(): number {
-      return this._viewport.center.x;
+      return this.viewport.center.x;
    }
 
    public set scrollX(value: number) {
-      this._viewport.moveCenter(value, this._viewport.center.y);
+      this.viewport.moveCenter(value, this.viewport.center.y);
    }
 
    private drawConnection(

@@ -3,7 +3,7 @@ import { CityDefinitions } from "../definitions/CityDefinitions";
 import { GreatPersonDefinitions } from "../definitions/GreatPersonDefinitions";
 import { DepositResources, Resource, ResourceDefinitions } from "../definitions/ResourceDefinitions";
 import { PartialTabulate } from "../definitions/TypeDefinitions";
-import { forEach, isEmpty, keysOf, sizeOf, tabulateAdd } from "../utilities/Helper";
+import { deepFreeze, forEach, isEmpty, keysOf, sizeOf, tabulateAdd } from "../utilities/Helper";
 import { GameState } from "./GameState";
 import { getDepositUnlockTech, getTechTree } from "./TechLogic";
 
@@ -15,10 +15,10 @@ const ResourcePrice: PartialTabulate<Resource> = {};
 const ResourceTech: PartialTabulate<Resource> = {};
 
 export const Config = {
-   Building: Object.freeze(new BuildingDefinitions()),
-   Resource: Object.freeze(new ResourceDefinitions()),
-   GreatPerson: Object.freeze(new GreatPersonDefinitions()),
-   City: Object.freeze(new CityDefinitions()),
+   Building: deepFreeze(new BuildingDefinitions()),
+   Resource: deepFreeze(new ResourceDefinitions()),
+   GreatPerson: deepFreeze(new GreatPersonDefinitions()),
+   City: deepFreeze(new CityDefinitions()),
    BuildingTier,
    BuildingTech,
    ResourceTier,

@@ -1,27 +1,33 @@
 import { SmoothGraphics } from "@pixi/graphics-smooth";
-import { Viewport } from "pixi-viewport";
-import { IPointData, LINE_CAP, LINE_JOIN, Sprite, Texture, TilingSprite, utils } from "pixi.js";
+import { Container, IPointData, LINE_CAP, LINE_JOIN, Sprite, Texture, TilingSprite, utils } from "pixi.js";
 import { Singleton } from "../Global";
 import { GameState } from "../logic/GameState";
 import { TilePage } from "../ui/TilePage";
-import { forEach, lookAt, pointToXy, xyToPoint } from "../utilities/Helper";
+import { clamp, forEach, lerp, lookAt, pointToXy, xyToPoint } from "../utilities/Helper";
 import { ObjectPool } from "../utilities/ObjectPool";
-import { Scene } from "../utilities/SceneManager";
+import { ViewportScene } from "../utilities/SceneManager";
+import { Vector2 } from "../utilities/Vector2";
 import { TileVisual } from "./TileVisual";
 
 class TransportPool extends ObjectPool<Sprite> {
    _texture: Texture;
+   _parent: Container;
 
-   constructor(texture: Texture) {
+   public static readonly DefaultAlpha = 0.5;
+
+   constructor(texture: Texture, parent: Container) {
       super();
       console.assert(texture instanceof Texture, "Texture is not valid");
       this._texture = texture;
+      this._parent = parent;
    }
 
    protected override create(): Sprite {
-      const visual = new Sprite(this._texture);
+      const visual = this._parent.addChild(new Sprite(this._texture));
       visual.scale = { x: 0.15, y: 0.15 };
-      visual.alpha = 0.5;
+      visual.anchor.x = 1;
+      visual.anchor.y = 0.5;
+      visual.alpha = TransportPool.DefaultAlpha;
       return visual;
    }
 
@@ -30,20 +36,16 @@ class TransportPool extends ObjectPool<Sprite> {
    }
 
    protected onRelease(obj: Sprite): void {
+      obj.alpha = TransportPool.DefaultAlpha;
       obj.visible = false;
    }
 }
 
-export class WorldScene extends Scene {
+export class WorldScene extends ViewportScene {
    private _width!: number;
    private _height!: number;
-   private _viewport!: Viewport;
    private _selectedGraphics!: SmoothGraphics;
    private _transportPool!: TransportPool;
-
-   public get viewport() {
-      return this._viewport;
-   }
 
    private readonly _tiles: utils.Dict<TileVisual> = {};
    private readonly _transport: Record<number, Sprite> = {};
@@ -51,22 +53,16 @@ export class WorldScene extends Scene {
    override onLoad(): void {
       const { app, textures } = this.context;
 
-      this._transportPool = new TransportPool(textures.Transport);
+      this._transportPool = new TransportPool(textures.Transport, this.viewport);
 
       const maxPosition = Singleton().grid.maxPosition();
       this._width = maxPosition.x;
       this._height = maxPosition.y;
 
-      this._viewport = new Viewport({
-         interaction: app.renderer.plugins.interaction,
-         disableOnContextMenu: true,
-         worldWidth: this._width,
-         worldHeight: this._height,
-         screenWidth: app.screen.width,
-         screenHeight: app.screen.height,
-      });
+      this.viewport.worldWidth = this._width;
+      this.viewport.worldHeight = this._height;
 
-      this._viewport
+      this.viewport
          .drag()
          .wheel({ smooth: 10 })
          .clamp({
@@ -77,13 +73,12 @@ export class WorldScene extends Scene {
             minScale: Math.max(app.screen.width / this._width, app.screen.height / this._height),
          });
 
-      app.stage.addChild(this._viewport);
       const bg = new TilingSprite(textures.Paper, this._width, this._height);
       bg.tint = 0x4b6584;
       bg.position.set((this._width - bg.width) / 2, (this._height - bg.height) / 2);
-      this._viewport.addChild(bg);
+      this.viewport.addChild(bg);
 
-      const graphics = this._viewport.addChild(new SmoothGraphics()).lineStyle({
+      const graphics = this.viewport.addChild(new SmoothGraphics()).lineStyle({
          color: 0xffffff,
          width: 2,
          cap: LINE_CAP.ROUND,
@@ -95,14 +90,14 @@ export class WorldScene extends Scene {
 
       Singleton().grid.forEach((grid) => {
          const xy = pointToXy(grid);
-         this._tiles[xy] = this._viewport.addChild(new TileVisual(this, grid));
+         this._tiles[xy] = this.viewport.addChild(new TileVisual(this, grid));
       });
 
-      this._selectedGraphics = this._viewport.addChild(new SmoothGraphics());
+      this._selectedGraphics = this.viewport.addChild(new SmoothGraphics());
 
-      this._viewport.moveCenter(this._width / 2, this._height / 2);
+      this.viewport.moveCenter(this._width / 2, this._height / 2);
 
-      this._viewport.on("clicked", (e) => {
+      this.viewport.on("clicked", (e) => {
          const grid = Singleton().grid.positionToGrid(e.world);
          if (e.event.data.button === 2) {
             return;
@@ -140,21 +135,29 @@ export class WorldScene extends Scene {
 
    resetTile(xy: string): void {
       this._tiles[xy]?.destroy({ children: true });
-      this._tiles[xy] = this._viewport.addChild(new TileVisual(this, xyToPoint(xy)));
+      this._tiles[xy] = this.viewport.addChild(new TileVisual(this, xyToPoint(xy)));
    }
 
-   updateTransportVisual(gs: GameState) {
+   updateTransportVisual(gs: GameState, timeSinceLastTick: number) {
       const ticked: Record<number, true> = {};
       forEach(gs.transportation, (xy, transports) => {
          transports.forEach((t) => {
             if (!this._transport[t.id]) {
                const visual = this._transportPool.allocate();
-               visual.position = t.position;
+               visual.position = t.fromPosition;
                lookAt(visual, t.toPosition);
                this._transport[t.id] = visual;
-               this._viewport.addChild(visual);
             } else {
-               this._transport[t.id].position = t.position;
+               const visual = this._transport[t.id];
+               visual.position = Vector2.lerp(
+                  t.fromPosition,
+                  t.toPosition,
+                  (t.ticksSpent + timeSinceLastTick) / t.ticksRequired
+               );
+               // This is the last tick
+               if (t.ticksSpent === t.ticksRequired - 1) {
+                  visual.alpha = lerp(TransportPool.DefaultAlpha, 0, clamp(timeSinceLastTick - 0.5, 0, 1));
+               }
             }
             ticked[t.id] = true;
          });

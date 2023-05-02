@@ -41,8 +41,4 @@ export default abstract class Action {
       this.pause().reset();
       return this;
    }
-
-   finish() {
-      return this;
-   }
 }

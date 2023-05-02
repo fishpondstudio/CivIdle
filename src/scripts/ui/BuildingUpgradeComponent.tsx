@@ -1,5 +1,6 @@
+import { useState } from "react";
 import { notifyGameStateUpdate } from "../Global";
-import { getBuildingCost } from "../logic/BuildingLogic";
+import { getBuildingCost, getBuildingUpgradeLevels } from "../logic/BuildingLogic";
 import {} from "../logic/GameState";
 import { Tick } from "../logic/TickLogic";
 import { jsxMapOf } from "../utilities/Helper";
@@ -16,6 +17,8 @@ export function BuildingUpgradeComponent({ gameState, xy }: IBuildingComponentPr
       return null;
    }
    const cost = getBuildingCost(building);
+   const levels = getBuildingUpgradeLevels(building);
+   const [upgradeLevel, setUpgradeLevel] = useState(levels[0]);
    return (
       <>
          <fieldset>
@@ -38,12 +41,23 @@ export function BuildingUpgradeComponent({ gameState, xy }: IBuildingComponentPr
             })}
             <div className="separator"></div>
             <div className="row">
-               <select className="f1">
-                  <option value="">x1</option>
+               <select
+                  className="f1"
+                  value={upgradeLevel}
+                  onChange={(v) => {
+                     setUpgradeLevel(parseInt(v.target.value, 10));
+                  }}
+               >
+                  {levels.map((level) => (
+                     <option key={level} value={level}>
+                        x{level}
+                     </option>
+                  ))}
                </select>
                <div style={{ width: "10px" }}></div>
                <button
                   onClick={() => {
+                     building.desiredLevel = building.level + upgradeLevel;
                      building.status = "upgrading";
                      notifyGameStateUpdate();
                   }}

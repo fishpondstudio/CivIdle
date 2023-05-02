@@ -14,12 +14,12 @@ interface ITransportationData {
    id: number;
    fromXy: string;
    toXy: string;
-   position: IPointData;
+   ticksRequired: number;
+   ticksSpent: number;
    fromPosition: IPointData;
    toPosition: IPointData;
    resource: Resource;
    amount: number;
-   hasEnoughFuel: boolean;
    fuel: Resource;
    fuelAmount: number;
 }

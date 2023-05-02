@@ -206,6 +206,11 @@ export function clamp(value: number, minInclusive: number, maxInclusive: number)
    return value;
 }
 
+export function lerp(a: number, b: number, amount: number): number {
+   amount = clamp(amount, 0, 1);
+   return a + (b - a) * amount;
+}
+
 export function lookAt(displayObject: DisplayObject, point: IPointData): void {
    displayObject.rotation = Math.atan2(point.y - displayObject.y, point.x - displayObject.x);
 }
@@ -324,4 +329,20 @@ export function loadScript(src: string): Promise<void> {
       script.onload = () => resolve();
       script.onerror = reject;
    });
+}
+
+export function deepFreeze<T>(object: T): Readonly<T> {
+   // Retrieve the property names defined on object
+   const propNames = Object.getOwnPropertyNames(object);
+
+   // Freeze properties before freezing self
+   for (const name of propNames) {
+      const value = (object as Record<string, unknown>)[name];
+
+      if ((value && typeof value === "object") || typeof value === "function") {
+         deepFreeze(value);
+      }
+   }
+
+   return Object.freeze(object);
 }

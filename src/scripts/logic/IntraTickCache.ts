@@ -4,11 +4,13 @@ import { PartialSet, PartialTabulate } from "../definitions/TypeDefinitions";
 import { forEach, safePush } from "../utilities/Helper";
 import { GameState } from "./GameState";
 import { getTechTree, getUnlocked } from "./TechLogic";
+import { Tick } from "./TickLogic";
 import { ITileData } from "./Tile";
 
 class IntraTickCache {
    revealedDeposits: PartialSet<Deposit> | undefined;
    unlockedBuildings: PartialSet<Building> | undefined;
+   unlockedResources: PartialSet<Resource> | undefined;
    buildingsByType: Partial<Record<Building, ITileData[]>> | undefined;
    resourceAmount: PartialTabulate<Resource> | undefined;
 }
@@ -54,15 +56,23 @@ export function unlockedBuildings(gs: GameState): PartialSet<Building> {
       return _cache.unlockedBuildings;
    }
    _cache.unlockedBuildings = {};
-   // forEach(gs.unlockedTech, (tech) => {
-   //    Config.Tech[tech].unlockBuilding?.forEach((r) => {
-   //       _cache.unlockedBuildings![r] = true;
-   //    });
-   // });
    forEach(gs.unlocked, (tech) => {
       getUnlocked(tech, getTechTree(gs).definitions)?.unlockBuilding?.forEach((r) => {
          _cache.unlockedBuildings![r] = true;
       });
    });
    return _cache.unlockedBuildings;
+}
+
+export function unlockedResources(gs: GameState): PartialSet<Resource> {
+   if (_cache.unlockedResources) {
+      return _cache.unlockedResources;
+   }
+   _cache.unlockedResources = {};
+   forEach(unlockedBuildings(gs), (b) => {
+      forEach(Tick.current.buildings[b].output, (res) => {
+         _cache.unlockedResources![res] = true;
+      });
+   });
+   return _cache.unlockedResources;
 }

@@ -1,9 +1,10 @@
 import { notifyGameStateUpdate } from "../Global";
 import { Config } from "../logic/Constants";
+import { unlockedResources } from "../logic/IntraTickCache";
 import { getCash } from "../logic/ResourceLogic";
 import { Tick } from "../logic/TickLogic";
 import { IMarketBuildingData } from "../logic/Tile";
-import { jsxMapOf } from "../utilities/Helper";
+import { keysOf } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
 import { playClick } from "../visuals/Sound";
 import { IBuildingComponentProps } from "./BuildingPage";
@@ -43,46 +44,51 @@ export function MarketBuildingBody({ gameState, xy }: IBuildingComponentProps) {
                   </tr>
                </thead>
                <tbody>
-                  {jsxMapOf(Tick.current.resourcesByBuilding, (res, xys) => {
-                     const r = Tick.current.resources[res];
-                     if (!r.canPrice || !r.canStore) {
-                        return null;
-                     }
-                     return (
-                        <tr key={res}>
-                           <td>{r.name()}</td>
-                           <td className="right">
-                              $<FormatNumber value={Config.ResourcePrice[res]} />
-                           </td>
-                           <td className="right">
-                              <FormatNumber
-                                 value={xys.reduce(
-                                    (prev, curr) => prev + (gameState.tiles[curr].building?.resources?.[res] ?? 0),
-                                    0
+                  {keysOf(unlockedResources(gameState))
+                     .sort((a, b) => (Config.ResourcePrice[b] ?? 0) - (Config.ResourcePrice[a] ?? 0))
+                     .map((res) => {
+                        const r = Tick.current.resources[res];
+                        if (!r.canPrice || !r.canStore) {
+                           return null;
+                        }
+                        return (
+                           <tr key={res}>
+                              <td>{r.name()}</td>
+                              <td className="right">
+                                 $<FormatNumber value={Config.ResourcePrice[res]} />
+                              </td>
+                              <td className="right">
+                                 <FormatNumber
+                                    value={
+                                       Tick.current.resourcesByBuilding[res]?.reduce(
+                                          (prev, curr) =>
+                                             prev + (gameState.tiles[curr].building?.resources?.[res] ?? 0),
+                                          0
+                                       ) ?? 0
+                                    }
+                                 />
+                              </td>
+                              <td
+                                 className="pointer"
+                                 onClick={() => {
+                                    playClick();
+                                    if (building.sellResources[res]) {
+                                       delete building.sellResources[res];
+                                    } else {
+                                       building.sellResources[res] = true;
+                                    }
+                                    notifyGameStateUpdate();
+                                 }}
+                              >
+                                 {building.sellResources[res] ? (
+                                    <div className="m-icon text-green">toggle_on</div>
+                                 ) : (
+                                    <div className="m-icon text-grey">toggle_off</div>
                                  )}
-                              />
-                           </td>
-                           <td
-                              className="pointer"
-                              onClick={() => {
-                                 playClick();
-                                 if (building.sellResources[res]) {
-                                    delete building.sellResources[res];
-                                 } else {
-                                    building.sellResources[res] = true;
-                                 }
-                                 notifyGameStateUpdate();
-                              }}
-                           >
-                              {building.sellResources[res] ? (
-                                 <div className="m-icon text-green">toggle_on</div>
-                              ) : (
-                                 <div className="m-icon text-grey">toggle_off</div>
-                              )}
-                           </td>
-                        </tr>
-                     );
-                  })}
+                              </td>
+                           </tr>
+                        );
+                     })}
                </tbody>
             </table>
          </div>

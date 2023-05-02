@@ -18,6 +18,7 @@ export type BuildingStatus = "building" | "upgrading" | "paused" | "completed";
 export interface IBuildingData {
    type: Building;
    level: number;
+   desiredLevel: number;
    resources: PartialTabulate<Resource>;
    status: BuildingStatus;
    capacity: number;
@@ -60,6 +61,7 @@ export const PRIORITY_MAX = 10;
 export function makeBuilding(data: Pick<IBuildingData, "type"> & Partial<IBuildingData>): IBuildingData {
    const building: IBuildingData = {
       level: 1,
+      desiredLevel: 1,
       resources: {},
       status: "building",
       capacity: 1,
