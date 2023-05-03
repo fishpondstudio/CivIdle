@@ -1,5 +1,6 @@
 import { SmoothGraphics } from "@pixi/graphics-smooth";
-import { Container, IPointData, LINE_CAP, LINE_JOIN, Sprite, Texture, TilingSprite, utils } from "pixi.js";
+import { BitmapText, Container, IPointData, LINE_CAP, LINE_JOIN, Sprite, Texture, TilingSprite, utils } from "pixi.js";
+import { Fonts } from "../generated/FontBundle";
 import { Singleton } from "../Global";
 import { GameState } from "../logic/GameState";
 import { TilePage } from "../ui/TilePage";
@@ -41,11 +42,43 @@ class TransportPool extends ObjectPool<Sprite> {
    }
 }
 
+class TooltipPool extends ObjectPool<BitmapText> {
+   _parent: Container;
+
+   public static readonly DefaultAlpha = 0.5;
+
+   constructor(parent: Container) {
+      super();
+      this._parent = parent;
+   }
+
+   protected override create(): BitmapText {
+      const visual = this._parent.addChild(
+         new BitmapText("", {
+            fontName: Fonts.CabinMedium,
+            fontSize: 14,
+            tint: 0xffffff,
+         })
+      );
+      visual.anchor.set(0.5, 0.5);
+      return visual;
+   }
+
+   protected onAllocate(obj: BitmapText): void {
+      obj.visible = true;
+   }
+
+   protected onRelease(obj: BitmapText): void {
+      obj.visible = false;
+   }
+}
+
 export class WorldScene extends ViewportScene {
    private _width!: number;
    private _height!: number;
    private _selectedGraphics!: SmoothGraphics;
    private _transportPool!: TransportPool;
+   public tooltipPool!: TooltipPool;
 
    private readonly _tiles: utils.Dict<TileVisual> = {};
    private readonly _transport: Record<number, Sprite> = {};
@@ -54,6 +87,7 @@ export class WorldScene extends ViewportScene {
       const { app, textures } = this.context;
 
       this._transportPool = new TransportPool(textures.Transport, this.viewport);
+      this.tooltipPool = new TooltipPool(this.viewport);
 
       const maxPosition = Singleton().grid.maxPosition();
       this._width = maxPosition.x;

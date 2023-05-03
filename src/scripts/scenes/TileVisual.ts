@@ -26,8 +26,6 @@ export class TileVisual extends Container {
    private readonly _level: BitmapText;
    private readonly _constructionAnimation: Action;
    private readonly _upgradeAnimation: Action;
-   private readonly _tooltip: BitmapText;
-   private readonly _tooltipAnimation: Action;
 
    constructor(world: WorldScene, grid: IPointData) {
       super();
@@ -87,23 +85,6 @@ export class TileVisual extends Container {
       this._level.anchor.set(0.5, 0.5);
       this._level.position.set(25, -25);
       this._level.visible = false;
-
-      this._tooltip = this.addChild(
-         new BitmapText("", {
-            fontName: Fonts.CabinMedium,
-            fontSize: 14,
-            tint: 0xffffff,
-         })
-      );
-      this._tooltip.anchor.set(0.5, 0.5);
-      this._tooltip.visible = false;
-      this._tooltipAnimation = Actions.sequence(
-         Actions.to(this._tooltip, { y: -30, alpha: 1 }, 0.2, Easing.OutQuad),
-         Actions.to(this._tooltip, { y: -60, alpha: 0 }, 0.6, Easing.InQuad),
-         Actions.runFunc(() => {
-            this._tooltip.visible = false;
-         })
-      );
 
       this._fog = this.addChild(new Sprite(textures.Cloud));
       this._fog.anchor.set(0.5);
@@ -174,16 +155,17 @@ export class TileVisual extends Container {
    }
 
    public showText(text: string): void {
-      if (this._tooltipAnimation.isPlaying()) {
-         console.warn("Another showText is ongoing, will ignore this one!");
-         return;
-      }
-      this._tooltip.visible = true;
-      this._tooltip.alpha = 0;
-      this._tooltip.position.set(0, 0);
-      this._tooltip.text = text;
-      this._tooltipAnimation.reset().play();
-      console.log(Actions.actions);
+      const t = this._world.tooltipPool.allocate();
+      t.text = text;
+      t.position = this.position;
+      t.y = t.y - 20;
+      Actions.sequence(
+         Actions.to(t, { y: t.y - 10, alpha: 1 }, 0.25, Easing.OutQuad),
+         Actions.to(t, { y: t.y - 40, alpha: 0 }, 1.25, Easing.InQuad),
+         Actions.runFunc(() => {
+            this._world.tooltipPool.release(t);
+         })
+      ).play();
    }
 
    public update(gs: GameState, dt: number) {
