@@ -16,16 +16,12 @@ export class WorldScene extends ViewportScene {
    private _selectedGraphics!: SmoothGraphics;
    private _transportPool!: TransportPool;
    public tooltipPool!: TooltipPool;
-   public textContainer!: Container;
 
    private readonly _tiles: utils.Dict<TileVisual> = {};
    private readonly _transport: Record<number, Sprite> = {};
 
    override onLoad(): void {
       const { app, textures } = this.context;
-
-      this.tooltipPool = new TooltipPool(this.viewport);
-
       const maxPosition = Singleton().grid.maxPosition();
       this._width = maxPosition.x;
       this._height = maxPosition.y;
@@ -59,14 +55,14 @@ export class WorldScene extends ViewportScene {
       graphics.alpha = 0.05;
       Singleton().grid.drawGrid(graphics);
 
-      this.textContainer = this.viewport.addChild(new Container());
+      this._selectedGraphics = this.viewport.addChild(new SmoothGraphics());
 
       Singleton().grid.forEach((grid) => {
          const xy = pointToXy(grid);
          this._tiles[xy] = this.viewport.addChild(new TileVisual(this, grid));
       });
 
-      this._selectedGraphics = this.viewport.addChild(new SmoothGraphics());
+      this.tooltipPool = new TooltipPool(this.viewport.addChild(new Container()));
 
       const transport = this.viewport.addChild(
          new ParticleContainer(1500, { position: true, rotation: true, alpha: true })

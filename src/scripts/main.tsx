@@ -48,6 +48,10 @@ const canvas = document.getElementById("game-canvas");
 const mainBundle = {
    atlas,
 };
+const fonts = [
+   new FontFace(Fonts.Cabin, `url(${CabinMedium})`),
+   new FontFace(Fonts.Marcellus, `url(${MarcellusRegular})`),
+];
 
 export type MainBundle = keyof typeof mainBundle;
 export type MainBundleAssets = Record<MainBundle, any>;
@@ -66,16 +70,12 @@ if (canvas) {
 }
 
 async function loadBundle(app: Application) {
-   const f1 = new FontFace(Fonts.Cabin, `url(${CabinMedium})`);
-   const f2 = new FontFace(Fonts.Marcellus, `url(${MarcellusRegular})`);
-   document.fonts.add(f1);
-   document.fonts.add(f2);
-   const result = await Promise.all([Assets.loadBundle(["main", "font"]), f1.load(), f2.load()]);
+   fonts.forEach((f) => document.fonts.add(f));
+   const result = await Promise.all([Assets.loadBundle(["main"])].concat(fonts.map((f) => f.load())));
    const { main }: { main: MainBundleAssets } = result[0];
-   BitmapFont.from(
-      Fonts.Cabin,
-      { fill: "#ffffff", fontSize: 100, fontFamily: Fonts.Cabin },
-      { chars: BitmapFont.ASCII }
+
+   fonts.forEach((f) =>
+      BitmapFont.from(f.family, { fill: "#ffffff", fontSize: 100, fontFamily: f.family }, { chars: BitmapFont.ASCII })
    );
    BitmapFont.from(
       Fonts.Marcellus,

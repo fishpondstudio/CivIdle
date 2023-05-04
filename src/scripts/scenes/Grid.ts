@@ -51,6 +51,7 @@ export class Grid {
          fontName: Fonts.Marcellus,
          fontSize: 14,
          align: "center",
+         tint: 0xffffff,
       });
       graphics.addChild(font).position.set(pos.x - font.width / 2, pos.y - font.height / 2);
    }

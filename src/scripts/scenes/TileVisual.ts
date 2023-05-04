@@ -1,5 +1,5 @@
 import { Viewport } from "pixi-viewport";
-import { BitmapText, Container, IPointData, Sprite } from "pixi.js";
+import { BitmapText, Container, IDestroyOptions, IPointData, Sprite } from "pixi.js";
 import { Resource } from "../definitions/ResourceDefinitions";
 import { getGameState, Singleton } from "../Global";
 import { getBuildingLevelLabel, getBuildingTexture, getTileTexture } from "../logic/BuildingLogic";
@@ -77,8 +77,7 @@ export class TileVisual extends Container {
          )
       );
 
-      console.assert(world.textContainer != null, "Text Container should be set up before TileVisual is added!");
-      this._level = world.textContainer.addChild(
+      this._level = this.addChild(
          new BitmapText("", {
             fontName: Fonts.Cabin,
             fontSize: 16,
@@ -86,8 +85,8 @@ export class TileVisual extends Container {
          })
       );
       this._level.anchor.set(0.5, 0.5);
-      this._level.position.set(this.x + 25, this.y - 25);
-      this._level.visible = false;
+      this._level.position.set(25, -25);
+      this._level.visible = true;
       this._level.cullable = true;
 
       this._fog = this.addChild(new Sprite(textures.Cloud));
@@ -110,7 +109,6 @@ export class TileVisual extends Container {
 
       this.update(getGameState(), 0);
       world.viewport.on("zoomed-end", this.onZoomed, this);
-      this.on("destroyed", this.onDestroyed);
    }
 
    public updateLayout() {
@@ -142,13 +140,11 @@ export class TileVisual extends Container {
       });
    }
 
-   private onDestroyed(): void {
+   override destroy(options?: boolean | IDestroyOptions | undefined): void {
+      super.destroy(options);
       this._world.viewport.off("zoomed-end", this.onZoomed, this);
       this._upgradeAnimation.stop();
       this._constructionAnimation.stop();
-      if (!this._level.destroyed) {
-         this._level.destroy({ children: true });
-      }
    }
 
    public async reveal(): Promise<TileVisual> {
