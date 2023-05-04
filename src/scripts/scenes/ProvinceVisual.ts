@@ -2,8 +2,8 @@ import { OutlineFilter } from "@pixi/filter-outline";
 import { BitmapText, Container, InteractionEvent, IRendererPlugins, Sprite, Texture } from "pixi.js";
 import { Unlockable } from "../definitions/CityDefinitions";
 import { RomeProvince } from "../definitions/RomeProvinceDefinitions";
-import { Fonts } from "../generated/FontBundle";
 import { v2 } from "../utilities/Vector2";
+import { Fonts } from "../visuals/Fonts";
 
 export class ProvinceVisual extends Container {
    private static readonly colors = [0x00cec9, 0x0984e3, 0xfdcb6e, 0xe84393, 0xe17055];
@@ -45,7 +45,7 @@ export class ProvinceVisual extends Container {
 
       const text = this.addChild(
          new BitmapText(definitions[id].name(), {
-            fontName: Fonts.MarcellusRegular,
+            fontName: Fonts.Marcellus,
             fontSize: visual?.textSize ?? 50,
             tint: 0xffffff,
          })

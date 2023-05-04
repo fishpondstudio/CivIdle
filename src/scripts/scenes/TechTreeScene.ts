@@ -1,7 +1,6 @@
 import { SmoothGraphics } from "@pixi/graphics-smooth";
 import { BitmapText, Container, LINE_CAP, LINE_JOIN, Rectangle } from "pixi.js";
 import { BG_COLOR } from "../Colors";
-import { Fonts } from "../generated/FontBundle";
 import { Singleton } from "../Global";
 import { getTechTree, isAgeUnlocked, unlockableTechs } from "../logic/TechLogic";
 import { TechPage } from "../ui/TechPage";
@@ -9,6 +8,7 @@ import { forEach } from "../utilities/Helper";
 import Actions from "../utilities/pixi-actions/Actions";
 import { Easing } from "../utilities/pixi-actions/Easing";
 import { ViewportScene } from "../utilities/SceneManager";
+import { Fonts } from "../visuals/Fonts";
 
 const BOX_WIDTH = 300;
 const BOX_HEIGHT = 100;
@@ -256,7 +256,7 @@ export class TechTreeScene extends ViewportScene {
       g.drawRoundedRect(rect.x, rect.y, rect.width, rect.height, radius);
       g.lineStyle({ ...g.line, color: oldColor });
       const bitmapText = new BitmapText(text, {
-         fontName: Fonts.MarcellusRegular,
+         fontName: Fonts.Marcellus,
          fontSize: 28,
          tint: color,
       });
@@ -264,6 +264,7 @@ export class TechTreeScene extends ViewportScene {
       bitmapText.anchor.y = 0.5;
       bitmapText.x = rect.x + rect.width / 2;
       bitmapText.y = rect.y + rect.height / 2;
+      bitmapText.cullable = true;
       return bitmapText;
    }
 }

@@ -1,13 +1,14 @@
 import { Assets } from "@pixi/assets";
-import { Application, Spritesheet } from "pixi.js";
+import { Application, BitmapFont, Spritesheet } from "pixi.js";
 import { createRoot } from "react-dom/client";
 import "../css/Main.css";
+import CabinMedium from "../fonts/CabinMedium.ttf?url";
+import MarcellusRegular from "../fonts/MarcellusRegular.ttf?url";
 import altasDef from "../images/textures.json";
 import atlas from "../images/textures.png";
 import { BG_COLOR } from "./Colors";
 import { Building } from "./definitions/BuildingDefinitions";
 import { City } from "./definitions/CityDefinitions";
-import { fontBundle } from "./generated/FontBundle";
 import {
    GameStateChanged,
    getGameState,
@@ -34,6 +35,7 @@ import { forEach } from "./utilities/Helper";
 import Actions from "./utilities/pixi-actions/Actions";
 import { SceneManager, Textures } from "./utilities/SceneManager";
 import { TypedEvent } from "./utilities/TypedEvent";
+import { Fonts } from "./visuals/Fonts";
 
 const routeChanged = new TypedEvent<RouteChangeEvent>();
 
@@ -58,21 +60,32 @@ if (canvas) {
    canvas.appendChild(app.view);
    registerPixiInspector(app);
    Assets.addBundle("main", mainBundle);
-   Assets.addBundle("font", fontBundle);
-   Assets.loadBundle(["main", "font"])
-      .then(({ main }: { main: MainBundleAssets }) => {
-         new Spritesheet(main.atlas, altasDef as any)
-            .parse()
-            .then((textures) => {
-               if (textures) {
-                  startGame(app, main, textures).catch(console.error);
-               }
-            })
-            .catch(console.error);
-      })
-      .catch(console.error);
+   loadBundle(app);
 } else {
    console.error("Cannot find #game-canvas, check your HTML setup!");
+}
+
+async function loadBundle(app: Application) {
+   const f1 = new FontFace(Fonts.Cabin, `url(${CabinMedium})`);
+   const f2 = new FontFace(Fonts.Marcellus, `url(${MarcellusRegular})`);
+   document.fonts.add(f1);
+   document.fonts.add(f2);
+   const result = await Promise.all([Assets.loadBundle(["main", "font"]), f1.load(), f2.load()]);
+   const { main }: { main: MainBundleAssets } = result[0];
+   BitmapFont.from(
+      Fonts.Cabin,
+      { fill: "#ffffff", fontSize: 100, fontFamily: Fonts.Cabin },
+      { chars: BitmapFont.ASCII }
+   );
+   BitmapFont.from(
+      Fonts.Marcellus,
+      { fill: "#ffffff", fontSize: 100, fontFamily: Fonts.Marcellus },
+      { chars: BitmapFont.ASCII }
+   );
+   const textures = await new Spritesheet(main.atlas, altasDef as any).parse();
+   if (textures) {
+      startGame(app, main, textures).catch(console.error);
+   }
 }
 
 async function startGame(app: Application, resources: MainBundleAssets, textures: Textures) {

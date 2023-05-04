@@ -1,7 +1,6 @@
 import { Viewport } from "pixi-viewport";
 import { BitmapText, Container, IPointData, Sprite } from "pixi.js";
 import { Resource } from "../definitions/ResourceDefinitions";
-import { Fonts } from "../generated/FontBundle";
 import { getGameState, Singleton } from "../Global";
 import { getBuildingLevelLabel, getBuildingTexture, getTileTexture } from "../logic/BuildingLogic";
 import { GameState } from "../logic/GameState";
@@ -11,6 +10,7 @@ import Actions from "../utilities/pixi-actions/Actions";
 import Action from "../utilities/pixi-actions/actions/Action";
 import { Easing } from "../utilities/pixi-actions/Easing";
 import { v2 } from "../utilities/Vector2";
+import { Fonts } from "../visuals/Fonts";
 import { WorldScene } from "./WorldScene";
 
 export class TileVisual extends Container {
@@ -32,6 +32,8 @@ export class TileVisual extends Container {
       this._world = world;
       this._grid = grid;
       this.position = Singleton().grid.gridToPosition(this._grid);
+
+      this.cullable = true;
 
       const { textures } = this._world.context;
 
@@ -75,16 +77,18 @@ export class TileVisual extends Container {
          )
       );
 
-      this._level = this.addChild(
+      console.assert(world.textContainer != null, "Text Container should be set up before TileVisual is added!");
+      this._level = world.textContainer.addChild(
          new BitmapText("", {
-            fontName: Fonts.CabinMedium,
+            fontName: Fonts.Cabin,
             fontSize: 16,
             tint: 0xffffff,
          })
       );
       this._level.anchor.set(0.5, 0.5);
-      this._level.position.set(25, -25);
+      this._level.position.set(this.x + 25, this.y - 25);
       this._level.visible = false;
+      this._level.cullable = true;
 
       this._fog = this.addChild(new Sprite(textures.Cloud));
       this._fog.anchor.set(0.5);
@@ -142,6 +146,9 @@ export class TileVisual extends Container {
       this._world.viewport.off("zoomed-end", this.onZoomed, this);
       this._upgradeAnimation.stop();
       this._constructionAnimation.stop();
+      if (!this._level.destroyed) {
+         this._level.destroy({ children: true });
+      }
    }
 
    public async reveal(): Promise<TileVisual> {
@@ -168,14 +175,15 @@ export class TileVisual extends Container {
       ).play();
    }
 
-   public update(gs: GameState, dt: number) {
-      const { textures, gameState } = this._world.context;
+   public onTileDataChanged(tileData: ITileData) {
+      const { textures, gameState, app } = this._world.context;
       if (!this._tile) {
          console.warn(`[TileVisual] Cannot find tile data for ${pointToXy(this._grid)}`);
          return;
       }
       if (!this._tile.explored) {
          this._fog.visible = true;
+         this._building.visible = false;
          return;
       }
       this._fog.visible = false;
@@ -190,7 +198,10 @@ export class TileVisual extends Container {
          this.updateLayout();
       }
       this._level.visible = true;
-      this._level.text = getBuildingLevelLabel(this._tile.building);
+      const newLevel = getBuildingLevelLabel(this._tile.building);
+      if (this._level.text != newLevel) {
+         this._level.text = newLevel;
+      }
       if (this._tile.building.status === "building") {
          this._construction.visible = true;
          this._spinner.visible = false;
@@ -216,6 +227,12 @@ export class TileVisual extends Container {
       this._upgrade.visible = false;
       this.toggleUpgradeTween(false);
       this._spinner.visible = true;
+   }
+
+   public update(gs: GameState, dt: number) {
+      if (!this._tile || !this._tile.building) {
+         return;
+      }
       this._spinner.angle += dt * 90;
       if (this._tile.building.notProducingReason == null) {
          this._spinner.alpha += dt;

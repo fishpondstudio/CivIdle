@@ -1,7 +1,7 @@
 import { BitmapText, Container } from "pixi.js";
-import { Fonts } from "../generated/FontBundle";
 import { xyToPoint } from "../utilities/Helper";
 import { Hex, Layout, OffsetCoord, Point } from "../utilities/Hex";
+import { Fonts } from "../visuals/Fonts";
 
 interface IGraphics extends Container {
    lineTo: (x: number, y: number) => IGraphics;
@@ -48,7 +48,7 @@ export class Grid {
    private drawGridDebugInfo(x: number, y: number, graphics: IGraphics) {
       const pos = this.gridToPosition({ x, y });
       const font = new BitmapText(`${x},${y}\n(${Math.round(pos.x)},${Math.round(pos.y)})`, {
-         fontName: Fonts.MarcellusRegular,
+         fontName: Fonts.Marcellus,
          fontSize: 14,
          align: "center",
       });

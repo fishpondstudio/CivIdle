@@ -1,77 +1,14 @@
 import { SmoothGraphics } from "@pixi/graphics-smooth";
-import { BitmapText, Container, IPointData, LINE_CAP, LINE_JOIN, Sprite, Texture, TilingSprite, utils } from "pixi.js";
-import { Fonts } from "../generated/FontBundle";
+import { Container, IPointData, LINE_CAP, LINE_JOIN, ParticleContainer, Sprite, TilingSprite, utils } from "pixi.js";
 import { Singleton } from "../Global";
 import { GameState } from "../logic/GameState";
 import { TilePage } from "../ui/TilePage";
 import { clamp, forEach, lerp, lookAt, pointToXy, xyToPoint } from "../utilities/Helper";
-import { ObjectPool } from "../utilities/ObjectPool";
 import { ViewportScene } from "../utilities/SceneManager";
 import { Vector2 } from "../utilities/Vector2";
 import { TileVisual } from "./TileVisual";
-
-class TransportPool extends ObjectPool<Sprite> {
-   _texture: Texture;
-   _parent: Container;
-
-   public static readonly DefaultAlpha = 0.5;
-
-   constructor(texture: Texture, parent: Container) {
-      super();
-      console.assert(texture instanceof Texture, "Texture is not valid");
-      this._texture = texture;
-      this._parent = parent;
-   }
-
-   protected override create(): Sprite {
-      const visual = this._parent.addChild(new Sprite(this._texture));
-      visual.scale = { x: 0.15, y: 0.15 };
-      visual.anchor.x = 1;
-      visual.anchor.y = 0.5;
-      visual.alpha = TransportPool.DefaultAlpha;
-      return visual;
-   }
-
-   protected onAllocate(obj: Sprite): void {
-      obj.visible = true;
-   }
-
-   protected onRelease(obj: Sprite): void {
-      obj.alpha = TransportPool.DefaultAlpha;
-      obj.visible = false;
-   }
-}
-
-class TooltipPool extends ObjectPool<BitmapText> {
-   _parent: Container;
-
-   public static readonly DefaultAlpha = 0.5;
-
-   constructor(parent: Container) {
-      super();
-      this._parent = parent;
-   }
-
-   protected override create(): BitmapText {
-      const visual = this._parent.addChild(
-         new BitmapText("", {
-            fontName: Fonts.CabinMedium,
-            fontSize: 14,
-            tint: 0xffffff,
-         })
-      );
-      visual.anchor.set(0.5, 0.5);
-      return visual;
-   }
-
-   protected onAllocate(obj: BitmapText): void {
-      obj.visible = true;
-   }
-
-   protected onRelease(obj: BitmapText): void {
-      obj.visible = false;
-   }
-}
+import { TooltipPool } from "./TooltipPool";
+import { TransportPool } from "./TransportPool";
 
 export class WorldScene extends ViewportScene {
    private _width!: number;
@@ -79,6 +16,7 @@ export class WorldScene extends ViewportScene {
    private _selectedGraphics!: SmoothGraphics;
    private _transportPool!: TransportPool;
    public tooltipPool!: TooltipPool;
+   public textContainer!: Container;
 
    private readonly _tiles: utils.Dict<TileVisual> = {};
    private readonly _transport: Record<number, Sprite> = {};
@@ -86,7 +24,6 @@ export class WorldScene extends ViewportScene {
    override onLoad(): void {
       const { app, textures } = this.context;
 
-      this._transportPool = new TransportPool(textures.Transport, this.viewport);
       this.tooltipPool = new TooltipPool(this.viewport);
 
       const maxPosition = Singleton().grid.maxPosition();
@@ -122,12 +59,19 @@ export class WorldScene extends ViewportScene {
       graphics.alpha = 0.05;
       Singleton().grid.drawGrid(graphics);
 
+      this.textContainer = this.viewport.addChild(new Container());
+
       Singleton().grid.forEach((grid) => {
          const xy = pointToXy(grid);
          this._tiles[xy] = this.viewport.addChild(new TileVisual(this, grid));
       });
 
       this._selectedGraphics = this.viewport.addChild(new SmoothGraphics());
+
+      const transport = this.viewport.addChild(
+         new ParticleContainer(1500, { position: true, rotation: true, alpha: true })
+      );
+      this._transportPool = new TransportPool(textures.Transport, transport);
 
       this.viewport.moveCenter(this._width / 2, this._height / 2);
 
@@ -140,6 +84,10 @@ export class WorldScene extends ViewportScene {
       });
 
       this.selectGrid(xyToPoint(Singleton().buildings.Headquarter.xy));
+   }
+
+   override onGameStateChanged(gameState: GameState): void {
+      forEach(this._tiles, (xy, visual) => visual.onTileDataChanged(gameState.tiles[xy]));
    }
 
    selectGrid(grid: IPointData) {
@@ -189,8 +137,8 @@ export class WorldScene extends ViewportScene {
                   (t.ticksSpent + timeSinceLastTick) / t.ticksRequired
                );
                // This is the last tick
-               if (t.ticksSpent === t.ticksRequired - 1) {
-                  visual.alpha = lerp(TransportPool.DefaultAlpha, 0, clamp(timeSinceLastTick - 0.5, 0, 1));
+               if (t.ticksSpent >= t.ticksRequired - 1) {
+                  visual.alpha = lerp(TransportPool.DefaultAlpha, 0, clamp(timeSinceLastTick - 0.5, 0, 0.5) * 2);
                }
             }
             ticked[t.id] = true;

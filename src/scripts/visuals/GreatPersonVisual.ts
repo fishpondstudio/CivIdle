@@ -1,10 +1,10 @@
 import { SmoothGraphics } from "@pixi/graphics-smooth";
 import { BitmapText, Sprite, Text } from "pixi.js";
 import { GreatPerson } from "../definitions/GreatPersonDefinitions";
-import { Fonts } from "../generated/FontBundle";
 import { Config } from "../logic/Constants";
 import { containsNonASCII } from "../utilities/Helper";
 import { ISceneContext } from "../utilities/SceneManager";
+import { Fonts } from "./Fonts";
 
 function makeText(text: string, size: number, tint: number) {
    if (containsNonASCII(text)) {
@@ -15,7 +15,7 @@ function makeText(text: string, size: number, tint: number) {
       });
    }
    return new BitmapText(text, {
-      fontName: Fonts.MarcellusRegular,
+      fontName: Fonts.Marcellus,
       fontSize: size,
       tint,
    });
