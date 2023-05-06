@@ -55,8 +55,8 @@ export class TileVisual extends Container {
       this._constructionAnimation = Actions.repeat(
          Actions.sequence(
             Actions.to(this._construction, { angle: 45 }, 0.5, Easing.OutBounce),
-            Actions.to(this._construction, { angle: 0 }, 0.5, Easing.OutSine),
-         ),
+            Actions.to(this._construction, { angle: 0 }, 0.5, Easing.OutSine)
+         )
       );
 
       this._upgrade = this.addChild(new Sprite(textures.Upgrade));
@@ -73,8 +73,8 @@ export class TileVisual extends Container {
                this._upgrade.alpha = 0;
             }),
             Actions.to(this._upgrade, { y: 0, alpha: 1 }, 0.5, Easing.OutSine),
-            Actions.to(this._upgrade, { y: -10, alpha: 0 }, 0.5, Easing.InSine),
-         ),
+            Actions.to(this._upgrade, { y: -10, alpha: 0 }, 0.5, Easing.InSine)
+         )
       );
 
       this._level = this.addChild(
@@ -82,7 +82,7 @@ export class TileVisual extends Container {
             fontName: Fonts.Cabin,
             fontSize: 16,
             tint: 0xffffff,
-         }),
+         })
       );
       this._level.anchor.set(0.5, 0.5);
       this._level.position.set(25, -25);
@@ -152,7 +152,7 @@ export class TileVisual extends Container {
       return await new Promise((resolve) => {
          Actions.sequence(
             Actions.to(this._fog, { alpha: 0, scale: { x: 0.8, y: 0.8 } }, 1, Easing.InQuad),
-            Actions.runFunc(() => resolve(this)),
+            Actions.runFunc(() => resolve(this))
          ).play();
       });
    }
@@ -167,7 +167,7 @@ export class TileVisual extends Container {
          Actions.to(t, { y: t.y - 40, alpha: 0 }, 1.25, Easing.InQuad),
          Actions.runFunc(() => {
             this._world.tooltipPool.release(t);
-         }),
+         })
       ).play();
    }
 

@@ -1,1150 +1,1150 @@
 {
-    "frames": {
-        "BuildingAngkorWat": {
-            "frame": {
-                "x": 4329,
-                "y": 1040,
-                "w": 100,
-                "h": 85
-            }
-        },
-        "BuildingAqueduct": {
-            "frame": {
-                "x": 3117,
-                "y": 1040,
-                "w": 100,
-                "h": 90
-            }
-        },
-        "BuildingArcDeTriomphe": {
-            "frame": {
-                "x": 3149,
-                "y": 1744,
-                "w": 100,
-                "h": 98
-            }
-        },
-        "BuildingArmory": {
-            "frame": {
-                "x": 1809,
-                "y": 1931,
-                "w": 90,
-                "h": 100
-            }
-        },
-        "BuildingBlacksmith": {
-            "frame": {
-                "x": 3016,
-                "y": 1040,
-                "w": 100,
-                "h": 91
-            }
-        },
-        "BuildingBorobudur": {
-            "frame": {
-                "x": 2384,
-                "y": 1931,
-                "w": 100,
-                "h": 55
-            }
-        },
-        "BuildingBranCastle": {
-            "frame": {
-                "x": 3351,
-                "y": 1744,
-                "w": 100,
-                "h": 97
-            }
-        },
-        "BuildingBrandenburgGate": {
-            "frame": {
-                "x": 3218,
-                "y": 1040,
-                "w": 100,
-                "h": 90
-            }
-        },
-        "BuildingBrewery": {
-            "frame": {
-                "x": 3665,
-                "y": 1562,
-                "w": 100,
-                "h": 100
-            }
-        },
-        "BuildingCastrum": {
-            "frame": {
-                "x": 3319,
-                "y": 1040,
-                "w": 100,
-                "h": 90
-            }
-        },
-        "BuildingChichenItza": {
-            "frame": {
-                "x": 2182,
-                "y": 1931,
-                "w": 100,
-                "h": 65
-            }
-        },
-        "BuildingChoghaZanbil": {
-            "frame": {
-                "x": 3651,
-                "y": 1476,
-                "w": 100,
-                "h": 80
-            }
-        },
-        "BuildingCircusMaximus": {
-            "frame": {
-                "x": 3420,
-                "y": 1040,
-                "w": 100,
-                "h": 90
-            }
-        },
-        "BuildingColosseum": {
-            "frame": {
-                "x": 4230,
-                "y": 1744,
-                "w": 100,
-                "h": 75
-            }
-        },
-        "BuildingColossusOfRhodes": {
-            "frame": {
-                "x": 4289,
-                "y": 2554,
-                "w": 75,
-                "h": 100
-            }
-        },
-        "BuildingCopperMiningCamp": {
-            "frame": {
-                "x": 3856,
-                "y": 1744,
-                "w": 90,
-                "h": 89
-            }
-        },
-        "BuildingCristoRedentor": {
-            "frame": {
-                "x": 1624,
-                "y": 1931,
-                "w": 92,
-                "h": 100
-            }
-        },
-        "BuildingDomus": {
-            "frame": {
-                "x": 3521,
-                "y": 1040,
-                "w": 100,
-                "h": 90
-            }
-        },
-        "BuildingFarmland": {
-            "frame": {
-                "x": 1618,
-                "y": 2032,
-                "w": 89,
-                "h": 72
-            }
-        },
-        "BuildingGoldenGateBridge": {
-            "frame": {
-                "x": 3348,
-                "y": 1476,
-                "w": 100,
-                "h": 82
-            }
-        },
-        "BuildingGreatDagonPagoda": {
-            "frame": {
-                "x": 3452,
-                "y": 1744,
-                "w": 100,
-                "h": 96
-            }
-        },
-        "BuildingGreatMosqueOfSamarra": {
-            "frame": {
-                "x": 1271,
-                "y": 2211,
-                "w": 87,
-                "h": 100
-            }
-        },
-        "BuildingGreatWall": {
-            "frame": {
-                "x": 3247,
-                "y": 1476,
-                "w": 100,
-                "h": 83
-            }
-        },
-        "BuildingHagiaSophia": {
-            "frame": {
-                "x": 3752,
-                "y": 1476,
-                "w": 100,
-                "h": 80
-            }
-        },
-        "BuildingHangingGarden": {
-            "frame": {
-                "x": 3622,
-                "y": 1040,
-                "w": 100,
-                "h": 90
-            }
-        },
-        "BuildingHatshepsutTemple": {
-            "frame": {
-                "x": 4331,
-                "y": 1744,
-                "w": 100,
-                "h": 70
-            }
-        },
-        "BuildingHeadquarter_Rome": {
-            "frame": {
-                "x": 3766,
-                "y": 1562,
-                "w": 100,
-                "h": 100
-            }
-        },
-        "BuildingHeadquarter": {
-            "frame": {
-                "x": 3723,
-                "y": 1040,
-                "w": 100,
-                "h": 90
-            }
-        },
-        "BuildingHimejiCastle": {
-            "frame": {
-                "x": 3553,
-                "y": 1744,
-                "w": 100,
-                "h": 96
-            }
-        },
-        "BuildingHouse": {
-            "frame": {
-                "x": 1701,
-                "y": 2211,
-                "w": 89,
-                "h": 85
-            }
-        },
-        "BuildingHut": {
-            "frame": {
-                "x": 1447,
-                "y": 2211,
-                "w": 85,
-                "h": 100
-            }
-        },
-        "BuildingInsula": {
-            "frame": {
-                "x": 3824,
-                "y": 1040,
-                "w": 100,
-                "h": 90
-            }
-        },
-        "BuildingIronForge": {
-            "frame": {
-                "x": 3250,
-                "y": 1744,
-                "w": 100,
-                "h": 98
-            }
-        },
-        "BuildingIronMiningCamp": {
-            "frame": {
-                "x": 3947,
-                "y": 1744,
-                "w": 90,
-                "h": 89
-            }
-        },
-        "BuildingItsukushimaShrine": {
-            "frame": {
-                "x": 2814,
-                "y": 1040,
-                "w": 100,
-                "h": 93
-            }
-        },
-        "BuildingLibrary": {
-            "frame": {
-                "x": 3925,
-                "y": 1040,
-                "w": 100,
-                "h": 90
-            }
-        },
-        "BuildingLighthouseOfAlexandria": {
-            "frame": {
-                "x": 4212,
-                "y": 2554,
-                "w": 76,
-                "h": 100
-            }
-        },
-        "BuildingLivestockFarm": {
-            "frame": {
-                "x": 2949,
-                "y": 1744,
-                "w": 99,
-                "h": 100
-            }
-        },
-        "BuildingLoggingCamp": {
-            "frame": {
-                "x": 1614,
-                "y": 2211,
-                "w": 86,
-                "h": 89
-            }
-        },
-        "BuildingLuxorTemple": {
-            "frame": {
-                "x": 3853,
-                "y": 1476,
-                "w": 100,
-                "h": 80
-            }
-        },
-        "BuildingMarket": {
-            "frame": {
-                "x": 1528,
-                "y": 2032,
-                "w": 89,
-                "h": 81
-            }
-        },
-        "BuildingMausoleumAtHalicarnassus": {
-            "frame": {
-                "x": 1717,
-                "y": 1931,
-                "w": 91,
-                "h": 100
-            }
-        },
-        "BuildingMiningCamp": {
-            "frame": {
-                "x": 3755,
-                "y": 1744,
-                "w": 100,
-                "h": 94
-            }
-        },
-        "BuildingMoai": {
-            "frame": {
-                "x": 2915,
-                "y": 1040,
-                "w": 100,
-                "h": 92
-            }
-        },
-        "BuildingMogaoCaves": {
-            "frame": {
-                "x": 3449,
-                "y": 1476,
-                "w": 100,
-                "h": 81
-            }
-        },
-        "BuildingNeuschwanstein": {
-            "frame": {
-                "x": 4127,
-                "y": 1040,
-                "w": 100,
-                "h": 89
-            }
-        },
-        "BuildingPantheon": {
-            "frame": {
-                "x": 3954,
-                "y": 1476,
-                "w": 100,
-                "h": 80
-            }
-        },
-        "BuildingParthenon": {
-            "frame": {
-                "x": 4228,
-                "y": 1040,
-                "w": 100,
-                "h": 86
-            }
-        },
-        "BuildingPersepolis": {
-            "frame": {
-                "x": 4055,
-                "y": 1476,
-                "w": 100,
-                "h": 80
-            }
-        },
-        "BuildingPetra": {
-            "frame": {
-                "x": 4129,
-                "y": 1744,
-                "w": 100,
-                "h": 77
-            }
-        },
-        "BuildingPyramidOfGiza": {
-            "frame": {
-                "x": 2727,
-                "y": 1873,
-                "w": 100,
-                "h": 49
-            }
-        },
-        "BuildingSagradaFamília": {
-            "frame": {
-                "x": 1900,
-                "y": 1931,
-                "w": 90,
-                "h": 99
-            }
-        },
-        "BuildingSaintBasilsCathedral": {
-            "frame": {
-                "x": 1528,
-                "y": 1931,
-                "w": 95,
-                "h": 100
-            }
-        },
-        "BuildingSilkRoad": {
-            "frame": {
-                "x": 4026,
-                "y": 1040,
-                "w": 100,
-                "h": 90
-            }
-        },
-        "BuildingStatueOfLiberty": {
-            "frame": {
-                "x": 3566,
-                "y": 1562,
-                "w": 98,
-                "h": 103
-            }
-        },
-        "BuildingStonehenge": {
-            "frame": {
-                "x": 2283,
-                "y": 1931,
-                "w": 100,
-                "h": 60
-            }
-        },
-        "BuildingStonemasonsWorkshop": {
-            "frame": {
-                "x": 1991,
-                "y": 1931,
-                "w": 92,
-                "h": 95
-            }
-        },
-        "BuildingStoneQuarry": {
-            "frame": {
-                "x": 4038,
-                "y": 1744,
-                "w": 90,
-                "h": 89
-            }
-        },
-        "BuildingSydneyOperaHouse": {
-            "frame": {
-                "x": 3550,
-                "y": 1476,
-                "w": 100,
-                "h": 81
-            }
-        },
-        "BuildingTempleOfHeaven": {
-            "frame": {
-                "x": 3654,
-                "y": 1744,
-                "w": 100,
-                "h": 95
-            }
-        },
-        "BuildingTerracottaArmy": {
-            "frame": {
-                "x": 1533,
-                "y": 2211,
-                "w": 80,
-                "h": 100
-            }
-        },
-        "BuildingToolMaker": {
-            "frame": {
-                "x": 3049,
-                "y": 1744,
-                "w": 99,
-                "h": 100
-            }
-        },
-        "BuildingVilla": {
-            "frame": {
-                "x": 3146,
-                "y": 1476,
-                "w": 100,
-                "h": 85
-            }
-        },
-        "BuildingWindMill": {
-            "frame": {
-                "x": 1359,
-                "y": 2211,
-                "w": 87,
-                "h": 100
-            }
-        },
-        "Cloud": {
-            "frame": {
-                "x": 2727,
-                "y": 1744,
-                "w": 120,
-                "h": 128
-            }
-        },
-        "Construction": {
-            "frame": {
-                "x": 4388,
-                "y": 456,
-                "w": 38,
-                "h": 53
-            }
-        },
-        "GreatPersonBackground": {
-            "frame": {
-                "x": 2102,
-                "y": 1134,
-                "w": 500,
-                "h": 600
-            }
-        },
-        "GreatPersonFrame": {
-            "frame": {
-                "x": 493,
-                "y": 1744,
-                "w": 450,
-                "h": 450
-            }
-        },
-        "Paper": {
-            "frame": {
-                "x": 3510,
-                "y": 3256,
-                "w": 300,
-                "h": 300
-            }
-        },
-        "PersonAeschylus": {
-            "frame": {
-                "x": 0,
-                "y": 2554,
-                "w": 350,
-                "h": 350
-            }
-        },
-        "PersonAgamemnon": {
-            "frame": {
-                "x": 351,
-                "y": 2554,
-                "w": 350,
-                "h": 350
-            }
-        },
-        "PersonAlexanderIII": {
-            "frame": {
-                "x": 702,
-                "y": 2554,
-                "w": 350,
-                "h": 350
-            }
-        },
-        "PersonAristotle": {
-            "frame": {
-                "x": 1053,
-                "y": 2554,
-                "w": 350,
-                "h": 350
-            }
-        },
-        "PersonAshoka": {
-            "frame": {
-                "x": 1404,
-                "y": 2554,
-                "w": 350,
-                "h": 350
-            }
-        },
-        "PersonAshurbanipal": {
-            "frame": {
-                "x": 1755,
-                "y": 2554,
-                "w": 350,
-                "h": 350
-            }
-        },
-        "PersonAugustus": {
-            "frame": {
-                "x": 2106,
-                "y": 2554,
-                "w": 350,
-                "h": 350
-            }
-        },
-        "PersonCaiLun": {
-            "frame": {
-                "x": 2457,
-                "y": 2554,
-                "w": 350,
-                "h": 350
-            }
-        },
-        "PersonCincinnatus": {
-            "frame": {
-                "x": 2808,
-                "y": 2554,
-                "w": 350,
-                "h": 350
-            }
-        },
-        "PersonCleopatra": {
-            "frame": {
-                "x": 3159,
-                "y": 2554,
-                "w": 350,
-                "h": 350
-            }
-        },
-        "PersonConfucius": {
-            "frame": {
-                "x": 3510,
-                "y": 2554,
-                "w": 350,
-                "h": 350
-            }
-        },
-        "PersonCyrusII": {
-            "frame": {
-                "x": 3861,
-                "y": 2554,
-                "w": 350,
-                "h": 350
-            }
-        },
-        "PersonDariusI": {
-            "frame": {
-                "x": 0,
-                "y": 2905,
-                "w": 350,
-                "h": 350
-            }
-        },
-        "PersonDido": {
-            "frame": {
-                "x": 351,
-                "y": 2905,
-                "w": 350,
-                "h": 350
-            }
-        },
-        "PersonDukeOfZhou": {
-            "frame": {
-                "x": 702,
-                "y": 2905,
-                "w": 350,
-                "h": 350
-            }
-        },
-        "PersonHammurabi": {
-            "frame": {
-                "x": 1053,
-                "y": 2905,
-                "w": 350,
-                "h": 350
-            }
-        },
-        "PersonHannibal": {
-            "frame": {
-                "x": 1404,
-                "y": 2905,
-                "w": 350,
-                "h": 350
-            }
-        },
-        "PersonHerodotus": {
-            "frame": {
-                "x": 1755,
-                "y": 2905,
-                "w": 350,
-                "h": 350
-            }
-        },
-        "PersonHippocrates": {
-            "frame": {
-                "x": 2106,
-                "y": 2905,
-                "w": 350,
-                "h": 350
-            }
-        },
-        "PersonHomer": {
-            "frame": {
-                "x": 2457,
-                "y": 2905,
-                "w": 350,
-                "h": 350
-            }
-        },
-        "PersonJuliusCaesar": {
-            "frame": {
-                "x": 2808,
-                "y": 2905,
-                "w": 350,
-                "h": 350
-            }
-        },
-        "PersonKhufu": {
-            "frame": {
-                "x": 3159,
-                "y": 2905,
-                "w": 350,
-                "h": 350
-            }
-        },
-        "PersonLaoZi": {
-            "frame": {
-                "x": 3510,
-                "y": 2905,
-                "w": 350,
-                "h": 350
-            }
-        },
-        "PersonNebuchadnezzarII": {
-            "frame": {
-                "x": 3861,
-                "y": 2905,
-                "w": 350,
-                "h": 350
-            }
-        },
-        "PersonPlato": {
-            "frame": {
-                "x": 0,
-                "y": 3256,
-                "w": 350,
-                "h": 350
-            }
-        },
-        "PersonProtagoras": {
-            "frame": {
-                "x": 351,
-                "y": 3256,
-                "w": 350,
-                "h": 350
-            }
-        },
-        "PersonQinShiHuang": {
-            "frame": {
-                "x": 702,
-                "y": 3256,
-                "w": 350,
-                "h": 350
-            }
-        },
-        "PersonRamessesII": {
-            "frame": {
-                "x": 1053,
-                "y": 3256,
-                "w": 350,
-                "h": 350
-            }
-        },
-        "PersonSargonOfAkkad": {
-            "frame": {
-                "x": 1404,
-                "y": 3256,
-                "w": 350,
-                "h": 350
-            }
-        },
-        "PersonScipioAfricanus": {
-            "frame": {
-                "x": 1755,
-                "y": 3256,
-                "w": 350,
-                "h": 350
-            }
-        },
-        "PersonSimaQian": {
-            "frame": {
-                "x": 2106,
-                "y": 3256,
-                "w": 350,
-                "h": 350
-            }
-        },
-        "PersonSocrates": {
-            "frame": {
-                "x": 2457,
-                "y": 3256,
-                "w": 350,
-                "h": 350
-            }
-        },
-        "PersonSolon": {
-            "frame": {
-                "x": 2808,
-                "y": 3256,
-                "w": 350,
-                "h": 350
-            }
-        },
-        "PersonTangOfShang": {
-            "frame": {
-                "x": 3159,
-                "y": 3256,
-                "w": 350,
-                "h": 350
-            }
-        },
-        "RomeAegyptus": {
-            "frame": {
-                "x": 3146,
-                "y": 1134,
-                "w": 650,
-                "h": 341
-            }
-        },
-        "RomeAfrica": {
-            "frame": {
-                "x": 3568,
-                "y": 456,
-                "w": 729,
-                "h": 541
-            }
-        },
-        "RomeAsia": {
-            "frame": {
-                "x": 944,
-                "y": 1744,
-                "w": 463,
-                "h": 371
-            }
-        },
-        "RomeBithynia": {
-            "frame": {
-                "x": 4127,
-                "y": 3256,
-                "w": 289,
-                "h": 216
-            }
-        },
-        "RomeCantabri": {
-            "frame": {
-                "x": 2246,
-                "y": 1744,
-                "w": 480,
-                "h": 178
-            }
-        },
-        "RomeCappadocia": {
-            "frame": {
-                "x": 240,
-                "y": 3607,
-                "w": 350,
-                "h": 213
-            }
-        },
-        "RomeCilicia": {
-            "frame": {
-                "x": 2976,
-                "y": 1562,
-                "w": 289,
-                "h": 138
-            }
-        },
-        "RomeCommagene": {
-            "frame": {
-                "x": 1408,
-                "y": 1931,
-                "w": 119,
-                "h": 184
-            }
-        },
-        "RomeCreta": {
-            "frame": {
-                "x": 4156,
-                "y": 1476,
-                "w": 173,
-                "h": 45
-            }
-        },
-        "RomeCyprus": {
-            "frame": {
-                "x": 3443,
-                "y": 1562,
-                "w": 122,
-                "h": 109
-            }
-        },
-        "RomeCyrene": {
-            "frame": {
-                "x": 455,
-                "y": 2211,
-                "w": 388,
-                "h": 263
-            }
-        },
-        "RomeGalatia": {
-            "frame": {
-                "x": 4298,
-                "y": 759,
-                "w": 136,
-                "h": 189
-            }
-        },
-        "RomeGallia": {
-            "frame": {
-                "x": 2102,
-                "y": 456,
-                "w": 711,
-                "h": 677
-            }
-        },
-        "RomeGalliaCisalpina": {
-            "frame": {
-                "x": 844,
-                "y": 2211,
-                "w": 426,
-                "h": 195
-            }
-        },
-        "RomeGalliaTransalpina": {
-            "frame": {
-                "x": 3797,
-                "y": 1134,
-                "w": 436,
-                "h": 312
-            }
-        },
-        "RomeHispania": {
-            "frame": {
-                "x": 2814,
-                "y": 456,
-                "w": 753,
-                "h": 583
-            }
-        },
-        "RomeIllyricum": {
-            "frame": {
-                "x": 3811,
-                "y": 3256,
-                "w": 315,
-                "h": 255
-            }
-        },
-        "RomeItalia": {
-            "frame": {
-                "x": 0,
-                "y": 1744,
-                "w": 492,
-                "h": 466
-            }
-        },
-        "RomeJudia": {
-            "frame": {
-                "x": 0,
-                "y": 3607,
-                "w": 239,
-                "h": 331
-            }
-        },
-        "RomeLycia": {
-            "frame": {
-                "x": 2084,
-                "y": 1931,
-                "w": 97,
-                "h": 79
-            }
-        },
-        "RomeMacedonia": {
-            "frame": {
-                "x": 2603,
-                "y": 1134,
-                "w": 542,
-                "h": 427
-            }
-        },
-        "RomeMauretania": {
-            "frame": {
-                "x": 1408,
-                "y": 1744,
-                "w": 837,
-                "h": 186
-            }
-        },
-        "RomeNumidia": {
-            "frame": {
-                "x": 4234,
-                "y": 1134,
-                "w": 168,
-                "h": 214
-            }
-        },
-        "RomePontus": {
-            "frame": {
-                "x": 0,
-                "y": 2211,
-                "w": 454,
-                "h": 342
-            }
-        },
-        "RomeSardiniaAndCorsica": {
-            "frame": {
-                "x": 4298,
-                "y": 456,
-                "w": 89,
-                "h": 302
-            }
-        },
-        "RomeSicillia": {
-            "frame": {
-                "x": 3266,
-                "y": 1562,
-                "w": 176,
-                "h": 121
-            }
-        },
-        "RomeSophene": {
-            "frame": {
-                "x": 4234,
-                "y": 1349,
-                "w": 182,
-                "h": 96
-            }
-        },
-        "RomeSyria": {
-            "frame": {
-                "x": 0,
-                "y": 3939,
-                "w": 162,
-                "h": 368
-            }
-        },
-        "RomeUnknown1": {
-            "frame": {
-                "x": 2603,
-                "y": 1562,
-                "w": 372,
-                "h": 143
-            }
-        },
-        "RomeUnknown2": {
-            "frame": {
-                "x": 0,
-                "y": 0,
-                "w": 2101,
-                "h": 1743
-            }
-        },
-        "RomeUnknown3": {
-            "frame": {
-                "x": 2102,
-                "y": 0,
-                "w": 2344,
-                "h": 455
-            }
-        },
-        "Spinner": {
-            "frame": {
-                "x": 3867,
-                "y": 1562,
-                "w": 100,
-                "h": 100
-            }
-        },
-        "TileCopper": {
-            "frame": {
-                "x": 3968,
-                "y": 1562,
-                "w": 100,
-                "h": 100
-            }
-        },
-        "TileIron": {
-            "frame": {
-                "x": 4069,
-                "y": 1562,
-                "w": 100,
-                "h": 100
-            }
-        },
-        "TileStone": {
-            "frame": {
-                "x": 4170,
-                "y": 1562,
-                "w": 100,
-                "h": 100
-            }
-        },
-        "TileWater": {
-            "frame": {
-                "x": 4271,
-                "y": 1562,
-                "w": 100,
-                "h": 100
-            }
-        },
-        "TileWood": {
-            "frame": {
-                "x": 2848,
-                "y": 1744,
-                "w": 100,
-                "h": 100
-            }
-        },
-        "Transport": {
-            "frame": {
-                "x": 4372,
-                "y": 1562,
-                "w": 65,
-                "h": 56
-            }
-        },
-        "Upgrade": {
-            "frame": {
-                "x": 4388,
-                "y": 510,
-                "w": 40,
-                "h": 46
-            }
-        }
-    },
-    "meta": {
-        "app": "spritesheet-templates",
-        "version": "10.5.2",
-        "image": "./src/images/textures.png",
-        "scale": 1,
-        "size": {
-            "w": 4446,
-            "h": 4307
-        }
-    }
+   "frames": {
+      "BuildingAngkorWat": {
+         "frame": {
+            "x": 4329,
+            "y": 1040,
+            "w": 100,
+            "h": 85
+         }
+      },
+      "BuildingAqueduct": {
+         "frame": {
+            "x": 3117,
+            "y": 1040,
+            "w": 100,
+            "h": 90
+         }
+      },
+      "BuildingArcDeTriomphe": {
+         "frame": {
+            "x": 3149,
+            "y": 1744,
+            "w": 100,
+            "h": 98
+         }
+      },
+      "BuildingArmory": {
+         "frame": {
+            "x": 1809,
+            "y": 1931,
+            "w": 90,
+            "h": 100
+         }
+      },
+      "BuildingBlacksmith": {
+         "frame": {
+            "x": 3016,
+            "y": 1040,
+            "w": 100,
+            "h": 91
+         }
+      },
+      "BuildingBorobudur": {
+         "frame": {
+            "x": 2384,
+            "y": 1931,
+            "w": 100,
+            "h": 55
+         }
+      },
+      "BuildingBranCastle": {
+         "frame": {
+            "x": 3351,
+            "y": 1744,
+            "w": 100,
+            "h": 97
+         }
+      },
+      "BuildingBrandenburgGate": {
+         "frame": {
+            "x": 3218,
+            "y": 1040,
+            "w": 100,
+            "h": 90
+         }
+      },
+      "BuildingBrewery": {
+         "frame": {
+            "x": 3665,
+            "y": 1562,
+            "w": 100,
+            "h": 100
+         }
+      },
+      "BuildingCastrum": {
+         "frame": {
+            "x": 3319,
+            "y": 1040,
+            "w": 100,
+            "h": 90
+         }
+      },
+      "BuildingChichenItza": {
+         "frame": {
+            "x": 2182,
+            "y": 1931,
+            "w": 100,
+            "h": 65
+         }
+      },
+      "BuildingChoghaZanbil": {
+         "frame": {
+            "x": 3651,
+            "y": 1476,
+            "w": 100,
+            "h": 80
+         }
+      },
+      "BuildingCircusMaximus": {
+         "frame": {
+            "x": 3420,
+            "y": 1040,
+            "w": 100,
+            "h": 90
+         }
+      },
+      "BuildingColosseum": {
+         "frame": {
+            "x": 4230,
+            "y": 1744,
+            "w": 100,
+            "h": 75
+         }
+      },
+      "BuildingColossusOfRhodes": {
+         "frame": {
+            "x": 4289,
+            "y": 2554,
+            "w": 75,
+            "h": 100
+         }
+      },
+      "BuildingCopperMiningCamp": {
+         "frame": {
+            "x": 3856,
+            "y": 1744,
+            "w": 90,
+            "h": 89
+         }
+      },
+      "BuildingCristoRedentor": {
+         "frame": {
+            "x": 1624,
+            "y": 1931,
+            "w": 92,
+            "h": 100
+         }
+      },
+      "BuildingDomus": {
+         "frame": {
+            "x": 3521,
+            "y": 1040,
+            "w": 100,
+            "h": 90
+         }
+      },
+      "BuildingFarmland": {
+         "frame": {
+            "x": 1618,
+            "y": 2032,
+            "w": 89,
+            "h": 72
+         }
+      },
+      "BuildingGoldenGateBridge": {
+         "frame": {
+            "x": 3348,
+            "y": 1476,
+            "w": 100,
+            "h": 82
+         }
+      },
+      "BuildingGreatDagonPagoda": {
+         "frame": {
+            "x": 3452,
+            "y": 1744,
+            "w": 100,
+            "h": 96
+         }
+      },
+      "BuildingGreatMosqueOfSamarra": {
+         "frame": {
+            "x": 1271,
+            "y": 2211,
+            "w": 87,
+            "h": 100
+         }
+      },
+      "BuildingGreatWall": {
+         "frame": {
+            "x": 3247,
+            "y": 1476,
+            "w": 100,
+            "h": 83
+         }
+      },
+      "BuildingHagiaSophia": {
+         "frame": {
+            "x": 3752,
+            "y": 1476,
+            "w": 100,
+            "h": 80
+         }
+      },
+      "BuildingHangingGarden": {
+         "frame": {
+            "x": 3622,
+            "y": 1040,
+            "w": 100,
+            "h": 90
+         }
+      },
+      "BuildingHatshepsutTemple": {
+         "frame": {
+            "x": 4331,
+            "y": 1744,
+            "w": 100,
+            "h": 70
+         }
+      },
+      "BuildingHeadquarter_Rome": {
+         "frame": {
+            "x": 3766,
+            "y": 1562,
+            "w": 100,
+            "h": 100
+         }
+      },
+      "BuildingHeadquarter": {
+         "frame": {
+            "x": 3723,
+            "y": 1040,
+            "w": 100,
+            "h": 90
+         }
+      },
+      "BuildingHimejiCastle": {
+         "frame": {
+            "x": 3553,
+            "y": 1744,
+            "w": 100,
+            "h": 96
+         }
+      },
+      "BuildingHouse": {
+         "frame": {
+            "x": 1701,
+            "y": 2211,
+            "w": 89,
+            "h": 85
+         }
+      },
+      "BuildingHut": {
+         "frame": {
+            "x": 1447,
+            "y": 2211,
+            "w": 85,
+            "h": 100
+         }
+      },
+      "BuildingInsula": {
+         "frame": {
+            "x": 3824,
+            "y": 1040,
+            "w": 100,
+            "h": 90
+         }
+      },
+      "BuildingIronForge": {
+         "frame": {
+            "x": 3250,
+            "y": 1744,
+            "w": 100,
+            "h": 98
+         }
+      },
+      "BuildingIronMiningCamp": {
+         "frame": {
+            "x": 3947,
+            "y": 1744,
+            "w": 90,
+            "h": 89
+         }
+      },
+      "BuildingItsukushimaShrine": {
+         "frame": {
+            "x": 2814,
+            "y": 1040,
+            "w": 100,
+            "h": 93
+         }
+      },
+      "BuildingLibrary": {
+         "frame": {
+            "x": 3925,
+            "y": 1040,
+            "w": 100,
+            "h": 90
+         }
+      },
+      "BuildingLighthouseOfAlexandria": {
+         "frame": {
+            "x": 4212,
+            "y": 2554,
+            "w": 76,
+            "h": 100
+         }
+      },
+      "BuildingLivestockFarm": {
+         "frame": {
+            "x": 2949,
+            "y": 1744,
+            "w": 99,
+            "h": 100
+         }
+      },
+      "BuildingLoggingCamp": {
+         "frame": {
+            "x": 1614,
+            "y": 2211,
+            "w": 86,
+            "h": 89
+         }
+      },
+      "BuildingLuxorTemple": {
+         "frame": {
+            "x": 3853,
+            "y": 1476,
+            "w": 100,
+            "h": 80
+         }
+      },
+      "BuildingMarket": {
+         "frame": {
+            "x": 1528,
+            "y": 2032,
+            "w": 89,
+            "h": 81
+         }
+      },
+      "BuildingMausoleumAtHalicarnassus": {
+         "frame": {
+            "x": 1717,
+            "y": 1931,
+            "w": 91,
+            "h": 100
+         }
+      },
+      "BuildingMiningCamp": {
+         "frame": {
+            "x": 3755,
+            "y": 1744,
+            "w": 100,
+            "h": 94
+         }
+      },
+      "BuildingMoai": {
+         "frame": {
+            "x": 2915,
+            "y": 1040,
+            "w": 100,
+            "h": 92
+         }
+      },
+      "BuildingMogaoCaves": {
+         "frame": {
+            "x": 3449,
+            "y": 1476,
+            "w": 100,
+            "h": 81
+         }
+      },
+      "BuildingNeuschwanstein": {
+         "frame": {
+            "x": 4127,
+            "y": 1040,
+            "w": 100,
+            "h": 89
+         }
+      },
+      "BuildingPantheon": {
+         "frame": {
+            "x": 3954,
+            "y": 1476,
+            "w": 100,
+            "h": 80
+         }
+      },
+      "BuildingParthenon": {
+         "frame": {
+            "x": 4228,
+            "y": 1040,
+            "w": 100,
+            "h": 86
+         }
+      },
+      "BuildingPersepolis": {
+         "frame": {
+            "x": 4055,
+            "y": 1476,
+            "w": 100,
+            "h": 80
+         }
+      },
+      "BuildingPetra": {
+         "frame": {
+            "x": 4129,
+            "y": 1744,
+            "w": 100,
+            "h": 77
+         }
+      },
+      "BuildingPyramidOfGiza": {
+         "frame": {
+            "x": 2727,
+            "y": 1873,
+            "w": 100,
+            "h": 49
+         }
+      },
+      "BuildingSagradaFamília": {
+         "frame": {
+            "x": 1900,
+            "y": 1931,
+            "w": 90,
+            "h": 99
+         }
+      },
+      "BuildingSaintBasilsCathedral": {
+         "frame": {
+            "x": 1528,
+            "y": 1931,
+            "w": 95,
+            "h": 100
+         }
+      },
+      "BuildingSilkRoad": {
+         "frame": {
+            "x": 4026,
+            "y": 1040,
+            "w": 100,
+            "h": 90
+         }
+      },
+      "BuildingStatueOfLiberty": {
+         "frame": {
+            "x": 3566,
+            "y": 1562,
+            "w": 98,
+            "h": 103
+         }
+      },
+      "BuildingStonehenge": {
+         "frame": {
+            "x": 2283,
+            "y": 1931,
+            "w": 100,
+            "h": 60
+         }
+      },
+      "BuildingStonemasonsWorkshop": {
+         "frame": {
+            "x": 1991,
+            "y": 1931,
+            "w": 92,
+            "h": 95
+         }
+      },
+      "BuildingStoneQuarry": {
+         "frame": {
+            "x": 4038,
+            "y": 1744,
+            "w": 90,
+            "h": 89
+         }
+      },
+      "BuildingSydneyOperaHouse": {
+         "frame": {
+            "x": 3550,
+            "y": 1476,
+            "w": 100,
+            "h": 81
+         }
+      },
+      "BuildingTempleOfHeaven": {
+         "frame": {
+            "x": 3654,
+            "y": 1744,
+            "w": 100,
+            "h": 95
+         }
+      },
+      "BuildingTerracottaArmy": {
+         "frame": {
+            "x": 1533,
+            "y": 2211,
+            "w": 80,
+            "h": 100
+         }
+      },
+      "BuildingToolMaker": {
+         "frame": {
+            "x": 3049,
+            "y": 1744,
+            "w": 99,
+            "h": 100
+         }
+      },
+      "BuildingVilla": {
+         "frame": {
+            "x": 3146,
+            "y": 1476,
+            "w": 100,
+            "h": 85
+         }
+      },
+      "BuildingWindMill": {
+         "frame": {
+            "x": 1359,
+            "y": 2211,
+            "w": 87,
+            "h": 100
+         }
+      },
+      "Cloud": {
+         "frame": {
+            "x": 2727,
+            "y": 1744,
+            "w": 120,
+            "h": 128
+         }
+      },
+      "Construction": {
+         "frame": {
+            "x": 4388,
+            "y": 456,
+            "w": 38,
+            "h": 53
+         }
+      },
+      "GreatPersonBackground": {
+         "frame": {
+            "x": 2102,
+            "y": 1134,
+            "w": 500,
+            "h": 600
+         }
+      },
+      "GreatPersonFrame": {
+         "frame": {
+            "x": 493,
+            "y": 1744,
+            "w": 450,
+            "h": 450
+         }
+      },
+      "Paper": {
+         "frame": {
+            "x": 3510,
+            "y": 3256,
+            "w": 300,
+            "h": 300
+         }
+      },
+      "PersonAeschylus": {
+         "frame": {
+            "x": 0,
+            "y": 2554,
+            "w": 350,
+            "h": 350
+         }
+      },
+      "PersonAgamemnon": {
+         "frame": {
+            "x": 351,
+            "y": 2554,
+            "w": 350,
+            "h": 350
+         }
+      },
+      "PersonAlexanderIII": {
+         "frame": {
+            "x": 702,
+            "y": 2554,
+            "w": 350,
+            "h": 350
+         }
+      },
+      "PersonAristotle": {
+         "frame": {
+            "x": 1053,
+            "y": 2554,
+            "w": 350,
+            "h": 350
+         }
+      },
+      "PersonAshoka": {
+         "frame": {
+            "x": 1404,
+            "y": 2554,
+            "w": 350,
+            "h": 350
+         }
+      },
+      "PersonAshurbanipal": {
+         "frame": {
+            "x": 1755,
+            "y": 2554,
+            "w": 350,
+            "h": 350
+         }
+      },
+      "PersonAugustus": {
+         "frame": {
+            "x": 2106,
+            "y": 2554,
+            "w": 350,
+            "h": 350
+         }
+      },
+      "PersonCaiLun": {
+         "frame": {
+            "x": 2457,
+            "y": 2554,
+            "w": 350,
+            "h": 350
+         }
+      },
+      "PersonCincinnatus": {
+         "frame": {
+            "x": 2808,
+            "y": 2554,
+            "w": 350,
+            "h": 350
+         }
+      },
+      "PersonCleopatra": {
+         "frame": {
+            "x": 3159,
+            "y": 2554,
+            "w": 350,
+            "h": 350
+         }
+      },
+      "PersonConfucius": {
+         "frame": {
+            "x": 3510,
+            "y": 2554,
+            "w": 350,
+            "h": 350
+         }
+      },
+      "PersonCyrusII": {
+         "frame": {
+            "x": 3861,
+            "y": 2554,
+            "w": 350,
+            "h": 350
+         }
+      },
+      "PersonDariusI": {
+         "frame": {
+            "x": 0,
+            "y": 2905,
+            "w": 350,
+            "h": 350
+         }
+      },
+      "PersonDido": {
+         "frame": {
+            "x": 351,
+            "y": 2905,
+            "w": 350,
+            "h": 350
+         }
+      },
+      "PersonDukeOfZhou": {
+         "frame": {
+            "x": 702,
+            "y": 2905,
+            "w": 350,
+            "h": 350
+         }
+      },
+      "PersonHammurabi": {
+         "frame": {
+            "x": 1053,
+            "y": 2905,
+            "w": 350,
+            "h": 350
+         }
+      },
+      "PersonHannibal": {
+         "frame": {
+            "x": 1404,
+            "y": 2905,
+            "w": 350,
+            "h": 350
+         }
+      },
+      "PersonHerodotus": {
+         "frame": {
+            "x": 1755,
+            "y": 2905,
+            "w": 350,
+            "h": 350
+         }
+      },
+      "PersonHippocrates": {
+         "frame": {
+            "x": 2106,
+            "y": 2905,
+            "w": 350,
+            "h": 350
+         }
+      },
+      "PersonHomer": {
+         "frame": {
+            "x": 2457,
+            "y": 2905,
+            "w": 350,
+            "h": 350
+         }
+      },
+      "PersonJuliusCaesar": {
+         "frame": {
+            "x": 2808,
+            "y": 2905,
+            "w": 350,
+            "h": 350
+         }
+      },
+      "PersonKhufu": {
+         "frame": {
+            "x": 3159,
+            "y": 2905,
+            "w": 350,
+            "h": 350
+         }
+      },
+      "PersonLaoZi": {
+         "frame": {
+            "x": 3510,
+            "y": 2905,
+            "w": 350,
+            "h": 350
+         }
+      },
+      "PersonNebuchadnezzarII": {
+         "frame": {
+            "x": 3861,
+            "y": 2905,
+            "w": 350,
+            "h": 350
+         }
+      },
+      "PersonPlato": {
+         "frame": {
+            "x": 0,
+            "y": 3256,
+            "w": 350,
+            "h": 350
+         }
+      },
+      "PersonProtagoras": {
+         "frame": {
+            "x": 351,
+            "y": 3256,
+            "w": 350,
+            "h": 350
+         }
+      },
+      "PersonQinShiHuang": {
+         "frame": {
+            "x": 702,
+            "y": 3256,
+            "w": 350,
+            "h": 350
+         }
+      },
+      "PersonRamessesII": {
+         "frame": {
+            "x": 1053,
+            "y": 3256,
+            "w": 350,
+            "h": 350
+         }
+      },
+      "PersonSargonOfAkkad": {
+         "frame": {
+            "x": 1404,
+            "y": 3256,
+            "w": 350,
+            "h": 350
+         }
+      },
+      "PersonScipioAfricanus": {
+         "frame": {
+            "x": 1755,
+            "y": 3256,
+            "w": 350,
+            "h": 350
+         }
+      },
+      "PersonSimaQian": {
+         "frame": {
+            "x": 2106,
+            "y": 3256,
+            "w": 350,
+            "h": 350
+         }
+      },
+      "PersonSocrates": {
+         "frame": {
+            "x": 2457,
+            "y": 3256,
+            "w": 350,
+            "h": 350
+         }
+      },
+      "PersonSolon": {
+         "frame": {
+            "x": 2808,
+            "y": 3256,
+            "w": 350,
+            "h": 350
+         }
+      },
+      "PersonTangOfShang": {
+         "frame": {
+            "x": 3159,
+            "y": 3256,
+            "w": 350,
+            "h": 350
+         }
+      },
+      "RomeAegyptus": {
+         "frame": {
+            "x": 3146,
+            "y": 1134,
+            "w": 650,
+            "h": 341
+         }
+      },
+      "RomeAfrica": {
+         "frame": {
+            "x": 3568,
+            "y": 456,
+            "w": 729,
+            "h": 541
+         }
+      },
+      "RomeAsia": {
+         "frame": {
+            "x": 944,
+            "y": 1744,
+            "w": 463,
+            "h": 371
+         }
+      },
+      "RomeBithynia": {
+         "frame": {
+            "x": 4127,
+            "y": 3256,
+            "w": 289,
+            "h": 216
+         }
+      },
+      "RomeCantabri": {
+         "frame": {
+            "x": 2246,
+            "y": 1744,
+            "w": 480,
+            "h": 178
+         }
+      },
+      "RomeCappadocia": {
+         "frame": {
+            "x": 240,
+            "y": 3607,
+            "w": 350,
+            "h": 213
+         }
+      },
+      "RomeCilicia": {
+         "frame": {
+            "x": 2976,
+            "y": 1562,
+            "w": 289,
+            "h": 138
+         }
+      },
+      "RomeCommagene": {
+         "frame": {
+            "x": 1408,
+            "y": 1931,
+            "w": 119,
+            "h": 184
+         }
+      },
+      "RomeCreta": {
+         "frame": {
+            "x": 4156,
+            "y": 1476,
+            "w": 173,
+            "h": 45
+         }
+      },
+      "RomeCyprus": {
+         "frame": {
+            "x": 3443,
+            "y": 1562,
+            "w": 122,
+            "h": 109
+         }
+      },
+      "RomeCyrene": {
+         "frame": {
+            "x": 455,
+            "y": 2211,
+            "w": 388,
+            "h": 263
+         }
+      },
+      "RomeGalatia": {
+         "frame": {
+            "x": 4298,
+            "y": 759,
+            "w": 136,
+            "h": 189
+         }
+      },
+      "RomeGallia": {
+         "frame": {
+            "x": 2102,
+            "y": 456,
+            "w": 711,
+            "h": 677
+         }
+      },
+      "RomeGalliaCisalpina": {
+         "frame": {
+            "x": 844,
+            "y": 2211,
+            "w": 426,
+            "h": 195
+         }
+      },
+      "RomeGalliaTransalpina": {
+         "frame": {
+            "x": 3797,
+            "y": 1134,
+            "w": 436,
+            "h": 312
+         }
+      },
+      "RomeHispania": {
+         "frame": {
+            "x": 2814,
+            "y": 456,
+            "w": 753,
+            "h": 583
+         }
+      },
+      "RomeIllyricum": {
+         "frame": {
+            "x": 3811,
+            "y": 3256,
+            "w": 315,
+            "h": 255
+         }
+      },
+      "RomeItalia": {
+         "frame": {
+            "x": 0,
+            "y": 1744,
+            "w": 492,
+            "h": 466
+         }
+      },
+      "RomeJudia": {
+         "frame": {
+            "x": 0,
+            "y": 3607,
+            "w": 239,
+            "h": 331
+         }
+      },
+      "RomeLycia": {
+         "frame": {
+            "x": 2084,
+            "y": 1931,
+            "w": 97,
+            "h": 79
+         }
+      },
+      "RomeMacedonia": {
+         "frame": {
+            "x": 2603,
+            "y": 1134,
+            "w": 542,
+            "h": 427
+         }
+      },
+      "RomeMauretania": {
+         "frame": {
+            "x": 1408,
+            "y": 1744,
+            "w": 837,
+            "h": 186
+         }
+      },
+      "RomeNumidia": {
+         "frame": {
+            "x": 4234,
+            "y": 1134,
+            "w": 168,
+            "h": 214
+         }
+      },
+      "RomePontus": {
+         "frame": {
+            "x": 0,
+            "y": 2211,
+            "w": 454,
+            "h": 342
+         }
+      },
+      "RomeSardiniaAndCorsica": {
+         "frame": {
+            "x": 4298,
+            "y": 456,
+            "w": 89,
+            "h": 302
+         }
+      },
+      "RomeSicillia": {
+         "frame": {
+            "x": 3266,
+            "y": 1562,
+            "w": 176,
+            "h": 121
+         }
+      },
+      "RomeSophene": {
+         "frame": {
+            "x": 4234,
+            "y": 1349,
+            "w": 182,
+            "h": 96
+         }
+      },
+      "RomeSyria": {
+         "frame": {
+            "x": 0,
+            "y": 3939,
+            "w": 162,
+            "h": 368
+         }
+      },
+      "RomeUnknown1": {
+         "frame": {
+            "x": 2603,
+            "y": 1562,
+            "w": 372,
+            "h": 143
+         }
+      },
+      "RomeUnknown2": {
+         "frame": {
+            "x": 0,
+            "y": 0,
+            "w": 2101,
+            "h": 1743
+         }
+      },
+      "RomeUnknown3": {
+         "frame": {
+            "x": 2102,
+            "y": 0,
+            "w": 2344,
+            "h": 455
+         }
+      },
+      "Spinner": {
+         "frame": {
+            "x": 3867,
+            "y": 1562,
+            "w": 100,
+            "h": 100
+         }
+      },
+      "TileCopper": {
+         "frame": {
+            "x": 3968,
+            "y": 1562,
+            "w": 100,
+            "h": 100
+         }
+      },
+      "TileIron": {
+         "frame": {
+            "x": 4069,
+            "y": 1562,
+            "w": 100,
+            "h": 100
+         }
+      },
+      "TileStone": {
+         "frame": {
+            "x": 4170,
+            "y": 1562,
+            "w": 100,
+            "h": 100
+         }
+      },
+      "TileWater": {
+         "frame": {
+            "x": 4271,
+            "y": 1562,
+            "w": 100,
+            "h": 100
+         }
+      },
+      "TileWood": {
+         "frame": {
+            "x": 2848,
+            "y": 1744,
+            "w": 100,
+            "h": 100
+         }
+      },
+      "Transport": {
+         "frame": {
+            "x": 4372,
+            "y": 1562,
+            "w": 65,
+            "h": 56
+         }
+      },
+      "Upgrade": {
+         "frame": {
+            "x": 4388,
+            "y": 510,
+            "w": 40,
+            "h": 46
+         }
+      }
+   },
+   "meta": {
+      "app": "spritesheet-templates",
+      "version": "10.5.2",
+      "image": "./src/images/textures.png",
+      "scale": 1,
+      "size": {
+         "w": 4446,
+         "h": 4307
+      }
+   }
 }

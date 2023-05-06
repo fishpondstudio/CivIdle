@@ -1,5 +1,6 @@
-import { notifyGameStateUpdate, useGameState } from "../Global";
+import { useState } from "react";
 import { Building } from "../definitions/BuildingDefinitions";
+import { notifyGameStateUpdate, useGameState } from "../Global";
 import { getBuildingCost } from "../logic/BuildingLogic";
 import { Config } from "../logic/Constants";
 import { getBuildingsByType, unlockedBuildings } from "../logic/IntraTickCache";
@@ -8,7 +9,6 @@ import { ITileData, makeBuilding } from "../logic/Tile";
 import { jsxMapOf, keysOf, numberToRoman, setContains } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
 import { MenuComponent } from "./MenuComponent";
-import { useState } from "react";
 
 export function EmptyTilePage({ tile }: { tile: ITileData }): JSX.Element {
    const gs = useGameState();
@@ -120,28 +120,6 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): JSX.Element {
                </table>
             </div>
          </div>
-         {/* <ReactModal
-                isOpen={true}
-                parentSelector={() => document.getElementById("game-ui")!}
-                overlayClassName="modal-overlay"
-                className="modal-content"
-            >
-                <div className="window">
-                    <div className="title-bar">
-                        <div className="title-bar-text">A Great Person was Born</div>
-                    </div>
-                    <div className="window-body">
-                        {jsxMapOf(Config.GreatPerson, (k) => {
-                            return (
-                                <img
-                                    src={greatPersonImage(k, Singleton().sceneManager.getContext())}
-                                    style={{ width: "18%", margin: "1%" }}
-                                />
-                            );
-                        })}
-                    </div>
-                </div>
-            </ReactModal> */}
       </div>
    );
 }
