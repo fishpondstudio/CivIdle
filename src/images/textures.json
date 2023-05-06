@@ -90,7 +90,7 @@
         },
         "BuildingChoghaZanbil": {
             "frame": {
-                "x": 3550,
+                "x": 3651,
                 "y": 1476,
                 "w": 100,
                 "h": 80
@@ -154,7 +154,7 @@
         },
         "BuildingGoldenGateBridge": {
             "frame": {
-                "x": 3247,
+                "x": 3348,
                 "y": 1476,
                 "w": 100,
                 "h": 82
@@ -178,7 +178,7 @@
         },
         "BuildingGreatWall": {
             "frame": {
-                "x": 3146,
+                "x": 3247,
                 "y": 1476,
                 "w": 100,
                 "h": 83
@@ -186,7 +186,7 @@
         },
         "BuildingHagiaSophia": {
             "frame": {
-                "x": 3651,
+                "x": 3752,
                 "y": 1476,
                 "w": 100,
                 "h": 80
@@ -314,7 +314,7 @@
         },
         "BuildingLuxorTemple": {
             "frame": {
-                "x": 3752,
+                "x": 3853,
                 "y": 1476,
                 "w": 100,
                 "h": 80
@@ -354,7 +354,7 @@
         },
         "BuildingMogaoCaves": {
             "frame": {
-                "x": 3348,
+                "x": 3449,
                 "y": 1476,
                 "w": 100,
                 "h": 81
@@ -370,7 +370,7 @@
         },
         "BuildingPantheon": {
             "frame": {
-                "x": 3853,
+                "x": 3954,
                 "y": 1476,
                 "w": 100,
                 "h": 80
@@ -386,7 +386,7 @@
         },
         "BuildingPersepolis": {
             "frame": {
-                "x": 3954,
+                "x": 4055,
                 "y": 1476,
                 "w": 100,
                 "h": 80
@@ -466,7 +466,7 @@
         },
         "BuildingSydneyOperaHouse": {
             "frame": {
-                "x": 3449,
+                "x": 3550,
                 "y": 1476,
                 "w": 100,
                 "h": 81
@@ -498,10 +498,10 @@
         },
         "BuildingVilla": {
             "frame": {
-                "x": 4055,
+                "x": 3146,
                 "y": 1476,
                 "w": 100,
-                "h": 80
+                "h": 85
             }
         },
         "BuildingWindMill": {

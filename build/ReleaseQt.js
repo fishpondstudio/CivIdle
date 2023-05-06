@@ -49,5 +49,3 @@ function cmd(command, cwd = null) {
    console.log(`>> Command: ${command} (CWD: ${cwd})`);
    execSync(command, { stdio: "inherit", cwd: cwd });
 }
-
-module.exports = { cmd };

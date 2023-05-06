@@ -37,7 +37,7 @@ import { IBuildingData } from "./Tile";
 let timeSinceLastTick = 0;
 
 export function tickEveryFrame(gs: GameState, dt: number) {
-   timeSinceLastTick += dt;
+   timeSinceLastTick = Math.min(timeSinceLastTick + dt, 1);
    const worldScene = Singleton().sceneManager.getCurrent(WorldScene);
    for (const xy in gs.tiles) {
       const tile = gs.tiles[xy];
