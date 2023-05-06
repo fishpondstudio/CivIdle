@@ -276,6 +276,8 @@ function tileTile(xy: string, gs: GameState): void {
    // Production
    //////////////////////////////////////////////////
 
+   const tileVisual = Singleton().sceneManager.getCurrent(WorldScene)?.getTile(xy);
+
    if (building.type === "Market") {
       building.notProducingReason = "NotEnoughResources";
       let totalCash = 0;
@@ -290,7 +292,7 @@ function tileTile(xy: string, gs: GameState): void {
          }
       });
       if (totalCash > 0) {
-         Singleton().sceneManager.getCurrent(WorldScene)?.getTile(xy)?.showText(`+$${totalCash}`);
+         tileVisual?.showText(`+$${totalCash}`);
       }
       return;
    }
@@ -331,6 +333,7 @@ function tileTile(xy: string, gs: GameState): void {
    forEach(output, (res, v) => {
       if (isTransportable(res)) {
          safeAdd(building.resources, res, v);
+         tileVisual?.showText(`+${v}`);
       } else {
          safeAdd(Tick.next.workersAvailable, res, v);
       }
