@@ -48,10 +48,10 @@ export function tickEveryFrame(gs: GameState, dt: number) {
    worldScene?.updateTransportVisual(gs, timeSinceLastTick);
 }
 export function tickEverySecond(gs: GameState) {
-   timeSinceLastTick = 0;
    if (document.visibilityState !== "visible") {
       return;
    }
+   timeSinceLastTick = 0;
    Tick.current = Tick.next;
    Tick.next = EmptyTickData();
    clearIntraTickCache();

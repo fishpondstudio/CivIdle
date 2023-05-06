@@ -179,7 +179,6 @@ export class TechTreeScene extends ViewportScene {
             techTree.definitions[to].require.forEach((from) => {
                newTo.push(from);
                const key = `${from} -> ${to}`;
-               // rome-ignore lint: bad suggestions
                if (
                   !drawnConnections[key] &&
                   !this.context.gameState.unlocked[from] &&

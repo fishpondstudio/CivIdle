@@ -1,10 +1,10 @@
-import { SmoothGraphics } from "@pixi/graphics-smooth";
-import { BitmapText, Sprite, Text } from "pixi.js";
 import { GreatPerson } from "../definitions/GreatPersonDefinitions";
 import { Config } from "../logic/Constants";
 import { containsNonASCII } from "../utilities/Helper";
 import { ISceneContext } from "../utilities/SceneManager";
 import { Fonts } from "./Fonts";
+import { SmoothGraphics } from "@pixi/graphics-smooth";
+import { BitmapText, Sprite, Text } from "pixi.js";
 
 function makeText(text: string, size: number, tint: number) {
    if (containsNonASCII(text)) {

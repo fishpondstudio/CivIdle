@@ -1,5 +1,15 @@
 import { SmoothGraphics } from "@pixi/graphics-smooth";
-import { Container, IPointData, LINE_CAP, LINE_JOIN, ParticleContainer, Sprite, TilingSprite, utils } from "pixi.js";
+import {
+   Container,
+   IPointData,
+   LINE_CAP,
+   LINE_JOIN,
+   MSAA_QUALITY,
+   ParticleContainer,
+   Sprite,
+   TilingSprite,
+   utils,
+} from "pixi.js";
 import { Singleton } from "../Global";
 import { GameState } from "../logic/GameState";
 import { TilePage } from "../ui/TilePage";
@@ -40,10 +50,9 @@ export class WorldScene extends ViewportScene {
             minScale: Math.max(app.screen.width / this._width, app.screen.height / this._height),
          });
 
-      const bg = new TilingSprite(textures.Paper, this._width, this._height);
+      const bg = this.viewport.addChild(new TilingSprite(textures.Paper, this._width, this._height));
       bg.tint = 0x4b6584;
       bg.position.set((this._width - bg.width) / 2, (this._height - bg.height) / 2);
-      this.viewport.addChild(bg);
 
       const graphics = this.viewport.addChild(new SmoothGraphics()).lineStyle({
          color: 0xffffff,
@@ -52,10 +61,10 @@ export class WorldScene extends ViewportScene {
          join: LINE_JOIN.ROUND,
          alignment: 0.5,
       });
-      graphics.alpha = 0.05;
+      graphics.alpha = 0.1;
       Singleton().grid.drawGrid(graphics);
-
-      this._selectedGraphics = this.viewport.addChild(new SmoothGraphics());
+      graphics.cacheAsBitmap = true;
+      graphics.cacheAsBitmapMultisample = MSAA_QUALITY.HIGH;
 
       Singleton().grid.forEach((grid) => {
          const xy = pointToXy(grid);
@@ -63,11 +72,17 @@ export class WorldScene extends ViewportScene {
       });
 
       this.tooltipPool = new TooltipPool(this.viewport.addChild(new Container()));
-
-      const transport = this.viewport.addChild(
-         new ParticleContainer(1500, { position: true, rotation: true, alpha: true })
+      this._transportPool = new TransportPool(
+         textures.Transport,
+         this.viewport.addChild(
+            new ParticleContainer(1500, {
+               position: true,
+               rotation: true,
+               alpha: true,
+            })
+         )
       );
-      this._transportPool = new TransportPool(textures.Transport, transport);
+      this._selectedGraphics = this.viewport.addChild(new SmoothGraphics());
 
       this.viewport.moveCenter(this._width / 2, this._height / 2);
 

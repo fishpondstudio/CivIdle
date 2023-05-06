@@ -1,6 +1,5 @@
-import { useState } from "react";
-import { Building } from "../definitions/BuildingDefinitions";
 import { notifyGameStateUpdate, useGameState } from "../Global";
+import { Building } from "../definitions/BuildingDefinitions";
 import { getBuildingCost } from "../logic/BuildingLogic";
 import { Config } from "../logic/Constants";
 import { getBuildingsByType, unlockedBuildings } from "../logic/IntraTickCache";
@@ -9,6 +8,7 @@ import { ITileData, makeBuilding } from "../logic/Tile";
 import { jsxMapOf, keysOf, numberToRoman, setContains } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
 import { MenuComponent } from "./MenuComponent";
+import { useState } from "react";
 
 export function EmptyTilePage({ tile }: { tile: ITileData }): JSX.Element {
    const gs = useGameState();
@@ -53,7 +53,7 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): JSX.Element {
                   <thead>
                      <tr>
                         <th>{t(L.BuildingName)}</th>
-                        <th>{t(L.BuildingTier)}</th>
+                        <th className="text-center">{t(L.BuildingTier)}</th>
                         <th className="right">{t(L.BuildingCost)}</th>
                         <th />
                      </tr>
@@ -84,8 +84,14 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): JSX.Element {
                                        ) : null}
                                     </div>
                                  </td>
-                                 <td>{numberToRoman(Config.BuildingTier[k] ?? 1)}</td>
-                                 <td className="right">
+                                 <td className="text-center">
+                                    {(building?.max ?? Infinity) <= 1 ? (
+                                       <div className="m-icon small">public</div>
+                                    ) : (
+                                       numberToRoman(Config.BuildingTier[k] ?? 1)
+                                    )}
+                                 </td>
+                                 <td className="right text-small">
                                     {jsxMapOf(buildCost, (res, amount) => {
                                        return (
                                           <div key={res}>

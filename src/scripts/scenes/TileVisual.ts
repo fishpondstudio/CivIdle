@@ -1,17 +1,17 @@
-import { Viewport } from "pixi-viewport";
-import { BitmapText, Container, IDestroyOptions, IPointData, Sprite } from "pixi.js";
+import { Singleton, getGameState } from "../Global";
 import { Resource } from "../definitions/ResourceDefinitions";
-import { getGameState, Singleton } from "../Global";
 import { getBuildingLevelLabel, getBuildingTexture, getTileTexture } from "../logic/BuildingLogic";
 import { GameState } from "../logic/GameState";
 import { ITileData } from "../logic/Tile";
 import { clamp, forEach, layoutCenter, pointToXy, sizeOf } from "../utilities/Helper";
-import Actions from "../utilities/pixi-actions/Actions";
-import Action from "../utilities/pixi-actions/actions/Action";
-import { Easing } from "../utilities/pixi-actions/Easing";
 import { v2 } from "../utilities/Vector2";
+import Actions from "../utilities/pixi-actions/Actions";
+import { Easing } from "../utilities/pixi-actions/Easing";
+import Action from "../utilities/pixi-actions/actions/Action";
 import { Fonts } from "../visuals/Fonts";
 import { WorldScene } from "./WorldScene";
+import { Viewport } from "pixi-viewport";
+import { BitmapText, Container, IDestroyOptions, IPointData, Sprite } from "pixi.js";
 
 export class TileVisual extends Container {
    private readonly _world: WorldScene;
@@ -55,8 +55,8 @@ export class TileVisual extends Container {
       this._constructionAnimation = Actions.repeat(
          Actions.sequence(
             Actions.to(this._construction, { angle: 45 }, 0.5, Easing.OutBounce),
-            Actions.to(this._construction, { angle: 0 }, 0.5, Easing.OutSine)
-         )
+            Actions.to(this._construction, { angle: 0 }, 0.5, Easing.OutSine),
+         ),
       );
 
       this._upgrade = this.addChild(new Sprite(textures.Upgrade));
@@ -73,8 +73,8 @@ export class TileVisual extends Container {
                this._upgrade.alpha = 0;
             }),
             Actions.to(this._upgrade, { y: 0, alpha: 1 }, 0.5, Easing.OutSine),
-            Actions.to(this._upgrade, { y: -10, alpha: 0 }, 0.5, Easing.InSine)
-         )
+            Actions.to(this._upgrade, { y: -10, alpha: 0 }, 0.5, Easing.InSine),
+         ),
       );
 
       this._level = this.addChild(
@@ -82,7 +82,7 @@ export class TileVisual extends Container {
             fontName: Fonts.Cabin,
             fontSize: 16,
             tint: 0xffffff,
-         })
+         }),
       );
       this._level.anchor.set(0.5, 0.5);
       this._level.position.set(25, -25);
@@ -152,7 +152,7 @@ export class TileVisual extends Container {
       return await new Promise((resolve) => {
          Actions.sequence(
             Actions.to(this._fog, { alpha: 0, scale: { x: 0.8, y: 0.8 } }, 1, Easing.InQuad),
-            Actions.runFunc(() => resolve(this))
+            Actions.runFunc(() => resolve(this)),
          ).play();
       });
    }
@@ -167,7 +167,7 @@ export class TileVisual extends Container {
          Actions.to(t, { y: t.y - 40, alpha: 0 }, 1.25, Easing.InQuad),
          Actions.runFunc(() => {
             this._world.tooltipPool.release(t);
-         })
+         }),
       ).play();
    }
 
@@ -226,7 +226,7 @@ export class TileVisual extends Container {
    }
 
    public update(gs: GameState, dt: number) {
-      if (!this._tile || !this._tile.building) {
+      if (!this._tile || !this._tile.building || this._tile.building.status !== "completed") {
          return;
       }
       this._spinner.angle += dt * 90;
