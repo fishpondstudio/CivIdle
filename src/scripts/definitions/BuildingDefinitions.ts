@@ -32,17 +32,43 @@ export class BuildingDefinitions {
       construction: { Wood: 1 },
    };
 
-   Farmland: IBuildingDefinition = {
-      name: () => t(L.Farmland),
+   WheatFarm: IBuildingDefinition = {
+      name: () => t(L.WheatFarm),
       input: {},
       output: { Crop: 1 },
       construction: { Wood: 1 },
    };
 
+   OlivePlantation: IBuildingDefinition = {
+      name: () => t(L.OlivePlantation),
+      input: {},
+      output: { Olive: 1 },
+      construction: { Wood: 1 },
+   };
+
+   Vineyard: IBuildingDefinition = {
+      name: () => t(L.Vineyard),
+      input: {},
+      output: { Grape: 1 },
+      construction: { Wood: 1 },
+   };
+
    LivestockFarm: IBuildingDefinition = {
       name: () => t(L.LivestockFarm),
-      input: { Crop: 1 },
-      output: { Meat: 1 },
+      input: { Crop: 2 },
+      output: { Meat: 1, Milk: 1 },
+   };
+
+   PaperMaker: IBuildingDefinition = {
+      name: () => t(L.PaperMaker),
+      input: { Wood: 1, Water: 1 },
+      output: { Paper: 1 },
+   };
+
+   CheeseMaker: IBuildingDefinition = {
+      name: () => t(L.CheeseMaker),
+      input: { Milk: 2 },
+      output: { Cheese: 1 },
    };
 
    StoneQuarry: IBuildingDefinition = {
@@ -59,6 +85,13 @@ export class BuildingDefinitions {
       deposit: { Wood: true },
       output: { Wood: 1 },
       construction: { Stone: 1 },
+   };
+
+   LumberMill: IBuildingDefinition = {
+      name: () => t(L.LumberMill),
+      input: { Wood: 2 },
+      output: { Lumber: 1 },
+      construction: { Stone: 1, Copper: 1 },
    };
 
    Aqueduct: IBuildingDefinition = {
@@ -81,10 +114,23 @@ export class BuildingDefinitions {
       output: { Tool: 1 },
    };
 
-   StonemasonsWorkshop: IBuildingDefinition = {
-      name: () => t(L.StonemasonsWorkshop),
+   Brickworks: IBuildingDefinition = {
+      name: () => t(L.Brickworks),
       input: { Stone: 1, Tool: 1 },
       output: { Brick: 1 },
+   };
+
+   Marbleworks: IBuildingDefinition = {
+      name: () => t(L.Marbleworks),
+      input: { Stone: 2, Tool: 1 },
+      output: { Marble: 1 },
+   };
+
+   OilPress: IBuildingDefinition = {
+      name: () => t(L.OilPress),
+      input: { Olive: 2 },
+      output: { OliveOil: 1 },
+      construction: { Stone: 2 },
    };
 
    Armory: IBuildingDefinition = {
@@ -128,7 +174,7 @@ export class BuildingDefinitions {
       name: () => t(L.Insula),
       input: { Crop: 2, Meat: 2, Water: 2 },
       output: { Worker: 16 },
-      construction: { Brick: 3, Iron: 1 },
+      construction: { Marble: 2, Iron: 1 },
    };
 
    Brewery: IBuildingDefinition = {
@@ -138,11 +184,18 @@ export class BuildingDefinitions {
       construction: { Brick: 1, Stone: 1 },
    };
 
+   Winery: IBuildingDefinition = {
+      name: () => t(L.Winery),
+      input: { Grape: 1, Water: 1 },
+      output: { Wine: 1 },
+      construction: { Stone: 1, Marble: 1 },
+   };
+
    Library: IBuildingDefinition = {
       name: () => t(L.Library),
       input: { Tool: 1, Alcohol: 1 },
       output: { Science: 20 },
-      construction: { Brick: 2, Stone: 2 },
+      construction: { Marble: 2, Stone: 2 },
    };
 
    Domus: IBuildingDefinition = {
@@ -164,7 +217,7 @@ export class BuildingDefinitions {
       desc: () => t(L.ColosseumDesc),
       input: {},
       output: {},
-      construction: { Brick: 1000, Tool: 1000, Alcohol: 1000 },
+      construction: { Brick: 1000, Marble: 1000, Alcohol: 1000 },
       max: 1,
       wikipedia: "Colosseum",
    };
@@ -174,7 +227,7 @@ export class BuildingDefinitions {
       desc: () => t(L.PantheonDesc),
       input: {},
       output: {},
-      construction: { Brick: 1000, Weapon: 1000, Copper: 1000 },
+      construction: { Marble: 1000, Weapon: 1000, Copper: 1000 },
       max: 1,
       wikipedia: "Pantheon,_Rome",
    };

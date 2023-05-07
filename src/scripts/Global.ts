@@ -151,7 +151,11 @@ export const useGameState = makeObservableHook(GameStateChanged, getGameState())
 function migrateSavedGame(gs: SavedGame) {
    forEach(gs.current.tiles, (xy, tile) => {
       if (tile.building) {
-         tile.building = makeBuilding(tile.building);
+         if (!Config.Building[tile.building.type]) {
+            delete tile.building;
+         } else {
+            tile.building = makeBuilding(tile.building);
+         }
       }
       forEach(tile.building?.resources, (res) => {
          if (!Config.Resource[res]) {

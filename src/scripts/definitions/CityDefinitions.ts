@@ -1,5 +1,6 @@
 import { deepFreeze } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
+import { Building } from "./BuildingDefinitions";
 import { ITechTree, IUnlockableDefinition, IUnlockableGroup } from "./ITechDefinition";
 import { Deposit } from "./ResourceDefinitions";
 import { RomeHistoryDefinitions, RomeHistoryStageDefinitions } from "./RomeHistoryDefinitions";
@@ -19,19 +20,9 @@ export class CityDefinitions {
       size: 40,
       techTree: "Rome",
       unlockable: { ...deepFreeze(new RomeProvinceDefinitions()) },
-   };
-   Athens: ICityDefinition = {
-      name: () => t(L.Rome),
-      deposits: {
-         Water: 0.02,
-         Copper: 0.02,
-         Iron: 0.02,
-         Wood: 0.02,
-         Stone: 0.02,
+      buildingNameOverrides: {
+         Headquarter: () => t(L.RomanForum),
       },
-      size: 40,
-      techTree: "Rome",
-      unlockable: {},
    };
 }
 
@@ -70,4 +61,5 @@ interface ICityDefinition {
    name: () => string;
    techTree: keyof typeof TechTree;
    unlockable: Record<string, IUnlockableDefinition>;
+   buildingNameOverrides: Partial<Record<Building, () => string>>;
 }

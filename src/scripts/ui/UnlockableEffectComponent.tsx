@@ -32,7 +32,7 @@ export function UnlockableEffectComponent({
             );
          })}
          {definition.unlockBuilding?.map((b) => {
-            const building = Config.Building[b];
+            const building = Tick.current.buildings[b];
             return (
                <fieldset key={b}>
                   <legend>
@@ -74,7 +74,7 @@ export function UnlockableEffectComponent({
             return (
                <fieldset key={k}>
                   <legend>
-                     <b>{t(L.UpgradeBuilding)}</b> {Config.Building[k].name()}
+                     <b>{t(L.UpgradeBuilding)}</b> {Tick.current.buildings[k].name()}
                   </legend>
                   {jsxMapOf(v.input, (res, v) => {
                      return (
@@ -99,7 +99,7 @@ export function UnlockableEffectComponent({
             return (
                <fieldset key={k}>
                   <legend>
-                     <b>{t(L.BuildingMultipliers)}</b> {Config.Building[k].name()}
+                     <b>{t(L.BuildingMultipliers)}</b> {Tick.current.buildings[k].name()}
                   </legend>
                   {v.input ? (
                      <div className="row mv5">

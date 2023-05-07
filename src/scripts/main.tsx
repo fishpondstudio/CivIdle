@@ -75,12 +75,16 @@ async function loadBundle(app: Application) {
    const { main }: { main: MainBundleAssets } = result[0];
 
    fonts.forEach((f) =>
-      BitmapFont.from(f.family, { fill: "#ffffff", fontSize: 100, fontFamily: f.family }, { chars: BitmapFont.ASCII })
+      BitmapFont.from(
+         f.family,
+         { fill: "#ffffff", fontSize: 64, fontFamily: f.family },
+         { chars: BitmapFont.ASCII, resolution: 2 }
+      )
    );
    BitmapFont.from(
       Fonts.Marcellus,
-      { fill: "#ffffff", fontSize: 100, fontFamily: Fonts.Marcellus },
-      { chars: BitmapFont.ASCII }
+      { fill: "#ffffff", fontSize: 64, fontFamily: Fonts.Marcellus },
+      { chars: BitmapFont.ASCII, padding: 16, resolution: 2 }
    );
    const textures = await new Spritesheet(main.atlas, altasDef as any).parse();
    if (textures) {

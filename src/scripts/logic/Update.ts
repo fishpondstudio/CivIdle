@@ -67,6 +67,12 @@ export function tickEverySecond(gs: GameState) {
    forEach(gs.greatPeople, (person, level) => {
       GreatPersonLogic[person]?.(level);
    });
+
+   forEach(Config.City[gs.city].buildingNameOverrides, (b, name) => {
+      Tick.current.buildings[b].name = name;
+      Tick.next.buildings[b].name = name;
+   });
+
    tickTileTech(gs);
    tickTransportation(gs);
    tickTiles(gs);

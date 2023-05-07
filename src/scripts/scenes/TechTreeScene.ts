@@ -3,6 +3,7 @@ import { BitmapText, Container, LINE_CAP, LINE_JOIN, Rectangle } from "pixi.js";
 import { BG_COLOR } from "../Colors";
 import { Singleton } from "../Global";
 import { getTechTree, isAgeUnlocked, unlockableTechs } from "../logic/TechLogic";
+import { Tick } from "../logic/TickLogic";
 import { TechPage } from "../ui/TechPage";
 import { forEach } from "../utilities/Helper";
 import Actions from "../utilities/pixi-actions/Actions";
@@ -106,26 +107,24 @@ export class TechTreeScene extends ViewportScene {
                (height / 2 - BOX_HEIGHT / 2 - (HEADER_TOTAL_HEIGHT - HEADER_BOX_HEIGHT) / 2);
             const rect = new Rectangle(x, y, BOX_WIDTH, BOX_HEIGHT);
             this._boxPositions[item] = rect;
-            this.viewport.addChild(
-               this.drawBox(
-                  g,
-                  rect,
-                  techTree.definitions[item].name(),
-                  this.context.gameState.unlocked[item] ? UNLOCKED_COLOR : LOCKED_COLOR
-               )
+            const def = techTree.definitions[item];
+            this.drawBox(
+               g,
+               rect,
+               def.name(),
+               def.unlockBuilding?.map((b) => Tick.current.buildings[b].name()).join(", ") ?? null,
+               this.context.gameState.unlocked[item] ? UNLOCKED_COLOR : LOCKED_COLOR
             );
          });
       });
 
       forEach(techTree.ages, (k, v) => {
-         this.viewport.addChild(
-            this.drawHeader(
-               g,
-               v.from,
-               v.to,
-               v.name(),
-               isAgeUnlocked(k, this.context.gameState) ? UNLOCKED_COLOR : LOCKED_COLOR
-            )
+         this.drawHeader(
+            g,
+            v.from,
+            v.to,
+            v.name(),
+            isAgeUnlocked(k, this.context.gameState) ? UNLOCKED_COLOR : LOCKED_COLOR
          );
       });
 
@@ -166,13 +165,15 @@ export class TechTreeScene extends ViewportScene {
          const newTo: string[] = [];
          targets.forEach((to) => {
             if (!drawnBoxes[to] && (!this.context.gameState.unlocked[to] || to === tech)) {
-               this._selectedContainer!.addChild(
-                  this.drawBox(
-                     this._selectedGraphics,
-                     this._boxPositions[to]!,
-                     techTree.definitions[to].name(),
-                     HIGHLIGHT_COLOR
-                  )
+               const def = techTree.definitions[to];
+               this.drawBox(
+                  this._selectedGraphics,
+                  this._boxPositions[to]!,
+                  def.name(),
+                  def.unlockBuilding?.map((b) => Tick.current.buildings[b].name()).join(", ") ?? null,
+                  HIGHLIGHT_COLOR,
+                  10,
+                  this._selectedContainer
                );
                drawnBoxes[to] = true;
             }
@@ -229,14 +230,8 @@ export class TechTreeScene extends ViewportScene {
       g.lineStyle({ ...g.line, color: oldColor });
    }
 
-   private drawHeader(
-      g: SmoothGraphics,
-      startColumn: number,
-      endColumn: number,
-      text: string,
-      color: number
-   ): BitmapText {
-      return this.drawBox(
+   private drawHeader(g: SmoothGraphics, startColumn: number, endColumn: number, text: string, color: number): void {
+      this.drawBox(
          g,
          new Rectangle(
             50 + startColumn * COLUMN_WIDTH,
@@ -245,25 +240,51 @@ export class TechTreeScene extends ViewportScene {
             HEADER_BOX_HEIGHT
          ),
          text.toUpperCase(),
+         null,
          color
       );
    }
 
-   private drawBox(g: SmoothGraphics, rect: Rectangle, text: string, color: number, radius = 10): BitmapText {
+   private drawBox(
+      g: SmoothGraphics,
+      rect: Rectangle,
+      title: string,
+      description: string | null,
+      color: number,
+      radius = 10,
+      parent: Container | null = null
+   ): void {
       const oldColor = g.line.color;
+      parent = parent ?? g.parent;
       g.lineStyle({ ...g.line, color });
       g.drawRoundedRect(rect.x, rect.y, rect.width, rect.height, radius);
       g.lineStyle({ ...g.line, color: oldColor });
-      const bitmapText = new BitmapText(text, {
-         fontName: Fonts.Marcellus,
-         fontSize: 28,
-         tint: color,
-      });
+      const bitmapText = parent.addChild(
+         new BitmapText(title, {
+            fontName: Fonts.Marcellus,
+            fontSize: 28,
+            tint: color,
+         })
+      );
       bitmapText.anchor.x = 0.5;
       bitmapText.anchor.y = 0.5;
       bitmapText.x = rect.x + rect.width / 2;
-      bitmapText.y = rect.y + rect.height / 2;
+      bitmapText.y = rect.y + rect.height / (description ? 3 : 2);
       bitmapText.cullable = true;
-      return bitmapText;
+
+      if (description) {
+         const bitmapText = parent.addChild(
+            new BitmapText(description, {
+               fontName: Fonts.Marcellus,
+               fontSize: 18,
+               tint: color,
+            })
+         );
+         bitmapText.anchor.x = 0.5;
+         bitmapText.anchor.y = 0.5;
+         bitmapText.x = rect.x + rect.width / 2;
+         bitmapText.y = rect.y + (rect.height * 2) / 3;
+         bitmapText.cullable = true;
+      }
    }
 }

@@ -5,7 +5,7 @@ import { GreatPerson } from "./GreatPersonDefinitions";
 
 export const GreatPersonLogic: Record<GreatPerson, (level: number) => void> = {
    Cincinnatus: (level) => {
-      addMultiplier("Farmland", { input: level, output: level }, t(L.SourceGreatPerson, { person: t(L.Cincinnatus) }));
+      addMultiplier("WheatFarm", { input: level, output: level }, t(L.SourceGreatPerson, { person: t(L.Cincinnatus) }));
    },
    ScipioAfricanus: (level) => {
       addMultiplier(

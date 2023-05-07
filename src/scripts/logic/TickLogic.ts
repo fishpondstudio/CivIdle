@@ -20,9 +20,11 @@ interface ITickData {
 }
 
 export function EmptyTickData(): ITickData {
+   const buildings = new BuildingDefinitions();
+   const resources = new ResourceDefinitions();
    return {
-      buildings: new BuildingDefinitions(),
-      resources: new ResourceDefinitions(),
+      buildings,
+      resources,
       buildingMultipliers: {},
       buildingModifiers: {},
       unlockedBuildings: {},

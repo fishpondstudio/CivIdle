@@ -60,8 +60,14 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): JSX.Element {
                   </thead>
                   <tbody>
                      {keysOf(unlockedBuildings(gs))
-                        .sort((a, b) => (Config.BuildingTier[a] ?? 0) - (Config.BuildingTier[b] ?? 0))
-                        .filter((v) => Config.Building[v].name().toLowerCase().includes(filter.toLowerCase()))
+                        .sort((a, b) => {
+                           const tier = (Config.BuildingTier[a] ?? 0) - (Config.BuildingTier[b] ?? 0);
+                           if (tier !== 0) {
+                              return tier;
+                           }
+                           return Tick.current.buildings[a].name().localeCompare(Tick.current.buildings[b].name());
+                        })
+                        .filter((v) => Tick.current.buildings[v].name().toLowerCase().includes(filter.toLowerCase()))
                         .map((k) => {
                            if ((constructed[k]?.length ?? 0) >= (Tick.current.buildings[k].max ?? Infinity)) {
                               return null;

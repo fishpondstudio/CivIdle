@@ -6,7 +6,6 @@ import { Singleton } from "../Global";
 import { forEach, isEmpty, keysOf, reduceOf, safeAdd, safePush, sum } from "../utilities/Helper";
 import { Textures } from "../utilities/SceneManager";
 import { v2 } from "../utilities/Vector2";
-import { Config } from "./Constants";
 import { GameState } from "./GameState";
 import { Multiplier, MultiplierWithSource, Tick } from "./TickLogic";
 import { IBuildingData, IHaveTypeAndLevel, IMarketBuildingData } from "./Tile";
@@ -318,7 +317,7 @@ export function getBuildingPercentage(xy: string, gs: GameState): number {
 }
 
 export function getBuildingLevelLabel(b: IBuildingData): string {
-   if (b.type === "Headquarter" || Config.Building[b.type].max === 1) {
+   if (b.type === "Headquarter" || Tick.current.buildings[b.type].max === 1) {
       return "";
    }
    return String(b.level);

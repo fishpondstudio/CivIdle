@@ -64,7 +64,7 @@ export class RomeProvinceDefinitions {
    Illyricum: IProvinceDefinition = {
       visual: { x: 1545, y: 667, textAngle: 30, textSize: 30, textX: -30, textY: 15 },
       unlockCost: 2000,
-      buildingMultiplier: { Farmland: { output: 1, storage: 1 } },
+      buildingMultiplier: { WheatFarm: { output: 1, storage: 1 } },
       name: () => t(L.ProvinceIllyricum),
       require: ["Italia"],
    };
@@ -116,7 +116,7 @@ export class RomeProvinceDefinitions {
       visual: { x: 2722, y: 689, textAngle: -20, textSize: 70 },
       unlockCost: 4000,
       name: () => t(L.ProvincePontus),
-      buildingMultiplier: { Farmland: { output: 1, worker: 1 } },
+      buildingMultiplier: { WheatFarm: { output: 1, worker: 1 } },
       require: ["Bithynia"],
    };
    Cappadocia: IProvinceDefinition = {
@@ -186,14 +186,14 @@ export class RomeProvinceDefinitions {
       visual: { x: 2463, y: 1573, textSize: 80, textX: -20 },
       unlockCost: 6000,
       name: () => t(L.ProvinceAegyptus),
-      buildingMultiplier: { Farmland: { output: 1, worker: 1 }, LivestockFarm: { output: 1, worker: 1 } },
+      buildingMultiplier: { WheatFarm: { output: 1, worker: 1 }, LivestockFarm: { output: 1, worker: 1 } },
       require: ["Cilicia"],
    };
    Cyrene: IProvinceDefinition = {
       visual: { x: 1948, y: 1574, textY: -50, textSize: 60 },
       unlockCost: 4000,
       name: () => t(L.ProvinceCyrene),
-      buildingMultiplier: { StoneQuarry: { storage: 1 }, StonemasonsWorkshop: { storage: 1 } },
+      buildingMultiplier: { StoneQuarry: { storage: 1 }, Brickworks: { storage: 1 } },
       require: ["Africa"],
    };
    Africa: IProvinceDefinition = {
