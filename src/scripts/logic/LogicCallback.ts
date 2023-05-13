@@ -5,6 +5,7 @@ import { RomeProvinceScene } from "../scenes/RomeProvinceScene";
 import { TechTreeScene } from "../scenes/TechTreeScene";
 import { WorldScene } from "../scenes/WorldScene";
 import { forEach, pointToXy, safePush, xyToPoint } from "../utilities/Helper";
+import { L, t } from "../utilities/i18n";
 import { GameState } from "./GameState";
 import { getBuildingsByType } from "./IntraTickCache";
 import { ensureTileFogOfWar } from "./TerrainLogic";
@@ -87,7 +88,7 @@ export function onBuildingProductionComplete(xy: string, gs: GameState) {
                safePush(Tick.next.tileMultipliers, xy, {
                   input: mul,
                   output: mul,
-                  source: Tick.current.buildings.Alps.name(),
+                  source: t(L.NaturalWonderName, { name: Tick.current.buildings.Alps.name() }),
                });
             }
          }

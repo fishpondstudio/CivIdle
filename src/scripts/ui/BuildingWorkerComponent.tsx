@@ -1,7 +1,7 @@
 import { notifyGameStateUpdate } from "../Global";
 import { getBuildingName, getMultipliersFor, getResourceName, getWorkersFor } from "../logic/BuildingLogic";
 import { Tick } from "../logic/TickLogic";
-import { formatPercent } from "../utilities/Helper";
+import { formatPercent, isEmpty } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
 import { IBuildingComponentProps } from "./BuildingPage";
 import { fmtNumber } from "./HelperComponents";
@@ -10,6 +10,9 @@ export function BuildingWorkerComponent({ gameState, xy }: IBuildingComponentPro
    const workersRequired = getWorkersFor(xy, { exclude: { Worker: true } }, gameState);
    const building = gameState.tiles[xy].building;
    if (building == null) {
+      return null;
+   }
+   if (isEmpty(Tick.current.buildings[building.type].input) && isEmpty(Tick.current.buildings[building.type].output)) {
       return null;
    }
    return (

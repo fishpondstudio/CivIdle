@@ -5,7 +5,8 @@
    src: url(../fonts/UniVGA16.woff2) format("woff2");
 }
 
-.loading-page {
+.loading-page,
+.error-page {
    font-family: "UniVGA16", monospace;
    font-size: 32px;
    background: #000;
@@ -24,4 +25,22 @@
    position: fixed;
    top: 50px;
    right: 50px;
+}
+
+.error-page {
+   background: #0608a8;
+   color: #fff;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   flex-direction: column;
+   padding: 10%;
+}
+
+.error-page .title {
+   color: #0608a8;
+   background: #aaaaaa;
+   padding: 0 20px;
+   margin: 0 0 20px 0;
+   display: block;
 }

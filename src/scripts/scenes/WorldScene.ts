@@ -20,6 +20,9 @@ import { TileVisual } from "./TileVisual";
 import { TooltipPool } from "./TooltipPool";
 import { TransportPool } from "./TransportPool";
 
+let viewportCenter: IPointData | null = null;
+let viewportZoom: number | null = null;
+
 export class WorldScene extends ViewportScene {
    private _width!: number;
    private _height!: number;
@@ -84,7 +87,19 @@ export class WorldScene extends ViewportScene {
       );
       this._selectedGraphics = this.viewport.addChild(new SmoothGraphics());
 
-      this.viewport.moveCenter(this._width / 2, this._height / 2);
+      if (viewportCenter) {
+         this.viewport.moveCenter(viewportCenter);
+      } else {
+         this.viewport.moveCenter(this._width / 2, this._height / 2);
+      }
+      if (viewportZoom) {
+         this.viewport.setZoom(viewportZoom, true);
+      }
+
+      this.viewport.on("moved", () => {
+         viewportCenter = this.viewport.center;
+         viewportZoom = this.viewport.scaled;
+      });
 
       this.viewport.on("clicked", (e) => {
          const grid = Singleton().grid.positionToGrid(e.world);

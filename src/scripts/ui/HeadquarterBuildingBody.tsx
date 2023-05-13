@@ -79,7 +79,7 @@ export function HeadquarterBuildingBody({ gameState, xy }: IBuildingComponentPro
                            <div className="f1">{t(L.SciencePerIdleWorker)}</div>
                            <div>{sciencePerIdleWorker}</div>
                         </li>
-                        <ul>
+                        <ul className="text-small">
                            {Tick.current.globalMultipliers.sciencePerIdleWorker.map((m) => (
                               <li key={m.source} className="row">
                                  <div className="f1">{m.source}</div>
@@ -103,7 +103,7 @@ export function HeadquarterBuildingBody({ gameState, xy }: IBuildingComponentPro
                            <div className="f1">{t(L.SciencePerBusyWorker)}</div>
                            <div>{sciencePerBusyWorker}</div>
                         </li>
-                        <ul>
+                        <ul className="text-small">
                            {Tick.current.globalMultipliers.sciencePerBusyWorker.map((m) => (
                               <li key={m.source} className="row">
                                  <div className="f1">{m.source}</div>

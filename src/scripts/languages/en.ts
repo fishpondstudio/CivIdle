@@ -166,6 +166,7 @@ export const EN = {
    Produce: "Produce",
    BaseMultiplier: "Base Multiplier",
    BaseProduction: "Base Production",
+   BaseConsumption: "Base Consumption",
    ProductionMultiplier: "Production Multiplier",
    ConsumptionMultiplier: "Consumption Multiplier",
    WorkerMultiplier: "Worker Capacity",
@@ -508,4 +509,5 @@ export const EN = {
    MarketAmount: "Amount",
    MarketSell: "Sell",
    RomanForum: "Roman Forum",
+   NaturalWonderName: "Natural Wonder: %{name}",
 };

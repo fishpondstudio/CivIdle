@@ -26,10 +26,11 @@ import { initializeGameState } from "./logic/GameState";
 import { ITileData } from "./logic/Tile";
 import { tickEveryFrame, tickEverySecond } from "./logic/Update";
 import { Route, RouteChangeEvent } from "./Route";
-import { connectWebSocket, initSteamClient } from "./rpc/RPCClient";
+import { connectWebSocket, initSteamClient, steamClient } from "./rpc/RPCClient";
 import { Grid } from "./scenes/Grid";
 import { WorldScene } from "./scenes/WorldScene";
 import { ChatPanel } from "./ui/ChatPanel";
+import { ErrorPage } from "./ui/ErrorPage";
 import { GlobalModal, GlobalToast } from "./ui/GlobalModal";
 import { forEach } from "./utilities/Helper";
 import Actions from "./utilities/pixi-actions/Actions";
@@ -159,6 +160,24 @@ async function startGame(app: Application, resources: MainBundleAssets, textures
       tickEveryFrame(gameState, app.ticker.elapsedMS / 1000);
    });
    setInterval(tickEverySecond.bind(null, gameState), 1000);
+
+   if (window.__STEAM_API_URL) {
+      const beta = await steamClient.getBetaName();
+      if (beta !== "beta") {
+         Singleton().routeTo(ErrorPage, {
+            content: (
+               <>
+                  <div className="title">Please Switch To Beta Branch On Steam</div>
+                  <div>
+                     You are not currently on beta branch. Please close the game, go to Steam, right click CivIdle -&gt;
+                     Properties -&gt; Betas and select "beta" in the dropdown menu. After Steam has finish downloading,
+                     start the game again. If this error persists, please report the bug on Discord.
+                  </div>
+               </>
+            ),
+         });
+      }
+   }
 }
 
 function verifyBuildingTextures(textures: Textures, city: City) {

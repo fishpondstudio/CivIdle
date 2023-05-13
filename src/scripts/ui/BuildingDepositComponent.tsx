@@ -19,18 +19,20 @@ export function BuildingDepositComponent({ gameState, xy }: IBuildingComponentPr
    return (
       <fieldset>
          <legend>{t(L.RequiredDeposit)}</legend>
-         {jsxMapOf(deposits, (k) => {
-            return (
-               <div key={k} className="row mv5">
-                  <div className="f1">{Tick.current.resources[k].name()}</div>
-                  {tile.deposit[k] ? (
-                     <div className="m-icon small text-green">check_circle</div>
-                  ) : (
-                     <div className="m-icon small text-red">cancel</div>
-                  )}
-               </div>
-            );
-         })}
+         <ul className="tree-view">
+            {jsxMapOf(deposits, (k) => {
+               return (
+                  <li key={k} className="row">
+                     <div className="f1">{Tick.current.resources[k].name()}</div>
+                     {tile.deposit[k] ? (
+                        <div className="m-icon small text-green">check_circle</div>
+                     ) : (
+                        <div className="m-icon small text-red">cancel</div>
+                     )}
+                  </li>
+               );
+            })}
+         </ul>
       </fieldset>
    );
 }
