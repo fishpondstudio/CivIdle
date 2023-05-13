@@ -20,6 +20,7 @@ import {
    getWorkersFor,
    hasEnoughResources,
    hasEnoughWorkers,
+   isNaturalWonder,
    isTransportable,
    totalMultiplierFor,
    tryAddTransportation,
@@ -73,7 +74,6 @@ export function tickEverySecond(gs: GameState) {
       Tick.next.buildings[b].name = name;
    });
 
-   tickTileTech(gs);
    tickTransportation(gs);
    tickTiles(gs);
 
@@ -106,32 +106,20 @@ function tickUnlockable(td: IUnlockableDefinition) {
    });
 }
 
-function tickTileTech(gs: GameState) {
-   forEach(gs.tiles, (xy, tile) => {
-      const building = tile.building;
-      if (!building) {
-         return;
-      }
-      if (building.type === "CircusMaximus") {
-         forEach(Tick.current.buildings, (building, def) => {
-            if (def.output.Worker) {
-               addMultiplier(building, { output: 1 }, Tick.current.buildings.CircusMaximus.name());
-            }
-         });
-      }
-   });
-}
-
 function tickTransportation(gs: GameState) {
    forEach(gs.transportation, (xy, queue) => {
       gs.transportation[xy] = queue.filter((transport) => {
-         // TODO: This needs to be done!
+         // TODO: This needs to be double checked when fuel is implemented!
          if (isTransportable(transport.fuel)) {
             transport.ticksSpent++;
+            transport.hasEnoughFuel = true;
          } else {
             if (hasEnoughWorkers(transport.fuel, transport.fuelAmount)) {
                useWorkers(transport.fuel, transport.fuelAmount, null);
                transport.ticksSpent++;
+               transport.hasEnoughFuel = true;
+            } else {
+               transport.hasEnoughFuel = false;
             }
          }
          // Has arrived!
@@ -177,6 +165,9 @@ function tileTile(xy: string, gs: GameState): void {
    const tile = gs.tiles[xy];
    const building = tile.building!;
    if (building.status === "paused") {
+      return;
+   }
+   if (isNaturalWonder(building.type) && !tile.explored) {
       return;
    }
    if (building.desiredLevel > building.level) {
@@ -299,6 +290,7 @@ function tileTile(xy: string, gs: GameState): void {
       });
       if (totalCash > 0) {
          tileVisual?.showText(`+$${totalCash}`);
+         onBuildingProductionComplete(xy, gs);
       }
       return;
    }

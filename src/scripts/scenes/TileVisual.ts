@@ -1,17 +1,22 @@
-import { Singleton, getGameState } from "../Global";
+import { Viewport } from "pixi-viewport";
+import { BitmapText, Container, IDestroyOptions, IPointData, Sprite } from "pixi.js";
 import { Resource } from "../definitions/ResourceDefinitions";
-import { getBuildingLevelLabel, getBuildingTexture, getTileTexture } from "../logic/BuildingLogic";
+import { getGameState, Singleton } from "../Global";
+import {
+   getBuildingLevelLabel,
+   getBuildingTexture,
+   getTileTexture,
+   isWorldOrNaturalWonder,
+} from "../logic/BuildingLogic";
 import { GameState } from "../logic/GameState";
 import { ITileData } from "../logic/Tile";
 import { clamp, forEach, layoutCenter, pointToXy, sizeOf } from "../utilities/Helper";
-import { v2 } from "../utilities/Vector2";
 import Actions from "../utilities/pixi-actions/Actions";
-import { Easing } from "../utilities/pixi-actions/Easing";
 import Action from "../utilities/pixi-actions/actions/Action";
+import { Easing } from "../utilities/pixi-actions/Easing";
+import { v2 } from "../utilities/Vector2";
 import { Fonts } from "../visuals/Fonts";
 import { WorldScene } from "./WorldScene";
-import { Viewport } from "pixi-viewport";
-import { BitmapText, Container, IDestroyOptions, IPointData, Sprite } from "pixi.js";
 
 export class TileVisual extends Container {
    private readonly _world: WorldScene;
@@ -31,8 +36,11 @@ export class TileVisual extends Container {
       super();
       this._world = world;
       this._grid = grid;
-      this.position = Singleton().grid.gridToPosition(this._grid);
+      const gs = getGameState();
+      const xy = pointToXy(this._grid);
+      this._tile = gs.tiles[xy];
 
+      this.position = Singleton().grid.gridToPosition(this._grid);
       this.cullable = true;
 
       const { textures } = this._world.context;
@@ -91,10 +99,7 @@ export class TileVisual extends Container {
 
       this._fog = this.addChild(new Sprite(textures.Cloud));
       this._fog.anchor.set(0.5);
-
-      const gs = getGameState();
-      const xy = pointToXy(this._grid);
-      this._tile = gs.tiles[xy];
+      this._fog.visible = !this._tile.explored;
 
       if (this._tile) {
          forEach(this._tile.deposit, (deposit) => {
@@ -151,7 +156,7 @@ export class TileVisual extends Container {
       this.updateLayout();
       return await new Promise((resolve) => {
          Actions.sequence(
-            Actions.to(this._fog, { alpha: 0, scale: { x: 0.8, y: 0.8 } }, 1, Easing.InQuad),
+            Actions.to(this._fog, { alpha: 0, scale: { x: 0.5, y: 0.5 } }, 1, Easing.InQuad),
             Actions.runFunc(() => resolve(this))
          ).play();
       });
@@ -178,11 +183,9 @@ export class TileVisual extends Container {
          return;
       }
       if (!this._tile.explored) {
-         this._fog.visible = true;
          this._building.visible = false;
          return;
       }
-      this._fog.visible = false;
       if (!this._tile.building) {
          this._building.visible = false;
          this._spinner.visible = false;
@@ -193,10 +196,12 @@ export class TileVisual extends Container {
          this._building.texture = getBuildingTexture(this._tile.building.type, textures, gameState.city);
          this.updateLayout();
       }
-      this._level.visible = true;
-      const newLevel = getBuildingLevelLabel(this._tile.building);
-      if (this._level.text != newLevel) {
-         this._level.text = newLevel;
+      if (!isWorldOrNaturalWonder(this._tile.building.type)) {
+         this._level.visible = true;
+         const newLevel = getBuildingLevelLabel(this._tile.building);
+         if (this._level.text != newLevel) {
+            this._level.text = newLevel;
+         }
       }
       if (this._tile.building.status === "building") {
          this._construction.visible = true;

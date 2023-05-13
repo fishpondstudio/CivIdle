@@ -4,12 +4,12 @@ import { Singleton } from "../Global";
 import { RomeProvinceScene } from "../scenes/RomeProvinceScene";
 import { TechTreeScene } from "../scenes/TechTreeScene";
 import { WorldScene } from "../scenes/WorldScene";
-import { pointToXy, safePush, xyToPoint } from "../utilities/Helper";
-import { L, t } from "../utilities/i18n";
+import { forEach, pointToXy, safePush, xyToPoint } from "../utilities/Helper";
 import { GameState } from "./GameState";
 import { getBuildingsByType } from "./IntraTickCache";
 import { ensureTileFogOfWar } from "./TerrainLogic";
 import { Tick } from "./TickLogic";
+import { addMultiplier } from "./Update";
 
 export function onBuildingComplete(xy: string, gs: GameState) {
    ensureTileFogOfWar(xy, gs, Singleton().grid).forEach((xy) => {
@@ -68,8 +68,29 @@ export function onBuildingProductionComplete(xy: string, gs: GameState) {
             output: 1,
             worker: 1,
             storage: 1,
-            source: t(L.Colosseum),
+            source: Tick.current.buildings.Colosseum.name(),
          });
+      });
+   }
+   if (building.type === "CircusMaximus") {
+      forEach(Tick.current.buildings, (building, def) => {
+         if (def.output.Worker) {
+            addMultiplier(building, { output: 1 }, Tick.current.buildings.CircusMaximus.name());
+         }
+      });
+   }
+   if (building.type === "Alps") {
+      forEach(gs.tiles, (xy, tile) => {
+         if (tile.building) {
+            const mul = Math.floor(tile.building.level / 10);
+            if (mul > 0) {
+               safePush(Tick.next.tileMultipliers, xy, {
+                  input: mul,
+                  output: mul,
+                  source: Tick.current.buildings.Alps.name(),
+               });
+            }
+         }
       });
    }
 }

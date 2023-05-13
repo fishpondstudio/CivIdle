@@ -14,14 +14,14 @@ export interface IBuildingDefinition {
    desc?: () => string;
 }
 
-export const BUILDING_DEFAULT_VISION = 1;
+export const BUILDING_DEFAULT_VISION = 2;
 
 export class BuildingDefinitions {
    Headquarter: IBuildingDefinition = {
       name: () => t(L.Headquarter),
       input: {},
       output: { Worker: 10 },
-      vision: 2,
+      vision: 3,
       max: 1,
    };
 
@@ -91,7 +91,7 @@ export class BuildingDefinitions {
       name: () => t(L.LumberMill),
       input: { Wood: 2 },
       output: { Lumber: 1 },
-      construction: { Stone: 1, Copper: 1 },
+      construction: { Brick: 1, Copper: 1 },
    };
 
    Aqueduct: IBuildingDefinition = {
@@ -100,6 +100,14 @@ export class BuildingDefinitions {
       deposit: { Water: true },
       output: { Water: 1 },
       construction: { Stone: 1 },
+   };
+
+   FishPond: IBuildingDefinition = {
+      name: () => t(L.FishPond),
+      input: {},
+      deposit: { Water: true },
+      output: { Fish: 1 },
+      construction: { Brick: 1 },
    };
 
    Blacksmith: IBuildingDefinition = {
@@ -130,7 +138,7 @@ export class BuildingDefinitions {
       name: () => t(L.OilPress),
       input: { Olive: 2 },
       output: { OliveOil: 1 },
-      construction: { Stone: 2 },
+      construction: { Brick: 1 },
    };
 
    Armory: IBuildingDefinition = {
@@ -240,6 +248,16 @@ export class BuildingDefinitions {
       construction: { Brick: 1000, Iron: 1000, Meat: 1000 },
       max: 1,
       wikipedia: "Circus_Maximus",
+   };
+
+   Alps: IBuildingDefinition = {
+      name: () => t(L.Alps),
+      desc: () => t(L.AlpsDesc),
+      input: {},
+      output: {},
+      construction: {},
+      max: 0,
+      wikipedia: "Alps",
    };
 
    // House: IBuildingDefinition = {

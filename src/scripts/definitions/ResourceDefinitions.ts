@@ -10,6 +10,7 @@ export class ResourceDefinitions {
    Worker: IResourceDefinition = { name: () => t(L.Worker), canStore: false, canPrice: false };
    Crop: IResourceDefinition = { name: () => t(L.Crop), canStore: true, canPrice: true };
    Meat: IResourceDefinition = { name: () => t(L.Meat), canStore: true, canPrice: true };
+   Fish: IResourceDefinition = { name: () => t(L.Fish), canStore: true, canPrice: true };
    Wood: IResourceDefinition = { name: () => t(L.Wood), canStore: true, canPrice: true };
    Lumber: IResourceDefinition = { name: () => t(L.Lumber), canStore: true, canPrice: true };
    Stone: IResourceDefinition = { name: () => t(L.Stone), canStore: true, canPrice: true };

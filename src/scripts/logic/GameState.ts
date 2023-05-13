@@ -5,7 +5,8 @@ import { GreatPerson } from "../definitions/GreatPersonDefinitions";
 import { Resource } from "../definitions/ResourceDefinitions";
 import { PartialSet, PartialTabulate } from "../definitions/TypeDefinitions";
 import { Grid } from "../scenes/Grid";
-import { forEach, pointToXy } from "../utilities/Helper";
+import { forEach, isEmpty, keysOf, pointToXy, shuffle } from "../utilities/Helper";
+import { Config } from "./Constants";
 import { getTechTree, unlockTech } from "./TechLogic";
 import { ensureTileFogOfWar, findNearest } from "./TerrainLogic";
 import { ITileData, makeBuilding } from "./Tile";
@@ -22,6 +23,7 @@ interface ITransportationData {
    amount: number;
    fuel: Resource;
    fuelAmount: number;
+   hasEnoughFuel: boolean;
 }
 
 export class GameState {
@@ -137,6 +139,20 @@ export function initializeGameState(gameState: GameState, grid: Grid) {
    //         });
    //     }
    // }
+
+   const naturalWonders = keysOf(Config.City[gameState.city].naturalWonders);
+   const xys = shuffle(keysOf(gameState.tiles));
+   for (let i = 0; i < xys.length; i++) {
+      const xy = xys[i];
+      if (gameState.tiles[xy].building || !isEmpty(gameState.tiles[xy].deposit)) {
+         continue;
+      }
+      if (naturalWonders.length <= 0) {
+         break;
+      }
+      const naturalWonder = naturalWonders.pop()!;
+      gameState.tiles[xy].building = makeBuilding({ type: naturalWonder, status: "completed" });
+   }
 
    forEach(gameState.tiles, (xy, tile) => {
       if (tile.building) {

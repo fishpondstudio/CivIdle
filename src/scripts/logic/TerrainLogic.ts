@@ -3,13 +3,15 @@ import { BUILDING_DEFAULT_VISION } from "../definitions/BuildingDefinitions";
 import { Grid } from "../scenes/Grid";
 import { forEach, keysOf, pointToXy, xyToPoint } from "../utilities/Helper";
 import { v2 } from "../utilities/Vector2";
+import { isNaturalWonder } from "./BuildingLogic";
 import { GameState } from "./GameState";
 import { Tick } from "./TickLogic";
 import { ITileData } from "./Tile";
 
 export function ensureTileFogOfWar(xy: string, gameState: GameState, grid: Grid): string[] {
-   const building = gameState.tiles[xy]?.building;
-   if (!building) {
+   const tile = gameState.tiles[xy];
+   const building = tile?.building;
+   if (!building || isNaturalWonder(building.type)) {
       return [];
    }
    const result: Record<string, true> = {};

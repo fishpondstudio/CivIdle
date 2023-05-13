@@ -258,6 +258,7 @@ export function tryAddTransportation(
       amount,
       fuel: "Worker",
       fuelAmount,
+      hasEnoughFuel: true,
    });
    return true;
 }
@@ -335,4 +336,16 @@ export function getBuildingUpgradeLevels(b: IBuildingData): number[] {
       levels.push(next10s);
    }
    return levels;
+}
+
+export function isNaturalWonder(building: Building): boolean {
+   return Tick.current.buildings[building].max === 0;
+}
+
+export function isWorldWonder(building: Building): boolean {
+   return Tick.current.buildings[building].max === 1;
+}
+
+export function isWorldOrNaturalWonder(building: Building): boolean {
+   return (Tick.current.buildings[building].max ?? Infinity) <= 1;
 }

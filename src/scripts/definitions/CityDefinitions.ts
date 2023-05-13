@@ -5,6 +5,7 @@ import { ITechTree, IUnlockableDefinition, IUnlockableGroup } from "./ITechDefin
 import { Deposit } from "./ResourceDefinitions";
 import { RomeHistoryDefinitions, RomeHistoryStageDefinitions } from "./RomeHistoryDefinitions";
 import { RomeProvinceDefinitions } from "./RomeProvinceDefinitions";
+import { PartialSet } from "./TypeDefinitions";
 // import { TechAgeDefinitions, TechDefinitions } from "./TechDefinitions";
 
 export class CityDefinitions {
@@ -23,6 +24,7 @@ export class CityDefinitions {
       buildingNameOverrides: {
          Headquarter: () => t(L.RomanForum),
       },
+      naturalWonders: { Alps: true },
    };
 }
 
@@ -62,4 +64,5 @@ interface ICityDefinition {
    techTree: keyof typeof TechTree;
    unlockable: Record<string, IUnlockableDefinition>;
    buildingNameOverrides: Partial<Record<Building, () => string>>;
+   naturalWonders: PartialSet<Building>;
 }

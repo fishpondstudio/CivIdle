@@ -1,5 +1,13 @@
 {
     "frames": {
+        "BuildingAlps": {
+            "frame": {
+                "x": 2381,
+                "y": 1931,
+                "w": 100,
+                "h": 75
+            }
+        },
         "BuildingAngkorWat": {
             "frame": {
                 "x": 4329,
@@ -42,7 +50,7 @@
         },
         "BuildingBorobudur": {
             "frame": {
-                "x": 2694,
+                "x": 2886,
                 "y": 1931,
                 "w": 100,
                 "h": 55
@@ -98,7 +106,7 @@
         },
         "BuildingChichenItza": {
             "frame": {
-                "x": 2492,
+                "x": 2684,
                 "y": 1931,
                 "w": 100,
                 "h": 65
@@ -122,7 +130,7 @@
         },
         "BuildingColosseum": {
             "frame": {
-                "x": 2290,
+                "x": 2482,
                 "y": 1931,
                 "w": 100,
                 "h": 75
@@ -158,6 +166,14 @@
                 "y": 1040,
                 "w": 100,
                 "h": 90
+            }
+        },
+        "BuildingFishPond": {
+            "frame": {
+                "x": 4250,
+                "y": 1744,
+                "w": 90,
+                "h": 89
             }
         },
         "BuildingGoldenGateBridge": {
@@ -210,7 +226,7 @@
         },
         "BuildingHatshepsutTemple": {
             "frame": {
-                "x": 2391,
+                "x": 2583,
                 "y": 1931,
                 "w": 100,
                 "h": 70
@@ -274,7 +290,7 @@
         },
         "BuildingIronMiningCamp": {
             "frame": {
-                "x": 4250,
+                "x": 4341,
                 "y": 1744,
                 "w": 90,
                 "h": 89
@@ -402,7 +418,7 @@
         },
         "BuildingOlivePlantation": {
             "frame": {
-                "x": 2189,
+                "x": 2280,
                 "y": 1931,
                 "w": 100,
                 "h": 76
@@ -442,7 +458,7 @@
         },
         "BuildingPetra": {
             "frame": {
-                "x": 2088,
+                "x": 2179,
                 "y": 1931,
                 "w": 100,
                 "h": 77
@@ -450,7 +466,7 @@
         },
         "BuildingPyramidOfGiza": {
             "frame": {
-                "x": 2795,
+                "x": 2987,
                 "y": 1931,
                 "w": 100,
                 "h": 49
@@ -490,7 +506,7 @@
         },
         "BuildingStonehenge": {
             "frame": {
-                "x": 2593,
+                "x": 2785,
                 "y": 1931,
                 "w": 100,
                 "h": 60
@@ -498,8 +514,8 @@
         },
         "BuildingStoneQuarry": {
             "frame": {
-                "x": 4341,
-                "y": 1744,
+                "x": 2088,
+                "y": 1931,
                 "w": 90,
                 "h": 89
             }

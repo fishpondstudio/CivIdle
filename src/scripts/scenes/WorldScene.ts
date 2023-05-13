@@ -140,7 +140,7 @@ export class WorldScene extends ViewportScene {
                visual.position = t.fromPosition;
                lookAt(visual, t.toPosition);
                this._transport[t.id] = visual;
-            } else {
+            } else if (t.hasEnoughFuel) {
                const visual = this._transport[t.id];
                visual.position = Vector2.lerp(
                   t.fromPosition,

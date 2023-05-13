@@ -215,7 +215,7 @@ export class RomeHistoryDefinitions {
    Populares: IRomeHistoryDefinitions = {
       name: () => t(L.Populares),
       column: 7,
-      unlockBuilding: ["CircusMaximus"],
+      unlockBuilding: ["FishPond"],
       buildingMultiplier: { WheatFarm: { worker: 1, storage: 1, output: 1 } },
       require: ["CursusHonorum"],
    };
@@ -264,6 +264,7 @@ export class RomeHistoryDefinitions {
          CopperMiningCamp: { output: 1, worker: 1 },
          Blacksmith: { output: 1, storage: 1 },
       },
+      unlockBuilding: ["CircusMaximus"],
       require: ["MarianReform"],
    };
    MithridaticWar: IRomeHistoryDefinitions = {

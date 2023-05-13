@@ -1,4 +1,5 @@
 import { notifyGameStateUpdate, Singleton } from "../Global";
+import { isWorldOrNaturalWonder } from "../logic/BuildingLogic";
 import { WorldScene } from "../scenes/WorldScene";
 import { L, t } from "../utilities/i18n";
 import { IBuildingComponentProps } from "./BuildingPage";
@@ -6,7 +7,7 @@ import { IBuildingComponentProps } from "./BuildingPage";
 export function BuildingSellComponent({ gameState, xy }: IBuildingComponentProps) {
    const tile = gameState.tiles[xy];
    const building = tile.building;
-   if (building == null) {
+   if (building == null || isWorldOrNaturalWonder(building.type)) {
       return null;
    }
    return (
