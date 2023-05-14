@@ -1,3 +1,5 @@
+import classNames from "classnames";
+import warning from "../../images/warning.png";
 import { notifyGameStateUpdate } from "../Global";
 import { getBuildingName, getMultipliersFor, getResourceName, getWorkersFor } from "../logic/BuildingLogic";
 import { Tick } from "../logic/TickLogic";
@@ -15,6 +17,7 @@ export function BuildingWorkerComponent({ gameState, xy }: IBuildingComponentPro
    if (isEmpty(Tick.current.buildings[building.type].input) && isEmpty(Tick.current.buildings[building.type].output)) {
       return null;
    }
+   const showWarning = Tick.current.notProducingReasons[xy] === "NotEnoughWorkers";
    return (
       <fieldset>
          <legend>{t(L.Workers)}</legend>
@@ -47,7 +50,10 @@ export function BuildingWorkerComponent({ gameState, xy }: IBuildingComponentPro
             <li>
                <details>
                   <summary className="row">
-                     <div className="f1">{t(L.WorkersRequiredOutput)}</div>
+                     {showWarning ? <img src={warning} style={{ margin: "0 2px 0 0" }} /> : null}
+                     <div className={classNames({ f1: true, "text-red": showWarning })}>
+                        {t(L.WorkersRequiredOutput)}
+                     </div>
                      <div className="text-strong">{Tick.current.workersAssignment[xy] ?? 0}</div>
                   </summary>
                   <ul>

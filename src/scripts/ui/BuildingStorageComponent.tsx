@@ -1,3 +1,5 @@
+import classNames from "classnames";
+import warning from "../../images/warning.png";
 import { getStorageFor } from "../logic/BuildingLogic";
 import { Tick } from "../logic/TickLogic";
 import { formatPercent, jsxMapOf } from "../utilities/Helper";
@@ -13,10 +15,14 @@ export function BuildingStorageComponent({ gameState, xy }: IBuildingComponentPr
       return null;
    }
    const percentage = storage.used / storage.total;
+   const showWarning = Tick.current.notProducingReasons[xy] === "StorageFull";
    return (
       <fieldset>
-         <legend>
-            {t(L.Storage)}: {formatPercent(percentage)}
+         <legend className="row">
+            {showWarning ? <img src={warning} style={{ margin: "0 2px 0 0" }} /> : null}
+            <div className={classNames({ f1: true, "text-red": showWarning })}>
+               {t(L.Storage)}: {formatPercent(percentage)}
+            </div>
          </legend>
          <ProgressBarComponent progress={percentage} />
          <div className="sep5"></div>

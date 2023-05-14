@@ -2,7 +2,6 @@ import { Building } from "../definitions/BuildingDefinitions";
 import { Deposit, Resource } from "../definitions/ResourceDefinitions";
 import { PartialSet, PartialTabulate } from "../definitions/TypeDefinitions";
 import { clamp } from "../utilities/Helper";
-import { L, t } from "../utilities/i18n";
 import { Config } from "./Constants";
 import { GameState } from "./GameState";
 
@@ -22,7 +21,6 @@ export interface IBuildingData {
    resources: PartialTabulate<Resource>;
    status: BuildingStatus;
    capacity: number;
-   notProducingReason: NotProducingReason | null;
    stockpileCapacity: number;
    stockpileMax: number;
    priority: number;
@@ -37,17 +35,6 @@ export interface IHaveTypeAndLevel {
    type: Building;
    level: number;
 }
-
-export const BuildingNotProducingReasons = {
-   StorageFull: () => t(L.NotProducingReasonStorageFull),
-   NotEnoughWorkers: () => t(L.NotProducingReasonNotEnoughWorkers),
-   NotEnoughResources: () => t(L.NotProducingReasonNotEnoughResources),
-   TurnedOff: () => t(L.NotProducingReasonTurnedOff),
-   StoragePartialFull: () => t(L.NotProducingReasonStoragePartialFull),
-   NotOnDeposit: () => t(L.NotProducingReasonNotOnDeposit),
-} as const;
-
-export type NotProducingReason = keyof typeof BuildingNotProducingReasons;
 
 export const STOCKPILE_CAPACITY_MIN = 0;
 export const STOCKPILE_CAPACITY_MAX = 10;
@@ -65,7 +52,6 @@ export function makeBuilding(data: Pick<IBuildingData, "type"> & Partial<IBuildi
       resources: {},
       status: "building",
       capacity: 1,
-      notProducingReason: null,
       stockpileCapacity: 1,
       stockpileMax: 5,
       priority: PRIORITY_MIN,

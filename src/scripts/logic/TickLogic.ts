@@ -17,7 +17,15 @@ interface ITickData {
    workersAssignment: Record<string, number>;
    resourcesByBuilding: Partial<Record<Resource, string[]>>;
    globalMultipliers: GlobalMultipliers;
+   notProducingReasons: Record<string, NotProducingReason>;
 }
+
+export type NotProducingReason =
+   | "NotEnoughResources"
+   | "NotEnoughWorkers"
+   | "StorageFull"
+   | "TurnedOff"
+   | "NotOnDeposit";
 
 export function EmptyTickData(): ITickData {
    const buildings = new BuildingDefinitions();
@@ -35,6 +43,7 @@ export function EmptyTickData(): ITickData {
       workersAssignment: {},
       resourcesByBuilding: {},
       globalMultipliers: new GlobalMultipliers(),
+      notProducingReasons: {},
    };
 }
 

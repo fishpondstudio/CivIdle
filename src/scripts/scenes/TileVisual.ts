@@ -9,6 +9,7 @@ import {
    isWorldOrNaturalWonder,
 } from "../logic/BuildingLogic";
 import { GameState } from "../logic/GameState";
+import { Tick } from "../logic/TickLogic";
 import { ITileData } from "../logic/Tile";
 import { clamp, forEach, layoutCenter, pointToXy, sizeOf } from "../utilities/Helper";
 import Actions from "../utilities/pixi-actions/Actions";
@@ -31,14 +32,15 @@ export class TileVisual extends Container {
    private readonly _level: BitmapText;
    private readonly _constructionAnimation: Action;
    private readonly _upgradeAnimation: Action;
+   private readonly _xy: string;
 
    constructor(world: WorldScene, grid: IPointData) {
       super();
       this._world = world;
       this._grid = grid;
       const gs = getGameState();
-      const xy = pointToXy(this._grid);
-      this._tile = gs.tiles[xy];
+      this._xy = pointToXy(this._grid);
+      this._tile = gs.tiles[this._xy];
 
       this.position = Singleton().grid.gridToPosition(this._grid);
       this.cullable = true;
@@ -235,12 +237,12 @@ export class TileVisual extends Container {
          return;
       }
       this._spinner.angle += dt * 90;
-      if (this._tile.building.notProducingReason == null) {
-         this._spinner.alpha += dt;
-         this._building.alpha += dt;
-      } else {
+      if (Tick.current.notProducingReasons[this._xy]) {
          this._spinner.alpha -= dt;
          this._building.alpha -= dt;
+      } else {
+         this._spinner.alpha += dt;
+         this._building.alpha += dt;
       }
       this._spinner.alpha = clamp(this._spinner.alpha, 0, 0.5);
       this._building.alpha = clamp(this._building.alpha, 0.5, 1);

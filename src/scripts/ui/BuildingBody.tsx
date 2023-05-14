@@ -8,14 +8,12 @@ import { BuildingSellComponent } from "./BuildingSellComponent";
 import { BuildingStockpileComponent } from "./BuildingStockpileComponent";
 import { BuildingStorageComponent } from "./BuildingStorageComponent";
 import { BuildingUpgradeComponent } from "./BuildingUpgradeComponent";
-import { BuildingWarningComponent } from "./BuildingWarningComponent";
 import { BuildingWikipediaComponent } from "./BuildingWikipediaComponent";
 import { BuildingWorkerComponent } from "./BuildingWorkerComponent";
 
 export function DefaultBuildingBody({ gameState, xy }: IBuildingComponentProps) {
    return (
       <div className="window-body">
-         <BuildingWarningComponent gameState={gameState} xy={xy} />
          <BuildingDescriptionComponent gameState={gameState} xy={xy} />
          <BuildingUpgradeComponent gameState={gameState} xy={xy} />
          <BuildingDepositComponent gameState={gameState} xy={xy} />

@@ -13,7 +13,6 @@ import { BuildingSellComponent } from "./BuildingSellComponent";
 import { BuildingStockpileComponent } from "./BuildingStockpileComponent";
 import { BuildingStorageComponent } from "./BuildingStorageComponent";
 import { BuildingUpgradeComponent } from "./BuildingUpgradeComponent";
-import { BuildingWarningComponent } from "./BuildingWarningComponent";
 import { BuildingWorkerComponent } from "./BuildingWorkerComponent";
 import { FormatNumber } from "./HelperComponents";
 
@@ -24,7 +23,6 @@ export function MarketBuildingBody({ gameState, xy }: IBuildingComponentProps) {
    }
    return (
       <div className="window-body">
-         <BuildingWarningComponent gameState={gameState} xy={xy} />
          <fieldset>
             <div className="text-strong row">
                <div className="f1">{t(L.Cash)}</div>

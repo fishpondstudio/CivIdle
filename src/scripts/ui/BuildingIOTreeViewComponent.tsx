@@ -1,7 +1,9 @@
+import classNames from "classnames";
+import warning from "../../images/warning.png";
 import { getBuildingIO, getMultipliersFor, totalMultiplierFor } from "../logic/BuildingLogic";
 import { Config } from "../logic/Constants";
 import { GameState } from "../logic/GameState";
-import { Multiplier } from "../logic/TickLogic";
+import { Multiplier, Tick } from "../logic/TickLogic";
 import { jsxMapOf } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
 import { FormatNumber } from "./HelperComponents";
@@ -20,11 +22,16 @@ export function BuildingIOTreeViewComponent({
    return (
       <ul className="tree-view">
          {jsxMapOf(data, (k, v) => {
+            const resourceInStorage = gameState.tiles[xy].building?.resources[k] ?? 0;
+            const showWarning = Tick.current.notProducingReasons[xy] === "NotEnoughResources" && resourceInStorage < v;
             return (
                <li key={k}>
                   <details>
                      <summary className="row">
-                        <div className="f1">{Config.Resource[k].name()}</div>
+                        {showWarning ? <img src={warning} style={{ margin: "0 2px 0 0" }} /> : null}
+                        <div className={classNames({ f1: true, "text-red": showWarning })}>
+                           {Config.Resource[k].name()}
+                        </div>
                         <div className="text-strong">
                            <FormatNumber value={v} />
                         </div>

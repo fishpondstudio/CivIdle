@@ -3,7 +3,6 @@ import { Tick } from "../logic/TickLogic";
 import { ITileData } from "../logic/Tile";
 import { L, t } from "../utilities/i18n";
 import { BuildingConstructionProgressComponent } from "./BuildingConstructionProgressComponent";
-import { BuildingWarningComponent } from "./BuildingWarningComponent";
 import { MenuComponent } from "./MenuComponent";
 
 export function UpgradingPage({ tile }: { tile: ITileData }) {
@@ -20,7 +19,6 @@ export function UpgradingPage({ tile }: { tile: ITileData }) {
          </div>
          <MenuComponent />
          <div className="window-body">
-            <BuildingWarningComponent xy={tile.xy} gameState={gs} />
             <BuildingConstructionProgressComponent xy={tile.xy} gameState={gs} />
             <fieldset>
                <div className="row text-strong">

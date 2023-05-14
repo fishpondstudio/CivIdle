@@ -4,7 +4,6 @@ import { ITileData } from "../logic/Tile";
 import { WorldScene } from "../scenes/WorldScene";
 import { L, t } from "../utilities/i18n";
 import { BuildingConstructionProgressComponent } from "./BuildingConstructionProgressComponent";
-import { BuildingWarningComponent } from "./BuildingWarningComponent";
 import { LoadingPage } from "./LoadingPage";
 import { MenuComponent } from "./MenuComponent";
 
@@ -23,7 +22,6 @@ export function ConstructionPage({ tile }: { tile: ITileData }): JSX.Element | n
          </div>
          <MenuComponent />
          <div className="window-body">
-            <BuildingWarningComponent xy={tile.xy} gameState={gs} />
             <BuildingConstructionProgressComponent xy={tile.xy} gameState={gs} />
             <fieldset>
                <legend>{t(building.status === "paused" ? L.ResumeConstruction : L.PauseConstruction)}</legend>

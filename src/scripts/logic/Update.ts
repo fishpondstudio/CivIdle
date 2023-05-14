@@ -4,7 +4,7 @@ import { IUnlockableDefinition } from "../definitions/ITechDefinition";
 import { Resource } from "../definitions/ResourceDefinitions";
 import { notifyGameStateUpdate, saveGame, Singleton } from "../Global";
 import { WorldScene } from "../scenes/WorldScene";
-import { filterOf, forEach, isEmpty, keysOf, safeAdd, safePush, sizeOf, sum } from "../utilities/Helper";
+import { clamp, filterOf, forEach, isEmpty, keysOf, safeAdd, safePush, sizeOf, sum } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
 import { v2 } from "../utilities/Vector2";
 import {
@@ -192,13 +192,13 @@ function tileTile(xy: string, gs: GameState): void {
          }
          completed = false;
          if (hasEnoughWorkers("Worker", builder)) {
-            building.notProducingReason = null;
+            delete Tick.next.notProducingReasons[xy];
             useWorkers("Worker", builder, xy);
             transportResource(res, builder * building.level, building.level, xy, gs);
             // break;
             return true;
          } else {
-            building.notProducingReason = "NotEnoughWorkers";
+            Tick.next.notProducingReasons[xy] = "NotEnoughWorkers";
          }
       });
       if (completed) {
@@ -237,14 +237,14 @@ function tileTile(xy: string, gs: GameState): void {
       let key: Resource;
       for (key in requiredDeposits) {
          if (!tile.deposit[key]) {
-            building.notProducingReason = "NotOnDeposit";
+            Tick.next.notProducingReasons[xy] = "NotOnDeposit";
             return;
          }
       }
    }
 
    if (building.capacity <= 0) {
-      building.notProducingReason = "TurnedOff";
+      Tick.next.notProducingReasons[xy] = "TurnedOff";
       return;
    }
 
@@ -276,17 +276,13 @@ function tileTile(xy: string, gs: GameState): void {
    const tileVisual = Singleton().sceneManager.getCurrent(WorldScene)?.getTile(xy);
 
    if (building.type === "Market") {
-      building.notProducingReason = "NotEnoughResources";
       let totalCash = 0;
-      forEach(input, (res) => {
-         const amount = building.resources[res] ?? 0;
+      forEach(input, (res, amount) => {
+         amount = clamp(amount, 0, building.resources[res] ?? 0);
          safeAdd(building.resources, res, -amount);
          const cash = amount * (Config.ResourcePrice[res] ?? 0);
          addCash(cash);
          totalCash += cash;
-         if (amount > 0) {
-            building.notProducingReason = null;
-         }
       });
       if (totalCash > 0) {
          tileVisual?.showText(`+$${totalCash}`);
@@ -300,12 +296,12 @@ function tileTile(xy: string, gs: GameState): void {
    const hasEnoughInput = hasEnoughResources(building.resources, input);
 
    if (!hasEnoughWorker) {
-      building.notProducingReason = "NotEnoughWorkers";
+      Tick.next.notProducingReasons[xy] = "NotEnoughWorkers";
       return;
    }
 
    if (!hasEnoughInput) {
-      building.notProducingReason = "NotEnoughResources";
+      Tick.next.notProducingReasons[xy] = "NotEnoughResources";
       return;
    }
 
@@ -317,15 +313,15 @@ function tileTile(xy: string, gs: GameState): void {
          deductResources(building.resources, input);
          addResources(Tick.next.workersAvailable, nonTransportables);
          if (!isEmpty(filterTransportable(output))) {
-            building.notProducingReason = "StoragePartialFull";
+            Tick.next.notProducingReasons[xy] = "StorageFull";
          }
       } else {
-         building.notProducingReason = "StorageFull";
+         Tick.next.notProducingReasons[xy] = "StorageFull";
       }
       return;
    }
 
-   building.notProducingReason = null;
+   delete Tick.next.notProducingReasons[xy];
    useWorkers("Worker", worker.output, xy);
    deductResources(building.resources, input);
    forEach(output, (res, v) => {
