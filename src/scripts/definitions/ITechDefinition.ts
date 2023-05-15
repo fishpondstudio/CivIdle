@@ -6,7 +6,6 @@ import { PartialTabulate } from "./TypeDefinitions";
 
 export interface IUnlockableDefinition {
    name: () => string;
-   require: string[];
    unlockFeature?: Feature[];
    unlockBuilding?: Building[];
    revealDeposit?: Deposit[];
@@ -17,6 +16,7 @@ export interface IUnlockableDefinition {
 }
 
 export interface ITechDefinition extends IUnlockableDefinition {
+   requireTech: string[];
    column: number;
 }
 

@@ -1,4 +1,5 @@
 import { Unlockable } from "../definitions/CityDefinitions";
+import { ITechDefinition } from "../definitions/ITechDefinition";
 import { Resource } from "../definitions/ResourceDefinitions";
 import { IRomeHistoryDefinitions } from "../definitions/RomeHistoryDefinitions";
 import { PartialTabulate } from "../definitions/TypeDefinitions";
@@ -33,6 +34,8 @@ export function TechPage({ id, type }: { id: string; type?: keyof typeof Unlocka
    const progress =
       reduceOf(availableResources, (prev, k, v) => prev + Math.min(v, unlockCost[k] ?? 0), 0) /
       reduceOf(unlockCost, (prev, _, v) => prev + v, 0);
+
+   let prerequisiteCount = 0;
    return (
       <div className="window">
          <div className="title-bar">
@@ -44,7 +47,8 @@ export function TechPage({ id, type }: { id: string; type?: keyof typeof Unlocka
          <div className="window-body">
             <fieldset>
                <legend>{t(L.TechnologyPrerequisite)}</legend>
-               {definition.require.map((prerequisite) => {
+               {(definition as ITechDefinition).requireTech?.map((prerequisite) => {
+                  prerequisiteCount++;
                   return (
                      <TechPrerequisiteItemComponent
                         key={prerequisite}
@@ -62,6 +66,7 @@ export function TechPage({ id, type }: { id: string; type?: keyof typeof Unlocka
                   );
                })}
                {(definition as IRomeHistoryDefinitions).requireProvince?.map((province) => {
+                  prerequisiteCount++;
                   return (
                      <TechPrerequisiteItemComponent
                         key={province}
@@ -75,7 +80,7 @@ export function TechPage({ id, type }: { id: string; type?: keyof typeof Unlocka
                      />
                   );
                })}
-               {definition.require.length === 0 ? <div>{t(L.TechnologyNoPrerequisite)}</div> : null}
+               {prerequisiteCount === 0 ? <div>{t(L.TechnologyNoPrerequisite)}</div> : null}
             </fieldset>
             <fieldset>
                <legend>{t(L.Progress)}</legend>

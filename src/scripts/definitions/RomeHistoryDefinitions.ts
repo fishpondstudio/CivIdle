@@ -29,7 +29,7 @@ export class RomeHistoryStageDefinitions {
 export type RomeHistoryStage = keyof RomeHistoryStageDefinitions;
 
 export interface IRomeHistoryDefinitions extends ITechDefinition {
-   require: RomeHistory[];
+   requireTech: RomeHistory[];
    requireProvince?: RomeProvince[];
 }
 
@@ -39,34 +39,34 @@ export class RomeHistoryDefinitions {
       column: 0,
       revealDeposit: ["Stone"],
       unlockBuilding: ["StoneQuarry"],
-      require: [],
+      requireTech: [],
    };
    TiberRiver: IRomeHistoryDefinitions = {
       name: () => t(L.TiberRiver),
       column: 0,
       revealDeposit: ["Water"],
       unlockBuilding: ["Aqueduct"],
-      require: [],
+      requireTech: [],
    };
    CuriateAssembly: IRomeHistoryDefinitions = {
       name: () => t(L.CuriateAssembly),
       column: 0,
       revealDeposit: ["Wood"],
       unlockBuilding: ["LoggingCamp"],
-      require: [],
+      requireTech: [],
    };
    Senate: IRomeHistoryDefinitions = {
       name: () => t(L.Senate),
       column: 0,
       unlockBuilding: ["Hut", "WheatFarm"],
-      require: [],
+      requireTech: [],
    };
    Metallurgy: IRomeHistoryDefinitions = {
       name: () => t(L.Metallurgy),
       column: 1,
       revealDeposit: ["Copper"],
       unlockBuilding: ["CopperMiningCamp"],
-      require: ["PalatineHill", "TiberRiver"],
+      requireTech: ["PalatineHill", "TiberRiver"],
    };
    Election: IRomeHistoryDefinitions = {
       name: () => t(L.Election),
@@ -74,19 +74,19 @@ export class RomeHistoryDefinitions {
       unlockBuilding: ["Blacksmith"],
       globalMultiplier: { sciencePerBusyWorker: 1 },
       buildingMultiplier: { Hut: { output: 1 } },
-      require: ["CuriateAssembly", "Senate"],
+      requireTech: ["CuriateAssembly", "Senate"],
    };
    Legion: IRomeHistoryDefinitions = {
       name: () => t(L.Legion),
       column: 2,
       unlockBuilding: ["Armory"],
-      require: ["Metallurgy"],
+      requireTech: ["Metallurgy"],
    };
    TribalAssembly: IRomeHistoryDefinitions = {
       name: () => t(L.TribalAssembly),
       column: 2,
       unlockBuilding: ["Brickworks"],
-      require: ["Election"],
+      requireTech: ["Election"],
    };
    Republic: IRomeHistoryDefinitions = {
       name: () => t(L.Republic),
@@ -94,21 +94,21 @@ export class RomeHistoryDefinitions {
       unlockBuilding: ["Castrum"],
       globalMultiplier: { sciencePerIdleWorker: 1 },
       buildingMultiplier: { WheatFarm: { storage: 1, output: 1 } },
-      require: ["Election"],
+      requireTech: ["Election"],
    };
    CenturiateAssembly: IRomeHistoryDefinitions = {
       name: () => t(L.CenturiateAssembly),
       column: 2,
       unlockBuilding: ["IronMiningCamp"],
       revealDeposit: ["Iron"],
-      require: ["Election"],
+      requireTech: ["Election"],
    };
    PyrrhicWar: IRomeHistoryDefinitions = {
       name: () => t(L.PyrrhicWar),
       column: 3,
       requireProvince: ["Italia"],
       unlockBuilding: ["LivestockFarm"],
-      require: ["Legion", "TribalAssembly"],
+      requireTech: ["Legion", "TribalAssembly"],
    };
    Dictator: IRomeHistoryDefinitions = {
       name: () => t(L.Dictator),
@@ -120,7 +120,7 @@ export class RomeHistoryDefinitions {
          Armory: { worker: 1 },
          Castrum: { worker: 1 },
       },
-      require: ["Republic", "TribalAssembly"],
+      requireTech: ["Republic", "TribalAssembly"],
    };
    Consul: IRomeHistoryDefinitions = {
       name: () => t(L.Consul),
@@ -132,13 +132,13 @@ export class RomeHistoryDefinitions {
          Brickworks: { worker: 1 },
       },
       unlockBuilding: ["Market"],
-      require: ["Republic"],
+      requireTech: ["Republic"],
    };
    PontifexMaximus: IRomeHistoryDefinitions = {
       name: () => t(L.PontifexMaximus),
       column: 3,
       unlockBuilding: ["Villa"],
-      require: ["Republic", "CenturiateAssembly"],
+      requireTech: ["Republic", "CenturiateAssembly"],
    };
    FirstPunicWar: IRomeHistoryDefinitions = {
       name: () => t(L.FirstPunicWar),
@@ -147,7 +147,7 @@ export class RomeHistoryDefinitions {
       buildingMultiplier: { Castrum: { storage: 1 } },
       unlockBuilding: ["Marbleworks"],
       column: 4,
-      require: ["Dictator", "PyrrhicWar"],
+      requireTech: ["Dictator", "PyrrhicWar"],
    };
    IllyrianWar: IRomeHistoryDefinitions = {
       name: () => t(L.IllyrianWar),
@@ -155,14 +155,14 @@ export class RomeHistoryDefinitions {
       requireProvince: ["Illyricum"],
       unlockBuilding: ["OlivePlantation"],
       buildingMultiplier: { Armory: { worker: 1 }, Castrum: { worker: 1 }, Aqueduct: { output: 1, storage: 1 } },
-      require: ["Dictator"],
+      requireTech: ["Dictator"],
    };
    TribuneOfThePlebs: IRomeHistoryDefinitions = {
       name: () => t(L.TribuneOfThePlebs),
       column: 4,
       unlockBuilding: ["Vineyard"],
       buildingMultiplier: { Villa: { worker: 1 } },
-      require: ["Consul", "PontifexMaximus"],
+      requireTech: ["Consul", "PontifexMaximus"],
    };
    FabianStrategy: IRomeHistoryDefinitions = {
       name: () => t(L.FabianStrategy),
@@ -173,21 +173,21 @@ export class RomeHistoryDefinitions {
          Castrum: { storage: 1 },
       },
       unlockBuilding: ["Insula"],
-      require: ["FirstPunicWar", "IllyrianWar"],
+      requireTech: ["FirstPunicWar", "IllyrianWar"],
    };
    Nobilis: IRomeHistoryDefinitions = {
       name: () => t(L.Nobilis),
       column: 5,
       buildingModifier: { WheatFarm: { input: { Water: 1 }, output: { Crop: 2 } } },
       unlockBuilding: ["Brewery"],
-      require: ["TribuneOfThePlebs", "IllyrianWar"],
+      requireTech: ["TribuneOfThePlebs", "IllyrianWar"],
    };
    SecondPunicWar: IRomeHistoryDefinitions = {
       name: () => t(L.SecondPunicWar),
       column: 6,
       requireProvince: ["Hispania"],
       buildingMultiplier: { Armory: { input: 1, output: 1 }, Castrum: { input: 1, output: 1 } },
-      require: ["FabianStrategy"],
+      requireTech: ["FabianStrategy"],
       unlockBuilding: ["Winery"],
    };
    MacedonianWar: IRomeHistoryDefinitions = {
@@ -195,14 +195,14 @@ export class RomeHistoryDefinitions {
       requireProvince: ["Macedonia"],
       column: 6,
       unlockBuilding: ["OilPress"],
-      require: ["FabianStrategy"],
+      requireTech: ["FabianStrategy"],
    };
    CursusHonorum: IRomeHistoryDefinitions = {
       name: () => t(L.CursusHonorum),
       column: 6,
       unlockBuilding: ["Domus"],
       buildingMultiplier: { Villa: { storage: 1 }, Insula: { storage: 1 } },
-      require: ["Nobilis"],
+      requireTech: ["Nobilis"],
    };
    ThirdPunicWar: IRomeHistoryDefinitions = {
       name: () => t(L.ThirdPunicWar),
@@ -210,14 +210,14 @@ export class RomeHistoryDefinitions {
       column: 7,
       unlockBuilding: ["Colosseum"],
       buildingMultiplier: { Villa: { input: 1, output: 1 }, Insula: { input: 1, output: 1 } },
-      require: ["SecondPunicWar", "MacedonianWar"],
+      requireTech: ["SecondPunicWar", "MacedonianWar"],
    };
    Populares: IRomeHistoryDefinitions = {
       name: () => t(L.Populares),
       column: 7,
       unlockBuilding: ["FishPond"],
       buildingMultiplier: { WheatFarm: { worker: 1, storage: 1, output: 1 } },
-      require: ["CursusHonorum"],
+      requireTech: ["CursusHonorum"],
    };
    Optimates: IRomeHistoryDefinitions = {
       name: () => t(L.Optimates),
@@ -227,7 +227,7 @@ export class RomeHistoryDefinitions {
          StoneQuarry: { input: 1, output: 1 },
          Brickworks: { worker: 1, storage: 1 },
       },
-      require: ["CursusHonorum"],
+      requireTech: ["CursusHonorum"],
    };
    MarianReform: IRomeHistoryDefinitions = {
       name: () => t(L.MarianReform),
@@ -236,14 +236,14 @@ export class RomeHistoryDefinitions {
          Armory: { output: 1, storage: 1, worker: 1 },
          Castrum: { output: 1, storage: 1, worker: 1 },
       },
-      require: ["ThirdPunicWar", "Optimates", "Populares"],
+      requireTech: ["ThirdPunicWar", "Optimates", "Populares"],
       unlockBuilding: ["PaperMaker"],
    };
    Imperator: IRomeHistoryDefinitions = {
       name: () => t(L.Imperator),
       column: 8,
       unlockBuilding: ["CheeseMaker"],
-      require: ["Optimates"],
+      requireTech: ["Optimates"],
    };
    Proscription: IRomeHistoryDefinitions = {
       name: () => t(L.Proscription),
@@ -253,7 +253,7 @@ export class RomeHistoryDefinitions {
          LivestockFarm: { output: 1, storage: 1 },
       },
       globalMultiplier: { sciencePerBusyWorker: 1 },
-      require: ["Optimates"],
+      requireTech: ["Optimates"],
       unlockBuilding: ["Library"],
    };
    GallicWars: IRomeHistoryDefinitions = {
@@ -265,7 +265,7 @@ export class RomeHistoryDefinitions {
          Blacksmith: { output: 1, storage: 1 },
       },
       unlockBuilding: ["CircusMaximus"],
-      require: ["MarianReform"],
+      requireTech: ["MarianReform"],
    };
    MithridaticWar: IRomeHistoryDefinitions = {
       name: () => t(L.MithridaticWar),
@@ -275,7 +275,7 @@ export class RomeHistoryDefinitions {
          Brewery: { output: 1, storage: 1 },
          Domus: { output: 1, storage: 1 },
       },
-      require: ["MarianReform", "Imperator"],
+      requireTech: ["MarianReform", "Imperator"],
    };
    CaesarsCivilWar: IRomeHistoryDefinitions = {
       name: () => t(L.CaesarsCivilWar),
@@ -285,7 +285,7 @@ export class RomeHistoryDefinitions {
          IronForge: { input: 1, output: 1 },
          Armory: { input: 1, output: 1 },
       },
-      require: ["Proscription", "Imperator"],
+      requireTech: ["Proscription", "Imperator"],
    };
    CaesarsAssassination: IRomeHistoryDefinitions = {
       name: () => t(L.CaesarsAssassination),
@@ -293,32 +293,32 @@ export class RomeHistoryDefinitions {
       globalMultiplier: { sciencePerIdleWorker: 1 },
       unlockBuilding: ["Pantheon"],
       buildingMultiplier: { Library: { storage: 1, worker: 1 } },
-      require: ["CaesarsCivilWar", "MithridaticWar", "GallicWars"],
+      requireTech: ["CaesarsCivilWar", "MithridaticWar", "GallicWars"],
    };
    LiberatorsCivilWar: IRomeHistoryDefinitions = {
       name: () => t(L.LiberatorsCivilWar),
       column: 11,
       requireProvince: ["Cyprus"],
       buildingMultiplier: { Blacksmith: { input: 1, output: 1 } },
-      require: ["CaesarsAssassination"],
+      requireTech: ["CaesarsAssassination"],
    };
    WarOfActium: IRomeHistoryDefinitions = {
       name: () => t(L.WarOfActium),
       column: 11,
       requireProvince: ["Aegyptus"],
       buildingMultiplier: { Library: { input: 1, output: 1 }, Domus: { storage: 1, worker: 1 } },
-      require: ["CaesarsAssassination"],
+      requireTech: ["CaesarsAssassination"],
    };
    FirstCitizen: IRomeHistoryDefinitions = {
       name: () => t(L.FirstCitizen),
       column: 11,
       buildingMultiplier: { Library: { worker: 1, storage: 1 }, Domus: { input: 1, output: 1 } },
-      require: ["CaesarsAssassination"],
+      requireTech: ["CaesarsAssassination"],
    };
    PaxRomana: IRomeHistoryDefinitions = {
       name: () => t(L.PaxRomana),
       column: 12,
-      require: ["LiberatorsCivilWar", "WarOfActium", "FirstCitizen"],
+      requireTech: ["LiberatorsCivilWar", "WarOfActium", "FirstCitizen"],
    };
 }
 

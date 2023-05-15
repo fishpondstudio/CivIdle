@@ -129,7 +129,7 @@ export class TechTreeScene extends ViewportScene {
       });
 
       forEach(techTree.definitions, (to, v) => {
-         v.require.forEach((from) => {
+         v.requireTech.forEach((from) => {
             this.drawConnection(
                g,
                this._boxPositions[from]!.x + BOX_WIDTH,
@@ -177,7 +177,7 @@ export class TechTreeScene extends ViewportScene {
                );
                drawnBoxes[to] = true;
             }
-            techTree.definitions[to].require.forEach((from) => {
+            techTree.definitions[to].requireTech.forEach((from) => {
                newTo.push(from);
                const key = `${from} -> ${to}`;
                if (

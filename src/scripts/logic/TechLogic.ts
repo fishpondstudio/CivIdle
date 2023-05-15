@@ -65,11 +65,8 @@ export function getAgeForTech(tech: string, gs: GameState): string | null {
 
 export function getUnlockRequirement(def: IUnlockableDefinition): string[] {
    const result: string[] = [];
-   def.require.forEach((r) => result.push(r));
-   const requireProvince = (def as IRomeHistoryDefinitions).requireProvince;
-   if (requireProvince) {
-      requireProvince.forEach((p) => result.push(p));
-   }
+   (def as ITechDefinition).requireTech?.forEach((r) => result.push(r));
+   (def as IRomeHistoryDefinitions).requireProvince?.forEach((p) => result.push(p));
    return result;
 }
 
@@ -128,7 +125,7 @@ export function unlockableTechs(gs: GameState): string[] {
       if (gs.unlocked[tech]) {
          return;
       }
-      if (def.require.every((t) => gs.unlocked[t])) {
+      if (def.requireTech.every((t) => gs.unlocked[t])) {
          result.push(tech);
       }
    });
