@@ -99,13 +99,11 @@ export function onBuildingProductionComplete(xy: string, gs: GameState) {
 export function onUnlockableUnlocked(id: string, type: keyof typeof Unlockable | undefined, gs: GameState) {
    if (!type) {
       Singleton().sceneManager.getCurrent(TechTreeScene)?.renderTechTree("animate");
+   }
+
+   if (type === "RomeProvince") {
       Singleton()
          .sceneManager.getCurrent(RomeProvinceScene)
          ?.annexProvince(id as RomeProvince);
-   }
-   if (type === "RomeProvince") {
-      Singleton()
-         .sceneManager.loadScene(RomeProvinceScene, true)
-         .selectProvince(id as RomeProvince);
    }
 }

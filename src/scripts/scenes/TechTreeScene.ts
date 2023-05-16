@@ -84,6 +84,7 @@ export class TechTreeScene extends ViewportScene {
    }
 
    override onDestroy(): void {
+      Actions.clear(this);
       this.viewport.destroy({ children: true });
    }
 
