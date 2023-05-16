@@ -159,7 +159,10 @@ export class TileVisual extends Container {
       return await new Promise((resolve) => {
          Actions.sequence(
             Actions.to(this._fog, { alpha: 0, scale: { x: 0.5, y: 0.5 } }, 1, Easing.InQuad),
-            Actions.runFunc(() => resolve(this))
+            Actions.runFunc(() => {
+               this._fog.visible = false;
+               resolve(this);
+            })
          ).play();
       });
    }

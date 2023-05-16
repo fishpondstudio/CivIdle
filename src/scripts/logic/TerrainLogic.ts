@@ -25,9 +25,12 @@ export function ensureTileFogOfWar(xy: string, gameState: GameState, grid: Grid)
          const neighbors = grid.getNeighbors(t);
          neighbors.forEach((n) => {
             const xy = pointToXy(n);
-            gameState.tiles[xy].explored = true;
-            result[xy] = true;
-            newTargets.push(n);
+            const tile = gameState.tiles[xy];
+            if (tile) {
+               tile.explored = true;
+               result[xy] = true;
+               newTargets.push(n);
+            }
          });
       });
       targets = newTargets;
