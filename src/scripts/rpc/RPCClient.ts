@@ -94,6 +94,10 @@ export function initSteamClient(url: string): Promise<void> {
          steamWs = null;
          reject();
       };
+      steamWs.onerror = () => {
+         steamWs = null;
+         reject();
+      };
    });
 }
 
