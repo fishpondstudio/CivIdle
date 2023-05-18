@@ -37,9 +37,29 @@ import { forEach } from "./utilities/Helper";
 import Actions from "./utilities/pixi-actions/Actions";
 import { SceneManager, Textures } from "./utilities/SceneManager";
 import { TypedEvent } from "./utilities/TypedEvent";
+import { build } from "./Version.json";
 import { Fonts } from "./visuals/Fonts";
 
-Sentry.init({ dsn: "https://dc918a4ab59f404688ab61ea803de8c0@bugreport.fishpondstudio.com/1" });
+if (!import.meta.env.DEV) {
+   Sentry.init({
+      dsn: "https://dc918a4ab59f404688ab61ea803de8c0@bugreport.fishpondstudio.com/1",
+      release: `Build.${build}`,
+      autoSessionTracking: false,
+   });
+}
+
+const consoleWarn = console.warn;
+const consoleError = console.error;
+
+console.warn = (...args) => {
+   consoleWarn.apply(this, args);
+   Sentry.captureMessage(JSON.stringify(args));
+};
+
+console.error = (...args) => {
+   consoleError.apply(this, args);
+   Sentry.captureMessage(JSON.stringify(args));
+};
 
 const routeChanged = new TypedEvent<RouteChangeEvent>();
 

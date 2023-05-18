@@ -40,20 +40,19 @@ let steamWs: WebSocket | null = null;
 
 export const client = rpcClient<ServerImpl>({
    request: (method: string, params: any[]) => {
-      const id = ++requestId;
-      if (!ws) {
-         return Promise.reject("WebSocket is not ready yet");
-      }
-      ws.send(
-         encode({
+      return new Promise((resolve, reject) => {
+         const id = ++requestId;
+         if (!ws) {
+            return reject("WebSocket is not ready yet");
+         }
+         const request = {
             jsonrpc: "2.0",
             id: id,
             method,
             params: removeTrailingUndefs(params),
-         })
-      );
-      return new Promise((resolve, reject) => {
-         rpcRequests[id] = { resolve, reject, time: Date.now() };
+         };
+         ws.send(encode(request));
+         rpcRequests[id] = { request: JSON.stringify(request), resolve, reject, time: Date.now() };
       });
    },
 });
@@ -77,7 +76,7 @@ export const useChatMessages = makeObservableHook(OnChatMessage, chatMessages);
 let reconnect = 0;
 let requestId = 0;
 // eslint-disable-next-line @typescript-eslint/ban-types
-const rpcRequests: Record<number, { resolve: Function; reject: Function; time: number }> = {};
+const rpcRequests: Record<number, { request: string; resolve: Function; reject: Function; time: number }> = {};
 
 const STEAM_APP_ID = 2181940;
 
@@ -165,20 +164,19 @@ function handleRpcResponse(response: any) {
 
 export const steamClient = rpcClient<ISteamClient>({
    request: (method: string, params: any[]) => {
-      const id = ++requestId;
-      if (!steamWs) {
-         return Promise.reject("WebSocket is not ready yet");
-      }
-      steamWs.send(
-         JSON.stringify({
+      return new Promise((resolve, reject) => {
+         const id = ++requestId;
+         if (!steamWs) {
+            return reject("WebSocket is not ready yet");
+         }
+         const request = JSON.stringify({
             jsonrpc: "2.0",
             id: id,
             method,
             params: removeTrailingUndefs(params),
-         })
-      );
-      return new Promise((resolve, reject) => {
-         rpcRequests[id] = { resolve, reject, time: Date.now() };
+         });
+         steamWs.send(request);
+         rpcRequests[id] = { request, resolve, reject, time: Date.now() };
       });
    },
 });

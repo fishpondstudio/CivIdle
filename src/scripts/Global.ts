@@ -116,7 +116,7 @@ export function saveGame() {
 export async function loadGame(): Promise<SavedGame | undefined> {
    if (window.__STEAM_API_URL) {
       try {
-         return JSON.parse(await await steamClient.fileRead(SAVE_KEY)) as SavedGame;
+         return JSON.parse(await steamClient.fileRead(SAVE_KEY)) as SavedGame;
       } catch (e) {
          console.warn("loadGame failed", e);
       }
