@@ -9,6 +9,7 @@ specifiers:
   '@pixi/sound': ^4.3.0
   '@pixi/ticker': ^6.5.9
   '@pixi/utils': ^6.5.9
+  '@sentry/browser': ^7.52.1
   '@types/gaze': ^1.1.2
   '@types/node': ^18.7.23
   '@types/react': ^18.0.0
@@ -50,6 +51,7 @@ dependencies:
   '@pixi/sound': 4.3.3_ibovozuixmwpaojz5y223iwifi
   '@pixi/ticker': 6.5.9_3ywbupy267ddqakwfvxdxsi3ce
   '@pixi/utils': 6.5.9_56wmgtaor3g36gitvwiown43he
+  '@sentry/browser': 7.52.1
   classnames: 2.3.2
   pixi-viewport: 4.38.0_2b6vrnoi2lcae47kikfquthhfu
   pixi.js: 6.5.9
@@ -1219,6 +1221,59 @@ packages:
       earcut: 2.2.4
       eventemitter3: 3.1.2
       url: 0.11.0
+    dev: false
+
+  /@sentry-internal/tracing/7.52.1:
+    resolution: {integrity: sha512-6N99rE+Ek0LgbqSzI/XpsKSLUyJjQ9nychViy+MP60p1x+hllukfTsDbNtUNrPlW0Bx+vqUrWKkAqmTFad94TQ==}
+    engines: {node: '>=8'}
+    dependencies:
+      '@sentry/core': 7.52.1
+      '@sentry/types': 7.52.1
+      '@sentry/utils': 7.52.1
+      tslib: 1.14.1
+    dev: false
+
+  /@sentry/browser/7.52.1:
+    resolution: {integrity: sha512-HrCOfieX68t+Wj42VIkraLYwx8kN5311SdBkHccevWs2Y2dZU7R9iLbI87+nb5kpOPQ7jVWW7d6QI/yZmliYgQ==}
+    engines: {node: '>=8'}
+    dependencies:
+      '@sentry-internal/tracing': 7.52.1
+      '@sentry/core': 7.52.1
+      '@sentry/replay': 7.52.1
+      '@sentry/types': 7.52.1
+      '@sentry/utils': 7.52.1
+      tslib: 1.14.1
+    dev: false
+
+  /@sentry/core/7.52.1:
+    resolution: {integrity: sha512-36clugQu5z/9jrit1gzI7KfKbAUimjRab39JeR0mJ6pMuKLTTK7PhbpUAD4AQBs9qVeXN2c7h9SVZiSA0UDvkg==}
+    engines: {node: '>=8'}
+    dependencies:
+      '@sentry/types': 7.52.1
+      '@sentry/utils': 7.52.1
+      tslib: 1.14.1
+    dev: false
+
+  /@sentry/replay/7.52.1:
+    resolution: {integrity: sha512-A+RaUmpU9/yBHnU3ATemc6wAvobGno0yf5R6fZYkAFoo2FCR2YG6AXxkTazymIf8v2DnLGaSDORYDPdhQClU9A==}
+    engines: {node: '>=12'}
+    dependencies:
+      '@sentry/core': 7.52.1
+      '@sentry/types': 7.52.1
+      '@sentry/utils': 7.52.1
+    dev: false
+
+  /@sentry/types/7.52.1:
+    resolution: {integrity: sha512-OMbGBPrJsw0iEXwZ2bJUYxewI1IEAU2e1aQGc0O6QW5+6hhCh+8HO8Xl4EymqwejjztuwStkl6G1qhK+Q0/Row==}
+    engines: {node: '>=8'}
+    dev: false
+
+  /@sentry/utils/7.52.1:
+    resolution: {integrity: sha512-MPt1Xu/jluulknW8CmZ2naJ53jEdtdwCBSo6fXJvOTI0SDqwIPbXDVrsnqLAhVJuIN7xbkj96nuY/VBR6S5sWg==}
+    engines: {node: '>=8'}
+    dependencies:
+      '@sentry/types': 7.52.1
+      tslib: 1.14.1
     dev: false
 
   /@sindresorhus/is/0.14.0:
@@ -4201,7 +4256,6 @@ packages:
 
   /tslib/1.14.1:
     resolution: {integrity: sha512-Xni35NKzjgMrwevysHTCArtLDpPvye8zV/0E4EyYn43P7/7qvQwPh9BGkHewbMulVntbigmcT7rdX3BNo9wRJg==}
-    dev: true
 
   /tslib/2.5.0:
     resolution: {integrity: sha512-336iVw3rtn2BUK7ORdIAHTyxHGRIHVReokCR3XjbckJMK7ms8FysBfhLR8IXnAgy7T0PTPNBWKiH514FOW/WSg==}

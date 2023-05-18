@@ -346,3 +346,15 @@ export function deepFreeze<T>(object: T): Readonly<T> {
 
    return Object.freeze(object);
 }
+
+export function resolveIn<T>(seconds: number, result: T): Promise<T> {
+   return new Promise((resolve) => {
+      setTimeout(() => resolve(result), seconds * 1000);
+   });
+}
+
+export function rejectIn(seconds: number, reason = "Timeout"): Promise<void> {
+   return new Promise((resolve, reject) => {
+      setTimeout(() => reject(new Error(reason)), seconds * 1000);
+   });
+}

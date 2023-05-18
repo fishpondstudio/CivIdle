@@ -1,4 +1,5 @@
 import { Assets } from "@pixi/assets";
+import * as Sentry from "@sentry/browser";
 import { Application, BitmapFont, Spritesheet } from "pixi.js";
 import { createRoot } from "react-dom/client";
 import "../css/Main.css";
@@ -37,6 +38,8 @@ import Actions from "./utilities/pixi-actions/Actions";
 import { SceneManager, Textures } from "./utilities/SceneManager";
 import { TypedEvent } from "./utilities/TypedEvent";
 import { Fonts } from "./visuals/Fonts";
+
+Sentry.init({ dsn: "https://dc918a4ab59f404688ab61ea803de8c0@bugreport.fishpondstudio.com/1" });
 
 const routeChanged = new TypedEvent<RouteChangeEvent>();
 
@@ -89,7 +92,7 @@ async function loadBundle(app: Application) {
    );
    const textures = await new Spritesheet(main.atlas, altasDef as any).parse();
    if (textures) {
-      startGame(app, main, textures).catch(console.error);
+      await startGame(app, main, textures).catch(console.error);
    }
 }
 
