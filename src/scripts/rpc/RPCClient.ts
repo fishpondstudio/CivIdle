@@ -52,7 +52,7 @@ export const client = rpcClient<ServerImpl>({
             params: removeTrailingUndefs(params),
          };
          ws.send(encode(request));
-         rpcRequests[id] = { request: JSON.stringify(request), resolve, reject, time: Date.now() };
+         rpcRequests[id] = { resolve, reject, time: Date.now() };
       });
    },
 });
@@ -76,7 +76,7 @@ export const useChatMessages = makeObservableHook(OnChatMessage, chatMessages);
 let reconnect = 0;
 let requestId = 0;
 // eslint-disable-next-line @typescript-eslint/ban-types
-const rpcRequests: Record<number, { request: string; resolve: Function; reject: Function; time: number }> = {};
+const rpcRequests: Record<number, { resolve: Function; reject: Function; time: number }> = {};
 
 const STEAM_APP_ID = 2181940;
 
@@ -176,7 +176,7 @@ export const steamClient = rpcClient<ISteamClient>({
             params: removeTrailingUndefs(params),
          });
          steamWs.send(request);
-         rpcRequests[id] = { request, resolve, reject, time: Date.now() };
+         rpcRequests[id] = { resolve, reject, time: Date.now() };
       });
    },
 });

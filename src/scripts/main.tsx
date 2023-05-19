@@ -46,20 +46,22 @@ if (!import.meta.env.DEV) {
       release: `Build.${build}`,
       autoSessionTracking: false,
    });
+
+   const consoleWarn = console.warn;
+   const consoleError = console.error;
+
+   console.warn = (...args) => {
+      consoleWarn.apply(this, args);
+      Sentry.captureMessage(JSON.stringify(args));
+   };
+
+   console.error = (...args) => {
+      consoleError.apply(this, args);
+      Sentry.captureMessage(JSON.stringify(args));
+   };
+
+   console.log = () => {};
 }
-
-const consoleWarn = console.warn;
-const consoleError = console.error;
-
-console.warn = (...args) => {
-   consoleWarn.apply(this, args);
-   Sentry.captureMessage(JSON.stringify(args));
-};
-
-console.error = (...args) => {
-   consoleError.apply(this, args);
-   Sentry.captureMessage(JSON.stringify(args));
-};
 
 const routeChanged = new TypedEvent<RouteChangeEvent>();
 
@@ -73,8 +75,8 @@ const mainBundle = {
    atlas,
 };
 const fonts = [
-   new FontFace(Fonts.Cabin, `url(${CabinMedium})`),
-   new FontFace(Fonts.Marcellus, `url(${MarcellusRegular})`),
+   new FontFace(Fonts.Cabin, `url("${CabinMedium}")`),
+   new FontFace(Fonts.Marcellus, `url("${MarcellusRegular}")`),
 ];
 
 export type MainBundle = keyof typeof mainBundle;

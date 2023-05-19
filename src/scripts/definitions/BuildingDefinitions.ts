@@ -250,6 +250,15 @@ export class BuildingDefinitions {
       wikipedia: "Circus_Maximus",
    };
 
+   Statistics: IBuildingDefinition = {
+      name: () => t(L.Statistics),
+      desc: () => t(L.StatisticsDesc),
+      input: {},
+      output: {},
+      construction: { Brick: 1000, Wood: 1000, Marble: 1000 },
+      max: 1,
+   };
+
    Alps: IBuildingDefinition = {
       name: () => t(L.Alps),
       desc: () => t(L.AlpsDesc),

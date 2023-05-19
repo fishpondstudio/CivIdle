@@ -23,13 +23,16 @@ export function BuildingIOTreeViewComponent({
       <ul className="tree-view">
          {jsxMapOf(data, (k, v) => {
             const resourceInStorage = gameState.tiles[xy].building?.resources[k] ?? 0;
-            const showWarning = Tick.current.notProducingReasons[xy] === "NotEnoughResources" && resourceInStorage < v;
+            const showWarning =
+               type === "input" &&
+               Tick.current.notProducingReasons[xy] === "NotEnoughResources" &&
+               resourceInStorage < v;
             return (
                <li key={k}>
                   <details>
                      <summary className="row">
                         {showWarning ? <img src={warning} style={{ margin: "0 2px 0 0" }} /> : null}
-                        <div className={classNames({ f1: true, "text-red": showWarning })}>
+                        <div className={classNames({ f1: true, "production-warning": showWarning })}>
                            {Config.Resource[k].name()}
                         </div>
                         <div className="text-strong">

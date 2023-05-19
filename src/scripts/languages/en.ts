@@ -307,6 +307,8 @@ export const EN = {
    ColosseumDesc: "Provide +1 Production, Storage and Worker Capacity multiplier to all adjacent buildings",
    CircusMaximus: "Circus Maximus",
    CircusMaximusDesc: "All buildings that produce workers have +1 Production multiplier",
+   Statistics: "Statistics Building",
+   StatisticsDesc: "Provide statistics of consumption and production",
    Alps: "Alps",
    AlpsDesc: "Provide +1 Production multiplier for every 10 level for all buildings",
    GreatDagonPagoda: "Great Dagon Pagoda",
@@ -509,5 +511,9 @@ export const EN = {
    MarketAmount: "Amount",
    MarketSell: "Sell",
    RomanForum: "Roman Forum",
+   CensorsOffice: "Censor's Office",
    NaturalWonderName: "Natural Wonder: %{name}",
+   ShowTheoreticalValue: "Show Theoretical Value",
+   StatisticsResources: "Resources",
+   BuildingsResources: "Buildings",
 };

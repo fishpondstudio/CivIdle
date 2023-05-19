@@ -23,6 +23,7 @@ export class CityDefinitions {
       unlockable: { ...deepFreeze(new RomeProvinceDefinitions()) },
       buildingNameOverrides: {
          Headquarter: () => t(L.RomanForum),
+         Statistics: () => t(L.CensorsOffice),
       },
       naturalWonders: { Alps: true },
    };

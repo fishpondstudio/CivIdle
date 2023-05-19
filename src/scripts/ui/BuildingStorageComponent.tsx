@@ -20,7 +20,7 @@ export function BuildingStorageComponent({ gameState, xy }: IBuildingComponentPr
       <fieldset>
          <legend className="row">
             {showWarning ? <img src={warning} style={{ margin: "0 2px 0 0" }} /> : null}
-            <div className={classNames({ f1: true, "text-red": showWarning })}>
+            <div className={classNames({ f1: true, "production-warning": showWarning })}>
                {t(L.Storage)}: {formatPercent(percentage)}
             </div>
          </legend>

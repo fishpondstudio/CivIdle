@@ -91,7 +91,7 @@ export class RomeHistoryDefinitions {
    Republic: IRomeHistoryDefinitions = {
       name: () => t(L.Republic),
       column: 2,
-      unlockBuilding: ["Castrum"],
+      unlockBuilding: ["Castrum", "Statistics"],
       globalMultiplier: { sciencePerIdleWorker: 1 },
       buildingMultiplier: { WheatFarm: { storage: 1, output: 1 } },
       requireTech: ["Election"],

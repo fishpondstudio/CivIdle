@@ -135,7 +135,7 @@ fieldset .separator {
 }
 
 .text-red {
-   color: #fe0000;
+   color: #e74c3c;
 }
 
 .text-right {
@@ -214,7 +214,13 @@ fieldset .separator {
    align-items: center;
 }
 
-.row .f1 {
+.col {
+   display: flex;
+   flex-direction: column;
+}
+
+.row .f1,
+.col .f1 {
    flex: 1;
 }
 
@@ -397,4 +403,9 @@ ul.tree-view > li:first-child {
 
 button {
    min-width: unset;
+}
+
+.production-warning {
+   color: #e74c3c;
+   font-weight: bold;
 }

@@ -51,7 +51,7 @@ export function BuildingWorkerComponent({ gameState, xy }: IBuildingComponentPro
                <details>
                   <summary className="row">
                      {showWarning ? <img src={warning} style={{ margin: "0 2px 0 0" }} /> : null}
-                     <div className={classNames({ f1: true, "text-red": showWarning })}>
+                     <div className={classNames({ f1: true, "production-warning": showWarning })}>
                         {t(L.WorkersRequiredOutput)}
                      </div>
                      <div className="text-strong">{Tick.current.workersAssignment[xy] ?? 0}</div>
