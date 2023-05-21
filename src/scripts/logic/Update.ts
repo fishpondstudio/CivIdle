@@ -50,7 +50,7 @@ export function tickEveryFrame(gs: GameState, dt: number) {
 }
 
 export function shouldTick(): boolean {
-   return !!window.__STEAM_API_URL || document.visibilityState !== "visible";
+   return !!window.__STEAM_API_URL || document.visibilityState === "visible";
 }
 
 export function tickEverySecond(gs: GameState) {
