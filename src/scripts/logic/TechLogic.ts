@@ -1,3 +1,4 @@
+import { Building } from "../definitions/BuildingDefinitions";
 import { TechTree } from "../definitions/CityDefinitions";
 import { ITechDefinition, IUnlockableDefinition } from "../definitions/ITechDefinition";
 import { Deposit } from "../definitions/ResourceDefinitions";
@@ -106,6 +107,19 @@ export function getDepositUnlockTech<T extends string>(deposit: Deposit, definit
       }
    }
    throw new Error(`Deposit ${deposit} is not revealed by any technology, check TechDefinitions`);
+}
+
+export function getBuildingUnlockTech<T extends string>(
+   building: Building,
+   definitions: Record<T, ITechDefinition>
+): T | null {
+   let key: T;
+   for (key in definitions) {
+      if (definitions[key].unlockBuilding?.includes(building)) {
+         return key;
+      }
+   }
+   return null;
 }
 
 export function getUnlocked(

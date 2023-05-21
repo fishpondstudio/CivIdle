@@ -515,5 +515,11 @@ export const EN = {
    NaturalWonderName: "Natural Wonder: %{name}",
    ShowTheoreticalValue: "Show Theoretical Value",
    StatisticsResources: "Resources",
-   BuildingsResources: "Buildings",
+   StatisticsBuildings: "Buildings",
+   StatisticsTransportation: "Transportation",
+   StatisticsTransportationBuilding: "Building",
+   StatisticsTransportationResource: "Resource",
+   StatisticsTransportationAmount: "Amt",
+   StatisticsTransportationWorker: "Wkr",
+   StatisticsTransportationProgress: "Progress",
 };

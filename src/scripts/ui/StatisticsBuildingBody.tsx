@@ -7,13 +7,13 @@ import { Config } from "../logic/Constants";
 import { unlockedResources } from "../logic/IntraTickCache";
 import { Tick } from "../logic/TickLogic";
 import { IBuildingData } from "../logic/Tile";
-import { forEach, keysOf, safeAdd } from "../utilities/Helper";
+import { forEach, jsxMapOf, keysOf, safeAdd } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
 import { playClick } from "../visuals/Sound";
 import { IBuildingComponentProps } from "./BuildingPage";
 import { FormatNumber } from "./HelperComponents";
 
-type Tab = "resources" | "buildings";
+type Tab = "resources" | "buildings" | "transportation";
 
 export function StatisticsBuildingBody({ gameState, xy }: IBuildingComponentProps) {
    const building = gameState.tiles[xy].building as IBuildingData;
@@ -26,6 +26,8 @@ export function StatisticsBuildingBody({ gameState, xy }: IBuildingComponentProp
       content = <ResourcesTab gameState={gameState} xy={xy} />;
    } else if (currentTab === "buildings") {
       content = <BuildingTab gameState={gameState} xy={xy} />;
+   } else if (currentTab === "transportation") {
+      content = <TransportationTab gameState={gameState} xy={xy} />;
    }
    return (
       <div className="window-body">
@@ -40,7 +42,13 @@ export function StatisticsBuildingBody({ gameState, xy }: IBuildingComponentProp
                onClick={() => setCurrentTab("buildings")}
                aria-selected={currentTab === "buildings" ? true : false}
             >
-               {t(L.BuildingsResources)}
+               {t(L.StatisticsBuildings)}
+            </button>
+            <button
+               onClick={() => setCurrentTab("transportation")}
+               aria-selected={currentTab === "transportation" ? true : false}
+            >
+               {t(L.StatisticsTransportation)}
             </button>
          </menu>
          {content}
@@ -78,15 +86,15 @@ function BuildingTab({ gameState }: IBuildingComponentProps) {
                            .localeCompare(Tick.current.buildings[b.building.type].name())
                      )
                      .map(({ building, xy }) => {
+                        let icon = <div className="m-icon small text-green">check_circle</div>;
+                        if (building.status !== "completed") {
+                           icon = <div className="m-icon small text-orange">build_circle</div>;
+                        } else if (Tick.current.notProducingReasons[xy]) {
+                           icon = <div className="m-icon small text-red">error</div>;
+                        }
                         return (
                            <tr key={xy}>
-                              <td>
-                                 {Tick.current.notProducingReasons[xy] ? (
-                                    <div className="m-icon small text-red">error</div>
-                                 ) : (
-                                    <div className="m-icon small text-green">check_circle</div>
-                                 )}
-                              </td>
+                              <td>{icon}</td>
                               <td>{Tick.current.buildings[building.type].name()}</td>
                               <td className="right">
                                  <FormatNumber value={building.level} />
@@ -111,6 +119,69 @@ function BuildingTab({ gameState }: IBuildingComponentProps) {
                            </tr>
                         );
                      })}
+               </tbody>
+            </table>
+         </div>
+      </article>
+   );
+}
+
+function TransportationTab({ gameState }: IBuildingComponentProps) {
+   return (
+      <article role="tabpanel">
+         <div className="table-view">
+            <table>
+               <thead>
+                  <tr>
+                     <th></th>
+                     <th>{t(L.StatisticsTransportationBuilding)}</th>
+                     <th className="right">{t(L.StatisticsTransportationResource)}</th>
+                     <th className="right">{t(L.StatisticsTransportationAmount)}</th>
+                     <th className="right">
+                        <div className="m-icon small">group</div>
+                     </th>
+                     <th className="right">
+                        <div className="m-icon small">hourglass_empty</div>
+                     </th>
+                  </tr>
+               </thead>
+               <tbody>
+                  {jsxMapOf(gameState.transportation, (xy, transportations) => {
+                     return (
+                        <>
+                           {transportations.map((transportation, i) => {
+                              const buildingType = gameState.tiles[xy].building?.type;
+                              return (
+                                 <tr key={xy}>
+                                    <td>
+                                       {transportation.hasEnoughFuel ? (
+                                          <div className="m-icon text-green small">check_circle</div>
+                                       ) : (
+                                          <div className="m-icon text-red small">error</div>
+                                       )}
+                                    </td>
+                                    <td>
+                                       {i === 0 && buildingType ? Tick.current.buildings[buildingType].name() : null}
+                                    </td>
+                                    <td>{Tick.current.resources[transportation.resource].name()}</td>
+                                    <td className="text-right">
+                                       <FormatNumber value={transportation.amount} />
+                                    </td>
+                                    <td className="text-right">
+                                       <FormatNumber value={transportation.fuelAmount} />
+                                    </td>
+                                    <td className="text-right">
+                                       <FormatNumber
+                                          value={(100 * transportation.ticksSpent) / transportation.ticksRequired}
+                                       />
+                                       %
+                                    </td>
+                                 </tr>
+                              );
+                           })}
+                        </>
+                     );
+                  })}
                </tbody>
             </table>
          </div>

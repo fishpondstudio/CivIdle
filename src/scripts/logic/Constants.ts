@@ -5,7 +5,7 @@ import { DepositResources, Resource, ResourceDefinitions } from "../definitions/
 import { PartialTabulate } from "../definitions/TypeDefinitions";
 import { deepFreeze, forEach, isEmpty, keysOf, sizeOf, tabulateAdd } from "../utilities/Helper";
 import { GameState } from "./GameState";
-import { getDepositUnlockTech, getTechTree } from "./TechLogic";
+import { getBuildingUnlockTech, getDepositUnlockTech, getTechTree } from "./TechLogic";
 
 const BuildingTier: PartialTabulate<Building> = {};
 const BuildingTech: PartialTabulate<Building> = {};
@@ -49,7 +49,12 @@ export function calculateTierAndPrice(gs: GameState) {
                Config.ResourceTier[res] = 1;
             }
             if (!Config.ResourcePrice[res]) {
-               Config.ResourcePrice[res] = 1;
+               const tech = getBuildingUnlockTech(building, definitions);
+               if (tech) {
+                  Config.ResourcePrice[res] = 1 + definitions[tech].column;
+               } else {
+                  Config.ResourcePrice[res] = 1;
+               }
             }
          });
          if (!Config.BuildingTier[building]) {
@@ -116,7 +121,6 @@ export function calculateTierAndPrice(gs: GameState) {
             forEach(output, (res, amount) => {
                if (!Config.ResourceTier[res] || targetTier < Config.ResourceTier[res]!) {
                   Config.ResourceTier[res] = targetTier;
-                  console.log(`${res} = ${targetTier}`);
                   if (maxInputResource) {
                      resourceTierDependency[res] = maxInputResource;
                   }

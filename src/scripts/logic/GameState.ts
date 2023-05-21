@@ -11,7 +11,7 @@ import { getTechTree, unlockTech } from "./TechLogic";
 import { ensureTileFogOfWar, findNearest } from "./TerrainLogic";
 import { ITileData, makeBuilding } from "./Tile";
 
-interface ITransportationData {
+export interface ITransportationData {
    id: number;
    fromXy: string;
    toXy: string;
