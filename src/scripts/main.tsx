@@ -25,7 +25,7 @@ import { getBuildingTexture } from "./logic/BuildingLogic";
 import { calculateTierAndPrice, Config } from "./logic/Constants";
 import { initializeGameState } from "./logic/GameState";
 import { ITileData } from "./logic/Tile";
-import { tickEveryFrame, tickEverySecond } from "./logic/Update";
+import { shouldTick, tickEveryFrame, tickEverySecond } from "./logic/Update";
 import { Route, RouteChangeEvent } from "./Route";
 import { connectWebSocket, initSteamClient, steamClient } from "./rpc/RPCClient";
 import { Grid } from "./scenes/Grid";
@@ -178,7 +178,7 @@ async function startGame(app: Application, resources: MainBundleAssets, textures
 
    GameStateChanged.emit(getGameState());
    app.ticker.add((frame) => {
-      if (document.visibilityState !== "visible") {
+      if (!shouldTick()) {
          return;
       }
       Actions.tick(frame / app.ticker.FPS);

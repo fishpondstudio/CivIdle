@@ -48,8 +48,13 @@ export function tickEveryFrame(gs: GameState, dt: number) {
    }
    worldScene?.updateTransportVisual(gs, timeSinceLastTick);
 }
+
+export function shouldTick(): boolean {
+   return !!window.__STEAM_API_URL || document.visibilityState !== "visible";
+}
+
 export function tickEverySecond(gs: GameState) {
-   if (document.visibilityState !== "visible") {
+   if (!shouldTick()) {
       return;
    }
    timeSinceLastTick = 0;
