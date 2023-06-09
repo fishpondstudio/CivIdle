@@ -339,6 +339,8 @@ export const EN = {
    ChichenItzaDesc: "Chichen Itza",
    Aqueduct: "Aqueduct",
    FishPond: "Fish Pond",
+   GarumMaker: "Garum Maker",
+   Garum: "Garum",
    Fish: "Fish",
    GreatMosqueOfSamarra: "Great Mosque Of Samarra",
    GreatMosqueOfSamarraDesc: "Great Mosque Of Samarra",

@@ -275,6 +275,7 @@ export class RomeHistoryDefinitions {
          Brewery: { output: 1, storage: 1 },
          Domus: { output: 1, storage: 1 },
       },
+      unlockBuilding: ["GarumMaker"],
       requireTech: ["MarianReform", "Imperator"],
    };
    CaesarsCivilWar: IRomeHistoryDefinitions = {

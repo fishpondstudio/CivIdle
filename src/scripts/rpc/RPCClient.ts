@@ -100,10 +100,14 @@ export function initSteamClient(url: string): Promise<void> {
    });
 }
 
+let steamTicket: string | null = null;
+
 export async function connectWebSocket() {
    if (window.__STEAM_API_URL) {
-      const ticket = await steamClient.auth();
-      ws = new WebSocket(`${serverAddress}/?appId=${STEAM_APP_ID}&ticket=${ticket}&platform=steam`);
+      if (!steamTicket) {
+         steamTicket = await steamClient.auth();
+      }
+      ws = new WebSocket(`${serverAddress}/?appId=${STEAM_APP_ID}&ticket=${steamTicket}&platform=steam`);
    } else {
       ws = new WebSocket(`${serverAddress}/?platform=web&ticket=${v4()}`);
    }

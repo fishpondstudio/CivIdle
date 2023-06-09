@@ -110,6 +110,13 @@ export class BuildingDefinitions {
       construction: { Brick: 1 },
    };
 
+   GarumMaker: IBuildingDefinition = {
+      name: () => t(L.GarumMaker),
+      input: { Water: 1, Fish: 1 },
+      output: { Garum: 1 },
+      construction: { Brick: 1, Copper: 1 },
+   };
+
    Blacksmith: IBuildingDefinition = {
       name: () => t(L.Blacksmith),
       input: { Copper: 1, Wood: 1 },

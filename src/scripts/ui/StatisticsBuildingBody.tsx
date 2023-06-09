@@ -147,40 +147,36 @@ function TransportationTab({ gameState }: IBuildingComponentProps) {
                </thead>
                <tbody>
                   {jsxMapOf(gameState.transportation, (xy, transportations) => {
-                     return (
-                        <>
-                           {transportations.map((transportation, i) => {
-                              const buildingType = gameState.tiles[xy].building?.type;
-                              return (
-                                 <tr key={xy}>
-                                    <td>
-                                       {transportation.hasEnoughFuel ? (
-                                          <div className="m-icon text-green small">check_circle</div>
-                                       ) : (
-                                          <div className="m-icon text-red small">error</div>
-                                       )}
-                                    </td>
-                                    <td>
-                                       {i === 0 && buildingType ? Tick.current.buildings[buildingType].name() : null}
-                                    </td>
-                                    <td>{Tick.current.resources[transportation.resource].name()}</td>
-                                    <td className="text-right">
-                                       <FormatNumber value={transportation.amount} />
-                                    </td>
-                                    <td className="text-right">
-                                       <FormatNumber value={transportation.fuelAmount} />
-                                    </td>
-                                    <td className="text-right">
-                                       <FormatNumber
-                                          value={(100 * transportation.ticksSpent) / transportation.ticksRequired}
-                                       />
-                                       %
-                                    </td>
-                                 </tr>
-                              );
-                           })}
-                        </>
-                     );
+                     return transportations.map((transportation, i) => {
+                        const buildingType = gameState.tiles[xy].building?.type;
+                        return (
+                           <tr key={transportation.id}>
+                              <td>
+                                 {transportation.hasEnoughFuel ? (
+                                    <div className="m-icon text-green small">check_circle</div>
+                                 ) : (
+                                    <div className="m-icon text-red small">error</div>
+                                 )}
+                              </td>
+                              <td className="text-strong">
+                                 {i === 0 && buildingType ? Tick.current.buildings[buildingType].name() : null}
+                              </td>
+                              <td>{Tick.current.resources[transportation.resource].name()}</td>
+                              <td className="text-right">
+                                 <FormatNumber value={transportation.amount} />
+                              </td>
+                              <td className="text-right">
+                                 <FormatNumber value={transportation.fuelAmount} />
+                              </td>
+                              <td className="text-right">
+                                 <FormatNumber
+                                    value={(100 * transportation.ticksSpent) / transportation.ticksRequired}
+                                 />
+                                 %
+                              </td>
+                           </tr>
+                        );
+                     });
                   })}
                </tbody>
             </table>
