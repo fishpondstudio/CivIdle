@@ -189,14 +189,14 @@ export class BuildingDefinitions {
       name: () => t(L.Insula),
       input: { Crop: 2, Meat: 2, Water: 2 },
       output: { Worker: 16 },
-      construction: { Marble: 2, Iron: 1 },
+      construction: { Marble: 1, Iron: 1, Lumber: 1 },
    };
 
    Brewery: IBuildingDefinition = {
       name: () => t(L.Brewery),
       input: { Crop: 1, Water: 1 },
       output: { Alcohol: 1 },
-      construction: { Brick: 1, Stone: 1 },
+      construction: { Brick: 1, Lumber: 1 },
    };
 
    Winery: IBuildingDefinition = {
@@ -217,14 +217,14 @@ export class BuildingDefinitions {
       name: () => t(L.Domus),
       input: { Alcohol: 1, Meat: 1, Crop: 1 },
       output: { Worker: 10, Science: 4 },
-      construction: { Brick: 1, Iron: 1, Copper: 1, Stone: 1 },
+      construction: { Brick: 1, Iron: 1, Marble: 1 },
    };
 
    Market: IBuildingDefinition = {
       name: () => t(L.Market),
       input: {},
       output: {},
-      construction: { Brick: 2, Copper: 2, Wood: 2 },
+      construction: { Brick: 2, Copper: 2, Lumber: 2 },
    };
 
    Colosseum: IBuildingDefinition = {

@@ -25,6 +25,7 @@
 
 .menu-button .menu-popover.active {
    display: block;
+   z-index: 9;
 }
 
 .menu-popover-item {
