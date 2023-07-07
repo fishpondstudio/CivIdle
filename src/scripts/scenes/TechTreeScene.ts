@@ -1,11 +1,12 @@
 import { SmoothGraphics } from "@pixi/graphics-smooth";
 import { BitmapText, Container, LINE_CAP, LINE_JOIN, Rectangle } from "pixi.js";
 import { BG_COLOR } from "../Colors";
+import { Tech, TechAge } from "../definitions/TechDefinitions";
 import { Singleton } from "../Global";
-import { getTechTree, isAgeUnlocked, unlockableTechs } from "../logic/TechLogic";
+import { isAgeUnlocked, unlockableTechs } from "../logic/TechLogic";
 import { Tick } from "../logic/TickLogic";
 import { TechPage } from "../ui/TechPage";
-import { forEach } from "../utilities/Helper";
+import { forEach, sizeOf } from "../utilities/Helper";
 import Actions from "../utilities/pixi-actions/Actions";
 import { Easing } from "../utilities/pixi-actions/Easing";
 import { ViewportScene } from "../utilities/SceneManager";
@@ -33,14 +34,13 @@ type AnimateType = "animate" | "jump" | "no";
 export class TechTreeScene extends ViewportScene {
    private _selectedContainer: Container | undefined;
    private readonly _selectedGraphics = new SmoothGraphics();
-   private _boxPositions: Partial<Record<string, Rectangle>> = {};
-   private _selectedTech: string | undefined;
-   private _layout: string[][] = [];
+   private _boxPositions: Partial<Record<Tech, Rectangle>> = {};
+   private _selectedTech: Tech | undefined;
+   private _layout: Record<number, Tech[]> = [];
 
    override onLoad(): void {
       const { app, gameState } = this.context;
-      const techTree = getTechTree(gameState);
-      forEach(techTree.definitions, (k, v) => {
+      forEach(Tech, (k, v) => {
          if (this._layout[v.column]) {
             this._layout[v.column].push(k);
          } else {
@@ -48,7 +48,7 @@ export class TechTreeScene extends ViewportScene {
          }
       });
 
-      const width = this._layout.length * COLUMN_WIDTH;
+      const width = sizeOf(this._layout) * COLUMN_WIDTH;
 
       this.viewport.worldWidth = width;
       this.viewport.worldHeight = PAGE_HEIGHT;
@@ -92,15 +92,14 @@ export class TechTreeScene extends ViewportScene {
       if (!this.viewport) {
          return;
       }
-      const techTree = getTechTree(this.context.gameState);
       this.viewport.removeChildren();
       const g = new SmoothGraphics();
       this.viewport.addChild(g).lineStyle(LINE_STYLE);
       this.viewport.addChild(this._selectedGraphics);
       this._boxPositions = {};
-      this._layout.forEach((column, columnIdx) => {
-         const height = (PAGE_HEIGHT - HEADER_TOTAL_HEIGHT) / column.length;
-         column.forEach((item, rowIdx) => {
+      forEach(this._layout, (columnIdx, techs) => {
+         const height = (PAGE_HEIGHT - HEADER_TOTAL_HEIGHT) / techs.length;
+         techs.forEach((item, rowIdx) => {
             const x = 50 + 500 * columnIdx;
             const y =
                height * rowIdx +
@@ -108,18 +107,18 @@ export class TechTreeScene extends ViewportScene {
                (height / 2 - BOX_HEIGHT / 2 - (HEADER_TOTAL_HEIGHT - HEADER_BOX_HEIGHT) / 2);
             const rect = new Rectangle(x, y, BOX_WIDTH, BOX_HEIGHT);
             this._boxPositions[item] = rect;
-            const def = techTree.definitions[item];
+            const def = Tech[item];
             this.drawBox(
                g,
                rect,
                def.name(),
                def.unlockBuilding?.map((b) => Tick.current.buildings[b].name()).join(", ") ?? null,
-               this.context.gameState.unlocked[item] ? UNLOCKED_COLOR : LOCKED_COLOR
+               this.context.gameState.unlockedTech[item] ? UNLOCKED_COLOR : LOCKED_COLOR
             );
          });
       });
 
-      forEach(techTree.ages, (k, v) => {
+      forEach(TechAge, (k, v) => {
          this.drawHeader(
             g,
             v.from,
@@ -129,7 +128,7 @@ export class TechTreeScene extends ViewportScene {
          );
       });
 
-      forEach(techTree.definitions, (to, v) => {
+      forEach(Tech, (to, v) => {
          v.requireTech.forEach((from) => {
             this.drawConnection(
                g,
@@ -137,7 +136,7 @@ export class TechTreeScene extends ViewportScene {
                this._boxPositions[from]!.y + BOX_HEIGHT / 2,
                this._boxPositions[to]!.x,
                this._boxPositions[to]!.y + BOX_HEIGHT / 2,
-               this.context.gameState.unlocked[from] || this.context.gameState.unlocked[to]
+               this.context.gameState.unlockedTech[from] || this.context.gameState.unlockedTech[to]
                   ? UNLOCKED_COLOR
                   : LOCKED_COLOR
             );
@@ -148,14 +147,13 @@ export class TechTreeScene extends ViewportScene {
       this.selectNode(this._selectedTech, cutTo);
    }
 
-   public selectNode(tech: string | undefined, cutToTech: AnimateType): void {
+   public selectNode(tech: Tech | undefined, cutToTech: AnimateType): void {
       this._selectedContainer!.removeChildren();
       this._selectedGraphics.clear();
       tech = tech ?? unlockableTechs(this.context.gameState)[0];
       if (!tech) {
          return;
       }
-      const techTree = getTechTree(this.context.gameState);
       this._selectedTech = tech;
       Singleton().routeTo(TechPage, { id: tech });
       this._selectedGraphics.lineStyle(LINE_STYLE);
@@ -163,10 +161,10 @@ export class TechTreeScene extends ViewportScene {
       const drawnBoxes: Partial<Record<string, true>> = {};
       const drawnConnections: Record<string, true> = {};
       while (targets.length > 0) {
-         const newTo: string[] = [];
+         const newTo: Tech[] = [];
          targets.forEach((to) => {
-            if (!drawnBoxes[to] && (!this.context.gameState.unlocked[to] || to === tech)) {
-               const def = techTree.definitions[to];
+            if (!drawnBoxes[to] && (!this.context.gameState.unlockedTech[to] || to === tech)) {
+               const def = Tech[to];
                this.drawBox(
                   this._selectedGraphics,
                   this._boxPositions[to]!,
@@ -178,13 +176,13 @@ export class TechTreeScene extends ViewportScene {
                );
                drawnBoxes[to] = true;
             }
-            techTree.definitions[to].requireTech.forEach((from) => {
+            Tech[to].requireTech.forEach((from) => {
                newTo.push(from);
                const key = `${from} -> ${to}`;
                if (
                   !drawnConnections[key] &&
-                  !this.context.gameState.unlocked[from] &&
-                  !this.context.gameState.unlocked[to]
+                  !this.context.gameState.unlockedTech[from] &&
+                  !this.context.gameState.unlockedTech[to]
                ) {
                   this.drawConnection(
                      this._selectedGraphics,

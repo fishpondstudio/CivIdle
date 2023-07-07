@@ -1,9 +1,6 @@
 import { InteractionEvent, Sprite } from "pixi.js";
 import { ROMAN_MAP_BG_COLOR } from "../Colors";
-import { Unlockable } from "../definitions/CityDefinitions";
 import { IProvinceVisual, RomeProvince } from "../definitions/RomeProvinceDefinitions";
-import { Singleton } from "../Global";
-import { TechPage } from "../ui/TechPage";
 import { forEach } from "../utilities/Helper";
 import { ViewportScene } from "../utilities/SceneManager";
 import { ProvinceVisual } from "./ProvinceVisual";
@@ -55,7 +52,8 @@ export class RomeProvinceScene extends ViewportScene {
             if (s.isClicked(e) && this._selectedProvince === null) {
                this._selectedProvince = s;
                s.outline = true;
-               Singleton().routeTo(TechPage, { id: s.province, type: "RomeProvince" as const });
+               // FIXME: Fix after province page refactor
+               // Singleton().routeTo(TechPage, { id: s.province, type: "RomeProvince" as const });
             } else {
                s.outline = false;
             }
@@ -63,9 +61,9 @@ export class RomeProvinceScene extends ViewportScene {
       });
 
       ProvinceVisual.i = 0;
-      forEach(Unlockable.RomeProvince.definitions, (name) => {
+      forEach(RomeProvince, (name) => {
          const province = new ProvinceVisual(name, textures[`Rome${name}`], app.renderer.plugins);
-         if (gameState.unlocked[name]) {
+         if (gameState.unlockedProvince[name]) {
             province.annex();
          }
          this._provinces.push(province);
@@ -93,7 +91,8 @@ export class RomeProvinceScene extends ViewportScene {
          if (s.province === id && this._selectedProvince === null) {
             this._selectedProvince = s;
             s.outline = true;
-            Singleton().routeTo(TechPage, { id: s.province, type: "RomeProvince" as const });
+            // FIXME: Fix after province page refactor
+            // Singleton().routeTo(TechPage, { id: s.province, type: "RomeProvince" as const });
          } else {
             s.outline = false;
          }

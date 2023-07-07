@@ -1,3 +1,4 @@
+import { deepFreeze } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
 import { IUnlockableDefinition } from "./ITechDefinition";
 
@@ -220,3 +221,4 @@ export class RomeProvinceDefinitions {
 }
 
 export type RomeProvince = keyof RomeProvinceDefinitions;
+export const RomeProvince = deepFreeze(new RomeProvinceDefinitions());

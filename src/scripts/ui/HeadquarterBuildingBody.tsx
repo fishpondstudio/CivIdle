@@ -1,8 +1,9 @@
 import classNames from "classnames";
+import { Tech, TechAge } from "../definitions/TechDefinitions";
 import { Singleton } from "../Global";
 import { getScienceFromWorkers } from "../logic/BuildingLogic";
 import { Config } from "../logic/Constants";
-import { getCurrentTechAge, getScienceAmount, getTechTree, getUnlockCost, unlockableTechs } from "../logic/TechLogic";
+import { getCurrentTechAge, getScienceAmount, getUnlockCost, unlockableTechs } from "../logic/TechLogic";
 import { Tick } from "../logic/TickLogic";
 import { getHandle, useIsConnected } from "../rpc/RPCClient";
 import { TechTreeScene } from "../scenes/TechTreeScene";
@@ -28,7 +29,6 @@ export function HeadquarterBuildingBody({ gameState, xy }: IBuildingComponentPro
       sciencePerIdleWorker,
    } = getScienceFromWorkers(gameState);
    const scienceAmount = getScienceAmount();
-   const config = getTechTree(gameState);
    const techAge = getCurrentTechAge(gameState);
    const connected = useIsConnected();
    return (
@@ -51,7 +51,7 @@ export function HeadquarterBuildingBody({ gameState, xy }: IBuildingComponentPro
             </div>
          </fieldset>
          <fieldset>
-            <legend>{techAge != null ? config.ages[techAge].name() : "Unknown Age"}</legend>
+            <legend>{techAge != null ? TechAge[techAge].name() : "Unknown Age"}</legend>
             <div className="row mv5">
                <div className="f1">{t(L.Science)}</div>
                <div className="text-strong">
@@ -134,10 +134,10 @@ export function HeadquarterBuildingBody({ gameState, xy }: IBuildingComponentPro
                   </thead>
                   <tbody>
                      {unlockableTechs(gameState).map((k) => {
-                        const unlockCost = getUnlockCost(config.definitions[k]);
+                        const unlockCost = getUnlockCost(Tech[k]);
                         return (
                            <tr key={k}>
-                              <td>{config.definitions[k].name()}</td>
+                              <td>{Tech[k].name()}</td>
                               <td className="right">
                                  <FormatNumber value={unlockCost} />
                               </td>

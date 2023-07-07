@@ -1,11 +1,9 @@
 import { Building } from "../definitions/BuildingDefinitions";
-import { TechTree } from "../definitions/CityDefinitions";
-import { ITechDefinition, IUnlockableDefinition } from "../definitions/ITechDefinition";
+import { ITechDefinition } from "../definitions/ITechDefinition";
 import { Deposit } from "../definitions/ResourceDefinitions";
-import { IRomeHistoryDefinitions } from "../definitions/RomeHistoryDefinitions";
+import { Tech, TechAge } from "../definitions/TechDefinitions";
 import { Singleton } from "../Global";
 import { forEach, isEmpty, keysOf, shuffle } from "../utilities/Helper";
-import { Config } from "./Constants";
 import { GameState } from "./GameState";
 import { getDepositTileCount } from "./Tile";
 
@@ -17,24 +15,19 @@ export function getScienceAmount(): number {
    return Singleton().buildings.Headquarter.building.resources.Science ?? 0;
 }
 
-export function getTechTree(gs: GameState) {
-   return TechTree[Config.City[gs.city].techTree];
-}
-
-export function getMostAdvancedTech(gs: GameState): string | null {
+export function getMostAdvancedTech(gs: GameState): Tech | null {
    let column = 0;
-   let tech: string | null = null;
-   const definitions = getTechTree(gs).definitions;
-   forEach(definitions, (k) => {
-      if (gs.unlocked[k] && definitions[k].column >= column) {
-         column = definitions[k].column;
+   let tech: Tech | null = null;
+   forEach(Tech, (k) => {
+      if (gs.unlockedTech[k] && Tech[k].column >= column) {
+         column = Tech[k].column;
          tech = k;
       }
    });
    return tech;
 }
 
-export function getCurrentTechAge(gs: GameState): string | null {
+export function getCurrentTechAge(gs: GameState): TechAge | null {
    const tech = getMostAdvancedTech(gs);
    if (!tech) {
       return null;
@@ -42,21 +35,19 @@ export function getCurrentTechAge(gs: GameState): string | null {
    return getAgeForTech(tech, gs);
 }
 
-export function isAgeUnlocked(age: string, gs: GameState): boolean {
-   const techTree = getTechTree(gs);
+export function isAgeUnlocked(age: TechAge, gs: GameState): boolean {
    const tech = getMostAdvancedTech(gs);
    if (!tech) {
       return false;
    }
-   return techTree.definitions[tech as keyof typeof techTree.definitions].column >= techTree.ages[age].from;
+   return Tech[tech].column >= TechAge[age].from;
 }
 
-export function getAgeForTech(tech: string, gs: GameState): string | null {
-   const techTree = getTechTree(gs);
-   const techColumn = techTree.definitions[tech as keyof typeof techTree.definitions].column;
-   let age: string;
-   for (age in techTree.ages) {
-      const ageDef = techTree.ages[age];
+export function getAgeForTech(tech: string, gs: GameState): TechAge | null {
+   const techColumn = Tech[tech as keyof typeof Tech].column;
+   let age: TechAge;
+   for (age in TechAge) {
+      const ageDef = TechAge[age];
       if (techColumn >= ageDef.from && techColumn <= ageDef.to) {
          return age;
       }
@@ -64,82 +55,51 @@ export function getAgeForTech(tech: string, gs: GameState): string | null {
    return null;
 }
 
-export function getUnlockRequirement(def: IUnlockableDefinition): string[] {
-   const result: string[] = [];
-   (def as ITechDefinition).requireTech?.forEach((r) => result.push(r));
-   (def as IRomeHistoryDefinitions).requireProvince?.forEach((p) => result.push(p));
-   return result;
-}
-
-export function unlockTech(tech: string, gs: GameState): void {
-   if (gs.unlocked[tech]) {
+export function unlockTech(tech: Tech, gs: GameState): void {
+   if (gs.unlockedTech[tech]) {
       return;
    }
-
-   let td: IUnlockableDefinition = getTechTree(gs).definitions[tech];
-   if (!td) {
-      td = Config.City[gs.city].unlockable[tech];
-   }
-
-   if (td) {
-      gs.unlocked[tech] = true;
-      td.revealDeposit?.forEach((deposit) => {
-         const tileCount = getDepositTileCount(deposit, gs);
-         const depositTiles = shuffle(keysOf(gs.tiles)).slice(0, tileCount);
-         const exploredEmptyTiles = Object.values(gs.tiles).filter(
-            (t) => t.explored && !t.building && isEmpty(t.deposit)
-         );
-         // We want to guarantee at least one of the deposit tile is spawned on explored tile.
-         if (depositTiles.every((xy) => !gs.tiles[xy].explored) && exploredEmptyTiles.length > 0) {
-            depositTiles[0] = shuffle(exploredEmptyTiles)[0].xy;
-         }
-         depositTiles.forEach((xy) => (gs.tiles[xy].deposit[deposit] = true));
-      });
-      td.unlockFeature?.forEach((f) => (gs.features[f] = true));
-   }
+   gs.unlockedTech[tech] = true;
+   Tech[tech].revealDeposit?.forEach((deposit) => {
+      const tileCount = getDepositTileCount(deposit, gs);
+      const depositTiles = shuffle(keysOf(gs.tiles)).slice(0, tileCount);
+      const exploredEmptyTiles = Object.values(gs.tiles).filter((t) => t.explored && !t.building && isEmpty(t.deposit));
+      // We want to guarantee at least one of the deposit tile is spawned on explored tile.
+      if (depositTiles.every((xy) => !gs.tiles[xy].explored) && exploredEmptyTiles.length > 0) {
+         depositTiles[0] = shuffle(exploredEmptyTiles)[0].xy;
+      }
+      depositTiles.forEach((xy) => (gs.tiles[xy].deposit[deposit] = true));
+   });
+   Tech[tech].unlockFeature?.forEach((f) => (gs.features[f] = true));
 }
 
-export function getDepositUnlockTech<T extends string>(deposit: Deposit, definitions: Record<T, ITechDefinition>): T {
-   let key: T;
-   for (key in definitions) {
-      if (definitions[key].revealDeposit?.includes(deposit)) {
+export function getDepositUnlockTech(deposit: Deposit): Tech {
+   let key: Tech;
+   for (key in Tech) {
+      if (Tech[key].revealDeposit?.includes(deposit)) {
          return key;
       }
    }
    throw new Error(`Deposit ${deposit} is not revealed by any technology, check TechDefinitions`);
 }
 
-export function getBuildingUnlockTech<T extends string>(
-   building: Building,
-   definitions: Record<T, ITechDefinition>
-): T | null {
-   let key: T;
-   for (key in definitions) {
-      if (definitions[key].unlockBuilding?.includes(building)) {
+export function getBuildingUnlockTech(building: Building): Tech | null {
+   let key: Tech;
+   for (key in Tech) {
+      if (Tech[key].unlockBuilding?.includes(building)) {
          return key;
       }
    }
    return null;
 }
 
-export function getUnlocked(
-   key: string,
-   definitions: Record<string, IUnlockableDefinition>
-): IUnlockableDefinition | null {
-   if (key in definitions) {
-      return definitions[key];
-   }
-   return null;
-}
-
-export function unlockableTechs(gs: GameState): string[] {
-   const techTree = getTechTree(gs);
-   const result: string[] = [];
-   forEach(techTree.definitions, (tech, def) => {
-      if (gs.unlocked[tech]) {
+export function unlockableTechs(gs: GameState): Tech[] {
+   const result: Tech[] = [];
+   forEach(Tech, (tech, def) => {
+      if (gs.unlockedTech[tech]) {
          return;
       }
-      if (def.requireTech.every((t) => gs.unlocked[t])) {
+      if (def.requireTech.every((t) => gs.unlockedTech[t])) {
          result.push(tech);
       }
    });

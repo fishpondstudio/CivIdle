@@ -2,6 +2,7 @@ import { Building } from "../definitions/BuildingDefinitions";
 import { GreatPersonLogic } from "../definitions/GreatPersonLogic";
 import { IUnlockableDefinition } from "../definitions/ITechDefinition";
 import { Resource } from "../definitions/ResourceDefinitions";
+import { Tech } from "../definitions/TechDefinitions";
 import { notifyGameStateUpdate, saveGame, Singleton } from "../Global";
 import { WorldScene } from "../scenes/WorldScene";
 import { clamp, filterOf, forEach, isEmpty, keysOf, safeAdd, safePush, sizeOf, sum } from "../utilities/Helper";
@@ -31,7 +32,6 @@ import { GameState } from "./GameState";
 import { clearIntraTickCache } from "./IntraTickCache";
 import { onBuildingComplete, onBuildingProductionComplete } from "./LogicCallback";
 import { addCash, getAmountInTransit } from "./ResourceLogic";
-import { getTechTree } from "./TechLogic";
 import { EmptyTickData, IModifier, Multiplier, Tick } from "./TickLogic";
 import { IBuildingData } from "./Tile";
 
@@ -62,14 +62,10 @@ export function tickEverySecond(gs: GameState) {
    Tick.next = EmptyTickData();
    clearIntraTickCache();
 
-   forEach(gs.unlocked, (tech) => {
-      const td: IUnlockableDefinition = getTechTree(gs).definitions[tech] ?? Config.City[gs.city].unlockable[tech];
-      if (td) {
-         tickUnlockable(td);
-         return;
-      }
-      console.warn(`Unlockable: ${tech} is not ticked. Check your definition in City.techTree or City.unlockable`);
+   forEach(gs.unlockedTech, (tech) => {
+      tickUnlockable(Tech[tech]);
    });
+
    forEach(gs.greatPeople, (person, level) => {
       GreatPersonLogic[person]?.(level);
    });

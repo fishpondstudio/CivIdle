@@ -2,10 +2,11 @@ import { Building, BuildingDefinitions } from "../definitions/BuildingDefinition
 import { CityDefinitions } from "../definitions/CityDefinitions";
 import { GreatPersonDefinitions } from "../definitions/GreatPersonDefinitions";
 import { DepositResources, Resource, ResourceDefinitions } from "../definitions/ResourceDefinitions";
+import { Tech } from "../definitions/TechDefinitions";
 import { PartialTabulate } from "../definitions/TypeDefinitions";
 import { deepFreeze, forEach, isEmpty, keysOf, sizeOf, tabulateAdd } from "../utilities/Helper";
 import { GameState } from "./GameState";
-import { getBuildingUnlockTech, getDepositUnlockTech, getTechTree } from "./TechLogic";
+import { getBuildingUnlockTech, getDepositUnlockTech } from "./TechLogic";
 
 const BuildingTier: PartialTabulate<Building> = {};
 const BuildingTech: PartialTabulate<Building> = {};
@@ -33,11 +34,9 @@ interface IRecipe {
 }
 
 export function calculateTierAndPrice(gs: GameState) {
-   const { definitions } = getTechTree(gs);
-
    forEach(DepositResources, (k) => {
       Config.ResourceTier[k] = 1;
-      Config.ResourcePrice[k] = 1 + definitions[getDepositUnlockTech(k, definitions)].column;
+      Config.ResourcePrice[k] = 1 + Tech[getDepositUnlockTech(k)].column;
    });
 
    const allRecipes: IRecipe[] = [];
@@ -49,9 +48,9 @@ export function calculateTierAndPrice(gs: GameState) {
                Config.ResourceTier[res] = 1;
             }
             if (!Config.ResourcePrice[res]) {
-               const tech = getBuildingUnlockTech(building, definitions);
+               const tech = getBuildingUnlockTech(building);
                if (tech) {
-                  Config.ResourcePrice[res] = 1 + definitions[tech].column;
+                  Config.ResourcePrice[res] = 1 + Tech[tech].column;
                } else {
                   Config.ResourcePrice[res] = 1;
                }
@@ -70,7 +69,7 @@ export function calculateTierAndPrice(gs: GameState) {
       }
    });
 
-   forEach(definitions, (tech, techDef) => {
+   forEach(Tech, (tech, techDef) => {
       techDef.unlockBuilding?.forEach((b) => {
          const techLevel = techDef.column + 1;
          Config.BuildingTech[b] = techLevel;

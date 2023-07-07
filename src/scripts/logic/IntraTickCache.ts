@@ -1,9 +1,9 @@
 import { Building } from "../definitions/BuildingDefinitions";
 import { Deposit, Resource } from "../definitions/ResourceDefinitions";
+import { Tech } from "../definitions/TechDefinitions";
 import { PartialSet, PartialTabulate } from "../definitions/TypeDefinitions";
 import { forEach, safePush } from "../utilities/Helper";
 import { GameState } from "./GameState";
-import { getTechTree, getUnlocked } from "./TechLogic";
 import { Tick } from "./TickLogic";
 import { ITileData } from "./Tile";
 
@@ -26,9 +26,8 @@ export function revealedDeposits(gs: GameState): PartialSet<Deposit> {
       return _cache.revealedDeposits;
    }
    _cache.revealedDeposits = {};
-   forEach(gs.unlocked, (tech) => {
-      const def = getUnlocked(tech, getTechTree(gs).definitions);
-      def?.revealDeposit?.forEach((r) => {
+   forEach(gs.unlockedTech, (tech) => {
+      Tech[tech].revealDeposit?.forEach((r) => {
          _cache.revealedDeposits![r] = true;
       });
    });
@@ -56,8 +55,8 @@ export function unlockedBuildings(gs: GameState): PartialSet<Building> {
       return _cache.unlockedBuildings;
    }
    _cache.unlockedBuildings = {};
-   forEach(gs.unlocked, (tech) => {
-      getUnlocked(tech, getTechTree(gs).definitions)?.unlockBuilding?.forEach((r) => {
+   forEach(gs.unlockedTech, (tech) => {
+      Tech[tech].unlockBuilding?.forEach((r) => {
          _cache.unlockedBuildings![r] = true;
       });
    });

@@ -3,11 +3,13 @@ import { City } from "../definitions/CityDefinitions";
 import { Feature } from "../definitions/FeatureDefinitions";
 import { GreatPerson } from "../definitions/GreatPersonDefinitions";
 import { Resource } from "../definitions/ResourceDefinitions";
+import { RomeProvince } from "../definitions/RomeProvinceDefinitions";
+import { Tech } from "../definitions/TechDefinitions";
 import { PartialSet, PartialTabulate } from "../definitions/TypeDefinitions";
 import { Grid } from "../scenes/Grid";
 import { forEach, isEmpty, keysOf, pointToXy, shuffle } from "../utilities/Helper";
 import { Config } from "./Constants";
-import { getTechTree, unlockTech } from "./TechLogic";
+import { unlockTech } from "./TechLogic";
 import { ensureTileFogOfWar, findNearest } from "./TerrainLogic";
 import { ITileData, makeBuilding } from "./Tile";
 
@@ -28,7 +30,8 @@ export interface ITransportationData {
 
 export class GameState {
    city: City = "Rome";
-   unlocked: Record<string, true> = {};
+   unlockedTech: PartialSet<Tech> = {};
+   unlockedProvince: PartialSet<RomeProvince> = {};
    features: PartialSet<Feature> = {};
    tiles: Record<string, ITileData> = {};
    transportation: Record<string, ITransportationData[]> = {};
@@ -76,8 +79,7 @@ export function initializeGameState(gameState: GameState, grid: Grid) {
    //       unlockTech(k, getTechConfig(gameState), gameState);
    //    }
    // });
-   const techTree = getTechTree(gameState);
-   forEach(techTree.definitions, (k, v) => {
+   forEach(Tech, (k, v) => {
       if (v.column === 0) {
          unlockTech(k, gameState);
       }

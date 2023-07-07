@@ -1,13 +1,12 @@
-import { Unlockable } from "../definitions/CityDefinitions";
-import { ITechDefinition } from "../definitions/ITechDefinition";
 import { Resource } from "../definitions/ResourceDefinitions";
-import { IRomeHistoryDefinitions } from "../definitions/RomeHistoryDefinitions";
+import { RomeProvince } from "../definitions/RomeProvinceDefinitions";
+import { Tech } from "../definitions/TechDefinitions";
 import { PartialTabulate } from "../definitions/TypeDefinitions";
 import { notifyGameStateUpdate, Singleton, useGameState } from "../Global";
 import { Config } from "../logic/Constants";
-import { onUnlockableUnlocked } from "../logic/LogicCallback";
+import { onUnlockableUnlocked as onTechUnlocked } from "../logic/LogicCallback";
 import { getResourceAmount, trySpendResources } from "../logic/ResourceLogic";
-import { getCurrentTechAge, getTechTree, getUnlockRequirement, unlockTech } from "../logic/TechLogic";
+import { getCurrentTechAge, unlockTech } from "../logic/TechLogic";
 import { RomeProvinceScene } from "../scenes/RomeProvinceScene";
 import { TechTreeScene } from "../scenes/TechTreeScene";
 import { forEach, jsxMapOf, reduceOf } from "../utilities/Helper";
@@ -20,13 +19,11 @@ import { ProgressBarComponent } from "./ProgressBarComponent";
 import { TechPrerequisiteItemComponent } from "./TechComponent";
 import { UnlockableEffectComponent } from "./UnlockableEffectComponent";
 
-export function TechPage({ id, type }: { id: string; type?: keyof typeof Unlockable }) {
+export function TechPage({ id }: { id: Tech }) {
    const gs = useGameState();
-   const config = type ? Unlockable[type] : getTechTree(gs);
-   const tech = id as keyof typeof config.definitions;
-   const definition = config.definitions[tech];
-   const prerequisitesSatisfied = getUnlockRequirement(definition).every((t) => gs.unlocked[t]);
-   const unlockCost = config.unlockCost(tech);
+   const tech = Tech[id];
+   const prerequisitesSatisfied = tech.requireTech.every((t) => gs.unlockedTech[t]);
+   const unlockCost: PartialTabulate<Resource> = { Science: Math.pow(tech.column, 2) * 1000 };
    const availableResources: PartialTabulate<Resource> = {};
    forEach(unlockCost, (k, v) => {
       availableResources[k] = getResourceAmount(k, gs);
@@ -40,42 +37,41 @@ export function TechPage({ id, type }: { id: string; type?: keyof typeof Unlocka
       <div className="window">
          <div className="title-bar">
             <div className="title-bar-text">
-               {config.verb()}: {definition.name()}
+               {t(L.UnlockBuilding)}: {tech.name()}
             </div>
          </div>
          <MenuComponent />
          <div className="window-body">
             <fieldset>
                <legend>{t(L.TechnologyPrerequisite)}</legend>
-               {(definition as ITechDefinition).requireTech?.map((prerequisite) => {
+               {tech.requireTech?.map((prerequisite) => {
                   prerequisiteCount++;
                   return (
                      <TechPrerequisiteItemComponent
                         key={prerequisite}
                         name={
                            <>
-                              {config.verb()}{" "}
-                              <b>{config.definitions[prerequisite as keyof typeof config.definitions].name()}</b>
+                              {t(L.UnlockBuilding)} <b>{tech.name()}</b>
                            </>
                         }
-                        unlocked={!!gs.unlocked[prerequisite]}
+                        unlocked={!!gs.unlockedTech[prerequisite]}
                         action={() =>
                            Singleton().sceneManager.loadScene(TechTreeScene)?.selectNode(prerequisite, "animate")
                         }
                      />
                   );
                })}
-               {(definition as IRomeHistoryDefinitions).requireProvince?.map((province) => {
+               {tech.requireProvince?.map((province) => {
                   prerequisiteCount++;
                   return (
                      <TechPrerequisiteItemComponent
                         key={province}
                         name={
                            <>
-                              {t(L.Annex)} <b>{Unlockable.RomeProvince.definitions[province].name()}</b>
+                              {t(L.Annex)} <b>{RomeProvince[province].name()}</b>
                            </>
                         }
-                        unlocked={!!gs.unlocked[province]}
+                        unlocked={!!gs.unlockedProvince[province]}
                         action={() => Singleton().sceneManager.loadScene(RomeProvinceScene)?.selectProvince(province)}
                      />
                   );
@@ -84,10 +80,10 @@ export function TechPage({ id, type }: { id: string; type?: keyof typeof Unlocka
             </fieldset>
             <fieldset>
                <legend>{t(L.Progress)}</legend>
-               {gs.unlocked[tech] ? (
+               {gs.unlockedTech[id] ? (
                   <div className="row text-green">
                      <div className="m-icon small mr5">check_circle</div>
-                     <div>{t(L.TechHasBeenUnlocked, { tech: definition.name() })}</div>
+                     <div>{t(L.TechHasBeenUnlocked, { tech: tech.name() })}</div>
                   </div>
                ) : (
                   <>
@@ -124,7 +120,7 @@ export function TechPage({ id, type }: { id: string; type?: keyof typeof Unlocka
                                  return;
                               }
                               const oldAge = getCurrentTechAge(gs);
-                              unlockTech(tech, gs);
+                              unlockTech(id, gs);
                               const newAge = getCurrentTechAge(gs);
                               if (oldAge !== newAge) {
                                  gs.greatPeopleChoices.push(["Cincinnatus", "JuliusCaesar", "ScipioAfricanus"]);
@@ -133,7 +129,7 @@ export function TechPage({ id, type }: { id: string; type?: keyof typeof Unlocka
                                  showModal(<ChooseGreatPersonModal greatPeopleChoice={gs.greatPeopleChoices[0]} />);
                               }
                               notifyGameStateUpdate();
-                              onUnlockableUnlocked(tech, type, gs);
+                              onTechUnlocked(id, gs);
                            }}
                         >
                            {t(L.UnlockBuilding)}
@@ -142,7 +138,7 @@ export function TechPage({ id, type }: { id: string; type?: keyof typeof Unlocka
                   </>
                )}
             </fieldset>
-            <UnlockableEffectComponent definition={definition} gameState={gs} />
+            <UnlockableEffectComponent definition={tech} gameState={gs} />
          </div>
       </div>
    );

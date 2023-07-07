@@ -1,8 +1,9 @@
 import { GlobalMultipliers, IModifier, Multiplier } from "../logic/TickLogic";
 import { Building } from "./BuildingDefinitions";
 import { Feature } from "./FeatureDefinitions";
-import { Deposit, Resource } from "./ResourceDefinitions";
-import { PartialTabulate } from "./TypeDefinitions";
+import { Deposit } from "./ResourceDefinitions";
+import { RomeProvince } from "./RomeProvinceDefinitions";
+import { Tech } from "./TechDefinitions";
 
 export interface IUnlockableDefinition {
    name: () => string;
@@ -16,7 +17,8 @@ export interface IUnlockableDefinition {
 }
 
 export interface ITechDefinition extends IUnlockableDefinition {
-   requireTech: string[];
+   requireTech: Tech[];
+   requireProvince?: RomeProvince[];
    column: number;
 }
 
@@ -24,14 +26,4 @@ export interface ITechAgeDefinition {
    from: number;
    to: number;
    name: () => string;
-}
-
-export interface IUnlockableGroup<T extends Record<string, IUnlockableDefinition>> {
-   definitions: T;
-   unlockCost: (key: keyof T) => PartialTabulate<Resource>;
-   verb: () => string;
-}
-
-export interface ITechTree extends IUnlockableGroup<Record<string, ITechDefinition>> {
-   ages: Record<string, ITechAgeDefinition>;
 }
