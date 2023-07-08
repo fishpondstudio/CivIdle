@@ -24,7 +24,7 @@ export class ViewportScene extends Scene {
       super(context);
       const { app, gameState } = context;
       this.viewport = new Viewport({
-         interaction: app.renderer.plugins.interaction,
+         events: app.renderer.events,
          disableOnContextMenu: true,
          screenWidth: app.screen.width,
          screenHeight: app.screen.height,
