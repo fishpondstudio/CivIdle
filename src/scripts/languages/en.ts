@@ -451,7 +451,6 @@ export const EN = {
    Annex: "Annex",
    Province: "Province",
    Progress: "Progress",
-   Villa: "Villa",
    Domus: "Domus",
    Castra: "Castra",
    Insula: "Insula",

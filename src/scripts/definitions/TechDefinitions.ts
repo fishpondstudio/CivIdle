@@ -21,7 +21,8 @@ export class TechDefinitions {
    Fire: ITechDefinition = {
       name: () => t(L.Fire),
       column: 0,
-      revealDeposit: ["Wood"],
+      revealDeposit: ["Water"],
+      unlockBuilding: ["Aqueduct"],
       requireTech: [],
    };
 
@@ -36,7 +37,7 @@ export class TechDefinitions {
    Logging: ITechDefinition = {
       name: () => t(L.Logging),
       column: 0,
-      revealDeposit: ["Water"],
+      revealDeposit: ["Wood"],
       unlockBuilding: ["LoggingCamp"],
       requireTech: [],
    };
@@ -47,6 +48,7 @@ export class TechDefinitions {
       name: () => t(L.Masonry),
       column: 1,
       requireTech: ["Fire", "StoneTools"],
+      unlockBuilding: ["Brickworks"],
    };
 
    Herding: ITechDefinition = {
@@ -74,38 +76,62 @@ export class TechDefinitions {
    Housing: ITechDefinition = {
       name: () => t(L.Housing),
       column: 2,
-      buildingModifier: { Brickworks: { input: { Stone: 1 }, output: { Brick: 1 } } },
+      unlockBuilding: ["House"],
       requireTech: ["Masonry", "Herding"],
    };
 
    Counting: ITechDefinition = {
       name: () => t(L.Counting),
       column: 2,
-      buildingMultiplier: {
-         LivestockFarm: { output: 1, storage: 1 },
-      },
+      unlockFeature: ["BuildingProductionPriority"],
       additionalUpgrades: [() => t(L.TechProductionPriority)],
       requireTech: ["Herding", "Farming"],
+      unlockBuilding: ["PaperMaker"],
    };
 
    Pictograph: ITechDefinition = {
       name: () => t(L.Pictograph),
       column: 2,
-      globalMultiplier: { sciencePerBusyWorker: 1 },
-      buildingMultiplier: {
-         WheatFarm: { output: 1, storage: 1 },
-         LoggingCamp: { storage: 1 },
-         StoneQuarry: { storage: 1 },
-      },
+      unlockFeature: ["BuildingStockpileMode"],
       additionalUpgrades: [() => t(L.TechStockpileMode)],
+      unlockBuilding: ["LivestockFarm"],
       requireTech: ["Farming"],
    };
 
-   Metallurgy: ITechDefinition = { name: () => t(L.Metallurgy), column: 3, requireTech: ["Bronze"] };
-   Stateship: ITechDefinition = { name: () => t(L.Stateship), column: 3, requireTech: ["Housing"] };
-   Geometry: ITechDefinition = { name: () => t(L.Geometry), column: 3, requireTech: ["Housing", "Counting"] };
-   Arithmetic: ITechDefinition = { name: () => t(L.Arithmetic), column: 3, requireTech: ["Counting", "Pictograph"] };
-   Writing: ITechDefinition = { name: () => t(L.Writing), column: 3, requireTech: ["Pictograph"] };
+   Metallurgy: ITechDefinition = {
+      name: () => t(L.Metallurgy),
+      column: 3,
+      requireTech: ["Bronze"],
+      unlockBuilding: ["Blacksmith"],
+   };
+
+   Stateship: ITechDefinition = {
+      name: () => t(L.Stateship),
+      column: 3,
+      requireTech: ["Housing"],
+      unlockBuilding: ["Marbleworks"],
+   };
+
+   Geometry: ITechDefinition = {
+      name: () => t(L.Geometry),
+      column: 3,
+      requireTech: ["Housing", "Counting"],
+      unlockBuilding: ["Brewery"],
+   };
+
+   Arithmetic: ITechDefinition = {
+      name: () => t(L.Arithmetic),
+      column: 3,
+      requireTech: ["Counting", "Pictograph"],
+      unlockBuilding: ["Statistics"],
+   };
+
+   Writing: ITechDefinition = {
+      name: () => t(L.Writing),
+      column: 3,
+      requireTech: ["Pictograph"],
+      unlockBuilding: ["Library"],
+   };
 
    Iron: ITechDefinition = {
       name: () => t(L.IronTech),

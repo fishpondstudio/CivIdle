@@ -39,20 +39,6 @@ export class BuildingDefinitions {
       construction: { Wood: 1 },
    };
 
-   OlivePlantation: IBuildingDefinition = {
-      name: () => t(L.OlivePlantation),
-      input: {},
-      output: { Olive: 1 },
-      construction: { Wood: 1 },
-   };
-
-   Vineyard: IBuildingDefinition = {
-      name: () => t(L.Vineyard),
-      input: {},
-      output: { Grape: 1 },
-      construction: { Wood: 1 },
-   };
-
    LivestockFarm: IBuildingDefinition = {
       name: () => t(L.LivestockFarm),
       input: { Crop: 2 },
@@ -110,6 +96,27 @@ export class BuildingDefinitions {
       construction: { Brick: 1 },
    };
 
+   OlivePlantation: IBuildingDefinition = {
+      name: () => t(L.OlivePlantation),
+      input: {},
+      output: { Olive: 1 },
+      construction: { Wood: 1 },
+   };
+
+   Vineyard: IBuildingDefinition = {
+      name: () => t(L.Vineyard),
+      input: {},
+      output: { Grape: 1 },
+      construction: { Wood: 1 },
+   };
+
+   OilPress: IBuildingDefinition = {
+      name: () => t(L.OilPress),
+      input: { Olive: 2 },
+      output: { OliveOil: 1 },
+      construction: { Brick: 1 },
+   };
+
    GarumMaker: IBuildingDefinition = {
       name: () => t(L.GarumMaker),
       input: { Water: 1, Fish: 1 },
@@ -131,7 +138,7 @@ export class BuildingDefinitions {
 
    Brickworks: IBuildingDefinition = {
       name: () => t(L.Brickworks),
-      input: { Stone: 1, Tool: 1 },
+      input: { Stone: 2 },
       output: { Brick: 1 },
    };
 
@@ -139,13 +146,6 @@ export class BuildingDefinitions {
       name: () => t(L.Marbleworks),
       input: { Stone: 2, Tool: 1 },
       output: { Marble: 1 },
-   };
-
-   OilPress: IBuildingDefinition = {
-      name: () => t(L.OilPress),
-      input: { Olive: 2 },
-      output: { OliveOil: 1 },
-      construction: { Brick: 1 },
    };
 
    Armory: IBuildingDefinition = {
@@ -178,8 +178,8 @@ export class BuildingDefinitions {
       construction: { Stone: 1 },
    };
 
-   Villa: IBuildingDefinition = {
-      name: () => t(L.Villa),
+   House: IBuildingDefinition = {
+      name: () => t(L.House),
       input: { Crop: 1, Water: 1 },
       output: { Worker: 4 },
       construction: { Brick: 2 },

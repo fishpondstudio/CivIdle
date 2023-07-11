@@ -1,5 +1,5 @@
 import { OutlineFilter } from "@pixi/filter-outline";
-import { BitmapText, Container, InteractionEvent, IRendererPlugins, Sprite, Texture } from "pixi.js";
+import { BitmapText, Container, FederatedPointerEvent, IRendererPlugins, Sprite, Texture } from "pixi.js";
 import { RomeProvince } from "../definitions/RomeProvinceDefinitions";
 import { v2 } from "../utilities/Vector2";
 import { Fonts } from "../visuals/Fonts";
@@ -60,7 +60,7 @@ export class ProvinceVisual extends Container {
       this._sprite.tint = 0x6c5ce7;
    }
 
-   public isClicked(event: InteractionEvent): boolean {
+   public isClicked(event: FederatedPointerEvent): boolean {
       const point = v2(event.data.getLocalPosition(this._sprite)).add({
          x: this._sprite.width / 2,
          y: this._sprite.height / 2,

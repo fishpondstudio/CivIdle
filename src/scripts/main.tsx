@@ -29,7 +29,7 @@ import { shouldTick, tickEveryFrame, tickEverySecond } from "./logic/Update";
 import { Route, RouteChangeEvent } from "./Route";
 import { connectWebSocket, initSteamClient, steamClient } from "./rpc/RPCClient";
 import { Grid } from "./scenes/Grid";
-import { WorldScene } from "./scenes/WorldScene";
+import { TechTreeScene } from "./scenes/TechTreeScene";
 import { ChatPanel } from "./ui/ChatPanel";
 import { ErrorPage } from "./ui/ErrorPage";
 import { GlobalModal, GlobalToast } from "./ui/GlobalModal";
@@ -173,8 +173,8 @@ async function startGame(app: Application, resources: MainBundleAssets, textures
 
    // Singleton().sceneManager.loadScene(RomeScene);
    // Singleton().sceneManager.loadScene(RomeHistoryScene);
-   Singleton().sceneManager.loadScene(WorldScene);
-   // Singleton().sceneManager.loadScene(TechTreeScene);
+   // Singleton().sceneManager.loadScene(WorldScene);
+   Singleton().sceneManager.loadScene(TechTreeScene);
 
    GameStateChanged.emit(getGameState());
    app.ticker.add((frame) => {

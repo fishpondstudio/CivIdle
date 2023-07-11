@@ -1,4 +1,4 @@
-import { InteractionEvent, Sprite } from "pixi.js";
+import { FederatedPointerEvent, Sprite } from "pixi.js";
 import { ROMAN_MAP_BG_COLOR } from "../Colors";
 import { IProvinceVisual, RomeProvince } from "../definitions/RomeProvinceDefinitions";
 import { forEach } from "../utilities/Helper";
@@ -34,7 +34,7 @@ export class RomeProvinceScene extends ViewportScene {
          })
          .setZoom(0);
 
-      app.renderer.backgroundColor = ROMAN_MAP_BG_COLOR;
+      app.renderer.background.color = ROMAN_MAP_BG_COLOR;
       app.renderer.plugins.interaction.moveWhenInside = true;
 
       forEach(UNKNOWN, (name, config) => {
@@ -46,7 +46,7 @@ export class RomeProvinceScene extends ViewportScene {
 
       this.viewport.sortableChildren = true;
 
-      this.viewport.on("pointerdown", (e: InteractionEvent) => {
+      this.viewport.on("pointerdown", (e: FederatedPointerEvent) => {
          this._selectedProvince = null;
          this._provinces.forEach((s) => {
             if (s.isClicked(e) && this._selectedProvince === null) {

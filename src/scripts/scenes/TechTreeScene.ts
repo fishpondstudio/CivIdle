@@ -1,6 +1,7 @@
 import { SmoothGraphics } from "@pixi/graphics-smooth";
 import { BitmapText, Container, LINE_CAP, LINE_JOIN, Rectangle } from "pixi.js";
 import { BG_COLOR } from "../Colors";
+import { ITechDefinition } from "../definitions/ITechDefinition";
 import { Tech, TechAge } from "../definitions/TechDefinitions";
 import { Singleton } from "../Global";
 import { isAgeUnlocked, unlockableTechs } from "../logic/TechLogic";
@@ -53,7 +54,7 @@ export class TechTreeScene extends ViewportScene {
       this.viewport.worldWidth = width;
       this.viewport.worldHeight = PAGE_HEIGHT;
 
-      app.renderer.backgroundColor = BG_COLOR;
+      app.renderer.background.color = BG_COLOR;
       app.renderer.plugins.interaction.moveWhenInside = true;
 
       const preferredZoom = Math.max(app.screen.width / width, app.screen.height / PAGE_HEIGHT);
@@ -88,6 +89,13 @@ export class TechTreeScene extends ViewportScene {
       this.viewport.destroy({ children: true });
    }
 
+   private getTechDescription(def: ITechDefinition): string {
+      const deposits = def.revealDeposit?.map((d) => Tick.current.resources[d].name()) ?? [];
+      const buildings = def.unlockBuilding?.map((b) => Tick.current.buildings[b].name()) ?? [];
+      const desc = deposits.concat(buildings.concat()).join(", ") ?? null;
+      return desc;
+   }
+
    public renderTechTree(cutTo: AnimateType): void {
       if (!this.viewport) {
          return;
@@ -112,7 +120,7 @@ export class TechTreeScene extends ViewportScene {
                g,
                rect,
                def.name(),
-               def.unlockBuilding?.map((b) => Tick.current.buildings[b].name()).join(", ") ?? null,
+               this.getTechDescription(def),
                this.context.gameState.unlockedTech[item] ? UNLOCKED_COLOR : LOCKED_COLOR
             );
          });
@@ -169,7 +177,7 @@ export class TechTreeScene extends ViewportScene {
                   this._selectedGraphics,
                   this._boxPositions[to]!,
                   def.name(),
-                  def.unlockBuilding?.map((b) => Tick.current.buildings[b].name()).join(", ") ?? null,
+                  this.getTechDescription(def),
                   HIGHLIGHT_COLOR,
                   10,
                   this._selectedContainer
