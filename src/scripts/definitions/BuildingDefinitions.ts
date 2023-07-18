@@ -39,6 +39,13 @@ export class BuildingDefinitions {
       construction: { Wood: 1 },
    };
 
+   FlourMill: IBuildingDefinition = {
+      name: () => t(L.WheatFarm),
+      input: { Crop: 2 },
+      output: { Flour: 1 },
+      construction: { Brick: 1, Wood: 1 },
+   };
+
    LivestockFarm: IBuildingDefinition = {
       name: () => t(L.LivestockFarm),
       input: { Crop: 2 },
@@ -51,10 +58,22 @@ export class BuildingDefinitions {
       output: { Paper: 1 },
    };
 
+   Pizzeria: IBuildingDefinition = {
+      name: () => t(L.Pizzeria),
+      input: { Water: 1, Flour: 2, Cheese: 1, Meat: 1 },
+      output: { Pizza: 1 },
+   };
+
    CheeseMaker: IBuildingDefinition = {
       name: () => t(L.CheeseMaker),
       input: { Milk: 2 },
       output: { Cheese: 1 },
+   };
+
+   WritersGuild: IBuildingDefinition = {
+      name: () => t(L.WritersGuild),
+      input: { Alcohol: 2 },
+      output: { Poem: 1 },
    };
 
    StoneQuarry: IBuildingDefinition = {
@@ -77,7 +96,7 @@ export class BuildingDefinitions {
       name: () => t(L.LumberMill),
       input: { Wood: 2 },
       output: { Lumber: 1 },
-      construction: { Brick: 1, Copper: 1 },
+      construction: { Brick: 1, Wood: 1 },
    };
 
    Aqueduct: IBuildingDefinition = {
@@ -173,6 +192,14 @@ export class BuildingDefinitions {
    CopperMiningCamp: IBuildingDefinition = {
       name: () => t(L.CopperMiningCamp),
       input: {},
+      deposit: { Gold: true },
+      output: { Gold: 1 },
+      construction: { Brick: 1 },
+   };
+
+   GoldMiningCamp: IBuildingDefinition = {
+      name: () => t(L.GoldMiningCamp),
+      input: {},
       deposit: { Copper: true },
       output: { Copper: 1 },
       construction: { Stone: 1 },
@@ -208,8 +235,8 @@ export class BuildingDefinitions {
 
    Library: IBuildingDefinition = {
       name: () => t(L.Library),
-      input: { Tool: 1, Alcohol: 1 },
-      output: { Science: 20 },
+      input: { Paper: 1 },
+      output: { Science: 5 },
       construction: { Marble: 2, Stone: 2 },
    };
 
@@ -225,6 +252,25 @@ export class BuildingDefinitions {
       input: {},
       output: {},
       construction: { Brick: 2, Copper: 2, Lumber: 2 },
+   };
+
+   Statistics: IBuildingDefinition = {
+      name: () => t(L.Statistics),
+      desc: () => t(L.StatisticsDesc),
+      input: {},
+      output: {},
+      construction: { Brick: 1000, Wood: 1000, Marble: 1000 },
+      max: 1,
+   };
+
+   Alps: IBuildingDefinition = {
+      name: () => t(L.Alps),
+      desc: () => t(L.AlpsDesc),
+      input: {},
+      output: {},
+      construction: {},
+      max: 0,
+      wikipedia: "Alps",
    };
 
    Colosseum: IBuildingDefinition = {
@@ -257,51 +303,25 @@ export class BuildingDefinitions {
       wikipedia: "Circus_Maximus",
    };
 
-   Statistics: IBuildingDefinition = {
-      name: () => t(L.Statistics),
-      desc: () => t(L.StatisticsDesc),
+   Stonehenge: IBuildingDefinition = {
+      name: () => t(L.Stonehenge),
+      desc: () => t(L.StonehengeDesc),
       input: {},
       output: {},
-      construction: { Brick: 1000, Wood: 1000, Marble: 1000 },
       max: 1,
+      wikipedia: "Stonehenge",
+      construction: { Stone: 3000 },
    };
 
-   Alps: IBuildingDefinition = {
-      name: () => t(L.Alps),
-      desc: () => t(L.AlpsDesc),
+   HatshepsutTemple: IBuildingDefinition = {
+      name: () => t(L.HatshepsutTemple),
+      desc: () => t(L.HatshepsutTempleDesc),
       input: {},
       output: {},
-      construction: {},
-      max: 0,
-      wikipedia: "Alps",
+      max: 1,
+      wikipedia: "Mortuary_Temple_of_Hatshepsut",
+      construction: { Stone: 1000, Wood: 1000, Copper: 1000 },
    };
-
-   // House: IBuildingDefinition = {
-   //    name: () => t(L.House),
-   //    input: { Crop: 2, Meat: 1 },
-   //    output: { Worker: 8 },
-   //    construction: { Brick: 1, Tool: 1 },
-   // };
-
-   // Stonehenge: IBuildingDefinition = {
-   //    name: () => t(L.Stonehenge),
-   //    desc: () => t(L.StonehengeDesc),
-   //    input: {},
-   //    output: {},
-   //    max: 1,
-   //    wikipedia: "Stonehenge",
-   //    construction: { Stone: 10 },
-   // };
-
-   // HatshepsutTemple: IBuildingDefinition = {
-   //    name: () => t(L.HatshepsutTemple),
-   //    desc: () => t(L.HatshepsutTempleDesc),
-   //    input: {},
-   //    output: {},
-   //    max: 1,
-   //    wikipedia: "Mortuary_Temple_of_Hatshepsut",
-   //    construction: { Stone: 10 },
-   // };
 
    // LighthouseOfAlexandria: IBuildingDefinition = {
    //    name: () => t(L.LighthouseOfAlexandria),
@@ -312,23 +332,25 @@ export class BuildingDefinitions {
    //    wikipedia: "Lighthouse_of_Alexandria",
    // };
 
-   // PyramidOfGiza: IBuildingDefinition = {
-   //    name: () => t(L.PyramidOfGiza),
-   //    desc: () => t(L.PyramidOfGizaDesc),
-   //    input: {},
-   //    output: {},
-   //    max: 1,
-   //    wikipedia: "Great_Pyramid_of_Giza",
-   // };
+   PyramidOfGiza: IBuildingDefinition = {
+      name: () => t(L.PyramidOfGiza),
+      desc: () => t(L.PyramidOfGizaDesc),
+      input: {},
+      output: {},
+      construction: { Brick: 3000 },
+      max: 1,
+      wikipedia: "Great_Pyramid_of_Giza",
+   };
 
-   // ColossusOfRhodes: IBuildingDefinition = {
-   //    name: () => t(L.ColossusOfRhodes),
-   //    desc: () => t(L.ColossusOfRhodesDesc),
-   //    input: {},
-   //    output: {},
-   //    max: 1,
-   //    wikipedia: "Colossus_of_Rhodes",
-   // };
+   ColossusOfRhodes: IBuildingDefinition = {
+      name: () => t(L.ColossusOfRhodes),
+      desc: () => t(L.ColossusOfRhodesDesc),
+      input: {},
+      output: {},
+      construction: { Stone: 3000 },
+      max: 1,
+      wikipedia: "Colossus_of_Rhodes",
+   };
 
    // MausoleumAtHalicarnassus: IBuildingDefinition = {
    //    name: () => t(L.MausoleumAtHalicarnassus),
