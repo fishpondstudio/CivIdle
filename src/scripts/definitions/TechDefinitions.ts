@@ -51,11 +51,11 @@ export class TechDefinitions {
       unlockBuilding: ["Brickworks", "PyramidOfGiza"],
    };
 
-   Herding: ITechDefinition = {
-      name: () => t(L.Herding),
+   Counting: ITechDefinition = {
+      name: () => t(L.Counting),
       column: 1,
-      unlockBuilding: ["LivestockFarm"],
       requireTech: ["Logging", "StoneTools"],
+      unlockBuilding: ["LumberMill"],
    };
 
    Farming: ITechDefinition = {
@@ -76,25 +76,25 @@ export class TechDefinitions {
    Housing: ITechDefinition = {
       name: () => t(L.Housing),
       column: 2,
-      unlockBuilding: ["House", "HatshepsutTemple"],
-      requireTech: ["Masonry", "Herding"],
+      unlockBuilding: ["House"],
+      requireTech: ["Masonry", "Counting"],
    };
 
-   Counting: ITechDefinition = {
-      name: () => t(L.Counting),
+   Herding: ITechDefinition = {
+      name: () => t(L.Herding),
       column: 2,
+      unlockBuilding: ["LivestockFarm"],
+      requireTech: ["Counting", "Farming"],
       unlockFeature: ["BuildingProductionPriority"],
       additionalUpgrades: [() => t(L.TechProductionPriority)],
-      requireTech: ["Herding", "Farming"],
-      unlockBuilding: ["LumberMill"],
    };
 
-   Pictograph: ITechDefinition = {
-      name: () => t(L.Pictograph),
+   HorsebackRiding: ITechDefinition = {
+      name: () => t(L.HorsebackRiding),
       column: 2,
       unlockFeature: ["BuildingStockpileMode"],
       additionalUpgrades: [() => t(L.TechStockpileMode)],
-      unlockBuilding: ["LivestockFarm"],
+      unlockBuilding: ["Stable", "HatshepsutTemple"],
       requireTech: ["Farming"],
    };
 
@@ -109,27 +109,27 @@ export class TechDefinitions {
       name: () => t(L.Stateship),
       column: 3,
       requireTech: ["Housing"],
-      unlockBuilding: ["FlourMill"],
+      unlockBuilding: ["FlourMill", "CottonPlantation"],
    };
 
    Market: ITechDefinition = {
       name: () => t(L.Market),
       column: 3,
-      requireTech: ["Housing", "Counting"],
+      requireTech: ["Housing", "Herding"],
       unlockBuilding: ["Market"],
    };
 
    Arithmetic: ITechDefinition = {
       name: () => t(L.Arithmetic),
       column: 3,
-      requireTech: ["Counting", "Pictograph"],
+      requireTech: ["Herding", "HorsebackRiding"],
       unlockBuilding: ["Statistics"],
    };
 
    Writing: ITechDefinition = {
       name: () => t(L.Writing),
       column: 3,
-      requireTech: ["Pictograph"],
+      requireTech: ["HorsebackRiding"],
       unlockBuilding: ["PaperMaker"],
    };
 
@@ -165,7 +165,7 @@ export class TechDefinitions {
       name: () => t(L.Shamanism),
       column: 5,
       requireTech: ["Iron", "RoadAndWheel"],
-      unlockBuilding: ["Brewery"],
+      unlockBuilding: ["ChariotWorkshop"],
    };
 
    Construction: ITechDefinition = {
@@ -179,22 +179,27 @@ export class TechDefinitions {
       name: () => t(L.Music),
       column: 5,
       requireTech: ["LandTrade", "RoadAndWheel"],
-      unlockBuilding: ["CheeseMaker"],
+      unlockBuilding: ["MusiciansGuild"],
    };
 
    Calendar: ITechDefinition = {
       name: () => t(L.Calendar),
       column: 5,
       requireTech: ["Astronomy", "LandTrade"],
-      unlockBuilding: ["ColossusOfRhodes"],
+      unlockBuilding: ["Brewery", "CottonMill"],
    };
 
-   Engineering: ITechDefinition = { name: () => t(L.Engineering), column: 6, requireTech: ["Shamanism"] };
+   Engineering: ITechDefinition = {
+      name: () => t(L.Engineering),
+      column: 6,
+      requireTech: ["Shamanism", "Construction"],
+      unlockBuilding: ["Armory"],
+   };
 
    PreciousMetal: ITechDefinition = {
       name: () => t(L.PreciousMetal),
       column: 6,
-      requireTech: ["Shamanism"],
+      requireTech: ["Construction"],
       revealDeposit: ["Gold"],
       unlockBuilding: ["GoldMiningCamp"],
    };
@@ -203,7 +208,7 @@ export class TechDefinitions {
       name: () => t(L.CityState),
       column: 6,
       requireTech: ["Construction", "Music"],
-      unlockBuilding: ["Pizzeria"],
+      unlockBuilding: ["CheeseMaker"],
    };
 
    Literature: ITechDefinition = {
@@ -217,60 +222,140 @@ export class TechDefinitions {
       name: () => t(L.Machinery),
       column: 7,
       requireTech: ["PreciousMetal", "Engineering"],
+      unlockBuilding: ["SiegeWorkshop"],
    };
 
    Currency: ITechDefinition = { name: () => t(L.Currency), column: 7, requireTech: ["PreciousMetal"] };
-   Politics: ITechDefinition = { name: () => t(L.Politics), column: 7, requireTech: ["CityState"] };
-   Theater: ITechDefinition = { name: () => t(L.Theater), column: 7, requireTech: ["CityState", "Literature"] };
 
-   Architecture: ITechDefinition = { name: () => t(L.Architecture), column: 8, requireTech: ["Currency", "Machinery"] };
-   Democracy: ITechDefinition = { name: () => t(L.Democracy), column: 8, requireTech: ["Politics"] };
-   Autocracy: ITechDefinition = { name: () => t(L.Autocracy), column: 8, requireTech: ["Politics", "Theater"] };
-   Religion: ITechDefinition = { name: () => t(L.Religion), column: 8, requireTech: ["Theater"] };
+   Politics: ITechDefinition = {
+      name: () => t(L.Politics),
+      column: 7,
+      requireTech: ["CityState"],
+      unlockBuilding: ["FurnitureWorkshop"],
+   };
 
-   Geography: ITechDefinition = { name: () => t(L.Geography), column: 9, requireTech: ["Architecture"] };
-   Physics: ITechDefinition = { name: () => t(L.Physics), column: 9, requireTech: ["Architecture"] };
-   Discourse: ITechDefinition = { name: () => t(L.Discourse), column: 9, requireTech: ["Democracy"] };
-   Feudalism: ITechDefinition = { name: () => t(L.Feudalism), column: 9, requireTech: ["Autocracy"] };
-   Theocracy: ITechDefinition = { name: () => t(L.Theocracy), column: 9, requireTech: ["Autocracy", "Religion"] };
-   Education: ITechDefinition = { name: () => t(L.Education), column: 9, requireTech: ["Religion"] };
+   Theater: ITechDefinition = {
+      name: () => t(L.Theater),
+      column: 7,
+      requireTech: ["Literature"],
+      unlockBuilding: ["ActorsGuild"],
+   };
 
-   Navigation: ITechDefinition = { name: () => t(L.Navigation), column: 10, requireTech: ["Geography", "Physics"] };
-   CivilService: ITechDefinition = { name: () => t(L.CivilService), column: 10, requireTech: ["Discourse"] };
-   RoyalCourt: ITechDefinition = { name: () => t(L.RoyalCourt), column: 10, requireTech: ["Feudalism"] };
-   Cathedral: ITechDefinition = { name: () => t(L.Cathedral), column: 10, requireTech: ["Theocracy"] };
-   Printing: ITechDefinition = { name: () => t(L.Printing), column: 10, requireTech: ["Education"] };
+   Library: ITechDefinition = {
+      name: () => t(L.Library),
+      column: 7,
+      requireTech: ["Literature"],
+      unlockBuilding: ["Library"],
+   };
+
+   Architecture: ITechDefinition = {
+      name: () => t(L.Architecture),
+      column: 8,
+      requireTech: ["Currency", "Machinery"],
+      unlockBuilding: ["Apartment", "ChichenItza"],
+   };
+
+   Democracy: ITechDefinition = {
+      name: () => t(L.Democracy),
+      column: 8,
+      requireTech: ["Politics"],
+      unlockBuilding: ["SwordForge", "Parthenon"],
+   };
+
+   Autocracy: ITechDefinition = {
+      name: () => t(L.Autocracy),
+      column: 8,
+      requireTech: ["Politics", "Library", "Theater"],
+      unlockBuilding: ["Pizzeria", "TempleOfHeaven"],
+   };
+
+   Religion: ITechDefinition = {
+      name: () => t(L.Religion),
+      column: 8,
+      requireTech: ["Library"],
+      unlockBuilding: ["Shrine", "LuxorTemple"],
+   };
+
+   Geography: ITechDefinition = {
+      name: () => t(L.Geography),
+      column: 9,
+      requireTech: ["Architecture"],
+      unlockBuilding: ["CaravelBuilder"],
+   };
+
+   Physics: ITechDefinition = {
+      name: () => t(L.Physics),
+      column: 9,
+      requireTech: ["Architecture"],
+      unlockBuilding: ["GarmentWorkshop"],
+   };
+
+   Feudalism: ITechDefinition = {
+      name: () => t(L.Feudalism),
+      column: 9,
+      requireTech: ["Autocracy", "Democracy"],
+      unlockBuilding: ["KnightCamp"],
+   };
+
+   Theocracy: ITechDefinition = {
+      name: () => t(L.Theocracy),
+      column: 9,
+      requireTech: ["Autocracy", "Religion"],
+      unlockBuilding: ["Church", "Mosque"],
+   };
+
+   Navigation: ITechDefinition = {
+      name: () => t(L.Navigation),
+      column: 10,
+      requireTech: ["Geography", "Physics"],
+      unlockBuilding: ["GalleonBuilder"],
+   };
+
+   CivilService: ITechDefinition = {
+      name: () => t(L.CivilService),
+      column: 10,
+      requireTech: ["Feudalism"],
+      unlockBuilding: ["Warehouse"],
+   };
+
+   HolyEmpire: ITechDefinition = {
+      name: () => t(L.HolyEmpire),
+      column: 10,
+      requireTech: ["Feudalism", "Theocracy"],
+      unlockBuilding: ["Cathedral"],
+   };
+
+   Education: ITechDefinition = {
+      name: () => t(L.Education),
+      column: 10,
+      requireTech: ["Theocracy"],
+      unlockBuilding: ["School"],
+   };
 
    Exploration: ITechDefinition = { name: () => t(L.Exploration), column: 11, requireTech: ["Navigation"] };
    Banking: ITechDefinition = { name: () => t(L.Banking), column: 11, requireTech: ["CivilService", "Navigation"] };
    University: ITechDefinition = {
       name: () => t(L.University),
       column: 11,
-      requireTech: ["RoyalCourt", "CivilService"],
+      requireTech: ["HolyEmpire", "CivilService"],
    };
-   HolyEmpire: ITechDefinition = {
-      name: () => t(L.HolyEmpire),
-      column: 11,
-      requireTech: ["RoyalCourt", "Cathedral", "Printing"],
-   };
-   Renaissance: ITechDefinition = { name: () => t(L.Renaissance), column: 11, requireTech: ["Printing"] };
+
+   Chemistry: ITechDefinition = { name: () => t(L.Chemistry), column: 11, requireTech: ["Education", "HolyEmpire"] };
 
    SeaTrade: ITechDefinition = { name: () => t(L.SeaTrade), column: 12, requireTech: ["Exploration", "Banking"] };
-   Chemistry: ITechDefinition = { name: () => t(L.Chemistry), column: 12, requireTech: ["Banking"] };
    Economics: ITechDefinition = { name: () => t(L.Economics), column: 12, requireTech: ["Banking", "University"] };
    Enlightenment: ITechDefinition = {
       name: () => t(L.Enlightenment),
       column: 12,
-      requireTech: ["University", "HolyEmpire", "Renaissance"],
+      requireTech: ["University", "Chemistry"],
    };
-   NewtonianPhysics: ITechDefinition = { name: () => t(L.NewtonianPhysics), column: 12, requireTech: ["Renaissance"] };
+   NewtonianPhysics: ITechDefinition = { name: () => t(L.NewtonianPhysics), column: 12, requireTech: ["Chemistry"] };
 
-   Steam: ITechDefinition = { name: () => t(L.Steam), column: 13, requireTech: ["SeaTrade", "Chemistry", "Economics"] };
+   Steam: ITechDefinition = { name: () => t(L.Steam), column: 13, requireTech: ["SeaTrade", "Economics"] };
    PrivateOwnership: ITechDefinition = { name: () => t(L.PrivateOwnership), column: 13, requireTech: ["Economics"] };
    Republic: ITechDefinition = { name: () => t(L.Republic), column: 13, requireTech: ["Economics", "Enlightenment"] };
-   Constitution: ITechDefinition = { name: () => t(L.Constitution), column: 13, requireTech: ["Enlightenment"] };
-   Library: ITechDefinition = {
-      name: () => t(L.Library),
+   Constitution: ITechDefinition = {
+      name: () => t(L.Constitution),
       column: 13,
       requireTech: ["Enlightenment", "NewtonianPhysics"],
    };
@@ -289,7 +374,7 @@ export class TechDefinitions {
    PublicSchool: ITechDefinition = {
       name: () => t(L.PublicSchool),
       column: 14,
-      requireTech: ["Constitution", "Library"],
+      requireTech: ["Constitution"],
    };
 
    Colonialism: ITechDefinition = { name: () => t(L.Colonialism), column: 15, requireTech: ["Engine", "Capitalism"] };

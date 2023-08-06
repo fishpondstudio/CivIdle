@@ -55,7 +55,6 @@ export class TechTreeScene extends ViewportScene {
       this.viewport.worldHeight = PAGE_HEIGHT;
 
       app.renderer.background.color = BG_COLOR;
-      app.renderer.plugins.interaction.moveWhenInside = true;
 
       const preferredZoom = Math.max(app.screen.width / width, app.screen.height / PAGE_HEIGHT);
       this.viewport

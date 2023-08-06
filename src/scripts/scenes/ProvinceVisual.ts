@@ -25,7 +25,6 @@ export class ProvinceVisual extends Container {
       const visual = RomeProvince[id].visual;
       sprite.tint = ProvinceVisual.colors[ProvinceVisual.i++ % ProvinceVisual.colors.length];
       sprite.anchor.set(0.5, 0.5);
-      sprite.interactive = true;
 
       const pixels: Uint8Array = plugins.extract.pixels(sprite);
 

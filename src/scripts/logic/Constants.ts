@@ -6,7 +6,7 @@ import { Tech } from "../definitions/TechDefinitions";
 import { PartialTabulate } from "../definitions/TypeDefinitions";
 import { deepFreeze, forEach, isEmpty, keysOf, sizeOf, tabulateAdd } from "../utilities/Helper";
 import { GameState } from "./GameState";
-import { getBuildingUnlockTech, getDepositUnlockTech } from "./TechLogic";
+import { getBuildingUnlockTech, getDepositUnlockTech, getResourceUnlockTech } from "./TechLogic";
 
 const BuildingTier: PartialTabulate<Building> = {};
 const BuildingTech: PartialTabulate<Building> = {};
@@ -67,6 +67,31 @@ export function calculateTierAndPrice(gs: GameState) {
             output: buildingDef.output,
          });
       }
+
+      const tech = getBuildingUnlockTech(building);
+      if (tech) {
+         forEach(buildingDef.input, (res) => {
+            const t = getResourceUnlockTech(res);
+            if (t) {
+               console.assert(
+                  Tech[t].column <= Tech[tech].column,
+                  `${building}'s input resource ${res} is unlocked (${t}) later than the building itself (${tech})`
+               );
+            }
+         });
+      }
+
+      let key: Tech;
+      const result: Tech[] = [];
+      for (key in Tech) {
+         if (Tech[key].unlockBuilding?.includes(building)) {
+            result.push(key);
+         }
+      }
+      console.assert(
+         result.length <= 1,
+         `Building ${building} should only be unlocked by one tech (${result.join(",")})`
+      );
    });
 
    forEach(Tech, (tech, techDef) => {

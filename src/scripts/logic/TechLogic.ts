@@ -1,10 +1,11 @@
 import { Building } from "../definitions/BuildingDefinitions";
 import { ITechDefinition } from "../definitions/ITechDefinition";
-import { Deposit } from "../definitions/ResourceDefinitions";
+import { Deposit, Resource } from "../definitions/ResourceDefinitions";
 import { Tech, TechAge } from "../definitions/TechDefinitions";
 import { Singleton } from "../Global";
 import { forEach, isEmpty, keysOf, shuffle } from "../utilities/Helper";
 import { GameState } from "./GameState";
+import { getBuildingsThatProduce } from "./ResourceLogic";
 import { getDepositTileCount } from "./Tile";
 
 export function getUnlockCost(def: ITechDefinition): number {
@@ -89,6 +90,23 @@ export function getBuildingUnlockTech(building: Building): Tech | null {
       if (Tech[key].unlockBuilding?.includes(building)) {
          return key;
       }
+   }
+   return null;
+}
+
+export function getResourceUnlockTech(res: Resource): Tech | null {
+   const buildings = getBuildingsThatProduce(res);
+   const techs = buildings
+      .flatMap((a) => {
+         const tech = getBuildingUnlockTech(a);
+         if (!tech) {
+            return [];
+         }
+         return [tech];
+      })
+      .sort((a, b) => Tech[a].column - Tech[b].column);
+   if (buildings.length > 0) {
+      return techs[0];
    }
    return null;
 }

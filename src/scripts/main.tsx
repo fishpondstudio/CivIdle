@@ -31,6 +31,7 @@ import { connectWebSocket, initSteamClient, steamClient } from "./rpc/RPCClient"
 import { Grid } from "./scenes/Grid";
 import { TechTreeScene } from "./scenes/TechTreeScene";
 import { ChatPanel } from "./ui/ChatPanel";
+import { DebugUI } from "./ui/DebugUI";
 import { ErrorPage } from "./ui/ErrorPage";
 import { GlobalModal, GlobalToast } from "./ui/GlobalModal";
 import { forEach } from "./utilities/Helper";
@@ -87,7 +88,7 @@ if (canvas) {
       resizeTo: canvas,
       backgroundColor: BG_COLOR,
    });
-   canvas.appendChild(app.view);
+   canvas.appendChild(app.view as any);
    registerPixiInspector(app);
    Assets.addBundle("main", mainBundle);
    loadBundle(app);
@@ -110,7 +111,7 @@ async function loadBundle(app: Application) {
    BitmapFont.from(
       Fonts.Marcellus,
       { fill: "#ffffff", fontSize: 64, fontFamily: Fonts.Marcellus },
-      { chars: BitmapFont.ASCII, padding: 16, resolution: 2 }
+      { chars: BitmapFont.ASCII, padding: 2, resolution: 2 }
    );
    const textures = await new Spritesheet(main.atlas, altasDef as any).parse();
    if (textures) {
@@ -145,6 +146,10 @@ async function startGame(app: Application, resources: MainBundleAssets, textures
    syncUITheme();
 
    calculateTierAndPrice(gameState);
+   if (import.meta.env.DEV) {
+      createRoot(document.getElementById("debug-ui")!).render(<DebugUI />);
+   }
+
    const buildings: Partial<Record<Building, ITileData>> = {};
    forEach(gameState.tiles, (_, tile) => {
       if (tile.building?.type === "Headquarter") {
@@ -168,8 +173,8 @@ async function startGame(app: Application, resources: MainBundleAssets, textures
 
    initializeSingletons(singletons);
    await connectWebSocket();
-
-   // Singleton is initialized
+   // We tick first before loading scene, making sure city-specific overrides are applied!
+   tickEverySecond(gameState);
 
    // Singleton().sceneManager.loadScene(RomeScene);
    // Singleton().sceneManager.loadScene(RomeHistoryScene);

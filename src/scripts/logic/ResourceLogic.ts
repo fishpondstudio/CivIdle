@@ -1,7 +1,8 @@
+import { Building } from "../definitions/BuildingDefinitions";
 import { Resource } from "../definitions/ResourceDefinitions";
 import { PartialTabulate } from "../definitions/TypeDefinitions";
 import { Singleton } from "../Global";
-import { safeAdd } from "../utilities/Helper";
+import { forEach, safeAdd } from "../utilities/Helper";
 import { GameState } from "./GameState";
 import { Tick } from "./TickLogic";
 
@@ -61,4 +62,14 @@ export function getCash(): number {
 
 export function addCash(amount: number): void {
    safeAdd(Singleton().buildings.Headquarter.building.resources, "Cash", amount);
+}
+
+export function getBuildingsThatProduce(res: Resource): Building[] {
+   const result: Building[] = [];
+   forEach(Tick.current.buildings, (b, def) => {
+      if (def.output[res]) {
+         result.push(b);
+      }
+   });
+   return result;
 }

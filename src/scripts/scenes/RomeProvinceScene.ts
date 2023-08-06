@@ -35,7 +35,6 @@ export class RomeProvinceScene extends ViewportScene {
          .setZoom(0);
 
       app.renderer.background.color = ROMAN_MAP_BG_COLOR;
-      app.renderer.plugins.interaction.moveWhenInside = true;
 
       forEach(UNKNOWN, (name, config) => {
          const sprite = this.viewport.addChild(new Sprite(textures[name]));

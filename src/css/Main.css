@@ -28,6 +28,19 @@ body {
    bottom: 0;
 }
 
+#debug-ui .window {
+   position: absolute;
+   width: 300px;
+   left: 10px;
+   top: 10px;
+}
+
+#debug-ui .window .table-view {
+   overflow-x: hidden;
+   overflow-y: auto;
+   height: 400px;
+}
+
 #game-canvas {
    position: absolute;
    left: 0;
