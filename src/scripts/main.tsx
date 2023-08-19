@@ -29,11 +29,11 @@ import { shouldTick, tickEveryFrame, tickEverySecond } from "./logic/Update";
 import { Route, RouteChangeEvent } from "./Route";
 import { connectWebSocket, initSteamClient, steamClient } from "./rpc/RPCClient";
 import { Grid } from "./scenes/Grid";
-import { TechTreeScene } from "./scenes/TechTreeScene";
+import { PlayerMapScene } from "./scenes/PlayerMapScene";
 import { ChatPanel } from "./ui/ChatPanel";
-import { DebugUI } from "./ui/DebugUI";
 import { ErrorPage } from "./ui/ErrorPage";
 import { GlobalModal, GlobalToast } from "./ui/GlobalModal";
+import { PlayerTradePage } from "./ui/PlayerTradePage";
 import { forEach } from "./utilities/Helper";
 import Actions from "./utilities/pixi-actions/Actions";
 import { SceneManager, Textures } from "./utilities/SceneManager";
@@ -146,9 +146,6 @@ async function startGame(app: Application, resources: MainBundleAssets, textures
    syncUITheme();
 
    calculateTierAndPrice(gameState);
-   if (import.meta.env.DEV) {
-      createRoot(document.getElementById("debug-ui")!).render(<DebugUI />);
-   }
 
    const buildings: Partial<Record<Building, ITileData>> = {};
    forEach(gameState.tiles, (_, tile) => {
@@ -176,10 +173,13 @@ async function startGame(app: Application, resources: MainBundleAssets, textures
    // We tick first before loading scene, making sure city-specific overrides are applied!
    tickEverySecond(gameState);
 
-   // Singleton().sceneManager.loadScene(RomeScene);
-   // Singleton().sceneManager.loadScene(RomeHistoryScene);
+   if (import.meta.env.DEV) {
+      createRoot(document.getElementById("debug-ui")!).render(<PlayerTradePage />);
+   }
+
+   Singleton().sceneManager.loadScene(PlayerMapScene);
    // Singleton().sceneManager.loadScene(WorldScene);
-   Singleton().sceneManager.loadScene(TechTreeScene);
+   // Singleton().sceneManager.loadScene(TechTreeScene);
 
    GameStateChanged.emit(getGameState());
    app.ticker.add((frame) => {

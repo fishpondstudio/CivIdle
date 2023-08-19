@@ -1,10 +1,22 @@
 /* eslint-disable no-case-declarations */
 import { decode, encode } from "@msgpack/msgpack";
 import { removeTrailingUndefs, rpcClient, RpcError } from "typed-rpc";
-import { v4 } from "uuid";
-import type { AllMessageTypes, IChat, IChatMessage, IRPCMessage, IWelcomeMessage } from "../../../server/src/Database";
+import type {
+   AllMessageTypes,
+   IChat,
+   IChatMessage,
+   IMapEntry,
+   IMapMessage,
+   IRPCMessage,
+   ITrade,
+   ITradeMessage,
+   IUser,
+   IWelcomeMessage,
+} from "../../../server/src/Database";
 import { MessageType } from "../../../server/src/Database";
 import { ServerImpl } from "../../../server/src/Server";
+import { getGameOptions } from "../Global";
+import { forEach } from "../utilities/Helper";
 import { makeObservableHook } from "../utilities/Hook";
 import { TypedEvent } from "../utilities/TypedEvent";
 
@@ -20,20 +32,26 @@ const serverAddress = import.meta.env.DEV ? "ws://localhost:8000" : "wss://api.c
 //    },
 // });
 
-let handle = "Offline";
+let user: IUser | null = null;
 export function getHandle() {
-   return handle;
+   return user?.handle ?? "Offline";
 }
 
 export async function changeHandle(newHandle: string) {
-   await client.changeHandle(newHandle);
-   handle = newHandle;
+   if (user) {
+      await client.changeHandle(newHandle);
+      user.handle = newHandle;
+   }
 }
 
+export const OnUserChanged = new TypedEvent<IUser | null>();
 export const OnChatMessage = new TypedEvent<IChat[]>();
-export const OnConnectionChanged = new TypedEvent<boolean>();
+export const OnTradeMessage = new TypedEvent<ITrade[]>();
+export const OnPlayerMapMessage = new TypedEvent<Record<string, IMapEntry>>();
 
 let chatMessages: IChat[] = [];
+const trades: Record<string, ITrade> = {};
+export const playerMap: Record<string, IMapEntry> = {};
 
 let ws: WebSocket | null = null;
 let steamWs: WebSocket | null = null;
@@ -66,12 +84,10 @@ interface ISteamClient {
    getBetaName(): string;
 }
 
-function isConnected() {
-   return ws !== null;
-}
-
-export const useIsConnected = makeObservableHook(OnConnectionChanged, isConnected());
-export const useChatMessages = makeObservableHook(OnChatMessage, chatMessages);
+export const usePlayerMap = makeObservableHook(OnPlayerMapMessage, () => playerMap);
+export const useChatMessages = makeObservableHook(OnChatMessage, () => chatMessages);
+export const useTrades = makeObservableHook(OnTradeMessage, () => Object.values(trades));
+export const useUser = makeObservableHook(OnUserChanged, () => user);
 
 let reconnect = 0;
 let requestId = 0;
@@ -109,14 +125,10 @@ export async function connectWebSocket() {
       }
       ws = new WebSocket(`${serverAddress}/?appId=${STEAM_APP_ID}&ticket=${steamTicket}&platform=steam`);
    } else {
-      ws = new WebSocket(`${serverAddress}/?platform=web&ticket=${v4()}`);
+      ws = new WebSocket(`${serverAddress}/?platform=web&ticket=${getGameOptions().userId}`);
    }
 
    ws.binaryType = "arraybuffer";
-
-   ws.onopen = async (e) => {
-      OnConnectionChanged.emit(true);
-   };
 
    ws.onmessage = (e) => {
       const message = decode(e.data as ArrayBuffer) as AllMessageTypes;
@@ -133,7 +145,47 @@ export async function connectWebSocket() {
             break;
          case MessageType.Welcome:
             const w = message as IWelcomeMessage;
-            handle = w.user.handle;
+            user = w.user;
+            OnUserChanged.emit(user);
+            break;
+         case MessageType.Trade:
+            const t = message as ITradeMessage;
+            let hasPendingClaim = false;
+            if (t.upsert) {
+               t.upsert.forEach((trade, id) => {
+                  if (trades[id] && trades[id].fromId == user?.userId) {
+                     hasPendingClaim = true;
+                  }
+                  trades[id] = trade;
+               });
+            }
+            if (t.remove) {
+               t.remove.forEach((id) => {
+                  if (trades[id] && trades[id].fromId == user?.userId) {
+                     hasPendingClaim = true;
+                  }
+                  delete trades[id];
+               });
+            }
+            if (hasPendingClaim) {
+               const pendingClaims = client.claimTrade();
+               // TODO: Claim trades
+            }
+            OnTradeMessage.emit(Object.values(trades));
+            break;
+         case MessageType.Map:
+            const m = message as IMapMessage;
+            if (m.upsert) {
+               forEach(m.upsert, (xy, entry) => {
+                  playerMap[xy] = entry;
+               });
+            }
+            if (m.remove) {
+               m.remove.forEach((xy) => {
+                  delete playerMap[xy];
+               });
+            }
+            OnPlayerMapMessage.emit(playerMap);
             break;
          case MessageType.RPC:
             const r = message as IRPCMessage;
@@ -144,7 +196,8 @@ export async function connectWebSocket() {
 
    ws.onclose = (e) => {
       ws = null;
-      OnConnectionChanged.emit(false);
+      user = null;
+      OnUserChanged.emit(user);
       setTimeout(connectWebSocket, Math.min(++reconnect * 1000, 5000));
    };
 }

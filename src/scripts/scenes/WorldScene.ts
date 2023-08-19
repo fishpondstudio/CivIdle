@@ -1,6 +1,7 @@
 import { SmoothGraphics } from "@pixi/graphics-smooth";
 import {
    Container,
+   FederatedPointerEvent,
    IPointData,
    LINE_CAP,
    LINE_JOIN,
@@ -103,7 +104,7 @@ export class WorldScene extends ViewportScene {
 
       this.viewport.on("clicked", (e) => {
          const grid = Singleton().grid.positionToGrid(e.world);
-         if (e.event.data.button === 2) {
+         if ((e.event as FederatedPointerEvent).button === 2) {
             return;
          }
          this.selectGrid(grid);

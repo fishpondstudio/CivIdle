@@ -2,20 +2,20 @@ import { useEffect, useRef, useState } from "react";
 import chatActive from "../../images/chat_active.png";
 import chatInactive from "../../images/chat_inactive.png";
 import { OnUIThemeChanged } from "../Global";
-import { client, useChatMessages, useIsConnected } from "../rpc/RPCClient";
+import { client, useChatMessages, useUser } from "../rpc/RPCClient";
 import { useTypedEvent } from "../utilities/Hook";
 import { L, t } from "../utilities/i18n";
 
 export function ChatPanel() {
    const [chat, setChat] = useState("");
    const messages = useChatMessages();
-   const isConnected = useIsConnected();
+   const user = useUser();
    const bottomRef = useRef<HTMLDivElement>(null);
    const [showChatWindow, setShowChatWindow] = useState(false);
 
    useEffect(() => {
       bottomRef.current?.scrollIntoView({ behavior: "smooth" });
-   }, [messages, isConnected, showChatWindow]);
+   }, [messages, user, showChatWindow]);
 
    useTypedEvent(OnUIThemeChanged, () => {
       bottomRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -54,7 +54,7 @@ export function ChatPanel() {
                );
             })}
             <div ref={bottomRef}>
-               {isConnected ? null : <div className="text-desc text-center text-small mv10">{t(L.ChatReconnect)}</div>}
+               {user != null ? null : <div className="text-desc text-center text-small mv10">{t(L.ChatReconnect)}</div>}
             </div>
          </div>
          <div className="row" style={{ padding: "2px" }}>
@@ -81,7 +81,7 @@ export function ChatPanel() {
       <div className="chat-bar window">
          <img
             style={{ width: "16px", height: "16px", margin: "0 5px 0 0" }}
-            src={isConnected ? chatActive : chatInactive}
+            src={user != null ? chatActive : chatInactive}
          />
          <div className="chat-message pointer" onClick={() => setShowChatWindow(!showChatWindow)}>
             {latestMessage}

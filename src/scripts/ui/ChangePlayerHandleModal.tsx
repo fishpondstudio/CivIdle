@@ -1,10 +1,14 @@
 import { useState } from "react";
-import { client, getHandle } from "../rpc/RPCClient";
+import { client, getHandle, OnUserChanged, useUser } from "../rpc/RPCClient";
 import { L, t } from "../utilities/i18n";
 import { hideModal, showToast } from "./GlobalModal";
 
 export function ChangePlayerHandleModal() {
-   const [handle, setHandle] = useState(getHandle());
+   const user = useUser();
+   if (!user) {
+      return null;
+   }
+   const [handle, setHandle] = useState(user.handle);
    return (
       <div className="window">
          <div className="title-bar">
@@ -24,6 +28,8 @@ export function ChangePlayerHandleModal() {
                   onClick={async () => {
                      try {
                         await client.changeHandle(handle);
+                        user.handle = handle;
+                        OnUserChanged.emit(user);
                         hideModal();
                      } catch (error) {
                         showToast(String(error));

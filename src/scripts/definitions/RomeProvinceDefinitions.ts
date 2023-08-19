@@ -82,7 +82,7 @@ export class RomeProvinceDefinitions {
       visual: { x: 1105, y: 889, textSize: 35, textY: 50 },
       unlockCost: 2000,
       name: () => t(L.ProvinceSardiniaAndCorsica),
-      buildingMultiplier: { Villa: { input: 1, output: 1, worker: 1 } },
+      buildingMultiplier: { House: { input: 1, output: 1, worker: 1 } },
       requireProvince: ["Italia"],
    };
    Sicillia: IProvinceDefinition = {
@@ -201,7 +201,7 @@ export class RomeProvinceDefinitions {
       visual: { x: 1393, y: 1435, textAngle: 35, textY: 120, textX: 50 },
       unlockCost: 5000,
       name: () => t(L.ProvinceAfrica),
-      buildingMultiplier: { Villa: { worker: 1, storage: 1 }, Insula: { worker: 1, storage: 1 } },
+      buildingMultiplier: { House: { worker: 1, storage: 1 }, Apartment: { worker: 1, storage: 1 } },
       requireProvince: ["Sicillia"],
    };
    Numidia: IProvinceDefinition = {

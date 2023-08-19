@@ -1,4 +1,5 @@
 import { IPointData } from "pixi.js";
+import { v4 } from "uuid";
 import { City } from "../definitions/CityDefinitions";
 import { Feature } from "../definitions/FeatureDefinitions";
 import { GreatPerson } from "../definitions/GreatPersonDefinitions";
@@ -50,6 +51,7 @@ export class SavedGame {
 
 export class GameOptions {
    useModernUI = true;
+   userId = v4();
 }
 
 export function initializeGameState(gameState: GameState, grid: Grid) {

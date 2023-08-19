@@ -220,9 +220,17 @@ fieldset .separator {
    flex-direction: column;
 }
 
+.jcc {
+   justify-content: center;
+}
+
 .row .f1,
 .col .f1 {
    flex: 1;
+}
+
+.w100 {
+   width: 100%;
 }
 
 .mv5 {

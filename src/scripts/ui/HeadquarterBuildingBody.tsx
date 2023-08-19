@@ -5,7 +5,7 @@ import { getScienceFromWorkers } from "../logic/BuildingLogic";
 import { Config } from "../logic/Constants";
 import { getCurrentTechAge, getScienceAmount, getUnlockCost, unlockableTechs } from "../logic/TechLogic";
 import { Tick } from "../logic/TickLogic";
-import { getHandle, useIsConnected } from "../rpc/RPCClient";
+import { getHandle, useUser } from "../rpc/RPCClient";
 import { TechTreeScene } from "../scenes/TechTreeScene";
 import { formatPercent, jsxMapOf } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
@@ -30,7 +30,7 @@ export function HeadquarterBuildingBody({ gameState, xy }: IBuildingComponentPro
    } = getScienceFromWorkers(gameState);
    const scienceAmount = getScienceAmount();
    const techAge = getCurrentTechAge(gameState);
-   const connected = useIsConnected();
+   const user = useUser();
    return (
       <div className="window-body">
          <BuildingProduceComponent gameState={gameState} xy={xy} />
@@ -190,9 +190,9 @@ export function HeadquarterBuildingBody({ gameState, xy }: IBuildingComponentPro
                   <div className="text-desc text-small">{t(L.ChangePlayerHandledDesc)}</div>
                </div>
                <div
-                  className={classNames("text-link text-strong", { disabled: !connected })}
+                  className={classNames("text-link text-strong", { disabled: !user })}
                   onClick={() => {
-                     if (connected) {
+                     if (user) {
                         showModal(<ChangePlayerHandleModal />);
                      } else {
                         playError();

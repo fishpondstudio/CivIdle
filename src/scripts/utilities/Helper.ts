@@ -18,6 +18,11 @@ const NUMBER_SUFFIX_2 = ["","K","M","B","T","aa","bb","cc","dd","ee","ff","gg","
 const NUMBER_SUFFIX_3 = ["","thousand","million","billion","trillion","quadrillion","quintillion","sextillion","septillion","octillion","nonillion","decillion","undecillion","duodecillion","tredecillion","quattuordecillion","quindecillion","sedecillion","septendecillion","octodecillion","novemdecillion ","vigintillion","unvigintillion","duovigintillion","trevigintillion","quattuorvigintillion","quinvigintillion","sexvigintillion","septenvigintillion","octovigintillion","novemvigintillion","trigintillion","untrigintillion","duotrigintillion","tretrigintillion","quattuortrigintillion","quintrigintillion","sextrigintillion","septentrigintillion","octotrigintillion","novemtrigintillion","quadragintillion","unquadragintillion","duoquadragintillion","trequadragintillion","quattuorquadragintillion","quinquadragintillion","sexquadragintillion","septenquadragintillion","octoquadragintillion","novemquadragintillion","quinquagintillion","unquinquagintillion","duoquinquagintillion","trequinquagintillion","quattuorquinquagintillion","quinquinquagintillion","sexquinquagintillion","septenquinquagintillion","octoquinquagintillion","novemquinquagintillion","sexagintillion","unsexagintillion","duosexagintillion","tresexagintillion","quattuorsexagintillion","quinsexagintillion","sexsexagintillion","septsexagintillion","octosexagintillion","octosexagintillion","septuagintillion","unseptuagintillion","duoseptuagintillion","treseptuagintillion","quinseptuagintillion","sexseptuagintillion","septseptuagintillion","octoseptuagintillion","novemseptuagintillion","octogintillion","unoctogintillion","duooctogintillion","treoctogintillion","quattuoroctogintillion","quinoctogintillion","sexoctogintillion","septoctogintillion","octooctogintillion","novemoctogintillion","nonagintillion","unnonagintillion","duononagintillion","trenonagintillion","quattuornonagintillion","quinnonagintillion","sexnonagintillion","septnonagintillion","octononagintillion","novemnonagintillion","centillion",
 ];
 
+export const SECOND = 1000;
+export const MINUTE = SECOND * 60;
+export const HOUR = 60 * MINUTE;
+export const DAY = 24 * HOUR;
+
 function scientificFormat(num: number): string {
    return num.toExponential(2).replace("00e+", "e").replace("0e+", "e").replace("e+", "e");
 }
@@ -258,6 +263,11 @@ export function tabulateAdd<T extends string>(...params: Array<PartialTabulate<T
       });
    });
    return result;
+}
+
+export function safeParseInt(str: string): number {
+   const parsed = parseInt(str, 10);
+   return isFinite(parsed) ? parsed : 0;
 }
 
 export function alphaNumericOf(str: string): string {

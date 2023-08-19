@@ -4,7 +4,7 @@ import { PartialTabulate } from "../definitions/TypeDefinitions";
 import { Config } from "../logic/Constants";
 import { clamp, keysOf, mapOf, safeAdd } from "../utilities/Helper";
 
-export function DebugUI() {
+export function DebugPage() {
    const [selectedResource, setSelectedResource] = useState<PartialTabulate<Resource>>({});
    return (
       <div className="window">
@@ -33,7 +33,7 @@ export function DebugUI() {
                         })
                         .map((res) => {
                            return (
-                              <tr>
+                              <tr key={res}>
                                  <td className="row">
                                     <div
                                        className="m-icon small text-desc"

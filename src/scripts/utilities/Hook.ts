@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { TypedEvent } from "./TypedEvent";
 
-export function makeObservableHook<T>(event: TypedEvent<T>, initialValue: T) {
-   return function useIsConnected(): T {
+export function makeObservableHook<T>(event: TypedEvent<T>, initialValue: () => T) {
+   return function observe(): T {
       const [getter, setter] = useState<T>(initialValue);
       useEffect(() => {
          function handleEvent(data: T): void {
