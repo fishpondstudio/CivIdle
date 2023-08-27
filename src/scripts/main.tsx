@@ -11,12 +11,12 @@ import { BG_COLOR } from "./Colors";
 import { Building } from "./definitions/BuildingDefinitions";
 import { City } from "./definitions/CityDefinitions";
 import {
-   GameStateChanged,
    getGameState,
    initializeSavedGame,
    initializeSingletons,
    ISingleton,
    loadGame,
+   notifyGameStateUpdate,
    Singleton,
    SpecialBuildings as ISpecialBuildings,
    syncUITheme,
@@ -181,7 +181,7 @@ async function startGame(app: Application, resources: MainBundleAssets, textures
    // Singleton().sceneManager.loadScene(WorldScene);
    // Singleton().sceneManager.loadScene(TechTreeScene);
 
-   GameStateChanged.emit(getGameState());
+   notifyGameStateUpdate();
    app.ticker.add((frame) => {
       if (!shouldTick()) {
          return;

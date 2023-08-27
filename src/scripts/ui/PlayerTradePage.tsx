@@ -1,9 +1,10 @@
+import classNames from "classnames";
 import { useState } from "react";
 import { IAddTradeRequest } from "../../../server/src/Database";
 import { Resource } from "../definitions/ResourceDefinitions";
 import { getSellAmountRange, isTradeValid } from "../logic/PlayerTradeLogic";
 import { Tick } from "../logic/TickLogic";
-import { client, useTrades } from "../rpc/RPCClient";
+import { client, useTrades, useUser } from "../rpc/RPCClient";
 import { keysOf, safeParseInt } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
 import { playError } from "../visuals/Sound";
@@ -15,6 +16,7 @@ export function PlayerTradePage() {
       (res) => Tick.current.resources[res].canPrice && Tick.current.resources[res].canStore
    );
    const trades = useTrades();
+   const user = useUser();
 
    const [trade, setTrade] = useState<IAddTradeRequest>({
       buyResource: resources[0],
@@ -122,6 +124,7 @@ export function PlayerTradePage() {
                         <th></th>
                      </tr>
                      {trades.map((trade) => {
+                        const disableFill = user == null || trade.fromId == user.userId;
                         return (
                            <tr key={trade.id}>
                               <td>
@@ -131,13 +134,21 @@ export function PlayerTradePage() {
                                  {Tick.current.resources[trade.sellResource as Resource].name()} x {trade.sellAmount}
                               </td>
                               <td>{trade.from}</td>
-                              <td
-                                 className="text-link text-strong"
-                                 onClick={() => {
-                                    showModal(<FillPlayerTradeModal trade={trade} />);
-                                 }}
-                              >
-                                 {t(L.PlayerTradeFill)}
+                              <td>
+                                 <div
+                                    className={classNames({
+                                       "text-link": !disableFill,
+                                       "text-strong": true,
+                                       "text-desc": disableFill,
+                                    })}
+                                    onClick={() => {
+                                       if (!disableFill) {
+                                          showModal(<FillPlayerTradeModal trade={trade} />);
+                                       }
+                                    }}
+                                 >
+                                    {t(L.PlayerTradeFill)}
+                                 </div>
                               </td>
                            </tr>
                         );

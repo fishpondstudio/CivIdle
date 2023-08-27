@@ -146,7 +146,7 @@ export function watchGameState(cb: (gs: GameState) => void): () => void {
    };
 }
 
-export const useGameState = makeObservableHook(GameStateChanged, getGameState);
+export const useGameState = makeObservableHook(GameStateChanged, getGameState());
 
 function migrateSavedGame(gs: SavedGame) {
    forEach(gs.current.tiles, (xy, tile) => {

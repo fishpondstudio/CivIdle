@@ -15,27 +15,14 @@ import type {
 } from "../../../server/src/Database";
 import { MessageType } from "../../../server/src/Database";
 import { ServerImpl } from "../../../server/src/Server";
-import { getGameOptions } from "../Global";
+import { getGameOptions, saveGame } from "../Global";
 import { forEach } from "../utilities/Helper";
 import { makeObservableHook } from "../utilities/Hook";
 import { TypedEvent } from "../utilities/TypedEvent";
 
 const serverAddress = import.meta.env.DEV ? "ws://localhost:8000" : "wss://api.cividle.com";
-// const serverAddress = "wss://api.cividle.com";
-
-// export const ipcClient = rpcClient<IPCService>({
-//    request: (method: string, params: any[]) => {
-//       if (typeof IPCBridge === "undefined") {
-//          throw new Error(`IPCBridge is not defined: ${method}(${params})`);
-//       }
-//       return IPCBridge.rpcCall(method, params);
-//    },
-// });
 
 let user: IUser | null = null;
-export function getHandle() {
-   return user?.handle ?? "Offline";
-}
 
 export async function changeHandle(newHandle: string) {
    if (user) {
@@ -47,11 +34,26 @@ export async function changeHandle(newHandle: string) {
 export const OnUserChanged = new TypedEvent<IUser | null>();
 export const OnChatMessage = new TypedEvent<IChat[]>();
 export const OnTradeMessage = new TypedEvent<ITrade[]>();
-export const OnPlayerMapMessage = new TypedEvent<Record<string, IMapEntry>>();
+export const OnPlayerMapChanged = new TypedEvent<Record<string, IMapEntry>>();
+export const OnPlayerMapMessage = new TypedEvent<IMapMessage>();
 
 let chatMessages: IChat[] = [];
 const trades: Record<string, ITrade> = {};
-export const playerMap: Record<string, IMapEntry> = {};
+const playerMap: Record<string, IMapEntry> = {};
+
+export function getPlayerMap() {
+   return playerMap;
+}
+
+export function getMyMapXy() {
+   for (const xy in playerMap) {
+      const entry = playerMap[xy];
+      if (entry.userId == getGameOptions().id) {
+         return xy;
+      }
+   }
+   return null;
+}
 
 let ws: WebSocket | null = null;
 let steamWs: WebSocket | null = null;
@@ -84,7 +86,7 @@ interface ISteamClient {
    getBetaName(): string;
 }
 
-export const usePlayerMap = makeObservableHook(OnPlayerMapMessage, () => playerMap);
+export const usePlayerMap = makeObservableHook(OnPlayerMapChanged, () => playerMap);
 export const useChatMessages = makeObservableHook(OnChatMessage, () => chatMessages);
 export const useTrades = makeObservableHook(OnTradeMessage, () => Object.values(trades));
 export const useUser = makeObservableHook(OnUserChanged, () => user);
@@ -125,7 +127,12 @@ export async function connectWebSocket() {
       }
       ws = new WebSocket(`${serverAddress}/?appId=${STEAM_APP_ID}&ticket=${steamTicket}&platform=steam`);
    } else {
-      ws = new WebSocket(`${serverAddress}/?platform=web&ticket=${getGameOptions().userId}`);
+      const token = getGameOptions().id + ":" + (getGameOptions().token ?? getGameOptions().id);
+      ws = new WebSocket(`${serverAddress}/?platform=web&ticket=${token}`);
+   }
+
+   if (!ws) {
+      return;
    }
 
    ws.binaryType = "arraybuffer";
@@ -147,6 +154,8 @@ export async function connectWebSocket() {
             const w = message as IWelcomeMessage;
             user = w.user;
             OnUserChanged.emit(user);
+            getGameOptions().token = w.user.token;
+            saveGame();
             break;
          case MessageType.Trade:
             const t = message as ITradeMessage;
@@ -185,7 +194,8 @@ export async function connectWebSocket() {
                   delete playerMap[xy];
                });
             }
-            OnPlayerMapMessage.emit(playerMap);
+            OnPlayerMapChanged.emit({ ...playerMap });
+            OnPlayerMapMessage.emit(m);
             break;
          case MessageType.RPC:
             const r = message as IRPCMessage;

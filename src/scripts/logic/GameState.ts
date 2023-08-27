@@ -51,7 +51,8 @@ export class SavedGame {
 
 export class GameOptions {
    useModernUI = true;
-   userId = v4();
+   id = v4();
+   token: string | null = null;
 }
 
 export function initializeGameState(gameState: GameState, grid: Grid) {

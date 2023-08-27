@@ -583,4 +583,11 @@ export const EN = {
    PlayerMapClaimTileCondition3: "You have unlocked required technology: %{tech}",
    PlayerMapClaimTileCondition4: "You haven't claimed a tile or have passed the cooldown of moving your tile",
    PlayerMapClaimTileCooldownLeft: "Cooldown left: %{time}",
+   PlayerMapYourTile: "Your Tile",
+   PlayerMapTariff: "Tariff",
+   PlayerMapSetYourTariff: "Set Your Tariff",
+   PlayerMapTariffDesc:
+      "Every trade that goes through your tile will pay tariff to you. It's a balance: if you increase the tariff, the more you will gain from each trade, but fewer trade will go through your tile.",
+   PlayerMapTariffApply: "Apply Tariff Rate",
+   ServerErrorMessage: "Server Error: %{error}",
 };

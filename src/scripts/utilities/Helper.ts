@@ -372,3 +372,66 @@ export function rejectIn(seconds: number, reason = "Timeout"): Promise<void> {
       setTimeout(() => reject(new Error(reason)), seconds * 1000);
    });
 }
+
+export function getHMS(t: number): [number, number, number] {
+   let h = 0;
+   let m = 0;
+   let s = 0;
+   const seconds = Math.floor(t / 1000);
+   const minutes = Math.floor(seconds / 60);
+   const hours = Math.floor(minutes / 60);
+   if (seconds < 60) {
+      s = seconds;
+   } else if (minutes < 60) {
+      s = seconds - minutes * 60;
+      m = minutes;
+   } else {
+      s = seconds - minutes * 60;
+      m = minutes - hours * 60;
+      h = hours;
+   }
+   return [h, m, s];
+}
+
+export function formatHMS(t: number) {
+   if (!isFinite(t)) {
+      return "--:--";
+   }
+   t = clamp(t, 0, Infinity);
+   const hms = getHMS(t);
+   if (hms[0] === 0) {
+      return `${pad(hms[1])}:${pad(hms[2])}`;
+   }
+   if (hms[0] > 24 * 4) {
+      const days = Math.floor(hms[0] / 24);
+      if (days > 30) {
+         const month = Math.floor(days / 30);
+         if (month > 12) {
+            const year = Math.floor(month / 12);
+            if (year > 10) {
+               return `10y+`;
+            }
+            return `${year}y${month - 12 * year}mo`;
+         }
+         return `${month}mo${days - 30 * month}d`;
+      }
+      return `${days}d${hms[0] - 24 * days}h`;
+   }
+   return `${pad(hms[0])}:${pad(hms[1])}:${pad(hms[2])}`;
+}
+
+export function formatHM(t: number) {
+   t = clamp(t, 0, Infinity);
+   const hms = getHMS(t);
+   if (hms[0] === 0) {
+      return `${hms[1]}m`;
+   }
+   if (hms[1] === 0) {
+      return `${hms[0]}h`;
+   }
+   return `${hms[0]}h${pad(hms[1])}m`;
+}
+
+function pad(num: number) {
+   return num < 10 ? `0${num}` : num;
+}

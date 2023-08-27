@@ -1,19 +1,11 @@
 import { SmoothGraphics } from "@pixi/graphics-smooth";
-import {
-   BitmapText,
-   Container,
-   FederatedPointerEvent,
-   IPointData,
-   LINE_CAP,
-   LINE_JOIN,
-   MSAA_QUALITY,
-   TilingSprite,
-} from "pixi.js";
+import { BitmapText, Container, FederatedPointerEvent, IPointData, LINE_CAP, LINE_JOIN, Sprite } from "pixi.js";
 import { IMapEntry } from "../../../server/src/Database";
+import WorldMap from "../../../server/WorldMap.json";
 import { Singleton } from "../Global";
-import { OnPlayerMapMessage, playerMap } from "../rpc/RPCClient";
+import { getMyMapXy, getPlayerMap, OnPlayerMapMessage } from "../rpc/RPCClient";
 import { PlayerMapPage } from "../ui/PlayerMapPage";
-import { forEach, safeParseInt } from "../utilities/Helper";
+import { forEach, formatPercent, safeParseInt, xyToPoint } from "../utilities/Helper";
 import { ViewportScene } from "../utilities/SceneManager";
 import { Disposable } from "../utilities/TypedEvent";
 import { Fonts } from "../visuals/Fonts";
@@ -21,7 +13,7 @@ import { Fonts } from "../visuals/Fonts";
 let viewportCenter: IPointData | null = null;
 let viewportZoom: number | null = null;
 
-const MaxX = 100;
+const MaxX = 200;
 const MaxY = 100;
 const GridSize = 100;
 
@@ -51,9 +43,41 @@ export class PlayerMapScene extends ViewportScene {
             minScale: Math.max(app.screen.width / this._width, app.screen.height / this._height),
          });
 
-      const bg = this.viewport.addChild(new TilingSprite(textures.Paper, this._width, this._height));
-      bg.tint = 0x4b6584;
-      bg.position.set((this._width - bg.width) / 2, (this._height - bg.height) / 2);
+      app.renderer.background.color = 0x2980b9;
+
+      // Assets.load<Texture>("/World.png").then((texture) => {
+      //    const sprite = this.viewport.addChild(new Sprite(texture));
+      //    sprite.anchor.set(0.5, 0.5);
+      //    sprite.position.set(this._width / 2, this._height / 2);
+      //    sprite.scale.set(11);
+      //    sprite.alpha = 0.5;
+
+      //    const pixels: Uint8Array = app.renderer.plugins.extract.pixels(sprite);
+      //    const map: Record<string, true> = {};
+      //    for (let x = 0; x <= MaxX; x++) {
+      //       for (let y = 0; y <= MaxY; y++) {
+      //          const pos = new Vector2((x * GridSize + 0.5 * GridSize) / 11, (y * GridSize + 0.5 * GridSize) / 11);
+      //          const ind = Math.round(pos.x) + Math.round(pos.y) * texture.width;
+      //          if (pixels[ind * 4 + 3] > 0) {
+      //             map[`${x},${y + 3}`] = true;
+      //          }
+      //       }
+      //    }
+      //    forEach(map, (xy) => {
+      //       const point = xyToPoint(xy);
+      //       const sprite = this.viewport.addChild(new Sprite(this.context.textures["100x100"]));
+      //       sprite.position.set(point.x * GridSize, point.y * GridSize);
+      //    });
+      //    navigator.clipboard.writeText(JSON.stringify(map));
+      //    sprite.visible = false;
+      // });
+
+      forEach(WorldMap, (xy) => {
+         const point = xyToPoint(xy);
+         const sprite = this.viewport.addChild(new Sprite(this.context.textures["100x100"]));
+         sprite.tint = 0x3498db;
+         sprite.position.set(point.x * GridSize, point.y * GridSize);
+      });
 
       const graphics = this.viewport.addChild(new SmoothGraphics()).lineStyle({
          color: 0xffffff,
@@ -62,7 +86,7 @@ export class PlayerMapScene extends ViewportScene {
          join: LINE_JOIN.ROUND,
          alignment: 0.5,
       });
-      graphics.alpha = 0.1;
+      graphics.alpha = 0.25;
 
       for (let x = 0; x <= MaxX; x++) {
          graphics.moveTo(x * GridSize, 0);
@@ -74,12 +98,23 @@ export class PlayerMapScene extends ViewportScene {
          graphics.lineTo(MaxX * GridSize, y * GridSize);
       }
 
-      graphics.cacheAsBitmap = true;
-      graphics.cacheAsBitmapMultisample = MSAA_QUALITY.HIGH;
+      forEach(getPlayerMap, (xy, entry) => {
+         this.drawTile(xy, entry);
+      });
 
-      this.drawAllTiles();
-
-      this._listener = OnPlayerMapMessage.on(this.drawAllTiles.bind(this));
+      this._listener = OnPlayerMapMessage.on((message) => {
+         if (message.remove) {
+            message.remove.forEach((xy) => {
+               this._tiles[xy]?.destroy({ children: true });
+               delete this._tiles[xy];
+            });
+         }
+         if (message.upsert) {
+            forEach(message.upsert, (xy, entry) => {
+               this.drawTile(xy, entry);
+            });
+         }
+      });
 
       this._selectedGraphics = this.viewport.addChild(new SmoothGraphics());
 
@@ -103,35 +138,45 @@ export class PlayerMapScene extends ViewportScene {
          }
          const tileX = Math.floor(e.world.x / GridSize);
          const tileY = Math.floor(e.world.y / GridSize);
-         const x = tileX * GridSize;
-         const y = tileY * GridSize;
-         if (!this._selectedGraphics) {
-            return;
-         }
-         this._selectedGraphics.clear();
-         this._selectedGraphics
-            .lineStyle({
-               alpha: 0.75,
-               color: 0xffff99,
-               width: 2,
-               cap: LINE_CAP.ROUND,
-               join: LINE_JOIN.ROUND,
-               alignment: 0.5,
-            })
-            .moveTo(x, y)
-            .lineTo(x + GridSize, y)
-            .lineTo(x + GridSize, y + GridSize)
-            .lineTo(x, y + GridSize)
-            .lineTo(x, y);
-         Singleton().routeTo(PlayerMapPage, { xy: tileX + "," + tileY });
+         this.selectTile(tileX, tileY);
       });
-      Singleton().routeTo(PlayerMapPage, { xy: "0,0" });
+
+      const xy = getMyMapXy();
+      if (xy) {
+         const point = xyToPoint(xy);
+         this.selectTile(point.x, point.y);
+         this.viewport.moveCenter(this.tileToPosition(point));
+      } else {
+         this.selectTile(100, 50);
+         this.viewport.moveCenter(this.tileToPosition({ x: 100, y: 50 }));
+      }
    }
 
-   drawAllTiles() {
-      forEach(playerMap, (xy, entry) => {
-         this.drawTile(xy, entry);
-      });
+   private tileToPosition(tile: IPointData): IPointData {
+      return { x: (tile.x + 0.5) * GridSize, y: (tile.y + 0.5) * GridSize };
+   }
+
+   private selectTile(tileX: number, tileY: number) {
+      const x = tileX * GridSize;
+      const y = tileY * GridSize;
+
+      this._selectedGraphics.clear();
+      this._selectedGraphics
+         .lineStyle({
+            alpha: 0.75,
+            color: 0xffff99,
+            width: 2,
+            cap: LINE_CAP.ROUND,
+            join: LINE_JOIN.ROUND,
+            alignment: 0.5,
+         })
+         .moveTo(x, y)
+         .lineTo(x + GridSize, y)
+         .lineTo(x + GridSize, y + GridSize)
+         .lineTo(x, y + GridSize)
+         .lineTo(x, y);
+
+      Singleton().routeTo(PlayerMapPage, { xy: tileX + "," + tileY });
    }
 
    private drawTile(xy: string, entry: IMapEntry) {
@@ -141,7 +186,6 @@ export class PlayerMapScene extends ViewportScene {
          this._tiles[xy].destroy({ children: true });
       }
       this._tiles[xy] = container;
-
       const handle = container.addChild(
          new BitmapText(entry.handle, {
             fontName: Fonts.Cabin,
@@ -153,7 +197,7 @@ export class PlayerMapScene extends ViewportScene {
       handle.position.set(x * GridSize + 0.5 * GridSize, y * GridSize + 0.5 * GridSize - 10);
 
       const tariff = container.addChild(
-         new BitmapText(`${entry.tariffRate}%`, {
+         new BitmapText(formatPercent(entry.tariffRate), {
             fontName: Fonts.Cabin,
             fontSize: 14,
             tint: 0xffffff,

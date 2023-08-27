@@ -5,7 +5,7 @@ import { getScienceFromWorkers } from "../logic/BuildingLogic";
 import { Config } from "../logic/Constants";
 import { getCurrentTechAge, getScienceAmount, getUnlockCost, unlockableTechs } from "../logic/TechLogic";
 import { Tick } from "../logic/TickLogic";
-import { getHandle, useUser } from "../rpc/RPCClient";
+import { useUser } from "../rpc/RPCClient";
 import { TechTreeScene } from "../scenes/TechTreeScene";
 import { formatPercent, jsxMapOf } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
@@ -185,7 +185,7 @@ export function HeadquarterBuildingBody({ gameState, xy }: IBuildingComponentPro
             <legend>{t(L.PlayerHandle)}</legend>
             <div className="row mv5">
                <div className="f1">
-                  <b>{getHandle()}</b>
+                  <b>{user?.handle}</b>
                   <br />
                   <div className="text-desc text-small">{t(L.ChangePlayerHandledDesc)}</div>
                </div>

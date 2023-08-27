@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { client, getHandle, OnUserChanged, useUser } from "../rpc/RPCClient";
+import { client, OnUserChanged, useUser } from "../rpc/RPCClient";
 import { L, t } from "../utilities/i18n";
 import { hideModal, showToast } from "./GlobalModal";
 
@@ -24,7 +24,7 @@ export function ChangePlayerHandleModal() {
             <div className="sep15"></div>
             <div className="row" style={{ justifyContent: "flex-end" }}>
                <button
-                  disabled={handle === getHandle()}
+                  disabled={handle === user.handle}
                   onClick={async () => {
                      try {
                         await client.changeHandle(handle);

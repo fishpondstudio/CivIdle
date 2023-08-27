@@ -5,7 +5,6 @@ import {
    IPointData,
    LINE_CAP,
    LINE_JOIN,
-   MSAA_QUALITY,
    ParticleContainer,
    Sprite,
    TilingSprite,
@@ -67,8 +66,6 @@ export class WorldScene extends ViewportScene {
       });
       graphics.alpha = 0.1;
       Singleton().grid.drawGrid(graphics);
-      graphics.cacheAsBitmap = true;
-      graphics.cacheAsBitmapMultisample = MSAA_QUALITY.HIGH;
 
       Singleton().grid.forEach((grid) => {
          const xy = pointToXy(grid);
