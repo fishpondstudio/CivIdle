@@ -18,7 +18,7 @@ export function UnclaimedTilePage({ xy }: { xy: string }) {
       cooldownLeft = 0;
    } else {
       const tile = playerMap[myXy];
-      cooldownLeft = tile.createdAt - Date.now();
+      cooldownLeft += tile.createdAt - Date.now();
    }
    return (
       <div className="window">

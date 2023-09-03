@@ -9,12 +9,14 @@ import { HeadquarterBuildingBody } from "./HeadquarterBuildingBody";
 import { LoadingPage } from "./LoadingPage";
 import { MarketBuildingBody } from "./MarketBuildingBody";
 import { MenuComponent } from "./MenuComponent";
+import { PlayerTradeBuildingBody } from "./PlayerTradeBuildingBody";
 import { StatisticsBuildingBody } from "./StatisticsBuildingBody";
 
 const BuildingBodyOverride: Partial<Record<Building, FunctionComponent<IBuildingComponentProps>>> = {
    Headquarter: HeadquarterBuildingBody,
    Market: MarketBuildingBody,
    Statistics: StatisticsBuildingBody,
+   Caravansary: PlayerTradeBuildingBody,
 };
 
 export function BuildingPage({ tile }: { tile: ITileData }): JSX.Element | null {

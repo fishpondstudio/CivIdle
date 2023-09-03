@@ -27,13 +27,13 @@ import { initializeGameState } from "./logic/GameState";
 import { ITileData } from "./logic/Tile";
 import { shouldTick, tickEveryFrame, tickEverySecond } from "./logic/Update";
 import { Route, RouteChangeEvent } from "./Route";
-import { connectWebSocket, initSteamClient, steamClient } from "./rpc/RPCClient";
+import { connectWebSocket } from "./rpc/RPCClient";
+import { isSteam, SteamClient } from "./rpc/SteamClient";
 import { Grid } from "./scenes/Grid";
-import { PlayerMapScene } from "./scenes/PlayerMapScene";
+import { WorldScene } from "./scenes/WorldScene";
 import { ChatPanel } from "./ui/ChatPanel";
 import { ErrorPage } from "./ui/ErrorPage";
 import { GlobalModal, GlobalToast } from "./ui/GlobalModal";
-import { PlayerTradePage } from "./ui/PlayerTradePage";
 import { forEach } from "./utilities/Helper";
 import Actions from "./utilities/pixi-actions/Actions";
 import { SceneManager, Textures } from "./utilities/SceneManager";
@@ -120,9 +120,6 @@ async function loadBundle(app: Application) {
 }
 
 async function startGame(app: Application, resources: MainBundleAssets, textures: Textures) {
-   if (window.__STEAM_API_URL) {
-      await initSteamClient(window.__STEAM_API_URL);
-   }
    let isNewPlayer = false;
    const data = await loadGame();
    if (data) {
@@ -173,12 +170,12 @@ async function startGame(app: Application, resources: MainBundleAssets, textures
    // We tick first before loading scene, making sure city-specific overrides are applied!
    tickEverySecond(gameState);
 
-   if (import.meta.env.DEV) {
-      createRoot(document.getElementById("debug-ui")!).render(<PlayerTradePage />);
-   }
+   // if (import.meta.env.DEV) {
+   // createRoot(document.getElementById("debug-ui")!).render(<PlayerTradeComponent />);
+   // }
 
-   Singleton().sceneManager.loadScene(PlayerMapScene);
-   // Singleton().sceneManager.loadScene(WorldScene);
+   // Singleton().sceneManager.loadScene(PlayerMapScene);
+   Singleton().sceneManager.loadScene(WorldScene);
    // Singleton().sceneManager.loadScene(TechTreeScene);
 
    notifyGameStateUpdate();
@@ -186,13 +183,14 @@ async function startGame(app: Application, resources: MainBundleAssets, textures
       if (!shouldTick()) {
          return;
       }
-      Actions.tick(frame / app.ticker.FPS);
-      tickEveryFrame(gameState, app.ticker.elapsedMS / 1000);
+      const dt = app.ticker.elapsedMS / 1000;
+      Actions.tick(dt);
+      tickEveryFrame(gameState, dt);
    });
    setInterval(tickEverySecond.bind(null, gameState), 1000);
 
-   if (window.__STEAM_API_URL) {
-      const beta = await steamClient.getBetaName();
+   if (isSteam()) {
+      const beta = await SteamClient.getBetaName();
       if (beta !== "beta") {
          Singleton().routeTo(ErrorPage, {
             content: (

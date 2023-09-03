@@ -98,7 +98,7 @@ export class PlayerMapScene extends ViewportScene {
          graphics.lineTo(MaxX * GridSize, y * GridSize);
       }
 
-      forEach(getPlayerMap, (xy, entry) => {
+      forEach(getPlayerMap(), (xy, entry) => {
          this.drawTile(xy, entry);
       });
 

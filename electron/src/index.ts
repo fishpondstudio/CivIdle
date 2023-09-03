@@ -1,12 +1,14 @@
 import { app, BrowserWindow, dialog, ipcMain, Menu } from "electron";
 import path from "path";
+import { Client, init } from "steamworks.js";
 import { IPCService } from "./IPCService";
-import { SteamAPI } from "./SteamAPI";
-// import { SteamAPI } from "./steam";
+
+export type SteamClient = Omit<Client, "init" | "runCallbacks">;
 
 const createWindow = () => {
    try {
-      const api = new SteamAPI();
+      const steam = init();
+
       const mainWindow = new BrowserWindow({
          webPreferences: {
             preload: path.join(__dirname, "preload.js"),
@@ -30,7 +32,7 @@ const createWindow = () => {
       mainWindow.maximize();
       mainWindow.show();
 
-      const service = new IPCService(app, api);
+      const service = new IPCService(app, steam);
 
       ipcMain.handle("__RPCCall", (e, method, args) => {
          // eslint-disable-next-line prefer-spread
@@ -57,6 +59,5 @@ app.on("window-all-closed", () => {
 });
 
 function quit() {
-   SteamAPI.shutdown();
    app.quit();
 }

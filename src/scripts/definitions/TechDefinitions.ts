@@ -152,6 +152,7 @@ export class TechDefinitions {
       name: () => t(L.LandTrade),
       column: 4,
       requireTech: ["Market", "Arithmetic"],
+      unlockBuilding: ["Caravansary"],
    };
 
    Astronomy: ITechDefinition = {

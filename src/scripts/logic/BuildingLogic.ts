@@ -299,6 +299,22 @@ export function getBuildingCost(building: IHaveTypeAndLevel): PartialTabulate<Re
    return cost;
 }
 
+export function getBuildingUpgradeCost(
+   building: Building,
+   fromLevel: number,
+   toLevel: number
+): PartialTabulate<Resource> {
+   console.assert(fromLevel <= toLevel);
+   const start: IHaveTypeAndLevel = { type: building, level: fromLevel };
+   const result: PartialTabulate<Resource> = {};
+   while (start.level < toLevel) {
+      const cost = getBuildingCost(start);
+      forEach(cost, (res, amount) => safeAdd(result, res, amount));
+      start.level++;
+   }
+   return result;
+}
+
 export function getBuildingPercentage(xy: string, gs: GameState): number {
    const building = gs.tiles[xy]?.building;
    if (!building) {
@@ -331,7 +347,7 @@ export function levelToNext10s(b: IBuildingData) {
 
 export function getBuildingUpgradeLevels(b: IBuildingData): number[] {
    const next10s = levelToNext10s(b);
-   const levels = [1, 2, 3, 4, 5];
+   const levels = [1, 5];
    if (!levels.includes(next10s)) {
       levels.push(next10s);
    }

@@ -23,7 +23,7 @@ export function TechPage({ id }: { id: Tech }) {
    const gs = useGameState();
    const tech = Tech[id];
    const prerequisitesSatisfied = tech.requireTech.every((t) => gs.unlockedTech[t]);
-   const unlockCost: PartialTabulate<Resource> = { Science: Math.pow(tech.column, 2) * 1000 };
+   const unlockCost: PartialTabulate<Resource> = { Science: Math.pow(2, tech.column) * 1000 };
    const availableResources: PartialTabulate<Resource> = {};
    forEach(unlockCost, (k, v) => {
       availableResources[k] = getResourceAmount(k, gs);

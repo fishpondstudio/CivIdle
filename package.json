@@ -10,8 +10,7 @@
       "optimize": "node ./build/OptimizePNG.js",
       "preview": "vite preview",
       "font": "node ./build/GenerateBitmapFont.js",
-      "release": "node ./build/ReleaseQt.js",
-      "update-qt": "node ./build/UpdateQt.js",
+      "release": "node ./build/ReleaseElectron.js",
       "prepare": "husky install"
    },
    "dependencies": {

@@ -1,49 +1,46 @@
-// ipcMain.handle("writeTextToFile", (e, name: string, content: string) => {
-//     return outputFile(path.join(app.getAppPath(), "save", api.getSteamID().toString(), name), content);
-//  });
-
 import type { App } from "electron";
-import { outputFile, readFile } from "fs-extra";
+import { exists, outputFile, readFile, unlink } from "fs-extra";
 import path from "path";
-import type { SteamAPI } from "./SteamAPI";
-
-//  ipcMain.handle("readTextFromFile", (e, name: string) => {
-//     return readFile(path.join(app.getAppPath(), "save", api.getSteamID().toString(), name));
-//  });
-
-//  ipcMain.handle("getAuthSessionTicket", (e) => {
-//     return api.getAuthSessionTicket();
-//  });
-
-//  ipcMain.handle("getAppID", (e) => {
-//     return api.getAppID();
-//  });
+import { SteamClient } from ".";
 
 export class IPCService {
    private _app: Electron.App;
-   private _api: SteamAPI;
+   private _client: SteamClient;
 
-   constructor(app: App, api: SteamAPI) {
+   constructor(app: App, steam: SteamClient) {
       this._app = app;
-      this._api = api;
+      this._client = steam;
    }
 
-   public writeTextToFile(name: string, content: string): void {
-      outputFile(path.join(this._app.getAppPath(), "save", this._api.getSteamID().toString(), name), content);
+   public fileWrite(name: string, content: string): void {
+      outputFile(path.join(this._app.getAppPath(), "save", this.getSteamId(), name), content);
    }
 
-   public async readTextFromFile(name: string): Promise<string> {
-      const content = await readFile(
-         path.join(this._app.getAppPath(), "save", this._api.getSteamID().toString(), name)
-      );
+   public async fileRead(name: string): Promise<string> {
+      const content = await readFile(path.join(this._app.getAppPath(), "save", this.getSteamId(), name));
       return content.toString("utf-8");
    }
 
-   public getAuthSessionTicket(): Promise<string> {
-      return this._api.getAuthSessionTicket();
+   public async fileDelete(name: string): Promise<void> {
+      const filePath = path.join(this._app.getAppPath(), "save", this.getSteamId(), name);
+      if (await exists(filePath)) {
+         unlink(filePath);
+      }
+   }
+
+   public getSteamId(): string {
+      return this._client.localplayer.getSteamId().steamId64.toString();
+   }
+
+   public async getAuthSessionTicket(): Promise<string> {
+      return (await this._client.auth.getSessionTicket()).getBytes().toString("hex");
    }
 
    public getAppID(): number {
-      return this._api.getAppID();
+      return this._client.utils.getAppId();
+   }
+
+   public getBetaName(): string {
+      return this._client.apps.currentBetaName() ?? "";
    }
 }

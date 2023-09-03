@@ -1,7 +1,7 @@
 import { Config } from "./logic/Constants";
 import { GameOptions, GameState, SavedGame } from "./logic/GameState";
 import { ITileData, makeBuilding } from "./logic/Tile";
-import { steamClient } from "./rpc/RPCClient";
+import { isSteam, SteamClient } from "./rpc/SteamClient";
 import { Grid } from "./scenes/Grid";
 import { idbClear, idbGet, idbSet } from "./utilities/BrowserStorage";
 import { forEach } from "./utilities/Helper";
@@ -48,8 +48,8 @@ if (import.meta.env.DEV) {
    window.savedGame = savedGame;
    // @ts-expect-error
    window.clearGame = () => {
-      if (window.__STEAM_API_URL) {
-         steamClient.fileDelete(SAVE_KEY);
+      if (isSteam()) {
+         SteamClient.fileDelete(SAVE_KEY).then(() => window.location.reload());
          return;
       }
       idbClear()
@@ -87,12 +87,6 @@ export function syncUITheme(): void {
 
 const SAVE_KEY = "CivIdle";
 
-declare global {
-   interface Window {
-      __STEAM_API_URL: string | undefined;
-   }
-}
-
 let saving = false;
 
 export function saveGame() {
@@ -101,9 +95,8 @@ export function saveGame() {
       return;
    }
    saving = true;
-   if (window.__STEAM_API_URL) {
-      steamClient
-         .fileWrite(SAVE_KEY, JSON.stringify(savedGame))
+   if (isSteam()) {
+      SteamClient.fileWrite(SAVE_KEY, JSON.stringify(savedGame))
          .catch(console.error)
          .finally(() => (saving = false));
       return;
@@ -114,9 +107,9 @@ export function saveGame() {
 }
 
 export async function loadGame(): Promise<SavedGame | undefined> {
-   if (window.__STEAM_API_URL) {
+   if (isSteam()) {
       try {
-         return JSON.parse(await steamClient.fileRead(SAVE_KEY)) as SavedGame;
+         return JSON.parse(await SteamClient.fileRead(SAVE_KEY)) as SavedGame;
       } catch (e) {
          console.warn("loadGame failed", e);
       }

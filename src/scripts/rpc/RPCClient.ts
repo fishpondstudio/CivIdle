@@ -19,6 +19,7 @@ import { getGameOptions, saveGame } from "../Global";
 import { forEach } from "../utilities/Helper";
 import { makeObservableHook } from "../utilities/Hook";
 import { TypedEvent } from "../utilities/TypedEvent";
+import { isSteam, SteamClient, STEAM_APP_ID } from "./SteamClient";
 
 const serverAddress = import.meta.env.DEV ? "ws://localhost:8000" : "wss://api.cividle.com";
 
@@ -46,6 +47,7 @@ export function getPlayerMap() {
 }
 
 export function getMyMapXy() {
+   console.log(playerMap);
    for (const xy in playerMap) {
       const entry = playerMap[xy];
       if (entry.userId == getGameOptions().id) {
@@ -56,7 +58,7 @@ export function getMyMapXy() {
 }
 
 let ws: WebSocket | null = null;
-let steamWs: WebSocket | null = null;
+const steamWs: WebSocket | null = null;
 
 export const client = rpcClient<ServerImpl>({
    request: (method: string, params: any[]) => {
@@ -77,15 +79,6 @@ export const client = rpcClient<ServerImpl>({
    },
 });
 
-interface ISteamClient {
-   player(): { steamId: string; name: string; phoneVerified: boolean; isSteamDeck: boolean };
-   auth(): string;
-   fileRead(name: string): string;
-   fileWrite(name: string, content: string): void;
-   fileDelete(name: string): void;
-   getBetaName(): string;
-}
-
 export const usePlayerMap = makeObservableHook(OnPlayerMapChanged, () => playerMap);
 export const useChatMessages = makeObservableHook(OnChatMessage, () => chatMessages);
 export const useTrades = makeObservableHook(OnTradeMessage, () => Object.values(trades));
@@ -96,35 +89,14 @@ let requestId = 0;
 // eslint-disable-next-line @typescript-eslint/ban-types
 const rpcRequests: Record<number, { resolve: Function; reject: Function; time: number }> = {};
 
-const STEAM_APP_ID = 2181940;
-
-export function initSteamClient(url: string): Promise<void> {
-   return new Promise((resolve, reject) => {
-      steamWs = new WebSocket(url);
-      steamWs.onopen = () => {
-         resolve();
-      };
-      steamWs.onmessage = (e) => {
-         handleRpcResponse(JSON.parse(e.data));
-      };
-      steamWs.onclose = () => {
-         steamWs = null;
-         reject();
-      };
-      steamWs.onerror = () => {
-         steamWs = null;
-         reject();
-      };
-   });
-}
-
 let steamTicket: string | null = null;
 
 export async function connectWebSocket() {
-   if (window.__STEAM_API_URL) {
+   if (isSteam()) {
       if (!steamTicket) {
-         steamTicket = await steamClient.auth();
+         steamTicket = await SteamClient.getAuthSessionTicket();
       }
+      getGameOptions().id = `steam:${await SteamClient.getSteamId()}`;
       ws = new WebSocket(`${serverAddress}/?appId=${STEAM_APP_ID}&ticket=${steamTicket}&platform=steam`);
    } else {
       const token = getGameOptions().id + ":" + (getGameOptions().token ?? getGameOptions().id);
@@ -161,11 +133,11 @@ export async function connectWebSocket() {
             const t = message as ITradeMessage;
             let hasPendingClaim = false;
             if (t.upsert) {
-               t.upsert.forEach((trade, id) => {
-                  if (trades[id] && trades[id].fromId == user?.userId) {
+               t.upsert.forEach((trade) => {
+                  if (trades[trade.id] && trades[trade.id].fromId == user?.userId) {
                      hasPendingClaim = true;
                   }
-                  trades[id] = trade;
+                  trades[trade.id] = trade;
                });
             }
             if (t.remove) {
@@ -180,6 +152,7 @@ export async function connectWebSocket() {
                const pendingClaims = client.claimTrade();
                // TODO: Claim trades
             }
+            console.log(trades);
             OnTradeMessage.emit(Object.values(trades));
             break;
          case MessageType.Map:
@@ -228,22 +201,3 @@ function handleRpcResponse(response: any) {
    }
    resolve(result);
 }
-
-export const steamClient = rpcClient<ISteamClient>({
-   request: (method: string, params: any[]) => {
-      return new Promise((resolve, reject) => {
-         const id = ++requestId;
-         if (!steamWs) {
-            return reject("WebSocket is not ready yet");
-         }
-         const request = JSON.stringify({
-            jsonrpc: "2.0",
-            id: id,
-            method,
-            params: removeTrailingUndefs(params),
-         });
-         steamWs.send(request);
-         rpcRequests[id] = { resolve, reject, time: Date.now() };
-      });
-   },
-});

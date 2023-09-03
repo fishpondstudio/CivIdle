@@ -146,6 +146,7 @@ export const EN = {
    FlourMill: "Flour Mill",
    OlivePlantation: "Olive Plantation",
    Vineyard: "Vineyard",
+   Caravansary: "Caravansary",
    Winery: "Winery",
    OilPress: "Oil Press",
    Wine: "Wine",
@@ -428,6 +429,7 @@ export const EN = {
    TechStockpileMode: "Unlock stockpile mode - allow adjusting stockpile for each building",
    ConstructionCost: "Construction Cost: %{cost}",
    RomeMapMenu: "Map",
+   PlayerMapMenu: "Trade",
    PalatineHill: "Palatine Hill",
    TiberRiver: "Tiber River",
    CuriateAssembly: "Curiate Assembly",
@@ -589,5 +591,7 @@ export const EN = {
    PlayerMapTariffDesc:
       "Every trade that goes through your tile will pay tariff to you. It's a balance: if you increase the tariff, the more you will gain from each trade, but fewer trade will go through your tile.",
    PlayerMapTariffApply: "Apply Tariff Rate",
+   PlayerMapTradesFrom: "Trades from %{name}",
+   PlayerMapEstablishedSince: "Est. Since",
    ServerErrorMessage: "Server Error: %{error}",
 };

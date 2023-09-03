@@ -6,11 +6,20 @@ console.log("========== Building CivIdle ==========");
 
 const rootPath = path.resolve(path.join(__dirname, "../"));
 
+const versionFilePath = path.join(rootPath, "src", "scripts", "Version.json");
+const ver = JSON.parse(fs.readFileSync(versionFilePath, { encoding: "utf8" }));
+ver.build++;
+fs.writeFileSync(versionFilePath, JSON.stringify(ver));
+
 cmd(`npm run build`, rootPath);
 
 console.log("========== Copy to Electron ==========");
 
 fs.copySync(path.join(rootPath, "dist"), path.join(rootPath, "electron", "dist"));
+
+console.log("========== Build Electron ==========");
+
+cmd(`npm run package`, path.join(rootPath, "electron"));
 
 console.log("========== Uploading to Steam ==========");
 

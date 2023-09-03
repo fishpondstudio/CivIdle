@@ -4,6 +4,7 @@ import { IUnlockableDefinition } from "../definitions/ITechDefinition";
 import { Resource } from "../definitions/ResourceDefinitions";
 import { Tech } from "../definitions/TechDefinitions";
 import { notifyGameStateUpdate, saveGame, Singleton } from "../Global";
+import { isSteam } from "../rpc/SteamClient";
 import { WorldScene } from "../scenes/WorldScene";
 import { clamp, filterOf, forEach, isEmpty, keysOf, safeAdd, safePush, sizeOf, sum } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
@@ -40,17 +41,19 @@ let timeSinceLastTick = 0;
 export function tickEveryFrame(gs: GameState, dt: number) {
    timeSinceLastTick = Math.min(timeSinceLastTick + dt, 1);
    const worldScene = Singleton().sceneManager.getCurrent(WorldScene);
-   for (const xy in gs.tiles) {
-      const tile = gs.tiles[xy];
-      if (tile.building != null) {
-         worldScene?.getTile(xy)?.update(gs, dt);
+   if (worldScene) {
+      for (const xy in gs.tiles) {
+         const tile = gs.tiles[xy];
+         if (tile.building != null) {
+            worldScene.getTile(xy)?.update(gs, dt);
+         }
       }
+      worldScene.updateTransportVisual(gs, timeSinceLastTick);
    }
-   worldScene?.updateTransportVisual(gs, timeSinceLastTick);
 }
 
 export function shouldTick(): boolean {
-   return !!window.__STEAM_API_URL || document.visibilityState === "visible";
+   return isSteam() || document.visibilityState === "visible";
 }
 
 export function tickEverySecond(gs: GameState) {

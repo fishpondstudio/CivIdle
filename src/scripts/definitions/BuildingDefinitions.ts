@@ -191,6 +191,14 @@ export class BuildingDefinitions {
       construction: { Brick: 1 },
    };
 
+   Caravansary: IBuildingDefinition = {
+      name: () => t(L.Caravansary),
+      input: {},
+      output: {},
+      construction: { Brick: 2 },
+      max: 2,
+   };
+
    // GarumMaker: IBuildingDefinition = {
    //    name: () => t(L.GarumMaker),
    //    input: { Water: 1, Fish: 1 },
