@@ -11,8 +11,6 @@ const ver = JSON.parse(fs.readFileSync(versionFilePath, { encoding: "utf8" }));
 ver.build++;
 fs.writeFileSync(versionFilePath, JSON.stringify(ver));
 
-cmd(`npm install`);
-cmd(`npm install`, path.join(rootPath, "electron"));
 cmd(`npm run build`, rootPath);
 
 console.log("========== Copy to Electron ==========");
