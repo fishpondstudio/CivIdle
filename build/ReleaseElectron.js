@@ -11,6 +11,8 @@ const ver = JSON.parse(fs.readFileSync(versionFilePath, { encoding: "utf8" }));
 ver.build++;
 fs.writeFileSync(versionFilePath, JSON.stringify(ver));
 
+cmd(`npm install`);
+cmd(`npm install`, path.join(rootPath, "electron"));
 cmd(`npm run build`, rootPath);
 
 console.log("========== Copy to Electron ==========");
@@ -19,7 +21,6 @@ fs.copySync(path.join(rootPath, "dist"), path.join(rootPath, "electron", "dist")
 
 console.log("========== Build Electron ==========");
 
-cmd(`npm install`, path.join(rootPath, "electron"));
 cmd(`npm run package`, path.join(rootPath, "electron"));
 
 console.log("========== Uploading to Steam ==========");
