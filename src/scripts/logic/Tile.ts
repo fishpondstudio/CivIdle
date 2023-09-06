@@ -27,8 +27,16 @@ export interface IBuildingData {
 }
 
 export interface IMarketBuildingData extends IBuildingData {
-   type: "Market";
    sellResources: PartialSet<Resource>;
+}
+
+export interface IResourceImport {
+   perCycle: number;
+   cap: number;
+}
+
+export interface IResourceImportBuildingData extends IBuildingData {
+   resourceImports: Partial<Record<Resource, IResourceImport>>;
 }
 
 export interface IHaveTypeAndLevel {
@@ -62,6 +70,13 @@ export function makeBuilding(data: Pick<IBuildingData, "type"> & Partial<IBuildi
       const market = building as IMarketBuildingData;
       if (!market.sellResources) {
          market.sellResources = {};
+      }
+   }
+
+   if (building.type == "Caravansary") {
+      const market = building as IResourceImportBuildingData;
+      if (!market.resourceImports) {
+         market.resourceImports = {};
       }
    }
 

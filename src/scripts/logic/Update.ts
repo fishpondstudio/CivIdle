@@ -34,7 +34,7 @@ import { clearIntraTickCache } from "./IntraTickCache";
 import { onBuildingComplete, onBuildingProductionComplete } from "./LogicCallback";
 import { addCash, getAmountInTransit } from "./ResourceLogic";
 import { EmptyTickData, IModifier, Multiplier, Tick } from "./TickLogic";
-import { IBuildingData } from "./Tile";
+import { IBuildingData, IResourceImportBuildingData } from "./Tile";
 
 let timeSinceLastTick = 0;
 
@@ -273,6 +273,19 @@ function tileTile(xy: string, gs: GameState): void {
       transportResource(res, amount, inputWorkerCapacity, xy, gs);
    });
 
+   if (building.type == "Caravansary") {
+      const warehouse = building as IResourceImportBuildingData;
+      forEach(warehouse.resourceImports, (res, ri) => {
+         if (used + getStorageRequired({ [res]: ri.perCycle }) > total) {
+            return;
+         }
+         if ((building.resources[res] ?? 0) + getAmountInTransit(xy, res, gs) > ri.cap) {
+            return;
+         }
+         transportResource(res, ri.perCycle, inputWorkerCapacity, xy, gs);
+      });
+   }
+
    //////////////////////////////////////////////////
    // Production
    //////////////////////////////////////////////////
@@ -357,6 +370,10 @@ export function transportResource(
       .some((fromXy) => {
          const building = gs.tiles[fromXy].building;
          if (!building) {
+            // continue;
+            return false;
+         }
+         if (fromXy == targetXy) {
             // continue;
             return false;
          }

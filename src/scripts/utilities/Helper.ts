@@ -265,9 +265,9 @@ export function tabulateAdd<T extends string>(...params: Array<PartialTabulate<T
    return result;
 }
 
-export function safeParseInt(str: string): number {
+export function safeParseInt(str: string, fallback = 0): number {
    const parsed = parseInt(str, 10);
-   return isFinite(parsed) ? parsed : 0;
+   return isFinite(parsed) ? parsed : fallback;
 }
 
 export function alphaNumericOf(str: string): string {

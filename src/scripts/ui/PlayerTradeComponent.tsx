@@ -1,116 +1,20 @@
 import classNames from "classnames";
-import { useState } from "react";
-import { IAddTradeRequest } from "../../../server/src/Database";
 import { Resource } from "../definitions/ResourceDefinitions";
-import { getSellAmountRange, isTradeValid } from "../logic/PlayerTradeLogic";
 import { Tick } from "../logic/TickLogic";
-import { client, useTrades, useUser } from "../rpc/RPCClient";
-import { keysOf, safeParseInt } from "../utilities/Helper";
+import { useTrades, useUser } from "../rpc/RPCClient";
 import { L, t } from "../utilities/i18n";
-import { playError } from "../visuals/Sound";
+import { AddTradeComponent } from "./AddTradeComponent";
 import { FillPlayerTradeModal } from "./FillPlayerTradeModal";
 import { showModal } from "./GlobalModal";
 import { IBuildingComponentProps } from "./PlayerMapPage";
 
 export function PlayerTradeComponent({ gameState, xy }: IBuildingComponentProps) {
-   const resources = keysOf(Tick.next.resourcesByBuilding).filter(
-      (res) => Tick.current.resources[res].canPrice && Tick.current.resources[res].canStore
-   );
    const trades = useTrades();
    const user = useUser();
-
-   const [trade, setTrade] = useState<IAddTradeRequest>({
-      buyResource: resources[0],
-      buyAmount: 0,
-      sellResource: resources[1],
-      sellAmount: 0,
-   });
-
-   const [rangeMin, rangeMax] = getSellAmountRange(trade);
-
    return (
-      <>
-         <fieldset>
-            <legend>{t(L.PlayerTradeIWant)}</legend>
-            <div className="row">
-               <div style={{ width: "80px" }}>{t(L.PlayerTradeResource)}</div>
-               <select
-                  className="f1"
-                  value={trade.buyResource}
-                  onChange={(e) => {
-                     setTrade({ ...trade, buyResource: e.target.value });
-                  }}
-               >
-                  {resources.map((res) => (
-                     <option key={res} value={res}>
-                        {Tick.current.resources[res].name()}
-                     </option>
-                  ))}
-               </select>
-            </div>
-            <div className="sep10"></div>
-            <div className="row">
-               <div style={{ width: "80px" }}>{t(L.PlayerTradeAmount)}</div>
-               <input
-                  className="f1 text-right w100"
-                  type="text"
-                  value={trade.buyAmount}
-                  onChange={(e) => setTrade({ ...trade, buyAmount: safeParseInt(e.target.value) })}
-               />
-            </div>
-         </fieldset>
-         <fieldset>
-            <legend>{t(L.PlayerTradeIOffer)}</legend>
-            <div className="row">
-               <div style={{ width: "80px" }}>{t(L.PlayerTradeResource)}</div>
-               <select
-                  className="f1"
-                  value={trade.sellResource}
-                  onChange={(e) => {
-                     setTrade({ ...trade, sellResource: e.target.value });
-                  }}
-               >
-                  {resources.map((res) => (
-                     <option key={res} value={res}>
-                        {Tick.current.resources[res].name()}
-                     </option>
-                  ))}
-               </select>
-            </div>
-            <div className="sep10"></div>
-            <div className="row">
-               <div style={{ width: "80px" }}>{t(L.PlayerTradeAmount)}</div>
-               <input
-                  className="f1 text-right w100"
-                  type="text"
-                  value={trade.sellAmount}
-                  onChange={(e) => setTrade({ ...trade, sellAmount: safeParseInt(e.target.value) })}
-               />
-            </div>
-            <div className="sep5"></div>
-            <div className="row">
-               <div style={{ width: "80px" }}></div>
-               <div className="f1 text-desc text-small text-right">
-                  {rangeMin} ~ {rangeMax}
-               </div>
-            </div>
-         </fieldset>
-         <button
-            className="row w100 jcc"
-            disabled={!isTradeValid(trade)}
-            onClick={() => {
-               if (isTradeValid(trade)) {
-                  client.addTrade(trade);
-               } else {
-                  playError();
-               }
-            }}
-         >
-            <div className="m-icon small mr5">shopping_cart</div>
-            <div className="text-strong">{t(L.PlayerTradePlaceTrade)}</div>
-         </button>
-
-         <div className="sep10"></div>
+      <fieldset>
+         <legend>{t(L.PlayerTrade)}</legend>
+         <AddTradeComponent gameState={gameState} xy={xy} />
          <div className="table-view">
             <table>
                <tbody>
@@ -153,7 +57,6 @@ export function PlayerTradeComponent({ gameState, xy }: IBuildingComponentProps)
                </tbody>
             </table>
          </div>
-         <div className="sep15"></div>
-      </>
+      </fieldset>
    );
 }

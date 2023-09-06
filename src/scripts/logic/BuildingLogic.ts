@@ -161,12 +161,18 @@ export function getStorageFor(xy: string, gs: GameState): IStorageResult {
    if (building?.type == "Market") {
       return { base: Infinity, multiplier: 1, total: Infinity, used: 0 };
    }
+
+   const used = reduceOf(building?.resources, accumulate, 0);
+
+   if (building?.type == "Caravansary") {
+      return { base: building.level * 1000, multiplier: 1, total: building.level * 1000, used };
+   }
+
    const base =
       100 * reduceOf(getBuildingIO(xy, "input", {}, gs), accumulate, 0) +
       1000 * reduceOf(getBuildingIO(xy, "output", {}, gs), accumulate, 0);
    const multiplier = totalMultiplierFor(xy, "storage", gs);
 
-   const used = reduceOf(building?.resources, accumulate, 0);
    return { base, multiplier, total: base * multiplier, used };
 }
 
@@ -364,4 +370,8 @@ export function isWorldWonder(building: Building): boolean {
 
 export function isWorldOrNaturalWonder(building: Building): boolean {
    return (Tick.current.buildings[building].max ?? Infinity) <= 1;
+}
+
+export function getWarehouseCapacity(building: IHaveTypeAndLevel): number {
+   return building.level * 10;
 }

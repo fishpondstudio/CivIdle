@@ -1,3 +1,15 @@
+@font-face {
+   font-family: "Roboto Mono";
+   font-style: normal;
+   font-weight: 500;
+   src: url(../fonts/RobotoMono-Medium.ttf) format("ttf");
+}
+
+code {
+   font-family: "Roboto Mono", monospace;
+   font-weight: 500;
+}
+
 .menus {
    display: flex;
    background: silver;
@@ -238,6 +250,22 @@ fieldset .separator {
    margin-bottom: 5px;
 }
 
+.mt5 {
+   margin-top: 5px;
+}
+
+.mb5 {
+   margin-bottom: 5px;
+}
+
+.mt10 {
+   margin-top: 10px;
+}
+
+.mb10 {
+   margin-bottom: 10px;
+}
+
 .mv10 {
    margin-top: 10px;
    margin-bottom: 10px;
@@ -345,6 +373,10 @@ ul.tree-view > li:first-child {
    font-weight: normal;
    text-align: left;
    box-shadow: inset -1px -1px #404040, inset 1px 1px #fff, inset -2px -2px grey, inset 2px 2px #dfdfdf;
+}
+
+.table-view th.text-right {
+   text-align: right;
 }
 
 .table-view th,

@@ -7,7 +7,7 @@ import { IBuildingComponentProps } from "./BuildingPage";
 
 export function BuildingProductionPriorityComponent({ gameState, xy }: IBuildingComponentProps) {
    const building = gameState.tiles[xy].building;
-   if (building == null || isEmpty(Tick.current.buildings[building.type].output)) {
+   if (building == null || (building.type != "Caravansary" && isEmpty(Tick.current.buildings[building.type].output))) {
       return null;
    }
    if (!gameState.features.BuildingProductionPriority) {
