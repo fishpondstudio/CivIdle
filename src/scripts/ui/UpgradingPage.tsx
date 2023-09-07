@@ -1,3 +1,4 @@
+import classNames from "classnames";
 import { notifyGameStateUpdate, useGameState } from "../Global";
 import { Tick } from "../logic/TickLogic";
 import { ITileData } from "../logic/Tile";
@@ -12,6 +13,7 @@ export function UpgradingPage({ tile }: { tile: ITileData }) {
    }
    const gs = useGameState();
    const definition = Tick.current.buildings[building.type];
+   const canDecreaseDesiredLevel = building.desiredLevel > building.level + 1;
    return (
       <div className="window">
          <div className="title-bar">
@@ -21,13 +23,38 @@ export function UpgradingPage({ tile }: { tile: ITileData }) {
          <div className="window-body">
             <BuildingConstructionProgressComponent xy={tile.xy} gameState={gs} />
             <fieldset>
+               <legend>{t(L.UpgradeBuilding)}</legend>
                <div className="row text-strong">
-                  <div className="f1">{t(L.UpgradeBuilding)}</div>
-                  <div>{building.level}</div>
-                  <div className="m-icon" style={{ fontSize: "17px", margin: "0 5px" }}>
-                     keyboard_double_arrow_right
+                  <div className="f1">{building.level}</div>
+                  <div className="m-icon">keyboard_double_arrow_right</div>
+                  <div className="f1 row jce">
+                     <div
+                        className={classNames({
+                           "m-icon mr5": true,
+                           "text-link": canDecreaseDesiredLevel,
+                           "text-desc": !canDecreaseDesiredLevel,
+                        })}
+                        onClick={() => {
+                           if (canDecreaseDesiredLevel) {
+                              building.desiredLevel--;
+                              notifyGameStateUpdate();
+                           }
+                        }}
+                     >
+                        indeterminate_check_box
+                     </div>
+
+                     <div>{building.desiredLevel}</div>
+                     <div
+                        className="m-icon ml5 text-link"
+                        onClick={() => {
+                           building.desiredLevel++;
+                           notifyGameStateUpdate();
+                        }}
+                     >
+                        add_box
+                     </div>
                   </div>
-                  <div>{building.desiredLevel}</div>
                </div>
                <div className="separator"></div>
                <div className="row">

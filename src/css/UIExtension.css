@@ -236,6 +236,10 @@ fieldset .separator {
    justify-content: center;
 }
 
+.jce {
+   justify-content: flex-end;
+}
+
 .row .f1,
 .col .f1 {
    flex: 1;

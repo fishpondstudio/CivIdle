@@ -20,7 +20,11 @@ export function ChangeResourceImportModal({
       building.resourceImports[resource] ?? { cap: 0, perCycle: 0 }
    );
    const totalCapacity = getWarehouseCapacity(building);
-   const usedCapacity = reduceOf(building.resourceImports, (prev, res, val) => prev + val.perCycle, 0);
+   const usedCapacity = reduceOf(
+      building.resourceImports,
+      (prev, res, val) => (res === resource ? prev : prev + val.perCycle),
+      0
+   );
    const max = clamp(totalCapacity - usedCapacity, 0, totalCapacity);
    const isValid = resourceImport.perCycle >= 0 && resourceImport.perCycle <= max;
    return (

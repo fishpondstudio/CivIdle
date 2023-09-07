@@ -118,6 +118,7 @@ export function AddTradeComponent({ gameState, xy }: IBuildingComponentProps) {
                   onClick={() => {
                      if (isTradeValid(trade)) {
                         client.addTrade(trade);
+                        resourcesInStorage[trade.sellResource as Resource]! -= trade.sellAmount;
                      } else {
                         playError();
                      }
