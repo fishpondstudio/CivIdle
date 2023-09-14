@@ -51,7 +51,6 @@ export class ResourceDefinitions {
    Flour: IResourceDefinition = { name: () => t(L.Flour), canStore: true, canPrice: true };
    Science: IResourceDefinition = { name: () => t(L.Science), canStore: true, canPrice: false };
    Faith: IResourceDefinition = { name: () => t(L.Faith), canStore: true, canPrice: false };
-   Cash: IResourceDefinition = { name: () => t(L.Cash), canStore: true, canPrice: false };
 }
 
 export type Resource = keyof ResourceDefinitions;

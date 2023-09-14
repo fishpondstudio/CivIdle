@@ -1,10 +1,8 @@
 import { notifyGameStateUpdate } from "../Global";
 import { Config } from "../logic/Constants";
-import { unlockedResources } from "../logic/IntraTickCache";
-import { getCash } from "../logic/ResourceLogic";
 import { Tick } from "../logic/TickLogic";
 import { IMarketBuildingData } from "../logic/Tile";
-import { keysOf } from "../utilities/Helper";
+import { keysOf, round } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
 import { playClick } from "../visuals/Sound";
 import { IBuildingComponentProps } from "./BuildingPage";
@@ -21,50 +19,37 @@ export function MarketBuildingBody({ gameState, xy }: IBuildingComponentProps) {
    if (building == null || !building.sellResources) {
       return null;
    }
+   const market = building as IMarketBuildingData;
    return (
       <div className="window-body">
-         <fieldset>
-            <div className="text-strong row">
-               <div className="f1">{t(L.Cash)}</div>
-               <div>
-                  <FormatNumber value={getCash()} />
-               </div>
-            </div>
-         </fieldset>
          <div className="table-view">
             <table>
                <thead>
                   <tr>
                      <th></th>
-                     <th className="right">{t(L.MarketPrice)}</th>
-                     <th className="right">{t(L.MarketAmount)}</th>
+                     <th className="right">{t(L.MarketYouGet)}</th>
+                     <th className="right">{t(L.Storage)}</th>
                      <th style={{ width: 0 }}>{t(L.MarketSell)}</th>
                   </tr>
                </thead>
                <tbody>
-                  {keysOf(unlockedResources(gameState))
+                  {keysOf(market.availableResources)
                      .sort((a, b) => (Config.ResourcePrice[b] ?? 0) - (Config.ResourcePrice[a] ?? 0))
                      .map((res) => {
                         const r = Tick.current.resources[res];
                         if (!r.canPrice || !r.canStore) {
                            return null;
                         }
+                        const buyResource = market.availableResources[res]!;
+                        const buyAmount = round(Config.ResourcePrice[res]! / Config.ResourcePrice[buyResource]!, 1);
                         return (
                            <tr key={res}>
                               <td>{r.name()}</td>
                               <td className="right">
-                                 $<FormatNumber value={Config.ResourcePrice[res]} />
+                                 <FormatNumber value={buyAmount} /> x {Tick.current.resources[buyResource].name()}
                               </td>
                               <td className="right">
-                                 <FormatNumber
-                                    value={
-                                       Tick.current.resourcesByBuilding[res]?.reduce(
-                                          (prev, curr) =>
-                                             prev + (gameState.tiles[curr].building?.resources?.[res] ?? 0),
-                                          0
-                                       ) ?? 0
-                                    }
-                                 />
+                                 <FormatNumber value={building.resources[res] ?? 0} />
                               </td>
                               <td
                                  className="pointer"

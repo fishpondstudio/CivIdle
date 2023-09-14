@@ -3,12 +3,12 @@ import { City } from "../definitions/CityDefinitions";
 import { IResourceDefinition, Resource } from "../definitions/ResourceDefinitions";
 import { PartialTabulate } from "../definitions/TypeDefinitions";
 import { Singleton } from "../Global";
-import { forEach, isEmpty, keysOf, reduceOf, safeAdd, safePush, sum } from "../utilities/Helper";
+import { clamp, forEach, isEmpty, keysOf, reduceOf, safeAdd, safePush, sum } from "../utilities/Helper";
 import { Textures } from "../utilities/SceneManager";
 import { v2 } from "../utilities/Vector2";
 import { GameState } from "./GameState";
 import { Multiplier, MultiplierWithSource, Tick } from "./TickLogic";
-import { IBuildingData, IHaveTypeAndLevel, IMarketBuildingData } from "./Tile";
+import { IBuildingData, IHaveTypeAndLevel, IMarketBuildingData, IResourceImportBuildingData } from "./Tile";
 
 export function getBuildingTexture(b: Building, textures: Textures, city: City) {
    return textures[`Building${b}_${city}`] ?? textures[`Building${b}`];
@@ -48,11 +48,19 @@ export function getBuildingIO(
    const b = gs.tiles[xy].building;
    if (b) {
       const resources = { ...Tick.current.buildings[b.type][type] };
-      if (b.type === "Market" && type === "input") {
+      if ("sellResources" in b && type === "input") {
          forEach((b as IMarketBuildingData).sellResources, (k) => {
             resources[k] = 1;
          });
       }
+      if ("resourceImports" in b && type === "input") {
+         forEach((b as IResourceImportBuildingData).resourceImports, (k, v) => {
+            result[k] = v.perCycle;
+         });
+         // Resource imports is not affected by multipliers
+         return result;
+      }
+      // Apply multipliers
       forEach(resources, (k, v) => {
          let value = v * b.level;
          if (options.capacity) {
@@ -158,13 +166,9 @@ export function getStorageFor(xy: string, gs: GameState): IStorageResult {
       return isTransportable(k) ? prev + v : prev;
    };
    const building = gs.tiles[xy].building;
-   if (building?.type == "Market") {
-      return { base: Infinity, multiplier: 1, total: Infinity, used: 0 };
-   }
-
    const used = reduceOf(building?.resources, accumulate, 0);
 
-   if (building?.type == "Caravansary") {
+   if (building?.type == "Caravansary" || building?.type == "Market") {
       return { base: building.level * 1000, multiplier: 1, total: building.level * 1000, used };
    }
 
@@ -334,7 +338,7 @@ export function getBuildingPercentage(xy: string, gs: GameState): number {
    let inStorage = 0;
    forEach(cost, (res, amount) => {
       totalCost += amount;
-      inStorage += building.resources[res] ?? 0;
+      inStorage += clamp(building.resources[res] ?? 0, 0, amount);
    });
    return inStorage / totalCost;
 }

@@ -87,16 +87,21 @@ if (canvas) {
    const app = new Application({
       resizeTo: canvas,
       backgroundColor: BG_COLOR,
+      sharedTicker: true,
    });
    canvas.appendChild(app.view as any);
    registerPixiInspector(app);
    Assets.addBundle("main", mainBundle);
-   loadBundle(app);
+   loadBundle()
+      .then(({ main, textures }) => {
+         return startGame(app, main, textures);
+      })
+      .catch(console.error);
 } else {
    console.error("Cannot find #game-canvas, check your HTML setup!");
 }
 
-async function loadBundle(app: Application) {
+async function loadBundle() {
    fonts.forEach((f) => document.fonts.add(f));
    const result = await Promise.all([Assets.loadBundle(["main"])].concat(fonts.map((f) => f.load())));
    const { main }: { main: MainBundleAssets } = result[0];
@@ -114,9 +119,7 @@ async function loadBundle(app: Application) {
       { chars: BitmapFont.ASCII, padding: 2, resolution: 2 }
    );
    const textures = await new Spritesheet(main.atlas, altasDef as any).parse();
-   if (textures) {
-      await startGame(app, main, textures).catch(console.error);
-   }
+   return { main, textures };
 }
 
 async function startGame(app: Application, resources: MainBundleAssets, textures: Textures) {

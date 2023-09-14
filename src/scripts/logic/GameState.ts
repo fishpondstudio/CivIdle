@@ -40,6 +40,7 @@ export class GameState {
    greatPeople: PartialTabulate<GreatPerson> = {};
    greatPeopleChoices: GreatPeopleChoice[] = [];
    transportId = 0;
+   lastPriceUpdated = 0;
 }
 
 export type GreatPeopleChoice = [GreatPerson, GreatPerson, GreatPerson];

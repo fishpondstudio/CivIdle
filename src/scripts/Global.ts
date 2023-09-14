@@ -35,7 +35,6 @@ export function isSingletonReady() {
 
 export function Singleton(): ISingleton {
    if (singletons == null) {
-      window.location.href = "/";
       throw new Error("Singletons are not initialized yet!");
    }
    return singletons;

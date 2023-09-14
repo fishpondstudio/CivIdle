@@ -57,16 +57,16 @@ export class SceneManager {
 
    constructor(context: ISceneContext) {
       this.context = context;
-      context.app.renderer.on("resize", (width: number, height: number) => {
-         this.currentScene?.onResize(width, height);
-      });
+      // context.app.renderer.on("resize", (width: number, height: number) => {
+      //    this.currentScene?.onResize(width, height);
+      // });
    }
 
    public getContext(): ISceneContext {
       return this.context;
    }
 
-   loadScene<T extends Scene>(SceneClass: new (context: ISceneContext) => T, force = false): T {
+   public loadScene<T extends Scene>(SceneClass: new (context: ISceneContext) => T, force = false): T {
       if (!force && this.isCurrent(SceneClass)) {
          return this.currentScene as T;
       }
@@ -78,7 +78,10 @@ export class SceneManager {
       }
 
       for (let i = 0; i < this.context.app.stage.children.length; i++) {
-         this.context.app.stage.children[i].destroy({ children: true, texture: false, baseTexture: false });
+         const removed = this.context.app.stage.removeChildren();
+         for (let i = 0; i < removed.length; ++i) {
+            removed[i].destroy({ children: true });
+         }
       }
 
       this.currentScene = new SceneClass(this.context);

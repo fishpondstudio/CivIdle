@@ -27,5 +27,8 @@ export default defineConfig(({ command }) => {
          port: 3000,
          host: true,
       },
+      build: {
+         target: "es2015",
+      },
    };
 });

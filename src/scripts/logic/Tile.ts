@@ -28,6 +28,7 @@ export interface IBuildingData {
 
 export interface IMarketBuildingData extends IBuildingData {
    sellResources: PartialSet<Resource>;
+   availableResources: Partial<Record<Resource, Resource>>;
 }
 
 export interface IResourceImport {
@@ -70,6 +71,7 @@ export function makeBuilding(data: Pick<IBuildingData, "type"> & Partial<IBuildi
       const market = building as IMarketBuildingData;
       if (!market.sellResources) {
          market.sellResources = {};
+         market.availableResources = {};
       }
    }
 

@@ -27,7 +27,19 @@ export function UpgradingPage({ tile }: { tile: ITileData }) {
                <div className="row text-strong">
                   <div className="f1">{building.level}</div>
                   <div className="m-icon">keyboard_double_arrow_right</div>
-                  <div className="f1 row jce">
+                  <div
+                     className="f1 row jce"
+                     onWheel={(e) => {
+                        if (e.deltaY < 0) {
+                           building.desiredLevel++;
+                           notifyGameStateUpdate();
+                        }
+                        if (e.deltaY > 0 && canDecreaseDesiredLevel) {
+                           building.desiredLevel--;
+                           notifyGameStateUpdate();
+                        }
+                     }}
+                  >
                      <div
                         className={classNames({
                            "m-icon mr5": true,
@@ -43,8 +55,7 @@ export function UpgradingPage({ tile }: { tile: ITileData }) {
                      >
                         indeterminate_check_box
                      </div>
-
-                     <div>{building.desiredLevel}</div>
+                     <div style={{ width: "40px", textAlign: "center" }}>{building.desiredLevel}</div>
                      <div
                         className="m-icon ml5 text-link"
                         onClick={() => {

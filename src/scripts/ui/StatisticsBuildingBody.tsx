@@ -226,7 +226,7 @@ function ResourcesTab({ gameState }: IBuildingComponentProps) {
                <thead>
                   <tr>
                      <th></th>
-                     <th className="right">{t(L.MarketAmount)}</th>
+                     <th className="right">{t(L.ResourceAmount)}</th>
                      <th className="right">
                         <div className="m-icon small">output</div>
                      </th>

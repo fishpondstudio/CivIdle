@@ -6,8 +6,22 @@ import { Tech } from "../definitions/TechDefinitions";
 import { notifyGameStateUpdate, saveGame, Singleton } from "../Global";
 import { isSteam } from "../rpc/SteamClient";
 import { WorldScene } from "../scenes/WorldScene";
-import { clamp, filterOf, forEach, isEmpty, keysOf, safeAdd, safePush, sizeOf, sum } from "../utilities/Helper";
+import {
+   clamp,
+   filterOf,
+   forEach,
+   HOUR,
+   isEmpty,
+   keysOf,
+   round,
+   safeAdd,
+   safePush,
+   shuffle,
+   sizeOf,
+   sum,
+} from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
+import { srand } from "../utilities/Random";
 import { v2 } from "../utilities/Vector2";
 import {
    addResources,
@@ -30,11 +44,11 @@ import {
 } from "./BuildingLogic";
 import { Config } from "./Constants";
 import { GameState } from "./GameState";
-import { clearIntraTickCache } from "./IntraTickCache";
+import { clearIntraTickCache, unlockedResources } from "./IntraTickCache";
 import { onBuildingComplete, onBuildingProductionComplete } from "./LogicCallback";
-import { addCash, getAmountInTransit } from "./ResourceLogic";
+import { getAmountInTransit } from "./ResourceLogic";
 import { EmptyTickData, IModifier, Multiplier, Tick } from "./TickLogic";
-import { IBuildingData, IResourceImportBuildingData } from "./Tile";
+import { IBuildingData, IMarketBuildingData, IResourceImportBuildingData } from "./Tile";
 
 let timeSinceLastTick = 0;
 
@@ -78,6 +92,7 @@ export function tickEverySecond(gs: GameState) {
       Tick.next.buildings[b].name = name;
    });
 
+   tickPrice(gs);
    tickTransportation(gs);
    tickTiles(gs);
 
@@ -233,6 +248,12 @@ function tileTile(xy: string, gs: GameState): void {
       if (input[res] && amount <= building.stockpileMax * (input[res] ?? 0)) {
          return;
       }
+      if ("resourceImports" in building) {
+         const ri = building as IResourceImportBuildingData;
+         if (ri.resourceImports[res] && amount <= (ri.resourceImports[res]?.cap ?? 0)) {
+            return;
+         }
+      }
       safePush(Tick.next.resourcesByBuilding, res, xy);
    });
 
@@ -259,6 +280,9 @@ function tileTile(xy: string, gs: GameState): void {
    //////////////////////////////////////////////////
    // Transport
    //////////////////////////////////////////////////
+
+   let hasTransported = false;
+
    forEach(input, (res, amount) => {
       amount = amount * building.stockpileCapacity;
       if (amount <= 0) {
@@ -267,23 +291,23 @@ function tileTile(xy: string, gs: GameState): void {
       if (used + getStorageRequired({ [res]: amount }) > total) {
          return;
       }
-      if ((building.resources[res] ?? 0) + getAmountInTransit(xy, res, gs) > building.stockpileMax * amount) {
+
+      let maxAmount = building.stockpileMax * amount;
+      if ("resourceImports" in building) {
+         const ri = building as IResourceImportBuildingData;
+         maxAmount = ri.resourceImports[res]?.cap ?? 0;
+      }
+
+      if ((building.resources[res] ?? 0) + getAmountInTransit(xy, res, gs) > maxAmount) {
          return;
       }
+
       transportResource(res, amount, inputWorkerCapacity, xy, gs);
+      hasTransported = true;
    });
 
-   if (building.type == "Caravansary") {
-      const warehouse = building as IResourceImportBuildingData;
-      forEach(warehouse.resourceImports, (res, ri) => {
-         if (used + getStorageRequired({ [res]: ri.perCycle }) > total) {
-            return;
-         }
-         if ((building.resources[res] ?? 0) + getAmountInTransit(xy, res, gs) > ri.cap) {
-            return;
-         }
-         transportResource(res, ri.perCycle, inputWorkerCapacity, xy, gs);
-      });
+   if (!hasTransported) {
+      Tick.next.notProducingReasons[xy] = "NoActiveTransports";
    }
 
    //////////////////////////////////////////////////
@@ -293,18 +317,28 @@ function tileTile(xy: string, gs: GameState): void {
    const tileVisual = Singleton().sceneManager.getCurrent(WorldScene)?.getTile(xy);
 
    if (building.type === "Market") {
-      let totalCash = 0;
-      forEach(input, (res, amount) => {
-         amount = clamp(amount, 0, building.resources[res] ?? 0);
+      const market = building as IMarketBuildingData;
+      let totalBought = 0;
+      forEach(market.sellResources, (res) => {
+         const amount = clamp(building.level * totalMultiplierFor(xy, "output", gs), 0, building.resources[res] ?? 0);
+         const buyResource = market.availableResources[res]!;
+         const buyAmount = (amount * (Config.ResourcePrice[res] ?? 0)) / (Config.ResourcePrice[buyResource] ?? 0);
+         if (used - amount + buyAmount > total) {
+            Tick.next.notProducingReasons[xy] = "StorageFull";
+            return;
+         }
          safeAdd(building.resources, res, -amount);
-         const cash = amount * (Config.ResourcePrice[res] ?? 0);
-         addCash(cash);
-         totalCash += cash;
+         safeAdd(building.resources, buyResource, buyAmount);
+         totalBought += buyAmount;
       });
-      if (totalCash > 0) {
-         tileVisual?.showText(`+$${totalCash}`);
+      if (totalBought > 0) {
+         tileVisual?.showText(`+${round(totalBought, 1)}`);
          onBuildingProductionComplete(xy, gs);
       }
+      return;
+   }
+
+   if (building.type == "Caravansary") {
       return;
    }
 
@@ -338,7 +372,6 @@ function tileTile(xy: string, gs: GameState): void {
       return;
    }
 
-   delete Tick.next.notProducingReasons[xy];
    useWorkers("Worker", worker.output, xy);
    deductResources(building.resources, input);
    forEach(output, (res, v) => {
@@ -426,4 +459,33 @@ export function addMultiplier(k: Building, multiplier: Multiplier, source: strin
    }
    m.push({ ...multiplier, source });
    Tick.next.buildingMultipliers[k] = m;
+}
+
+function tickPrice(gs: GameState) {
+   const priceId = Math.floor(Date.now() / HOUR);
+   if (gs.lastPriceUpdated == priceId) {
+      return;
+   }
+   gs.lastPriceUpdated = priceId;
+   const resources = filterOf(
+      unlockedResources(gs),
+      (res) => Tick.current.resources[res].canPrice && Tick.current.resources[res].canStore
+   );
+   forEach(gs.tiles, (xy, tile) => {
+      if (tile.building?.type == "Market") {
+         const market = tile.building as IMarketBuildingData;
+         if (!market.availableResources) {
+            market.availableResources = {};
+         }
+         const sell = shuffle(keysOf(resources), srand(priceId + xy));
+         const buy = shuffle(keysOf(resources), srand(priceId + xy));
+         let idx = 0;
+         sell.forEach((res) => {
+            while (buy[idx % buy.length] == res) {
+               idx++;
+            }
+            market.availableResources[res] = buy[idx % buy.length];
+         });
+      }
+   });
 }

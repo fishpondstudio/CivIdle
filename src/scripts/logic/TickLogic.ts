@@ -25,7 +25,8 @@ export type NotProducingReason =
    | "NotEnoughWorkers"
    | "StorageFull"
    | "TurnedOff"
-   | "NotOnDeposit";
+   | "NotOnDeposit"
+   | "NoActiveTransports";
 
 export function EmptyTickData(): ITickData {
    const buildings = new BuildingDefinitions();
