@@ -31,7 +31,7 @@ export function BuildingStockpileComponent({ gameState, xy }: IBuildingComponent
             }}
          />
          <div className="sep15"></div>
-         <div className="text-desc">{t(L.StockpileDesc, { capacity: building.stockpileCapacity })}</div>
+         <div className="text-desc text-small">{t(L.StockpileDesc, { capacity: building.stockpileCapacity })}</div>
          <div className="sep10"></div>
          <div className="separator has-title">
             <div>
@@ -52,7 +52,7 @@ export function BuildingStockpileComponent({ gameState, xy }: IBuildingComponent
             }}
          />
          <div className="sep15"></div>
-         <div className="text-desc">
+         <div className="text-desc text-small">
             {building.stockpileMax <= 0
                ? t(L.StockpileMaxUnlimitedDesc)
                : t(L.StockpileMaxDesc, { cycle: building.stockpileMax })}

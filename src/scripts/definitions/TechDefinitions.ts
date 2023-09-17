@@ -267,7 +267,7 @@ export class TechDefinitions {
       name: () => t(L.Autocracy),
       column: 8,
       requireTech: ["Politics", "Library", "Theater"],
-      unlockBuilding: ["Pizzeria", "TempleOfHeaven"],
+      unlockBuilding: ["Bakery", "TempleOfHeaven"],
    };
 
    Religion: ITechDefinition = {

@@ -36,6 +36,7 @@ export class ResourceDefinitions {
    Legion: IResourceDefinition = { name: () => t(L.Legion), canStore: true, canPrice: true };
    Milk: IResourceDefinition = { name: () => t(L.Milk), canStore: true, canPrice: true };
    Pizza: IResourceDefinition = { name: () => t(L.Pizza), canStore: true, canPrice: true };
+   Bread: IResourceDefinition = { name: () => t(L.Bread), canStore: true, canPrice: true };
    SiegeRam: IResourceDefinition = { name: () => t(L.SiegeRam), canStore: true, canPrice: true };
    Caravel: IResourceDefinition = { name: () => t(L.Caravel), canStore: true, canPrice: true };
    Galleon: IResourceDefinition = { name: () => t(L.Galleon), canStore: true, canPrice: true };

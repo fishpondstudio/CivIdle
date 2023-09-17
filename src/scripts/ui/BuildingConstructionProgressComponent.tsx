@@ -1,6 +1,6 @@
-import { getBuildingCost, getBuildingPercentage } from "../logic/BuildingLogic";
+import { getBuilderCapacity, getBuildingCost, getBuildingPercentage } from "../logic/BuildingLogic";
 import { Tick } from "../logic/TickLogic";
-import { formatPercent, jsxMapOf, sum } from "../utilities/Helper";
+import { formatPercent, jsxMapOf } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
 import { IBuildingComponentProps } from "./BuildingPage";
 import { FormatNumber } from "./HelperComponents";
@@ -12,6 +12,7 @@ export function BuildingConstructionProgressComponent({ gameState, xy }: IBuildi
    if (!building) {
       return null;
    }
+   const { base, multiplier, total } = getBuilderCapacity(building);
    const resources = getBuildingCost(building);
    return (
       <fieldset>
@@ -30,13 +31,30 @@ export function BuildingConstructionProgressComponent({ gameState, xy }: IBuildi
                </div>
             );
          })}
-         <div className="separator" />
-         <div className="row">
-            <div className="f1">{t(L.ConstructionBuilders)}</div>
-            <div className="text-strong">
-               <FormatNumber value={sum(Tick.current.globalMultipliers.builderCapacity, "value")} />
-            </div>
-         </div>
+         <ul className="tree-view">
+            <details>
+               <summary className="row">
+                  <div className="f1">{t(L.ConstructionBuilderCapacity)}</div>
+                  <div className="text-strong">
+                     <FormatNumber value={total} />
+                  </div>
+               </summary>
+               <ul>
+                  <li className="row">
+                     <div className="f1">{t(L.ConstructionBuilderBaseCapacity)}</div>
+                     <div className="text-strong">
+                        <FormatNumber value={base} />
+                     </div>
+                  </li>
+                  <li className="row">
+                     <div className="f1">{t(L.ConstructionBuilderMultiplier)}</div>
+                     <div className="text-strong">
+                        x<FormatNumber value={multiplier} />
+                     </div>
+                  </li>
+               </ul>
+            </details>
+         </ul>
       </fieldset>
    );
 }

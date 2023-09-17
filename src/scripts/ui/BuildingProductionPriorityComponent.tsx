@@ -31,7 +31,7 @@ export function BuildingProductionPriorityComponent({ gameState, xy }: IBuilding
             }}
          />
          <div className="sep15"></div>
-         <div className="text-desc">{t(L.ProductionPriorityDesc)}</div>
+         <div className="text-desc text-small">{t(L.ProductionPriorityDesc)}</div>
       </fieldset>
    );
 }

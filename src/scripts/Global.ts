@@ -12,11 +12,11 @@ import { TypedEvent } from "./utilities/TypedEvent";
 export interface ISingleton {
    sceneManager: SceneManager;
    grid: Grid;
-   buildings: SpecialBuildings;
+   buildings: ISpecialBuildings;
    routeTo: <P extends Record<string, unknown>>(component: React.ComponentType<P>, params: P) => void;
 }
 
-export interface SpecialBuildings {
+export interface ISpecialBuildings {
    Headquarter: Required<ITileData>;
 }
 

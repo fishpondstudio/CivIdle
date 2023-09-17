@@ -82,6 +82,12 @@ export class BuildingDefinitions {
       output: { Pizza: 1 },
    };
 
+   Bakery: IBuildingDefinition = {
+      name: () => t(L.Bakery),
+      input: { Water: 1, Flour: 2 },
+      output: { Bread: 1 },
+   };
+
    CheeseMaker: IBuildingDefinition = {
       name: () => t(L.CheeseMaker),
       input: { Milk: 2 },

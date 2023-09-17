@@ -379,3 +379,8 @@ export function isWorldOrNaturalWonder(building: Building): boolean {
 export function getWarehouseCapacity(building: IHaveTypeAndLevel): number {
    return building.level * 10;
 }
+
+export function getBuilderCapacity(building: IHaveTypeAndLevel): { multiplier: number; base: number; total: number } {
+   const builder = sum(Tick.current.globalMultipliers.builderCapacity, "value");
+   return { multiplier: builder, base: building.level, total: builder * building.level };
+}

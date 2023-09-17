@@ -3,7 +3,7 @@ import { GreatPersonLogic } from "../definitions/GreatPersonLogic";
 import { IUnlockableDefinition } from "../definitions/ITechDefinition";
 import { Resource } from "../definitions/ResourceDefinitions";
 import { Tech } from "../definitions/TechDefinitions";
-import { notifyGameStateUpdate, saveGame, Singleton } from "../Global";
+import { getGameState, notifyGameStateUpdate, Singleton } from "../Global";
 import { isSteam } from "../rpc/SteamClient";
 import { WorldScene } from "../scenes/WorldScene";
 import {
@@ -18,7 +18,6 @@ import {
    safePush,
    shuffle,
    sizeOf,
-   sum,
 } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
 import { srand } from "../utilities/Random";
@@ -28,6 +27,7 @@ import {
    deductResources,
    filterResource,
    filterTransportable,
+   getBuilderCapacity,
    getBuildingCost,
    getBuildingIO,
    getScienceFromWorkers,
@@ -101,10 +101,6 @@ export function tickEverySecond(gs: GameState) {
 
    ++gs.tick;
    notifyGameStateUpdate();
-
-   if (gs.tick % 5 === 0) {
-      saveGame();
-   }
 }
 
 function tickUnlockable(td: IUnlockableDefinition) {
@@ -198,7 +194,7 @@ function tileTile(xy: string, gs: GameState): void {
       const cost = getBuildingCost(building);
       let completed = true;
       forEach(cost, (res, amount) => {
-         const builder = sum(Tick.current.globalMultipliers.builderCapacity, "value");
+         const { base, total } = getBuilderCapacity(building);
          const amountArrived = building.resources[res] ?? 0;
          if (amountArrived >= amount) {
             // continue;
@@ -210,10 +206,10 @@ function tileTile(xy: string, gs: GameState): void {
             return false;
          }
          completed = false;
-         if (hasEnoughWorkers("Worker", builder)) {
+         if (hasEnoughWorkers("Worker", base)) {
             delete Tick.next.notProducingReasons[xy];
-            useWorkers("Worker", builder, xy);
-            transportResource(res, builder * building.level, building.level, xy, gs);
+            useWorkers("Worker", base, xy);
+            transportResource(res, total, building.level, xy, gs);
             // break;
             return true;
          } else {
@@ -488,4 +484,14 @@ function tickPrice(gs: GameState) {
          });
       }
    });
+}
+
+if (import.meta.env.DEV) {
+   // @ts-expect-error
+   window.tickGameState = (tick: number) => {
+      const gs = getGameState();
+      for (let i = 0; i < tick; i++) {
+         tickEverySecond(gs);
+      }
+   };
 }

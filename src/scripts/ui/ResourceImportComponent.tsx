@@ -50,7 +50,9 @@ export function ResourceImportComponent({ gameState, xy }: IBuildingComponentPro
                      return (
                         <tr key={res}>
                            <td>{Tick.current.resources[res].name()}</td>
-                           <td className="text-right">{building.resources[res] ?? 0}</td>
+                           <td className="text-right">
+                              <FormatNumber value={building.resources[res] ?? 0} />
+                           </td>
                            <td className="text-right" onWheel={(e) => {}}>
                               <FormatNumber value={ri?.perCycle ?? 0} />
                            </td>
