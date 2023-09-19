@@ -159,7 +159,7 @@ export class TechDefinitions {
       name: () => t(L.Astronomy),
       column: 4,
       requireTech: ["Arithmetic", "Writing"],
-      unlockBuilding: ["Library", "Stonehenge"],
+      unlockBuilding: ["Stonehenge"],
    };
 
    Shamanism: ITechDefinition = {

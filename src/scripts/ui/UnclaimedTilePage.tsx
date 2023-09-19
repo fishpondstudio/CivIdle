@@ -1,7 +1,8 @@
 import { MoveTileCooldown } from "../../../server/src/Database";
 import { Tech } from "../definitions/TechDefinitions";
 import { GameStateChanged } from "../Global";
-import { client, getMyMapXy, usePlayerMap } from "../rpc/RPCClient";
+import { client, usePlayerMap } from "../rpc/RPCClient";
+import { getMyMapXy } from "../scenes/PathFinder";
 import { formatHMS } from "../utilities/Helper";
 import { refreshOnTypedEvent } from "../utilities/Hook";
 import { L, t } from "../utilities/i18n";

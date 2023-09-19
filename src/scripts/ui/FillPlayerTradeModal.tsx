@@ -1,9 +1,13 @@
 import { useState } from "react";
 import { ITrade } from "../../../server/src/Database";
 import { Resource } from "../definitions/ResourceDefinitions";
+import { Singleton } from "../Global";
 import { Tick } from "../logic/TickLogic";
-import { safeParseInt } from "../utilities/Helper";
+import { findPath, findUserOnMap, getMyMapXy } from "../scenes/PathFinder";
+import { PlayerMapScene } from "../scenes/PlayerMapScene";
+import { safeParseInt, xyToPoint } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
+import { playError } from "../visuals/Sound";
 import { hideModal } from "./GlobalModal";
 import { FormatNumber } from "./HelperComponents";
 
@@ -45,7 +49,19 @@ export function FillPlayerTradeModal({ trade }: { trade: ITrade }) {
             </div>
             <div className="sep10"></div>
             <div className="row" style={{ justifyContent: "flex-end" }}>
-               <button disabled={false} onClick={async () => {}}>
+               <button
+                  disabled={false}
+                  onClick={async () => {
+                     const myXy = getMyMapXy();
+                     const targetXy = findUserOnMap(trade.fromId);
+                     if (!myXy || !targetXy) {
+                        playError();
+                        return;
+                     }
+                     const path = findPath(xyToPoint(myXy), xyToPoint(targetXy));
+                     Singleton().sceneManager.getCurrent(PlayerMapScene)?.drawPath(path);
+                  }}
+               >
                   {t(L.PlayerTradeFillTradeButton)}
                </button>
                <div style={{ width: "10px" }}></div>

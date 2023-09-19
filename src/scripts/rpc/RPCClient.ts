@@ -46,17 +46,6 @@ export function getPlayerMap() {
    return playerMap;
 }
 
-export function getMyMapXy() {
-   console.log(playerMap);
-   for (const xy in playerMap) {
-      const entry = playerMap[xy];
-      if (entry.userId == getGameOptions().id) {
-         return xy;
-      }
-   }
-   return null;
-}
-
 let ws: WebSocket | null = null;
 const steamWs: WebSocket | null = null;
 

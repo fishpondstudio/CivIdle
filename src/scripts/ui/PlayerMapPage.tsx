@@ -1,5 +1,6 @@
 import { GameState } from "../logic/GameState";
-import { getMyMapXy, usePlayerMap } from "../rpc/RPCClient";
+import { usePlayerMap } from "../rpc/RPCClient";
+import { getMyMapXy } from "../scenes/PathFinder";
 import { MyTilePage } from "./MyTilePage";
 import { PlayerTilePage } from "./PlayerTilePage";
 import { UnclaimedTilePage } from "./UnclaimedTilePage";

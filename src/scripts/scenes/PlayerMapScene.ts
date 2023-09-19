@@ -1,20 +1,19 @@
 import { SmoothGraphics } from "@pixi/graphics-smooth";
 import { BitmapText, Container, FederatedPointerEvent, IPointData, LINE_CAP, LINE_JOIN, Sprite } from "pixi.js";
-import { IMapEntry } from "../../../server/src/Database";
+import { IMapEntry, MAP_MAX_X, MAP_MAX_Y } from "../../../server/src/Database";
 import WorldMap from "../../../server/WorldMap.json";
-import { Singleton } from "../Global";
-import { getMyMapXy, getPlayerMap, OnPlayerMapMessage } from "../rpc/RPCClient";
+import { getGameOptions, Singleton } from "../Global";
+import { getPlayerMap, OnPlayerMapMessage } from "../rpc/RPCClient";
 import { PlayerMapPage } from "../ui/PlayerMapPage";
-import { forEach, formatPercent, safeParseInt, xyToPoint } from "../utilities/Helper";
+import { drawDashedLine, forEach, formatPercent, safeParseInt, xyToPoint } from "../utilities/Helper";
 import { ViewportScene } from "../utilities/SceneManager";
 import { Disposable } from "../utilities/TypedEvent";
 import { Fonts } from "../visuals/Fonts";
+import { getMyMapXy } from "./PathFinder";
 
 let viewportCenter: IPointData | null = null;
 let viewportZoom: number | null = null;
 
-const MaxX = 200;
-const MaxY = 100;
 const GridSize = 100;
 
 export class PlayerMapScene extends ViewportScene {
@@ -23,11 +22,12 @@ export class PlayerMapScene extends ViewportScene {
    private _selectedGraphics!: SmoothGraphics;
    private _tiles: Record<string, Container> = {};
    private _listener!: Disposable;
+   private _path!: SmoothGraphics;
 
    override onLoad(): void {
       const { app, textures } = this.context;
-      this._width = MaxX * GridSize;
-      this._height = MaxY * GridSize;
+      this._width = MAP_MAX_X * GridSize;
+      this._height = MAP_MAX_Y * GridSize;
 
       this.viewport.worldWidth = this._width;
       this.viewport.worldHeight = this._height;
@@ -88,14 +88,14 @@ export class PlayerMapScene extends ViewportScene {
       });
       graphics.alpha = 0.25;
 
-      for (let x = 0; x <= MaxX; x++) {
+      for (let x = 0; x <= MAP_MAX_X; x++) {
          graphics.moveTo(x * GridSize, 0);
-         graphics.lineTo(x * GridSize, MaxY * GridSize);
+         graphics.lineTo(x * GridSize, MAP_MAX_Y * GridSize);
       }
 
-      for (let y = 0; y <= MaxY; y++) {
+      for (let y = 0; y <= MAP_MAX_Y; y++) {
          graphics.moveTo(0, y * GridSize);
-         graphics.lineTo(MaxX * GridSize, y * GridSize);
+         graphics.lineTo(MAP_MAX_X * GridSize, y * GridSize);
       }
 
       forEach(getPlayerMap(), (xy, entry) => {
@@ -117,6 +117,8 @@ export class PlayerMapScene extends ViewportScene {
       });
 
       this._selectedGraphics = this.viewport.addChild(new SmoothGraphics());
+
+      this._path = this.viewport.addChild(new SmoothGraphics());
 
       if (viewportCenter) {
          this.viewport.moveCenter(viewportCenter);
@@ -156,9 +158,33 @@ export class PlayerMapScene extends ViewportScene {
       return { x: (tile.x + 0.5) * GridSize, y: (tile.y + 0.5) * GridSize };
    }
 
+   public drawPath(path: IPointData[]): void {
+      this._path.clear().lineStyle({
+         color: 0xffff99,
+         width: 4,
+         cap: LINE_CAP.ROUND,
+         join: LINE_JOIN.ROUND,
+         alignment: 0.5,
+      });
+      this._path.alpha = 0.5;
+      let count = 0;
+      path.forEach((point, idx) => {
+         const pos = this.tileToPosition(point);
+         if (idx == 0) {
+            this._path.moveTo(pos.x, pos.y);
+         } else {
+            count = drawDashedLine(this._path, this.tileToPosition(path[idx - 1]), pos, count, 5, 10);
+         }
+      });
+   }
+
    private selectTile(tileX: number, tileY: number) {
       const x = tileX * GridSize;
       const y = tileY * GridSize;
+
+      if (import.meta.env.DEV) {
+         console.log("Select Tile:", tileX, tileY);
+      }
 
       this._selectedGraphics.clear();
       this._selectedGraphics
@@ -186,11 +212,12 @@ export class PlayerMapScene extends ViewportScene {
          this._tiles[xy].destroy({ children: true });
       }
       this._tiles[xy] = container;
+      const isMyself = entry.userId == getGameOptions().id;
       const handle = container.addChild(
          new BitmapText(entry.handle, {
             fontName: Fonts.Cabin,
             fontSize: 16,
-            tint: 0xffffff,
+            tint: isMyself ? 0xffeaa7 : 0xffffff,
          })
       );
       handle.anchor.set(0.5, 0.5);
@@ -200,7 +227,7 @@ export class PlayerMapScene extends ViewportScene {
          new BitmapText(formatPercent(entry.tariffRate), {
             fontName: Fonts.Cabin,
             fontSize: 14,
-            tint: 0xffffff,
+            tint: isMyself ? 0xffeaa7 : 0xffffff,
          })
       );
       tariff.anchor.set(0.5, 0.5);

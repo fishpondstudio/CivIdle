@@ -1,5 +1,6 @@
 import { DisplayObject, IPointData } from "pixi.js";
 import { PartialSet, PartialTabulate } from "../definitions/TypeDefinitions";
+import { v2 } from "./Vector2";
 
 // prettier-ignore
 const NUMBER_SUFFIX_1 = ["","K","M","B","T","Qa","Qt","Sx","Sp","Oc","Nn","Dc","UDc","DDc","TDc","QaDc","QtDc","SxDc","SpDc","ODc","NDc","Vi","UVi","DVi","TVi","QaVi","QtVi","SxVi","SpVi","OcVi","NnVi","Tg","UTg","DTg","TTg","QaTg","QtTg","SxTg","SpTg","OcTg","NnTg","Qd","UQd","DQd","TQd","QaQd","QtQd","SxQd","SpQd","OcQd","NnQd","Qq","UQq","DQq","TQq","QaQq","QtQq","SxQq","SpQq","OcQq","NnQq","Sg",
@@ -434,4 +435,39 @@ export function formatHM(t: number) {
 
 function pad(num: number) {
    return num < 10 ? `0${num}` : num;
+}
+
+interface ICanDrawLine {
+   moveTo(x: number, y: number): this;
+   lineTo(x: number, y: number): this;
+}
+
+export function drawDashedLine(
+   g: ICanDrawLine,
+   start: IPointData,
+   end: IPointData,
+   initial = 0,
+   lineLength = 10,
+   spaceLength = 20
+): number {
+   const startPos = v2(start);
+   const endPos = v2(end);
+   let cursor = startPos;
+   let count = initial;
+   const direction = endPos.subtract(startPos);
+   if (direction.length() < 10) {
+      return count;
+   }
+   const increment = direction.normalize();
+   while ((endPos.x - cursor.x) * increment.x >= 0 && (endPos.y - cursor.y) * increment.y >= 0) {
+      if (count % 2 === 0) {
+         g.moveTo(cursor.x, cursor.y);
+         cursor = cursor.add(increment.multiply(lineLength));
+      } else {
+         g.lineTo(cursor.x, cursor.y);
+         cursor = cursor.add(increment.multiply(spaceLength));
+      }
+      count++;
+   }
+   return count;
 }

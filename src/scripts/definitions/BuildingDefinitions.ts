@@ -348,13 +348,6 @@ export class BuildingDefinitions {
    };
 
    Brewery: IBuildingDefinition = {
-      name: () => t(L.Brewery),
-      input: {},
-      output: {},
-      construction: { Brick: 1, Lumber: 1 },
-   };
-
-   Warehouse: IBuildingDefinition = {
       name: () => t(L.Warehouse),
       input: { Wheat: 1, Water: 1 },
       output: { Alcohol: 1 },
@@ -387,6 +380,13 @@ export class BuildingDefinitions {
       input: {},
       output: {},
       construction: { Brick: 2, Copper: 2, Lumber: 2 },
+   };
+
+   Warehouse: IBuildingDefinition = {
+      name: () => t(L.Warehouse),
+      input: {},
+      output: {},
+      construction: { Brick: 1, Iron: 1 },
    };
 
    Statistics: IBuildingDefinition = {

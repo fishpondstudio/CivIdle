@@ -59,9 +59,17 @@
         "BuildingArmory": {
             "frame": {
                 "x": 4212,
-                "y": 2654,
+                "y": 2755,
                 "w": 90,
                 "h": 100
+            }
+        },
+        "BuildingBakery": {
+            "frame": {
+                "x": 1849,
+                "y": 2211,
+                "w": 96,
+                "h": 97
             }
         },
         "BuildingBlacksmith": {
@@ -139,7 +147,7 @@
         "BuildingCathedral": {
             "frame": {
                 "x": 4300,
-                "y": 2755,
+                "y": 2905,
                 "w": 85,
                 "h": 100
             }
@@ -147,7 +155,7 @@
         "BuildingChariotWorkshop": {
             "frame": {
                 "x": 4212,
-                "y": 2554,
+                "y": 2655,
                 "w": 91,
                 "h": 99
             }
@@ -202,15 +210,15 @@
         },
         "BuildingColossusOfRhodes": {
             "frame": {
-                "x": 4370,
-                "y": 3107,
+                "x": 749,
+                "y": 3607,
                 "w": 75,
                 "h": 100
             }
         },
         "BuildingCopperMiningCamp": {
             "frame": {
-                "x": 2221,
+                "x": 2133,
                 "y": 2211,
                 "w": 90,
                 "h": 89
@@ -234,8 +242,8 @@
         },
         "BuildingCristoRedentor": {
             "frame": {
-                "x": 1849,
-                "y": 2211,
+                "x": 4212,
+                "y": 2554,
                 "w": 92,
                 "h": 100
             }
@@ -250,7 +258,7 @@
         },
         "BuildingFishPond": {
             "frame": {
-                "x": 2312,
+                "x": 2224,
                 "y": 2211,
                 "w": 90,
                 "h": 89
@@ -259,7 +267,7 @@
         "BuildingFlourMill": {
             "frame": {
                 "x": 4212,
-                "y": 3006,
+                "y": 3107,
                 "w": 80,
                 "h": 100
             }
@@ -282,7 +290,7 @@
         },
         "BuildingGarmentWorkshop": {
             "frame": {
-                "x": 2034,
+                "x": 1946,
                 "y": 2211,
                 "w": 95,
                 "h": 95
@@ -298,7 +306,7 @@
         },
         "BuildingGoldMiningCamp": {
             "frame": {
-                "x": 2403,
+                "x": 2315,
                 "y": 2211,
                 "w": 90,
                 "h": 89
@@ -315,7 +323,7 @@
         "BuildingGreatMosqueOfSamarra": {
             "frame": {
                 "x": 4303,
-                "y": 2654,
+                "y": 2755,
                 "w": 87,
                 "h": 100
             }
@@ -378,7 +386,7 @@
         },
         "BuildingHouse": {
             "frame": {
-                "x": 2676,
+                "x": 2588,
                 "y": 2211,
                 "w": 89,
                 "h": 85
@@ -387,7 +395,7 @@
         "BuildingHut": {
             "frame": {
                 "x": 4212,
-                "y": 2905,
+                "y": 3006,
                 "w": 85,
                 "h": 100
             }
@@ -402,7 +410,7 @@
         },
         "BuildingIronMiningCamp": {
             "frame": {
-                "x": 2494,
+                "x": 2406,
                 "y": 2211,
                 "w": 90,
                 "h": 89
@@ -419,7 +427,7 @@
         "BuildingKnightCamp": {
             "frame": {
                 "x": 4293,
-                "y": 3006,
+                "y": 3107,
                 "w": 80,
                 "h": 100
             }
@@ -434,8 +442,8 @@
         },
         "BuildingLighthouseOfAlexandria": {
             "frame": {
-                "x": 4293,
-                "y": 3107,
+                "x": 672,
+                "y": 3607,
                 "w": 76,
                 "h": 100
             }
@@ -482,7 +490,7 @@
         },
         "BuildingMarket": {
             "frame": {
-                "x": 2766,
+                "x": 2678,
                 "y": 2211,
                 "w": 89,
                 "h": 81
@@ -490,8 +498,8 @@
         },
         "BuildingMausoleumAtHalicarnassus": {
             "frame": {
-                "x": 1942,
-                "y": 2211,
+                "x": 4305,
+                "y": 2554,
                 "w": 91,
                 "h": 100
             }
@@ -530,7 +538,7 @@
         },
         "BuildingMusiciansGuild": {
             "frame": {
-                "x": 2130,
+                "x": 2042,
                 "y": 2211,
                 "w": 90,
                 "h": 93
@@ -547,7 +555,7 @@
         "BuildingOilPress": {
             "frame": {
                 "x": 4298,
-                "y": 2905,
+                "y": 3006,
                 "w": 85,
                 "h": 100
             }
@@ -627,7 +635,7 @@
         "BuildingSagradaFamília": {
             "frame": {
                 "x": 4304,
-                "y": 2554,
+                "y": 2655,
                 "w": 90,
                 "h": 99
             }
@@ -706,7 +714,7 @@
         },
         "BuildingStoneQuarry": {
             "frame": {
-                "x": 2585,
+                "x": 2497,
                 "y": 2211,
                 "w": 90,
                 "h": 89
@@ -738,8 +746,8 @@
         },
         "BuildingTerracottaArmy": {
             "frame": {
-                "x": 4212,
-                "y": 3107,
+                "x": 591,
+                "y": 3607,
                 "w": 80,
                 "h": 100
             }
@@ -762,7 +770,7 @@
         },
         "BuildingVineyard": {
             "frame": {
-                "x": 591,
+                "x": 825,
                 "y": 3607,
                 "w": 75,
                 "h": 100
@@ -787,14 +795,14 @@
         "BuildingWindMill": {
             "frame": {
                 "x": 4212,
-                "y": 2755,
+                "y": 2905,
                 "w": 87,
                 "h": 100
             }
         },
         "BuildingWinery": {
             "frame": {
-                "x": 667,
+                "x": 901,
                 "y": 3607,
                 "w": 75,
                 "h": 100

@@ -57,25 +57,37 @@ export class FlowGraphScene extends ViewportScene {
       const flourMill = new BuildingCard("FlourMill");
       this.viewport.addChild(flourMill).position.set(100, 200);
       const pizzeria = new BuildingCard("Pizzeria");
+      pizzeria.interactive = true;
       this.viewport.addChild(pizzeria).position.set(500, 100);
       this.viewport.addChild(new BuildingCard("SiegeWorkshop")).position.set(900, 100);
 
-      const connections = this.viewport.addChild(new SmoothGraphics()).lineStyle({
-         color: 0x666666,
-         width: 3,
-         cap: LINE_CAP.ROUND,
-         join: LINE_JOIN.ROUND,
-         alignment: 0.5,
-      });
+      const connections = this.viewport.addChild(new SmoothGraphics());
 
       drawConnection(connections, flourMill.getPortPosition("Flour")!, pizzeria.getPortPosition("Flour")!, 0xbbbbbb, 4);
+
+      this.viewport.on("card-moved", () => {
+         connections.clear();
+         drawConnection(
+            connections,
+            flourMill.getPortPosition("Flour")!,
+            pizzeria.getPortPosition("Flour")!,
+            0xbbbbbb,
+            4
+         );
+      });
 
       Singleton().routeTo(DebugPage, {});
    }
 }
 
 function drawConnection(g: SmoothGraphics, from: IPointData, to: IPointData, color: number, width: number) {
-   g.moveTo(from.x, from.y);
+   g.lineStyle({
+      color: 0x666666,
+      width: 3,
+      cap: LINE_CAP.ROUND,
+      join: LINE_JOIN.ROUND,
+      alignment: 0.5,
+   }).moveTo(from.x, from.y);
    const oldColor = g.line.color;
    g.lineStyle({ ...g.line, color, width });
    g.bezierCurveTo((from.x + to.x) / 2, from.y, (from.x + to.x) / 2, to.y, to.x, to.y);
@@ -152,6 +164,32 @@ class BuildingCard extends Container {
          const portY = 100 + 2 + (i * 300) / (outputCount + 1);
          graphics.beginFill(0x2ecc71).drawCircle(portX, portY, 10).endFill();
          this.port[res] = { x: portX, y: portY };
+      });
+
+      let pointerDownPos: IPointData | null = null;
+      const startPos = { x: this.x, y: this.y };
+
+      this.on("pointerdown", (e) => {
+         e.stopPropagation();
+         pointerDownPos = { x: e.x, y: e.y };
+         startPos.x = this.x;
+         startPos.y = this.y;
+      });
+
+      this.on("pointermove", (e) => {
+         e.stopPropagation();
+         if (pointerDownPos) {
+            this.x = startPos.x + e.x - pointerDownPos.x;
+            this.y = startPos.y + e.y - pointerDownPos.y;
+            this.parent.emit("card-moved");
+         }
+      });
+
+      this.on("pointerup", (e) => {
+         e.stopPropagation();
+         pointerDownPos = null;
+         startPos.x = this.x;
+         startPos.y = this.y;
       });
    }
 

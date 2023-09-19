@@ -22,10 +22,9 @@ import { shouldTick, tickEveryFrame, tickEverySecond } from "./logic/Update";
 import { fonts, MainBundleAssets } from "./main";
 import { RouteChangeEvent } from "./Route";
 import { connectWebSocket } from "./rpc/RPCClient";
-import { isSteam, SteamClient } from "./rpc/SteamClient";
 import { Grid } from "./scenes/Grid";
-import { WorldScene } from "./scenes/WorldScene";
-import { ErrorPage } from "./ui/ErrorPage";
+import { PlayerMapScene } from "./scenes/PlayerMapScene";
+import { checkSteamBranch } from "./SteamTesting";
 import { forEach } from "./utilities/Helper";
 import Actions from "./utilities/pixi-actions/Actions";
 import { SceneManager, Textures } from "./utilities/SceneManager";
@@ -102,9 +101,9 @@ export async function startGame(
    // createRoot(document.getElementById("debug-ui")!).render(<PlayerTradeComponent />);
    // }
 
-   // Singleton().sceneManager.loadScene(PlayerMapScene);
+   Singleton().sceneManager.loadScene(PlayerMapScene);
    // Singleton().sceneManager.loadScene(FlowGraphScene);
-   Singleton().sceneManager.loadScene(WorldScene);
+   // Singleton().sceneManager.loadScene(WorldScene);
    // Singleton().sceneManager.loadScene(TechTreeScene);
 
    notifyGameStateUpdate();
@@ -112,27 +111,6 @@ export async function startGame(
    startTicker(app.ticker, gameState);
 
    await checkSteamBranch();
-}
-
-async function checkSteamBranch() {
-   if (!isSteam()) {
-      return;
-   }
-   const beta = await SteamClient.getBetaName();
-   if (beta !== "beta") {
-      Singleton().routeTo(ErrorPage, {
-         content: (
-            <>
-               <div className="title">Please Switch To Beta Branch On Steam</div>
-               <div>
-                  You are not currently on beta branch. Please close the game, go to Steam, right click CivIdle -&gt;
-                  Properties -&gt; Betas and select "beta" in the dropdown menu. After Steam has finish downloading,
-                  start the game again. If this error persists, please report the bug on Discord.
-               </div>
-            </>
-         ),
-      });
-   }
 }
 
 function startTicker(ticker: Ticker, gameState: GameState) {
