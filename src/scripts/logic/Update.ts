@@ -234,6 +234,10 @@ function tileTile(xy: string, gs: GameState): void {
       return;
    }
 
+   if (building.type == "Caravansary") {
+      Tick.next.playerTradeBuildings.push(building);
+   }
+
    const input = filterTransportable(getBuildingIO(xy, "input", { multiplier: true, capacity: true }, gs));
    const output = getBuildingIO(xy, "output", { multiplier: true, capacity: true }, gs);
 

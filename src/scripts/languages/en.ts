@@ -202,6 +202,7 @@ export const EN = {
    WorkersRequiredAfterMultiplier: "Required Workers",
    AdjustBuildingCapacity: "Production Capacity",
    Storage: "Storage",
+   ResourceInStorage: "In Storage",
    TotalStorage: "Total Storage",
    StorageBaseCapacity: "Base Capacity",
    StorageMultiplier: "Storage Multiplier",

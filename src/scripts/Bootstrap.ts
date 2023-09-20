@@ -1,5 +1,4 @@
-import { Assets } from "@pixi/assets";
-import { Application, BitmapFont, Spritesheet, Ticker } from "pixi.js";
+import { Application, Assets, BitmapFont, Spritesheet, Ticker } from "pixi.js";
 import altasDef from "../images/textures.json";
 import { Building } from "./definitions/BuildingDefinitions";
 import { City } from "./definitions/CityDefinitions";

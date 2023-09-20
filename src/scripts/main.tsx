@@ -1,6 +1,5 @@
-import { Assets } from "@pixi/assets";
 import * as Sentry from "@sentry/browser";
-import { Application } from "pixi.js";
+import { Application, Assets } from "pixi.js";
 import { createRoot } from "react-dom/client";
 import "../css/Main.css";
 import CabinMedium from "../fonts/CabinMedium.ttf?url";

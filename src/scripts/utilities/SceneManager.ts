@@ -99,8 +99,8 @@ export class SceneManager {
    }
 
    getCurrent<T extends Scene>(SceneClass: new (context: ISceneContext) => T): T | null {
-      if (this.currentScene instanceof SceneClass) {
-         return this.currentScene;
+      if (this.isCurrent(SceneClass)) {
+         return this.currentScene as T;
       }
       return null;
    }

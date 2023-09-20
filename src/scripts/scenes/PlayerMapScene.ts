@@ -178,6 +178,10 @@ export class PlayerMapScene extends ViewportScene {
       });
    }
 
+   public clearPath() {
+      this._path.clear();
+   }
+
    private selectTile(tileX: number, tileY: number) {
       const x = tileX * GridSize;
       const y = tileY * GridSize;

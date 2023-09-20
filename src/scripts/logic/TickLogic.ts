@@ -3,6 +3,7 @@ import { Resource, ResourceDefinitions } from "../definitions/ResourceDefinition
 import { PartialSet, PartialTabulate } from "../definitions/TypeDefinitions";
 import { L, t } from "../utilities/i18n";
 import { RequireAtLeastOne } from "../utilities/Type";
+import { IBuildingData } from "./Tile";
 
 interface ITickData {
    buildings: BuildingDefinitions;
@@ -16,6 +17,7 @@ interface ITickData {
    workersUsed: PartialTabulate<Resource>;
    workersAssignment: Record<string, number>;
    resourcesByBuilding: Partial<Record<Resource, string[]>>;
+   playerTradeBuildings: IBuildingData[];
    globalMultipliers: GlobalMultipliers;
    notProducingReasons: Record<string, NotProducingReason>;
 }
@@ -45,6 +47,7 @@ export function EmptyTickData(): ITickData {
       resourcesByBuilding: {},
       globalMultipliers: new GlobalMultipliers(),
       notProducingReasons: {},
+      playerTradeBuildings: [],
    };
 }
 

@@ -1,4 +1,4 @@
-import { Ticker, UPDATE_PRIORITY } from "@pixi/ticker";
+import { Ticker, UPDATE_PRIORITY } from "pixi.js";
 
 class AverageProvider {
    private readonly _history: number[];
