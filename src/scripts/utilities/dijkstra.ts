@@ -11,15 +11,24 @@ export function dijkstra(graph: number[][], start: IPointData, end: IPointData):
    const cameFrom = new Map<number, IPointData>();
    const costSoFar = new Map<number, number>();
    const maxY = graph.length;
-   const hash = (p: IPointData) => p.y * maxY + p.x;
+   const hash = (x: number, y: number) => y * maxY + x;
 
    frontier.queue({ value: start, priority: 0 });
 
-   const key = hash(start);
+   const key = hash(start.x, start.y);
    cameFrom.set(key, start);
    costSoFar.set(key, 0);
 
-   const neighbors: IPointData[] = [];
+   function expandFrontier(nextX: number, nextY: number, current: IPointData) {
+      const newCost = costSoFar.get(hash(current.x, current.y))! + graph[nextY][nextX];
+      const nextXy = hash(nextX, nextY);
+      if (!costSoFar.has(nextXy) || newCost < costSoFar.get(nextXy)!) {
+         costSoFar.set(nextXy, newCost);
+         const priority = newCost;
+         frontier.queue({ value: { x: nextX, y: nextY }, priority });
+         cameFrom.set(nextXy, current);
+      }
+   }
 
    while (frontier.length > 0) {
       const current = frontier.dequeue();
@@ -27,43 +36,29 @@ export function dijkstra(graph: number[][], start: IPointData, end: IPointData):
          break;
       }
 
-      neighbors.length = 0;
-
       if (graph[current.value.y]?.[current.value.x + 1] >= 0) {
-         neighbors.push({ x: current.value.x + 1, y: current.value.y });
+         expandFrontier(current.value.x + 1, current.value.y, current.value);
       }
 
       if (graph[current.value.y]?.[current.value.x - 1] >= 0) {
-         neighbors.push({ x: current.value.x - 1, y: current.value.y });
+         expandFrontier(current.value.x - 1, current.value.y, current.value);
       }
 
       if (graph[current.value.y + 1]?.[current.value.x] >= 0) {
-         neighbors.push({ x: current.value.x, y: current.value.y + 1 });
+         expandFrontier(current.value.x, current.value.y + 1, current.value);
       }
 
       if (graph[current.value.y - 1]?.[current.value.x] >= 0) {
-         neighbors.push({ x: current.value.x, y: current.value.y - 1 });
-      }
-
-      for (let i = 0; i < neighbors.length; i++) {
-         const next = neighbors[i];
-         const newCost = costSoFar.get(hash(current.value))! + graph[next.y][next.x];
-         const nextXy = hash(next);
-         if (!costSoFar.has(nextXy) || newCost < costSoFar.get(nextXy)!) {
-            costSoFar.set(nextXy, newCost);
-            const priority = newCost;
-            frontier.queue({ value: next, priority });
-            cameFrom.set(nextXy, current.value);
-         }
+         expandFrontier(current.value.x, current.value.y - 1, current.value);
       }
    }
 
    let current = end;
    const path: IPointData[] = [];
-   if (cameFrom.has(hash(end))) {
+   if (cameFrom.has(hash(end.x, end.y))) {
       while (current.x != start.x || current.y != start.y) {
          path.unshift(current);
-         current = cameFrom.get(hash(current))!;
+         current = cameFrom.get(hash(current.x, current.y))!;
       }
       path.unshift(start);
    }

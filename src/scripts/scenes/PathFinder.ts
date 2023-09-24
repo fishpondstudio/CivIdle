@@ -23,17 +23,17 @@ function buildPathfinderGrid() {
       grid.push(row);
    }
 
-   for (let i = 0; i < 100; i++) {
-      findPath({ x: 106, y: 33 }, { x: 106, y: 38 });
-   }
+   // console.time("PathFinder.findPath");
+   // for (let i = 0; i < 100; i++) {
+   //    findPath({ x: 106, y: 33 }, { x: 106, y: 38 });
+   // }
+   // console.timeEnd("PathFinder.findPath");
 }
 
 OnPlayerMapChanged.on(buildPathfinderGrid);
 
 export function findPath(start: IPointData, end: IPointData): IPointData[] {
-   console.time("PathFinder.findPath");
    const result = dijkstra(grid, start, end);
-   console.timeEnd("PathFinder.findPath");
    return result;
 }
 

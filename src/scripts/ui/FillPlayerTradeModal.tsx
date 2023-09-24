@@ -6,7 +6,7 @@ import { Tick } from "../logic/TickLogic";
 import { usePlayerMap } from "../rpc/RPCClient";
 import { findPath, findUserOnMap, getMyMapXy } from "../scenes/PathFinder";
 import { PlayerMapScene } from "../scenes/PlayerMapScene";
-import { formatPercent, pointToXy, safeParseInt, xyToPoint } from "../utilities/Helper";
+import { formatNumber, formatPercent, pointToXy, safeParseInt, xyToPoint } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
 import { hideModal } from "./GlobalModal";
 import { FormatNumber } from "./HelperComponents";
@@ -57,34 +57,27 @@ export function FillPlayerTradeModal({ trade }: { trade: ITrade }) {
             />
             <div className="sep10"></div>
             <div className="row">
-               <div className="f1">{Tick.current.resources[trade.buyResource as Resource].name()}</div>
+               <div className="f1 text-strong">{Tick.current.resources[trade.buyResource as Resource].name()}</div>
                <div>
                   <FormatNumber value={(trade.buyAmount * percent) / 100} />
                </div>
             </div>
-            <div className="row">
-               <div className="f1">{t(L.ResourceInStorage)}</div>
-               <div>
-                  <FormatNumber value={maxAmount} />
-               </div>
+            <div className="text-desc text-right text-small">
+               {t(L.ResourceInStorage, { amount: formatNumber(maxAmount) })}
             </div>
-            <div className="sep5"></div>
-            <ul className="tree-view">
-               {tiles.map((xy, i) => {
-                  const tile = map[xy];
-                  if (!tile || i == 0 || i == tiles.length - 1) {
-                     return null;
-                  }
-                  return (
-                     <li key={xy} className="row">
-                        <div className="f1">
-                           {t(L.PlayerMapTariff)}: {tile.handle}
-                        </div>
-                        <div>{formatPercent(tile.tariffRate)}</div>
-                     </li>
-                  );
-               })}
-            </ul>
+            <div className="text-strong">{t(L.PlayerMapTariff)}</div>
+            {tiles.map((xy, i) => {
+               const tile = map[xy];
+               if (!tile || i == 0 || i == tiles.length - 1) {
+                  return null;
+               }
+               return (
+                  <div key={xy} className="row">
+                     <div className="f1 ml10">{tile.handle}</div>
+                     <div>{formatPercent(tile.tariffRate)}</div>
+                  </div>
+               );
+            })}
 
             <div className="sep10"></div>
             <div className="row" style={{ justifyContent: "flex-end" }}>

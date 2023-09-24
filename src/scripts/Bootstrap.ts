@@ -22,7 +22,7 @@ import { fonts, MainBundleAssets } from "./main";
 import { RouteChangeEvent } from "./Route";
 import { connectWebSocket } from "./rpc/RPCClient";
 import { Grid } from "./scenes/Grid";
-import { PlayerMapScene } from "./scenes/PlayerMapScene";
+import { WorldScene } from "./scenes/WorldScene";
 import { checkSteamBranch } from "./SteamTesting";
 import { forEach } from "./utilities/Helper";
 import Actions from "./utilities/pixi-actions/Actions";
@@ -100,9 +100,8 @@ export async function startGame(
    // createRoot(document.getElementById("debug-ui")!).render(<PlayerTradeComponent />);
    // }
 
-   Singleton().sceneManager.loadScene(PlayerMapScene);
    // Singleton().sceneManager.loadScene(FlowGraphScene);
-   // Singleton().sceneManager.loadScene(WorldScene);
+   Singleton().sceneManager.loadScene(WorldScene);
    // Singleton().sceneManager.loadScene(TechTreeScene);
 
    notifyGameStateUpdate();
