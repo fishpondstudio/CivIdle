@@ -6,12 +6,13 @@ interface ValueAndPriority<T> {
    priority: number;
 }
 
-export function dijkstra(graph: number[][], start: IPointData, end: IPointData): IPointData[] {
+export function dijkstra(grid: number[], stride: number, start: IPointData, end: IPointData): IPointData[] {
    const frontier = new PriorityQueue<ValueAndPriority<IPointData>>({ comparator: (a, b) => a.priority - b.priority });
    const cameFrom = new Map<number, IPointData>();
    const costSoFar = new Map<number, number>();
-   const maxY = graph.length;
-   const hash = (x: number, y: number) => y * maxY + x;
+   const maxX = stride;
+   const maxY = grid.length / stride;
+   const hash = (x: number, y: number) => y * maxX + x;
 
    frontier.queue({ value: start, priority: 0 });
 
@@ -20,7 +21,7 @@ export function dijkstra(graph: number[][], start: IPointData, end: IPointData):
    costSoFar.set(key, 0);
 
    function expandFrontier(nextX: number, nextY: number, current: IPointData) {
-      const newCost = costSoFar.get(hash(current.x, current.y))! + graph[nextY][nextX];
+      const newCost = costSoFar.get(hash(current.x, current.y))! + grid[hash(nextX, nextY)];
       const nextXy = hash(nextX, nextY);
       if (!costSoFar.has(nextXy) || newCost < costSoFar.get(nextXy)!) {
          costSoFar.set(nextXy, newCost);
@@ -30,25 +31,29 @@ export function dijkstra(graph: number[][], start: IPointData, end: IPointData):
       }
    }
 
+   function isPassable(x: number, y: number): boolean {
+      return grid[hash(x, y)] >= 0;
+   }
+
    while (frontier.length > 0) {
       const current = frontier.dequeue();
       if (current.value == end) {
          break;
       }
 
-      if (graph[current.value.y]?.[current.value.x + 1] >= 0) {
+      if (current.value.x + 1 < maxX && isPassable(current.value.x + 1, current.value.y)) {
          expandFrontier(current.value.x + 1, current.value.y, current.value);
       }
 
-      if (graph[current.value.y]?.[current.value.x - 1] >= 0) {
+      if (current.value.x - 1 >= 0 && isPassable(current.value.x - 1, current.value.y)) {
          expandFrontier(current.value.x - 1, current.value.y, current.value);
       }
 
-      if (graph[current.value.y + 1]?.[current.value.x] >= 0) {
+      if (current.value.y + 1 < maxY && isPassable(current.value.x, current.value.y + 1)) {
          expandFrontier(current.value.x, current.value.y + 1, current.value);
       }
 
-      if (graph[current.value.y - 1]?.[current.value.x] >= 0) {
+      if (current.value.y - 1 >= 0 && isPassable(current.value.x, current.value.y - 1)) {
          expandFrontier(current.value.x, current.value.y - 1, current.value);
       }
    }

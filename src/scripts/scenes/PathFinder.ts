@@ -5,22 +5,21 @@ import { getGameOptions } from "../Global";
 import { getPlayerMap, OnPlayerMapChanged } from "../rpc/RPCClient";
 import { dijkstra } from "../utilities/dijkstra";
 
-export const grid: number[][] = [];
+export const grid: number[] = [];
 
 function buildPathfinderGrid() {
    for (let y = 0; y < MAP_MAX_Y; y++) {
-      const row = [];
       for (let x = 0; x < MAP_MAX_X; x++) {
          const xy = `${x},${y}`;
+         const idx = y * MAP_MAX_X + x;
          if (!(WorldMap as Record<string, boolean>)[xy]) {
-            row.push(-1);
+            grid[idx] = -1;
             continue;
          }
          const map = getPlayerMap();
          const cost = map[xy]?.tariffRate ?? 0;
-         row.push(cost);
+         grid[idx] = cost;
       }
-      grid.push(row);
    }
 
    // console.time("PathFinder.findPath");
@@ -33,7 +32,7 @@ function buildPathfinderGrid() {
 OnPlayerMapChanged.on(buildPathfinderGrid);
 
 export function findPath(start: IPointData, end: IPointData): IPointData[] {
-   const result = dijkstra(grid, start, end);
+   const result = dijkstra(grid, MAP_MAX_X, start, end);
    return result;
 }
 
