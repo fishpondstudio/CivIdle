@@ -25,7 +25,7 @@ export function trySpendResources(resources: PartialTabulate<Resource>, gs: Game
    }
 
    for (res in resources) {
-      let amount = resources[res as Resource] ?? 0;
+      let amount = resources[res] ?? 0;
       for (const xy of Tick.current.resourcesByBuilding[res] ?? []) {
          const building = gs.tiles[xy]?.building;
          if (!building) {

@@ -1,11 +1,11 @@
 import classNames from "classnames";
-import { Resource } from "../definitions/ResourceDefinitions";
 import { Tick } from "../logic/TickLogic";
 import { useTrades, useUser } from "../rpc/RPCClient";
 import { L, t } from "../utilities/i18n";
 import { AddTradeComponent } from "./AddTradeComponent";
 import { FillPlayerTradeModal } from "./FillPlayerTradeModal";
 import { showModal } from "./GlobalModal";
+import { FormatNumber } from "./HelperComponents";
 import { IBuildingComponentProps } from "./PlayerMapPage";
 
 export function PlayerTradeComponent({ gameState, xy }: IBuildingComponentProps) {
@@ -29,10 +29,12 @@ export function PlayerTradeComponent({ gameState, xy }: IBuildingComponentProps)
                      return (
                         <tr key={trade.id}>
                            <td>
-                              {Tick.current.resources[trade.buyResource as Resource].name()} x {trade.buyAmount}
+                              {Tick.current.resources[trade.buyResource].name()} x{" "}
+                              <FormatNumber value={trade.buyAmount} />
                            </td>
                            <td>
-                              {Tick.current.resources[trade.sellResource as Resource].name()} x {trade.sellAmount}
+                              {Tick.current.resources[trade.sellResource].name()} x{" "}
+                              <FormatNumber value={trade.sellAmount} />
                            </td>
                            <td>{trade.from}</td>
                            <td>
@@ -44,7 +46,7 @@ export function PlayerTradeComponent({ gameState, xy }: IBuildingComponentProps)
                                  })}
                                  onClick={() => {
                                     if (!disableFill) {
-                                       showModal(<FillPlayerTradeModal trade={trade} />);
+                                       showModal(<FillPlayerTradeModal trade={trade} xy={xy} />);
                                     }
                                  }}
                               >

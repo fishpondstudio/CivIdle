@@ -8,7 +8,6 @@ import type {
    IMapEntry,
    IMapMessage,
    IRPCMessage,
-   ITrade,
    ITradeMessage,
    IUser,
    IWelcomeMessage,
@@ -16,6 +15,7 @@ import type {
 import { MessageType } from "../../../server/src/Database";
 import { ServerImpl } from "../../../server/src/Server";
 import { getGameOptions, saveGame } from "../Global";
+import { IClientTrade } from "../logic/PlayerTradeLogic";
 import { forEach } from "../utilities/Helper";
 import { makeObservableHook } from "../utilities/Hook";
 import { TypedEvent } from "../utilities/TypedEvent";
@@ -34,12 +34,12 @@ export async function changeHandle(newHandle: string) {
 
 export const OnUserChanged = new TypedEvent<IUser | null>();
 export const OnChatMessage = new TypedEvent<IChat[]>();
-export const OnTradeMessage = new TypedEvent<ITrade[]>();
+export const OnTradeMessage = new TypedEvent<IClientTrade[]>();
 export const OnPlayerMapChanged = new TypedEvent<Record<string, IMapEntry>>();
 export const OnPlayerMapMessage = new TypedEvent<IMapMessage>();
 
 let chatMessages: IChat[] = [];
-const trades: Record<string, ITrade> = {};
+const trades: Record<string, IClientTrade> = {};
 const playerMap: Record<string, IMapEntry> = {};
 
 export function getPlayerMap() {
@@ -126,7 +126,7 @@ export async function connectWebSocket() {
                   if (trades[trade.id] && trades[trade.id].fromId == user?.userId) {
                      hasPendingClaim = true;
                   }
-                  trades[trade.id] = trade;
+                  trades[trade.id] = trade as IClientTrade;
                });
             }
             if (t.remove) {

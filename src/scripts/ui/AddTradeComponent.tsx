@@ -1,7 +1,6 @@
 import { useState } from "react";
-import { IAddTradeRequest } from "../../../server/src/Database";
 import { Resource } from "../definitions/ResourceDefinitions";
-import { getBuyAmountRange } from "../logic/PlayerTradeLogic";
+import { getBuyAmountRange, IClientAddTradeRequest } from "../logic/PlayerTradeLogic";
 import { Tick } from "../logic/TickLogic";
 import { client } from "../rpc/RPCClient";
 import { keysOf, safeParseInt } from "../utilities/Helper";
@@ -16,7 +15,7 @@ export function AddTradeComponent({ gameState, xy }: IBuildingComponentProps) {
    );
    const resourcesInStorage = gameState.tiles[xy].building?.resources ?? {};
    const sellResources = keysOf(resourcesInStorage);
-   const [trade, setTrade] = useState<IAddTradeRequest>({
+   const [trade, setTrade] = useState<IClientAddTradeRequest>({
       buyResource: buyResources[0],
       buyAmount: 0,
       sellResource: sellResources[0],
@@ -25,7 +24,7 @@ export function AddTradeComponent({ gameState, xy }: IBuildingComponentProps) {
    const [showTrade, setShowTrade] = useState(false);
    const [rangeMin, rangeMax] = getBuyAmountRange(trade);
 
-   function isTradeValid(trade: IAddTradeRequest): boolean {
+   function isTradeValid(trade: IClientAddTradeRequest): boolean {
       if (trade.buyResource == trade.sellResource) {
          return false;
       }
@@ -35,7 +34,7 @@ export function AddTradeComponent({ gameState, xy }: IBuildingComponentProps) {
       if (trade.buyAmount > rangeMax || trade.buyAmount < rangeMin) {
          return false;
       }
-      if (trade.sellAmount < 0 || trade.sellAmount > (resourcesInStorage[trade.sellResource as Resource] ?? 0)) {
+      if (trade.sellAmount < 0 || trade.sellAmount > (resourcesInStorage[trade.sellResource] ?? 0)) {
          return false;
       }
       return true;
@@ -52,7 +51,9 @@ export function AddTradeComponent({ gameState, xy }: IBuildingComponentProps) {
                   className="f1"
                   value={trade.sellResource}
                   onChange={(e) => {
-                     setTrade({ ...trade, sellResource: e.target.value });
+                     if (e.target.value in Tick.current.resources) {
+                        setTrade({ ...trade, sellResource: e.target.value as Resource });
+                     }
                   }}
                >
                   {sellResources.map((res) => (
@@ -74,7 +75,7 @@ export function AddTradeComponent({ gameState, xy }: IBuildingComponentProps) {
             </div>
             <div className="sep5"></div>
             <div className="text-desc text-small text-right">
-               0 ~ <FormatNumber value={resourcesInStorage[trade.sellResource as Resource] ?? 0} />
+               0 ~ <FormatNumber value={resourcesInStorage[trade.sellResource] ?? 0} />
             </div>
             <div className="separator has-title">
                <div className="title text-strong">{t(L.PlayerTradeIWant)}</div>
@@ -86,7 +87,9 @@ export function AddTradeComponent({ gameState, xy }: IBuildingComponentProps) {
                   className="f1"
                   value={trade.buyResource}
                   onChange={(e) => {
-                     setTrade({ ...trade, buyResource: e.target.value });
+                     if (e.target.value in Tick.current.resources) {
+                        setTrade({ ...trade, buyResource: e.target.value as Resource });
+                     }
                   }}
                >
                   {buyResources.map((res) => (
@@ -118,7 +121,7 @@ export function AddTradeComponent({ gameState, xy }: IBuildingComponentProps) {
                   onClick={() => {
                      if (isTradeValid(trade)) {
                         client.addTrade(trade);
-                        resourcesInStorage[trade.sellResource as Resource]! -= trade.sellAmount;
+                        resourcesInStorage[trade.sellResource]! -= trade.sellAmount;
                      } else {
                         playError();
                      }

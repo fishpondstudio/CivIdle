@@ -1,4 +1,3 @@
-import { Dict } from "@pixi/utils";
 import { Viewport } from "pixi-viewport";
 import { Application, Resource, Texture } from "pixi.js";
 import { watchGameState } from "../Global";
@@ -41,7 +40,7 @@ export class ViewportScene extends Scene {
    }
 }
 
-export type Textures = Dict<Texture<Resource>>;
+export type Textures = Record<string, Texture<Resource>>;
 
 export interface ISceneContext {
    app: Application;

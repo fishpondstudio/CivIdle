@@ -235,7 +235,7 @@ function tileTile(xy: string, gs: GameState): void {
    }
 
    if (building.type == "Caravansary") {
-      Tick.next.playerTradeBuildings.push(building);
+      Tick.next.playerTradeBuildings[xy] = building;
    }
 
    const input = filterTransportable(getBuildingIO(xy, "input", { multiplier: true, capacity: true }, gs));
@@ -306,7 +306,7 @@ function tileTile(xy: string, gs: GameState): void {
       hasTransported = true;
    });
 
-   if (!hasTransported) {
+   if (sizeOf(input) > 0 && !hasTransported) {
       Tick.next.notProducingReasons[xy] = "NoActiveTransports";
    }
 

@@ -94,6 +94,22 @@ export function forEach<T extends {}>(
 }
 
 // eslint-disable-next-line @typescript-eslint/ban-types
+export function firstKeyOf<T extends {}>(obj: T | undefined) {
+   for (const key in obj) {
+      return key;
+   }
+   return null;
+}
+
+// eslint-disable-next-line @typescript-eslint/ban-types
+export function firstValueOf<T extends {}>(obj: T | undefined) {
+   for (const key in obj) {
+      return obj[key];
+   }
+   return null;
+}
+
+// eslint-disable-next-line @typescript-eslint/ban-types
 export function reduceOf<T extends {}, K>(
    obj: T | undefined,
    func: (prev: K, k: keyof T, v: NonNullable<T[keyof T]>) => K,

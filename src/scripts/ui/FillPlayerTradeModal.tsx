@@ -1,17 +1,28 @@
+import classNames from "classnames";
 import { useEffect, useState } from "react";
-import { ITrade } from "../../../server/src/Database";
-import { Resource } from "../definitions/ResourceDefinitions";
-import { Singleton } from "../Global";
+import { Singleton, useGameState } from "../Global";
+import { getStorageFor } from "../logic/BuildingLogic";
+import { IClientTrade } from "../logic/PlayerTradeLogic";
 import { Tick } from "../logic/TickLogic";
-import { usePlayerMap } from "../rpc/RPCClient";
+import { client, usePlayerMap } from "../rpc/RPCClient";
 import { findPath, findUserOnMap, getMyMapXy } from "../scenes/PathFinder";
 import { PlayerMapScene } from "../scenes/PlayerMapScene";
-import { formatNumber, formatPercent, pointToXy, safeParseInt, xyToPoint } from "../utilities/Helper";
+import {
+   clamp,
+   firstKeyOf,
+   formatPercent,
+   jsxMapOf,
+   pointToXy,
+   safeAdd,
+   safeParseInt,
+   xyToPoint,
+} from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
-import { hideModal } from "./GlobalModal";
+import { playError } from "../visuals/Sound";
+import { hideModal, showToast } from "./GlobalModal";
 import { FormatNumber } from "./HelperComponents";
 
-export function FillPlayerTradeModal({ trade }: { trade: ITrade }) {
+export function FillPlayerTradeModal({ trade, xy }: { trade: IClientTrade; xy?: string }) {
    const [percent, setPercent] = useState(100);
    const [tiles, setTiles] = useState<string[]>([]);
    const map = usePlayerMap();
@@ -28,10 +39,27 @@ export function FillPlayerTradeModal({ trade }: { trade: ITrade }) {
          Singleton().sceneManager.getCurrent(PlayerMapScene)?.clearPath();
       };
    }, []);
-   const maxAmount = Tick.current.playerTradeBuildings.reduce(
-      (accu, curr) => accu + (curr.resources[trade.buyResource as Resource] ?? 0),
-      0
+   const totalTariff = tiles.reduce((prev, xy, i) => {
+      const tile = map[xy];
+      if (!tile || i == 0 || i == tiles.length - 1) {
+         return prev;
+      }
+      return prev + tile.tariffRate;
+   }, 0);
+
+   const gs = useGameState();
+   const allTradeBuildings = Tick.current.playerTradeBuildings;
+   const [delivery, setDelivery] = useState<string>(xy ? xy : firstKeyOf(allTradeBuildings)!);
+   const maxAmount = allTradeBuildings[delivery].resources[trade.buyResource] ?? 0;
+   const storageRequired = clamp(
+      ((trade.sellAmount * (1 - totalTariff) - trade.buyAmount) * percent) / 100,
+      0,
+      Infinity
    );
+   const s = getStorageFor(delivery, gs);
+   const hasEnoughStorage = s.total - s.used >= storageRequired;
+   const hasEnoughResource = (trade.buyAmount * percent) / 100 <= maxAmount;
+
    return (
       <div className="window">
          <div className="title-bar">
@@ -41,6 +69,44 @@ export function FillPlayerTradeModal({ trade }: { trade: ITrade }) {
             </div>
          </div>
          <div className="window-body">
+            <div className="table-view">
+               <table>
+                  <tbody>
+                     <tr>
+                        <th></th>
+                        <th className="text-right">{Tick.current.resources[trade.buyResource].name()}</th>
+                        <th className="text-right">{t(L.StorageLeft)}</th>
+                     </tr>
+                     {jsxMapOf(allTradeBuildings, (xy, building) => {
+                        const storage = getStorageFor(xy, gs);
+                        const uniqueId = "tile_" + xy;
+                        return (
+                           <tr key={xy}>
+                              <td>
+                                 <input
+                                    type="radio"
+                                    id={uniqueId}
+                                    checked={delivery == xy}
+                                    onChange={() => setDelivery(xy)}
+                                 />
+                                 <label htmlFor={uniqueId}>
+                                    {Tick.current.buildings[building.type].name()} (
+                                    {t(L.LevelX, { level: building.level })})
+                                 </label>
+                              </td>
+                              <td className="text-right">
+                                 <FormatNumber value={allTradeBuildings[xy].resources[trade.buyResource] ?? 0} />
+                              </td>
+                              <td className="text-right">
+                                 <FormatNumber value={storage.total - storage.used} />
+                              </td>
+                           </tr>
+                        );
+                     })}
+                  </tbody>
+               </table>
+            </div>
+            <div className="sep15"></div>
             <div className="row">
                <div className="f1">{t(L.PlayerTradeFillPercentage)}</div>
                <div>{percent}%</div>
@@ -55,33 +121,89 @@ export function FillPlayerTradeModal({ trade }: { trade: ITrade }) {
                   setPercent(safeParseInt(e.target.value));
                }}
             />
-            <div className="sep10"></div>
-            <div className="row">
-               <div className="f1 text-strong">{Tick.current.resources[trade.buyResource as Resource].name()}</div>
-               <div>
-                  <FormatNumber value={(trade.buyAmount * percent) / 100} />
-               </div>
-            </div>
-            <div className="text-desc text-right text-small">
-               {t(L.ResourceInStorage, { amount: formatNumber(maxAmount) })}
-            </div>
-            <div className="text-strong">{t(L.PlayerMapTariff)}</div>
-            {tiles.map((xy, i) => {
-               const tile = map[xy];
-               if (!tile || i == 0 || i == tiles.length - 1) {
-                  return null;
-               }
-               return (
-                  <div key={xy} className="row">
-                     <div className="f1 ml10">{tile.handle}</div>
-                     <div>{formatPercent(tile.tariffRate)}</div>
+            <div className="sep20"></div>
+            <ul className="tree-view">
+               <li className={classNames({ row: true, "text-strong text-red": !hasEnoughResource })}>
+                  <div className="f1">
+                     {t(L.PlayerTradeYouPay, { res: Tick.current.resources[trade.buyResource].name() })}
                   </div>
-               );
-            })}
-
-            <div className="sep10"></div>
+                  <div>
+                     <FormatNumber value={(trade.buyAmount * percent) / 100} />
+                  </div>
+               </li>
+               <li className="row">
+                  <div className="f1">
+                     {t(L.PlayerTradeYouGetGross, {
+                        res: Tick.current.resources[trade.sellResource].name(),
+                     })}
+                  </div>
+                  <div>
+                     <FormatNumber value={(trade.sellAmount * percent) / 100} />
+                  </div>
+               </li>
+               <li>
+                  <details>
+                     <summary className="row">
+                        <div className="f1">{t(L.PlayerMapTariff)}</div>
+                        <div>{formatPercent(totalTariff)}</div>
+                     </summary>
+                     <ul>
+                        {tiles.map((xy, i) => {
+                           const tile = map[xy];
+                           if (!tile || i == 0 || i == tiles.length - 1) {
+                              return null;
+                           }
+                           return (
+                              <li key={xy} className="row">
+                                 <div className="f1">{tile.handle}</div>
+                                 <div>{formatPercent(tile.tariffRate)}</div>
+                              </li>
+                           );
+                        })}
+                     </ul>
+                  </details>
+               </li>
+               <li className={classNames({ row: true, "text-strong text-red": !hasEnoughStorage })}>
+                  <div className="f1">{t(L.PlayerTradeStorageRequired)}</div>
+                  <div>
+                     <FormatNumber value={storageRequired} />
+                  </div>
+               </li>
+               <li className="row">
+                  <div className="f1">
+                     {t(L.PlayerTradeYouGetNet, { res: Tick.current.resources[trade.sellResource].name() })}
+                  </div>
+                  <div className="text-strong">
+                     <FormatNumber value={((1 - totalTariff) * (trade.sellAmount * percent)) / 100} />
+                  </div>
+               </li>
+            </ul>
+            <div className="sep15"></div>
             <div className="row" style={{ justifyContent: "flex-end" }}>
-               <button disabled={(trade.buyAmount * percent) / 100 > maxAmount} onClick={async () => {}}>
+               <button
+                  disabled={!hasEnoughResource || !hasEnoughStorage}
+                  onClick={async () => {
+                     if (!hasEnoughResource || !hasEnoughStorage) {
+                        playError();
+                     }
+                     try {
+                        await client.fillTrade({ id: trade.id, percent: percent / 100, path: tiles });
+                        safeAdd(
+                           allTradeBuildings[delivery].resources,
+                           trade.buyResource,
+                           (-trade.buyAmount * percent) / 100
+                        );
+                        safeAdd(
+                           allTradeBuildings[delivery].resources,
+                           trade.sellResource,
+                           (trade.sellAmount * percent) / 100
+                        );
+                        hideModal();
+                     } catch (error) {
+                        showToast(String(error));
+                     }
+                  }}
+               >
                   {t(L.PlayerTradeFillTradeButton)}
                </button>
                <div style={{ width: "10px" }}></div>

@@ -1,4 +1,3 @@
-import { Resource } from "../definitions/ResourceDefinitions";
 import { Tick } from "../logic/TickLogic";
 import { usePlayerMap, useTrades } from "../rpc/RPCClient";
 import { formatPercent } from "../utilities/Helper";
@@ -48,12 +47,10 @@ export function PlayerTilePage({ xy }: { xy: string }) {
                               return (
                                  <tr key={trade.id}>
                                     <td>
-                                       {Tick.current.resources[trade.buyResource as Resource].name()} x{" "}
-                                       {trade.buyAmount}
+                                       {Tick.current.resources[trade.buyResource].name()} x {trade.buyAmount}
                                     </td>
                                     <td>
-                                       {Tick.current.resources[trade.sellResource as Resource].name()} x{" "}
-                                       {trade.sellAmount}
+                                       {Tick.current.resources[trade.sellResource].name()} x {trade.sellAmount}
                                     </td>
                                     <td>
                                        <div

@@ -207,6 +207,7 @@ export const EN = {
    StorageBaseCapacity: "Base Capacity",
    StorageMultiplier: "Storage Multiplier",
    StorageUsed: "Storage Used",
+   StorageLeft: "Storage Left",
    NotProducingReasons: "This building is not producing, reason: %{reason}",
    NotProducingReasonStorageFull: "storage full",
    NotProducingReasonNotEnoughWorkers: "not enough workers",
@@ -607,4 +608,8 @@ export const EN = {
    ResourceImportImportPerCycle: "Import",
    ResourceImportImportCap: "Cap",
    ResourceImportSettings: "Resource Transport: %{res}",
+   PlayerTradeYouPay: "You Pay: %{res}",
+   PlayerTradeYouGetGross: "You Get (Before Tariff): %{res}",
+   PlayerTradeYouGetNet: "You Get (After Tariff): %{res}",
+   PlayerTradeStorageRequired: "Storage Required",
 };
