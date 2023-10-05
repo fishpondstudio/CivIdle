@@ -37,6 +37,7 @@ export const OnChatMessage = new TypedEvent<IChat[]>();
 export const OnTradeMessage = new TypedEvent<IClientTrade[]>();
 export const OnPlayerMapChanged = new TypedEvent<Record<string, IMapEntry>>();
 export const OnPlayerMapMessage = new TypedEvent<IMapMessage>();
+export const OnNewPendingClaims = new TypedEvent<void>();
 
 let chatMessages: IChat[] = [];
 const trades: Record<string, IClientTrade> = {};
@@ -138,8 +139,7 @@ export async function connectWebSocket() {
                });
             }
             if (hasPendingClaim) {
-               const pendingClaims = client.claimTrade();
-               // TODO: Claim trades
+               OnNewPendingClaims.emit();
             }
             console.log(trades);
             OnTradeMessage.emit(Object.values(trades));
