@@ -8,20 +8,11 @@ export default defineConfig(({ command }) => {
       base: "",
       plugins: [
          react(),
-         Spritesmith({
-            watch: command === "serve",
-            src: {
-               cwd: "./src/textures",
-               glob: "**/*.png",
-            },
-            target: {
-               image: "./src/images/textures.png",
-               css: [["./src/images/textures.json", { format: "json_texture" }]],
-            },
-            spritesmithOptions: {
-               padding: 1,
-            },
-         }),
+         buildAtlas("rome"),
+         buildAtlas("people"),
+         buildAtlas("buildings"),
+         buildAtlas("tiles"),
+         buildAtlas("misc"),
       ],
       server: {
          port: 3000,
@@ -31,4 +22,21 @@ export default defineConfig(({ command }) => {
          target: "es2015",
       },
    };
+
+   function buildAtlas(folder: string) {
+      return Spritesmith({
+         watch: command == "serve",
+         src: {
+            cwd: `./src/textures/${folder}`,
+            glob: "*.png",
+         },
+         target: {
+            image: `./src/images/textures_${folder}.png`,
+            css: [[`./src/images/textures_${folder}.json`, { format: "json_texture" }]],
+         },
+         spritesmithOptions: {
+            padding: 1,
+         },
+      });
+   }
 });

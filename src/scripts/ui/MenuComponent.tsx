@@ -2,7 +2,6 @@ import classNames from "classnames";
 import { PropsWithChildren, useEffect, useRef, useState } from "react";
 import { getGameOptions, Singleton, syncUITheme } from "../Global";
 import { PlayerMapScene } from "../scenes/PlayerMapScene";
-import { RomeProvinceScene } from "../scenes/RomeProvinceScene";
 import { TechTreeScene } from "../scenes/TechTreeScene";
 import { WorldScene } from "../scenes/WorldScene";
 import { L, t } from "../utilities/i18n";
@@ -92,18 +91,6 @@ export function MenuComponent() {
                   >
                      <MenuItem check={Singleton().sceneManager.isCurrent(WorldScene)}>{t(L.CityViewMap)}</MenuItem>
                   </div>
-                  {/* <div
-                        
-                            className="menu-popover-item"
-                            onPointerDown={(e) => {
-                                Singleton().sceneManager.loadScene(TechTreeScene);
-                                setActive(null);
-                            }}
-                        >
-                            <MenuItem visible={Singleton().sceneManager.isCurrent(TechTreeScene)}>
-                                {t(L.TechnologyMenu)}
-                            </MenuItem>
-                        </div> */}
                   <div
                      className="menu-popover-item"
                      onPointerDown={(e) => {
@@ -113,7 +100,7 @@ export function MenuComponent() {
                   >
                      <MenuItem check={Singleton().sceneManager.isCurrent(TechTreeScene)}>{t(L.ResearchMenu)}</MenuItem>
                   </div>
-                  <div
+                  {/* <div
                      className="menu-popover-item"
                      onPointerDown={(e) => {
                         Singleton().sceneManager.loadScene(RomeProvinceScene);
@@ -123,7 +110,7 @@ export function MenuComponent() {
                      <MenuItem check={Singleton().sceneManager.isCurrent(RomeProvinceScene)}>
                         {t(L.RomeMapMenu)}
                      </MenuItem>
-                  </div>
+                  </div> */}
                   <div
                      className="menu-popover-item"
                      onPointerDown={(e) => {

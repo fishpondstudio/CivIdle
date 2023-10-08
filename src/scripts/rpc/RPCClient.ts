@@ -16,9 +16,12 @@ import { MessageType } from "../../../server/src/Database";
 import { ServerImpl } from "../../../server/src/Server";
 import { getGameOptions, saveGame } from "../Global";
 import { IClientTrade } from "../logic/PlayerTradeLogic";
+import { showToast } from "../ui/GlobalModal";
 import { forEach } from "../utilities/Helper";
 import { makeObservableHook } from "../utilities/Hook";
+import { L, t } from "../utilities/i18n";
 import { TypedEvent } from "../utilities/TypedEvent";
+import { playKaching } from "../visuals/Sound";
 import { isSteam, SteamClient, STEAM_APP_ID } from "./SteamClient";
 
 const serverAddress = import.meta.env.DEV ? "ws://localhost:8000" : "wss://api.cividle.com";
@@ -120,28 +123,29 @@ export async function connectWebSocket() {
             saveGame();
             break;
          case MessageType.Trade:
-            const t = message as ITradeMessage;
-            let hasPendingClaim = false;
-            if (t.upsert) {
-               t.upsert.forEach((trade) => {
+            const tm = message as ITradeMessage;
+            let pendingClaims = 0;
+            if (tm.upsert) {
+               tm.upsert.forEach((trade) => {
                   if (trades[trade.id] && trades[trade.id].fromId == user?.userId) {
-                     hasPendingClaim = true;
+                     pendingClaims++;
                   }
                   trades[trade.id] = trade as IClientTrade;
                });
             }
-            if (t.remove) {
-               t.remove.forEach((id) => {
+            if (tm.remove) {
+               tm.remove.forEach((id) => {
                   if (trades[id] && trades[id].fromId == user?.userId) {
-                     hasPendingClaim = true;
+                     pendingClaims++;
                   }
                   delete trades[id];
                });
             }
-            if (hasPendingClaim) {
+            if (pendingClaims > 0) {
+               playKaching();
+               showToast(t(L.PlayerTradeClaimAvailable, { count: pendingClaims }));
                OnNewPendingClaims.emit();
             }
-            console.log(trades);
             OnTradeMessage.emit(Object.values(trades));
             break;
          case MessageType.Map:

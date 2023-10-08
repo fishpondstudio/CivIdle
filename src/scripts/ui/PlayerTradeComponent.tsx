@@ -2,14 +2,17 @@ import classNames from "classnames";
 import { useEffect, useState } from "react";
 import { IPendingClaim } from "../../../server/src/Database";
 import { Resource } from "../definitions/ResourceDefinitions";
+import { notifyGameStateUpdate } from "../Global";
+import { getStorageFor } from "../logic/BuildingLogic";
 import { Tick } from "../logic/TickLogic";
-import { IBuildingData } from "../logic/Tile";
 import { client, OnNewPendingClaims, useTrades, useUser } from "../rpc/RPCClient";
+import { safeAdd } from "../utilities/Helper";
 import { useTypedEvent } from "../utilities/Hook";
 import { L, t } from "../utilities/i18n";
+import { playClick, playError } from "../visuals/Sound";
 import { AddTradeComponent } from "./AddTradeComponent";
 import { FillPlayerTradeModal } from "./FillPlayerTradeModal";
-import { showModal } from "./GlobalModal";
+import { showModal, showToast } from "./GlobalModal";
 import { FormatNumber } from "./HelperComponents";
 import { IBuildingComponentProps } from "./PlayerMapPage";
 
@@ -20,18 +23,10 @@ export function PlayerTradeComponent({ gameState, xy }: IBuildingComponentProps)
    }
    const trades = useTrades();
    const user = useUser();
-   const [pendingClaims, setPendingClaims] = useState<IPendingClaim[]>([]);
-   useEffect(() => {
-      client.getPendingClaims().then(setPendingClaims);
-   }, []);
-   useTypedEvent(OnNewPendingClaims, () => {
-      client.getPendingClaims().then(setPendingClaims);
-   });
-
    return (
       <fieldset>
          <legend>{t(L.PlayerTrade)}</legend>
-         <PendingClaimComponent pendingClaims={pendingClaims} building={building} />
+         <PendingClaimComponent gameState={gameState} xy={xy} />
          <AddTradeComponent gameState={gameState} xy={xy} />
          <div className="table-view">
             <table>
@@ -81,7 +76,15 @@ export function PlayerTradeComponent({ gameState, xy }: IBuildingComponentProps)
    );
 }
 
-function PendingClaimComponent({ pendingClaims }: { pendingClaims: IPendingClaim[]; building: IBuildingData }) {
+function PendingClaimComponent({ gameState, xy }: IBuildingComponentProps) {
+   const [pendingClaims, setPendingClaims] = useState<IPendingClaim[]>([]);
+   useEffect(() => {
+      client.getPendingClaims().then(setPendingClaims);
+   }, []);
+   useTypedEvent(OnNewPendingClaims, () => {
+      client.getPendingClaims().then(setPendingClaims);
+   });
+
    if (pendingClaims.length == 0) {
       return null;
    }
@@ -103,7 +106,24 @@ function PendingClaimComponent({ pendingClaims }: { pendingClaims: IPendingClaim
                         <td className="text-right">
                            <FormatNumber value={trade.amount} />
                         </td>
-                        <td className="text-right text-strong text-link">
+                        <td
+                           className="text-right text-strong text-link"
+                           onClick={async () => {
+                              const { total, used } = getStorageFor(xy, gameState);
+                              if (total - used >= trade.amount) {
+                                 await client.claimTrade(trade.id).then(setPendingClaims);
+                                 const building = gameState.tiles[xy].building;
+                                 if (building) {
+                                    playClick();
+                                    safeAdd(building.resources, trade.resource, trade.amount);
+                                    notifyGameStateUpdate();
+                                 }
+                              } else {
+                                 showToast(t(L.PlayerTradeClaimNotEnoughStorage));
+                                 playError();
+                              }
+                           }}
+                        >
                            <span>{t(L.PlayerTradeClaim)}</span>
                         </td>
                      </tr>

@@ -614,4 +614,6 @@ export const EN = {
    PlayerTradeYouGetGross: "You Get (Before Tariff): %{res}",
    PlayerTradeYouGetNet: "You Get (After Tariff): %{res}",
    PlayerTradeStorageRequired: "Storage Required",
+   PlayerTradeClaimAvailable: "%{count} trade(s) has been filled available for claim",
+   PlayerTradeClaimNotEnoughStorage: "Not enough storage for resources",
 };

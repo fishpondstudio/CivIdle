@@ -4,6 +4,7 @@ import { formatPercent } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
 import { FillPlayerTradeModal } from "./FillPlayerTradeModal";
 import { showModal } from "./GlobalModal";
+import { FormatNumber } from "./HelperComponents";
 import { MenuComponent } from "./MenuComponent";
 
 export function PlayerTilePage({ xy }: { xy: string }) {
@@ -47,10 +48,12 @@ export function PlayerTilePage({ xy }: { xy: string }) {
                               return (
                                  <tr key={trade.id}>
                                     <td>
-                                       {Tick.current.resources[trade.buyResource].name()} x {trade.buyAmount}
+                                       {Tick.current.resources[trade.buyResource].name()} x{" "}
+                                       <FormatNumber value={trade.buyAmount} />
                                     </td>
                                     <td>
-                                       {Tick.current.resources[trade.sellResource].name()} x {trade.sellAmount}
+                                       {Tick.current.resources[trade.sellResource].name()} x{" "}
+                                       <FormatNumber value={trade.sellAmount} />
                                     </td>
                                     <td>
                                        <div

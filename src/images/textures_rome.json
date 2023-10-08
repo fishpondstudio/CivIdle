@@ -1,0 +1,262 @@
+{
+    "frames": {
+        "RomeAegyptus": {
+            "frame": {
+                "x": 2645,
+                "y": 1134,
+                "w": 650,
+                "h": 341
+            }
+        },
+        "RomeAfrica": {
+            "frame": {
+                "x": 3568,
+                "y": 456,
+                "w": 729,
+                "h": 541
+            }
+        },
+        "RomeAsia": {
+            "frame": {
+                "x": 493,
+                "y": 1744,
+                "w": 463,
+                "h": 371
+            }
+        },
+        "RomeBithynia": {
+            "frame": {
+                "x": 240,
+                "y": 2467,
+                "w": 289,
+                "h": 216
+            }
+        },
+        "RomeCantabri": {
+            "frame": {
+                "x": 2102,
+                "y": 1562,
+                "w": 480,
+                "h": 178
+            }
+        },
+        "RomeCappadocia": {
+            "frame": {
+                "x": 316,
+                "y": 2211,
+                "w": 350,
+                "h": 213
+            }
+        },
+        "RomeCilicia": {
+            "frame": {
+                "x": 4134,
+                "y": 1134,
+                "w": 289,
+                "h": 138
+            }
+        },
+        "RomeCommagene": {
+            "frame": {
+                "x": 2665,
+                "y": 1744,
+                "w": 119,
+                "h": 184
+            }
+        },
+        "RomeCreta": {
+            "frame": {
+                "x": 2814,
+                "y": 1040,
+                "w": 173,
+                "h": 45
+            }
+        },
+        "RomeCyprus": {
+            "frame": {
+                "x": 2583,
+                "y": 1562,
+                "w": 122,
+                "h": 109
+            }
+        },
+        "RomeCyrene": {
+            "frame": {
+                "x": 1849,
+                "y": 1744,
+                "w": 388,
+                "h": 263
+            }
+        },
+        "RomeGalatia": {
+            "frame": {
+                "x": 4298,
+                "y": 759,
+                "w": 136,
+                "h": 189
+            }
+        },
+        "RomeGallia": {
+            "frame": {
+                "x": 2102,
+                "y": 456,
+                "w": 711,
+                "h": 677
+            }
+        },
+        "RomeGalliaCisalpina": {
+            "frame": {
+                "x": 2238,
+                "y": 1744,
+                "w": 426,
+                "h": 195
+            }
+        },
+        "RomeGalliaTransalpina": {
+            "frame": {
+                "x": 1412,
+                "y": 1744,
+                "w": 436,
+                "h": 312
+            }
+        },
+        "RomeHispania": {
+            "frame": {
+                "x": 2814,
+                "y": 456,
+                "w": 753,
+                "h": 583
+            }
+        },
+        "RomeIllyricum": {
+            "frame": {
+                "x": 0,
+                "y": 2211,
+                "w": 315,
+                "h": 255
+            }
+        },
+        "RomeItalia": {
+            "frame": {
+                "x": 0,
+                "y": 1744,
+                "w": 492,
+                "h": 466
+            }
+        },
+        "RomeJudia": {
+            "frame": {
+                "x": 0,
+                "y": 2467,
+                "w": 239,
+                "h": 331
+            }
+        },
+        "RomeLycia": {
+            "frame": {
+                "x": 4029,
+                "y": 1321,
+                "w": 97,
+                "h": 79
+            }
+        },
+        "RomeMacedonia": {
+            "frame": {
+                "x": 2102,
+                "y": 1134,
+                "w": 542,
+                "h": 427
+            }
+        },
+        "RomeMauretania": {
+            "frame": {
+                "x": 3296,
+                "y": 1134,
+                "w": 837,
+                "h": 186
+            }
+        },
+        "RomeNumidia": {
+            "frame": {
+                "x": 530,
+                "y": 2467,
+                "w": 168,
+                "h": 214
+            }
+        },
+        "RomePontus": {
+            "frame": {
+                "x": 957,
+                "y": 1744,
+                "w": 454,
+                "h": 342
+            }
+        },
+        "RomeSardiniaAndCorsica": {
+            "frame": {
+                "x": 4298,
+                "y": 456,
+                "w": 89,
+                "h": 302
+            }
+        },
+        "RomeSicillia": {
+            "frame": {
+                "x": 3669,
+                "y": 1321,
+                "w": 176,
+                "h": 121
+            }
+        },
+        "RomeSophene": {
+            "frame": {
+                "x": 3846,
+                "y": 1321,
+                "w": 182,
+                "h": 96
+            }
+        },
+        "RomeSyria": {
+            "frame": {
+                "x": 0,
+                "y": 2799,
+                "w": 162,
+                "h": 368
+            }
+        },
+        "RomeUnknown1": {
+            "frame": {
+                "x": 3296,
+                "y": 1321,
+                "w": 372,
+                "h": 143
+            }
+        },
+        "RomeUnknown2": {
+            "frame": {
+                "x": 0,
+                "y": 0,
+                "w": 2101,
+                "h": 1743
+            }
+        },
+        "RomeUnknown3": {
+            "frame": {
+                "x": 2102,
+                "y": 0,
+                "w": 2344,
+                "h": 455
+            }
+        }
+    },
+    "meta": {
+        "app": "spritesheet-templates",
+        "version": "10.5.2",
+        "image": "./src/images/textures_rome.png",
+        "scale": 1,
+        "size": {
+            "w": 4446,
+            "h": 3167
+        }
+    }
+}

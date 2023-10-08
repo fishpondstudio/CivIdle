@@ -1,5 +1,4 @@
-import { Application, Assets, BitmapFont, Spritesheet, Ticker } from "pixi.js";
-import altasDef from "../images/textures.json";
+import { Application, Ticker } from "pixi.js";
 import { Building } from "./definitions/BuildingDefinitions";
 import { City } from "./definitions/CityDefinitions";
 import {
@@ -18,7 +17,7 @@ import { calculateTierAndPrice, Config } from "./logic/Constants";
 import { GameState, initializeGameState } from "./logic/GameState";
 import { ITileData } from "./logic/Tile";
 import { shouldTick, tickEveryFrame, tickEverySecond } from "./logic/Update";
-import { fonts, MainBundleAssets } from "./main";
+import { MainBundleAssets } from "./main";
 import { RouteChangeEvent } from "./Route";
 import { connectWebSocket } from "./rpc/RPCClient";
 import { Grid } from "./scenes/Grid";
@@ -28,28 +27,6 @@ import { forEach } from "./utilities/Helper";
 import Actions from "./utilities/pixi-actions/Actions";
 import { SceneManager, Textures } from "./utilities/SceneManager";
 import { TypedEvent } from "./utilities/TypedEvent";
-import { Fonts } from "./visuals/Fonts";
-
-export async function loadBundle() {
-   fonts.forEach((f) => document.fonts.add(f));
-   const result = await Promise.all([Assets.loadBundle(["main"])].concat(fonts.map((f) => f.load())));
-   const { main }: { main: MainBundleAssets } = result[0];
-
-   fonts.forEach((f) =>
-      BitmapFont.from(
-         f.family,
-         { fill: "#ffffff", fontSize: 64, fontFamily: f.family },
-         { chars: BitmapFont.ASCII, resolution: 2 }
-      )
-   );
-   BitmapFont.from(
-      Fonts.Marcellus,
-      { fill: "#ffffff", fontSize: 64, fontFamily: Fonts.Marcellus },
-      { chars: BitmapFont.ASCII, padding: 2, resolution: 2 }
-   );
-   const textures = await new Spritesheet(main.atlas, altasDef as any).parse();
-   return { main, textures };
-}
 
 export async function startGame(
    app: Application,
