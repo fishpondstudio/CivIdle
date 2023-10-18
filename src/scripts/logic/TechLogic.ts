@@ -1,15 +1,21 @@
 import { Building } from "../definitions/BuildingDefinitions";
-import { ITechDefinition } from "../definitions/ITechDefinition";
 import { Deposit, Resource } from "../definitions/ResourceDefinitions";
 import { Tech, TechAge } from "../definitions/TechDefinitions";
 import { Singleton } from "../Global";
 import { forEach, isEmpty, keysOf, shuffle } from "../utilities/Helper";
+import { Config } from "./Constants";
 import { GameState } from "./GameState";
 import { getBuildingsThatProduce } from "./ResourceLogic";
 import { getDepositTileCount } from "./Tile";
 
-export function getUnlockCost(def: ITechDefinition): number {
-   return Math.pow(2, def.column) * 5000;
+export function getUnlockCost(tech: Tech): number {
+   const a = getAgeForTech(tech);
+   let ageIdx = 0;
+   if (a) {
+      const age = Config.TechAge[a];
+      ageIdx = age.idx;
+   }
+   return Math.pow(10, ageIdx) * Math.pow(1.5, Config.Tech[tech].column) * 5000;
 }
 
 export function getScienceAmount(): number {
@@ -19,9 +25,9 @@ export function getScienceAmount(): number {
 export function getMostAdvancedTech(gs: GameState): Tech | null {
    let column = 0;
    let tech: Tech | null = null;
-   forEach(Tech, (k) => {
-      if (gs.unlockedTech[k] && Tech[k].column >= column) {
-         column = Tech[k].column;
+   forEach(Config.Tech, (k) => {
+      if (gs.unlockedTech[k] && Config.Tech[k].column >= column) {
+         column = Config.Tech[k].column;
          tech = k;
       }
    });
@@ -33,7 +39,7 @@ export function getCurrentTechAge(gs: GameState): TechAge | null {
    if (!tech) {
       return null;
    }
-   return getAgeForTech(tech, gs);
+   return getAgeForTech(tech);
 }
 
 export function isAgeUnlocked(age: TechAge, gs: GameState): boolean {
@@ -41,14 +47,14 @@ export function isAgeUnlocked(age: TechAge, gs: GameState): boolean {
    if (!tech) {
       return false;
    }
-   return Tech[tech].column >= TechAge[age].from;
+   return Config.Tech[tech].column >= Config.TechAge[age].from;
 }
 
-export function getAgeForTech(tech: string, gs: GameState): TechAge | null {
-   const techColumn = Tech[tech as keyof typeof Tech].column;
+export function getAgeForTech(tech: string): TechAge | null {
+   const techColumn = Config.Tech[tech as Tech].column;
    let age: TechAge;
-   for (age in TechAge) {
-      const ageDef = TechAge[age];
+   for (age in Config.TechAge) {
+      const ageDef = Config.TechAge[age];
       if (techColumn >= ageDef.from && techColumn <= ageDef.to) {
          return age;
       }
@@ -61,7 +67,7 @@ export function unlockTech(tech: Tech, gs: GameState): void {
       return;
    }
    gs.unlockedTech[tech] = true;
-   Tech[tech].revealDeposit?.forEach((deposit) => {
+   Config.Tech[tech].revealDeposit?.forEach((deposit) => {
       const tileCount = getDepositTileCount(deposit, gs);
       const depositTiles = shuffle(keysOf(gs.tiles)).slice(0, tileCount);
       const exploredEmptyTiles = Object.values(gs.tiles).filter((t) => t.explored && !t.building && isEmpty(t.deposit));
@@ -71,13 +77,13 @@ export function unlockTech(tech: Tech, gs: GameState): void {
       }
       depositTiles.forEach((xy) => (gs.tiles[xy].deposit[deposit] = true));
    });
-   Tech[tech].unlockFeature?.forEach((f) => (gs.features[f] = true));
+   Config.Tech[tech].unlockFeature?.forEach((f) => (gs.features[f] = true));
 }
 
 export function getDepositUnlockTech(deposit: Deposit): Tech {
    let key: Tech;
-   for (key in Tech) {
-      if (Tech[key].revealDeposit?.includes(deposit)) {
+   for (key in Config.Tech) {
+      if (Config.Tech[key].revealDeposit?.includes(deposit)) {
          return key;
       }
    }
@@ -86,8 +92,8 @@ export function getDepositUnlockTech(deposit: Deposit): Tech {
 
 export function getBuildingUnlockTech(building: Building): Tech | null {
    let key: Tech;
-   for (key in Tech) {
-      if (Tech[key].unlockBuilding?.includes(building)) {
+   for (key in Config.Tech) {
+      if (Config.Tech[key].unlockBuilding?.includes(building)) {
          return key;
       }
    }
@@ -104,7 +110,7 @@ export function getResourceUnlockTech(res: Resource): Tech | null {
          }
          return [tech];
       })
-      .sort((a, b) => Tech[a].column - Tech[b].column);
+      .sort((a, b) => Config.Tech[a].column - Config.Tech[b].column);
    if (buildings.length > 0) {
       return techs[0];
    }
@@ -113,7 +119,7 @@ export function getResourceUnlockTech(res: Resource): Tech | null {
 
 export function unlockableTechs(gs: GameState): Tech[] {
    const result: Tech[] = [];
-   forEach(Tech, (tech, def) => {
+   forEach(Config.Tech, (tech, def) => {
       if (gs.unlockedTech[tech]) {
          return;
       }

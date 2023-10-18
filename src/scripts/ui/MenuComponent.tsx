@@ -1,9 +1,11 @@
 import classNames from "classnames";
 import { PropsWithChildren, useEffect, useRef, useState } from "react";
 import { getGameOptions, Singleton, syncUITheme } from "../Global";
+import { Tick } from "../logic/TickLogic";
 import { PlayerMapScene } from "../scenes/PlayerMapScene";
 import { TechTreeScene } from "../scenes/TechTreeScene";
 import { WorldScene } from "../scenes/WorldScene";
+import { sizeOf } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
 import { AboutModal } from "./AboutModal";
 import { showModal } from "./GlobalModal";
@@ -111,17 +113,19 @@ export function MenuComponent() {
                         {t(L.RomeMapMenu)}
                      </MenuItem>
                   </div> */}
-                  <div
-                     className="menu-popover-item"
-                     onPointerDown={(e) => {
-                        Singleton().sceneManager.loadScene(PlayerMapScene);
-                        setActive(null);
-                     }}
-                  >
-                     <MenuItem check={Singleton().sceneManager.isCurrent(PlayerMapScene)}>
-                        {t(L.PlayerMapMenu)}
-                     </MenuItem>
-                  </div>
+                  {sizeOf(Tick.current.playerTradeBuildings) <= 0 ? null : (
+                     <div
+                        className="menu-popover-item"
+                        onPointerDown={(e) => {
+                           Singleton().sceneManager.loadScene(PlayerMapScene);
+                           setActive(null);
+                        }}
+                     >
+                        <MenuItem check={Singleton().sceneManager.isCurrent(PlayerMapScene)}>
+                           {t(L.PlayerMapMenu)}
+                        </MenuItem>
+                     </div>
+                  )}
                </div>
             </div>
             <div

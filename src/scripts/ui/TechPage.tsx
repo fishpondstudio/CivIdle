@@ -6,11 +6,12 @@ import { notifyGameStateUpdate, Singleton, useGameState } from "../Global";
 import { Config } from "../logic/Constants";
 import { onUnlockableUnlocked as onTechUnlocked } from "../logic/LogicCallback";
 import { getResourceAmount, trySpendResources } from "../logic/ResourceLogic";
-import { getCurrentTechAge, unlockTech } from "../logic/TechLogic";
+import { getCurrentTechAge, getUnlockCost, unlockTech } from "../logic/TechLogic";
 import { RomeProvinceScene } from "../scenes/RomeProvinceScene";
 import { TechTreeScene } from "../scenes/TechTreeScene";
 import { forEach, jsxMapOf, reduceOf } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
+import { playLevelUp } from "../visuals/Sound";
 import { ChooseGreatPersonModal } from "./ChooseGreatPersonModal";
 import { showModal } from "./GlobalModal";
 import { FormatNumber } from "./HelperComponents";
@@ -21,9 +22,9 @@ import { UnlockableEffectComponent } from "./UnlockableEffectComponent";
 
 export function TechPage({ id }: { id: Tech }) {
    const gs = useGameState();
-   const tech = Tech[id];
+   const tech = Config.Tech[id];
    const prerequisitesSatisfied = tech.requireTech.every((t) => gs.unlockedTech[t]);
-   const unlockCost: PartialTabulate<Resource> = { Science: Math.pow(2, tech.column) * 1000 };
+   const unlockCost: PartialTabulate<Resource> = { Science: getUnlockCost(id) };
    const availableResources: PartialTabulate<Resource> = {};
    forEach(unlockCost, (k, v) => {
       availableResources[k] = getResourceAmount(k, gs);
@@ -51,7 +52,7 @@ export function TechPage({ id }: { id: Tech }) {
                         key={prerequisite}
                         name={
                            <>
-                              {t(L.UnlockBuilding)} <b>{tech.name()}</b>
+                              {t(L.UnlockBuilding)} <b>{Config.Tech[prerequisite].name()}</b>
                            </>
                         }
                         unlocked={!!gs.unlockedTech[prerequisite]}
@@ -121,6 +122,7 @@ export function TechPage({ id }: { id: Tech }) {
                               }
                               const oldAge = getCurrentTechAge(gs);
                               unlockTech(id, gs);
+                              playLevelUp();
                               const newAge = getCurrentTechAge(gs);
                               if (oldAge !== newAge) {
                                  gs.greatPeopleChoices.push(["Cincinnatus", "JuliusCaesar", "ScipioAfricanus"]);

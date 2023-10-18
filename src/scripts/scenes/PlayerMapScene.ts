@@ -32,6 +32,8 @@ export class PlayerMapScene extends ViewportScene {
       this.viewport.worldWidth = this._width;
       this.viewport.worldHeight = this._height;
 
+      const minZoom = Math.max(app.screen.width / this._width, app.screen.height / this._height);
+
       this.viewport
          .drag()
          .wheel({ smooth: 10 })
@@ -40,7 +42,7 @@ export class PlayerMapScene extends ViewportScene {
          })
          .clampZoom({
             maxScale: 1,
-            minScale: Math.max(app.screen.width / this._width, app.screen.height / this._height),
+            minScale: minZoom,
          });
 
       app.renderer.background.color = 0x2980b9;
@@ -125,9 +127,12 @@ export class PlayerMapScene extends ViewportScene {
       } else {
          this.viewport.moveCenter(this._width / 2, this._height / 2);
       }
-      if (viewportZoom) {
-         this.viewport.setZoom(viewportZoom, true);
+
+      if (!viewportZoom) {
+         viewportZoom = minZoom;
       }
+
+      this.viewport.setZoom(viewportZoom, true);
 
       this.viewport.on("moved", () => {
          viewportCenter = this.viewport.center;

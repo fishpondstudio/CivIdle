@@ -2,7 +2,7 @@ import { Building, BuildingDefinitions } from "../definitions/BuildingDefinition
 import { CityDefinitions } from "../definitions/CityDefinitions";
 import { GreatPersonDefinitions } from "../definitions/GreatPersonDefinitions";
 import { DepositResources, Resource, ResourceDefinitions } from "../definitions/ResourceDefinitions";
-import { Tech } from "../definitions/TechDefinitions";
+import { Tech, TechAgeDefinitions, TechDefinitions } from "../definitions/TechDefinitions";
 import { PartialTabulate } from "../definitions/TypeDefinitions";
 import { deepFreeze, forEach, isEmpty, keysOf, sizeOf, tabulateAdd } from "../utilities/Helper";
 import { GameState } from "./GameState";
@@ -20,6 +20,8 @@ export const Config = {
    Resource: deepFreeze(new ResourceDefinitions()),
    GreatPerson: deepFreeze(new GreatPersonDefinitions()),
    City: deepFreeze(new CityDefinitions()),
+   Tech: deepFreeze(new TechDefinitions()),
+   TechAge: deepFreeze(new TechAgeDefinitions()),
    BuildingTier,
    BuildingTech,
    ResourceTier,
@@ -36,7 +38,7 @@ interface IRecipe {
 export function calculateTierAndPrice(gs: GameState) {
    forEach(DepositResources, (k) => {
       Config.ResourceTier[k] = 1;
-      Config.ResourcePrice[k] = 1 + Tech[getDepositUnlockTech(k)].column;
+      Config.ResourcePrice[k] = 1 + Config.Tech[getDepositUnlockTech(k)].column;
    });
 
    const allRecipes: IRecipe[] = [];
@@ -50,7 +52,7 @@ export function calculateTierAndPrice(gs: GameState) {
             if (!Config.ResourcePrice[res]) {
                const tech = getBuildingUnlockTech(building);
                if (tech) {
-                  Config.ResourcePrice[res] = 1 + Tech[tech].column;
+                  Config.ResourcePrice[res] = 1 + Config.Tech[tech].column;
                } else {
                   Config.ResourcePrice[res] = 1;
                }
@@ -74,8 +76,17 @@ export function calculateTierAndPrice(gs: GameState) {
             const t = getResourceUnlockTech(res);
             if (t) {
                console.assert(
-                  Tech[t].column <= Tech[tech].column,
-                  `${building}'s input resource ${res} is unlocked (${t}) later than the building itself (${tech})`
+                  Config.Tech[t].column < Config.Tech[tech].column,
+                  `Input: Expect Unlock(${building}=${tech},${Config.Tech[tech].column}) > Unlock(${res}=${t},${Config.Tech[t].column})`
+               );
+            }
+         });
+         forEach(buildingDef.construction, (res) => {
+            const t = getResourceUnlockTech(res);
+            if (t && t !== tech && Config.Tech[t].column > 0) {
+               console.assert(
+                  Config.Tech[t].column < Config.Tech[tech].column,
+                  `Construction: Expect Unlock(${building}=${tech},${Config.Tech[tech].column}) > Unlock(${res}=${t},${Config.Tech[t].column})`
                );
             }
          });
@@ -83,8 +94,8 @@ export function calculateTierAndPrice(gs: GameState) {
 
       let key: Tech;
       const result: Tech[] = [];
-      for (key in Tech) {
-         if (Tech[key].unlockBuilding?.includes(building)) {
+      for (key in Config.Tech) {
+         if (Config.Tech[key].unlockBuilding?.includes(building)) {
             result.push(key);
          }
       }
@@ -94,7 +105,7 @@ export function calculateTierAndPrice(gs: GameState) {
       );
    });
 
-   forEach(Tech, (tech, techDef) => {
+   forEach(Config.Tech, (tech, techDef) => {
       techDef.unlockBuilding?.forEach((b) => {
          const techLevel = techDef.column + 1;
          Config.BuildingTech[b] = techLevel;

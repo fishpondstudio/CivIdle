@@ -1,13 +1,17 @@
 import { notifyGameStateUpdate } from "../Global";
 import { Tick } from "../logic/TickLogic";
-import { PRIORITY_MAX, PRIORITY_MIN } from "../logic/Tile";
+import { IMarketBuildingData, PRIORITY_MAX, PRIORITY_MIN } from "../logic/Tile";
 import { isEmpty } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
 import { IBuildingComponentProps } from "./BuildingPage";
 
 export function BuildingProductionPriorityComponent({ gameState, xy }: IBuildingComponentProps) {
    const building = gameState.tiles[xy].building;
-   if (building == null || (building.type != "Caravansary" && isEmpty(Tick.current.buildings[building.type].output))) {
+   if (
+      building == null ||
+      (isEmpty((building as IMarketBuildingData)?.sellResources) &&
+         isEmpty(Tick.current.buildings[building.type].output))
+   ) {
       return null;
    }
    if (!gameState.features.BuildingProductionPriority) {

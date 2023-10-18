@@ -83,7 +83,7 @@ export function initializeGameState(gameState: GameState, grid: Grid) {
    //       unlockTech(k, getTechConfig(gameState), gameState);
    //    }
    // });
-   forEach(Tech, (k, v) => {
+   forEach(Config.Tech, (k, v) => {
       if (v.column === 0) {
          unlockTech(k, gameState);
       }

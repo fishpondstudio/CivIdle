@@ -132,7 +132,7 @@ export class BuildingDefinitions {
       name: () => t(L.LumberMill),
       input: { Wood: 2 },
       output: { Lumber: 1 },
-      construction: { Brick: 1, Wood: 1 },
+      construction: { Stone: 1, Wood: 1 },
    };
 
    Aqueduct: IBuildingDefinition = {
@@ -348,10 +348,10 @@ export class BuildingDefinitions {
    };
 
    Brewery: IBuildingDefinition = {
-      name: () => t(L.Warehouse),
+      name: () => t(L.Brewery),
       input: { Wheat: 1, Water: 1 },
       output: { Alcohol: 1 },
-      construction: { Lumber: 1, Brick: 1, Iron: 1 },
+      construction: { Lumber: 1, Brick: 1, Copper: 1 },
    };
 
    Winery: IBuildingDefinition = {
@@ -394,7 +394,7 @@ export class BuildingDefinitions {
       desc: () => t(L.StatisticsDesc),
       input: {},
       output: {},
-      construction: { Brick: 1000, Wood: 1000, Marble: 1000 },
+      construction: { Brick: 1000, Wood: 1000, Lumber: 1000 },
       max: 1,
    };
 

@@ -23,6 +23,7 @@ export interface ITechDefinition extends IUnlockableDefinition {
 }
 
 export interface ITechAgeDefinition {
+   idx: number;
    from: number;
    to: number;
    name: () => string;

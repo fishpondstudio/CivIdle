@@ -616,4 +616,7 @@ export const EN = {
    PlayerTradeStorageRequired: "Storage Required",
    PlayerTradeClaimAvailable: "%{count} trade(s) has been filled available for claim",
    PlayerTradeClaimNotEnoughStorage: "Not enough storage for resources",
+   PlayerTradeClaimTileFirst: "Claim Your Tile On Trade Map",
+   PlayerTradeClaimTileFirstWarning:
+      "You can only trade with other players after you've claimed your tile on the trade map",
 };

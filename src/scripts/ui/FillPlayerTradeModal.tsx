@@ -26,8 +26,13 @@ export function FillPlayerTradeModal({ trade, xy }: { trade: IClientTrade; xy?: 
    const [percent, setPercent] = useState(100);
    const [tiles, setTiles] = useState<string[]>([]);
    const map = usePlayerMap();
+   const myXy = getMyMapXy();
+   if (!myXy) {
+      hideModal();
+      playError();
+      showToast(t(L.PlayerTradeClaimTileFirstWarning));
+   }
    useEffect(() => {
-      const myXy = getMyMapXy();
       const targetXy = findUserOnMap(trade.fromId);
       if (!myXy || !targetXy) {
          return;
@@ -59,6 +64,7 @@ export function FillPlayerTradeModal({ trade, xy }: { trade: IClientTrade; xy?: 
    const s = getStorageFor(delivery, gs);
    const hasEnoughStorage = s.total - s.used >= storageRequired;
    const hasEnoughResource = (trade.buyAmount * percent) / 100 <= maxAmount;
+   const hasValidPath = tiles.length > 0;
 
    return (
       <div className="window">
@@ -181,9 +187,9 @@ export function FillPlayerTradeModal({ trade, xy }: { trade: IClientTrade; xy?: 
             <div className="sep15"></div>
             <div className="row" style={{ justifyContent: "flex-end" }}>
                <button
-                  disabled={!hasEnoughResource || !hasEnoughStorage}
+                  disabled={!hasEnoughResource || !hasEnoughStorage || !hasValidPath}
                   onClick={async () => {
-                     if (!hasEnoughResource || !hasEnoughStorage) {
+                     if (!hasEnoughResource || !hasEnoughStorage || !hasValidPath) {
                         playError();
                      }
                      try {

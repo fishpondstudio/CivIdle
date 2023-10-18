@@ -1,5 +1,4 @@
 import classNames from "classnames";
-import { Tech, TechAge } from "../definitions/TechDefinitions";
 import { Singleton } from "../Global";
 import { getScienceFromWorkers } from "../logic/BuildingLogic";
 import { Config } from "../logic/Constants";
@@ -51,7 +50,7 @@ export function HeadquarterBuildingBody({ gameState, xy }: IBuildingComponentPro
             </div>
          </fieldset>
          <fieldset>
-            <legend>{techAge != null ? TechAge[techAge].name() : "Unknown Age"}</legend>
+            <legend>{techAge != null ? Config.TechAge[techAge].name() : "Unknown Age"}</legend>
             <div className="row mv5">
                <div className="f1">{t(L.Science)}</div>
                <div className="text-strong">
@@ -134,12 +133,12 @@ export function HeadquarterBuildingBody({ gameState, xy }: IBuildingComponentPro
                   </thead>
                   <tbody>
                      {unlockableTechs(gameState).map((k) => {
-                        const unlockCost = getUnlockCost(Tech[k]);
+                        const unlockCost = getUnlockCost(k);
                         return (
                            <tr key={k}>
-                              <td>{Tech[k].name()}</td>
+                              <td>{Config.Tech[k].name()}</td>
                               <td className="right">
-                                 <FormatNumber value={unlockCost} />
+                                 <FormatNumber value={unlockCost ?? 0} />
                               </td>
                               <td className="right" style={{ width: "65px" }}>
                                  {scienceAmount < unlockCost ? (
@@ -177,7 +176,7 @@ export function HeadquarterBuildingBody({ gameState, xy }: IBuildingComponentPro
                   </div>
                );
             })}
-            <div className="mv5 text-link" onClick={() => Singleton().routeTo(GreatPersonPage, {})}>
+            <div className="mv5 text-link text-strong" onClick={() => Singleton().routeTo(GreatPersonPage, {})}>
                {t(L.ManageGreatPeople)}
             </div>
          </fieldset>

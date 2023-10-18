@@ -2,20 +2,19 @@ import { L, t } from "../utilities/i18n";
 import { ITechAgeDefinition, ITechDefinition } from "./ITechDefinition";
 
 export class TechAgeDefinitions {
-   StoneAge: ITechAgeDefinition = { from: 0, to: 1, name: () => t(L.StoneAge) };
-   BronzeAge: ITechAgeDefinition = { from: 2, to: 3, name: () => t(L.BronzeAge) };
-   IronAge: ITechAgeDefinition = { from: 4, to: 5, name: () => t(L.IronAge) };
-   ClassicalAge: ITechAgeDefinition = { from: 6, to: 8, name: () => t(L.ClassicalAge) };
-   MiddleAge: ITechAgeDefinition = { from: 9, to: 10, name: () => t(L.MiddleAge) };
-   RenaissanceAge: ITechAgeDefinition = { from: 11, to: 13, name: () => t(L.RenaissanceAge) };
-   IndustrialAge: ITechAgeDefinition = { from: 14, to: 17, name: () => t(L.IndustrialAge) };
-   WorldWarAge: ITechAgeDefinition = { from: 18, to: 20, name: () => t(L.WorldWarAge) };
-   ColdWarAge: ITechAgeDefinition = { from: 21, to: 22, name: () => t(L.ColdWarAge) };
-   InformationAge: ITechAgeDefinition = { from: 23, to: 25, name: () => t(L.InformationAge) };
+   StoneAge: ITechAgeDefinition = { idx: 0, from: 0, to: 1, name: () => t(L.StoneAge) };
+   BronzeAge: ITechAgeDefinition = { idx: 1, from: 2, to: 3, name: () => t(L.BronzeAge) };
+   IronAge: ITechAgeDefinition = { idx: 2, from: 4, to: 5, name: () => t(L.IronAge) };
+   ClassicalAge: ITechAgeDefinition = { idx: 3, from: 6, to: 8, name: () => t(L.ClassicalAge) };
+   MiddleAge: ITechAgeDefinition = { idx: 4, from: 9, to: 10, name: () => t(L.MiddleAge) };
+   RenaissanceAge: ITechAgeDefinition = { idx: 5, from: 11, to: 13, name: () => t(L.RenaissanceAge) };
+   IndustrialAge: ITechAgeDefinition = { idx: 6, from: 14, to: 17, name: () => t(L.IndustrialAge) };
+   WorldWarAge: ITechAgeDefinition = { idx: 7, from: 18, to: 20, name: () => t(L.WorldWarAge) };
+   ColdWarAge: ITechAgeDefinition = { idx: 8, from: 21, to: 22, name: () => t(L.ColdWarAge) };
+   InformationAge: ITechAgeDefinition = { idx: 9, from: 23, to: 25, name: () => t(L.InformationAge) };
 }
 
 export type TechAge = keyof TechAgeDefinitions;
-export const TechAge = new TechAgeDefinitions();
 
 export class TechDefinitions {
    Fire: ITechDefinition = {
@@ -94,7 +93,7 @@ export class TechDefinitions {
       column: 2,
       unlockFeature: ["BuildingStockpileMode"],
       additionalUpgrades: [() => t(L.TechStockpileMode)],
-      unlockBuilding: ["Stable", "HatshepsutTemple"],
+      unlockBuilding: ["Stable"],
       requireTech: ["Farming"],
    };
 
@@ -102,7 +101,7 @@ export class TechDefinitions {
       name: () => t(L.Metallurgy),
       column: 3,
       requireTech: ["Bronze"],
-      unlockBuilding: ["Blacksmith"],
+      unlockBuilding: ["HatshepsutTemple", "Blacksmith"],
    };
 
    Stateship: ITechDefinition = {
@@ -159,7 +158,7 @@ export class TechDefinitions {
       name: () => t(L.Astronomy),
       column: 4,
       requireTech: ["Arithmetic", "Writing"],
-      unlockBuilding: ["Stonehenge"],
+      unlockBuilding: ["Brewery", "Stonehenge"],
    };
 
    Shamanism: ITechDefinition = {
@@ -187,7 +186,7 @@ export class TechDefinitions {
       name: () => t(L.Calendar),
       column: 5,
       requireTech: ["Astronomy", "LandTrade"],
-      unlockBuilding: ["Brewery", "CottonMill"],
+      unlockBuilding: ["CottonMill"],
    };
 
    Engineering: ITechDefinition = {
@@ -493,4 +492,3 @@ export class TechDefinitions {
 }
 
 export type Tech = keyof TechDefinitions;
-export const Tech = new TechDefinitions();

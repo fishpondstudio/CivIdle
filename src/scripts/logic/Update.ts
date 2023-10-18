@@ -2,7 +2,6 @@ import { Building } from "../definitions/BuildingDefinitions";
 import { GreatPersonLogic } from "../definitions/GreatPersonLogic";
 import { IUnlockableDefinition } from "../definitions/ITechDefinition";
 import { Resource } from "../definitions/ResourceDefinitions";
-import { Tech } from "../definitions/TechDefinitions";
 import { getGameState, notifyGameStateUpdate, Singleton } from "../Global";
 import { isSteam } from "../rpc/SteamClient";
 import { WorldScene } from "../scenes/WorldScene";
@@ -80,7 +79,7 @@ export function tickEverySecond(gs: GameState) {
    clearIntraTickCache();
 
    forEach(gs.unlockedTech, (tech) => {
-      tickUnlockable(Tech[tech]);
+      tickUnlockable(Config.Tech[tech]);
    });
 
    forEach(gs.greatPeople, (person, level) => {
@@ -461,12 +460,17 @@ export function addMultiplier(k: Building, multiplier: Multiplier, source: strin
    Tick.next.buildingMultipliers[k] = m;
 }
 
+function getPriceId() {
+   return Math.floor(Date.now() / HOUR);
+}
+
 function tickPrice(gs: GameState) {
-   const priceId = Math.floor(Date.now() / HOUR);
-   if (gs.lastPriceUpdated == priceId) {
-      return;
+   const priceId = getPriceId();
+   let forceUpdatePrice = false;
+   if (gs.lastPriceUpdated !== priceId) {
+      forceUpdatePrice = true;
+      gs.lastPriceUpdated = priceId;
    }
-   gs.lastPriceUpdated = priceId;
    const resources = filterOf(
       unlockedResources(gs),
       (res) => Tick.current.resources[res].canPrice && Tick.current.resources[res].canStore
@@ -477,15 +481,17 @@ function tickPrice(gs: GameState) {
          if (!market.availableResources) {
             market.availableResources = {};
          }
-         const sell = shuffle(keysOf(resources), srand(priceId + xy));
-         const buy = shuffle(keysOf(resources), srand(priceId + xy));
-         let idx = 0;
-         sell.forEach((res) => {
-            while (buy[idx % buy.length] == res) {
-               idx++;
-            }
-            market.availableResources[res] = buy[idx % buy.length];
-         });
+         if (sizeOf(market.availableResources) <= 0 || forceUpdatePrice) {
+            const sell = shuffle(keysOf(resources), srand(priceId + xy));
+            const buy = shuffle(keysOf(resources), srand(priceId + xy));
+            let idx = 0;
+            sell.forEach((res) => {
+               while (buy[idx % buy.length] == res) {
+                  idx++;
+               }
+               market.availableResources[res] = buy[idx % buy.length];
+            });
+         }
       }
    });
 }

@@ -2,10 +2,12 @@ import classNames from "classnames";
 import { useEffect, useState } from "react";
 import { IPendingClaim } from "../../../server/src/Database";
 import { Resource } from "../definitions/ResourceDefinitions";
-import { notifyGameStateUpdate } from "../Global";
+import { notifyGameStateUpdate, Singleton } from "../Global";
 import { getStorageFor } from "../logic/BuildingLogic";
 import { Tick } from "../logic/TickLogic";
 import { client, OnNewPendingClaims, useTrades, useUser } from "../rpc/RPCClient";
+import { getMyMapXy } from "../scenes/PathFinder";
+import { PlayerMapScene } from "../scenes/PlayerMapScene";
 import { safeAdd } from "../utilities/Helper";
 import { useTypedEvent } from "../utilities/Hook";
 import { L, t } from "../utilities/i18n";
@@ -15,6 +17,7 @@ import { FillPlayerTradeModal } from "./FillPlayerTradeModal";
 import { showModal, showToast } from "./GlobalModal";
 import { FormatNumber } from "./HelperComponents";
 import { IBuildingComponentProps } from "./PlayerMapPage";
+import { WarningComponent } from "./WarningComponent";
 
 export function PlayerTradeComponent({ gameState, xy }: IBuildingComponentProps) {
    const building = gameState.tiles[xy].building;
@@ -23,6 +26,25 @@ export function PlayerTradeComponent({ gameState, xy }: IBuildingComponentProps)
    }
    const trades = useTrades();
    const user = useUser();
+   const myXy = getMyMapXy();
+
+   if (!myXy) {
+      return (
+         <>
+            <WarningComponent icon="info">
+               <div>{t(L.PlayerTradeClaimTileFirstWarning)}</div>
+               <div
+                  className="text-strong text-link row"
+                  onClick={() => Singleton().sceneManager.loadScene(PlayerMapScene)}
+               >
+                  {t(L.PlayerTradeClaimTileFirst)}
+               </div>
+            </WarningComponent>
+            <div className="sep10"></div>
+         </>
+      );
+   }
+
    return (
       <fieldset>
          <legend>{t(L.PlayerTrade)}</legend>

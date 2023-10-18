@@ -26,7 +26,7 @@ export class Vector2 {
     * @param y - The component of the y-axis.
     * @returns The vector.
     */
-   public constructor(public readonly x: number, public readonly y: number) {}
+   public constructor(public x: number, public y: number) {}
 
    /**
     * Add another vector to the vector.
@@ -35,6 +35,11 @@ export class Vector2 {
     */
    public add(val: IHaveXY): Vector2 {
       return new Vector2(this.x + val.x, this.y + val.y);
+   }
+   public addSelf(val: IHaveXY): Vector2 {
+      this.x = this.x + val.x;
+      this.y = this.y + val.y;
+      return this;
    }
 
    /**
@@ -45,6 +50,11 @@ export class Vector2 {
    public subtract(val: IHaveXY): Vector2 {
       return new Vector2(this.x - val.x, this.y - val.y);
    }
+   public subtractSelf(val: IHaveXY): Vector2 {
+      this.x = this.x - val.x;
+      this.y = this.y - val.y;
+      return this;
+   }
 
    /**
     * Multiply the vector by a scalar.
@@ -54,6 +64,11 @@ export class Vector2 {
    public multiply(scalar: number): Vector2 {
       return new Vector2(this.x * scalar, this.y * scalar);
    }
+   public multiplySelf(scalar: number): Vector2 {
+      this.x = this.x * scalar;
+      this.y = this.y * scalar;
+      return this;
+   }
 
    /**
     * Divide the vector by a scalar.
@@ -62,6 +77,11 @@ export class Vector2 {
     */
    public divide(scalar: number): Vector2 {
       return new Vector2(this.x / scalar, this.y / scalar);
+   }
+   public divideSelf(scalar: number): Vector2 {
+      this.x = this.x / scalar;
+      this.y = this.y / scalar;
+      return this;
    }
 
    /**
@@ -91,6 +111,12 @@ export class Vector2 {
       return new Vector2(this.x * other.x, this.y * other.y);
    }
 
+   public hadamardSelf(other: IHaveXY): Vector2 {
+      this.x = this.x * other.x;
+      this.y = this.y * other.y;
+      return this;
+   }
+
    /**
     * Calculate the length of the vector using the L2 norm.
     * @returns The length.
@@ -110,6 +136,13 @@ export class Vector2 {
    public normalize(): Vector2 {
       const length = this.length();
       return new Vector2(this.x / length, this.y / length);
+   }
+
+   public normalizeSelf(): Vector2 {
+      const length = this.length();
+      this.x = this.x / length;
+      this.y = this.y / length;
+      return this;
    }
 
    /**

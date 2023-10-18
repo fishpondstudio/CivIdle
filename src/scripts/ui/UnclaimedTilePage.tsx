@@ -1,6 +1,6 @@
 import { MoveTileCooldown } from "../../../server/src/Database";
-import { Tech } from "../definitions/TechDefinitions";
 import { GameStateChanged } from "../Global";
+import { Config } from "../logic/Constants";
 import { client, usePlayerMap } from "../rpc/RPCClient";
 import { getMyMapXy } from "../scenes/PathFinder";
 import { formatHMS } from "../utilities/Helper";
@@ -42,7 +42,7 @@ export function UnclaimedTilePage({ xy }: { xy: string }) {
                <div className="separator"></div>
                <div className="row">
                   <div className="m-icon small mr10 text-green">check_circle</div>
-                  <div className="f1">{t(L.PlayerMapClaimTileCondition3, { tech: Tech.LandTrade.name() })}</div>
+                  <div className="f1">{t(L.PlayerMapClaimTileCondition3, { tech: Config.Tech.LandTrade.name() })}</div>
                </div>
                <div className="separator"></div>
                <div className="row">

@@ -3,11 +3,13 @@ import beep from "../../sounds/beep.mp3";
 import click from "../../sounds/click.mp3";
 import error from "../../sounds/error.mp3";
 import kaching from "../../sounds/kaching.mp3";
+import levelup from "../../sounds/levelup.mp3";
 
 sound.add("click", click);
 sound.add("beep", beep);
 sound.add("error", error);
 sound.add("kaching", kaching);
+sound.add("levelup", levelup);
 
 export function playClick() {
    sound.play("click");
@@ -23,4 +25,8 @@ export function playError() {
 
 export function playKaching() {
    sound.play("kaching");
+}
+
+export function playLevelUp() {
+   sound.play("levelup");
 }

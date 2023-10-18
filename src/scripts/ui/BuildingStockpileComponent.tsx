@@ -7,7 +7,10 @@ import { IBuildingComponentProps } from "./BuildingPage";
 
 export function BuildingStockpileComponent({ gameState, xy }: IBuildingComponentProps) {
    const building = gameState.tiles[xy].building;
-   if (building == null || isEmpty(Tick.current.buildings[building.type].input)) {
+   if (building == null) {
+      return null;
+   }
+   if (isEmpty(Tick.current.buildings[building.type].input)) {
       return null;
    }
    if (!gameState.features.BuildingStockpileMode) {

@@ -2,8 +2,9 @@ import { SmoothGraphics } from "@pixi/graphics-smooth";
 import { BitmapText, Container, LINE_CAP, LINE_JOIN, Rectangle } from "pixi.js";
 import { BG_COLOR } from "../Colors";
 import { ITechDefinition } from "../definitions/ITechDefinition";
-import { Tech, TechAge } from "../definitions/TechDefinitions";
+import { Tech } from "../definitions/TechDefinitions";
 import { Singleton } from "../Global";
+import { Config } from "../logic/Constants";
 import { isAgeUnlocked, unlockableTechs } from "../logic/TechLogic";
 import { Tick } from "../logic/TickLogic";
 import { TechPage } from "../ui/TechPage";
@@ -41,7 +42,7 @@ export class TechTreeScene extends ViewportScene {
 
    override onLoad(): void {
       const { app, gameState } = this.context;
-      forEach(Tech, (k, v) => {
+      forEach(Config.Tech, (k, v) => {
          if (this._layout[v.column]) {
             this._layout[v.column].push(k);
          } else {
@@ -114,7 +115,7 @@ export class TechTreeScene extends ViewportScene {
                (height / 2 - BOX_HEIGHT / 2 - (HEADER_TOTAL_HEIGHT - HEADER_BOX_HEIGHT) / 2);
             const rect = new Rectangle(x, y, BOX_WIDTH, BOX_HEIGHT);
             this._boxPositions[item] = rect;
-            const def = Tech[item];
+            const def = Config.Tech[item];
             this.drawBox(
                g,
                rect,
@@ -125,7 +126,7 @@ export class TechTreeScene extends ViewportScene {
          });
       });
 
-      forEach(TechAge, (k, v) => {
+      forEach(Config.TechAge, (k, v) => {
          this.drawHeader(
             g,
             v.from,
@@ -135,7 +136,7 @@ export class TechTreeScene extends ViewportScene {
          );
       });
 
-      forEach(Tech, (to, v) => {
+      forEach(Config.Tech, (to, v) => {
          v.requireTech.forEach((from) => {
             this.drawConnection(
                g,
@@ -171,7 +172,7 @@ export class TechTreeScene extends ViewportScene {
          const newTo: Tech[] = [];
          targets.forEach((to) => {
             if (!drawnBoxes[to] && (!this.context.gameState.unlockedTech[to] || to === tech)) {
-               const def = Tech[to];
+               const def = Config.Tech[to];
                this.drawBox(
                   this._selectedGraphics,
                   this._boxPositions[to]!,
@@ -183,7 +184,7 @@ export class TechTreeScene extends ViewportScene {
                );
                drawnBoxes[to] = true;
             }
-            Tech[to].requireTech.forEach((from) => {
+            Config.Tech[to].requireTech.forEach((from) => {
                newTo.push(from);
                const key = `${from} -> ${to}`;
                if (
