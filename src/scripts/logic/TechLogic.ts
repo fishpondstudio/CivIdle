@@ -15,7 +15,7 @@ export function getUnlockCost(tech: Tech): number {
       const age = Config.TechAge[a];
       ageIdx = age.idx;
    }
-   return Math.pow(10, ageIdx) * Math.pow(1.5, Config.Tech[tech].column) * 5000;
+   return Math.pow(5, ageIdx) * Math.pow(1.5, Config.Tech[tech].column) * 5000;
 }
 
 export function getScienceAmount(): number {

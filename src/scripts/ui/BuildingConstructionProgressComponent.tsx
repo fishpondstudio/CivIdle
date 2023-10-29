@@ -22,7 +22,7 @@ export function BuildingConstructionProgressComponent({ gameState, xy }: IBuildi
          <ProgressBarComponent progress={percentage} />
          {jsxMapOf(resources, (res, value) => {
             return (
-               <div className="row mv10" key={res}>
+               <div className="row mv5" key={res}>
                   <div className="f1">{Tick.current.resources[res].name()}</div>
                   <div>
                      <FormatNumber value={building.resources[res] ?? 0} />/
@@ -31,6 +31,7 @@ export function BuildingConstructionProgressComponent({ gameState, xy }: IBuildi
                </div>
             );
          })}
+         <div className="separator"></div>
          <ul className="tree-view">
             <details>
                <summary className="row">

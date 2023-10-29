@@ -92,7 +92,15 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): JSX.Element {
                                  </td>
                                  <td className="text-center">
                                     {(building?.max ?? Infinity) <= 1 ? (
-                                       <div className="m-icon small">public</div>
+                                       <div
+                                          className="m-icon small"
+                                          aria-label={building.desc?.()}
+                                          data-balloon-pos="up"
+                                          data-balloon-text="left"
+                                          data-balloon-length="large"
+                                       >
+                                          public
+                                       </div>
                                     ) : (
                                        numberToRoman(Config.BuildingTier[k] ?? 1)
                                     )}

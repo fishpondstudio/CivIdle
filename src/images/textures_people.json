@@ -64,7 +64,7 @@
                 "h": 350
             }
         },
-        "PersonCincinnatus": {
+        "PersonCharlemagne": {
             "frame": {
                 "x": 702,
                 "y": 702,
@@ -168,7 +168,7 @@
                 "h": 350
             }
         },
-        "PersonKhufu": {
+        "PersonJustinian": {
             "frame": {
                 "x": 351,
                 "y": 1404,
@@ -176,7 +176,7 @@
                 "h": 350
             }
         },
-        "PersonLaoZi": {
+        "PersonKhufu": {
             "frame": {
                 "x": 702,
                 "y": 1404,
@@ -184,7 +184,7 @@
                 "h": 350
             }
         },
-        "PersonNebuchadnezzarII": {
+        "PersonLaoZi": {
             "frame": {
                 "x": 1053,
                 "y": 1404,
@@ -192,7 +192,7 @@
                 "h": 350
             }
         },
-        "PersonPlato": {
+        "PersonNebuchadnezzarII": {
             "frame": {
                 "x": 1404,
                 "y": 1404,
@@ -200,7 +200,7 @@
                 "h": 350
             }
         },
-        "PersonProtagoras": {
+        "PersonPlato": {
             "frame": {
                 "x": 1755,
                 "y": 0,
@@ -208,7 +208,7 @@
                 "h": 350
             }
         },
-        "PersonQinShiHuang": {
+        "PersonProtagoras": {
             "frame": {
                 "x": 1755,
                 "y": 351,
@@ -216,7 +216,7 @@
                 "h": 350
             }
         },
-        "PersonRamessesII": {
+        "PersonQinShiHuang": {
             "frame": {
                 "x": 1755,
                 "y": 702,
@@ -224,7 +224,7 @@
                 "h": 350
             }
         },
-        "PersonSargonOfAkkad": {
+        "PersonRamessesII": {
             "frame": {
                 "x": 1755,
                 "y": 1053,
@@ -232,7 +232,7 @@
                 "h": 350
             }
         },
-        "PersonScipioAfricanus": {
+        "PersonSargonOfAkkad": {
             "frame": {
                 "x": 1755,
                 "y": 1404,

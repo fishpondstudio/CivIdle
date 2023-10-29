@@ -6,7 +6,9 @@ import { Singleton } from "../Global";
 import { clamp, forEach, isEmpty, keysOf, reduceOf, safeAdd, safePush, sum } from "../utilities/Helper";
 import { Textures } from "../utilities/SceneManager";
 import { v2 } from "../utilities/Vector2";
+import { Config } from "./Constants";
 import { GameState } from "./GameState";
+import { getBuildingUnlockTech } from "./TechLogic";
 import { Multiplier, MultiplierWithSource, Tick } from "./TickLogic";
 import { IBuildingData, IHaveTypeAndLevel, IMarketBuildingData, IResourceImportBuildingData } from "./Tile";
 
@@ -303,8 +305,18 @@ export function getBuildingCost(building: IHaveTypeAndLevel): PartialTabulate<Re
    if (isEmpty(cost)) {
       console.error(`${type}: does not have 'input' or 'construction' defined`);
    }
+
+   let multiplier = 10;
+   // This is a wonder, we apply the wonder multiplier here
+   if (Tick.current.buildings[type].max === 1) {
+      const tech = getBuildingUnlockTech(building.type);
+      if (tech) {
+         multiplier = Math.pow(2, Config.Tech[tech].column);
+      }
+   }
+
    keysOf(cost).forEach((res) => {
-      cost[res] = Math.pow(1.5, building.level - 1) * 10 * cost[res]!;
+      cost[res] = Math.pow(1.5, building.level - 1) * multiplier * cost[res]!;
    });
    return cost;
 }
@@ -383,4 +395,12 @@ export function getWarehouseCapacity(building: IHaveTypeAndLevel): number {
 export function getBuilderCapacity(building: IHaveTypeAndLevel): { multiplier: number; base: number; total: number } {
    const builder = sum(Tick.current.globalMultipliers.builderCapacity, "value");
    return { multiplier: builder, base: building.level, total: builder * building.level };
+}
+
+export function applyToAllBuildings(building: Building, settings: Partial<IBuildingData>, gs: GameState) {
+   forEach(gs.tiles, (xy, tile) => {
+      if (tile.building && tile.building.type === building) {
+         Object.assign(tile.building, settings);
+      }
+   });
 }

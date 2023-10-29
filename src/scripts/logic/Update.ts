@@ -1,5 +1,4 @@
 import { Building } from "../definitions/BuildingDefinitions";
-import { GreatPersonLogic } from "../definitions/GreatPersonLogic";
 import { IUnlockableDefinition } from "../definitions/ITechDefinition";
 import { Resource } from "../definitions/ResourceDefinitions";
 import { getGameState, notifyGameStateUpdate, Singleton } from "../Global";
@@ -79,11 +78,12 @@ export function tickEverySecond(gs: GameState) {
    clearIntraTickCache();
 
    forEach(gs.unlockedTech, (tech) => {
-      tickUnlockable(Config.Tech[tech]);
+      tickTech(Config.Tech[tech]);
    });
 
    forEach(gs.greatPeople, (person, level) => {
-      GreatPersonLogic[person]?.(level);
+      const greatPerson = Config.GreatPerson[person];
+      greatPerson.tick(greatPerson, level);
    });
 
    forEach(Config.City[gs.city].buildingNameOverrides, (b, name) => {
@@ -102,7 +102,7 @@ export function tickEverySecond(gs: GameState) {
    notifyGameStateUpdate();
 }
 
-function tickUnlockable(td: IUnlockableDefinition) {
+function tickTech(td: IUnlockableDefinition) {
    td.unlockBuilding?.forEach((b) => {
       Tick.next.unlockedBuildings[b] = true;
    });

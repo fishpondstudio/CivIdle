@@ -77,6 +77,7 @@ export class TechDefinitions {
       column: 2,
       unlockBuilding: ["House"],
       requireTech: ["Masonry", "Counting"],
+      buildingMultiplier: { Hut: { output: 1 } },
    };
 
    Herding: ITechDefinition = {
@@ -145,6 +146,7 @@ export class TechDefinitions {
       column: 4,
       requireTech: ["Market", "Stateship"],
       unlockBuilding: ["Marbleworks"],
+      buildingMultiplier: { House: { worker: 1 } },
    };
 
    LandTrade: ITechDefinition = {
@@ -225,12 +227,10 @@ export class TechDefinitions {
       unlockBuilding: ["SiegeWorkshop"],
    };
 
-   Currency: ITechDefinition = { name: () => t(L.Currency), column: 7, requireTech: ["PreciousMetal"] };
-
    Politics: ITechDefinition = {
       name: () => t(L.Politics),
       column: 7,
-      requireTech: ["CityState"],
+      requireTech: ["CityState", "PreciousMetal"],
       unlockBuilding: ["FurnitureWorkshop"],
    };
 
@@ -251,7 +251,7 @@ export class TechDefinitions {
    Architecture: ITechDefinition = {
       name: () => t(L.Architecture),
       column: 8,
-      requireTech: ["Currency", "Machinery"],
+      requireTech: ["Machinery"],
       unlockBuilding: ["Apartment", "ChichenItza"],
    };
 

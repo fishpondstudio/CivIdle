@@ -74,7 +74,7 @@ export async function startGame(
    tickEverySecond(gameState);
 
    // if (import.meta.env.DEV) {
-   // createRoot(document.getElementById("debug-ui")!).render(<PlayerTradeComponent />);
+   //    createRoot(document.getElementById("debug-ui")!).render(<GreatPersonDebug />);
    // }
 
    // Singleton().sceneManager.loadScene(FlowGraphScene);

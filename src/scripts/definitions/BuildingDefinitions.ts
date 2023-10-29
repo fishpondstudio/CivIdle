@@ -394,7 +394,7 @@ export class BuildingDefinitions {
       desc: () => t(L.StatisticsDesc),
       input: {},
       output: {},
-      construction: { Brick: 1000, Wood: 1000, Lumber: 1000 },
+      construction: { Brick: 100, Wood: 100, Lumber: 100 },
       max: 1,
    };
 
@@ -413,7 +413,7 @@ export class BuildingDefinitions {
       desc: () => t(L.ColosseumDesc),
       input: {},
       output: {},
-      construction: { Brick: 1000, Marble: 1000, Alcohol: 1000 },
+      construction: { Brick: 100, Marble: 100, Alcohol: 100 },
       max: 1,
       wikipedia: "Colosseum",
    };
@@ -423,7 +423,7 @@ export class BuildingDefinitions {
       desc: () => t(L.PantheonDesc),
       input: {},
       output: {},
-      construction: { Marble: 1000, Sword: 1000, Copper: 1000 },
+      construction: { Marble: 100, Sword: 100, Copper: 100 },
       max: 1,
       wikipedia: "Pantheon,_Rome",
    };
@@ -433,7 +433,7 @@ export class BuildingDefinitions {
       desc: () => t(L.CircusMaximusDesc),
       input: {},
       output: {},
-      construction: { Brick: 1000, Iron: 1000, Meat: 1000 },
+      construction: { Brick: 100, Iron: 100, Meat: 100 },
       max: 1,
       wikipedia: "Circus_Maximus",
    };
@@ -445,7 +445,7 @@ export class BuildingDefinitions {
       output: {},
       max: 1,
       wikipedia: "Stonehenge",
-      construction: { Stone: 3000 },
+      construction: { Stone: 300 },
    };
 
    HatshepsutTemple: IBuildingDefinition = {
@@ -455,7 +455,7 @@ export class BuildingDefinitions {
       output: {},
       max: 1,
       wikipedia: "Mortuary_Temple_of_Hatshepsut",
-      construction: { Stone: 1000, Wood: 1000, Copper: 1000 },
+      construction: { Stone: 100, Wood: 100, Copper: 100 },
    };
 
    // LighthouseOfAlexandria: IBuildingDefinition = {
@@ -472,7 +472,7 @@ export class BuildingDefinitions {
       desc: () => t(L.PyramidOfGizaDesc),
       input: {},
       output: {},
-      construction: { Brick: 3000 },
+      construction: { Brick: 300 },
       max: 1,
       wikipedia: "Great_Pyramid_of_Giza",
    };
@@ -482,7 +482,7 @@ export class BuildingDefinitions {
       desc: () => t(L.ColossusOfRhodesDesc),
       input: {},
       output: {},
-      construction: { Stone: 3000 },
+      construction: { Stone: 300 },
       max: 1,
       wikipedia: "Colossus_of_Rhodes",
    };

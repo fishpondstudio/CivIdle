@@ -31,7 +31,7 @@ export function ChooseGreatPersonModal({ greatPeopleChoice }: { greatPeopleChoic
 }
 
 function GreatPersonCard({ greatPerson, onChosen }: { greatPerson: GreatPerson; onChosen: () => void }) {
-   const { desc } = Config.GreatPerson[greatPerson];
+   const p = Config.GreatPerson[greatPerson];
    const gs = useGameState();
    return (
       <div
@@ -45,7 +45,7 @@ function GreatPersonCard({ greatPerson, onChosen }: { greatPerson: GreatPerson; 
       >
          <img src={greatPersonImage(greatPerson, Singleton().sceneManager.getContext())} style={{ width: "100%" }} />
          <div className="sep5" />
-         {t(desc(), { value: 1 })}
+         {p.desc(p, 1)}
       </div>
    );
 }

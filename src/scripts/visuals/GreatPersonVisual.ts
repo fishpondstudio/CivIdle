@@ -1,10 +1,10 @@
+import { SmoothGraphics } from "@pixi/graphics-smooth";
+import { BitmapText, Sprite, Text } from "pixi.js";
 import { GreatPerson } from "../definitions/GreatPersonDefinitions";
 import { Config } from "../logic/Constants";
 import { containsNonASCII } from "../utilities/Helper";
 import { ISceneContext } from "../utilities/SceneManager";
 import { Fonts } from "./Fonts";
-import { SmoothGraphics } from "@pixi/graphics-smooth";
-import { BitmapText, Sprite, Text } from "pixi.js";
 
 function makeText(text: string, size: number, tint: number) {
    if (containsNonASCII(text)) {
@@ -31,13 +31,14 @@ function makeTextAutoSize(text: string, size: number, tint: number, maxWidth: nu
 
 export function greatPersonSprite(greatPerson: GreatPerson, context: ISceneContext): Sprite {
    const { textures } = context;
-   const { time, name } = Config.GreatPerson[greatPerson];
+   const { time, name, age } = Config.GreatPerson[greatPerson];
 
    const bg = new Sprite(textures.GreatPersonBackground);
 
    const frame = bg.addChild(new Sprite(textures.GreatPersonFrame));
    frame.anchor.set(0.5, 0.5);
-   frame.position.set(bg.width / 2, 225);
+   frame.position.set(bg.width / 2, 260);
+   frame.scale.set(400 / frame.width);
 
    const sprite = frame.addChild(new Sprite(textures[`Person${greatPerson}`]));
    const graphics = sprite.addChild(new SmoothGraphics());
@@ -48,11 +49,17 @@ export function greatPersonSprite(greatPerson: GreatPerson, context: ISceneConte
    sprite.mask = graphics;
    sprite.scale.set(350 / Math.max(sprite.width, sprite.height));
 
+   const ageText = bg.addChild(makeTextAutoSize(Config.TechAge[age].name().toUpperCase(), 30, 0x34495e, 400));
+
+   ageText.anchor.set(0.5, 0.5);
+   ageText.alpha = 0.8;
+   ageText.position.set(bg.width / 2, 50);
+
    const nameText = bg.addChild(makeTextAutoSize(name().toUpperCase(), 50, 0x34495e, 400));
 
    nameText.anchor.set(0.5, 0.5);
    nameText.alpha = 0.8;
-   nameText.position.set(bg.width / 2, 470);
+   nameText.position.set(bg.width / 2, 480);
 
    const timeText = bg.addChild(makeText(time, 25, 0x34495e));
 
@@ -67,9 +74,9 @@ const greatPersonImageCache: Partial<Record<GreatPerson, string>> = {};
 
 export function greatPersonImage(greatPerson: GreatPerson, context: ISceneContext): string {
    const cache = greatPersonImageCache[greatPerson];
-   if (cache) {
-      return cache;
-   }
+   // if (cache) {
+   //    return cache;
+   // }
    const canvas = context.app.renderer.plugins.extract.canvas(
       greatPersonSprite(greatPerson, context)
    ) as HTMLCanvasElement;

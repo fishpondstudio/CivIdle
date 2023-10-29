@@ -26,7 +26,11 @@ export function trySpendResources(resources: PartialTabulate<Resource>, gs: Game
 
    for (res in resources) {
       let amount = resources[res] ?? 0;
-      for (const xy of Tick.current.resourcesByBuilding[res] ?? []) {
+      const buildings = Tick.current.resourcesByBuilding[res] ?? [];
+      buildings.sort((a, b) => {
+         return (gs.tiles[a]?.building?.resources[res] ?? 0) - (gs.tiles[b]?.building?.resources[res] ?? 0);
+      });
+      for (const xy of buildings) {
          const building = gs.tiles[xy]?.building;
          if (!building) {
             continue;

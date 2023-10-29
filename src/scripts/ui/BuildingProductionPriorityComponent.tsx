@@ -1,8 +1,10 @@
 import { notifyGameStateUpdate } from "../Global";
+import { applyToAllBuildings } from "../logic/BuildingLogic";
 import { Tick } from "../logic/TickLogic";
 import { IMarketBuildingData, PRIORITY_MAX, PRIORITY_MIN } from "../logic/Tile";
 import { isEmpty } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
+import { playClick } from "../visuals/Sound";
 import { IBuildingComponentProps } from "./BuildingPage";
 
 export function BuildingProductionPriorityComponent({ gameState, xy }: IBuildingComponentProps) {
@@ -36,6 +38,16 @@ export function BuildingProductionPriorityComponent({ gameState, xy }: IBuilding
          />
          <div className="sep15"></div>
          <div className="text-desc text-small">{t(L.ProductionPriorityDesc)}</div>
+         <div className="sep5" />
+         <div
+            className="text-link text-small"
+            onClick={() => {
+               playClick();
+               applyToAllBuildings(building.type, { priority: building.priority }, gameState);
+            }}
+         >
+            {t(L.ApplyToAll, { building: Tick.current.buildings[building.type].name() })}
+         </div>
       </fieldset>
    );
 }

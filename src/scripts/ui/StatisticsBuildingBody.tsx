@@ -112,6 +112,7 @@ function BuildingTab({ gameState }: IBuildingComponentProps) {
                               <td
                                  className={classNames({
                                     "text-red": Tick.current.notProducingReasons[xy] === "NotEnoughWorkers",
+                                    "text-right": true,
                                  })}
                               >
                                  <FormatNumber value={Tick.current.workersAssignment[xy] ?? 0} />

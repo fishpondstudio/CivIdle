@@ -1,8 +1,10 @@
 import { notifyGameStateUpdate } from "../Global";
+import { applyToAllBuildings } from "../logic/BuildingLogic";
 import { Tick } from "../logic/TickLogic";
 import { STOCKPILE_CAPACITY_MAX, STOCKPILE_CAPACITY_MIN, STOCKPILE_MAX_MAX, STOCKPILE_MAX_MIN } from "../logic/Tile";
 import { isEmpty } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
+import { playClick } from "../visuals/Sound";
 import { IBuildingComponentProps } from "./BuildingPage";
 
 export function BuildingStockpileComponent({ gameState, xy }: IBuildingComponentProps) {
@@ -35,6 +37,17 @@ export function BuildingStockpileComponent({ gameState, xy }: IBuildingComponent
          />
          <div className="sep15"></div>
          <div className="text-desc text-small">{t(L.StockpileDesc, { capacity: building.stockpileCapacity })}</div>
+         <div className="sep5"></div>
+         <div
+            className="text-link text-small"
+            onClick={() => {
+               playClick();
+               applyToAllBuildings(building.type, { stockpileCapacity: building.stockpileCapacity }, gameState);
+            }}
+         >
+            {t(L.ApplyToAll, { building: Tick.current.buildings[building.type].name() })}
+         </div>
+
          <div className="sep10"></div>
          <div className="separator has-title">
             <div>
@@ -59,6 +72,16 @@ export function BuildingStockpileComponent({ gameState, xy }: IBuildingComponent
             {building.stockpileMax <= 0
                ? t(L.StockpileMaxUnlimitedDesc)
                : t(L.StockpileMaxDesc, { cycle: building.stockpileMax })}
+         </div>
+         <div className="sep5" />
+         <div
+            className="text-link text-small"
+            onClick={() => {
+               playClick();
+               applyToAllBuildings(building.type, { stockpileMax: building.stockpileMax }, gameState);
+            }}
+         >
+            {t(L.ApplyToAll, { building: Tick.current.buildings[building.type].name() })}
          </div>
       </fieldset>
    );

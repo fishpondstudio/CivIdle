@@ -34,6 +34,7 @@
 .modern select,
 .modern option,
 .modern .toast,
+.modern [aria-label][data-balloon-pos]:after,
 .modern ul.tree-view {
    font-family: "Inter Tight", sans-serif;
    font-size: 14px;

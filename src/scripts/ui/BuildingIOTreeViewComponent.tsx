@@ -41,13 +41,15 @@ export function BuildingIOTreeViewComponent({
                      </summary>
                      <ul>
                         <li className="row">
-                           <div className="f1">{t(L.BaseConsumption)}</div>
+                           <div className="f1">{type === "input" ? t(L.BaseConsumption) : t(L.BaseProduction)}</div>
                            <div className="text-strong">
                               <FormatNumber value={v / totalMultiplier} />
                            </div>
                         </li>
                         <li className="row">
-                           <div className="f1">{t(L.ConsumptionMultiplier)}</div>
+                           <div className="f1">
+                              {type === "input" ? t(L.ConsumptionMultiplier) : t(L.ProductionMultiplier)}
+                           </div>
                            <div className="text-strong">
                               x<FormatNumber value={totalMultiplier} />
                            </div>

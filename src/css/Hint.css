@@ -1,5 +1,5 @@
 :root {
-   --balloon-border-radius: 2px;
+   --balloon-border-radius: 5px;
    --balloon-color: rgba(16, 16, 16, 0.95);
    --balloon-text-color: #fff;
    --balloon-font-size: 12px;
@@ -12,9 +12,14 @@ button[aria-label][data-balloon-pos] {
 
 [aria-label][data-balloon-pos] {
    position: relative;
-   cursor: pointer;
 }
+
+[aria-label][data-balloon-text="left"]:after {
+   text-align: left;
+}
+
 [aria-label][data-balloon-pos]:after {
+   font-family: "Pixelated MS Sans Serif", Arial;
    opacity: 0;
    pointer-events: none;
    transition: all 0.1s ease-out 0.1s;
