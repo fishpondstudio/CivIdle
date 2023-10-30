@@ -389,7 +389,8 @@ export const EN = {
    TerracottaArmy: "Terracotta Army",
    TerracottaArmyDesc: "Terracotta Army",
    Parthenon: "Parthenon",
-   ParthenonDesc: "Parthenon",
+   ParthenonDesc:
+      "A new great person of classical age is born. +1 Worker Capacity multiplier for Musician's Guild and Writer's Guild",
    Persepolis: "Persepolis",
    PersepolisDesc: "Persepolis",
    ChoghaZanbil: "Chogha Zanbil",

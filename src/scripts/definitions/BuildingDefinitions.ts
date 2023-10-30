@@ -511,6 +511,7 @@ export class BuildingDefinitions {
       input: {},
       output: {},
       max: 1,
+      construction: { Marble: 100, Poem: 100, Music: 100 },
       wikipedia: "Parthenon",
    };
 

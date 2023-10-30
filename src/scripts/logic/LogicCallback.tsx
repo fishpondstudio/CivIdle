@@ -2,10 +2,13 @@ import { Tech } from "../definitions/TechDefinitions";
 import { Singleton } from "../Global";
 import { TechTreeScene } from "../scenes/TechTreeScene";
 import { WorldScene } from "../scenes/WorldScene";
+import { ChooseGreatPersonModal } from "../ui/ChooseGreatPersonModal";
+import { showModal } from "../ui/GlobalModal";
 import { forEach, pointToXy, safePush, xyToPoint } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
 import { GameState } from "./GameState";
 import { getBuildingsByType } from "./IntraTickCache";
+import { getGreatPeopleChoices } from "./TechLogic";
 import { ensureTileFogOfWar } from "./TerrainLogic";
 import { Tick } from "./TickLogic";
 import { addMultiplier } from "./Update";
@@ -29,6 +32,13 @@ export function onBuildingComplete(xy: string, gs: GameState) {
                Singleton().sceneManager.getCurrent(WorldScene)?.getTile(xy)?.reveal().catch(console.error);
             }
          });
+         break;
+      }
+      case "Parthenon": {
+         gs.greatPeopleChoices.push(getGreatPeopleChoices("ClassicalAge"));
+         if (gs.greatPeopleChoices.length > 0) {
+            showModal(<ChooseGreatPersonModal greatPeopleChoice={gs.greatPeopleChoices[0]} />);
+         }
          break;
       }
    }

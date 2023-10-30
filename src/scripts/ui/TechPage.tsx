@@ -1,17 +1,15 @@
-import { GreatPerson } from "../definitions/GreatPersonDefinitions";
 import { Resource } from "../definitions/ResourceDefinitions";
 import { RomeProvince } from "../definitions/RomeProvinceDefinitions";
 import { Tech } from "../definitions/TechDefinitions";
 import { PartialTabulate } from "../definitions/TypeDefinitions";
 import { notifyGameStateUpdate, Singleton, useGameState } from "../Global";
 import { Config } from "../logic/Constants";
-import { GreatPeopleChoice } from "../logic/GameState";
 import { onUnlockableUnlocked as onTechUnlocked } from "../logic/LogicCallback";
 import { getResourceAmount, trySpendResources } from "../logic/ResourceLogic";
-import { getCurrentTechAge, getUnlockCost, unlockTech } from "../logic/TechLogic";
+import { getCurrentTechAge, getGreatPeopleChoices, getUnlockCost, unlockTech } from "../logic/TechLogic";
 import { RomeProvinceScene } from "../scenes/RomeProvinceScene";
 import { TechTreeScene } from "../scenes/TechTreeScene";
-import { filterOf, forEach, jsxMapOf, keysOf, reduceOf, shuffle } from "../utilities/Helper";
+import { forEach, jsxMapOf, reduceOf } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
 import { playLevelUp } from "../visuals/Sound";
 import { ChooseGreatPersonModal } from "./ChooseGreatPersonModal";
@@ -127,13 +125,7 @@ export function TechPage({ id }: { id: Tech }) {
                               playLevelUp();
                               const newAge = getCurrentTechAge(gs);
                               if (oldAge !== newAge) {
-                                 const choices: GreatPerson[] = [];
-                                 const pool = shuffle(keysOf(filterOf(Config.GreatPerson, (k, v) => v.age === newAge)));
-                                 console.assert(pool.length > 3);
-                                 for (let i = 0; i < 3; i++) {
-                                    choices.push(pool[i]);
-                                 }
-                                 gs.greatPeopleChoices.push(choices as GreatPeopleChoice);
+                                 gs.greatPeopleChoices.push(getGreatPeopleChoices(newAge!));
                               }
                               if (gs.greatPeopleChoices.length > 0) {
                                  showModal(<ChooseGreatPersonModal greatPeopleChoice={gs.greatPeopleChoices[0]} />);

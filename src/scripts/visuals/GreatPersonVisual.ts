@@ -74,9 +74,9 @@ const greatPersonImageCache: Partial<Record<GreatPerson, string>> = {};
 
 export function greatPersonImage(greatPerson: GreatPerson, context: ISceneContext): string {
    const cache = greatPersonImageCache[greatPerson];
-   // if (cache) {
-   //    return cache;
-   // }
+   if (cache) {
+      return cache;
+   }
    const canvas = context.app.renderer.plugins.extract.canvas(
       greatPersonSprite(greatPerson, context)
    ) as HTMLCanvasElement;

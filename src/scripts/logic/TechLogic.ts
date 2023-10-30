@@ -1,10 +1,11 @@
 import { Building } from "../definitions/BuildingDefinitions";
+import { GreatPerson } from "../definitions/GreatPersonDefinitions";
 import { Deposit, Resource } from "../definitions/ResourceDefinitions";
 import { Tech, TechAge } from "../definitions/TechDefinitions";
 import { Singleton } from "../Global";
-import { forEach, isEmpty, keysOf, shuffle } from "../utilities/Helper";
+import { filterOf, forEach, isEmpty, keysOf, shuffle } from "../utilities/Helper";
 import { Config } from "./Constants";
-import { GameState } from "./GameState";
+import { GameState, GreatPeopleChoice } from "./GameState";
 import { getBuildingsThatProduce } from "./ResourceLogic";
 import { getDepositTileCount } from "./Tile";
 
@@ -128,4 +129,14 @@ export function unlockableTechs(gs: GameState): Tech[] {
       }
    });
    return result;
+}
+
+export function getGreatPeopleChoices(age: TechAge): GreatPeopleChoice {
+   const choices: GreatPerson[] = [];
+   const pool = shuffle(keysOf(filterOf(Config.GreatPerson, (_, v) => v.age === age)));
+   console.assert(pool.length > 3);
+   for (let i = 0; i < 3; i++) {
+      choices.push(pool[i]);
+   }
+   return choices as GreatPeopleChoice;
 }
