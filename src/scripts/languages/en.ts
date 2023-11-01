@@ -356,7 +356,7 @@ export const EN = {
    ItsukushimaShrine: "Itsukushima Shrine",
    ItsukushimaShrineDesc: "Itsukushima Shrine",
    TempleOfHeaven: "Temple Of Heaven",
-   TempleOfHeavenDesc: "Temple Of Heaven",
+   TempleOfHeavenDesc: "All buildings that are level 10 or higher get +1 Worker Capacity Multiplier",
    HimejiCastle: "Himeji Castle",
    HimejiCastleDesc: "Himeji Castle",
    StatueOfLiberty: "Statue Of Liberty",
@@ -370,7 +370,8 @@ export const EN = {
    SaintBasilsCathedral: "Saint Basil's Cathedral",
    SaintBasilsCathedralDesc: "Saint Basil's Cathedral",
    ChichenItza: "Chichen Itza",
-   ChichenItzaDesc: "Chichen Itza",
+   ChichenItzaDesc:
+      "All adjacent buildings get +1 Production Multiplier, Worker Capacity Multiplier and Storage Multiplier",
    Aqueduct: "Aqueduct",
    FishPond: "Fish Pond",
    GarumMaker: "Garum Maker",

@@ -55,6 +55,8 @@ export function onBuildingProductionComplete(xy: string, gs: GameState) {
 
    const { grid } = Singleton();
 
+   const buildingName = Tick.current.buildings[building.type].name();
+
    switch (building.type) {
       case "HatshepsutTemple": {
          buildingsByType.WheatFarm?.forEach((f) => {
@@ -68,7 +70,7 @@ export function onBuildingProductionComplete(xy: string, gs: GameState) {
                if (adjacentWaterTiles > 0) {
                   safePush(Tick.next.tileMultipliers, f.xy, {
                      output: adjacentWaterTiles,
-                     source: Tick.current.buildings.HatshepsutTemple.name(),
+                     source: buildingName,
                   });
                }
             }
@@ -81,7 +83,7 @@ export function onBuildingProductionComplete(xy: string, gs: GameState) {
                output: 1,
                worker: 1,
                storage: 1,
-               source: Tick.current.buildings.Colosseum.name(),
+               source: buildingName,
             });
          });
          break;
@@ -89,7 +91,7 @@ export function onBuildingProductionComplete(xy: string, gs: GameState) {
       case "CircusMaximus": {
          forEach(Tick.current.buildings, (building, def) => {
             if (def.output.Worker) {
-               addMultiplier(building, { output: 1 }, Tick.current.buildings.CircusMaximus.name());
+               addMultiplier(building, { output: 1 }, buildingName);
             }
          });
          break;
@@ -102,7 +104,7 @@ export function onBuildingProductionComplete(xy: string, gs: GameState) {
                   safePush(Tick.next.tileMultipliers, xy, {
                      input: mul,
                      output: mul,
-                     source: t(L.NaturalWonderName, { name: Tick.current.buildings.Alps.name() }),
+                     source: t(L.NaturalWonderName, { name: buildingName }),
                   });
                }
             }
@@ -112,7 +114,31 @@ export function onBuildingProductionComplete(xy: string, gs: GameState) {
       case "PyramidOfGiza": {
          forEach(Tick.current.buildings, (building, def) => {
             if (def.output.Worker) {
-               addMultiplier(building, { output: 1 }, Tick.current.buildings.PyramidOfGiza.name());
+               addMultiplier(building, { output: 1 }, buildingName);
+            }
+         });
+         break;
+      }
+      case "ChichenItza": {
+         grid.getNeighbors(xyToPoint(xy)).forEach((neighbor) => {
+            safePush(Tick.next.tileMultipliers, pointToXy(neighbor), {
+               output: 1,
+               storage: 1,
+               worker: 1,
+               source: buildingName,
+            });
+         });
+         break;
+      }
+      case "TempleOfHeaven": {
+         forEach(gs.tiles, (xy, tile) => {
+            if (tile.building) {
+               if (tile.building.level >= 10) {
+                  safePush(Tick.next.tileMultipliers, xy, {
+                     worker: 1,
+                     source: buildingName,
+                  });
+               }
             }
          });
          break;

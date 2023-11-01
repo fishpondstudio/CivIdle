@@ -32,6 +32,28 @@ export function HeadquarterBuildingBody({ gameState, xy }: IBuildingComponentPro
    const user = useUser();
    return (
       <div className="window-body">
+         <fieldset>
+            <legend>{t(L.PlayerHandle)}</legend>
+            <div className="row mv5">
+               <div className="f1">
+                  <b>{user?.handle}</b>
+                  <br />
+                  <div className="text-desc text-small">{t(L.ChangePlayerHandledDesc)}</div>
+               </div>
+               <div
+                  className={classNames("text-link text-strong", { disabled: !user })}
+                  onClick={() => {
+                     if (user) {
+                        showModal(<ChangePlayerHandleModal />);
+                     } else {
+                        playError();
+                     }
+                  }}
+               >
+                  {t(L.ChangePlayerHandle)}
+               </div>
+            </div>
+         </fieldset>
          <BuildingProduceComponent gameState={gameState} xy={xy} />
          <BuildingStorageComponent xy={xy} gameState={gameState} />
          <fieldset>
@@ -178,28 +200,6 @@ export function HeadquarterBuildingBody({ gameState, xy }: IBuildingComponentPro
             })}
             <div className="mv5 text-link text-strong" onClick={() => Singleton().routeTo(GreatPersonPage, {})}>
                {t(L.ManageGreatPeople)}
-            </div>
-         </fieldset>
-         <fieldset>
-            <legend>{t(L.PlayerHandle)}</legend>
-            <div className="row mv5">
-               <div className="f1">
-                  <b>{user?.handle}</b>
-                  <br />
-                  <div className="text-desc text-small">{t(L.ChangePlayerHandledDesc)}</div>
-               </div>
-               <div
-                  className={classNames("text-link text-strong", { disabled: !user })}
-                  onClick={() => {
-                     if (user) {
-                        showModal(<ChangePlayerHandleModal />);
-                     } else {
-                        playError();
-                     }
-                  }}
-               >
-                  {t(L.ChangePlayerHandle)}
-               </div>
             </div>
          </fieldset>
          {/* {jsxMapOf(Config.GreatPerson, (k) => {

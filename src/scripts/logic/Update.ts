@@ -208,7 +208,7 @@ function tileTile(xy: string, gs: GameState): void {
          if (hasEnoughWorkers("Worker", base)) {
             delete Tick.next.notProducingReasons[xy];
             useWorkers("Worker", base, xy);
-            transportResource(res, total, building.level, xy, gs);
+            transportResource(res, total, total, xy, gs);
             // break;
             return true;
          } else {

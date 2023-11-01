@@ -61,6 +61,12 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): JSX.Element {
                   <tbody>
                      {keysOf(unlockedBuildings(gs))
                         .sort((a, b) => {
+                           if (Tick.current.buildings[a].max === 1 && Tick.current.buildings[b].max !== 1) {
+                              return -1;
+                           }
+                           if (Tick.current.buildings[b].max === 1 && Tick.current.buildings[a].max !== 1) {
+                              return 1;
+                           }
                            const tier = (Config.BuildingTier[a] ?? 0) - (Config.BuildingTier[b] ?? 0);
                            if (tier !== 0) {
                               return tier;

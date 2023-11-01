@@ -502,6 +502,7 @@ export class BuildingDefinitions {
       input: {},
       output: {},
       max: 1,
+      construction: { Iron: 100, Bread: 100, Cheese: 100 },
       wikipedia: "Temple_of_Heaven",
    };
 
@@ -530,6 +531,7 @@ export class BuildingDefinitions {
       input: {},
       output: {},
       max: 1,
+      construction: { Stone: 100, Furniture: 100, SiegeRam: 100 },
       wikipedia: "Chichen_Itza",
    };
 

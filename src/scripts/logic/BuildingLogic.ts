@@ -394,7 +394,14 @@ export function getWarehouseCapacity(building: IHaveTypeAndLevel): number {
 
 export function getBuilderCapacity(building: IHaveTypeAndLevel): { multiplier: number; base: number; total: number } {
    const builder = sum(Tick.current.globalMultipliers.builderCapacity, "value");
-   return { multiplier: builder, base: building.level, total: builder * building.level };
+   let baseCapacity = building.level;
+   if (Tick.current.buildings[building.type].max === 1) {
+      const tech = getBuildingUnlockTech(building.type);
+      if (tech) {
+         baseCapacity = Config.Tech[tech].column;
+      }
+   }
+   return { multiplier: builder, base: baseCapacity, total: builder * baseCapacity };
 }
 
 export function applyToAllBuildings(building: Building, settings: Partial<IBuildingData>, gs: GameState) {
