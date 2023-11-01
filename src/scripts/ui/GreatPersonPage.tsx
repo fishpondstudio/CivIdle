@@ -16,6 +16,18 @@ export function GreatPersonPage(): JSX.Element | null {
          </div>
          <MenuComponent />
          <div className="window-body">
+            <button
+               className="w100"
+               onClick={() => Singleton().routeTo(TilePage, { xy: Singleton().buildings.Headquarter.xy })}
+            >
+               <div className="row jcc">
+                  <div className="m-icon" style={{ margin: "0 5px 0 -5px", fontSize: "18px" }}>
+                     arrow_back
+                  </div>
+                  <div>{t(L.BackToHeadquarter)}</div>
+               </div>
+            </button>
+            <div className="sep10"></div>
             <fieldset>
                <legend>{t(L.GreatPeopleThisRun)}</legend>
                <div className="table-view">
@@ -75,14 +87,6 @@ export function GreatPersonPage(): JSX.Element | null {
                   </table>
                </div>
             </fieldset>
-            <button onClick={() => Singleton().routeTo(TilePage, { xy: Singleton().buildings.Headquarter.xy })}>
-               <div className="row">
-                  <div className="m-icon" style={{ margin: "0 5px 0 -5px", fontSize: "18px" }}>
-                     arrow_back
-                  </div>
-                  <div className="f1">{t(L.BackToHeadquarter)}</div>
-               </div>
-            </button>
          </div>
       </div>
    );

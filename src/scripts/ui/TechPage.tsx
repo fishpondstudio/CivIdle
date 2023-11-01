@@ -9,12 +9,14 @@ import { getResourceAmount, trySpendResources } from "../logic/ResourceLogic";
 import { getCurrentTechAge, getGreatPeopleChoices, getUnlockCost, unlockTech } from "../logic/TechLogic";
 import { RomeProvinceScene } from "../scenes/RomeProvinceScene";
 import { TechTreeScene } from "../scenes/TechTreeScene";
+import { MAX_TECH_COLUMN } from "../SteamTesting";
 import { forEach, jsxMapOf, reduceOf } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
 import { playLevelUp } from "../visuals/Sound";
 import { ChooseGreatPersonModal } from "./ChooseGreatPersonModal";
 import { showModal } from "./GlobalModal";
 import { FormatNumber } from "./HelperComponents";
+import { InDevelopmentPage } from "./InDevelopmentPage";
 import { MenuComponent } from "./MenuComponent";
 import { ProgressBarComponent } from "./ProgressBarComponent";
 import { TechPrerequisiteItemComponent } from "./TechComponent";
@@ -23,6 +25,11 @@ import { UnlockableEffectComponent } from "./UnlockableEffectComponent";
 export function TechPage({ id }: { id: Tech }) {
    const gs = useGameState();
    const tech = Config.Tech[id];
+
+   if (tech.column > MAX_TECH_COLUMN) {
+      return <InDevelopmentPage />;
+   }
+
    const prerequisitesSatisfied = tech.requireTech.every((t) => gs.unlockedTech[t]);
    const unlockCost: PartialTabulate<Resource> = { Science: getUnlockCost(id) };
    const availableResources: PartialTabulate<Resource> = {};

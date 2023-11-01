@@ -22,3 +22,5 @@ export async function checkSteamBranch() {
       });
    }
 }
+
+export const MAX_TECH_COLUMN = 10;

@@ -628,4 +628,7 @@ export const EN = {
       "You can only trade with other players after you've claimed your tile on the trade map",
    ApplyToAll: "Apply To All %{building}",
    NothingHere: "Nothing here",
+   ContentInDevelopment: "Content In Development",
+   ContentInDevelopmentDesc:
+      "This game content is still in development and will be available in a future game update, stay tuned!",
 };
