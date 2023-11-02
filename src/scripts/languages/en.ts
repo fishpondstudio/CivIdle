@@ -277,7 +277,7 @@ export const EN = {
    TangOfShang: "Tang Of Shang",
    TangOfShangDesc: "+%{value} Science From Idle Workers",
    RamessesII: "Ramesses II",
-   RamessesIIDesc: "+%{value} Builder Capacity",
+   RamessesIIDesc: "+%{value} Builder Capacity Multiplier",
    Agamemnon: "Agamemnon",
    SargonOfAkkad: "Sargon Of Akkad",
    Dido: "Dido",
@@ -391,7 +391,7 @@ export const EN = {
    TerracottaArmyDesc: "Terracotta Army",
    Parthenon: "Parthenon",
    ParthenonDesc:
-      "A new great person of classical age is born. +1 Worker Capacity multiplier for Musician's Guild and Writer's Guild",
+      "A new great person of classical age is born. +1 Worker Capacity Multiplier for Musician's Guild and Writer's Guild",
    Persepolis: "Persepolis",
    PersepolisDesc: "Persepolis",
    ChoghaZanbil: "Chogha Zanbil",
@@ -400,7 +400,7 @@ export const EN = {
    HatshepsutTempleDesc:
       "Reveal all water tiles on the map when completed. Wheat Farms get +1 Production Multiplier for each adjacent water tile",
    LuxorTemple: "Luxor Temple",
-   LuxorTempleDesc: "Luxor Temple",
+   LuxorTempleDesc: "+1 Science From Busy Workers",
    Neuschwanstein: "Neuschwanstein",
    NeuschwansteinDesc: "Neuschwanstein",
    CristoRedentor: "Cristo Redentor",

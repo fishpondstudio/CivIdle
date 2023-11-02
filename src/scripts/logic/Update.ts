@@ -193,7 +193,7 @@ function tileTile(xy: string, gs: GameState): void {
       const cost = getBuildingCost(building);
       let completed = true;
       forEach(cost, (res, amount) => {
-         const { base, total } = getBuilderCapacity(building);
+         const { total } = getBuilderCapacity(building);
          const amountArrived = building.resources[res] ?? 0;
          if (amountArrived >= amount) {
             // continue;
@@ -205,9 +205,10 @@ function tileTile(xy: string, gs: GameState): void {
             return false;
          }
          completed = false;
-         if (hasEnoughWorkers("Worker", base)) {
+         // Each transportation costs 1 worker, and deliver Total (=Builder Capacity x Multiplier) resources
+         if (hasEnoughWorkers("Worker", 1)) {
             delete Tick.next.notProducingReasons[xy];
-            useWorkers("Worker", base, xy);
+            useWorkers("Worker", 1, xy);
             transportResource(res, total, total, xy, gs);
             // break;
             return true;

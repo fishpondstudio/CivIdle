@@ -5,7 +5,7 @@ export function makeObservableHook<T>(event: TypedEvent<T>, initialValue: () => 
    return function observe(): T {
       const [getter, setter] = useState<T>(initialValue());
       function handleEvent(data: T): void {
-         if (data === getter) {
+         if (data && data === getter) {
             console.warn("makeObservableHook: data change event should return a copy", data);
          }
          setter(data);

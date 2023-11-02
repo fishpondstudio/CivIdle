@@ -522,6 +522,7 @@ export class BuildingDefinitions {
       input: {},
       output: {},
       max: 1,
+      construction: { Tool: 100, Cloth: 100, Furniture: 100 },
       wikipedia: "Luxor_Temple",
    };
 
@@ -531,7 +532,7 @@ export class BuildingDefinitions {
       input: {},
       output: {},
       max: 1,
-      construction: { Stone: 100, Furniture: 100, SiegeRam: 100 },
+      construction: { Stone: 100, Armor: 100, SiegeRam: 100 },
       wikipedia: "Chichen_Itza",
    };
 

@@ -143,6 +143,13 @@ export function onBuildingProductionComplete(xy: string, gs: GameState) {
          });
          break;
       }
+      case "LuxorTemple": {
+         Tick.next.globalMultipliers.sciencePerBusyWorker.push({
+            value: 1,
+            source: buildingName,
+         });
+         break;
+      }
    }
 }
 
