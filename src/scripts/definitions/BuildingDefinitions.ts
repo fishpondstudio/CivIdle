@@ -477,15 +477,15 @@ export class BuildingDefinitions {
       wikipedia: "Great_Pyramid_of_Giza",
    };
 
-   ColossusOfRhodes: IBuildingDefinition = {
-      name: () => t(L.ColossusOfRhodes),
-      desc: () => t(L.ColossusOfRhodesDesc),
-      input: {},
-      output: {},
-      construction: { Stone: 300 },
-      max: 1,
-      wikipedia: "Colossus_of_Rhodes",
-   };
+   // ColossusOfRhodes: IBuildingDefinition = {
+   //    name: () => t(L.ColossusOfRhodes),
+   //    desc: () => t(L.ColossusOfRhodesDesc),
+   //    input: {},
+   //    output: {},
+   //    construction: { Stone: 300 },
+   //    max: 1,
+   //    wikipedia: "Colossus_of_Rhodes",
+   // };
 
    HangingGarden: IBuildingDefinition = {
       name: () => t(L.HangingGarden),

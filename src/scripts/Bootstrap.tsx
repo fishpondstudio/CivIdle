@@ -4,13 +4,11 @@ import { City } from "./definitions/CityDefinitions";
 import {
    checkSaveCompatible,
    getGameState,
-   initializeSavedGame,
    initializeSingletons,
    ISpecialBuildings,
    loadGame,
    notifyGameStateUpdate,
    RouteTo,
-   saveGame,
    Singleton,
    syncUITheme,
 } from "./Global";
@@ -42,8 +40,7 @@ export async function startGame(
    let isNewPlayer = false;
    const data = await loadGame();
    if (data) {
-      await checkSaveCompatible(data.options.version, routeTo);
-      initializeSavedGame(data);
+      await checkSaveCompatible(data, routeTo);
    } else {
       isNewPlayer = true;
    }
@@ -103,12 +100,7 @@ function startTicker(ticker: Ticker, gameState: GameState) {
       tickEveryFrame(gameState, dt);
    });
 
-   setInterval(() => {
-      tickEverySecond(gameState);
-      if (gameState.tick % 5 == 0) {
-         saveGame();
-      }
-   }, 1000);
+   setInterval(tickEverySecond.bind(null, gameState), 1000);
 }
 
 function findSpecialBuildings(gameState: GameState): Partial<Record<Building, ITileData>> {

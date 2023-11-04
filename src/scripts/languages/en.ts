@@ -552,10 +552,12 @@ export const EN = {
    BuildingCost: "Cost",
    GreatPeople: "Great People",
    ManageGreatPeople: "Manage Great People",
+   ManageWonders: "Manage Wonders",
    GreatPeopleEffect: "Effect",
    GreatPeopleName: "Name",
    GreatPeopleThisRun: "Great People From This Run",
    GreatPeopleWiki: "Great People Wiki",
+   WondersWiki: "Wonders Wiki",
    BackToHeadquarter: "Back To Headquarter",
    CivIdle: "CivIdle",
    CivIdleInfo: "Proudly presented by Fish Pond Studio",
@@ -631,4 +633,5 @@ export const EN = {
    ContentInDevelopment: "Content In Development",
    ContentInDevelopmentDesc:
       "This game content is still in development and will be available in a future game update, stay tuned!",
+   WipeSaveData: "Wipe Your Save",
 };

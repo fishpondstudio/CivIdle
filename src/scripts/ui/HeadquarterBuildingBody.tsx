@@ -16,6 +16,7 @@ import { ChangePlayerHandleModal } from "./ChangePlayerHandleModal";
 import { showModal } from "./GlobalModal";
 import { GreatPersonPage } from "./GreatPersonPage";
 import { FormatNumber } from "./HelperComponents";
+import { WonderPage } from "./WonderPage";
 
 export function HeadquarterBuildingBody({ gameState, xy }: IBuildingComponentProps) {
    const {
@@ -200,6 +201,24 @@ export function HeadquarterBuildingBody({ gameState, xy }: IBuildingComponentPro
             })}
             <div className="mv5 text-link text-strong" onClick={() => Singleton().routeTo(GreatPersonPage, {})}>
                {t(L.ManageGreatPeople)}
+            </div>
+         </fieldset>
+         <fieldset>
+            <legend>{t(L.Wonder)}</legend>
+            {Object.values(gameState.tiles)
+               .flatMap((tile) => {
+                  if (!tile.building) {
+                     return [];
+                  }
+                  const def = Tick.current.buildings[tile.building.type];
+                  if (def.max !== 1 || !def.construction) {
+                     return [];
+                  }
+                  return [def.name()];
+               })
+               .join(", ")}
+            <div className="mv5 text-link text-strong" onClick={() => Singleton().routeTo(WonderPage, {})}>
+               {t(L.ManageWonders)}
             </div>
          </fieldset>
          {/* {jsxMapOf(Config.GreatPerson, (k) => {

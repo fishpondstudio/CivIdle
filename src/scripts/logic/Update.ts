@@ -1,7 +1,7 @@
 import { Building } from "../definitions/BuildingDefinitions";
 import { IUnlockableDefinition } from "../definitions/ITechDefinition";
 import { Resource } from "../definitions/ResourceDefinitions";
-import { getGameState, notifyGameStateUpdate, Singleton } from "../Global";
+import { getGameState, notifyGameStateUpdate, saveGame, Singleton } from "../Global";
 import { isSteam } from "../rpc/SteamClient";
 import { WorldScene } from "../scenes/WorldScene";
 import {
@@ -100,6 +100,10 @@ export function tickEverySecond(gs: GameState) {
 
    ++gs.tick;
    notifyGameStateUpdate();
+
+   if (gs.tick % 5 == 0) {
+      saveGame();
+   }
 }
 
 function tickTech(td: IUnlockableDefinition) {

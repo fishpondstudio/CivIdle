@@ -1,5 +1,6 @@
 import logo from "../../images/icon.png";
-import { Singleton } from "../Global";
+import { Singleton, wipeSaveData } from "../Global";
+import { SAVE_FILE_VERSION } from "../logic/GameState";
 import { L, t } from "../utilities/i18n";
 import { build } from "../Version.json";
 import { playClick } from "../visuals/Sound";
@@ -18,11 +19,22 @@ export function AboutModal() {
                </div>
                <div className="f1">
                   <div className="text-strong">{t(L.CivIdle)}</div>
-                  <div>{t(L.CivIdleBuild, { build })}</div>
+                  <div>{t(L.CivIdleBuild, { build: `0.${SAVE_FILE_VERSION}.${build}` })}</div>
                   <div>{t(L.CivIdleInfo)}</div>
                   <hr className="mv10" />
                   <div className="text-small text-desc">{t(L.GraphicsDriver, { driver: getWebglRenderInfo() })}</div>
                   <div className="text-small text-desc">{t(L.UserAgent, { driver: navigator.userAgent })}</div>
+                  <div>
+                     <span
+                        className="text-small text-link"
+                        onClick={() => {
+                           playClick();
+                           wipeSaveData();
+                        }}
+                     >
+                        {t(L.WipeSaveData)}
+                     </span>
+                  </div>
                </div>
             </div>
             <div className="text-right" style={{ margin: "20px 0 0 0" }}>

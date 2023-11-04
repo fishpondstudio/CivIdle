@@ -54,8 +54,10 @@ export class GameOptions {
    useModernUI = true;
    id = v4();
    token: string | null = null;
-   version = 1;
+   version = SAVE_FILE_VERSION;
 }
+
+export const SAVE_FILE_VERSION = 1;
 
 export function initializeGameState(gameState: GameState, grid: Grid) {
    const center = grid.center();

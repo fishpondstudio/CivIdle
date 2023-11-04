@@ -46,19 +46,22 @@ export function Singleton(): ISingleton {
 
 const savedGame = new SavedGame();
 
+export function wipeSaveData() {
+   saving = true;
+   if (isSteam()) {
+      SteamClient.fileDelete(SAVE_KEY).then(() => window.location.reload());
+      return;
+   }
+   idbClear()
+      .then(() => window.location.reload())
+      .catch(console.error);
+}
+
 if (import.meta.env.DEV) {
    // @ts-expect-error
    window.savedGame = savedGame;
    // @ts-expect-error
-   window.clearGame = () => {
-      if (isSteam()) {
-         SteamClient.fileDelete(SAVE_KEY).then(() => window.location.reload());
-         return;
-      }
-      idbClear()
-         .then(() => window.location.reload())
-         .catch(console.error);
-   };
+   window.clearGame = wipeSaveData;
    // @ts-expect-error
    window.clearAllResources = () => {
       forEach(getGameState().tiles, (xy, tile) => {
@@ -121,9 +124,9 @@ export async function loadGame(): Promise<SavedGame | undefined> {
    return await idbGet<SavedGame>(SAVE_KEY);
 }
 
-export function checkSaveCompatible(version: number, routeTo: RouteTo): Promise<void> {
+export function checkSaveCompatible(gs: SavedGame, routeTo: RouteTo): Promise<void> {
    return new Promise((resolve, reject) => {
-      if (savedGame.options.version !== version) {
+      if (savedGame.options.version !== gs.options.version) {
          playError();
          routeTo(LoadingPage, {
             message: {
@@ -134,19 +137,18 @@ export function checkSaveCompatible(version: number, routeTo: RouteTo): Promise<
                      Press F to WIPE and continue
                   </>
                ),
-               continue: resolve,
+               continue: () => {
+                  resolve();
+               },
             },
          });
       } else {
+         migrateSavedGame(gs);
+         Object.assign(savedGame.current, gs.current);
+         Object.assign(savedGame.options, gs.options);
          resolve();
       }
    });
-}
-
-export function initializeSavedGame(gs: SavedGame): void {
-   migrateSavedGame(gs);
-   Object.assign(savedGame.current, gs.current);
-   Object.assign(savedGame.options, gs.options);
 }
 
 export function notifyGameStateUpdate(): void {
