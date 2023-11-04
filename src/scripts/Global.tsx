@@ -3,17 +3,21 @@ import { GameOptions, GameState, SavedGame } from "./logic/GameState";
 import { ITileData, makeBuilding } from "./logic/Tile";
 import { isSteam, SteamClient } from "./rpc/SteamClient";
 import { Grid } from "./scenes/Grid";
+import { LoadingPage } from "./ui/LoadingPage";
 import { idbClear, idbGet, idbSet } from "./utilities/BrowserStorage";
 import { forEach } from "./utilities/Helper";
 import { makeObservableHook } from "./utilities/Hook";
 import { SceneManager } from "./utilities/SceneManager";
 import { TypedEvent } from "./utilities/TypedEvent";
+import { playError } from "./visuals/Sound";
+
+export type RouteTo = <P extends Record<string, unknown>>(component: React.ComponentType<P>, params: P) => void;
 
 export interface ISingleton {
    sceneManager: SceneManager;
    grid: Grid;
    buildings: ISpecialBuildings;
-   routeTo: <P extends Record<string, unknown>>(component: React.ComponentType<P>, params: P) => void;
+   routeTo: RouteTo;
 }
 
 export interface ISpecialBuildings {
@@ -115,6 +119,28 @@ export async function loadGame(): Promise<SavedGame | undefined> {
       return;
    }
    return await idbGet<SavedGame>(SAVE_KEY);
+}
+
+export function checkSaveCompatible(version: number, routeTo: RouteTo): Promise<void> {
+   return new Promise((resolve, reject) => {
+      if (savedGame.options.version !== version) {
+         playError();
+         routeTo(LoadingPage, {
+            message: {
+               content: (
+                  <>
+                     Error: Your save is incompatible
+                     <br />
+                     Press F to WIPE and continue
+                  </>
+               ),
+               continue: resolve,
+            },
+         });
+      } else {
+         resolve();
+      }
+   });
 }
 
 export function initializeSavedGame(gs: SavedGame): void {

@@ -25,6 +25,7 @@ import { playKaching } from "../visuals/Sound";
 import { isSteam, SteamClient, STEAM_APP_ID } from "./SteamClient";
 
 const serverAddress = import.meta.env.DEV ? "ws://localhost:8000" : "wss://api.cividle.com";
+// const serverAddress = "wss://api.cividle.com";
 
 let user: IUser | null = null;
 

@@ -54,6 +54,7 @@ export class GameOptions {
    useModernUI = true;
    id = v4();
    token: string | null = null;
+   version = 1;
 }
 
 export function initializeGameState(gameState: GameState, grid: Grid) {

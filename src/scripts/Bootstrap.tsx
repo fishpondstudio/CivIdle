@@ -2,12 +2,14 @@ import { Application, Ticker } from "pixi.js";
 import { Building } from "./definitions/BuildingDefinitions";
 import { City } from "./definitions/CityDefinitions";
 import {
+   checkSaveCompatible,
    getGameState,
    initializeSavedGame,
    initializeSingletons,
    ISpecialBuildings,
    loadGame,
    notifyGameStateUpdate,
+   RouteTo,
    saveGame,
    Singleton,
    syncUITheme,
@@ -34,10 +36,13 @@ export async function startGame(
    textures: Textures,
    routeChanged: TypedEvent<RouteChangeEvent>
 ) {
+   const routeTo: RouteTo = (component, params) => routeChanged.emit({ component, params });
+
    // ========== Load game data ==========
    let isNewPlayer = false;
    const data = await loadGame();
    if (data) {
+      await checkSaveCompatible(data.options.version, routeTo);
       initializeSavedGame(data);
    } else {
       isNewPlayer = true;
@@ -64,7 +69,7 @@ export async function startGame(
       sceneManager: new SceneManager({ app, assets: resources, textures, gameState }),
       buildings: findSpecialBuildings(gameState) as ISpecialBuildings,
       grid,
-      routeTo: (component, params) => routeChanged.emit({ component, params }),
+      routeTo,
    });
 
    // ========== Connect to server ==========
