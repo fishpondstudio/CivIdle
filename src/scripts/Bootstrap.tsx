@@ -2,9 +2,9 @@ import { Application, Ticker } from "pixi.js";
 import { Building } from "./definitions/BuildingDefinitions";
 import { City } from "./definitions/CityDefinitions";
 import {
-   checkSaveCompatible,
    getGameState,
    initializeSingletons,
+   isGameDataCompatible,
    ISpecialBuildings,
    loadGame,
    notifyGameStateUpdate,
@@ -39,8 +39,8 @@ export async function startGame(
    // ========== Load game data ==========
    let isNewPlayer = false;
    const data = await loadGame();
-   if (data) {
-      await checkSaveCompatible(data, routeTo);
+   if (data && (await isGameDataCompatible(data, routeTo))) {
+      // Nothing to do yet
    } else {
       isNewPlayer = true;
    }

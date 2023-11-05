@@ -124,7 +124,7 @@ export async function loadGame(): Promise<SavedGame | undefined> {
    return await idbGet<SavedGame>(SAVE_KEY);
 }
 
-export function checkSaveCompatible(gs: SavedGame, routeTo: RouteTo): Promise<void> {
+export function isGameDataCompatible(gs: SavedGame, routeTo: RouteTo): Promise<boolean> {
    return new Promise((resolve, reject) => {
       if (savedGame.options.version !== gs.options.version) {
          playError();
@@ -138,7 +138,7 @@ export function checkSaveCompatible(gs: SavedGame, routeTo: RouteTo): Promise<vo
                   </>
                ),
                continue: () => {
-                  resolve();
+                  resolve(false);
                },
             },
          });
@@ -146,7 +146,7 @@ export function checkSaveCompatible(gs: SavedGame, routeTo: RouteTo): Promise<vo
          migrateSavedGame(gs);
          Object.assign(savedGame.current, gs.current);
          Object.assign(savedGame.options, gs.options);
-         resolve();
+         resolve(true);
       }
    });
 }
