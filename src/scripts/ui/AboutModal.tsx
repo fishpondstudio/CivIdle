@@ -1,8 +1,7 @@
 import logo from "../../images/icon.png";
 import { Singleton, wipeSaveData } from "../Global";
-import { SAVE_FILE_VERSION } from "../logic/GameState";
+import { getVersion } from "../logic/Constants";
 import { L, t } from "../utilities/i18n";
-import { build } from "../Version.json";
 import { playClick } from "../visuals/Sound";
 import { hideModal } from "./GlobalModal";
 
@@ -19,7 +18,7 @@ export function AboutModal() {
                </div>
                <div className="f1">
                   <div className="text-strong">{t(L.CivIdle)}</div>
-                  <div>{t(L.CivIdleBuild, { build: `0.${SAVE_FILE_VERSION}.${build}` })}</div>
+                  <div>{t(L.CivIdleBuild, { build: getVersion() })}</div>
                   <div>{t(L.CivIdleInfo)}</div>
                   <hr className="mv10" />
                   <div className="text-small text-desc">{t(L.GraphicsDriver, { driver: getWebglRenderInfo() })}</div>

@@ -1,6 +1,7 @@
 import { ReactNode } from "react";
 import "../../css/LoadingPage.css";
 import energyStar from "../../images/energy_star.png";
+import { getVersion } from "../logic/Constants";
 
 interface ErrorMessage {
    content: ReactNode;
@@ -19,7 +20,7 @@ export function LoadingPage({ message }: { message?: ErrorMessage }) {
          }}
       >
          <img className="energy-star" src={energyStar} />
-         CivIdle
+         CivIdle {getVersion()}
          <br />
          Proudly Presented by Fish Pond Studio
          <br />

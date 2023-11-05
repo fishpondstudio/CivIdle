@@ -5,7 +5,8 @@ import { DepositResources, Resource, ResourceDefinitions } from "../definitions/
 import { Tech, TechAgeDefinitions, TechDefinitions } from "../definitions/TechDefinitions";
 import { PartialTabulate } from "../definitions/TypeDefinitions";
 import { deepFreeze, forEach, isEmpty, keysOf, sizeOf, tabulateAdd } from "../utilities/Helper";
-import { GameState } from "./GameState";
+import { build } from "../Version.json";
+import { GameState, SAVE_FILE_VERSION } from "./GameState";
 import { getBuildingUnlockTech, getDepositUnlockTech, getResourceUnlockTech } from "./TechLogic";
 
 const BuildingTier: PartialTabulate<Building> = {};
@@ -14,6 +15,10 @@ const BuildingTech: PartialTabulate<Building> = {};
 const ResourceTier: PartialTabulate<Resource> = {};
 const ResourcePrice: PartialTabulate<Resource> = {};
 const ResourceTech: PartialTabulate<Resource> = {};
+
+export function getVersion(): string {
+   return `0.${SAVE_FILE_VERSION}.${build}`;
+}
 
 export const Config = {
    Building: deepFreeze(new BuildingDefinitions()),
