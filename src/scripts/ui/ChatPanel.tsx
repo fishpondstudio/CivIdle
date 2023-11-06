@@ -15,7 +15,11 @@ export function ChatPanel() {
    const chatInput = useRef<HTMLInputElement>(null);
 
    useEffect(() => {
-      bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+      if (bottomRef.current?.parentElement?.scrollTop === 0) {
+         bottomRef.current?.scrollIntoView();
+      } else {
+         bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+      }
    }, [messages, user, showChatWindow]);
 
    useTypedEvent(OnUIThemeChanged, () => {

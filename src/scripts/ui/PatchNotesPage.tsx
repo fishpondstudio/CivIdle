@@ -20,7 +20,7 @@ export function PatchNotesPage(): JSX.Element {
                   <div className="m-icon" style={{ margin: "0 5px 0 -5px", fontSize: "18px" }}>
                      arrow_back
                   </div>
-                  <div>{t(L.BackToHeadquarter)}</div>
+                  <div>{t(L.GoBack)}</div>
                </div>
             </button>
             <div className="sep10"></div>

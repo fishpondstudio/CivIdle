@@ -25,6 +25,14 @@ export function wipeSaveData() {
 
 if (import.meta.env.DEV) {
    // @ts-expect-error
+   window.loadSave = (content: any) => {
+      saving = true;
+      Object.assign(savedGame, content);
+      idbSet(SAVE_KEY, savedGame)
+         .then(() => window.location.reload())
+         .catch(console.error);
+   };
+   // @ts-expect-error
    window.savedGame = savedGame;
    // @ts-expect-error
    window.clearGame = wipeSaveData;

@@ -5,6 +5,14 @@ interface PatchNote {
 
 export const PatchNotes: PatchNote[] = [
    {
+      version: "0.1.58",
+      content: [
+         ["Bugfix", "Fix unlimited max stockpile is not correctly applied"],
+         ["Bugfix", "Disable initial scroll animation when opening chat window"],
+         ["QoL", "Add an error message when trade cannot be filled because of lack of a valid route"],
+      ],
+   },
+   {
       version: "0.1.57",
       content: [
          ["Bugfix", "Disable claiming an ocean tile: you have to be on land to trade"],

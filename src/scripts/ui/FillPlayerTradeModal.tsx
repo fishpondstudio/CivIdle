@@ -22,6 +22,7 @@ import { Singleton } from "../utilities/Singleton";
 import { playError } from "../visuals/Sound";
 import { hideModal, showToast } from "./GlobalModal";
 import { FormatNumber } from "./HelperComponents";
+import { WarningComponent } from "./WarningComponent";
 
 export function FillPlayerTradeModal({ trade, xy }: { trade: IClientTrade; xy?: string }) {
    const [percent, setPercent] = useState(100);
@@ -76,6 +77,14 @@ export function FillPlayerTradeModal({ trade, xy }: { trade: IClientTrade; xy?: 
             </div>
          </div>
          <div className="window-body">
+            {!hasValidPath ? (
+               <>
+                  <WarningComponent icon="warning">
+                     {t(L.PlayerTradeNoValidRoute, { name: trade.from })}
+                  </WarningComponent>
+                  <div className="sep10"></div>
+               </>
+            ) : null}
             <div className="table-view">
                <table>
                   <tbody>

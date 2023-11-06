@@ -30,6 +30,7 @@ import {
    getBuildingCost,
    getBuildingIO,
    getScienceFromWorkers,
+   getStockpileMax,
    getStorageFor,
    getStorageRequired,
    getWorkersFor,
@@ -250,7 +251,7 @@ function tileTile(xy: string, gs: GameState): void {
       if (amount <= 0) {
          return;
       }
-      if (input[res] && amount <= building.stockpileMax * (input[res] ?? 0)) {
+      if (input[res] && amount <= getStockpileMax(building) * input[res]!) {
          return;
       }
       if ("resourceImports" in building) {
@@ -297,7 +298,7 @@ function tileTile(xy: string, gs: GameState): void {
          return;
       }
 
-      let maxAmount = building.stockpileMax * amount;
+      let maxAmount = getStockpileMax(building) * amount;
       if ("resourceImports" in building) {
          const ri = building as IResourceImportBuildingData;
          maxAmount = ri.resourceImports[res]?.cap ?? 0;

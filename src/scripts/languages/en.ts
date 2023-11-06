@@ -558,7 +558,7 @@ export const EN = {
    GreatPeopleThisRun: "Great People From This Run",
    GreatPeopleWiki: "Great People Wiki",
    WondersWiki: "Wonders Wiki",
-   BackToHeadquarter: "Back To Headquarter",
+   GoBack: "Go Back",
    CivIdle: "CivIdle",
    CivIdleInfo: "Proudly presented by Fish Pond Studio",
    CivIdleBuild: "Build: %{build}",
@@ -637,4 +637,5 @@ export const EN = {
    PatchNotes: "Patch Notes",
    PatchNotesDesc: "There are %{number} changes in the version %{version}",
    PatchNotesRead: "View",
+   PlayerTradeNoValidRoute: "Cannot find a valid trade route between you and %{name}",
 };

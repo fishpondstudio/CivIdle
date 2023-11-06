@@ -243,6 +243,10 @@ export function filterResource<T>(
    return result;
 }
 
+export function getStockpileMax(b: IBuildingData) {
+   return b.stockpileMax === 0 ? Infinity : b.stockpileMax;
+}
+
 export function tryAddTransportation(
    resource: Resource,
    amount: number,
