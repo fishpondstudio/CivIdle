@@ -5,7 +5,7 @@ interface PatchNote {
 
 export const PatchNotes: PatchNote[] = [
    {
-      version: "0.1.55",
+      version: "0.1.57",
       content: [
          ["Bugfix", "Disable claiming an ocean tile: you have to be on land to trade"],
          ["Bugfix", "Fix Stonehenge failing to provide production multiplier"],
