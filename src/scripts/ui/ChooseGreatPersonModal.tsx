@@ -1,9 +1,10 @@
 import { GreatPerson } from "../definitions/GreatPersonDefinitions";
-import { notifyGameStateUpdate, Singleton, useGameState } from "../Global";
+import { notifyGameStateUpdate, useGameState } from "../Global";
 import { Config } from "../logic/Constants";
 import { GreatPeopleChoice } from "../logic/GameState";
 import { safeAdd } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
+import { Singleton } from "../utilities/Singleton";
 import { greatPersonImage } from "../visuals/GreatPersonVisual";
 import { hideModal } from "./GlobalModal";
 

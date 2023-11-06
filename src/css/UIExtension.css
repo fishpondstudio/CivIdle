@@ -91,14 +91,6 @@ fieldset .separator {
    text-decoration: underline;
 }
 
-.inset-deep {
-   box-shadow: inset -1px -1px #fff, inset 1px 1px grey, inset -2px -2px #dfdfdf, inset 2px 2px #0a0a0a;
-}
-
-.inset-deep.white {
-   background: #fff;
-}
-
 .p5 {
    padding: 5px;
 }
@@ -125,6 +117,14 @@ fieldset .separator {
 
 .p10 {
    padding: 10px;
+}
+
+.inset-deep {
+   box-shadow: inset -1px -1px #fff, inset 1px 1px grey, inset -2px -2px #dfdfdf, inset 2px 2px #0a0a0a;
+}
+
+.inset-deep.white {
+   background: #fff;
 }
 
 .inset-shallow {

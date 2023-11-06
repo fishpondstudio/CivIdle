@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import { Singleton } from "../Global";
+import { PatchNotes } from "../definitions/PatchNotes";
 import { getScienceFromWorkers } from "../logic/BuildingLogic";
 import { Config } from "../logic/Constants";
 import { getCurrentTechAge, getScienceAmount, getUnlockCost, unlockableTechs } from "../logic/TechLogic";
@@ -8,6 +8,7 @@ import { useUser } from "../rpc/RPCClient";
 import { TechTreeScene } from "../scenes/TechTreeScene";
 import { formatPercent, jsxMapOf } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
+import { Singleton } from "../utilities/Singleton";
 import { playError } from "../visuals/Sound";
 import { IBuildingComponentProps } from "./BuildingPage";
 import { BuildingProduceComponent } from "./BuildingProduceComponent";
@@ -16,6 +17,7 @@ import { ChangePlayerHandleModal } from "./ChangePlayerHandleModal";
 import { showModal } from "./GlobalModal";
 import { GreatPersonPage } from "./GreatPersonPage";
 import { FormatNumber } from "./HelperComponents";
+import { PatchNotesPage } from "./PatchNotesPage";
 import { WonderPage } from "./WonderPage";
 
 export function HeadquarterBuildingBody({ gameState, xy }: IBuildingComponentProps) {
@@ -31,6 +33,7 @@ export function HeadquarterBuildingBody({ gameState, xy }: IBuildingComponentPro
    const scienceAmount = getScienceAmount();
    const techAge = getCurrentTechAge(gameState);
    const user = useUser();
+   // const patch = PatchNotes[0];
    return (
       <div className="window-body">
          <fieldset>
@@ -221,15 +224,15 @@ export function HeadquarterBuildingBody({ gameState, xy }: IBuildingComponentPro
                {t(L.ManageWonders)}
             </div>
          </fieldset>
-         {/* {jsxMapOf(Config.GreatPerson, (k) => {
-                return (
-                    <img
-                        key={k}
-                        src={greatPersonImage(k, Singleton().sceneManager.getContext())}
-                        style={{ width: "31%", margin: "1%" }}
-                    />
-                );
-            })} */}
+         <fieldset>
+            <legend>{t(L.PatchNotes)}</legend>
+            <div className="row mv5" onClick={() => Singleton().routeTo(PatchNotesPage, {})}>
+               <div className="f1">
+                  {t(L.PatchNotesDesc, { number: PatchNotes[0].content.length, version: PatchNotes[0].version })}
+               </div>
+               <div className="text-link text-strong">{t(L.PatchNotesRead)}</div>
+            </div>
+         </fieldset>
       </div>
    );
 }

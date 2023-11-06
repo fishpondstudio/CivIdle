@@ -10,11 +10,11 @@ import {
    TilingSprite,
    utils,
 } from "pixi.js";
-import { Singleton } from "../Global";
 import { GameState } from "../logic/GameState";
 import { TilePage } from "../ui/TilePage";
 import { clamp, forEach, lerp, lookAt, pointToXy, xyToPoint } from "../utilities/Helper";
 import { ViewportScene } from "../utilities/SceneManager";
+import { Singleton } from "../utilities/Singleton";
 import { Vector2 } from "../utilities/Vector2";
 import { TileVisual } from "./TileVisual";
 import { TooltipPool } from "./TooltipPool";

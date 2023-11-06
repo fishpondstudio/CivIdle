@@ -1,6 +1,6 @@
 import classNames from "classnames";
 import { useEffect, useState } from "react";
-import { Singleton, useGameState } from "../Global";
+import { useGameState } from "../Global";
 import { getStorageFor } from "../logic/BuildingLogic";
 import { IClientTrade } from "../logic/PlayerTradeLogic";
 import { Tick } from "../logic/TickLogic";
@@ -18,6 +18,7 @@ import {
    xyToPoint,
 } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
+import { Singleton } from "../utilities/Singleton";
 import { playError } from "../visuals/Sound";
 import { hideModal, showToast } from "./GlobalModal";
 import { FormatNumber } from "./HelperComponents";

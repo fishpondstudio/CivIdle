@@ -1,7 +1,7 @@
 import { Building } from "../definitions/BuildingDefinitions";
 import { IUnlockableDefinition } from "../definitions/ITechDefinition";
 import { Resource } from "../definitions/ResourceDefinitions";
-import { getGameState, notifyGameStateUpdate, saveGame, Singleton } from "../Global";
+import { getGameState, notifyGameStateUpdate, saveGame } from "../Global";
 import { isSteam } from "../rpc/SteamClient";
 import { WorldScene } from "../scenes/WorldScene";
 import {
@@ -19,6 +19,7 @@ import {
 } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
 import { srand } from "../utilities/Random";
+import { Singleton } from "../utilities/Singleton";
 import { v2 } from "../utilities/Vector2";
 import {
    addResources,

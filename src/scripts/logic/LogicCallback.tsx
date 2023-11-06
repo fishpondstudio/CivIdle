@@ -1,11 +1,11 @@
 import { Tech } from "../definitions/TechDefinitions";
-import { Singleton } from "../Global";
 import { TechTreeScene } from "../scenes/TechTreeScene";
 import { WorldScene } from "../scenes/WorldScene";
 import { ChooseGreatPersonModal } from "../ui/ChooseGreatPersonModal";
 import { showModal } from "../ui/GlobalModal";
 import { forEach, pointToXy, safePush, xyToPoint } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
+import { Singleton } from "../utilities/Singleton";
 import { GameState } from "./GameState";
 import { getBuildingsByType } from "./IntraTickCache";
 import { getGreatPeopleChoices } from "./TechLogic";
@@ -147,6 +147,14 @@ export function onBuildingProductionComplete(xy: string, gs: GameState) {
          Tick.next.globalMultipliers.sciencePerBusyWorker.push({
             value: 1,
             source: buildingName,
+         });
+         break;
+      }
+      case "Stonehenge": {
+         forEach(Tick.current.buildings, (b, def) => {
+            if (def.input.Stone || def.output.Stone) {
+               addMultiplier(b, { output: 1 }, buildingName);
+            }
          });
          break;
       }

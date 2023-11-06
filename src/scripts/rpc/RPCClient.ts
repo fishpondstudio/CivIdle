@@ -21,10 +21,12 @@ import { forEach } from "../utilities/Helper";
 import { makeObservableHook } from "../utilities/Hook";
 import { L, t } from "../utilities/i18n";
 import { TypedEvent } from "../utilities/TypedEvent";
-import { playKaching } from "../visuals/Sound";
+import { playBubble, playKaching } from "../visuals/Sound";
 import { isSteam, SteamClient, STEAM_APP_ID } from "./SteamClient";
 
-const serverAddress = import.meta.env.DEV ? "ws://localhost:8000" : "wss://api.cividle.com";
+const url = new URLSearchParams(window.location.search);
+const devServerAddress = url.get("server") ?? "ws://localhost:8000";
+const serverAddress = import.meta.env.DEV ? devServerAddress : "wss://api.cividle.com";
 // const serverAddress = "wss://api.cividle.com";
 
 let user: IUser | null = null;
@@ -112,6 +114,12 @@ export async function connectWebSocket() {
             if (c.flush) {
                chatMessages = c.chat;
             } else {
+               c.chat.forEach((m) => {
+                  if (user && m.message.includes(`@${user!.handle} `)) {
+                     playBubble();
+                     showToast(`${m.name}: ${m.message}`);
+                  }
+               });
                chatMessages = chatMessages.concat(c.chat);
             }
             OnChatMessage.emit(chatMessages);

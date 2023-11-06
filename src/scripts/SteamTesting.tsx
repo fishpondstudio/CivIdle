@@ -1,6 +1,6 @@
-import { Singleton } from "./Global";
 import { isSteam, SteamClient } from "./rpc/SteamClient";
 import { ErrorPage } from "./ui/ErrorPage";
+import { Singleton } from "./utilities/Singleton";
 
 export async function checkSteamBranch() {
    if (!isSteam()) {

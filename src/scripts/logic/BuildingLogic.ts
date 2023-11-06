@@ -2,9 +2,9 @@ import { Building, IBuildingDefinition } from "../definitions/BuildingDefinition
 import { City } from "../definitions/CityDefinitions";
 import { IResourceDefinition, Resource } from "../definitions/ResourceDefinitions";
 import { PartialTabulate } from "../definitions/TypeDefinitions";
-import { Singleton } from "../Global";
 import { clamp, forEach, isEmpty, keysOf, reduceOf, safeAdd, safePush, sum } from "../utilities/Helper";
 import { Textures } from "../utilities/SceneManager";
+import { Singleton } from "../utilities/Singleton";
 import { v2 } from "../utilities/Vector2";
 import { Config } from "./Constants";
 import { GameState } from "./GameState";

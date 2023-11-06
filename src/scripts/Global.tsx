@@ -1,48 +1,14 @@
 import { Config } from "./logic/Constants";
 import { GameOptions, GameState, SavedGame } from "./logic/GameState";
-import { ITileData, makeBuilding } from "./logic/Tile";
+import { makeBuilding } from "./logic/Tile";
 import { isSteam, SteamClient } from "./rpc/SteamClient";
-import { Grid } from "./scenes/Grid";
 import { LoadingPage } from "./ui/LoadingPage";
 import { idbClear, idbGet, idbSet } from "./utilities/BrowserStorage";
 import { forEach } from "./utilities/Helper";
 import { makeObservableHook } from "./utilities/Hook";
-import { SceneManager } from "./utilities/SceneManager";
+import { RouteTo } from "./utilities/Singleton";
 import { TypedEvent } from "./utilities/TypedEvent";
 import { playError } from "./visuals/Sound";
-
-export type RouteTo = <P extends Record<string, unknown>>(component: React.ComponentType<P>, params: P) => void;
-
-export interface ISingleton {
-   sceneManager: SceneManager;
-   grid: Grid;
-   buildings: ISpecialBuildings;
-   routeTo: RouteTo;
-}
-
-export interface ISpecialBuildings {
-   Headquarter: Required<ITileData>;
-}
-
-let singletons: ISingleton | null = null;
-
-export function initializeSingletons(s: ISingleton) {
-   if (singletons != null) {
-      console.warn("Singletons are already initialized, you are trying to initialize it again!");
-   }
-   singletons = s;
-}
-
-export function isSingletonReady() {
-   return singletons !== null;
-}
-
-export function Singleton(): ISingleton {
-   if (singletons == null) {
-      throw new Error("Singletons are not initialized yet!");
-   }
-   return singletons;
-}
 
 const savedGame = new SavedGame();
 

@@ -2,11 +2,12 @@ import { SmoothGraphics } from "@pixi/graphics-smooth";
 import { BitmapText, Container, FederatedPointerEvent, IPointData, LINE_CAP, LINE_JOIN, Sprite } from "pixi.js";
 import { IMapEntry, MAP_MAX_X, MAP_MAX_Y } from "../../../server/src/Database";
 import WorldMap from "../../../server/WorldMap.json";
-import { getGameOptions, Singleton } from "../Global";
+import { getGameOptions } from "../Global";
 import { getPlayerMap, OnPlayerMapMessage } from "../rpc/RPCClient";
 import { PlayerMapPage } from "../ui/PlayerMapPage";
 import { drawDashedLine, forEach, formatPercent, safeParseInt, xyToPoint } from "../utilities/Helper";
 import { ViewportScene } from "../utilities/SceneManager";
+import { Singleton } from "../utilities/Singleton";
 import { Disposable } from "../utilities/TypedEvent";
 import { Fonts } from "../visuals/Fonts";
 import { getMyMapXy } from "./PathFinder";
@@ -190,10 +191,6 @@ export class PlayerMapScene extends ViewportScene {
    private selectTile(tileX: number, tileY: number) {
       const x = tileX * GridSize;
       const y = tileY * GridSize;
-
-      if (import.meta.env.DEV) {
-         console.log("Select Tile:", tileX, tileY);
-      }
 
       this._selectedGraphics.clear();
       this._selectedGraphics

@@ -1,17 +1,8 @@
 import { Application, Ticker } from "pixi.js";
 import { Building } from "./definitions/BuildingDefinitions";
 import { City } from "./definitions/CityDefinitions";
-import {
-   getGameState,
-   initializeSingletons,
-   isGameDataCompatible,
-   ISpecialBuildings,
-   loadGame,
-   notifyGameStateUpdate,
-   RouteTo,
-   Singleton,
-   syncUITheme,
-} from "./Global";
+import { PatchNotes } from "./definitions/PatchNotes";
+import { getGameState, isGameDataCompatible, loadGame, notifyGameStateUpdate, syncUITheme } from "./Global";
 import { getBuildingTexture } from "./logic/BuildingLogic";
 import { calculateTierAndPrice, Config } from "./logic/Constants";
 import { GameState, initializeGameState } from "./logic/GameState";
@@ -26,6 +17,7 @@ import { checkSteamBranch } from "./SteamTesting";
 import { forEach } from "./utilities/Helper";
 import Actions from "./utilities/pixi-actions/Actions";
 import { SceneManager, Textures } from "./utilities/SceneManager";
+import { initializeSingletons, ISpecialBuildings, RouteTo, Singleton } from "./utilities/Singleton";
 import { TypedEvent } from "./utilities/TypedEvent";
 
 export async function startGame(
@@ -75,9 +67,15 @@ export async function startGame(
    // We tick first before loading scene, making sure city-specific overrides are applied!
    tickEverySecond(gameState);
 
-   // if (import.meta.env.DEV) {
-   //    createRoot(document.getElementById("debug-ui")!).render(<GreatPersonDebug />);
-   // }
+   if (import.meta.env.DEV) {
+      const patchNotes = [];
+      patchNotes.push(`${PatchNotes[0].version}`);
+      PatchNotes[0].content.forEach((c) => {
+         patchNotes.push(`${c[0]}: ${c[1]}`);
+      });
+      console.log(patchNotes.join("\n"));
+      // createRoot(document.getElementById("debug-ui")!).render(<GreatPersonDebug />);
+   }
 
    // Singleton().sceneManager.loadScene(FlowGraphScene);
    Singleton().sceneManager.loadScene(WorldScene);

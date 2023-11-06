@@ -1,8 +1,9 @@
 import { GreatPerson } from "../definitions/GreatPersonDefinitions";
-import { Singleton, useGameState } from "../Global";
+import { useGameState } from "../Global";
 import { Config } from "../logic/Constants";
 import { jsxMapOf } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
+import { Singleton } from "../utilities/Singleton";
 import { greatPersonImage } from "../visuals/GreatPersonVisual";
 import { MenuComponent } from "./MenuComponent";
 import { TilePage } from "./TilePage";

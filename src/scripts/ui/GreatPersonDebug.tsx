@@ -1,4 +1,4 @@
-import { Singleton } from "../Global";
+import { Singleton } from "../utilities/Singleton";
 import { greatPersonImage } from "../visuals/GreatPersonVisual";
 
 export function GreatPersonDebug() {

@@ -1,8 +1,9 @@
-import { notifyGameStateUpdate, Singleton, useGameState } from "../Global";
+import { notifyGameStateUpdate, useGameState } from "../Global";
 import { Tick } from "../logic/TickLogic";
 import { ITileData } from "../logic/Tile";
 import { WorldScene } from "../scenes/WorldScene";
 import { L, t } from "../utilities/i18n";
+import { Singleton } from "../utilities/Singleton";
 import { BuildingConstructionProgressComponent } from "./BuildingConstructionProgressComponent";
 import { LoadingPage } from "./LoadingPage";
 import { MenuComponent } from "./MenuComponent";

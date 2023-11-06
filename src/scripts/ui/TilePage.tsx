@@ -1,4 +1,5 @@
-import { isSingletonReady, useGameState } from "../Global";
+import { useGameState } from "../Global";
+import { isSingletonReady } from "../utilities/Singleton";
 import { BuildingPage } from "./BuildingPage";
 import { ConstructionPage } from "./ConstructionPage";
 import { EmptyTilePage } from "./EmptyTilePage";

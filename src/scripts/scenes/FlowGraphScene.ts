@@ -2,11 +2,11 @@ import { SmoothGraphics } from "@pixi/graphics-smooth";
 import { BitmapText, Container, IPointData, LINE_CAP, LINE_JOIN } from "pixi.js";
 import { Building } from "../definitions/BuildingDefinitions";
 import { Resource } from "../definitions/ResourceDefinitions";
-import { Singleton } from "../Global";
 import { Tick } from "../logic/TickLogic";
 import { DebugPage } from "../ui/DebugPage";
 import { forEach, sizeOf } from "../utilities/Helper";
 import { ViewportScene } from "../utilities/SceneManager";
+import { Singleton } from "../utilities/Singleton";
 import { Fonts } from "../visuals/Fonts";
 
 const MaxX = 200;

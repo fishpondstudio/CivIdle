@@ -1,7 +1,8 @@
-import { notifyGameStateUpdate, Singleton } from "../Global";
+import { notifyGameStateUpdate } from "../Global";
 import { isWorldOrNaturalWonder } from "../logic/BuildingLogic";
 import { WorldScene } from "../scenes/WorldScene";
 import { L, t } from "../utilities/i18n";
+import { Singleton } from "../utilities/Singleton";
 import { IBuildingComponentProps } from "./BuildingPage";
 
 export function BuildingSellComponent({ gameState, xy }: IBuildingComponentProps) {

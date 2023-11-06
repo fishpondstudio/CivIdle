@@ -1,9 +1,10 @@
 import { Building } from "../definitions/BuildingDefinitions";
 import { PartialSet } from "../definitions/TypeDefinitions";
-import { Singleton, useGameState } from "../Global";
+import { useGameState } from "../Global";
 import { Tick } from "../logic/TickLogic";
 import { forEach, jsxMapOf } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
+import { Singleton } from "../utilities/Singleton";
 import { MenuComponent } from "./MenuComponent";
 import { TilePage } from "./TilePage";
 
@@ -55,7 +56,7 @@ export function WonderPage(): JSX.Element | null {
                               return null;
                            }
                            return (
-                              <tr>
+                              <tr key={b}>
                                  <td>
                                     {builtWonders[b] ? (
                                        <div className="m-icon small text-green">check_circle</div>

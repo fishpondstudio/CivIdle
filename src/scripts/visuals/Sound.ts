@@ -1,5 +1,6 @@
 import { sound } from "@pixi/sound";
 import beep from "../../sounds/beep.mp3";
+import bubble from "../../sounds/bubble.mp3";
 import click from "../../sounds/click.mp3";
 import error from "../../sounds/error.mp3";
 import kaching from "../../sounds/kaching.mp3";
@@ -10,6 +11,7 @@ sound.add("beep", beep);
 sound.add("error", error);
 sound.add("kaching", kaching);
 sound.add("levelup", levelup);
+sound.add("bubble", bubble);
 
 export function playClick() {
    sound.play("click");
@@ -29,4 +31,8 @@ export function playKaching() {
 
 export function playLevelUp() {
    sound.play("levelup");
+}
+
+export function playBubble() {
+   sound.play("bubble");
 }

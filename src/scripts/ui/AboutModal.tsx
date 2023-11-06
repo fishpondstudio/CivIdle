@@ -1,7 +1,8 @@
 import logo from "../../images/icon.png";
-import { Singleton, wipeSaveData } from "../Global";
+import { wipeSaveData } from "../Global";
 import { getVersion } from "../logic/Constants";
 import { L, t } from "../utilities/i18n";
+import { Singleton } from "../utilities/Singleton";
 import { playClick } from "../visuals/Sound";
 import { hideModal } from "./GlobalModal";
 

@@ -3,7 +3,6 @@ import { BitmapText, Container, LINE_CAP, LINE_JOIN, Rectangle } from "pixi.js";
 import { BG_COLOR } from "../Colors";
 import { ITechDefinition } from "../definitions/ITechDefinition";
 import { Tech } from "../definitions/TechDefinitions";
-import { Singleton } from "../Global";
 import { Config } from "../logic/Constants";
 import { isAgeUnlocked, unlockableTechs } from "../logic/TechLogic";
 import { Tick } from "../logic/TickLogic";
@@ -12,6 +11,7 @@ import { forEach, sizeOf } from "../utilities/Helper";
 import Actions from "../utilities/pixi-actions/Actions";
 import { Easing } from "../utilities/pixi-actions/Easing";
 import { ViewportScene } from "../utilities/SceneManager";
+import { Singleton } from "../utilities/Singleton";
 import { Fonts } from "../visuals/Fonts";
 
 const BOX_WIDTH = 300;

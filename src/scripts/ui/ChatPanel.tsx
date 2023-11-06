@@ -12,6 +12,7 @@ export function ChatPanel() {
    const user = useUser();
    const bottomRef = useRef<HTMLDivElement>(null);
    const [showChatWindow, setShowChatWindow] = useState(false);
+   const chatInput = useRef<HTMLInputElement>(null);
 
    useEffect(() => {
       bottomRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -49,7 +50,16 @@ export function ChatPanel() {
             {messages.map((c, i) => {
                return (
                   <div className="chat-message-item" key={i}>
-                     <span className="text-desc">{c.name}</span>: {c.message}
+                     <span
+                        className="text-desc pointer"
+                        onClick={() => {
+                           setChat(`@${c.name} `);
+                           chatInput.current?.focus();
+                        }}
+                     >
+                        {c.name}
+                     </span>
+                     : {c.message}
                   </div>
                );
             })}
@@ -59,6 +69,7 @@ export function ChatPanel() {
          </div>
          <div className="row" style={{ padding: "2px" }}>
             <input
+               ref={chatInput}
                className="f1"
                type="text"
                style={{ margin: "0 2px 0 0" }}

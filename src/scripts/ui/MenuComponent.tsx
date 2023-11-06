@@ -1,12 +1,13 @@
 import classNames from "classnames";
 import { PropsWithChildren, useEffect, useRef, useState } from "react";
-import { getGameOptions, Singleton, syncUITheme } from "../Global";
+import { getGameOptions, syncUITheme } from "../Global";
 import { Tick } from "../logic/TickLogic";
 import { PlayerMapScene } from "../scenes/PlayerMapScene";
 import { TechTreeScene } from "../scenes/TechTreeScene";
 import { WorldScene } from "../scenes/WorldScene";
 import { sizeOf } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
+import { Singleton } from "../utilities/Singleton";
 import { AboutModal } from "./AboutModal";
 import { showModal } from "./GlobalModal";
 

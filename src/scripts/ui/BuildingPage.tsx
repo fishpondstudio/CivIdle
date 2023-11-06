@@ -1,9 +1,10 @@
 import { FunctionComponent } from "react";
 import { Building } from "../definitions/BuildingDefinitions";
-import { Singleton, useGameState } from "../Global";
+import { useGameState } from "../Global";
 import { GameState } from "../logic/GameState";
 import { Tick } from "../logic/TickLogic";
 import { ITileData } from "../logic/Tile";
+import { Singleton } from "../utilities/Singleton";
 import { DefaultBuildingBody } from "./DefaultBuildingBody";
 import { HeadquarterBuildingBody } from "./HeadquarterBuildingBody";
 import { LoadingPage } from "./LoadingPage";
