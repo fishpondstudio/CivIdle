@@ -1,6 +1,6 @@
 import classNames from "classnames";
 import { PropsWithChildren, useEffect, useRef, useState } from "react";
-import { getGameOptions, syncUITheme } from "../Global";
+import { notifyGameOptionsUpdate, syncUITheme, useGameOptions } from "../Global";
 import { Tick } from "../logic/TickLogic";
 import { PlayerMapScene } from "../scenes/PlayerMapScene";
 import { TechTreeScene } from "../scenes/TechTreeScene";
@@ -58,6 +58,7 @@ export function MenuComponent() {
          window.removeEventListener("pointerdown", onPointerDown);
       };
    }, []);
+   const gameOptions = useGameOptions();
 
    return (
       <>
@@ -155,12 +156,13 @@ export function MenuComponent() {
                   <div
                      className="menu-popover-item"
                      onPointerDown={() => {
-                        getGameOptions().useModernUI = !getGameOptions().useModernUI;
+                        gameOptions.useModernUI = !gameOptions.useModernUI;
+                        notifyGameOptionsUpdate();
                         syncUITheme();
                         setActive(null);
                      }}
                   >
-                     <MenuItem check={getGameOptions().useModernUI}>{t(L.OptionsUseModernUI)}</MenuItem>
+                     <MenuItem check={gameOptions.useModernUI}>{t(L.OptionsUseModernUI)}</MenuItem>
                   </div>
                </div>
             </div>

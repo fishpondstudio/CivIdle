@@ -13,9 +13,12 @@ import {
 import { GameState } from "../logic/GameState";
 import { TilePage } from "../ui/TilePage";
 import { clamp, forEach, lerp, lookAt, pointToXy, xyToPoint } from "../utilities/Helper";
+import Action from "../utilities/pixi-actions/actions/Action";
+import { CustomAction } from "../utilities/pixi-actions/actions/CustomAction";
+import { Easing } from "../utilities/pixi-actions/Easing";
 import { ViewportScene } from "../utilities/SceneManager";
 import { Singleton } from "../utilities/Singleton";
-import { Vector2 } from "../utilities/Vector2";
+import { v2, Vector2 } from "../utilities/Vector2";
 import { TileVisual } from "./TileVisual";
 import { TooltipPool } from "./TooltipPool";
 import { TransportPool } from "./TransportPool";
@@ -29,7 +32,7 @@ export class WorldScene extends ViewportScene {
    private _selectedGraphics!: SmoothGraphics;
    private _transportPool!: TransportPool;
    public tooltipPool!: TooltipPool;
-
+   private cameraMovement: Action | null = null;
    private readonly _tiles: utils.Dict<TileVisual> = {};
    private readonly _transport: Record<number, Sprite> = {};
 
@@ -85,11 +88,10 @@ export class WorldScene extends ViewportScene {
       );
       this._selectedGraphics = this.viewport.addChild(new SmoothGraphics());
 
-      if (viewportCenter) {
-         this.viewport.moveCenter(viewportCenter);
-      } else {
-         this.viewport.moveCenter(this._width / 2, this._height / 2);
+      if (!viewportCenter) {
+         viewportCenter = { x: this._width / 2, y: this._height / 2 };
       }
+      this.viewport.moveCenter(viewportCenter);
       if (viewportZoom) {
          this.viewport.setZoom(viewportZoom, true);
       }
@@ -114,7 +116,29 @@ export class WorldScene extends ViewportScene {
       forEach(this._tiles, (xy, visual) => visual.onTileDataChanged(gameState.tiles[xy]));
    }
 
-   selectGrid(grid: IPointData) {
+   lookAtXy(xy: string) {
+      this.cameraMovement?.stop();
+      const clampedCenter = this.clampCenter(Singleton().grid.xyToPosition(xy));
+      this.cameraMovement = new CustomAction(
+         () => viewportCenter,
+         (v) => {
+            viewportCenter = v;
+            this.viewport.moveCenter(viewportCenter!);
+         },
+         (a, b, f) => {
+            if (a && b) {
+               return { x: a.x + (b.x - a.x) * f, y: a.y + (b.y - a.y) * f };
+            }
+            throw new Error(`Cannot interpolate from a = ${a} to b = ${b}`);
+         },
+         clampedCenter,
+         v2(clampedCenter).subtractSelf(viewportCenter!).length() / 2000,
+         Easing.InOutSine
+      ).play();
+      this.drawSelection(xyToPoint(xy));
+   }
+
+   drawSelection(grid: IPointData) {
       if (!this._selectedGraphics) {
          return;
       }
@@ -122,7 +146,6 @@ export class WorldScene extends ViewportScene {
       if (Singleton().grid.isEdge(grid)) {
          return;
       }
-      const key = pointToXy(grid);
       this._selectedGraphics.lineStyle({
          alpha: 0.75,
          color: 0xffff99,
@@ -131,8 +154,13 @@ export class WorldScene extends ViewportScene {
          join: LINE_JOIN.ROUND,
          alignment: 0.5,
       });
+
       Singleton().grid.drawSelected(grid, this._selectedGraphics);
-      Singleton().routeTo(TilePage, { xy: key });
+   }
+
+   selectGrid(grid: IPointData) {
+      this.drawSelection(grid);
+      Singleton().routeTo(TilePage, { xy: pointToXy(grid) });
    }
 
    getTile(xy: string): TileVisual | undefined {

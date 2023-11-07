@@ -10,6 +10,7 @@ import { formatPercent, jsxMapOf } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
 import { Singleton } from "../utilities/Singleton";
 import { playError } from "../visuals/Sound";
+import { BuildingColorComponent } from "./BuildingColorComponent";
 import { IBuildingComponentProps } from "./BuildingPage";
 import { BuildingProduceComponent } from "./BuildingProduceComponent";
 import { BuildingStorageComponent } from "./BuildingStorageComponent";
@@ -233,6 +234,7 @@ export function HeadquarterBuildingBody({ gameState, xy }: IBuildingComponentPro
                <div className="text-link text-strong">{t(L.PatchNotesRead)}</div>
             </div>
          </fieldset>
+         <BuildingColorComponent gameState={gameState} xy={xy} />
       </div>
    );
 }

@@ -33,7 +33,7 @@ dependencies:
     specifier: ^2.3.1
     version: 2.3.2
   pixi-viewport:
-    specifier: ^5.0.1
+    specifier: ^5.0.2
     version: 5.0.2
   pixi.js:
     specifier: 7.2.4

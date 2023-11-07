@@ -2,9 +2,11 @@ import { notifyGameStateUpdate } from "../Global";
 import { Config } from "../logic/Constants";
 import { Tick } from "../logic/TickLogic";
 import { IMarketBuildingData } from "../logic/Tile";
-import { keysOf, round } from "../utilities/Helper";
+import { convertPriceIdToTime } from "../logic/Update";
+import { formatHMS, keysOf, round } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
 import { playClick } from "../visuals/Sound";
+import { BuildingColorComponent } from "./BuildingColorComponent";
 import { IBuildingComponentProps } from "./BuildingPage";
 import { BuildingProductionPriorityComponent } from "./BuildingProductionPriorityComponent";
 import { BuildingSellComponent } from "./BuildingSellComponent";
@@ -22,6 +24,14 @@ export function MarketBuildingBody({ gameState, xy }: IBuildingComponentProps) {
    const market = building as IMarketBuildingData;
    return (
       <div className="window-body">
+         <fieldset>
+            <div className="row">
+               <div className="f1">{t(L.NextMarketUpdateIn)}</div>
+               <div className="text-strong">
+                  {formatHMS(convertPriceIdToTime(gameState.lastPriceUpdated + 1) - Date.now())}
+               </div>
+            </div>
+         </fieldset>
          <div className="table-view">
             <table>
                <thead>
@@ -81,6 +91,7 @@ export function MarketBuildingBody({ gameState, xy }: IBuildingComponentProps) {
          <BuildingStorageComponent gameState={gameState} xy={xy} />
          <BuildingProductionPriorityComponent gameState={gameState} xy={xy} />
          <BuildingStockpileComponent gameState={gameState} xy={xy} />
+         <BuildingColorComponent gameState={gameState} xy={xy} />
          <BuildingSellComponent gameState={gameState} xy={xy} />
       </div>
    );

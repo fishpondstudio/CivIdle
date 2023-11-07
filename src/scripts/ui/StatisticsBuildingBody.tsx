@@ -7,9 +7,12 @@ import { Config } from "../logic/Constants";
 import { unlockedResources } from "../logic/IntraTickCache";
 import { Tick } from "../logic/TickLogic";
 import { IBuildingData } from "../logic/Tile";
+import { WorldScene } from "../scenes/WorldScene";
 import { forEach, jsxMapOf, keysOf, safeAdd } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
+import { Singleton } from "../utilities/Singleton";
 import { playClick } from "../visuals/Sound";
+import { BuildingColorComponent } from "./BuildingColorComponent";
 import { IBuildingComponentProps } from "./BuildingPage";
 import { FormatNumber } from "./HelperComponents";
 
@@ -52,6 +55,7 @@ export function StatisticsBuildingBody({ gameState, xy }: IBuildingComponentProp
             </button>
          </menu>
          {content}
+         <BuildingColorComponent gameState={gameState} xy={xy} />
       </div>
    );
 }
@@ -87,15 +91,29 @@ function BuildingTab({ gameState }: IBuildingComponentProps) {
                      )
                      .map(({ building, xy }) => {
                         let icon = <div className="m-icon small text-green">check_circle</div>;
+                        const notProducingReason = Tick.current.notProducingReasons[xy];
                         if (building.status !== "completed") {
                            icon = <div className="m-icon small text-orange">build_circle</div>;
-                        } else if (Tick.current.notProducingReasons[xy]) {
-                           icon = <div className="m-icon small text-red">error</div>;
+                        } else if (notProducingReason) {
+                           if (notProducingReason === "StorageFull") {
+                              icon = <div className="m-icon small text-red">stroke_full</div>;
+                           } else {
+                              icon = <div className="m-icon small text-red">error</div>;
+                           }
                         }
                         return (
                            <tr key={xy}>
                               <td>{icon}</td>
-                              <td>{Tick.current.buildings[building.type].name()}</td>
+                              <td>
+                                 <div
+                                    className="pointer"
+                                    onClick={() => {
+                                       Singleton().sceneManager.getCurrent(WorldScene)?.lookAtXy(xy);
+                                    }}
+                                 >
+                                    {Tick.current.buildings[building.type].name()}
+                                 </div>
+                              </td>
                               <td className="right">
                                  <FormatNumber value={building.level} />
                               </td>

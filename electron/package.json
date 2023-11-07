@@ -5,9 +5,10 @@
    "description": "CivIdle is an idle/incremental game that allows you to lead your own civilization through thousands of years from ancient times to modern era",
    "main": "compiled/index.js",
    "scripts": {
+      "clean": "node clean.js",
       "build": "tsc",
       "start": "npm run build && electron-forge start -- --in-process-gpu --disable-direct-composition",
-      "package": "npm run build && electron-forge package",
+      "package": "npm run clean && npm run build && electron-forge package",
       "make": "npm run build && electron-forge make",
       "publish": "npm run build && electron-forge publish",
       "lint": "echo \"No linting configured\""

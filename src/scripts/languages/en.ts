@@ -638,4 +638,6 @@ export const EN = {
    PatchNotesDesc: "There are %{number} changes in the version %{version}",
    PatchNotesRead: "View",
    PlayerTradeNoValidRoute: "Cannot find a valid trade route between you and %{name}",
+   BuildingColor: "Building Color",
+   NextMarketUpdateIn: "Next Market Update In",
 };

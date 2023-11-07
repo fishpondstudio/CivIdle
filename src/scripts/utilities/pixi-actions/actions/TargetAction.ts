@@ -64,6 +64,7 @@ export class TargetAction<T extends Record<string, any>> extends Action {
       return this;
    }
 }
+
 function isPointLike(value: any): value is IPoint {
    return typeof value === "object" && "x" in value && "y" in value;
 }

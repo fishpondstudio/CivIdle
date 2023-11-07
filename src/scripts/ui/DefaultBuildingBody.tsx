@@ -1,3 +1,4 @@
+import { BuildingColorComponent } from "./BuildingColorComponent";
 import { BuildingConsumeComponent } from "./BuildingConsumeComponent";
 import { BuildingDepositComponent } from "./BuildingDepositComponent";
 import { BuildingDescriptionComponent } from "./BuildingDescriptionComponent";
@@ -24,6 +25,7 @@ export function DefaultBuildingBody({ gameState, xy }: IBuildingComponentProps) 
          <BuildingWikipediaComponent gameState={gameState} xy={xy} />
          <BuildingProductionPriorityComponent gameState={gameState} xy={xy} />
          <BuildingStockpileComponent gameState={gameState} xy={xy} />
+         <BuildingColorComponent gameState={gameState} xy={xy} />
          <BuildingSellComponent gameState={gameState} xy={xy} />
       </div>
    );

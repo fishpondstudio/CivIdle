@@ -1,5 +1,6 @@
 import { IPointData } from "pixi.js";
 import { v4 } from "uuid";
+import { Building } from "../definitions/BuildingDefinitions";
 import { City } from "../definitions/CityDefinitions";
 import { Feature } from "../definitions/FeatureDefinitions";
 import { GreatPerson } from "../definitions/GreatPersonDefinitions";
@@ -55,6 +56,7 @@ export class GameOptions {
    id = v4();
    token: string | null = null;
    version = SAVE_FILE_VERSION;
+   buildingColors: Partial<Record<Building, string>> = {};
 }
 
 export const SAVE_FILE_VERSION = 1;

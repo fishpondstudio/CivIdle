@@ -1,7 +1,7 @@
 import { Viewport } from "pixi-viewport";
-import { BitmapText, Container, IDestroyOptions, IPointData, Sprite } from "pixi.js";
+import { BitmapText, Color, Container, IDestroyOptions, IPointData, Sprite } from "pixi.js";
 import { Resource } from "../definitions/ResourceDefinitions";
-import { getGameState } from "../Global";
+import { getGameOptions, getGameState } from "../Global";
 import {
    getBuildingLevelLabel,
    getBuildingTexture,
@@ -240,6 +240,14 @@ export class TileVisual extends Container {
       if (!this._tile || !this._tile.building || this._tile.building.status !== "completed") {
          return;
       }
+      const color = getGameOptions().buildingColors[this._tile.building.type];
+      if (color) {
+         const c = Color.shared.setValue(color);
+         this._building.tint = c;
+      } else {
+         this._building.tint = 0xffffff;
+      }
+
       this._spinner.angle += dt * 90;
       if (Tick.current.notProducingReasons[this._xy]) {
          this._spinner.alpha -= dt;

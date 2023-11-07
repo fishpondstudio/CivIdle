@@ -312,7 +312,8 @@ function tileTile(xy: string, gs: GameState): void {
       hasTransported = true;
    });
 
-   if (sizeOf(input) > 0 && !hasTransported) {
+   // If a building is a resourceImport type but has not transported, we consider it not working
+   if ("resourceImports" in building && !hasTransported) {
       Tick.next.notProducingReasons[xy] = "NoActiveTransports";
    }
 
@@ -383,7 +384,7 @@ function tileTile(xy: string, gs: GameState): void {
    forEach(output, (res, v) => {
       if (isTransportable(res)) {
          safeAdd(building.resources, res, v);
-         tileVisual?.showText(`+${v}`);
+         tileVisual?.showText(`+${round(v, 1)}`);
       } else {
          safeAdd(Tick.next.workersAvailable, res, v);
       }
@@ -469,6 +470,10 @@ export function addMultiplier(k: Building, multiplier: Multiplier, source: strin
 
 function getPriceId() {
    return Math.floor(Date.now() / HOUR);
+}
+
+export function convertPriceIdToTime(priceId: number) {
+   return priceId * HOUR;
 }
 
 function tickPrice(gs: GameState) {

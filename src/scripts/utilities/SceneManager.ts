@@ -1,8 +1,9 @@
 import { Viewport } from "pixi-viewport";
-import { Application, Resource, Texture } from "pixi.js";
+import { Application, IPointData, Resource, Texture } from "pixi.js";
 import { watchGameState } from "../Global";
 import { GameState } from "../logic/GameState";
 import { MainBundleAssets } from "../main";
+import { clamp } from "./Helper";
 
 export class Scene {
    public readonly context: ISceneContext;
@@ -29,6 +30,20 @@ export class ViewportScene extends Scene {
          screenHeight: app.screen.height,
       });
       app.stage.addChild(this.viewport);
+   }
+
+   clampCenter(pos: IPointData): IPointData {
+      const x = clamp(
+         pos.x,
+         this.viewport.screenWidth / 2 / this.viewport.scale.y,
+         this.viewport.worldWidth - this.viewport.screenWidth / 2 / this.viewport.scale.y
+      );
+      const y = clamp(
+         pos.y,
+         this.viewport.screenHeight / 2 / this.viewport.scale.y,
+         this.viewport.worldHeight - this.viewport.screenHeight / 2 / this.viewport.scale.y
+      );
+      return { x, y };
    }
 
    override onResize(width: number, height: number): void {

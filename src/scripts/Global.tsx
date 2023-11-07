@@ -49,6 +49,7 @@ if (import.meta.env.DEV) {
 }
 
 export const GameStateChanged = new TypedEvent<GameState>();
+export const GameOptionsChanged = new TypedEvent<GameOptions>();
 
 export function getGameState(): GameState {
    return savedGame.current;
@@ -129,6 +130,10 @@ export function notifyGameStateUpdate(): void {
    GameStateChanged.emit({ ...getGameState() });
 }
 
+export function notifyGameOptionsUpdate(): void {
+   GameOptionsChanged.emit({ ...getGameOptions() });
+}
+
 export function watchGameState(cb: (gs: GameState) => void): () => void {
    cb(getGameState());
    function handleGameStateChanged(gs: GameState) {
@@ -141,6 +146,7 @@ export function watchGameState(cb: (gs: GameState) => void): () => void {
 }
 
 export const useGameState = makeObservableHook(GameStateChanged, getGameState);
+export const useGameOptions = makeObservableHook(GameOptionsChanged, getGameOptions);
 
 function migrateSavedGame(gs: SavedGame) {
    forEach(gs.current.tiles, (xy, tile) => {

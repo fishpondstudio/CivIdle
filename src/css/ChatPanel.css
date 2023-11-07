@@ -32,6 +32,7 @@
 
 #chat-panel .chat-message-item {
    padding: 6px 8px;
+   user-select: contain;
 }
 
 #chat-panel .chat-message-item:nth-child(even) {
