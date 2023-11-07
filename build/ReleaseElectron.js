@@ -28,6 +28,8 @@ if (!process.env.STEAMWORKS_PATH) {
    return;
 }
 
+fs.removeSync(path.join(process.env.STEAMWORKS_PATH, "cividle-win32-x64"));
+
 fs.copySync(
    path.join(rootPath, "electron", "out", "cividle-win32-x64"),
    path.join(process.env.STEAMWORKS_PATH, "cividle-win32-x64")
