@@ -1,9 +1,10 @@
 import { SmoothGraphics } from "@pixi/graphics-smooth";
 import { BitmapText, Container, LINE_CAP, LINE_JOIN, Rectangle } from "pixi.js";
-import { BG_COLOR } from "../Colors";
 import { ITechDefinition } from "../definitions/ITechDefinition";
 import { Tech } from "../definitions/TechDefinitions";
+import { getGameOptions } from "../Global";
 import { Config } from "../logic/Constants";
+import { GameOptions } from "../logic/GameState";
 import { isAgeUnlocked, unlockableTechs } from "../logic/TechLogic";
 import { Tick } from "../logic/TickLogic";
 import { TechPage } from "../ui/TechPage";
@@ -55,7 +56,7 @@ export class TechTreeScene extends ViewportScene {
       this.viewport.worldWidth = width;
       this.viewport.worldHeight = PAGE_HEIGHT;
 
-      app.renderer.background.color = BG_COLOR;
+      app.renderer.background.color = getGameOptions().themeColors.ResearchBackground;
 
       const preferredZoom = Math.max(app.screen.width / width, app.screen.height / PAGE_HEIGHT);
       this.viewport
@@ -82,6 +83,10 @@ export class TechTreeScene extends ViewportScene {
 
       this.renderTechTree("jump");
       this.viewport.setZoom(Math.max(app.screen.width / width, app.screen.height / PAGE_HEIGHT));
+   }
+
+   override onGameOptionsChanged(gameOptions: GameOptions): void {
+      this.context.app.renderer.background.color = gameOptions.themeColors.ResearchBackground;
    }
 
    override onDestroy(): void {

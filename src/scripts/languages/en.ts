@@ -635,9 +635,11 @@ export const EN = {
       "This game content is still in development and will be available in a future game update, stay tuned!",
    WipeSaveData: "Wipe Your Save",
    PatchNotes: "Patch Notes",
-   PatchNotesDesc: "There are %{number} changes in the version %{version}",
-   PatchNotesRead: "View",
    PlayerTradeNoValidRoute: "Cannot find a valid trade route between you and %{name}",
    BuildingColor: "Building Color",
    NextMarketUpdateIn: "Next Market Update In",
+   Theme: "Theme",
+   ThemeColor: "Theme Color",
+   ThemeColorWorldBackground: "World Background",
+   ThemeColorResearchBackground: "Research Background",
 };

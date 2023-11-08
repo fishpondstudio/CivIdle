@@ -10,6 +10,7 @@ import { Tech } from "../definitions/TechDefinitions";
 import { PartialSet, PartialTabulate } from "../definitions/TypeDefinitions";
 import { Grid } from "../scenes/Grid";
 import { forEach, isEmpty, keysOf, pointToXy, shuffle } from "../utilities/Helper";
+import { L, t } from "../utilities/i18n";
 import { Config } from "./Constants";
 import { unlockTech } from "./TechLogic";
 import { ensureTileFogOfWar, findNearest } from "./TerrainLogic";
@@ -51,12 +52,23 @@ export class SavedGame {
    options = new GameOptions();
 }
 
+const DefaultThemeColors = {
+   WorldBackground: "#4b6584",
+   ResearchBackground: "#4b6584",
+};
+
+export const ThemeColorNames: Record<keyof typeof DefaultThemeColors, () => string> = {
+   WorldBackground: () => t(L.ThemeColorWorldBackground),
+   ResearchBackground: () => t(L.ThemeColorResearchBackground),
+};
+
 export class GameOptions {
    useModernUI = true;
    id = v4();
    token: string | null = null;
    version = SAVE_FILE_VERSION;
    buildingColors: Partial<Record<Building, string>> = {};
+   themeColors = { ...DefaultThemeColors };
 }
 
 export const SAVE_FILE_VERSION = 1;

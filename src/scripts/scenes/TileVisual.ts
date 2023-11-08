@@ -237,15 +237,20 @@ export class TileVisual extends Container {
    }
 
    public update(gs: GameState, dt: number) {
-      if (!this._tile || !this._tile.building || this._tile.building.status !== "completed") {
+      if (!this._tile || !this._tile.building) {
          return;
       }
+
       const color = getGameOptions().buildingColors[this._tile.building.type];
       if (color) {
          const c = Color.shared.setValue(color);
          this._building.tint = c;
       } else {
          this._building.tint = 0xffffff;
+      }
+
+      if (this._tile.building.status !== "completed") {
+         return;
       }
 
       this._spinner.angle += dt * 90;

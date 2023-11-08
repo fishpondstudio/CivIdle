@@ -5,6 +5,20 @@ interface PatchNote {
 
 export const PatchNotes: PatchNote[] = [
    {
+      version: "0.1.60",
+      content: [
+         ["QoL", "Add Theme page to manage building colors"],
+         ["QoL", "Allow customizing background colors in Theme page"],
+         ["QoL", "Move Patch Notes to Help menu"],
+         ["Bugfix", "Fix custom color of buildings are not applied until completed"],
+         ["Bugfix", "Fix Socrates has wrong multiplier applied"],
+         ["Bugfix", "Fix switching Eye Protection UI does not work"],
+         ["Bugfix", "Allow setting custom color for Caravansary"],
+         ["Bugfix", "Do not show natural wonders in Censor's Office before it is discovered"],
+         ["Bugfix", "Actually make chat text selectable"],
+      ],
+   },
+   {
       version: "0.1.59",
       content: [
          ["QoL", "Custom building colors!"],

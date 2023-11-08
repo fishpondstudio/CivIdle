@@ -1,6 +1,6 @@
 import classNames from "classnames";
 import { PropsWithChildren, useEffect, useRef, useState } from "react";
-import { notifyGameOptionsUpdate, syncUITheme, useGameOptions } from "../Global";
+import { useGameOptions } from "../Global";
 import { Tick } from "../logic/TickLogic";
 import { PlayerMapScene } from "../scenes/PlayerMapScene";
 import { TechTreeScene } from "../scenes/TechTreeScene";
@@ -10,6 +10,8 @@ import { L, t } from "../utilities/i18n";
 import { Singleton } from "../utilities/Singleton";
 import { AboutModal } from "./AboutModal";
 import { showModal } from "./GlobalModal";
+import { PatchNotesPage } from "./PatchNotesPage";
+import { ThemePage } from "./ThemePage";
 
 type MenuItemOptions = "view" | "options" | "help" | null;
 
@@ -156,13 +158,10 @@ export function MenuComponent() {
                   <div
                      className="menu-popover-item"
                      onPointerDown={() => {
-                        gameOptions.useModernUI = !gameOptions.useModernUI;
-                        notifyGameOptionsUpdate();
-                        syncUITheme();
-                        setActive(null);
+                        Singleton().routeTo(ThemePage, {});
                      }}
                   >
-                     <MenuItem check={gameOptions.useModernUI}>{t(L.OptionsUseModernUI)}</MenuItem>
+                     <MenuItem check={false}>{t(L.Theme)}</MenuItem>
                   </div>
                </div>
             </div>
@@ -189,6 +188,14 @@ export function MenuComponent() {
                      active: active === "help",
                   })}
                >
+                  <div
+                     className="menu-popover-item"
+                     onPointerDown={() => {
+                        Singleton().routeTo(PatchNotesPage, {});
+                     }}
+                  >
+                     <MenuItem check={false}>{t(L.PatchNotes)}</MenuItem>
+                  </div>
                   <div
                      className="menu-popover-item"
                      onPointerDown={() => {

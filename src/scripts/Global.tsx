@@ -61,8 +61,8 @@ export function getGameOptions(): GameOptions {
 
 export const OnUIThemeChanged = new TypedEvent<boolean>();
 
-export function syncUITheme(): void {
-   getGameOptions().useModernUI ? document.body.classList.add("modern") : document.body.classList.remove("modern");
+export function syncUITheme(gameOptions: GameOptions): void {
+   gameOptions.useModernUI ? document.body.classList.add("modern") : document.body.classList.remove("modern");
    OnUIThemeChanged.emit(getGameOptions().useModernUI);
 }
 
@@ -120,18 +120,19 @@ export function isGameDataCompatible(gs: SavedGame, routeTo: RouteTo): Promise<b
       } else {
          migrateSavedGame(gs);
          Object.assign(savedGame.current, gs.current);
+         Object.assign(savedGame.options.themeColors, gs.options.themeColors);
          Object.assign(savedGame.options, gs.options);
          resolve(true);
       }
    });
 }
 
-export function notifyGameStateUpdate(): void {
-   GameStateChanged.emit({ ...getGameState() });
+export function notifyGameStateUpdate(gameState?: GameState): void {
+   GameStateChanged.emit({ ...(gameState ?? getGameState()) });
 }
 
-export function notifyGameOptionsUpdate(): void {
-   GameOptionsChanged.emit({ ...getGameOptions() });
+export function notifyGameOptionsUpdate(gameOptions?: GameOptions): void {
+   GameOptionsChanged.emit({ ...(gameOptions ?? getGameOptions()) });
 }
 
 export function watchGameState(cb: (gs: GameState) => void): () => void {
@@ -142,6 +143,17 @@ export function watchGameState(cb: (gs: GameState) => void): () => void {
    GameStateChanged.on(handleGameStateChanged);
    return () => {
       GameStateChanged.off(handleGameStateChanged);
+   };
+}
+
+export function watchGameOptions(cb: (gameOptions: GameOptions) => void): () => void {
+   cb(getGameOptions());
+   function handleGameOptionsChanged(gameOptions: GameOptions) {
+      cb(gameOptions);
+   }
+   GameOptionsChanged.on(handleGameOptionsChanged);
+   return () => {
+      GameOptionsChanged.off(handleGameOptionsChanged);
    };
 }
 

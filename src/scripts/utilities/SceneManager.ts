@@ -1,7 +1,7 @@
 import { Viewport } from "pixi-viewport";
 import { Application, IPointData, Resource, Texture } from "pixi.js";
-import { watchGameState } from "../Global";
-import { GameState } from "../logic/GameState";
+import { watchGameOptions, watchGameState } from "../Global";
+import { GameOptions, GameState } from "../logic/GameState";
 import { MainBundleAssets } from "../main";
 import { clamp } from "./Helper";
 
@@ -15,6 +15,7 @@ export class Scene {
    onDestroy(): void {}
    onResize(width: number, height: number): void {}
    onGameStateChanged(gameState: GameState): void {}
+   onGameOptionsChanged(gameOptions: GameOptions): void {}
 }
 
 export class ViewportScene extends Scene {
@@ -68,6 +69,7 @@ export class SceneManager {
    protected currentScene: Scene | undefined;
    protected context: ISceneContext;
    protected gameStateWatcher: (() => void) | undefined;
+   protected gameOptionsWatcher: (() => void) | undefined;
 
    constructor(context: ISceneContext) {
       this.context = context;
@@ -90,6 +92,9 @@ export class SceneManager {
       if (this.gameStateWatcher) {
          this.gameStateWatcher();
       }
+      if (this.gameOptionsWatcher) {
+         this.gameOptionsWatcher();
+      }
 
       for (let i = 0; i < this.context.app.stage.children.length; i++) {
          const removed = this.context.app.stage.removeChildren();
@@ -101,6 +106,7 @@ export class SceneManager {
       this.currentScene = new SceneClass(this.context);
       this.currentScene.onLoad();
       this.gameStateWatcher = watchGameState((gs) => this.currentScene?.onGameStateChanged(gs));
+      this.gameOptionsWatcher = watchGameOptions((gameOptions) => this.currentScene?.onGameOptionsChanged(gameOptions));
       return this.currentScene as T;
    }
 

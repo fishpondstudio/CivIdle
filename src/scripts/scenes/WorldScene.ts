@@ -1,5 +1,6 @@
 import { SmoothGraphics } from "@pixi/graphics-smooth";
 import {
+   Color,
    Container,
    FederatedPointerEvent,
    IPointData,
@@ -10,7 +11,8 @@ import {
    TilingSprite,
    utils,
 } from "pixi.js";
-import { GameState } from "../logic/GameState";
+import { getGameOptions } from "../Global";
+import { GameOptions, GameState } from "../logic/GameState";
 import { TilePage } from "../ui/TilePage";
 import { clamp, forEach, lerp, lookAt, pointToXy, xyToPoint } from "../utilities/Helper";
 import Action from "../utilities/pixi-actions/actions/Action";
@@ -35,6 +37,7 @@ export class WorldScene extends ViewportScene {
    private cameraMovement: Action | null = null;
    private readonly _tiles: utils.Dict<TileVisual> = {};
    private readonly _transport: Record<number, Sprite> = {};
+   private _bg!: TilingSprite;
 
    override onLoad(): void {
       const { app, textures } = this.context;
@@ -56,9 +59,10 @@ export class WorldScene extends ViewportScene {
             minScale: Math.max(app.screen.width / this._width, app.screen.height / this._height),
          });
 
-      const bg = this.viewport.addChild(new TilingSprite(textures.Paper, this._width, this._height));
-      bg.tint = 0x4b6584;
-      bg.position.set((this._width - bg.width) / 2, (this._height - bg.height) / 2);
+      this._bg = this.viewport.addChild(new TilingSprite(textures.Paper, this._width, this._height));
+      console.log(getGameOptions());
+      this._bg.tint = Color.shared.setValue(getGameOptions().themeColors.WorldBackground);
+      this._bg.position.set((this._width - this._bg.width) / 2, (this._height - this._bg.height) / 2);
 
       const graphics = this.viewport.addChild(new SmoothGraphics()).lineStyle({
          color: 0xffffff,
@@ -114,6 +118,10 @@ export class WorldScene extends ViewportScene {
 
    override onGameStateChanged(gameState: GameState): void {
       forEach(this._tiles, (xy, visual) => visual.onTileDataChanged(gameState.tiles[xy]));
+   }
+
+   override onGameOptionsChanged(gameOptions: GameOptions): void {
+      this._bg.tint = Color.shared.setValue(gameOptions.themeColors.WorldBackground);
    }
 
    lookAtXy(xy: string) {

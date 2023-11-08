@@ -2,7 +2,14 @@ import { Application, Ticker } from "pixi.js";
 import { Building } from "./definitions/BuildingDefinitions";
 import { City } from "./definitions/CityDefinitions";
 import { PatchNotes } from "./definitions/PatchNotes";
-import { getGameState, isGameDataCompatible, loadGame, notifyGameStateUpdate, syncUITheme } from "./Global";
+import {
+   getGameOptions,
+   getGameState,
+   isGameDataCompatible,
+   loadGame,
+   notifyGameStateUpdate,
+   syncUITheme,
+} from "./Global";
 import { getBuildingTexture } from "./logic/BuildingLogic";
 import { calculateTierAndPrice, Config } from "./logic/Constants";
 import { GameState, initializeGameState } from "./logic/GameState";
@@ -52,7 +59,7 @@ export async function startGame(
 
    // ========== Game state is initialized ==========
 
-   syncUITheme();
+   syncUITheme(getGameOptions());
    calculateTierAndPrice(gameState);
    initializeSingletons({
       sceneManager: new SceneManager({ app, assets: resources, textures, gameState }),

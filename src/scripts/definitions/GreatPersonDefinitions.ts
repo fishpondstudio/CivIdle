@@ -145,7 +145,7 @@ export class GreatPersonDefinitions {
       maxLevel: Infinity,
       age: "ClassicalAge",
       tick: (self, level) => {
-         Tick.next.globalMultipliers.sciencePerIdleWorker.push({
+         Tick.next.globalMultipliers.sciencePerBusyWorker.push({
             value: level,
             source: t(L.SourceGreatPerson, { person: self.name() }),
          });

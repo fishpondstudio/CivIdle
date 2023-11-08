@@ -81,8 +81,9 @@ function BuildingTab({ gameState }: IBuildingComponentProps) {
                <tbody>
                   {keysOf(gameState.tiles)
                      .flatMap((xy) => {
-                        const building = gameState.tiles[xy].building;
-                        return building ? [{ building, xy }] : [];
+                        const tile = gameState.tiles[xy];
+                        const building = tile.building;
+                        return tile.explored && building ? [{ building, xy }] : [];
                      })
                      .sort((a, b) =>
                         Tick.current.buildings[a.building.type]

@@ -1,5 +1,4 @@
 import classNames from "classnames";
-import { PatchNotes } from "../definitions/PatchNotes";
 import { getScienceFromWorkers } from "../logic/BuildingLogic";
 import { Config } from "../logic/Constants";
 import { getCurrentTechAge, getScienceAmount, getUnlockCost, unlockableTechs } from "../logic/TechLogic";
@@ -18,7 +17,6 @@ import { ChangePlayerHandleModal } from "./ChangePlayerHandleModal";
 import { showModal } from "./GlobalModal";
 import { GreatPersonPage } from "./GreatPersonPage";
 import { FormatNumber } from "./HelperComponents";
-import { PatchNotesPage } from "./PatchNotesPage";
 import { WonderPage } from "./WonderPage";
 
 export function HeadquarterBuildingBody({ gameState, xy }: IBuildingComponentProps) {
@@ -223,15 +221,6 @@ export function HeadquarterBuildingBody({ gameState, xy }: IBuildingComponentPro
                .join(", ")}
             <div className="mv5 text-link text-strong" onClick={() => Singleton().routeTo(WonderPage, {})}>
                {t(L.ManageWonders)}
-            </div>
-         </fieldset>
-         <fieldset>
-            <legend>{t(L.PatchNotes)}</legend>
-            <div className="row mv5" onClick={() => Singleton().routeTo(PatchNotesPage, {})}>
-               <div className="f1">
-                  {t(L.PatchNotesDesc, { number: PatchNotes[0].content.length, version: PatchNotes[0].version })}
-               </div>
-               <div className="text-link text-strong">{t(L.PatchNotesRead)}</div>
             </div>
          </fieldset>
          <BuildingColorComponent gameState={gameState} xy={xy} />
