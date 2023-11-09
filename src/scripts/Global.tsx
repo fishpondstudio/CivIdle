@@ -120,7 +120,7 @@ export function isGameDataCompatible(gs: SavedGame, routeTo: RouteTo): Promise<b
       } else {
          migrateSavedGame(gs);
          Object.assign(savedGame.current, gs.current);
-         Object.assign(savedGame.options.themeColors, gs.options.themeColors);
+         gs.options.themeColors = Object.assign(savedGame.options.themeColors, gs.options.themeColors);
          Object.assign(savedGame.options, gs.options);
          resolve(true);
       }

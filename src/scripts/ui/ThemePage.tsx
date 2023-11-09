@@ -2,7 +2,7 @@ import classNames from "classnames";
 import { notifyGameOptionsUpdate, syncUITheme, useGameOptions } from "../Global";
 import { ThemeColorNames } from "../logic/GameState";
 import { Tick } from "../logic/TickLogic";
-import { jsxMapOf, keysOf } from "../utilities/Helper";
+import { keysOf } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
 import { MenuComponent } from "./MenuComponent";
 
@@ -16,7 +16,6 @@ export function ThemePage(): JSX.Element {
          <MenuComponent />
          <div className="window-body">
             <fieldset>
-               <legend>{t(L.ThemeColor)}</legend>
                <div className="row">
                   <div className="f1">{t(L.OptionsUseModernUI)}</div>
                   <div
@@ -38,20 +37,45 @@ export function ThemePage(): JSX.Element {
             </fieldset>
 
             <fieldset>
-               {jsxMapOf(gameOptions.themeColors, (k, v) => {
-                  return (
-                     <div key={k} className="row mv5">
-                        <div className="f1">{ThemeColorNames[k]()}</div>
-                        <input
-                           type="color"
-                           value={gameOptions.themeColors[k]}
-                           onChange={(v) => {
-                              gameOptions.themeColors[k] = v.target.value;
-                              notifyGameOptionsUpdate();
-                           }}
-                        />
-                     </div>
-                  );
+               <legend>{t(L.ThemeColor)}</legend>
+               {keysOf(gameOptions.themeColors).map((k) => {
+                  if (typeof gameOptions.themeColors[k] === "string") {
+                     return (
+                        <div key={k} className="row mv5">
+                           <div className="f1">{ThemeColorNames[k]()}</div>
+                           <input
+                              type="color"
+                              value={gameOptions.themeColors[k]}
+                              onChange={(v) => {
+                                 gameOptions.themeColors[k] = v.target.value as never;
+                                 notifyGameOptionsUpdate();
+                              }}
+                           />
+                        </div>
+                     );
+                  }
+                  if (typeof gameOptions.themeColors[k] === "number") {
+                     return (
+                        <div key={k} className="row mv5">
+                           <div className="f1">{ThemeColorNames[k]()}</div>
+                           <input
+                              type="number"
+                              step="0.1"
+                              max="1"
+                              min="0"
+                              style={{ width: "50px" }}
+                              value={gameOptions.themeColors[k]}
+                              onChange={(v) => {
+                                 const parsed = parseFloat(v.target.value);
+                                 if (isFinite(parsed) && parsed >= 0 && parsed <= 1) {
+                                    gameOptions.themeColors[k] = parsed as never;
+                                    notifyGameOptionsUpdate();
+                                 }
+                              }}
+                           />
+                        </div>
+                     );
+                  }
                })}
             </fieldset>
 
@@ -68,6 +92,27 @@ export function ThemePage(): JSX.Element {
                               value={gameOptions.buildingColors[b] ?? "#ffffff"}
                               onChange={(v) => {
                                  gameOptions.buildingColors[b] = v.target.value;
+                                 notifyGameOptionsUpdate();
+                              }}
+                           />
+                        </div>
+                     );
+                  })}
+            </fieldset>
+
+            <fieldset>
+               <legend>{t(L.ResourceColor)}</legend>
+               {keysOf(gameOptions.resourceColors)
+                  .sort((a, b) => Tick.current.resources[a].name().localeCompare(Tick.current.resources[b].name()))
+                  .map((b) => {
+                     return (
+                        <div key={b} className="row mv5">
+                           <div className="f1">{Tick.current.resources[b].name()}</div>
+                           <input
+                              type="color"
+                              value={gameOptions.resourceColors[b] ?? "#ffffff"}
+                              onChange={(v) => {
+                                 gameOptions.resourceColors[b] = v.target.value;
                                  notifyGameOptionsUpdate();
                               }}
                            />

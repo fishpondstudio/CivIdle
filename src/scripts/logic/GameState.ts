@@ -54,12 +54,28 @@ export class SavedGame {
 
 const DefaultThemeColors = {
    WorldBackground: "#4b6584",
+   GridColor: "#ffffff",
+   GridAlpha: 0.1,
+   SelectedGridColor: "#ffff99",
+   InactiveBuildingAlpha: 0.5,
+   TransportIndicatorAlpha: 0.5,
    ResearchBackground: "#4b6584",
+   ResearchLockedColor: "#bebebe",
+   ResearchUnlockedColor: "#ffffff",
+   ResearchHighlightColor: "#ffff99",
 };
 
 export const ThemeColorNames: Record<keyof typeof DefaultThemeColors, () => string> = {
    WorldBackground: () => t(L.ThemeColorWorldBackground),
    ResearchBackground: () => t(L.ThemeColorResearchBackground),
+   GridColor: () => t(L.ThemeColorGridColor),
+   GridAlpha: () => t(L.ThemeColorGridAlpha),
+   SelectedGridColor: () => t(L.ThemeSelectedGridColor),
+   InactiveBuildingAlpha: () => t(L.ThemeInactiveBuildingAlpha),
+   TransportIndicatorAlpha: () => t(L.ThemeTransportIndicatorAlpha),
+   ResearchLockedColor: () => t(L.ThemeResearchLockedColor),
+   ResearchUnlockedColor: () => t(L.ThemeResearchUnlockedColor),
+   ResearchHighlightColor: () => t(L.ThemeResearchHighlightColor),
 };
 
 export class GameOptions {
@@ -68,6 +84,7 @@ export class GameOptions {
    token: string | null = null;
    version = SAVE_FILE_VERSION;
    buildingColors: Partial<Record<Building, string>> = {};
+   resourceColors: Partial<Record<Resource, string>> = {};
    themeColors = { ...DefaultThemeColors };
 }
 

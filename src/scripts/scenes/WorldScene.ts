@@ -38,6 +38,7 @@ export class WorldScene extends ViewportScene {
    private readonly _tiles: utils.Dict<TileVisual> = {};
    private readonly _transport: Record<number, Sprite> = {};
    private _bg!: TilingSprite;
+   private _graphics!: SmoothGraphics;
 
    override onLoad(): void {
       const { app, textures } = this.context;
@@ -60,19 +61,18 @@ export class WorldScene extends ViewportScene {
          });
 
       this._bg = this.viewport.addChild(new TilingSprite(textures.Paper, this._width, this._height));
-      console.log(getGameOptions());
       this._bg.tint = Color.shared.setValue(getGameOptions().themeColors.WorldBackground);
       this._bg.position.set((this._width - this._bg.width) / 2, (this._height - this._bg.height) / 2);
 
-      const graphics = this.viewport.addChild(new SmoothGraphics()).lineStyle({
+      this._graphics = this.viewport.addChild(new SmoothGraphics()).lineStyle({
          color: 0xffffff,
          width: 2,
          cap: LINE_CAP.ROUND,
          join: LINE_JOIN.ROUND,
          alignment: 0.5,
       });
-      graphics.alpha = 0.1;
-      Singleton().grid.drawGrid(graphics);
+      this._graphics.alpha = 0.1;
+      Singleton().grid.drawGrid(this._graphics);
 
       Singleton().grid.forEach((grid) => {
          const xy = pointToXy(grid);
@@ -122,6 +122,9 @@ export class WorldScene extends ViewportScene {
 
    override onGameOptionsChanged(gameOptions: GameOptions): void {
       this._bg.tint = Color.shared.setValue(gameOptions.themeColors.WorldBackground);
+      this._graphics.tint = Color.shared.setValue(gameOptions.themeColors.GridColor);
+      this._graphics.alpha = gameOptions.themeColors.GridAlpha;
+      this._selectedGraphics.tint = Color.shared.setValue(gameOptions.themeColors.SelectedGridColor);
    }
 
    lookAtXy(xy: string) {
@@ -155,8 +158,7 @@ export class WorldScene extends ViewportScene {
          return;
       }
       this._selectedGraphics.lineStyle({
-         alpha: 0.75,
-         color: 0xffff99,
+         color: 0xffffff,
          width: 2,
          cap: LINE_CAP.ROUND,
          join: LINE_JOIN.ROUND,
@@ -182,11 +184,13 @@ export class WorldScene extends ViewportScene {
 
    updateTransportVisual(gs: GameState, timeSinceLastTick: number) {
       const ticked: Record<number, true> = {};
+      const options = getGameOptions();
       forEach(gs.transportation, (xy, transports) => {
          transports.forEach((t) => {
             if (!this._transport[t.id]) {
                const visual = this._transportPool.allocate();
                visual.position = t.fromPosition;
+               visual.tint = Color.shared.setValue(options.resourceColors[t.resource] ?? "#ffffff");
                lookAt(visual, t.toPosition);
                this._transport[t.id] = visual;
             } else if (t.hasEnoughFuel) {
@@ -198,7 +202,11 @@ export class WorldScene extends ViewportScene {
                );
                // This is the last tick
                if (t.ticksSpent >= t.ticksRequired - 1) {
-                  visual.alpha = lerp(TransportPool.DefaultAlpha, 0, clamp(timeSinceLastTick - 0.5, 0, 0.5) * 2);
+                  visual.alpha = lerp(
+                     options.themeColors.TransportIndicatorAlpha,
+                     0,
+                     clamp(timeSinceLastTick - 0.5, 0, 0.5) * 2
+                  );
                }
             }
             ticked[t.id] = true;

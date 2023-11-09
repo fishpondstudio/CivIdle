@@ -1,11 +1,10 @@
 import { Container, Sprite, Texture } from "pixi.js";
+import { getGameOptions } from "../Global";
 import { ObjectPool } from "../utilities/ObjectPool";
 
 export class TransportPool extends ObjectPool<Sprite> {
    _texture: Texture;
    _parent: Container;
-
-   public static readonly DefaultAlpha = 0.5;
 
    constructor(texture: Texture, parent: Container) {
       super();
@@ -23,7 +22,7 @@ export class TransportPool extends ObjectPool<Sprite> {
    }
 
    protected onAllocate(obj: Sprite): void {
-      obj.alpha = TransportPool.DefaultAlpha;
+      obj.alpha = getGameOptions().themeColors.TransportIndicatorAlpha;
    }
 
    protected onRelease(obj: Sprite): void {

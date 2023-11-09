@@ -5,6 +5,13 @@ interface PatchNote {
 
 export const PatchNotes: PatchNote[] = [
    {
+      version: "0.1.61",
+      content: [
+         ["QoL", "Add more theme color customizations, go wild!"],
+         ["QoL", "Add custom color support for resources"],
+      ],
+   },
+   {
       version: "0.1.60",
       content: [
          ["QoL", "Add Theme page to manage building colors"],

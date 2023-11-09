@@ -262,7 +262,7 @@ export class TileVisual extends Container {
          this._building.alpha += dt;
       }
       this._spinner.alpha = clamp(this._spinner.alpha, 0, 0.5);
-      this._building.alpha = clamp(this._building.alpha, 0.5, 1);
+      this._building.alpha = clamp(this._building.alpha, getGameOptions().themeColors.InactiveBuildingAlpha, 1);
    }
 
    private toggleConstructionTween(on: boolean) {
