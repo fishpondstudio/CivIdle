@@ -65,7 +65,7 @@ export function TechPage({ id }: { id: Tech }) {
                         }
                         unlocked={!!gs.unlockedTech[prerequisite]}
                         action={() =>
-                           Singleton().sceneManager.loadScene(TechTreeScene)?.selectNode(prerequisite, "animate")
+                           Singleton().sceneManager.loadScene(TechTreeScene)?.selectNode(prerequisite, "animate", false)
                         }
                      />
                   );
