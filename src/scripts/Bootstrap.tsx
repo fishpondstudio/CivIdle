@@ -1,7 +1,6 @@
 import { Application, Ticker } from "pixi.js";
 import { Building } from "./definitions/BuildingDefinitions";
 import { City } from "./definitions/CityDefinitions";
-import { PatchNotes } from "./definitions/PatchNotes";
 import {
    getGameOptions,
    getGameState,
@@ -75,12 +74,6 @@ export async function startGame(
    tickEverySecond(gameState);
 
    if (import.meta.env.DEV) {
-      const patchNotes = [];
-      patchNotes.push(`${PatchNotes[0].version}`);
-      PatchNotes[0].content.forEach((c) => {
-         patchNotes.push(`${c[0]}: ${c[1]}`);
-      });
-      console.log(patchNotes.join("\n"));
       // createRoot(document.getElementById("debug-ui")!).render(<GreatPersonDebug />);
    }
 

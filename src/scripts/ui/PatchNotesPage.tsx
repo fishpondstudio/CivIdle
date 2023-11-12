@@ -9,7 +9,7 @@ export function PatchNotesPage(): JSX.Element {
             <div className="title-bar-text">{t(L.PatchNotes)}</div>
          </div>
          <MenuComponent />
-         <div className="window-body">
+         <div className="window-body" style={{ userSelect: "text" }}>
             {PatchNotes.map((note) => {
                return (
                   <fieldset key={note.version}>
