@@ -30,7 +30,10 @@ export function calculateHappiness(gs: GameState) {
    let fromBuildings = 0;
    let fromWonders = 0;
    forEach(getXyBuildings(gs), (xy, building) => {
-      if (building.status === "completed" && !isSpecialBuilding(building.type)) {
+      if (building.status !== "completed") {
+         return;
+      }
+      if (!isSpecialBuilding(building.type)) {
          ++fromBuildings;
       }
       if (isWorldWonder(building.type)) {

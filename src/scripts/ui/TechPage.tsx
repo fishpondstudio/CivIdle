@@ -4,7 +4,7 @@ import { Tech } from "../definitions/TechDefinitions";
 import { PartialTabulate } from "../definitions/TypeDefinitions";
 import { notifyGameStateUpdate, useGameState } from "../Global";
 import { Config } from "../logic/Constants";
-import { onUnlockableUnlocked as onTechUnlocked } from "../logic/LogicCallback";
+import { onTechUnlocked } from "../logic/LogicCallback";
 import { getResourceAmount, trySpendResources } from "../logic/ResourceLogic";
 import { getCurrentTechAge, getGreatPeopleChoices, getUnlockCost, unlockTech } from "../logic/TechLogic";
 import { RomeProvinceScene } from "../scenes/RomeProvinceScene";
@@ -65,7 +65,7 @@ export function TechPage({ id }: { id: Tech }) {
                         }
                         unlocked={!!gs.unlockedTech[prerequisite]}
                         action={() =>
-                           Singleton().sceneManager.loadScene(TechTreeScene)?.selectNode(prerequisite, "animate", false)
+                           Singleton().sceneManager.loadScene(TechTreeScene)?.selectNode(prerequisite, "animate", true)
                         }
                      />
                   );

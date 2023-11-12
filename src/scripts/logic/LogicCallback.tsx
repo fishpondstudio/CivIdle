@@ -157,6 +157,6 @@ export function onBuildingProductionComplete(xy: string, gs: GameState) {
    }
 }
 
-export function onUnlockableUnlocked(tech: Tech, gs: GameState) {
-   Singleton().sceneManager.getCurrent(TechTreeScene)?.renderTechTree("animate", false);
+export function onTechUnlocked(tech: Tech, gs: GameState) {
+   Singleton().sceneManager.getCurrent(TechTreeScene)?.renderTechTree("animate", true);
 }

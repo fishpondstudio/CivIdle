@@ -282,7 +282,7 @@ export function HeadquarterBuildingBody({ gameState, xy }: IBuildingComponentPro
                                  <span
                                     className="text-link"
                                     onClick={() => {
-                                       Singleton().sceneManager.loadScene(TechTreeScene)?.selectNode(k, "jump", false);
+                                       Singleton().sceneManager.loadScene(TechTreeScene)?.selectNode(k, "jump", true);
                                     }}
                                  >
                                     {t(L.View)}

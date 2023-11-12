@@ -5,6 +5,13 @@ interface PatchNote {
 
 export const PatchNotes: PatchNote[] = [
    {
+      version: "0.1.63",
+      content: [
+         ["Bugfix", "Fix happiness from wonders are generated before the wonder is completed"],
+         ["Bugfix", "Fix Tech Tree sometimes showing the wrong tech"],
+      ],
+   },
+   {
       version: "0.1.62",
       content: [
          ["Balance", "Add Happiness System"],
