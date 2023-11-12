@@ -6,7 +6,7 @@ import { Config } from "../logic/Constants";
 import { getTypeBuildings, unlockedBuildings } from "../logic/IntraTickCache";
 import { Tick } from "../logic/TickLogic";
 import { ITileData, makeBuilding } from "../logic/Tile";
-import { jsxMapOf, keysOf, numberToRoman, setContains } from "../utilities/Helper";
+import { jsxMapOf, keysOf, numberToRoman, setContains, sizeOf } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
 import { MenuComponent } from "./MenuComponent";
 
@@ -75,7 +75,7 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): JSX.Element {
                         })
                         .filter((v) => Tick.current.buildings[v].name().toLowerCase().includes(filter.toLowerCase()))
                         .map((k) => {
-                           if ((constructed[k]?.length ?? 0) >= (Tick.current.buildings[k].max ?? Infinity)) {
+                           if ((sizeOf(constructed[k]) ?? 0) >= (Tick.current.buildings[k].max ?? Infinity)) {
                               return null;
                            }
                            const building = Tick.current.buildings[k];
