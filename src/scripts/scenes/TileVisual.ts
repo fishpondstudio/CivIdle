@@ -8,7 +8,7 @@ import {
    getTileTexture,
    isWorldOrNaturalWonder,
 } from "../logic/BuildingLogic";
-import { GameState } from "../logic/GameState";
+import { GameOptions, GameState } from "../logic/GameState";
 import { Tick } from "../logic/TickLogic";
 import { ITileData } from "../logic/Tile";
 import { clamp, forEach, layoutCenter, pointToXy, sizeOf } from "../utilities/Helper";
@@ -119,6 +119,12 @@ export class TileVisual extends Container {
       world.viewport.on("zoomed-end", this.onZoomed, this);
    }
 
+   public updateDepositColor(options: GameOptions) {
+      forEach(this._deposits, (deposit, sprite) => {
+         sprite.tint = Color.shared.setValue(options.resourceColors[deposit] ?? "#ffffff");
+      });
+   }
+
    public updateLayout() {
       if (!this._tile.explored) {
          return;
@@ -134,7 +140,7 @@ export class TileVisual extends Container {
       const total = sizeOf(this._tile.deposit);
       forEach(this._deposits, (_, sprite) => {
          sprite.visible = true;
-         sprite.position.copyFrom(position.add({ x: layoutCenter(width, 4, total, i++), y: 0 }));
+         sprite.position.copyFrom(position.addSelf({ x: layoutCenter(width, 4, total, i++), y: 0 }));
          sprite.scale.set(scale);
       });
    }

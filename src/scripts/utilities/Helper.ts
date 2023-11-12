@@ -470,20 +470,26 @@ export function drawDashedLine(
    const endPos = v2(end);
    let cursor = startPos;
    let count = initial;
-   const direction = endPos.subtract(startPos);
+   const direction = endPos.subtractSelf(startPos);
    if (direction.length() < 10) {
       return count;
    }
-   const increment = direction.normalize();
+   const increment = direction.normalizeSelf();
+   const lineIncrement = increment.multiply(lineLength);
+   const spaceIncrement = increment.multiply(spaceLength);
    while ((endPos.x - cursor.x) * increment.x >= 0 && (endPos.y - cursor.y) * increment.y >= 0) {
       if (count % 2 === 0) {
          g.moveTo(cursor.x, cursor.y);
-         cursor = cursor.add(increment.multiply(lineLength));
+         cursor = cursor.add(lineIncrement);
       } else {
          g.lineTo(cursor.x, cursor.y);
-         cursor = cursor.add(increment.multiply(spaceLength));
+         cursor = cursor.add(spaceIncrement);
       }
       count++;
    }
    return count;
+}
+
+export function isNullOrUndefined(v: any): v is undefined | null {
+   return v === null || typeof v === "undefined";
 }

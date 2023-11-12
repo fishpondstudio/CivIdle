@@ -60,7 +60,7 @@ export class ProvinceVisual extends Container {
    }
 
    public isClicked(event: FederatedPointerEvent): boolean {
-      const point = v2(event.data.getLocalPosition(this._sprite)).add({
+      const point = v2(event.data.getLocalPosition(this._sprite)).addSelf({
          x: this._sprite.width / 2,
          y: this._sprite.height / 2,
       });

@@ -2,6 +2,12 @@ import { L, t } from "../utilities/i18n";
 import { Resource } from "./ResourceDefinitions";
 import { PartialSet, PartialTabulate } from "./TypeDefinitions";
 
+export enum BuildingSpecial {
+   HQ,
+   WorldWonder,
+   NaturalWonder,
+}
+
 export interface IBuildingDefinition {
    name: () => string;
    input: PartialTabulate<Resource>;
@@ -12,6 +18,7 @@ export interface IBuildingDefinition {
    max?: number;
    wikipedia?: string;
    desc?: () => string;
+   special?: BuildingSpecial;
 }
 
 export const BUILDING_DEFAULT_VISION = 2;
@@ -22,7 +29,8 @@ export class BuildingDefinitions {
       input: {},
       output: { Worker: 10 },
       vision: 3,
-      max: 1,
+      max: 0,
+      special: BuildingSpecial.HQ,
    };
 
    Hut: IBuildingDefinition = {
@@ -202,7 +210,6 @@ export class BuildingDefinitions {
       input: {},
       output: {},
       construction: { Brick: 2 },
-      max: 2,
    };
 
    // GarumMaker: IBuildingDefinition = {
@@ -396,6 +403,7 @@ export class BuildingDefinitions {
       output: {},
       construction: { Brick: 100, Wood: 100, Lumber: 100 },
       max: 1,
+      special: BuildingSpecial.WorldWonder,
    };
 
    Alps: IBuildingDefinition = {
@@ -406,6 +414,7 @@ export class BuildingDefinitions {
       construction: {},
       max: 0,
       wikipedia: "Alps",
+      special: BuildingSpecial.NaturalWonder,
    };
 
    Colosseum: IBuildingDefinition = {
@@ -415,6 +424,7 @@ export class BuildingDefinitions {
       output: {},
       construction: { Brick: 100, Marble: 100, Alcohol: 100 },
       max: 1,
+      special: BuildingSpecial.WorldWonder,
       wikipedia: "Colosseum",
    };
 
@@ -425,6 +435,7 @@ export class BuildingDefinitions {
       output: {},
       construction: { Marble: 100, Sword: 100, Copper: 100 },
       max: 1,
+      special: BuildingSpecial.WorldWonder,
       wikipedia: "Pantheon,_Rome",
    };
 
@@ -435,6 +446,7 @@ export class BuildingDefinitions {
       output: {},
       construction: { Brick: 100, Iron: 100, Meat: 100 },
       max: 1,
+      special: BuildingSpecial.WorldWonder,
       wikipedia: "Circus_Maximus",
    };
 
@@ -444,6 +456,7 @@ export class BuildingDefinitions {
       input: {},
       output: {},
       max: 1,
+      special: BuildingSpecial.WorldWonder,
       wikipedia: "Stonehenge",
       construction: { Stone: 300 },
    };
@@ -454,6 +467,7 @@ export class BuildingDefinitions {
       input: {},
       output: {},
       max: 1,
+      special: BuildingSpecial.WorldWonder,
       wikipedia: "Mortuary_Temple_of_Hatshepsut",
       construction: { Stone: 100, Wood: 100, Copper: 100 },
    };
@@ -474,6 +488,7 @@ export class BuildingDefinitions {
       output: {},
       construction: { Brick: 300 },
       max: 1,
+      special: BuildingSpecial.WorldWonder,
       wikipedia: "Great_Pyramid_of_Giza",
    };
 
@@ -493,6 +508,7 @@ export class BuildingDefinitions {
       input: {},
       output: {},
       max: 1,
+      special: BuildingSpecial.WorldWonder,
       wikipedia: "Hanging_Gardens_of_Babylon",
    };
 
@@ -502,6 +518,7 @@ export class BuildingDefinitions {
       input: {},
       output: {},
       max: 1,
+      special: BuildingSpecial.WorldWonder,
       construction: { Iron: 100, Bread: 100, Cheese: 100 },
       wikipedia: "Temple_of_Heaven",
    };
@@ -512,6 +529,7 @@ export class BuildingDefinitions {
       input: {},
       output: {},
       max: 1,
+      special: BuildingSpecial.WorldWonder,
       construction: { Marble: 100, Poem: 100, Music: 100 },
       wikipedia: "Parthenon",
    };
@@ -522,6 +540,7 @@ export class BuildingDefinitions {
       input: {},
       output: {},
       max: 1,
+      special: BuildingSpecial.WorldWonder,
       construction: { Tool: 100, Cloth: 100, Furniture: 100 },
       wikipedia: "Luxor_Temple",
    };
@@ -532,6 +551,7 @@ export class BuildingDefinitions {
       input: {},
       output: {},
       max: 1,
+      special: BuildingSpecial.WorldWonder,
       construction: { Stone: 100, Armor: 100, SiegeRam: 100 },
       wikipedia: "Chichen_Itza",
    };

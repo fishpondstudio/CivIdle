@@ -5,6 +5,14 @@ interface PatchNote {
 
 export const PatchNotes: PatchNote[] = [
    {
+      version: "0.1.62",
+      content: [
+         ["Balance", "Add Happiness System"],
+         ["QoL", "Add keyboard shortcut support: you can assign keys in Options > Shortcut"],
+         ["QoL", "Resource color will apply to deposits on the map"],
+      ],
+   },
+   {
       version: "0.1.61",
       content: [
          ["QoL", "Add more theme color customizations, go wild!"],

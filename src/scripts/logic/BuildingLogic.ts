@@ -1,13 +1,24 @@
-import { Building, IBuildingDefinition } from "../definitions/BuildingDefinitions";
+import { Building, BuildingSpecial, IBuildingDefinition } from "../definitions/BuildingDefinitions";
 import { City } from "../definitions/CityDefinitions";
 import { IResourceDefinition, Resource } from "../definitions/ResourceDefinitions";
 import { PartialTabulate } from "../definitions/TypeDefinitions";
-import { clamp, forEach, isEmpty, keysOf, reduceOf, safeAdd, safePush, sum } from "../utilities/Helper";
+import {
+   clamp,
+   forEach,
+   isEmpty,
+   isNullOrUndefined,
+   keysOf,
+   reduceOf,
+   safeAdd,
+   safePush,
+   sum,
+} from "../utilities/Helper";
 import { Textures } from "../utilities/SceneManager";
 import { Singleton } from "../utilities/Singleton";
 import { v2 } from "../utilities/Vector2";
 import { Config } from "./Constants";
 import { GameState } from "./GameState";
+import { getBuildingsByType } from "./IntraTickCache";
 import { getBuildingUnlockTech } from "./TechLogic";
 import { Multiplier, MultiplierWithSource, Tick } from "./TickLogic";
 import { IBuildingData, IHaveTypeAndLevel, IMarketBuildingData, IResourceImportBuildingData } from "./Tile";
@@ -214,7 +225,10 @@ export function hasEnoughWorkers(res: Resource, amount: number): boolean {
    if (!Tick.current.workersUsed[res]) {
       Tick.current.workersUsed[res] = 0;
    }
-   return Tick.current.workersAvailable[res]! >= Tick.current.workersUsed[res]! + amount;
+   return (
+      Math.floor(Tick.current.workersAvailable[res]! * (Tick.current.happiness?.workerPercentage ?? 1)) >=
+      Tick.current.workersUsed[res]! + amount
+   );
 }
 
 export function getResourceName(r: Resource): string {
@@ -268,7 +282,7 @@ export function tryAddTransportation(
       toXy,
       fromPosition,
       toPosition,
-      ticksRequired: Math.ceil(v2(fromPosition).subtract(toPosition).length() / 100),
+      ticksRequired: Math.ceil(v2(fromPosition).subtractSelf(toPosition).length() / 100),
       ticksSpent: 0,
       resource,
       amount,
@@ -281,9 +295,11 @@ export function tryAddTransportation(
 
 export function getScienceFromWorkers(gs: GameState) {
    const workersAvailable = Tick.current.workersAvailable.Worker ?? 0;
+   const happinessPercentage = Tick.current.happiness?.workerPercentage ?? 1;
+   const workersAvailableAfterHappiness = Math.floor(workersAvailable * happinessPercentage);
    const workersBusy = Tick.current.workersUsed.Worker ?? 0;
    const sciencePerIdleWorker = sum(Tick.current.globalMultipliers.sciencePerIdleWorker, "value");
-   const scienceFromIdleWorkers = sciencePerIdleWorker * (workersAvailable - workersBusy);
+   const scienceFromIdleWorkers = sciencePerIdleWorker * (workersAvailableAfterHappiness - workersBusy);
 
    const sciencePerBusyWorker = sum(Tick.current.globalMultipliers.sciencePerBusyWorker, "value");
    const scienceFromBusyWorkers = sciencePerBusyWorker * workersBusy;
@@ -291,6 +307,8 @@ export function getScienceFromWorkers(gs: GameState) {
 
    return {
       workersAvailable,
+      happinessPercentage,
+      workersAvailableAfterHappiness,
       workersBusy,
       scienceFromBusyWorkers,
       sciencePerBusyWorker,
@@ -312,7 +330,7 @@ export function getBuildingCost(building: IHaveTypeAndLevel): PartialTabulate<Re
 
    let multiplier = 10;
    // This is a wonder, we apply the wonder multiplier here
-   if (Tick.current.buildings[type].max === 1) {
+   if (Tick.current.buildings[type].special === BuildingSpecial.WorldWonder) {
       const tech = getBuildingUnlockTech(building.type);
       if (tech) {
          multiplier = Math.pow(2, Config.Tech[tech].column);
@@ -360,7 +378,7 @@ export function getBuildingPercentage(xy: string, gs: GameState): number {
 }
 
 export function getBuildingLevelLabel(b: IBuildingData): string {
-   if (b.type === "Headquarter" || Tick.current.buildings[b.type].max === 1) {
+   if (Tick.current.buildings[b.type].special === BuildingSpecial.HQ || isWorldOrNaturalWonder(b.type)) {
       return "";
    }
    return String(b.level);
@@ -380,16 +398,20 @@ export function getBuildingUpgradeLevels(b: IBuildingData): number[] {
    return levels;
 }
 
+export function isSpecialBuilding(building: Building): boolean {
+   return !isNullOrUndefined(Tick.current.buildings[building].special);
+}
+
 export function isNaturalWonder(building: Building): boolean {
-   return Tick.current.buildings[building].max === 0;
+   return Tick.current.buildings[building].special === BuildingSpecial.NaturalWonder;
 }
 
 export function isWorldWonder(building: Building): boolean {
-   return Tick.current.buildings[building].max === 1;
+   return Tick.current.buildings[building].special === BuildingSpecial.WorldWonder;
 }
 
 export function isWorldOrNaturalWonder(building: Building): boolean {
-   return (Tick.current.buildings[building].max ?? Infinity) <= 1;
+   return isNaturalWonder(building) || isWorldWonder(building);
 }
 
 export function getWarehouseCapacity(building: IHaveTypeAndLevel): number {
@@ -399,7 +421,7 @@ export function getWarehouseCapacity(building: IHaveTypeAndLevel): number {
 export function getBuilderCapacity(building: IHaveTypeAndLevel): { multiplier: number; base: number; total: number } {
    const builder = sum(Tick.current.globalMultipliers.builderCapacity, "value");
    let baseCapacity = building.level;
-   if (Tick.current.buildings[building.type].max === 1) {
+   if (isWorldWonder(building.type)) {
       const tech = getBuildingUnlockTech(building.type);
       if (tech) {
          baseCapacity = Config.Tech[tech].column;
@@ -409,9 +431,7 @@ export function getBuilderCapacity(building: IHaveTypeAndLevel): { multiplier: n
 }
 
 export function applyToAllBuildings(building: Building, settings: Partial<IBuildingData>, gs: GameState) {
-   forEach(gs.tiles, (xy, tile) => {
-      if (tile.building && tile.building.type === building) {
-         Object.assign(tile.building, settings);
-      }
+   forEach(getBuildingsByType(building, gs), (xy, tile) => {
+      Object.assign(tile.building, settings);
    });
 }

@@ -21,7 +21,7 @@ import { connectWebSocket } from "./rpc/RPCClient";
 import { Grid } from "./scenes/Grid";
 import { WorldScene } from "./scenes/WorldScene";
 import { checkSteamBranch } from "./SteamTesting";
-import { forEach } from "./utilities/Helper";
+import { forEach, isNullOrUndefined } from "./utilities/Helper";
 import Actions from "./utilities/pixi-actions/Actions";
 import { SceneManager, Textures } from "./utilities/SceneManager";
 import { initializeSingletons, ISpecialBuildings, RouteTo, Singleton } from "./utilities/Singleton";
@@ -48,7 +48,7 @@ export async function startGame(
 
    const gameState = getGameState();
 
-   verifyBuildingTextures(textures, gameState.city);
+   verifyBuildingConfig(textures, gameState.city);
 
    const size = Config.City[gameState.city].size;
    const grid = new Grid(size, size, 64);
@@ -125,10 +125,13 @@ function findSpecialBuildings(gameState: GameState): Partial<Record<Building, IT
    return buildings;
 }
 
-function verifyBuildingTextures(textures: Textures, city: City) {
-   forEach(Config.Building, (b) => {
+function verifyBuildingConfig(textures: Textures, city: City) {
+   forEach(Config.Building, (b, def) => {
       if (!getBuildingTexture(b, textures, city)) {
          console.warn(`Cannot find textures for building ${b}`);
+      }
+      if (!isNullOrUndefined(def.max) && isNullOrUndefined(def.special)) {
+         console.warn(`Building ${b} has "max" defined but "special" undefined. Please define "special"!`);
       }
    });
 }

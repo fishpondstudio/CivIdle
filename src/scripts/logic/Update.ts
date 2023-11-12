@@ -44,7 +44,8 @@ import {
 } from "./BuildingLogic";
 import { Config } from "./Constants";
 import { GameState } from "./GameState";
-import { clearIntraTickCache, unlockedResources } from "./IntraTickCache";
+import { calculateHappiness } from "./HappinessLogic";
+import { clearIntraTickCache, getXyBuildings, unlockedResources } from "./IntraTickCache";
 import { onBuildingComplete, onBuildingProductionComplete } from "./LogicCallback";
 import { getAmountInTransit } from "./ResourceLogic";
 import { EmptyTickData, IModifier, Multiplier, Tick } from "./TickLogic";
@@ -97,6 +98,7 @@ export function tickEverySecond(gs: GameState) {
    tickTransportation(gs);
    tickTiles(gs);
 
+   Tick.next.happiness = calculateHappiness(gs);
    const { scienceFromWorkers } = getScienceFromWorkers(gs);
    safeAdd(Singleton().buildings.Headquarter.building.resources, "Science", scienceFromWorkers);
 
@@ -405,7 +407,9 @@ export function transportResource(
       ?.sort((xy1, xy2) => {
          const pos1 = Singleton().grid.xyToPosition(xy1);
          const pos2 = Singleton().grid.xyToPosition(xy2);
-         return v2(pos1).subtract(buildingPosition).lengthSqr() - v2(pos2).subtract(buildingPosition).lengthSqr();
+         return (
+            v2(pos1).subtractSelf(buildingPosition).lengthSqr() - v2(pos2).subtractSelf(buildingPosition).lengthSqr()
+         );
       })
       .some((fromXy) => {
          const building = gs.tiles[fromXy].building;
@@ -487,9 +491,9 @@ function tickPrice(gs: GameState) {
       unlockedResources(gs),
       (res) => Tick.current.resources[res].canPrice && Tick.current.resources[res].canStore
    );
-   forEach(gs.tiles, (xy, tile) => {
-      if (tile.building?.type == "Market") {
-         const market = tile.building as IMarketBuildingData;
+   forEach(getXyBuildings(gs), (xy, building) => {
+      if (building.type == "Market") {
+         const market = building as IMarketBuildingData;
          if (!market.availableResources) {
             market.availableResources = {};
          }

@@ -1,9 +1,10 @@
 import { Config } from "./logic/Constants";
-import { GameOptions, GameState, SavedGame } from "./logic/GameState";
+import { GameOptions, GameState, initializeGameState, SavedGame } from "./logic/GameState";
 import { makeBuilding } from "./logic/Tile";
 import { isSteam, SteamClient } from "./rpc/SteamClient";
+import { Grid } from "./scenes/Grid";
 import { LoadingPage } from "./ui/LoadingPage";
-import { idbClear, idbGet, idbSet } from "./utilities/BrowserStorage";
+import { idbGet, idbSet } from "./utilities/BrowserStorage";
 import { forEach } from "./utilities/Helper";
 import { makeObservableHook } from "./utilities/Hook";
 import { RouteTo } from "./utilities/Singleton";
@@ -14,13 +15,18 @@ const savedGame = new SavedGame();
 
 export function wipeSaveData() {
    saving = true;
+   const gs = new GameState();
+   initializeGameState(gs, new Grid(Config.City[gs.city].size, Config.City[gs.city].size, 64));
+   savedGame.current = gs;
    if (isSteam()) {
-      SteamClient.fileDelete(SAVE_KEY).then(() => window.location.reload());
+      SteamClient.fileWrite(SAVE_KEY, JSON.stringify(savedGame))
+         .catch(console.error)
+         .finally(() => window.location.reload());
       return;
    }
-   idbClear()
-      .then(() => window.location.reload())
-      .catch(console.error);
+   idbSet(SAVE_KEY, savedGame)
+      .catch(console.error)
+      .finally(() => window.location.reload());
 }
 
 if (import.meta.env.DEV) {

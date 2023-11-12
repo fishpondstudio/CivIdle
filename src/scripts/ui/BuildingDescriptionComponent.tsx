@@ -1,3 +1,4 @@
+import { isWorldOrNaturalWonder } from "../logic/BuildingLogic";
 import { Tick } from "../logic/TickLogic";
 import { L, t } from "../utilities/i18n";
 import { IBuildingComponentProps } from "./BuildingPage";
@@ -13,7 +14,7 @@ export function BuildingDescriptionComponent({ gameState, xy }: IBuildingCompone
    }
    return (
       <fieldset>
-         {building.max === 1 ? <legend>{t(L.Wonder)}</legend> : null}
+         {isWorldOrNaturalWonder(type) ? <legend>{t(L.Wonder)}</legend> : null}
          {building.desc()}
       </fieldset>
    );

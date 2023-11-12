@@ -7,7 +7,7 @@ import { forEach, pointToXy, safePush, xyToPoint } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
 import { Singleton } from "../utilities/Singleton";
 import { GameState } from "./GameState";
-import { getBuildingsByType } from "./IntraTickCache";
+import { getTypeBuildings, getXyBuildings } from "./IntraTickCache";
 import { getGreatPeopleChoices } from "./TechLogic";
 import { ensureTileFogOfWar } from "./TerrainLogic";
 import { Tick } from "./TickLogic";
@@ -51,7 +51,7 @@ export function onBuildingProductionComplete(xy: string, gs: GameState) {
       return;
    }
 
-   const buildingsByType = getBuildingsByType(gs);
+   const buildingsByType = getTypeBuildings(gs);
 
    const { grid } = Singleton();
 
@@ -59,16 +59,16 @@ export function onBuildingProductionComplete(xy: string, gs: GameState) {
 
    switch (building.type) {
       case "HatshepsutTemple": {
-         buildingsByType.WheatFarm?.forEach((f) => {
-            if (f.building) {
+         forEach(buildingsByType.WheatFarm, (xy, tile) => {
+            if (tile.building) {
                let adjacentWaterTiles = 0;
-               grid.getNeighbors(xyToPoint(f.xy)).forEach((neighbor) => {
+               grid.getNeighbors(xyToPoint(tile.xy)).forEach((neighbor) => {
                   if (gs.tiles[pointToXy(neighbor)]?.deposit.Water) {
                      ++adjacentWaterTiles;
                   }
                });
                if (adjacentWaterTiles > 0) {
-                  safePush(Tick.next.tileMultipliers, f.xy, {
+                  safePush(Tick.next.tileMultipliers, tile.xy, {
                      output: adjacentWaterTiles,
                      source: buildingName,
                   });
@@ -97,16 +97,14 @@ export function onBuildingProductionComplete(xy: string, gs: GameState) {
          break;
       }
       case "Alps": {
-         forEach(gs.tiles, (xy, tile) => {
-            if (tile.building) {
-               const mul = Math.floor(tile.building.level / 10);
-               if (mul > 0) {
-                  safePush(Tick.next.tileMultipliers, xy, {
-                     input: mul,
-                     output: mul,
-                     source: t(L.NaturalWonderName, { name: buildingName }),
-                  });
-               }
+         forEach(getXyBuildings(gs), (xy, building) => {
+            const mul = Math.floor(building.level / 10);
+            if (mul > 0) {
+               safePush(Tick.next.tileMultipliers, xy, {
+                  input: mul,
+                  output: mul,
+                  source: t(L.NaturalWonderName, { name: buildingName }),
+               });
             }
          });
          break;
@@ -131,14 +129,12 @@ export function onBuildingProductionComplete(xy: string, gs: GameState) {
          break;
       }
       case "TempleOfHeaven": {
-         forEach(gs.tiles, (xy, tile) => {
-            if (tile.building) {
-               if (tile.building.level >= 10) {
-                  safePush(Tick.next.tileMultipliers, xy, {
-                     worker: 1,
-                     source: buildingName,
-                  });
-               }
+         forEach(getXyBuildings(gs), (xy, tile) => {
+            if (building.level >= 10) {
+               safePush(Tick.next.tileMultipliers, xy, {
+                  worker: 1,
+                  source: buildingName,
+               });
             }
          });
          break;

@@ -52,7 +52,7 @@ export function findNearest(
          return;
       }
       const distSqr = v2(grid.gridToPosition(xyToPoint(xy)))
-         .subtract(position)
+         .subtractSelf(position)
          .lengthSqr();
       if (distSqr < minDistSqr) {
          minDistSqr = distSqr;

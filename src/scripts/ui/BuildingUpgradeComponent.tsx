@@ -3,6 +3,7 @@ import { useState } from "react";
 import { notifyGameStateUpdate } from "../Global";
 import { getBuildingUpgradeCost, getBuildingUpgradeLevels } from "../logic/BuildingLogic";
 import {} from "../logic/GameState";
+import { useShortcut } from "../logic/Shortcut";
 import { Tick } from "../logic/TickLogic";
 import { jsxMapOf } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
@@ -20,6 +21,14 @@ export function BuildingUpgradeComponent({ gameState, xy }: IBuildingComponentPr
    const levels = getBuildingUpgradeLevels(building);
    const [selected, setSelected] = useState(0);
    const cost = getBuildingUpgradeCost(building.type, building.level, building.level + levels[selected]);
+   const upgrade = (level: number) => {
+      building.desiredLevel = building.level + level;
+      building.status = "upgrading";
+      notifyGameStateUpdate();
+   };
+   useShortcut("BuildingPageUpgradeX1", () => upgrade(1));
+   useShortcut("BuildingPageUpgradeX5", () => upgrade(5));
+   useShortcut("BuildingPageUpgradeToNext10", () => upgrade(levels[levels.length - 1]));
    return (
       <>
          <fieldset>
@@ -34,11 +43,7 @@ export function BuildingUpgradeComponent({ gameState, xy }: IBuildingComponentPr
                      style={{ width: "60px" }}
                      className={classNames({ "text-strong": index == selected })}
                      onMouseOver={setSelected.bind(null, index)}
-                     onClick={() => {
-                        building.desiredLevel = building.level + level;
-                        building.status = "upgrading";
-                        notifyGameStateUpdate();
-                     }}
+                     onClick={() => upgrade(level)}
                   >
                      x{level}
                   </button>

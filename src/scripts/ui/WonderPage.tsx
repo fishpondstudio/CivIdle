@@ -1,6 +1,7 @@
 import { Building } from "../definitions/BuildingDefinitions";
 import { PartialSet } from "../definitions/TypeDefinitions";
 import { useGameState } from "../Global";
+import { getXyBuildings } from "../logic/IntraTickCache";
 import { Tick } from "../logic/TickLogic";
 import { forEach, jsxMapOf } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
@@ -11,13 +12,9 @@ import { TilePage } from "./TilePage";
 export function WonderPage(): JSX.Element | null {
    const gs = useGameState();
    const builtWonders: PartialSet<Building> = {};
-   forEach(gs.tiles, (xy, tile) => {
-      if (
-         tile.building &&
-         Tick.current.buildings[tile.building.type].max == 1 &&
-         Tick.current.buildings[tile.building.type].construction
-      ) {
-         builtWonders[tile.building.type] = true;
+   forEach(getXyBuildings(gs), (xy, building) => {
+      if (Tick.current.buildings[building.type].max == 1 && Tick.current.buildings[building.type].construction) {
+         builtWonders[building.type] = true;
       }
    });
    return (

@@ -12,6 +12,7 @@ import { Grid } from "../scenes/Grid";
 import { forEach, isEmpty, keysOf, pointToXy, shuffle } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
 import { Config } from "./Constants";
+import { IShortcutConfig, Shortcut } from "./Shortcut";
 import { unlockTech } from "./TechLogic";
 import { ensureTileFogOfWar, findNearest } from "./TerrainLogic";
 import { ITileData, makeBuilding } from "./Tile";
@@ -86,6 +87,7 @@ export class GameOptions {
    buildingColors: Partial<Record<Building, string>> = {};
    resourceColors: Partial<Record<Resource, string>> = {};
    themeColors = { ...DefaultThemeColors };
+   shortcuts: Partial<Record<Shortcut, IShortcutConfig>> = {};
 }
 
 export const SAVE_FILE_VERSION = 1;

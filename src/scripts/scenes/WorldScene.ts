@@ -125,6 +125,7 @@ export class WorldScene extends ViewportScene {
       this._graphics.tint = Color.shared.setValue(gameOptions.themeColors.GridColor);
       this._graphics.alpha = gameOptions.themeColors.GridAlpha;
       this._selectedGraphics.tint = Color.shared.setValue(gameOptions.themeColors.SelectedGridColor);
+      forEach(this._tiles, (xy, visual) => visual.updateDepositColor(gameOptions));
    }
 
    lookAtXy(xy: string) {

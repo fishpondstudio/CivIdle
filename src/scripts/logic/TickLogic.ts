@@ -3,6 +3,7 @@ import { Resource, ResourceDefinitions } from "../definitions/ResourceDefinition
 import { PartialSet, PartialTabulate } from "../definitions/TypeDefinitions";
 import { L, t } from "../utilities/i18n";
 import { RequireAtLeastOne } from "../utilities/Type";
+import { calculateHappiness } from "./HappinessLogic";
 import { IBuildingData } from "./Tile";
 
 interface ITickData {
@@ -14,6 +15,7 @@ interface ITickData {
    tileModifiers: Partial<Record<string, ModifierWithSource[]>>;
    unlockedBuildings: PartialSet<Building>;
    workersAvailable: PartialTabulate<Resource>;
+   happiness: ReturnType<typeof calculateHappiness> | null;
    workersUsed: PartialTabulate<Resource>;
    workersAssignment: Record<string, number>;
    resourcesByBuilding: Partial<Record<Resource, string[]>>;
@@ -43,6 +45,7 @@ export function EmptyTickData(): ITickData {
       tileMultipliers: {},
       workersAvailable: {},
       workersUsed: {},
+      happiness: null,
       workersAssignment: {},
       resourcesByBuilding: {},
       globalMultipliers: new GlobalMultipliers(),

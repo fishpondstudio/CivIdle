@@ -1,17 +1,18 @@
 import { Building } from "../definitions/BuildingDefinitions";
 import { Deposit, Resource } from "../definitions/ResourceDefinitions";
 import { PartialSet, PartialTabulate } from "../definitions/TypeDefinitions";
-import { forEach, safePush } from "../utilities/Helper";
+import { forEach } from "../utilities/Helper";
 import { Config } from "./Constants";
 import { GameState } from "./GameState";
 import { Tick } from "./TickLogic";
-import { ITileData } from "./Tile";
+import { IBuildingData, ITileData } from "./Tile";
 
 class IntraTickCache {
    revealedDeposits: PartialSet<Deposit> | undefined;
    unlockedBuildings: PartialSet<Building> | undefined;
    unlockedResources: PartialSet<Resource> | undefined;
-   buildingsByType: Partial<Record<Building, ITileData[]>> | undefined;
+   buildingsByType: Partial<Record<Building, Record<string, Required<ITileData>>>> | undefined;
+   buildingsByXy: Partial<Record<string, IBuildingData>> | undefined;
    resourceAmount: PartialTabulate<Resource> | undefined;
 }
 
@@ -34,19 +35,40 @@ export function revealedDeposits(gs: GameState): PartialSet<Deposit> {
    return _cache.revealedDeposits;
 }
 
-export function getBuildingsByType(gs: GameState): Partial<Record<Building, ITileData[]>> {
+export function getTypeBuildings(gs: GameState): Partial<Record<Building, Record<string, Required<ITileData>>>> {
    if (_cache.buildingsByType) {
       return _cache.buildingsByType;
    }
-   const result: Partial<Record<Building, ITileData[]>> = {};
-   forEach(gs.tiles, (_, tile) => {
+   const result: Partial<Record<Building, Record<string, Required<ITileData>>>> = {};
+   forEach(gs.tiles, (xy, tile) => {
       const type = tile.building?.type;
       if (!type) {
          return;
       }
-      safePush(result, type, tile);
+      if (!result[type]) {
+         result[type] = {};
+      }
+      result[type]![xy] = tile as Required<ITileData>;
    });
    _cache.buildingsByType = result;
+   return result;
+}
+
+export function getBuildingsByType(building: Building, gs: GameState): Record<string, Required<ITileData>> | undefined {
+   return getTypeBuildings(gs)[building];
+}
+
+export function getXyBuildings(gs: GameState): Partial<Record<string, IBuildingData>> {
+   if (_cache.buildingsByXy) {
+      return _cache.buildingsByXy;
+   }
+   const result: Partial<Record<string, IBuildingData>> = {};
+   forEach(gs.tiles, (xy, tile) => {
+      if (tile.building) {
+         result[xy] = tile.building;
+      }
+   });
+   _cache.buildingsByXy = result;
    return result;
 }
 

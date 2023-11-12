@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { Building } from "../definitions/BuildingDefinitions";
 import { notifyGameStateUpdate, useGameState } from "../Global";
-import { getBuildingCost } from "../logic/BuildingLogic";
+import { getBuildingCost, isWorldOrNaturalWonder } from "../logic/BuildingLogic";
 import { Config } from "../logic/Constants";
-import { getBuildingsByType, unlockedBuildings } from "../logic/IntraTickCache";
+import { getTypeBuildings, unlockedBuildings } from "../logic/IntraTickCache";
 import { Tick } from "../logic/TickLogic";
 import { ITileData, makeBuilding } from "../logic/Tile";
 import { jsxMapOf, keysOf, numberToRoman, setContains } from "../utilities/Helper";
@@ -14,7 +14,7 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): JSX.Element {
    const gs = useGameState();
    const [, setSelected] = useState<Building | null>(null);
    const [filter, setFilter] = useState<string>("");
-   const constructed = getBuildingsByType(gs);
+   const constructed = getTypeBuildings(gs);
    return (
       <div className="window" onPointerDown={() => setSelected(null)}>
          <div className="title-bar">
@@ -61,10 +61,10 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): JSX.Element {
                   <tbody>
                      {keysOf(unlockedBuildings(gs))
                         .sort((a, b) => {
-                           if (Tick.current.buildings[a].max === 1 && Tick.current.buildings[b].max !== 1) {
+                           if (isWorldOrNaturalWonder(a) && !isWorldOrNaturalWonder(b)) {
                               return -1;
                            }
-                           if (Tick.current.buildings[b].max === 1 && Tick.current.buildings[a].max !== 1) {
+                           if (isWorldOrNaturalWonder(b) && !isWorldOrNaturalWonder(a)) {
                               return 1;
                            }
                            const tier = (Config.BuildingTier[a] ?? 0) - (Config.BuildingTier[b] ?? 0);
