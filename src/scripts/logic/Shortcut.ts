@@ -15,13 +15,12 @@ export const ShortcutActions = {
    BuildingPageUpgradeX5: { scope: "BuildingPage", name: () => t(L.ShortcutBuildingPageUpgradeX5) },
    BuildingPageUpgradeToNext10: { scope: "BuildingPage", name: () => t(L.ShortcutBuildingPageUpgradeToNext10) },
    TechPageGoBackToCity: { scope: "TechPage", name: () => t(L.ShortcutTechPageGoBackToCity) },
-} satisfies Record<
-   string,
-   {
-      scope: ShortcutScope;
-      name: () => string;
-   }
->;
+} satisfies Record<string, IShortcutNameAndScope>;
+
+export interface IShortcutNameAndScope {
+   scope: ShortcutScope;
+   name: () => string;
+}
 
 export type Shortcut = keyof typeof ShortcutActions;
 

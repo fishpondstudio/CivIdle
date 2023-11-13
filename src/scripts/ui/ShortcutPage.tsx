@@ -1,5 +1,5 @@
 import { useGameOptions } from "../Global";
-import { getShortcutKey, ShortcutActions, ShortcutScopes } from "../logic/Shortcut";
+import { getShortcutKey, IShortcutNameAndScope, Shortcut, ShortcutActions, ShortcutScopes } from "../logic/Shortcut";
 import { jsxMapOf } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
 import { EditShortcutModal } from "./EditShortcutModal";
@@ -19,7 +19,7 @@ export function ShortcutPage(): JSX.Element {
                return (
                   <fieldset key={scope}>
                      <legend>{name()}</legend>
-                     {jsxMapOf(ShortcutActions, (key, value) => {
+                     {jsxMapOf(ShortcutActions as Record<Shortcut, IShortcutNameAndScope>, (key, value) => {
                         if (value.scope === scope) {
                            const shortcut = gameOptions.shortcuts[key];
                            return (
