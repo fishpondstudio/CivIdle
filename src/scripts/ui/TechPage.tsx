@@ -6,9 +6,11 @@ import { notifyGameStateUpdate, useGameState } from "../Global";
 import { Config } from "../logic/Constants";
 import { onTechUnlocked } from "../logic/LogicCallback";
 import { getResourceAmount, trySpendResources } from "../logic/ResourceLogic";
+import { useShortcut } from "../logic/Shortcut";
 import { getCurrentTechAge, getGreatPeopleChoices, getUnlockCost, unlockTech } from "../logic/TechLogic";
 import { RomeProvinceScene } from "../scenes/RomeProvinceScene";
 import { TechTreeScene } from "../scenes/TechTreeScene";
+import { WorldScene } from "../scenes/WorldScene";
 import { MAX_TECH_COLUMN } from "../SteamTesting";
 import { forEach, jsxMapOf, reduceOf } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
@@ -40,6 +42,14 @@ export function TechPage({ id }: { id: Tech }) {
    const progress =
       reduceOf(availableResources, (prev, k, v) => prev + Math.min(v, unlockCost[k] ?? 0), 0) /
       reduceOf(unlockCost, (prev, _, v) => prev + v, 0);
+
+   useShortcut(
+      "TechPageGoBackToCity",
+      () => {
+         Singleton().sceneManager.loadScene(WorldScene);
+      },
+      [id]
+   );
 
    let prerequisiteCount = 0;
    return (

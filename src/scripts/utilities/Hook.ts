@@ -24,6 +24,7 @@ export function useTypedEvent<T>(event: TypedEvent<T>, listener: (e: T) => void)
    return useEffect(() => {
       event.on(listener);
       return () => {
+         console.log("Unsubscribe");
          event.off(listener);
       };
    }, []);

@@ -140,7 +140,7 @@ export class TileVisual extends Container {
       const total = sizeOf(this._tile.deposit);
       forEach(this._deposits, (_, sprite) => {
          sprite.visible = true;
-         sprite.position.copyFrom(position.addSelf({ x: layoutCenter(width, 4, total, i++), y: 0 }));
+         sprite.position.copyFrom(position.add({ x: layoutCenter(width, 4, total, i++), y: 0 }));
          sprite.scale.set(scale);
       });
    }

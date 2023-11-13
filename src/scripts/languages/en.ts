@@ -662,6 +662,7 @@ export const EN = {
    HappinessFromBuilding: "From Buildings (excl. Wonders)",
    HappinessFromWonders: "From Wonders (incl. Natural)",
    ShortcutScopeBuildingPage: "Building Page",
+   ShortcutScopeTechPage: "Tech Page",
    ShortcutBuildingPageSellBuilding: "Sell Building",
    ShortcutBuildingPageUpgradeX1: "Upgrade x1",
    ShortcutBuildingPageUpgradeX5: "Upgrade x5",
@@ -671,4 +672,6 @@ export const EN = {
    ShortcutSave: "Save",
    ShortcutPressShortcut: "Press Shortcut Key...",
    ShortcutConflict: "Your shortcut is in conflict with %{name}",
+   ShortcutTechPageGoBackToCity: "Go Back To City",
+   UnclaimedGreatPerson: "You have unclaimed Great People, click here to claim",
 };

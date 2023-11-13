@@ -5,6 +5,16 @@ interface PatchNote {
 
 export const PatchNotes: PatchNote[] = [
    {
+      version: "0.1.65",
+      content: [
+         ["Bugfix", "Fix shortcuts sometimes not correctly executed"],
+         ["Bugfix", "Fix shortcuts sometimes in conflict with input"],
+         ["Bugfix", "Fix deposit tile sometimes shows wrong layout"],
+         ["QoL", "Allow claiming unclaimed great people in Manage Great People page"],
+         ["QoL", "Add a shortcut binding for going back to city when viewing tech tree"],
+      ],
+   },
+   {
       version: "0.1.64",
       content: [["Bugfix", "Fix multiple wonders can be built"]],
    },

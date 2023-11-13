@@ -5,8 +5,12 @@ import { jsxMapOf } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
 import { Singleton } from "../utilities/Singleton";
 import { greatPersonImage } from "../visuals/GreatPersonVisual";
+import { playLevelUp } from "../visuals/Sound";
+import { ChooseGreatPersonModal } from "./ChooseGreatPersonModal";
+import { showModal } from "./GlobalModal";
 import { MenuComponent } from "./MenuComponent";
 import { TilePage } from "./TilePage";
+import { WarningComponent } from "./WarningComponent";
 
 export function GreatPersonPage(): JSX.Element | null {
    const gs = useGameState();
@@ -29,6 +33,20 @@ export function GreatPersonPage(): JSX.Element | null {
                </div>
             </button>
             <div className="sep10"></div>
+            {gs.greatPeopleChoices.length > 0 ? (
+               <div
+                  className="pointer"
+                  onClick={() => {
+                     if (gs.greatPeopleChoices.length > 0) {
+                        playLevelUp();
+                        showModal(<ChooseGreatPersonModal greatPeopleChoice={gs.greatPeopleChoices[0]} />);
+                     }
+                  }}
+               >
+                  <WarningComponent icon="info">{t(L.UnclaimedGreatPerson)}</WarningComponent>
+                  <div className="sep10"></div>
+               </div>
+            ) : null}
             <fieldset>
                <legend>{t(L.GreatPeopleThisRun)}</legend>
                <div className="table-view">

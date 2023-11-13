@@ -17,7 +17,7 @@ export function BuildingSellComponent({ gameState, xy }: IBuildingComponentProps
       Singleton().sceneManager.getCurrent(WorldScene)?.resetTile(tile.xy);
       notifyGameStateUpdate();
    };
-   useShortcut("BuildingPageSellBuilding", sellBuilding);
+   useShortcut("BuildingPageSellBuilding", sellBuilding, [xy]);
    return (
       <button className="row w100 jcc" onClick={sellBuilding}>
          <div className="m-icon" style={{ margin: "0 5px 0 -5px", fontSize: "18px" }}>

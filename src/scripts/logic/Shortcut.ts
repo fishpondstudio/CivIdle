@@ -1,9 +1,10 @@
-import { useEffect } from "react";
+import { DependencyList, useEffect } from "react";
 import { getGameOptions } from "../Global";
 import { L, t } from "../utilities/i18n";
 
 export const ShortcutScopes = {
    BuildingPage: () => t(L.ShortcutScopeBuildingPage),
+   TechPage: () => t(L.ShortcutScopeTechPage),
 } as const;
 
 export type ShortcutScope = keyof typeof ShortcutScopes;
@@ -13,6 +14,7 @@ export const ShortcutActions = {
    BuildingPageUpgradeX1: { scope: "BuildingPage", name: () => t(L.ShortcutBuildingPageUpgradeX1) },
    BuildingPageUpgradeX5: { scope: "BuildingPage", name: () => t(L.ShortcutBuildingPageUpgradeX5) },
    BuildingPageUpgradeToNext10: { scope: "BuildingPage", name: () => t(L.ShortcutBuildingPageUpgradeToNext10) },
+   TechPageGoBackToCity: { scope: "TechPage", name: () => t(L.ShortcutTechPageGoBackToCity) },
 } satisfies Record<
    string,
    {
@@ -31,9 +33,12 @@ export interface IShortcutConfig {
    meta: boolean;
 }
 
-export function useShortcut(shortcut: Shortcut, callback: () => void) {
+export function useShortcut(shortcut: Shortcut, callback: () => void, deps?: DependencyList) {
    useEffect(() => {
       const handler = (e: KeyboardEvent) => {
+         if (e.target instanceof HTMLInputElement) {
+            return;
+         }
          const s = getGameOptions().shortcuts[shortcut];
          if (s && isShortcutEqual(s, makeShortcut(e))) {
             callback();
@@ -43,7 +48,7 @@ export function useShortcut(shortcut: Shortcut, callback: () => void) {
       return () => {
          document.removeEventListener("keydown", handler);
       };
-   });
+   }, deps);
 }
 
 export function getShortcutKey(s: IShortcutConfig): string {
