@@ -64,6 +64,13 @@ input[type="text"] {
    position: relative;
 }
 
+.separator-vertical {
+   border-left: 1px solid #808080;
+   border-right: 1px solid #fff;
+   width: 2px;
+   height: 100%;
+}
+
 .separator.has-title > div {
    background: silver;
    position: absolute;
@@ -195,6 +202,10 @@ fieldset .separator {
 
 .m-icon.small {
    font-size: 12px;
+}
+
+.mr2 {
+   margin-right: 2px;
 }
 
 .mr5 {

@@ -48,7 +48,7 @@ import { calculateHappiness } from "./HappinessLogic";
 import { clearIntraTickCache, getXyBuildings, unlockedResources } from "./IntraTickCache";
 import { onBuildingComplete, onBuildingProductionComplete } from "./LogicCallback";
 import { getAmountInTransit } from "./ResourceLogic";
-import { EmptyTickData, IModifier, Multiplier, Tick } from "./TickLogic";
+import { CurrentTickChanged, EmptyTickData, IModifier, Multiplier, Tick } from "./TickLogic";
 import { IBuildingData, IMarketBuildingData, IResourceImportBuildingData } from "./Tile";
 
 let timeSinceLastTick = 0;
@@ -77,6 +77,7 @@ export function tickEverySecond(gs: GameState) {
    }
    timeSinceLastTick = 0;
    Tick.current = Tick.next;
+   CurrentTickChanged.emit(Tick.current);
    Tick.next = EmptyTickData();
    clearIntraTickCache();
 

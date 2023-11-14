@@ -1,0 +1,22 @@
+#resource-panel .resource-bar {
+   max-width: 25vw;
+   height: 30px;
+   position: absolute;
+   top: 10px;
+   left: 10px;
+   display: flex;
+   align-items: center;
+   font-weight: bold;
+   color: #333;
+}
+
+#resource-panel .resource-bar > .row {
+   width: 90px;
+   margin: 0 10px 0 0;
+   text-align: center;
+}
+
+#resource-panel .resource-bar .m-icon {
+   margin: 0 5px;
+   font-size: 20px;
+}

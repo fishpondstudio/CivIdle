@@ -4,17 +4,30 @@ import { notifyGameStateUpdate, useGameState } from "../Global";
 import { getBuildingCost, isWorldOrNaturalWonder } from "../logic/BuildingLogic";
 import { Config } from "../logic/Constants";
 import { getTypeBuildings, unlockedBuildings } from "../logic/IntraTickCache";
+import { useShortcut } from "../logic/Shortcut";
 import { Tick } from "../logic/TickLogic";
 import { ITileData, makeBuilding } from "../logic/Tile";
 import { jsxMapOf, keysOf, numberToRoman, setContains, sizeOf } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
 import { MenuComponent } from "./MenuComponent";
 
+let lastBuild: Building | null = null;
+
 export function EmptyTilePage({ tile }: { tile: ITileData }): JSX.Element {
    const gs = useGameState();
    const [, setSelected] = useState<Building | null>(null);
    const [filter, setFilter] = useState<string>("");
    const constructed = getTypeBuildings(gs);
+   const build = (k: Building) => {
+      lastBuild = k;
+      tile.building = makeBuilding({ type: k });
+      notifyGameStateUpdate();
+   };
+   useShortcut("EmptyTilePageBuildLastBuilding", () => {
+      if (lastBuild) {
+         build(lastBuild);
+      }
+   });
    return (
       <div className="window" onPointerDown={() => setSelected(null)}>
          <div className="title-bar">
@@ -94,6 +107,9 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): JSX.Element {
                                        {building.deposit && setContains(tile.deposit, building.deposit) ? (
                                           <div className="m-icon small text-orange ml5">stars</div>
                                        ) : null}
+                                       {k === lastBuild ? (
+                                          <div className="m-icon small text-orange ml5">replay</div>
+                                       ) : null}
                                     </div>
                                  </td>
                                  <td className="text-center">
@@ -121,13 +137,7 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): JSX.Element {
                                     })}
                                  </td>
                                  <td>
-                                    <div
-                                       className="row text-link"
-                                       onClick={() => {
-                                          tile.building = makeBuilding({ type: k });
-                                          notifyGameStateUpdate();
-                                       }}
-                                    >
+                                    <div className="row text-link" onClick={() => build(k)}>
                                        <div className="f1" />
                                        <div className="m-icon small">construction</div>
                                        <div className="text-link">{t(L.Build)}</div>

@@ -14,6 +14,7 @@ export const HappinessNames = {
    fromBuildingTypes: () => t(L.HappinessFromBuildingTypes),
    fromBuildings: () => t(L.HappinessFromBuilding),
    fromWonders: () => t(L.HappinessFromWonders),
+   fromHighestTierBuilding: () => t(L.HappinessFromHighestTierBuilding),
 } as const;
 
 type HappinessType = keyof typeof HappinessNames;
@@ -29,11 +30,18 @@ export function calculateHappiness(gs: GameState) {
    }
    let fromBuildings = 0;
    let fromWonders = 0;
+   let fromHighestTierBuilding = 0;
    forEach(getXyBuildings(gs), (xy, building) => {
       if (building.status !== "completed") {
          return;
       }
       if (!isSpecialBuilding(building.type)) {
+         if (!Tick.current.notProducingReasons[xy]) {
+            const tier = Config.BuildingTier[building.type] ?? 0;
+            if (tier > fromHighestTierBuilding) {
+               fromHighestTierBuilding = tier;
+            }
+         }
          ++fromBuildings;
       }
       if (isWorldWonder(building.type)) {
@@ -65,6 +73,7 @@ export function calculateHappiness(gs: GameState) {
       fromUnlockedAge,
       fromWonders,
       fromBuildingTypes,
+      fromHighestTierBuilding,
    };
    const negative: PartialTabulate<HappinessType> = { fromBuildings };
    const value = clamp(
@@ -81,4 +90,20 @@ export function calculateHappiness(gs: GameState) {
       normalized,
       workerPercentage,
    };
+}
+
+export function getHappinessIcon(value: number): string {
+   if (value < -30) {
+      return "sentiment_extremely_dissatisfied";
+   }
+   if (value < -10) {
+      return "sentiment_dissatisfied";
+   }
+   if (value < 10) {
+      return "sentiment_neutral";
+   }
+   if (value < 30) {
+      return "sentiment_satisfied";
+   }
+   return "sentiment_very_satisfied";
 }

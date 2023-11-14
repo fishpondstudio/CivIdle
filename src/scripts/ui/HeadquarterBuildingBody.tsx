@@ -1,7 +1,6 @@
 import classNames from "classnames";
 import { getScienceFromWorkers } from "../logic/BuildingLogic";
 import { Config } from "../logic/Constants";
-import { calculateHappiness, HappinessNames, HAPPINESS_MULTIPLIER } from "../logic/HappinessLogic";
 import { getCurrentTechAge, getScienceAmount, getUnlockCost, unlockableTechs } from "../logic/TechLogic";
 import { Tick } from "../logic/TickLogic";
 import { useUser } from "../rpc/RPCClient";
@@ -17,8 +16,8 @@ import { BuildingStorageComponent } from "./BuildingStorageComponent";
 import { ChangePlayerHandleModal } from "./ChangePlayerHandleModal";
 import { showModal } from "./GlobalModal";
 import { GreatPersonPage } from "./GreatPersonPage";
+import { HappinessComponent } from "./HappinessComponent";
 import { FormatNumber } from "./HelperComponents";
-import { ProgressBarComponent } from "./ProgressBarComponent";
 import { WonderPage } from "./WonderPage";
 
 export function HeadquarterBuildingBody({ gameState, xy }: IBuildingComponentProps) {
@@ -36,7 +35,6 @@ export function HeadquarterBuildingBody({ gameState, xy }: IBuildingComponentPro
    const scienceAmount = getScienceAmount();
    const techAge = getCurrentTechAge(gameState);
    const user = useUser();
-   const happiness = calculateHappiness(gameState);
    // const patch = PatchNotes[0];
    return (
       <div className="window-body">
@@ -64,85 +62,7 @@ export function HeadquarterBuildingBody({ gameState, xy }: IBuildingComponentPro
          </fieldset>
          <BuildingProduceComponent gameState={gameState} xy={xy} />
          <BuildingStorageComponent xy={xy} gameState={gameState} />
-         <fieldset>
-            <legend>{t(L.Happiness)}</legend>
-            <div className="row">
-               <div>
-                  <div className="text-red m-icon">sentiment_extremely_dissatisfied</div>
-               </div>
-               <div className="f1 text-center">
-                  <div className="text-red m-icon">sentiment_dissatisfied</div>
-               </div>
-               <div>
-                  <div className="text-desc m-icon">sentiment_neutral</div>
-               </div>
-               <div className="f1 text-center">
-                  <div className="text-green m-icon">sentiment_satisfied</div>
-               </div>
-               <div>
-                  <div className="text-green m-icon">sentiment_very_satisfied</div>
-               </div>
-            </div>
-            <div className="sep5"></div>
-            <ProgressBarComponent progress={happiness.normalized} />
-            <div className="row">
-               <div className="f1">-50</div>
-               <div className="f1 text-center">0</div>
-               <div className="f1 text-right">50</div>
-            </div>
-            <div className="sep5"></div>
-            <ul className="tree-view">
-               <li>
-                  <details>
-                     <summary className="row">
-                        <div className="f1">{t(L.Happiness)}</div>
-                        <div className="text-strong">{happiness.value}</div>
-                     </summary>
-                     <ul>
-                        {jsxMapOf(happiness.positive, (type, value) => {
-                           return (
-                              <li className="row" key={type}>
-                                 <div className="f1">{HappinessNames[type]()}</div>
-                                 <div className="text-green">
-                                    +<FormatNumber value={value} />
-                                 </div>
-                              </li>
-                           );
-                        })}
-                        {jsxMapOf(happiness.negative, (type, value) => {
-                           return (
-                              <li className="row" key={type}>
-                                 <div className="f1">{HappinessNames[type]()}</div>
-                                 <div className="text-red">
-                                    -<FormatNumber value={value} />
-                                 </div>
-                              </li>
-                           );
-                        })}
-                     </ul>
-                  </details>
-               </li>
-               <li>
-                  <details>
-                     <summary className="row">
-                        <div className="f1">{t(L.WorkerHappinessPercentage)}</div>
-                        <div
-                           className={classNames({
-                              "text-strong": true,
-                              "text-red": happiness.workerPercentage < 1,
-                              "text-green": happiness.workerPercentage > 1,
-                           })}
-                        >
-                           {formatPercent(happiness.workerPercentage)}
-                        </div>
-                     </summary>
-                     <ul>
-                        <li>{t(L.WorkerPercentagePerHappiness, { value: HAPPINESS_MULTIPLIER })}</li>
-                     </ul>
-                  </details>
-               </li>
-            </ul>
-         </fieldset>
+         <HappinessComponent />
          <fieldset>
             <legend>{t(L.Census)}</legend>
             <ul className="tree-view">

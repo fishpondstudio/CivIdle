@@ -53,6 +53,16 @@ export function BuildingConstructionProgressComponent({ gameState, xy }: IBuildi
                         x<FormatNumber value={multiplier} />
                      </div>
                   </li>
+                  <ul>
+                     {Tick.current.globalMultipliers.builderCapacity.map((value) => {
+                        return (
+                           <li key={value.source} className="text-small row">
+                              <div className="f1">{value.source}</div>
+                              <div>{value.value}</div>
+                           </li>
+                        );
+                     })}
+                  </ul>
                </ul>
             </details>
          </ul>

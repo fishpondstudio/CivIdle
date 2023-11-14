@@ -1,8 +1,10 @@
 import { Building, BuildingDefinitions } from "../definitions/BuildingDefinitions";
 import { Resource, ResourceDefinitions } from "../definitions/ResourceDefinitions";
 import { PartialSet, PartialTabulate } from "../definitions/TypeDefinitions";
+import { makeObservableHook } from "../utilities/Hook";
 import { L, t } from "../utilities/i18n";
 import { RequireAtLeastOne } from "../utilities/Type";
+import { TypedEvent } from "../utilities/TypedEvent";
 import { calculateHappiness } from "./HappinessLogic";
 import { IBuildingData } from "./Tile";
 
@@ -57,7 +59,7 @@ export function EmptyTickData(): ITickData {
 export class GlobalMultipliers {
    sciencePerIdleWorker: IValueWithSource[] = [{ value: 1, source: t(L.BaseProduction) }];
    sciencePerBusyWorker: IValueWithSource[] = [{ value: 1, source: t(L.BaseProduction) }];
-   builderCapacity: IValueWithSource[] = [{ value: 1, source: t(L.BaseProduction) }];
+   builderCapacity: IValueWithSource[] = [{ value: 1, source: t(L.BaseMultiplier) }];
 }
 
 export const GlobalMultiplierNames: Record<keyof GlobalMultipliers, () => string> = {
@@ -100,3 +102,6 @@ export interface IModifier {
 }
 
 export type ModifierWithSource = IModifier & { source: string };
+
+export const CurrentTickChanged = new TypedEvent<ITickData>();
+export const useCurrentTick = makeObservableHook(CurrentTickChanged, () => Tick.current);

@@ -5,6 +5,7 @@ import { L, t } from "../utilities/i18n";
 export const ShortcutScopes = {
    BuildingPage: () => t(L.ShortcutScopeBuildingPage),
    TechPage: () => t(L.ShortcutScopeTechPage),
+   EmptyTilePage: () => t(L.ShortcutScopeEmptyTilePage),
 } as const;
 
 export type ShortcutScope = keyof typeof ShortcutScopes;
@@ -15,6 +16,7 @@ export const ShortcutActions = {
    BuildingPageUpgradeX5: { scope: "BuildingPage", name: () => t(L.ShortcutBuildingPageUpgradeX5) },
    BuildingPageUpgradeToNext10: { scope: "BuildingPage", name: () => t(L.ShortcutBuildingPageUpgradeToNext10) },
    TechPageGoBackToCity: { scope: "TechPage", name: () => t(L.ShortcutTechPageGoBackToCity) },
+   EmptyTilePageBuildLastBuilding: { scope: "EmptyTilePage", name: () => t(L.EmptyTilePageBuildLastBuilding) },
 } satisfies Record<string, IShortcutNameAndScope>;
 
 export interface IShortcutNameAndScope {

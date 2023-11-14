@@ -5,6 +5,21 @@ interface PatchNote {
 
 export const PatchNotes: PatchNote[] = [
    {
+      version: "0.1.66",
+      content: [
+         [
+            "Balance",
+            "Your highest tier working building will provide corresponding happiness (Tier 3 building will provide 3 happiness)",
+         ],
+         [
+            "QoL",
+            "Add a resource bar showing happiness, available workers, busy workers, science and non-working buildings",
+         ],
+         ["QoL", "Add a shortcut to repeat last build buildings"],
+         ["QoL", "Builder Capacity Multiplier now shows where the multipliers come from like everywhere else"],
+      ],
+   },
+   {
       version: "0.1.65",
       content: [
          ["Bugfix", "Fix shortcuts sometimes not correctly executed"],
