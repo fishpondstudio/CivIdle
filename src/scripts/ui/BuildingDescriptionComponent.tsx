@@ -4,7 +4,7 @@ import { L, t } from "../utilities/i18n";
 import { IBuildingComponentProps } from "./BuildingPage";
 
 export function BuildingDescriptionComponent({ gameState, xy }: IBuildingComponentProps) {
-   const type = gameState.tiles[xy].building?.type;
+   const type = gameState.tiles[xy]?.building?.type;
    if (!type) {
       return null;
    }

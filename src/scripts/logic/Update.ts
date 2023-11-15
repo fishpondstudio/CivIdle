@@ -29,6 +29,7 @@ import {
    getBuilderCapacity,
    getBuildingCost,
    getBuildingIO,
+   getMarketPrice,
    getScienceFromWorkers,
    getStockpileMax,
    getStorageFor,
@@ -332,7 +333,7 @@ function tileTile(xy: string, gs: GameState): void {
       forEach(market.sellResources, (res) => {
          const amount = clamp(building.level * totalMultiplierFor(xy, "output", gs), 0, building.resources[res] ?? 0);
          const buyResource = market.availableResources[res]!;
-         const buyAmount = (amount * (Config.ResourcePrice[res] ?? 0)) / (Config.ResourcePrice[buyResource] ?? 0);
+         const buyAmount = (amount * getMarketPrice(res, xy, gs)) / getMarketPrice(buyResource, xy, gs);
          if (used - amount + buyAmount > total) {
             Tick.next.notProducingReasons[xy] = "StorageFull";
             return;

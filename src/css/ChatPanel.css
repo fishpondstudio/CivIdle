@@ -35,6 +35,7 @@
    user-select: text;
    user-select: contain;
    cursor: text;
+   word-break: break-all;
 }
 
 #chat-panel .chat-message-item:nth-child(even) {

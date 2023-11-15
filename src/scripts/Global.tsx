@@ -15,16 +15,19 @@ const savedGame = new SavedGame();
 
 export function wipeSaveData() {
    saving = true;
-   const gs = new GameState();
-   initializeGameState(gs, new Grid(Config.City[gs.city].size, Config.City[gs.city].size, 64));
-   savedGame.current = gs;
+   const save = new SavedGame();
+   save.options = savedGame.options;
+   initializeGameState(
+      save.current,
+      new Grid(Config.City[save.current.city].size, Config.City[save.current.city].size, 64)
+   );
    if (isSteam()) {
-      SteamClient.fileWrite(SAVE_KEY, JSON.stringify(savedGame))
+      SteamClient.fileWrite(SAVE_KEY, JSON.stringify(save))
          .catch(console.error)
          .finally(() => window.location.reload());
       return;
    }
-   idbSet(SAVE_KEY, savedGame)
+   idbSet(SAVE_KEY, save)
       .catch(console.error)
       .finally(() => window.location.reload());
 }

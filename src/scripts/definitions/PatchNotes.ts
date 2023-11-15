@@ -5,6 +5,18 @@ interface PatchNote {
 
 export const PatchNotes: PatchNote[] = [
    {
+      version: "0.1.67",
+      content: [
+         [
+            "Balance",
+            "Market exchange rate will now fluctuate every market refresh. Different markets will have different fluctuations",
+         ],
+         ["Bugfix", "Fix tech page shows blank after clicking on unreleased tech item"],
+         ["Bugfix", "Fix resource bar sometimes shows incorrect layout"],
+         ["Bugfix", "Fix long chat text can cause layout overflow"],
+      ],
+   },
+   {
       version: "0.1.66",
       content: [
          [

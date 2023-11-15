@@ -13,6 +13,7 @@ import {
    safePush,
    sum,
 } from "../utilities/Helper";
+import { srand } from "../utilities/Random";
 import { Textures } from "../utilities/SceneManager";
 import { Singleton } from "../utilities/Singleton";
 import { v2 } from "../utilities/Vector2";
@@ -434,4 +435,10 @@ export function applyToAllBuildings(building: Building, settings: Partial<IBuild
    forEach(getBuildingsByType(building, gs), (xy, tile) => {
       Object.assign(tile.building, settings);
    });
+}
+
+export function getMarketPrice(resource: Resource, xy: string, gs: GameState): number {
+   const rand = srand(gs.lastPriceUpdated + xy + resource);
+   const fluctuation = 0.75 + rand() * 0.5;
+   return (Config.ResourcePrice[resource] ?? 0) * fluctuation;
 }

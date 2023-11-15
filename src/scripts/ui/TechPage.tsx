@@ -29,6 +29,14 @@ export function TechPage({ id }: { id: Tech }) {
    const gs = useGameState();
    const tech = Config.Tech[id];
 
+   useShortcut(
+      "TechPageGoBackToCity",
+      () => {
+         Singleton().sceneManager.loadScene(WorldScene);
+      },
+      [id]
+   );
+
    if (tech.column > MAX_TECH_COLUMN) {
       return <InDevelopmentPage />;
    }
@@ -42,14 +50,6 @@ export function TechPage({ id }: { id: Tech }) {
    const progress =
       reduceOf(availableResources, (prev, k, v) => prev + Math.min(v, unlockCost[k] ?? 0), 0) /
       reduceOf(unlockCost, (prev, _, v) => prev + v, 0);
-
-   useShortcut(
-      "TechPageGoBackToCity",
-      () => {
-         Singleton().sceneManager.loadScene(WorldScene);
-      },
-      [id]
-   );
 
    let prerequisiteCount = 0;
    return (

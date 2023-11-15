@@ -1,4 +1,5 @@
 import { notifyGameStateUpdate } from "../Global";
+import { getMarketPrice } from "../logic/BuildingLogic";
 import { Config } from "../logic/Constants";
 import { Tick } from "../logic/TickLogic";
 import { IMarketBuildingData } from "../logic/Tile";
@@ -51,7 +52,10 @@ export function MarketBuildingBody({ gameState, xy }: IBuildingComponentProps) {
                            return null;
                         }
                         const buyResource = market.availableResources[res]!;
-                        const buyAmount = round(Config.ResourcePrice[res]! / Config.ResourcePrice[buyResource]!, 1);
+                        const buyAmount = round(
+                           getMarketPrice(res, xy, gameState) / getMarketPrice(buyResource, xy, gameState),
+                           1
+                        );
                         return (
                            <tr key={res}>
                               <td>{r.name()}</td>
