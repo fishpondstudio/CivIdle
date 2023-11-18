@@ -6,10 +6,12 @@ console.log("========== Building CivIdle ==========");
 
 const rootPath = path.resolve(path.join(__dirname, "../"));
 
-const versionFilePath = path.join(rootPath, "src", "scripts", "Version.json");
-const ver = JSON.parse(fs.readFileSync(versionFilePath, { encoding: "utf8" }));
-ver.build++;
-fs.writeFileSync(versionFilePath, JSON.stringify(ver));
+if (process.env.STEAMWORKS_PATH) {
+   const versionFilePath = path.join(rootPath, "src", "scripts", "Version.json");
+   const ver = JSON.parse(fs.readFileSync(versionFilePath, { encoding: "utf8" }));
+   ver.build++;
+   fs.writeFileSync(versionFilePath, JSON.stringify(ver));
+}
 
 cmd(`npm run build`, rootPath);
 
