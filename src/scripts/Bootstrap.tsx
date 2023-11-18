@@ -73,7 +73,7 @@ export async function startGame(
    // ========== Connect to server ==========
    try {
       const offlineTime = await Promise.race([connectWebSocket(), rejectIn<number>(5, "Connection Timeout")]);
-      if (offlineTime > 60) {
+      if (offlineTime >= 60) {
          const before = JSON.parse(JSON.stringify(gameState));
          for (let i = 0; i < offlineTime; i++) {
             tickEverySecond(gameState);
