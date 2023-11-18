@@ -23,10 +23,6 @@ jobs:
            env:
               STEAMWORKS_PATH: /home/insraq/steamworks/tools/ContentBuilder/
          - run: |
-              sudo systemctl restart cividle
-              sudo systemctl status cividle
-           working-directory: /home/insraq/CivIdle/server
-         - run: |
               git add src/scripts/Version.json
               git commit -m "[skip ci] New build"
               git push
