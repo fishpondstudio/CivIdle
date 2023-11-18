@@ -22,6 +22,7 @@ jobs:
            working-directory: /home/insraq/CivIdle
            env:
               STEAMWORKS_PATH: /home/insraq/steamworks/tools/ContentBuilder/
+         - run: ssh ubuntu@uk.fishpondstudio.com "cd /home/ubuntu/CivIdle/server/ && npm install && npm run build && sudo systemctl restart cividle"
          - run: |
               git add src/scripts/Version.json
               git commit -m "[skip ci] New build"
