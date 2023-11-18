@@ -14,13 +14,15 @@ jobs:
          - run: |
               npm install
            working-directory: /home/insraq/CivIdle/electron
+         - run: |
+              npm install
+              npm run build
+           working-directory: /home/insraq/CivIdle/server
          - run: npm run release
            working-directory: /home/insraq/CivIdle
            env:
               STEAMWORKS_PATH: /home/insraq/steamworks/tools/ContentBuilder/
          - run: |
-              npm install
-              npm run build
               sudo systemctl restart cividle
               sudo systemctl status cividle
            working-directory: /home/insraq/CivIdle/server
