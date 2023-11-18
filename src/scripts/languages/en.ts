@@ -677,4 +677,6 @@ export const EN = {
    ShortcutTechPageGoBackToCity: "Go Back To City",
    EmptyTilePageBuildLastBuilding: "Build Last Building",
    UnclaimedGreatPerson: "You have unclaimed Great People, click here to claim",
+   OfflineProduction: "Offline Production",
+   OfflineTime: "Offline Time",
 };

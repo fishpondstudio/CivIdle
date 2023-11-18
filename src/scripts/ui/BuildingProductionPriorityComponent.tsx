@@ -1,7 +1,7 @@
 import { notifyGameStateUpdate } from "../Global";
-import { applyToAllBuildings } from "../logic/BuildingLogic";
+import { applyToAllBuildings, getBuildingIO } from "../logic/BuildingLogic";
 import { Tick } from "../logic/TickLogic";
-import { IMarketBuildingData, PRIORITY_MAX, PRIORITY_MIN } from "../logic/Tile";
+import { PRIORITY_MAX, PRIORITY_MIN } from "../logic/Tile";
 import { isEmpty } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
 import { playClick } from "../visuals/Sound";
@@ -9,11 +9,7 @@ import { IBuildingComponentProps } from "./BuildingPage";
 
 export function BuildingProductionPriorityComponent({ gameState, xy }: IBuildingComponentProps) {
    const building = gameState.tiles[xy].building;
-   if (
-      building == null ||
-      (isEmpty((building as IMarketBuildingData)?.sellResources) &&
-         isEmpty(Tick.current.buildings[building.type].output))
-   ) {
+   if (building == null || isEmpty(getBuildingIO(xy, "output", {}, gameState))) {
       return null;
    }
    if (!gameState.features.BuildingProductionPriority) {

@@ -15,8 +15,8 @@ export function PlayerTradeBuildingBody({ gameState, xy }: IBuildingComponentPro
          <ResourceImportComponent gameState={gameState} xy={xy} />
          <BuildingWorkerComponent gameState={gameState} xy={xy} />
          <BuildingProductionPriorityComponent gameState={gameState} xy={xy} />
-         <BuildingSellComponent gameState={gameState} xy={xy} />
          <BuildingColorComponent gameState={gameState} xy={xy} />
+         <BuildingSellComponent gameState={gameState} xy={xy} />
       </div>
    );
 }

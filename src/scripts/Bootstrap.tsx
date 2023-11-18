@@ -20,11 +20,14 @@ import { connectWebSocket } from "./rpc/RPCClient";
 import { Grid } from "./scenes/Grid";
 import { WorldScene } from "./scenes/WorldScene";
 import { checkSteamBranch } from "./SteamTesting";
-import { forEach, isNullOrUndefined } from "./utilities/Helper";
+import { showModal, showToast } from "./ui/GlobalModal";
+import { OfflineProductionModal } from "./ui/OfflineProductionModal";
+import { forEach, isNullOrUndefined, rejectIn } from "./utilities/Helper";
 import Actions from "./utilities/pixi-actions/Actions";
 import { SceneManager, Textures } from "./utilities/SceneManager";
 import { initializeSingletons, ISpecialBuildings, RouteTo, Singleton } from "./utilities/Singleton";
 import { TypedEvent } from "./utilities/TypedEvent";
+import { playError } from "./visuals/Sound";
 
 export async function startGame(
    app: Application,
@@ -68,7 +71,20 @@ export async function startGame(
    });
 
    // ========== Connect to server ==========
-   await connectWebSocket();
+   try {
+      const offlineTime = await Promise.race([connectWebSocket(), rejectIn<number>(5, "Connection Timeout")]);
+      if (offlineTime > 60) {
+         const before = JSON.parse(JSON.stringify(gameState));
+         for (let i = 0; i < offlineTime; i++) {
+            tickEverySecond(gameState);
+         }
+         const after = JSON.parse(JSON.stringify(gameState));
+         showModal(<OfflineProductionModal before={before} after={after} time={offlineTime} />);
+      }
+   } catch (error) {
+      playError();
+      showToast(String(error));
+   }
 
    // We tick first before loading scene, making sure city-specific overrides are applied!
    tickEverySecond(gameState);

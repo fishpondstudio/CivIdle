@@ -3,6 +3,7 @@ import warning from "../../images/warning.png";
 import { notifyGameStateUpdate } from "../Global";
 import {
    applyToAllBuildings,
+   getBuildingIO,
    getBuildingName,
    getMultipliersFor,
    getResourceName,
@@ -13,7 +14,7 @@ import { formatPercent, isEmpty } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
 import { playClick } from "../visuals/Sound";
 import { IBuildingComponentProps } from "./BuildingPage";
-import { fmtNumber } from "./HelperComponents";
+import { fmtNumber, FormatNumber } from "./HelperComponents";
 
 export function BuildingWorkerComponent({ gameState, xy }: IBuildingComponentProps) {
    const workersRequired = getWorkersFor(xy, { exclude: { Worker: true } }, gameState);
@@ -21,7 +22,7 @@ export function BuildingWorkerComponent({ gameState, xy }: IBuildingComponentPro
    if (building == null) {
       return null;
    }
-   if (isEmpty(Tick.current.buildings[building.type].input) && isEmpty(Tick.current.buildings[building.type].output)) {
+   if (isEmpty(getBuildingIO(xy, "input", {}, gameState)) && isEmpty(getBuildingIO(xy, "output", {}, gameState))) {
       return null;
    }
    const showWarning = Tick.current.notProducingReasons[xy] === "NotEnoughWorkers";
@@ -61,16 +62,22 @@ export function BuildingWorkerComponent({ gameState, xy }: IBuildingComponentPro
                      <div className={classNames({ f1: true, "production-warning": showWarning })}>
                         {t(L.WorkersRequiredOutput)}
                      </div>
-                     <div className="text-strong">{Tick.current.workersAssignment[xy] ?? 0}</div>
+                     <div className="text-strong">
+                        <FormatNumber value={Tick.current.workersAssignment[xy] ?? 0} />
+                     </div>
                   </summary>
                   <ul>
                      <li className="row">
                         <div className="f1">{t(L.WorkersRequiredBeforeMultiplier)}</div>
-                        <div>{workersRequired.rawOutput}</div>
+                        <div>
+                           <FormatNumber value={workersRequired.rawOutput} />
+                        </div>
                      </li>
                      <li className="row">
                         <div className="f1">{t(L.WorkersRequiredAfterMultiplier)}</div>
-                        <div>{workersRequired.output}</div>
+                        <div>
+                           <FormatNumber value={workersRequired.output} />
+                        </div>
                      </li>
                   </ul>
                </details>

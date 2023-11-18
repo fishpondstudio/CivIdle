@@ -331,7 +331,11 @@ function tileTile(xy: string, gs: GameState): void {
       const market = building as IMarketBuildingData;
       let totalBought = 0;
       forEach(market.sellResources, (res) => {
-         const amount = clamp(building.level * totalMultiplierFor(xy, "output", gs), 0, building.resources[res] ?? 0);
+         const amount = clamp(
+            building.capacity * building.level * totalMultiplierFor(xy, "output", gs),
+            0,
+            building.resources[res] ?? 0
+         );
          const buyResource = market.availableResources[res]!;
          const buyAmount = (amount * getMarketPrice(res, xy, gs)) / getMarketPrice(buyResource, xy, gs);
          if (used - amount + buyAmount > total) {

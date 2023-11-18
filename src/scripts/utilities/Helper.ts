@@ -384,7 +384,7 @@ export function resolveIn<T>(seconds: number, result: T): Promise<T> {
    });
 }
 
-export function rejectIn(seconds: number, reason = "Timeout"): Promise<void> {
+export function rejectIn<T>(seconds: number, reason = "Timeout"): Promise<T> {
    return new Promise((resolve, reject) => {
       setTimeout(() => reject(new Error(reason)), seconds * 1000);
    });

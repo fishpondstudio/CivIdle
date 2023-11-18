@@ -38,6 +38,7 @@ export async function changeHandle(newHandle: string) {
    }
 }
 
+export const OnOfflineTime = new TypedEvent<number>();
 export const OnUserChanged = new TypedEvent<IUser | null>();
 export const OnChatMessage = new TypedEvent<IChat[]>();
 export const OnTradeMessage = new TypedEvent<IClientTrade[]>();
@@ -87,7 +88,7 @@ const rpcRequests: Record<number, { resolve: Function; reject: Function; time: n
 
 let steamTicket: string | null = null;
 
-export async function connectWebSocket() {
+export async function connectWebSocket(): Promise<number> {
    if (isSteam()) {
       if (!steamTicket) {
          steamTicket = await SteamClient.getAuthSessionTicket();
@@ -100,7 +101,7 @@ export async function connectWebSocket() {
    }
 
    if (!ws) {
-      return;
+      return Promise.reject("Failed to initialize WebSocket");
    }
 
    ws.binaryType = "arraybuffer";
@@ -127,6 +128,7 @@ export async function connectWebSocket() {
          case MessageType.Welcome:
             const w = message as IWelcomeMessage;
             user = w.user;
+            OnOfflineTime.emit(w.offlineTime);
             OnUserChanged.emit(user);
             getGameOptions().token = w.user.token;
             saveGame();
@@ -185,6 +187,10 @@ export async function connectWebSocket() {
       OnUserChanged.emit(user);
       setTimeout(connectWebSocket, Math.min(++reconnect * 1000, 5000));
    };
+
+   return new Promise<number>((resolve, reject) => {
+      OnOfflineTime.once((e) => resolve(e));
+   });
 }
 
 function handleRpcResponse(response: any) {

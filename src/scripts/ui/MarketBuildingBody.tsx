@@ -1,5 +1,5 @@
 import { notifyGameStateUpdate } from "../Global";
-import { getMarketPrice } from "../logic/BuildingLogic";
+import { getMarketPrice, totalMultiplierFor } from "../logic/BuildingLogic";
 import { Config } from "../logic/Constants";
 import { Tick } from "../logic/TickLogic";
 import { IMarketBuildingData } from "../logic/Tile";
@@ -23,6 +23,7 @@ export function MarketBuildingBody({ gameState, xy }: IBuildingComponentProps) {
       return null;
    }
    const market = building as IMarketBuildingData;
+   const capacity = building.capacity * building.level * totalMultiplierFor(xy, "output", gameState);
    return (
       <div className="window-body">
          <fieldset>
@@ -37,7 +38,9 @@ export function MarketBuildingBody({ gameState, xy }: IBuildingComponentProps) {
             <table>
                <thead>
                   <tr>
-                     <th></th>
+                     <th>
+                        <FormatNumber value={capacity} />x
+                     </th>
                      <th className="right">{t(L.MarketYouGet)}</th>
                      <th className="right">{t(L.Storage)}</th>
                      <th style={{ width: 0 }}>{t(L.MarketSell)}</th>
@@ -53,7 +56,7 @@ export function MarketBuildingBody({ gameState, xy }: IBuildingComponentProps) {
                         }
                         const buyResource = market.availableResources[res]!;
                         const buyAmount = round(
-                           getMarketPrice(res, xy, gameState) / getMarketPrice(buyResource, xy, gameState),
+                           (capacity * getMarketPrice(res, xy, gameState)) / getMarketPrice(buyResource, xy, gameState),
                            1
                         );
                         return (

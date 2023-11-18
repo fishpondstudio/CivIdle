@@ -9,7 +9,7 @@ export interface Disposable {
 /** passes through events as they happen. You will not get events from before you start listening */
 export class TypedEvent<T> {
    private listeners: Listener<T>[] = [];
-   private listenersOncer: Listener<T>[] = [];
+   private listenersOnce: Listener<T>[] = [];
 
    on = (listener: Listener<T>): Disposable => {
       this.listeners.push(listener);
@@ -19,7 +19,7 @@ export class TypedEvent<T> {
    };
 
    once = (listener: Listener<T>): void => {
-      this.listenersOncer.push(listener);
+      this.listenersOnce.push(listener);
    };
 
    off = (listener: Listener<T>) => {
@@ -32,9 +32,9 @@ export class TypedEvent<T> {
       this.listeners.forEach((listener) => listener(event));
 
       /** Clear the `once` queue */
-      if (this.listenersOncer.length > 0) {
-         const toCall = this.listenersOncer;
-         this.listenersOncer = [];
+      if (this.listenersOnce.length > 0) {
+         const toCall = this.listenersOnce;
+         this.listenersOnce = [];
          toCall.forEach((listener) => listener(event));
       }
    };

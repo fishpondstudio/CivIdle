@@ -5,6 +5,18 @@ interface PatchNote {
 
 export const PatchNotes: PatchNote[] = [
    {
+      version: "0.1.71",
+      content: [
+         [
+            "Feature",
+            "Offline production is here: now your production will fully simulate while you are offline. Offline production will start to count after you are offline for more than 1 minute. You need to be able to connect to the server to claim offline production",
+         ],
+         ["QoL", "Market now allows setting production capacity"],
+         ["QoL", "Market now shows the actual amount per cycle, instead of just exchange rate"],
+         ["Bugfix", "Fix market not showing stockpile sliders"],
+      ],
+   },
+   {
       version: "0.1.67",
       content: [
          [
