@@ -195,7 +195,7 @@ export class TechDefinitions {
       name: () => t(L.Engineering),
       column: 6,
       requireTech: ["Shamanism", "Construction"],
-      unlockBuilding: ["Armory"],
+      unlockBuilding: ["Armory", "LighthouseOfAlexandria"],
    };
 
    PreciousMetal: ITechDefinition = {

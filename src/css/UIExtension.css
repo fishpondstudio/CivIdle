@@ -238,6 +238,11 @@ fieldset .separator {
    align-items: center;
 }
 
+.column {
+   display: flex;
+   flex-direction: column;
+}
+
 .col {
    display: flex;
    flex-direction: column;
@@ -374,8 +379,8 @@ ul.tree-view > li:first-child {
 
 .table-view {
    background: #fff;
-   box-shadow: inset -1px -1px #fff, inset 1px 1px grey, inset -2px -2px #dfdfdf, inset 2px 2px #404040;
-   padding: 2px;
+   /* box-shadow: inset -1px -1px #fff, inset 1px 1px grey, inset -2px -2px #dfdfdf, inset 2px 2px #404040; */
+   border: 2px inset rgb(192, 192, 192);
 }
 
 .table-view table {
@@ -390,6 +395,16 @@ ul.tree-view > li:first-child {
    box-shadow: inset -1px -1px #404040, inset 1px 1px #fff, inset -2px -2px grey, inset 2px 2px #dfdfdf;
 }
 
+.table-view.sticky-header {
+   overflow: auto;
+}
+
+.table-view.sticky-header th {
+   position: sticky;
+   top: 0;
+   z-index: 1;
+}
+
 .table-view th.text-right {
    text-align: right;
 }
@@ -402,6 +417,10 @@ ul.tree-view > li:first-child {
 
 .table-view tr:nth-child(even) {
    background: #efefef;
+}
+
+.table-view tr:hover {
+   background: #ffc;
 }
 
 .table-view tr.selected {

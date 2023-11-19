@@ -5,6 +5,14 @@ interface PatchNote {
 
 export const PatchNotes: PatchNote[] = [
    {
+      version: "0.1.73",
+      content: [
+         ["Bugfix", "Fix transport amount is incorrect when a building does not have enough resources"],
+         ["QoL", "Redesign building list page: now showing building input and output"],
+         ["Content", "New Wonder: Lighthouse Of Alexandria"],
+      ],
+   },
+   {
       version: "0.1.72",
       content: [
          ["Bugfix", "Fix Temple of Heaven not providing boost"],

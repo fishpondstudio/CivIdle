@@ -128,6 +128,15 @@ export function onBuildingProductionComplete(xy: string, gs: GameState) {
          });
          break;
       }
+      case "LighthouseOfAlexandria": {
+         grid.getNeighbors(xyToPoint(xy)).forEach((neighbor) => {
+            safePush(Tick.next.tileMultipliers, pointToXy(neighbor), {
+               storage: 5,
+               source: buildingName,
+            });
+         });
+         break;
+      }
       case "ColossusOfRhodes": {
          let happiness = 0;
          grid.getNeighbors(xyToPoint(xy)).forEach((neighbor) => {

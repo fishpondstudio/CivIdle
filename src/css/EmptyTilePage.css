@@ -1,0 +1,10 @@
+.building-list table tbody tr {
+   height: 40px;
+}
+.building-list th {
+   position: sticky;
+}
+
+.building-list {
+   overflow-y: auto;
+}

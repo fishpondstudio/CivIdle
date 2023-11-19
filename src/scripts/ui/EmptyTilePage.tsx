@@ -1,4 +1,5 @@
 import { useState } from "react";
+import "../../css/EmptyTilePage.css";
 import { Building } from "../definitions/BuildingDefinitions";
 import { notifyGameStateUpdate, useGameState } from "../Global";
 import { getBuildingCost, isWorldOrNaturalWonder } from "../logic/BuildingLogic";
@@ -7,7 +8,16 @@ import { getTypeBuildings, unlockedBuildings } from "../logic/IntraTickCache";
 import { useShortcut } from "../logic/Shortcut";
 import { Tick } from "../logic/TickLogic";
 import { ITileData, makeBuilding } from "../logic/Tile";
-import { jsxMapOf, keysOf, numberToRoman, setContains, sizeOf } from "../utilities/Helper";
+import {
+   formatNumber,
+   isEmpty,
+   jsxMapOf,
+   keysOf,
+   mapOf,
+   numberToRoman,
+   setContains,
+   sizeOf,
+} from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
 import { MenuComponent } from "./MenuComponent";
 
@@ -34,7 +44,7 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): JSX.Element {
             <div className="title-bar-text">{t(L.Tile)}</div>
          </div>
          <MenuComponent />
-         <div className="window-body">
+         <div className="window-body" style={{ display: "flex", flexDirection: "column" }}>
             <fieldset>
                <legend>{t(L.Deposit)}</legend>
                {jsxMapOf(
@@ -61,12 +71,12 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): JSX.Element {
                   onChange={(e) => setFilter(e.target.value)}
                />
             </fieldset>
-            <div className="table-view">
+            <div className="table-view sticky-header building-list f1">
                <table>
                   <thead>
                      <tr>
-                        <th>{t(L.BuildingName)}</th>
                         <th className="text-center">{t(L.BuildingTier)}</th>
+                        <th>{t(L.BuildingName)}</th>
                         <th className="right">{t(L.BuildingCost)}</th>
                         <th />
                      </tr>
@@ -101,23 +111,12 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): JSX.Element {
                                     e.stopPropagation();
                                  }}
                               >
-                                 <td>
-                                    <div className="row">
-                                       <div>{building.name()}</div>
-                                       {building.deposit && setContains(tile.deposit, building.deposit) ? (
-                                          <div className="m-icon small text-orange ml5">stars</div>
-                                       ) : null}
-                                       {k === lastBuild ? (
-                                          <div className="m-icon small text-orange ml5">replay</div>
-                                       ) : null}
-                                    </div>
-                                 </td>
-                                 <td className="text-center">
+                                 <td className="text-center text-strong">
                                     {(building?.max ?? Infinity) <= 1 ? (
                                        <div
                                           className="m-icon small"
                                           aria-label={building.desc?.()}
-                                          data-balloon-pos="up"
+                                          data-balloon-pos="right"
                                           data-balloon-text="left"
                                           data-balloon-length="large"
                                        >
@@ -127,11 +126,42 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): JSX.Element {
                                        numberToRoman(Config.BuildingTier[k] ?? 1)
                                     )}
                                  </td>
+                                 <td>
+                                    <div className="row text-strong">
+                                       <div>{building.name()}</div>
+                                       {building.deposit && setContains(tile.deposit, building.deposit) ? (
+                                          <div className="m-icon small text-orange ml5">stars</div>
+                                       ) : null}
+                                       {k === lastBuild ? (
+                                          <div className="m-icon small text-orange ml5">replay</div>
+                                       ) : null}
+                                    </div>
+                                    <div className="row text-small text-desc">
+                                       {isEmpty(building.input) ? null : (
+                                          <div className="m-icon small mr2">exit_to_app</div>
+                                       )}
+                                       {mapOf(
+                                          building.input,
+                                          (res, amount) =>
+                                             `${Tick.current.resources[res].name()} x${formatNumber(amount)}`
+                                       ).join(", ")}
+                                    </div>
+                                    <div className="row text-small text-desc">
+                                       {isEmpty(building.output) ? null : (
+                                          <div className="m-icon small mr2">output</div>
+                                       )}
+                                       {mapOf(
+                                          building.output,
+                                          (res, amount) =>
+                                             `${Tick.current.resources[res].name()} x${formatNumber(amount)}`
+                                       ).join(", ")}
+                                    </div>
+                                 </td>
                                  <td className="right text-small">
                                     {jsxMapOf(buildCost, (res, amount) => {
                                        return (
-                                          <div key={res}>
-                                             {Tick.current.resources[res].name()} x{amount}
+                                          <div className="nowrap" key={res}>
+                                             {Tick.current.resources[res].name()} x{formatNumber(amount)}
                                           </div>
                                        );
                                     })}

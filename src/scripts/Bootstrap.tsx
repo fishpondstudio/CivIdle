@@ -134,6 +134,7 @@ function findSpecialBuildings(gameState: GameState): Partial<Record<Building, IT
          buildings.Headquarter = tile;
       }
    });
+   console.assert(buildings.Headquarter, "Should fine 1 Headquarter");
    return buildings;
 }
 

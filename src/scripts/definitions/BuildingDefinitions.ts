@@ -478,6 +478,8 @@ export class BuildingDefinitions {
       input: {},
       output: {},
       max: 1,
+      construction: { Iron: 100, Marble: 100, Tool: 100 },
+      special: BuildingSpecial.WorldWonder,
       wikipedia: "Lighthouse_of_Alexandria",
    };
 

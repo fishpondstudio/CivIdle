@@ -33,7 +33,7 @@ export function StatisticsBuildingBody({ gameState, xy }: IBuildingComponentProp
       content = <TransportationTab gameState={gameState} xy={xy} />;
    }
    return (
-      <div className="window-body">
+      <div className="window-body column">
          <menu role="tablist">
             <button
                onClick={() => setCurrentTab("resources")}
@@ -62,8 +62,8 @@ export function StatisticsBuildingBody({ gameState, xy }: IBuildingComponentProp
 
 function BuildingTab({ gameState }: IBuildingComponentProps) {
    return (
-      <article role="tabpanel">
-         <div className="table-view">
+      <article role="tabpanel" className="f1" style={{ padding: "8px", overflow: "auto" }}>
+         <div className="table-view sticky-header" style={{ height: "100%" }}>
             <table>
                <thead>
                   <tr>
@@ -148,8 +148,8 @@ function BuildingTab({ gameState }: IBuildingComponentProps) {
 
 function TransportationTab({ gameState }: IBuildingComponentProps) {
    return (
-      <article role="tabpanel">
-         <div className="table-view">
+      <article role="tabpanel" className="f1" style={{ padding: "8px", overflow: "auto" }}>
+         <div className="table-view sticky-header" style={{ height: "100%" }}>
             <table>
                <thead>
                   <tr>
@@ -219,7 +219,7 @@ function ResourcesTab({ gameState }: IBuildingComponentProps) {
       forEach(output, (res, amount) => safeAdd(outputs, res, amount));
    });
    return (
-      <article role="tabpanel">
+      <article role="tabpanel" className="f1 column" style={{ padding: "8px", overflow: "auto" }}>
          <fieldset>
             <div className="row">
                <div className="f1">{t(L.ShowTheoreticalValue)}</div>
@@ -241,7 +241,7 @@ function ResourcesTab({ gameState }: IBuildingComponentProps) {
                </div>
             </div>
          </fieldset>
-         <div className="table-view">
+         <div className="table-view sticky-header f1">
             <table>
                <thead>
                   <tr>

@@ -433,7 +433,7 @@ export function transportResource(
          }
          if (building.resources[res]! >= amountLeft) {
             const fuelAmount = Math.ceil(amountLeft / workerCapacity);
-            if (tryAddTransportation(res, amount, "Worker", fuelAmount, fromXy, targetXy, gs)) {
+            if (tryAddTransportation(res, amountLeft, "Worker", fuelAmount, fromXy, targetXy, gs)) {
                building.resources[res]! -= amountLeft;
                amountLeft = 0;
                // break;
@@ -443,9 +443,10 @@ export function transportResource(
                return false;
             }
          } else {
-            const fuelAmount = Math.ceil(building.resources[res]! / workerCapacity);
-            if (tryAddTransportation(res, amount, "Worker", fuelAmount, fromXy, targetXy, gs)) {
-               amountLeft -= building.resources[res]!;
+            const amountToTransport = building.resources[res]!;
+            const fuelAmount = Math.ceil(amountToTransport / workerCapacity);
+            if (tryAddTransportation(res, amountToTransport, "Worker", fuelAmount, fromXy, targetXy, gs)) {
+               amountLeft -= amountToTransport;
                building.resources[res] = 0;
             }
             // continue
