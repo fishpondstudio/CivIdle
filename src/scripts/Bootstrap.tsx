@@ -21,6 +21,7 @@ import { Grid } from "./scenes/Grid";
 import { WorldScene } from "./scenes/WorldScene";
 import { checkSteamBranch } from "./SteamTesting";
 import { showModal, showToast } from "./ui/GlobalModal";
+import { LoadingPage, LoadingPageStage } from "./ui/LoadingPage";
 import { OfflineProductionModal } from "./ui/OfflineProductionModal";
 import { forEach, isNullOrUndefined, rejectIn } from "./utilities/Helper";
 import Actions from "./utilities/pixi-actions/Actions";
@@ -38,29 +39,28 @@ export async function startGame(
    const routeTo: RouteTo = (component, params) => routeChanged.emit({ component, params });
 
    // ========== Load game data ==========
+   routeTo(LoadingPage, { stage: LoadingPageStage.LoadSave });
+
    let isNewPlayer = false;
    const data = await loadGame();
-   if (data && (await isGameDataCompatible(data, routeTo))) {
+   if (data && isGameDataCompatible(data, routeTo)) {
       // Nothing to do yet
    } else {
       isNewPlayer = true;
    }
 
    // ========== Game data is loaded ==========
-
+   routeTo(LoadingPage, { stage: LoadingPageStage.CheckSave });
    const gameState = getGameState();
-
    verifyBuildingConfig(textures, gameState.city);
-
    const size = Config.City[gameState.city].size;
    const grid = new Grid(size, size, 64);
-
    if (isNewPlayer) {
       initializeGameState(gameState, grid);
    }
 
    // ========== Game state is initialized ==========
-
+   routeTo(LoadingPage, { stage: LoadingPageStage.CheckSave });
    syncUITheme(getGameOptions());
    calculateTierAndPrice(gameState);
    initializeSingletons({
@@ -71,8 +71,11 @@ export async function startGame(
    });
 
    // ========== Connect to server ==========
+   routeTo(LoadingPage, { stage: LoadingPageStage.SteamSignIn });
+   const TIMEOUT = import.meta.env.DEV ? 1 : 5;
    try {
-      const offlineTime = await Promise.race([connectWebSocket(), rejectIn<number>(5, "Connection Timeout")]);
+      const offlineTime = await Promise.race([connectWebSocket(), rejectIn<number>(TIMEOUT, "Connection Timeout")]);
+      routeTo(LoadingPage, { stage: LoadingPageStage.OfflineProduction });
       if (offlineTime >= 60) {
          const before = JSON.parse(JSON.stringify(gameState));
          for (let i = 0; i < offlineTime; i++) {

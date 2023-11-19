@@ -175,21 +175,30 @@ interface IStorageResult {
    used: number;
 }
 
+// 1 hour
+const STORAGE_TO_PRODUCTION = 3600;
+
 export function getStorageFor(xy: string, gs: GameState): IStorageResult {
    const accumulate = (prev: number, k: Resource, v: number): number => {
       return isTransportable(k) ? prev + v : prev;
    };
    const building = gs.tiles[xy].building;
    const used = reduceOf(building?.resources, accumulate, 0);
+   const multiplier = totalMultiplierFor(xy, "storage", gs);
 
    if (building?.type == "Caravansary" || building?.type == "Market") {
-      return { base: building.level * 1000, multiplier: 1, total: building.level * 1000, used };
+      const base = building.level * STORAGE_TO_PRODUCTION * 10;
+      return {
+         base,
+         multiplier,
+         total: base * multiplier,
+         used,
+      };
    }
 
    const base =
-      100 * reduceOf(getBuildingIO(xy, "input", {}, gs), accumulate, 0) +
-      1000 * reduceOf(getBuildingIO(xy, "output", {}, gs), accumulate, 0);
-   const multiplier = totalMultiplierFor(xy, "storage", gs);
+      60 * reduceOf(getBuildingIO(xy, "input", { multiplier: true }, gs), accumulate, 0) +
+      STORAGE_TO_PRODUCTION * reduceOf(getBuildingIO(xy, "output", { multiplier: true }, gs), accumulate, 0);
 
    return { base, multiplier, total: base * multiplier, used };
 }
@@ -419,8 +428,14 @@ export function getWarehouseCapacity(building: IHaveTypeAndLevel): number {
    return building.level * 10;
 }
 
-export function getBuilderCapacity(building: IHaveTypeAndLevel): { multiplier: number; base: number; total: number } {
-   const builder = sum(Tick.current.globalMultipliers.builderCapacity, "value");
+export function getBuilderCapacity(
+   building: IHaveTypeAndLevel,
+   xy: string,
+   gs: GameState
+): { multiplier: number; base: number; total: number } {
+   const builder =
+      sum(Tick.current.globalMultipliers.builderCapacity, "value") +
+      sumMultipliers(getMultipliersFor(xy, gs), "worker");
    let baseCapacity = building.level;
    if (isWorldWonder(building.type)) {
       const tech = getBuildingUnlockTech(building.type);

@@ -1,6 +1,7 @@
 import { DependencyList, useEffect } from "react";
 import { getGameOptions } from "../Global";
 import { L, t } from "../utilities/i18n";
+import { TypedEvent } from "../utilities/TypedEvent";
 
 export const ShortcutScopes = {
    BuildingPage: () => t(L.ShortcutScopeBuildingPage),
@@ -34,6 +35,10 @@ export interface IShortcutConfig {
    meta: boolean;
 }
 
+const OnKeydown = new TypedEvent<KeyboardEvent>();
+
+document.addEventListener("keydown", OnKeydown.emit);
+
 export function useShortcut(shortcut: Shortcut, callback: () => void, deps?: DependencyList) {
    useEffect(() => {
       const handler = (e: KeyboardEvent) => {
@@ -45,9 +50,9 @@ export function useShortcut(shortcut: Shortcut, callback: () => void, deps?: Dep
             callback();
          }
       };
-      document.addEventListener("keydown", handler);
+      OnKeydown.on(handler);
       return () => {
-         document.removeEventListener("keydown", handler);
+         OnKeydown.off(handler);
       };
    }, deps);
 }

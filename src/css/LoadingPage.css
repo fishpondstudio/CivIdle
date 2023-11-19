@@ -44,3 +44,7 @@
    margin: 0 0 20px 0;
    display: block;
 }
+
+.loading-page > .row {
+   width: 600px;
+}

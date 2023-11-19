@@ -7,7 +7,7 @@ import { ITileData } from "../logic/Tile";
 import { Singleton } from "../utilities/Singleton";
 import { DefaultBuildingBody } from "./DefaultBuildingBody";
 import { HeadquarterBuildingBody } from "./HeadquarterBuildingBody";
-import { LoadingPage } from "./LoadingPage";
+import { LoadingPage, LoadingPageStage } from "./LoadingPage";
 import { MarketBuildingBody } from "./MarketBuildingBody";
 import { MenuComponent } from "./MenuComponent";
 import { PlayerTradeBuildingBody } from "./PlayerTradeBuildingBody";
@@ -22,7 +22,7 @@ const BuildingBodyOverride: Partial<Record<Building, FunctionComponent<IBuilding
 
 export function BuildingPage({ tile }: { tile: ITileData }): JSX.Element | null {
    if (tile.building == null) {
-      Singleton().routeTo(LoadingPage, {});
+      Singleton().routeTo(LoadingPage, { stage: LoadingPageStage.LoadSave });
       return null;
    }
    const building = tile.building;

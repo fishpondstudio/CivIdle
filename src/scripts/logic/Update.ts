@@ -203,7 +203,7 @@ function tileTile(xy: string, gs: GameState): void {
       const cost = getBuildingCost(building);
       let completed = true;
       forEach(cost, (res, amount) => {
-         const { total } = getBuilderCapacity(building);
+         const { total } = getBuilderCapacity(building, xy, gs);
          const amountArrived = building.resources[res] ?? 0;
          if (amountArrived >= amount) {
             // continue;

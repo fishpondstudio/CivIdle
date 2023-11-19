@@ -3,7 +3,7 @@ import { GameOptions, GameState, initializeGameState, SavedGame } from "./logic/
 import { makeBuilding } from "./logic/Tile";
 import { isSteam, SteamClient } from "./rpc/SteamClient";
 import { Grid } from "./scenes/Grid";
-import { LoadingPage } from "./ui/LoadingPage";
+import { ErrorPage } from "./ui/ErrorPage";
 import { idbGet, idbSet } from "./utilities/BrowserStorage";
 import { forEach } from "./utilities/Helper";
 import { makeObservableHook } from "./utilities/Hook";
@@ -97,43 +97,38 @@ export function saveGame() {
 }
 
 export async function loadGame(): Promise<SavedGame | undefined> {
-   if (isSteam()) {
-      try {
+   try {
+      if (isSteam()) {
          return JSON.parse(await SteamClient.fileRead(SAVE_KEY)) as SavedGame;
-      } catch (e) {
-         console.warn("loadGame failed", e);
       }
-      return;
+      return await idbGet<SavedGame>(SAVE_KEY);
+   } catch (e) {
+      console.warn("loadGame failed", e);
    }
-   return await idbGet<SavedGame>(SAVE_KEY);
 }
 
-export function isGameDataCompatible(gs: SavedGame, routeTo: RouteTo): Promise<boolean> {
-   return new Promise((resolve, reject) => {
-      if (savedGame.options.version !== gs.options.version) {
-         playError();
-         routeTo(LoadingPage, {
-            message: {
-               content: (
-                  <>
-                     Error: Your save is incompatible
-                     <br />
-                     Press F to WIPE and continue
-                  </>
-               ),
-               continue: () => {
-                  resolve(false);
-               },
-            },
-         });
-      } else {
-         migrateSavedGame(gs);
-         Object.assign(savedGame.current, gs.current);
-         gs.options.themeColors = Object.assign(savedGame.options.themeColors, gs.options.themeColors);
-         Object.assign(savedGame.options, gs.options);
-         resolve(true);
-      }
-   });
+export function isGameDataCompatible(gs: SavedGame, routeTo: RouteTo): boolean {
+   if (savedGame.options.version !== gs.options.version) {
+      playError();
+      routeTo(ErrorPage, {
+         content: (
+            <>
+               <div className="title">Save File Incompatible</div>
+               <div>
+                  Your currently save file is not compatible with the game version. You need to delete your old save and
+                  restart the game.
+               </div>
+            </>
+         ),
+      });
+      return false;
+   } else {
+      migrateSavedGame(gs);
+      Object.assign(savedGame.current, gs.current);
+      gs.options.themeColors = Object.assign(savedGame.options.themeColors, gs.options.themeColors);
+      Object.assign(savedGame.options, gs.options);
+      return true;
+   }
 }
 
 export function notifyGameStateUpdate(gameState?: GameState): void {

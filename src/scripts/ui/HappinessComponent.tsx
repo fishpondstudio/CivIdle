@@ -1,6 +1,6 @@
 import classNames from "classnames";
 import { getHappinessIcon, HappinessNames, HAPPINESS_MULTIPLIER } from "../logic/HappinessLogic";
-import { useCurrentTick } from "../logic/TickLogic";
+import { Tick, useCurrentTick } from "../logic/TickLogic";
 import { formatPercent, jsxMapOf } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
 import { FormatNumber } from "./HelperComponents";
@@ -53,6 +53,16 @@ export function HappinessComponent() {
                               <div className="f1">{HappinessNames[type]()}</div>
                               <div className="text-green">
                                  +<FormatNumber value={value} />
+                              </div>
+                           </li>
+                        );
+                     })}
+                     {Tick.current.globalMultipliers.happiness.map((m) => {
+                        return (
+                           <li className="row" key={m.source}>
+                              <div className="f1">{m.source}</div>
+                              <div className="text-green">
+                                 +<FormatNumber value={m.value} />
                               </div>
                            </li>
                         );

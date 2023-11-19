@@ -128,8 +128,19 @@ export function onBuildingProductionComplete(xy: string, gs: GameState) {
          });
          break;
       }
+      case "ColossusOfRhodes": {
+         let happiness = 0;
+         grid.getNeighbors(xyToPoint(xy)).forEach((neighbor) => {
+            const building = gs.tiles[pointToXy(neighbor)].building;
+            if (building && !Tick.current.buildings[building.type].output.Worker) {
+               happiness++;
+            }
+         });
+         Tick.next.globalMultipliers.happiness.push({ value: happiness, source: buildingName });
+         break;
+      }
       case "TempleOfHeaven": {
-         forEach(getXyBuildings(gs), (xy, tile) => {
+         forEach(getXyBuildings(gs), (xy, building) => {
             if (building.level >= 10) {
                safePush(Tick.next.tileMultipliers, xy, {
                   worker: 1,

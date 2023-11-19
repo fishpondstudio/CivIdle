@@ -37,12 +37,12 @@ if (!import.meta.env.DEV) {
 
    console.warn = (...args) => {
       consoleWarn.apply(this, args);
-      Sentry.captureMessage(JSON.stringify(args), "warning");
+      Sentry.captureMessage(args.map((a) => JSON.stringify(a)).join(" "), "warning");
    };
 
    console.error = (...args) => {
       consoleError.apply(this, args);
-      Sentry.captureMessage(JSON.stringify(args), "error");
+      Sentry.captureMessage(args.map((a) => JSON.stringify(a)).join(" "), "error");
    };
 
    console.log = () => {};

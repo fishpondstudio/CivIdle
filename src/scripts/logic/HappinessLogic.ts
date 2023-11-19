@@ -1,5 +1,5 @@
 import { PartialTabulate } from "../definitions/TypeDefinitions";
-import { clamp, filterOf, forEach, isEmpty, reduceOf, sizeOf } from "../utilities/Helper";
+import { clamp, filterOf, forEach, isEmpty, reduceOf, sizeOf, sum } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
 import { isNaturalWonder, isSpecialBuilding, isWorldWonder } from "./BuildingLogic";
 import { Config } from "./Constants";
@@ -58,7 +58,9 @@ export function calculateHappiness(gs: GameState) {
             filterOf(value, (xy, tile) => {
                return (
                   !isSpecialBuilding(tile.building.type) &&
-                  !Tick.current.notProducingReasons[xy] &&
+                  (!Tick.current.notProducingReasons[xy] ||
+                     Tick.current.notProducingReasons[xy] === "StorageFull" ||
+                     Tick.current.notProducingReasons[xy] === "NotEnoughWorkers") &&
                   tile.building.status === "completed"
                );
             })
@@ -77,7 +79,9 @@ export function calculateHappiness(gs: GameState) {
    };
    const negative: PartialTabulate<HappinessType> = { fromBuildings };
    const value = clamp(
-      reduceOf(positive, (prev, _, value) => prev + value, 0) - reduceOf(negative, (prev, _, value) => prev + value, 0),
+      reduceOf(positive, (prev, _, value) => prev + value, 0) +
+         sum(Tick.current.globalMultipliers.happiness, "value") -
+         reduceOf(negative, (prev, _, value) => prev + value, 0),
       -50,
       50
    );

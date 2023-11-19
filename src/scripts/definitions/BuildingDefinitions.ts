@@ -472,14 +472,14 @@ export class BuildingDefinitions {
       construction: { Stone: 100, Wood: 100, Copper: 100 },
    };
 
-   // LighthouseOfAlexandria: IBuildingDefinition = {
-   //    name: () => t(L.LighthouseOfAlexandria),
-   //    desc: () => t(L.LighthouseOfAlexandriaDesc),
-   //    input: {},
-   //    output: {},
-   //    max: 1,
-   //    wikipedia: "Lighthouse_of_Alexandria",
-   // };
+   LighthouseOfAlexandria: IBuildingDefinition = {
+      name: () => t(L.LighthouseOfAlexandria),
+      desc: () => t(L.LighthouseOfAlexandriaDesc),
+      input: {},
+      output: {},
+      max: 1,
+      wikipedia: "Lighthouse_of_Alexandria",
+   };
 
    PyramidOfGiza: IBuildingDefinition = {
       name: () => t(L.PyramidOfGiza),
@@ -492,15 +492,16 @@ export class BuildingDefinitions {
       wikipedia: "Great_Pyramid_of_Giza",
    };
 
-   // ColossusOfRhodes: IBuildingDefinition = {
-   //    name: () => t(L.ColossusOfRhodes),
-   //    desc: () => t(L.ColossusOfRhodesDesc),
-   //    input: {},
-   //    output: {},
-   //    construction: { Stone: 300 },
-   //    max: 1,
-   //    wikipedia: "Colossus_of_Rhodes",
-   // };
+   ColossusOfRhodes: IBuildingDefinition = {
+      name: () => t(L.ColossusOfRhodes),
+      desc: () => t(L.ColossusOfRhodesDesc),
+      input: {},
+      output: {},
+      construction: { Stone: 300 },
+      max: 1,
+      special: BuildingSpecial.WorldWonder,
+      wikipedia: "Colossus_of_Rhodes",
+   };
 
    HangingGarden: IBuildingDefinition = {
       name: () => t(L.HangingGarden),

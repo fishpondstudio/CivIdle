@@ -2,10 +2,11 @@ import classNames from "classnames";
 import { useState } from "react";
 import { notifyGameStateUpdate } from "../Global";
 import { getBuildingUpgradeCost, getBuildingUpgradeLevels } from "../logic/BuildingLogic";
+import { Config } from "../logic/Constants";
 import {} from "../logic/GameState";
 import { useShortcut } from "../logic/Shortcut";
 import { Tick } from "../logic/TickLogic";
-import { jsxMapOf } from "../utilities/Helper";
+import { jsxMapOf, numberToRoman } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
 import { IBuildingComponentProps } from "./BuildingPage";
 import { FormatNumber } from "./HelperComponents";
@@ -35,6 +36,11 @@ export function BuildingUpgradeComponent({ gameState, xy }: IBuildingComponentPr
             <legend className="text-strong">
                {t(L.Level)} {building.level}
             </legend>
+            <div className="row">
+               <div className="f1"> {t(L.BuildingTier)}</div>
+               <div className="text-strong">{numberToRoman(Config.BuildingTier[building.type]!)}</div>
+            </div>
+            <div className="sep5"></div>
             <div className="row">
                <div className="f1">{t(L.Upgrade)}</div>
                {levels.map((level, index) => (

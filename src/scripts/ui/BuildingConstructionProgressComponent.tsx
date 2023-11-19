@@ -1,4 +1,4 @@
-import { getBuilderCapacity, getBuildingCost, getBuildingPercentage } from "../logic/BuildingLogic";
+import { getBuilderCapacity, getBuildingCost, getBuildingPercentage, getMultipliersFor } from "../logic/BuildingLogic";
 import { Tick } from "../logic/TickLogic";
 import { formatPercent, jsxMapOf } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
@@ -12,7 +12,7 @@ export function BuildingConstructionProgressComponent({ gameState, xy }: IBuildi
    if (!building) {
       return null;
    }
-   const { base, multiplier, total } = getBuilderCapacity(building);
+   const { base, multiplier, total } = getBuilderCapacity(building, xy, gameState);
    const resources = getBuildingCost(building);
    return (
       <fieldset>
@@ -59,6 +59,17 @@ export function BuildingConstructionProgressComponent({ gameState, xy }: IBuildi
                            <li key={value.source} className="text-small row">
                               <div className="f1">{value.source}</div>
                               <div>{value.value}</div>
+                           </li>
+                        );
+                     })}
+                     {getMultipliersFor(xy, gameState).map((value) => {
+                        if (!value.worker) {
+                           return null;
+                        }
+                        return (
+                           <li key={value.source} className="text-small row">
+                              <div className="f1">{value.source}</div>
+                              <div>{value.worker}</div>
                            </li>
                         );
                      })}

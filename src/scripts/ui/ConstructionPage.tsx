@@ -5,12 +5,10 @@ import { WorldScene } from "../scenes/WorldScene";
 import { L, t } from "../utilities/i18n";
 import { Singleton } from "../utilities/Singleton";
 import { BuildingConstructionProgressComponent } from "./BuildingConstructionProgressComponent";
-import { LoadingPage } from "./LoadingPage";
 import { MenuComponent } from "./MenuComponent";
 
 export function ConstructionPage({ tile }: { tile: ITileData }): JSX.Element | null {
    if (tile.building == null) {
-      Singleton().routeTo(LoadingPage, {});
       return null;
    }
    const building = tile.building;

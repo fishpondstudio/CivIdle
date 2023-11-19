@@ -5,11 +5,32 @@ interface PatchNote {
 
 export const PatchNotes: PatchNote[] = [
    {
+      version: "0.1.72",
+      content: [
+         ["Bugfix", "Fix Temple of Heaven not providing boost"],
+         ["QoL", "Rewrite shortcut manager to prevent ghost shortcut"],
+         ["QoL", "Loading page now shows more detailed loading stages"],
+         [
+            "Balance",
+            "Happiness from each working building type now becomes happiness from each well-stocked building type" +
+               " - if a building stopped production because of full storage, it will count when calculating happiness",
+         ],
+         ["Balance", "Decrease base science generation from idle workers from 1 to 0"],
+         ["Balance", "Worker capacity multipliers will applied to builders as well"],
+         ["Balance", "Increase base storage from ~15 min of production to 1 hour of production"],
+         ["Balance", "Base storage calculation now counts production after multipliers"],
+         ["Balance", "Storage of Market and Caravansary is increased. Storage multipliers now apply to both"],
+         ["Content", "New Wonder: Colossus Of Rhodes"],
+      ],
+   },
+   {
       version: "0.1.71",
       content: [
          [
             "Feature",
-            "Offline production is here: now your production will fully simulate while you are offline. Offline production will start to count after you are offline for more than 1 minute. You need to be able to connect to the server to claim offline production",
+            "Offline production is here: now your production will fully simulate while you are offline. " +
+               "Offline production will start to count after you are offline for more than 1 minute. " +
+               "You need to be able to connect to the server to claim offline production",
          ],
          ["QoL", "Market now allows setting production capacity"],
          ["QoL", "Market now shows the actual amount per cycle, instead of just exchange rate"],
