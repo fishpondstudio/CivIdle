@@ -1,5 +1,6 @@
 import { notifyGameStateUpdate } from "../Global";
-import { applyToAllBuildings, getBuildingIO } from "../logic/BuildingLogic";
+import { applyToAllBuildings, IOCalculation } from "../logic/BuildingLogic";
+import { getBuildingIO } from "../logic/IntraTickCache";
 import { Tick } from "../logic/TickLogic";
 import { PRIORITY_MAX, PRIORITY_MIN } from "../logic/Tile";
 import { isEmpty } from "../utilities/Helper";
@@ -9,7 +10,7 @@ import { IBuildingComponentProps } from "./BuildingPage";
 
 export function BuildingProductionPriorityComponent({ gameState, xy }: IBuildingComponentProps) {
    const building = gameState.tiles[xy].building;
-   if (building == null || isEmpty(getBuildingIO(xy, "output", {}, gameState))) {
+   if (building == null || isEmpty(getBuildingIO(xy, "output", IOCalculation.None, gameState))) {
       return null;
    }
    if (!gameState.features.BuildingProductionPriority) {

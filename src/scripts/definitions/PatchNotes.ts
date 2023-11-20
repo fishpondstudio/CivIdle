@@ -5,6 +5,15 @@ interface PatchNote {
 
 export const PatchNotes: PatchNote[] = [
    {
+      version: "0.1.74",
+      content: [
+         [
+            "QoL",
+            "Improve offline earning speed by 2x. But it is still not fast enough when offline time gets very long",
+         ],
+      ],
+   },
+   {
       version: "0.1.73",
       content: [
          ["Bugfix", "Fix transport amount is incorrect when a building does not have enough resources"],

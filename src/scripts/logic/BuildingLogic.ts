@@ -1,4 +1,4 @@
-import { Building, BuildingSpecial, IBuildingDefinition } from "../definitions/BuildingDefinitions";
+import { Building, BuildingSpecial } from "../definitions/BuildingDefinitions";
 import { City } from "../definitions/CityDefinitions";
 import { IResourceDefinition, Resource } from "../definitions/ResourceDefinitions";
 import { PartialTabulate } from "../definitions/TypeDefinitions";
@@ -19,10 +19,10 @@ import { Singleton } from "../utilities/Singleton";
 import { v2 } from "../utilities/Vector2";
 import { Config } from "./Constants";
 import { GameState } from "./GameState";
-import { getBuildingsByType } from "./IntraTickCache";
+import { getBuildingIO, getBuildingsByType } from "./IntraTickCache";
 import { getBuildingUnlockTech } from "./TechLogic";
 import { Multiplier, MultiplierWithSource, Tick } from "./TickLogic";
-import { IBuildingData, IHaveTypeAndLevel, IMarketBuildingData, IResourceImportBuildingData } from "./Tile";
+import { IBuildingData, IHaveTypeAndLevel } from "./Tile";
 
 export function getBuildingTexture(b: Building, textures: Textures, city: City) {
    return textures[`Building${b}_${city}`] ?? textures[`Building${b}`];
@@ -32,61 +32,32 @@ export function getTileTexture(r: Resource, textures: Textures) {
    return textures[`Tile${r}`];
 }
 
-export function totalMultiplierFor(xy: string, type: keyof Multiplier, gs: GameState): number {
-   return 1 + sumMultipliers(getMultipliersFor(xy, gs), type);
+export function totalMultiplierFor(xy: string, type: keyof Multiplier, base: number, gs: GameState): number {
+   let result = base;
+   forEachMultiplier(xy, (m) => (result += m[type] ?? 0), gs);
+   return result;
 }
 
-function sumMultipliers(multipliers: Multiplier[], type: keyof Multiplier): number {
-   return sum(multipliers, type);
+function forEachMultiplier(xy: string, func: (m: MultiplierWithSource) => void, gs: GameState): MultiplierWithSource[] {
+   const result: MultiplierWithSource[] = [];
+   const b = gs.tiles[xy].building;
+   Tick.current.tileMultipliers[xy]?.forEach((m) => func(m));
+   if (b) {
+      Tick.current.buildingMultipliers[b.type]?.forEach((m) => func(m));
+   }
+   return result;
 }
 
 export function getMultipliersFor(xy: string, gs: GameState): MultiplierWithSource[] {
    const result: MultiplierWithSource[] = [];
-   const b = gs.tiles[xy].building;
-   Tick.current.tileMultipliers[xy]?.forEach((m) => result.push(m));
-   if (b) {
-      Tick.current.buildingMultipliers[b.type]?.forEach((m) => result.push(m));
-   }
+   forEachMultiplier(xy, (m) => result.push(m), gs);
    return result;
 }
 
-export type IOCalculations = Partial<Record<"capacity" | "multiplier", true>>;
-
-export function getBuildingIO(
-   xy: string,
-   type: keyof Pick<IBuildingDefinition, "input" | "output">,
-   options: IOCalculations,
-   gs: GameState
-): PartialTabulate<Resource> {
-   const result: PartialTabulate<Resource> = {};
-   const b = gs.tiles[xy].building;
-   if (b) {
-      const resources = { ...Tick.current.buildings[b.type][type] };
-      if ("sellResources" in b && type === "input") {
-         forEach((b as IMarketBuildingData).sellResources, (k) => {
-            resources[k] = 1;
-         });
-      }
-      if ("resourceImports" in b && type === "input") {
-         forEach((b as IResourceImportBuildingData).resourceImports, (k, v) => {
-            result[k] = v.perCycle;
-         });
-         // Resource imports is not affected by multipliers
-         return result;
-      }
-      // Apply multipliers
-      forEach(resources, (k, v) => {
-         let value = v * b.level;
-         if (options.capacity) {
-            value *= b.capacity;
-         }
-         if (options.multiplier) {
-            value *= totalMultiplierFor(xy, type, gs);
-         }
-         safeAdd(result, k, value);
-      });
-   }
-   return result;
+export enum IOCalculation {
+   None = 0,
+   Capacity = 1 << 0,
+   Multiplier = 1 << 1,
 }
 
 export function hasEnoughResources(a: PartialTabulate<Resource>, b: PartialTabulate<Resource>): boolean {
@@ -149,7 +120,7 @@ export function getWorkersFor(
    };
    const b = gs.tiles[xy].building;
    if (b) {
-      forEach(getBuildingIO(xy, "output", { capacity: true }, gs), (k, v) => {
+      forEach(getBuildingIO(xy, "output", IOCalculation.Capacity, gs), (k, v) => {
          if ("include" in filter && k in filter.include) {
             result.rawOutput += v;
             return;
@@ -158,7 +129,7 @@ export function getWorkersFor(
             result.rawOutput += v;
          }
       });
-      result.multiplier = totalMultiplierFor(xy, "worker", gs);
+      result.multiplier = totalMultiplierFor(xy, "worker", 1, gs);
    }
    result.output = Math.ceil(result.rawOutput / result.multiplier);
    return result;
@@ -184,7 +155,7 @@ export function getStorageFor(xy: string, gs: GameState): IStorageResult {
    };
    const building = gs.tiles[xy].building;
    const used = reduceOf(building?.resources, accumulate, 0);
-   const multiplier = totalMultiplierFor(xy, "storage", gs);
+   const multiplier = totalMultiplierFor(xy, "storage", 1, gs);
 
    if (building?.type == "Caravansary" || building?.type == "Market") {
       const base = building.level * STORAGE_TO_PRODUCTION * 10;
@@ -197,8 +168,8 @@ export function getStorageFor(xy: string, gs: GameState): IStorageResult {
    }
 
    const base =
-      60 * reduceOf(getBuildingIO(xy, "input", { multiplier: true }, gs), accumulate, 0) +
-      STORAGE_TO_PRODUCTION * reduceOf(getBuildingIO(xy, "output", { multiplier: true }, gs), accumulate, 0);
+      60 * reduceOf(getBuildingIO(xy, "input", IOCalculation.Multiplier, gs), accumulate, 0) +
+      STORAGE_TO_PRODUCTION * reduceOf(getBuildingIO(xy, "output", IOCalculation.Multiplier, gs), accumulate, 0);
 
    return { base, multiplier, total: base * multiplier, used };
 }
@@ -434,8 +405,7 @@ export function getBuilderCapacity(
    gs: GameState
 ): { multiplier: number; base: number; total: number } {
    const builder =
-      sum(Tick.current.globalMultipliers.builderCapacity, "value") +
-      sumMultipliers(getMultipliersFor(xy, gs), "worker");
+      sum(Tick.current.globalMultipliers.builderCapacity, "value") + totalMultiplierFor(xy, "worker", 0, gs);
    let baseCapacity = building.level;
    if (isWorldWonder(building.type)) {
       const tech = getBuildingUnlockTech(building.type);

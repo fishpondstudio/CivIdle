@@ -21,6 +21,7 @@ interface ITickData {
    workersUsed: PartialTabulate<Resource>;
    workersAssignment: Record<string, number>;
    resourcesByBuilding: Partial<Record<Resource, string[]>>;
+   buildingTransportSources: Record<string, Partial<Record<Resource, string[]>>>;
    playerTradeBuildings: Record<string, IBuildingData>;
    globalMultipliers: GlobalMultipliers;
    notProducingReasons: Record<string, NotProducingReason>;
@@ -53,6 +54,7 @@ export function EmptyTickData(): ITickData {
       globalMultipliers: new GlobalMultipliers(),
       notProducingReasons: {},
       playerTradeBuildings: {},
+      buildingTransportSources: {},
    };
 }
 

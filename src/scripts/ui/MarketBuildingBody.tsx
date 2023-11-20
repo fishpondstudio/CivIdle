@@ -23,7 +23,7 @@ export function MarketBuildingBody({ gameState, xy }: IBuildingComponentProps) {
       return null;
    }
    const market = building as IMarketBuildingData;
-   const capacity = building.capacity * building.level * totalMultiplierFor(xy, "output", gameState);
+   const capacity = building.capacity * building.level * totalMultiplierFor(xy, "output", 1, gameState);
    return (
       <div className="window-body">
          <fieldset>

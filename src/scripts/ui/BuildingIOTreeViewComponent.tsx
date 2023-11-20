@@ -1,8 +1,9 @@
 import classNames from "classnames";
 import warning from "../../images/warning.png";
-import { getBuildingIO, getMultipliersFor, totalMultiplierFor } from "../logic/BuildingLogic";
+import { getMultipliersFor, IOCalculation, totalMultiplierFor } from "../logic/BuildingLogic";
 import { Config } from "../logic/Constants";
 import { GameState } from "../logic/GameState";
+import { getBuildingIO } from "../logic/IntraTickCache";
 import { Multiplier, Tick } from "../logic/TickLogic";
 import { jsxMapOf } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
@@ -17,8 +18,8 @@ export function BuildingIOTreeViewComponent({
    xy: string;
    type: keyof Pick<Multiplier, "input" | "output">;
 }) {
-   const data = getBuildingIO(xy, type, { multiplier: true, capacity: true }, gameState);
-   const totalMultiplier = totalMultiplierFor(xy, type, gameState);
+   const data = getBuildingIO(xy, type, IOCalculation.Multiplier | IOCalculation.Capacity, gameState);
+   const totalMultiplier = totalMultiplierFor(xy, type, 1, gameState);
    return (
       <ul className="tree-view">
          {jsxMapOf(data, (k, v) => {

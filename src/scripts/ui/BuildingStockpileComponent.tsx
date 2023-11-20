@@ -1,5 +1,6 @@
 import { notifyGameStateUpdate } from "../Global";
-import { applyToAllBuildings, getBuildingIO } from "../logic/BuildingLogic";
+import { applyToAllBuildings, IOCalculation } from "../logic/BuildingLogic";
+import { getBuildingIO } from "../logic/IntraTickCache";
 import { Tick } from "../logic/TickLogic";
 import { STOCKPILE_CAPACITY_MAX, STOCKPILE_CAPACITY_MIN, STOCKPILE_MAX_MAX, STOCKPILE_MAX_MIN } from "../logic/Tile";
 import { isEmpty } from "../utilities/Helper";
@@ -15,7 +16,7 @@ export function BuildingStockpileComponent({ gameState, xy }: IBuildingComponent
    if (!gameState.features.BuildingStockpileMode) {
       return null;
    }
-   if (isEmpty(getBuildingIO(xy, "input", {}, gameState))) {
+   if (isEmpty(getBuildingIO(xy, "input", IOCalculation.None, gameState))) {
       return null;
    }
    return (

@@ -17,6 +17,13 @@ export class Hex {
       return new Hex(this.q - b.q, this.r - b.r, this.s - b.s);
    }
 
+   public subtractSelf(b: Hex): Hex {
+      this.q -= b.q;
+      this.r -= b.r;
+      this.s -= b.s;
+      return this;
+   }
+
    public scale(k: number): Hex {
       return new Hex(this.q * k, this.r * k, this.s * k);
    }
@@ -65,6 +72,10 @@ export class Hex {
 
    public distance(b: Hex): number {
       return this.subtract(b).len();
+   }
+
+   public distanceSelf(b: Hex): number {
+      return this.subtractSelf(b).len();
    }
 
    public round(): Hex {
@@ -142,6 +153,18 @@ export class OffsetCoord {
          throw "offset must be EVEN (+1) or ODD (-1)";
       }
       return new Hex(q, r, s);
+   }
+
+   public static roffsetToCubeNoAlloc(offset: number, h: OffsetCoord, result: Hex): void {
+      const q: number = h.col - (h.row + offset * (h.row & 1)) / 2;
+      const r: number = h.row;
+      const s: number = -q - r;
+      if (offset !== OffsetCoord.EVEN && offset !== OffsetCoord.ODD) {
+         throw "offset must be EVEN (+1) or ODD (-1)";
+      }
+      result.q = q;
+      result.r = r;
+      result.s = s;
    }
 }
 

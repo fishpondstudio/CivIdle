@@ -1,6 +1,7 @@
 import { Building } from "../definitions/BuildingDefinitions";
 import { IUnlockableDefinition } from "../definitions/ITechDefinition";
 import { Resource } from "../definitions/ResourceDefinitions";
+import { PartialSet } from "../definitions/TypeDefinitions";
 import { getGameState, notifyGameStateUpdate, saveGame } from "../Global";
 import { isSteam } from "../rpc/SteamClient";
 import { WorldScene } from "../scenes/WorldScene";
@@ -20,7 +21,6 @@ import {
 import { L, t } from "../utilities/i18n";
 import { srand } from "../utilities/Random";
 import { Singleton } from "../utilities/Singleton";
-import { v2 } from "../utilities/Vector2";
 import {
    addResources,
    deductResources,
@@ -28,7 +28,6 @@ import {
    filterTransportable,
    getBuilderCapacity,
    getBuildingCost,
-   getBuildingIO,
    getMarketPrice,
    getScienceFromWorkers,
    getStockpileMax,
@@ -37,6 +36,7 @@ import {
    getWorkersFor,
    hasEnoughResources,
    hasEnoughWorkers,
+   IOCalculation,
    isNaturalWonder,
    isTransportable,
    totalMultiplierFor,
@@ -46,7 +46,7 @@ import {
 import { Config } from "./Constants";
 import { GameState } from "./GameState";
 import { calculateHappiness } from "./HappinessLogic";
-import { clearIntraTickCache, getXyBuildings, unlockedResources } from "./IntraTickCache";
+import { clearIntraTickCache, getBuildingIO, getXyBuildings, unlockedResources } from "./IntraTickCache";
 import { onBuildingComplete, onBuildingProductionComplete } from "./LogicCallback";
 import { getAmountInTransit } from "./ResourceLogic";
 import { CurrentTickChanged, EmptyTickData, IModifier, Multiplier, Tick } from "./TickLogic";
@@ -72,12 +72,23 @@ export function shouldTick(): boolean {
    return isSteam() || document.visibilityState === "visible";
 }
 
-export function tickEverySecond(gs: GameState) {
-   if (!shouldTick()) {
+export function tickEverySecond(gs: GameState, offline: boolean) {
+   // We should always tick when offline
+   if (!offline && !shouldTick()) {
       return;
    }
    timeSinceLastTick = 0;
+
+   const buildingTransportSources = hasResourcesByBuildingChanged(
+      Tick.current.resourcesByBuilding,
+      Tick.next.resourcesByBuilding
+   )
+      ? {}
+      : Tick.current.buildingTransportSources;
+
    Tick.current = Tick.next;
+   Tick.current.buildingTransportSources = buildingTransportSources;
+
    CurrentTickChanged.emit(Tick.current);
    Tick.next = EmptyTickData();
    clearIntraTickCache();
@@ -98,17 +109,19 @@ export function tickEverySecond(gs: GameState) {
 
    tickPrice(gs);
    tickTransportation(gs);
-   tickTiles(gs);
+   tickTiles(gs, offline);
 
    Tick.next.happiness = calculateHappiness(gs);
    const { scienceFromWorkers } = getScienceFromWorkers(gs);
    safeAdd(Singleton().buildings.Headquarter.building.resources, "Science", scienceFromWorkers);
 
    ++gs.tick;
-   notifyGameStateUpdate();
 
-   if (gs.tick % 5 == 0) {
-      saveGame();
+   if (!offline) {
+      notifyGameStateUpdate();
+      if (gs.tick % 5 == 0) {
+         saveGame();
+      }
    }
 }
 
@@ -164,9 +177,8 @@ function isBuildingOrUpgrading(b: IBuildingData): boolean {
    return b.status === "building" || b.status === "upgrading";
 }
 
-function tickTiles(gs: GameState) {
-   keysOf(gs.tiles)
-      .filter((xy) => gs.tiles[xy].building)
+function tickTiles(gs: GameState, offline: boolean) {
+   keysOf(getXyBuildings(gs))
       .sort((a, b) => {
          const buildingA = gs.tiles[a].building!;
          const buildingB = gs.tiles[b].building!;
@@ -182,10 +194,10 @@ function tickTiles(gs: GameState) {
          }
          return (Config.BuildingTier[buildingA.type] ?? 0) - (Config.BuildingTier[buildingB.type] ?? 0);
       })
-      .forEach((xy) => tileTile(xy, gs));
+      .forEach((xy) => tickTile(xy, gs, offline));
 }
 
-function tileTile(xy: string, gs: GameState): void {
+function tickTile(xy: string, gs: GameState, offline: boolean): void {
    const tile = gs.tiles[xy];
    const building = tile.building!;
    if (building.status === "paused") {
@@ -248,22 +260,14 @@ function tileTile(xy: string, gs: GameState): void {
       Tick.next.playerTradeBuildings[xy] = building;
    }
 
-   const input = filterTransportable(getBuildingIO(xy, "input", { multiplier: true, capacity: true }, gs));
-   const output = getBuildingIO(xy, "output", { multiplier: true, capacity: true }, gs);
+   const input = filterTransportable(getBuildingIO(xy, "input", IOCalculation.Multiplier | IOCalculation.Capacity, gs));
+   const output = getBuildingIO(xy, "output", IOCalculation.Multiplier | IOCalculation.Capacity, gs);
 
-   forEach(building.resources, (res, amount) => {
-      if (amount <= 0) {
-         return;
-      }
-      if (input[res] && amount <= getStockpileMax(building) * input[res]!) {
-         return;
-      }
-      if ("resourceImports" in building) {
-         const ri = building as IResourceImportBuildingData;
-         if (ri.resourceImports[res] && amount <= (ri.resourceImports[res]?.cap ?? 0)) {
-            return;
-         }
-      }
+   const potentialResources: PartialSet<Resource> = {};
+   forEach(input, (k) => (potentialResources[k] = true));
+   forEach(output, (k) => (potentialResources[k] = true));
+   forEach(building.resources, (k) => (potentialResources[k] = true));
+   forEach(potentialResources, (res) => {
       safePush(Tick.next.resourcesByBuilding, res, xy);
    });
 
@@ -284,7 +288,7 @@ function tileTile(xy: string, gs: GameState): void {
    }
 
    const worker = getWorkersFor(xy, { exclude: { Worker: true } }, gs);
-   const inputWorkerCapacity = totalMultiplierFor(xy, "worker", gs);
+   const inputWorkerCapacity = totalMultiplierFor(xy, "worker", 1, gs);
    const { total, used } = getStorageFor(xy, gs);
 
    //////////////////////////////////////////////////
@@ -325,14 +329,14 @@ function tileTile(xy: string, gs: GameState): void {
    // Production
    //////////////////////////////////////////////////
 
-   const tileVisual = Singleton().sceneManager.getCurrent(WorldScene)?.getTile(xy);
+   const tileVisual = offline ? null : Singleton().sceneManager.getCurrent(WorldScene)?.getTile(xy);
 
    if (building.type === "Market") {
       const market = building as IMarketBuildingData;
       let totalBought = 0;
       forEach(market.sellResources, (res) => {
          const amount = clamp(
-            building.capacity * building.level * totalMultiplierFor(xy, "output", gs),
+            building.capacity * building.level * totalMultiplierFor(xy, "output", 1, gs),
             0,
             building.resources[res] ?? 0
          );
@@ -407,52 +411,71 @@ export function transportResource(
    targetXy: string,
    gs: GameState
 ) {
-   const buildingPosition = Singleton().grid.xyToPosition(targetXy);
    let amountLeft = amount;
-   Tick.current.resourcesByBuilding[res]
-      ?.sort((xy1, xy2) => {
-         const pos1 = Singleton().grid.xyToPosition(xy1);
-         const pos2 = Singleton().grid.xyToPosition(xy2);
-         return (
-            v2(pos1).subtractSelf(buildingPosition).lengthSqr() - v2(pos2).subtractSelf(buildingPosition).lengthSqr()
-         );
-      })
-      .some((fromXy) => {
-         const building = gs.tiles[fromXy].building;
-         if (!building) {
-            // continue;
-            return false;
-         }
-         if (fromXy == targetXy) {
-            // continue;
-            return false;
-         }
-         if (!building.resources[res]) {
-            // continue;
-            return false;
-         }
-         if (building.resources[res]! >= amountLeft) {
-            const fuelAmount = Math.ceil(amountLeft / workerCapacity);
-            if (tryAddTransportation(res, amountLeft, "Worker", fuelAmount, fromXy, targetXy, gs)) {
-               building.resources[res]! -= amountLeft;
-               amountLeft = 0;
-               // break;
-               return true;
-            } else {
-               // continue;
-               return false;
-            }
-         } else {
-            const amountToTransport = building.resources[res]!;
-            const fuelAmount = Math.ceil(amountToTransport / workerCapacity);
-            if (tryAddTransportation(res, amountToTransport, "Worker", fuelAmount, fromXy, targetXy, gs)) {
-               amountLeft -= amountToTransport;
-               building.resources[res] = 0;
-            }
-            // continue
-            return false;
-         }
+   const grid = Singleton().grid;
+   const transportSources =
+      Tick.current.buildingTransportSources[targetXy]?.[res] ??
+      Tick.current.resourcesByBuilding[res]?.sort((xy1, xy2) => {
+         return grid.distance(xy1, targetXy) - grid.distance(xy2, targetXy);
       });
+
+   if (!Tick.current.buildingTransportSources[targetXy]?.[res]) {
+      if (!Tick.current.buildingTransportSources[targetXy]) {
+         Tick.current.buildingTransportSources[targetXy] = {};
+      }
+      Tick.current.buildingTransportSources[targetXy][res] = transportSources?.slice(0) ?? [];
+   }
+
+   transportSources?.some((fromXy) => {
+      const building = gs.tiles[fromXy].building;
+      if (!building) {
+         // continue;
+         return false;
+      }
+      if (fromXy == targetXy) {
+         // continue;
+         return false;
+      }
+      if (!building.resources[res]) {
+         // continue;
+         return false;
+      }
+
+      const input = getBuildingIO(fromXy, "input", IOCalculation.Multiplier | IOCalculation.Capacity, gs);
+      if (input[res] && building.resources[res]! <= getStockpileMax(building) * input[res]!) {
+         // continue;
+         return false;
+      }
+      if ("resourceImports" in building) {
+         const ri = building as IResourceImportBuildingData;
+         if (ri.resourceImports[res] && building.resources[res]! <= (ri.resourceImports[res]?.cap ?? 0)) {
+            // continue;
+            return false;
+         }
+      }
+
+      if (building.resources[res]! >= amountLeft) {
+         const fuelAmount = Math.ceil(amountLeft / workerCapacity);
+         if (tryAddTransportation(res, amountLeft, "Worker", fuelAmount, fromXy, targetXy, gs)) {
+            building.resources[res]! -= amountLeft;
+            amountLeft = 0;
+            // break;
+            return true;
+         } else {
+            // continue;
+            return false;
+         }
+      } else {
+         const amountToTransport = building.resources[res]!;
+         const fuelAmount = Math.ceil(amountToTransport / workerCapacity);
+         if (tryAddTransportation(res, amountToTransport, "Worker", fuelAmount, fromXy, targetXy, gs)) {
+            amountLeft -= amountToTransport;
+            building.resources[res] = 0;
+         }
+         // continue
+         return false;
+      }
+   });
 }
 
 export function addModifier(k: Building, modifier: IModifier, source: string) {
@@ -524,7 +547,26 @@ if (import.meta.env.DEV) {
    window.tickGameState = (tick: number) => {
       const gs = getGameState();
       for (let i = 0; i < tick; i++) {
-         tickEverySecond(gs);
+         tickEverySecond(gs, true);
       }
    };
+}
+function hasResourcesByBuildingChanged(a: Partial<Record<Resource, string[]>>, b: Partial<Record<Resource, string[]>>) {
+   if (sizeOf(a) != sizeOf(b)) {
+      return true;
+   }
+   let res: Resource;
+   for (res in a) {
+      if (!a[res] || !b[res] || a[res]!.length != b[res]!.length) {
+         return true;
+      }
+      const aSorted = a[res]!.sort();
+      const bSorted = b[res]!.sort();
+      for (let i = 0; i < aSorted.length; i++) {
+         if (aSorted[i] !== bSorted[i]) {
+            return true;
+         }
+      }
+   }
+   return false;
 }

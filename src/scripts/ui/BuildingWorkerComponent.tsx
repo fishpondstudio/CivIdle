@@ -3,12 +3,13 @@ import warning from "../../images/warning.png";
 import { notifyGameStateUpdate } from "../Global";
 import {
    applyToAllBuildings,
-   getBuildingIO,
    getBuildingName,
    getMultipliersFor,
    getResourceName,
    getWorkersFor,
+   IOCalculation,
 } from "../logic/BuildingLogic";
+import { getBuildingIO } from "../logic/IntraTickCache";
 import { Tick } from "../logic/TickLogic";
 import { formatPercent, isEmpty } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
@@ -22,7 +23,10 @@ export function BuildingWorkerComponent({ gameState, xy }: IBuildingComponentPro
    if (building == null) {
       return null;
    }
-   if (isEmpty(getBuildingIO(xy, "input", {}, gameState)) && isEmpty(getBuildingIO(xy, "output", {}, gameState))) {
+   if (
+      isEmpty(getBuildingIO(xy, "input", IOCalculation.None, gameState)) &&
+      isEmpty(getBuildingIO(xy, "output", IOCalculation.None, gameState))
+   ) {
       return null;
    }
    const showWarning = Tick.current.notProducingReasons[xy] === "NotEnoughWorkers";

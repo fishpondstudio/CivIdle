@@ -1,11 +1,12 @@
-import { Building } from "../definitions/BuildingDefinitions";
+import { Building, IBuildingDefinition } from "../definitions/BuildingDefinitions";
 import { Deposit, Resource } from "../definitions/ResourceDefinitions";
 import { PartialSet, PartialTabulate } from "../definitions/TypeDefinitions";
-import { forEach } from "../utilities/Helper";
+import { forEach, safeAdd } from "../utilities/Helper";
+import { IOCalculation, totalMultiplierFor } from "./BuildingLogic";
 import { Config } from "./Constants";
 import { GameState } from "./GameState";
 import { Tick } from "./TickLogic";
-import { IBuildingData, ITileData } from "./Tile";
+import { IBuildingData, IMarketBuildingData, IResourceImportBuildingData, ITileData } from "./Tile";
 
 class IntraTickCache {
    revealedDeposits: PartialSet<Deposit> | undefined;
@@ -14,12 +15,56 @@ class IntraTickCache {
    buildingsByType: Partial<Record<Building, Record<string, Required<ITileData>>>> | undefined;
    buildingsByXy: Partial<Record<string, IBuildingData>> | undefined;
    resourceAmount: PartialTabulate<Resource> | undefined;
+   buildingIO: Record<string, PartialTabulate<Resource>> = {};
 }
 
 let _cache = new IntraTickCache();
 
 export function clearIntraTickCache(): void {
    _cache = new IntraTickCache();
+}
+
+export function getBuildingIO(
+   xy: string,
+   type: keyof Pick<IBuildingDefinition, "input" | "output">,
+   options: IOCalculation,
+   gs: GameState
+): PartialTabulate<Resource> {
+   const key = xy + type + options;
+   if (_cache.buildingIO[key]) {
+      return _cache.buildingIO[key];
+   }
+   const result: PartialTabulate<Resource> = {};
+   const b = gs.tiles[xy].building;
+   if (b) {
+      const resources = { ...Tick.current.buildings[b.type][type] };
+      if ("sellResources" in b && type === "input") {
+         forEach((b as IMarketBuildingData).sellResources, (k) => {
+            resources[k] = 1;
+         });
+      }
+      if ("resourceImports" in b && type === "input") {
+         forEach((b as IResourceImportBuildingData).resourceImports, (k, v) => {
+            result[k] = v.perCycle;
+         });
+         // Resource imports is not affected by multipliers
+         return result;
+      }
+      // Apply multipliers
+      forEach(resources, (k, v) => {
+         let value = v * b.level;
+         if (options & IOCalculation.Capacity) {
+            value *= b.capacity;
+         }
+         if (options & IOCalculation.Multiplier) {
+            value *= totalMultiplierFor(xy, type, 1, gs);
+         }
+         safeAdd(result, k, value);
+      });
+   }
+
+   _cache.buildingIO[key] = result;
+   return result;
 }
 
 export function revealedDeposits(gs: GameState): PartialSet<Deposit> {

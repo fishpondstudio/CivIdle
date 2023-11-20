@@ -2,9 +2,9 @@ import classNames from "classnames";
 import { useState } from "react";
 import { Resource } from "../definitions/ResourceDefinitions";
 import { PartialTabulate } from "../definitions/TypeDefinitions";
-import { getBuildingIO } from "../logic/BuildingLogic";
+import { IOCalculation } from "../logic/BuildingLogic";
 import { Config } from "../logic/Constants";
-import { unlockedResources } from "../logic/IntraTickCache";
+import { getBuildingIO, unlockedResources } from "../logic/IntraTickCache";
 import { Tick } from "../logic/TickLogic";
 import { IBuildingData } from "../logic/Tile";
 import { WorldScene } from "../scenes/WorldScene";
@@ -210,8 +210,8 @@ function ResourcesTab({ gameState }: IBuildingComponentProps) {
    const inputs: PartialTabulate<Resource> = {};
    const outputs: PartialTabulate<Resource> = {};
    forEach(gameState.tiles, (xy, tile) => {
-      const input = getBuildingIO(xy, "input", { multiplier: true, capacity: true }, gameState);
-      const output = getBuildingIO(xy, "output", { multiplier: true, capacity: true }, gameState);
+      const input = getBuildingIO(xy, "input", IOCalculation.Multiplier | IOCalculation.Capacity, gameState);
+      const output = getBuildingIO(xy, "output", IOCalculation.Multiplier | IOCalculation.Capacity, gameState);
       if (!showTheoreticalValue && Tick.current.notProducingReasons[xy]) {
          return;
       }

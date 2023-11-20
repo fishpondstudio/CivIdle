@@ -79,7 +79,7 @@ export async function startGame(
       if (offlineTime >= 60) {
          const before = JSON.parse(JSON.stringify(gameState));
          for (let i = 0; i < offlineTime; i++) {
-            tickEverySecond(gameState);
+            tickEverySecond(gameState, true);
          }
          const after = JSON.parse(JSON.stringify(gameState));
          showModal(<OfflineProductionModal before={before} after={after} time={offlineTime} />);
@@ -90,7 +90,7 @@ export async function startGame(
    }
 
    // We tick first before loading scene, making sure city-specific overrides are applied!
-   tickEverySecond(gameState);
+   tickEverySecond(gameState, false);
 
    if (import.meta.env.DEV) {
       // createRoot(document.getElementById("debug-ui")!).render(<GreatPersonDebug />);
@@ -117,7 +117,7 @@ function startTicker(ticker: Ticker, gameState: GameState) {
       tickEveryFrame(gameState, dt);
    });
 
-   setInterval(tickEverySecond.bind(null, gameState), 1000);
+   setInterval(tickEverySecond.bind(null, gameState, false), 1000);
 }
 
 function findSpecialBuildings(gameState: GameState): Partial<Record<Building, ITileData>> {
@@ -134,7 +134,7 @@ function findSpecialBuildings(gameState: GameState): Partial<Record<Building, IT
          buildings.Headquarter = tile;
       }
    });
-   console.assert(buildings.Headquarter, "Should fine 1 Headquarter");
+   console.assert(buildings.Headquarter, "Should find 1 Headquarter");
    return buildings;
 }
 

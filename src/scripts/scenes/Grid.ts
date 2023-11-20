@@ -1,11 +1,35 @@
 import { BitmapText, Container } from "pixi.js";
 import { xyToPoint } from "../utilities/Helper";
 import { Hex, Layout, OffsetCoord, Point } from "../utilities/Hex";
+import { ObjectPool } from "../utilities/ObjectPool";
 import { Fonts } from "../visuals/Fonts";
 
 interface IGraphics extends Container {
    lineTo: (x: number, y: number) => IGraphics;
    moveTo: (x: number, y: number) => IGraphics;
+}
+
+class HexPool extends ObjectPool<Hex> {
+   protected override create(): Hex {
+      return new Hex(0, 0, 0);
+   }
+   protected onAllocate(obj: Hex): void {
+      obj.q = 0;
+      obj.r = 0;
+      obj.s = 0;
+   }
+   protected onRelease(obj: Hex): void {}
+}
+
+class OffsetCoordPool extends ObjectPool<OffsetCoord> {
+   protected override create(): OffsetCoord {
+      return new OffsetCoord(0, 0);
+   }
+   protected onAllocate(obj: OffsetCoord): void {
+      obj.row = 0;
+      obj.col = 0;
+   }
+   protected onRelease(obj: OffsetCoord): void {}
 }
 
 export class Grid {
@@ -99,6 +123,33 @@ export class Grid {
          result.push(this.hexToGrid(hex));
       }
       return result;
+   }
+
+   private static _hexPool = new HexPool();
+   private static _offsetCoordPool = new OffsetCoordPool();
+
+   public distance(xy1: string, xy2: string): number {
+      const hex1 = Grid._hexPool.allocate();
+      const oc1 = Grid._offsetCoordPool.allocate();
+      const arr1 = xy1.split(",");
+      oc1.row = parseInt(arr1[0], 10);
+      oc1.col = parseInt(arr1[1], 10);
+      OffsetCoord.roffsetToCubeNoAlloc(OffsetCoord.ODD, oc1, hex1);
+
+      const hex2 = Grid._hexPool.allocate();
+      const oc2 = Grid._offsetCoordPool.allocate();
+      const arr2 = xy2.split(",");
+      oc2.row = parseInt(arr2[0], 10);
+      oc2.col = parseInt(arr2[1], 10);
+      OffsetCoord.roffsetToCubeNoAlloc(OffsetCoord.ODD, oc2, hex2);
+
+      const distance = hex1.distanceSelf(hex2);
+      Grid._hexPool.release(hex1);
+      Grid._hexPool.release(hex2);
+      Grid._offsetCoordPool.release(oc1);
+      Grid._offsetCoordPool.release(oc2);
+
+      return distance;
    }
 
    public gridToHex(grid: Point): Hex {
