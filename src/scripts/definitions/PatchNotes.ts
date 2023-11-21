@@ -5,6 +5,17 @@ interface PatchNote {
 
 export const PatchNotes: PatchNote[] = [
    {
+      version: "0.1.75",
+      content: [
+         [
+            "QoL",
+            "Add a progress in loading screen when calculating offline production (this will make the overall calculation a bit slower but the game will not appear stuck)",
+         ],
+         ["QoL", "Revert certain optimizations in 0.1.74 that cause transportation issues"],
+         ["QoL", "Temporarily cap the offline production time to 4h to avoid game taking forever to load"],
+      ],
+   },
+   {
       version: "0.1.74",
       content: [
          [

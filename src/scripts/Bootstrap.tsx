@@ -23,7 +23,7 @@ import { checkSteamBranch } from "./SteamTesting";
 import { showModal, showToast } from "./ui/GlobalModal";
 import { LoadingPage, LoadingPageStage } from "./ui/LoadingPage";
 import { OfflineProductionModal } from "./ui/OfflineProductionModal";
-import { forEach, isNullOrUndefined, rejectIn } from "./utilities/Helper";
+import { clamp, forEach, isNullOrUndefined, rejectIn, schedule } from "./utilities/Helper";
 import Actions from "./utilities/pixi-actions/Actions";
 import { SceneManager, Textures } from "./utilities/SceneManager";
 import { initializeSingletons, ISpecialBuildings, RouteTo, Singleton } from "./utilities/Singleton";
@@ -74,12 +74,25 @@ export async function startGame(
    routeTo(LoadingPage, { stage: LoadingPageStage.SteamSignIn });
    const TIMEOUT = import.meta.env.DEV ? 1 : 5;
    try {
-      const offlineTime = await Promise.race([connectWebSocket(), rejectIn<number>(TIMEOUT, "Connection Timeout")]);
+      const offlineTime = clamp(
+         await Promise.race([connectWebSocket(), rejectIn<number>(TIMEOUT, "Connection Timeout")]),
+         0,
+         60 * 60 * 4
+      );
       routeTo(LoadingPage, { stage: LoadingPageStage.OfflineProduction });
+
       if (offlineTime >= 60) {
          const before = JSON.parse(JSON.stringify(gameState));
-         for (let i = 0; i < offlineTime; i++) {
-            tickEverySecond(gameState, true);
+         let timeLeft = offlineTime;
+         while (timeLeft > 0) {
+            const batchSize = Math.min(offlineTime, 100);
+            await schedule(() => {
+               for (let i = 0; i < batchSize; i++) {
+                  tickEverySecond(gameState, true);
+               }
+            });
+            await showOfflineProductionProgress(1 - timeLeft / offlineTime, routeTo);
+            timeLeft -= batchSize;
          }
          const after = JSON.parse(JSON.stringify(gameState));
          showModal(<OfflineProductionModal before={before} after={after} time={offlineTime} />);
@@ -105,6 +118,16 @@ export async function startGame(
    startTicker(app.ticker, gameState);
 
    await checkSteamBranch();
+}
+
+function showOfflineProductionProgress(progress: number, routeTo: RouteTo): Promise<void> {
+   return new Promise((resolve) => {
+      routeTo(LoadingPage, {
+         stage: LoadingPageStage.OfflineProduction,
+         progress: progress,
+         onload: () => schedule(resolve),
+      });
+   });
 }
 
 function startTicker(ticker: Ticker, gameState: GameState) {

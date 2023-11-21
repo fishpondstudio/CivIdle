@@ -10,7 +10,7 @@ import { FormatNumber } from "./HelperComponents";
 import { IBuildingComponentProps } from "./PlayerMapPage";
 
 export function AddTradeComponent({ gameState, xy }: IBuildingComponentProps) {
-   const buyResources = keysOf(Tick.next.resourcesByBuilding).filter(
+   const buyResources = keysOf(Tick.next.resourcesByXy).filter(
       (res) => Tick.current.resources[res].canPrice && Tick.current.resources[res].canStore
    );
    const resourcesInStorage = gameState.tiles[xy].building?.resources ?? {};

@@ -199,7 +199,7 @@ export function useWorkers(res: Resource, amount: number, xy: string | null): vo
    }
 }
 
-export function hasEnoughWorkers(res: Resource, amount: number): boolean {
+export function getAvailableWorkers(res: Resource): number {
    if (!Tick.current.workersAvailable[res]) {
       Tick.current.workersAvailable[res] = 0;
    }
@@ -207,10 +207,23 @@ export function hasEnoughWorkers(res: Resource, amount: number): boolean {
       Tick.current.workersUsed[res] = 0;
    }
    return (
-      Math.floor(Tick.current.workersAvailable[res]! * (Tick.current.happiness?.workerPercentage ?? 1)) >=
-      Tick.current.workersUsed[res]! + amount
+      Math.floor(Tick.current.workersAvailable[res]! * (Tick.current.happiness?.workerPercentage ?? 1)) -
+      Tick.current.workersUsed[res]!
    );
 }
+
+// export function hasEnoughWorkers(res: Resource, amount: number): boolean {
+//    if (!Tick.current.workersAvailable[res]) {
+//       Tick.current.workersAvailable[res] = 0;
+//    }
+//    if (!Tick.current.workersUsed[res]) {
+//       Tick.current.workersUsed[res] = 0;
+//    }
+//    return (
+//       Math.floor(Tick.current.workersAvailable[res]! * (Tick.current.happiness?.workerPercentage ?? 1)) >=
+//       Tick.current.workersUsed[res]! + amount
+//    );
+// }
 
 export function getResourceName(r: Resource): string {
    return Tick.current.resources[r].name();
@@ -242,7 +255,7 @@ export function getStockpileMax(b: IBuildingData) {
    return b.stockpileMax === 0 ? Infinity : b.stockpileMax;
 }
 
-export function tryAddTransportation(
+export function addTransportation(
    resource: Resource,
    amount: number,
    fuelResource: Resource,
@@ -250,10 +263,7 @@ export function tryAddTransportation(
    fromXy: string,
    toXy: string,
    gs: GameState
-): boolean {
-   if (!hasEnoughWorkers(fuelResource, fuelAmount)) {
-      return false;
-   }
+): void {
    useWorkers(fuelResource, fuelAmount, null);
    const fromPosition = Singleton().grid.xyToPosition(fromXy);
    const toPosition = Singleton().grid.xyToPosition(toXy);
@@ -271,7 +281,6 @@ export function tryAddTransportation(
       fuelAmount,
       hasEnoughFuel: true,
    });
-   return true;
 }
 
 export function getScienceFromWorkers(gs: GameState) {

@@ -1,7 +1,6 @@
 import { Building } from "../definitions/BuildingDefinitions";
 import { IUnlockableDefinition } from "../definitions/ITechDefinition";
 import { Resource } from "../definitions/ResourceDefinitions";
-import { PartialSet } from "../definitions/TypeDefinitions";
 import { getGameState, notifyGameStateUpdate, saveGame } from "../Global";
 import { isSteam } from "../rpc/SteamClient";
 import { WorldScene } from "../scenes/WorldScene";
@@ -12,20 +11,24 @@ import {
    HOUR,
    isEmpty,
    keysOf,
+   pointArrayToXy,
    round,
    safeAdd,
    safePush,
    shuffle,
    sizeOf,
+   xyToPointArray,
 } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
 import { srand } from "../utilities/Random";
 import { Singleton } from "../utilities/Singleton";
 import {
    addResources,
+   addTransportation,
    deductResources,
    filterResource,
    filterTransportable,
+   getAvailableWorkers,
    getBuilderCapacity,
    getBuildingCost,
    getMarketPrice,
@@ -35,12 +38,10 @@ import {
    getStorageRequired,
    getWorkersFor,
    hasEnoughResources,
-   hasEnoughWorkers,
    IOCalculation,
    isNaturalWonder,
    isTransportable,
    totalMultiplierFor,
-   tryAddTransportation,
    useWorkers,
 } from "./BuildingLogic";
 import { Config } from "./Constants";
@@ -79,16 +80,7 @@ export function tickEverySecond(gs: GameState, offline: boolean) {
    }
    timeSinceLastTick = 0;
 
-   const buildingTransportSources = hasResourcesByBuildingChanged(
-      Tick.current.resourcesByBuilding,
-      Tick.next.resourcesByBuilding
-   )
-      ? {}
-      : Tick.current.buildingTransportSources;
-
    Tick.current = Tick.next;
-   Tick.current.buildingTransportSources = buildingTransportSources;
-
    CurrentTickChanged.emit(Tick.current);
    Tick.next = EmptyTickData();
    clearIntraTickCache();
@@ -151,7 +143,7 @@ function tickTransportation(gs: GameState) {
             transport.ticksSpent++;
             transport.hasEnoughFuel = true;
          } else {
-            if (hasEnoughWorkers(transport.fuel, transport.fuelAmount)) {
+            if (getAvailableWorkers(transport.fuel) >= transport.fuelAmount) {
                useWorkers(transport.fuel, transport.fuelAmount, null);
                transport.ticksSpent++;
                transport.hasEnoughFuel = true;
@@ -228,7 +220,7 @@ function tickTile(xy: string, gs: GameState, offline: boolean): void {
          }
          completed = false;
          // Each transportation costs 1 worker, and deliver Total (=Builder Capacity x Multiplier) resources
-         if (hasEnoughWorkers("Worker", 1)) {
+         if (getAvailableWorkers("Worker") >= 1) {
             delete Tick.next.notProducingReasons[xy];
             useWorkers("Worker", 1, xy);
             transportResource(res, total, total, xy, gs);
@@ -263,12 +255,21 @@ function tickTile(xy: string, gs: GameState, offline: boolean): void {
    const input = filterTransportable(getBuildingIO(xy, "input", IOCalculation.Multiplier | IOCalculation.Capacity, gs));
    const output = getBuildingIO(xy, "output", IOCalculation.Multiplier | IOCalculation.Capacity, gs);
 
-   const potentialResources: PartialSet<Resource> = {};
-   forEach(input, (k) => (potentialResources[k] = true));
-   forEach(output, (k) => (potentialResources[k] = true));
-   forEach(building.resources, (k) => (potentialResources[k] = true));
-   forEach(potentialResources, (res) => {
-      safePush(Tick.next.resourcesByBuilding, res, xy);
+   forEach(building.resources, (res, amount) => {
+      if (amount <= 0) {
+         return;
+      }
+      if (input[res] && amount <= getStockpileMax(building) * input[res]!) {
+         return;
+      }
+      if ("resourceImports" in building) {
+         const ri = building as IResourceImportBuildingData;
+         if (ri.resourceImports[res] && amount <= (ri.resourceImports[res]?.cap ?? 0)) {
+            return;
+         }
+      }
+      safePush(Tick.next.resourcesByXy, res, xy);
+      safePush(Tick.next.resourcesByGrid, res, xyToPointArray(xy));
    });
 
    const requiredDeposits = Tick.current.buildings[building.type].deposit;
@@ -362,7 +363,7 @@ function tickTile(xy: string, gs: GameState, offline: boolean): void {
    }
 
    const hasEnoughStorage = isEmpty(output) || used + getStorageRequired(output) <= total;
-   const hasEnoughWorker = hasEnoughWorkers("Worker", worker.output);
+   const hasEnoughWorker = getAvailableWorkers("Worker") >= worker.output;
    const hasEnoughInput = hasEnoughResources(building.resources, input);
 
    if (!hasEnoughWorker) {
@@ -413,69 +414,51 @@ export function transportResource(
 ) {
    let amountLeft = amount;
    const grid = Singleton().grid;
-   const transportSources =
-      Tick.current.buildingTransportSources[targetXy]?.[res] ??
-      Tick.current.resourcesByBuilding[res]?.sort((xy1, xy2) => {
-         return grid.distance(xy1, targetXy) - grid.distance(xy2, targetXy);
-      });
-
-   if (!Tick.current.buildingTransportSources[targetXy]?.[res]) {
-      if (!Tick.current.buildingTransportSources[targetXy]) {
-         Tick.current.buildingTransportSources[targetXy] = {};
-      }
-      Tick.current.buildingTransportSources[targetXy][res] = transportSources?.slice(0) ?? [];
+   const targetPoint = xyToPointArray(targetXy);
+   const sources = Tick.current.resourcesByGrid[res]?.sort((point1, point2) => {
+      return grid.distance(point1, targetPoint) - grid.distance(point2, targetPoint);
+   });
+   if (!sources) {
+      return;
    }
-
-   transportSources?.some((fromXy) => {
+   for (let i = 0; i < sources.length; i++) {
+      const fromXy = pointArrayToXy(sources[i]);
       const building = gs.tiles[fromXy].building;
       if (!building) {
-         // continue;
-         return false;
+         continue;
       }
       if (fromXy == targetXy) {
-         // continue;
-         return false;
+         continue;
       }
       if (!building.resources[res]) {
-         // continue;
-         return false;
+         continue;
       }
-
-      const input = getBuildingIO(fromXy, "input", IOCalculation.Multiplier | IOCalculation.Capacity, gs);
-      if (input[res] && building.resources[res]! <= getStockpileMax(building) * input[res]!) {
-         // continue;
-         return false;
-      }
-      if ("resourceImports" in building) {
-         const ri = building as IResourceImportBuildingData;
-         if (ri.resourceImports[res] && building.resources[res]! <= (ri.resourceImports[res]?.cap ?? 0)) {
-            // continue;
-            return false;
-         }
-      }
-
       if (building.resources[res]! >= amountLeft) {
          const fuelAmount = Math.ceil(amountLeft / workerCapacity);
-         if (tryAddTransportation(res, amountLeft, "Worker", fuelAmount, fromXy, targetXy, gs)) {
-            building.resources[res]! -= amountLeft;
-            amountLeft = 0;
-            // break;
-            return true;
+         const fuelLeft = getAvailableWorkers("Worker");
+         if (fuelLeft >= fuelAmount) {
+            addTransportation(res, amountLeft, "Worker", fuelAmount, fromXy, targetXy, gs);
          } else {
-            // continue;
-            return false;
+            addTransportation(res, (amountLeft * fuelLeft) / fuelAmount, "Worker", fuelLeft, fromXy, targetXy, gs);
          }
+         // Here we return because either we've got all we need, or we run out of workers (no need to continue)
+         return;
       } else {
          const amountToTransport = building.resources[res]!;
          const fuelAmount = Math.ceil(amountToTransport / workerCapacity);
-         if (tryAddTransportation(res, amountToTransport, "Worker", fuelAmount, fromXy, targetXy, gs)) {
+         const fuelLeft = getAvailableWorkers("Worker");
+         if (fuelLeft >= fuelAmount) {
             amountLeft -= amountToTransport;
-            building.resources[res] = 0;
+            addTransportation(res, amountToTransport, "Worker", fuelAmount, fromXy, targetXy, gs);
+            // We continue here because the next source might have what we need
+         } else {
+            const amountAfterFuel = (amountToTransport * fuelLeft) / fuelAmount;
+            addTransportation(res, amountAfterFuel, "Worker", fuelLeft, fromXy, targetXy, gs);
+            // We return here because we run out of workers (no need to continue)
+            return;
          }
-         // continue
-         return false;
       }
-   });
+   }
 }
 
 export function addModifier(k: Building, modifier: IModifier, source: string) {

@@ -1,12 +1,8 @@
-import { ReactNode } from "react";
+import { useEffect } from "react";
 import "../../css/LoadingPage.css";
 import energyStar from "../../images/energy_star.png";
 import { getVersion } from "../logic/Constants";
-
-interface ErrorMessage {
-   content: ReactNode;
-   continue: () => void;
-}
+import { formatPercent } from "../utilities/Helper";
 
 export enum LoadingPageStage {
    LoadSave,
@@ -15,7 +11,19 @@ export enum LoadingPageStage {
    OfflineProduction,
 }
 
-export function LoadingPage({ stage }: { stage: LoadingPageStage }) {
+export function LoadingPage({
+   stage,
+   onload,
+   progress,
+}: {
+   stage: LoadingPageStage;
+   onload?: () => void;
+   progress?: number;
+}) {
+   useEffect(() => {
+      onload?.();
+   }, [stage, progress]);
+
    return (
       <div className="loading-page">
          <img className="energy-star" src={energyStar} />
@@ -32,31 +40,44 @@ export function LoadingPage({ stage }: { stage: LoadingPageStage }) {
             <div className="f1">Loading Sound</div>
             <div>... Done</div>
          </div>
-         <ShowStage name="Loading Save" stage={LoadingPageStage.LoadSave} current={stage} />
-         <ShowStage name="Verifying Data" stage={LoadingPageStage.CheckSave} current={stage} />
-         <ShowStage name="Connecting to Steam" stage={LoadingPageStage.SteamSignIn} current={stage} />
-         <ShowStage name="Calculating Offline Production" stage={LoadingPageStage.OfflineProduction} current={stage} />
+         <ShowStage name="Loading Save" stage={LoadingPageStage.LoadSave} current={stage} progress={progress} />
+         <ShowStage name="Verifying Data" stage={LoadingPageStage.CheckSave} current={stage} progress={progress} />
+         <ShowStage
+            name="Connecting to Steam"
+            stage={LoadingPageStage.SteamSignIn}
+            current={stage}
+            progress={progress}
+         />
+         <ShowStage
+            name="Calculating Offline Production"
+            stage={LoadingPageStage.OfflineProduction}
+            current={stage}
+            progress={progress}
+         />
       </div>
    );
 }
 
 function ShowStage({
    name,
-   stage: index,
+   stage,
    current,
+   progress,
 }: {
    name: string;
    stage: LoadingPageStage;
    current: LoadingPageStage;
+   progress?: number;
 }) {
-   if (current === index) {
+   if (current === stage) {
       return (
          <div className="row">
             <div className="f1">{name} ...</div>
+            {progress ? <div>{formatPercent(progress, 0)}</div> : null}
          </div>
       );
    }
-   if (current > index) {
+   if (current > stage) {
       return (
          <div className="row">
             <div className="f1">{name}</div>

@@ -14,7 +14,9 @@ export function Route({ event }: { event: TypedEvent<RouteChangeEvent> }) {
                console.log(getGameState().tiles[e.params.xy as string]);
             }
          }
-         playClick();
+         if (e.component !== LoadingPage) {
+            playClick();
+         }
          setRoute(e);
       }
       event.on(handleRouteChanged);

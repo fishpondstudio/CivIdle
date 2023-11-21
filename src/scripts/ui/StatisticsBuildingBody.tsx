@@ -271,7 +271,7 @@ function ResourcesTab({ gameState }: IBuildingComponentProps) {
                               <td className="right">
                                  <FormatNumber
                                     value={
-                                       Tick.current.resourcesByBuilding[res]?.reduce(
+                                       Tick.current.resourcesByXy[res]?.reduce(
                                           (prev, curr) =>
                                              prev + (gameState.tiles[curr].building?.resources?.[res] ?? 0),
                                           0

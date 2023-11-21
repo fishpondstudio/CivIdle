@@ -1,5 +1,5 @@
 import { BitmapText, Container } from "pixi.js";
-import { xyToPoint } from "../utilities/Helper";
+import { IPointArray, xyToPoint } from "../utilities/Helper";
 import { Hex, Layout, OffsetCoord, Point } from "../utilities/Hex";
 import { ObjectPool } from "../utilities/ObjectPool";
 import { Fonts } from "../visuals/Fonts";
@@ -128,19 +128,26 @@ export class Grid {
    private static _hexPool = new HexPool();
    private static _offsetCoordPool = new OffsetCoordPool();
 
-   public distance(xy1: string, xy2: string): number {
+   private static _distanceCache: Record<number, number> = {};
+
+   public distance(point1: IPointArray, point2: IPointArray): number {
+      const key1 = point1[1] * this.maxX + point1[0];
+      const key2 = point2[1] * this.maxX + point2[0];
+      const key = key1 >= key2 ? (key1 << 16) + key2 : (key2 << 16) + key1;
+      const cached = Grid._distanceCache[key];
+      if (cached) {
+         return cached;
+      }
       const hex1 = Grid._hexPool.allocate();
       const oc1 = Grid._offsetCoordPool.allocate();
-      const arr1 = xy1.split(",");
-      oc1.row = parseInt(arr1[0], 10);
-      oc1.col = parseInt(arr1[1], 10);
+      oc1.row = point1[0];
+      oc1.col = point1[1];
       OffsetCoord.roffsetToCubeNoAlloc(OffsetCoord.ODD, oc1, hex1);
 
       const hex2 = Grid._hexPool.allocate();
       const oc2 = Grid._offsetCoordPool.allocate();
-      const arr2 = xy2.split(",");
-      oc2.row = parseInt(arr2[0], 10);
-      oc2.col = parseInt(arr2[1], 10);
+      oc2.row = point2[0];
+      oc2.col = point2[1];
       OffsetCoord.roffsetToCubeNoAlloc(OffsetCoord.ODD, oc2, hex2);
 
       const distance = hex1.distanceSelf(hex2);
@@ -149,6 +156,7 @@ export class Grid {
       Grid._offsetCoordPool.release(oc1);
       Grid._offsetCoordPool.release(oc2);
 
+      Grid._distanceCache[key] = distance;
       return distance;
    }
 

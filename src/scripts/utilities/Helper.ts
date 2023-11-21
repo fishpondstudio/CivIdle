@@ -210,6 +210,10 @@ export function pointToXy(point: IPointData): string {
    return point.x.toString() + "," + point.y.toString();
 }
 
+export function pointArrayToXy(pa: IPointArray): string {
+   return pa.join(",");
+}
+
 export function sizeOf(obj: any): number {
    if (typeof obj !== "object") {
       return 0;
@@ -220,6 +224,13 @@ export function sizeOf(obj: any): number {
 export function xyToPoint(str: string): IPointData {
    const parts = str.split(",");
    return { x: parseInt(parts[0], 10), y: parseInt(parts[1], 10) };
+}
+
+export type IPointArray = [number, number];
+
+export function xyToPointArray(str: string): IPointArray {
+   const parts = str.split(",");
+   return [parseInt(parts[0], 10), parseInt(parts[1], 10)];
 }
 
 export function clamp(value: number, minInclusive: number, maxInclusive: number): number {
@@ -387,6 +398,14 @@ export function resolveIn<T>(seconds: number, result: T): Promise<T> {
 export function rejectIn<T>(seconds: number, reason = "Timeout"): Promise<T> {
    return new Promise((resolve, reject) => {
       setTimeout(() => reject(new Error(reason)), seconds * 1000);
+   });
+}
+
+export function schedule<T>(func: () => T): Promise<T> {
+   return new Promise((resolve) => {
+      setTimeout(() => {
+         resolve(func());
+      }, 0);
    });
 }
 

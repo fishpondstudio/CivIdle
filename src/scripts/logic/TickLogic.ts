@@ -1,6 +1,7 @@
 import { Building, BuildingDefinitions } from "../definitions/BuildingDefinitions";
 import { Resource, ResourceDefinitions } from "../definitions/ResourceDefinitions";
 import { PartialSet, PartialTabulate } from "../definitions/TypeDefinitions";
+import { IPointArray } from "../utilities/Helper";
 import { makeObservableHook } from "../utilities/Hook";
 import { L, t } from "../utilities/i18n";
 import { RequireAtLeastOne } from "../utilities/Type";
@@ -20,8 +21,8 @@ interface ITickData {
    happiness: ReturnType<typeof calculateHappiness> | null;
    workersUsed: PartialTabulate<Resource>;
    workersAssignment: Record<string, number>;
-   resourcesByBuilding: Partial<Record<Resource, string[]>>;
-   buildingTransportSources: Record<string, Partial<Record<Resource, string[]>>>;
+   resourcesByXy: Partial<Record<Resource, string[]>>;
+   resourcesByGrid: Partial<Record<Resource, IPointArray[]>>;
    playerTradeBuildings: Record<string, IBuildingData>;
    globalMultipliers: GlobalMultipliers;
    notProducingReasons: Record<string, NotProducingReason>;
@@ -50,11 +51,11 @@ export function EmptyTickData(): ITickData {
       workersUsed: {},
       happiness: null,
       workersAssignment: {},
-      resourcesByBuilding: {},
+      resourcesByXy: {},
+      resourcesByGrid: {},
       globalMultipliers: new GlobalMultipliers(),
       notProducingReasons: {},
       playerTradeBuildings: {},
-      buildingTransportSources: {},
    };
 }
 
