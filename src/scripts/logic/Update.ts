@@ -437,9 +437,12 @@ export function transportResource(
          const fuelAmount = Math.ceil(amountLeft / workerCapacity);
          const fuelLeft = getAvailableWorkers("Worker");
          if (fuelLeft >= fuelAmount) {
+            building.resources[res]! -= amountLeft;
             addTransportation(res, amountLeft, "Worker", fuelAmount, fromXy, targetXy, gs);
          } else {
-            addTransportation(res, (amountLeft * fuelLeft) / fuelAmount, "Worker", fuelLeft, fromXy, targetXy, gs);
+            const amountAfterFuel = (amountLeft * fuelLeft) / fuelAmount;
+            building.resources[res]! -= amountAfterFuel;
+            addTransportation(res, amountAfterFuel, "Worker", fuelLeft, fromXy, targetXy, gs);
          }
          // Here we return because either we've got all we need, or we run out of workers (no need to continue)
          return;
@@ -449,10 +452,12 @@ export function transportResource(
          const fuelLeft = getAvailableWorkers("Worker");
          if (fuelLeft >= fuelAmount) {
             amountLeft -= amountToTransport;
+            building.resources[res] = 0;
             addTransportation(res, amountToTransport, "Worker", fuelAmount, fromXy, targetXy, gs);
             // We continue here because the next source might have what we need
          } else {
             const amountAfterFuel = (amountToTransport * fuelLeft) / fuelAmount;
+            building.resources[res]! -= amountAfterFuel;
             addTransportation(res, amountAfterFuel, "Worker", fuelLeft, fromXy, targetXy, gs);
             // We return here because we run out of workers (no need to continue)
             return;
