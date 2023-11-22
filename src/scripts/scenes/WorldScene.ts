@@ -11,7 +11,7 @@ import {
    TilingSprite,
    utils,
 } from "pixi.js";
-import { getGameOptions } from "../Global";
+import { getGameOptions, getGameState } from "../Global";
 import { GameOptions, GameState } from "../logic/GameState";
 import { TilePage } from "../ui/TilePage";
 import { clamp, forEach, lerp, lookAt, pointToXy, xyToPoint } from "../utilities/Helper";
@@ -171,7 +171,24 @@ export class WorldScene extends ViewportScene {
 
    selectGrid(grid: IPointData) {
       this.drawSelection(grid);
-      Singleton().routeTo(TilePage, { xy: pointToXy(grid) });
+      const xy = pointToXy(grid);
+      Singleton().routeTo(TilePage, { xy: xy });
+      const gs = getGameState();
+      const building = gs.tiles[xy].building;
+      if (building) {
+         switch (building.type) {
+            case "MausoleumAtHalicarnassus": {
+               const pos = Singleton().grid.gridToPosition(grid);
+
+               this._selectedGraphics.lineStyle({ width: 0 });
+               this._selectedGraphics.beginFill(0xffffff, 0.2, true);
+               this._selectedGraphics.drawCircle(pos.x, pos.y, 200);
+               this._selectedGraphics.endFill();
+
+               break;
+            }
+         }
+      }
    }
 
    getTile(xy: string): TileVisual | undefined {

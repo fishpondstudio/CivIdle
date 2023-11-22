@@ -5,6 +5,24 @@ interface PatchNote {
 
 export const PatchNotes: PatchNote[] = [
    {
+      version: "0.1.76",
+      content: [
+         ["Content", "New Wonder: Mausoleum At Halicarnassus - free transportation within 200 range"],
+         [
+            "Balance",
+            "Add Transport Capacity Multiplier. Road & Wheel technology now provides +1 Transport Capacity Multiplier",
+         ],
+         ["Balance", "Construction cost for wonders has been increased"],
+         ["QoL", "Show Builder/Transport Capacity Multiplier in Headquarter"],
+         [
+            "Bugfix",
+            "Make transport more consistent: transports now take 1 second to travel for 1 tile. Previously it is inconsistent",
+         ],
+         ["Bugfix", "Fix buildings sometimes showing 0 amount 0 cost transports"],
+         ["Bugfix", "Fix buildings not showing correct transport sources"],
+      ],
+   },
+   {
       version: "0.1.75",
       content: [
          [

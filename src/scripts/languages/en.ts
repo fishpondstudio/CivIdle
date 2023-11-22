@@ -324,6 +324,7 @@ export const EN = {
    ConstructionBuilderCapacity: "Builder Capacity",
    ConstructionBuilderBaseCapacity: "Base Capacity",
    ConstructionBuilderMultiplier: "Capacity Multiplier",
+   ConstructionBuilderMultiplierFull: "Builder Capacity Multiplier",
    ConstructionNotEnoughWorkers: "This building's construction is paused because of lack of workers",
    EndConstruction: "End Construction",
    EndConstructionEnd: "End",
@@ -337,7 +338,7 @@ export const EN = {
    ColossusOfRhodes: "Colossus Of Rhodes",
    ColossusOfRhodesDesc: "All adjacent buildings that do not produce workers get +1 Happiness",
    MausoleumAtHalicarnassus: "Mausoleum At Halicarnassus",
-   MausoleumAtHalicarnassusDesc: "Mausoleum At Halicarnassus",
+   MausoleumAtHalicarnassusDesc: "Free transportation within 200 range",
    HangingGarden: "Hanging Garden",
    HangingGardenDesc: "Hanging Garden",
    Colosseum: "Colosseum",
@@ -679,4 +680,6 @@ export const EN = {
    UnclaimedGreatPerson: "You have unclaimed Great People, click here to claim",
    OfflineProduction: "Offline Production",
    OfflineTime: "Offline Time",
+   TransportCapacity: "Transport Capacity",
+   TransportCapacityMultiplier: "Transport Capacity Multiplier",
 };

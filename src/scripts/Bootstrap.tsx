@@ -8,6 +8,7 @@ import {
    loadGame,
    notifyGameStateUpdate,
    syncUITheme,
+   TILE_SIZE,
 } from "./Global";
 import { getBuildingTexture } from "./logic/BuildingLogic";
 import { calculateTierAndPrice, Config } from "./logic/Constants";
@@ -54,7 +55,7 @@ export async function startGame(
    const gameState = getGameState();
    verifyBuildingConfig(textures, gameState.city);
    const size = Config.City[gameState.city].size;
-   const grid = new Grid(size, size, 64);
+   const grid = new Grid(size, size, TILE_SIZE);
    if (isNewPlayer) {
       initializeGameState(gameState, grid);
    }

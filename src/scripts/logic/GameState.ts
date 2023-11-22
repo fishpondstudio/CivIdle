@@ -29,6 +29,7 @@ export interface ITransportationData {
    amount: number;
    fuel: Resource;
    fuelAmount: number;
+   currentFuelAmount: number;
    hasEnoughFuel: boolean;
 }
 

@@ -26,6 +26,7 @@ interface ITickData {
    playerTradeBuildings: Record<string, IBuildingData>;
    globalMultipliers: GlobalMultipliers;
    notProducingReasons: Record<string, NotProducingReason>;
+   specialBuildings: Partial<Record<Building, string>>;
 }
 
 export type NotProducingReason =
@@ -56,6 +57,7 @@ export function EmptyTickData(): ITickData {
       globalMultipliers: new GlobalMultipliers(),
       notProducingReasons: {},
       playerTradeBuildings: {},
+      specialBuildings: {},
    };
 }
 
@@ -63,6 +65,7 @@ export class GlobalMultipliers {
    sciencePerIdleWorker: IValueWithSource[] = [{ value: 0, source: t(L.BaseProduction) }];
    sciencePerBusyWorker: IValueWithSource[] = [{ value: 1, source: t(L.BaseProduction) }];
    builderCapacity: IValueWithSource[] = [{ value: 1, source: t(L.BaseMultiplier) }];
+   transportCapacity: IValueWithSource[] = [{ value: 1, source: t(L.BaseMultiplier) }];
    happiness: IValueWithSource[] = [];
 }
 
@@ -71,6 +74,7 @@ export const GlobalMultiplierNames: Record<keyof GlobalMultipliers, () => string
    sciencePerIdleWorker: () => t(L.ScienceFromIdleWorkers),
    builderCapacity: () => t(L.BuilderCapacity),
    happiness: () => t(L.Happiness),
+   transportCapacity: () => t(L.TransportCapacity),
 };
 
 export const Tick = {

@@ -13,13 +13,15 @@ import { playError } from "./visuals/Sound";
 
 const savedGame = new SavedGame();
 
+export const TILE_SIZE = 64;
+
 export function wipeSaveData() {
    saving = true;
    const save = new SavedGame();
    save.options = savedGame.options;
    initializeGameState(
       save.current,
-      new Grid(Config.City[save.current.city].size, Config.City[save.current.city].size, 64)
+      new Grid(Config.City[save.current.city].size, Config.City[save.current.city].size, TILE_SIZE)
    );
    if (isSteam()) {
       SteamClient.fileWrite(SAVE_KEY, JSON.stringify(save))

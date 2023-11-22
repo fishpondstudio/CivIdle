@@ -12,15 +12,15 @@ import {
    safeAdd,
    safePush,
    sum,
+   xyToPoint,
 } from "../utilities/Helper";
 import { srand } from "../utilities/Random";
 import { Textures } from "../utilities/SceneManager";
 import { Singleton } from "../utilities/Singleton";
-import { v2 } from "../utilities/Vector2";
 import { Config } from "./Constants";
 import { GameState } from "./GameState";
 import { getBuildingIO, getBuildingsByType } from "./IntraTickCache";
-import { getBuildingUnlockTech } from "./TechLogic";
+import { getAgeForTech, getBuildingUnlockTech } from "./TechLogic";
 import { Multiplier, MultiplierWithSource, Tick } from "./TickLogic";
 import { IBuildingData, IHaveTypeAndLevel } from "./Tile";
 
@@ -264,21 +264,24 @@ export function addTransportation(
    toXy: string,
    gs: GameState
 ): void {
+   const fromGrid = xyToPoint(fromXy);
+   const fromPosition = Singleton().grid.gridToPosition(fromGrid);
+   const toGrid = xyToPoint(toXy);
+   const toPosition = Singleton().grid.gridToPosition(toGrid);
    useWorkers(fuelResource, fuelAmount, null);
-   const fromPosition = Singleton().grid.xyToPosition(fromXy);
-   const toPosition = Singleton().grid.xyToPosition(toXy);
    safePush(gs.transportation, toXy, {
       id: ++gs.transportId,
       fromXy,
       toXy,
       fromPosition,
       toPosition,
-      ticksRequired: Math.ceil(v2(fromPosition).subtractSelf(toPosition).length() / 100),
+      ticksRequired: Singleton().grid.distance(fromGrid.x, fromGrid.y, toGrid.x, toGrid.y),
       ticksSpent: 0,
       resource,
       amount,
       fuel: "Worker",
       fuelAmount,
+      currentFuelAmount: fuelAmount,
       hasEnoughFuel: true,
    });
 }
@@ -322,9 +325,17 @@ export function getBuildingCost(building: IHaveTypeAndLevel): PartialTabulate<Re
    // This is a wonder, we apply the wonder multiplier here
    if (Tick.current.buildings[type].special === BuildingSpecial.WorldWonder) {
       const tech = getBuildingUnlockTech(building.type);
+      let techIdx = 0;
+      let ageIdx = 0;
       if (tech) {
-         multiplier = Math.pow(2, Config.Tech[tech].column);
+         techIdx = Config.Tech[tech].column;
+         const a = getAgeForTech(tech);
+         if (a) {
+            const age = Config.TechAge[a];
+            ageIdx = age.idx;
+         }
       }
+      multiplier = Math.round(10 + Math.pow(5, ageIdx) * Math.pow(1.5, techIdx));
    }
 
    keysOf(cost).forEach((res) => {

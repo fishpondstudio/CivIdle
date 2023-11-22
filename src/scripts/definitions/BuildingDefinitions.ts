@@ -428,16 +428,16 @@ export class BuildingDefinitions {
       wikipedia: "Colosseum",
    };
 
-   Pantheon: IBuildingDefinition = {
-      name: () => t(L.Pantheon),
-      desc: () => t(L.PantheonDesc),
-      input: {},
-      output: {},
-      construction: { Marble: 100, Sword: 100, Copper: 100 },
-      max: 1,
-      special: BuildingSpecial.WorldWonder,
-      wikipedia: "Pantheon,_Rome",
-   };
+   // Pantheon: IBuildingDefinition = {
+   //    name: () => t(L.Pantheon),
+   //    desc: () => t(L.PantheonDesc),
+   //    input: {},
+   //    output: {},
+   //    construction: { Marble: 100, Sword: 100, Copper: 100 },
+   //    max: 1,
+   //    special: BuildingSpecial.WorldWonder,
+   //    wikipedia: "Pantheon,_Rome",
+   // };
 
    CircusMaximus: IBuildingDefinition = {
       name: () => t(L.CircusMaximus),
@@ -559,6 +559,17 @@ export class BuildingDefinitions {
       wikipedia: "Chichen_Itza",
    };
 
+   MausoleumAtHalicarnassus: IBuildingDefinition = {
+      name: () => t(L.MausoleumAtHalicarnassus),
+      desc: () => t(L.MausoleumAtHalicarnassusDesc),
+      input: {},
+      output: {},
+      max: 1,
+      construction: { Marble: 100, Lumber: 100, Tool: 100 },
+      special: BuildingSpecial.WorldWonder,
+      wikipedia: "Mausoleum_at_Halicarnassus",
+   };
+
    // GreatDagonPagoda: IBuildingDefinition = {
    //    name: () => t(L.GreatDagonPagoda),
    //    desc: () => t(L.GreatDagonPagodaDesc),
@@ -566,15 +577,6 @@ export class BuildingDefinitions {
    //    output: {},
    //    max: 1,
    //    wikipedia: "Shwedagon_Pagoda",
-   // };
-
-   // MausoleumAtHalicarnassus: IBuildingDefinition = {
-   //    name: () => t(L.MausoleumAtHalicarnassus),
-   //    desc: () => t(L.MausoleumAtHalicarnassusDesc),
-   //    input: {},
-   //    output: {},
-   //    max: 1,
-   //    wikipedia: "Mausoleum_at_Halicarnassus",
    // };
 
    // GreatDagonPagoda: IBuildingDefinition = {

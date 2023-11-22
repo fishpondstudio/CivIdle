@@ -297,10 +297,15 @@ export class TechTreeScene extends ViewportScene {
          const bitmapText = parent.addChild(
             new BitmapText(description, {
                fontName: Fonts.Marcellus,
-               fontSize: 18,
                tint: color,
             })
          );
+
+         bitmapText.fontSize = 18;
+         while (bitmapText.width > rect.width - 20) {
+            bitmapText.fontSize--;
+         }
+
          bitmapText.anchor.x = 0.5;
          bitmapText.anchor.y = 0.5;
          bitmapText.x = rect.x + rect.width / 2;

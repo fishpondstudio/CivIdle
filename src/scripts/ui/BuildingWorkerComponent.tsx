@@ -39,7 +39,7 @@ export function BuildingWorkerComponent({ gameState, xy }: IBuildingComponentPro
                   <summary className="row">
                      <div className="f1">{t(L.WorkersRequiredInput)}</div>
                      <div className="text-strong">
-                        {gameState.transportation[xy]?.reduce((prev, curr) => prev + curr.fuelAmount, 0) ?? 0}
+                        {gameState.transportation[xy]?.reduce((prev, curr) => prev + curr.currentFuelAmount, 0) ?? 0}
                      </div>
                   </summary>
                   <ul>
@@ -49,10 +49,10 @@ export function BuildingWorkerComponent({ gameState, xy }: IBuildingComponentPro
                               <div className="f1">
                                  {t(L.ResourceFromBuilding, {
                                     resource: `${fmtNumber(v.amount, gameState)} ${getResourceName(v.resource)}`,
-                                    building: getBuildingName(xy, gameState),
+                                    building: getBuildingName(v.fromXy, gameState),
                                  })}
                               </div>
-                              <div>{v.fuelAmount}</div>
+                              <div>{v.currentFuelAmount}</div>
                            </li>
                         );
                      })}

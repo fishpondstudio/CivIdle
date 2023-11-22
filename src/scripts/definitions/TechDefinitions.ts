@@ -147,6 +147,7 @@ export class TechDefinitions {
       requireTech: ["Market", "Stateship"],
       unlockBuilding: ["Marbleworks"],
       buildingMultiplier: { House: { worker: 1 } },
+      globalMultiplier: { transportCapacity: 1 },
    };
 
    LandTrade: ITechDefinition = {
@@ -174,7 +175,7 @@ export class TechDefinitions {
       name: () => t(L.Construction),
       column: 5,
       requireTech: ["RoadAndWheel"],
-      unlockBuilding: ["IronForge"],
+      unlockBuilding: ["IronForge", "MausoleumAtHalicarnassus"],
    };
 
    Music: ITechDefinition = {

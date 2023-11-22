@@ -122,7 +122,7 @@ function BuildingTab({ gameState }: IBuildingComponentProps) {
                                  <FormatNumber
                                     value={
                                        gameState.transportation[xy]?.reduce(
-                                          (prev, curr) => prev + curr.fuelAmount,
+                                          (prev, curr) => prev + curr.currentFuelAmount,
                                           0
                                        ) ?? 0
                                     }
@@ -186,7 +186,7 @@ function TransportationTab({ gameState }: IBuildingComponentProps) {
                                  <FormatNumber value={transportation.amount} />
                               </td>
                               <td className="text-right">
-                                 <FormatNumber value={transportation.fuelAmount} />
+                                 <FormatNumber value={transportation.currentFuelAmount} />
                               </td>
                               <td className="text-right">
                                  <FormatNumber

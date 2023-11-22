@@ -98,11 +98,61 @@ export function HeadquarterBuildingBody({ gameState, xy }: IBuildingComponentPro
                      </summary>
                   </details>
                </li>
+               <li>
+                  <details>
+                     <summary className="row">
+                        <div className="f1">{t(L.ConstructionBuilderMultiplierFull)}</div>
+                        <div className="text-strong">
+                           <FormatNumber
+                              value={Tick.current.globalMultipliers.builderCapacity.reduce(
+                                 (prev, curr) => prev + curr.value,
+                                 0
+                              )}
+                           />
+                        </div>
+                     </summary>
+                     <ul>
+                        {Tick.current.globalMultipliers.builderCapacity.map((value) => {
+                           return (
+                              <li key={value.source} className="row">
+                                 <div className="f1">{value.source}</div>
+                                 <div>{value.value}</div>
+                              </li>
+                           );
+                        })}
+                     </ul>
+                  </details>
+               </li>
+               <li>
+                  <details>
+                     <summary className="row">
+                        <div className="f1">{t(L.TransportCapacityMultiplier)}</div>
+                        <div className="text-strong">
+                           <FormatNumber
+                              value={Tick.current.globalMultipliers.transportCapacity.reduce(
+                                 (prev, curr) => prev + curr.value,
+                                 0
+                              )}
+                           />
+                        </div>
+                     </summary>
+                     <ul>
+                        {Tick.current.globalMultipliers.transportCapacity.map((value) => {
+                           return (
+                              <li key={value.source} className="row">
+                                 <div className="f1">{value.source}</div>
+                                 <div>{value.value}</div>
+                              </li>
+                           );
+                        })}
+                     </ul>
+                  </details>
+               </li>
             </ul>
          </fieldset>
          <fieldset>
             <legend>{techAge != null ? Config.TechAge[techAge].name() : "Unknown Age"}</legend>
-            <div className="row mv5">
+            <div className="row">
                <div className="f1">{t(L.Science)}</div>
                <div className="text-strong">
                   <FormatNumber value={scienceAmount} />
