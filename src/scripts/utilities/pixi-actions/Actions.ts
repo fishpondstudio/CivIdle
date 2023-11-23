@@ -46,7 +46,7 @@ export default class Actions {
       return new Repeat(action, times);
    }
 
-   static play(action: Action) {
+   static start(action: Action) {
       this.actions[action.id] = action;
    }
 
@@ -76,7 +76,7 @@ export default class Actions {
             delete this.actions[id];
             // Are there any queued events?
             for (let j = 0; j < action.queued.length; j++) {
-               Actions.play(action.queued[j]);
+               Actions.start(action.queued[j]);
             }
             action.queued = [];
          }

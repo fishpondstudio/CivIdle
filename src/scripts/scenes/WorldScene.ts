@@ -11,7 +11,7 @@ import {
    TilingSprite,
    utils,
 } from "pixi.js";
-import { getGameOptions, getGameState } from "../Global";
+import { getGameOptions, getGameState, TILE_SIZE } from "../Global";
 import { GameOptions, GameState } from "../logic/GameState";
 import { TilePage } from "../ui/TilePage";
 import { clamp, forEach, lerp, lookAt, pointToXy, xyToPoint } from "../utilities/Helper";
@@ -146,7 +146,7 @@ export class WorldScene extends ViewportScene {
          clampedCenter,
          v2(clampedCenter).subtractSelf(viewportCenter!).length() / 2000,
          Easing.InOutSine
-      ).play();
+      ).start();
       this.drawSelection(xyToPoint(xy));
    }
 
@@ -182,11 +182,24 @@ export class WorldScene extends ViewportScene {
 
                this._selectedGraphics.lineStyle({ width: 0 });
                this._selectedGraphics.beginFill(0xffffff, 0.2, true);
-               this._selectedGraphics.drawCircle(pos.x, pos.y, 200);
+               this._selectedGraphics.drawCircle(pos.x, pos.y, TILE_SIZE * 4);
                this._selectedGraphics.endFill();
 
                break;
             }
+            case "ColossusOfRhodes":
+            case "Colosseum":
+            case "LighthouseOfAlexandria":
+            case "ChichenItza":
+               Singleton()
+                  .grid.getNeighbors(grid)
+                  .forEach((neighbor) => {
+                     this._selectedGraphics.lineStyle({ width: 0 });
+                     this._selectedGraphics.beginFill(0xffffff, 0.2, true);
+                     Singleton().grid.drawSelected(neighbor, this._selectedGraphics);
+                     this._selectedGraphics.endFill();
+                  });
+               break;
          }
       }
    }

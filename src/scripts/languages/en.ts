@@ -197,7 +197,8 @@ export const EN = {
    WorkersRequiredInput: "Transportation",
    ResourceFromBuilding: "%{resource} from %{building}",
    WorkersRequiredOutput: "Production",
-   WorkersRequiredMultiplier: "Capacity Per Worker",
+   WorkersRequiredForProductionMultiplier: "Production Capacity Per Worker",
+   WorkersRequiredForTransportationMultiplier: "Transportation Capacity Per Worker",
    WorkersRequiredBeforeMultiplier: "Required Worker Capacity",
    WorkersRequiredAfterMultiplier: "Required Workers",
    AdjustBuildingCapacity: "Production Capacity",
@@ -338,7 +339,7 @@ export const EN = {
    ColossusOfRhodes: "Colossus Of Rhodes",
    ColossusOfRhodesDesc: "All adjacent buildings that do not produce workers get +1 Happiness",
    MausoleumAtHalicarnassus: "Mausoleum At Halicarnassus",
-   MausoleumAtHalicarnassusDesc: "Free transportation within 200 range",
+   MausoleumAtHalicarnassusDesc: "Free transportation within 2 tile range",
    HangingGarden: "Hanging Garden",
    HangingGardenDesc: "Hanging Garden",
    Colosseum: "Colosseum",
@@ -682,4 +683,6 @@ export const EN = {
    OfflineTime: "Offline Time",
    TransportCapacity: "Transport Capacity",
    TransportCapacityMultiplier: "Transport Capacity Multiplier",
+   WonderBuilderCapacityDesc:
+      "Builder Capacity when constructing wonders are affect by the age and technology that unlocks the wonder",
 };

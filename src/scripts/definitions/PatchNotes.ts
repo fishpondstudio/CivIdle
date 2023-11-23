@@ -5,9 +5,22 @@ interface PatchNote {
 
 export const PatchNotes: PatchNote[] = [
    {
+      version: "0.1.77",
+      content: [
+         ["Bugfix", "Fix builder capacity when constructing wonders are not calculated correctly"],
+         ["Bugfix", "Fix transport multiplier not being applied correctly"],
+         ["QoL", "If a building is not producing, an icon will show on the top left indicating the reason"],
+         ["QoL", "Show transport multiplier in worker section in building page"],
+         ["QoL", "Building color will now apply to spinner"],
+         ["QoL", "For progress for each transportation in building page"],
+         ["QoL", "In building list, show how many buildings are currently on the map"],
+         ["QoL", "When a wonder affect adjacent buildings, the relevant tiles will be highlighted"],
+      ],
+   },
+   {
       version: "0.1.76",
       content: [
-         ["Content", "New Wonder: Mausoleum At Halicarnassus - free transportation within 200 range"],
+         ["Content", "New Wonder: Mausoleum At Halicarnassus - free transportation within 2 tile range"],
          [
             "Balance",
             "Add Transport Capacity Multiplier. Road & Wheel technology now provides +1 Transport Capacity Multiplier",

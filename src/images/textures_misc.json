@@ -18,8 +18,8 @@
         },
         "Construction": {
             "frame": {
-                "x": 890,
-                "y": 451,
+                "x": 301,
+                "y": 652,
                 "w": 38,
                 "h": 53
             }
@@ -40,6 +40,30 @@
                 "h": 450
             }
         },
+        "NotEnoughResources": {
+            "frame": {
+                "x": 890,
+                "y": 451,
+                "w": 50,
+                "h": 50
+            }
+        },
+        "NotEnoughWorkers": {
+            "frame": {
+                "x": 301,
+                "y": 601,
+                "w": 50,
+                "h": 50
+            }
+        },
+        "NotProducingGeneral": {
+            "frame": {
+                "x": 352,
+                "y": 601,
+                "w": 50,
+                "h": 50
+            }
+        },
         "Paper": {
             "frame": {
                 "x": 0,
@@ -56,6 +80,14 @@
                 "h": 100
             }
         },
+        "StorageFull": {
+            "frame": {
+                "x": 403,
+                "y": 601,
+                "w": 50,
+                "h": 50
+            }
+        },
         "Transport": {
             "frame": {
                 "x": 824,
@@ -66,7 +98,7 @@
         },
         "Upgrade": {
             "frame": {
-                "x": 301,
+                "x": 454,
                 "y": 601,
                 "w": 40,
                 "h": 46

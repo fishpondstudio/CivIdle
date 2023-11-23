@@ -18,8 +18,8 @@ export default abstract class Action {
       return this;
    }
 
-   play() {
-      Actions.play(this);
+   start() {
+      Actions.start(this);
       return this;
    }
 

@@ -216,7 +216,7 @@ export class TechTreeScene extends ViewportScene {
       }
       const targetX = this._boxPositions[tech]?.x ?? this.viewport.center.x;
       if (cutToTech === "animate") {
-         Actions.to<TechTreeScene>(this, { scrollX: targetX }, 0.5, Easing.InOutQuad).play();
+         Actions.to<TechTreeScene>(this, { scrollX: targetX }, 0.5, Easing.InOutQuad).start();
       } else if (cutToTech === "jump") {
          this.scrollX = targetX;
       }

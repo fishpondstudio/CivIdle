@@ -62,10 +62,10 @@ export function EmptyTickData(): ITickData {
 }
 
 export class GlobalMultipliers {
-   sciencePerIdleWorker: IValueWithSource[] = [{ value: 0, source: t(L.BaseProduction) }];
+   sciencePerIdleWorker: IValueWithSource[] = [];
    sciencePerBusyWorker: IValueWithSource[] = [{ value: 1, source: t(L.BaseProduction) }];
    builderCapacity: IValueWithSource[] = [{ value: 1, source: t(L.BaseMultiplier) }];
-   transportCapacity: IValueWithSource[] = [{ value: 1, source: t(L.BaseMultiplier) }];
+   transportCapacity: IValueWithSource[] = [];
    happiness: IValueWithSource[] = [];
 }
 

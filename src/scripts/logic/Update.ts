@@ -470,7 +470,7 @@ export function transportResource(
       }
       // const distance = Singleton().grid.distance(pointArray[0], pointArray[1], targetPoint[0], targetPoint[1]);
       const transportCapacity =
-         workerCapacity * Tick.current.globalMultipliers.transportCapacity.reduce((prev, curr) => prev + curr.value, 0);
+         workerCapacity + Tick.current.globalMultipliers.transportCapacity.reduce((prev, curr) => prev + curr.value, 0);
       if (building.resources[res]! >= amountLeft) {
          const fuelAmount = Math.ceil(amountLeft / transportCapacity);
          const fuelLeft = getAvailableWorkers("Worker");

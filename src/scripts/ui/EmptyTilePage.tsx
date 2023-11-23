@@ -38,6 +38,7 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): JSX.Element {
          build(lastBuild);
       }
    });
+   const buildingByType = getTypeBuildings(gs);
    return (
       <div className="window" onPointerDown={() => setSelected(null)}>
          <div className="title-bar">
@@ -127,8 +128,15 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): JSX.Element {
                                     )}
                                  </td>
                                  <td>
-                                    <div className="row text-strong">
-                                       <div>{building.name()}</div>
+                                    <div className="row">
+                                       <div>
+                                          <span className="text-strong">{building.name()}</span>
+                                          {building.max === 1 ? null : (
+                                             <span className="text-desc text-small ml5">
+                                                {sizeOf(buildingByType[k])}
+                                             </span>
+                                          )}
+                                       </div>
                                        {building.deposit && setContains(tile.deposit, building.deposit) ? (
                                           <div className="m-icon small text-orange ml5">stars</div>
                                        ) : null}

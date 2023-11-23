@@ -1,10 +1,17 @@
-import { getBuilderCapacity, getBuildingCost, getBuildingPercentage, getMultipliersFor } from "../logic/BuildingLogic";
+import {
+   getBuilderCapacity,
+   getBuildingCost,
+   getBuildingPercentage,
+   getMultipliersFor,
+   isWorldWonder,
+} from "../logic/BuildingLogic";
 import { Tick } from "../logic/TickLogic";
 import { formatPercent, jsxMapOf } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
 import { IBuildingComponentProps } from "./BuildingPage";
 import { FormatNumber } from "./HelperComponents";
 import { ProgressBarComponent } from "./ProgressBarComponent";
+import { WarningComponent } from "./WarningComponent";
 
 export function BuildingConstructionProgressComponent({ gameState, xy }: IBuildingComponentProps) {
    const percentage = getBuildingPercentage(xy, gameState);
@@ -32,6 +39,12 @@ export function BuildingConstructionProgressComponent({ gameState, xy }: IBuildi
             );
          })}
          <div className="separator"></div>
+         {isWorldWonder(building.type) ? (
+            <>
+               <WarningComponent icon="info">{t(L.WonderBuilderCapacityDesc)}</WarningComponent>
+               <div className="sep10"></div>
+            </>
+         ) : null}
          <ul className="tree-view">
             <details>
                <summary className="row">

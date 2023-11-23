@@ -1,13 +1,9 @@
-import { BitmapText, Container } from "pixi.js";
+import { SmoothGraphics } from "@pixi/graphics-smooth";
+import { BitmapText, Polygon } from "pixi.js";
 import { xyToPoint } from "../utilities/Helper";
 import { Hex, Layout, OffsetCoord, Point } from "../utilities/Hex";
 import { ObjectPool } from "../utilities/ObjectPool";
 import { Fonts } from "../visuals/Fonts";
-
-interface IGraphics extends Container {
-   lineTo: (x: number, y: number) => IGraphics;
-   moveTo: (x: number, y: number) => IGraphics;
-}
 
 class HexPool extends ObjectPool<Hex> {
    protected override create(): Hex {
@@ -45,7 +41,7 @@ export class Grid {
       this.size = size;
    }
 
-   public drawGrid(graphics: IGraphics): void {
+   public drawGrid(graphics: SmoothGraphics): void {
       this.forEach((hex) => {
          this.drawCorners(this.layout.polygonCorners(this.gridToHex(hex)), graphics);
       });
@@ -69,7 +65,7 @@ export class Grid {
       }
    }
 
-   private drawGridDebugInfo(x: number, y: number, graphics: IGraphics) {
+   private drawGridDebugInfo(x: number, y: number, graphics: SmoothGraphics) {
       const pos = this.gridToPosition({ x, y });
       const font = new BitmapText(`${x},${y}\n(${Math.round(pos.x)},${Math.round(pos.y)})`, {
          fontName: Fonts.Marcellus,
@@ -87,7 +83,7 @@ export class Grid {
       return point;
    }
 
-   public drawSelected(grid: Point, graphics: IGraphics): void {
+   public drawSelected(grid: Point, graphics: SmoothGraphics): void {
       this.drawCorners(this.layout.polygonCorners(this.gridToHex(grid)), graphics);
    }
 
@@ -135,9 +131,12 @@ export class Grid {
       const key2 = y2 * this.maxX + x2;
       const key = key1 >= key2 ? (key1 << 16) + key2 : (key2 << 16) + key1;
       const cached = Grid._distanceCache[key];
-      if (cached) {
+
+      // We use cached value in prod, but in dev, we want to validate our cache is good
+      if (!import.meta.env.DEV && cached) {
          return cached;
       }
+
       const hex1 = Grid._hexPool.allocate();
       const oc1 = Grid._offsetCoordPool.allocate();
       oc1.row = x1;
@@ -156,6 +155,10 @@ export class Grid {
       Grid._offsetCoordPool.release(oc1);
       Grid._offsetCoordPool.release(oc2);
 
+      if (cached) {
+         console.assert(distance === cached);
+      }
+
       Grid._distanceCache[key] = distance;
       return distance;
    }
@@ -173,12 +176,7 @@ export class Grid {
       return this.layout.hexToPixel(hex);
    }
 
-   private drawCorners(corners: Point[], graphics: IGraphics) {
-      const [first, ...others] = corners;
-      graphics.moveTo(first.x, first.y);
-      others.forEach((point, index) => {
-         graphics.lineTo(point.x, point.y);
-      });
-      graphics.lineTo(first.x, first.y);
+   private drawCorners(corners: Point[], graphics: SmoothGraphics) {
+      graphics.drawPolygon(new Polygon(corners));
    }
 }

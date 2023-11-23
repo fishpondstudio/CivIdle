@@ -21,11 +21,24 @@ import { Config } from "./Constants";
 import { GameState } from "./GameState";
 import { getBuildingIO, getBuildingsByType } from "./IntraTickCache";
 import { getAgeForTech, getBuildingUnlockTech } from "./TechLogic";
-import { Multiplier, MultiplierWithSource, Tick } from "./TickLogic";
+import { Multiplier, MultiplierWithSource, NotProducingReason, Tick } from "./TickLogic";
 import { IBuildingData, IHaveTypeAndLevel } from "./Tile";
 
 export function getBuildingTexture(b: Building, textures: Textures, city: City) {
    return textures[`Building${b}_${city}`] ?? textures[`Building${b}`];
+}
+
+export function getNotProducingTexture(reason: NotProducingReason, textures: Textures) {
+   switch (reason) {
+      case "NotEnoughResources":
+         return textures["NotEnoughResources"];
+      case "NotEnoughWorkers":
+         return textures["NotEnoughWorkers"];
+      case "StorageFull":
+         return textures["StorageFull"];
+      default:
+         return textures["StorageFull"];
+   }
 }
 
 export function getTileTexture(r: Resource, textures: Textures) {
@@ -323,7 +336,7 @@ export function getBuildingCost(building: IHaveTypeAndLevel): PartialTabulate<Re
 
    let multiplier = 10;
    // This is a wonder, we apply the wonder multiplier here
-   if (Tick.current.buildings[type].special === BuildingSpecial.WorldWonder) {
+   if (isWorldWonder(building.type)) {
       const tech = getBuildingUnlockTech(building.type);
       let techIdx = 0;
       let ageIdx = 0;
@@ -427,12 +440,22 @@ export function getBuilderCapacity(
    const builder =
       sum(Tick.current.globalMultipliers.builderCapacity, "value") + totalMultiplierFor(xy, "worker", 0, gs);
    let baseCapacity = building.level;
+
    if (isWorldWonder(building.type)) {
       const tech = getBuildingUnlockTech(building.type);
+      let techIdx = 0;
+      let ageIdx = 0;
       if (tech) {
-         baseCapacity = Config.Tech[tech].column;
+         techIdx = Config.Tech[tech].column;
+         const a = getAgeForTech(tech);
+         if (a) {
+            const age = Config.TechAge[a];
+            ageIdx = age.idx;
+         }
       }
+      baseCapacity = Math.round(Math.pow(5, ageIdx) + techIdx * 2);
    }
+
    return { multiplier: builder, base: baseCapacity, total: builder * baseCapacity };
 }
 

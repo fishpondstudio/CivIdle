@@ -5,6 +5,7 @@ import { getGameOptions, getGameState } from "../Global";
 import {
    getBuildingLevelLabel,
    getBuildingTexture,
+   getNotProducingTexture,
    getTileTexture,
    isWorldOrNaturalWonder,
 } from "../logic/BuildingLogic";
@@ -29,6 +30,7 @@ export class TileVisual extends Container {
    private readonly _deposits: Partial<Record<Resource, Sprite>> = {};
    private readonly _tile: ITileData;
    private readonly _construction: Sprite;
+   private readonly _notProducing: Sprite;
    private readonly _upgrade: Sprite;
    private readonly _level: BitmapText;
    private readonly _constructionAnimation: Action;
@@ -62,6 +64,12 @@ export class TileVisual extends Container {
       this._construction.anchor.set(0, 1);
       this._construction.scale.set(0.5);
       this._construction.visible = false;
+
+      this._notProducing = this.addChild(new Sprite());
+      this._notProducing.position.set(-20, -20);
+      this._notProducing.anchor.set(0.5, 0.5);
+      this._notProducing.scale.set(0.5);
+      this._notProducing.visible = false;
 
       this._constructionAnimation = Actions.repeat(
          Actions.sequence(
@@ -170,7 +178,7 @@ export class TileVisual extends Container {
                this._fog.visible = false;
                resolve(this);
             })
-         ).play();
+         ).start();
       });
    }
 
@@ -185,7 +193,7 @@ export class TileVisual extends Container {
          Actions.runFunc(() => {
             this._world.tooltipPool.release(t);
          })
-      ).play();
+      ).start();
    }
 
    public onTileDataChanged(tileData: ITileData) {
@@ -208,38 +216,67 @@ export class TileVisual extends Container {
          this._building.texture = getBuildingTexture(this._tile.building.type, textures, gameState.city);
          this.updateLayout();
       }
-      if (!isWorldOrNaturalWonder(this._tile.building.type)) {
-         this._level.visible = true;
-         const newLevel = getBuildingLevelLabel(this._tile.building);
-         if (this._level.text != newLevel) {
-            this._level.text = newLevel;
+
+      switch (this._tile.building.status) {
+         case "building": {
+            this._construction.visible = true;
+            this._spinner.visible = false;
+            this._building.alpha = 0.5;
+            this.toggleConstructionTween(true);
+            return;
+         }
+         case "paused": {
+            this.toggleConstructionTween(false);
+            this._construction.visible = true;
+            this._spinner.visible = false;
+            this._building.alpha = 0.5;
+            return;
+         }
+         case "upgrading": {
+            this._upgrade.visible = true;
+            this.toggleUpgradeTween(true);
+            this._spinner.visible = false;
+            return;
+         }
+         case "completed": {
+            this._construction.visible = false;
+            this.toggleConstructionTween(false);
+            this._upgrade.visible = false;
+            this.toggleUpgradeTween(false);
+
+            if (!isWorldOrNaturalWonder(this._tile.building.type)) {
+               this._level.visible = true;
+               const newLevel = getBuildingLevelLabel(this._tile.building);
+               if (this._level.text != newLevel) {
+                  this._level.text = newLevel;
+               }
+            }
+
+            if (Tick.current.notProducingReasons[tileData.xy]) {
+               this._notProducing.texture = getNotProducingTexture(
+                  Tick.current.notProducingReasons[tileData.xy],
+                  textures
+               );
+
+               if (!this._notProducing.visible) {
+                  this._notProducing.visible = true;
+                  this._notProducing.alpha = 0;
+                  Actions.to(this._notProducing, { alpha: 1 }, 0.25, Easing.InQuad).start();
+               }
+            } else {
+               if (this._notProducing.visible) {
+                  Actions.sequence(
+                     Actions.to(this._notProducing, { alpha: 0 }, 0.25, Easing.OutQuad),
+                     Actions.runFunc(() => {
+                        this._notProducing.visible = false;
+                     })
+                  ).start();
+               }
+            }
+
+            this._spinner.visible = true;
          }
       }
-      if (this._tile.building.status === "building") {
-         this._construction.visible = true;
-         this._spinner.visible = false;
-         this._building.alpha = 0.5;
-         this.toggleConstructionTween(true);
-         return;
-      }
-      if (this._tile.building.status === "paused") {
-         this.toggleConstructionTween(false);
-         this._construction.visible = true;
-         this._spinner.visible = false;
-         this._building.alpha = 0.5;
-         return;
-      }
-      this._construction.visible = false;
-      this.toggleConstructionTween(false);
-      if (this._tile.building.status === "upgrading") {
-         this._upgrade.visible = true;
-         this.toggleUpgradeTween(true);
-         this._spinner.visible = false;
-         return;
-      }
-      this._upgrade.visible = false;
-      this.toggleUpgradeTween(false);
-      this._spinner.visible = true;
    }
 
    public update(gs: GameState, dt: number) {
@@ -251,8 +288,12 @@ export class TileVisual extends Container {
       if (color) {
          const c = Color.shared.setValue(color);
          this._building.tint = c;
+         this._notProducing.tint = c;
+         this._spinner.tint = c;
       } else {
          this._building.tint = 0xffffff;
+         this._notProducing.tint = 0xffffff;
+         this._spinner.tint = 0xffffff;
       }
 
       if (this._tile.building.status !== "completed") {
@@ -273,7 +314,7 @@ export class TileVisual extends Container {
 
    private toggleConstructionTween(on: boolean) {
       if (on && !this._constructionAnimation.isPlaying()) {
-         this._constructionAnimation.play();
+         this._constructionAnimation.start();
       }
       if (!on) {
          this._constructionAnimation.stop();
@@ -282,7 +323,7 @@ export class TileVisual extends Container {
 
    private toggleUpgradeTween(on: boolean) {
       if (on && !this._upgradeAnimation.isPlaying()) {
-         this._upgradeAnimation.play();
+         this._upgradeAnimation.start();
       }
       if (!on) {
          this._upgradeAnimation.stop();

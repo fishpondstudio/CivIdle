@@ -50,12 +50,63 @@ export function BuildingWorkerComponent({ gameState, xy }: IBuildingComponentPro
                                  {t(L.ResourceFromBuilding, {
                                     resource: `${fmtNumber(v.amount, gameState)} ${getResourceName(v.resource)}`,
                                     building: getBuildingName(v.fromXy, gameState),
-                                 })}
+                                 })}{" "}
+                                 ({v.ticksSpent}/{v.ticksRequired})
                               </div>
                               <div>{v.currentFuelAmount}</div>
                            </li>
                         );
                      })}
+                  </ul>
+               </details>
+            </li>
+            <li>
+               <details>
+                  <summary className="row">
+                     <div className="f1">{t(L.WorkersRequiredForTransportationMultiplier)}</div>
+                     <div className="text-strong">
+                        {workersRequired.multiplier +
+                           Tick.current.globalMultipliers.transportCapacity.reduce(
+                              (prev, curr) => prev + curr.value,
+                              0
+                           )}
+                     </div>
+                  </summary>
+                  <ul>
+                     <li className="row">
+                        <div className="f1">{t(L.BaseMultiplier)}</div>
+                        <div>1</div>
+                     </li>
+                     {getMultipliersFor(xy, gameState).map((m) => {
+                        if (!m.worker) {
+                           return null;
+                        }
+                        return (
+                           <li key={m.source} className="row">
+                              <div className="f1">{m.source}</div>
+                              <div>{m.worker}</div>
+                           </li>
+                        );
+                     })}
+                     <li className="row">
+                        <div className="f1">{t(L.TransportCapacityMultiplier)}</div>
+                        <div>
+                           {Tick.current.globalMultipliers.transportCapacity.reduce(
+                              (prev, curr) => prev + curr.value,
+                              0
+                           )}
+                        </div>
+                     </li>
+                     <ul className="text-small">
+                        {Tick.current.globalMultipliers.transportCapacity.map((m) => {
+                           return (
+                              <li key={m.source} className="row">
+                                 <div className="f1">{m.source}</div>
+                                 <div>{m.value}</div>
+                              </li>
+                           );
+                        })}
+                     </ul>
                   </ul>
                </details>
             </li>
@@ -89,7 +140,7 @@ export function BuildingWorkerComponent({ gameState, xy }: IBuildingComponentPro
             <li>
                <details>
                   <summary className="row">
-                     <div className="f1">{t(L.WorkersRequiredMultiplier)}</div>
+                     <div className="f1">{t(L.WorkersRequiredForProductionMultiplier)}</div>
                      <div className="text-strong">{workersRequired.multiplier}</div>
                   </summary>
                   <ul>
