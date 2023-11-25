@@ -32,6 +32,7 @@ export class WorldScene extends ViewportScene {
    private _width!: number;
    private _height!: number;
    private _selectedGraphics!: SmoothGraphics;
+   private _transportLines!: SmoothGraphics;
    private _transportPool!: TransportPool;
    public tooltipPool!: TooltipPool;
    private cameraMovement: Action | null = null;
@@ -91,6 +92,7 @@ export class WorldScene extends ViewportScene {
          )
       );
       this._selectedGraphics = this.viewport.addChild(new SmoothGraphics());
+      this._transportLines = this.viewport.addChild(new SmoothGraphics());
 
       if (!viewportCenter) {
          viewportCenter = { x: this._width / 2, y: this._height / 2 };
@@ -175,7 +177,29 @@ export class WorldScene extends ViewportScene {
       Singleton().routeTo(TilePage, { xy: xy });
       const gs = getGameState();
       const building = gs.tiles[xy].building;
+      this._transportLines.clear();
       if (building) {
+         const lines: Record<string, true> = {};
+         gs.transportation[xy]?.forEach((t) => {
+            const fromGrid = xyToPoint(t.fromXy);
+            const toGrid = xyToPoint(t.toXy);
+            const key = [t.resource, (fromGrid.y - toGrid.y) / (fromGrid.x - toGrid.x)].join(",");
+            if (lines[key]) {
+               return;
+            }
+            lines[key] = true;
+            this._transportLines.lineStyle({
+               color: Color.shared.setValue(getGameOptions().resourceColors[t.resource] ?? "#ffffff"),
+               width: 2,
+               cap: LINE_CAP.ROUND,
+               join: LINE_JOIN.ROUND,
+               alignment: 0.5,
+               alpha: 0.25,
+            });
+            this._transportLines.moveTo(t.fromPosition.x, t.fromPosition.y);
+            this._transportLines.lineTo(t.toPosition.x, t.toPosition.y);
+         });
+
          switch (building.type) {
             case "MausoleumAtHalicarnassus": {
                const pos = Singleton().grid.gridToPosition(grid);

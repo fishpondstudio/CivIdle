@@ -220,6 +220,8 @@ export class TileVisual extends Container {
       switch (this._tile.building.status) {
          case "building": {
             this._construction.visible = true;
+            this._notProducing.visible = false;
+            this._upgrade.visible = false;
             this._spinner.visible = false;
             this._building.alpha = 0.5;
             this.toggleConstructionTween(true);
@@ -228,11 +230,15 @@ export class TileVisual extends Container {
          case "paused": {
             this.toggleConstructionTween(false);
             this._construction.visible = true;
+            this._notProducing.visible = false;
+            this._upgrade.visible = false;
             this._spinner.visible = false;
             this._building.alpha = 0.5;
             return;
          }
          case "upgrading": {
+            this._construction.visible = false;
+            this._notProducing.visible = false;
             this._upgrade.visible = true;
             this.toggleUpgradeTween(true);
             this._spinner.visible = false;

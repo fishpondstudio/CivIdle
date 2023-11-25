@@ -2,7 +2,7 @@ import { notifyGameStateUpdate } from "../Global";
 import { getMarketPrice, totalMultiplierFor } from "../logic/BuildingLogic";
 import { Config } from "../logic/Constants";
 import { Tick } from "../logic/TickLogic";
-import { IMarketBuildingData } from "../logic/Tile";
+import { IMarketBuildingData, MarketOptions } from "../logic/Tile";
 import { convertPriceIdToTime } from "../logic/Update";
 import { formatHMS, keysOf, round } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
@@ -98,6 +98,26 @@ export function MarketBuildingBody({ gameState, xy }: IBuildingComponentProps) {
          <BuildingStorageComponent gameState={gameState} xy={xy} />
          <BuildingProductionPriorityComponent gameState={gameState} xy={xy} />
          <BuildingStockpileComponent gameState={gameState} xy={xy} />
+         <fieldset>
+            <legend>{t(L.MarketSettings)}</legend>
+            <div className="row">
+               <div className="f1">{t(L.ClearAfterUpdate)}</div>
+               <div
+                  className="pointer"
+                  onClick={() => {
+                     playClick();
+                     market.marketOptions ^= MarketOptions.ClearAfterUpdate;
+                     notifyGameStateUpdate();
+                  }}
+               >
+                  {market.marketOptions & MarketOptions.ClearAfterUpdate ? (
+                     <div className="m-icon text-green">toggle_on</div>
+                  ) : (
+                     <div className="m-icon text-desc">toggle_off</div>
+                  )}
+               </div>
+            </div>
+         </fieldset>
          <BuildingColorComponent gameState={gameState} xy={xy} />
          <BuildingSellComponent gameState={gameState} xy={xy} />
       </div>

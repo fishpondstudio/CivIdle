@@ -1,7 +1,7 @@
 import { Building } from "../definitions/BuildingDefinitions";
 import { Deposit, Resource } from "../definitions/ResourceDefinitions";
 import { PartialSet, PartialTabulate } from "../definitions/TypeDefinitions";
-import { clamp } from "../utilities/Helper";
+import { clamp, isNullOrUndefined } from "../utilities/Helper";
 import { Config } from "./Constants";
 import { GameState } from "./GameState";
 
@@ -26,9 +26,15 @@ export interface IBuildingData {
    priority: number;
 }
 
+export enum MarketOptions {
+   None = 0,
+   ClearAfterUpdate = 1 << 0,
+}
+
 export interface IMarketBuildingData extends IBuildingData {
    sellResources: PartialSet<Resource>;
    availableResources: Partial<Record<Resource, Resource>>;
+   marketOptions: MarketOptions;
 }
 
 export interface IResourceImport {
@@ -72,6 +78,9 @@ export function makeBuilding(data: Pick<IBuildingData, "type"> & Partial<IBuildi
       if (!market.sellResources) {
          market.sellResources = {};
          market.availableResources = {};
+      }
+      if (isNullOrUndefined(market.marketOptions)) {
+         market.marketOptions = MarketOptions.None;
       }
    }
 

@@ -5,6 +5,14 @@ interface PatchNote {
 
 export const PatchNotes: PatchNote[] = [
    {
+      version: "0.1.78",
+      content: [
+         ["Bugfix", "Fix transports are sometimes made from incorrect buildings"],
+         ["Bugfix", "Fix building status icon showing up on buildings that are being upgraded"],
+         ["QoL", "When selecting a tile, show all incoming transports on map"],
+      ],
+   },
+   {
       version: "0.1.77",
       content: [
          ["Bugfix", "Fix builder capacity when constructing wonders are not calculated correctly"],

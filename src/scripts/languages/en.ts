@@ -685,4 +685,6 @@ export const EN = {
    TransportCapacityMultiplier: "Transport Capacity Multiplier",
    WonderBuilderCapacityDesc:
       "Builder Capacity when constructing wonders are affect by the age and technology that unlocks the wonder",
+   MarketSettings: "Market Settings",
+   ClearAfterUpdate: "Clear All Trades After Market Update",
 };

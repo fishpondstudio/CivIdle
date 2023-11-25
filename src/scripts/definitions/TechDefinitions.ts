@@ -147,7 +147,6 @@ export class TechDefinitions {
       requireTech: ["Market", "Stateship"],
       unlockBuilding: ["Marbleworks"],
       buildingMultiplier: { House: { worker: 1 } },
-      globalMultiplier: { transportCapacity: 1 },
    };
 
    LandTrade: ITechDefinition = {
@@ -155,6 +154,7 @@ export class TechDefinitions {
       column: 4,
       requireTech: ["Market", "Arithmetic"],
       unlockBuilding: ["Caravansary"],
+      globalMultiplier: { transportCapacity: 1 },
    };
 
    Astronomy: ITechDefinition = {

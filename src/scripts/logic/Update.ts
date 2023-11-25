@@ -30,6 +30,7 @@ import {
    deductResources,
    filterResource,
    filterTransportable,
+   getAvailableResource,
    getAvailableWorkers,
    getBuilderCapacity,
    getBuildingCost,
@@ -54,7 +55,7 @@ import { clearIntraTickCache, getBuildingIO, getXyBuildings, unlockedResources }
 import { onBuildingComplete, onBuildingProductionComplete } from "./LogicCallback";
 import { getAmountInTransit } from "./ResourceLogic";
 import { CurrentTickChanged, EmptyTickData, IModifier, Multiplier, Tick } from "./TickLogic";
-import { IBuildingData, IMarketBuildingData, IResourceImportBuildingData } from "./Tile";
+import { IBuildingData, IMarketBuildingData, IResourceImportBuildingData, MarketOptions } from "./Tile";
 
 let timeSinceLastTick = 0;
 
@@ -286,15 +287,6 @@ function tickTile(xy: string, gs: GameState, offline: boolean): void {
       if (amount <= 0) {
          return;
       }
-      if (input[res] && amount <= getStockpileMax(building) * input[res]!) {
-         return;
-      }
-      if ("resourceImports" in building) {
-         const ri = building as IResourceImportBuildingData;
-         if (ri.resourceImports[res] && amount <= (ri.resourceImports[res]?.cap ?? 0)) {
-            return;
-         }
-      }
       safePush(Tick.next.resourcesByXy, res, xy);
       safePush(Tick.next.resourcesByGrid, res, xyToPointArray(xy));
    });
@@ -465,13 +457,16 @@ export function transportResource(
       if (fromXy == targetXy) {
          continue;
       }
-      if (!building.resources[res]) {
+
+      const availableAmount = getAvailableResource(fromXy, res, gs);
+      if (availableAmount <= 0) {
          continue;
       }
+
       // const distance = Singleton().grid.distance(pointArray[0], pointArray[1], targetPoint[0], targetPoint[1]);
       const transportCapacity =
          workerCapacity + Tick.current.globalMultipliers.transportCapacity.reduce((prev, curr) => prev + curr.value, 0);
-      if (building.resources[res]! >= amountLeft) {
+      if (availableAmount >= amountLeft) {
          const fuelAmount = Math.ceil(amountLeft / transportCapacity);
          const fuelLeft = getAvailableWorkers("Worker");
          if (fuelLeft >= fuelAmount) {
@@ -485,12 +480,12 @@ export function transportResource(
          // Here we return because either we've got all we need, or we run out of workers (no need to continue)
          return;
       } else {
-         const amountToTransport = building.resources[res]!;
+         const amountToTransport = availableAmount!;
          const fuelAmount = Math.ceil(amountToTransport / transportCapacity);
          const fuelLeft = getAvailableWorkers("Worker");
          if (fuelLeft >= fuelAmount) {
             amountLeft -= amountToTransport;
-            building.resources[res] = 0;
+            building.resources[res]! -= amountToTransport;
             addTransportation(res, amountToTransport, "Worker", fuelAmount, fromXy, targetXy, gs);
             // We continue here because the next source might have what we need
          } else if (fuelLeft > 0) {
@@ -563,6 +558,9 @@ function tickPrice(gs: GameState) {
                }
                market.availableResources[res] = buy[idx % buy.length];
             });
+         }
+         if (forceUpdatePrice && market.marketOptions & MarketOptions.ClearAfterUpdate) {
+            market.sellResources = {};
          }
       }
    });

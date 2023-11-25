@@ -19,10 +19,10 @@ import { Textures } from "../utilities/SceneManager";
 import { Singleton } from "../utilities/Singleton";
 import { Config } from "./Constants";
 import { GameState } from "./GameState";
-import { getBuildingIO, getBuildingsByType } from "./IntraTickCache";
+import { getBuildingIO, getBuildingsByType, getXyBuildings } from "./IntraTickCache";
 import { getAgeForTech, getBuildingUnlockTech } from "./TechLogic";
 import { Multiplier, MultiplierWithSource, NotProducingReason, Tick } from "./TickLogic";
-import { IBuildingData, IHaveTypeAndLevel } from "./Tile";
+import { IBuildingData, IHaveTypeAndLevel, IResourceImportBuildingData } from "./Tile";
 
 export function getBuildingTexture(b: Building, textures: Textures, city: City) {
    return textures[`Building${b}_${city}`] ?? textures[`Building${b}`];
@@ -469,4 +469,40 @@ export function getMarketPrice(resource: Resource, xy: string, gs: GameState): n
    const rand = srand(gs.lastPriceUpdated + xy + resource);
    const fluctuation = 0.75 + rand() * 0.5;
    return (Config.ResourcePrice[resource] ?? 0) * fluctuation;
+}
+
+export function getAvailableResource(xy: string, res: Resource, gs: GameState): number {
+   const building = getXyBuildings(gs)[xy];
+
+   if (!building) {
+      return 0;
+   }
+
+   if (!building.resources[res]) {
+      return 0;
+   }
+
+   if ("resourceImports" in building) {
+      const ri = building as IResourceImportBuildingData;
+      if (ri.resourceImports[res]) {
+         return clamp(building.resources[res]! - (ri.resourceImports[res]?.cap ?? 0), 0, Infinity);
+      } else {
+         return building.resources[res]!;
+      }
+   }
+
+   if (!Tick.current.buildings[building.type].input[res]) {
+      return building.resources[res]!;
+   }
+
+   const input = getBuildingIO(xy, "input", IOCalculation.Capacity | IOCalculation.Multiplier, gs);
+   if (input[res]) {
+      return clamp(
+         building.resources[res]! - (getStockpileMax(building) + building.stockpileCapacity) * input[res]!,
+         0,
+         Infinity
+      );
+   } else {
+      return building.resources[res]!;
+   }
 }
