@@ -39,7 +39,7 @@ const OnKeydown = new TypedEvent<KeyboardEvent>();
 
 document.addEventListener("keydown", OnKeydown.emit);
 
-export function useShortcut(shortcut: Shortcut, callback: () => void, deps?: DependencyList) {
+export function useShortcut(shortcut: Shortcut, callback: () => void, deps: DependencyList) {
    useEffect(() => {
       const handler = (e: KeyboardEvent) => {
          if (e.target instanceof HTMLInputElement) {

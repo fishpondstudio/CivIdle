@@ -145,7 +145,7 @@ export class TechDefinitions {
       name: () => t(L.RoadAndWheel),
       column: 4,
       requireTech: ["Market", "Stateship"],
-      unlockBuilding: ["Marbleworks"],
+      unlockBuilding: ["Warehouse"],
       buildingMultiplier: { House: { worker: 1 } },
    };
 
@@ -175,7 +175,7 @@ export class TechDefinitions {
       name: () => t(L.Construction),
       column: 5,
       requireTech: ["RoadAndWheel"],
-      unlockBuilding: ["IronForge", "MausoleumAtHalicarnassus"],
+      unlockBuilding: ["IronForge", "Marbleworks"],
    };
 
    Music: ITechDefinition = {
@@ -211,14 +211,14 @@ export class TechDefinitions {
       name: () => t(L.CityState),
       column: 6,
       requireTech: ["Construction", "Music"],
-      unlockBuilding: ["CheeseMaker"],
+      unlockBuilding: ["Bakery", "MausoleumAtHalicarnassus"],
    };
 
    Literature: ITechDefinition = {
       name: () => t(L.Literature),
       column: 6,
       requireTech: ["Calendar", "Music"],
-      unlockBuilding: ["WritersGuild"],
+      unlockBuilding: ["CheeseMaker", "WritersGuild"],
    };
 
    Machinery: ITechDefinition = {
@@ -226,6 +226,8 @@ export class TechDefinitions {
       column: 7,
       requireTech: ["PreciousMetal", "Engineering"],
       unlockBuilding: ["SiegeWorkshop"],
+      unlockFeature: ["WarehouseUpgrade"],
+      additionalUpgrades: [() => t(L.WarehouseUpgrade)],
    };
 
    Politics: ITechDefinition = {
@@ -253,21 +255,21 @@ export class TechDefinitions {
       name: () => t(L.Architecture),
       column: 8,
       requireTech: ["Machinery"],
-      unlockBuilding: ["Apartment", "ChichenItza"],
+      unlockBuilding: ["SwordForge", "ChichenItza"],
    };
 
    Democracy: ITechDefinition = {
       name: () => t(L.Democracy),
       column: 8,
       requireTech: ["Politics"],
-      unlockBuilding: ["SwordForge", "Parthenon"],
+      unlockBuilding: ["Apartment", "Parthenon"],
    };
 
    Autocracy: ITechDefinition = {
       name: () => t(L.Autocracy),
       column: 8,
       requireTech: ["Politics", "Library", "Theater"],
-      unlockBuilding: ["Bakery", "TempleOfHeaven"],
+      unlockBuilding: ["TempleOfHeaven"],
    };
 
    Religion: ITechDefinition = {
@@ -316,7 +318,7 @@ export class TechDefinitions {
       name: () => t(L.CivilService),
       column: 10,
       requireTech: ["Feudalism"],
-      unlockBuilding: ["Warehouse"],
+      unlockBuilding: [],
    };
 
    HolyEmpire: ITechDefinition = {

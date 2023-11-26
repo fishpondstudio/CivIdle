@@ -1,5 +1,5 @@
 import { notifyGameStateUpdate } from "../Global";
-import { getMarketPrice, totalMultiplierFor } from "../logic/BuildingLogic";
+import { applyToAllBuildings, getMarketPrice, totalMultiplierFor } from "../logic/BuildingLogic";
 import { Config } from "../logic/Constants";
 import { Tick } from "../logic/TickLogic";
 import { IMarketBuildingData, MarketOptions } from "../logic/Tile";
@@ -116,6 +116,20 @@ export function MarketBuildingBody({ gameState, xy }: IBuildingComponentProps) {
                      <div className="m-icon text-desc">toggle_off</div>
                   )}
                </div>
+            </div>
+            <div className="sep5"></div>
+            <div
+               className="text-link text-small"
+               onClick={() => {
+                  playClick();
+                  applyToAllBuildings<IMarketBuildingData>(
+                     market.type,
+                     { marketOptions: market.marketOptions },
+                     gameState
+                  );
+               }}
+            >
+               {t(L.ApplyToAll, { building: Tick.current.buildings[building.type].name() })}
             </div>
          </fieldset>
          <BuildingColorComponent gameState={gameState} xy={xy} />

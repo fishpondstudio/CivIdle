@@ -46,6 +46,15 @@ export interface IResourceImportBuildingData extends IBuildingData {
    resourceImports: Partial<Record<Resource, IResourceImport>>;
 }
 
+export enum WarehouseOptions {
+   None = 0,
+   Autopilot = 1 << 0,
+}
+
+export interface IWarehouseBuildingData extends IResourceImportBuildingData {
+   warehouseOptions: WarehouseOptions;
+}
+
 export interface IHaveTypeAndLevel {
    type: Building;
    level: number;
@@ -73,21 +82,34 @@ export function makeBuilding(data: Pick<IBuildingData, "type"> & Partial<IBuildi
       ...data,
    };
 
-   if (building.type == "Market") {
-      const market = building as IMarketBuildingData;
-      if (!market.sellResources) {
-         market.sellResources = {};
-         market.availableResources = {};
+   switch (building.type) {
+      case "Market": {
+         const market = building as IMarketBuildingData;
+         if (!market.sellResources) {
+            market.sellResources = {};
+            market.availableResources = {};
+         }
+         if (isNullOrUndefined(market.marketOptions)) {
+            market.marketOptions = MarketOptions.None;
+         }
+         break;
       }
-      if (isNullOrUndefined(market.marketOptions)) {
-         market.marketOptions = MarketOptions.None;
+      case "Caravansary": {
+         const trade = building as IResourceImportBuildingData;
+         if (!trade.resourceImports) {
+            trade.resourceImports = {};
+         }
+         break;
       }
-   }
-
-   if (building.type == "Caravansary") {
-      const market = building as IResourceImportBuildingData;
-      if (!market.resourceImports) {
-         market.resourceImports = {};
+      case "Warehouse": {
+         const warehouse = building as IWarehouseBuildingData;
+         if (!warehouse.resourceImports) {
+            warehouse.resourceImports = {};
+         }
+         if (isNullOrUndefined(warehouse.warehouseOptions)) {
+            warehouse.warehouseOptions = WarehouseOptions.None;
+         }
+         break;
       }
    }
 

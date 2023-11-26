@@ -33,11 +33,15 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): JSX.Element {
       tile.building = makeBuilding({ type: k });
       notifyGameStateUpdate();
    };
-   useShortcut("EmptyTilePageBuildLastBuilding", () => {
-      if (lastBuild) {
-         build(lastBuild);
-      }
-   });
+   useShortcut(
+      "EmptyTilePageBuildLastBuilding",
+      () => {
+         if (lastBuild) {
+            build(lastBuild);
+         }
+      },
+      []
+   );
    const buildingByType = getTypeBuildings(gs);
    return (
       <div className="window" onPointerDown={() => setSelected(null)}>

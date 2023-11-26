@@ -181,4 +181,7 @@ function migrateSavedGame(gs: SavedGame) {
          }
       });
    });
+   forEach(gs.current.unlockedTech, (tech) => {
+      Config.Tech[tech].unlockFeature?.forEach((f) => (gs.current.features[f] = true));
+   });
 }

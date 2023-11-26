@@ -20,9 +20,10 @@ import { Singleton } from "../utilities/Singleton";
 import { Config } from "./Constants";
 import { GameState } from "./GameState";
 import { getBuildingIO, getBuildingsByType, getXyBuildings } from "./IntraTickCache";
+import { getResourcesValue } from "./ResourceLogic";
 import { getAgeForTech, getBuildingUnlockTech } from "./TechLogic";
 import { Multiplier, MultiplierWithSource, NotProducingReason, Tick } from "./TickLogic";
-import { IBuildingData, IHaveTypeAndLevel, IResourceImportBuildingData } from "./Tile";
+import { IBuildingData, IHaveTypeAndLevel, IResourceImportBuildingData, IWarehouseBuildingData } from "./Tile";
 
 export function getBuildingTexture(b: Building, textures: Textures, city: City) {
    return textures[`Building${b}_${city}`] ?? textures[`Building${b}`];
@@ -37,7 +38,7 @@ export function getNotProducingTexture(reason: NotProducingReason, textures: Tex
       case "StorageFull":
          return textures["StorageFull"];
       default:
-         return textures["StorageFull"];
+         return textures["NotProducingGeneral"];
    }
 }
 
@@ -170,20 +171,16 @@ export function getStorageFor(xy: string, gs: GameState): IStorageResult {
    const used = reduceOf(building?.resources, accumulate, 0);
    const multiplier = totalMultiplierFor(xy, "storage", 1, gs);
 
+   let base = 0;
    if (building?.type == "Caravansary" || building?.type == "Market") {
-      const base = building.level * STORAGE_TO_PRODUCTION * 10;
-      return {
-         base,
-         multiplier,
-         total: base * multiplier,
-         used,
-      };
+      base = building.level * STORAGE_TO_PRODUCTION * 10;
+   } else if (building?.type == "Warehouse") {
+      base = building.level * STORAGE_TO_PRODUCTION * 100;
+   } else {
+      base =
+         60 * reduceOf(getBuildingIO(xy, "input", IOCalculation.Multiplier, gs), accumulate, 0) +
+         STORAGE_TO_PRODUCTION * reduceOf(getBuildingIO(xy, "output", IOCalculation.Multiplier, gs), accumulate, 0);
    }
-
-   const base =
-      60 * reduceOf(getBuildingIO(xy, "input", IOCalculation.Multiplier, gs), accumulate, 0) +
-      STORAGE_TO_PRODUCTION * reduceOf(getBuildingIO(xy, "output", IOCalculation.Multiplier, gs), accumulate, 0);
-
    return { base, multiplier, total: base * multiplier, used };
 }
 
@@ -331,9 +328,8 @@ export function getBuildingCost(building: IHaveTypeAndLevel): PartialTabulate<Re
       cost = { ...Tick.current.buildings[type].input } ?? {};
    }
    if (isEmpty(cost)) {
-      console.error(`${type}: does not have 'input' or 'construction' defined`);
+      return {};
    }
-
    let multiplier = 10;
    // This is a wonder, we apply the wonder multiplier here
    if (isWorldWonder(building.type)) {
@@ -357,20 +353,24 @@ export function getBuildingCost(building: IHaveTypeAndLevel): PartialTabulate<Re
    return cost;
 }
 
-export function getBuildingUpgradeCost(
+export function getTotalBuildingCost(
    building: Building,
-   fromLevel: number,
-   toLevel: number
+   currentLevel: number,
+   desiredLevel: number
 ): PartialTabulate<Resource> {
-   console.assert(fromLevel <= toLevel);
-   const start: IHaveTypeAndLevel = { type: building, level: fromLevel };
+   console.assert(currentLevel <= desiredLevel);
+   const start: IHaveTypeAndLevel = { type: building, level: currentLevel };
    const result: PartialTabulate<Resource> = {};
-   while (start.level < toLevel) {
+   while (start.level <= desiredLevel) {
       const cost = getBuildingCost(start);
       forEach(cost, (res, amount) => safeAdd(result, res, amount));
-      start.level++;
+      ++start.level;
    }
    return result;
+}
+
+export function getBuildingValue(building: IBuildingData): number {
+   return getResourcesValue(getTotalBuildingCost(building.type, 1, building.level));
 }
 
 export function getBuildingPercentage(xy: string, gs: GameState): number {
@@ -432,6 +432,19 @@ export function getWarehouseCapacity(building: IHaveTypeAndLevel): number {
    return building.level * 10;
 }
 
+export function getWarehouseIdleCapacity(warehouse: IWarehouseBuildingData): number {
+   return (
+      getWarehouseCapacity(warehouse) -
+      reduceOf(
+         warehouse.resourceImports,
+         (prev, k, v) => {
+            return prev + v.perCycle;
+         },
+         0
+      )
+   );
+}
+
 export function getBuilderCapacity(
    building: IHaveTypeAndLevel,
    xy: string,
@@ -459,7 +472,7 @@ export function getBuilderCapacity(
    return { multiplier: builder, base: baseCapacity, total: builder * baseCapacity };
 }
 
-export function applyToAllBuildings(building: Building, settings: Partial<IBuildingData>, gs: GameState) {
+export function applyToAllBuildings<T extends IBuildingData>(building: Building, settings: Partial<T>, gs: GameState) {
    forEach(getBuildingsByType(building, gs), (xy, tile) => {
       Object.assign(tile.building, settings);
    });

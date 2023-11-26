@@ -1,7 +1,7 @@
 import classNames from "classnames";
 import { useState } from "react";
 import { notifyGameStateUpdate } from "../Global";
-import { getBuildingUpgradeCost, getBuildingUpgradeLevels } from "../logic/BuildingLogic";
+import { getBuildingUpgradeLevels, getTotalBuildingCost } from "../logic/BuildingLogic";
 import { Config } from "../logic/Constants";
 import {} from "../logic/GameState";
 import { useShortcut } from "../logic/Shortcut";
@@ -21,7 +21,7 @@ export function BuildingUpgradeComponent({ gameState, xy }: IBuildingComponentPr
    }
    const levels = getBuildingUpgradeLevels(building);
    const [selected, setSelected] = useState(0);
-   const cost = getBuildingUpgradeCost(building.type, building.level, building.level + levels[selected]);
+   const cost = getTotalBuildingCost(building.type, building.level + 1, building.level + levels[selected]);
    const upgrade = (level: number) => {
       building.desiredLevel = building.level + level;
       building.status = "upgrading";

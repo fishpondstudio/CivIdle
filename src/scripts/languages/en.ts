@@ -687,4 +687,10 @@ export const EN = {
       "Builder Capacity when constructing wonders are affect by the age and technology that unlocks the wonder",
    MarketSettings: "Market Settings",
    ClearAfterUpdate: "Clear All Trades After Market Update",
+   WarehouseSettings: "Warehouse Settings",
+   WarehouseSettingsAutopilot: "Autopilot Mode",
+   WarehouseSettingsAutopilotDesc:
+      "This warehouse will use its idle capacity to transport resources from buildings that have full storage. Current idle capacity: %{capacity}",
+   WarehouseUpgrade:
+      "Unlock warehouse autopilot mode. Free transportation between a warehouse and its adjacent buildings",
 };

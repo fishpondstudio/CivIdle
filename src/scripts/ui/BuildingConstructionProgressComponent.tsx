@@ -20,7 +20,7 @@ export function BuildingConstructionProgressComponent({ gameState, xy }: IBuildi
       return null;
    }
    const { base, multiplier, total } = getBuilderCapacity(building, xy, gameState);
-   const resources = getBuildingCost(building);
+   const resources = getBuildingCost({ type: building.type, level: building.level + 1 });
    return (
       <fieldset>
          <legend>

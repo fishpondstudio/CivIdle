@@ -23,10 +23,9 @@ export function BuildingWorkerComponent({ gameState, xy }: IBuildingComponentPro
    if (building == null) {
       return null;
    }
-   if (
-      isEmpty(getBuildingIO(xy, "input", IOCalculation.None, gameState)) &&
-      isEmpty(getBuildingIO(xy, "output", IOCalculation.None, gameState))
-   ) {
+   const input = getBuildingIO(xy, "input", IOCalculation.None, gameState);
+   const output = getBuildingIO(xy, "output", IOCalculation.None, gameState);
+   if (isEmpty(input) && isEmpty(output)) {
       return null;
    }
    const showWarning = Tick.current.notProducingReasons[xy] === "NotEnoughWorkers";
@@ -34,134 +33,143 @@ export function BuildingWorkerComponent({ gameState, xy }: IBuildingComponentPro
       <fieldset>
          <legend>{t(L.Workers)}</legend>
          <ul className="tree-view">
-            <li>
-               <details>
-                  <summary className="row">
-                     <div className="f1">{t(L.WorkersRequiredInput)}</div>
-                     <div className="text-strong">
-                        {gameState.transportation[xy]?.reduce((prev, curr) => prev + curr.currentFuelAmount, 0) ?? 0}
-                     </div>
-                  </summary>
-                  <ul>
-                     {gameState.transportation[xy]?.map((v) => {
-                        return (
-                           <li className="row" key={v.id}>
-                              <div className="f1">
-                                 {t(L.ResourceFromBuilding, {
-                                    resource: `${fmtNumber(v.amount, gameState)} ${getResourceName(v.resource)}`,
-                                    building: getBuildingName(v.fromXy, gameState),
-                                 })}{" "}
-                                 ({v.ticksSpent}/{v.ticksRequired})
+            {isEmpty(input) ? null : (
+               <>
+                  <li>
+                     <details>
+                        <summary className="row">
+                           <div className="f1">{t(L.WorkersRequiredInput)}</div>
+                           <div className="text-strong">
+                              {gameState.transportation[xy]?.reduce((prev, curr) => prev + curr.currentFuelAmount, 0) ??
+                                 0}
+                           </div>
+                        </summary>
+                        <ul>
+                           {gameState.transportation[xy]?.map((v) => {
+                              return (
+                                 <li className="row" key={v.id}>
+                                    <div className="f1">
+                                       {t(L.ResourceFromBuilding, {
+                                          resource: `${fmtNumber(v.amount, gameState)} ${getResourceName(v.resource)}`,
+                                          building: getBuildingName(v.fromXy, gameState),
+                                       })}{" "}
+                                       ({v.ticksSpent}/{v.ticksRequired})
+                                    </div>
+                                    <div>{v.currentFuelAmount}</div>
+                                 </li>
+                              );
+                           })}
+                        </ul>
+                     </details>
+                  </li>
+                  <li>
+                     <details>
+                        <summary className="row">
+                           <div className="f1">{t(L.WorkersRequiredForTransportationMultiplier)}</div>
+                           <div className="text-strong">
+                              {workersRequired.multiplier +
+                                 Tick.current.globalMultipliers.transportCapacity.reduce(
+                                    (prev, curr) => prev + curr.value,
+                                    0
+                                 )}
+                           </div>
+                        </summary>
+                        <ul>
+                           <li className="row">
+                              <div className="f1">{t(L.BaseMultiplier)}</div>
+                              <div>1</div>
+                           </li>
+                           {getMultipliersFor(xy, gameState).map((m) => {
+                              if (!m.worker) {
+                                 return null;
+                              }
+                              return (
+                                 <li key={m.source} className="row">
+                                    <div className="f1">{m.source}</div>
+                                    <div>{m.worker}</div>
+                                 </li>
+                              );
+                           })}
+                           <li className="row">
+                              <div className="f1">{t(L.TransportCapacityMultiplier)}</div>
+                              <div>
+                                 {Tick.current.globalMultipliers.transportCapacity.reduce(
+                                    (prev, curr) => prev + curr.value,
+                                    0
+                                 )}
                               </div>
-                              <div>{v.currentFuelAmount}</div>
                            </li>
-                        );
-                     })}
-                  </ul>
-               </details>
-            </li>
-            <li>
-               <details>
-                  <summary className="row">
-                     <div className="f1">{t(L.WorkersRequiredForTransportationMultiplier)}</div>
-                     <div className="text-strong">
-                        {workersRequired.multiplier +
-                           Tick.current.globalMultipliers.transportCapacity.reduce(
-                              (prev, curr) => prev + curr.value,
-                              0
-                           )}
-                     </div>
-                  </summary>
-                  <ul>
-                     <li className="row">
-                        <div className="f1">{t(L.BaseMultiplier)}</div>
-                        <div>1</div>
-                     </li>
-                     {getMultipliersFor(xy, gameState).map((m) => {
-                        if (!m.worker) {
-                           return null;
-                        }
-                        return (
-                           <li key={m.source} className="row">
-                              <div className="f1">{m.source}</div>
-                              <div>{m.worker}</div>
+                           <ul className="text-small">
+                              {Tick.current.globalMultipliers.transportCapacity.map((m) => {
+                                 return (
+                                    <li key={m.source} className="row">
+                                       <div className="f1">{m.source}</div>
+                                       <div>{m.value}</div>
+                                    </li>
+                                 );
+                              })}
+                           </ul>
+                        </ul>
+                     </details>
+                  </li>
+               </>
+            )}
+            {isEmpty(output) ? null : (
+               <>
+                  <li>
+                     <details>
+                        <summary className="row">
+                           {showWarning ? <img src={warning} style={{ margin: "0 2px 0 0" }} /> : null}
+                           <div className={classNames({ f1: true, "production-warning": showWarning })}>
+                              {t(L.WorkersRequiredOutput)}
+                           </div>
+                           <div className="text-strong">
+                              <FormatNumber value={Tick.current.workersAssignment[xy] ?? 0} />
+                           </div>
+                        </summary>
+                        <ul>
+                           <li className="row">
+                              <div className="f1">{t(L.WorkersRequiredBeforeMultiplier)}</div>
+                              <div>
+                                 <FormatNumber value={workersRequired.rawOutput} />
+                              </div>
                            </li>
-                        );
-                     })}
-                     <li className="row">
-                        <div className="f1">{t(L.TransportCapacityMultiplier)}</div>
-                        <div>
-                           {Tick.current.globalMultipliers.transportCapacity.reduce(
-                              (prev, curr) => prev + curr.value,
-                              0
-                           )}
-                        </div>
-                     </li>
-                     <ul className="text-small">
-                        {Tick.current.globalMultipliers.transportCapacity.map((m) => {
-                           return (
-                              <li key={m.source} className="row">
-                                 <div className="f1">{m.source}</div>
-                                 <div>{m.value}</div>
-                              </li>
-                           );
-                        })}
-                     </ul>
-                  </ul>
-               </details>
-            </li>
-            <li>
-               <details>
-                  <summary className="row">
-                     {showWarning ? <img src={warning} style={{ margin: "0 2px 0 0" }} /> : null}
-                     <div className={classNames({ f1: true, "production-warning": showWarning })}>
-                        {t(L.WorkersRequiredOutput)}
-                     </div>
-                     <div className="text-strong">
-                        <FormatNumber value={Tick.current.workersAssignment[xy] ?? 0} />
-                     </div>
-                  </summary>
-                  <ul>
-                     <li className="row">
-                        <div className="f1">{t(L.WorkersRequiredBeforeMultiplier)}</div>
-                        <div>
-                           <FormatNumber value={workersRequired.rawOutput} />
-                        </div>
-                     </li>
-                     <li className="row">
-                        <div className="f1">{t(L.WorkersRequiredAfterMultiplier)}</div>
-                        <div>
-                           <FormatNumber value={workersRequired.output} />
-                        </div>
-                     </li>
-                  </ul>
-               </details>
-            </li>
-            <li>
-               <details>
-                  <summary className="row">
-                     <div className="f1">{t(L.WorkersRequiredForProductionMultiplier)}</div>
-                     <div className="text-strong">{workersRequired.multiplier}</div>
-                  </summary>
-                  <ul>
-                     <li className="row">
-                        <div className="f1">{t(L.BaseMultiplier)}</div>
-                        <div>1</div>
-                     </li>
-                     {getMultipliersFor(xy, gameState).map((m, idx) => {
-                        if (!m.worker) {
-                           return null;
-                        }
-                        return (
-                           <li key={idx} className="row">
-                              <div className="f1">{m.source}</div>
-                              <div>{m.worker}</div>
+                           <li className="row">
+                              <div className="f1">{t(L.WorkersRequiredAfterMultiplier)}</div>
+                              <div>
+                                 <FormatNumber value={workersRequired.output} />
+                              </div>
                            </li>
-                        );
-                     })}
-                  </ul>
-               </details>
-            </li>
+                        </ul>
+                     </details>
+                  </li>
+                  <li>
+                     <details>
+                        <summary className="row">
+                           <div className="f1">{t(L.WorkersRequiredForProductionMultiplier)}</div>
+                           <div className="text-strong">{workersRequired.multiplier}</div>
+                        </summary>
+                        <ul>
+                           <li className="row">
+                              <div className="f1">{t(L.BaseMultiplier)}</div>
+                              <div>1</div>
+                           </li>
+                           {getMultipliersFor(xy, gameState).map((m, idx) => {
+                              if (!m.worker) {
+                                 return null;
+                              }
+                              return (
+                                 <li key={idx} className="row">
+                                    <div className="f1">{m.source}</div>
+                                    <div>{m.worker}</div>
+                                 </li>
+                              );
+                           })}
+                        </ul>
+                     </details>
+                  </li>
+               </>
+            )}
          </ul>
          <div className="sep10"></div>
          <div className="separator has-title">

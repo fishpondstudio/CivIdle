@@ -1,7 +1,8 @@
+import { IPointData } from "pixi.js";
 import { Building, IBuildingDefinition } from "../definitions/BuildingDefinitions";
 import { Deposit, Resource } from "../definitions/ResourceDefinitions";
 import { PartialSet, PartialTabulate } from "../definitions/TypeDefinitions";
-import { forEach, safeAdd } from "../utilities/Helper";
+import { forEach, safeAdd, xyToPoint } from "../utilities/Helper";
 import { IOCalculation, totalMultiplierFor } from "./BuildingLogic";
 import { Config } from "./Constants";
 import { GameState } from "./GameState";
@@ -16,6 +17,7 @@ class IntraTickCache {
    buildingsByXy: Partial<Record<string, IBuildingData>> | undefined;
    resourceAmount: PartialTabulate<Resource> | undefined;
    buildingIO: Record<string, PartialTabulate<Resource>> = {};
+   storageFullBuildings: IPointData[] | undefined;
 }
 
 let _cache = new IntraTickCache();
@@ -78,6 +80,20 @@ export function revealedDeposits(gs: GameState): PartialSet<Deposit> {
       });
    });
    return _cache.revealedDeposits;
+}
+
+export function getStorageFullBuildings(gs: GameState): IPointData[] {
+   if (_cache.storageFullBuildings) {
+      return _cache.storageFullBuildings;
+   }
+   const result: IPointData[] = [];
+   forEach(Tick.current.notProducingReasons, (xy, reason) => {
+      if (reason === "StorageFull") {
+         result.push(xyToPoint(xy));
+      }
+   });
+   _cache.storageFullBuildings = result;
+   return result;
 }
 
 export function getTypeBuildings(gs: GameState): Partial<Record<Building, Record<string, Required<ITileData>>>> {

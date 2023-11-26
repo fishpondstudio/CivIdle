@@ -1,7 +1,8 @@
 import { Building } from "../definitions/BuildingDefinitions";
 import { Resource } from "../definitions/ResourceDefinitions";
 import { PartialTabulate } from "../definitions/TypeDefinitions";
-import { forEach } from "../utilities/Helper";
+import { forEach, reduceOf } from "../utilities/Helper";
+import { Config } from "./Constants";
 import { GameState } from "./GameState";
 import { Tick } from "./TickLogic";
 
@@ -57,6 +58,10 @@ export function getAmountInTransit(xy: string, res: Resource, gs: GameState) {
          return prev + (curr.resource === res ? curr.amount : 0);
       }, 0) ?? 0
    );
+}
+
+export function getResourcesValue(resources: PartialTabulate<Resource>): number {
+   return reduceOf(resources, (prev, res, amount) => prev + Config.ResourcePrice[res]! * amount, 0);
 }
 
 export function getBuildingsThatProduce(res: Resource): Building[] {

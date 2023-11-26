@@ -3,7 +3,7 @@ import { PartialSet } from "../definitions/TypeDefinitions";
 import { getStorageFor } from "../logic/BuildingLogic";
 import { Tick } from "../logic/TickLogic";
 import { IResourceImportBuildingData } from "../logic/Tile";
-import { forEach, jsxMapOf } from "../utilities/Helper";
+import { forEach, keysOf } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
 import { ChangeResourceImportModal } from "./ChangeResourceImportModal";
 import { showModal } from "./GlobalModal";
@@ -45,31 +45,33 @@ export function ResourceImportComponent({ gameState, xy }: IBuildingComponentPro
                      <th className="text-right">{t(L.ResourceImportImportCap)}</th>
                      <th></th>
                   </tr>
-                  {jsxMapOf(resources, (res) => {
-                     const ri = building.resourceImports[res];
-                     return (
-                        <tr key={res}>
-                           <td>{Tick.current.resources[res].name()}</td>
-                           <td className="text-right">
-                              <FormatNumber value={building.resources[res] ?? 0} />
-                           </td>
-                           <td className="text-right" onWheel={(e) => {}}>
-                              <FormatNumber value={ri?.perCycle ?? 0} />
-                           </td>
-                           <td className="text-right">
-                              <FormatNumber value={ri?.cap ?? 0} />
-                           </td>
-                           <td
-                              className="text-right"
-                              onClick={() =>
-                                 showModal(<ChangeResourceImportModal building={building} resource={res} />)
-                              }
-                           >
-                              <div className="m-icon small pointer text-link">settings</div>
-                           </td>
-                        </tr>
-                     );
-                  })}
+                  {keysOf(resources)
+                     .sort((a, b) => Tick.current.resources[a].name().localeCompare(Tick.current.resources[b].name()))
+                     .map((res) => {
+                        const ri = building.resourceImports[res];
+                        return (
+                           <tr key={res}>
+                              <td>{Tick.current.resources[res].name()}</td>
+                              <td className="text-right">
+                                 <FormatNumber value={building.resources[res] ?? 0} />
+                              </td>
+                              <td className="text-right" onWheel={(e) => {}}>
+                                 <FormatNumber value={ri?.perCycle ?? 0} />
+                              </td>
+                              <td className="text-right">
+                                 <FormatNumber value={ri?.cap ?? 0} />
+                              </td>
+                              <td
+                                 className="text-right"
+                                 onClick={() =>
+                                    showModal(<ChangeResourceImportModal building={building} resource={res} />)
+                                 }
+                              >
+                                 <div className="m-icon small pointer text-link">settings</div>
+                              </td>
+                           </tr>
+                        );
+                     })}
                </tbody>
             </table>
          </div>

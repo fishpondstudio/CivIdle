@@ -211,21 +211,31 @@ export class WorldScene extends ViewportScene {
 
                break;
             }
+            case "Warehouse": {
+               if (gs.features.WarehouseUpgrade) {
+                  this.highlightAdjacentTiles(grid);
+               }
+               break;
+            }
             case "ColossusOfRhodes":
             case "Colosseum":
             case "LighthouseOfAlexandria":
             case "ChichenItza":
-               Singleton()
-                  .grid.getNeighbors(grid)
-                  .forEach((neighbor) => {
-                     this._selectedGraphics.lineStyle({ width: 0 });
-                     this._selectedGraphics.beginFill(0xffffff, 0.2, true);
-                     Singleton().grid.drawSelected(neighbor, this._selectedGraphics);
-                     this._selectedGraphics.endFill();
-                  });
+               this.highlightAdjacentTiles(grid);
                break;
          }
       }
+   }
+
+   private highlightAdjacentTiles(grid: IPointData) {
+      Singleton()
+         .grid.getNeighbors(grid)
+         .forEach((neighbor) => {
+            this._selectedGraphics.lineStyle({ width: 0 });
+            this._selectedGraphics.beginFill(0xffffff, 0.2, true);
+            Singleton().grid.drawSelected(neighbor, this._selectedGraphics);
+            this._selectedGraphics.endFill();
+         });
    }
 
    getTile(xy: string): TileVisual | undefined {

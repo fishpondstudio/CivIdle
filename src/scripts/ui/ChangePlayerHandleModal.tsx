@@ -29,7 +29,7 @@ export function ChangePlayerHandleModal() {
                      try {
                         await client.changeHandle(handle);
                         user.handle = handle;
-                        OnUserChanged.emit(user);
+                        OnUserChanged.emit({ ...user });
                         hideModal();
                      } catch (error) {
                         showToast(String(error));

@@ -92,7 +92,7 @@ export class BuildingDefinitions {
 
    Bakery: IBuildingDefinition = {
       name: () => t(L.Bakery),
-      input: { Water: 1, Flour: 2 },
+      input: { Water: 1, Flour: 1 },
       output: { Bread: 1 },
    };
 
@@ -307,7 +307,7 @@ export class BuildingDefinitions {
    House: IBuildingDefinition = {
       name: () => t(L.House),
       input: { Wheat: 1, Water: 1 },
-      output: { Worker: 4 },
+      output: { Worker: 6 },
       construction: { Brick: 2 },
    };
 
@@ -349,8 +349,8 @@ export class BuildingDefinitions {
 
    Apartment: IBuildingDefinition = {
       name: () => t(L.Apartment),
-      input: { Wheat: 2, Meat: 2, Water: 2 },
-      output: { Worker: 16 },
+      input: { Cheese: 1, Meat: 2, Bread: 1 },
+      output: { Worker: 84 },
       construction: { Brick: 2, Lumber: 2 },
    };
 
@@ -393,7 +393,7 @@ export class BuildingDefinitions {
       name: () => t(L.Warehouse),
       input: {},
       output: {},
-      construction: { Brick: 1, Iron: 1 },
+      construction: { Lumber: 1, Brick: 1, Horse: 1 },
    };
 
    Statistics: IBuildingDefinition = {
@@ -622,15 +622,6 @@ export class BuildingDefinitions {
    //    output: {},
    //    max: 1,
    //    wikipedia: "Itsukushima_Shrine",
-   // };
-
-   // TempleOfHeaven: IBuildingDefinition = {
-   //    name: () => t(L.TempleOfHeaven),
-   //    desc: () => t(L.TempleOfHeavenDesc),
-   //    input: {},
-   //    output: {},
-   //    max: 1,
-   //    wikipedia: "Temple_of_Heaven",
    // };
 
    // HimejiCastle: IBuildingDefinition = {

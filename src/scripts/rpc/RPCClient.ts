@@ -129,7 +129,7 @@ export async function connectWebSocket(): Promise<number> {
             const w = message as IWelcomeMessage;
             user = w.user;
             OnOfflineTime.emit(w.offlineTime);
-            OnUserChanged.emit(user);
+            OnUserChanged.emit({ ...user });
             getGameOptions().token = w.user.token;
             saveGame();
             break;
@@ -184,7 +184,7 @@ export async function connectWebSocket(): Promise<number> {
    ws.onclose = (e) => {
       ws = null;
       user = null;
-      OnUserChanged.emit(user);
+      OnUserChanged.emit(null);
       setTimeout(connectWebSocket, Math.min(++reconnect * 1000, 5000));
    };
 

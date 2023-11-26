@@ -242,6 +242,12 @@ export class TileVisual extends Container {
             this._upgrade.visible = true;
             this.toggleUpgradeTween(true);
             this._spinner.visible = false;
+
+            if (!isWorldOrNaturalWonder(this._tile.building.type)) {
+               this._level.visible = true;
+               this._level.text = getBuildingLevelLabel(this._tile.building);
+            }
+
             return;
          }
          case "completed": {
@@ -252,10 +258,7 @@ export class TileVisual extends Container {
 
             if (!isWorldOrNaturalWonder(this._tile.building.type)) {
                this._level.visible = true;
-               const newLevel = getBuildingLevelLabel(this._tile.building);
-               if (this._level.text != newLevel) {
-                  this._level.text = newLevel;
-               }
+               this._level.text = getBuildingLevelLabel(this._tile.building);
             }
 
             if (Tick.current.notProducingReasons[tileData.xy]) {

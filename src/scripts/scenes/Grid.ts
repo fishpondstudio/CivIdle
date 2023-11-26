@@ -1,6 +1,6 @@
 import { SmoothGraphics } from "@pixi/graphics-smooth";
 import { BitmapText, Polygon } from "pixi.js";
-import { xyToPoint } from "../utilities/Helper";
+import { xyToPoint, xyToPointArray } from "../utilities/Helper";
 import { Hex, Layout, OffsetCoord, Point } from "../utilities/Hex";
 import { ObjectPool } from "../utilities/ObjectPool";
 import { Fonts } from "../visuals/Fonts";
@@ -125,6 +125,12 @@ export class Grid {
    private static _offsetCoordPool = new OffsetCoordPool();
 
    private static _distanceCache: Record<number, number> = {};
+
+   public distanceXy(xy1: string, xy2: string): number {
+      const a = xyToPointArray(xy1);
+      const b = xyToPointArray(xy2);
+      return this.distance(a[0], a[1], b[0], b[1]);
+   }
 
    public distance(x1: number, y1: number, x2: number, y2: number): number {
       const key1 = y1 * this.maxX + x1;

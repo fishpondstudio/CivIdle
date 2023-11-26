@@ -90,6 +90,19 @@ export function ResourcePanel() {
                <FormatNumber value={sizeOf(tick.notProducingReasons)} />
             </div>
          </div>
+         <div className="separator-vertical" />
+         <div className="row">
+            <div
+               className={classNames({
+                  "m-icon": true,
+               })}
+            >
+               account_balance
+            </div>
+            <div className="f1">
+               <FormatNumber value={tick.totalValue} />
+            </div>
+         </div>
       </div>
    );
 }

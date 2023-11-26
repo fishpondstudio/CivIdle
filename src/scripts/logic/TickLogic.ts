@@ -27,6 +27,7 @@ interface ITickData {
    globalMultipliers: GlobalMultipliers;
    notProducingReasons: Record<string, NotProducingReason>;
    specialBuildings: Partial<Record<Building, string>>;
+   totalValue: number;
 }
 
 export type NotProducingReason =
@@ -58,6 +59,7 @@ export function EmptyTickData(): ITickData {
       notProducingReasons: {},
       playerTradeBuildings: {},
       specialBuildings: {},
+      totalValue: 0,
    };
 }
 

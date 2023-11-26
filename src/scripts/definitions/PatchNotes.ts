@@ -5,6 +5,26 @@ interface PatchNote {
 
 export const PatchNotes: PatchNote[] = [
    {
+      version: "0.1.79",
+      content: [
+         ["Balance", "Apartments change to: 1 Cheese + 2 Meat + 1 Bread -> 84 Worker"],
+         ["Balance", "Houses change to: 1 Wheat + 1 Water -> 6 Worker"],
+         ["Balance", "Bakery change to: 1 Wheat + 1 Water -> 1 Bread"],
+         ["Balance", "Marbleworks is now unlocked by Construction"],
+         ["Balance", "Mausoleum At Halicarnassus is now unlocked by City State"],
+         ["Balance", "Bakery is now unlocked by City State"],
+         ["Balance", "Cheese Maker is now unlocked by Literature"],
+         ["Balance", "Sword Forge is now unlocked by Architecture"],
+         ["Balance", "Apartment is now unlocked by Democracy"],
+         ["Content", "Add Warehouse building (unlocked by Road & Wheel)"],
+         ["Content", "Add Warehouse autopilot mode (unlocked by Machinery)"],
+         ["Content", "Add total empire value in the resource panel"],
+         ["Bugfix", "Fix building level sometimes disappears"],
+         ["Bugfix", "Fix new players get stuck at the loading screen"],
+         ["QoL", "Add an option enables market to clear all trades after market update"],
+      ],
+   },
+   {
       version: "0.1.78",
       content: [
          ["Bugfix", "Fix transports are sometimes made from incorrect buildings"],
