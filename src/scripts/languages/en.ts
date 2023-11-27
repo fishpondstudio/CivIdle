@@ -389,9 +389,10 @@ export const EN = {
    GreatMosqueOfSamarra: "Great Mosque Of Samarra",
    GreatMosqueOfSamarraDesc: "Great Mosque Of Samarra",
    HagiaSophia: "Hagia Sophia",
-   HagiaSophiaDesc: "Hagia Sophia",
+   HagiaSophiaDesc:
+      "Buildings with 0% Production Capacity are exempt from -1 happiness. Consumes 10 Faith and produce 10 happiness",
    AngkorWat: "Angkor Wat",
-   AngkorWatDesc: "Angkor Wat",
+   AngkorWatDesc: "All adjacent buildings get +1 Worker Capacity Multiplier. Provide 1000 Workers",
    TerracottaArmy: "Terracotta Army",
    TerracottaArmyDesc: "Terracotta Army",
    Parthenon: "Parthenon",

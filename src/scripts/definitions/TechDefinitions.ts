@@ -318,14 +318,14 @@ export class TechDefinitions {
       name: () => t(L.CivilService),
       column: 10,
       requireTech: ["Feudalism"],
-      unlockBuilding: [],
+      unlockBuilding: ["AngkorWat"],
    };
 
    HolyEmpire: ITechDefinition = {
       name: () => t(L.HolyEmpire),
       column: 10,
       requireTech: ["Feudalism", "Theocracy"],
-      unlockBuilding: ["Cathedral"],
+      unlockBuilding: ["Cathedral", "HagiaSophia"],
    };
 
    Education: ITechDefinition = {

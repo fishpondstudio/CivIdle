@@ -5,6 +5,20 @@ interface PatchNote {
 
 export const PatchNotes: PatchNote[] = [
    {
+      version: "0.1.80",
+      content: [
+         [
+            "Content",
+            "New Wonder: Hagia Sophia - Buildings with 0% Production Capacity are exempt from -1 happiness. Consumes 10 Faith and produce 10 happiness",
+         ],
+         [
+            "Content",
+            "New Wonder: Angkor Wat - All adjacent buildings get +1 Worker Capacity Multiplier. Provide 1000 Workers",
+         ],
+         ["Bugfix", "Fix building upgrade not showing the correct percentage"],
+      ],
+   },
+   {
       version: "0.1.79",
       content: [
          ["Balance", "Apartments change to: 1 Cheese + 2 Meat + 1 Bread -> 84 Worker"],

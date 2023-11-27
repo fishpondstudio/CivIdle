@@ -381,7 +381,7 @@ export function getBuildingPercentage(xy: string, gs: GameState): number {
    if (building.status === "completed") {
       return 1;
    }
-   const cost = getBuildingCost(building);
+   const cost = getBuildingCost({ type: building.type, level: building.level + 1 });
    let totalCost = 0;
    let inStorage = 0;
    forEach(cost, (res, amount) => {

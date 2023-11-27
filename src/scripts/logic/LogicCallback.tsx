@@ -3,7 +3,7 @@ import { TechTreeScene } from "../scenes/TechTreeScene";
 import { WorldScene } from "../scenes/WorldScene";
 import { ChooseGreatPersonModal } from "../ui/ChooseGreatPersonModal";
 import { showModal } from "../ui/GlobalModal";
-import { forEach, pointToXy, safePush, xyToPoint } from "../utilities/Helper";
+import { forEach, pointToXy, safeAdd, safePush, xyToPoint } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
 import { Singleton } from "../utilities/Singleton";
 import { GameState } from "./GameState";
@@ -146,6 +146,25 @@ export function onBuildingProductionComplete(xy: string, gs: GameState) {
             }
          });
          Tick.next.globalMultipliers.happiness.push({ value: happiness, source: buildingName });
+         break;
+      }
+      case "HagiaSophia": {
+         if (!Tick.current.notProducingReasons[xy]) {
+            Tick.next.globalMultipliers.happiness.push({
+               value: Tick.current.buildings.HagiaSophia.input.Faith!,
+               source: buildingName,
+            });
+         }
+         break;
+      }
+      case "AngkorWat": {
+         safeAdd(Tick.next.workersAvailable, "Worker", 1000);
+         grid.getNeighbors(xyToPoint(xy)).forEach((neighbor) => {
+            safePush(Tick.next.tileMultipliers, pointToXy(neighbor), {
+               worker: 1,
+               source: buildingName,
+            });
+         });
          break;
       }
       case "TempleOfHeaven": {

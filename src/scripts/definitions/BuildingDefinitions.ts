@@ -570,6 +570,28 @@ export class BuildingDefinitions {
       wikipedia: "Mausoleum_at_Halicarnassus",
    };
 
+   HagiaSophia: IBuildingDefinition = {
+      name: () => t(L.HagiaSophia),
+      desc: () => t(L.HagiaSophiaDesc),
+      input: { Faith: 10 },
+      construction: { Faith: 100, Marble: 100, Brick: 100 },
+      output: {},
+      max: 1,
+      special: BuildingSpecial.WorldWonder,
+      wikipedia: "Hagia_Sophia",
+   };
+
+   AngkorWat: IBuildingDefinition = {
+      name: () => t(L.AngkorWat),
+      desc: () => t(L.AngkorWatDesc),
+      input: {},
+      output: {},
+      construction: { Faith: 100, Tool: 100, Stone: 100 },
+      max: 1,
+      special: BuildingSpecial.WorldWonder,
+      wikipedia: "Angkor_Wat",
+   };
+
    // GreatDagonPagoda: IBuildingDefinition = {
    //    name: () => t(L.GreatDagonPagoda),
    //    desc: () => t(L.GreatDagonPagodaDesc),
@@ -676,24 +698,6 @@ export class BuildingDefinitions {
    //    output: {},
    //    max: 1,
    //    wikipedia: "Great_Mosque_of_Samarra",
-   // };
-
-   // HagiaSophia: IBuildingDefinition = {
-   //    name: () => t(L.HagiaSophia),
-   //    desc: () => t(L.HagiaSophiaDesc),
-   //    input: {},
-   //    output: {},
-   //    max: 1,
-   //    wikipedia: "Hagia_Sophia",
-   // };
-
-   // AngkorWat: IBuildingDefinition = {
-   //    name: () => t(L.AngkorWat),
-   //    desc: () => t(L.AngkorWatDesc),
-   //    input: {},
-   //    output: {},
-   //    max: 1,
-   //    wikipedia: "Angkor_Wat",
    // };
 
    // TerracottaArmy: IBuildingDefinition = {

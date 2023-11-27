@@ -24,6 +24,7 @@ export const HAPPINESS_MULTIPLIER = 2;
 export function calculateHappiness(gs: GameState) {
    const fromUnlockedTech = sizeOf(gs.unlockedTech);
    const techAge = getCurrentTechAge(gs);
+   const buildingsByType = getTypeBuildings(gs);
    let fromUnlockedAge = 0;
    if (techAge) {
       fromUnlockedAge = 5 * (Config.TechAge[techAge].idx + 1);
@@ -42,7 +43,11 @@ export function calculateHappiness(gs: GameState) {
                fromHighestTierBuilding = tier;
             }
          }
-         ++fromBuildings;
+         if (building.capacity <= 0 && buildingsByType.HagiaSophia) {
+            // Do nothing
+         } else {
+            ++fromBuildings;
+         }
       }
       if (isWorldWonder(building.type)) {
          ++fromWonders;
@@ -52,7 +57,7 @@ export function calculateHappiness(gs: GameState) {
       }
    });
    const fromBuildingTypes = reduceOf(
-      getTypeBuildings(gs),
+      buildingsByType,
       (prev, _, value) => {
          return isEmpty(
             filterOf(value, (xy, tile) => {

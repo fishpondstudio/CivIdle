@@ -8,6 +8,7 @@ import {
    getResourceName,
    getWorkersFor,
    IOCalculation,
+   isSpecialBuilding,
 } from "../logic/BuildingLogic";
 import { getBuildingIO } from "../logic/IntraTickCache";
 import { Tick } from "../logic/TickLogic";
@@ -171,35 +172,39 @@ export function BuildingWorkerComponent({ gameState, xy }: IBuildingComponentPro
                </>
             )}
          </ul>
-         <div className="sep10"></div>
-         <div className="separator has-title">
-            <div>
-               {t(L.AdjustBuildingCapacity)}: {formatPercent(building.capacity)}
-            </div>
-         </div>
-         <input
-            id="building-capacity"
-            type="range"
-            min="0"
-            max="1"
-            step="0.01"
-            value={building.capacity}
-            onChange={(e) => {
-               building.capacity = parseFloat(e.target.value);
-               notifyGameStateUpdate();
-            }}
-            className="mh0"
-         />
-         <div className="sep10" />
-         <div
-            className="text-link text-small"
-            onClick={() => {
-               playClick();
-               applyToAllBuildings(building.type, { capacity: building.capacity }, gameState);
-            }}
-         >
-            {t(L.ApplyToAll, { building: Tick.current.buildings[building.type].name() })}
-         </div>
+         {isSpecialBuilding(building.type) ? null : (
+            <>
+               <div className="sep10"></div>
+               <div className="separator has-title">
+                  <div>
+                     {t(L.AdjustBuildingCapacity)}: {formatPercent(building.capacity)}
+                  </div>
+               </div>
+               <input
+                  id="building-capacity"
+                  type="range"
+                  min="0"
+                  max="1"
+                  step="0.01"
+                  value={building.capacity}
+                  onChange={(e) => {
+                     building.capacity = parseFloat(e.target.value);
+                     notifyGameStateUpdate();
+                  }}
+                  className="mh0"
+               />
+               <div className="sep10" />
+               <div
+                  className="text-link text-small"
+                  onClick={() => {
+                     playClick();
+                     applyToAllBuildings(building.type, { capacity: building.capacity }, gameState);
+                  }}
+               >
+                  {t(L.ApplyToAll, { building: Tick.current.buildings[building.type].name() })}
+               </div>
+            </>
+         )}
       </fieldset>
    );
 }
