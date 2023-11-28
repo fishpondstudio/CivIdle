@@ -166,7 +166,7 @@ export class RomeProvinceDefinitions {
       visual: { x: 2066, y: 1244, textSize: 30, textY: -5, textX: 15 },
       unlockCost: 2000,
       name: () => t(L.ProvinceCreta),
-      buildingMultiplier: { Castrum: { worker: 1, storage: 1 } },
+      // buildingMultiplier: { Castrum: { worker: 1, storage: 1 } },
       requireProvince: ["Macedonia"],
    };
    Syria: IProvinceDefinition = {

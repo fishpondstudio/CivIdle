@@ -77,25 +77,25 @@ export function onBuildingProductionComplete(xy: string, gs: GameState) {
          });
          break;
       }
-      case "Colosseum": {
-         grid.getNeighbors(xyToPoint(xy)).forEach((neighbor) => {
-            safePush(Tick.next.tileMultipliers, pointToXy(neighbor), {
-               output: 1,
-               worker: 1,
-               storage: 1,
-               source: buildingName,
-            });
-         });
-         break;
-      }
-      case "CircusMaximus": {
-         forEach(Tick.current.buildings, (building, def) => {
-            if (def.output.Worker) {
-               addMultiplier(building, { output: 1 }, buildingName);
-            }
-         });
-         break;
-      }
+      // case "Colosseum": {
+      //    grid.getNeighbors(xyToPoint(xy)).forEach((neighbor) => {
+      //       safePush(Tick.next.tileMultipliers, pointToXy(neighbor), {
+      //          output: 1,
+      //          worker: 1,
+      //          storage: 1,
+      //          source: buildingName,
+      //       });
+      //    });
+      //    break;
+      // }
+      // case "CircusMaximus": {
+      //    forEach(Tick.current.buildings, (building, def) => {
+      //       if (def.output.Worker) {
+      //          addMultiplier(building, { output: 1 }, buildingName);
+      //       }
+      //    });
+      //    break;
+      // }
       case "Alps": {
          forEach(getXyBuildings(gs), (xy, building) => {
             const mul = Math.floor(building.level / 10);

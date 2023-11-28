@@ -11,16 +11,16 @@ import {
    TilingSprite,
    utils,
 } from "pixi.js";
-import { getGameOptions, getGameState, TILE_SIZE } from "../Global";
+import { TILE_SIZE, getGameOptions, getGameState } from "../Global";
 import { GameOptions, GameState } from "../logic/GameState";
 import { TilePage } from "../ui/TilePage";
 import { clamp, forEach, lerp, lookAt, pointToXy, xyToPoint } from "../utilities/Helper";
-import Action from "../utilities/pixi-actions/actions/Action";
-import { CustomAction } from "../utilities/pixi-actions/actions/CustomAction";
-import { Easing } from "../utilities/pixi-actions/Easing";
 import { ViewportScene } from "../utilities/SceneManager";
 import { Singleton } from "../utilities/Singleton";
-import { v2, Vector2 } from "../utilities/Vector2";
+import { Vector2, v2 } from "../utilities/Vector2";
+import { Easing } from "../utilities/pixi-actions/Easing";
+import Action from "../utilities/pixi-actions/actions/Action";
+import { CustomAction } from "../utilities/pixi-actions/actions/CustomAction";
 import { TileVisual } from "./TileVisual";
 import { TooltipPool } from "./TooltipPool";
 import { TransportPool } from "./TransportPool";
@@ -218,7 +218,6 @@ export class WorldScene extends ViewportScene {
                break;
             }
             case "ColossusOfRhodes":
-            case "Colosseum":
             case "LighthouseOfAlexandria":
             case "ChichenItza":
                this.highlightAdjacentTiles(grid);

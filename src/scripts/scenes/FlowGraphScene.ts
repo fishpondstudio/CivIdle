@@ -56,7 +56,7 @@ export class FlowGraphScene extends ViewportScene {
 
       const flourMill = new BuildingCard("FlourMill");
       this.viewport.addChild(flourMill).position.set(100, 200);
-      const pizzeria = new BuildingCard("Pizzeria");
+      const pizzeria = new BuildingCard("Bakery");
       pizzeria.interactive = true;
       this.viewport.addChild(pizzeria).position.set(500, 100);
       this.viewport.addChild(new BuildingCard("SiegeWorkshop")).position.set(900, 100);
