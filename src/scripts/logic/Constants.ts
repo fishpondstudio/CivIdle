@@ -1,4 +1,4 @@
-import { Building, BuildingDefinitions } from "../definitions/BuildingDefinitions";
+import { Building, BuildingDefinitions, BuildingSpecial } from "../definitions/BuildingDefinitions";
 import { CityDefinitions } from "../definitions/CityDefinitions";
 import { GreatPersonDefinitions } from "../definitions/GreatPersonDefinitions";
 import { DepositResources, Resource, ResourceDefinitions } from "../definitions/ResourceDefinitions";
@@ -84,6 +84,10 @@ export function calculateTierAndPrice(gs: GameState) {
                   Config.Tech[t].column < Config.Tech[tech].column,
                   `Input: Expect Unlock(${building}=${tech},${Config.Tech[tech].column}) > Unlock(${res}=${t},${Config.Tech[t].column})`
                );
+            } else {
+               console.error(
+                  `Input: Expect Unlock(${building}=${tech},${Config.Tech[tech].column}) > Unlock(${res}=${t},NotFound)`
+               );
             }
          });
          forEach(buildingDef.construction, (res) => {
@@ -95,6 +99,10 @@ export function calculateTierAndPrice(gs: GameState) {
                );
             }
          });
+      } else {
+         if (buildingDef.special !== BuildingSpecial.HQ && buildingDef.special !== BuildingSpecial.NaturalWonder) {
+            console.error(`Building: ${building} is not unlocked by any tech!`);
+         }
       }
 
       let key: Tech;

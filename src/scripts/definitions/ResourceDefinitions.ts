@@ -10,7 +10,7 @@ export class ResourceDefinitions {
    Worker: IResourceDefinition = { name: () => t(L.Worker), canStore: false, canPrice: false };
    Wheat: IResourceDefinition = { name: () => t(L.Wheat), canStore: true, canPrice: true };
    Meat: IResourceDefinition = { name: () => t(L.Meat), canStore: true, canPrice: true };
-   Fish: IResourceDefinition = { name: () => t(L.Fish), canStore: true, canPrice: true };
+   // Fish: IResourceDefinition = { name: () => t(L.Fish), canStore: true, canPrice: true };
    Wood: IResourceDefinition = { name: () => t(L.Wood), canStore: true, canPrice: true };
    Lumber: IResourceDefinition = { name: () => t(L.Lumber), canStore: true, canPrice: true };
    Stone: IResourceDefinition = { name: () => t(L.Stone), canStore: true, canPrice: true };
@@ -27,15 +27,15 @@ export class ResourceDefinitions {
    Armor: IResourceDefinition = { name: () => t(L.Armor), canStore: true, canPrice: true };
    Chariot: IResourceDefinition = { name: () => t(L.Chariot), canStore: true, canPrice: true };
    Knight: IResourceDefinition = { name: () => t(L.Knight), canStore: true, canPrice: true };
-   Olive: IResourceDefinition = { name: () => t(L.Olive), canStore: true, canPrice: true };
-   Grape: IResourceDefinition = { name: () => t(L.Grape), canStore: true, canPrice: true };
-   Wine: IResourceDefinition = { name: () => t(L.Wine), canStore: true, canPrice: true };
+   // Olive: IResourceDefinition = { name: () => t(L.Olive), canStore: true, canPrice: true };
+   // Grape: IResourceDefinition = { name: () => t(L.Grape), canStore: true, canPrice: true };
+   // Wine: IResourceDefinition = { name: () => t(L.Wine), canStore: true, canPrice: true };
    Paper: IResourceDefinition = { name: () => t(L.Paper), canStore: true, canPrice: true };
-   OliveOil: IResourceDefinition = { name: () => t(L.OliveOil), canStore: true, canPrice: true };
+   // OliveOil: IResourceDefinition = { name: () => t(L.OliveOil), canStore: true, canPrice: true };
    Cheese: IResourceDefinition = { name: () => t(L.Cheese), canStore: true, canPrice: true };
-   Legion: IResourceDefinition = { name: () => t(L.Legion), canStore: true, canPrice: true };
+   // Legion: IResourceDefinition = { name: () => t(L.Legion), canStore: true, canPrice: true };
    Milk: IResourceDefinition = { name: () => t(L.Milk), canStore: true, canPrice: true };
-   Pizza: IResourceDefinition = { name: () => t(L.Pizza), canStore: true, canPrice: true };
+   // Pizza: IResourceDefinition = { name: () => t(L.Pizza), canStore: true, canPrice: true };
    Bread: IResourceDefinition = { name: () => t(L.Bread), canStore: true, canPrice: true };
    SiegeRam: IResourceDefinition = { name: () => t(L.SiegeRam), canStore: true, canPrice: true };
    Caravel: IResourceDefinition = { name: () => t(L.Caravel), canStore: true, canPrice: true };
@@ -48,10 +48,10 @@ export class ResourceDefinitions {
    Poem: IResourceDefinition = { name: () => t(L.Poem), canStore: true, canPrice: true };
    Music: IResourceDefinition = { name: () => t(L.Music), canStore: true, canPrice: true };
    Cloth: IResourceDefinition = { name: () => t(L.Cloth), canStore: true, canPrice: true };
-   Newspaper: IResourceDefinition = { name: () => t(L.Newspaper), canStore: true, canPrice: true };
+   // Newspaper: IResourceDefinition = { name: () => t(L.Newspaper), canStore: true, canPrice: true };
    Flour: IResourceDefinition = { name: () => t(L.Flour), canStore: true, canPrice: true };
    Science: IResourceDefinition = { name: () => t(L.Science), canStore: true, canPrice: false };
-   Faith: IResourceDefinition = { name: () => t(L.Faith), canStore: true, canPrice: false };
+   Faith: IResourceDefinition = { name: () => t(L.Faith), canStore: true, canPrice: true };
 }
 
 export type Resource = keyof ResourceDefinitions;

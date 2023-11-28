@@ -84,11 +84,11 @@ export class BuildingDefinitions {
       output: { Paper: 1 },
    };
 
-   Pizzeria: IBuildingDefinition = {
-      name: () => t(L.Pizzeria),
-      input: { Water: 1, Flour: 2, Cheese: 1, Meat: 1 },
-      output: { Pizza: 1 },
-   };
+   // Pizzeria: IBuildingDefinition = {
+   //    name: () => t(L.Pizzeria),
+   //    input: { Water: 1, Flour: 2, Cheese: 1, Meat: 1 },
+   //    output: { Pizza: 1 },
+   // };
 
    Bakery: IBuildingDefinition = {
       name: () => t(L.Bakery),
@@ -151,20 +151,20 @@ export class BuildingDefinitions {
       construction: { Stone: 1 },
    };
 
-   FishPond: IBuildingDefinition = {
-      name: () => t(L.FishPond),
-      input: {},
-      deposit: { Water: true },
-      output: { Fish: 1 },
-      construction: { Brick: 1 },
-   };
+   // FishPond: IBuildingDefinition = {
+   //    name: () => t(L.FishPond),
+   //    input: {},
+   //    deposit: { Water: true },
+   //    output: { Fish: 1 },
+   //    construction: { Brick: 1 },
+   // };
 
-   OlivePlantation: IBuildingDefinition = {
-      name: () => t(L.OlivePlantation),
-      input: {},
-      output: { Olive: 1 },
-      construction: { Wood: 1 },
-   };
+   // OlivePlantation: IBuildingDefinition = {
+   //    name: () => t(L.OlivePlantation),
+   //    input: {},
+   //    output: { Olive: 1 },
+   //    construction: { Wood: 1 },
+   // };
 
    CottonPlantation: IBuildingDefinition = {
       name: () => t(L.CottonPlantation),
@@ -191,19 +191,19 @@ export class BuildingDefinitions {
       output: { Furniture: 1 },
    };
 
-   Vineyard: IBuildingDefinition = {
-      name: () => t(L.Vineyard),
-      input: {},
-      output: { Grape: 1 },
-      construction: { Wood: 1 },
-   };
+   // Vineyard: IBuildingDefinition = {
+   //    name: () => t(L.Vineyard),
+   //    input: {},
+   //    output: { Grape: 1 },
+   //    construction: { Wood: 1 },
+   // };
 
-   OilPress: IBuildingDefinition = {
-      name: () => t(L.OilPress),
-      input: { Olive: 2 },
-      output: { OliveOil: 1 },
-      construction: { Brick: 1 },
-   };
+   // OilPress: IBuildingDefinition = {
+   //    name: () => t(L.OilPress),
+   //    input: { Olive: 2 },
+   //    output: { OliveOil: 1 },
+   //    construction: { Brick: 1 },
+   // };
 
    Caravansary: IBuildingDefinition = {
       name: () => t(L.Caravansary),
@@ -273,12 +273,12 @@ export class BuildingDefinitions {
       output: { Galleon: 1 },
    };
 
-   Castrum: IBuildingDefinition = {
-      name: () => t(L.Castrum),
-      input: { Sword: 2 },
-      output: { Legion: 1 },
-      construction: { Sword: 2, Stone: 2 },
-   };
+   // Castrum: IBuildingDefinition = {
+   //    name: () => t(L.Castrum),
+   //    input: { Sword: 2 },
+   //    output: { Legion: 1 },
+   //    construction: { Sword: 2, Stone: 2 },
+   // };
 
    IronMiningCamp: IBuildingDefinition = {
       name: () => t(L.IronMiningCamp),
@@ -331,8 +331,8 @@ export class BuildingDefinitions {
 
    School: IBuildingDefinition = {
       name: () => t(L.School),
-      input: { Pizza: 1, Opera: 1 },
-      output: { Science: 100 },
+      input: { Faith: 1, Poem: 1 },
+      output: { Science: 88 },
    };
 
    Cathedral: IBuildingDefinition = {
@@ -341,11 +341,11 @@ export class BuildingDefinitions {
       output: { Faith: 6 },
    };
 
-   PrintingPress: IBuildingDefinition = {
-      name: () => t(L.PrintingPress),
-      input: { Paper: 1, Poem: 1 },
-      output: { Newspaper: 1 },
-   };
+   // PrintingPress: IBuildingDefinition = {
+   //    name: () => t(L.PrintingPress),
+   //    input: { Paper: 1, Poem: 1 },
+   //    output: { Newspaper: 1 },
+   // };
 
    Apartment: IBuildingDefinition = {
       name: () => t(L.Apartment),
@@ -361,25 +361,18 @@ export class BuildingDefinitions {
       construction: { Lumber: 1, Brick: 1, Copper: 1 },
    };
 
-   Winery: IBuildingDefinition = {
-      name: () => t(L.Winery),
-      input: { Grape: 1, Water: 1 },
-      output: { Wine: 1 },
-      construction: { Stone: 1, Marble: 1 },
-   };
+   // Winery: IBuildingDefinition = {
+   //    name: () => t(L.Winery),
+   //    input: { Grape: 1, Water: 1 },
+   //    output: { Wine: 1 },
+   //    construction: { Stone: 1, Marble: 1 },
+   // };
 
    Library: IBuildingDefinition = {
       name: () => t(L.Library),
       input: { Paper: 1 },
       output: { Science: 5 },
       construction: { Marble: 2, Stone: 2 },
-   };
-
-   Domus: IBuildingDefinition = {
-      name: () => t(L.Domus),
-      input: { Alcohol: 1, Meat: 1, Wheat: 1 },
-      output: { Worker: 10, Science: 4 },
-      construction: { Brick: 1, Iron: 1, Marble: 1 },
    };
 
    Market: IBuildingDefinition = {
@@ -417,16 +410,16 @@ export class BuildingDefinitions {
       special: BuildingSpecial.NaturalWonder,
    };
 
-   Colosseum: IBuildingDefinition = {
-      name: () => t(L.Colosseum),
-      desc: () => t(L.ColosseumDesc),
-      input: {},
-      output: {},
-      construction: { Brick: 100, Marble: 100, Alcohol: 100 },
-      max: 1,
-      special: BuildingSpecial.WorldWonder,
-      wikipedia: "Colosseum",
-   };
+   // Colosseum: IBuildingDefinition = {
+   //    name: () => t(L.Colosseum),
+   //    desc: () => t(L.ColosseumDesc),
+   //    input: {},
+   //    output: {},
+   //    construction: { Brick: 100, Marble: 100, Alcohol: 100 },
+   //    max: 1,
+   //    special: BuildingSpecial.WorldWonder,
+   //    wikipedia: "Colosseum",
+   // };
 
    // Pantheon: IBuildingDefinition = {
    //    name: () => t(L.Pantheon),
@@ -439,16 +432,16 @@ export class BuildingDefinitions {
    //    wikipedia: "Pantheon,_Rome",
    // };
 
-   CircusMaximus: IBuildingDefinition = {
-      name: () => t(L.CircusMaximus),
-      desc: () => t(L.CircusMaximusDesc),
-      input: {},
-      output: {},
-      construction: { Brick: 100, Iron: 100, Meat: 100 },
-      max: 1,
-      special: BuildingSpecial.WorldWonder,
-      wikipedia: "Circus_Maximus",
-   };
+   // CircusMaximus: IBuildingDefinition = {
+   //    name: () => t(L.CircusMaximus),
+   //    desc: () => t(L.CircusMaximusDesc),
+   //    input: {},
+   //    output: {},
+   //    construction: { Brick: 100, Iron: 100, Meat: 100 },
+   //    max: 1,
+   //    special: BuildingSpecial.WorldWonder,
+   //    wikipedia: "Circus_Maximus",
+   // };
 
    Stonehenge: IBuildingDefinition = {
       name: () => t(L.Stonehenge),
@@ -505,15 +498,15 @@ export class BuildingDefinitions {
       wikipedia: "Colossus_of_Rhodes",
    };
 
-   HangingGarden: IBuildingDefinition = {
-      name: () => t(L.HangingGarden),
-      desc: () => t(L.HangingGardenDesc),
-      input: {},
-      output: {},
-      max: 1,
-      special: BuildingSpecial.WorldWonder,
-      wikipedia: "Hanging_Gardens_of_Babylon",
-   };
+   // HangingGarden: IBuildingDefinition = {
+   //    name: () => t(L.HangingGarden),
+   //    desc: () => t(L.HangingGardenDesc),
+   //    input: {},
+   //    output: {},
+   //    max: 1,
+   //    special: BuildingSpecial.WorldWonder,
+   //    wikipedia: "Hanging_Gardens_of_Babylon",
+   // };
 
    TempleOfHeaven: IBuildingDefinition = {
       name: () => t(L.TempleOfHeaven),

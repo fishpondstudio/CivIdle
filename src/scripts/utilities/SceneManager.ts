@@ -48,6 +48,7 @@ export class ViewportScene extends Scene {
    }
 
    override onResize(width: number, height: number): void {
+      console.log(width, height);
       this.viewport.resize(width, height);
    }
 
@@ -73,9 +74,9 @@ export class SceneManager {
 
    constructor(context: ISceneContext) {
       this.context = context;
-      // context.app.renderer.on("resize", (width: number, height: number) => {
-      //    this.currentScene?.onResize(width, height);
-      // });
+      context.app.renderer.on("resize", (width: number, height: number) => {
+         this.currentScene?.onResize(width, height);
+      });
    }
 
    public getContext(): ISceneContext {

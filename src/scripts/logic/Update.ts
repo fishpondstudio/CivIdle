@@ -1,15 +1,15 @@
 import { IPointData } from "pixi.js";
+import { getGameState, notifyGameStateUpdate, saveGame } from "../Global";
 import { Building } from "../definitions/BuildingDefinitions";
 import { IUnlockableDefinition } from "../definitions/ITechDefinition";
 import { Resource } from "../definitions/ResourceDefinitions";
-import { getGameState, notifyGameStateUpdate, saveGame } from "../Global";
 import { isSteam } from "../rpc/SteamClient";
 import { WorldScene } from "../scenes/WorldScene";
 import {
+   HOUR,
    clamp,
    filterOf,
    forEach,
-   HOUR,
    isEmpty,
    keysOf,
    pointArrayToXy,
@@ -22,11 +22,12 @@ import {
    xyToPoint,
    xyToPointArray,
 } from "../utilities/Helper";
-import { L, t } from "../utilities/i18n";
 import { srand } from "../utilities/Random";
 import { Singleton } from "../utilities/Singleton";
-import { v2, Vector2 } from "../utilities/Vector2";
+import { Vector2, v2 } from "../utilities/Vector2";
+import { L, t } from "../utilities/i18n";
 import {
+   IOCalculation,
    addResources,
    addTransportation,
    deductResources,
@@ -45,7 +46,6 @@ import {
    getWarehouseIdleCapacity,
    getWorkersFor,
    hasEnoughResources,
-   IOCalculation,
    isNaturalWonder,
    isSpecialBuilding,
    isTransportable,
@@ -245,7 +245,10 @@ function tickTile(xy: string, gs: GameState, offline: boolean): void {
       building.desiredLevel = building.level;
    }
    if (building.status === "building" || building.status === "upgrading") {
-      const cost = getBuildingCost({ type: building.type, level: building.level + 1 });
+      const cost = getBuildingCost({
+         type: building.type,
+         level: building.status === "building" ? 1 : building.level + 1,
+      });
       let completed = true;
       forEach(cost, (res, amount) => {
          const { total } = getBuilderCapacity(building, xy, gs);
@@ -442,7 +445,11 @@ function tickTile(xy: string, gs: GameState, offline: boolean): void {
    deductResources(building.resources, input);
    forEach(output, (res, v) => {
       if (isTransportable(res)) {
-         safeAdd(building.resources, res, v);
+         if (res === "Science") {
+            safeAdd(Singleton().buildings.Headquarter.building.resources, res, v);
+         } else {
+            safeAdd(building.resources, res, v);
+         }
          tileVisual?.showText(`+${round(v, 1)}`);
       } else {
          safeAdd(Tick.next.workersAvailable, res, v);

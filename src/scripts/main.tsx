@@ -18,11 +18,11 @@ import TextureTiles from "../images/textures_tiles.png";
 import { startGame } from "./Bootstrap";
 import { BG_COLOR } from "./Colors";
 import { Route, RouteChangeEvent } from "./Route";
+import { build } from "./Version.json";
 import { ChatPanel } from "./ui/ChatPanel";
 import { GlobalModal, GlobalToast } from "./ui/GlobalModal";
 import { ResourcePanel } from "./ui/ResourcePanel";
 import { TypedEvent } from "./utilities/TypedEvent";
-import { build } from "./Version.json";
 import { Fonts } from "./visuals/Fonts";
 
 if (!import.meta.env.DEV) {

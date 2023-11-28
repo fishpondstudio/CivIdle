@@ -5,6 +5,27 @@ interface PatchNote {
 
 export const PatchNotes: PatchNote[] = [
    {
+      version: "0.1.81",
+      content: [
+         ["Balance", "Optimize offline production and increase the cap to 8 hours (from 4 hours)"],
+         [
+            "Balance",
+            "When science is produced in buildings, it will appear in Headquarter (Roman Forum) - thus not taking storage space in the building",
+         ],
+         [
+            "Bugfix",
+            "Schools change to: 1 Faith + 1 Poem -> 88 Science (Previously it requires Pizza, which does not exists yet",
+         ],
+         ["Bugfix", "Fix moving camera does not work after resizing the window"],
+         ["Bugfix", "Fix building cost is not calculated correctly"],
+         [
+            "Content",
+            "New Wonder: Angkor Wat - All adjacent buildings get +1 Worker Capacity Multiplier. Provide 1000 Workers",
+         ],
+         ["Bugfix", "Fix building upgrade not showing the correct percentage"],
+      ],
+   },
+   {
       version: "0.1.80",
       content: [
          [

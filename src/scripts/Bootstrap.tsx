@@ -1,34 +1,34 @@
 import { Application, Ticker } from "pixi.js";
-import { Building } from "./definitions/BuildingDefinitions";
-import { City } from "./definitions/CityDefinitions";
 import {
+   TILE_SIZE,
    getGameOptions,
    getGameState,
    isGameDataCompatible,
    loadGame,
    notifyGameStateUpdate,
    syncUITheme,
-   TILE_SIZE,
 } from "./Global";
+import { RouteChangeEvent } from "./Route";
+import { checkSteamBranch } from "./SteamTesting";
+import { Building } from "./definitions/BuildingDefinitions";
+import { City } from "./definitions/CityDefinitions";
 import { getBuildingTexture } from "./logic/BuildingLogic";
-import { calculateTierAndPrice, Config } from "./logic/Constants";
+import { Config, calculateTierAndPrice } from "./logic/Constants";
 import { GameState, initializeGameState } from "./logic/GameState";
 import { ITileData } from "./logic/Tile";
 import { shouldTick, tickEveryFrame, tickEverySecond } from "./logic/Update";
 import { MainBundleAssets } from "./main";
-import { RouteChangeEvent } from "./Route";
 import { connectWebSocket } from "./rpc/RPCClient";
 import { Grid } from "./scenes/Grid";
 import { WorldScene } from "./scenes/WorldScene";
-import { checkSteamBranch } from "./SteamTesting";
 import { showModal, showToast } from "./ui/GlobalModal";
 import { LoadingPage, LoadingPageStage } from "./ui/LoadingPage";
 import { OfflineProductionModal } from "./ui/OfflineProductionModal";
 import { clamp, forEach, isNullOrUndefined, rejectIn, schedule } from "./utilities/Helper";
-import Actions from "./utilities/pixi-actions/Actions";
 import { SceneManager, Textures } from "./utilities/SceneManager";
-import { initializeSingletons, ISpecialBuildings, RouteTo, Singleton } from "./utilities/Singleton";
+import { ISpecialBuildings, RouteTo, Singleton, initializeSingletons } from "./utilities/Singleton";
 import { TypedEvent } from "./utilities/TypedEvent";
+import Actions from "./utilities/pixi-actions/Actions";
 import { playError } from "./visuals/Sound";
 
 export async function startGame(
@@ -78,7 +78,7 @@ export async function startGame(
       const offlineTime = clamp(
          await Promise.race([connectWebSocket(), rejectIn<number>(TIMEOUT, "Connection Timeout")]),
          0,
-         60 * 60 * 4
+         60 * 60 * 8
       );
       routeTo(LoadingPage, { stage: LoadingPageStage.OfflineProduction });
 
