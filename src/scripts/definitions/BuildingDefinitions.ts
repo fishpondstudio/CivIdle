@@ -586,6 +586,28 @@ export class BuildingDefinitions {
       wikipedia: "Angkor_Wat",
    };
 
+   TerracottaArmy: IBuildingDefinition = {
+      name: () => t(L.TerracottaArmy),
+      desc: () => t(L.TerracottaArmyDesc),
+      input: {},
+      output: {},
+      max: 1,
+      construction: { Chariot: 100, Iron: 100, Stone: 100 },
+      special: BuildingSpecial.WorldWonder,
+      wikipedia: "Terracotta_Army",
+   };
+
+   Persepolis: IBuildingDefinition = {
+      name: () => t(L.Persepolis),
+      desc: () => t(L.PersepolisDesc),
+      input: {},
+      output: {},
+      max: 1,
+      construction: { Stone: 100, Wood: 100, Copper: 100 },
+      special: BuildingSpecial.WorldWonder,
+      wikipedia: "Persepolis",
+   };
+
    // GreatDagonPagoda: IBuildingDefinition = {
    //    name: () => t(L.GreatDagonPagoda),
    //    desc: () => t(L.GreatDagonPagodaDesc),
@@ -684,24 +706,6 @@ export class BuildingDefinitions {
    //    output: {},
    //    max: 1,
    //    wikipedia: "Great_Mosque_of_Samarra",
-   // };
-
-   // TerracottaArmy: IBuildingDefinition = {
-   //    name: () => t(L.TerracottaArmy),
-   //    desc: () => t(L.TerracottaArmyDesc),
-   //    input: {},
-   //    output: {},
-   //    max: 1,
-   //    wikipedia: "Terracotta_Army",
-   // };
-
-   // Persepolis: IBuildingDefinition = {
-   //    name: () => t(L.Persepolis),
-   //    desc: () => t(L.PersepolisDesc),
-   //    input: {},
-   //    output: {},
-   //    max: 1,
-   //    wikipedia: "Persepolis",
    // };
 
    // ChoghaZanbil: IBuildingDefinition = {

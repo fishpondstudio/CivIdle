@@ -211,6 +211,64 @@ export function onBuildingProductionComplete(xy: string, gs: GameState) {
          });
          break;
       }
+      case "TerracottaArmy": {
+         addMultiplier(
+            "IronMiningCamp",
+            {
+               output: 1,
+               worker: 1,
+               storage: 1,
+            },
+            buildingName
+         );
+         forEach(buildingsByType.IronForge, (xy, tile) => {
+            if (tile.building) {
+               let adjacentIronMiningCamps = 0;
+               grid.getNeighbors(xyToPoint(tile.xy)).forEach((neighbor) => {
+                  if (gs.tiles[pointToXy(neighbor)]?.building?.type === "IronMiningCamp") {
+                     ++adjacentIronMiningCamps;
+                  }
+               });
+               if (adjacentIronMiningCamps > 0) {
+                  safePush(Tick.next.tileMultipliers, tile.xy, {
+                     output: adjacentIronMiningCamps,
+                     source: buildingName,
+                  });
+               }
+            }
+         });
+         break;
+      }
+      case "Persepolis": {
+         addMultiplier(
+            "StoneQuarry",
+            {
+               output: 1,
+               worker: 1,
+               storage: 1,
+            },
+            buildingName
+         );
+         addMultiplier(
+            "LoggingCamp",
+            {
+               output: 1,
+               worker: 1,
+               storage: 1,
+            },
+            buildingName
+         );
+         addMultiplier(
+            "CopperMiningCamp",
+            {
+               output: 1,
+               worker: 1,
+               storage: 1,
+            },
+            buildingName
+         );
+         break;
+      }
    }
 }
 

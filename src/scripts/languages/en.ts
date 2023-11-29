@@ -395,12 +395,14 @@ export const EN = {
    AngkorWat: "Angkor Wat",
    AngkorWatDesc: "All adjacent buildings get +1 Worker Capacity Multiplier. Provide 1000 Workers",
    TerracottaArmy: "Terracotta Army",
-   TerracottaArmyDesc: "Terracotta Army",
+   TerracottaArmyDesc:
+      "All Iron Mining Camps get +1 Production Multiplier, Worker Capacity Multiplier and Storage Multiplier. Iron Forges get +1 Production Multiplier for each adjacent Iron Mining Camp",
    Parthenon: "Parthenon",
    ParthenonDesc:
       "A new great person of classical age is born. Musician's Guild and Writer's Guild get +1 Worker Capacity Multiplier",
    Persepolis: "Persepolis",
-   PersepolisDesc: "Persepolis",
+   PersepolisDesc:
+      "All Copper Mining Camps, Logging Camps and Stone Quarries get +1 Production Multiplier, Worker Capacity Multiplier and Storage Multiplier",
    ChoghaZanbil: "Chogha Zanbil",
    ChoghaZanbilDesc: "Chogha Zanbil",
    HatshepsutTemple: "Hatshepsut Temple",

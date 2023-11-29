@@ -10,8 +10,17 @@ export const PatchNotes: PatchNote[] = [
          ["Balance", "Architecture now provides +1 Builder Capacity Multiplier"],
          [
             "Content",
+            "New Wonder: Terracotta Army - All Iron Mining Camps get +1 Production Multiplier, Worker Capacity Multiplier and Storage Multiplier. Iron Forges get +1 Production Multiplier for each adjacent Iron Mining Camp",
+         ],
+         [
+            "Content",
             "New Wonder: Hanging Garden - +1 Builder Capacity Multiplier. Adjacent aqueducts get +1 Production, Storage and Worker Capacity multiplier",
          ],
+         [
+            "Content",
+            "New Wonder: Persepolis - All Copper Mining Camps, Logging Camps and Stone Quarries get +1 Production Multiplier, Worker Capacity Multiplier and Storage Multiplier",
+         ],
+         ["Bugfix", "Fix sometimes games does not load for new players"],
       ],
    },
    {

@@ -21,6 +21,7 @@ import { MainBundleAssets } from "./main";
 import { connectWebSocket } from "./rpc/RPCClient";
 import { Grid } from "./scenes/Grid";
 import { WorldScene } from "./scenes/WorldScene";
+import { ErrorPage } from "./ui/ErrorPage";
 import { showModal, showToast } from "./ui/GlobalModal";
 import { LoadingPage, LoadingPageStage } from "./ui/LoadingPage";
 import { OfflineProductionModal } from "./ui/OfflineProductionModal";
@@ -44,8 +45,22 @@ export async function startGame(
 
    let isNewPlayer = false;
    const data = await loadGame();
-   if (data && isGameDataCompatible(data, routeTo)) {
-      // Nothing to do yet
+   if (data) {
+      if (!isGameDataCompatible(data)) {
+         playError();
+         routeTo(ErrorPage, {
+            content: (
+               <>
+                  <div className="title">Save File Incompatible</div>
+                  <div>
+                     Your currently save file is not compatible with the game version. You need to delete your old save
+                     and restart the game.
+                  </div>
+               </>
+            ),
+         });
+         return;
+      }
    } else {
       isNewPlayer = true;
    }
@@ -86,7 +101,7 @@ export async function startGame(
          const before = JSON.parse(JSON.stringify(gameState));
          let timeLeft = offlineTime;
          while (timeLeft > 0) {
-            const batchSize = Math.min(offlineTime, 100);
+            const batchSize = Math.min(offlineTime, 288);
             await schedule(() => {
                for (let i = 0; i < batchSize; i++) {
                   tickEverySecond(gameState, true);

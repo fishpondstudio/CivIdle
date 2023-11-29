@@ -168,7 +168,7 @@ export class TechDefinitions {
       name: () => t(L.Shamanism),
       column: 5,
       requireTech: ["Iron", "RoadAndWheel"],
-      unlockBuilding: ["ChariotWorkshop"],
+      unlockBuilding: ["ChariotWorkshop", "Persepolis"],
    };
 
    Construction: ITechDefinition = {
@@ -225,7 +225,7 @@ export class TechDefinitions {
       name: () => t(L.Machinery),
       column: 7,
       requireTech: ["PreciousMetal", "Engineering"],
-      unlockBuilding: ["SiegeWorkshop"],
+      unlockBuilding: ["SiegeWorkshop", "TerracottaArmy"],
       unlockFeature: ["WarehouseUpgrade"],
       additionalUpgrades: [() => t(L.WarehouseUpgrade)],
    };

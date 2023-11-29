@@ -3,13 +3,10 @@ import { GameOptions, GameState, initializeGameState, SavedGame } from "./logic/
 import { makeBuilding } from "./logic/Tile";
 import { isSteam, SteamClient } from "./rpc/SteamClient";
 import { Grid } from "./scenes/Grid";
-import { ErrorPage } from "./ui/ErrorPage";
 import { idbGet, idbSet } from "./utilities/BrowserStorage";
 import { forEach } from "./utilities/Helper";
 import { makeObservableHook } from "./utilities/Hook";
-import { RouteTo } from "./utilities/Singleton";
 import { TypedEvent } from "./utilities/TypedEvent";
-import { playError } from "./visuals/Sound";
 
 const savedGame = new SavedGame();
 
@@ -115,20 +112,8 @@ export async function loadGame(): Promise<SavedGame | undefined> {
    }
 }
 
-export function isGameDataCompatible(gs: SavedGame, routeTo: RouteTo): boolean {
+export function isGameDataCompatible(gs: SavedGame): boolean {
    if (savedGame.options.version !== gs.options.version) {
-      playError();
-      routeTo(ErrorPage, {
-         content: (
-            <>
-               <div className="title">Save File Incompatible</div>
-               <div>
-                  Your currently save file is not compatible with the game version. You need to delete your old save and
-                  restart the game.
-               </div>
-            </>
-         ),
-      });
       return false;
    } else {
       migrateSavedGame(gs);
