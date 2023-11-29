@@ -189,7 +189,7 @@ export class TechDefinitions {
       name: () => t(L.Calendar),
       column: 5,
       requireTech: ["Astronomy", "LandTrade"],
-      unlockBuilding: ["CottonMill"],
+      unlockBuilding: ["CottonMill", "HangingGarden"],
    };
 
    Engineering: ITechDefinition = {
@@ -256,6 +256,7 @@ export class TechDefinitions {
       column: 8,
       requireTech: ["Machinery"],
       unlockBuilding: ["SwordForge", "ChichenItza"],
+      globalMultiplier: { builderCapacity: 1 },
    };
 
    Democracy: ITechDefinition = {

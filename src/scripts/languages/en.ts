@@ -341,7 +341,8 @@ export const EN = {
    MausoleumAtHalicarnassus: "Mausoleum At Halicarnassus",
    MausoleumAtHalicarnassusDesc: "Free transportation within 2 tile range",
    HangingGarden: "Hanging Garden",
-   HangingGardenDesc: "Hanging Garden",
+   HangingGardenDesc:
+      "+1 Builder Capacity Multiplier. Adjacent aqueducts get +1 Production, Storage and Worker Capacity multiplier",
    Colosseum: "Colosseum",
    ColosseumDesc: "All adjacent buildings get +1 Production, Storage and Worker Capacity multiplier",
    CircusMaximus: "Circus Maximus",
@@ -693,4 +694,5 @@ export const EN = {
       "This warehouse will use its idle capacity to transport resources from buildings that have full storage. Current idle capacity: %{capacity}",
    WarehouseUpgrade:
       "Unlock warehouse autopilot mode. Free transportation between a warehouse and its adjacent buildings",
+   WarehouseUpgradeDesc: "Free transportation between this warehouse and its adjacent tiles",
 };

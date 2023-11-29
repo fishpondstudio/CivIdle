@@ -5,6 +5,16 @@ interface PatchNote {
 
 export const PatchNotes: PatchNote[] = [
    {
+      version: "0.1.82",
+      content: [
+         ["Balance", "Architecture now provides +1 Builder Capacity Multiplier"],
+         [
+            "Content",
+            "New Wonder: Hanging Garden - +1 Builder Capacity Multiplier. Adjacent aqueducts get +1 Production, Storage and Worker Capacity multiplier",
+         ],
+      ],
+   },
+   {
       version: "0.1.81",
       content: [
          ["Balance", "Optimize offline production and increase the cap to 8 hours (from 4 hours)"],

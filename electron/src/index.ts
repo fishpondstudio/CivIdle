@@ -14,6 +14,7 @@ const createWindow = () => {
             preload: path.join(__dirname, "preload.js"),
             devTools: !app.isPackaged,
             backgroundThrottling: false,
+            webSecurity: false,
          },
          minHeight: 640,
          minWidth: 1136,

@@ -498,15 +498,16 @@ export class BuildingDefinitions {
       wikipedia: "Colossus_of_Rhodes",
    };
 
-   // HangingGarden: IBuildingDefinition = {
-   //    name: () => t(L.HangingGarden),
-   //    desc: () => t(L.HangingGardenDesc),
-   //    input: {},
-   //    output: {},
-   //    max: 1,
-   //    special: BuildingSpecial.WorldWonder,
-   //    wikipedia: "Hanging_Gardens_of_Babylon",
-   // };
+   HangingGarden: IBuildingDefinition = {
+      name: () => t(L.HangingGarden),
+      desc: () => t(L.HangingGardenDesc),
+      input: {},
+      output: {},
+      construction: { Stone: 100, Water: 100, Copper: 100 },
+      max: 1,
+      special: BuildingSpecial.WorldWonder,
+      wikipedia: "Hanging_Gardens_of_Babylon",
+   };
 
    TempleOfHeaven: IBuildingDefinition = {
       name: () => t(L.TempleOfHeaven),

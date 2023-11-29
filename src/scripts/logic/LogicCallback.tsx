@@ -185,6 +185,24 @@ export function onBuildingProductionComplete(xy: string, gs: GameState) {
          });
          break;
       }
+      case "HangingGarden": {
+         Tick.next.globalMultipliers.builderCapacity.push({
+            value: 1,
+            source: buildingName,
+         });
+         grid.getNeighbors(xyToPoint(xy)).forEach((neighbor) => {
+            const building = gs.tiles[pointToXy(neighbor)].building;
+            if (building && building.type === "Aqueduct") {
+               safePush(Tick.next.tileMultipliers, pointToXy(neighbor), {
+                  worker: 1,
+                  storage: 1,
+                  output: 1,
+                  source: buildingName,
+               });
+            }
+         });
+         break;
+      }
       case "Stonehenge": {
          forEach(Tick.current.buildings, (b, def) => {
             if (def.input.Stone || def.output.Stone) {

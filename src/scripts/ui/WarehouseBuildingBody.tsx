@@ -10,6 +10,7 @@ import { BuildingUpgradeComponent } from "./BuildingUpgradeComponent";
 import { BuildingWorkerComponent } from "./BuildingWorkerComponent";
 import { IBuildingComponentProps } from "./PlayerMapPage";
 import { ResourceImportComponent } from "./ResourceImportComponent";
+import { WarningComponent } from "./WarningComponent";
 
 export function WarehouseBuildingBody({ gameState, xy }: IBuildingComponentProps) {
    const warehouse = gameState.tiles[xy].building as IWarehouseBuildingData;
@@ -20,6 +21,13 @@ export function WarehouseBuildingBody({ gameState, xy }: IBuildingComponentProps
    return (
       <div className="window-body">
          <BuildingUpgradeComponent gameState={gameState} xy={xy} />
+         {gameState.features.WarehouseUpgrade ? (
+            <>
+               <WarningComponent icon="info">{t(L.WarehouseUpgradeDesc)}</WarningComponent>
+               <div className="sep10"></div>
+            </>
+         ) : null}
+
          <ResourceImportComponent gameState={gameState} xy={xy} />
          {!gameState.features.WarehouseUpgrade ? null : (
             <fieldset>

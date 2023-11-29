@@ -219,6 +219,7 @@ export class WorldScene extends ViewportScene {
             }
             case "ColossusOfRhodes":
             case "LighthouseOfAlexandria":
+            case "HangingGarden":
             case "ChichenItza":
                this.highlightAdjacentTiles(grid);
                break;

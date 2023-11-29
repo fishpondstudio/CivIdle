@@ -39,9 +39,15 @@ if (import.meta.env.DEV) {
    window.loadSave = (content: any) => {
       saving = true;
       Object.assign(savedGame, content);
-      idbSet(SAVE_KEY, savedGame)
-         .then(() => window.location.reload())
-         .catch(console.error);
+      if (isSteam()) {
+         SteamClient.fileWrite(SAVE_KEY, JSON.stringify(savedGame))
+            .then(() => window.location.reload())
+            .catch(console.error);
+      } else {
+         idbSet(SAVE_KEY, savedGame)
+            .then(() => window.location.reload())
+            .catch(console.error);
+      }
    };
    // @ts-expect-error
    window.savedGame = savedGame;
