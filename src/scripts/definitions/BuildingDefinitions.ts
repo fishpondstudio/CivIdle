@@ -591,6 +591,93 @@ export class BuildingDefinitions {
    //    desc: () => t(L.GreatDagonPagodaDesc),
    //    input: {},
    //    output: {},
+   //    construction: { Brick: 100, Marble: 100, Alcohol: 100 },
+   //    max: 1,
+   //    wikipedia: "Shwedagon_Pagoda",
+   // };
+
+   TempleOfHeaven: IBuildingDefinition = {
+      name: () => t(L.TempleOfHeaven),
+      desc: () => t(L.TempleOfHeavenDesc),
+      input: {},
+      output: {},
+      max: 1,
+      special: BuildingSpecial.WorldWonder,
+      construction: { Iron: 100, Bread: 100, Cheese: 100 },
+      wikipedia: "Temple_of_Heaven",
+   };
+
+   Parthenon: IBuildingDefinition = {
+      name: () => t(L.Parthenon),
+      desc: () => t(L.ParthenonDesc),
+      input: {},
+      output: {},
+      max: 1,
+      special: BuildingSpecial.WorldWonder,
+      construction: { Marble: 100, Poem: 100, Music: 100 },
+      wikipedia: "Parthenon",
+   };
+
+   LuxorTemple: IBuildingDefinition = {
+      name: () => t(L.LuxorTemple),
+      desc: () => t(L.LuxorTempleDesc),
+      input: {},
+      output: {},
+      max: 1,
+      special: BuildingSpecial.WorldWonder,
+      construction: { Tool: 100, Cloth: 100, Furniture: 100 },
+      wikipedia: "Luxor_Temple",
+   };
+
+   ChichenItza: IBuildingDefinition = {
+      name: () => t(L.ChichenItza),
+      desc: () => t(L.ChichenItzaDesc),
+      input: {},
+      output: {},
+      max: 1,
+      special: BuildingSpecial.WorldWonder,
+      construction: { Stone: 100, Armor: 100, SiegeRam: 100 },
+      wikipedia: "Chichen_Itza",
+   };
+
+   MausoleumAtHalicarnassus: IBuildingDefinition = {
+      name: () => t(L.MausoleumAtHalicarnassus),
+      desc: () => t(L.MausoleumAtHalicarnassusDesc),
+      input: {},
+      output: {},
+      max: 1,
+      construction: { Marble: 100, Lumber: 100, Tool: 100 },
+      special: BuildingSpecial.WorldWonder,
+      wikipedia: "Mausoleum_at_Halicarnassus",
+   };
+
+   HagiaSophia: IBuildingDefinition = {
+      name: () => t(L.HagiaSophia),
+      desc: () => t(L.HagiaSophiaDesc),
+      input: { Faith: 10 },
+      construction: { Faith: 100, Marble: 100, Brick: 100 },
+      output: {},
+      max: 1,
+      special: BuildingSpecial.WorldWonder,
+      wikipedia: "Hagia_Sophia",
+   };
+
+   AngkorWat: IBuildingDefinition = {
+      name: () => t(L.AngkorWat),
+      desc: () => t(L.AngkorWatDesc),
+      input: {},
+      output: {},
+      construction: { Faith: 100, Tool: 100, Stone: 100 },
+      max: 1,
+      special: BuildingSpecial.WorldWonder,
+      wikipedia: "Angkor_Wat",
+   };
+
+   // GreatDagonPagoda: IBuildingDefinition = {
+   //    name: () => t(L.GreatDagonPagoda),
+   //    desc: () => t(L.GreatDagonPagodaDesc),
+   //    input: {},
+   //    output: {},
    //    max: 1,
    //    wikipedia: "Shwedagon_Pagoda",
    // };
