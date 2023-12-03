@@ -1,4 +1,4 @@
-import { Application, Ticker } from "pixi.js";
+import { Application } from "pixi.js";
 import {
    TILE_SIZE,
    getGameOptions,
@@ -12,11 +12,11 @@ import { RouteChangeEvent } from "./Route";
 import { checkSteamBranch } from "./SteamTesting";
 import { Building } from "./definitions/BuildingDefinitions";
 import { City } from "./definitions/CityDefinitions";
-import { getBuildingTexture } from "./logic/BuildingLogic";
-import { Config, calculateTierAndPrice } from "./logic/Constants";
+import { getBuildingTexture, getStorageFor } from "./logic/BuildingLogic";
+import { Config, MAX_OFFLINE_PRODUCTION_SEC, calculateTierAndPrice } from "./logic/Constants";
 import { GameState, initializeGameState } from "./logic/GameState";
 import { ITileData } from "./logic/Tile";
-import { shouldTick, tickEveryFrame, tickEverySecond } from "./logic/Update";
+import { tickEverySecond } from "./logic/Update";
 import { MainBundleAssets } from "./main";
 import { connectWebSocket } from "./rpc/RPCClient";
 import { Grid } from "./scenes/Grid";
@@ -25,11 +25,11 @@ import { ErrorPage } from "./ui/ErrorPage";
 import { showModal, showToast } from "./ui/GlobalModal";
 import { LoadingPage, LoadingPageStage } from "./ui/LoadingPage";
 import { OfflineProductionModal } from "./ui/OfflineProductionModal";
+import { GameTicker } from "./utilities/GameTicker";
 import { clamp, forEach, isNullOrUndefined, rejectIn, schedule } from "./utilities/Helper";
 import { SceneManager, Textures } from "./utilities/SceneManager";
 import { ISpecialBuildings, RouteTo, Singleton, initializeSingletons } from "./utilities/Singleton";
 import { TypedEvent } from "./utilities/TypedEvent";
-import Actions from "./utilities/pixi-actions/Actions";
 import { playError } from "./visuals/Sound";
 
 export async function startGame(
@@ -81,27 +81,27 @@ export async function startGame(
    calculateTierAndPrice(gameState);
    initializeSingletons({
       sceneManager: new SceneManager({ app, assets: resources, textures, gameState }),
-      buildings: findSpecialBuildings(gameState) as ISpecialBuildings,
+      buildings: findSpecialBuildings(gameState),
       grid,
       routeTo,
+      ticker: new GameTicker(app.ticker, gameState),
    });
 
    // ========== Connect to server ==========
    routeTo(LoadingPage, { stage: LoadingPageStage.SteamSignIn });
    const TIMEOUT = import.meta.env.DEV ? 1 : 5;
    try {
-      const offlineTime = clamp(
-         await Promise.race([connectWebSocket(), rejectIn<number>(TIMEOUT, "Connection Timeout")]),
-         0,
-         60 * 60 * 8
-      );
+      const actualOfflineTime = await Promise.race([
+         connectWebSocket(),
+         rejectIn<number>(TIMEOUT, "Connection Timeout"),
+      ]);
+      const offlineTime = clamp(actualOfflineTime, 0, MAX_OFFLINE_PRODUCTION_SEC);
       routeTo(LoadingPage, { stage: LoadingPageStage.OfflineProduction });
-
       if (offlineTime >= 60) {
          const before = JSON.parse(JSON.stringify(gameState));
          let timeLeft = offlineTime;
          while (timeLeft > 0) {
-            const batchSize = Math.min(offlineTime, 288);
+            const batchSize = Math.min(offlineTime, MAX_OFFLINE_PRODUCTION_SEC / 100);
             await schedule(() => {
                for (let i = 0; i < batchSize; i++) {
                   tickEverySecond(gameState, true);
@@ -110,6 +110,17 @@ export async function startGame(
             await showOfflineProductionProgress(1 - timeLeft / offlineTime, routeTo);
             timeLeft -= batchSize;
          }
+         const petraOfflineTime = actualOfflineTime - offlineTime;
+         const petra = Singleton().buildings.Petra;
+         if (petra) {
+            const storage = getStorageFor(petra.xy, gameState);
+            if (!petra.building.resources.Warp) {
+               petra.building.resources.Warp = 0;
+            }
+            petra.building.resources.Warp += petraOfflineTime;
+            petra.building.resources.Warp = clamp(petra.building.resources.Warp, 0, storage.total);
+         }
+
          const after = JSON.parse(JSON.stringify(gameState));
          showModal(<OfflineProductionModal before={before} after={after} time={offlineTime} />);
       }
@@ -130,9 +141,7 @@ export async function startGame(
    // Singleton().sceneManager.loadScene(TechTreeScene);
 
    notifyGameStateUpdate();
-
-   startTicker(app.ticker, gameState);
-
+   Singleton().ticker.start();
    await checkSteamBranch();
 }
 
@@ -146,20 +155,7 @@ function showOfflineProductionProgress(progress: number, routeTo: RouteTo): Prom
    });
 }
 
-function startTicker(ticker: Ticker, gameState: GameState) {
-   ticker.add(() => {
-      if (!shouldTick()) {
-         return;
-      }
-      const dt = ticker.elapsedMS / 1000;
-      Actions.tick(dt);
-      tickEveryFrame(gameState, dt);
-   });
-
-   setInterval(tickEverySecond.bind(null, gameState, false), 1000);
-}
-
-function findSpecialBuildings(gameState: GameState): Partial<Record<Building, ITileData>> {
+function findSpecialBuildings(gameState: GameState): ISpecialBuildings {
    const buildings: Partial<Record<Building, ITileData>> = {};
    forEach(gameState.tiles, (_, tile) => {
       if (tile.building?.type === "Headquarter") {
@@ -172,9 +168,19 @@ function findSpecialBuildings(gameState: GameState): Partial<Record<Building, IT
          );
          buildings.Headquarter = tile;
       }
+      if (tile.building?.type === "Petra") {
+         console.assert(
+            buildings.Petra === undefined,
+            "There should be only one Petra. One =",
+            buildings.Petra,
+            "Another = ",
+            tile
+         );
+         buildings.Petra = tile;
+      }
    });
    console.assert(buildings.Headquarter, "Should find 1 Headquarter");
-   return buildings;
+   return buildings as ISpecialBuildings;
 }
 
 function verifyBuildingConfig(textures: Textures, city: City) {

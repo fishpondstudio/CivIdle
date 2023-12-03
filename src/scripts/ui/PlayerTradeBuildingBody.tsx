@@ -1,9 +1,9 @@
 import { BuildingColorComponent } from "./BuildingColorComponent";
+import { IBuildingComponentProps } from "./BuildingPage";
 import { BuildingProductionPriorityComponent } from "./BuildingProductionPriorityComponent";
 import { BuildingSellComponent } from "./BuildingSellComponent";
 import { BuildingUpgradeComponent } from "./BuildingUpgradeComponent";
 import { BuildingWorkerComponent } from "./BuildingWorkerComponent";
-import { IBuildingComponentProps } from "./PlayerMapPage";
 import { PlayerTradeComponent } from "./PlayerTradeComponent";
 import { ResourceImportComponent } from "./ResourceImportComponent";
 

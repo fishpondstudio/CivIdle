@@ -1,6 +1,6 @@
 import { FunctionComponent } from "react";
-import { Building } from "../definitions/BuildingDefinitions";
 import { useGameState } from "../Global";
+import { Building } from "../definitions/BuildingDefinitions";
 import { GameState } from "../logic/GameState";
 import { Tick } from "../logic/TickLogic";
 import { ITileData } from "../logic/Tile";
@@ -10,6 +10,7 @@ import { HeadquarterBuildingBody } from "./HeadquarterBuildingBody";
 import { LoadingPage, LoadingPageStage } from "./LoadingPage";
 import { MarketBuildingBody } from "./MarketBuildingBody";
 import { MenuComponent } from "./MenuComponent";
+import { PetraBuildingBody } from "./PetraBuildingBody";
 import { PlayerTradeBuildingBody } from "./PlayerTradeBuildingBody";
 import { StatisticsBuildingBody } from "./StatisticsBuildingBody";
 import { WarehouseBuildingBody } from "./WarehouseBuildingBody";
@@ -20,6 +21,7 @@ const BuildingBodyOverride: Partial<Record<Building, FunctionComponent<IBuilding
    Statistics: StatisticsBuildingBody,
    Caravansary: PlayerTradeBuildingBody,
    Warehouse: WarehouseBuildingBody,
+   Petra: PetraBuildingBody,
 };
 
 export function BuildingPage({ tile }: { tile: ITileData }): JSX.Element | null {

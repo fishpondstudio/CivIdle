@@ -1,23 +1,23 @@
 import classNames from "classnames";
 import { useEffect, useState } from "react";
 import { IPendingClaim } from "../../../server/src/Database";
-import { Resource } from "../definitions/ResourceDefinitions";
 import { notifyGameStateUpdate } from "../Global";
+import { Resource } from "../definitions/ResourceDefinitions";
 import { getStorageFor } from "../logic/BuildingLogic";
 import { Tick } from "../logic/TickLogic";
-import { client, OnNewPendingClaims, useTrades, useUser } from "../rpc/RPCClient";
+import { OnNewPendingClaims, client, useTrades, useUser } from "../rpc/RPCClient";
 import { getMyMapXy } from "../scenes/PathFinder";
 import { PlayerMapScene } from "../scenes/PlayerMapScene";
 import { safeAdd } from "../utilities/Helper";
 import { useTypedEvent } from "../utilities/Hook";
-import { L, t } from "../utilities/i18n";
 import { Singleton } from "../utilities/Singleton";
+import { L, t } from "../utilities/i18n";
 import { playClick, playError } from "../visuals/Sound";
 import { AddTradeComponent } from "./AddTradeComponent";
+import { IBuildingComponentProps } from "./BuildingPage";
 import { FillPlayerTradeModal } from "./FillPlayerTradeModal";
 import { showModal, showToast } from "./GlobalModal";
 import { FormatNumber } from "./HelperComponents";
-import { IBuildingComponentProps } from "./PlayerMapPage";
 import { WarningComponent } from "./WarningComponent";
 
 export function PlayerTradeComponent({ gameState, xy }: IBuildingComponentProps) {

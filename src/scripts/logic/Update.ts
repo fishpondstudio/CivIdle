@@ -245,10 +245,7 @@ function tickTile(xy: string, gs: GameState, offline: boolean): void {
       building.desiredLevel = building.level;
    }
    if (building.status === "building" || building.status === "upgrading") {
-      const cost = getBuildingCost({
-         type: building.type,
-         level: building.status === "building" ? 1 : building.level + 1,
-      });
+      const cost = getBuildingCost(building);
       let completed = true;
       forEach(cost, (res, amount) => {
          const { total } = getBuilderCapacity(building, xy, gs);
@@ -469,6 +466,10 @@ function tickWarehouseAutopilot(warehouse: IWarehouseBuildingData, xy: string, g
    if (Math.ceil(capacity / transportCapacity) > getAvailableWorkers("Worker")) {
       capacity = getAvailableWorkers("Worker") * transportCapacity;
    }
+
+   // Clamp capacity by available storage
+   const { total, used } = getStorageFor(xy, gs);
+   capacity = clamp(capacity, 0, total - used);
 
    const me = xyToPoint(xy);
    const result = getStorageFullBuildings(gs).sort(

@@ -5,6 +5,25 @@ interface PatchNote {
 
 export const PatchNotes: PatchNote[] = [
    {
+      version: "0.1.83",
+      content: [
+         [
+            "Content",
+            "New Wonder: Petra - Generate time warp when you are offline, which you can use to accelerate your empire",
+         ],
+         [
+            "Content",
+            "Time Warp: cost 1 warp for each cycle and accelerate your empire to run at 2x speed (controlled by Petra)",
+         ],
+         ["Content", "New Great Person: Empress Wu Zetian - +1 Transport Capacity Multiplier"],
+         ["Content", "New Great Person: Rurik - +2 Happiness"],
+         ["Balance", "Tang Of Shang: +0.5 Science from Idle Workers"],
+         ["QoL", "Transport lines will update in real-time"],
+         ["Bugfix", "Fix warehouse autopilot mode will result in storage overflow"],
+         ["Bugfix", "Fix building upgrade progress bar is incorrect"],
+      ],
+   },
+   {
       version: "0.1.82",
       content: [
          ["Balance", "Architecture now provides +1 Builder Capacity Multiplier"],

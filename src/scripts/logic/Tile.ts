@@ -55,10 +55,17 @@ export interface IWarehouseBuildingData extends IResourceImportBuildingData {
    warehouseOptions: WarehouseOptions;
 }
 
-export interface IHaveTypeAndLevel {
-   type: Building;
-   level: number;
+export enum PetraOptions {
+   None = 0,
+   TimeWarp = 1 << 0,
 }
+
+export interface IPetraBuildingData extends IBuildingData {
+   petraOptions: PetraOptions;
+}
+
+export type IHaveTypeAndLevel = Pick<IBuildingData, "type" | "level">;
+export type IHaveTypeLevelAndStatus = Pick<IBuildingData, "type" | "level" | "status">;
 
 export const STOCKPILE_CAPACITY_MIN = 0;
 export const STOCKPILE_CAPACITY_MAX = 10;
@@ -110,6 +117,12 @@ export function makeBuilding(data: Pick<IBuildingData, "type"> & Partial<IBuildi
             warehouse.warehouseOptions = WarehouseOptions.None;
          }
          break;
+      }
+      case "Petra": {
+         const petra = building as IPetraBuildingData;
+         if (isNullOrUndefined(petra.petraOptions)) {
+            petra.petraOptions = PetraOptions.None;
+         }
       }
    }
 

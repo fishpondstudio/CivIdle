@@ -240,7 +240,7 @@
                 "h": 350
             }
         },
-        "PersonSargonOfAkkad": {
+        "PersonRurik": {
             "frame": {
                 "x": 0,
                 "y": 1755,
@@ -248,7 +248,7 @@
                 "h": 350
             }
         },
-        "PersonSimaQian": {
+        "PersonSargonOfAkkad": {
             "frame": {
                 "x": 351,
                 "y": 1755,
@@ -256,7 +256,7 @@
                 "h": 350
             }
         },
-        "PersonSocrates": {
+        "PersonSimaQian": {
             "frame": {
                 "x": 702,
                 "y": 1755,
@@ -264,7 +264,7 @@
                 "h": 350
             }
         },
-        "PersonSolon": {
+        "PersonSocrates": {
             "frame": {
                 "x": 1053,
                 "y": 1755,
@@ -272,10 +272,26 @@
                 "h": 350
             }
         },
-        "PersonTangOfShang": {
+        "PersonSolon": {
             "frame": {
                 "x": 1404,
                 "y": 1755,
+                "w": 350,
+                "h": 350
+            }
+        },
+        "PersonTangOfShang": {
+            "frame": {
+                "x": 1755,
+                "y": 1755,
+                "w": 350,
+                "h": 350
+            }
+        },
+        "PersonWuZetian": {
+            "frame": {
+                "x": 2106,
+                "y": 0,
                 "w": 350,
                 "h": 350
             }
@@ -287,7 +303,7 @@
         "image": "./src/images/textures_people.png",
         "scale": 1,
         "size": {
-            "w": 2105,
+            "w": 2456,
             "h": 2105
         }
     }

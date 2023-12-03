@@ -6,8 +6,8 @@ import { client } from "../rpc/RPCClient";
 import { keysOf, safeParseInt } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
 import { playError } from "../visuals/Sound";
+import { IBuildingComponentProps } from "./BuildingPage";
 import { FormatNumber } from "./HelperComponents";
-import { IBuildingComponentProps } from "./PlayerMapPage";
 
 export function AddTradeComponent({ gameState, xy }: IBuildingComponentProps) {
    const buyResources = keysOf(Tick.next.resourcesByXy).filter(
@@ -78,7 +78,7 @@ export function AddTradeComponent({ gameState, xy }: IBuildingComponentProps) {
                0 ~ <FormatNumber value={resourcesInStorage[trade.sellResource] ?? 0} />
             </div>
             <div className="separator has-title">
-               <div className="title text-strong">{t(L.PlayerTradeIWant)}</div>
+               <div className="text-strong">{t(L.PlayerTradeIWant)}</div>
             </div>
             <div className="sep10" />
             <div className="row">

@@ -14,23 +14,20 @@ import { ProgressBarComponent } from "./ProgressBarComponent";
 import { WarningComponent } from "./WarningComponent";
 
 export function BuildingConstructionProgressComponent({ gameState, xy }: IBuildingComponentProps) {
-   const percentage = getBuildingPercentage(xy, gameState);
    const building = gameState.tiles[xy]?.building;
    if (!building) {
       return null;
    }
    const { base, multiplier, total } = getBuilderCapacity(building, xy, gameState);
-   const resources = getBuildingCost({
-      type: building.type,
-      level: building.status === "building" ? 1 : building.level + 1,
-   });
+   const cost = getBuildingCost(building);
+   const percentage = getBuildingPercentage(xy, cost, gameState);
    return (
       <fieldset>
          <legend>
             {t(L.ConstructionProgress)}: {formatPercent(percentage, 0)}
          </legend>
          <ProgressBarComponent progress={percentage} />
-         {jsxMapOf(resources, (res, value) => {
+         {jsxMapOf(cost, (res, value) => {
             return (
                <div className="row mv5" key={res}>
                   <div className="f1">{Tick.current.resources[res].name()}</div>

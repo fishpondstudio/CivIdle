@@ -40,6 +40,7 @@ export class WorldScene extends ViewportScene {
    private readonly _transport: Record<number, Sprite> = {};
    private _bg!: TilingSprite;
    private _graphics!: SmoothGraphics;
+   private _selectedXy: string | null = null;
 
    override onLoad(): void {
       const { app, textures } = this.context;
@@ -120,6 +121,7 @@ export class WorldScene extends ViewportScene {
 
    override onGameStateChanged(gameState: GameState): void {
       forEach(this._tiles, (xy, visual) => visual.onTileDataChanged(gameState.tiles[xy]));
+      this.drawTransportation(gameState);
    }
 
    override onGameOptionsChanged(gameOptions: GameOptions): void {
@@ -174,32 +176,21 @@ export class WorldScene extends ViewportScene {
    selectGrid(grid: IPointData) {
       this.drawSelection(grid);
       const xy = pointToXy(grid);
+      this._selectedXy = xy;
       Singleton().routeTo(TilePage, { xy: xy });
       const gs = getGameState();
-      const building = gs.tiles[xy].building;
-      this._transportLines.clear();
-      if (building) {
-         const lines: Record<string, true> = {};
-         gs.transportation[xy]?.forEach((t) => {
-            const fromGrid = xyToPoint(t.fromXy);
-            const toGrid = xyToPoint(t.toXy);
-            const key = [t.resource, (fromGrid.y - toGrid.y) / (fromGrid.x - toGrid.x)].join(",");
-            if (lines[key]) {
-               return;
-            }
-            lines[key] = true;
-            this._transportLines.lineStyle({
-               color: Color.shared.setValue(getGameOptions().resourceColors[t.resource] ?? "#ffffff"),
-               width: 2,
-               cap: LINE_CAP.ROUND,
-               join: LINE_JOIN.ROUND,
-               alignment: 0.5,
-               alpha: 0.25,
-            });
-            this._transportLines.moveTo(t.fromPosition.x, t.fromPosition.y);
-            this._transportLines.lineTo(t.toPosition.x, t.toPosition.y);
-         });
+      this.drawTransportation(gs);
+      this.drawBuildingDecors(gs);
+   }
 
+   private drawBuildingDecors(gs: GameState) {
+      const xy = this._selectedXy;
+      if (!xy) {
+         return;
+      }
+      const building = gs.tiles[xy].building;
+      const grid = xyToPoint(xy);
+      if (building) {
          switch (building.type) {
             case "MausoleumAtHalicarnassus": {
                const pos = Singleton().grid.gridToPosition(grid);
@@ -225,6 +216,34 @@ export class WorldScene extends ViewportScene {
                break;
          }
       }
+   }
+
+   private drawTransportation(gs: GameState) {
+      const xy = this._selectedXy;
+      if (!xy) {
+         return;
+      }
+      this._transportLines.clear();
+      const lines: Record<string, true> = {};
+      gs.transportation[xy]?.forEach((t) => {
+         const fromGrid = xyToPoint(t.fromXy);
+         const toGrid = xyToPoint(t.toXy);
+         const key = [t.resource, (fromGrid.y - toGrid.y) / (fromGrid.x - toGrid.x)].join(",");
+         if (lines[key]) {
+            return;
+         }
+         lines[key] = true;
+         this._transportLines.lineStyle({
+            color: Color.shared.setValue(getGameOptions().resourceColors[t.resource] ?? "#ffffff"),
+            width: 2,
+            cap: LINE_CAP.ROUND,
+            join: LINE_JOIN.ROUND,
+            alignment: 0.5,
+            alpha: 0.25,
+         });
+         this._transportLines.moveTo(t.fromPosition.x, t.fromPosition.y);
+         this._transportLines.lineTo(t.toPosition.x, t.toPosition.y);
+      });
    }
 
    private highlightAdjacentTiles(grid: IPointData) {

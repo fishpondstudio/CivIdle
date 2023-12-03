@@ -608,6 +608,17 @@ export class BuildingDefinitions {
       wikipedia: "Persepolis",
    };
 
+   Petra: IBuildingDefinition = {
+      name: () => t(L.Petra),
+      desc: () => t(L.PetraDesc),
+      input: {},
+      output: {},
+      max: 1,
+      construction: { Gold: 500 },
+      special: BuildingSpecial.WorldWonder,
+      wikipedia: "Petra",
+   };
+
    // GreatDagonPagoda: IBuildingDefinition = {
    //    name: () => t(L.GreatDagonPagoda),
    //    desc: () => t(L.GreatDagonPagodaDesc),
@@ -625,15 +636,6 @@ export class BuildingDefinitions {
    //    output: {},
    //    max: 1,
    //    wikipedia: "Sagrada_Família",
-   // };
-
-   // Petra: IBuildingDefinition = {
-   //    name: () => t(L.Petra),
-   //    desc: () => t(L.PetraDesc),
-   //    input: {},
-   //    output: {},
-   //    max: 1,
-   //    wikipedia: "Petra",
    // };
 
    // Borobudur: IBuildingDefinition = {

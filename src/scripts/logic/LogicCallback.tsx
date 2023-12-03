@@ -11,6 +11,7 @@ import { getTypeBuildings, getXyBuildings } from "./IntraTickCache";
 import { getGreatPeopleChoices } from "./TechLogic";
 import { ensureTileFogOfWar } from "./TerrainLogic";
 import { Tick } from "./TickLogic";
+import { IPetraBuildingData, PetraOptions } from "./Tile";
 import { addMultiplier } from "./Update";
 
 export function onBuildingComplete(xy: string, gs: GameState) {
@@ -267,6 +268,16 @@ export function onBuildingProductionComplete(xy: string, gs: GameState) {
             },
             buildingName
          );
+         break;
+      }
+      case "Petra": {
+         const petra = building as IPetraBuildingData;
+         if (petra.petraOptions & PetraOptions.TimeWarp && (petra.resources.Warp ?? 0) > 0) {
+            --petra.resources.Warp!;
+            Singleton().ticker.speedUp = 2;
+         } else {
+            Singleton().ticker.speedUp = 1;
+         }
          break;
       }
    }

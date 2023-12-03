@@ -234,7 +234,7 @@ export class TechDefinitions {
       name: () => t(L.Politics),
       column: 7,
       requireTech: ["CityState", "PreciousMetal"],
-      unlockBuilding: ["FurnitureWorkshop"],
+      unlockBuilding: ["FurnitureWorkshop", "Petra"],
    };
 
    Theater: ITechDefinition = {

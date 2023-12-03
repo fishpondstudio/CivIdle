@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "../../css/EmptyTilePage.css";
-import { Building } from "../definitions/BuildingDefinitions";
 import { notifyGameStateUpdate, useGameState } from "../Global";
+import { Building } from "../definitions/BuildingDefinitions";
 import { getBuildingCost, isWorldOrNaturalWonder } from "../logic/BuildingLogic";
 import { Config } from "../logic/Constants";
 import { getTypeBuildings, unlockedBuildings } from "../logic/IntraTickCache";
@@ -107,7 +107,7 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): JSX.Element {
                               return null;
                            }
                            const building = Tick.current.buildings[k];
-                           const buildCost = getBuildingCost({ type: k, level: 1 });
+                           const buildCost = getBuildingCost({ type: k, level: 1, status: "building" });
                            return (
                               <tr
                                  key={k}

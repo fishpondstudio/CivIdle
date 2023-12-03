@@ -23,7 +23,13 @@ import { getBuildingIO, getBuildingsByType, getXyBuildings } from "./IntraTickCa
 import { getResourcesValue } from "./ResourceLogic";
 import { getAgeForTech, getBuildingUnlockTech } from "./TechLogic";
 import { Multiplier, MultiplierWithSource, NotProducingReason, Tick } from "./TickLogic";
-import { IBuildingData, IHaveTypeAndLevel, IResourceImportBuildingData, IWarehouseBuildingData } from "./Tile";
+import {
+   IBuildingData,
+   IHaveTypeAndLevel,
+   IHaveTypeLevelAndStatus,
+   IResourceImportBuildingData,
+   IWarehouseBuildingData,
+} from "./Tile";
 
 export function getBuildingTexture(b: Building, textures: Textures, city: City) {
    return textures[`Building${b}_${city}`] ?? textures[`Building${b}`];
@@ -169,13 +175,16 @@ export function getStorageFor(xy: string, gs: GameState): IStorageResult {
    };
    const building = gs.tiles[xy].building;
    const used = reduceOf(building?.resources, accumulate, 0);
-   const multiplier = totalMultiplierFor(xy, "storage", 1, gs);
+   let multiplier = totalMultiplierFor(xy, "storage", 1, gs);
 
    let base = 0;
-   if (building?.type == "Caravansary" || building?.type == "Market") {
+   if (building?.type === "Caravansary" || building?.type === "Market") {
       base = building.level * STORAGE_TO_PRODUCTION * 10;
-   } else if (building?.type == "Warehouse") {
+   } else if (building?.type === "Warehouse") {
       base = building.level * STORAGE_TO_PRODUCTION * 100;
+   } else if (building?.type === "Petra") {
+      base = 60 * 60 * building.level; // 1 hour
+      multiplier = 1;
    } else {
       base =
          60 * reduceOf(getBuildingIO(xy, "input", IOCalculation.Multiplier, gs), accumulate, 0) +
@@ -321,8 +330,9 @@ export function getScienceFromWorkers(gs: GameState) {
    };
 }
 
-export function getBuildingCost(building: IHaveTypeAndLevel): PartialTabulate<Resource> {
+export function getBuildingCost(building: Pick<IBuildingData, "type" | "level" | "status">): PartialTabulate<Resource> {
    const type = building.type;
+   const level = building.status === "building" ? 0 : building.level;
    let cost = { ...Tick.current.buildings[type].construction };
    if (isEmpty(cost)) {
       cost = { ...Tick.current.buildings[type].input } ?? {};
@@ -348,7 +358,7 @@ export function getBuildingCost(building: IHaveTypeAndLevel): PartialTabulate<Re
    }
 
    keysOf(cost).forEach((res) => {
-      cost[res] = Math.pow(1.5, building.level - 1) * multiplier * cost[res]!;
+      cost[res] = Math.pow(1.5, level) * multiplier * cost[res]!;
    });
    return cost;
 }
@@ -359,7 +369,11 @@ export function getTotalBuildingCost(
    desiredLevel: number
 ): PartialTabulate<Resource> {
    console.assert(currentLevel <= desiredLevel);
-   const start: IHaveTypeAndLevel = { type: building, level: currentLevel };
+   const start: IHaveTypeLevelAndStatus = {
+      type: building,
+      level: currentLevel,
+      status: currentLevel == 1 ? "building" : "upgrading",
+   };
    const result: PartialTabulate<Resource> = {};
    while (start.level <= desiredLevel) {
       const cost = getBuildingCost(start);
@@ -373,7 +387,7 @@ export function getBuildingValue(building: IBuildingData): number {
    return getResourcesValue(getTotalBuildingCost(building.type, 1, building.level));
 }
 
-export function getBuildingPercentage(xy: string, gs: GameState): number {
+export function getBuildingPercentage(xy: string, cost: PartialTabulate<Resource>, gs: GameState): number {
    const building = gs.tiles[xy]?.building;
    if (!building) {
       return 0;
@@ -381,7 +395,6 @@ export function getBuildingPercentage(xy: string, gs: GameState): number {
    if (building.status === "completed") {
       return 1;
    }
-   const cost = getBuildingCost({ type: building.type, level: building.level + 1 });
    let totalCost = 0;
    let inStorage = 0;
    forEach(cost, (res, amount) => {

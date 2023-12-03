@@ -62,7 +62,7 @@ export function UnlockableEffectComponent({
                   <div className="text-desc">
                      {t(L.ConstructionCost, {
                         cost: mapOf(
-                           getBuildingCost({ type: b, level: 1 }),
+                           getBuildingCost({ type: b, level: 1, status: "building" }),
                            (res, amount) => `${Config.Resource[res].name()} x${formatNumber(amount)}`
                         ).join(", "),
                      })}

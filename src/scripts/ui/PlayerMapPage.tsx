@@ -1,5 +1,4 @@
 import WorldMap from "../../../server/WorldMap.json";
-import { GameState } from "../logic/GameState";
 import { usePlayerMap } from "../rpc/RPCClient";
 import { getMyMapXy } from "../scenes/PathFinder";
 import { MyTilePage } from "./MyTilePage";
@@ -19,9 +18,4 @@ export function PlayerMapPage({ xy }: { xy: string }): JSX.Element | null {
    } else {
       return <OceanTilePage xy={xy} />;
    }
-}
-
-export interface IBuildingComponentProps {
-   gameState: GameState;
-   xy: string;
 }

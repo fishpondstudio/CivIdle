@@ -5,10 +5,10 @@ import { Tick } from "../logic/TickLogic";
 import { IResourceImportBuildingData } from "../logic/Tile";
 import { forEach, keysOf } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
+import { IBuildingComponentProps } from "./BuildingPage";
 import { ChangeResourceImportModal } from "./ChangeResourceImportModal";
 import { showModal } from "./GlobalModal";
 import { FormatNumber } from "./HelperComponents";
-import { IBuildingComponentProps } from "./PlayerMapPage";
 import { ProgressBarComponent } from "./ProgressBarComponent";
 
 export function ResourceImportComponent({ gameState, xy }: IBuildingComponentProps) {

@@ -4,11 +4,11 @@ import { IWarehouseBuildingData, WarehouseOptions } from "../logic/Tile";
 import { L, t } from "../utilities/i18n";
 import { playClick } from "../visuals/Sound";
 import { BuildingColorComponent } from "./BuildingColorComponent";
+import { IBuildingComponentProps } from "./BuildingPage";
 import { BuildingProductionPriorityComponent } from "./BuildingProductionPriorityComponent";
 import { BuildingSellComponent } from "./BuildingSellComponent";
 import { BuildingUpgradeComponent } from "./BuildingUpgradeComponent";
 import { BuildingWorkerComponent } from "./BuildingWorkerComponent";
-import { IBuildingComponentProps } from "./PlayerMapPage";
 import { ResourceImportComponent } from "./ResourceImportComponent";
 import { WarningComponent } from "./WarningComponent";
 

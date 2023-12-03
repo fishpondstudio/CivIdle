@@ -16,6 +16,8 @@ const ResourceTier: PartialTabulate<Resource> = {};
 const ResourcePrice: PartialTabulate<Resource> = {};
 const ResourceTech: PartialTabulate<Resource> = {};
 
+export const MAX_OFFLINE_PRODUCTION_SEC = 60 * 60 * 4;
+
 export function getVersion(): string {
    return `0.${SAVE_FILE_VERSION}.${build}`;
 }

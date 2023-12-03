@@ -44,12 +44,12 @@ export class GreatPersonDefinitions {
       name: () => t(L.TangOfShang),
       desc: (self, level) => t(L.TangOfShangDesc, { value: self.value(level) }),
       time: "c. 1600s BC",
-      value: (level) => level,
+      value: (level) => level * 0.5,
       maxLevel: Infinity,
       age: "BronzeAge",
       tick: (self, level) => {
          Tick.next.globalMultipliers.sciencePerIdleWorker.push({
-            value: level,
+            value: self.value(level),
             source: t(L.SourceGreatPerson, { person: self.name() }),
          });
       },
@@ -200,6 +200,36 @@ export class GreatPersonDefinitions {
       maxLevel: Infinity,
       age: "MiddleAge",
    });
+
+   WuZetian: IGreatPersonDefinition = {
+      name: () => t(L.WuZetian),
+      desc: (self, level) => t(L.WuZetianDesc, { value: self.value(level) }),
+      time: "624 ~ 705 AD",
+      value: (level) => level,
+      maxLevel: Infinity,
+      age: "MiddleAge",
+      tick: (self, level) => {
+         Tick.next.globalMultipliers.transportCapacity.push({
+            value: level,
+            source: t(L.SourceGreatPerson, { person: self.name() }),
+         });
+      },
+   };
+
+   Rurik: IGreatPersonDefinition = {
+      name: () => t(L.Rurik),
+      desc: (self, level) => t(L.RurikDesc, { value: self.value(level) }),
+      time: "624 ~ 705 AD",
+      value: (level) => level * 2,
+      maxLevel: Infinity,
+      age: "MiddleAge",
+      tick: (self, level) => {
+         Tick.next.globalMultipliers.happiness.push({
+            value: self.value(level),
+            source: t(L.SourceGreatPerson, { person: self.name() }),
+         });
+      },
+   };
 
    // LaoZi: IGreatPersonDefinition = {
    //    name: () => t(L.LaoZi),

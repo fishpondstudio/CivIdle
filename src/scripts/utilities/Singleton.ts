@@ -2,6 +2,7 @@
 // Attention! Do not complicates the import of this file since it causes HMR to break easily
 import { ITileData } from "../logic/Tile";
 import { Grid } from "../scenes/Grid";
+import { GameTicker } from "./GameTicker";
 import { SceneManager } from "./SceneManager";
 /////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -12,10 +13,12 @@ export interface ISingleton {
    grid: Grid;
    buildings: ISpecialBuildings;
    routeTo: RouteTo;
+   ticker: GameTicker;
 }
 
 export interface ISpecialBuildings {
    Headquarter: Required<ITileData>;
+   Petra?: Required<ITileData>;
 }
 
 let singletons: ISingleton | null = null;
