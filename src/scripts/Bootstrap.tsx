@@ -15,7 +15,7 @@ import { City } from "./definitions/CityDefinitions";
 import { getBuildingTexture, getStorageFor } from "./logic/BuildingLogic";
 import { Config, MAX_OFFLINE_PRODUCTION_SEC, calculateTierAndPrice } from "./logic/Constants";
 import { GameState, initializeGameState } from "./logic/GameState";
-import { ITileData } from "./logic/Tile";
+import { IPetraBuildingData, ITileData } from "./logic/Tile";
 import { tickEverySecond } from "./logic/Update";
 import { MainBundleAssets } from "./main";
 import { connectWebSocket } from "./rpc/RPCClient";
@@ -95,7 +95,13 @@ export async function startGame(
          connectWebSocket(),
          rejectIn<number>(TIMEOUT, "Connection Timeout"),
       ]);
-      const offlineTime = clamp(actualOfflineTime, 0, MAX_OFFLINE_PRODUCTION_SEC);
+
+      const petra = Singleton().buildings.Petra;
+      const maxOfflineTime =
+         ((petra?.building as IPetraBuildingData | undefined)?.offlineProductionPercent ?? 1) *
+         MAX_OFFLINE_PRODUCTION_SEC;
+      const offlineTime = clamp(actualOfflineTime, 0, maxOfflineTime);
+
       routeTo(LoadingPage, { stage: LoadingPageStage.OfflineProduction });
       if (offlineTime >= 60) {
          const before = JSON.parse(JSON.stringify(gameState));
@@ -111,7 +117,6 @@ export async function startGame(
             timeLeft -= batchSize;
          }
          const petraOfflineTime = actualOfflineTime - offlineTime;
-         const petra = Singleton().buildings.Petra;
          if (petra) {
             const storage = getStorageFor(petra.xy, gameState);
             if (!petra.building.resources.Warp) {

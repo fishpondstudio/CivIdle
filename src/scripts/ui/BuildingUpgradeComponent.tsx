@@ -21,7 +21,7 @@ export function BuildingUpgradeComponent({ gameState, xy }: IBuildingComponentPr
    }
    const levels = getBuildingUpgradeLevels(building);
    const [selected, setSelected] = useState(0);
-   const cost = getTotalBuildingCost(building.type, building.level + 1, building.level + levels[selected]);
+   const cost = getTotalBuildingCost(building.type, building.level, building.level + levels[selected]);
    const upgrade = (level: number) => {
       building.desiredLevel = building.level + level;
       building.status = "upgrading";

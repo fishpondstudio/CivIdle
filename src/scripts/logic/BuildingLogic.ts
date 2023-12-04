@@ -372,10 +372,10 @@ export function getTotalBuildingCost(
    const start: IHaveTypeLevelAndStatus = {
       type: building,
       level: currentLevel,
-      status: currentLevel == 1 ? "building" : "upgrading",
+      status: currentLevel == 0 ? "building" : "upgrading",
    };
    const result: PartialTabulate<Resource> = {};
-   while (start.level <= desiredLevel) {
+   while (start.level < desiredLevel) {
       const cost = getBuildingCost(start);
       forEach(cost, (res, amount) => safeAdd(result, res, amount));
       ++start.level;
@@ -384,7 +384,7 @@ export function getTotalBuildingCost(
 }
 
 export function getBuildingValue(building: IBuildingData): number {
-   return getResourcesValue(getTotalBuildingCost(building.type, 1, building.level));
+   return getResourcesValue(getTotalBuildingCost(building.type, 0, building.level));
 }
 
 export function getBuildingPercentage(xy: string, cost: PartialTabulate<Resource>, gs: GameState): number {

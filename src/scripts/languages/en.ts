@@ -709,4 +709,5 @@ export const EN = {
    TurnOnTimeWarp: "Turn On Time Warp",
    TurnOnTimeWarpDesc: "Cost 1 warp for each cycle and accelerate your empire to run at 2x speed",
    PetraNoMultiplier: "Petra is not affected by any multipliers (production, worker capacity, storage, etc)",
+   LimitOfflineProduction: "Limit Offline Production",
 };

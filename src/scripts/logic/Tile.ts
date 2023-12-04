@@ -62,6 +62,7 @@ export enum PetraOptions {
 
 export interface IPetraBuildingData extends IBuildingData {
    petraOptions: PetraOptions;
+   offlineProductionPercent: number;
 }
 
 export type IHaveTypeAndLevel = Pick<IBuildingData, "type" | "level">;
@@ -122,6 +123,9 @@ export function makeBuilding(data: Pick<IBuildingData, "type"> & Partial<IBuildi
          const petra = building as IPetraBuildingData;
          if (isNullOrUndefined(petra.petraOptions)) {
             petra.petraOptions = PetraOptions.None;
+         }
+         if (isNullOrUndefined(petra.offlineProductionPercent)) {
+            petra.offlineProductionPercent = 1;
          }
       }
    }

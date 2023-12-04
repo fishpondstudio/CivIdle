@@ -3,7 +3,7 @@ import { TechTreeScene } from "../scenes/TechTreeScene";
 import { WorldScene } from "../scenes/WorldScene";
 import { ChooseGreatPersonModal } from "../ui/ChooseGreatPersonModal";
 import { showModal } from "../ui/GlobalModal";
-import { forEach, pointToXy, safeAdd, safePush, xyToPoint } from "../utilities/Helper";
+import { forEach, keysOf, pointToXy, safeAdd, safePush, xyToPoint } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
 import { Singleton } from "../utilities/Singleton";
 import { GameState } from "./GameState";
@@ -278,6 +278,11 @@ export function onBuildingProductionComplete(xy: string, gs: GameState) {
          } else {
             Singleton().ticker.speedUp = 1;
          }
+         keysOf(petra.resources).forEach((res) => {
+            if (res !== "Warp") {
+               delete petra.resources[res];
+            }
+         });
          break;
       }
    }

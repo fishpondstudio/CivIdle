@@ -23,10 +23,32 @@ export function PetraBuildingBody({ gameState, xy }: IBuildingComponentProps) {
             <legend>{t(L.OfflineProduction)}</legend>
             <div className="row">
                <div className="f1">{t(L.MaxOfflineProductionTime)}</div>
-               <div className="text-strong">{formatHM(MAX_OFFLINE_PRODUCTION_SEC * 1000)}</div>
+               <div className="text-strong">
+                  {formatHM(building.offlineProductionPercent * MAX_OFFLINE_PRODUCTION_SEC * 1000)}
+               </div>
             </div>
-            <div className="sep5"></div>
+            <div className="sep5" />
             <div className="text-desc text-small">{t(L.WarpConversionDesc)}</div>
+            <div className="sep10" />
+            <div className="separator has-title">
+               <div>
+                  {t(L.LimitOfflineProduction)}: {formatPercent(building.offlineProductionPercent)}
+               </div>
+            </div>
+            <input
+               id="building-capacity"
+               type="range"
+               min="0"
+               max="1"
+               step="0.01"
+               value={building.offlineProductionPercent}
+               onChange={(e) => {
+                  building.offlineProductionPercent = parseFloat(e.target.value);
+                  notifyGameStateUpdate();
+               }}
+               className="mh0"
+            />
+            <div className="sep5" />
          </fieldset>
          <fieldset>
             <legend className="text-strong">{t(L.LevelX, { level: building.level })}</legend>
