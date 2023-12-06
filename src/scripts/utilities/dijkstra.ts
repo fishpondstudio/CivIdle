@@ -6,8 +6,15 @@ interface ValueAndPriority<T> {
    priority: number;
 }
 
-export function dijkstra(grid: number[], stride: number, start: IPointData, end: IPointData): IPointData[] {
-   const frontier = new PriorityQueue<ValueAndPriority<IPointData>>({ comparator: (a, b) => a.priority - b.priority });
+export function dijkstra(
+   grid: number[],
+   stride: number,
+   start: IPointData,
+   end: IPointData,
+): IPointData[] {
+   const frontier = new PriorityQueue<ValueAndPriority<IPointData>>({
+      comparator: (a, b) => a.priority - b.priority,
+   });
    const cameFrom = new Map<number, IPointData>();
    const costSoFar = new Map<number, number>();
    const maxX = stride;

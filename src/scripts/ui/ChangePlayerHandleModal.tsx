@@ -20,7 +20,12 @@ export function ChangePlayerHandleModal() {
          <div className="window-body">
             <div className="text-small">{t(L.ChangePlayerHandledDesc)}</div>
             <div className="sep10"></div>
-            <input style={{ width: "100%" }} type="text" value={handle} onChange={(e) => setHandle(e.target.value)} />
+            <input
+               style={{ width: "100%" }}
+               type="text"
+               value={handle}
+               onChange={(e) => setHandle(e.target.value)}
+            />
             <div className="sep15"></div>
             <div className="row" style={{ justifyContent: "flex-end" }}>
                <button

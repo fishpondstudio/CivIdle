@@ -187,7 +187,10 @@ export class RomeProvinceDefinitions {
       visual: { x: 2463, y: 1573, textSize: 80, textX: -20 },
       unlockCost: 6000,
       name: () => t(L.ProvinceAegyptus),
-      buildingMultiplier: { WheatFarm: { output: 1, worker: 1 }, LivestockFarm: { output: 1, worker: 1 } },
+      buildingMultiplier: {
+         WheatFarm: { output: 1, worker: 1 },
+         LivestockFarm: { output: 1, worker: 1 },
+      },
       requireProvince: ["Cilicia"],
    };
    Cyrene: IProvinceDefinition = {
@@ -201,7 +204,10 @@ export class RomeProvinceDefinitions {
       visual: { x: 1393, y: 1435, textAngle: 35, textY: 120, textX: 50 },
       unlockCost: 5000,
       name: () => t(L.ProvinceAfrica),
-      buildingMultiplier: { House: { worker: 1, storage: 1 }, Apartment: { worker: 1, storage: 1 } },
+      buildingMultiplier: {
+         House: { worker: 1, storage: 1 },
+         Apartment: { worker: 1, storage: 1 },
+      },
       requireProvince: ["Sicillia"],
    };
    Numidia: IProvinceDefinition = {

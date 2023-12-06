@@ -1,11 +1,25 @@
 import { SmoothGraphics } from "@pixi/graphics-smooth";
-import { BitmapText, Container, FederatedPointerEvent, IPointData, LINE_CAP, LINE_JOIN, Sprite } from "pixi.js";
+import {
+   BitmapText,
+   Container,
+   FederatedPointerEvent,
+   IPointData,
+   LINE_CAP,
+   LINE_JOIN,
+   Sprite,
+} from "pixi.js";
 import { IMapEntry, MAP_MAX_X, MAP_MAX_Y } from "../../../server/src/Database";
 import WorldMap from "../../../server/WorldMap.json";
 import { getGameOptions } from "../Global";
 import { getPlayerMap, OnPlayerMapMessage } from "../rpc/RPCClient";
 import { PlayerMapPage } from "../ui/PlayerMapPage";
-import { drawDashedLine, forEach, formatPercent, safeParseInt, xyToPoint } from "../utilities/Helper";
+import {
+   drawDashedLine,
+   forEach,
+   formatPercent,
+   safeParseInt,
+   xyToPoint,
+} from "../utilities/Helper";
 import { ViewportScene } from "../utilities/SceneManager";
 import { Singleton } from "../utilities/Singleton";
 import { Disposable } from "../utilities/TypedEvent";
@@ -179,7 +193,14 @@ export class PlayerMapScene extends ViewportScene {
          if (idx == 0) {
             this._path.moveTo(pos.x, pos.y);
          } else {
-            count = drawDashedLine(this._path, this.tileToPosition(path[idx - 1]), pos, count, 5, 10);
+            count = drawDashedLine(
+               this._path,
+               this.tileToPosition(path[idx - 1]),
+               pos,
+               count,
+               5,
+               10,
+            );
          }
       });
    }
@@ -224,7 +245,7 @@ export class PlayerMapScene extends ViewportScene {
             fontName: Fonts.Cabin,
             fontSize: 16,
             tint: isMyself ? 0xffeaa7 : 0xffffff,
-         })
+         }),
       );
       handle.anchor.set(0.5, 0.5);
       handle.position.set(x * GridSize + 0.5 * GridSize, y * GridSize + 0.5 * GridSize - 10);
@@ -234,7 +255,7 @@ export class PlayerMapScene extends ViewportScene {
             fontName: Fonts.Cabin,
             fontSize: 14,
             tint: isMyself ? 0xffeaa7 : 0xffffff,
-         })
+         }),
       );
       tariff.anchor.set(0.5, 0.5);
       tariff.position.set(x * GridSize + 0.5 * GridSize, y * GridSize + 0.5 * GridSize + 15);

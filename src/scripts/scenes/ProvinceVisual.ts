@@ -1,5 +1,12 @@
 import { OutlineFilter } from "@pixi/filter-outline";
-import { BitmapText, Container, FederatedPointerEvent, IRendererPlugins, Sprite, Texture } from "pixi.js";
+import {
+   BitmapText,
+   Container,
+   FederatedPointerEvent,
+   IRendererPlugins,
+   Sprite,
+   Texture,
+} from "pixi.js";
 import { RomeProvince } from "../definitions/RomeProvinceDefinitions";
 import { v2 } from "../utilities/Vector2";
 import { Fonts } from "../visuals/Fonts";
@@ -17,7 +24,7 @@ export class ProvinceVisual extends Container {
       texture: Texture,
       plugins: IRendererPlugins,
       hitmapResolution = 32,
-      hitmapAlphaThreshold = 255
+      hitmapAlphaThreshold = 255,
    ) {
       super();
       this.province = id;
@@ -29,7 +36,9 @@ export class ProvinceVisual extends Container {
       const pixels: Uint8Array = plugins.extract.pixels(sprite);
 
       if (!ProvinceVisual.hitmapCache[id]) {
-         const hitmap = new Uint32Array(Math.ceil((sprite.width * sprite.height) / hitmapResolution));
+         const hitmap = new Uint32Array(
+            Math.ceil((sprite.width * sprite.height) / hitmapResolution),
+         );
          for (let i = 0; i < sprite.width * sprite.height; i++) {
             const ind1 = i % 32;
             const ind2 = (i / 32) | 0;
@@ -45,7 +54,7 @@ export class ProvinceVisual extends Container {
             fontName: Fonts.Marcellus,
             fontSize: visual?.textSize ?? 50,
             tint: 0xffffff,
-         })
+         }),
       );
       text.position.set(visual?.textX ?? 0, visual?.textY ?? 0);
       text.anchor.set(0.5, 0.5);
@@ -64,7 +73,12 @@ export class ProvinceVisual extends Container {
          x: this._sprite.width / 2,
          y: this._sprite.height / 2,
       });
-      if (point.x < 0 || point.y < 0 || point.x > this._sprite.width || point.y > this._sprite.height) {
+      if (
+         point.x < 0 ||
+         point.y < 0 ||
+         point.x > this._sprite.width ||
+         point.y > this._sprite.height
+      ) {
          return false;
       }
       const ind = Math.round(point.x) + Math.round(point.y) * this._sprite.width;

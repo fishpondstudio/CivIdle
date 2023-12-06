@@ -15,14 +15,15 @@ import { PlayerTradeBuildingBody } from "./PlayerTradeBuildingBody";
 import { StatisticsBuildingBody } from "./StatisticsBuildingBody";
 import { WarehouseBuildingBody } from "./WarehouseBuildingBody";
 
-const BuildingBodyOverride: Partial<Record<Building, FunctionComponent<IBuildingComponentProps>>> = {
-   Headquarter: HeadquarterBuildingBody,
-   Market: MarketBuildingBody,
-   Statistics: StatisticsBuildingBody,
-   Caravansary: PlayerTradeBuildingBody,
-   Warehouse: WarehouseBuildingBody,
-   Petra: PetraBuildingBody,
-};
+const BuildingBodyOverride: Partial<Record<Building, FunctionComponent<IBuildingComponentProps>>> =
+   {
+      Headquarter: HeadquarterBuildingBody,
+      Market: MarketBuildingBody,
+      Statistics: StatisticsBuildingBody,
+      Caravansary: PlayerTradeBuildingBody,
+      Warehouse: WarehouseBuildingBody,
+      Petra: PetraBuildingBody,
+   };
 
 export function BuildingPage({ tile }: { tile: ITileData }): JSX.Element | null {
    if (tile.building == null) {

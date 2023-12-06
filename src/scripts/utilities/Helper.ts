@@ -3,7 +3,69 @@ import { PartialSet, PartialTabulate } from "../definitions/TypeDefinitions";
 import { v2 } from "./Vector2";
 
 // prettier-ignore
-const NUMBER_SUFFIX_1 = ["","K","M","B","T","Qa","Qt","Sx","Sp","Oc","Nn","Dc","UDc","DDc","TDc","QaDc","QtDc","SxDc","SpDc","ODc","NDc","Vi","UVi","DVi","TVi","QaVi","QtVi","SxVi","SpVi","OcVi","NnVi","Tg","UTg","DTg","TTg","QaTg","QtTg","SxTg","SpTg","OcTg","NnTg","Qd","UQd","DQd","TQd","QaQd","QtQd","SxQd","SpQd","OcQd","NnQd","Qq","UQq","DQq","TQq","QaQq","QtQq","SxQq","SpQq","OcQq","NnQq","Sg",
+const NUMBER_SUFFIX_1 = [
+   "",
+   "K",
+   "M",
+   "B",
+   "T",
+   "Qa",
+   "Qt",
+   "Sx",
+   "Sp",
+   "Oc",
+   "Nn",
+   "Dc",
+   "UDc",
+   "DDc",
+   "TDc",
+   "QaDc",
+   "QtDc",
+   "SxDc",
+   "SpDc",
+   "ODc",
+   "NDc",
+   "Vi",
+   "UVi",
+   "DVi",
+   "TVi",
+   "QaVi",
+   "QtVi",
+   "SxVi",
+   "SpVi",
+   "OcVi",
+   "NnVi",
+   "Tg",
+   "UTg",
+   "DTg",
+   "TTg",
+   "QaTg",
+   "QtTg",
+   "SxTg",
+   "SpTg",
+   "OcTg",
+   "NnTg",
+   "Qd",
+   "UQd",
+   "DQd",
+   "TQd",
+   "QaQd",
+   "QtQd",
+   "SxQd",
+   "SpQd",
+   "OcQd",
+   "NnQd",
+   "Qq",
+   "UQq",
+   "DQq",
+   "TQq",
+   "QaQq",
+   "QtQq",
+   "SxQq",
+   "SpQq",
+   "OcQq",
+   "NnQq",
+   "Sg",
 ];
 
 // prettier-ignore
@@ -11,12 +73,196 @@ const NUMBER_SUFFIX_BIN = ["", "K", "M", "G", "T", "P", "E", "Z", "Y"];
 
 // prettier-ignore
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const NUMBER_SUFFIX_2 = ["","K","M","B","T","aa","bb","cc","dd","ee","ff","gg","hh","ii","jj","kk","ll","mm","nn","oo","pp","qq","rr","ss","tt","uu","vv","ww","xx","yy","zz","Aa","Bb","Cc","Dd","Ee","Ff","Gg","Hh","Ii","Jj","Kk","Ll","Mm","Nn","Oo","Pp","Qq","Rr","Ss","Tt","Uu","Vv","Ww","Xx","Yy","Zz","AA","BB","CC","DD","EE","FF","GG","HH","II","JJ","KK","LL","MM","NN","OO","PP","QQ","RR","SS","TT","UU","VV","WW","XX","YY","ZZ",
+const NUMBER_SUFFIX_2 = [
+   "",
+   "K",
+   "M",
+   "B",
+   "T",
+   "aa",
+   "bb",
+   "cc",
+   "dd",
+   "ee",
+   "ff",
+   "gg",
+   "hh",
+   "ii",
+   "jj",
+   "kk",
+   "ll",
+   "mm",
+   "nn",
+   "oo",
+   "pp",
+   "qq",
+   "rr",
+   "ss",
+   "tt",
+   "uu",
+   "vv",
+   "ww",
+   "xx",
+   "yy",
+   "zz",
+   "Aa",
+   "Bb",
+   "Cc",
+   "Dd",
+   "Ee",
+   "Ff",
+   "Gg",
+   "Hh",
+   "Ii",
+   "Jj",
+   "Kk",
+   "Ll",
+   "Mm",
+   "Nn",
+   "Oo",
+   "Pp",
+   "Qq",
+   "Rr",
+   "Ss",
+   "Tt",
+   "Uu",
+   "Vv",
+   "Ww",
+   "Xx",
+   "Yy",
+   "Zz",
+   "AA",
+   "BB",
+   "CC",
+   "DD",
+   "EE",
+   "FF",
+   "GG",
+   "HH",
+   "II",
+   "JJ",
+   "KK",
+   "LL",
+   "MM",
+   "NN",
+   "OO",
+   "PP",
+   "QQ",
+   "RR",
+   "SS",
+   "TT",
+   "UU",
+   "VV",
+   "WW",
+   "XX",
+   "YY",
+   "ZZ",
 ];
 
 // prettier-ignore
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const NUMBER_SUFFIX_3 = ["","thousand","million","billion","trillion","quadrillion","quintillion","sextillion","septillion","octillion","nonillion","decillion","undecillion","duodecillion","tredecillion","quattuordecillion","quindecillion","sedecillion","septendecillion","octodecillion","novemdecillion ","vigintillion","unvigintillion","duovigintillion","trevigintillion","quattuorvigintillion","quinvigintillion","sexvigintillion","septenvigintillion","octovigintillion","novemvigintillion","trigintillion","untrigintillion","duotrigintillion","tretrigintillion","quattuortrigintillion","quintrigintillion","sextrigintillion","septentrigintillion","octotrigintillion","novemtrigintillion","quadragintillion","unquadragintillion","duoquadragintillion","trequadragintillion","quattuorquadragintillion","quinquadragintillion","sexquadragintillion","septenquadragintillion","octoquadragintillion","novemquadragintillion","quinquagintillion","unquinquagintillion","duoquinquagintillion","trequinquagintillion","quattuorquinquagintillion","quinquinquagintillion","sexquinquagintillion","septenquinquagintillion","octoquinquagintillion","novemquinquagintillion","sexagintillion","unsexagintillion","duosexagintillion","tresexagintillion","quattuorsexagintillion","quinsexagintillion","sexsexagintillion","septsexagintillion","octosexagintillion","octosexagintillion","septuagintillion","unseptuagintillion","duoseptuagintillion","treseptuagintillion","quinseptuagintillion","sexseptuagintillion","septseptuagintillion","octoseptuagintillion","novemseptuagintillion","octogintillion","unoctogintillion","duooctogintillion","treoctogintillion","quattuoroctogintillion","quinoctogintillion","sexoctogintillion","septoctogintillion","octooctogintillion","novemoctogintillion","nonagintillion","unnonagintillion","duononagintillion","trenonagintillion","quattuornonagintillion","quinnonagintillion","sexnonagintillion","septnonagintillion","octononagintillion","novemnonagintillion","centillion",
+const NUMBER_SUFFIX_3 = [
+   "",
+   "thousand",
+   "million",
+   "billion",
+   "trillion",
+   "quadrillion",
+   "quintillion",
+   "sextillion",
+   "septillion",
+   "octillion",
+   "nonillion",
+   "decillion",
+   "undecillion",
+   "duodecillion",
+   "tredecillion",
+   "quattuordecillion",
+   "quindecillion",
+   "sedecillion",
+   "septendecillion",
+   "octodecillion",
+   "novemdecillion ",
+   "vigintillion",
+   "unvigintillion",
+   "duovigintillion",
+   "trevigintillion",
+   "quattuorvigintillion",
+   "quinvigintillion",
+   "sexvigintillion",
+   "septenvigintillion",
+   "octovigintillion",
+   "novemvigintillion",
+   "trigintillion",
+   "untrigintillion",
+   "duotrigintillion",
+   "tretrigintillion",
+   "quattuortrigintillion",
+   "quintrigintillion",
+   "sextrigintillion",
+   "septentrigintillion",
+   "octotrigintillion",
+   "novemtrigintillion",
+   "quadragintillion",
+   "unquadragintillion",
+   "duoquadragintillion",
+   "trequadragintillion",
+   "quattuorquadragintillion",
+   "quinquadragintillion",
+   "sexquadragintillion",
+   "septenquadragintillion",
+   "octoquadragintillion",
+   "novemquadragintillion",
+   "quinquagintillion",
+   "unquinquagintillion",
+   "duoquinquagintillion",
+   "trequinquagintillion",
+   "quattuorquinquagintillion",
+   "quinquinquagintillion",
+   "sexquinquagintillion",
+   "septenquinquagintillion",
+   "octoquinquagintillion",
+   "novemquinquagintillion",
+   "sexagintillion",
+   "unsexagintillion",
+   "duosexagintillion",
+   "tresexagintillion",
+   "quattuorsexagintillion",
+   "quinsexagintillion",
+   "sexsexagintillion",
+   "septsexagintillion",
+   "octosexagintillion",
+   "octosexagintillion",
+   "septuagintillion",
+   "unseptuagintillion",
+   "duoseptuagintillion",
+   "treseptuagintillion",
+   "quinseptuagintillion",
+   "sexseptuagintillion",
+   "septseptuagintillion",
+   "octoseptuagintillion",
+   "novemseptuagintillion",
+   "octogintillion",
+   "unoctogintillion",
+   "duooctogintillion",
+   "treoctogintillion",
+   "quattuoroctogintillion",
+   "quinoctogintillion",
+   "sexoctogintillion",
+   "septoctogintillion",
+   "octooctogintillion",
+   "novemoctogintillion",
+   "nonagintillion",
+   "unnonagintillion",
+   "duononagintillion",
+   "trenonagintillion",
+   "quattuornonagintillion",
+   "quinnonagintillion",
+   "sexnonagintillion",
+   "septnonagintillion",
+   "octononagintillion",
+   "novemnonagintillion",
+   "centillion",
 ];
 
 export const SECOND = 1000;
@@ -48,7 +294,11 @@ function humanFormat(num: number, suffix: string[]): string {
    return num.toLocaleString() + "E" + idx.toString();
 }
 
-export function formatNumber(num: number | undefined | null, binary = false, scientific = false): string {
+export function formatNumber(
+   num: number | undefined | null,
+   binary = false,
+   scientific = false,
+): string {
    if (num === null || num === undefined) {
       return "";
    }
@@ -82,7 +332,7 @@ export function keysOf<T extends {}>(obj: T): Array<keyof T> {
 export function forEach<T extends {}>(
    obj: T | undefined,
    // eslint-disable-next-line @typescript-eslint/no-invalid-void-type
-   func: (k: keyof T, v: NonNullable<T[keyof T]>) => boolean | void
+   func: (k: keyof T, v: NonNullable<T[keyof T]>) => boolean | void,
 ) {
    for (const key in obj) {
       const value = obj[key];
@@ -113,7 +363,7 @@ export function firstValueOf<T extends {}>(obj: T | undefined) {
 export function reduceOf<T extends {}, K>(
    obj: T | undefined,
    func: (prev: K, k: keyof T, v: NonNullable<T[keyof T]>) => K,
-   initial: K
+   initial: K,
 ): K {
    let result = initial;
    for (const key in obj) {
@@ -124,14 +374,22 @@ export function reduceOf<T extends {}, K>(
    return result;
 }
 
-export function safeAdd<T extends string>(obj: Partial<Record<T, number>>, key: T, valueToAdd: number): void {
+export function safeAdd<T extends string>(
+   obj: Partial<Record<T, number>>,
+   key: T,
+   valueToAdd: number,
+): void {
    if (!obj[key]) {
       obj[key] = 0;
    }
    obj[key]! += valueToAdd;
 }
 
-export function safePush<T extends string, K>(obj: Partial<Record<T, K[]>>, key: T, valueToPush: K): void {
+export function safePush<T extends string, K>(
+   obj: Partial<Record<T, K[]>>,
+   key: T,
+   valueToPush: K,
+): void {
    if (!obj[key]) {
       obj[key] = [];
    }
@@ -141,7 +399,7 @@ export function safePush<T extends string, K>(obj: Partial<Record<T, K[]>>, key:
 export function mapOf<K extends string, V, T>(
    obj: Partial<Record<K, V>> | undefined | null,
    func: (key: K, value: V) => T,
-   ifEmpty: () => T[] = () => []
+   ifEmpty: () => T[] = () => [],
 ): T[] {
    const result: T[] = [];
    if (!obj) {
@@ -159,7 +417,7 @@ export function mapOf<K extends string, V, T>(
 export function transformOf<K extends string, V, T>(
    obj: Partial<Record<K, V>>,
    func: (key: K, value: V) => T,
-   ifEmpty: () => Partial<Record<K, T>> = () => ({})
+   ifEmpty: () => Partial<Record<K, T>> = () => ({}),
 ): Partial<Record<K, T>> {
    const result: Partial<Record<K, T>> = {};
    forEach(obj, (k, v) => {
@@ -173,7 +431,7 @@ export function transformOf<K extends string, V, T>(
 
 export function filterOf<K extends string, V>(
    obj: Partial<Record<K, V>>,
-   func: (key: K, value: V) => boolean
+   func: (key: K, value: V) => boolean,
 ): Partial<Record<K, V>> {
    const result: Partial<Record<K, V>> = {};
    forEach(obj, (k, v) => {
@@ -187,7 +445,7 @@ export function filterOf<K extends string, V>(
 export function jsxMapOf<K extends string, V>(
    obj: Partial<Record<K, V>> | undefined,
    func: (key: K, value: V) => JSX.Element[] | JSX.Element | null,
-   ifEmpty: () => JSX.Element | null = () => null
+   ifEmpty: () => JSX.Element | null = () => null,
 ): JSX.Element[] | JSX.Element | null {
    const result: JSX.Element[] = [];
    forEach(obj, (k, v) => {
@@ -252,7 +510,12 @@ export function lookAt(displayObject: DisplayObject, point: IPointData): void {
    displayObject.rotation = Math.atan2(point.y - displayObject.y, point.x - displayObject.x);
 }
 
-export function layoutCenter(itemSize: number, margin: number, totalCount: number, current: number): number {
+export function layoutCenter(
+   itemSize: number,
+   margin: number,
+   totalCount: number,
+   current: number,
+): number {
    const halfSize = itemSize / 2;
    const halfMargin = margin / 2;
    return -(totalCount - 1) * (halfSize + halfMargin) + current * (itemSize + margin);
@@ -283,7 +546,9 @@ export function setContains<T extends string>(a: PartialSet<T>, b: PartialSet<T>
    return true;
 }
 
-export function tabulateAdd<T extends string>(...params: Array<PartialTabulate<T>>): PartialTabulate<T> {
+export function tabulateAdd<T extends string>(
+   ...params: Array<PartialTabulate<T>>
+): PartialTabulate<T> {
    const result: PartialTabulate<T> = {};
    params.forEach((param) => {
       forEach(param, (k, v) => {
@@ -336,9 +601,38 @@ export function numberToRoman(num: number): string | null {
    if (!+num) return null;
    const digits = String(+num).split("");
    // prettier-ignore
-   const key = ['','C','CC','CCC','CD','D','DC','DCC','DCCC','CM',
-              '','X','XX','XXX','XL','L','LX','LXX','LXXX','XC',
-              '','I','II','III','IV','V','VI','VII','VIII','IX'];
+   const key = [
+      "",
+      "C",
+      "CC",
+      "CCC",
+      "CD",
+      "D",
+      "DC",
+      "DCC",
+      "DCCC",
+      "CM",
+      "",
+      "X",
+      "XX",
+      "XXX",
+      "XL",
+      "L",
+      "LX",
+      "LXX",
+      "LXXX",
+      "XC",
+      "",
+      "I",
+      "II",
+      "III",
+      "IV",
+      "V",
+      "VI",
+      "VII",
+      "VIII",
+      "IX",
+   ];
    let roman = "",
       i = 3;
    while (i--) roman = (key[+digits.pop()! + i * 10] || "") + roman;
@@ -350,7 +644,21 @@ export function romanToNumber(str: string): number | null {
    const validator = /^M*(?:D?C{0,3}|C[MD])(?:L?X{0,3}|X[CL])(?:V?I{0,3}|I[XV])$/;
    const token = /[MDLV]|C[MD]?|X[CL]?|I[XV]?/g;
    // prettier-ignore
-   const key : Record<string,number> = { M: 1000, CM: 900, D: 500, CD: 400, C: 100, XC: 90, L: 50, XL: 40, X: 10, IX: 9, V: 5, IV: 4, I: 1 };
+   const key: Record<string, number> = {
+      M: 1000,
+      CM: 900,
+      D: 500,
+      CD: 400,
+      C: 100,
+      XC: 90,
+      L: 50,
+      XL: 40,
+      X: 10,
+      IX: 9,
+      V: 5,
+      IV: 4,
+      I: 1,
+   };
    let num = 0,
       m;
    if (!(str && validator.test(str))) return null;
@@ -483,7 +791,7 @@ export function drawDashedLine(
    end: IPointData,
    initial = 0,
    lineLength = 10,
-   spaceLength = 20
+   spaceLength = 20,
 ): number {
    const startPos = v2(start);
    const endPos = v2(end);

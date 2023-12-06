@@ -20,7 +20,10 @@ export class GameTicker {
          window.clearInterval(this._interval);
          this._interval = 0;
       }
-      this._interval = window.setInterval(tickEverySecond.bind(null, this._gameState, false), 1000 / this._speedUp);
+      this._interval = window.setInterval(
+         tickEverySecond.bind(null, this._gameState, false),
+         1000 / this._speedUp,
+      );
    }
 
    private _speedUp = 1;
@@ -36,6 +39,9 @@ export class GameTicker {
          window.clearInterval(this._interval);
          this._interval = 0;
       }
-      this._interval = window.setInterval(tickEverySecond.bind(null, this._gameState, false), 1000 / this._speedUp);
+      this._interval = window.setInterval(
+         tickEverySecond.bind(null, this._gameState, false),
+         1000 / this._speedUp,
+      );
    }
 }

@@ -41,8 +41,10 @@ export function BuildingWorkerComponent({ gameState, xy }: IBuildingComponentPro
                         <summary className="row">
                            <div className="f1">{t(L.WorkersRequiredInput)}</div>
                            <div className="text-strong">
-                              {gameState.transportation[xy]?.reduce((prev, curr) => prev + curr.currentFuelAmount, 0) ??
-                                 0}
+                              {gameState.transportation[xy]?.reduce(
+                                 (prev, curr) => prev + curr.currentFuelAmount,
+                                 0,
+                              ) ?? 0}
                            </div>
                         </summary>
                         <ul>
@@ -51,7 +53,10 @@ export function BuildingWorkerComponent({ gameState, xy }: IBuildingComponentPro
                                  <li className="row" key={v.id}>
                                     <div className="f1">
                                        {t(L.ResourceFromBuilding, {
-                                          resource: `${fmtNumber(v.amount, gameState)} ${getResourceName(v.resource)}`,
+                                          resource: `${fmtNumber(
+                                             v.amount,
+                                             gameState,
+                                          )} ${getResourceName(v.resource)}`,
                                           building: getBuildingName(v.fromXy, gameState),
                                        })}{" "}
                                        ({v.ticksSpent}/{v.ticksRequired})
@@ -66,12 +71,14 @@ export function BuildingWorkerComponent({ gameState, xy }: IBuildingComponentPro
                   <li>
                      <details>
                         <summary className="row">
-                           <div className="f1">{t(L.WorkersRequiredForTransportationMultiplier)}</div>
+                           <div className="f1">
+                              {t(L.WorkersRequiredForTransportationMultiplier)}
+                           </div>
                            <div className="text-strong">
                               {workersRequired.multiplier +
                                  Tick.current.globalMultipliers.transportCapacity.reduce(
                                     (prev, curr) => prev + curr.value,
-                                    0
+                                    0,
                                  )}
                            </div>
                         </summary>
@@ -96,7 +103,7 @@ export function BuildingWorkerComponent({ gameState, xy }: IBuildingComponentPro
                               <div>
                                  {Tick.current.globalMultipliers.transportCapacity.reduce(
                                     (prev, curr) => prev + curr.value,
-                                    0
+                                    0,
                                  )}
                               </div>
                            </li>
@@ -120,8 +127,15 @@ export function BuildingWorkerComponent({ gameState, xy }: IBuildingComponentPro
                   <li>
                      <details>
                         <summary className="row">
-                           {showWarning ? <img src={warning} style={{ margin: "0 2px 0 0" }} /> : null}
-                           <div className={classNames({ f1: true, "production-warning": showWarning })}>
+                           {showWarning ? (
+                              <img src={warning} style={{ margin: "0 2px 0 0" }} />
+                           ) : null}
+                           <div
+                              className={classNames({
+                                 f1: true,
+                                 "production-warning": showWarning,
+                              })}
+                           >
                               {t(L.WorkersRequiredOutput)}
                            </div>
                            <div className="text-strong">

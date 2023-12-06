@@ -17,13 +17,13 @@ export function ChangeResourceImportModal({
    resource: Resource;
 }) {
    const [resourceImport, setResourceImport] = useState<IResourceImport>(
-      building.resourceImports[resource] ?? { cap: 0, perCycle: 0 }
+      building.resourceImports[resource] ?? { cap: 0, perCycle: 0 },
    );
    const totalCapacity = getWarehouseCapacity(building);
    const usedCapacity = reduceOf(
       building.resourceImports,
       (prev, res, val) => (res === resource ? prev : prev + val.perCycle),
-      0
+      0,
    );
    const max = clamp(totalCapacity - usedCapacity, 0, totalCapacity);
    const isValid = resourceImport.perCycle >= 0 && resourceImport.perCycle <= max;
@@ -45,7 +45,10 @@ export function ChangeResourceImportModal({
                   type="text"
                   value={resourceImport.perCycle}
                   onChange={(e) => {
-                     setResourceImport({ ...resourceImport, perCycle: safeParseInt(e.target.value) });
+                     setResourceImport({
+                        ...resourceImport,
+                        perCycle: safeParseInt(e.target.value),
+                     });
                   }}
                />
             </div>

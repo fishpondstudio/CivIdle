@@ -3,14 +3,13 @@ import { useState } from "react";
 import { Resource } from "../definitions/ResourceDefinitions";
 import { PartialTabulate } from "../definitions/TypeDefinitions";
 import { IOCalculation } from "../logic/BuildingLogic";
-import { Config } from "../logic/Constants";
 import { getBuildingIO, unlockedResources } from "../logic/IntraTickCache";
 import { Tick } from "../logic/TickLogic";
 import { IBuildingData } from "../logic/Tile";
 import { WorldScene } from "../scenes/WorldScene";
-import { forEach, jsxMapOf, keysOf, safeAdd } from "../utilities/Helper";
-import { L, t } from "../utilities/i18n";
+import { forEach, formatPercent, jsxMapOf, keysOf, reduceOf, safeAdd } from "../utilities/Helper";
 import { Singleton } from "../utilities/Singleton";
+import { L, t } from "../utilities/i18n";
 import { playClick } from "../visuals/Sound";
 import { BuildingColorComponent } from "./BuildingColorComponent";
 import { IBuildingComponentProps } from "./BuildingPage";
@@ -88,7 +87,7 @@ function BuildingTab({ gameState }: IBuildingComponentProps) {
                      .sort((a, b) =>
                         Tick.current.buildings[a.building.type]
                            .name()
-                           .localeCompare(Tick.current.buildings[b.building.type].name())
+                           .localeCompare(Tick.current.buildings[b.building.type].name()),
                      )
                      .map(({ building, xy }) => {
                         let icon = <div className="m-icon small text-green">check_circle</div>;
@@ -109,7 +108,9 @@ function BuildingTab({ gameState }: IBuildingComponentProps) {
                                  <div
                                     className="pointer"
                                     onClick={() => {
-                                       Singleton().sceneManager.getCurrent(WorldScene)?.lookAtXy(xy);
+                                       Singleton()
+                                          .sceneManager.getCurrent(WorldScene)
+                                          ?.lookAtXy(xy);
                                     }}
                                  >
                                     {Tick.current.buildings[building.type].name()}
@@ -123,14 +124,15 @@ function BuildingTab({ gameState }: IBuildingComponentProps) {
                                     value={
                                        gameState.transportation[xy]?.reduce(
                                           (prev, curr) => prev + curr.currentFuelAmount,
-                                          0
+                                          0,
                                        ) ?? 0
                                     }
                                  />
                               </td>
                               <td
                                  className={classNames({
-                                    "text-red": Tick.current.notProducingReasons[xy] === "NotEnoughWorkers",
+                                    "text-red":
+                                       Tick.current.notProducingReasons[xy] === "NotEnoughWorkers",
                                     "text-right": true,
                                  })}
                               >
@@ -148,8 +150,23 @@ function BuildingTab({ gameState }: IBuildingComponentProps) {
 
 function TransportationTab({ gameState }: IBuildingComponentProps) {
    return (
-      <article role="tabpanel" className="f1" style={{ padding: "8px", overflow: "auto" }}>
-         <div className="table-view sticky-header" style={{ height: "100%" }}>
+      <article role="tabpanel" className="f1 column" style={{ padding: "8px", overflow: "auto" }}>
+         <fieldset>
+            <div className="row">
+               <div className="f1">{t(L.StatisticsTransportationPercentage)}</div>
+               <div className="text-strong">
+                  {formatPercent(
+                     reduceOf(
+                        gameState.transportation,
+                        (prev, k, v) =>
+                           prev + v.reduce((prev, curr) => prev + curr.currentFuelAmount, 0),
+                        0,
+                     ) / Tick.current.workersUsed.Worker!,
+                  )}
+               </div>
+            </div>
+         </fieldset>
+         <div className="table-view sticky-header f1">
             <table>
                <thead>
                   <tr>
@@ -179,7 +196,9 @@ function TransportationTab({ gameState }: IBuildingComponentProps) {
                                  )}
                               </td>
                               <td className="text-strong">
-                                 {i === 0 && buildingType ? Tick.current.buildings[buildingType].name() : null}
+                                 {i === 0 && buildingType
+                                    ? Tick.current.buildings[buildingType].name()
+                                    : null}
                               </td>
                               <td>{Tick.current.resources[transportation.resource].name()}</td>
                               <td className="text-right">
@@ -190,7 +209,10 @@ function TransportationTab({ gameState }: IBuildingComponentProps) {
                               </td>
                               <td className="text-right">
                                  <FormatNumber
-                                    value={(100 * transportation.ticksSpent) / transportation.ticksRequired}
+                                    value={
+                                       (100 * transportation.ticksSpent) /
+                                       transportation.ticksRequired
+                                    }
                                  />
                                  %
                               </td>
@@ -210,8 +232,18 @@ function ResourcesTab({ gameState }: IBuildingComponentProps) {
    const inputs: PartialTabulate<Resource> = {};
    const outputs: PartialTabulate<Resource> = {};
    forEach(gameState.tiles, (xy, tile) => {
-      const input = getBuildingIO(xy, "input", IOCalculation.Multiplier | IOCalculation.Capacity, gameState);
-      const output = getBuildingIO(xy, "output", IOCalculation.Multiplier | IOCalculation.Capacity, gameState);
+      const input = getBuildingIO(
+         xy,
+         "input",
+         IOCalculation.Multiplier | IOCalculation.Capacity,
+         gameState,
+      );
+      const output = getBuildingIO(
+         xy,
+         "output",
+         IOCalculation.Multiplier | IOCalculation.Capacity,
+         gameState,
+      );
       if (!showTheoreticalValue && Tick.current.notProducingReasons[xy]) {
          return;
       }
@@ -257,7 +289,11 @@ function ResourcesTab({ gameState }: IBuildingComponentProps) {
                </thead>
                <tbody>
                   {keysOf(unlockedResources(gameState))
-                     .sort((a, b) => (Config.ResourceTier[a] ?? 0) - (Config.ResourceTier[b] ?? 0))
+                     .sort((a, b) =>
+                        Tick.current.resources[a]
+                           .name()
+                           .localeCompare(Tick.current.resources[b].name()),
+                     )
                      .map((res) => {
                         const r = Tick.current.resources[res];
                         if (!r.canPrice || !r.canStore) {
@@ -273,8 +309,10 @@ function ResourcesTab({ gameState }: IBuildingComponentProps) {
                                     value={
                                        Tick.current.resourcesByXy[res]?.reduce(
                                           (prev, curr) =>
-                                             prev + (gameState.tiles[curr].building?.resources?.[res] ?? 0),
-                                          0
+                                             prev +
+                                             (gameState.tiles[curr].building?.resources?.[res] ??
+                                                0),
+                                          0,
                                        ) ?? 0
                                     }
                                  />
@@ -282,7 +320,9 @@ function ResourcesTab({ gameState }: IBuildingComponentProps) {
                               <td className="right">
                                  <FormatNumber value={output} />
                               </td>
-                              <td className={classNames({ right: true, "text-red": input > output })}>
+                              <td
+                                 className={classNames({ right: true, "text-red": input > output })}
+                              >
                                  <FormatNumber value={input} />
                               </td>
                            </tr>

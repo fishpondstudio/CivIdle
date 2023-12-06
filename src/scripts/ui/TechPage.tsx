@@ -7,7 +7,12 @@ import { Config } from "../logic/Constants";
 import { onTechUnlocked } from "../logic/LogicCallback";
 import { getResourceAmount, trySpendResources } from "../logic/ResourceLogic";
 import { useShortcut } from "../logic/Shortcut";
-import { getCurrentTechAge, getGreatPeopleChoices, getUnlockCost, unlockTech } from "../logic/TechLogic";
+import {
+   getCurrentTechAge,
+   getGreatPeopleChoices,
+   getUnlockCost,
+   unlockTech,
+} from "../logic/TechLogic";
 import { RomeProvinceScene } from "../scenes/RomeProvinceScene";
 import { TechTreeScene } from "../scenes/TechTreeScene";
 import { WorldScene } from "../scenes/WorldScene";
@@ -34,7 +39,7 @@ export function TechPage({ id }: { id: Tech }) {
       () => {
          Singleton().sceneManager.loadScene(WorldScene);
       },
-      [id]
+      [id],
    );
 
    if (tech.column > MAX_TECH_COLUMN) {
@@ -75,7 +80,9 @@ export function TechPage({ id }: { id: Tech }) {
                         }
                         unlocked={!!gs.unlockedTech[prerequisite]}
                         action={() =>
-                           Singleton().sceneManager.loadScene(TechTreeScene)?.selectNode(prerequisite, "animate", true)
+                           Singleton()
+                              .sceneManager.loadScene(TechTreeScene)
+                              ?.selectNode(prerequisite, "animate", true)
                         }
                      />
                   );
@@ -91,7 +98,11 @@ export function TechPage({ id }: { id: Tech }) {
                            </>
                         }
                         unlocked={!!gs.unlockedProvince[province]}
-                        action={() => Singleton().sceneManager.loadScene(RomeProvinceScene)?.selectProvince(province)}
+                        action={() =>
+                           Singleton()
+                              .sceneManager.loadScene(RomeProvinceScene)
+                              ?.selectProvince(province)
+                        }
                      />
                   );
                })}
@@ -146,7 +157,11 @@ export function TechPage({ id }: { id: Tech }) {
                                  gs.greatPeopleChoices.push(getGreatPeopleChoices(newAge!));
                               }
                               if (gs.greatPeopleChoices.length > 0) {
-                                 showModal(<ChooseGreatPersonModal greatPeopleChoice={gs.greatPeopleChoices[0]} />);
+                                 showModal(
+                                    <ChooseGreatPersonModal
+                                       greatPeopleChoice={gs.greatPeopleChoices[0]}
+                                    />,
+                                 );
                               }
                               notifyGameStateUpdate();
                               onTechUnlocked(id, gs);

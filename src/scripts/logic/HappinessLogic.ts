@@ -68,12 +68,12 @@ export function calculateHappiness(gs: GameState) {
                      Tick.current.notProducingReasons[xy] === "NotEnoughWorkers") &&
                   tile.building.status === "completed"
                );
-            })
+            }),
          )
             ? prev
             : prev + 1;
       },
-      0
+      0,
    );
    const positive: PartialTabulate<HappinessType> = {
       fromUnlockedTech,
@@ -88,7 +88,7 @@ export function calculateHappiness(gs: GameState) {
          sum(Tick.current.globalMultipliers.happiness, "value") -
          reduceOf(negative, (prev, _, value) => prev + value, 0),
       -50,
-      50
+      50,
    );
    const workerPercentage = (100 + value * HAPPINESS_MULTIPLIER) / 100;
    const normalized = (value + 50) / 100;

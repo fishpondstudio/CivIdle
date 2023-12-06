@@ -128,12 +128,18 @@ export function initializeGameState(gameState: GameState, grid: Grid) {
 
    const wood = findNearest((tile) => !!tile.deposit.Wood, center, grid, gameState);
    if (wood) {
-      gameState.tiles[wood.xy].building = makeBuilding({ type: "LoggingCamp", status: "completed" });
+      gameState.tiles[wood.xy].building = makeBuilding({
+         type: "LoggingCamp",
+         status: "completed",
+      });
    }
 
    const stone = findNearest((tile) => !!tile.deposit.Stone, center, grid, gameState);
    if (stone) {
-      gameState.tiles[stone.xy].building = makeBuilding({ type: "StoneQuarry", status: "completed" });
+      gameState.tiles[stone.xy].building = makeBuilding({
+         type: "StoneQuarry",
+         status: "completed",
+      });
    }
 
    const water = findNearest((tile) => !!tile.deposit.Water, center, grid, gameState);

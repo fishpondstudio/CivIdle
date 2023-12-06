@@ -21,7 +21,11 @@ export function BuildingUpgradeComponent({ gameState, xy }: IBuildingComponentPr
    }
    const levels = getBuildingUpgradeLevels(building);
    const [selected, setSelected] = useState(0);
-   const cost = getTotalBuildingCost(building.type, building.level, building.level + levels[selected]);
+   const cost = getTotalBuildingCost(
+      building.type,
+      building.level,
+      building.level + levels[selected],
+   );
    const upgrade = (level: number) => {
       building.desiredLevel = building.level + level;
       building.status = "upgrading";
@@ -38,7 +42,9 @@ export function BuildingUpgradeComponent({ gameState, xy }: IBuildingComponentPr
             </legend>
             <div className="row">
                <div className="f1"> {t(L.BuildingTier)}</div>
-               <div className="text-strong">{numberToRoman(Config.BuildingTier[building.type]!)}</div>
+               <div className="text-strong">
+                  {numberToRoman(Config.BuildingTier[building.type]!)}
+               </div>
             </div>
             <div className="sep5"></div>
             <div className="row">

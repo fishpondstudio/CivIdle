@@ -176,7 +176,10 @@ export abstract class ObjectPool<T> {
 
       if (this._freeCount + array.length > this.capacity) {
          // Ensure we have enough capacity to insert the release objects
-         this.capacity = Math.max(this.capacity * this._capacityRatio, this._freeCount + array.length);
+         this.capacity = Math.max(
+            this.capacity * this._capacityRatio,
+            this._freeCount + array.length,
+         );
       }
 
       // Place objects into pool list
@@ -244,7 +247,10 @@ export abstract class ObjectPool<T> {
       }
 
       // If pool is say, 2x, larger than borrowing rate on average (adjusted for variance/abs-dev), then downsize.
-      const threshold = Math.max(this._borrowRateAverage * (this._capacityRatio - 1), this._reserveCount);
+      const threshold = Math.max(
+         this._borrowRateAverage * (this._capacityRatio - 1),
+         this._reserveCount,
+      );
 
       if (this._freeCount > threshold + absDev) {
          const newCap = threshold + absDev;

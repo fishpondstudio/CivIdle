@@ -8,7 +8,9 @@ import { Singleton } from "../utilities/Singleton";
 import { greatPersonImage } from "../visuals/GreatPersonVisual";
 import { hideModal } from "./GlobalModal";
 
-export function ChooseGreatPersonModal({ greatPeopleChoice }: { greatPeopleChoice: GreatPeopleChoice }) {
+export function ChooseGreatPersonModal({
+   greatPeopleChoice,
+}: { greatPeopleChoice: GreatPeopleChoice }) {
    const gs = useGameState();
    function onChosen() {
       gs.greatPeopleChoices.splice(gs.greatPeopleChoices.indexOf(greatPeopleChoice), 1);
@@ -31,7 +33,10 @@ export function ChooseGreatPersonModal({ greatPeopleChoice }: { greatPeopleChoic
    );
 }
 
-function GreatPersonCard({ greatPerson, onChosen }: { greatPerson: GreatPerson; onChosen: () => void }) {
+function GreatPersonCard({
+   greatPerson,
+   onChosen,
+}: { greatPerson: GreatPerson; onChosen: () => void }) {
    const p = Config.GreatPerson[greatPerson];
    const gs = useGameState();
    return (
@@ -44,7 +49,10 @@ function GreatPersonCard({ greatPerson, onChosen }: { greatPerson: GreatPerson; 
             hideModal();
          }}
       >
-         <img src={greatPersonImage(greatPerson, Singleton().sceneManager.getContext())} style={{ width: "100%" }} />
+         <img
+            src={greatPersonImage(greatPerson, Singleton().sceneManager.getContext())}
+            style={{ width: "100%" }}
+         />
          <div className="sep5" />
          {p.desc(p, 1)}
       </div>

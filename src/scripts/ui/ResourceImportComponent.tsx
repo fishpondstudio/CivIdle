@@ -46,7 +46,11 @@ export function ResourceImportComponent({ gameState, xy }: IBuildingComponentPro
                      <th></th>
                   </tr>
                   {keysOf(resources)
-                     .sort((a, b) => Tick.current.resources[a].name().localeCompare(Tick.current.resources[b].name()))
+                     .sort((a, b) =>
+                        Tick.current.resources[a]
+                           .name()
+                           .localeCompare(Tick.current.resources[b].name()),
+                     )
                      .map((res) => {
                         const ri = building.resourceImports[res];
                         return (
@@ -64,7 +68,12 @@ export function ResourceImportComponent({ gameState, xy }: IBuildingComponentPro
                               <td
                                  className="text-right"
                                  onClick={() =>
-                                    showModal(<ChangeResourceImportModal building={building} resource={res} />)
+                                    showModal(
+                                       <ChangeResourceImportModal
+                                          building={building}
+                                          resource={res}
+                                       />,
+                                    )
                                  }
                               >
                                  <div className="m-icon small pointer text-link">settings</div>

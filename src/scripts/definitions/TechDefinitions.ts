@@ -7,11 +7,21 @@ export class TechAgeDefinitions {
    IronAge: ITechAgeDefinition = { idx: 2, from: 4, to: 5, name: () => t(L.IronAge) };
    ClassicalAge: ITechAgeDefinition = { idx: 3, from: 6, to: 8, name: () => t(L.ClassicalAge) };
    MiddleAge: ITechAgeDefinition = { idx: 4, from: 9, to: 10, name: () => t(L.MiddleAge) };
-   RenaissanceAge: ITechAgeDefinition = { idx: 5, from: 11, to: 13, name: () => t(L.RenaissanceAge) };
+   RenaissanceAge: ITechAgeDefinition = {
+      idx: 5,
+      from: 11,
+      to: 13,
+      name: () => t(L.RenaissanceAge),
+   };
    IndustrialAge: ITechAgeDefinition = { idx: 6, from: 14, to: 17, name: () => t(L.IndustrialAge) };
    WorldWarAge: ITechAgeDefinition = { idx: 7, from: 18, to: 20, name: () => t(L.WorldWarAge) };
    ColdWarAge: ITechAgeDefinition = { idx: 8, from: 21, to: 22, name: () => t(L.ColdWarAge) };
-   InformationAge: ITechAgeDefinition = { idx: 9, from: 23, to: 25, name: () => t(L.InformationAge) };
+   InformationAge: ITechAgeDefinition = {
+      idx: 9,
+      from: 23,
+      to: 25,
+      name: () => t(L.InformationAge),
+   };
 }
 
 export type TechAge = keyof TechAgeDefinitions;
@@ -41,7 +51,12 @@ export class TechDefinitions {
       requireTech: [],
    };
 
-   Shelter: ITechDefinition = { name: () => t(L.Shelter), column: 0, unlockBuilding: ["Hut"], requireTech: [] };
+   Shelter: ITechDefinition = {
+      name: () => t(L.Shelter),
+      column: 0,
+      unlockBuilding: ["Hut"],
+      requireTech: [],
+   };
 
    Masonry: ITechDefinition = {
       name: () => t(L.Masonry),
@@ -336,28 +351,64 @@ export class TechDefinitions {
       unlockBuilding: ["School"],
    };
 
-   Exploration: ITechDefinition = { name: () => t(L.Exploration), column: 11, requireTech: ["Navigation"] };
-   Banking: ITechDefinition = { name: () => t(L.Banking), column: 11, requireTech: ["CivilService", "Navigation"] };
+   Exploration: ITechDefinition = {
+      name: () => t(L.Exploration),
+      column: 11,
+      requireTech: ["Navigation"],
+   };
+   Banking: ITechDefinition = {
+      name: () => t(L.Banking),
+      column: 11,
+      requireTech: ["CivilService", "Navigation"],
+   };
    University: ITechDefinition = {
       name: () => t(L.University),
       column: 11,
       requireTech: ["HolyEmpire", "CivilService"],
    };
 
-   Chemistry: ITechDefinition = { name: () => t(L.Chemistry), column: 11, requireTech: ["Education", "HolyEmpire"] };
+   Chemistry: ITechDefinition = {
+      name: () => t(L.Chemistry),
+      column: 11,
+      requireTech: ["Education", "HolyEmpire"],
+   };
 
-   SeaTrade: ITechDefinition = { name: () => t(L.SeaTrade), column: 12, requireTech: ["Exploration", "Banking"] };
-   Economics: ITechDefinition = { name: () => t(L.Economics), column: 12, requireTech: ["Banking", "University"] };
+   SeaTrade: ITechDefinition = {
+      name: () => t(L.SeaTrade),
+      column: 12,
+      requireTech: ["Exploration", "Banking"],
+   };
+   Economics: ITechDefinition = {
+      name: () => t(L.Economics),
+      column: 12,
+      requireTech: ["Banking", "University"],
+   };
    Enlightenment: ITechDefinition = {
       name: () => t(L.Enlightenment),
       column: 12,
       requireTech: ["University", "Chemistry"],
    };
-   NewtonianPhysics: ITechDefinition = { name: () => t(L.NewtonianPhysics), column: 12, requireTech: ["Chemistry"] };
+   NewtonianPhysics: ITechDefinition = {
+      name: () => t(L.NewtonianPhysics),
+      column: 12,
+      requireTech: ["Chemistry"],
+   };
 
-   Steam: ITechDefinition = { name: () => t(L.Steam), column: 13, requireTech: ["SeaTrade", "Economics"] };
-   PrivateOwnership: ITechDefinition = { name: () => t(L.PrivateOwnership), column: 13, requireTech: ["Economics"] };
-   Republic: ITechDefinition = { name: () => t(L.Republic), column: 13, requireTech: ["Economics", "Enlightenment"] };
+   Steam: ITechDefinition = {
+      name: () => t(L.Steam),
+      column: 13,
+      requireTech: ["SeaTrade", "Economics"],
+   };
+   PrivateOwnership: ITechDefinition = {
+      name: () => t(L.PrivateOwnership),
+      column: 13,
+      requireTech: ["Economics"],
+   };
+   Republic: ITechDefinition = {
+      name: () => t(L.Republic),
+      column: 13,
+      requireTech: ["Economics", "Enlightenment"],
+   };
    Constitution: ITechDefinition = {
       name: () => t(L.Constitution),
       column: 13,
@@ -381,16 +432,48 @@ export class TechDefinitions {
       requireTech: ["Constitution"],
    };
 
-   Colonialism: ITechDefinition = { name: () => t(L.Colonialism), column: 15, requireTech: ["Engine", "Capitalism"] };
+   Colonialism: ITechDefinition = {
+      name: () => t(L.Colonialism),
+      column: 15,
+      requireTech: ["Engine", "Capitalism"],
+   };
    Factory: ITechDefinition = { name: () => t(L.Factory), column: 15, requireTech: ["Capitalism"] };
-   Newspaper: ITechDefinition = { name: () => t(L.Newspaper), column: 15, requireTech: ["Industrialization"] };
-   Railway: ITechDefinition = { name: () => t(L.Railway), column: 15, requireTech: ["Industrialization"] };
-   Olympics: ITechDefinition = { name: () => t(L.Olympics), column: 15, requireTech: ["PublicSchool"] };
+   Newspaper: ITechDefinition = {
+      name: () => t(L.Newspaper),
+      column: 15,
+      requireTech: ["Industrialization"],
+   };
+   Railway: ITechDefinition = {
+      name: () => t(L.Railway),
+      column: 15,
+      requireTech: ["Industrialization"],
+   };
+   Olympics: ITechDefinition = {
+      name: () => t(L.Olympics),
+      column: 15,
+      requireTech: ["PublicSchool"],
+   };
 
-   OceanLiner: ITechDefinition = { name: () => t(L.OceanLiner), column: 16, requireTech: ["Colonialism", "Factory"] };
-   Imperialism: ITechDefinition = { name: () => t(L.Imperialism), column: 16, requireTech: ["Factory"] };
-   StockMarket: ITechDefinition = { name: () => t(L.StockMarket), column: 16, requireTech: ["Newspaper", "Railway"] };
-   Electricity: ITechDefinition = { name: () => t(L.Electricity), column: 16, requireTech: ["Railway"] };
+   OceanLiner: ITechDefinition = {
+      name: () => t(L.OceanLiner),
+      column: 16,
+      requireTech: ["Colonialism", "Factory"],
+   };
+   Imperialism: ITechDefinition = {
+      name: () => t(L.Imperialism),
+      column: 16,
+      requireTech: ["Factory"],
+   };
+   StockMarket: ITechDefinition = {
+      name: () => t(L.StockMarket),
+      column: 16,
+      requireTech: ["Newspaper", "Railway"],
+   };
+   Electricity: ITechDefinition = {
+      name: () => t(L.Electricity),
+      column: 16,
+      requireTech: ["Railway"],
+   };
    SocialWelfare: ITechDefinition = {
       name: () => t(L.SocialWelfare),
       column: 16,
@@ -402,8 +485,16 @@ export class TechDefinitions {
       column: 17,
       requireTech: ["OceanLiner", "Imperialism"],
    };
-   Marconi: ITechDefinition = { name: () => t(L.Marconi), column: 17, requireTech: ["StockMarket"] };
-   PowerGrid: ITechDefinition = { name: () => t(L.PowerGrid), column: 17, requireTech: ["Electricity"] };
+   Marconi: ITechDefinition = {
+      name: () => t(L.Marconi),
+      column: 17,
+      requireTech: ["StockMarket"],
+   };
+   PowerGrid: ITechDefinition = {
+      name: () => t(L.PowerGrid),
+      column: 17,
+      requireTech: ["Electricity"],
+   };
    Camera: ITechDefinition = { name: () => t(L.Camera), column: 17, requireTech: ["Electricity"] };
    Urbanization: ITechDefinition = {
       name: () => t(L.Urbanization),
@@ -411,62 +502,138 @@ export class TechDefinitions {
       requireTech: ["Electricity", "SocialWelfare"],
    };
 
-   Aeroplane: ITechDefinition = { name: () => t(L.Aeroplane), column: 18, requireTech: ["Automobile", "Marconi"] };
-   AtomTheory: ITechDefinition = { name: () => t(L.AtomTheory), column: 18, requireTech: ["PowerGrid"] };
+   Aeroplane: ITechDefinition = {
+      name: () => t(L.Aeroplane),
+      column: 18,
+      requireTech: ["Automobile", "Marconi"],
+   };
+   AtomTheory: ITechDefinition = {
+      name: () => t(L.AtomTheory),
+      column: 18,
+      requireTech: ["PowerGrid"],
+   };
    Movie: ITechDefinition = {
       name: () => t(L.Movie),
       column: 18,
       requireTech: ["PowerGrid", "Camera", "Urbanization"],
    };
 
-   Jet: ITechDefinition = { name: () => t(L.Jet), column: 19, requireTech: ["Aeroplane", "AtomTheory"] };
-   Medicine: ITechDefinition = { name: () => t(L.Medicine), column: 19, requireTech: ["AtomTheory"] };
-   Hospital: ITechDefinition = { name: () => t(L.Hospital), column: 19, requireTech: ["AtomTheory"] };
-   Greenhouse: ITechDefinition = { name: () => t(L.Greenhouse), column: 19, requireTech: ["AtomTheory", "Movie"] };
+   Jet: ITechDefinition = {
+      name: () => t(L.Jet),
+      column: 19,
+      requireTech: ["Aeroplane", "AtomTheory"],
+   };
+   Medicine: ITechDefinition = {
+      name: () => t(L.Medicine),
+      column: 19,
+      requireTech: ["AtomTheory"],
+   };
+   Hospital: ITechDefinition = {
+      name: () => t(L.Hospital),
+      column: 19,
+      requireTech: ["AtomTheory"],
+   };
+   Greenhouse: ITechDefinition = {
+      name: () => t(L.Greenhouse),
+      column: 19,
+      requireTech: ["AtomTheory", "Movie"],
+   };
 
    Rocket: ITechDefinition = { name: () => t(L.Rocket), column: 20, requireTech: ["Jet"] };
-   Semiconductor: ITechDefinition = { name: () => t(L.Semiconductor), column: 20, requireTech: ["Jet", "Medicine"] };
+   Semiconductor: ITechDefinition = {
+      name: () => t(L.Semiconductor),
+      column: 20,
+      requireTech: ["Jet", "Medicine"],
+   };
    Vaccine: ITechDefinition = {
       name: () => t(L.Vaccine),
       column: 20,
       requireTech: ["Hospital", "Medicine", "Greenhouse"],
    };
-   Refrigeration: ITechDefinition = { name: () => t(L.Refrigeration), column: 20, requireTech: ["Greenhouse"] };
+   Refrigeration: ITechDefinition = {
+      name: () => t(L.Refrigeration),
+      column: 20,
+      requireTech: ["Greenhouse"],
+   };
 
    SpaceProgram: ITechDefinition = {
       name: () => t(L.SpaceProgram),
       column: 21,
       requireTech: ["Rocket", "Semiconductor"],
    };
-   Television: ITechDefinition = { name: () => t(L.Television), column: 21, requireTech: ["Semiconductor"] };
-   Tourism: ITechDefinition = { name: () => t(L.Tourism), column: 21, requireTech: ["Vaccine", "Semiconductor"] };
+   Television: ITechDefinition = {
+      name: () => t(L.Television),
+      column: 21,
+      requireTech: ["Semiconductor"],
+   };
+   Tourism: ITechDefinition = {
+      name: () => t(L.Tourism),
+      column: 21,
+      requireTech: ["Vaccine", "Semiconductor"],
+   };
    Skyscrapper: ITechDefinition = {
       name: () => t(L.Skyscrapper),
       column: 21,
       requireTech: ["Vaccine", "Refrigeration"],
    };
 
-   Computer: ITechDefinition = { name: () => t(L.Computer), column: 22, requireTech: ["SpaceProgram", "Television"] };
+   Computer: ITechDefinition = {
+      name: () => t(L.Computer),
+      column: 22,
+      requireTech: ["SpaceProgram", "Television"],
+   };
    Globalization: ITechDefinition = {
       name: () => t(L.Globalization),
       column: 22,
       requireTech: ["Tourism", "Television"],
    };
-   UnitedNation: ITechDefinition = { name: () => t(L.UnitedNation), column: 22, requireTech: ["Tourism"] };
-   Metropolitan: ITechDefinition = { name: () => t(L.Metropolitan), column: 22, requireTech: ["Skyscrapper"] };
+   UnitedNation: ITechDefinition = {
+      name: () => t(L.UnitedNation),
+      column: 22,
+      requireTech: ["Tourism"],
+   };
+   Metropolitan: ITechDefinition = {
+      name: () => t(L.Metropolitan),
+      column: 22,
+      requireTech: ["Skyscrapper"],
+   };
 
-   NuclearFission: ITechDefinition = { name: () => t(L.NuclearFission), column: 23, requireTech: ["Computer"] };
-   Internet: ITechDefinition = { name: () => t(L.Internet), column: 23, requireTech: ["Computer", "Globalization"] };
-   Nanotechnology: ITechDefinition = { name: () => t(L.Nanotechnology), column: 23, requireTech: ["Globalization"] };
-   Genetics: ITechDefinition = { name: () => t(L.Genetics), column: 23, requireTech: ["UnitedNation"] };
+   NuclearFission: ITechDefinition = {
+      name: () => t(L.NuclearFission),
+      column: 23,
+      requireTech: ["Computer"],
+   };
+   Internet: ITechDefinition = {
+      name: () => t(L.Internet),
+      column: 23,
+      requireTech: ["Computer", "Globalization"],
+   };
+   Nanotechnology: ITechDefinition = {
+      name: () => t(L.Nanotechnology),
+      column: 23,
+      requireTech: ["Globalization"],
+   };
+   Genetics: ITechDefinition = {
+      name: () => t(L.Genetics),
+      column: 23,
+      requireTech: ["UnitedNation"],
+   };
    Conglomerate: ITechDefinition = {
       name: () => t(L.Conglomerate),
       column: 23,
       requireTech: ["UnitedNation", "Metropolitan"],
    };
 
-   Robotics: ITechDefinition = { name: () => t(L.Robotics), column: 24, requireTech: ["NuclearFission", "Internet"] };
-   SocialNetwork: ITechDefinition = { name: () => t(L.SocialNetwork), column: 24, requireTech: ["Internet"] };
+   Robotics: ITechDefinition = {
+      name: () => t(L.Robotics),
+      column: 24,
+      requireTech: ["NuclearFission", "Internet"],
+   };
+   SocialNetwork: ITechDefinition = {
+      name: () => t(L.SocialNetwork),
+      column: 24,
+      requireTech: ["Internet"],
+   };
    Smartphone: ITechDefinition = {
       name: () => t(L.Smartphone),
       column: 24,
@@ -477,7 +644,11 @@ export class TechDefinitions {
       column: 24,
       requireTech: ["Genetics"],
    };
-   VentureCapital: ITechDefinition = { name: () => t(L.VentureCapital), column: 24, requireTech: ["Conglomerate"] };
+   VentureCapital: ITechDefinition = {
+      name: () => t(L.VentureCapital),
+      column: 24,
+      requireTech: ["Conglomerate"],
+   };
 
    ArtificialIntelligence: ITechDefinition = {
       name: () => t(L.ArtificialIntelligence),
@@ -486,13 +657,21 @@ export class TechDefinitions {
       requireTech: ["Robotics", "SocialNetwork"],
    };
 
-   CloudComputing: ITechDefinition = { name: () => t(L.CloudComputing), column: 25, requireTech: ["SocialNetwork"] };
+   CloudComputing: ITechDefinition = {
+      name: () => t(L.CloudComputing),
+      column: 25,
+      requireTech: ["SocialNetwork"],
+   };
    VirtualReality: ITechDefinition = {
       name: () => t(L.VirtualReality),
       column: 25,
       requireTech: ["SocialNetwork", "Smartphone"],
    };
-   Cryptocurrency: ITechDefinition = { name: () => t(L.Cryptocurrency), column: 25, requireTech: ["VentureCapital"] };
+   Cryptocurrency: ITechDefinition = {
+      name: () => t(L.Cryptocurrency),
+      column: 25,
+      requireTech: ["VentureCapital"],
+   };
 }
 
 export type Tech = keyof TechDefinitions;

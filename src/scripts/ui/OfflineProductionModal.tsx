@@ -8,7 +8,11 @@ import { L, t } from "../utilities/i18n";
 import { hideModal } from "./GlobalModal";
 import { FormatNumber } from "./HelperComponents";
 
-export function OfflineProductionModal({ before, after, time }: { before: GameState; after: GameState; time: number }) {
+export function OfflineProductionModal({
+   before,
+   after,
+   time,
+}: { before: GameState; after: GameState; time: number }) {
    return (
       <div className="window" style={{ width: "500px" }}>
          <div className="title-bar">

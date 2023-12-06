@@ -3,9 +3,9 @@ import { Resource, ResourceDefinitions } from "../definitions/ResourceDefinition
 import { PartialSet, PartialTabulate } from "../definitions/TypeDefinitions";
 import { IPointArray } from "../utilities/Helper";
 import { makeObservableHook } from "../utilities/Hook";
-import { L, t } from "../utilities/i18n";
 import { RequireAtLeastOne } from "../utilities/Type";
 import { TypedEvent } from "../utilities/TypedEvent";
+import { L, t } from "../utilities/i18n";
 import { calculateHappiness } from "./HappinessLogic";
 import { IBuildingData } from "./Tile";
 

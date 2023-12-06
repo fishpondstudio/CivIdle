@@ -6,7 +6,10 @@ import { GameTicker } from "./GameTicker";
 import { SceneManager } from "./SceneManager";
 /////////////////////////////////////////////////////////////////////////////////////////////
 
-export type RouteTo = <P extends Record<string, unknown>>(component: React.ComponentType<P>, params: P) => void;
+export type RouteTo = <P extends Record<string, unknown>>(
+   component: React.ComponentType<P>,
+   params: P,
+) => void;
 
 export interface ISingleton {
    sceneManager: SceneManager;

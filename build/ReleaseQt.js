@@ -19,9 +19,13 @@ console.log("========== Building Qt ==========");
 
 fs.emptyDirSync(path.join(rootPath, "qt", "cividle-win32-x64"));
 
-const stream = sevenZip.extractFull(path.join(rootPath, "qt", "cividle-win32-x64.7z"), path.join(rootPath, "qt"), {
-   $bin: sevenBin.path7za,
-});
+const stream = sevenZip.extractFull(
+   path.join(rootPath, "qt", "cividle-win32-x64.7z"),
+   path.join(rootPath, "qt"),
+   {
+      $bin: sevenBin.path7za,
+   },
+);
 
 stream.on("end", () => {
    fs.copySync(path.join(rootPath, "dist"), path.join(rootPath, "qt", "cividle-win32-x64", "dist"));
@@ -40,8 +44,9 @@ stream.on("end", () => {
    fs.copySync(path.join(rootPath, "qt", "cividle-win32-x64"), gameFilePath);
 
    cmd(
-      path.join(process.env.STEAMWORKS_PATH, "builder_linux", "steamcmd.sh") + " +runscript ../cividle.txt",
-      process.env.STEAMWORKS_PATH
+      path.join(process.env.STEAMWORKS_PATH, "builder_linux", "steamcmd.sh") +
+         " +runscript ../cividle.txt",
+      process.env.STEAMWORKS_PATH,
    );
 });
 

@@ -77,7 +77,9 @@ export const STOCKPILE_MAX_MAX = 50;
 export const PRIORITY_MIN = 1;
 export const PRIORITY_MAX = 10;
 
-export function makeBuilding(data: Pick<IBuildingData, "type"> & Partial<IBuildingData>): IBuildingData {
+export function makeBuilding(
+   data: Pick<IBuildingData, "type"> & Partial<IBuildingData>,
+): IBuildingData {
    const building: IBuildingData = {
       level: 1,
       desiredLevel: 1,
@@ -130,7 +132,11 @@ export function makeBuilding(data: Pick<IBuildingData, "type"> & Partial<IBuildi
       }
    }
 
-   building.stockpileCapacity = clamp(building.stockpileCapacity, STOCKPILE_CAPACITY_MIN, STOCKPILE_CAPACITY_MAX);
+   building.stockpileCapacity = clamp(
+      building.stockpileCapacity,
+      STOCKPILE_CAPACITY_MIN,
+      STOCKPILE_CAPACITY_MAX,
+   );
    building.stockpileMax = clamp(building.stockpileMax, STOCKPILE_MAX_MIN, STOCKPILE_MAX_MAX);
    building.priority = clamp(building.priority, PRIORITY_MIN, PRIORITY_MAX);
 

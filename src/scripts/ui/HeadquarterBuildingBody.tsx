@@ -1,7 +1,12 @@
 import classNames from "classnames";
 import { getScienceFromWorkers } from "../logic/BuildingLogic";
 import { Config } from "../logic/Constants";
-import { getCurrentTechAge, getScienceAmount, getUnlockCost, unlockableTechs } from "../logic/TechLogic";
+import {
+   getCurrentTechAge,
+   getScienceAmount,
+   getUnlockCost,
+   unlockableTechs,
+} from "../logic/TechLogic";
 import { Tick } from "../logic/TickLogic";
 import { useUser } from "../rpc/RPCClient";
 import { TechTreeScene } from "../scenes/TechTreeScene";
@@ -106,7 +111,7 @@ export function HeadquarterBuildingBody({ gameState, xy }: IBuildingComponentPro
                            <FormatNumber
                               value={Tick.current.globalMultipliers.builderCapacity.reduce(
                                  (prev, curr) => prev + curr.value,
-                                 0
+                                 0,
                               )}
                            />
                         </div>
@@ -131,7 +136,7 @@ export function HeadquarterBuildingBody({ gameState, xy }: IBuildingComponentPro
                            <FormatNumber
                               value={Tick.current.globalMultipliers.transportCapacity.reduce(
                                  (prev, curr) => prev + curr.value,
-                                 0
+                                 0,
                               )}
                            />
                         </div>
@@ -252,7 +257,9 @@ export function HeadquarterBuildingBody({ gameState, xy }: IBuildingComponentPro
                                  <span
                                     className="text-link"
                                     onClick={() => {
-                                       Singleton().sceneManager.loadScene(TechTreeScene)?.selectNode(k, "jump", true);
+                                       Singleton()
+                                          .sceneManager.loadScene(TechTreeScene)
+                                          ?.selectNode(k, "jump", true);
                                     }}
                                  >
                                     {t(L.View)}
@@ -277,7 +284,10 @@ export function HeadquarterBuildingBody({ gameState, xy }: IBuildingComponentPro
                   </div>
                );
             })}
-            <div className="mv5 text-link text-strong" onClick={() => Singleton().routeTo(GreatPersonPage, {})}>
+            <div
+               className="mv5 text-link text-strong"
+               onClick={() => Singleton().routeTo(GreatPersonPage, {})}
+            >
                {t(L.ManageGreatPeople)}
             </div>
          </fieldset>
@@ -295,7 +305,10 @@ export function HeadquarterBuildingBody({ gameState, xy }: IBuildingComponentPro
                   return [def.name()];
                })
                .join(", ")}
-            <div className="mv5 text-link text-strong" onClick={() => Singleton().routeTo(WonderPage, {})}>
+            <div
+               className="mv5 text-link text-strong"
+               onClick={() => Singleton().routeTo(WonderPage, {})}
+            >
                {t(L.ManageWonders)}
             </div>
          </fieldset>

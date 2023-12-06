@@ -40,8 +40,18 @@ export function LoadingPage({
             <div className="f1">Loading Sound</div>
             <div>... Done</div>
          </div>
-         <ShowStage name="Loading Save" stage={LoadingPageStage.LoadSave} current={stage} progress={progress} />
-         <ShowStage name="Verifying Data" stage={LoadingPageStage.CheckSave} current={stage} progress={progress} />
+         <ShowStage
+            name="Loading Save"
+            stage={LoadingPageStage.LoadSave}
+            current={stage}
+            progress={progress}
+         />
+         <ShowStage
+            name="Verifying Data"
+            stage={LoadingPageStage.CheckSave}
+            current={stage}
+            progress={progress}
+         />
          <ShowStage
             name="Connecting to Steam"
             stage={LoadingPageStage.SteamSignIn}

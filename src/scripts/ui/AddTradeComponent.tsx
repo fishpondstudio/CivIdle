@@ -11,7 +11,7 @@ import { FormatNumber } from "./HelperComponents";
 
 export function AddTradeComponent({ gameState, xy }: IBuildingComponentProps) {
    const buyResources = keysOf(Tick.next.resourcesByXy).filter(
-      (res) => Tick.current.resources[res].canPrice && Tick.current.resources[res].canStore
+      (res) => Tick.current.resources[res].canPrice && Tick.current.resources[res].canStore,
    );
    const resourcesInStorage = gameState.tiles[xy].building?.resources ?? {};
    const sellResources = keysOf(resourcesInStorage);
@@ -34,7 +34,10 @@ export function AddTradeComponent({ gameState, xy }: IBuildingComponentProps) {
       if (trade.buyAmount > rangeMax || trade.buyAmount < rangeMin) {
          return false;
       }
-      if (trade.sellAmount < 0 || trade.sellAmount > (resourcesInStorage[trade.sellResource] ?? 0)) {
+      if (
+         trade.sellAmount < 0 ||
+         trade.sellAmount > (resourcesInStorage[trade.sellResource] ?? 0)
+      ) {
          return false;
       }
       return true;

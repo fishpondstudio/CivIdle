@@ -40,7 +40,7 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): JSX.Element {
             build(lastBuild);
          }
       },
-      []
+      [],
    );
    const buildingByType = getTypeBuildings(gs);
    return (
@@ -64,7 +64,7 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): JSX.Element {
                   },
                   () => {
                      return <div className="text-desc">{t(L.NoDepositDesc)}</div>;
-                  }
+                  },
                )}
             </fieldset>
             <fieldset>
@@ -95,19 +95,34 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): JSX.Element {
                            if (isWorldOrNaturalWonder(b) && !isWorldOrNaturalWonder(a)) {
                               return 1;
                            }
-                           const tier = (Config.BuildingTier[a] ?? 0) - (Config.BuildingTier[b] ?? 0);
+                           const tier =
+                              (Config.BuildingTier[a] ?? 0) - (Config.BuildingTier[b] ?? 0);
                            if (tier !== 0) {
                               return tier;
                            }
-                           return Tick.current.buildings[a].name().localeCompare(Tick.current.buildings[b].name());
+                           return Tick.current.buildings[a]
+                              .name()
+                              .localeCompare(Tick.current.buildings[b].name());
                         })
-                        .filter((v) => Tick.current.buildings[v].name().toLowerCase().includes(filter.toLowerCase()))
+                        .filter((v) =>
+                           Tick.current.buildings[v]
+                              .name()
+                              .toLowerCase()
+                              .includes(filter.toLowerCase()),
+                        )
                         .map((k) => {
-                           if ((sizeOf(constructed[k]) ?? 0) >= (Tick.current.buildings[k].max ?? Infinity)) {
+                           if (
+                              (sizeOf(constructed[k]) ?? 0) >=
+                              (Tick.current.buildings[k].max ?? Infinity)
+                           ) {
                               return null;
                            }
                            const building = Tick.current.buildings[k];
-                           const buildCost = getBuildingCost({ type: k, level: 1, status: "building" });
+                           const buildCost = getBuildingCost({
+                              type: k,
+                              level: 1,
+                              status: "building",
+                           });
                            return (
                               <tr
                                  key={k}
@@ -141,7 +156,8 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): JSX.Element {
                                              </span>
                                           )}
                                        </div>
-                                       {building.deposit && setContains(tile.deposit, building.deposit) ? (
+                                       {building.deposit &&
+                                       setContains(tile.deposit, building.deposit) ? (
                                           <div className="m-icon small text-orange ml5">stars</div>
                                        ) : null}
                                        {k === lastBuild ? (
@@ -155,7 +171,9 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): JSX.Element {
                                        {mapOf(
                                           building.input,
                                           (res, amount) =>
-                                             `${Tick.current.resources[res].name()} x${formatNumber(amount)}`
+                                             `${Tick.current.resources[res].name()} x${formatNumber(
+                                                amount,
+                                             )}`,
                                        ).join(", ")}
                                     </div>
                                     <div className="row text-small text-desc">
@@ -165,7 +183,9 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): JSX.Element {
                                        {mapOf(
                                           building.output,
                                           (res, amount) =>
-                                             `${Tick.current.resources[res].name()} x${formatNumber(amount)}`
+                                             `${Tick.current.resources[res].name()} x${formatNumber(
+                                                amount,
+                                             )}`,
                                        ).join(", ")}
                                     </div>
                                  </td>
@@ -173,7 +193,8 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): JSX.Element {
                                     {jsxMapOf(buildCost, (res, amount) => {
                                        return (
                                           <div className="nowrap" key={res}>
-                                             {Tick.current.resources[res].name()} x{formatNumber(amount)}
+                                             {Tick.current.resources[res].name()} x
+                                             {formatNumber(amount)}
                                           </div>
                                        );
                                     })}

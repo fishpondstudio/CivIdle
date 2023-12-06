@@ -36,7 +36,7 @@ export async function startGame(
    app: Application,
    resources: MainBundleAssets,
    textures: Textures,
-   routeChanged: TypedEvent<RouteChangeEvent>
+   routeChanged: TypedEvent<RouteChangeEvent>,
 ) {
    const routeTo: RouteTo = (component, params) => routeChanged.emit({ component, params });
 
@@ -53,8 +53,8 @@ export async function startGame(
                <>
                   <div className="title">Save File Incompatible</div>
                   <div>
-                     Your currently save file is not compatible with the game version. You need to delete your old save
-                     and restart the game.
+                     Your currently save file is not compatible with the game version. You need to
+                     delete your old save and restart the game.
                   </div>
                </>
             ),
@@ -169,7 +169,7 @@ function findSpecialBuildings(gameState: GameState): ISpecialBuildings {
             "There should be only one Headquarter. One =",
             buildings.Headquarter,
             "Another = ",
-            tile
+            tile,
          );
          buildings.Headquarter = tile;
       }
@@ -179,7 +179,7 @@ function findSpecialBuildings(gameState: GameState): ISpecialBuildings {
             "There should be only one Petra. One =",
             buildings.Petra,
             "Another = ",
-            tile
+            tile,
          );
          buildings.Petra = tile;
       }
@@ -194,7 +194,9 @@ function verifyBuildingConfig(textures: Textures, city: City) {
          console.warn(`Cannot find textures for building ${b}`);
       }
       if (!isNullOrUndefined(def.max) && isNullOrUndefined(def.special)) {
-         console.warn(`Building ${b} has "max" defined but "special" undefined. Please define "special"!`);
+         console.warn(
+            `Building ${b} has "max" defined but "special" undefined. Please define "special"!`,
+         );
       }
    });
 }

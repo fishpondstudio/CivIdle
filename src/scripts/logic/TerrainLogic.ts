@@ -19,7 +19,11 @@ export function ensureTileFogOfWar(xy: string, gameState: GameState, grid: Grid)
    result[xy] = true;
    const point = xyToPoint(xy);
    let targets = [point];
-   for (let i = 0; i < (Tick.current.buildings[building.type]?.vision ?? BUILDING_DEFAULT_VISION); i++) {
+   for (
+      let i = 0;
+      i < (Tick.current.buildings[building.type]?.vision ?? BUILDING_DEFAULT_VISION);
+      i++
+   ) {
       const newTargets: IPointData[] = [];
       targets.forEach((t) => {
          const neighbors = grid.getNeighbors(t);
@@ -42,7 +46,7 @@ export function findNearest(
    predicate: (tile: ITileData) => boolean,
    point: IPointData,
    grid: Grid,
-   gs: GameState
+   gs: GameState,
 ): ITileData | null {
    const position = grid.gridToPosition(point);
    let minDistSqr = Infinity;

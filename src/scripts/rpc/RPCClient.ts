@@ -94,7 +94,9 @@ export async function connectWebSocket(): Promise<number> {
          steamTicket = await SteamClient.getAuthSessionTicket();
       }
       getGameOptions().id = `steam:${await SteamClient.getSteamId()}`;
-      ws = new WebSocket(`${serverAddress}/?appId=${STEAM_APP_ID}&ticket=${steamTicket}&platform=steam`);
+      ws = new WebSocket(
+         `${serverAddress}/?appId=${STEAM_APP_ID}&ticket=${steamTicket}&platform=steam`,
+      );
    } else {
       const token = getGameOptions().id + ":" + (getGameOptions().token ?? getGameOptions().id);
       ws = new WebSocket(`${serverAddress}/?platform=web&ticket=${token}`);

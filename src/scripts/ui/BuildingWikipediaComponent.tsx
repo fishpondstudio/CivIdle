@@ -44,6 +44,9 @@ export function BuildingWikipediaComponent({ gameState, xy }: IBuildingComponent
       };
    }, [type]);
    return (
-      <iframe ref={iframeEl} style={{ width: "100%", height: "400px", background: "#fff", marginBottom: "10px" }} />
+      <iframe
+         ref={iframeEl}
+         style={{ width: "100%", height: "400px", background: "#fff", marginBottom: "10px" }}
+      />
    );
 }

@@ -30,7 +30,7 @@ export class FlowGraphScene extends ViewportScene {
             maxScale: 1,
             minScale: Math.max(
                app.screen.width / this.viewport.worldWidth,
-               app.screen.height / this.viewport.worldHeight
+               app.screen.height / this.viewport.worldHeight,
             ),
          });
 
@@ -63,7 +63,13 @@ export class FlowGraphScene extends ViewportScene {
 
       const connections = this.viewport.addChild(new SmoothGraphics());
 
-      drawConnection(connections, flourMill.getPortPosition("Flour")!, pizzeria.getPortPosition("Flour")!, 0xbbbbbb, 4);
+      drawConnection(
+         connections,
+         flourMill.getPortPosition("Flour")!,
+         pizzeria.getPortPosition("Flour")!,
+         0xbbbbbb,
+         4,
+      );
 
       this.viewport.on("card-moved", () => {
          connections.clear();
@@ -72,7 +78,7 @@ export class FlowGraphScene extends ViewportScene {
             flourMill.getPortPosition("Flour")!,
             pizzeria.getPortPosition("Flour")!,
             0xbbbbbb,
-            4
+            4,
          );
       });
 
@@ -80,7 +86,13 @@ export class FlowGraphScene extends ViewportScene {
    }
 }
 
-function drawConnection(g: SmoothGraphics, from: IPointData, to: IPointData, color: number, width: number) {
+function drawConnection(
+   g: SmoothGraphics,
+   from: IPointData,
+   to: IPointData,
+   color: number,
+   width: number,
+) {
    g.lineStyle({
       color: 0x666666,
       width: 3,
@@ -114,7 +126,7 @@ class BuildingCard extends Container {
             fontName: Fonts.CabinSketch,
             fontSize: 36,
             tint: 0x333333,
-         })
+         }),
       ).position.set(20, 20);
 
       const desc = this.addChild(
@@ -123,7 +135,7 @@ class BuildingCard extends Container {
             fontSize: 16,
             tint: 0x333333,
             maxWidth: 260,
-         })
+         }),
       );
       desc.position.set(20, 60);
 
@@ -136,7 +148,7 @@ class BuildingCard extends Container {
                fontName: Fonts.Cabin,
                fontSize: 20,
                tint: 0x333333,
-            })
+            }),
          );
          input.anchor.set(0, 0.5);
          input.position.set(50, 100 + (i * 300) / (inputCount + 1));
@@ -156,7 +168,7 @@ class BuildingCard extends Container {
                fontSize: 20,
                align: "right",
                tint: 0x333333,
-            })
+            }),
          );
          output.anchor.set(1, 0.5);
          output.position.set(250, 100 + (i * 300) / (outputCount + 1));

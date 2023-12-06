@@ -18,7 +18,7 @@ export function wipeSaveData() {
    save.options = savedGame.options;
    initializeGameState(
       save.current,
-      new Grid(Config.City[save.current.city].size, Config.City[save.current.city].size, TILE_SIZE)
+      new Grid(Config.City[save.current.city].size, Config.City[save.current.city].size, TILE_SIZE),
    );
    if (isSteam()) {
       SteamClient.fileWrite(SAVE_KEY, JSON.stringify(save))
@@ -76,7 +76,9 @@ export function getGameOptions(): GameOptions {
 export const OnUIThemeChanged = new TypedEvent<boolean>();
 
 export function syncUITheme(gameOptions: GameOptions): void {
-   gameOptions.useModernUI ? document.body.classList.add("modern") : document.body.classList.remove("modern");
+   gameOptions.useModernUI
+      ? document.body.classList.add("modern")
+      : document.body.classList.remove("modern");
    OnUIThemeChanged.emit(getGameOptions().useModernUI);
 }
 
@@ -86,7 +88,9 @@ let saving = false;
 
 export function saveGame() {
    if (saving) {
-      console.warn("Received a save request while another one is ongoing, will ignore the new request");
+      console.warn(
+         "Received a save request while another one is ongoing, will ignore the new request",
+      );
       return;
    }
    saving = true;

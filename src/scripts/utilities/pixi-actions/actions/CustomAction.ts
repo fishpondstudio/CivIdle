@@ -18,7 +18,7 @@ export class CustomAction<T> extends Action {
       interpolator: (initial: T, target: T, factor: number) => T,
       targetValue: T,
       seconds: number,
-      interpolation: EasingFunction = Easing.Linear
+      interpolation: EasingFunction = Easing.Linear,
    ) {
       super();
       this.interpolation = interpolation;

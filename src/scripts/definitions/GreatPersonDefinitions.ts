@@ -160,8 +160,16 @@ export class GreatPersonDefinitions {
       maxLevel: Infinity,
       age: "ClassicalAge",
       tick: (self, level) => {
-         addModifier("ChariotWorkshop", { output: { Science: 1 } }, t(L.SourceGreatPerson, { person: self.name() }));
-         addModifier("Armory", { output: { Science: 1 } }, t(L.SourceGreatPerson, { person: self.name() }));
+         addModifier(
+            "ChariotWorkshop",
+            { output: { Science: 1 } },
+            t(L.SourceGreatPerson, { person: self.name() }),
+         );
+         addModifier(
+            "Armory",
+            { output: { Science: 1 } },
+            t(L.SourceGreatPerson, { person: self.name() }),
+         );
       },
    };
 
@@ -355,7 +363,8 @@ function tickGreatPersonBoost(self: IGreatPersonDefinition, level: number) {
 }
 
 function boostOf(
-   def: Omit<IGreatPersonDefinition, "desc" | "tick"> & Pick<Required<IGreatPersonDefinition>, "boost">
+   def: Omit<IGreatPersonDefinition, "desc" | "tick"> &
+      Pick<Required<IGreatPersonDefinition>, "boost">,
 ): IGreatPersonDefinition {
    return {
       name: def.name,

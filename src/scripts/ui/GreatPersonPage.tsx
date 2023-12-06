@@ -23,7 +23,9 @@ export function GreatPersonPage(): JSX.Element | null {
          <div className="window-body">
             <button
                className="w100"
-               onClick={() => Singleton().routeTo(TilePage, { xy: Singleton().buildings.Headquarter.xy })}
+               onClick={() =>
+                  Singleton().routeTo(TilePage, { xy: Singleton().buildings.Headquarter.xy })
+               }
             >
                <div className="row jcc">
                   <div className="m-icon" style={{ margin: "0 5px 0 -5px", fontSize: "18px" }}>
@@ -39,7 +41,9 @@ export function GreatPersonPage(): JSX.Element | null {
                   onClick={() => {
                      if (gs.greatPeopleChoices.length > 0) {
                         playLevelUp();
-                        showModal(<ChooseGreatPersonModal greatPeopleChoice={gs.greatPeopleChoices[0]} />);
+                        showModal(
+                           <ChooseGreatPersonModal greatPeopleChoice={gs.greatPeopleChoices[0]} />,
+                        );
                      }
                   }}
                >
@@ -63,7 +67,13 @@ export function GreatPersonPage(): JSX.Element | null {
                            gs.greatPeople,
                            (k, level) => {
                               const person = Config.GreatPerson[k];
-                              return <GreatPersonRow key={k} greatPerson={k} level={person.value(level)} />;
+                              return (
+                                 <GreatPersonRow
+                                    key={k}
+                                    greatPerson={k}
+                                    level={person.value(level)}
+                                 />
+                              );
                            },
                            () => (
                               <tr>
@@ -71,7 +81,7 @@ export function GreatPersonPage(): JSX.Element | null {
                                     {t(L.NothingHere)}
                                  </td>
                               </tr>
-                           )
+                           ),
                         )}
                      </tbody>
                   </table>
@@ -100,7 +110,7 @@ export function GreatPersonPage(): JSX.Element | null {
                                     {t(L.NothingHere)}
                                  </td>
                               </tr>
-                           )
+                           ),
                         )}
                      </tbody>
                   </table>

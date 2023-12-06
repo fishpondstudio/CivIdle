@@ -13,7 +13,10 @@ export function WonderPage(): JSX.Element | null {
    const gs = useGameState();
    const builtWonders: PartialSet<Building> = {};
    forEach(getXyBuildings(gs), (xy, building) => {
-      if (Tick.current.buildings[building.type].max == 1 && Tick.current.buildings[building.type].construction) {
+      if (
+         Tick.current.buildings[building.type].max == 1 &&
+         Tick.current.buildings[building.type].construction
+      ) {
          builtWonders[building.type] = true;
       }
    });
@@ -26,7 +29,9 @@ export function WonderPage(): JSX.Element | null {
          <div className="window-body">
             <button
                className="w100"
-               onClick={() => Singleton().routeTo(TilePage, { xy: Singleton().buildings.Headquarter.xy })}
+               onClick={() =>
+                  Singleton().routeTo(TilePage, { xy: Singleton().buildings.Headquarter.xy })
+               }
             >
                <div className="row jcc">
                   <div className="m-icon" style={{ margin: "0 5px 0 -5px", fontSize: "18px" }}>

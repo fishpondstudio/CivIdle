@@ -18,7 +18,7 @@ export class TooltipPool extends ObjectPool<BitmapText> {
             fontName: Fonts.Cabin,
             fontSize: 14,
             tint: 0xffffff,
-         })
+         }),
       );
       visual.anchor.set(0.5, 0.5);
       return visual;

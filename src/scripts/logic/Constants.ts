@@ -1,7 +1,11 @@
 import { Building, BuildingDefinitions, BuildingSpecial } from "../definitions/BuildingDefinitions";
 import { CityDefinitions } from "../definitions/CityDefinitions";
 import { GreatPersonDefinitions } from "../definitions/GreatPersonDefinitions";
-import { DepositResources, Resource, ResourceDefinitions } from "../definitions/ResourceDefinitions";
+import {
+   DepositResources,
+   Resource,
+   ResourceDefinitions,
+} from "../definitions/ResourceDefinitions";
 import { Tech, TechAgeDefinitions, TechDefinitions } from "../definitions/TechDefinitions";
 import { PartialTabulate } from "../definitions/TypeDefinitions";
 import { deepFreeze, forEach, isEmpty, keysOf, sizeOf, tabulateAdd } from "../utilities/Helper";
@@ -84,11 +88,11 @@ export function calculateTierAndPrice(gs: GameState) {
             if (t) {
                console.assert(
                   Config.Tech[t].column < Config.Tech[tech].column,
-                  `Input: Expect Unlock(${building}=${tech},${Config.Tech[tech].column}) > Unlock(${res}=${t},${Config.Tech[t].column})`
+                  `Input: Expect Unlock(${building}=${tech},${Config.Tech[tech].column}) > Unlock(${res}=${t},${Config.Tech[t].column})`,
                );
             } else {
                console.error(
-                  `Input: Expect Unlock(${building}=${tech},${Config.Tech[tech].column}) > Unlock(${res}=${t},NotFound)`
+                  `Input: Expect Unlock(${building}=${tech},${Config.Tech[tech].column}) > Unlock(${res}=${t},NotFound)`,
                );
             }
          });
@@ -97,12 +101,15 @@ export function calculateTierAndPrice(gs: GameState) {
             if (t && t !== tech && Config.Tech[t].column > 0) {
                console.assert(
                   Config.Tech[t].column < Config.Tech[tech].column,
-                  `Construction: Expect Unlock(${building}=${tech},${Config.Tech[tech].column}) > Unlock(${res}=${t},${Config.Tech[t].column})`
+                  `Construction: Expect Unlock(${building}=${tech},${Config.Tech[tech].column}) > Unlock(${res}=${t},${Config.Tech[t].column})`,
                );
             }
          });
       } else {
-         if (buildingDef.special !== BuildingSpecial.HQ && buildingDef.special !== BuildingSpecial.NaturalWonder) {
+         if (
+            buildingDef.special !== BuildingSpecial.HQ &&
+            buildingDef.special !== BuildingSpecial.NaturalWonder
+         ) {
             console.error(`Building: ${building} is not unlocked by any tech!`);
          }
       }
@@ -116,7 +123,7 @@ export function calculateTierAndPrice(gs: GameState) {
       }
       console.assert(
          result.length <= 1,
-         `Building ${building} should only be unlocked by one tech (${result.join(",")})`
+         `Building ${building} should only be unlocked by one tech (${result.join(",")})`,
       );
    });
 
@@ -133,7 +140,7 @@ export function calculateTierAndPrice(gs: GameState) {
          console.assert(
             // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
             !isEmpty(Config.Building[b].input) || !isEmpty(Config.Building[b].construction),
-            `${b}: A building should have either 'input' or 'construction' defined`
+            `${b}: A building should have either 'input' or 'construction' defined`,
          );
       });
       forEach(techDef.buildingModifier, (building, modifier) => {
@@ -178,14 +185,18 @@ export function calculateTierAndPrice(gs: GameState) {
                      if (v === res) {
                         delete resourceTierDependency[k];
                         delete Config.ResourceTier[k];
-                        console.log(`Resource Tier of ${k} is decided by ${res}, but its tier has changed.`);
+                        console.log(
+                           `Resource Tier of ${k} is decided by ${res}, but its tier has changed.`,
+                        );
                      }
                   });
                   forEach(buildingTierDependency, (k, v) => {
                      if (v === res) {
                         delete buildingTierDependency[k];
                         delete Config.BuildingTier[k];
-                        console.log(`Building Tier of ${k} is decided by ${res}, but its tier has changed.`);
+                        console.log(
+                           `Building Tier of ${k} is decided by ${res}, but its tier has changed.`,
+                        );
                      }
                   });
                }

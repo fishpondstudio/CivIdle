@@ -131,7 +131,8 @@ export const EN = {
    Tile: "Tile",
    Deposit: "Deposit",
    RequiredDeposit: "Required Deposit",
-   NoDepositDesc: "There's no deposit on this tile. More deposits may be discovered when you unlock new technologies",
+   NoDepositDesc:
+      "There's no deposit on this tile. More deposits may be discovered when you unlock new technologies",
    UnlockBuilding: "Unlock",
    AnnexProvinceButton: "Annex",
    UpgradeBuilding: "Upgrade",
@@ -330,7 +331,8 @@ export const EN = {
    ConstructionBuilderBaseCapacity: "Base Capacity",
    ConstructionBuilderMultiplier: "Capacity Multiplier",
    ConstructionBuilderMultiplierFull: "Builder Capacity Multiplier",
-   ConstructionNotEnoughWorkers: "This building's construction is paused because of lack of workers",
+   ConstructionNotEnoughWorkers:
+      "This building's construction is paused because of lack of workers",
    EndConstruction: "End Construction",
    EndConstructionEnd: "End",
    EndConstructionDesc: "All the resources that have already been used will not be returned",
@@ -348,7 +350,8 @@ export const EN = {
    HangingGardenDesc:
       "+1 Builder Capacity Multiplier. Adjacent aqueducts get +1 Production, Storage and Worker Capacity multiplier",
    Colosseum: "Colosseum",
-   ColosseumDesc: "All adjacent buildings get +1 Production, Storage and Worker Capacity multiplier",
+   ColosseumDesc:
+      "All adjacent buildings get +1 Production, Storage and Worker Capacity multiplier",
    CircusMaximus: "Circus Maximus",
    CircusMaximusDesc: "All buildings that produce workers get +1 Production multiplier",
    Statistics: "Statistics Building",
@@ -360,13 +363,15 @@ export const EN = {
    SagradaFamília: "Sagrada Família",
    SagradaFamíliaDesc: "Sagrada Família",
    Petra: "Petra",
-   PetraDesc: "Generate time warp when you are offline, which you can use to accelerate your empire",
+   PetraDesc:
+      "Generate time warp when you are offline, which you can use to accelerate your empire",
    Borobudur: "Borobudur",
    BorobudurDesc: "Borobudur",
    ItsukushimaShrine: "Itsukushima Shrine",
    ItsukushimaShrineDesc: "Itsukushima Shrine",
    TempleOfHeaven: "Temple Of Heaven",
-   TempleOfHeavenDesc: "All buildings that are level 10 or higher get +1 Worker Capacity Multiplier",
+   TempleOfHeavenDesc:
+      "All buildings that are level 10 or higher get +1 Worker Capacity Multiplier",
    HimejiCastle: "Himeji Castle",
    HimejiCastleDesc: "Himeji Castle",
    StatueOfLiberty: "Statue Of Liberty",
@@ -431,14 +436,16 @@ export const EN = {
    Wonder: "Wonder",
    PauseConstruction: "Pause Construction",
    ResumeConstruction: "Resume Construction",
-   PauseConstructionDesc: "Construction is currently in progress. You can pause construction any time",
+   PauseConstructionDesc:
+      "Construction is currently in progress. You can pause construction any time",
    ResumeConstructionDesc: "Construction is currently paused. You can resume construction any time",
    PauseConstructionPause: "Pause",
    ResumeConstructionResume: "Resume",
    Upgrade: "Upgrade",
    UpgradeCost: "Upgrade Cost",
    CancelUpgrade: "Cancel Upgrade",
-   CancelUpgradeDesc: "All the resources that have already been transported will remain in the storage",
+   CancelUpgradeDesc:
+      "All the resources that have already been transported will remain in the storage",
    StockpileSettings: "Stockpile Input Capacity",
    SellBuilding: "Sell Building",
    StockpileDesc:
@@ -447,10 +454,12 @@ export const EN = {
    StockpileMaxUnlimited: "Unlimited",
    StockpileMaxDesc:
       "This building will stop transporting a resource once there are enough for %{cycle} production cycles",
-   StockpileMaxUnlimitedDesc: "The building will never stop transporting resources until the storage is full",
+   StockpileMaxUnlimitedDesc:
+      "The building will never stop transporting resources until the storage is full",
    ProductionPriority: "Production Priority",
    ProductionPriorityDesc: "High priority means the building produces before other buildings",
-   TechProductionPriority: "Unlock building priority - allow setting production priority for each building",
+   TechProductionPriority:
+      "Unlock building priority - allow setting production priority for each building",
    TechStockpileMode: "Unlock stockpile mode - allow adjusting stockpile for each building",
    ConstructionCost: "Construction Cost: %{cost}",
    RomeMapMenu: "Map",
@@ -556,7 +565,8 @@ export const EN = {
    PlayerHandle: "Player Handle",
    ChangePlayerHandle: "Change",
    ChangePlayerHandleCancel: "Cancel",
-   ChangePlayerHandledDesc: "Your player handle can only contain 5 ~ 16 alphabets and numbers and has to be unique",
+   ChangePlayerHandledDesc:
+      "Your player handle can only contain 5 ~ 16 alphabets and numbers and has to be unique",
    ChangePlayerHandleTitle: "Change Your Player Handle",
    AGreatPersonIsBorn: "A Great Person Is Born",
    BuildingName: "Name",
@@ -587,6 +597,7 @@ export const EN = {
    StatisticsResources: "Resources",
    StatisticsBuildings: "Buildings",
    StatisticsTransportation: "Transportation",
+   StatisticsTransportationPercentage: "Percentage of Transportation Workers",
    StatisticsTransportationBuilding: "Building",
    StatisticsTransportationResource: "Resource",
    StatisticsTransportationAmount: "Amt",
@@ -614,7 +625,8 @@ export const EN = {
    PlayerMapClaimTileCondition1: "You are authenticated on the platform",
    PlayerMapClaimTileCondition2: "You haven't been banned by anti-cheat",
    PlayerMapClaimTileCondition3: "You have unlocked required technology: %{tech}",
-   PlayerMapClaimTileCondition4: "You haven't claimed a tile or have passed the cooldown of moving your tile",
+   PlayerMapClaimTileCondition4:
+      "You haven't claimed a tile or have passed the cooldown of moving your tile",
    PlayerMapClaimTileCooldownLeft: "Cooldown left: %{time}",
    PlayerMapYourTile: "Your Tile",
    PlayerMapTariff: "Tariff",
@@ -708,6 +720,7 @@ export const EN = {
    TimeWarp: "Time Warp",
    TurnOnTimeWarp: "Turn On Time Warp",
    TurnOnTimeWarpDesc: "Cost 1 warp for each cycle and accelerate your empire to run at 2x speed",
-   PetraNoMultiplier: "Petra is not affected by any multipliers (production, worker capacity, storage, etc)",
+   PetraNoMultiplier:
+      "Petra is not affected by any multipliers (production, worker capacity, storage, etc)",
    LimitOfflineProduction: "Limit Offline Production",
 };

@@ -103,8 +103,12 @@ export class TechTreeScene extends ViewportScene {
       if (!this.viewport) {
          return;
       }
-      const unlockedColor = Color.shared.setValue(getGameOptions().themeColors.ResearchUnlockedColor).toNumber();
-      const lockedColor = Color.shared.setValue(getGameOptions().themeColors.ResearchLockedColor).toNumber();
+      const unlockedColor = Color.shared
+         .setValue(getGameOptions().themeColors.ResearchUnlockedColor)
+         .toNumber();
+      const lockedColor = Color.shared
+         .setValue(getGameOptions().themeColors.ResearchLockedColor)
+         .toNumber();
       this.viewport.removeChildren();
       const g = new SmoothGraphics();
       this.viewport.addChild(g).lineStyle(LINE_STYLE);
@@ -126,7 +130,7 @@ export class TechTreeScene extends ViewportScene {
                rect,
                def.name(),
                this.getTechDescription(def),
-               this.context.gameState.unlockedTech[item] ? unlockedColor : lockedColor
+               this.context.gameState.unlockedTech[item] ? unlockedColor : lockedColor,
             );
          });
       });
@@ -137,7 +141,7 @@ export class TechTreeScene extends ViewportScene {
             v.from,
             v.to,
             v.name(),
-            isAgeUnlocked(k, this.context.gameState) ? unlockedColor : lockedColor
+            isAgeUnlocked(k, this.context.gameState) ? unlockedColor : lockedColor,
          );
       });
 
@@ -151,7 +155,7 @@ export class TechTreeScene extends ViewportScene {
                this._boxPositions[to]!.y + BOX_HEIGHT / 2,
                this.context.gameState.unlockedTech[from] || this.context.gameState.unlockedTech[to]
                   ? unlockedColor
-                  : lockedColor
+                  : lockedColor,
             );
          });
       });
@@ -167,7 +171,9 @@ export class TechTreeScene extends ViewportScene {
       if (!tech) {
          return;
       }
-      const highlightColor = Color.shared.setValue(getGameOptions().themeColors.ResearchHighlightColor).toNumber();
+      const highlightColor = Color.shared
+         .setValue(getGameOptions().themeColors.ResearchHighlightColor)
+         .toNumber();
       this._selectedTech = tech;
       if (route) {
          Singleton().routeTo(TechPage, { id: tech });
@@ -188,7 +194,7 @@ export class TechTreeScene extends ViewportScene {
                   this.getTechDescription(def),
                   highlightColor,
                   10,
-                  this._selectedContainer
+                  this._selectedContainer,
                );
                drawnBoxes[to] = true;
             }
@@ -206,7 +212,7 @@ export class TechTreeScene extends ViewportScene {
                      this._boxPositions[from]!.y + BOX_HEIGHT / 2,
                      this._boxPositions[to]!.x,
                      this._boxPositions[to]!.y + BOX_HEIGHT / 2,
-                     highlightColor
+                     highlightColor,
                   );
                   drawnConnections[key] = true;
                }
@@ -236,7 +242,7 @@ export class TechTreeScene extends ViewportScene {
       fromY: number,
       toX: number,
       toY: number,
-      color: ColorSource
+      color: ColorSource,
    ): void {
       g.moveTo(fromX, fromY);
       const oldColor = g.line.color;
@@ -250,7 +256,7 @@ export class TechTreeScene extends ViewportScene {
       startColumn: number,
       endColumn: number,
       text: string,
-      color: ColorSource
+      color: ColorSource,
    ): void {
       this.drawBox(
          g,
@@ -258,11 +264,11 @@ export class TechTreeScene extends ViewportScene {
             50 + startColumn * COLUMN_WIDTH,
             (HEADER_TOTAL_HEIGHT - HEADER_BOX_HEIGHT) / 2,
             COLUMN_WIDTH * (endColumn - startColumn) + BOX_WIDTH,
-            HEADER_BOX_HEIGHT
+            HEADER_BOX_HEIGHT,
          ),
          text.toUpperCase(),
          null,
-         color
+         color,
       );
    }
 
@@ -273,7 +279,7 @@ export class TechTreeScene extends ViewportScene {
       description: string | null,
       color: ColorSource,
       radius = 10,
-      parent: Container | null = null
+      parent: Container | null = null,
    ): void {
       const oldColor = g.line.color;
       parent = parent ?? g.parent;
@@ -285,7 +291,7 @@ export class TechTreeScene extends ViewportScene {
             fontName: Fonts.Marcellus,
             fontSize: 28,
             tint: color,
-         })
+         }),
       );
       bitmapText.anchor.x = 0.5;
       bitmapText.anchor.y = 0.5;
@@ -298,7 +304,7 @@ export class TechTreeScene extends ViewportScene {
             new BitmapText(description, {
                fontName: Fonts.Marcellus,
                tint: color,
-            })
+            }),
          );
 
          bitmapText.fontSize = 18;

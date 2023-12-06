@@ -2,7 +2,12 @@ import { notifyGameStateUpdate } from "../Global";
 import { applyToAllBuildings, IOCalculation } from "../logic/BuildingLogic";
 import { getBuildingIO } from "../logic/IntraTickCache";
 import { Tick } from "../logic/TickLogic";
-import { STOCKPILE_CAPACITY_MAX, STOCKPILE_CAPACITY_MIN, STOCKPILE_MAX_MAX, STOCKPILE_MAX_MIN } from "../logic/Tile";
+import {
+   STOCKPILE_CAPACITY_MAX,
+   STOCKPILE_CAPACITY_MIN,
+   STOCKPILE_MAX_MAX,
+   STOCKPILE_MAX_MIN,
+} from "../logic/Tile";
 import { isEmpty } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
 import { playClick } from "../visuals/Sound";
@@ -37,13 +42,19 @@ export function BuildingStockpileComponent({ gameState, xy }: IBuildingComponent
             }}
          />
          <div className="sep15"></div>
-         <div className="text-desc text-small">{t(L.StockpileDesc, { capacity: building.stockpileCapacity })}</div>
+         <div className="text-desc text-small">
+            {t(L.StockpileDesc, { capacity: building.stockpileCapacity })}
+         </div>
          <div className="sep5"></div>
          <div
             className="text-link text-small"
             onClick={() => {
                playClick();
-               applyToAllBuildings(building.type, { stockpileCapacity: building.stockpileCapacity }, gameState);
+               applyToAllBuildings(
+                  building.type,
+                  { stockpileCapacity: building.stockpileCapacity },
+                  gameState,
+               );
             }}
          >
             {t(L.ApplyToAll, { building: Tick.current.buildings[building.type].name() })}
@@ -53,7 +64,9 @@ export function BuildingStockpileComponent({ gameState, xy }: IBuildingComponent
          <div className="separator has-title">
             <div>
                {t(L.StockpileMax)}:{" "}
-               {building.stockpileMax <= 0 ? t(L.StockpileMaxUnlimited) : `${building.stockpileMax}x`}
+               {building.stockpileMax <= 0
+                  ? t(L.StockpileMaxUnlimited)
+                  : `${building.stockpileMax}x`}
             </div>
          </div>
          <div className="sep5"></div>
@@ -79,7 +92,11 @@ export function BuildingStockpileComponent({ gameState, xy }: IBuildingComponent
             className="text-link text-small"
             onClick={() => {
                playClick();
-               applyToAllBuildings(building.type, { stockpileMax: building.stockpileMax }, gameState);
+               applyToAllBuildings(
+                  building.type,
+                  { stockpileMax: building.stockpileMax },
+                  gameState,
+               );
             }}
          >
             {t(L.ApplyToAll, { building: Tick.current.buildings[building.type].name() })}

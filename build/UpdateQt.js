@@ -4,7 +4,8 @@ const glob = require("glob");
 const sevenBin = require("7zip-bin");
 const sevenZip = require("node-7z");
 
-const qtPath = "C:/Users/Ruoyu/Projects/CivIdle-Qt/build-CivIdle-Desktop_Qt_6_5_0_MSVC2019_64bit-Release/release";
+const qtPath =
+   "C:/Users/Ruoyu/Projects/CivIdle-Qt/build-CivIdle-Desktop_Qt_6_5_0_MSVC2019_64bit-Release/release";
 const rootPath = path.resolve(path.join(__dirname, "../"));
 const targetPath = path.join(rootPath, "qt", "cividle-win32-x64");
 

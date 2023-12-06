@@ -15,7 +15,7 @@ export function makeObservableHook<T>(event: TypedEvent<T>, initialValue: () => 
          return () => {
             event.off(handleEvent);
          };
-      }, []);
+      }, [event]);
       return getter;
    };
 }
@@ -24,22 +24,21 @@ export function useTypedEvent<T>(event: TypedEvent<T>, listener: (e: T) => void)
    return useEffect(() => {
       event.on(listener);
       return () => {
-         console.log("Unsubscribe");
          event.off(listener);
       };
-   }, []);
+   }, [event, listener]);
 }
 
 export function refreshOnTypedEvent<T>(event: TypedEvent<T>) {
    const [getter, setter] = useState(0);
-   const listener = () => {
+   function listener() {
       setter((old) => old + 1);
-   };
+   }
    useEffect(() => {
       event.on(listener);
       return () => {
          event.off(listener);
       };
-   }, []);
+   }, [event]);
    return getter;
 }

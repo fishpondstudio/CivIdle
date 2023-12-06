@@ -85,7 +85,8 @@ export function PetraBuildingBody({ gameState, xy }: IBuildingComponentProps) {
             <div className="row">
                <div className="f1">{t(L.Warp)}</div>
                <div className="text-strong">
-                  <FormatNumber value={building.resources.Warp ?? 0} /> / <FormatNumber value={total} />
+                  <FormatNumber value={building.resources.Warp ?? 0} /> /{" "}
+                  <FormatNumber value={total} />
                </div>
             </div>
             <div className="separator"></div>

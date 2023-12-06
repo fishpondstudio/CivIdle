@@ -23,7 +23,8 @@ export function MarketBuildingBody({ gameState, xy }: IBuildingComponentProps) {
       return null;
    }
    const market = building as IMarketBuildingData;
-   const capacity = building.capacity * building.level * totalMultiplierFor(xy, "output", 1, gameState);
+   const capacity =
+      building.capacity * building.level * totalMultiplierFor(xy, "output", 1, gameState);
    return (
       <div className="window-body">
          <fieldset>
@@ -39,7 +40,8 @@ export function MarketBuildingBody({ gameState, xy }: IBuildingComponentProps) {
                <thead>
                   <tr>
                      <th>
-                        <FormatNumber value={capacity} />x
+                        <FormatNumber value={capacity} />
+                        x
                      </th>
                      <th className="right">{t(L.MarketYouGet)}</th>
                      <th className="right">{t(L.Storage)}</th>
@@ -48,7 +50,9 @@ export function MarketBuildingBody({ gameState, xy }: IBuildingComponentProps) {
                </thead>
                <tbody>
                   {keysOf(market.availableResources)
-                     .sort((a, b) => (Config.ResourcePrice[b] ?? 0) - (Config.ResourcePrice[a] ?? 0))
+                     .sort(
+                        (a, b) => (Config.ResourcePrice[b] ?? 0) - (Config.ResourcePrice[a] ?? 0),
+                     )
                      .map((res) => {
                         const r = Tick.current.resources[res];
                         if (!r.canPrice || !r.canStore) {
@@ -56,14 +60,16 @@ export function MarketBuildingBody({ gameState, xy }: IBuildingComponentProps) {
                         }
                         const buyResource = market.availableResources[res]!;
                         const buyAmount = round(
-                           (capacity * getMarketPrice(res, xy, gameState)) / getMarketPrice(buyResource, xy, gameState),
-                           1
+                           (capacity * getMarketPrice(res, xy, gameState)) /
+                              getMarketPrice(buyResource, xy, gameState),
+                           1,
                         );
                         return (
                            <tr key={res}>
                               <td>{r.name()}</td>
                               <td className="right">
-                                 <FormatNumber value={buyAmount} /> x {Tick.current.resources[buyResource].name()}
+                                 <FormatNumber value={buyAmount} /> x{" "}
+                                 {Tick.current.resources[buyResource].name()}
                               </td>
                               <td className="right">
                                  <FormatNumber value={building.resources[res] ?? 0} />
@@ -125,7 +131,7 @@ export function MarketBuildingBody({ gameState, xy }: IBuildingComponentProps) {
                   applyToAllBuildings<IMarketBuildingData>(
                      market.type,
                      { marketOptions: market.marketOptions },
-                     gameState
+                     gameState,
                   );
                }}
             >

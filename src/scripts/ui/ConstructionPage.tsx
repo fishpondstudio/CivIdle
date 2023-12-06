@@ -23,9 +23,17 @@ export function ConstructionPage({ tile }: { tile: ITileData }): JSX.Element | n
          <div className="window-body">
             <BuildingConstructionProgressComponent xy={tile.xy} gameState={gs} />
             <fieldset>
-               <legend>{t(building.status === "paused" ? L.ResumeConstruction : L.PauseConstruction)}</legend>
+               <legend>
+                  {t(building.status === "paused" ? L.ResumeConstruction : L.PauseConstruction)}
+               </legend>
                <div className="row">
-                  <div>{t(building.status === "paused" ? L.ResumeConstructionDesc : L.PauseConstructionDesc)}</div>
+                  <div>
+                     {t(
+                        building.status === "paused"
+                           ? L.ResumeConstructionDesc
+                           : L.PauseConstructionDesc,
+                     )}
+                  </div>
                   <div className="ml10">
                      <button
                         onClick={() => {
@@ -33,7 +41,11 @@ export function ConstructionPage({ tile }: { tile: ITileData }): JSX.Element | n
                            notifyGameStateUpdate();
                         }}
                      >
-                        {t(building.status === "paused" ? L.ResumeConstructionResume : L.PauseConstructionPause)}
+                        {t(
+                           building.status === "paused"
+                              ? L.ResumeConstructionResume
+                              : L.PauseConstructionPause,
+                        )}
                      </button>
                   </div>
                </div>

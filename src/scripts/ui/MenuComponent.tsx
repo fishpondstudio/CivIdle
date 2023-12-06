@@ -93,7 +93,9 @@ export function MenuComponent() {
                         setActive(null);
                      }}
                   >
-                     <MenuItem check={Singleton().sceneManager.isCurrent(WorldScene)}>{t(L.CityViewMap)}</MenuItem>
+                     <MenuItem check={Singleton().sceneManager.isCurrent(WorldScene)}>
+                        {t(L.CityViewMap)}
+                     </MenuItem>
                   </div>
                   <div
                      className="menu-popover-item"
@@ -102,7 +104,9 @@ export function MenuComponent() {
                         setActive(null);
                      }}
                   >
-                     <MenuItem check={Singleton().sceneManager.isCurrent(TechTreeScene)}>{t(L.ResearchMenu)}</MenuItem>
+                     <MenuItem check={Singleton().sceneManager.isCurrent(TechTreeScene)}>
+                        {t(L.ResearchMenu)}
+                     </MenuItem>
                   </div>
                   {/* <div
                      className="menu-popover-item"

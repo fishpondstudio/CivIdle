@@ -61,7 +61,7 @@ export function FillPlayerTradeModal({ trade, xy }: { trade: IClientTrade; xy?: 
    const storageRequired = clamp(
       ((trade.sellAmount * (1 - totalTariff) - trade.buyAmount) * percent) / 100,
       0,
-      Infinity
+      Infinity,
    );
    const s = getStorageFor(delivery, gs);
    const hasEnoughStorage = s.total - s.used >= storageRequired;
@@ -90,7 +90,9 @@ export function FillPlayerTradeModal({ trade, xy }: { trade: IClientTrade; xy?: 
                   <tbody>
                      <tr>
                         <th></th>
-                        <th className="text-right">{Tick.current.resources[trade.buyResource].name()}</th>
+                        <th className="text-right">
+                           {Tick.current.resources[trade.buyResource].name()}
+                        </th>
                         <th className="text-right">{t(L.StorageLeft)}</th>
                      </tr>
                      {jsxMapOf(allTradeBuildings, (xy, building) => {
@@ -111,7 +113,9 @@ export function FillPlayerTradeModal({ trade, xy }: { trade: IClientTrade; xy?: 
                                  </label>
                               </td>
                               <td className="text-right">
-                                 <FormatNumber value={allTradeBuildings[xy].resources[trade.buyResource] ?? 0} />
+                                 <FormatNumber
+                                    value={allTradeBuildings[xy].resources[trade.buyResource] ?? 0}
+                                 />
                               </td>
                               <td className="text-right">
                                  <FormatNumber value={storage.total - storage.used} />
@@ -139,9 +143,13 @@ export function FillPlayerTradeModal({ trade, xy }: { trade: IClientTrade; xy?: 
             />
             <div className="sep20"></div>
             <ul className="tree-view">
-               <li className={classNames({ row: true, "text-strong text-red": !hasEnoughResource })}>
+               <li
+                  className={classNames({ row: true, "text-strong text-red": !hasEnoughResource })}
+               >
                   <div className="f1">
-                     {t(L.PlayerTradeYouPay, { res: Tick.current.resources[trade.buyResource].name() })}
+                     {t(L.PlayerTradeYouPay, {
+                        res: Tick.current.resources[trade.buyResource].name(),
+                     })}
                   </div>
                   <div>
                      <FormatNumber value={(trade.buyAmount * percent) / 100} />
@@ -187,10 +195,14 @@ export function FillPlayerTradeModal({ trade, xy }: { trade: IClientTrade; xy?: 
                </li>
                <li className="row">
                   <div className="f1">
-                     {t(L.PlayerTradeYouGetNet, { res: Tick.current.resources[trade.sellResource].name() })}
+                     {t(L.PlayerTradeYouGetNet, {
+                        res: Tick.current.resources[trade.sellResource].name(),
+                     })}
                   </div>
                   <div className="text-strong">
-                     <FormatNumber value={((1 - totalTariff) * (trade.sellAmount * percent)) / 100} />
+                     <FormatNumber
+                        value={((1 - totalTariff) * (trade.sellAmount * percent)) / 100}
+                     />
                   </div>
                </li>
             </ul>
@@ -203,16 +215,20 @@ export function FillPlayerTradeModal({ trade, xy }: { trade: IClientTrade; xy?: 
                         playError();
                      }
                      try {
-                        await client.fillTrade({ id: trade.id, percent: percent / 100, path: tiles });
+                        await client.fillTrade({
+                           id: trade.id,
+                           percent: percent / 100,
+                           path: tiles,
+                        });
                         safeAdd(
                            allTradeBuildings[delivery].resources,
                            trade.buyResource,
-                           (-trade.buyAmount * percent) / 100
+                           (-trade.buyAmount * percent) / 100,
                         );
                         safeAdd(
                            allTradeBuildings[delivery].resources,
                            trade.sellResource,
-                           (trade.sellAmount * percent) / 100
+                           (trade.sellAmount * percent) / 100,
                         );
                         hideModal();
                      } catch (error) {

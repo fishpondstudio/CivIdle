@@ -1,7 +1,7 @@
 import { DependencyList, useEffect } from "react";
 import { getGameOptions } from "../Global";
-import { L, t } from "../utilities/i18n";
 import { TypedEvent } from "../utilities/TypedEvent";
+import { L, t } from "../utilities/i18n";
 
 export const ShortcutScopes = {
    BuildingPage: () => t(L.ShortcutScopeBuildingPage),
@@ -12,12 +12,21 @@ export const ShortcutScopes = {
 export type ShortcutScope = keyof typeof ShortcutScopes;
 
 export const ShortcutActions = {
-   BuildingPageSellBuilding: { scope: "BuildingPage", name: () => t(L.ShortcutBuildingPageSellBuilding) },
+   BuildingPageSellBuilding: {
+      scope: "BuildingPage",
+      name: () => t(L.ShortcutBuildingPageSellBuilding),
+   },
    BuildingPageUpgradeX1: { scope: "BuildingPage", name: () => t(L.ShortcutBuildingPageUpgradeX1) },
    BuildingPageUpgradeX5: { scope: "BuildingPage", name: () => t(L.ShortcutBuildingPageUpgradeX5) },
-   BuildingPageUpgradeToNext10: { scope: "BuildingPage", name: () => t(L.ShortcutBuildingPageUpgradeToNext10) },
+   BuildingPageUpgradeToNext10: {
+      scope: "BuildingPage",
+      name: () => t(L.ShortcutBuildingPageUpgradeToNext10),
+   },
    TechPageGoBackToCity: { scope: "TechPage", name: () => t(L.ShortcutTechPageGoBackToCity) },
-   EmptyTilePageBuildLastBuilding: { scope: "EmptyTilePage", name: () => t(L.EmptyTilePageBuildLastBuilding) },
+   EmptyTilePageBuildLastBuilding: {
+      scope: "EmptyTilePage",
+      name: () => t(L.EmptyTilePageBuildLastBuilding),
+   },
 } satisfies Record<string, IShortcutNameAndScope>;
 
 export interface IShortcutNameAndScope {
@@ -54,7 +63,7 @@ export function useShortcut(shortcut: Shortcut, callback: () => void, deps: Depe
       return () => {
          OnKeydown.off(handler);
       };
-   }, deps);
+   }, [shortcut, callback, ...deps]);
 }
 
 export function getShortcutKey(s: IShortcutConfig): string {
@@ -76,7 +85,13 @@ export function getShortcutKey(s: IShortcutConfig): string {
 }
 
 export function isShortcutEqual(a: IShortcutConfig, b: IShortcutConfig): boolean {
-   return a.ctrl === b.ctrl && a.shift === b.shift && a.alt === b.alt && a.meta === b.meta && a.key === b.key;
+   return (
+      a.ctrl === b.ctrl &&
+      a.shift === b.shift &&
+      a.alt === b.alt &&
+      a.meta === b.meta &&
+      a.key === b.key
+   );
 }
 
 export function makeShortcut(e: KeyboardEvent): IShortcutConfig {

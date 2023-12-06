@@ -82,7 +82,11 @@ export function ThemePage(): JSX.Element {
             <fieldset>
                <legend>{t(L.BuildingColor)}</legend>
                {keysOf(gameOptions.buildingColors)
-                  .sort((a, b) => Tick.current.buildings[a].name().localeCompare(Tick.current.buildings[b].name()))
+                  .sort((a, b) =>
+                     Tick.current.buildings[a]
+                        .name()
+                        .localeCompare(Tick.current.buildings[b].name()),
+                  )
                   .map((b) => {
                      return (
                         <div key={b} className="row mv5">
@@ -103,7 +107,11 @@ export function ThemePage(): JSX.Element {
             <fieldset>
                <legend>{t(L.ResourceColor)}</legend>
                {keysOf(gameOptions.resourceColors)
-                  .sort((a, b) => Tick.current.resources[a].name().localeCompare(Tick.current.resources[b].name()))
+                  .sort((a, b) =>
+                     Tick.current.resources[a]
+                        .name()
+                        .localeCompare(Tick.current.resources[b].name()),
+                  )
                   .map((b) => {
                      return (
                         <div key={b} className="row mv5">

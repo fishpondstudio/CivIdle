@@ -37,12 +37,12 @@ export class ViewportScene extends Scene {
       const x = clamp(
          pos.x,
          this.viewport.screenWidth / 2 / this.viewport.scale.y,
-         this.viewport.worldWidth - this.viewport.screenWidth / 2 / this.viewport.scale.y
+         this.viewport.worldWidth - this.viewport.screenWidth / 2 / this.viewport.scale.y,
       );
       const y = clamp(
          pos.y,
          this.viewport.screenHeight / 2 / this.viewport.scale.y,
-         this.viewport.worldHeight - this.viewport.screenHeight / 2 / this.viewport.scale.y
+         this.viewport.worldHeight - this.viewport.screenHeight / 2 / this.viewport.scale.y,
       );
       return { x, y };
    }
@@ -83,7 +83,10 @@ export class SceneManager {
       return this.context;
    }
 
-   public loadScene<T extends Scene>(SceneClass: new (context: ISceneContext) => T, force = false): T {
+   public loadScene<T extends Scene>(
+      SceneClass: new (context: ISceneContext) => T,
+      force = false,
+   ): T {
       if (!force && this.isCurrent(SceneClass)) {
          return this.currentScene as T;
       }
@@ -107,7 +110,9 @@ export class SceneManager {
       this.currentScene = new SceneClass(this.context);
       this.currentScene.onLoad();
       this.gameStateWatcher = watchGameState((gs) => this.currentScene?.onGameStateChanged(gs));
-      this.gameOptionsWatcher = watchGameOptions((gameOptions) => this.currentScene?.onGameOptionsChanged(gameOptions));
+      this.gameOptionsWatcher = watchGameOptions((gameOptions) =>
+         this.currentScene?.onGameOptionsChanged(gameOptions),
+      );
       return this.currentScene as T;
    }
 

@@ -30,7 +30,7 @@ export function getBuildingIO(
    xy: string,
    type: keyof Pick<IBuildingDefinition, "input" | "output">,
    options: IOCalculation,
-   gs: GameState
+   gs: GameState,
 ): PartialTabulate<Resource> {
    const key = xy + type + options;
    if (_cache.buildingIO[key]) {
@@ -96,7 +96,9 @@ export function getStorageFullBuildings(gs: GameState): IPointData[] {
    return result;
 }
 
-export function getTypeBuildings(gs: GameState): Partial<Record<Building, Record<string, Required<ITileData>>>> {
+export function getTypeBuildings(
+   gs: GameState,
+): Partial<Record<Building, Record<string, Required<ITileData>>>> {
    if (_cache.buildingsByType) {
       return _cache.buildingsByType;
    }
@@ -115,7 +117,10 @@ export function getTypeBuildings(gs: GameState): Partial<Record<Building, Record
    return result;
 }
 
-export function getBuildingsByType(building: Building, gs: GameState): Record<string, Required<ITileData>> | undefined {
+export function getBuildingsByType(
+   building: Building,
+   gs: GameState,
+): Record<string, Required<ITileData>> | undefined {
    return getTypeBuildings(gs)[building];
 }
 

@@ -15,7 +15,7 @@ export default class Actions {
       target: T,
       targetValue: Partial<Record<keyof T, any>>,
       seconds: number,
-      interpolation: EasingFunction = Easing.Linear
+      interpolation: EasingFunction = Easing.Linear,
    ): Action {
       return new TargetAction(target, targetValue, seconds, interpolation);
    }

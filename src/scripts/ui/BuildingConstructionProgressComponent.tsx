@@ -63,7 +63,8 @@ export function BuildingConstructionProgressComponent({ gameState, xy }: IBuildi
                   <li className="row">
                      <div className="f1">{t(L.ConstructionBuilderMultiplier)}</div>
                      <div className="text-strong">
-                        x<FormatNumber value={multiplier} />
+                        x
+                        <FormatNumber value={multiplier} />
                      </div>
                   </li>
                   <ul>

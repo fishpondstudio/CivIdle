@@ -96,7 +96,11 @@ export class Hex {
    }
 
    public lerp(b: Hex, t: number): Hex {
-      return new Hex(this.q * (1.0 - t) + b.q * t, this.r * (1.0 - t) + b.r * t, this.s * (1.0 - t) + b.s * t);
+      return new Hex(
+         this.q * (1.0 - t) + b.q * t,
+         this.r * (1.0 - t) + b.r * t,
+         this.s * (1.0 - t) + b.s * t,
+      );
    }
 
    public linedraw(b: Hex): Hex[] {
@@ -208,7 +212,7 @@ export class Orientation {
       public b1: number,
       public b2: number,
       public b3: number,
-      public start_angle: number
+      public start_angle: number,
    ) {}
 }
 
@@ -223,7 +227,7 @@ export class Layout {
       -1.0 / 3.0,
       0.0,
       2.0 / 3.0,
-      0.5
+      0.5,
    );
    public static flat: Orientation = new Orientation(
       3.0 / 2.0,
@@ -234,7 +238,7 @@ export class Layout {
       0.0,
       -1.0 / 3.0,
       Math.sqrt(3.0) / 3.0,
-      0.0
+      0.0,
    );
 
    public hexToPixel(h: Hex): Point {

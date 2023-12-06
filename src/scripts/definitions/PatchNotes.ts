@@ -5,6 +5,14 @@ interface PatchNote {
 
 export const PatchNotes: PatchNote[] = [
    {
+      version: "0.1.85",
+      content: [
+         ["QoL", "Censor's Office shows percentage of transportation workers"],
+         ["Bugfix", "Fix shortcut sometimes are registered incorrectly (3rd fix)"],
+         ["Bugfix", "Fix a bug where offline production consumes Warp (it should not)"],
+      ],
+   },
+   {
       version: "0.1.84",
       content: [
          ["Content", "Allow cap offline production time in Petra"],
@@ -25,6 +33,7 @@ export const PatchNotes: PatchNote[] = [
          ["Content", "New Great Person: Empress Wu Zetian - +1 Transport Capacity Multiplier"],
          ["Content", "New Great Person: Rurik - +2 Happiness"],
          ["Balance", "Tang Of Shang: +0.5 Science from Idle Workers"],
+         ["Balance", "Restore default offline production time to 4 hours"],
          ["QoL", "Transport lines will update in real-time"],
          ["Bugfix", "Fix warehouse autopilot mode will result in storage overflow"],
          ["Bugfix", "Fix building upgrade progress bar is incorrect"],
@@ -117,7 +126,10 @@ export const PatchNotes: PatchNote[] = [
       content: [
          ["Bugfix", "Fix builder capacity when constructing wonders are not calculated correctly"],
          ["Bugfix", "Fix transport multiplier not being applied correctly"],
-         ["QoL", "If a building is not producing, an icon will show on the top left indicating the reason"],
+         [
+            "QoL",
+            "If a building is not producing, an icon will show on the top left indicating the reason",
+         ],
          ["QoL", "Show transport multiplier in worker section in building page"],
          ["QoL", "Building color will now apply to spinner"],
          ["QoL", "For progress for each transportation in building page"],
@@ -128,7 +140,10 @@ export const PatchNotes: PatchNote[] = [
    {
       version: "0.1.76",
       content: [
-         ["Content", "New Wonder: Mausoleum At Halicarnassus - free transportation within 2 tile range"],
+         [
+            "Content",
+            "New Wonder: Mausoleum At Halicarnassus - free transportation within 2 tile range",
+         ],
          [
             "Balance",
             "Add Transport Capacity Multiplier. Road & Wheel technology now provides +1 Transport Capacity Multiplier",
@@ -151,7 +166,10 @@ export const PatchNotes: PatchNote[] = [
             "Add a progress in loading screen when calculating offline production (this will make the overall calculation a bit slower but the game will not appear stuck)",
          ],
          ["QoL", "Revert certain optimizations in 0.1.74 that cause transportation issues"],
-         ["QoL", "Temporarily cap the offline production time to 4h to avoid game taking forever to load"],
+         [
+            "QoL",
+            "Temporarily cap the offline production time to 4h to avoid game taking forever to load",
+         ],
       ],
    },
    {
@@ -166,7 +184,10 @@ export const PatchNotes: PatchNote[] = [
    {
       version: "0.1.73",
       content: [
-         ["Bugfix", "Fix transport amount is incorrect when a building does not have enough resources"],
+         [
+            "Bugfix",
+            "Fix transport amount is incorrect when a building does not have enough resources",
+         ],
          ["QoL", "Redesign building list page: now showing building input and output"],
          ["Content", "New Wonder: Lighthouse Of Alexandria"],
       ],
@@ -186,7 +207,10 @@ export const PatchNotes: PatchNote[] = [
          ["Balance", "Worker capacity multipliers will applied to builders as well"],
          ["Balance", "Increase base storage from ~15 min of production to 1 hour of production"],
          ["Balance", "Base storage calculation now counts production after multipliers"],
-         ["Balance", "Storage of Market and Caravansary is increased. Storage multipliers now apply to both"],
+         [
+            "Balance",
+            "Storage of Market and Caravansary is increased. Storage multipliers now apply to both",
+         ],
          ["Content", "New Wonder: Colossus Of Rhodes"],
       ],
    },
@@ -228,7 +252,10 @@ export const PatchNotes: PatchNote[] = [
             "Add a resource bar showing happiness, available workers, busy workers, science and non-working buildings",
          ],
          ["QoL", "Add a shortcut to repeat last build buildings"],
-         ["QoL", "Builder Capacity Multiplier now shows where the multipliers come from like everywhere else"],
+         [
+            "QoL",
+            "Builder Capacity Multiplier now shows where the multipliers come from like everywhere else",
+         ],
       ],
    },
    {
@@ -287,7 +314,10 @@ export const PatchNotes: PatchNote[] = [
          ["QoL", "Custom building colors!"],
          ["QoL", "Show a different icon when a building is full in Censor's Office"],
          ["QoL", "Make chat text selectable"],
-         ["QoL", "You can click on building names in Censor's Office to move camera to that building"],
+         [
+            "QoL",
+            "You can click on building names in Censor's Office to move camera to that building",
+         ],
          ["QoL", "Add a timer in Market showing countdown to the next market update"],
          ["Bugfix", "Cleanup unused file in the final package"],
          ["Bugfix", "Fix a producing building occasionally shows not producing"],
@@ -299,7 +329,10 @@ export const PatchNotes: PatchNote[] = [
       content: [
          ["Bugfix", "Fix unlimited max stockpile is not correctly applied"],
          ["Bugfix", "Disable initial scroll animation when opening chat window"],
-         ["QoL", "Add an error message when trade cannot be filled because of lack of a valid route"],
+         [
+            "QoL",
+            "Add an error message when trade cannot be filled because of lack of a valid route",
+         ],
       ],
    },
    {
@@ -308,7 +341,10 @@ export const PatchNotes: PatchNote[] = [
          ["Bugfix", "Disable claiming an ocean tile: you have to be on land to trade"],
          ["Bugfix", "Fix Stonehenge failing to provide production multiplier"],
          ["QoL", "Add a patch notes page and start to write patch notes :-)"],
-         ["QoL", "You can click the name in the chat to mention someone, and the player mentioned will be notified"],
+         [
+            "QoL",
+            "You can click the name in the chat to mention someone, and the player mentioned will be notified",
+         ],
       ],
    },
 ];

@@ -22,8 +22,12 @@ export function AboutModal() {
                   <div>{t(L.CivIdleBuild, { build: getVersion() })}</div>
                   <div>{t(L.CivIdleInfo)}</div>
                   <hr className="mv10" />
-                  <div className="text-small text-desc">{t(L.GraphicsDriver, { driver: getWebglRenderInfo() })}</div>
-                  <div className="text-small text-desc">{t(L.UserAgent, { driver: navigator.userAgent })}</div>
+                  <div className="text-small text-desc">
+                     {t(L.GraphicsDriver, { driver: getWebglRenderInfo() })}
+                  </div>
+                  <div className="text-small text-desc">
+                     {t(L.UserAgent, { driver: navigator.userAgent })}
+                  </div>
                   <div>
                      <span
                         className="text-small text-link"

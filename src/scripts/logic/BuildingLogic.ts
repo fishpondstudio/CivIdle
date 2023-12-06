@@ -52,13 +52,22 @@ export function getTileTexture(r: Resource, textures: Textures) {
    return textures[`Tile${r}`];
 }
 
-export function totalMultiplierFor(xy: string, type: keyof Multiplier, base: number, gs: GameState): number {
+export function totalMultiplierFor(
+   xy: string,
+   type: keyof Multiplier,
+   base: number,
+   gs: GameState,
+): number {
    let result = base;
    forEachMultiplier(xy, (m) => (result += m[type] ?? 0), gs);
    return result;
 }
 
-function forEachMultiplier(xy: string, func: (m: MultiplierWithSource) => void, gs: GameState): MultiplierWithSource[] {
+function forEachMultiplier(
+   xy: string,
+   func: (m: MultiplierWithSource) => void,
+   gs: GameState,
+): MultiplierWithSource[] {
    const result: MultiplierWithSource[] = [];
    const b = gs.tiles[xy].building;
    Tick.current.tileMultipliers[xy]?.forEach((m) => func(m));
@@ -80,7 +89,10 @@ export enum IOCalculation {
    Multiplier = 1 << 1,
 }
 
-export function hasEnoughResources(a: PartialTabulate<Resource>, b: PartialTabulate<Resource>): boolean {
+export function hasEnoughResources(
+   a: PartialTabulate<Resource>,
+   b: PartialTabulate<Resource>,
+): boolean {
    let res: Resource;
    for (res in b) {
       if ((a[res] ?? 0) < (b[res] ?? 0)) {
@@ -90,7 +102,10 @@ export function hasEnoughResources(a: PartialTabulate<Resource>, b: PartialTabul
    return true;
 }
 
-export function deductResources(a: PartialTabulate<Resource>, b: PartialTabulate<Resource>): PartialTabulate<Resource> {
+export function deductResources(
+   a: PartialTabulate<Resource>,
+   b: PartialTabulate<Resource>,
+): PartialTabulate<Resource> {
    let res: Resource;
    for (res in b) {
       if (!a[res] || a[res]! < b[res]!) {
@@ -103,7 +118,10 @@ export function deductResources(a: PartialTabulate<Resource>, b: PartialTabulate
    return a;
 }
 
-export function addResources(a: PartialTabulate<Resource>, b: PartialTabulate<Resource>): PartialTabulate<Resource> {
+export function addResources(
+   a: PartialTabulate<Resource>,
+   b: PartialTabulate<Resource>,
+): PartialTabulate<Resource> {
    let res: Resource;
    for (res in b) {
       safeAdd(a, res, b[res]!);
@@ -111,7 +129,9 @@ export function addResources(a: PartialTabulate<Resource>, b: PartialTabulate<Re
    return a;
 }
 
-export function filterTransportable(resources: PartialTabulate<Resource>): PartialTabulate<Resource> {
+export function filterTransportable(
+   resources: PartialTabulate<Resource>,
+): PartialTabulate<Resource> {
    const result: PartialTabulate<Resource> = {};
    let res: Resource;
    for (res in resources) {
@@ -130,8 +150,10 @@ interface IWorkerRequirement {
 
 export function getWorkersFor(
    xy: string,
-   filter: { include: Partial<Record<Resource, any>> } | { exclude: Partial<Record<Resource, any>> },
-   gs: GameState
+   filter:
+      | { include: Partial<Record<Resource, any>> }
+      | { exclude: Partial<Record<Resource, any>> },
+   gs: GameState,
 ): IWorkerRequirement {
    const result: IWorkerRequirement = {
       rawOutput: 0,
@@ -188,7 +210,8 @@ export function getStorageFor(xy: string, gs: GameState): IStorageResult {
    } else {
       base =
          60 * reduceOf(getBuildingIO(xy, "input", IOCalculation.Multiplier, gs), accumulate, 0) +
-         STORAGE_TO_PRODUCTION * reduceOf(getBuildingIO(xy, "output", IOCalculation.Multiplier, gs), accumulate, 0);
+         STORAGE_TO_PRODUCTION *
+            reduceOf(getBuildingIO(xy, "output", IOCalculation.Multiplier, gs), accumulate, 0);
    }
    return { base, multiplier, total: base * multiplier, used };
 }
@@ -226,8 +249,9 @@ export function getAvailableWorkers(res: Resource): number {
       Tick.current.workersUsed[res] = 0;
    }
    return (
-      Math.floor(Tick.current.workersAvailable[res]! * (Tick.current.happiness?.workerPercentage ?? 1)) -
-      Tick.current.workersUsed[res]!
+      Math.floor(
+         Tick.current.workersAvailable[res]! * (Tick.current.happiness?.workerPercentage ?? 1),
+      ) - Tick.current.workersUsed[res]!
    );
 }
 
@@ -258,7 +282,7 @@ export function getBuildingName(xy: string, gs: GameState): string {
 
 export function filterResource<T>(
    resources: Partial<Record<Resource, T>>,
-   filter: Pick<IResourceDefinition, "canStore">
+   filter: Pick<IResourceDefinition, "canStore">,
 ): Partial<Record<Resource, T>> {
    const result: Partial<Record<Resource, T>> = {};
    let key: Resource;
@@ -281,7 +305,7 @@ export function addTransportation(
    fuelAmount: number,
    fromXy: string,
    toXy: string,
-   gs: GameState
+   gs: GameState,
 ): void {
    const fromGrid = xyToPoint(fromXy);
    const fromPosition = Singleton().grid.gridToPosition(fromGrid);
@@ -311,7 +335,8 @@ export function getScienceFromWorkers(gs: GameState) {
    const workersAvailableAfterHappiness = Math.floor(workersAvailable * happinessPercentage);
    const workersBusy = Tick.current.workersUsed.Worker ?? 0;
    const sciencePerIdleWorker = sum(Tick.current.globalMultipliers.sciencePerIdleWorker, "value");
-   const scienceFromIdleWorkers = sciencePerIdleWorker * (workersAvailableAfterHappiness - workersBusy);
+   const scienceFromIdleWorkers =
+      sciencePerIdleWorker * (workersAvailableAfterHappiness - workersBusy);
 
    const sciencePerBusyWorker = sum(Tick.current.globalMultipliers.sciencePerBusyWorker, "value");
    const scienceFromBusyWorkers = sciencePerBusyWorker * workersBusy;
@@ -330,7 +355,9 @@ export function getScienceFromWorkers(gs: GameState) {
    };
 }
 
-export function getBuildingCost(building: Pick<IBuildingData, "type" | "level" | "status">): PartialTabulate<Resource> {
+export function getBuildingCost(
+   building: Pick<IBuildingData, "type" | "level" | "status">,
+): PartialTabulate<Resource> {
    const type = building.type;
    const level = building.status === "building" ? 0 : building.level;
    let cost = { ...Tick.current.buildings[type].construction };
@@ -366,7 +393,7 @@ export function getBuildingCost(building: Pick<IBuildingData, "type" | "level" |
 export function getTotalBuildingCost(
    building: Building,
    currentLevel: number,
-   desiredLevel: number
+   desiredLevel: number,
 ): PartialTabulate<Resource> {
    console.assert(currentLevel <= desiredLevel);
    const start: IHaveTypeLevelAndStatus = {
@@ -387,7 +414,11 @@ export function getBuildingValue(building: IBuildingData): number {
    return getResourcesValue(getTotalBuildingCost(building.type, 0, building.level));
 }
 
-export function getBuildingPercentage(xy: string, cost: PartialTabulate<Resource>, gs: GameState): number {
+export function getBuildingPercentage(
+   xy: string,
+   cost: PartialTabulate<Resource>,
+   gs: GameState,
+): number {
    const building = gs.tiles[xy]?.building;
    if (!building) {
       return 0;
@@ -405,7 +436,10 @@ export function getBuildingPercentage(xy: string, cost: PartialTabulate<Resource
 }
 
 export function getBuildingLevelLabel(b: IBuildingData): string {
-   if (Tick.current.buildings[b.type].special === BuildingSpecial.HQ || isWorldOrNaturalWonder(b.type)) {
+   if (
+      Tick.current.buildings[b.type].special === BuildingSpecial.HQ ||
+      isWorldOrNaturalWonder(b.type)
+   ) {
       return "";
    }
    return String(b.level);
@@ -453,7 +487,7 @@ export function getWarehouseIdleCapacity(warehouse: IWarehouseBuildingData): num
          (prev, k, v) => {
             return prev + v.perCycle;
          },
-         0
+         0,
       )
    );
 }
@@ -461,10 +495,11 @@ export function getWarehouseIdleCapacity(warehouse: IWarehouseBuildingData): num
 export function getBuilderCapacity(
    building: IHaveTypeAndLevel,
    xy: string,
-   gs: GameState
+   gs: GameState,
 ): { multiplier: number; base: number; total: number } {
    const builder =
-      sum(Tick.current.globalMultipliers.builderCapacity, "value") + totalMultiplierFor(xy, "worker", 0, gs);
+      sum(Tick.current.globalMultipliers.builderCapacity, "value") +
+      totalMultiplierFor(xy, "worker", 0, gs);
    let baseCapacity = building.level;
 
    if (isWorldWonder(building.type)) {
@@ -485,7 +520,11 @@ export function getBuilderCapacity(
    return { multiplier: builder, base: baseCapacity, total: builder * baseCapacity };
 }
 
-export function applyToAllBuildings<T extends IBuildingData>(building: Building, settings: Partial<T>, gs: GameState) {
+export function applyToAllBuildings<T extends IBuildingData>(
+   building: Building,
+   settings: Partial<T>,
+   gs: GameState,
+) {
    forEach(getBuildingsByType(building, gs), (xy, tile) => {
       Object.assign(tile.building, settings);
    });
@@ -524,9 +563,10 @@ export function getAvailableResource(xy: string, res: Resource, gs: GameState): 
    const input = getBuildingIO(xy, "input", IOCalculation.Capacity | IOCalculation.Multiplier, gs);
    if (input[res]) {
       return clamp(
-         building.resources[res]! - (getStockpileMax(building) + building.stockpileCapacity) * input[res]!,
+         building.resources[res]! -
+            (getStockpileMax(building) + building.stockpileCapacity) * input[res]!,
          0,
-         Infinity
+         Infinity,
       );
    } else {
       return building.resources[res]!;

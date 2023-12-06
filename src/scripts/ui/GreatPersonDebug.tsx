@@ -8,7 +8,10 @@ export function GreatPersonDebug() {
             <div className="title-bar-text">Debug</div>
          </div>
          <div className="window-body">
-            <img src={greatPersonImage("Hammurabi", Singleton().sceneManager.getContext())} style={{ width: "100%" }} />
+            <img
+               src={greatPersonImage("Hammurabi", Singleton().sceneManager.getContext())}
+               style={{ width: "100%" }}
+            />
          </div>
       </div>
    );

@@ -73,7 +73,9 @@ export function EditShortcutModal({ action }: { action: Shortcut }) {
                                  isShortcutEqual(value, key) &&
                                  a !== action
                               ) {
-                                 throw new Error(t(L.ShortcutConflict, { name: ShortcutActions[a].name() }));
+                                 throw new Error(
+                                    t(L.ShortcutConflict, { name: ShortcutActions[a].name() }),
+                                 );
                               }
                            });
                            options.shortcuts[action] = key;

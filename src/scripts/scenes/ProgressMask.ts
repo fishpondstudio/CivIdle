@@ -43,9 +43,9 @@ export class ProgressMask extends SmoothGraphics {
       this.clear();
       const pts = computeMaskPolygon(0, 0, this._radius, zeroToOne * 360);
       this.beginFill(0xffffff, 1, true);
-      pts.forEach(({ x, y }) => {
+      for (const { x, y } of pts) {
          this.lineTo(x, y);
-      });
+      }
       this.lineTo(pts[0].x, pts[0].y);
       this.endFill();
    }

@@ -68,7 +68,9 @@ export function ChatPanel() {
                );
             })}
             <div ref={bottomRef}>
-               {user != null ? null : <div className="text-desc text-center text-small mv10">{t(L.ChatReconnect)}</div>}
+               {user != null ? null : (
+                  <div className="text-desc text-center text-small mv10">{t(L.ChatReconnect)}</div>
+               )}
             </div>
          </div>
          <div className="row" style={{ padding: "2px" }}>

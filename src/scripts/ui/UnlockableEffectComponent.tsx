@@ -41,7 +41,9 @@ export function UnlockableEffectComponent({
                   {jsxMapOf(building.input, (res, v) => {
                      return (
                         <div className="row mv5" key={res}>
-                           <div className="f1">{t(L.ConsumeResource, { resource: Config.Resource[res].name() })}</div>
+                           <div className="f1">
+                              {t(L.ConsumeResource, { resource: Config.Resource[res].name() })}
+                           </div>
                            <div>
                               <strong>{v}</strong>
                            </div>
@@ -51,7 +53,9 @@ export function UnlockableEffectComponent({
                   {jsxMapOf(building.output, (res, v) => {
                      return (
                         <div className="row mv5" key={res}>
-                           <div className="f1">{t(L.ProduceResource, { resource: Config.Resource[res].name() })}</div>
+                           <div className="f1">
+                              {t(L.ProduceResource, { resource: Config.Resource[res].name() })}
+                           </div>
                            <div>
                               <strong>{v}</strong>
                            </div>
@@ -63,7 +67,8 @@ export function UnlockableEffectComponent({
                      {t(L.ConstructionCost, {
                         cost: mapOf(
                            getBuildingCost({ type: b, level: 1, status: "building" }),
-                           (res, amount) => `${Config.Resource[res].name()} x${formatNumber(amount)}`
+                           (res, amount) =>
+                              `${Config.Resource[res].name()} x${formatNumber(amount)}`,
                         ).join(", "),
                      })}
                   </div>
@@ -79,7 +84,9 @@ export function UnlockableEffectComponent({
                   {jsxMapOf(v.input, (res, v) => {
                      return (
                         <div className="row mv5" key={res}>
-                           <div className="f1">{t(L.ConsumeResource, { resource: Config.Resource[res].name() })}</div>
+                           <div className="f1">
+                              {t(L.ConsumeResource, { resource: Config.Resource[res].name() })}
+                           </div>
                            <div className="text-strong">+{v}</div>
                         </div>
                      );
@@ -87,7 +94,9 @@ export function UnlockableEffectComponent({
                   {jsxMapOf(v.output, (res, v) => {
                      return (
                         <div className="row mv5" key={res}>
-                           <div className="f1">{t(L.ProduceResource, { resource: Config.Resource[res].name() })}</div>
+                           <div className="f1">
+                              {t(L.ProduceResource, { resource: Config.Resource[res].name() })}
+                           </div>
                            <div className="text-strong">+{v}</div>
                         </div>
                      );

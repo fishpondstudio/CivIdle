@@ -6,7 +6,10 @@ import { TypedEvent } from "./utilities/TypedEvent";
 import { playClick } from "./visuals/Sound";
 
 export function Route({ event }: { event: TypedEvent<RouteChangeEvent> }) {
-   const [{ component, params }, setRoute] = useState<RouteChangeEvent>({ component: LoadingPage, params: {} });
+   const [{ component, params }, setRoute] = useState<RouteChangeEvent>({
+      component: LoadingPage,
+      params: {},
+   });
    useEffect(() => {
       function handleRouteChanged(e: RouteChangeEvent) {
          if (import.meta.env.DEV) {

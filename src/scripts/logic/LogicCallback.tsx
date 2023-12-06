@@ -4,8 +4,8 @@ import { WorldScene } from "../scenes/WorldScene";
 import { ChooseGreatPersonModal } from "../ui/ChooseGreatPersonModal";
 import { showModal } from "../ui/GlobalModal";
 import { forEach, keysOf, pointToXy, safeAdd, safePush, xyToPoint } from "../utilities/Helper";
-import { L, t } from "../utilities/i18n";
 import { Singleton } from "../utilities/Singleton";
+import { L, t } from "../utilities/i18n";
 import { GameState } from "./GameState";
 import { getTypeBuildings, getXyBuildings } from "./IntraTickCache";
 import { getGreatPeopleChoices } from "./TechLogic";
@@ -15,10 +15,9 @@ import { IPetraBuildingData, PetraOptions } from "./Tile";
 import { addMultiplier } from "./Update";
 
 export function onBuildingComplete(xy: string, gs: GameState) {
-   ensureTileFogOfWar(xy, gs, Singleton().grid).forEach((xy) => {
-      Singleton().sceneManager.getCurrent(WorldScene)?.getTile(xy)?.reveal().catch(console.error);
-   });
-
+   for (const g of ensureTileFogOfWar(xy, gs, Singleton().grid)) {
+      Singleton().sceneManager.getCurrent(WorldScene)?.getTile(g)?.reveal().catch(console.error);
+   }
    const building = gs.tiles[xy].building;
 
    if (!building) {
@@ -30,7 +29,11 @@ export function onBuildingComplete(xy: string, gs: GameState) {
          forEach(gs.tiles, (xy, tile) => {
             if (tile.deposit.Water) {
                tile.explored = true;
-               Singleton().sceneManager.getCurrent(WorldScene)?.getTile(xy)?.reveal().catch(console.error);
+               Singleton()
+                  .sceneManager.getCurrent(WorldScene)
+                  ?.getTile(xy)
+                  ?.reveal()
+                  .catch(console.error);
             }
          });
          break;
@@ -45,7 +48,7 @@ export function onBuildingComplete(xy: string, gs: GameState) {
    }
 }
 
-export function onBuildingProductionComplete(xy: string, gs: GameState) {
+export function onBuildingProductionComplete(xy: string, gs: GameState, offline: boolean) {
    const building = gs.tiles[xy].building;
 
    if (!building) {
@@ -63,11 +66,11 @@ export function onBuildingProductionComplete(xy: string, gs: GameState) {
          forEach(buildingsByType.WheatFarm, (xy, tile) => {
             if (tile.building) {
                let adjacentWaterTiles = 0;
-               grid.getNeighbors(xyToPoint(tile.xy)).forEach((neighbor) => {
+               for (const neighbor of grid.getNeighbors(xyToPoint(xy))) {
                   if (gs.tiles[pointToXy(neighbor)]?.deposit.Water) {
                      ++adjacentWaterTiles;
                   }
-               });
+               }
                if (adjacentWaterTiles > 0) {
                   safePush(Tick.next.tileMultipliers, tile.xy, {
                      output: adjacentWaterTiles,
@@ -119,33 +122,33 @@ export function onBuildingProductionComplete(xy: string, gs: GameState) {
          break;
       }
       case "ChichenItza": {
-         grid.getNeighbors(xyToPoint(xy)).forEach((neighbor) => {
+         for (const neighbor of grid.getNeighbors(xyToPoint(xy))) {
             safePush(Tick.next.tileMultipliers, pointToXy(neighbor), {
                output: 1,
                storage: 1,
                worker: 1,
                source: buildingName,
             });
-         });
+         }
          break;
       }
       case "LighthouseOfAlexandria": {
-         grid.getNeighbors(xyToPoint(xy)).forEach((neighbor) => {
+         for (const neighbor of grid.getNeighbors(xyToPoint(xy))) {
             safePush(Tick.next.tileMultipliers, pointToXy(neighbor), {
                storage: 5,
                source: buildingName,
             });
-         });
+         }
          break;
       }
       case "ColossusOfRhodes": {
          let happiness = 0;
-         grid.getNeighbors(xyToPoint(xy)).forEach((neighbor) => {
+         for (const neighbor of grid.getNeighbors(xyToPoint(xy))) {
             const building = gs.tiles[pointToXy(neighbor)].building;
             if (building && !Tick.current.buildings[building.type].output.Worker) {
                happiness++;
             }
-         });
+         }
          Tick.next.globalMultipliers.happiness.push({ value: happiness, source: buildingName });
          break;
       }
@@ -160,12 +163,12 @@ export function onBuildingProductionComplete(xy: string, gs: GameState) {
       }
       case "AngkorWat": {
          safeAdd(Tick.next.workersAvailable, "Worker", 1000);
-         grid.getNeighbors(xyToPoint(xy)).forEach((neighbor) => {
+         for (const neighbor of grid.getNeighbors(xyToPoint(xy))) {
             safePush(Tick.next.tileMultipliers, pointToXy(neighbor), {
                worker: 1,
                source: buildingName,
             });
-         });
+         }
          break;
       }
       case "TempleOfHeaven": {
@@ -191,7 +194,7 @@ export function onBuildingProductionComplete(xy: string, gs: GameState) {
             value: 1,
             source: buildingName,
          });
-         grid.getNeighbors(xyToPoint(xy)).forEach((neighbor) => {
+         for (const neighbor of grid.getNeighbors(xyToPoint(xy))) {
             const building = gs.tiles[pointToXy(neighbor)].building;
             if (building && building.type === "Aqueduct") {
                safePush(Tick.next.tileMultipliers, pointToXy(neighbor), {
@@ -201,7 +204,7 @@ export function onBuildingProductionComplete(xy: string, gs: GameState) {
                   source: buildingName,
                });
             }
-         });
+         }
          break;
       }
       case "Stonehenge": {
@@ -220,16 +223,16 @@ export function onBuildingProductionComplete(xy: string, gs: GameState) {
                worker: 1,
                storage: 1,
             },
-            buildingName
+            buildingName,
          );
          forEach(buildingsByType.IronForge, (xy, tile) => {
             if (tile.building) {
                let adjacentIronMiningCamps = 0;
-               grid.getNeighbors(xyToPoint(tile.xy)).forEach((neighbor) => {
+               for (const neighbor of grid.getNeighbors(xyToPoint(tile.xy))) {
                   if (gs.tiles[pointToXy(neighbor)]?.building?.type === "IronMiningCamp") {
                      ++adjacentIronMiningCamps;
                   }
-               });
+               }
                if (adjacentIronMiningCamps > 0) {
                   safePush(Tick.next.tileMultipliers, tile.xy, {
                      output: adjacentIronMiningCamps,
@@ -248,7 +251,7 @@ export function onBuildingProductionComplete(xy: string, gs: GameState) {
                worker: 1,
                storage: 1,
             },
-            buildingName
+            buildingName,
          );
          addMultiplier(
             "LoggingCamp",
@@ -257,7 +260,7 @@ export function onBuildingProductionComplete(xy: string, gs: GameState) {
                worker: 1,
                storage: 1,
             },
-            buildingName
+            buildingName,
          );
          addMultiplier(
             "CopperMiningCamp",
@@ -266,11 +269,14 @@ export function onBuildingProductionComplete(xy: string, gs: GameState) {
                worker: 1,
                storage: 1,
             },
-            buildingName
+            buildingName,
          );
          break;
       }
       case "Petra": {
+         if (offline) {
+            break;
+         }
          const petra = building as IPetraBuildingData;
          if (petra.petraOptions & PetraOptions.TimeWarp && (petra.resources.Warp ?? 0) > 0) {
             --petra.resources.Warp!;
@@ -278,11 +284,11 @@ export function onBuildingProductionComplete(xy: string, gs: GameState) {
          } else {
             Singleton().ticker.speedUp = 1;
          }
-         keysOf(petra.resources).forEach((res) => {
+         for (const res of keysOf(petra.resources)) {
             if (res !== "Warp") {
                delete petra.resources[res];
             }
-         });
+         }
          break;
       }
    }

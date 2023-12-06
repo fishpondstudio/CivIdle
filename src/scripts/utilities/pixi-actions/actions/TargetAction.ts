@@ -10,7 +10,12 @@ export class TargetAction<T extends Record<string, any>> extends Action {
    private readonly seconds: number;
    public readonly target: T;
 
-   constructor(target: T, to: Partial<T>, seconds: number, interpolation: EasingFunction = Easing.Linear) {
+   constructor(
+      target: T,
+      to: Partial<T>,
+      seconds: number,
+      interpolation: EasingFunction = Easing.Linear,
+   ) {
       super();
       this.interpolation = interpolation;
       this.targetValue = to;
@@ -19,7 +24,10 @@ export class TargetAction<T extends Record<string, any>> extends Action {
    }
 
    tick(delta: number): boolean {
-      if (!this.target || (this.target instanceof DisplayObject && (this.target.destroyed || !this.target.parent))) {
+      if (
+         !this.target ||
+         (this.target instanceof DisplayObject && (this.target.destroyed || !this.target.parent))
+      ) {
          return true;
       }
       let key: keyof T;
@@ -44,7 +52,7 @@ export class TargetAction<T extends Record<string, any>> extends Action {
             const initial = this.initialValue[key] as IPoint;
             (this.target[key] as ObservablePoint).set(
                initial.x + (target.x - initial.x) * factor,
-               initial.y + (target.y - initial.y) * factor
+               initial.y + (target.y - initial.y) * factor,
             );
          } else {
             this.target[key] = ((this.initialValue[key] as number) +

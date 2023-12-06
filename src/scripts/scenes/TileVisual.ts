@@ -74,8 +74,8 @@ export class TileVisual extends Container {
       this._constructionAnimation = Actions.repeat(
          Actions.sequence(
             Actions.to(this._construction, { angle: 45 }, 0.5, Easing.OutBounce),
-            Actions.to(this._construction, { angle: 0 }, 0.5, Easing.OutSine)
-         )
+            Actions.to(this._construction, { angle: 0 }, 0.5, Easing.OutSine),
+         ),
       );
 
       this._upgrade = this.addChild(new Sprite(textures.Upgrade));
@@ -92,8 +92,8 @@ export class TileVisual extends Container {
                this._upgrade.alpha = 0;
             }),
             Actions.to(this._upgrade, { y: 0, alpha: 1 }, 0.5, Easing.OutSine),
-            Actions.to(this._upgrade, { y: -10, alpha: 0 }, 0.5, Easing.InSine)
-         )
+            Actions.to(this._upgrade, { y: -10, alpha: 0 }, 0.5, Easing.InSine),
+         ),
       );
 
       this._level = this.addChild(
@@ -101,7 +101,7 @@ export class TileVisual extends Container {
             fontName: Fonts.Cabin,
             fontSize: 16,
             tint: 0xffffff,
-         })
+         }),
       );
       this._level.anchor.set(0.5, 0.5);
       this._level.position.set(25, -25);
@@ -177,7 +177,7 @@ export class TileVisual extends Container {
             Actions.runFunc(() => {
                this._fog.visible = false;
                resolve(this);
-            })
+            }),
          ).start();
       });
    }
@@ -192,7 +192,7 @@ export class TileVisual extends Container {
          Actions.to(t, { y: t.y - 40, alpha: 0 }, 1.25, Easing.InQuad),
          Actions.runFunc(() => {
             this._world.tooltipPool.release(t);
-         })
+         }),
       ).start();
    }
 
@@ -213,7 +213,11 @@ export class TileVisual extends Container {
       }
       this._building.visible = true;
       if (this._building.texture.noFrame) {
-         this._building.texture = getBuildingTexture(this._tile.building.type, textures, gameState.city);
+         this._building.texture = getBuildingTexture(
+            this._tile.building.type,
+            textures,
+            gameState.city,
+         );
          this.updateLayout();
       }
 
@@ -264,7 +268,7 @@ export class TileVisual extends Container {
             if (Tick.current.notProducingReasons[tileData.xy]) {
                this._notProducing.texture = getNotProducingTexture(
                   Tick.current.notProducingReasons[tileData.xy],
-                  textures
+                  textures,
                );
 
                if (!this._notProducing.visible) {
@@ -278,7 +282,7 @@ export class TileVisual extends Container {
                      Actions.to(this._notProducing, { alpha: 0 }, 0.25, Easing.OutQuad),
                      Actions.runFunc(() => {
                         this._notProducing.visible = false;
-                     })
+                     }),
                   ).start();
                }
             }
@@ -318,7 +322,11 @@ export class TileVisual extends Container {
          this._building.alpha += dt;
       }
       this._spinner.alpha = clamp(this._spinner.alpha, 0, 0.5);
-      this._building.alpha = clamp(this._building.alpha, getGameOptions().themeColors.InactiveBuildingAlpha, 1);
+      this._building.alpha = clamp(
+         this._building.alpha,
+         getGameOptions().themeColors.InactiveBuildingAlpha,
+         1,
+      );
    }
 
    private toggleConstructionTween(on: boolean) {
