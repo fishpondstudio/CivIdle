@@ -12,7 +12,7 @@ import { BuildingUpgradeComponent } from "./BuildingUpgradeComponent";
 import { BuildingWikipediaComponent } from "./BuildingWikipediaComponent";
 import { BuildingWorkerComponent } from "./BuildingWorkerComponent";
 
-export function DefaultBuildingBody({ gameState, xy }: IBuildingComponentProps) {
+export function DefaultBuildingBody({ gameState, xy }: IBuildingComponentProps): React.ReactNode {
    return (
       <div className="window-body">
          <BuildingDescriptionComponent gameState={gameState} xy={xy} />

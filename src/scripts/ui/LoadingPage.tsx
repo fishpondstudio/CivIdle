@@ -5,10 +5,10 @@ import { getVersion } from "../logic/Constants";
 import { formatPercent } from "../utilities/Helper";
 
 export enum LoadingPageStage {
-   LoadSave,
-   CheckSave,
-   SteamSignIn,
-   OfflineProduction,
+   LoadSave = 0,
+   CheckSave = 1,
+   SteamSignIn = 2,
+   OfflineProduction = 3,
 }
 
 export function LoadingPage({
@@ -19,7 +19,7 @@ export function LoadingPage({
    stage: LoadingPageStage;
    onload?: () => void;
    progress?: number;
-}) {
+}): React.ReactNode {
    useEffect(() => {
       onload?.();
    }, [stage, progress]);

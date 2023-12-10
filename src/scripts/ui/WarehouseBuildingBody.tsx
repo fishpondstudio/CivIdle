@@ -12,7 +12,7 @@ import { BuildingWorkerComponent } from "./BuildingWorkerComponent";
 import { ResourceImportComponent } from "./ResourceImportComponent";
 import { WarningComponent } from "./WarningComponent";
 
-export function WarehouseBuildingBody({ gameState, xy }: IBuildingComponentProps) {
+export function WarehouseBuildingBody({ gameState, xy }: IBuildingComponentProps): React.ReactNode {
    const warehouse = gameState.tiles[xy].building as IWarehouseBuildingData;
    if (!warehouse) {
       return null;

@@ -5,8 +5,8 @@ import { PlayerMapScene } from "../scenes/PlayerMapScene";
 import { TechTreeScene } from "../scenes/TechTreeScene";
 import { WorldScene } from "../scenes/WorldScene";
 import { sizeOf } from "../utilities/Helper";
-import { L, t } from "../utilities/i18n";
 import { Singleton } from "../utilities/Singleton";
+import { L, t } from "../utilities/i18n";
 import { AboutModal } from "./AboutModal";
 import { showModal } from "./GlobalModal";
 import { PatchNotesPage } from "./PatchNotesPage";
@@ -15,7 +15,7 @@ import { ThemePage } from "./ThemePage";
 
 type MenuItemOptions = "view" | "options" | "help" | null;
 
-function MenuButton({ name }: { name: string }) {
+function MenuButton({ name }: { name: string }): React.ReactNode {
    return (
       <>
          <span className="menu-hotkey">{name.substring(0, 1)}</span>
@@ -24,7 +24,7 @@ function MenuButton({ name }: { name: string }) {
    );
 }
 
-function MenuItem({ check, children }: PropsWithChildren<{ check: boolean }>) {
+function MenuItem({ check, children }: PropsWithChildren<{ check: boolean }>): React.ReactNode {
    return (
       <>
          <svg
@@ -48,7 +48,7 @@ function MenuItem({ check, children }: PropsWithChildren<{ check: boolean }>) {
    );
 }
 
-export function MenuComponent() {
+export function MenuComponent(): React.ReactNode {
    const [active, setActive] = useState<MenuItemOptions>(null);
    const buttonRef = useRef(null);
    useEffect(() => {

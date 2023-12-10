@@ -1,12 +1,12 @@
 import classNames from "classnames";
-import { getHappinessIcon, HappinessNames, HAPPINESS_MULTIPLIER } from "../logic/HappinessLogic";
+import { HAPPINESS_MULTIPLIER, HappinessNames, getHappinessIcon } from "../logic/HappinessLogic";
 import { Tick, useCurrentTick } from "../logic/TickLogic";
 import { formatPercent, jsxMapOf } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
 import { FormatNumber } from "./HelperComponents";
 import { ProgressBarComponent } from "./ProgressBarComponent";
 
-export function HappinessComponent() {
+export function HappinessComponent(): React.ReactNode {
    const happiness = useCurrentTick().happiness;
    if (!happiness) {
       return null;

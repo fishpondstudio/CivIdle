@@ -2,11 +2,11 @@ import { notifyGameStateUpdate } from "../Global";
 import { isWorldOrNaturalWonder } from "../logic/BuildingLogic";
 import { useShortcut } from "../logic/Shortcut";
 import { WorldScene } from "../scenes/WorldScene";
-import { L, t } from "../utilities/i18n";
 import { Singleton } from "../utilities/Singleton";
+import { L, t } from "../utilities/i18n";
 import { IBuildingComponentProps } from "./BuildingPage";
 
-export function BuildingSellComponent({ gameState, xy }: IBuildingComponentProps) {
+export function BuildingSellComponent({ gameState, xy }: IBuildingComponentProps): React.ReactNode {
    const tile = gameState.tiles[xy];
    const building = tile.building;
    if (building == null || isWorldOrNaturalWonder(building.type)) {

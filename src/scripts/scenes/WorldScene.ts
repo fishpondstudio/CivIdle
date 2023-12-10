@@ -124,6 +124,15 @@ export class WorldScene extends ViewportScene {
       this.selectGrid(xyToPoint(Singleton().buildings.Headquarter.xy));
    }
 
+   override onResize(width: number, height: number): void {
+      super.onResize(width, height);
+      const { app } = this.context;
+      this.viewport.clampZoom({
+         maxScale: 2,
+         minScale: Math.max(app.screen.width / this._width, app.screen.height / this._height),
+      });
+   }
+
    override onGameStateChanged(gameState: GameState): void {
       forEach(this._tiles, (xy, visual) => visual.onTileDataChanged(gameState.tiles[xy]));
       this.drawTransportation(gameState);
@@ -310,4 +319,10 @@ export class WorldScene extends ViewportScene {
          }
       });
    }
+
+   // public update(dt: number): void {
+   //    if ("zoom" in window) {
+   //       this.viewport.setZoom(this.viewport.scaled - (window.zoom as number) * dt, true);
+   //    }
+   // }
 }

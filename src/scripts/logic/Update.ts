@@ -133,7 +133,7 @@ export function tickEverySecond(gs: GameState, offline: boolean) {
    if (!offline) {
       notifyGameStateUpdate();
       if (gs.tick % 5 === 0) {
-         saveGame();
+         saveGame(false).catch(console.error);
       }
    }
 }

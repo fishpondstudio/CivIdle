@@ -1,15 +1,15 @@
+import { useGameState } from "../Global";
 import { Building } from "../definitions/BuildingDefinitions";
 import { PartialSet } from "../definitions/TypeDefinitions";
-import { useGameState } from "../Global";
 import { getXyBuildings } from "../logic/IntraTickCache";
 import { Tick } from "../logic/TickLogic";
 import { forEach, jsxMapOf } from "../utilities/Helper";
-import { L, t } from "../utilities/i18n";
 import { Singleton } from "../utilities/Singleton";
+import { L, t } from "../utilities/i18n";
 import { MenuComponent } from "./MenuComponent";
 import { TilePage } from "./TilePage";
 
-export function WonderPage(): JSX.Element | null {
+export function WonderPage(): React.ReactNode {
    const gs = useGameState();
    const builtWonders: PartialSet<Building> = {};
    forEach(getXyBuildings(gs), (xy, building) => {

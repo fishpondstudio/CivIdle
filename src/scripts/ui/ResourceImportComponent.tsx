@@ -11,7 +11,10 @@ import { showModal } from "./GlobalModal";
 import { FormatNumber } from "./HelperComponents";
 import { ProgressBarComponent } from "./ProgressBarComponent";
 
-export function ResourceImportComponent({ gameState, xy }: IBuildingComponentProps) {
+export function ResourceImportComponent({
+   gameState,
+   xy,
+}: IBuildingComponentProps): React.ReactNode {
    const building = gameState.tiles[xy]?.building as IResourceImportBuildingData;
    if (!building) {
       return null;
@@ -27,8 +30,12 @@ export function ResourceImportComponent({ gameState, xy }: IBuildingComponentPro
          resources[k] = true;
       }
    });
-   forEach(building.resources, (k, v) => (resources[k] = true));
-   forEach(building.resourceImports, (k, v) => (resources[k] = true));
+   forEach(building.resources, (k, v) => {
+      resources[k] = true;
+   });
+   forEach(building.resourceImports, (k, v) => {
+      resources[k] = true;
+   });
    const storage = getStorageFor(xy, gameState);
    const percentage = storage.used / storage.total;
 

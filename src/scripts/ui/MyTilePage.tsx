@@ -5,7 +5,7 @@ import { L, t } from "../utilities/i18n";
 import { showToast } from "./GlobalModal";
 import { MenuComponent } from "./MenuComponent";
 
-export function MyTilePage({ xy }: { xy: string }) {
+export function MyTilePage({ xy }: { xy: string }): React.ReactNode {
    const playerMap = usePlayerMap();
    const [tariffRate, setTariffRate] = useState(playerMap[xy].tariffRate);
    return (

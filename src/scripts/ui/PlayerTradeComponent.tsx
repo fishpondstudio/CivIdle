@@ -20,7 +20,7 @@ import { showModal, showToast } from "./GlobalModal";
 import { FormatNumber } from "./HelperComponents";
 import { WarningComponent } from "./WarningComponent";
 
-export function PlayerTradeComponent({ gameState, xy }: IBuildingComponentProps) {
+export function PlayerTradeComponent({ gameState, xy }: IBuildingComponentProps): React.ReactNode {
    const building = gameState.tiles[xy].building;
    if (!building) {
       return null;

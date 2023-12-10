@@ -11,7 +11,10 @@ import { L, t } from "../utilities/i18n";
 import { IBuildingComponentProps } from "./BuildingPage";
 import { FormatNumber } from "./HelperComponents";
 
-export function BuildingUpgradeComponent({ gameState, xy }: IBuildingComponentProps) {
+export function BuildingUpgradeComponent({
+   gameState,
+   xy,
+}: IBuildingComponentProps): React.ReactNode {
    const building = gameState.tiles[xy]?.building;
    if (!building) {
       return null;

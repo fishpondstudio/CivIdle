@@ -6,7 +6,7 @@ import { client, useChatMessages, useUser } from "../rpc/RPCClient";
 import { useTypedEvent } from "../utilities/Hook";
 import { L, t } from "../utilities/i18n";
 
-export function ChatPanel() {
+export function ChatPanel(): React.ReactNode {
    const [chat, setChat] = useState("");
    const messages = useChatMessages();
    const user = useUser();

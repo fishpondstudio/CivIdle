@@ -8,7 +8,7 @@ export function TechPrerequisiteItemComponent({
    name: JSX.Element | string;
    unlocked: boolean;
    action: () => void;
-}) {
+}): React.ReactNode {
    return (
       <div className="row mv5">
          {unlocked ? (

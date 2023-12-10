@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Resource } from "../definitions/ResourceDefinitions";
-import { getBuyAmountRange, IClientAddTradeRequest } from "../logic/PlayerTradeLogic";
+import { IClientAddTradeRequest, getBuyAmountRange } from "../logic/PlayerTradeLogic";
 import { Tick } from "../logic/TickLogic";
 import { client } from "../rpc/RPCClient";
 import { keysOf, safeParseInt } from "../utilities/Helper";
@@ -9,7 +9,7 @@ import { playError } from "../visuals/Sound";
 import { IBuildingComponentProps } from "./BuildingPage";
 import { FormatNumber } from "./HelperComponents";
 
-export function AddTradeComponent({ gameState, xy }: IBuildingComponentProps) {
+export function AddTradeComponent({ gameState, xy }: IBuildingComponentProps): React.ReactNode {
    const buyResources = keysOf(Tick.next.resourcesByXy).filter(
       (res) => Tick.current.resources[res].canPrice && Tick.current.resources[res].canStore,
    );

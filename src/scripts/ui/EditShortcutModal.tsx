@@ -1,19 +1,19 @@
 import { useEffect, useState } from "react";
 import { notifyGameOptionsUpdate, useGameOptions } from "../Global";
 import {
-   getShortcutKey,
    IShortcutConfig,
-   isShortcutEqual,
-   makeShortcut,
    Shortcut,
    ShortcutActions,
+   getShortcutKey,
+   isShortcutEqual,
+   makeShortcut,
 } from "../logic/Shortcut";
 import { forEach } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
 import { playError } from "../visuals/Sound";
 import { hideModal, showToast } from "./GlobalModal";
 
-export function EditShortcutModal({ action }: { action: Shortcut }) {
+export function EditShortcutModal({ action }: { action: Shortcut }): React.ReactNode {
    const options = useGameOptions();
    const [key, setKey] = useState<IShortcutConfig | undefined>(options.shortcuts[action]);
    useEffect(() => {

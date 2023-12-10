@@ -24,6 +24,7 @@ import { WorldScene } from "./scenes/WorldScene";
 import { ErrorPage } from "./ui/ErrorPage";
 import { showModal, showToast } from "./ui/GlobalModal";
 import { LoadingPage, LoadingPageStage } from "./ui/LoadingPage";
+import { ManageRebornModal } from "./ui/ManageRebornModal";
 import { OfflineProductionModal } from "./ui/OfflineProductionModal";
 import { GameTicker } from "./utilities/GameTicker";
 import { clamp, forEach, isNullOrUndefined, rejectIn, schedule } from "./utilities/Helper";
@@ -90,6 +91,7 @@ export async function startGame(
    // ========== Connect to server ==========
    routeTo(LoadingPage, { stage: LoadingPageStage.SteamSignIn });
    const TIMEOUT = import.meta.env.DEV ? 1 : 5;
+   let hasOfflineProductionModal = false;
    try {
       const actualOfflineTime = await Promise.race([
          connectWebSocket(),
@@ -127,11 +129,16 @@ export async function startGame(
          }
 
          const after = JSON.parse(JSON.stringify(gameState));
+         hasOfflineProductionModal = true;
          showModal(<OfflineProductionModal before={before} after={after} time={offlineTime} />);
       }
    } catch (error) {
       playError();
       showToast(String(error));
+   }
+
+   if (!hasOfflineProductionModal && getGameOptions().greatPeopleChoices.length > 0) {
+      showModal(<ManageRebornModal />);
    }
 
    // We tick first before loading scene, making sure city-specific overrides are applied!

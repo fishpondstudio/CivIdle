@@ -6,7 +6,7 @@ import { keysOf } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
 import { MenuComponent } from "./MenuComponent";
 
-export function ThemePage(): JSX.Element {
+export function ThemePage(): React.ReactNode {
    const gameOptions = useGameOptions();
    return (
       <div className="window">

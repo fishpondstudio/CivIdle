@@ -723,4 +723,11 @@ export const EN = {
    PetraNoMultiplier:
       "Petra is not affected by any multipliers (production, worker capacity, storage, etc)",
    LimitOfflineProduction: "Limit Offline Production",
+   Reborn: "Reborn",
+   TotalEmpireValue: "Total Empire Value",
+   NotProducingBuildings: "Buildings That Are Not Producing",
+   ExtraGreatPeopleAtReborn: "Extra Great People At Reborn",
+   Ok: "OK",
+   Cancel: "Cancel",
+   ChooseGreatPersonFromLastReborn: "Choose Great Person From Last Reborn",
 };

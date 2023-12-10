@@ -1,9 +1,9 @@
-import { GreatPerson } from "../definitions/GreatPersonDefinitions";
 import { useGameState } from "../Global";
+import { GreatPerson } from "../definitions/GreatPersonDefinitions";
 import { Config } from "../logic/Constants";
 import { jsxMapOf } from "../utilities/Helper";
-import { L, t } from "../utilities/i18n";
 import { Singleton } from "../utilities/Singleton";
+import { L, t } from "../utilities/i18n";
 import { greatPersonImage } from "../visuals/GreatPersonVisual";
 import { playLevelUp } from "../visuals/Sound";
 import { ChooseGreatPersonModal } from "./ChooseGreatPersonModal";
@@ -12,7 +12,7 @@ import { MenuComponent } from "./MenuComponent";
 import { TilePage } from "./TilePage";
 import { WarningComponent } from "./WarningComponent";
 
-export function GreatPersonPage(): JSX.Element | null {
+export function GreatPersonPage(): React.ReactNode {
    const gs = useGameState();
    return (
       <div className="window">

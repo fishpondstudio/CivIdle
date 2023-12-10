@@ -1,6 +1,6 @@
 /* eslint-disable no-case-declarations */
 import { decode, encode } from "@msgpack/msgpack";
-import { removeTrailingUndefs, rpcClient, RpcError } from "typed-rpc";
+import { RpcError, removeTrailingUndefs, rpcClient } from "typed-rpc";
 import type {
    AllMessageTypes,
    IChat,
@@ -19,10 +19,10 @@ import { IClientTrade } from "../logic/PlayerTradeLogic";
 import { showToast } from "../ui/GlobalModal";
 import { forEach } from "../utilities/Helper";
 import { makeObservableHook } from "../utilities/Hook";
-import { L, t } from "../utilities/i18n";
 import { TypedEvent } from "../utilities/TypedEvent";
+import { L, t } from "../utilities/i18n";
 import { playBubble, playKaching } from "../visuals/Sound";
-import { isSteam, SteamClient, STEAM_APP_ID } from "./SteamClient";
+import { STEAM_APP_ID, SteamClient, isSteam } from "./SteamClient";
 
 const url = new URLSearchParams(window.location.search);
 const devServerAddress = url.get("server") ?? "ws://localhost:8000";
@@ -112,7 +112,7 @@ export async function connectWebSocket(): Promise<number> {
       const message = decode(e.data as ArrayBuffer) as AllMessageTypes;
       const type = message.type as MessageType;
       switch (type) {
-         case MessageType.Chat:
+         case MessageType.Chat: {
             const c = message as IChatMessage;
             if (c.flush) {
                chatMessages = c.chat;
@@ -127,15 +127,17 @@ export async function connectWebSocket(): Promise<number> {
             }
             OnChatMessage.emit(chatMessages);
             break;
-         case MessageType.Welcome:
+         }
+         case MessageType.Welcome: {
             const w = message as IWelcomeMessage;
             user = w.user;
             OnOfflineTime.emit(w.offlineTime);
             OnUserChanged.emit({ ...user });
             getGameOptions().token = w.user.token;
-            saveGame();
+            saveGame(false).catch(console.error);
             break;
-         case MessageType.Trade:
+         }
+         case MessageType.Trade: {
             const tm = message as ITradeMessage;
             let pendingClaims = 0;
             if (tm.upsert) {
@@ -161,7 +163,8 @@ export async function connectWebSocket(): Promise<number> {
             }
             OnTradeMessage.emit(Object.values(trades));
             break;
-         case MessageType.Map:
+         }
+         case MessageType.Map: {
             const m = message as IMapMessage;
             if (m.upsert) {
                forEach(m.upsert, (xy, entry) => {
@@ -176,10 +179,12 @@ export async function connectWebSocket(): Promise<number> {
             OnPlayerMapChanged.emit({ ...playerMap });
             OnPlayerMapMessage.emit(m);
             break;
-         case MessageType.RPC:
+         }
+         case MessageType.RPC: {
             const r = message as IRPCMessage;
             handleRpcResponse(r.data);
             break;
+         }
       }
    };
 

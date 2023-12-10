@@ -10,7 +10,7 @@
          "a11y": { "all": false },
          "performance": { "noDelete": "warn" },
          "style": { "useSelfClosingElements": "off", "noNonNullAssertion": "warn" },
-         "complexity": { "noForEach": "warn" }
+         "complexity": { "noForEach": "off" }
       }
    },
    "formatter": { "lineWidth": 100, "indentStyle": "space", "indentWidth": 3 }

@@ -1,12 +1,12 @@
 import logo from "../../images/icon.png";
 import { wipeSaveData } from "../Global";
 import { getVersion } from "../logic/Constants";
-import { L, t } from "../utilities/i18n";
 import { Singleton } from "../utilities/Singleton";
+import { L, t } from "../utilities/i18n";
 import { playClick } from "../visuals/Sound";
 import { hideModal } from "./GlobalModal";
 
-export function AboutModal() {
+export function AboutModal(): React.ReactNode {
    return (
       <div className="window">
          <div className="title-bar">
@@ -49,7 +49,7 @@ export function AboutModal() {
                      hideModal();
                   }}
                >
-                  OK
+                  {t(L.Ok)}
                </button>
             </div>
          </div>

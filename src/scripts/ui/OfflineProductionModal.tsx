@@ -12,7 +12,7 @@ export function OfflineProductionModal({
    before,
    after,
    time,
-}: { before: GameState; after: GameState; time: number }) {
+}: { before: GameState; after: GameState; time: number }): React.ReactNode {
    return (
       <div className="window" style={{ width: "500px" }}>
          <div className="title-bar">

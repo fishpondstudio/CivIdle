@@ -1,10 +1,10 @@
 import { useGameOptions } from "../Global";
 import {
-   getShortcutKey,
    IShortcutNameAndScope,
    Shortcut,
    ShortcutActions,
    ShortcutScopes,
+   getShortcutKey,
 } from "../logic/Shortcut";
 import { jsxMapOf } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
@@ -12,7 +12,7 @@ import { EditShortcutModal } from "./EditShortcutModal";
 import { showModal } from "./GlobalModal";
 import { MenuComponent } from "./MenuComponent";
 
-export function ShortcutPage(): JSX.Element {
+export function ShortcutPage(): React.ReactNode {
    const gameOptions = useGameOptions();
    return (
       <div className="window">

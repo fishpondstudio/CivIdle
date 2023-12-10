@@ -2,12 +2,12 @@ import classNames from "classnames";
 import warning from "../../images/warning.png";
 import { notifyGameStateUpdate } from "../Global";
 import {
+   IOCalculation,
    applyToAllBuildings,
    getBuildingName,
    getMultipliersFor,
    getResourceName,
    getWorkersFor,
-   IOCalculation,
    isSpecialBuilding,
 } from "../logic/BuildingLogic";
 import { getBuildingIO } from "../logic/IntraTickCache";
@@ -16,9 +16,12 @@ import { formatPercent, isEmpty } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
 import { playClick } from "../visuals/Sound";
 import { IBuildingComponentProps } from "./BuildingPage";
-import { fmtNumber, FormatNumber } from "./HelperComponents";
+import { FormatNumber, fmtNumber } from "./HelperComponents";
 
-export function BuildingWorkerComponent({ gameState, xy }: IBuildingComponentProps) {
+export function BuildingWorkerComponent({
+   gameState,
+   xy,
+}: IBuildingComponentProps): React.ReactNode {
    const workersRequired = getWorkersFor(xy, { exclude: { Worker: true } }, gameState);
    const building = gameState.tiles[xy].building;
    if (building == null) {

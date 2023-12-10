@@ -2,7 +2,7 @@ import GreatWave from "../../images/GreatWave.jpg";
 import { L, t } from "../utilities/i18n";
 import { MenuComponent } from "./MenuComponent";
 
-export function OceanTilePage({ xy }: { xy: string }) {
+export function OceanTilePage({ xy }: { xy: string }): React.ReactNode {
    return (
       <div className="window">
          <div className="title-bar">

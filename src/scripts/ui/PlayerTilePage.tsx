@@ -7,7 +7,7 @@ import { showModal } from "./GlobalModal";
 import { FormatNumber } from "./HelperComponents";
 import { MenuComponent } from "./MenuComponent";
 
-export function PlayerTilePage({ xy }: { xy: string }) {
+export function PlayerTilePage({ xy }: { xy: string }): React.ReactNode {
    const playerMap = usePlayerMap();
    const tile = playerMap[xy];
    if (!tile) {

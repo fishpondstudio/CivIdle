@@ -11,7 +11,7 @@ import { FormatNumber } from "./HelperComponents";
 import { ProgressBarComponent } from "./ProgressBarComponent";
 import { WarningComponent } from "./WarningComponent";
 
-export function PetraBuildingBody({ gameState, xy }: IBuildingComponentProps) {
+export function PetraBuildingBody({ gameState, xy }: IBuildingComponentProps): React.ReactNode {
    const building = gameState.tiles[xy].building as IPetraBuildingData;
    if (!building || building.type !== "Petra") {
       return null;

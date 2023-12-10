@@ -1,7 +1,7 @@
 import { Singleton } from "../utilities/Singleton";
 import { greatPersonImage } from "../visuals/GreatPersonVisual";
 
-export function GreatPersonDebug() {
+export function GreatPersonDebug(): React.ReactNode {
    return (
       <div className="window">
          <div className="title-bar">

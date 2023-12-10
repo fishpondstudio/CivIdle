@@ -18,7 +18,7 @@ export function WarningComponent({
 }: PropsWithChildren<{
    icon: "warning" | "error" | "info" | "question";
    bottom?: number;
-}>): JSX.Element {
+}>): React.ReactNode {
    return (
       <div className="warning-banner row" style={{ marginBottom: `${bottom ?? 0}px` }}>
          <img src={ICONS[icon]} style={{ alignSelf: "flex-start", margin: "2px 5px 2px 0" }} />

@@ -2,12 +2,12 @@ import { notifyGameStateUpdate, useGameState } from "../Global";
 import { Tick } from "../logic/TickLogic";
 import { ITileData } from "../logic/Tile";
 import { WorldScene } from "../scenes/WorldScene";
-import { L, t } from "../utilities/i18n";
 import { Singleton } from "../utilities/Singleton";
+import { L, t } from "../utilities/i18n";
 import { BuildingConstructionProgressComponent } from "./BuildingConstructionProgressComponent";
 import { MenuComponent } from "./MenuComponent";
 
-export function ConstructionPage({ tile }: { tile: ITileData }): JSX.Element | null {
+export function ConstructionPage({ tile }: { tile: ITileData }): React.ReactNode {
    if (tile.building == null) {
       return null;
    }

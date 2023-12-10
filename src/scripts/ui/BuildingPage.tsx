@@ -25,7 +25,7 @@ const BuildingBodyOverride: Partial<Record<Building, FunctionComponent<IBuilding
       Petra: PetraBuildingBody,
    };
 
-export function BuildingPage({ tile }: { tile: ITileData }): JSX.Element | null {
+export function BuildingPage({ tile }: { tile: ITileData }): React.ReactNode {
    if (tile.building == null) {
       Singleton().routeTo(LoadingPage, { stage: LoadingPageStage.LoadSave });
       return null;

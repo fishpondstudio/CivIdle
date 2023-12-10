@@ -31,6 +31,10 @@ export function initializeSingletons(s: ISingleton) {
       console.warn("Singletons are already initialized, you are trying to initialize it again!");
    }
    singletons = s;
+   if (import.meta.env.DEV) {
+      // @ts-expect-error
+      window.singleton = s;
+   }
 }
 
 export function isSingletonReady() {

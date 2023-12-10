@@ -1,7 +1,7 @@
 import { L, t } from "../utilities/i18n";
 import { MenuComponent } from "./MenuComponent";
 
-export function UnexploredTile(): JSX.Element {
+export function UnexploredTile(): React.ReactNode {
    return (
       <div className="window">
          <div className="title-bar">

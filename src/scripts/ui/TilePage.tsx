@@ -6,7 +6,7 @@ import { EmptyTilePage } from "./EmptyTilePage";
 import { UnexploredTile } from "./UnexploredTile";
 import { UpgradingPage } from "./UpgradingPage";
 
-export function TilePage({ xy }: { xy: string }) {
+export function TilePage({ xy }: { xy: string }): React.ReactNode {
    const gameState = useGameState();
    if (!xy || !isSingletonReady()) {
       return null;

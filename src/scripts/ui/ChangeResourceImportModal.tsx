@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { Resource } from "../definitions/ResourceDefinitions";
 import { notifyGameStateUpdate } from "../Global";
+import { Resource } from "../definitions/ResourceDefinitions";
 import { getWarehouseCapacity } from "../logic/BuildingLogic";
 import { Tick } from "../logic/TickLogic";
 import { IResourceImport, IResourceImportBuildingData } from "../logic/Tile";
@@ -15,7 +15,7 @@ export function ChangeResourceImportModal({
 }: {
    building: IResourceImportBuildingData;
    resource: Resource;
-}) {
+}): React.ReactNode {
    const [resourceImport, setResourceImport] = useState<IResourceImport>(
       building.resourceImports[resource] ?? { cap: 0, perCycle: 0 },
    );

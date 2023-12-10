@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { client, OnUserChanged, useUser } from "../rpc/RPCClient";
+import { OnUserChanged, client, useUser } from "../rpc/RPCClient";
 import { L, t } from "../utilities/i18n";
 import { hideModal, showToast } from "./GlobalModal";
 
-export function ChangePlayerHandleModal() {
+export function ChangePlayerHandleModal(): React.ReactNode {
    const user = useUser();
    if (!user) {
       return null;

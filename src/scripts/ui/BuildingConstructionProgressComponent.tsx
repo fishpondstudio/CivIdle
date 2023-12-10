@@ -13,7 +13,10 @@ import { FormatNumber } from "./HelperComponents";
 import { ProgressBarComponent } from "./ProgressBarComponent";
 import { WarningComponent } from "./WarningComponent";
 
-export function BuildingConstructionProgressComponent({ gameState, xy }: IBuildingComponentProps) {
+export function BuildingConstructionProgressComponent({
+   gameState,
+   xy,
+}: IBuildingComponentProps): React.ReactNode {
    const building = gameState.tiles[xy]?.building;
    if (!building) {
       return null;

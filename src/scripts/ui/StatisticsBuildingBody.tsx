@@ -17,7 +17,10 @@ import { FormatNumber } from "./HelperComponents";
 
 type Tab = "resources" | "buildings" | "transportation";
 
-export function StatisticsBuildingBody({ gameState, xy }: IBuildingComponentProps) {
+export function StatisticsBuildingBody({
+   gameState,
+   xy,
+}: IBuildingComponentProps): React.ReactNode {
    const building = gameState.tiles[xy].building as IBuildingData;
    if (building == null) {
       return null;
@@ -59,7 +62,7 @@ export function StatisticsBuildingBody({ gameState, xy }: IBuildingComponentProp
    );
 }
 
-function BuildingTab({ gameState }: IBuildingComponentProps) {
+function BuildingTab({ gameState }: IBuildingComponentProps): React.ReactNode {
    return (
       <article role="tabpanel" className="f1" style={{ padding: "8px", overflow: "auto" }}>
          <div className="table-view sticky-header" style={{ height: "100%" }}>
@@ -148,7 +151,7 @@ function BuildingTab({ gameState }: IBuildingComponentProps) {
    );
 }
 
-function TransportationTab({ gameState }: IBuildingComponentProps) {
+function TransportationTab({ gameState }: IBuildingComponentProps): React.ReactNode {
    return (
       <article role="tabpanel" className="f1 column" style={{ padding: "8px", overflow: "auto" }}>
          <fieldset>
@@ -227,7 +230,7 @@ function TransportationTab({ gameState }: IBuildingComponentProps) {
    );
 }
 
-function ResourcesTab({ gameState }: IBuildingComponentProps) {
+function ResourcesTab({ gameState }: IBuildingComponentProps): React.ReactNode {
    const [showTheoreticalValue, setShowTheoreticalValue] = useState(true);
    const inputs: PartialTabulate<Resource> = {};
    const outputs: PartialTabulate<Resource> = {};

@@ -17,14 +17,17 @@ import {
    safeParseInt,
    xyToPoint,
 } from "../utilities/Helper";
-import { L, t } from "../utilities/i18n";
 import { Singleton } from "../utilities/Singleton";
+import { L, t } from "../utilities/i18n";
 import { playError } from "../visuals/Sound";
 import { hideModal, showToast } from "./GlobalModal";
 import { FormatNumber } from "./HelperComponents";
 import { WarningComponent } from "./WarningComponent";
 
-export function FillPlayerTradeModal({ trade, xy }: { trade: IClientTrade; xy?: string }) {
+export function FillPlayerTradeModal({
+   trade,
+   xy,
+}: { trade: IClientTrade; xy?: string }): React.ReactNode {
    const [percent, setPercent] = useState(100);
    const [tiles, setTiles] = useState<string[]>([]);
    const map = usePlayerMap();
@@ -45,10 +48,10 @@ export function FillPlayerTradeModal({ trade, xy }: { trade: IClientTrade; xy?: 
       return () => {
          Singleton().sceneManager.getCurrent(PlayerMapScene)?.clearPath();
       };
-   }, []);
+   }, [trade, myXy]);
    const totalTariff = tiles.reduce((prev, xy, i) => {
       const tile = map[xy];
-      if (!tile || i == 0 || i == tiles.length - 1) {
+      if (!tile || i === 0 || i === tiles.length - 1) {
          return prev;
       }
       return prev + tile.tariffRate;
@@ -97,7 +100,7 @@ export function FillPlayerTradeModal({ trade, xy }: { trade: IClientTrade; xy?: 
                      </tr>
                      {jsxMapOf(allTradeBuildings, (xy, building) => {
                         const storage = getStorageFor(xy, gs);
-                        const uniqueId = "tile_" + xy;
+                        const uniqueId = `tile_${xy}`;
                         return (
                            <tr key={xy}>
                               <td>
@@ -174,7 +177,7 @@ export function FillPlayerTradeModal({ trade, xy }: { trade: IClientTrade; xy?: 
                      <ul>
                         {tiles.map((xy, i) => {
                            const tile = map[xy];
-                           if (!tile || i == 0 || i == tiles.length - 1) {
+                           if (!tile || i === 0 || i === tiles.length - 1) {
                               return null;
                            }
                            return (
@@ -238,7 +241,7 @@ export function FillPlayerTradeModal({ trade, xy }: { trade: IClientTrade; xy?: 
                >
                   {t(L.PlayerTradeFillTradeButton)}
                </button>
-               <div style={{ width: "10px" }}></div>
+               <div style={{ width: "6px" }}></div>
                <button onClick={hideModal}>{t(L.ChangePlayerHandleCancel)}</button>
             </div>
          </div>

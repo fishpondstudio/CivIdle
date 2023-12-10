@@ -2,7 +2,7 @@ import { PatchNotes } from "../definitions/PatchNotes";
 import { L, t } from "../utilities/i18n";
 import { MenuComponent } from "./MenuComponent";
 
-export function PatchNotesPage(): JSX.Element {
+export function PatchNotesPage(): React.ReactNode {
    return (
       <div className="window">
          <div className="title-bar">

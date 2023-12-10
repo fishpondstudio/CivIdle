@@ -2,7 +2,7 @@ import { L, t } from "../utilities/i18n";
 import { MenuComponent } from "./MenuComponent";
 import { WarningComponent } from "./WarningComponent";
 
-export function InDevelopmentPage() {
+export function InDevelopmentPage(): React.ReactNode {
    return (
       <div className="window">
          <div className="title-bar">

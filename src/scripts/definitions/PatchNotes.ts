@@ -5,6 +5,10 @@ interface PatchNote {
 
 export const PatchNotes: PatchNote[] = [
    {
+      version: "0.1.86",
+      content: [["QoL", "Add tooltip to resource bar"]],
+   },
+   {
       version: "0.1.85",
       content: [
          ["QoL", "Censor's Office shows percentage of transportation workers"],

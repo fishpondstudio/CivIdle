@@ -7,7 +7,10 @@ import { BuildingWorkerComponent } from "./BuildingWorkerComponent";
 import { PlayerTradeComponent } from "./PlayerTradeComponent";
 import { ResourceImportComponent } from "./ResourceImportComponent";
 
-export function PlayerTradeBuildingBody({ gameState, xy }: IBuildingComponentProps) {
+export function PlayerTradeBuildingBody({
+   gameState,
+   xy,
+}: IBuildingComponentProps): React.ReactNode {
    return (
       <div className="window-body">
          <BuildingUpgradeComponent gameState={gameState} xy={xy} />

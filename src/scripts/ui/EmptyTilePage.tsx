@@ -23,7 +23,7 @@ import { MenuComponent } from "./MenuComponent";
 
 let lastBuild: Building | null = null;
 
-export function EmptyTilePage({ tile }: { tile: ITileData }): JSX.Element {
+export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
    const gs = useGameState();
    const [, setSelected] = useState<Building | null>(null);
    const [filter, setFilter] = useState<string>("");

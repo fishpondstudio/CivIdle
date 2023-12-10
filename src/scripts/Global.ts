@@ -1,7 +1,7 @@
 import { Config } from "./logic/Constants";
-import { GameOptions, GameState, initializeGameState, SavedGame } from "./logic/GameState";
+import { GameOptions, GameState, SavedGame, initializeGameState } from "./logic/GameState";
 import { makeBuilding } from "./logic/Tile";
-import { isSteam, SteamClient } from "./rpc/SteamClient";
+import { SteamClient, isSteam } from "./rpc/SteamClient";
 import { Grid } from "./scenes/Grid";
 import { idbGet, idbSet } from "./utilities/BrowserStorage";
 import { forEach } from "./utilities/Helper";
@@ -13,27 +13,19 @@ const savedGame = new SavedGame();
 export const TILE_SIZE = 64;
 
 export function wipeSaveData() {
-   saving = true;
-   const save = new SavedGame();
-   save.options = savedGame.options;
-   initializeGameState(
-      save.current,
-      new Grid(Config.City[save.current.city].size, Config.City[save.current.city].size, TILE_SIZE),
-   );
-   if (isSteam()) {
-      SteamClient.fileWrite(SAVE_KEY, JSON.stringify(save))
-         .catch(console.error)
-         .finally(() => window.location.reload());
-      return;
-   }
-   idbSet(SAVE_KEY, save)
-      .catch(console.error)
-      .finally(() => window.location.reload());
+   resetCurrentCity();
+   saveGame(true).catch(console.error);
+}
+
+export function resetCurrentCity(): void {
+   savedGame.current = new GameState();
+   const size = Config.City[savedGame.current.city].size;
+   initializeGameState(savedGame.current, new Grid(size, size, TILE_SIZE));
 }
 
 if (import.meta.env.DEV) {
    // @ts-expect-error
-   window.loadSave = (content: any) => {
+   window.loadSave = (content: unknown) => {
       saving = true;
       Object.assign(savedGame, content);
       if (isSteam()) {
@@ -86,23 +78,26 @@ const SAVE_KEY = "CivIdle";
 
 let saving = false;
 
-export function saveGame() {
-   if (saving) {
-      console.warn(
+export function saveGame(forceAndReload: boolean): Promise<void> {
+   if (!forceAndReload && saving) {
+      return Promise.reject(
          "Received a save request while another one is ongoing, will ignore the new request",
       );
-      return;
    }
    saving = true;
-   if (isSteam()) {
-      SteamClient.fileWrite(SAVE_KEY, JSON.stringify(savedGame))
-         .catch(console.error)
-         .finally(() => (saving = false));
-      return;
+   function cleanup() {
+      if (forceAndReload) {
+         window.location.reload();
+      } else {
+         saving = false;
+      }
    }
-   idbSet(SAVE_KEY, savedGame)
-      .catch(console.error)
-      .finally(() => (saving = false));
+   if (isSteam()) {
+      return SteamClient.fileWrite(SAVE_KEY, JSON.stringify(savedGame))
+         .catch(console.error)
+         .finally(cleanup);
+   }
+   return idbSet(SAVE_KEY, savedGame).catch(console.error).finally(cleanup);
 }
 
 export async function loadGame(): Promise<SavedGame | undefined> {
@@ -119,13 +114,12 @@ export async function loadGame(): Promise<SavedGame | undefined> {
 export function isGameDataCompatible(gs: SavedGame): boolean {
    if (savedGame.options.version !== gs.options.version) {
       return false;
-   } else {
-      migrateSavedGame(gs);
-      Object.assign(savedGame.current, gs.current);
-      gs.options.themeColors = Object.assign(savedGame.options.themeColors, gs.options.themeColors);
-      Object.assign(savedGame.options, gs.options);
-      return true;
    }
+   migrateSavedGame(gs);
+   Object.assign(savedGame.current, gs.current);
+   gs.options.themeColors = Object.assign(savedGame.options.themeColors, gs.options.themeColors);
+   Object.assign(savedGame.options, gs.options);
+   return true;
 }
 
 export function notifyGameStateUpdate(gameState?: GameState): void {
@@ -177,6 +171,8 @@ function migrateSavedGame(gs: SavedGame) {
       });
    });
    forEach(gs.current.unlockedTech, (tech) => {
-      Config.Tech[tech].unlockFeature?.forEach((f) => (gs.current.features[f] = true));
+      Config.Tech[tech].unlockFeature?.forEach((f) => {
+         gs.current.features[f] = true;
+      });
    });
 }

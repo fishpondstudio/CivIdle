@@ -10,7 +10,7 @@ import { playError } from "../visuals/Sound";
 import { showToast } from "./GlobalModal";
 import { MenuComponent } from "./MenuComponent";
 
-export function UnclaimedTilePage({ xy }: { xy: string }) {
+export function UnclaimedTilePage({ xy }: { xy: string }): React.ReactNode {
    refreshOnTypedEvent(GameStateChanged);
    const playerMap = usePlayerMap();
    const myXy = getMyMapXy();

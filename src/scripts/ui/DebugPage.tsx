@@ -4,7 +4,7 @@ import { PartialTabulate } from "../definitions/TypeDefinitions";
 import { Config } from "../logic/Constants";
 import { clamp, keysOf, mapOf, safeAdd } from "../utilities/Helper";
 
-export function DebugPage() {
+export function DebugPage(): React.ReactNode {
    const [selectedResource, setSelectedResource] = useState<PartialTabulate<Resource>>({});
    return (
       <div className="window">

@@ -1,6 +1,7 @@
 import classNames from "classnames";
 import { getScienceFromWorkers } from "../logic/BuildingLogic";
 import { Config } from "../logic/Constants";
+import { getGreatPeopleAtReborn } from "../logic/RebornLogic";
 import {
    getCurrentTechAge,
    getScienceAmount,
@@ -10,7 +11,7 @@ import {
 import { Tick } from "../logic/TickLogic";
 import { useUser } from "../rpc/RPCClient";
 import { TechTreeScene } from "../scenes/TechTreeScene";
-import { formatPercent, jsxMapOf } from "../utilities/Helper";
+import { formatPercent, jsxMapOf, reduceOf } from "../utilities/Helper";
 import { Singleton } from "../utilities/Singleton";
 import { L, t } from "../utilities/i18n";
 import { playError } from "../visuals/Sound";
@@ -23,9 +24,13 @@ import { showModal } from "./GlobalModal";
 import { GreatPersonPage } from "./GreatPersonPage";
 import { HappinessComponent } from "./HappinessComponent";
 import { FormatNumber } from "./HelperComponents";
+import { RebornModal } from "./RebornModal";
 import { WonderPage } from "./WonderPage";
 
-export function HeadquarterBuildingBody({ gameState, xy }: IBuildingComponentProps) {
+export function HeadquarterBuildingBody({
+   gameState,
+   xy,
+}: IBuildingComponentProps): React.ReactNode {
    const {
       happinessPercentage,
       workersAvailable,
@@ -310,6 +315,39 @@ export function HeadquarterBuildingBody({ gameState, xy }: IBuildingComponentPro
                onClick={() => Singleton().routeTo(WonderPage, {})}
             >
                {t(L.ManageWonders)}
+            </div>
+         </fieldset>
+         <fieldset>
+            <legend>{t(L.Reborn)}</legend>
+            <div className="row">
+               <div className="f1">{t(L.GreatPeopleThisRun)}</div>
+               <div className="text-strong">
+                  {reduceOf(
+                     gameState.greatPeople,
+                     (prev, k, v) => {
+                        return prev + v;
+                     },
+                     0,
+                  )}
+               </div>
+            </div>
+            <div className="sep5"></div>
+            <div className="row">
+               <div className="f1">{t(L.TotalEmpireValue)}</div>
+               <div className="text-strong">
+                  <FormatNumber value={Tick.current.totalValue} />
+               </div>
+            </div>
+            <div className="sep5"></div>
+            <div className="row">
+               <div className="f1">{t(L.ExtraGreatPeopleAtReborn)}</div>
+               <div className="text-strong">{getGreatPeopleAtReborn()}</div>
+            </div>
+            <div
+               className="mv5 text-link text-strong"
+               onClick={() => showModal(<RebornModal gameState={gameState} />)}
+            >
+               {t(L.Reborn)}
             </div>
          </fieldset>
          <BuildingColorComponent gameState={gameState} xy={xy} />

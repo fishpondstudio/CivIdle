@@ -5,26 +5,22 @@ import { getHappinessIcon } from "../logic/HappinessLogic";
 import { getResourceAmount } from "../logic/ResourceLogic";
 import { useCurrentTick } from "../logic/TickLogic";
 import { sizeOf } from "../utilities/Helper";
+import { L, t } from "../utilities/i18n";
 import { FormatNumber } from "./HelperComponents";
 
-export function ResourcePanel() {
+export function ResourcePanel(): React.ReactNode {
    const tick = useCurrentTick();
    const gs = useGameState();
-   const {
-      happinessPercentage,
-      workersAvailable,
-      workersAvailableAfterHappiness,
-      workersBusy,
-      scienceFromBusyWorkers,
-      scienceFromIdleWorkers,
-      scienceFromWorkers,
-      sciencePerBusyWorker,
-      sciencePerIdleWorker,
-   } = getScienceFromWorkers(gs);
+   const { workersAvailableAfterHappiness, workersBusy } = getScienceFromWorkers(gs);
    return (
       <div className="resource-bar window">
          {tick.happiness ? (
-            <div className="row">
+            <div
+               className="row"
+               aria-label={t(L.Happiness)}
+               data-balloon-pos="down"
+               data-balloon-text="left"
+            >
                <div
                   className={classNames({
                      "m-icon": true,
@@ -38,7 +34,12 @@ export function ResourcePanel() {
             </div>
          ) : null}
          <div className="separator-vertical" />
-         <div className="row">
+         <div
+            className="row"
+            aria-label={t(L.WorkersAvailable)}
+            data-balloon-pos="down"
+            data-balloon-text="left"
+         >
             <div
                className={classNames({
                   "m-icon": true,
@@ -51,7 +52,12 @@ export function ResourcePanel() {
             </div>
          </div>
          <div className="separator-vertical" />
-         <div className="row">
+         <div
+            className="row"
+            aria-label={t(L.WorkersBusy)}
+            data-balloon-pos="down"
+            data-balloon-text="left"
+         >
             <div
                className={classNames({
                   "m-icon": true,
@@ -65,7 +71,12 @@ export function ResourcePanel() {
          </div>
 
          <div className="separator-vertical" />
-         <div className="row">
+         <div
+            className="row"
+            aria-label={t(L.Science)}
+            data-balloon-pos="down"
+            data-balloon-text="left"
+         >
             <div
                className={classNames({
                   "m-icon": true,
@@ -78,7 +89,12 @@ export function ResourcePanel() {
             </div>
          </div>
          <div className="separator-vertical" />
-         <div className="row">
+         <div
+            className="row"
+            aria-label={t(L.NotProducingBuildings)}
+            data-balloon-pos="down"
+            data-balloon-text="left"
+         >
             <div
                className={classNames({
                   "m-icon": true,
@@ -91,7 +107,12 @@ export function ResourcePanel() {
             </div>
          </div>
          <div className="separator-vertical" />
-         <div className="row">
+         <div
+            className="row"
+            aria-label={t(L.TotalEmpireValue)}
+            data-balloon-pos="down"
+            data-balloon-text="left"
+         >
             <div
                className={classNames({
                   "m-icon": true,

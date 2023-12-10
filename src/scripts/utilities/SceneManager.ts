@@ -48,7 +48,6 @@ export class ViewportScene extends Scene {
    }
 
    override onResize(width: number, height: number): void {
-      console.log(width, height);
       this.viewport.resize(width, height);
    }
 

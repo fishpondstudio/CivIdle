@@ -1,5 +1,5 @@
 import { notifyGameStateUpdate } from "../Global";
-import { applyToAllBuildings, IOCalculation } from "../logic/BuildingLogic";
+import { IOCalculation, applyToAllBuildings } from "../logic/BuildingLogic";
 import { getBuildingIO } from "../logic/IntraTickCache";
 import { Tick } from "../logic/TickLogic";
 import { PRIORITY_MAX, PRIORITY_MIN } from "../logic/Tile";
@@ -8,7 +8,10 @@ import { L, t } from "../utilities/i18n";
 import { playClick } from "../visuals/Sound";
 import { IBuildingComponentProps } from "./BuildingPage";
 
-export function BuildingProductionPriorityComponent({ gameState, xy }: IBuildingComponentProps) {
+export function BuildingProductionPriorityComponent({
+   gameState,
+   xy,
+}: IBuildingComponentProps): React.ReactNode {
    const building = gameState.tiles[xy].building;
    if (building == null || isEmpty(getBuildingIO(xy, "output", IOCalculation.None, gameState))) {
       return null;

@@ -13,7 +13,7 @@ export function UnlockableEffectComponent({
 }: {
    definition: IUnlockableDefinition;
    gameState: GameState;
-}) {
+}): React.ReactNode {
    return (
       <>
          {definition.revealDeposit?.map((d) => {

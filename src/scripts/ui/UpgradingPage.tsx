@@ -6,7 +6,7 @@ import { L, t } from "../utilities/i18n";
 import { BuildingConstructionProgressComponent } from "./BuildingConstructionProgressComponent";
 import { MenuComponent } from "./MenuComponent";
 
-export function UpgradingPage({ tile }: { tile: ITileData }) {
+export function UpgradingPage({ tile }: { tile: ITileData }): React.ReactNode {
    const building = tile.building;
    if (!building) {
       return null;

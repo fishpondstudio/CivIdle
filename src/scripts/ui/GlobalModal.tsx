@@ -13,7 +13,7 @@ export function hideModal() {
    hideModalEvent.emit();
 }
 
-export function GlobalModal() {
+export function GlobalModal(): React.ReactNode {
    const [content, setContent] = useState<ReactNode>(null);
 
    useTypedEvent(showModalEvent, (e) => {
@@ -38,7 +38,7 @@ export function showToast(toast: string) {
    showToastEvent.emit(toast);
 }
 
-export function GlobalToast() {
+export function GlobalToast(): React.ReactNode {
    const [content, setContent] = useState<string | null>(null);
 
    useTypedEvent(showToastEvent, (e) => {

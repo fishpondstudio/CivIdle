@@ -1,6 +1,6 @@
 import classNames from "classnames";
 import warning from "../../images/warning.png";
-import { getMultipliersFor, IOCalculation, totalMultiplierFor } from "../logic/BuildingLogic";
+import { IOCalculation, getMultipliersFor, totalMultiplierFor } from "../logic/BuildingLogic";
 import { Config } from "../logic/Constants";
 import { GameState } from "../logic/GameState";
 import { getBuildingIO } from "../logic/IntraTickCache";
@@ -17,7 +17,7 @@ export function BuildingIOTreeViewComponent({
    gameState: GameState;
    xy: string;
    type: keyof Pick<Multiplier, "input" | "output">;
-}) {
+}): React.ReactNode {
    const data = getBuildingIO(
       xy,
       type,

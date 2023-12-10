@@ -6,7 +6,7 @@ import { OceanTilePage } from "./OceanTilePage";
 import { PlayerTilePage } from "./PlayerTilePage";
 import { UnclaimedTilePage } from "./UnclaimedTilePage";
 
-export function PlayerMapPage({ xy }: { xy: string }): JSX.Element | null {
+export function PlayerMapPage({ xy }: { xy: string }): React.ReactNode {
    const playerMap = usePlayerMap();
    const myXy = getMyMapXy();
    if (myXy == xy) {
