@@ -62,14 +62,9 @@ export class WorldScene extends ViewportScene {
             minScale: Math.max(app.screen.width / this._width, app.screen.height / this._height),
          });
 
-      this._bg = this.viewport.addChild(
-         new TilingSprite(textures.Paper, this._width, this._height),
-      );
+      this._bg = this.viewport.addChild(new TilingSprite(textures.Paper, this._width, this._height));
       this._bg.tint = Color.shared.setValue(getGameOptions().themeColors.WorldBackground);
-      this._bg.position.set(
-         (this._width - this._bg.width) / 2,
-         (this._height - this._bg.height) / 2,
-      );
+      this._bg.position.set((this._width - this._bg.width) / 2, (this._height - this._bg.height) / 2);
 
       this._graphics = this.viewport.addChild(new SmoothGraphics()).lineStyle({
          color: 0xffffff,
@@ -142,9 +137,7 @@ export class WorldScene extends ViewportScene {
       this._bg.tint = Color.shared.setValue(gameOptions.themeColors.WorldBackground);
       this._graphics.tint = Color.shared.setValue(gameOptions.themeColors.GridColor);
       this._graphics.alpha = gameOptions.themeColors.GridAlpha;
-      this._selectedGraphics.tint = Color.shared.setValue(
-         gameOptions.themeColors.SelectedGridColor,
-      );
+      this._selectedGraphics.tint = Color.shared.setValue(gameOptions.themeColors.SelectedGridColor);
       forEach(this._tiles, (xy, visual) => visual.updateDepositColor(gameOptions));
    }
 

@@ -13,5 +13,5 @@
          "complexity": { "noForEach": "off" }
       }
    },
-   "formatter": { "lineWidth": 100, "indentStyle": "space", "indentWidth": 3 }
+   "formatter": { "lineWidth": 110, "indentStyle": "space", "indentWidth": 3 }
 }

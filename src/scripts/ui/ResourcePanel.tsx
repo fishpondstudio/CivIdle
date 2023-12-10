@@ -15,12 +15,7 @@ export function ResourcePanel(): React.ReactNode {
    return (
       <div className="resource-bar window">
          {tick.happiness ? (
-            <div
-               className="row"
-               aria-label={t(L.Happiness)}
-               data-balloon-pos="down"
-               data-balloon-text="left"
-            >
+            <div className="row" aria-label={t(L.Happiness)} data-balloon-pos="down" data-balloon-text="left">
                <div
                   className={classNames({
                      "m-icon": true,
@@ -52,12 +47,7 @@ export function ResourcePanel(): React.ReactNode {
             </div>
          </div>
          <div className="separator-vertical" />
-         <div
-            className="row"
-            aria-label={t(L.WorkersBusy)}
-            data-balloon-pos="down"
-            data-balloon-text="left"
-         >
+         <div className="row" aria-label={t(L.WorkersBusy)} data-balloon-pos="down" data-balloon-text="left">
             <div
                className={classNames({
                   "m-icon": true,
@@ -71,12 +61,7 @@ export function ResourcePanel(): React.ReactNode {
          </div>
 
          <div className="separator-vertical" />
-         <div
-            className="row"
-            aria-label={t(L.Science)}
-            data-balloon-pos="down"
-            data-balloon-text="left"
-         >
+         <div className="row" aria-label={t(L.Science)} data-balloon-pos="down" data-balloon-text="left">
             <div
                className={classNames({
                   "m-icon": true,

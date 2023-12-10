@@ -24,10 +24,7 @@ import { hideModal, showToast } from "./GlobalModal";
 import { FormatNumber } from "./HelperComponents";
 import { WarningComponent } from "./WarningComponent";
 
-export function FillPlayerTradeModal({
-   trade,
-   xy,
-}: { trade: IClientTrade; xy?: string }): React.ReactNode {
+export function FillPlayerTradeModal({ trade, xy }: { trade: IClientTrade; xy?: string }): React.ReactNode {
    const [percent, setPercent] = useState(100);
    const [tiles, setTiles] = useState<string[]>([]);
    const map = usePlayerMap();
@@ -93,9 +90,7 @@ export function FillPlayerTradeModal({
                   <tbody>
                      <tr>
                         <th></th>
-                        <th className="text-right">
-                           {Tick.current.resources[trade.buyResource].name()}
-                        </th>
+                        <th className="text-right">{Tick.current.resources[trade.buyResource].name()}</th>
                         <th className="text-right">{t(L.StorageLeft)}</th>
                      </tr>
                      {jsxMapOf(allTradeBuildings, (xy, building) => {
@@ -146,9 +141,7 @@ export function FillPlayerTradeModal({
             />
             <div className="sep20"></div>
             <ul className="tree-view">
-               <li
-                  className={classNames({ row: true, "text-strong text-red": !hasEnoughResource })}
-               >
+               <li className={classNames({ row: true, "text-strong text-red": !hasEnoughResource })}>
                   <div className="f1">
                      {t(L.PlayerTradeYouPay, {
                         res: Tick.current.resources[trade.buyResource].name(),
@@ -203,9 +196,7 @@ export function FillPlayerTradeModal({
                      })}
                   </div>
                   <div className="text-strong">
-                     <FormatNumber
-                        value={((1 - totalTariff) * (trade.sellAmount * percent)) / 100}
-                     />
+                     <FormatNumber value={((1 - totalTariff) * (trade.sellAmount * percent)) / 100} />
                   </div>
                </li>
             </ul>

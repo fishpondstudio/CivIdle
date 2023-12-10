@@ -49,9 +49,7 @@ export function greatPersonSprite(greatPerson: GreatPerson, context: ISceneConte
    sprite.mask = graphics;
    sprite.scale.set(350 / Math.max(sprite.width, sprite.height));
 
-   const ageText = bg.addChild(
-      makeTextAutoSize(Config.TechAge[age].name().toUpperCase(), 30, 0x34495e, 400),
-   );
+   const ageText = bg.addChild(makeTextAutoSize(Config.TechAge[age].name().toUpperCase(), 30, 0x34495e, 400));
 
    ageText.anchor.set(0.5, 0.5);
    ageText.alpha = 0.8;

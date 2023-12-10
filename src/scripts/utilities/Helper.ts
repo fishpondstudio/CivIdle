@@ -294,11 +294,7 @@ function humanFormat(num: number, suffix: string[]): string {
    return num.toLocaleString() + "E" + idx.toString();
 }
 
-export function formatNumber(
-   num: number | undefined | null,
-   binary = false,
-   scientific = false,
-): string {
+export function formatNumber(num: number | undefined | null, binary = false, scientific = false): string {
    if (num === null || num === undefined) {
       return "";
    }
@@ -374,22 +370,14 @@ export function reduceOf<T extends {}, K>(
    return result;
 }
 
-export function safeAdd<T extends string>(
-   obj: Partial<Record<T, number>>,
-   key: T,
-   valueToAdd: number,
-): void {
+export function safeAdd<T extends string>(obj: Partial<Record<T, number>>, key: T, valueToAdd: number): void {
    if (!obj[key]) {
       obj[key] = 0;
    }
    obj[key]! += valueToAdd;
 }
 
-export function safePush<T extends string, K>(
-   obj: Partial<Record<T, K[]>>,
-   key: T,
-   valueToPush: K,
-): void {
+export function safePush<T extends string, K>(obj: Partial<Record<T, K[]>>, key: T, valueToPush: K): void {
    if (!obj[key]) {
       obj[key] = [];
    }
@@ -510,12 +498,7 @@ export function lookAt(displayObject: DisplayObject, point: IPointData): void {
    displayObject.rotation = Math.atan2(point.y - displayObject.y, point.x - displayObject.x);
 }
 
-export function layoutCenter(
-   itemSize: number,
-   margin: number,
-   totalCount: number,
-   current: number,
-): number {
+export function layoutCenter(itemSize: number, margin: number, totalCount: number, current: number): number {
    const halfSize = itemSize / 2;
    const halfMargin = margin / 2;
    return -(totalCount - 1) * (halfSize + halfMargin) + current * (itemSize + margin);
@@ -546,9 +529,7 @@ export function setContains<T extends string>(a: PartialSet<T>, b: PartialSet<T>
    return true;
 }
 
-export function tabulateAdd<T extends string>(
-   ...params: Array<PartialTabulate<T>>
-): PartialTabulate<T> {
+export function tabulateAdd<T extends string>(...params: Array<PartialTabulate<T>>): PartialTabulate<T> {
    const result: PartialTabulate<T> = {};
    params.forEach((param) => {
       forEach(param, (k, v) => {

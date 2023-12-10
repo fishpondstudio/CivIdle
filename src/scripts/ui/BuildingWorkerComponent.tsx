@@ -18,10 +18,7 @@ import { playClick } from "../visuals/Sound";
 import { IBuildingComponentProps } from "./BuildingPage";
 import { FormatNumber, fmtNumber } from "./HelperComponents";
 
-export function BuildingWorkerComponent({
-   gameState,
-   xy,
-}: IBuildingComponentProps): React.ReactNode {
+export function BuildingWorkerComponent({ gameState, xy }: IBuildingComponentProps): React.ReactNode {
    const workersRequired = getWorkersFor(xy, { exclude: { Worker: true } }, gameState);
    const building = gameState.tiles[xy].building;
    if (building == null) {
@@ -56,10 +53,9 @@ export function BuildingWorkerComponent({
                                  <li className="row" key={v.id}>
                                     <div className="f1">
                                        {t(L.ResourceFromBuilding, {
-                                          resource: `${fmtNumber(
-                                             v.amount,
-                                             gameState,
-                                          )} ${getResourceName(v.resource)}`,
+                                          resource: `${fmtNumber(v.amount, gameState)} ${getResourceName(
+                                             v.resource,
+                                          )}`,
                                           building: getBuildingName(v.fromXy, gameState),
                                        })}{" "}
                                        ({v.ticksSpent}/{v.ticksRequired})
@@ -74,9 +70,7 @@ export function BuildingWorkerComponent({
                   <li>
                      <details>
                         <summary className="row">
-                           <div className="f1">
-                              {t(L.WorkersRequiredForTransportationMultiplier)}
-                           </div>
+                           <div className="f1">{t(L.WorkersRequiredForTransportationMultiplier)}</div>
                            <div className="text-strong">
                               {workersRequired.multiplier +
                                  Tick.current.globalMultipliers.transportCapacity.reduce(
@@ -130,9 +124,7 @@ export function BuildingWorkerComponent({
                   <li>
                      <details>
                         <summary className="row">
-                           {showWarning ? (
-                              <img src={warning} style={{ margin: "0 2px 0 0" }} />
-                           ) : null}
+                           {showWarning ? <img src={warning} style={{ margin: "0 2px 0 0" }} /> : null}
                            <div
                               className={classNames({
                                  f1: true,

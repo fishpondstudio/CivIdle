@@ -13,10 +13,10 @@ export async function checkSteamBranch() {
             <>
                <div className="title">Please Switch To Beta Branch On Steam</div>
                <div>
-                  You are not currently on beta branch. Please close the game, go to Steam, right
-                  click CivIdle -&gt; Properties -&gt; Betas and select "beta" in the dropdown menu.
-                  After Steam has finish downloading, start the game again. If this error persists,
-                  please report the bug on Discord.
+                  You are not currently on beta branch. Please close the game, go to Steam, right click
+                  CivIdle -&gt; Properties -&gt; Betas and select "beta" in the dropdown menu. After Steam has
+                  finish downloading, start the game again. If this error persists, please report the bug on
+                  Discord.
                </div>
             </>
          ),

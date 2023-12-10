@@ -25,28 +25,23 @@ export function ShortcutPage(): React.ReactNode {
                return (
                   <fieldset key={scope}>
                      <legend>{name()}</legend>
-                     {jsxMapOf(
-                        ShortcutActions as Record<Shortcut, IShortcutNameAndScope>,
-                        (key, value) => {
-                           if (value.scope === scope) {
-                              const shortcut = gameOptions.shortcuts[key];
-                              return (
-                                 <div key={key} className="row mv5">
-                                    <div className="f1">{value.name()}</div>
-                                    <div
-                                       className="text-link"
-                                       onClick={() => showModal(<EditShortcutModal action={key} />)}
-                                    >
-                                       <code>
-                                          {shortcut ? getShortcutKey(shortcut) : t(L.ShortcutNone)}
-                                       </code>
-                                    </div>
+                     {jsxMapOf(ShortcutActions as Record<Shortcut, IShortcutNameAndScope>, (key, value) => {
+                        if (value.scope === scope) {
+                           const shortcut = gameOptions.shortcuts[key];
+                           return (
+                              <div key={key} className="row mv5">
+                                 <div className="f1">{value.name()}</div>
+                                 <div
+                                    className="text-link"
+                                    onClick={() => showModal(<EditShortcutModal action={key} />)}
+                                 >
+                                    <code>{shortcut ? getShortcutKey(shortcut) : t(L.ShortcutNone)}</code>
                                  </div>
-                              );
-                           }
-                           return null;
-                        },
-                     )}
+                              </div>
+                           );
+                        }
+                        return null;
+                     })}
                   </fieldset>
                );
             })}

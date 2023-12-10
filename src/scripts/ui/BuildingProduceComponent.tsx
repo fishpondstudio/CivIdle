@@ -5,10 +5,7 @@ import { L, t } from "../utilities/i18n";
 import { BuildingIOTreeViewComponent } from "./BuildingIOTreeViewComponent";
 import { IBuildingComponentProps } from "./BuildingPage";
 
-export function BuildingProduceComponent({
-   gameState,
-   xy,
-}: IBuildingComponentProps): React.ReactNode {
+export function BuildingProduceComponent({ gameState, xy }: IBuildingComponentProps): React.ReactNode {
    const output = getBuildingIO(xy, "output", IOCalculation.Capacity, gameState);
    if (isEmpty(output)) {
       return null;

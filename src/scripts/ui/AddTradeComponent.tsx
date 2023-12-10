@@ -34,10 +34,7 @@ export function AddTradeComponent({ gameState, xy }: IBuildingComponentProps): R
       if (trade.buyAmount > rangeMax || trade.buyAmount < rangeMin) {
          return false;
       }
-      if (
-         trade.sellAmount < 0 ||
-         trade.sellAmount > (resourcesInStorage[trade.sellResource] ?? 0)
-      ) {
+      if (trade.sellAmount < 0 || trade.sellAmount > (resourcesInStorage[trade.sellResource] ?? 0)) {
          return false;
       }
       return true;

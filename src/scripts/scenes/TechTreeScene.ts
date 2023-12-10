@@ -106,9 +106,7 @@ export class TechTreeScene extends ViewportScene {
       const unlockedColor = Color.shared
          .setValue(getGameOptions().themeColors.ResearchUnlockedColor)
          .toNumber();
-      const lockedColor = Color.shared
-         .setValue(getGameOptions().themeColors.ResearchLockedColor)
-         .toNumber();
+      const lockedColor = Color.shared.setValue(getGameOptions().themeColors.ResearchLockedColor).toNumber();
       this.viewport.removeChildren();
       const g = new SmoothGraphics();
       this.viewport.addChild(g).lineStyle(LINE_STYLE);

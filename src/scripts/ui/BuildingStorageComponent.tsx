@@ -8,10 +8,7 @@ import { IBuildingComponentProps } from "./BuildingPage";
 import { FormatNumber } from "./HelperComponents";
 import { ProgressBarComponent } from "./ProgressBarComponent";
 
-export function BuildingStorageComponent({
-   gameState,
-   xy,
-}: IBuildingComponentProps): React.ReactNode {
+export function BuildingStorageComponent({ gameState, xy }: IBuildingComponentProps): React.ReactNode {
    const storage = getStorageFor(xy, gameState);
    const building = gameState.tiles[xy].building;
    if (building == null || !Number.isFinite(storage.total) || storage.total <= 0) {

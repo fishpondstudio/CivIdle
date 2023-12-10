@@ -1,17 +1,16 @@
-import { getGameOptions, resetCurrentCity, saveGame } from "../Global";
-import { GreatPerson } from "../definitions/GreatPersonDefinitions";
-import { Config } from "../logic/Constants";
-import { GameState, GreatPeopleChoice } from "../logic/GameState";
-import { getGreatPeopleAtReborn } from "../logic/RebornLogic";
+import { resetCurrentCity, saveGame, useGameOptions, useGameState } from "../Global";
+import { getGreatPeopleAtReborn, rollGreatPeople } from "../logic/RebornLogic";
 import { Tick } from "../logic/TickLogic";
-import { keysOf, reduceOf, shuffle } from "../utilities/Helper";
+import { forEach, reduceOf } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
 import { playClick } from "../visuals/Sound";
 import { hideModal } from "./GlobalModal";
 import { FormatNumber } from "./HelperComponents";
 import { WarningComponent } from "./WarningComponent";
 
-export function RebornModal({ gameState }: { gameState: GameState }): React.ReactNode {
+export function RebornModal(): React.ReactNode {
+   const gameState = useGameState();
+   const options = useGameOptions();
    return (
       <div className="window">
          <div className="title-bar">
@@ -19,8 +18,8 @@ export function RebornModal({ gameState }: { gameState: GameState }): React.Reac
          </div>
          <div className="window-body">
             <WarningComponent icon="info">
-               Your will start a new empire but you can take all the great people from this run,
-               plus extra great people based on your total empire value.
+               Your will start a new empire but you can take all the great people from this run, plus extra
+               great people based on your total empire value.
             </WarningComponent>
             <div className="sep10"></div>
             <fieldset>
@@ -64,18 +63,14 @@ export function RebornModal({ gameState }: { gameState: GameState }): React.Reac
                <button
                   style={{ padding: "0 15px" }}
                   onClick={() => {
-                     const amount = getGreatPeopleAtReborn();
-                     let candidates = shuffle(keysOf(Config.GreatPerson));
-                     for (let i = 0; i < amount; i++) {
-                        const choice: GreatPerson[] = [];
-                        for (let i = 0; i < 3; i++) {
-                           if (candidates.length === 0) {
-                              candidates = shuffle(keysOf(Config.GreatPerson));
-                           }
-                           choice.push(candidates.pop()!);
+                     rollGreatPeople(getGreatPeopleAtReborn());
+                     forEach(gameState.greatPeople, (k, v) => {
+                        if (options.greatPeople[k]) {
+                           options.greatPeople[k]!.amount += v;
+                        } else {
+                           options.greatPeople[k] = { level: 1, amount: v - 1 };
                         }
-                        getGameOptions().greatPeopleChoices.push(choice as GreatPeopleChoice);
-                     }
+                     });
                      resetCurrentCity();
                      saveGame(true).catch(console.error);
                      playClick();

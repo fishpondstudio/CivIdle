@@ -13,10 +13,7 @@ import { L, t } from "../utilities/i18n";
 import { playClick } from "../visuals/Sound";
 import { IBuildingComponentProps } from "./BuildingPage";
 
-export function BuildingStockpileComponent({
-   gameState,
-   xy,
-}: IBuildingComponentProps): React.ReactNode {
+export function BuildingStockpileComponent({ gameState, xy }: IBuildingComponentProps): React.ReactNode {
    const building = gameState.tiles[xy].building;
    if (building == null) {
       return null;
@@ -67,9 +64,7 @@ export function BuildingStockpileComponent({
          <div className="separator has-title">
             <div>
                {t(L.StockpileMax)}:{" "}
-               {building.stockpileMax <= 0
-                  ? t(L.StockpileMaxUnlimited)
-                  : `${building.stockpileMax}x`}
+               {building.stockpileMax <= 0 ? t(L.StockpileMaxUnlimited) : `${building.stockpileMax}x`}
             </div>
          </div>
          <div className="sep5"></div>
@@ -95,11 +90,7 @@ export function BuildingStockpileComponent({
             className="text-link text-small"
             onClick={() => {
                playClick();
-               applyToAllBuildings(
-                  building.type,
-                  { stockpileMax: building.stockpileMax },
-                  gameState,
-               );
+               applyToAllBuildings(building.type, { stockpileMax: building.stockpileMax }, gameState);
             }}
          >
             {t(L.ApplyToAll, { building: Tick.current.buildings[building.type].name() })}

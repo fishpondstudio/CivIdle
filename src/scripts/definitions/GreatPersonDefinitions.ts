@@ -32,10 +32,12 @@ export class GreatPersonDefinitions {
       value: (level) => level,
       maxLevel: Infinity,
       age: "BronzeAge",
-      tick: (self, level) => {
+      tick: (self, level, permanent) => {
          Tick.next.globalMultipliers.builderCapacity.push({
             value: level,
-            source: t(L.SourceGreatPerson, { person: self.name() }),
+            source: t(permanent ? L.SourceGreatPersonPermanent : L.SourceGreatPerson, {
+               person: self.name(),
+            }),
          });
       },
    };
@@ -47,10 +49,12 @@ export class GreatPersonDefinitions {
       value: (level) => level * 0.5,
       maxLevel: Infinity,
       age: "BronzeAge",
-      tick: (self, level) => {
+      tick: (self, level, permanent) => {
          Tick.next.globalMultipliers.sciencePerIdleWorker.push({
             value: self.value(level),
-            source: t(L.SourceGreatPerson, { person: self.name() }),
+            source: t(permanent ? L.SourceGreatPersonPermanent : L.SourceGreatPerson, {
+               person: self.name(),
+            }),
          });
       },
    };
@@ -144,10 +148,12 @@ export class GreatPersonDefinitions {
       value: (level) => level,
       maxLevel: Infinity,
       age: "ClassicalAge",
-      tick: (self, level) => {
+      tick: (self, level, permanent) => {
          Tick.next.globalMultipliers.sciencePerBusyWorker.push({
             value: level,
-            source: t(L.SourceGreatPerson, { person: self.name() }),
+            source: t(permanent ? L.SourceGreatPersonPermanent : L.SourceGreatPerson, {
+               person: self.name(),
+            }),
          });
       },
    };
@@ -159,16 +165,16 @@ export class GreatPersonDefinitions {
       value: (level) => level,
       maxLevel: Infinity,
       age: "ClassicalAge",
-      tick: (self, level) => {
+      tick: (self, level, permanent) => {
          addModifier(
             "ChariotWorkshop",
             { output: { Science: 1 } },
-            t(L.SourceGreatPerson, { person: self.name() }),
+            t(permanent ? L.SourceGreatPersonPermanent : L.SourceGreatPerson, { person: self.name() }),
          );
          addModifier(
             "Armory",
             { output: { Science: 1 } },
-            t(L.SourceGreatPerson, { person: self.name() }),
+            t(permanent ? L.SourceGreatPersonPermanent : L.SourceGreatPerson, { person: self.name() }),
          );
       },
    };
@@ -216,10 +222,12 @@ export class GreatPersonDefinitions {
       value: (level) => level,
       maxLevel: Infinity,
       age: "MiddleAge",
-      tick: (self, level) => {
+      tick: (self, level, permanent) => {
          Tick.next.globalMultipliers.transportCapacity.push({
             value: level,
-            source: t(L.SourceGreatPerson, { person: self.name() }),
+            source: t(permanent ? L.SourceGreatPersonPermanent : L.SourceGreatPerson, {
+               person: self.name(),
+            }),
          });
       },
    };
@@ -231,10 +239,12 @@ export class GreatPersonDefinitions {
       value: (level) => level * 2,
       maxLevel: Infinity,
       age: "MiddleAge",
-      tick: (self, level) => {
+      tick: (self, level, permanent) => {
          Tick.next.globalMultipliers.happiness.push({
             value: self.value(level),
-            source: t(L.SourceGreatPerson, { person: self.name() }),
+            source: t(permanent ? L.SourceGreatPersonPermanent : L.SourceGreatPerson, {
+               person: self.name(),
+            }),
          });
       },
    };
@@ -337,7 +347,7 @@ export interface IGreatPersonDefinition {
    maxLevel: number;
    age: TechAge;
    boost?: IGreatPersonBoost;
-   tick: (self: IGreatPersonDefinition, level: number) => void;
+   tick: (self: IGreatPersonDefinition, level: number, permanent: boolean) => void;
 }
 
 function greatPersonBoostDesc(self: IGreatPersonDefinition, level: number) {
@@ -351,20 +361,25 @@ function greatPersonBoostDesc(self: IGreatPersonDefinition, level: number) {
    });
 }
 
-function tickGreatPersonBoost(self: IGreatPersonDefinition, level: number) {
+function tickGreatPersonBoost(self: IGreatPersonDefinition, level: number, permanent: boolean) {
    if (!self.boost) {
       throw new Error("`tickGreatPersonBoost` requires `boost` to be defined");
    }
    self.boost.buildings.forEach((b) => {
       const multiplier: Partial<Multiplier> = {};
-      self.boost!.multipliers.forEach((m) => (multiplier[m] = self.value(level)));
-      addMultiplier(b, multiplier as Multiplier, t(L.SourceGreatPerson, { person: self.name() }));
+      self.boost!.multipliers.forEach((m) => {
+         multiplier[m] = self.value(level);
+      });
+      addMultiplier(
+         b,
+         multiplier as Multiplier,
+         t(permanent ? L.SourceGreatPersonPermanent : L.SourceGreatPerson, { person: self.name() }),
+      );
    });
 }
 
 function boostOf(
-   def: Omit<IGreatPersonDefinition, "desc" | "tick"> &
-      Pick<Required<IGreatPersonDefinition>, "boost">,
+   def: Omit<IGreatPersonDefinition, "desc" | "tick"> & Pick<Required<IGreatPersonDefinition>, "boost">,
 ): IGreatPersonDefinition {
    return {
       name: def.name,
@@ -374,6 +389,6 @@ function boostOf(
       value: def.value,
       maxLevel: def.maxLevel,
       age: def.age,
-      tick: (self, level) => tickGreatPersonBoost(self, level),
+      tick: (self, level, permanent) => tickGreatPersonBoost(self, level, permanent),
    };
 }

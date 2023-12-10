@@ -85,13 +85,7 @@ export function getShortcutKey(s: IShortcutConfig): string {
 }
 
 export function isShortcutEqual(a: IShortcutConfig, b: IShortcutConfig): boolean {
-   return (
-      a.ctrl === b.ctrl &&
-      a.shift === b.shift &&
-      a.alt === b.alt &&
-      a.meta === b.meta &&
-      a.key === b.key
-   );
+   return a.ctrl === b.ctrl && a.shift === b.shift && a.alt === b.alt && a.meta === b.meta && a.key === b.key;
 }
 
 export function makeShortcut(e: KeyboardEvent): IShortcutConfig {

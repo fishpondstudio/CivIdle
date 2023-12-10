@@ -3,10 +3,7 @@ import { jsxMapOf, sizeOf } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
 import { IBuildingComponentProps } from "./BuildingPage";
 
-export function BuildingDepositComponent({
-   gameState,
-   xy,
-}: IBuildingComponentProps): React.ReactNode {
+export function BuildingDepositComponent({ gameState, xy }: IBuildingComponentProps): React.ReactNode {
    const tile = gameState.tiles[xy];
    if (!tile) {
       return null;

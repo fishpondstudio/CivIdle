@@ -29,11 +29,7 @@ export function onBuildingComplete(xy: string, gs: GameState) {
          forEach(gs.tiles, (xy, tile) => {
             if (tile.deposit.Water) {
                tile.explored = true;
-               Singleton()
-                  .sceneManager.getCurrent(WorldScene)
-                  ?.getTile(xy)
-                  ?.reveal()
-                  .catch(console.error);
+               Singleton().sceneManager.getCurrent(WorldScene)?.getTile(xy)?.reveal().catch(console.error);
             }
          });
          break;

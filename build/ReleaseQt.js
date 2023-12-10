@@ -44,8 +44,7 @@ stream.on("end", () => {
    fs.copySync(path.join(rootPath, "qt", "cividle-win32-x64"), gameFilePath);
 
    cmd(
-      path.join(process.env.STEAMWORKS_PATH, "builder_linux", "steamcmd.sh") +
-         " +runscript ../cividle.txt",
+      path.join(process.env.STEAMWORKS_PATH, "builder_linux", "steamcmd.sh") + " +runscript ../cividle.txt",
       process.env.STEAMWORKS_PATH,
    );
 });

@@ -80,13 +80,7 @@ export const Easing = {
       return x === 1 ? 1 : 1 - pow(2, -10 * x);
    },
    InOutExpo: function (x) {
-      return x === 0
-         ? 0
-         : x === 1
-           ? 1
-           : x < 0.5
-              ? pow(2, 20 * x - 10) / 2
-              : (2 - pow(2, -20 * x + 10)) / 2;
+      return x === 0 ? 0 : x === 1 ? 1 : x < 0.5 ? pow(2, 20 * x - 10) / 2 : (2 - pow(2, -20 * x + 10)) / 2;
    },
    InCirc: function (x) {
       return 1 - sqrt(1 - pow(x, 2));

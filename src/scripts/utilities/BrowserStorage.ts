@@ -14,10 +14,7 @@ export class Store {
       });
    }
 
-   _withIDBStore(
-      type: IDBTransactionMode,
-      callback: (store: IDBObjectStore) => void,
-   ): Promise<void> {
+   _withIDBStore(type: IDBTransactionMode, callback: (store: IDBObjectStore) => void): Promise<void> {
       return this._dbp.then(
          (db) =>
             new Promise<void>((resolve, reject) => {

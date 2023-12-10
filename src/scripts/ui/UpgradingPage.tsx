@@ -55,9 +55,7 @@ export function UpgradingPage({ tile }: { tile: ITileData }): React.ReactNode {
                      >
                         indeterminate_check_box
                      </div>
-                     <div style={{ width: "40px", textAlign: "center" }}>
-                        {building.desiredLevel}
-                     </div>
+                     <div style={{ width: "40px", textAlign: "center" }}>{building.desiredLevel}</div>
                      <div
                         className="m-icon ml5 text-link"
                         onClick={() => {

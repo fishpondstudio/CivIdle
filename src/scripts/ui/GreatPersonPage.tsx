@@ -1,5 +1,4 @@
 import { useGameState } from "../Global";
-import { GreatPerson } from "../definitions/GreatPersonDefinitions";
 import { Config } from "../logic/Constants";
 import { jsxMapOf } from "../utilities/Helper";
 import { Singleton } from "../utilities/Singleton";
@@ -9,7 +8,9 @@ import { playLevelUp } from "../visuals/Sound";
 import { ChooseGreatPersonModal } from "./ChooseGreatPersonModal";
 import { showModal } from "./GlobalModal";
 import { MenuComponent } from "./MenuComponent";
+import { PermanentGreatPeople } from "./PermanentGreatPeople";
 import { TilePage } from "./TilePage";
+import { UpgradeGreatPersonModal } from "./UpgradeGreatPersonModal";
 import { WarningComponent } from "./WarningComponent";
 
 export function GreatPersonPage(): React.ReactNode {
@@ -23,9 +24,7 @@ export function GreatPersonPage(): React.ReactNode {
          <div className="window-body">
             <button
                className="w100"
-               onClick={() =>
-                  Singleton().routeTo(TilePage, { xy: Singleton().buildings.Headquarter.xy })
-               }
+               onClick={() => Singleton().routeTo(TilePage, { xy: Singleton().buildings.Headquarter.xy })}
             >
                <div className="row jcc">
                   <div className="m-icon" style={{ margin: "0 5px 0 -5px", fontSize: "18px" }}>
@@ -41,9 +40,7 @@ export function GreatPersonPage(): React.ReactNode {
                   onClick={() => {
                      if (gs.greatPeopleChoices.length > 0) {
                         playLevelUp();
-                        showModal(
-                           <ChooseGreatPersonModal greatPeopleChoice={gs.greatPeopleChoices[0]} />,
-                        );
+                        showModal(<ChooseGreatPersonModal greatPeopleChoice={gs.greatPeopleChoices[0]} />);
                      }
                   }}
                >
@@ -59,7 +56,7 @@ export function GreatPersonPage(): React.ReactNode {
                         <tr>
                            <th></th>
                            <th>{t(L.GreatPeopleName)}</th>
-                           <th>{t(L.GreatPeopleEffect)}</th>
+                           <th className="text-center">{t(L.GreatPeopleAmount)}</th>
                         </tr>
                      </thead>
                      <tbody>
@@ -68,11 +65,31 @@ export function GreatPersonPage(): React.ReactNode {
                            (k, level) => {
                               const person = Config.GreatPerson[k];
                               return (
-                                 <GreatPersonRow
-                                    key={k}
-                                    greatPerson={k}
-                                    level={person.value(level)}
-                                 />
+                                 <tr key={k}>
+                                    <td>
+                                       <img
+                                          src={greatPersonImage(k, Singleton().sceneManager.getContext())}
+                                          style={{ height: "50px", display: "block" }}
+                                       />
+                                    </td>
+                                    <td className="nowrap">
+                                       <div className="text-strong">{person.name()}</div>
+                                       <div className="text-desc text-small">
+                                          {Config.TechAge[person.age].name()}
+                                       </div>
+                                    </td>
+                                    <td className="text-center">
+                                       <div
+                                          className="text-center"
+                                          aria-label={person.desc(person, level)}
+                                          data-balloon-pos="left"
+                                          data-balloon-text="left"
+                                          data-balloon-length="medium"
+                                       >
+                                          {level}
+                                       </div>
+                                    </td>
+                                 </tr>
                               );
                            },
                            () => (
@@ -86,6 +103,14 @@ export function GreatPersonPage(): React.ReactNode {
                      </tbody>
                   </table>
                </div>
+            </fieldset>
+            <fieldset>
+               <legend>{t(L.PermanentGreatPeople)}</legend>
+               <div className="text-link text-strong" onClick={() => showModal(<UpgradeGreatPersonModal />)}>
+                  {t(L.PermanentGreatPeopleShowInModal)}
+               </div>
+               <div className="sep10" />
+               <PermanentGreatPeople showEffect={false} stickyHeader={false} />
             </fieldset>
             <fieldset>
                <legend>{t(L.GreatPeopleWiki)}</legend>
@@ -102,7 +127,23 @@ export function GreatPersonPage(): React.ReactNode {
                         {jsxMapOf(
                            Config.GreatPerson,
                            (k, person) => {
-                              return <GreatPersonRow key={k} greatPerson={k} level={1} />;
+                              return (
+                                 <tr key={k}>
+                                    <td>
+                                       <img
+                                          src={greatPersonImage(k, Singleton().sceneManager.getContext())}
+                                          style={{ height: "50px", display: "block" }}
+                                       />
+                                    </td>
+                                    <td className="nowrap">
+                                       <div className="text-strong">{person.name()}</div>
+                                       <div className="text-desc text-small">
+                                          {Config.TechAge[person.age].name()}
+                                       </div>
+                                    </td>
+                                    <td>{person.desc(person, 1)}</td>
+                                 </tr>
+                              );
                            },
                            () => (
                               <tr>
@@ -118,24 +159,5 @@ export function GreatPersonPage(): React.ReactNode {
             </fieldset>
          </div>
       </div>
-   );
-}
-
-function GreatPersonRow({ greatPerson, level }: { greatPerson: GreatPerson; level: number }) {
-   const person = Config.GreatPerson[greatPerson];
-   return (
-      <tr>
-         <td>
-            <img
-               src={greatPersonImage(greatPerson, Singleton().sceneManager.getContext())}
-               style={{ height: "50px", display: "block" }}
-            />
-         </td>
-         <td className="nowrap">
-            <div className="text-strong">{person.name()}</div>
-            <div className="text-desc text-small">{Config.TechAge[person.age].name()}</div>
-         </td>
-         <td>{person.desc(person, level)}</td>
-      </tr>
    );
 }

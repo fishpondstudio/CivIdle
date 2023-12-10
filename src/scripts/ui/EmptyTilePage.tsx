@@ -95,8 +95,7 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
                            if (isWorldOrNaturalWonder(b) && !isWorldOrNaturalWonder(a)) {
                               return 1;
                            }
-                           const tier =
-                              (Config.BuildingTier[a] ?? 0) - (Config.BuildingTier[b] ?? 0);
+                           const tier = (Config.BuildingTier[a] ?? 0) - (Config.BuildingTier[b] ?? 0);
                            if (tier !== 0) {
                               return tier;
                            }
@@ -105,16 +104,10 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
                               .localeCompare(Tick.current.buildings[b].name());
                         })
                         .filter((v) =>
-                           Tick.current.buildings[v]
-                              .name()
-                              .toLowerCase()
-                              .includes(filter.toLowerCase()),
+                           Tick.current.buildings[v].name().toLowerCase().includes(filter.toLowerCase()),
                         )
                         .map((k) => {
-                           if (
-                              (sizeOf(constructed[k]) ?? 0) >=
-                              (Tick.current.buildings[k].max ?? Infinity)
-                           ) {
+                           if ((sizeOf(constructed[k]) ?? 0) >= (Tick.current.buildings[k].max ?? Infinity)) {
                               return null;
                            }
                            const building = Tick.current.buildings[k];
@@ -156,8 +149,7 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
                                              </span>
                                           )}
                                        </div>
-                                       {building.deposit &&
-                                       setContains(tile.deposit, building.deposit) ? (
+                                       {building.deposit && setContains(tile.deposit, building.deposit) ? (
                                           <div className="m-icon small text-orange ml5">stars</div>
                                        ) : null}
                                        {k === lastBuild ? (
@@ -171,9 +163,7 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
                                        {mapOf(
                                           building.input,
                                           (res, amount) =>
-                                             `${Tick.current.resources[res].name()} x${formatNumber(
-                                                amount,
-                                             )}`,
+                                             `${Tick.current.resources[res].name()} x${formatNumber(amount)}`,
                                        ).join(", ")}
                                     </div>
                                     <div className="row text-small text-desc">
@@ -183,9 +173,7 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
                                        {mapOf(
                                           building.output,
                                           (res, amount) =>
-                                             `${Tick.current.resources[res].name()} x${formatNumber(
-                                                amount,
-                                             )}`,
+                                             `${Tick.current.resources[res].name()} x${formatNumber(amount)}`,
                                        ).join(", ")}
                                     </div>
                                  </td>

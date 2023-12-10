@@ -83,9 +83,7 @@ export function ThemePage(): React.ReactNode {
                <legend>{t(L.BuildingColor)}</legend>
                {keysOf(gameOptions.buildingColors)
                   .sort((a, b) =>
-                     Tick.current.buildings[a]
-                        .name()
-                        .localeCompare(Tick.current.buildings[b].name()),
+                     Tick.current.buildings[a].name().localeCompare(Tick.current.buildings[b].name()),
                   )
                   .map((b) => {
                      return (
@@ -108,9 +106,7 @@ export function ThemePage(): React.ReactNode {
                <legend>{t(L.ResourceColor)}</legend>
                {keysOf(gameOptions.resourceColors)
                   .sort((a, b) =>
-                     Tick.current.resources[a]
-                        .name()
-                        .localeCompare(Tick.current.resources[b].name()),
+                     Tick.current.resources[a].name().localeCompare(Tick.current.resources[b].name()),
                   )
                   .map((b) => {
                      return (

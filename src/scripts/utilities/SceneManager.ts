@@ -82,10 +82,7 @@ export class SceneManager {
       return this.context;
    }
 
-   public loadScene<T extends Scene>(
-      SceneClass: new (context: ISceneContext) => T,
-      force = false,
-   ): T {
+   public loadScene<T extends Scene>(SceneClass: new (context: ISceneContext) => T, force = false): T {
       if (!force && this.isCurrent(SceneClass)) {
          return this.currentScene as T;
       }

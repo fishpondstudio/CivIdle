@@ -1,11 +1,7 @@
 import { Building, BuildingDefinitions, BuildingSpecial } from "../definitions/BuildingDefinitions";
 import { CityDefinitions } from "../definitions/CityDefinitions";
 import { GreatPersonDefinitions } from "../definitions/GreatPersonDefinitions";
-import {
-   DepositResources,
-   Resource,
-   ResourceDefinitions,
-} from "../definitions/ResourceDefinitions";
+import { DepositResources, Resource, ResourceDefinitions } from "../definitions/ResourceDefinitions";
 import { Tech, TechAgeDefinitions, TechDefinitions } from "../definitions/TechDefinitions";
 import { PartialTabulate } from "../definitions/TypeDefinitions";
 import { deepFreeze, forEach, isEmpty, keysOf, sizeOf, tabulateAdd } from "../utilities/Helper";
@@ -185,18 +181,14 @@ export function calculateTierAndPrice(gs: GameState) {
                      if (v === res) {
                         delete resourceTierDependency[k];
                         delete Config.ResourceTier[k];
-                        console.log(
-                           `Resource Tier of ${k} is decided by ${res}, but its tier has changed.`,
-                        );
+                        console.log(`Resource Tier of ${k} is decided by ${res}, but its tier has changed.`);
                      }
                   });
                   forEach(buildingTierDependency, (k, v) => {
                      if (v === res) {
                         delete buildingTierDependency[k];
                         delete Config.BuildingTier[k];
-                        console.log(
-                           `Building Tier of ${k} is decided by ${res}, but its tier has changed.`,
-                        );
+                        console.log(`Building Tier of ${k} is decided by ${res}, but its tier has changed.`);
                      }
                   });
                }

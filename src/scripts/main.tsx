@@ -92,9 +92,7 @@ if (canvas) {
 
 export async function loadBundle() {
    fonts.forEach((f) => document.fonts.add(f));
-   const result = await Promise.all(
-      [Assets.loadBundle(["main"])].concat(fonts.map((f) => f.load())),
-   );
+   const result = await Promise.all([Assets.loadBundle(["main"])].concat(fonts.map((f) => f.load())));
    const { main }: { main: MainBundleAssets } = result[0];
 
    fonts.forEach((f) =>

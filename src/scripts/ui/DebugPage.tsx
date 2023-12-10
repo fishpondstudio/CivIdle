@@ -49,11 +49,7 @@ export function DebugPage(): React.ReactNode {
                                        className="m-icon small text-desc"
                                        onClick={() => {
                                           safeAdd(selectedResource, res, -1);
-                                          selectedResource[res] = clamp(
-                                             selectedResource[res]!,
-                                             0,
-                                             Infinity,
-                                          );
+                                          selectedResource[res] = clamp(selectedResource[res]!, 0, Infinity);
                                           setSelectedResource({ ...selectedResource });
                                        }}
                                     >
@@ -73,10 +69,10 @@ export function DebugPage(): React.ReactNode {
             <div className="row">
                <div>Selected</div>
                <div className="f1 text-right">
-                  {mapOf(
-                     selectedResource,
-                     (res, amount) => Config.ResourcePrice[res]! * amount,
-                  ).reduce((prev, curr) => prev + curr, 0)}
+                  {mapOf(selectedResource, (res, amount) => Config.ResourcePrice[res]! * amount).reduce(
+                     (prev, curr) => prev + curr,
+                     0,
+                  )}
                </div>
             </div>
          </div>

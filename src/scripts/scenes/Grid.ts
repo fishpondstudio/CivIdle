@@ -88,10 +88,7 @@ export class Grid {
    }
 
    public positionToGrid(position: Point): Point {
-      const o = OffsetCoord.roffsetFromCube(
-         OffsetCoord.ODD,
-         this.layout.pixelToHex(position).round(),
-      );
+      const o = OffsetCoord.roffsetFromCube(OffsetCoord.ODD, this.layout.pixelToHex(position).round());
       return { x: o.col, y: o.row };
    }
 

@@ -17,10 +17,7 @@ import { FormatNumber } from "./HelperComponents";
 
 type Tab = "resources" | "buildings" | "transportation";
 
-export function StatisticsBuildingBody({
-   gameState,
-   xy,
-}: IBuildingComponentProps): React.ReactNode {
+export function StatisticsBuildingBody({ gameState, xy }: IBuildingComponentProps): React.ReactNode {
    const building = gameState.tiles[xy].building as IBuildingData;
    if (building == null) {
       return null;
@@ -111,9 +108,7 @@ function BuildingTab({ gameState }: IBuildingComponentProps): React.ReactNode {
                                  <div
                                     className="pointer"
                                     onClick={() => {
-                                       Singleton()
-                                          .sceneManager.getCurrent(WorldScene)
-                                          ?.lookAtXy(xy);
+                                       Singleton().sceneManager.getCurrent(WorldScene)?.lookAtXy(xy);
                                     }}
                                  >
                                     {Tick.current.buildings[building.type].name()}
@@ -134,8 +129,7 @@ function BuildingTab({ gameState }: IBuildingComponentProps): React.ReactNode {
                               </td>
                               <td
                                  className={classNames({
-                                    "text-red":
-                                       Tick.current.notProducingReasons[xy] === "NotEnoughWorkers",
+                                    "text-red": Tick.current.notProducingReasons[xy] === "NotEnoughWorkers",
                                     "text-right": true,
                                  })}
                               >
@@ -161,8 +155,7 @@ function TransportationTab({ gameState }: IBuildingComponentProps): React.ReactN
                   {formatPercent(
                      reduceOf(
                         gameState.transportation,
-                        (prev, k, v) =>
-                           prev + v.reduce((prev, curr) => prev + curr.currentFuelAmount, 0),
+                        (prev, k, v) => prev + v.reduce((prev, curr) => prev + curr.currentFuelAmount, 0),
                         0,
                      ) / Tick.current.workersUsed.Worker!,
                   )}
@@ -212,10 +205,7 @@ function TransportationTab({ gameState }: IBuildingComponentProps): React.ReactN
                               </td>
                               <td className="text-right">
                                  <FormatNumber
-                                    value={
-                                       (100 * transportation.ticksSpent) /
-                                       transportation.ticksRequired
-                                    }
+                                    value={(100 * transportation.ticksSpent) / transportation.ticksRequired}
                                  />
                                  %
                               </td>
@@ -235,12 +225,7 @@ function ResourcesTab({ gameState }: IBuildingComponentProps): React.ReactNode {
    const inputs: PartialTabulate<Resource> = {};
    const outputs: PartialTabulate<Resource> = {};
    forEach(gameState.tiles, (xy, tile) => {
-      const input = getBuildingIO(
-         xy,
-         "input",
-         IOCalculation.Multiplier | IOCalculation.Capacity,
-         gameState,
-      );
+      const input = getBuildingIO(xy, "input", IOCalculation.Multiplier | IOCalculation.Capacity, gameState);
       const output = getBuildingIO(
          xy,
          "output",
@@ -293,9 +278,7 @@ function ResourcesTab({ gameState }: IBuildingComponentProps): React.ReactNode {
                <tbody>
                   {keysOf(unlockedResources(gameState))
                      .sort((a, b) =>
-                        Tick.current.resources[a]
-                           .name()
-                           .localeCompare(Tick.current.resources[b].name()),
+                        Tick.current.resources[a].name().localeCompare(Tick.current.resources[b].name()),
                      )
                      .map((res) => {
                         const r = Tick.current.resources[res];
@@ -312,9 +295,7 @@ function ResourcesTab({ gameState }: IBuildingComponentProps): React.ReactNode {
                                     value={
                                        Tick.current.resourcesByXy[res]?.reduce(
                                           (prev, curr) =>
-                                             prev +
-                                             (gameState.tiles[curr].building?.resources?.[res] ??
-                                                0),
+                                             prev + (gameState.tiles[curr].building?.resources?.[res] ?? 0),
                                           0,
                                        ) ?? 0
                                     }
@@ -323,9 +304,7 @@ function ResourcesTab({ gameState }: IBuildingComponentProps): React.ReactNode {
                               <td className="right">
                                  <FormatNumber value={output} />
                               </td>
-                              <td
-                                 className={classNames({ right: true, "text-red": input > output })}
-                              >
+                              <td className={classNames({ right: true, "text-red": input > output })}>
                                  <FormatNumber value={input} />
                               </td>
                            </tr>

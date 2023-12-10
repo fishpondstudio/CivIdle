@@ -89,7 +89,7 @@ export class GameOptions {
    resourceColors: Partial<Record<Resource, string>> = {};
    themeColors = { ...DefaultThemeColors };
    shortcuts: Partial<Record<Shortcut, IShortcutConfig>> = {};
-   greatPeople: PartialTabulate<GreatPerson> = {};
+   greatPeople: Partial<Record<GreatPerson, { level: number; amount: number }>> = {};
    greatPeopleChoices: GreatPeopleChoice[] = [];
 }
 

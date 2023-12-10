@@ -3,10 +3,7 @@ import { Tick } from "../logic/TickLogic";
 import { L, t } from "../utilities/i18n";
 import { IBuildingComponentProps } from "./BuildingPage";
 
-export function BuildingDescriptionComponent({
-   gameState,
-   xy,
-}: IBuildingComponentProps): React.ReactNode {
+export function BuildingDescriptionComponent({ gameState, xy }: IBuildingComponentProps): React.ReactNode {
    const type = gameState.tiles[xy]?.building?.type;
    if (!type) {
       return null;

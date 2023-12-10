@@ -17,9 +17,7 @@ export class IPCService {
    }
 
    public async fileRead(name: string): Promise<string> {
-      const content = await readFile(
-         path.join(this._app.getAppPath(), "save", this.getSteamId(), name),
-      );
+      const content = await readFile(path.join(this._app.getAppPath(), "save", this.getSteamId(), name));
       return content.toString("utf-8");
    }
 

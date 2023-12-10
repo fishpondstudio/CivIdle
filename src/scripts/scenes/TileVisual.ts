@@ -213,11 +213,7 @@ export class TileVisual extends Container {
       }
       this._building.visible = true;
       if (this._building.texture.noFrame) {
-         this._building.texture = getBuildingTexture(
-            this._tile.building.type,
-            textures,
-            gameState.city,
-         );
+         this._building.texture = getBuildingTexture(this._tile.building.type, textures, gameState.city);
          this.updateLayout();
       }
 

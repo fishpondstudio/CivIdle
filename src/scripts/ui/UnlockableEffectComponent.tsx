@@ -67,8 +67,7 @@ export function UnlockableEffectComponent({
                      {t(L.ConstructionCost, {
                         cost: mapOf(
                            getBuildingCost({ type: b, level: 1, status: "building" }),
-                           (res, amount) =>
-                              `${Config.Resource[res].name()} x${formatNumber(amount)}`,
+                           (res, amount) => `${Config.Resource[res].name()} x${formatNumber(amount)}`,
                         ).join(", "),
                      })}
                   </div>

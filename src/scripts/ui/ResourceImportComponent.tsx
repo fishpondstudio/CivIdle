@@ -11,10 +11,7 @@ import { showModal } from "./GlobalModal";
 import { FormatNumber } from "./HelperComponents";
 import { ProgressBarComponent } from "./ProgressBarComponent";
 
-export function ResourceImportComponent({
-   gameState,
-   xy,
-}: IBuildingComponentProps): React.ReactNode {
+export function ResourceImportComponent({ gameState, xy }: IBuildingComponentProps): React.ReactNode {
    const building = gameState.tiles[xy]?.building as IResourceImportBuildingData;
    if (!building) {
       return null;
@@ -54,9 +51,7 @@ export function ResourceImportComponent({
                   </tr>
                   {keysOf(resources)
                      .sort((a, b) =>
-                        Tick.current.resources[a]
-                           .name()
-                           .localeCompare(Tick.current.resources[b].name()),
+                        Tick.current.resources[a].name().localeCompare(Tick.current.resources[b].name()),
                      )
                      .map((res) => {
                         const ri = building.resourceImports[res];
@@ -76,10 +71,7 @@ export function ResourceImportComponent({
                                  className="text-right"
                                  onClick={() =>
                                     showModal(
-                                       <ChangeResourceImportModal
-                                          building={building}
-                                          resource={res}
-                                       />,
+                                       <ChangeResourceImportModal building={building} resource={res} />,
                                     )
                                  }
                               >

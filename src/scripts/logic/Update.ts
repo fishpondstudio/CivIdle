@@ -1,5 +1,5 @@
 import { IPointData } from "pixi.js";
-import { getGameState, notifyGameStateUpdate, saveGame } from "../Global";
+import { getGameOptions, getGameState, notifyGameStateUpdate, saveGame } from "../Global";
 import { Building } from "../definitions/BuildingDefinitions";
 import { IUnlockableDefinition } from "../definitions/ITechDefinition";
 import { Resource } from "../definitions/ResourceDefinitions";
@@ -112,7 +112,12 @@ export function tickEverySecond(gs: GameState, offline: boolean) {
 
    forEach(gs.greatPeople, (person, level) => {
       const greatPerson = Config.GreatPerson[person];
-      greatPerson.tick(greatPerson, level);
+      greatPerson.tick(greatPerson, level, false);
+   });
+
+   forEach(getGameOptions().greatPeople, (person, v) => {
+      const greatPerson = Config.GreatPerson[person];
+      greatPerson.tick(greatPerson, v.level, true);
    });
 
    forEach(Config.City[gs.city].buildingNameOverrides, (b, name) => {
@@ -224,9 +229,7 @@ function tickTiles(gs: GameState, offline: boolean) {
       if (diff !== 0) {
          return diff;
       }
-      return (
-         (Config.BuildingTier[buildingA.type] ?? 0) - (Config.BuildingTier[buildingB.type] ?? 0)
-      );
+      return (Config.BuildingTier[buildingA.type] ?? 0) - (Config.BuildingTier[buildingB.type] ?? 0);
    });
 
    for (const tile of tiles) {
@@ -305,12 +308,7 @@ function tickTile(xy: string, gs: GameState, offline: boolean): void {
    const input = filterTransportable(
       getBuildingIO(xy, "input", IOCalculation.Multiplier | IOCalculation.Capacity, gs),
    );
-   const output = getBuildingIO(
-      xy,
-      "output",
-      IOCalculation.Multiplier | IOCalculation.Capacity,
-      gs,
-   );
+   const output = getBuildingIO(xy, "output", IOCalculation.Multiplier | IOCalculation.Capacity, gs);
 
    forEach(building.resources, (res, amount) => {
       if (amount <= 0) {
@@ -398,8 +396,7 @@ function tickTile(xy: string, gs: GameState, offline: boolean): void {
             building.resources[res] ?? 0,
          );
          const buyResource = market.availableResources[res]!;
-         const buyAmount =
-            (amount * getMarketPrice(res, xy, gs)) / getMarketPrice(buyResource, xy, gs);
+         const buyAmount = (amount * getMarketPrice(res, xy, gs)) / getMarketPrice(buyResource, xy, gs);
          if (used - amount + buyAmount > total) {
             Tick.next.notProducingReasons[xy] = "StorageFull";
             return;
@@ -470,11 +467,7 @@ function tickTile(xy: string, gs: GameState, offline: boolean): void {
    onBuildingProductionComplete(xy, gs, offline);
 }
 
-function tickWarehouseAutopilot(
-   warehouse: IWarehouseBuildingData,
-   xy: string,
-   gs: GameState,
-): boolean {
+function tickWarehouseAutopilot(warehouse: IWarehouseBuildingData, xy: string, gs: GameState): boolean {
    let capacity = getWarehouseIdleCapacity(warehouse);
    let hasTransported = false;
    const transportCapacity =
@@ -493,8 +486,7 @@ function tickWarehouseAutopilot(
    const me = xyToPoint(xy);
    const result = getStorageFullBuildings(gs).sort(
       (a, b) =>
-         Singleton().grid.distance(a.x, a.y, me.x, me.y) -
-         Singleton().grid.distance(b.x, b.y, me.x, me.y),
+         Singleton().grid.distance(a.x, a.y, me.x, me.y) - Singleton().grid.distance(b.x, b.y, me.x, me.y),
    );
    const buildings = getXyBuildings(gs);
    for (let i = 0; i < result.length; i++) {
@@ -513,9 +505,7 @@ function tickWarehouseAutopilot(
          // Note: this is questionable. capacity are capped by transportCapacity first, without taking into account
          // the warehouse upgrade. This will result in less transports than it is. But fixing it is really complicated
          const upgradedTransportCapacity =
-            Singleton().grid.distanceXy(fromXy, xy) <= 1
-               ? Infinity
-               : Math.ceil(capacity / transportCapacity);
+            Singleton().grid.distanceXy(fromXy, xy) <= 1 ? Infinity : Math.ceil(capacity / transportCapacity);
          if (resources[candidate]! >= capacity) {
             const workers = Math.ceil(capacity / upgradedTransportCapacity);
             useWorkers("Worker", workers, xy);
@@ -577,10 +567,7 @@ export function transportResource(
 
       let transportCapacity =
          workerCapacity +
-         Tick.current.globalMultipliers.transportCapacity.reduce(
-            (prev, curr) => prev + curr.value,
-            0,
-         );
+         Tick.current.globalMultipliers.transportCapacity.reduce((prev, curr) => prev + curr.value, 0);
 
       if (
          gs.features.WarehouseUpgrade &&

@@ -18,12 +18,7 @@ export function BuildingIOTreeViewComponent({
    xy: string;
    type: keyof Pick<Multiplier, "input" | "output">;
 }): React.ReactNode {
-   const data = getBuildingIO(
-      xy,
-      type,
-      IOCalculation.Multiplier | IOCalculation.Capacity,
-      gameState,
-   );
+   const data = getBuildingIO(xy, type, IOCalculation.Multiplier | IOCalculation.Capacity, gameState);
    const totalMultiplier = totalMultiplierFor(xy, type, 1, gameState);
    return (
       <ul className="tree-view">
@@ -38,9 +33,7 @@ export function BuildingIOTreeViewComponent({
                   <details>
                      <summary className="row">
                         {showWarning ? <img src={warning} style={{ margin: "0 2px 0 0" }} /> : null}
-                        <div
-                           className={classNames({ f1: true, "production-warning": showWarning })}
-                        >
+                        <div className={classNames({ f1: true, "production-warning": showWarning })}>
                            {Config.Resource[k].name()}
                         </div>
                         <div className="text-strong">
@@ -58,9 +51,7 @@ export function BuildingIOTreeViewComponent({
                         </li>
                         <li className="row">
                            <div className="f1">
-                              {type === "input"
-                                 ? t(L.ConsumptionMultiplier)
-                                 : t(L.ProductionMultiplier)}
+                              {type === "input" ? t(L.ConsumptionMultiplier) : t(L.ProductionMultiplier)}
                            </div>
                            <div className="text-strong">
                               x

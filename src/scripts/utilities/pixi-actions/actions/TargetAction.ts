@@ -10,12 +10,7 @@ export class TargetAction<T extends Record<string, any>> extends Action {
    private readonly seconds: number;
    public readonly target: T;
 
-   constructor(
-      target: T,
-      to: Partial<T>,
-      seconds: number,
-      interpolation: EasingFunction = Easing.Linear,
-   ) {
+   constructor(target: T, to: Partial<T>, seconds: number, interpolation: EasingFunction = Easing.Linear) {
       super();
       this.interpolation = interpolation;
       this.targetValue = to;

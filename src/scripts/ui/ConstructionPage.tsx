@@ -23,16 +23,10 @@ export function ConstructionPage({ tile }: { tile: ITileData }): React.ReactNode
          <div className="window-body">
             <BuildingConstructionProgressComponent xy={tile.xy} gameState={gs} />
             <fieldset>
-               <legend>
-                  {t(building.status === "paused" ? L.ResumeConstruction : L.PauseConstruction)}
-               </legend>
+               <legend>{t(building.status === "paused" ? L.ResumeConstruction : L.PauseConstruction)}</legend>
                <div className="row">
                   <div>
-                     {t(
-                        building.status === "paused"
-                           ? L.ResumeConstructionDesc
-                           : L.PauseConstructionDesc,
-                     )}
+                     {t(building.status === "paused" ? L.ResumeConstructionDesc : L.PauseConstructionDesc)}
                   </div>
                   <div className="ml10">
                      <button

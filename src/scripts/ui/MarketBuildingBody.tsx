@@ -23,8 +23,7 @@ export function MarketBuildingBody({ gameState, xy }: IBuildingComponentProps): 
       return null;
    }
    const market = building as IMarketBuildingData;
-   const capacity =
-      building.capacity * building.level * totalMultiplierFor(xy, "output", 1, gameState);
+   const capacity = building.capacity * building.level * totalMultiplierFor(xy, "output", 1, gameState);
    return (
       <div className="window-body">
          <fieldset>
@@ -50,9 +49,7 @@ export function MarketBuildingBody({ gameState, xy }: IBuildingComponentProps): 
                </thead>
                <tbody>
                   {keysOf(market.availableResources)
-                     .sort(
-                        (a, b) => (Config.ResourcePrice[b] ?? 0) - (Config.ResourcePrice[a] ?? 0),
-                     )
+                     .sort((a, b) => (Config.ResourcePrice[b] ?? 0) - (Config.ResourcePrice[a] ?? 0))
                      .map((res) => {
                         const r = Tick.current.resources[res];
                         if (!r.canPrice || !r.canStore) {

@@ -126,11 +126,19 @@ fieldset .separator {
    padding: 10px;
 }
 
+.p8 {
+   padding: 8px;
+}
+
+.p5 {
+   padding: 5px;
+}
+
 .inset-deep {
    box-shadow: inset -1px -1px #fff, inset 1px 1px grey, inset -2px -2px #dfdfdf, inset 2px 2px #0a0a0a;
 }
 
-.inset-deep.white {
+.inset-deep.white,.outset-shallow-2.white,.inset-shallow-2.white {
    background: #fff;
 }
 
@@ -139,7 +147,14 @@ fieldset .separator {
    border-width: 1px;
    border-color: rgb(128, 128, 128) rgb(255, 255, 255) rgb(255, 255, 255) rgb(128, 128, 128);
    background-color: rgb(192, 192, 192);
-   color: rgb(0, 0, 0);
+}
+
+.inset-shallow-2 {
+   border: 1px inset #eee;
+}
+
+.outset-shallow-2 {
+   border: 1px outset #eee;
 }
 
 .inset-shallow.white {
@@ -407,6 +422,10 @@ ul.tree-view > li:first-child {
 
 .table-view th.text-right {
    text-align: right;
+}
+
+.table-view th.text-center {
+   text-align: center;
 }
 
 .table-view th,

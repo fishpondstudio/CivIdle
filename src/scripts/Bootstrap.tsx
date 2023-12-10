@@ -54,8 +54,8 @@ export async function startGame(
                <>
                   <div className="title">Save File Incompatible</div>
                   <div>
-                     Your currently save file is not compatible with the game version. You need to
-                     delete your old save and restart the game.
+                     Your currently save file is not compatible with the game version. You need to delete your
+                     old save and restart the game.
                   </div>
                </>
             ),
@@ -201,9 +201,7 @@ function verifyBuildingConfig(textures: Textures, city: City) {
          console.warn(`Cannot find textures for building ${b}`);
       }
       if (!isNullOrUndefined(def.max) && isNullOrUndefined(def.special)) {
-         console.warn(
-            `Building ${b} has "max" defined but "special" undefined. Please define "special"!`,
-         );
+         console.warn(`Building ${b} has "max" defined but "special" undefined. Please define "special"!`);
       }
    });
 }

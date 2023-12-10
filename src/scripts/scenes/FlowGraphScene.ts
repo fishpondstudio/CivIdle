@@ -86,13 +86,7 @@ export class FlowGraphScene extends ViewportScene {
    }
 }
 
-function drawConnection(
-   g: SmoothGraphics,
-   from: IPointData,
-   to: IPointData,
-   color: number,
-   width: number,
-) {
+function drawConnection(g: SmoothGraphics, from: IPointData, to: IPointData, color: number, width: number) {
    g.lineStyle({
       color: 0x666666,
       width: 3,

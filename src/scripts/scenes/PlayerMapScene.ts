@@ -13,13 +13,7 @@ import WorldMap from "../../../server/WorldMap.json";
 import { getGameOptions } from "../Global";
 import { getPlayerMap, OnPlayerMapMessage } from "../rpc/RPCClient";
 import { PlayerMapPage } from "../ui/PlayerMapPage";
-import {
-   drawDashedLine,
-   forEach,
-   formatPercent,
-   safeParseInt,
-   xyToPoint,
-} from "../utilities/Helper";
+import { drawDashedLine, forEach, formatPercent, safeParseInt, xyToPoint } from "../utilities/Helper";
 import { ViewportScene } from "../utilities/SceneManager";
 import { Singleton } from "../utilities/Singleton";
 import { Disposable } from "../utilities/TypedEvent";
@@ -193,14 +187,7 @@ export class PlayerMapScene extends ViewportScene {
          if (idx == 0) {
             this._path.moveTo(pos.x, pos.y);
          } else {
-            count = drawDashedLine(
-               this._path,
-               this.tileToPosition(path[idx - 1]),
-               pos,
-               count,
-               5,
-               10,
-            );
+            count = drawDashedLine(this._path, this.tileToPosition(path[idx - 1]), pos, count, 5, 10);
          }
       });
    }

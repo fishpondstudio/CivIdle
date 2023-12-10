@@ -1,5 +1,6 @@
 import { Config } from "./logic/Constants";
 import { GameOptions, GameState, SavedGame, initializeGameState } from "./logic/GameState";
+import { rollGreatPeople } from "./logic/RebornLogic";
 import { makeBuilding } from "./logic/Tile";
 import { SteamClient, isSteam } from "./rpc/SteamClient";
 import { Grid } from "./scenes/Grid";
@@ -52,6 +53,8 @@ if (import.meta.env.DEV) {
    };
    // @ts-expect-error
    window.saveGame = saveGame;
+   // @ts-expect-error
+   window.rollGreatPeople = rollGreatPeople;
 }
 
 export const GameStateChanged = new TypedEvent<GameState>();
@@ -68,9 +71,7 @@ export function getGameOptions(): GameOptions {
 export const OnUIThemeChanged = new TypedEvent<boolean>();
 
 export function syncUITheme(gameOptions: GameOptions): void {
-   gameOptions.useModernUI
-      ? document.body.classList.add("modern")
-      : document.body.classList.remove("modern");
+   gameOptions.useModernUI ? document.body.classList.add("modern") : document.body.classList.remove("modern");
    OnUIThemeChanged.emit(getGameOptions().useModernUI);
 }
 
@@ -93,9 +94,7 @@ export function saveGame(forceAndReload: boolean): Promise<void> {
       }
    }
    if (isSteam()) {
-      return SteamClient.fileWrite(SAVE_KEY, JSON.stringify(savedGame))
-         .catch(console.error)
-         .finally(cleanup);
+      return SteamClient.fileWrite(SAVE_KEY, JSON.stringify(savedGame)).catch(console.error).finally(cleanup);
    }
    return idbSet(SAVE_KEY, savedGame).catch(console.error).finally(cleanup);
 }
