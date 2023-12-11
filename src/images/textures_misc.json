@@ -1,118 +1,118 @@
 {
-   "frames": {
-      "100x100": {
-         "frame": {
-            "x": 622,
-            "y": 451,
-            "w": 100,
-            "h": 100
-         }
-      },
-      "Cloud": {
-         "frame": {
-            "x": 501,
-            "y": 451,
-            "w": 120,
-            "h": 128
-         }
-      },
-      "Construction": {
-         "frame": {
-            "x": 301,
-            "y": 652,
-            "w": 38,
-            "h": 53
-         }
-      },
-      "GreatPersonBackground": {
-         "frame": {
-            "x": 0,
-            "y": 0,
-            "w": 500,
-            "h": 600
-         }
-      },
-      "GreatPersonFrame": {
-         "frame": {
-            "x": 501,
-            "y": 0,
-            "w": 450,
-            "h": 450
-         }
-      },
-      "NotEnoughResources": {
-         "frame": {
-            "x": 890,
-            "y": 451,
-            "w": 50,
-            "h": 50
-         }
-      },
-      "NotEnoughWorkers": {
-         "frame": {
-            "x": 301,
-            "y": 601,
-            "w": 50,
-            "h": 50
-         }
-      },
-      "NotProducingGeneral": {
-         "frame": {
-            "x": 352,
-            "y": 601,
-            "w": 50,
-            "h": 50
-         }
-      },
-      "Paper": {
-         "frame": {
-            "x": 0,
-            "y": 601,
-            "w": 300,
-            "h": 300
-         }
-      },
-      "Spinner": {
-         "frame": {
-            "x": 723,
-            "y": 451,
-            "w": 100,
-            "h": 100
-         }
-      },
-      "StorageFull": {
-         "frame": {
-            "x": 403,
-            "y": 601,
-            "w": 50,
-            "h": 50
-         }
-      },
-      "Transport": {
-         "frame": {
-            "x": 824,
-            "y": 451,
-            "w": 65,
-            "h": 56
-         }
-      },
-      "Upgrade": {
-         "frame": {
-            "x": 454,
-            "y": 601,
-            "w": 40,
-            "h": 46
-         }
-      }
-   },
-   "meta": {
-      "app": "spritesheet-templates",
-      "version": "10.5.2",
-      "image": "./src/images/textures_misc.png",
-      "scale": 1,
-      "size": {
-         "w": 951,
-         "h": 901
-      }
-   }
+    "frames": {
+        "100x100": {
+            "frame": {
+                "x": 622,
+                "y": 451,
+                "w": 100,
+                "h": 100
+            }
+        },
+        "Cloud": {
+            "frame": {
+                "x": 501,
+                "y": 451,
+                "w": 120,
+                "h": 128
+            }
+        },
+        "Construction": {
+            "frame": {
+                "x": 301,
+                "y": 652,
+                "w": 38,
+                "h": 53
+            }
+        },
+        "GreatPersonBackground": {
+            "frame": {
+                "x": 0,
+                "y": 0,
+                "w": 500,
+                "h": 600
+            }
+        },
+        "GreatPersonFrame": {
+            "frame": {
+                "x": 501,
+                "y": 0,
+                "w": 450,
+                "h": 450
+            }
+        },
+        "NotEnoughResources": {
+            "frame": {
+                "x": 890,
+                "y": 451,
+                "w": 50,
+                "h": 50
+            }
+        },
+        "NotEnoughWorkers": {
+            "frame": {
+                "x": 301,
+                "y": 601,
+                "w": 50,
+                "h": 50
+            }
+        },
+        "NotProducingGeneral": {
+            "frame": {
+                "x": 352,
+                "y": 601,
+                "w": 50,
+                "h": 50
+            }
+        },
+        "Paper": {
+            "frame": {
+                "x": 0,
+                "y": 601,
+                "w": 300,
+                "h": 300
+            }
+        },
+        "Spinner": {
+            "frame": {
+                "x": 723,
+                "y": 451,
+                "w": 100,
+                "h": 100
+            }
+        },
+        "StorageFull": {
+            "frame": {
+                "x": 403,
+                "y": 601,
+                "w": 50,
+                "h": 50
+            }
+        },
+        "Transport": {
+            "frame": {
+                "x": 824,
+                "y": 451,
+                "w": 65,
+                "h": 56
+            }
+        },
+        "Upgrade": {
+            "frame": {
+                "x": 454,
+                "y": 601,
+                "w": 40,
+                "h": 46
+            }
+        }
+    },
+    "meta": {
+        "app": "spritesheet-templates",
+        "version": "10.5.2",
+        "image": "./src/images/textures_misc.png",
+        "scale": 1,
+        "size": {
+            "w": 951,
+            "h": 901
+        }
+    }
 }

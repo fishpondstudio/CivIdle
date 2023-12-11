@@ -5,6 +5,10 @@ interface PatchNote {
 
 export const PatchNotes: PatchNote[] = [
    {
+      version: "0.1.87",
+      content: [["QoL", "Improve Reborn UI and remove useless buttons"]],
+   },
+   {
       version: "0.1.86",
       content: [
          [

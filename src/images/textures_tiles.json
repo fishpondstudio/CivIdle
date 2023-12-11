@@ -1,62 +1,62 @@
 {
-   "frames": {
-      "TileCopper": {
-         "frame": {
-            "x": 0,
-            "y": 0,
-            "w": 100,
-            "h": 100
-         }
-      },
-      "TileGold": {
-         "frame": {
-            "x": 101,
-            "y": 0,
-            "w": 100,
-            "h": 100
-         }
-      },
-      "TileIron": {
-         "frame": {
-            "x": 0,
-            "y": 101,
-            "w": 100,
-            "h": 100
-         }
-      },
-      "TileStone": {
-         "frame": {
-            "x": 101,
-            "y": 101,
-            "w": 100,
-            "h": 100
-         }
-      },
-      "TileWater": {
-         "frame": {
-            "x": 202,
-            "y": 0,
-            "w": 100,
-            "h": 100
-         }
-      },
-      "TileWood": {
-         "frame": {
-            "x": 202,
-            "y": 101,
-            "w": 100,
-            "h": 100
-         }
-      }
-   },
-   "meta": {
-      "app": "spritesheet-templates",
-      "version": "10.5.2",
-      "image": "./src/images/textures_tiles.png",
-      "scale": 1,
-      "size": {
-         "w": 302,
-         "h": 201
-      }
-   }
+    "frames": {
+        "TileCopper": {
+            "frame": {
+                "x": 0,
+                "y": 0,
+                "w": 100,
+                "h": 100
+            }
+        },
+        "TileGold": {
+            "frame": {
+                "x": 101,
+                "y": 0,
+                "w": 100,
+                "h": 100
+            }
+        },
+        "TileIron": {
+            "frame": {
+                "x": 0,
+                "y": 101,
+                "w": 100,
+                "h": 100
+            }
+        },
+        "TileStone": {
+            "frame": {
+                "x": 101,
+                "y": 101,
+                "w": 100,
+                "h": 100
+            }
+        },
+        "TileWater": {
+            "frame": {
+                "x": 202,
+                "y": 0,
+                "w": 100,
+                "h": 100
+            }
+        },
+        "TileWood": {
+            "frame": {
+                "x": 202,
+                "y": 101,
+                "w": 100,
+                "h": 100
+            }
+        }
+    },
+    "meta": {
+        "app": "spritesheet-templates",
+        "version": "10.5.2",
+        "image": "./src/images/textures_tiles.png",
+        "scale": 1,
+        "size": {
+            "w": 302,
+            "h": 201
+        }
+    }
 }

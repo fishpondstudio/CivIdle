@@ -61,11 +61,8 @@ export function ManageRebornModal(): React.ReactNode {
                </div>
             </div>
             <div className="sep10" />
-            <div className="row">
-               <div className="f1 text-desc text-small">
-                  You have {options.greatPeopleChoices.length - 1} choices left
-               </div>
-               <button>Next</button>
+            <div className="f1 text-desc text-small text-center">
+               You have {options.greatPeopleChoices.length} choices left
             </div>
          </div>
       </div>
