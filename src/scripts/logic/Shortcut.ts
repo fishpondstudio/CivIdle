@@ -1,5 +1,6 @@
 import { DependencyList, useEffect } from "react";
 import { getGameOptions } from "../Global";
+import { forEach } from "../utilities/Helper";
 import { TypedEvent } from "../utilities/TypedEvent";
 import { L, t } from "../utilities/i18n";
 
@@ -48,20 +49,24 @@ const OnKeydown = new TypedEvent<KeyboardEvent>();
 
 document.addEventListener("keydown", OnKeydown.emit);
 
+const shortcuts: Partial<Record<Shortcut, () => void>> = {};
+
+OnKeydown.on((e) => {
+   if (e.target instanceof HTMLInputElement) {
+      return;
+   }
+   forEach(getGameOptions().shortcuts, (shortcut, config) => {
+      if (isShortcutEqual(config, makeShortcut(e))) {
+         shortcuts[shortcut]?.();
+      }
+   });
+});
+
 export function useShortcut(shortcut: Shortcut, callback: () => void, deps: DependencyList) {
    useEffect(() => {
-      const handler = (e: KeyboardEvent) => {
-         if (e.target instanceof HTMLInputElement) {
-            return;
-         }
-         const s = getGameOptions().shortcuts[shortcut];
-         if (s && isShortcutEqual(s, makeShortcut(e))) {
-            callback();
-         }
-      };
-      OnKeydown.on(handler);
+      shortcuts[shortcut] = callback;
       return () => {
-         OnKeydown.off(handler);
+         shortcuts[shortcut] = undefined;
       };
    }, [shortcut, callback, ...deps]);
 }

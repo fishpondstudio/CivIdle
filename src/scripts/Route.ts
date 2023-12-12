@@ -26,7 +26,7 @@ export function Route({ event }: { event: TypedEvent<RouteChangeEvent> }) {
       return () => {
          event.off(handleRouteChanged);
       };
-   }, []);
+   }, [event]);
    return React.createElement(component, params);
 }
 
