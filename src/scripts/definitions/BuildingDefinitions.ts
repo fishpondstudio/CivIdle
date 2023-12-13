@@ -3,9 +3,9 @@ import { Resource } from "./ResourceDefinitions";
 import { PartialSet, PartialTabulate } from "./TypeDefinitions";
 
 export enum BuildingSpecial {
-   HQ,
-   WorldWonder,
-   NaturalWonder,
+   HQ = 0,
+   WorldWonder = 1,
+   NaturalWonder = 2,
 }
 
 export interface IBuildingDefinition {

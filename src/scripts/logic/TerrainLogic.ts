@@ -40,15 +40,20 @@ export function ensureTileFogOfWar(xy: string, gameState: GameState, grid: Grid)
 
 export function findNearest(
    predicate: (tile: ITileData) => boolean,
-   point: IPointData,
+   target: IPointData,
    grid: Grid,
    gs: GameState,
 ): ITileData | null {
-   const position = grid.gridToPosition(point);
+   const position = grid.gridToPosition(target);
+   const targetXp = pointToXy(target);
    let minDistSqr = Infinity;
    let tile: ITileData | null = null;
    forEach(gs.tiles, (xy, t) => {
       if (!predicate(t)) {
+         return;
+      }
+      // Do NOT find myself!
+      if (xy === targetXp) {
          return;
       }
       const distSqr = v2(grid.gridToPosition(xyToPoint(xy)))

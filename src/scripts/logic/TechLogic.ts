@@ -1,4 +1,4 @@
-import { Building } from "../definitions/BuildingDefinitions";
+import { Building, BuildingSpecial } from "../definitions/BuildingDefinitions";
 import { GreatPerson } from "../definitions/GreatPersonDefinitions";
 import { Deposit, Resource } from "../definitions/ResourceDefinitions";
 import { Tech, TechAge } from "../definitions/TechDefinitions";
@@ -70,7 +70,23 @@ export function unlockTech(tech: Tech, gs: GameState): void {
    gs.unlockedTech[tech] = true;
    Config.Tech[tech].revealDeposit?.forEach((deposit) => {
       const tileCount = getDepositTileCount(deposit, gs);
-      const depositTiles = shuffle(keysOf(gs.tiles)).slice(0, tileCount);
+      const depositTiles = shuffle(
+         keysOf(gs.tiles).filter((xy) => {
+            const type = gs.tiles[xy].building?.type;
+            if (!type) {
+               return true;
+            }
+            // Do not spawn deposit under headquarter or natural wonders! Also use Config.Building because
+            // this code can happen in Initialize logic, which is very early
+            if (
+               Config.Building[type].special === BuildingSpecial.HQ ||
+               Config.Building[type].special === BuildingSpecial.NaturalWonder
+            ) {
+               return false;
+            }
+            return true;
+         }),
+      ).slice(0, tileCount);
       const exploredEmptyTiles = Object.values(gs.tiles).filter(
          (t) => t.explored && !t.building && isEmpty(t.deposit),
       );
@@ -78,9 +94,13 @@ export function unlockTech(tech: Tech, gs: GameState): void {
       if (depositTiles.every((xy) => !gs.tiles[xy].explored) && exploredEmptyTiles.length > 0) {
          depositTiles[0] = shuffle(exploredEmptyTiles)[0].xy;
       }
-      depositTiles.forEach((xy) => (gs.tiles[xy].deposit[deposit] = true));
+      depositTiles.forEach((xy) => {
+         gs.tiles[xy].deposit[deposit] = true;
+      });
    });
-   Config.Tech[tech].unlockFeature?.forEach((f) => (gs.features[f] = true));
+   Config.Tech[tech].unlockFeature?.forEach((f) => {
+      gs.features[f] = true;
+   });
 }
 
 export function getDepositUnlockTech(deposit: Deposit): Tech {

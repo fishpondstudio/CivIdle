@@ -5,6 +5,10 @@ interface PatchNote {
 
 export const PatchNotes: PatchNote[] = [
    {
+      version: "0.1.89",
+      content: [["Bugfix", "Fix a rare bug where reborn might causes game to stuck"]],
+   },
+   {
       version: "0.1.88",
       content: [["Bugfix", "Fix shortcut sometimes are registered incorrectly (4th fix)"]],
    },
