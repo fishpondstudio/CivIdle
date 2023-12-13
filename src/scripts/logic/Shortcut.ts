@@ -51,6 +51,12 @@ document.addEventListener("keydown", OnKeydown.emit);
 
 const shortcuts: Partial<Record<Shortcut, () => void>> = {};
 
+export function clearShortcuts() {
+   forEach(shortcuts, (k, v) => {
+      shortcuts[k] = undefined;
+   });
+}
+
 OnKeydown.on((e) => {
    if (e.target instanceof HTMLInputElement) {
       return;

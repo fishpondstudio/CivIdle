@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { getGameState } from "./Global";
+import { clearShortcuts } from "./logic/Shortcut";
 import { LoadingPage } from "./ui/LoadingPage";
 import { TilePage } from "./ui/TilePage";
 import { TypedEvent } from "./utilities/TypedEvent";
@@ -20,6 +21,7 @@ export function Route({ event }: { event: TypedEvent<RouteChangeEvent> }) {
          if (e.component !== LoadingPage) {
             playClick();
          }
+         clearShortcuts();
          setRoute(e);
       }
       event.on(handleRouteChanged);
