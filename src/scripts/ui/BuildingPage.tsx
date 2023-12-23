@@ -1,8 +1,8 @@
 import { FunctionComponent } from "react";
 import { useGameState } from "../Global";
 import { Building } from "../definitions/BuildingDefinitions";
+import { Config } from "../logic/Constants";
 import { GameState } from "../logic/GameState";
-import { Tick } from "../logic/TickLogic";
 import { ITileData } from "../logic/Tile";
 import { Singleton } from "../utilities/Singleton";
 import { DefaultBuildingBody } from "./DefaultBuildingBody";
@@ -35,7 +35,7 @@ export function BuildingPage({ tile }: { tile: ITileData }): React.ReactNode {
    }
    const building = tile.building;
    const gs = useGameState();
-   const definition = Tick.current.buildings[building.type];
+   const definition = Config.Building[building.type];
    const Body = BuildingBodyOverride[building.type] ?? DefaultBuildingBody;
    return (
       <div className="window">

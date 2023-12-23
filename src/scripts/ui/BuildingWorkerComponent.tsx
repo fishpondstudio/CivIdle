@@ -10,6 +10,7 @@ import {
    getWorkersFor,
    isSpecialBuilding,
 } from "../logic/BuildingLogic";
+import { Config } from "../logic/Constants";
 import { getBuildingIO } from "../logic/IntraTickCache";
 import { Tick } from "../logic/TickLogic";
 import { formatPercent, isEmpty } from "../utilities/Helper";
@@ -210,7 +211,7 @@ export function BuildingWorkerComponent({ gameState, xy }: IBuildingComponentPro
                      applyToAllBuildings(building.type, { capacity: building.capacity }, gameState);
                   }}
                >
-                  {t(L.ApplyToAll, { building: Tick.current.buildings[building.type].name() })}
+                  {t(L.ApplyToAll, { building: Config.Building[building.type].name() })}
                </div>
             </>
          )}

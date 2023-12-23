@@ -1,8 +1,8 @@
 import classNames from "classnames";
 import { Resource } from "../definitions/ResourceDefinitions";
 import { PartialTabulate } from "../definitions/TypeDefinitions";
+import { Config } from "../logic/Constants";
 import { GameState } from "../logic/GameState";
-import { Tick } from "../logic/TickLogic";
 import { forEach, formatHM, isEmpty, jsxMapOf } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
 import { hideModal } from "./GlobalModal";
@@ -47,14 +47,14 @@ export function OfflineProductionModal({
                            }
                         });
                         const beforeLevel = before.tiles[xy].building?.level ?? 0;
-                        if (isEmpty(diff) && beforeLevel == building.level) {
+                        if (isEmpty(diff) && beforeLevel === building.level) {
                            return null;
                         }
                         return (
                            <tr key={xy}>
-                              <td>{Tick.current.buildings[building.type].name()}</td>
+                              <td>{Config.Building[building.type].name()}</td>
                               <td>
-                                 {beforeLevel == building.level ? (
+                                 {beforeLevel === building.level ? (
                                     building.level
                                  ) : (
                                     <span className="text-green text-strong">
@@ -66,7 +66,7 @@ export function OfflineProductionModal({
                                  {jsxMapOf(diff, (res, amount) => {
                                     return (
                                        <span key={res} className="mr10">
-                                          {Tick.current.resources[res].name()}:
+                                          {Config.Resource[res].name()}:
                                           <span
                                              className={classNames({
                                                 "text-red": amount < 0,

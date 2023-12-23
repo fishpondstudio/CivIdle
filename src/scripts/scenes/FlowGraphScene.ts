@@ -2,7 +2,7 @@ import { SmoothGraphics } from "@pixi/graphics-smooth";
 import { BitmapText, Container, IPointData, LINE_CAP, LINE_JOIN } from "pixi.js";
 import { Building } from "../definitions/BuildingDefinitions";
 import { Resource } from "../definitions/ResourceDefinitions";
-import { Tick } from "../logic/TickLogic";
+import { Config } from "../logic/Constants";
 import { DebugPage } from "../ui/DebugPage";
 import { forEach, sizeOf } from "../utilities/Helper";
 import { ViewportScene } from "../utilities/SceneManager";
@@ -114,7 +114,7 @@ class BuildingCard extends Container {
       });
       graphics.beginFill(0xffffff).drawRoundedRect(0, 0, 300, 400, 10).endFill();
 
-      const building = Tick.current.buildings[b];
+      const building = Config.Building[b];
       this.addChild(
          new BitmapText(building.name(), {
             fontName: Fonts.CabinSketch,
@@ -138,7 +138,7 @@ class BuildingCard extends Container {
       forEach(building.input, (res, amount) => {
          ++i;
          const input = this.addChild(
-            new BitmapText(Tick.current.resources[res].name(), {
+            new BitmapText(Config.Resource[res].name(), {
                fontName: Fonts.Cabin,
                fontSize: 20,
                tint: 0x333333,
@@ -157,7 +157,7 @@ class BuildingCard extends Container {
       forEach(building.output, (res, amount) => {
          ++i;
          const output = this.addChild(
-            new BitmapText(Tick.current.resources[res].name(), {
+            new BitmapText(Config.Resource[res].name(), {
                fontName: Fonts.Cabin,
                fontSize: 20,
                align: "right",

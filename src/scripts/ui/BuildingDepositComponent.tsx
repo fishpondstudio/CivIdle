@@ -1,4 +1,4 @@
-import { Tick } from "../logic/TickLogic";
+import { Config } from "../logic/Constants";
 import { jsxMapOf, sizeOf } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
 import { IBuildingComponentProps } from "./BuildingPage";
@@ -12,7 +12,7 @@ export function BuildingDepositComponent({ gameState, xy }: IBuildingComponentPr
    if (!building) {
       return null;
    }
-   const deposits = Tick.current.buildings[building.type].deposit;
+   const deposits = Config.Building[building.type].deposit;
    if (!deposits || sizeOf(deposits) === 0) {
       return null;
    }
@@ -23,7 +23,7 @@ export function BuildingDepositComponent({ gameState, xy }: IBuildingComponentPr
             {jsxMapOf(deposits, (k) => {
                return (
                   <li key={k} className="row">
-                     <div className="f1">{Tick.current.resources[k].name()}</div>
+                     <div className="f1">{Config.Resource[k].name()}</div>
                      {tile.deposit[k] ? (
                         <div className="m-icon small text-green">check_circle</div>
                      ) : (

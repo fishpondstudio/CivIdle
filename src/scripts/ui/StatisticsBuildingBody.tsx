@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Resource } from "../definitions/ResourceDefinitions";
 import { PartialTabulate } from "../definitions/TypeDefinitions";
 import { IOCalculation } from "../logic/BuildingLogic";
+import { Config } from "../logic/Constants";
 import { getBuildingIO, unlockedResources } from "../logic/IntraTickCache";
 import { Tick } from "../logic/TickLogic";
 import { IBuildingData } from "../logic/Tile";
@@ -85,9 +86,9 @@ function BuildingTab({ gameState }: IBuildingComponentProps): React.ReactNode {
                         return tile.explored && building ? [{ building, xy }] : [];
                      })
                      .sort((a, b) =>
-                        Tick.current.buildings[a.building.type]
+                        Config.Building[a.building.type]
                            .name()
-                           .localeCompare(Tick.current.buildings[b.building.type].name()),
+                           .localeCompare(Config.Building[b.building.type].name()),
                      )
                      .map(({ building, xy }) => {
                         let icon = <div className="m-icon small text-green">check_circle</div>;
@@ -111,7 +112,7 @@ function BuildingTab({ gameState }: IBuildingComponentProps): React.ReactNode {
                                        Singleton().sceneManager.getCurrent(WorldScene)?.lookAtXy(xy);
                                     }}
                                  >
-                                    {Tick.current.buildings[building.type].name()}
+                                    {Config.Building[building.type].name()}
                                  </div>
                               </td>
                               <td className="right">
@@ -192,11 +193,9 @@ function TransportationTab({ gameState }: IBuildingComponentProps): React.ReactN
                                  )}
                               </td>
                               <td className="text-strong">
-                                 {i === 0 && buildingType
-                                    ? Tick.current.buildings[buildingType].name()
-                                    : null}
+                                 {i === 0 && buildingType ? Config.Building[buildingType].name() : null}
                               </td>
-                              <td>{Tick.current.resources[transportation.resource].name()}</td>
+                              <td>{Config.Resource[transportation.resource].name()}</td>
                               <td className="text-right">
                                  <FormatNumber value={transportation.amount} />
                               </td>
@@ -277,11 +276,9 @@ function ResourcesTab({ gameState }: IBuildingComponentProps): React.ReactNode {
                </thead>
                <tbody>
                   {keysOf(unlockedResources(gameState))
-                     .sort((a, b) =>
-                        Tick.current.resources[a].name().localeCompare(Tick.current.resources[b].name()),
-                     )
+                     .sort((a, b) => Config.Resource[a].name().localeCompare(Config.Resource[b].name()))
                      .map((res) => {
-                        const r = Tick.current.resources[res];
+                        const r = Config.Resource[res];
                         if (!r.canPrice || !r.canStore) {
                            return null;
                         }

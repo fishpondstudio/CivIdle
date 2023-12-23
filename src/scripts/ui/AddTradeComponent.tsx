@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Resource } from "../definitions/ResourceDefinitions";
+import { Config } from "../logic/Constants";
 import { IClientAddTradeRequest, getBuyAmountRange } from "../logic/PlayerTradeLogic";
 import { Tick } from "../logic/TickLogic";
 import { client } from "../rpc/RPCClient";
@@ -11,7 +12,7 @@ import { FormatNumber } from "./HelperComponents";
 
 export function AddTradeComponent({ gameState, xy }: IBuildingComponentProps): React.ReactNode {
    const buyResources = keysOf(Tick.next.resourcesByXy).filter(
-      (res) => Tick.current.resources[res].canPrice && Tick.current.resources[res].canStore,
+      (res) => Config.Resource[res].canPrice && Config.Resource[res].canStore,
    );
    const resourcesInStorage = gameState.tiles[xy].building?.resources ?? {};
    const sellResources = keysOf(resourcesInStorage);
@@ -25,7 +26,7 @@ export function AddTradeComponent({ gameState, xy }: IBuildingComponentProps): R
    const [rangeMin, rangeMax] = getBuyAmountRange(trade);
 
    function isTradeValid(trade: IClientAddTradeRequest): boolean {
-      if (trade.buyResource == trade.sellResource) {
+      if (trade.buyResource === trade.sellResource) {
          return false;
       }
       if (trade.buyAmount < 1) {
@@ -51,14 +52,14 @@ export function AddTradeComponent({ gameState, xy }: IBuildingComponentProps): R
                   className="f1"
                   value={trade.sellResource}
                   onChange={(e) => {
-                     if (e.target.value in Tick.current.resources) {
+                     if (e.target.value in Config.Resource) {
                         setTrade({ ...trade, sellResource: e.target.value as Resource });
                      }
                   }}
                >
                   {sellResources.map((res) => (
                      <option key={res} value={res}>
-                        {Tick.current.resources[res].name()}
+                        {Config.Resource[res].name()}
                      </option>
                   ))}
                </select>
@@ -87,14 +88,14 @@ export function AddTradeComponent({ gameState, xy }: IBuildingComponentProps): R
                   className="f1"
                   value={trade.buyResource}
                   onChange={(e) => {
-                     if (e.target.value in Tick.current.resources) {
+                     if (e.target.value in Config.Resource) {
                         setTrade({ ...trade, buyResource: e.target.value as Resource });
                      }
                   }}
                >
                   {buyResources.map((res) => (
                      <option key={res} value={res}>
-                        {Tick.current.resources[res].name()}
+                        {Config.Resource[res].name()}
                      </option>
                   ))}
                </select>

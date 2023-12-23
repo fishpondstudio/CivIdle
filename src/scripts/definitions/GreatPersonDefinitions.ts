@@ -1,5 +1,6 @@
+import { Config } from "../logic/Constants";
 import { Multiplier, MultiplierType, MultiplierTypeDesc, Tick } from "../logic/TickLogic";
-import { addModifier, addMultiplier } from "../logic/Update";
+import { addMultiplier } from "../logic/Update";
 import { L, t } from "../utilities/i18n";
 import { Building } from "./BuildingDefinitions";
 import { TechAge } from "./TechDefinitions";
@@ -158,26 +159,17 @@ export class GreatPersonDefinitions {
       },
    };
 
-   QinShiHuang: IGreatPersonDefinition = {
+   QinShiHuang: IGreatPersonDefinition = boostOf({
       name: () => t(L.QinShiHuang),
-      desc: (self, level) => t(L.QinShiHuangDesc, { value: self.value(level) }),
+      boost: {
+         multipliers: ["output", "storage"],
+         buildings: ["ChariotWorkshop", "Armory"],
+      },
       time: "c. 200s BC",
       value: (level) => level,
       maxLevel: Infinity,
       age: "ClassicalAge",
-      tick: (self, level, permanent) => {
-         addModifier(
-            "ChariotWorkshop",
-            { output: { Science: 1 } },
-            t(permanent ? L.SourceGreatPersonPermanent : L.SourceGreatPerson, { person: self.name() }),
-         );
-         addModifier(
-            "Armory",
-            { output: { Science: 1 } },
-            t(permanent ? L.SourceGreatPersonPermanent : L.SourceGreatPerson, { person: self.name() }),
-         );
-      },
-   };
+   });
 
    Justinian: IGreatPersonDefinition = boostOf({
       name: () => t(L.Justinian),
@@ -429,7 +421,7 @@ function greatPersonBoostDesc(self: IGreatPersonDefinition, level: number) {
    return t(L.BoostDescription, {
       value: self.value(level),
       multipliers: self.boost.multipliers.map((m) => MultiplierTypeDesc[m]).join(", "),
-      buildings: self.boost.buildings.map((b) => Tick.current.buildings[b].name()).join(", "),
+      buildings: self.boost.buildings.map((b) => Config.Building[b].name()).join(", "),
    });
 }
 

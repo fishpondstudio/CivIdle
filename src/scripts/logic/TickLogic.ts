@@ -1,5 +1,5 @@
-import { Building, BuildingDefinitions } from "../definitions/BuildingDefinitions";
-import { Resource, ResourceDefinitions } from "../definitions/ResourceDefinitions";
+import { Building } from "../definitions/BuildingDefinitions";
+import { Resource } from "../definitions/ResourceDefinitions";
 import { PartialSet, PartialTabulate } from "../definitions/TypeDefinitions";
 import { IPointArray } from "../utilities/Helper";
 import { makeObservableHook } from "../utilities/Hook";
@@ -10,12 +10,8 @@ import { calculateHappiness } from "./HappinessLogic";
 import { IBuildingData } from "./Tile";
 
 interface ITickData {
-   buildings: BuildingDefinitions;
-   resources: ResourceDefinitions;
    buildingMultipliers: Partial<Record<Building, MultiplierWithSource[]>>;
-   buildingModifiers: Partial<Record<Building, ModifierWithSource[]>>;
    tileMultipliers: Partial<Record<string, MultiplierWithSource[]>>;
-   tileModifiers: Partial<Record<string, ModifierWithSource[]>>;
    unlockedBuildings: PartialSet<Building>;
    workersAvailable: PartialTabulate<Resource>;
    happiness: ReturnType<typeof calculateHappiness> | null;
@@ -39,15 +35,9 @@ export type NotProducingReason =
    | "NoActiveTransports";
 
 export function EmptyTickData(): ITickData {
-   const buildings = new BuildingDefinitions();
-   const resources = new ResourceDefinitions();
    return {
-      buildings,
-      resources,
       buildingMultipliers: {},
-      buildingModifiers: {},
       unlockedBuildings: {},
-      tileModifiers: {},
       tileMultipliers: {},
       workersAvailable: {},
       workersUsed: {},
@@ -106,13 +96,6 @@ export interface IValueWithSource {
    value: number;
    source: string;
 }
-
-export interface IModifier {
-   input?: PartialTabulate<Resource>;
-   output: PartialTabulate<Resource>;
-}
-
-export type ModifierWithSource = IModifier & { source: string };
 
 export const CurrentTickChanged = new TypedEvent<ITickData>();
 export const useCurrentTick = makeObservableHook(CurrentTickChanged, () => Tick.current);

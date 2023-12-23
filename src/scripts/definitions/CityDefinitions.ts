@@ -1,6 +1,7 @@
 import { L, t } from "../utilities/i18n";
-import { Building } from "./BuildingDefinitions";
-import { Deposit } from "./ResourceDefinitions";
+import { Building, BuildingDefinitions } from "./BuildingDefinitions";
+import { Deposit, ResourceDefinitions } from "./ResourceDefinitions";
+import { TechDefinitions } from "./TechDefinitions";
 import { PartialSet } from "./TypeDefinitions";
 
 export class CityDefinitions {
@@ -16,9 +17,9 @@ export class CityDefinitions {
          Coal: 0.02,
       },
       size: 40,
-      buildingNameOverrides: {
-         Headquarter: () => t(L.RomanForum),
-         Statistics: () => t(L.CensorsOffice),
+      override: (resource, building, tech) => {
+         building.Headquarter.name = () => t(L.RomanForum);
+         building.Statistics.name = () => t(L.CensorsOffice);
       },
       naturalWonders: { Alps: true },
    };
@@ -30,6 +31,6 @@ interface ICityDefinition {
    deposits: Record<Deposit, number>;
    size: number;
    name: () => string;
-   buildingNameOverrides: Partial<Record<Building, () => string>>;
+   override: (resource: ResourceDefinitions, building: BuildingDefinitions, tech: TechDefinitions) => void;
    naturalWonders: PartialSet<Building>;
 }

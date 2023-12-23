@@ -1,6 +1,6 @@
 import { notifyGameOptionsUpdate, useGameOptions } from "../Global";
 import { Resource } from "../definitions/ResourceDefinitions";
-import { Tick } from "../logic/TickLogic";
+import { Config } from "../logic/Constants";
 import { jsxMapOf } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
 import { IBuildingComponentProps } from "./BuildingPage";
@@ -12,7 +12,7 @@ export function BuildingColorComponent({ gameState, xy }: IBuildingComponentProp
       return null;
    }
    const gameOptions = useGameOptions();
-   const def = Tick.current.buildings[building.type];
+   const def = Config.Building[building.type];
    return (
       <fieldset>
          <legend>{t(L.BuildingColor)}</legend>
@@ -40,7 +40,7 @@ export function BuildingColorComponent({ gameState, xy }: IBuildingComponentProp
 }
 
 function ResourceColor({ resource }: { resource: Resource }) {
-   const r = Tick.current.resources[resource];
+   const r = Config.Resource[resource];
    const gameOptions = useGameOptions();
    if (r.canStore) {
       return (

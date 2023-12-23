@@ -383,15 +383,16 @@ export const EN = {
    MausoleumAtHalicarnassusDesc: "Free transportation within 2 tile range",
    HangingGarden: "Hanging Garden",
    HangingGardenDesc:
-      "+1 Builder Capacity Multiplier. Adjacent aqueducts get +1 Production, Storage and Worker Capacity multiplier",
+      "+1 Builder Capacity Multiplier. Adjacent aqueducts get +1 Production, Storage and Worker Capacity Multiplier",
    Colosseum: "Colosseum",
-   ColosseumDesc: "All adjacent buildings get +1 Production, Storage and Worker Capacity multiplier",
+   ColosseumDesc: "All adjacent buildings get +1 Production, Storage and Worker Capacity Multiplier",
    CircusMaximus: "Circus Maximus",
-   CircusMaximusDesc: "All buildings that produce workers get +1 Production multiplier",
+   CircusMaximusDesc: "All buildings that produce workers get +1 Production Multiplier",
    Statistics: "Statistics Building",
    StatisticsDesc: "Provide statistics of consumption and production",
    Alps: "Alps",
-   AlpsDesc: "Every 10th level of a building gets +1 Production capacity",
+   AlpsDesc:
+      "Every 10th level of a building gets +1 Production Capacity (+1 Consumption Multiplier, +1 Production Multiplier)",
    GreatDagonPagoda: "Great Dagon Pagoda",
    GreatDagonPagodaDesc: "Great Dagon Pagoda",
    SagradaFamília: "Sagrada Família",
@@ -774,4 +775,5 @@ export const EN = {
    Cancel: "Cancel",
    ChooseGreatPersonFromLastReborn: "Choose Great Person From Last Reborn",
    BankingAdditionalUpgrade: "All buildings that are level 10 or higher get +1 Storage Multiplier",
+   EstimatedTimeLeft: "Estimated Time Left",
 };

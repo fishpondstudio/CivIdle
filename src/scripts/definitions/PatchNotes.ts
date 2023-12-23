@@ -5,6 +5,19 @@ interface PatchNote {
 
 export const PatchNotes: PatchNote[] = [
    {
+      version: "0.1.92",
+      content: [
+         [
+            "Balance",
+            "Great Person: Qin Shi Huang changed to +1 Production Multiplier, Storage Multiplier for Chariot Workshop, Armory",
+         ],
+         ["QoL", "Show estimated time left when constructing/upgrading buildings"],
+         ["Bugfix", "Fix St. Peter's Basilica shows incorrect storage"],
+         ["Balance", "Parthenon now costs Paintings instead of Poems"],
+         ["QoL", "Improve performance and remove animation stutters"],
+      ],
+   },
+   {
       version: "0.1.91",
       content: [["Bugfix", "Fix Cannon Workshop typo"]],
    },
@@ -18,7 +31,7 @@ export const PatchNotes: PatchNote[] = [
          ],
          [
             "Content",
-            "12 New Renaissance Buildings: Lens Workshop, Bank, University, Coal Mine, Canon Workshop, Printing House, Museum, Gunpowder Mill, Frigate Builder, Bond Market, Courthouse, Dynamic Workshop",
+            "12 New Renaissance Buildings: Lens Workshop, Bank, University, Coal Mine, Cannon Workshop, Printing House, Museum, Gunpowder Mill, Frigate Builder, Bond Market, Courthouse, Dynamic Workshop",
          ],
          [
             "Content",

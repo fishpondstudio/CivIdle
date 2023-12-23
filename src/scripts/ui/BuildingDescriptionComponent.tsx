@@ -1,5 +1,5 @@
 import { isWorldOrNaturalWonder } from "../logic/BuildingLogic";
-import { Tick } from "../logic/TickLogic";
+import { Config } from "../logic/Constants";
 import { L, t } from "../utilities/i18n";
 import { IBuildingComponentProps } from "./BuildingPage";
 
@@ -8,7 +8,7 @@ export function BuildingDescriptionComponent({ gameState, xy }: IBuildingCompone
    if (!type) {
       return null;
    }
-   const building = Tick.current.buildings[type];
+   const building = Config.Building[type];
    if (!building.desc) {
       return null;
    }

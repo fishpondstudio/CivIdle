@@ -2,7 +2,7 @@ import { useState } from "react";
 import { notifyGameStateUpdate } from "../Global";
 import { Resource } from "../definitions/ResourceDefinitions";
 import { getWarehouseCapacity } from "../logic/BuildingLogic";
-import { Tick } from "../logic/TickLogic";
+import { Config } from "../logic/Constants";
 import { IResourceImport, IResourceImportBuildingData } from "../logic/Tile";
 import { clamp, reduceOf, safeParseInt } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
@@ -31,7 +31,7 @@ export function ChangeResourceImportModal({
       <div className="window">
          <div className="title-bar">
             <div className="title-bar-text">
-               {t(L.ResourceImportSettings, { res: Tick.current.resources[resource].name() })}
+               {t(L.ResourceImportSettings, { res: Config.Resource[resource].name() })}
             </div>
             <div className="title-bar-controls">
                <button onClick={hideModal} aria-label="Close"></button>

@@ -1,4 +1,4 @@
-import { GlobalMultipliers, IModifier, Multiplier } from "../logic/TickLogic";
+import { GlobalMultipliers, Multiplier } from "../logic/TickLogic";
 import { Building } from "./BuildingDefinitions";
 import { Feature } from "./FeatureDefinitions";
 import { Deposit } from "./ResourceDefinitions";
@@ -10,7 +10,6 @@ export interface IUnlockableDefinition {
    unlockFeature?: Feature[];
    unlockBuilding?: Building[];
    revealDeposit?: Deposit[];
-   buildingModifier?: Partial<Record<Building, IModifier>>;
    buildingMultiplier?: Partial<Record<Building, Multiplier>>;
    globalMultiplier?: Partial<Record<keyof GlobalMultipliers, number>>;
    additionalUpgrades?: Array<() => string>;

@@ -2,7 +2,7 @@ import { IUnlockableDefinition } from "../definitions/ITechDefinition";
 import { getBuildingCost } from "../logic/BuildingLogic";
 import { Config } from "../logic/Constants";
 import { GameState } from "../logic/GameState";
-import { GlobalMultiplierNames, Tick } from "../logic/TickLogic";
+import { GlobalMultiplierNames } from "../logic/TickLogic";
 import { getDepositTileCount } from "../logic/Tile";
 import { formatNumber, jsxMapOf, mapOf } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
@@ -17,7 +17,7 @@ export function UnlockableEffectComponent({
    return (
       <>
          {definition.revealDeposit?.map((d) => {
-            const deposit = Tick.current.resources[d];
+            const deposit = Config.Resource[d];
             return (
                <fieldset key={d}>
                   <legend>
@@ -32,7 +32,7 @@ export function UnlockableEffectComponent({
             );
          })}
          {definition.unlockBuilding?.map((b) => {
-            const building = Tick.current.buildings[b];
+            const building = Config.Building[b];
             return (
                <fieldset key={b}>
                   <legend>
@@ -74,40 +74,11 @@ export function UnlockableEffectComponent({
                </fieldset>
             );
          })}
-         {jsxMapOf(definition.buildingModifier, (k, v) => {
-            return (
-               <fieldset key={k}>
-                  <legend>
-                     <b>{t(L.UpgradeBuilding)}</b> {Tick.current.buildings[k].name()}
-                  </legend>
-                  {jsxMapOf(v.input, (res, v) => {
-                     return (
-                        <div className="row mv5" key={res}>
-                           <div className="f1">
-                              {t(L.ConsumeResource, { resource: Config.Resource[res].name() })}
-                           </div>
-                           <div className="text-strong">+{v}</div>
-                        </div>
-                     );
-                  })}
-                  {jsxMapOf(v.output, (res, v) => {
-                     return (
-                        <div className="row mv5" key={res}>
-                           <div className="f1">
-                              {t(L.ProduceResource, { resource: Config.Resource[res].name() })}
-                           </div>
-                           <div className="text-strong">+{v}</div>
-                        </div>
-                     );
-                  })}
-               </fieldset>
-            );
-         })}
          {jsxMapOf(definition.buildingMultiplier, (k, v) => {
             return (
                <fieldset key={k}>
                   <legend>
-                     <b>{t(L.BuildingMultipliers)}</b> {Tick.current.buildings[k].name()}
+                     <b>{t(L.BuildingMultipliers)}</b> {Config.Building[k].name()}
                   </legend>
                   {v.input ? (
                      <div className="row mv5">

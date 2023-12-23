@@ -64,7 +64,7 @@ import {
 } from "./IntraTickCache";
 import { onBuildingComplete, onBuildingProductionComplete } from "./LogicCallback";
 import { getAmountInTransit } from "./ResourceLogic";
-import { CurrentTickChanged, EmptyTickData, IModifier, Multiplier, Tick } from "./TickLogic";
+import { CurrentTickChanged, EmptyTickData, Multiplier, Tick } from "./TickLogic";
 import {
    IBuildingData,
    IMarketBuildingData,
@@ -120,11 +120,6 @@ export function tickEverySecond(gs: GameState, offline: boolean) {
       greatPerson.tick(greatPerson, v.level, true);
    });
 
-   forEach(Config.City[gs.city].buildingNameOverrides, (b, name) => {
-      Tick.current.buildings[b].name = name;
-      Tick.next.buildings[b].name = name;
-   });
-
    tickPrice(gs);
    tickTransportations(gs);
    tickTiles(gs, offline);
@@ -146,9 +141,6 @@ export function tickEverySecond(gs: GameState, offline: boolean) {
 function tickTech(td: IUnlockableDefinition) {
    td.unlockBuilding?.forEach((b) => {
       Tick.next.unlockedBuildings[b] = true;
-   });
-   forEach(td.buildingModifier, (k, v) => {
-      addModifier(k, v, t(L.SourceResearch, { tech: td.name() }));
    });
    forEach(td.buildingMultiplier, (k, v) => {
       addMultiplier(k, v, t(L.SourceResearch, { tech: td.name() }));
@@ -321,14 +313,12 @@ function tickTile(xy: string, gs: GameState, offline: boolean): void {
       if (amount <= 0) {
          return;
       }
-      Tick.next.totalValue += Tick.current.resources[res].canPrice
-         ? (Config.ResourcePrice[res] ?? 0) * amount
-         : 0;
+      Tick.next.totalValue += Config.Resource[res].canPrice ? (Config.ResourcePrice[res] ?? 0) * amount : 0;
       safePush(Tick.next.resourcesByXy, res, xy);
       safePush(Tick.next.resourcesByGrid, res, xyToPointArray(xy));
    });
 
-   const requiredDeposits = Tick.current.buildings[building.type].deposit;
+   const requiredDeposits = Config.Building[building.type].deposit;
    if (requiredDeposits) {
       let key: Resource;
       for (key in requiredDeposits) {
@@ -505,7 +495,7 @@ function tickWarehouseAutopilot(warehouse: IWarehouseBuildingData, xy: string, g
          continue;
       }
       const resources = building.resources;
-      const output = Tick.current.buildings[building.type].output;
+      const output = Config.Building[building.type].output;
       const candidates = keysOf(resources)
          .filter((r) => output[r])
          .sort((a, b) => resources[b]! - resources[a]!);
@@ -626,21 +616,6 @@ export function transportResource(
    }
 }
 
-export function addModifier(k: Building, modifier: IModifier, source: string) {
-   let m = Tick.next.buildingModifiers[k];
-   if (m == null) {
-      m = [];
-   }
-   m.push({ ...modifier, source });
-   Tick.next.buildingModifiers[k] = m;
-   forEach(modifier.input, (res, v) => {
-      safeAdd(Tick.next.buildings[k].input, res, v);
-   });
-   forEach(modifier.output, (res, v) => {
-      safeAdd(Tick.next.buildings[k].output, res, v);
-   });
-}
-
 export function addMultiplier(k: Building, multiplier: Multiplier, source: string) {
    let m = Tick.next.buildingMultipliers[k];
    if (m == null) {
@@ -667,7 +642,7 @@ function tickPrice(gs: GameState) {
    }
    const resources = filterOf(
       unlockedResources(gs),
-      (res) => Tick.current.resources[res].canPrice && Tick.current.resources[res].canStore,
+      (res) => Config.Resource[res].canPrice && Config.Resource[res].canStore,
    );
    forEach(getXyBuildings(gs), (xy, building) => {
       if (building.type === "Market") {

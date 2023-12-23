@@ -6,7 +6,6 @@ import { Tech } from "../definitions/TechDefinitions";
 import { Config } from "../logic/Constants";
 import { GameOptions } from "../logic/GameState";
 import { isAgeUnlocked, unlockableTechs } from "../logic/TechLogic";
-import { Tick } from "../logic/TickLogic";
 import { TechPage } from "../ui/TechPage";
 import { forEach, sizeOf } from "../utilities/Helper";
 import { ViewportScene } from "../utilities/SceneManager";
@@ -93,8 +92,8 @@ export class TechTreeScene extends ViewportScene {
    }
 
    private getTechDescription(def: ITechDefinition): string {
-      const deposits = def.revealDeposit?.map((d) => Tick.current.resources[d].name()) ?? [];
-      const buildings = def.unlockBuilding?.map((b) => Tick.current.buildings[b].name()) ?? [];
+      const deposits = def.revealDeposit?.map((d) => Config.Resource[d].name()) ?? [];
+      const buildings = def.unlockBuilding?.map((b) => Config.Building[b].name()) ?? [];
       const desc = deposits.concat(buildings.concat()).join(", ") ?? null;
       return desc;
    }

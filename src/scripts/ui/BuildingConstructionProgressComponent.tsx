@@ -1,12 +1,12 @@
 import {
    getBuilderCapacity,
-   getBuildingCost,
    getBuildingPercentage,
    getMultipliersFor,
    isWorldWonder,
 } from "../logic/BuildingLogic";
+import { Config } from "../logic/Constants";
 import { Tick } from "../logic/TickLogic";
-import { formatPercent, jsxMapOf } from "../utilities/Helper";
+import { formatHMS, formatPercent, jsxMapOf } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
 import { IBuildingComponentProps } from "./BuildingPage";
 import { FormatNumber } from "./HelperComponents";
@@ -22,18 +22,25 @@ export function BuildingConstructionProgressComponent({
       return null;
    }
    const { base, multiplier, total } = getBuilderCapacity(building, xy, gameState);
-   const cost = getBuildingCost(building);
-   const percentage = getBuildingPercentage(xy, cost, gameState);
+   const { cost, percent, secondsLeft } = getBuildingPercentage(xy, gameState);
    return (
       <fieldset>
-         <legend>
-            {t(L.ConstructionProgress)}: {formatPercent(percentage, 0)}
-         </legend>
-         <ProgressBarComponent progress={percentage} />
+         <div className="row">
+            <div className="f1">{t(L.ConstructionProgress)}</div>
+            <div>{formatPercent(percent, 0)}</div>
+         </div>
+         <div className="sep5"></div>
+         <div className="row">
+            <div className="f1">{t(L.EstimatedTimeLeft)}</div>
+            <div>{formatHMS(secondsLeft * 1000)}</div>
+         </div>
+         <div className="sep5"></div>
+
+         <ProgressBarComponent progress={percent} />
          {jsxMapOf(cost, (res, value) => {
             return (
                <div className="row mv5" key={res}>
-                  <div className="f1">{Tick.current.resources[res].name()}</div>
+                  <div className="f1">{Config.Resource[res].name()}</div>
                   <div>
                      <FormatNumber value={building.resources[res] ?? 0} />/
                      <FormatNumber value={value} />

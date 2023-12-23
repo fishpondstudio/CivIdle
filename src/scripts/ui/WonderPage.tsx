@@ -1,8 +1,8 @@
 import { useGameState } from "../Global";
 import { Building } from "../definitions/BuildingDefinitions";
 import { PartialSet } from "../definitions/TypeDefinitions";
+import { Config } from "../logic/Constants";
 import { getXyBuildings } from "../logic/IntraTickCache";
-import { Tick } from "../logic/TickLogic";
 import { forEach, jsxMapOf } from "../utilities/Helper";
 import { Singleton } from "../utilities/Singleton";
 import { L, t } from "../utilities/i18n";
@@ -13,10 +13,7 @@ export function WonderPage(): React.ReactNode {
    const gs = useGameState();
    const builtWonders: PartialSet<Building> = {};
    forEach(getXyBuildings(gs), (xy, building) => {
-      if (
-         Tick.current.buildings[building.type].max == 1 &&
-         Tick.current.buildings[building.type].construction
-      ) {
+      if (Config.Building[building.type].max === 1 && Config.Building[building.type].construction) {
          builtWonders[building.type] = true;
       }
    });
@@ -51,7 +48,7 @@ export function WonderPage(): React.ReactNode {
                         </tr>
                      </thead>
                      <tbody>
-                        {jsxMapOf(Tick.current.buildings, (b, def) => {
+                        {jsxMapOf(Config.Building, (b, def) => {
                            if (def.max !== 1 || !def.construction) {
                               return null;
                            }

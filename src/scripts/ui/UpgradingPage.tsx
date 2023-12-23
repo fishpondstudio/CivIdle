@@ -1,6 +1,6 @@
 import classNames from "classnames";
 import { notifyGameStateUpdate, useGameState } from "../Global";
-import { Tick } from "../logic/TickLogic";
+import { Config } from "../logic/Constants";
 import { ITileData } from "../logic/Tile";
 import { L, t } from "../utilities/i18n";
 import { BuildingConstructionProgressComponent } from "./BuildingConstructionProgressComponent";
@@ -12,7 +12,7 @@ export function UpgradingPage({ tile }: { tile: ITileData }): React.ReactNode {
       return null;
    }
    const gs = useGameState();
-   const definition = Tick.current.buildings[building.type];
+   const definition = Config.Building[building.type];
    const canDecreaseDesiredLevel = building.desiredLevel > building.level + 1;
    return (
       <div className="window">

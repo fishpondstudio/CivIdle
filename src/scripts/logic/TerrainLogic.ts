@@ -4,8 +4,8 @@ import { Grid } from "../scenes/Grid";
 import { forEach, keysOf, pointToXy, xyToPoint } from "../utilities/Helper";
 import { v2 } from "../utilities/Vector2";
 import { isNaturalWonder } from "./BuildingLogic";
+import { Config } from "./Constants";
 import { GameState } from "./GameState";
-import { Tick } from "./TickLogic";
 import { ITileData } from "./Tile";
 
 export function ensureTileFogOfWar(xy: string, gameState: GameState, grid: Grid): string[] {
@@ -19,7 +19,7 @@ export function ensureTileFogOfWar(xy: string, gameState: GameState, grid: Grid)
    result[xy] = true;
    const point = xyToPoint(xy);
    let targets = [point];
-   for (let i = 0; i < (Tick.current.buildings[building.type]?.vision ?? BUILDING_DEFAULT_VISION); i++) {
+   for (let i = 0; i < (Config.Building[building.type]?.vision ?? BUILDING_DEFAULT_VISION); i++) {
       const newTargets: IPointData[] = [];
       targets.forEach((t) => {
          const neighbors = grid.getNeighbors(t);

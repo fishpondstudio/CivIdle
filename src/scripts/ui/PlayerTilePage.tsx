@@ -1,8 +1,8 @@
-import { Tick } from "../logic/TickLogic";
+import { Config } from "../logic/Constants";
 import { usePlayerMap, useTrades } from "../rpc/RPCClient";
 import { formatPercent } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
-import { FillPlayerTradeModal } from "./FillPlayerTradeModal";
+import { FillPlayerTradeModal } from "./FillPlayerTradeModal.1";
 import { showModal } from "./GlobalModal";
 import { FormatNumber } from "./HelperComponents";
 import { MenuComponent } from "./MenuComponent";
@@ -43,16 +43,16 @@ export function PlayerTilePage({ xy }: { xy: string }): React.ReactNode {
                            <th></th>
                         </tr>
                         {trades
-                           .filter((t) => t.fromId == tile.userId)
+                           .filter((t) => t.fromId === tile.userId)
                            .map((trade) => {
                               return (
                                  <tr key={trade.id}>
                                     <td>
-                                       {Tick.current.resources[trade.buyResource].name()} x{" "}
+                                       {Config.Resource[trade.buyResource].name()} x{" "}
                                        <FormatNumber value={trade.buyAmount} />
                                     </td>
                                     <td>
-                                       {Tick.current.resources[trade.sellResource].name()} x{" "}
+                                       {Config.Resource[trade.sellResource].name()} x{" "}
                                        <FormatNumber value={trade.sellAmount} />
                                     </td>
                                     <td>

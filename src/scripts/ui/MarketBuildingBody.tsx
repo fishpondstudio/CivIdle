@@ -1,7 +1,6 @@
 import { notifyGameStateUpdate } from "../Global";
 import { applyToAllBuildings, getMarketPrice, totalMultiplierFor } from "../logic/BuildingLogic";
 import { Config } from "../logic/Constants";
-import { Tick } from "../logic/TickLogic";
 import { IMarketBuildingData, MarketOptions } from "../logic/Tile";
 import { convertPriceIdToTime } from "../logic/Update";
 import { formatHMS, keysOf, round } from "../utilities/Helper";
@@ -51,7 +50,7 @@ export function MarketBuildingBody({ gameState, xy }: IBuildingComponentProps): 
                   {keysOf(market.availableResources)
                      .sort((a, b) => (Config.ResourcePrice[b] ?? 0) - (Config.ResourcePrice[a] ?? 0))
                      .map((res) => {
-                        const r = Tick.current.resources[res];
+                        const r = Config.Resource[res];
                         if (!r || !r.canPrice || !r.canStore) {
                            return null;
                         }
@@ -65,8 +64,7 @@ export function MarketBuildingBody({ gameState, xy }: IBuildingComponentProps): 
                            <tr key={res}>
                               <td>{r.name()}</td>
                               <td className="right">
-                                 <FormatNumber value={buyAmount} /> x{" "}
-                                 {Tick.current.resources[buyResource].name()}
+                                 <FormatNumber value={buyAmount} /> x {Config.Resource[buyResource].name()}
                               </td>
                               <td className="right">
                                  <FormatNumber value={building.resources[res] ?? 0} />
@@ -132,7 +130,7 @@ export function MarketBuildingBody({ gameState, xy }: IBuildingComponentProps): 
                   );
                }}
             >
-               {t(L.ApplyToAll, { building: Tick.current.buildings[building.type].name() })}
+               {t(L.ApplyToAll, { building: Config.Building[building.type].name() })}
             </div>
          </fieldset>
          <BuildingColorComponent gameState={gameState} xy={xy} />

@@ -1,7 +1,7 @@
 import classNames from "classnames";
 import { notifyGameOptionsUpdate, syncUITheme, useGameOptions } from "../Global";
+import { Config } from "../logic/Constants";
 import { ThemeColorNames } from "../logic/GameState";
-import { Tick } from "../logic/TickLogic";
 import { keysOf } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
 import { MenuComponent } from "./MenuComponent";
@@ -67,7 +67,7 @@ export function ThemePage(): React.ReactNode {
                               value={gameOptions.themeColors[k]}
                               onChange={(v) => {
                                  const parsed = parseFloat(v.target.value);
-                                 if (isFinite(parsed) && parsed >= 0 && parsed <= 1) {
+                                 if (Number.isFinite(parsed) && parsed >= 0 && parsed <= 1) {
                                     gameOptions.themeColors[k] = parsed as never;
                                     notifyGameOptionsUpdate();
                                  }
@@ -82,13 +82,11 @@ export function ThemePage(): React.ReactNode {
             <fieldset>
                <legend>{t(L.BuildingColor)}</legend>
                {keysOf(gameOptions.buildingColors)
-                  .sort((a, b) =>
-                     Tick.current.buildings[a].name().localeCompare(Tick.current.buildings[b].name()),
-                  )
+                  .sort((a, b) => Config.Building[a].name().localeCompare(Config.Building[b].name()))
                   .map((b) => {
                      return (
                         <div key={b} className="row mv5">
-                           <div className="f1">{Tick.current.buildings[b].name()}</div>
+                           <div className="f1">{Config.Building[b].name()}</div>
                            <input
                               type="color"
                               value={gameOptions.buildingColors[b] ?? "#ffffff"}
@@ -105,13 +103,11 @@ export function ThemePage(): React.ReactNode {
             <fieldset>
                <legend>{t(L.ResourceColor)}</legend>
                {keysOf(gameOptions.resourceColors)
-                  .sort((a, b) =>
-                     Tick.current.resources[a].name().localeCompare(Tick.current.resources[b].name()),
-                  )
+                  .sort((a, b) => Config.Resource[a].name().localeCompare(Config.Resource[b].name()))
                   .map((b) => {
                      return (
                         <div key={b} className="row mv5">
-                           <div className="f1">{Tick.current.resources[b].name()}</div>
+                           <div className="f1">{Config.Resource[b].name()}</div>
                            <input
                               type="color"
                               value={gameOptions.resourceColors[b] ?? "#ffffff"}

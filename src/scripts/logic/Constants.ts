@@ -5,7 +5,7 @@ import { GreatPersonDefinitions } from "../definitions/GreatPersonDefinitions";
 import { DepositResources, Resource, ResourceDefinitions } from "../definitions/ResourceDefinitions";
 import { Tech, TechAgeDefinitions, TechDefinitions } from "../definitions/TechDefinitions";
 import { PartialTabulate } from "../definitions/TypeDefinitions";
-import { deepFreeze, forEach, isEmpty, keysOf, sizeOf, tabulateAdd } from "../utilities/Helper";
+import { deepFreeze, forEach, isEmpty, keysOf, sizeOf } from "../utilities/Helper";
 import { GameState, SAVE_FILE_VERSION } from "./GameState";
 import { getBuildingUnlockTech, getDepositUnlockTech, getResourceUnlockTech } from "./TechLogic";
 
@@ -23,11 +23,11 @@ export function getVersion(): string {
 }
 
 export const Config = {
-   Building: deepFreeze(new BuildingDefinitions()),
-   Resource: deepFreeze(new ResourceDefinitions()),
+   Building: new BuildingDefinitions(),
+   Resource: new ResourceDefinitions(),
    GreatPerson: deepFreeze(new GreatPersonDefinitions()),
    City: deepFreeze(new CityDefinitions()),
-   Tech: deepFreeze(new TechDefinitions()),
+   Tech: new TechDefinitions(),
    TechAge: deepFreeze(new TechAgeDefinitions()),
    BuildingTier,
    BuildingTech,
@@ -138,13 +138,6 @@ export function calculateTierAndPrice(gs: GameState) {
             !isEmpty(Config.Building[b].input) || !isEmpty(Config.Building[b].construction),
             `${b}: A building should have either 'input' or 'construction' defined`,
          );
-      });
-      forEach(techDef.buildingModifier, (building, modifier) => {
-         allRecipes.push({
-            building,
-            input: tabulateAdd(Config.Building[building].input, modifier.input ?? {}),
-            output: tabulateAdd(Config.Building[building].output, modifier.output),
-         });
       });
    });
 

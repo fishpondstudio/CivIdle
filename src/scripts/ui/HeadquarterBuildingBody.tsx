@@ -325,7 +325,7 @@ export function HeadquarterBuildingBody({ gameState, xy }: IBuildingComponentPro
                   if (!tile.building) {
                      return [];
                   }
-                  const def = Tick.current.buildings[tile.building.type];
+                  const def = Config.Building[tile.building.type];
                   if (def.max !== 1 || !def.construction) {
                      return [];
                   }

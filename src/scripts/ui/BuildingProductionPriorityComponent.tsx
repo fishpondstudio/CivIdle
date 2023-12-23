@@ -1,7 +1,7 @@
 import { notifyGameStateUpdate } from "../Global";
 import { IOCalculation, applyToAllBuildings } from "../logic/BuildingLogic";
+import { Config } from "../logic/Constants";
 import { getBuildingIO } from "../logic/IntraTickCache";
-import { Tick } from "../logic/TickLogic";
 import { PRIORITY_MAX, PRIORITY_MIN } from "../logic/Tile";
 import { isEmpty } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
@@ -46,7 +46,7 @@ export function BuildingProductionPriorityComponent({
                applyToAllBuildings(building.type, { priority: building.priority }, gameState);
             }}
          >
-            {t(L.ApplyToAll, { building: Tick.current.buildings[building.type].name() })}
+            {t(L.ApplyToAll, { building: Config.Building[building.type].name() })}
          </div>
       </fieldset>
    );

@@ -4,7 +4,7 @@ import { IPendingClaim } from "../../../server/src/Database";
 import { notifyGameStateUpdate } from "../Global";
 import { Resource } from "../definitions/ResourceDefinitions";
 import { getStorageFor } from "../logic/BuildingLogic";
-import { Tick } from "../logic/TickLogic";
+import { Config } from "../logic/Constants";
 import { OnNewPendingClaims, client, useTrades, useUser } from "../rpc/RPCClient";
 import { getMyMapXy } from "../scenes/PathFinder";
 import { PlayerMapScene } from "../scenes/PlayerMapScene";
@@ -15,7 +15,7 @@ import { L, t } from "../utilities/i18n";
 import { playClick, playError } from "../visuals/Sound";
 import { AddTradeComponent } from "./AddTradeComponent";
 import { IBuildingComponentProps } from "./BuildingPage";
-import { FillPlayerTradeModal } from "./FillPlayerTradeModal";
+import { FillPlayerTradeModal } from "./FillPlayerTradeModal.1";
 import { showModal, showToast } from "./GlobalModal";
 import { FormatNumber } from "./HelperComponents";
 import { WarningComponent } from "./WarningComponent";
@@ -61,15 +61,15 @@ export function PlayerTradeComponent({ gameState, xy }: IBuildingComponentProps)
                      <th></th>
                   </tr>
                   {trades.map((trade) => {
-                     const disableFill = user == null || trade.fromId == user.userId;
+                     const disableFill = user == null || trade.fromId === user.userId;
                      return (
                         <tr key={trade.id}>
                            <td>
-                              {Tick.current.resources[trade.buyResource].name()} x{" "}
+                              {Config.Resource[trade.buyResource].name()} x{" "}
                               <FormatNumber value={trade.buyAmount} />
                            </td>
                            <td>
-                              {Tick.current.resources[trade.sellResource].name()} x{" "}
+                              {Config.Resource[trade.sellResource].name()} x{" "}
                               <FormatNumber value={trade.sellAmount} />
                            </td>
                            <td>{trade.from}</td>
@@ -108,7 +108,7 @@ function PendingClaimComponent({ gameState, xy }: IBuildingComponentProps) {
       client.getPendingClaims().then(setPendingClaims);
    });
 
-   if (pendingClaims.length == 0) {
+   if (pendingClaims.length === 0) {
       return null;
    }
    return (
@@ -124,7 +124,7 @@ function PendingClaimComponent({ gameState, xy }: IBuildingComponentProps) {
                {pendingClaims.map((trade) => {
                   return (
                      <tr key={trade.id}>
-                        <td>{Tick.current.resources[trade.resource as Resource].name()}</td>
+                        <td>{Config.Resource[trade.resource as Resource].name()}</td>
                         <td>{trade.fillBy}</td>
                         <td className="text-right">
                            <FormatNumber value={trade.amount} />

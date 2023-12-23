@@ -39,7 +39,7 @@ export function getBuildingIO(
    const result: PartialTabulate<Resource> = {};
    const b = gs.tiles[xy].building;
    if (b) {
-      const resources = { ...Tick.current.buildings[b.type][type] };
+      const resources = { ...Config.Building[b.type][type] };
       if ("sellResources" in b && type === "input") {
          forEach((b as IMarketBuildingData).sellResources, (k) => {
             resources[k] = 1;
@@ -157,7 +157,7 @@ export function unlockedResources(gs: GameState): PartialSet<Resource> {
    }
    _cache.unlockedResources = {};
    forEach(unlockedBuildings(gs), (b) => {
-      forEach(Tick.current.buildings[b].output, (res) => {
+      forEach(Config.Building[b].output, (res) => {
          _cache.unlockedResources![res] = true;
       });
    });

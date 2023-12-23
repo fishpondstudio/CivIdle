@@ -178,11 +178,11 @@ export function checkBuildingMax(k: Building, gs: GameState): boolean {
       (prev, _xy, tile) => prev + (tile.building?.type === k ? 1 : 0),
       0,
    );
-   return buildingCount < (Tick.current.buildings[k].max ?? Infinity);
+   return buildingCount < (Config.Building[k].max ?? Infinity);
 }
 
 export function isTransportable(res: Resource) {
-   return Tick.current.resources[res].canStore;
+   return Config.Resource[res].canStore;
 }
 
 interface IStorageResult {
@@ -228,10 +228,13 @@ export function getStorageFor(xy: string, gs: GameState): IStorageResult {
          let count = 0;
          getBuildingsThatProduce("Faith").forEach((b) => {
             forEach(getBuildingsByType(b, gs), (xy, tile) => {
-               count += tile.building.level;
+               if (tile.building.status === "completed") {
+                  count += tile.building.level;
+               }
             });
          });
          base = count * ST_PETERS_STORAGE_MULTIPLIER;
+         console.log(count);
          break;
       }
       default: {
@@ -260,7 +263,7 @@ export function addWorkers(res: Resource, amount: number): void {
 }
 
 export function useWorkers(res: Resource, amount: number, xy: string | null): void {
-   if (Tick.current.resources[res].canStore) {
+   if (Config.Resource[res].canStore) {
       console.error("`useWorkers` can only be called with non-transportable resource!");
       return;
    }
@@ -297,7 +300,7 @@ export function getAvailableWorkers(res: Resource): number {
 // }
 
 export function getResourceName(r: Resource): string {
-   return Tick.current.resources[r].name();
+   return Config.Resource[r].name();
 }
 
 export function getBuildingName(xy: string, gs: GameState): string {
@@ -305,7 +308,7 @@ export function getBuildingName(xy: string, gs: GameState): string {
    if (!type) {
       return "";
    }
-   return Tick.current.buildings[type].name();
+   return Config.Building[type].name();
 }
 
 export function filterResource<T>(
@@ -315,7 +318,7 @@ export function filterResource<T>(
    const result: Partial<Record<Resource, T>> = {};
    let key: Resource;
    for (key in resources) {
-      if (Tick.current.resources[key].canStore === filter.canStore) {
+      if (Config.Resource[key].canStore === filter.canStore) {
          result[key] = resources[key];
       }
    }
@@ -387,9 +390,9 @@ export function getBuildingCost(
 ): PartialTabulate<Resource> {
    const type = building.type;
    const level = building.status === "building" ? 0 : building.level;
-   let cost = { ...Tick.current.buildings[type].construction };
+   let cost = { ...Config.Building[type].construction };
    if (isEmpty(cost)) {
-      cost = { ...Tick.current.buildings[type].input } ?? {};
+      cost = { ...Config.Building[type].input } ?? {};
    }
    if (isEmpty(cost)) {
       return {};
@@ -453,25 +456,33 @@ export function getTotalBuildingUpgrades(gs: GameState): number {
    return result;
 }
 
-export function getBuildingPercentage(xy: string, cost: PartialTabulate<Resource>, gs: GameState): number {
+interface BuildingPercentageResult {
+   percent: number;
+   secondsLeft: number;
+   cost: PartialTabulate<Resource>;
+}
+
+export function getBuildingPercentage(xy: string, gs: GameState): BuildingPercentageResult {
    const building = gs.tiles[xy]?.building;
    if (!building) {
-      return 0;
+      return { percent: 0, secondsLeft: Infinity, cost: {} };
    }
    if (building.status === "completed") {
-      return 1;
+      return { percent: 1, secondsLeft: 0, cost: {} };
    }
+   const { total } = getBuilderCapacity(building, xy, gs);
+   const cost = getBuildingCost(building);
    let totalCost = 0;
    let inStorage = 0;
    forEach(cost, (res, amount) => {
       totalCost += amount;
       inStorage += clamp(building.resources[res] ?? 0, 0, amount);
    });
-   return inStorage / totalCost;
+   return { cost, percent: inStorage / totalCost, secondsLeft: Math.ceil((totalCost - inStorage) / total) };
 }
 
 export function getBuildingLevelLabel(b: IBuildingData): string {
-   if (Tick.current.buildings[b.type].special === BuildingSpecial.HQ || isWorldOrNaturalWonder(b.type)) {
+   if (Config.Building[b.type].special === BuildingSpecial.HQ || isWorldOrNaturalWonder(b.type)) {
       return "";
    }
    return String(b.level);
@@ -492,15 +503,15 @@ export function getBuildingUpgradeLevels(b: IBuildingData): number[] {
 }
 
 export function isSpecialBuilding(building: Building): boolean {
-   return !isNullOrUndefined(Tick.current.buildings[building].special);
+   return !isNullOrUndefined(Config.Building[building].special);
 }
 
 export function isNaturalWonder(building: Building): boolean {
-   return Tick.current.buildings[building].special === BuildingSpecial.NaturalWonder;
+   return Config.Building[building].special === BuildingSpecial.NaturalWonder;
 }
 
 export function isWorldWonder(building: Building): boolean {
-   return Tick.current.buildings[building].special === BuildingSpecial.WorldWonder;
+   return Config.Building[building].special === BuildingSpecial.WorldWonder;
 }
 
 export function isWorldOrNaturalWonder(building: Building): boolean {
@@ -586,7 +597,7 @@ export function getAvailableResource(xy: string, res: Resource, gs: GameState): 
       return building.resources[res]!;
    }
 
-   if (!Tick.current.buildings[building.type].input[res]) {
+   if (!Config.Building[building.type].input[res]) {
       return building.resources[res]!;
    }
 

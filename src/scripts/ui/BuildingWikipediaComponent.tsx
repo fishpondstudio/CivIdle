@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import { Building } from "../definitions/BuildingDefinitions";
-import { Tick } from "../logic/TickLogic";
+import { Config } from "../logic/Constants";
 import { IBuildingComponentProps } from "./BuildingPage";
 
 const WikipediaCache: Partial<Record<Building, string>> = {};
@@ -10,7 +10,7 @@ export function BuildingWikipediaComponent({ gameState, xy }: IBuildingComponent
    if (!type) {
       return null;
    }
-   const wikipedia = Tick.current.buildings[type].wikipedia;
+   const wikipedia = Config.Building[type].wikipedia;
    if (!wikipedia) {
       return null;
    }

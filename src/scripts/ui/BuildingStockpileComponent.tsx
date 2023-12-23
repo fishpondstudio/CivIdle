@@ -1,7 +1,7 @@
 import { notifyGameStateUpdate } from "../Global";
 import { IOCalculation, applyToAllBuildings } from "../logic/BuildingLogic";
+import { Config } from "../logic/Constants";
 import { getBuildingIO } from "../logic/IntraTickCache";
-import { Tick } from "../logic/TickLogic";
 import {
    STOCKPILE_CAPACITY_MAX,
    STOCKPILE_CAPACITY_MIN,
@@ -57,7 +57,7 @@ export function BuildingStockpileComponent({ gameState, xy }: IBuildingComponent
                );
             }}
          >
-            {t(L.ApplyToAll, { building: Tick.current.buildings[building.type].name() })}
+            {t(L.ApplyToAll, { building: Config.Building[building.type].name() })}
          </div>
 
          <div className="sep10"></div>
@@ -93,7 +93,7 @@ export function BuildingStockpileComponent({ gameState, xy }: IBuildingComponent
                applyToAllBuildings(building.type, { stockpileMax: building.stockpileMax }, gameState);
             }}
          >
-            {t(L.ApplyToAll, { building: Tick.current.buildings[building.type].name() })}
+            {t(L.ApplyToAll, { building: Config.Building[building.type].name() })}
          </div>
       </fieldset>
    );

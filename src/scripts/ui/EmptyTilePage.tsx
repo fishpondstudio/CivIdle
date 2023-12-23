@@ -6,7 +6,6 @@ import { checkBuildingMax, getBuildingCost, isWorldOrNaturalWonder } from "../lo
 import { Config } from "../logic/Constants";
 import { getTypeBuildings, unlockedBuildings } from "../logic/IntraTickCache";
 import { useShortcut } from "../logic/Shortcut";
-import { Tick } from "../logic/TickLogic";
 import { ITileData, makeBuilding } from "../logic/Tile";
 import {
    formatNumber,
@@ -59,7 +58,7 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
                   (k, v) => {
                      return (
                         <div key={k} className="row mv5">
-                           <div className="f1">{Tick.current.resources[k].name()}</div>
+                           <div className="f1">{Config.Resource[k].name()}</div>
                            <div className="m-icon small text-link">visibility</div>
                         </div>
                      );
@@ -101,18 +100,14 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
                            if (tier !== 0) {
                               return tier;
                            }
-                           return Tick.current.buildings[a]
-                              .name()
-                              .localeCompare(Tick.current.buildings[b].name());
+                           return Config.Building[a].name().localeCompare(Config.Building[b].name());
                         })
-                        .filter((v) =>
-                           Tick.current.buildings[v].name().toLowerCase().includes(filter.toLowerCase()),
-                        )
+                        .filter((v) => Config.Building[v].name().toLowerCase().includes(filter.toLowerCase()))
                         .map((k) => {
-                           if ((sizeOf(constructed[k]) ?? 0) >= (Tick.current.buildings[k].max ?? Infinity)) {
+                           if ((sizeOf(constructed[k]) ?? 0) >= (Config.Building[k].max ?? Infinity)) {
                               return null;
                            }
-                           const building = Tick.current.buildings[k];
+                           const building = Config.Building[k];
                            const buildCost = getBuildingCost({
                               type: k,
                               level: 1,
@@ -165,7 +160,7 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
                                        {mapOf(
                                           building.input,
                                           (res, amount) =>
-                                             `${Tick.current.resources[res].name()} x${formatNumber(amount)}`,
+                                             `${Config.Resource[res].name()} x${formatNumber(amount)}`,
                                        ).join(", ")}
                                     </div>
                                     <div className="row text-small text-desc">
@@ -175,7 +170,7 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
                                        {mapOf(
                                           building.output,
                                           (res, amount) =>
-                                             `${Tick.current.resources[res].name()} x${formatNumber(amount)}`,
+                                             `${Config.Resource[res].name()} x${formatNumber(amount)}`,
                                        ).join(", ")}
                                     </div>
                                  </td>
@@ -183,7 +178,7 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
                                     {jsxMapOf(buildCost, (res, amount) => {
                                        return (
                                           <div className="nowrap" key={res}>
-                                             {Tick.current.resources[res].name()} x
+                                             {Config.Resource[res].name()} x
                                              {formatNumber(amount)}
                                           </div>
                                        );

@@ -1,6 +1,7 @@
 import classNames from "classnames";
 import warning from "../../images/warning.png";
 import { getMultipliersFor, getStorageFor } from "../logic/BuildingLogic";
+import { Config } from "../logic/Constants";
 import { Tick } from "../logic/TickLogic";
 import { formatPercent, jsxMapOf } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
@@ -81,7 +82,7 @@ export function BuildingStorageComponent({ gameState, xy }: IBuildingComponentPr
                      {jsxMapOf(building.resources, (res, value) => {
                         return (
                            <li className="row" key={res}>
-                              <div className="f1">{Tick.current.resources[res].name()}</div>
+                              <div className="f1">{Config.Resource[res].name()}</div>
                               <div>
                                  <FormatNumber value={value} />
                               </div>

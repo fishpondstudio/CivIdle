@@ -87,7 +87,7 @@ export async function startGame(
       routeTo,
       ticker: new GameTicker(app.ticker, gameState),
    });
-
+   Config.City[gameState.city].override(Config.Resource, Config.Building, Config.Tech);
    // ========== Connect to server ==========
    routeTo(LoadingPage, { stage: LoadingPageStage.SteamSignIn });
    const TIMEOUT = import.meta.env.DEV ? 1 : 5;

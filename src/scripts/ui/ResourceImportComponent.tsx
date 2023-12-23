@@ -1,6 +1,7 @@
 import { Resource } from "../definitions/ResourceDefinitions";
 import { PartialSet } from "../definitions/TypeDefinitions";
 import { getStorageFor } from "../logic/BuildingLogic";
+import { Config } from "../logic/Constants";
 import { Tick } from "../logic/TickLogic";
 import { IResourceImportBuildingData } from "../logic/Tile";
 import { forEach, keysOf } from "../utilities/Helper";
@@ -23,7 +24,7 @@ export function ResourceImportComponent({ gameState, xy }: IBuildingComponentPro
 
    const resources: PartialSet<Resource> = {};
    forEach(Tick.current.resourcesByXy, (k, v) => {
-      if (Tick.current.resources[k].canPrice && Tick.current.resources[k].canStore) {
+      if (Config.Resource[k].canPrice && Config.Resource[k].canStore) {
          resources[k] = true;
       }
    });
@@ -50,14 +51,12 @@ export function ResourceImportComponent({ gameState, xy }: IBuildingComponentPro
                      <th></th>
                   </tr>
                   {keysOf(resources)
-                     .sort((a, b) =>
-                        Tick.current.resources[a].name().localeCompare(Tick.current.resources[b].name()),
-                     )
+                     .sort((a, b) => Config.Resource[a].name().localeCompare(Config.Resource[b].name()))
                      .map((res) => {
                         const ri = building.resourceImports[res];
                         return (
                            <tr key={res}>
-                              <td>{Tick.current.resources[res].name()}</td>
+                              <td>{Config.Resource[res].name()}</td>
                               <td className="text-right">
                                  <FormatNumber value={building.resources[res] ?? 0} />
                               </td>

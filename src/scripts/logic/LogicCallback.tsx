@@ -11,6 +11,7 @@ import {
    ST_PETERS_STORAGE_MULTIPLIER,
    getTotalBuildingUpgrades,
 } from "./BuildingLogic";
+import { Config } from "./Constants";
 import { GameState } from "./GameState";
 import { getBuildingsByType, getTypeBuildings, getXyBuildings } from "./IntraTickCache";
 import { getBuildingsThatProduce } from "./ResourceLogic";
@@ -68,7 +69,7 @@ export function onBuildingProductionComplete(xy: string, gs: GameState, offline:
 
    const { grid } = Singleton();
 
-   const buildingName = Tick.current.buildings[building.type].name();
+   const buildingName = Config.Building[building.type].name();
 
    switch (building.type) {
       case "HatshepsutTemple": {
@@ -102,7 +103,7 @@ export function onBuildingProductionComplete(xy: string, gs: GameState, offline:
       //    break;
       // }
       // case "CircusMaximus": {
-      //    forEach(Tick.current.buildings, (building, def) => {
+      //    forEach(Config.Building, (building, def) => {
       //       if (def.output.Worker) {
       //          addMultiplier(building, { output: 1 }, buildingName);
       //       }
@@ -123,7 +124,7 @@ export function onBuildingProductionComplete(xy: string, gs: GameState, offline:
          break;
       }
       case "PyramidOfGiza": {
-         forEach(Tick.current.buildings, (building, def) => {
+         forEach(Config.Building, (building, def) => {
             if (def.output.Worker) {
                addMultiplier(building, { output: 1 }, buildingName);
             }
@@ -154,7 +155,7 @@ export function onBuildingProductionComplete(xy: string, gs: GameState, offline:
          let happiness = 0;
          for (const neighbor of grid.getNeighbors(xyToPoint(xy))) {
             const building = gs.tiles[pointToXy(neighbor)].building;
-            if (building && !Tick.current.buildings[building.type].output.Worker) {
+            if (building && !Config.Building[building.type].output.Worker) {
                happiness++;
             }
          }
@@ -164,7 +165,7 @@ export function onBuildingProductionComplete(xy: string, gs: GameState, offline:
       case "HagiaSophia": {
          if (!Tick.current.notProducingReasons[xy]) {
             Tick.next.globalMultipliers.happiness.push({
-               value: Tick.current.buildings.HagiaSophia.input.Faith!,
+               value: Config.Building.HagiaSophia.input.Faith!,
                source: buildingName,
             });
          }
@@ -222,7 +223,7 @@ export function onBuildingProductionComplete(xy: string, gs: GameState, offline:
          break;
       }
       case "Stonehenge": {
-         forEach(Tick.current.buildings, (b, def) => {
+         forEach(Config.Building, (b, def) => {
             if (def.input.Stone || def.output.Stone) {
                addMultiplier(b, { output: 1 }, buildingName);
             }

@@ -63,15 +63,14 @@ export function getAmountInTransit(xy: string, res: Resource, gs: GameState) {
 export function getResourcesValue(resources: PartialTabulate<Resource>): number {
    return reduceOf(
       resources,
-      (prev, res, amount) =>
-         prev + (Tick.current.resources[res].canPrice ? Config.ResourcePrice[res]! * amount : 0),
+      (prev, res, amount) => prev + (Config.Resource[res].canPrice ? Config.ResourcePrice[res]! * amount : 0),
       0,
    );
 }
 
 export function getBuildingsThatProduce(res: Resource): Building[] {
    const result: Building[] = [];
-   forEach(Tick.current.buildings, (b, def) => {
+   forEach(Config.Building, (b, def) => {
       if (def.output[res]) {
          result.push(b);
       }

@@ -1,7 +1,7 @@
 import { ST_PETERS_FAITH_MULTIPLIER, ST_PETERS_STORAGE_MULTIPLIER } from "../logic/BuildingLogic";
+import { Config } from "../logic/Constants";
 import { getBuildingsByType } from "../logic/IntraTickCache";
 import { getBuildingsThatProduce } from "../logic/ResourceLogic";
-import { Tick } from "../logic/TickLogic";
 import { formatPercent, mapOf } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
 import { BuildingColorComponent } from "./BuildingColorComponent";
@@ -27,7 +27,7 @@ export function StPetersBasilicaBuildingBody({ gameState, xy }: IBuildingCompone
                   <tr>
                      <th></th>
                      <th className="text-right">{t(L.Level)}</th>
-                     <th className="text-right">{Tick.current.resources.Faith.name()}</th>
+                     <th className="text-right">{Config.Resource.Faith.name()}</th>
                   </tr>
                </thead>
                <tbody>
@@ -40,7 +40,7 @@ export function StPetersBasilicaBuildingBody({ gameState, xy }: IBuildingCompone
                         totalFaith += v.building.resources.Faith ?? 0;
                         return (
                            <tr key={k}>
-                              <td>{Tick.current.buildings[v.building.type].name()}</td>
+                              <td>{Config.Building[v.building.type].name()}</td>
                               <td className="text-right">{v.building.level}</td>
                               <td className="text-right">
                                  <FormatNumber value={v.building.resources.Faith ?? 0} />

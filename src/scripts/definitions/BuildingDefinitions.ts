@@ -511,7 +511,7 @@ export class BuildingDefinitions {
       output: {},
       max: 1,
       special: BuildingSpecial.WorldWonder,
-      construction: { Marble: 100, Poem: 100, Music: 100 },
+      construction: { Marble: 100, Painting: 100, Music: 100 },
       wikipedia: "Parthenon",
    };
 

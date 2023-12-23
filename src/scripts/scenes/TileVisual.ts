@@ -4,6 +4,7 @@ import { getGameOptions, getGameState } from "../Global";
 import { Resource } from "../definitions/ResourceDefinitions";
 import {
    getBuildingLevelLabel,
+   getBuildingPercentage,
    getBuildingTexture,
    getNotProducingTexture,
    getTileTexture,
@@ -12,7 +13,7 @@ import {
 import { GameOptions, GameState } from "../logic/GameState";
 import { Tick } from "../logic/TickLogic";
 import { ITileData } from "../logic/Tile";
-import { clamp, forEach, layoutCenter, pointToXy, sizeOf } from "../utilities/Helper";
+import { clamp, forEach, formatHMS, layoutCenter, pointToXy, sizeOf } from "../utilities/Helper";
 import { Singleton } from "../utilities/Singleton";
 import { v2 } from "../utilities/Vector2";
 import { Actions } from "../utilities/pixi-actions/Actions";
@@ -36,6 +37,7 @@ export class TileVisual extends Container {
    private readonly _constructionAnimation: Action;
    private readonly _upgradeAnimation: Action;
    private readonly _xy: string;
+   private readonly _timeLeft: BitmapText;
 
    constructor(world: WorldScene, grid: IPointData) {
       super();
@@ -107,6 +109,18 @@ export class TileVisual extends Container {
       this._level.position.set(25, -25);
       this._level.visible = true;
       this._level.cullable = true;
+
+      this._timeLeft = this.addChild(
+         new BitmapText("", {
+            fontName: Fonts.Cabin,
+            fontSize: 14,
+            tint: 0xffffff,
+         }),
+      );
+      this._timeLeft.anchor.set(0.5, 0.5);
+      this._timeLeft.position.set(0, 30);
+      this._timeLeft.visible = false;
+      this._timeLeft.cullable = true;
 
       this._fog = this.addChild(new Sprite(textures.Cloud));
       this._fog.anchor.set(0.5);
@@ -225,6 +239,7 @@ export class TileVisual extends Container {
             this._spinner.visible = false;
             this._building.alpha = 0.5;
             this.toggleConstructionTween(true);
+            this.showTimeLeft(tileData, gameState);
             return;
          }
          case "paused": {
@@ -234,6 +249,7 @@ export class TileVisual extends Container {
             this._upgrade.visible = false;
             this._spinner.visible = false;
             this._building.alpha = 0.5;
+            this.showTimeLeft(tileData, gameState);
             return;
          }
          case "upgrading": {
@@ -242,18 +258,18 @@ export class TileVisual extends Container {
             this._upgrade.visible = true;
             this.toggleUpgradeTween(true);
             this._spinner.visible = false;
-
             if (!isWorldOrNaturalWonder(this._tile.building.type)) {
                this._level.visible = true;
                this._level.text = getBuildingLevelLabel(this._tile.building);
             }
-
+            this.showTimeLeft(tileData, gameState);
             return;
          }
          case "completed": {
             this._construction.visible = false;
             this.toggleConstructionTween(false);
             this._upgrade.visible = false;
+            this._timeLeft.visible = false;
             this.toggleUpgradeTween(false);
 
             if (!isWorldOrNaturalWonder(this._tile.building.type)) {
@@ -286,6 +302,12 @@ export class TileVisual extends Container {
             this._spinner.visible = true;
          }
       }
+   }
+
+   private showTimeLeft(tileData: ITileData, gameState: GameState) {
+      const { secondsLeft } = getBuildingPercentage(tileData.xy, gameState);
+      this._timeLeft.text = formatHMS(secondsLeft * 1000);
+      this._timeLeft.visible = true;
    }
 
    public update(gs: GameState, dt: number) {

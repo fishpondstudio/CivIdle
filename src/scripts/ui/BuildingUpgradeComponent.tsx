@@ -5,7 +5,6 @@ import { getBuildingUpgradeLevels, getTotalBuildingCost } from "../logic/Buildin
 import { Config } from "../logic/Constants";
 import {} from "../logic/GameState";
 import { useShortcut } from "../logic/Shortcut";
-import { Tick } from "../logic/TickLogic";
 import { jsxMapOf, numberToRoman } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
 import { IBuildingComponentProps } from "./BuildingPage";
@@ -16,7 +15,7 @@ export function BuildingUpgradeComponent({ gameState, xy }: IBuildingComponentPr
    if (!building) {
       return null;
    }
-   if ((Tick.current.buildings[building.type]?.max ?? Infinity) <= 1) {
+   if ((Config.Building[building.type]?.max ?? Infinity) <= 1) {
       return null;
    }
    const levels = getBuildingUpgradeLevels(building);
@@ -60,7 +59,7 @@ export function BuildingUpgradeComponent({ gameState, xy }: IBuildingComponentPr
                {jsxMapOf(cost, (res, amount) => {
                   return (
                      <div className="row mv5" key={res}>
-                        <div className="f1">{Tick.current.resources[res].name()}</div>
+                        <div className="f1">{Config.Resource[res].name()}</div>
                         <div className="text-strong">
                            <FormatNumber value={amount} />
                         </div>
