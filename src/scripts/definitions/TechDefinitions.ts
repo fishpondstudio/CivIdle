@@ -394,7 +394,7 @@ export class TechDefinitions {
       name: () => t(L.Exploration),
       column: 12,
       requireTech: ["Optics"],
-      unlockBuilding: ["CanonWorkshop"],
+      unlockBuilding: ["CannonWorkshop"],
    };
 
    PrintingPress: ITechDefinition = {
