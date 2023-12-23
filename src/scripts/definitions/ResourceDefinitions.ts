@@ -59,7 +59,7 @@ export class ResourceDefinitions {
    Coin: IResourceDefinition = { name: () => t(L.Coin), canStore: true, canPrice: true };
    Banknote: IResourceDefinition = { name: () => t(L.Banknote), canStore: true, canPrice: true };
    Bond: IResourceDefinition = { name: () => t(L.Bond), canStore: true, canPrice: true };
-   Canon: IResourceDefinition = { name: () => t(L.Canon), canStore: true, canPrice: true };
+   Cannon: IResourceDefinition = { name: () => t(L.Cannon), canStore: true, canPrice: true };
    Dynamite: IResourceDefinition = { name: () => t(L.Dynamite), canStore: true, canPrice: true };
    Gunpowder: IResourceDefinition = { name: () => t(L.Gunpowder), canStore: true, canPrice: true };
    Coal: IResourceDefinition = { name: () => t(L.Coal), canStore: true, canPrice: true };

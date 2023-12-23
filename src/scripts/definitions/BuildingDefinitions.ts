@@ -135,10 +135,10 @@ export class BuildingDefinitions {
       input: { Horse: 1, Armor: 1, Sword: 1 },
       output: { Knight: 1 },
    };
-   CanonWorkshop: IBuildingDefinition = {
-      name: () => t(L.CanonWorkshop),
+   CannonWorkshop: IBuildingDefinition = {
+      name: () => t(L.CannonWorkshop),
       input: { Iron: 2, Wood: 1, Tool: 1 },
-      output: { Canon: 1 },
+      output: { Cannon: 1 },
    };
    GunpowderMill: IBuildingDefinition = {
       name: () => t(L.GunpowderMill),
@@ -167,7 +167,7 @@ export class BuildingDefinitions {
    };
    FrigateBuilder: IBuildingDefinition = {
       name: () => t(L.FrigateBuilder),
-      input: { Galleon: 1, Knight: 1, Canon: 1, Lens: 1 },
+      input: { Galleon: 1, Knight: 1, Cannon: 1, Lens: 1 },
       output: { Frigate: 1 },
    };
    // #endregion /////////////////////////////////////////////////////////////////////////////////////////////
