@@ -19,7 +19,7 @@ import { IBuildingComponentProps } from "./BuildingPage";
 import { FormatNumber, fmtNumber } from "./HelperComponents";
 
 export function BuildingWorkerComponent({ gameState, xy }: IBuildingComponentProps): React.ReactNode {
-   const workersRequired = getWorkersFor(xy, { exclude: { Worker: true } }, gameState);
+   const workersRequired = getWorkersFor(xy, { exclude: { Worker: 1 } }, gameState);
    const building = gameState.tiles[xy].building;
    if (building == null) {
       return null;

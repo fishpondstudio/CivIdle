@@ -5,6 +5,34 @@ interface PatchNote {
 
 export const PatchNotes: PatchNote[] = [
    {
+      version: "0.1.90",
+      content: [
+         ["Content", "Renaissance Age is here!"],
+         [
+            "Content",
+            "12 New Renaissance Tech: Optics, Banking, University, Chemistry, Exploration, Printing Press, Enlightenment, Firearm, Colonialism, Private Ownership, Constitution, Revolution",
+         ],
+         [
+            "Content",
+            "12 New Renaissance Buildings: Lens Workshop, Bank, University, Coal Mine, Canon Workshop, Printing House, Museum, Gunpowder Mill, Frigate Builder, Bond Market, Courthouse, Dynamic Workshop",
+         ],
+         [
+            "Content",
+            "4 New Buildings: Sandpit (Bronze Age), Painter's Guild (Iron Age), Glassworks (Classical Age), Coin Mint (Classical Age)",
+         ],
+         [
+            "Content",
+            "5 New Wonders: Oxford University, Forbidden City, St. Peter's Basilica, Himeji Castle, Taj Mahal",
+         ],
+         [
+            "Content",
+            "5 New Great People: Leonardo da Vinci, Martin Luther, William Shakespeare, René Descartes, Zheng He, Cosimo de' Medici",
+         ],
+         ["Bugfix", "Fix a bug where science are included in total empire value"],
+         ["Bugfix", "Fix a bug where Parthenon did not give correct multipliers"],
+      ],
+   },
+   {
       version: "0.1.89",
       content: [["Bugfix", "Fix a rare bug where reborn might causes game to stuck"]],
    },

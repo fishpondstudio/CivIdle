@@ -1,14 +1,14 @@
 import * as PIXI from "pixi.js";
-import Action from "./actions/Action";
+import { Easing, EasingFunction } from "./Easing";
+import { Action } from "./actions/Action";
 import Delay from "./actions/Delay";
 import Parallel from "./actions/Parallel";
 import Repeat from "./actions/Repeat";
 import RunFunc from "./actions/RunFunc";
 import Sequence from "./actions/Sequence";
 import { TargetAction } from "./actions/TargetAction";
-import { Easing, EasingFunction } from "./Easing";
 
-export default class Actions {
+export class Actions {
    static actions: Record<number, Action> = {};
 
    static to<T extends Record<string, any>>(

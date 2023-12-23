@@ -1,7 +1,7 @@
 import { Ticker } from "pixi.js";
 import { GameState } from "../logic/GameState";
 import { shouldTick, tickEveryFrame, tickEverySecond } from "../logic/Update";
-import Actions from "./pixi-actions/Actions";
+import { Actions } from "./pixi-actions/Actions";
 
 export class GameTicker {
    private _interval = 0;

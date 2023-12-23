@@ -295,6 +295,13 @@ function tickTile(xy: string, gs: GameState, offline: boolean): void {
       return;
    }
 
+   if (gs.unlockedTech.Banking && building.level >= 5) {
+      safePush(Tick.next.tileMultipliers, xy, {
+         storage: 1,
+         source: t(L.SourceResearch, { tech: t(L.Banking) }),
+      });
+   }
+
    if (building.type === "Caravansary") {
       Tick.next.playerTradeBuildings[xy] = building;
    }
@@ -314,7 +321,9 @@ function tickTile(xy: string, gs: GameState, offline: boolean): void {
       if (amount <= 0) {
          return;
       }
-      Tick.next.totalValue += (Config.ResourcePrice[res] ?? 0) * amount;
+      Tick.next.totalValue += Tick.current.resources[res].canPrice
+         ? (Config.ResourcePrice[res] ?? 0) * amount
+         : 0;
       safePush(Tick.next.resourcesByXy, res, xy);
       safePush(Tick.next.resourcesByGrid, res, xyToPointArray(xy));
    });
@@ -335,7 +344,7 @@ function tickTile(xy: string, gs: GameState, offline: boolean): void {
       return;
    }
 
-   const worker = getWorkersFor(xy, { exclude: { Worker: true } }, gs);
+   const worker = getWorkersFor(xy, { exclude: { Worker: 1 } }, gs);
    const inputWorkerCapacity = totalMultiplierFor(xy, "worker", 1, gs);
    const { total, used } = getStorageFor(xy, gs);
 

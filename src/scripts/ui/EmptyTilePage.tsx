@@ -2,7 +2,7 @@ import { useState } from "react";
 import "../../css/EmptyTilePage.css";
 import { notifyGameStateUpdate, useGameState } from "../Global";
 import { Building } from "../definitions/BuildingDefinitions";
-import { getBuildingCost, isWorldOrNaturalWonder } from "../logic/BuildingLogic";
+import { checkBuildingMax, getBuildingCost, isWorldOrNaturalWonder } from "../logic/BuildingLogic";
 import { Config } from "../logic/Constants";
 import { getTypeBuildings, unlockedBuildings } from "../logic/IntraTickCache";
 import { useShortcut } from "../logic/Shortcut";
@@ -29,14 +29,16 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
    const [filter, setFilter] = useState<string>("");
    const constructed = getTypeBuildings(gs);
    const build = (k: Building) => {
-      lastBuild = k;
       tile.building = makeBuilding({ type: k });
       notifyGameStateUpdate();
+      if (checkBuildingMax(k, gs)) {
+         lastBuild = k;
+      }
    };
    useShortcut(
       "EmptyTilePageBuildLastBuilding",
       () => {
-         if (lastBuild) {
+         if (lastBuild && checkBuildingMax(lastBuild, gs)) {
             build(lastBuild);
          }
       },

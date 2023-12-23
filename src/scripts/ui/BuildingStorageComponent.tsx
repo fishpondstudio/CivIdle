@@ -1,6 +1,6 @@
 import classNames from "classnames";
 import warning from "../../images/warning.png";
-import { getStorageFor } from "../logic/BuildingLogic";
+import { getMultipliersFor, getStorageFor } from "../logic/BuildingLogic";
 import { Tick } from "../logic/TickLogic";
 import { formatPercent, jsxMapOf } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
@@ -49,6 +49,23 @@ export function BuildingStorageComponent({ gameState, xy }: IBuildingComponentPr
                            <FormatNumber value={storage.multiplier} />
                         </div>
                      </li>
+                     <ul className="text-small">
+                        <li className="row">
+                           <div className="f1">{t(L.BaseMultiplier)}</div>
+                           <div>1</div>
+                        </li>
+                        {getMultipliersFor(xy, gameState).map((m, idx) => {
+                           if (!m.storage) {
+                              return null;
+                           }
+                           return (
+                              <li key={idx} className="row">
+                                 <div className="f1">{m.source}</div>
+                                 <div>{m.storage}</div>
+                              </li>
+                           );
+                        })}
+                     </ul>
                   </ul>
                </details>
             </li>

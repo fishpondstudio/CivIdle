@@ -9,7 +9,11 @@
          "recommended": true,
          "a11y": { "all": false },
          "performance": { "noDelete": "warn" },
-         "style": { "useSelfClosingElements": "off", "noNonNullAssertion": "warn" },
+         "style": {
+            "useSelfClosingElements": "off",
+            "noNonNullAssertion": "warn",
+            "useExponentiationOperator": "warn"
+         },
          "complexity": { "noForEach": "off" }
       }
    },

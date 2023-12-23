@@ -13,6 +13,7 @@ export class CityDefinitions {
          Wood: 0.02,
          Stone: 0.02,
          Gold: 0.02,
+         Coal: 0.02,
       },
       size: 40,
       buildingNameOverrides: {

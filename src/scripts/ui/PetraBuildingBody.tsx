@@ -5,6 +5,7 @@ import { IPetraBuildingData, PetraOptions } from "../logic/Tile";
 import { formatHM, formatPercent } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
 import { playClick, playError } from "../visuals/Sound";
+import { BuildingColorComponent } from "./BuildingColorComponent";
 import { IBuildingComponentProps } from "./BuildingPage";
 import { BuildingWikipediaComponent } from "./BuildingWikipediaComponent";
 import { FormatNumber } from "./HelperComponents";
@@ -113,6 +114,7 @@ export function PetraBuildingBody({ gameState, xy }: IBuildingComponentProps): R
          <WarningComponent icon="info">{t(L.PetraNoMultiplier)}</WarningComponent>
          <div className="sep10"></div>
          <BuildingWikipediaComponent gameState={gameState} xy={xy} />
+         <BuildingColorComponent gameState={gameState} xy={xy} />
       </div>
    );
 }

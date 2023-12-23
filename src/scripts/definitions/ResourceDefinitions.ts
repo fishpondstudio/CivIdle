@@ -40,19 +40,36 @@ export class ResourceDefinitions {
    SiegeRam: IResourceDefinition = { name: () => t(L.SiegeRam), canStore: true, canPrice: true };
    Caravel: IResourceDefinition = { name: () => t(L.Caravel), canStore: true, canPrice: true };
    Galleon: IResourceDefinition = { name: () => t(L.Galleon), canStore: true, canPrice: true };
+   Frigate: IResourceDefinition = { name: () => t(L.Frigate), canStore: true, canPrice: true };
    Cotton: IResourceDefinition = { name: () => t(L.Cotton), canStore: true, canPrice: true };
    Garment: IResourceDefinition = { name: () => t(L.Garment), canStore: true, canPrice: true };
    // Garum: IResourceDefinition = { name: () => t(L.Garum), canStore: true, canPrice: true };
    Furniture: IResourceDefinition = { name: () => t(L.Furniture), canStore: true, canPrice: true };
    Opera: IResourceDefinition = { name: () => t(L.Opera), canStore: true, canPrice: true };
    Poem: IResourceDefinition = { name: () => t(L.Poem), canStore: true, canPrice: true };
+   Painting: IResourceDefinition = { name: () => t(L.Painting), canStore: true, canPrice: true };
    Music: IResourceDefinition = { name: () => t(L.Music), canStore: true, canPrice: true };
    Cloth: IResourceDefinition = { name: () => t(L.Cloth), canStore: true, canPrice: true };
    // Newspaper: IResourceDefinition = { name: () => t(L.Newspaper), canStore: true, canPrice: true };
    Flour: IResourceDefinition = { name: () => t(L.Flour), canStore: true, canPrice: true };
+   Book: IResourceDefinition = { name: () => t(L.Book), canStore: true, canPrice: true };
    Science: IResourceDefinition = { name: () => t(L.Science), canStore: true, canPrice: false };
    Faith: IResourceDefinition = { name: () => t(L.Faith), canStore: true, canPrice: true };
    Warp: IResourceDefinition = { name: () => t(L.Warp), canStore: true, canPrice: false };
+   Coin: IResourceDefinition = { name: () => t(L.Coin), canStore: true, canPrice: true };
+   Banknote: IResourceDefinition = { name: () => t(L.Banknote), canStore: true, canPrice: true };
+   Bond: IResourceDefinition = { name: () => t(L.Bond), canStore: true, canPrice: true };
+   Canon: IResourceDefinition = { name: () => t(L.Canon), canStore: true, canPrice: true };
+   Dynamite: IResourceDefinition = { name: () => t(L.Dynamite), canStore: true, canPrice: true };
+   Gunpowder: IResourceDefinition = { name: () => t(L.Gunpowder), canStore: true, canPrice: true };
+   Coal: IResourceDefinition = { name: () => t(L.Coal), canStore: true, canPrice: true };
+   // Silicon: IResourceDefinition = { name: () => t(L.Silicon), canStore: true, canPrice: true };
+   Sand: IResourceDefinition = { name: () => t(L.Sand), canStore: true, canPrice: true };
+   Glass: IResourceDefinition = { name: () => t(L.Glass), canStore: true, canPrice: true };
+   Lens: IResourceDefinition = { name: () => t(L.Lens), canStore: true, canPrice: true };
+   Philosophy: IResourceDefinition = { name: () => t(L.Philosophy), canStore: true, canPrice: true };
+   Culture: IResourceDefinition = { name: () => t(L.Culture), canStore: true, canPrice: true };
+   Law: IResourceDefinition = { name: () => t(L.Law), canStore: true, canPrice: true };
 }
 
 export type Resource = keyof ResourceDefinitions;
@@ -64,6 +81,7 @@ export const DepositResources = {
    Wood: true,
    Stone: true,
    Gold: true,
+   Coal: true,
 } as const satisfies Partial<Record<Resource, true>>;
 
 export type Deposit = keyof typeof DepositResources;

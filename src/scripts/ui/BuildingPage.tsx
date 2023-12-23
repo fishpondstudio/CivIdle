@@ -10,8 +10,10 @@ import { HeadquarterBuildingBody } from "./HeadquarterBuildingBody";
 import { LoadingPage, LoadingPageStage } from "./LoadingPage";
 import { MarketBuildingBody } from "./MarketBuildingBody";
 import { MenuComponent } from "./MenuComponent";
+import { OxfordUniversityBuildingBody } from "./OxfordUniversityBuildingBody";
 import { PetraBuildingBody } from "./PetraBuildingBody";
 import { PlayerTradeBuildingBody } from "./PlayerTradeBuildingBody";
+import { StPetersBasilicaBuildingBody } from "./StPetersBasilicaBuildingBody";
 import { StatisticsBuildingBody } from "./StatisticsBuildingBody";
 import { WarehouseBuildingBody } from "./WarehouseBuildingBody";
 
@@ -22,6 +24,8 @@ const BuildingBodyOverride: Partial<Record<Building, FunctionComponent<IBuilding
    Caravansary: PlayerTradeBuildingBody,
    Warehouse: WarehouseBuildingBody,
    Petra: PetraBuildingBody,
+   OxfordUniversity: OxfordUniversityBuildingBody,
+   StPetersBasilica: StPetersBasilicaBuildingBody,
 };
 
 export function BuildingPage({ tile }: { tile: ITileData }): React.ReactNode {

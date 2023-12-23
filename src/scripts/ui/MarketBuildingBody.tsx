@@ -52,7 +52,7 @@ export function MarketBuildingBody({ gameState, xy }: IBuildingComponentProps): 
                      .sort((a, b) => (Config.ResourcePrice[b] ?? 0) - (Config.ResourcePrice[a] ?? 0))
                      .map((res) => {
                         const r = Tick.current.resources[res];
-                        if (!r.canPrice || !r.canStore) {
+                        if (!r || !r.canPrice || !r.canStore) {
                            return null;
                         }
                         const buyResource = market.availableResources[res]!;

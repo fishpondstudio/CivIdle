@@ -2,40 +2,40 @@
     "frames": {
         "BuildingActorsGuild": {
             "frame": {
-                "x": 0,
-                "y": 612,
+                "x": 299,
+                "y": 616,
                 "w": 100,
                 "h": 90
             }
         },
         "BuildingAlps": {
             "frame": {
-                "x": 303,
-                "y": 887,
+                "x": 404,
+                "y": 991,
                 "w": 100,
                 "h": 75
             }
         },
         "BuildingAngkorWat": {
             "frame": {
-                "x": 303,
-                "y": 703,
+                "x": 101,
+                "y": 810,
                 "w": 100,
                 "h": 85
             }
         },
         "BuildingApartment": {
             "frame": {
-                "x": 101,
-                "y": 612,
+                "x": 400,
+                "y": 616,
                 "w": 100,
                 "h": 90
             }
         },
         "BuildingAqueduct": {
             "frame": {
-                "x": 202,
-                "y": 612,
+                "x": 501,
+                "y": 616,
                 "w": 100,
                 "h": 90
             }
@@ -43,60 +43,28 @@
         "BuildingArcDeTriomphe": {
             "frame": {
                 "x": 0,
-                "y": 320,
+                "y": 421,
                 "w": 100,
                 "h": 98
             }
         },
         "BuildingArmory": {
             "frame": {
-                "x": 618,
-                "y": 496,
+                "x": 721,
+                "y": 302,
                 "w": 90,
                 "h": 100
             }
         },
         "BuildingBakery": {
             "frame": {
-                "x": 618,
-                "y": 0,
+                "x": 0,
+                "y": 616,
                 "w": 96,
                 "h": 97
             }
         },
-        "BuildingBlacksmith": {
-            "frame": {
-                "x": 505,
-                "y": 516,
-                "w": 100,
-                "h": 91
-            }
-        },
-        "BuildingBorobudur": {
-            "frame": {
-                "x": 715,
-                "y": 646,
-                "w": 100,
-                "h": 55
-            }
-        },
-        "BuildingBranCastle": {
-            "frame": {
-                "x": 303,
-                "y": 320,
-                "w": 100,
-                "h": 97
-            }
-        },
-        "BuildingBrandenburgGate": {
-            "frame": {
-                "x": 303,
-                "y": 612,
-                "w": 100,
-                "h": 90
-            }
-        },
-        "BuildingBrewery": {
+        "BuildingBank": {
             "frame": {
                 "x": 0,
                 "y": 118,
@@ -104,7 +72,47 @@
                 "h": 100
             }
         },
-        "BuildingBrickworks": {
+        "BuildingBlacksmith": {
+            "frame": {
+                "x": 198,
+                "y": 616,
+                "w": 100,
+                "h": 91
+            }
+        },
+        "BuildingBondMarket": {
+            "frame": {
+                "x": 602,
+                "y": 616,
+                "w": 100,
+                "h": 90
+            }
+        },
+        "BuildingBorobudur": {
+            "frame": {
+                "x": 808,
+                "y": 991,
+                "w": 100,
+                "h": 55
+            }
+        },
+        "BuildingBranCastle": {
+            "frame": {
+                "x": 404,
+                "y": 421,
+                "w": 100,
+                "h": 97
+            }
+        },
+        "BuildingBrandenburgGate": {
+            "frame": {
+                "x": 96,
+                "y": 714,
+                "w": 100,
+                "h": 90
+            }
+        },
+        "BuildingBrewery": {
             "frame": {
                 "x": 101,
                 "y": 118,
@@ -112,10 +120,26 @@
                 "h": 100
             }
         },
-        "BuildingCaravansary": {
+        "BuildingBrickworks": {
             "frame": {
                 "x": 222,
                 "y": 0,
+                "w": 100,
+                "h": 100
+            }
+        },
+        "BuildingCanonWorkshop": {
+            "frame": {
+                "x": 524,
+                "y": 396,
+                "w": 100,
+                "h": 95
+            }
+        },
+        "BuildingCaravansary": {
+            "frame": {
+                "x": 222,
+                "y": 101,
                 "w": 100,
                 "h": 100
             }
@@ -130,15 +154,15 @@
         },
         "BuildingCastrum": {
             "frame": {
-                "x": 404,
-                "y": 612,
+                "x": 197,
+                "y": 714,
                 "w": 100,
                 "h": 90
             }
         },
         "BuildingCathedral": {
             "frame": {
-                "x": 816,
+                "x": 914,
                 "y": 0,
                 "w": 85,
                 "h": 100
@@ -146,16 +170,16 @@
         },
         "BuildingChariotWorkshop": {
             "frame": {
-                "x": 618,
-                "y": 396,
+                "x": 721,
+                "y": 202,
                 "w": 91,
                 "h": 99
             }
         },
         "BuildingCheeseMaker": {
             "frame": {
-                "x": 303,
-                "y": 419,
+                "x": 0,
+                "y": 520,
                 "w": 100,
                 "h": 95
             }
@@ -163,63 +187,79 @@
         "BuildingChichenItza": {
             "frame": {
                 "x": 606,
-                "y": 887,
+                "y": 991,
                 "w": 100,
                 "h": 65
             }
         },
         "BuildingChoghaZanbil": {
             "frame": {
-                "x": 495,
-                "y": 793,
+                "x": 293,
+                "y": 897,
                 "w": 100,
                 "h": 80
             }
         },
         "BuildingChurch": {
             "frame": {
-                "x": 404,
-                "y": 419,
+                "x": 101,
+                "y": 520,
                 "w": 100,
                 "h": 95
             }
         },
         "BuildingCircusMaximus": {
             "frame": {
-                "x": 505,
-                "y": 612,
+                "x": 298,
+                "y": 714,
                 "w": 100,
                 "h": 90
             }
         },
+        "BuildingCoalMine": {
+            "frame": {
+                "x": 1000,
+                "y": 0,
+                "w": 90,
+                "h": 89
+            }
+        },
+        "BuildingCoinMint": {
+            "frame": {
+                "x": 0,
+                "y": 219,
+                "w": 100,
+                "h": 100
+            }
+        },
         "BuildingColosseum": {
             "frame": {
-                "x": 404,
-                "y": 887,
+                "x": 505,
+                "y": 991,
                 "w": 100,
                 "h": 75
             }
         },
         "BuildingColossusOfRhodes": {
             "frame": {
-                "x": 993,
-                "y": 86,
+                "x": 1091,
+                "y": 191,
                 "w": 75,
                 "h": 100
             }
         },
         "BuildingCopperMiningCamp": {
             "frame": {
-                "x": 902,
-                "y": 0,
+                "x": 1000,
+                "y": 90,
                 "w": 90,
                 "h": 89
             }
         },
         "BuildingCottonMill": {
             "frame": {
-                "x": 0,
-                "y": 419,
+                "x": 524,
+                "y": 0,
                 "w": 100,
                 "h": 96
             }
@@ -227,46 +267,78 @@
         "BuildingCottonPlantation": {
             "frame": {
                 "x": 101,
-                "y": 320,
+                "y": 421,
                 "w": 100,
                 "h": 98
             }
         },
+        "BuildingCourthouse": {
+            "frame": {
+                "x": 394,
+                "y": 897,
+                "w": 100,
+                "h": 80
+            }
+        },
         "BuildingCristoRedentor": {
             "frame": {
-                "x": 618,
-                "y": 98,
+                "x": 625,
+                "y": 404,
                 "w": 92,
                 "h": 100
             }
         },
         "BuildingDomus": {
             "frame": {
-                "x": 606,
-                "y": 612,
+                "x": 399,
+                "y": 714,
                 "w": 100,
                 "h": 90
             }
         },
+        "BuildingDynamiteWorkshop": {
+            "frame": {
+                "x": 101,
+                "y": 219,
+                "w": 100,
+                "h": 100
+            }
+        },
         "BuildingFishPond": {
             "frame": {
-                "x": 902,
-                "y": 90,
+                "x": 1000,
+                "y": 180,
                 "w": 90,
                 "h": 89
             }
         },
         "BuildingFlourMill": {
             "frame": {
-                "x": 902,
-                "y": 450,
+                "x": 1000,
+                "y": 630,
                 "w": 80,
                 "h": 100
             }
         },
+        "BuildingForbiddenCity": {
+            "frame": {
+                "x": 495,
+                "y": 897,
+                "w": 100,
+                "h": 80
+            }
+        },
+        "BuildingFrigateBuilder": {
+            "frame": {
+                "x": 596,
+                "y": 897,
+                "w": 100,
+                "h": 80
+            }
+        },
         "BuildingFurnitureWorkshop": {
             "frame": {
-                "x": 423,
+                "x": 424,
                 "y": 303,
                 "w": 95,
                 "h": 100
@@ -274,96 +346,112 @@
         },
         "BuildingGalleonBuilder": {
             "frame": {
-                "x": 715,
-                "y": 0,
+                "x": 500,
+                "y": 714,
                 "w": 100,
                 "h": 90
             }
         },
         "BuildingGarmentWorkshop": {
             "frame": {
-                "x": 618,
-                "y": 300,
+                "x": 0,
+                "y": 714,
                 "w": 95,
                 "h": 95
             }
         },
+        "BuildingGlassworks": {
+            "frame": {
+                "x": 202,
+                "y": 421,
+                "w": 100,
+                "h": 98
+            }
+        },
         "BuildingGoldenGateBridge": {
             "frame": {
-                "x": 192,
-                "y": 793,
+                "x": 807,
+                "y": 810,
                 "w": 100,
                 "h": 82
             }
         },
         "BuildingGoldMiningCamp": {
             "frame": {
-                "x": 902,
-                "y": 180,
+                "x": 1000,
+                "y": 270,
                 "w": 90,
                 "h": 89
             }
         },
         "BuildingGreatDagonPagoda": {
             "frame": {
-                "x": 101,
-                "y": 419,
+                "x": 524,
+                "y": 97,
                 "w": 100,
                 "h": 96
             }
         },
         "BuildingGreatMosqueOfSamarra": {
             "frame": {
-                "x": 522,
-                "y": 303,
+                "x": 721,
+                "y": 403,
                 "w": 87,
                 "h": 100
             }
         },
         "BuildingGreatWall": {
             "frame": {
-                "x": 91,
-                "y": 793,
+                "x": 706,
+                "y": 810,
                 "w": 100,
                 "h": 83
             }
         },
+        "BuildingGunpowderMill": {
+            "frame": {
+                "x": 101,
+                "y": 320,
+                "w": 99,
+                "h": 100
+            }
+        },
         "BuildingHagiaSophia": {
             "frame": {
-                "x": 596,
-                "y": 793,
+                "x": 697,
+                "y": 897,
                 "w": 100,
                 "h": 80
             }
         },
         "BuildingHangingGarden": {
             "frame": {
-                "x": 715,
-                "y": 91,
+                "x": 601,
+                "y": 714,
                 "w": 100,
                 "h": 90
             }
         },
         "BuildingHatshepsutTemple": {
             "frame": {
-                "x": 505,
-                "y": 887,
+                "x": 813,
+                "y": 735,
                 "w": 100,
                 "h": 70
             }
         },
         "BuildingHeadquarter_Rome": {
             "frame": {
-                "x": 222,
-                "y": 101,
+                "x": 202,
+                "y": 219,
                 "w": 100,
                 "h": 100
             }
         },
         "BuildingHeadquarter": {
             "frame": {
-                "x": 715,
-                "y": 182,
+                "x": 702,
+                "y": 714,
                 "w": 100,
                 "h": 90
             }
@@ -371,22 +459,22 @@
         "BuildingHimejiCastle": {
             "frame": {
                 "x": 202,
-                "y": 419,
+                "y": 810,
                 "w": 100,
-                "h": 96
+                "h": 85
             }
         },
         "BuildingHouse": {
             "frame": {
-                "x": 993,
-                "y": 0,
+                "x": 0,
+                "y": 1072,
                 "w": 89,
                 "h": 85
             }
         },
         "BuildingHut": {
             "frame": {
-                "x": 816,
+                "x": 914,
                 "y": 101,
                 "w": 85,
                 "h": 100
@@ -394,159 +482,175 @@
         },
         "BuildingIronForge": {
             "frame": {
-                "x": 202,
-                "y": 320,
+                "x": 303,
+                "y": 421,
                 "w": 100,
                 "h": 98
             }
         },
         "BuildingIronMiningCamp": {
             "frame": {
-                "x": 902,
-                "y": 270,
+                "x": 1000,
+                "y": 360,
                 "w": 90,
                 "h": 89
             }
         },
         "BuildingItsukushimaShrine": {
             "frame": {
-                "x": 303,
-                "y": 516,
+                "x": 505,
+                "y": 520,
                 "w": 100,
                 "h": 93
             }
         },
         "BuildingKnightCamp": {
             "frame": {
-                "x": 902,
-                "y": 551,
+                "x": 1000,
+                "y": 731,
                 "w": 80,
+                "h": 100
+            }
+        },
+        "BuildingLensWorkshop": {
+            "frame": {
+                "x": 625,
+                "y": 505,
+                "w": 91,
                 "h": 100
             }
         },
         "BuildingLibrary": {
             "frame": {
-                "x": 715,
-                "y": 273,
+                "x": 813,
+                "y": 0,
                 "w": 100,
                 "h": 90
             }
         },
         "BuildingLighthouseOfAlexandria": {
             "frame": {
-                "x": 816,
-                "y": 303,
+                "x": 1091,
+                "y": 90,
                 "w": 76,
                 "h": 100
             }
         },
         "BuildingLivestockFarm": {
             "frame": {
-                "x": 323,
-                "y": 0,
+                "x": 201,
+                "y": 320,
                 "w": 99,
                 "h": 100
             }
         },
         "BuildingLoggingCamp": {
             "frame": {
-                "x": 902,
-                "y": 753,
+                "x": 1091,
+                "y": 0,
                 "w": 86,
                 "h": 89
             }
         },
         "BuildingLumberMill": {
             "frame": {
-                "x": 404,
-                "y": 703,
+                "x": 303,
+                "y": 810,
                 "w": 100,
                 "h": 85
             }
         },
         "BuildingLuxorTemple": {
             "frame": {
-                "x": 697,
-                "y": 793,
+                "x": 798,
+                "y": 897,
                 "w": 100,
                 "h": 80
             }
         },
         "BuildingMarbleworks": {
             "frame": {
-                "x": 707,
-                "y": 703,
+                "x": 606,
+                "y": 810,
                 "w": 99,
                 "h": 85
             }
         },
         "BuildingMarket": {
             "frame": {
-                "x": 993,
-                "y": 389,
+                "x": 90,
+                "y": 1072,
                 "w": 89,
                 "h": 81
             }
         },
         "BuildingMausoleumAtHalicarnassus": {
             "frame": {
-                "x": 618,
-                "y": 199,
+                "x": 721,
+                "y": 0,
                 "w": 91,
                 "h": 100
             }
         },
         "BuildingMiningCamp": {
             "frame": {
-                "x": 202,
-                "y": 516,
+                "x": 404,
+                "y": 520,
                 "w": 100,
                 "h": 94
             }
         },
         "BuildingMoai": {
             "frame": {
-                "x": 404,
-                "y": 516,
+                "x": 97,
+                "y": 616,
                 "w": 100,
                 "h": 92
             }
         },
         "BuildingMogaoCaves": {
             "frame": {
-                "x": 293,
-                "y": 793,
+                "x": 91,
+                "y": 897,
                 "w": 100,
                 "h": 81
             }
         },
         "BuildingMosque": {
             "frame": {
-                "x": 423,
-                "y": 101,
+                "x": 524,
+                "y": 194,
                 "w": 96,
+                "h": 100
+            }
+        },
+        "BuildingMuseum": {
+            "frame": {
+                "x": 721,
+                "y": 504,
+                "w": 87,
                 "h": 100
             }
         },
         "BuildingMusiciansGuild": {
             "frame": {
                 "x": 0,
-                "y": 793,
+                "y": 897,
                 "w": 90,
                 "h": 93
             }
         },
         "BuildingNeuschwanstein": {
             "frame": {
-                "x": 0,
-                "y": 703,
+                "x": 813,
+                "y": 555,
                 "w": 100,
                 "h": 89
             }
         },
         "BuildingOilPress": {
             "frame": {
-                "x": 816,
+                "x": 914,
                 "y": 202,
                 "w": 85,
                 "h": 100
@@ -554,32 +658,48 @@
         },
         "BuildingOlivePlantation": {
             "frame": {
-                "x": 202,
-                "y": 887,
+                "x": 303,
+                "y": 991,
                 "w": 100,
                 "h": 76
             }
         },
+        "BuildingOxfordUniversity": {
+            "frame": {
+                "x": 721,
+                "y": 101,
+                "w": 91,
+                "h": 100
+            }
+        },
+        "BuildingPaintersGuild": {
+            "frame": {
+                "x": 323,
+                "y": 0,
+                "w": 100,
+                "h": 100
+            }
+        },
         "BuildingPantheon": {
             "frame": {
-                "x": 798,
-                "y": 793,
+                "x": 899,
+                "y": 897,
                 "w": 100,
                 "h": 80
             }
         },
         "BuildingPaperMaker": {
             "frame": {
-                "x": 0,
-                "y": 219,
+                "x": 323,
+                "y": 101,
                 "w": 100,
                 "h": 100
             }
         },
         "BuildingParthenon": {
             "frame": {
-                "x": 202,
-                "y": 703,
+                "x": 0,
+                "y": 810,
                 "w": 100,
                 "h": 86
             }
@@ -587,103 +707,127 @@
         "BuildingPersepolis": {
             "frame": {
                 "x": 0,
-                "y": 887,
+                "y": 991,
                 "w": 100,
                 "h": 80
             }
         },
         "BuildingPetra": {
             "frame": {
-                "x": 101,
-                "y": 887,
+                "x": 202,
+                "y": 991,
                 "w": 100,
                 "h": 77
             }
         },
         "BuildingPizzeria": {
             "frame": {
-                "x": 323,
-                "y": 101,
+                "x": 301,
+                "y": 320,
                 "w": 99,
+                "h": 100
+            }
+        },
+        "BuildingPrintingHouse": {
+            "frame": {
+                "x": 625,
+                "y": 0,
+                "w": 95,
                 "h": 100
             }
         },
         "BuildingPrintingPress": {
             "frame": {
-                "x": 101,
-                "y": 219,
+                "x": 323,
+                "y": 202,
                 "w": 100,
                 "h": 100
             }
         },
         "BuildingPyramidOfGiza": {
             "frame": {
-                "x": 808,
-                "y": 887,
+                "x": 909,
+                "y": 991,
                 "w": 100,
                 "h": 49
             }
         },
         "BuildingSagradaFamília": {
             "frame": {
-                "x": 715,
-                "y": 546,
+                "x": 813,
+                "y": 455,
                 "w": 90,
                 "h": 99
             }
         },
         "BuildingSaintBasilsCathedral": {
             "frame": {
-                "x": 522,
-                "y": 0,
+                "x": 625,
+                "y": 101,
                 "w": 95,
                 "h": 100
             }
         },
+        "BuildingSandpit": {
+            "frame": {
+                "x": 813,
+                "y": 91,
+                "w": 100,
+                "h": 90
+            }
+        },
         "BuildingSchool": {
             "frame": {
-                "x": 202,
-                "y": 219,
+                "x": 0,
+                "y": 320,
                 "w": 100,
                 "h": 100
             }
         },
         "BuildingShrine": {
             "frame": {
-                "x": 0,
-                "y": 516,
+                "x": 202,
+                "y": 520,
                 "w": 100,
                 "h": 95
             }
         },
         "BuildingSiegeWorkshop": {
             "frame": {
-                "x": 505,
-                "y": 703,
+                "x": 404,
+                "y": 810,
                 "w": 100,
                 "h": 85
             }
         },
+        "BuildingSiliconMiningCamp": {
+            "frame": {
+                "x": 1000,
+                "y": 450,
+                "w": 90,
+                "h": 89
+            }
+        },
         "BuildingSilkRoad": {
             "frame": {
-                "x": 715,
-                "y": 364,
+                "x": 813,
+                "y": 182,
                 "w": 100,
                 "h": 90
             }
         },
         "BuildingStable": {
             "frame": {
-                "x": 423,
-                "y": 0,
+                "x": 424,
+                "y": 101,
                 "w": 98,
                 "h": 100
             }
         },
         "BuildingStatistics": {
             "frame": {
-                "x": 101,
-                "y": 703,
+                "x": 813,
+                "y": 645,
                 "w": 100,
                 "h": 89
             }
@@ -699,111 +843,135 @@
         "BuildingStonehenge": {
             "frame": {
                 "x": 707,
-                "y": 887,
+                "y": 991,
                 "w": 100,
                 "h": 60
             }
         },
         "BuildingStoneQuarry": {
             "frame": {
-                "x": 902,
-                "y": 360,
+                "x": 1000,
+                "y": 540,
                 "w": 90,
                 "h": 89
             }
         },
+        "BuildingStPetersBasilica": {
+            "frame": {
+                "x": 424,
+                "y": 202,
+                "w": 98,
+                "h": 100
+            }
+        },
         "BuildingSwordForge": {
             "frame": {
-                "x": 522,
-                "y": 101,
+                "x": 625,
+                "y": 202,
                 "w": 95,
                 "h": 100
             }
         },
         "BuildingSydneyOperaHouse": {
             "frame": {
-                "x": 394,
-                "y": 793,
+                "x": 192,
+                "y": 897,
                 "w": 100,
                 "h": 81
             }
         },
-        "BuildingTempleOfHeaven": {
+        "BuildingTajMahal": {
             "frame": {
                 "x": 101,
-                "y": 516,
+                "y": 991,
+                "w": 100,
+                "h": 80
+            }
+        },
+        "BuildingTempleOfHeaven": {
+            "frame": {
+                "x": 303,
+                "y": 520,
                 "w": 100,
                 "h": 95
             }
         },
         "BuildingTerracottaArmy": {
             "frame": {
-                "x": 902,
-                "y": 652,
+                "x": 1000,
+                "y": 832,
                 "w": 80,
                 "h": 100
             }
         },
         "BuildingToolMaker": {
             "frame": {
-                "x": 323,
-                "y": 202,
+                "x": 424,
+                "y": 0,
                 "w": 99,
                 "h": 100
             }
         },
+        "BuildingUniversity": {
+            "frame": {
+                "x": 813,
+                "y": 273,
+                "w": 100,
+                "h": 90
+            }
+        },
         "BuildingVilla": {
             "frame": {
-                "x": 606,
-                "y": 703,
+                "x": 505,
+                "y": 810,
                 "w": 100,
                 "h": 85
             }
         },
         "BuildingVineyard": {
             "frame": {
-                "x": 993,
-                "y": 187,
+                "x": 1091,
+                "y": 292,
                 "w": 75,
                 "h": 100
             }
         },
         "BuildingWarehouse": {
             "frame": {
-                "x": 715,
-                "y": 455,
+                "x": 813,
+                "y": 364,
                 "w": 100,
                 "h": 90
             }
         },
         "BuildingWheatFarm": {
             "frame": {
-                "x": 423,
-                "y": 202,
+                "x": 524,
+                "y": 295,
                 "w": 96,
                 "h": 100
             }
         },
         "BuildingWindMill": {
             "frame": {
-                "x": 522,
-                "y": 404,
+                "x": 721,
+                "y": 605,
                 "w": 87,
                 "h": 100
             }
         },
         "BuildingWinery": {
             "frame": {
-                "x": 993,
-                "y": 288,
+                "x": 1091,
+                "y": 393,
                 "w": 75,
                 "h": 100
             }
         },
         "BuildingWritersGuild": {
             "frame": {
-                "x": 522,
-                "y": 202,
+                "x": 625,
+                "y": 303,
                 "w": 95,
                 "h": 100
             }
@@ -815,8 +983,8 @@
         "image": "./src/images/textures_buildings.png",
         "scale": 1,
         "size": {
-            "w": 1082,
-            "h": 967
+            "w": 1177,
+            "h": 1157
         }
     }
 }

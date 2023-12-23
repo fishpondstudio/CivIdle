@@ -1,8 +1,8 @@
-import Actions from "../Actions";
+import { Actions } from "../Actions";
 
 let id = 0;
 
-export default abstract class Action {
+export abstract class Action {
    public done = false;
    public queued: Array<Action> = [];
    public readonly id: number;

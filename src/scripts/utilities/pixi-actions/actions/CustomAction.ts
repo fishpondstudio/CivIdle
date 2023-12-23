@@ -1,5 +1,5 @@
 import { Easing, EasingFunction } from "../Easing";
-import Action from "./Action";
+import { Action } from "./Action";
 
 export class CustomAction<T> extends Action {
    private readonly interpolation: EasingFunction;

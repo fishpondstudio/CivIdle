@@ -1,4 +1,4 @@
-import { isSteam, SteamClient } from "./rpc/SteamClient";
+import { SteamClient, isSteam } from "./rpc/SteamClient";
 import { ErrorPage } from "./ui/ErrorPage";
 import { Singleton } from "./utilities/Singleton";
 
@@ -24,4 +24,4 @@ export async function checkSteamBranch() {
    }
 }
 
-export const MAX_TECH_COLUMN = 10;
+export const MAX_TECH_COLUMN = 13;

@@ -249,6 +249,78 @@ export class GreatPersonDefinitions {
       },
    };
 
+   LeonardoDaVinci: IGreatPersonDefinition = boostOf({
+      name: () => t(L.LeonardoDaVinci),
+      boost: {
+         multipliers: ["output", "storage"],
+         buildings: ["PaintersGuild", "University"],
+      },
+      time: "1452 ~ 1519 AD",
+      value: (level) => level,
+      maxLevel: Infinity,
+      age: "RenaissanceAge",
+   });
+
+   MartinLuther: IGreatPersonDefinition = boostOf({
+      name: () => t(L.MartinLuther),
+      boost: {
+         multipliers: ["output", "storage"],
+         buildings: ["Church", "Cathedral"],
+      },
+      time: "1483 ~ 1546 AD",
+      value: (level) => level,
+      maxLevel: Infinity,
+      age: "RenaissanceAge",
+   });
+
+   WilliamShakespeare: IGreatPersonDefinition = boostOf({
+      name: () => t(L.WilliamShakespeare),
+      boost: {
+         multipliers: ["output", "storage"],
+         buildings: ["PaperMaker", "PrintingHouse"],
+      },
+      time: "1564 ~ 1616 AD",
+      value: (level) => level,
+      maxLevel: Infinity,
+      age: "RenaissanceAge",
+   });
+
+   ReneDescartes: IGreatPersonDefinition = boostOf({
+      name: () => t(L.ReneDescartes),
+      boost: {
+         multipliers: ["output"],
+         buildings: ["School", "Library"],
+      },
+      time: "1596 ~ 1650 AD",
+      value: (level) => level * 2,
+      maxLevel: Infinity,
+      age: "RenaissanceAge",
+   });
+
+   ZhengHe: IGreatPersonDefinition = boostOf({
+      name: () => t(L.ZhengHe),
+      boost: {
+         multipliers: ["storage", "output"],
+         buildings: ["CaravelBuilder", "GalleonBuilder"],
+      },
+      time: "1371 ~ 1435 AD",
+      value: (level) => level,
+      maxLevel: Infinity,
+      age: "RenaissanceAge",
+   });
+
+   CosimoDeMedici: IGreatPersonDefinition = boostOf({
+      name: () => t(L.CosimoDeMedici),
+      boost: {
+         multipliers: ["storage", "output"],
+         buildings: ["GoldMiningCamp", "CoinMint"],
+      },
+      time: "1389 ~ 1464 AD",
+      value: (level) => level,
+      maxLevel: Infinity,
+      age: "RenaissanceAge",
+   });
+
    // LaoZi: IGreatPersonDefinition = {
    //    name: () => t(L.LaoZi),
    //    time: "c. 600s BC",

@@ -1,6 +1,6 @@
-import { useGameState } from "../Global";
+import { useGameOptions, useGameState } from "../Global";
 import { Config } from "../logic/Constants";
-import { jsxMapOf } from "../utilities/Helper";
+import { isEmpty, jsxMapOf } from "../utilities/Helper";
 import { Singleton } from "../utilities/Singleton";
 import { L, t } from "../utilities/i18n";
 import { greatPersonImage } from "../visuals/GreatPersonVisual";
@@ -15,6 +15,7 @@ import { WarningComponent } from "./WarningComponent";
 
 export function GreatPersonPage(): React.ReactNode {
    const gs = useGameState();
+   const options = useGameOptions();
    return (
       <div className="window">
          <div className="title-bar">
@@ -106,12 +107,20 @@ export function GreatPersonPage(): React.ReactNode {
             </fieldset>
             <fieldset>
                <legend>{t(L.PermanentGreatPeople)}</legend>
-               <div className="text-link text-strong" onClick={() => showModal(<UpgradeGreatPersonModal />)}>
-                  {t(L.PermanentGreatPeopleShowInModal)}
-               </div>
-               <div className="sep10" />
+               {isEmpty(options.greatPeople) ? null : (
+                  <>
+                     <div
+                        className="text-link text-strong"
+                        onClick={() => showModal(<UpgradeGreatPersonModal />)}
+                     >
+                        {t(L.PermanentGreatPeopleShowInModal)}
+                     </div>
+                     <div className="sep10" />
+                  </>
+               )}
                <PermanentGreatPeople showEffect={false} stickyHeader={false} />
             </fieldset>
+
             <fieldset>
                <legend>{t(L.GreatPeopleWiki)}</legend>
                <div className="table-view">

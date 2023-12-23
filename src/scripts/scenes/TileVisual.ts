@@ -1,7 +1,7 @@
 import { Viewport } from "pixi-viewport";
 import { BitmapText, Color, Container, IDestroyOptions, IPointData, Sprite } from "pixi.js";
-import { Resource } from "../definitions/ResourceDefinitions";
 import { getGameOptions, getGameState } from "../Global";
+import { Resource } from "../definitions/ResourceDefinitions";
 import {
    getBuildingLevelLabel,
    getBuildingTexture,
@@ -13,11 +13,11 @@ import { GameOptions, GameState } from "../logic/GameState";
 import { Tick } from "../logic/TickLogic";
 import { ITileData } from "../logic/Tile";
 import { clamp, forEach, layoutCenter, pointToXy, sizeOf } from "../utilities/Helper";
-import Actions from "../utilities/pixi-actions/Actions";
-import Action from "../utilities/pixi-actions/actions/Action";
-import { Easing } from "../utilities/pixi-actions/Easing";
 import { Singleton } from "../utilities/Singleton";
 import { v2 } from "../utilities/Vector2";
+import { Actions } from "../utilities/pixi-actions/Actions";
+import { Easing } from "../utilities/pixi-actions/Easing";
+import { Action } from "../utilities/pixi-actions/actions/Action";
 import { Fonts } from "../visuals/Fonts";
 import { WorldScene } from "./WorldScene";
 

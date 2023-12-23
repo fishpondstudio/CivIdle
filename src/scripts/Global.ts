@@ -4,9 +4,11 @@ import { rollGreatPeople } from "./logic/RebornLogic";
 import { makeBuilding } from "./logic/Tile";
 import { SteamClient, isSteam } from "./rpc/SteamClient";
 import { Grid } from "./scenes/Grid";
+import { WorldScene } from "./scenes/WorldScene";
 import { idbGet, idbSet } from "./utilities/BrowserStorage";
 import { forEach } from "./utilities/Helper";
 import { makeObservableHook } from "./utilities/Hook";
+import { Singleton } from "./utilities/Singleton";
 import { TypedEvent } from "./utilities/TypedEvent";
 
 const savedGame = new SavedGame();
@@ -55,6 +57,10 @@ if (import.meta.env.DEV) {
    window.saveGame = saveGame;
    // @ts-expect-error
    window.rollGreatPeople = rollGreatPeople;
+   // @ts-expect-error
+   window.cameraPan = (target: number, time: number) => {
+      Singleton().sceneManager.getCurrent(WorldScene)?.cameraPan(target, time);
+   };
 }
 
 export const GameStateChanged = new TypedEvent<GameState>();

@@ -18,8 +18,9 @@ import { clamp, forEach, lerp, lookAt, pointToXy, xyToPoint } from "../utilities
 import { ViewportScene } from "../utilities/SceneManager";
 import { Singleton } from "../utilities/Singleton";
 import { Vector2, v2 } from "../utilities/Vector2";
+import { Actions } from "../utilities/pixi-actions/Actions";
 import { Easing } from "../utilities/pixi-actions/Easing";
-import Action from "../utilities/pixi-actions/actions/Action";
+import { Action } from "../utilities/pixi-actions/actions/Action";
 import { CustomAction } from "../utilities/pixi-actions/actions/CustomAction";
 import { TileVisual } from "./TileVisual";
 import { TooltipPool } from "./TooltipPool";
@@ -313,9 +314,9 @@ export class WorldScene extends ViewportScene {
       });
    }
 
-   // public update(dt: number): void {
-   //    if ("zoom" in window) {
-   //       this.viewport.setZoom(this.viewport.scaled - (window.zoom as number) * dt, true);
-   //    }
-   // }
+   public cameraPan(target: number, time: number): void {
+      const { app } = this.context;
+      target = clamp(target, Math.max(app.screen.width / this._width, app.screen.height / this._height), 2);
+      Actions.to(this.viewport, { scaled: target }, time).start();
+   }
 }

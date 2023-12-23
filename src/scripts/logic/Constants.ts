@@ -1,3 +1,4 @@
+import { build } from "../Version.json";
 import { Building, BuildingDefinitions, BuildingSpecial } from "../definitions/BuildingDefinitions";
 import { CityDefinitions } from "../definitions/CityDefinitions";
 import { GreatPersonDefinitions } from "../definitions/GreatPersonDefinitions";
@@ -5,7 +6,6 @@ import { DepositResources, Resource, ResourceDefinitions } from "../definitions/
 import { Tech, TechAgeDefinitions, TechDefinitions } from "../definitions/TechDefinitions";
 import { PartialTabulate } from "../definitions/TypeDefinitions";
 import { deepFreeze, forEach, isEmpty, keysOf, sizeOf, tabulateAdd } from "../utilities/Helper";
-import { build } from "../Version.json";
 import { GameState, SAVE_FILE_VERSION } from "./GameState";
 import { getBuildingUnlockTech, getDepositUnlockTech, getResourceUnlockTech } from "./TechLogic";
 
@@ -173,6 +173,7 @@ export function calculateTierAndPrice(gs: GameState) {
             let allOutputAmount = 0;
             forEach(output, (res, amount) => {
                if (!Config.ResourceTier[res] || targetTier < Config.ResourceTier[res]!) {
+                  const oldTier = Config.ResourceTier[res];
                   Config.ResourceTier[res] = targetTier;
                   if (maxInputResource) {
                      resourceTierDependency[res] = maxInputResource;
@@ -181,14 +182,22 @@ export function calculateTierAndPrice(gs: GameState) {
                      if (v === res) {
                         delete resourceTierDependency[k];
                         delete Config.ResourceTier[k];
-                        console.log(`Resource Tier of ${k} is decided by ${res}, but its tier has changed.`);
+                        console.log(
+                           `Resource Tier of ${k} is decided by ${res}, but its tier has changed from ${
+                              oldTier ?? "?"
+                           } to ${targetTier}`,
+                        );
                      }
                   });
                   forEach(buildingTierDependency, (k, v) => {
                      if (v === res) {
                         delete buildingTierDependency[k];
                         delete Config.BuildingTier[k];
-                        console.log(`Building Tier of ${k} is decided by ${res}, but its tier has changed.`);
+                        console.log(
+                           `Building Tier of ${k} is decided by ${res}, but its tier has changed from ${
+                              oldTier ?? "?"
+                           } to ${targetTier}`,
+                        );
                      }
                   });
                }
@@ -218,9 +227,17 @@ export function calculateTierAndPrice(gs: GameState) {
    });
 
    console.log("AllRecipes", allRecipes);
-   console.log("BuildingTier", Config.BuildingTier);
-   console.log("BuildingTech", Config.BuildingTech);
-   console.log("ResourceTier", Config.ResourceTier);
-   console.log("ResourcePrice", Config.ResourcePrice);
-   console.log("ResourceTech", Config.ResourceTech);
+   console.log("BuildingTier", sortTabulate(Config.BuildingTier));
+   console.log("BuildingTech", sortTabulate(Config.BuildingTech));
+   console.log("ResourceTier", sortTabulate(Config.ResourceTier));
+   console.log("ResourcePrice", sortTabulate(Config.ResourcePrice));
+   console.log("ResourceTech", sortTabulate(Config.ResourceTech));
+}
+
+function sortTabulate<T extends string>(dict: PartialTabulate<T>): string[] {
+   return keysOf(dict)
+      .sort((a, b) => dict[a]! - dict[b]!)
+      .map((a) => {
+         return `${a}: ${dict[a]}`;
+      });
 }

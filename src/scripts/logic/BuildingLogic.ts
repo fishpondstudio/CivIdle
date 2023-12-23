@@ -20,7 +20,7 @@ import { Singleton } from "../utilities/Singleton";
 import { Config } from "./Constants";
 import { GameState } from "./GameState";
 import { getBuildingIO, getBuildingsByType, getXyBuildings } from "./IntraTickCache";
-import { getResourcesValue } from "./ResourceLogic";
+import { getBuildingsThatProduce, getResourcesValue } from "./ResourceLogic";
 import { getAgeForTech, getBuildingUnlockTech } from "./TechLogic";
 import { Multiplier, MultiplierWithSource, NotProducingReason, Tick } from "./TickLogic";
 import {
@@ -38,13 +38,13 @@ export function getBuildingTexture(b: Building, textures: Textures, city: City) 
 export function getNotProducingTexture(reason: NotProducingReason, textures: Textures) {
    switch (reason) {
       case "NotEnoughResources":
-         return textures["NotEnoughResources"];
+         return textures.NotEnoughResources;
       case "NotEnoughWorkers":
-         return textures["NotEnoughWorkers"];
+         return textures.NotEnoughWorkers;
       case "StorageFull":
-         return textures["StorageFull"];
+         return textures.StorageFull;
       default:
-         return textures["NotProducingGeneral"];
+         return textures.NotProducingGeneral;
    }
 }
 
@@ -54,7 +54,13 @@ export function getTileTexture(r: Resource, textures: Textures) {
 
 export function totalMultiplierFor(xy: string, type: keyof Multiplier, base: number, gs: GameState): number {
    let result = base;
-   forEachMultiplier(xy, (m) => (result += m[type] ?? 0), gs);
+   forEachMultiplier(
+      xy,
+      (m) => {
+         result += m[type] ?? 0;
+      },
+      gs,
+   );
    return result;
 }
 
@@ -104,6 +110,7 @@ export function deductResources(
          console.warn(`Not enough ${res} when trying to deduct`, b, "from", a);
          a[res] = 0;
       } else {
+         // biome-ignore lint/suspicious/noExtraNonNullAssertion: <explanation>
          a[res]! -= b[res]!;
       }
    }
@@ -140,7 +147,7 @@ interface IWorkerRequirement {
 
 export function getWorkersFor(
    xy: string,
-   filter: { include: Partial<Record<Resource, any>> } | { exclude: Partial<Record<Resource, any>> },
+   filter: { include: Partial<Record<Resource, number>> } | { exclude: Partial<Record<Resource, number>> },
    gs: GameState,
 ): IWorkerRequirement {
    const result: IWorkerRequirement = {
@@ -163,6 +170,15 @@ export function getWorkersFor(
    }
    result.output = Math.ceil(result.rawOutput / result.multiplier);
    return result;
+}
+
+export function checkBuildingMax(k: Building, gs: GameState): boolean {
+   const buildingCount = reduceOf(
+      gs.tiles,
+      (prev, _xy, tile) => prev + (tile.building?.type === k ? 1 : 0),
+      0,
+   );
+   return buildingCount < (Tick.current.buildings[k].max ?? Infinity);
 }
 
 export function isTransportable(res: Resource) {
@@ -188,18 +204,43 @@ export function getStorageFor(xy: string, gs: GameState): IStorageResult {
    let multiplier = totalMultiplierFor(xy, "storage", 1, gs);
 
    let base = 0;
-   if (building?.type === "Caravansary" || building?.type === "Market") {
-      base = building.level * STORAGE_TO_PRODUCTION * 10;
-   } else if (building?.type === "Warehouse") {
-      base = building.level * STORAGE_TO_PRODUCTION * 100;
-   } else if (building?.type === "Petra") {
-      base = 60 * 60 * building.level; // 1 hour
-      multiplier = 1;
-   } else {
-      base =
-         60 * reduceOf(getBuildingIO(xy, "input", IOCalculation.Multiplier, gs), accumulate, 0) +
-         STORAGE_TO_PRODUCTION *
-            reduceOf(getBuildingIO(xy, "output", IOCalculation.Multiplier, gs), accumulate, 0);
+
+   switch (building?.type) {
+      case "Caravansary": {
+         base = building.level * STORAGE_TO_PRODUCTION * 10;
+         break;
+      }
+      case "Market": {
+         base = building.level * STORAGE_TO_PRODUCTION * 10;
+         break;
+      }
+      case "Warehouse": {
+         base = building.level * STORAGE_TO_PRODUCTION * 100;
+
+         break;
+      }
+      case "Petra": {
+         base = 60 * 60 * building.level; // 1 hour
+         multiplier = 1;
+         break;
+      }
+      case "StPetersBasilica": {
+         let count = 0;
+         getBuildingsThatProduce("Faith").forEach((b) => {
+            forEach(getBuildingsByType(b, gs), (xy, tile) => {
+               count += tile.building.level;
+            });
+         });
+         base = count * ST_PETERS_STORAGE_MULTIPLIER;
+         break;
+      }
+      default: {
+         base =
+            60 * reduceOf(getBuildingIO(xy, "input", IOCalculation.Multiplier, gs), accumulate, 0) +
+            STORAGE_TO_PRODUCTION *
+               reduceOf(getBuildingIO(xy, "output", IOCalculation.Multiplier, gs), accumulate, 0);
+         break;
+      }
    }
    return { base, multiplier, total: base * multiplier, used };
 }
@@ -385,7 +426,7 @@ export function getTotalBuildingCost(
    const start: IHaveTypeLevelAndStatus = {
       type: building,
       level: currentLevel,
-      status: currentLevel == 0 ? "building" : "upgrading",
+      status: currentLevel === 0 ? "building" : "upgrading",
    };
    const result: PartialTabulate<Resource> = {};
    while (start.level < desiredLevel) {
@@ -398,6 +439,18 @@ export function getTotalBuildingCost(
 
 export function getBuildingValue(building: IBuildingData): number {
    return getResourcesValue(getTotalBuildingCost(building.type, 0, building.level));
+}
+
+export function getTotalBuildingUpgrades(gs: GameState): number {
+   let result = 0;
+   forEach(gs.tiles, (xy, tile) => {
+      if (tile.building) {
+         if (!isSpecialBuilding(tile.building.type)) {
+            result += tile.building.level;
+         }
+      }
+   });
+   return result;
 }
 
 export function getBuildingPercentage(xy: string, cost: PartialTabulate<Resource>, gs: GameState): number {
@@ -529,9 +582,8 @@ export function getAvailableResource(xy: string, res: Resource, gs: GameState): 
       const ri = building as IResourceImportBuildingData;
       if (ri.resourceImports[res]) {
          return clamp(building.resources[res]! - (ri.resourceImports[res]?.cap ?? 0), 0, Infinity);
-      } else {
-         return building.resources[res]!;
       }
+      return building.resources[res]!;
    }
 
    if (!Tick.current.buildings[building.type].input[res]) {
@@ -545,7 +597,9 @@ export function getAvailableResource(xy: string, res: Resource, gs: GameState): 
          0,
          Infinity,
       );
-   } else {
-      return building.resources[res]!;
    }
+   return building.resources[res]!;
 }
+
+export const ST_PETERS_FAITH_MULTIPLIER = 0.01;
+export const ST_PETERS_STORAGE_MULTIPLIER = 10 * 60 * 60;

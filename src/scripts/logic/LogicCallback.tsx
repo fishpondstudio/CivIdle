@@ -6,8 +6,14 @@ import { showModal } from "../ui/GlobalModal";
 import { forEach, keysOf, pointToXy, safeAdd, safePush, xyToPoint } from "../utilities/Helper";
 import { Singleton } from "../utilities/Singleton";
 import { L, t } from "../utilities/i18n";
+import {
+   ST_PETERS_FAITH_MULTIPLIER,
+   ST_PETERS_STORAGE_MULTIPLIER,
+   getTotalBuildingUpgrades,
+} from "./BuildingLogic";
 import { GameState } from "./GameState";
-import { getTypeBuildings, getXyBuildings } from "./IntraTickCache";
+import { getBuildingsByType, getTypeBuildings, getXyBuildings } from "./IntraTickCache";
+import { getBuildingsThatProduce } from "./ResourceLogic";
 import { getGreatPeopleChoices } from "./TechLogic";
 import { ensureTileFogOfWar } from "./TerrainLogic";
 import { Tick } from "./TickLogic";
@@ -36,6 +42,13 @@ export function onBuildingComplete(xy: string, gs: GameState) {
       }
       case "Parthenon": {
          gs.greatPeopleChoices.push(getGreatPeopleChoices("ClassicalAge"));
+         if (gs.greatPeopleChoices.length > 0) {
+            showModal(<ChooseGreatPersonModal greatPeopleChoice={gs.greatPeopleChoices[0]} />);
+         }
+         break;
+      }
+      case "TajMahal": {
+         gs.greatPeopleChoices.push(getGreatPeopleChoices("MiddleAge"));
          if (gs.greatPeopleChoices.length > 0) {
             showModal(<ChooseGreatPersonModal greatPeopleChoice={gs.greatPeopleChoices[0]} />);
          }
@@ -203,6 +216,11 @@ export function onBuildingProductionComplete(xy: string, gs: GameState, offline:
          }
          break;
       }
+      case "Parthenon": {
+         addMultiplier("MusiciansGuild", { worker: 1 }, buildingName);
+         addMultiplier("PaintersGuild", { worker: 1 }, buildingName);
+         break;
+      }
       case "Stonehenge": {
          forEach(Tick.current.buildings, (b, def) => {
             if (def.input.Stone || def.output.Stone) {
@@ -240,33 +258,9 @@ export function onBuildingProductionComplete(xy: string, gs: GameState, offline:
          break;
       }
       case "Persepolis": {
-         addMultiplier(
-            "StoneQuarry",
-            {
-               output: 1,
-               worker: 1,
-               storage: 1,
-            },
-            buildingName,
-         );
-         addMultiplier(
-            "LoggingCamp",
-            {
-               output: 1,
-               worker: 1,
-               storage: 1,
-            },
-            buildingName,
-         );
-         addMultiplier(
-            "CopperMiningCamp",
-            {
-               output: 1,
-               worker: 1,
-               storage: 1,
-            },
-            buildingName,
-         );
+         addMultiplier("StoneQuarry", { output: 1, worker: 1, storage: 1 }, buildingName);
+         addMultiplier("LoggingCamp", { output: 1, worker: 1, storage: 1 }, buildingName);
+         addMultiplier("CopperMiningCamp", { output: 1, worker: 1, storage: 1 }, buildingName);
          break;
       }
       case "Petra": {
@@ -285,6 +279,56 @@ export function onBuildingProductionComplete(xy: string, gs: GameState, offline:
                delete petra.resources[res];
             }
          }
+         break;
+      }
+      case "OxfordUniversity": {
+         const upgrades = getTotalBuildingUpgrades(gs);
+         safeAdd(Singleton().buildings.Headquarter.building.resources, "Science", upgrades);
+         break;
+      }
+      case "StPetersBasilica": {
+         let totalFaith = 0;
+         let totalLevel = 0;
+         getBuildingsThatProduce("Faith").forEach((b) => {
+            addMultiplier(b, { storage: 1 }, buildingName);
+            forEach(getBuildingsByType(b, gs), (xy, tile) => {
+               if (tile.building.status === "completed") {
+                  totalFaith += tile.building.resources.Faith ?? 0;
+                  totalLevel += tile.building.level;
+               }
+            });
+         });
+         const toProduce = Math.floor(totalFaith * ST_PETERS_FAITH_MULTIPLIER);
+         safeAdd(building.resources, "Faith", toProduce);
+         const max = totalLevel * ST_PETERS_STORAGE_MULTIPLIER;
+         if ((building.resources.Faith ?? 0) > max) {
+            building.resources.Faith = max;
+            Tick.current.notProducingReasons[xy] = "StorageFull";
+         } else if (toProduce > 0) {
+            delete Tick.current.notProducingReasons[xy];
+         } else {
+            Tick.current.notProducingReasons[xy] = "NotEnoughResources";
+         }
+         break;
+      }
+      case "ForbiddenCity": {
+         addMultiplier("PaperMaker", { output: 1, worker: 1, storage: 1 }, buildingName);
+         addMultiplier("WritersGuild", { output: 1, worker: 1, storage: 1 }, buildingName);
+         addMultiplier("PrintingHouse", { output: 1, worker: 1, storage: 1 }, buildingName);
+         break;
+      }
+      case "HimejiCastle": {
+         addMultiplier("CaravelBuilder", { output: 1, worker: 1, storage: 1 }, buildingName);
+         addMultiplier("GalleonBuilder", { output: 1, worker: 1, storage: 1 }, buildingName);
+         addMultiplier("FrigateBuilder", { output: 1, worker: 1, storage: 1 }, buildingName);
+         break;
+      }
+      case "TajMahal": {
+         forEach(getXyBuildings(gs), (xy, building) => {
+            if (building.level >= 20 && building.status !== "completed") {
+               safePush(Tick.next.tileMultipliers, xy, { worker: 5, source: buildingName });
+            }
+         });
          break;
       }
    }

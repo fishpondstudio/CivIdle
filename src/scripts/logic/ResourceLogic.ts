@@ -61,7 +61,12 @@ export function getAmountInTransit(xy: string, res: Resource, gs: GameState) {
 }
 
 export function getResourcesValue(resources: PartialTabulate<Resource>): number {
-   return reduceOf(resources, (prev, res, amount) => prev + Config.ResourcePrice[res]! * amount, 0);
+   return reduceOf(
+      resources,
+      (prev, res, amount) =>
+         prev + (Tick.current.resources[res].canPrice ? Config.ResourcePrice[res]! * amount : 0),
+      0,
+   );
 }
 
 export function getBuildingsThatProduce(res: Resource): Building[] {

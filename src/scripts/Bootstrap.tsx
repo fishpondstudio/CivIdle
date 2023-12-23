@@ -106,7 +106,7 @@ export async function startGame(
 
       routeTo(LoadingPage, { stage: LoadingPageStage.OfflineProduction });
       if (offlineTime >= 60) {
-         const before = JSON.parse(JSON.stringify(gameState));
+         const before = structuredClone(gameState);
          let timeLeft = offlineTime;
          while (timeLeft > 0) {
             const batchSize = Math.min(offlineTime, MAX_OFFLINE_PRODUCTION_SEC / 100);
@@ -128,7 +128,7 @@ export async function startGame(
             petra.building.resources.Warp = clamp(petra.building.resources.Warp, 0, storage.total);
          }
 
-         const after = JSON.parse(JSON.stringify(gameState));
+         const after = structuredClone(gameState);
          hasOfflineProductionModal = true;
          showModal(<OfflineProductionModal before={before} after={after} time={offlineTime} />);
       }

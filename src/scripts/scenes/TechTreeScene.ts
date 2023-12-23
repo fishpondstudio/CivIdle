@@ -1,18 +1,18 @@
 import { SmoothGraphics } from "@pixi/graphics-smooth";
 import { BitmapText, Color, ColorSource, Container, LINE_CAP, LINE_JOIN, Rectangle } from "pixi.js";
+import { getGameOptions } from "../Global";
 import { ITechDefinition } from "../definitions/ITechDefinition";
 import { Tech } from "../definitions/TechDefinitions";
-import { getGameOptions } from "../Global";
 import { Config } from "../logic/Constants";
 import { GameOptions } from "../logic/GameState";
 import { isAgeUnlocked, unlockableTechs } from "../logic/TechLogic";
 import { Tick } from "../logic/TickLogic";
 import { TechPage } from "../ui/TechPage";
 import { forEach, sizeOf } from "../utilities/Helper";
-import Actions from "../utilities/pixi-actions/Actions";
-import { Easing } from "../utilities/pixi-actions/Easing";
 import { ViewportScene } from "../utilities/SceneManager";
 import { Singleton } from "../utilities/Singleton";
+import { Actions } from "../utilities/pixi-actions/Actions";
+import { Easing } from "../utilities/pixi-actions/Easing";
 import { Fonts } from "../visuals/Fonts";
 
 const BOX_WIDTH = 300;
