@@ -20,6 +20,7 @@ import { Singleton } from "../utilities/Singleton";
 import { Config } from "./Constants";
 import { GameState } from "./GameState";
 import { getBuildingIO, getBuildingsByType, getXyBuildings } from "./IntraTickCache";
+import { onTileExplored } from "./LogicCallback";
 import { getBuildingsThatProduce, getResourcesValue } from "./ResourceLogic";
 import { getAgeForTech, getBuildingUnlockTech } from "./TechLogic";
 import { Multiplier, MultiplierWithSource, NotProducingReason, Tick } from "./TickLogic";
@@ -234,7 +235,6 @@ export function getStorageFor(xy: string, gs: GameState): IStorageResult {
             });
          });
          base = count * ST_PETERS_STORAGE_MULTIPLIER;
-         console.log(count);
          break;
       }
       default: {
@@ -502,19 +502,28 @@ export function getBuildingUpgradeLevels(b: IBuildingData): number[] {
    return levels;
 }
 
-export function isSpecialBuilding(building: Building): boolean {
+export function isSpecialBuilding(building?: Building): boolean {
+   if (!building) {
+      return false;
+   }
    return !isNullOrUndefined(Config.Building[building].special);
 }
 
-export function isNaturalWonder(building: Building): boolean {
+export function isNaturalWonder(building?: Building): boolean {
+   if (!building) {
+      return false;
+   }
    return Config.Building[building].special === BuildingSpecial.NaturalWonder;
 }
 
-export function isWorldWonder(building: Building): boolean {
+export function isWorldWonder(building?: Building): boolean {
+   if (!building) {
+      return false;
+   }
    return Config.Building[building].special === BuildingSpecial.WorldWonder;
 }
 
-export function isWorldOrNaturalWonder(building: Building): boolean {
+export function isWorldOrNaturalWonder(building?: Building): boolean {
    return isNaturalWonder(building) || isWorldWonder(building);
 }
 
@@ -610,6 +619,11 @@ export function getAvailableResource(xy: string, res: Resource, gs: GameState): 
       );
    }
    return building.resources[res]!;
+}
+
+export function exploreTile(xy: string, gs: GameState): void {
+   gs.tiles[xy].explored = true;
+   onTileExplored(xy, gs);
 }
 
 export const ST_PETERS_FAITH_MULTIPLIER = 0.01;

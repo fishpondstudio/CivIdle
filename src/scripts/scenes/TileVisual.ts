@@ -1,4 +1,3 @@
-import { Viewport } from "pixi-viewport";
 import { BitmapText, Color, Container, IDestroyOptions, IPointData, Sprite } from "pixi.js";
 import { getGameOptions, getGameState } from "../Global";
 import { Resource } from "../definitions/ResourceDefinitions";
@@ -138,7 +137,7 @@ export class TileVisual extends Container {
       }
 
       this.update(getGameState(), 0);
-      world.viewport.on("zoomed-end", this.onZoomed, this);
+      world.viewport.on("zoomed", this.onZoomed, this);
    }
 
    public updateDepositColor(options: GameOptions) {
@@ -167,12 +166,12 @@ export class TileVisual extends Container {
       });
    }
 
-   private onZoomed(e: Viewport) {
+   private onZoomed(zoom: number) {
       if (!this._tile.explored) {
          return;
       }
       forEach(this._deposits, (_, sprite) => {
-         sprite.visible = !this._tile.building || e.scale.x >= 1;
+         sprite.visible = !this._tile.building || zoom >= 1;
       });
    }
 

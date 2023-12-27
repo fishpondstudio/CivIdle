@@ -119,7 +119,6 @@ export class BuildingDefinitions {
       input: { Tool: 2 },
       output: { Sword: 1 },
    };
-
    Armory: IBuildingDefinition = {
       name: () => t(L.Armory),
       input: { Tool: 2 },
@@ -305,6 +304,7 @@ export class BuildingDefinitions {
       input: { Wood: 1, Water: 1 },
       output: { Paper: 1 },
    };
+
    // #endregion /////////////////////////////////////////////////////////////////////////////////////////////
 
    // #region Heavy Industry /////////////////////////////////////////////////////////////////////////////////
@@ -424,6 +424,36 @@ export class BuildingDefinitions {
       wikipedia: "Alps",
       special: BuildingSpecial.NaturalWonder,
    };
+   GrottaAzzurra: IBuildingDefinition = {
+      name: () => t(L.GrottaAzzurra),
+      desc: () => t(L.GrottaAzzurraDesc),
+      input: {},
+      output: {},
+      construction: {},
+      max: 0,
+      wikipedia: "Blue_Grotto_(Capri)",
+      special: BuildingSpecial.NaturalWonder,
+   };
+   Aphrodite: IBuildingDefinition = {
+      name: () => t(L.Aphrodite),
+      desc: () => t(L.AphroditeDesc),
+      input: {},
+      output: {},
+      construction: {},
+      max: 0,
+      wikipedia: "Aphrodite",
+      special: BuildingSpecial.NaturalWonder,
+   };
+   Poseidon: IBuildingDefinition = {
+      name: () => t(L.Poseidon),
+      desc: () => t(L.PoseidonDesc),
+      input: {},
+      output: {},
+      construction: {},
+      max: 0,
+      wikipedia: "Poseidon",
+      special: BuildingSpecial.NaturalWonder,
+   };
    // #endregion /////////////////////////////////////////////////////////////////////////////////////////////
 
    // #region World Wonders //////////////////////////////////////////////////////////////////////////////////
@@ -437,7 +467,6 @@ export class BuildingDefinitions {
       wikipedia: "Stonehenge",
       construction: { Stone: 300 },
    };
-
    HatshepsutTemple: IBuildingDefinition = {
       name: () => t(L.HatshepsutTemple),
       desc: () => t(L.HatshepsutTempleDesc),
@@ -448,7 +477,6 @@ export class BuildingDefinitions {
       wikipedia: "Mortuary_Temple_of_Hatshepsut",
       construction: { Stone: 100, Wood: 100, Copper: 100 },
    };
-
    LighthouseOfAlexandria: IBuildingDefinition = {
       name: () => t(L.LighthouseOfAlexandria),
       desc: () => t(L.LighthouseOfAlexandriaDesc),
@@ -459,7 +487,6 @@ export class BuildingDefinitions {
       special: BuildingSpecial.WorldWonder,
       wikipedia: "Lighthouse_of_Alexandria",
    };
-
    PyramidOfGiza: IBuildingDefinition = {
       name: () => t(L.PyramidOfGiza),
       desc: () => t(L.PyramidOfGizaDesc),
@@ -470,7 +497,6 @@ export class BuildingDefinitions {
       special: BuildingSpecial.WorldWonder,
       wikipedia: "Great_Pyramid_of_Giza",
    };
-
    ColossusOfRhodes: IBuildingDefinition = {
       name: () => t(L.ColossusOfRhodes),
       desc: () => t(L.ColossusOfRhodesDesc),
@@ -481,7 +507,6 @@ export class BuildingDefinitions {
       special: BuildingSpecial.WorldWonder,
       wikipedia: "Colossus_of_Rhodes",
    };
-
    HangingGarden: IBuildingDefinition = {
       name: () => t(L.HangingGarden),
       desc: () => t(L.HangingGardenDesc),
@@ -492,7 +517,6 @@ export class BuildingDefinitions {
       special: BuildingSpecial.WorldWonder,
       wikipedia: "Hanging_Gardens_of_Babylon",
    };
-
    TempleOfHeaven: IBuildingDefinition = {
       name: () => t(L.TempleOfHeaven),
       desc: () => t(L.TempleOfHeavenDesc),
@@ -503,7 +527,6 @@ export class BuildingDefinitions {
       construction: { Iron: 100, Bread: 100, Cheese: 100 },
       wikipedia: "Temple_of_Heaven",
    };
-
    Parthenon: IBuildingDefinition = {
       name: () => t(L.Parthenon),
       desc: () => t(L.ParthenonDesc),
@@ -514,7 +537,16 @@ export class BuildingDefinitions {
       construction: { Marble: 100, Painting: 100, Music: 100 },
       wikipedia: "Parthenon",
    };
-
+   TempleOfArtemis: IBuildingDefinition = {
+      name: () => t(L.TempleOfArtemis),
+      desc: () => t(L.TempleOfArtemisDesc),
+      input: {},
+      output: {},
+      max: 1,
+      special: BuildingSpecial.WorldWonder,
+      construction: { Armor: 100, Sword: 100, Marble: 100 },
+      wikipedia: "Temple_of_Artemis",
+   };
    LuxorTemple: IBuildingDefinition = {
       name: () => t(L.LuxorTemple),
       desc: () => t(L.LuxorTempleDesc),
@@ -525,7 +557,6 @@ export class BuildingDefinitions {
       construction: { Tool: 100, Cloth: 100, Furniture: 100 },
       wikipedia: "Luxor_Temple",
    };
-
    ChichenItza: IBuildingDefinition = {
       name: () => t(L.ChichenItza),
       desc: () => t(L.ChichenItzaDesc),
@@ -536,7 +567,6 @@ export class BuildingDefinitions {
       construction: { Stone: 100, Armor: 100, SiegeRam: 100 },
       wikipedia: "Chichen_Itza",
    };
-
    MausoleumAtHalicarnassus: IBuildingDefinition = {
       name: () => t(L.MausoleumAtHalicarnassus),
       desc: () => t(L.MausoleumAtHalicarnassusDesc),
@@ -547,7 +577,6 @@ export class BuildingDefinitions {
       special: BuildingSpecial.WorldWonder,
       wikipedia: "Mausoleum_at_Halicarnassus",
    };
-
    HagiaSophia: IBuildingDefinition = {
       name: () => t(L.HagiaSophia),
       desc: () => t(L.HagiaSophiaDesc),
@@ -558,7 +587,6 @@ export class BuildingDefinitions {
       special: BuildingSpecial.WorldWonder,
       wikipedia: "Hagia_Sophia",
    };
-
    AngkorWat: IBuildingDefinition = {
       name: () => t(L.AngkorWat),
       desc: () => t(L.AngkorWatDesc),
@@ -569,7 +597,6 @@ export class BuildingDefinitions {
       special: BuildingSpecial.WorldWonder,
       wikipedia: "Angkor_Wat",
    };
-
    TerracottaArmy: IBuildingDefinition = {
       name: () => t(L.TerracottaArmy),
       desc: () => t(L.TerracottaArmyDesc),
@@ -580,7 +607,6 @@ export class BuildingDefinitions {
       special: BuildingSpecial.WorldWonder,
       wikipedia: "Terracotta_Army",
    };
-
    Persepolis: IBuildingDefinition = {
       name: () => t(L.Persepolis),
       desc: () => t(L.PersepolisDesc),
@@ -591,7 +617,6 @@ export class BuildingDefinitions {
       special: BuildingSpecial.WorldWonder,
       wikipedia: "Persepolis",
    };
-
    OxfordUniversity: IBuildingDefinition = {
       name: () => t(L.OxfordUniversity),
       desc: () => t(L.OxfordUniversityDesc),
@@ -602,7 +627,6 @@ export class BuildingDefinitions {
       special: BuildingSpecial.WorldWonder,
       wikipedia: "University_of_Oxford",
    };
-
    StPetersBasilica: IBuildingDefinition = {
       name: () => t(L.StPetersBasilica),
       desc: () => t(L.StPetersBasilicaDesc),
@@ -613,7 +637,6 @@ export class BuildingDefinitions {
       special: BuildingSpecial.WorldWonder,
       wikipedia: "St._Peter%27s_Basilica",
    };
-
    ForbiddenCity: IBuildingDefinition = {
       name: () => t(L.ForbiddenCity),
       desc: () => t(L.ForbiddenCityDesc),
@@ -624,7 +647,6 @@ export class BuildingDefinitions {
       special: BuildingSpecial.WorldWonder,
       wikipedia: "Forbidden_City",
    };
-
    HimejiCastle: IBuildingDefinition = {
       name: () => t(L.HimejiCastle),
       desc: () => t(L.HimejiCastleDesc),
@@ -635,7 +657,6 @@ export class BuildingDefinitions {
       special: BuildingSpecial.WorldWonder,
       wikipedia: "Himeji_Castle",
    };
-
    TajMahal: IBuildingDefinition = {
       name: () => t(L.TajMahal),
       desc: () => t(L.TajMahalDesc),
@@ -645,6 +666,36 @@ export class BuildingDefinitions {
       construction: { Faith: 100, Marble: 100, Garment: 100 },
       special: BuildingSpecial.WorldWonder,
       wikipedia: "Taj_Mahal",
+   };
+   Colosseum: IBuildingDefinition = {
+      name: () => t(L.Colosseum),
+      desc: () => t(L.ColosseumDesc),
+      input: { Chariot: 10 },
+      output: {},
+      construction: { Brick: 100, Chariot: 100, Alcohol: 100 },
+      max: 1,
+      special: BuildingSpecial.WorldWonder,
+      wikipedia: "Colosseum",
+   };
+   StatueOfZeus: IBuildingDefinition = {
+      name: () => t(L.StatueOfZeus),
+      desc: () => t(L.StatueOfZeusDesc),
+      input: {},
+      output: {},
+      construction: { Marble: 100, Brick: 100, Music: 100 },
+      max: 1,
+      wikipedia: "Statue_of_Zeus_at_Olympia",
+      special: BuildingSpecial.WorldWonder,
+   };
+   CircusMaximus: IBuildingDefinition = {
+      name: () => t(L.CircusMaximus),
+      desc: () => t(L.CircusMaximusDesc),
+      input: {},
+      output: {},
+      construction: { Music: 100, Poem: 100, Painting: 100 },
+      max: 1,
+      special: BuildingSpecial.WorldWonder,
+      wikipedia: "Circus_Maximus",
    };
    // #endregion /////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -669,17 +720,6 @@ export class BuildingDefinitions {
    //    construction: { Stone: 1, Marble: 1 },
    // };
 
-   // Colosseum: IBuildingDefinition = {
-   //    name: () => t(L.Colosseum),
-   //    desc: () => t(L.ColosseumDesc),
-   //    input: {},
-   //    output: {},
-   //    construction: { Brick: 100, Marble: 100, Alcohol: 100 },
-   //    max: 1,
-   //    special: BuildingSpecial.WorldWonder,
-   //    wikipedia: "Colosseum",
-   // };
-
    // Pantheon: IBuildingDefinition = {
    //    name: () => t(L.Pantheon),
    //    desc: () => t(L.PantheonDesc),
@@ -689,17 +729,6 @@ export class BuildingDefinitions {
    //    max: 1,
    //    special: BuildingSpecial.WorldWonder,
    //    wikipedia: "Pantheon,_Rome",
-   // };
-
-   // CircusMaximus: IBuildingDefinition = {
-   //    name: () => t(L.CircusMaximus),
-   //    desc: () => t(L.CircusMaximusDesc),
-   //    input: {},
-   //    output: {},
-   //    construction: { Brick: 100, Iron: 100, Meat: 100 },
-   //    max: 1,
-   //    special: BuildingSpecial.WorldWonder,
-   //    wikipedia: "Circus_Maximus",
    // };
 
    // GreatDagonPagoda: IBuildingDefinition = {

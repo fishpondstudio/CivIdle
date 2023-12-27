@@ -278,7 +278,7 @@ export class TechDefinitions {
       name: () => t(L.Democracy),
       column: 8,
       requireTech: ["Politics"],
-      unlockBuilding: ["Apartment", "Parthenon"],
+      unlockBuilding: ["Apartment"],
    };
 
    Autocracy: ITechDefinition = {
@@ -313,7 +313,7 @@ export class TechDefinitions {
       name: () => t(L.Feudalism),
       column: 9,
       requireTech: ["Autocracy", "Democracy"],
-      unlockBuilding: ["KnightCamp"],
+      unlockBuilding: ["KnightCamp", "TempleOfArtemis"],
    };
 
    Theocracy: ITechDefinition = {

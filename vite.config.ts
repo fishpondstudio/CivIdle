@@ -25,7 +25,7 @@ export default defineConfig(({ command }) => {
 
    function buildAtlas(folder: string) {
       return Spritesmith({
-         watch: command == "serve",
+         watch: command === "serve",
          src: {
             cwd: `./src/textures/${folder}`,
             glob: "*.png",

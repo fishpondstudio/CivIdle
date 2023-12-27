@@ -1,8 +1,8 @@
 import { IPointData } from "pixi.js";
-import { MAP_MAX_X, MAP_MAX_Y } from "../../../server/src/Database";
 import WorldMap from "../../../server/WorldMap.json";
+import { MAP_MAX_X, MAP_MAX_Y } from "../../../server/src/Database";
 import { getGameOptions } from "../Global";
-import { getPlayerMap, OnPlayerMapChanged } from "../rpc/RPCClient";
+import { OnPlayerMapChanged, getPlayerMap } from "../rpc/RPCClient";
 import { dijkstra } from "../utilities/dijkstra";
 
 export const grid: number[] = [];
@@ -40,7 +40,7 @@ export function findUserOnMap(userId: string): string | null {
    const map = getPlayerMap();
    for (const key in map) {
       const value = map[key];
-      if (value.userId == userId) {
+      if (value.userId === userId) {
          return key;
       }
    }
@@ -51,7 +51,7 @@ export function getMyMapXy() {
    const playerMap = getPlayerMap();
    for (const xy in playerMap) {
       const entry = playerMap[xy];
-      if (entry.userId == getGameOptions().id) {
+      if (entry.userId === getGameOptions().id) {
          return xy;
       }
    }

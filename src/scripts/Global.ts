@@ -1,3 +1,4 @@
+import { City } from "./definitions/CityDefinitions";
 import { Config } from "./logic/Constants";
 import { GameOptions, GameState, SavedGame, initializeGameState } from "./logic/GameState";
 import { rollGreatPeople } from "./logic/RebornLogic";
@@ -6,7 +7,7 @@ import { SteamClient, isSteam } from "./rpc/SteamClient";
 import { Grid } from "./scenes/Grid";
 import { WorldScene } from "./scenes/WorldScene";
 import { idbGet, idbSet } from "./utilities/BrowserStorage";
-import { forEach } from "./utilities/Helper";
+import { firstKeyOf, forEach } from "./utilities/Helper";
 import { makeObservableHook } from "./utilities/Hook";
 import { Singleton } from "./utilities/Singleton";
 import { TypedEvent } from "./utilities/TypedEvent";
@@ -16,12 +17,13 @@ const savedGame = new SavedGame();
 export const TILE_SIZE = 64;
 
 export function wipeSaveData() {
-   resetCurrentCity();
+   resetToCity(firstKeyOf(Config.City)!);
    saveGame(true).catch(console.error);
 }
 
-export function resetCurrentCity(): void {
+export function resetToCity(city: City): void {
    savedGame.current = new GameState();
+   savedGame.current.city = city;
    const size = Config.City[savedGame.current.city].size;
    initializeGameState(savedGame.current, new Grid(size, size, TILE_SIZE));
 }

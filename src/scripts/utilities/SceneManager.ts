@@ -1,9 +1,8 @@
-import { Viewport } from "pixi-viewport";
-import { Application, IPointData, Resource, Texture } from "pixi.js";
+import { Application, Container, Resource, Texture } from "pixi.js";
 import { watchGameOptions, watchGameState } from "../Global";
 import { GameOptions, GameState } from "../logic/GameState";
 import { MainBundleAssets } from "../main";
-import { clamp } from "./Helper";
+import { Camera } from "./Camera";
 
 export class Scene {
    public readonly context: ISceneContext;
@@ -19,36 +18,17 @@ export class Scene {
 }
 
 export class ViewportScene extends Scene {
-   public readonly viewport: Viewport;
+   public readonly viewport: Camera;
 
    constructor(context: ISceneContext) {
       super(context);
       const { app, gameState } = context;
-      this.viewport = new Viewport({
-         events: app.renderer.events,
-         disableOnContextMenu: true,
-         screenWidth: app.screen.width,
-         screenHeight: app.screen.height,
-      });
+      this.viewport = new Camera(app);
       app.stage.addChild(this.viewport);
    }
 
-   clampCenter(pos: IPointData): IPointData {
-      const x = clamp(
-         pos.x,
-         this.viewport.screenWidth / 2 / this.viewport.scale.y,
-         this.viewport.worldWidth - this.viewport.screenWidth / 2 / this.viewport.scale.y,
-      );
-      const y = clamp(
-         pos.y,
-         this.viewport.screenHeight / 2 / this.viewport.scale.y,
-         this.viewport.worldHeight - this.viewport.screenHeight / 2 / this.viewport.scale.y,
-      );
-      return { x, y };
-   }
-
    override onResize(width: number, height: number): void {
-      this.viewport.resize(width, height);
+      // this.viewport.resize(width, height);
    }
 
    override onDestroy(): void {
@@ -96,12 +76,7 @@ export class SceneManager {
          this.gameOptionsWatcher();
       }
 
-      for (let i = 0; i < this.context.app.stage.children.length; i++) {
-         const removed = this.context.app.stage.removeChildren();
-         for (let i = 0; i < removed.length; ++i) {
-            removed[i].destroy({ children: true });
-         }
-      }
+      destroyAllChildren(this.context.app.stage);
 
       this.currentScene = new SceneClass(this.context);
       this.currentScene.onLoad();
@@ -125,5 +100,12 @@ export class SceneManager {
          return this.currentScene as T;
       }
       return null;
+   }
+}
+
+export function destroyAllChildren(co: Container): void {
+   const removed = co.removeChildren();
+   for (let i = 0; i < removed.length; ++i) {
+      removed[i].destroy({ children: true });
    }
 }

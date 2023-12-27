@@ -3,7 +3,7 @@ import { BUILDING_DEFAULT_VISION } from "../definitions/BuildingDefinitions";
 import { Grid } from "../scenes/Grid";
 import { forEach, keysOf, pointToXy, xyToPoint } from "../utilities/Helper";
 import { v2 } from "../utilities/Vector2";
-import { isNaturalWonder } from "./BuildingLogic";
+import { exploreTile, isNaturalWonder } from "./BuildingLogic";
 import { Config } from "./Constants";
 import { GameState } from "./GameState";
 import { ITileData } from "./Tile";
@@ -15,7 +15,7 @@ export function ensureTileFogOfWar(xy: string, gameState: GameState, grid: Grid)
       return [];
    }
    const result: Record<string, true> = {};
-   gameState.tiles[xy].explored = true;
+   exploreTile(xy, gameState);
    result[xy] = true;
    const point = xyToPoint(xy);
    let targets = [point];
@@ -27,7 +27,7 @@ export function ensureTileFogOfWar(xy: string, gameState: GameState, grid: Grid)
             const xy = pointToXy(n);
             const tile = gameState.tiles[xy];
             if (tile) {
-               tile.explored = true;
+               exploreTile(xy, gameState);
                result[xy] = true;
                newTargets.push(n);
             }

@@ -11,8 +11,9 @@ import {
 import { RouteChangeEvent } from "./Route";
 import { checkSteamBranch } from "./SteamTesting";
 import { Building } from "./definitions/BuildingDefinitions";
-import { City } from "./definitions/CityDefinitions";
-import { getBuildingTexture, getStorageFor } from "./logic/BuildingLogic";
+import { City, setCityOverride } from "./definitions/CityDefinitions";
+import { DepositResources } from "./definitions/ResourceDefinitions";
+import { getBuildingTexture, getStorageFor, getTileTexture } from "./logic/BuildingLogic";
 import { Config, MAX_OFFLINE_PRODUCTION_SEC, calculateTierAndPrice } from "./logic/Constants";
 import { GameState, initializeGameState } from "./logic/GameState";
 import { IPetraBuildingData, ITileData } from "./logic/Tile";
@@ -69,7 +70,7 @@ export async function startGame(
    // ========== Game data is loaded ==========
    routeTo(LoadingPage, { stage: LoadingPageStage.CheckSave });
    const gameState = getGameState();
-   verifyBuildingConfig(textures, gameState.city);
+   verifyTextures(textures, gameState.city);
    const size = Config.City[gameState.city].size;
    const grid = new Grid(size, size, TILE_SIZE);
    if (isNewPlayer) {
@@ -87,7 +88,9 @@ export async function startGame(
       routeTo,
       ticker: new GameTicker(app.ticker, gameState),
    });
-   Config.City[gameState.city].override(Config.Resource, Config.Building, Config.Tech);
+
+   setCityOverride(gameState);
+
    // ========== Connect to server ==========
    routeTo(LoadingPage, { stage: LoadingPageStage.SteamSignIn });
    const TIMEOUT = import.meta.env.DEV ? 1 : 5;
@@ -195,13 +198,18 @@ function findSpecialBuildings(gameState: GameState): ISpecialBuildings {
    return buildings as ISpecialBuildings;
 }
 
-function verifyBuildingConfig(textures: Textures, city: City) {
+function verifyTextures(textures: Textures, city: City) {
    forEach(Config.Building, (b, def) => {
       if (!getBuildingTexture(b, textures, city)) {
-         console.warn(`Cannot find textures for building ${b}`);
+         console.warn(`Cannot find texture for building ${b}`);
       }
       if (!isNullOrUndefined(def.max) && isNullOrUndefined(def.special)) {
          console.warn(`Building ${b} has "max" defined but "special" undefined. Please define "special"!`);
+      }
+   });
+   forEach(DepositResources, (k, v) => {
+      if (!getTileTexture(k, textures)) {
+         console.warn(`Cannot find texture for deposit ${k}`);
       }
    });
 }

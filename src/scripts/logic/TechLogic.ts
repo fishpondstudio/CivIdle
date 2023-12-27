@@ -1,7 +1,9 @@
 import { Building, BuildingSpecial } from "../definitions/BuildingDefinitions";
+import { City } from "../definitions/CityDefinitions";
 import { GreatPerson } from "../definitions/GreatPersonDefinitions";
 import { Deposit, Resource } from "../definitions/ResourceDefinitions";
 import { Tech, TechAge } from "../definitions/TechDefinitions";
+import { WorldScene } from "../scenes/WorldScene";
 import { filterOf, forEach, isEmpty, keysOf, shuffle } from "../utilities/Helper";
 import { Singleton } from "../utilities/Singleton";
 import { Config } from "./Constants";
@@ -95,12 +97,17 @@ export function unlockTech(tech: Tech, gs: GameState): void {
          depositTiles[0] = shuffle(exploredEmptyTiles)[0].xy;
       }
       depositTiles.forEach((xy) => {
-         gs.tiles[xy].deposit[deposit] = true;
+         addDeposit(xy, deposit, gs);
       });
    });
    Config.Tech[tech].unlockFeature?.forEach((f) => {
       gs.features[f] = true;
    });
+}
+
+export function addDeposit(xy: string, deposit: Deposit, gs: GameState): void {
+   gs.tiles[xy].deposit[deposit] = true;
+   Singleton().sceneManager.getCurrent(WorldScene)?.resetTile(xy);
 }
 
 export function getDepositUnlockTech(deposit: Deposit): Tech {
@@ -118,6 +125,14 @@ export function getBuildingUnlockTech(building: Building): Tech | null {
    for (key in Config.Tech) {
       if (Config.Tech[key].unlockBuilding?.includes(building)) {
          return key;
+      }
+   }
+
+   let city: City;
+   for (city in Config.City) {
+      const def = Config.City[city];
+      if (def.uniqueBuildings[building]) {
+         return def.uniqueBuildings[building]!;
       }
    }
    return null;

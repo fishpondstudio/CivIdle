@@ -121,7 +121,7 @@ export async function loadBundle() {
    altas.forEach((a) => {
       for (const k in a) {
          if (textures[k]) {
-            console.warn(`Duplicated key in textures: {k}`);
+            console.warn(`Duplicated key in textures: ${k}`);
          } else {
             textures[k] = a[k];
          }

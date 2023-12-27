@@ -49,19 +49,11 @@ export class WorldScene extends ViewportScene {
       this._width = maxPosition.x;
       this._height = maxPosition.y;
 
-      this.viewport.worldWidth = this._width;
-      this.viewport.worldHeight = this._height;
-
-      this.viewport
-         .drag()
-         .wheel({ smooth: 10 })
-         .clamp({
-            direction: "all",
-         })
-         .clampZoom({
-            maxScale: 2,
-            minScale: Math.max(app.screen.width / this._width, app.screen.height / this._height),
-         });
+      this.viewport.setWorldSize(this._width, this._height);
+      this.viewport.setZoomRange(
+         Math.max(app.screen.width / this._width, app.screen.height / this._height),
+         2,
+      );
 
       this._bg = this.viewport.addChild(new TilingSprite(textures.Paper, this._width, this._height));
       this._bg.tint = Color.shared.setValue(getGameOptions().themeColors.WorldBackground);
@@ -99,19 +91,19 @@ export class WorldScene extends ViewportScene {
       if (!viewportCenter) {
          viewportCenter = { x: this._width / 2, y: this._height / 2 };
       }
-      this.viewport.moveCenter(viewportCenter);
+      this.viewport.center = viewportCenter;
       if (viewportZoom) {
-         this.viewport.setZoom(viewportZoom, true);
+         this.viewport.zoom = viewportZoom;
       }
 
       this.viewport.on("moved", () => {
          viewportCenter = this.viewport.center;
-         viewportZoom = this.viewport.scaled;
+         viewportZoom = this.viewport.zoom;
       });
 
-      this.viewport.on("clicked", (e) => {
-         const grid = Singleton().grid.positionToGrid(e.world);
-         if ((e.event as FederatedPointerEvent).button === 2) {
+      this.viewport.on("clicked", (e: FederatedPointerEvent) => {
+         const grid = Singleton().grid.positionToGrid(this.viewport.screenToWorld(e));
+         if (e.button === 2) {
             return;
          }
          this.selectGrid(grid);
@@ -123,10 +115,10 @@ export class WorldScene extends ViewportScene {
    override onResize(width: number, height: number): void {
       super.onResize(width, height);
       const { app } = this.context;
-      this.viewport.clampZoom({
-         maxScale: 2,
-         minScale: Math.max(app.screen.width / this._width, app.screen.height / this._height),
-      });
+      this.viewport.setZoomRange(
+         Math.max(app.screen.width / this._width, app.screen.height / this._height),
+         2,
+      );
    }
 
    override onGameStateChanged(gameState: GameState): void {
@@ -144,12 +136,12 @@ export class WorldScene extends ViewportScene {
 
    lookAtXy(xy: string) {
       this.cameraMovement?.stop();
-      const clampedCenter = this.clampCenter(Singleton().grid.xyToPosition(xy));
+      const target = this.viewport.clampCenter(Singleton().grid.xyToPosition(xy));
       this.cameraMovement = new CustomAction(
          () => viewportCenter,
          (v) => {
             viewportCenter = v;
-            this.viewport.moveCenter(viewportCenter!);
+            this.viewport.center = viewportCenter!;
          },
          (a, b, f) => {
             if (a && b) {
@@ -157,8 +149,8 @@ export class WorldScene extends ViewportScene {
             }
             throw new Error(`Cannot interpolate from a = ${a} to b = ${b}`);
          },
-         clampedCenter,
-         v2(clampedCenter).subtractSelf(viewportCenter!).length() / 2000,
+         target,
+         v2(target).subtractSelf(viewportCenter!).length() / 2000,
          Easing.InOutSine,
       ).start();
       this.drawSelection(xyToPoint(xy));
@@ -314,9 +306,13 @@ export class WorldScene extends ViewportScene {
       });
    }
 
-   public cameraPan(target: number, time: number): void {
+   public cameraPan(target_: number, time: number): void {
       const { app } = this.context;
-      target = clamp(target, Math.max(app.screen.width / this._width, app.screen.height / this._height), 2);
-      Actions.to(this.viewport, { scaled: target }, time).start();
+      const target = clamp(
+         target_,
+         Math.max(app.screen.width / this._width, app.screen.height / this._height),
+         2,
+      );
+      Actions.to(this.viewport, { zoom: target }, time).start();
    }
 }

@@ -1,7 +1,6 @@
 import { notifyGameStateUpdate, useGameState } from "../Global";
 import { MAX_TECH_COLUMN } from "../SteamTesting";
 import { Resource } from "../definitions/ResourceDefinitions";
-import { RomeProvince } from "../definitions/RomeProvinceDefinitions";
 import { Tech } from "../definitions/TechDefinitions";
 import { PartialTabulate } from "../definitions/TypeDefinitions";
 import { Config } from "../logic/Constants";
@@ -9,7 +8,6 @@ import { onTechUnlocked } from "../logic/LogicCallback";
 import { getResourceAmount, trySpendResources } from "../logic/ResourceLogic";
 import { useShortcut } from "../logic/Shortcut";
 import { getCurrentTechAge, getGreatPeopleChoices, getUnlockCost, unlockTech } from "../logic/TechLogic";
-import { RomeProvinceScene } from "../scenes/RomeProvinceScene";
 import { TechTreeScene } from "../scenes/TechTreeScene";
 import { WorldScene } from "../scenes/WorldScene";
 import { forEach, jsxMapOf, reduceOf } from "../utilities/Helper";
@@ -82,7 +80,7 @@ export function TechPage({ id }: { id: Tech }): React.ReactNode {
                      />
                   );
                })}
-               {tech.requireProvince?.map((province) => {
+               {/* {tech.requireProvince?.map((province) => {
                   prerequisiteCount++;
                   return (
                      <TechPrerequisiteItemComponent
@@ -98,7 +96,7 @@ export function TechPage({ id }: { id: Tech }): React.ReactNode {
                         }
                      />
                   );
-               })}
+               })} */}
                {prerequisiteCount === 0 ? <div>{t(L.TechnologyNoPrerequisite)}</div> : null}
             </fieldset>
             <fieldset>

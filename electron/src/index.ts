@@ -1,4 +1,4 @@
-import { app, BrowserWindow, dialog, ipcMain, Menu } from "electron";
+import { BrowserWindow, Menu, app, dialog, ipcMain } from "electron";
 import path from "path";
 import { Client, init } from "steamworks.js";
 import { IPCService } from "./IPCService";
@@ -14,18 +14,16 @@ const createWindow = () => {
             preload: path.join(__dirname, "preload.js"),
             devTools: !app.isPackaged,
             backgroundThrottling: false,
-            webSecurity: false,
          },
          minHeight: 640,
          minWidth: 1136,
          show: false,
       });
-      // and load the index.html of the app.
-      app.isPackaged
-         ? mainWindow.loadFile(path.join(__dirname, "../dist/index.html"))
-         : mainWindow.loadURL("http://localhost:3000");
 
-      if (!app.isPackaged) {
+      if (app.isPackaged) {
+         mainWindow.loadFile(path.join(__dirname, "..", "dist", "index.html"));
+      } else {
+         mainWindow.loadURL("http://localhost:3000");
          mainWindow.webContents.openDevTools();
       }
 

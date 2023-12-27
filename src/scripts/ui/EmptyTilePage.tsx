@@ -8,6 +8,7 @@ import { getTypeBuildings, unlockedBuildings } from "../logic/IntraTickCache";
 import { useShortcut } from "../logic/Shortcut";
 import { ITileData, makeBuilding } from "../logic/Tile";
 import {
+   anyOf,
    formatNumber,
    isEmpty,
    jsxMapOf,
@@ -102,7 +103,18 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
                            }
                            return Config.Building[a].name().localeCompare(Config.Building[b].name());
                         })
-                        .filter((v) => Config.Building[v].name().toLowerCase().includes(filter.toLowerCase()))
+                        .filter((v) => {
+                           const f = filter.toLowerCase();
+                           return (
+                              Config.Building[v].name().toLowerCase().includes(f) ||
+                              anyOf(Config.Building[v].input, (res) =>
+                                 Config.Resource[res].name().toLowerCase().includes(f),
+                              ) ||
+                              anyOf(Config.Building[v].output, (res) =>
+                                 Config.Resource[res].name().toLowerCase().includes(f),
+                              )
+                           );
+                        })
                         .map((k) => {
                            if ((sizeOf(constructed[k]) ?? 0) >= (Config.Building[k].max ?? Infinity)) {
                               return null;

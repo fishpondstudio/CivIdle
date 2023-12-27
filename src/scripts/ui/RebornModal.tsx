@@ -1,7 +1,10 @@
-import { resetCurrentCity, saveGame, useGameOptions, useGameState } from "../Global";
+import { useState } from "react";
+import { resetToCity, saveGame, useGameOptions, useGameState } from "../Global";
+import { City } from "../definitions/CityDefinitions";
+import { Config } from "../logic/Constants";
 import { getGreatPeopleAtReborn, rollGreatPeople } from "../logic/RebornLogic";
 import { Tick } from "../logic/TickLogic";
-import { forEach, reduceOf } from "../utilities/Helper";
+import { firstKeyOf, forEach, formatPercent, jsxMapOf, mapOf, reduceOf } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
 import { playClick } from "../visuals/Sound";
 import { hideModal } from "./GlobalModal";
@@ -11,8 +14,9 @@ import { WarningComponent } from "./WarningComponent";
 export function RebornModal(): React.ReactNode {
    const gameState = useGameState();
    const options = useGameOptions();
+   const [city, setCity] = useState<City>(firstKeyOf(Config.City)!);
    return (
-      <div className="window">
+      <div className="window" style={{ width: "400px" }}>
          <div className="title-bar">
             <div className="title-bar-text">{t(L.Reborn)}</div>
          </div>
@@ -48,6 +52,78 @@ export function RebornModal(): React.ReactNode {
                   <div className="text-strong">{getGreatPeopleAtReborn()}</div>
                </div>
             </fieldset>
+            <fieldset>
+               <div className="row">
+                  <div className="f1">{t(L.RebornCity)}</div>
+                  <select
+                     value={city}
+                     onChange={(e) => {
+                        setCity(e.target.value as City);
+                     }}
+                  >
+                     {jsxMapOf(Config.City, (city, def) => {
+                        return (
+                           <option key={city} value={city}>
+                              {def.name()}
+                           </option>
+                        );
+                     })}
+                  </select>
+               </div>
+               <div className="separator"></div>
+               <div className="text-strong">{t(L.Deposit)}</div>
+               <div>
+                  {mapOf(Config.City[city].deposits, (dep, value) => {
+                     return `${Config.Resource[dep].name()}: ${formatPercent(value)}`;
+                  }).join(", ")}
+               </div>
+               <div className="sep5"></div>
+               <div className="text-strong">{t(L.UniqueBuildings)}</div>
+               <div>
+                  {jsxMapOf(Config.City[city].uniqueBuildings, (building, tech) => {
+                     return (
+                        <span
+                           style={{
+                              textDecoration: "dotted underline",
+                              textUnderlineOffset: "0.25em",
+                              cursor: "help",
+                           }}
+                           className="mr10"
+                           aria-label={Config.Building[building].desc?.()}
+                           data-balloon-pos="up"
+                           data-balloon-text="left"
+                           data-balloon-length="large"
+                        >
+                           {Config.Building[building].name()}{" "}
+                           <span className="text-desc">({Config.Tech[tech].name()})</span>
+                        </span>
+                     );
+                  })}
+               </div>
+               <div className="sep5"></div>
+               <div className="text-strong">{t(L.NaturalWonders)}</div>
+               <div>
+                  {jsxMapOf(Config.City[city].naturalWonders, (building, tech) => {
+                     const def = Config.Building[building];
+                     return (
+                        <span
+                           style={{
+                              textDecoration: "dotted underline",
+                              textUnderlineOffset: "0.25em",
+                              cursor: "help",
+                           }}
+                           className="mr10"
+                           aria-label={def.desc?.()}
+                           data-balloon-pos="up"
+                           data-balloon-text="left"
+                           data-balloon-length="large"
+                        >
+                           {def.name()}
+                        </span>
+                     );
+                  })}
+               </div>
+            </fieldset>
             <div className="sep5"></div>
             <div className="text-right row" style={{ justifyContent: "flex-end" }}>
                <button
@@ -71,7 +147,7 @@ export function RebornModal(): React.ReactNode {
                            options.greatPeople[k] = { level: 1, amount: v - 1 };
                         }
                      });
-                     resetCurrentCity();
+                     resetToCity(city);
                      saveGame(true).catch(console.error);
                      playClick();
                   }}

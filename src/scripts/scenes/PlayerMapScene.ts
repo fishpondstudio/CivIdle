@@ -8,10 +8,10 @@ import {
    LINE_JOIN,
    Sprite,
 } from "pixi.js";
-import { IMapEntry, MAP_MAX_X, MAP_MAX_Y } from "../../../server/src/Database";
 import WorldMap from "../../../server/WorldMap.json";
+import { IMapEntry, MAP_MAX_X, MAP_MAX_Y } from "../../../server/src/Database";
 import { getGameOptions } from "../Global";
-import { getPlayerMap, OnPlayerMapMessage } from "../rpc/RPCClient";
+import { OnPlayerMapMessage, getPlayerMap } from "../rpc/RPCClient";
 import { PlayerMapPage } from "../ui/PlayerMapPage";
 import { drawDashedLine, forEach, formatPercent, safeParseInt, xyToPoint } from "../utilities/Helper";
 import { ViewportScene } from "../utilities/SceneManager";
@@ -38,21 +38,9 @@ export class PlayerMapScene extends ViewportScene {
       this._width = MAP_MAX_X * GridSize;
       this._height = MAP_MAX_Y * GridSize;
 
-      this.viewport.worldWidth = this._width;
-      this.viewport.worldHeight = this._height;
-
       const minZoom = Math.max(app.screen.width / this._width, app.screen.height / this._height);
-
-      this.viewport
-         .drag()
-         .wheel({ smooth: 10 })
-         .clamp({
-            direction: "all",
-         })
-         .clampZoom({
-            maxScale: 1,
-            minScale: minZoom,
-         });
+      this.viewport.setWorldSize(this._width, this._height);
+      this.viewport.setZoomRange(minZoom, 1);
 
       app.renderer.background.color = 0x2980b9;
 
@@ -132,28 +120,27 @@ export class PlayerMapScene extends ViewportScene {
       this._path = this.viewport.addChild(new SmoothGraphics());
 
       if (viewportCenter) {
-         this.viewport.moveCenter(viewportCenter);
+         this.viewport.center = viewportCenter;
       } else {
-         this.viewport.moveCenter(this._width / 2, this._height / 2);
+         this.viewport.center = { x: this._width / 2, y: this._height / 2 };
       }
 
       if (!viewportZoom) {
          viewportZoom = minZoom;
       }
-
-      this.viewport.setZoom(viewportZoom, true);
-
+      this.viewport.zoom = viewportZoom;
       this.viewport.on("moved", () => {
          viewportCenter = this.viewport.center;
-         viewportZoom = this.viewport.scaled;
+         viewportZoom = this.viewport.zoom;
       });
 
-      this.viewport.on("clicked", (e) => {
-         if ((e.event as FederatedPointerEvent).button === 2) {
+      this.viewport.on("clicked", (e: FederatedPointerEvent) => {
+         if (e.button === 2) {
             return;
          }
-         const tileX = Math.floor(e.world.x / GridSize);
-         const tileY = Math.floor(e.world.y / GridSize);
+         const pos = this.viewport.screenToWorld(e);
+         const tileX = Math.floor(pos.x / GridSize);
+         const tileY = Math.floor(pos.y / GridSize);
          this.selectTile(tileX, tileY);
       });
 
@@ -161,10 +148,10 @@ export class PlayerMapScene extends ViewportScene {
       if (xy) {
          const point = xyToPoint(xy);
          this.selectTile(point.x, point.y);
-         this.viewport.moveCenter(this.tileToPosition(point));
+         this.viewport.center = this.tileToPosition(point);
       } else {
          this.selectTile(100, 50);
-         this.viewport.moveCenter(this.tileToPosition({ x: 100, y: 50 }));
+         this.viewport.center = this.tileToPosition({ x: 100, y: 50 });
       }
    }
 
@@ -184,7 +171,7 @@ export class PlayerMapScene extends ViewportScene {
       let count = 0;
       path.forEach((point, idx) => {
          const pos = this.tileToPosition(point);
-         if (idx == 0) {
+         if (idx === 0) {
             this._path.moveTo(pos.x, pos.y);
          } else {
             count = drawDashedLine(this._path, this.tileToPosition(path[idx - 1]), pos, count, 5, 10);
@@ -216,7 +203,7 @@ export class PlayerMapScene extends ViewportScene {
          .lineTo(x, y + GridSize)
          .lineTo(x, y);
 
-      Singleton().routeTo(PlayerMapPage, { xy: tileX + "," + tileY });
+      Singleton().routeTo(PlayerMapPage, { xy: `${tileX},${tileY}` });
    }
 
    private drawTile(xy: string, entry: IMapEntry) {
@@ -226,7 +213,7 @@ export class PlayerMapScene extends ViewportScene {
          this._tiles[xy].destroy({ children: true });
       }
       this._tiles[xy] = container;
-      const isMyself = entry.userId == getGameOptions().id;
+      const isMyself = entry.userId === getGameOptions().id;
       const handle = container.addChild(
          new BitmapText(entry.handle, {
             fontName: Fonts.Cabin,

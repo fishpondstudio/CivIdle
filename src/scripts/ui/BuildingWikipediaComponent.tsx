@@ -30,6 +30,7 @@ export function BuildingWikipediaComponent({ gameState, xy }: IBuildingComponent
       })
          .then(async (r) => await r.text())
          .then((t) => {
+            t = t.replaceAll(`src="//`, `src="https://`);
             WikipediaCache[type] = t;
             if (iframeEl.current) {
                iframeEl.current.srcdoc = t;

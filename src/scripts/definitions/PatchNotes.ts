@@ -5,6 +5,44 @@ interface PatchNote {
 
 export const PatchNotes: PatchNote[] = [
    {
+      version: "0.1.93",
+      content: [
+         ["Content", "New Map: Athens"],
+         [
+            "Content",
+            "New Wonder: Statue Of Zeus (Athens Unique) - Spawn random deposits that have been revealed on adjacent empty tiles. All adjacent Tier I buildings get +5 Production and Storage Multiplier",
+         ],
+         [
+            "Content",
+            "New Natural Wonder: Aphrodite (Athens Unique) - +1 Builder Capacity Multiplier for each level when upgrading buildings over Level 20",
+         ],
+         [
+            "Content",
+            "New Natural Wonder: Poseidon (Athens Unique) - All adjacent buildings get free upgrades to Level 20",
+         ],
+         ["Balance", "Parthenon is now an Athens unique wonder"],
+         [
+            "Content",
+            "New Wonder: Colosseum (Rome Unique) - Chariot Workshops are exempt from -1 happiness. Consumes 10 chariots and produce 10 happiness",
+         ],
+         [
+            "Content",
+            "New Wonder: Circus Maximus (Rome Unique) - +5 Happiness. All Actor's Guilds, Writer's Guilds and Painter's Guilds get +1 Production and Storage Multiplier",
+         ],
+         [
+            "Content",
+            "New Natural Wonder: Grotta Azzurra (Rome Unique) - When discovered, all your Tier I buildings get +5 Level",
+         ],
+         [
+            "Content",
+            "New Wonder: Temple Of Artemis - All Sword Forges and Armories get +5 Level when completed. All Sword Forges and Armories get +1 Production Multiplier, Worker Capacity Multiplier and Storage Multiplier",
+         ],
+         ["QoL", "Port the camera control from Industry Idle (for muchc better performance)"],
+         ["QoL", "When searching in cbuilding list, the input/output resources will also be searched"],
+         ["Bugfix", "Fix a bug where Coal tile texture is missing"],
+      ],
+   },
+   {
       version: "0.1.92",
       content: [
          [

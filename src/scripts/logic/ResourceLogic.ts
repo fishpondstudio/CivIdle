@@ -1,5 +1,5 @@
 import { Building } from "../definitions/BuildingDefinitions";
-import { Resource } from "../definitions/ResourceDefinitions";
+import { Deposit, Resource } from "../definitions/ResourceDefinitions";
 import { PartialTabulate } from "../definitions/TypeDefinitions";
 import { forEach, reduceOf } from "../utilities/Helper";
 import { Config } from "./Constants";
@@ -76,4 +76,12 @@ export function getBuildingsThatProduce(res: Resource): Building[] {
       }
    });
    return result;
+}
+
+export function getRevealedDeposits(gs: GameState): Deposit[] {
+   const deposits: Deposit[] = [];
+   forEach(gs.unlockedTech, (tech) => {
+      Config.Tech[tech].revealDeposit?.forEach((d) => deposits.push(d));
+   });
+   return deposits;
 }

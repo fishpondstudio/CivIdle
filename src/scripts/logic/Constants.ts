@@ -1,6 +1,6 @@
 import { build } from "../Version.json";
 import { Building, BuildingDefinitions, BuildingSpecial } from "../definitions/BuildingDefinitions";
-import { CityDefinitions } from "../definitions/CityDefinitions";
+import { City, CityDefinitions } from "../definitions/CityDefinitions";
 import { GreatPersonDefinitions } from "../definitions/GreatPersonDefinitions";
 import { DepositResources, Resource, ResourceDefinitions } from "../definitions/ResourceDefinitions";
 import { Tech, TechAgeDefinitions, TechDefinitions } from "../definitions/TechDefinitions";
@@ -133,6 +133,11 @@ export function calculateTierAndPrice(gs: GameState) {
             }
             Config.ResourceTech[res] = techLevel;
          });
+         forEach(Config.City, (city, def) => {
+            if (def.uniqueBuildings[b]) {
+               console.error(`${city}'s unique building ${b} should not be unlocked by ${tech}`);
+            }
+         });
          console.assert(
             // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
             !isEmpty(Config.Building[b].input) || !isEmpty(Config.Building[b].construction),
@@ -217,6 +222,18 @@ export function calculateTierAndPrice(gs: GameState) {
          Config.ResourcePrice[r] = 1;
          Config.ResourceTier[r] = 1;
       }
+   });
+
+   const uniqueBuildings: Partial<Record<Building, City>> = {};
+
+   forEach(Config.City, (city, def) => {
+      forEach(def.uniqueBuildings, (k, v) => {
+         if (uniqueBuildings[k]) {
+            console.error(`Duplicated unique buildings ${k} found in ${uniqueBuildings[k]} and ${city}`);
+            return;
+         }
+         uniqueBuildings[k] = city;
+      });
    });
 
    console.log("AllRecipes", allRecipes);

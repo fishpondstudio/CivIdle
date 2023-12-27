@@ -1,21 +1,34 @@
+import { Deposit } from "../definitions/ResourceDefinitions";
 import { Tech } from "../definitions/TechDefinitions";
 import { TechTreeScene } from "../scenes/TechTreeScene";
 import { WorldScene } from "../scenes/WorldScene";
 import { ChooseGreatPersonModal } from "../ui/ChooseGreatPersonModal";
 import { showModal } from "../ui/GlobalModal";
-import { forEach, keysOf, pointToXy, safeAdd, safePush, xyToPoint } from "../utilities/Helper";
+import {
+   forEach,
+   isEmpty,
+   keysOf,
+   pointToXy,
+   safeAdd,
+   safePush,
+   shuffle,
+   xyToPoint,
+} from "../utilities/Helper";
 import { Singleton } from "../utilities/Singleton";
 import { L, t } from "../utilities/i18n";
 import {
    ST_PETERS_FAITH_MULTIPLIER,
    ST_PETERS_STORAGE_MULTIPLIER,
+   exploreTile,
    getTotalBuildingUpgrades,
+   isNaturalWonder,
+   isSpecialBuilding,
 } from "./BuildingLogic";
 import { Config } from "./Constants";
 import { GameState } from "./GameState";
 import { getBuildingsByType, getTypeBuildings, getXyBuildings } from "./IntraTickCache";
-import { getBuildingsThatProduce } from "./ResourceLogic";
-import { getGreatPeopleChoices } from "./TechLogic";
+import { getBuildingsThatProduce, getRevealedDeposits } from "./ResourceLogic";
+import { addDeposit, getGreatPeopleChoices } from "./TechLogic";
 import { ensureTileFogOfWar } from "./TerrainLogic";
 import { Tick } from "./TickLogic";
 import { IPetraBuildingData, PetraOptions } from "./Tile";
@@ -26,16 +39,15 @@ export function onBuildingComplete(xy: string, gs: GameState) {
       Singleton().sceneManager.getCurrent(WorldScene)?.getTile(g)?.reveal().catch(console.error);
    }
    const building = gs.tiles[xy].building;
-
    if (!building) {
       return;
    }
-
+   const { grid } = Singleton();
    switch (building.type) {
       case "HatshepsutTemple": {
          forEach(gs.tiles, (xy, tile) => {
             if (tile.deposit.Water) {
-               tile.explored = true;
+               exploreTile(xy, gs);
                Singleton().sceneManager.getCurrent(WorldScene)?.getTile(xy)?.reveal().catch(console.error);
             }
          });
@@ -55,20 +67,60 @@ export function onBuildingComplete(xy: string, gs: GameState) {
          }
          break;
       }
+      case "StatueOfZeus": {
+         let deposits: Deposit[] = [];
+         for (const neighbor of grid.getNeighbors(xyToPoint(xy))) {
+            if (deposits.length <= 0) {
+               deposits = shuffle(getRevealedDeposits(gs));
+            }
+            const neighborXy = pointToXy(neighbor);
+            if (isEmpty(gs.tiles[neighborXy].deposit)) {
+               const deposit = deposits.pop()!;
+               addDeposit(neighborXy, deposit, gs);
+            }
+         }
+         break;
+      }
+      case "TempleOfArtemis": {
+         forEach(getXyBuildings(gs), (xy, building) => {
+            if (isSpecialBuilding(building.type)) {
+               return;
+            }
+            if (building.type === "Armory" || building.type === "SwordForge") {
+               building.level += 5;
+            }
+         });
+         break;
+      }
+   }
+}
+
+export function onTileExplored(xy: string, gs: GameState) {
+   const building = gs.tiles[xy].building;
+   if (isNaturalWonder(building?.type)) {
+      switch (building?.type) {
+         case "GrottaAzzurra": {
+            forEach(getXyBuildings(gs), (xy, building) => {
+               if (isSpecialBuilding(building.type)) {
+                  return;
+               }
+               if (Config.BuildingTier[building.type] === 1) {
+                  building.level += 5;
+               }
+            });
+            break;
+         }
+      }
    }
 }
 
 export function onBuildingProductionComplete(xy: string, gs: GameState, offline: boolean) {
    const building = gs.tiles[xy].building;
-
    if (!building) {
       return;
    }
-
    const buildingsByType = getTypeBuildings(gs);
-
    const { grid } = Singleton();
-
    const buildingName = Config.Building[building.type].name();
 
    switch (building.type) {
@@ -91,25 +143,13 @@ export function onBuildingProductionComplete(xy: string, gs: GameState, offline:
          });
          break;
       }
-      // case "Colosseum": {
-      //    grid.getNeighbors(xyToPoint(xy)).forEach((neighbor) => {
-      //       safePush(Tick.next.tileMultipliers, pointToXy(neighbor), {
-      //          output: 1,
-      //          worker: 1,
-      //          storage: 1,
-      //          source: buildingName,
-      //       });
-      //    });
-      //    break;
-      // }
-      // case "CircusMaximus": {
-      //    forEach(Config.Building, (building, def) => {
-      //       if (def.output.Worker) {
-      //          addMultiplier(building, { output: 1 }, buildingName);
-      //       }
-      //    });
-      //    break;
-      // }
+      case "CircusMaximus": {
+         addMultiplier("MusiciansGuild", { output: 1, storage: 1 }, buildingName);
+         addMultiplier("PaintersGuild", { output: 1, storage: 1 }, buildingName);
+         addMultiplier("WritersGuild", { output: 1, storage: 1 }, buildingName);
+         Tick.next.globalMultipliers.happiness.push({ value: 5, source: buildingName });
+         break;
+      }
       case "Alps": {
          forEach(getXyBuildings(gs), (xy, building) => {
             const mul = Math.floor(building.level / 10);
@@ -166,6 +206,15 @@ export function onBuildingProductionComplete(xy: string, gs: GameState, offline:
          if (!Tick.current.notProducingReasons[xy]) {
             Tick.next.globalMultipliers.happiness.push({
                value: Config.Building.HagiaSophia.input.Faith!,
+               source: buildingName,
+            });
+         }
+         break;
+      }
+      case "Colosseum": {
+         if (!Tick.current.notProducingReasons[xy]) {
+            Tick.next.globalMultipliers.happiness.push({
+               value: Config.Building.Colosseum.input.Chariot!,
                source: buildingName,
             });
          }
@@ -330,6 +379,42 @@ export function onBuildingProductionComplete(xy: string, gs: GameState, offline:
                safePush(Tick.next.tileMultipliers, xy, { worker: 5, source: buildingName });
             }
          });
+         break;
+      }
+      case "Aphrodite": {
+         forEach(getXyBuildings(gs), (xy, building) => {
+            if (building.level >= 20 && building.status !== "completed") {
+               safePush(Tick.next.tileMultipliers, xy, { worker: building.level - 20, source: buildingName });
+            }
+         });
+         break;
+      }
+      case "Poseidon": {
+         for (const neighbor of grid.getNeighbors(xyToPoint(xy))) {
+            const neighborXy = pointToXy(neighbor);
+            if (gs.tiles[neighborXy].building && gs.tiles[neighborXy].building!.level < 20) {
+               gs.tiles[neighborXy].building!.level = 20;
+            }
+         }
+         break;
+      }
+      case "StatueOfZeus": {
+         for (const neighbor of grid.getNeighbors(xyToPoint(xy))) {
+            const neighborXy = pointToXy(neighbor);
+            const building = gs.tiles[neighborXy].building;
+            if (building && Config.BuildingTier[building.type] === 1) {
+               safePush(Tick.next.tileMultipliers, neighborXy, {
+                  output: 5,
+                  storage: 5,
+                  source: buildingName,
+               });
+            }
+         }
+         break;
+      }
+      case "TempleOfArtemis": {
+         addMultiplier("SwordForge", { worker: 1, storage: 1, output: 1 }, buildingName);
+         addMultiplier("Armory", { worker: 1, storage: 1, output: 1 }, buildingName);
          break;
       }
    }

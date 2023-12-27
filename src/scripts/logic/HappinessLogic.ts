@@ -45,6 +45,8 @@ export function calculateHappiness(gs: GameState) {
          }
          if (building.capacity <= 0 && buildingsByType.HagiaSophia) {
             // Do nothing
+         } else if (building.type === "ChariotWorkshop" && buildingsByType.Colosseum) {
+            // Do nothing
          } else {
             ++fromBuildings;
          }
