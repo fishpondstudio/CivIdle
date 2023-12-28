@@ -21,6 +21,13 @@ export default defineConfig(({ command }) => {
       build: {
          target: "es2015",
       },
+      test: {
+         browser: {
+            enabled: true,
+            headless: true,
+            name: "chrome",
+         },
+      },
    };
 
    function buildAtlas(folder: string) {

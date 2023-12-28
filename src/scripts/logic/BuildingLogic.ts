@@ -27,7 +27,6 @@ import { Multiplier, MultiplierWithSource, NotProducingReason, Tick } from "./Ti
 import {
    IBuildingData,
    IHaveTypeAndLevel,
-   IHaveTypeLevelAndStatus,
    IResourceImportBuildingData,
    IWarehouseBuildingData,
 } from "./Tile";
@@ -385,11 +384,9 @@ export function getScienceFromWorkers(gs: GameState) {
    };
 }
 
-export function getBuildingCost(
-   building: Pick<IBuildingData, "type" | "level" | "status">,
-): PartialTabulate<Resource> {
+export function getBuildingCost(building: Pick<IBuildingData, "type" | "level">): PartialTabulate<Resource> {
    const type = building.type;
-   const level = building.status === "building" ? 0 : building.level;
+   const level = building.level;
    let cost = { ...Config.Building[type].construction };
    if (isEmpty(cost)) {
       cost = { ...Config.Building[type].input } ?? {};
@@ -426,10 +423,9 @@ export function getTotalBuildingCost(
    desiredLevel: number,
 ): PartialTabulate<Resource> {
    console.assert(currentLevel <= desiredLevel);
-   const start: IHaveTypeLevelAndStatus = {
+   const start: IHaveTypeAndLevel = {
       type: building,
       level: currentLevel,
-      status: currentLevel === 0 ? "building" : "upgrading",
    };
    const result: PartialTabulate<Resource> = {};
    while (start.level < desiredLevel) {
@@ -551,7 +547,7 @@ export function getBuilderCapacity(
 ): { multiplier: number; base: number; total: number } {
    const builder =
       sum(Tick.current.globalMultipliers.builderCapacity, "value") + totalMultiplierFor(xy, "worker", 0, gs);
-   let baseCapacity = building.level;
+   let baseCapacity = clamp(building.level, 1, Infinity);
 
    if (isWorldWonder(building.type)) {
       const tech = getBuildingUnlockTech(building.type);

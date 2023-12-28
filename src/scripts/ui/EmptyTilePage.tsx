@@ -122,8 +122,7 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
                            const building = Config.Building[k];
                            const buildCost = getBuildingCost({
                               type: k,
-                              level: 1,
-                              status: "building",
+                              level: 0,
                            });
                            return (
                               <tr

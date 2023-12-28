@@ -13,7 +13,7 @@ export function BuildingProductionPriorityComponent({
    xy,
 }: IBuildingComponentProps): React.ReactNode {
    const building = gameState.tiles[xy].building;
-   if (building == null || isEmpty(getBuildingIO(xy, "output", IOCalculation.None, gameState))) {
+   if (building == null || isEmpty(getBuildingIO(xy, "input", IOCalculation.None, gameState))) {
       return null;
    }
    if (!gameState.features.BuildingProductionPriority) {
@@ -24,7 +24,6 @@ export function BuildingProductionPriorityComponent({
          <legend>
             {t(L.ProductionPriority)}: {building.priority}
          </legend>
-
          <input
             type="range"
             min={PRIORITY_MIN}

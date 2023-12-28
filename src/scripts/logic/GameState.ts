@@ -104,7 +104,6 @@ export function initializeGameState(gameState: GameState, grid: Grid) {
       if (gameState.tiles[xy]) {
          return;
       }
-
       gameState.tiles[xy] = {
          xy,
          deposit: {},
@@ -114,6 +113,7 @@ export function initializeGameState(gameState: GameState, grid: Grid) {
 
    gameState.tiles[centerXy].building = makeBuilding({
       type: "Headquarter",
+      level: 1,
       status: "completed",
    });
 
@@ -132,6 +132,7 @@ export function initializeGameState(gameState: GameState, grid: Grid) {
    if (wood) {
       gameState.tiles[wood.xy].building = makeBuilding({
          type: "LoggingCamp",
+         level: 1,
          status: "completed",
       });
    }
@@ -140,13 +141,14 @@ export function initializeGameState(gameState: GameState, grid: Grid) {
    if (stone) {
       gameState.tiles[stone.xy].building = makeBuilding({
          type: "StoneQuarry",
+         level: 1,
          status: "completed",
       });
    }
 
    const water = findNearest((tile) => !!tile.deposit.Water, center, grid, gameState);
    if (water) {
-      gameState.tiles[water.xy].building = makeBuilding({ type: "Aqueduct", status: "completed" });
+      gameState.tiles[water.xy].building = makeBuilding({ type: "Aqueduct", level: 1, status: "completed" });
    }
 
    // gameState.tiles[pointToXy({ x: center.x + 1, y: center.y + 1 })].building = makeBuilding({ type: "Hut" });
@@ -202,7 +204,7 @@ export function initializeGameState(gameState: GameState, grid: Grid) {
          break;
       }
       const naturalWonder = naturalWonders.pop()!;
-      gameState.tiles[xy].building = makeBuilding({ type: naturalWonder, status: "completed" });
+      gameState.tiles[xy].building = makeBuilding({ type: naturalWonder, level: 1, status: "completed" });
    }
 
    forEach(gameState.tiles, (xy, tile) => {

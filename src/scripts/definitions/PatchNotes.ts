@@ -5,6 +5,14 @@ interface PatchNote {
 
 export const PatchNotes: PatchNote[] = [
    {
+      version: "0.1.94",
+      content: [
+         ["Bugfix", "Fix unlocking a tech causes camera jitter"],
+         ["Bugfix", "Fix total empire value is incorrect when upgrading a building"],
+         ["Bugfix", "Fix wonders that require resources does not show the priority slider"],
+      ],
+   },
+   {
       version: "0.1.93",
       content: [
          ["Content", "New Map: Athens"],
@@ -37,8 +45,8 @@ export const PatchNotes: PatchNote[] = [
             "Content",
             "New Wonder: Temple Of Artemis - All Sword Forges and Armories get +5 Level when completed. All Sword Forges and Armories get +1 Production Multiplier, Worker Capacity Multiplier and Storage Multiplier",
          ],
-         ["QoL", "Port the camera control from Industry Idle (for muchc better performance)"],
-         ["QoL", "When searching in cbuilding list, the input/output resources will also be searched"],
+         ["QoL", "Port the camera control from Industry Idle (for much better performance)"],
+         ["QoL", "When searching in building list, the input/output resources will also be searched"],
          ["Bugfix", "Fix a bug where Coal tile texture is missing"],
       ],
    },

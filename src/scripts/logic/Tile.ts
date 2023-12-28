@@ -66,7 +66,6 @@ export interface IPetraBuildingData extends IBuildingData {
 }
 
 export type IHaveTypeAndLevel = Pick<IBuildingData, "type" | "level">;
-export type IHaveTypeLevelAndStatus = Pick<IBuildingData, "type" | "level" | "status">;
 
 export const STOCKPILE_CAPACITY_MIN = 0;
 export const STOCKPILE_CAPACITY_MAX = 10;
@@ -79,7 +78,7 @@ export const PRIORITY_MAX = 10;
 
 export function makeBuilding(data: Pick<IBuildingData, "type"> & Partial<IBuildingData>): IBuildingData {
    const building: IBuildingData = {
-      level: 1,
+      level: 0,
       desiredLevel: 1,
       resources: {},
       status: "building",

@@ -134,6 +134,7 @@ export class TileVisual extends Container {
             this._deposits[deposit] = sprite;
          });
          this.updateLayout();
+         this.updateDepositColor(getGameOptions());
       }
 
       this.update(getGameState(), 0);

@@ -1,4 +1,4 @@
-import { DisplayObject, IPoint, ObservablePoint } from "pixi.js";
+import { DisplayObject, IPoint, IPointData } from "pixi.js";
 import { Easing, EasingFunction } from "../Easing";
 import { Action } from "./Action";
 
@@ -43,12 +43,10 @@ export class TargetAction<T extends Record<string, any>> extends Action {
       for (key in this.targetValue) {
          const value = this.targetValue[key] as any;
          if (isPointLike(value)) {
-            const target = value as IPoint;
-            const initial = this.initialValue[key] as IPoint;
-            (this.target[key] as ObservablePoint).set(
-               initial.x + (target.x - initial.x) * factor,
-               initial.y + (target.y - initial.y) * factor,
-            );
+            const target = value as IPointData;
+            const initial = this.initialValue[key] as IPointData;
+            (this.target[key] as IPointData).x = initial.x + (target.x - initial.x) * factor;
+            (this.target[key] as IPointData).y = initial.y + (target.y - initial.y) * factor;
          } else {
             this.target[key] = ((this.initialValue[key] as number) +
                ((value as number) - (this.initialValue[key] as number)) * factor) as any;

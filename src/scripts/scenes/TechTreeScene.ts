@@ -5,7 +5,6 @@ import {
    ColorSource,
    Container,
    FederatedPointerEvent,
-   IPointData,
    LINE_CAP,
    LINE_JOIN,
    Rectangle,
@@ -218,7 +217,7 @@ export class TechTreeScene extends ViewportScene {
          });
          targets = newTo;
       }
-      const target = this._boxPositions[tech] ?? this.viewport.center;
+      const target = this._boxPositions[tech]?.x ?? this.viewport.center.x;
       if (cutToTech === "animate") {
          Actions.to<TechTreeScene>(this, { scrollX: target }, 0.5, Easing.InOutQuad).start();
       } else if (cutToTech === "jump") {
@@ -226,13 +225,12 @@ export class TechTreeScene extends ViewportScene {
       }
    }
 
-   public get scrollX(): IPointData {
-      return this.viewport.center;
+   public get scrollX(): number {
+      return this.viewport.center.x;
    }
 
-   public set scrollX(value: IPointData) {
-      // this.viewport.moveCenter(value, this.viewport.center.y);
-      this.viewport.center = value;
+   public set scrollX(value: number) {
+      this.viewport.center = { x: value, y: this.viewport.center.y };
    }
 
    private drawConnection(

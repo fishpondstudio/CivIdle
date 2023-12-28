@@ -1,4 +1,5 @@
 import { Application } from "pixi.js";
+import { RunTests } from "../tests/TestRunner";
 import {
    TILE_SIZE,
    getGameOptions,
@@ -158,6 +159,9 @@ export async function startGame(
    notifyGameStateUpdate();
    Singleton().ticker.start();
    await checkSteamBranch();
+   if (import.meta.env.DEV) {
+      RunTests(gameState);
+   }
 }
 
 function showOfflineProductionProgress(progress: number, routeTo: RouteTo): Promise<void> {
