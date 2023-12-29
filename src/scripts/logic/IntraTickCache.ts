@@ -61,6 +61,9 @@ export function getBuildingIO(
          if (options & IOCalculation.Multiplier) {
             value *= totalMultiplierFor(xy, type, 1, gs);
          }
+         if (options & IOCalculation.MultiplierExcludeElectrification) {
+            value *= totalMultiplierFor(xy, type, 1, gs) - (Tick.current.electrified[xy] ?? 0);
+         }
          safeAdd(result, k, value);
       });
    }

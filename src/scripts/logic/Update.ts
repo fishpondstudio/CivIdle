@@ -10,6 +10,7 @@ import {
    clamp,
    filterOf,
    forEach,
+   hasFlag,
    isEmpty,
    keysOf,
    pointArrayToXy,
@@ -27,9 +28,11 @@ import { Singleton } from "../utilities/Singleton";
 import { Vector2, v2 } from "../utilities/Vector2";
 import { L, t } from "../utilities/i18n";
 import {
+   BUILDING_POWER_TO_LEVEL,
    IOCalculation,
    addResources,
    addTransportation,
+   canBeElectrified,
    deductResources,
    filterResource,
    filterTransportable,
@@ -53,6 +56,7 @@ import {
    useWorkers,
 } from "./BuildingLogic";
 import { Config } from "./Constants";
+import { GameFeature, hasFeature } from "./FeatureLogic";
 import { GameState, ITransportationData } from "./GameState";
 import { calculateHappiness } from "./HappinessLogic";
 import {
@@ -64,8 +68,9 @@ import {
 } from "./IntraTickCache";
 import { onBuildingComplete, onBuildingProductionComplete } from "./LogicCallback";
 import { getAmountInTransit } from "./ResourceLogic";
-import { CurrentTickChanged, EmptyTickData, Multiplier, Tick } from "./TickLogic";
+import { CurrentTickChanged, EmptyTickData, Multiplier, Tick, freezeTickData } from "./TickLogic";
 import {
+   BuildingOptions,
    IBuildingData,
    IMarketBuildingData,
    IResourceImportBuildingData,
@@ -101,7 +106,7 @@ export function tickEverySecond(gs: GameState, offline: boolean) {
    }
    timeSinceLastTick = 0;
 
-   Tick.current = Tick.next;
+   Tick.current = freezeTickData(Tick.next);
    CurrentTickChanged.emit(Tick.current);
    Tick.next = EmptyTickData();
    clearIntraTickCache();
@@ -270,9 +275,7 @@ function tickTile(xy: string, gs: GameState, offline: boolean): void {
          Tick.next.notProducingReasons[xy] = "NotEnoughWorkers";
       });
       if (completed) {
-         if (building.status === "upgrading") {
-            building.level++;
-         }
+         building.level++;
          if (
             building.status === "building" ||
             (building.status === "upgrading" && building.level >= building.desiredLevel)
@@ -367,9 +370,9 @@ function tickTile(xy: string, gs: GameState, offline: boolean): void {
       hasTransported = true;
    });
 
-   if (gs.features.WarehouseUpgrade && "warehouseOptions" in building) {
+   if (hasFeature(GameFeature.WarehouseUpgrade, gs) && "warehouseOptions" in building) {
       const warehouse = building as IWarehouseBuildingData;
-      if (warehouse.warehouseOptions & WarehouseOptions.Autopilot) {
+      if (hasFlag(warehouse.warehouseOptions, WarehouseOptions.Autopilot)) {
          hasTransported = tickWarehouseAutopilot(warehouse, xy, gs);
       }
    }
@@ -447,6 +450,23 @@ function tickTile(xy: string, gs: GameState, offline: boolean): void {
          Tick.next.notProducingReasons[xy] = "StorageFull";
       }
       return;
+   }
+
+   if (
+      hasFeature(GameFeature.Electricity, gs) &&
+      canBeElectrified(building.type) &&
+      hasFlag(building.options, BuildingOptions.Electrification)
+   ) {
+      const requiredPower = building.level * BUILDING_POWER_TO_LEVEL;
+      if (getAvailableWorkers("Power") >= requiredPower) {
+         useWorkers("Power", requiredPower, xy);
+         safePush(Tick.next.tileMultipliers, xy, {
+            source: t(L.Electrification),
+            input: building.level,
+            output: building.level,
+         });
+         Tick.next.electrified[xy] = building.level;
+      }
    }
 
    useWorkers("Worker", worker.output, xy);
@@ -539,7 +559,7 @@ export function transportResource(
    if (getAvailableWorkers("Worker") <= 0) {
       return;
    }
-   const sources = Tick.current.resourcesByGrid[res]?.sort((point1, point2) => {
+   const sources = Tick.current.resourcesByGrid[res]?.slice(0).sort((point1, point2) => {
       return (
          grid.distance(point1[0], point1[1], targetPoint[0], targetPoint[1]) -
          grid.distance(point2[0], point2[1], targetPoint[0], targetPoint[1])
@@ -569,7 +589,7 @@ export function transportResource(
          Tick.current.globalMultipliers.transportCapacity.reduce((prev, curr) => prev + curr.value, 0);
 
       if (
-         gs.features.WarehouseUpgrade &&
+         hasFeature(GameFeature.WarehouseUpgrade, gs) &&
          (gs.tiles[fromXy].building?.type === "Warehouse" ||
             gs.tiles[targetXy].building?.type === "Warehouse")
       ) {
@@ -661,7 +681,7 @@ function tickPrice(gs: GameState) {
                market.availableResources[res] = buy[idx % buy.length];
             }
          }
-         if (forceUpdatePrice && market.marketOptions & MarketOptions.ClearAfterUpdate) {
+         if (forceUpdatePrice && hasFlag(market.marketOptions, MarketOptions.ClearAfterUpdate)) {
             market.sellResources = {};
          }
       }

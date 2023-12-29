@@ -100,9 +100,6 @@ export function unlockTech(tech: Tech, gs: GameState): void {
          addDeposit(xy, deposit, gs);
       });
    });
-   Config.Tech[tech].unlockFeature?.forEach((f) => {
-      gs.features[f] = true;
-   });
 }
 
 export function addDeposit(xy: string, deposit: Deposit, gs: GameState): void {

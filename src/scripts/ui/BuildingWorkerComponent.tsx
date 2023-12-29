@@ -208,7 +208,7 @@ export function BuildingWorkerComponent({ gameState, xy }: IBuildingComponentPro
                   className="text-link text-small"
                   onClick={() => {
                      playClick();
-                     applyToAllBuildings(building.type, { capacity: building.capacity }, gameState);
+                     applyToAllBuildings(building.type, () => ({ capacity: building.capacity }), gameState);
                   }}
                >
                   {t(L.ApplyToAll, { building: Config.Building[building.type].name() })}

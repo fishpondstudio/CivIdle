@@ -313,6 +313,42 @@ export class GreatPersonDefinitions {
       age: "RenaissanceAge",
    });
 
+   JamesWatt: IGreatPersonDefinition = boostOf({
+      name: () => t(L.JamesWatt),
+      boost: {
+         multipliers: ["storage", "output"],
+         buildings: ["Steamworks", "DynamiteWorkshop"],
+      },
+      time: "1736 ~ 1819 AD",
+      value: (level) => level,
+      maxLevel: Infinity,
+      age: "IndustrialAge",
+   });
+
+   KarlMarx: IGreatPersonDefinition = boostOf({
+      name: () => t(L.KarlMarx),
+      boost: {
+         multipliers: ["storage", "output"],
+         buildings: ["Courthouse", "Parliament"],
+      },
+      time: "1818 ~ 1883 AD",
+      value: (level) => level,
+      maxLevel: Infinity,
+      age: "IndustrialAge",
+   });
+
+   AdaLovelace: IGreatPersonDefinition = boostOf({
+      name: () => t(L.AdaLovelace),
+      boost: {
+         multipliers: ["storage", "output"],
+         buildings: ["PrintingHouse", "Museum"],
+      },
+      time: "1815 ~ 1852 AD",
+      value: (level) => level,
+      maxLevel: Infinity,
+      age: "IndustrialAge",
+   });
+
    // LaoZi: IGreatPersonDefinition = {
    //    name: () => t(L.LaoZi),
    //    time: "c. 600s BC",

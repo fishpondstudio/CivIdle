@@ -1,13 +1,11 @@
 import { GlobalMultipliers, Multiplier } from "../logic/TickLogic";
 import { Building } from "./BuildingDefinitions";
-import { Feature } from "./FeatureDefinitions";
 import { Deposit } from "./ResourceDefinitions";
 import { RomeProvince } from "./RomeProvinceDefinitions";
 import { Tech } from "./TechDefinitions";
 
 export interface IUnlockableDefinition {
    name: () => string;
-   unlockFeature?: Feature[];
    unlockBuilding?: Building[];
    revealDeposit?: Deposit[];
    buildingMultiplier?: Partial<Record<Building, Multiplier>>;

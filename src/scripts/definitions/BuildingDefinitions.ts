@@ -1,5 +1,5 @@
 import { L, t } from "../utilities/i18n";
-import { Resource } from "./ResourceDefinitions";
+import { Deposit, Resource } from "./ResourceDefinitions";
 import { PartialSet, PartialTabulate } from "./TypeDefinitions";
 
 export enum BuildingSpecial {
@@ -14,7 +14,7 @@ export interface IBuildingDefinition {
    construction?: PartialTabulate<Resource>;
    output: PartialTabulate<Resource>;
    vision?: number;
-   deposit?: PartialSet<Resource>;
+   deposit?: PartialSet<Deposit>;
    max?: number;
    wikipedia?: string;
    desc?: () => string;
@@ -111,6 +111,29 @@ export class BuildingDefinitions {
       output: { Gold: 1 },
       construction: { Stone: 1 },
    };
+
+   OilWell: IBuildingDefinition = {
+      name: () => t(L.OilWell),
+      input: {},
+      deposit: { Oil: true },
+      output: { Oil: 1 },
+      construction: { Steel: 1 },
+   };
+
+   AluminumSmelter: IBuildingDefinition = {
+      name: () => t(L.AluminumSmelter),
+      input: {},
+      deposit: { Aluminum: true },
+      output: { Aluminum: 1 },
+      construction: { Steel: 1 },
+   };
+
+   CoalPowerPlant: IBuildingDefinition = {
+      name: () => t(L.CoalPowerPlant),
+      input: { Coal: 1 },
+      output: { Power: 1 },
+      construction: { Steel: 1 },
+   };
    // #endregion /////////////////////////////////////////////////////////////////////////////////////////////
 
    // #region Military ///////////////////////////////////////////////////////////////////////////////////////
@@ -169,6 +192,26 @@ export class BuildingDefinitions {
       input: { Galleon: 1, Knight: 1, Cannon: 1, Lens: 1 },
       output: { Frigate: 1 },
    };
+   RifleFactory: IBuildingDefinition = {
+      name: () => t(L.RifleFactory),
+      input: { Gunpowder: 5, Tool: 5 },
+      output: { Rifle: 1 },
+   };
+   GatlingGunFactory: IBuildingDefinition = {
+      name: () => t(L.GatlingGunFactory),
+      input: { Rifle: 1, Gunpowder: 5 },
+      output: { GatlingGun: 1 },
+   };
+   IroncladBuilder: IBuildingDefinition = {
+      name: () => t(L.IroncladBuilder),
+      input: { GatlingGun: 1, Rifle: 1, Frigate: 1 },
+      output: { Ironclad: 1 },
+   };
+   TankFactory: IBuildingDefinition = {
+      name: () => t(L.TankFactory),
+      input: { Engine: 1, Steel: 10, Cannon: 1, GatlingGun: 1, Rifle: 1 },
+      output: { Tank: 1 },
+   };
    // #endregion /////////////////////////////////////////////////////////////////////////////////////////////
 
    // #region Culture ////////////////////////////////////////////////////////////////////////////////////////
@@ -207,10 +250,21 @@ export class BuildingDefinitions {
       input: { Cheese: 1, Marble: 1 },
       output: { Faith: 3 },
    };
+   Cathedral: IBuildingDefinition = {
+      name: () => t(L.Cathedral),
+      input: { Sword: 1, Armor: 1 },
+      output: { Faith: 6 },
+   };
    School: IBuildingDefinition = {
       name: () => t(L.School),
       input: { Faith: 1, Poem: 1 },
       output: { Science: 88 },
+   };
+   Library: IBuildingDefinition = {
+      name: () => t(L.Library),
+      input: { Paper: 1 },
+      output: { Science: 8 },
+      construction: { Marble: 2, Stone: 2 },
    };
    University: IBuildingDefinition = {
       name: () => t(L.University),
@@ -227,16 +281,20 @@ export class BuildingDefinitions {
       input: { Philosophy: 1, Faith: 1 },
       output: { Law: 1 },
    };
-   Cathedral: IBuildingDefinition = {
-      name: () => t(L.Cathedral),
-      input: { Sword: 1, Armor: 1 },
-      output: { Faith: 6 },
+   PublishingHouse: IBuildingDefinition = {
+      name: () => t(L.PublishingHouse),
+      input: { Politics: 1, Paper: 10 },
+      output: { Newspaper: 1 },
    };
-   Library: IBuildingDefinition = {
-      name: () => t(L.Library),
-      input: { Paper: 1 },
-      output: { Science: 8 },
-      construction: { Marble: 2, Stone: 2 },
+   Stadium: IBuildingDefinition = {
+      name: () => t(L.Stadium),
+      input: { Culture: 1, Opera: 1 },
+      output: { Sports: 1 },
+   };
+   Parliament: IBuildingDefinition = {
+      name: () => t(L.Parliament),
+      input: { Culture: 1, Philosophy: 1 },
+      output: { Politics: 1 },
    };
    // #endregion /////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -345,6 +403,27 @@ export class BuildingDefinitions {
       input: { Stone: 2, Tool: 1 },
       output: { Marble: 1 },
    };
+   SteelMill: IBuildingDefinition = {
+      name: () => t(L.SteelMill),
+      input: { Iron: 1, Coal: 1 },
+      output: { Steel: 1 },
+   };
+   Steamworks: IBuildingDefinition = {
+      name: () => t(L.Steamworks),
+      input: { Iron: 1, Coal: 1, Tool: 1 },
+      output: { Engine: 1 },
+   };
+   LocomotiveFactory: IBuildingDefinition = {
+      name: () => t(L.LocomotiveFactory),
+      input: { Engine: 1, Steel: 10 },
+      output: { Train: 1 },
+   };
+   OilRefinery: IBuildingDefinition = {
+      name: () => t(L.OilRefinery),
+      input: { Oil: 2 },
+      output: { Petrol: 1 },
+      construction: { Steel: 1, Oil: 1 },
+   };
    // #endregion /////////////////////////////////////////////////////////////////////////////////////////////
 
    // #region Financial & Trade //////////////////////////////////////////////////////////////////////////////
@@ -362,6 +441,11 @@ export class BuildingDefinitions {
       name: () => t(L.BondMarket),
       input: { Banknote: 10 },
       output: { Bond: 1 },
+   };
+   StockExchange: IBuildingDefinition = {
+      name: () => t(L.StockExchange),
+      input: { Bond: 10 },
+      output: { Stock: 1 },
    };
    Caravansary: IBuildingDefinition = {
       name: () => t(L.Caravansary),

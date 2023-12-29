@@ -217,7 +217,9 @@ export class TechTreeScene extends ViewportScene {
          });
          targets = newTo;
       }
-      const target = this._boxPositions[tech]?.x ?? this.viewport.center.x;
+      const target = this._boxPositions[tech]
+         ? this._boxPositions[tech]!.x + BOX_WIDTH / 2
+         : this.viewport.center.x;
       if (cutToTech === "animate") {
          Actions.to<TechTreeScene>(this, { scrollX: target }, 0.5, Easing.InOutQuad).start();
       } else if (cutToTech === "jump") {

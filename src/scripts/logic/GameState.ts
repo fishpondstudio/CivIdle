@@ -2,7 +2,6 @@ import { IPointData } from "pixi.js";
 import { v4 } from "uuid";
 import { Building } from "../definitions/BuildingDefinitions";
 import { City } from "../definitions/CityDefinitions";
-import { Feature } from "../definitions/FeatureDefinitions";
 import { GreatPerson } from "../definitions/GreatPersonDefinitions";
 import { Resource } from "../definitions/ResourceDefinitions";
 import { RomeProvince } from "../definitions/RomeProvinceDefinitions";
@@ -37,7 +36,6 @@ export class GameState {
    city: City = "Rome";
    unlockedTech: PartialSet<Tech> = {};
    unlockedProvince: PartialSet<RomeProvince> = {};
-   features: PartialSet<Feature> = {};
    tiles: Record<string, ITileData> = {};
    transportation: Record<string, ITransportationData[]> = {};
    tick = 0;

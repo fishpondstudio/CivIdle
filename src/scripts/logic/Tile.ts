@@ -14,6 +14,11 @@ export interface ITileData {
 
 export type BuildingStatus = "building" | "upgrading" | "paused" | "completed";
 
+export enum BuildingOptions {
+   None = 0,
+   Electrification = 1 << 0,
+}
+
 export interface IBuildingData {
    type: Building;
    level: number;
@@ -24,6 +29,7 @@ export interface IBuildingData {
    stockpileCapacity: number;
    stockpileMax: number;
    priority: number;
+   options: BuildingOptions;
 }
 
 export enum MarketOptions {
@@ -79,13 +85,14 @@ export const PRIORITY_MAX = 10;
 export function makeBuilding(data: Pick<IBuildingData, "type"> & Partial<IBuildingData>): IBuildingData {
    const building: IBuildingData = {
       level: 0,
-      desiredLevel: 1,
+      desiredLevel: 0,
       resources: {},
       status: "building",
       capacity: 1,
       stockpileCapacity: 1,
       stockpileMax: 5,
       priority: PRIORITY_MIN,
+      options: BuildingOptions.None,
       ...data,
    };
 

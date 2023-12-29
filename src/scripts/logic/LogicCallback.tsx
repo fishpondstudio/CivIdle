@@ -1,11 +1,10 @@
 import { Deposit } from "../definitions/ResourceDefinitions";
-import { Tech } from "../definitions/TechDefinitions";
-import { TechTreeScene } from "../scenes/TechTreeScene";
 import { WorldScene } from "../scenes/WorldScene";
 import { ChooseGreatPersonModal } from "../ui/ChooseGreatPersonModal";
 import { showModal } from "../ui/GlobalModal";
 import {
    forEach,
+   hasFlag,
    isEmpty,
    keysOf,
    pointToXy,
@@ -318,7 +317,7 @@ export function onBuildingProductionComplete(xy: string, gs: GameState, offline:
             break;
          }
          const petra = building as IPetraBuildingData;
-         if (petra.petraOptions & PetraOptions.TimeWarp && (petra.resources.Warp ?? 0) > 0) {
+         if (hasFlag(petra.petraOptions, PetraOptions.TimeWarp) && (petra.resources.Warp ?? 0) > 0) {
             --petra.resources.Warp!;
             Singleton().ticker.speedUp = 2;
          } else {
@@ -418,8 +417,4 @@ export function onBuildingProductionComplete(xy: string, gs: GameState, offline:
          break;
       }
    }
-}
-
-export function onTechUnlocked(tech: Tech, gs: GameState) {
-   Singleton().sceneManager.getCurrent(TechTreeScene)?.renderTechTree("animate", true);
 }

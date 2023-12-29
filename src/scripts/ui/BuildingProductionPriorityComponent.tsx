@@ -1,6 +1,7 @@
 import { notifyGameStateUpdate } from "../Global";
 import { IOCalculation, applyToAllBuildings } from "../logic/BuildingLogic";
 import { Config } from "../logic/Constants";
+import { GameFeature, hasFeature } from "../logic/FeatureLogic";
 import { getBuildingIO } from "../logic/IntraTickCache";
 import { PRIORITY_MAX, PRIORITY_MIN } from "../logic/Tile";
 import { isEmpty } from "../utilities/Helper";
@@ -16,7 +17,7 @@ export function BuildingProductionPriorityComponent({
    if (building == null || isEmpty(getBuildingIO(xy, "input", IOCalculation.None, gameState))) {
       return null;
    }
-   if (!gameState.features.BuildingProductionPriority) {
+   if (!hasFeature(GameFeature.BuildingProductionPriority, gameState)) {
       return null;
    }
    return (
@@ -42,7 +43,7 @@ export function BuildingProductionPriorityComponent({
             className="text-link text-small"
             onClick={() => {
                playClick();
-               applyToAllBuildings(building.type, { priority: building.priority }, gameState);
+               applyToAllBuildings(building.type, () => ({ priority: building.priority }), gameState);
             }}
          >
             {t(L.ApplyToAll, { building: Config.Building[building.type].name() })}

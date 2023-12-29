@@ -3,7 +3,7 @@ import { applyToAllBuildings, getMarketPrice, totalMultiplierFor } from "../logi
 import { Config } from "../logic/Constants";
 import { IMarketBuildingData, MarketOptions } from "../logic/Tile";
 import { convertPriceIdToTime } from "../logic/Update";
-import { formatHMS, keysOf, round } from "../utilities/Helper";
+import { formatHMS, hasFlag, keysOf, round, toggleFlag } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
 import { playClick } from "../visuals/Sound";
 import { BuildingColorComponent } from "./BuildingColorComponent";
@@ -107,11 +107,11 @@ export function MarketBuildingBody({ gameState, xy }: IBuildingComponentProps): 
                   className="pointer"
                   onClick={() => {
                      playClick();
-                     market.marketOptions ^= MarketOptions.ClearAfterUpdate;
+                     market.marketOptions = toggleFlag(market.marketOptions, MarketOptions.ClearAfterUpdate);
                      notifyGameStateUpdate();
                   }}
                >
-                  {market.marketOptions & MarketOptions.ClearAfterUpdate ? (
+                  {hasFlag(market.marketOptions, MarketOptions.ClearAfterUpdate) ? (
                      <div className="m-icon text-green">toggle_on</div>
                   ) : (
                      <div className="m-icon text-desc">toggle_off</div>
@@ -125,7 +125,7 @@ export function MarketBuildingBody({ gameState, xy }: IBuildingComponentProps): 
                   playClick();
                   applyToAllBuildings<IMarketBuildingData>(
                      market.type,
-                     { marketOptions: market.marketOptions },
+                     () => ({ marketOptions: market.marketOptions }),
                      gameState,
                   );
                }}

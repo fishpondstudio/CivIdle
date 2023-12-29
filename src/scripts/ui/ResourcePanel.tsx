@@ -31,7 +31,8 @@ export function ResourcePanel(): React.ReactNode {
          <div className="separator-vertical" />
          <div
             className="row"
-            aria-label={t(L.WorkersAvailable)}
+            style={{ width: "150px" }}
+            aria-label={`${t(L.WorkersBusy)} / ${t(L.WorkersAvailable)}`}
             data-balloon-pos="down"
             data-balloon-text="left"
          >
@@ -43,24 +44,39 @@ export function ResourcePanel(): React.ReactNode {
                person
             </div>
             <div className="f1">
-               <FormatNumber value={workersAvailableAfterHappiness} />
+               <FormatNumber value={workersBusy} /> / <FormatNumber value={workersAvailableAfterHappiness} />
             </div>
          </div>
          <div className="separator-vertical" />
-         <div className="row" aria-label={t(L.WorkersBusy)} data-balloon-pos="down" data-balloon-text="left">
-            <div
-               className={classNames({
-                  "m-icon": true,
-               })}
-            >
-               directions_walk
-            </div>
-            <div className="f1">
-               <FormatNumber value={workersBusy} />
-            </div>
-         </div>
-
-         <div className="separator-vertical" />
+         {(tick.workersAvailable.Power ?? 0) > 0 ? (
+            <>
+               <div
+                  className="row"
+                  style={{ width: "150px" }}
+                  aria-label={t(L.Happiness)}
+                  data-balloon-pos="down"
+                  data-balloon-text="left"
+               >
+                  <div
+                     className={classNames({
+                        "m-icon": true,
+                        "text-red": (tick.workersAvailable.Power ?? 0) < (tick.workersUsed.Power ?? 0),
+                        "text-green": (tick.workersAvailable.Power ?? 0) > (tick.workersUsed.Power ?? 0),
+                     })}
+                  >
+                     bolt
+                  </div>
+                  <div className="f1">
+                     <FormatNumber value={tick.workersUsed.Power ?? 0} />
+                     W
+                     {" / "}
+                     <FormatNumber value={tick.workersAvailable.Power} />
+                     W
+                  </div>
+               </div>
+               <div className="separator-vertical" />
+            </>
+         ) : null}
          <div className="row" aria-label={t(L.Science)} data-balloon-pos="down" data-balloon-text="left">
             <div
                className={classNames({

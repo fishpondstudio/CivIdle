@@ -167,7 +167,7 @@ export class Camera extends Container {
             Math.min(0.01 * this.app.ticker.deltaMS, 1 / 3),
          );
          this.moveOrigin(target);
-         if ((this.targetOrigin.x - target.x) ** 2 + (this.targetOrigin.y - target.y) ** 2 < 0.001 ** 2) {
+         if ((this.targetOrigin.x - target.x) ** 2 + (this.targetOrigin.y - target.y) ** 2 < 0.1 ** 2) {
             this.targetOrigin = null;
          }
       }
@@ -192,7 +192,12 @@ export class Camera extends Container {
       }
    };
 
+   public get center(): IPointData {
+      return this.originToCenter(this.pivot);
+   }
+
    public set center(point: IPointData) {
+      this.targetOrigin = null;
       this.moveOrigin(this.centerToOrigin(point));
    }
 
@@ -209,13 +214,9 @@ export class Camera extends Container {
 
    public originToCenter(point: IPointData): IPointData {
       return {
-         x: point.x + (this.scale.x * this.screenWidth) / 2,
-         y: point.y + (this.scale.y * this.screenHeight) / 2,
+         x: point.x + this.screenWidth / this.scale.x / 2,
+         y: point.y + this.screenHeight / this.scale.y / 2,
       };
-   }
-
-   public get center(): IPointData {
-      return this.originToCenter(this.pivot);
    }
 
    public clampOrigin(point: IPointData): IPointData {

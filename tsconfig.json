@@ -15,7 +15,8 @@
       "isolatedModules": true,
       "noEmit": true,
       "jsx": "react-jsx",
-      "noImplicitOverride": true
+      "noImplicitOverride": true,
+      "verbatimModuleSyntax": true
    },
    "include": ["src"],
    "exclude": ["**/node_modules", "**/.*/"],

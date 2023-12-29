@@ -41,14 +41,14 @@ function humanFormat(num: number, suffix: string[]): string {
    if (idx < suffix.length) {
       return num.toLocaleString() + suffix[idx];
    }
-   return num.toLocaleString() + "E" + idx.toString();
+   return `${num.toLocaleString()}E${idx.toString()}`;
 }
 
 export function formatNumber(num: number | undefined | null, binary = false, scientific = false): string {
    if (num === null || num === undefined) {
       return "";
    }
-   if (!isFinite(num)) {
+   if (!Number.isFinite(num)) {
       return String(num);
    }
    if (scientific && num >= 1e15) {
@@ -515,4 +515,24 @@ export function drawDashedLine(
 
 export function isNullOrUndefined(v: any): v is undefined | null {
    return v === null || typeof v === "undefined";
+}
+
+export function hasFlag<T extends number>(value: T, flag: T): boolean {
+   return (value & flag) !== 0;
+}
+
+export function setFlag<T extends number>(value: T, flag: T): T {
+   return (value | flag) as T;
+}
+
+export function clearFlag<T extends number>(value: T, flag: T): T {
+   return (value & ~flag) as T;
+}
+
+export function toggleFlag<T extends number>(value: T, flag: T): T {
+   return (value ^ flag) as T;
+}
+
+export function copyFlag<T extends number>(from: T, to: T, flag: T): T {
+   return hasFlag(from, flag) ? setFlag(to, flag) : clearFlag(to, flag);
 }

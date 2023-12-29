@@ -24,4 +24,4 @@ export async function checkSteamBranch() {
    }
 }
 
-export const MAX_TECH_COLUMN = 13;
+export const MAX_TECH_COLUMN = import.meta.env.DEV ? Infinity : 13;

@@ -9,19 +9,20 @@ import {
    notifyGameStateUpdate,
    syncUITheme,
 } from "./Global";
-import { RouteChangeEvent } from "./Route";
+import type { RouteChangeEvent } from "./Route";
 import { checkSteamBranch } from "./SteamTesting";
-import { Building } from "./definitions/BuildingDefinitions";
-import { City, setCityOverride } from "./definitions/CityDefinitions";
+import type { Building } from "./definitions/BuildingDefinitions";
+import { setCityOverride, type City } from "./definitions/CityDefinitions";
 import { DepositResources } from "./definitions/ResourceDefinitions";
 import { getBuildingTexture, getStorageFor, getTileTexture } from "./logic/BuildingLogic";
 import { Config, MAX_OFFLINE_PRODUCTION_SEC, calculateTierAndPrice } from "./logic/Constants";
 import { GameState, initializeGameState } from "./logic/GameState";
-import { IPetraBuildingData, ITileData } from "./logic/Tile";
+import type { IPetraBuildingData, ITileData } from "./logic/Tile";
 import { tickEverySecond } from "./logic/Update";
-import { MainBundleAssets } from "./main";
+import type { MainBundleAssets } from "./main";
 import { connectWebSocket } from "./rpc/RPCClient";
 import { Grid } from "./scenes/Grid";
+import { TechTreeScene } from "./scenes/TechTreeScene";
 import { WorldScene } from "./scenes/WorldScene";
 import { ErrorPage } from "./ui/ErrorPage";
 import { showModal, showToast } from "./ui/GlobalModal";
@@ -30,8 +31,8 @@ import { ManageRebornModal } from "./ui/ManageRebornModal";
 import { OfflineProductionModal } from "./ui/OfflineProductionModal";
 import { GameTicker } from "./utilities/GameTicker";
 import { clamp, forEach, isNullOrUndefined, rejectIn, schedule } from "./utilities/Helper";
-import { SceneManager, Textures } from "./utilities/SceneManager";
-import { ISpecialBuildings, RouteTo, Singleton, initializeSingletons } from "./utilities/Singleton";
+import { SceneManager, type Textures } from "./utilities/SceneManager";
+import { Singleton, initializeSingletons, type ISpecialBuildings, type RouteTo } from "./utilities/Singleton";
 import { TypedEvent } from "./utilities/TypedEvent";
 import { playError } from "./visuals/Sound";
 
@@ -152,9 +153,17 @@ export async function startGame(
       // createRoot(document.getElementById("debug-ui")!).render(<GreatPersonDebug />);
    }
 
-   // Singleton().sceneManager.loadScene(FlowGraphScene);
-   Singleton().sceneManager.loadScene(WorldScene);
-   // Singleton().sceneManager.loadScene(TechTreeScene);
+   const params = new URLSearchParams(location.href.split("?")[1]);
+   switch (params.get("scene")) {
+      case "Tech": {
+         Singleton().sceneManager.loadScene(TechTreeScene);
+         break;
+      }
+      default: {
+         Singleton().sceneManager.loadScene(WorldScene);
+         break;
+      }
+   }
 
    notifyGameStateUpdate();
    Singleton().ticker.start();

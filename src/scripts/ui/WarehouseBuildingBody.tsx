@@ -1,6 +1,8 @@
 import { notifyGameStateUpdate } from "../Global";
 import { getWarehouseIdleCapacity } from "../logic/BuildingLogic";
+import { GameFeature, hasFeature } from "../logic/FeatureLogic";
 import { IWarehouseBuildingData, WarehouseOptions } from "../logic/Tile";
+import { hasFlag, toggleFlag } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
 import { playClick } from "../visuals/Sound";
 import { BuildingColorComponent } from "./BuildingColorComponent";
@@ -21,7 +23,7 @@ export function WarehouseBuildingBody({ gameState, xy }: IBuildingComponentProps
    return (
       <div className="window-body">
          <BuildingUpgradeComponent gameState={gameState} xy={xy} />
-         {gameState.features.WarehouseUpgrade ? (
+         {hasFeature(GameFeature.WarehouseUpgrade, gameState) ? (
             <>
                <WarningComponent icon="info">{t(L.WarehouseUpgradeDesc)}</WarningComponent>
                <div className="sep10"></div>
@@ -29,7 +31,7 @@ export function WarehouseBuildingBody({ gameState, xy }: IBuildingComponentProps
          ) : null}
 
          <ResourceImportComponent gameState={gameState} xy={xy} />
-         {!gameState.features.WarehouseUpgrade ? null : (
+         {!hasFeature(GameFeature.WarehouseUpgrade, gameState) ? null : (
             <fieldset>
                <legend>{t(L.WarehouseSettings)}</legend>
                <div className="row">
@@ -43,11 +45,14 @@ export function WarehouseBuildingBody({ gameState, xy }: IBuildingComponentProps
                      className="pointer"
                      onClick={() => {
                         playClick();
-                        warehouse.warehouseOptions ^= WarehouseOptions.Autopilot;
+                        warehouse.warehouseOptions = toggleFlag(
+                           warehouse.warehouseOptions,
+                           WarehouseOptions.Autopilot,
+                        );
                         notifyGameStateUpdate();
                      }}
                   >
-                     {warehouse.warehouseOptions & WarehouseOptions.Autopilot ? (
+                     {hasFlag(warehouse.warehouseOptions, WarehouseOptions.Autopilot) ? (
                         <div className="m-icon text-green">toggle_on</div>
                      ) : (
                         <div className="m-icon text-desc">toggle_off</div>

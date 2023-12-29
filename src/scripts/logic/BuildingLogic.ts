@@ -11,11 +11,12 @@ import {
    reduceOf,
    safeAdd,
    safePush,
+   sizeOf,
    sum,
    xyToPoint,
 } from "../utilities/Helper";
 import { srand } from "../utilities/Random";
-import { Textures } from "../utilities/SceneManager";
+import type { Textures } from "../utilities/SceneManager";
 import { Singleton } from "../utilities/Singleton";
 import { Config } from "./Constants";
 import { GameState } from "./GameState";
@@ -23,8 +24,8 @@ import { getBuildingIO, getBuildingsByType, getXyBuildings } from "./IntraTickCa
 import { onTileExplored } from "./LogicCallback";
 import { getBuildingsThatProduce, getResourcesValue } from "./ResourceLogic";
 import { getAgeForTech, getBuildingUnlockTech } from "./TechLogic";
-import { Multiplier, MultiplierWithSource, NotProducingReason, Tick } from "./TickLogic";
-import {
+import { Tick, type Multiplier, type MultiplierWithSource, type NotProducingReason } from "./TickLogic";
+import type {
    IBuildingData,
    IHaveTypeAndLevel,
    IResourceImportBuildingData,
@@ -88,6 +89,7 @@ export enum IOCalculation {
    None = 0,
    Capacity = 1 << 0,
    Multiplier = 1 << 1,
+   MultiplierExcludeElectrification = 1 << 2,
 }
 
 export function hasEnoughResources(a: PartialTabulate<Resource>, b: PartialTabulate<Resource>): boolean {
@@ -238,9 +240,18 @@ export function getStorageFor(xy: string, gs: GameState): IStorageResult {
       }
       default: {
          base =
-            60 * reduceOf(getBuildingIO(xy, "input", IOCalculation.Multiplier, gs), accumulate, 0) +
+            60 *
+               reduceOf(
+                  getBuildingIO(xy, "input", IOCalculation.MultiplierExcludeElectrification, gs),
+                  accumulate,
+                  0,
+               ) +
             STORAGE_TO_PRODUCTION *
-               reduceOf(getBuildingIO(xy, "output", IOCalculation.Multiplier, gs), accumulate, 0);
+               reduceOf(
+                  getBuildingIO(xy, "output", IOCalculation.MultiplierExcludeElectrification, gs),
+                  accumulate,
+                  0,
+               );
          break;
       }
    }
@@ -266,37 +277,28 @@ export function useWorkers(res: Resource, amount: number, xy: string | null): vo
       console.error("`useWorkers` can only be called with non-transportable resource!");
       return;
    }
+   // Normally, we write to Tick.next and read from Tick.current. This is the only exception!
    safeAdd(Tick.current.workersUsed, res, amount);
-   if (xy) {
-      safeAdd(Tick.current.workersAssignment, xy, amount);
+   if (!xy) {
+      return;
+   }
+   switch (res) {
+      case "Worker": {
+         safeAdd(Tick.next.workersAssignment, xy, amount);
+         break;
+      }
    }
 }
 
 export function getAvailableWorkers(res: Resource): number {
-   if (!Tick.current.workersAvailable[res]) {
-      Tick.current.workersAvailable[res] = 0;
+   const workersAvailable = Tick.current.workersAvailable[res] ?? 0;
+   const workersUsed = Tick.current.workersUsed[res] ?? 0;
+   let pct = 1;
+   if (res === "Worker") {
+      pct = Tick.current.happiness?.workerPercentage ?? 1;
    }
-   if (!Tick.current.workersUsed[res]) {
-      Tick.current.workersUsed[res] = 0;
-   }
-   return (
-      Math.floor(Tick.current.workersAvailable[res]! * (Tick.current.happiness?.workerPercentage ?? 1)) -
-      Tick.current.workersUsed[res]!
-   );
+   return Math.floor(workersAvailable * pct) - workersUsed;
 }
-
-// export function hasEnoughWorkers(res: Resource, amount: number): boolean {
-//    if (!Tick.current.workersAvailable[res]) {
-//       Tick.current.workersAvailable[res] = 0;
-//    }
-//    if (!Tick.current.workersUsed[res]) {
-//       Tick.current.workersUsed[res] = 0;
-//    }
-//    return (
-//       Math.floor(Tick.current.workersAvailable[res]! * (Tick.current.happiness?.workerPercentage ?? 1)) >=
-//       Tick.current.workersUsed[res]! + amount
-//    );
-// }
 
 export function getResourceName(r: Resource): string {
    return Config.Resource[r].name();
@@ -569,11 +571,11 @@ export function getBuilderCapacity(
 
 export function applyToAllBuildings<T extends IBuildingData>(
    building: Building,
-   settings: Partial<T>,
+   settings: (b: IBuildingData) => Partial<T>,
    gs: GameState,
 ) {
    forEach(getBuildingsByType(building, gs), (xy, tile) => {
-      Object.assign(tile.building, settings);
+      Object.assign(tile.building, settings(tile.building));
    });
 }
 
@@ -624,3 +626,9 @@ export function exploreTile(xy: string, gs: GameState): void {
 
 export const ST_PETERS_FAITH_MULTIPLIER = 0.01;
 export const ST_PETERS_STORAGE_MULTIPLIER = 10 * 60 * 60;
+
+export const BUILDING_POWER_TO_LEVEL = 10;
+
+export function canBeElectrified(b: Building): boolean {
+   return !isSpecialBuilding(b) && !Config.Building[b].output.Power && sizeOf(Config.Building[b].output) > 0;
+}

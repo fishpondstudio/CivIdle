@@ -17,6 +17,7 @@ interface ITickData {
    happiness: ReturnType<typeof calculateHappiness> | null;
    workersUsed: PartialTabulate<Resource>;
    workersAssignment: Record<string, number>;
+   electrified: Record<string, number>;
    resourcesByXy: Partial<Record<Resource, string[]>>;
    resourcesByGrid: Partial<Record<Resource, IPointArray[]>>;
    playerTradeBuildings: Record<string, IBuildingData>;
@@ -36,6 +37,7 @@ export type NotProducingReason =
 
 export function EmptyTickData(): ITickData {
    return {
+      electrified: {},
       buildingMultipliers: {},
       unlockedBuildings: {},
       tileMultipliers: {},
@@ -69,8 +71,22 @@ export const GlobalMultiplierNames: Record<keyof GlobalMultipliers, () => string
    transportCapacity: () => t(L.TransportCapacity),
 };
 
+export function freezeTickData(t: ITickData): ITickData {
+   let key: keyof ITickData;
+   for (key in t) {
+      switch (key) {
+         case "workersUsed":
+            break;
+         default:
+            Object.freeze(t[key]);
+            break;
+      }
+   }
+   return Object.freeze(t);
+}
+
 export const Tick = {
-   current: EmptyTickData(),
+   current: freezeTickData(EmptyTickData()),
    next: EmptyTickData(),
 };
 

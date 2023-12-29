@@ -2,6 +2,7 @@ import { BuildingColorComponent } from "./BuildingColorComponent";
 import { BuildingConsumeComponent } from "./BuildingConsumeComponent";
 import { BuildingDepositComponent } from "./BuildingDepositComponent";
 import { BuildingDescriptionComponent } from "./BuildingDescriptionComponent";
+import { BuildingElectricityComponent } from "./BuildingElectricityComponent";
 import { IBuildingComponentProps } from "./BuildingPage";
 import { BuildingProduceComponent } from "./BuildingProduceComponent";
 import { BuildingProductionPriorityComponent } from "./BuildingProductionPriorityComponent";
@@ -22,9 +23,10 @@ export function DefaultBuildingBody({ gameState, xy }: IBuildingComponentProps):
          <BuildingProduceComponent gameState={gameState} xy={xy} />
          <BuildingWorkerComponent gameState={gameState} xy={xy} />
          <BuildingStorageComponent gameState={gameState} xy={xy} />
-         <BuildingWikipediaComponent gameState={gameState} xy={xy} />
+         <BuildingElectricityComponent gameState={gameState} xy={xy} />
          <BuildingProductionPriorityComponent gameState={gameState} xy={xy} />
          <BuildingStockpileComponent gameState={gameState} xy={xy} />
+         <BuildingWikipediaComponent gameState={gameState} xy={xy} />
          <BuildingColorComponent gameState={gameState} xy={xy} />
          <BuildingSellComponent gameState={gameState} xy={xy} />
       </div>

@@ -236,6 +236,7 @@ export class TileVisual extends Container {
             this._construction.visible = true;
             this._notProducing.visible = false;
             this._upgrade.visible = false;
+            this._level.visible = false;
             this._spinner.visible = false;
             this._building.alpha = 0.5;
             this.toggleConstructionTween(true);
@@ -247,6 +248,7 @@ export class TileVisual extends Container {
             this._construction.visible = true;
             this._notProducing.visible = false;
             this._upgrade.visible = false;
+            this._level.visible = false;
             this._spinner.visible = false;
             this._building.alpha = 0.5;
             this.showTimeLeft(tileData, gameState);
@@ -282,25 +284,35 @@ export class TileVisual extends Container {
                   Tick.current.notProducingReasons[tileData.xy],
                   textures,
                );
-
-               if (!this._notProducing.visible) {
-                  this._notProducing.visible = true;
-                  this._notProducing.alpha = 0;
-                  Actions.to(this._notProducing, { alpha: 1 }, 0.25, Easing.InQuad).start();
-               }
+               this.fadeInTopLeftIcon();
+            } else if (Tick.current.electrified[tileData.xy]) {
+               this._notProducing.texture = textures.Bolt;
+               this.fadeInTopLeftIcon();
             } else {
-               if (this._notProducing.visible) {
-                  Actions.sequence(
-                     Actions.to(this._notProducing, { alpha: 0 }, 0.25, Easing.OutQuad),
-                     Actions.runFunc(() => {
-                        this._notProducing.visible = false;
-                     }),
-                  ).start();
-               }
+               this.fadeOutTopLeftIcon();
             }
 
             this._spinner.visible = true;
          }
+      }
+   }
+
+   private fadeOutTopLeftIcon(): void {
+      if (this._notProducing.visible) {
+         Actions.sequence(
+            Actions.to(this._notProducing, { alpha: 0 }, 0.25, Easing.OutQuad),
+            Actions.runFunc(() => {
+               this._notProducing.visible = false;
+            }),
+         ).start();
+      }
+   }
+
+   private fadeInTopLeftIcon(): void {
+      if (!this._notProducing.visible) {
+         this._notProducing.visible = true;
+         this._notProducing.alpha = 0;
+         Actions.to(this._notProducing, { alpha: 1 }, 0.25, Easing.InQuad).start();
       }
    }
 
@@ -331,7 +343,7 @@ export class TileVisual extends Container {
          return;
       }
 
-      this._spinner.angle += dt * 90;
+      this._spinner.angle += Tick.current.electrified[this._tile.xy] ? dt * 180 : dt * 90;
       if (Tick.current.notProducingReasons[this._xy]) {
          this._spinner.alpha -= dt;
          this._building.alpha -= dt;

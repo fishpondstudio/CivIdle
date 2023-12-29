@@ -1,6 +1,7 @@
 import { notifyGameStateUpdate } from "../Global";
 import { IOCalculation, applyToAllBuildings } from "../logic/BuildingLogic";
 import { Config } from "../logic/Constants";
+import { GameFeature, hasFeature } from "../logic/FeatureLogic";
 import { getBuildingIO } from "../logic/IntraTickCache";
 import {
    STOCKPILE_CAPACITY_MAX,
@@ -18,7 +19,7 @@ export function BuildingStockpileComponent({ gameState, xy }: IBuildingComponent
    if (building == null) {
       return null;
    }
-   if (!gameState.features.BuildingStockpileMode) {
+   if (!hasFeature(GameFeature.BuildingStockpileMode, gameState)) {
       return null;
    }
    if (isEmpty(getBuildingIO(xy, "input", IOCalculation.None, gameState))) {
@@ -52,7 +53,7 @@ export function BuildingStockpileComponent({ gameState, xy }: IBuildingComponent
                playClick();
                applyToAllBuildings(
                   building.type,
-                  { stockpileCapacity: building.stockpileCapacity },
+                  () => ({ stockpileCapacity: building.stockpileCapacity }),
                   gameState,
                );
             }}
@@ -90,7 +91,7 @@ export function BuildingStockpileComponent({ gameState, xy }: IBuildingComponent
             className="text-link text-small"
             onClick={() => {
                playClick();
-               applyToAllBuildings(building.type, { stockpileMax: building.stockpileMax }, gameState);
+               applyToAllBuildings(building.type, () => ({ stockpileMax: building.stockpileMax }), gameState);
             }}
          >
             {t(L.ApplyToAll, { building: Config.Building[building.type].name() })}

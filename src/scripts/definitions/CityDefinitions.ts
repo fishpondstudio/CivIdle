@@ -18,6 +18,8 @@ export class CityDefinitions {
          Stone: 0.02,
          Gold: 0.02,
          Coal: 0.02,
+         Oil: 0.02,
+         Aluminum: 0.02,
       },
       size: 40,
       buildingNames: {
@@ -40,6 +42,8 @@ export class CityDefinitions {
          Stone: 0.04,
          Gold: 0.01,
          Coal: 0.03,
+         Oil: 0.02,
+         Aluminum: 0.02,
       },
       size: 40,
       buildingNames: {

@@ -2,7 +2,7 @@ import { notifyGameStateUpdate } from "../Global";
 import { getStorageFor } from "../logic/BuildingLogic";
 import { MAX_OFFLINE_PRODUCTION_SEC } from "../logic/Constants";
 import { IPetraBuildingData, PetraOptions } from "../logic/Tile";
-import { formatHM, formatPercent } from "../utilities/Helper";
+import { formatHM, formatPercent, hasFlag, toggleFlag } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
 import { playClick, playError } from "../visuals/Sound";
 import { BuildingColorComponent } from "./BuildingColorComponent";
@@ -99,11 +99,11 @@ export function PetraBuildingBody({ gameState, xy }: IBuildingComponentProps): R
                   className="pointer ml10"
                   onClick={() => {
                      playClick();
-                     building.petraOptions ^= PetraOptions.TimeWarp;
+                     building.petraOptions = toggleFlag(building.petraOptions, PetraOptions.TimeWarp);
                      notifyGameStateUpdate();
                   }}
                >
-                  {building.petraOptions & PetraOptions.TimeWarp ? (
+                  {hasFlag(building.petraOptions, PetraOptions.TimeWarp) ? (
                      <div className="m-icon text-green">toggle_on</div>
                   ) : (
                      <div className="m-icon text-desc">toggle_off</div>

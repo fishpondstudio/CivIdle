@@ -12,6 +12,7 @@ import {
    utils,
 } from "pixi.js";
 import { TILE_SIZE, getGameOptions, getGameState } from "../Global";
+import { GameFeature, hasFeature } from "../logic/FeatureLogic";
 import { GameOptions, GameState } from "../logic/GameState";
 import { TilePage } from "../ui/TilePage";
 import { clamp, forEach, lerp, lookAt, pointToXy, xyToPoint } from "../utilities/Helper";
@@ -205,7 +206,7 @@ export class WorldScene extends ViewportScene {
                break;
             }
             case "Warehouse": {
-               if (gs.features.WarehouseUpgrade) {
+               if (hasFeature(GameFeature.WarehouseUpgrade, gs)) {
                   this.highlightAdjacentTiles(grid);
                }
                break;
