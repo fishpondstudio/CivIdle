@@ -1,8 +1,8 @@
-import { GlobalMultipliers, Multiplier } from "../logic/TickLogic";
-import { Building } from "./BuildingDefinitions";
-import { Deposit } from "./ResourceDefinitions";
-import { RomeProvince } from "./RomeProvinceDefinitions";
-import { Tech } from "./TechDefinitions";
+import type { GlobalMultipliers, Multiplier } from "../logic/TickLogic";
+import type { Building } from "./BuildingDefinitions";
+import type { Deposit } from "./ResourceDefinitions";
+import type { RomeProvince } from "./RomeProvinceDefinitions";
+import type { Tech } from "./TechDefinitions";
 
 export interface IUnlockableDefinition {
    name: () => string;

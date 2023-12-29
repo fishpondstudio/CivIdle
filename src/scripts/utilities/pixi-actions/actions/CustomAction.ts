@@ -1,4 +1,5 @@
-import { Easing, EasingFunction } from "../Easing";
+import type { EasingFunction } from "../Easing";
+import { Easing } from "../Easing";
 import { Action } from "./Action";
 
 export class CustomAction<T> extends Action {

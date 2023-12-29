@@ -834,4 +834,5 @@ export const EN = {
    PowerAvailable: "Power Available",
    PowerUsed: "Power Used",
    Power: "Power",
+   ElectrificationStatus: "Current Status",
 };

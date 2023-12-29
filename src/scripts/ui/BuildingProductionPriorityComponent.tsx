@@ -1,13 +1,13 @@
 import { notifyGameStateUpdate } from "../Global";
 import { IOCalculation, applyToAllBuildings } from "../logic/BuildingLogic";
-import { Config } from "../logic/Constants";
+import { Config } from "../logic/Config";
 import { GameFeature, hasFeature } from "../logic/FeatureLogic";
 import { getBuildingIO } from "../logic/IntraTickCache";
 import { PRIORITY_MAX, PRIORITY_MIN } from "../logic/Tile";
 import { isEmpty } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
 import { playClick } from "../visuals/Sound";
-import { IBuildingComponentProps } from "./BuildingPage";
+import type { IBuildingComponentProps } from "./BuildingPage";
 
 export function BuildingProductionPriorityComponent({
    gameState,

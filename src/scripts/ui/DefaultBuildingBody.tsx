@@ -3,7 +3,7 @@ import { BuildingConsumeComponent } from "./BuildingConsumeComponent";
 import { BuildingDepositComponent } from "./BuildingDepositComponent";
 import { BuildingDescriptionComponent } from "./BuildingDescriptionComponent";
 import { BuildingElectricityComponent } from "./BuildingElectricityComponent";
-import { IBuildingComponentProps } from "./BuildingPage";
+import type { IBuildingComponentProps } from "./BuildingPage";
 import { BuildingProduceComponent } from "./BuildingProduceComponent";
 import { BuildingProductionPriorityComponent } from "./BuildingProductionPriorityComponent";
 import { BuildingSellComponent } from "./BuildingSellComponent";

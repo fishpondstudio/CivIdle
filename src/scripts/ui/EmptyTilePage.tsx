@@ -1,12 +1,13 @@
 import { useState } from "react";
 import "../../css/EmptyTilePage.css";
 import { notifyGameStateUpdate, useGameState } from "../Global";
-import { Building } from "../definitions/BuildingDefinitions";
+import type { Building } from "../definitions/BuildingDefinitions";
 import { checkBuildingMax, getBuildingCost, isWorldOrNaturalWonder } from "../logic/BuildingLogic";
-import { Config } from "../logic/Constants";
+import { Config } from "../logic/Config";
 import { getTypeBuildings, unlockedBuildings } from "../logic/IntraTickCache";
 import { useShortcut } from "../logic/Shortcut";
-import { ITileData, makeBuilding } from "../logic/Tile";
+import type { ITileData } from "../logic/Tile";
+import { makeBuilding } from "../logic/Tile";
 import {
    anyOf,
    formatNumber,

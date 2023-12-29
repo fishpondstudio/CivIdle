@@ -1,9 +1,9 @@
-import { Building } from "../definitions/BuildingDefinitions";
-import { Deposit, Resource } from "../definitions/ResourceDefinitions";
-import { PartialSet, PartialTabulate } from "../definitions/TypeDefinitions";
+import type { Building } from "../definitions/BuildingDefinitions";
+import type { Deposit, Resource } from "../definitions/ResourceDefinitions";
+import type { PartialSet, PartialTabulate } from "../definitions/TypeDefinitions";
 import { clamp, isNullOrUndefined } from "../utilities/Helper";
-import { Config } from "./Constants";
-import { GameState } from "./GameState";
+import { Config } from "./Config";
+import type { GameState } from "./GameState";
 
 export interface ITileData {
    xy: string;

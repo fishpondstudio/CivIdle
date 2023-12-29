@@ -1,9 +1,9 @@
 /////////////////////////////////////////////////////////////////////////////////////////////
 // Attention! Do not complicates the import of this file since it causes HMR to break easily
-import { ITileData } from "../logic/Tile";
-import { Grid } from "../scenes/Grid";
-import { GameTicker } from "./GameTicker";
-import { SceneManager } from "./SceneManager";
+import type { ITileData } from "../logic/Tile";
+import type { Grid } from "../scenes/Grid";
+import type { GameTicker } from "./GameTicker";
+import type { SceneManager } from "./SceneManager";
 /////////////////////////////////////////////////////////////////////////////////////////////
 
 export type RouteTo = <P extends Record<string, unknown>>(

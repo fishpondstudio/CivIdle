@@ -1,6 +1,6 @@
 import { L, t } from "../utilities/i18n";
-import { Deposit, Resource } from "./ResourceDefinitions";
-import { PartialSet, PartialTabulate } from "./TypeDefinitions";
+import type { Deposit, Resource } from "./ResourceDefinitions";
+import type { PartialSet, PartialTabulate } from "./TypeDefinitions";
 
 export enum BuildingSpecial {
    HQ = 0,

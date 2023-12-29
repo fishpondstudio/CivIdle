@@ -1,20 +1,21 @@
-import { IPointData } from "pixi.js";
+import type { IPointData } from "pixi.js";
 import { v4 } from "uuid";
-import { Building } from "../definitions/BuildingDefinitions";
-import { City } from "../definitions/CityDefinitions";
-import { GreatPerson } from "../definitions/GreatPersonDefinitions";
-import { Resource } from "../definitions/ResourceDefinitions";
-import { RomeProvince } from "../definitions/RomeProvinceDefinitions";
-import { Tech } from "../definitions/TechDefinitions";
-import { PartialSet, PartialTabulate } from "../definitions/TypeDefinitions";
-import { Grid } from "../scenes/Grid";
+import type { Building } from "../definitions/BuildingDefinitions";
+import type { City } from "../definitions/CityDefinitions";
+import type { GreatPerson } from "../definitions/GreatPersonDefinitions";
+import type { Resource } from "../definitions/ResourceDefinitions";
+import type { RomeProvince } from "../definitions/RomeProvinceDefinitions";
+import type { Tech } from "../definitions/TechDefinitions";
+import type { PartialSet, PartialTabulate } from "../definitions/TypeDefinitions";
+import type { Grid } from "../scenes/Grid";
 import { forEach, isEmpty, keysOf, pointToXy, shuffle } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
-import { Config } from "./Constants";
-import { IShortcutConfig, Shortcut } from "./Shortcut";
+import { Config } from "./Config";
+import type { IShortcutConfig, Shortcut } from "./Shortcut";
 import { unlockTech } from "./TechLogic";
 import { ensureTileFogOfWar, findNearest } from "./TerrainLogic";
-import { ITileData, makeBuilding } from "./Tile";
+import type { ITileData } from "./Tile";
+import { makeBuilding } from "./Tile";
 
 export interface ITransportationData {
    id: number;

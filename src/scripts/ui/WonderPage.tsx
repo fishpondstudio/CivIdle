@@ -1,7 +1,7 @@
 import { useGameState } from "../Global";
-import { Building } from "../definitions/BuildingDefinitions";
-import { PartialSet } from "../definitions/TypeDefinitions";
-import { Config } from "../logic/Constants";
+import type { Building } from "../definitions/BuildingDefinitions";
+import type { PartialSet } from "../definitions/TypeDefinitions";
+import { Config } from "../logic/Config";
 import { getXyBuildings } from "../logic/IntraTickCache";
 import { forEach, jsxMapOf } from "../utilities/Helper";
 import { Singleton } from "../utilities/Singleton";

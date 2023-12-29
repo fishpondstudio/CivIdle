@@ -1,5 +1,5 @@
 import { BuildingColorComponent } from "./BuildingColorComponent";
-import { IBuildingComponentProps } from "./BuildingPage";
+import type { IBuildingComponentProps } from "./BuildingPage";
 import { BuildingProductionPriorityComponent } from "./BuildingProductionPriorityComponent";
 import { BuildingSellComponent } from "./BuildingSellComponent";
 import { BuildingUpgradeComponent } from "./BuildingUpgradeComponent";

@@ -1,5 +1,5 @@
 import { getBuildingCost, getTotalBuildingCost } from "../scripts/logic/BuildingLogic";
-import { GameState } from "../scripts/logic/GameState";
+import type { GameState } from "../scripts/logic/GameState";
 
 const title = "background: #636e72; color: #fff;";
 

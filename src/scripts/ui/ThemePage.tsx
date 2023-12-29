@@ -1,6 +1,6 @@
 import classNames from "classnames";
 import { notifyGameOptionsUpdate, syncUITheme, useGameOptions } from "../Global";
-import { Config } from "../logic/Constants";
+import { Config } from "../logic/Config";
 import { ThemeColorNames } from "../logic/GameState";
 import { keysOf } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";

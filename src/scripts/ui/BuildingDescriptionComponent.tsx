@@ -1,7 +1,7 @@
 import { isWorldOrNaturalWonder } from "../logic/BuildingLogic";
-import { Config } from "../logic/Constants";
+import { Config } from "../logic/Config";
 import { L, t } from "../utilities/i18n";
-import { IBuildingComponentProps } from "./BuildingPage";
+import type { IBuildingComponentProps } from "./BuildingPage";
 
 export function BuildingDescriptionComponent({ gameState, xy }: IBuildingComponentProps): React.ReactNode {
    const type = gameState.tiles[xy]?.building?.type;

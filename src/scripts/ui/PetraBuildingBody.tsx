@@ -1,12 +1,13 @@
 import { notifyGameStateUpdate } from "../Global";
 import { getStorageFor } from "../logic/BuildingLogic";
 import { MAX_OFFLINE_PRODUCTION_SEC } from "../logic/Constants";
-import { IPetraBuildingData, PetraOptions } from "../logic/Tile";
+import type { IPetraBuildingData} from "../logic/Tile";
+import { PetraOptions } from "../logic/Tile";
 import { formatHM, formatPercent, hasFlag, toggleFlag } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
 import { playClick, playError } from "../visuals/Sound";
 import { BuildingColorComponent } from "./BuildingColorComponent";
-import { IBuildingComponentProps } from "./BuildingPage";
+import type { IBuildingComponentProps } from "./BuildingPage";
 import { BuildingWikipediaComponent } from "./BuildingWikipediaComponent";
 import { FormatNumber } from "./HelperComponents";
 import { ProgressBarComponent } from "./ProgressBarComponent";

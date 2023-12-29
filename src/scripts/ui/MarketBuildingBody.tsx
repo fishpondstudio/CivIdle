@@ -1,13 +1,14 @@
 import { notifyGameStateUpdate } from "../Global";
 import { applyToAllBuildings, getMarketPrice, totalMultiplierFor } from "../logic/BuildingLogic";
-import { Config } from "../logic/Constants";
-import { IMarketBuildingData, MarketOptions } from "../logic/Tile";
+import { Config } from "../logic/Config";
+import type { IMarketBuildingData } from "../logic/Tile";
+import { MarketOptions } from "../logic/Tile";
 import { convertPriceIdToTime } from "../logic/Update";
 import { formatHMS, hasFlag, keysOf, round, toggleFlag } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
 import { playClick } from "../visuals/Sound";
 import { BuildingColorComponent } from "./BuildingColorComponent";
-import { IBuildingComponentProps } from "./BuildingPage";
+import type { IBuildingComponentProps } from "./BuildingPage";
 import { BuildingProductionPriorityComponent } from "./BuildingProductionPriorityComponent";
 import { BuildingSellComponent } from "./BuildingSellComponent";
 import { BuildingStockpileComponent } from "./BuildingStockpileComponent";

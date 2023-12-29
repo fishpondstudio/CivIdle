@@ -1,9 +1,9 @@
 import { SmoothGraphics } from "@pixi/graphics-smooth";
 import { BitmapText, Sprite, Text } from "pixi.js";
-import { GreatPerson } from "../definitions/GreatPersonDefinitions";
-import { Config } from "../logic/Constants";
+import type { GreatPerson } from "../definitions/GreatPersonDefinitions";
+import { Config } from "../logic/Config";
 import { containsNonASCII } from "../utilities/Helper";
-import { ISceneContext } from "../utilities/SceneManager";
+import type { ISceneContext } from "../utilities/SceneManager";
 import { Fonts } from "./Fonts";
 
 function makeText(text: string, size: number, tint: number) {

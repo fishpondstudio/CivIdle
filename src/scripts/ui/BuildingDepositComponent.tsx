@@ -1,7 +1,7 @@
-import { Config } from "../logic/Constants";
+import { Config } from "../logic/Config";
 import { jsxMapOf, sizeOf } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
-import { IBuildingComponentProps } from "./BuildingPage";
+import type { IBuildingComponentProps } from "./BuildingPage";
 
 export function BuildingDepositComponent({ gameState, xy }: IBuildingComponentProps): React.ReactNode {
    const tile = gameState.tiles[xy];

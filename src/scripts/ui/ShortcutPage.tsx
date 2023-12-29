@@ -1,7 +1,8 @@
 import { useGameOptions } from "../Global";
-import {
+import type {
    IShortcutNameAndScope,
-   Shortcut,
+   Shortcut} from "../logic/Shortcut";
+import {
    ShortcutActions,
    ShortcutScopes,
    getShortcutKey,

@@ -1,7 +1,7 @@
 import classNames from "classnames";
 import { notifyGameStateUpdate, useGameState } from "../Global";
-import { Config } from "../logic/Constants";
-import { ITileData } from "../logic/Tile";
+import { Config } from "../logic/Config";
+import type { ITileData } from "../logic/Tile";
 import { L, t } from "../utilities/i18n";
 import { BuildingConstructionProgressComponent } from "./BuildingConstructionProgressComponent";
 import { MenuComponent } from "./MenuComponent";

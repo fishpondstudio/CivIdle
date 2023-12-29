@@ -1,40 +1,22 @@
 import { build } from "../Version.json";
-import { Building, BuildingDefinitions, BuildingSpecial } from "../definitions/BuildingDefinitions";
-import { City, CityDefinitions } from "../definitions/CityDefinitions";
-import { GreatPersonDefinitions } from "../definitions/GreatPersonDefinitions";
-import { DepositResources, Resource, ResourceDefinitions } from "../definitions/ResourceDefinitions";
-import { Tech, TechAgeDefinitions, TechDefinitions } from "../definitions/TechDefinitions";
-import { PartialTabulate } from "../definitions/TypeDefinitions";
-import { deepFreeze, forEach, isEmpty, keysOf, sizeOf } from "../utilities/Helper";
-import { GameState, SAVE_FILE_VERSION } from "./GameState";
+import type { Building } from "../definitions/BuildingDefinitions";
+import { BuildingSpecial } from "../definitions/BuildingDefinitions";
+import type { City } from "../definitions/CityDefinitions";
+import type { Resource } from "../definitions/ResourceDefinitions";
+import { DepositResources } from "../definitions/ResourceDefinitions";
+import type { Tech } from "../definitions/TechDefinitions";
+import type { PartialTabulate } from "../definitions/TypeDefinitions";
+import { forEach, isEmpty, keysOf, sizeOf } from "../utilities/Helper";
+import { Config } from "./Config";
+import type { GameState } from "./GameState";
+import { SAVE_FILE_VERSION } from "./GameState";
 import { getBuildingUnlockTech, getDepositUnlockTech, getResourceUnlockTech } from "./TechLogic";
-
-const BuildingTier: PartialTabulate<Building> = {};
-const BuildingTech: PartialTabulate<Building> = {};
-
-const ResourceTier: PartialTabulate<Resource> = {};
-const ResourcePrice: PartialTabulate<Resource> = {};
-const ResourceTech: PartialTabulate<Resource> = {};
 
 export const MAX_OFFLINE_PRODUCTION_SEC = 60 * 60 * 4;
 
 export function getVersion(): string {
    return `0.${SAVE_FILE_VERSION}.${build}`;
 }
-
-export const Config = {
-   Building: new BuildingDefinitions(),
-   Resource: new ResourceDefinitions(),
-   GreatPerson: deepFreeze(new GreatPersonDefinitions()),
-   City: deepFreeze(new CityDefinitions()),
-   Tech: new TechDefinitions(),
-   TechAge: deepFreeze(new TechAgeDefinitions()),
-   BuildingTier,
-   BuildingTech,
-   ResourceTier,
-   ResourceTech,
-   ResourcePrice,
-} as const;
 
 interface IRecipe {
    building: Building;

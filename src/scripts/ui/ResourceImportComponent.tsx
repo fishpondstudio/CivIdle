@@ -1,12 +1,12 @@
-import { Resource } from "../definitions/ResourceDefinitions";
-import { PartialSet } from "../definitions/TypeDefinitions";
+import type { Resource } from "../definitions/ResourceDefinitions";
+import type { PartialSet } from "../definitions/TypeDefinitions";
 import { getStorageFor } from "../logic/BuildingLogic";
-import { Config } from "../logic/Constants";
+import { Config } from "../logic/Config";
 import { Tick } from "../logic/TickLogic";
-import { IResourceImportBuildingData } from "../logic/Tile";
+import type { IResourceImportBuildingData } from "../logic/Tile";
 import { forEach, keysOf } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
-import { IBuildingComponentProps } from "./BuildingPage";
+import type { IBuildingComponentProps } from "./BuildingPage";
 import { ChangeResourceImportModal } from "./ChangeResourceImportModal";
 import { showModal } from "./GlobalModal";
 import { FormatNumber } from "./HelperComponents";

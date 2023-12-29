@@ -1,5 +1,6 @@
 import classNames from "classnames";
-import { PropsWithChildren, useEffect, useRef, useState } from "react";
+import type { PropsWithChildren} from "react";
+import { useEffect, useRef, useState } from "react";
 import { Tick } from "../logic/TickLogic";
 import { PlayerMapScene } from "../scenes/PlayerMapScene";
 import { TechTreeScene } from "../scenes/TechTreeScene";

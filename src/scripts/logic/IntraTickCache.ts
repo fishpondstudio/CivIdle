@@ -1,13 +1,13 @@
-import { IPointData } from "pixi.js";
-import { Building, IBuildingDefinition } from "../definitions/BuildingDefinitions";
-import { Deposit, Resource } from "../definitions/ResourceDefinitions";
-import { PartialSet, PartialTabulate } from "../definitions/TypeDefinitions";
+import type { IPointData } from "pixi.js";
+import type { Building, IBuildingDefinition } from "../definitions/BuildingDefinitions";
+import type { Deposit, Resource } from "../definitions/ResourceDefinitions";
+import type { PartialSet, PartialTabulate } from "../definitions/TypeDefinitions";
 import { forEach, safeAdd, xyToPoint } from "../utilities/Helper";
 import { IOCalculation, totalMultiplierFor } from "./BuildingLogic";
-import { Config } from "./Constants";
-import { GameState } from "./GameState";
+import { Config } from "./Config";
+import type { GameState } from "./GameState";
 import { Tick } from "./TickLogic";
-import { IBuildingData, IMarketBuildingData, IResourceImportBuildingData, ITileData } from "./Tile";
+import type { IBuildingData, IMarketBuildingData, IResourceImportBuildingData, ITileData } from "./Tile";
 
 class IntraTickCache {
    revealedDeposits: PartialSet<Deposit> | undefined;

@@ -1,8 +1,8 @@
 import { getGameOptions } from "../Global";
-import { GreatPerson } from "../definitions/GreatPersonDefinitions";
+import type { GreatPerson } from "../definitions/GreatPersonDefinitions";
 import { clamp, keysOf, shuffle } from "../utilities/Helper";
-import { Config } from "./Constants";
-import { GreatPeopleChoice } from "./GameState";
+import { Config } from "./Config";
+import type { GreatPeopleChoice } from "./GameState";
 import { Tick } from "./TickLogic";
 
 export function getGreatPeopleAtReborn(): number {

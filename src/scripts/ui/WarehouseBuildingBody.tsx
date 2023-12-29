@@ -1,12 +1,13 @@
 import { notifyGameStateUpdate } from "../Global";
 import { getWarehouseIdleCapacity } from "../logic/BuildingLogic";
 import { GameFeature, hasFeature } from "../logic/FeatureLogic";
-import { IWarehouseBuildingData, WarehouseOptions } from "../logic/Tile";
+import type { IWarehouseBuildingData} from "../logic/Tile";
+import { WarehouseOptions } from "../logic/Tile";
 import { hasFlag, toggleFlag } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
 import { playClick } from "../visuals/Sound";
 import { BuildingColorComponent } from "./BuildingColorComponent";
-import { IBuildingComponentProps } from "./BuildingPage";
+import type { IBuildingComponentProps } from "./BuildingPage";
 import { BuildingProductionPriorityComponent } from "./BuildingProductionPriorityComponent";
 import { BuildingSellComponent } from "./BuildingSellComponent";
 import { BuildingUpgradeComponent } from "./BuildingUpgradeComponent";

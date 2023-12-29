@@ -1,6 +1,6 @@
-import { IAddTradeRequest, ITrade } from "../../../server/src/Database";
-import { Resource } from "../definitions/ResourceDefinitions";
-import { Config } from "./Constants";
+import type { IAddTradeRequest, ITrade } from "../../../server/src/Database";
+import type { Resource } from "../definitions/ResourceDefinitions";
+import { Config } from "./Config";
 
 export interface IClientTrade extends ITrade {
    buyResource: Resource;

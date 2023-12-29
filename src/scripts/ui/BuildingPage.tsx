@@ -1,9 +1,9 @@
-import { FunctionComponent } from "react";
+import type { FunctionComponent } from "react";
 import { useGameState } from "../Global";
-import { Building } from "../definitions/BuildingDefinitions";
-import { Config } from "../logic/Constants";
-import { GameState } from "../logic/GameState";
-import { ITileData } from "../logic/Tile";
+import type { Building } from "../definitions/BuildingDefinitions";
+import { Config } from "../logic/Config";
+import type { GameState } from "../logic/GameState";
+import type { ITileData } from "../logic/Tile";
 import { Singleton } from "../utilities/Singleton";
 import { DefaultBuildingBody } from "./DefaultBuildingBody";
 import { HeadquarterBuildingBody } from "./HeadquarterBuildingBody";

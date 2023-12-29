@@ -1,4 +1,4 @@
-import { Deposit } from "../definitions/ResourceDefinitions";
+import type { Deposit } from "../definitions/ResourceDefinitions";
 import { WorldScene } from "../scenes/WorldScene";
 import { ChooseGreatPersonModal } from "../ui/ChooseGreatPersonModal";
 import { showModal } from "../ui/GlobalModal";
@@ -23,14 +23,15 @@ import {
    isNaturalWonder,
    isSpecialBuilding,
 } from "./BuildingLogic";
-import { Config } from "./Constants";
-import { GameState } from "./GameState";
+import { Config } from "./Config";
+import type { GameState } from "./GameState";
 import { getBuildingsByType, getTypeBuildings, getXyBuildings } from "./IntraTickCache";
 import { getBuildingsThatProduce, getRevealedDeposits } from "./ResourceLogic";
 import { addDeposit, getGreatPeopleChoices } from "./TechLogic";
 import { ensureTileFogOfWar } from "./TerrainLogic";
 import { Tick } from "./TickLogic";
-import { IPetraBuildingData, PetraOptions } from "./Tile";
+import type { IPetraBuildingData } from "./Tile";
+import { PetraOptions } from "./Tile";
 import { addMultiplier } from "./Update";
 
 export function onBuildingComplete(xy: string, gs: GameState) {

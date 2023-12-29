@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { resetToCity, saveGame, useGameOptions, useGameState } from "../Global";
-import { City } from "../definitions/CityDefinitions";
-import { Config } from "../logic/Constants";
+import type { City } from "../definitions/CityDefinitions";
+import { Config } from "../logic/Config";
 import { getGreatPeopleAtReborn, rollGreatPeople } from "../logic/RebornLogic";
 import { Tick } from "../logic/TickLogic";
 import { firstKeyOf, forEach, formatPercent, jsxMapOf, mapOf, reduceOf } from "../utilities/Helper";

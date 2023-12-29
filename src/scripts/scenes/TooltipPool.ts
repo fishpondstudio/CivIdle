@@ -1,4 +1,5 @@
-import { BitmapText, Container } from "pixi.js";
+import type { Container } from "pixi.js";
+import { BitmapText } from "pixi.js";
 import { ObjectPool } from "../utilities/ObjectPool";
 import { Fonts } from "../visuals/Fonts";
 

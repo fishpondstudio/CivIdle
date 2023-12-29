@@ -1,5 +1,5 @@
-import { DisplayObject, IPointData } from "pixi.js";
-import { PartialSet, PartialTabulate } from "../definitions/TypeDefinitions";
+import type { DisplayObject, IPointData } from "pixi.js";
+import type { PartialSet, PartialTabulate } from "../definitions/TypeDefinitions";
 import { v2 } from "./Vector2";
 
 // biome-ignore format:

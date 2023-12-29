@@ -1,4 +1,4 @@
-import { SmoothGraphics } from "@pixi/graphics-smooth";
+import type { SmoothGraphics } from "@pixi/graphics-smooth";
 import { BitmapText, Polygon } from "pixi.js";
 import { xyToPoint, xyToPointArray } from "../utilities/Helper";
 import { Hex, Layout, OffsetCoord, Point } from "../utilities/Hex";

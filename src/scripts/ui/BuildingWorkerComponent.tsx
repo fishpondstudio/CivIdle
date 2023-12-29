@@ -10,13 +10,13 @@ import {
    getWorkersFor,
    isSpecialBuilding,
 } from "../logic/BuildingLogic";
-import { Config } from "../logic/Constants";
+import { Config } from "../logic/Config";
 import { getBuildingIO } from "../logic/IntraTickCache";
 import { Tick } from "../logic/TickLogic";
 import { formatPercent, isEmpty } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
 import { playClick } from "../visuals/Sound";
-import { IBuildingComponentProps } from "./BuildingPage";
+import type { IBuildingComponentProps } from "./BuildingPage";
 import { FormatNumber, fmtNumber } from "./HelperComponents";
 
 export function BuildingWorkerComponent({ gameState, xy }: IBuildingComponentProps): React.ReactNode {

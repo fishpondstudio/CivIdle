@@ -4,7 +4,7 @@ import { useShortcut } from "../logic/Shortcut";
 import { WorldScene } from "../scenes/WorldScene";
 import { Singleton } from "../utilities/Singleton";
 import { L, t } from "../utilities/i18n";
-import { IBuildingComponentProps } from "./BuildingPage";
+import type { IBuildingComponentProps } from "./BuildingPage";
 
 export function BuildingSellComponent({ gameState, xy }: IBuildingComponentProps): React.ReactNode {
    const tile = gameState.tiles[xy];

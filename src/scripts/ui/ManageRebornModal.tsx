@@ -1,5 +1,5 @@
 import { notifyGameOptionsUpdate, useGameOptions } from "../Global";
-import { GreatPerson } from "../definitions/GreatPersonDefinitions";
+import type { GreatPerson } from "../definitions/GreatPersonDefinitions";
 import { getGreatPersonUpgradeCost } from "../logic/RebornLogic";
 import { L, t } from "../utilities/i18n";
 import { playClick } from "../visuals/Sound";

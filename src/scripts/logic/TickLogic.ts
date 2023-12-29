@@ -1,13 +1,13 @@
-import { Building } from "../definitions/BuildingDefinitions";
-import { Resource } from "../definitions/ResourceDefinitions";
-import { PartialSet, PartialTabulate } from "../definitions/TypeDefinitions";
-import { IPointArray } from "../utilities/Helper";
+import type { Building } from "../definitions/BuildingDefinitions";
+import type { Resource } from "../definitions/ResourceDefinitions";
+import type { PartialSet, PartialTabulate } from "../definitions/TypeDefinitions";
+import type { IPointArray } from "../utilities/Helper";
 import { makeObservableHook } from "../utilities/Hook";
-import { RequireAtLeastOne } from "../utilities/Type";
+import type { RequireAtLeastOne } from "../utilities/Type";
 import { TypedEvent } from "../utilities/TypedEvent";
 import { L, t } from "../utilities/i18n";
-import { calculateHappiness } from "./HappinessLogic";
-import { IBuildingData } from "./Tile";
+import type { calculateHappiness } from "./HappinessLogic";
+import type { IBuildingData } from "./Tile";
 
 interface ITickData {
    buildingMultipliers: Partial<Record<Building, MultiplierWithSource[]>>;

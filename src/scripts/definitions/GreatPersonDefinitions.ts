@@ -1,9 +1,10 @@
-import { Config } from "../logic/Constants";
-import { Multiplier, MultiplierType, MultiplierTypeDesc, Tick } from "../logic/TickLogic";
+import { Config } from "../logic/Config";
+import type { Multiplier, MultiplierType } from "../logic/TickLogic";
+import { MultiplierTypeDesc, Tick } from "../logic/TickLogic";
 import { addMultiplier } from "../logic/Update";
 import { L, t } from "../utilities/i18n";
-import { Building } from "./BuildingDefinitions";
-import { TechAge } from "./TechDefinitions";
+import type { Building } from "./BuildingDefinitions";
+import type { TechAge } from "./TechDefinitions";
 
 export class GreatPersonDefinitions {
    // JuliusCaesar: IGreatPersonDefinition = {

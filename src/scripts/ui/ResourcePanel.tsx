@@ -1,6 +1,7 @@
 import classNames from "classnames";
 import { useGameState } from "../Global";
 import { getScienceFromWorkers } from "../logic/BuildingLogic";
+import { GameFeature, hasFeature } from "../logic/FeatureLogic";
 import { getHappinessIcon } from "../logic/HappinessLogic";
 import { getResourceAmount } from "../logic/ResourceLogic";
 import { useCurrentTick } from "../logic/TickLogic";
@@ -48,7 +49,7 @@ export function ResourcePanel(): React.ReactNode {
             </div>
          </div>
          <div className="separator-vertical" />
-         {(tick.workersAvailable.Power ?? 0) > 0 ? (
+         {hasFeature(GameFeature.Electricity, gs) ? (
             <>
                <div
                   className="row"
@@ -70,7 +71,7 @@ export function ResourcePanel(): React.ReactNode {
                      <FormatNumber value={tick.workersUsed.Power ?? 0} />
                      W
                      {" / "}
-                     <FormatNumber value={tick.workersAvailable.Power} />
+                     <FormatNumber value={tick.workersAvailable.Power ?? 0} />
                      W
                   </div>
                </div>

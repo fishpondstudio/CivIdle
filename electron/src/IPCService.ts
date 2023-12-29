@@ -1,7 +1,7 @@
 import type { App } from "electron";
 import { exists, outputFile, readFile, unlink } from "fs-extra";
 import path from "path";
-import { SteamClient } from ".";
+import { type SteamClient } from ".";
 
 export class IPCService {
    private _app: Electron.App;

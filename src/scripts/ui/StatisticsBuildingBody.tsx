@@ -1,19 +1,19 @@
 import classNames from "classnames";
 import { useState } from "react";
-import { Resource } from "../definitions/ResourceDefinitions";
-import { PartialTabulate } from "../definitions/TypeDefinitions";
+import type { Resource } from "../definitions/ResourceDefinitions";
+import type { PartialTabulate } from "../definitions/TypeDefinitions";
 import { IOCalculation } from "../logic/BuildingLogic";
-import { Config } from "../logic/Constants";
+import { Config } from "../logic/Config";
 import { getBuildingIO, unlockedResources } from "../logic/IntraTickCache";
 import { Tick } from "../logic/TickLogic";
-import { IBuildingData } from "../logic/Tile";
+import type { IBuildingData } from "../logic/Tile";
 import { WorldScene } from "../scenes/WorldScene";
 import { forEach, formatPercent, jsxMapOf, keysOf, reduceOf, safeAdd } from "../utilities/Helper";
 import { Singleton } from "../utilities/Singleton";
 import { L, t } from "../utilities/i18n";
 import { playClick } from "../visuals/Sound";
 import { BuildingColorComponent } from "./BuildingColorComponent";
-import { IBuildingComponentProps } from "./BuildingPage";
+import type { IBuildingComponentProps } from "./BuildingPage";
 import { FormatNumber } from "./HelperComponents";
 
 type Tab = "resources" | "buildings" | "transportation";

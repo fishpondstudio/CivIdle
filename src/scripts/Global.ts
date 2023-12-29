@@ -1,6 +1,7 @@
-import { City } from "./definitions/CityDefinitions";
-import { Config } from "./logic/Constants";
-import { GameOptions, GameState, SavedGame, initializeGameState } from "./logic/GameState";
+import type { City } from "./definitions/CityDefinitions";
+import { Config } from "./logic/Config";
+import type { GameOptions } from "./logic/GameState";
+import { GameState, SavedGame, initializeGameState } from "./logic/GameState";
 import { rollGreatPeople } from "./logic/RebornLogic";
 import { makeBuilding } from "./logic/Tile";
 import { SteamClient, isSteam } from "./rpc/SteamClient";

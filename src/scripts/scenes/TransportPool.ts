@@ -1,4 +1,5 @@
-import { Container, Sprite, Texture } from "pixi.js";
+import type { Container} from "pixi.js";
+import { Sprite, Texture } from "pixi.js";
 import { getGameOptions } from "../Global";
 import { ObjectPool } from "../utilities/ObjectPool";
 

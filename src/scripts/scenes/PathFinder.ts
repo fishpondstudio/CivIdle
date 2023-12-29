@@ -1,4 +1,4 @@
-import { IPointData } from "pixi.js";
+import type { IPointData } from "pixi.js";
 import WorldMap from "../../../server/WorldMap.json";
 import { MAP_MAX_X, MAP_MAX_Y } from "../../../server/src/Database";
 import { getGameOptions } from "../Global";

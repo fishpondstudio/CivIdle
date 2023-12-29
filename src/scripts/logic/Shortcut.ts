@@ -1,4 +1,5 @@
-import { DependencyList, useEffect } from "react";
+import type { DependencyList} from "react";
+import { useEffect } from "react";
 import { getGameOptions } from "../Global";
 import { forEach } from "../utilities/Helper";
 import { TypedEvent } from "../utilities/TypedEvent";

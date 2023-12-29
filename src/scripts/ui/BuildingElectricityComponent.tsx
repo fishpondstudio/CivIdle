@@ -1,6 +1,6 @@
 import { notifyGameStateUpdate } from "../Global";
 import { BUILDING_POWER_TO_LEVEL, applyToAllBuildings, canBeElectrified } from "../logic/BuildingLogic";
-import { Config } from "../logic/Constants";
+import { Config } from "../logic/Config";
 import { GameFeature, hasFeature } from "../logic/FeatureLogic";
 import { BuildingOptions } from "../logic/Tile";
 import { copyFlag, hasFlag, toggleFlag } from "../utilities/Helper";
@@ -42,11 +42,12 @@ export function BuildingElectricityComponent({ gameState, xy }: IBuildingCompone
             </div>
          </div>
          <div className="sep5"></div>
+         <div className="separator"></div>
          <div className="row">
-            <div className="f1"></div>
-            <div></div>
+            <div className="f1">{t(L.ElectrificationStatus)}</div>
+            <div>OK</div>
          </div>
-         <div className="sep5"></div>
+         <div className="separator"></div>
          <div
             className="text-link text-small"
             onClick={() => {

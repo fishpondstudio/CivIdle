@@ -1,9 +1,9 @@
-import { PartialTabulate } from "../definitions/TypeDefinitions";
+import type { PartialTabulate } from "../definitions/TypeDefinitions";
 import { clamp, filterOf, forEach, isEmpty, reduceOf, sizeOf, sum } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
 import { isNaturalWonder, isSpecialBuilding, isWorldWonder } from "./BuildingLogic";
-import { Config } from "./Constants";
-import { GameState } from "./GameState";
+import { Config } from "./Config";
+import type { GameState } from "./GameState";
 import { getTypeBuildings, getXyBuildings } from "./IntraTickCache";
 import { getCurrentTechAge } from "./TechLogic";
 import { Tick } from "./TickLogic";

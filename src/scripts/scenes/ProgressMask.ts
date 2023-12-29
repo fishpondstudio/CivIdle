@@ -1,5 +1,5 @@
 import { SmoothGraphics } from "@pixi/graphics-smooth";
-import { IPointData } from "pixi.js";
+import type { IPointData } from "pixi.js";
 import { clamp } from "../utilities/Helper";
 
 function rotateXY(x: number, y: number, angle: number): IPointData {

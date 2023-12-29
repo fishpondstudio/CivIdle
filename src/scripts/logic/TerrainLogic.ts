@@ -1,12 +1,12 @@
-import { IPointData } from "pixi.js";
+import type { IPointData } from "pixi.js";
 import { BUILDING_DEFAULT_VISION } from "../definitions/BuildingDefinitions";
-import { Grid } from "../scenes/Grid";
+import type { Grid } from "../scenes/Grid";
 import { forEach, keysOf, pointToXy, xyToPoint } from "../utilities/Helper";
 import { v2 } from "../utilities/Vector2";
 import { exploreTile, isNaturalWonder } from "./BuildingLogic";
-import { Config } from "./Constants";
-import { GameState } from "./GameState";
-import { ITileData } from "./Tile";
+import { Config } from "./Config";
+import type { GameState } from "./GameState";
+import type { ITileData } from "./Tile";
 
 export function ensureTileFogOfWar(xy: string, gameState: GameState, grid: Grid): string[] {
    const tile = gameState.tiles[xy];

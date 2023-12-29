@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { notifyGameOptionsUpdate, useGameOptions } from "../Global";
-import {
+import type {
    IShortcutConfig,
-   Shortcut,
+   Shortcut} from "../logic/Shortcut";
+import {
    ShortcutActions,
    getShortcutKey,
    isShortcutEqual,

@@ -1,11 +1,11 @@
-import { Config } from "../logic/Constants";
-import { GameState } from "../logic/GameState";
+import { Config } from "../logic/Config";
+import type { GameState } from "../logic/GameState";
 import { forEach } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
-import { Building } from "./BuildingDefinitions";
-import { Deposit } from "./ResourceDefinitions";
-import { Tech } from "./TechDefinitions";
-import { PartialSet } from "./TypeDefinitions";
+import type { Building } from "./BuildingDefinitions";
+import type { Deposit } from "./ResourceDefinitions";
+import type { Tech } from "./TechDefinitions";
+import type { PartialSet } from "./TypeDefinitions";
 
 export class CityDefinitions {
    Rome: ICityDefinition = {

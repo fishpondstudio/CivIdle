@@ -1,5 +1,5 @@
 import { useGameOptions, useGameState } from "../Global";
-import { Config } from "../logic/Constants";
+import { Config } from "../logic/Config";
 import { isEmpty, jsxMapOf } from "../utilities/Helper";
 import { Singleton } from "../utilities/Singleton";
 import { L, t } from "../utilities/i18n";

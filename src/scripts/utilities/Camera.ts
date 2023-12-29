@@ -1,9 +1,10 @@
-import {
+import type {
    Application,
-   Container,
    FederatedPointerEvent,
    IDestroyOptions,
-   IPointData,
+   IPointData} from "pixi.js";
+import {
+   Container,
    Rectangle,
 } from "pixi.js";
 import { clamp, lerp, sizeOf } from "./Helper";

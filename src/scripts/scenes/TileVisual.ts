@@ -1,6 +1,7 @@
-import { BitmapText, Color, Container, IDestroyOptions, IPointData, Sprite } from "pixi.js";
+import type { IDestroyOptions, IPointData} from "pixi.js";
+import { BitmapText, Color, Container, Sprite } from "pixi.js";
 import { getGameOptions, getGameState } from "../Global";
-import { Resource } from "../definitions/ResourceDefinitions";
+import type { Resource } from "../definitions/ResourceDefinitions";
 import {
    getBuildingLevelLabel,
    getBuildingPercentage,
@@ -9,17 +10,17 @@ import {
    getTileTexture,
    isWorldOrNaturalWonder,
 } from "../logic/BuildingLogic";
-import { GameOptions, GameState } from "../logic/GameState";
+import type { GameOptions, GameState } from "../logic/GameState";
 import { Tick } from "../logic/TickLogic";
-import { ITileData } from "../logic/Tile";
+import type { ITileData } from "../logic/Tile";
 import { clamp, forEach, formatHMS, layoutCenter, pointToXy, sizeOf } from "../utilities/Helper";
 import { Singleton } from "../utilities/Singleton";
 import { v2 } from "../utilities/Vector2";
 import { Actions } from "../utilities/pixi-actions/Actions";
 import { Easing } from "../utilities/pixi-actions/Easing";
-import { Action } from "../utilities/pixi-actions/actions/Action";
+import type { Action } from "../utilities/pixi-actions/actions/Action";
 import { Fonts } from "../visuals/Fonts";
-import { WorldScene } from "./WorldScene";
+import type { WorldScene } from "./WorldScene";
 
 export class TileVisual extends Container {
    private readonly _world: WorldScene;

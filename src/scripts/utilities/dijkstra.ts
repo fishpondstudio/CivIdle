@@ -1,4 +1,4 @@
-import { IPointData } from "pixi.js";
+import type { IPointData } from "pixi.js";
 import { PriorityQueue } from "./PriorityQueue";
 
 interface ValueAndPriority<T> {

@@ -1,6 +1,6 @@
 import { notifyGameStateUpdate, useGameState } from "../Global";
-import { GreatPerson } from "../definitions/GreatPersonDefinitions";
-import { GreatPeopleChoice } from "../logic/GameState";
+import type { GreatPerson } from "../definitions/GreatPersonDefinitions";
+import type { GreatPeopleChoice } from "../logic/GameState";
 import { safeAdd } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
 import { playClick } from "../visuals/Sound";

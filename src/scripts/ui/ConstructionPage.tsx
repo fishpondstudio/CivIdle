@@ -1,6 +1,6 @@
 import { notifyGameStateUpdate, useGameState } from "../Global";
-import { Config } from "../logic/Constants";
-import { ITileData } from "../logic/Tile";
+import { Config } from "../logic/Config";
+import type { ITileData } from "../logic/Tile";
 import { WorldScene } from "../scenes/WorldScene";
 import { Singleton } from "../utilities/Singleton";
 import { L, t } from "../utilities/i18n";

@@ -1,8 +1,8 @@
-import { IPointData } from "pixi.js";
+import type { IPointData } from "pixi.js";
 import { getGameOptions, getGameState, notifyGameStateUpdate, saveGame } from "../Global";
-import { Building } from "../definitions/BuildingDefinitions";
-import { IUnlockableDefinition } from "../definitions/ITechDefinition";
-import { Resource } from "../definitions/ResourceDefinitions";
+import type { Building } from "../definitions/BuildingDefinitions";
+import type { IUnlockableDefinition } from "../definitions/ITechDefinition";
+import type { Resource } from "../definitions/ResourceDefinitions";
 import { isSteam } from "../rpc/SteamClient";
 import { WorldScene } from "../scenes/WorldScene";
 import {
@@ -55,9 +55,9 @@ import {
    totalMultiplierFor,
    useWorkers,
 } from "./BuildingLogic";
-import { Config } from "./Constants";
+import { Config } from "./Config";
 import { GameFeature, hasFeature } from "./FeatureLogic";
-import { GameState, ITransportationData } from "./GameState";
+import type { GameState, ITransportationData } from "./GameState";
 import { calculateHappiness } from "./HappinessLogic";
 import {
    clearIntraTickCache,
@@ -68,16 +68,15 @@ import {
 } from "./IntraTickCache";
 import { onBuildingComplete, onBuildingProductionComplete } from "./LogicCallback";
 import { getAmountInTransit } from "./ResourceLogic";
-import { CurrentTickChanged, EmptyTickData, Multiplier, Tick, freezeTickData } from "./TickLogic";
-import {
-   BuildingOptions,
+import type { Multiplier } from "./TickLogic";
+import { CurrentTickChanged, EmptyTickData, Tick, freezeTickData } from "./TickLogic";
+import type {
    IBuildingData,
    IMarketBuildingData,
    IResourceImportBuildingData,
    IWarehouseBuildingData,
-   MarketOptions,
-   WarehouseOptions,
 } from "./Tile";
+import { BuildingOptions, MarketOptions, WarehouseOptions } from "./Tile";
 
 let timeSinceLastTick = 0;
 

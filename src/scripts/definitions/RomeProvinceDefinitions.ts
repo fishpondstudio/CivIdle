@@ -1,6 +1,6 @@
 import { deepFreeze } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
-import { IUnlockableDefinition } from "./ITechDefinition";
+import type { IUnlockableDefinition } from "./ITechDefinition";
 
 export interface IProvinceDefinition extends IUnlockableDefinition {
    visual: IProvinceVisual;

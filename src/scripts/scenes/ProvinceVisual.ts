@@ -1,5 +1,6 @@
 import { OutlineFilter } from "@pixi/filter-outline";
-import { BitmapText, Container, FederatedPointerEvent, IRendererPlugins, Sprite, Texture } from "pixi.js";
+import type { FederatedPointerEvent, IRendererPlugins, Texture } from "pixi.js";
+import { BitmapText, Container, Sprite } from "pixi.js";
 import { RomeProvince } from "../definitions/RomeProvinceDefinitions";
 import { v2 } from "../utilities/Vector2";
 import { Fonts } from "../visuals/Fonts";

@@ -1,19 +1,11 @@
 import { SmoothGraphics } from "@pixi/graphics-smooth";
-import {
-   BitmapText,
-   Color,
-   ColorSource,
-   Container,
-   FederatedPointerEvent,
-   LINE_CAP,
-   LINE_JOIN,
-   Rectangle,
-} from "pixi.js";
+import type { ColorSource, FederatedPointerEvent } from "pixi.js";
+import { BitmapText, Color, Container, LINE_CAP, LINE_JOIN, Rectangle } from "pixi.js";
 import { getGameOptions } from "../Global";
-import { ITechDefinition } from "../definitions/ITechDefinition";
-import { Tech } from "../definitions/TechDefinitions";
-import { Config } from "../logic/Constants";
-import { GameOptions } from "../logic/GameState";
+import type { ITechDefinition } from "../definitions/ITechDefinition";
+import type { Tech } from "../definitions/TechDefinitions";
+import { Config } from "../logic/Config";
+import type { GameOptions } from "../logic/GameState";
 import { isAgeUnlocked, unlockableTechs } from "../logic/TechLogic";
 import { TechPage } from "../ui/TechPage";
 import { WheelMode } from "../utilities/Camera";

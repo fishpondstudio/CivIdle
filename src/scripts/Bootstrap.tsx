@@ -1,4 +1,4 @@
-import { Application } from "pixi.js";
+import type { Application } from "pixi.js";
 import { RunTests } from "../tests/TestRunner";
 import {
    TILE_SIZE,
@@ -15,8 +15,10 @@ import type { Building } from "./definitions/BuildingDefinitions";
 import { setCityOverride, type City } from "./definitions/CityDefinitions";
 import { DepositResources } from "./definitions/ResourceDefinitions";
 import { getBuildingTexture, getStorageFor, getTileTexture } from "./logic/BuildingLogic";
-import { Config, MAX_OFFLINE_PRODUCTION_SEC, calculateTierAndPrice } from "./logic/Constants";
-import { GameState, initializeGameState } from "./logic/GameState";
+import { Config } from "./logic/Config";
+import { MAX_OFFLINE_PRODUCTION_SEC, calculateTierAndPrice } from "./logic/Constants";
+import type { GameState } from "./logic/GameState";
+import { initializeGameState } from "./logic/GameState";
 import type { IPetraBuildingData, ITileData } from "./logic/Tile";
 import { tickEverySecond } from "./logic/Update";
 import type { MainBundleAssets } from "./main";
@@ -33,7 +35,7 @@ import { GameTicker } from "./utilities/GameTicker";
 import { clamp, forEach, isNullOrUndefined, rejectIn, schedule } from "./utilities/Helper";
 import { SceneManager, type Textures } from "./utilities/SceneManager";
 import { Singleton, initializeSingletons, type ISpecialBuildings, type RouteTo } from "./utilities/Singleton";
-import { TypedEvent } from "./utilities/TypedEvent";
+import type { TypedEvent } from "./utilities/TypedEvent";
 import { playError } from "./visuals/Sound";
 
 export async function startGame(

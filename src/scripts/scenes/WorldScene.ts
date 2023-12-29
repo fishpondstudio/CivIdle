@@ -1,19 +1,20 @@
 import { SmoothGraphics } from "@pixi/graphics-smooth";
+import type {
+   FederatedPointerEvent,
+   IPointData,
+   Sprite,
+   utils} from "pixi.js";
 import {
    Color,
    Container,
-   FederatedPointerEvent,
-   IPointData,
    LINE_CAP,
    LINE_JOIN,
    ParticleContainer,
-   Sprite,
-   TilingSprite,
-   utils,
+   TilingSprite
 } from "pixi.js";
 import { TILE_SIZE, getGameOptions, getGameState } from "../Global";
 import { GameFeature, hasFeature } from "../logic/FeatureLogic";
-import { GameOptions, GameState } from "../logic/GameState";
+import type { GameOptions, GameState } from "../logic/GameState";
 import { TilePage } from "../ui/TilePage";
 import { clamp, forEach, lerp, lookAt, pointToXy, xyToPoint } from "../utilities/Helper";
 import { ViewportScene } from "../utilities/SceneManager";
@@ -21,7 +22,7 @@ import { Singleton } from "../utilities/Singleton";
 import { Vector2, v2 } from "../utilities/Vector2";
 import { Actions } from "../utilities/pixi-actions/Actions";
 import { Easing } from "../utilities/pixi-actions/Easing";
-import { Action } from "../utilities/pixi-actions/actions/Action";
+import type { Action } from "../utilities/pixi-actions/actions/Action";
 import { CustomAction } from "../utilities/pixi-actions/actions/CustomAction";
 import { TileVisual } from "./TileVisual";
 import { TooltipPool } from "./TooltipPool";

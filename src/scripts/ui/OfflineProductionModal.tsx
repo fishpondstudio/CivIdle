@@ -1,8 +1,8 @@
 import classNames from "classnames";
-import { Resource } from "../definitions/ResourceDefinitions";
-import { PartialTabulate } from "../definitions/TypeDefinitions";
-import { Config } from "../logic/Constants";
-import { GameState } from "../logic/GameState";
+import type { Resource } from "../definitions/ResourceDefinitions";
+import type { PartialTabulate } from "../definitions/TypeDefinitions";
+import { Config } from "../logic/Config";
+import type { GameState } from "../logic/GameState";
 import { forEach, formatHM, isEmpty, jsxMapOf } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
 import { hideModal } from "./GlobalModal";

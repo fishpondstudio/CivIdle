@@ -1,6 +1,6 @@
 import { BrowserWindow, Menu, app, dialog, ipcMain } from "electron";
 import path from "path";
-import { Client, init } from "steamworks.js";
+import { init, type Client } from "steamworks.js";
 import { IPCService } from "./IPCService";
 
 export type SteamClient = Omit<Client, "init" | "runCallbacks">;

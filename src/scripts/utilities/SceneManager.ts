@@ -1,7 +1,7 @@
-import { Application, Container, Resource, Texture } from "pixi.js";
+import type { Application, Container, Resource, Texture } from "pixi.js";
 import { watchGameOptions, watchGameState } from "../Global";
-import { GameOptions, GameState } from "../logic/GameState";
-import { MainBundleAssets } from "../main";
+import type { GameOptions, GameState } from "../logic/GameState";
+import type { MainBundleAssets } from "../main";
 import { Camera } from "./Camera";
 
 export class Scene {

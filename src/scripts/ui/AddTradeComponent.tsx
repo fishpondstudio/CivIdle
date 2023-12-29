@@ -1,13 +1,14 @@
 import { useState } from "react";
-import { Resource } from "../definitions/ResourceDefinitions";
-import { Config } from "../logic/Constants";
-import { IClientAddTradeRequest, getBuyAmountRange } from "../logic/PlayerTradeLogic";
+import type { Resource } from "../definitions/ResourceDefinitions";
+import { Config } from "../logic/Config";
+import type { IClientAddTradeRequest } from "../logic/PlayerTradeLogic";
+import { getBuyAmountRange } from "../logic/PlayerTradeLogic";
 import { Tick } from "../logic/TickLogic";
 import { client } from "../rpc/RPCClient";
 import { keysOf, safeParseInt } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
 import { playError } from "../visuals/Sound";
-import { IBuildingComponentProps } from "./BuildingPage";
+import type { IBuildingComponentProps } from "./BuildingPage";
 import { FormatNumber } from "./HelperComponents";
 
 export function AddTradeComponent({ gameState, xy }: IBuildingComponentProps): React.ReactNode {

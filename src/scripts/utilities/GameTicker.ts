@@ -1,5 +1,5 @@
-import { Ticker } from "pixi.js";
-import { GameState } from "../logic/GameState";
+import type { Ticker } from "pixi.js";
+import type { GameState } from "../logic/GameState";
 import { shouldTick, tickEveryFrame, tickEverySecond } from "../logic/Update";
 import { Actions } from "./pixi-actions/Actions";
 

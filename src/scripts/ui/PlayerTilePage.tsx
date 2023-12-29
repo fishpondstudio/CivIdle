@@ -1,4 +1,4 @@
-import { Config } from "../logic/Constants";
+import { Config } from "../logic/Config";
 import { usePlayerMap, useTrades } from "../rpc/RPCClient";
 import { formatPercent } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";

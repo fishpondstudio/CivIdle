@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { notifyGameStateUpdate } from "../Global";
-import { Resource } from "../definitions/ResourceDefinitions";
+import type { Resource } from "../definitions/ResourceDefinitions";
 import { getWarehouseCapacity } from "../logic/BuildingLogic";
-import { Config } from "../logic/Constants";
-import { IResourceImport, IResourceImportBuildingData } from "../logic/Tile";
+import { Config } from "../logic/Config";
+import type { IResourceImport, IResourceImportBuildingData } from "../logic/Tile";
 import { clamp, reduceOf, safeParseInt } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
 import { hideModal } from "./GlobalModal";

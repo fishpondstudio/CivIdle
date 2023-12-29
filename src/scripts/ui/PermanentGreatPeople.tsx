@@ -1,6 +1,6 @@
 import classNames from "classnames";
 import { notifyGameOptionsUpdate, useGameOptions } from "../Global";
-import { Config } from "../logic/Constants";
+import { Config } from "../logic/Config";
 import { getGreatPersonUpgradeCost } from "../logic/RebornLogic";
 import { isEmpty, keysOf, numberToRoman } from "../utilities/Helper";
 import { Singleton } from "../utilities/Singleton";

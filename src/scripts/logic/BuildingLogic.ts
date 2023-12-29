@@ -1,7 +1,8 @@
-import { Building, BuildingSpecial } from "../definitions/BuildingDefinitions";
-import { City } from "../definitions/CityDefinitions";
-import { IResourceDefinition, Resource } from "../definitions/ResourceDefinitions";
-import { PartialTabulate } from "../definitions/TypeDefinitions";
+import type { Building } from "../definitions/BuildingDefinitions";
+import { BuildingSpecial } from "../definitions/BuildingDefinitions";
+import type { City } from "../definitions/CityDefinitions";
+import type { IResourceDefinition, Resource } from "../definitions/ResourceDefinitions";
+import type { PartialTabulate } from "../definitions/TypeDefinitions";
 import {
    clamp,
    forEach,
@@ -18,8 +19,8 @@ import {
 import { srand } from "../utilities/Random";
 import type { Textures } from "../utilities/SceneManager";
 import { Singleton } from "../utilities/Singleton";
-import { Config } from "./Constants";
-import { GameState } from "./GameState";
+import { Config } from "./Config";
+import type { GameState } from "./GameState";
 import { getBuildingIO, getBuildingsByType, getXyBuildings } from "./IntraTickCache";
 import { onTileExplored } from "./LogicCallback";
 import { getBuildingsThatProduce, getResourcesValue } from "./ResourceLogic";

@@ -1,9 +1,9 @@
 import { notifyGameOptionsUpdate, useGameOptions } from "../Global";
-import { Resource } from "../definitions/ResourceDefinitions";
-import { Config } from "../logic/Constants";
+import type { Resource } from "../definitions/ResourceDefinitions";
+import { Config } from "../logic/Config";
 import { jsxMapOf } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
-import { IBuildingComponentProps } from "./BuildingPage";
+import type { IBuildingComponentProps } from "./BuildingPage";
 
 export function BuildingColorComponent({ gameState, xy }: IBuildingComponentProps): React.ReactNode {
    const tile = gameState.tiles[xy];

@@ -13,9 +13,9 @@ import type {
    IWelcomeMessage,
 } from "../../../server/src/Database";
 import { MessageType } from "../../../server/src/Database";
-import { ServerImpl } from "../../../server/src/Server";
+import type { ServerImpl } from "../../../server/src/Server";
 import { getGameOptions, saveGame } from "../Global";
-import { IClientTrade } from "../logic/PlayerTradeLogic";
+import type { IClientTrade } from "../logic/PlayerTradeLogic";
 import { showToast } from "../ui/GlobalModal";
 import { forEach } from "../utilities/Helper";
 import { makeObservableHook } from "../utilities/Hook";

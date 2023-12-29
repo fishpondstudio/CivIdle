@@ -1,6 +1,6 @@
 import { MoveTileCooldown } from "../../../server/src/Database";
 import { GameStateChanged } from "../Global";
-import { Config } from "../logic/Constants";
+import { Config } from "../logic/Config";
 import { client, usePlayerMap } from "../rpc/RPCClient";
 import { getMyMapXy } from "../scenes/PathFinder";
 import { formatHMS } from "../utilities/Helper";

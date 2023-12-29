@@ -3,7 +3,7 @@ import { getGameState } from "./Global";
 import { clearShortcuts } from "./logic/Shortcut";
 import { LoadingPage } from "./ui/LoadingPage";
 import { TilePage } from "./ui/TilePage";
-import { TypedEvent } from "./utilities/TypedEvent";
+import type { TypedEvent } from "./utilities/TypedEvent";
 import { playClick } from "./visuals/Sound";
 
 export function Route({ event }: { event: TypedEvent<RouteChangeEvent> }) {

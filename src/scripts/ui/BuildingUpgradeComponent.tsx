@@ -2,12 +2,12 @@ import classNames from "classnames";
 import { useState } from "react";
 import { notifyGameStateUpdate } from "../Global";
 import { getBuildingUpgradeLevels, getTotalBuildingCost } from "../logic/BuildingLogic";
-import { Config } from "../logic/Constants";
+import { Config } from "../logic/Config";
 import {} from "../logic/GameState";
 import { useShortcut } from "../logic/Shortcut";
 import { jsxMapOf, numberToRoman } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
-import { IBuildingComponentProps } from "./BuildingPage";
+import type { IBuildingComponentProps } from "./BuildingPage";
 import { FormatNumber } from "./HelperComponents";
 
 export function BuildingUpgradeComponent({ gameState, xy }: IBuildingComponentProps): React.ReactNode {

@@ -1,5 +1,6 @@
 import * as Sentry from "@sentry/browser";
-import { Application, Assets, BitmapFont, Spritesheet, Texture } from "pixi.js";
+import type { Texture } from "pixi.js";
+import { Application, Assets, BitmapFont, Spritesheet } from "pixi.js";
 import { createRoot } from "react-dom/client";
 import "../css/Main.css";
 import CabinMedium from "../fonts/CabinMedium.ttf?url";
@@ -17,7 +18,8 @@ import TextureTilesDef from "../images/textures_tiles.json";
 import TextureTiles from "../images/textures_tiles.png";
 import { startGame } from "./Bootstrap";
 import { BG_COLOR } from "./Colors";
-import { Route, RouteChangeEvent } from "./Route";
+import type { RouteChangeEvent } from "./Route";
+import { Route } from "./Route";
 import { build } from "./Version.json";
 import { ChatPanel } from "./ui/ChatPanel";
 import { GlobalModal, GlobalToast } from "./ui/GlobalModal";

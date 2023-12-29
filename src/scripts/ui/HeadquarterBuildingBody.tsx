@@ -1,6 +1,6 @@
 import classNames from "classnames";
 import { getScienceFromWorkers } from "../logic/BuildingLogic";
-import { Config } from "../logic/Constants";
+import { Config } from "../logic/Config";
 import { getGreatPeopleAtReborn } from "../logic/RebornLogic";
 import { getCurrentTechAge, getScienceAmount, getUnlockCost, unlockableTechs } from "../logic/TechLogic";
 import { Tick } from "../logic/TickLogic";
@@ -11,7 +11,7 @@ import { Singleton } from "../utilities/Singleton";
 import { L, t } from "../utilities/i18n";
 import { playError } from "../visuals/Sound";
 import { BuildingColorComponent } from "./BuildingColorComponent";
-import { IBuildingComponentProps } from "./BuildingPage";
+import type { IBuildingComponentProps } from "./BuildingPage";
 import { BuildingProduceComponent } from "./BuildingProduceComponent";
 import { BuildingStorageComponent } from "./BuildingStorageComponent";
 import { ChangePlayerHandleModal } from "./ChangePlayerHandleModal";

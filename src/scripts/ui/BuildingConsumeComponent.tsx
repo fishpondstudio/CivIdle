@@ -3,7 +3,7 @@ import { getBuildingIO } from "../logic/IntraTickCache";
 import { isEmpty } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
 import { BuildingIOTreeViewComponent } from "./BuildingIOTreeViewComponent";
-import { IBuildingComponentProps } from "./BuildingPage";
+import type { IBuildingComponentProps } from "./BuildingPage";
 
 export function BuildingConsumeComponent({ gameState, xy }: IBuildingComponentProps): React.ReactNode {
    const input = getBuildingIO(xy, "input", IOCalculation.Capacity, gameState);

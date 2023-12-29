@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { Resource } from "../definitions/ResourceDefinitions";
-import { PartialTabulate } from "../definitions/TypeDefinitions";
-import { Config } from "../logic/Constants";
+import type { Resource } from "../definitions/ResourceDefinitions";
+import type { PartialTabulate } from "../definitions/TypeDefinitions";
+import { Config } from "../logic/Config";
 import { clamp, keysOf, mapOf, safeAdd } from "../utilities/Helper";
 
 export function DebugPage(): React.ReactNode {

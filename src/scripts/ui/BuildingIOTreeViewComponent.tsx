@@ -1,10 +1,11 @@
 import classNames from "classnames";
 import warning from "../../images/warning.png";
 import { IOCalculation, getMultipliersFor, totalMultiplierFor } from "../logic/BuildingLogic";
-import { Config } from "../logic/Constants";
-import { GameState } from "../logic/GameState";
+import { Config } from "../logic/Config";
+import type { GameState } from "../logic/GameState";
 import { getBuildingIO } from "../logic/IntraTickCache";
-import { Multiplier, Tick } from "../logic/TickLogic";
+import type { Multiplier } from "../logic/TickLogic";
+import { Tick } from "../logic/TickLogic";
 import { jsxMapOf } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
 import { FormatNumber } from "./HelperComponents";

@@ -5,7 +5,8 @@
       "forceConsistentCasingInFileNames": true,
       "esModuleInterop": true,
       "outDir": "compiled",
-      "strict": true
+      "strict": true,
+      "verbatimModuleSyntax": false
    },
    "include": ["src/**/*"]
 }

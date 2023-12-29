@@ -1,5 +1,5 @@
 import { L, t } from "../utilities/i18n";
-import { ITechAgeDefinition, ITechDefinition } from "./ITechDefinition";
+import type { ITechAgeDefinition, ITechDefinition } from "./ITechDefinition";
 
 export class TechAgeDefinitions {
    StoneAge: ITechAgeDefinition = { idx: 0, from: 0, to: 1, name: () => t(L.StoneAge) };

@@ -1,5 +1,3 @@
-import { lerp } from "./Helper";
-
 interface IHaveXY {
    x: number;
    y: number;
@@ -17,7 +15,7 @@ export class Vector2 {
    }
 
    public static lerp(p1: IHaveXY, p2: IHaveXY, amount: number): IHaveXY {
-      return { x: lerp(p1.x, p2.x, amount), y: lerp(p1.y, p2.y, amount) };
+      return { x: p1.x + (p2.x - p1.x) * amount, y: p1.y + (p2.y - p1.y) * amount };
    }
 
    /**

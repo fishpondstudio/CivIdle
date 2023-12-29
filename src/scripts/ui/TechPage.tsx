@@ -1,9 +1,9 @@
 import { notifyGameStateUpdate, useGameState } from "../Global";
 import { MAX_TECH_COLUMN } from "../SteamTesting";
-import { Resource } from "../definitions/ResourceDefinitions";
-import { Tech } from "../definitions/TechDefinitions";
-import { PartialTabulate } from "../definitions/TypeDefinitions";
-import { Config } from "../logic/Constants";
+import type { Resource } from "../definitions/ResourceDefinitions";
+import type { Tech } from "../definitions/TechDefinitions";
+import type { PartialTabulate } from "../definitions/TypeDefinitions";
+import { Config } from "../logic/Config";
 import { getResourceAmount, trySpendResources } from "../logic/ResourceLogic";
 import { useShortcut } from "../logic/Shortcut";
 import { getCurrentTechAge, getGreatPeopleChoices, getUnlockCost, unlockTech } from "../logic/TechLogic";

@@ -1,13 +1,13 @@
-import { Building, BuildingSpecial } from "../definitions/BuildingDefinitions";
-import { City } from "../definitions/CityDefinitions";
-import { GreatPerson } from "../definitions/GreatPersonDefinitions";
-import { Deposit, Resource } from "../definitions/ResourceDefinitions";
-import { Tech, TechAge } from "../definitions/TechDefinitions";
-import { WorldScene } from "../scenes/WorldScene";
+import type { Building } from "../definitions/BuildingDefinitions";
+import { BuildingSpecial } from "../definitions/BuildingDefinitions";
+import type { City } from "../definitions/CityDefinitions";
+import type { GreatPerson } from "../definitions/GreatPersonDefinitions";
+import type { Deposit, Resource } from "../definitions/ResourceDefinitions";
+import type { Tech, TechAge } from "../definitions/TechDefinitions";
 import { filterOf, forEach, isEmpty, keysOf, shuffle } from "../utilities/Helper";
 import { Singleton } from "../utilities/Singleton";
-import { Config } from "./Constants";
-import { GameState, GreatPeopleChoice } from "./GameState";
+import { Config } from "./Config";
+import type { GameState, GreatPeopleChoice } from "./GameState";
 import { getBuildingsThatProduce } from "./ResourceLogic";
 import { getDepositTileCount } from "./Tile";
 
@@ -104,7 +104,7 @@ export function unlockTech(tech: Tech, gs: GameState): void {
 
 export function addDeposit(xy: string, deposit: Deposit, gs: GameState): void {
    gs.tiles[xy].deposit[deposit] = true;
-   Singleton().sceneManager.getCurrent(WorldScene)?.resetTile(xy);
+   // Singleton().sceneManager.getCurrent(WorldScene)?.resetTile(xy);
 }
 
 export function getDepositUnlockTech(deposit: Deposit): Tech {

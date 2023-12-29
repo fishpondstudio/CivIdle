@@ -1,9 +1,9 @@
-import { Building } from "../definitions/BuildingDefinitions";
-import { Deposit, Resource } from "../definitions/ResourceDefinitions";
-import { PartialTabulate } from "../definitions/TypeDefinitions";
+import type { Building } from "../definitions/BuildingDefinitions";
+import type { Deposit, Resource } from "../definitions/ResourceDefinitions";
+import type { PartialTabulate } from "../definitions/TypeDefinitions";
 import { forEach, reduceOf } from "../utilities/Helper";
-import { Config } from "./Constants";
-import { GameState } from "./GameState";
+import { Config } from "./Config";
+import type { GameState } from "./GameState";
 import { Tick } from "./TickLogic";
 
 export function getResourceAmount(res: Resource, gs: GameState): number {
