@@ -14,7 +14,13 @@ export function BuildingProductionPriorityComponent({
    xy,
 }: IBuildingComponentProps): React.ReactNode {
    const building = gameState.tiles[xy].building;
-   if (building == null || isEmpty(getBuildingIO(xy, "input", IOCalculation.None, gameState))) {
+   if (building == null) {
+      return null;
+   }
+   if (
+      isEmpty(getBuildingIO(xy, "input", IOCalculation.None, gameState)) &&
+      isEmpty(getBuildingIO(xy, "output", IOCalculation.None, gameState))
+   ) {
       return null;
    }
    if (!hasFeature(GameFeature.BuildingProductionPriority, gameState)) {

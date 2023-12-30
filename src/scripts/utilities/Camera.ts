@@ -1,12 +1,5 @@
-import type {
-   Application,
-   FederatedPointerEvent,
-   IDestroyOptions,
-   IPointData} from "pixi.js";
-import {
-   Container,
-   Rectangle,
-} from "pixi.js";
+import type { Application, FederatedPointerEvent, IDestroyOptions, IPointData } from "pixi.js";
+import { Container, Rectangle } from "pixi.js";
 import { clamp, lerp, sizeOf } from "./Helper";
 import { Vector2, v2 } from "./Vector2";
 
@@ -203,7 +196,7 @@ export class Camera extends Container {
    }
 
    public clampCenter(point: IPointData): IPointData {
-      return this.clampOrigin(this.centerToOrigin(point));
+      return this.originToCenter(this.clampOrigin(this.centerToOrigin(point)));
    }
 
    public centerToOrigin(point: IPointData): IPointData {

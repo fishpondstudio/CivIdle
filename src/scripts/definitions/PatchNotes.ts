@@ -6,7 +6,10 @@ interface PatchNote {
 export const PatchNotes: PatchNote[] = [
    {
       version: "0.1.95",
-      content: [["Bugfix", "Fix construction cost of wonders are incorrect"]],
+      content: [
+         ["Bugfix", "Fix construction cost of wonders are incorrect"],
+         ["Bugfix", "Fix Grotta Azzurra can be explored repeatedly"],
+      ],
    },
    {
       version: "0.1.94",

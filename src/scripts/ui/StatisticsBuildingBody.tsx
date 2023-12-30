@@ -2,8 +2,9 @@ import classNames from "classnames";
 import { useState } from "react";
 import type { Resource } from "../definitions/ResourceDefinitions";
 import type { PartialTabulate } from "../definitions/TypeDefinitions";
-import { IOCalculation } from "../logic/BuildingLogic";
+import { IOCalculation, getElectrificationStatus } from "../logic/BuildingLogic";
 import { Config } from "../logic/Config";
+import { GameFeature, hasFeature } from "../logic/FeatureLogic";
 import { getBuildingIO, unlockedResources } from "../logic/IntraTickCache";
 import { Tick } from "../logic/TickLogic";
 import type { IBuildingData } from "../logic/Tile";
@@ -68,6 +69,7 @@ function BuildingTab({ gameState }: IBuildingComponentProps): React.ReactNode {
                <thead>
                   <tr>
                      <th></th>
+                     {hasFeature(GameFeature.Electricity, gameState) ? <th></th> : null}
                      <th></th>
                      <th className="right">{t(L.Level)}</th>
                      <th className="right">
@@ -105,6 +107,13 @@ function BuildingTab({ gameState }: IBuildingComponentProps): React.ReactNode {
                         return (
                            <tr key={xy}>
                               <td>{icon}</td>
+                              {hasFeature(GameFeature.Electricity, gameState) ? (
+                                 <td>
+                                    {getElectrificationStatus(xy, gameState) === "Active" ? (
+                                       <div className="m-icon small text-orange">bolt</div>
+                                    ) : null}
+                                 </td>
+                              ) : null}
                               <td>
                                  <div
                                     className="pointer"

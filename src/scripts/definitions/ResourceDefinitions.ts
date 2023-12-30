@@ -36,7 +36,7 @@ export class ResourceDefinitions {
    Cheese: IResourceDefinition = { name: () => t(L.Cheese), canStore: true, canPrice: true };
    // Legion: IResourceDefinition = { name: () => t(L.Legion), canStore: true, canPrice: true };
    Milk: IResourceDefinition = { name: () => t(L.Milk), canStore: true, canPrice: true };
-   // Pizza: IResourceDefinition = { name: () => t(L.Pizza), canStore: true, canPrice: true };
+   Pizza: IResourceDefinition = { name: () => t(L.Pizza), canStore: true, canPrice: true };
    Bread: IResourceDefinition = { name: () => t(L.Bread), canStore: true, canPrice: true };
    SiegeRam: IResourceDefinition = { name: () => t(L.SiegeRam), canStore: true, canPrice: true };
    Caravel: IResourceDefinition = { name: () => t(L.Caravel), canStore: true, canPrice: true };
@@ -52,6 +52,7 @@ export class ResourceDefinitions {
    Music: IResourceDefinition = { name: () => t(L.Music), canStore: true, canPrice: true };
    Cloth: IResourceDefinition = { name: () => t(L.Cloth), canStore: true, canPrice: true };
    Newspaper: IResourceDefinition = { name: () => t(L.Newspaper), canStore: true, canPrice: true };
+   Magazine: IResourceDefinition = { name: () => t(L.Magazine), canStore: true, canPrice: true };
    Flour: IResourceDefinition = { name: () => t(L.Flour), canStore: true, canPrice: true };
    Book: IResourceDefinition = { name: () => t(L.Book), canStore: true, canPrice: true };
    Science: IResourceDefinition = { name: () => t(L.Science), canStore: true, canPrice: false };
@@ -82,6 +83,7 @@ export class ResourceDefinitions {
    Tank: IResourceDefinition = { name: () => t(L.Tank), canStore: true, canPrice: true };
    Politics: IResourceDefinition = { name: () => t(L.Politics), canStore: true, canPrice: true };
    Oil: IResourceDefinition = { name: () => t(L.Oil), canStore: true, canPrice: true };
+   NaturalGas: IResourceDefinition = { name: () => t(L.NaturalGas), canStore: true, canPrice: true };
    Aluminum: IResourceDefinition = { name: () => t(L.Aluminum), canStore: true, canPrice: true };
    Petrol: IResourceDefinition = { name: () => t(L.Petrol), canStore: true, canPrice: true };
 }
@@ -98,6 +100,7 @@ export const DepositResources = {
    Coal: true,
    Oil: true,
    Aluminum: true,
+   NaturalGas: true,
 } as const satisfies Partial<Record<Resource, true>>;
 
 export type Deposit = keyof typeof DepositResources;

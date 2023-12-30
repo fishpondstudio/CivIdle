@@ -19,6 +19,7 @@ import {
 import { srand } from "../utilities/Random";
 import type { Textures } from "../utilities/SceneManager";
 import { Singleton } from "../utilities/Singleton";
+import { L, t } from "../utilities/i18n";
 import { Config } from "./Config";
 import type { GameState } from "./GameState";
 import { getBuildingIO, getBuildingsByType, getXyBuildings } from "./IntraTickCache";
@@ -26,11 +27,11 @@ import { onTileExplored } from "./LogicCallback";
 import { getBuildingsThatProduce, getResourcesValue } from "./ResourceLogic";
 import { getAgeForTech, getBuildingUnlockTech } from "./TechLogic";
 import { Tick, type Multiplier, type MultiplierWithSource, type NotProducingReason } from "./TickLogic";
-import type {
-   IBuildingData,
-   IHaveTypeAndLevel,
-   IResourceImportBuildingData,
-   IWarehouseBuildingData,
+import {
+   type IBuildingData,
+   type IHaveTypeAndLevel,
+   type IResourceImportBuildingData,
+   type IWarehouseBuildingData,
 } from "./Tile";
 
 export function getBuildingTexture(b: Building, textures: Textures, city: City) {
@@ -621,8 +622,10 @@ export function getAvailableResource(xy: string, res: Resource, gs: GameState): 
 }
 
 export function exploreTile(xy: string, gs: GameState): void {
-   gs.tiles[xy].explored = true;
-   onTileExplored(xy, gs);
+   if (!gs.tiles[xy].explored) {
+      gs.tiles[xy].explored = true;
+      onTileExplored(xy, gs);
+   }
 }
 
 export const ST_PETERS_FAITH_MULTIPLIER = 0.01;
@@ -631,5 +634,43 @@ export const ST_PETERS_STORAGE_MULTIPLIER = 10 * 60 * 60;
 export const BUILDING_POWER_TO_LEVEL = 10;
 
 export function canBeElectrified(b: Building): boolean {
-   return !isSpecialBuilding(b) && !Config.Building[b].output.Power && sizeOf(Config.Building[b].output) > 0;
+   if (isSpecialBuilding(b)) {
+      return false;
+   }
+   const output = Config.Building[b].output;
+   if (sizeOf(output) <= 0) {
+      return false;
+   }
+   let res: Resource;
+   for (res in output) {
+      if (!Config.Resource[res].canStore) {
+         return false;
+      }
+   }
+   return true;
+}
+
+export const ElectrificationStatus = {
+   NotActive: () => t(L.ElectrificationStatusNotActive),
+   NoPower: () => t(L.ElectrificationStatusNoPower),
+   Active: () => t(L.ElectrificationStatusActive),
+} as const satisfies Record<string, () => string>;
+
+export type ElectrificationStatus = keyof typeof ElectrificationStatus;
+
+export function getElectrificationStatus(xy: string, gs: GameState): ElectrificationStatus {
+   const building = gs.tiles[xy].building;
+   if (!building || !canBeElectrified(building.type)) {
+      return "NotActive";
+   }
+   if (building.electrification <= 0) {
+      return "NotActive";
+   }
+   if (Tick.current.notProducingReasons[xy]) {
+      return "NotActive";
+   }
+   if (Tick.current.electrified[xy]) {
+      return "Active";
+   }
+   return "NoPower";
 }

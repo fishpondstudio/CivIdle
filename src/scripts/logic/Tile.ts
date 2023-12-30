@@ -16,7 +16,6 @@ export type BuildingStatus = "building" | "upgrading" | "paused" | "completed";
 
 export enum BuildingOptions {
    None = 0,
-   Electrification = 1 << 0,
 }
 
 export interface IBuildingData {
@@ -30,6 +29,7 @@ export interface IBuildingData {
    stockpileMax: number;
    priority: number;
    options: BuildingOptions;
+   electrification: number;
 }
 
 export enum MarketOptions {
@@ -93,6 +93,7 @@ export function makeBuilding(data: Pick<IBuildingData, "type"> & Partial<IBuildi
       stockpileMax: 5,
       priority: PRIORITY_MIN,
       options: BuildingOptions.None,
+      electrification: 0,
       ...data,
    };
 

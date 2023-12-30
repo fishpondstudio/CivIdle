@@ -504,13 +504,6 @@ export class TechDefinitions {
       unlockBuilding: ["PublishingHouse"],
    };
 
-   Refinery: ITechDefinition = {
-      name: () => t(L.Refinery),
-      column: 16,
-      requireTech: ["RapidFire"],
-      unlockBuilding: ["OilRefinery"],
-   };
-
    Imperialism: ITechDefinition = {
       name: () => t(L.Imperialism),
       column: 16,
@@ -523,6 +516,7 @@ export class TechDefinitions {
       column: 16,
       requireTech: ["Railway", "Drilling"],
       unlockBuilding: ["CoalPowerPlant"],
+      additionalUpgrades: [() => t(L.ElectrificationUpgrade)],
    };
 
    StockMarket: ITechDefinition = {
@@ -542,7 +536,7 @@ export class TechDefinitions {
    Combustion: ITechDefinition = {
       name: () => t(L.Combustion),
       column: 17,
-      requireTech: ["Refinery", "Imperialism"],
+      requireTech: ["Imperialism", "Electricity"],
       unlockBuilding: ["TankFactory"],
    };
 
@@ -553,38 +547,57 @@ export class TechDefinitions {
       revealDeposit: ["Aluminum"],
       unlockBuilding: ["AluminumSmelter"],
    };
-   PowerGrid: ITechDefinition = {
-      name: () => t(L.PowerGrid),
+
+   Refinery: ITechDefinition = {
+      name: () => t(L.Refinery),
       column: 17,
       requireTech: ["Electricity"],
+      unlockBuilding: ["OilRefinery"],
    };
-   Photography: ITechDefinition = { name: () => t(L.Photography), column: 17, requireTech: ["Electricity"] };
+
+   GasPipeline: ITechDefinition = {
+      name: () => t(L.GasPipeline),
+      column: 17,
+      requireTech: ["Electricity"],
+      unlockBuilding: ["NaturalGasWell"],
+      revealDeposit: ["NaturalGas"],
+   };
+
    Urbanization: ITechDefinition = {
       name: () => t(L.Urbanization),
       column: 17,
-      requireTech: ["Electricity", "Olympics", "StockMarket"],
+      requireTech: ["Olympics", "StockMarket"],
+      unlockBuilding: ["Pizzeria", "MagazinePublisher"],
+   };
+
+   Assembly: ITechDefinition = {
+      name: () => t(L.Assembly),
+      column: 18,
+      requireTech: ["Combustion", "Electrolysis"],
+   };
+
+   AtomTheory: ITechDefinition = {
+      name: () => t(L.AtomTheory),
+      column: 18,
+      requireTech: ["Refinery", "Electrolysis"],
+   };
+
+   Synthetics: ITechDefinition = {
+      name: () => t(L.Synthetics),
+      column: 18,
+      requireTech: ["Refinery", "GasPipeline"],
+   };
+
+   MotionPicture: ITechDefinition = {
+      name: () => t(L.MotionPicture),
+      column: 18,
+      requireTech: ["Urbanization"],
    };
 
    Aeroplane: ITechDefinition = {
       name: () => t(L.Aeroplane),
-      column: 18,
-      requireTech: ["Combustion", "Electrolysis"],
-   };
-   AtomTheory: ITechDefinition = {
-      name: () => t(L.AtomTheory),
-      column: 18,
-      requireTech: ["PowerGrid"],
-   };
-   MotionPicture: ITechDefinition = {
-      name: () => t(L.MotionPicture),
-      column: 18,
-      requireTech: ["PowerGrid", "Photography", "Urbanization"],
-   };
-
-   Jet: ITechDefinition = {
-      name: () => t(L.Jet),
       column: 19,
-      requireTech: ["Aeroplane", "AtomTheory"],
+      requireTech: ["Assembly", "AtomTheory"],
    };
    Medicine: ITechDefinition = {
       name: () => t(L.Medicine),
@@ -594,19 +607,19 @@ export class TechDefinitions {
    Hospital: ITechDefinition = {
       name: () => t(L.Hospital),
       column: 19,
-      requireTech: ["AtomTheory"],
+      requireTech: ["AtomTheory", "Synthetics"],
    };
    Greenhouse: ITechDefinition = {
       name: () => t(L.Greenhouse),
       column: 19,
-      requireTech: ["AtomTheory", "MotionPicture"],
+      requireTech: ["Synthetics", "MotionPicture"],
    };
 
-   Rocket: ITechDefinition = { name: () => t(L.Rocket), column: 20, requireTech: ["Jet"] };
+   Rocket: ITechDefinition = { name: () => t(L.Rocket), column: 20, requireTech: ["Aeroplane"] };
    Semiconductor: ITechDefinition = {
       name: () => t(L.Semiconductor),
       column: 20,
-      requireTech: ["Jet", "Medicine"],
+      requireTech: ["Aeroplane", "Medicine"],
    };
    Vaccine: ITechDefinition = {
       name: () => t(L.Vaccine),

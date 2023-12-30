@@ -24,7 +24,7 @@
                 "h": 100
             }
         },
-        "TileGas": {
+        "TileGold": {
             "frame": {
                 "x": 101,
                 "y": 101,
@@ -32,7 +32,7 @@
                 "h": 100
             }
         },
-        "TileGold": {
+        "TileIron": {
             "frame": {
                 "x": 202,
                 "y": 0,
@@ -40,7 +40,7 @@
                 "h": 100
             }
         },
-        "TileIron": {
+        "TileNaturalGas": {
             "frame": {
                 "x": 202,
                 "y": 101,

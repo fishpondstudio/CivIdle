@@ -117,7 +117,15 @@ export class BuildingDefinitions {
       input: {},
       deposit: { Oil: true },
       output: { Oil: 1 },
-      construction: { Steel: 1 },
+      construction: { Steel: 1, Dynamite: 1 },
+   };
+
+   NaturalGasWell: IBuildingDefinition = {
+      name: () => t(L.NaturalGasWell),
+      input: {},
+      deposit: { NaturalGas: true },
+      output: { NaturalGas: 1 },
+      construction: { Steel: 1, Dynamite: 1 },
    };
 
    AluminumSmelter: IBuildingDefinition = {
@@ -281,11 +289,6 @@ export class BuildingDefinitions {
       input: { Philosophy: 1, Faith: 1 },
       output: { Law: 1 },
    };
-   PublishingHouse: IBuildingDefinition = {
-      name: () => t(L.PublishingHouse),
-      input: { Politics: 1, Paper: 10 },
-      output: { Newspaper: 1 },
-   };
    Stadium: IBuildingDefinition = {
       name: () => t(L.Stadium),
       input: { Culture: 1, Opera: 1 },
@@ -295,6 +298,16 @@ export class BuildingDefinitions {
       name: () => t(L.Parliament),
       input: { Culture: 1, Philosophy: 1 },
       output: { Politics: 1 },
+   };
+   PublishingHouse: IBuildingDefinition = {
+      name: () => t(L.PublishingHouse),
+      input: { Politics: 1, Paper: 10 },
+      output: { Newspaper: 1 },
+   };
+   MagazinePublisher: IBuildingDefinition = {
+      name: () => t(L.MagazinePublisher),
+      input: { Sports: 1, Paper: 10 },
+      output: { Magazine: 1 },
    };
    // #endregion /////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -362,7 +375,16 @@ export class BuildingDefinitions {
       input: { Wood: 1, Water: 1 },
       output: { Paper: 1 },
    };
-
+   Pizzeria: IBuildingDefinition = {
+      name: () => t(L.Pizzeria),
+      input: { Cheese: 1, Meat: 1, Flour: 2, Water: 2 },
+      output: { Pizza: 1 },
+   };
+   FertilizerFactory: IBuildingDefinition = {
+      name: () => t(L.FertilizerFactory),
+      input: { Cheese: 1, Meat: 1, Flour: 2, Water: 2 },
+      output: { Pizza: 1 },
+   };
    // #endregion /////////////////////////////////////////////////////////////////////////////////////////////
 
    // #region Heavy Industry /////////////////////////////////////////////////////////////////////////////////
@@ -429,22 +451,22 @@ export class BuildingDefinitions {
    // #region Financial & Trade //////////////////////////////////////////////////////////////////////////////
    CoinMint: IBuildingDefinition = {
       name: () => t(L.CoinMint),
-      input: { Gold: 2 },
+      input: { Gold: 3 },
       output: { Coin: 1 },
    };
    Bank: IBuildingDefinition = {
       name: () => t(L.Bank),
-      input: { Gold: 10 },
+      input: { Coin: 3 },
       output: { Banknote: 1 },
    };
    BondMarket: IBuildingDefinition = {
       name: () => t(L.BondMarket),
-      input: { Banknote: 10 },
+      input: { Banknote: 3 },
       output: { Bond: 1 },
    };
    StockExchange: IBuildingDefinition = {
       name: () => t(L.StockExchange),
-      input: { Bond: 10 },
+      input: { Bond: 3 },
       output: { Stock: 1 },
    };
    Caravansary: IBuildingDefinition = {

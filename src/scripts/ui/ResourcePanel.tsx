@@ -54,7 +54,7 @@ export function ResourcePanel(): React.ReactNode {
                <div
                   className="row"
                   style={{ width: "150px" }}
-                  aria-label={t(L.Happiness)}
+                  aria-label={`${t(L.PowerUsed)}/${t(L.PowerAvailable)}`}
                   data-balloon-pos="down"
                   data-balloon-text="left"
                >

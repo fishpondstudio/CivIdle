@@ -76,7 +76,7 @@ import type {
    IResourceImportBuildingData,
    IWarehouseBuildingData,
 } from "./Tile";
-import { BuildingOptions, MarketOptions, WarehouseOptions } from "./Tile";
+import { MarketOptions, WarehouseOptions } from "./Tile";
 
 let timeSinceLastTick = 0;
 
@@ -454,17 +454,18 @@ function tickTile(xy: string, gs: GameState, offline: boolean): void {
    if (
       hasFeature(GameFeature.Electricity, gs) &&
       canBeElectrified(building.type) &&
-      hasFlag(building.options, BuildingOptions.Electrification)
+      building.electrification > 0
    ) {
-      const requiredPower = building.level * BUILDING_POWER_TO_LEVEL;
+      building.electrification = clamp(building.electrification, 0, building.level);
+      const requiredPower = building.electrification * BUILDING_POWER_TO_LEVEL;
       if (getAvailableWorkers("Power") >= requiredPower) {
          useWorkers("Power", requiredPower, xy);
          safePush(Tick.next.tileMultipliers, xy, {
             source: t(L.Electrification),
-            input: building.level,
-            output: building.level,
+            input: building.electrification,
+            output: building.electrification,
          });
-         Tick.next.electrified[xy] = building.level;
+         Tick.next.electrified[xy] = building.electrification;
       }
    }
 
