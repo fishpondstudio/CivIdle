@@ -417,5 +417,26 @@ export function onBuildingProductionComplete(xy: string, gs: GameState, offline:
          addMultiplier("Armory", { worker: 1, storage: 1, output: 1 }, buildingName);
          break;
       }
+      case "EiffelTower": {
+         const neighborXys: string[] = [];
+         let count = 0;
+         for (const neighbor of grid.getNeighbors(xyToPoint(xy))) {
+            const neighborXy = pointToXy(neighbor);
+            const building = gs.tiles[neighborXy].building;
+            if (building && building.type === "SteelMill") {
+               neighborXys.push(neighborXy);
+               ++count;
+            }
+         }
+         for (const xy of neighborXys) {
+            safePush(Tick.next.tileMultipliers, xy, {
+               worker: count,
+               storage: count,
+               output: count,
+               source: buildingName,
+            });
+         }
+         break;
+      }
    }
 }

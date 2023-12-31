@@ -1,5 +1,5 @@
 {
-   "cSpell.words": ["Cooldown", "hitmap", "Koffi", "lerp", "unlockable"],
+   "cSpell.words": ["Cooldown", "Gameplay", "hitmap", "Koffi", "lerp", "unlockable"],
    "task.allowAutomaticTasks": "on",
    "typescript.tsdk": "node_modules\\typescript\\lib"
 }

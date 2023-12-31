@@ -631,7 +631,9 @@ export function exploreTile(xy: string, gs: GameState): void {
 export const ST_PETERS_FAITH_MULTIPLIER = 0.01;
 export const ST_PETERS_STORAGE_MULTIPLIER = 10 * 60 * 60;
 
-export const BUILDING_POWER_TO_LEVEL = 10;
+export function getPowerRequired(electrification: number): number {
+   return Math.round(Math.pow(2, electrification - 1) * 10);
+}
 
 export function canBeElectrified(b: Building): boolean {
    if (isSpecialBuilding(b)) {

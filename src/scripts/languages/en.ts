@@ -421,6 +421,9 @@ export const EN = {
    Colosseum: "Colosseum",
    ColosseumDesc:
       "Chariot Workshops are exempt from -1 happiness. Consumes 10 chariots and produce 10 happiness",
+   EiffelTower: "Eiffel Tower",
+   EiffelTowerDesc:
+      "All adjacent steel mills get +N Production, Storage and Worker Multiplier. N = Number of adjacent steel mills",
    CircusMaximus: "Circus Maximus",
    CircusMaximusDesc:
       "+5 Happiness. All Actor's Guilds, Writer's Guilds and Painter's Guilds get +1 Production and Storage Multiplier",
@@ -676,6 +679,8 @@ export const EN = {
    GreatPeopleName: "Name",
    GreatPeopleAmount: "Amount",
    GreatPeopleThisRun: "Great People From This Run",
+   GreatPeopleThisRunShort: "This Run",
+   GreatPeoplePermanentShort: "Permanent",
    PermanentGreatPeople: "Permanent Great People",
    PermanentGreatPeopleShowInModal: "Show In A Popup Window",
    GreatPeopleWiki: "Great People Wiki",
@@ -767,6 +772,13 @@ export const EN = {
    NextMarketUpdateIn: "Next Market Update In",
    Theme: "Theme",
    Shortcut: "Shortcut",
+   Gameplay: "Gameplay",
+   Sound: "Sound",
+   SoundEffect: "Sound Effect",
+   SoundEffectDesc: "Turn on or off sound effect in the game",
+   RemoveResidualConstructionResources: "Remove Residual Construction Resources",
+   RemoveResidualConstructionResourcesDesc:
+      "After the construction/upgrade of a building, there might be some amount of residual construction resources left. Enabling this will remove those once the consutruction/upgrade is complete",
    ThemeColor: "Theme Color",
    ThemeColorWorldBackground: "World Background",
    ThemeColorResearchBackground: "Research Background",

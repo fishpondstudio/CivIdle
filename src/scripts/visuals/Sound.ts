@@ -6,6 +6,7 @@ import error from "../../sounds/error.mp3";
 import kaching from "../../sounds/kaching.mp3";
 import levelup from "../../sounds/levelup.mp3";
 import music from "../../sounds/music/pilgrimage-ancient-mediaeval-harp.mp3";
+import { getGameOptions } from "../Global";
 
 sound.add("click", click);
 sound.add("beep", beep);
@@ -16,25 +17,43 @@ sound.add("bubble", bubble);
 sound.add("music", music);
 
 export function playClick() {
+   if (!getGameOptions().soundEffect) {
+      return;
+   }
    sound.play("click");
 }
 
 export function playBeep() {
+   if (!getGameOptions().soundEffect) {
+      return;
+   }
    sound.play("beep");
 }
 
 export function playError() {
+   if (!getGameOptions().soundEffect) {
+      return;
+   }
    sound.play("error");
 }
 
 export function playKaching() {
+   if (!getGameOptions().soundEffect) {
+      return;
+   }
    sound.play("kaching");
 }
 
 export function playLevelUp() {
+   if (!getGameOptions().soundEffect) {
+      return;
+   }
    sound.play("levelup");
 }
 
 export function playBubble() {
+   if (!getGameOptions().soundEffect) {
+      return;
+   }
    sound.play("bubble");
 }

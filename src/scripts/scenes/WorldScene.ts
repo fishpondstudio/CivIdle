@@ -1,17 +1,6 @@
 import { SmoothGraphics } from "@pixi/graphics-smooth";
-import type {
-   FederatedPointerEvent,
-   IPointData,
-   Sprite,
-   utils} from "pixi.js";
-import {
-   Color,
-   Container,
-   LINE_CAP,
-   LINE_JOIN,
-   ParticleContainer,
-   TilingSprite
-} from "pixi.js";
+import type { FederatedPointerEvent, IPointData, Sprite, utils } from "pixi.js";
+import { Color, Container, LINE_CAP, LINE_JOIN, ParticleContainer, TilingSprite } from "pixi.js";
 import { TILE_SIZE, getGameOptions, getGameState } from "../Global";
 import { GameFeature, hasFeature } from "../logic/FeatureLogic";
 import type { GameOptions, GameState } from "../logic/GameState";
@@ -216,6 +205,8 @@ export class WorldScene extends ViewportScene {
             case "LighthouseOfAlexandria":
             case "HangingGarden":
             case "ChichenItza":
+            case "StatueOfZeus":
+            case "Poseidon":
                this.highlightAdjacentTiles(grid);
                break;
          }

@@ -28,7 +28,6 @@ import { Singleton } from "../utilities/Singleton";
 import { Vector2, v2 } from "../utilities/Vector2";
 import { L, t } from "../utilities/i18n";
 import {
-   BUILDING_POWER_TO_LEVEL,
    IOCalculation,
    addResources,
    addTransportation,
@@ -42,6 +41,7 @@ import {
    getBuildingCost,
    getBuildingValue,
    getMarketPrice,
+   getPowerRequired,
    getScienceFromWorkers,
    getStockpileMax,
    getStorageFor,
@@ -318,6 +318,13 @@ function tickTile(xy: string, gs: GameState, offline: boolean): void {
       Tick.next.totalValue += Config.Resource[res].canPrice ? (Config.ResourcePrice[res] ?? 0) * amount : 0;
       safePush(Tick.next.resourcesByXy, res, xy);
       safePush(Tick.next.resourcesByGrid, res, xyToPointArray(xy));
+      if (
+         getGameOptions().removeResidualConstructionResource &&
+         !Config.Building[building.type].input[res] &&
+         !Config.Building[building.type].output[res]
+      ) {
+         delete building.resources[res];
+      }
    });
 
    const requiredDeposits = Config.Building[building.type].deposit;
@@ -457,7 +464,7 @@ function tickTile(xy: string, gs: GameState, offline: boolean): void {
       building.electrification > 0
    ) {
       building.electrification = clamp(building.electrification, 0, building.level);
-      const requiredPower = building.electrification * BUILDING_POWER_TO_LEVEL;
+      const requiredPower = getPowerRequired(building.electrification);
       if (getAvailableWorkers("Power") >= requiredPower) {
          useWorkers("Power", requiredPower, xy);
          safePush(Tick.next.tileMultipliers, xy, {

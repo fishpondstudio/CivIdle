@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import type { PropsWithChildren} from "react";
+import type { PropsWithChildren } from "react";
 import { useEffect, useRef, useState } from "react";
 import { Tick } from "../logic/TickLogic";
 import { PlayerMapScene } from "../scenes/PlayerMapScene";
@@ -9,6 +9,7 @@ import { sizeOf } from "../utilities/Helper";
 import { Singleton } from "../utilities/Singleton";
 import { L, t } from "../utilities/i18n";
 import { AboutModal } from "./AboutModal";
+import { GameplayOptionPage } from "./GameplayOptionPage";
 import { showModal } from "./GlobalModal";
 import { PatchNotesPage } from "./PatchNotesPage";
 import { ShortcutPage } from "./ShortcutPage";
@@ -158,6 +159,14 @@ export function MenuComponent(): React.ReactNode {
                      active: active === "options",
                   })}
                >
+                  <div
+                     className="menu-popover-item"
+                     onPointerDown={() => {
+                        Singleton().routeTo(GameplayOptionPage, {});
+                     }}
+                  >
+                     <MenuItem check={false}>{t(L.Gameplay)}</MenuItem>
+                  </div>
                   <div
                      className="menu-popover-item"
                      onPointerDown={() => {

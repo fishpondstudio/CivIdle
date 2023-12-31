@@ -168,7 +168,7 @@ export function unlockableTechs(gs: GameState): Tech[] {
 export function getGreatPeopleChoices(age: TechAge): GreatPeopleChoice {
    const choices: GreatPerson[] = [];
    const pool = shuffle(keysOf(filterOf(Config.GreatPerson, (_, v) => v.age === age)));
-   console.assert(pool.length > 3);
+   console.assert(pool.length >= 3);
    for (let i = 0; i < 3; i++) {
       choices.push(pool[i]);
    }

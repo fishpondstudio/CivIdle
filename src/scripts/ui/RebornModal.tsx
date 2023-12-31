@@ -2,7 +2,7 @@ import { useState } from "react";
 import { resetToCity, saveGame, useGameOptions, useGameState } from "../Global";
 import type { City } from "../definitions/CityDefinitions";
 import { Config } from "../logic/Config";
-import { getGreatPeopleAtReborn, rollGreatPeople } from "../logic/RebornLogic";
+import { getGreatPeopleAtReborn, rollPermanentGreatPeople } from "../logic/RebornLogic";
 import { Tick } from "../logic/TickLogic";
 import { firstKeyOf, forEach, formatPercent, jsxMapOf, mapOf, reduceOf } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
@@ -139,7 +139,7 @@ export function RebornModal(): React.ReactNode {
                <button
                   style={{ padding: "0 15px" }}
                   onClick={() => {
-                     rollGreatPeople(getGreatPeopleAtReborn());
+                     rollPermanentGreatPeople(getGreatPeopleAtReborn());
                      forEach(gameState.greatPeople, (k, v) => {
                         if (options.greatPeople[k]) {
                            options.greatPeople[k]!.amount += v;

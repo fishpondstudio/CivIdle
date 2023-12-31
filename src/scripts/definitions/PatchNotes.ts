@@ -5,6 +5,18 @@ interface PatchNote {
 
 export const PatchNotes: PatchNote[] = [
    {
+      version: "0.1.96",
+      content: [
+         ["QoL", "Show permanent great people amount when choosing a great person"],
+         ["QoL", "Allow turn of game sound effects"],
+         [
+            "QoL",
+            "Add an option to automatically remove residual construction resources (enabled by default)",
+         ],
+         ["Bugfix", "Fix a bug where production priority is not shown on mines"],
+      ],
+   },
+   {
       version: "0.1.95",
       content: [
          ["Bugfix", "Fix construction cost of wonders are incorrect"],

@@ -454,7 +454,7 @@ export class TechDefinitions {
       name: () => t(L.Alloy),
       column: 14,
       requireTech: ["PrivateOwnership"],
-      unlockBuilding: ["SteelMill"],
+      unlockBuilding: ["SteelMill", "EiffelTower"],
    };
 
    SteamEngine: ITechDefinition = {

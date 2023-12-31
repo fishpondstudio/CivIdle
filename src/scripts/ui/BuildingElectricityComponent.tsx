@@ -1,14 +1,15 @@
 import classNames from "classnames";
 import { notifyGameStateUpdate } from "../Global";
 import {
-   BUILDING_POWER_TO_LEVEL,
    ElectrificationStatus,
    applyToAllBuildings,
    canBeElectrified,
    getElectrificationStatus,
+   getPowerRequired,
 } from "../logic/BuildingLogic";
 import { Config } from "../logic/Config";
 import { GameFeature, hasFeature } from "../logic/FeatureLogic";
+import { formatNumber } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
 import { playClick } from "../visuals/Sound";
 import type { IBuildingComponentProps } from "./BuildingPage";
@@ -26,7 +27,7 @@ export function BuildingElectricityComponent({ gameState, xy }: IBuildingCompone
       <fieldset>
          <legend>{t(L.Electrification)}</legend>
          {t(L.ElectrificationDesc, {
-            power: building.electrification * BUILDING_POWER_TO_LEVEL,
+            power: formatNumber(getPowerRequired(building.electrification)),
             level: building.electrification,
          })}
          <div className="sep5"></div>

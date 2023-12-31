@@ -1,8 +1,10 @@
 import type { City } from "./definitions/CityDefinitions";
+import type { TechAge } from "./definitions/TechDefinitions";
 import { Config } from "./logic/Config";
 import type { GameOptions } from "./logic/GameState";
 import { GameState, SavedGame, initializeGameState } from "./logic/GameState";
-import { rollGreatPeople } from "./logic/RebornLogic";
+import { rollPermanentGreatPeople } from "./logic/RebornLogic";
+import { getGreatPeopleChoices } from "./logic/TechLogic";
 import { makeBuilding } from "./logic/Tile";
 import { SteamClient, isSteam } from "./rpc/SteamClient";
 import { Grid } from "./scenes/Grid";
@@ -59,10 +61,18 @@ if (import.meta.env.DEV) {
    // @ts-expect-error
    window.saveGame = saveGame;
    // @ts-expect-error
-   window.rollGreatPeople = rollGreatPeople;
+   window.rollPermanentGreatPeople = rollPermanentGreatPeople;
    // @ts-expect-error
    window.cameraPan = (target: number, time: number) => {
       Singleton().sceneManager.getCurrent(WorldScene)?.cameraPan(target, time);
+   };
+   // @ts-expect-error
+   window.rollGreatPeople = (age: TechAge) => {
+      const gs = getGameState();
+      if (age) {
+         gs.greatPeopleChoices.push(getGreatPeopleChoices(age));
+      }
+      notifyGameStateUpdate(gs);
    };
 }
 
@@ -172,8 +182,8 @@ function migrateSavedGame(gs: SavedGame) {
             tile.building = makeBuilding(tile.building);
          }
       }
-      forEach(tile.building?.resources, (res) => {
-         if (!Config.Resource[res]) {
+      forEach(tile.building?.resources, (res, amount) => {
+         if (!Config.Resource[res] || !Number.isFinite(amount)) {
             delete tile.building!.resources[res];
          }
       });

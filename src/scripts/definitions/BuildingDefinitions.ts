@@ -803,6 +803,16 @@ export class BuildingDefinitions {
       special: BuildingSpecial.WorldWonder,
       wikipedia: "Circus_Maximus",
    };
+   EiffelTower: IBuildingDefinition = {
+      name: () => t(L.EiffelTower),
+      desc: () => t(L.EiffelTowerDesc),
+      input: {},
+      output: {},
+      construction: { Steel: 300 },
+      max: 1,
+      special: BuildingSpecial.WorldWonder,
+      wikipedia: "Eiffel_Tower",
+   };
    // #endregion /////////////////////////////////////////////////////////////////////////////////////////////
 
    // GarumMaker: IBuildingDefinition = {

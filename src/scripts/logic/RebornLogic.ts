@@ -13,7 +13,7 @@ export function getGreatPersonUpgradeCost(targetLevel: number): number {
    return Math.pow(2, targetLevel - 1);
 }
 
-export function rollGreatPeople(amount: number): void {
+export function rollPermanentGreatPeople(amount: number): void {
    let candidates = shuffle(keysOf(Config.GreatPerson));
    for (let i = 0; i < amount; i++) {
       const choice: GreatPerson[] = [];

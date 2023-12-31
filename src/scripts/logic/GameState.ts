@@ -90,6 +90,8 @@ export class GameOptions {
    shortcuts: Partial<Record<Shortcut, IShortcutConfig>> = {};
    greatPeople: Partial<Record<GreatPerson, { level: number; amount: number }>> = {};
    greatPeopleChoices: GreatPeopleChoice[] = [];
+   soundEffect = true;
+   removeResidualConstructionResource = true;
 }
 
 export const SAVE_FILE_VERSION = 1;
