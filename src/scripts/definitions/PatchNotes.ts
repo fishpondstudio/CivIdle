@@ -5,6 +5,13 @@ interface PatchNote {
 
 export const PatchNotes: PatchNote[] = [
    {
+      version: "0.1.98",
+      content: [
+         ["Content", "Allow destroying resources in a building's storage"],
+         ["QoL", "Allow set building options as default"],
+      ],
+   },
+   {
       version: "0.1.97",
       content: [
          [

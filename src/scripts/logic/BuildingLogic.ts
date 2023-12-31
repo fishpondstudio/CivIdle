@@ -573,11 +573,11 @@ export function getBuilderCapacity(
 
 export function applyToAllBuildings<T extends IBuildingData>(
    building: Building,
-   settings: (b: IBuildingData) => Partial<T>,
+   getOptions: (b: IBuildingData) => Partial<T>,
    gs: GameState,
 ) {
    forEach(getBuildingsByType(building, gs), (xy, tile) => {
-      Object.assign(tile.building, settings(tile.building));
+      Object.assign(tile.building, getOptions(tile.building));
    });
 }
 

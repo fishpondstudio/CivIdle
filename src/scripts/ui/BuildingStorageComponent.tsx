@@ -1,11 +1,14 @@
 import classNames from "classnames";
 import warning from "../../images/warning.png";
+import { notifyGameStateUpdate } from "../Global";
 import { getMultipliersFor, getStorageFor } from "../logic/BuildingLogic";
 import { Config } from "../logic/Config";
 import { Tick } from "../logic/TickLogic";
-import { formatPercent, jsxMapOf } from "../utilities/Helper";
+import { formatNumber, formatPercent, jsxMapOf } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
 import type { IBuildingComponentProps } from "./BuildingPage";
+import { ConfirmModal } from "./ConfirmModal";
+import { showModal } from "./GlobalModal";
 import { FormatNumber } from "./HelperComponents";
 import { ProgressBarComponent } from "./ProgressBarComponent";
 
@@ -82,6 +85,26 @@ export function BuildingStorageComponent({ gameState, xy }: IBuildingComponentPr
                      {jsxMapOf(building.resources, (res, value) => {
                         return (
                            <li className="row" key={res}>
+                              <div
+                                 className="m-icon small text-red mr5 pointer"
+                                 onClick={() => {
+                                    showModal(
+                                       <ConfirmModal
+                                          title={t(L.ConfirmDestroyResourceTitle)}
+                                          content={t(L.ConfirmDestroyResourceContent, {
+                                             resource: Config.Resource[res].name(),
+                                             amount: formatNumber(value),
+                                          })}
+                                          onConfirm={() => {
+                                             delete building.resources[res];
+                                             notifyGameStateUpdate(gameState);
+                                          }}
+                                       />,
+                                    );
+                                 }}
+                              >
+                                 delete
+                              </div>
                               <div className="f1">{Config.Resource[res].name()}</div>
                               <div>
                                  <FormatNumber value={value} />

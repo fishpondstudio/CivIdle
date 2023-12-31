@@ -275,16 +275,19 @@ function tickTile(xy: string, gs: GameState, offline: boolean): void {
       });
       if (completed) {
          building.level++;
-         if (
-            building.status === "building" ||
-            (building.status === "upgrading" && building.level >= building.desiredLevel)
-         ) {
+         if (building.status === "building") {
+            building.status = "completed";
+            const defaults = getGameOptions().buildingDefaults[building.type];
+            if (defaults) {
+               Object.assign(building, defaults);
+            }
+            onBuildingComplete(xy, gs);
+         } else if (building.status === "upgrading" && building.level >= building.desiredLevel) {
             building.status = "completed";
          }
          forEach(cost, (res, amount) => {
             safeAdd(building.resources, res, -amount);
          });
-         onBuildingComplete(xy, gs);
       }
       return;
    }

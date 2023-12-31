@@ -3,19 +3,17 @@ import warning from "../../images/warning.png";
 import { notifyGameStateUpdate } from "../Global";
 import {
    IOCalculation,
-   applyToAllBuildings,
    getBuildingName,
    getMultipliersFor,
    getResourceName,
    getWorkersFor,
    isSpecialBuilding,
 } from "../logic/BuildingLogic";
-import { Config } from "../logic/Config";
 import { getBuildingIO } from "../logic/IntraTickCache";
 import { Tick } from "../logic/TickLogic";
 import { formatPercent, isEmpty } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
-import { playClick } from "../visuals/Sound";
+import { ApplyToAllComponent } from "./ApplyToAllComponent";
 import type { IBuildingComponentProps } from "./BuildingPage";
 import { FormatNumber, fmtNumber } from "./HelperComponents";
 
@@ -204,15 +202,11 @@ export function BuildingWorkerComponent({ gameState, xy }: IBuildingComponentPro
                   className="mh0"
                />
                <div className="sep10" />
-               <div
-                  className="text-link text-small"
-                  onClick={() => {
-                     playClick();
-                     applyToAllBuildings(building.type, () => ({ capacity: building.capacity }), gameState);
-                  }}
-               >
-                  {t(L.ApplyToAll, { building: Config.Building[building.type].name() })}
-               </div>
+               <ApplyToAllComponent
+                  building={building}
+                  getOptions={() => ({ capacity: building.capacity })}
+                  gameState={gameState}
+               />
             </>
          )}
       </fieldset>

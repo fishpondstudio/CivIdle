@@ -2,16 +2,14 @@ import classNames from "classnames";
 import { notifyGameStateUpdate } from "../Global";
 import {
    ElectrificationStatus,
-   applyToAllBuildings,
    canBeElectrified,
    getElectrificationStatus,
    getPowerRequired,
 } from "../logic/BuildingLogic";
-import { Config } from "../logic/Config";
 import { GameFeature, hasFeature } from "../logic/FeatureLogic";
 import { formatNumber } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
-import { playClick } from "../visuals/Sound";
+import { ApplyToAllComponent } from "./ApplyToAllComponent";
 import type { IBuildingComponentProps } from "./BuildingPage";
 
 export function BuildingElectricityComponent({ gameState, xy }: IBuildingComponentProps): React.ReactNode {
@@ -45,19 +43,11 @@ export function BuildingElectricityComponent({ gameState, xy }: IBuildingCompone
             className="mh0"
          />
          <div className="sep15" />
-         <div
-            className="text-link text-small"
-            onClick={() => {
-               playClick();
-               applyToAllBuildings(
-                  building.type,
-                  () => ({ electrification: building.electrification }),
-                  gameState,
-               );
-            }}
-         >
-            {t(L.ApplyToAll, { building: Config.Building[building.type].name() })}
-         </div>
+         <ApplyToAllComponent
+            building={building}
+            getOptions={() => ({ electrification: building.electrification })}
+            gameState={gameState}
+         />
          <div className="separator"></div>
          <div className="row">
             <div className="f1">{t(L.ElectrificationStatus)}</div>

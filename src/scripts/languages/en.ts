@@ -761,7 +761,10 @@ export const EN = {
    PlayerTradeClaimTileFirst: "Claim Your Tile On Trade Map",
    PlayerTradeClaimTileFirstWarning:
       "You can only trade with other players after you've claimed your tile on the trade map",
-   ApplyToAll: "Apply To All %{building}",
+   ApplyToAll: "Apply To All",
+   ApplyToAllBuilding: "Apply To All %{building}",
+   SetAsDefault: "Set As Default",
+   SetAsDefaultBuilding: "Set As Default For All %{building}",
    NothingHere: "Nothing here",
    ContentInDevelopment: "Content In Development",
    ContentInDevelopmentDesc:
@@ -859,4 +862,9 @@ export const EN = {
    ElectrificationStatusNotActive: "Not Active",
    ElectrificationStatusNoPower: "No Power",
    ElectrificationStatusActive: "Active",
+   ConfirmYes: "Yes",
+   ConfirmNo: "No",
+   ConfirmDestroyResourceTitle: "Confirm Destroying Resources",
+   ConfirmDestroyResourceContent:
+      "You are about to destroy %{amount} %{resource}. This cannot be undone. Are you sure?",
 };

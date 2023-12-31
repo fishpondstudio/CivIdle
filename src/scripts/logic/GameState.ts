@@ -14,7 +14,7 @@ import { Config } from "./Config";
 import type { IShortcutConfig, Shortcut } from "./Shortcut";
 import { unlockTech } from "./TechLogic";
 import { ensureTileFogOfWar, findNearest } from "./TerrainLogic";
-import type { ITileData } from "./Tile";
+import type { IBuildingData, ITileData } from "./Tile";
 import { makeBuilding } from "./Tile";
 
 export interface ITransportationData {
@@ -91,7 +91,7 @@ export class GameOptions {
    greatPeople: Partial<Record<GreatPerson, { level: number; amount: number }>> = {};
    greatPeopleChoices: GreatPeopleChoice[] = [];
    soundEffect = true;
-   removeResidualConstructionResource = true;
+   buildingDefaults: Partial<Record<Building, Partial<IBuildingData>>> = {};
 }
 
 export const SAVE_FILE_VERSION = 1;
