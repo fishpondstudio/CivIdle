@@ -421,6 +421,8 @@ export const EN = {
    Colosseum: "Colosseum",
    ColosseumDesc:
       "Chariot Workshops are exempt from -1 happiness. Consumes 10 chariots and produce 10 happiness",
+   Rijksmuseum: "Rijksmuseum",
+   RijksmuseumDesc: "Rijksmuseum",
    EiffelTower: "Eiffel Tower",
    EiffelTowerDesc:
       "All adjacent steel mills get +N Production, Storage and Worker Multiplier. N = Number of adjacent steel mills",

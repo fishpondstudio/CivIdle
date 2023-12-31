@@ -813,6 +813,16 @@ export class BuildingDefinitions {
       special: BuildingSpecial.WorldWonder,
       wikipedia: "Eiffel_Tower",
    };
+   Rijksmuseum: IBuildingDefinition = {
+      name: () => t(L.Rijksmuseum),
+      desc: () => t(L.RijksmuseumDesc),
+      input: {},
+      output: {},
+      construction: { Painting: 300 },
+      max: 1,
+      special: BuildingSpecial.WorldWonder,
+      wikipedia: "Rijksmuseum",
+   };
    // #endregion /////////////////////////////////////////////////////////////////////////////////////////////
 
    // GarumMaker: IBuildingDefinition = {

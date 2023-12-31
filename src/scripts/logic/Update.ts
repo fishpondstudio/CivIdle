@@ -318,13 +318,6 @@ function tickTile(xy: string, gs: GameState, offline: boolean): void {
       Tick.next.totalValue += Config.Resource[res].canPrice ? (Config.ResourcePrice[res] ?? 0) * amount : 0;
       safePush(Tick.next.resourcesByXy, res, xy);
       safePush(Tick.next.resourcesByGrid, res, xyToPointArray(xy));
-      if (
-         getGameOptions().removeResidualConstructionResource &&
-         !Config.Building[building.type].input[res] &&
-         !Config.Building[building.type].output[res]
-      ) {
-         delete building.resources[res];
-      }
    });
 
    const requiredDeposits = Config.Building[building.type].deposit;

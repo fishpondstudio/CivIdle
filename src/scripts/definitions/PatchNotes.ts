@@ -5,10 +5,19 @@ interface PatchNote {
 
 export const PatchNotes: PatchNote[] = [
    {
+      version: "0.1.97",
+      content: [
+         [
+            "Bugfix",
+            "Reverted: Add an option to automatically remove residual construction resources (enabled by default)",
+         ],
+      ],
+   },
+   {
       version: "0.1.96",
       content: [
          ["QoL", "Show permanent great people amount when choosing a great person"],
-         ["QoL", "Allow turn of game sound effects"],
+         ["QoL", "Allow turn off game sound effects"],
          [
             "QoL",
             "Add an option to automatically remove residual construction resources (enabled by default)",

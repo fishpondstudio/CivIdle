@@ -35,7 +35,7 @@ export function GameplayOptionPage(): React.ReactNode {
                   </div>
                </div>
             </fieldset>
-            <fieldset>
+            {/* <fieldset>
                <legend>{t(L.Gameplay)}</legend>
                <div className="row">
                   <div className="f1">
@@ -60,7 +60,7 @@ export function GameplayOptionPage(): React.ReactNode {
                      )}
                   </div>
                </div>
-            </fieldset>
+            </fieldset> */}
          </div>
       </div>
    );
