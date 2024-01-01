@@ -196,6 +196,8 @@ export function calculateTierAndPrice(gs: GameState) {
       });
    }
 
+   const endResources: Resource[] = [];
+
    forEach(Config.Resource, (r) => {
       if (Config.Resource[r].canPrice) {
          console.assert(Config.ResourceTier[r], `Resource = ${r} does not have a tier`);
@@ -203,6 +205,16 @@ export function calculateTierAndPrice(gs: GameState) {
       } else {
          Config.ResourcePrice[r] = 1;
          Config.ResourceTier[r] = 1;
+      }
+
+      let isEndResource = true;
+      forEach(Config.Building, (b, def) => {
+         if (def.input[r]) {
+            isEndResource = false;
+         }
+      });
+      if (isEndResource) {
+         endResources.push(r);
       }
    });
 
@@ -224,6 +236,16 @@ export function calculateTierAndPrice(gs: GameState) {
    console.log("ResourceTier", sortTabulate(Config.ResourceTier));
    console.log("ResourcePrice", sortTabulate(Config.ResourcePrice));
    console.log("ResourceTech", sortTabulate(Config.ResourceTech));
+   console.log(
+      "EndResources",
+      endResources
+         .filter((r) => Config.Resource[r].canPrice && Config.Resource[r].canStore)
+         .map((r) => ({
+            Resource: r,
+            Tier: Config.ResourceTier[r],
+            Price: Config.ResourcePrice[r],
+         })),
+   );
 }
 
 function sortTabulate<T extends string>(dict: PartialTabulate<T>): string[] {

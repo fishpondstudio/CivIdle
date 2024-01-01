@@ -386,6 +386,11 @@ export const EN = {
    JamesWatt: "James Watt",
    KarlMarx: "Karl Marx",
    AdaLovelace: "Ada Lovelace",
+   NapoleonBonaparte: "Napoleon Bonaparte",
+   CharlesDarwin: "Charles Darwin",
+   FlorenceNightingale: "Florence Nightingale",
+   FlorenceNightingaleDesc: "+%{value} Happiness",
+   CharlesDarwinDesc: "+%{value} Science From Busy Workers",
    JuliusCaesar: "Julius Caesar",
    JuliusCaesarDesc: "+%{value} Science from Idle Workers",
    Augustus: "Augustus",
@@ -417,12 +422,16 @@ export const EN = {
    MausoleumAtHalicarnassusDesc: "Free transportation within 2 tile range",
    HangingGarden: "Hanging Garden",
    HangingGardenDesc:
-      "+1 Builder Capacity Multiplier. Adjacent aqueducts get +1 Production Storage and Worker Capacity Multiplier",
+      "+1 Builder Capacity Multiplier. Adjacent aqueducts get +1 Production, Storage and Worker Capacity Multiplier",
    Colosseum: "Colosseum",
    ColosseumDesc:
       "Chariot Workshops are exempt from -1 happiness. Consumes 10 chariots and produce 10 happiness",
+   SummerPalace: "Summer Palace",
+   SummerPalaceDesc:
+      "All adjacent buildings that consume or produce Gunpowder are exempt from -1 Happiness. All buildings that consume or produce Gunpowder get +1 Production, Storage and Worker Capacity",
    Rijksmuseum: "Rijksmuseum",
-   RijksmuseumDesc: "Rijksmuseum",
+   RijksmuseumDesc:
+      "+5 Happiness. All buildings that consume or produce Culture get +1 Production, Storage and Worker Capacity",
    EiffelTower: "Eiffel Tower",
    EiffelTowerDesc:
       "All adjacent steel mills get +N Production, Storage and Worker Multiplier. N = Number of adjacent steel mills",
@@ -473,7 +482,8 @@ export const EN = {
    TajMahalDesc:
       "A new great person of Middle Age is born. +5 Builder Capacity Multiplier when upgrading buildings over Level 20",
    StatueOfLiberty: "Statue Of Liberty",
-   StatueOfLibertyDesc: "Statue Of Liberty",
+   StatueOfLibertyDesc:
+      "All adjacent buildings get +N Production, Storage and Worker Capacity Multiplier. N = Number of its adjacent buildings of the same type",
    Moai: "Moai",
    MoaiDesc: "Moai",
    BranCastle: "Bran Castle",
@@ -484,7 +494,7 @@ export const EN = {
    SaintBasilsCathedralDesc: "Saint Basil's Cathedral",
    ChichenItza: "Chichen Itza",
    ChichenItzaDesc:
-      "All adjacent buildings get +1 Production Multiplier, Worker Capacity Multiplier and Storage Multiplier",
+      "All adjacent buildings get +1 Production Multiplier, Storage and Worker Capacity Multiplier",
    Aqueduct: "Aqueduct",
    FishPond: "Fish Pond",
    GarumMaker: "Garum Maker",
@@ -518,13 +528,14 @@ export const EN = {
    LuxorTemple: "Luxor Temple",
    LuxorTempleDesc: "+1 Science From Busy Workers",
    Neuschwanstein: "Neuschwanstein",
-   NeuschwansteinDesc: "Neuschwanstein",
+   NeuschwansteinDesc: "+10 Builder Capacity Multiplier when constructing wonders",
    CristoRedentor: "Cristo Redentor",
    CristoRedentorDesc: "Cristo Redentor",
    GoldenGateBridge: "Golden Gate Bridge",
    GoldenGateBridgeDesc: "Golden Gate Bridge",
    BrandenburgGate: "Brandenburg Gate",
-   BrandenburgGateDesc: "Brandenburg Gate",
+   BrandenburgGateDesc:
+      "All coal mines and oil wells get +1 Production, Storage and Worker Capacity Multiplier. Oil refineries get +1 Production, Storage and Worker Capacity Multiplier for each adjacent oil tile",
    ArcDeTriomphe: "Arc de Triomphe",
    ArcDeTriompheDesc: "Arc de Triomphe",
    SydneyOperaHouse: "Sydney Opera House",

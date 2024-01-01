@@ -78,6 +78,7 @@ function forEachMultiplier(
    if (b) {
       Tick.current.buildingMultipliers[b.type]?.forEach((m) => func(m));
    }
+   Tick.current.globalMultipliers.storage.forEach((m) => func({ storage: m.value, source: m.source }));
    return result;
 }
 

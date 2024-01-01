@@ -301,12 +301,12 @@ export class BuildingDefinitions {
    };
    PublishingHouse: IBuildingDefinition = {
       name: () => t(L.PublishingHouse),
-      input: { Politics: 1, Paper: 10 },
+      input: { Politics: 1, Book: 1 },
       output: { Newspaper: 1 },
    };
    MagazinePublisher: IBuildingDefinition = {
       name: () => t(L.MagazinePublisher),
-      input: { Sports: 1, Paper: 10 },
+      input: { Sports: 1, Book: 10 },
       output: { Magazine: 1 },
    };
    // #endregion /////////////////////////////////////////////////////////////////////////////////////////////
@@ -377,11 +377,6 @@ export class BuildingDefinitions {
    };
    Pizzeria: IBuildingDefinition = {
       name: () => t(L.Pizzeria),
-      input: { Cheese: 1, Meat: 1, Flour: 2, Water: 2 },
-      output: { Pizza: 1 },
-   };
-   FertilizerFactory: IBuildingDefinition = {
-      name: () => t(L.FertilizerFactory),
       input: { Cheese: 1, Meat: 1, Flour: 2, Water: 2 },
       output: { Pizza: 1 },
    };
@@ -823,6 +818,56 @@ export class BuildingDefinitions {
       special: BuildingSpecial.WorldWonder,
       wikipedia: "Rijksmuseum",
    };
+   SummerPalace: IBuildingDefinition = {
+      name: () => t(L.SummerPalace),
+      desc: () => t(L.SummerPalaceDesc),
+      input: {},
+      output: {},
+      construction: { Gunpowder: 100, Rifle: 100, Brick: 100 },
+      max: 1,
+      special: BuildingSpecial.WorldWonder,
+      wikipedia: "Summer_Palace",
+   };
+   StatueOfLiberty: IBuildingDefinition = {
+      name: () => t(L.StatueOfLiberty),
+      desc: () => t(L.StatueOfLibertyDesc),
+      input: {},
+      output: {},
+      construction: { Philosophy: 100, Politics: 100, Law: 100 },
+      max: 1,
+      special: BuildingSpecial.WorldWonder,
+      wikipedia: "Statue_of_Liberty",
+   };
+   Neuschwanstein: IBuildingDefinition = {
+      name: () => t(L.Neuschwanstein),
+      desc: () => t(L.NeuschwansteinDesc),
+      input: {},
+      output: {},
+      construction: { Dynamite: 100, Brick: 100, Marble: 100 },
+      max: 1,
+      special: BuildingSpecial.WorldWonder,
+      wikipedia: "Neuschwanstein_Castle",
+   };
+   BrandenburgGate: IBuildingDefinition = {
+      name: () => t(L.BrandenburgGate),
+      desc: () => t(L.BrandenburgGateDesc),
+      input: {},
+      output: {},
+      construction: { Train: 100, Brick: 100, Marble: 100 },
+      max: 1,
+      special: BuildingSpecial.WorldWonder,
+      wikipedia: "Brandenburg_Gate",
+   };
+   // ArcDeTriomphe: IBuildingDefinition = {
+   //    name: () => t(L.ArcDeTriomphe),
+   //    desc: () => t(L.ArcDeTriompheDesc),
+   //    input: {},
+   //    output: {},
+   //    construction: { Culture: 100, Brick: 100, Marble: 100 },
+   //    max: 1,
+   //    special: BuildingSpecial.WorldWonder,
+   //    wikipedia: "Arc_de_Triomphe",
+   // };
    // #endregion /////////////////////////////////////////////////////////////////////////////////////////////
 
    // GarumMaker: IBuildingDefinition = {
@@ -948,15 +993,6 @@ export class BuildingDefinitions {
    //    wikipedia: "Chogha_Zanbil",
    // };
 
-   // Neuschwanstein: IBuildingDefinition = {
-   //    name: () => t(L.Neuschwanstein),
-   //    desc: () => t(L.NeuschwansteinDesc),
-   //    input: {},
-   //    output: {},
-   //    max: 1,
-   //    wikipedia: "Neuschwanstein_Castle",
-   // };
-
    // CristoRedentor: IBuildingDefinition = {
    //    name: () => t(L.CristoRedentor),
    //    desc: () => t(L.CristoRedentorDesc),
@@ -973,24 +1009,6 @@ export class BuildingDefinitions {
    //    output: {},
    //    max: 1,
    //    wikipedia: "Golden_Gate_Bridge",
-   // };
-
-   // BrandenburgGate: IBuildingDefinition = {
-   //    name: () => t(L.BrandenburgGate),
-   //    desc: () => t(L.BrandenburgGateDesc),
-   //    input: {},
-   //    output: {},
-   //    max: 1,
-   //    wikipedia: "Brandenburg_Gate",
-   // };
-
-   // ArcDeTriomphe: IBuildingDefinition = {
-   //    name: () => t(L.ArcDeTriomphe),
-   //    desc: () => t(L.ArcDeTriompheDesc),
-   //    input: {},
-   //    output: {},
-   //    max: 1,
-   //    wikipedia: "Arc_de_Triomphe",
    // };
 
    // SydneyOperaHouse: IBuildingDefinition = {

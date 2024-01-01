@@ -152,7 +152,7 @@ export class GreatPersonDefinitions {
       age: "ClassicalAge",
       tick: (self, level, permanent) => {
          Tick.next.globalMultipliers.sciencePerBusyWorker.push({
-            value: level,
+            value: self.value(level),
             source: t(permanent ? L.SourceGreatPersonPermanent : L.SourceGreatPerson, {
                person: self.name(),
             }),
@@ -349,6 +349,52 @@ export class GreatPersonDefinitions {
       maxLevel: Infinity,
       age: "IndustrialAge",
    });
+
+   NapoleonBonaparte: IGreatPersonDefinition = boostOf({
+      name: () => t(L.NapoleonBonaparte),
+      boost: {
+         multipliers: ["storage", "output"],
+         buildings: ["CannonWorkshop", "GunpowderMill"],
+      },
+      time: "1769 ~ 1821 AD",
+      value: (level) => level,
+      maxLevel: Infinity,
+      age: "IndustrialAge",
+   });
+
+   CharlesDarwin: IGreatPersonDefinition = {
+      name: () => t(L.CharlesDarwin),
+      desc: (self, level) => t(L.CharlesDarwinDesc, { value: self.value(level) }),
+      time: "1809 ~ 1882 AD",
+      value: (level) => level * 2,
+      maxLevel: Infinity,
+      age: "IndustrialAge",
+      tick: (self, level, permanent) => {
+         Tick.next.globalMultipliers.sciencePerBusyWorker.push({
+            value: self.value(level),
+            source: t(permanent ? L.SourceGreatPersonPermanent : L.SourceGreatPerson, {
+               person: self.name(),
+            }),
+         });
+      },
+   };
+
+   FlorenceNightingale: IGreatPersonDefinition = {
+      name: () => t(L.FlorenceNightingale),
+      desc: (self, level) => t(L.FlorenceNightingaleDesc, { value: self.value(level) }),
+      time: "1820 ~ 1910 AD",
+      value: (level) => level * 3,
+      maxLevel: Infinity,
+      age: "IndustrialAge",
+      tick: (self, level, permanent) => {
+         Tick.next.globalMultipliers.happiness.push({
+            value: self.value(level),
+            source: t(permanent ? L.SourceGreatPersonPermanent : L.SourceGreatPerson, {
+               person: self.name(),
+            }),
+         });
+      },
+   };
 
    // LaoZi: IGreatPersonDefinition = {
    //    name: () => t(L.LaoZi),

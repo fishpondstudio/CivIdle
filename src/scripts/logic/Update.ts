@@ -562,7 +562,7 @@ export function transportResource(
    if (getAvailableWorkers("Worker") <= 0) {
       return;
    }
-   const sources = Tick.current.resourcesByGrid[res]?.slice(0).sort((point1, point2) => {
+   const sources = Tick.current.resourcesByGrid[res]?.sort((point1, point2) => {
       return (
          grid.distance(point1[0], point1[1], targetPoint[0], targetPoint[1]) -
          grid.distance(point2[0], point2[1], targetPoint[0], targetPoint[1])

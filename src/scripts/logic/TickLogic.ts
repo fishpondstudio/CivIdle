@@ -61,6 +61,7 @@ export class GlobalMultipliers {
    builderCapacity: IValueWithSource[] = [{ value: 1, source: t(L.BaseMultiplier) }];
    transportCapacity: IValueWithSource[] = [];
    happiness: IValueWithSource[] = [];
+   storage: IValueWithSource[] = [];
 }
 
 export const GlobalMultiplierNames: Record<keyof GlobalMultipliers, () => string> = {
@@ -69,6 +70,7 @@ export const GlobalMultiplierNames: Record<keyof GlobalMultipliers, () => string
    builderCapacity: () => t(L.BuilderCapacity),
    happiness: () => t(L.Happiness),
    transportCapacity: () => t(L.TransportCapacity),
+   storage: () => t(L.StorageMultiplier),
 };
 
 export function freezeTickData(t: ITickData): ITickData {

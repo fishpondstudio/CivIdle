@@ -5,6 +5,29 @@ interface PatchNote {
 
 export const PatchNotes: PatchNote[] = [
    {
+      version: "0.1.99",
+      content: [
+         ["Content", "Industrial Age is here!"],
+         [
+            "Content",
+            "17 New Industrial Age Tech: Rifling, Alloy, Steam Engine, Capitalism, Rapid Fire, Railway, Drilling, Journalism, Imperialism, Electricity, Stock Market, Olympics, Combustion, Electrolysis, Refinery, Gas Pipeline, Urbanization",
+         ],
+         [
+            "Content",
+            "18 New Industrial Age Buildings: Rifle Factory, Gatling Gun Factory, Ironclad Builder, Tank Factory, Steel Mill, Locomotive Factory, Coal Power Plant, Aluminum Smelter, Steamworks, Oil Well, Stock Exchange, Oil Refinery, Parliament, Publishing House, Stadium, Natural Gas Well, Pizzeria, Magazine Publisher",
+         ],
+         ["Content", "3 New Industrial Age Deposits: Oil, Aluminum, Natural Gas"],
+         [
+            "Content",
+            "6 New Industrial Age Wonders: Neuschwanstein, Summer Palace, Eiffel Tower, Brandenburg Gate, Statue of Liberty, Rijksmuseum",
+         ],
+         [
+            "Content",
+            "6 New Industrial Age Great People: James Watt, Karl Marx, Ada Lovelace, Napoleon Bonaparte, Charles Darwin,Florence Nightingale",
+         ],
+      ],
+   },
+   {
       version: "0.1.98",
       content: [
          ["Content", "Allow destroying resources in a building's storage"],

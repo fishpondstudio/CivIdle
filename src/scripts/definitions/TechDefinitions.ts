@@ -447,7 +447,7 @@ export class TechDefinitions {
       name: () => t(L.Rifling),
       column: 14,
       requireTech: ["PrivateOwnership", "Colonialism"],
-      unlockBuilding: ["RifleFactory"],
+      unlockBuilding: ["RifleFactory", "Neuschwanstein"],
    };
 
    Alloy: ITechDefinition = {
@@ -469,7 +469,6 @@ export class TechDefinitions {
       column: 14,
       requireTech: ["Constitution", "Revolution"],
       globalMultiplier: {
-         sciencePerBusyWorker: 1,
          builderCapacity: 1,
       },
       unlockBuilding: ["Parliament"],
@@ -487,6 +486,9 @@ export class TechDefinitions {
       column: 15,
       requireTech: ["Alloy", "SteamEngine"],
       unlockBuilding: ["LocomotiveFactory"],
+      globalMultiplier: {
+         transportCapacity: 1,
+      },
    };
 
    Drilling: ITechDefinition = {
@@ -501,14 +503,17 @@ export class TechDefinitions {
       name: () => t(L.Journalism),
       column: 15,
       requireTech: ["Capitalism"],
-      unlockBuilding: ["PublishingHouse"],
+      unlockBuilding: ["PublishingHouse", "Rijksmuseum"],
+      globalMultiplier: {
+         sciencePerBusyWorker: 1,
+      },
    };
 
    Imperialism: ITechDefinition = {
       name: () => t(L.Imperialism),
       column: 16,
       requireTech: ["Railway", "RapidFire"],
-      unlockBuilding: ["IroncladBuilder"],
+      unlockBuilding: ["IroncladBuilder", "SummerPalace"],
    };
 
    Electricity: ITechDefinition = {
@@ -523,7 +528,10 @@ export class TechDefinitions {
       name: () => t(L.StockMarket),
       column: 16,
       requireTech: ["Journalism"],
-      unlockBuilding: ["StockExchange"],
+      unlockBuilding: ["StockExchange", "StatueOfLiberty"],
+      globalMultiplier: {
+         storage: 1,
+      },
    };
 
    Olympics: ITechDefinition = {
@@ -531,6 +539,9 @@ export class TechDefinitions {
       column: 16,
       requireTech: ["Journalism"],
       unlockBuilding: ["Stadium"],
+      globalMultiplier: {
+         happiness: 5,
+      },
    };
 
    Combustion: ITechDefinition = {
@@ -552,7 +563,7 @@ export class TechDefinitions {
       name: () => t(L.Refinery),
       column: 17,
       requireTech: ["Electricity"],
-      unlockBuilding: ["OilRefinery"],
+      unlockBuilding: ["OilRefinery", "BrandenburgGate"],
    };
 
    GasPipeline: ITechDefinition = {

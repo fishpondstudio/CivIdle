@@ -144,7 +144,7 @@ export function GreatPersonPage(): React.ReactNode {
                                           style={{ height: "50px", display: "block" }}
                                        />
                                     </td>
-                                    <td className="nowrap">
+                                    <td>
                                        <div className="text-strong">{person.name()}</div>
                                        <div className="text-desc text-small">
                                           {Config.TechAge[person.age].name()}

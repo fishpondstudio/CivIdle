@@ -22,6 +22,7 @@ import {
    getTotalBuildingUpgrades,
    isNaturalWonder,
    isSpecialBuilding,
+   isWorldWonder,
 } from "./BuildingLogic";
 import { Config } from "./Config";
 import type { GameState } from "./GameState";
@@ -436,6 +437,71 @@ export function onBuildingProductionComplete(xy: string, gs: GameState, offline:
                source: buildingName,
             });
          }
+         break;
+      }
+      case "Rijksmuseum": {
+         forEach(Config.Building, (b, def) => {
+            if (def.input.Culture || def.output.Culture) {
+               addMultiplier(b, { output: 1, worker: 1, storage: 1 }, buildingName);
+            }
+         });
+         Tick.next.globalMultipliers.happiness.push({ value: 5, source: buildingName });
+         break;
+      }
+      case "SummerPalace": {
+         forEach(Config.Building, (b, def) => {
+            if (def.input.Gunpowder || def.output.Gunpowder) {
+               addMultiplier(b, { output: 1, worker: 1, storage: 1 }, buildingName);
+            }
+         });
+         let count = 0;
+         for (const neighbor of grid.getNeighbors(xyToPoint(xy))) {
+            const neighborXy = pointToXy(neighbor);
+            const b = gs.tiles[neighborXy].building;
+            if (b && (Config.Building[b.type].input.Gunpowder || Config.Building[b.type].output.Gunpowder)) {
+               ++count;
+            }
+         }
+         Tick.next.globalMultipliers.happiness.push({ value: count, source: buildingName });
+         break;
+      }
+      case "Neuschwanstein": {
+         forEach(getXyBuildings(gs), (xy, building) => {
+            if (isWorldWonder(building.type) && building.status === "building") {
+               safePush(Tick.next.tileMultipliers, xy, { worker: 10, source: buildingName });
+            }
+         });
+         break;
+      }
+      case "BrandenburgGate": {
+         forEach(buildingsByType.OilRefinery, (xy, tile) => {
+            if (tile.building) {
+               let adjacentOilTiles = 0;
+               for (const neighbor of grid.getNeighbors(xyToPoint(xy))) {
+                  if (gs.tiles[pointToXy(neighbor)]?.deposit.Oil) {
+                     ++adjacentOilTiles;
+                  }
+               }
+               if (adjacentOilTiles > 0) {
+                  safePush(Tick.next.tileMultipliers, tile.xy, {
+                     output: adjacentOilTiles,
+                     storage: adjacentOilTiles,
+                     worker: adjacentOilTiles,
+                     source: buildingName,
+                  });
+               }
+            }
+         });
+         addMultiplier("OilWell", { output: 1, worker: 1, storage: 1 }, buildingName);
+         addMultiplier("CoalMine", { output: 1, worker: 1, storage: 1 }, buildingName);
+         break;
+      }
+      case "ArcDeTriomphe": {
+         forEach(Config.Building, (b, def) => {
+            if (def.input.Culture || def.output.Culture) {
+               addMultiplier(b, { output: 1, worker: 1, storage: 1 }, buildingName);
+            }
+         });
          break;
       }
    }
