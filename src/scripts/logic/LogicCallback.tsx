@@ -496,13 +496,13 @@ export function onBuildingProductionComplete(xy: string, gs: GameState, offline:
          addMultiplier("CoalMine", { output: 1, worker: 1, storage: 1 }, buildingName);
          break;
       }
-      case "ArcDeTriomphe": {
-         forEach(Config.Building, (b, def) => {
-            if (def.input.Culture || def.output.Culture) {
-               addMultiplier(b, { output: 1, worker: 1, storage: 1 }, buildingName);
-            }
-         });
-         break;
-      }
+      // case "ArcDeTriomphe": {
+      //    forEach(Config.Building, (b, def) => {
+      //       if (def.input.Culture || def.output.Culture) {
+      //          addMultiplier(b, { output: 1, worker: 1, storage: 1 }, buildingName);
+      //       }
+      //    });
+      //    break;
+      // }
    }
 }
