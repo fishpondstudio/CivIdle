@@ -56,7 +56,7 @@ export function ChatPanel(): React.ReactNode {
                   <div className="chat-message-item" key={i}>
                      {c.name === user?.handle ? (
                         <div className="row text-small text-desc">
-                           <div>{new Date(c.time).toLocaleTimeString()}</div>
+                           <div>{new Date(c.time ?? 0).toLocaleTimeString()}</div>
                            <div className="f1"></div>
                            <div className="text-strong">{c.name}</div>
                         </div>
@@ -71,7 +71,7 @@ export function ChatPanel(): React.ReactNode {
                               {c.name}
                            </div>
                            <div className="f1"></div>
-                           <div>{new Date(c.time).toLocaleTimeString()}</div>
+                           <div>{new Date(c.time ?? 0).toLocaleTimeString()}</div>
                         </div>
                      )}
 
