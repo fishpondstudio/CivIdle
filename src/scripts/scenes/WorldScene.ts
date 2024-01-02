@@ -79,13 +79,14 @@ export class WorldScene extends ViewportScene {
       this._selectedGraphics = this.viewport.addChild(new SmoothGraphics());
       this._transportLines = this.viewport.addChild(new SmoothGraphics());
 
+      if (viewportZoom) {
+         this.viewport.zoom = viewportZoom;
+      }
+
       if (!viewportCenter) {
          viewportCenter = { x: this._width / 2, y: this._height / 2 };
       }
       this.viewport.center = viewportCenter;
-      if (viewportZoom) {
-         this.viewport.zoom = viewportZoom;
-      }
 
       this.viewport.on("moved", () => {
          viewportCenter = this.viewport.center;

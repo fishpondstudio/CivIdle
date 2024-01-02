@@ -5,6 +5,14 @@ interface PatchNote {
 
 export const PatchNotes: PatchNote[] = [
    {
+      version: "0.1.100",
+      content: [
+         ["Bugfix", "Fix a bug where camera position is wrong after switching scenes"],
+         ["Bugfix", "Fix a bug where St. Peter's Basilica causes offline earning calculation stuck"],
+         ["QoL", "Add Timestamp in Chat. Add a special styling for your own messages"],
+      ],
+   },
+   {
       version: "0.1.99",
       content: [
          ["Content", "Industrial Age is here!"],

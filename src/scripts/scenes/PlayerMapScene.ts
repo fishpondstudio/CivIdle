@@ -1,16 +1,8 @@
 import { SmoothGraphics } from "@pixi/graphics-smooth";
-import type {
-   FederatedPointerEvent,
-   IPointData} from "pixi.js";
-import {
-   BitmapText,
-   Container,
-   LINE_CAP,
-   LINE_JOIN,
-   Sprite,
-} from "pixi.js";
+import type { FederatedPointerEvent, IPointData } from "pixi.js";
+import { BitmapText, Container, LINE_CAP, LINE_JOIN, Sprite } from "pixi.js";
 import WorldMap from "../../../server/WorldMap.json";
-import type { IMapEntry} from "../../../server/src/Database";
+import type { IMapEntry } from "../../../server/src/Database";
 import { MAP_MAX_X, MAP_MAX_Y } from "../../../server/src/Database";
 import { getGameOptions } from "../Global";
 import { OnPlayerMapMessage, getPlayerMap } from "../rpc/RPCClient";
@@ -121,16 +113,17 @@ export class PlayerMapScene extends ViewportScene {
 
       this._path = this.viewport.addChild(new SmoothGraphics());
 
+      if (!viewportZoom) {
+         viewportZoom = minZoom;
+      }
+      this.viewport.zoom = viewportZoom;
+
       if (viewportCenter) {
          this.viewport.center = viewportCenter;
       } else {
          this.viewport.center = { x: this._width / 2, y: this._height / 2 };
       }
 
-      if (!viewportZoom) {
-         viewportZoom = minZoom;
-      }
-      this.viewport.zoom = viewportZoom;
       this.viewport.on("moved", () => {
          viewportCenter = this.viewport.center;
          viewportZoom = this.viewport.zoom;

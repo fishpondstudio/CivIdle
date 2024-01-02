@@ -138,6 +138,12 @@ export class Camera extends Container {
    public set zoom(value: number) {
       const clamped = clamp(value, this.minZoom, this.maxZoom);
       this.scale.set(clamped, clamped);
+      this.clampAndRecalculateHit(this.pivot);
+   }
+
+   private moveOrigin(point: IPointData): void {
+      const clamped = this.clampAndRecalculateHit(point);
+      this.emit("moved", clamped);
    }
 
    private update = () => {
@@ -186,6 +192,13 @@ export class Camera extends Container {
       }
    };
 
+   private clampAndRecalculateHit(point: IPointData) {
+      const clamped = this.clampOrigin(point);
+      this.pivot.set(clamped.x, clamped.y);
+      this.recalculateHitArea();
+      return clamped;
+   }
+
    public get center(): IPointData {
       return this.originToCenter(this.pivot);
    }
@@ -220,13 +233,6 @@ export class Camera extends Container {
          x: maxX < 0 ? maxX / 2 : clamp(point.x, 0, maxX),
          y: maxY < 0 ? maxY / 2 : clamp(point.y, 0, maxY),
       };
-   }
-
-   private moveOrigin(point: IPointData): void {
-      const clamped = this.clampOrigin(point);
-      this.pivot.set(clamped.x, clamped.y);
-      this.recalculateHitArea();
-      this.emit("moved", clamped);
    }
 
    private recalculateHitArea() {

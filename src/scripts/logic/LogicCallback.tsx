@@ -354,11 +354,11 @@ export function onBuildingProductionComplete(xy: string, gs: GameState, offline:
          const max = totalLevel * ST_PETERS_STORAGE_MULTIPLIER;
          if ((building.resources.Faith ?? 0) > max) {
             building.resources.Faith = max;
-            Tick.current.notProducingReasons[xy] = "StorageFull";
+            Tick.next.notProducingReasons[xy] = "StorageFull";
          } else if (toProduce > 0) {
-            delete Tick.current.notProducingReasons[xy];
+            delete Tick.next.notProducingReasons[xy];
          } else {
-            Tick.current.notProducingReasons[xy] = "NotEnoughResources";
+            Tick.next.notProducingReasons[xy] = "NotEnoughResources";
          }
          break;
       }

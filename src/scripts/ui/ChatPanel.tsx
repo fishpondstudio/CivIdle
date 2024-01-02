@@ -54,16 +54,28 @@ export function ChatPanel(): React.ReactNode {
             {messages.map((c, i) => {
                return (
                   <div className="chat-message-item" key={i}>
-                     <span
-                        className="text-desc pointer"
-                        onClick={() => {
-                           setChat(`@${c.name} `);
-                           chatInput.current?.focus();
-                        }}
-                     >
-                        {c.name}
-                     </span>
-                     : {c.message}
+                     {c.name === user?.handle ? (
+                        <div className="row text-small text-desc">
+                           <div>{new Date(c.time).toLocaleTimeString()}</div>
+                           <div className="f1"></div>
+                           <div className="text-strong">{c.name}</div>
+                        </div>
+                     ) : (
+                        <div className="row text-small text-desc">
+                           <div
+                              onClick={() => {
+                                 setChat(`@${c.name} `);
+                                 chatInput.current?.focus();
+                              }}
+                           >
+                              {c.name}
+                           </div>
+                           <div className="f1"></div>
+                           <div>{new Date(c.time).toLocaleTimeString()}</div>
+                        </div>
+                     )}
+
+                     <div>{c.message}</div>
                   </div>
                );
             })}

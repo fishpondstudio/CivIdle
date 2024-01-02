@@ -64,7 +64,7 @@
                 "h": 100
             }
         },
-        "TileWater": {
+        "TileUranium": {
             "frame": {
                 "x": 202,
                 "y": 202,
@@ -72,10 +72,18 @@
                 "h": 100
             }
         },
-        "TileWood": {
+        "TileWater": {
             "frame": {
                 "x": 303,
                 "y": 0,
+                "w": 100,
+                "h": 100
+            }
+        },
+        "TileWood": {
+            "frame": {
+                "x": 303,
+                "y": 101,
                 "w": 100,
                 "h": 100
             }
