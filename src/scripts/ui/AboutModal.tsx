@@ -1,6 +1,7 @@
 import logo from "../../images/icon.png";
-import { wipeSaveData } from "../Global";
+import { getGameState, wipeSaveData } from "../Global";
 import { getVersion } from "../logic/Constants";
+import { tickEverySecond } from "../logic/Update";
 import { Singleton } from "../utilities/Singleton";
 import { L, t } from "../utilities/i18n";
 import { playClick } from "../visuals/Sound";
@@ -30,13 +31,25 @@ export function AboutModal(): React.ReactNode {
                   </div>
                   <div>
                      <span
-                        className="text-small text-link"
+                        className="text-small text-red"
                         onClick={() => {
                            playClick();
                            wipeSaveData();
                         }}
                      >
-                        {t(L.WipeSaveData)}
+                        Wipe Progress
+                     </span>
+                     <span
+                        className="text-small text-link ml10"
+                        onClick={() => {
+                           playClick();
+                           const gs = getGameState();
+                           for (let i = 0; i < 60 * 30; i++) {
+                              tickEverySecond(gs, true);
+                           }
+                        }}
+                     >
+                        Fast Forward 30min
                      </span>
                   </div>
                </div>

@@ -21,6 +21,8 @@ export const TILE_SIZE = 64;
 
 export function wipeSaveData() {
    resetToCity(firstKeyOf(Config.City)!);
+   savedGame.options.greatPeople = {};
+   savedGame.options.greatPeopleChoices = [];
    saveGame(true).catch(console.error);
 }
 

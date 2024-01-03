@@ -137,19 +137,23 @@ export class Camera extends Container {
    }
    public set zoom(value: number) {
       const clamped = clamp(value, this.minZoom, this.maxZoom);
+      const oldCenter = this.center;
       this.scale.set(clamped, clamped);
-      this.clampAndRecalculateHit(this.pivot);
+      this.center = oldCenter;
    }
 
    private moveOrigin(point: IPointData): void {
-      const clamped = this.clampAndRecalculateHit(point);
+      const clamped = this.clampOrigin(point);
+      this.pivot.set(clamped.x, clamped.y);
+      this.recalculateHitArea();
       this.emit("moved", clamped);
    }
 
    private update = () => {
       if (this.targetZoom) {
          const posBefore = this.screenToWorld(this.cursorPos!);
-         this.zoom = lerp(this.zoom, this.targetZoom, Math.min(0.01 * this.app.ticker.deltaMS, 1 / 3));
+         const newZoom = lerp(this.zoom, this.targetZoom, Math.min(0.01 * this.app.ticker.deltaMS, 1 / 3));
+         this.scale.set(newZoom, newZoom);
          const posAfter = this.screenToWorld(this.cursorPos!);
          const newPivot = v2(posBefore).subtractSelf(posAfter).addSelf(this.pivot);
          this.moveOrigin(newPivot);
@@ -192,13 +196,6 @@ export class Camera extends Container {
       }
    };
 
-   private clampAndRecalculateHit(point: IPointData) {
-      const clamped = this.clampOrigin(point);
-      this.pivot.set(clamped.x, clamped.y);
-      this.recalculateHitArea();
-      return clamped;
-   }
-
    public get center(): IPointData {
       return this.originToCenter(this.pivot);
    }
@@ -208,31 +205,43 @@ export class Camera extends Container {
       this.moveOrigin(this.centerToOrigin(point));
    }
 
-   public clampCenter(point: IPointData): IPointData {
-      return this.originToCenter(this.clampOrigin(this.centerToOrigin(point)));
+   public clampCenter(point: IPointData, result?: IPointData): IPointData {
+      return this.originToCenter(this.clampOrigin(this.centerToOrigin(point, result), result), result);
    }
 
-   public centerToOrigin(point: IPointData): IPointData {
-      return {
-         x: point.x - this.screenWidth / this.scale.x / 2,
-         y: point.y - this.screenHeight / this.scale.y / 2,
-      };
+   public centerToOrigin(point: IPointData, result?: IPointData): IPointData {
+      const x = point.x - this.screenWidth / this.scale.x / 2;
+      const y = point.y - this.screenHeight / this.scale.y / 2;
+      if (result) {
+         result.x = x;
+         result.y = y;
+         return result;
+      }
+      return { x, y };
    }
 
-   public originToCenter(point: IPointData): IPointData {
-      return {
-         x: point.x + this.screenWidth / this.scale.x / 2,
-         y: point.y + this.screenHeight / this.scale.y / 2,
-      };
+   public originToCenter(point: IPointData, result?: IPointData): IPointData {
+      const x = point.x + this.screenWidth / this.scale.x / 2;
+      const y = point.y + this.screenHeight / this.scale.y / 2;
+      if (result) {
+         result.x = x;
+         result.y = y;
+         return result;
+      }
+      return { x, y };
    }
 
-   public clampOrigin(point: IPointData): IPointData {
+   public clampOrigin(point: IPointData, result?: IPointData): IPointData {
       const maxX = this._worldWidth - this.screenWidth / this.scale.x;
       const maxY = this._worldHeight - this.screenHeight / this.scale.y;
-      return {
-         x: maxX < 0 ? maxX / 2 : clamp(point.x, 0, maxX),
-         y: maxY < 0 ? maxY / 2 : clamp(point.y, 0, maxY),
-      };
+      const x = maxX < 0 ? maxX / 2 : clamp(point.x, 0, maxX);
+      const y = maxY < 0 ? maxY / 2 : clamp(point.y, 0, maxY);
+      if (result) {
+         result.x = x;
+         result.y = y;
+         return result;
+      }
+      return { x, y };
    }
 
    private recalculateHitArea() {

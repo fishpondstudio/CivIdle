@@ -1,4 +1,4 @@
-import { getBuildingCost, getTotalBuildingCost } from "../scripts/logic/BuildingLogic";
+import { getBuildingCost, getPowerRequired, getTotalBuildingCost } from "../scripts/logic/BuildingLogic";
 import type { GameState } from "../scripts/logic/GameState";
 
 const title = "background: #636e72; color: #fff;";
@@ -23,5 +23,12 @@ export function RunTests(gs: GameState): void {
       assertEqual(10 + 15 + 22.5, getTotalBuildingCost("CoalMine", 0, 3).Brick);
       assertEqual(15, getTotalBuildingCost("CoalMine", 1, 2).Brick);
       assertEqual(15 + 22.5, getTotalBuildingCost("CoalMine", 1, 3).Brick);
+   });
+
+   test("getPowerRequired", () => {
+      assertEqual(0, getPowerRequired(0));
+      assertEqual(10, getPowerRequired(1));
+      assertEqual(20, getPowerRequired(2));
+      assertEqual(40, getPowerRequired(3));
    });
 }

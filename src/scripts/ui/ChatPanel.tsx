@@ -63,6 +63,7 @@ export function ChatPanel(): React.ReactNode {
                      ) : (
                         <div className="row text-small text-desc">
                            <div
+                              className="pointer"
                               onClick={() => {
                                  setChat(`@${c.name} `);
                                  chatInput.current?.focus();

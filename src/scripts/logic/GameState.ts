@@ -88,10 +88,11 @@ export class GameOptions {
    resourceColors: Partial<Record<Resource, string>> = {};
    themeColors = { ...DefaultThemeColors };
    shortcuts: Partial<Record<Shortcut, IShortcutConfig>> = {};
-   greatPeople: Partial<Record<GreatPerson, { level: number; amount: number }>> = {};
-   greatPeopleChoices: GreatPeopleChoice[] = [];
    soundEffect = true;
    buildingDefaults: Partial<Record<Building, Partial<IBuildingData>>> = {};
+   //  Should be wiped
+   greatPeople: Partial<Record<GreatPerson, { level: number; amount: number }>> = {};
+   greatPeopleChoices: GreatPeopleChoice[] = [];
 }
 
 export const SAVE_FILE_VERSION = 1;

@@ -780,7 +780,6 @@ export const EN = {
    ContentInDevelopment: "Content In Development",
    ContentInDevelopmentDesc:
       "This game content is still in development and will be available in a future game update, stay tuned!",
-   WipeSaveData: "Wipe Your Save",
    PatchNotes: "Patch Notes",
    PlayerTradeNoValidRoute: "Cannot find a valid trade route between you and %{name}",
    BuildingColor: "Building Color",

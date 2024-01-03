@@ -302,6 +302,9 @@ export class WorldScene extends ViewportScene {
 
    public cameraPan(target_: number, time: number): void {
       const { app } = this.context;
+      if (this._selectedXy) {
+         this.viewport.center = Singleton().grid.xyToPosition(this._selectedXy);
+      }
       const target = clamp(
          target_,
          Math.max(app.screen.width / this._width, app.screen.height / this._height),
