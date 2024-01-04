@@ -104,6 +104,10 @@ export class Grid {
       return false;
    }
 
+   public isValid(g: Point, edgeSize = 1): boolean {
+      return g.x >= edgeSize && g.x < this.maxX - edgeSize && g.y >= edgeSize && g.y < this.maxY - edgeSize;
+   }
+
    public gridToPosition(grid: Point): Point {
       return this.layout.hexToPixel(this.gridToHex(grid));
    }
@@ -116,7 +120,10 @@ export class Grid {
       const result: Point[] = [];
       for (let i = 0; i < 6; i++) {
          const hex = this.gridToHex(grid).neighbor(i);
-         result.push(this.hexToGrid(hex));
+         const g = this.hexToGrid(hex);
+         if (this.isValid(g)) {
+            result.push(g);
+         }
       }
       return result;
    }

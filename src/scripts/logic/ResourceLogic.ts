@@ -8,10 +8,13 @@ import { Tick } from "./TickLogic";
 
 export function getResourceAmount(res: Resource, gs: GameState): number {
    return (
-      Tick.current.resourcesByXy[res]?.reduce(
-         (prev, curr) => prev + (gs.tiles[curr]?.building?.resources[res] ?? 0),
-         0,
-      ) ?? 0
+      Tick.current.resourcesByXy[res]?.reduce((prev, curr) => {
+         const amount = gs.tiles[curr]?.building?.resources[res];
+         if (amount && Number.isFinite(amount)) {
+            return prev + amount;
+         }
+         return prev;
+      }, 0) ?? 0
    );
 }
 

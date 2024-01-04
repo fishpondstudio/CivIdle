@@ -5,6 +5,16 @@ interface PatchNote {
 
 export const PatchNotes: PatchNote[] = [
    {
+      version: "0.1.102",
+      content: [
+         ["Bugfix", "Fix a bug where wonders built at the map edge causes production to halt"],
+         [
+            "Bugfix",
+            "Fix a bug where Turning on autopilot mode on a warehouse with full import causes glitch",
+         ],
+      ],
+   },
+   {
       version: "0.1.101",
       content: [["Bugfix", "Fix a bug where electrification cost is incorrect"]],
    },

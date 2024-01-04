@@ -505,6 +505,9 @@ function tickWarehouseAutopilot(warehouse: IWarehouseBuildingData, xy: string, g
    const { total, used } = getStorageFor(xy, gs);
    capacity = clamp(capacity, 0, total - used);
 
+   if (capacity <= 0) {
+      return false;
+   }
    const me = xyToPoint(xy);
    const result = getStorageFullBuildings(gs).sort(
       (a, b) =>
