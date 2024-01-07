@@ -134,7 +134,7 @@ export const EN = {
    Medicine: "Medicine",
    Hospital: "Hospital",
    Greenhouse: "Greenhouse",
-   Rocket: "Rocket",
+   Rocketry: "Rocketry",
    Semiconductor: "Semiconductor",
    Vaccine: "Vaccine",
    Refrigeration: "Refrigeration",
@@ -795,6 +795,7 @@ export const EN = {
    RemoveResidualConstructionResourcesDesc:
       "After the construction/upgrade of a building, there might be some amount of residual construction resources left. Enabling this will remove those once the consutruction/upgrade is complete",
    ThemeColor: "Theme Color",
+   ThemeColorReset: "Reset to Default",
    ThemeColorWorldBackground: "World Background",
    ThemeColorResearchBackground: "Research Background",
    ThemeColorGridColor: "Grid Color",

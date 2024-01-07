@@ -1,5 +1,3 @@
-/* eslint-disable no-fallthrough */
-
 export function murmurhash3(key: string, seed: number): number {
    let k1: number;
    const remainder: number = key.length & 3; // key.length % 4
@@ -31,8 +29,10 @@ export function murmurhash3(key: string, seed: number): number {
    k1 = 0;
 
    switch (remainder) {
+      // biome-ignore lint/suspicious/noFallthroughSwitchClause:
       case 3:
          k1 ^= (key.charCodeAt(i + 2) & 0xff) << 16;
+      // biome-ignore lint/suspicious/noFallthroughSwitchClause:
       case 2:
          k1 ^= (key.charCodeAt(i + 1) & 0xff) << 8;
       case 1:

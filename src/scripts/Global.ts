@@ -14,6 +14,7 @@ import { firstKeyOf, forEach } from "./utilities/Helper";
 import { makeObservableHook } from "./utilities/Hook";
 import { Singleton } from "./utilities/Singleton";
 import { TypedEvent } from "./utilities/TypedEvent";
+import { compress, decompress } from "./workers/Compress";
 
 const savedGame = new SavedGame();
 
@@ -39,11 +40,13 @@ if (import.meta.env.DEV) {
       saving = true;
       Object.assign(savedGame, content);
       if (isSteam()) {
-         SteamClient.fileWrite(SAVE_KEY, JSON.stringify(savedGame))
+         compressSave(savedGame)
+            .then((b) => SteamClient.fileWriteBytes(SAVE_KEY, b))
             .then(() => window.location.reload())
             .catch(console.error);
       } else {
-         idbSet(SAVE_KEY, savedGame)
+         compressSave(savedGame)
+            .then((b) => idbSet(SAVE_KEY, b))
             .then(() => window.location.reload())
             .catch(console.error);
       }
@@ -115,17 +118,53 @@ export function saveGame(forceAndReload: boolean): Promise<void> {
       }
    }
    if (isSteam()) {
-      return SteamClient.fileWrite(SAVE_KEY, JSON.stringify(savedGame)).catch(console.error).finally(cleanup);
+      return compressSave(savedGame)
+         .then((compressed) => {
+            return SteamClient.fileWriteBytes(SAVE_KEY, compressed);
+         })
+         .catch(console.error)
+         .finally(cleanup);
    }
-   return idbSet(SAVE_KEY, savedGame).catch(console.error).finally(cleanup);
+   return compressSave(savedGame)
+      .then((compressed) => {
+         idbSet(SAVE_KEY, compressed).catch(console.error).finally(cleanup);
+      })
+      .catch(console.error)
+      .finally(cleanup);
+}
+
+export async function compressSave(gs: SavedGame = savedGame): Promise<Uint8Array> {
+   return await compress(serializeSave(gs));
+}
+
+export function serializeSave(gs: SavedGame = savedGame): Uint8Array {
+   return new TextEncoder().encode(JSON.stringify(gs));
+}
+
+export function deserializeSave(bytes: Uint8Array): SavedGame {
+   return JSON.parse(new TextDecoder().decode(bytes));
+}
+
+export async function decompressSave(data: Uint8Array): Promise<SavedGame> {
+   return deserializeSave(await decompress(data));
 }
 
 export async function loadGame(): Promise<SavedGame | undefined> {
    try {
       if (isSteam()) {
-         return JSON.parse(await SteamClient.fileRead(SAVE_KEY)) as SavedGame;
+         const bytes = await SteamClient.fileReadBytes(SAVE_KEY);
+         try {
+            // This is for migrating old uncompressed save file. Consider remove this after release!
+            return JSON.parse(new TextDecoder().decode(bytes));
+         } catch (error) {
+            return decompressSave(new Uint8Array(bytes));
+         }
       }
-      return await idbGet<SavedGame>(SAVE_KEY);
+      const compressed = await idbGet<Uint8Array>(SAVE_KEY);
+      if (!compressed) {
+         return;
+      }
+      return await decompressSave(compressed);
    } catch (e) {
       console.warn("loadGame failed", e);
    }

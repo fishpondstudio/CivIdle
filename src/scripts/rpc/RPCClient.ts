@@ -31,13 +31,6 @@ const serverAddress = import.meta.env.DEV ? devServerAddress : "wss://api.cividl
 
 let user: IUser | null = null;
 
-export async function changeHandle(newHandle: string) {
-   if (user) {
-      await client.changeHandle(newHandle);
-      user.handle = newHandle;
-   }
-}
-
 export const OnOfflineTime = new TypedEvent<number>();
 export const OnUserChanged = new TypedEvent<IUser | null>();
 export const OnChatMessage = new TypedEvent<IChat[]>();
@@ -55,7 +48,6 @@ export function getPlayerMap() {
 }
 
 let ws: WebSocket | null = null;
-const steamWs: WebSocket | null = null;
 
 export const client = rpcClient<ServerImpl>({
    request: (method: string, params: any[]) => {
@@ -140,7 +132,7 @@ export async function connectWebSocket(): Promise<number> {
             let pendingClaims = 0;
             if (tm.upsert) {
                tm.upsert.forEach((trade) => {
-                  if (trades[trade.id] && trades[trade.id].fromId == user?.userId) {
+                  if (trades[trade.id] && trades[trade.id].fromId === user?.userId) {
                      pendingClaims++;
                   }
                   trades[trade.id] = trade as IClientTrade;
@@ -148,7 +140,7 @@ export async function connectWebSocket(): Promise<number> {
             }
             if (tm.remove) {
                tm.remove.forEach((id) => {
-                  if (trades[id] && trades[id].fromId == user?.userId) {
+                  if (trades[id] && trades[id].fromId === user?.userId) {
                      pendingClaims++;
                   }
                   delete trades[id];

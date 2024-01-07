@@ -5,6 +5,7 @@
    src: url(../fonts/RobotoMono-Medium.ttf) format("ttf");
 }
 
+.code,
 code {
    font-family: "Roboto Mono", monospace;
    font-weight: 500;
@@ -71,7 +72,7 @@ input[type="text"] {
    height: 100%;
 }
 
-.separator.has-title > div {
+.separator.has-title>div {
    background: silver;
    position: absolute;
    left: 10px;
@@ -138,7 +139,9 @@ fieldset .separator {
    box-shadow: inset -1px -1px #fff, inset 1px 1px grey, inset -2px -2px #dfdfdf, inset 2px 2px #0a0a0a;
 }
 
-.inset-deep.white,.outset-shallow-2.white,.inset-shallow-2.white {
+.inset-deep.white,
+.outset-shallow-2.white,
+.inset-shallow-2.white {
    background: #fff;
 }
 
@@ -360,7 +363,7 @@ a {
    border-radius: 0;
 }
 
-.meter > .fill {
+.meter>.fill {
    display: block;
    height: 100%;
    background-color: #00289e;
@@ -370,7 +373,7 @@ a {
    background-size: 24px 24px;
 }
 
-ul.tree-view > li:first-child {
+ul.tree-view>li:first-child {
    margin-top: 0;
 }
 
@@ -502,4 +505,20 @@ button {
 .production-warning {
    color: #e74c3c;
    font-weight: bold;
+}
+
+.player-flag {
+   height: 17px;
+   display: block;
+}
+
+.player-flag-large {
+   height: 24px;
+   display: block;
+}
+
+.chat-message-item .player-flag {
+   height: 15px;
+   display: block;
+   margin: 0 0 0 2px;
 }

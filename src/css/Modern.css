@@ -40,7 +40,7 @@
    font-size: 14px;
 }
 
-.modern ul.tree-view details > summary:before {
+.modern ul.tree-view details>summary:before {
    width: 14px;
    height: 15px;
    line-height: 14px;
@@ -50,7 +50,7 @@
    margin-left: 23px;
 }
 
-.modern ul.tree-view ul > li:before {
+.modern ul.tree-view ul>li:before {
    top: 8px;
 }
 
@@ -58,7 +58,7 @@
    top: 25px;
 }
 
-.modern ul.tree-view ul > li:after {
+.modern ul.tree-view ul>li:after {
    top: 9px;
 }
 
@@ -91,7 +91,7 @@
    min-height: 27px;
 }
 
-.modern .separator.has-title > div {
+.modern .separator.has-title>div {
    top: -10px;
 }
 

@@ -393,8 +393,14 @@ export function onBuildingProductionComplete(xy: string, gs: GameState, offline:
       case "Poseidon": {
          for (const neighbor of grid.getNeighbors(xyToPoint(xy))) {
             const neighborXy = pointToXy(neighbor);
-            if (gs.tiles[neighborXy].building && gs.tiles[neighborXy].building!.level < 20) {
-               gs.tiles[neighborXy].building!.level = 20;
+            const building = gs.tiles[neighborXy].building;
+            if (
+               building &&
+               !isSpecialBuilding(building.type) &&
+               building.status === "completed" &&
+               building.level < 20
+            ) {
+               building.level = 20;
             }
          }
          break;

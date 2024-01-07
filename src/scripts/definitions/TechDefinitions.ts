@@ -626,7 +626,7 @@ export class TechDefinitions {
       requireTech: ["Synthetics", "MotionPicture"],
    };
 
-   Rocket: ITechDefinition = { name: () => t(L.Rocket), column: 20, requireTech: ["Aeroplane"] };
+   Rocketry: ITechDefinition = { name: () => t(L.Rocketry), column: 20, requireTech: ["Aeroplane"] };
    Semiconductor: ITechDefinition = {
       name: () => t(L.Semiconductor),
       column: 20,
@@ -646,7 +646,7 @@ export class TechDefinitions {
    SpaceProgram: ITechDefinition = {
       name: () => t(L.SpaceProgram),
       column: 21,
-      requireTech: ["Rocket", "Semiconductor"],
+      requireTech: ["Rocketry", "Semiconductor"],
    };
    Television: ITechDefinition = {
       name: () => t(L.Television),

@@ -1,5 +1,6 @@
 /////////////////////////////////////////////////////////////////////////////////////////////
 // Attention! Do not complicates the import of this file since it causes HMR to break easily
+import type { Heartbeat } from "../logic/Heartbeat";
 import type { ITileData } from "../logic/Tile";
 import type { Grid } from "../scenes/Grid";
 import type { GameTicker } from "./GameTicker";
@@ -17,6 +18,7 @@ export interface ISingleton {
    buildings: ISpecialBuildings;
    routeTo: RouteTo;
    ticker: GameTicker;
+   heartbeat: Heartbeat;
 }
 
 export interface ISpecialBuildings {

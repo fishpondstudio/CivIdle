@@ -5,6 +5,14 @@ interface PatchNote {
 
 export const PatchNotes: PatchNote[] = [
    {
+      version: "0.1.103",
+      content: [
+         ["QoL", "Allow choosing player flag"],
+         ["QoL", "Improve server performance"],
+         ["Bugfix", "Fix Poseidon wonder is not functioning correctly"],
+      ],
+   },
+   {
       version: "0.1.102",
       content: [
          ["Bugfix", "Fix a bug where wonders built at the map edge causes production to halt"],

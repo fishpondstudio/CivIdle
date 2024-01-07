@@ -5,6 +5,10 @@
 @import "ResourcePanel.css";
 @import "Hint.css";
 
+.game-cursor {
+   cursor: url("../images/w98normal.png"), default;
+}
+
 body {
    cursor: url("../images/w98normal.png"), default;
    user-select: none;

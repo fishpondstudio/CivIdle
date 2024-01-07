@@ -16,9 +16,18 @@ export class IPCService {
       outputFile(path.join(this._app.getAppPath(), "save", this.getSteamId(), name), content);
    }
 
+   public fileWriteBytes(name: string, content: ArrayBuffer): void {
+      outputFile(path.join(this._app.getAppPath(), "save", this.getSteamId(), name), Buffer.from(content));
+   }
+
    public async fileRead(name: string): Promise<string> {
       const content = await readFile(path.join(this._app.getAppPath(), "save", this.getSteamId(), name));
       return content.toString("utf-8");
+   }
+
+   public async fileReadBytes(name: string): Promise<ArrayBuffer> {
+      const content = await readFile(path.join(this._app.getAppPath(), "save", this.getSteamId(), name));
+      return content.buffer;
    }
 
    public async fileDelete(name: string): Promise<void> {

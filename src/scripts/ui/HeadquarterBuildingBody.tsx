@@ -6,6 +6,7 @@ import { getCurrentTechAge, getScienceAmount, getUnlockCost, unlockableTechs } f
 import { Tick } from "../logic/TickLogic";
 import { useUser } from "../rpc/RPCClient";
 import { TechTreeScene } from "../scenes/TechTreeScene";
+import { getCountryName, getFlagUrl } from "../utilities/CountryCode";
 import { formatPercent, jsxMapOf, reduceOf } from "../utilities/Helper";
 import { Singleton } from "../utilities/Singleton";
 import { L, t } from "../utilities/i18n";
@@ -43,11 +44,15 @@ export function HeadquarterBuildingBody({ gameState, xy }: IBuildingComponentPro
          <fieldset>
             <legend>{t(L.PlayerHandle)}</legend>
             <div className="row mv5">
-               <div className="f1">
-                  <b>{user?.handle}</b>
-                  <br />
-                  <div className="text-desc text-small">{t(L.ChangePlayerHandledDesc)}</div>
+               <div className="text-strong">{user?.handle}</div>
+               <div>
+                  <img
+                     className="ml5 player-flag"
+                     src={getFlagUrl(user?.flag)}
+                     title={getCountryName(user?.flag)}
+                  />
                </div>
+               <div className="f1" />
                <div
                   className={classNames("text-link text-strong", { disabled: !user })}
                   onClick={() => {

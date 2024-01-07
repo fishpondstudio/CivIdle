@@ -1,5 +1,6 @@
 import type { IPointData } from "pixi.js";
 import { v4 } from "uuid";
+import { getGameOptions, notifyGameOptionsUpdate } from "../Global";
 import type { Building } from "../definitions/BuildingDefinitions";
 import type { City } from "../definitions/CityDefinitions";
 import type { GreatPerson } from "../definitions/GreatPersonDefinitions";
@@ -54,17 +55,22 @@ export class SavedGame {
 }
 
 const DefaultThemeColors = {
-   WorldBackground: "#4b6584",
+   WorldBackground: "#1e2328",
    GridColor: "#ffffff",
    GridAlpha: 0.1,
    SelectedGridColor: "#ffff99",
    InactiveBuildingAlpha: 0.5,
    TransportIndicatorAlpha: 0.5,
-   ResearchBackground: "#4b6584",
-   ResearchLockedColor: "#bebebe",
+   ResearchBackground: "#1e2328",
+   ResearchLockedColor: "#666666",
    ResearchUnlockedColor: "#ffffff",
    ResearchHighlightColor: "#ffff99",
 };
+
+export function resetThemeColor() {
+   getGameOptions().themeColors = { ...DefaultThemeColors };
+   notifyGameOptionsUpdate();
+}
 
 export const ThemeColorNames: Record<keyof typeof DefaultThemeColors, () => string> = {
    WorldBackground: () => t(L.ThemeColorWorldBackground),

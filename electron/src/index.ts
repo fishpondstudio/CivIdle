@@ -33,9 +33,9 @@ const createWindow = () => {
 
       const service = new IPCService(app, steam);
 
-      ipcMain.handle("__RPCCall", (e, method, args) => {
-         // eslint-disable-next-line prefer-spread
-         return service[method as keyof IPCService].apply(service, args);
+      ipcMain.handle("__RPCCall", (e, method: keyof IPCService, args) => {
+         // @ts-expect-error
+         return service[method].apply(service, args);
       });
    } catch (error) {
       dialog.showErrorBox("Failed to Start Game", String(error));

@@ -3,6 +3,7 @@ import chatActive from "../../images/chat_active.png";
 import chatInactive from "../../images/chat_inactive.png";
 import { OnUIThemeChanged } from "../Global";
 import { client, useChatMessages, useUser } from "../rpc/RPCClient";
+import { getCountryName, getFlagUrl } from "../utilities/CountryCode";
 import { useTypedEvent } from "../utilities/Hook";
 import { L, t } from "../utilities/i18n";
 
@@ -20,7 +21,7 @@ export function ChatPanel(): React.ReactNode {
       } else {
          bottomRef.current?.scrollIntoView({ behavior: "smooth" });
       }
-   }, [messages, user, showChatWindow]);
+   });
 
    useTypedEvent(OnUIThemeChanged, () => {
       bottomRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -59,6 +60,11 @@ export function ChatPanel(): React.ReactNode {
                            <div>{new Date(c.time ?? 0).toLocaleTimeString()}</div>
                            <div className="f1"></div>
                            <div className="text-strong">{c.name}</div>
+                           <img
+                              src={getFlagUrl(c.flag)}
+                              className="player-flag game-cursor"
+                              title={getCountryName(c.flag)}
+                           />
                         </div>
                      ) : (
                         <div className="row text-small text-desc">
@@ -71,6 +77,11 @@ export function ChatPanel(): React.ReactNode {
                            >
                               {c.name}
                            </div>
+                           <img
+                              src={getFlagUrl(c.flag)}
+                              className="player-flag game-cursor"
+                              title={getCountryName(c.flag)}
+                           />
                            <div className="f1"></div>
                            <div>{new Date(c.time ?? 0).toLocaleTimeString()}</div>
                         </div>
@@ -97,7 +108,7 @@ export function ChatPanel(): React.ReactNode {
                   setChat(e.currentTarget.value);
                }}
                onKeyDown={(e) => {
-                  if (e.key == "Enter") {
+                  if (e.key === "Enter") {
                      sendChat();
                   }
                }}

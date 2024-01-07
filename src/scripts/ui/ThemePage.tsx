@@ -1,9 +1,10 @@
 import classNames from "classnames";
 import { notifyGameOptionsUpdate, syncUITheme, useGameOptions } from "../Global";
 import { Config } from "../logic/Config";
-import { ThemeColorNames } from "../logic/GameState";
+import { ThemeColorNames, resetThemeColor } from "../logic/GameState";
 import { keysOf } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
+import { playClick } from "../visuals/Sound";
 import { MenuComponent } from "./MenuComponent";
 
 export function ThemePage(): React.ReactNode {
@@ -35,7 +36,6 @@ export function ThemePage(): React.ReactNode {
                   </div>
                </div>
             </fieldset>
-
             <fieldset>
                <legend>{t(L.ThemeColor)}</legend>
                {keysOf(gameOptions.themeColors).map((k) => {
@@ -77,6 +77,15 @@ export function ThemePage(): React.ReactNode {
                      );
                   }
                })}
+               <div
+                  className="mv5 text-link pointer text-strong"
+                  onClick={() => {
+                     playClick();
+                     resetThemeColor();
+                  }}
+               >
+                  {t(L.ThemeColorReset)}
+               </div>
             </fieldset>
 
             <fieldset>

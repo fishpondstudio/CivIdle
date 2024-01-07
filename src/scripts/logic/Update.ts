@@ -1,12 +1,22 @@
 import type { IPointData } from "pixi.js";
-import { getGameOptions, getGameState, notifyGameStateUpdate, saveGame } from "../Global";
+import { rpcClient } from "typed-rpc";
+import {
+   compressSave,
+   getGameOptions,
+   getGameState,
+   notifyGameStateUpdate,
+   saveGame,
+   serializeSave,
+} from "../Global";
 import type { Building } from "../definitions/BuildingDefinitions";
 import type { IUnlockableDefinition } from "../definitions/ITechDefinition";
 import type { Resource } from "../definitions/ResourceDefinitions";
+import { client } from "../rpc/RPCClient";
 import { isSteam } from "../rpc/SteamClient";
 import { WorldScene } from "../scenes/WorldScene";
 import {
    HOUR,
+   bytesToBase64,
    clamp,
    filterOf,
    forEach,
@@ -27,6 +37,7 @@ import { srand } from "../utilities/Random";
 import { Singleton } from "../utilities/Singleton";
 import { Vector2, v2 } from "../utilities/Vector2";
 import { L, t } from "../utilities/i18n";
+import { compress, decompress } from "../workers/Compress";
 import {
    IOCalculation,
    addResources,
@@ -57,7 +68,7 @@ import {
 } from "./BuildingLogic";
 import { Config } from "./Config";
 import { GameFeature, hasFeature } from "./FeatureLogic";
-import type { GameState, ITransportationData } from "./GameState";
+import { GameState, type ITransportationData } from "./GameState";
 import { calculateHappiness } from "./HappinessLogic";
 import {
    clearIntraTickCache,
@@ -138,6 +149,7 @@ export function tickEverySecond(gs: GameState, offline: boolean) {
       notifyGameStateUpdate();
       if (gs.tick % 5 === 0) {
          saveGame(false).catch(console.error);
+         Singleton().heartbeat.update(serializeSave());
       }
    }
 }

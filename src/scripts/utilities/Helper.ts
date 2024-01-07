@@ -536,3 +536,14 @@ export function toggleFlag<T extends number>(value: T, flag: T): T {
 export function copyFlag<T extends number>(from: T, to: T, flag: T): T {
    return hasFlag(from, flag) ? setFlag(to, flag) : clearFlag(to, flag);
 }
+
+export function base64ToBytes(base64: string): Uint8Array {
+   const binString = atob(base64);
+   // @ts-expect-error
+   return Uint8Array.from(binString, (m) => m.codePointAt(0));
+}
+
+export function bytesToBase64(bytes: Uint8Array): string {
+   const binString = String.fromCodePoint(...bytes);
+   return btoa(binString);
+}
