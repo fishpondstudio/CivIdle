@@ -1,3 +1,5 @@
+import type { CompressMessage, Operation } from "./CompressWorker";
+
 const worker = new Worker(new URL("CompressWorker.ts", import.meta.url), {
    type: "module",
 });
@@ -6,14 +8,6 @@ interface IExecutor {
    resolve: (data: Uint8Array) => void;
    reject: (error?: any) => void;
 }
-
-export interface CompressMessage {
-   id: number;
-   buffer: Uint8Array;
-   op: Operation;
-}
-
-export type Operation = "compress" | "decompress";
 
 const pending: Record<number, IExecutor> = {};
 

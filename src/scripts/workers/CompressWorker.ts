@@ -1,5 +1,12 @@
 import pako from "pako";
-import { type CompressMessage } from "./Compress";
+
+export type Operation = "compress" | "decompress";
+
+export interface CompressMessage {
+   id: number;
+   buffer: Uint8Array;
+   op: Operation;
+}
 
 onmessage = (ev: MessageEvent<CompressMessage>) => {
    switch (ev.data.op) {
