@@ -263,21 +263,22 @@ export class BuildingDefinitions {
       input: { Sword: 1, Armor: 1 },
       output: { Faith: 6 },
    };
+   // Science is valued at 0.5
    School: IBuildingDefinition = {
       name: () => t(L.School),
       input: { Faith: 1, Poem: 1 },
-      output: { Science: 88 },
+      output: { Science: 172 },
    };
    Library: IBuildingDefinition = {
       name: () => t(L.Library),
       input: { Paper: 1 },
-      output: { Science: 8 },
-      construction: { Marble: 2, Stone: 2 },
+      output: { Science: 16 },
+      construction: { Marble: 1, Stone: 1 },
    };
    University: IBuildingDefinition = {
       name: () => t(L.University),
       input: { Poem: 1, Painting: 1, Faith: 1 },
-      output: { Philosophy: 1 },
+      output: { Philosophy: 1, Science: 100 },
    };
    Museum: IBuildingDefinition = {
       name: () => t(L.Museum),
@@ -302,7 +303,7 @@ export class BuildingDefinitions {
    PublishingHouse: IBuildingDefinition = {
       name: () => t(L.PublishingHouse),
       input: { Politics: 1, Book: 1 },
-      output: { Newspaper: 1 },
+      output: { Newspaper: 1, Science: 200 },
    };
    MagazinePublisher: IBuildingDefinition = {
       name: () => t(L.MagazinePublisher),

@@ -2,7 +2,7 @@ import { notifyGameStateUpdate } from "../Global";
 import { IOCalculation } from "../logic/BuildingLogic";
 import { GameFeature, hasFeature } from "../logic/FeatureLogic";
 import { getBuildingIO } from "../logic/IntraTickCache";
-import { PRIORITY_MAX, PRIORITY_MIN } from "../logic/Tile";
+import { PRIORITY_MAX, PRIORITY_MIN, getProductionPriority, setProductionPriority } from "../logic/Tile";
 import { isEmpty } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
 import { ApplyToAllComponent } from "./ApplyToAllComponent";
@@ -28,16 +28,16 @@ export function BuildingProductionPriorityComponent({
    return (
       <fieldset>
          <legend>
-            {t(L.ProductionPriority)}: {building.priority}
+            {t(L.ProductionPriority)}: {getProductionPriority(building.priority)}
          </legend>
          <input
             type="range"
             min={PRIORITY_MIN}
             max={PRIORITY_MAX}
             step="1"
-            value={building.priority}
+            value={getProductionPriority(building.priority)}
             onChange={(e) => {
-               building.priority = parseInt(e.target.value, 10);
+               building.priority = setProductionPriority(building.priority, parseInt(e.target.value, 10));
                notifyGameStateUpdate();
             }}
          />

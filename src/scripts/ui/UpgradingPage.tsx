@@ -1,7 +1,13 @@
 import classNames from "classnames";
 import { notifyGameStateUpdate, useGameState } from "../Global";
 import { Config } from "../logic/Config";
-import type { ITileData } from "../logic/Tile";
+import {
+   PRIORITY_MAX,
+   PRIORITY_MIN,
+   getUpgradePriority,
+   setUpgradePriority,
+   type ITileData,
+} from "../logic/Tile";
 import { L, t } from "../utilities/i18n";
 import { BuildingConstructionProgressComponent } from "./BuildingConstructionProgressComponent";
 import { MenuComponent } from "./MenuComponent";
@@ -83,6 +89,24 @@ export function UpgradingPage({ tile }: { tile: ITileData }): React.ReactNode {
                      </button>
                   </div>
                </div>
+            </fieldset>
+            <fieldset>
+               <legend>
+                  {t(L.ConstructionPriority)}: {getUpgradePriority(building.priority)}
+               </legend>
+               <input
+                  type="range"
+                  min={PRIORITY_MIN}
+                  max={PRIORITY_MAX}
+                  step="1"
+                  value={getUpgradePriority(building.priority)}
+                  onChange={(e) => {
+                     building.priority = setUpgradePriority(building.priority, parseInt(e.target.value, 10));
+                     notifyGameStateUpdate();
+                  }}
+               />
+               <div className="sep15"></div>
+               <div className="text-desc text-small">{t(L.ProductionPriorityDesc)}</div>
             </fieldset>
          </div>
       </div>

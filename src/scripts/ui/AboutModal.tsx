@@ -1,5 +1,5 @@
 import logo from "../../images/icon.png";
-import { getGameState, wipeSaveData } from "../Global";
+import { decompressSave, getGameState, loadSave, wipeSaveData } from "../Global";
 import { getVersion } from "../logic/Constants";
 import { tickEverySecond } from "../logic/Update";
 import { Singleton } from "../utilities/Singleton";
@@ -52,6 +52,19 @@ export function AboutModal(): React.ReactNode {
                         Fast Forward 30min
                      </span>
                   </div>
+                  {import.meta.env.DEV ? (
+                     <div
+                        className="text-link text-small"
+                        onClick={async () => {
+                           const [handle] = await window.showOpenFilePicker();
+                           const file = await handle.getFile();
+                           const bytes = await file.arrayBuffer();
+                           loadSave(await decompressSave(new Uint8Array(bytes)));
+                        }}
+                     >
+                        Load Save
+                     </div>
+                  ) : null}
                </div>
             </div>
             <div className="text-right" style={{ margin: "20px 0 0 0" }}>

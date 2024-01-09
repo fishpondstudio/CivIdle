@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "../../css/EmptyTilePage.css";
-import { notifyGameStateUpdate, useGameState } from "../Global";
+import { getGameOptions, notifyGameStateUpdate, useGameState } from "../Global";
 import type { Building } from "../definitions/BuildingDefinitions";
 import { checkBuildingMax, getBuildingCost, isWorldOrNaturalWonder } from "../logic/BuildingLogic";
 import { Config } from "../logic/Config";
@@ -31,6 +31,7 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
    const constructed = getTypeBuildings(gs);
    const build = (k: Building) => {
       tile.building = makeBuilding({ type: k });
+      tile.building.priority = getGameOptions().defaultPriority;
       notifyGameStateUpdate();
       if (checkBuildingMax(k, gs)) {
          lastBuild = k;

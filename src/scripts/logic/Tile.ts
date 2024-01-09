@@ -32,6 +32,30 @@ export interface IBuildingData {
    electrification: number;
 }
 
+export function getProductionPriority(v: number): number {
+   return v & 0x0000ff;
+}
+
+export function setProductionPriority(priority: number, v: number): number {
+   return (priority & 0xffff00) | (v & 0xff);
+}
+
+export function getConstructionPriority(v: number): number {
+   return (v & 0x00ff00) >> 8;
+}
+
+export function setConstructionPriority(priority: number, v: number): number {
+   return (priority & 0xff00ff) | ((v & 0xff) << 8);
+}
+
+export function getUpgradePriority(v: number): number {
+   return (v & 0xff0000) >> 16;
+}
+
+export function setUpgradePriority(priority: number, v: number): number {
+   return (priority & 0x00ffff) | ((v & 0xff) << 16);
+}
+
 export enum MarketOptions {
    None = 0,
    ClearAfterUpdate = 1 << 0,
@@ -67,7 +91,7 @@ export enum PetraOptions {
 }
 
 export interface IPetraBuildingData extends IBuildingData {
-   petraOptions: PetraOptions;
+   speedUp: number;
    offlineProductionPercent: number;
 }
 
@@ -128,8 +152,8 @@ export function makeBuilding(data: Pick<IBuildingData, "type"> & Partial<IBuildi
       }
       case "Petra": {
          const petra = building as IPetraBuildingData;
-         if (isNullOrUndefined(petra.petraOptions)) {
-            petra.petraOptions = PetraOptions.None;
+         if (isNullOrUndefined(petra.speedUp)) {
+            petra.speedUp = 1;
          }
          if (isNullOrUndefined(petra.offlineProductionPercent)) {
             petra.offlineProductionPercent = 1;

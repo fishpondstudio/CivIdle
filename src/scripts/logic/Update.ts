@@ -1,22 +1,12 @@
 import type { IPointData } from "pixi.js";
-import { rpcClient } from "typed-rpc";
-import {
-   compressSave,
-   getGameOptions,
-   getGameState,
-   notifyGameStateUpdate,
-   saveGame,
-   serializeSave,
-} from "../Global";
+import { getGameOptions, getGameState, notifyGameStateUpdate, saveGame, serializeSave } from "../Global";
 import type { Building } from "../definitions/BuildingDefinitions";
 import type { IUnlockableDefinition } from "../definitions/ITechDefinition";
 import type { Resource } from "../definitions/ResourceDefinitions";
-import { client } from "../rpc/RPCClient";
 import { isSteam } from "../rpc/SteamClient";
 import { WorldScene } from "../scenes/WorldScene";
 import {
    HOUR,
-   bytesToBase64,
    clamp,
    filterOf,
    forEach,
@@ -25,7 +15,6 @@ import {
    keysOf,
    pointArrayToXy,
    pointToXy,
-   round,
    safeAdd,
    safePush,
    shuffle,
@@ -37,7 +26,6 @@ import { srand } from "../utilities/Random";
 import { Singleton } from "../utilities/Singleton";
 import { Vector2, v2 } from "../utilities/Vector2";
 import { L, t } from "../utilities/i18n";
-import { compress, decompress } from "../workers/Compress";
 import {
    IOCalculation,
    addResources,
@@ -51,6 +39,7 @@ import {
    getBuilderCapacity,
    getBuildingCost,
    getBuildingValue,
+   getCurrentPriority,
    getMarketPrice,
    getPowerRequired,
    getScienceFromWorkers,
@@ -115,9 +104,7 @@ export function tickEverySecond(gs: GameState, offline: boolean) {
       return;
    }
    timeSinceLastTick = 0;
-
    Tick.current = freezeTickData(Tick.next);
-   CurrentTickChanged.emit(Tick.current);
    Tick.next = EmptyTickData();
    clearIntraTickCache();
 
@@ -146,9 +133,15 @@ export function tickEverySecond(gs: GameState, offline: boolean) {
    ++gs.tick;
 
    if (!offline) {
-      notifyGameStateUpdate();
-      if (gs.tick % 5 === 0) {
+      const speed = Singleton().ticker.speedUp;
+      if (gs.tick % speed === 0) {
+         CurrentTickChanged.emit(Tick.current);
+         notifyGameStateUpdate();
+      }
+      if (gs.tick % (5 * speed) === 0) {
          saveGame(false).catch(console.error);
+      }
+      if (gs.tick % (60 * speed) === 1) {
          Singleton().heartbeat.update(serializeSave());
       }
    }
@@ -227,13 +220,7 @@ function tickTiles(gs: GameState, offline: boolean) {
    const tiles = keysOf(getXyBuildings(gs)).sort((a, b) => {
       const buildingA = gs.tiles[a].building!;
       const buildingB = gs.tiles[b].building!;
-      if (isBuildingOrUpgrading(buildingA) && !isBuildingOrUpgrading(buildingB)) {
-         return -1;
-      }
-      if (isBuildingOrUpgrading(buildingB) && !isBuildingOrUpgrading(buildingA)) {
-         return 1;
-      }
-      const diff = gs.tiles[b].building!.priority - gs.tiles[a].building!.priority;
+      const diff = getCurrentPriority(buildingB) - getCurrentPriority(buildingA);
       if (diff !== 0) {
          return diff;
       }
@@ -422,7 +409,7 @@ function tickTile(xy: string, gs: GameState, offline: boolean): void {
          totalBought += buyAmount;
       });
       if (totalBought > 0) {
-         tileVisual?.showText(`+${round(totalBought, 1)}`);
+         tileVisual?.showFloater(totalBought);
          onBuildingProductionComplete(xy, gs, offline);
       }
       return;
@@ -493,7 +480,7 @@ function tickTile(xy: string, gs: GameState, offline: boolean): void {
          } else {
             safeAdd(building.resources, res, v);
          }
-         tileVisual?.showText(`+${round(v, 1)}`);
+         tileVisual?.showFloater(v);
       } else {
          safeAdd(Tick.next.workersAvailable, res, v);
       }

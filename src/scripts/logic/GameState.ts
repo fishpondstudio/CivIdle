@@ -96,7 +96,8 @@ export class GameOptions {
    shortcuts: Partial<Record<Shortcut, IShortcutConfig>> = {};
    soundEffect = true;
    buildingDefaults: Partial<Record<Building, Partial<IBuildingData>>> = {};
-   //  Should be wiped
+   defaultPriority = 0x010101;
+   // Should be wiped
    greatPeople: Partial<Record<GreatPerson, { level: number; amount: number }>> = {};
    greatPeopleChoices: GreatPeopleChoice[] = [];
 }

@@ -1,10 +1,16 @@
-import { v4 } from "uuid";
 import { compressSave, decompressSave, deserializeSave, serializeSave } from "../scripts/Global";
 import { getBuildingCost, getPowerRequired, getTotalBuildingCost } from "../scripts/logic/BuildingLogic";
-import { type GameState, SavedGame, initializeGameState } from "../scripts/logic/GameState";
+import { SavedGame, initializeGameState, type GameState } from "../scripts/logic/GameState";
+import {
+   getConstructionPriority,
+   getProductionPriority,
+   getUpgradePriority,
+   setConstructionPriority,
+   setProductionPriority,
+   setUpgradePriority,
+} from "../scripts/logic/Tile";
 import { Grid } from "../scripts/scenes/Grid";
 import { fossilDeltaApply, fossilDeltaCreate } from "../scripts/utilities/FossilDelta";
-import { compress } from "../scripts/workers/Compress";
 
 const title = "background: #636e72; color: #fff;";
 
@@ -74,6 +80,21 @@ export function RunTests(gs: GameState): void {
             assertEqual(dest.length, newDest.length);
             const newGameState = deserializeSave(newDest);
             assertEqual(s.current.tick, newGameState.current.tick);
+         }),
+      )
+      .then(() =>
+         test("priority", () => {
+            const priority = 0x123456;
+            assertEqual(0x56, getProductionPriority(priority));
+            assertEqual(0x34, getConstructionPriority(priority));
+            assertEqual(0x12, getUpgradePriority(priority));
+
+            assertEqual(0x123478, setProductionPriority(priority, 0x78));
+            assertEqual(5, getProductionPriority(setProductionPriority(priority, 5)));
+            assertEqual(0x127856, setConstructionPriority(priority, 0x78));
+            assertEqual(6, getConstructionPriority(setConstructionPriority(priority, 6)));
+            assertEqual(0x783456, setUpgradePriority(priority, 0x78));
+            assertEqual(7, getUpgradePriority(setUpgradePriority(priority, 7)));
          }),
       );
 }

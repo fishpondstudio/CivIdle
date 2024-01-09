@@ -14,6 +14,8 @@ import { getBuildingUnlockTech, getDepositUnlockTech, getResourceUnlockTech } fr
 
 export const MAX_OFFLINE_PRODUCTION_SEC = 60 * 60 * 4;
 
+export const SCIENCE_VALUE = 0.5;
+
 export function getVersion(): string {
    return `0.${SAVE_FILE_VERSION}.${build}`;
 }
@@ -151,7 +153,13 @@ export function calculateTierAndPrice(gs: GameState) {
          if (allInputResourcesHasTier) {
             const targetTier = maxInputResourceTier + 1;
             let allOutputAmount = 0;
+            let notPricedResourceValue = 0;
             forEach(output, (res, amount) => {
+               if (res === "Science") {
+                  // Science is internally valued at 0.5
+                  notPricedResourceValue += amount * SCIENCE_VALUE;
+                  return;
+               }
                if (!Config.ResourceTier[res] || targetTier < Config.ResourceTier[res]!) {
                   const oldTier = Config.ResourceTier[res];
                   Config.ResourceTier[res] = targetTier;
@@ -187,7 +195,7 @@ export function calculateTierAndPrice(gs: GameState) {
                Config.BuildingTier[building] = targetTier;
             }
             forEach(output, (res) => {
-               const price = (2 * inputResourcesValue) / allOutputAmount;
+               const price = (2 * inputResourcesValue - notPricedResourceValue) / allOutputAmount;
                if (!Config.ResourcePrice[res] || price > Config.ResourcePrice[res]!) {
                   Config.ResourcePrice[res] = price;
                }

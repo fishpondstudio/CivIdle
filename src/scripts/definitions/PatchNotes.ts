@@ -5,6 +5,26 @@ interface PatchNote {
 
 export const PatchNotes: PatchNote[] = [
    {
+      version: "0.1.104",
+      content: [
+         ["Content", "Allow setting default construction, upgrade and production priority"],
+         ["Content", "Petra now allows you to accelerate your empire up to 8x"],
+         ["Balance", "Increase School's science output: 88 -> 172"],
+         ["Balance", "Increase Library's science output: 8 -> 16"],
+         ["Balance", "University now produces 100 Science"],
+         ["Balance", "Publishing House now produces 200 Science"],
+         [
+            "Balance",
+            "Geography Technology now provides +10 Consumption and Production Multiplier to Library",
+         ],
+         ["Balance", "Optics now provides +10 Consumption and Production Multiplier to Library and School"],
+         [
+            "Bugfix",
+            "Fix a bug where wonder construction cost fail to take resource value into consideration",
+         ],
+      ],
+   },
+   {
       version: "0.1.103",
       content: [
          ["QoL", "Allow choosing player flag"],

@@ -1,10 +1,11 @@
 import classNames from "classnames";
 import { useState } from "react";
-import { notifyGameStateUpdate } from "../Global";
+import { getGameOptions, notifyGameStateUpdate } from "../Global";
 import { getBuildingUpgradeLevels, getTotalBuildingCost } from "../logic/BuildingLogic";
 import { Config } from "../logic/Config";
 import {} from "../logic/GameState";
 import { useShortcut } from "../logic/Shortcut";
+import { getUpgradePriority, setUpgradePriority } from "../logic/Tile";
 import { jsxMapOf, numberToRoman } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
 import type { IBuildingComponentProps } from "./BuildingPage";
@@ -24,6 +25,10 @@ export function BuildingUpgradeComponent({ gameState, xy }: IBuildingComponentPr
    const upgrade = (level: number) => {
       building.desiredLevel = building.level + level;
       building.status = "upgrading";
+      building.priority = setUpgradePriority(
+         building.priority,
+         getUpgradePriority(getGameOptions().defaultPriority),
+      );
       notifyGameStateUpdate();
    };
    useShortcut("BuildingPageUpgradeX1", () => upgrade(1), [xy]);
@@ -46,7 +51,7 @@ export function BuildingUpgradeComponent({ gameState, xy }: IBuildingComponentPr
                   <button
                      key={level}
                      style={{ width: "60px" }}
-                     className={classNames({ "text-strong": index == selected })}
+                     className={classNames({ "text-strong": index === selected })}
                      onMouseOver={setSelected.bind(null, index)}
                      onClick={() => upgrade(level)}
                   >

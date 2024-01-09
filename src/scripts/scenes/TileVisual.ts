@@ -1,4 +1,4 @@
-import type { IDestroyOptions, IPointData} from "pixi.js";
+import type { IDestroyOptions, IPointData } from "pixi.js";
 import { BitmapText, Color, Container, Sprite } from "pixi.js";
 import { getGameOptions, getGameState } from "../Global";
 import type { Resource } from "../definitions/ResourceDefinitions";
@@ -13,7 +13,15 @@ import {
 import type { GameOptions, GameState } from "../logic/GameState";
 import { Tick } from "../logic/TickLogic";
 import type { ITileData } from "../logic/Tile";
-import { clamp, forEach, formatHMS, layoutCenter, pointToXy, sizeOf } from "../utilities/Helper";
+import {
+   clamp,
+   forEach,
+   formatHMS,
+   formatNumber,
+   layoutCenter,
+   pointToXy,
+   sizeOf,
+} from "../utilities/Helper";
 import { Singleton } from "../utilities/Singleton";
 import { v2 } from "../utilities/Vector2";
 import { Actions } from "../utilities/pixi-actions/Actions";
@@ -38,6 +46,8 @@ export class TileVisual extends Container {
    private readonly _upgradeAnimation: Action;
    private readonly _xy: string;
    private readonly _timeLeft: BitmapText;
+   private _lastFloaterShownAt = 0;
+   private _floaterValue = 0;
 
    constructor(world: WorldScene, grid: IPointData) {
       super();
@@ -197,14 +207,21 @@ export class TileVisual extends Container {
       });
    }
 
-   public showText(text: string): void {
+   public showFloater(value: number): void {
+      if (Date.now() - this._lastFloaterShownAt < 1000) {
+         this._floaterValue += value;
+         return;
+      }
+      const speed = Singleton().ticker.speedUp;
+      this._lastFloaterShownAt = Date.now();
       const t = this._world.tooltipPool.allocate();
-      t.text = text;
+      t.text = `+${formatNumber(this._floaterValue + value)}`;
+      this._floaterValue = 0;
       t.position = this.position;
       t.y = t.y - 20;
       Actions.sequence(
-         Actions.to(t, { y: t.y - 10, alpha: 1 }, 0.25, Easing.OutQuad),
-         Actions.to(t, { y: t.y - 40, alpha: 0 }, 1.25, Easing.InQuad),
+         Actions.to(t, { y: t.y - 10, alpha: 1 }, 0.25 * speed, Easing.OutQuad),
+         Actions.to(t, { y: t.y - 40, alpha: 0 }, 1.25 * speed, Easing.InQuad),
          Actions.runFunc(() => {
             this._world.tooltipPool.release(t);
          }),

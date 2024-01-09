@@ -1,11 +1,10 @@
 import { notifyGameStateUpdate } from "../Global";
 import { getStorageFor } from "../logic/BuildingLogic";
 import { MAX_OFFLINE_PRODUCTION_SEC } from "../logic/Constants";
-import type { IPetraBuildingData} from "../logic/Tile";
-import { PetraOptions } from "../logic/Tile";
-import { formatHM, formatPercent, hasFlag, toggleFlag } from "../utilities/Helper";
+import type { IPetraBuildingData } from "../logic/Tile";
+import { clamp, formatHM, formatPercent } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
-import { playClick, playError } from "../visuals/Sound";
+import { playError } from "../visuals/Sound";
 import { BuildingColorComponent } from "./BuildingColorComponent";
 import type { IBuildingComponentProps } from "./BuildingPage";
 import { BuildingWikipediaComponent } from "./BuildingWikipediaComponent";
@@ -93,24 +92,30 @@ export function PetraBuildingBody({ gameState, xy }: IBuildingComponentProps): R
             <div className="separator"></div>
             <div className="row">
                <div className="f1">
-                  <div className="text-strong">{t(L.TurnOnTimeWarp)}</div>
-                  <div className="text-small text-desc">{t(L.TurnOnTimeWarpDesc)}</div>
+                  <div className="text-strong">{t(L.TimeWarp)}</div>
                </div>
-               <div
-                  className="pointer ml10"
-                  onClick={() => {
-                     playClick();
-                     building.petraOptions = toggleFlag(building.petraOptions, PetraOptions.TimeWarp);
-                     notifyGameStateUpdate();
-                  }}
-               >
-                  {hasFlag(building.petraOptions, PetraOptions.TimeWarp) ? (
-                     <div className="m-icon text-green">toggle_on</div>
-                  ) : (
-                     <div className="m-icon text-desc">toggle_off</div>
-                  )}
-               </div>
+               <div className="ml10 text-strong">{building.speedUp}x</div>
             </div>
+            <input
+               type="range"
+               min={1}
+               max={8}
+               step="1"
+               value={building.speedUp}
+               onChange={(e) => {
+                  building.speedUp = clamp(parseInt(e.target.value, 10), 1, 8);
+                  notifyGameStateUpdate();
+               }}
+            />
+            <div className="sep15" />
+            {building.speedUp > 1 ? (
+               <div className="text-small text-desc">
+                  {t(L.TurnOnTimeWarpDesc, { speed: building.speedUp })}
+               </div>
+            ) : null}
+            {building.speedUp > 2 ? (
+               <div className="text-small text-strong text-red mt5">{t(L.TimeWarpWarning)}</div>
+            ) : null}
          </fieldset>
          <WarningComponent icon="info">{t(L.PetraNoMultiplier)}</WarningComponent>
          <div className="sep10"></div>

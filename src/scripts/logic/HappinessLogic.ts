@@ -27,7 +27,7 @@ export function calculateHappiness(gs: GameState) {
    const buildingsByType = getTypeBuildings(gs);
    let fromUnlockedAge = 0;
    if (techAge) {
-      fromUnlockedAge = 5 * (Config.TechAge[techAge].idx + 1);
+      fromUnlockedAge = 10 * (Config.TechAge[techAge].idx + 1);
    }
    let fromBuildings = 0;
    let fromWonders = 0;

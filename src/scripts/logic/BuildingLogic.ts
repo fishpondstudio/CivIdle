@@ -28,6 +28,9 @@ import { getBuildingsThatProduce, getResourcesValue } from "./ResourceLogic";
 import { getAgeForTech, getBuildingUnlockTech } from "./TechLogic";
 import { Tick, type Multiplier, type MultiplierWithSource, type NotProducingReason } from "./TickLogic";
 import {
+   getConstructionPriority,
+   getProductionPriority,
+   getUpgradePriority,
    type IBuildingData,
    type IHaveTypeAndLevel,
    type IResourceImportBuildingData,
@@ -399,7 +402,7 @@ export function getBuildingCost(building: Pick<IBuildingData, "type" | "level">)
    if (isEmpty(cost)) {
       return {};
    }
-   let multiplier = 10;
+
    // This is a wonder, we apply the wonder multiplier here
    if (isWorldWonder(building.type)) {
       const tech = getBuildingUnlockTech(building.type);
@@ -413,12 +416,16 @@ export function getBuildingCost(building: Pick<IBuildingData, "type" | "level">)
             ageIdx = age.idx;
          }
       }
-      multiplier = Math.round(10 + Math.pow(5, ageIdx) * Math.pow(1.5, techIdx));
+      const multiplier = Math.round(10 + Math.pow(5, ageIdx) * Math.pow(1.5, techIdx));
+      keysOf(cost).forEach((res) => {
+         cost[res] = (Math.pow(1.5, level) * multiplier * cost[res]!) / (Config.ResourcePrice[res] ?? 1);
+      });
+   } else {
+      const multiplier = 10;
+      keysOf(cost).forEach((res) => {
+         cost[res] = Math.pow(1.5, level) * multiplier * cost[res]!;
+      });
    }
-
-   keysOf(cost).forEach((res) => {
-      cost[res] = Math.pow(1.5, level) * multiplier * cost[res]!;
-   });
    return cost;
 }
 
@@ -443,6 +450,19 @@ export function getTotalBuildingCost(
 
 export function getBuildingValue(building: IBuildingData): number {
    return getResourcesValue(getTotalBuildingCost(building.type, 0, building.level));
+}
+
+export function getCurrentPriority(building: IBuildingData): number {
+   switch (building.status) {
+      case "building":
+         return getConstructionPriority(building.priority);
+      case "upgrading":
+         return getUpgradePriority(building.priority);
+      case "completed":
+         return getProductionPriority(building.priority);
+      default:
+         return 0;
+   }
 }
 
 export function getTotalBuildingUpgrades(gs: GameState): number {

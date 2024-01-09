@@ -5,7 +5,17 @@ import type { GameOptions } from "./logic/GameState";
 import { GameState, SavedGame, initializeGameState } from "./logic/GameState";
 import { rollPermanentGreatPeople } from "./logic/RebornLogic";
 import { getGreatPeopleChoices } from "./logic/TechLogic";
-import { makeBuilding } from "./logic/Tile";
+import {
+   PRIORITY_MAX,
+   PRIORITY_MIN,
+   getConstructionPriority,
+   getProductionPriority,
+   getUpgradePriority,
+   makeBuilding,
+   setConstructionPriority,
+   setProductionPriority,
+   setUpgradePriority,
+} from "./logic/Tile";
 import { SteamClient, isSteam } from "./rpc/SteamClient";
 import { Grid } from "./scenes/Grid";
 import { WorldScene } from "./scenes/WorldScene";
@@ -34,23 +44,13 @@ export function resetToCity(city: City): void {
    initializeGameState(savedGame.current, new Grid(size, size, TILE_SIZE));
 }
 
+export function loadSave(save: SavedGame): void {
+   saving = true;
+   Object.assign(savedGame, save);
+   saveGame(true).catch(console.error);
+}
+
 if (import.meta.env.DEV) {
-   // @ts-expect-error
-   window.loadSave = (content: unknown) => {
-      saving = true;
-      Object.assign(savedGame, content);
-      if (isSteam()) {
-         compressSave(savedGame)
-            .then((b) => SteamClient.fileWriteBytes(SAVE_KEY, b))
-            .then(() => window.location.reload())
-            .catch(console.error);
-      } else {
-         compressSave(savedGame)
-            .then((b) => idbSet(SAVE_KEY, b))
-            .then(() => window.location.reload())
-            .catch(console.error);
-      }
-   };
    // @ts-expect-error
    window.savedGame = savedGame;
    // @ts-expect-error
@@ -182,11 +182,11 @@ export function isGameDataCompatible(gs: SavedGame): boolean {
 }
 
 export function notifyGameStateUpdate(gameState?: GameState): void {
-   GameStateChanged.emit({ ...(gameState ?? getGameState()) });
+   GameStateChanged.emit(gameState ?? getGameState());
 }
 
 export function notifyGameOptionsUpdate(gameOptions?: GameOptions): void {
-   GameOptionsChanged.emit({ ...(gameOptions ?? getGameOptions()) });
+   GameOptionsChanged.emit(gameOptions ?? getGameOptions());
 }
 
 export function watchGameState(cb: (gs: GameState) => void): () => void {
@@ -219,14 +219,32 @@ function migrateSavedGame(gs: SavedGame) {
       if (tile.building) {
          if (!Config.Building[tile.building.type]) {
             delete tile.building;
-         } else {
-            tile.building = makeBuilding(tile.building);
+            return;
          }
+         tile.building = makeBuilding(tile.building);
+         if (
+            getProductionPriority(tile.building.priority) > PRIORITY_MAX ||
+            getProductionPriority(tile.building.priority) < PRIORITY_MIN
+         ) {
+            tile.building.priority = setProductionPriority(tile.building.priority, 1);
+         }
+         if (
+            getConstructionPriority(tile.building.priority) > PRIORITY_MAX ||
+            getConstructionPriority(tile.building.priority) < PRIORITY_MAX
+         ) {
+            tile.building.priority = setConstructionPriority(tile.building.priority, 1);
+         }
+         if (
+            getUpgradePriority(tile.building.priority) > PRIORITY_MAX ||
+            getUpgradePriority(tile.building.priority) < PRIORITY_MAX
+         ) {
+            tile.building.priority = setUpgradePriority(tile.building.priority, 1);
+         }
+         forEach(tile.building.resources, (res, amount) => {
+            if (!Config.Resource[res] || !Number.isFinite(amount)) {
+               delete tile.building!.resources[res];
+            }
+         });
       }
-      forEach(tile.building?.resources, (res, amount) => {
-         if (!Config.Resource[res] || !Number.isFinite(amount)) {
-            delete tile.building!.resources[res];
-         }
-      });
    });
 }

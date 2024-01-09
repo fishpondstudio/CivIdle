@@ -297,6 +297,9 @@ export class TechDefinitions {
       column: 9,
       requireTech: ["Architecture"],
       unlockBuilding: ["CaravelBuilder"],
+      buildingMultiplier: {
+         Library: { output: 10, input: 10 },
+      },
    };
 
    Physics: ITechDefinition = {
@@ -354,6 +357,10 @@ export class TechDefinitions {
       requireTech: ["Navigation"],
       unlockBuilding: ["LensWorkshop"],
       globalMultiplier: { builderCapacity: 1 },
+      buildingMultiplier: {
+         Library: { output: 10, input: 10 },
+         School: { output: 10, input: 10 },
+      },
    };
 
    Banking: ITechDefinition = {

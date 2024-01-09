@@ -409,7 +409,8 @@ export const EN = {
    ConstructionNotEnoughWorkers: "This building's construction is paused because of lack of workers",
    EndConstruction: "End Construction",
    EndConstructionEnd: "End",
-   EndConstructionDesc: "All the resources that have already been used will not be returned",
+   EndConstructionDesc:
+      "When you end the construction, all the resources that have already been used will not be returned",
    Stonehenge: "Stonehenge",
    StonehengeDesc: "All buildings that consume or produce stone get +1 Production Multiplier",
    LighthouseOfAlexandria: "Lighthouse Of Alexandria",
@@ -543,10 +544,6 @@ export const EN = {
    MogaoCaves: "Mogao Caves",
    MogaoCavesDesc: "Mogao Caves",
    Wonder: "Wonder",
-   PauseConstruction: "Pause Construction",
-   ResumeConstruction: "Resume Construction",
-   PauseConstructionDesc: "Construction is currently in progress. You can pause construction any time",
-   ResumeConstructionDesc: "Construction is currently paused. You can resume construction any time",
    PauseConstructionPause: "Pause",
    ResumeConstructionResume: "Resume",
    Upgrade: "Upgrade",
@@ -563,7 +560,14 @@ export const EN = {
       "This building will stop transporting a resource once there are enough for %{cycle} production cycles",
    StockpileMaxUnlimitedDesc: "The building will never stop transporting resources until the storage is full",
    ProductionPriority: "Production Priority",
-   ProductionPriorityDesc: "High priority means the building produces before other buildings",
+   DefaultProductionPriority: "Default Production Priority",
+   ConstructionPriority: "Construction Priority",
+   DefaultConstructionPriority: "Default Construction Priority",
+   DefaultUpgradePriority: "Default Upgrade Priority",
+   UpgradePriority: "Upgrade Priority",
+   PreferBuildingPriorityUpgrade:
+      "When upgrading a building, use the building's default production priority if it exists instead of default construction priority",
+   ProductionPriorityDesc: "High priority means the building transport before other buildings",
    TechProductionPriority: "Unlock building priority - allow setting production priority for each building",
    TechStockpileMode: "Unlock stockpile mode - allow adjusting stockpile for each building",
    ConstructionCost: "Construction Cost: %{cost}",
@@ -848,8 +852,10 @@ export const EN = {
    WarpConversionDesc:
       "Your offline time that exceeds Max Offline Production Time will be converted to warp (1 second = 1 warp)",
    TimeWarp: "Time Warp",
-   TurnOnTimeWarp: "Turn On Time Warp",
-   TurnOnTimeWarpDesc: "Cost 1 warp for each cycle and accelerate your empire to run at 2x speed",
+   TurnOnTimeWarpDesc:
+      "Cost %{speed} warps for every second and accelerate your empire to run at %{speed}x speed.",
+   TimeWarpWarning:
+      "Accelerate at a higher speed than your computer can handle might result in data loss: USE AT YOUR OWN RISK",
    PetraNoMultiplier: "Petra is not affected by any multipliers (production, worker capacity, storage, etc)",
    LimitOfflineProduction: "Limit Offline Production",
    Reborn: "Reborn",
@@ -878,4 +884,5 @@ export const EN = {
    ConfirmDestroyResourceTitle: "Confirm Destroying Resources",
    ConfirmDestroyResourceContent:
       "You are about to destroy %{amount} %{resource}. This cannot be undone. Are you sure?",
+   BuildingPriority: "Building Priority",
 };

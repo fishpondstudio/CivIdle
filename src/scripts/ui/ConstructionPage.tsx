@@ -1,6 +1,12 @@
 import { notifyGameStateUpdate, useGameState } from "../Global";
 import { Config } from "../logic/Config";
-import type { ITileData } from "../logic/Tile";
+import {
+   PRIORITY_MAX,
+   PRIORITY_MIN,
+   getConstructionPriority,
+   setConstructionPriority,
+   type ITileData,
+} from "../logic/Tile";
 import { WorldScene } from "../scenes/WorldScene";
 import { Singleton } from "../utilities/Singleton";
 import { L, t } from "../utilities/i18n";
@@ -23,43 +29,50 @@ export function ConstructionPage({ tile }: { tile: ITileData }): React.ReactNode
          <div className="window-body">
             <BuildingConstructionProgressComponent xy={tile.xy} gameState={gs} />
             <fieldset>
-               <legend>{t(building.status === "paused" ? L.ResumeConstruction : L.PauseConstruction)}</legend>
-               <div className="row">
-                  <div>
-                     {t(building.status === "paused" ? L.ResumeConstructionDesc : L.PauseConstructionDesc)}
-                  </div>
-                  <div className="ml10">
-                     <button
-                        onClick={() => {
-                           building.status = building.status === "paused" ? "building" : "paused";
-                           notifyGameStateUpdate();
-                        }}
-                     >
-                        {t(
-                           building.status === "paused"
-                              ? L.ResumeConstructionResume
-                              : L.PauseConstructionPause,
-                        )}
-                     </button>
-                  </div>
-               </div>
+               <legend>
+                  {t(L.ConstructionPriority)}: {getConstructionPriority(building.priority)}
+               </legend>
+               <input
+                  type="range"
+                  min={PRIORITY_MIN}
+                  max={PRIORITY_MAX}
+                  step="1"
+                  value={getConstructionPriority(building.priority)}
+                  onChange={(e) => {
+                     building.priority = setConstructionPriority(
+                        building.priority,
+                        parseInt(e.target.value, 10),
+                     );
+                     notifyGameStateUpdate();
+                  }}
+               />
+               <div className="sep15"></div>
+               <div className="text-desc text-small">{t(L.ProductionPriorityDesc)}</div>
             </fieldset>
             <fieldset>
-               <legend>{t(L.EndConstruction)}</legend>
                <div className="row">
-                  <div>{t(L.EndConstructionDesc)}</div>
-                  <div className="ml10">
-                     <button
-                        onClick={() => {
-                           delete tile.building;
-                           Singleton().sceneManager.getCurrent(WorldScene)?.resetTile(tile.xy);
-                           notifyGameStateUpdate();
-                        }}
-                     >
-                        {t(L.EndConstructionEnd)}
-                     </button>
-                  </div>
+                  <button
+                     className="f1"
+                     onClick={() => {
+                        building.status = building.status === "paused" ? "building" : "paused";
+                        notifyGameStateUpdate();
+                     }}
+                  >
+                     {t(building.status === "paused" ? L.ResumeConstructionResume : L.PauseConstructionPause)}
+                  </button>
+                  <button
+                     className="f1"
+                     onClick={() => {
+                        delete tile.building;
+                        Singleton().sceneManager.getCurrent(WorldScene)?.resetTile(tile.xy);
+                        notifyGameStateUpdate();
+                     }}
+                  >
+                     {t(L.EndConstructionEnd)}
+                  </button>
                </div>
+               <div className="sep5"></div>
+               <div className="text-desc text-small">{t(L.EndConstructionDesc)}</div>
             </fieldset>
          </div>
       </div>

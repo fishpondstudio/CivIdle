@@ -4,7 +4,6 @@ import { ChooseGreatPersonModal } from "../ui/ChooseGreatPersonModal";
 import { showModal } from "../ui/GlobalModal";
 import {
    forEach,
-   hasFlag,
    isEmpty,
    keysOf,
    pointToXy,
@@ -32,7 +31,6 @@ import { addDeposit, getGreatPeopleChoices } from "./TechLogic";
 import { ensureTileFogOfWar } from "./TerrainLogic";
 import { Tick } from "./TickLogic";
 import type { IPetraBuildingData } from "./Tile";
-import { PetraOptions } from "./Tile";
 import { addMultiplier } from "./Update";
 
 export function onBuildingComplete(xy: string, gs: GameState) {
@@ -319,9 +317,9 @@ export function onBuildingProductionComplete(xy: string, gs: GameState, offline:
             break;
          }
          const petra = building as IPetraBuildingData;
-         if (hasFlag(petra.petraOptions, PetraOptions.TimeWarp) && (petra.resources.Warp ?? 0) > 0) {
+         if (petra.speedUp > 1 && (petra.resources.Warp ?? 0) > 0) {
             --petra.resources.Warp!;
-            Singleton().ticker.speedUp = 2;
+            Singleton().ticker.speedUp = petra.speedUp;
          } else {
             Singleton().ticker.speedUp = 1;
          }
