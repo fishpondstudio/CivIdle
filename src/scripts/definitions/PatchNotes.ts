@@ -18,6 +18,7 @@ export const PatchNotes: PatchNote[] = [
             "Geography Technology now provides +10 Consumption and Production Multiplier to Library",
          ],
          ["Balance", "Optics now provides +10 Consumption and Production Multiplier to Library and School"],
+         ["Balance", "Each new tech age now provides +10 happiness (instead of +5)"],
          [
             "Bugfix",
             "Fix a bug where wonder construction cost fail to take resource value into consideration",
