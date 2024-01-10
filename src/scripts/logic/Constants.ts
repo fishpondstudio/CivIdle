@@ -5,8 +5,9 @@ import type { City } from "../definitions/CityDefinitions";
 import type { Resource } from "../definitions/ResourceDefinitions";
 import { DepositResources } from "../definitions/ResourceDefinitions";
 import type { Tech } from "../definitions/TechDefinitions";
-import type { PartialTabulate } from "../definitions/TypeDefinitions";
-import { forEach, isEmpty, keysOf, sizeOf } from "../utilities/Helper";
+import type { PartialSet, PartialTabulate } from "../definitions/TypeDefinitions";
+import { forEach, formatNumber, isEmpty, keysOf, numberToRoman, sizeOf } from "../utilities/Helper";
+import { getBuildingCost, isWorldWonder } from "./BuildingLogic";
 import { Config } from "./Config";
 import type { GameState } from "./GameState";
 import { SAVE_FILE_VERSION } from "./GameState";
@@ -34,7 +35,9 @@ export function calculateTierAndPrice(gs: GameState) {
 
    const allRecipes: IRecipe[] = [];
 
+   let buildingHash = 0;
    forEach(Config.Building, (building, buildingDef) => {
+      Config.BuildingHash[building] = buildingHash++;
       if (isEmpty(buildingDef.input)) {
          forEach(buildingDef.output, (res) => {
             if (!Config.ResourceTier[res]) {
@@ -204,9 +207,10 @@ export function calculateTierAndPrice(gs: GameState) {
       });
    }
 
-   const endResources: Resource[] = [];
-
+   const endResources: PartialSet<Resource> = {};
+   let resourceHash = 0;
    forEach(Config.Resource, (r) => {
+      Config.ResourceHash[r] = resourceHash++;
       if (Config.Resource[r].canPrice) {
          console.assert(Config.ResourceTier[r], `Resource = ${r} does not have a tier`);
          console.assert(Config.ResourcePrice[r], `Resource = ${r} does not have a price`);
@@ -222,7 +226,7 @@ export function calculateTierAndPrice(gs: GameState) {
          }
       });
       if (isEndResource) {
-         endResources.push(r);
+         endResources[r] = true;
       }
    });
 
@@ -238,28 +242,45 @@ export function calculateTierAndPrice(gs: GameState) {
       });
    });
 
-   console.log("AllRecipes", allRecipes);
-   console.log("BuildingTier", sortTabulate(Config.BuildingTier));
-   console.log("BuildingTech", sortTabulate(Config.BuildingTech));
-   console.log("ResourceTier", sortTabulate(Config.ResourceTier));
-   console.log("ResourcePrice", sortTabulate(Config.ResourcePrice));
-   console.log("ResourceTech", sortTabulate(Config.ResourceTech));
-   console.log(
-      "EndResources",
-      endResources
-         .filter((r) => Config.Resource[r].canPrice && Config.Resource[r].canStore)
-         .map((r) => ({
-            Resource: r,
-            Tier: Config.ResourceTier[r],
-            Price: Config.ResourcePrice[r],
-         })),
-   );
-}
-
-function sortTabulate<T extends string>(dict: PartialTabulate<T>): string[] {
-   return keysOf(dict)
-      .sort((a, b) => dict[a]! - dict[b]!)
-      .map((a) => {
-         return `${a}: ${dict[a]}`;
+   const wonderCost: string[] = [];
+   keysOf(Config.Building)
+      .sort((a, b) => {
+         const techA = getBuildingUnlockTech(a);
+         const techB = getBuildingUnlockTech(b);
+         if (techA && techB) {
+            return Config.Tech[techA].column - Config.Tech[techB].column;
+         }
+         return 0;
+      })
+      .forEach((k) => {
+         if (isWorldWonder(k)) {
+            let value = 0;
+            let cost = "";
+            forEach(getBuildingCost({ type: k, level: 0 }), (res, amount) => {
+               cost += `${res}: ${formatNumber(amount)}, `;
+               value += Config.ResourcePrice[res]! * amount;
+            });
+            cost = `${k.padEnd(25)} ${formatNumber(value).padEnd(10)}${cost}`;
+            wonderCost.push(cost);
+         }
       });
+
+   const resourcePrice: string[] = [];
+   keysOf(Config.Resource)
+      .sort((a, b) => Config.ResourceTier[a]! - Config.ResourceTier[b]!)
+      .forEach((r) => {
+         resourcePrice.push(
+            `${r.padEnd(15)}${
+               Config.Resource[r].canPrice && endResources[r] ? "*".padEnd(5) : "".padEnd(5)
+            }${numberToRoman(Config.ResourceTier[r]!)!.padEnd(10)}${formatNumber(Config.ResourcePrice[r]!)}`,
+         );
+      });
+
+   // console.log("BuildingTier", sortTabulate(Config.BuildingTier));
+   // console.log("BuildingTech", sortTabulate(Config.BuildingTech));
+   // console.log("ResourceTier", sortTabulate(Config.ResourceTier));
+   // console.log("ResourcePrice", sortTabulate(Config.ResourcePrice));
+   // console.log("ResourceTech", sortTabulate(Config.ResourceTech));
+   console.log(`>>>>>>>>>> ResourcePrice <<<<<<<<<<\n${resourcePrice.join("\n")}`);
+   console.log(`>>>>>>>>>> WonderCost <<<<<<<<<<\n${wonderCost.join("\n")}`);
 }

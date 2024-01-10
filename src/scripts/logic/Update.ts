@@ -13,14 +13,12 @@ import {
    hasFlag,
    isEmpty,
    keysOf,
-   pointArrayToXy,
    pointToXy,
    safeAdd,
    safePush,
    shuffle,
    sizeOf,
    xyToPoint,
-   xyToPointArray,
 } from "../utilities/Helper";
 import { srand } from "../utilities/Random";
 import { Singleton } from "../utilities/Singleton";
@@ -319,7 +317,7 @@ function tickTile(xy: string, gs: GameState, offline: boolean): void {
       }
       Tick.next.totalValue += Config.Resource[res].canPrice ? (Config.ResourcePrice[res] ?? 0) * amount : 0;
       safePush(Tick.next.resourcesByXy, res, xy);
-      safePush(Tick.next.resourcesByGrid, res, xyToPointArray(xy));
+      safePush(Tick.next.resourcesByGrid, res, xyToPoint(xy));
    });
 
    const requiredDeposits = Config.Building[building.type].deposit;
@@ -559,23 +557,23 @@ export function transportResource(
 ) {
    let amountLeft = amount;
    const grid = Singleton().grid;
-   const targetPoint = xyToPointArray(targetXy);
+   const targetPoint = xyToPoint(targetXy);
    // We are out of workers, no need to run the expensive sorting!
    if (getAvailableWorkers("Worker") <= 0) {
       return;
    }
    const sources = Tick.current.resourcesByGrid[res]?.sort((point1, point2) => {
       return (
-         grid.distance(point1[0], point1[1], targetPoint[0], targetPoint[1]) -
-         grid.distance(point2[0], point2[1], targetPoint[0], targetPoint[1])
+         grid.distance(point1.x, point1.y, targetPoint.x, targetPoint.y) -
+         grid.distance(point2.x, point2.y, targetPoint.x, targetPoint.y)
       );
    });
    if (!sources) {
       return;
    }
    for (let i = 0; i < sources.length; i++) {
-      const pointArray = sources[i];
-      const fromXy = pointArrayToXy(pointArray);
+      const point = sources[i];
+      const fromXy = pointToXy(point);
       const building = gs.tiles[fromXy].building;
       if (!building) {
          continue;
@@ -598,12 +596,7 @@ export function transportResource(
          (gs.tiles[fromXy].building?.type === "Warehouse" ||
             gs.tiles[targetXy].building?.type === "Warehouse")
       ) {
-         const distance = Singleton().grid.distance(
-            pointArray[0],
-            pointArray[1],
-            targetPoint[0],
-            targetPoint[1],
-         );
+         const distance = Singleton().grid.distance(point.x, point.y, targetPoint.x, targetPoint.y);
          if (distance <= 1) {
             transportCapacity = Infinity;
          }

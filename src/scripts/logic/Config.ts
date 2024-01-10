@@ -13,6 +13,9 @@ const ResourceTier: PartialTabulate<Resource> = {};
 const ResourcePrice: PartialTabulate<Resource> = {};
 const ResourceTech: PartialTabulate<Resource> = {};
 
+const BuildingHash: PartialTabulate<Building> = {};
+const ResourceHash: PartialTabulate<Resource> = {};
+
 export const Config = {
    Building: new BuildingDefinitions(),
    Resource: new ResourceDefinitions(),
@@ -25,4 +28,6 @@ export const Config = {
    ResourceTier,
    ResourceTech,
    ResourcePrice,
+   BuildingHash,
+   ResourceHash,
 } as const;

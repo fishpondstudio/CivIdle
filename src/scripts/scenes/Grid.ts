@@ -1,6 +1,6 @@
 import type { SmoothGraphics } from "@pixi/graphics-smooth";
 import { BitmapText, Polygon } from "pixi.js";
-import { xyToPoint, xyToPointArray } from "../utilities/Helper";
+import { xyToPoint } from "../utilities/Helper";
 import { Hex, Layout, OffsetCoord, Point } from "../utilities/Hex";
 import { ObjectPool } from "../utilities/ObjectPool";
 import { Fonts } from "../visuals/Fonts";
@@ -134,9 +134,9 @@ export class Grid {
    private static _distanceCache: Record<number, number> = {};
 
    public distanceXy(xy1: string, xy2: string): number {
-      const a = xyToPointArray(xy1);
-      const b = xyToPointArray(xy2);
-      return this.distance(a[0], a[1], b[0], b[1]);
+      const a = xyToPoint(xy1);
+      const b = xyToPoint(xy2);
+      return this.distance(a.x, a.y, b.x, b.y);
    }
 
    public distance(x1: number, y1: number, x2: number, y2: number): number {
@@ -146,7 +146,11 @@ export class Grid {
       const cached = Grid._distanceCache[key];
 
       // We use cached value in prod, but in dev, we want to validate our cache is good
-      if (!import.meta.env.DEV && cached) {
+      // if (!import.meta.env.DEV && cached) {
+      //    return cached;
+      // }
+
+      if (cached) {
          return cached;
       }
 
@@ -168,9 +172,9 @@ export class Grid {
       Grid._offsetCoordPool.release(oc1);
       Grid._offsetCoordPool.release(oc2);
 
-      if (cached) {
-         console.assert(distance === cached);
-      }
+      // if (cached) {
+      //    console.assert(distance === cached);
+      // }
 
       Grid._distanceCache[key] = distance;
       return distance;

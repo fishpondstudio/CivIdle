@@ -392,9 +392,16 @@ export function getScienceFromWorkers(gs: GameState) {
    };
 }
 
+const buildingCostCache: Record<string, Readonly<PartialTabulate<Resource>>> = {};
+
 export function getBuildingCost(building: Pick<IBuildingData, "type" | "level">): PartialTabulate<Resource> {
    const type = building.type;
    const level = building.level;
+   const key = (Config.BuildingHash[building.type]! << 16) + level;
+   const cached = buildingCostCache[key];
+   if (cached) {
+      return cached;
+   }
    let cost = { ...Config.Building[type].construction };
    if (isEmpty(cost)) {
       cost = { ...Config.Building[type].input } ?? {};
@@ -416,9 +423,14 @@ export function getBuildingCost(building: Pick<IBuildingData, "type" | "level">)
             ageIdx = age.idx;
          }
       }
-      const multiplier = Math.round(10 + Math.pow(5, ageIdx) * Math.pow(1.5, techIdx));
+      const multiplier = Math.round(
+         100 + 100 * Math.pow(techIdx, 2) + Math.pow(5, ageIdx) * Math.pow(1.5, techIdx),
+      );
+
       keysOf(cost).forEach((res) => {
-         cost[res] = (Math.pow(1.5, level) * multiplier * cost[res]!) / (Config.ResourcePrice[res] ?? 1);
+         const tier = Config.ResourceTier[res] ?? 1;
+         const price = Config.ResourcePrice[res] ?? 1;
+         cost[res] = (multiplier * cost[res]! * tier) / Math.pow(price, 0.9);
       });
    } else {
       const multiplier = 10;
@@ -426,8 +438,11 @@ export function getBuildingCost(building: Pick<IBuildingData, "type" | "level">)
          cost[res] = Math.pow(1.5, level) * multiplier * cost[res]!;
       });
    }
+   buildingCostCache[key] = Object.freeze(cost);
    return cost;
 }
+
+const totalBuildingCostCache: Record<string, Readonly<PartialTabulate<Resource>>> = {};
 
 export function getTotalBuildingCost(
    building: Building,
@@ -435,6 +450,11 @@ export function getTotalBuildingCost(
    desiredLevel: number,
 ): PartialTabulate<Resource> {
    console.assert(currentLevel <= desiredLevel);
+   const hash = (Config.BuildingHash[building]! << 22) + (currentLevel << 11) + desiredLevel;
+   const cached = totalBuildingCostCache[hash];
+   if (cached) {
+      return cached;
+   }
    const start: IHaveTypeAndLevel = {
       type: building,
       level: currentLevel,
@@ -445,6 +465,7 @@ export function getTotalBuildingCost(
       forEach(cost, (res, amount) => safeAdd(result, res, amount));
       ++start.level;
    }
+   totalBuildingCostCache[hash] = Object.freeze(result);
    return result;
 }
 

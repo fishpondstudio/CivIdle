@@ -1,7 +1,7 @@
+import type { IPointData } from "pixi.js";
 import type { Building } from "../definitions/BuildingDefinitions";
 import type { Resource } from "../definitions/ResourceDefinitions";
 import type { PartialSet, PartialTabulate } from "../definitions/TypeDefinitions";
-import type { IPointArray } from "../utilities/Helper";
 import { makeObservableHook } from "../utilities/Hook";
 import type { RequireAtLeastOne } from "../utilities/Type";
 import { TypedEvent } from "../utilities/TypedEvent";
@@ -19,7 +19,7 @@ interface ITickData {
    workersAssignment: Record<string, number>;
    electrified: Record<string, number>;
    resourcesByXy: Partial<Record<Resource, string[]>>;
-   resourcesByGrid: Partial<Record<Resource, IPointArray[]>>;
+   resourcesByGrid: Partial<Record<Resource, IPointData[]>>;
    playerTradeBuildings: Record<string, IBuildingData>;
    globalMultipliers: GlobalMultipliers;
    notProducingReasons: Record<string, NotProducingReason>;

@@ -212,12 +212,17 @@ export function jsxMapOf<K extends string, V>(
    return result;
 }
 
-export function pointToXy(point: IPointData): string {
-   return point.x.toString() + "," + point.y.toString();
-}
+const pointToXyCache: Record<number, string> = {};
 
-export function pointArrayToXy(pa: IPointArray): string {
-   return pa.join(",");
+export function pointToXy(point: IPointData): string {
+   const hash = (point.x << 16) + point.y;
+   const cached = pointToXyCache[hash];
+   if (cached) {
+      return cached;
+   }
+   const xy = `${point.x.toString()},${point.y.toString()}`;
+   pointToXyCache[hash] = xy;
+   return xy;
 }
 
 export function sizeOf(obj: any): number {
@@ -227,16 +232,17 @@ export function sizeOf(obj: any): number {
    return Object.keys(obj).length;
 }
 
+const xyToPointCache: Record<string, Readonly<IPointData>> = {};
+
 export function xyToPoint(str: string): IPointData {
+   const cached = xyToPointCache[str];
+   if (cached) {
+      return { x: cached.x, y: cached.y };
+   }
    const parts = str.split(",");
-   return { x: parseInt(parts[0], 10), y: parseInt(parts[1], 10) };
-}
-
-export type IPointArray = [number, number];
-
-export function xyToPointArray(str: string): IPointArray {
-   const parts = str.split(",");
-   return [parseInt(parts[0], 10), parseInt(parts[1], 10)];
+   const point = { x: parseInt(parts[0], 10), y: parseInt(parts[1], 10) };
+   xyToPointCache[str] = Object.freeze(point);
+   return point;
 }
 
 export function clamp(value: number, minInclusive: number, maxInclusive: number): number {

@@ -5,6 +5,16 @@ interface PatchNote {
 
 export const PatchNotes: PatchNote[] = [
    {
+      version: "0.1.105",
+      content: [
+         ["Balance", "Balance wonder cost based on resource value"],
+         [
+            "QoL",
+            "Improve general performance, especially when calculating offline production and using Petra to accelerate",
+         ],
+      ],
+   },
+   {
       version: "0.1.104",
       content: [
          ["Content", "Allow setting default construction, upgrade and production priority"],
