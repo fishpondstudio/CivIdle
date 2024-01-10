@@ -46,7 +46,7 @@ export function BuildingProductionPriorityComponent({
          <div className="sep5" />
          <ApplyToAllComponent
             building={building}
-            getOptions={() => ({ priority: building.priority })}
+            getOptions={(s) => ({ priority: setProductionPriority(s.priority, building.priority) })}
             gameState={gameState}
          />
       </fieldset>

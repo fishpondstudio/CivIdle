@@ -115,7 +115,7 @@ export function makeBuilding(data: Pick<IBuildingData, "type"> & Partial<IBuildi
       capacity: 1,
       stockpileCapacity: 1,
       stockpileMax: 5,
-      priority: PRIORITY_MIN,
+      priority: 0x010101,
       options: BuildingOptions.None,
       electrification: 0,
       ...data,
@@ -167,8 +167,18 @@ export function makeBuilding(data: Pick<IBuildingData, "type"> & Partial<IBuildi
       STOCKPILE_CAPACITY_MAX,
    );
    building.stockpileMax = clamp(building.stockpileMax, STOCKPILE_MAX_MIN, STOCKPILE_MAX_MAX);
-   building.priority = clamp(building.priority, PRIORITY_MIN, PRIORITY_MAX);
-
+   building.priority = setProductionPriority(
+      building.priority,
+      clamp(getProductionPriority(building.priority), PRIORITY_MIN, PRIORITY_MAX),
+   );
+   building.priority = setConstructionPriority(
+      building.priority,
+      clamp(getConstructionPriority(building.priority), PRIORITY_MIN, PRIORITY_MAX),
+   );
+   building.priority = setUpgradePriority(
+      building.priority,
+      clamp(getUpgradePriority(building.priority), PRIORITY_MIN, PRIORITY_MAX),
+   );
    return building;
 }
 

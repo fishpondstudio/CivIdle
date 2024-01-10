@@ -5,17 +5,7 @@ import type { GameOptions } from "./logic/GameState";
 import { GameState, SavedGame, initializeGameState } from "./logic/GameState";
 import { rollPermanentGreatPeople } from "./logic/RebornLogic";
 import { getGreatPeopleChoices } from "./logic/TechLogic";
-import {
-   PRIORITY_MAX,
-   PRIORITY_MIN,
-   getConstructionPriority,
-   getProductionPriority,
-   getUpgradePriority,
-   makeBuilding,
-   setConstructionPriority,
-   setProductionPriority,
-   setUpgradePriority,
-} from "./logic/Tile";
+import { makeBuilding } from "./logic/Tile";
 import { SteamClient, isSteam } from "./rpc/SteamClient";
 import { Grid } from "./scenes/Grid";
 import { WorldScene } from "./scenes/WorldScene";
@@ -222,24 +212,6 @@ function migrateSavedGame(gs: SavedGame) {
             return;
          }
          tile.building = makeBuilding(tile.building);
-         if (
-            getProductionPriority(tile.building.priority) > PRIORITY_MAX ||
-            getProductionPriority(tile.building.priority) < PRIORITY_MIN
-         ) {
-            tile.building.priority = setProductionPriority(tile.building.priority, 1);
-         }
-         if (
-            getConstructionPriority(tile.building.priority) > PRIORITY_MAX ||
-            getConstructionPriority(tile.building.priority) < PRIORITY_MAX
-         ) {
-            tile.building.priority = setConstructionPriority(tile.building.priority, 1);
-         }
-         if (
-            getUpgradePriority(tile.building.priority) > PRIORITY_MAX ||
-            getUpgradePriority(tile.building.priority) < PRIORITY_MAX
-         ) {
-            tile.building.priority = setUpgradePriority(tile.building.priority, 1);
-         }
          forEach(tile.building.resources, (res, amount) => {
             if (!Config.Resource[res] || !Number.isFinite(amount)) {
                delete tile.building!.resources[res];

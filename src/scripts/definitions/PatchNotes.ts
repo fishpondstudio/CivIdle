@@ -5,6 +5,10 @@ interface PatchNote {
 
 export const PatchNotes: PatchNote[] = [
    {
+      version: "0.1.106",
+      content: [["Bugfix", "Fix production priority slider resets after restart the game"]],
+   },
+   {
       version: "0.1.105",
       content: [
          ["Balance", "Balance wonder cost based on resource value"],

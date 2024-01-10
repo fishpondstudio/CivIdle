@@ -95,6 +95,14 @@ export function RunTests(gs: GameState): void {
             assertEqual(6, getConstructionPriority(setConstructionPriority(priority, 6)));
             assertEqual(0x783456, setUpgradePriority(priority, 0x78));
             assertEqual(7, getUpgradePriority(setUpgradePriority(priority, 7)));
+
+            let p = 0x050505;
+            p = setConstructionPriority(p, 1);
+            p = setUpgradePriority(p, 1);
+            p = setProductionPriority(p, 1);
+            assertEqual(1, getProductionPriority(p));
+            assertEqual(1, getUpgradePriority(p));
+            assertEqual(1, getConstructionPriority(p));
          }),
       );
 }
