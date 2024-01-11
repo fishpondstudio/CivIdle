@@ -103,7 +103,7 @@ export function onTileExplored(xy: string, gs: GameState) {
                if (isSpecialBuilding(building.type)) {
                   return;
                }
-               if (Config.BuildingTier[building.type] === 1) {
+               if (building.status === "completed" && Config.BuildingTier[building.type] === 1) {
                   building.level += 5;
                }
             });

@@ -5,6 +5,12 @@ interface PatchNote {
 
 export const PatchNotes: PatchNote[] = [
    {
+      version: "0.1.107",
+      content: [
+         ["Bugfix", "Grotta Azzurra will only upgrade buildings that are not being constructed/upgraded"],
+      ],
+   },
+   {
       version: "0.1.106",
       content: [["Bugfix", "Fix production priority slider resets after restart the game"]],
    },

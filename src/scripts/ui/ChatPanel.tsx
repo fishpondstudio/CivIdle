@@ -71,7 +71,7 @@ export function ChatPanel(): React.ReactNode {
                            <div
                               className="pointer"
                               onClick={() => {
-                                 setChat(`@${c.name} `);
+                                 setChat(`@${c.name} ${chat}`);
                                  chatInput.current?.focus();
                               }}
                            >
