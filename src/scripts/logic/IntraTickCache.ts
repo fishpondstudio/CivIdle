@@ -33,11 +33,10 @@ export function getBuildingIO(
    gs: GameState,
 ): PartialTabulate<Resource> {
    const key =
-      (xyToHash(xy) << (IOCalculation.TotalUsedBits + 1)) |
-      (options << IOCalculation.TotalUsedBits) |
-      (type === "input" ? 1 : 0);
-   if (_cache.buildingIO[key]) {
-      return _cache.buildingIO[key];
+      (xyToHash(xy) << (IOCalculation.TotalUsedBits + 1)) | (options << 1) | (type === "input" ? 1 : 0);
+   const cached = _cache.buildingIO[key];
+   if (cached) {
+      return cached;
    }
    const result: PartialTabulate<Resource> = {};
    const b = gs.tiles[xy].building;
@@ -71,7 +70,7 @@ export function getBuildingIO(
       });
    }
 
-   _cache.buildingIO[key] = result;
+   _cache.buildingIO[key] = Object.freeze(result);
    return result;
 }
 
