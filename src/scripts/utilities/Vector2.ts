@@ -31,7 +31,12 @@ export class Vector2 {
     * @param val - The vector to be added.
     * @returns The resulting vector of the addition.
     */
-   public add(val: IHaveXY): Vector2 {
+   public add(val: IHaveXY, result?: Vector2): Vector2 {
+      if (result) {
+         result.x += val.x;
+         result.y += val.y;
+         return result;
+      }
       return new Vector2(this.x + val.x, this.y + val.y);
    }
    public addSelf(val: IHaveXY): Vector2 {

@@ -4,6 +4,7 @@ import { formatPercent, safeParseInt } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
 import { showToast } from "./GlobalModal";
 import { MenuComponent } from "./MenuComponent";
+import { PlayerHandleComponent } from "./PlayerHandleComponent";
 
 export function MyTilePage({ xy }: { xy: string }): React.ReactNode {
    const playerMap = usePlayerMap();
@@ -15,6 +16,7 @@ export function MyTilePage({ xy }: { xy: string }): React.ReactNode {
          </div>
          <MenuComponent />
          <div className="window-body">
+            <PlayerHandleComponent />
             <fieldset>
                <legend>{t(L.PlayerMapSetYourTariff)}</legend>
                <div className="row">

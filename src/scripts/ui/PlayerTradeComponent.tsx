@@ -15,7 +15,7 @@ import { L, t } from "../utilities/i18n";
 import { playClick, playError } from "../visuals/Sound";
 import { AddTradeComponent } from "./AddTradeComponent";
 import type { IBuildingComponentProps } from "./BuildingPage";
-import { FillPlayerTradeModal } from "./FillPlayerTradeModal.1";
+import { FillPlayerTradeModal } from "./FillPlayerTradeModal";
 import { showModal, showToast } from "./GlobalModal";
 import { FormatNumber } from "./HelperComponents";
 import { WarningComponent } from "./WarningComponent";

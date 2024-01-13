@@ -63,7 +63,7 @@ export function dijkstra(grid: number[], stride: number, start: IPointData, end:
    let current = end;
    const path: IPointData[] = [];
    if (cameFrom.has(hash(end.x, end.y))) {
-      while (current.x != start.x || current.y != start.y) {
+      while (current.x !== start.x || current.y !== start.y) {
          path.unshift(current);
          current = cameFrom.get(hash(current.x, current.y))!;
       }

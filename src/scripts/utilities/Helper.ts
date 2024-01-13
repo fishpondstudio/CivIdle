@@ -232,6 +232,31 @@ export function sizeOf(obj: any): number {
    return Object.keys(obj).length;
 }
 
+const xyToTileCache: Record<string, Tile> = {};
+export type Tile = number;
+export function xyToTile(xy: string): Tile {
+   const cached = xyToTileCache[xy];
+   if (cached) {
+      return cached;
+   }
+   const point = xyToPoint(xy);
+   const tile = (point.x << 16) | point.y;
+   xyToTileCache[xy] = tile;
+   return tile;
+}
+
+const xyHash: Record<string, number> = {};
+let xyCounter = 0;
+
+export function xyToHash(xy: string): number {
+   let cached = xyHash[xy];
+   if (!cached) {
+      cached = xyCounter++;
+      xyHash[xy] = cached;
+   }
+   return cached;
+}
+
 const xyToPointCache: Record<string, Readonly<IPointData>> = {};
 
 export function xyToPoint(str: string): IPointData {
@@ -497,9 +522,9 @@ export function drawDashedLine(
 ): number {
    const startPos = v2(start);
    const endPos = v2(end);
-   let cursor = startPos;
+   const cursor = startPos;
    let count = initial;
-   const direction = endPos.subtractSelf(startPos);
+   const direction = endPos.subtract(startPos);
    if (direction.length() < 10) {
       return count;
    }
@@ -509,10 +534,10 @@ export function drawDashedLine(
    while ((endPos.x - cursor.x) * increment.x >= 0 && (endPos.y - cursor.y) * increment.y >= 0) {
       if (count % 2 === 0) {
          g.moveTo(cursor.x, cursor.y);
-         cursor = cursor.add(lineIncrement);
+         cursor.addSelf(lineIncrement);
       } else {
          g.lineTo(cursor.x, cursor.y);
-         cursor = cursor.add(spaceIncrement);
+         cursor.addSelf(spaceIncrement);
       }
       count++;
    }
@@ -552,4 +577,12 @@ export function base64ToBytes(base64: string): Uint8Array {
 export function bytesToBase64(bytes: Uint8Array): string {
    const binString = String.fromCodePoint(...bytes);
    return btoa(binString);
+}
+
+export function maxBranchless(x: number, y: number): number {
+   return x ^ ((x ^ y) & -(x < y));
+}
+
+export function minBranchless(x: number, y: number): number {
+   return y ^ ((x ^ y) & -(x < y));
 }

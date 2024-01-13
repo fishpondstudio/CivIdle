@@ -1,25 +1,21 @@
-import classNames from "classnames";
 import { getScienceFromWorkers } from "../logic/BuildingLogic";
 import { Config } from "../logic/Config";
 import { getGreatPeopleAtReborn } from "../logic/RebornLogic";
 import { getCurrentTechAge, getScienceAmount, getUnlockCost, unlockableTechs } from "../logic/TechLogic";
 import { Tick } from "../logic/TickLogic";
-import { useUser } from "../rpc/RPCClient";
 import { TechTreeScene } from "../scenes/TechTreeScene";
-import { getCountryName, getFlagUrl } from "../utilities/CountryCode";
 import { formatPercent, jsxMapOf, reduceOf } from "../utilities/Helper";
 import { Singleton } from "../utilities/Singleton";
 import { L, t } from "../utilities/i18n";
-import { playError } from "../visuals/Sound";
 import { BuildingColorComponent } from "./BuildingColorComponent";
 import type { IBuildingComponentProps } from "./BuildingPage";
 import { BuildingProduceComponent } from "./BuildingProduceComponent";
 import { BuildingStorageComponent } from "./BuildingStorageComponent";
-import { ChangePlayerHandleModal } from "./ChangePlayerHandleModal";
 import { showModal } from "./GlobalModal";
 import { GreatPersonPage } from "./GreatPersonPage";
 import { HappinessComponent } from "./HappinessComponent";
 import { FormatNumber } from "./HelperComponents";
+import { PlayerHandleComponent } from "./PlayerHandleComponent";
 import { RebornModal } from "./RebornModal";
 import { WonderPage } from "./WonderPage";
 
@@ -37,36 +33,10 @@ export function HeadquarterBuildingBody({ gameState, xy }: IBuildingComponentPro
    } = getScienceFromWorkers(gameState);
    const scienceAmount = getScienceAmount();
    const techAge = getCurrentTechAge(gameState);
-   const user = useUser();
    // const patch = PatchNotes[0];
    return (
       <div className="window-body">
-         <fieldset>
-            <legend>{t(L.PlayerHandle)}</legend>
-            <div className="row mv5">
-               <div className="text-strong">{user?.handle}</div>
-               <div>
-                  <img
-                     className="ml5 player-flag"
-                     src={getFlagUrl(user?.flag)}
-                     title={getCountryName(user?.flag)}
-                  />
-               </div>
-               <div className="f1" />
-               <div
-                  className={classNames("text-link text-strong", { disabled: !user })}
-                  onClick={() => {
-                     if (user) {
-                        showModal(<ChangePlayerHandleModal />);
-                     } else {
-                        playError();
-                     }
-                  }}
-               >
-                  {t(L.ChangePlayerHandle)}
-               </div>
-            </div>
-         </fieldset>
+         <PlayerHandleComponent />
          <BuildingProduceComponent gameState={gameState} xy={xy} />
          <BuildingStorageComponent xy={xy} gameState={gameState} />
          <HappinessComponent />

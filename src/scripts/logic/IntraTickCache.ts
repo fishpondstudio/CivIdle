@@ -2,7 +2,7 @@ import type { IPointData } from "pixi.js";
 import type { Building, IBuildingDefinition } from "../definitions/BuildingDefinitions";
 import type { Deposit, Resource } from "../definitions/ResourceDefinitions";
 import type { PartialSet, PartialTabulate } from "../definitions/TypeDefinitions";
-import { forEach, safeAdd, xyToPoint } from "../utilities/Helper";
+import { forEach, safeAdd, xyToHash, xyToPoint } from "../utilities/Helper";
 import { IOCalculation, totalMultiplierFor } from "./BuildingLogic";
 import { Config } from "./Config";
 import type { GameState } from "./GameState";
@@ -32,7 +32,10 @@ export function getBuildingIO(
    options: IOCalculation,
    gs: GameState,
 ): PartialTabulate<Resource> {
-   const key = xy + type + options;
+   const key =
+      (xyToHash(xy) << (IOCalculation.TotalUsedBits + 1)) |
+      (options << IOCalculation.TotalUsedBits) |
+      (type === "input" ? 1 : 0);
    if (_cache.buildingIO[key]) {
       return _cache.buildingIO[key];
    }

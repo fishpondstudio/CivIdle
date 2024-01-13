@@ -1,8 +1,9 @@
 import { Config } from "../logic/Config";
 import { usePlayerMap, useTrades } from "../rpc/RPCClient";
+import { getCountryName, getFlagUrl } from "../utilities/CountryCode";
 import { formatPercent } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
-import { FillPlayerTradeModal } from "./FillPlayerTradeModal.1";
+import { FillPlayerTradeModal } from "./FillPlayerTradeModal";
 import { showModal } from "./GlobalModal";
 import { FormatNumber } from "./HelperComponents";
 import { MenuComponent } from "./MenuComponent";
@@ -22,14 +23,21 @@ export function PlayerTilePage({ xy }: { xy: string }): React.ReactNode {
          <MenuComponent />
          <div className="window-body">
             <fieldset>
-               <legend>{tile.handle}</legend>
+               <legend className="row">
+                  {tile.handle}{" "}
+                  <img
+                     src={getFlagUrl(tile.flag)}
+                     className="player-flag ml5"
+                     title={getCountryName(tile.flag)}
+                  />
+               </legend>
                <div className="row mv5">
                   <div className="f1">{t(L.PlayerMapTariff)}</div>
-                  <div>{formatPercent(tile.tariffRate)}</div>
+                  <div className="text-strong">{formatPercent(tile.tariffRate)}</div>
                </div>
                <div className="row mv5">
                   <div className="f1">{t(L.PlayerMapEstablishedSince)}</div>
-                  <div>{new Date(tile.createdAt).toLocaleDateString()}</div>
+                  <div className="text-strong">{new Date(tile.createdAt).toLocaleDateString()}</div>
                </div>
             </fieldset>
             <fieldset>

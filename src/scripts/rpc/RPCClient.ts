@@ -5,7 +5,7 @@ import type {
    AllMessageTypes,
    IChat,
    IChatMessage,
-   IMapEntry,
+   IClientMapEntry,
    IMapMessage,
    IRPCMessage,
    ITradeMessage,
@@ -35,13 +35,13 @@ export const OnOfflineTime = new TypedEvent<number>();
 export const OnUserChanged = new TypedEvent<IUser | null>();
 export const OnChatMessage = new TypedEvent<IChat[]>();
 export const OnTradeMessage = new TypedEvent<IClientTrade[]>();
-export const OnPlayerMapChanged = new TypedEvent<Record<string, IMapEntry>>();
+export const OnPlayerMapChanged = new TypedEvent<Record<string, IClientMapEntry>>();
 export const OnPlayerMapMessage = new TypedEvent<IMapMessage>();
 export const OnNewPendingClaims = new TypedEvent<void>();
 
 let chatMessages: IChat[] = [];
 const trades: Record<string, IClientTrade> = {};
-const playerMap: Record<string, IMapEntry> = {};
+const playerMap: Record<string, IClientMapEntry> = {};
 
 export function getPlayerMap() {
    return playerMap;

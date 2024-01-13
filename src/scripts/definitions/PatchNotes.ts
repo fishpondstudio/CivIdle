@@ -5,6 +5,16 @@ interface PatchNote {
 
 export const PatchNotes: PatchNote[] = [
    {
+      version: "0.1.108",
+      content: [
+         ["Bugfix", "Fix player trade routes are incorrectly drawn"],
+         ["QoL", "Allow type in player trade fill amount manually"],
+         ["QoL", "Add a button to set fill amount to the max available in the Caravansary"],
+         ["QoL", "Show player flag on the world map page"],
+         ["QoL", "Improve performance of offline production calculation"],
+      ],
+   },
+   {
       version: "0.1.107",
       content: [
          ["Bugfix", "Grotta Azzurra will only upgrade buildings that are not being constructed/upgraded"],

@@ -96,6 +96,7 @@ export enum IOCalculation {
    Capacity = 1 << 0,
    Multiplier = 1 << 1,
    MultiplierExcludeElectrification = 1 << 2,
+   TotalUsedBits = 3,
 }
 
 export function hasEnoughResources(a: PartialTabulate<Resource>, b: PartialTabulate<Resource>): boolean {
@@ -488,11 +489,10 @@ export function getCurrentPriority(building: IBuildingData): number {
 
 export function getTotalBuildingUpgrades(gs: GameState): number {
    let result = 0;
-   forEach(gs.tiles, (xy, tile) => {
-      if (tile.building) {
-         if (!isSpecialBuilding(tile.building.type)) {
-            result += tile.building.level;
-         }
+
+   forEach(getXyBuildings(gs), (xy, building) => {
+      if (!isSpecialBuilding(building.type)) {
+         result += building.level;
       }
    });
    return result;
