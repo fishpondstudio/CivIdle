@@ -332,7 +332,7 @@ export function tabulateAdd<T extends string>(...params: Array<PartialTabulate<T
 
 export function safeParseInt(str: string, fallback = 0): number {
    const parsed = parseInt(str, 10);
-   return isFinite(parsed) ? parsed : fallback;
+   return Number.isFinite(parsed) ? parsed : fallback;
 }
 
 export function alphaNumericOf(str: string): string {
@@ -577,12 +577,4 @@ export function base64ToBytes(base64: string): Uint8Array {
 export function bytesToBase64(bytes: Uint8Array): string {
    const binString = String.fromCodePoint(...bytes);
    return btoa(binString);
-}
-
-export function maxBranchless(x: number, y: number): number {
-   return x ^ ((x ^ y) & -(x < y));
-}
-
-export function minBranchless(x: number, y: number): number {
-   return y ^ ((x ^ y) & -(x < y));
 }

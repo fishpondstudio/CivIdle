@@ -98,3 +98,9 @@
 .modern .m-icon.small {
    font-size: 17px;
 }
+
+.modern #chat-panel .language-switch {
+   height: 25px;
+   width: 25px;
+   line-height: 25px;
+}

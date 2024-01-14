@@ -13,13 +13,13 @@ import {
 import type { RouteChangeEvent } from "./Route";
 import { checkSteamBranch } from "./SteamTesting";
 import type { Building } from "./definitions/BuildingDefinitions";
-import { type City, setCityOverride } from "./definitions/CityDefinitions";
+import { setCityOverride, type City } from "./definitions/CityDefinitions";
 import { DepositResources } from "./definitions/ResourceDefinitions";
 import { getBuildingTexture, getStorageFor, getTileTexture } from "./logic/BuildingLogic";
 import { Config } from "./logic/Config";
 import { MAX_OFFLINE_PRODUCTION_SEC, calculateTierAndPrice } from "./logic/Constants";
 import type { GameState } from "./logic/GameState";
-import { SavedGame, initializeGameState } from "./logic/GameState";
+import { initializeGameState } from "./logic/GameState";
 import { Heartbeat } from "./logic/Heartbeat";
 import type { IPetraBuildingData, ITileData } from "./logic/Tile";
 import { tickEverySecond } from "./logic/Update";
@@ -29,6 +29,7 @@ import { Grid } from "./scenes/Grid";
 import { TechTreeScene } from "./scenes/TechTreeScene";
 import { WorldScene } from "./scenes/WorldScene";
 import { ErrorPage } from "./ui/ErrorPage";
+import { FirstTimePlayerModal } from "./ui/FirstTimePlayerModal";
 import { showModal, showToast } from "./ui/GlobalModal";
 import { LoadingPage, LoadingPageStage } from "./ui/LoadingPage";
 import { ManageRebornModal } from "./ui/ManageRebornModal";
@@ -36,7 +37,7 @@ import { OfflineProductionModal } from "./ui/OfflineProductionModal";
 import { GameTicker } from "./utilities/GameTicker";
 import { clamp, forEach, isNullOrUndefined, rejectIn, schedule } from "./utilities/Helper";
 import { SceneManager, type Textures } from "./utilities/SceneManager";
-import { type ISpecialBuildings, type RouteTo, Singleton, initializeSingletons } from "./utilities/Singleton";
+import { Singleton, initializeSingletons, type ISpecialBuildings, type RouteTo } from "./utilities/Singleton";
 import type { TypedEvent } from "./utilities/TypedEvent";
 import { playError } from "./visuals/Sound";
 
@@ -93,7 +94,7 @@ export async function startGame(
       grid,
       routeTo,
       ticker: new GameTicker(app.ticker, gameState),
-      heartbeat: new Heartbeat(serializeSave())
+      heartbeat: new Heartbeat(serializeSave()),
    });
 
    setCityOverride(gameState);
@@ -147,11 +148,15 @@ export async function startGame(
       showToast(String(error));
    }
 
-   if (!hasOfflineProductionModal && getGameOptions().greatPeopleChoices.length > 0) {
+   if (hasOfflineProductionModal) {
+      // Do nothing
+   } else if (isNewPlayer) {
+      showModal(<FirstTimePlayerModal />);
+   } else if (getGameOptions().greatPeopleChoices.length > 0) {
       showModal(<ManageRebornModal />);
    }
 
-   Singleton().heartbeat.init()
+   Singleton().heartbeat.init();
 
    // We tick first before loading scene, making sure city-specific overrides are applied!
    tickEverySecond(gameState, false);

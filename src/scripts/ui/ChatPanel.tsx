@@ -1,11 +1,15 @@
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import { ChatChannels } from "../../../server/src/Database";
 import chatActive from "../../images/chat_active.png";
 import chatInactive from "../../images/chat_inactive.png";
-import { OnUIThemeChanged } from "../Global";
+import { OnUIThemeChanged, useGameOptions } from "../Global";
 import { client, useChatMessages, useUser } from "../rpc/RPCClient";
 import { getCountryName, getFlagUrl } from "../utilities/CountryCode";
+import { isEmpty, keysOf } from "../utilities/Helper";
 import { useTypedEvent } from "../utilities/Hook";
 import { L, t } from "../utilities/i18n";
+import { showModal } from "./GlobalModal";
+import { SelectChatChannelModal } from "./SelectChatChannelModal";
 
 export function ChatPanel(): React.ReactNode {
    const [chat, setChat] = useState("");
@@ -14,6 +18,15 @@ export function ChatPanel(): React.ReactNode {
    const bottomRef = useRef<HTMLDivElement>(null);
    const [showChatWindow, setShowChatWindow] = useState(false);
    const chatInput = useRef<HTMLInputElement>(null);
+   const options = useGameOptions();
+
+   if (typeof options.chatSendChannel !== "string" || !ChatChannels[options.chatSendChannel]) {
+      options.chatSendChannel = "en";
+   }
+
+   if (isEmpty(options.chatReceiveChannel)) {
+      options.chatReceiveChannel.en = true;
+   }
 
    useEffect(() => {
       if (bottomRef.current?.parentElement?.scrollTop === 0) {
@@ -38,7 +51,7 @@ export function ChatPanel(): React.ReactNode {
       );
    const sendChat = () => {
       if (chat) {
-         client.chat(chat);
+         client.chat(chat, options.chatSendChannel);
          setChat("");
       }
    };
@@ -46,51 +59,60 @@ export function ChatPanel(): React.ReactNode {
    const chatWindow = (
       <div className="chat-content window">
          <div className="title-bar">
-            <div className="title-bar-text">{t(L.Chat)}</div>
+            <div className="title-bar-text">
+               {t(L.Chat)}
+               {": "}
+               {keysOf(options.chatReceiveChannel)
+                  .sort()
+                  .map((c) => ChatChannels[c])
+                  .join(", ")}
+            </div>
             <div className="title-bar-controls">
                <button aria-label="Close" onClick={() => setShowChatWindow(false)}></button>
             </div>
          </div>
          <div className="window-content inset-shallow">
-            {messages.map((c, i) => {
-               return (
-                  <div className="chat-message-item" key={i}>
-                     {c.name === user?.handle ? (
-                        <div className="row text-small text-desc">
-                           <div>{new Date(c.time ?? 0).toLocaleTimeString()}</div>
-                           <div className="f1"></div>
-                           <div className="text-strong">{c.name}</div>
-                           <img
-                              src={getFlagUrl(c.flag)}
-                              className="player-flag game-cursor"
-                              title={getCountryName(c.flag)}
-                           />
-                        </div>
-                     ) : (
-                        <div className="row text-small text-desc">
-                           <div
-                              className="pointer"
-                              onClick={() => {
-                                 setChat(`@${c.name} ${chat}`);
-                                 chatInput.current?.focus();
-                              }}
-                           >
-                              {c.name}
+            {messages
+               .filter((m) => options.chatReceiveChannel[m.channel])
+               .map((c, i) => {
+                  return (
+                     <div className="chat-message-item" key={i}>
+                        {c.name === user?.handle ? (
+                           <div className="row text-small text-desc">
+                              <div>{new Date(c.time ?? 0).toLocaleTimeString()}</div>
+                              <div className="f1"></div>
+                              <div className="text-strong">{c.name}</div>
+                              <img
+                                 src={getFlagUrl(c.flag)}
+                                 className="player-flag game-cursor"
+                                 title={getCountryName(c.flag)}
+                              />
                            </div>
-                           <img
-                              src={getFlagUrl(c.flag)}
-                              className="player-flag game-cursor"
-                              title={getCountryName(c.flag)}
-                           />
-                           <div className="f1"></div>
-                           <div>{new Date(c.time ?? 0).toLocaleTimeString()}</div>
-                        </div>
-                     )}
+                        ) : (
+                           <div className="row text-small text-desc">
+                              <div
+                                 className="pointer"
+                                 onClick={() => {
+                                    setChat(`@${c.name} ${chat}`);
+                                    chatInput.current?.focus();
+                                 }}
+                              >
+                                 {c.name}
+                              </div>
+                              <img
+                                 src={getFlagUrl(c.flag)}
+                                 className="player-flag game-cursor"
+                                 title={getCountryName(c.flag)}
+                              />
+                              <div className="f1"></div>
+                              <div>{new Date(c.time ?? 0).toLocaleTimeString()}</div>
+                           </div>
+                        )}
 
-                     <div>{c.message}</div>
-                  </div>
-               );
-            })}
+                        <div>{c.message}</div>
+                     </div>
+                  );
+               })}
             <div ref={bottomRef}>
                {user != null ? null : (
                   <div className="text-desc text-center text-small mv10">{t(L.ChatReconnect)}</div>
@@ -98,6 +120,17 @@ export function ChatPanel(): React.ReactNode {
             </div>
          </div>
          <div className="row" style={{ padding: "2px" }}>
+            <div
+               className="language-switch pointer"
+               aria-label={ChatChannels[options.chatSendChannel]}
+               data-balloon-pos="right"
+               data-balloon-text="left"
+               onClick={() => {
+                  showModal(<SelectChatChannelModal />);
+               }}
+            >
+               {options.chatSendChannel.toUpperCase()}
+            </div>
             <input
                ref={chatInput}
                className="f1"

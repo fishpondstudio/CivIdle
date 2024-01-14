@@ -796,7 +796,6 @@ export const EN = {
    Gameplay: "Gameplay",
    Sound: "Sound",
    SoundEffect: "Sound Effect",
-   SoundEffectDesc: "Turn on or off sound effect in the game",
    RemoveResidualConstructionResources: "Remove Residual Construction Resources",
    RemoveResidualConstructionResourcesDesc:
       "After the construction/upgrade of a building, there might be some amount of residual construction resources left. Enabling this will remove those once the consutruction/upgrade is complete",
@@ -884,7 +883,21 @@ export const EN = {
    ConfirmYes: "Yes",
    ConfirmNo: "No",
    ConfirmDestroyResourceTitle: "Confirm Destroying Resources",
-   ConfirmDestroyResourceContent:
-      "You are about to destroy %{amount} %{resource}. This cannot be undone. Are you sure?",
+   ConfirmDestroyResourceContent: "You are about to destroy %{amount} %{resource}. This cannot be undone",
    BuildingPriority: "Building Priority",
+   ChatChannel: "Chat Channel",
+   ChatChannelLanguage: "Language",
+   ChatChannelSend: "Send",
+   ChatChannelReceive: "Receive",
+   FirstTimeGuideNext: "Next",
+   FirstTimeGuideFinish: "Finish",
+   AccountTypeShowDetails: "Show Account Details",
+   AccountType: "Account Type",
+   AccountTypeOnline: "Online",
+   AccountTypeDesc:
+      "Online accounts can start either an online run or an offline run but can only earn permanent great people from online run. Offline accounts can only start an offline run and can earn permanent great people from an offline run. You can convert your account from online to offline but NOT the other way around",
+   AccountTypeOffline: "Offline",
+   ThisRunType: "This Run Type",
+   ThisRunTypeDesc:
+      "An online run requires an Internet connection, is subject to server anti-cheat inspection and have full access to online features (player trade and leader board). You can convert this run from online to offline but NOT the other way around",
 };

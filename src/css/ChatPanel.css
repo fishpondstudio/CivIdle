@@ -1,5 +1,5 @@
 #chat-panel .chat-bar {
-   width: 300px;
+   width: 350px;
    height: 30px;
    position: absolute;
    bottom: 10px;
@@ -10,8 +10,8 @@
 }
 
 #chat-panel .chat-content {
-   width: 300px;
-   height: 50vh;
+   width: 350px;
+   height: 60vh;
    position: absolute;
    bottom: 30px;
    display: flex;
@@ -41,4 +41,14 @@
 
 #chat-panel .chat-message-item:nth-child(even) {
    background: #efefef;
+}
+
+#chat-panel .language-switch {
+   background: #00289e;
+   color: #fff;
+   height: 19px;
+   width: 19px;
+   line-height: 19px;
+   text-align: center;
+   margin: 0 2px 0 0;
 }

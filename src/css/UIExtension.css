@@ -139,6 +139,14 @@ fieldset .separator {
    box-shadow: inset -1px -1px #fff, inset 1px 1px grey, inset -2px -2px #dfdfdf, inset 2px 2px #0a0a0a;
 }
 
+.inset-deep-2 {
+   border: 2px solid #666;
+   border-left: 2px solid #666;
+   border-right: 2px solid #dfdfdf;
+   border-bottom: 2px solid #dfdfdf;
+}
+
+.inset-deep-2.white,
 .inset-deep.white,
 .outset-shallow-2.white,
 .inset-shallow-2.white {
@@ -182,6 +190,10 @@ fieldset .separator {
 
 .text-strong {
    font-weight: bold;
+}
+
+.text-justify {
+   text-align: justify;
 }
 
 .text-desc {
@@ -232,6 +244,10 @@ fieldset .separator {
 
 .mr10 {
    margin-right: 10px;
+}
+
+.mr15 {
+   margin-right: 15px;
 }
 
 .mr20 {

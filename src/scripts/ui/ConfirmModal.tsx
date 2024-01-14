@@ -1,4 +1,3 @@
-import { Singleton } from "../utilities/Singleton";
 import { L, t } from "../utilities/i18n";
 import { playClick } from "../visuals/Sound";
 import { hideModal } from "./GlobalModal";
@@ -17,17 +16,7 @@ export function ConfirmModal({
             {content}
             <div className="row" style={{ margin: "20px 0 0 0", justifyContent: "center" }}>
                <button
-                  style={{ width: "80px" }}
-                  onClick={() => {
-                     playClick();
-                     hideModal();
-                  }}
-               >
-                  {t(L.ConfirmNo)}
-               </button>
-               <div style={{ width: "10px" }}></div>
-               <button
-                  style={{ width: "80px" }}
+                  style={{ width: "80px", fontWeight: "bold" }}
                   onClick={() => {
                      playClick();
                      onConfirm();
@@ -36,23 +25,18 @@ export function ConfirmModal({
                >
                   {t(L.ConfirmYes)}
                </button>
+               <div style={{ width: "10px" }}></div>
+               <button
+                  style={{ width: "80px" }}
+                  onClick={() => {
+                     playClick();
+                     hideModal();
+                  }}
+               >
+                  {t(L.ConfirmNo)}
+               </button>
             </div>
          </div>
       </div>
    );
-}
-
-function getWebglRenderInfo(): string {
-   const { app } = Singleton().sceneManager.getContext();
-   const gl = app.view.getContext("webgl2");
-   if (!gl) {
-      return "";
-   }
-   const debugInfo = gl.getExtension("WEBGL_debug_renderer_info");
-   if (!debugInfo) {
-      return "";
-   }
-   // const vendor = gl.getParameter(debugInfo.UNMASKED_VENDOR_WEBGL);
-   const renderer = gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL);
-   return renderer;
 }

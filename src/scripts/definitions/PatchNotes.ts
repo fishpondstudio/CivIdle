@@ -5,6 +5,17 @@ interface PatchNote {
 
 export const PatchNotes: PatchNote[] = [
    {
+      version: "0.1.109",
+      content: [
+         ["QoL", "Allow destroying partial resources in a building"],
+         [
+            "QoL",
+            "Add support for different language channels in chat. You can subscribe to multiple channels",
+         ],
+         ["QoL", "Add a simple tutorial for first-time players"],
+      ],
+   },
+   {
       version: "0.1.108",
       content: [
          ["Bugfix", "Fix player trade routes are incorrectly drawn"],

@@ -1,13 +1,12 @@
 import classNames from "classnames";
 import warning from "../../images/warning.png";
-import { notifyGameStateUpdate } from "../Global";
 import { getMultipliersFor, getStorageFor } from "../logic/BuildingLogic";
 import { Config } from "../logic/Config";
 import { Tick } from "../logic/TickLogic";
-import { formatNumber, formatPercent, jsxMapOf } from "../utilities/Helper";
+import { formatPercent, jsxMapOf } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
 import type { IBuildingComponentProps } from "./BuildingPage";
-import { ConfirmModal } from "./ConfirmModal";
+import { DeleteResourceModal } from "./DeleteResourceModal";
 import { showModal } from "./GlobalModal";
 import { FormatNumber } from "./HelperComponents";
 import { ProgressBarComponent } from "./ProgressBarComponent";
@@ -88,19 +87,7 @@ export function BuildingStorageComponent({ gameState, xy }: IBuildingComponentPr
                               <div
                                  className="m-icon small text-red mr5 pointer"
                                  onClick={() => {
-                                    showModal(
-                                       <ConfirmModal
-                                          title={t(L.ConfirmDestroyResourceTitle)}
-                                          content={t(L.ConfirmDestroyResourceContent, {
-                                             resource: Config.Resource[res].name(),
-                                             amount: formatNumber(value),
-                                          })}
-                                          onConfirm={() => {
-                                             delete building.resources[res];
-                                             notifyGameStateUpdate(gameState);
-                                          }}
-                                       />,
-                                    );
+                                    showModal(<DeleteResourceModal building={building} resource={res} />);
                                  }}
                               >
                                  delete

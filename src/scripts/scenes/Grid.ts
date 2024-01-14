@@ -1,6 +1,6 @@
 import type { SmoothGraphics } from "@pixi/graphics-smooth";
 import { BitmapText, Polygon } from "pixi.js";
-import { maxBranchless, minBranchless, xyToPoint } from "../utilities/Helper";
+import { xyToPoint } from "../utilities/Helper";
 import { Hex, Layout, OffsetCoord, Point } from "../utilities/Hex";
 import { ObjectPool } from "../utilities/ObjectPool";
 import { Fonts } from "../visuals/Fonts";
@@ -131,7 +131,7 @@ export class Grid {
    private static _hexPool = new HexPool();
    private static _offsetCoordPool = new OffsetCoordPool();
 
-   private static _distanceCache: Record<number, number> = {};
+   private _distanceCache: Record<number, number> = {};
 
    public distanceXy(xy1: string, xy2: string): number {
       const a = xyToPoint(xy1);
@@ -142,8 +142,8 @@ export class Grid {
    public distance(x1: number, y1: number, x2: number, y2: number): number {
       const key1 = y1 * this.maxX + x1;
       const key2 = y2 * this.maxX + x2;
-      const key = (maxBranchless(key1, key2) << 16) | minBranchless(key1, key2);
-      const cached = Grid._distanceCache[key];
+      const key = (Math.max(key1, key2) << 16) | Math.min(key1, key2);
+      const cached = this._distanceCache[key];
 
       // We use cached value in prod, but in dev, we want to validate our cache is good
       // if (!import.meta.env.DEV && cached) {
@@ -176,7 +176,7 @@ export class Grid {
       //    console.assert(distance === cached);
       // }
 
-      Grid._distanceCache[key] = distance;
+      this._distanceCache[key] = distance;
       return distance;
    }
 

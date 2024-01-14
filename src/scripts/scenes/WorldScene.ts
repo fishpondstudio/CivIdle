@@ -206,8 +206,12 @@ export class WorldScene extends ViewportScene {
             case "LighthouseOfAlexandria":
             case "HangingGarden":
             case "ChichenItza":
+            case "AngkorWat":
             case "StatueOfZeus":
             case "Poseidon":
+            case "EiffelTower":
+            case "BrandenburgGate":
+            case "SummerPalace":
                this.highlightAdjacentTiles(grid);
                break;
          }

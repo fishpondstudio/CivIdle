@@ -1,3 +1,4 @@
+import { getGameOptions, getGameState } from "../Global";
 import { client } from "../rpc/RPCClient";
 import { fossilDeltaCreate } from "../utilities/FossilDelta";
 import { wyhash } from "../utilities/wyhash";
@@ -7,10 +8,16 @@ export class Heartbeat {
    constructor(private data: Uint8Array) {}
 
    public init() {
+      if (getGameState().isOffline || getGameOptions().isOffline) {
+         return;
+      }
       return client.fullHeartbeat(this.data);
    }
 
    public update(data: Uint8Array): void {
+      if (getGameState().isOffline || getGameOptions().isOffline) {
+         return;
+      }
       const patch = fossilDeltaCreate(this.data, data);
       compress(patch).then((p) => {
          client

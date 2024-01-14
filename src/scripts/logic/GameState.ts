@@ -1,5 +1,6 @@
 import type { IPointData } from "pixi.js";
 import { v4 } from "uuid";
+import type { ChatChannel } from "../../../server/src/Database";
 import { getGameOptions, notifyGameOptionsUpdate } from "../Global";
 import type { Building } from "../definitions/BuildingDefinitions";
 import type { City } from "../definitions/CityDefinitions";
@@ -45,6 +46,7 @@ export class GameState {
    greatPeopleChoices: GreatPeopleChoice[] = [];
    transportId = 0;
    lastPriceUpdated = 0;
+   isOffline = false;
 }
 
 export type GreatPeopleChoice = [GreatPerson, GreatPerson, GreatPerson];
@@ -97,6 +99,9 @@ export class GameOptions {
    soundEffect = true;
    buildingDefaults: Partial<Record<Building, Partial<IBuildingData>>> = {};
    defaultPriority = 0x010101;
+   chatSendChannel: ChatChannel = "en";
+   chatReceiveChannel: PartialSet<ChatChannel> = {};
+   isOffline = false;
    // Should be wiped
    greatPeople: Partial<Record<GreatPerson, { level: number; amount: number }>> = {};
    greatPeopleChoices: GreatPeopleChoice[] = [];

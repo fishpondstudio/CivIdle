@@ -1,10 +1,10 @@
-import classNames from "classnames";
-import { notifyGameOptionsUpdate, syncUITheme, useGameOptions } from "../Global";
+import { notifyGameOptionsUpdate, useGameOptions } from "../Global";
 import { Config } from "../logic/Config";
 import { ThemeColorNames, resetThemeColor } from "../logic/GameState";
 import { keysOf } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
 import { playClick } from "../visuals/Sound";
+import { ChangeModernUIComponent } from "./ChangeModernUIComponent";
 import { MenuComponent } from "./MenuComponent";
 
 export function ThemePage(): React.ReactNode {
@@ -18,22 +18,7 @@ export function ThemePage(): React.ReactNode {
          <div className="window-body">
             <fieldset>
                <div className="row">
-                  <div className="f1">{t(L.OptionsUseModernUI)}</div>
-                  <div
-                     onClick={() => {
-                        gameOptions.useModernUI = !gameOptions.useModernUI;
-                        notifyGameOptionsUpdate(gameOptions);
-                        syncUITheme(gameOptions);
-                     }}
-                     className={classNames({
-                        "m-icon": true,
-                        "text-green": gameOptions.useModernUI,
-                        "text-desc": !gameOptions.useModernUI,
-                     })}
-                     style={{ margin: "-5px 0" }}
-                  >
-                     {gameOptions.useModernUI ? "toggle_on" : "toggle_off"}
-                  </div>
+                  <ChangeModernUIComponent />
                </div>
             </fieldset>
             <fieldset>

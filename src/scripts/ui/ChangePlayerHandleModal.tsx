@@ -44,7 +44,10 @@ export function ChangePlayerHandleModal(): React.ReactNode {
                </div>
             </div>
             <div className="sep10"></div>
-            <div className="inset-deep white" style={{ padding: "10px", height: "200px", overflowY: "auto" }}>
+            <div
+               className="inset-deep-2 white"
+               style={{ padding: "10px", height: "200px", overflowY: "auto" }}
+            >
                <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "space-between" }}>
                   {jsxMapOf(CountryCode, (c, v) => {
                      return (

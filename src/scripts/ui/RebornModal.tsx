@@ -83,6 +83,7 @@ export function RebornModal(): React.ReactNode {
                   {jsxMapOf(Config.City[city].uniqueBuildings, (building, tech) => {
                      return (
                         <span
+                           key={building}
                            style={{
                               textDecoration: "dotted underline",
                               textUnderlineOffset: "0.25em",
@@ -107,6 +108,7 @@ export function RebornModal(): React.ReactNode {
                      const def = Config.Building[building];
                      return (
                         <span
+                           key={building}
                            style={{
                               textDecoration: "dotted underline",
                               textUnderlineOffset: "0.25em",
@@ -138,6 +140,7 @@ export function RebornModal(): React.ReactNode {
                <div style={{ width: "6px" }} />
                <button
                   style={{ padding: "0 15px" }}
+                  className="text-strong"
                   onClick={() => {
                      rollPermanentGreatPeople(getGreatPeopleAtReborn());
                      forEach(gameState.greatPeople, (k, v) => {
