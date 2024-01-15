@@ -16,8 +16,14 @@ if (isRelease && process.env.STEAMWORKS_PATH) {
    ver.build++;
    fs.writeFileSync(versionFilePath, JSON.stringify(ver));
 
-   fs.copyFileSync("CivIdle.vdf", path.join(process.env.STEAMWORKS_PATH, "cividle", "CivIdle.vdf"));
-   fs.copyFileSync("CivIdle-Demo.vdf", path.join(process.env.STEAMWORKS_PATH, "cividle", "CivIdle-Demo.vdf"));
+   fs.copyFileSync(
+      path.join(rootPath, "build", "CivIdle.vdf"),
+      path.join(process.env.STEAMWORKS_PATH, "cividle", "CivIdle.vdf"),
+   );
+   fs.copyFileSync(
+      path.join(rootPath, "build", "CivIdle-Demo.vdf"),
+      path.join(process.env.STEAMWORKS_PATH, "cividle", "CivIdle-Demo.vdf"),
+   );
 
    replaceVersion(path.join(process.env.STEAMWORKS_PATH, "cividle", "CivIdle.vdf"));
    replaceVersion(path.join(process.env.STEAMWORKS_PATH, "cividle", "CivIdle-Demo.vdf"));
