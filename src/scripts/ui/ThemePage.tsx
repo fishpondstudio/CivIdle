@@ -17,9 +17,7 @@ export function ThemePage(): React.ReactNode {
          <MenuComponent />
          <div className="window-body">
             <fieldset>
-               <div className="row">
-                  <ChangeModernUIComponent />
-               </div>
+               <ChangeModernUIComponent />
             </fieldset>
             <fieldset>
                <legend>{t(L.ThemeColor)}</legend>

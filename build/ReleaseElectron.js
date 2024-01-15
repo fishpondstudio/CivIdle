@@ -30,8 +30,7 @@ if (isRelease && process.env.STEAMWORKS_PATH) {
 
    function replaceVersion(path) {
       const content = fs.readFileSync(path, { encoding: "utf8" });
-      content.replace("@Version", ver.build);
-      fs.writeFileSync(path, content);
+      fs.writeFileSync(path, content.replace("@Version", ver.build));
    }
 }
 
