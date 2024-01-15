@@ -18,7 +18,7 @@ export function BuildingStorageComponent({ gameState, xy }: IBuildingComponentPr
       return null;
    }
    const percentage = storage.used / storage.total;
-   const showWarning = Tick.current.notProducingReasons[xy] === "StorageFull";
+   const showWarning = Tick.current.notProducingReasons.get(xy) === "StorageFull";
    return (
       <fieldset>
          <legend className="row">

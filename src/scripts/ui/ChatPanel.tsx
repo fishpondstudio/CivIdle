@@ -5,7 +5,7 @@ import chatInactive from "../../images/chat_inactive.png";
 import { OnUIThemeChanged, useGameOptions } from "../Global";
 import { client, useChatMessages, useUser } from "../rpc/RPCClient";
 import { getCountryName, getFlagUrl } from "../utilities/CountryCode";
-import { isEmpty, keysOf } from "../utilities/Helper";
+import { isEmpty, keysOf, sizeOf } from "../utilities/Helper";
 import { useTypedEvent } from "../utilities/Hook";
 import { L, t } from "../utilities/i18n";
 import { showModal } from "./GlobalModal";
@@ -13,12 +13,12 @@ import { SelectChatChannelModal } from "./SelectChatChannelModal";
 
 export function ChatPanel(): React.ReactNode {
    const [chat, setChat] = useState("");
-   const messages = useChatMessages();
+   const options = useGameOptions();
+   const messages = useChatMessages().filter((m) => options.chatReceiveChannel[m.channel]);
    const user = useUser();
    const bottomRef = useRef<HTMLDivElement>(null);
    const [showChatWindow, setShowChatWindow] = useState(false);
    const chatInput = useRef<HTMLInputElement>(null);
-   const options = useGameOptions();
 
    if (typeof options.chatSendChannel !== "string" || !ChatChannels[options.chatSendChannel]) {
       options.chatSendChannel = "en";
@@ -56,6 +56,8 @@ export function ChatPanel(): React.ReactNode {
       }
    };
 
+   const receiveMultipleChannels = sizeOf(options.chatReceiveChannel) > 1;
+
    const chatWindow = (
       <div className="chat-content window">
          <div className="title-bar">
@@ -72,47 +74,47 @@ export function ChatPanel(): React.ReactNode {
             </div>
          </div>
          <div className="window-content inset-shallow">
-            {messages
-               .filter((m) => options.chatReceiveChannel[m.channel])
-               .map((c, i) => {
-                  return (
-                     <div className="chat-message-item" key={i}>
-                        {c.name === user?.handle ? (
-                           <div className="row text-small text-desc">
-                              <div>{new Date(c.time ?? 0).toLocaleTimeString()}</div>
-                              <div className="f1"></div>
-                              <div className="text-strong">{c.name}</div>
-                              <img
-                                 src={getFlagUrl(c.flag)}
-                                 className="player-flag game-cursor"
-                                 title={getCountryName(c.flag)}
-                              />
+            {messages.map((c, i) => {
+               return (
+                  <div className="chat-message-item" key={i}>
+                     {c.name === user?.handle ? (
+                        <div className="row text-small text-desc">
+                           <div>{new Date(c.time ?? 0).toLocaleTimeString()}</div>
+                           {receiveMultipleChannels ? <div className="chat-channel">{c.channel}</div> : null}
+                           <div className="f1"></div>
+                           <div className="text-strong">{c.name}</div>
+                           <img
+                              src={getFlagUrl(c.flag)}
+                              className="player-flag game-cursor"
+                              title={getCountryName(c.flag)}
+                           />
+                        </div>
+                     ) : (
+                        <div className="row text-small text-desc">
+                           <div
+                              className="pointer"
+                              onClick={() => {
+                                 setChat(`@${c.name} ${chat}`);
+                                 chatInput.current?.focus();
+                              }}
+                           >
+                              {c.name}
                            </div>
-                        ) : (
-                           <div className="row text-small text-desc">
-                              <div
-                                 className="pointer"
-                                 onClick={() => {
-                                    setChat(`@${c.name} ${chat}`);
-                                    chatInput.current?.focus();
-                                 }}
-                              >
-                                 {c.name}
-                              </div>
-                              <img
-                                 src={getFlagUrl(c.flag)}
-                                 className="player-flag game-cursor"
-                                 title={getCountryName(c.flag)}
-                              />
-                              <div className="f1"></div>
-                              <div>{new Date(c.time ?? 0).toLocaleTimeString()}</div>
-                           </div>
-                        )}
+                           <img
+                              src={getFlagUrl(c.flag)}
+                              className="player-flag game-cursor"
+                              title={getCountryName(c.flag)}
+                           />
+                           <div className="f1"></div>
+                           <div>{new Date(c.time ?? 0).toLocaleTimeString()}</div>
+                           {receiveMultipleChannels ? <div className="chat-channel">{c.channel}</div> : null}
+                        </div>
+                     )}
 
-                        <div>{c.message}</div>
-                     </div>
-                  );
-               })}
+                     <div>{c.message}</div>
+                  </div>
+               );
+            })}
             <div ref={bottomRef}>
                {user != null ? null : (
                   <div className="text-desc text-center text-small mv10">{t(L.ChatReconnect)}</div>

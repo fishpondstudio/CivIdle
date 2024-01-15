@@ -37,7 +37,7 @@ export function calculateHappiness(gs: GameState) {
          return;
       }
       if (!isSpecialBuilding(building.type)) {
-         if (!Tick.current.notProducingReasons[xy]) {
+         if (!Tick.current.notProducingReasons.has(xy)) {
             const tier = Config.BuildingTier[building.type] ?? 0;
             if (tier > fromHighestTierBuilding) {
                fromHighestTierBuilding = tier;
@@ -65,9 +65,9 @@ export function calculateHappiness(gs: GameState) {
             filterOf(value, (xy, tile) => {
                return (
                   !isSpecialBuilding(tile.building.type) &&
-                  (!Tick.current.notProducingReasons[xy] ||
-                     Tick.current.notProducingReasons[xy] === "StorageFull" ||
-                     Tick.current.notProducingReasons[xy] === "NotEnoughWorkers") &&
+                  (!Tick.current.notProducingReasons.has(xy) ||
+                     Tick.current.notProducingReasons.get(xy) === "StorageFull" ||
+                     Tick.current.notProducingReasons.get(xy) === "NotEnoughWorkers") &&
                   tile.building.status === "completed"
                );
             }),

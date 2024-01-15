@@ -44,7 +44,11 @@ export function DeleteResourceModal({
                <button
                   style={{ width: "80px", fontWeight: "bold" }}
                   onClick={() => {
-                     safeAdd(building.resources, resource, -clamp(amount, 0, maxAmount));
+                     safeAdd(
+                        building.resources,
+                        resource,
+                        -clamp(amount, 0, building.resources[resource] ?? 0),
+                     );
                      notifyGameStateUpdate();
                      playClick();
                      hideModal();

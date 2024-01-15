@@ -297,13 +297,11 @@ export class TileVisual extends Container {
                this._level.text = getBuildingLevelLabel(this._tile.building);
             }
 
-            if (Tick.current.notProducingReasons[tileData.xy]) {
-               this._notProducing.texture = getNotProducingTexture(
-                  Tick.current.notProducingReasons[tileData.xy],
-                  textures,
-               );
+            const reason = Tick.current.notProducingReasons.get(tileData.xy);
+            if (reason) {
+               this._notProducing.texture = getNotProducingTexture(reason, textures);
                this.fadeInTopLeftIcon();
-            } else if (Tick.current.electrified[tileData.xy]) {
+            } else if (Tick.current.electrified.has(tileData.xy)) {
                this._notProducing.texture = textures.Bolt;
                this.fadeInTopLeftIcon();
             } else {
@@ -361,8 +359,8 @@ export class TileVisual extends Container {
          return;
       }
 
-      this._spinner.angle += Tick.current.electrified[this._tile.xy] ? dt * 180 : dt * 90;
-      if (Tick.current.notProducingReasons[this._xy]) {
+      this._spinner.angle += Tick.current.electrified.has(this._tile.xy) ? dt * 180 : dt * 90;
+      if (Tick.current.notProducingReasons.has(this._xy)) {
          this._spinner.alpha -= dt;
          this._building.alpha -= dt;
       } else {

@@ -11,7 +11,7 @@ import { ViewportScene } from "../utilities/SceneManager";
 import { Singleton } from "../utilities/Singleton";
 import type { Disposable } from "../utilities/TypedEvent";
 import { Fonts } from "../visuals/Fonts";
-import { getMyMapXy } from "./PathFinder";
+import { findPath, getMyMapXy } from "./PathFinder";
 
 let viewportCenter: IPointData | null = null;
 let viewportZoom: number | null = null;
@@ -195,6 +195,16 @@ export class PlayerMapScene extends ViewportScene {
          .lineTo(x + GridSize, y + GridSize)
          .lineTo(x, y + GridSize)
          .lineTo(x, y);
+
+      const myXy = getMyMapXy();
+      const map = getPlayerMap();
+
+      if (myXy && map[`${tileX},${tileY}`]) {
+         const path = findPath(xyToPoint(myXy), { x: tileX, y: tileY });
+         this.drawPath(path);
+      } else {
+         this.clearPath();
+      }
 
       Singleton().routeTo(PlayerMapPage, { xy: `${tileX},${tileY}` });
    }

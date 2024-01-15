@@ -10,21 +10,41 @@ import type { calculateHappiness } from "./HappinessLogic";
 import type { IBuildingData } from "./Tile";
 
 interface ITickData {
-   buildingMultipliers: Partial<Record<Building, MultiplierWithSource[]>>;
-   tileMultipliers: Partial<Record<string, MultiplierWithSource[]>>;
+   buildingMultipliers: Map<Building, MultiplierWithSource[]>;
+   tileMultipliers: Map<string, MultiplierWithSource[]>;
    unlockedBuildings: PartialSet<Building>;
    workersAvailable: PartialTabulate<Resource>;
    happiness: ReturnType<typeof calculateHappiness> | null;
    workersUsed: PartialTabulate<Resource>;
-   workersAssignment: Record<string, number>;
-   electrified: Record<string, number>;
+   workersAssignment: Map<string, number>;
+   electrified: Map<string, number>;
    resourcesByXy: Partial<Record<Resource, string[]>>;
    resourcesByGrid: Partial<Record<Resource, IPointData[]>>;
    playerTradeBuildings: Record<string, IBuildingData>;
    globalMultipliers: GlobalMultipliers;
-   notProducingReasons: Record<string, NotProducingReason>;
+   notProducingReasons: Map<string, NotProducingReason>;
    specialBuildings: Partial<Record<Building, string>>;
    totalValue: number;
+}
+
+export function EmptyTickData(): ITickData {
+   return {
+      electrified: new Map(),
+      buildingMultipliers: new Map(),
+      unlockedBuildings: {},
+      tileMultipliers: new Map(),
+      workersAvailable: {},
+      workersUsed: {},
+      happiness: null,
+      workersAssignment: new Map(),
+      resourcesByXy: {},
+      resourcesByGrid: {},
+      globalMultipliers: new GlobalMultipliers(),
+      notProducingReasons: new Map(),
+      playerTradeBuildings: {},
+      specialBuildings: {},
+      totalValue: 0,
+   };
 }
 
 export type NotProducingReason =
@@ -34,26 +54,6 @@ export type NotProducingReason =
    | "TurnedOff"
    | "NotOnDeposit"
    | "NoActiveTransports";
-
-export function EmptyTickData(): ITickData {
-   return {
-      electrified: {},
-      buildingMultipliers: {},
-      unlockedBuildings: {},
-      tileMultipliers: {},
-      workersAvailable: {},
-      workersUsed: {},
-      happiness: null,
-      workersAssignment: {},
-      resourcesByXy: {},
-      resourcesByGrid: {},
-      globalMultipliers: new GlobalMultipliers(),
-      notProducingReasons: {},
-      playerTradeBuildings: {},
-      specialBuildings: {},
-      totalValue: 0,
-   };
-}
 
 export class GlobalMultipliers {
    sciencePerIdleWorker: IValueWithSource[] = [];

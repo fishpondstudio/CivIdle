@@ -27,7 +27,7 @@ export function dijkstra(grid: number[], stride: number, start: IPointData, end:
       const nextXy = hash(nextX, nextY);
       if (!costSoFar.has(nextXy) || newCost < costSoFar.get(nextXy)!) {
          costSoFar.set(nextXy, newCost);
-         const priority = newCost;
+         const priority = newCost + Math.abs(nextX - end.x) + Math.abs(nextY - end.y);
          frontier.queue({ value: { x: nextX, y: nextY }, priority });
          cameFrom.set(nextXy, current);
       }
@@ -39,7 +39,7 @@ export function dijkstra(grid: number[], stride: number, start: IPointData, end:
 
    while (frontier.length > 0) {
       const current = frontier.dequeue();
-      if (current.value == end) {
+      if (current.value === end) {
          break;
       }
 

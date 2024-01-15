@@ -25,6 +25,6 @@ jobs:
          - run: ssh ubuntu@uk.fishpondstudio.com "cd /home/ubuntu/CivIdle/server/ && git checkout . && git pull && npm install && npm run build && sudo systemctl restart cividle"
          - run: |
               git add src/scripts/Version.json
-              git commit -m "[skip ci] New build"
+              git commit -m "[skip ci] New build" || echo "There's nothing to commit"
               git push
            working-directory: /home/insraq/CivIdle

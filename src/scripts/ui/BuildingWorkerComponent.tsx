@@ -28,7 +28,7 @@ export function BuildingWorkerComponent({ gameState, xy }: IBuildingComponentPro
    if (isEmpty(input) && isEmpty(output)) {
       return null;
    }
-   const showWarning = Tick.current.notProducingReasons[xy] === "NotEnoughWorkers";
+   const showWarning = Tick.current.notProducingReasons.get(xy) === "NotEnoughWorkers";
    return (
       <fieldset>
          <legend>{t(L.Workers)}</legend>
@@ -133,7 +133,7 @@ export function BuildingWorkerComponent({ gameState, xy }: IBuildingComponentPro
                               {t(L.WorkersRequiredOutput)}
                            </div>
                            <div className="text-strong">
-                              <FormatNumber value={Tick.current.workersAssignment[xy] ?? 0} />
+                              <FormatNumber value={Tick.current.workersAssignment.get(xy) ?? 0} />
                            </div>
                         </summary>
                         <ul>

@@ -7,7 +7,6 @@ import type { IClientTrade } from "../logic/PlayerTradeLogic";
 import { Tick } from "../logic/TickLogic";
 import { client, usePlayerMap } from "../rpc/RPCClient";
 import { findPath, findUserOnMap, getMyMapXy } from "../scenes/PathFinder";
-import { PlayerMapScene } from "../scenes/PlayerMapScene";
 import {
    clamp,
    firstKeyOf,
@@ -17,7 +16,6 @@ import {
    safeAdd,
    xyToPoint,
 } from "../utilities/Helper";
-import { Singleton } from "../utilities/Singleton";
 import { L, t } from "../utilities/i18n";
 import { playError, playKaching } from "../visuals/Sound";
 import { hideModal, showToast } from "./GlobalModal";
@@ -40,11 +38,7 @@ export function FillPlayerTradeModal({ trade, xy }: { trade: IClientTrade; xy?: 
       }
       const path = findPath(xyToPoint(myXy), xyToPoint(targetXy));
       setTiles(path.map((x) => pointToXy(x)));
-      Singleton().sceneManager.getCurrent(PlayerMapScene)?.drawPath(path);
-      return () => {
-         Singleton().sceneManager.getCurrent(PlayerMapScene)?.clearPath();
-      };
-   }, [trade, myXy]);
+   }, [trade.fromId, myXy]);
    const totalTariff = tiles.reduce((prev, xy, i) => {
       const tile = map[xy];
       if (!tile || i === 0 || i === tiles.length - 1) {

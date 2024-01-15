@@ -29,7 +29,7 @@ export class WorldScene extends ViewportScene {
    public tooltipPool!: TooltipPool;
    private cameraMovement: Action | null = null;
    private readonly _tiles: utils.Dict<TileVisual> = {};
-   private readonly _transport: Record<number, Sprite> = {};
+   private readonly _transport: Map<number, Sprite> = new Map();
    private _bg!: TilingSprite;
    private _graphics!: SmoothGraphics;
    private _selectedXy: string | null = null;
@@ -212,6 +212,7 @@ export class WorldScene extends ViewportScene {
             case "EiffelTower":
             case "BrandenburgGate":
             case "SummerPalace":
+            case "StatueOfLiberty":
                this.highlightAdjacentTiles(grid);
                break;
          }
@@ -266,42 +267,45 @@ export class WorldScene extends ViewportScene {
       this._tiles[xy] = this.viewport.addChild(new TileVisual(this, xyToPoint(xy)));
    }
 
+   private _ticked: Set<number> = new Set();
+
    updateTransportVisual(gs: GameState, timeSinceLastTick: number) {
-      const ticked: Record<number, true> = {};
+      this._ticked.clear();
       const options = getGameOptions();
       forEach(gs.transportation, (xy, transports) => {
          transports.forEach((t) => {
-            if (!this._transport[t.id]) {
+            if (!this._transport.get(t.id)) {
                const visual = this._transportPool.allocate();
                visual.position = t.fromPosition;
                visual.tint = Color.shared.setValue(options.resourceColors[t.resource] ?? "#ffffff");
                lookAt(visual, t.toPosition);
-               this._transport[t.id] = visual;
+               this._transport.set(t.id, visual);
             } else if (t.hasEnoughFuel) {
-               const visual = this._transport[t.id];
-               visual.position = Vector2.lerp(
+               const visual = this._transport.get(t.id);
+               visual!.position = Vector2.lerp(
                   t.fromPosition,
                   t.toPosition,
                   (t.ticksSpent + timeSinceLastTick) / t.ticksRequired,
                );
                // This is the last tick
                if (t.ticksSpent >= t.ticksRequired - 1) {
-                  visual.alpha = lerp(
+                  visual!.alpha = lerp(
                      options.themeColors.TransportIndicatorAlpha,
                      0,
                      clamp(timeSinceLastTick - 0.5, 0, 0.5) * 2,
                   );
                }
             }
-            ticked[t.id] = true;
+            this._ticked.add(t.id);
          });
       });
-      forEach(this._transport, (id, sprite) => {
-         if (!ticked[id]) {
+
+      for (const [id, sprite] of this._transport) {
+         if (!this._ticked.has(id)) {
             this._transportPool.release(sprite);
-            delete this._transport[id];
+            this._transport.delete(id);
          }
-      });
+      }
    }
 
    public cameraPan(target_: number, time: number): void {

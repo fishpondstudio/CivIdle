@@ -1,7 +1,7 @@
 import type * as PIXI from "pixi.js";
 import type { EasingFunction } from "./Easing";
 import { Easing } from "./Easing";
-import type { Action } from "./actions/Action";
+import { Action } from "./actions/Action";
 import Delay from "./actions/Delay";
 import Parallel from "./actions/Parallel";
 import Repeat from "./actions/Repeat";
@@ -9,8 +9,9 @@ import RunFunc from "./actions/RunFunc";
 import Sequence from "./actions/Sequence";
 import { TargetAction } from "./actions/TargetAction";
 
+// biome-ignore lint/complexity/noStaticOnlyClass: <explanation>
 export class Actions {
-   static actions: Record<number, Action> = {};
+   static actions: Map<number, Action> = new Map();
 
    static to<T extends Record<string, any>>(
       target: T,
@@ -48,33 +49,31 @@ export class Actions {
    }
 
    static start(action: Action) {
-      this.actions[action.id] = action;
+      Actions.actions.set(action.id, action);
    }
 
    static isPlaying(action: Action): boolean {
-      return !!this.actions[action.id];
+      return Actions.actions.has(action.id);
    }
 
    static pause(action: Action) {
-      delete this.actions[action.id];
+      Actions.actions.delete(action.id);
    }
 
    static clear(target: object) {
-      for (const id in this.actions) {
-         const action = this.actions[id];
-         if (action instanceof TargetAction && action.target == target) {
-            delete this.actions[id];
+      for (const [id, action] of Actions.actions) {
+         if (action instanceof TargetAction && action.target === target) {
+            Actions.actions.delete(id);
          }
       }
    }
 
    static tick(delta: number) {
-      for (const id in this.actions) {
-         const action = this.actions[id];
+      for (const [id, action] of Actions.actions) {
          const done = action.tick(delta);
          if (done) {
             action.done = true;
-            delete this.actions[id];
+            Actions.actions.delete(id);
             // Are there any queued events?
             for (let j = 0; j < action.queued.length; j++) {
                Actions.start(action.queued[j]);

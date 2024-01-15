@@ -137,11 +137,29 @@ export function safeAdd<T extends string>(obj: Partial<Record<T, number>>, key: 
    obj[key]! += valueToAdd;
 }
 
+export function mapSafeAdd<T extends string>(obj: Map<T, number>, key: T, valueToAdd: number): void {
+   const v = obj.get(key);
+   if (v) {
+      obj.set(key, v + valueToAdd);
+   } else {
+      obj.set(key, valueToAdd);
+   }
+}
+
 export function safePush<T extends string, K>(obj: Partial<Record<T, K[]>>, key: T, valueToPush: K): void {
    if (!obj[key]) {
       obj[key] = [];
    }
    obj[key]!.push(valueToPush);
+}
+
+export function mapSafePush<T extends string, K>(obj: Map<T, K[]>, key: T, valueToPush: K): void {
+   const v = obj.get(key);
+   if (v) {
+      v.push(valueToPush);
+   } else {
+      obj.set(key, [valueToPush]);
+   }
 }
 
 export function mapOf<K extends string, V, T>(

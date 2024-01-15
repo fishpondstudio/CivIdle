@@ -27,7 +27,7 @@ export function BuildingIOTreeViewComponent({
             const resourceInStorage = gameState.tiles[xy].building?.resources[k] ?? 0;
             const showWarning =
                type === "input" &&
-               Tick.current.notProducingReasons[xy] === "NotEnoughResources" &&
+               Tick.current.notProducingReasons.get(xy) === "NotEnoughResources" &&
                resourceInStorage < v;
             return (
                <li key={k}>

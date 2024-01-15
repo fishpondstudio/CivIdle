@@ -5,6 +5,17 @@ interface PatchNote {
 
 export const PatchNotes: PatchNote[] = [
    {
+      version: "0.1.110",
+      content: [
+         ["QoL", "Now the map will show the trade route when you click on a player's tile"],
+         ["QoL", "Shows each message's channel when receiving from multiple channels"],
+         ["Bugfix", "Fix Statue Of Liberty not working correctly"],
+         ["Bugfix", "Fix sometimes a building with full storage shows not enough resources icon"],
+         ["Bugfix", "Fix player trade world map sometimes shows unnecessary detours"],
+         ["Bugfix", "Fix chat not filtering the latest message correctly"],
+      ],
+   },
+   {
       version: "0.1.109",
       content: [
          ["QoL", "Allow destroying partial resources in a building"],

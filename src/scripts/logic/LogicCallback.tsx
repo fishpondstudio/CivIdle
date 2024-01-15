@@ -6,9 +6,9 @@ import {
    forEach,
    isEmpty,
    keysOf,
+   mapSafePush,
    pointToXy,
    safeAdd,
-   safePush,
    shuffle,
    xyToPoint,
 } from "../utilities/Helper";
@@ -133,7 +133,7 @@ export function onBuildingProductionComplete(xy: string, gs: GameState, offline:
                   }
                }
                if (adjacentWaterTiles > 0) {
-                  safePush(Tick.next.tileMultipliers, tile.xy, {
+                  mapSafePush(Tick.next.tileMultipliers, tile.xy, {
                      output: adjacentWaterTiles,
                      source: buildingName,
                   });
@@ -153,7 +153,7 @@ export function onBuildingProductionComplete(xy: string, gs: GameState, offline:
          forEach(getXyBuildings(gs), (xy, building) => {
             const mul = Math.floor(building.level / 10);
             if (mul > 0) {
-               safePush(Tick.next.tileMultipliers, xy, {
+               mapSafePush(Tick.next.tileMultipliers, xy, {
                   input: mul,
                   output: mul,
                   source: t(L.NaturalWonderName, { name: buildingName }),
@@ -172,7 +172,7 @@ export function onBuildingProductionComplete(xy: string, gs: GameState, offline:
       }
       case "ChichenItza": {
          for (const neighbor of grid.getNeighbors(xyToPoint(xy))) {
-            safePush(Tick.next.tileMultipliers, pointToXy(neighbor), {
+            mapSafePush(Tick.next.tileMultipliers, pointToXy(neighbor), {
                output: 1,
                storage: 1,
                worker: 1,
@@ -183,7 +183,7 @@ export function onBuildingProductionComplete(xy: string, gs: GameState, offline:
       }
       case "LighthouseOfAlexandria": {
          for (const neighbor of grid.getNeighbors(xyToPoint(xy))) {
-            safePush(Tick.next.tileMultipliers, pointToXy(neighbor), {
+            mapSafePush(Tick.next.tileMultipliers, pointToXy(neighbor), {
                storage: 5,
                source: buildingName,
             });
@@ -202,7 +202,7 @@ export function onBuildingProductionComplete(xy: string, gs: GameState, offline:
          break;
       }
       case "HagiaSophia": {
-         if (!Tick.current.notProducingReasons[xy]) {
+         if (!Tick.current.notProducingReasons.has(xy)) {
             Tick.next.globalMultipliers.happiness.push({
                value: Config.Building.HagiaSophia.input.Faith!,
                source: buildingName,
@@ -211,7 +211,7 @@ export function onBuildingProductionComplete(xy: string, gs: GameState, offline:
          break;
       }
       case "Colosseum": {
-         if (!Tick.current.notProducingReasons[xy]) {
+         if (!Tick.current.notProducingReasons.has(xy)) {
             Tick.next.globalMultipliers.happiness.push({
                value: Config.Building.Colosseum.input.Chariot!,
                source: buildingName,
@@ -222,7 +222,7 @@ export function onBuildingProductionComplete(xy: string, gs: GameState, offline:
       case "AngkorWat": {
          safeAdd(Tick.next.workersAvailable, "Worker", 1000);
          for (const neighbor of grid.getNeighbors(xyToPoint(xy))) {
-            safePush(Tick.next.tileMultipliers, pointToXy(neighbor), {
+            mapSafePush(Tick.next.tileMultipliers, pointToXy(neighbor), {
                worker: 1,
                source: buildingName,
             });
@@ -232,7 +232,7 @@ export function onBuildingProductionComplete(xy: string, gs: GameState, offline:
       case "TempleOfHeaven": {
          forEach(getXyBuildings(gs), (xy, building) => {
             if (building.level >= 10) {
-               safePush(Tick.next.tileMultipliers, xy, {
+               mapSafePush(Tick.next.tileMultipliers, xy, {
                   worker: 1,
                   source: buildingName,
                });
@@ -255,7 +255,7 @@ export function onBuildingProductionComplete(xy: string, gs: GameState, offline:
          for (const neighbor of grid.getNeighbors(xyToPoint(xy))) {
             const building = gs.tiles[pointToXy(neighbor)].building;
             if (building && building.type === "Aqueduct") {
-               safePush(Tick.next.tileMultipliers, pointToXy(neighbor), {
+               mapSafePush(Tick.next.tileMultipliers, pointToXy(neighbor), {
                   worker: 1,
                   storage: 1,
                   output: 1,
@@ -297,7 +297,7 @@ export function onBuildingProductionComplete(xy: string, gs: GameState, offline:
                   }
                }
                if (adjacentIronMiningCamps > 0) {
-                  safePush(Tick.next.tileMultipliers, tile.xy, {
+                  mapSafePush(Tick.next.tileMultipliers, tile.xy, {
                      output: adjacentIronMiningCamps,
                      source: buildingName,
                   });
@@ -352,11 +352,11 @@ export function onBuildingProductionComplete(xy: string, gs: GameState, offline:
          const max = totalLevel * ST_PETERS_STORAGE_MULTIPLIER;
          if ((building.resources.Faith ?? 0) > max) {
             building.resources.Faith = max;
-            Tick.next.notProducingReasons[xy] = "StorageFull";
+            Tick.next.notProducingReasons.set(xy, "StorageFull");
          } else if (toProduce > 0) {
-            delete Tick.next.notProducingReasons[xy];
+            Tick.next.notProducingReasons.delete(xy);
          } else {
-            Tick.next.notProducingReasons[xy] = "NotEnoughResources";
+            Tick.next.notProducingReasons.set(xy, "NotEnoughResources");
          }
          break;
       }
@@ -375,7 +375,7 @@ export function onBuildingProductionComplete(xy: string, gs: GameState, offline:
       case "TajMahal": {
          forEach(getXyBuildings(gs), (xy, building) => {
             if (building.level >= 20 && building.status !== "completed") {
-               safePush(Tick.next.tileMultipliers, xy, { worker: 5, source: buildingName });
+               mapSafePush(Tick.next.tileMultipliers, xy, { worker: 5, source: buildingName });
             }
          });
          break;
@@ -383,7 +383,10 @@ export function onBuildingProductionComplete(xy: string, gs: GameState, offline:
       case "Aphrodite": {
          forEach(getXyBuildings(gs), (xy, building) => {
             if (building.level >= 20 && building.status !== "completed") {
-               safePush(Tick.next.tileMultipliers, xy, { worker: building.level - 20, source: buildingName });
+               mapSafePush(Tick.next.tileMultipliers, xy, {
+                  worker: building.level - 20,
+                  source: buildingName,
+               });
             }
          });
          break;
@@ -408,7 +411,7 @@ export function onBuildingProductionComplete(xy: string, gs: GameState, offline:
             const neighborXy = pointToXy(neighbor);
             const building = gs.tiles[neighborXy].building;
             if (building && Config.BuildingTier[building.type] === 1) {
-               safePush(Tick.next.tileMultipliers, neighborXy, {
+               mapSafePush(Tick.next.tileMultipliers, neighborXy, {
                   output: 5,
                   storage: 5,
                   source: buildingName,
@@ -434,7 +437,7 @@ export function onBuildingProductionComplete(xy: string, gs: GameState, offline:
             }
          }
          for (const xy of neighborXys) {
-            safePush(Tick.next.tileMultipliers, xy, {
+            mapSafePush(Tick.next.tileMultipliers, xy, {
                worker: count,
                storage: count,
                output: count,
@@ -472,9 +475,31 @@ export function onBuildingProductionComplete(xy: string, gs: GameState, offline:
       case "Neuschwanstein": {
          forEach(getXyBuildings(gs), (xy, building) => {
             if (isWorldWonder(building.type) && building.status === "building") {
-               safePush(Tick.next.tileMultipliers, xy, { worker: 10, source: buildingName });
+               mapSafePush(Tick.next.tileMultipliers, xy, { worker: 10, source: buildingName });
             }
          });
+         break;
+      }
+      case "StatueOfLiberty": {
+         for (const neighbor of grid.getNeighbors(xyToPoint(xy))) {
+            const neighborXy = pointToXy(neighbor);
+            const b = gs.tiles[neighborXy].building;
+            if (b) {
+               const type = b.type;
+               let count = 0;
+               for (const n of grid.getNeighbors(neighbor)) {
+                  if (gs.tiles[pointToXy(n)].building?.type === type) {
+                     ++count;
+                  }
+               }
+               mapSafePush(Tick.next.tileMultipliers, neighborXy, {
+                  worker: count,
+                  storage: count,
+                  output: count,
+                  source: buildingName,
+               });
+            }
+         }
          break;
       }
       case "BrandenburgGate": {
@@ -487,7 +512,7 @@ export function onBuildingProductionComplete(xy: string, gs: GameState, offline:
                   }
                }
                if (adjacentOilTiles > 0) {
-                  safePush(Tick.next.tileMultipliers, tile.xy, {
+                  mapSafePush(Tick.next.tileMultipliers, tile.xy, {
                      output: adjacentOilTiles,
                      storage: adjacentOilTiles,
                      worker: adjacentOilTiles,

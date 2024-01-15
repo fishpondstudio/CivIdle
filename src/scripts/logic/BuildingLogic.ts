@@ -9,6 +9,7 @@ import {
    isEmpty,
    isNullOrUndefined,
    keysOf,
+   mapSafeAdd,
    reduceOf,
    safeAdd,
    safePush,
@@ -77,9 +78,9 @@ function forEachMultiplier(
 ): MultiplierWithSource[] {
    const result: MultiplierWithSource[] = [];
    const b = gs.tiles[xy].building;
-   Tick.current.tileMultipliers[xy]?.forEach((m) => func(m));
+   Tick.current.tileMultipliers.get(xy)?.forEach((m) => func(m));
    if (b) {
-      Tick.current.buildingMultipliers[b.type]?.forEach((m) => func(m));
+      Tick.current.buildingMultipliers.get(b.type)?.forEach((m) => func(m));
    }
    Tick.current.globalMultipliers.storage.forEach((m) => func({ storage: m.value, source: m.source }));
    return result;
@@ -291,7 +292,7 @@ export function useWorkers(res: Resource, amount: number, xy: string | null): vo
    }
    switch (res) {
       case "Worker": {
-         safeAdd(Tick.next.workersAssignment, xy, amount);
+         mapSafeAdd(Tick.next.workersAssignment, xy, amount);
          break;
       }
    }
@@ -710,10 +711,10 @@ export function getElectrificationStatus(xy: string, gs: GameState): Electrifica
    if (building.electrification <= 0) {
       return "NotActive";
    }
-   if (Tick.current.notProducingReasons[xy]) {
+   if (Tick.current.notProducingReasons.has(xy)) {
       return "NotActive";
    }
-   if (Tick.current.electrified[xy]) {
+   if (Tick.current.electrified.has(xy)) {
       return "Active";
    }
    return "NoPower";

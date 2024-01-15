@@ -16,7 +16,10 @@ class IntraTickCache {
    buildingsByType: Partial<Record<Building, Record<string, Required<ITileData>>>> | undefined;
    buildingsByXy: Partial<Record<string, IBuildingData>> | undefined;
    resourceAmount: PartialTabulate<Resource> | undefined;
-   buildingIO: Record<string, PartialTabulate<Resource>> = {};
+   buildingIO: Map<number, Readonly<PartialTabulate<Resource>>> = new Map<
+      number,
+      Readonly<PartialTabulate<Resource>>
+   >();
    storageFullBuildings: IPointData[] | undefined;
 }
 
@@ -31,10 +34,10 @@ export function getBuildingIO(
    type: keyof Pick<IBuildingDefinition, "input" | "output">,
    options: IOCalculation,
    gs: GameState,
-): PartialTabulate<Resource> {
+): Readonly<PartialTabulate<Resource>> {
    const key =
       (xyToHash(xy) << (IOCalculation.TotalUsedBits + 1)) | (options << 1) | (type === "input" ? 1 : 0);
-   const cached = _cache.buildingIO[key];
+   const cached = _cache.buildingIO.get(key);
    if (cached) {
       return cached;
    }
@@ -64,13 +67,13 @@ export function getBuildingIO(
             value *= totalMultiplierFor(xy, type, 1, gs);
          }
          if (options & IOCalculation.MultiplierExcludeElectrification) {
-            value *= totalMultiplierFor(xy, type, 1, gs) - (Tick.current.electrified[xy] ?? 0);
+            value *= totalMultiplierFor(xy, type, 1, gs) - (Tick.current.electrified.get(xy) ?? 0);
          }
          safeAdd(result, k, value);
       });
    }
 
-   _cache.buildingIO[key] = Object.freeze(result);
+   _cache.buildingIO.set(key, Object.freeze(result));
    return result;
 }
 
@@ -92,11 +95,11 @@ export function getStorageFullBuildings(gs: GameState): IPointData[] {
       return _cache.storageFullBuildings;
    }
    const result: IPointData[] = [];
-   forEach(Tick.current.notProducingReasons, (xy, reason) => {
+   for (const [xy, reason] of Tick.current.notProducingReasons) {
       if (reason === "StorageFull") {
          result.push(xyToPoint(xy));
       }
-   });
+   }
    _cache.storageFullBuildings = result;
    return result;
 }

@@ -13,6 +13,7 @@ import {
    hasFlag,
    isEmpty,
    keysOf,
+   mapSafePush,
    pointToXy,
    safeAdd,
    safePush,
@@ -262,13 +263,13 @@ function tickTile(xy: string, gs: GameState, offline: boolean): void {
          completed = false;
          // Each transportation costs 1 worker, and deliver Total (=Builder Capacity x Multiplier) resources
          if (getAvailableWorkers("Worker") >= 1) {
-            delete Tick.next.notProducingReasons[xy];
+            Tick.next.notProducingReasons.delete(xy);
             useWorkers("Worker", 1, xy);
             transportResource(res, total, total, xy, gs);
             // break;
             return true;
          }
-         Tick.next.notProducingReasons[xy] = "NotEnoughWorkers";
+         Tick.next.notProducingReasons.set(xy, "NotEnoughWorkers");
       });
       if (completed) {
          building.level++;
@@ -290,7 +291,7 @@ function tickTile(xy: string, gs: GameState, offline: boolean): void {
    }
 
    if (gs.unlockedTech.Banking && building.level >= 5) {
-      safePush(Tick.next.tileMultipliers, xy, {
+      mapSafePush(Tick.next.tileMultipliers, xy, {
          storage: 1,
          source: t(L.SourceResearch, { tech: t(L.Banking) }),
       });
@@ -325,14 +326,14 @@ function tickTile(xy: string, gs: GameState, offline: boolean): void {
       let key: Resource;
       for (key in requiredDeposits) {
          if (!tile.deposit[key]) {
-            Tick.next.notProducingReasons[xy] = "NotOnDeposit";
+            Tick.next.notProducingReasons.set(xy, "NotOnDeposit");
             return;
          }
       }
    }
 
    if (building.capacity <= 0) {
-      Tick.next.notProducingReasons[xy] = "TurnedOff";
+      Tick.next.notProducingReasons.set(xy, "TurnedOff");
       return;
    }
 
@@ -378,7 +379,7 @@ function tickTile(xy: string, gs: GameState, offline: boolean): void {
 
    // If a building is a resourceImport type but has not transported, we consider it not working
    if ("resourceImports" in building && !hasTransported) {
-      Tick.next.notProducingReasons[xy] = "NoActiveTransports";
+      Tick.next.notProducingReasons.set(xy, "NoActiveTransports");
    }
 
    //////////////////////////////////////////////////
@@ -399,7 +400,7 @@ function tickTile(xy: string, gs: GameState, offline: boolean): void {
          const buyResource = market.availableResources[res]!;
          const buyAmount = (amount * getMarketPrice(res, xy, gs)) / getMarketPrice(buyResource, xy, gs);
          if (used - amount + buyAmount > total) {
-            Tick.next.notProducingReasons[xy] = "StorageFull";
+            Tick.next.notProducingReasons.set(xy, "StorageFull");
             return;
          }
          safeAdd(building.resources, res, -amount);
@@ -422,12 +423,12 @@ function tickTile(xy: string, gs: GameState, offline: boolean): void {
    const hasEnoughInput = hasEnoughResources(building.resources, input);
 
    if (!hasEnoughWorker) {
-      Tick.next.notProducingReasons[xy] = "NotEnoughWorkers";
+      Tick.next.notProducingReasons.set(xy, "NotEnoughWorkers");
       return;
    }
 
    if (!hasEnoughInput) {
-      Tick.next.notProducingReasons[xy] = "NotEnoughResources";
+      Tick.next.notProducingReasons.set(xy, "NotEnoughResources");
       return;
    }
 
@@ -443,10 +444,10 @@ function tickTile(xy: string, gs: GameState, offline: boolean): void {
          deductResources(building.resources, input);
          addResources(Tick.next.workersAvailable, nonTransportables);
          if (!isEmpty(filterTransportable(output))) {
-            Tick.next.notProducingReasons[xy] = "StorageFull";
+            Tick.next.notProducingReasons.set(xy, "StorageFull");
          }
       } else {
-         Tick.next.notProducingReasons[xy] = "StorageFull";
+         Tick.next.notProducingReasons.set(xy, "StorageFull");
       }
       return;
    }
@@ -460,12 +461,12 @@ function tickTile(xy: string, gs: GameState, offline: boolean): void {
       const requiredPower = getPowerRequired(building.electrification);
       if (getAvailableWorkers("Power") >= requiredPower) {
          useWorkers("Power", requiredPower, xy);
-         safePush(Tick.next.tileMultipliers, xy, {
+         mapSafePush(Tick.next.tileMultipliers, xy, {
             source: t(L.Electrification),
             input: building.electrification,
             output: building.electrification,
          });
-         Tick.next.electrified[xy] = building.electrification;
+         Tick.next.electrified.set(xy, building.electrification);
       }
    }
 
@@ -635,12 +636,12 @@ export function transportResource(
 }
 
 export function addMultiplier(k: Building, multiplier: Multiplier, source: string) {
-   let m = Tick.next.buildingMultipliers[k];
+   let m = Tick.next.buildingMultipliers.get(k);
    if (m == null) {
       m = [];
    }
    m.push({ ...multiplier, source });
-   Tick.next.buildingMultipliers[k] = m;
+   Tick.next.buildingMultipliers.set(k, m);
 }
 
 function getPriceId() {
@@ -693,5 +694,14 @@ if (import.meta.env.DEV) {
       for (let i = 0; i < tick; i++) {
          tickEverySecond(gs, true);
       }
+   };
+   // @ts-expect-error
+   window.benchmarkTick = (tick: number) => {
+      console.time(`TickGameState(${tick})`);
+      const gs = getGameState();
+      for (let i = 0; i < tick; i++) {
+         tickEverySecond(gs, true);
+      }
+      console.timeEnd(`TickGameState(${tick})`);
    };
 }

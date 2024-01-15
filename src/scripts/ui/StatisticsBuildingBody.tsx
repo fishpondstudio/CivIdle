@@ -94,7 +94,7 @@ function BuildingTab({ gameState }: IBuildingComponentProps): React.ReactNode {
                      )
                      .map(({ building, xy }) => {
                         let icon = <div className="m-icon small text-green">check_circle</div>;
-                        const notProducingReason = Tick.current.notProducingReasons[xy];
+                        const notProducingReason = Tick.current.notProducingReasons.get(xy);
                         if (building.status !== "completed") {
                            icon = <div className="m-icon small text-orange">build_circle</div>;
                         } else if (notProducingReason) {
@@ -139,11 +139,12 @@ function BuildingTab({ gameState }: IBuildingComponentProps): React.ReactNode {
                               </td>
                               <td
                                  className={classNames({
-                                    "text-red": Tick.current.notProducingReasons[xy] === "NotEnoughWorkers",
+                                    "text-red":
+                                       Tick.current.notProducingReasons.get(xy) === "NotEnoughWorkers",
                                     "text-right": true,
                                  })}
                               >
-                                 <FormatNumber value={Tick.current.workersAssignment[xy] ?? 0} />
+                                 <FormatNumber value={Tick.current.workersAssignment.get(xy) ?? 0} />
                               </td>
                            </tr>
                         );
@@ -240,7 +241,7 @@ function ResourcesTab({ gameState }: IBuildingComponentProps): React.ReactNode {
          IOCalculation.Multiplier | IOCalculation.Capacity,
          gameState,
       );
-      if (!showTheoreticalValue && Tick.current.notProducingReasons[xy]) {
+      if (!showTheoreticalValue && Tick.current.notProducingReasons.has(xy)) {
          return;
       }
       forEach(input, (res, amount) => safeAdd(inputs, res, amount));
