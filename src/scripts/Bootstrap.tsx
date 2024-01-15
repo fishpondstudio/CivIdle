@@ -183,6 +183,8 @@ export async function startGame(
    if (import.meta.env.DEV) {
       RunTests(gameState);
    }
+
+   // showModal(<FirstTimePlayerModal />);
 }
 
 function showOfflineProductionProgress(progress: number, routeTo: RouteTo): Promise<void> {
