@@ -230,16 +230,16 @@ export function jsxMapOf<K extends string, V>(
    return result;
 }
 
-const pointToXyCache: Record<number, string> = {};
+const pointToXyCache: Map<number, string> = new Map();
 
 export function pointToXy(point: IPointData): string {
    const hash = (point.x << 16) + point.y;
-   const cached = pointToXyCache[hash];
+   const cached = pointToXyCache.get(hash);
    if (cached) {
       return cached;
    }
    const xy = `${point.x.toString()},${point.y.toString()}`;
-   pointToXyCache[hash] = xy;
+   pointToXyCache.set(hash, xy);
    return xy;
 }
 
@@ -250,41 +250,41 @@ export function sizeOf(obj: any): number {
    return Object.keys(obj).length;
 }
 
-const xyToTileCache: Record<string, Tile> = {};
+const xyToTileCache: Map<string, Tile> = new Map();
 export type Tile = number;
 export function xyToTile(xy: string): Tile {
-   const cached = xyToTileCache[xy];
+   const cached = xyToTileCache.get(xy);
    if (cached) {
       return cached;
    }
    const point = xyToPoint(xy);
    const tile = (point.x << 16) | point.y;
-   xyToTileCache[xy] = tile;
+   xyToTileCache.set(xy, tile);
    return tile;
 }
 
-const xyHash: Record<string, number> = {};
+const xyHash: Map<string, number> = new Map();
 let xyCounter = 0;
 
 export function xyToHash(xy: string): number {
-   let cached = xyHash[xy];
+   let cached = xyHash.get(xy);
    if (!cached) {
       cached = xyCounter++;
-      xyHash[xy] = cached;
+      xyHash.set(xy, cached);
    }
    return cached;
 }
 
-const xyToPointCache: Record<string, Readonly<IPointData>> = {};
+const xyToPointCache: Map<string, Readonly<IPointData>> = new Map();
 
 export function xyToPoint(str: string): IPointData {
-   const cached = xyToPointCache[str];
+   const cached = xyToPointCache.get(str);
    if (cached) {
       return { x: cached.x, y: cached.y };
    }
    const parts = str.split(",");
    const point = { x: parseInt(parts[0], 10), y: parseInt(parts[1], 10) };
-   xyToPointCache[str] = Object.freeze(point);
+   xyToPointCache.set(str, Object.freeze(point));
    return point;
 }
 
