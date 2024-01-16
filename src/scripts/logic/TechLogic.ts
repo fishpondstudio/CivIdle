@@ -4,7 +4,7 @@ import type { City } from "../definitions/CityDefinitions";
 import type { GreatPerson } from "../definitions/GreatPersonDefinitions";
 import type { Deposit, Resource } from "../definitions/ResourceDefinitions";
 import type { Tech, TechAge } from "../definitions/TechDefinitions";
-import { filterOf, forEach, isEmpty, keysOf, shuffle } from "../utilities/Helper";
+import { filterOf, forEach, isEmpty, keysOf, shuffle, type Tile } from "../utilities/Helper";
 import { Singleton } from "../utilities/Singleton";
 import { Config } from "./Config";
 import type { GameState, GreatPeopleChoice } from "./GameState";
@@ -73,8 +73,8 @@ export function unlockTech(tech: Tech, gs: GameState): void {
    Config.Tech[tech].revealDeposit?.forEach((deposit) => {
       const tileCount = getDepositTileCount(deposit, gs);
       const depositTiles = shuffle(
-         keysOf(gs.tiles).filter((xy) => {
-            const type = gs.tiles[xy].building?.type;
+         Array.from(gs.tiles.entries()).filter(([xy, tile]) => {
+            const type = tile.building?.type;
             if (!type) {
                return true;
             }
@@ -93,17 +93,17 @@ export function unlockTech(tech: Tech, gs: GameState): void {
          (t) => t.explored && !t.building && isEmpty(t.deposit),
       );
       // We want to guarantee at least one of the deposit tile is spawned on explored tile.
-      if (depositTiles.every((xy) => !gs.tiles[xy].explored) && exploredEmptyTiles.length > 0) {
+      if (depositTiles.every(([_, tile]) => !tile.explored) && exploredEmptyTiles.length > 0) {
          depositTiles[0] = shuffle(exploredEmptyTiles)[0].xy;
       }
-      depositTiles.forEach((xy) => {
+      depositTiles.forEach(([xy, tile]) => {
          addDeposit(xy, deposit, gs);
       });
    });
 }
 
-export function addDeposit(xy: string, deposit: Deposit, gs: GameState): void {
-   gs.tiles[xy].deposit[deposit] = true;
+export function addDeposit(xy: Tile, deposit: Deposit, gs: GameState): void {
+   gs.tiles.get(xy)!.deposit[deposit] = true;
    // Singleton().sceneManager.getCurrent(WorldScene)?.resetTile(xy);
 }
 

@@ -39,7 +39,7 @@ export function MyTilePage({ xy }: { xy: string }): React.ReactNode {
                <div className="sep10"></div>
                <button
                   className="w100 row jcc"
-                  disabled={tariffRate == playerMap[xy].tariffRate}
+                  disabled={tariffRate === playerMap[xy].tariffRate}
                   onClick={async () => {
                      try {
                         await client.setTariffRate(tariffRate);

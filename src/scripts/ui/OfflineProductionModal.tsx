@@ -3,7 +3,7 @@ import type { Resource } from "../definitions/ResourceDefinitions";
 import type { PartialTabulate } from "../definitions/TypeDefinitions";
 import { Config } from "../logic/Config";
 import type { GameState } from "../logic/GameState";
-import { forEach, formatHM, isEmpty, jsxMapOf } from "../utilities/Helper";
+import { forEach, formatHM, isEmpty, jsxMMapOf, jsxMapOf } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
 import { hideModal } from "./GlobalModal";
 import { FormatNumber } from "./HelperComponents";
@@ -34,19 +34,19 @@ export function OfflineProductionModal({
                         <th>{t(L.Level)}</th>
                         <th></th>
                      </tr>
-                     {jsxMapOf(after.tiles, (xy, tile) => {
+                     {jsxMMapOf(after.tiles, (xy, tile) => {
                         const building = tile.building;
                         if (!building) {
                            return null;
                         }
                         const diff: PartialTabulate<Resource> = {};
                         forEach(building.resources, (res, amount) => {
-                           const beforeAmount = before.tiles[xy].building?.resources[res] ?? 0;
+                           const beforeAmount = before.tiles.get(xy)?.building?.resources[res] ?? 0;
                            if (Math.abs(amount - beforeAmount) > 1) {
                               diff[res] = amount - beforeAmount;
                            }
                         });
-                        const beforeLevel = before.tiles[xy].building?.level ?? 0;
+                        const beforeLevel = before.tiles.get(xy)?.building?.level ?? 0;
                         if (isEmpty(diff) && beforeLevel === building.level) {
                            return null;
                         }

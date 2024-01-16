@@ -1,12 +1,12 @@
 import type { Building } from "../definitions/BuildingDefinitions";
 import type { Deposit, Resource } from "../definitions/ResourceDefinitions";
 import type { PartialSet, PartialTabulate } from "../definitions/TypeDefinitions";
-import { clamp, isNullOrUndefined } from "../utilities/Helper";
+import { clamp, isNullOrUndefined, type Tile } from "../utilities/Helper";
 import { Config } from "./Config";
 import type { GameState } from "./GameState";
 
 export interface ITileData {
-   xy: string;
+   tile: Tile;
    explored: boolean;
    deposit: PartialSet<Resource>;
    building?: IBuildingData;

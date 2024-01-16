@@ -5,12 +5,12 @@ import type { GameOptions } from "./logic/GameState";
 import { GameState, SavedGame, initializeGameState } from "./logic/GameState";
 import { rollPermanentGreatPeople } from "./logic/RebornLogic";
 import { getGreatPeopleChoices } from "./logic/TechLogic";
-import { makeBuilding } from "./logic/Tile";
+import { makeBuilding, type ITileData } from "./logic/Tile";
 import { SteamClient, isSteam } from "./rpc/SteamClient";
 import { Grid } from "./scenes/Grid";
 import { WorldScene } from "./scenes/WorldScene";
 import { idbGet, idbSet } from "./utilities/BrowserStorage";
-import { firstKeyOf, forEach } from "./utilities/Helper";
+import { firstKeyOf, forEach, xyToTile, type Tile } from "./utilities/Helper";
 import { makeObservableHook } from "./utilities/Hook";
 import { Singleton } from "./utilities/Singleton";
 import { TypedEvent } from "./utilities/TypedEvent";
@@ -47,7 +47,7 @@ if (import.meta.env.DEV) {
    window.clearGame = wipeSaveData;
    // @ts-expect-error
    window.clearAllResources = () => {
-      forEach(getGameState().tiles, (xy, tile) => {
+      getGameState().tiles.forEach((tile) => {
          if (tile.building) {
             tile.building.resources = {};
          }
@@ -127,12 +127,30 @@ export async function compressSave(gs: SavedGame = savedGame): Promise<Uint8Arra
    return await compress(serializeSave(gs));
 }
 
+function replacer(key: string, value: any): any {
+   if (value instanceof Map) {
+      return {
+         $type: "Map",
+         value: Array.from(value.entries()), // or with spread: value: [...value]
+      };
+   }
+   return value;
+}
+function reviver(key: string, value: any): any {
+   if (typeof value === "object" && value !== null) {
+      if (value.$type === "Map") {
+         return new Map(value.value);
+      }
+   }
+   return value;
+}
+
 export function serializeSave(gs: SavedGame = savedGame): Uint8Array {
-   return new TextEncoder().encode(JSON.stringify(gs));
+   return new TextEncoder().encode(JSON.stringify(gs, replacer));
 }
 
 export function deserializeSave(bytes: Uint8Array): SavedGame {
-   return JSON.parse(new TextDecoder().decode(bytes));
+   return JSON.parse(new TextDecoder().decode(bytes), reviver);
 }
 
 export async function decompressSave(data: Uint8Array): Promise<SavedGame> {
@@ -204,8 +222,21 @@ export function watchGameOptions(cb: (gameOptions: GameOptions) => void): () => 
 export const useGameState = makeObservableHook(GameStateChanged, getGameState);
 export const useGameOptions = makeObservableHook(GameOptionsChanged, getGameOptions);
 
-function migrateSavedGame(gs: SavedGame) {
-   forEach(gs.current.tiles, (xy, tile) => {
+function migrateSavedGame(save: SavedGame) {
+   if (!(save.current.tiles instanceof Map)) {
+      const tiles = new Map<Tile, ITileData>();
+      forEach(save.current.tiles as Record<string, ITileData>, (xy, tile) => {
+         if ("xy" in tile) {
+            // @ts-expect-error
+            tile.tile = xyToTile(tile.xy);
+            delete tile.xy;
+         }
+         tiles.set(xyToTile(xy), tile);
+      });
+      save.current.tiles = tiles;
+      save.current.transportation = new Map();
+   }
+   save.current.tiles.forEach((tile) => {
       if (tile.building) {
          if (!Config.Building[tile.building.type]) {
             delete tile.building;

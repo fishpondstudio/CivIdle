@@ -7,10 +7,11 @@ import {
    isEmpty,
    keysOf,
    mapSafePush,
-   pointToXy,
+   pointToTile,
    safeAdd,
    shuffle,
-   xyToPoint,
+   tileToPoint,
+   type Tile,
 } from "../utilities/Helper";
 import { Singleton } from "../utilities/Singleton";
 import { L, t } from "../utilities/i18n";
@@ -33,18 +34,18 @@ import { Tick } from "./TickLogic";
 import type { IPetraBuildingData } from "./Tile";
 import { addMultiplier } from "./Update";
 
-export function onBuildingComplete(xy: string, gs: GameState) {
+export function onBuildingComplete(xy: Tile, gs: GameState) {
    for (const g of ensureTileFogOfWar(xy, gs, Singleton().grid)) {
       Singleton().sceneManager.getCurrent(WorldScene)?.getTile(g)?.reveal().catch(console.error);
    }
-   const building = gs.tiles[xy].building;
+   const building = gs.tiles.get(xy)?.building;
    if (!building) {
       return;
    }
    const { grid } = Singleton();
    switch (building.type) {
       case "HatshepsutTemple": {
-         forEach(gs.tiles, (xy, tile) => {
+         gs.tiles.forEach((tile, xy) => {
             if (tile.deposit.Water) {
                exploreTile(xy, gs);
                Singleton().sceneManager.getCurrent(WorldScene)?.getTile(xy)?.reveal().catch(console.error);
@@ -68,12 +69,12 @@ export function onBuildingComplete(xy: string, gs: GameState) {
       }
       case "StatueOfZeus": {
          let deposits: Deposit[] = [];
-         for (const neighbor of grid.getNeighbors(xyToPoint(xy))) {
+         for (const neighbor of grid.getNeighbors(tileToPoint(xy))) {
             if (deposits.length <= 0) {
                deposits = shuffle(getRevealedDeposits(gs));
             }
-            const neighborXy = pointToXy(neighbor);
-            if (isEmpty(gs.tiles[neighborXy].deposit)) {
+            const neighborXy = pointToTile(neighbor);
+            if (isEmpty(gs.tiles.get(neighborXy)!.deposit)) {
                const deposit = deposits.pop()!;
                addDeposit(neighborXy, deposit, gs);
             }
@@ -81,7 +82,7 @@ export function onBuildingComplete(xy: string, gs: GameState) {
          break;
       }
       case "TempleOfArtemis": {
-         forEach(getXyBuildings(gs), (xy, building) => {
+         getXyBuildings(gs).forEach((building) => {
             if (isSpecialBuilding(building.type)) {
                return;
             }
@@ -94,12 +95,12 @@ export function onBuildingComplete(xy: string, gs: GameState) {
    }
 }
 
-export function onTileExplored(xy: string, gs: GameState) {
-   const building = gs.tiles[xy].building;
+export function onTileExplored(xy: Tile, gs: GameState) {
+   const building = gs.tiles.get(xy)?.building;
    if (isNaturalWonder(building?.type)) {
       switch (building?.type) {
          case "GrottaAzzurra": {
-            forEach(getXyBuildings(gs), (xy, building) => {
+            getXyBuildings(gs).forEach((building) => {
                if (isSpecialBuilding(building.type)) {
                   return;
                }
@@ -113,8 +114,8 @@ export function onTileExplored(xy: string, gs: GameState) {
    }
 }
 
-export function onBuildingProductionComplete(xy: string, gs: GameState, offline: boolean) {
-   const building = gs.tiles[xy].building;
+export function onBuildingProductionComplete(xy: Tile, gs: GameState, offline: boolean) {
+   const building = gs.tiles.get(xy)?.building;
    if (!building) {
       return;
    }
@@ -124,16 +125,16 @@ export function onBuildingProductionComplete(xy: string, gs: GameState, offline:
 
    switch (building.type) {
       case "HatshepsutTemple": {
-         forEach(buildingsByType.WheatFarm, (xy, tile) => {
+         buildingsByType.get("WheatFarm")?.forEach((tile, xy) => {
             if (tile.building) {
                let adjacentWaterTiles = 0;
-               for (const neighbor of grid.getNeighbors(xyToPoint(xy))) {
-                  if (gs.tiles[pointToXy(neighbor)]?.deposit.Water) {
+               for (const neighbor of grid.getNeighbors(tileToPoint(xy))) {
+                  if (gs.tiles.get(pointToTile(neighbor))?.deposit.Water) {
                      ++adjacentWaterTiles;
                   }
                }
                if (adjacentWaterTiles > 0) {
-                  mapSafePush(Tick.next.tileMultipliers, tile.xy, {
+                  mapSafePush(Tick.next.tileMultipliers, tile.tile, {
                      output: adjacentWaterTiles,
                      source: buildingName,
                   });
@@ -150,7 +151,7 @@ export function onBuildingProductionComplete(xy: string, gs: GameState, offline:
          break;
       }
       case "Alps": {
-         forEach(getXyBuildings(gs), (xy, building) => {
+         getXyBuildings(gs).forEach((building, xy) => {
             const mul = Math.floor(building.level / 10);
             if (mul > 0) {
                mapSafePush(Tick.next.tileMultipliers, xy, {
@@ -171,8 +172,8 @@ export function onBuildingProductionComplete(xy: string, gs: GameState, offline:
          break;
       }
       case "ChichenItza": {
-         for (const neighbor of grid.getNeighbors(xyToPoint(xy))) {
-            mapSafePush(Tick.next.tileMultipliers, pointToXy(neighbor), {
+         for (const neighbor of grid.getNeighbors(tileToPoint(xy))) {
+            mapSafePush(Tick.next.tileMultipliers, pointToTile(neighbor), {
                output: 1,
                storage: 1,
                worker: 1,
@@ -182,8 +183,8 @@ export function onBuildingProductionComplete(xy: string, gs: GameState, offline:
          break;
       }
       case "LighthouseOfAlexandria": {
-         for (const neighbor of grid.getNeighbors(xyToPoint(xy))) {
-            mapSafePush(Tick.next.tileMultipliers, pointToXy(neighbor), {
+         for (const neighbor of grid.getNeighbors(tileToPoint(xy))) {
+            mapSafePush(Tick.next.tileMultipliers, pointToTile(neighbor), {
                storage: 5,
                source: buildingName,
             });
@@ -192,8 +193,8 @@ export function onBuildingProductionComplete(xy: string, gs: GameState, offline:
       }
       case "ColossusOfRhodes": {
          let happiness = 0;
-         for (const neighbor of grid.getNeighbors(xyToPoint(xy))) {
-            const building = gs.tiles[pointToXy(neighbor)].building;
+         for (const neighbor of grid.getNeighbors(tileToPoint(xy))) {
+            const building = gs.tiles.get(pointToTile(neighbor))?.building;
             if (building && !Config.Building[building.type].output.Worker) {
                happiness++;
             }
@@ -221,8 +222,8 @@ export function onBuildingProductionComplete(xy: string, gs: GameState, offline:
       }
       case "AngkorWat": {
          safeAdd(Tick.next.workersAvailable, "Worker", 1000);
-         for (const neighbor of grid.getNeighbors(xyToPoint(xy))) {
-            mapSafePush(Tick.next.tileMultipliers, pointToXy(neighbor), {
+         for (const neighbor of grid.getNeighbors(tileToPoint(xy))) {
+            mapSafePush(Tick.next.tileMultipliers, pointToTile(neighbor), {
                worker: 1,
                source: buildingName,
             });
@@ -230,7 +231,7 @@ export function onBuildingProductionComplete(xy: string, gs: GameState, offline:
          break;
       }
       case "TempleOfHeaven": {
-         forEach(getXyBuildings(gs), (xy, building) => {
+         getXyBuildings(gs).forEach((building, xy) => {
             if (building.level >= 10) {
                mapSafePush(Tick.next.tileMultipliers, xy, {
                   worker: 1,
@@ -252,10 +253,10 @@ export function onBuildingProductionComplete(xy: string, gs: GameState, offline:
             value: 1,
             source: buildingName,
          });
-         for (const neighbor of grid.getNeighbors(xyToPoint(xy))) {
-            const building = gs.tiles[pointToXy(neighbor)].building;
+         for (const neighbor of grid.getNeighbors(tileToPoint(xy))) {
+            const building = gs.tiles.get(pointToTile(neighbor))?.building;
             if (building && building.type === "Aqueduct") {
-               mapSafePush(Tick.next.tileMultipliers, pointToXy(neighbor), {
+               mapSafePush(Tick.next.tileMultipliers, pointToTile(neighbor), {
                   worker: 1,
                   storage: 1,
                   output: 1,
@@ -288,16 +289,16 @@ export function onBuildingProductionComplete(xy: string, gs: GameState, offline:
             },
             buildingName,
          );
-         forEach(buildingsByType.IronForge, (xy, tile) => {
+         buildingsByType.get("IronForge")?.forEach((tile, xy) => {
             if (tile.building) {
                let adjacentIronMiningCamps = 0;
-               for (const neighbor of grid.getNeighbors(xyToPoint(tile.xy))) {
-                  if (gs.tiles[pointToXy(neighbor)]?.building?.type === "IronMiningCamp") {
+               for (const neighbor of grid.getNeighbors(tileToPoint(tile.tile))) {
+                  if (gs.tiles.get(pointToTile(neighbor))?.building?.type === "IronMiningCamp") {
                      ++adjacentIronMiningCamps;
                   }
                }
                if (adjacentIronMiningCamps > 0) {
-                  mapSafePush(Tick.next.tileMultipliers, tile.xy, {
+                  mapSafePush(Tick.next.tileMultipliers, tile.tile, {
                      output: adjacentIronMiningCamps,
                      source: buildingName,
                   });
@@ -340,7 +341,7 @@ export function onBuildingProductionComplete(xy: string, gs: GameState, offline:
          let totalLevel = 0;
          getBuildingsThatProduce("Faith").forEach((b) => {
             addMultiplier(b, { storage: 1 }, buildingName);
-            forEach(getBuildingsByType(b, gs), (xy, tile) => {
+            getBuildingsByType(b, gs)?.forEach((tile, xy) => {
                if (tile.building.status === "completed") {
                   totalFaith += tile.building.resources.Faith ?? 0;
                   totalLevel += tile.building.level;
@@ -373,7 +374,7 @@ export function onBuildingProductionComplete(xy: string, gs: GameState, offline:
          break;
       }
       case "TajMahal": {
-         forEach(getXyBuildings(gs), (xy, building) => {
+         getXyBuildings(gs).forEach((building, xy) => {
             if (building.level >= 20 && building.status !== "completed") {
                mapSafePush(Tick.next.tileMultipliers, xy, { worker: 5, source: buildingName });
             }
@@ -381,7 +382,7 @@ export function onBuildingProductionComplete(xy: string, gs: GameState, offline:
          break;
       }
       case "Aphrodite": {
-         forEach(getXyBuildings(gs), (xy, building) => {
+         getXyBuildings(gs).forEach((building, xy) => {
             if (building.level >= 20 && building.status !== "completed") {
                mapSafePush(Tick.next.tileMultipliers, xy, {
                   worker: building.level - 20,
@@ -392,9 +393,9 @@ export function onBuildingProductionComplete(xy: string, gs: GameState, offline:
          break;
       }
       case "Poseidon": {
-         for (const neighbor of grid.getNeighbors(xyToPoint(xy))) {
-            const neighborXy = pointToXy(neighbor);
-            const building = gs.tiles[neighborXy].building;
+         for (const neighbor of grid.getNeighbors(tileToPoint(xy))) {
+            const neighborXy = pointToTile(neighbor);
+            const building = gs.tiles.get(neighborXy)?.building;
             if (
                building &&
                !isSpecialBuilding(building.type) &&
@@ -407,9 +408,9 @@ export function onBuildingProductionComplete(xy: string, gs: GameState, offline:
          break;
       }
       case "StatueOfZeus": {
-         for (const neighbor of grid.getNeighbors(xyToPoint(xy))) {
-            const neighborXy = pointToXy(neighbor);
-            const building = gs.tiles[neighborXy].building;
+         for (const neighbor of grid.getNeighbors(tileToPoint(xy))) {
+            const neighborXy = pointToTile(neighbor);
+            const building = gs.tiles.get(neighborXy)?.building;
             if (building && Config.BuildingTier[building.type] === 1) {
                mapSafePush(Tick.next.tileMultipliers, neighborXy, {
                   output: 5,
@@ -426,11 +427,11 @@ export function onBuildingProductionComplete(xy: string, gs: GameState, offline:
          break;
       }
       case "EiffelTower": {
-         const neighborXys: string[] = [];
+         const neighborXys: Tile[] = [];
          let count = 0;
-         for (const neighbor of grid.getNeighbors(xyToPoint(xy))) {
-            const neighborXy = pointToXy(neighbor);
-            const building = gs.tiles[neighborXy].building;
+         for (const neighbor of grid.getNeighbors(tileToPoint(xy))) {
+            const neighborXy = pointToTile(neighbor);
+            const building = gs.tiles.get(neighborXy)?.building;
             if (building && building.type === "SteelMill") {
                neighborXys.push(neighborXy);
                ++count;
@@ -462,9 +463,9 @@ export function onBuildingProductionComplete(xy: string, gs: GameState, offline:
             }
          });
          let count = 0;
-         for (const neighbor of grid.getNeighbors(xyToPoint(xy))) {
-            const neighborXy = pointToXy(neighbor);
-            const b = gs.tiles[neighborXy].building;
+         for (const neighbor of grid.getNeighbors(tileToPoint(xy))) {
+            const neighborXy = pointToTile(neighbor);
+            const b = gs.tiles.get(neighborXy)?.building;
             if (b && (Config.Building[b.type].input.Gunpowder || Config.Building[b.type].output.Gunpowder)) {
                ++count;
             }
@@ -473,7 +474,7 @@ export function onBuildingProductionComplete(xy: string, gs: GameState, offline:
          break;
       }
       case "Neuschwanstein": {
-         forEach(getXyBuildings(gs), (xy, building) => {
+         getXyBuildings(gs).forEach((building, xy) => {
             if (isWorldWonder(building.type) && building.status === "building") {
                mapSafePush(Tick.next.tileMultipliers, xy, { worker: 10, source: buildingName });
             }
@@ -481,14 +482,14 @@ export function onBuildingProductionComplete(xy: string, gs: GameState, offline:
          break;
       }
       case "StatueOfLiberty": {
-         for (const neighbor of grid.getNeighbors(xyToPoint(xy))) {
-            const neighborXy = pointToXy(neighbor);
-            const b = gs.tiles[neighborXy].building;
+         for (const neighbor of grid.getNeighbors(tileToPoint(xy))) {
+            const neighborXy = pointToTile(neighbor);
+            const b = gs.tiles.get(neighborXy)?.building;
             if (b) {
                const type = b.type;
                let count = 0;
                for (const n of grid.getNeighbors(neighbor)) {
-                  if (gs.tiles[pointToXy(n)].building?.type === type) {
+                  if (gs.tiles.get(pointToTile(n))?.building?.type === type) {
                      ++count;
                   }
                }
@@ -503,16 +504,16 @@ export function onBuildingProductionComplete(xy: string, gs: GameState, offline:
          break;
       }
       case "BrandenburgGate": {
-         forEach(buildingsByType.OilRefinery, (xy, tile) => {
+         buildingsByType.get("OilRefinery")?.forEach((tile, xy) => {
             if (tile.building) {
                let adjacentOilTiles = 0;
-               for (const neighbor of grid.getNeighbors(xyToPoint(xy))) {
-                  if (gs.tiles[pointToXy(neighbor)]?.deposit.Oil) {
+               for (const neighbor of grid.getNeighbors(tileToPoint(xy))) {
+                  if (gs.tiles.get(pointToTile(neighbor))?.deposit.Oil) {
                      ++adjacentOilTiles;
                   }
                }
                if (adjacentOilTiles > 0) {
-                  mapSafePush(Tick.next.tileMultipliers, tile.xy, {
+                  mapSafePush(Tick.next.tileMultipliers, tile.tile, {
                      output: adjacentOilTiles,
                      storage: adjacentOilTiles,
                      worker: adjacentOilTiles,

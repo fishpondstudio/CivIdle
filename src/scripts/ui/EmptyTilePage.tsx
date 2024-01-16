@@ -118,7 +118,7 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
                            );
                         })
                         .map((k) => {
-                           if ((sizeOf(constructed[k]) ?? 0) >= (Config.Building[k].max ?? Infinity)) {
+                           if ((sizeOf(constructed.get(k)) ?? 0) >= (Config.Building[k].max ?? Infinity)) {
                               return null;
                            }
                            const building = Config.Building[k];
@@ -155,7 +155,7 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
                                           <span className="text-strong">{building.name()}</span>
                                           {building.max === 1 ? null : (
                                              <span className="text-desc text-small ml5">
-                                                {sizeOf(buildingByType[k])}
+                                                {sizeOf(buildingByType.get(k))}
                                              </span>
                                           )}
                                        </div>

@@ -13,7 +13,7 @@ import { ApplyToAllComponent } from "./ApplyToAllComponent";
 import type { IBuildingComponentProps } from "./BuildingPage";
 
 export function BuildingElectricityComponent({ gameState, xy }: IBuildingComponentProps): React.ReactNode {
-   const building = gameState.tiles[xy].building;
+   const building = gameState.tiles.get(xy)?.building;
    if (!hasFeature(GameFeature.Electricity, gameState) || !building) {
       return null;
    }

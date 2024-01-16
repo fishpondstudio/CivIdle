@@ -27,7 +27,7 @@ export function UpgradingPage({ tile }: { tile: ITileData }): React.ReactNode {
          </div>
          <MenuComponent />
          <div className="window-body">
-            <BuildingConstructionProgressComponent xy={tile.xy} gameState={gs} />
+            <BuildingConstructionProgressComponent xy={tile.tile} gameState={gs} />
             <fieldset>
                <legend>{t(L.UpgradeBuilding)}</legend>
                <div className="row text-strong">

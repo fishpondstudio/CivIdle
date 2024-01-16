@@ -7,14 +7,14 @@ import { L, t } from "../utilities/i18n";
 import type { IBuildingComponentProps } from "./BuildingPage";
 
 export function BuildingSellComponent({ gameState, xy }: IBuildingComponentProps): React.ReactNode {
-   const tile = gameState.tiles[xy];
-   const building = tile.building;
+   const tile = gameState.tiles.get(xy);
+   const building = tile?.building;
    if (building == null || isWorldOrNaturalWonder(building.type)) {
       return null;
    }
    const sellBuilding = () => {
-      delete tile.building;
-      Singleton().sceneManager.getCurrent(WorldScene)?.resetTile(tile.xy);
+      delete tile!.building;
+      Singleton().sceneManager.getCurrent(WorldScene)?.resetTile(tile!.tile);
       notifyGameStateUpdate();
    };
    useShortcut("BuildingPageSellBuilding", sellBuilding, [xy]);

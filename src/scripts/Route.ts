@@ -3,6 +3,7 @@ import { getGameState } from "./Global";
 import { clearShortcuts } from "./logic/Shortcut";
 import { LoadingPage } from "./ui/LoadingPage";
 import { TilePage } from "./ui/TilePage";
+import type { Tile } from "./utilities/Helper";
 import type { TypedEvent } from "./utilities/TypedEvent";
 import { playClick } from "./visuals/Sound";
 
@@ -15,7 +16,7 @@ export function Route({ event }: { event: TypedEvent<RouteChangeEvent> }) {
       function handleRouteChanged(e: RouteChangeEvent) {
          if (import.meta.env.DEV) {
             if (e.component === TilePage) {
-               console.log(getGameState().tiles[e.params.xy as string]);
+               console.log(getGameState().tiles.get(e.params.xy as Tile));
             }
          }
          if (e.component !== LoadingPage) {

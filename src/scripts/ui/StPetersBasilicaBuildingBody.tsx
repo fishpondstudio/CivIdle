@@ -2,7 +2,7 @@ import { ST_PETERS_FAITH_MULTIPLIER, ST_PETERS_STORAGE_MULTIPLIER } from "../log
 import { Config } from "../logic/Config";
 import { getBuildingsByType } from "../logic/IntraTickCache";
 import { getBuildingsThatProduce } from "../logic/ResourceLogic";
-import { formatPercent, mapOf } from "../utilities/Helper";
+import { formatPercent, mMapOf } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
 import { BuildingColorComponent } from "./BuildingColorComponent";
 import { BuildingDescriptionComponent } from "./BuildingDescriptionComponent";
@@ -12,7 +12,7 @@ import { BuildingWikipediaComponent } from "./BuildingWikipediaComponent";
 import { FormatNumber } from "./HelperComponents";
 
 export function StPetersBasilicaBuildingBody({ gameState, xy }: IBuildingComponentProps): React.ReactNode {
-   const building = gameState.tiles[xy].building;
+   const building = gameState.tiles.get(xy)?.building;
    if (!building) {
       return null;
    }
@@ -32,7 +32,7 @@ export function StPetersBasilicaBuildingBody({ gameState, xy }: IBuildingCompone
                </thead>
                <tbody>
                   {getBuildingsThatProduce("Faith").flatMap((b) =>
-                     mapOf(getBuildingsByType(b, gameState), (k, v) => {
+                     mMapOf(getBuildingsByType(b, gameState), (k, v) => {
                         if (v.building.status !== "completed") {
                            return [];
                         }

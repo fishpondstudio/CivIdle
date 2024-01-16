@@ -1,7 +1,7 @@
 import { notifyGameStateUpdate } from "../Global";
 import { getWarehouseIdleCapacity } from "../logic/BuildingLogic";
 import { GameFeature, hasFeature } from "../logic/FeatureLogic";
-import type { IWarehouseBuildingData} from "../logic/Tile";
+import type { IWarehouseBuildingData } from "../logic/Tile";
 import { WarehouseOptions } from "../logic/Tile";
 import { hasFlag, toggleFlag } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
@@ -16,7 +16,7 @@ import { ResourceImportComponent } from "./ResourceImportComponent";
 import { WarningComponent } from "./WarningComponent";
 
 export function WarehouseBuildingBody({ gameState, xy }: IBuildingComponentProps): React.ReactNode {
-   const warehouse = gameState.tiles[xy].building as IWarehouseBuildingData;
+   const warehouse = gameState.tiles.get(xy)?.building as IWarehouseBuildingData;
    if (!warehouse) {
       return null;
    }

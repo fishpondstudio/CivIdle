@@ -6,7 +6,7 @@ import type { IBuildingComponentProps } from "./BuildingPage";
 const WikipediaCache: Partial<Record<Building, string>> = {};
 
 export function BuildingWikipediaComponent({ gameState, xy }: IBuildingComponentProps): React.ReactNode {
-   const type = gameState.tiles[xy].building?.type;
+   const type = gameState.tiles.get(xy)?.building?.type;
    if (!type) {
       return null;
    }

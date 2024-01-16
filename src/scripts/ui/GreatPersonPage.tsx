@@ -25,7 +25,7 @@ export function GreatPersonPage(): React.ReactNode {
          <div className="window-body">
             <button
                className="w100"
-               onClick={() => Singleton().routeTo(TilePage, { xy: Singleton().buildings.Headquarter.xy })}
+               onClick={() => Singleton().routeTo(TilePage, { xy: Singleton().buildings.Headquarter.tile })}
             >
                <div className="row jcc">
                   <div className="m-icon" style={{ margin: "0 5px 0 -5px", fontSize: "18px" }}>

@@ -95,6 +95,16 @@ export function firstKeyOf<T extends {}>(obj: T | undefined) {
    }
    return null;
 }
+// eslint-disable-next-line @typescript-eslint/ban-types
+export function mFirstKeyOf<K, V>(obj: Map<K, V> | undefined): K | null {
+   if (!obj) {
+      return null;
+   }
+   for (const key of obj) {
+      return key[0];
+   }
+   return null;
+}
 
 export function firstValueOf<T extends {}>(obj: T | undefined) {
    for (const key in obj) {
@@ -115,7 +125,6 @@ export function anyOf<T extends {}>(
    return false;
 }
 
-// eslint-disable-next-line @typescript-eslint/ban-types
 export function reduceOf<T extends {}, K>(
    obj: T | undefined,
    func: (prev: K, k: keyof T, v: NonNullable<T[keyof T]>) => K,
@@ -130,6 +139,14 @@ export function reduceOf<T extends {}, K>(
    return result;
 }
 
+export function mReduceOf<T, V, K>(obj: Map<T, V>, func: (prev: K, k: T, v: V) => K, initial: K): K {
+   let result = initial;
+   for (const [key, value] of obj) {
+      result = func(result, key, value);
+   }
+   return result;
+}
+
 export function safeAdd<T extends string>(obj: Partial<Record<T, number>>, key: T, valueToAdd: number): void {
    if (!obj[key]) {
       obj[key] = 0;
@@ -137,7 +154,7 @@ export function safeAdd<T extends string>(obj: Partial<Record<T, number>>, key: 
    obj[key]! += valueToAdd;
 }
 
-export function mapSafeAdd<T extends string>(obj: Map<T, number>, key: T, valueToAdd: number): void {
+export function mapSafeAdd<T>(obj: Map<T, number>, key: T, valueToAdd: number): void {
    const v = obj.get(key);
    if (v) {
       obj.set(key, v + valueToAdd);
@@ -153,7 +170,7 @@ export function safePush<T extends string, K>(obj: Partial<Record<T, K[]>>, key:
    obj[key]!.push(valueToPush);
 }
 
-export function mapSafePush<T extends string, K>(obj: Map<T, K[]>, key: T, valueToPush: K): void {
+export function mapSafePush<T, K>(obj: Map<T, K[]>, key: T, valueToPush: K): void {
    const v = obj.get(key);
    if (v) {
       v.push(valueToPush);
@@ -172,6 +189,24 @@ export function mapOf<K extends string, V, T>(
       return result;
    }
    forEach(obj, (k, v) => {
+      result.push(func(k, v));
+   });
+   if (result.length === 0) {
+      return ifEmpty();
+   }
+   return result;
+}
+
+export function mMapOf<K, V, T>(
+   obj: Map<K, V> | undefined | null,
+   func: (key: K, value: V) => T,
+   ifEmpty: () => T[] = () => [],
+): T[] {
+   const result: T[] = [];
+   if (!obj) {
+      return result;
+   }
+   obj.forEach((v, k) => {
       result.push(func(k, v));
    });
    if (result.length === 0) {
@@ -208,6 +243,16 @@ export function filterOf<K extends string, V>(
    return result;
 }
 
+export function mFilterOf<K, V>(obj: Map<K, V>, func: (key: K, value: V) => boolean): Map<K, V> {
+   const result: Map<K, V> = new Map();
+   obj.forEach((v, k) => {
+      if (func(k, v)) {
+         result.set(k, v);
+      }
+   });
+   return result;
+}
+
 export function jsxMapOf<K extends string, V>(
    obj: Partial<Record<K, V>> | undefined,
    func: (key: K, value: V) => JSX.Element[] | JSX.Element | null,
@@ -215,6 +260,28 @@ export function jsxMapOf<K extends string, V>(
 ): JSX.Element[] | JSX.Element | null {
    const result: JSX.Element[] = [];
    forEach(obj, (k, v) => {
+      const ele = func(k, v);
+      if (ele) {
+         if (Array.isArray(ele)) {
+            ele.forEach((e) => result.push(e));
+         } else {
+            result.push(ele);
+         }
+      }
+   });
+   if (result.length === 0) {
+      return ifEmpty();
+   }
+   return result;
+}
+
+export function jsxMMapOf<K, V>(
+   obj: Map<K, V> | undefined,
+   func: (key: K, value: V) => JSX.Element[] | JSX.Element | null,
+   ifEmpty: () => JSX.Element | null = () => null,
+): JSX.Element[] | JSX.Element | null {
+   const result: JSX.Element[] = [];
+   obj?.forEach((v, k) => {
       const ele = func(k, v);
       if (ele) {
          if (Array.isArray(ele)) {
@@ -243,6 +310,14 @@ export function pointToXy(point: IPointData): string {
    return xy;
 }
 
+export function pointToTile(point: IPointData): Tile {
+   return (point.x << 16) + point.y;
+}
+
+export function tileToPoint(tile: Tile): IPointData {
+   return { x: (tile >> 16) & 0xffff, y: tile & 0xffff };
+}
+
 export function sizeOf(obj: any): number {
    if (typeof obj !== "object") {
       return 0;
@@ -263,10 +338,10 @@ export function xyToTile(xy: string): Tile {
    return tile;
 }
 
-const xyHash: Map<string, number> = new Map();
+const xyHash: Map<Tile, number> = new Map();
 let xyCounter = 0;
 
-export function xyToHash(xy: string): number {
+export function tileToHash(xy: Tile): number {
    let cached = xyHash.get(xy);
    if (!cached) {
       cached = xyCounter++;
@@ -595,4 +670,18 @@ export function base64ToBytes(base64: string): Uint8Array {
 export function bytesToBase64(bytes: Uint8Array): string {
    const binString = String.fromCodePoint(...bytes);
    return btoa(binString);
+}
+
+export function filterInPlace<T>(a: T[], condition: (v: T, i: number, array: T[]) => boolean): T[] {
+   let i = 0;
+   let j = 0;
+
+   while (i < a.length) {
+      const val = a[i];
+      if (condition(val, i, a)) a[j++] = val;
+      i++;
+   }
+
+   a.length = j;
+   return a;
 }

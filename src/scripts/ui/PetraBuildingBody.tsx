@@ -13,7 +13,7 @@ import { ProgressBarComponent } from "./ProgressBarComponent";
 import { WarningComponent } from "./WarningComponent";
 
 export function PetraBuildingBody({ gameState, xy }: IBuildingComponentProps): React.ReactNode {
-   const building = gameState.tiles[xy].building as IPetraBuildingData;
+   const building = gameState.tiles.get(xy)?.building as IPetraBuildingData;
    if (!building || building.type !== "Petra") {
       return null;
    }

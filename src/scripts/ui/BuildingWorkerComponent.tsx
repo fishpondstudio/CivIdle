@@ -19,7 +19,7 @@ import { FormatNumber, fmtNumber } from "./HelperComponents";
 
 export function BuildingWorkerComponent({ gameState, xy }: IBuildingComponentProps): React.ReactNode {
    const workersRequired = getWorkersFor(xy, { exclude: { Worker: 1 } }, gameState);
-   const building = gameState.tiles[xy].building;
+   const building = gameState.tiles.get(xy)?.building;
    if (building == null) {
       return null;
    }
@@ -40,14 +40,13 @@ export function BuildingWorkerComponent({ gameState, xy }: IBuildingComponentPro
                         <summary className="row">
                            <div className="f1">{t(L.WorkersRequiredInput)}</div>
                            <div className="text-strong">
-                              {gameState.transportation[xy]?.reduce(
-                                 (prev, curr) => prev + curr.currentFuelAmount,
-                                 0,
-                              ) ?? 0}
+                              {gameState.transportation
+                                 .get(xy)
+                                 ?.reduce((prev, curr) => prev + curr.currentFuelAmount, 0) ?? 0}
                            </div>
                         </summary>
                         <ul>
-                           {gameState.transportation[xy]?.map((v) => {
+                           {gameState.transportation.get(xy)?.map((v) => {
                               return (
                                  <li className="row" key={v.id}>
                                     <div className="f1">
@@ -168,6 +167,7 @@ export function BuildingWorkerComponent({ gameState, xy }: IBuildingComponentPro
                                  return null;
                               }
                               return (
+                                 // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
                                  <li key={idx} className="row">
                                     <div className="f1">{m.source}</div>
                                     <div>{m.worker}</div>

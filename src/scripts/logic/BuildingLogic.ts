@@ -9,13 +9,15 @@ import {
    isEmpty,
    isNullOrUndefined,
    keysOf,
+   mReduceOf,
    mapSafeAdd,
+   mapSafePush,
    reduceOf,
    safeAdd,
-   safePush,
    sizeOf,
    sum,
-   xyToPoint,
+   tileToPoint,
+   type Tile,
 } from "../utilities/Helper";
 import { srand } from "../utilities/Random";
 import type { Textures } from "../utilities/SceneManager";
@@ -59,7 +61,7 @@ export function getTileTexture(r: Resource, textures: Textures) {
    return textures[`Tile${r}`];
 }
 
-export function totalMultiplierFor(xy: string, type: keyof Multiplier, base: number, gs: GameState): number {
+export function totalMultiplierFor(xy: Tile, type: keyof Multiplier, base: number, gs: GameState): number {
    let result = base;
    forEachMultiplier(
       xy,
@@ -72,12 +74,12 @@ export function totalMultiplierFor(xy: string, type: keyof Multiplier, base: num
 }
 
 function forEachMultiplier(
-   xy: string,
+   xy: Tile,
    func: (m: MultiplierWithSource) => void,
    gs: GameState,
 ): MultiplierWithSource[] {
    const result: MultiplierWithSource[] = [];
-   const b = gs.tiles[xy].building;
+   const b = gs.tiles.get(xy)?.building;
    Tick.current.tileMultipliers.get(xy)?.forEach((m) => func(m));
    if (b) {
       Tick.current.buildingMultipliers.get(b.type)?.forEach((m) => func(m));
@@ -86,7 +88,7 @@ function forEachMultiplier(
    return result;
 }
 
-export function getMultipliersFor(xy: string, gs: GameState): MultiplierWithSource[] {
+export function getMultipliersFor(xy: Tile, gs: GameState): MultiplierWithSource[] {
    const result: MultiplierWithSource[] = [];
    forEachMultiplier(xy, (m) => result.push(m), gs);
    return result;
@@ -156,7 +158,7 @@ interface IWorkerRequirement {
 }
 
 export function getWorkersFor(
-   xy: string,
+   xy: Tile,
    filter: { include: Partial<Record<Resource, number>> } | { exclude: Partial<Record<Resource, number>> },
    gs: GameState,
 ): IWorkerRequirement {
@@ -165,7 +167,7 @@ export function getWorkersFor(
       multiplier: 1,
       output: 0,
    };
-   const b = gs.tiles[xy].building;
+   const b = gs.tiles.get(xy)?.building;
    if (b) {
       forEach(getBuildingIO(xy, "output", IOCalculation.Capacity, gs), (k, v) => {
          if ("include" in filter && k in filter.include) {
@@ -183,7 +185,7 @@ export function getWorkersFor(
 }
 
 export function checkBuildingMax(k: Building, gs: GameState): boolean {
-   const buildingCount = reduceOf(
+   const buildingCount = mReduceOf(
       gs.tiles,
       (prev, _xy, tile) => prev + (tile.building?.type === k ? 1 : 0),
       0,
@@ -205,11 +207,11 @@ interface IStorageResult {
 // 1 hour
 const STORAGE_TO_PRODUCTION = 3600;
 
-export function getStorageFor(xy: string, gs: GameState): IStorageResult {
+export function getStorageFor(xy: Tile, gs: GameState): IStorageResult {
    const accumulate = (prev: number, k: Resource, v: number): number => {
       return isTransportable(k) ? prev + v : prev;
    };
-   const building = gs.tiles[xy].building;
+   const building = gs.tiles.get(xy)?.building;
    const used = reduceOf(building?.resources, accumulate, 0);
    let multiplier = totalMultiplierFor(xy, "storage", 1, gs);
 
@@ -237,7 +239,7 @@ export function getStorageFor(xy: string, gs: GameState): IStorageResult {
       case "StPetersBasilica": {
          let count = 0;
          getBuildingsThatProduce("Faith").forEach((b) => {
-            forEach(getBuildingsByType(b, gs), (xy, tile) => {
+            getBuildingsByType(b, gs)?.forEach((tile, xy) => {
                if (tile.building.status === "completed") {
                   count += tile.building.level;
                }
@@ -280,14 +282,14 @@ export function addWorkers(res: Resource, amount: number): void {
    safeAdd(Tick.next.workersAvailable, res, amount);
 }
 
-export function useWorkers(res: Resource, amount: number, xy: string | null): void {
+export function useWorkers(res: Resource, amount: number, xy: Tile | null): void {
    if (Config.Resource[res].canStore) {
       console.error("`useWorkers` can only be called with non-transportable resource!");
       return;
    }
    // Normally, we write to Tick.next and read from Tick.current. This is the only exception!
    safeAdd(Tick.current.workersUsed, res, amount);
-   if (!xy) {
+   if (isNullOrUndefined(xy)) {
       return;
    }
    switch (res) {
@@ -312,8 +314,8 @@ export function getResourceName(r: Resource): string {
    return Config.Resource[r].name();
 }
 
-export function getBuildingName(xy: string, gs: GameState): string {
-   const type = gs.tiles[xy].building?.type;
+export function getBuildingName(xy: Tile, gs: GameState): string {
+   const type = gs.tiles.get(xy)?.building?.type;
    if (!type) {
       return "";
    }
@@ -343,16 +345,16 @@ export function addTransportation(
    amount: number,
    fuelResource: Resource,
    fuelAmount: number,
-   fromXy: string,
-   toXy: string,
+   fromXy: Tile,
+   toXy: Tile,
    gs: GameState,
 ): void {
-   const fromGrid = xyToPoint(fromXy);
+   const fromGrid = tileToPoint(fromXy);
    const fromPosition = Singleton().grid.gridToPosition(fromGrid);
-   const toGrid = xyToPoint(toXy);
+   const toGrid = tileToPoint(toXy);
    const toPosition = Singleton().grid.gridToPosition(toGrid);
    useWorkers(fuelResource, fuelAmount, null);
-   safePush(gs.transportation, toXy, {
+   mapSafePush(gs.transportation, toXy, {
       id: ++gs.transportId,
       fromXy,
       toXy,
@@ -490,8 +492,7 @@ export function getCurrentPriority(building: IBuildingData): number {
 
 export function getTotalBuildingUpgrades(gs: GameState): number {
    let result = 0;
-
-   forEach(getXyBuildings(gs), (xy, building) => {
+   getXyBuildings(gs).forEach((building) => {
       if (!isSpecialBuilding(building.type)) {
          result += building.level;
       }
@@ -505,8 +506,8 @@ interface BuildingPercentageResult {
    cost: PartialTabulate<Resource>;
 }
 
-export function getBuildingPercentage(xy: string, gs: GameState): BuildingPercentageResult {
-   const building = gs.tiles[xy]?.building;
+export function getBuildingPercentage(xy: Tile, gs: GameState): BuildingPercentageResult {
+   const building = gs.tiles.get(xy)?.building;
    if (!building) {
       return { percent: 0, secondsLeft: Infinity, cost: {} };
    }
@@ -589,7 +590,7 @@ export function getWarehouseIdleCapacity(warehouse: IWarehouseBuildingData): num
 
 export function getBuilderCapacity(
    building: IHaveTypeAndLevel,
-   xy: string,
+   xy: Tile,
    gs: GameState,
 ): { multiplier: number; base: number; total: number } {
    const builder =
@@ -619,19 +620,19 @@ export function applyToAllBuildings<T extends IBuildingData>(
    getOptions: (b: IBuildingData) => Partial<T>,
    gs: GameState,
 ) {
-   forEach(getBuildingsByType(building, gs), (xy, tile) => {
+   getBuildingsByType(building, gs)?.forEach((tile, xy) => {
       Object.assign(tile.building, getOptions(tile.building));
    });
 }
 
-export function getMarketPrice(resource: Resource, xy: string, gs: GameState): number {
+export function getMarketPrice(resource: Resource, xy: Tile, gs: GameState): number {
    const rand = srand(gs.lastPriceUpdated + xy + resource);
    const fluctuation = 0.75 + rand() * 0.5;
    return (Config.ResourcePrice[resource] ?? 0) * fluctuation;
 }
 
-export function getAvailableResource(xy: string, res: Resource, gs: GameState): number {
-   const building = getXyBuildings(gs)[xy];
+export function getAvailableResource(xy: Tile, res: Resource, gs: GameState): number {
+   const building = getXyBuildings(gs).get(xy);
 
    if (!building) {
       return 0;
@@ -664,9 +665,10 @@ export function getAvailableResource(xy: string, res: Resource, gs: GameState): 
    return building.resources[res]!;
 }
 
-export function exploreTile(xy: string, gs: GameState): void {
-   if (!gs.tiles[xy].explored) {
-      gs.tiles[xy].explored = true;
+export function exploreTile(xy: Tile, gs: GameState): void {
+   const tile = gs.tiles.get(xy);
+   if (tile && !tile.explored) {
+      tile.explored = true;
       onTileExplored(xy, gs);
    }
 }
@@ -703,8 +705,8 @@ export const ElectrificationStatus = {
 
 export type ElectrificationStatus = keyof typeof ElectrificationStatus;
 
-export function getElectrificationStatus(xy: string, gs: GameState): ElectrificationStatus {
-   const building = gs.tiles[xy].building;
+export function getElectrificationStatus(xy: Tile, gs: GameState): ElectrificationStatus {
+   const building = gs.tiles.get(xy)?.building;
    if (!building || !canBeElectrified(building.type)) {
       return "NotActive";
    }

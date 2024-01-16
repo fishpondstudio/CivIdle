@@ -1,41 +1,41 @@
 import type { IPointData } from "pixi.js";
 import { BUILDING_DEFAULT_VISION } from "../definitions/BuildingDefinitions";
 import type { Grid } from "../scenes/Grid";
-import { forEach, keysOf, pointToXy, xyToPoint } from "../utilities/Helper";
+import { pointToTile, tileToPoint, type Tile } from "../utilities/Helper";
 import { v2 } from "../utilities/Vector2";
 import { exploreTile, isNaturalWonder } from "./BuildingLogic";
 import { Config } from "./Config";
 import type { GameState } from "./GameState";
 import type { ITileData } from "./Tile";
 
-export function ensureTileFogOfWar(xy: string, gameState: GameState, grid: Grid): string[] {
-   const tile = gameState.tiles[xy];
+export function ensureTileFogOfWar(xy: Tile, gameState: GameState, grid: Grid): Tile[] {
+   const tile = gameState.tiles.get(xy);
    const building = tile?.building;
    if (!building || isNaturalWonder(building.type)) {
       return [];
    }
-   const result: Record<string, true> = {};
+   const result: Set<Tile> = new Set();
    exploreTile(xy, gameState);
-   result[xy] = true;
-   const point = xyToPoint(xy);
+   result.add(xy);
+   const point = tileToPoint(xy);
    let targets = [point];
    for (let i = 0; i < (Config.Building[building.type]?.vision ?? BUILDING_DEFAULT_VISION); i++) {
       const newTargets: IPointData[] = [];
       targets.forEach((t) => {
          const neighbors = grid.getNeighbors(t);
          neighbors.forEach((n) => {
-            const xy = pointToXy(n);
-            const tile = gameState.tiles[xy];
+            const xy = pointToTile(n);
+            const tile = gameState.tiles.get(xy);
             if (tile) {
                exploreTile(xy, gameState);
-               result[xy] = true;
+               result.add(xy);
                newTargets.push(n);
             }
          });
       });
       targets = newTargets;
    }
-   return keysOf(result);
+   return Array.from(result.values());
 }
 
 export function findNearest(
@@ -45,10 +45,10 @@ export function findNearest(
    gs: GameState,
 ): ITileData | null {
    const position = grid.gridToPosition(target);
-   const targetXp = pointToXy(target);
+   const targetXp = pointToTile(target);
    let minDistSqr = Infinity;
    let tile: ITileData | null = null;
-   forEach(gs.tiles, (xy, t) => {
+   gs.tiles.forEach((t, xy) => {
       if (!predicate(t)) {
          return;
       }
@@ -56,7 +56,7 @@ export function findNearest(
       if (xy === targetXp) {
          return;
       }
-      const distSqr = v2(grid.gridToPosition(xyToPoint(xy)))
+      const distSqr = v2(grid.gridToPosition(tileToPoint(xy)))
          .subtractSelf(position)
          .lengthSqr();
       if (distSqr < minDistSqr) {

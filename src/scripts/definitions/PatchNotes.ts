@@ -5,6 +5,16 @@ interface PatchNote {
 
 export const PatchNotes: PatchNote[] = [
    {
+      version: "0.1.111",
+      content: [
+         [
+            "QoL",
+            "This patch contains a significant performance improvement. The save data will be automatically migrated but you might want to take a backup first",
+         ],
+         ["Bugfix", "Fix Not Producing Buildings on the resource panel does not work"],
+      ],
+   },
+   {
       version: "0.1.110",
       content: [
          ["QoL", "Now the map will show the trade route when you click on a player's tile"],

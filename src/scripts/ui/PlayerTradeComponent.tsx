@@ -21,7 +21,7 @@ import { FormatNumber } from "./HelperComponents";
 import { WarningComponent } from "./WarningComponent";
 
 export function PlayerTradeComponent({ gameState, xy }: IBuildingComponentProps): React.ReactNode {
-   const building = gameState.tiles[xy].building;
+   const building = gameState.tiles.get(xy)?.building;
    if (!building) {
       return null;
    }
@@ -135,7 +135,7 @@ function PendingClaimComponent({ gameState, xy }: IBuildingComponentProps) {
                               const { total, used } = getStorageFor(xy, gameState);
                               if (total - used >= trade.amount) {
                                  await client.claimTrade(trade.id).then(setPendingClaims);
-                                 const building = gameState.tiles[xy].building;
+                                 const building = gameState.tiles.get(xy)?.building;
                                  if (building) {
                                     playClick();
                                     safeAdd(building.resources, trade.resource, trade.amount);

@@ -13,7 +13,7 @@ import { ProgressBarComponent } from "./ProgressBarComponent";
 
 export function BuildingStorageComponent({ gameState, xy }: IBuildingComponentProps): React.ReactNode {
    const storage = getStorageFor(xy, gameState);
-   const building = gameState.tiles[xy].building;
+   const building = gameState.tiles.get(xy)?.building;
    if (building == null || !Number.isFinite(storage.total) || storage.total <= 0) {
       return null;
    }
@@ -62,6 +62,7 @@ export function BuildingStorageComponent({ gameState, xy }: IBuildingComponentPr
                               return null;
                            }
                            return (
+                              // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
                               <li key={idx} className="row">
                                  <div className="f1">{m.source}</div>
                                  <div>{m.storage}</div>

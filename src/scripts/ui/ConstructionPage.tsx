@@ -27,7 +27,7 @@ export function ConstructionPage({ tile }: { tile: ITileData }): React.ReactNode
          </div>
          <MenuComponent />
          <div className="window-body">
-            <BuildingConstructionProgressComponent xy={tile.xy} gameState={gs} />
+            <BuildingConstructionProgressComponent xy={tile.tile} gameState={gs} />
             <fieldset>
                <legend>
                   {t(L.ConstructionPriority)}: {getConstructionPriority(building.priority)}
@@ -64,7 +64,7 @@ export function ConstructionPage({ tile }: { tile: ITileData }): React.ReactNode
                      className="f1"
                      onClick={() => {
                         delete tile.building;
-                        Singleton().sceneManager.getCurrent(WorldScene)?.resetTile(tile.xy);
+                        Singleton().sceneManager.getCurrent(WorldScene)?.resetTile(tile.tile);
                         notifyGameStateUpdate();
                      }}
                   >

@@ -9,12 +9,13 @@ import { client, usePlayerMap } from "../rpc/RPCClient";
 import { findPath, findUserOnMap, getMyMapXy } from "../scenes/PathFinder";
 import {
    clamp,
-   firstKeyOf,
    formatPercent,
-   jsxMapOf,
+   jsxMMapOf,
+   mFirstKeyOf,
    pointToXy,
    safeAdd,
    xyToPoint,
+   type Tile,
 } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
 import { playError, playKaching } from "../visuals/Sound";
@@ -22,7 +23,7 @@ import { hideModal, showToast } from "./GlobalModal";
 import { FormatNumber } from "./HelperComponents";
 import { WarningComponent } from "./WarningComponent";
 
-export function FillPlayerTradeModal({ trade, xy }: { trade: IClientTrade; xy?: string }): React.ReactNode {
+export function FillPlayerTradeModal({ trade, xy }: { trade: IClientTrade; xy?: Tile }): React.ReactNode {
    const [tiles, setTiles] = useState<string[]>([]);
    const map = usePlayerMap();
    const myXy = getMyMapXy();
@@ -49,8 +50,8 @@ export function FillPlayerTradeModal({ trade, xy }: { trade: IClientTrade; xy?: 
 
    const gs = useGameState();
    const allTradeBuildings = Tick.current.playerTradeBuildings;
-   const [delivery, setDelivery] = useState<string>(xy ? xy : firstKeyOf(allTradeBuildings)!);
-   const maxAmount = allTradeBuildings[delivery].resources[trade.buyResource] ?? 0;
+   const [delivery, setDelivery] = useState<Tile>(xy ? xy : mFirstKeyOf(allTradeBuildings)!);
+   const maxAmount = allTradeBuildings.get(delivery)?.resources[trade.buyResource] ?? 0;
    const [fillAmount, setFillAmount] = useState(Math.min(maxAmount, trade.buyAmount));
    const percentage = fillAmount / trade.buyAmount;
    const isPercentageValid = percentage > 0 && percentage <= 1;
@@ -89,7 +90,7 @@ export function FillPlayerTradeModal({ trade, xy }: { trade: IClientTrade; xy?: 
                         <th className="text-right">{Config.Resource[trade.buyResource].name()}</th>
                         <th className="text-right">{t(L.StorageLeft)}</th>
                      </tr>
-                     {jsxMapOf(allTradeBuildings, (xy, building) => {
+                     {jsxMMapOf(allTradeBuildings, (xy, building) => {
                         const storage = getStorageFor(xy, gs);
                         const uniqueId = `tile_${xy}`;
                         return (
@@ -108,7 +109,7 @@ export function FillPlayerTradeModal({ trade, xy }: { trade: IClientTrade; xy?: 
                               </td>
                               <td className="text-right">
                                  <FormatNumber
-                                    value={allTradeBuildings[xy].resources[trade.buyResource] ?? 0}
+                                    value={allTradeBuildings.get(xy)?.resources[trade.buyResource] ?? 0}
                                  />
                               </td>
                               <td className="text-right">
@@ -223,12 +224,12 @@ export function FillPlayerTradeModal({ trade, xy }: { trade: IClientTrade; xy?: 
                            path: tiles,
                         });
                         safeAdd(
-                           allTradeBuildings[delivery].resources,
+                           allTradeBuildings.get(delivery)!.resources,
                            trade.buyResource,
                            -trade.buyAmount * percentage,
                         );
                         safeAdd(
-                           allTradeBuildings[delivery].resources,
+                           allTradeBuildings.get(delivery)!.resources,
                            trade.sellResource,
                            trade.sellAmount * percentage,
                         );

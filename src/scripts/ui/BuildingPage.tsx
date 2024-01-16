@@ -4,6 +4,7 @@ import type { Building } from "../definitions/BuildingDefinitions";
 import { Config } from "../logic/Config";
 import type { GameState } from "../logic/GameState";
 import type { ITileData } from "../logic/Tile";
+import type { Tile } from "../utilities/Helper";
 import { Singleton } from "../utilities/Singleton";
 import { DefaultBuildingBody } from "./DefaultBuildingBody";
 import { HeadquarterBuildingBody } from "./HeadquarterBuildingBody";
@@ -43,12 +44,12 @@ export function BuildingPage({ tile }: { tile: ITileData }): React.ReactNode {
             <div className="title-bar-text">{definition.name()}</div>
          </div>
          <MenuComponent />
-         <Body gameState={gs} xy={tile.xy} />
+         <Body gameState={gs} xy={tile.tile} />
       </div>
    );
 }
 
 export interface IBuildingComponentProps {
    gameState: GameState;
-   xy: string;
+   xy: Tile;
 }

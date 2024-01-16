@@ -18,7 +18,7 @@ import { BuildingWorkerComponent } from "./BuildingWorkerComponent";
 import { FormatNumber } from "./HelperComponents";
 
 export function MarketBuildingBody({ gameState, xy }: IBuildingComponentProps): React.ReactNode {
-   const building = gameState.tiles[xy].building as IMarketBuildingData;
+   const building = gameState.tiles.get(xy)?.building as IMarketBuildingData;
    if (building == null || !building.sellResources) {
       return null;
    }

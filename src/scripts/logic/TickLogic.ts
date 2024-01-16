@@ -2,6 +2,7 @@ import type { IPointData } from "pixi.js";
 import type { Building } from "../definitions/BuildingDefinitions";
 import type { Resource } from "../definitions/ResourceDefinitions";
 import type { PartialSet, PartialTabulate } from "../definitions/TypeDefinitions";
+import type { Tile } from "../utilities/Helper";
 import { makeObservableHook } from "../utilities/Hook";
 import type { RequireAtLeastOne } from "../utilities/Type";
 import { TypedEvent } from "../utilities/TypedEvent";
@@ -11,19 +12,19 @@ import type { IBuildingData } from "./Tile";
 
 interface ITickData {
    buildingMultipliers: Map<Building, MultiplierWithSource[]>;
-   tileMultipliers: Map<string, MultiplierWithSource[]>;
+   tileMultipliers: Map<Tile, MultiplierWithSource[]>;
    unlockedBuildings: PartialSet<Building>;
    workersAvailable: PartialTabulate<Resource>;
    happiness: ReturnType<typeof calculateHappiness> | null;
    workersUsed: PartialTabulate<Resource>;
-   workersAssignment: Map<string, number>;
-   electrified: Map<string, number>;
-   resourcesByXy: Partial<Record<Resource, string[]>>;
+   workersAssignment: Map<Tile, number>;
+   electrified: Map<Tile, number>;
+   resourcesByXy: Partial<Record<Resource, Tile[]>>;
    resourcesByGrid: Partial<Record<Resource, IPointData[]>>;
-   playerTradeBuildings: Record<string, IBuildingData>;
+   playerTradeBuildings: Map<Tile, IBuildingData>;
    globalMultipliers: GlobalMultipliers;
-   notProducingReasons: Map<string, NotProducingReason>;
-   specialBuildings: Partial<Record<Building, string>>;
+   notProducingReasons: Map<Tile, NotProducingReason>;
+   specialBuildings: Partial<Record<Building, Tile>>;
    totalValue: number;
 }
 
@@ -41,7 +42,7 @@ export function EmptyTickData(): ITickData {
       resourcesByGrid: {},
       globalMultipliers: new GlobalMultipliers(),
       notProducingReasons: new Map(),
-      playerTradeBuildings: {},
+      playerTradeBuildings: new Map(),
       specialBuildings: {},
       totalValue: 0,
    };

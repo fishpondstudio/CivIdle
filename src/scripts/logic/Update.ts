@@ -8,18 +8,20 @@ import { WorldScene } from "../scenes/WorldScene";
 import {
    HOUR,
    clamp,
+   filterInPlace,
    filterOf,
    forEach,
    hasFlag,
    isEmpty,
    keysOf,
    mapSafePush,
-   pointToXy,
+   pointToTile,
    safeAdd,
    safePush,
    shuffle,
    sizeOf,
-   xyToPoint,
+   tileToPoint,
+   type Tile,
 } from "../utilities/Helper";
 import { srand } from "../utilities/Random";
 import { Singleton } from "../utilities/Singleton";
@@ -83,12 +85,11 @@ export function tickEveryFrame(gs: GameState, dt: number) {
    timeSinceLastTick = Math.min(timeSinceLastTick + dt, 1);
    const worldScene = Singleton().sceneManager.getCurrent(WorldScene);
    if (worldScene) {
-      for (const xy in gs.tiles) {
-         const tile = gs.tiles[xy];
+      gs.tiles.forEach((tile, xy) => {
          if (tile.building != null) {
             worldScene.getTile(xy)?.update(gs, dt);
          }
-      }
+      });
       worldScene.updateTransportVisual(gs, timeSinceLastTick);
    }
 }
@@ -165,12 +166,12 @@ function tickTransportations(gs: GameState) {
    const mah = Tick.current.specialBuildings.MausoleumAtHalicarnassus
       ? Singleton().grid.xyToPosition(Tick.current.specialBuildings.MausoleumAtHalicarnassus)
       : null;
-   forEach(gs.transportation, (xy, queue) => {
-      gs.transportation[xy] = queue.filter((transport) => {
+   gs.transportation.forEach((queue) => {
+      filterInPlace(queue, (transport) => {
          tickTransportation(transport, mah);
          // Has arrived!
          if (transport.ticksSpent >= transport.ticksRequired) {
-            const building = gs.tiles[transport.toXy].building;
+            const building = gs.tiles.get(transport.toXy)?.building;
             if (building) {
                safeAdd(building.resources, transport.resource, transport.amount);
             }
@@ -216,23 +217,19 @@ function isBuildingOrUpgrading(b: IBuildingData): boolean {
 }
 
 function tickTiles(gs: GameState, offline: boolean) {
-   const tiles = keysOf(getXyBuildings(gs)).sort((a, b) => {
-      const buildingA = gs.tiles[a].building!;
-      const buildingB = gs.tiles[b].building!;
-      const diff = getCurrentPriority(buildingB) - getCurrentPriority(buildingA);
-      if (diff !== 0) {
-         return diff;
-      }
-      return (Config.BuildingTier[buildingA.type] ?? 0) - (Config.BuildingTier[buildingB.type] ?? 0);
-   });
-
-   for (const tile of tiles) {
-      tickTile(tile, gs, offline);
-   }
+   Array.from(getXyBuildings(gs).entries())
+      .sort(([a, buildingA], [b, buildingB]) => {
+         const diff = getCurrentPriority(buildingB) - getCurrentPriority(buildingA);
+         if (diff !== 0) {
+            return diff;
+         }
+         return (Config.BuildingTier[buildingA.type] ?? 0) - (Config.BuildingTier[buildingB.type] ?? 0);
+      })
+      .forEach(([tile, _]) => tickTile(tile, gs, offline));
 }
 
-function tickTile(xy: string, gs: GameState, offline: boolean): void {
-   const tile = gs.tiles[xy];
+function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
+   const tile = gs.tiles.get(xy)!;
    const building = tile.building!;
    if (building.status === "paused") {
       return;
@@ -298,7 +295,7 @@ function tickTile(xy: string, gs: GameState, offline: boolean): void {
    }
 
    if (building.type === "Caravansary") {
-      Tick.next.playerTradeBuildings[xy] = building;
+      Tick.next.playerTradeBuildings.set(xy, building);
    }
 
    if (isSpecialBuilding(building.type)) {
@@ -318,7 +315,7 @@ function tickTile(xy: string, gs: GameState, offline: boolean): void {
       }
       Tick.next.totalValue += Config.Resource[res].canPrice ? (Config.ResourcePrice[res] ?? 0) * amount : 0;
       safePush(Tick.next.resourcesByXy, res, xy);
-      safePush(Tick.next.resourcesByGrid, res, xyToPoint(xy));
+      safePush(Tick.next.resourcesByGrid, res, tileToPoint(xy));
    });
 
    const requiredDeposits = Config.Building[building.type].deposit;
@@ -487,7 +484,7 @@ function tickTile(xy: string, gs: GameState, offline: boolean): void {
    onBuildingProductionComplete(xy, gs, offline);
 }
 
-function tickWarehouseAutopilot(warehouse: IWarehouseBuildingData, xy: string, gs: GameState): boolean {
+function tickWarehouseAutopilot(warehouse: IWarehouseBuildingData, xy: Tile, gs: GameState): boolean {
    let capacity = getWarehouseIdleCapacity(warehouse);
    let hasTransported = false;
    const transportCapacity =
@@ -506,15 +503,15 @@ function tickWarehouseAutopilot(warehouse: IWarehouseBuildingData, xy: string, g
    if (capacity <= 0) {
       return false;
    }
-   const me = xyToPoint(xy);
+   const me = tileToPoint(xy);
    const result = getStorageFullBuildings(gs).sort(
       (a, b) =>
          Singleton().grid.distance(a.x, a.y, me.x, me.y) - Singleton().grid.distance(b.x, b.y, me.x, me.y),
    );
    const buildings = getXyBuildings(gs);
    for (let i = 0; i < result.length; i++) {
-      const fromXy = pointToXy(result[i]);
-      const building = buildings[fromXy];
+      const fromXy = pointToTile(result[i]);
+      const building = buildings.get(fromXy);
       if (!building || fromXy === xy) {
          continue;
       }
@@ -528,7 +525,9 @@ function tickWarehouseAutopilot(warehouse: IWarehouseBuildingData, xy: string, g
          // Note: this is questionable. capacity are capped by transportCapacity first, without taking into account
          // the warehouse upgrade. This will result in less transports than it is. But fixing it is really complicated
          const upgradedTransportCapacity =
-            Singleton().grid.distanceXy(fromXy, xy) <= 1 ? Infinity : Math.ceil(capacity / transportCapacity);
+            Singleton().grid.distanceTile(fromXy, xy) <= 1
+               ? Infinity
+               : Math.ceil(capacity / transportCapacity);
          if (resources[candidate]! >= capacity) {
             const workers = Math.ceil(capacity / upgradedTransportCapacity);
             useWorkers("Worker", workers, xy);
@@ -553,12 +552,12 @@ export function transportResource(
    res: Resource,
    amount: number,
    workerCapacity: number,
-   targetXy: string,
+   targetXy: Tile,
    gs: GameState,
 ) {
    let amountLeft = amount;
    const grid = Singleton().grid;
-   const targetPoint = xyToPoint(targetXy);
+   const targetPoint = tileToPoint(targetXy);
    // We are out of workers, no need to run the expensive sorting!
    if (getAvailableWorkers("Worker") <= 0) {
       return;
@@ -574,8 +573,8 @@ export function transportResource(
    }
    for (let i = 0; i < sources.length; i++) {
       const point = sources[i];
-      const fromXy = pointToXy(point);
-      const building = gs.tiles[fromXy].building;
+      const fromXy = pointToTile(point);
+      const building = gs.tiles.get(fromXy)?.building;
       if (!building) {
          continue;
       }
@@ -594,8 +593,8 @@ export function transportResource(
 
       if (
          hasFeature(GameFeature.WarehouseUpgrade, gs) &&
-         (gs.tiles[fromXy].building?.type === "Warehouse" ||
-            gs.tiles[targetXy].building?.type === "Warehouse")
+         (gs.tiles.get(fromXy)?.building?.type === "Warehouse" ||
+            gs.tiles.get(targetXy)?.building?.type === "Warehouse")
       ) {
          const distance = Singleton().grid.distance(point.x, point.y, targetPoint.x, targetPoint.y);
          if (distance <= 1) {
@@ -663,15 +662,16 @@ function tickPrice(gs: GameState) {
       unlockedResources(gs),
       (res) => Config.Resource[res].canPrice && Config.Resource[res].canStore,
    );
-   forEach(getXyBuildings(gs), (xy, building) => {
+   getXyBuildings(gs).forEach((building, xy) => {
       if (building.type === "Market") {
          const market = building as IMarketBuildingData;
          if (!market.availableResources) {
             market.availableResources = {};
          }
          if (sizeOf(market.availableResources) <= 0 || forceUpdatePrice) {
-            const sell = shuffle(keysOf(resources), srand(priceId + xy));
-            const buy = shuffle(keysOf(resources), srand(priceId + xy));
+            const seed = `${priceId},${xy}`;
+            const sell = shuffle(keysOf(resources), srand(seed));
+            const buy = shuffle(keysOf(resources), srand(seed));
             let idx = 0;
             for (const res of sell) {
                while (buy[idx % buy.length] === res) {

@@ -1,4 +1,5 @@
 import { useGameState } from "../Global";
+import type { Tile } from "../utilities/Helper";
 import { isSingletonReady } from "../utilities/Singleton";
 import { BuildingPage } from "./BuildingPage";
 import { ConstructionPage } from "./ConstructionPage";
@@ -6,12 +7,12 @@ import { EmptyTilePage } from "./EmptyTilePage";
 import { UnexploredTile } from "./UnexploredTile";
 import { UpgradingPage } from "./UpgradingPage";
 
-export function TilePage({ xy }: { xy: string }): React.ReactNode {
+export function TilePage({ xy }: { xy: Tile }): React.ReactNode {
    const gameState = useGameState();
    if (!xy || !isSingletonReady()) {
       return null;
    }
-   const tile = gameState.tiles[xy];
+   const tile = gameState.tiles.get(xy);
    if (!tile?.explored) {
       return <UnexploredTile />;
    }

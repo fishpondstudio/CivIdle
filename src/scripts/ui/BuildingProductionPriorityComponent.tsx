@@ -12,7 +12,7 @@ export function BuildingProductionPriorityComponent({
    gameState,
    xy,
 }: IBuildingComponentProps): React.ReactNode {
-   const building = gameState.tiles[xy].building;
+   const building = gameState.tiles.get(xy)?.building;
    if (building == null) {
       return null;
    }

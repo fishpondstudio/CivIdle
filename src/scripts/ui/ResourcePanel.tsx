@@ -5,7 +5,6 @@ import { GameFeature, hasFeature } from "../logic/FeatureLogic";
 import { getHappinessIcon } from "../logic/HappinessLogic";
 import { getResourceAmount } from "../logic/ResourceLogic";
 import { useCurrentTick } from "../logic/TickLogic";
-import { sizeOf } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
 import { FormatNumber } from "./HelperComponents";
 
@@ -105,7 +104,7 @@ export function ResourcePanel(): React.ReactNode {
                domain_disabled
             </div>
             <div className="f1">
-               <FormatNumber value={sizeOf(tick.notProducingReasons)} />
+               <FormatNumber value={tick.notProducingReasons.size} />
             </div>
          </div>
          <div className="separator-vertical" />

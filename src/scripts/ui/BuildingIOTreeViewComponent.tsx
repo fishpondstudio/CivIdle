@@ -6,7 +6,7 @@ import type { GameState } from "../logic/GameState";
 import { getBuildingIO } from "../logic/IntraTickCache";
 import type { Multiplier } from "../logic/TickLogic";
 import { Tick } from "../logic/TickLogic";
-import { jsxMapOf } from "../utilities/Helper";
+import { jsxMapOf, type Tile } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
 import { FormatNumber } from "./HelperComponents";
 
@@ -16,7 +16,7 @@ export function BuildingIOTreeViewComponent({
    type,
 }: {
    gameState: GameState;
-   xy: string;
+   xy: Tile;
    type: keyof Pick<Multiplier, "input" | "output">;
 }): React.ReactNode {
    const data = getBuildingIO(xy, type, IOCalculation.Multiplier | IOCalculation.Capacity, gameState);
@@ -24,7 +24,7 @@ export function BuildingIOTreeViewComponent({
    return (
       <ul className="tree-view">
          {jsxMapOf(data, (k, v) => {
-            const resourceInStorage = gameState.tiles[xy].building?.resources[k] ?? 0;
+            const resourceInStorage = gameState.tiles.get(xy)?.building?.resources[k] ?? 0;
             const showWarning =
                type === "input" &&
                Tick.current.notProducingReasons.get(xy) === "NotEnoughResources" &&
@@ -69,6 +69,7 @@ export function BuildingIOTreeViewComponent({
                                  return null;
                               }
                               return (
+                                 // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
                                  <li key={idx} className="row">
                                     <div className="f1">{m.source}</div>
                                     <div>{m[type]}</div>

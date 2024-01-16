@@ -131,7 +131,7 @@ export async function startGame(
          }
          const petraOfflineTime = actualOfflineTime - offlineTime;
          if (petra) {
-            const storage = getStorageFor(petra.xy, gameState);
+            const storage = getStorageFor(petra.tile, gameState);
             if (!petra.building.resources.Warp) {
                petra.building.resources.Warp = 0;
             }
@@ -199,7 +199,7 @@ function showOfflineProductionProgress(progress: number, routeTo: RouteTo): Prom
 
 function findSpecialBuildings(gameState: GameState): ISpecialBuildings {
    const buildings: Partial<Record<Building, ITileData>> = {};
-   forEach(gameState.tiles, (_, tile) => {
+   gameState.tiles.forEach((tile) => {
       if (tile.building?.type === "Headquarter") {
          console.assert(
             buildings.Headquarter === undefined,

@@ -2,7 +2,7 @@ import type { IPointData } from "pixi.js";
 import type { Building, IBuildingDefinition } from "../definitions/BuildingDefinitions";
 import type { Deposit, Resource } from "../definitions/ResourceDefinitions";
 import type { PartialSet, PartialTabulate } from "../definitions/TypeDefinitions";
-import { forEach, safeAdd, xyToHash, xyToPoint } from "../utilities/Helper";
+import { forEach, safeAdd, tileToHash, tileToPoint, type Tile } from "../utilities/Helper";
 import { IOCalculation, totalMultiplierFor } from "./BuildingLogic";
 import { Config } from "./Config";
 import type { GameState } from "./GameState";
@@ -13,8 +13,8 @@ class IntraTickCache {
    revealedDeposits: PartialSet<Deposit> | undefined;
    unlockedBuildings: PartialSet<Building> | undefined;
    unlockedResources: PartialSet<Resource> | undefined;
-   buildingsByType: Partial<Record<Building, Record<string, Required<ITileData>>>> | undefined;
-   buildingsByXy: Partial<Record<string, IBuildingData>> | undefined;
+   buildingsByType: Map<Building, Map<Tile, Required<ITileData>>> | undefined;
+   buildingsByXy: Map<Tile, IBuildingData> | undefined;
    resourceAmount: PartialTabulate<Resource> | undefined;
    buildingIO: Map<number, Readonly<PartialTabulate<Resource>>> = new Map<
       number,
@@ -30,19 +30,19 @@ export function clearIntraTickCache(): void {
 }
 
 export function getBuildingIO(
-   xy: string,
+   xy: Tile,
    type: keyof Pick<IBuildingDefinition, "input" | "output">,
    options: IOCalculation,
    gs: GameState,
 ): Readonly<PartialTabulate<Resource>> {
    const key =
-      (xyToHash(xy) << (IOCalculation.TotalUsedBits + 1)) | (options << 1) | (type === "input" ? 1 : 0);
+      (tileToHash(xy) << (IOCalculation.TotalUsedBits + 1)) | (options << 1) | (type === "input" ? 1 : 0);
    const cached = _cache.buildingIO.get(key);
    if (cached) {
       return cached;
    }
    const result: PartialTabulate<Resource> = {};
-   const b = gs.tiles[xy].building;
+   const b = gs.tiles.get(xy)?.building;
    if (b) {
       const resources = { ...Config.Building[b.type][type] };
       if ("sellResources" in b && type === "input") {
@@ -97,29 +97,27 @@ export function getStorageFullBuildings(gs: GameState): IPointData[] {
    const result: IPointData[] = [];
    for (const [xy, reason] of Tick.current.notProducingReasons) {
       if (reason === "StorageFull") {
-         result.push(xyToPoint(xy));
+         result.push(tileToPoint(xy));
       }
    }
    _cache.storageFullBuildings = result;
    return result;
 }
 
-export function getTypeBuildings(
-   gs: GameState,
-): Partial<Record<Building, Record<string, Required<ITileData>>>> {
+export function getTypeBuildings(gs: GameState): Map<Building, Map<Tile, Required<ITileData>>> {
    if (_cache.buildingsByType) {
       return _cache.buildingsByType;
    }
-   const result: Partial<Record<Building, Record<string, Required<ITileData>>>> = {};
-   forEach(gs.tiles, (xy, tile) => {
+   const result: Map<Building, Map<Tile, Required<ITileData>>> = new Map();
+   gs.tiles.forEach((tile, xy) => {
       const type = tile.building?.type;
       if (!type) {
          return;
       }
-      if (!result[type]) {
-         result[type] = {};
+      if (!result.has(type)) {
+         result.set(type, new Map());
       }
-      result[type]![xy] = tile as Required<ITileData>;
+      result.get(type)?.set(xy, tile as Required<ITileData>);
    });
    _cache.buildingsByType = result;
    return result;
@@ -128,18 +126,18 @@ export function getTypeBuildings(
 export function getBuildingsByType(
    building: Building,
    gs: GameState,
-): Record<string, Required<ITileData>> | undefined {
-   return getTypeBuildings(gs)[building];
+): Map<Tile, Required<ITileData>> | undefined {
+   return getTypeBuildings(gs).get(building);
 }
 
-export function getXyBuildings(gs: GameState): Partial<Record<string, IBuildingData>> {
+export function getXyBuildings(gs: GameState): Map<Tile, IBuildingData> {
    if (_cache.buildingsByXy) {
       return _cache.buildingsByXy;
    }
-   const result: Partial<Record<string, IBuildingData>> = {};
-   forEach(gs.tiles, (xy, tile) => {
+   const result: Map<Tile, IBuildingData> = new Map();
+   gs.tiles.forEach((tile, xy) => {
       if (tile.building) {
-         result[xy] = tile.building;
+         result.set(xy, tile.building);
       }
    });
    _cache.buildingsByXy = result;

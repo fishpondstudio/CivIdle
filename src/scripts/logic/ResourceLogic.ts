@@ -1,7 +1,7 @@
 import type { Building } from "../definitions/BuildingDefinitions";
 import type { Deposit, Resource } from "../definitions/ResourceDefinitions";
 import type { PartialTabulate } from "../definitions/TypeDefinitions";
-import { forEach, reduceOf } from "../utilities/Helper";
+import { forEach, reduceOf, type Tile } from "../utilities/Helper";
 import { Config } from "./Config";
 import type { GameState } from "./GameState";
 import { Tick } from "./TickLogic";
@@ -9,7 +9,7 @@ import { Tick } from "./TickLogic";
 export function getResourceAmount(res: Resource, gs: GameState): number {
    return (
       Tick.current.resourcesByXy[res]?.reduce((prev, curr) => {
-         const amount = gs.tiles[curr]?.building?.resources[res];
+         const amount = gs.tiles.get(curr)?.building?.resources[res];
          if (amount && Number.isFinite(amount)) {
             return prev + amount;
          }
@@ -32,10 +32,13 @@ export function trySpendResources(resources: PartialTabulate<Resource>, gs: Game
       let amount = resources[res] ?? 0;
       const buildings = Tick.current.resourcesByXy[res] ?? [];
       buildings.sort((a, b) => {
-         return (gs.tiles[a]?.building?.resources[res] ?? 0) - (gs.tiles[b]?.building?.resources[res] ?? 0);
+         return (
+            (gs.tiles.get(a)?.building?.resources[res] ?? 0) -
+            (gs.tiles.get(b)?.building?.resources[res] ?? 0)
+         );
       });
       for (const xy of buildings) {
-         const building = gs.tiles[xy]?.building;
+         const building = gs.tiles.get(xy)?.building;
          if (!building) {
             continue;
          }
@@ -55,9 +58,9 @@ export function trySpendResources(resources: PartialTabulate<Resource>, gs: Game
    return false;
 }
 
-export function getAmountInTransit(xy: string, res: Resource, gs: GameState) {
+export function getAmountInTransit(xy: Tile, res: Resource, gs: GameState) {
    return (
-      gs.transportation[xy]?.reduce((prev, curr) => {
+      gs.transportation.get(xy)?.reduce((prev, curr) => {
          return prev + (curr.resource === res ? curr.amount : 0);
       }, 0) ?? 0
    );

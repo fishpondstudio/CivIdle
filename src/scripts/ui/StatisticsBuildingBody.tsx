@@ -9,7 +9,7 @@ import { getBuildingIO, unlockedResources } from "../logic/IntraTickCache";
 import { Tick } from "../logic/TickLogic";
 import type { IBuildingData } from "../logic/Tile";
 import { WorldScene } from "../scenes/WorldScene";
-import { forEach, formatPercent, jsxMapOf, keysOf, reduceOf, safeAdd } from "../utilities/Helper";
+import { forEach, formatPercent, jsxMMapOf, keysOf, mReduceOf, safeAdd } from "../utilities/Helper";
 import { Singleton } from "../utilities/Singleton";
 import { L, t } from "../utilities/i18n";
 import { playClick } from "../visuals/Sound";
@@ -20,7 +20,7 @@ import { FormatNumber } from "./HelperComponents";
 type Tab = "resources" | "buildings" | "transportation";
 
 export function StatisticsBuildingBody({ gameState, xy }: IBuildingComponentProps): React.ReactNode {
-   const building = gameState.tiles[xy].building as IBuildingData;
+   const building = gameState.tiles.get(xy)?.building as IBuildingData;
    if (building == null) {
       return null;
    }
@@ -81,9 +81,8 @@ function BuildingTab({ gameState }: IBuildingComponentProps): React.ReactNode {
                   </tr>
                </thead>
                <tbody>
-                  {keysOf(gameState.tiles)
-                     .flatMap((xy) => {
-                        const tile = gameState.tiles[xy];
+                  {Array.from(gameState.tiles.entries())
+                     .flatMap(([xy, tile]) => {
                         const building = tile.building;
                         return tile.explored && building ? [{ building, xy }] : [];
                      })
@@ -130,10 +129,9 @@ function BuildingTab({ gameState }: IBuildingComponentProps): React.ReactNode {
                               <td className="right">
                                  <FormatNumber
                                     value={
-                                       gameState.transportation[xy]?.reduce(
-                                          (prev, curr) => prev + curr.currentFuelAmount,
-                                          0,
-                                       ) ?? 0
+                                       gameState.transportation
+                                          .get(xy)
+                                          ?.reduce((prev, curr) => prev + curr.currentFuelAmount, 0) ?? 0
                                     }
                                  />
                               </td>
@@ -158,13 +156,13 @@ function BuildingTab({ gameState }: IBuildingComponentProps): React.ReactNode {
 
 function TransportationTab({ gameState }: IBuildingComponentProps): React.ReactNode {
    return (
-      <article role="tabpanel" className="f1 column" style={{ padding: "8px", overflow: "auto" }}>
+      <article role="tabpanel" className="f1 column" style={{ padding: "8px", overflowY: "auto" }}>
          <fieldset>
             <div className="row">
                <div className="f1">{t(L.StatisticsTransportationPercentage)}</div>
                <div className="text-strong">
                   {formatPercent(
-                     reduceOf(
+                     mReduceOf(
                         gameState.transportation,
                         (prev, k, v) => prev + v.reduce((prev, curr) => prev + curr.currentFuelAmount, 0),
                         0,
@@ -179,7 +177,7 @@ function TransportationTab({ gameState }: IBuildingComponentProps): React.ReactN
                   <tr>
                      <th></th>
                      <th>{t(L.StatisticsTransportationBuilding)}</th>
-                     <th className="right">{t(L.StatisticsTransportationResource)}</th>
+                     <th>{t(L.StatisticsTransportationResource)}</th>
                      <th className="right">{t(L.StatisticsTransportationAmount)}</th>
                      <th className="right">
                         <div className="m-icon small">group</div>
@@ -190,9 +188,9 @@ function TransportationTab({ gameState }: IBuildingComponentProps): React.ReactN
                   </tr>
                </thead>
                <tbody>
-                  {jsxMapOf(gameState.transportation, (xy, transportations) => {
+                  {jsxMMapOf(gameState.transportation, (xy, transportations) => {
                      return transportations.map((transportation, i) => {
-                        const buildingType = gameState.tiles[xy].building?.type;
+                        const buildingType = gameState.tiles.get(xy)?.building?.type;
                         return (
                            <tr key={transportation.id}>
                               <td>
@@ -233,7 +231,7 @@ function ResourcesTab({ gameState }: IBuildingComponentProps): React.ReactNode {
    const [showTheoreticalValue, setShowTheoreticalValue] = useState(true);
    const inputs: PartialTabulate<Resource> = {};
    const outputs: PartialTabulate<Resource> = {};
-   forEach(gameState.tiles, (xy, tile) => {
+   gameState.tiles.forEach((tile, xy) => {
       const input = getBuildingIO(xy, "input", IOCalculation.Multiplier | IOCalculation.Capacity, gameState);
       const output = getBuildingIO(
          xy,
@@ -302,7 +300,8 @@ function ResourcesTab({ gameState }: IBuildingComponentProps): React.ReactNode {
                                     value={
                                        Tick.current.resourcesByXy[res]?.reduce(
                                           (prev, curr) =>
-                                             prev + (gameState.tiles[curr].building?.resources?.[res] ?? 0),
+                                             prev +
+                                             (gameState.tiles.get(curr)?.building?.resources?.[res] ?? 0),
                                           0,
                                        ) ?? 0
                                     }

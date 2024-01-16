@@ -1,11 +1,11 @@
 import { SmoothGraphics } from "@pixi/graphics-smooth";
-import type { FederatedPointerEvent, IPointData, Sprite, utils } from "pixi.js";
+import type { FederatedPointerEvent, IPointData, Sprite } from "pixi.js";
 import { Color, Container, LINE_CAP, LINE_JOIN, ParticleContainer, TilingSprite } from "pixi.js";
 import { TILE_SIZE, getGameOptions, getGameState } from "../Global";
 import { GameFeature, hasFeature } from "../logic/FeatureLogic";
 import type { GameOptions, GameState } from "../logic/GameState";
 import { TilePage } from "../ui/TilePage";
-import { clamp, forEach, lerp, lookAt, pointToXy, xyToPoint } from "../utilities/Helper";
+import { clamp, lerp, lookAt, pointToTile, tileToPoint, type Tile } from "../utilities/Helper";
 import { ViewportScene } from "../utilities/SceneManager";
 import { Singleton } from "../utilities/Singleton";
 import { Vector2, v2 } from "../utilities/Vector2";
@@ -28,11 +28,11 @@ export class WorldScene extends ViewportScene {
    private _transportPool!: TransportPool;
    public tooltipPool!: TooltipPool;
    private cameraMovement: Action | null = null;
-   private readonly _tiles: utils.Dict<TileVisual> = {};
+   private readonly _tiles: Map<number, TileVisual> = new Map();
    private readonly _transport: Map<number, Sprite> = new Map();
    private _bg!: TilingSprite;
    private _graphics!: SmoothGraphics;
-   private _selectedXy: string | null = null;
+   private _selectedXy: Tile | null = null;
 
    override onLoad(): void {
       const { app, textures } = this.context;
@@ -61,8 +61,8 @@ export class WorldScene extends ViewportScene {
       Singleton().grid.drawGrid(this._graphics);
 
       Singleton().grid.forEach((grid) => {
-         const xy = pointToXy(grid);
-         this._tiles[xy] = this.viewport.addChild(new TileVisual(this, grid));
+         const xy = pointToTile(grid);
+         this._tiles.set(xy, this.viewport.addChild(new TileVisual(this, grid)));
       });
 
       this.tooltipPool = new TooltipPool(this.viewport.addChild(new Container()));
@@ -101,7 +101,7 @@ export class WorldScene extends ViewportScene {
          this.selectGrid(grid);
       });
 
-      this.selectGrid(xyToPoint(Singleton().buildings.Headquarter.xy));
+      this.selectGrid(tileToPoint(Singleton().buildings.Headquarter.tile));
    }
 
    override onResize(width: number, height: number): void {
@@ -114,7 +114,7 @@ export class WorldScene extends ViewportScene {
    }
 
    override onGameStateChanged(gameState: GameState): void {
-      forEach(this._tiles, (xy, visual) => visual.onTileDataChanged(gameState.tiles[xy]));
+      this._tiles.forEach((visual, xy) => visual.onTileDataChanged(gameState.tiles.get(xy)!));
       this.drawTransportation(gameState);
    }
 
@@ -123,10 +123,10 @@ export class WorldScene extends ViewportScene {
       this._graphics.tint = Color.shared.setValue(gameOptions.themeColors.GridColor);
       this._graphics.alpha = gameOptions.themeColors.GridAlpha;
       this._selectedGraphics.tint = Color.shared.setValue(gameOptions.themeColors.SelectedGridColor);
-      forEach(this._tiles, (xy, visual) => visual.updateDepositColor(gameOptions));
+      this._tiles.forEach((visual, xy) => visual.updateDepositColor(gameOptions));
    }
 
-   lookAtXy(xy: string) {
+   lookAtXy(xy: Tile) {
       this.cameraMovement?.stop();
       const target = this.viewport.clampCenter(Singleton().grid.xyToPosition(xy));
       this.cameraMovement = new CustomAction(
@@ -145,7 +145,7 @@ export class WorldScene extends ViewportScene {
          v2(target).subtractSelf(viewportCenter!).length() / 2000,
          Easing.InOutSine,
       ).start();
-      this.drawSelection(xyToPoint(xy));
+      this.drawSelection(tileToPoint(xy));
    }
 
    drawSelection(grid: IPointData) {
@@ -169,7 +169,7 @@ export class WorldScene extends ViewportScene {
 
    selectGrid(grid: IPointData) {
       this.drawSelection(grid);
-      const xy = pointToXy(grid);
+      const xy = pointToTile(grid);
       this._selectedXy = xy;
       Singleton().routeTo(TilePage, { xy: xy });
       const gs = getGameState();
@@ -182,8 +182,8 @@ export class WorldScene extends ViewportScene {
       if (!xy) {
          return;
       }
-      const building = gs.tiles[xy].building;
-      const grid = xyToPoint(xy);
+      const building = gs.tiles.get(xy)?.building;
+      const grid = tileToPoint(xy);
       if (building) {
          switch (building.type) {
             case "MausoleumAtHalicarnassus": {
@@ -226,9 +226,9 @@ export class WorldScene extends ViewportScene {
       }
       this._transportLines.clear();
       const lines: Record<string, true> = {};
-      gs.transportation[xy]?.forEach((t) => {
-         const fromGrid = xyToPoint(t.fromXy);
-         const toGrid = xyToPoint(t.toXy);
+      gs.transportation.get(xy)?.forEach((t) => {
+         const fromGrid = tileToPoint(t.fromXy);
+         const toGrid = tileToPoint(t.toXy);
          const key = [t.resource, (fromGrid.y - toGrid.y) / (fromGrid.x - toGrid.x)].join(",");
          if (lines[key]) {
             return;
@@ -258,13 +258,13 @@ export class WorldScene extends ViewportScene {
          });
    }
 
-   getTile(xy: string): TileVisual | undefined {
-      return this._tiles[xy];
+   getTile(xy: Tile): TileVisual | undefined {
+      return this._tiles.get(xy);
    }
 
-   resetTile(xy: string): void {
-      this._tiles[xy]?.destroy({ children: true });
-      this._tiles[xy] = this.viewport.addChild(new TileVisual(this, xyToPoint(xy)));
+   resetTile(xy: Tile): void {
+      this._tiles.get(xy)?.destroy({ children: true });
+      this._tiles.set(xy, this.viewport.addChild(new TileVisual(this, tileToPoint(xy))));
    }
 
    private _ticked: Set<number> = new Set();
@@ -272,7 +272,7 @@ export class WorldScene extends ViewportScene {
    updateTransportVisual(gs: GameState, timeSinceLastTick: number) {
       this._ticked.clear();
       const options = getGameOptions();
-      forEach(gs.transportation, (xy, transports) => {
+      gs.transportation.forEach((transports) => {
          transports.forEach((t) => {
             if (!this._transport.get(t.id)) {
                const visual = this._transportPool.allocate();

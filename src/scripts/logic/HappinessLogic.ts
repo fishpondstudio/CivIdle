@@ -1,5 +1,5 @@
 import type { PartialTabulate } from "../definitions/TypeDefinitions";
-import { clamp, filterOf, forEach, isEmpty, reduceOf, sizeOf, sum } from "../utilities/Helper";
+import { clamp, isEmpty, mFilterOf, mReduceOf, reduceOf, sizeOf, sum } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
 import { isNaturalWonder, isSpecialBuilding, isWorldWonder } from "./BuildingLogic";
 import { Config } from "./Config";
@@ -32,7 +32,7 @@ export function calculateHappiness(gs: GameState) {
    let fromBuildings = 0;
    let fromWonders = 0;
    let fromHighestTierBuilding = 0;
-   forEach(getXyBuildings(gs), (xy, building) => {
+   getXyBuildings(gs).forEach((building, xy) => {
       if (building.status !== "completed") {
          return;
       }
@@ -43,9 +43,9 @@ export function calculateHappiness(gs: GameState) {
                fromHighestTierBuilding = tier;
             }
          }
-         if (building.capacity <= 0 && buildingsByType.HagiaSophia) {
+         if (building.capacity <= 0 && buildingsByType.has("HagiaSophia")) {
             // Do nothing
-         } else if (building.type === "ChariotWorkshop" && buildingsByType.Colosseum) {
+         } else if (building.type === "ChariotWorkshop" && buildingsByType.has("Colosseum")) {
             // Do nothing
          } else {
             ++fromBuildings;
@@ -54,15 +54,15 @@ export function calculateHappiness(gs: GameState) {
       if (isWorldWonder(building.type)) {
          ++fromWonders;
       }
-      if (isNaturalWonder(building.type) && gs.tiles[xy].explored) {
+      if (isNaturalWonder(building.type) && gs.tiles.get(xy)!.explored) {
          ++fromWonders;
       }
    });
-   const fromBuildingTypes = reduceOf(
+   const fromBuildingTypes = mReduceOf(
       buildingsByType,
       (prev, _, value) => {
          return isEmpty(
-            filterOf(value, (xy, tile) => {
+            mFilterOf(value, (xy, tile) => {
                return (
                   !isSpecialBuilding(tile.building.type) &&
                   (!Tick.current.notProducingReasons.has(xy) ||

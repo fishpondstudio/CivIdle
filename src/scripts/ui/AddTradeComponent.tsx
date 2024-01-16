@@ -15,7 +15,7 @@ export function AddTradeComponent({ gameState, xy }: IBuildingComponentProps): R
    const buyResources = keysOf(Tick.next.resourcesByXy).filter(
       (res) => Config.Resource[res].canPrice && Config.Resource[res].canStore,
    );
-   const resourcesInStorage = gameState.tiles[xy].building?.resources ?? {};
+   const resourcesInStorage = gameState.tiles.get(xy)?.building?.resources ?? {};
    const sellResources = keysOf(resourcesInStorage);
    const [trade, setTrade] = useState<IClientAddTradeRequest>({
       buyResource: buyResources[0],

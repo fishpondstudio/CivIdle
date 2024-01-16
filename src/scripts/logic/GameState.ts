@@ -10,7 +10,7 @@ import type { RomeProvince } from "../definitions/RomeProvinceDefinitions";
 import type { Tech } from "../definitions/TechDefinitions";
 import type { PartialSet, PartialTabulate } from "../definitions/TypeDefinitions";
 import type { Grid } from "../scenes/Grid";
-import { forEach, isEmpty, keysOf, pointToXy, shuffle } from "../utilities/Helper";
+import { forEach, isEmpty, keysOf, pointToTile, shuffle, type Tile } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
 import { Config } from "./Config";
 import type { IShortcutConfig, Shortcut } from "./Shortcut";
@@ -21,8 +21,8 @@ import { makeBuilding } from "./Tile";
 
 export interface ITransportationData {
    id: number;
-   fromXy: string;
-   toXy: string;
+   fromXy: Tile;
+   toXy: Tile;
    ticksRequired: number;
    ticksSpent: number;
    fromPosition: IPointData;
@@ -39,8 +39,8 @@ export class GameState {
    city: City = "Rome";
    unlockedTech: PartialSet<Tech> = {};
    unlockedProvince: PartialSet<RomeProvince> = {};
-   tiles: Record<string, ITileData> = {};
-   transportation: Record<string, ITransportationData[]> = {};
+   tiles: Map<Tile, ITileData> = new Map();
+   transportation: Map<Tile, ITransportationData[]> = new Map();
    tick = 0;
    greatPeople: PartialTabulate<GreatPerson> = {};
    greatPeopleChoices: GreatPeopleChoice[] = [];
@@ -111,21 +111,21 @@ export const SAVE_FILE_VERSION = 1;
 
 export function initializeGameState(gameState: GameState, grid: Grid) {
    const center = grid.center();
-   const centerXy = pointToXy(center);
+   const centerXy = pointToTile(center);
 
    grid.forEach((point) => {
-      const xy = pointToXy(point);
-      if (gameState.tiles[xy]) {
+      const xy = pointToTile(point);
+      if (gameState.tiles.get(xy)) {
          return;
       }
-      gameState.tiles[xy] = {
-         xy,
+      gameState.tiles.set(xy, {
+         tile: xy,
          deposit: {},
          explored: false,
-      };
+      });
    });
 
-   gameState.tiles[centerXy].building = makeBuilding({
+   gameState.tiles.get(centerXy)!.building = makeBuilding({
       type: "Headquarter",
       level: 1,
       status: "completed",
@@ -144,7 +144,7 @@ export function initializeGameState(gameState: GameState, grid: Grid) {
 
    const wood = findNearest((tile) => !!tile.deposit.Wood, center, grid, gameState);
    if (wood) {
-      gameState.tiles[wood.xy].building = makeBuilding({
+      gameState.tiles.get(wood.tile)!.building = makeBuilding({
          type: "LoggingCamp",
          level: 1,
          status: "completed",
@@ -153,7 +153,7 @@ export function initializeGameState(gameState: GameState, grid: Grid) {
 
    const stone = findNearest((tile) => !!tile.deposit.Stone, center, grid, gameState);
    if (stone) {
-      gameState.tiles[stone.xy].building = makeBuilding({
+      gameState.tiles.get(stone.tile)!.building = makeBuilding({
          type: "StoneQuarry",
          level: 1,
          status: "completed",
@@ -162,7 +162,11 @@ export function initializeGameState(gameState: GameState, grid: Grid) {
 
    const water = findNearest((tile) => !!tile.deposit.Water, center, grid, gameState);
    if (water) {
-      gameState.tiles[water.xy].building = makeBuilding({ type: "Aqueduct", level: 1, status: "completed" });
+      gameState.tiles.get(water.tile)!.building = makeBuilding({
+         type: "Aqueduct",
+         level: 1,
+         status: "completed",
+      });
    }
 
    // gameState.tiles[pointToXy({ x: center.x + 1, y: center.y + 1 })].building = makeBuilding({ type: "Hut" });
@@ -208,20 +212,24 @@ export function initializeGameState(gameState: GameState, grid: Grid) {
    // }
 
    const naturalWonders = keysOf(Config.City[gameState.city].naturalWonders);
-   const xys = shuffle(keysOf(gameState.tiles));
+   const xys = shuffle(Array.from(gameState.tiles.keys()));
    for (let i = 0; i < xys.length; i++) {
       const xy = xys[i];
-      if (gameState.tiles[xy].building || !isEmpty(gameState.tiles[xy].deposit)) {
+      if (gameState.tiles.get(xy)!.building || !isEmpty(gameState.tiles.get(xy)!.deposit)) {
          continue;
       }
       if (naturalWonders.length <= 0) {
          break;
       }
       const naturalWonder = naturalWonders.pop()!;
-      gameState.tiles[xy].building = makeBuilding({ type: naturalWonder, level: 1, status: "completed" });
+      gameState.tiles.get(xy)!.building = makeBuilding({
+         type: naturalWonder,
+         level: 1,
+         status: "completed",
+      });
    }
 
-   forEach(gameState.tiles, (xy, tile) => {
+   gameState.tiles.forEach((tile, xy) => {
       if (tile.building) {
          ensureTileFogOfWar(xy, gameState, grid);
       }

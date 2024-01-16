@@ -1,5 +1,6 @@
 import { getScienceFromWorkers } from "../logic/BuildingLogic";
 import { Config } from "../logic/Config";
+import { getXyBuildings } from "../logic/IntraTickCache";
 import { getGreatPeopleAtReborn } from "../logic/RebornLogic";
 import { getCurrentTechAge, getScienceAmount, getUnlockCost, unlockableTechs } from "../logic/TechLogic";
 import { Tick } from "../logic/TickLogic";
@@ -295,12 +296,9 @@ export function HeadquarterBuildingBody({ gameState, xy }: IBuildingComponentPro
          </fieldset>
          <fieldset>
             <legend>{t(L.Wonder)}</legend>
-            {Object.values(gameState.tiles)
-               .flatMap((tile) => {
-                  if (!tile.building) {
-                     return [];
-                  }
-                  const def = Config.Building[tile.building.type];
+            {Array.from(getXyBuildings(gameState).entries())
+               .flatMap(([_, building]) => {
+                  const def = Config.Building[building.type];
                   if (def.max !== 1 || !def.construction) {
                      return [];
                   }

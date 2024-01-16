@@ -19,8 +19,10 @@ import {
    formatHMS,
    formatNumber,
    layoutCenter,
+   pointToTile,
    pointToXy,
    sizeOf,
+   type Tile,
 } from "../utilities/Helper";
 import { Singleton } from "../utilities/Singleton";
 import { v2 } from "../utilities/Vector2";
@@ -44,7 +46,7 @@ export class TileVisual extends Container {
    private readonly _level: BitmapText;
    private readonly _constructionAnimation: Action;
    private readonly _upgradeAnimation: Action;
-   private readonly _xy: string;
+   private readonly _xy: Tile;
    private readonly _timeLeft: BitmapText;
    private _lastFloaterShownAt = 0;
    private _floaterValue = 0;
@@ -54,8 +56,8 @@ export class TileVisual extends Container {
       this._world = world;
       this._grid = grid;
       const gs = getGameState();
-      this._xy = pointToXy(this._grid);
-      this._tile = gs.tiles[this._xy];
+      this._xy = pointToTile(this._grid);
+      this._tile = gs.tiles.get(this._xy)!;
 
       this.position = Singleton().grid.gridToPosition(this._grid);
       this.cullable = true;
@@ -297,11 +299,11 @@ export class TileVisual extends Container {
                this._level.text = getBuildingLevelLabel(this._tile.building);
             }
 
-            const reason = Tick.current.notProducingReasons.get(tileData.xy);
+            const reason = Tick.current.notProducingReasons.get(tileData.tile);
             if (reason) {
                this._notProducing.texture = getNotProducingTexture(reason, textures);
                this.fadeInTopLeftIcon();
-            } else if (Tick.current.electrified.has(tileData.xy)) {
+            } else if (Tick.current.electrified.has(tileData.tile)) {
                this._notProducing.texture = textures.Bolt;
                this.fadeInTopLeftIcon();
             } else {
@@ -333,7 +335,7 @@ export class TileVisual extends Container {
    }
 
    private showTimeLeft(tileData: ITileData, gameState: GameState) {
-      const { secondsLeft } = getBuildingPercentage(tileData.xy, gameState);
+      const { secondsLeft } = getBuildingPercentage(tileData.tile, gameState);
       this._timeLeft.text = formatHMS(secondsLeft * 1000);
       this._timeLeft.visible = true;
    }
@@ -359,7 +361,7 @@ export class TileVisual extends Container {
          return;
       }
 
-      this._spinner.angle += Tick.current.electrified.has(this._tile.xy) ? dt * 180 : dt * 90;
+      this._spinner.angle += Tick.current.electrified.has(this._tile.tile) ? dt * 180 : dt * 90;
       if (Tick.current.notProducingReasons.has(this._xy)) {
          this._spinner.alpha -= dt;
          this._building.alpha -= dt;

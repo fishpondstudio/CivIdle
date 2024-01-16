@@ -1,6 +1,6 @@
 import type { SmoothGraphics } from "@pixi/graphics-smooth";
 import { BitmapText, Polygon } from "pixi.js";
-import { xyToPoint } from "../utilities/Helper";
+import { tileToPoint, type Tile } from "../utilities/Helper";
 import { Hex, Layout, OffsetCoord, Point } from "../utilities/Hex";
 import { ObjectPool } from "../utilities/ObjectPool";
 import { Fonts } from "../visuals/Fonts";
@@ -112,8 +112,8 @@ export class Grid {
       return this.layout.hexToPixel(this.gridToHex(grid));
    }
 
-   public xyToPosition(xy: string): Point {
-      return this.layout.hexToPixel(this.gridToHex(xyToPoint(xy)));
+   public xyToPosition(xy: Tile): Point {
+      return this.layout.hexToPixel(this.gridToHex(tileToPoint(xy)));
    }
 
    public getNeighbors(grid: Point): Point[] {
@@ -133,10 +133,8 @@ export class Grid {
 
    private _distanceCache: Record<number, number> = {};
 
-   public distanceXy(xy1: string, xy2: string): number {
-      const a = xyToPoint(xy1);
-      const b = xyToPoint(xy2);
-      return this.distance(a.x, a.y, b.x, b.y);
+   public distanceTile(xy1: Tile, xy2: Tile): number {
+      return this.distance((xy1 >> 16) & 0xffff, xy1 & 0xffff, (xy2 >> 16) & 0xffff, xy2 & 0xffff);
    }
 
    public distance(x1: number, y1: number, x2: number, y2: number): number {

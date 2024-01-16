@@ -17,7 +17,7 @@ export function BuildingConstructionProgressComponent({
    gameState,
    xy,
 }: IBuildingComponentProps): React.ReactNode {
-   const building = gameState.tiles[xy]?.building;
+   const building = gameState.tiles.get(xy)?.building;
    if (!building) {
       return null;
    }

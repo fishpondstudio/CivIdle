@@ -13,7 +13,7 @@ import { FormatNumber } from "./HelperComponents";
 import { ProgressBarComponent } from "./ProgressBarComponent";
 
 export function ResourceImportComponent({ gameState, xy }: IBuildingComponentProps): React.ReactNode {
-   const building = gameState.tiles[xy]?.building as IResourceImportBuildingData;
+   const building = gameState.tiles.get(xy)?.building as IResourceImportBuildingData;
    if (!building) {
       return null;
    }

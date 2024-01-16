@@ -3,7 +3,7 @@ import type { Building } from "../definitions/BuildingDefinitions";
 import type { PartialSet } from "../definitions/TypeDefinitions";
 import { Config } from "../logic/Config";
 import { getXyBuildings } from "../logic/IntraTickCache";
-import { forEach, jsxMapOf } from "../utilities/Helper";
+import { jsxMapOf } from "../utilities/Helper";
 import { Singleton } from "../utilities/Singleton";
 import { L, t } from "../utilities/i18n";
 import { MenuComponent } from "./MenuComponent";
@@ -12,7 +12,7 @@ import { TilePage } from "./TilePage";
 export function WonderPage(): React.ReactNode {
    const gs = useGameState();
    const builtWonders: PartialSet<Building> = {};
-   forEach(getXyBuildings(gs), (xy, building) => {
+   getXyBuildings(gs).forEach((building) => {
       if (Config.Building[building.type].max === 1 && Config.Building[building.type].construction) {
          builtWonders[building.type] = true;
       }
@@ -26,7 +26,7 @@ export function WonderPage(): React.ReactNode {
          <div className="window-body">
             <button
                className="w100"
-               onClick={() => Singleton().routeTo(TilePage, { xy: Singleton().buildings.Headquarter.xy })}
+               onClick={() => Singleton().routeTo(TilePage, { xy: Singleton().buildings.Headquarter.tile })}
             >
                <div className="row jcc">
                   <div className="m-icon" style={{ margin: "0 5px 0 -5px", fontSize: "18px" }}>
