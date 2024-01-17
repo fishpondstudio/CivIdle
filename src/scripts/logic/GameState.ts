@@ -169,69 +169,28 @@ export function initializeGameState(gameState: GameState, grid: Grid) {
       });
    }
 
-   // gameState.tiles[pointToXy({ x: center.x + 1, y: center.y + 1 })].building = makeBuilding({ type: "Hut" });
-
-   // gameState.tiles[pointToXy({ x: center.x + 1, y: center.y })].building = makeBuilding({
-   //     type: "Farmland",
-   //     status: "completed",
-   // });
-
-   // gameState.tiles[pointToXy({ x: center.x + 4, y: center.y + 1 })].building = makeBuilding({
-   //     type: "LivestockFarm",
-   //     status: "completed",
-   // });
-
-   // gameState.tiles[pointToXy({ x: center.x + 5, y: center.y + 1 })].building = makeBuilding({
-   //     type: "StonemasonsWorkshop",
-   // });
-
-   // const xy5 = pointToXy({ x: center.x + 5, y: center.y + 2 });
-   // gameState.tiles[xy5].building = makeBuilding({ type: "StoneQuarry", status: "completed" });
-   // gameState.tiles[xy5].deposit.Stone = true;
-
-   // const xy6 = pointToXy({ x: center.x + 4, y: center.y + 2 });
-   // gameState.tiles[xy6].building = makeBuilding({ type: "LoggingCamp" });
-   // gameState.tiles[xy6].deposit.Wood = true;
-
-   // const wonders = keysOf(gameState.currentTick.buildings).filter(
-   //     (b) => gameState.currentTick.buildings[b].max === 1 && b !== "Headquarter"
-   // );
-   // const row = 6;
-   // const col = wonders.length / row;
-   // for (let x = 0; x < col; x++) {
-   //     for (let y = 0; y < row; y++) {
-   //         const building = wonders[y + x * row];
-   //         if (!building) {
-   //             break;
-   //         }
-   //         gameState.tiles[pointToXy({ x: center.x - 2 + x, y: center.y + 3 + y })].building = makeBuilding({
-   //             type: building,
-   //             status: "completed",
-   //         });
-   //     }
-   // }
+   gameState.tiles.forEach((tile, xy) => {
+      if (tile.building) {
+         ensureTileFogOfWar(xy, gameState, grid);
+      }
+   });
 
    const naturalWonders = keysOf(Config.City[gameState.city].naturalWonders);
    const xys = shuffle(Array.from(gameState.tiles.keys()));
    for (let i = 0; i < xys.length; i++) {
       const xy = xys[i];
-      if (gameState.tiles.get(xy)!.building || !isEmpty(gameState.tiles.get(xy)!.deposit)) {
+      const tile = gameState.tiles.get(xy)!;
+      if (tile.building || !isEmpty(tile.deposit) || tile.explored) {
          continue;
       }
       if (naturalWonders.length <= 0) {
          break;
       }
       const naturalWonder = naturalWonders.pop()!;
-      gameState.tiles.get(xy)!.building = makeBuilding({
+      tile.building = makeBuilding({
          type: naturalWonder,
          level: 1,
          status: "completed",
       });
    }
-
-   gameState.tiles.forEach((tile, xy) => {
-      if (tile.building) {
-         ensureTileFogOfWar(xy, gameState, grid);
-      }
-   });
 }

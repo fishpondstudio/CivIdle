@@ -73,9 +73,22 @@ export const useChatMessages = makeObservableHook(OnChatMessage, () => chatMessa
 export const useTrades = makeObservableHook(OnTradeMessage, () => Object.values(trades));
 export const useUser = makeObservableHook(OnUserChanged, () => user);
 
+export const SYSTEM_USER = "$";
+
+export function addSystemMessage(message: string): void {
+   chatMessages.push({
+      name: SYSTEM_USER,
+      message,
+      flag: "earth",
+      time: Date.now(),
+      channel: getGameOptions().chatSendChannel,
+   });
+   OnChatMessage.emit(chatMessages);
+}
+
 let reconnect = 0;
 let requestId = 0;
-// eslint-disable-next-line @typescript-eslint/ban-types
+// biome-ignore lint/complexity/noBannedTypes: <explanation>
 const rpcRequests: Record<number, { resolve: Function; reject: Function; time: number }> = {};
 
 let steamTicket: string | null = null;
@@ -112,8 +125,8 @@ export async function connectWebSocket(): Promise<number> {
                      playBubble();
                      showToast(`${m.name}: ${m.message}`);
                   }
+                  chatMessages.push(m);
                });
-               chatMessages = chatMessages.concat(c.chat);
             }
             OnChatMessage.emit(chatMessages);
             break;

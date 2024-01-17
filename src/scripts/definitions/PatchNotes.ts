@@ -5,8 +5,16 @@ interface PatchNote {
 
 export const PatchNotes: PatchNote[] = [
    {
+      version: "0.1.113",
+      content: [
+         ["QoL", "Added chat command support"],
+         ["Bugfix", "Natural wonders will not be spawned on initial tiles"],
+         ["Bugfix", "New deposits will not be spawned on tiles with Wonders"],
+      ],
+   },
+   {
       version: "0.1.112",
-      content: [["Bugfix", "Fix Wonders can be built several times"]],
+      content: [["Bugfix", "Fix wonders can be built several times"]],
    },
    {
       version: "0.1.111",

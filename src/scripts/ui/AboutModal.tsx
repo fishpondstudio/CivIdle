@@ -1,7 +1,5 @@
 import logo from "../../images/icon.png";
-import { decompressSave, getGameState, loadSave, wipeSaveData } from "../Global";
 import { getVersion } from "../logic/Constants";
-import { tickEverySecond } from "../logic/Update";
 import { Singleton } from "../utilities/Singleton";
 import { L, t } from "../utilities/i18n";
 import { playClick } from "../visuals/Sound";
@@ -29,42 +27,6 @@ export function AboutModal(): React.ReactNode {
                   <div className="text-small text-desc">
                      {t(L.UserAgent, { driver: navigator.userAgent })}
                   </div>
-                  <div>
-                     <span
-                        className="text-small text-red"
-                        onClick={() => {
-                           playClick();
-                           wipeSaveData();
-                        }}
-                     >
-                        Wipe Progress
-                     </span>
-                     <span
-                        className="text-small text-link ml10"
-                        onClick={() => {
-                           playClick();
-                           const gs = getGameState();
-                           for (let i = 0; i < 60 * 30; i++) {
-                              tickEverySecond(gs, true);
-                           }
-                        }}
-                     >
-                        Fast Forward 30min
-                     </span>
-                  </div>
-                  {import.meta.env.DEV ? (
-                     <div
-                        className="text-link text-small"
-                        onClick={async () => {
-                           const [handle] = await window.showOpenFilePicker();
-                           const file = await handle.getFile();
-                           const bytes = await file.arrayBuffer();
-                           loadSave(await decompressSave(new Uint8Array(bytes)));
-                        }}
-                     >
-                        Load Save
-                     </div>
-                  ) : null}
                </div>
             </div>
             <div className="text-right" style={{ margin: "20px 0 0 0" }}>

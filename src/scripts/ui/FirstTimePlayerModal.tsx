@@ -8,6 +8,7 @@ import { playError } from "../visuals/Sound";
 import { ChangeModernUIComponent } from "./ChangeModernUIComponent";
 import { ChangeSoundComponent } from "./ChangeSoundComponent";
 import { hideModal, showToast } from "./GlobalModal";
+import { RenderHTML } from "./RenderHTMLComponent";
 
 enum SetupStep {
    Welcome = 0,
@@ -200,9 +201,4 @@ function FirstTimePlayerSettings(): React.ReactNode {
          </div>
       </div>
    );
-}
-
-function RenderHTML({ html }: { html: string }): React.ReactNode {
-   /* biome-ignore lint/security/noDangerouslySetInnerHtml: */
-   return <div dangerouslySetInnerHTML={{ __html: html }}></div>;
 }

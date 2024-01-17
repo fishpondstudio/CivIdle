@@ -1,10 +1,17 @@
 import type { Building } from "../definitions/BuildingDefinitions";
-import { BuildingSpecial } from "../definitions/BuildingDefinitions";
 import type { City } from "../definitions/CityDefinitions";
 import type { GreatPerson } from "../definitions/GreatPersonDefinitions";
 import type { Deposit, Resource } from "../definitions/ResourceDefinitions";
 import type { Tech, TechAge } from "../definitions/TechDefinitions";
-import { filterOf, forEach, isEmpty, keysOf, shuffle, type Tile } from "../utilities/Helper";
+import {
+   filterOf,
+   forEach,
+   isEmpty,
+   isNullOrUndefined,
+   keysOf,
+   shuffle,
+   type Tile,
+} from "../utilities/Helper";
 import { Singleton } from "../utilities/Singleton";
 import { Config } from "./Config";
 import type { GameState, GreatPeopleChoice } from "./GameState";
@@ -78,12 +85,9 @@ export function unlockTech(tech: Tech, gs: GameState): void {
             if (!type) {
                return true;
             }
-            // Do not spawn deposit under headquarter or natural wonders! Also use Config.Building because
+            // Do not spawn deposit under headquarter or wonders! Also use Config.Building because
             // this code can happen in Initialize logic, which is very early
-            if (
-               Config.Building[type].special === BuildingSpecial.HQ ||
-               Config.Building[type].special === BuildingSpecial.NaturalWonder
-            ) {
+            if (!isNullOrUndefined(Config.Building[type].special)) {
                return false;
             }
             return true;

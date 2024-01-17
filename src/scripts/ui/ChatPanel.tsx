@@ -3,12 +3,14 @@ import { ChatChannels } from "../../../server/src/Database";
 import chatActive from "../../images/chat_active.png";
 import chatInactive from "../../images/chat_inactive.png";
 import { OnUIThemeChanged, useGameOptions } from "../Global";
-import { client, useChatMessages, useUser } from "../rpc/RPCClient";
+import { handleChatCommand } from "../logic/ChatCommand";
+import { SYSTEM_USER, addSystemMessage, client, useChatMessages, useUser } from "../rpc/RPCClient";
 import { getCountryName, getFlagUrl } from "../utilities/CountryCode";
 import { isEmpty, keysOf, sizeOf } from "../utilities/Helper";
 import { useTypedEvent } from "../utilities/Hook";
 import { L, t } from "../utilities/i18n";
 import { showModal } from "./GlobalModal";
+import { RenderHTML } from "./RenderHTMLComponent";
 import { SelectChatChannelModal } from "./SelectChatChannelModal";
 
 export function ChatPanel(): React.ReactNode {
@@ -40,18 +42,30 @@ export function ChatPanel(): React.ReactNode {
       bottomRef.current?.scrollIntoView({ behavior: "smooth" });
    });
 
-   const latestMessage =
-      messages.length > 0 ? (
-         <>
-            <span className="text-desc">{messages[messages.length - 1].name}: </span>
-            {messages[messages.length - 1].message}
-         </>
-      ) : (
-         t(L.ChatNoMessage)
-      );
+   let latestMessage: React.ReactNode = t(L.ChatNoMessage);
+
+   for (let i = messages.length - 1; i >= 0; --i) {
+      const message = messages[i];
+      if (message.name !== SYSTEM_USER) {
+         latestMessage = (
+            <>
+               <span className="text-desc">{message.name}: </span>
+               {message.message}
+            </>
+         );
+         break;
+      }
+   }
    const sendChat = () => {
       if (chat) {
-         client.chat(chat, options.chatSendChannel);
+         if (chat.startsWith("/")) {
+            const command = chat.substring(1);
+            handleChatCommand(command)
+               .then((o) => addSystemMessage(`${command}\n${o}`))
+               .catch((e) => addSystemMessage(`${command}\n${e}`));
+         } else {
+            client.chat(chat, options.chatSendChannel);
+         }
          setChat("");
       }
    };
@@ -75,6 +89,14 @@ export function ChatPanel(): React.ReactNode {
          </div>
          <div className="window-content inset-shallow">
             {messages.map((c, i) => {
+               if (c.name === SYSTEM_USER) {
+                  const output = c.message.split("\n").join("<br>");
+                  return (
+                     <div className="chat-command-item" key={i}>
+                        <RenderHTML html={`$ ${output}`} />
+                     </div>
+                  );
+               }
                return (
                   <div className="chat-message-item" key={i}>
                      {c.name === user?.handle ? (
@@ -110,7 +132,6 @@ export function ChatPanel(): React.ReactNode {
                            {receiveMultipleChannels ? <div className="chat-channel">{c.channel}</div> : null}
                         </div>
                      )}
-
                      <div>{c.message}</div>
                   </div>
                );
