@@ -16,32 +16,34 @@ export function PlayerHandleComponent() {
    return (
       <fieldset>
          <legend>{t(L.PlayerHandle)}</legend>
-         <div className="row mv5">
-            <div className="text-strong">{user?.handle}</div>
-            <div>
+         {user == null ? (
+            <div className="text-strong">{t(L.PlayerHandleOffline)}</div>
+         ) : (
+            <div className="row">
+               <div className="text-strong">{user?.handle}</div>
                <img
                   className="ml5 player-flag"
                   src={getFlagUrl(user?.flag)}
                   title={getCountryName(user?.flag)}
                />
+               <div className="f1" />
+               <div
+                  className={classNames("text-link text-strong", { disabled: !user })}
+                  onClick={() => {
+                     if (user) {
+                        showModal(<ChangePlayerHandleModal />);
+                     } else {
+                        playError();
+                     }
+                  }}
+               >
+                  {t(L.ChangePlayerHandle)}
+               </div>
             </div>
-            <div className="f1" />
-            <div
-               className={classNames("text-link text-strong", { disabled: !user })}
-               onClick={() => {
-                  if (user) {
-                     showModal(<ChangePlayerHandleModal />);
-                  } else {
-                     playError();
-                  }
-               }}
-            >
-               {t(L.ChangePlayerHandle)}
-            </div>
-         </div>
+         )}
          {showDetails ? (
             <>
-               <div className="separator"></div>
+               <div className="separator" />
                <div className="row text-strong">
                   <div className="f1">{t(L.AccountType)}</div>
                   {opt.isOffline ? null : <div className="m-icon small mr5 text-green">wifi</div>}
@@ -57,7 +59,7 @@ export function PlayerHandleComponent() {
                <div className="text-desc text-small text-justify">{t(L.ThisRunTypeDesc)}</div>
             </>
          ) : (
-            <div className="text-small text-link" onClick={() => setShowDetails(true)}>
+            <div className="text-small text-link mt5" onClick={() => setShowDetails(true)}>
                {t(L.AccountTypeShowDetails)}
             </div>
          )}

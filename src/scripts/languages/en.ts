@@ -893,6 +893,7 @@ export const EN = {
    FirstTimeGuideNext: "Next",
    FirstTimeGuideFinish: "Finish",
    AccountTypeShowDetails: "Show Account Details",
+   PlayerHandleOffline: "You are currently offline",
    AccountType: "Account Type",
    AccountTypeOnline: "Online",
    AccountTypeDesc:
