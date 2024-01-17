@@ -322,6 +322,15 @@ export function sizeOf(obj: any): number {
    if (typeof obj !== "object") {
       return 0;
    }
+   if (obj instanceof Map) {
+      return obj.size;
+   }
+   if (obj instanceof Set) {
+      return obj.size;
+   }
+   if (Array.isArray(obj)) {
+      return obj.length;
+   }
    return Object.keys(obj).length;
 }
 
