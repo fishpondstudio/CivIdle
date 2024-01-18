@@ -4,7 +4,7 @@ import chatActive from "../../images/chat_active.png";
 import chatInactive from "../../images/chat_inactive.png";
 import { OnUIThemeChanged, useGameOptions } from "../Global";
 import { handleChatCommand } from "../logic/ChatCommand";
-import { SYSTEM_USER, addSystemMessage, client, useChatMessages, useUser } from "../rpc/RPCClient";
+import { addSystemMessage, client, useChatMessages, useUser } from "../rpc/RPCClient";
 import { getCountryName, getFlagUrl } from "../utilities/CountryCode";
 import { isEmpty, keysOf, sizeOf } from "../utilities/Helper";
 import { useTypedEvent } from "../utilities/Hook";
@@ -16,7 +16,9 @@ import { SelectChatChannelModal } from "./SelectChatChannelModal";
 export function ChatPanel(): React.ReactNode {
    const [chat, setChat] = useState("");
    const options = useGameOptions();
-   const messages = useChatMessages().filter((m) => options.chatReceiveChannel[m.channel]);
+   const messages = useChatMessages().filter(
+      (m) => typeof m === "string" || options.chatReceiveChannel[m.channel],
+   );
    const user = useUser();
    const bottomRef = useRef<HTMLDivElement>(null);
    const [showChatWindow, setShowChatWindow] = useState(false);
@@ -46,7 +48,7 @@ export function ChatPanel(): React.ReactNode {
 
    for (let i = messages.length - 1; i >= 0; --i) {
       const message = messages[i];
-      if (message.name !== SYSTEM_USER) {
+      if (typeof message === "object") {
          latestMessage = (
             <>
                <span className="text-desc">{message.name}: </span>
@@ -60,9 +62,8 @@ export function ChatPanel(): React.ReactNode {
       if (chat) {
          if (chat.startsWith("/")) {
             const command = chat.substring(1);
-            handleChatCommand(command)
-               .then((o) => addSystemMessage(`${command}\n${o}`))
-               .catch((e) => addSystemMessage(`${command}\n${e}`));
+            addSystemMessage(`$ ${command}`);
+            handleChatCommand(command).catch((e) => addSystemMessage(`${command}: ${e}`));
          } else {
             client.chat(chat, options.chatSendChannel);
          }
@@ -89,11 +90,10 @@ export function ChatPanel(): React.ReactNode {
          </div>
          <div className="window-content inset-shallow">
             {messages.map((c, i) => {
-               if (c.name === SYSTEM_USER) {
-                  const output = c.message.split("\n").join("<br>");
+               if (typeof c === "string") {
                   return (
                      <div className="chat-command-item" key={i}>
-                        <RenderHTML html={`$ ${output}`} />
+                        <RenderHTML html={c} />
                      </div>
                   );
                }

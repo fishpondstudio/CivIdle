@@ -16,6 +16,7 @@ export class Heartbeat {
 
    public update(data: Uint8Array): void {
       if (getGameState().isOffline || getGameOptions().isOffline) {
+         client.pulse();
          return;
       }
       const patch = fossilDeltaCreate(this.data, data);

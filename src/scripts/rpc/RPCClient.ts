@@ -33,13 +33,15 @@ let user: IUser | null = null;
 
 export const OnOfflineTime = new TypedEvent<number>();
 export const OnUserChanged = new TypedEvent<IUser | null>();
-export const OnChatMessage = new TypedEvent<IChat[]>();
+export const OnChatMessage = new TypedEvent<LocalChat[]>();
 export const OnTradeMessage = new TypedEvent<IClientTrade[]>();
 export const OnPlayerMapChanged = new TypedEvent<Record<string, IClientMapEntry>>();
 export const OnPlayerMapMessage = new TypedEvent<IMapMessage>();
 export const OnNewPendingClaims = new TypedEvent<void>();
 
-let chatMessages: IChat[] = [];
+export type LocalChat = IChat | string;
+
+let chatMessages: LocalChat[] = [];
 const trades: Record<string, IClientTrade> = {};
 const playerMap: Record<string, IClientMapEntry> = {};
 
@@ -76,13 +78,7 @@ export const useUser = makeObservableHook(OnUserChanged, () => user);
 export const SYSTEM_USER = "$";
 
 export function addSystemMessage(message: string): void {
-   chatMessages.push({
-      name: SYSTEM_USER,
-      message,
-      flag: "earth",
-      time: Date.now(),
-      channel: getGameOptions().chatSendChannel,
-   });
+   chatMessages.push(message);
    OnChatMessage.emit(chatMessages);
 }
 

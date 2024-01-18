@@ -5,6 +5,10 @@ interface PatchNote {
 
 export const PatchNotes: PatchNote[] = [
    {
+      version: "0.1.114",
+      content: [["QoL", "Improve chat command"]],
+   },
+   {
       version: "0.1.113",
       content: [
          ["QoL", "Added chat command support"],
