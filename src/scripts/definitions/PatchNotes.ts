@@ -9,7 +9,7 @@ export const PatchNotes: PatchNote[] = [
       content: [
          [
             "QoL",
-            "Server will not track active play time. You can query the time by using /playtime chat command",
+            "Server will now track active play time. You can query the time by using /playtime chat command",
          ],
       ],
    },
