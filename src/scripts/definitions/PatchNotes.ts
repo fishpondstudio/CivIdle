@@ -5,6 +5,15 @@ interface PatchNote {
 
 export const PatchNotes: PatchNote[] = [
    {
+      version: "0.1.115",
+      content: [
+         [
+            "QoL",
+            "Server will not track active play time. You can query the time by using /playtime chat command",
+         ],
+      ],
+   },
+   {
       version: "0.1.114",
       content: [["QoL", "Improve chat command"]],
    },

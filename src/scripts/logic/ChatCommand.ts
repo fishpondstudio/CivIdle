@@ -1,6 +1,6 @@
 import { decompressSave, getGameState, loadSave } from "../Global";
-import { addSystemMessage } from "../rpc/RPCClient";
-import { clamp, formatNumber, safeParseInt } from "../utilities/Helper";
+import { addSystemMessage, client } from "../rpc/RPCClient";
+import { clamp, formatHM, formatNumber, safeParseInt } from "../utilities/Helper";
 import { tickEverySecond } from "./Update";
 
 export async function handleChatCommand(command: string): Promise<void> {
@@ -25,6 +25,11 @@ export async function handleChatCommand(command: string): Promise<void> {
          const bytes = await file.arrayBuffer();
          loadSave(await decompressSave(new Uint8Array(bytes)));
          addSystemMessage("Load save file");
+         break;
+      }
+      case "playtime": {
+         const playTime = await client.getPlayTime();
+         addSystemMessage(`You have played ${formatHM(playTime * 1000)}`);
          break;
       }
       default: {

@@ -373,13 +373,7 @@ export function xyToPoint(str: string): IPointData {
 }
 
 export function clamp(value: number, minInclusive: number, maxInclusive: number): number {
-   if (value > maxInclusive) {
-      return maxInclusive;
-   }
-   if (value < minInclusive) {
-      return minInclusive;
-   }
-   return value;
+   return Math.min(Math.max(value, minInclusive), maxInclusive);
 }
 
 export function lerp(a: number, b: number, amount: number): number {
