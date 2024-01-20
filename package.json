@@ -4,7 +4,7 @@
    "version": "0.0.0",
    "scripts": {
       "dev": "vite",
-      "build": "tsc && vite build",
+      "build": "tsc --build && vite build",
       "server": "cd server && npm run start",
       "electron": "cd electron && npm run start",
       "optimize": "node ./build/OptimizePNG.js",

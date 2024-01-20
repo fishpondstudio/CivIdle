@@ -24,10 +24,7 @@
       "verbatimModuleSyntax": true
    },
    "include": [
-      "src",
-      "shared/wyhash.ts",
-      "shared/FossilDelta.ts",
-      "shared/murmurhash.ts"
+      "src"
    ],
    "exclude": [
       "**/node_modules",
