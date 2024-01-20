@@ -50,9 +50,6 @@ dependencies:
   typed-rpc:
     specifier: insraq/typed-rpc
     version: github.com/insraq/typed-rpc/70d12974f02d95de15b7bceeb455b718041af271
-  uuid:
-    specifier: ^9.0.0
-    version: 9.0.1
   xp.css:
     specifier: ^0.3.0
     version: 0.3.0
@@ -4756,11 +4753,6 @@ packages:
     deprecated: Please upgrade  to version 7 or higher.  Older versions may use Math.random() in certain circumstances, which is known to be problematic.  See https://v8.dev/blog/math-random for details.
     hasBin: true
     dev: true
-
-  /uuid@9.0.1:
-    resolution: {integrity: sha512-b+1eJOlsR9K8HJpow9Ok3fiWOWSIcIzXodvv0rQjVoOVNpWMpxf1wZNpt4y9h10odCNrqnYp1OBzRktckBe3sA==}
-    hasBin: true
-    dev: false
 
   /verror@1.10.0:
     resolution: {integrity: sha512-ZZKSmDAEFOijERBLkmYfJ+vmk3w+7hOLYDNkRCuRuMJGEmqYNCNLyBBFwWKVMhfwaEF3WOd0Zlw86U/WC/+nYw==}

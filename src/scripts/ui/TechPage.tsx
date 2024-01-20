@@ -5,6 +5,7 @@ import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
 import { getResourceAmount, trySpendResources } from "../../../shared/logic/ResourceLogic";
 import { useShortcut } from "../../../shared/logic/Shortcut";
 import {
+   OnResetTile,
    getCurrentTechAge,
    getGreatPeopleChoices,
    getUnlockCost,
@@ -147,7 +148,7 @@ export function TechPage({ id }: { id: Tech }): React.ReactNode {
                                  return;
                               }
                               const oldAge = getCurrentTechAge(gs);
-                              unlockTech(id, gs);
+                              unlockTech(id, OnResetTile, gs);
                               playLevelUp();
                               const newAge = getCurrentTechAge(gs);
                               if (oldAge !== newAge) {
