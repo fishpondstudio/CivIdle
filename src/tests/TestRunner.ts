@@ -1,6 +1,7 @@
 import { getBuildingCost, getPowerRequired, getTotalBuildingCost } from "../../shared/logic/BuildingLogic";
 import { SavedGame, type GameState } from "../../shared/logic/GameState";
 import { deserializeSave, serializeSave } from "../../shared/logic/GameStateLogic";
+import { initializeGameState } from "../../shared/logic/InitializeGameState";
 import {
    getConstructionPriority,
    getProductionPriority,
@@ -9,7 +10,6 @@ import {
    setProductionPriority,
    setUpgradePriority,
 } from "../../shared/logic/Tile";
-import { initializeGameState } from "../../shared/logic/initializeGameState";
 import { fossilDeltaApply, fossilDeltaCreate } from "../../shared/utilities/FossilDelta";
 import { Grid } from "../../shared/utilities/Grid";
 import { compressSave, decompressSave } from "../scripts/Global";

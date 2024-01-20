@@ -11,9 +11,9 @@ import {
    notifyGameStateUpdate,
    serializeSave,
 } from "../../shared/logic/GameStateLogic";
+import { initializeGameState } from "../../shared/logic/InitializeGameState";
 import { getGrid, getSpecialBuildings } from "../../shared/logic/IntraTickCache";
 import type { IPetraBuildingData } from "../../shared/logic/Tile";
-import { initializeGameState } from "../../shared/logic/initializeGameState";
 import { clamp, forEach, isNullOrUndefined, rejectIn, schedule } from "../../shared/utilities/Helper";
 import { type Textures } from "../../shared/utilities/Type";
 import type { TypedEvent } from "../../shared/utilities/TypedEvent";

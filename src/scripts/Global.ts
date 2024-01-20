@@ -14,10 +14,10 @@ import {
    savedGame,
    serializeSave,
 } from "../../shared/logic/GameStateLogic";
+import { initializeGameState } from "../../shared/logic/InitializeGameState";
 import { rollPermanentGreatPeople } from "../../shared/logic/RebornLogic";
 import { getGreatPeopleChoices } from "../../shared/logic/TechLogic";
 import { makeBuilding, type ITileData } from "../../shared/logic/Tile";
-import { initializeGameState } from "../../shared/logic/initializeGameState";
 import { Grid } from "../../shared/utilities/Grid";
 import { firstKeyOf, forEach, xyToTile, type Tile } from "../../shared/utilities/Helper";
 import { TypedEvent } from "../../shared/utilities/TypedEvent";
