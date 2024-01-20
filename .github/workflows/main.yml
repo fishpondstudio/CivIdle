@@ -11,10 +11,7 @@ jobs:
               git pull
               git submodule update --recursive --remote --init
               pnpm install
-           working-directory: /home/insraq/CivIdle
-         - run: |
-              npm run clean
-           working-directory: /home/insraq/CivIdle/shared
+           working-directory: /home/insraq/CivIdle         
          - run: |
               npm install
            working-directory: /home/insraq/CivIdle/electron
@@ -22,6 +19,9 @@ jobs:
               npm install
               npm run build
            working-directory: /home/insraq/CivIdle/server
+         - run: |
+              npm run clean
+           working-directory: /home/insraq/CivIdle/shared
          - run: npm run release
            working-directory: /home/insraq/CivIdle
            env:
