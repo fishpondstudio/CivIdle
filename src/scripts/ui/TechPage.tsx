@@ -3,7 +3,6 @@ import type { Tech } from "../../../shared/definitions/TechDefinitions";
 import { Config } from "../../../shared/logic/Config";
 import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
 import { getResourceAmount, trySpendResources } from "../../../shared/logic/ResourceLogic";
-import { useShortcut } from "../../../shared/logic/Shortcut";
 import {
    OnResetTile,
    getCurrentTechAge,
@@ -19,6 +18,7 @@ import { MAX_TECH_COLUMN } from "../SteamTesting";
 import { TechTreeScene } from "../scenes/TechTreeScene";
 import { WorldScene } from "../scenes/WorldScene";
 import { jsxMapOf } from "../utilities/Helper";
+import { useShortcut } from "../utilities/Hook";
 import { Singleton } from "../utilities/Singleton";
 import { playLevelUp } from "../visuals/Sound";
 import { ChooseGreatPersonModal } from "./ChooseGreatPersonModal";
@@ -33,7 +33,6 @@ import { UnlockableEffectComponent } from "./UnlockableEffectComponent";
 export function TechPage({ id }: { id: Tech }): React.ReactNode {
    const gs = useGameState();
    const tech = Config.Tech[id];
-
    useShortcut(
       "TechPageGoBackToCity",
       () => {

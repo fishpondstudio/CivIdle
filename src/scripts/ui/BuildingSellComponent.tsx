@@ -1,8 +1,8 @@
 import { isWorldOrNaturalWonder } from "../../../shared/logic/BuildingLogic";
 import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
-import { useShortcut } from "../../../shared/logic/Shortcut";
 import { L, t } from "../../../shared/utilities/i18n";
 import { WorldScene } from "../scenes/WorldScene";
+import { useShortcut } from "../utilities/Hook";
 import { Singleton } from "../utilities/Singleton";
 import type { IBuildingComponentProps } from "./BuildingPage";
 

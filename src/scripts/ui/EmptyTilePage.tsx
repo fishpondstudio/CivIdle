@@ -8,7 +8,6 @@ import {
 import { Config } from "../../../shared/logic/Config";
 import { getGameOptions, notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
 import { getTypeBuildings, unlockedBuildings } from "../../../shared/logic/IntraTickCache";
-import { useShortcut } from "../../../shared/logic/Shortcut";
 import type { ITileData } from "../../../shared/logic/Tile";
 import { makeBuilding } from "../../../shared/logic/Tile";
 import {
@@ -25,6 +24,7 @@ import { L, t } from "../../../shared/utilities/i18n";
 import "../../css/EmptyTilePage.css";
 import { useGameState } from "../Global";
 import { jsxMapOf } from "../utilities/Helper";
+import { useShortcut } from "../utilities/Hook";
 import { MenuComponent } from "./MenuComponent";
 
 let lastBuild: Building | null = null;

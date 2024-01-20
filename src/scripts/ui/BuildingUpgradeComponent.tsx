@@ -4,11 +4,11 @@ import { getBuildingUpgradeLevels, getTotalBuildingCost } from "../../../shared/
 import { Config } from "../../../shared/logic/Config";
 import {} from "../../../shared/logic/GameState";
 import { getGameOptions, notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
-import { useShortcut } from "../../../shared/logic/Shortcut";
 import { getUpgradePriority, setUpgradePriority } from "../../../shared/logic/Tile";
 import { numberToRoman } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import { jsxMapOf } from "../utilities/Helper";
+import { useShortcut } from "../utilities/Hook";
 import type { IBuildingComponentProps } from "./BuildingPage";
 import { FormatNumber } from "./HelperComponents";
 
