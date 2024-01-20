@@ -1,7 +1,6 @@
-import type { Application, Container } from "pixi.js";
+import type { Application, Container, Texture } from "pixi.js";
 import type { GameOptions, GameState } from "../../../shared/logic/GameState";
 import { watchGameOptions, watchGameState } from "../../../shared/logic/GameStateLogic";
-import { type Textures } from "../../../shared/utilities/Type";
 import type { MainBundleAssets } from "../main";
 import { Camera } from "./Camera";
 
@@ -40,7 +39,7 @@ export class ViewportScene extends Scene {
 export interface ISceneContext {
    app: Application;
    assets: MainBundleAssets;
-   textures: Textures;
+   textures: Record<string, Texture>;
    gameState: GameState;
 }
 

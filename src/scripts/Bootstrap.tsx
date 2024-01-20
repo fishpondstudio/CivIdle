@@ -1,7 +1,7 @@
-import type { Application } from "pixi.js";
+import type { Application, Texture } from "pixi.js";
 import { type City } from "../../shared/definitions/CityDefinitions";
 import { DepositResources } from "../../shared/definitions/ResourceDefinitions";
-import { getBuildingTexture, getStorageFor, getTileTexture } from "../../shared/logic/BuildingLogic";
+import { getStorageFor } from "../../shared/logic/BuildingLogic";
 import { Config } from "../../shared/logic/Config";
 import { MAX_OFFLINE_PRODUCTION_SEC, calculateTierAndPrice } from "../../shared/logic/Constants";
 import type { GameState } from "../../shared/logic/GameState";
@@ -15,7 +15,6 @@ import { initializeGameState } from "../../shared/logic/InitializeGameState";
 import { getGrid, getSpecialBuildings } from "../../shared/logic/IntraTickCache";
 import type { IPetraBuildingData } from "../../shared/logic/Tile";
 import { clamp, forEach, isNullOrUndefined, rejectIn, schedule } from "../../shared/utilities/Helper";
-import { type Textures } from "../../shared/utilities/Type";
 import type { TypedEvent } from "../../shared/utilities/TypedEvent";
 import { RunTests } from "../tests/TestRunner";
 import { isGameDataCompatible, loadGame, syncUITheme } from "./Global";
@@ -23,6 +22,7 @@ import type { RouteChangeEvent } from "./Route";
 import { checkSteamBranch } from "./SteamTesting";
 import { Heartbeat } from "./logic/Heartbeat";
 import { tickEverySecond } from "./logic/Tick";
+import { getBuildingTexture, getTileTexture } from "./logic/VisualLogic";
 import type { MainBundleAssets } from "./main";
 import { connectWebSocket } from "./rpc/RPCClient";
 import { TechTreeScene } from "./scenes/TechTreeScene";
@@ -41,7 +41,7 @@ import { playError } from "./visuals/Sound";
 export async function startGame(
    app: Application,
    resources: MainBundleAssets,
-   textures: Textures,
+   textures: Record<string, Texture>,
    routeChanged: TypedEvent<RouteChangeEvent>,
 ) {
    const routeTo: RouteTo = (component, params) => routeChanged.emit({ component, params });
@@ -204,7 +204,7 @@ function showOfflineProductionProgress(progress: number, routeTo: RouteTo): Prom
    });
 }
 
-function verifyTextures(textures: Textures, city: City) {
+function verifyTextures(textures: Record<string, Texture>, city: City) {
    forEach(Config.Building, (b, def) => {
       if (!getBuildingTexture(b, textures, city)) {
          console.warn(`Cannot find texture for building ${b}`);

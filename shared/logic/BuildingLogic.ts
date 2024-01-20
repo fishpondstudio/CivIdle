@@ -1,6 +1,5 @@
 import type { Building } from "../definitions/BuildingDefinitions";
 import { BuildingSpecial } from "../definitions/BuildingDefinitions";
-import type { City } from "../definitions/CityDefinitions";
 import type { IResourceDefinition, Resource } from "../definitions/ResourceDefinitions";
 import {
    clamp,
@@ -19,7 +18,6 @@ import {
    type Tile,
 } from "../utilities/Helper";
 import { srand } from "../utilities/Random";
-import type { Textures } from "../utilities/Type";
 import type { PartialTabulate } from "../utilities/TypeDefinitions";
 import { TypedEvent } from "../utilities/TypedEvent";
 import { L, t } from "../utilities/i18n";
@@ -28,7 +26,7 @@ import type { GameState } from "./GameState";
 import { getBuildingIO, getBuildingsByType, getGrid, getXyBuildings } from "./IntraTickCache";
 import { getBuildingsThatProduce, getResourcesValue } from "./ResourceLogic";
 import { getAgeForTech, getBuildingUnlockTech } from "./TechLogic";
-import { Tick, type Multiplier, type MultiplierWithSource, type NotProducingReason } from "./TickLogic";
+import { Tick, type Multiplier, type MultiplierWithSource } from "./TickLogic";
 import {
    getConstructionPriority,
    getProductionPriority,
@@ -38,27 +36,6 @@ import {
    type IResourceImportBuildingData,
    type IWarehouseBuildingData,
 } from "./Tile";
-
-export function getBuildingTexture(b: Building, textures: Textures, city: City) {
-   return textures[`Building${b}_${city}`] ?? textures[`Building${b}`];
-}
-
-export function getNotProducingTexture(reason: NotProducingReason, textures: Textures) {
-   switch (reason) {
-      case "NotEnoughResources":
-         return textures.NotEnoughResources;
-      case "NotEnoughWorkers":
-         return textures.NotEnoughWorkers;
-      case "StorageFull":
-         return textures.StorageFull;
-      default:
-         return textures.NotProducingGeneral;
-   }
-}
-
-export function getTileTexture(r: Resource, textures: Textures) {
-   return textures[`Tile${r}`];
-}
 
 export function totalMultiplierFor(xy: Tile, type: keyof Multiplier, base: number, gs: GameState): number {
    let result = base;

@@ -1,5 +1,3 @@
-import type { DependencyList } from "react";
-import { useEffect } from "react";
 import { forEach } from "../utilities/Helper";
 import { TypedEvent } from "../utilities/TypedEvent";
 import { L, t } from "../utilities/i18n";
@@ -52,6 +50,10 @@ document.addEventListener("keydown", OnKeydown.emit);
 
 const shortcuts: Partial<Record<Shortcut, () => void>> = {};
 
+export function getShortcuts() {
+   return shortcuts;
+}
+
 export function clearShortcuts() {
    forEach(shortcuts, (k, v) => {
       shortcuts[k] = undefined;
@@ -68,15 +70,6 @@ OnKeydown.on((e) => {
       }
    });
 });
-
-export function useShortcut(shortcut: Shortcut, callback: () => void, deps: DependencyList) {
-   useEffect(() => {
-      shortcuts[shortcut] = callback;
-      return () => {
-         shortcuts[shortcut] = undefined;
-      };
-   }, [shortcut, callback, ...deps]);
-}
 
 export function getShortcutKey(s: IShortcutConfig): string {
    const keys: string[] = [];

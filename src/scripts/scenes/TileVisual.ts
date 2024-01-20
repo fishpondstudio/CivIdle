@@ -4,9 +4,6 @@ import type { Resource } from "../../../shared/definitions/ResourceDefinitions";
 import {
    getBuildingLevelLabel,
    getBuildingPercentage,
-   getBuildingTexture,
-   getNotProducingTexture,
-   getTileTexture,
    isWorldOrNaturalWonder,
 } from "../../../shared/logic/BuildingLogic";
 import type { GameOptions, GameState } from "../../../shared/logic/GameState";
@@ -26,6 +23,7 @@ import {
    type Tile,
 } from "../../../shared/utilities/Helper";
 import { v2 } from "../../../shared/utilities/Vector2";
+import { getBuildingTexture, getNotProducingTexture, getTileTexture } from "../logic/VisualLogic";
 import { Singleton } from "../utilities/Singleton";
 import { Actions } from "../utilities/pixi-actions/Actions";
 import { Easing } from "../utilities/pixi-actions/Easing";
