@@ -219,7 +219,7 @@ function findSpecialBuildings(gameState: GameState): ISpecialBuildings {
          buildings.Petra = tile;
       }
    });
-   console.assert(buildings.Headquarter, "Should find 1 Headquarter");
+   console.assert(!!buildings.Headquarter, "Should find 1 Headquarter");
    return buildings as ISpecialBuildings;
 }
 

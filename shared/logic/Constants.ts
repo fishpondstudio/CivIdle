@@ -206,8 +206,8 @@ export function calculateTierAndPrice(gs: GameState) {
    forEach(Config.Resource, (r) => {
       Config.ResourceHash[r] = resourceHash++;
       if (Config.Resource[r].canPrice) {
-         console.assert(Config.ResourceTier[r], `Resource = ${r} does not have a tier`);
-         console.assert(Config.ResourcePrice[r], `Resource = ${r} does not have a price`);
+         console.assert(!!Config.ResourceTier[r], `Resource = ${r} does not have a tier`);
+         console.assert(!!Config.ResourcePrice[r], `Resource = ${r} does not have a price`);
       } else {
          Config.ResourcePrice[r] = 1;
          Config.ResourceTier[r] = 1;
