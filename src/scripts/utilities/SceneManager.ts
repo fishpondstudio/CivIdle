@@ -1,6 +1,7 @@
-import type { Application, Container, Resource, Texture } from "pixi.js";
-import { watchGameOptions, watchGameState } from "../Global";
-import type { GameOptions, GameState } from "../logic/GameState";
+import type { Application, Container } from "pixi.js";
+import type { GameOptions, GameState } from "../../../shared/logic/GameState";
+import { watchGameOptions, watchGameState } from "../../../shared/logic/GameStateLogic";
+import { type Textures } from "../../../shared/utilities/Type";
 import type { MainBundleAssets } from "../main";
 import { Camera } from "./Camera";
 
@@ -35,8 +36,6 @@ export class ViewportScene extends Scene {
       this.viewport.destroy({ children: true, texture: false, baseTexture: false });
    }
 }
-
-export type Textures = Record<string, Texture<Resource>>;
 
 export interface ISceneContext {
    app: Application;

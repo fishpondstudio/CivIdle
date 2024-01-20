@@ -1,14 +1,15 @@
 import classNames from "classnames";
-import { notifyGameStateUpdate, useGameState } from "../Global";
-import { Config } from "../logic/Config";
+import { Config } from "../../../shared/logic/Config";
+import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
 import {
    PRIORITY_MAX,
    PRIORITY_MIN,
    getUpgradePriority,
    setUpgradePriority,
    type ITileData,
-} from "../logic/Tile";
-import { L, t } from "../utilities/i18n";
+} from "../../../shared/logic/Tile";
+import { L, t } from "../../../shared/utilities/i18n";
+import { useGameState } from "../Global";
 import { BuildingConstructionProgressComponent } from "./BuildingConstructionProgressComponent";
 import { MenuComponent } from "./MenuComponent";
 

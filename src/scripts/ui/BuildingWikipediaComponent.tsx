@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
-import type { Building } from "../definitions/BuildingDefinitions";
-import { Config } from "../logic/Config";
+import type { Building } from "../../../shared/definitions/BuildingDefinitions";
+import { Config } from "../../../shared/logic/Config";
 import type { IBuildingComponentProps } from "./BuildingPage";
 
 const WikipediaCache: Partial<Record<Building, string>> = {};

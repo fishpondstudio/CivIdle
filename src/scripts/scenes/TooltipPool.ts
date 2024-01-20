@@ -1,6 +1,6 @@
 import type { Container } from "pixi.js";
 import { BitmapText } from "pixi.js";
-import { ObjectPool } from "../utilities/ObjectPool";
+import { ObjectPool } from "../../../shared/utilities/ObjectPool";
 import { Fonts } from "../visuals/Fonts";
 
 export class TooltipPool extends ObjectPool<BitmapText> {

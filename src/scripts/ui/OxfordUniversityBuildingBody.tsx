@@ -1,5 +1,5 @@
-import { getTotalBuildingUpgrades } from "../logic/BuildingLogic";
-import { L, t } from "../utilities/i18n";
+import { getTotalBuildingUpgrades } from "../../../shared/logic/BuildingLogic";
+import { L, t } from "../../../shared/utilities/i18n";
 import { BuildingColorComponent } from "./BuildingColorComponent";
 import { BuildingDescriptionComponent } from "./BuildingDescriptionComponent";
 import type { IBuildingComponentProps } from "./BuildingPage";

@@ -1,5 +1,3 @@
-import { Ticker, UPDATE_PRIORITY } from "pixi.js";
-
 class AverageProvider {
    private readonly _history: number[];
    private readonly _decayRatio: number;
@@ -217,15 +215,7 @@ export abstract class ObjectPool<T> {
       }
    }
 
-   startGC(ticker: Ticker = Ticker.shared): void {
-      ticker.add(this._gcTick, null, UPDATE_PRIORITY.UTILITY);
-   }
-
-   stopGC(ticker: Ticker = Ticker.shared): void {
-      ticker.remove(this._gcTick);
-   }
-
-   private readonly _gcTick = (): void => {
+   public readonly gcTick = (): void => {
       this._borrowRateAverage = this._borrowRateAverageProvider.next(this._borrowRate);
       this._marginAverage = this._marginAverageProvider.next(this._freeCount - this._borrowRate);
 

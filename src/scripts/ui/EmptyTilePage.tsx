@@ -1,4 +1,16 @@
 import { useState } from "react";
+import type { Building } from "../../../shared/definitions/BuildingDefinitions";
+import {
+   checkBuildingMax,
+   getBuildingCost,
+   isWorldOrNaturalWonder,
+} from "../../../shared/logic/BuildingLogic";
+import { Config } from "../../../shared/logic/Config";
+import { getGameOptions, notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
+import { getTypeBuildings, unlockedBuildings } from "../../../shared/logic/IntraTickCache";
+import { useShortcut } from "../../../shared/logic/Shortcut";
+import type { ITileData } from "../../../shared/logic/Tile";
+import { makeBuilding } from "../../../shared/logic/Tile";
 import {
    anyOf,
    formatNumber,
@@ -9,17 +21,10 @@ import {
    setContains,
    sizeOf,
 } from "../../../shared/utilities/Helper";
+import { L, t } from "../../../shared/utilities/i18n";
 import "../../css/EmptyTilePage.css";
-import { getGameOptions, notifyGameStateUpdate, useGameState } from "../Global";
-import type { Building } from "../definitions/BuildingDefinitions";
-import { checkBuildingMax, getBuildingCost, isWorldOrNaturalWonder } from "../logic/BuildingLogic";
-import { Config } from "../logic/Config";
-import { getTypeBuildings, unlockedBuildings } from "../logic/IntraTickCache";
-import { useShortcut } from "../logic/Shortcut";
-import type { ITileData } from "../logic/Tile";
-import { makeBuilding } from "../logic/Tile";
+import { useGameState } from "../Global";
 import { jsxMapOf } from "../utilities/Helper";
-import { L, t } from "../utilities/i18n";
 import { MenuComponent } from "./MenuComponent";
 
 let lastBuild: Building | null = null;

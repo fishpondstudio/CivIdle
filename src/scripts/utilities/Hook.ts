@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import type { TypedEvent } from "./TypedEvent";
+import type { TypedEvent } from "../../../shared/utilities/TypedEvent";
 
 export function makeObservableHook<T>(event: TypedEvent<T>, getter: () => T) {
    return function observe(): T {

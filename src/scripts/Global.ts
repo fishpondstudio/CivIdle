@@ -1,24 +1,32 @@
+import type { City } from "../../shared/definitions/CityDefinitions";
+import type { TechAge } from "../../shared/definitions/TechDefinitions";
+import { Config } from "../../shared/logic/Config";
+import type { GameOptions, SavedGame } from "../../shared/logic/GameState";
+import { GameState } from "../../shared/logic/GameState";
+import {
+   GameOptionsChanged,
+   GameStateChanged,
+   TILE_SIZE,
+   deserializeSave,
+   getGameOptions,
+   getGameState,
+   notifyGameStateUpdate,
+   savedGame,
+   serializeSave,
+} from "../../shared/logic/GameStateLogic";
+import { rollPermanentGreatPeople } from "../../shared/logic/RebornLogic";
+import { getGreatPeopleChoices } from "../../shared/logic/TechLogic";
+import { makeBuilding, type ITileData } from "../../shared/logic/Tile";
+import { initializeGameState } from "../../shared/logic/initializeGameState";
+import { Grid } from "../../shared/utilities/Grid";
 import { firstKeyOf, forEach, xyToTile, type Tile } from "../../shared/utilities/Helper";
-import type { City } from "./definitions/CityDefinitions";
-import type { TechAge } from "./definitions/TechDefinitions";
-import { Config } from "./logic/Config";
-import type { GameOptions } from "./logic/GameState";
-import { GameState, SavedGame, initializeGameState } from "./logic/GameState";
-import { rollPermanentGreatPeople } from "./logic/RebornLogic";
-import { getGreatPeopleChoices } from "./logic/TechLogic";
-import { makeBuilding, type ITileData } from "./logic/Tile";
+import { TypedEvent } from "../../shared/utilities/TypedEvent";
 import { SteamClient, isSteam } from "./rpc/SteamClient";
-import { Grid } from "./scenes/Grid";
 import { WorldScene } from "./scenes/WorldScene";
 import { idbGet, idbSet } from "./utilities/BrowserStorage";
 import { makeObservableHook } from "./utilities/Hook";
 import { Singleton } from "./utilities/Singleton";
-import { TypedEvent } from "./utilities/TypedEvent";
 import { compress, decompress } from "./workers/Compress";
-
-const savedGame = new SavedGame();
-
-export const TILE_SIZE = 64;
 
 export function wipeSaveData() {
    resetToCity(firstKeyOf(Config.City)!);
@@ -71,17 +79,6 @@ if (import.meta.env.DEV) {
    };
 }
 
-export const GameStateChanged = new TypedEvent<GameState>();
-export const GameOptionsChanged = new TypedEvent<GameOptions>();
-
-export function getGameState(): GameState {
-   return savedGame.current;
-}
-
-export function getGameOptions(): GameOptions {
-   return savedGame.options;
-}
-
 export const OnUIThemeChanged = new TypedEvent<boolean>();
 
 export function syncUITheme(gameOptions: GameOptions): void {
@@ -127,32 +124,6 @@ export async function compressSave(gs: SavedGame = savedGame): Promise<Uint8Arra
    return await compress(serializeSave(gs));
 }
 
-function replacer(key: string, value: any): any {
-   if (value instanceof Map) {
-      return {
-         $type: "Map",
-         value: Array.from(value.entries()), // or with spread: value: [...value]
-      };
-   }
-   return value;
-}
-function reviver(key: string, value: any): any {
-   if (typeof value === "object" && value !== null) {
-      if (value.$type === "Map") {
-         return new Map(value.value);
-      }
-   }
-   return value;
-}
-
-export function serializeSave(gs: SavedGame = savedGame): Uint8Array {
-   return new TextEncoder().encode(JSON.stringify(gs, replacer));
-}
-
-export function deserializeSave(bytes: Uint8Array): SavedGame {
-   return JSON.parse(new TextDecoder().decode(bytes), reviver);
-}
-
 export async function decompressSave(data: Uint8Array): Promise<SavedGame> {
    return deserializeSave(await decompress(data));
 }
@@ -187,36 +158,6 @@ export function isGameDataCompatible(gs: SavedGame): boolean {
    gs.options.themeColors = Object.assign(savedGame.options.themeColors, gs.options.themeColors);
    Object.assign(savedGame.options, gs.options);
    return true;
-}
-
-export function notifyGameStateUpdate(gameState?: GameState): void {
-   GameStateChanged.emit(gameState ?? getGameState());
-}
-
-export function notifyGameOptionsUpdate(gameOptions?: GameOptions): void {
-   GameOptionsChanged.emit(gameOptions ?? getGameOptions());
-}
-
-export function watchGameState(cb: (gs: GameState) => void): () => void {
-   cb(getGameState());
-   function handleGameStateChanged(gs: GameState) {
-      cb(gs);
-   }
-   GameStateChanged.on(handleGameStateChanged);
-   return () => {
-      GameStateChanged.off(handleGameStateChanged);
-   };
-}
-
-export function watchGameOptions(cb: (gameOptions: GameOptions) => void): () => void {
-   cb(getGameOptions());
-   function handleGameOptionsChanged(gameOptions: GameOptions) {
-      cb(gameOptions);
-   }
-   GameOptionsChanged.on(handleGameOptionsChanged);
-   return () => {
-      GameOptionsChanged.off(handleGameOptionsChanged);
-   };
 }
 
 export const useGameState = makeObservableHook(GameStateChanged, getGameState);

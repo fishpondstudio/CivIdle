@@ -2,6 +2,7 @@ import * as Sentry from "@sentry/browser";
 import type { Texture } from "pixi.js";
 import { Application, Assets, BitmapFont, Spritesheet } from "pixi.js";
 import { createRoot } from "react-dom/client";
+import { TypedEvent } from "../../shared/utilities/TypedEvent";
 import "../css/Main.css";
 import CabinMedium from "../fonts/CabinMedium.ttf?url";
 import CabinSketchBold from "../fonts/CabinSketchBold.ttf?url";
@@ -24,7 +25,6 @@ import { build } from "./Version.json";
 import { ChatPanel } from "./ui/ChatPanel";
 import { GlobalModal, GlobalToast } from "./ui/GlobalModal";
 import { ResourcePanel } from "./ui/ResourcePanel";
-import { TypedEvent } from "./utilities/TypedEvent";
 import { Fonts } from "./visuals/Fonts";
 
 if (!import.meta.env.DEV) {

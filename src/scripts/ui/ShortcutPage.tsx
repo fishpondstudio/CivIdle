@@ -1,8 +1,8 @@
+import type { IShortcutNameAndScope, Shortcut } from "../../../shared/logic/Shortcut";
+import { ShortcutActions, ShortcutScopes, getShortcutKey } from "../../../shared/logic/Shortcut";
+import { L, t } from "../../../shared/utilities/i18n";
 import { useGameOptions } from "../Global";
-import type { IShortcutNameAndScope, Shortcut } from "../logic/Shortcut";
-import { ShortcutActions, ShortcutScopes, getShortcutKey } from "../logic/Shortcut";
 import { jsxMapOf } from "../utilities/Helper";
-import { L, t } from "../utilities/i18n";
 import { EditShortcutModal } from "./EditShortcutModal";
 import { showModal } from "./GlobalModal";
 import { MenuComponent } from "./MenuComponent";

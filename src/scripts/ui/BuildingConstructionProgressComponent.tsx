@@ -1,14 +1,14 @@
-import { formatHMS, formatPercent } from "../../../shared/utilities/Helper";
 import {
    getBuilderCapacity,
    getBuildingPercentage,
    getMultipliersFor,
    isWorldWonder,
-} from "../logic/BuildingLogic";
-import { Config } from "../logic/Config";
-import { Tick } from "../logic/TickLogic";
+} from "../../../shared/logic/BuildingLogic";
+import { Config } from "../../../shared/logic/Config";
+import { Tick } from "../../../shared/logic/TickLogic";
+import { formatHMS, formatPercent } from "../../../shared/utilities/Helper";
+import { L, t } from "../../../shared/utilities/i18n";
 import { jsxMapOf } from "../utilities/Helper";
-import { L, t } from "../utilities/i18n";
 import type { IBuildingComponentProps } from "./BuildingPage";
 import { FormatNumber } from "./HelperComponents";
 import { ProgressBarComponent } from "./ProgressBarComponent";

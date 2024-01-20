@@ -1,3 +1,33 @@
+import type { Deposit } from "../../../shared/definitions/ResourceDefinitions";
+import {
+   OnTileExplored,
+   ST_PETERS_FAITH_MULTIPLIER,
+   ST_PETERS_STORAGE_MULTIPLIER,
+   exploreTile,
+   getTotalBuildingUpgrades,
+   isNaturalWonder,
+   isSpecialBuilding,
+   isWorldWonder,
+} from "../../../shared/logic/BuildingLogic";
+import { Config } from "../../../shared/logic/Config";
+import { getGameState } from "../../../shared/logic/GameStateLogic";
+import {
+   getBuildingsByType,
+   getGrid,
+   getSpecialBuildings,
+   getTypeBuildings,
+   getXyBuildings,
+} from "../../../shared/logic/IntraTickCache";
+import { getBuildingsThatProduce, getRevealedDeposits } from "../../../shared/logic/ResourceLogic";
+import { addDeposit, getGreatPeopleChoices } from "../../../shared/logic/TechLogic";
+import { ensureTileFogOfWar } from "../../../shared/logic/TerrainLogic";
+import { Tick } from "../../../shared/logic/TickLogic";
+import type { IPetraBuildingData } from "../../../shared/logic/Tile";
+import {
+   OnBuildingComplete,
+   OnBuildingProductionComplete,
+   addMultiplier,
+} from "../../../shared/logic/Update";
 import {
    forEach,
    isEmpty,
@@ -9,40 +39,22 @@ import {
    tileToPoint,
    type Tile,
 } from "../../../shared/utilities/Helper";
-import type { Deposit } from "../definitions/ResourceDefinitions";
+import { L, t } from "../../../shared/utilities/i18n";
 import { WorldScene } from "../scenes/WorldScene";
 import { ChooseGreatPersonModal } from "../ui/ChooseGreatPersonModal";
 import { showModal } from "../ui/GlobalModal";
 import { Singleton } from "../utilities/Singleton";
-import { L, t } from "../utilities/i18n";
-import {
-   ST_PETERS_FAITH_MULTIPLIER,
-   ST_PETERS_STORAGE_MULTIPLIER,
-   exploreTile,
-   getTotalBuildingUpgrades,
-   isNaturalWonder,
-   isSpecialBuilding,
-   isWorldWonder,
-} from "./BuildingLogic";
-import { Config } from "./Config";
-import type { GameState } from "./GameState";
-import { getBuildingsByType, getTypeBuildings, getXyBuildings } from "./IntraTickCache";
-import { getBuildingsThatProduce, getRevealedDeposits } from "./ResourceLogic";
-import { addDeposit, getGreatPeopleChoices } from "./TechLogic";
-import { ensureTileFogOfWar } from "./TerrainLogic";
-import { Tick } from "./TickLogic";
-import type { IPetraBuildingData } from "./Tile";
-import { addMultiplier } from "./Update";
 
-export function onBuildingComplete(xy: Tile, gs: GameState) {
-   for (const g of ensureTileFogOfWar(xy, gs, Singleton().grid)) {
+OnBuildingComplete.on((xy) => {
+   const gs = getGameState();
+   for (const g of ensureTileFogOfWar(xy, gs, getGrid(gs))) {
       Singleton().sceneManager.getCurrent(WorldScene)?.getTile(g)?.reveal().catch(console.error);
    }
    const building = gs.tiles.get(xy)?.building;
    if (!building) {
       return;
    }
-   const { grid } = Singleton();
+   const grid = getGrid(gs);
    switch (building.type) {
       case "HatshepsutTemple": {
          gs.tiles.forEach((tile, xy) => {
@@ -93,9 +105,10 @@ export function onBuildingComplete(xy: Tile, gs: GameState) {
          break;
       }
    }
-}
+});
 
-export function onTileExplored(xy: Tile, gs: GameState) {
+OnTileExplored.on((xy) => {
+   const gs = getGameState();
    const building = gs.tiles.get(xy)?.building;
    if (isNaturalWonder(building?.type)) {
       switch (building?.type) {
@@ -112,15 +125,16 @@ export function onTileExplored(xy: Tile, gs: GameState) {
          }
       }
    }
-}
+});
 
-export function onBuildingProductionComplete(xy: Tile, gs: GameState, offline: boolean) {
+OnBuildingProductionComplete.on(({ xy, offline }) => {
+   const gs = getGameState();
    const building = gs.tiles.get(xy)?.building;
    if (!building) {
       return;
    }
    const buildingsByType = getTypeBuildings(gs);
-   const { grid } = Singleton();
+   const grid = getGrid(gs);
    const buildingName = Config.Building[building.type].name();
 
    switch (building.type) {
@@ -333,7 +347,7 @@ export function onBuildingProductionComplete(xy: Tile, gs: GameState, offline: b
       }
       case "OxfordUniversity": {
          const upgrades = getTotalBuildingUpgrades(gs);
-         safeAdd(Singleton().buildings.Headquarter.building.resources, "Science", upgrades);
+         safeAdd(getSpecialBuildings(gs).Headquarter.building.resources, "Science", upgrades);
          break;
       }
       case "StPetersBasilica": {
@@ -535,4 +549,4 @@ export function onBuildingProductionComplete(xy: Tile, gs: GameState, offline: b
       //    break;
       // }
    }
-}
+});

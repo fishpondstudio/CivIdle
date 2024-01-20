@@ -1,11 +1,11 @@
+import { applyToAllBuildings, getMarketPrice, totalMultiplierFor } from "../../../shared/logic/BuildingLogic";
+import { Config } from "../../../shared/logic/Config";
+import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
+import type { IMarketBuildingData } from "../../../shared/logic/Tile";
+import { MarketOptions } from "../../../shared/logic/Tile";
+import { convertPriceIdToTime } from "../../../shared/logic/Update";
 import { formatHMS, hasFlag, keysOf, round, toggleFlag } from "../../../shared/utilities/Helper";
-import { notifyGameStateUpdate } from "../Global";
-import { applyToAllBuildings, getMarketPrice, totalMultiplierFor } from "../logic/BuildingLogic";
-import { Config } from "../logic/Config";
-import type { IMarketBuildingData } from "../logic/Tile";
-import { MarketOptions } from "../logic/Tile";
-import { convertPriceIdToTime } from "../logic/Update";
-import { L, t } from "../utilities/i18n";
+import { L, t } from "../../../shared/utilities/i18n";
 import { playClick } from "../visuals/Sound";
 import { BuildingColorComponent } from "./BuildingColorComponent";
 import type { IBuildingComponentProps } from "./BuildingPage";

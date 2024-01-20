@@ -1,11 +1,11 @@
 import classNames from "classnames";
+import { getMultipliersFor, getStorageFor } from "../../../shared/logic/BuildingLogic";
+import { Config } from "../../../shared/logic/Config";
+import { Tick } from "../../../shared/logic/TickLogic";
 import { formatPercent } from "../../../shared/utilities/Helper";
+import { L, t } from "../../../shared/utilities/i18n";
 import warning from "../../images/warning.png";
-import { getMultipliersFor, getStorageFor } from "../logic/BuildingLogic";
-import { Config } from "../logic/Config";
-import { Tick } from "../logic/TickLogic";
 import { jsxMapOf } from "../utilities/Helper";
-import { L, t } from "../utilities/i18n";
 import type { IBuildingComponentProps } from "./BuildingPage";
 import { DeleteResourceModal } from "./DeleteResourceModal";
 import { showModal } from "./GlobalModal";

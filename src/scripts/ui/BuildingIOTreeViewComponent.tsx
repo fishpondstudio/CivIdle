@@ -1,14 +1,14 @@
 import classNames from "classnames";
+import { IOCalculation, getMultipliersFor, totalMultiplierFor } from "../../../shared/logic/BuildingLogic";
+import { Config } from "../../../shared/logic/Config";
+import type { GameState } from "../../../shared/logic/GameState";
+import { getBuildingIO } from "../../../shared/logic/IntraTickCache";
+import type { Multiplier } from "../../../shared/logic/TickLogic";
+import { Tick } from "../../../shared/logic/TickLogic";
 import { type Tile } from "../../../shared/utilities/Helper";
+import { L, t } from "../../../shared/utilities/i18n";
 import warning from "../../images/warning.png";
-import { IOCalculation, getMultipliersFor, totalMultiplierFor } from "../logic/BuildingLogic";
-import { Config } from "../logic/Config";
-import type { GameState } from "../logic/GameState";
-import { getBuildingIO } from "../logic/IntraTickCache";
-import type { Multiplier } from "../logic/TickLogic";
-import { Tick } from "../logic/TickLogic";
 import { jsxMapOf } from "../utilities/Helper";
-import { L, t } from "../utilities/i18n";
 import { FormatNumber } from "./HelperComponents";
 
 export function BuildingIOTreeViewComponent({

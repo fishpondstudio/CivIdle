@@ -1,8 +1,8 @@
 import { useState } from "react";
+import { L, t } from "../../../shared/utilities/i18n";
 import { OnUserChanged, client, useUser } from "../rpc/RPCClient";
 import { CountryCode, getCountryName, getFlagUrl } from "../utilities/CountryCode";
 import { jsxMapOf } from "../utilities/Helper";
-import { L, t } from "../utilities/i18n";
 import { hideModal, showToast } from "./GlobalModal";
 
 export function ChangePlayerHandleModal(): React.ReactNode {

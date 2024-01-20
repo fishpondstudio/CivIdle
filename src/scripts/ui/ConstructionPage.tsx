@@ -1,15 +1,16 @@
-import { notifyGameStateUpdate, useGameState } from "../Global";
-import { Config } from "../logic/Config";
+import { Config } from "../../../shared/logic/Config";
+import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
 import {
    PRIORITY_MAX,
    PRIORITY_MIN,
    getConstructionPriority,
    setConstructionPriority,
    type ITileData,
-} from "../logic/Tile";
+} from "../../../shared/logic/Tile";
+import { L, t } from "../../../shared/utilities/i18n";
+import { useGameState } from "../Global";
 import { WorldScene } from "../scenes/WorldScene";
 import { Singleton } from "../utilities/Singleton";
-import { L, t } from "../utilities/i18n";
 import { BuildingConstructionProgressComponent } from "./BuildingConstructionProgressComponent";
 import { MenuComponent } from "./MenuComponent";
 

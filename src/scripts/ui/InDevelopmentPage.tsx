@@ -1,4 +1,4 @@
-import { L, t } from "../utilities/i18n";
+import { L, t } from "../../../shared/utilities/i18n";
 import { MenuComponent } from "./MenuComponent";
 import { WarningComponent } from "./WarningComponent";
 

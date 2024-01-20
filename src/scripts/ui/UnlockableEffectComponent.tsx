@@ -1,12 +1,12 @@
+import type { IUnlockableDefinition } from "../../../shared/definitions/ITechDefinition";
+import { getBuildingCost } from "../../../shared/logic/BuildingLogic";
+import { Config } from "../../../shared/logic/Config";
+import type { GameState } from "../../../shared/logic/GameState";
+import { GlobalMultiplierNames } from "../../../shared/logic/TickLogic";
+import { getDepositTileCount } from "../../../shared/logic/Tile";
 import { formatNumber, mapOf } from "../../../shared/utilities/Helper";
-import type { IUnlockableDefinition } from "../definitions/ITechDefinition";
-import { getBuildingCost } from "../logic/BuildingLogic";
-import { Config } from "../logic/Config";
-import type { GameState } from "../logic/GameState";
-import { GlobalMultiplierNames } from "../logic/TickLogic";
-import { getDepositTileCount } from "../logic/Tile";
+import { L, t } from "../../../shared/utilities/i18n";
 import { jsxMapOf } from "../utilities/Helper";
-import { L, t } from "../utilities/i18n";
 
 export function UnlockableEffectComponent({
    definition,

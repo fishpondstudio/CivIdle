@@ -1,8 +1,8 @@
 import { SmoothGraphics } from "@pixi/graphics-smooth";
 import { BitmapText, Sprite, Text } from "pixi.js";
+import type { GreatPerson } from "../../../shared/definitions/GreatPersonDefinitions";
+import { Config } from "../../../shared/logic/Config";
 import { containsNonASCII } from "../../../shared/utilities/Helper";
-import type { GreatPerson } from "../definitions/GreatPersonDefinitions";
-import { Config } from "../logic/Config";
 import type { ISceneContext } from "../utilities/SceneManager";
 import { Fonts } from "./Fonts";
 

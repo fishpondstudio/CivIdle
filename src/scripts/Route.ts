@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
+import { getGameState } from "../../shared/logic/GameStateLogic";
+import { clearShortcuts } from "../../shared/logic/Shortcut";
 import type { Tile } from "../../shared/utilities/Helper";
-import { getGameState } from "./Global";
-import { clearShortcuts } from "./logic/Shortcut";
+import type { TypedEvent } from "../../shared/utilities/TypedEvent";
 import { LoadingPage } from "./ui/LoadingPage";
 import { TilePage } from "./ui/TilePage";
-import type { TypedEvent } from "./utilities/TypedEvent";
 import { playClick } from "./visuals/Sound";
 
 export function Route({ event }: { event: TypedEvent<RouteChangeEvent> }) {

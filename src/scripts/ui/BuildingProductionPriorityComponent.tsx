@@ -1,10 +1,15 @@
+import { IOCalculation } from "../../../shared/logic/BuildingLogic";
+import { GameFeature, hasFeature } from "../../../shared/logic/FeatureLogic";
+import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
+import { getBuildingIO } from "../../../shared/logic/IntraTickCache";
+import {
+   PRIORITY_MAX,
+   PRIORITY_MIN,
+   getProductionPriority,
+   setProductionPriority,
+} from "../../../shared/logic/Tile";
 import { isEmpty } from "../../../shared/utilities/Helper";
-import { notifyGameStateUpdate } from "../Global";
-import { IOCalculation } from "../logic/BuildingLogic";
-import { GameFeature, hasFeature } from "../logic/FeatureLogic";
-import { getBuildingIO } from "../logic/IntraTickCache";
-import { PRIORITY_MAX, PRIORITY_MIN, getProductionPriority, setProductionPriority } from "../logic/Tile";
-import { L, t } from "../utilities/i18n";
+import { L, t } from "../../../shared/utilities/i18n";
 import { ApplyToAllComponent } from "./ApplyToAllComponent";
 import type { IBuildingComponentProps } from "./BuildingPage";
 

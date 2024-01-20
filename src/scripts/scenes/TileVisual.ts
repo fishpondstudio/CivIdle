@@ -1,5 +1,19 @@
 import type { IDestroyOptions, IPointData } from "pixi.js";
 import { BitmapText, Color, Container, Sprite } from "pixi.js";
+import type { Resource } from "../../../shared/definitions/ResourceDefinitions";
+import {
+   getBuildingLevelLabel,
+   getBuildingPercentage,
+   getBuildingTexture,
+   getNotProducingTexture,
+   getTileTexture,
+   isWorldOrNaturalWonder,
+} from "../../../shared/logic/BuildingLogic";
+import type { GameOptions, GameState } from "../../../shared/logic/GameState";
+import { getGameOptions, getGameState } from "../../../shared/logic/GameStateLogic";
+import { getGrid } from "../../../shared/logic/IntraTickCache";
+import { Tick } from "../../../shared/logic/TickLogic";
+import type { ITileData } from "../../../shared/logic/Tile";
 import {
    clamp,
    forEach,
@@ -12,19 +26,6 @@ import {
    type Tile,
 } from "../../../shared/utilities/Helper";
 import { v2 } from "../../../shared/utilities/Vector2";
-import { getGameOptions, getGameState } from "../Global";
-import type { Resource } from "../definitions/ResourceDefinitions";
-import {
-   getBuildingLevelLabel,
-   getBuildingPercentage,
-   getBuildingTexture,
-   getNotProducingTexture,
-   getTileTexture,
-   isWorldOrNaturalWonder,
-} from "../logic/BuildingLogic";
-import type { GameOptions, GameState } from "../logic/GameState";
-import { Tick } from "../logic/TickLogic";
-import type { ITileData } from "../logic/Tile";
 import { Singleton } from "../utilities/Singleton";
 import { Actions } from "../utilities/pixi-actions/Actions";
 import { Easing } from "../utilities/pixi-actions/Easing";
@@ -59,7 +60,7 @@ export class TileVisual extends Container {
       this._xy = pointToTile(this._grid);
       this._tile = gs.tiles.get(this._xy)!;
 
-      this.position = Singleton().grid.gridToPosition(this._grid);
+      this.position = getGrid(gs).gridToPosition(this._grid);
       this.cullable = true;
 
       const { textures } = this._world.context;

@@ -1,9 +1,10 @@
 import classNames from "classnames";
+import { HAPPINESS_MULTIPLIER, HappinessNames, getHappinessIcon } from "../../../shared/logic/HappinessLogic";
+import { Tick } from "../../../shared/logic/TickLogic";
 import { formatPercent } from "../../../shared/utilities/Helper";
-import { HAPPINESS_MULTIPLIER, HappinessNames, getHappinessIcon } from "../logic/HappinessLogic";
-import { Tick, useCurrentTick } from "../logic/TickLogic";
+import { L, t } from "../../../shared/utilities/i18n";
+import { useCurrentTick } from "../logic/Tick";
 import { jsxMapOf } from "../utilities/Helper";
-import { L, t } from "../utilities/i18n";
 import { FormatNumber } from "./HelperComponents";
 import { ProgressBarComponent } from "./ProgressBarComponent";
 

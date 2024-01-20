@@ -1,3 +1,8 @@
+import type { Building } from "../definitions/BuildingDefinitions";
+import type { City } from "../definitions/CityDefinitions";
+import type { GreatPerson } from "../definitions/GreatPersonDefinitions";
+import type { Deposit, Resource } from "../definitions/ResourceDefinitions";
+import type { Tech, TechAge } from "../definitions/TechDefinitions";
 import {
    filterOf,
    forEach,
@@ -6,15 +11,11 @@ import {
    keysOf,
    shuffle,
    type Tile,
-} from "../../../shared/utilities/Helper";
-import type { Building } from "../definitions/BuildingDefinitions";
-import type { City } from "../definitions/CityDefinitions";
-import type { GreatPerson } from "../definitions/GreatPersonDefinitions";
-import type { Deposit, Resource } from "../definitions/ResourceDefinitions";
-import type { Tech, TechAge } from "../definitions/TechDefinitions";
-import { Singleton } from "../utilities/Singleton";
+} from "../utilities/Helper";
 import { Config } from "./Config";
 import type { GameState, GreatPeopleChoice } from "./GameState";
+import { getGameState } from "./GameStateLogic";
+import { getSpecialBuildings } from "./IntraTickCache";
 import { getBuildingsThatProduce } from "./ResourceLogic";
 import { getDepositTileCount } from "./Tile";
 
@@ -29,7 +30,7 @@ export function getUnlockCost(tech: Tech): number {
 }
 
 export function getScienceAmount(): number {
-   return Singleton().buildings.Headquarter.building.resources.Science ?? 0;
+   return getSpecialBuildings(getGameState()).Headquarter.building.resources.Science ?? 0;
 }
 
 export function getMostAdvancedTech(gs: GameState): Tech | null {

@@ -1,18 +1,24 @@
+import type { Resource } from "../../../shared/definitions/ResourceDefinitions";
+import type { Tech } from "../../../shared/definitions/TechDefinitions";
+import { Config } from "../../../shared/logic/Config";
+import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
+import { getResourceAmount, trySpendResources } from "../../../shared/logic/ResourceLogic";
+import { useShortcut } from "../../../shared/logic/Shortcut";
+import {
+   getCurrentTechAge,
+   getGreatPeopleChoices,
+   getUnlockCost,
+   unlockTech,
+} from "../../../shared/logic/TechLogic";
 import { forEach, reduceOf } from "../../../shared/utilities/Helper";
 import type { PartialTabulate } from "../../../shared/utilities/TypeDefinitions";
-import { notifyGameStateUpdate, useGameState } from "../Global";
+import { L, t } from "../../../shared/utilities/i18n";
+import { useGameState } from "../Global";
 import { MAX_TECH_COLUMN } from "../SteamTesting";
-import type { Resource } from "../definitions/ResourceDefinitions";
-import type { Tech } from "../definitions/TechDefinitions";
-import { Config } from "../logic/Config";
-import { getResourceAmount, trySpendResources } from "../logic/ResourceLogic";
-import { useShortcut } from "../logic/Shortcut";
-import { getCurrentTechAge, getGreatPeopleChoices, getUnlockCost, unlockTech } from "../logic/TechLogic";
 import { TechTreeScene } from "../scenes/TechTreeScene";
 import { WorldScene } from "../scenes/WorldScene";
 import { jsxMapOf } from "../utilities/Helper";
 import { Singleton } from "../utilities/Singleton";
-import { L, t } from "../utilities/i18n";
 import { playLevelUp } from "../visuals/Sound";
 import { ChooseGreatPersonModal } from "./ChooseGreatPersonModal";
 import { showModal } from "./GlobalModal";

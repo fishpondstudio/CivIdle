@@ -1,9 +1,10 @@
+import { Config } from "../../../shared/logic/Config";
+import { getSpecialBuildings } from "../../../shared/logic/IntraTickCache";
 import { isEmpty } from "../../../shared/utilities/Helper";
+import { L, t } from "../../../shared/utilities/i18n";
 import { useGameOptions, useGameState } from "../Global";
-import { Config } from "../logic/Config";
 import { jsxMapOf } from "../utilities/Helper";
 import { Singleton } from "../utilities/Singleton";
-import { L, t } from "../utilities/i18n";
 import { greatPersonImage } from "../visuals/GreatPersonVisual";
 import { playLevelUp } from "../visuals/Sound";
 import { ChooseGreatPersonModal } from "./ChooseGreatPersonModal";
@@ -26,7 +27,7 @@ export function GreatPersonPage(): React.ReactNode {
          <div className="window-body">
             <button
                className="w100"
-               onClick={() => Singleton().routeTo(TilePage, { xy: Singleton().buildings.Headquarter.tile })}
+               onClick={() => Singleton().routeTo(TilePage, { xy: getSpecialBuildings(gs).Headquarter.tile })}
             >
                <div className="row jcc">
                   <div className="m-icon" style={{ margin: "0 5px 0 -5px", fontSize: "18px" }}>

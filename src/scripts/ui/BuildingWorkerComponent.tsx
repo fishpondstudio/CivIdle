@@ -1,7 +1,4 @@
 import classNames from "classnames";
-import { formatPercent, isEmpty } from "../../../shared/utilities/Helper";
-import warning from "../../images/warning.png";
-import { notifyGameStateUpdate } from "../Global";
 import {
    IOCalculation,
    getBuildingName,
@@ -9,10 +6,13 @@ import {
    getResourceName,
    getWorkersFor,
    isSpecialBuilding,
-} from "../logic/BuildingLogic";
-import { getBuildingIO } from "../logic/IntraTickCache";
-import { Tick } from "../logic/TickLogic";
-import { L, t } from "../utilities/i18n";
+} from "../../../shared/logic/BuildingLogic";
+import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
+import { getBuildingIO } from "../../../shared/logic/IntraTickCache";
+import { Tick } from "../../../shared/logic/TickLogic";
+import { formatPercent, isEmpty } from "../../../shared/utilities/Helper";
+import { L, t } from "../../../shared/utilities/i18n";
+import warning from "../../images/warning.png";
 import { ApplyToAllComponent } from "./ApplyToAllComponent";
 import type { IBuildingComponentProps } from "./BuildingPage";
 import { FormatNumber, fmtNumber } from "./HelperComponents";

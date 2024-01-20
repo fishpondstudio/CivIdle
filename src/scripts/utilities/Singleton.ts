@@ -1,8 +1,6 @@
 /////////////////////////////////////////////////////////////////////////////////////////////
 // Attention! Do not complicates the import of this file since it causes HMR to break easily
 import type { Heartbeat } from "../logic/Heartbeat";
-import type { ITileData } from "../logic/Tile";
-import type { Grid } from "../scenes/Grid";
 import type { GameTicker } from "./GameTicker";
 import type { SceneManager } from "./SceneManager";
 /////////////////////////////////////////////////////////////////////////////////////////////
@@ -14,16 +12,9 @@ export type RouteTo = <P extends Record<string, unknown>>(
 
 export interface ISingleton {
    sceneManager: SceneManager;
-   grid: Grid;
-   buildings: ISpecialBuildings;
    routeTo: RouteTo;
    ticker: GameTicker;
    heartbeat: Heartbeat;
-}
-
-export interface ISpecialBuildings {
-   Headquarter: Required<ITileData>;
-   Petra?: Required<ITileData>;
 }
 
 let singletons: ISingleton | null = null;
@@ -33,10 +24,6 @@ export function initializeSingletons(s: ISingleton) {
       console.warn("Singletons are already initialized, you are trying to initialize it again!");
    }
    singletons = s;
-   if (import.meta.env.DEV) {
-      // @ts-expect-error
-      window.singleton = s;
-   }
 }
 
 export function isSingletonReady() {

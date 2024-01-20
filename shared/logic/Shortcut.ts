@@ -1,9 +1,9 @@
 import type { DependencyList } from "react";
 import { useEffect } from "react";
-import { forEach } from "../../../shared/utilities/Helper";
-import { getGameOptions } from "../Global";
+import { forEach } from "../utilities/Helper";
 import { TypedEvent } from "../utilities/TypedEvent";
 import { L, t } from "../utilities/i18n";
+import { getGameOptions } from "./GameStateLogic";
 
 export const ShortcutScopes = {
    BuildingPage: () => t(L.ShortcutScopeBuildingPage),

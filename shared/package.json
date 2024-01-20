@@ -3,7 +3,7 @@
    "version": "1.0.0",
    "description": "",
    "scripts": {
-      "clean": "rm *.js *.d.ts *.map"
+      "clean": "rm **/*.js **/*.d.ts **/*.map"
    },
    "author": "",
    "license": "ISC"

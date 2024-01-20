@@ -1,4 +1,4 @@
-import { deepFreeze } from "../../../shared/utilities/Helper";
+import { deepFreeze } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
 import type { IUnlockableDefinition } from "./ITechDefinition";
 

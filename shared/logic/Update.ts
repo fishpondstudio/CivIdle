@@ -1,6 +1,9 @@
-import type { IPointData } from "pixi.js";
+import type { Building } from "../definitions/BuildingDefinitions";
+import type { IUnlockableDefinition } from "../definitions/ITechDefinition";
+import type { Resource } from "../definitions/ResourceDefinitions";
 import {
    HOUR,
+   IPointData,
    clamp,
    filterInPlace,
    filterOf,
@@ -16,16 +19,10 @@ import {
    sizeOf,
    tileToPoint,
    type Tile,
-} from "../../../shared/utilities/Helper";
-import { Vector2, v2 } from "../../../shared/utilities/Vector2";
-import { getGameOptions, getGameState, notifyGameStateUpdate, saveGame, serializeSave } from "../Global";
-import type { Building } from "../definitions/BuildingDefinitions";
-import type { IUnlockableDefinition } from "../definitions/ITechDefinition";
-import type { Resource } from "../definitions/ResourceDefinitions";
-import { isSteam } from "../rpc/SteamClient";
-import { WorldScene } from "../scenes/WorldScene";
+} from "../utilities/Helper";
 import { srand } from "../utilities/Random";
-import { Singleton } from "../utilities/Singleton";
+import { TypedEvent } from "../utilities/TypedEvent";
+import { Vector2, v2 } from "../utilities/Vector2";
 import { L, t } from "../utilities/i18n";
 import {
    IOCalculation,
@@ -43,7 +40,6 @@ import {
    getCurrentPriority,
    getMarketPrice,
    getPowerRequired,
-   getScienceFromWorkers,
    getStockpileMax,
    getStorageFor,
    getStorageRequired,
@@ -59,18 +55,18 @@ import {
 import { Config } from "./Config";
 import { GameFeature, hasFeature } from "./FeatureLogic";
 import { GameState, type ITransportationData } from "./GameState";
-import { calculateHappiness } from "./HappinessLogic";
+import { getGameOptions } from "./GameStateLogic";
 import {
-   clearIntraTickCache,
    getBuildingIO,
+   getGrid,
+   getSpecialBuildings,
    getStorageFullBuildings,
    getXyBuildings,
    unlockedResources,
 } from "./IntraTickCache";
-import { onBuildingComplete, onBuildingProductionComplete } from "./LogicCallback";
 import { getAmountInTransit } from "./ResourceLogic";
 import type { Multiplier } from "./TickLogic";
-import { CurrentTickChanged, EmptyTickData, Tick, freezeTickData } from "./TickLogic";
+import { Tick } from "./TickLogic";
 import type {
    IBuildingData,
    IMarketBuildingData,
@@ -79,75 +75,11 @@ import type {
 } from "./Tile";
 import { MarketOptions, WarehouseOptions } from "./Tile";
 
-let timeSinceLastTick = 0;
+export const OnBuildingComplete = new TypedEvent<Tile>();
+export const OnBuildingProductionComplete = new TypedEvent<{ xy: Tile; offline: boolean }>();
+export const OnShowFloater = new TypedEvent<{ xy: Tile; amount: number }>();
 
-export function tickEveryFrame(gs: GameState, dt: number) {
-   timeSinceLastTick = Math.min(timeSinceLastTick + dt, 1);
-   const worldScene = Singleton().sceneManager.getCurrent(WorldScene);
-   if (worldScene) {
-      gs.tiles.forEach((tile, xy) => {
-         if (tile.building != null) {
-            worldScene.getTile(xy)?.update(gs, dt);
-         }
-      });
-      worldScene.updateTransportVisual(gs, timeSinceLastTick);
-   }
-}
-
-export function shouldTick(): boolean {
-   return isSteam() || document.visibilityState === "visible";
-}
-
-export function tickEverySecond(gs: GameState, offline: boolean) {
-   // We should always tick when offline
-   if (!offline && !shouldTick()) {
-      return;
-   }
-   timeSinceLastTick = 0;
-   Tick.current = freezeTickData(Tick.next);
-   Tick.next = EmptyTickData();
-   clearIntraTickCache();
-
-   forEach(gs.unlockedTech, (tech) => {
-      tickTech(Config.Tech[tech]);
-   });
-
-   forEach(gs.greatPeople, (person, level) => {
-      const greatPerson = Config.GreatPerson[person];
-      greatPerson.tick(greatPerson, level, false);
-   });
-
-   forEach(getGameOptions().greatPeople, (person, v) => {
-      const greatPerson = Config.GreatPerson[person];
-      greatPerson.tick(greatPerson, v.level, true);
-   });
-
-   tickPrice(gs);
-   tickTransportations(gs);
-   tickTiles(gs, offline);
-
-   Tick.next.happiness = calculateHappiness(gs);
-   const { scienceFromWorkers } = getScienceFromWorkers(gs);
-   safeAdd(Singleton().buildings.Headquarter.building.resources, "Science", scienceFromWorkers);
-
-   ++gs.tick;
-
-   if (!offline) {
-      const speed = Singleton().ticker.speedUp;
-      if (gs.tick % speed === 0) {
-         CurrentTickChanged.emit(Tick.current);
-         notifyGameStateUpdate();
-      }
-      if (gs.tick % (5 * speed) === 0) {
-         saveGame(false).catch(console.error);
-      }
-      if (gs.tick % (60 * speed) === 1) {
-         Singleton().heartbeat.update(serializeSave());
-      }
-   }
-}
-
-function tickTech(td: IUnlockableDefinition) {
+export function tickTech(td: IUnlockableDefinition) {
    td.unlockBuilding?.forEach((b) => {
       Tick.next.unlockedBuildings[b] = true;
    });
@@ -162,9 +94,9 @@ function tickTech(td: IUnlockableDefinition) {
    });
 }
 
-function tickTransportations(gs: GameState) {
+export function tickTransportations(gs: GameState) {
    const mah = Tick.current.specialBuildings.MausoleumAtHalicarnassus
-      ? Singleton().grid.xyToPosition(Tick.current.specialBuildings.MausoleumAtHalicarnassus)
+      ? getGrid(gs).xyToPosition(Tick.current.specialBuildings.MausoleumAtHalicarnassus)
       : null;
    gs.transportation.forEach((queue) => {
       filterInPlace(queue, (transport) => {
@@ -216,7 +148,7 @@ function isBuildingOrUpgrading(b: IBuildingData): boolean {
    return b.status === "building" || b.status === "upgrading";
 }
 
-function tickTiles(gs: GameState, offline: boolean) {
+export function tickTiles(gs: GameState, offline: boolean) {
    Array.from(getXyBuildings(gs).entries())
       .sort(([a, buildingA], [b, buildingB]) => {
          const diff = getCurrentPriority(buildingB) - getCurrentPriority(buildingA);
@@ -276,7 +208,7 @@ function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
             if (defaults) {
                Object.assign(building, defaults);
             }
-            onBuildingComplete(xy, gs);
+            OnBuildingComplete.emit(xy);
          } else if (building.status === "upgrading" && building.level >= building.desiredLevel) {
             building.status = "completed";
          }
@@ -383,8 +315,6 @@ function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
    // Production
    //////////////////////////////////////////////////
 
-   const tileVisual = offline ? null : Singleton().sceneManager.getCurrent(WorldScene)?.getTile(xy);
-
    if (building.type === "Market") {
       const market = building as IMarketBuildingData;
       let totalBought = 0;
@@ -405,8 +335,8 @@ function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
          totalBought += buyAmount;
       });
       if (totalBought > 0) {
-         tileVisual?.showFloater(totalBought);
-         onBuildingProductionComplete(xy, gs, offline);
+         OnShowFloater.emit({ xy, amount: totalBought });
+         OnBuildingProductionComplete.emit({ xy, offline });
       }
       return;
    }
@@ -472,16 +402,16 @@ function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
    forEach(output, (res, v) => {
       if (isTransportable(res)) {
          if (res === "Science") {
-            safeAdd(Singleton().buildings.Headquarter.building.resources, res, v);
+            safeAdd(getSpecialBuildings(gs).Headquarter.building.resources, res, v);
          } else {
             safeAdd(building.resources, res, v);
          }
-         tileVisual?.showFloater(v);
+         OnShowFloater.emit({ xy, amount: v });
       } else {
          safeAdd(Tick.next.workersAvailable, res, v);
       }
    });
-   onBuildingProductionComplete(xy, gs, offline);
+   OnBuildingProductionComplete.emit({ xy, offline });
 }
 
 function tickWarehouseAutopilot(warehouse: IWarehouseBuildingData, xy: Tile, gs: GameState): boolean {
@@ -505,8 +435,7 @@ function tickWarehouseAutopilot(warehouse: IWarehouseBuildingData, xy: Tile, gs:
    }
    const me = tileToPoint(xy);
    const result = getStorageFullBuildings(gs).sort(
-      (a, b) =>
-         Singleton().grid.distance(a.x, a.y, me.x, me.y) - Singleton().grid.distance(b.x, b.y, me.x, me.y),
+      (a, b) => getGrid(gs).distance(a.x, a.y, me.x, me.y) - getGrid(gs).distance(b.x, b.y, me.x, me.y),
    );
    const buildings = getXyBuildings(gs);
    for (let i = 0; i < result.length; i++) {
@@ -525,9 +454,7 @@ function tickWarehouseAutopilot(warehouse: IWarehouseBuildingData, xy: Tile, gs:
          // Note: this is questionable. capacity are capped by transportCapacity first, without taking into account
          // the warehouse upgrade. This will result in less transports than it is. But fixing it is really complicated
          const upgradedTransportCapacity =
-            Singleton().grid.distanceTile(fromXy, xy) <= 1
-               ? Infinity
-               : Math.ceil(capacity / transportCapacity);
+            getGrid(gs).distanceTile(fromXy, xy) <= 1 ? Infinity : Math.ceil(capacity / transportCapacity);
          if (resources[candidate]! >= capacity) {
             const workers = Math.ceil(capacity / upgradedTransportCapacity);
             useWorkers("Worker", workers, xy);
@@ -556,7 +483,7 @@ export function transportResource(
    gs: GameState,
 ) {
    let amountLeft = amount;
-   const grid = Singleton().grid;
+   const grid = getGrid(gs);
    const targetPoint = tileToPoint(targetXy);
    // We are out of workers, no need to run the expensive sorting!
    if (getAvailableWorkers("Worker") <= 0) {
@@ -596,7 +523,7 @@ export function transportResource(
          (gs.tiles.get(fromXy)?.building?.type === "Warehouse" ||
             gs.tiles.get(targetXy)?.building?.type === "Warehouse")
       ) {
-         const distance = Singleton().grid.distance(point.x, point.y, targetPoint.x, targetPoint.y);
+         const distance = getGrid(gs).distance(point.x, point.y, targetPoint.x, targetPoint.y);
          if (distance <= 1) {
             transportCapacity = Infinity;
          }
@@ -651,7 +578,7 @@ export function convertPriceIdToTime(priceId: number) {
    return priceId * HOUR;
 }
 
-function tickPrice(gs: GameState) {
+export function tickPrice(gs: GameState) {
    const priceId = getPriceId();
    let forceUpdatePrice = false;
    if (gs.lastPriceUpdated !== priceId) {
@@ -685,23 +612,4 @@ function tickPrice(gs: GameState) {
          }
       }
    });
-}
-
-if (import.meta.env.DEV) {
-   // @ts-expect-error
-   window.tickGameState = (tick: number) => {
-      const gs = getGameState();
-      for (let i = 0; i < tick; i++) {
-         tickEverySecond(gs, true);
-      }
-   };
-   // @ts-expect-error
-   window.benchmarkTick = (tick: number) => {
-      console.time(`TickGameState(${tick})`);
-      const gs = getGameState();
-      for (let i = 0; i < tick; i++) {
-         tickEverySecond(gs, true);
-      }
-      console.timeEnd(`TickGameState(${tick})`);
-   };
 }

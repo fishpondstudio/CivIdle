@@ -1,7 +1,7 @@
-import type { Container} from "pixi.js";
+import type { Container } from "pixi.js";
 import { Sprite, Texture } from "pixi.js";
-import { getGameOptions } from "../Global";
-import { ObjectPool } from "../utilities/ObjectPool";
+import { getGameOptions } from "../../../shared/logic/GameStateLogic";
+import { ObjectPool } from "../../../shared/utilities/ObjectPool";
 
 export class TransportPool extends ObjectPool<Sprite> {
    _texture: Texture;

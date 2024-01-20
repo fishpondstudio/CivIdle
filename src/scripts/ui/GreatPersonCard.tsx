@@ -1,5 +1,5 @@
-import type { GreatPerson } from "../definitions/GreatPersonDefinitions";
-import { Config } from "../logic/Config";
+import type { GreatPerson } from "../../../shared/definitions/GreatPersonDefinitions";
+import { Config } from "../../../shared/logic/Config";
 import { Singleton } from "../utilities/Singleton";
 import { greatPersonImage } from "../visuals/GreatPersonVisual";
 

@@ -22,7 +22,7 @@ export function LoadingPage({
 }): React.ReactNode {
    useEffect(() => {
       onload?.();
-   }, [stage, progress]);
+   }, [onload]);
 
    return (
       <div className="loading-page">

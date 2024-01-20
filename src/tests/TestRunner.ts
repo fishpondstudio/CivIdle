@@ -1,7 +1,6 @@
-import { fossilDeltaApply, fossilDeltaCreate } from "../../shared/utilities/FossilDelta";
-import { compressSave, decompressSave, deserializeSave, serializeSave } from "../scripts/Global";
-import { getBuildingCost, getPowerRequired, getTotalBuildingCost } from "../scripts/logic/BuildingLogic";
-import { SavedGame, initializeGameState, type GameState } from "../scripts/logic/GameState";
+import { getBuildingCost, getPowerRequired, getTotalBuildingCost } from "../../shared/logic/BuildingLogic";
+import { SavedGame, type GameState } from "../../shared/logic/GameState";
+import { deserializeSave, serializeSave } from "../../shared/logic/GameStateLogic";
 import {
    getConstructionPriority,
    getProductionPriority,
@@ -9,8 +8,11 @@ import {
    setConstructionPriority,
    setProductionPriority,
    setUpgradePriority,
-} from "../scripts/logic/Tile";
-import { Grid } from "../scripts/scenes/Grid";
+} from "../../shared/logic/Tile";
+import { initializeGameState } from "../../shared/logic/initializeGameState";
+import { fossilDeltaApply, fossilDeltaCreate } from "../../shared/utilities/FossilDelta";
+import { Grid } from "../../shared/utilities/Grid";
+import { compressSave, decompressSave } from "../scripts/Global";
 
 const title = "background: #636e72; color: #fff;";
 

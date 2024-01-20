@@ -4,14 +4,8 @@
       {
          "label": "Watch and compile TypeScript",
          "type": "shell",
-         "command": "npx tsc",
+         "command": "npm run watch",
          "isBackground": true,
-         "args": [
-            "--build",
-            "--incremental",
-            "--watch",
-            "tsconfig.json"
-         ],
          "presentation": {
             "reveal": "never",
             "echo": false,

@@ -1,7 +1,4 @@
-import { forEach } from "../../../shared/utilities/Helper";
-import type { PartialSet } from "../../../shared/utilities/TypeDefinitions";
-import { Config } from "../logic/Config";
-import type { GameState } from "../logic/GameState";
+import type { PartialSet } from "../utilities/TypeDefinitions";
 import { L, t } from "../utilities/i18n";
 import type { Building } from "./BuildingDefinitions";
 import type { Deposit } from "./ResourceDefinitions";
@@ -66,18 +63,4 @@ interface ICityDefinition {
    naturalWonders: PartialSet<Building>;
    buildingNames: Partial<Record<Building, () => string>>;
    uniqueBuildings: Partial<Record<Building, Tech>>;
-}
-
-// This method is called early during bootstrap!
-export function setCityOverride(gameState: GameState) {
-   const city = Config.City[gameState.city];
-   forEach(city.buildingNames, (b, name) => {
-      Config.Building[b].name = name;
-   });
-   forEach(city.uniqueBuildings, (building, tech) => {
-      if (!Config.Tech[tech].unlockBuilding) {
-         Config.Tech[tech].unlockBuilding = [];
-      }
-      Config.Tech[tech].unlockBuilding!.push(building);
-   });
 }

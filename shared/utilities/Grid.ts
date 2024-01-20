@@ -1,9 +1,6 @@
-import type { SmoothGraphics } from "@pixi/graphics-smooth";
-import { BitmapText, Polygon } from "pixi.js";
-import { tileToPoint, type Tile } from "../../../shared/utilities/Helper";
-import { Hex, Layout, OffsetCoord, Point } from "../utilities/Hex";
-import { ObjectPool } from "../utilities/ObjectPool";
-import { Fonts } from "../visuals/Fonts";
+import { tileToPoint, type Tile } from "./Helper";
+import { Hex, Layout, OffsetCoord, Point } from "./Hex";
+import { ObjectPool } from "./ObjectPool";
 
 class HexPool extends ObjectPool<Hex> {
    protected override create(): Hex {
@@ -41,12 +38,6 @@ export class Grid {
       this.size = size;
    }
 
-   public drawGrid(graphics: SmoothGraphics): void {
-      this.forEach((hex) => {
-         this.drawCorners(this.layout.polygonCorners(this.gridToHex(hex)), graphics);
-      });
-   }
-
    public center(): Point {
       return {
          x: Math.floor(this.maxX / 2),
@@ -65,26 +56,22 @@ export class Grid {
       }
    }
 
-   private drawGridDebugInfo(x: number, y: number, graphics: SmoothGraphics) {
-      const pos = this.gridToPosition({ x, y });
-      const font = new BitmapText(`${x},${y}\n(${Math.round(pos.x)},${Math.round(pos.y)})`, {
-         fontName: Fonts.Marcellus,
-         fontSize: 14,
-         align: "center",
-         tint: 0xffffff,
-      });
-      graphics.addChild(font).position.set(pos.x - font.width / 2, pos.y - font.height / 2);
-   }
+   // private drawGridDebugInfo(x: number, y: number, graphics: SmoothGraphics) {
+   //    const pos = this.gridToPosition({ x, y });
+   //    const font = new BitmapText(`${x},${y}\n(${Math.round(pos.x)},${Math.round(pos.y)})`, {
+   //       fontName: Fonts.Marcellus,
+   //       fontSize: 14,
+   //       align: "center",
+   //       tint: 0xffffff,
+   //    });
+   //    graphics.addChild(font).position.set(pos.x - font.width / 2, pos.y - font.height / 2);
+   // }
 
    public maxPosition(): Point {
       const point = this.gridToPosition(new Point(this.maxX - 1, this.maxY - 1));
       // This is to give an extra padding on the right
       point.x += (Math.sqrt(3) * this.size) / 2;
       return point;
-   }
-
-   public drawSelected(grid: Point, graphics: SmoothGraphics): void {
-      this.drawCorners(this.layout.polygonCorners(this.gridToHex(grid)), graphics);
    }
 
    public positionToGrid(position: Point): Point {
@@ -189,9 +176,5 @@ export class Grid {
 
    public hexToPosition(hex: Hex): Point {
       return this.layout.hexToPixel(hex);
-   }
-
-   private drawCorners(corners: Point[], graphics: SmoothGraphics) {
-      graphics.drawPolygon(new Polygon(corners));
    }
 }

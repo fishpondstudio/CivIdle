@@ -1,8 +1,8 @@
 import { OutlineFilter } from "@pixi/filter-outline";
 import type { FederatedPointerEvent, IRendererPlugins, Texture } from "pixi.js";
 import { BitmapText, Container, Sprite } from "pixi.js";
+import { RomeProvince } from "../../../shared/definitions/RomeProvinceDefinitions";
 import { v2 } from "../../../shared/utilities/Vector2";
-import { RomeProvince } from "../definitions/RomeProvinceDefinitions";
 import { Fonts } from "../visuals/Fonts";
 
 export class ProvinceVisual extends Container {

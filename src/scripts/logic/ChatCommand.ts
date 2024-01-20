@@ -1,7 +1,8 @@
+import { getGameState } from "../../../shared/logic/GameStateLogic";
 import { clamp, formatHM, formatNumber, safeParseInt } from "../../../shared/utilities/Helper";
-import { decompressSave, getGameState, loadSave } from "../Global";
+import { decompressSave, loadSave } from "../Global";
 import { addSystemMessage, client } from "../rpc/RPCClient";
-import { tickEverySecond } from "./Update";
+import { tickEverySecond } from "./Tick";
 
 export async function handleChatCommand(command: string): Promise<void> {
    const parts = command.split(" ");

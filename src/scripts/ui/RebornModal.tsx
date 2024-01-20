@@ -1,12 +1,12 @@
 import { useState } from "react";
+import type { City } from "../../../shared/definitions/CityDefinitions";
+import { Config } from "../../../shared/logic/Config";
+import { getGreatPeopleAtReborn, rollPermanentGreatPeople } from "../../../shared/logic/RebornLogic";
+import { Tick } from "../../../shared/logic/TickLogic";
 import { firstKeyOf, forEach, formatPercent, mapOf, reduceOf } from "../../../shared/utilities/Helper";
+import { L, t } from "../../../shared/utilities/i18n";
 import { resetToCity, saveGame, useGameOptions, useGameState } from "../Global";
-import type { City } from "../definitions/CityDefinitions";
-import { Config } from "../logic/Config";
-import { getGreatPeopleAtReborn, rollPermanentGreatPeople } from "../logic/RebornLogic";
-import { Tick } from "../logic/TickLogic";
 import { jsxMapOf } from "../utilities/Helper";
-import { L, t } from "../utilities/i18n";
 import { playClick } from "../visuals/Sound";
 import { hideModal } from "./GlobalModal";
 import { FormatNumber } from "./HelperComponents";

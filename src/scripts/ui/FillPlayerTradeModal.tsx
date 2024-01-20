@@ -1,5 +1,9 @@
 import classNames from "classnames";
 import { useEffect, useState } from "react";
+import { getStorageFor } from "../../../shared/logic/BuildingLogic";
+import { Config } from "../../../shared/logic/Config";
+import type { IClientTrade } from "../../../shared/logic/PlayerTradeLogic";
+import { Tick } from "../../../shared/logic/TickLogic";
 import {
    clamp,
    formatPercent,
@@ -9,15 +13,11 @@ import {
    xyToPoint,
    type Tile,
 } from "../../../shared/utilities/Helper";
+import { L, t } from "../../../shared/utilities/i18n";
 import { useGameState } from "../Global";
-import { getStorageFor } from "../logic/BuildingLogic";
-import { Config } from "../logic/Config";
-import type { IClientTrade } from "../logic/PlayerTradeLogic";
-import { Tick } from "../logic/TickLogic";
 import { client, usePlayerMap } from "../rpc/RPCClient";
 import { findPath, findUserOnMap, getMyMapXy } from "../scenes/PathFinder";
 import { jsxMMapOf } from "../utilities/Helper";
-import { L, t } from "../utilities/i18n";
 import { playError, playKaching } from "../visuals/Sound";
 import { hideModal, showToast } from "./GlobalModal";
 import { FormatNumber } from "./HelperComponents";

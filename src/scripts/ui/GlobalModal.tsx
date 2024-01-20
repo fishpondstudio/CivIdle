@@ -1,7 +1,7 @@
-import type { ReactNode} from "react";
+import type { ReactNode } from "react";
 import { useState } from "react";
+import { TypedEvent } from "../../../shared/utilities/TypedEvent";
 import { useTypedEvent } from "../utilities/Hook";
-import { TypedEvent } from "../utilities/TypedEvent";
 
 const showModalEvent = new TypedEvent<ReactNode>();
 const hideModalEvent = new TypedEvent<void>();

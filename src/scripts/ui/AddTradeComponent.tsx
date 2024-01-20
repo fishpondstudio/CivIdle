@@ -1,12 +1,12 @@
 import { useState } from "react";
+import type { Resource } from "../../../shared/definitions/ResourceDefinitions";
+import { Config } from "../../../shared/logic/Config";
+import type { IClientAddTradeRequest } from "../../../shared/logic/PlayerTradeLogic";
+import { getBuyAmountRange } from "../../../shared/logic/PlayerTradeLogic";
+import { Tick } from "../../../shared/logic/TickLogic";
 import { keysOf, safeParseInt } from "../../../shared/utilities/Helper";
-import type { Resource } from "../definitions/ResourceDefinitions";
-import { Config } from "../logic/Config";
-import type { IClientAddTradeRequest } from "../logic/PlayerTradeLogic";
-import { getBuyAmountRange } from "../logic/PlayerTradeLogic";
-import { Tick } from "../logic/TickLogic";
+import { L, t } from "../../../shared/utilities/i18n";
 import { client } from "../rpc/RPCClient";
-import { L, t } from "../utilities/i18n";
 import { playError } from "../visuals/Sound";
 import type { IBuildingComponentProps } from "./BuildingPage";
 import { FormatNumber } from "./HelperComponents";

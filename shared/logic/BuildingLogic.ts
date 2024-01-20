@@ -1,3 +1,7 @@
+import type { Building } from "../definitions/BuildingDefinitions";
+import { BuildingSpecial } from "../definitions/BuildingDefinitions";
+import type { City } from "../definitions/CityDefinitions";
+import type { IResourceDefinition, Resource } from "../definitions/ResourceDefinitions";
 import {
    clamp,
    forEach,
@@ -13,20 +17,15 @@ import {
    sum,
    tileToPoint,
    type Tile,
-} from "../../../shared/utilities/Helper";
-import type { PartialTabulate } from "../../../shared/utilities/TypeDefinitions";
-import type { Building } from "../definitions/BuildingDefinitions";
-import { BuildingSpecial } from "../definitions/BuildingDefinitions";
-import type { City } from "../definitions/CityDefinitions";
-import type { IResourceDefinition, Resource } from "../definitions/ResourceDefinitions";
+} from "../utilities/Helper";
 import { srand } from "../utilities/Random";
-import type { Textures } from "../utilities/SceneManager";
-import { Singleton } from "../utilities/Singleton";
+import type { Textures } from "../utilities/Type";
+import type { PartialTabulate } from "../utilities/TypeDefinitions";
+import { TypedEvent } from "../utilities/TypedEvent";
 import { L, t } from "../utilities/i18n";
 import { Config } from "./Config";
 import type { GameState } from "./GameState";
-import { getBuildingIO, getBuildingsByType, getXyBuildings } from "./IntraTickCache";
-import { onTileExplored } from "./LogicCallback";
+import { getBuildingIO, getBuildingsByType, getGrid, getXyBuildings } from "./IntraTickCache";
 import { getBuildingsThatProduce, getResourcesValue } from "./ResourceLogic";
 import { getAgeForTech, getBuildingUnlockTech } from "./TechLogic";
 import { Tick, type Multiplier, type MultiplierWithSource, type NotProducingReason } from "./TickLogic";
@@ -350,9 +349,9 @@ export function addTransportation(
    gs: GameState,
 ): void {
    const fromGrid = tileToPoint(fromXy);
-   const fromPosition = Singleton().grid.gridToPosition(fromGrid);
+   const fromPosition = getGrid(gs).gridToPosition(fromGrid);
    const toGrid = tileToPoint(toXy);
-   const toPosition = Singleton().grid.gridToPosition(toGrid);
+   const toPosition = getGrid(gs).gridToPosition(toGrid);
    useWorkers(fuelResource, fuelAmount, null);
    mapSafePush(gs.transportation, toXy, {
       id: ++gs.transportId,
@@ -360,7 +359,7 @@ export function addTransportation(
       toXy,
       fromPosition,
       toPosition,
-      ticksRequired: Singleton().grid.distance(fromGrid.x, fromGrid.y, toGrid.x, toGrid.y),
+      ticksRequired: getGrid(gs).distance(fromGrid.x, fromGrid.y, toGrid.x, toGrid.y),
       ticksSpent: 0,
       resource,
       amount,
@@ -669,9 +668,11 @@ export function exploreTile(xy: Tile, gs: GameState): void {
    const tile = gs.tiles.get(xy);
    if (tile && !tile.explored) {
       tile.explored = true;
-      onTileExplored(xy, gs);
+      OnTileExplored.emit(xy);
    }
 }
+
+export const OnTileExplored = new TypedEvent<Tile>();
 
 export const ST_PETERS_FAITH_MULTIPLIER = 0.01;
 export const ST_PETERS_STORAGE_MULTIPLIER = 10 * 60 * 60;

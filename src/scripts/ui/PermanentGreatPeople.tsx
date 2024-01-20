@@ -1,10 +1,11 @@
 import classNames from "classnames";
+import { Config } from "../../../shared/logic/Config";
+import { notifyGameOptionsUpdate } from "../../../shared/logic/GameStateLogic";
+import { getGreatPersonUpgradeCost } from "../../../shared/logic/RebornLogic";
 import { isEmpty, keysOf, numberToRoman } from "../../../shared/utilities/Helper";
-import { notifyGameOptionsUpdate, useGameOptions } from "../Global";
-import { Config } from "../logic/Config";
-import { getGreatPersonUpgradeCost } from "../logic/RebornLogic";
+import { L, t } from "../../../shared/utilities/i18n";
+import { useGameOptions } from "../Global";
 import { Singleton } from "../utilities/Singleton";
-import { L, t } from "../utilities/i18n";
 import { greatPersonImage } from "../visuals/GreatPersonVisual";
 import { playError, playLevelUp } from "../visuals/Sound";
 import { FormatNumber } from "./HelperComponents";

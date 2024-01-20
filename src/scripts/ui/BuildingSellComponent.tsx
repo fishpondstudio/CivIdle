@@ -1,9 +1,9 @@
-import { notifyGameStateUpdate } from "../Global";
-import { isWorldOrNaturalWonder } from "../logic/BuildingLogic";
-import { useShortcut } from "../logic/Shortcut";
+import { isWorldOrNaturalWonder } from "../../../shared/logic/BuildingLogic";
+import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
+import { useShortcut } from "../../../shared/logic/Shortcut";
+import { L, t } from "../../../shared/utilities/i18n";
 import { WorldScene } from "../scenes/WorldScene";
 import { Singleton } from "../utilities/Singleton";
-import { L, t } from "../utilities/i18n";
 import type { IBuildingComponentProps } from "./BuildingPage";
 
 export function BuildingSellComponent({ gameState, xy }: IBuildingComponentProps): React.ReactNode {

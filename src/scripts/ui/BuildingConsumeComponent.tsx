@@ -1,7 +1,7 @@
+import { IOCalculation } from "../../../shared/logic/BuildingLogic";
+import { getBuildingIO } from "../../../shared/logic/IntraTickCache";
 import { isEmpty } from "../../../shared/utilities/Helper";
-import { IOCalculation } from "../logic/BuildingLogic";
-import { getBuildingIO } from "../logic/IntraTickCache";
-import { L, t } from "../utilities/i18n";
+import { L, t } from "../../../shared/utilities/i18n";
 import { BuildingIOTreeViewComponent } from "./BuildingIOTreeViewComponent";
 import type { IBuildingComponentProps } from "./BuildingPage";
 

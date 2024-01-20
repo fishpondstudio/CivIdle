@@ -1,9 +1,10 @@
 import classNames from "classnames";
 import React from "react";
+import { notifyGameOptionsUpdate } from "../../../shared/logic/GameStateLogic";
 import { ChatChannels } from "../../../shared/utilities/Database";
-import { notifyGameOptionsUpdate, useGameOptions } from "../Global";
+import { L, t } from "../../../shared/utilities/i18n";
+import { useGameOptions } from "../Global";
 import { jsxMapOf } from "../utilities/Helper";
-import { L, t } from "../utilities/i18n";
 import { playError } from "../visuals/Sound";
 import { hideModal } from "./GlobalModal";
 

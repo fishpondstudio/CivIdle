@@ -1,10 +1,10 @@
+import { getWarehouseIdleCapacity } from "../../../shared/logic/BuildingLogic";
+import { GameFeature, hasFeature } from "../../../shared/logic/FeatureLogic";
+import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
+import type { IWarehouseBuildingData } from "../../../shared/logic/Tile";
+import { WarehouseOptions } from "../../../shared/logic/Tile";
 import { hasFlag, toggleFlag } from "../../../shared/utilities/Helper";
-import { notifyGameStateUpdate } from "../Global";
-import { getWarehouseIdleCapacity } from "../logic/BuildingLogic";
-import { GameFeature, hasFeature } from "../logic/FeatureLogic";
-import type { IWarehouseBuildingData } from "../logic/Tile";
-import { WarehouseOptions } from "../logic/Tile";
-import { L, t } from "../utilities/i18n";
+import { L, t } from "../../../shared/utilities/i18n";
 import { playClick } from "../visuals/Sound";
 import { BuildingColorComponent } from "./BuildingColorComponent";
 import type { IBuildingComponentProps } from "./BuildingPage";

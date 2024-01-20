@@ -1,13 +1,13 @@
 import classNames from "classnames";
 import type { PropsWithChildren } from "react";
 import { useEffect, useRef, useState } from "react";
+import { Tick } from "../../../shared/logic/TickLogic";
 import { sizeOf } from "../../../shared/utilities/Helper";
-import { Tick } from "../logic/TickLogic";
+import { L, t } from "../../../shared/utilities/i18n";
 import { PlayerMapScene } from "../scenes/PlayerMapScene";
 import { TechTreeScene } from "../scenes/TechTreeScene";
 import { WorldScene } from "../scenes/WorldScene";
 import { Singleton } from "../utilities/Singleton";
-import { L, t } from "../utilities/i18n";
 import { AboutModal } from "./AboutModal";
 import { GameplayOptionPage } from "./GameplayOptionPage";
 import { showModal } from "./GlobalModal";

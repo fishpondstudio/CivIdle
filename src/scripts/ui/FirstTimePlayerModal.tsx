@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { firstKeyOf } from "../../../shared/utilities/Helper";
+import { L, t } from "../../../shared/utilities/i18n";
 import install from "../../images/install.png";
 import { useUser } from "../rpc/RPCClient";
 import { CountryCode, getCountryName, getFlagUrl } from "../utilities/CountryCode";
 import { jsxMapOf } from "../utilities/Helper";
-import { L, t } from "../utilities/i18n";
 import { playError } from "../visuals/Sound";
 import { ChangeModernUIComponent } from "./ChangeModernUIComponent";
 import { ChangeSoundComponent } from "./ChangeSoundComponent";

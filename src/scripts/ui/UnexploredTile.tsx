@@ -1,5 +1,5 @@
+import { L, t } from "../../../shared/utilities/i18n";
 import Discovery from "../../images/Discovery.jpg";
-import { L, t } from "../utilities/i18n";
 import { MenuComponent } from "./MenuComponent";
 
 export function UnexploredTile(): React.ReactNode {

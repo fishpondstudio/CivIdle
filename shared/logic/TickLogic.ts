@@ -1,10 +1,8 @@
-import type { IPointData } from "pixi.js";
-import type { Tile } from "../../../shared/utilities/Helper";
-import type { PartialSet, PartialTabulate } from "../../../shared/utilities/TypeDefinitions";
 import type { Building } from "../definitions/BuildingDefinitions";
 import type { Resource } from "../definitions/ResourceDefinitions";
-import { makeObservableHook } from "../utilities/Hook";
+import type { IPointData, Tile } from "../utilities/Helper";
 import type { RequireAtLeastOne } from "../utilities/Type";
+import type { PartialSet, PartialTabulate } from "../utilities/TypeDefinitions";
 import { TypedEvent } from "../utilities/TypedEvent";
 import { L, t } from "../utilities/i18n";
 import type { calculateHappiness } from "./HappinessLogic";
@@ -117,4 +115,3 @@ export interface IValueWithSource {
 }
 
 export const CurrentTickChanged = new TypedEvent<ITickData>();
-export const useCurrentTick = makeObservableHook(CurrentTickChanged, () => Tick.current);

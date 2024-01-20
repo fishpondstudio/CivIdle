@@ -1,6 +1,6 @@
-import { isWorldOrNaturalWonder } from "../logic/BuildingLogic";
-import { Config } from "../logic/Config";
-import { L, t } from "../utilities/i18n";
+import { isWorldOrNaturalWonder } from "../../../shared/logic/BuildingLogic";
+import { Config } from "../../../shared/logic/Config";
+import { L, t } from "../../../shared/utilities/i18n";
 import type { IBuildingComponentProps } from "./BuildingPage";
 
 export function BuildingDescriptionComponent({ gameState, xy }: IBuildingComponentProps): React.ReactNode {

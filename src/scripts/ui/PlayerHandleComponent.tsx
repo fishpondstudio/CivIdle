@@ -1,9 +1,9 @@
 import classNames from "classnames";
 import { useState } from "react";
+import { L, t } from "../../../shared/utilities/i18n";
 import { useGameOptions, useGameState } from "../Global";
 import { useUser } from "../rpc/RPCClient";
 import { getCountryName, getFlagUrl } from "../utilities/CountryCode";
-import { L, t } from "../utilities/i18n";
 import { playError } from "../visuals/Sound";
 import { ChangePlayerHandleModal } from "./ChangePlayerHandleModal";
 import { showModal } from "./GlobalModal";

@@ -1,8 +1,8 @@
+import { Config } from "../../../shared/logic/Config";
 import { formatPercent } from "../../../shared/utilities/Helper";
-import { Config } from "../logic/Config";
+import { L, t } from "../../../shared/utilities/i18n";
 import { usePlayerMap, useTrades } from "../rpc/RPCClient";
 import { getCountryName, getFlagUrl } from "../utilities/CountryCode";
-import { L, t } from "../utilities/i18n";
 import { FillPlayerTradeModal } from "./FillPlayerTradeModal";
 import { showModal } from "./GlobalModal";
 import { FormatNumber } from "./HelperComponents";

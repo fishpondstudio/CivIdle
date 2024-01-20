@@ -1,9 +1,15 @@
 import { useEffect, useState } from "react";
+import { notifyGameOptionsUpdate } from "../../../shared/logic/GameStateLogic";
+import type { IShortcutConfig, Shortcut } from "../../../shared/logic/Shortcut";
+import {
+   ShortcutActions,
+   getShortcutKey,
+   isShortcutEqual,
+   makeShortcut,
+} from "../../../shared/logic/Shortcut";
 import { forEach } from "../../../shared/utilities/Helper";
-import { notifyGameOptionsUpdate, useGameOptions } from "../Global";
-import type { IShortcutConfig, Shortcut } from "../logic/Shortcut";
-import { ShortcutActions, getShortcutKey, isShortcutEqual, makeShortcut } from "../logic/Shortcut";
-import { L, t } from "../utilities/i18n";
+import { L, t } from "../../../shared/utilities/i18n";
+import { useGameOptions } from "../Global";
 import { playError } from "../visuals/Sound";
 import { hideModal, showToast } from "./GlobalModal";
 

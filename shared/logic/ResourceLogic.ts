@@ -1,7 +1,7 @@
-import { forEach, reduceOf, type Tile } from "../../../shared/utilities/Helper";
-import type { PartialTabulate } from "../../../shared/utilities/TypeDefinitions";
 import type { Building } from "../definitions/BuildingDefinitions";
 import type { Deposit, Resource } from "../definitions/ResourceDefinitions";
+import { forEach, reduceOf, type Tile } from "../utilities/Helper";
+import type { PartialTabulate } from "../utilities/TypeDefinitions";
 import { Config } from "./Config";
 import type { GameState } from "./GameState";
 import { Tick } from "./TickLogic";

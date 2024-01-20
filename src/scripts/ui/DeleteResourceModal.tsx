@@ -1,10 +1,10 @@
 import { useState } from "react";
+import type { Resource } from "../../../shared/definitions/ResourceDefinitions";
+import { Config } from "../../../shared/logic/Config";
+import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
+import type { IBuildingData } from "../../../shared/logic/Tile";
 import { clamp, formatNumber, safeAdd, safeParseInt } from "../../../shared/utilities/Helper";
-import { notifyGameStateUpdate } from "../Global";
-import type { Resource } from "../definitions/ResourceDefinitions";
-import { Config } from "../logic/Config";
-import type { IBuildingData } from "../logic/Tile";
-import { L, t } from "../utilities/i18n";
+import { L, t } from "../../../shared/utilities/i18n";
 import { playClick } from "../visuals/Sound";
 import { hideModal } from "./GlobalModal";
 import { WarningComponent } from "./WarningComponent";

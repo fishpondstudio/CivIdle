@@ -1,7 +1,7 @@
-import { clamp, isNullOrUndefined, type Tile } from "../../../shared/utilities/Helper";
-import type { PartialSet, PartialTabulate } from "../../../shared/utilities/TypeDefinitions";
 import type { Building } from "../definitions/BuildingDefinitions";
 import type { Deposit, Resource } from "../definitions/ResourceDefinitions";
+import { clamp, isNullOrUndefined, type Tile } from "../utilities/Helper";
+import type { PartialSet, PartialTabulate } from "../utilities/TypeDefinitions";
 import { Config } from "./Config";
 import type { GameState } from "./GameState";
 

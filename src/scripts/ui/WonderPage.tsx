@@ -1,11 +1,11 @@
+import type { Building } from "../../../shared/definitions/BuildingDefinitions";
+import { Config } from "../../../shared/logic/Config";
+import { getSpecialBuildings, getXyBuildings } from "../../../shared/logic/IntraTickCache";
 import type { PartialSet } from "../../../shared/utilities/TypeDefinitions";
+import { L, t } from "../../../shared/utilities/i18n";
 import { useGameState } from "../Global";
-import type { Building } from "../definitions/BuildingDefinitions";
-import { Config } from "../logic/Config";
-import { getXyBuildings } from "../logic/IntraTickCache";
 import { jsxMapOf } from "../utilities/Helper";
 import { Singleton } from "../utilities/Singleton";
-import { L, t } from "../utilities/i18n";
 import { MenuComponent } from "./MenuComponent";
 import { TilePage } from "./TilePage";
 
@@ -26,7 +26,7 @@ export function WonderPage(): React.ReactNode {
          <div className="window-body">
             <button
                className="w100"
-               onClick={() => Singleton().routeTo(TilePage, { xy: Singleton().buildings.Headquarter.tile })}
+               onClick={() => Singleton().routeTo(TilePage, { xy: getSpecialBuildings(gs).Headquarter.tile })}
             >
                <div className="row jcc">
                   <div className="m-icon" style={{ margin: "0 5px 0 -5px", fontSize: "18px" }}>

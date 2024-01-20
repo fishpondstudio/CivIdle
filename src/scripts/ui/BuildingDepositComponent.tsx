@@ -1,7 +1,7 @@
+import { Config } from "../../../shared/logic/Config";
 import { sizeOf } from "../../../shared/utilities/Helper";
-import { Config } from "../logic/Config";
+import { L, t } from "../../../shared/utilities/i18n";
 import { jsxMapOf } from "../utilities/Helper";
-import { L, t } from "../utilities/i18n";
 import type { IBuildingComponentProps } from "./BuildingPage";
 
 export function BuildingDepositComponent({ gameState, xy }: IBuildingComponentProps): React.ReactNode {

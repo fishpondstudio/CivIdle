@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { formatPercent, safeParseInt } from "../../../shared/utilities/Helper";
+import { L, t } from "../../../shared/utilities/i18n";
 import { client, usePlayerMap } from "../rpc/RPCClient";
-import { L, t } from "../utilities/i18n";
 import { showToast } from "./GlobalModal";
 import { MenuComponent } from "./MenuComponent";
 import { PlayerHandleComponent } from "./PlayerHandleComponent";

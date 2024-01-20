@@ -1,12 +1,12 @@
 import classNames from "classnames";
+import { getScienceFromWorkers } from "../../../shared/logic/BuildingLogic";
+import { GameFeature, hasFeature } from "../../../shared/logic/FeatureLogic";
+import { getHappinessIcon } from "../../../shared/logic/HappinessLogic";
+import { getResourceAmount } from "../../../shared/logic/ResourceLogic";
 import { sizeOf } from "../../../shared/utilities/Helper";
+import { L, t } from "../../../shared/utilities/i18n";
 import { useGameState } from "../Global";
-import { getScienceFromWorkers } from "../logic/BuildingLogic";
-import { GameFeature, hasFeature } from "../logic/FeatureLogic";
-import { getHappinessIcon } from "../logic/HappinessLogic";
-import { getResourceAmount } from "../logic/ResourceLogic";
-import { useCurrentTick } from "../logic/TickLogic";
-import { L, t } from "../utilities/i18n";
+import { useCurrentTick } from "../logic/Tick";
 import { FormatNumber } from "./HelperComponents";
 
 export function ResourcePanel(): React.ReactNode {

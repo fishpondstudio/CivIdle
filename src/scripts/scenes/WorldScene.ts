@@ -1,11 +1,12 @@
 import { SmoothGraphics } from "@pixi/graphics-smooth";
 import type { FederatedPointerEvent, IPointData, Sprite } from "pixi.js";
 import { Color, Container, LINE_CAP, LINE_JOIN, ParticleContainer, TilingSprite } from "pixi.js";
+import { GameFeature, hasFeature } from "../../../shared/logic/FeatureLogic";
+import type { GameOptions, GameState } from "../../../shared/logic/GameState";
+import { TILE_SIZE, getGameOptions, getGameState } from "../../../shared/logic/GameStateLogic";
+import { getGrid, getSpecialBuildings } from "../../../shared/logic/IntraTickCache";
 import { clamp, lerp, lookAt, pointToTile, tileToPoint, type Tile } from "../../../shared/utilities/Helper";
 import { Vector2, v2 } from "../../../shared/utilities/Vector2";
-import { TILE_SIZE, getGameOptions, getGameState } from "../Global";
-import { GameFeature, hasFeature } from "../logic/FeatureLogic";
-import type { GameOptions, GameState } from "../logic/GameState";
 import { TilePage } from "../ui/TilePage";
 import { ViewportScene } from "../utilities/SceneManager";
 import { Singleton } from "../utilities/Singleton";
@@ -13,6 +14,7 @@ import { Actions } from "../utilities/pixi-actions/Actions";
 import { Easing } from "../utilities/pixi-actions/Easing";
 import type { Action } from "../utilities/pixi-actions/actions/Action";
 import { CustomAction } from "../utilities/pixi-actions/actions/CustomAction";
+import { drawGrid, drawSelected } from "../visuals/DrawGrid";
 import { TileVisual } from "./TileVisual";
 import { TooltipPool } from "./TooltipPool";
 import { TransportPool } from "./TransportPool";
@@ -36,7 +38,7 @@ export class WorldScene extends ViewportScene {
 
    override onLoad(): void {
       const { app, textures } = this.context;
-      const maxPosition = Singleton().grid.maxPosition();
+      const maxPosition = getGrid(getGameState()).maxPosition();
       this._width = maxPosition.x;
       this._height = maxPosition.y;
 
@@ -58,9 +60,9 @@ export class WorldScene extends ViewportScene {
          alignment: 0.5,
       });
       this._graphics.alpha = 0.1;
-      Singleton().grid.drawGrid(this._graphics);
+      drawGrid(getGrid(getGameState()), this._graphics);
 
-      Singleton().grid.forEach((grid) => {
+      getGrid(getGameState()).forEach((grid) => {
          const xy = pointToTile(grid);
          this._tiles.set(xy, this.viewport.addChild(new TileVisual(this, grid)));
       });
@@ -94,14 +96,14 @@ export class WorldScene extends ViewportScene {
       });
 
       this.viewport.on("clicked", (e: FederatedPointerEvent) => {
-         const grid = Singleton().grid.positionToGrid(this.viewport.screenToWorld(e));
+         const grid = getGrid(getGameState()).positionToGrid(this.viewport.screenToWorld(e));
          if (e.button === 2) {
             return;
          }
          this.selectGrid(grid);
       });
 
-      this.selectGrid(tileToPoint(Singleton().buildings.Headquarter.tile));
+      this.selectGrid(tileToPoint(getSpecialBuildings(getGameState()).Headquarter.tile));
    }
 
    override onResize(width: number, height: number): void {
@@ -128,7 +130,7 @@ export class WorldScene extends ViewportScene {
 
    lookAtXy(xy: Tile) {
       this.cameraMovement?.stop();
-      const target = this.viewport.clampCenter(Singleton().grid.xyToPosition(xy));
+      const target = this.viewport.clampCenter(getGrid(getGameState()).xyToPosition(xy));
       this.cameraMovement = new CustomAction(
          () => viewportCenter,
          (v) => {
@@ -153,7 +155,7 @@ export class WorldScene extends ViewportScene {
          return;
       }
       this._selectedGraphics.clear();
-      if (Singleton().grid.isEdge(grid)) {
+      if (getGrid(getGameState()).isEdge(grid)) {
          return;
       }
       this._selectedGraphics.lineStyle({
@@ -164,7 +166,7 @@ export class WorldScene extends ViewportScene {
          alignment: 0.5,
       });
 
-      Singleton().grid.drawSelected(grid, this._selectedGraphics);
+      drawSelected(getGrid(getGameState()), grid, this._selectedGraphics);
    }
 
    selectGrid(grid: IPointData) {
@@ -187,7 +189,7 @@ export class WorldScene extends ViewportScene {
       if (building) {
          switch (building.type) {
             case "MausoleumAtHalicarnassus": {
-               const pos = Singleton().grid.gridToPosition(grid);
+               const pos = getGrid(gs).gridToPosition(grid);
 
                this._selectedGraphics.lineStyle({ width: 0 });
                this._selectedGraphics.beginFill(0xffffff, 0.2, true);
@@ -248,14 +250,13 @@ export class WorldScene extends ViewportScene {
    }
 
    private highlightAdjacentTiles(grid: IPointData) {
-      Singleton()
-         .grid.getNeighbors(grid)
-         .forEach((neighbor) => {
-            this._selectedGraphics.lineStyle({ width: 0 });
-            this._selectedGraphics.beginFill(0xffffff, 0.2, true);
-            Singleton().grid.drawSelected(neighbor, this._selectedGraphics);
-            this._selectedGraphics.endFill();
-         });
+      const g = getGrid(getGameState());
+      g.getNeighbors(grid).forEach((neighbor) => {
+         this._selectedGraphics.lineStyle({ width: 0 });
+         this._selectedGraphics.beginFill(0xffffff, 0.2, true);
+         drawSelected(g, neighbor, this._selectedGraphics);
+         this._selectedGraphics.endFill();
+      });
    }
 
    getTile(xy: Tile): TileVisual | undefined {
@@ -311,7 +312,7 @@ export class WorldScene extends ViewportScene {
    public cameraPan(target_: number, time: number): void {
       const { app } = this.context;
       if (this._selectedXy) {
-         this.viewport.center = Singleton().grid.xyToPosition(this._selectedXy);
+         this.viewport.center = getGrid(getGameState()).xyToPosition(this._selectedXy);
       }
       const target = clamp(
          target_,

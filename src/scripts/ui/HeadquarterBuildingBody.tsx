@@ -1,14 +1,19 @@
+import { getScienceFromWorkers } from "../../../shared/logic/BuildingLogic";
+import { Config } from "../../../shared/logic/Config";
+import { getXyBuildings } from "../../../shared/logic/IntraTickCache";
+import { getGreatPeopleAtReborn } from "../../../shared/logic/RebornLogic";
+import {
+   getCurrentTechAge,
+   getScienceAmount,
+   getUnlockCost,
+   unlockableTechs,
+} from "../../../shared/logic/TechLogic";
+import { Tick } from "../../../shared/logic/TickLogic";
 import { formatPercent, reduceOf } from "../../../shared/utilities/Helper";
-import { getScienceFromWorkers } from "../logic/BuildingLogic";
-import { Config } from "../logic/Config";
-import { getXyBuildings } from "../logic/IntraTickCache";
-import { getGreatPeopleAtReborn } from "../logic/RebornLogic";
-import { getCurrentTechAge, getScienceAmount, getUnlockCost, unlockableTechs } from "../logic/TechLogic";
-import { Tick } from "../logic/TickLogic";
+import { L, t } from "../../../shared/utilities/i18n";
 import { TechTreeScene } from "../scenes/TechTreeScene";
 import { jsxMapOf } from "../utilities/Helper";
 import { Singleton } from "../utilities/Singleton";
-import { L, t } from "../utilities/i18n";
 import { BuildingColorComponent } from "./BuildingColorComponent";
 import type { IBuildingComponentProps } from "./BuildingPage";
 import { BuildingProduceComponent } from "./BuildingProduceComponent";

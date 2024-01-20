@@ -1,14 +1,14 @@
 import classNames from "classnames";
-import { formatNumber } from "../../../shared/utilities/Helper";
-import { notifyGameStateUpdate } from "../Global";
 import {
    ElectrificationStatus,
    canBeElectrified,
    getElectrificationStatus,
    getPowerRequired,
-} from "../logic/BuildingLogic";
-import { GameFeature, hasFeature } from "../logic/FeatureLogic";
-import { L, t } from "../utilities/i18n";
+} from "../../../shared/logic/BuildingLogic";
+import { GameFeature, hasFeature } from "../../../shared/logic/FeatureLogic";
+import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
+import { formatNumber } from "../../../shared/utilities/Helper";
+import { L, t } from "../../../shared/utilities/i18n";
 import { ApplyToAllComponent } from "./ApplyToAllComponent";
 import type { IBuildingComponentProps } from "./BuildingPage";
 

@@ -2,6 +2,7 @@ import { SmoothGraphics } from "@pixi/graphics-smooth";
 import type { FederatedPointerEvent, IPointData } from "pixi.js";
 import { BitmapText, Container, LINE_CAP, LINE_JOIN, Sprite } from "pixi.js";
 import WorldMap from "../../../server/WorldMap.json";
+import { getGameOptions } from "../../../shared/logic/GameStateLogic";
 import { MAP_MAX_X, MAP_MAX_Y, type IClientMapEntry } from "../../../shared/utilities/Database";
 import {
    drawDashedLine,
@@ -10,12 +11,11 @@ import {
    safeParseInt,
    xyToPoint,
 } from "../../../shared/utilities/Helper";
-import { getGameOptions } from "../Global";
+import type { Disposable } from "../../../shared/utilities/TypedEvent";
 import { OnPlayerMapMessage, getPlayerMap } from "../rpc/RPCClient";
 import { PlayerMapPage } from "../ui/PlayerMapPage";
 import { ViewportScene } from "../utilities/SceneManager";
 import { Singleton } from "../utilities/Singleton";
-import type { Disposable } from "../utilities/TypedEvent";
 import { Fonts } from "../visuals/Fonts";
 import { findPath, getMyMapXy } from "./PathFinder";
 

@@ -1,8 +1,9 @@
-import { notifyGameOptionsUpdate, useGameOptions } from "../Global";
-import type { Resource } from "../definitions/ResourceDefinitions";
-import { Config } from "../logic/Config";
+import type { Resource } from "../../../shared/definitions/ResourceDefinitions";
+import { Config } from "../../../shared/logic/Config";
+import { notifyGameOptionsUpdate } from "../../../shared/logic/GameStateLogic";
+import { L, t } from "../../../shared/utilities/i18n";
+import { useGameOptions } from "../Global";
 import { jsxMapOf } from "../utilities/Helper";
-import { L, t } from "../utilities/i18n";
 import type { IBuildingComponentProps } from "./BuildingPage";
 
 export function BuildingColorComponent({ gameState, xy }: IBuildingComponentProps): React.ReactNode {

@@ -1,9 +1,12 @@
+import {
+   ST_PETERS_FAITH_MULTIPLIER,
+   ST_PETERS_STORAGE_MULTIPLIER,
+} from "../../../shared/logic/BuildingLogic";
+import { Config } from "../../../shared/logic/Config";
+import { getBuildingsByType } from "../../../shared/logic/IntraTickCache";
+import { getBuildingsThatProduce } from "../../../shared/logic/ResourceLogic";
 import { formatPercent, mMapOf } from "../../../shared/utilities/Helper";
-import { ST_PETERS_FAITH_MULTIPLIER, ST_PETERS_STORAGE_MULTIPLIER } from "../logic/BuildingLogic";
-import { Config } from "../logic/Config";
-import { getBuildingsByType } from "../logic/IntraTickCache";
-import { getBuildingsThatProduce } from "../logic/ResourceLogic";
-import { L, t } from "../utilities/i18n";
+import { L, t } from "../../../shared/utilities/i18n";
 import { BuildingColorComponent } from "./BuildingColorComponent";
 import { BuildingDescriptionComponent } from "./BuildingDescriptionComponent";
 import type { IBuildingComponentProps } from "./BuildingPage";

@@ -1,11 +1,11 @@
+import { Config } from "../../../shared/logic/Config";
+import { GameStateChanged } from "../../../shared/logic/GameStateLogic";
 import { MoveTileCooldown } from "../../../shared/utilities/Database";
 import { formatHMS } from "../../../shared/utilities/Helper";
-import { GameStateChanged } from "../Global";
-import { Config } from "../logic/Config";
+import { L, t } from "../../../shared/utilities/i18n";
 import { client, usePlayerMap } from "../rpc/RPCClient";
 import { getMyMapXy } from "../scenes/PathFinder";
 import { refreshOnTypedEvent } from "../utilities/Hook";
-import { L, t } from "../utilities/i18n";
 import { playError } from "../visuals/Sound";
 import { showToast } from "./GlobalModal";
 import { MenuComponent } from "./MenuComponent";

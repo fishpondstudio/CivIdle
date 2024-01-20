@@ -1,11 +1,11 @@
+import type { Resource } from "../../../shared/definitions/ResourceDefinitions";
+import { getStorageFor } from "../../../shared/logic/BuildingLogic";
+import { Config } from "../../../shared/logic/Config";
+import { Tick } from "../../../shared/logic/TickLogic";
+import type { IResourceImportBuildingData } from "../../../shared/logic/Tile";
 import { forEach, keysOf } from "../../../shared/utilities/Helper";
 import type { PartialSet } from "../../../shared/utilities/TypeDefinitions";
-import type { Resource } from "../definitions/ResourceDefinitions";
-import { getStorageFor } from "../logic/BuildingLogic";
-import { Config } from "../logic/Config";
-import { Tick } from "../logic/TickLogic";
-import type { IResourceImportBuildingData } from "../logic/Tile";
-import { L, t } from "../utilities/i18n";
+import { L, t } from "../../../shared/utilities/i18n";
 import type { IBuildingComponentProps } from "./BuildingPage";
 import { ChangeResourceImportModal } from "./ChangeResourceImportModal";
 import { showModal } from "./GlobalModal";

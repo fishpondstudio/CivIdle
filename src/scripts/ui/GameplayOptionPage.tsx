@@ -1,4 +1,4 @@
-import { notifyGameOptionsUpdate, useGameOptions } from "../Global";
+import { notifyGameOptionsUpdate } from "../../../shared/logic/GameStateLogic";
 import {
    PRIORITY_MAX,
    PRIORITY_MIN,
@@ -8,8 +8,9 @@ import {
    setConstructionPriority,
    setProductionPriority,
    setUpgradePriority,
-} from "../logic/Tile";
-import { L, t } from "../utilities/i18n";
+} from "../../../shared/logic/Tile";
+import { L, t } from "../../../shared/utilities/i18n";
+import { useGameOptions } from "../Global";
 import { ChangeSoundComponent } from "./ChangeSoundComponent";
 import { MenuComponent } from "./MenuComponent";
 

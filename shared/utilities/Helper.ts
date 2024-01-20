@@ -1,7 +1,7 @@
 import type { PartialSet, PartialTabulate } from "./TypeDefinitions";
 import { v2 } from "./Vector2";
 
-interface IPointData {
+export interface IPointData {
    x: number;
    y: number;
 }
@@ -663,4 +663,11 @@ export function filterInPlace<T>(a: T[], condition: (v: T, i: number, array: T[]
 
    a.length = j;
    return a;
+}
+
+export function uuid4(): string {
+   return "10000000-1000-4000-8000-100000000000".replace(/[018]/g, (c) =>
+      // @ts-expect-error
+      (c ^ (crypto.getRandomValues(new Uint8Array(1))[0] & (15 >> (c / 4)))).toString(16),
+   );
 }

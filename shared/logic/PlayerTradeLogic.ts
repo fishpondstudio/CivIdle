@@ -1,5 +1,5 @@
-import type { IAddTradeRequest, ITrade } from "../../../shared/utilities/Database";
 import type { Resource } from "../definitions/ResourceDefinitions";
+import type { IAddTradeRequest, ITrade } from "../utilities/Database";
 import { Config } from "./Config";
 
 export interface IClientTrade extends ITrade {

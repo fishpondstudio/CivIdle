@@ -1,11 +1,11 @@
 import classNames from "classnames";
+import type { Resource } from "../../../shared/definitions/ResourceDefinitions";
+import { Config } from "../../../shared/logic/Config";
+import type { GameState } from "../../../shared/logic/GameState";
 import { forEach, formatHM, isEmpty } from "../../../shared/utilities/Helper";
 import type { PartialTabulate } from "../../../shared/utilities/TypeDefinitions";
-import type { Resource } from "../definitions/ResourceDefinitions";
-import { Config } from "../logic/Config";
-import type { GameState } from "../logic/GameState";
+import { L, t } from "../../../shared/utilities/i18n";
 import { jsxMMapOf, jsxMapOf } from "../utilities/Helper";
-import { L, t } from "../utilities/i18n";
 import { hideModal } from "./GlobalModal";
 import { FormatNumber } from "./HelperComponents";
 

@@ -1,5 +1,5 @@
-import { PatchNotes } from "../definitions/PatchNotes";
-import { L, t } from "../utilities/i18n";
+import { PatchNotes } from "../../../shared/definitions/PatchNotes";
+import { L, t } from "../../../shared/utilities/i18n";
 import { MenuComponent } from "./MenuComponent";
 
 export function PatchNotesPage(): React.ReactNode {

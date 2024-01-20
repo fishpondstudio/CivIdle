@@ -4,6 +4,7 @@
    "version": "0.0.0",
    "scripts": {
       "dev": "vite",
+      "watch": "tsc --build --incremental --watch --force tsconfig.json",
       "build": "tsc --build && vite build",
       "server": "cd server && npm run start",
       "electron": "cd electron && npm run start",
@@ -29,7 +30,6 @@
       "react-dom": "^18.2.0",
       "react-modal": "^3.15.1",
       "typed-rpc": "insraq/typed-rpc",
-      "uuid": "^9.0.0",
       "xp.css": "^0.3.0"
    },
    "devDependencies": {

@@ -1,4 +1,4 @@
-import type { IProvinceVisual } from "../definitions/RomeProvinceDefinitions";
+import type { IProvinceVisual } from "../../../shared/definitions/RomeProvinceDefinitions";
 
 const WIDTH = 3000;
 const HEIGHT = 1743;

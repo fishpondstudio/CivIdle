@@ -1,11 +1,11 @@
 import { useState } from "react";
+import type { Resource } from "../../../shared/definitions/ResourceDefinitions";
+import { getWarehouseCapacity } from "../../../shared/logic/BuildingLogic";
+import { Config } from "../../../shared/logic/Config";
+import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
+import type { IResourceImport, IResourceImportBuildingData } from "../../../shared/logic/Tile";
 import { clamp, reduceOf, safeParseInt } from "../../../shared/utilities/Helper";
-import { notifyGameStateUpdate } from "../Global";
-import type { Resource } from "../definitions/ResourceDefinitions";
-import { getWarehouseCapacity } from "../logic/BuildingLogic";
-import { Config } from "../logic/Config";
-import type { IResourceImport, IResourceImportBuildingData } from "../logic/Tile";
-import { L, t } from "../utilities/i18n";
+import { L, t } from "../../../shared/utilities/i18n";
 import { hideModal } from "./GlobalModal";
 import { FormatNumber } from "./HelperComponents";
 

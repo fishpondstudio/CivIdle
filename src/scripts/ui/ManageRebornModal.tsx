@@ -1,7 +1,8 @@
-import { notifyGameOptionsUpdate, useGameOptions } from "../Global";
-import type { GreatPerson } from "../definitions/GreatPersonDefinitions";
-import { getGreatPersonUpgradeCost } from "../logic/RebornLogic";
-import { L, t } from "../utilities/i18n";
+import type { GreatPerson } from "../../../shared/definitions/GreatPersonDefinitions";
+import { notifyGameOptionsUpdate } from "../../../shared/logic/GameStateLogic";
+import { getGreatPersonUpgradeCost } from "../../../shared/logic/RebornLogic";
+import { L, t } from "../../../shared/utilities/i18n";
+import { useGameOptions } from "../Global";
 import { playClick } from "../visuals/Sound";
 import { showModal } from "./GlobalModal";
 import { GreatPersonCard } from "./GreatPersonCard";

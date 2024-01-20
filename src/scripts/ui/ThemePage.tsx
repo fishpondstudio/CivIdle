@@ -1,8 +1,9 @@
+import { Config } from "../../../shared/logic/Config";
+import { ThemeColorNames, resetThemeColor } from "../../../shared/logic/GameState";
+import { notifyGameOptionsUpdate } from "../../../shared/logic/GameStateLogic";
 import { keysOf } from "../../../shared/utilities/Helper";
-import { notifyGameOptionsUpdate, useGameOptions } from "../Global";
-import { Config } from "../logic/Config";
-import { ThemeColorNames, resetThemeColor } from "../logic/GameState";
-import { L, t } from "../utilities/i18n";
+import { L, t } from "../../../shared/utilities/i18n";
+import { useGameOptions } from "../Global";
 import { playClick } from "../visuals/Sound";
 import { ChangeModernUIComponent } from "./ChangeModernUIComponent";
 import { MenuComponent } from "./MenuComponent";

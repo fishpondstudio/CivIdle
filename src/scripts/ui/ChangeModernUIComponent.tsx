@@ -1,6 +1,7 @@
 import classNames from "classnames";
-import { notifyGameOptionsUpdate, syncUITheme, useGameOptions } from "../Global";
-import { L, t } from "../utilities/i18n";
+import { notifyGameOptionsUpdate } from "../../../shared/logic/GameStateLogic";
+import { L, t } from "../../../shared/utilities/i18n";
+import { syncUITheme, useGameOptions } from "../Global";
 import { playClick } from "../visuals/Sound";
 
 export function ChangeModernUIComponent(): React.ReactNode {
