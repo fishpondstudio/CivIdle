@@ -1,6 +1,10 @@
-import type { DisplayObject, IPointData } from "pixi.js";
 import type { PartialSet, PartialTabulate } from "./TypeDefinitions";
 import { v2 } from "./Vector2";
+
+interface IPointData {
+   x: number;
+   y: number;
+}
 
 // biome-ignore format:
 const NUMBER_SUFFIX_1 = ["","K","M","B","T","Qa","Qt","Sx","Sp","Oc","Nn","Dc","UDc","DDc","TDc","QaDc","QtDc","SxDc","SpDc","ODc","NDc","Vi","UVi","DVi","TVi","QaVi","QtVi","SxVi","SpVi","OcVi","NnVi","Tg","UTg","DTg","TTg","QaTg","QtTg","SxTg","SpTg","OcTg","NnTg","Qd","UQd","DQd","TQd","QaQd","QtQd","SxQd","SpQd","OcQd","NnQd","Qq","UQq","DQq","TQq","QaQq","QtQq","SxQq","SpQq","OcQq","NnQq","Sg"];
@@ -390,7 +394,7 @@ export function lerp(a: number, b: number, amount: number): number {
    return a + (b - a) * amount;
 }
 
-export function lookAt(displayObject: DisplayObject, point: IPointData): void {
+export function lookAt(displayObject: { x: number; y: number; rotation: number }, point: IPointData): void {
    displayObject.rotation = Math.atan2(point.y - displayObject.y, point.x - displayObject.x);
 }
 
