@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import { formatPercent } from "../../../shared/Helper";
+import { formatPercent } from "../../../shared/utilities/Helper";
 import { HAPPINESS_MULTIPLIER, HappinessNames, getHappinessIcon } from "../logic/HappinessLogic";
 import { Tick, useCurrentTick } from "../logic/TickLogic";
 import { jsxMapOf } from "../utilities/Helper";

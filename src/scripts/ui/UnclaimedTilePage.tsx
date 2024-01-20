@@ -1,5 +1,5 @@
-import { MoveTileCooldown } from "../../../shared/Database";
-import { formatHMS } from "../../../shared/Helper";
+import { MoveTileCooldown } from "../../../shared/utilities/Database";
+import { formatHMS } from "../../../shared/utilities/Helper";
 import { GameStateChanged } from "../Global";
 import { Config } from "../logic/Config";
 import { client, usePlayerMap } from "../rpc/RPCClient";

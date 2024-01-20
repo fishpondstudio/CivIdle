@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import type { Tile } from "../../shared/Helper";
+import type { Tile } from "../../shared/utilities/Helper";
 import { getGameState } from "./Global";
 import { clearShortcuts } from "./logic/Shortcut";
 import { LoadingPage } from "./ui/LoadingPage";

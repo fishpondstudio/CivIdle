@@ -1,5 +1,5 @@
 import type { Application } from "pixi.js";
-import { clamp, forEach, isNullOrUndefined, rejectIn, schedule } from "../../shared/Helper";
+import { clamp, forEach, isNullOrUndefined, rejectIn, schedule } from "../../shared/utilities/Helper";
 import { RunTests } from "../tests/TestRunner";
 import {
    TILE_SIZE,

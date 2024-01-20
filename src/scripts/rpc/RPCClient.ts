@@ -12,9 +12,9 @@ import type {
    ITradeMessage,
    IUser,
    IWelcomeMessage,
-} from "../../../shared/Database";
-import { MessageType } from "../../../shared/Database";
-import { forEach } from "../../../shared/Helper";
+} from "../../../shared/utilities/Database";
+import { MessageType } from "../../../shared/utilities/Database";
+import { forEach } from "../../../shared/utilities/Helper";
 import { getGameOptions, saveGame } from "../Global";
 import type { IClientTrade } from "../logic/PlayerTradeLogic";
 import { showToast } from "../ui/GlobalModal";

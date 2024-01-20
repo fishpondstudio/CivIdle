@@ -8,7 +8,7 @@ import {
    numberToRoman,
    setContains,
    sizeOf,
-} from "../../../shared/Helper";
+} from "../../../shared/utilities/Helper";
 import "../../css/EmptyTilePage.css";
 import { getGameOptions, notifyGameStateUpdate, useGameState } from "../Global";
 import type { Building } from "../definitions/BuildingDefinitions";

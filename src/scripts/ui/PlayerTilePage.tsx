@@ -1,4 +1,4 @@
-import { formatPercent } from "../../../shared/Helper";
+import { formatPercent } from "../../../shared/utilities/Helper";
 import { Config } from "../logic/Config";
 import { usePlayerMap, useTrades } from "../rpc/RPCClient";
 import { getCountryName, getFlagUrl } from "../utilities/CountryCode";

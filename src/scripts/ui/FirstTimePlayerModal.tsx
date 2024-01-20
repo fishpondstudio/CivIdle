@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { firstKeyOf } from "../../../shared/Helper";
+import { firstKeyOf } from "../../../shared/utilities/Helper";
 import install from "../../images/install.png";
 import { useUser } from "../rpc/RPCClient";
 import { CountryCode, getCountryName, getFlagUrl } from "../utilities/CountryCode";

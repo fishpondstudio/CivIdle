@@ -1,5 +1,5 @@
-import { forEach, reduceOf } from "../../../shared/Helper";
-import type { PartialTabulate } from "../../../shared/TypeDefinitions";
+import { forEach, reduceOf } from "../../../shared/utilities/Helper";
+import type { PartialTabulate } from "../../../shared/utilities/TypeDefinitions";
 import { notifyGameStateUpdate, useGameState } from "../Global";
 import { MAX_TECH_COLUMN } from "../SteamTesting";
 import type { Resource } from "../definitions/ResourceDefinitions";

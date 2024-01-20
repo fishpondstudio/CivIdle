@@ -13,8 +13,8 @@ import {
    sum,
    tileToPoint,
    type Tile,
-} from "../../../shared/Helper";
-import type { PartialTabulate } from "../../../shared/TypeDefinitions";
+} from "../../../shared/utilities/Helper";
+import type { PartialTabulate } from "../../../shared/utilities/TypeDefinitions";
 import type { Building } from "../definitions/BuildingDefinitions";
 import { BuildingSpecial } from "../definitions/BuildingDefinitions";
 import type { City } from "../definitions/CityDefinitions";

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { keysOf, safeParseInt } from "../../../shared/Helper";
+import { keysOf, safeParseInt } from "../../../shared/utilities/Helper";
 import type { Resource } from "../definitions/ResourceDefinitions";
 import { Config } from "../logic/Config";
 import type { IClientAddTradeRequest } from "../logic/PlayerTradeLogic";

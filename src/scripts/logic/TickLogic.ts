@@ -1,6 +1,6 @@
 import type { IPointData } from "pixi.js";
-import type { Tile } from "../../../shared/Helper";
-import type { PartialSet, PartialTabulate } from "../../../shared/TypeDefinitions";
+import type { Tile } from "../../../shared/utilities/Helper";
+import type { PartialSet, PartialTabulate } from "../../../shared/utilities/TypeDefinitions";
 import type { Building } from "../definitions/BuildingDefinitions";
 import type { Resource } from "../definitions/ResourceDefinitions";
 import { makeObservableHook } from "../utilities/Hook";

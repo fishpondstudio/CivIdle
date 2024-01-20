@@ -1,4 +1,4 @@
-import { formatPercent, mMapOf } from "../../../shared/Helper";
+import { formatPercent, mMapOf } from "../../../shared/utilities/Helper";
 import { ST_PETERS_FAITH_MULTIPLIER, ST_PETERS_STORAGE_MULTIPLIER } from "../logic/BuildingLogic";
 import { Config } from "../logic/Config";
 import { getBuildingsByType } from "../logic/IntraTickCache";

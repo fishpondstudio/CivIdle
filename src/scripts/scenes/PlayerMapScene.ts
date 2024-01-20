@@ -2,8 +2,14 @@ import { SmoothGraphics } from "@pixi/graphics-smooth";
 import type { FederatedPointerEvent, IPointData } from "pixi.js";
 import { BitmapText, Container, LINE_CAP, LINE_JOIN, Sprite } from "pixi.js";
 import WorldMap from "../../../server/WorldMap.json";
-import { MAP_MAX_X, MAP_MAX_Y, type IClientMapEntry } from "../../../shared/Database";
-import { drawDashedLine, forEach, formatPercent, safeParseInt, xyToPoint } from "../../../shared/Helper";
+import { MAP_MAX_X, MAP_MAX_Y, type IClientMapEntry } from "../../../shared/utilities/Database";
+import {
+   drawDashedLine,
+   forEach,
+   formatPercent,
+   safeParseInt,
+   xyToPoint,
+} from "../../../shared/utilities/Helper";
 import { getGameOptions } from "../Global";
 import { OnPlayerMapMessage, getPlayerMap } from "../rpc/RPCClient";
 import { PlayerMapPage } from "../ui/PlayerMapPage";

@@ -1,6 +1,6 @@
 import classNames from "classnames";
 import React from "react";
-import { ChatChannels } from "../../../shared/Database";
+import { ChatChannels } from "../../../shared/utilities/Database";
 import { notifyGameOptionsUpdate, useGameOptions } from "../Global";
 import { jsxMapOf } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";

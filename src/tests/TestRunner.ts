@@ -1,4 +1,4 @@
-import { fossilDeltaApply, fossilDeltaCreate } from "../../shared/FossilDelta";
+import { fossilDeltaApply, fossilDeltaCreate } from "../../shared/utilities/FossilDelta";
 import { compressSave, decompressSave, deserializeSave, serializeSave } from "../scripts/Global";
 import { getBuildingCost, getPowerRequired, getTotalBuildingCost } from "../scripts/logic/BuildingLogic";
 import { SavedGame, initializeGameState, type GameState } from "../scripts/logic/GameState";

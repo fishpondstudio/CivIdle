@@ -1,6 +1,6 @@
 import { SmoothGraphics } from "@pixi/graphics-smooth";
 import { BitmapText, Sprite, Text } from "pixi.js";
-import { containsNonASCII } from "../../../shared/Helper";
+import { containsNonASCII } from "../../../shared/utilities/Helper";
 import type { GreatPerson } from "../definitions/GreatPersonDefinitions";
 import { Config } from "../logic/Config";
 import type { ISceneContext } from "../utilities/SceneManager";

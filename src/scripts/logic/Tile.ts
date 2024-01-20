@@ -1,5 +1,5 @@
-import { clamp, isNullOrUndefined, type Tile } from "../../../shared/Helper";
-import type { PartialSet, PartialTabulate } from "../../../shared/TypeDefinitions";
+import { clamp, isNullOrUndefined, type Tile } from "../../../shared/utilities/Helper";
+import type { PartialSet, PartialTabulate } from "../../../shared/utilities/TypeDefinitions";
 import type { Building } from "../definitions/BuildingDefinitions";
 import type { Deposit, Resource } from "../definitions/ResourceDefinitions";
 import { Config } from "./Config";

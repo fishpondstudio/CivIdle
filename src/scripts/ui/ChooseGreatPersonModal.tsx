@@ -1,4 +1,4 @@
-import { safeAdd } from "../../../shared/Helper";
+import { safeAdd } from "../../../shared/utilities/Helper";
 import { notifyGameStateUpdate, useGameOptions, useGameState } from "../Global";
 import type { GreatPerson } from "../definitions/GreatPersonDefinitions";
 import type { GreatPeopleChoice } from "../logic/GameState";

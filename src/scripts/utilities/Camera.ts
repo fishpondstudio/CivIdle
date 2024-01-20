@@ -1,7 +1,7 @@
 import type { Application, FederatedPointerEvent, IDestroyOptions, IPointData } from "pixi.js";
 import { Container, Rectangle } from "pixi.js";
-import { clamp, lerp, sizeOf } from "../../../shared/Helper";
-import { Vector2, v2 } from "../../../shared/Vector2";
+import { clamp, lerp, sizeOf } from "../../../shared/utilities/Helper";
+import { Vector2, v2 } from "../../../shared/utilities/Vector2";
 
 const DEAD_ZONE_SQR = 25;
 

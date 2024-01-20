@@ -1,8 +1,8 @@
 import type { IPointData } from "pixi.js";
 import { v4 } from "uuid";
-import type { ChatChannel } from "../../../shared/Database";
-import { forEach, isEmpty, keysOf, pointToTile, shuffle, type Tile } from "../../../shared/Helper";
-import type { PartialSet, PartialTabulate } from "../../../shared/TypeDefinitions";
+import type { ChatChannel } from "../../../shared/utilities/Database";
+import { forEach, isEmpty, keysOf, pointToTile, shuffle, type Tile } from "../../../shared/utilities/Helper";
+import type { PartialSet, PartialTabulate } from "../../../shared/utilities/TypeDefinitions";
 import type { Building } from "../definitions/BuildingDefinitions";
 import type { City } from "../definitions/CityDefinitions";
 import type { GreatPerson } from "../definitions/GreatPersonDefinitions";

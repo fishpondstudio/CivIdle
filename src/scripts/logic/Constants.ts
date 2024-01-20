@@ -1,5 +1,12 @@
-import { forEach, formatNumber, isEmpty, keysOf, numberToRoman, sizeOf } from "../../../shared/Helper";
-import type { PartialSet, PartialTabulate } from "../../../shared/TypeDefinitions";
+import {
+   forEach,
+   formatNumber,
+   isEmpty,
+   keysOf,
+   numberToRoman,
+   sizeOf,
+} from "../../../shared/utilities/Helper";
+import type { PartialSet, PartialTabulate } from "../../../shared/utilities/TypeDefinitions";
 import { build } from "../Version.json";
 import type { Building } from "../definitions/BuildingDefinitions";
 import { BuildingSpecial } from "../definitions/BuildingDefinitions";

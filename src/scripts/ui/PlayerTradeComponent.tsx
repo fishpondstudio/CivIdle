@@ -1,7 +1,7 @@
 import classNames from "classnames";
 import { useEffect, useState } from "react";
-import type { IPendingClaim } from "../../../shared/Database";
-import { safeAdd } from "../../../shared/Helper";
+import type { IPendingClaim } from "../../../shared/utilities/Database";
+import { safeAdd } from "../../../shared/utilities/Helper";
 import { notifyGameStateUpdate } from "../Global";
 import type { Resource } from "../definitions/ResourceDefinitions";
 import { getStorageFor } from "../logic/BuildingLogic";

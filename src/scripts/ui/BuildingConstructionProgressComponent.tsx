@@ -1,4 +1,4 @@
-import { formatHMS, formatPercent } from "../../../shared/Helper";
+import { formatHMS, formatPercent } from "../../../shared/utilities/Helper";
 import {
    getBuilderCapacity,
    getBuildingPercentage,

@@ -1,5 +1,5 @@
-import { forEach, reduceOf, type Tile } from "../../../shared/Helper";
-import type { PartialTabulate } from "../../../shared/TypeDefinitions";
+import { forEach, reduceOf, type Tile } from "../../../shared/utilities/Helper";
+import type { PartialTabulate } from "../../../shared/utilities/TypeDefinitions";
 import type { Building } from "../definitions/BuildingDefinitions";
 import type { Deposit, Resource } from "../definitions/ResourceDefinitions";
 import { Config } from "./Config";

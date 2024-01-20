@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import { formatPercent, isEmpty } from "../../../shared/Helper";
+import { formatPercent, isEmpty } from "../../../shared/utilities/Helper";
 import warning from "../../images/warning.png";
 import { notifyGameStateUpdate } from "../Global";
 import {

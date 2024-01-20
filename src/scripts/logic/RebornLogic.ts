@@ -1,4 +1,4 @@
-import { clamp, keysOf, shuffle } from "../../../shared/Helper";
+import { clamp, keysOf, shuffle } from "../../../shared/utilities/Helper";
 import { getGameOptions } from "../Global";
 import type { GreatPerson } from "../definitions/GreatPersonDefinitions";
 import { Config } from "./Config";

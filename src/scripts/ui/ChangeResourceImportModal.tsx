@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { clamp, reduceOf, safeParseInt } from "../../../shared/Helper";
+import { clamp, reduceOf, safeParseInt } from "../../../shared/utilities/Helper";
 import { notifyGameStateUpdate } from "../Global";
 import type { Resource } from "../definitions/ResourceDefinitions";
 import { getWarehouseCapacity } from "../logic/BuildingLogic";

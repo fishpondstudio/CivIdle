@@ -1,6 +1,6 @@
 import classNames from "classnames";
 import { useState } from "react";
-import { numberToRoman } from "../../../shared/Helper";
+import { numberToRoman } from "../../../shared/utilities/Helper";
 import { getGameOptions, notifyGameStateUpdate } from "../Global";
 import { getBuildingUpgradeLevels, getTotalBuildingCost } from "../logic/BuildingLogic";
 import { Config } from "../logic/Config";

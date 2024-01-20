@@ -1,4 +1,4 @@
-import { formatHMS, hasFlag, keysOf, round, toggleFlag } from "../../../shared/Helper";
+import { formatHMS, hasFlag, keysOf, round, toggleFlag } from "../../../shared/utilities/Helper";
 import { notifyGameStateUpdate } from "../Global";
 import { applyToAllBuildings, getMarketPrice, totalMultiplierFor } from "../logic/BuildingLogic";
 import { Config } from "../logic/Config";

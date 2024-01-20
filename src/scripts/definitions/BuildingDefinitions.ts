@@ -1,4 +1,4 @@
-import type { PartialSet, PartialTabulate } from "../../../shared/TypeDefinitions";
+import type { PartialSet, PartialTabulate } from "../../../shared/utilities/TypeDefinitions";
 import { L, t } from "../utilities/i18n";
 import type { Deposit, Resource } from "./ResourceDefinitions";
 

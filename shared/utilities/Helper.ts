@@ -89,7 +89,7 @@ export function keysOf<T extends {}>(obj: T): Array<keyof T> {
 
 export function forEach<T extends {}>(
    obj: T | undefined,
-   // eslint-disable-next-line @typescript-eslint/no-invalid-void-type
+   // biome-ignore lint/suspicious/noConfusingVoidType: <explanation>
    func: (k: keyof T, v: NonNullable<T[keyof T]>) => boolean | void,
 ) {
    for (const key in obj) {
@@ -457,9 +457,10 @@ export function romanToNumber(str: string): number | null {
    const token = /[MDLV]|C[MD]?|X[CL]?|I[XV]?/g;
    // biome-ignore format:
    const key: Record<string, number> = {M: 1000,CM: 900,D: 500,CD: 400,C: 100,XC: 90,L: 50,XL: 40,X: 10,IX: 9,V: 5,IV: 4,I: 1};
-   let num = 0,
-      m;
+   let num = 0;
+   let m;
    if (!(str && validator.test(str))) return null;
+   // biome-ignore lint/suspicious/noAssignInExpressions: <explanation>
    while ((m = token.exec(str))) num += key[m[0]];
    return num;
 }

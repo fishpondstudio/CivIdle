@@ -1,7 +1,7 @@
 import classNames from "classnames";
 import type { PropsWithChildren } from "react";
 import { useEffect, useRef, useState } from "react";
-import { sizeOf } from "../../../shared/Helper";
+import { sizeOf } from "../../../shared/utilities/Helper";
 import { Tick } from "../logic/TickLogic";
 import { PlayerMapScene } from "../scenes/PlayerMapScene";
 import { TechTreeScene } from "../scenes/TechTreeScene";

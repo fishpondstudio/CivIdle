@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import { isEmpty, keysOf, numberToRoman } from "../../../shared/Helper";
+import { isEmpty, keysOf, numberToRoman } from "../../../shared/utilities/Helper";
 import { notifyGameOptionsUpdate, useGameOptions } from "../Global";
 import { Config } from "../logic/Config";
 import { getGreatPersonUpgradeCost } from "../logic/RebornLogic";

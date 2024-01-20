@@ -1,6 +1,6 @@
 import type { IPointData } from "pixi.js";
 import WorldMap from "../../../server/WorldMap.json";
-import { MAP_MAX_X, MAP_MAX_Y } from "../../../shared/Database";
+import { MAP_MAX_X, MAP_MAX_Y } from "../../../shared/utilities/Database";
 import { getGameOptions } from "../Global";
 import { OnPlayerMapChanged, getPlayerMap } from "../rpc/RPCClient";
 import { dijkstra } from "../utilities/dijkstra";

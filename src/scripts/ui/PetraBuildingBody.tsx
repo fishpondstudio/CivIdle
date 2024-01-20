@@ -1,4 +1,4 @@
-import { clamp, formatHM, formatPercent } from "../../../shared/Helper";
+import { clamp, formatHM, formatPercent } from "../../../shared/utilities/Helper";
 import { notifyGameStateUpdate } from "../Global";
 import { getStorageFor } from "../logic/BuildingLogic";
 import { MAX_OFFLINE_PRODUCTION_SEC } from "../logic/Constants";

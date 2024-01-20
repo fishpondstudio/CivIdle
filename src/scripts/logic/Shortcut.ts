@@ -1,6 +1,6 @@
 import type { DependencyList } from "react";
 import { useEffect } from "react";
-import { forEach } from "../../../shared/Helper";
+import { forEach } from "../../../shared/utilities/Helper";
 import { getGameOptions } from "../Global";
 import { TypedEvent } from "../utilities/TypedEvent";
 import { L, t } from "../utilities/i18n";

@@ -1,5 +1,5 @@
-import { forEach, keysOf } from "../../../shared/Helper";
-import type { PartialSet } from "../../../shared/TypeDefinitions";
+import { forEach, keysOf } from "../../../shared/utilities/Helper";
+import type { PartialSet } from "../../../shared/utilities/TypeDefinitions";
 import type { Resource } from "../definitions/ResourceDefinitions";
 import { getStorageFor } from "../logic/BuildingLogic";
 import { Config } from "../logic/Config";

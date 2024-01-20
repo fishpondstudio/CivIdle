@@ -1,4 +1,4 @@
-import { isEmpty } from "../../../shared/Helper";
+import { isEmpty } from "../../../shared/utilities/Helper";
 import { IOCalculation } from "../logic/BuildingLogic";
 import { getBuildingIO } from "../logic/IntraTickCache";
 import { L, t } from "../utilities/i18n";

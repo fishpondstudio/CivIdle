@@ -1,5 +1,5 @@
-import { forEach } from "../../../shared/Helper";
-import type { PartialSet } from "../../../shared/TypeDefinitions";
+import { forEach } from "../../../shared/utilities/Helper";
+import type { PartialSet } from "../../../shared/utilities/TypeDefinitions";
 import { Config } from "../logic/Config";
 import type { GameState } from "../logic/GameState";
 import { L, t } from "../utilities/i18n";

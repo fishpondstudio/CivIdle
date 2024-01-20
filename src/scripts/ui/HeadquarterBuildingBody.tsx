@@ -1,4 +1,4 @@
-import { formatPercent, reduceOf } from "../../../shared/Helper";
+import { formatPercent, reduceOf } from "../../../shared/utilities/Helper";
 import { getScienceFromWorkers } from "../logic/BuildingLogic";
 import { Config } from "../logic/Config";
 import { getXyBuildings } from "../logic/IntraTickCache";

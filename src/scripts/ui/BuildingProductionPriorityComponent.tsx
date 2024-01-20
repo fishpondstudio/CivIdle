@@ -1,4 +1,4 @@
-import { isEmpty } from "../../../shared/Helper";
+import { isEmpty } from "../../../shared/utilities/Helper";
 import { notifyGameStateUpdate } from "../Global";
 import { IOCalculation } from "../logic/BuildingLogic";
 import { GameFeature, hasFeature } from "../logic/FeatureLogic";

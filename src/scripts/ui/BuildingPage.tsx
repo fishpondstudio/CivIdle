@@ -1,5 +1,5 @@
 import type { FunctionComponent } from "react";
-import type { Tile } from "../../../shared/Helper";
+import type { Tile } from "../../../shared/utilities/Helper";
 import { useGameState } from "../Global";
 import type { Building } from "../definitions/BuildingDefinitions";
 import { Config } from "../logic/Config";

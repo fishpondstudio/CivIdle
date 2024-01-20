@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { clamp, keysOf, mapOf, safeAdd } from "../../../shared/Helper";
-import type { PartialTabulate } from "../../../shared/TypeDefinitions";
+import { clamp, keysOf, mapOf, safeAdd } from "../../../shared/utilities/Helper";
+import type { PartialTabulate } from "../../../shared/utilities/TypeDefinitions";
 import type { Resource } from "../definitions/ResourceDefinitions";
 import { Config } from "../logic/Config";
 

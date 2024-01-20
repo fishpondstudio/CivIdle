@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import { formatNumber } from "../../../shared/Helper";
+import { formatNumber } from "../../../shared/utilities/Helper";
 import { notifyGameStateUpdate } from "../Global";
 import {
    ElectrificationStatus,

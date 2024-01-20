@@ -1,5 +1,5 @@
-import { fossilDeltaCreate } from "../../../shared/FossilDelta";
-import { wyhash } from "../../../shared/wyhash";
+import { fossilDeltaCreate } from "../../../shared/utilities/FossilDelta";
+import { wyhash } from "../../../shared/utilities/wyhash";
 import { getGameOptions, getGameState } from "../Global";
 import { client } from "../rpc/RPCClient";
 import { compress } from "../workers/Compress";

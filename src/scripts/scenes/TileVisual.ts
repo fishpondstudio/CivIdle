@@ -10,8 +10,8 @@ import {
    pointToXy,
    sizeOf,
    type Tile,
-} from "../../../shared/Helper";
-import { v2 } from "../../../shared/Vector2";
+} from "../../../shared/utilities/Helper";
+import { v2 } from "../../../shared/utilities/Vector2";
 import { getGameOptions, getGameState } from "../Global";
 import type { Resource } from "../definitions/ResourceDefinitions";
 import {

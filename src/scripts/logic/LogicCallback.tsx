@@ -8,7 +8,7 @@ import {
    shuffle,
    tileToPoint,
    type Tile,
-} from "../../../shared/Helper";
+} from "../../../shared/utilities/Helper";
 import type { Deposit } from "../definitions/ResourceDefinitions";
 import { WorldScene } from "../scenes/WorldScene";
 import { ChooseGreatPersonModal } from "../ui/ChooseGreatPersonModal";

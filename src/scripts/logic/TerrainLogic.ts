@@ -1,6 +1,6 @@
 import type { IPointData } from "pixi.js";
-import { pointToTile, tileToPoint, type Tile } from "../../../shared/Helper";
-import { v2 } from "../../../shared/Vector2";
+import { pointToTile, tileToPoint, type Tile } from "../../../shared/utilities/Helper";
+import { v2 } from "../../../shared/utilities/Vector2";
 import { BUILDING_DEFAULT_VISION } from "../definitions/BuildingDefinitions";
 import type { Grid } from "../scenes/Grid";
 import { exploreTile, isNaturalWonder } from "./BuildingLogic";

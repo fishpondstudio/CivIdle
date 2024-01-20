@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { forEach } from "../../../shared/Helper";
+import { forEach } from "../../../shared/utilities/Helper";
 import { notifyGameOptionsUpdate, useGameOptions } from "../Global";
 import type { IShortcutConfig, Shortcut } from "../logic/Shortcut";
 import { ShortcutActions, getShortcutKey, isShortcutEqual, makeShortcut } from "../logic/Shortcut";

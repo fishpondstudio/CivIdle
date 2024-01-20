@@ -1,4 +1,4 @@
-import { forEach } from "../../../shared/Helper";
+import { forEach } from "../../../shared/utilities/Helper";
 
 export function jsxMapOf<K extends string, V>(
    obj: Partial<Record<K, V>> | undefined,

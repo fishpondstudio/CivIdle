@@ -1,4 +1,4 @@
-import { formatNumber, mapOf } from "../../../shared/Helper";
+import { formatNumber, mapOf } from "../../../shared/utilities/Helper";
 import type { IUnlockableDefinition } from "../definitions/ITechDefinition";
 import { getBuildingCost } from "../logic/BuildingLogic";
 import { Config } from "../logic/Config";

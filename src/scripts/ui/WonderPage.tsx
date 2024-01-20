@@ -1,4 +1,4 @@
-import type { PartialSet } from "../../../shared/TypeDefinitions";
+import type { PartialSet } from "../../../shared/utilities/TypeDefinitions";
 import { useGameState } from "../Global";
 import type { Building } from "../definitions/BuildingDefinitions";
 import { Config } from "../logic/Config";

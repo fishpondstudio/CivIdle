@@ -1,5 +1,5 @@
-import { deepFreeze } from "../../../shared/Helper";
-import type { PartialTabulate } from "../../../shared/TypeDefinitions";
+import { deepFreeze } from "../../../shared/utilities/Helper";
+import type { PartialTabulate } from "../../../shared/utilities/TypeDefinitions";
 import { BuildingDefinitions, type Building } from "../definitions/BuildingDefinitions";
 import { CityDefinitions } from "../definitions/CityDefinitions";
 import { GreatPersonDefinitions } from "../definitions/GreatPersonDefinitions";

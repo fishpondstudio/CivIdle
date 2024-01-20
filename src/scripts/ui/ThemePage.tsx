@@ -1,4 +1,4 @@
-import { keysOf } from "../../../shared/Helper";
+import { keysOf } from "../../../shared/utilities/Helper";
 import { notifyGameOptionsUpdate, useGameOptions } from "../Global";
 import { Config } from "../logic/Config";
 import { ThemeColorNames, resetThemeColor } from "../logic/GameState";

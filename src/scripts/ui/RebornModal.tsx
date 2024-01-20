@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { firstKeyOf, forEach, formatPercent, mapOf, reduceOf } from "../../../shared/Helper";
+import { firstKeyOf, forEach, formatPercent, mapOf, reduceOf } from "../../../shared/utilities/Helper";
 import { resetToCity, saveGame, useGameOptions, useGameState } from "../Global";
 import type { City } from "../definitions/CityDefinitions";
 import { Config } from "../logic/Config";

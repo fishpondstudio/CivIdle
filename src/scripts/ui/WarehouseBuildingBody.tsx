@@ -1,4 +1,4 @@
-import { hasFlag, toggleFlag } from "../../../shared/Helper";
+import { hasFlag, toggleFlag } from "../../../shared/utilities/Helper";
 import { notifyGameStateUpdate } from "../Global";
 import { getWarehouseIdleCapacity } from "../logic/BuildingLogic";
 import { GameFeature, hasFeature } from "../logic/FeatureLogic";

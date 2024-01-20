@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import { type Tile } from "../../../shared/Helper";
+import { type Tile } from "../../../shared/utilities/Helper";
 import warning from "../../images/warning.png";
 import { IOCalculation, getMultipliersFor, totalMultiplierFor } from "../logic/BuildingLogic";
 import { Config } from "../logic/Config";

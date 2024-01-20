@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { clamp, formatNumber, safeAdd, safeParseInt } from "../../../shared/Helper";
+import { clamp, formatNumber, safeAdd, safeParseInt } from "../../../shared/utilities/Helper";
 import { notifyGameStateUpdate } from "../Global";
 import type { Resource } from "../definitions/ResourceDefinitions";
 import { Config } from "../logic/Config";

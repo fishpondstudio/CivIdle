@@ -1,4 +1,4 @@
-import { sizeOf } from "../../../shared/Helper";
+import { sizeOf } from "../../../shared/utilities/Helper";
 import { Config } from "../logic/Config";
 import { jsxMapOf } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";

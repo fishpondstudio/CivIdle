@@ -6,7 +6,7 @@ import {
    keysOf,
    shuffle,
    type Tile,
-} from "../../../shared/Helper";
+} from "../../../shared/utilities/Helper";
 import type { Building } from "../definitions/BuildingDefinitions";
 import type { City } from "../definitions/CityDefinitions";
 import type { GreatPerson } from "../definitions/GreatPersonDefinitions";

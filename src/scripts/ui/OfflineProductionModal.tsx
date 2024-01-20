@@ -1,6 +1,6 @@
 import classNames from "classnames";
-import { forEach, formatHM, isEmpty } from "../../../shared/Helper";
-import type { PartialTabulate } from "../../../shared/TypeDefinitions";
+import { forEach, formatHM, isEmpty } from "../../../shared/utilities/Helper";
+import type { PartialTabulate } from "../../../shared/utilities/TypeDefinitions";
 import type { Resource } from "../definitions/ResourceDefinitions";
 import { Config } from "../logic/Config";
 import type { GameState } from "../logic/GameState";

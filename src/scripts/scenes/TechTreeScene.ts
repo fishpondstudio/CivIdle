@@ -1,7 +1,7 @@
 import { SmoothGraphics } from "@pixi/graphics-smooth";
 import type { ColorSource, FederatedPointerEvent } from "pixi.js";
 import { BitmapText, Color, Container, LINE_CAP, LINE_JOIN, Rectangle } from "pixi.js";
-import { forEach, sizeOf } from "../../../shared/Helper";
+import { forEach, sizeOf } from "../../../shared/utilities/Helper";
 import { getGameOptions } from "../Global";
 import type { ITechDefinition } from "../definitions/ITechDefinition";
 import type { Tech } from "../definitions/TechDefinitions";

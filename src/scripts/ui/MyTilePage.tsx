@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { formatPercent, safeParseInt } from "../../../shared/Helper";
+import { formatPercent, safeParseInt } from "../../../shared/utilities/Helper";
 import { client, usePlayerMap } from "../rpc/RPCClient";
 import { L, t } from "../utilities/i18n";
 import { showToast } from "./GlobalModal";

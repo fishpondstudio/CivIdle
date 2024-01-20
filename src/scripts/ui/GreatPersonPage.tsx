@@ -1,4 +1,4 @@
-import { isEmpty } from "../../../shared/Helper";
+import { isEmpty } from "../../../shared/utilities/Helper";
 import { useGameOptions, useGameState } from "../Global";
 import { Config } from "../logic/Config";
 import { jsxMapOf } from "../utilities/Helper";

@@ -16,8 +16,8 @@ import {
    sizeOf,
    tileToPoint,
    type Tile,
-} from "../../../shared/Helper";
-import { Vector2, v2 } from "../../../shared/Vector2";
+} from "../../../shared/utilities/Helper";
+import { Vector2, v2 } from "../../../shared/utilities/Vector2";
 import { getGameOptions, getGameState, notifyGameStateUpdate, saveGame, serializeSave } from "../Global";
 import type { Building } from "../definitions/BuildingDefinitions";
 import type { IUnlockableDefinition } from "../definitions/ITechDefinition";

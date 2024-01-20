@@ -8,7 +8,7 @@ import {
    safeAdd,
    xyToPoint,
    type Tile,
-} from "../../../shared/Helper";
+} from "../../../shared/utilities/Helper";
 import { useGameState } from "../Global";
 import { getStorageFor } from "../logic/BuildingLogic";
 import { Config } from "../logic/Config";

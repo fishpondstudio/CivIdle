@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import { formatPercent } from "../../../shared/Helper";
+import { formatPercent } from "../../../shared/utilities/Helper";
 import warning from "../../images/warning.png";
 import { getMultipliersFor, getStorageFor } from "../logic/BuildingLogic";
 import { Config } from "../logic/Config";

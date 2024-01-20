@@ -1,4 +1,4 @@
-import { firstKeyOf, forEach, xyToTile, type Tile } from "../../shared/Helper";
+import { firstKeyOf, forEach, xyToTile, type Tile } from "../../shared/utilities/Helper";
 import type { City } from "./definitions/CityDefinitions";
 import type { TechAge } from "./definitions/TechDefinitions";
 import { Config } from "./logic/Config";

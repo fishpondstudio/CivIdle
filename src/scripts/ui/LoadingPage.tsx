@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { formatPercent } from "../../../shared/Helper";
+import { formatPercent } from "../../../shared/utilities/Helper";
 import "../../css/LoadingPage.css";
 import energyStar from "../../images/energy_star.png";
 import { getVersion } from "../logic/Constants";

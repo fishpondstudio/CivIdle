@@ -1,8 +1,8 @@
 import { SmoothGraphics } from "@pixi/graphics-smooth";
 import type { FederatedPointerEvent, IPointData, Sprite } from "pixi.js";
 import { Color, Container, LINE_CAP, LINE_JOIN, ParticleContainer, TilingSprite } from "pixi.js";
-import { clamp, lerp, lookAt, pointToTile, tileToPoint, type Tile } from "../../../shared/Helper";
-import { Vector2, v2 } from "../../../shared/Vector2";
+import { clamp, lerp, lookAt, pointToTile, tileToPoint, type Tile } from "../../../shared/utilities/Helper";
+import { Vector2, v2 } from "../../../shared/utilities/Vector2";
 import { TILE_SIZE, getGameOptions, getGameState } from "../Global";
 import { GameFeature, hasFeature } from "../logic/FeatureLogic";
 import type { GameOptions, GameState } from "../logic/GameState";

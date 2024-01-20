@@ -1,7 +1,7 @@
 import classNames from "classnames";
 import { useState } from "react";
-import { forEach, formatPercent, keysOf, mReduceOf, safeAdd } from "../../../shared/Helper";
-import type { PartialTabulate } from "../../../shared/TypeDefinitions";
+import { forEach, formatPercent, keysOf, mReduceOf, safeAdd } from "../../../shared/utilities/Helper";
+import type { PartialTabulate } from "../../../shared/utilities/TypeDefinitions";
 import type { Resource } from "../definitions/ResourceDefinitions";
 import { IOCalculation, getElectrificationStatus } from "../logic/BuildingLogic";
 import { Config } from "../logic/Config";

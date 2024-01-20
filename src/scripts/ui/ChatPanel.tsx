@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
-import { ChatChannels } from "../../../shared/Database";
-import { isEmpty, keysOf, sizeOf } from "../../../shared/Helper";
+import { ChatChannels } from "../../../shared/utilities/Database";
+import { isEmpty, keysOf, sizeOf } from "../../../shared/utilities/Helper";
 import chatActive from "../../images/chat_active.png";
 import chatInactive from "../../images/chat_inactive.png";
 import { OnUIThemeChanged, useGameOptions } from "../Global";
