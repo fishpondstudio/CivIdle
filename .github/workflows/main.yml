@@ -8,7 +8,7 @@ jobs:
       steps:
          - run: |
               git checkout .
-              git pull --recurse-submodules
+              git submodule update --recursive --remote
               pnpm install
            working-directory: /home/insraq/CivIdle
          - run: |
@@ -22,7 +22,7 @@ jobs:
            working-directory: /home/insraq/CivIdle
            env:
               STEAMWORKS_PATH: /home/insraq/steamworks/tools/ContentBuilder/
-         - run: ssh ubuntu@uk.fishpondstudio.com "cd /home/ubuntu/CivIdle/server/ && git checkout . && git pull --recurse-submodules && npm install && npm run build && sudo systemctl restart cividle"
+         - run: ssh ubuntu@uk.fishpondstudio.com "cd /home/ubuntu/CivIdle/server/ && git checkout . && git submodule update --recursive --remote && npm install && npm run build && sudo systemctl restart cividle"
          - run: |
               git add src/scripts/Version.json
               git commit -m "[skip ci] New build" || echo "There's nothing to commit"
