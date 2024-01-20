@@ -4,6 +4,7 @@ import { GameState } from "../../../shared/logic/GameState";
 import { getGameOptions, notifyGameStateUpdate, serializeSave } from "../../../shared/logic/GameStateLogic";
 import { calculateHappiness } from "../../../shared/logic/HappinessLogic";
 import { clearIntraTickCache, getSpecialBuildings } from "../../../shared/logic/IntraTickCache";
+import { OnResetTile } from "../../../shared/logic/TechLogic";
 import { CurrentTickChanged, EmptyTickData, Tick, freezeTickData } from "../../../shared/logic/TickLogic";
 import {
    OnShowFloater,
@@ -88,4 +89,9 @@ export function tickEverySecond(gs: GameState, offline: boolean) {
 OnShowFloater.on(({ xy, amount }) => {
    Singleton().sceneManager.getCurrent(WorldScene)?.getTile(xy)?.showFloater(amount);
 });
+
+OnResetTile.on((xy) => {
+   Singleton().sceneManager.getCurrent(WorldScene)?.resetTile(xy);
+});
+
 export const useCurrentTick = makeObservableHook(CurrentTickChanged, () => Tick.current);

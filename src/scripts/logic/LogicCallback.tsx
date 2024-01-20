@@ -19,7 +19,7 @@ import {
    getXyBuildings,
 } from "../../../shared/logic/IntraTickCache";
 import { getBuildingsThatProduce, getRevealedDeposits } from "../../../shared/logic/ResourceLogic";
-import { addDeposit, getGreatPeopleChoices } from "../../../shared/logic/TechLogic";
+import { OnResetTile, addDeposit, getGreatPeopleChoices } from "../../../shared/logic/TechLogic";
 import { ensureTileFogOfWar } from "../../../shared/logic/TerrainLogic";
 import { Tick } from "../../../shared/logic/TickLogic";
 import type { IPetraBuildingData } from "../../../shared/logic/Tile";
@@ -88,7 +88,7 @@ OnBuildingComplete.on((xy) => {
             const neighborXy = pointToTile(neighbor);
             if (isEmpty(gs.tiles.get(neighborXy)!.deposit)) {
                const deposit = deposits.pop()!;
-               addDeposit(neighborXy, deposit, gs);
+               addDeposit(neighborXy, deposit, OnResetTile, gs);
             }
          }
          break;

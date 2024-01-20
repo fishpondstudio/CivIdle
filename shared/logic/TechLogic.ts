@@ -12,6 +12,7 @@ import {
    shuffle,
    type Tile,
 } from "../utilities/Helper";
+import { TypedEvent } from "../utilities/TypedEvent";
 import { Config } from "./Config";
 import type { GameState, GreatPeopleChoice } from "./GameState";
 import { getGameState } from "./GameStateLogic";
@@ -73,7 +74,7 @@ export function getAgeForTech(tech: string): TechAge | null {
    return null;
 }
 
-export function unlockTech(tech: Tech, gs: GameState): void {
+export function unlockTech(tech: Tech, event: TypedEvent<Tile> | null, gs: GameState): void {
    if (gs.unlockedTech[tech]) {
       return;
    }
@@ -102,14 +103,16 @@ export function unlockTech(tech: Tech, gs: GameState): void {
          depositTiles[0] = shuffle(exploredEmptyTiles)[0].xy;
       }
       depositTiles.forEach(([xy, tile]) => {
-         addDeposit(xy, deposit, gs);
+         addDeposit(xy, deposit, event, gs);
       });
    });
 }
 
-export function addDeposit(xy: Tile, deposit: Deposit, gs: GameState): void {
+export const OnResetTile = new TypedEvent<Tile>();
+
+export function addDeposit(xy: Tile, deposit: Deposit, event: TypedEvent<Tile> | null, gs: GameState): void {
    gs.tiles.get(xy)!.deposit[deposit] = true;
-   // Singleton().sceneManager.getCurrent(WorldScene)?.resetTile(xy);
+   event?.emit(xy);
 }
 
 export function getDepositUnlockTech(deposit: Deposit): Tech {
