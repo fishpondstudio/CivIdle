@@ -1,7 +1,8 @@
 import classNames from "classnames";
-import { formatPercent, jsxMapOf } from "../../../shared/Helper";
+import { formatPercent } from "../../../shared/Helper";
 import { HAPPINESS_MULTIPLIER, HappinessNames, getHappinessIcon } from "../logic/HappinessLogic";
 import { Tick, useCurrentTick } from "../logic/TickLogic";
+import { jsxMapOf } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
 import { FormatNumber } from "./HelperComponents";
 import { ProgressBarComponent } from "./ProgressBarComponent";

@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import {
    clamp,
    formatPercent,
-   jsxMMapOf,
    mFirstKeyOf,
    pointToXy,
    safeAdd,
@@ -17,6 +16,7 @@ import type { IClientTrade } from "../logic/PlayerTradeLogic";
 import { Tick } from "../logic/TickLogic";
 import { client, usePlayerMap } from "../rpc/RPCClient";
 import { findPath, findUserOnMap, getMyMapXy } from "../scenes/PathFinder";
+import { jsxMMapOf } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
 import { playError, playKaching } from "../visuals/Sound";
 import { hideModal, showToast } from "./GlobalModal";

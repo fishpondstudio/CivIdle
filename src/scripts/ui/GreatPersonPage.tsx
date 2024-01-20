@@ -1,6 +1,7 @@
-import { isEmpty, jsxMapOf } from "../../../shared/Helper";
+import { isEmpty } from "../../../shared/Helper";
 import { useGameOptions, useGameState } from "../Global";
 import { Config } from "../logic/Config";
+import { jsxMapOf } from "../utilities/Helper";
 import { Singleton } from "../utilities/Singleton";
 import { L, t } from "../utilities/i18n";
 import { greatPersonImage } from "../visuals/GreatPersonVisual";

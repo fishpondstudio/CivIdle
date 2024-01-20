@@ -1,12 +1,13 @@
 import classNames from "classnames";
 import { useState } from "react";
-import { jsxMapOf, numberToRoman } from "../../../shared/Helper";
+import { numberToRoman } from "../../../shared/Helper";
 import { getGameOptions, notifyGameStateUpdate } from "../Global";
 import { getBuildingUpgradeLevels, getTotalBuildingCost } from "../logic/BuildingLogic";
 import { Config } from "../logic/Config";
 import {} from "../logic/GameState";
 import { useShortcut } from "../logic/Shortcut";
 import { getUpgradePriority, setUpgradePriority } from "../logic/Tile";
+import { jsxMapOf } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
 import type { IBuildingComponentProps } from "./BuildingPage";
 import { FormatNumber } from "./HelperComponents";

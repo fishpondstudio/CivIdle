@@ -3,7 +3,6 @@ import {
    anyOf,
    formatNumber,
    isEmpty,
-   jsxMapOf,
    keysOf,
    mapOf,
    numberToRoman,
@@ -19,6 +18,7 @@ import { getTypeBuildings, unlockedBuildings } from "../logic/IntraTickCache";
 import { useShortcut } from "../logic/Shortcut";
 import type { ITileData } from "../logic/Tile";
 import { makeBuilding } from "../logic/Tile";
+import { jsxMapOf } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
 import { MenuComponent } from "./MenuComponent";
 

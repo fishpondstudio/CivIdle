@@ -1,4 +1,4 @@
-import { formatPercent, jsxMapOf, reduceOf } from "../../../shared/Helper";
+import { formatPercent, reduceOf } from "../../../shared/Helper";
 import { getScienceFromWorkers } from "../logic/BuildingLogic";
 import { Config } from "../logic/Config";
 import { getXyBuildings } from "../logic/IntraTickCache";
@@ -6,6 +6,7 @@ import { getGreatPeopleAtReborn } from "../logic/RebornLogic";
 import { getCurrentTechAge, getScienceAmount, getUnlockCost, unlockableTechs } from "../logic/TechLogic";
 import { Tick } from "../logic/TickLogic";
 import { TechTreeScene } from "../scenes/TechTreeScene";
+import { jsxMapOf } from "../utilities/Helper";
 import { Singleton } from "../utilities/Singleton";
 import { L, t } from "../utilities/i18n";
 import { BuildingColorComponent } from "./BuildingColorComponent";

@@ -1,7 +1,7 @@
-import { jsxMapOf } from "../../../shared/Helper";
 import { notifyGameOptionsUpdate, useGameOptions } from "../Global";
 import type { Resource } from "../definitions/ResourceDefinitions";
 import { Config } from "../logic/Config";
+import { jsxMapOf } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
 import type { IBuildingComponentProps } from "./BuildingPage";
 

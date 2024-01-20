@@ -1,4 +1,4 @@
-import { forEach, jsxMapOf, reduceOf } from "../../../shared/Helper";
+import { forEach, reduceOf } from "../../../shared/Helper";
 import type { PartialTabulate } from "../../../shared/TypeDefinitions";
 import { notifyGameStateUpdate, useGameState } from "../Global";
 import { MAX_TECH_COLUMN } from "../SteamTesting";
@@ -10,6 +10,7 @@ import { useShortcut } from "../logic/Shortcut";
 import { getCurrentTechAge, getGreatPeopleChoices, getUnlockCost, unlockTech } from "../logic/TechLogic";
 import { TechTreeScene } from "../scenes/TechTreeScene";
 import { WorldScene } from "../scenes/WorldScene";
+import { jsxMapOf } from "../utilities/Helper";
 import { Singleton } from "../utilities/Singleton";
 import { L, t } from "../utilities/i18n";
 import { playLevelUp } from "../visuals/Sound";
