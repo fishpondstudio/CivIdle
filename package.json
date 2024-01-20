@@ -11,8 +11,7 @@
       "preview": "vite preview",
       "test": "vitest",
       "font": "node ./build/GenerateBitmapFont.js",
-      "release": "node ./build/ReleaseElectron.js",
-      "prepare": "husky install"
+      "release": "node ./build/ReleaseElectron.js"
    },
    "dependencies": {
       "@capacitor/android": "^5.4.2",
