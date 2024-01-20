@@ -25,7 +25,7 @@ declare global {
        */
       readonly isDirectory: boolean;
    }
-   var FileSystemHandle: {
+   const FileSystemHandle: {
       prototype: FileSystemHandle;
       new (): FileSystemHandle;
    };
@@ -112,7 +112,7 @@ declare global {
       readonly isDirectory: false;
    }
 
-   var FileSystemFileHandle: {
+   const FileSystemFileHandle: {
       prototype: FileSystemFileHandle;
       new (): FileSystemFileHandle;
    };
@@ -140,7 +140,7 @@ declare global {
       readonly isDirectory: true;
    }
 
-   var FileSystemDirectoryHandle: {
+   const FileSystemDirectoryHandle: {
       prototype: FileSystemDirectoryHandle;
       new (): FileSystemDirectoryHandle;
    };

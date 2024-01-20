@@ -2,7 +2,12 @@
    "compilerOptions": {
       "target": "ESNext",
       "useDefineForClassFields": true,
-      "lib": ["DOM", "DOM.Iterable", "ESNext", "WebWorker"],
+      "lib": [
+         "DOM",
+         "DOM.Iterable",
+         "ESNext",
+         "WebWorker"
+      ],
       "allowJs": false,
       "skipLibCheck": true,
       "esModuleInterop": false,
@@ -18,7 +23,22 @@
       "noImplicitOverride": true,
       "verbatimModuleSyntax": true
    },
-   "include": ["src"],
-   "exclude": ["**/node_modules", "**/.*/"],
-   "references": [{ "path": "./tsconfig.node.json" }]
+   "include": [
+      "src",
+      "shared/wyhash.ts",
+      "shared/FossilDelta.ts",
+      "shared/murmurhash.ts"
+   ],
+   "exclude": [
+      "**/node_modules",
+      "**/.*/",
+   ],
+   "references": [
+      {
+         "path": "./tsconfig.node.json"
+      },
+      {
+         "path": "./shared/tsconfig.json"
+      }
+   ]
 }

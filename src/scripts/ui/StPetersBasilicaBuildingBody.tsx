@@ -1,8 +1,8 @@
+import { formatPercent, mMapOf } from "../../../shared/Helper";
 import { ST_PETERS_FAITH_MULTIPLIER, ST_PETERS_STORAGE_MULTIPLIER } from "../logic/BuildingLogic";
 import { Config } from "../logic/Config";
 import { getBuildingsByType } from "../logic/IntraTickCache";
 import { getBuildingsThatProduce } from "../logic/ResourceLogic";
-import { formatPercent, mMapOf } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
 import { BuildingColorComponent } from "./BuildingColorComponent";
 import { BuildingDescriptionComponent } from "./BuildingDescriptionComponent";

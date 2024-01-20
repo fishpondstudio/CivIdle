@@ -1,6 +1,6 @@
+import { clamp, keysOf, shuffle } from "../../../shared/Helper";
 import { getGameOptions } from "../Global";
 import type { GreatPerson } from "../definitions/GreatPersonDefinitions";
-import { clamp, keysOf, shuffle } from "../utilities/Helper";
 import { Config } from "./Config";
 import type { GreatPeopleChoice } from "./GameState";
 import { Tick } from "./TickLogic";

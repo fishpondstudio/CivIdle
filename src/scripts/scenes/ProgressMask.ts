@@ -1,6 +1,6 @@
 import { SmoothGraphics } from "@pixi/graphics-smooth";
 import type { IPointData } from "pixi.js";
-import { clamp } from "../utilities/Helper";
+import { clamp } from "../../../shared/Helper";
 
 function rotateXY(x: number, y: number, angle: number): IPointData {
    const rad = (Math.PI * angle) / 180;

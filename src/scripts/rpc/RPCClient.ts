@@ -1,6 +1,7 @@
 /* eslint-disable no-case-declarations */
 import { decode, encode } from "@msgpack/msgpack";
 import { RpcError, removeTrailingUndefs, rpcClient } from "typed-rpc";
+import type { ServerImpl } from "../../../server/src/Server";
 import type {
    AllMessageTypes,
    IChat,
@@ -11,13 +12,12 @@ import type {
    ITradeMessage,
    IUser,
    IWelcomeMessage,
-} from "../../../server/src/Database";
-import { MessageType } from "../../../server/src/Database";
-import type { ServerImpl } from "../../../server/src/Server";
+} from "../../../shared/Database";
+import { MessageType } from "../../../shared/Database";
+import { forEach } from "../../../shared/Helper";
 import { getGameOptions, saveGame } from "../Global";
 import type { IClientTrade } from "../logic/PlayerTradeLogic";
 import { showToast } from "../ui/GlobalModal";
-import { forEach } from "../utilities/Helper";
 import { makeObservableHook } from "../utilities/Hook";
 import { TypedEvent } from "../utilities/TypedEvent";
 import { L, t } from "../utilities/i18n";

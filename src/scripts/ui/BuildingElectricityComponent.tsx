@@ -1,4 +1,5 @@
 import classNames from "classnames";
+import { formatNumber } from "../../../shared/Helper";
 import { notifyGameStateUpdate } from "../Global";
 import {
    ElectrificationStatus,
@@ -7,7 +8,6 @@ import {
    getPowerRequired,
 } from "../logic/BuildingLogic";
 import { GameFeature, hasFeature } from "../logic/FeatureLogic";
-import { formatNumber } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
 import { ApplyToAllComponent } from "./ApplyToAllComponent";
 import type { IBuildingComponentProps } from "./BuildingPage";

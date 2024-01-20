@@ -1,12 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
-import { ChatChannels } from "../../../server/src/Database";
+import { ChatChannels } from "../../../shared/Database";
+import { isEmpty, keysOf, sizeOf } from "../../../shared/Helper";
 import chatActive from "../../images/chat_active.png";
 import chatInactive from "../../images/chat_inactive.png";
 import { OnUIThemeChanged, useGameOptions } from "../Global";
 import { handleChatCommand } from "../logic/ChatCommand";
 import { addSystemMessage, client, useChatMessages, useUser } from "../rpc/RPCClient";
 import { getCountryName, getFlagUrl } from "../utilities/CountryCode";
-import { isEmpty, keysOf, sizeOf } from "../utilities/Helper";
 import { useTypedEvent } from "../utilities/Hook";
 import { L, t } from "../utilities/i18n";
 import { showModal } from "./GlobalModal";

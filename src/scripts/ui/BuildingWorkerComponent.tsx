@@ -1,4 +1,5 @@
 import classNames from "classnames";
+import { formatPercent, isEmpty } from "../../../shared/Helper";
 import warning from "../../images/warning.png";
 import { notifyGameStateUpdate } from "../Global";
 import {
@@ -11,7 +12,6 @@ import {
 } from "../logic/BuildingLogic";
 import { getBuildingIO } from "../logic/IntraTickCache";
 import { Tick } from "../logic/TickLogic";
-import { formatPercent, isEmpty } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
 import { ApplyToAllComponent } from "./ApplyToAllComponent";
 import type { IBuildingComponentProps } from "./BuildingPage";

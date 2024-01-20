@@ -1,9 +1,9 @@
 import { useState } from "react";
+import { clamp, formatNumber, safeAdd, safeParseInt } from "../../../shared/Helper";
 import { notifyGameStateUpdate } from "../Global";
 import type { Resource } from "../definitions/ResourceDefinitions";
 import { Config } from "../logic/Config";
 import type { IBuildingData } from "../logic/Tile";
-import { clamp, formatNumber, safeAdd, safeParseInt } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
 import { playClick } from "../visuals/Sound";
 import { hideModal } from "./GlobalModal";

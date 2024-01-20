@@ -1,6 +1,6 @@
+import type { PartialSet, PartialTabulate } from "../../../shared/TypeDefinitions";
 import { L, t } from "../utilities/i18n";
 import type { Deposit, Resource } from "./ResourceDefinitions";
-import type { PartialSet, PartialTabulate } from "./TypeDefinitions";
 
 export enum BuildingSpecial {
    HQ = 0,

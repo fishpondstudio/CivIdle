@@ -1,8 +1,3 @@
-import type { Building } from "../definitions/BuildingDefinitions";
-import type { City } from "../definitions/CityDefinitions";
-import type { GreatPerson } from "../definitions/GreatPersonDefinitions";
-import type { Deposit, Resource } from "../definitions/ResourceDefinitions";
-import type { Tech, TechAge } from "../definitions/TechDefinitions";
 import {
    filterOf,
    forEach,
@@ -11,7 +6,12 @@ import {
    keysOf,
    shuffle,
    type Tile,
-} from "../utilities/Helper";
+} from "../../../shared/Helper";
+import type { Building } from "../definitions/BuildingDefinitions";
+import type { City } from "../definitions/CityDefinitions";
+import type { GreatPerson } from "../definitions/GreatPersonDefinitions";
+import type { Deposit, Resource } from "../definitions/ResourceDefinitions";
+import type { Tech, TechAge } from "../definitions/TechDefinitions";
 import { Singleton } from "../utilities/Singleton";
 import { Config } from "./Config";
 import type { GameState, GreatPeopleChoice } from "./GameState";

@@ -1,10 +1,10 @@
+import { forEach, keysOf } from "../../../shared/Helper";
+import type { PartialSet } from "../../../shared/TypeDefinitions";
 import type { Resource } from "../definitions/ResourceDefinitions";
-import type { PartialSet } from "../definitions/TypeDefinitions";
 import { getStorageFor } from "../logic/BuildingLogic";
 import { Config } from "../logic/Config";
 import { Tick } from "../logic/TickLogic";
 import type { IResourceImportBuildingData } from "../logic/Tile";
-import { forEach, keysOf } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
 import type { IBuildingComponentProps } from "./BuildingPage";
 import { ChangeResourceImportModal } from "./ChangeResourceImportModal";

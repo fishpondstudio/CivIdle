@@ -1,9 +1,9 @@
+import { jsxMapOf } from "../../../shared/Helper";
+import type { PartialSet } from "../../../shared/TypeDefinitions";
 import { useGameState } from "../Global";
 import type { Building } from "../definitions/BuildingDefinitions";
-import type { PartialSet } from "../definitions/TypeDefinitions";
 import { Config } from "../logic/Config";
 import { getXyBuildings } from "../logic/IntraTickCache";
-import { jsxMapOf } from "../utilities/Helper";
 import { Singleton } from "../utilities/Singleton";
 import { L, t } from "../utilities/i18n";
 import { MenuComponent } from "./MenuComponent";

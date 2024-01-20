@@ -1,8 +1,8 @@
+import { clamp, formatHM, formatPercent } from "../../../shared/Helper";
 import { notifyGameStateUpdate } from "../Global";
 import { getStorageFor } from "../logic/BuildingLogic";
 import { MAX_OFFLINE_PRODUCTION_SEC } from "../logic/Constants";
 import type { IPetraBuildingData } from "../logic/Tile";
-import { clamp, formatHM, formatPercent } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
 import { playError } from "../visuals/Sound";
 import { BuildingColorComponent } from "./BuildingColorComponent";

@@ -1,6 +1,6 @@
 import type { SmoothGraphics } from "@pixi/graphics-smooth";
 import { BitmapText, Polygon } from "pixi.js";
-import { tileToPoint, type Tile } from "../utilities/Helper";
+import { tileToPoint, type Tile } from "../../../shared/Helper";
 import { Hex, Layout, OffsetCoord, Point } from "../utilities/Hex";
 import { ObjectPool } from "../utilities/ObjectPool";
 import { Fonts } from "../visuals/Fonts";

@@ -1,10 +1,10 @@
 import { useState } from "react";
+import { clamp, reduceOf, safeParseInt } from "../../../shared/Helper";
 import { notifyGameStateUpdate } from "../Global";
 import type { Resource } from "../definitions/ResourceDefinitions";
 import { getWarehouseCapacity } from "../logic/BuildingLogic";
 import { Config } from "../logic/Config";
 import type { IResourceImport, IResourceImportBuildingData } from "../logic/Tile";
-import { clamp, reduceOf, safeParseInt } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
 import { hideModal } from "./GlobalModal";
 import { FormatNumber } from "./HelperComponents";

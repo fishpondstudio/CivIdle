@@ -1,13 +1,4 @@
 import { useState } from "react";
-import "../../css/EmptyTilePage.css";
-import { getGameOptions, notifyGameStateUpdate, useGameState } from "../Global";
-import type { Building } from "../definitions/BuildingDefinitions";
-import { checkBuildingMax, getBuildingCost, isWorldOrNaturalWonder } from "../logic/BuildingLogic";
-import { Config } from "../logic/Config";
-import { getTypeBuildings, unlockedBuildings } from "../logic/IntraTickCache";
-import { useShortcut } from "../logic/Shortcut";
-import type { ITileData } from "../logic/Tile";
-import { makeBuilding } from "../logic/Tile";
 import {
    anyOf,
    formatNumber,
@@ -18,7 +9,16 @@ import {
    numberToRoman,
    setContains,
    sizeOf,
-} from "../utilities/Helper";
+} from "../../../shared/Helper";
+import "../../css/EmptyTilePage.css";
+import { getGameOptions, notifyGameStateUpdate, useGameState } from "../Global";
+import type { Building } from "../definitions/BuildingDefinitions";
+import { checkBuildingMax, getBuildingCost, isWorldOrNaturalWonder } from "../logic/BuildingLogic";
+import { Config } from "../logic/Config";
+import { getTypeBuildings, unlockedBuildings } from "../logic/IntraTickCache";
+import { useShortcut } from "../logic/Shortcut";
+import type { ITileData } from "../logic/Tile";
+import { makeBuilding } from "../logic/Tile";
 import { L, t } from "../utilities/i18n";
 import { MenuComponent } from "./MenuComponent";
 

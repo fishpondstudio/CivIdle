@@ -1,3 +1,5 @@
+import { forEach, formatNumber, isEmpty, keysOf, numberToRoman, sizeOf } from "../../../shared/Helper";
+import type { PartialSet, PartialTabulate } from "../../../shared/TypeDefinitions";
 import { build } from "../Version.json";
 import type { Building } from "../definitions/BuildingDefinitions";
 import { BuildingSpecial } from "../definitions/BuildingDefinitions";
@@ -5,8 +7,6 @@ import type { City } from "../definitions/CityDefinitions";
 import type { Resource } from "../definitions/ResourceDefinitions";
 import { DepositResources } from "../definitions/ResourceDefinitions";
 import type { Tech } from "../definitions/TechDefinitions";
-import type { PartialSet, PartialTabulate } from "../definitions/TypeDefinitions";
-import { forEach, formatNumber, isEmpty, keysOf, numberToRoman, sizeOf } from "../utilities/Helper";
 import { getBuildingCost, isWorldWonder } from "./BuildingLogic";
 import { Config } from "./Config";
 import type { GameState } from "./GameState";

@@ -1,4 +1,5 @@
 import type { Application } from "pixi.js";
+import { clamp, forEach, isNullOrUndefined, rejectIn, schedule } from "../../shared/Helper";
 import { RunTests } from "../tests/TestRunner";
 import {
    TILE_SIZE,
@@ -35,7 +36,6 @@ import { LoadingPage, LoadingPageStage } from "./ui/LoadingPage";
 import { ManageRebornModal } from "./ui/ManageRebornModal";
 import { OfflineProductionModal } from "./ui/OfflineProductionModal";
 import { GameTicker } from "./utilities/GameTicker";
-import { clamp, forEach, isNullOrUndefined, rejectIn, schedule } from "./utilities/Helper";
 import { SceneManager, type Textures } from "./utilities/SceneManager";
 import { Singleton, initializeSingletons, type ISpecialBuildings, type RouteTo } from "./utilities/Singleton";
 import type { TypedEvent } from "./utilities/TypedEvent";

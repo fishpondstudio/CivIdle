@@ -1,5 +1,5 @@
+import { jsxMapOf, sizeOf } from "../../../shared/Helper";
 import { Config } from "../logic/Config";
-import { jsxMapOf, sizeOf } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
 import type { IBuildingComponentProps } from "./BuildingPage";
 

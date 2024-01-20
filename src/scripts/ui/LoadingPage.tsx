@@ -1,8 +1,8 @@
 import { useEffect } from "react";
+import { formatPercent } from "../../../shared/Helper";
 import "../../css/LoadingPage.css";
 import energyStar from "../../images/energy_star.png";
 import { getVersion } from "../logic/Constants";
-import { formatPercent } from "../utilities/Helper";
 
 export enum LoadingPageStage {
    LoadSave = 0,

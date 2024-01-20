@@ -1,5 +1,17 @@
 import type { IDestroyOptions, IPointData } from "pixi.js";
 import { BitmapText, Color, Container, Sprite } from "pixi.js";
+import {
+   clamp,
+   forEach,
+   formatHMS,
+   formatNumber,
+   layoutCenter,
+   pointToTile,
+   pointToXy,
+   sizeOf,
+   type Tile,
+} from "../../../shared/Helper";
+import { v2 } from "../../../shared/Vector2";
 import { getGameOptions, getGameState } from "../Global";
 import type { Resource } from "../definitions/ResourceDefinitions";
 import {
@@ -13,19 +25,7 @@ import {
 import type { GameOptions, GameState } from "../logic/GameState";
 import { Tick } from "../logic/TickLogic";
 import type { ITileData } from "../logic/Tile";
-import {
-   clamp,
-   forEach,
-   formatHMS,
-   formatNumber,
-   layoutCenter,
-   pointToTile,
-   pointToXy,
-   sizeOf,
-   type Tile,
-} from "../utilities/Helper";
 import { Singleton } from "../utilities/Singleton";
-import { v2 } from "../utilities/Vector2";
 import { Actions } from "../utilities/pixi-actions/Actions";
 import { Easing } from "../utilities/pixi-actions/Easing";
 import type { Action } from "../utilities/pixi-actions/actions/Action";

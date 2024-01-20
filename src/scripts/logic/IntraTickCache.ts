@@ -1,8 +1,8 @@
 import type { IPointData } from "pixi.js";
+import { forEach, safeAdd, tileToHash, tileToPoint, type Tile } from "../../../shared/Helper";
+import type { PartialSet, PartialTabulate } from "../../../shared/TypeDefinitions";
 import type { Building, IBuildingDefinition } from "../definitions/BuildingDefinitions";
 import type { Deposit, Resource } from "../definitions/ResourceDefinitions";
-import type { PartialSet, PartialTabulate } from "../definitions/TypeDefinitions";
-import { forEach, safeAdd, tileToHash, tileToPoint, type Tile } from "../utilities/Helper";
 import { IOCalculation, totalMultiplierFor } from "./BuildingLogic";
 import { Config } from "./Config";
 import type { GameState } from "./GameState";

@@ -1,11 +1,11 @@
 import classNames from "classnames";
 import type { PropsWithChildren } from "react";
 import { useEffect, useRef, useState } from "react";
+import { sizeOf } from "../../../shared/Helper";
 import { Tick } from "../logic/TickLogic";
 import { PlayerMapScene } from "../scenes/PlayerMapScene";
 import { TechTreeScene } from "../scenes/TechTreeScene";
 import { WorldScene } from "../scenes/WorldScene";
-import { sizeOf } from "../utilities/Helper";
 import { Singleton } from "../utilities/Singleton";
 import { L, t } from "../utilities/i18n";
 import { AboutModal } from "./AboutModal";

@@ -1,4 +1,4 @@
-import { clamp } from "../utilities/Helper";
+import { clamp } from "../../../shared/Helper";
 
 export function ProgressBarComponent({ progress }: { progress: number }): React.ReactNode {
    return (

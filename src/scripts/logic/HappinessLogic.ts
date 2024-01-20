@@ -1,5 +1,5 @@
-import type { PartialTabulate } from "../definitions/TypeDefinitions";
-import { clamp, isEmpty, mFilterOf, mReduceOf, reduceOf, sizeOf, sum } from "../utilities/Helper";
+import { clamp, isEmpty, mFilterOf, mReduceOf, reduceOf, sizeOf, sum } from "../../../shared/Helper";
+import type { PartialTabulate } from "../../../shared/TypeDefinitions";
 import { L, t } from "../utilities/i18n";
 import { isNaturalWonder, isSpecialBuilding, isWorldWonder } from "./BuildingLogic";
 import { Config } from "./Config";

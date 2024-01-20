@@ -1,7 +1,3 @@
-import type { Deposit } from "../definitions/ResourceDefinitions";
-import { WorldScene } from "../scenes/WorldScene";
-import { ChooseGreatPersonModal } from "../ui/ChooseGreatPersonModal";
-import { showModal } from "../ui/GlobalModal";
 import {
    forEach,
    isEmpty,
@@ -12,7 +8,11 @@ import {
    shuffle,
    tileToPoint,
    type Tile,
-} from "../utilities/Helper";
+} from "../../../shared/Helper";
+import type { Deposit } from "../definitions/ResourceDefinitions";
+import { WorldScene } from "../scenes/WorldScene";
+import { ChooseGreatPersonModal } from "../ui/ChooseGreatPersonModal";
+import { showModal } from "../ui/GlobalModal";
 import { Singleton } from "../utilities/Singleton";
 import { L, t } from "../utilities/i18n";
 import {

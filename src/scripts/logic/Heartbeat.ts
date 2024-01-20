@@ -1,7 +1,7 @@
+import { fossilDeltaCreate } from "../../../shared/FossilDelta";
+import { wyhash } from "../../../shared/wyhash";
 import { getGameOptions, getGameState } from "../Global";
 import { client } from "../rpc/RPCClient";
-import { fossilDeltaCreate } from "../utilities/FossilDelta";
-import { wyhash } from "../utilities/wyhash";
 import { compress } from "../workers/Compress";
 
 export class Heartbeat {

@@ -1,11 +1,11 @@
+import { forEach } from "../../../shared/Helper";
+import type { PartialSet } from "../../../shared/TypeDefinitions";
 import { Config } from "../logic/Config";
 import type { GameState } from "../logic/GameState";
-import { forEach } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
 import type { Building } from "./BuildingDefinitions";
 import type { Deposit } from "./ResourceDefinitions";
 import type { Tech } from "./TechDefinitions";
-import type { PartialSet } from "./TypeDefinitions";
 
 export class CityDefinitions {
    Rome: ICityDefinition = {

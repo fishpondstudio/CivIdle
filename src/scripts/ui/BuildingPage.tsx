@@ -1,10 +1,10 @@
 import type { FunctionComponent } from "react";
+import type { Tile } from "../../../shared/Helper";
 import { useGameState } from "../Global";
 import type { Building } from "../definitions/BuildingDefinitions";
 import { Config } from "../logic/Config";
 import type { GameState } from "../logic/GameState";
 import type { ITileData } from "../logic/Tile";
-import type { Tile } from "../utilities/Helper";
 import { Singleton } from "../utilities/Singleton";
 import { DefaultBuildingBody } from "./DefaultBuildingBody";
 import { HeadquarterBuildingBody } from "./HeadquarterBuildingBody";

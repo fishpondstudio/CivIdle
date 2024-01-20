@@ -1,9 +1,9 @@
+import { hasFlag, toggleFlag } from "../../../shared/Helper";
 import { notifyGameStateUpdate } from "../Global";
 import { getWarehouseIdleCapacity } from "../logic/BuildingLogic";
 import { GameFeature, hasFeature } from "../logic/FeatureLogic";
 import type { IWarehouseBuildingData } from "../logic/Tile";
 import { WarehouseOptions } from "../logic/Tile";
-import { hasFlag, toggleFlag } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
 import { playClick } from "../visuals/Sound";
 import { BuildingColorComponent } from "./BuildingColorComponent";

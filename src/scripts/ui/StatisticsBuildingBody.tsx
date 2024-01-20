@@ -1,7 +1,8 @@
 import classNames from "classnames";
 import { useState } from "react";
+import { forEach, formatPercent, jsxMMapOf, keysOf, mReduceOf, safeAdd } from "../../../shared/Helper";
+import type { PartialTabulate } from "../../../shared/TypeDefinitions";
 import type { Resource } from "../definitions/ResourceDefinitions";
-import type { PartialTabulate } from "../definitions/TypeDefinitions";
 import { IOCalculation, getElectrificationStatus } from "../logic/BuildingLogic";
 import { Config } from "../logic/Config";
 import { GameFeature, hasFeature } from "../logic/FeatureLogic";
@@ -9,7 +10,6 @@ import { getBuildingIO, unlockedResources } from "../logic/IntraTickCache";
 import { Tick } from "../logic/TickLogic";
 import type { IBuildingData } from "../logic/Tile";
 import { WorldScene } from "../scenes/WorldScene";
-import { forEach, formatPercent, jsxMMapOf, keysOf, mReduceOf, safeAdd } from "../utilities/Helper";
 import { Singleton } from "../utilities/Singleton";
 import { L, t } from "../utilities/i18n";
 import { playClick } from "../visuals/Sound";

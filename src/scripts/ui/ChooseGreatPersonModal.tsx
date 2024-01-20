@@ -1,8 +1,8 @@
+import { safeAdd } from "../../../shared/Helper";
 import { notifyGameStateUpdate, useGameOptions, useGameState } from "../Global";
 import type { GreatPerson } from "../definitions/GreatPersonDefinitions";
 import type { GreatPeopleChoice } from "../logic/GameState";
 import { getGreatPersonUpgradeCost } from "../logic/RebornLogic";
-import { safeAdd } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
 import { playClick } from "../visuals/Sound";
 import { hideModal } from "./GlobalModal";

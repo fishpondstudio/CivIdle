@@ -1,7 +1,7 @@
+import { formatPercent } from "../../../shared/Helper";
 import { Config } from "../logic/Config";
 import { usePlayerMap, useTrades } from "../rpc/RPCClient";
 import { getCountryName, getFlagUrl } from "../utilities/CountryCode";
-import { formatPercent } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
 import { FillPlayerTradeModal } from "./FillPlayerTradeModal";
 import { showModal } from "./GlobalModal";

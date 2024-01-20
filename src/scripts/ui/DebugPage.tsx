@@ -1,8 +1,8 @@
 import { useState } from "react";
+import { clamp, keysOf, mapOf, safeAdd } from "../../../shared/Helper";
+import type { PartialTabulate } from "../../../shared/TypeDefinitions";
 import type { Resource } from "../definitions/ResourceDefinitions";
-import type { PartialTabulate } from "../definitions/TypeDefinitions";
 import { Config } from "../logic/Config";
-import { clamp, keysOf, mapOf, safeAdd } from "../utilities/Helper";
 
 export function DebugPage(): React.ReactNode {
    const [selectedResource, setSelectedResource] = useState<PartialTabulate<Resource>>({});

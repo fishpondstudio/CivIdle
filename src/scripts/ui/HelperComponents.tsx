@@ -1,5 +1,5 @@
+import { formatNumber } from "../../../shared/Helper";
 import type { GameState } from "../logic/GameState";
-import { formatNumber } from "../utilities/Helper";
 
 export function FormatNumber({ value }: { value: number | undefined | null }): React.ReactNode {
    return formatNumber(value, false, false);

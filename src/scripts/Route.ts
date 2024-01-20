@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
+import type { Tile } from "../../shared/Helper";
 import { getGameState } from "./Global";
 import { clearShortcuts } from "./logic/Shortcut";
 import { LoadingPage } from "./ui/LoadingPage";
 import { TilePage } from "./ui/TilePage";
-import type { Tile } from "./utilities/Helper";
 import type { TypedEvent } from "./utilities/TypedEvent";
 import { playClick } from "./visuals/Sound";
 

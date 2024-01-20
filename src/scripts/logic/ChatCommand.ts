@@ -1,6 +1,6 @@
+import { clamp, formatHM, formatNumber, safeParseInt } from "../../../shared/Helper";
 import { decompressSave, getGameState, loadSave } from "../Global";
 import { addSystemMessage, client } from "../rpc/RPCClient";
-import { clamp, formatHM, formatNumber, safeParseInt } from "../utilities/Helper";
 import { tickEverySecond } from "./Update";
 
 export async function handleChatCommand(command: string): Promise<void> {
@@ -29,7 +29,7 @@ export async function handleChatCommand(command: string): Promise<void> {
       }
       case "playtime": {
          const playTime = await client.getPlayTime();
-         addSystemMessage(`You have played ${formatHM(playTime * 1000)}`);
+         addSystemMessage(`You have played actively and online for ${formatHM(playTime * 1000)}`);
          break;
       }
       default: {

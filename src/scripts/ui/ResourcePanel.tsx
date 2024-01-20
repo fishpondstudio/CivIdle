@@ -1,11 +1,11 @@
 import classNames from "classnames";
+import { sizeOf } from "../../../shared/Helper";
 import { useGameState } from "../Global";
 import { getScienceFromWorkers } from "../logic/BuildingLogic";
 import { GameFeature, hasFeature } from "../logic/FeatureLogic";
 import { getHappinessIcon } from "../logic/HappinessLogic";
 import { getResourceAmount } from "../logic/ResourceLogic";
 import { useCurrentTick } from "../logic/TickLogic";
-import { sizeOf } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
 import { FormatNumber } from "./HelperComponents";
 

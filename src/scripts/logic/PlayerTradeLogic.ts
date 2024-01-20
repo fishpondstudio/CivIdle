@@ -1,4 +1,4 @@
-import type { IAddTradeRequest, ITrade } from "../../../server/src/Database";
+import type { IAddTradeRequest, ITrade } from "../../../shared/Database";
 import type { Resource } from "../definitions/ResourceDefinitions";
 import { Config } from "./Config";
 

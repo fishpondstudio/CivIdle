@@ -1,10 +1,10 @@
+import { deepFreeze } from "../../../shared/Helper";
+import type { PartialTabulate } from "../../../shared/TypeDefinitions";
 import { BuildingDefinitions, type Building } from "../definitions/BuildingDefinitions";
 import { CityDefinitions } from "../definitions/CityDefinitions";
 import { GreatPersonDefinitions } from "../definitions/GreatPersonDefinitions";
 import { ResourceDefinitions, type Resource } from "../definitions/ResourceDefinitions";
 import { TechAgeDefinitions, TechDefinitions } from "../definitions/TechDefinitions";
-import type { PartialTabulate } from "../definitions/TypeDefinitions";
-import { deepFreeze } from "../utilities/Helper";
 
 const BuildingTier: PartialTabulate<Building> = {};
 const BuildingTech: PartialTabulate<Building> = {};

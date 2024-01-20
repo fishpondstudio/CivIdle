@@ -1,10 +1,4 @@
 import type { IPointData } from "pixi.js";
-import { getGameOptions, getGameState, notifyGameStateUpdate, saveGame, serializeSave } from "../Global";
-import type { Building } from "../definitions/BuildingDefinitions";
-import type { IUnlockableDefinition } from "../definitions/ITechDefinition";
-import type { Resource } from "../definitions/ResourceDefinitions";
-import { isSteam } from "../rpc/SteamClient";
-import { WorldScene } from "../scenes/WorldScene";
 import {
    HOUR,
    clamp,
@@ -22,10 +16,16 @@ import {
    sizeOf,
    tileToPoint,
    type Tile,
-} from "../utilities/Helper";
+} from "../../../shared/Helper";
+import { Vector2, v2 } from "../../../shared/Vector2";
+import { getGameOptions, getGameState, notifyGameStateUpdate, saveGame, serializeSave } from "../Global";
+import type { Building } from "../definitions/BuildingDefinitions";
+import type { IUnlockableDefinition } from "../definitions/ITechDefinition";
+import type { Resource } from "../definitions/ResourceDefinitions";
+import { isSteam } from "../rpc/SteamClient";
+import { WorldScene } from "../scenes/WorldScene";
 import { srand } from "../utilities/Random";
 import { Singleton } from "../utilities/Singleton";
-import { Vector2, v2 } from "../utilities/Vector2";
 import { L, t } from "../utilities/i18n";
 import {
    IOCalculation,

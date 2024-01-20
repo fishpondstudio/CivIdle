@@ -1,3 +1,4 @@
+import { firstKeyOf, forEach, xyToTile, type Tile } from "../../shared/Helper";
 import type { City } from "./definitions/CityDefinitions";
 import type { TechAge } from "./definitions/TechDefinitions";
 import { Config } from "./logic/Config";
@@ -10,7 +11,6 @@ import { SteamClient, isSteam } from "./rpc/SteamClient";
 import { Grid } from "./scenes/Grid";
 import { WorldScene } from "./scenes/WorldScene";
 import { idbGet, idbSet } from "./utilities/BrowserStorage";
-import { firstKeyOf, forEach, xyToTile, type Tile } from "./utilities/Helper";
 import { makeObservableHook } from "./utilities/Hook";
 import { Singleton } from "./utilities/Singleton";
 import { TypedEvent } from "./utilities/TypedEvent";

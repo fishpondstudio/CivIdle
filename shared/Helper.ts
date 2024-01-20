@@ -1,5 +1,5 @@
 import type { DisplayObject, IPointData } from "pixi.js";
-import type { PartialSet, PartialTabulate } from "../definitions/TypeDefinitions";
+import type { PartialSet, PartialTabulate } from "./TypeDefinitions";
 import { v2 } from "./Vector2";
 
 // biome-ignore format:
@@ -19,6 +19,15 @@ export const SECOND = 1000;
 export const MINUTE = SECOND * 60;
 export const HOUR = 60 * MINUTE;
 export const DAY = 24 * HOUR;
+
+export function escapeHtml(unsafe: string): string {
+   return unsafe
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
+}
 
 function scientificFormat(num: number): string {
    return num.toExponential(2).replace("00e+", "e").replace("0e+", "e").replace("e+", "e");
@@ -453,7 +462,13 @@ export function shuffle<T>(array: T[], rand?: () => number): T[] {
 }
 
 // eslint-disable-next-line @typescript-eslint/ban-types
-export function isEmpty(obj: {} | null | undefined): boolean {
+export function isEmpty<K, V>(obj: Map<K, V> | Set<K> | object | null | undefined): boolean {
+   if (obj instanceof Map) {
+      return obj.size === 0;
+   }
+   if (obj instanceof Set) {
+      return obj.size === 0;
+   }
    if (!obj) {
       return true;
    }

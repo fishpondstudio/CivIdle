@@ -1,10 +1,10 @@
+import { formatNumber, jsxMapOf, mapOf } from "../../../shared/Helper";
 import type { IUnlockableDefinition } from "../definitions/ITechDefinition";
 import { getBuildingCost } from "../logic/BuildingLogic";
 import { Config } from "../logic/Config";
 import type { GameState } from "../logic/GameState";
 import { GlobalMultiplierNames } from "../logic/TickLogic";
 import { getDepositTileCount } from "../logic/Tile";
-import { formatNumber, jsxMapOf, mapOf } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
 
 export function UnlockableEffectComponent({

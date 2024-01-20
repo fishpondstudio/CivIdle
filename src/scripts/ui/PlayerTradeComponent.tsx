@@ -1,6 +1,7 @@
 import classNames from "classnames";
 import { useEffect, useState } from "react";
-import type { IPendingClaim } from "../../../server/src/Database";
+import type { IPendingClaim } from "../../../shared/Database";
+import { safeAdd } from "../../../shared/Helper";
 import { notifyGameStateUpdate } from "../Global";
 import type { Resource } from "../definitions/ResourceDefinitions";
 import { getStorageFor } from "../logic/BuildingLogic";
@@ -8,7 +9,6 @@ import { Config } from "../logic/Config";
 import { OnNewPendingClaims, client, useTrades, useUser } from "../rpc/RPCClient";
 import { getMyMapXy } from "../scenes/PathFinder";
 import { PlayerMapScene } from "../scenes/PlayerMapScene";
-import { safeAdd } from "../utilities/Helper";
 import { useTypedEvent } from "../utilities/Hook";
 import { Singleton } from "../utilities/Singleton";
 import { L, t } from "../utilities/i18n";

@@ -9,11 +9,12 @@
          "recommended": true,
          "a11y": { "all": false },
          "performance": { "noDelete": "warn" },
-         "suspicious": {"noExplicitAny":"warn"},
+         "suspicious": { "noExplicitAny": "warn" },
          "style": {
             "useSelfClosingElements": "off",
             "noNonNullAssertion": "warn",
-            "useExponentiationOperator": "warn"
+            "useExponentiationOperator": "warn",
+            "noParameterAssign": "warn"
          },
          "complexity": { "noForEach": "off" }
       }

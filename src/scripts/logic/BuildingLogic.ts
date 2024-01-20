@@ -1,8 +1,3 @@
-import type { Building } from "../definitions/BuildingDefinitions";
-import { BuildingSpecial } from "../definitions/BuildingDefinitions";
-import type { City } from "../definitions/CityDefinitions";
-import type { IResourceDefinition, Resource } from "../definitions/ResourceDefinitions";
-import type { PartialTabulate } from "../definitions/TypeDefinitions";
 import {
    clamp,
    forEach,
@@ -18,7 +13,12 @@ import {
    sum,
    tileToPoint,
    type Tile,
-} from "../utilities/Helper";
+} from "../../../shared/Helper";
+import type { PartialTabulate } from "../../../shared/TypeDefinitions";
+import type { Building } from "../definitions/BuildingDefinitions";
+import { BuildingSpecial } from "../definitions/BuildingDefinitions";
+import type { City } from "../definitions/CityDefinitions";
+import type { IResourceDefinition, Resource } from "../definitions/ResourceDefinitions";
 import { srand } from "../utilities/Random";
 import type { Textures } from "../utilities/SceneManager";
 import { Singleton } from "../utilities/Singleton";

@@ -1,8 +1,8 @@
 import classNames from "classnames";
+import { isEmpty, keysOf, numberToRoman } from "../../../shared/Helper";
 import { notifyGameOptionsUpdate, useGameOptions } from "../Global";
 import { Config } from "../logic/Config";
 import { getGreatPersonUpgradeCost } from "../logic/RebornLogic";
-import { isEmpty, keysOf, numberToRoman } from "../utilities/Helper";
 import { Singleton } from "../utilities/Singleton";
 import { L, t } from "../utilities/i18n";
 import { greatPersonImage } from "../visuals/GreatPersonVisual";

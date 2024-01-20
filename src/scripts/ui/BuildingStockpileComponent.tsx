@@ -1,3 +1,4 @@
+import { isEmpty } from "../../../shared/Helper";
 import { notifyGameStateUpdate } from "../Global";
 import { IOCalculation } from "../logic/BuildingLogic";
 import { GameFeature, hasFeature } from "../logic/FeatureLogic";
@@ -8,7 +9,6 @@ import {
    STOCKPILE_MAX_MAX,
    STOCKPILE_MAX_MIN,
 } from "../logic/Tile";
-import { isEmpty } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
 import { ApplyToAllComponent } from "./ApplyToAllComponent";
 import type { IBuildingComponentProps } from "./BuildingPage";

@@ -1,7 +1,7 @@
+import { keysOf } from "../../../shared/Helper";
 import { notifyGameOptionsUpdate, useGameOptions } from "../Global";
 import { Config } from "../logic/Config";
 import { ThemeColorNames, resetThemeColor } from "../logic/GameState";
-import { keysOf } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
 import { playClick } from "../visuals/Sound";
 import { ChangeModernUIComponent } from "./ChangeModernUIComponent";

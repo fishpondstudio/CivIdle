@@ -6,12 +6,20 @@
          "type": "shell",
          "command": "npx tsc",
          "isBackground": true,
-         "args": ["--incremental", "--watch", "--noEmit", "--project", "tsconfig.json"],
+         "args": [
+            "--build",
+            "--incremental",
+            "--watch",
+            "tsconfig.json"
+         ],
          "presentation": {
             "reveal": "never",
             "echo": false,
             "focus": false,
             "panel": "dedicated"
+         },
+         "runOptions": {
+            "runOn": "folderOpen"
          },
          "problemMatcher": "$tsc-watch"
       },

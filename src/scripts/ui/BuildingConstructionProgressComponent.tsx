@@ -1,3 +1,4 @@
+import { formatHMS, formatPercent, jsxMapOf } from "../../../shared/Helper";
 import {
    getBuilderCapacity,
    getBuildingPercentage,
@@ -6,7 +7,6 @@ import {
 } from "../logic/BuildingLogic";
 import { Config } from "../logic/Config";
 import { Tick } from "../logic/TickLogic";
-import { formatHMS, formatPercent, jsxMapOf } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
 import type { IBuildingComponentProps } from "./BuildingPage";
 import { FormatNumber } from "./HelperComponents";

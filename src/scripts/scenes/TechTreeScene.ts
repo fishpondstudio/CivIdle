@@ -1,6 +1,7 @@
 import { SmoothGraphics } from "@pixi/graphics-smooth";
 import type { ColorSource, FederatedPointerEvent } from "pixi.js";
 import { BitmapText, Color, Container, LINE_CAP, LINE_JOIN, Rectangle } from "pixi.js";
+import { forEach, sizeOf } from "../../../shared/Helper";
 import { getGameOptions } from "../Global";
 import type { ITechDefinition } from "../definitions/ITechDefinition";
 import type { Tech } from "../definitions/TechDefinitions";
@@ -9,7 +10,6 @@ import type { GameOptions } from "../logic/GameState";
 import { isAgeUnlocked, unlockableTechs } from "../logic/TechLogic";
 import { TechPage } from "../ui/TechPage";
 import { WheelMode } from "../utilities/Camera";
-import { forEach, sizeOf } from "../utilities/Helper";
 import { ViewportScene, destroyAllChildren } from "../utilities/SceneManager";
 import { Singleton } from "../utilities/Singleton";
 import { Actions } from "../utilities/pixi-actions/Actions";

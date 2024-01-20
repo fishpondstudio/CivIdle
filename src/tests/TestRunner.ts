@@ -1,3 +1,4 @@
+import { fossilDeltaApply, fossilDeltaCreate } from "../../shared/FossilDelta";
 import { compressSave, decompressSave, deserializeSave, serializeSave } from "../scripts/Global";
 import { getBuildingCost, getPowerRequired, getTotalBuildingCost } from "../scripts/logic/BuildingLogic";
 import { SavedGame, initializeGameState, type GameState } from "../scripts/logic/GameState";
@@ -10,7 +11,6 @@ import {
    setUpgradePriority,
 } from "../scripts/logic/Tile";
 import { Grid } from "../scripts/scenes/Grid";
-import { fossilDeltaApply, fossilDeltaCreate } from "../scripts/utilities/FossilDelta";
 
 const title = "background: #636e72; color: #fff;";
 

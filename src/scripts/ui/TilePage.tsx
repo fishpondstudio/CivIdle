@@ -1,5 +1,5 @@
+import type { Tile } from "../../../shared/Helper";
 import { useGameState } from "../Global";
-import type { Tile } from "../utilities/Helper";
 import { isSingletonReady } from "../utilities/Singleton";
 import { BuildingPage } from "./BuildingPage";
 import { ConstructionPage } from "./ConstructionPage";
