@@ -16,7 +16,6 @@ import { getGrid, getSpecialBuildings } from "../../shared/logic/IntraTickCache"
 import type { IPetraBuildingData } from "../../shared/logic/Tile";
 import { clamp, forEach, isNullOrUndefined, rejectIn, schedule } from "../../shared/utilities/Helper";
 import type { TypedEvent } from "../../shared/utilities/TypedEvent";
-import { RunTests } from "../tests/TestRunner";
 import { isGameDataCompatible, loadGame, syncUITheme } from "./Global";
 import type { RouteChangeEvent } from "./Route";
 import { checkSteamBranch } from "./SteamTesting";
@@ -173,9 +172,6 @@ export async function startGame(
    notifyGameStateUpdate();
    Singleton().ticker.start();
    await checkSteamBranch();
-   if (import.meta.env.DEV) {
-      RunTests(gameState);
-   }
 
    // showModal(<FirstTimePlayerModal />);
 }

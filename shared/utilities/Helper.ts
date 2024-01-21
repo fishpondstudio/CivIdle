@@ -666,8 +666,26 @@ export function filterInPlace<T>(a: T[], condition: (v: T, i: number, array: T[]
 }
 
 export function uuid4(): string {
-   return "10000000-1000-4000-8000-100000000000".replace(/[018]/g, (c) =>
+   let a;
+   let b;
+   for (
+      // loop :)
+      b = a = ""; // b - result , a - numeric variable
       // @ts-expect-error
-      (c ^ (crypto.getRandomValues(new Uint8Array(1))[0] & (15 >> (c / 4)))).toString(16),
-   );
+      a++ < 36; //
+      b +=
+         // @ts-expect-error
+         (a * 51) & 52 // if "a" is not 9 or 14 or 19 or 24
+            ? //  return a random number or 4
+              // @ts-expect-error
+              (a ^ 15 // if "a" is not 15
+                 ? // genetate a random number from 0 to 15
+                    // @ts-expect-error
+                    8 ^ (Math.random() * (a ^ 20 ? 16 : 4)) // unless "a" is 20, in which case a random number from 8 to 11
+                 : 4
+              ) //  otherwise 4
+                 .toString(16)
+            : "-" //  in other cases (if "a" is 9,14,19,24) insert "-"
+   ) {}
+   return b;
 }

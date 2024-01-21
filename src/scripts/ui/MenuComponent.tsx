@@ -7,6 +7,7 @@ import { L, t } from "../../../shared/utilities/i18n";
 import { PlayerMapScene } from "../scenes/PlayerMapScene";
 import { TechTreeScene } from "../scenes/TechTreeScene";
 import { WorldScene } from "../scenes/WorldScene";
+import { openUrl } from "../utilities/Platform";
 import { Singleton } from "../utilities/Singleton";
 import { AboutModal } from "./AboutModal";
 import { GameplayOptionPage } from "./GameplayOptionPage";
@@ -208,6 +209,14 @@ export function MenuComponent(): React.ReactNode {
                      active: active === "help",
                   })}
                >
+                  <div
+                     className="menu-popover-item"
+                     onPointerDown={() => {
+                        openUrl("https://discord.com/invite/xgNxpsM");
+                     }}
+                  >
+                     <MenuItem check={false}>{t(L.JoinDiscord)}</MenuItem>
+                  </div>
                   <div
                      className="menu-popover-item"
                      onPointerDown={() => {

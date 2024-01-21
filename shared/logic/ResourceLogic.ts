@@ -8,7 +8,7 @@ import { Tick } from "./TickLogic";
 
 export function getResourceAmount(res: Resource, gs: GameState): number {
    return (
-      Tick.current.resourcesByXy[res]?.reduce((prev, curr) => {
+      Tick.current.resourcesByTile[res]?.reduce((prev, curr) => {
          const amount = gs.tiles.get(curr)?.building?.resources[res];
          if (amount && Number.isFinite(amount)) {
             return prev + amount;
@@ -30,7 +30,7 @@ export function trySpendResources(resources: PartialTabulate<Resource>, gs: Game
 
    for (res in resources) {
       let amount = resources[res] ?? 0;
-      const buildings = Tick.current.resourcesByXy[res] ?? [];
+      const buildings = Tick.current.resourcesByTile[res] ?? [];
       buildings.sort((a, b) => {
          return (
             (gs.tiles.get(a)?.building?.resources[res] ?? 0) -

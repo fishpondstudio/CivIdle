@@ -246,8 +246,7 @@ function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
          return;
       }
       Tick.next.totalValue += Config.Resource[res].canPrice ? (Config.ResourcePrice[res] ?? 0) * amount : 0;
-      safePush(Tick.next.resourcesByXy, res, xy);
-      safePush(Tick.next.resourcesByGrid, res, tileToPoint(xy));
+      safePush(Tick.next.resourcesByTile, res, xy);
    });
 
    const requiredDeposits = Config.Building[building.type].deposit;
@@ -489,18 +488,15 @@ export function transportResource(
    if (getAvailableWorkers("Worker") <= 0) {
       return;
    }
-   const sources = Tick.current.resourcesByGrid[res]?.sort((point1, point2) => {
-      return (
-         grid.distance(point1.x, point1.y, targetPoint.x, targetPoint.y) -
-         grid.distance(point2.x, point2.y, targetPoint.x, targetPoint.y)
-      );
+   const sources = Tick.current.resourcesByTile[res]?.sort((point1, point2) => {
+      return grid.distanceTile(point1, targetXy) - grid.distanceTile(point2, targetXy);
    });
    if (!sources) {
       return;
    }
    for (let i = 0; i < sources.length; i++) {
-      const point = sources[i];
-      const fromXy = pointToTile(point);
+      const fromXy = sources[i];
+      const point = tileToPoint(fromXy);
       const building = gs.tiles.get(fromXy)?.building;
       if (!building) {
          continue;

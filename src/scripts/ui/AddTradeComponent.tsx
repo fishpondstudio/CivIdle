@@ -12,7 +12,7 @@ import type { IBuildingComponentProps } from "./BuildingPage";
 import { FormatNumber } from "./HelperComponents";
 
 export function AddTradeComponent({ gameState, xy }: IBuildingComponentProps): React.ReactNode {
-   const buyResources = keysOf(Tick.next.resourcesByXy).filter(
+   const buyResources = keysOf(Tick.next.resourcesByTile).filter(
       (res) => Config.Resource[res].canPrice && Config.Resource[res].canStore,
    );
    const resourcesInStorage = gameState.tiles.get(xy)?.building?.resources ?? {};

@@ -1,6 +1,6 @@
 import type { Building } from "../definitions/BuildingDefinitions";
 import type { Resource } from "../definitions/ResourceDefinitions";
-import type { IPointData, Tile } from "../utilities/Helper";
+import type { Tile } from "../utilities/Helper";
 import type { RequireAtLeastOne } from "../utilities/Type";
 import type { PartialSet, PartialTabulate } from "../utilities/TypeDefinitions";
 import { TypedEvent } from "../utilities/TypedEvent";
@@ -17,8 +17,7 @@ interface ITickData {
    workersUsed: PartialTabulate<Resource>;
    workersAssignment: Map<Tile, number>;
    electrified: Map<Tile, number>;
-   resourcesByXy: Partial<Record<Resource, Tile[]>>;
-   resourcesByGrid: Partial<Record<Resource, IPointData[]>>;
+   resourcesByTile: Partial<Record<Resource, Tile[]>>;
    playerTradeBuildings: Map<Tile, IBuildingData>;
    globalMultipliers: GlobalMultipliers;
    notProducingReasons: Map<Tile, NotProducingReason>;
@@ -36,8 +35,7 @@ export function EmptyTickData(): ITickData {
       workersUsed: {},
       happiness: null,
       workersAssignment: new Map(),
-      resourcesByXy: {},
-      resourcesByGrid: {},
+      resourcesByTile: {},
       globalMultipliers: new GlobalMultipliers(),
       notProducingReasons: new Map(),
       playerTradeBuildings: new Map(),

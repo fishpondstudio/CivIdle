@@ -1,4 +1,4 @@
-import type { App } from "electron";
+import { shell, type App } from "electron";
 import { exists, outputFile, readFile, unlink } from "fs-extra";
 import path from "path";
 import { type SteamClient } from ".";
@@ -35,6 +35,10 @@ export class IPCService {
       if (await exists(filePath)) {
          unlink(filePath);
       }
+   }
+
+   public openUrl(url: string): void {
+      shell.openExternal(url);
    }
 
    public getSteamId(): string {

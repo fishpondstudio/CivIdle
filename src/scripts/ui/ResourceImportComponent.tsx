@@ -23,7 +23,7 @@ export function ResourceImportComponent({ gameState, xy }: IBuildingComponentPro
    }
 
    const resources: PartialSet<Resource> = {};
-   forEach(Tick.current.resourcesByXy, (k, v) => {
+   forEach(Tick.current.resourcesByTile, (k, v) => {
       if (Config.Resource[k].canPrice && Config.Resource[k].canStore) {
          resources[k] = true;
       }

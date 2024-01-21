@@ -118,7 +118,7 @@ export class Grid {
    private static _hexPool = new HexPool();
    private static _offsetCoordPool = new OffsetCoordPool();
 
-   private _distanceCache: Record<number, number> = {};
+   private _distanceCache: Map<number, number> = new Map();
 
    public distanceTile(xy1: Tile, xy2: Tile): number {
       return this.distance((xy1 >> 16) & 0xffff, xy1 & 0xffff, (xy2 >> 16) & 0xffff, xy2 & 0xffff);
@@ -128,7 +128,7 @@ export class Grid {
       const key1 = y1 * this.maxX + x1;
       const key2 = y2 * this.maxX + x2;
       const key = (Math.max(key1, key2) << 16) | Math.min(key1, key2);
-      const cached = this._distanceCache[key];
+      const cached = this._distanceCache.get(key);
 
       // We use cached value in prod, but in dev, we want to validate our cache is good
       // if (!import.meta.env.DEV && cached) {
@@ -161,7 +161,7 @@ export class Grid {
       //    console.assert(distance === cached);
       // }
 
-      this._distanceCache[key] = distance;
+      this._distanceCache.set(key, distance);
       return distance;
    }
 

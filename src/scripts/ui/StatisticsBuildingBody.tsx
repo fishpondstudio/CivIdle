@@ -299,7 +299,7 @@ function ResourcesTab({ gameState }: IBuildingComponentProps): React.ReactNode {
                               <td className="right">
                                  <FormatNumber
                                     value={
-                                       Tick.current.resourcesByXy[res]?.reduce(
+                                       Tick.current.resourcesByTile[res]?.reduce(
                                           (prev, curr) =>
                                              prev +
                                              (gameState.tiles.get(curr)?.building?.resources?.[res] ?? 0),

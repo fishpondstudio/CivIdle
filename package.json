@@ -12,7 +12,8 @@
       "preview": "vite preview",
       "test": "vitest",
       "font": "node ./build/GenerateBitmapFont.js",
-      "release": "node ./build/ReleaseElectron.js"
+      "release": "node ./build/ReleaseElectron.js",
+      "translate": "node ./build/Translate.js"
    },
    "dependencies": {
       "@capacitor/android": "^5.4.2",

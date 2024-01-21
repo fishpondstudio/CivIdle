@@ -384,7 +384,7 @@ export function getBuildingCost(building: Pick<IBuildingData, "type" | "level">)
    }
    let cost = { ...Config.Building[type].construction };
    if (isEmpty(cost)) {
-      cost = { ...Config.Building[type].input } ?? {};
+      cost = { ...Config.Building[type].input };
    }
    if (isEmpty(cost)) {
       return {};
