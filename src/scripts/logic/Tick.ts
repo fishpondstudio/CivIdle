@@ -1,12 +1,19 @@
-import { getScienceFromWorkers } from "../../../shared/logic/BuildingLogic";
+import { OnTileExplored, getScienceFromWorkers } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
 import { GameState } from "../../../shared/logic/GameState";
-import { getGameOptions, notifyGameStateUpdate, serializeSave } from "../../../shared/logic/GameStateLogic";
+import {
+   getGameOptions,
+   getGameState,
+   notifyGameStateUpdate,
+   serializeSave,
+} from "../../../shared/logic/GameStateLogic";
 import { calculateHappiness } from "../../../shared/logic/HappinessLogic";
 import { clearIntraTickCache, getSpecialBuildings } from "../../../shared/logic/IntraTickCache";
 import { OnResetTile } from "../../../shared/logic/TechLogic";
 import { CurrentTickChanged, EmptyTickData, Tick, freezeTickData } from "../../../shared/logic/TickLogic";
 import {
+   OnBuildingComplete,
+   OnBuildingProductionComplete,
    OnShowFloater,
    tickPrice,
    tickTech,
@@ -19,6 +26,9 @@ import { isSteam } from "../rpc/SteamClient";
 import { WorldScene } from "../scenes/WorldScene";
 import { makeObservableHook } from "../utilities/Hook";
 import { Singleton } from "../utilities/Singleton";
+import { onBuildingComplete } from "./OnBuildingComplete";
+import { onProductionComplete } from "./OnProductionComplete";
+import { onTileExplored } from "./OnTileExplored";
 
 export function shouldTick(): boolean {
    return isSteam() || document.visibilityState === "visible";
@@ -86,12 +96,36 @@ export function tickEverySecond(gs: GameState, offline: boolean) {
    }
 }
 
+// Make sure we do event subscription here. If we do it in the individual file, it might mistakenly get
+// eliminated by the dead code elimination!
+
 OnShowFloater.on(({ xy, amount }) => {
    Singleton().sceneManager.getCurrent(WorldScene)?.getTile(xy)?.showFloater(amount);
 });
-
 OnResetTile.on((xy) => {
    Singleton().sceneManager.getCurrent(WorldScene)?.resetTile(xy);
 });
+OnTileExplored.on(onTileExplored);
+OnBuildingComplete.on(onBuildingComplete);
+OnBuildingProductionComplete.on(onProductionComplete);
 
 export const useCurrentTick = makeObservableHook(CurrentTickChanged, () => Tick.current);
+
+if (import.meta.env.DEV) {
+   // @ts-expect-error
+   window.tickGameState = (tick: number) => {
+      const gs = getGameState();
+      for (let i = 0; i < tick; i++) {
+         tickEverySecond(gs, true);
+      }
+   };
+   // @ts-expect-error
+   window.benchmarkTick = (tick: number) => {
+      console.time(`TickGameState(${tick})`);
+      const gs = getGameState();
+      for (let i = 0; i < tick; i++) {
+         tickEverySecond(gs, true);
+      }
+      console.timeEnd(`TickGameState(${tick})`);
+   };
+}

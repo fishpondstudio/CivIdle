@@ -1,11 +1,7 @@
-import type { Deposit } from "../../../shared/definitions/ResourceDefinitions";
 import {
-   OnTileExplored,
    ST_PETERS_FAITH_MULTIPLIER,
    ST_PETERS_STORAGE_MULTIPLIER,
-   exploreTile,
    getTotalBuildingUpgrades,
-   isNaturalWonder,
    isSpecialBuilding,
    isWorldWonder,
 } from "../../../shared/logic/BuildingLogic";
@@ -18,116 +14,23 @@ import {
    getTypeBuildings,
    getXyBuildings,
 } from "../../../shared/logic/IntraTickCache";
-import { getBuildingsThatProduce, getRevealedDeposits } from "../../../shared/logic/ResourceLogic";
-import { OnResetTile, addDeposit, getGreatPeopleChoices } from "../../../shared/logic/TechLogic";
-import { ensureTileFogOfWar } from "../../../shared/logic/TerrainLogic";
+import { getBuildingsThatProduce } from "../../../shared/logic/ResourceLogic";
 import { Tick } from "../../../shared/logic/TickLogic";
 import type { IPetraBuildingData } from "../../../shared/logic/Tile";
-import {
-   OnBuildingComplete,
-   OnBuildingProductionComplete,
-   addMultiplier,
-} from "../../../shared/logic/Update";
+import { addMultiplier } from "../../../shared/logic/Update";
 import {
    forEach,
-   isEmpty,
    keysOf,
    mapSafePush,
    pointToTile,
    safeAdd,
-   shuffle,
    tileToPoint,
    type Tile,
 } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
-import { WorldScene } from "../scenes/WorldScene";
-import { ChooseGreatPersonModal } from "../ui/ChooseGreatPersonModal";
-import { showModal } from "../ui/GlobalModal";
 import { Singleton } from "../utilities/Singleton";
 
-OnBuildingComplete.on((xy) => {
-   const gs = getGameState();
-   for (const g of ensureTileFogOfWar(xy, gs, getGrid(gs))) {
-      Singleton().sceneManager.getCurrent(WorldScene)?.getTile(g)?.reveal().catch(console.error);
-   }
-   const building = gs.tiles.get(xy)?.building;
-   if (!building) {
-      return;
-   }
-   const grid = getGrid(gs);
-   switch (building.type) {
-      case "HatshepsutTemple": {
-         gs.tiles.forEach((tile, xy) => {
-            if (tile.deposit.Water) {
-               exploreTile(xy, gs);
-               Singleton().sceneManager.getCurrent(WorldScene)?.getTile(xy)?.reveal().catch(console.error);
-            }
-         });
-         break;
-      }
-      case "Parthenon": {
-         gs.greatPeopleChoices.push(getGreatPeopleChoices("ClassicalAge"));
-         if (gs.greatPeopleChoices.length > 0) {
-            showModal(<ChooseGreatPersonModal greatPeopleChoice={gs.greatPeopleChoices[0]} />);
-         }
-         break;
-      }
-      case "TajMahal": {
-         gs.greatPeopleChoices.push(getGreatPeopleChoices("MiddleAge"));
-         if (gs.greatPeopleChoices.length > 0) {
-            showModal(<ChooseGreatPersonModal greatPeopleChoice={gs.greatPeopleChoices[0]} />);
-         }
-         break;
-      }
-      case "StatueOfZeus": {
-         let deposits: Deposit[] = [];
-         for (const neighbor of grid.getNeighbors(tileToPoint(xy))) {
-            if (deposits.length <= 0) {
-               deposits = shuffle(getRevealedDeposits(gs));
-            }
-            const neighborXy = pointToTile(neighbor);
-            if (isEmpty(gs.tiles.get(neighborXy)!.deposit)) {
-               const deposit = deposits.pop()!;
-               addDeposit(neighborXy, deposit, OnResetTile, gs);
-            }
-         }
-         break;
-      }
-      case "TempleOfArtemis": {
-         getXyBuildings(gs).forEach((building) => {
-            if (isSpecialBuilding(building.type)) {
-               return;
-            }
-            if (building.type === "Armory" || building.type === "SwordForge") {
-               building.level += 5;
-            }
-         });
-         break;
-      }
-   }
-});
-
-OnTileExplored.on((xy) => {
-   const gs = getGameState();
-   const building = gs.tiles.get(xy)?.building;
-   if (isNaturalWonder(building?.type)) {
-      switch (building?.type) {
-         case "GrottaAzzurra": {
-            getXyBuildings(gs).forEach((building) => {
-               if (isSpecialBuilding(building.type)) {
-                  return;
-               }
-               if (building.status === "completed" && Config.BuildingTier[building.type] === 1) {
-                  building.level += 5;
-               }
-            });
-            break;
-         }
-      }
-   }
-});
-
-OnBuildingProductionComplete.on(({ xy, offline }) => {
+export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boolean }): void {
    const gs = getGameState();
    const building = gs.tiles.get(xy)?.building;
    if (!building) {
@@ -549,4 +452,4 @@ OnBuildingProductionComplete.on(({ xy, offline }) => {
       //    break;
       // }
    }
-});
+}
