@@ -4,6 +4,8 @@ import type { GreatPerson } from "../definitions/GreatPersonDefinitions";
 import type { Resource } from "../definitions/ResourceDefinitions";
 import type { RomeProvince } from "../definitions/RomeProvinceDefinitions";
 import type { Tech } from "../definitions/TechDefinitions";
+import { EN } from "../languages/en";
+import { RU } from "../languages/ru";
 import type { ChatChannel } from "../utilities/Database";
 import { IPointData, uuid4, type Tile } from "../utilities/Helper";
 import type { PartialSet, PartialTabulate } from "../utilities/TypeDefinitions";
@@ -98,6 +100,16 @@ export class GameOptions {
    // Should be wiped
    greatPeople: Partial<Record<GreatPerson, { level: number; amount: number }>> = {};
    greatPeopleChoices: GreatPeopleChoice[] = [];
+   language: keyof typeof Languages = "en";
 }
 
+export const Languages = {
+   en: EN,
+   ru: RU,
+} as const;
+
 export const SAVE_FILE_VERSION = 1;
+
+export function syncLanguage(l: Record<string, string>): void {
+   Object.assign(L, l);
+}

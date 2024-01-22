@@ -1,3 +1,4 @@
+import { Languages, syncLanguage } from "../../../shared/logic/GameState";
 import { notifyGameOptionsUpdate } from "../../../shared/logic/GameStateLogic";
 import {
    PRIORITY_MAX,
@@ -11,6 +12,7 @@ import {
 } from "../../../shared/logic/Tile";
 import { L, t } from "../../../shared/utilities/i18n";
 import { useGameOptions } from "../Global";
+import { jsxMapOf } from "../utilities/Helper";
 import { ChangeSoundComponent } from "./ChangeSoundComponent";
 import { MenuComponent } from "./MenuComponent";
 
@@ -23,6 +25,26 @@ export function GameplayOptionPage(): React.ReactNode {
          </div>
          <MenuComponent />
          <div className="window-body">
+            <fieldset>
+               <legend>{t(L.Language)}</legend>
+               <select
+                  className="w100"
+                  value={options.language}
+                  onChange={(e) => {
+                     options.language = e.target.value as keyof typeof Languages;
+                     notifyGameOptionsUpdate(options);
+                     syncLanguage(Languages[options.language]);
+                  }}
+               >
+                  {jsxMapOf(Languages, (k, v) => {
+                     return (
+                        <option key={k} value={k}>
+                           {v.CurrentLanguage}
+                        </option>
+                     );
+                  })}
+               </select>
+            </fieldset>
             <fieldset>
                <div className="row">
                   <div className="f1">{t(L.DefaultProductionPriority)}</div>

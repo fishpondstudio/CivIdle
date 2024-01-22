@@ -20,6 +20,11 @@ export function AboutModal(): React.ReactNode {
                   <div className="text-strong">{t(L.CivIdle)}</div>
                   <div>{t(L.CivIdleBuild, { build: getVersion() })}</div>
                   <div>{t(L.CivIdleInfo)}</div>
+                  {L.CurrentLanguage === "English" ? null : (
+                     <div>
+                        {t(L.Translators)}: {t(L.TranslatorCredit)}
+                     </div>
+                  )}
                   <hr className="mv10" />
                   <div className="text-small text-desc">
                      {t(L.GraphicsDriver, { driver: getWebglRenderInfo() })}

@@ -1,8 +1,10 @@
 {
    "compilerOptions": {
       "composite": true,
-      "module": "esnext",
-      "moduleResolution": "node"
+      "module": "ESNext",
+      "moduleResolution": "Bundler"
    },
-   "include": ["vite.config.mts"]
+   "include": [
+      "vite.config.mts"
+   ]
 }

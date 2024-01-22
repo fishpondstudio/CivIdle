@@ -90,7 +90,7 @@ export class SceneManager {
       if (!this.currentScene) {
          return false;
       }
-      return Object.getPrototypeOf(this.currentScene).constructor.name === SceneClass.name;
+      return this.currentScene instanceof SceneClass;
    }
 
    getCurrent<T extends Scene>(SceneClass: new (context: ISceneContext) => T): T | null {

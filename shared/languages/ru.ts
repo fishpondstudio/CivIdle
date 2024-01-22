@@ -1,5 +1,5 @@
-export const EN = {
-   CurrentLanguage: "English",
+export const RU = {
+   CurrentLanguage: "Русский",
    TranslatorCredit: "<Put Your Name Here>",
    Translators: "Translators",
    Language: "Language",

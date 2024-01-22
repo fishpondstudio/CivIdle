@@ -4,7 +4,7 @@ import { DepositResources } from "../../shared/definitions/ResourceDefinitions";
 import { getStorageFor } from "../../shared/logic/BuildingLogic";
 import { Config } from "../../shared/logic/Config";
 import { MAX_OFFLINE_PRODUCTION_SEC, calculateTierAndPrice } from "../../shared/logic/Constants";
-import type { GameState } from "../../shared/logic/GameState";
+import { Languages, syncLanguage, type GameState } from "../../shared/logic/GameState";
 import {
    getGameOptions,
    getGameState,
@@ -80,6 +80,7 @@ export async function startGame(
 
    // ========== Game state is initialized ==========
    routeTo(LoadingPage, { stage: LoadingPageStage.CheckSave });
+   syncLanguage(Languages[getGameOptions().language]);
    syncUITheme(getGameOptions());
    calculateTierAndPrice(gameState);
    initializeSingletons({

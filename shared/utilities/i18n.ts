@@ -28,4 +28,4 @@ function transformPhrase(phrase: string, substitutions?: Record<string, any>) {
    return result;
 }
 
-export const L = EN;
+export const L = structuredClone(EN);

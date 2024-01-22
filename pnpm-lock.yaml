@@ -87,7 +87,7 @@ devDependencies:
     version: 9.0.7
   '@vitejs/plugin-react-swc':
     specifier: ^3.3.0
-    version: 3.5.0(vite@4.5.1)
+    version: 3.5.0(vite@4.5.2)
   fs-extra:
     specifier: ^11.1.0
     version: 11.2.0
@@ -113,8 +113,8 @@ devDependencies:
     specifier: 5.3.2
     version: 5.3.2
   vite:
-    specifier: ^4.5.1
-    version: 4.5.1(@types/node@18.19.3)
+    specifier: ^4.5.2
+    version: 4.5.2(@types/node@18.19.3)
   vite-plugin-spritesmith:
     specifier: fishpondstudio/vite-plugin-spritesmith
     version: github.com/fishpondstudio/vite-plugin-spritesmith/a933c5fbda1b7288100781618078cc322071f1d4
@@ -1674,13 +1674,13 @@ packages:
       eslint-visitor-keys: 3.4.3
     dev: true
 
-  /@vitejs/plugin-react-swc@3.5.0(vite@4.5.1):
+  /@vitejs/plugin-react-swc@3.5.0(vite@4.5.2):
     resolution: {integrity: sha512-1PrOvAaDpqlCV+Up8RkAh9qaiUjoDUcjtttyhXDKw53XA6Ve16SOp6cCOpRs8Dj8DqUQs6eTW5YkLcLJjrXAig==}
     peerDependencies:
       vite: ^4 || ^5
     dependencies:
       '@swc/core': 1.3.101
-      vite: 4.5.1(@types/node@18.19.3)
+      vite: 4.5.2(@types/node@18.19.3)
     transitivePeerDependencies:
       - '@swc/helpers'
     dev: true
@@ -4782,8 +4782,8 @@ packages:
       replace-ext: 0.0.1
     dev: true
 
-  /vite@4.5.1(@types/node@18.19.3):
-    resolution: {integrity: sha512-AXXFaAJ8yebyqzoNB9fu2pHoo/nWX+xZlaRwoeYUxEqBO+Zj4msE5G+BhGBll9lYEKv9Hfks52PAF2X7qDYXQA==}
+  /vite@4.5.2(@types/node@18.19.3):
+    resolution: {integrity: sha512-tBCZBNSBbHQkaGyhGCDUGqeo2ph8Fstyp6FMSvTtsXeZSPpSMGlviAOav2hxVTqFcx8Hj/twtWKsMJXNY0xI8w==}
     engines: {node: ^14.18.0 || >=16.0.0}
     hasBin: true
     peerDependencies:

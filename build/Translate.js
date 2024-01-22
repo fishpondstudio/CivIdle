@@ -44,7 +44,7 @@ readdirSync("./shared/languages").forEach((fileName) => {
       return;
    }
    const variableName = fileName.replace(".ts", "").replace("-", "_").toUpperCase();
-   const filePath = `./assets/Script/Languages/${fileName}`;
+   const filePath = `shared/languages/${fileName}`;
    const file = readFileSync(filePath, { encoding: "utf8" })
       .replace(`export const ${variableName} =`, "")
       .replace("};", "}");
