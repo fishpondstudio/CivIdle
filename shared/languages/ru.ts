@@ -813,9 +813,9 @@ export const RU = {
    AccountTypeShowDetails: "Show Account Details",
    PlayerHandleOffline: "You are currently offline",
    AccountLevel: "Account Level",
-   AccountTypeOnline: "Online",
-   AccountTypeOffline: "Offline",
-   ThisRunType: "This Run Type",
+   ThisRun: "This Run",
+   ThisRunPermanent: "Permanent",
+   ThisRunTrial: "Trial",
    TrialRunDesc:
       "Quaestor or above can start a trial run that is subject to the Tribune limits and cannot earn permanent great people",
    Tutorial1:
@@ -836,4 +836,9 @@ export const RU = {
    AccountLevelConsul: "Consul",
    AccountLevelCensor: "Censor",
    AccountLevelDictator: "Dictator",
+   AccountChatBadge: "Chat Badge",
+   AccountLeaderboard: "Leaderboard",
+   AccountActiveTrade: "Active Trade",
+   AccountTradeValuePerMinute: "Trade Value Per Minute",
+   AccountTradePriceRange: "Trade Price Range",
 };
