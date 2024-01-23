@@ -812,14 +812,12 @@ export const RU = {
    FirstTimeGuideFinish: "Finish",
    AccountTypeShowDetails: "Show Account Details",
    PlayerHandleOffline: "You are currently offline",
-   AccountType: "Account Type",
+   AccountLevel: "Account Level",
    AccountTypeOnline: "Online",
-   AccountTypeDesc:
-      "Online accounts can start either an online run or an offline run but can only earn permanent great people from online run. Offline accounts can only start an offline run and can earn permanent great people from an offline run. You can convert your account from online to offline but NOT the other way around",
    AccountTypeOffline: "Offline",
    ThisRunType: "This Run Type",
-   ThisRunTypeDesc:
-      "An online run requires an Internet connection, is subject to server anti-cheat inspection and have full access to online features (player trade and leader board). You can convert this run from online to offline but NOT the other way around",
+   TrialRunDesc:
+      "Quaestor or above can start a trial run that is subject to the Tribune limits and cannot earn permanent great people",
    Tutorial1:
       "Welcome to CivIdle Setup.<br><br>In this game, you will run your own empire: manage productions, unlock technologies, trade resources with other players, create great people and build world wonders.<br><br>Drag your mouse to move around. Use scroll wheel to zoom in or out. Click an empty tile to build new buildings, click a building to inspect.<br><br>",
    Tutorial2: "I haven't played similar games and I'd like to go through a quick tutorial",
@@ -831,4 +829,11 @@ export const RU = {
    Tutorial6:
       "When you enter a new age, a new <b>great person</b> will be born. You can choose one out of three candidates.<br><br>Great people provide boosts and will be added to your permanent collection. When you reborn, you collect all the great people you've chosen this run, plus some  gone, these permanent great people will remain with you.<br><br><b>Permanent</b> great people can be upgraded by collecting great people from each run. They will help your empire achieve new heights. That's all the basics you need to know.<br><br>If you have questions, the best way to get help is by asking the <b>chat</b> - we have a friendly community that is always ready to help.",
    JoinDiscord: "Join Discord",
+   AccountLevelTribune: "Tribune",
+   AccountLevelQuaestor: "Quaestor",
+   AccountLevelAedile: "Aedile",
+   AccountLevelPraetor: "Praetor",
+   AccountLevelConsul: "Consul",
+   AccountLevelCensor: "Censor",
+   AccountLevelDictator: "Dictator",
 };

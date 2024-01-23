@@ -372,13 +372,13 @@ export function getScienceFromWorkers(gs: GameState) {
    };
 }
 
-const buildingCostCache: Record<string, Readonly<PartialTabulate<Resource>>> = {};
+const buildingCostCache: Map<number, Readonly<PartialTabulate<Resource>>> = new Map();
 
 export function getBuildingCost(building: Pick<IBuildingData, "type" | "level">): PartialTabulate<Resource> {
    const type = building.type;
    const level = building.level;
    const key = (Config.BuildingHash[building.type]! << 16) + level;
-   const cached = buildingCostCache[key];
+   const cached = buildingCostCache.get(key);
    if (cached) {
       return cached;
    }
@@ -418,11 +418,11 @@ export function getBuildingCost(building: Pick<IBuildingData, "type" | "level">)
          cost[res] = Math.pow(1.5, level) * multiplier * cost[res]!;
       });
    }
-   buildingCostCache[key] = Object.freeze(cost);
+   buildingCostCache.set(key, Object.freeze(cost));
    return cost;
 }
 
-const totalBuildingCostCache: Record<string, Readonly<PartialTabulate<Resource>>> = {};
+const totalBuildingCostCache: Map<number, Readonly<PartialTabulate<Resource>>> = new Map();
 
 export function getTotalBuildingCost(
    building: Building,
@@ -431,7 +431,7 @@ export function getTotalBuildingCost(
 ): PartialTabulate<Resource> {
    console.assert(currentLevel <= desiredLevel);
    const hash = (Config.BuildingHash[building]! << 22) + (currentLevel << 11) + desiredLevel;
-   const cached = totalBuildingCostCache[hash];
+   const cached = totalBuildingCostCache.get(hash);
    if (cached) {
       return cached;
    }
@@ -445,7 +445,7 @@ export function getTotalBuildingCost(
       forEach(cost, (res, amount) => safeAdd(result, res, amount));
       ++start.level;
    }
-   totalBuildingCostCache[hash] = Object.freeze(result);
+   totalBuildingCostCache.set(hash, Object.freeze(result));
    return result;
 }
 

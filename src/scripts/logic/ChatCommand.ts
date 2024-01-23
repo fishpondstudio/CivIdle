@@ -1,4 +1,5 @@
 import { getGameState } from "../../../shared/logic/GameStateLogic";
+import { AccountLevel } from "../../../shared/utilities/Database";
 import { clamp, formatHM, formatNumber, safeParseInt } from "../../../shared/utilities/Helper";
 import { decompressSave, loadSave } from "../Global";
 import { addSystemMessage, client } from "../rpc/RPCClient";
@@ -31,6 +32,14 @@ export async function handleChatCommand(command: string): Promise<void> {
       case "playtime": {
          const playTime = await client.getPlayTime();
          addSystemMessage(`You have played actively and online for ${formatHM(playTime * 1000)}`);
+         break;
+      }
+      case "changelevel": {
+         if (!parts[1] || !parts[2]) {
+            throw new Error("Invalid command format");
+         }
+         await client.changePlayerLevel(parts[1], parseInt(parts[2], 10) as AccountLevel);
+         addSystemMessage("Player Level has been changed");
          break;
       }
       default: {

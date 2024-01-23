@@ -1,7 +1,9 @@
 import classNames from "classnames";
 import { useState } from "react";
+import { AccountLevel } from "../../../shared/utilities/Database";
 import { L, t } from "../../../shared/utilities/i18n";
 import { useGameOptions, useGameState } from "../Global";
+import { AccountLevelImages, AccountLevelNames } from "../logic/AccountLevel";
 import { useUser } from "../rpc/RPCClient";
 import { getCountryName, getFlagUrl } from "../utilities/CountryCode";
 import { playError } from "../visuals/Sound";
@@ -13,6 +15,7 @@ export function PlayerHandleComponent() {
    const opt = useGameOptions();
    const gs = useGameState();
    const [showDetails, setShowDetails] = useState(false);
+   const accountLevel = user?.level ?? AccountLevel.Tribune;
    return (
       <fieldset>
          <legend>{t(L.PlayerHandle)}</legend>
@@ -45,18 +48,127 @@ export function PlayerHandleComponent() {
             <>
                <div className="separator" />
                <div className="row text-strong">
-                  <div className="f1">{t(L.AccountType)}</div>
-                  {opt.isOffline ? null : <div className="m-icon small mr5 text-green">wifi</div>}
-                  <div>{opt.isOffline ? t(L.AccountTypeOffline) : t(L.AccountTypeOnline)}</div>
+                  <div className="f1">{t(L.AccountLevel)}</div>
+                  <img
+                     src={AccountLevelImages[accountLevel]}
+                     alt={AccountLevelNames[accountLevel]()}
+                     className="player-level mr5"
+                  />
+                  <div>{AccountLevelNames[accountLevel]()}</div>
                </div>
-               <div className="text-desc text-small text-justify">{t(L.AccountTypeDesc)}</div>
-               <div className="sep10" />
+               <div className="separator" />
+               <div className="table-view">
+                  <table>
+                     <tbody>
+                        <tr>
+                           <th></th>
+                           <th
+                              aria-label={AccountLevelNames[AccountLevel.Tribune]()}
+                              data-balloon-pos="up"
+                              data-balloon-text="left"
+                           >
+                              <img className="player-level" src={AccountLevelImages[AccountLevel.Tribune]} />
+                           </th>
+                           <th
+                              aria-label={AccountLevelNames[AccountLevel.Quaestor]()}
+                              data-balloon-pos="up"
+                              data-balloon-text="left"
+                           >
+                              <img className="player-level" src={AccountLevelImages[AccountLevel.Quaestor]} />
+                           </th>
+                           <th
+                              aria-label={AccountLevelNames[AccountLevel.Aedile]()}
+                              data-balloon-pos="up"
+                              data-balloon-text="left"
+                           >
+                              <img className="player-level" src={AccountLevelImages[AccountLevel.Aedile]} />
+                           </th>
+                           <th
+                              aria-label={AccountLevelNames[AccountLevel.Praetor]()}
+                              data-balloon-pos="up"
+                              data-balloon-text="left"
+                           >
+                              <img className="player-level" src={AccountLevelImages[AccountLevel.Praetor]} />
+                           </th>
+                           <th
+                              aria-label={AccountLevelNames[AccountLevel.Consul]()}
+                              data-balloon-pos="up"
+                              data-balloon-text="left"
+                           >
+                              <img className="player-level" src={AccountLevelImages[AccountLevel.Consul]} />
+                           </th>
+                        </tr>
+                        <tr>
+                           <td>{t(L.AccountChatBadge)}</td>
+                           <td>
+                              <div className="m-icon small text-red">cancel</div>
+                           </td>
+                           <td>
+                              <div className="m-icon small text-green">check_circle</div>
+                           </td>
+                           <td>
+                              <div className="m-icon small text-green">check_circle</div>
+                           </td>
+                           <td>
+                              <div className="m-icon small text-green">check_circle</div>
+                           </td>
+                           <td>
+                              <div className="m-icon small text-green">check_circle</div>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td>{t(L.AccountLeaderboard)}</td>
+                           <td>
+                              <div className="m-icon small text-red">cancel</div>
+                           </td>
+                           <td>
+                              <div className="m-icon small text-green">check_circle</div>
+                           </td>
+                           <td>
+                              <div className="m-icon small text-green">check_circle</div>
+                           </td>
+                           <td>
+                              <div className="m-icon small text-green">check_circle</div>
+                           </td>
+                           <td>
+                              <div className="m-icon small text-green">check_circle</div>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td>{t(L.AccountActiveTrade)}</td>
+                           <td>2</td>
+                           <td>4</td>
+                           <td>6</td>
+                           <td>8</td>
+                           <td>10</td>
+                        </tr>
+                        <tr>
+                           <td>{t(L.AccountTradeValuePerMinute)}</td>
+                           <td>1,000</td>
+                           <td>∞</td>
+                           <td>∞</td>
+                           <td>∞</td>
+                           <td>∞</td>
+                        </tr>
+                        <tr>
+                           <td>{t(L.AccountTradePriceRange)}</td>
+                           <td>5%</td>
+                           <td>10%</td>
+                           <td>15%</td>
+                           <td>20%</td>
+                           <td>25%</td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </div>
+               <div className="sep5"></div>
+               <div className="text-desc text-small">{t(L.TrialRunDesc)}</div>
+               <div className="separator" />
                <div className="row text-strong">
-                  <div className="f1">{t(L.ThisRunType)}</div>
-                  {gs.isOffline ? null : <div className="m-icon small mr5 text-green">wifi</div>}
-                  <div>{gs.isOffline ? t(L.AccountTypeOffline) : t(L.AccountTypeOnline)}</div>
+                  <div className="f1">{t(L.ThisRun)}</div>
+                  {gs.isOffline ? null : <div className="m-icon small mr5 text-green">verified_user</div>}
+                  <div>{gs.isOffline ? t(L.ThisRunTrial) : t(L.ThisRunPermanent)}</div>
                </div>
-               <div className="text-desc text-small text-justify">{t(L.ThisRunTypeDesc)}</div>
             </>
          ) : (
             <div className="text-small text-link mt5" onClick={() => setShowDetails(true)}>

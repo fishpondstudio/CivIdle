@@ -3,7 +3,7 @@ import type { Building } from "../../../shared/definitions/BuildingDefinitions";
 import { Config } from "../../../shared/logic/Config";
 import type { IBuildingComponentProps } from "./BuildingPage";
 
-const WikipediaCache: Partial<Record<Building, string>> = {};
+const WikipediaCache: Map<Building, string> = new Map();
 
 export function BuildingWikipediaComponent({ gameState, xy }: IBuildingComponentProps): React.ReactNode {
    const type = gameState.tiles.get(xy)?.building?.type;
@@ -19,7 +19,7 @@ export function BuildingWikipediaComponent({ gameState, xy }: IBuildingComponent
       if (!iframeEl.current) {
          return;
       }
-      const cache = WikipediaCache[type];
+      const cache = WikipediaCache.get(type);
       if (cache) {
          iframeEl.current.srcdoc = cache;
          return;
@@ -32,7 +32,7 @@ export function BuildingWikipediaComponent({ gameState, xy }: IBuildingComponent
          .then((t) => {
             t = t.replaceAll(`src="//`, `src="https://`);
             t = t.replaceAll(`href="//`, `href="https://`);
-            WikipediaCache[type] = t;
+            WikipediaCache.set(type, t);
             if (iframeEl.current) {
                iframeEl.current.srcdoc = t;
             }

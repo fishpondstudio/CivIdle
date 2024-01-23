@@ -82,7 +82,7 @@ export async function startGame(
    routeTo(LoadingPage, { stage: LoadingPageStage.CheckSave });
    syncLanguage(Languages[getGameOptions().language]);
    syncUITheme(getGameOptions());
-   calculateTierAndPrice(gameState);
+   calculateTierAndPrice();
    initializeSingletons({
       sceneManager: new SceneManager({ app, assets: resources, textures, gameState }),
       routeTo,

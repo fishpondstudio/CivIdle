@@ -5,6 +5,7 @@ export interface IChat {
    message: string;
    time: number;
    flag: string;
+   level: AccountLevel;
    channel: ChatChannel;
 }
 
@@ -95,6 +96,7 @@ export interface IUser {
    lastDisconnectAt: number;
    lastHeartbeatAt: number;
    totalPlayTime: number;
+   level: AccountLevel;
    flag: string;
 }
 
@@ -147,7 +149,7 @@ export const ChatChannels = {
 
 export type ChatChannel = keyof typeof ChatChannels;
 
-export enum AccountLevels {
+export enum AccountLevel {
    Tribune = 0,
    Quaestor = 1,
    Aedile = 2,

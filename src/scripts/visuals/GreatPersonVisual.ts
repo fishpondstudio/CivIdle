@@ -70,10 +70,10 @@ export function greatPersonSprite(greatPerson: GreatPerson, context: ISceneConte
    return bg;
 }
 
-const greatPersonImageCache: Partial<Record<GreatPerson, string>> = {};
+const greatPersonImageCache: Map<GreatPerson, string> = new Map();
 
 export function greatPersonImage(greatPerson: GreatPerson, context: ISceneContext): string {
-   const cache = greatPersonImageCache[greatPerson];
+   const cache = greatPersonImageCache.get(greatPerson);
    if (cache) {
       return cache;
    }
@@ -81,6 +81,6 @@ export function greatPersonImage(greatPerson: GreatPerson, context: ISceneContex
       greatPersonSprite(greatPerson, context),
    ) as HTMLCanvasElement;
    const dataURL = canvas.toDataURL();
-   greatPersonImageCache[greatPerson] = dataURL;
+   greatPersonImageCache.set(greatPerson, dataURL);
    return dataURL;
 }

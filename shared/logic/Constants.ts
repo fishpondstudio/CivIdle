@@ -8,7 +8,6 @@ import { forEach, formatNumber, isEmpty, keysOf, numberToRoman, sizeOf } from ".
 import type { PartialSet, PartialTabulate } from "../utilities/TypeDefinitions";
 import { getBuildingCost, isWorldWonder } from "./BuildingLogic";
 import { Config } from "./Config";
-import type { GameState } from "./GameState";
 import { getBuildingUnlockTech, getDepositUnlockTech, getResourceUnlockTech } from "./TechLogic";
 
 export const MAX_OFFLINE_PRODUCTION_SEC = 60 * 60 * 4;
@@ -21,7 +20,7 @@ interface IRecipe {
    output: PartialTabulate<Resource>;
 }
 
-export function calculateTierAndPrice(gs: GameState) {
+export function calculateTierAndPrice() {
    forEach(DepositResources, (k) => {
       Config.ResourceTier[k] = 1;
       Config.ResourcePrice[k] = 1 + Config.Tech[getDepositUnlockTech(k)].column;

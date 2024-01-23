@@ -5,6 +5,7 @@ import { L, t } from "../../../shared/utilities/i18n";
 import chatActive from "../../images/chat_active.png";
 import chatInactive from "../../images/chat_inactive.png";
 import { OnUIThemeChanged, useGameOptions } from "../Global";
+import { AccountLevelImages, AccountLevelNames } from "../logic/AccountLevel";
 import { handleChatCommand } from "../logic/ChatCommand";
 import { addSystemMessage, client, useChatMessages, useUser } from "../rpc/RPCClient";
 import { getCountryName, getFlagUrl } from "../utilities/CountryCode";
@@ -110,6 +111,13 @@ export function ChatPanel(): React.ReactNode {
                               className="player-flag game-cursor"
                               title={getCountryName(c.flag)}
                            />
+                           {c.level > 0 ? (
+                              <img
+                                 src={AccountLevelImages[c.level]}
+                                 className="player-flag game-cursor"
+                                 title={AccountLevelNames[c.level]()}
+                              />
+                           ) : null}
                         </div>
                      ) : (
                         <div className="row text-small text-desc">
@@ -127,6 +135,13 @@ export function ChatPanel(): React.ReactNode {
                               className="player-flag game-cursor"
                               title={getCountryName(c.flag)}
                            />
+                           {c.level > 0 ? (
+                              <img
+                                 src={AccountLevelImages[c.level]}
+                                 className="player-flag game-cursor"
+                                 title={AccountLevelNames[c.level]()}
+                              />
+                           ) : null}
                            <div className="f1"></div>
                            <div>{new Date(c.time ?? 0).toLocaleTimeString()}</div>
                            {receiveMultipleChannels ? <div className="chat-channel">{c.channel}</div> : null}

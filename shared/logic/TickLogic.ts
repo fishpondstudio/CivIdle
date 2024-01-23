@@ -1,10 +1,13 @@
 import type { Building } from "../definitions/BuildingDefinitions";
 import type { Resource } from "../definitions/ResourceDefinitions";
-import type { Tile } from "../utilities/Helper";
+import { forEach, type Tile } from "../utilities/Helper";
 import type { RequireAtLeastOne } from "../utilities/Type";
 import type { PartialSet, PartialTabulate } from "../utilities/TypeDefinitions";
 import { TypedEvent } from "../utilities/TypedEvent";
 import { L, t } from "../utilities/i18n";
+import { getBuildingValue } from "./BuildingLogic";
+import { Config } from "./Config";
+import { GameState } from "./GameState";
 import type { calculateHappiness } from "./HappinessLogic";
 import type { IBuildingData } from "./Tile";
 
@@ -113,3 +116,18 @@ export interface IValueWithSource {
 }
 
 export const CurrentTickChanged = new TypedEvent<ITickData>();
+
+export function totalEmpireValue(gs: GameState): number {
+   let value = 0;
+   gs.tiles.forEach((tile) => {
+      if (tile.building) {
+         value += getBuildingValue(tile.building);
+         forEach(tile.building.resources, (res, amount) => {
+            if (Config.Resource[res].canPrice) {
+               value += (Config.ResourcePrice[res] ?? 0) * amount;
+            }
+         });
+      }
+   });
+   return value;
+}
