@@ -5,6 +5,10 @@ interface PatchNote {
 
 export const PatchNotes: PatchNote[] = [
    {
+      version: "0.1.118",
+      content: [["QoL", "Update Account Level"]],
+   },
+   {
       version: "0.1.117",
       content: [["Bugfix", "Fix wonders stopped working after upgrading to 0.1.116"]],
    },
