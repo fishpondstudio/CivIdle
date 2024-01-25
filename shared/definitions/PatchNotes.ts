@@ -5,6 +5,13 @@ interface PatchNote {
 
 export const PatchNotes: PatchNote[] = [
    {
+      version: "0.1.119",
+      content: [
+         ["QoL", "You can middle click an empty tile to copy the building from the selected tile"],
+         ["Bugfix", "Fix transportation indicators are sometimes not shown"],
+      ],
+   },
+   {
       version: "0.1.118",
       content: [["QoL", "Update Account Level"]],
    },

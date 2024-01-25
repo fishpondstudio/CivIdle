@@ -1,29 +1,5 @@
 import { tileToPoint, type Tile } from "./Helper";
 import { Hex, Layout, OffsetCoord, Point } from "./Hex";
-import { ObjectPool } from "./ObjectPool";
-
-class HexPool extends ObjectPool<Hex> {
-   protected override create(): Hex {
-      return new Hex(0, 0, 0);
-   }
-   protected onAllocate(obj: Hex): void {
-      obj.q = 0;
-      obj.r = 0;
-      obj.s = 0;
-   }
-   protected onRelease(obj: Hex): void {}
-}
-
-class OffsetCoordPool extends ObjectPool<OffsetCoord> {
-   protected override create(): OffsetCoord {
-      return new OffsetCoord(0, 0);
-   }
-   protected onAllocate(obj: OffsetCoord): void {
-      obj.row = 0;
-      obj.col = 0;
-   }
-   protected onRelease(obj: OffsetCoord): void {}
-}
 
 export class Grid {
    layout: Layout;
@@ -115,14 +91,16 @@ export class Grid {
       return result;
    }
 
-   private static _hexPool = new HexPool();
-   private static _offsetCoordPool = new OffsetCoordPool();
-
    private _distanceCache: Map<number, number> = new Map();
 
    public distanceTile(xy1: Tile, xy2: Tile): number {
       return this.distance((xy1 >> 16) & 0xffff, xy1 & 0xffff, (xy2 >> 16) & 0xffff, xy2 & 0xffff);
    }
+
+   private static _oc1 = new OffsetCoord(0, 0);
+   private static _oc2 = new OffsetCoord(0, 0);
+   private static _hex1 = new Hex(0, 0, 0);
+   private static _hex2 = new Hex(0, 0, 0);
 
    public distance(x1: number, y1: number, x2: number, y2: number): number {
       const key1 = y1 * this.maxX + x1;
@@ -130,36 +108,23 @@ export class Grid {
       const key = (Math.max(key1, key2) << 16) | Math.min(key1, key2);
       const cached = this._distanceCache.get(key);
 
-      // We use cached value in prod, but in dev, we want to validate our cache is good
-      // if (!import.meta.env.DEV && cached) {
-      //    return cached;
-      // }
-
       if (cached) {
          return cached;
       }
 
-      const hex1 = Grid._hexPool.allocate();
-      const oc1 = Grid._offsetCoordPool.allocate();
-      oc1.row = x1;
-      oc1.col = y1;
+      const hex1 = Grid._hex1;
+      const oc1 = Grid._oc1;
+      oc1.col = x1;
+      oc1.row = y1;
       OffsetCoord.roffsetToCubeNoAlloc(OffsetCoord.ODD, oc1, hex1);
 
-      const hex2 = Grid._hexPool.allocate();
-      const oc2 = Grid._offsetCoordPool.allocate();
-      oc2.row = x2;
-      oc2.col = y2;
+      const hex2 = Grid._hex2;
+      const oc2 = Grid._oc2;
+      oc2.col = x2;
+      oc2.row = y2;
       OffsetCoord.roffsetToCubeNoAlloc(OffsetCoord.ODD, oc2, hex2);
 
       const distance = hex1.distanceSelf(hex2);
-      Grid._hexPool.release(hex1);
-      Grid._hexPool.release(hex2);
-      Grid._offsetCoordPool.release(oc1);
-      Grid._offsetCoordPool.release(oc2);
-
-      // if (cached) {
-      //    console.assert(distance === cached);
-      // }
 
       this._distanceCache.set(key, distance);
       return distance;

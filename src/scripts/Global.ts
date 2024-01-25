@@ -1,3 +1,4 @@
+import randomColor from "randomcolor";
 import type { City } from "../../shared/definitions/CityDefinitions";
 import type { TechAge } from "../../shared/definitions/TechDefinitions";
 import { Config } from "../../shared/logic/Config";
@@ -19,7 +20,7 @@ import { rollPermanentGreatPeople } from "../../shared/logic/RebornLogic";
 import { getGreatPeopleChoices } from "../../shared/logic/TechLogic";
 import { makeBuilding, type ITileData } from "../../shared/logic/Tile";
 import { Grid } from "../../shared/utilities/Grid";
-import { firstKeyOf, forEach, xyToTile, type Tile } from "../../shared/utilities/Helper";
+import { firstKeyOf, forEach, sizeOf, xyToTile, type Tile } from "../../shared/utilities/Helper";
 import { TypedEvent } from "../../shared/utilities/TypedEvent";
 import { SteamClient, isSteam } from "./rpc/SteamClient";
 import { WorldScene } from "./scenes/WorldScene";
@@ -76,6 +77,19 @@ if (import.meta.env.DEV) {
          gs.greatPeopleChoices.push(getGreatPeopleChoices(age));
       }
       notifyGameStateUpdate(gs);
+   };
+   // @ts-expect-error
+   window.randomColor = () => {
+      const colors = randomColor({
+         luminosity: "light",
+         count: sizeOf(Config.Building) + sizeOf(Config.Resource),
+      });
+      forEach(Config.Building, (k, v) => {
+         getGameOptions().buildingColors[k] = colors.pop();
+      });
+      forEach(Config.Resource, (k, v) => {
+         getGameOptions().resourceColors[k] = colors.pop();
+      });
    };
 }
 

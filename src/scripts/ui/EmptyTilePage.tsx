@@ -25,6 +25,7 @@ import "../../css/EmptyTilePage.css";
 import { useGameState } from "../Global";
 import { jsxMapOf } from "../utilities/Helper";
 import { useShortcut } from "../utilities/Hook";
+import { playError } from "../visuals/Sound";
 import { MenuComponent } from "./MenuComponent";
 
 let lastBuild: Building | null = null;
@@ -35,12 +36,14 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
    const [filter, setFilter] = useState<string>("");
    const constructed = getTypeBuildings(gs);
    const build = (k: Building) => {
+      if (!checkBuildingMax(k, gs)) {
+         playError();
+         return;
+      }
       tile.building = makeBuilding({ type: k });
       tile.building.priority = getGameOptions().defaultPriority;
       notifyGameStateUpdate();
-      if (checkBuildingMax(k, gs)) {
-         lastBuild = k;
-      }
+      lastBuild = k;
    };
    useShortcut(
       "EmptyTilePageBuildLastBuilding",

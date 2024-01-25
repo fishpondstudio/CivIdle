@@ -1,10 +1,17 @@
 import { SmoothGraphics } from "@pixi/graphics-smooth";
 import type { FederatedPointerEvent, IPointData, Sprite } from "pixi.js";
 import { Color, Container, LINE_CAP, LINE_JOIN, ParticleContainer, TilingSprite } from "pixi.js";
+import { checkBuildingMax } from "../../../shared/logic/BuildingLogic";
 import { GameFeature, hasFeature } from "../../../shared/logic/FeatureLogic";
 import type { GameOptions, GameState } from "../../../shared/logic/GameState";
-import { TILE_SIZE, getGameOptions, getGameState } from "../../../shared/logic/GameStateLogic";
+import {
+   TILE_SIZE,
+   getGameOptions,
+   getGameState,
+   notifyGameStateUpdate,
+} from "../../../shared/logic/GameStateLogic";
 import { getGrid, getSpecialBuildings } from "../../../shared/logic/IntraTickCache";
+import { makeBuilding } from "../../../shared/logic/Tile";
 import { clamp, lerp, lookAt, pointToTile, tileToPoint, type Tile } from "../../../shared/utilities/Helper";
 import { Vector2, v2 } from "../../../shared/utilities/Vector2";
 import { TilePage } from "../ui/TilePage";
@@ -15,6 +22,7 @@ import { Easing } from "../utilities/pixi-actions/Easing";
 import type { Action } from "../utilities/pixi-actions/actions/Action";
 import { CustomAction } from "../utilities/pixi-actions/actions/CustomAction";
 import { drawGrid, drawSelected } from "../visuals/DrawGrid";
+import { playError } from "../visuals/Sound";
 import { TileVisual } from "./TileVisual";
 import { TooltipPool } from "./TooltipPool";
 import { TransportPool } from "./TransportPool";
@@ -71,7 +79,7 @@ export class WorldScene extends ViewportScene {
       this._transportPool = new TransportPool(
          textures.Transport,
          this.viewport.addChild(
-            new ParticleContainer(1500, {
+            new ParticleContainer(100_000, {
                position: true,
                rotation: true,
                alpha: true,
@@ -96,14 +104,50 @@ export class WorldScene extends ViewportScene {
       });
 
       this.viewport.on("clicked", (e: FederatedPointerEvent) => {
-         const grid = getGrid(getGameState()).positionToGrid(this.viewport.screenToWorld(e));
-         if (e.button === 2) {
-            return;
+         const gs = getGameState();
+         const grid = getGrid(gs).positionToGrid(this.viewport.screenToWorld(e));
+         switch (e.button) {
+            case 0: {
+               this.selectGrid(grid);
+               break;
+            }
+            case 1: {
+               this.copyBuilding(grid, gs);
+               break;
+            }
+            case 2: {
+               break;
+            }
          }
-         this.selectGrid(grid);
       });
 
       this.selectGrid(tileToPoint(getSpecialBuildings(getGameState()).Headquarter.tile));
+   }
+
+   copyBuilding(grid: IPointData, gs: GameState): void {
+      if (this._selectedXy === null) {
+         return;
+      }
+      const selectBuilding = gs.tiles.get(this._selectedXy)?.building;
+      if (!selectBuilding) {
+         return;
+      }
+      const xy = pointToTile(grid);
+      const currentTile = gs.tiles.get(xy);
+      if (!currentTile) {
+         return;
+      }
+      if (currentTile?.building) {
+         playError();
+         return;
+      }
+      if (!checkBuildingMax(selectBuilding.type, gs)) {
+         playError();
+         return;
+      }
+      currentTile.building = makeBuilding({ type: selectBuilding.type });
+      currentTile.building.priority = getGameOptions().defaultPriority;
+      notifyGameStateUpdate();
    }
 
    override onResize(width: number, height: number): void {
