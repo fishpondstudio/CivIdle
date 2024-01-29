@@ -2,7 +2,7 @@ import { useState } from "react";
 import { firstKeyOf } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import install from "../../images/install.png";
-import { useUser } from "../rpc/RPCClient";
+import { OnUserChanged, client, useUser } from "../rpc/RPCClient";
 import { CountryCode, getCountryName, getFlagUrl } from "../utilities/CountryCode";
 import { jsxMapOf } from "../utilities/Helper";
 import { playError } from "../visuals/Sound";
@@ -22,6 +22,8 @@ enum SetupStep {
 export function FirstTimePlayerModal(): React.ReactNode {
    const [step, setStep] = useState(SetupStep.Welcome);
    const [skipTutorial, setSkipTutorial] = useState(false);
+   const user = useUser();
+   const edit = { handle: user?.handle ?? "", flag: user?.flag ?? firstKeyOf(CountryCode)! };
    const content = () => {
       switch (step) {
          case SetupStep.Welcome:
@@ -82,7 +84,7 @@ export function FirstTimePlayerModal(): React.ReactNode {
                </div>
             );
          case SetupStep.Settings:
-            return <FirstTimePlayerSettings />;
+            return <FirstTimePlayerSettings user={edit} />;
       }
    };
 
@@ -97,7 +99,7 @@ export function FirstTimePlayerModal(): React.ReactNode {
                <div className="row" style={{ justifyContent: "flex-end" }}>
                   <button
                      style={{ width: "80px" }}
-                     onClick={() => {
+                     onClick={async () => {
                         switch (step) {
                            case SetupStep.Welcome: {
                               if (skipTutorial) {
@@ -108,7 +110,20 @@ export function FirstTimePlayerModal(): React.ReactNode {
                               break;
                            }
                            case SetupStep.Settings: {
-                              hideModal();
+                              try {
+                                 if (!user) {
+                                    throw new Error(t(L.OfflineErrorMessage));
+                                 }
+                                 await client.changeHandle(edit.handle, edit.flag);
+                                 user.handle = edit.handle;
+                                 user.flag = edit.flag;
+                                 OnUserChanged.emit({ ...user });
+                              } catch (error) {
+                                 playError();
+                                 showToast(String(error));
+                              } finally {
+                                 hideModal();
+                              }
                               break;
                            }
                            default: {
@@ -127,18 +142,17 @@ export function FirstTimePlayerModal(): React.ReactNode {
    );
 }
 
-function FirstTimePlayerSettings(): React.ReactNode {
-   const user = useUser();
-   const [handle, setHandle] = useState(user?.handle ?? "");
-   const [flag, setFlag] = useState(user?.flag ?? firstKeyOf(CountryCode)!);
-   const name = getCountryName(flag);
+function FirstTimePlayerSettings({ user }: { user: { handle: string; flag: string } }): React.ReactNode {
+   const [handle, setHandle] = useState(user.handle);
+   const [flag, setFlag] = useState(user.flag);
+   const countryName = getCountryName(flag);
    return (
       <div className="row">
          <div style={{ alignSelf: "flex-start" }}>
             <img src={install} style={{ width: "48px" }} />
          </div>
          <div className="f1" style={{ margin: "10px 15px" }}>
-            <div>Choose your player handle</div>
+            <div>{t(L.TutorialPlayerHandle)}</div>
             <div className="sep5" />
             <div className="row">
                <div className="f1">
@@ -146,7 +160,8 @@ function FirstTimePlayerSettings(): React.ReactNode {
                      value={handle}
                      onChange={(e) => {
                         if (user) {
-                           setHandle(e.target.value);
+                           user.handle = e.target.value;
+                           setHandle(user.handle);
                         } else {
                            showToast(t(L.OfflineErrorMessage));
                         }
@@ -160,15 +175,15 @@ function FirstTimePlayerSettings(): React.ReactNode {
                      className="ml5"
                      src={getFlagUrl(flag)}
                      style={{ height: "30px", display: "block" }}
-                     title={name}
-                     alt={name}
+                     title={countryName}
+                     alt={countryName}
                   />
                </div>
             </div>
             <div className="sep5" />
             <div className="text-small text-desc">{t(L.ChangePlayerHandledDesc)}</div>
             <div className="sep10" />
-            <div>Choose your player flag</div>
+            <div>{t(L.TutorialPlayerFlag)}</div>
             <div className="sep5" />
             <div
                className="inset-deep-2 white"
@@ -185,7 +200,8 @@ function FirstTimePlayerSettings(): React.ReactNode {
                                  showToast(t(L.OfflineErrorMessage));
                                  return;
                               }
-                              setFlag(c);
+                              user.flag = c;
+                              setFlag(user.flag);
                            }}
                            src={getFlagUrl(c)}
                            className="pointer player-flag-large"

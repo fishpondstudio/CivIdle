@@ -1,4 +1,3 @@
-import randomColor from "randomcolor";
 import type { City } from "../../shared/definitions/CityDefinitions";
 import type { TechAge } from "../../shared/definitions/TechDefinitions";
 import { Config } from "../../shared/logic/Config";
@@ -20,11 +19,11 @@ import { rollPermanentGreatPeople } from "../../shared/logic/RebornLogic";
 import { getGreatPeopleChoices } from "../../shared/logic/TechLogic";
 import { makeBuilding, type ITileData } from "../../shared/logic/Tile";
 import { Grid } from "../../shared/utilities/Grid";
-import { firstKeyOf, forEach, sizeOf, xyToTile, type Tile } from "../../shared/utilities/Helper";
+import { firstKeyOf, forEach, xyToTile, type Tile } from "../../shared/utilities/Helper";
 import { TypedEvent } from "../../shared/utilities/TypedEvent";
 import { SteamClient, isSteam } from "./rpc/SteamClient";
 import { WorldScene } from "./scenes/WorldScene";
-import { idbGet, idbSet } from "./utilities/BrowserStorage";
+import { idbDel, idbGet, idbSet } from "./utilities/BrowserStorage";
 import { makeObservableHook } from "./utilities/Hook";
 import { Singleton } from "./utilities/Singleton";
 import { compress, decompress } from "./workers/Compress";
@@ -53,7 +52,15 @@ if (import.meta.env.DEV) {
    // @ts-expect-error
    window.savedGame = savedGame;
    // @ts-expect-error
-   window.clearGame = wipeSaveData;
+   window.clearGame = async () => {
+      saving = true;
+      if (isSteam()) {
+         await SteamClient.fileDelete(SAVE_KEY);
+         return;
+      }
+      await idbDel(SAVE_KEY);
+      window.location.reload();
+   };
    // @ts-expect-error
    window.clearAllResources = () => {
       getGameState().tiles.forEach((tile) => {
@@ -77,19 +84,6 @@ if (import.meta.env.DEV) {
          gs.greatPeopleChoices.push(getGreatPeopleChoices(age));
       }
       notifyGameStateUpdate(gs);
-   };
-   // @ts-expect-error
-   window.randomColor = () => {
-      const colors = randomColor({
-         luminosity: "light",
-         count: sizeOf(Config.Building) + sizeOf(Config.Resource),
-      });
-      forEach(Config.Building, (k, v) => {
-         getGameOptions().buildingColors[k] = colors.pop();
-      });
-      forEach(Config.Resource, (k, v) => {
-         getGameOptions().resourceColors[k] = colors.pop();
-      });
    };
 }
 

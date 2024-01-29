@@ -5,6 +5,13 @@ interface PatchNote {
 
 export const PatchNotes: PatchNote[] = [
    {
+      version: "0.1.120",
+      content: [
+         ["QoL", "Add /randomcolor chat command that will assign a random color to all buildings/resources"],
+         ["Bugfix", "Fix first time tutorial does not work when there's no Internet connection"],
+      ],
+   },
+   {
       version: "0.1.119",
       content: [
          ["QoL", "You can middle click an empty tile to copy the building from the selected tile"],

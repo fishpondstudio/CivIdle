@@ -2,7 +2,7 @@ import classNames from "classnames";
 import { useState } from "react";
 import { AccountLevel } from "../../../shared/utilities/Database";
 import { L, t } from "../../../shared/utilities/i18n";
-import { useGameOptions, useGameState } from "../Global";
+import { useGameState } from "../Global";
 import { AccountLevelImages, AccountLevelNames } from "../logic/AccountLevel";
 import { useUser } from "../rpc/RPCClient";
 import { getCountryName, getFlagUrl } from "../utilities/CountryCode";
@@ -12,7 +12,6 @@ import { showModal } from "./GlobalModal";
 
 export function PlayerHandleComponent() {
    const user = useUser();
-   const opt = useGameOptions();
    const gs = useGameState();
    const [showDetails, setShowDetails] = useState(false);
    const accountLevel = user?.level ?? AccountLevel.Tribune;

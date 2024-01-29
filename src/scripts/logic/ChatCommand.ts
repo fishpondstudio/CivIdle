@@ -1,6 +1,15 @@
-import { getGameState } from "../../../shared/logic/GameStateLogic";
+import randomColor from "randomcolor";
+import { Config } from "../../../shared/logic/Config";
+import { getGameOptions, getGameState } from "../../../shared/logic/GameStateLogic";
 import { AccountLevel } from "../../../shared/utilities/Database";
-import { clamp, formatHM, formatNumber, safeParseInt } from "../../../shared/utilities/Helper";
+import {
+   clamp,
+   forEach,
+   formatHM,
+   formatNumber,
+   safeParseInt,
+   sizeOf,
+} from "../../../shared/utilities/Helper";
 import { decompressSave, loadSave } from "../Global";
 import { addSystemMessage, client } from "../rpc/RPCClient";
 import { tickEverySecond } from "./Tick";
@@ -40,6 +49,20 @@ export async function handleChatCommand(command: string): Promise<void> {
          }
          await client.changePlayerLevel(parts[1], parseInt(parts[2], 10) as AccountLevel);
          addSystemMessage("Player Level has been changed");
+         break;
+      }
+      case "randomcolor": {
+         const colors = randomColor({
+            luminosity: "light",
+            count: sizeOf(Config.Building) + sizeOf(Config.Resource),
+         });
+         forEach(Config.Building, (k, v) => {
+            getGameOptions().buildingColors[k] = colors.pop();
+         });
+         forEach(Config.Resource, (k, v) => {
+            getGameOptions().resourceColors[k] = colors.pop();
+         });
+         addSystemMessage("Assign random colors to buildings and resources");
          break;
       }
       default: {
