@@ -219,7 +219,7 @@ function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
       return;
    }
 
-   if (gs.unlockedTech.Banking && building.level >= 5) {
+   if (gs.unlockedTech.Banking && building.level >= 10) {
       mapSafePush(Tick.next.tileMultipliers, xy, {
          storage: 1,
          source: t(L.SourceResearch, { tech: t(L.Banking) }),
