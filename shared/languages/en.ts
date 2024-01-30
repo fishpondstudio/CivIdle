@@ -837,7 +837,6 @@ export const EN = {
    AccountLevelPraetor: "Praetor",
    AccountLevelConsul: "Consul",
    AccountLevelCensor: "Censor",
-   AccountLevelDictator: "Dictator",
    AccountChatBadge: "Chat Badge",
    AccountLeaderboard: "Leaderboard",
    AccountActiveTrade: "Active Trade",

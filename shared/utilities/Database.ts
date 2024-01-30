@@ -6,6 +6,7 @@ export interface IChat {
    time: number;
    flag: string;
    level: AccountLevel;
+   isMod: boolean;
    channel: ChatChannel;
 }
 
@@ -104,6 +105,7 @@ export interface IUser {
    totalPlayTime: number;
    empireValues: IEmpireValue[];
    level: AccountLevel;
+   isMod: boolean;
    flag: string;
 }
 
@@ -133,12 +135,14 @@ export const DB: {
    trades: Record<string, ITrade>;
    pendingClaims: Record<string, IPendingClaim[]>;
    map: Record<string, IMapEntry>;
+   muteList: Record<string, number>;
 } = {
    chat: [],
    users: {},
    trades: {},
    map: {},
    pendingClaims: {},
+   muteList: {},
 };
 
 export const MoveTileCooldown = 1 * HOUR;
@@ -162,6 +166,4 @@ export enum AccountLevel {
    Aedile = 2,
    Praetor = 3,
    Consul = 4,
-   Censor = 5,
-   Dictator = 6,
 }

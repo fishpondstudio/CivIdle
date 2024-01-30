@@ -3,6 +3,7 @@ import { Config } from "../../../shared/logic/Config";
 import { getGameOptions, getGameState } from "../../../shared/logic/GameStateLogic";
 import { AccountLevel } from "../../../shared/utilities/Database";
 import {
+   HOUR,
    clamp,
    forEach,
    formatHM,
@@ -43,14 +44,6 @@ export async function handleChatCommand(command: string): Promise<void> {
          addSystemMessage(`You have played actively and online for ${formatHM(playTime * 1000)}`);
          break;
       }
-      case "changelevel": {
-         if (!parts[1] || !parts[2]) {
-            throw new Error("Invalid command format");
-         }
-         await client.changePlayerLevel(parts[1], parseInt(parts[2], 10) as AccountLevel);
-         addSystemMessage("Player Level has been changed");
-         break;
-      }
       case "randomcolor": {
          const colors = randomColor({
             luminosity: "light",
@@ -63,6 +56,45 @@ export async function handleChatCommand(command: string): Promise<void> {
             getGameOptions().resourceColors[k] = colors.pop();
          });
          addSystemMessage("Assign random colors to buildings and resources");
+         break;
+      }
+      case "changelevel": {
+         if (!parts[1] || !parts[2]) {
+            throw new Error("Invalid command format");
+         }
+         await client.changePlayerLevel(parts[1], parseInt(parts[2], 10) as AccountLevel);
+         addSystemMessage("Player level has been changed");
+         break;
+      }
+      case "setplaytime": {
+         if (!parts[1] || !parts[2]) {
+            throw new Error("Invalid command format");
+         }
+         await client.setPlayTime(parts[1], parseInt(parts[2], 10));
+         addSystemMessage("Play time has been changed");
+         break;
+      }
+      case "makemod": {
+         if (!parts[1]) {
+            throw new Error("Invalid command format");
+         }
+         await client.makeMod(parts[1]);
+         addSystemMessage("Player mod has been changed");
+         break;
+      }
+      case "muteplayer": {
+         if (!parts[1] || !parts[2]) {
+            throw new Error("Invalid command format");
+         }
+         const muteUntil = await client.mutePlayer(parts[1], parseInt(parts[2], 10) * HOUR);
+         addSystemMessage(`Player ${parts[1]} has been muted until ${new Date(muteUntil).toLocaleString()}`);
+         break;
+      }
+      case "mutelist": {
+         const mutedPlayers = await client.getMutedPlayers();
+         mutedPlayers.forEach((m) => {
+            addSystemMessage(`${m.handle} muted until ${new Date(m.time).toLocaleString()}`);
+         });
          break;
       }
       default: {

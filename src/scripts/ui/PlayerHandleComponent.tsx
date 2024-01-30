@@ -21,32 +21,30 @@ export function PlayerHandleComponent() {
          {user == null ? (
             <div className="text-strong">{t(L.PlayerHandleOffline)}</div>
          ) : (
-            <div className="row">
-               <div className="text-strong">{user?.handle}</div>
-               <img
-                  className="ml5 player-flag"
-                  src={getFlagUrl(user?.flag)}
-                  title={getCountryName(user?.flag)}
-               />
-               <div className="f1" />
-               <div
-                  className={classNames("text-link text-strong", { disabled: !user })}
-                  onClick={() => {
-                     if (user) {
-                        showModal(<ChangePlayerHandleModal />);
-                     } else {
-                        playError();
-                     }
-                  }}
-               >
-                  {t(L.ChangePlayerHandle)}
-               </div>
-            </div>
-         )}
-         {showDetails ? (
             <>
-               <div className="separator" />
-               <div className="row text-strong">
+               <div className="row">
+                  <div className="text-strong">{user?.handle}</div>
+                  <img
+                     className="ml5 player-flag"
+                     src={getFlagUrl(user?.flag)}
+                     title={getCountryName(user?.flag)}
+                  />
+                  <div className="f1" />
+                  <div
+                     className={classNames("text-link text-strong", { disabled: !user })}
+                     onClick={() => {
+                        if (user) {
+                           showModal(<ChangePlayerHandleModal />);
+                        } else {
+                           playError();
+                        }
+                     }}
+                  >
+                     {t(L.ChangePlayerHandle)}
+                  </div>
+               </div>
+               <div className="sep5" />
+               <div className="row text-desc">
                   <div className="f1">{t(L.AccountLevel)}</div>
                   <img
                      src={AccountLevelImages[accountLevel]}
@@ -55,6 +53,10 @@ export function PlayerHandleComponent() {
                   />
                   <div>{AccountLevelNames[accountLevel]()}</div>
                </div>
+            </>
+         )}
+         {showDetails ? (
+            <>
                <div className="separator" />
                <div className="table-view">
                   <table>
@@ -170,7 +172,7 @@ export function PlayerHandleComponent() {
                </div>
             </>
          ) : (
-            <div className="text-small text-link mt5" onClick={() => setShowDetails(true)}>
+            <div className="row text-link mt5" onClick={() => setShowDetails(true)}>
                {t(L.AccountTypeShowDetails)}
             </div>
          )}

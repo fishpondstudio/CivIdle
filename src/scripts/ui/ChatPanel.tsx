@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { ChatChannels } from "../../../shared/utilities/Database";
 import { isEmpty, keysOf, sizeOf } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
+import AccountLevelMod from "../../images/AccountLevelMod.png";
 import chatActive from "../../images/chat_active.png";
 import chatInactive from "../../images/chat_inactive.png";
 import { OnUIThemeChanged, useGameOptions } from "../Global";
@@ -118,6 +119,13 @@ export function ChatPanel(): React.ReactNode {
                                  title={AccountLevelNames[c.level]()}
                               />
                            ) : null}
+                           {c.isMod ? (
+                              <img
+                                 src={AccountLevelMod}
+                                 className="player-flag game-cursor"
+                                 title={t(L.AccountLevelCensor)}
+                              />
+                           ) : null}
                         </div>
                      ) : (
                         <div className="row text-small text-desc">
@@ -140,6 +148,13 @@ export function ChatPanel(): React.ReactNode {
                                  src={AccountLevelImages[c.level]}
                                  className="player-flag game-cursor"
                                  title={AccountLevelNames[c.level]()}
+                              />
+                           ) : null}
+                           {c.isMod ? (
+                              <img
+                                 src={AccountLevelMod}
+                                 className="player-flag game-cursor"
+                                 title={t(L.AccountLevelCensor)}
                               />
                            ) : null}
                            <div className="f1"></div>
