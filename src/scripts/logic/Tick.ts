@@ -5,7 +5,7 @@ import {
    getGameOptions,
    getGameState,
    notifyGameStateUpdate,
-   serializeSave,
+   serializeSaveLite,
 } from "../../../shared/logic/GameStateLogic";
 import { calculateHappiness } from "../../../shared/logic/HappinessLogic";
 import { clearIntraTickCache, getSpecialBuildings } from "../../../shared/logic/IntraTickCache";
@@ -47,6 +47,9 @@ export function tickEveryFrame(gs: GameState, dt: number) {
       worldScene.updateTransportVisual(gs, timeSinceLastTick);
    }
 }
+
+const heartbeatFreq = import.meta.env.DEV ? 10 : 60;
+
 export function tickEverySecond(gs: GameState, offline: boolean) {
    // We should always tick when offline
    if (!offline && !shouldTick()) {
@@ -90,8 +93,8 @@ export function tickEverySecond(gs: GameState, offline: boolean) {
       if (gs.tick % (5 * speed) === 0) {
          saveGame(false).catch(console.error);
       }
-      if (gs.tick % (60 * speed) === 1) {
-         Singleton().heartbeat.update(serializeSave());
+      if (gs.tick % (heartbeatFreq * speed) === 1) {
+         Singleton().heartbeat.update(serializeSaveLite());
       }
    }
 }

@@ -7,11 +7,11 @@ import { compress } from "../workers/Compress";
 export class Heartbeat {
    constructor(private data: Uint8Array) {}
 
-   public init() {
+   public init(): void {
       if (getGameState().isOffline || getGameOptions().isOffline) {
          return;
       }
-      return client.fullHeartbeat(this.data);
+      compress(this.data).then((d) => client.fullHeartbeat(d));
    }
 
    public update(data: Uint8Array): void {

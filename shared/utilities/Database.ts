@@ -88,6 +88,12 @@ export interface IPoint {
 
 export type AllMessageTypes = IChatMessage | IRPCMessage | IWelcomeMessage | ITradeMessage | IMapMessage;
 
+export interface IEmpireValue {
+   value: number;
+   time: number;
+   tick: number;
+}
+
 export interface IUser {
    userId: string;
    handle: string;
@@ -96,6 +102,7 @@ export interface IUser {
    lastDisconnectAt: number;
    lastHeartbeatAt: number;
    totalPlayTime: number;
+   empireValues: IEmpireValue[];
    level: AccountLevel;
    flag: string;
 }

@@ -14,6 +14,13 @@ export function getGameOptions(): GameOptions {
 export function serializeSave(gs: SavedGame = savedGame): Uint8Array {
    return new TextEncoder().encode(JSON.stringify(gs, replacer));
 }
+export function serializeSaveLite(gs: SavedGame = savedGame): Uint8Array {
+   const transportation = gs.current.transportation;
+   gs.current.transportation = new Map();
+   const result = new TextEncoder().encode(JSON.stringify(gs, replacer));
+   gs.current.transportation = transportation;
+   return result;
+}
 export function deserializeSave(bytes: Uint8Array): SavedGame {
    return JSON.parse(new TextDecoder().decode(bytes), reviver);
 }
