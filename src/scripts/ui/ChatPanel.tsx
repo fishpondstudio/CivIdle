@@ -1,3 +1,4 @@
+import classNames from "classnames";
 import React, { useEffect, useRef, useState } from "react";
 import { ChatChannels } from "../../../shared/utilities/Database";
 import { isEmpty, keysOf, sizeOf } from "../../../shared/utilities/Helper";
@@ -100,7 +101,13 @@ export function ChatPanel(): React.ReactNode {
                   );
                }
                return (
-                  <div className="chat-message-item" key={i}>
+                  <div
+                     className={classNames({
+                        "chat-message-item": true,
+                        "mentions-me": user ? c.message.includes(`@${user.handle}`) : false,
+                     })}
+                     key={i}
+                  >
                      {c.name === user?.handle ? (
                         <div className="row text-small text-desc">
                            <div>{new Date(c.time ?? 0).toLocaleTimeString()}</div>

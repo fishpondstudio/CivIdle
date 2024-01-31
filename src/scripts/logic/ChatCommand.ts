@@ -78,8 +78,21 @@ export async function handleChatCommand(command: string): Promise<void> {
          if (!parts[1]) {
             throw new Error("Invalid command format");
          }
-         await client.makeMod(parts[1]);
-         addSystemMessage("Player mod has been changed");
+         await client.makeMod(parts[1], true);
+         addSystemMessage(`${parts[1]} is now a mod`);
+         break;
+      }
+      case "unmakemod": {
+         if (!parts[1]) {
+            throw new Error("Invalid command format");
+         }
+         await client.makeMod(parts[1], false);
+         addSystemMessage(`${parts[1]} is no longer a mod`);
+         break;
+      }
+      case "modlist": {
+         const result = await client.getMods();
+         addSystemMessage(`Current censors: ${result.join(", ")}`);
          break;
       }
       case "muteplayer": {
