@@ -636,6 +636,7 @@ export const EN = {
    UserAgent: "User Agent: %{driver}",
    MarketYouGet: "You Get",
    MarketSell: "Sell",
+   MarketFilterResource: "Resource",
    ResourceAmount: "Amount",
    RomanForum: "Roman Forum",
    Acropolis: "Acropolis",
