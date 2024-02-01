@@ -50,7 +50,7 @@ export function PlayerTradeFilters({wantFilterParams, offerFilterParams, trades}
    if ( showFilters ) {
       return (
          <fieldset>
-            <legend className="text-strong">Filters</legend>
+            <legend className="text-strong">{t(L.PlayerTradeFilters)}</legend>
             <div className="row">
                <div style={{ width: "80px" }}>{t(L.PlayerTradeWant)}</div>
                <select
@@ -102,7 +102,7 @@ export function PlayerTradeFilters({wantFilterParams, offerFilterParams, trades}
                      setShowFilters(false);
                   }}
                >
-                  Close
+                  {t(L.PlayerTradeFiltersClose)}
                </button>               
             </div>
          </fieldset>
