@@ -1,6 +1,6 @@
 import classNames from "classnames";
 import { useEffect, useState } from "react";
-import type { Resource } from "../../../shared/definitions/ResourceDefinitions";
+import type { Resource, ResourceDefinitions } from "../../../shared/definitions/ResourceDefinitions";
 import { getStorageFor } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
 import { TRADE_CANCEL_REFUND_PERCENT } from "../../../shared/logic/Constants";
@@ -24,6 +24,102 @@ import { FillPlayerTradeModal } from "./FillPlayerTradeModal";
 import { showModal, showToast } from "./GlobalModal";
 import { FormatNumber } from "./HelperComponents";
 import { WarningComponent } from "./WarningComponent";
+import type { IClientTrade } from "../../../shared/logic/PlayerTradeLogic";
+
+interface IPlayerTradeFiltersProps {
+   wantFilterParams: {wantFilter: string, setWantFilter: React.Dispatch<React.SetStateAction<string>>},
+   offerFilterParams: {offerFilter: string, setOfferFilter: React.Dispatch<React.SetStateAction<string>>},
+   trades: IClientTrade[],
+}
+
+export function PlayerTradeFilters({wantFilterParams, offerFilterParams, trades}: IPlayerTradeFiltersProps ): React.ReactNode {
+   const { wantFilter, setWantFilter} = wantFilterParams;
+   const { offerFilter, setOfferFilter} = offerFilterParams;
+   
+   const [showFilters, setShowFilters] = useState(false);
+
+   const uniqueBuyResources: Set<Resource> = new Set();
+   trades.map((trade) => {
+     uniqueBuyResources.add(trade.buyResource);
+   });   
+   const uniqueSellResources: Set<Resource> = new Set();
+   trades.map((trade) => {
+      uniqueSellResources.add(trade.sellResource);
+   });    
+
+   if ( showFilters ) {
+      return (
+         <fieldset>
+            <legend className="text-strong">Filters</legend>
+            <div className="row">
+               <div style={{ width: "80px" }}>{t(L.PlayerTradeWant)}</div>
+               <select
+                  className="f1"
+                  value={wantFilter}
+                  onChange={(e) => {
+                     if (e.target.value in Config.Resource || e.target.value === "") {
+                        setWantFilter(e.target.value);
+                     }
+                  }}
+               >
+                  <option key="Empty" value="">                     
+                  </option>
+
+                  {Array.from(uniqueBuyResources).map((res) => (
+                     <option key={res} value={res}>
+                        {Config.Resource[res].name()}
+                     </option>
+                  ))}
+               </select>
+            </div>
+            <div className="sep10"></div>
+            <div className="row">
+               <div style={{ width: "80px" }}>{t(L.PlayerTradeOffer)}</div>
+               <select
+                  className="f1"
+                  value={offerFilter}
+                  onChange={(e) => {
+                     if (e.target.value in Config.Resource || e.target.value === "") {
+                        setOfferFilter(e.target.value);
+                     }
+                  }}
+               >
+                  <option key="Empty" value="">                     
+                  </option>
+
+                  {Array.from(uniqueSellResources).map((res) => (
+                     <option key={res} value={res}>
+                        {Config.Resource[res].name()}
+                     </option>
+                  ))}
+               </select>
+            </div>     
+            <div className="sep10"></div>
+            <div className="row">
+            <button
+                  className="row f1 jcc"
+                  onClick={() => {
+                     setShowFilters(false);
+                  }}
+               >
+                  Close
+               </button>               
+            </div>
+         </fieldset>
+      );
+   }
+   return (
+      <button
+         className="row w100 jcc mb10"
+         onClick={() => {
+            setShowFilters(true);
+         }}
+      >
+         <div className="m-icon small mr5">add_circle</div>
+         <div className="text-strong">Filters</div>
+      </button>
+   );
+}
 
 export function PlayerTradeComponent({ gameState, xy }: IBuildingComponentProps): React.ReactNode {
    const building = gameState.tiles.get(xy)?.building;
@@ -33,6 +129,9 @@ export function PlayerTradeComponent({ gameState, xy }: IBuildingComponentProps)
    const trades = useTrades();
    const user = useUser();
    const myXy = getMyMapXy();
+   const [wantFilter, setWantFilter] = useState<keyof ResourceDefinitions|string>("");
+   const [offerFilter, setOfferFilter] = useState<keyof ResourceDefinitions|string>("");
+
    if (!myXy) {
       return (
          <>
@@ -62,6 +161,10 @@ export function PlayerTradeComponent({ gameState, xy }: IBuildingComponentProps)
             gameState={gameState}
             xy={xy}
          />
+         <PlayerTradeFilters 
+            wantFilterParams={{wantFilter, setWantFilter}}
+            offerFilterParams={{offerFilter, setOfferFilter}}
+            trades={trades}/>
          <div className="table-view">
             <table>
                <tbody>
@@ -71,7 +174,23 @@ export function PlayerTradeComponent({ gameState, xy }: IBuildingComponentProps)
                      <th>{t(L.PlayerTradeFrom)}</th>
                      <th></th>
                   </tr>
-                  {trades.map((trade) => {
+                  {trades
+                  .filter((t) => {
+                     if ( wantFilter === "" && offerFilter === "" ) {
+                        return true;
+                     }
+                     if ( t.buyResource === wantFilter && offerFilter === "" ) {
+                        return true;
+                     }
+                     if ( t.sellResource === offerFilter && wantFilter === "" ) {
+                        return true;
+                     }
+                     if ( t.buyResource === wantFilter && t.sellResource === offerFilter ) {
+                        return true;
+                     }
+                     return false;
+                  })
+                  .map((trade) => {
                      const disableFill = user === null || trade.fromId === user.userId;
                      return (
                         <tr
