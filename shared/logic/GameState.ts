@@ -92,6 +92,7 @@ export class GameOptions {
    themeColors = { ...DefaultThemeColors };
    shortcuts: Partial<Record<Shortcut, IShortcutConfig>> = {};
    soundEffect = true;
+   mapStoragePercentage = false;
    buildingDefaults: Partial<Record<Building, Partial<IBuildingData>>> = {};
    defaultPriority = 0x010101;
    chatSendChannel: ChatChannel = "en";

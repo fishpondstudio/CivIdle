@@ -4,6 +4,7 @@ import type { Resource } from "../../../shared/definitions/ResourceDefinitions";
 import {
    getBuildingLevelLabel,
    getBuildingPercentage,
+   getStorageFor,
    isWorldOrNaturalWonder,
 } from "../../../shared/logic/BuildingLogic";
 import type { GameOptions, GameState } from "../../../shared/logic/GameState";
@@ -17,6 +18,7 @@ import {
    forEach,
    formatHMS,
    formatNumber,
+   formatPercent,
    layoutCenter,
    pointToTile,
    pointToXy,
@@ -30,6 +32,7 @@ import { Easing } from "../utilities/pixi-actions/Easing";
 import type { Action } from "../utilities/pixi-actions/actions/Action";
 import { Fonts } from "../visuals/Fonts";
 import type { WorldScene } from "./WorldScene";
+import { useGameOptions } from "../Global";
 
 export class TileVisual extends Container {
    private readonly _world: WorldScene;
@@ -43,10 +46,12 @@ export class TileVisual extends Container {
    private readonly _notProducing: Sprite;
    private readonly _upgrade: Sprite;
    private readonly _level: BitmapText;
+   private readonly _storagePercentage: BitmapText;
    private readonly _constructionAnimation: Action;
    private readonly _upgradeAnimation: Action;
    private readonly _xy: Tile;
    private readonly _timeLeft: BitmapText;
+   private readonly _gs: GameState;
    private _lastFloaterShownAt = 0;
    private _floaterValue = 0;
 
@@ -54,11 +59,11 @@ export class TileVisual extends Container {
       super();
       this._world = world;
       this._grid = grid;
-      const gs = getGameState();
+      this._gs = getGameState();
       this._xy = pointToTile(this._grid);
-      this._tile = gs.tiles.get(this._xy)!;
+      this._tile = this._gs.tiles.get(this._xy)!;
 
-      this.position = getGrid(gs).gridToPosition(this._grid);
+      this.position = getGrid(this._gs).gridToPosition(this._grid);
       this.cullable = true;
 
       const { textures } = this._world.context;
@@ -120,6 +125,18 @@ export class TileVisual extends Container {
       this._level.position.set(25, -25);
       this._level.visible = true;
       this._level.cullable = true;
+
+      this._storagePercentage = this.addChild(
+         new BitmapText("", {
+            fontName: Fonts.Cabin,
+            fontSize: 16,
+            tint: 0xffffff,
+         }),
+      );
+      this._storagePercentage.anchor.set(0.5, 0.5);
+      this._storagePercentage.position.set(0, 30);
+      this._storagePercentage.visible = false;
+      this._storagePercentage.cullable = true;      
 
       this._timeLeft = this.addChild(
          new BitmapText("", {
@@ -256,6 +273,7 @@ export class TileVisual extends Container {
             this._notProducing.visible = false;
             this._upgrade.visible = false;
             this._level.visible = false;
+            this._storagePercentage.visible = false;
             this._spinner.visible = false;
             this._building.alpha = 0.5;
             this.toggleConstructionTween(true);
@@ -268,6 +286,7 @@ export class TileVisual extends Container {
             this._notProducing.visible = false;
             this._upgrade.visible = false;
             this._level.visible = false;
+            this._storagePercentage.visible = false;
             this._spinner.visible = false;
             this._building.alpha = 0.5;
             this.showTimeLeft(tileData, gameState);
@@ -279,6 +298,7 @@ export class TileVisual extends Container {
             this._upgrade.visible = true;
             this.toggleUpgradeTween(true);
             this._spinner.visible = false;
+            this._storagePercentage.visible = false;
             if (!isWorldOrNaturalWonder(this._tile.building.type)) {
                this._level.visible = true;
                this._level.text = getBuildingLevelLabel(this._tile.building);
@@ -296,6 +316,19 @@ export class TileVisual extends Container {
             if (!isWorldOrNaturalWonder(this._tile.building.type)) {
                this._level.visible = true;
                this._level.text = getBuildingLevelLabel(this._tile.building);
+            }
+
+            const options = getGameOptions();
+            if ( options.mapStoragePercentage === true ) {
+               const storage = getStorageFor(this._xy, this._gs);
+               if ( storage.total > 0 && Number.isFinite(storage.total) ) {
+                  const percentage = storage.used / storage.total;
+                  this._storagePercentage.visible = true;
+                  this._storagePercentage.text = formatPercent(percentage);
+               }
+            }
+            else {
+               this._storagePercentage.visible = false;
             }
 
             const reason = Tick.current.notProducingReasons.get(tileData.tile);

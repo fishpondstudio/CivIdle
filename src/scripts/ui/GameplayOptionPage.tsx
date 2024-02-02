@@ -14,6 +14,7 @@ import { L, t } from "../../../shared/utilities/i18n";
 import { useGameOptions } from "../Global";
 import { jsxMapOf } from "../utilities/Helper";
 import { ChangeSoundComponent } from "./ChangeSoundComponent";
+import { MapOptionsComponent } from "./MapOptionsComponent";
 import { MenuComponent } from "./MenuComponent";
 
 export function GameplayOptionPage(): React.ReactNode {
@@ -113,6 +114,10 @@ export function GameplayOptionPage(): React.ReactNode {
             <fieldset>
                <legend>{t(L.Sound)}</legend>
                <ChangeSoundComponent />
+            </fieldset>
+            <fieldset>
+               <legend>Map</legend>
+               <MapOptionsComponent />
             </fieldset>
          </div>
       </div>
