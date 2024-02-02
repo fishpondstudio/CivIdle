@@ -25,7 +25,7 @@ import { build } from "./Version.json";
 import { ChatPanel } from "./ui/ChatPanel";
 import { GlobalModal, GlobalToast } from "./ui/GlobalModal";
 import { ResourcePanel } from "./ui/ResourcePanel";
-import { Fonts } from "./visuals/Fonts";
+import { FallbackFont, Fonts } from "./visuals/Fonts";
 
 if (!import.meta.env.DEV) {
    Sentry.init({
@@ -104,10 +104,16 @@ export async function loadBundle() {
          { chars: BitmapFont.ASCII, resolution: 2 },
       ),
    );
+
    BitmapFont.from(
-      Fonts.Marcellus,
-      { fill: "#ffffff", fontSize: 64, fontFamily: Fonts.Marcellus },
-      { chars: BitmapFont.ASCII, padding: 2, resolution: 2 },
+      FallbackFont,
+      { fill: "#ffffff", fontSize: 64, fontFamily: "serif" },
+      {
+         chars: ["АаБбВвГгДдЕеËëЖжЗзИиЙйКкЛлМмНнОоПпРрСсТтУуФфХхЦцЧчШшЩщЪъЫыЬьЭэЮюЯя"].concat(
+            BitmapFont.ASCII.flat(),
+         ),
+         resolution: 2,
+      },
    );
 
    const textures: Record<string, Texture> = {};

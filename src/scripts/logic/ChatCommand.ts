@@ -1,4 +1,5 @@
 import randomColor from "randomcolor";
+import { isSpecialBuilding } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
 import { getGameOptions, getGameState } from "../../../shared/logic/GameStateLogic";
 import { AccountLevel } from "../../../shared/utilities/Database";
@@ -8,6 +9,7 @@ import {
    forEach,
    formatHM,
    formatNumber,
+   reduceOf,
    safeParseInt,
    sizeOf,
 } from "../../../shared/utilities/Helper";
@@ -47,10 +49,16 @@ export async function handleChatCommand(command: string): Promise<void> {
       case "randomcolor": {
          const colors = randomColor({
             luminosity: "light",
-            count: sizeOf(Config.Building) + sizeOf(Config.Resource),
+            count:
+               reduceOf(Config.Building, (prev, k) => prev + (isSpecialBuilding(k) ? 0 : 1), 0) +
+               sizeOf(Config.Resource),
          });
          forEach(Config.Building, (k, v) => {
-            getGameOptions().buildingColors[k] = colors.pop();
+            if (!isSpecialBuilding(k)) {
+               getGameOptions().buildingColors[k] = colors.pop();
+            } else {
+               delete getGameOptions().buildingColors[k];
+            }
          });
          forEach(Config.Resource, (k, v) => {
             getGameOptions().resourceColors[k] = colors.pop();
