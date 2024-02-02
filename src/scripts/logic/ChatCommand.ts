@@ -1,4 +1,5 @@
 import randomColor from "randomcolor";
+import { isSpecialBuilding } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
 import { getGameOptions, getGameState } from "../../../shared/logic/GameStateLogic";
 import { AccountLevel } from "../../../shared/utilities/Database";
@@ -8,6 +9,7 @@ import {
    forEach,
    formatHM,
    formatNumber,
+   reduceOf,
    safeParseInt,
    sizeOf,
 } from "../../../shared/utilities/Helper";
@@ -47,10 +49,16 @@ export async function handleChatCommand(command: string): Promise<void> {
       case "randomcolor": {
          const colors = randomColor({
             luminosity: "light",
-            count: sizeOf(Config.Building) + sizeOf(Config.Resource),
+            count:
+               reduceOf(Config.Building, (prev, k) => prev + (isSpecialBuilding(k) ? 0 : 1), 0) +
+               sizeOf(Config.Resource),
          });
          forEach(Config.Building, (k, v) => {
-            getGameOptions().buildingColors[k] = colors.pop();
+            if (!isSpecialBuilding(k)) {
+               getGameOptions().buildingColors[k] = colors.pop();
+            } else {
+               delete getGameOptions().buildingColors[k];
+            }
          });
          forEach(Config.Resource, (k, v) => {
             getGameOptions().resourceColors[k] = colors.pop();
@@ -78,8 +86,21 @@ export async function handleChatCommand(command: string): Promise<void> {
          if (!parts[1]) {
             throw new Error("Invalid command format");
          }
-         await client.makeMod(parts[1]);
-         addSystemMessage("Player mod has been changed");
+         await client.makeMod(parts[1], true);
+         addSystemMessage(`${parts[1]} is now a mod`);
+         break;
+      }
+      case "unmakemod": {
+         if (!parts[1]) {
+            throw new Error("Invalid command format");
+         }
+         await client.makeMod(parts[1], false);
+         addSystemMessage(`${parts[1]} is no longer a mod`);
+         break;
+      }
+      case "modlist": {
+         const result = await client.getMods();
+         addSystemMessage(`Current censors: ${result.join(", ")}`);
          break;
       }
       case "muteplayer": {

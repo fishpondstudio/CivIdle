@@ -14,7 +14,7 @@ import { ViewportScene, destroyAllChildren } from "../utilities/SceneManager";
 import { Singleton } from "../utilities/Singleton";
 import { Actions } from "../utilities/pixi-actions/Actions";
 import { Easing } from "../utilities/pixi-actions/Easing";
-import { Fonts } from "../visuals/Fonts";
+import { fontWithFallback } from "../visuals/Fonts";
 
 const BOX_WIDTH = 300;
 const BOX_HEIGHT = 100;
@@ -279,11 +279,14 @@ export class TechTreeScene extends ViewportScene {
       g.lineStyle({ ...g.line, color: oldColor });
       const bitmapText = parent.addChild(
          new BitmapText(title, {
-            fontName: Fonts.Marcellus,
+            fontName: fontWithFallback("Marcellus"),
             fontSize: 28,
             tint: color,
          }),
       );
+      while (bitmapText.width > rect.width - 20) {
+         bitmapText.fontSize--;
+      }
       bitmapText.anchor.x = 0.5;
       bitmapText.anchor.y = 0.5;
       bitmapText.x = rect.x + rect.width / 2;
@@ -293,7 +296,7 @@ export class TechTreeScene extends ViewportScene {
       if (description) {
          const bitmapText = parent.addChild(
             new BitmapText(description, {
-               fontName: Fonts.Marcellus,
+               fontName: fontWithFallback("Marcellus"),
                tint: color,
             }),
          );

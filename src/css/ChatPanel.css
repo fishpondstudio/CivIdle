@@ -43,6 +43,11 @@
    background: #efefef;
 }
 
+#chat-panel .chat-message-item.mentions-me {
+   background: #ffc;
+   font-weight: bold;
+}
+
 #chat-panel .chat-command-item {
    padding: 6px 8px;
    user-select: text;
