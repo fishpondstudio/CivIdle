@@ -228,11 +228,13 @@ function TransportationTab({ gameState }: IBuildingComponentProps): React.ReactN
    );
 }
 
+type SortByOptions = "name" | "amount" | "input" | "output";
+type SortOrder = "asc" | "desc";
+
 function ResourcesTab({ gameState }: IBuildingComponentProps): React.ReactNode {
-   type SortByOptions = "name" | "amount" | "input" | "output";
    const [showTheoreticalValue, setShowTheoreticalValue] = useState(true);
    const [sortBy, setSortBy] = useState<SortByOptions>("name");
-   const [sortOrder, setSortOrder] = useState<boolean>(true);
+   const [sortOrder, setSortOrder] = useState<SortOrder>("asc");
    const unlockedResourcesList: PartialSet<Resource> = unlockedResources(gameState);
    const resourceAmounts: Partial<Record<keyof ResourceDefinitions, number>> = {};
    const inputs: PartialTabulate<Resource> = {};
@@ -252,16 +254,15 @@ function ResourcesTab({ gameState }: IBuildingComponentProps): React.ReactNode {
       forEach(output, (res, amount) => safeAdd(outputs, res, amount));
    });
    keysOf(unlockedResourcesList).map((res) => {
-      resourceAmounts[res] = Tick.current.resourcesByTile[res]?.reduce(
-         (prev, curr) =>
-            prev +
-            (gameState.tiles.get(curr)?.building?.resources?.[res] ?? 0),
-         0,
-      ) ?? 0;
+      resourceAmounts[res] =
+         Tick.current.resourcesByTile[res]?.reduce(
+            (prev, curr) => prev + (gameState.tiles.get(curr)?.building?.resources?.[res] ?? 0),
+            0,
+         ) ?? 0;
    });
 
    const handleSortClick = (sortBy: SortByOptions) => {
-      setSortOrder((prevSortOrder) => !prevSortOrder);
+      setSortOrder((prev) => (prev === "asc" ? "desc" : "asc"));
       setSortBy(sortBy);
    };
 
@@ -292,47 +293,68 @@ function ResourcesTab({ gameState }: IBuildingComponentProps): React.ReactNode {
             <table>
                <thead>
                   <tr>
-                     <th className={sortBy === "name" ? "row" : ""} onClick={() => handleSortClick("name")}>
-                        {sortBy === "name" && (
-                           <div className="f1 m-icon small">{sortOrder ? "arrow_upward" : "arrow_downward"}</div>
+                     <th onClick={() => handleSortClick("name")}>
+                        {sortBy === "name" ? (
+                           <div className="f1 m-icon small">
+                              {sortOrder === "asc" ? "arrow_upward" : "arrow_downward"}
+                           </div>
+                        ) : (
+                           <div className="f1" />
                         )}
                      </th>
-                     <th className={sortBy === "amount" ? "row" : "right"} onClick={() => handleSortClick("amount")}>
-                        {sortBy === "amount" && (
-                           <div className="f1 m-icon small">{sortOrder ? "arrow_upward" : "arrow_downward"}</div>
-                        )}
-                        <div>{t(L.ResourceAmount)}</div>
+                     <th onClick={() => handleSortClick("amount")}>
+                        <div className="row">
+                           {sortBy === "amount" ? (
+                              <div className="f1 m-icon small">
+                                 {sortOrder === "asc" ? "arrow_upward" : "arrow_downward"}
+                              </div>
+                           ) : (
+                              <div className="f1" />
+                           )}
+                           <div>{t(L.ResourceAmount)}</div>
+                        </div>
                      </th>
-                     <th className={sortBy === "output" ? "row" : "right"} onClick={() => handleSortClick("output")}>
-                        {sortBy === "output" && (
-                           <div className="f1 m-icon small">{sortOrder ? "arrow_upward" : "arrow_downward"}</div>
-                        )}
-                        <div className="m-icon small">output</div>
+                     <th onClick={() => handleSortClick("output")}>
+                        <div className="row">
+                           {sortBy === "output" ? (
+                              <div className="f1 m-icon small">
+                                 {sortOrder === "asc" ? "arrow_upward" : "arrow_downward"}
+                              </div>
+                           ) : (
+                              <div className="f1" />
+                           )}
+                           <div className="m-icon small">output</div>
+                        </div>
                      </th>
-                     <th className={sortBy === "input" ? "row" : "right"} onClick={() => handleSortClick("input")}>
-                        {sortBy === "input" && (
-                           <div className="f1 m-icon small">{sortOrder ? "arrow_upward" : "arrow_downward"}</div>
-                        )}                        
-                        <div className="m-icon small">exit_to_app</div>
+                     <th onClick={() => handleSortClick("input")}>
+                        <div className="row">
+                           {sortBy === "input" ? (
+                              <div className="f1 m-icon small">
+                                 {sortOrder === "asc" ? "arrow_upward" : "arrow_downward"}
+                              </div>
+                           ) : (
+                              <div className="f1" />
+                           )}
+                           <div className="m-icon small">exit_to_app</div>
+                        </div>
                      </th>
                   </tr>
                </thead>
                <tbody>
                   {keysOf(unlockedResourcesList)
                      .sort((a, b) => {
-                        const aIdx = sortOrder === true ? a : b;
-                        const bIdx = sortOrder === true ? b : a;
-
-                        if ( sortBy === "amount" ) {
+                        const aIdx = sortOrder === "asc" ? a : b;
+                        const bIdx = sortOrder === "asc" ? b : a;
+                        if (sortBy === "amount") {
                            return (resourceAmounts[aIdx] ?? 0) - (resourceAmounts[bIdx] ?? 0);
                         }
-                        else if ( sortBy === "input" ) {
+                        if (sortBy === "input") {
                            return (inputs[aIdx] ?? 0) - (inputs[bIdx] ?? 0);
                         }
-                        else if ( sortBy === "output" ) {
+                        if (sortBy === "output") {
                            return (outputs[aIdx] ?? 0) - (outputs[bIdx] ?? 0);
                         }
-                        return Config.Resource[aIdx].name().localeCompare(Config.Resource[bIdx].name())
+                        return Config.Resource[aIdx].name().localeCompare(Config.Resource[bIdx].name());
                      })
                      .map((res) => {
                         const r = Config.Resource[res];
