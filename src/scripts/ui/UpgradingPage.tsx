@@ -12,6 +12,8 @@ import { L, t } from "../../../shared/utilities/i18n";
 import { useGameState } from "../Global";
 import { BuildingConstructionProgressComponent } from "./BuildingConstructionProgressComponent";
 import { MenuComponent } from "./MenuComponent";
+import { useShortcut } from "../utilities/Hook";
+import { desiredLevelToNext10s } from "../../../shared/logic/BuildingLogic";
 
 export function UpgradingPage({ tile }: { tile: ITileData }): React.ReactNode {
    const building = tile.building;
@@ -21,6 +23,14 @@ export function UpgradingPage({ tile }: { tile: ITileData }): React.ReactNode {
    const gs = useGameState();
    const definition = Config.Building[building.type];
    const canDecreaseDesiredLevel = building.desiredLevel > building.level + 1;
+
+   const increaseDesiredLevel = (level: number) => {
+      building.desiredLevel = building.desiredLevel + level;
+      notifyGameStateUpdate();
+   };   
+   useShortcut("BuildingPageUpgradeX1", () => increaseDesiredLevel(1), [tile]);
+   useShortcut("BuildingPageUpgradeX5", () => increaseDesiredLevel(5), [tile]);
+   useShortcut("BuildingPageUpgradeToNext10", () => increaseDesiredLevel(desiredLevelToNext10s(building)), [tile]);   
    return (
       <div className="window">
          <div className="title-bar">

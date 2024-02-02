@@ -513,6 +513,11 @@ export function levelToNext10s(b: IBuildingData) {
    return l > 0 ? l : 10;
 }
 
+export function desiredLevelToNext10s(b: IBuildingData) {
+   const l = Math.ceil(b.desiredLevel / 10) * 10 - b.desiredLevel;
+   return l > 0 ? l : 10;
+}
+
 export function getBuildingUpgradeLevels(b: IBuildingData): number[] {
    const next10s = levelToNext10s(b);
    const levels = [1, 5];
