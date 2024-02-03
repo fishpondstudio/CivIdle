@@ -1,6 +1,6 @@
 import { getGameOptions, getGameState } from "../../../shared/logic/GameStateLogic";
-import { fossilDeltaCreate } from "../../../shared/utilities/FossilDelta";
-import { wyhash } from "../../../shared/utilities/wyhash";
+import { fossilDeltaCreate } from "../../../shared/thirdparty/FossilDelta";
+import { wyhash } from "../../../shared/thirdparty/wyhash";
 import { client } from "../rpc/RPCClient";
 import { compress } from "../workers/Compress";
 

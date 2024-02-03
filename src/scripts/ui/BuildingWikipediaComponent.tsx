@@ -44,7 +44,7 @@ export function BuildingWikipediaComponent({ gameState, xy }: IBuildingComponent
          }
          controller.abort();
       };
-   }, [type]);
+   }, [type, wikipedia]);
    return (
       <iframe
          ref={iframeEl}

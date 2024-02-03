@@ -12,7 +12,7 @@ import {
 } from "../../../shared/logic/GameStateLogic";
 import { getGrid, getSpecialBuildings } from "../../../shared/logic/IntraTickCache";
 import { makeBuilding } from "../../../shared/logic/Tile";
-import { clamp, lerp, lookAt, pointToTile, tileToPoint, type Tile } from "../../../shared/utilities/Helper";
+import { type Tile, clamp, lerp, lookAt, pointToTile, tileToPoint } from "../../../shared/utilities/Helper";
 import { Vector2, v2 } from "../../../shared/utilities/Vector2";
 import { TilePage } from "../ui/TilePage";
 import { ViewportScene } from "../utilities/SceneManager";

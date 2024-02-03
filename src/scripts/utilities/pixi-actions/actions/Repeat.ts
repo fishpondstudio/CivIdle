@@ -16,10 +16,9 @@ export default class Repeat extends Action {
          this.n++;
          if (this.times >= 0 && this.n >= this.times) {
             return true;
-         } else {
-            // reset delta!
-            this.reset();
          }
+         // reset delta!
+         this.reset();
       }
       return false;
    }

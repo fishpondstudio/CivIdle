@@ -33,7 +33,7 @@ export function WarehouseBuildingBody({ gameState, xy }: IBuildingComponentProps
          ) : null}
 
          <ResourceImportComponent gameState={gameState} xy={xy} />
-         <BuildingStorageComponent gameState={gameState} xy={xy} />         
+         <BuildingStorageComponent gameState={gameState} xy={xy} />
          {!hasFeature(GameFeature.WarehouseUpgrade, gameState) ? null : (
             <fieldset>
                <legend>{t(L.WarehouseSettings)}</legend>

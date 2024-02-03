@@ -24,7 +24,10 @@ export class Vector2 {
     * @param y - The component of the y-axis.
     * @returns The vector.
     */
-   public constructor(public x: number, public y: number) {}
+   public constructor(
+      public x: number,
+      public y: number,
+   ) {}
 
    /**
     * Add another vector to the vector.

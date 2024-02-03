@@ -1,5 +1,5 @@
-import { useEffect, useState, type DependencyList } from "react";
-import { getShortcuts, type Shortcut } from "../../../shared/logic/Shortcut";
+import { type DependencyList, useEffect, useState } from "react";
+import { type Shortcut, getShortcuts } from "../../../shared/logic/Shortcut";
 import type { TypedEvent } from "../../../shared/utilities/TypedEvent";
 
 export function makeObservableHook<T>(event: TypedEvent<T>, getter: () => T) {

@@ -5,7 +5,10 @@ import { Actions } from "./pixi-actions/Actions";
 
 export class GameTicker {
    private _interval = 0;
-   constructor(private _ticker: Ticker, private _gameState: GameState) {}
+   constructor(
+      private _ticker: Ticker,
+      private _gameState: GameState,
+   ) {}
 
    public start(): void {
       this._ticker.add(() => {

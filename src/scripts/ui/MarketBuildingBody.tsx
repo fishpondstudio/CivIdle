@@ -39,8 +39,7 @@ export function MarketBuildingBody({ gameState, xy }: IBuildingComponentProps): 
                <thead>
                   <tr>
                      <th>
-                        <FormatNumber value={capacity} />
-                        x
+                        <FormatNumber value={capacity} />x
                      </th>
                      <th className="right">{t(L.MarketYouGet)}</th>
                      <th className="right">{t(L.Storage)}</th>

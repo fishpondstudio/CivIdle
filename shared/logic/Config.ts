@@ -1,7 +1,7 @@
-import { BuildingDefinitions, type Building } from "../definitions/BuildingDefinitions";
+import { type Building, BuildingDefinitions } from "../definitions/BuildingDefinitions";
 import { CityDefinitions } from "../definitions/CityDefinitions";
 import { GreatPersonDefinitions } from "../definitions/GreatPersonDefinitions";
-import { ResourceDefinitions, type Resource } from "../definitions/ResourceDefinitions";
+import { type Resource, ResourceDefinitions } from "../definitions/ResourceDefinitions";
 import { TechAgeDefinitions, TechDefinitions } from "../definitions/TechDefinitions";
 import { deepFreeze } from "../utilities/Helper";
 import type { PartialTabulate } from "../utilities/TypeDefinitions";

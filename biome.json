@@ -14,7 +14,8 @@
             "noDelete": "warn"
          },
          "suspicious": {
-            "noExplicitAny": "warn"
+            "noExplicitAny": "warn",
+            "noArrayIndexKey": "warn"
          },
          "style": {
             "useSelfClosingElements": "off",
@@ -30,9 +31,10 @@
    "formatter": {
       "lineWidth": 110,
       "indentStyle": "space",
-      "indentWidth": 3
+      "indentWidth": 3,
+      "lineEnding": "crlf"
    },
    "files": {
-      "ignore": ["**/*.js", "**/*.d.ts"]
+      "ignore": ["**/*.js", "**/*.d.ts", "shared/thirdparty/*"]
    }
 }

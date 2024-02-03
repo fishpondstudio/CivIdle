@@ -1,6 +1,6 @@
 import type { Building } from "../definitions/BuildingDefinitions";
 import type { Resource } from "../definitions/ResourceDefinitions";
-import { forEach, type Tile } from "../utilities/Helper";
+import { type Tile, forEach } from "../utilities/Helper";
 import type { RequireAtLeastOne } from "../utilities/Type";
 import type { PartialSet, PartialTabulate } from "../utilities/TypeDefinitions";
 import { TypedEvent } from "../utilities/TypedEvent";

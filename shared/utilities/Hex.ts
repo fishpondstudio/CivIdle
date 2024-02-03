@@ -1,11 +1,18 @@
 // Generated code -- CC0 -- No Rights Reserved -- http://www.redblobgames.com/grids/hexagons/
 
 export class Point {
-   constructor(public x: number, public y: number) {}
+   constructor(
+      public x: number,
+      public y: number,
+   ) {}
 }
 
 export class Hex {
-   constructor(public q: number, public r: number, public s: number) {
+   constructor(
+      public q: number,
+      public r: number,
+      public s: number,
+   ) {
       if (Math.round(q + r + s) !== 0) throw "q + r + s must be 0";
    }
 
@@ -117,7 +124,10 @@ export class Hex {
 }
 
 export class OffsetCoord {
-   constructor(public col: number, public row: number) {}
+   constructor(
+      public col: number,
+      public row: number,
+   ) {}
    public static EVEN = 1;
    public static ODD = -1;
 
@@ -173,7 +183,10 @@ export class OffsetCoord {
 }
 
 export class DoubledCoord {
-   constructor(public col: number, public row: number) {}
+   constructor(
+      public col: number,
+      public row: number,
+   ) {}
 
    public static qdoubledFromCube(h: Hex): DoubledCoord {
       const col: number = h.q;
@@ -217,7 +230,11 @@ export class Orientation {
 }
 
 export class Layout {
-   constructor(public orientation: Orientation, public size: Point, public origin: Point) {}
+   constructor(
+      public orientation: Orientation,
+      public size: Point,
+      public origin: Point,
+   ) {}
    public static pointy: Orientation = new Orientation(
       Math.sqrt(3.0),
       Math.sqrt(3.0) / 2.0,

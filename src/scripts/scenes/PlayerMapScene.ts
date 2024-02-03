@@ -3,7 +3,7 @@ import type { FederatedPointerEvent, IPointData } from "pixi.js";
 import { BitmapText, Container, LINE_CAP, LINE_JOIN, Sprite } from "pixi.js";
 import WorldMap from "../../../shared/definitions/WorldMap.json";
 import { getGameOptions } from "../../../shared/logic/GameStateLogic";
-import { MAP_MAX_X, MAP_MAX_Y, type IClientMapEntry } from "../../../shared/utilities/Database";
+import { type IClientMapEntry, MAP_MAX_X, MAP_MAX_Y } from "../../../shared/utilities/Database";
 import {
    drawDashedLine,
    forEach,

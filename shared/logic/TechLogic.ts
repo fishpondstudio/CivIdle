@@ -4,13 +4,13 @@ import type { GreatPerson } from "../definitions/GreatPersonDefinitions";
 import type { Deposit, Resource } from "../definitions/ResourceDefinitions";
 import type { Tech, TechAge } from "../definitions/TechDefinitions";
 import {
+   type Tile,
    filterOf,
    forEach,
    isEmpty,
    isNullOrUndefined,
    keysOf,
    shuffle,
-   type Tile,
 } from "../utilities/Helper";
 import { TypedEvent } from "../utilities/TypedEvent";
 import { Config } from "./Config";

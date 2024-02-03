@@ -11,7 +11,7 @@ export default class Sequence extends Action {
 
    tick(delta: number): boolean {
       // If empty, we are done!
-      if (this.index == this.actions.length) return true;
+      if (this.index === this.actions.length) return true;
 
       // Otherwise, tick the first element
       if (this.actions[this.index].tick(delta)) {

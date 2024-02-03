@@ -10,7 +10,6 @@ import type { IBuildingComponentProps } from "./BuildingPage";
 import { ChangeResourceImportModal } from "./ChangeResourceImportModal";
 import { showModal } from "./GlobalModal";
 import { FormatNumber } from "./HelperComponents";
-import { ProgressBarComponent } from "./ProgressBarComponent";
 
 export function ResourceImportComponent({ gameState, xy }: IBuildingComponentProps): React.ReactNode {
    const building = gameState.tiles.get(xy)?.building as IResourceImportBuildingData;

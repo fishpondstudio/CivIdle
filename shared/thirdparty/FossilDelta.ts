@@ -62,7 +62,12 @@ const zValue = [
 ];
 
 class RollingHash {
-   constructor(private a = 0, private b = 0, private i = 0, private z = new Array(NHASH)) {}
+   constructor(
+      private a = 0,
+      private b = 0,
+      private i = 0,
+      private z = new Array(NHASH),
+   ) {}
 
    init(z: Uint8Array, pos: number) {
       let a = 0;
@@ -94,7 +99,10 @@ class RollingHash {
 }
 
 class Reader {
-   constructor(public a: Uint8Array, public pos = 0) {}
+   constructor(
+      public a: Uint8Array,
+      public pos = 0,
+   ) {}
    haveBytes() {
       return this.pos < this.a.length;
    }

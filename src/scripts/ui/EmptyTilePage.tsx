@@ -199,8 +199,7 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
                                     {jsxMapOf(buildCost, (res, amount) => {
                                        return (
                                           <div className="nowrap" key={res}>
-                                             {Config.Resource[res].name()} x
-                                             {formatNumber(amount)}
+                                             {Config.Resource[res].name()} x{formatNumber(amount)}
                                           </div>
                                        );
                                     })}
