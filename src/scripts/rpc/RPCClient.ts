@@ -1,8 +1,8 @@
 import { decode, encode } from "@msgpack/msgpack";
-import { RpcError, removeTrailingUndefs, rpcClient } from "typed-rpc";
 import type { ServerImpl } from "../../../server/src/Server";
 import { getGameOptions } from "../../../shared/logic/GameStateLogic";
 import type { IClientTrade } from "../../../shared/logic/PlayerTradeLogic";
+import { RpcError, removeTrailingUndefs, rpcClient } from "../../../shared/thirdparty/typedrpc/client";
 import type {
    AllMessageTypes,
    IChat,

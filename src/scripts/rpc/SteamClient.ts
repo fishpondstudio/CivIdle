@@ -1,5 +1,5 @@
-import { rpcClient } from "typed-rpc";
 import type { IPCService } from "../../../electron/src/IPCService";
+import { rpcClient } from "../../../shared/thirdparty/typedrpc/client";
 
 export const STEAM_APP_ID = 2181940;
 

@@ -50,9 +50,6 @@ dependencies:
   react-modal:
     specifier: ^3.15.1
     version: 3.16.1(react-dom@18.2.0)(react@18.2.0)
-  typed-rpc:
-    specifier: github:insraq/typed-rpc
-    version: github.com/insraq/typed-rpc/c3bb48a7f0c04d96f4da2d1c6cbef2b60ac578c2
   xp.css:
     specifier: ^0.3.0
     version: 0.3.0
@@ -4981,10 +4978,3 @@ packages:
       spritesheet-templates: 10.5.2
       spritesmith: 3.4.1
     dev: true
-
-  github.com/insraq/typed-rpc/c3bb48a7f0c04d96f4da2d1c6cbef2b60ac578c2:
-    resolution: {tarball: https://codeload.github.com/insraq/typed-rpc/tar.gz/c3bb48a7f0c04d96f4da2d1c6cbef2b60ac578c2}
-    name: typed-rpc
-    version: 3.0.0
-    requiresBuild: true
-    dev: false
