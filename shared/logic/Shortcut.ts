@@ -23,6 +23,7 @@ export const ShortcutActions = {
       name: () => t(L.ShortcutBuildingPageUpgradeToNext10),
    },
    TechPageGoBackToCity: { scope: "TechPage", name: () => t(L.ShortcutTechPageGoBackToCity) },
+   TechPageUnlockTech: { scope: "TechPage", name: () => t(L.ShortcutTechPageUnlockTech) },
    EmptyTilePageBuildLastBuilding: {
       scope: "EmptyTilePage",
       name: () => t(L.EmptyTilePageBuildLastBuilding),
