@@ -3,11 +3,11 @@ import { useGameOptions } from "../Global";
 import { playClick } from "../visuals/Sound";
 
 export function MapOptionsComponent(): React.ReactNode {
-    const options = useGameOptions();
-    return (
-        <div className="row">
-            <div className="f1">Storage Percentages</div>
-            <div
+   const options = useGameOptions();
+   return (
+      <div className="row">
+         <div className="f1">Storage Percentages</div>
+         <div
             onClick={() => {
                options.mapStoragePercentage = !options.mapStoragePercentage;
                playClick();
@@ -20,7 +20,7 @@ export function MapOptionsComponent(): React.ReactNode {
             ) : (
                <div className="m-icon text-grey">toggle_off</div>
             )}
-         </div>            
-        </div>
-    );
+         </div>
+      </div>
+   );
 }
