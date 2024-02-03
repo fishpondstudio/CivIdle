@@ -25,15 +25,15 @@ import {
    sizeOf,
 } from "../../../shared/utilities/Helper";
 import { v2 } from "../../../shared/utilities/Vector2";
-import { getBuildingTexture, getNotProducingTexture, getTileTexture } from "../logic/VisualLogic";
+import { L, t } from "../../../shared/utilities/i18n";
 import { Singleton } from "../utilities/Singleton";
 import { Actions } from "../utilities/pixi-actions/Actions";
 import { Easing } from "../utilities/pixi-actions/Easing";
 import type { Action } from "../utilities/pixi-actions/actions/Action";
 import { Fonts } from "../visuals/Fonts";
-import type { WorldScene } from "./WorldScene";
 import { useGameOptions } from "../Global";
-import { L, t } from "../../../shared/utilities/i18n";
+import { getBuildingTexture, getNotProducingTexture, getTileTexture } from "../logic/VisualLogic";
+import type { WorldScene } from "./WorldScene";
 
 export class TileVisual extends Container {
    private readonly _world: WorldScene;
@@ -137,7 +137,7 @@ export class TileVisual extends Container {
       this._storagePercentage.anchor.set(0.5, 0.5);
       this._storagePercentage.position.set(0, 30);
       this._storagePercentage.visible = false;
-      this._storagePercentage.cullable = true;      
+      this._storagePercentage.cullable = true;
 
       this._timeLeft = this.addChild(
          new BitmapText("", {
@@ -320,15 +320,16 @@ export class TileVisual extends Container {
             }
 
             const options = getGameOptions();
-            if ( options.mapStoragePercentage === true ) {
+            if (options.mapStoragePercentage === true) {
                const storage = getStorageFor(this._xy, this._gs);
-               if ( storage.total > 0 && Number.isFinite(storage.total) ) {
+               if (storage.total > 0 && Number.isFinite(storage.total)) {
                   const percentage = storage.used / storage.total;
                   this._storagePercentage.visible = true;
-                  this._storagePercentage.text = t(L.MapTileStoragePercentage, { storagePercentage: formatPercent(percentage) })
+                  this._storagePercentage.text = t(L.MapTileStoragePercentage, { 
+                     storagePercentage: formatPercent(percentage)
+                  });
                }
-            }
-            else {
+            } else {
                this._storagePercentage.visible = false;
             }
 
