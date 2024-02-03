@@ -33,6 +33,7 @@ import type { Action } from "../utilities/pixi-actions/actions/Action";
 import { Fonts } from "../visuals/Fonts";
 import type { WorldScene } from "./WorldScene";
 import { useGameOptions } from "../Global";
+import { L, t } from "../../../shared/utilities/i18n";
 
 export class TileVisual extends Container {
    private readonly _world: WorldScene;
@@ -324,7 +325,7 @@ export class TileVisual extends Container {
                if ( storage.total > 0 && Number.isFinite(storage.total) ) {
                   const percentage = storage.used / storage.total;
                   this._storagePercentage.visible = true;
-                  this._storagePercentage.text = formatPercent(percentage);
+                  this._storagePercentage.text = t(L.MapTileStoragePercentage, { storagePercentage: formatPercent(percentage) })
                }
             }
             else {

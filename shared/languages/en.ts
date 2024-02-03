@@ -842,4 +842,5 @@ export const EN = {
    AccountActiveTrade: "Active Trade",
    AccountTradeValuePerMinute: "Trade Value Per Minute",
    AccountTradePriceRange: "Trade Price Range",
+   MapTileStoragePercentage: "%{storagePercentage}"
 };
