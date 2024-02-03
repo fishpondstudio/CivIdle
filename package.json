@@ -15,7 +15,7 @@
       "font": "node ./build/GenerateBitmapFont.js",
       "release": "node ./build/ReleaseElectron.js",
       "translate": "node ./build/Translate.js",
-      "ci": "biome ci ./src/scripts/ ./shared/ ./server/ --diagnostic-level=error --config-path=./"
+      "ci": "biome ci ./src/scripts/ ./shared/ ./server/ --diagnostic-level=error --config-path=./ --line-ending=crlf"
    },
    "dependencies": {
       "@capacitor/android": "^5.4.2",
