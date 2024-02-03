@@ -1,4 +1,4 @@
-import WorldMap from "../../../server/WorldMap.json";
+import WorldMap from "../../../shared/definitions/WorldMap.json";
 import { usePlayerMap } from "../rpc/RPCClient";
 import { getMyMapXy } from "../scenes/PathFinder";
 import { MyTilePage } from "./MyTilePage";

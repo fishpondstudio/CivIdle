@@ -4,6 +4,7 @@ import type { Resource } from "../definitions/ResourceDefinitions";
 import {
    HOUR,
    IPointData,
+   type Tile,
    clamp,
    filterInPlace,
    filterOf,
@@ -18,7 +19,6 @@ import {
    shuffle,
    sizeOf,
    tileToPoint,
-   type Tile,
 } from "../utilities/Helper";
 import { srand } from "../utilities/Random";
 import { TypedEvent } from "../utilities/TypedEvent";

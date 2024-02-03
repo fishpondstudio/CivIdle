@@ -1,5 +1,5 @@
 {
-   "$schema": "https://biomejs.dev/schemas/1.4.1/schema.json",
+   "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
    "organizeImports": {
       "enabled": true
    },
@@ -7,17 +7,33 @@
       "enabled": true,
       "rules": {
          "recommended": true,
-         "a11y": { "all": false },
-         "performance": { "noDelete": "warn" },
-         "suspicious": { "noExplicitAny": "warn" },
+         "a11y": {
+            "all": false
+         },
+         "performance": {
+            "noDelete": "warn"
+         },
+         "suspicious": {
+            "noExplicitAny": "warn",
+            "noArrayIndexKey": "warn"
+         },
          "style": {
             "useSelfClosingElements": "off",
             "noNonNullAssertion": "warn",
             "useExponentiationOperator": "warn",
             "noParameterAssign": "warn"
          },
-         "complexity": { "noForEach": "off" }
+         "complexity": {
+            "noForEach": "off"
+         }
       }
    },
-   "formatter": { "lineWidth": 110, "indentStyle": "space", "indentWidth": 3 }
+   "formatter": {
+      "lineWidth": 110,
+      "indentStyle": "space",
+      "indentWidth": 3
+   },
+   "files": {
+      "ignore": ["**/*.js", "**/*.d.ts", "shared/thirdparty/*"]
+   }
 }

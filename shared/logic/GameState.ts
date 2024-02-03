@@ -7,7 +7,7 @@ import type { Tech } from "../definitions/TechDefinitions";
 import { EN } from "../languages/en";
 import { RU } from "../languages/ru";
 import type { ChatChannel } from "../utilities/Database";
-import { IPointData, uuid4, type Tile } from "../utilities/Helper";
+import { IPointData, type Tile, uuid4 } from "../utilities/Helper";
 import type { PartialSet, PartialTabulate } from "../utilities/TypeDefinitions";
 import { L, t } from "../utilities/i18n";
 import { getGameOptions, notifyGameOptionsUpdate } from "./GameStateLogic";

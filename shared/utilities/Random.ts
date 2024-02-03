@@ -1,5 +1,3 @@
-/* eslint-disable */
-
 export function sfc32(a: number, b: number, c: number, d: number) {
    return () => {
       a |= 0;
@@ -21,9 +19,12 @@ export function xmur3(str: string) {
    let i: number;
    let h: number;
    for (i = 0, h = 1779033703 ^ str.length; i < str.length; i++)
+      // biome-ignore lint/style/noCommaOperator:
       (h = Math.imul(h ^ str.charCodeAt(i), 3432918353)), (h = (h << 13) | (h >>> 19));
    return () => {
+      // biome-ignore lint/style/noCommaOperator:
       (h = Math.imul(h ^ (h >>> 16), 2246822507)), (h = Math.imul(h ^ (h >>> 13), 3266489909));
+      // biome-ignore lint/suspicious/noAssignInExpressions:
       return (h ^= h >>> 16) >>> 0;
    };
 }

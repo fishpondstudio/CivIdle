@@ -2,6 +2,7 @@
    "name": "CivIdle",
    "private": true,
    "version": "0.0.0",
+   "packageManager": "pnpm@8.14.2",
    "scripts": {
       "dev": "vite",
       "watch": "tsc --build --incremental --watch --force tsconfig.json",
@@ -13,7 +14,8 @@
       "test": "vitest",
       "font": "node ./build/GenerateBitmapFont.js",
       "release": "node ./build/ReleaseElectron.js",
-      "translate": "node ./build/Translate.js"
+      "translate": "node ./build/Translate.js",
+      "ci": "biome ci ./src/scripts/ ./shared/ ./server/ --diagnostic-level=error --config-path=./"
    },
    "dependencies": {
       "@capacitor/android": "^5.4.2",
@@ -31,12 +33,11 @@
       "react": "^18.2.0",
       "react-dom": "^18.2.0",
       "react-modal": "^3.15.1",
-      "typed-rpc": "github:insraq/typed-rpc",
       "xp.css": "^0.3.0"
    },
    "devDependencies": {
       "7zip-bin": "^5.2.0",
-      "@biomejs/biome": "1.4.1",
+      "@biomejs/biome": "1.5.3",
       "@capacitor/cli": "^5.4.2",
       "@types/gaze": "^1.1.2",
       "@types/node": "^18.7.23",

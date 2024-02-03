@@ -1,6 +1,6 @@
 import classNames from "classnames";
 import { useState } from "react";
-import type { Resource } from "../../../shared/definitions/ResourceDefinitions";
+import type { Resource, ResourceDefinitions } from "../../../shared/definitions/ResourceDefinitions";
 import { IOCalculation, getElectrificationStatus } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
 import { GameFeature, hasFeature } from "../../../shared/logic/FeatureLogic";
@@ -8,7 +8,7 @@ import { getBuildingIO, unlockedResources } from "../../../shared/logic/IntraTic
 import { Tick } from "../../../shared/logic/TickLogic";
 import type { IBuildingData } from "../../../shared/logic/Tile";
 import { forEach, formatPercent, keysOf, mReduceOf, safeAdd } from "../../../shared/utilities/Helper";
-import type { PartialTabulate } from "../../../shared/utilities/TypeDefinitions";
+import type { PartialSet, PartialTabulate } from "../../../shared/utilities/TypeDefinitions";
 import { L, t } from "../../../shared/utilities/i18n";
 import { WorldScene } from "../scenes/WorldScene";
 import { jsxMMapOf } from "../utilities/Helper";
@@ -228,8 +228,15 @@ function TransportationTab({ gameState }: IBuildingComponentProps): React.ReactN
    );
 }
 
+type SortByOptions = "name" | "amount" | "input" | "output";
+type SortOrder = "asc" | "desc";
+
 function ResourcesTab({ gameState }: IBuildingComponentProps): React.ReactNode {
    const [showTheoreticalValue, setShowTheoreticalValue] = useState(true);
+   const [sortBy, setSortBy] = useState<SortByOptions>("name");
+   const [sortOrder, setSortOrder] = useState<SortOrder>("asc");
+   const unlockedResourcesList: PartialSet<Resource> = unlockedResources(gameState);
+   const resourceAmounts: Partial<Record<keyof ResourceDefinitions, number>> = {};
    const inputs: PartialTabulate<Resource> = {};
    const outputs: PartialTabulate<Resource> = {};
    gameState.tiles.forEach((tile, xy) => {
@@ -246,6 +253,19 @@ function ResourcesTab({ gameState }: IBuildingComponentProps): React.ReactNode {
       forEach(input, (res, amount) => safeAdd(inputs, res, amount));
       forEach(output, (res, amount) => safeAdd(outputs, res, amount));
    });
+   keysOf(unlockedResourcesList).map((res) => {
+      resourceAmounts[res] =
+         Tick.current.resourcesByTile[res]?.reduce(
+            (prev, curr) => prev + (gameState.tiles.get(curr)?.building?.resources?.[res] ?? 0),
+            0,
+         ) ?? 0;
+   });
+
+   const handleSortClick = (sortBy: SortByOptions) => {
+      setSortOrder((prev) => (prev === "asc" ? "desc" : "asc"));
+      setSortBy(sortBy);
+   };
+
    return (
       <article role="tabpanel" className="f1 column" style={{ padding: "8px", overflow: "auto" }}>
          <fieldset>
@@ -273,19 +293,69 @@ function ResourcesTab({ gameState }: IBuildingComponentProps): React.ReactNode {
             <table>
                <thead>
                   <tr>
-                     <th></th>
-                     <th className="right">{t(L.ResourceAmount)}</th>
-                     <th className="right">
-                        <div className="m-icon small">output</div>
+                     <th onClick={() => handleSortClick("name")}>
+                        {sortBy === "name" ? (
+                           <div className="f1 m-icon small">
+                              {sortOrder === "asc" ? "arrow_upward" : "arrow_downward"}
+                           </div>
+                        ) : (
+                           <div className="f1" />
+                        )}
                      </th>
-                     <th className="right">
-                        <div className="m-icon small">exit_to_app</div>
+                     <th onClick={() => handleSortClick("amount")}>
+                        <div className="row">
+                           {sortBy === "amount" ? (
+                              <div className="f1 m-icon small">
+                                 {sortOrder === "asc" ? "arrow_upward" : "arrow_downward"}
+                              </div>
+                           ) : (
+                              <div className="f1" />
+                           )}
+                           <div>{t(L.ResourceAmount)}</div>
+                        </div>
+                     </th>
+                     <th onClick={() => handleSortClick("output")}>
+                        <div className="row">
+                           {sortBy === "output" ? (
+                              <div className="f1 m-icon small">
+                                 {sortOrder === "asc" ? "arrow_upward" : "arrow_downward"}
+                              </div>
+                           ) : (
+                              <div className="f1" />
+                           )}
+                           <div className="m-icon small">output</div>
+                        </div>
+                     </th>
+                     <th onClick={() => handleSortClick("input")}>
+                        <div className="row">
+                           {sortBy === "input" ? (
+                              <div className="f1 m-icon small">
+                                 {sortOrder === "asc" ? "arrow_upward" : "arrow_downward"}
+                              </div>
+                           ) : (
+                              <div className="f1" />
+                           )}
+                           <div className="m-icon small">exit_to_app</div>
+                        </div>
                      </th>
                   </tr>
                </thead>
                <tbody>
-                  {keysOf(unlockedResources(gameState))
-                     .sort((a, b) => Config.Resource[a].name().localeCompare(Config.Resource[b].name()))
+                  {keysOf(unlockedResourcesList)
+                     .sort((a, b) => {
+                        const aIdx = sortOrder === "asc" ? a : b;
+                        const bIdx = sortOrder === "asc" ? b : a;
+                        if (sortBy === "amount") {
+                           return (resourceAmounts[aIdx] ?? 0) - (resourceAmounts[bIdx] ?? 0);
+                        }
+                        if (sortBy === "input") {
+                           return (inputs[aIdx] ?? 0) - (inputs[bIdx] ?? 0);
+                        }
+                        if (sortBy === "output") {
+                           return (outputs[aIdx] ?? 0) - (outputs[bIdx] ?? 0);
+                        }
+                        return Config.Resource[aIdx].name().localeCompare(Config.Resource[bIdx].name());
+                     })
                      .map((res) => {
                         const r = Config.Resource[res];
                         if (!r.canPrice || !r.canStore) {
@@ -297,16 +367,7 @@ function ResourcesTab({ gameState }: IBuildingComponentProps): React.ReactNode {
                            <tr key={res}>
                               <td>{r.name()}</td>
                               <td className="right">
-                                 <FormatNumber
-                                    value={
-                                       Tick.current.resourcesByTile[res]?.reduce(
-                                          (prev, curr) =>
-                                             prev +
-                                             (gameState.tiles.get(curr)?.building?.resources?.[res] ?? 0),
-                                          0,
-                                       ) ?? 0
-                                    }
-                                 />
+                                 <FormatNumber value={resourceAmounts[res]} />
                               </td>
                               <td className="right">
                                  <FormatNumber value={output} />

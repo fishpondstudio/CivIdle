@@ -19,13 +19,13 @@ import { Tick } from "../../../shared/logic/TickLogic";
 import type { IPetraBuildingData } from "../../../shared/logic/Tile";
 import { addMultiplier } from "../../../shared/logic/Update";
 import {
+   type Tile,
    forEach,
    keysOf,
    mapSafePush,
    pointToTile,
    safeAdd,
    tileToPoint,
-   type Tile,
 } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import { Singleton } from "../utilities/Singleton";

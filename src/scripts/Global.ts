@@ -17,9 +17,9 @@ import {
 import { initializeGameState } from "../../shared/logic/InitializeGameState";
 import { rollPermanentGreatPeople } from "../../shared/logic/RebornLogic";
 import { getGreatPeopleChoices } from "../../shared/logic/TechLogic";
-import { makeBuilding, type ITileData } from "../../shared/logic/Tile";
+import { type ITileData, makeBuilding } from "../../shared/logic/Tile";
 import { Grid } from "../../shared/utilities/Grid";
-import { firstKeyOf, forEach, xyToTile, type Tile } from "../../shared/utilities/Helper";
+import { type Tile, firstKeyOf, forEach, xyToTile } from "../../shared/utilities/Helper";
 import { TypedEvent } from "../../shared/utilities/TypedEvent";
 import { SteamClient, isSteam } from "./rpc/SteamClient";
 import { WorldScene } from "./scenes/WorldScene";

@@ -68,11 +68,8 @@ export function ResourcePanel(): React.ReactNode {
                      bolt
                   </div>
                   <div className="f1">
-                     <FormatNumber value={tick.workersUsed.Power ?? 0} />
-                     W
-                     {" / "}
-                     <FormatNumber value={tick.workersAvailable.Power ?? 0} />
-                     W
+                     <FormatNumber value={tick.workersUsed.Power ?? 0} />W{" / "}
+                     <FormatNumber value={tick.workersAvailable.Power ?? 0} />W
                   </div>
                </div>
                <div className="separator-vertical" />

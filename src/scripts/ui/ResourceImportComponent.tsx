@@ -10,7 +10,6 @@ import type { IBuildingComponentProps } from "./BuildingPage";
 import { ChangeResourceImportModal } from "./ChangeResourceImportModal";
 import { showModal } from "./GlobalModal";
 import { FormatNumber } from "./HelperComponents";
-import { ProgressBarComponent } from "./ProgressBarComponent";
 
 export function ResourceImportComponent({ gameState, xy }: IBuildingComponentProps): React.ReactNode {
    const building = gameState.tiles.get(xy)?.building as IResourceImportBuildingData;
@@ -82,15 +81,6 @@ export function ResourceImportComponent({ gameState, xy }: IBuildingComponentPro
                </tbody>
             </table>
          </div>
-         <div className="separator"></div>
-         <div className="row">
-            <div className="f1">{t(L.StorageUsed)}</div>
-            <div>
-               <FormatNumber value={storage.used} /> / <FormatNumber value={storage.total} />
-            </div>
-         </div>
-         <div className="sep5"></div>
-         <ProgressBarComponent progress={percentage} />
       </fieldset>
    );
 }

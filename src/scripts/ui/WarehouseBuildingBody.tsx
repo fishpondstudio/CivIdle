@@ -10,6 +10,7 @@ import { BuildingColorComponent } from "./BuildingColorComponent";
 import type { IBuildingComponentProps } from "./BuildingPage";
 import { BuildingProductionPriorityComponent } from "./BuildingProductionPriorityComponent";
 import { BuildingSellComponent } from "./BuildingSellComponent";
+import { BuildingStorageComponent } from "./BuildingStorageComponent";
 import { BuildingUpgradeComponent } from "./BuildingUpgradeComponent";
 import { BuildingWorkerComponent } from "./BuildingWorkerComponent";
 import { ResourceImportComponent } from "./ResourceImportComponent";
@@ -32,6 +33,7 @@ export function WarehouseBuildingBody({ gameState, xy }: IBuildingComponentProps
          ) : null}
 
          <ResourceImportComponent gameState={gameState} xy={xy} />
+         <BuildingStorageComponent gameState={gameState} xy={xy} />
          {!hasFeature(GameFeature.WarehouseUpgrade, gameState) ? null : (
             <fieldset>
                <legend>{t(L.WarehouseSettings)}</legend>

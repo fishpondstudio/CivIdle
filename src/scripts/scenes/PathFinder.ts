@@ -1,5 +1,5 @@
 import type { IPointData } from "pixi.js";
-import WorldMap from "../../../server/WorldMap.json";
+import WorldMap from "../../../shared/definitions/WorldMap.json";
 import { getGameOptions } from "../../../shared/logic/GameStateLogic";
 import { MAP_MAX_X, MAP_MAX_Y } from "../../../shared/utilities/Database";
 import { OnPlayerMapChanged, getPlayerMap } from "../rpc/RPCClient";

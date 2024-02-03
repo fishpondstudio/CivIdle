@@ -12,6 +12,7 @@ import { getGrid } from "../../../shared/logic/IntraTickCache";
 import { Tick } from "../../../shared/logic/TickLogic";
 import type { ITileData } from "../../../shared/logic/Tile";
 import {
+   type Tile,
    clamp,
    forEach,
    formatHMS,
@@ -20,7 +21,6 @@ import {
    pointToTile,
    pointToXy,
    sizeOf,
-   type Tile,
 } from "../../../shared/utilities/Helper";
 import { v2 } from "../../../shared/utilities/Vector2";
 import { getBuildingTexture, getNotProducingTexture, getTileTexture } from "../logic/VisualLogic";

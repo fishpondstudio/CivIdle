@@ -2,11 +2,11 @@ import classNames from "classnames";
 import { Config } from "../../../shared/logic/Config";
 import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
 import {
+   type ITileData,
    PRIORITY_MAX,
    PRIORITY_MIN,
    getUpgradePriority,
    setUpgradePriority,
-   type ITileData,
 } from "../../../shared/logic/Tile";
 import { L, t } from "../../../shared/utilities/i18n";
 import { useGameState } from "../Global";

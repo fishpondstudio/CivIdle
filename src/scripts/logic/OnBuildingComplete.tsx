@@ -5,7 +5,7 @@ import { getGrid, getXyBuildings } from "../../../shared/logic/IntraTickCache";
 import { getRevealedDeposits } from "../../../shared/logic/ResourceLogic";
 import { OnResetTile, addDeposit, getGreatPeopleChoices } from "../../../shared/logic/TechLogic";
 import { ensureTileFogOfWar } from "../../../shared/logic/TerrainLogic";
-import { isEmpty, pointToTile, shuffle, tileToPoint, type Tile } from "../../../shared/utilities/Helper";
+import { type Tile, isEmpty, pointToTile, shuffle, tileToPoint } from "../../../shared/utilities/Helper";
 import { WorldScene } from "../scenes/WorldScene";
 import { ChooseGreatPersonModal } from "../ui/ChooseGreatPersonModal";
 import { showModal } from "../ui/GlobalModal";

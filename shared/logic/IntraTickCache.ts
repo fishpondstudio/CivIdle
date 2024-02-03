@@ -1,7 +1,7 @@
 import type { Building, IBuildingDefinition } from "../definitions/BuildingDefinitions";
 import type { Deposit, Resource } from "../definitions/ResourceDefinitions";
 import { Grid } from "../utilities/Grid";
-import { IPointData, forEach, safeAdd, tileToHash, tileToPoint, type Tile } from "../utilities/Helper";
+import { IPointData, type Tile, forEach, safeAdd, tileToHash, tileToPoint } from "../utilities/Helper";
 import type { PartialSet, PartialTabulate } from "../utilities/TypeDefinitions";
 import { IOCalculation, totalMultiplierFor } from "./BuildingLogic";
 import { Config } from "./Config";

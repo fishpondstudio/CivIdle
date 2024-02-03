@@ -1,0 +1,19 @@
+name: CI Run
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup PNPM
+        uses: pnpm/action-setup@v2
+        with:
+          run_install: |
+            - recursive: false
+      - name: Run Biome
+        run: pnpm run ci

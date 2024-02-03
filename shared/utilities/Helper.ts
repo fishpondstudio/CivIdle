@@ -458,6 +458,7 @@ export function romanToNumber(str: string): number | null {
    // biome-ignore format:
    const key: Record<string, number> = {M: 1000,CM: 900,D: 500,CD: 400,C: 100,XC: 90,L: 50,XL: 40,X: 10,IX: 9,V: 5,IV: 4,I: 1};
    let num = 0;
+   // biome-ignore lint/suspicious/noImplicitAnyLet: <explanation>
    let m;
    if (!(str && validator.test(str))) return null;
    // biome-ignore lint/suspicious/noAssignInExpressions: <explanation>
@@ -666,7 +667,9 @@ export function filterInPlace<T>(a: T[], condition: (v: T, i: number, array: T[]
 }
 
 export function uuid4(): string {
+   // biome-ignore lint/suspicious/noImplicitAnyLet: <explanation>
    let a;
+   // biome-ignore lint/suspicious/noImplicitAnyLet: <explanation>
    let b;
    for (
       // loop :)
