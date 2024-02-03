@@ -26,13 +26,13 @@ import {
 } from "../../../shared/utilities/Helper";
 import { v2 } from "../../../shared/utilities/Vector2";
 import { L, t } from "../../../shared/utilities/i18n";
+import { useGameOptions } from "../Global";
+import { getBuildingTexture, getNotProducingTexture, getTileTexture } from "../logic/VisualLogic";
 import { Singleton } from "../utilities/Singleton";
 import { Actions } from "../utilities/pixi-actions/Actions";
 import { Easing } from "../utilities/pixi-actions/Easing";
 import type { Action } from "../utilities/pixi-actions/actions/Action";
 import { Fonts } from "../visuals/Fonts";
-import { useGameOptions } from "../Global";
-import { getBuildingTexture, getNotProducingTexture, getTileTexture } from "../logic/VisualLogic";
 import type { WorldScene } from "./WorldScene";
 
 export class TileVisual extends Container {
@@ -325,8 +325,8 @@ export class TileVisual extends Container {
                if (storage.total > 0 && Number.isFinite(storage.total)) {
                   const percentage = storage.used / storage.total;
                   this._storagePercentage.visible = true;
-                  this._storagePercentage.text = t(L.MapTileStoragePercentage, { 
-                     storagePercentage: formatPercent(percentage)
+                  this._storagePercentage.text = t(L.MapTileStoragePercentage, {
+                     storagePercentage: formatPercent(percentage),
                   });
                }
             } else {
