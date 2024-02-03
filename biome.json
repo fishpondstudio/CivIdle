@@ -31,8 +31,7 @@
    "formatter": {
       "lineWidth": 110,
       "indentStyle": "space",
-      "indentWidth": 3,
-      "lineEnding": "crlf"
+      "indentWidth": 3
    },
    "files": {
       "ignore": ["**/*.js", "**/*.d.ts", "shared/thirdparty/*"]
