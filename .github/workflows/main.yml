@@ -1,4 +1,4 @@
-name: build-win-steam-beta
+name: Build Win/Linux Steam (Beta)
 on:
   push:
     branches:

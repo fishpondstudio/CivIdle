@@ -2,6 +2,7 @@
    "name": "CivIdle",
    "private": true,
    "version": "0.0.0",
+   "packageManager": "pnpm@8.14.2",
    "scripts": {
       "dev": "vite",
       "watch": "tsc --build --incremental --watch --force tsconfig.json",
