@@ -1,11 +1,12 @@
 import classNames from "classnames";
 import { useEffect, useState } from "react";
-import type { Resource, ResourceDefinitions } from "../../../shared/definitions/ResourceDefinitions";
+import type { Resource } from "../../../shared/definitions/ResourceDefinitions";
 import { getStorageFor } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
 import { TRADE_CANCEL_REFUND_PERCENT } from "../../../shared/logic/Constants";
 import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
 import { getMaxActiveTrades } from "../../../shared/logic/PlayerTradeLogic";
+import type { IClientTrade } from "../../../shared/logic/PlayerTradeLogic";
 import type { IPendingClaim } from "../../../shared/utilities/Database";
 import { formatPercent, isNullOrUndefined, safeAdd } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
@@ -24,30 +25,39 @@ import { FillPlayerTradeModal } from "./FillPlayerTradeModal";
 import { showModal, showToast } from "./GlobalModal";
 import { FormatNumber } from "./HelperComponents";
 import { WarningComponent } from "./WarningComponent";
-import type { IClientTrade } from "../../../shared/logic/PlayerTradeLogic";
 
 interface IPlayerTradeFiltersProps {
-   wantFilterParams: {wantFilter: string, setWantFilter: React.Dispatch<React.SetStateAction<string>>},
-   offerFilterParams: {offerFilter: string, setOfferFilter: React.Dispatch<React.SetStateAction<string>>},
-   trades: IClientTrade[],
+   wantFilterParams: {
+      wantFilter: Resource | null;
+      setWantFilter: (newFilter: Resource | null) => void;
+   };
+   offerFilterParams: {
+      offerFilter: Resource | null;
+      setOfferFilter: (newFilter: Resource | null) => void;
+   };
+   trades: IClientTrade[];
 }
 
-export function PlayerTradeFilters({wantFilterParams, offerFilterParams, trades}: IPlayerTradeFiltersProps ): React.ReactNode {
-   const { wantFilter, setWantFilter} = wantFilterParams;
-   const { offerFilter, setOfferFilter} = offerFilterParams;
-   
+export function PlayerTradeFilters({
+   wantFilterParams,
+   offerFilterParams,
+   trades,
+}: IPlayerTradeFiltersProps): React.ReactNode {
+   const { wantFilter, setWantFilter } = wantFilterParams;
+   const { offerFilter, setOfferFilter } = offerFilterParams;
+
    const [showFilters, setShowFilters] = useState(false);
 
    const uniqueBuyResources: Set<Resource> = new Set();
    trades.map((trade) => {
-     uniqueBuyResources.add(trade.buyResource);
-   });   
+      uniqueBuyResources.add(trade.buyResource);
+   });
    const uniqueSellResources: Set<Resource> = new Set();
    trades.map((trade) => {
       uniqueSellResources.add(trade.sellResource);
-   });    
+   });
 
-   if ( showFilters ) {
+   if (showFilters) {
       return (
          <fieldset>
             <legend className="text-strong">{t(L.PlayerTradeFilters)}</legend>
@@ -55,15 +65,14 @@ export function PlayerTradeFilters({wantFilterParams, offerFilterParams, trades}
                <div style={{ width: "80px" }}>{t(L.PlayerTradeWant)}</div>
                <select
                   className="f1"
-                  value={wantFilter}
+                  value={wantFilter ? wantFilter : ""}
                   onChange={(e) => {
                      if (e.target.value in Config.Resource || e.target.value === "") {
-                        setWantFilter(e.target.value);
+                        setWantFilter(e.target.value === "" ? null : (e.target.value as Resource));
                      }
                   }}
                >
-                  <option key="Empty" value="">                     
-                  </option>
+                  <option key="Empty" value=""></option>
 
                   {Array.from(uniqueBuyResources).map((res) => (
                      <option key={res} value={res}>
@@ -77,15 +86,14 @@ export function PlayerTradeFilters({wantFilterParams, offerFilterParams, trades}
                <div style={{ width: "80px" }}>{t(L.PlayerTradeOffer)}</div>
                <select
                   className="f1"
-                  value={offerFilter}
+                  value={offerFilter ? offerFilter : ""}
                   onChange={(e) => {
                      if (e.target.value in Config.Resource || e.target.value === "") {
-                        setOfferFilter(e.target.value);
+                        setOfferFilter(e.target.value === "" ? null : (e.target.value as Resource));
                      }
                   }}
                >
-                  <option key="Empty" value="">                     
-                  </option>
+                  <option key="Empty" value=""></option>
 
                   {Array.from(uniqueSellResources).map((res) => (
                      <option key={res} value={res}>
@@ -93,17 +101,17 @@ export function PlayerTradeFilters({wantFilterParams, offerFilterParams, trades}
                      </option>
                   ))}
                </select>
-            </div>     
+            </div>
             <div className="sep10"></div>
             <div className="row">
-            <button
+               <button
                   className="row f1 jcc"
                   onClick={() => {
                      setShowFilters(false);
                   }}
                >
                   {t(L.PlayerTradeFiltersClose)}
-               </button>               
+               </button>
             </div>
          </fieldset>
       );
@@ -129,8 +137,9 @@ export function PlayerTradeComponent({ gameState, xy }: IBuildingComponentProps)
    const trades = useTrades();
    const user = useUser();
    const myXy = getMyMapXy();
-   const [wantFilter, setWantFilter] = useState<keyof ResourceDefinitions|string>("");
-   const [offerFilter, setOfferFilter] = useState<keyof ResourceDefinitions|string>("");
+
+   const [wantFilter, setWantFilter] = useState<Resource | null>(null);
+   const [offerFilter, setOfferFilter] = useState<Resource | null>(null);
 
    if (!myXy) {
       return (
@@ -174,22 +183,21 @@ export function PlayerTradeComponent({ gameState, xy }: IBuildingComponentProps)
                      <th>{t(L.PlayerTradeFrom)}</th>
                      <th></th>
                   </tr>
-                  {trades
-                  .filter((t) => {
-                     if ( wantFilter === "" && offerFilter === "" ) {
-                        return true;
-                     }
-                     if ( t.buyResource === wantFilter && offerFilter === "" ) {
-                        return true;
-                     }
-                     if ( t.sellResource === offerFilter && wantFilter === "" ) {
-                        return true;
-                     }
-                     if ( t.buyResource === wantFilter && t.sellResource === offerFilter ) {
-                        return true;
-                     }
-                     return false;
-                  })
+                  {trades.filter((t) => {
+                        if (!wantFilter && !offerFilter) {
+                           return true;
+                        }
+                        if (t.buyResource === wantFilter && !offerFilter) {
+                           return true;
+                        }
+                        if (t.sellResource === offerFilter && !wantFilter) {
+                           return true;
+                        }
+                        if (t.buyResource === wantFilter && t.sellResource === offerFilter) {
+                           return true;
+                        }
+                        return false;
+                     })
                   .map((trade) => {
                      const disableFill = user === null || trade.fromId === user.userId;
                      return (
@@ -268,6 +276,7 @@ export function PlayerTradeComponent({ gameState, xy }: IBuildingComponentProps)
                                     delete
                                  </div>
                               ) : (
+
                                  <div
                                     className={classNames({
                                        "text-link": !disableFill,
@@ -287,6 +296,7 @@ export function PlayerTradeComponent({ gameState, xy }: IBuildingComponentProps)
                         </tr>
                      );
                   })}
+
                </tbody>
             </table>
          </div>
