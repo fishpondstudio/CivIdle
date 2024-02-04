@@ -7,6 +7,8 @@ import { sizeOf } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import { useGameState } from "../Global";
 import { useCurrentTick } from "../logic/Tick";
+import { TechTreeScene } from "../scenes/TechTreeScene";
+import { Singleton } from "../utilities/Singleton";
 import { FormatNumber } from "./HelperComponents";
 import { TextWithHelp } from "./TextWithHelpComponent";
 
@@ -81,7 +83,7 @@ export function ResourcePanel(): React.ReactNode {
                <div className="separator-vertical" />
             </>
          ) : null}
-         <div className="row">
+         <div className="row" onClick={() => Singleton().sceneManager.loadScene(TechTreeScene)}>
             <div
                className={classNames({
                   "m-icon": true,

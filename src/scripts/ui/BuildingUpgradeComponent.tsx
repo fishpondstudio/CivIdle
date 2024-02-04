@@ -5,7 +5,7 @@ import { Config } from "../../../shared/logic/Config";
 import {} from "../../../shared/logic/GameState";
 import { getGameOptions, notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
 import { getUpgradePriority, setUpgradePriority } from "../../../shared/logic/Tile";
-import { isEmpty, numberToRoman, tileToPoint, type Tile } from "../../../shared/utilities/Helper";
+import { type Tile, isEmpty, numberToRoman, tileToPoint } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import { WorldScene } from "../scenes/WorldScene";
 import { jsxMapOf } from "../utilities/Helper";
