@@ -2,7 +2,6 @@ import type { Building } from "../definitions/BuildingDefinitions";
 import { BuildingSpecial } from "../definitions/BuildingDefinitions";
 import type { IResourceDefinition, Resource } from "../definitions/ResourceDefinitions";
 import {
-   type Tile,
    clamp,
    forEach,
    isEmpty,
@@ -16,6 +15,7 @@ import {
    sizeOf,
    sum,
    tileToPoint,
+   type Tile,
 } from "../utilities/Helper";
 import { srand } from "../utilities/Random";
 import type { PartialTabulate } from "../utilities/TypeDefinitions";
@@ -26,15 +26,15 @@ import type { GameState } from "./GameState";
 import { getBuildingIO, getBuildingsByType, getGrid, getXyBuildings } from "./IntraTickCache";
 import { getBuildingsThatProduce, getResourcesValue } from "./ResourceLogic";
 import { getAgeForTech, getBuildingUnlockTech } from "./TechLogic";
-import { type Multiplier, type MultiplierWithSource, Tick } from "./TickLogic";
+import { Tick, type Multiplier, type MultiplierWithSource } from "./TickLogic";
 import {
+   getConstructionPriority,
+   getProductionPriority,
+   getUpgradePriority,
    type IBuildingData,
    type IHaveTypeAndLevel,
    type IResourceImportBuildingData,
    type IWarehouseBuildingData,
-   getConstructionPriority,
-   getProductionPriority,
-   getUpgradePriority,
 } from "./Tile";
 
 export function totalMultiplierFor(xy: Tile, type: keyof Multiplier, base: number, gs: GameState): number {
@@ -510,11 +510,6 @@ export function getBuildingLevelLabel(b: IBuildingData): string {
 
 export function levelToNext10s(b: IBuildingData) {
    const l = Math.ceil(b.level / 10) * 10 - b.level;
-   return l > 0 ? l : 10;
-}
-
-export function desiredLevelToNext10s(b: IBuildingData) {
-   const l = Math.ceil(b.desiredLevel / 10) * 10 - b.desiredLevel;
    return l > 0 ? l : 10;
 }
 
