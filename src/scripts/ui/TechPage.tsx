@@ -1,11 +1,10 @@
 import type { Resource } from "../../../shared/definitions/ResourceDefinitions";
-import type { Tech, TechAge, TechAgeDefinitions } from "../../../shared/definitions/TechDefinitions";
+import type { Tech } from "../../../shared/definitions/TechDefinitions";
 import { Config } from "../../../shared/logic/Config";
 import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
 import { getResourceAmount, trySpendResources } from "../../../shared/logic/ResourceLogic";
 import {
    OnResetTile,
-   getAgeForTech,
    getCurrentTechAge,
    getGreatPeopleChoices,
    getUnlockCost,
@@ -57,38 +56,8 @@ export function TechPage({ id }: { id: Tech }): React.ReactNode {
       reduceOf(availableResources, (prev, k, v) => prev + Math.min(v, unlockCost[k] ?? 0), 0) /
       reduceOf(unlockCost, (prev, _, v) => prev + v, 0);
 
-   const acrossAges: Set<string> = new Set();
-   const unlockPrerequisites = (id: Tech) => {
-      let unlocked = false;
-      Config.Tech[id].requireTech.forEach((preq) => {
-         if ( !gs.unlockedTech[preq] ) {
-            if ( unlockPrerequisites(preq) ) {
-               unlocked = true;
-            }
-
-            if (!trySpendResources({ Science: getUnlockCost(preq) }, gs)) {
-               return;
-            }            
-            unlockTech(preq, OnResetTile, gs);
-            const age1 = getAgeForTech(id);
-            const age2 = getAgeForTech(preq);
-            if ( age1 !== age2 ) {
-               acrossAges.add(age1!);
-            }
-            unlocked = true;
-         }
-      });
-      return unlocked;
-   };   
-
    const unlock = () => {
-      if ( unlockPrerequisites(id) ) {
-         notifyGameStateUpdate();
-         Singleton()
-            .sceneManager.getCurrent(TechTreeScene)
-            ?.renderTechTree("animate", true); 
-      }
-      if ( !tech.requireTech.every((t) => gs.unlockedTech[t]) || progress < 1) {
+      if (!tech.requireTech.every((t) => gs.unlockedTech[t]) || progress < 1) {
          return;
       }
       if (!trySpendResources(unlockCost, gs)) {
@@ -99,20 +68,13 @@ export function TechPage({ id }: { id: Tech }): React.ReactNode {
       playLevelUp();
       const newAge = getCurrentTechAge(gs);
       if (oldAge !== newAge) {
-         acrossAges.add(newAge!);
+         gs.greatPeopleChoices.push(getGreatPeopleChoices(newAge!));
       }
-      acrossAges.forEach((age) => {
-         gs.greatPeopleChoices.push(getGreatPeopleChoices(age as keyof TechAgeDefinitions));
-      });      
       if (gs.greatPeopleChoices.length > 0) {
-         showModal(
-            <ChooseGreatPersonModal greatPeopleChoice={gs.greatPeopleChoices[0]} />,
-         );
+         showModal(<ChooseGreatPersonModal greatPeopleChoice={gs.greatPeopleChoices[0]} />);
       }
       notifyGameStateUpdate();
-      Singleton()
-         .sceneManager.getCurrent(TechTreeScene)
-         ?.renderTechTree("animate", true);
+      Singleton().sceneManager.getCurrent(TechTreeScene)?.renderTechTree("animate", true);
    };
 
    let prerequisiteCount = 0;
@@ -200,10 +162,7 @@ export function TechPage({ id }: { id: Tech }): React.ReactNode {
                            <ProgressBarComponent progress={progress} />
                         </div>
                         <div style={{ width: "10px" }} />
-                        <button
-                           disabled={!prerequisitesSatisfied || progress < 1}
-                           onClick={() => unlock()}
-                        >
+                        <button disabled={!prerequisitesSatisfied || progress < 1} onClick={() => unlock()}>
                            {t(L.UnlockBuilding)}
                         </button>
                      </div>
