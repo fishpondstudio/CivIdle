@@ -164,7 +164,9 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
                                  <td className="text-center text-strong">
                                     {(building?.max ?? Infinity) <= 1 ? (
                                        <div className="m-icon small">
-                                          <TextWithHelp help={building.desc?.()}>public</TextWithHelp>
+                                          <TextWithHelp help={building.desc?.()} noStyle>
+                                             public
+                                          </TextWithHelp>
                                        </div>
                                     ) : (
                                        <div
