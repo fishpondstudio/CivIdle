@@ -675,7 +675,7 @@ export const RU = {
    PlayerTradeFillAmountMax: "Продать Всё Доступное",
    PlayerTradeFillTradeTitle: "Продать",
    PlayerTradeFillTradeButton: "Продать",
-      PlayerTradeMaxTradeExceeded: "Вы превысили максимальное количество активных сделок для вашего уровня аккаунта",
+   PlayerTradeMaxTradeExceeded: "Вы превысили максимальное количество активных сделок для вашего уровня аккаунта",
    PlayerTradeCancelTrade: "Отменить Заявку",
    PlayerTradeCancelTradeNo: "Не Отменять",
    PlayerTradeCancelTradeNotEnoughStorage: "У вас недостаточно хранилища, чтобы отменить эту сделку",
