@@ -7,8 +7,13 @@ export const PatchNotes: PatchNote[] = [
    {
       version: "0.1.121",
       content: [
+         ["Content", "Support cancelling player trades"],
          ["QoL", "Allow highlight buildings/deposits on map"],
+         ["QoL", "Allow clicking on building tier on building page to highlight all buildings of that type"],
+         ["QoL", "Allow clicking on Science in resource panel to go to tech tree (@Vethon)"],
          ["QoL", "Allow sorting by column in Censor's Office (@Vethon)"],
+         ["Content", "Implement trade limit for different account levels"],
+         ["Content", "Add support for upgrading from Tribune to Quaestor"],
       ],
    },
    {

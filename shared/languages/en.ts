@@ -658,7 +658,7 @@ export const EN = {
    PlayerTradeFillBy: "Fill By",
    PlayerTradeAmount: "Amount",
    PlayerTradePlaceTrade: "Place Trade",
-   PlayerTradeCancelTrade: "Cancel",
+   PlayerTradeAddTradeCancel: "Cancel",
    PlayerTradeNewTrade: "New Trade",
    PlayerTradeWant: "Want",
    PlayerTradeOffer: "Offer",
@@ -667,9 +667,16 @@ export const EN = {
    PlayerTradeClaim: "Claim",
    PlayerTradeFillAmount: "Fill Amount",
    PlayerTradeFillSuccess: "The trade has been successfully filled",
+   PlayerTradeAddSuccess: "The trade has been successfully added",
    PlayerTradeFillAmountMax: "Fill All Available",
    PlayerTradeFillTradeTitle: "Fill Trade",
    PlayerTradeFillTradeButton: "Fill Trade",
+   PlayerTradeMaxTradeExceeded: "You have exceeded max number of active trades for your account level",
+   PlayerTradeCancelTrade: "Cancel Trade",
+   PlayerTradeCancelTradeNo: "Do Not Cancel",
+   PlayerTradeCancelTradeNotEnoughStorage: "You do not have enough storage to cancel this trade",
+   PlayerTradeCancelDesc:
+      "Cancelling this trade will only refund %{percent} of the resources. Are you sure you want to cancel?",
    PlayerMapUnclaimedTile: "Unclaimed Tile",
    PlayerMapClaimThisTile: "Claim This Tile",
    PlayerMapClaimTileCondition1: "You are authenticated on the platform",
@@ -854,4 +861,12 @@ export const EN = {
       "Your current account level is Tribune. Upgrading to Quaestor will carry over permanent great people <b>up to level %{level}</b>",
    RebornModalDesc:
       "Your will start a new empire but you can take all the great people <b>from this run</b>, plus extra great people based on your <b>total empire value</b>",
+   OperationNotAllowedError: "This operation is not allowed",
+   AccountLevelUpgradeConditionAny:
+      "To upgrde your account, you only need to satisfy one of the following criteria:",
+   AccountLevelPlayTime: "Active Online Playtime > %{requiredTime} (Your play time is %{actualTime})",
+   AccountUpgradeButton: "Upgrade Account To Quaestor",
+   AccountUpgradeConfirm: "Account Upgrade",
+   AccountUpgradeConfirmDesc:
+      "Upgrading your account will <b>reset your current run</b> and carry over permanent great people <b>up to level %{level}</b>. This <b>cannot</b> be undone, are you sure to continue?",
 };

@@ -10,12 +10,15 @@ export function TextWithHelp({
    className,
    noStyle,
 }: React.PropsWithChildren<{
-   help: string | undefined;
+   help: string | null | undefined;
    placement?: Placement;
    size?: "small" | "medium" | "large" | "xlarge" | "fit";
    className?: string;
    noStyle?: boolean;
 }>): React.ReactNode {
+   if (!help) {
+      return children;
+   }
    if (!noStyle) {
       className += " with-help";
    }

@@ -7,11 +7,17 @@ import { Tick } from "../../../shared/logic/TickLogic";
 import { keysOf, safeParseInt } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import { client, useUser } from "../rpc/RPCClient";
-import { playError } from "../visuals/Sound";
+import { playError, playKaching } from "../visuals/Sound";
 import type { IBuildingComponentProps } from "./BuildingPage";
+import { showToast } from "./GlobalModal";
 import { FormatNumber } from "./HelperComponents";
+import { TextWithHelp } from "./TextWithHelpComponent";
 
-export function AddTradeComponent({ gameState, xy }: IBuildingComponentProps): React.ReactNode {
+export function AddTradeComponent({
+   gameState,
+   xy,
+   enabled,
+}: IBuildingComponentProps & { enabled: boolean }): React.ReactNode {
    const buyResources = keysOf(Tick.next.resourcesByTile).filter(
       (res) => Config.Resource[res].canPrice && Config.Resource[res].canStore,
    );
@@ -120,13 +126,19 @@ export function AddTradeComponent({ gameState, xy }: IBuildingComponentProps): R
             <div className="row">
                <button
                   className="row f1 jcc"
-                  disabled={!isTradeValid(trade)}
-                  onClick={() => {
-                     if (isTradeValid(trade)) {
-                        client.addTrade(trade);
+                  disabled={!isTradeValid(trade) || !enabled}
+                  onClick={async () => {
+                     try {
+                        if (!isTradeValid(trade) || !enabled) {
+                           throw new Error(t(L.OperationNotAllowedError));
+                        }
+                        await client.addTrade(trade);
+                        playKaching();
                         resourcesInStorage[trade.sellResource]! -= trade.sellAmount;
-                     } else {
+                        showToast(t(L.PlayerTradeAddSuccess));
+                     } catch (error) {
                         playError();
+                        showToast(String(error));
                      }
                   }}
                >
@@ -140,7 +152,7 @@ export function AddTradeComponent({ gameState, xy }: IBuildingComponentProps): R
                      setShowTrade(false);
                   }}
                >
-                  {t(L.PlayerTradeCancelTrade)}
+                  {t(L.PlayerTradeAddTradeCancel)}
                </button>
             </div>
          </fieldset>
@@ -150,11 +162,20 @@ export function AddTradeComponent({ gameState, xy }: IBuildingComponentProps): R
       <button
          className="row w100 jcc mb10"
          onClick={() => {
-            setShowTrade(true);
+            if (enabled) {
+               setShowTrade(true);
+            } else {
+               playError();
+            }
          }}
+         disabled={!enabled}
       >
          <div className="m-icon small mr5">add_circle</div>
-         <div className="text-strong">{t(L.PlayerTradeNewTrade)}</div>
+         <div className="text-strong">
+            <TextWithHelp help={enabled ? null : t(L.PlayerTradeMaxTradeExceeded)} noStyle>
+               {t(L.PlayerTradeNewTrade)}
+            </TextWithHelp>
+         </div>
       </button>
    );
 }

@@ -1,15 +1,19 @@
 import classNames from "classnames";
 import { useEffect, useState } from "react";
-import { MAX_TRIBUNE_CARRY_OVER_LEVEL } from "../../../shared/logic/Constants";
+import { MAX_TRIBUNE_CARRY_OVER_LEVEL, TRIBUNE_UPGRADE_PLAYTIME } from "../../../shared/logic/Constants";
+import { getGameOptions, getGameState } from "../../../shared/logic/GameStateLogic";
+import { upgradeAllPermanentGreatPeople } from "../../../shared/logic/RebornLogic";
 import { AccountLevel } from "../../../shared/utilities/Database";
+import { forEach, formatHM } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
-import { useGameState } from "../Global";
+import { resetToCity, saveGame, useGameState } from "../Global";
 import { AccountLevelImages, AccountLevelNames } from "../logic/AccountLevel";
 import { canEarnGreatPeopleFromReborn, client, useUser } from "../rpc/RPCClient";
 import { getCountryName, getFlagUrl } from "../utilities/CountryCode";
 import { playError } from "../visuals/Sound";
 import { ChangePlayerHandleModal } from "./ChangePlayerHandleModal";
-import { showModal } from "./GlobalModal";
+import { ConfirmModal } from "./ConfirmModal";
+import { showModal, showToast } from "./GlobalModal";
 import { RenderHTML } from "./RenderHTMLComponent";
 import { TextWithHelp } from "./TextWithHelpComponent";
 import { WarningComponent } from "./WarningComponent";
@@ -80,6 +84,7 @@ function AccountDetails(): React.ReactNode {
          }
       })();
    }, [user]);
+   const cond1 = playTime * 1000 > TRIBUNE_UPGRADE_PLAYTIME;
    return (
       <>
          <div className="separator" />
@@ -215,18 +220,70 @@ function AccountDetails(): React.ReactNode {
                <div className="m-icon ml10 text-red small">cancel</div>
             </div>
          )}
-         <div className="separator" />
-         <WarningComponent icon="info">
-            <RenderHTML
-               className="text-small"
-               html={t(L.TribuneUpgradeDesc, { level: MAX_TRIBUNE_CARRY_OVER_LEVEL })}
-            />
-         </WarningComponent>
-         <div className="sep10" />
-         <button className="w100 text-strong row" disabled>
-            <div className="m-icon small">vpn_lock</div>
-            <div className="f1 text-center">Upgrade Account To Quaestor</div>
-         </button>
+         {user?.level === AccountLevel.Tribune ? (
+            <>
+               <div className="separator" />
+               <WarningComponent icon="info">
+                  <RenderHTML
+                     className="text-small"
+                     html={t(L.TribuneUpgradeDesc, { level: MAX_TRIBUNE_CARRY_OVER_LEVEL })}
+                  />
+               </WarningComponent>
+               <div className="sep10" />
+               <div className="text-strong">{t(L.AccountLevelUpgradeConditionAny)}</div>
+               <div className="sep5" />
+               <div className="row">
+                  {cond1 ? (
+                     <div className="m-icon small text-green mr10">check_circle</div>
+                  ) : (
+                     <div className="m-icon small text-red mr10">cancel</div>
+                  )}
+                  <div>
+                     {t(L.AccountLevelPlayTime, {
+                        requiredTime: formatHM(TRIBUNE_UPGRADE_PLAYTIME),
+                        actualTime: formatHM(playTime * 1000),
+                     })}
+                  </div>
+               </div>
+               <div className="sep10" />
+               <button
+                  className="w100 text-strong row"
+                  disabled={!cond1}
+                  onClick={() => {
+                     showModal(
+                        <ConfirmModal
+                           title={t(L.AccountUpgradeConfirm)}
+                           onConfirm={async () => {
+                              try {
+                                 await client.upgrade();
+                                 resetToCity(getGameState().city);
+                                 getGameOptions().greatPeopleChoices = [];
+                                 upgradeAllPermanentGreatPeople(getGameOptions());
+                                 forEach(getGameOptions().greatPeople, (k, v) => {
+                                    if (v.level > MAX_TRIBUNE_CARRY_OVER_LEVEL) {
+                                       v.level = MAX_TRIBUNE_CARRY_OVER_LEVEL;
+                                       v.amount = 0;
+                                    }
+                                 });
+                                 saveGame(true).catch(console.error);
+                              } catch (error) {
+                                 playError();
+                                 showToast(String(error));
+                              }
+                           }}
+                        >
+                           <RenderHTML
+                              html={t(L.AccountUpgradeConfirmDesc, { level: MAX_TRIBUNE_CARRY_OVER_LEVEL })}
+                           />
+                        </ConfirmModal>,
+                     );
+                  }}
+               >
+                  <div className="m-icon small">vpn_lock</div>
+                  <div className="f1 text-center">{t(L.AccountUpgradeButton)}</div>
+               </button>
+            </>
+         ) : null}
       </>
    );
 }

@@ -12,6 +12,7 @@ import {
    reduceOf,
    safeParseInt,
    sizeOf,
+   uuid4,
 } from "../../../shared/utilities/Helper";
 import { decompressSave, loadSave } from "../Global";
 import { addSystemMessage, client } from "../rpc/RPCClient";
@@ -20,6 +21,12 @@ import { tickEverySecond } from "./Tick";
 function requireOfflineRun(): void {
    if (!getGameState().isOffline) {
       throw new Error("Command is only available for trial run");
+   }
+}
+
+function requireDevelopment(): void {
+   if (!import.meta.env.DEV) {
+      throw new Error("Command is only available for development");
    }
 }
 
@@ -41,11 +48,15 @@ export async function handleChatCommand(command: string): Promise<void> {
          break;
       }
       case "loadsave": {
-         requireOfflineRun();
+         requireDevelopment();
          const [handle] = await window.showOpenFilePicker();
          const file = await handle.getFile();
          const bytes = await file.arrayBuffer();
-         loadSave(await decompressSave(new Uint8Array(bytes)));
+
+         const save = await decompressSave(new Uint8Array(bytes));
+         save.options.id = uuid4();
+
+         loadSave(save);
          addSystemMessage("Load save file");
          break;
       }

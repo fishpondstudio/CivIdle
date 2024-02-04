@@ -94,8 +94,6 @@ export function canEarnGreatPeopleFromReborn(): boolean {
    return true;
 }
 
-export const SYSTEM_USER = "$";
-
 export function addSystemMessage(message: string): void {
    chatMessages.push(message);
    OnChatMessage.emit(chatMessages);

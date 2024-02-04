@@ -3,18 +3,21 @@ import { useEffect, useState } from "react";
 import type { Resource } from "../../../shared/definitions/ResourceDefinitions";
 import { getStorageFor } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
+import { TRADE_CANCEL_REFUND_PERCENT } from "../../../shared/logic/Constants";
 import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
+import { getMaxActiveTrades } from "../../../shared/logic/PlayerTradeLogic";
 import type { IPendingClaim } from "../../../shared/utilities/Database";
-import { safeAdd } from "../../../shared/utilities/Helper";
+import { formatPercent, isNullOrUndefined, safeAdd } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import { OnNewPendingClaims, client, useTrades, useUser } from "../rpc/RPCClient";
 import { getMyMapXy } from "../scenes/PathFinder";
 import { PlayerMapScene } from "../scenes/PlayerMapScene";
 import { useTypedEvent } from "../utilities/Hook";
 import { Singleton } from "../utilities/Singleton";
-import { playClick, playError } from "../visuals/Sound";
+import { playClick, playError, playKaching } from "../visuals/Sound";
 import { AddTradeComponent } from "./AddTradeComponent";
 import type { IBuildingComponentProps } from "./BuildingPage";
+import { ConfirmModal } from "./ConfirmModal";
 import { FillPlayerTradeModal } from "./FillPlayerTradeModal";
 import { showModal, showToast } from "./GlobalModal";
 import { FormatNumber } from "./HelperComponents";
@@ -28,7 +31,6 @@ export function PlayerTradeComponent({ gameState, xy }: IBuildingComponentProps)
    const trades = useTrades();
    const user = useUser();
    const myXy = getMyMapXy();
-
    if (!myXy) {
       return (
          <>
@@ -50,7 +52,14 @@ export function PlayerTradeComponent({ gameState, xy }: IBuildingComponentProps)
       <fieldset>
          <legend>{t(L.PlayerTrade)}</legend>
          <PendingClaimComponent gameState={gameState} xy={xy} />
-         <AddTradeComponent gameState={gameState} xy={xy} />
+         <AddTradeComponent
+            enabled={
+               !isNullOrUndefined(user) &&
+               trades.filter((t) => t.fromId === user.userId).length < getMaxActiveTrades(user)
+            }
+            gameState={gameState}
+            xy={xy}
+         />
          <div className="table-view">
             <table>
                <tbody>
@@ -61,9 +70,12 @@ export function PlayerTradeComponent({ gameState, xy }: IBuildingComponentProps)
                      <th></th>
                   </tr>
                   {trades.map((trade) => {
-                     const disableFill = user == null || trade.fromId === user.userId;
+                     const disableFill = user === null || trade.fromId === user.userId;
                      return (
-                        <tr key={trade.id}>
+                        <tr
+                           key={trade.id}
+                           className={classNames({ "text-strong": trade.fromId === user?.userId })}
+                        >
                            <td>
                               {Config.Resource[trade.buyResource].name()} x{" "}
                               <FormatNumber value={trade.buyAmount} />
@@ -74,20 +86,62 @@ export function PlayerTradeComponent({ gameState, xy }: IBuildingComponentProps)
                            </td>
                            <td>{trade.from}</td>
                            <td>
-                              <div
-                                 className={classNames({
-                                    "text-link": !disableFill,
-                                    "text-strong": true,
-                                    "text-desc": disableFill,
-                                 })}
-                                 onClick={() => {
-                                    if (!disableFill) {
-                                       showModal(<FillPlayerTradeModal trade={trade} xy={xy} />);
-                                    }
-                                 }}
-                              >
-                                 {t(L.PlayerTradeFill)}
-                              </div>
+                              {trade.fromId === user?.userId ? (
+                                 <div
+                                    className="m-icon small text-link"
+                                    onClick={() => {
+                                       showModal(
+                                          <ConfirmModal
+                                             title={t(L.PlayerTradeCancelTrade)}
+                                             onConfirm={async () => {
+                                                try {
+                                                   const { total, used } = getStorageFor(xy, gameState);
+                                                   if (
+                                                      used + trade.sellAmount * TRADE_CANCEL_REFUND_PERCENT >
+                                                      total
+                                                   ) {
+                                                      throw new Error(
+                                                         t(L.PlayerTradeCancelTradeNotEnoughStorage),
+                                                      );
+                                                   }
+                                                   const cancelledTrade = await client.cancelTrade(trade.id);
+                                                   safeAdd(
+                                                      building.resources,
+                                                      cancelledTrade.sellResource,
+                                                      cancelledTrade.sellAmount * TRADE_CANCEL_REFUND_PERCENT,
+                                                   );
+                                                   playKaching();
+                                                } catch (error) {
+                                                   showToast(String(error));
+                                                   playError();
+                                                }
+                                             }}
+                                          >
+                                             {t(L.PlayerTradeCancelDesc, {
+                                                percent: formatPercent(TRADE_CANCEL_REFUND_PERCENT),
+                                             })}
+                                          </ConfirmModal>,
+                                       );
+                                    }}
+                                 >
+                                    delete
+                                 </div>
+                              ) : (
+                                 <div
+                                    className={classNames({
+                                       "text-link": !disableFill,
+                                       "text-strong": true,
+                                       "text-desc": disableFill,
+                                    })}
+                                    onClick={() => {
+                                       if (!disableFill) {
+                                          showModal(<FillPlayerTradeModal trade={trade} xy={xy} />);
+                                       }
+                                    }}
+                                 >
+                                    {t(L.PlayerTradeFill)}
+                                 </div>
+                              )}
                            </td>
                         </tr>
                      );

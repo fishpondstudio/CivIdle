@@ -34,3 +34,18 @@ export function getUserTradePriceRange(user: IUser): number {
          return 0.05;
    }
 }
+
+export function getMaxActiveTrades(user: IUser): number {
+   switch (user.level) {
+      case AccountLevel.Quaestor:
+         return 4;
+      case AccountLevel.Aedile:
+         return 6;
+      case AccountLevel.Praetor:
+         return 8;
+      case AccountLevel.Consul:
+         return 10;
+      default:
+         return 2;
+   }
+}

@@ -11,7 +11,6 @@ import { getTypeBuildings, unlockedBuildings } from "../../../shared/logic/Intra
 import type { ITileData } from "../../../shared/logic/Tile";
 import { makeBuilding } from "../../../shared/logic/Tile";
 import {
-   type Tile,
    anyOf,
    formatNumber,
    isEmpty,
@@ -21,6 +20,7 @@ import {
    setContains,
    sizeOf,
    tileToPoint,
+   type Tile,
 } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import "../../css/EmptyTilePage.css";
@@ -167,7 +167,22 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
                                           <TextWithHelp help={building.desc?.()}>public</TextWithHelp>
                                        </div>
                                     ) : (
-                                       numberToRoman(Config.BuildingTier[k] ?? 1)
+                                       <div
+                                          className="pointer"
+                                          onClick={() => {
+                                             const result: Tile[] = [];
+                                             gs.tiles.forEach((tile, xy) => {
+                                                if (tile.building?.type === k) {
+                                                   result.push(xy);
+                                                }
+                                             });
+                                             Singleton()
+                                                .sceneManager.getCurrent(WorldScene)
+                                                ?.drawSelection(tileToPoint(tile.tile), result);
+                                          }}
+                                       >
+                                          {numberToRoman(Config.BuildingTier[k] ?? 1)}
+                                       </div>
                                     )}
                                  </td>
                                  <td>
