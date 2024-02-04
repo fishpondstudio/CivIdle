@@ -1,4 +1,5 @@
 import { useState } from "react";
+import type { Resource, ResourceDefinitions } from "../../../shared/definitions/ResourceDefinitions";
 import { applyToAllBuildings, getMarketPrice, totalMultiplierFor } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
 import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
@@ -17,7 +18,6 @@ import { BuildingStorageComponent } from "./BuildingStorageComponent";
 import { BuildingUpgradeComponent } from "./BuildingUpgradeComponent";
 import { BuildingWorkerComponent } from "./BuildingWorkerComponent";
 import { FormatNumber } from "./HelperComponents";
-import type { Resource, ResourceDefinitions } from "../../../shared/definitions/ResourceDefinitions";
 
 interface IMarketFiltersProps {
    resourceFilterParams: {
