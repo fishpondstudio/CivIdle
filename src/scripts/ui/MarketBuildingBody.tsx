@@ -17,39 +17,42 @@ import { BuildingStorageComponent } from "./BuildingStorageComponent";
 import { BuildingUpgradeComponent } from "./BuildingUpgradeComponent";
 import { BuildingWorkerComponent } from "./BuildingWorkerComponent";
 import { FormatNumber } from "./HelperComponents";
-import type { ResourceDefinitions } from "../../../shared/definitions/ResourceDefinitions";
+import type { Resource, ResourceDefinitions } from "../../../shared/definitions/ResourceDefinitions";
 
 interface IMarketFiltersProps {
-   resourceFilterParams: {resourceFilter: string, setResourceFilter: React.Dispatch<React.SetStateAction<string>>},
-   resources: (keyof ResourceDefinitions)[]
+   resourceFilterParams: {
+      resourceFilter: Resource | null;
+      setResourceFilter: (newFilter: Resource | null) => void;
+   };
+   resources: (keyof ResourceDefinitions)[];
 }
-function MarketFilters({resourceFilterParams, resources}: IMarketFiltersProps): React.ReactNode {
-   const { resourceFilter, setResourceFilter} = resourceFilterParams;
+function MarketFilters({ resourceFilterParams, resources }: IMarketFiltersProps): React.ReactNode {
+   const { resourceFilter, setResourceFilter } = resourceFilterParams;
 
    return (
       <fieldset>
-         <legend>Filters</legend>
-         <div className="row">         
+         <legend>{t(L.MarketFilters)}</legend>
+         <div className="row">
             <div style={{ width: "80px" }}>{t(L.MarketFilterResource)}</div>
             <select
-                  className="f1"
-                  value={resourceFilter}
-                  onChange={(e) => {
-                     if (e.target.value in Config.Resource || e.target.value === "") {
-                        setResourceFilter(e.target.value);
-                     }
-                  }}
-               >
-                  <option value=""></option>
-                  {resources.map((res) => (
-                     <option key={res} value={res}>
-                        {Config.Resource[res].name()}
-                     </option>
-                  ))}
-               </select>            
-         </div>            
+               className="f1"
+               value={resourceFilter ? resourceFilter : ""}
+               onChange={(e) => {
+                  if (e.target.value in Config.Resource || e.target.value === "") {
+                     setResourceFilter(e.target.value === "" ? null : (e.target.value as Resource));
+                  }
+               }}
+            >
+               <option value=""></option>
+               {resources.map((res) => (
+                  <option key={res} value={res}>
+                     {Config.Resource[res].name()}
+                  </option>
+               ))}
+            </select>
+         </div>
       </fieldset>
-   )
+   );
 }
 
 export function MarketBuildingBody({ gameState, xy }: IBuildingComponentProps): React.ReactNode {
@@ -60,7 +63,7 @@ export function MarketBuildingBody({ gameState, xy }: IBuildingComponentProps): 
    const market = building as IMarketBuildingData;
    const capacity = building.capacity * building.level * totalMultiplierFor(xy, "output", 1, gameState);
 
-   const [resourceFilter, setResourceFilter] = useState<keyof ResourceDefinitions|string>("");
+   const [resourceFilter, setResourceFilter] = useState<Resource | null>(null);
    return (
       <div className="window-body">
          <fieldset>
@@ -72,8 +75,9 @@ export function MarketBuildingBody({ gameState, xy }: IBuildingComponentProps): 
             </div>
          </fieldset>
          <MarketFilters
-            resourceFilterParams={{resourceFilter, setResourceFilter}}
-            resources={keysOf(market.availableResources)}/>
+            resourceFilterParams={{ resourceFilter, setResourceFilter }}
+            resources={keysOf(market.availableResources)}
+         />
          <div className="table-view">
             <table>
                <thead>
@@ -90,11 +94,14 @@ export function MarketBuildingBody({ gameState, xy }: IBuildingComponentProps): 
                   {keysOf(market.availableResources)
                      .sort((a, b) => (Config.ResourcePrice[b] ?? 0) - (Config.ResourcePrice[a] ?? 0))
                      .filter((res) => {
-                        if ( res === resourceFilter || resourceFilter === "" ||
-                            market.availableResources[res]! === resourceFilter ) {
+                        if (
+                           res === resourceFilter ||
+                           !resourceFilter ||
+                           market.availableResources[res]! === resourceFilter
+                        ) {
                            return true;
                         }
-                        return false
+                        return false;
                      })
                      .map((res) => {
                         const r = Config.Resource[res];

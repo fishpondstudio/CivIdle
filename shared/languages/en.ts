@@ -637,6 +637,7 @@ export const EN = {
    MarketYouGet: "You Get",
    MarketSell: "Sell",
    MarketFilterResource: "Resource",
+   MarketFilters: "Filters",
    ResourceAmount: "Amount",
    RomanForum: "Roman Forum",
    Acropolis: "Acropolis",
