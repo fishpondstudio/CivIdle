@@ -12,7 +12,7 @@ import {
 } from "../../../shared/logic/GameStateLogic";
 import { getGrid, getSpecialBuildings } from "../../../shared/logic/IntraTickCache";
 import { makeBuilding } from "../../../shared/logic/Tile";
-import { type Tile, clamp, lerp, lookAt, pointToTile, tileToPoint } from "../../../shared/utilities/Helper";
+import { clamp, lerp, lookAt, pointToTile, tileToPoint, type Tile } from "../../../shared/utilities/Helper";
 import { Vector2, v2 } from "../../../shared/utilities/Vector2";
 import { TilePage } from "../ui/TilePage";
 import { ViewportScene } from "../utilities/SceneManager";
@@ -191,16 +191,17 @@ export class WorldScene extends ViewportScene {
          v2(target).subtractSelf(viewportCenter!).length() / 2000,
          Easing.InOutSine,
       ).start();
-      this.drawSelection(tileToPoint(xy));
+      this.drawSelection(null, [xy]);
    }
 
-   drawSelection(grid: IPointData, highlights: Tile[] = []) {
-      if (!this._selectedGraphics) {
+   drawSelection(selected: IPointData | null, highlights: Tile[] = []) {
+      if (!this._selectedGraphics || !this._selectedXy) {
          return;
       }
       this._selectedGraphics.clear();
-      const g = getGrid(getGameState());
-      if (g.isEdge(grid)) {
+      const grid = getGrid(getGameState());
+      selected ??= tileToPoint(this._selectedXy);
+      if (grid.isEdge(selected)) {
          return;
       }
       this._selectedGraphics.lineStyle({
@@ -210,11 +211,11 @@ export class WorldScene extends ViewportScene {
          join: LINE_JOIN.ROUND,
          alignment: 0.5,
       });
-      drawSelected(g, grid, this._selectedGraphics);
+      drawSelected(grid, selected, this._selectedGraphics);
       highlights.forEach((tile) => {
          this._selectedGraphics.lineStyle({ width: 0 });
          this._selectedGraphics.beginFill(0xffffff, 0.2, true);
-         drawSelected(g, tileToPoint(tile), this._selectedGraphics);
+         drawSelected(grid, tileToPoint(tile), this._selectedGraphics);
          this._selectedGraphics.endFill();
       });
    }

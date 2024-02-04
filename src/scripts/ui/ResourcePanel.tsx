@@ -83,7 +83,7 @@ export function ResourcePanel(): React.ReactNode {
                <div className="separator-vertical" />
             </>
          ) : null}
-         <div className="row" onClick={() => Singleton().sceneManager.loadScene(TechTreeScene)}>
+         <div className="row pointer" onClick={() => Singleton().sceneManager.loadScene(TechTreeScene)}>
             <div
                className={classNames({
                   "m-icon": true,
