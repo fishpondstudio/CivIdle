@@ -8,6 +8,7 @@ import { L, t } from "../../../shared/utilities/i18n";
 import { useGameState } from "../Global";
 import { useCurrentTick } from "../logic/Tick";
 import { FormatNumber } from "./HelperComponents";
+import { TextWithHelp } from "./TextWithHelpComponent";
 
 export function ResourcePanel(): React.ReactNode {
    const tick = useCurrentTick();
@@ -16,7 +17,7 @@ export function ResourcePanel(): React.ReactNode {
    return (
       <div className="resource-bar window">
          {tick.happiness ? (
-            <div className="row" aria-label={t(L.Happiness)} data-balloon-pos="down" data-balloon-text="left">
+            <div className="row">
                <div
                   className={classNames({
                      "m-icon": true,
@@ -26,17 +27,15 @@ export function ResourcePanel(): React.ReactNode {
                >
                   {getHappinessIcon(tick.happiness.value)}
                </div>
-               <div className="f1">{tick.happiness.value}</div>
+               <div className="f1">
+                  <TextWithHelp noStyle placement="bottom" help={t(L.Happiness)}>
+                     {tick.happiness.value}
+                  </TextWithHelp>
+               </div>
             </div>
          ) : null}
          <div className="separator-vertical" />
-         <div
-            className="row"
-            style={{ width: "150px" }}
-            aria-label={`${t(L.WorkersBusy)} / ${t(L.WorkersAvailable)}`}
-            data-balloon-pos="down"
-            data-balloon-text="left"
-         >
+         <div className="row" style={{ width: "150px" }}>
             <div
                className={classNames({
                   "m-icon": true,
@@ -45,19 +44,20 @@ export function ResourcePanel(): React.ReactNode {
                person
             </div>
             <div className="f1">
-               <FormatNumber value={workersBusy} /> / <FormatNumber value={workersAvailableAfterHappiness} />
+               <TextWithHelp
+                  help={`${t(L.WorkersBusy)} / ${t(L.WorkersAvailable)}`}
+                  placement="bottom"
+                  noStyle
+               >
+                  <FormatNumber value={workersBusy} /> /{" "}
+                  <FormatNumber value={workersAvailableAfterHappiness} />
+               </TextWithHelp>
             </div>
          </div>
          <div className="separator-vertical" />
          {hasFeature(GameFeature.Electricity, gs) ? (
             <>
-               <div
-                  className="row"
-                  style={{ width: "150px" }}
-                  aria-label={`${t(L.PowerUsed)}/${t(L.PowerAvailable)}`}
-                  data-balloon-pos="down"
-                  data-balloon-text="left"
-               >
+               <div className="row" style={{ width: "150px" }}>
                   <div
                      className={classNames({
                         "m-icon": true,
@@ -68,14 +68,20 @@ export function ResourcePanel(): React.ReactNode {
                      bolt
                   </div>
                   <div className="f1">
-                     <FormatNumber value={tick.workersUsed.Power ?? 0} />W{" / "}
-                     <FormatNumber value={tick.workersAvailable.Power ?? 0} />W
+                     <TextWithHelp
+                        placement="bottom"
+                        help={`${t(L.PowerUsed)}/${t(L.PowerAvailable)}`}
+                        noStyle
+                     >
+                        <FormatNumber value={tick.workersUsed.Power ?? 0} />W{" / "}
+                        <FormatNumber value={tick.workersAvailable.Power ?? 0} />W
+                     </TextWithHelp>
                   </div>
                </div>
                <div className="separator-vertical" />
             </>
          ) : null}
-         <div className="row" aria-label={t(L.Science)} data-balloon-pos="down" data-balloon-text="left">
+         <div className="row">
             <div
                className={classNames({
                   "m-icon": true,
@@ -84,16 +90,13 @@ export function ResourcePanel(): React.ReactNode {
                science
             </div>
             <div className="f1">
-               <FormatNumber value={getResourceAmount("Science", gs)} />
+               <TextWithHelp help={t(L.Science)} placement="bottom" noStyle>
+                  <FormatNumber value={getResourceAmount("Science", gs)} />
+               </TextWithHelp>
             </div>
          </div>
          <div className="separator-vertical" />
-         <div
-            className="row"
-            aria-label={t(L.NotProducingBuildings)}
-            data-balloon-pos="down"
-            data-balloon-text="left"
-         >
+         <div className="row">
             <div
                className={classNames({
                   "m-icon": true,
@@ -102,16 +105,13 @@ export function ResourcePanel(): React.ReactNode {
                domain_disabled
             </div>
             <div className="f1">
-               <FormatNumber value={sizeOf(tick.notProducingReasons)} />
+               <TextWithHelp help={t(L.NotProducingBuildings)} placement="bottom" noStyle>
+                  <FormatNumber value={sizeOf(tick.notProducingReasons)} />
+               </TextWithHelp>
             </div>
          </div>
          <div className="separator-vertical" />
-         <div
-            className="row"
-            aria-label={t(L.TotalEmpireValue)}
-            data-balloon-pos="down"
-            data-balloon-text="left"
-         >
+         <div className="row">
             <div
                className={classNames({
                   "m-icon": true,
@@ -120,7 +120,9 @@ export function ResourcePanel(): React.ReactNode {
                account_balance
             </div>
             <div className="f1">
-               <FormatNumber value={tick.totalValue} />
+               <TextWithHelp help={t(L.TotalEmpireValue)} placement="bottom" noStyle>
+                  <FormatNumber value={tick.totalValue} />
+               </TextWithHelp>
             </div>
          </div>
       </div>

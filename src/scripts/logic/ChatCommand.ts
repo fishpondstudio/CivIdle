@@ -17,10 +17,17 @@ import { decompressSave, loadSave } from "../Global";
 import { addSystemMessage, client } from "../rpc/RPCClient";
 import { tickEverySecond } from "./Tick";
 
+function requireOfflineRun(): void {
+   if (!getGameState().isOffline) {
+      throw new Error("Command is only available for trial run");
+   }
+}
+
 export async function handleChatCommand(command: string): Promise<void> {
    const parts = command.split(" ");
    switch (parts[0]) {
       case "timetravel": {
+         requireOfflineRun();
          const time = clamp(safeParseInt(parts[1], 30), 0, 60 * 4);
          addSystemMessage(`Time travel ${time} minutes. This could take a while, please be patient...`);
          setTimeout(() => {
@@ -34,6 +41,7 @@ export async function handleChatCommand(command: string): Promise<void> {
          break;
       }
       case "loadsave": {
+         requireOfflineRun();
          const [handle] = await window.showOpenFilePicker();
          const file = await handle.getFile();
          const bytes = await file.arrayBuffer();

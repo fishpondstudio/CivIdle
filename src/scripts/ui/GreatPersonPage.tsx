@@ -1,8 +1,10 @@
 import { Config } from "../../../shared/logic/Config";
+import { MAX_TRIBUNE_CARRY_OVER_LEVEL } from "../../../shared/logic/Constants";
 import { getSpecialBuildings } from "../../../shared/logic/IntraTickCache";
 import { isEmpty } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import { useGameOptions, useGameState } from "../Global";
+import { isOnlineUser } from "../rpc/RPCClient";
 import { jsxMapOf } from "../utilities/Helper";
 import { Singleton } from "../utilities/Singleton";
 import { greatPersonImage } from "../visuals/GreatPersonVisual";
@@ -11,6 +13,8 @@ import { ChooseGreatPersonModal } from "./ChooseGreatPersonModal";
 import { showModal } from "./GlobalModal";
 import { MenuComponent } from "./MenuComponent";
 import { PermanentGreatPeople } from "./PermanentGreatPeople";
+import { RenderHTML } from "./RenderHTMLComponent";
+import { TextWithHelp } from "./TextWithHelpComponent";
 import { TilePage } from "./TilePage";
 import { UpgradeGreatPersonModal } from "./UpgradeGreatPersonModal";
 import { WarningComponent } from "./WarningComponent";
@@ -82,15 +86,7 @@ export function GreatPersonPage(): React.ReactNode {
                                        </div>
                                     </td>
                                     <td className="text-center">
-                                       <div
-                                          className="text-center"
-                                          aria-label={person.desc(person, level)}
-                                          data-balloon-pos="left"
-                                          data-balloon-text="left"
-                                          data-balloon-length="medium"
-                                       >
-                                          {level}
-                                       </div>
+                                       <TextWithHelp help={person.desc(person, level)}>{level}</TextWithHelp>
                                     </td>
                                  </tr>
                               );
@@ -109,20 +105,24 @@ export function GreatPersonPage(): React.ReactNode {
             </fieldset>
             <fieldset>
                <legend>{t(L.PermanentGreatPeople)}</legend>
+               {isOnlineUser() ? null : (
+                  <WarningComponent className="mb10 text-small" icon="warning">
+                     <RenderHTML
+                        html={t(L.TribuneGreatPeopleLevelWarning, { level: MAX_TRIBUNE_CARRY_OVER_LEVEL })}
+                     />
+                  </WarningComponent>
+               )}
                {isEmpty(options.greatPeople) ? null : (
-                  <>
-                     <div
-                        className="text-link text-strong"
-                        onClick={() => showModal(<UpgradeGreatPersonModal />)}
-                     >
-                        {t(L.PermanentGreatPeopleShowInModal)}
-                     </div>
-                     <div className="sep10" />
-                  </>
+                  <button
+                     className="row w100 mb10 text-strong"
+                     onClick={() => showModal(<UpgradeGreatPersonModal />)}
+                  >
+                     <div className="m-icon small">open_in_new</div>
+                     <div className="f1 text-center">{t(L.PermanentGreatPeopleShowInModal)}</div>
+                  </button>
                )}
                <PermanentGreatPeople showEffect={false} stickyHeader={false} />
             </fieldset>
-
             <fieldset>
                <legend>{t(L.GreatPeopleWiki)}</legend>
                <div className="table-view">

@@ -1,21 +1,21 @@
-import { getGameOptions, getGameState } from "../../../shared/logic/GameStateLogic";
+import { getGameState } from "../../../shared/logic/GameStateLogic";
 import { fossilDeltaCreate } from "../../../shared/thirdparty/FossilDelta";
 import { wyhash } from "../../../shared/thirdparty/wyhash";
-import { client } from "../rpc/RPCClient";
+import { client, isOnlineUser } from "../rpc/RPCClient";
 import { compress } from "../workers/Compress";
 
 export class Heartbeat {
    constructor(private data: Uint8Array) {}
 
    public init(): void {
-      if (getGameState().isOffline || getGameOptions().isOffline) {
+      if (!getGameState().isOffline || !isOnlineUser()) {
          return;
       }
       compress(this.data).then((d) => client.fullHeartbeat(d));
    }
 
    public update(data: Uint8Array): void {
-      if (getGameState().isOffline || getGameOptions().isOffline) {
+      if (getGameState().isOffline || !isOnlineUser()) {
          client.pulse();
          return;
       }

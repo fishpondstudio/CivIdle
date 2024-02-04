@@ -1,8 +1,8 @@
 import { decode, encode } from "@msgpack/msgpack";
 import type { ServerImpl } from "../../../server/src/Server";
-import { getGameOptions } from "../../../shared/logic/GameStateLogic";
+import { getGameOptions, getGameState } from "../../../shared/logic/GameStateLogic";
 import type { IClientTrade } from "../../../shared/logic/PlayerTradeLogic";
-import { RpcError, removeTrailingUndefs, rpcClient } from "../../../shared/thirdparty/typedrpc/client";
+import { RpcError, removeTrailingUndefs, rpcClient } from "../../../shared/thirdparty/TRPCClient";
 import type {
    AllMessageTypes,
    IChat,
@@ -14,7 +14,7 @@ import type {
    IUser,
    IWelcomeMessage,
 } from "../../../shared/utilities/Database";
-import { MessageType } from "../../../shared/utilities/Database";
+import { AccountLevel, MessageType } from "../../../shared/utilities/Database";
 import { forEach } from "../../../shared/utilities/Helper";
 import { TypedEvent } from "../../../shared/utilities/TypedEvent";
 import { L, t } from "../../../shared/utilities/i18n";
@@ -73,7 +73,26 @@ export const client = rpcClient<ServerImpl>({
 export const usePlayerMap = makeObservableHook(OnPlayerMapChanged, () => playerMap);
 export const useChatMessages = makeObservableHook(OnChatMessage, () => chatMessages);
 export const useTrades = makeObservableHook(OnTradeMessage, () => Object.values(trades));
-export const useUser = makeObservableHook(OnUserChanged, () => user);
+export const useUser = makeObservableHook(OnUserChanged, getUser);
+
+function getUser(): IUser | null {
+   return user;
+}
+
+export function isOnlineUser(): boolean {
+   return (user?.level ?? AccountLevel.Tribune) > AccountLevel.Tribune;
+}
+
+export function getUserLevel(): AccountLevel {
+   return user?.level ?? AccountLevel.Tribune;
+}
+
+export function canEarnGreatPeopleFromReborn(): boolean {
+   if (isOnlineUser()) {
+      return !getGameState().isOffline;
+   }
+   return true;
+}
 
 export const SYSTEM_USER = "$";
 
@@ -130,10 +149,13 @@ export async function connectWebSocket(): Promise<number> {
          case MessageType.Welcome: {
             const w = message as IWelcomeMessage;
             user = w.user;
-            OnOfflineTime.emit(w.offlineTime);
-            OnUserChanged.emit({ ...user });
+            if (user.level <= AccountLevel.Tribune) {
+               getGameState().isOffline = true;
+            }
             getGameOptions().token = w.user.token;
             saveGame(false).catch(console.error);
+            OnUserChanged.emit({ ...user });
+            OnOfflineTime.emit(w.offlineTime);
             break;
          }
          case MessageType.Trade: {

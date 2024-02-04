@@ -262,6 +262,10 @@ fieldset .separator {
    margin-left: 10px;
 }
 
+.ml15 {
+   margin-left: 15px;
+}
+
 .ml20 {
    margin-left: 20px;
 }
@@ -488,24 +492,6 @@ ul.tree-view>li:first-child {
    text-align: right;
 }
 
-.modal-overlay {
-   position: fixed;
-   top: 0;
-   left: 0;
-   right: 0;
-   bottom: 0;
-   background: rgba(0, 0, 0, 0.75);
-}
-
-.modal-content {
-   position: absolute;
-   top: min(200px, 10%);
-   left: min(200px, 10%);
-   right: min(200px, 10%);
-   bottom: min(200px, 10%);
-   outline: none;
-}
-
 .nowrap {
    white-space: nowrap;
 }
@@ -544,4 +530,10 @@ button {
 .player-level {
    height: 12px;
    display: block;
+}
+
+.with-help {
+   text-decoration: dotted underline;
+   text-underline-offset: 0.25em;
+   cursor: help;
 }

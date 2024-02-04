@@ -1,4 +1,4 @@
-import { Languages, syncLanguage } from "../../../shared/logic/GameState";
+import { Languages, getTranslatedPercentage, syncLanguage } from "../../../shared/logic/GameState";
 import { notifyGameOptionsUpdate } from "../../../shared/logic/GameStateLogic";
 import {
    PRIORITY_MAX,
@@ -10,9 +10,11 @@ import {
    setProductionPriority,
    setUpgradePriority,
 } from "../../../shared/logic/Tile";
+import { formatPercent } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import { useGameOptions } from "../Global";
 import { jsxMapOf } from "../utilities/Helper";
+import { openUrl } from "../utilities/Platform";
 import { ChangeSoundComponent } from "./ChangeSoundComponent";
 import { MenuComponent } from "./MenuComponent";
 
@@ -44,6 +46,19 @@ export function GameplayOptionPage(): React.ReactNode {
                      );
                   })}
                </select>
+               {options.language !== "en" ? (
+                  <div
+                     className="mt5 text-link"
+                     onClick={() =>
+                        openUrl("https://github.com/fishpondstudio/CivIdle/tree/main/shared/languages")
+                     }
+                  >
+                     {t(L.TranslationPercentage, {
+                        language: L.CurrentLanguage,
+                        percentage: formatPercent(getTranslatedPercentage()),
+                     })}
+                  </div>
+               ) : null}
             </fieldset>
             <fieldset>
                <div className="row">

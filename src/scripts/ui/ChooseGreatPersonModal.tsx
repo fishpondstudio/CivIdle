@@ -14,7 +14,6 @@ export function ChooseGreatPersonModal({
    greatPeopleChoice,
 }: { greatPeopleChoice: GreatPeopleChoice }): React.ReactNode {
    const gs = useGameState();
-   const options = useGameOptions();
    function onChosen(greatPerson: GreatPerson) {
       playClick();
       gs.greatPeopleChoices.splice(gs.greatPeopleChoices.indexOf(greatPeopleChoice), 1);

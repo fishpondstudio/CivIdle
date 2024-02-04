@@ -5,21 +5,25 @@ import { Config } from "../../../shared/logic/Config";
 import {} from "../../../shared/logic/GameState";
 import { getGameOptions, notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
 import { getUpgradePriority, setUpgradePriority } from "../../../shared/logic/Tile";
-import { numberToRoman } from "../../../shared/utilities/Helper";
+import { isEmpty, numberToRoman, tileToPoint, type Tile } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
+import { WorldScene } from "../scenes/WorldScene";
 import { jsxMapOf } from "../utilities/Helper";
 import { useShortcut } from "../utilities/Hook";
+import { Singleton } from "../utilities/Singleton";
 import type { IBuildingComponentProps } from "./BuildingPage";
 import { FormatNumber } from "./HelperComponents";
 
 export function BuildingUpgradeComponent({ gameState, xy }: IBuildingComponentProps): React.ReactNode {
-   const building = gameState.tiles.get(xy)?.building;
+   const tile = gameState.tiles.get(xy);
+   const building = tile?.building;
    if (!building) {
       return null;
    }
    if ((Config.Building[building.type]?.max ?? Infinity) <= 1) {
       return null;
    }
+   const deposits = tile.deposit;
    const levels = getBuildingUpgradeLevels(building);
    const [selected, setSelected] = useState(0);
    const cost = getTotalBuildingCost(building.type, building.level, building.level + levels[selected]);
@@ -38,21 +42,66 @@ export function BuildingUpgradeComponent({ gameState, xy }: IBuildingComponentPr
    return (
       <>
          <fieldset>
-            <legend className="text-strong">
-               {t(L.Level)} {building.level}
-            </legend>
             <div className="row">
-               <div className="f1"> {t(L.BuildingTier)}</div>
+               <div className="f1">{t(L.Level)}</div>
+               <div className="text-strong">{building.level}</div>
+            </div>
+            <div className="sep5" />
+            <div className="row">
+               <div className="f1">{t(L.BuildingTier)}</div>
                <div className="text-strong">{numberToRoman(Config.BuildingTier[building.type]!)}</div>
             </div>
-            <div className="sep5"></div>
+            <div className="separator"></div>
+            <div className="row text-link text-strong">
+               <div className="m-icon " style={{ margin: "-10px 0" }}>
+                  search
+               </div>
+               <div
+                  className="ml5"
+                  onClick={() => {
+                     const result: Tile[] = [];
+                     gameState.tiles.forEach((tile, xy) => {
+                        if (tile.building?.type === building.type) {
+                           result.push(xy);
+                        }
+                     });
+                     Singleton().sceneManager.getCurrent(WorldScene)?.drawSelection(tileToPoint(xy), result);
+                  }}
+               >
+                  {Config.Building[building.type].name()}
+               </div>
+               {isEmpty(deposits)
+                  ? null
+                  : jsxMapOf(deposits, (deposit) => {
+                       return (
+                          <div
+                             key={deposit}
+                             className="ml10"
+                             onClick={() => {
+                                const result: Tile[] = [];
+                                gameState.tiles.forEach((tile, xy) => {
+                                   if (tile.explored && tile.deposit[deposit]) {
+                                      result.push(xy);
+                                   }
+                                });
+                                Singleton()
+                                   .sceneManager.getCurrent(WorldScene)
+                                   ?.drawSelection(tileToPoint(xy), result);
+                             }}
+                          >
+                             {Config.Resource[deposit].name()}
+                          </div>
+                       );
+                    })}
+            </div>
+         </fieldset>
+         <fieldset>
+            <legend>{t(L.Upgrade)}</legend>
             <div className="row">
-               <div className="f1">{t(L.Upgrade)}</div>
                {levels.map((level, index) => (
                   <button
                      key={level}
-                     style={{ width: "60px" }}
-                     className={classNames({ "text-strong": index === selected })}
+                     className={classNames({ "text-strong": index === selected, f1: true })}
                      onMouseOver={setSelected.bind(null, index)}
                      onClick={() => upgrade(level)}
                   >
@@ -60,11 +109,11 @@ export function BuildingUpgradeComponent({ gameState, xy }: IBuildingComponentPr
                   </button>
                ))}
             </div>
-            <div className="sep5"></div>
+            <div className="sep5" />
             <div className="text-desc text-small">
                {jsxMapOf(cost, (res, amount) => {
                   return (
-                     <div className="row mv5" key={res}>
+                     <div className="row" key={res}>
                         <div className="f1">{Config.Resource[res].name()}</div>
                         <div className="text-strong">
                            <FormatNumber value={amount} />

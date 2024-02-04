@@ -819,9 +819,6 @@ export const RU = {
    AccountTypeShowDetails: "Показать Детали Аккаунта",
    PlayerHandleOffline: "Вы сейчас не в сети",
    AccountLevel: "Уровень Аккаунта",
-   ThisRun: "Этот Пробег",
-   ThisRunPermanent: "Постоянный",
-   ThisRunTrial: "Пробный",
    TrialRunDesc:
       "Квестор или выше может начать пробный запуск, который подчиняется ограничениям Трибуна и не может заработать постоянных великих людей.",
    Tutorial1:
@@ -843,9 +840,23 @@ export const RU = {
    AccountLevelAedile: "Эдил",
    AccountLevelPraetor: "Претор",
    AccountLevelConsul: "Консул",
+   AccountLevelCensor: "Censor",
    AccountChatBadge: "Значок Чата",
    AccountLeaderboard: "Таблица Лидеров",
    AccountActiveTrade: "Активных Заявок",
    AccountTradeValuePerMinute: "Торгового Стоимости В Минуту",
    AccountTradePriceRange: "Диапазон Цен Торговли",
+   AccountTradeTileReservationTime: "Trade Tile Reservation",
+   AccountTradeTileReservationTimeDesc:
+      "This is the time your player trade tile will be reserved for you since you are last online. After the reservation period has ended, your tile will become available for other players",
+   AccountUpgradeCarryOver: "Carry Over Level",
+   AccountUpgradeCarryOverDesc:
+      "When upgrading to the next account level, this is the maximum level of permanent great people that you can carry over",
+   TranslationPercentage: "%{language} is %{percentage} translated. Help improve this translation on GitHub",
+   CanEarnGreatPeopleFromRebornYes: "This run can earn great people from reborn",
+   CanEarnGreatPeopleFromRebornNo: "This run cannot earn great people from reborn",
+   TribuneUpgradeDesc:
+      "Upgrading from Tribune to Quaestor will allow your account to use all online features. However, <b>you can only carry over permanent great people up to level %{level}</b>",
+   TribuneGreatPeopleLevelWarning:
+      "Your account level is Tribune - when you upgrade to Quaestor, you can carry over permanent great people up to level %{level}",
 };

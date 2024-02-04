@@ -26,6 +26,7 @@
       "@pixi/graphics-smooth": "^1.1.0",
       "@pixi/sound": "^5.2.0",
       "@sentry/browser": "^7.52.1",
+      "@tippyjs/react": "^4.2.6",
       "classnames": "^2.3.1",
       "pako": "^2.1.0",
       "pixi.js": "7.4.0",
@@ -33,6 +34,7 @@
       "react": "^18.2.0",
       "react-dom": "^18.2.0",
       "react-modal": "^3.15.1",
+      "tippy.js": "^6.3.7",
       "xp.css": "^0.3.0"
    },
    "devDependencies": {

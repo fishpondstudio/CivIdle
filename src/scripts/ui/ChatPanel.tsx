@@ -15,6 +15,7 @@ import { useTypedEvent } from "../utilities/Hook";
 import { showModal } from "./GlobalModal";
 import { RenderHTML } from "./RenderHTMLComponent";
 import { SelectChatChannelModal } from "./SelectChatChannelModal";
+import { TextWithHelp } from "./TextWithHelpComponent";
 
 export function ChatPanel(): React.ReactNode {
    const [chat, setChat] = useState("");
@@ -182,14 +183,13 @@ export function ChatPanel(): React.ReactNode {
          <div className="row" style={{ padding: "2px" }}>
             <div
                className="language-switch pointer"
-               aria-label={ChatChannels[options.chatSendChannel]}
-               data-balloon-pos="right"
-               data-balloon-text="left"
                onClick={() => {
                   showModal(<SelectChatChannelModal />);
                }}
             >
-               {options.chatSendChannel.toUpperCase()}
+               <TextWithHelp noStyle help={ChatChannels[options.chatSendChannel]}>
+                  {options.chatSendChannel.toUpperCase()}
+               </TextWithHelp>
             </div>
             <input
                ref={chatInput}

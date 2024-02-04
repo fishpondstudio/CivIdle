@@ -29,6 +29,9 @@ dependencies:
   '@sentry/browser':
     specifier: ^7.52.1
     version: 7.91.0
+  '@tippyjs/react':
+    specifier: ^4.2.6
+    version: 4.2.6(react-dom@18.2.0)(react@18.2.0)
   classnames:
     specifier: ^2.3.1
     version: 2.3.2
@@ -50,6 +53,9 @@ dependencies:
   react-modal:
     specifier: ^3.15.1
     version: 3.16.1(react-dom@18.2.0)(react@18.2.0)
+  tippy.js:
+    specifier: ^6.3.7
+    version: 6.3.7
   xp.css:
     specifier: ^0.3.0
     version: 0.3.0
@@ -1347,6 +1353,10 @@ packages:
       url: 0.11.3
     dev: false
 
+  /@popperjs/core@2.11.8:
+    resolution: {integrity: sha512-P1st0aksCrn9sGZhp8GMYwBnQsbvAWsZAX44oXNNvLHGqAOcoVxmjZiohstwQ7SqKnbR47akdNi+uleWD8+g6A==}
+    dev: false
+
   /@sentry-internal/feedback@7.91.0:
     resolution: {integrity: sha512-SJKTSaz68F5YIwF79EttBm915M2LnacgZMYRnRumyTmMKnebGhYQLwWbZdpaDvOa1U18dgRajDX8Qed/8A3tXw==}
     engines: {node: '>=12'}
@@ -1541,6 +1551,17 @@ packages:
     dependencies:
       defer-to-connect: 1.1.3
     dev: true
+
+  /@tippyjs/react@4.2.6(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-91RicDR+H7oDSyPycI13q3b7o4O60wa2oRbjlz2fyRLmHImc4vyDwuUP8NtZaN0VARJY5hybvDYrFzhY9+Lbyw==}
+    peerDependencies:
+      react: '>=16.8'
+      react-dom: '>=16.8'
+    dependencies:
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+      tippy.js: 6.3.7
+    dev: false
 
   /@types/css-font-loading-module@0.0.12:
     resolution: {integrity: sha512-x2tZZYkSxXqWvTDgveSynfjq/T2HyiZHXb00j/+gy19yp70PHCizM48XFdjBCWH7eHBD0R5i/pw9yMBP/BH5uA==}
@@ -4561,6 +4582,12 @@ packages:
   /tinycolor2@1.6.0:
     resolution: {integrity: sha512-XPaBkWQJdsf3pLKJV9p4qN/S+fm2Oj8AIPo1BTUhg5oxkvm9+SVEGFdhyOz7tTdUTfvxMiAs4sp6/eZO2Ew+pw==}
     dev: true
+
+  /tippy.js@6.3.7:
+    resolution: {integrity: sha512-E1d3oP2emgJ9dRQZdf3Kkn0qJgI6ZLpyS5z6ZkY1DF3kaQaBsGZsndEpHwx+eC+tYM41HaSNvNtLx8tU57FzTQ==}
+    dependencies:
+      '@popperjs/core': 2.11.8
+    dev: false
 
   /to-fast-properties@2.0.0:
     resolution: {integrity: sha512-/OaKK0xYrs3DmxRYqL/yDc+FxFUVYhDlXMhRmv3z915w2HF1tnN1omB354j8VUGO/hbRzyD6Y3sA7v7GS/ceog==}

@@ -5,6 +5,13 @@ interface PatchNote {
 
 export const PatchNotes: PatchNote[] = [
    {
+      version: "0.1.121",
+      content: [
+         ["QoL", "Allow highlight buildings/deposits on map"],
+         ["QoL", "Allow sorting by column in Censor's Office (@Vethon)"],
+      ],
+   },
+   {
       version: "0.1.120",
       content: [
          ["QoL", "Add /randomcolor chat command that will assign a random color to all buildings/resources"],

@@ -813,9 +813,6 @@ export const EN = {
    AccountTypeShowDetails: "Show Account Details",
    PlayerHandleOffline: "You are currently offline",
    AccountLevel: "Account Level",
-   ThisRun: "This Run",
-   ThisRunPermanent: "Permanent",
-   ThisRunTrial: "Trial",
    TrialRunDesc:
       "Quaestor or above can start a trial run that is subject to the Tribune limits and cannot earn permanent great people",
    Tutorial1:
@@ -842,4 +839,19 @@ export const EN = {
    AccountActiveTrade: "Active Trade",
    AccountTradeValuePerMinute: "Trade Value Per Minute",
    AccountTradePriceRange: "Trade Price Range",
+   AccountTradeTileReservationTime: "Trade Tile Reservation",
+   AccountTradeTileReservationTimeDesc:
+      "This is the time your player trade tile will be reserved for you since you are last online. After the reservation period has ended, your tile will become available for other players",
+   AccountUpgradeCarryOver: "Level Carry-Over",
+   AccountUpgradeCarryOverDesc:
+      "When upgrading to the next account level, this is the maximum level of permanent great people that you can carry over",
+   TranslationPercentage: "%{language} is %{percentage} translated. Help improve this translation on GitHub",
+   CanEarnGreatPeopleFromRebornYes: "This run can earn great people from reborn",
+   CanEarnGreatPeopleFromRebornNo: "This run cannot earn great people from reborn",
+   TribuneUpgradeDesc:
+      "Upgrading from Tribune to Quaestor will allow your account to unlock all online features. However, only <b>permanent great people up to level %{level}</b> can be carried over",
+   TribuneGreatPeopleLevelWarning:
+      "Your current account level is Tribune. Upgrading to Quaestor will carry over permanent great people <b>up to level %{level}</b>",
+   RebornModalDesc:
+      "Your will start a new empire but you can take all the great people <b>from this run</b>, plus extra great people based on your <b>total empire value</b>",
 };

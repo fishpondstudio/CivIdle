@@ -1,4 +1,4 @@
-export function RenderHTML({ html }: { html: string }): React.ReactNode {
+export function RenderHTML({ html, className }: { html: string; className?: string }): React.ReactNode {
    /* biome-ignore lint/security/noDangerouslySetInnerHtml: */
-   return <div dangerouslySetInnerHTML={{ __html: html }}></div>;
+   return <div className={className} dangerouslySetInnerHTML={{ __html: html }}></div>;
 }

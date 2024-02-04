@@ -10,23 +10,19 @@ import { jsxMapOf } from "../utilities/Helper";
 import { playClick } from "../visuals/Sound";
 import { hideModal } from "./GlobalModal";
 import { FormatNumber } from "./HelperComponents";
-import { WarningComponent } from "./WarningComponent";
+import { RenderHTML } from "./RenderHTMLComponent";
+import { TextWithHelp } from "./TextWithHelpComponent";
 
 export function RebornModal(): React.ReactNode {
    const gameState = useGameState();
    const options = useGameOptions();
    const [city, setCity] = useState<City>(firstKeyOf(Config.City)!);
    return (
-      <div className="window" style={{ width: "400px" }}>
+      <div className="window" style={{ width: "450px" }}>
          <div className="title-bar">
             <div className="title-bar-text">{t(L.Reborn)}</div>
          </div>
          <div className="window-body">
-            <WarningComponent icon="info">
-               Your will start a new empire but you can take all the great people from this run, plus extra
-               great people based on your total empire value.
-            </WarningComponent>
-            <div className="sep10"></div>
             <fieldset>
                <div className="row">
                   <div className="f1">{t(L.GreatPeopleThisRun)}</div>
@@ -51,6 +47,10 @@ export function RebornModal(): React.ReactNode {
                <div className="row">
                   <div className="f1">{t(L.ExtraGreatPeopleAtReborn)}</div>
                   <div className="text-strong">{getGreatPeopleAtReborn()}</div>
+               </div>
+               <div className="sep10" />
+               <div className="text-small text-desc">
+                  <RenderHTML html={t(L.RebornModalDesc)} />
                </div>
             </fieldset>
             <fieldset>
@@ -83,22 +83,15 @@ export function RebornModal(): React.ReactNode {
                <div>
                   {jsxMapOf(Config.City[city].uniqueBuildings, (building, tech) => {
                      return (
-                        <span
-                           key={building}
-                           style={{
-                              textDecoration: "dotted underline",
-                              textUnderlineOffset: "0.25em",
-                              cursor: "help",
-                           }}
+                        <TextWithHelp
                            className="mr10"
-                           aria-label={Config.Building[building].desc?.()}
-                           data-balloon-pos="up"
-                           data-balloon-text="left"
-                           data-balloon-length="large"
+                           key={building}
+                           size="large"
+                           help={Config.Building[building].desc?.()}
                         >
                            {Config.Building[building].name()}{" "}
                            <span className="text-desc">({Config.Tech[tech].name()})</span>
-                        </span>
+                        </TextWithHelp>
                      );
                   })}
                </div>
@@ -108,21 +101,9 @@ export function RebornModal(): React.ReactNode {
                   {jsxMapOf(Config.City[city].naturalWonders, (building, tech) => {
                      const def = Config.Building[building];
                      return (
-                        <span
-                           key={building}
-                           style={{
-                              textDecoration: "dotted underline",
-                              textUnderlineOffset: "0.25em",
-                              cursor: "help",
-                           }}
-                           className="mr10"
-                           aria-label={def.desc?.()}
-                           data-balloon-pos="up"
-                           data-balloon-text="left"
-                           data-balloon-length="large"
-                        >
+                        <TextWithHelp className="mr10" key={building} size="large" help={def.desc?.()}>
                            {def.name()}
-                        </span>
+                        </TextWithHelp>
                      );
                   })}
                </div>

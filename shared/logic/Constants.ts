@@ -11,8 +11,8 @@ import { Config } from "./Config";
 import { getBuildingUnlockTech, getDepositUnlockTech, getResourceUnlockTech } from "./TechLogic";
 
 export const MAX_OFFLINE_PRODUCTION_SEC = 60 * 60 * 4;
-
 export const SCIENCE_VALUE = 0.5;
+export const MAX_TRIBUNE_CARRY_OVER_LEVEL = 2;
 
 interface IRecipe {
    building: Building;

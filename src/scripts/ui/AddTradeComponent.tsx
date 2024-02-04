@@ -6,7 +6,7 @@ import { getBuyAmountRange } from "../../../shared/logic/PlayerTradeLogic";
 import { Tick } from "../../../shared/logic/TickLogic";
 import { keysOf, safeParseInt } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
-import { client } from "../rpc/RPCClient";
+import { client, useUser } from "../rpc/RPCClient";
 import { playError } from "../visuals/Sound";
 import type { IBuildingComponentProps } from "./BuildingPage";
 import { FormatNumber } from "./HelperComponents";
@@ -24,7 +24,8 @@ export function AddTradeComponent({ gameState, xy }: IBuildingComponentProps): R
       sellAmount: 0,
    });
    const [showTrade, setShowTrade] = useState(false);
-   const [rangeMin, rangeMax] = getBuyAmountRange(trade);
+   const user = useUser();
+   const [rangeMin, rangeMax] = getBuyAmountRange(trade, user);
 
    function isTradeValid(trade: IClientAddTradeRequest): boolean {
       if (trade.buyResource === trade.sellResource) {
