@@ -22,7 +22,7 @@ import { saveGame } from "../Global";
 import { showToast } from "../ui/GlobalModal";
 import { makeObservableHook } from "../utilities/Hook";
 import { playBubble, playKaching } from "../visuals/Sound";
-import { STEAM_APP_ID, SteamClient, isSteam } from "./SteamClient";
+import { SteamClient, isSteam } from "./SteamClient";
 
 const url = new URLSearchParams(window.location.search);
 const devServerAddress = url.get("server") ?? "ws://localhost:8000";
@@ -112,7 +112,9 @@ export async function connectWebSocket(): Promise<number> {
          steamTicket = await SteamClient.getAuthSessionTicket();
       }
       getGameOptions().id = `steam:${await SteamClient.getSteamId()}`;
-      ws = new WebSocket(`${serverAddress}/?appId=${STEAM_APP_ID}&ticket=${steamTicket}&platform=steam`);
+      ws = new WebSocket(
+         `${serverAddress}/?appId=${await SteamClient.getAppID()}&ticket=${steamTicket}&platform=steam`,
+      );
    } else {
       const token = `${getGameOptions().id}:${getGameOptions().token ?? getGameOptions().id}`;
       ws = new WebSocket(`${serverAddress}/?platform=web&ticket=${token}`);
