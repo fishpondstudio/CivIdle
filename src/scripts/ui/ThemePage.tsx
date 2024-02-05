@@ -3,7 +3,7 @@ import {
    ThemeColorNames,
    resetThemeBuildingColors,
    resetThemeColor,
-   resetThemeResourceColors
+   resetThemeResourceColors,
 } from "../../../shared/logic/GameState";
 import { notifyGameOptionsUpdate } from "../../../shared/logic/GameStateLogic";
 import { keysOf } from "../../../shared/utilities/Helper";
