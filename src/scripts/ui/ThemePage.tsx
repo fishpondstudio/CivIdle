@@ -1,5 +1,5 @@
 import { Config } from "../../../shared/logic/Config";
-import { ThemeColorNames, resetThemeColor } from "../../../shared/logic/GameState";
+import { ThemeColorNames, resetThemeBuildingColors, resetThemeColor, resetThemeResourceColors } from "../../../shared/logic/GameState";
 import { notifyGameOptionsUpdate } from "../../../shared/logic/GameStateLogic";
 import { keysOf } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
@@ -91,6 +91,15 @@ export function ThemePage(): React.ReactNode {
                         </div>
                      );
                   })}
+               <div
+                  className="mv5 text-link pointer text-strong"
+                  onClick={() => {
+                     playClick();
+                     resetThemeBuildingColors();
+                  }}
+               >
+                  {t(L.ThemeColorResetBuildingColors)}
+               </div>                  
             </fieldset>
 
             <fieldset>
@@ -112,6 +121,15 @@ export function ThemePage(): React.ReactNode {
                         </div>
                      );
                   })}
+               <div
+                  className="mv5 text-link pointer text-strong"
+                  onClick={() => {
+                     playClick();
+                     resetThemeResourceColors();
+                  }}
+               >
+                  {t(L.ThemeColorResetResourceColors)}
+               </div>                    
             </fieldset>
          </div>
       </div>
