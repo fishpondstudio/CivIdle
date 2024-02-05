@@ -1,5 +1,10 @@
 import { Config } from "../../../shared/logic/Config";
-import { ThemeColorNames, resetThemeBuildingColors, resetThemeColor, resetThemeResourceColors } from "../../../shared/logic/GameState";
+import {
+   ThemeColorNames,
+   resetThemeBuildingColors,
+   resetThemeColor,
+   resetThemeResourceColors
+} from "../../../shared/logic/GameState";
 import { notifyGameOptionsUpdate } from "../../../shared/logic/GameStateLogic";
 import { keysOf } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
@@ -99,7 +104,7 @@ export function ThemePage(): React.ReactNode {
                   }}
                >
                   {t(L.ThemeColorResetBuildingColors)}
-               </div>                  
+               </div>
             </fieldset>
 
             <fieldset>
@@ -129,7 +134,7 @@ export function ThemePage(): React.ReactNode {
                   }}
                >
                   {t(L.ThemeColorResetResourceColors)}
-               </div>                    
+               </div>
             </fieldset>
          </div>
       </div>
