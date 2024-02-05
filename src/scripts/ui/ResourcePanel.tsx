@@ -1,10 +1,9 @@
 import classNames from "classnames";
-import { useState } from "react";
 import { getScienceFromWorkers } from "../../../shared/logic/BuildingLogic";
 import { GameFeature, hasFeature } from "../../../shared/logic/FeatureLogic";
 import { getHappinessIcon } from "../../../shared/logic/HappinessLogic";
 import { getResourceAmount } from "../../../shared/logic/ResourceLogic";
-import { keysOf, sizeOf, type Tile } from "../../../shared/utilities/Helper";
+import { sizeOf, type Tile } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import { useGameState } from "../Global";
 import { useCurrentTick } from "../logic/Tick";
@@ -18,7 +17,6 @@ export function ResourcePanel(): React.ReactNode {
    const tick = useCurrentTick();
    const gs = useGameState();
    const { workersAvailableAfterHappiness, workersBusy } = getScienceFromWorkers(gs);
-   const [notProducingIdx, setNotProducingIdx] = useState(0);
 
    const highlightNotProducingReasons = () => {
       const buildingTiles: Tile[] = Array.from(tick.notProducingReasons.keys());
