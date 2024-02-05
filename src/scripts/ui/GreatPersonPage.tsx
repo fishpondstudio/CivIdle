@@ -30,15 +30,13 @@ export function GreatPersonPage(): React.ReactNode {
          <MenuComponent />
          <div className="window-body">
             <button
-               className="w100"
+               className="w100 row jcc"
                onClick={() => Singleton().routeTo(TilePage, { xy: getSpecialBuildings(gs).Headquarter.tile })}
             >
-               <div className="row jcc">
-                  <div className="m-icon" style={{ margin: "0 5px 0 -5px", fontSize: "18px" }}>
-                     arrow_back
-                  </div>
-                  <div>{t(L.GoBack)}</div>
+               <div className="m-icon" style={{ margin: "0 5px 0 -5px", fontSize: "18px" }}>
+                  arrow_back
                </div>
+               <div className="f1">{t(L.GoBack)}</div>
             </button>
             <div className="sep10"></div>
             {gs.greatPeopleChoices.length > 0 ? (

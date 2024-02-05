@@ -1,8 +1,6 @@
 import type { IPCService } from "../../../electron/src/IPCService";
 import { rpcClient } from "../../../shared/thirdparty/TRPCClient";
 
-export const STEAM_APP_ID = 2181940;
-
 export function isSteam() {
    return typeof IPCBridge !== "undefined";
 }

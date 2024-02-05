@@ -65,6 +65,11 @@ export async function handleChatCommand(command: string): Promise<void> {
          addSystemMessage(`You have played actively and online for ${formatHM(playTime * 1000)}`);
          break;
       }
+      case "playercount": {
+         const playerCount = await client.getPlayerCount();
+         addSystemMessage(`There are ${playerCount} players current online`);
+         break;
+      }
       case "randomcolor": {
          const colors = randomColor({
             luminosity: "light",

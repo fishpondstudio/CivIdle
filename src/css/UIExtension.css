@@ -324,6 +324,14 @@ fieldset .separator {
    margin-bottom: 10px;
 }
 
+.mb15 {
+   margin-bottom: 15px;
+}
+
+.mb20 {
+   margin-bottom: 20px;
+}
+
 .mv10 {
    margin-top: 10px;
    margin-bottom: 10px;
