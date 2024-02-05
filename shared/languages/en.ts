@@ -863,7 +863,7 @@ export const EN = {
       "Your will start a new empire but you can take all the great people <b>from this run</b>, plus extra great people based on your <b>total empire value</b>",
    OperationNotAllowedError: "This operation is not allowed",
    AccountLevelUpgradeConditionAny:
-      "To upgrde your account, you only need to satisfy one of the following criteria:",
+      "To upgrade your account, you only need to satisfy one of the following criteria:",
    AccountLevelPlayTime: "Active Online Playtime > %{requiredTime} (Your play time is %{actualTime})",
    AccountUpgradeButton: "Upgrade Account To Quaestor",
    AccountUpgradeConfirm: "Account Upgrade",
