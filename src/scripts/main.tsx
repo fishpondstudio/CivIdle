@@ -2,6 +2,7 @@ import * as Sentry from "@sentry/browser";
 import type { Texture } from "pixi.js";
 import { Application, Assets, BitmapFont, Spritesheet } from "pixi.js";
 import { createRoot } from "react-dom/client";
+import Chars from "../../shared/utilities/Chars.json";
 import { TypedEvent } from "../../shared/utilities/TypedEvent";
 import "../css/Main.css";
 import CabinMedium from "../fonts/CabinMedium.ttf?url";
@@ -109,9 +110,7 @@ export async function loadBundle() {
       FallbackFont,
       { fill: "#ffffff", fontSize: 64, fontFamily: "serif" },
       {
-         chars: ["АаБбВвГгДдЕеËëЖжЗзИиЙйКкЛлМмНнОоПпРрСсТтУуФфХхЦцЧчШшЩщЪъЫыЬьЭэЮюЯя"].concat(
-            BitmapFont.ASCII.flat(),
-         ),
+         chars: Chars.join(""),
          resolution: 2,
       },
    );

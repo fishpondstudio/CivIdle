@@ -192,6 +192,10 @@ fieldset .separator {
    font-weight: bold;
 }
 
+.text-large {
+   font-size: 150%;
+}
+
 .text-justify {
    text-align: justify;
 }
@@ -322,6 +326,14 @@ fieldset .separator {
 
 .mb10 {
    margin-bottom: 10px;
+}
+
+.mb15 {
+   margin-bottom: 15px;
+}
+
+.mb20 {
+   margin-bottom: 20px;
 }
 
 .mv10 {

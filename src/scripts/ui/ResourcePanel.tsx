@@ -3,11 +3,12 @@ import { getScienceFromWorkers } from "../../../shared/logic/BuildingLogic";
 import { GameFeature, hasFeature } from "../../../shared/logic/FeatureLogic";
 import { getHappinessIcon } from "../../../shared/logic/HappinessLogic";
 import { getResourceAmount } from "../../../shared/logic/ResourceLogic";
-import { sizeOf } from "../../../shared/utilities/Helper";
+import { sizeOf, type Tile } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import { useGameState } from "../Global";
 import { useCurrentTick } from "../logic/Tick";
 import { TechTreeScene } from "../scenes/TechTreeScene";
+import { WorldScene } from "../scenes/WorldScene";
 import { Singleton } from "../utilities/Singleton";
 import { FormatNumber } from "./HelperComponents";
 import { TextWithHelp } from "./TextWithHelpComponent";
@@ -16,6 +17,11 @@ export function ResourcePanel(): React.ReactNode {
    const tick = useCurrentTick();
    const gs = useGameState();
    const { workersAvailableAfterHappiness, workersBusy } = getScienceFromWorkers(gs);
+
+   const highlightNotProducingReasons = () => {
+      const buildingTiles: Tile[] = Array.from(tick.notProducingReasons.keys());
+      Singleton().sceneManager.getCurrent(WorldScene)?.drawSelection(null, buildingTiles);
+   };
    return (
       <div className="resource-bar window">
          {tick.happiness ? (
@@ -98,7 +104,7 @@ export function ResourcePanel(): React.ReactNode {
             </div>
          </div>
          <div className="separator-vertical" />
-         <div className="row">
+         <div className="row pointer" onClick={() => highlightNotProducingReasons()}>
             <div
                className={classNames({
                   "m-icon": true,

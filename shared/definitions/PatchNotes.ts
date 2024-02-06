@@ -5,6 +5,36 @@ interface PatchNote {
 
 export const PatchNotes: PatchNote[] = [
    {
+      version: "0.1.124",
+      content: [
+         ["Bugfix", "Fix a bug where muting player does not work"],
+         ["Bugfix", "Steam will not automatically install necessary VCRedist packages"],
+         ["Bugfix", "Fix a bug where Space key does not show up in the shortcut manager"],
+         ["QoL", "Improve Building Level/Tier UI"],
+         ["QoL", "Add a shortcut to go back from player trade map to city (@Hanz)"],
+         [
+            "QoL",
+            "Click not producing building count in title bar to highlight all buildings that are producing (@Vethon)",
+         ],
+      ],
+   },
+   {
+      version: "0.1.123",
+      content: [
+         [
+            "QoL",
+            "Support showing image in Chat (the poster has to have account level above Tribune, otherwise the image will show as text)",
+         ],
+         ["QoL", "Add a back button on tech tree page"],
+         ["QoL", "Add language select on the first tutorial page"],
+         ["QoL", "Add a new chat command /playercount that will show currently online players"],
+      ],
+   },
+   {
+      version: "0.1.122",
+      content: [["Bugfix", "Prepare for Steam Next Demo"]],
+   },
+   {
       version: "0.1.121",
       content: [
          ["Content", "Support cancelling player trades"],
