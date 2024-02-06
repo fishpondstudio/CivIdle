@@ -7,7 +7,7 @@ import type { Tech } from "../definitions/TechDefinitions";
 import { EN } from "../languages/en";
 import { RU } from "../languages/ru";
 import type { ChatChannel } from "../utilities/Database";
-import { IPointData, type Tile, forEach, uuid4 } from "../utilities/Helper";
+import { IPointData, forEach, uuid4, type Tile } from "../utilities/Helper";
 import type { PartialSet, PartialTabulate } from "../utilities/TypeDefinitions";
 import { L, t } from "../utilities/i18n";
 import { getGameOptions, notifyGameOptionsUpdate } from "./GameStateLogic";
@@ -66,6 +66,16 @@ const DefaultThemeColors = {
 
 export function resetThemeColor() {
    getGameOptions().themeColors = { ...DefaultThemeColors };
+   notifyGameOptionsUpdate();
+}
+
+export function resetThemeBuildingColors() {
+   getGameOptions().buildingColors = {};
+   notifyGameOptionsUpdate();
+}
+
+export function resetThemeResourceColors() {
+   getGameOptions().resourceColors = {};
    notifyGameOptionsUpdate();
 }
 

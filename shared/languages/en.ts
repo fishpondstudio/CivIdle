@@ -726,6 +726,8 @@ export const EN = {
    SoundEffect: "Sound Effect",
    ThemeColor: "Theme Color",
    ThemeColorReset: "Reset to Default",
+   ThemeColorResetBuildingColors: "Reset Building Colors",
+   ThemeColorResetResourceColors: "Reset Resource Colors",
    ThemeColorWorldBackground: "World Background",
    ThemeColorResearchBackground: "Research Background",
    ThemeColorGridColor: "Grid Color",
