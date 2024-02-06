@@ -871,4 +871,6 @@ export const EN = {
       "Upgrading your account will <b>reset your current run</b> and carry over permanent great people <b>up to level %{level}</b>. This <b>cannot</b> be undone, are you sure to continue?",
    CannotEarnPermanentGreatPeopleDesc: "Because this is a trial run, permanent great people cannot be earned",
    BackToCity: "Back To City",
+   UpgradeBuildingNotProducingDesc:
+      "This building is being upgraded - production will halt until upgrade is complete",
 };

@@ -21,9 +21,9 @@ import { TextWithHelp } from "./TextWithHelpComponent";
 export function ChatPanel(): React.ReactNode {
    const [chat, setChat] = useState("");
    const options = useGameOptions();
-   const messages = useChatMessages().filter(
-      (m) => typeof m === "string" || options.chatReceiveChannel[m.channel],
-   );
+   const messages = useChatMessages()
+      .filter((m) => typeof m === "string" || options.chatReceiveChannel[m.channel])
+      .slice(0, 200);
    const user = useUser();
    const bottomRef = useRef<HTMLDivElement>(null);
    const [showChatWindow, setShowChatWindow] = useState(false);

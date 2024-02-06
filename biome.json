@@ -34,6 +34,12 @@
       "indentWidth": 3
    },
    "files": {
-      "ignore": ["**/*.js", "**/*.d.ts", "shared/thirdparty/*", "src/scripts/Version.json"]
+      "ignore": [
+         "**/*.js",
+         "**/*.d.ts",
+         "shared/thirdparty/*",
+         "src/scripts/Version.json",
+         "shared/utilities/Chars.json"
+      ]
    }
 }
