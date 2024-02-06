@@ -2,7 +2,6 @@ import type { Building } from "../definitions/BuildingDefinitions";
 import { BuildingSpecial } from "../definitions/BuildingDefinitions";
 import type { IResourceDefinition, Resource } from "../definitions/ResourceDefinitions";
 import {
-   type Tile,
    clamp,
    forEach,
    isEmpty,
@@ -16,6 +15,7 @@ import {
    sizeOf,
    sum,
    tileToPoint,
+   type Tile,
 } from "../utilities/Helper";
 import { srand } from "../utilities/Random";
 import type { PartialTabulate } from "../utilities/TypeDefinitions";
@@ -26,15 +26,15 @@ import type { GameState } from "./GameState";
 import { getBuildingIO, getBuildingsByType, getGrid, getXyBuildings } from "./IntraTickCache";
 import { getBuildingsThatProduce, getResourcesValue } from "./ResourceLogic";
 import { getAgeForTech, getBuildingUnlockTech } from "./TechLogic";
-import { type Multiplier, type MultiplierWithSource, Tick } from "./TickLogic";
+import { Tick, type Multiplier, type MultiplierWithSource } from "./TickLogic";
 import {
+   getConstructionPriority,
+   getProductionPriority,
+   getUpgradePriority,
    type IBuildingData,
    type IHaveTypeAndLevel,
    type IResourceImportBuildingData,
    type IWarehouseBuildingData,
-   getConstructionPriority,
-   getProductionPriority,
-   getUpgradePriority,
 } from "./Tile";
 
 export function totalMultiplierFor(xy: Tile, type: keyof Multiplier, base: number, gs: GameState): number {
@@ -222,6 +222,7 @@ export function getStorageFor(xy: Tile, gs: GameState): IStorageResult {
             });
          });
          base = count * ST_PETERS_STORAGE_MULTIPLIER;
+         multiplier = 1;
          break;
       }
       default: {
