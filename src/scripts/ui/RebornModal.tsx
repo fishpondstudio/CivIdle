@@ -6,12 +6,14 @@ import { Tick } from "../../../shared/logic/TickLogic";
 import { firstKeyOf, forEach, formatPercent, mapOf, reduceOf } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import { resetToCity, saveGame, useGameOptions, useGameState } from "../Global";
+import { canEarnGreatPeopleFromReborn } from "../rpc/RPCClient";
 import { jsxMapOf } from "../utilities/Helper";
 import { playClick } from "../visuals/Sound";
 import { hideModal } from "./GlobalModal";
 import { FormatNumber } from "./HelperComponents";
 import { RenderHTML } from "./RenderHTMLComponent";
 import { TextWithHelp } from "./TextWithHelpComponent";
+import { WarningComponent } from "./WarningComponent";
 
 export function RebornModal(): React.ReactNode {
    const gameState = useGameState();
@@ -23,36 +25,42 @@ export function RebornModal(): React.ReactNode {
             <div className="title-bar-text">{t(L.Reborn)}</div>
          </div>
          <div className="window-body">
-            <fieldset>
-               <div className="row">
-                  <div className="f1">{t(L.GreatPeopleThisRun)}</div>
-                  <div className="text-strong">
-                     {reduceOf(
-                        gameState.greatPeople,
-                        (prev, k, v) => {
-                           return prev + v;
-                        },
-                        0,
-                     )}
+            {canEarnGreatPeopleFromReborn() ? (
+               <fieldset>
+                  <div className="row">
+                     <div className="f1">{t(L.GreatPeopleThisRun)}</div>
+                     <div className="text-strong">
+                        {reduceOf(
+                           gameState.greatPeople,
+                           (prev, k, v) => {
+                              return prev + v;
+                           },
+                           0,
+                        )}
+                     </div>
                   </div>
-               </div>
-               <div className="sep5"></div>
-               <div className="row">
-                  <div className="f1">{t(L.TotalEmpireValue)}</div>
-                  <div className="text-strong">
-                     <FormatNumber value={Tick.current.totalValue} />
+                  <div className="sep5"></div>
+                  <div className="row">
+                     <div className="f1">{t(L.TotalEmpireValue)}</div>
+                     <div className="text-strong">
+                        <FormatNumber value={Tick.current.totalValue} />
+                     </div>
                   </div>
-               </div>
-               <div className="sep5"></div>
-               <div className="row">
-                  <div className="f1">{t(L.ExtraGreatPeopleAtReborn)}</div>
-                  <div className="text-strong">{getGreatPeopleAtReborn()}</div>
-               </div>
-               <div className="sep10" />
-               <div className="text-small text-desc">
-                  <RenderHTML html={t(L.RebornModalDesc)} />
-               </div>
-            </fieldset>
+                  <div className="sep5"></div>
+                  <div className="row">
+                     <div className="f1">{t(L.ExtraGreatPeopleAtReborn)}</div>
+                     <div className="text-strong">{getGreatPeopleAtReborn()}</div>
+                  </div>
+                  <div className="sep10" />
+                  <div className="text-small text-desc">
+                     <RenderHTML html={t(L.RebornModalDesc)} />
+                  </div>
+               </fieldset>
+            ) : (
+               <WarningComponent icon="warning" className="mb10">
+                  {t(L.CannotEarnPermanentGreatPeopleDesc)}
+               </WarningComponent>
+            )}
             <fieldset>
                <div className="row">
                   <div className="f1">{t(L.RebornCity)}</div>
@@ -124,14 +132,16 @@ export function RebornModal(): React.ReactNode {
                   style={{ padding: "0 15px" }}
                   className="text-strong"
                   onClick={() => {
-                     rollPermanentGreatPeople(getGreatPeopleAtReborn());
-                     forEach(gameState.greatPeople, (k, v) => {
-                        if (options.greatPeople[k]) {
-                           options.greatPeople[k]!.amount += v;
-                        } else {
-                           options.greatPeople[k] = { level: 1, amount: v - 1 };
-                        }
-                     });
+                     if (canEarnGreatPeopleFromReborn()) {
+                        rollPermanentGreatPeople(getGreatPeopleAtReborn());
+                        forEach(gameState.greatPeople, (k, v) => {
+                           if (options.greatPeople[k]) {
+                              options.greatPeople[k]!.amount += v;
+                           } else {
+                              options.greatPeople[k] = { level: 1, amount: v - 1 };
+                           }
+                        });
+                     }
                      resetToCity(city);
                      saveGame(true).catch(console.error);
                      playClick();

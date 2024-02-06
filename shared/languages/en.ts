@@ -863,10 +863,12 @@ export const EN = {
       "Your will start a new empire but you can take all the great people <b>from this run</b>, plus extra great people based on your <b>total empire value</b>",
    OperationNotAllowedError: "This operation is not allowed",
    AccountLevelUpgradeConditionAny:
-      "To upgrde your account, you only need to satisfy one of the following criteria:",
+      "To upgrade your account, you only need to satisfy one of the following criteria:",
    AccountLevelPlayTime: "Active Online Playtime > %{requiredTime} (Your play time is %{actualTime})",
    AccountUpgradeButton: "Upgrade Account To Quaestor",
    AccountUpgradeConfirm: "Account Upgrade",
    AccountUpgradeConfirmDesc:
       "Upgrading your account will <b>reset your current run</b> and carry over permanent great people <b>up to level %{level}</b>. This <b>cannot</b> be undone, are you sure to continue?",
+   CannotEarnPermanentGreatPeopleDesc: "Because this is a trial run, permanent great people cannot be earned",
+   BackToCity: "Back To City",
 };

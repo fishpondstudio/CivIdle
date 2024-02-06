@@ -5,6 +5,22 @@ interface PatchNote {
 
 export const PatchNotes: PatchNote[] = [
    {
+      version: "0.1.123",
+      content: [
+         [
+            "QoL",
+            "Support showing image in Chat (the poster has to have account level above Tribune, otherwise the image will show as text)",
+         ],
+         ["QoL", "Add a back button on tech tree page"],
+         ["QoL", "Add language select on the first tutorial page"],
+         ["QoL", "Add a new chat command /playercount that will show currently online players"],
+      ],
+   },
+   {
+      version: "0.1.122",
+      content: [["Bugfix", "Prepare for Steam Next Demo"]],
+   },
+   {
       version: "0.1.121",
       content: [
          ["Content", "Support cancelling player trades"],

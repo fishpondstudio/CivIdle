@@ -33,14 +33,8 @@ import { UnlockableEffectComponent } from "./UnlockableEffectComponent";
 export function TechPage({ id }: { id: Tech }): React.ReactNode {
    const gs = useGameState();
    const tech = Config.Tech[id];
-   useShortcut(
-      "TechPageGoBackToCity",
-      () => {
-         Singleton().sceneManager.loadScene(WorldScene);
-      },
-      [id],
-   );
-
+   const goBackToCity = () => Singleton().sceneManager.loadScene(WorldScene);
+   useShortcut("TechPageGoBackToCity", goBackToCity, [id]);
    if (tech.column > MAX_TECH_COLUMN) {
       return <InDevelopmentPage />;
    }
@@ -86,23 +80,6 @@ export function TechPage({ id }: { id: Tech }): React.ReactNode {
                      />
                   );
                })}
-               {/* {tech.requireProvince?.map((province) => {
-                  prerequisiteCount++;
-                  return (
-                     <TechPrerequisiteItemComponent
-                        key={province}
-                        name={
-                           <>
-                              {t(L.Annex)} <b>{RomeProvince[province].name()}</b>
-                           </>
-                        }
-                        unlocked={!!gs.unlockedProvince[province]}
-                        action={() =>
-                           Singleton().sceneManager.loadScene(RomeProvinceScene)?.selectProvince(province)
-                        }
-                     />
-                  );
-               })} */}
                {prerequisiteCount === 0 ? <div>{t(L.TechnologyNoPrerequisite)}</div> : null}
             </fieldset>
             <fieldset>
@@ -171,6 +148,12 @@ export function TechPage({ id }: { id: Tech }): React.ReactNode {
                )}
             </fieldset>
             <UnlockableEffectComponent definition={tech} gameState={gs} />
+            <button className="w100 row jcc" onClick={goBackToCity}>
+               <div className="m-icon" style={{ margin: "0 5px 0 -5px", fontSize: "18px" }}>
+                  arrow_back
+               </div>
+               <div className="f1">{t(L.BackToCity)}</div>
+            </button>
          </div>
       </div>
    );

@@ -1,14 +1,17 @@
 import { useState } from "react";
+import { GameOptionsChanged } from "../../../shared/logic/GameStateLogic";
 import { firstKeyOf } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import install from "../../images/install.png";
 import { OnUserChanged, client, useUser } from "../rpc/RPCClient";
 import { CountryCode, getCountryName, getFlagUrl } from "../utilities/CountryCode";
 import { jsxMapOf } from "../utilities/Helper";
+import { refreshOnTypedEvent } from "../utilities/Hook";
 import { playError } from "../visuals/Sound";
 import { ChangeModernUIComponent } from "./ChangeModernUIComponent";
 import { ChangeSoundComponent } from "./ChangeSoundComponent";
 import { hideModal, showToast } from "./GlobalModal";
+import { LanguageSelect } from "./LanguageSelectComponent";
 import { RenderHTML } from "./RenderHTMLComponent";
 
 enum SetupStep {
@@ -20,6 +23,7 @@ enum SetupStep {
 }
 
 export function FirstTimePlayerModal(): React.ReactNode {
+   refreshOnTypedEvent(GameOptionsChanged);
    const [step, setStep] = useState(SetupStep.Welcome);
    const [skipTutorial, setSkipTutorial] = useState(false);
    const user = useUser();
@@ -33,6 +37,10 @@ export function FirstTimePlayerModal(): React.ReactNode {
                      <img src={install} style={{ width: "48px" }} />
                   </div>
                   <div className="f1" style={{ margin: "10px 15px" }}>
+                     <div className="row mb15">
+                        <div className="m-icon mr5 text-desc">translate</div>
+                        <LanguageSelect className="f1" />
+                     </div>
                      <RenderHTML html={t(L.Tutorial1)} />
                      <div className="row pointer" onClick={() => setSkipTutorial(false)}>
                         <div className="m-icon small mr10">
@@ -47,6 +55,7 @@ export function FirstTimePlayerModal(): React.ReactNode {
                         </div>
                         <div>{t(L.Tutorial3)}</div>
                      </div>
+                     <div className="sep15" />
                   </div>
                </div>
             );
@@ -62,16 +71,6 @@ export function FirstTimePlayerModal(): React.ReactNode {
                </div>
             );
          case SetupStep.Tutorial2:
-            return (
-               <div className="row">
-                  <div style={{ alignSelf: "flex-start" }}>
-                     <img src={install} style={{ width: "48px" }} />
-                  </div>
-                  <div className="f1" style={{ margin: "10px 15px" }}>
-                     <RenderHTML html={t(L.Tutorial5)} />
-                  </div>
-               </div>
-            );
          case SetupStep.Tutorial3:
             return (
                <div className="row">
@@ -93,7 +92,10 @@ export function FirstTimePlayerModal(): React.ReactNode {
          <div className="title-bar">
             <div className="title-bar-text">CivIdle Setup</div>
          </div>
-         <div className="window-body" style={{ height: "350px", display: "flex", flexDirection: "column" }}>
+         <div
+            className="window-body"
+            style={{ minHeight: "350px", display: "flex", flexDirection: "column" }}
+         >
             <div style={{ flex: "1" }}>{content()}</div>
             <div>
                <div className="row" style={{ justifyContent: "flex-end" }}>

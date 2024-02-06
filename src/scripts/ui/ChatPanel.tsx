@@ -1,6 +1,6 @@
 import classNames from "classnames";
 import React, { useEffect, useRef, useState } from "react";
-import { ChatChannels } from "../../../shared/utilities/Database";
+import { AccountLevel, ChatChannels, type IChat } from "../../../shared/utilities/Database";
 import { isEmpty, keysOf, sizeOf } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import AccountLevelMod from "../../images/AccountLevelMod.png";
@@ -12,6 +12,7 @@ import { handleChatCommand } from "../logic/ChatCommand";
 import { addSystemMessage, client, useChatMessages, useUser } from "../rpc/RPCClient";
 import { getCountryName, getFlagUrl } from "../utilities/CountryCode";
 import { useTypedEvent } from "../utilities/Hook";
+import { openUrl } from "../utilities/Platform";
 import { showModal } from "./GlobalModal";
 import { RenderHTML } from "./RenderHTMLComponent";
 import { SelectChatChannelModal } from "./SelectChatChannelModal";
@@ -170,7 +171,12 @@ export function ChatPanel(): React.ReactNode {
                            {receiveMultipleChannels ? <div className="chat-channel">{c.channel}</div> : null}
                         </div>
                      )}
-                     <div>{c.message}</div>
+                     <div>
+                        <ChatMessage
+                           chat={c}
+                           onImageLoaded={() => bottomRef.current?.scrollIntoView({ behavior: "smooth" })}
+                        />
+                     </div>
                   </div>
                );
             })}
@@ -223,4 +229,24 @@ export function ChatPanel(): React.ReactNode {
          {showChatWindow ? chatWindow : null}
       </div>
    );
+}
+
+function ChatMessage({ chat, onImageLoaded }: { chat: IChat; onImageLoaded: () => void }): React.ReactNode {
+   const message = chat.message;
+   if (chat.level <= AccountLevel.Tribune && !chat.isMod) {
+      return message;
+   }
+   const isDomainWhitelisted =
+      message.startsWith("https://i.imgur.com/") ||
+      message.startsWith("https://i.gyazo.com/") ||
+      message.startsWith("https://i.ibb.co/") ||
+      message.startsWith("https://cdn.discordapp.com/attachments/");
+   const isExtensionWhitelisted =
+      message.endsWith(".jpg") || message.endsWith(".png") || message.endsWith(".jpeg");
+   if (isDomainWhitelisted && isExtensionWhitelisted) {
+      return (
+         <img className="chat-image" src={message} onClick={() => openUrl(message)} onLoad={onImageLoaded} />
+      );
+   }
+   return message;
 }
