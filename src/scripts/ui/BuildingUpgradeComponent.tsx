@@ -1,18 +1,23 @@
-import classNames from "classnames";
-import { useState } from "react";
+import Tippy from "@tippyjs/react";
 import { getBuildingUpgradeLevels, getTotalBuildingCost } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
 import {} from "../../../shared/logic/GameState";
 import { getGameOptions, notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
 import { getUpgradePriority, setUpgradePriority } from "../../../shared/logic/Tile";
-import { type Tile, isEmpty, numberToRoman, tileToPoint } from "../../../shared/utilities/Helper";
+import {
+   formatNumber,
+   isEmpty,
+   mapOf,
+   numberToRoman,
+   tileToPoint,
+   type Tile,
+} from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import { WorldScene } from "../scenes/WorldScene";
 import { jsxMapOf } from "../utilities/Helper";
 import { useShortcut } from "../utilities/Hook";
 import { Singleton } from "../utilities/Singleton";
 import type { IBuildingComponentProps } from "./BuildingPage";
-import { FormatNumber } from "./HelperComponents";
 
 export function BuildingUpgradeComponent({ gameState, xy }: IBuildingComponentProps): React.ReactNode {
    const tile = gameState.tiles.get(xy);
@@ -25,8 +30,6 @@ export function BuildingUpgradeComponent({ gameState, xy }: IBuildingComponentPr
    }
    const deposits = tile.deposit;
    const levels = getBuildingUpgradeLevels(building);
-   const [selected, setSelected] = useState(0);
-   const cost = getTotalBuildingCost(building.type, building.level, building.level + levels[selected]);
    const upgrade = (level: number) => {
       building.desiredLevel = building.level + level;
       building.status = "upgrading";
@@ -39,23 +42,43 @@ export function BuildingUpgradeComponent({ gameState, xy }: IBuildingComponentPr
    useShortcut("BuildingPageUpgradeX1", () => upgrade(1), [xy]);
    useShortcut("BuildingPageUpgradeX5", () => upgrade(5), [xy]);
    useShortcut("BuildingPageUpgradeToNext10", () => upgrade(levels[levels.length - 1]), [xy]);
+
    return (
       <>
          <fieldset>
             <div className="row">
-               <div className="f1">{t(L.Level)}</div>
-               <div className="text-strong">{building.level}</div>
-            </div>
-            <div className="sep5" />
-            <div className="row">
-               <div className="f1">{t(L.BuildingTier)}</div>
-               <div className="text-strong">{numberToRoman(Config.BuildingTier[building.type]!)}</div>
+               <div className="f1 text-center">
+                  <div className="text-strong text-large">{building.level}</div>
+                  <div className="text-small text-desc">{t(L.Level)}</div>
+               </div>
+               <div className="f1 text-center">
+                  <div className="text-strong text-large">
+                     {numberToRoman(Config.BuildingTier[building.type]!)}
+                  </div>
+                  <div className="text-small text-desc">{t(L.BuildingTier)}</div>
+               </div>
             </div>
             <div className="separator"></div>
-            <div className="row text-link text-strong">
-               <div className="m-icon " style={{ margin: "-10px 0" }}>
-                  search
-               </div>
+            <div className="row">
+               {levels.map((level, index) => (
+                  <Tippy
+                     content={`${t(L.Upgrade)} x${level}: ${mapOf(
+                        getTotalBuildingCost(building.type, building.level, building.level + levels[index]),
+                        (res, amount) => {
+                           return `${Config.Resource[res].name()} ${formatNumber(amount)}`;
+                        },
+                     ).join(", ")}`}
+                     placement="top"
+                  >
+                     <button key={level} className="f1" onClick={() => upgrade(level)}>
+                        x{level}
+                     </button>
+                  </Tippy>
+               ))}
+            </div>
+            <div className="separator"></div>
+            <div className="row text-link text-strong text-small">
+               <div className="m-icon small">search</div>
                <div
                   className="ml5"
                   onClick={() => {
@@ -93,34 +116,6 @@ export function BuildingUpgradeComponent({ gameState, xy }: IBuildingComponentPr
                           </div>
                        );
                     })}
-            </div>
-         </fieldset>
-         <fieldset>
-            <legend>{t(L.Upgrade)}</legend>
-            <div className="row">
-               {levels.map((level, index) => (
-                  <button
-                     key={level}
-                     className={classNames({ "text-strong": index === selected, f1: true })}
-                     onMouseOver={setSelected.bind(null, index)}
-                     onClick={() => upgrade(level)}
-                  >
-                     x{level}
-                  </button>
-               ))}
-            </div>
-            <div className="sep5" />
-            <div className="text-desc text-small">
-               {jsxMapOf(cost, (res, amount) => {
-                  return (
-                     <div className="row" key={res}>
-                        <div className="f1">{Config.Resource[res].name()}</div>
-                        <div className="text-strong">
-                           <FormatNumber value={amount} />
-                        </div>
-                     </div>
-                  );
-               })}
             </div>
          </fieldset>
       </>

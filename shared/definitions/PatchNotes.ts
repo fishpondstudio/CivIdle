@@ -5,6 +5,20 @@ interface PatchNote {
 
 export const PatchNotes: PatchNote[] = [
    {
+      version: "0.1.124",
+      content: [
+         ["Bugfix", "Fix a bug where muting player does not work"],
+         ["Bugfix", "Steam will not automatically install necessary VCRedist packages"],
+         ["Bugfix", "Fix a bug where Space key does not show up in the shortcut manager"],
+         ["QoL", "Improve Building Level/Tier UI"],
+         ["QoL", "Add a shortcut to go back from player trade map to city (@Hanz)"],
+         [
+            "QoL",
+            "Click not producing building count in title bar to highlight all buildings that are producing (@Vethon)",
+         ],
+      ],
+   },
+   {
       version: "0.1.123",
       content: [
          [

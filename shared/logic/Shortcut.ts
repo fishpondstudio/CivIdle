@@ -7,6 +7,7 @@ export const ShortcutScopes = {
    BuildingPage: () => t(L.ShortcutScopeBuildingPage),
    TechPage: () => t(L.ShortcutScopeTechPage),
    EmptyTilePage: () => t(L.ShortcutScopeEmptyTilePage),
+   PlayerMapPage: () => t(L.ShortcutScopePlayerMapPage),
 } as const;
 
 export type ShortcutScope = keyof typeof ShortcutScopes;
@@ -26,6 +27,10 @@ export const ShortcutActions = {
    EmptyTilePageBuildLastBuilding: {
       scope: "EmptyTilePage",
       name: () => t(L.EmptyTilePageBuildLastBuilding),
+   },
+   PlayerMapPageGoBackToCity: {
+      scope: "PlayerMapPage",
+      name: () => t(L.PlayerMapPageGoBackToCity),
    },
 } satisfies Record<string, IShortcutNameAndScope>;
 
@@ -86,12 +91,12 @@ export function getShortcutKey(s: IShortcutConfig): string {
       keys.push("Command");
    }
 
-   if (s.key == ' ') {
-      keys.push("Space")
+   if (s.key === " ") {
+      keys.push("Space");
    } else {
       keys.push(s.key);
    }
-   
+
    return keys.join(" + ");
 }
 

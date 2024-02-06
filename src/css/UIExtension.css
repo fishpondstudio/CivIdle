@@ -192,6 +192,10 @@ fieldset .separator {
    font-weight: bold;
 }
 
+.text-large {
+   font-size: 150%;
+}
+
 .text-justify {
    text-align: justify;
 }
