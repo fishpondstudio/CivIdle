@@ -742,6 +742,7 @@ export const RU = {
    HappinessFromHighestTierBuilding: "От Рабочего Здания Высшего Тира",
    HappinessFromBuilding: "От Зданий (Исключая Чудеса)",
    HappinessFromWonders: "От Чудес (Включая Природные)",
+   ShortcutScopeAnywhere: "где-нибудь", /* FIXME: hanz: This is translated, is this native-like? */
    ShortcutScopeBuildingPage: "Страница Зданий",
    ShortcutScopeTechPage: "Страница Технологий",
    ShortcutScopeEmptyTilePage: "Страница Пустой Плитки",
@@ -754,7 +755,7 @@ export const RU = {
    ShortcutSave: "Сохранить",
    ShortcutPressShortcut: "Нажмите на клавишу...",
    ShortcutConflict: "Ваша Горячая Клавиша пересекается с %{name}",
-   ShortcutTechPageGoBackToCity: "Вернуться В Город",
+   ShortcutGoBackToCity: "Вернуться В Город",
    EmptyTilePageBuildLastBuilding: "Построить Последнее Здание",
    UnclaimedGreatPerson: "У вас есть незабранные Великие Люди, Нажмите здесь, чтобы забрать",
    OfflineProduction: "Оффлайн Продукция",

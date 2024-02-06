@@ -34,7 +34,7 @@ export function TechPage({ id }: { id: Tech }): React.ReactNode {
    const gs = useGameState();
    const tech = Config.Tech[id];
    const goBackToCity = () => Singleton().sceneManager.loadScene(WorldScene);
-   useShortcut("TechPageGoBackToCity", goBackToCity, [id]);
+   useShortcut("GoBackToCity", goBackToCity, [id]);
    if (tech.column > MAX_TECH_COLUMN) {
       return <InDevelopmentPage />;
    }
