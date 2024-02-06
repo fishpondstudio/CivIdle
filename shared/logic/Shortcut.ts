@@ -85,7 +85,13 @@ export function getShortcutKey(s: IShortcutConfig): string {
    if (s.meta) {
       keys.push("Command");
    }
-   keys.push(s.key);
+
+   if (s.key == ' ') {
+      keys.push("Space")
+   } else {
+      keys.push(s.key);
+   }
+   
    return keys.join(" + ");
 }
 
