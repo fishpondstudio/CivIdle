@@ -58,18 +58,20 @@ export function BuildingStorageComponent({ gameState, xy }: IBuildingComponentPr
                            <div className="f1">{t(L.BaseMultiplier)}</div>
                            <div>1</div>
                         </li>
-                        {getMultipliersFor(xy, gameState).map((m, idx) => {
-                           if (!m.storage) {
-                              return null;
-                           }
-                           return (
-                              // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
-                              <li key={idx} className="row">
-                                 <div className="f1">{m.source}</div>
-                                 <div>{m.storage}</div>
-                              </li>
-                           );
-                        })}
+                        {storage.multiplier === 1
+                           ? null
+                           : getMultipliersFor(xy, gameState).map((m, idx) => {
+                                if (!m.storage) {
+                                   return null;
+                                }
+                                return (
+                                   // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
+                                   <li key={idx} className="row">
+                                      <div className="f1">{m.source}</div>
+                                      <div>{m.storage}</div>
+                                   </li>
+                                );
+                             })}
                      </ul>
                   </ul>
                </details>
