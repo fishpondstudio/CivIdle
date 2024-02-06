@@ -7,7 +7,7 @@ export const ShortcutScopes = {
    BuildingPage: () => t(L.ShortcutScopeBuildingPage),
    TechPage: () => t(L.ShortcutScopeTechPage),
    EmptyTilePage: () => t(L.ShortcutScopeEmptyTilePage),
-   Anywhere: () => t(L.ShortcutScopeAnywhere)
+   Anywhere: () => t(L.ShortcutScopeAnywhere),
 } as const;
 
 export type ShortcutScope = keyof typeof ShortcutScopes;

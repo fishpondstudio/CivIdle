@@ -742,7 +742,7 @@ export const RU = {
    HappinessFromHighestTierBuilding: "От Рабочего Здания Высшего Тира",
    HappinessFromBuilding: "От Зданий (Исключая Чудеса)",
    HappinessFromWonders: "От Чудес (Включая Природные)",
-   ShortcutScopeAnywhere: "где-нибудь", /* FIXME: hanz: This is translated, is this native-like? */
+   ShortcutScopeAnywhere: "где-нибудь" /* FIXME: hanz: This is translated, is this native-like? */,
    ShortcutScopeBuildingPage: "Страница Зданий",
    ShortcutScopeTechPage: "Страница Технологий",
    ShortcutScopeEmptyTilePage: "Страница Пустой Плитки",
