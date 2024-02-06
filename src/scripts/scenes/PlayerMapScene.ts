@@ -18,8 +18,6 @@ import { ViewportScene } from "../utilities/SceneManager";
 import { Singleton } from "../utilities/Singleton";
 import { Fonts } from "../visuals/Fonts";
 import { findPath, getMyMapXy } from "./PathFinder";
-import { WorldScene } from "./WorldScene";
-import { useShortcut } from "../utilities/Hook";
 
 let viewportCenter: IPointData | null = null;
 let viewportZoom: number | null = null;
@@ -35,9 +33,6 @@ export class PlayerMapScene extends ViewportScene {
    private _path!: SmoothGraphics;
 
    override onLoad(): void {
-      const goBackToCity = () => Singleton().sceneManager.loadScene(WorldScene);
-      useShortcut("GoBackToCity", goBackToCity, []);
-      
       const { app, textures } = this.context;
       this._width = MAP_MAX_X * GridSize;
       this._height = MAP_MAX_Y * GridSize;
