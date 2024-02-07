@@ -60,18 +60,14 @@ export function BuildingUpgradeComponent({ gameState, xy }: IBuildingComponentPr
             </div>
             <div className="sep10"></div>
             <div className="separator has-title">
-               <div>Upgrade Building</div>
+               <div>{t(L.UpgradeBuilding)}</div>
             </div>
             <div className="sep10"></div>
             <div className="row">
                {levels.map((level, index) => (
                   <Tippy
                      content={`${t(L.Upgrade)} x${level}: ${mapOf(
-                        getTotalBuildingCost(
-                           building.type,
-                           building.level,
-                           building.level + levels[index],
-                        ),
+                        getTotalBuildingCost(building.type, building.level, building.level + levels[index]),
                         (res, amount) => {
                            return `${Config.Resource[res].name()} ${formatNumber(amount)}`;
                         },
