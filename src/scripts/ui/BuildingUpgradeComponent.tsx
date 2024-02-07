@@ -58,30 +58,31 @@ export function BuildingUpgradeComponent({ gameState, xy }: IBuildingComponentPr
                   <div className="text-small text-desc">{t(L.BuildingTier)}</div>
                </div>
             </div>
-            <div className="separator"></div>
-            <div className="column">
-               <div className="mb5 text-strong text-small">Upgrade Building</div>
-               <div className="row">
-                  {levels.map((level, index) => (
-                     <Tippy
-                        content={`${t(L.Upgrade)} x${level}: ${mapOf(
-                           getTotalBuildingCost(
-                              building.type,
-                              building.level,
-                              building.level + levels[index],
-                           ),
-                           (res, amount) => {
-                              return `${Config.Resource[res].name()} ${formatNumber(amount)}`;
-                           },
-                        ).join(", ")}`}
-                        placement="top"
-                     >
-                        <button key={level} className="f1" onClick={() => upgrade(level)}>
-                           x{level}
-                        </button>
-                     </Tippy>
-                  ))}
-               </div>
+            <div className="sep10"></div>
+            <div className="separator has-title">
+               <div>Upgrade Building</div>
+            </div>
+            <div className="sep10"></div>
+            <div className="row">
+               {levels.map((level, index) => (
+                  <Tippy
+                     content={`${t(L.Upgrade)} x${level}: ${mapOf(
+                        getTotalBuildingCost(
+                           building.type,
+                           building.level,
+                           building.level + levels[index],
+                        ),
+                        (res, amount) => {
+                           return `${Config.Resource[res].name()} ${formatNumber(amount)}`;
+                        },
+                     ).join(", ")}`}
+                     placement="top"
+                  >
+                     <button key={level} className="f1" onClick={() => upgrade(level)}>
+                        x{level}
+                     </button>
+                  </Tippy>
+               ))}
             </div>
             <div className="separator"></div>
             <div className="row text-link text-strong text-small">
