@@ -15,6 +15,8 @@ export const SCIENCE_VALUE = 0.5;
 export const MAX_TRIBUNE_CARRY_OVER_LEVEL = 2;
 export const TRADE_CANCEL_REFUND_PERCENT = 0.9;
 export const TRIBUNE_UPGRADE_PLAYTIME = 48 * HOUR;
+export const MAX_CHAT_PER_CHANNEL = 200;
+export const DISCORD_URL = "https://discord.com/invite/m5JWZtEKMZ";
 
 interface IRecipe {
    building: Building;

@@ -168,12 +168,8 @@ export async function startGame(
          break;
       }
    }
-
    notifyGameStateUpdate();
    Singleton().ticker.start();
-
-   // await checkSteamBranch();
-   // showModal(<FirstTimePlayerModal />);
 }
 
 // This method is called early during bootstrap!

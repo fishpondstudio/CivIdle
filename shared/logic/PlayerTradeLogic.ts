@@ -1,11 +1,6 @@
 import type { Resource } from "../definitions/ResourceDefinitions";
-import { AccountLevel, type IAddTradeRequest, type ITrade, type IUser } from "../utilities/Database";
+import { AccountLevel, type IAddTradeRequest, type IUser } from "../utilities/Database";
 import { Config } from "./Config";
-
-export interface IClientTrade extends ITrade {
-   buyResource: Resource;
-   sellResource: Resource;
-}
 
 export interface IClientAddTradeRequest extends IAddTradeRequest {
    buyResource: Resource;

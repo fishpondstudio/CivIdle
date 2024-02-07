@@ -2,16 +2,16 @@ import classNames from "classnames";
 import { useEffect, useState } from "react";
 import { getStorageFor } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
-import type { IClientTrade } from "../../../shared/logic/PlayerTradeLogic";
 import { Tick } from "../../../shared/logic/TickLogic";
+import type { IClientTrade } from "../../../shared/utilities/Database";
 import {
-   type Tile,
    clamp,
    formatPercent,
    mFirstKeyOf,
    pointToXy,
    safeAdd,
    xyToPoint,
+   type Tile,
 } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import { useGameState } from "../Global";

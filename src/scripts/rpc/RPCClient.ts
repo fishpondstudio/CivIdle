@@ -1,13 +1,13 @@
 import { decode, encode } from "@msgpack/msgpack";
 import type { ServerImpl } from "../../../server/src/Server";
 import { getGameOptions, getGameState } from "../../../shared/logic/GameStateLogic";
-import type { IClientTrade } from "../../../shared/logic/PlayerTradeLogic";
 import { RpcError, removeTrailingUndefs, rpcClient } from "../../../shared/thirdparty/TRPCClient";
 import type {
    AllMessageTypes,
    IChat,
    IChatMessage,
    IClientMapEntry,
+   IClientTrade,
    IMapMessage,
    IRPCMessage,
    ITradeMessage,
@@ -166,7 +166,7 @@ export async function connectWebSocket(): Promise<number> {
                   if (trades[trade.id] && trades[trade.id].fromId === user?.userId) {
                      pendingClaims++;
                   }
-                  trades[trade.id] = trade as IClientTrade;
+                  trades[trade.id] = trade;
                });
             }
             if (tm.remove) {

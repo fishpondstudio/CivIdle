@@ -9,9 +9,11 @@ import { getMaxActiveTrades } from "../../../shared/logic/PlayerTradeLogic";
 import type { IPendingClaim } from "../../../shared/utilities/Database";
 import { formatPercent, isNullOrUndefined, safeAdd } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
+import { AccountLevelImages, AccountLevelNames } from "../logic/AccountLevel";
 import { OnNewPendingClaims, client, useTrades, useUser } from "../rpc/RPCClient";
 import { getMyMapXy } from "../scenes/PathFinder";
 import { PlayerMapScene } from "../scenes/PlayerMapScene";
+import { getCountryName, getFlagUrl } from "../utilities/CountryCode";
 import { useTypedEvent } from "../utilities/Hook";
 import { Singleton } from "../utilities/Singleton";
 import { playClick, playError, playKaching } from "../visuals/Sound";
@@ -77,14 +79,34 @@ export function PlayerTradeComponent({ gameState, xy }: IBuildingComponentProps)
                            className={classNames({ "text-strong": trade.fromId === user?.userId })}
                         >
                            <td>
-                              {Config.Resource[trade.buyResource].name()} x{" "}
-                              <FormatNumber value={trade.buyAmount} />
+                              <div>{Config.Resource[trade.buyResource].name()}</div>
+                              <div className="text-small text-strong text-desc">
+                                 <FormatNumber value={trade.buyAmount} />
+                              </div>
                            </td>
                            <td>
-                              {Config.Resource[trade.sellResource].name()} x{" "}
-                              <FormatNumber value={trade.sellAmount} />
+                              <div>{Config.Resource[trade.sellResource].name()}</div>
+                              <div className="text-small text-strong text-desc">
+                                 <FormatNumber value={trade.sellAmount} />
+                              </div>
                            </td>
-                           <td>{trade.from}</td>
+                           <td>
+                              <div className="row">
+                                 <img
+                                    src={getFlagUrl(trade.fromFlag)}
+                                    className="player-flag game-cursor"
+                                    title={getCountryName(trade.fromFlag)}
+                                 />
+                                 {trade.fromLevel > 0 ? (
+                                    <img
+                                       src={AccountLevelImages[trade.fromLevel]}
+                                       className="player-flag"
+                                       title={AccountLevelNames[trade.fromLevel]()}
+                                    />
+                                 ) : null}
+                              </div>
+                              <div className="text-small">{trade.from}</div>
+                           </td>
                            <td>
                               {trade.fromId === user?.userId ? (
                                  <div

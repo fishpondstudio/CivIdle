@@ -83,8 +83,28 @@ export function AddTradeComponent({
                />
             </div>
             <div className="sep5"></div>
-            <div className="text-desc text-small text-right">
-               0 ~ <FormatNumber value={resourcesInStorage[trade.sellResource] ?? 0} />
+            <div className="row text-desc text-small">
+               <div style={{ width: "80px" }}></div>
+               <div>
+                  0 ~ <FormatNumber value={resourcesInStorage[trade.sellResource] ?? 0} />
+               </div>
+               <div className="f1"></div>
+               <div
+                  className="text-link text-strong mr10"
+                  onClick={() =>
+                     setTrade({ ...trade, sellAmount: (resourcesInStorage[trade.sellResource] ?? 0) * 0.5 })
+                  }
+               >
+                  {t(L.PlayerTradeSetHalf)}
+               </div>
+               <div
+                  className="text-link text-strong"
+                  onClick={() =>
+                     setTrade({ ...trade, sellAmount: resourcesInStorage[trade.sellResource] ?? 0 })
+                  }
+               >
+                  {t(L.PlayerTradeSetMax)}
+               </div>
             </div>
             <div className="separator has-title">
                <div className="text-strong">{t(L.PlayerTradeIWant)}</div>
@@ -119,8 +139,24 @@ export function AddTradeComponent({
                />
             </div>
             <div className="sep5" />
-            <div className="text-desc text-small text-right">
-               <FormatNumber value={rangeMin} /> ~ <FormatNumber value={rangeMax} />
+            <div className="row text-desc text-small">
+               <div style={{ width: "80px" }}></div>
+               <div>
+                  <FormatNumber value={rangeMin} /> ~ <FormatNumber value={rangeMax} />
+               </div>
+               <div className="f1" />
+               <div
+                  className="text-link text-strong mr10"
+                  onClick={() => setTrade({ ...trade, buyAmount: rangeMin })}
+               >
+                  {t(L.PlayerTradeSetMin)}
+               </div>
+               <div
+                  className="text-link text-strong"
+                  onClick={() => setTrade({ ...trade, buyAmount: rangeMax })}
+               >
+                  {t(L.PlayerTradeSetMax)}
+               </div>
             </div>
             <div className="sep15"></div>
             <div className="row">

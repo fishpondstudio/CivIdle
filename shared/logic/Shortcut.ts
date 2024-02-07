@@ -49,7 +49,7 @@ export interface IShortcutConfig {
    meta: boolean;
 }
 
-const OnKeydown = new TypedEvent<KeyboardEvent>();
+export const OnKeydown = new TypedEvent<KeyboardEvent>();
 
 document.addEventListener("keydown", OnKeydown.emit);
 

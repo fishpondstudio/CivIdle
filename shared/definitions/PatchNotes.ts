@@ -5,6 +5,19 @@ interface PatchNote {
 
 export const PatchNotes: PatchNote[] = [
    {
+      version: "0.1.125",
+      content: [
+         ["QoL", "Rework player trade UI, add player flag and level"],
+         ["Bugfix", "Fix a bug where open/close chat causes lag"],
+         ["Bugfix", "Rename Account Level to Account Rank"],
+         ["QoL", "/playercount command now returns total/online players"],
+         ["QoL", "Fix missing tutorial. Allow redoing tutorial in Help -> Tutorial"],
+         ["Bugfix", "Fix St. Peter's Basilica has incorrect storage amount (@Vethon)"],
+         ["QoL", "Allow resetting building/resource colors (@Vethon)"],
+         ["QoL", "Support press [D] key during the boot screen to report issues on Discord"],
+      ],
+   },
+   {
       version: "0.1.124",
       content: [
          ["Bugfix", "Fix a bug where muting player does not work"],

@@ -1,5 +1,6 @@
 import classNames from "classnames";
 import React, { useEffect, useRef, useState } from "react";
+import { MAX_CHAT_PER_CHANNEL } from "../../../shared/logic/Constants";
 import { AccountLevel, ChatChannels, type IChat } from "../../../shared/utilities/Database";
 import { isEmpty, keysOf, sizeOf } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
@@ -23,7 +24,7 @@ export function ChatPanel(): React.ReactNode {
    const options = useGameOptions();
    const messages = useChatMessages()
       .filter((m) => typeof m === "string" || options.chatReceiveChannel[m.channel])
-      .slice(0, 200);
+      .slice(-MAX_CHAT_PER_CHANNEL);
    const user = useUser();
    const bottomRef = useRef<HTMLDivElement>(null);
    const [showChatWindow, setShowChatWindow] = useState(false);

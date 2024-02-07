@@ -71,6 +71,16 @@ export function FirstTimePlayerModal(): React.ReactNode {
                </div>
             );
          case SetupStep.Tutorial2:
+            return (
+               <div className="row">
+                  <div style={{ alignSelf: "flex-start" }}>
+                     <img src={install} style={{ width: "48px" }} />
+                  </div>
+                  <div className="f1" style={{ margin: "10px 15px" }}>
+                     <RenderHTML html={t(L.Tutorial5)} />
+                  </div>
+               </div>
+            );
          case SetupStep.Tutorial3:
             return (
                <div className="row">

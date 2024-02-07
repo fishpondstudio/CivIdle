@@ -66,8 +66,9 @@ export async function handleChatCommand(command: string): Promise<void> {
          break;
       }
       case "playercount": {
-         const playerCount = await client.getPlayerCount();
-         addSystemMessage(`There are ${playerCount} players current online`);
+         const onlineCount = await client.getOnlinePlayerCount();
+         const totalCount = await client.getTotalPlayerCount();
+         addSystemMessage(`There are ${totalCount} players, ${onlineCount} of them are current online`);
          break;
       }
       case "randomcolor": {

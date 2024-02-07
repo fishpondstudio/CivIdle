@@ -58,12 +58,9 @@ export function BuildingUpgradeComponent({ gameState, xy }: IBuildingComponentPr
                   <div className="text-small text-desc">{t(L.BuildingTier)}</div>
                </div>
             </div>
-            <div className="sep10"></div>
-            <div className="separator has-title">
-               <div>{t(L.UpgradeBuilding)}</div>
-            </div>
-            <div className="sep10"></div>
+            <div className="separator"></div>
             <div className="row">
+               <div className="text-strong mr10">{t(L.UpgradeBuilding)}</div>
                {levels.map((level, index) => (
                   <Tippy
                      content={`${t(L.Upgrade)} x${level}: ${mapOf(

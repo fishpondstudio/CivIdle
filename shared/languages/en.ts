@@ -651,6 +651,9 @@ export const EN = {
    StatisticsTransportationAmount: "Amt",
    PlayerTrade: "Trade With Players",
    PlayerTradeIWant: "I Want",
+   PlayerTradeSetMin: "Min",
+   PlayerTradeSetMax: "Max",
+   PlayerTradeSetHalf: "50%",
    PlayerTradeIOffer: "I Offer",
    PlayerTradeResource: "Resource",
    PlayerTradeFillBy: "Fill By",
@@ -830,6 +833,8 @@ export const EN = {
    Tutorial3: "I have played Industry Idle and I know the drill, please skip the basic tutorial",
    Tutorial4:
       "Buildings are the basic building block of your empire - place them on the explored map tiles. Certain buildings like Stone Quarries and Aqueducts that extract deposit need to be placed on a deposit tile. A building will lift the fog of its surrounding tiles.<br><br>Buildings consume resources and produce new ones. They will <b>automatically</b> transport needed resources. The produced resources will be stored in the buildings which can be transported into other buildings that need these resources. However, a building's storage space is limited.<br><br>Buildings need <b>workers</b> for transportation and production - you need to build residential buildings like <b>huts</b> to increase the worker population. You can upgrade a building to increase its production and storage.",
+   Tutorial5:
+      "<b>Science</b> is used to unlock technologies in the tech tree. A technology unlocks new building, wonders and boosts.<br><br><b>Busy workers</b> generate a small amount of science. Later on, you will unlock buildings like libraries and schools that produce science.<br><br>The amount of workers available is affected by <b>happiness</b>. Each building will cost 1 happiness. And you gain happiness from technologies, wonders and great people. Make sure your workers are happy, otherwise your empire's production will halt.<br><br><b>Wonders</b> are one of a kind building - you can only build one and they cannot be removed once built. Wonders can provide significant boost or unlock new mechanisms.",
    Tutorial6:
       "When you enter a new age, a new <b>great person</b> will be born. You can choose one out of three candidates.<br><br>Great people provide boosts and will be added to your permanent collection. When you reborn, you collect all the great people you've chosen this run, plus some  gone, these permanent great people will remain with you.<br><br><b>Permanent</b> great people can be upgraded by collecting great people from each run. They will help your empire achieve new heights. That's all the basics you need to know.<br><br>If you have questions, the best way to get help is by asking the <b>chat</b> - we have a friendly community that is always ready to help.",
    TutorialPlayerHandle: "Choose your player handle",
@@ -873,4 +878,5 @@ export const EN = {
    BackToCity: "Back To City",
    UpgradeBuildingNotProducingDesc:
       "This building is being upgraded - production will halt until upgrade is complete",
+   Tutorial: "Tutorial",
 };
