@@ -112,7 +112,7 @@ export async function startGame(
          const before = structuredClone(gameState);
          let timeLeft = offlineTime;
          while (timeLeft > 0) {
-            const batchSize = Math.min(offlineTime, MAX_OFFLINE_PRODUCTION_SEC / 100);
+            const batchSize = Math.min(timeLeft, MAX_OFFLINE_PRODUCTION_SEC / 100);
             await schedule(() => {
                for (let i = 0; i < batchSize; i++) {
                   tickEverySecond(gameState, true);
