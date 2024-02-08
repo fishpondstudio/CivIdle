@@ -8,7 +8,7 @@ import { jsxMapOf } from "../utilities/Helper";
 import { FormatNumber } from "./HelperComponents";
 import { ProgressBarComponent } from "./ProgressBarComponent";
 
-export function HappinessComponent(): React.ReactNode {
+export function HappinessComponent({ open }: { open: boolean }): React.ReactNode {
    const happiness = useCurrentTick().happiness;
    if (!happiness) {
       return null;
@@ -43,7 +43,7 @@ export function HappinessComponent(): React.ReactNode {
          <div className="sep5"></div>
          <ul className="tree-view">
             <li>
-               <details>
+               <details open={open}>
                   <summary className="row">
                      <div className="f1">{t(L.Happiness)}</div>
                      <div className="text-strong">{happiness.value}</div>
@@ -83,7 +83,7 @@ export function HappinessComponent(): React.ReactNode {
                </details>
             </li>
             <li>
-               <details>
+               <details open={open}>
                   <summary className="row">
                      <div className="f1">{t(L.WorkerHappinessPercentage)}</div>
                      <div

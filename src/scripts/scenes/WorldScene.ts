@@ -172,7 +172,7 @@ export class WorldScene extends ViewportScene {
       this._tiles.forEach((visual, xy) => visual.updateDepositColor(gameOptions));
    }
 
-   lookAtXy(xy: Tile) {
+   lookAtTile(xy: Tile, lookAtMode: LookAtMode) {
       this.cameraMovement?.stop();
       const target = this.viewport.clampCenter(getGrid(getGameState()).xyToPosition(xy));
       this.cameraMovement = new CustomAction(
@@ -191,7 +191,11 @@ export class WorldScene extends ViewportScene {
          v2(target).subtractSelf(viewportCenter!).length() / 2000,
          Easing.InOutSine,
       ).start();
-      this.drawSelection(null, [xy]);
+      if (lookAtMode === LookAtMode.Highlight) {
+         this.drawSelection(null, [xy]);
+      } else {
+         this.selectGrid(tileToPoint(xy));
+      }
    }
 
    drawSelection(selected: IPointData | null, highlights: Tile[] = []) {
@@ -372,4 +376,9 @@ export class WorldScene extends ViewportScene {
       );
       Actions.to(this.viewport, { zoom: target }, time).start();
    }
+}
+
+export enum LookAtMode {
+   Highlight = 0,
+   Select = 1,
 }

@@ -26,7 +26,11 @@ import { PlayerHandleComponent } from "./PlayerHandleComponent";
 import { RebornModal } from "./RebornModal";
 import { WonderPage } from "./WonderPage";
 
-export function HeadquarterBuildingBody({ gameState, xy }: IBuildingComponentProps): React.ReactNode {
+export function HeadquarterBuildingBody({
+   gameState,
+   xy,
+   expandHappiness,
+}: IBuildingComponentProps & { expandHappiness?: boolean }): React.ReactNode {
    const {
       happinessPercentage,
       workersAvailable,
@@ -46,7 +50,7 @@ export function HeadquarterBuildingBody({ gameState, xy }: IBuildingComponentPro
          <PlayerHandleComponent />
          <BuildingProduceComponent gameState={gameState} xy={xy} />
          <BuildingStorageComponent xy={xy} gameState={gameState} />
-         <HappinessComponent />
+         <HappinessComponent open={expandHappiness ?? false} />
          <fieldset>
             <legend>{t(L.Census)}</legend>
             <ul className="tree-view">

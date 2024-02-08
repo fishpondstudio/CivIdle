@@ -61,17 +61,18 @@ export function BuildingUpgradeComponent({ gameState, xy }: IBuildingComponentPr
             <div className="separator"></div>
             <div className="row">
                <div className="text-strong mr10">{t(L.UpgradeBuilding)}</div>
-               {levels.map((level, index) => (
+               {levels.map((level) => (
                   <Tippy
+                     key={level}
                      content={`${t(L.Upgrade)} x${level}: ${mapOf(
-                        getTotalBuildingCost(building.type, building.level, building.level + levels[index]),
+                        getTotalBuildingCost(building.type, building.level, building.level + level),
                         (res, amount) => {
                            return `${Config.Resource[res].name()} ${formatNumber(amount)}`;
                         },
                      ).join(", ")}`}
                      placement="top"
                   >
-                     <button key={level} className="f1" onClick={() => upgrade(level)}>
+                     <button className="f1" onClick={() => upgrade(level)}>
                         x{level}
                      </button>
                   </Tippy>

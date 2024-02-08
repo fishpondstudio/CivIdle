@@ -10,7 +10,7 @@ import type { IBuildingData } from "../../../shared/logic/Tile";
 import { forEach, formatPercent, keysOf, mReduceOf, safeAdd } from "../../../shared/utilities/Helper";
 import type { PartialSet, PartialTabulate } from "../../../shared/utilities/TypeDefinitions";
 import { L, t } from "../../../shared/utilities/i18n";
-import { WorldScene } from "../scenes/WorldScene";
+import { LookAtMode, WorldScene } from "../scenes/WorldScene";
 import { jsxMMapOf } from "../utilities/Helper";
 import { Singleton } from "../utilities/Singleton";
 import { playClick } from "../visuals/Sound";
@@ -118,7 +118,9 @@ function BuildingTab({ gameState }: IBuildingComponentProps): React.ReactNode {
                                  <div
                                     className="pointer"
                                     onClick={() => {
-                                       Singleton().sceneManager.getCurrent(WorldScene)?.lookAtXy(xy);
+                                       Singleton()
+                                          .sceneManager.getCurrent(WorldScene)
+                                          ?.lookAtTile(xy, LookAtMode.Highlight);
                                     }}
                                  >
                                     {Config.Building[building.type].name()}

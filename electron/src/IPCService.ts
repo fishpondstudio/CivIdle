@@ -49,7 +49,7 @@ export class IPCService {
       return (await this._client.auth.getSessionTicket()).getBytes().toString("hex");
    }
 
-   public getAppID(): number {
+   public getAppId(): number {
       return this._client.utils.getAppId();
    }
 

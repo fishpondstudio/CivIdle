@@ -2,16 +2,18 @@ import classNames from "classnames";
 import { getScienceFromWorkers } from "../../../shared/logic/BuildingLogic";
 import { GameFeature, hasFeature } from "../../../shared/logic/FeatureLogic";
 import { getHappinessIcon } from "../../../shared/logic/HappinessLogic";
+import { getSpecialBuildings } from "../../../shared/logic/IntraTickCache";
 import { getResourceAmount } from "../../../shared/logic/ResourceLogic";
 import { sizeOf, type Tile } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import { useGameState } from "../Global";
 import { useCurrentTick } from "../logic/Tick";
 import { TechTreeScene } from "../scenes/TechTreeScene";
-import { WorldScene } from "../scenes/WorldScene";
+import { LookAtMode, WorldScene } from "../scenes/WorldScene";
 import { Singleton } from "../utilities/Singleton";
 import { FormatNumber } from "./HelperComponents";
 import { TextWithHelp } from "./TextWithHelpComponent";
+import { TilePage } from "./TilePage";
 
 export function ResourcePanel(): React.ReactNode {
    const tick = useCurrentTick();
@@ -25,7 +27,14 @@ export function ResourcePanel(): React.ReactNode {
    return (
       <div className="resource-bar window">
          {tick.happiness ? (
-            <div className="row">
+            <div
+               className="row pointer"
+               onClick={() => {
+                  const xy = getSpecialBuildings(gs).Headquarter.tile;
+                  Singleton().sceneManager.getCurrent(WorldScene)?.lookAtTile(xy, LookAtMode.Select);
+                  Singleton().routeTo(TilePage, { xy, expandHappiness: true });
+               }}
+            >
                <div
                   className={classNames({
                      "m-icon": true,

@@ -5,6 +5,19 @@ interface PatchNote {
 
 export const PatchNotes: PatchNote[] = [
    {
+      version: "0.1.126",
+      content: [
+         ["Bugfix", "Fix Offline production calculation is incorrect (@Vethon)"],
+         ["Bugfix", "Fix new map sometimes missing resource buildings"],
+         ["QoL", "Optimize in-game chat performance"],
+         ["QoL", "Make Market, Caravansary and Warehouse sortable"],
+         [
+            "QoL",
+            "Now when you click on happiness on resource panel, the game will highlight happiness in Headquarter",
+         ],
+      ],
+   },
+   {
       version: "0.1.125",
       content: [
          ["QoL", "Rework player trade UI, add player flag and level"],

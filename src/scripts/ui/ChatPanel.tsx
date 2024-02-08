@@ -1,6 +1,5 @@
 import classNames from "classnames";
-import React, { useEffect, useRef, useState } from "react";
-import { MAX_CHAT_PER_CHANNEL } from "../../../shared/logic/Constants";
+import React, { memo, useCallback, useEffect, useRef, useState } from "react";
 import { AccountLevel, ChatChannels, type IChat } from "../../../shared/utilities/Database";
 import { isEmpty, keysOf, sizeOf } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
@@ -22,9 +21,9 @@ import { TextWithHelp } from "./TextWithHelpComponent";
 export function ChatPanel(): React.ReactNode {
    const [chat, setChat] = useState("");
    const options = useGameOptions();
-   const messages = useChatMessages()
-      .filter((m) => typeof m === "string" || options.chatReceiveChannel[m.channel])
-      .slice(-MAX_CHAT_PER_CHANNEL);
+   const messages = useChatMessages().filter(
+      (m) => !("channel" in m) || options.chatReceiveChannel[m.channel],
+   );
    const user = useUser();
    const bottomRef = useRef<HTMLDivElement>(null);
    const [showChatWindow, setShowChatWindow] = useState(false);
@@ -54,7 +53,7 @@ export function ChatPanel(): React.ReactNode {
 
    for (let i = messages.length - 1; i >= 0; --i) {
       const message = messages[i];
-      if (typeof message === "object") {
+      if ("channel" in message) {
          latestMessage = (
             <>
                <span className="text-desc">{message.name}: </span>
@@ -77,6 +76,8 @@ export function ChatPanel(): React.ReactNode {
       }
    };
 
+   const onImageLoaded = useCallback(() => bottomRef.current?.scrollIntoView({ behavior: "smooth" }), []);
+
    const receiveMultipleChannels = sizeOf(options.chatReceiveChannel) > 1;
 
    const chatWindow = (
@@ -95,11 +96,11 @@ export function ChatPanel(): React.ReactNode {
             </div>
          </div>
          <div className="window-content inset-shallow">
-            {messages.map((c, i) => {
-               if (typeof c === "string") {
+            {messages.map((c) => {
+               if (!("channel" in c)) {
                   return (
-                     <div className="chat-command-item" key={i}>
-                        <RenderHTML html={c} />
+                     <div className="chat-command-item" key={c.id}>
+                        <RenderHTML html={c.message} />
                      </div>
                   );
                }
@@ -109,7 +110,7 @@ export function ChatPanel(): React.ReactNode {
                         "chat-message-item": true,
                         "mentions-me": user ? c.message.includes(`@${user.handle}`) : false,
                      })}
-                     key={i}
+                     key={c.id}
                   >
                      {c.name === user?.handle ? (
                         <div className="row text-small text-desc">
@@ -173,10 +174,7 @@ export function ChatPanel(): React.ReactNode {
                         </div>
                      )}
                      <div>
-                        <ChatMessage
-                           chat={c}
-                           onImageLoaded={() => bottomRef.current?.scrollIntoView({ behavior: "smooth" })}
-                        />
+                        <ChatMessage chat={c} onImageLoaded={onImageLoaded} />
                      </div>
                   </div>
                );
@@ -232,22 +230,33 @@ export function ChatPanel(): React.ReactNode {
    );
 }
 
-function ChatMessage({ chat, onImageLoaded }: { chat: IChat; onImageLoaded: () => void }): React.ReactNode {
-   const message = chat.message;
-   if (chat.level <= AccountLevel.Tribune && !chat.isMod) {
+const ChatMessage = memo(
+   function ChatMessage({
+      chat,
+      onImageLoaded,
+   }: { chat: IChat; onImageLoaded: () => void }): React.ReactNode {
+      const message = chat.message;
+      if (chat.level <= AccountLevel.Tribune && !chat.isMod) {
+         return message;
+      }
+      const isDomainWhitelisted =
+         message.startsWith("https://i.imgur.com/") ||
+         message.startsWith("https://i.gyazo.com/") ||
+         message.startsWith("https://i.ibb.co/") ||
+         message.startsWith("https://cdn.discordapp.com/attachments/");
+      const isExtensionWhitelisted =
+         message.endsWith(".jpg") || message.endsWith(".png") || message.endsWith(".jpeg");
+      if (isDomainWhitelisted && isExtensionWhitelisted) {
+         return (
+            <img
+               className="chat-image"
+               src={message}
+               onClick={() => openUrl(message)}
+               onLoad={onImageLoaded}
+            />
+         );
+      }
       return message;
-   }
-   const isDomainWhitelisted =
-      message.startsWith("https://i.imgur.com/") ||
-      message.startsWith("https://i.gyazo.com/") ||
-      message.startsWith("https://i.ibb.co/") ||
-      message.startsWith("https://cdn.discordapp.com/attachments/");
-   const isExtensionWhitelisted =
-      message.endsWith(".jpg") || message.endsWith(".png") || message.endsWith(".jpeg");
-   if (isDomainWhitelisted && isExtensionWhitelisted) {
-      return (
-         <img className="chat-image" src={message} onClick={() => openUrl(message)} onLoad={onImageLoaded} />
-      );
-   }
-   return message;
-}
+   },
+   (p, n) => p.chat === n.chat && p.onImageLoaded === n.onImageLoaded,
+);

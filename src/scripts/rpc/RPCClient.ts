@@ -39,7 +39,16 @@ export const OnPlayerMapChanged = new TypedEvent<Record<string, IClientMapEntry>
 export const OnPlayerMapMessage = new TypedEvent<IMapMessage>();
 export const OnNewPendingClaims = new TypedEvent<void>();
 
-export type LocalChat = IChat | string;
+interface IClientChat extends IChat {
+   id: number;
+}
+
+interface ISystemMessage {
+   id: number;
+   message: string;
+}
+
+export type LocalChat = IClientChat | ISystemMessage;
 
 let chatMessages: LocalChat[] = [];
 const trades: Record<string, IClientTrade> = {};
@@ -94,8 +103,10 @@ export function canEarnGreatPeopleFromReborn(): boolean {
    return true;
 }
 
+let chatId = 0;
+
 export function addSystemMessage(message: string): void {
-   chatMessages.push(message);
+   chatMessages.push({ id: ++chatId, message });
    OnChatMessage.emit(chatMessages);
 }
 
@@ -113,7 +124,7 @@ export async function connectWebSocket(): Promise<number> {
       }
       getGameOptions().id = `steam:${await SteamClient.getSteamId()}`;
       ws = new WebSocket(
-         `${serverAddress}/?appId=${await SteamClient.getAppID()}&ticket=${steamTicket}&platform=steam`,
+         `${serverAddress}/?appId=${await SteamClient.getAppId()}&ticket=${steamTicket}&platform=steam&steamId=${await SteamClient.getSteamId()}`,
       );
    } else {
       const token = `${getGameOptions().id}:${getGameOptions().token ?? getGameOptions().id}`;
@@ -133,14 +144,14 @@ export async function connectWebSocket(): Promise<number> {
          case MessageType.Chat: {
             const c = message as IChatMessage;
             if (c.flush) {
-               chatMessages = c.chat;
+               chatMessages = c.chat.map((c) => ({ ...c, id: ++chatId }));
             } else {
                c.chat.forEach((m) => {
                   if (user && m.message.includes(`@${user!.handle} `)) {
                      playBubble();
                      showToast(`${m.name}: ${m.message}`);
                   }
-                  chatMessages.push(m);
+                  chatMessages.push({ ...m, id: ++chatId });
                });
             }
             OnChatMessage.emit(chatMessages);
