@@ -5,7 +5,6 @@ import { getStorageFor } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
 import { TRADE_CANCEL_REFUND_PERCENT } from "../../../shared/logic/Constants";
 import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
-import type { IClientTrade } from "../../../shared/logic/PlayerTradeLogic";
 import { getMaxActiveTrades } from "../../../shared/logic/PlayerTradeLogic";
 import type { IPendingClaim } from "../../../shared/utilities/Database";
 import { formatPercent, isNullOrUndefined, safeAdd } from "../../../shared/utilities/Helper";
@@ -26,109 +25,6 @@ import { showModal, showToast } from "./GlobalModal";
 import { FormatNumber } from "./HelperComponents";
 import { WarningComponent } from "./WarningComponent";
 
-interface IPlayerTradeFiltersProps {
-   wantFilterParams: {
-      wantFilter: Resource | null;
-      setWantFilter: (newFilter: Resource | null) => void;
-   };
-   offerFilterParams: {
-      offerFilter: Resource | null;
-      setOfferFilter: (newFilter: Resource | null) => void;
-   };
-   trades: IClientTrade[];
-}
-
-export function PlayerTradeFilters({
-   wantFilterParams,
-   offerFilterParams,
-   trades,
-}: IPlayerTradeFiltersProps): React.ReactNode {
-   const { wantFilter, setWantFilter } = wantFilterParams;
-   const { offerFilter, setOfferFilter } = offerFilterParams;
-
-   const [showFilters, setShowFilters] = useState(false);
-
-   const uniqueBuyResources: Set<Resource> = new Set();
-   trades.map((trade) => {
-      uniqueBuyResources.add(trade.buyResource);
-   });
-   const uniqueSellResources: Set<Resource> = new Set();
-   trades.map((trade) => {
-      uniqueSellResources.add(trade.sellResource);
-   });
-
-   if (showFilters) {
-      return (
-         <fieldset>
-            <legend className="text-strong">{t(L.PlayerTradeFilters)}</legend>
-            <div className="row">
-               <div style={{ width: "80px" }}>{t(L.PlayerTradeWant)}</div>
-               <select
-                  className="f1"
-                  value={wantFilter ? wantFilter : ""}
-                  onChange={(e) => {
-                     if (e.target.value in Config.Resource || e.target.value === "") {
-                        setWantFilter(e.target.value === "" ? null : (e.target.value as Resource));
-                     }
-                  }}
-               >
-                  <option key="Empty" value=""></option>
-
-                  {Array.from(uniqueBuyResources).map((res) => (
-                     <option key={res} value={res}>
-                        {Config.Resource[res].name()}
-                     </option>
-                  ))}
-               </select>
-            </div>
-            <div className="sep10"></div>
-            <div className="row">
-               <div style={{ width: "80px" }}>{t(L.PlayerTradeOffer)}</div>
-               <select
-                  className="f1"
-                  value={offerFilter ? offerFilter : ""}
-                  onChange={(e) => {
-                     if (e.target.value in Config.Resource || e.target.value === "") {
-                        setOfferFilter(e.target.value === "" ? null : (e.target.value as Resource));
-                     }
-                  }}
-               >
-                  <option key="Empty" value=""></option>
-
-                  {Array.from(uniqueSellResources).map((res) => (
-                     <option key={res} value={res}>
-                        {Config.Resource[res].name()}
-                     </option>
-                  ))}
-               </select>
-            </div>
-            <div className="sep10"></div>
-            <div className="row">
-               <button
-                  className="row f1 jcc"
-                  onClick={() => {
-                     setShowFilters(false);
-                  }}
-               >
-                  {t(L.PlayerTradeFiltersClose)}
-               </button>
-            </div>
-         </fieldset>
-      );
-   }
-   return (
-      <button
-         className="row w100 jcc mb10"
-         onClick={() => {
-            setShowFilters(true);
-         }}
-      >
-         <div className="m-icon small mr5">add_circle</div>
-         <div className="text-strong">Filters</div>
-      </button>
-   );
-}
-
 export function PlayerTradeComponent({ gameState, xy }: IBuildingComponentProps): React.ReactNode {
    const building = gameState.tiles.get(xy)?.building;
    if (!building) {
@@ -137,10 +33,6 @@ export function PlayerTradeComponent({ gameState, xy }: IBuildingComponentProps)
    const trades = useTrades();
    const user = useUser();
    const myXy = getMyMapXy();
-
-   const [wantFilter, setWantFilter] = useState<Resource | null>(null);
-   const [offerFilter, setOfferFilter] = useState<Resource | null>(null);
-
    if (!myXy) {
       return (
          <>
@@ -170,11 +62,6 @@ export function PlayerTradeComponent({ gameState, xy }: IBuildingComponentProps)
             gameState={gameState}
             xy={xy}
          />
-         <PlayerTradeFilters
-            wantFilterParams={{ wantFilter, setWantFilter }}
-            offerFilterParams={{ offerFilter, setOfferFilter }}
-            trades={trades}
-         />
          <div className="table-view">
             <table>
                <tbody>
@@ -184,123 +71,103 @@ export function PlayerTradeComponent({ gameState, xy }: IBuildingComponentProps)
                      <th>{t(L.PlayerTradeFrom)}</th>
                      <th></th>
                   </tr>
-                  {trades
-                     .filter((t) => {
-                        if (!wantFilter && !offerFilter) {
-                           return true;
-                        }
-                        if (t.buyResource === wantFilter && !offerFilter) {
-                           return true;
-                        }
-                        if (t.sellResource === offerFilter && !wantFilter) {
-                           return true;
-                        }
-                        if (t.buyResource === wantFilter && t.sellResource === offerFilter) {
-                           return true;
-                        }
-                        return false;
-                     })
-                     .map((trade) => {
-                        const disableFill = user === null || trade.fromId === user.userId;
-                        return (
-                           <tr
-                              key={trade.id}
-                              className={classNames({ "text-strong": trade.fromId === user?.userId })}
-                           >
-                              <td>
-                                 <div>{Config.Resource[trade.buyResource].name()}</div>
-                                 <div className="text-small text-strong text-desc">
-                                    <FormatNumber value={trade.buyAmount} />
-                                 </div>
-                              </td>
-                              <td>
-                                 <div>{Config.Resource[trade.sellResource].name()}</div>
-                                 <div className="text-small text-strong text-desc">
-                                    <FormatNumber value={trade.sellAmount} />
-                                 </div>
-                              </td>
-                              <td>
-                                 <div className="row">
+                  {trades.map((trade) => {
+                     const disableFill = user === null || trade.fromId === user.userId;
+                     return (
+                        <tr
+                           key={trade.id}
+                           className={classNames({ "text-strong": trade.fromId === user?.userId })}
+                        >
+                           <td>
+                              <div>{Config.Resource[trade.buyResource].name()}</div>
+                              <div className="text-small text-strong text-desc">
+                                 <FormatNumber value={trade.buyAmount} />
+                              </div>
+                           </td>
+                           <td>
+                              <div>{Config.Resource[trade.sellResource].name()}</div>
+                              <div className="text-small text-strong text-desc">
+                                 <FormatNumber value={trade.sellAmount} />
+                              </div>
+                           </td>
+                           <td>
+                              <div className="row">
+                                 <img
+                                    src={getFlagUrl(trade.fromFlag)}
+                                    className="player-flag game-cursor"
+                                    title={getCountryName(trade.fromFlag)}
+                                 />
+                                 {trade.fromLevel > 0 ? (
                                     <img
-                                       src={getFlagUrl(trade.fromFlag)}
-                                       className="player-flag game-cursor"
-                                       title={getCountryName(trade.fromFlag)}
+                                       src={AccountLevelImages[trade.fromLevel]}
+                                       className="player-flag"
+                                       title={AccountLevelNames[trade.fromLevel]()}
                                     />
-                                    {trade.fromLevel > 0 ? (
-                                       <img
-                                          src={AccountLevelImages[trade.fromLevel]}
-                                          className="player-flag"
-                                          title={AccountLevelNames[trade.fromLevel]()}
-                                       />
-                                    ) : null}
-                                 </div>
-                                 <div className="text-small">{trade.from}</div>
-                              </td>
-                              <td>
-                                 {trade.fromId === user?.userId ? (
-                                    <div
-                                       className="m-icon small text-link"
-                                       onClick={() => {
-                                          showModal(
-                                             <ConfirmModal
-                                                title={t(L.PlayerTradeCancelTrade)}
-                                                onConfirm={async () => {
-                                                   try {
-                                                      const { total, used } = getStorageFor(xy, gameState);
-                                                      if (
-                                                         used +
-                                                            trade.sellAmount * TRADE_CANCEL_REFUND_PERCENT >
-                                                         total
-                                                      ) {
-                                                         throw new Error(
-                                                            t(L.PlayerTradeCancelTradeNotEnoughStorage),
-                                                         );
-                                                      }
-                                                      const cancelledTrade = await client.cancelTrade(
-                                                         trade.id,
+                                 ) : null}
+                              </div>
+                              <div className="text-small">{trade.from}</div>
+                           </td>
+                           <td>
+                              {trade.fromId === user?.userId ? (
+                                 <div
+                                    className="m-icon small text-link"
+                                    onClick={() => {
+                                       showModal(
+                                          <ConfirmModal
+                                             title={t(L.PlayerTradeCancelTrade)}
+                                             onConfirm={async () => {
+                                                try {
+                                                   const { total, used } = getStorageFor(xy, gameState);
+                                                   if (
+                                                      used + trade.sellAmount * TRADE_CANCEL_REFUND_PERCENT >
+                                                      total
+                                                   ) {
+                                                      throw new Error(
+                                                         t(L.PlayerTradeCancelTradeNotEnoughStorage),
                                                       );
-                                                      safeAdd(
-                                                         building.resources,
-                                                         cancelledTrade.sellResource,
-                                                         cancelledTrade.sellAmount *
-                                                            TRADE_CANCEL_REFUND_PERCENT,
-                                                      );
-                                                      playKaching();
-                                                   } catch (error) {
-                                                      showToast(String(error));
-                                                      playError();
                                                    }
-                                                }}
-                                             >
-                                                {t(L.PlayerTradeCancelDesc, {
-                                                   percent: formatPercent(TRADE_CANCEL_REFUND_PERCENT),
-                                                })}
-                                             </ConfirmModal>,
-                                          );
-                                       }}
-                                    >
-                                       delete
-                                    </div>
-                                 ) : (
-                                    <div
-                                       className={classNames({
-                                          "text-link": !disableFill,
-                                          "text-strong": true,
-                                          "text-desc": disableFill,
-                                       })}
-                                       onClick={() => {
-                                          if (!disableFill) {
-                                             showModal(<FillPlayerTradeModal trade={trade} xy={xy} />);
-                                          }
-                                       }}
-                                    >
-                                       {t(L.PlayerTradeFill)}
-                                    </div>
-                                 )}
-                              </td>
-                           </tr>
-                        );
-                     })}
+                                                   const cancelledTrade = await client.cancelTrade(trade.id);
+                                                   safeAdd(
+                                                      building.resources,
+                                                      cancelledTrade.sellResource,
+                                                      cancelledTrade.sellAmount * TRADE_CANCEL_REFUND_PERCENT,
+                                                   );
+                                                   playKaching();
+                                                } catch (error) {
+                                                   showToast(String(error));
+                                                   playError();
+                                                }
+                                             }}
+                                          >
+                                             {t(L.PlayerTradeCancelDesc, {
+                                                percent: formatPercent(TRADE_CANCEL_REFUND_PERCENT),
+                                             })}
+                                          </ConfirmModal>,
+                                       );
+                                    }}
+                                 >
+                                    delete
+                                 </div>
+                              ) : (
+                                 <div
+                                    className={classNames({
+                                       "text-link": !disableFill,
+                                       "text-strong": true,
+                                       "text-desc": disableFill,
+                                    })}
+                                    onClick={() => {
+                                       if (!disableFill) {
+                                          showModal(<FillPlayerTradeModal trade={trade} xy={xy} />);
+                                       }
+                                    }}
+                                 >
+                                    {t(L.PlayerTradeFill)}
+                                 </div>
+                              )}
+                           </td>
+                        </tr>
+                     );
+                  })}
                </tbody>
             </table>
          </div>

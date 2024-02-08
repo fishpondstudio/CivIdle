@@ -655,8 +655,6 @@ export const EN = {
    PlayerTradeSetMax: "Max",
    PlayerTradeSetHalf: "50%",
    PlayerTradeIOffer: "I Offer",
-   PlayerTradeFilters: "Filters",
-   PlayerTradeFiltersClose: "Close",
    PlayerTradeResource: "Resource",
    PlayerTradeFillBy: "Fill By",
    PlayerTradeAmount: "Amount",
