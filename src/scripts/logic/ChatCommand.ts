@@ -99,12 +99,13 @@ export async function handleChatCommand(command: string): Promise<void> {
          addSystemMessage("Player level has been changed");
          break;
       }
-      case "setplaytime": {
+      case "setplayhour": {
          if (!parts[1] || !parts[2]) {
             throw new Error("Invalid command format");
          }
-         await client.setPlayTime(parts[1], parseInt(parts[2], 10));
-         addSystemMessage("Play time has been changed");
+         const time = parseInt(parts[2], 10);
+         addSystemMessage(`Play time has been changed to ${time}h`);
+         await client.setPlayTime(parts[1], time * HOUR);
          break;
       }
       case "makemod": {
