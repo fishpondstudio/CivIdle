@@ -92,7 +92,9 @@ export function PlayerTradeComponent({ gameState, xy }: IBuildingComponentProps)
                return (
                   <tr key={trade.id} className={classNames({ "text-strong": trade.fromId === user?.userId })}>
                      <td>
-                        <div>{Config.Resource[trade.buyResource].name()}</div>
+                        <div className={classNames({ "text-strong": building.resources[trade.buyResource] })}>
+                           {Config.Resource[trade.buyResource].name()}
+                        </div>
                         <div className="text-small text-strong text-desc">
                            <FormatNumber value={trade.buyAmount} />
                         </div>

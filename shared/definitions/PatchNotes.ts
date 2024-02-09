@@ -5,6 +5,13 @@ interface PatchNote {
 
 export const PatchNotes: PatchNote[] = [
    {
+      version: "0.1.127",
+      content: [
+         ["QoL", "Highlight trades that can be filled immediately in Caravansary"],
+         ["QoL", "Add descriptions to Market, Warehouse and Caravansary"],
+      ],
+   },
+   {
       version: "0.1.126",
       content: [
          ["Bugfix", "Fix Offline production calculation is incorrect (@Vethon)"],

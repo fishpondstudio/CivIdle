@@ -467,6 +467,7 @@ export class BuildingDefinitions {
    };
    Caravansary: IBuildingDefinition = {
       name: () => t(L.Caravansary),
+      desc: () => t(L.CaravansaryDesc),
       input: {},
       output: {},
       construction: { Brick: 2 },
@@ -475,12 +476,14 @@ export class BuildingDefinitions {
       name: () => t(L.Market),
       input: {},
       output: {},
+      desc: () => t(L.MarketDesc),
       construction: { Brick: 2, Copper: 2, Lumber: 2 },
    };
    Warehouse: IBuildingDefinition = {
       name: () => t(L.Warehouse),
       input: {},
       output: {},
+      desc: () => t(L.WarehouseDesc),
       construction: { Lumber: 1, Brick: 1, Horse: 1 },
    };
    // #endregion /////////////////////////////////////////////////////////////////////////////////////////////

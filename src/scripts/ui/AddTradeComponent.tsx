@@ -92,7 +92,10 @@ export function AddTradeComponent({
                <div
                   className="text-link text-strong mr10"
                   onClick={() =>
-                     setTrade({ ...trade, sellAmount: (resourcesInStorage[trade.sellResource] ?? 0) * 0.5 })
+                     setTrade({
+                        ...trade,
+                        sellAmount: Math.floor((resourcesInStorage[trade.sellResource] ?? 0) * 0.5),
+                     })
                   }
                >
                   {t(L.PlayerTradeSetHalf)}
@@ -100,7 +103,10 @@ export function AddTradeComponent({
                <div
                   className="text-link text-strong"
                   onClick={() =>
-                     setTrade({ ...trade, sellAmount: resourcesInStorage[trade.sellResource] ?? 0 })
+                     setTrade({
+                        ...trade,
+                        sellAmount: Math.floor(resourcesInStorage[trade.sellResource] ?? 0),
+                     })
                   }
                >
                   {t(L.PlayerTradeSetMax)}
