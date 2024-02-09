@@ -105,7 +105,7 @@ export async function handleChatCommand(command: string): Promise<void> {
          }
          const time = parseInt(parts[2], 10);
          addSystemMessage(`Play time has been changed to ${time}h`);
-         await client.setPlayTime(parts[1], time * HOUR);
+         await client.setPlayTime(parts[1], time * 60 * 60);
          break;
       }
       case "makemod": {
