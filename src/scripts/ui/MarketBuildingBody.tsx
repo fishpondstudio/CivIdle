@@ -38,6 +38,16 @@ export function MarketBuildingBody({ gameState, xy }: IBuildingComponentProps): 
       };
    };
 
+   const tradeValues: Map<Resource, number> = new Map();
+
+   keysOf(market.availableResources).forEach((res) => {
+      const buy = getBuyResourceAndAmount(res);
+      const sellValue = Config.ResourcePrice[res]! * capacity;
+      const buyValue = Config.ResourcePrice[buy.resource]! * buy.amount;
+
+      tradeValues.set(res, (buyValue / sellValue) * 100);
+   });
+
    return (
       <div className="window-body">
          <fieldset>
@@ -60,6 +70,7 @@ export function MarketBuildingBody({ gameState, xy }: IBuildingComponentProps): 
                },
                { name: t(L.MarketYouGet), sortable: true },
                { name: "", sortable: true },
+               { name: "", sortable: true },
                { name: t(L.Storage), sortable: true },
                { name: t(L.MarketSell), sortable: false },
             ]}
@@ -77,6 +88,9 @@ export function MarketBuildingBody({ gameState, xy }: IBuildingComponentProps): 
                      return getBuyResourceAndAmount(a).amount - getBuyResourceAndAmount(b).amount;
                   }
                   case 3: {
+                     return (tradeValues.get(a) ?? 0) - (tradeValues.get(b) ?? 0);
+                  }
+                  case 4: {
                      return (building.resources[a] ?? 0) - (building.resources[b] ?? 0);
                   }
                   default:
@@ -89,12 +103,17 @@ export function MarketBuildingBody({ gameState, xy }: IBuildingComponentProps): 
                   return null;
                }
                const buy = getBuyResourceAndAmount(res);
+               const tradeValue = tradeValues.get(res) ?? 0;
+
                return (
                   <tr key={res}>
                      <td>{r.name()}</td>
                      <td>{Config.Resource[buy.resource].name()}</td>
                      <td className="right">
                         <FormatNumber value={buy.amount} />
+                     </td>
+                     <td className={tradeValue > 100 ? "text-green" : "text-red"}>
+                        {tradeValue.toFixed(0)}%
                      </td>
                      <td className="right">
                         <FormatNumber value={building.resources[res] ?? 0} />
