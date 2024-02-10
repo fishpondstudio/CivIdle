@@ -27,6 +27,7 @@ export const ShortcutActions = {
    UpgradePageIncreaseLevel: { scope: "UpgradePage", name: () => t(L.ShortcutUpgradePageIncreaseLevel) },
    UpgradePageDecreaseLevel: { scope: "UpgradePage", name: () => t(L.ShortcutUpgradePageDecreaseLevel) },
    TechPageGoBackToCity: { scope: "TechPage", name: () => t(L.ShortcutTechPageGoBackToCity) },
+   TechPageUnlockTech: { scope: "TechPage", name: () => t(L.ShortcutTechPageUnlockTech) },
    EmptyTilePageBuildLastBuilding: {
       scope: "EmptyTilePage",
       name: () => t(L.EmptyTilePageBuildLastBuilding),

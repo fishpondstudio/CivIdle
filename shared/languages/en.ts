@@ -768,6 +768,7 @@ export const EN = {
    ShortcutPressShortcut: "Press Shortcut Key...",
    ShortcutConflict: "Your shortcut is in conflict with %{name}",
    ShortcutTechPageGoBackToCity: "Go Back To City",
+   ShortcutTechPageUnlockTech: "Unlock Selected Tech",
    EmptyTilePageBuildLastBuilding: "Build Last Building",
    PlayerMapPageGoBackToCity: "Go Back To City",
    UnclaimedGreatPerson: "You have unclaimed Great People, click here to claim",

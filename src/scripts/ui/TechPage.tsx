@@ -49,6 +49,27 @@ export function TechPage({ id }: { id: Tech }): React.ReactNode {
       reduceOf(availableResources, (prev, k, v) => prev + Math.min(v, unlockCost[k] ?? 0), 0) /
       reduceOf(unlockCost, (prev, _, v) => prev + v, 0);
 
+   const unlock = () => {
+      if (!tech.requireTech.every((t) => gs.unlockedTech[t]) || progress < 1) {
+         return;
+      }
+      if (!trySpendResources(unlockCost, gs)) {
+         return;
+      }
+      const oldAge = getCurrentTechAge(gs);
+      unlockTech(id, OnResetTile, gs);
+      playLevelUp();
+      const newAge = getCurrentTechAge(gs);
+      if (oldAge !== newAge) {
+         gs.greatPeopleChoices.push(getGreatPeopleChoices(newAge!));
+      }
+      if (gs.greatPeopleChoices.length > 0) {
+         showModal(<ChooseGreatPersonModal greatPeopleChoice={gs.greatPeopleChoices[0]} />);
+      }
+      notifyGameStateUpdate();
+      Singleton().sceneManager.getCurrent(TechTreeScene)?.renderTechTree("animate", true);
+   };
+
    let prerequisiteCount = 0;
    return (
       <div className="window">
@@ -117,30 +138,7 @@ export function TechPage({ id }: { id: Tech }): React.ReactNode {
                            <ProgressBarComponent progress={progress} />
                         </div>
                         <div style={{ width: "10px" }} />
-                        <button
-                           disabled={!prerequisitesSatisfied || progress < 1}
-                           onClick={() => {
-                              if (!trySpendResources(unlockCost, gs)) {
-                                 return;
-                              }
-                              const oldAge = getCurrentTechAge(gs);
-                              unlockTech(id, OnResetTile, gs);
-                              playLevelUp();
-                              const newAge = getCurrentTechAge(gs);
-                              if (oldAge !== newAge) {
-                                 gs.greatPeopleChoices.push(getGreatPeopleChoices(newAge!));
-                              }
-                              if (gs.greatPeopleChoices.length > 0) {
-                                 showModal(
-                                    <ChooseGreatPersonModal greatPeopleChoice={gs.greatPeopleChoices[0]} />,
-                                 );
-                              }
-                              notifyGameStateUpdate();
-                              Singleton()
-                                 .sceneManager.getCurrent(TechTreeScene)
-                                 ?.renderTechTree("animate", true);
-                           }}
-                        >
+                        <button disabled={!prerequisitesSatisfied || progress < 1} onClick={() => unlock()}>
                            {t(L.UnlockBuilding)}
                         </button>
                      </div>
