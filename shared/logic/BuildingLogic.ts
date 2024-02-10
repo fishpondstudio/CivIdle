@@ -255,6 +255,13 @@ export function getStorageRequired(res: PartialTabulate<Resource>): number {
    return result;
 }
 
+export function buildingHasStorage(building: IBuildingData | undefined, storageTotal: number): boolean {
+   if (building == null || !Number.isFinite(storageTotal) || storageTotal <= 0) {
+      return false;
+   }
+   return true;
+}
+
 export function addWorkers(res: Resource, amount: number): void {
    safeAdd(Tick.next.workersAvailable, res, amount);
 }

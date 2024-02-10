@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import { getMultipliersFor, getStorageFor } from "../../../shared/logic/BuildingLogic";
+import { buildingHasStorage, getMultipliersFor, getStorageFor } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
 import { Tick } from "../../../shared/logic/TickLogic";
 import { formatPercent } from "../../../shared/utilities/Helper";
@@ -15,7 +15,7 @@ import { ProgressBarComponent } from "./ProgressBarComponent";
 export function BuildingStorageComponent({ gameState, xy }: IBuildingComponentProps): React.ReactNode {
    const storage = getStorageFor(xy, gameState);
    const building = gameState.tiles.get(xy)?.building;
-   if (building == null || !Number.isFinite(storage.total) || storage.total <= 0) {
+   if (!buildingHasStorage(building, storage.total)) {
       return null;
    }
    const percentage = storage.used / storage.total;

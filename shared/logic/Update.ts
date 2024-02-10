@@ -28,6 +28,7 @@ import {
    IOCalculation,
    addResources,
    addTransportation,
+   buildingHasStorage,
    canBeElectrified,
    deductResources,
    filterResource,
@@ -272,7 +273,7 @@ function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
 
    const options = getGameOptions();
 
-   if (total > 0) {
+   if (buildingHasStorage(building, total)) {
       const storagePercentage = used / total;
       if (storagePercentage >= options.autopilotPercentage) {
          Tick.next.autopilotBuildings.set(xy, building);
