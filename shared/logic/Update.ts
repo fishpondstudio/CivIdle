@@ -61,6 +61,7 @@ import {
    getGrid,
    getSpecialBuildings,
    getStorageFullBuildings,
+   getWarehouseAutopilotBuildings,
    getXyBuildings,
    unlockedResources,
 } from "./IntraTickCache";
@@ -269,6 +270,15 @@ function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
    const inputWorkerCapacity = totalMultiplierFor(xy, "worker", 1, gs);
    const { total, used } = getStorageFor(xy, gs);
 
+   const options = getGameOptions();
+
+   if (total > 0) {
+      const storagePercentage = used / total;
+      if (storagePercentage >= options.autopilotPercentage) {
+         Tick.next.autopilotBuildings.set(xy, building);
+      }
+   }
+
    //////////////////////////////////////////////////
    // Transport
    //////////////////////////////////////////////////
@@ -433,7 +443,7 @@ function tickWarehouseAutopilot(warehouse: IWarehouseBuildingData, xy: Tile, gs:
       return false;
    }
    const me = tileToPoint(xy);
-   const result = getStorageFullBuildings(gs).sort(
+   const result = getWarehouseAutopilotBuildings(gs).sort(
       (a, b) => getGrid(gs).distance(a.x, a.y, me.x, me.y) - getGrid(gs).distance(b.x, b.y, me.x, me.y),
    );
    const buildings = getXyBuildings(gs);

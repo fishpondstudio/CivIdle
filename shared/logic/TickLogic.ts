@@ -24,6 +24,7 @@ interface ITickData {
    playerTradeBuildings: Map<Tile, IBuildingData>;
    globalMultipliers: GlobalMultipliers;
    notProducingReasons: Map<Tile, NotProducingReason>;
+   autopilotBuildings: Map<Tile, IBuildingData>;
    specialBuildings: Partial<Record<Building, Tile>>;
    totalValue: number;
 }
@@ -41,6 +42,7 @@ export function EmptyTickData(): ITickData {
       resourcesByTile: {},
       globalMultipliers: new GlobalMultipliers(),
       notProducingReasons: new Map(),
+      autopilotBuildings: new Map(),
       playerTradeBuildings: new Map(),
       specialBuildings: {},
       totalValue: 0,

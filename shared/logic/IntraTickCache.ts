@@ -22,6 +22,7 @@ class IntraTickCache {
       Readonly<PartialTabulate<Resource>>
    >();
    storageFullBuildings: IPointData[] | undefined;
+   warehouseAutopilotBuildings: IPointData[] | undefined;
 }
 
 let _cache = new IntraTickCache();
@@ -102,6 +103,18 @@ export function getStorageFullBuildings(gs: GameState): IPointData[] {
       }
    }
    _cache.storageFullBuildings = result;
+   return result;
+}
+
+export function getWarehouseAutopilotBuildings(gs: GameState): IPointData[] {
+   if (_cache.warehouseAutopilotBuildings) {
+      return _cache.warehouseAutopilotBuildings;
+   }
+   const result: IPointData[] = [];
+   for (const [xy, building] of Tick.current.autopilotBuildings) {
+      result.push(tileToPoint(xy));
+   }
+   _cache.warehouseAutopilotBuildings = result;
    return result;
 }
 

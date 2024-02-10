@@ -104,6 +104,7 @@ export class GameOptions {
    soundEffect = true;
    buildingDefaults: Partial<Record<Building, Partial<IBuildingData>>> = {};
    defaultPriority = 0x010101;
+   autopilotPercentage = 0.95;
    chatSendChannel: ChatChannel = "en";
    chatReceiveChannel: PartialSet<ChatChannel> = {};
    // Should be wiped
