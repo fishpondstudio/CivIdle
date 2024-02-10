@@ -5,8 +5,20 @@ import type { GameOptions, GreatPeopleChoice } from "./GameState";
 import { getGameOptions } from "./GameStateLogic";
 import { Tick } from "./TickLogic";
 
+////////////////////////////////////////////////
+// These two functions needed to be kept in sync manually! If you modify any of them, please also change the
+// other one!
 export function getGreatPeopleAtReborn(): number {
    return clamp(Math.floor(Math.cbrt(Tick.current.totalValue / 1e6) / 4), 0, Infinity);
+}
+
+export function getValueRequiredForGreatPeople(count: number): number {
+   return Math.pow(4 * count, 3) * 1e6;
+}
+////////////////////////////////////////////////
+
+export function getProgressTowardsNextGreatPerson(): number {
+   return Tick.current.totalValue / getValueRequiredForGreatPeople(getGreatPeopleAtReborn() + 1);
 }
 
 export function getGreatPersonUpgradeCost(targetLevel: number): number {

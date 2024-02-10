@@ -9,8 +9,7 @@
    color: #333;
 }
 
-#resource-panel .resource-bar > .row {
-   width: 90px;
+#resource-panel .resource-bar>.row {
    margin: 0 10px 0 0;
    text-align: center;
 }

@@ -15,6 +15,7 @@ import type {
    IWelcomeMessage,
 } from "../../../shared/utilities/Database";
 import { AccountLevel, MessageType } from "../../../shared/utilities/Database";
+import { vacuumChat } from "../../../shared/utilities/DatabaseShared";
 import { forEach } from "../../../shared/utilities/Helper";
 import { TypedEvent } from "../../../shared/utilities/TypedEvent";
 import { L, t } from "../../../shared/utilities/i18n";
@@ -154,6 +155,7 @@ export async function connectWebSocket(): Promise<number> {
                   chatMessages.push({ ...m, id: ++chatId });
                });
             }
+            chatMessages = vacuumChat(chatMessages);
             OnChatMessage.emit(chatMessages);
             break;
          }

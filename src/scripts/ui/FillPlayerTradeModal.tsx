@@ -6,6 +6,7 @@ import { Tick } from "../../../shared/logic/TickLogic";
 import type { IClientTrade } from "../../../shared/utilities/Database";
 import {
    clamp,
+   forEach,
    formatPercent,
    mFirstKeyOf,
    pointToXy,
@@ -204,7 +205,7 @@ export function FillPlayerTradeModal({ trade, xy }: { trade: IClientTrade; xy?: 
                      })}
                   </div>
                   <div className="text-strong">
-                     <FormatNumber value={(1 - totalTariff) * (trade.sellAmount * percentage)} />
+                     <FormatNumber value={(1 - totalTariff) * trade.sellAmount * percentage} />
                   </div>
                </li>
             </ul>
@@ -219,21 +220,16 @@ export function FillPlayerTradeModal({ trade, xy }: { trade: IClientTrade; xy?: 
                         return;
                      }
                      try {
-                        await client.fillTrade({
+                        const result = await client.fillTrade({
                            id: trade.id,
-                           percent: percentage,
+                           amount: fillAmount,
                            path: tiles,
                         });
-                        safeAdd(
-                           allTradeBuildings.get(delivery)!.resources,
-                           trade.buyResource,
-                           -trade.buyAmount * percentage,
-                        );
-                        safeAdd(
-                           allTradeBuildings.get(delivery)!.resources,
-                           trade.sellResource,
-                           trade.sellAmount * percentage,
-                        );
+
+                        forEach(result, (res, amount) => {
+                           safeAdd(allTradeBuildings.get(delivery)!.resources, res, amount);
+                        });
+
                         showToast(t(L.PlayerTradeFillSuccess));
                         playKaching();
                         hideModal();

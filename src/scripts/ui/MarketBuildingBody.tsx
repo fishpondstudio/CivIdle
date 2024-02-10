@@ -1,3 +1,4 @@
+import classNames from "classnames";
 import type { Resource } from "../../../shared/definitions/ResourceDefinitions";
 import { applyToAllBuildings, getMarketPrice, totalMultiplierFor } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
@@ -5,7 +6,14 @@ import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
 import type { IMarketBuildingData } from "../../../shared/logic/Tile";
 import { MarketOptions } from "../../../shared/logic/Tile";
 import { convertPriceIdToTime } from "../../../shared/logic/Update";
-import { formatHMS, hasFlag, keysOf, round, toggleFlag } from "../../../shared/utilities/Helper";
+import {
+   formatHMS,
+   formatPercent,
+   hasFlag,
+   keysOf,
+   round,
+   toggleFlag,
+} from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import { playClick } from "../visuals/Sound";
 import { BuildingColorComponent } from "./BuildingColorComponent";
@@ -18,6 +26,7 @@ import { BuildingUpgradeComponent } from "./BuildingUpgradeComponent";
 import { BuildingWorkerComponent } from "./BuildingWorkerComponent";
 import { FormatNumber } from "./HelperComponents";
 import { TableView } from "./TableView";
+import { TextWithHelp } from "./TextWithHelpComponent";
 
 export function MarketBuildingBody({ gameState, xy }: IBuildingComponentProps): React.ReactNode {
    const building = gameState.tiles.get(xy)?.building as IMarketBuildingData;
@@ -45,7 +54,7 @@ export function MarketBuildingBody({ gameState, xy }: IBuildingComponentProps): 
       const sellValue = Config.ResourcePrice[res]! * capacity;
       const buyValue = Config.ResourcePrice[buy.resource]! * buy.amount;
 
-      tradeValues.set(res, (buyValue / sellValue) * 100);
+      tradeValues.set(res, buyValue / sellValue - 1);
    });
 
    return (
@@ -60,16 +69,8 @@ export function MarketBuildingBody({ gameState, xy }: IBuildingComponentProps): 
          </fieldset>
          <TableView
             header={[
-               {
-                  name: (
-                     <>
-                        <FormatNumber value={capacity} />x
-                     </>
-                  ),
-                  sortable: true,
-               },
+               { name: t(L.MarketYouPay), sortable: true },
                { name: t(L.MarketYouGet), sortable: true },
-               { name: "", sortable: true },
                { name: "", sortable: true },
                { name: t(L.Storage), sortable: true },
                { name: t(L.MarketSell), sortable: false },
@@ -85,12 +86,9 @@ export function MarketBuildingBody({ gameState, xy }: IBuildingComponentProps): 
                      return Config.Resource[aRes].name().localeCompare(Config.Resource[bRes].name());
                   }
                   case 2: {
-                     return getBuyResourceAndAmount(a).amount - getBuyResourceAndAmount(b).amount;
-                  }
-                  case 3: {
                      return (tradeValues.get(a) ?? 0) - (tradeValues.get(b) ?? 0);
                   }
-                  case 4: {
+                  case 3: {
                      return (building.resources[a] ?? 0) - (building.resources[b] ?? 0);
                   }
                   default:
@@ -107,13 +105,31 @@ export function MarketBuildingBody({ gameState, xy }: IBuildingComponentProps): 
 
                return (
                   <tr key={res}>
-                     <td>{r.name()}</td>
-                     <td>{Config.Resource[buy.resource].name()}</td>
-                     <td className="right">
-                        <FormatNumber value={buy.amount} />
+                     <td>
+                        <div>{r.name()}</div>
+                        <div className="text-small text-desc text-strong">
+                           <FormatNumber value={capacity} />
+                        </div>
                      </td>
-                     <td className={tradeValue > 100 ? "text-green" : "text-red"}>
-                        {tradeValue.toFixed(0)}%
+                     <td>
+                        <div>{Config.Resource[buy.resource].name()}</div>
+                        <div className="text-small text-desc text-strong">
+                           <FormatNumber value={buy.amount} />
+                        </div>
+                     </td>
+                     <td
+                        className={classNames({
+                           "text-green": tradeValue > 0,
+                           "text-red": tradeValue < 0,
+                           "text-right text-small": true,
+                        })}
+                     >
+                        <TextWithHelp
+                           help={t(L.MarketValueDesc, { value: formatPercent(tradeValue, 0) })}
+                           noStyle
+                        >
+                           {formatPercent(tradeValue, 0)}
+                        </TextWithHelp>
                      </td>
                      <td className="right">
                         <FormatNumber value={building.resources[res] ?? 0} />

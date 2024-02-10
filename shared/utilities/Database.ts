@@ -84,7 +84,7 @@ export interface IPendingClaim {
 
 export interface IFillTradeRequest {
    id: string;
-   percent: number;
+   amount: number;
    path: string[];
 }
 

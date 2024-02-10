@@ -5,6 +5,14 @@ interface PatchNote {
 
 export const PatchNotes: PatchNote[] = [
    {
+      version: "0.1.128",
+      content: [
+         ["QoL", "Show progress towards next great person at reborn in resource panel"],
+         ["QoL", "Market now shows average value compared to average price (@Vethon)"],
+         ["Bugfix", "Tariff is now implemented on the server (previously tariff is not implemented)"],
+      ],
+   },
+   {
       version: "0.1.127",
       content: [
          [
