@@ -12,15 +12,29 @@ import {
    reduceOf,
    safeParseInt,
    sizeOf,
+   uuid4,
 } from "../../../shared/utilities/Helper";
 import { decompressSave, loadSave } from "../Global";
 import { addSystemMessage, client } from "../rpc/RPCClient";
 import { tickEverySecond } from "./Tick";
 
+function requireOfflineRun(): void {
+   if (!getGameState().isOffline) {
+      throw new Error("Command is only available for trial run");
+   }
+}
+
+function requireDevelopment(): void {
+   if (!import.meta.env.DEV) {
+      throw new Error("Command is only available for development");
+   }
+}
+
 export async function handleChatCommand(command: string): Promise<void> {
    const parts = command.split(" ");
    switch (parts[0]) {
       case "timetravel": {
+         requireOfflineRun();
          const time = clamp(safeParseInt(parts[1], 30), 0, 60 * 4);
          addSystemMessage(`Time travel ${time} minutes. This could take a while, please be patient...`);
          setTimeout(() => {
@@ -34,16 +48,27 @@ export async function handleChatCommand(command: string): Promise<void> {
          break;
       }
       case "loadsave": {
+         requireDevelopment();
          const [handle] = await window.showOpenFilePicker();
          const file = await handle.getFile();
          const bytes = await file.arrayBuffer();
-         loadSave(await decompressSave(new Uint8Array(bytes)));
+
+         const save = await decompressSave(new Uint8Array(bytes));
+         save.options.id = uuid4();
+
+         loadSave(save);
          addSystemMessage("Load save file");
          break;
       }
       case "playtime": {
          const playTime = await client.getPlayTime();
          addSystemMessage(`You have played actively and online for ${formatHM(playTime * 1000)}`);
+         break;
+      }
+      case "playercount": {
+         const onlineCount = await client.getOnlinePlayerCount();
+         const totalCount = await client.getTotalPlayerCount();
+         addSystemMessage(`There are ${totalCount} players, ${onlineCount} of them are current online`);
          break;
       }
       case "randomcolor": {
@@ -74,12 +99,13 @@ export async function handleChatCommand(command: string): Promise<void> {
          addSystemMessage("Player level has been changed");
          break;
       }
-      case "setplaytime": {
+      case "setplayhour": {
          if (!parts[1] || !parts[2]) {
             throw new Error("Invalid command format");
          }
-         await client.setPlayTime(parts[1], parseInt(parts[2], 10));
-         addSystemMessage("Play time has been changed");
+         const time = parseInt(parts[2], 10);
+         addSystemMessage(`Play time has been changed to ${time}h`);
+         await client.setPlayTime(parts[1], time * 60 * 60);
          break;
       }
       case "makemod": {

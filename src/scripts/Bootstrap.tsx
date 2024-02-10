@@ -4,7 +4,7 @@ import { DepositResources } from "../../shared/definitions/ResourceDefinitions";
 import { getStorageFor } from "../../shared/logic/BuildingLogic";
 import { Config } from "../../shared/logic/Config";
 import { MAX_OFFLINE_PRODUCTION_SEC, calculateTierAndPrice } from "../../shared/logic/Constants";
-import { type GameState, Languages, syncLanguage } from "../../shared/logic/GameState";
+import { Languages, syncLanguage, type GameState } from "../../shared/logic/GameState";
 import {
    getGameOptions,
    getGameState,
@@ -18,7 +18,6 @@ import { clamp, forEach, isNullOrUndefined, rejectIn, schedule } from "../../sha
 import type { TypedEvent } from "../../shared/utilities/TypedEvent";
 import { isGameDataCompatible, loadGame, syncUITheme } from "./Global";
 import type { RouteChangeEvent } from "./Route";
-import { checkSteamBranch } from "./SteamTesting";
 import { Heartbeat } from "./logic/Heartbeat";
 import { tickEverySecond } from "./logic/Tick";
 import { getBuildingTexture, getTileTexture } from "./logic/VisualLogic";
@@ -34,7 +33,7 @@ import { ManageRebornModal } from "./ui/ManageRebornModal";
 import { OfflineProductionModal } from "./ui/OfflineProductionModal";
 import { GameTicker } from "./utilities/GameTicker";
 import { SceneManager } from "./utilities/SceneManager";
-import { type RouteTo, Singleton, initializeSingletons } from "./utilities/Singleton";
+import { Singleton, initializeSingletons, type RouteTo } from "./utilities/Singleton";
 import { playError } from "./visuals/Sound";
 
 export async function startGame(
@@ -94,7 +93,7 @@ export async function startGame(
 
    // ========== Connect to server ==========
    routeTo(LoadingPage, { stage: LoadingPageStage.SteamSignIn });
-   const TIMEOUT = import.meta.env.DEV ? 1 : 5;
+   const TIMEOUT = import.meta.env.DEV ? 1 : 10;
    let hasOfflineProductionModal = false;
    try {
       const actualOfflineTime = await Promise.race([
@@ -113,7 +112,7 @@ export async function startGame(
          const before = structuredClone(gameState);
          let timeLeft = offlineTime;
          while (timeLeft > 0) {
-            const batchSize = Math.min(offlineTime, MAX_OFFLINE_PRODUCTION_SEC / 100);
+            const batchSize = Math.min(timeLeft, MAX_OFFLINE_PRODUCTION_SEC / 100);
             await schedule(() => {
                for (let i = 0; i < batchSize; i++) {
                   tickEverySecond(gameState, true);
@@ -169,12 +168,8 @@ export async function startGame(
          break;
       }
    }
-
    notifyGameStateUpdate();
    Singleton().ticker.start();
-   await checkSteamBranch();
-
-   // showModal(<FirstTimePlayerModal />);
 }
 
 // This method is called early during bootstrap!

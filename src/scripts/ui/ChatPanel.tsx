@@ -1,6 +1,6 @@
 import classNames from "classnames";
-import React, { useEffect, useRef, useState } from "react";
-import { ChatChannels } from "../../../shared/utilities/Database";
+import React, { memo, useCallback, useEffect, useRef, useState } from "react";
+import { AccountLevel, ChatChannels, type IChat } from "../../../shared/utilities/Database";
 import { isEmpty, keysOf, sizeOf } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import AccountLevelMod from "../../images/AccountLevelMod.png";
@@ -12,15 +12,17 @@ import { handleChatCommand } from "../logic/ChatCommand";
 import { addSystemMessage, client, useChatMessages, useUser } from "../rpc/RPCClient";
 import { getCountryName, getFlagUrl } from "../utilities/CountryCode";
 import { useTypedEvent } from "../utilities/Hook";
+import { openUrl } from "../utilities/Platform";
 import { showModal } from "./GlobalModal";
 import { RenderHTML } from "./RenderHTMLComponent";
 import { SelectChatChannelModal } from "./SelectChatChannelModal";
+import { TextWithHelp } from "./TextWithHelpComponent";
 
 export function ChatPanel(): React.ReactNode {
    const [chat, setChat] = useState("");
    const options = useGameOptions();
    const messages = useChatMessages().filter(
-      (m) => typeof m === "string" || options.chatReceiveChannel[m.channel],
+      (m) => !("channel" in m) || options.chatReceiveChannel[m.channel],
    );
    const user = useUser();
    const bottomRef = useRef<HTMLDivElement>(null);
@@ -51,7 +53,7 @@ export function ChatPanel(): React.ReactNode {
 
    for (let i = messages.length - 1; i >= 0; --i) {
       const message = messages[i];
-      if (typeof message === "object") {
+      if ("channel" in message) {
          latestMessage = (
             <>
                <span className="text-desc">{message.name}: </span>
@@ -74,6 +76,8 @@ export function ChatPanel(): React.ReactNode {
       }
    };
 
+   const onImageLoaded = useCallback(() => bottomRef.current?.scrollIntoView({ behavior: "smooth" }), []);
+
    const receiveMultipleChannels = sizeOf(options.chatReceiveChannel) > 1;
 
    const chatWindow = (
@@ -92,11 +96,11 @@ export function ChatPanel(): React.ReactNode {
             </div>
          </div>
          <div className="window-content inset-shallow">
-            {messages.map((c, i) => {
-               if (typeof c === "string") {
+            {messages.map((c) => {
+               if (!("channel" in c)) {
                   return (
-                     <div className="chat-command-item" key={i}>
-                        <RenderHTML html={c} />
+                     <div className="chat-command-item" key={c.id}>
+                        <RenderHTML html={c.message} />
                      </div>
                   );
                }
@@ -106,7 +110,7 @@ export function ChatPanel(): React.ReactNode {
                         "chat-message-item": true,
                         "mentions-me": user ? c.message.includes(`@${user.handle}`) : false,
                      })}
-                     key={i}
+                     key={c.id}
                   >
                      {c.name === user?.handle ? (
                         <div className="row text-small text-desc">
@@ -169,7 +173,9 @@ export function ChatPanel(): React.ReactNode {
                            {receiveMultipleChannels ? <div className="chat-channel">{c.channel}</div> : null}
                         </div>
                      )}
-                     <div>{c.message}</div>
+                     <div>
+                        <ChatMessage chat={c} onImageLoaded={onImageLoaded} />
+                     </div>
                   </div>
                );
             })}
@@ -182,14 +188,13 @@ export function ChatPanel(): React.ReactNode {
          <div className="row" style={{ padding: "2px" }}>
             <div
                className="language-switch pointer"
-               aria-label={ChatChannels[options.chatSendChannel]}
-               data-balloon-pos="right"
-               data-balloon-text="left"
                onClick={() => {
                   showModal(<SelectChatChannelModal />);
                }}
             >
-               {options.chatSendChannel.toUpperCase()}
+               <TextWithHelp noStyle help={ChatChannels[options.chatSendChannel]}>
+                  {options.chatSendChannel.toUpperCase()}
+               </TextWithHelp>
             </div>
             <input
                ref={chatInput}
@@ -224,3 +229,34 @@ export function ChatPanel(): React.ReactNode {
       </div>
    );
 }
+
+const ChatMessage = memo(
+   function ChatMessage({
+      chat,
+      onImageLoaded,
+   }: { chat: IChat; onImageLoaded: () => void }): React.ReactNode {
+      const message = chat.message;
+      if (chat.level <= AccountLevel.Tribune && !chat.isMod) {
+         return message;
+      }
+      const isDomainWhitelisted =
+         message.startsWith("https://i.imgur.com/") ||
+         message.startsWith("https://i.gyazo.com/") ||
+         message.startsWith("https://i.ibb.co/") ||
+         message.startsWith("https://cdn.discordapp.com/attachments/");
+      const isExtensionWhitelisted =
+         message.endsWith(".jpg") || message.endsWith(".png") || message.endsWith(".jpeg");
+      if (isDomainWhitelisted && isExtensionWhitelisted) {
+         return (
+            <img
+               className="chat-image"
+               src={message}
+               onClick={() => openUrl(message)}
+               onLoad={onImageLoaded}
+            />
+         );
+      }
+      return message;
+   },
+   (p, n) => p.chat === n.chat && p.onImageLoaded === n.onImageLoaded,
+);

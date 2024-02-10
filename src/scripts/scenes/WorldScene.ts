@@ -12,7 +12,7 @@ import {
 } from "../../../shared/logic/GameStateLogic";
 import { getGrid, getSpecialBuildings } from "../../../shared/logic/IntraTickCache";
 import { makeBuilding } from "../../../shared/logic/Tile";
-import { type Tile, clamp, lerp, lookAt, pointToTile, tileToPoint } from "../../../shared/utilities/Helper";
+import { clamp, lerp, lookAt, pointToTile, tileToPoint, type Tile } from "../../../shared/utilities/Helper";
 import { Vector2, v2 } from "../../../shared/utilities/Vector2";
 import { TilePage } from "../ui/TilePage";
 import { ViewportScene } from "../utilities/SceneManager";
@@ -172,7 +172,7 @@ export class WorldScene extends ViewportScene {
       this._tiles.forEach((visual, xy) => visual.updateDepositColor(gameOptions));
    }
 
-   lookAtXy(xy: Tile) {
+   lookAtTile(xy: Tile, lookAtMode: LookAtMode) {
       this.cameraMovement?.stop();
       const target = this.viewport.clampCenter(getGrid(getGameState()).xyToPosition(xy));
       this.cameraMovement = new CustomAction(
@@ -191,15 +191,21 @@ export class WorldScene extends ViewportScene {
          v2(target).subtractSelf(viewportCenter!).length() / 2000,
          Easing.InOutSine,
       ).start();
-      this.drawSelection(tileToPoint(xy));
+      if (lookAtMode === LookAtMode.Highlight) {
+         this.drawSelection(null, [xy]);
+      } else {
+         this.selectGrid(tileToPoint(xy));
+      }
    }
 
-   drawSelection(grid: IPointData) {
-      if (!this._selectedGraphics) {
+   drawSelection(selected: IPointData | null, highlights: Tile[] = []) {
+      if (!this._selectedGraphics || !this._selectedXy) {
          return;
       }
       this._selectedGraphics.clear();
-      if (getGrid(getGameState()).isEdge(grid)) {
+      const grid = getGrid(getGameState());
+      selected ??= tileToPoint(this._selectedXy);
+      if (grid.isEdge(selected)) {
          return;
       }
       this._selectedGraphics.lineStyle({
@@ -209,8 +215,13 @@ export class WorldScene extends ViewportScene {
          join: LINE_JOIN.ROUND,
          alignment: 0.5,
       });
-
-      drawSelected(getGrid(getGameState()), grid, this._selectedGraphics);
+      drawSelected(grid, selected, this._selectedGraphics);
+      highlights.forEach((tile) => {
+         this._selectedGraphics.lineStyle({ width: 0 });
+         this._selectedGraphics.beginFill(0xffffff, 0.2, true);
+         drawSelected(grid, tileToPoint(tile), this._selectedGraphics);
+         this._selectedGraphics.endFill();
+      });
    }
 
    selectGrid(grid: IPointData) {
@@ -365,4 +376,9 @@ export class WorldScene extends ViewportScene {
       );
       Actions.to(this.viewport, { zoom: target }, time).start();
    }
+}
+
+export enum LookAtMode {
+   Highlight = 0,
+   Select = 1,
 }

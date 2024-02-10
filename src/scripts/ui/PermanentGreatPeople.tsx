@@ -9,14 +9,16 @@ import { Singleton } from "../utilities/Singleton";
 import { greatPersonImage } from "../visuals/GreatPersonVisual";
 import { playError, playLevelUp } from "../visuals/Sound";
 import { FormatNumber } from "./HelperComponents";
+import { TextWithHelp } from "./TextWithHelpComponent";
 
 export function PermanentGreatPeople({
    showEffect,
    stickyHeader,
-}: { showEffect: boolean; stickyHeader: boolean }): React.ReactNode {
+   style,
+}: { showEffect: boolean; stickyHeader: boolean; style?: React.CSSProperties }): React.ReactNode {
    const options = useGameOptions();
    return (
-      <div className={classNames({ "table-view": true, "sticky-header f1": stickyHeader })}>
+      <div className={classNames({ "table-view": true, "sticky-header f1": stickyHeader })} style={style}>
          <table>
             <thead>
                <tr>
@@ -46,19 +48,15 @@ export function PermanentGreatPeople({
                                  style={{ height: "50px", display: "block" }}
                               />
                            </td>
-                           <td className="nowrap">
+                           <td>
                               <div className="text-strong">{person.name()}</div>
                               <div className="text-desc text-small">{Config.TechAge[person.age].name()}</div>
                            </td>
                            <td>
-                              <div
-                                 className="text-center"
-                                 aria-label={person.desc(person, value.level)}
-                                 data-balloon-pos="left"
-                                 data-balloon-text="left"
-                                 data-balloon-length="medium"
-                              >
-                                 {numberToRoman(value.level)}
+                              <div className="text-center">
+                                 <TextWithHelp help={person.desc(person, value.level)}>
+                                    {numberToRoman(value.level)}
+                                 </TextWithHelp>
                               </div>
                            </td>
                            {showEffect ? <td>{person.desc(person, value.level)}</td> : null}

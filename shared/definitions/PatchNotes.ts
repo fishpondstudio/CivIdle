@@ -5,6 +5,81 @@ interface PatchNote {
 
 export const PatchNotes: PatchNote[] = [
    {
+      version: "0.1.127",
+      content: [
+         ["QoL", "Highlight trades that can be filled immediately in Caravansary"],
+         ["QoL", "Add descriptions to Market, Warehouse and Caravansary"],
+      ],
+   },
+   {
+      version: "0.1.126",
+      content: [
+         ["Bugfix", "Fix Offline production calculation is incorrect (@Vethon)"],
+         ["Bugfix", "Fix new map sometimes missing resource buildings"],
+         ["QoL", "Optimize in-game chat performance"],
+         ["QoL", "Make Market, Caravansary and Warehouse sortable"],
+         [
+            "QoL",
+            "Now when you click on happiness on resource panel, the game will highlight happiness in Headquarter",
+         ],
+      ],
+   },
+   {
+      version: "0.1.125",
+      content: [
+         ["QoL", "Rework player trade UI, add player flag and level"],
+         ["Bugfix", "Fix a bug where open/close chat causes lag"],
+         ["Bugfix", "Rename Account Level to Account Rank"],
+         ["QoL", "/playercount command now returns total/online players"],
+         ["QoL", "Fix missing tutorial. Allow redoing tutorial in Help -> Tutorial"],
+         ["Bugfix", "Fix St. Peter's Basilica has incorrect storage amount (@Vethon)"],
+         ["QoL", "Allow resetting building/resource colors (@Vethon)"],
+         ["QoL", "Support press [D] key during the boot screen to report issues on Discord"],
+      ],
+   },
+   {
+      version: "0.1.124",
+      content: [
+         ["Bugfix", "Fix a bug where muting player does not work"],
+         ["Bugfix", "Steam will not automatically install necessary VCRedist packages"],
+         ["Bugfix", "Fix a bug where Space key does not show up in the shortcut manager"],
+         ["QoL", "Improve Building Level/Tier UI"],
+         ["QoL", "Add a shortcut to go back from player trade map to city (@Hanz)"],
+         [
+            "QoL",
+            "Click not producing building count in title bar to highlight all buildings that are producing (@Vethon)",
+         ],
+      ],
+   },
+   {
+      version: "0.1.123",
+      content: [
+         [
+            "QoL",
+            "Support showing image in Chat (the poster has to have account level above Tribune, otherwise the image will show as text)",
+         ],
+         ["QoL", "Add a back button on tech tree page"],
+         ["QoL", "Add language select on the first tutorial page"],
+         ["QoL", "Add a new chat command /playercount that will show currently online players"],
+      ],
+   },
+   {
+      version: "0.1.122",
+      content: [["Bugfix", "Prepare for Steam Next Demo"]],
+   },
+   {
+      version: "0.1.121",
+      content: [
+         ["Content", "Support cancelling player trades"],
+         ["QoL", "Allow highlight buildings/deposits on map"],
+         ["QoL", "Allow clicking on building tier on building page to highlight all buildings of that type"],
+         ["QoL", "Allow clicking on Science in resource panel to go to tech tree (@Vethon)"],
+         ["QoL", "Allow sorting by column in Censor's Office (@Vethon)"],
+         ["Content", "Implement trade limit for different account levels"],
+         ["Content", "Add support for upgrading from Tribune to Quaestor"],
+      ],
+   },
+   {
       version: "0.1.120",
       content: [
          ["QoL", "Add /randomcolor chat command that will assign a random color to all buildings/resources"],

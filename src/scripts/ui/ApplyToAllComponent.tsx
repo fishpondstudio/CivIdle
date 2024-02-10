@@ -5,6 +5,7 @@ import { getGameOptions } from "../../../shared/logic/GameStateLogic";
 import type { IBuildingData } from "../../../shared/logic/Tile";
 import { L, t } from "../../../shared/utilities/i18n";
 import { playClick } from "../visuals/Sound";
+import { TextWithHelp } from "./TextWithHelpComponent";
 
 export function ApplyToAllComponent({
    building,
@@ -19,26 +20,18 @@ export function ApplyToAllComponent({
    return (
       <div className="text-small row">
          <div
-            aria-label={t(L.ApplyToAllBuilding, { building: def.name() })}
-            data-balloon-pos="right"
-            data-balloon-text="left"
-            data-balloon-length="medium"
             className="text-link"
             onClick={() => {
                playClick();
                applyToAllBuildings(building.type, getOptions, gameState);
             }}
          >
-            {t(L.ApplyToAll, { building: def.name() })}
+            <TextWithHelp noStyle help={t(L.ApplyToAllBuilding, { building: def.name() })}>
+               {t(L.ApplyToAll, { building: def.name() })}
+            </TextWithHelp>
          </div>
          <div className="f1"></div>
          <div
-            aria-label={t(L.SetAsDefaultBuilding, {
-               building: def.name(),
-            })}
-            data-balloon-pos="left"
-            data-balloon-text="left"
-            data-balloon-length="medium"
             className="text-link"
             onClick={() => {
                playClick();
@@ -49,7 +42,14 @@ export function ApplyToAllComponent({
                Object.assign(defaults[building.type]!, getOptions(building));
             }}
          >
-            {t(L.SetAsDefault, { building: def.name() })}
+            <TextWithHelp
+               noStyle
+               help={t(L.SetAsDefaultBuilding, {
+                  building: def.name(),
+               })}
+            >
+               {t(L.SetAsDefault, { building: def.name() })}
+            </TextWithHelp>
          </div>
       </div>
    );

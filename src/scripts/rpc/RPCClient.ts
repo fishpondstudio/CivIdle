@@ -1,20 +1,20 @@
 import { decode, encode } from "@msgpack/msgpack";
 import type { ServerImpl } from "../../../server/src/Server";
-import { getGameOptions } from "../../../shared/logic/GameStateLogic";
-import type { IClientTrade } from "../../../shared/logic/PlayerTradeLogic";
-import { RpcError, removeTrailingUndefs, rpcClient } from "../../../shared/thirdparty/typedrpc/client";
+import { getGameOptions, getGameState } from "../../../shared/logic/GameStateLogic";
+import { RpcError, removeTrailingUndefs, rpcClient } from "../../../shared/thirdparty/TRPCClient";
 import type {
    AllMessageTypes,
    IChat,
    IChatMessage,
    IClientMapEntry,
+   IClientTrade,
    IMapMessage,
    IRPCMessage,
    ITradeMessage,
    IUser,
    IWelcomeMessage,
 } from "../../../shared/utilities/Database";
-import { MessageType } from "../../../shared/utilities/Database";
+import { AccountLevel, MessageType } from "../../../shared/utilities/Database";
 import { forEach } from "../../../shared/utilities/Helper";
 import { TypedEvent } from "../../../shared/utilities/TypedEvent";
 import { L, t } from "../../../shared/utilities/i18n";
@@ -22,7 +22,7 @@ import { saveGame } from "../Global";
 import { showToast } from "../ui/GlobalModal";
 import { makeObservableHook } from "../utilities/Hook";
 import { playBubble, playKaching } from "../visuals/Sound";
-import { STEAM_APP_ID, SteamClient, isSteam } from "./SteamClient";
+import { SteamClient, isSteam } from "./SteamClient";
 
 const url = new URLSearchParams(window.location.search);
 const devServerAddress = url.get("server") ?? "ws://localhost:8000";
@@ -39,7 +39,16 @@ export const OnPlayerMapChanged = new TypedEvent<Record<string, IClientMapEntry>
 export const OnPlayerMapMessage = new TypedEvent<IMapMessage>();
 export const OnNewPendingClaims = new TypedEvent<void>();
 
-export type LocalChat = IChat | string;
+interface IClientChat extends IChat {
+   id: number;
+}
+
+interface ISystemMessage {
+   id: number;
+   message: string;
+}
+
+export type LocalChat = IClientChat | ISystemMessage;
 
 let chatMessages: LocalChat[] = [];
 const trades: Record<string, IClientTrade> = {};
@@ -73,12 +82,31 @@ export const client = rpcClient<ServerImpl>({
 export const usePlayerMap = makeObservableHook(OnPlayerMapChanged, () => playerMap);
 export const useChatMessages = makeObservableHook(OnChatMessage, () => chatMessages);
 export const useTrades = makeObservableHook(OnTradeMessage, () => Object.values(trades));
-export const useUser = makeObservableHook(OnUserChanged, () => user);
+export const useUser = makeObservableHook(OnUserChanged, getUser);
 
-export const SYSTEM_USER = "$";
+function getUser(): IUser | null {
+   return user;
+}
+
+export function isOnlineUser(): boolean {
+   return (user?.level ?? AccountLevel.Tribune) > AccountLevel.Tribune;
+}
+
+export function getUserLevel(): AccountLevel {
+   return user?.level ?? AccountLevel.Tribune;
+}
+
+export function canEarnGreatPeopleFromReborn(): boolean {
+   if (isOnlineUser()) {
+      return !getGameState().isOffline;
+   }
+   return true;
+}
+
+let chatId = 0;
 
 export function addSystemMessage(message: string): void {
-   chatMessages.push(message);
+   chatMessages.push({ id: ++chatId, message });
    OnChatMessage.emit(chatMessages);
 }
 
@@ -95,7 +123,9 @@ export async function connectWebSocket(): Promise<number> {
          steamTicket = await SteamClient.getAuthSessionTicket();
       }
       getGameOptions().id = `steam:${await SteamClient.getSteamId()}`;
-      ws = new WebSocket(`${serverAddress}/?appId=${STEAM_APP_ID}&ticket=${steamTicket}&platform=steam`);
+      ws = new WebSocket(
+         `${serverAddress}/?appId=${await SteamClient.getAppId()}&ticket=${steamTicket}&platform=steam&steamId=${await SteamClient.getSteamId()}`,
+      );
    } else {
       const token = `${getGameOptions().id}:${getGameOptions().token ?? getGameOptions().id}`;
       ws = new WebSocket(`${serverAddress}/?platform=web&ticket=${token}`);
@@ -114,14 +144,14 @@ export async function connectWebSocket(): Promise<number> {
          case MessageType.Chat: {
             const c = message as IChatMessage;
             if (c.flush) {
-               chatMessages = c.chat;
+               chatMessages = c.chat.map((c) => ({ ...c, id: ++chatId }));
             } else {
                c.chat.forEach((m) => {
                   if (user && m.message.includes(`@${user!.handle} `)) {
                      playBubble();
                      showToast(`${m.name}: ${m.message}`);
                   }
-                  chatMessages.push(m);
+                  chatMessages.push({ ...m, id: ++chatId });
                });
             }
             OnChatMessage.emit(chatMessages);
@@ -130,10 +160,13 @@ export async function connectWebSocket(): Promise<number> {
          case MessageType.Welcome: {
             const w = message as IWelcomeMessage;
             user = w.user;
-            OnOfflineTime.emit(w.offlineTime);
-            OnUserChanged.emit({ ...user });
+            if (user.level <= AccountLevel.Tribune) {
+               getGameState().isOffline = true;
+            }
             getGameOptions().token = w.user.token;
             saveGame(false).catch(console.error);
+            OnUserChanged.emit({ ...user });
+            OnOfflineTime.emit(w.offlineTime);
             break;
          }
          case MessageType.Trade: {
@@ -144,7 +177,7 @@ export async function connectWebSocket(): Promise<number> {
                   if (trades[trade.id] && trades[trade.id].fromId === user?.userId) {
                      pendingClaims++;
                   }
-                  trades[trade.id] = trade as IClientTrade;
+                  trades[trade.id] = trade;
                });
             }
             if (tm.remove) {

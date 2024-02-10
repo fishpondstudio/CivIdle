@@ -8,6 +8,7 @@ export const ShortcutScopes = {
    TechPage: () => t(L.ShortcutScopeTechPage),
    EmptyTilePage: () => t(L.ShortcutScopeEmptyTilePage),
    UpgradePage: () => t(L.ShortcutScopeUpgradePage),
+   PlayerMapPage: () => t(L.ShortcutScopePlayerMapPage),
 } as const;
 
 export type ShortcutScope = keyof typeof ShortcutScopes;
@@ -30,6 +31,10 @@ export const ShortcutActions = {
       scope: "EmptyTilePage",
       name: () => t(L.EmptyTilePageBuildLastBuilding),
    },
+   PlayerMapPageGoBackToCity: {
+      scope: "PlayerMapPage",
+      name: () => t(L.PlayerMapPageGoBackToCity),
+   },
 } satisfies Record<string, IShortcutNameAndScope>;
 
 export interface IShortcutNameAndScope {
@@ -47,7 +52,7 @@ export interface IShortcutConfig {
    meta: boolean;
 }
 
-const OnKeydown = new TypedEvent<KeyboardEvent>();
+export const OnKeydown = new TypedEvent<KeyboardEvent>();
 
 document.addEventListener("keydown", OnKeydown.emit);
 
@@ -88,7 +93,13 @@ export function getShortcutKey(s: IShortcutConfig): string {
    if (s.meta) {
       keys.push("Command");
    }
-   keys.push(s.key);
+
+   if (s.key === " ") {
+      keys.push("Space");
+   } else {
+      keys.push(s.key);
+   }
+
    return keys.join(" + ");
 }
 
