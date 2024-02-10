@@ -137,6 +137,10 @@ export class WorldScene extends ViewportScene {
       if (!currentTile) {
          return;
       }
+      if (!currentTile?.explored) {
+         playError();
+         return;
+      }
       if (currentTile?.building) {
          playError();
          return;
