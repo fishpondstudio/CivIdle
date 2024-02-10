@@ -7,6 +7,7 @@ export const ShortcutScopes = {
    BuildingPage: () => t(L.ShortcutScopeBuildingPage),
    TechPage: () => t(L.ShortcutScopeTechPage),
    EmptyTilePage: () => t(L.ShortcutScopeEmptyTilePage),
+   UpgradePage: () => t(L.ShortcutScopeUpgradePage),
    PlayerMapPage: () => t(L.ShortcutScopePlayerMapPage),
 } as const;
 
@@ -23,6 +24,8 @@ export const ShortcutActions = {
       scope: "BuildingPage",
       name: () => t(L.ShortcutBuildingPageUpgradeToNext10),
    },
+   UpgradePageIncreaseLevel: { scope: "UpgradePage", name: () => t(L.ShortcutUpgradePageIncreaseLevel) },
+   UpgradePageDecreaseLevel: { scope: "UpgradePage", name: () => t(L.ShortcutUpgradePageDecreaseLevel) },
    TechPageGoBackToCity: { scope: "TechPage", name: () => t(L.ShortcutTechPageGoBackToCity) },
    EmptyTilePageBuildLastBuilding: {
       scope: "EmptyTilePage",
