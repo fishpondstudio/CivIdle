@@ -39,7 +39,7 @@ export function initializeGameState(gameState: GameState, grid: Grid) {
       }
    });
 
-   const wood = findNearest((tile) => !!tile.deposit.Wood, center, grid, gameState);
+   const wood = findNearest((tile) => !!tile.deposit.Wood && !tile.building, center, grid, gameState);
    if (wood) {
       gameState.tiles.get(wood.tile)!.building = makeBuilding({
          type: "LoggingCamp",
@@ -48,7 +48,7 @@ export function initializeGameState(gameState: GameState, grid: Grid) {
       });
    }
 
-   const stone = findNearest((tile) => !!tile.deposit.Stone, center, grid, gameState);
+   const stone = findNearest((tile) => !!tile.deposit.Stone && !tile.building, center, grid, gameState);
    if (stone) {
       gameState.tiles.get(stone.tile)!.building = makeBuilding({
          type: "StoneQuarry",
@@ -57,7 +57,7 @@ export function initializeGameState(gameState: GameState, grid: Grid) {
       });
    }
 
-   const water = findNearest((tile) => !!tile.deposit.Water, center, grid, gameState);
+   const water = findNearest((tile) => !!tile.deposit.Water && !tile.building, center, grid, gameState);
    if (water) {
       gameState.tiles.get(water.tile)!.building = makeBuilding({
          type: "Aqueduct",

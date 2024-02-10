@@ -1,3 +1,4 @@
+import type { Resource } from "../../../shared/definitions/ResourceDefinitions";
 import { applyToAllBuildings, getMarketPrice, totalMultiplierFor } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
 import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
@@ -16,6 +17,7 @@ import { BuildingStorageComponent } from "./BuildingStorageComponent";
 import { BuildingUpgradeComponent } from "./BuildingUpgradeComponent";
 import { BuildingWorkerComponent } from "./BuildingWorkerComponent";
 import { FormatNumber } from "./HelperComponents";
+import { TableView } from "./TableView";
 
 export function MarketBuildingBody({ gameState, xy }: IBuildingComponentProps): React.ReactNode {
    const building = gameState.tiles.get(xy)?.building as IMarketBuildingData;
@@ -24,6 +26,18 @@ export function MarketBuildingBody({ gameState, xy }: IBuildingComponentProps): 
    }
    const market = building as IMarketBuildingData;
    const capacity = building.capacity * building.level * totalMultiplierFor(xy, "output", 1, gameState);
+   const getBuyResourceAndAmount = (sellResource: Resource) => {
+      const buyResource = market.availableResources[sellResource]!;
+      return {
+         resource: buyResource,
+         amount: round(
+            (capacity * getMarketPrice(sellResource, xy, gameState)) /
+               getMarketPrice(buyResource, xy, gameState),
+            1,
+         ),
+      };
+   };
+
    return (
       <div className="window-body">
          <fieldset>
@@ -34,65 +48,79 @@ export function MarketBuildingBody({ gameState, xy }: IBuildingComponentProps): 
                </div>
             </div>
          </fieldset>
-         <div className="table-view">
-            <table>
-               <thead>
-                  <tr>
-                     <th>
+         <TableView
+            header={[
+               {
+                  name: (
+                     <>
                         <FormatNumber value={capacity} />x
-                     </th>
-                     <th className="right">{t(L.MarketYouGet)}</th>
-                     <th className="right">{t(L.Storage)}</th>
-                     <th style={{ width: 0 }}>{t(L.MarketSell)}</th>
+                     </>
+                  ),
+                  sortable: true,
+               },
+               { name: t(L.MarketYouGet), sortable: true },
+               { name: "", sortable: true },
+               { name: t(L.Storage), sortable: true },
+               { name: t(L.MarketSell), sortable: false },
+            ]}
+            data={keysOf(market.availableResources)}
+            compareFunc={(a, b, i) => {
+               switch (i) {
+                  case 0:
+                     return Config.Resource[a].name().localeCompare(Config.Resource[b].name());
+                  case 1: {
+                     const aRes = market.availableResources[a]!;
+                     const bRes = market.availableResources[b]!;
+                     return Config.Resource[aRes].name().localeCompare(Config.Resource[bRes].name());
+                  }
+                  case 2: {
+                     return getBuyResourceAndAmount(a).amount - getBuyResourceAndAmount(b).amount;
+                  }
+                  case 3: {
+                     return (building.resources[a] ?? 0) - (building.resources[b] ?? 0);
+                  }
+                  default:
+                     return 0;
+               }
+            }}
+            renderRow={(res) => {
+               const r = Config.Resource[res];
+               if (!r || !r.canPrice || !r.canStore) {
+                  return null;
+               }
+               const buy = getBuyResourceAndAmount(res);
+               return (
+                  <tr key={res}>
+                     <td>{r.name()}</td>
+                     <td>{Config.Resource[buy.resource].name()}</td>
+                     <td className="right">
+                        <FormatNumber value={buy.amount} />
+                     </td>
+                     <td className="right">
+                        <FormatNumber value={building.resources[res] ?? 0} />
+                     </td>
+                     <td
+                        className="pointer"
+                        onClick={() => {
+                           playClick();
+                           if (building.sellResources[res]) {
+                              delete building.sellResources[res];
+                           } else {
+                              building.sellResources[res] = true;
+                           }
+                           notifyGameStateUpdate();
+                        }}
+                     >
+                        {building.sellResources[res] ? (
+                           <div className="m-icon text-green">toggle_on</div>
+                        ) : (
+                           <div className="m-icon text-grey">toggle_off</div>
+                        )}
+                     </td>
                   </tr>
-               </thead>
-               <tbody>
-                  {keysOf(market.availableResources)
-                     .sort((a, b) => (Config.ResourcePrice[b] ?? 0) - (Config.ResourcePrice[a] ?? 0))
-                     .map((res) => {
-                        const r = Config.Resource[res];
-                        if (!r || !r.canPrice || !r.canStore) {
-                           return null;
-                        }
-                        const buyResource = market.availableResources[res]!;
-                        const buyAmount = round(
-                           (capacity * getMarketPrice(res, xy, gameState)) /
-                              getMarketPrice(buyResource, xy, gameState),
-                           1,
-                        );
-                        return (
-                           <tr key={res}>
-                              <td>{r.name()}</td>
-                              <td className="right">
-                                 <FormatNumber value={buyAmount} /> x {Config.Resource[buyResource].name()}
-                              </td>
-                              <td className="right">
-                                 <FormatNumber value={building.resources[res] ?? 0} />
-                              </td>
-                              <td
-                                 className="pointer"
-                                 onClick={() => {
-                                    playClick();
-                                    if (building.sellResources[res]) {
-                                       delete building.sellResources[res];
-                                    } else {
-                                       building.sellResources[res] = true;
-                                    }
-                                    notifyGameStateUpdate();
-                                 }}
-                              >
-                                 {building.sellResources[res] ? (
-                                    <div className="m-icon text-green">toggle_on</div>
-                                 ) : (
-                                    <div className="m-icon text-grey">toggle_off</div>
-                                 )}
-                              </td>
-                           </tr>
-                        );
-                     })}
-               </tbody>
-            </table>
-         </div>
+               );
+            }}
+         />
          <div className="sep10"></div>
          <BuildingUpgradeComponent gameState={gameState} xy={xy} />
          <BuildingWorkerComponent gameState={gameState} xy={xy} />

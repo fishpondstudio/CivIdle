@@ -1,3 +1,4 @@
+import { Resource } from "../definitions/ResourceDefinitions";
 import { HOUR } from "./Helper";
 
 export interface IChat {
@@ -41,16 +42,23 @@ export interface IWelcomeMessage extends IMessage {
 
 export interface ITrade extends IAddTradeRequest {
    id: string;
-   from: string;
-   fromId: string;
    status: TradeStatus;
-   fillBy?: string;
+   fromId: string;
    fillById?: string;
+}
+
+export interface IClientTrade extends ITrade {
+   from: string;
+   fromFlag: string;
+   fromLevel: AccountLevel;
+   fillBy?: string;
+   fillByFlag?: string;
+   fillByLevel?: AccountLevel;
 }
 
 export interface ITradeMessage extends IMessage {
    type: MessageType.Trade;
-   upsert?: ITrade[];
+   upsert?: IClientTrade[];
    remove?: string[];
 }
 
@@ -61,9 +69,9 @@ export interface IMapMessage extends IMessage {
 }
 
 export interface IAddTradeRequest {
-   buyResource: string;
+   buyResource: Resource;
    buyAmount: number;
-   sellResource: string;
+   sellResource: Resource;
    sellAmount: number;
 }
 

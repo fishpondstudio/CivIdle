@@ -7,7 +7,7 @@ import type { Tech } from "../definitions/TechDefinitions";
 import { EN } from "../languages/en";
 import { RU } from "../languages/ru";
 import type { ChatChannel } from "../utilities/Database";
-import { IPointData, type Tile, uuid4 } from "../utilities/Helper";
+import { IPointData, forEach, uuid4, type Tile } from "../utilities/Helper";
 import type { PartialSet, PartialTabulate } from "../utilities/TypeDefinitions";
 import { L, t } from "../utilities/i18n";
 import { getGameOptions, notifyGameOptionsUpdate } from "./GameStateLogic";
@@ -69,6 +69,16 @@ export function resetThemeColor() {
    notifyGameOptionsUpdate();
 }
 
+export function resetThemeBuildingColors() {
+   getGameOptions().buildingColors = {};
+   notifyGameOptionsUpdate();
+}
+
+export function resetThemeResourceColors() {
+   getGameOptions().resourceColors = {};
+   notifyGameOptionsUpdate();
+}
+
 export const ThemeColorNames: Record<keyof typeof DefaultThemeColors, () => string> = {
    WorldBackground: () => t(L.ThemeColorWorldBackground),
    ResearchBackground: () => t(L.ThemeColorResearchBackground),
@@ -96,7 +106,6 @@ export class GameOptions {
    defaultPriority = 0x010101;
    chatSendChannel: ChatChannel = "en";
    chatReceiveChannel: PartialSet<ChatChannel> = {};
-   isOffline = false;
    // Should be wiped
    greatPeople: Partial<Record<GreatPerson, { level: number; amount: number }>> = {};
    greatPeopleChoices: GreatPeopleChoice[] = [];
@@ -110,6 +119,24 @@ export const Languages = {
 
 export const SAVE_FILE_VERSION = 1;
 
+let translatePercentage = 1;
+
 export function syncLanguage(l: Record<string, string>): void {
+   let total = 0;
+   let translated = 0;
+
+   forEach(EN, (k, v) => {
+      ++total;
+      if (l[k] && l[k] !== v) {
+         ++translated;
+      }
+   });
+
+   translatePercentage = translated / total;
+
    Object.assign(L, l);
+}
+
+export function getTranslatedPercentage(): number {
+   return translatePercentage;
 }

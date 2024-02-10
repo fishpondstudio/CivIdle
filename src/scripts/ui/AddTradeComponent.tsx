@@ -6,12 +6,18 @@ import { getBuyAmountRange } from "../../../shared/logic/PlayerTradeLogic";
 import { Tick } from "../../../shared/logic/TickLogic";
 import { keysOf, safeParseInt } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
-import { client } from "../rpc/RPCClient";
-import { playError } from "../visuals/Sound";
+import { client, useUser } from "../rpc/RPCClient";
+import { playError, playKaching } from "../visuals/Sound";
 import type { IBuildingComponentProps } from "./BuildingPage";
+import { showToast } from "./GlobalModal";
 import { FormatNumber } from "./HelperComponents";
+import { TextWithHelp } from "./TextWithHelpComponent";
 
-export function AddTradeComponent({ gameState, xy }: IBuildingComponentProps): React.ReactNode {
+export function AddTradeComponent({
+   gameState,
+   xy,
+   enabled,
+}: IBuildingComponentProps & { enabled: boolean }): React.ReactNode {
    const buyResources = keysOf(Tick.next.resourcesByTile).filter(
       (res) => Config.Resource[res].canPrice && Config.Resource[res].canStore,
    );
@@ -24,7 +30,8 @@ export function AddTradeComponent({ gameState, xy }: IBuildingComponentProps): R
       sellAmount: 0,
    });
    const [showTrade, setShowTrade] = useState(false);
-   const [rangeMin, rangeMax] = getBuyAmountRange(trade);
+   const user = useUser();
+   const [rangeMin, rangeMax] = getBuyAmountRange(trade, user);
 
    function isTradeValid(trade: IClientAddTradeRequest): boolean {
       if (trade.buyResource === trade.sellResource) {
@@ -76,8 +83,34 @@ export function AddTradeComponent({ gameState, xy }: IBuildingComponentProps): R
                />
             </div>
             <div className="sep5"></div>
-            <div className="text-desc text-small text-right">
-               0 ~ <FormatNumber value={resourcesInStorage[trade.sellResource] ?? 0} />
+            <div className="row text-desc text-small">
+               <div style={{ width: "80px" }}></div>
+               <div>
+                  0 ~ <FormatNumber value={resourcesInStorage[trade.sellResource] ?? 0} />
+               </div>
+               <div className="f1"></div>
+               <div
+                  className="text-link text-strong mr10"
+                  onClick={() =>
+                     setTrade({
+                        ...trade,
+                        sellAmount: Math.floor((resourcesInStorage[trade.sellResource] ?? 0) * 0.5),
+                     })
+                  }
+               >
+                  {t(L.PlayerTradeSetHalf)}
+               </div>
+               <div
+                  className="text-link text-strong"
+                  onClick={() =>
+                     setTrade({
+                        ...trade,
+                        sellAmount: Math.floor(resourcesInStorage[trade.sellResource] ?? 0),
+                     })
+                  }
+               >
+                  {t(L.PlayerTradeSetMax)}
+               </div>
             </div>
             <div className="separator has-title">
                <div className="text-strong">{t(L.PlayerTradeIWant)}</div>
@@ -112,20 +145,42 @@ export function AddTradeComponent({ gameState, xy }: IBuildingComponentProps): R
                />
             </div>
             <div className="sep5" />
-            <div className="text-desc text-small text-right">
-               <FormatNumber value={rangeMin} /> ~ <FormatNumber value={rangeMax} />
+            <div className="row text-desc text-small">
+               <div style={{ width: "80px" }}></div>
+               <div>
+                  <FormatNumber value={rangeMin} /> ~ <FormatNumber value={rangeMax} />
+               </div>
+               <div className="f1" />
+               <div
+                  className="text-link text-strong mr10"
+                  onClick={() => setTrade({ ...trade, buyAmount: rangeMin })}
+               >
+                  {t(L.PlayerTradeSetMin)}
+               </div>
+               <div
+                  className="text-link text-strong"
+                  onClick={() => setTrade({ ...trade, buyAmount: rangeMax })}
+               >
+                  {t(L.PlayerTradeSetMax)}
+               </div>
             </div>
             <div className="sep15"></div>
             <div className="row">
                <button
                   className="row f1 jcc"
-                  disabled={!isTradeValid(trade)}
-                  onClick={() => {
-                     if (isTradeValid(trade)) {
-                        client.addTrade(trade);
+                  disabled={!isTradeValid(trade) || !enabled}
+                  onClick={async () => {
+                     try {
+                        if (!isTradeValid(trade) || !enabled) {
+                           throw new Error(t(L.OperationNotAllowedError));
+                        }
+                        await client.addTrade(trade);
+                        playKaching();
                         resourcesInStorage[trade.sellResource]! -= trade.sellAmount;
-                     } else {
+                        showToast(t(L.PlayerTradeAddSuccess));
+                     } catch (error) {
                         playError();
+                        showToast(String(error));
                      }
                   }}
                >
@@ -139,7 +194,7 @@ export function AddTradeComponent({ gameState, xy }: IBuildingComponentProps): R
                      setShowTrade(false);
                   }}
                >
-                  {t(L.PlayerTradeCancelTrade)}
+                  {t(L.PlayerTradeAddTradeCancel)}
                </button>
             </div>
          </fieldset>
@@ -149,11 +204,20 @@ export function AddTradeComponent({ gameState, xy }: IBuildingComponentProps): R
       <button
          className="row w100 jcc mb10"
          onClick={() => {
-            setShowTrade(true);
+            if (enabled) {
+               setShowTrade(true);
+            } else {
+               playError();
+            }
          }}
+         disabled={!enabled}
       >
          <div className="m-icon small mr5">add_circle</div>
-         <div className="text-strong">{t(L.PlayerTradeNewTrade)}</div>
+         <div className="text-strong">
+            <TextWithHelp help={enabled ? null : t(L.PlayerTradeMaxTradeExceeded)} noStyle>
+               {t(L.PlayerTradeNewTrade)}
+            </TextWithHelp>
+         </div>
       </button>
    );
 }

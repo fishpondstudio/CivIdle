@@ -29,7 +29,8 @@ const BuildingBodyOverride: Partial<Record<Building, FunctionComponent<IBuilding
    StPetersBasilica: StPetersBasilicaBuildingBody,
 };
 
-export function BuildingPage({ tile }: { tile: ITileData }): React.ReactNode {
+export function BuildingPage(props: { tile: ITileData }): React.ReactNode {
+   const { tile } = props;
    if (tile.building == null) {
       Singleton().routeTo(LoadingPage, { stage: LoadingPageStage.LoadSave });
       return null;
@@ -44,7 +45,7 @@ export function BuildingPage({ tile }: { tile: ITileData }): React.ReactNode {
             <div className="title-bar-text">{definition.name()}</div>
          </div>
          <MenuComponent />
-         <Body gameState={gs} xy={tile.tile} />
+         <Body {...props} gameState={gs} xy={tile.tile} />
       </div>
    );
 }

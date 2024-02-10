@@ -19,14 +19,19 @@ import {
    numberToRoman,
    setContains,
    sizeOf,
+   tileToPoint,
+   type Tile,
 } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import "../../css/EmptyTilePage.css";
 import { useGameState } from "../Global";
+import { WorldScene } from "../scenes/WorldScene";
 import { jsxMapOf } from "../utilities/Helper";
 import { useShortcut } from "../utilities/Hook";
+import { Singleton } from "../utilities/Singleton";
 import { playError } from "../visuals/Sound";
 import { MenuComponent } from "./MenuComponent";
+import { TextWithHelp } from "./TextWithHelpComponent";
 
 let lastBuild: Building | null = null;
 
@@ -68,9 +73,23 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
                   tile.deposit,
                   (k, v) => {
                      return (
-                        <div key={k} className="row mv5">
+                        <div
+                           key={k}
+                           className="text-strong row mv5"
+                           onClick={() => {
+                              const result: Tile[] = [];
+                              gs.tiles.forEach((tile, xy) => {
+                                 if (tile.explored && tile.deposit[k]) {
+                                    result.push(xy);
+                                 }
+                              });
+                              Singleton()
+                                 .sceneManager.getCurrent(WorldScene)
+                                 ?.drawSelection(tileToPoint(tile.tile), result);
+                           }}
+                        >
                            <div className="f1">{Config.Resource[k].name()}</div>
-                           <div className="m-icon small text-link">visibility</div>
+                           <div className="m-icon small text-link">search</div>
                         </div>
                      );
                   },
@@ -144,17 +163,28 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
                               >
                                  <td className="text-center text-strong">
                                     {(building?.max ?? Infinity) <= 1 ? (
-                                       <div
-                                          className="m-icon small"
-                                          aria-label={building.desc?.()}
-                                          data-balloon-pos="right"
-                                          data-balloon-text="left"
-                                          data-balloon-length="large"
-                                       >
-                                          public
+                                       <div className="m-icon small">
+                                          <TextWithHelp help={building.desc?.()} noStyle>
+                                             public
+                                          </TextWithHelp>
                                        </div>
                                     ) : (
-                                       numberToRoman(Config.BuildingTier[k] ?? 1)
+                                       <div
+                                          className="pointer"
+                                          onClick={() => {
+                                             const result: Tile[] = [];
+                                             gs.tiles.forEach((tile, xy) => {
+                                                if (tile.building?.type === k) {
+                                                   result.push(xy);
+                                                }
+                                             });
+                                             Singleton()
+                                                .sceneManager.getCurrent(WorldScene)
+                                                ?.drawSelection(tileToPoint(tile.tile), result);
+                                          }}
+                                       >
+                                          {numberToRoman(Config.BuildingTier[k] ?? 1)}
+                                       </div>
                                     )}
                                  </td>
                                  <td>

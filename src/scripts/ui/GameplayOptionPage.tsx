@@ -1,4 +1,4 @@
-import { Languages, syncLanguage } from "../../../shared/logic/GameState";
+import { getTranslatedPercentage } from "../../../shared/logic/GameState";
 import { notifyGameOptionsUpdate } from "../../../shared/logic/GameStateLogic";
 import {
    PRIORITY_MAX,
@@ -10,10 +10,12 @@ import {
    setProductionPriority,
    setUpgradePriority,
 } from "../../../shared/logic/Tile";
+import { formatPercent } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import { useGameOptions } from "../Global";
-import { jsxMapOf } from "../utilities/Helper";
+import { openUrl } from "../utilities/Platform";
 import { ChangeSoundComponent } from "./ChangeSoundComponent";
+import { LanguageSelect } from "./LanguageSelectComponent";
 import { MenuComponent } from "./MenuComponent";
 
 export function GameplayOptionPage(): React.ReactNode {
@@ -27,23 +29,20 @@ export function GameplayOptionPage(): React.ReactNode {
          <div className="window-body">
             <fieldset>
                <legend>{t(L.Language)}</legend>
-               <select
-                  className="w100"
-                  value={options.language}
-                  onChange={(e) => {
-                     options.language = e.target.value as keyof typeof Languages;
-                     notifyGameOptionsUpdate(options);
-                     syncLanguage(Languages[options.language]);
-                  }}
-               >
-                  {jsxMapOf(Languages, (k, v) => {
-                     return (
-                        <option key={k} value={k}>
-                           {v.CurrentLanguage}
-                        </option>
-                     );
-                  })}
-               </select>
+               <LanguageSelect className="w100" />
+               {options.language !== "en" ? (
+                  <div
+                     className="mt5 text-link"
+                     onClick={() =>
+                        openUrl("https://github.com/fishpondstudio/CivIdle/tree/main/shared/languages")
+                     }
+                  >
+                     {t(L.TranslationPercentage, {
+                        language: L.CurrentLanguage,
+                        percentage: formatPercent(getTranslatedPercentage()),
+                     })}
+                  </div>
+               ) : null}
             </fieldset>
             <fieldset>
                <div className="row">

@@ -1,0 +1,13 @@
+name: Backup
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '*/10 * * * *'
+
+jobs:
+  run-script:
+    runs-on: [self-hosted]
+    steps:
+      - name: Backup Database
+        run: /usr/bin/scp ubuntu@uk.fishpondstudio.com:/home/ubuntu/CivIdle/server/db /home/insraq/CivIdleDB/db-$(date +"%Y_%m_%d_%H")

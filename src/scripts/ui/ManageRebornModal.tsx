@@ -1,14 +1,18 @@
 import type { GreatPerson } from "../../../shared/definitions/GreatPersonDefinitions";
+import { MAX_TRIBUNE_CARRY_OVER_LEVEL } from "../../../shared/logic/Constants";
 import { notifyGameOptionsUpdate } from "../../../shared/logic/GameStateLogic";
 import { getGreatPersonUpgradeCost } from "../../../shared/logic/RebornLogic";
 import { L, t } from "../../../shared/utilities/i18n";
 import { useGameOptions } from "../Global";
+import { isOnlineUser } from "../rpc/RPCClient";
 import { playClick } from "../visuals/Sound";
 import { showModal } from "./GlobalModal";
 import { GreatPersonCard } from "./GreatPersonCard";
 import { FormatNumber } from "./HelperComponents";
 import { ProgressBarComponent } from "./ProgressBarComponent";
+import { RenderHTML } from "./RenderHTMLComponent";
 import { UpgradeGreatPersonModal } from "./UpgradeGreatPersonModal";
+import { WarningComponent } from "./WarningComponent";
 
 export function ManageRebornModal(): React.ReactNode {
    const options = useGameOptions();
@@ -39,7 +43,13 @@ export function ManageRebornModal(): React.ReactNode {
             <div className="title-bar-text">{t(L.ChooseGreatPersonFromLastReborn)}</div>
          </div>
          <div className="window-body">
-            <div className="sep5" />
+            {isOnlineUser() ? null : (
+               <WarningComponent className="mb10 text-small" icon="warning">
+                  <RenderHTML
+                     html={t(L.TribuneGreatPeopleLevelWarning, { level: MAX_TRIBUNE_CARRY_OVER_LEVEL })}
+                  />
+               </WarningComponent>
+            )}
             <div className="row" style={{ alignItems: "stretch" }}>
                <GreatPersonCard greatPerson={greatPeopleChoice[0]} onChosen={onChosen} />
                <div style={{ width: "5px" }} />

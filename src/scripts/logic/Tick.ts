@@ -49,6 +49,7 @@ export function tickEveryFrame(gs: GameState, dt: number) {
 }
 
 const heartbeatFreq = import.meta.env.DEV ? 10 : 60;
+const saveFreq = 5;
 
 export function tickEverySecond(gs: GameState, offline: boolean) {
    // We should always tick when offline
@@ -90,7 +91,7 @@ export function tickEverySecond(gs: GameState, offline: boolean) {
          CurrentTickChanged.emit(Tick.current);
          notifyGameStateUpdate();
       }
-      if (gs.tick % (5 * speed) === 0) {
+      if (gs.tick % (saveFreq * speed) === 0) {
          saveGame(false).catch(console.error);
       }
       if (gs.tick % (heartbeatFreq * speed) === 1) {

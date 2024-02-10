@@ -1,6 +1,7 @@
 import classNames from "classnames";
 import type { PropsWithChildren } from "react";
 import { useEffect, useRef, useState } from "react";
+import { DISCORD_URL } from "../../../shared/logic/Constants";
 import { Tick } from "../../../shared/logic/TickLogic";
 import { sizeOf } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
@@ -10,6 +11,7 @@ import { WorldScene } from "../scenes/WorldScene";
 import { openUrl } from "../utilities/Platform";
 import { Singleton } from "../utilities/Singleton";
 import { AboutModal } from "./AboutModal";
+import { FirstTimePlayerModal } from "./FirstTimePlayerModal";
 import { GameplayOptionPage } from "./GameplayOptionPage";
 import { showModal } from "./GlobalModal";
 import { PatchNotesPage } from "./PatchNotesPage";
@@ -212,7 +214,15 @@ export function MenuComponent(): React.ReactNode {
                   <div
                      className="menu-popover-item"
                      onPointerDown={() => {
-                        openUrl("https://discord.com/invite/xgNxpsM");
+                        showModal(<FirstTimePlayerModal />);
+                     }}
+                  >
+                     <MenuItem check={false}>{t(L.Tutorial)}</MenuItem>
+                  </div>
+                  <div
+                     className="menu-popover-item"
+                     onPointerDown={() => {
+                        openUrl(DISCORD_URL);
                      }}
                   >
                      <MenuItem check={false}>{t(L.JoinDiscord)}</MenuItem>

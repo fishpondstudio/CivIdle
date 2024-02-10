@@ -4,15 +4,19 @@ import type { City } from "../definitions/CityDefinitions";
 import type { Resource } from "../definitions/ResourceDefinitions";
 import { DepositResources } from "../definitions/ResourceDefinitions";
 import type { Tech } from "../definitions/TechDefinitions";
-import { forEach, formatNumber, isEmpty, keysOf, numberToRoman, sizeOf } from "../utilities/Helper";
+import { HOUR, forEach, formatNumber, isEmpty, keysOf, numberToRoman, sizeOf } from "../utilities/Helper";
 import type { PartialSet, PartialTabulate } from "../utilities/TypeDefinitions";
 import { getBuildingCost, isWorldWonder } from "./BuildingLogic";
 import { Config } from "./Config";
 import { getBuildingUnlockTech, getDepositUnlockTech, getResourceUnlockTech } from "./TechLogic";
 
 export const MAX_OFFLINE_PRODUCTION_SEC = 60 * 60 * 4;
-
 export const SCIENCE_VALUE = 0.5;
+export const MAX_TRIBUNE_CARRY_OVER_LEVEL = 2;
+export const TRADE_CANCEL_REFUND_PERCENT = 0.9;
+export const TRIBUNE_UPGRADE_PLAYTIME = 48 * HOUR;
+export const MAX_CHAT_PER_CHANNEL = 200;
+export const DISCORD_URL = "https://discord.com/invite/m5JWZtEKMZ";
 
 interface IRecipe {
    building: Building;

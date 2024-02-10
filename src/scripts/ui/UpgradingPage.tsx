@@ -2,16 +2,18 @@ import classNames from "classnames";
 import { Config } from "../../../shared/logic/Config";
 import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
 import {
-   type ITileData,
    PRIORITY_MAX,
    PRIORITY_MIN,
    getUpgradePriority,
    setUpgradePriority,
+   type ITileData,
 } from "../../../shared/logic/Tile";
 import { L, t } from "../../../shared/utilities/i18n";
 import { useGameState } from "../Global";
+import { useShortcut } from "../utilities/Hook";
 import { BuildingConstructionProgressComponent } from "./BuildingConstructionProgressComponent";
 import { MenuComponent } from "./MenuComponent";
+import { WarningComponent } from "./WarningComponent";
 
 export function UpgradingPage({ tile }: { tile: ITileData }): React.ReactNode {
    const building = tile.building;
@@ -21,6 +23,19 @@ export function UpgradingPage({ tile }: { tile: ITileData }): React.ReactNode {
    const gs = useGameState();
    const definition = Config.Building[building.type];
    const canDecreaseDesiredLevel = building.desiredLevel > building.level + 1;
+
+   const increaseDesiredLevel = () => {
+      building.desiredLevel++;
+      notifyGameStateUpdate();
+   };
+   const decreaseDesiredLevel = () => {
+      if (canDecreaseDesiredLevel) {
+         building.desiredLevel--;
+         notifyGameStateUpdate();
+      }
+   };
+   useShortcut("UpgradePageIncreaseLevel", () => increaseDesiredLevel(), [tile]);
+   useShortcut("UpgradePageDecreaseLevel", () => decreaseDesiredLevel(), [tile]);
    return (
       <div className="window">
          <div className="title-bar">
@@ -28,6 +43,9 @@ export function UpgradingPage({ tile }: { tile: ITileData }): React.ReactNode {
          </div>
          <MenuComponent />
          <div className="window-body">
+            <WarningComponent className="mb10" icon="info">
+               {t(L.UpgradeBuildingNotProducingDesc)}
+            </WarningComponent>
             <BuildingConstructionProgressComponent xy={tile.tile} gameState={gs} />
             <fieldset>
                <legend>{t(L.UpgradeBuilding)}</legend>
@@ -53,23 +71,12 @@ export function UpgradingPage({ tile }: { tile: ITileData }): React.ReactNode {
                            "text-link": canDecreaseDesiredLevel,
                            "text-desc": !canDecreaseDesiredLevel,
                         })}
-                        onClick={() => {
-                           if (canDecreaseDesiredLevel) {
-                              building.desiredLevel--;
-                              notifyGameStateUpdate();
-                           }
-                        }}
+                        onClick={() => decreaseDesiredLevel()}
                      >
                         indeterminate_check_box
                      </div>
                      <div style={{ width: "40px", textAlign: "center" }}>{building.desiredLevel}</div>
-                     <div
-                        className="m-icon ml5 text-link"
-                        onClick={() => {
-                           building.desiredLevel++;
-                           notifyGameStateUpdate();
-                        }}
-                     >
+                     <div className="m-icon ml5 text-link" onClick={() => increaseDesiredLevel()}>
                         add_box
                      </div>
                   </div>

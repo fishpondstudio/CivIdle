@@ -45,6 +45,16 @@
    display: block;
 }
 
-.loading-page > .row {
+.loading-page>.row {
    width: 800px;
+}
+
+.loading-page .report-issue {
+   position: absolute;
+   bottom: 25px;
+   left: 25px
+}
+
+.loading-page .highlight {
+   color: #fff;
 }

@@ -1,7 +1,7 @@
 {
    "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
    "organizeImports": {
-      "enabled": true
+      "enabled": false
    },
    "linter": {
       "enabled": true,
@@ -34,6 +34,12 @@
       "indentWidth": 3
    },
    "files": {
-      "ignore": ["**/*.js", "**/*.d.ts", "shared/thirdparty/*"]
+      "ignore": [
+         "**/*.js",
+         "**/*.d.ts",
+         "shared/thirdparty/*",
+         "src/scripts/Version.json",
+         "shared/utilities/Chars.json"
+      ]
    }
 }

@@ -10,6 +10,7 @@ import type { IBuildingComponentProps } from "./BuildingPage";
 import { ChangeResourceImportModal } from "./ChangeResourceImportModal";
 import { showModal } from "./GlobalModal";
 import { FormatNumber } from "./HelperComponents";
+import { TableView } from "./TableView";
 
 export function ResourceImportComponent({ gameState, xy }: IBuildingComponentProps): React.ReactNode {
    const building = gameState.tiles.get(xy)?.building as IResourceImportBuildingData;
@@ -39,48 +40,58 @@ export function ResourceImportComponent({ gameState, xy }: IBuildingComponentPro
    return (
       <fieldset>
          <legend>{t(L.ResourceImport)}</legend>
-         <div className="table-view">
-            <table>
-               <tbody>
-                  <tr>
-                     <th>{t(L.ResourceImportResource)}</th>
-                     <th className="text-right">{t(L.ResourceImportStorage)}</th>
-                     <th className="text-right">{t(L.ResourceImportImportPerCycle)}</th>
-                     <th className="text-right">{t(L.ResourceImportImportCap)}</th>
-                     <th></th>
+         <TableView
+            header={[
+               { name: t(L.ResourceImportResource), sortable: true },
+               { name: t(L.ResourceImportStorage), sortable: true },
+               { name: t(L.ResourceImportImportPerCycle), sortable: true },
+               { name: t(L.ResourceImportImportCap), sortable: true },
+               { name: "", sortable: false },
+            ]}
+            data={keysOf(resources)}
+            compareFunc={(a, b, col) => {
+               switch (col) {
+                  case 0:
+                     return Config.Resource[a].name().localeCompare(Config.Resource[b].name());
+                  case 1:
+                     return (building.resources[a] ?? 0) - (building.resources[b] ?? 0);
+                  case 2:
+                     return (
+                        (building.resourceImports[a]?.perCycle ?? 0) -
+                        (building.resourceImports[b]?.perCycle ?? 0)
+                     );
+                  case 3:
+                     return (building.resourceImports[a]?.cap ?? 0) - (building.resourceImports[b]?.cap ?? 0);
+                  default:
+                     return 0;
+               }
+            }}
+            renderRow={(res) => {
+               const ri = building.resourceImports[res];
+               return (
+                  <tr key={res}>
+                     <td>{Config.Resource[res].name()}</td>
+                     <td className="text-right">
+                        <FormatNumber value={building.resources[res] ?? 0} />
+                     </td>
+                     <td className="text-right" onWheel={(e) => {}}>
+                        <FormatNumber value={ri?.perCycle ?? 0} />
+                     </td>
+                     <td className="text-right">
+                        <FormatNumber value={ri?.cap ?? 0} />
+                     </td>
+                     <td
+                        className="text-right"
+                        onClick={() =>
+                           showModal(<ChangeResourceImportModal building={building} resource={res} />)
+                        }
+                     >
+                        <div className="m-icon small pointer text-link">settings</div>
+                     </td>
                   </tr>
-                  {keysOf(resources)
-                     .sort((a, b) => Config.Resource[a].name().localeCompare(Config.Resource[b].name()))
-                     .map((res) => {
-                        const ri = building.resourceImports[res];
-                        return (
-                           <tr key={res}>
-                              <td>{Config.Resource[res].name()}</td>
-                              <td className="text-right">
-                                 <FormatNumber value={building.resources[res] ?? 0} />
-                              </td>
-                              <td className="text-right" onWheel={(e) => {}}>
-                                 <FormatNumber value={ri?.perCycle ?? 0} />
-                              </td>
-                              <td className="text-right">
-                                 <FormatNumber value={ri?.cap ?? 0} />
-                              </td>
-                              <td
-                                 className="text-right"
-                                 onClick={() =>
-                                    showModal(
-                                       <ChangeResourceImportModal building={building} resource={res} />,
-                                    )
-                                 }
-                              >
-                                 <div className="m-icon small pointer text-link">settings</div>
-                              </td>
-                           </tr>
-                        );
-                     })}
-               </tbody>
-            </table>
-         </div>
+               );
+            }}
+         />
       </fieldset>
    );
 }

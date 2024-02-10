@@ -23,51 +23,49 @@ export function WonderPage(): React.ReactNode {
             <div className="title-bar-text">{t(L.Wonder)}</div>
          </div>
          <MenuComponent />
-         <div className="window-body">
-            <button
-               className="w100"
-               onClick={() => Singleton().routeTo(TilePage, { xy: getSpecialBuildings(gs).Headquarter.tile })}
-            >
-               <div className="row jcc">
+         <div className="window-body" style={{ display: "flex", flexDirection: "column" }}>
+            <div className="mb10">
+               <button
+                  className="w100 row jcc"
+                  onClick={() =>
+                     Singleton().routeTo(TilePage, { xy: getSpecialBuildings(gs).Headquarter.tile })
+                  }
+               >
                   <div className="m-icon" style={{ margin: "0 5px 0 -5px", fontSize: "18px" }}>
                      arrow_back
                   </div>
-                  <div>{t(L.GoBack)}</div>
-               </div>
-            </button>
-            <div className="sep10"></div>
-            <fieldset>
-               <legend>{t(L.WondersWiki)}</legend>
-               <div className="table-view">
-                  <table>
-                     <thead>
-                        <tr>
-                           <th></th>
-                           <th>{t(L.GreatPeopleName)}</th>
-                           <th>{t(L.GreatPeopleEffect)}</th>
-                        </tr>
-                     </thead>
-                     <tbody>
-                        {jsxMapOf(Config.Building, (b, def) => {
-                           if (def.max !== 1 || !def.construction) {
-                              return null;
-                           }
-                           return (
-                              <tr key={b}>
-                                 <td>
-                                    {builtWonders[b] ? (
-                                       <div className="m-icon small text-green">check_circle</div>
-                                    ) : null}
-                                 </td>
-                                 <td>{def.name()}</td>
-                                 <td>{def.desc?.()}</td>
-                              </tr>
-                           );
-                        })}
-                     </tbody>
-                  </table>
-               </div>
-            </fieldset>
+                  <div className="f1">{t(L.GoBack)}</div>
+               </button>
+            </div>
+            <div className="table-view sticky-header f1">
+               <table>
+                  <thead>
+                     <tr>
+                        <th></th>
+                        <th>{t(L.GreatPeopleName)}</th>
+                        <th>{t(L.GreatPeopleEffect)}</th>
+                     </tr>
+                  </thead>
+                  <tbody>
+                     {jsxMapOf(Config.Building, (b, def) => {
+                        if (def.max !== 1 || !def.construction) {
+                           return null;
+                        }
+                        return (
+                           <tr key={b}>
+                              <td>
+                                 {builtWonders[b] ? (
+                                    <div className="m-icon small text-green">check_circle</div>
+                                 ) : null}
+                              </td>
+                              <td>{def.name()}</td>
+                              <td>{def.desc?.()}</td>
+                           </tr>
+                        );
+                     })}
+                  </tbody>
+               </table>
+            </div>
          </div>
       </div>
    );

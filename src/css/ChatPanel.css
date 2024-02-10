@@ -39,6 +39,16 @@
    overflow-wrap: break-word;
 }
 
+#chat-panel .chat-message-item .chat-image {
+   cursor: pointer;
+   width: 100%;
+   max-height: 200px;
+   object-fit: cover;
+   display: block;
+   margin: 5px 0;
+   border-radius: 5px;
+}
+
 #chat-panel .chat-message-item:nth-child(even) {
    background: #efefef;
 }
