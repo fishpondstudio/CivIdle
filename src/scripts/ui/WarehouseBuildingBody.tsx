@@ -3,8 +3,9 @@ import { GameFeature, hasFeature } from "../../../shared/logic/FeatureLogic";
 import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
 import type { IWarehouseBuildingData } from "../../../shared/logic/Tile";
 import { WarehouseOptions } from "../../../shared/logic/Tile";
-import { hasFlag, toggleFlag } from "../../../shared/utilities/Helper";
+import { formatPercent, hasFlag, toggleFlag } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
+import { useGameOptions } from "../Global";
 import { playClick } from "../visuals/Sound";
 import { BuildingColorComponent } from "./BuildingColorComponent";
 import type { IBuildingComponentProps } from "./BuildingPage";
@@ -22,6 +23,7 @@ export function WarehouseBuildingBody({ gameState, xy }: IBuildingComponentProps
       return null;
    }
    const idleCapacity = getWarehouseIdleCapacity(warehouse);
+   const options = useGameOptions();
    return (
       <div className="window-body">
          <BuildingUpgradeComponent gameState={gameState} xy={xy} />
@@ -62,6 +64,26 @@ export function WarehouseBuildingBody({ gameState, xy }: IBuildingComponentProps
                      )}
                   </div>
                </div>
+               <div className="sep10" />
+               <div className="separator"></div>
+               <div className="row">
+                  <div className="f1">{t(L.AutopilotStoragePercentageDesc)}</div>
+                  <div className="text-strong">{formatPercent(options.autopilotPercentage)}</div>
+               </div>
+               <input
+                  type="range"
+                  min="0"
+                  max="1"
+                  step="0.01"
+                  value={options.autopilotPercentage}
+                  onChange={(e) => {
+                     options.autopilotPercentage = parseFloat(e.target.value);
+                     notifyGameStateUpdate();
+                  }}
+                  className="mh0"
+               />
+               <div className="sep15"></div>
+               <WarningComponent icon="info">{t(L.AutopilotSettingWarning)}</WarningComponent>
                <div className="sep5"></div>
             </fieldset>
          )}

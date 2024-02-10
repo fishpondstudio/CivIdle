@@ -110,29 +110,6 @@ export function GameplayOptionPage(): React.ReactNode {
                <div className="sep10" />
             </fieldset>
             <fieldset>
-               <legend>{t(L.DefaultWarehouseSettings)}</legend>
-               <div className="row">
-                  <div className="f1">{t(L.AutopilotStoragePercentageDesc)}</div>
-                  <div className="text-strong">
-                     {t(L.AutopilotStoragePercentage, {
-                        percentage: (options.autopilotPercentage * 100).toFixed(0),
-                     })}
-                  </div>
-               </div>
-               <div className="sep5" />
-               <input
-                  type="range"
-                  min="0"
-                  max="1"
-                  step="0.01"
-                  value={options.autopilotPercentage}
-                  onChange={(e) => {
-                     options.autopilotPercentage = parseFloat(e.target.value);
-                     notifyGameOptionsUpdate(options);
-                  }}
-               />
-            </fieldset>
-            <fieldset>
                <legend>{t(L.Sound)}</legend>
                <ChangeSoundComponent />
             </fieldset>
