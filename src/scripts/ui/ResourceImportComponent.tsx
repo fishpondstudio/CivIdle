@@ -35,7 +35,6 @@ export function ResourceImportComponent({ gameState, xy }: IBuildingComponentPro
       resources[k] = true;
    });
    const storage = getStorageFor(xy, gameState);
-   const percentage = storage.used / storage.total;
 
    return (
       <fieldset>
@@ -83,7 +82,13 @@ export function ResourceImportComponent({ gameState, xy }: IBuildingComponentPro
                      <td
                         className="text-right"
                         onClick={() =>
-                           showModal(<ChangeResourceImportModal building={building} resource={res} />)
+                           showModal(
+                              <ChangeResourceImportModal
+                                 storage={storage.total}
+                                 building={building}
+                                 resource={res}
+                              />,
+                           )
                         }
                      >
                         <div className="m-icon small pointer text-link">settings</div>

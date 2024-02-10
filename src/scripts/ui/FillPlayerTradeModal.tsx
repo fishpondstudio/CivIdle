@@ -211,6 +211,7 @@ export function FillPlayerTradeModal({ trade, xy }: { trade: IClientTrade; xy?: 
             <div className="sep15"></div>
             <div className="row" style={{ justifyContent: "flex-end" }}>
                <button
+                  className="text-strong"
                   disabled={!hasEnoughResource || !hasEnoughStorage || !hasValidPath || !isPercentageValid}
                   onClick={async () => {
                      if (!hasEnoughResource || !hasEnoughStorage || !hasValidPath || !isPercentageValid) {
@@ -237,6 +238,7 @@ export function FillPlayerTradeModal({ trade, xy }: { trade: IClientTrade; xy?: 
                         playKaching();
                         hideModal();
                      } catch (error) {
+                        playError();
                         showToast(String(error));
                      }
                   }}

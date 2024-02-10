@@ -4,7 +4,7 @@ import { getWarehouseCapacity } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
 import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
 import type { IResourceImport, IResourceImportBuildingData } from "../../../shared/logic/Tile";
-import { clamp, reduceOf, safeParseInt } from "../../../shared/utilities/Helper";
+import { clamp, formatPercent, reduceOf, safeParseInt } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import { hideModal } from "./GlobalModal";
 import { FormatNumber } from "./HelperComponents";
@@ -12,9 +12,11 @@ import { FormatNumber } from "./HelperComponents";
 export function ChangeResourceImportModal({
    building,
    resource,
+   storage,
 }: {
    building: IResourceImportBuildingData;
    resource: Resource;
+   storage: number;
 }): React.ReactNode {
    const [resourceImport, setResourceImport] = useState<IResourceImport>(
       building.resourceImports[resource] ?? { cap: 0, perCycle: 0 },
@@ -52,8 +54,27 @@ export function ChangeResourceImportModal({
                   }}
                />
             </div>
-            <div className="text-desc text-right text-small">
-               0 ~ <FormatNumber value={max} />
+            <div className="row text-small">
+               <div style={{ width: "60px" }}></div>
+               <div className="text-desc">
+                  0 ~ <FormatNumber value={max} />
+               </div>
+               <div className="f1" />
+               <div>
+                  {[0.25, 0.5, 0.75, 1].map((p) => (
+                     <span
+                        className="ml10 text-strong text-link"
+                        onClick={() => {
+                           setResourceImport({
+                              ...resourceImport,
+                              perCycle: Math.floor(max * p),
+                           });
+                        }}
+                     >
+                        {formatPercent(p)}
+                     </span>
+                  ))}
+               </div>
             </div>
             <div className="sep5"></div>
             <div className="row mv5">
@@ -67,9 +88,32 @@ export function ChangeResourceImportModal({
                   }}
                />
             </div>
+            <div className="row text-small">
+               <div style={{ width: "60px" }}></div>
+               <div className="text-desc">
+                  0 ~ <FormatNumber value={storage} />
+               </div>
+               <div className="f1" />
+               <div>
+                  {[0.1, 0.25, 0.5, 0.75, 1].map((p) => (
+                     <span
+                        className="ml10 text-strong text-link"
+                        onClick={() => {
+                           setResourceImport({
+                              ...resourceImport,
+                              cap: Math.floor(storage * p),
+                           });
+                        }}
+                     >
+                        {formatPercent(p)}
+                     </span>
+                  ))}
+               </div>
+            </div>
             <div className="sep10"></div>
             <div className="row" style={{ justifyContent: "flex-end" }}>
                <button
+                  className="text-strong"
                   disabled={!isValid}
                   onClick={() => {
                      building.resourceImports[resource] = resourceImport;

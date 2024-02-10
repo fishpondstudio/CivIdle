@@ -1,6 +1,10 @@
 import classNames from "classnames";
 import { useEffect, useState } from "react";
-import { MAX_TRIBUNE_CARRY_OVER_LEVEL, TRIBUNE_UPGRADE_PLAYTIME } from "../../../shared/logic/Constants";
+import {
+   MAX_TRIBUNE_CARRY_OVER_LEVEL,
+   TRIBUNE_TRADE_VALUE_PER_MINUTE,
+   TRIBUNE_UPGRADE_PLAYTIME,
+} from "../../../shared/logic/Constants";
 import { getGameOptions, getGameState } from "../../../shared/logic/GameStateLogic";
 import { upgradeAllPermanentGreatPeople } from "../../../shared/logic/RebornLogic";
 import { AccountLevel } from "../../../shared/utilities/Database";
@@ -14,6 +18,7 @@ import { playError } from "../visuals/Sound";
 import { ChangePlayerHandleModal } from "./ChangePlayerHandleModal";
 import { ConfirmModal } from "./ConfirmModal";
 import { showModal, showToast } from "./GlobalModal";
+import { FormatNumber } from "./HelperComponents";
 import { RenderHTML } from "./RenderHTMLComponent";
 import { TextWithHelp } from "./TextWithHelpComponent";
 import { WarningComponent } from "./WarningComponent";
@@ -165,7 +170,9 @@ function AccountDetails(): React.ReactNode {
                   </tr>
                   <tr>
                      <td>{t(L.AccountTradeValuePerMinute)}</td>
-                     <td>1,000</td>
+                     <td>
+                        <FormatNumber value={TRIBUNE_TRADE_VALUE_PER_MINUTE} />
+                     </td>
                      <td>∞</td>
                      <td>∞</td>
                      <td>∞</td>

@@ -417,6 +417,7 @@ ul.tree-view>li:first-child {
    border-radius: 3px;
    font-family: "Pixelated MS Sans Serif", Arial;
    font-size: 11px;
+   z-index: 2;
 }
 
 .warning-banner {

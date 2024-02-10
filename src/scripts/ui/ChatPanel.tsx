@@ -1,3 +1,4 @@
+import Tippy from "@tippyjs/react";
 import classNames from "classnames";
 import React, { memo, useCallback, useEffect, useRef, useState } from "react";
 import { AccountLevel, ChatChannels, type IChat } from "../../../shared/utilities/Database";
@@ -118,24 +119,18 @@ export function ChatPanel(): React.ReactNode {
                            {receiveMultipleChannels ? <div className="chat-channel">{c.channel}</div> : null}
                            <div className="f1"></div>
                            <div className="text-strong">{c.name}</div>
-                           <img
-                              src={getFlagUrl(c.flag)}
-                              className="player-flag game-cursor"
-                              title={getCountryName(c.flag)}
-                           />
+                           <Tippy content={getCountryName(c.flag)}>
+                              <img src={getFlagUrl(c.flag)} className="player-flag game-cursor" />
+                           </Tippy>
                            {c.level > 0 ? (
-                              <img
-                                 src={AccountLevelImages[c.level]}
-                                 className="player-flag game-cursor"
-                                 title={AccountLevelNames[c.level]()}
-                              />
+                              <Tippy content={AccountLevelNames[c.level]()}>
+                                 <img src={AccountLevelImages[c.level]} className="player-flag game-cursor" />
+                              </Tippy>
                            ) : null}
                            {c.isMod ? (
-                              <img
-                                 src={AccountLevelMod}
-                                 className="player-flag game-cursor"
-                                 title={t(L.AccountLevelCensor)}
-                              />
+                              <Tippy content={t(L.AccountLevelCensor)}>
+                                 <img src={AccountLevelMod} className="player-flag game-cursor" />
+                              </Tippy>
                            ) : null}
                         </div>
                      ) : (
@@ -149,24 +144,18 @@ export function ChatPanel(): React.ReactNode {
                            >
                               {c.name}
                            </div>
-                           <img
-                              src={getFlagUrl(c.flag)}
-                              className="player-flag game-cursor"
-                              title={getCountryName(c.flag)}
-                           />
+                           <Tippy content={getCountryName(c.flag)}>
+                              <img src={getFlagUrl(c.flag)} className="player-flag game-cursor" />
+                           </Tippy>
                            {c.level > 0 ? (
-                              <img
-                                 src={AccountLevelImages[c.level]}
-                                 className="player-flag game-cursor"
-                                 title={AccountLevelNames[c.level]()}
-                              />
+                              <Tippy content={AccountLevelNames[c.level]()}>
+                                 <img src={AccountLevelImages[c.level]} className="player-flag game-cursor" />
+                              </Tippy>
                            ) : null}
                            {c.isMod ? (
-                              <img
-                                 src={AccountLevelMod}
-                                 className="player-flag game-cursor"
-                                 title={t(L.AccountLevelCensor)}
-                              />
+                              <Tippy content={t(L.AccountLevelCensor)}>
+                                 <img src={AccountLevelMod} className="player-flag game-cursor" />
+                              </Tippy>
                            ) : null}
                            <div className="f1"></div>
                            <div>{new Date(c.time ?? 0).toLocaleTimeString()}</div>

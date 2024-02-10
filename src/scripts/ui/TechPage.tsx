@@ -34,22 +34,13 @@ export function TechPage({ id }: { id: Tech }): React.ReactNode {
    const gs = useGameState();
    const tech = Config.Tech[id];
    const goBackToCity = () => Singleton().sceneManager.loadScene(WorldScene);
-   useShortcut("TechPageGoBackToCity", goBackToCity, [id]);
-   if (tech.column > MAX_TECH_COLUMN) {
-      return <InDevelopmentPage />;
-   }
-
-   const prerequisitesSatisfied = tech.requireTech.every((t) => gs.unlockedTech[t]);
-   const unlockCost: PartialTabulate<Resource> = { Science: getUnlockCost(id) };
-   const availableResources: PartialTabulate<Resource> = {};
-   forEach(unlockCost, (k, v) => {
-      availableResources[k] = getResourceAmount(k, gs);
-   });
-   const progress =
-      reduceOf(availableResources, (prev, k, v) => prev + Math.min(v, unlockCost[k] ?? 0), 0) /
-      reduceOf(unlockCost, (prev, _, v) => prev + v, 0);
-
+   const canUnlock = () => {
+      return tech.column <= MAX_TECH_COLUMN;
+   };
    const unlock = () => {
+      if (!canUnlock()) {
+         return;
+      }
       if (!tech.requireTech.every((t) => gs.unlockedTech[t]) || progress < 1) {
          return;
       }
@@ -69,6 +60,23 @@ export function TechPage({ id }: { id: Tech }): React.ReactNode {
       notifyGameStateUpdate();
       Singleton().sceneManager.getCurrent(TechTreeScene)?.renderTechTree("animate", true);
    };
+
+   useShortcut("TechPageGoBackToCity", goBackToCity, [id]);
+   useShortcut("TechPageUnlockTech", unlock, [id]);
+
+   if (!canUnlock()) {
+      return <InDevelopmentPage />;
+   }
+
+   const prerequisitesSatisfied = tech.requireTech.every((t) => gs.unlockedTech[t]);
+   const unlockCost: PartialTabulate<Resource> = { Science: getUnlockCost(id) };
+   const availableResources: PartialTabulate<Resource> = {};
+   forEach(unlockCost, (k, v) => {
+      availableResources[k] = getResourceAmount(k, gs);
+   });
+   const progress =
+      reduceOf(availableResources, (prev, k, v) => prev + Math.min(v, unlockCost[k] ?? 0), 0) /
+      reduceOf(unlockCost, (prev, _, v) => prev + v, 0);
 
    let prerequisiteCount = 0;
    return (

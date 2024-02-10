@@ -11,6 +11,7 @@ import {
 import { L, t } from "../../../shared/utilities/i18n";
 import { useGameState } from "../Global";
 import { useShortcut } from "../utilities/Hook";
+import { playClick } from "../visuals/Sound";
 import { BuildingConstructionProgressComponent } from "./BuildingConstructionProgressComponent";
 import { MenuComponent } from "./MenuComponent";
 import { WarningComponent } from "./WarningComponent";
@@ -22,14 +23,16 @@ export function UpgradingPage({ tile }: { tile: ITileData }): React.ReactNode {
    }
    const gs = useGameState();
    const definition = Config.Building[building.type];
-   const canDecreaseDesiredLevel = building.desiredLevel > building.level + 1;
+   const canDecreaseDesiredLevel = () => building.desiredLevel > building.level + 1;
 
    const increaseDesiredLevel = () => {
+      playClick();
       building.desiredLevel++;
       notifyGameStateUpdate();
    };
    const decreaseDesiredLevel = () => {
-      if (canDecreaseDesiredLevel) {
+      if (canDecreaseDesiredLevel()) {
+         playClick();
          building.desiredLevel--;
          notifyGameStateUpdate();
       }
@@ -50,7 +53,7 @@ export function UpgradingPage({ tile }: { tile: ITileData }): React.ReactNode {
             <fieldset>
                <legend>{t(L.UpgradeBuilding)}</legend>
                <div className="row text-strong">
-                  <div className="f1">{building.level}</div>
+                  <div className="f1 text-large">{building.level}</div>
                   <div className="m-icon">keyboard_double_arrow_right</div>
                   <div
                      className="f1 row jce"
@@ -59,7 +62,7 @@ export function UpgradingPage({ tile }: { tile: ITileData }): React.ReactNode {
                            building.desiredLevel++;
                            notifyGameStateUpdate();
                         }
-                        if (e.deltaY > 0 && canDecreaseDesiredLevel) {
+                        if (e.deltaY > 0 && canDecreaseDesiredLevel()) {
                            building.desiredLevel--;
                            notifyGameStateUpdate();
                         }
@@ -68,14 +71,16 @@ export function UpgradingPage({ tile }: { tile: ITileData }): React.ReactNode {
                      <div
                         className={classNames({
                            "m-icon mr5": true,
-                           "text-link": canDecreaseDesiredLevel,
-                           "text-desc": !canDecreaseDesiredLevel,
+                           "text-link": canDecreaseDesiredLevel(),
+                           "text-desc": !canDecreaseDesiredLevel(),
                         })}
                         onClick={() => decreaseDesiredLevel()}
                      >
                         indeterminate_check_box
                      </div>
-                     <div style={{ width: "40px", textAlign: "center" }}>{building.desiredLevel}</div>
+                     <div className="text-large text-center" style={{ width: "40px" }}>
+                        {building.desiredLevel}
+                     </div>
                      <div className="m-icon ml5 text-link" onClick={() => increaseDesiredLevel()}>
                         add_box
                      </div>

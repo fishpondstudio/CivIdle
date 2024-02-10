@@ -7,8 +7,14 @@ export const PatchNotes: PatchNote[] = [
    {
       version: "0.1.127",
       content: [
+         [
+            "Bugfix",
+            "Trade value per minute limit has been implemented on the server (previously Tribune's trade value per minute limit was not implemented)",
+         ],
          ["QoL", "Highlight trades that can be filled immediately in Caravansary"],
          ["QoL", "Add descriptions to Market, Warehouse and Caravansary"],
+         ["QoL", "Add shortcut for adjusting building upgrade levels (@Vethon)"],
+         ["QoL", "Add shortcut for unlocking select technology (@Vethon)"],
       ],
    },
    {

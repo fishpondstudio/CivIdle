@@ -39,12 +39,17 @@ export function showToast(toast: string) {
    showToastEvent.emit(toast);
 }
 
+let toastTimeout = 0;
+
 export function GlobalToast(): React.ReactNode {
    const [content, setContent] = useState<string | null>(null);
 
    useTypedEvent(showToastEvent, (e) => {
       setContent(e);
-      setTimeout(() => setContent(null), 3500);
+      if (toastTimeout) {
+         clearTimeout(toastTimeout);
+      }
+      toastTimeout = window.setTimeout(() => setContent(null), 3500);
    });
 
    useTypedEvent(hideToastEvent, (e) => {

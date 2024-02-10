@@ -103,6 +103,11 @@ export interface IEmpireValue {
    tick: number;
 }
 
+export interface ITradeValue {
+   value: number;
+   time: number;
+}
+
 export interface IUser {
    userId: string;
    handle: string;
@@ -112,6 +117,7 @@ export interface IUser {
    lastHeartbeatAt: number;
    totalPlayTime: number;
    empireValues: IEmpireValue[];
+   tradeValues: ITradeValue[];
    level: AccountLevel;
    isMod: boolean;
    flag: string;
