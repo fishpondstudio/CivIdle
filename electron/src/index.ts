@@ -14,18 +14,7 @@ export function getGameSavePath(): string {
 const createWindow = () => {
    try {
       const steam = init();
-
-      // FIXME: Migrate save, consider removing this later!
-      if (!existsSync(getGameSavePath())) {
-         const steamId = steam.localplayer.getSteamId().steamId64.toString();
-         const oldSavePath = path.join(app.getAppPath(), "save", steamId, "CivIdle");
-         const newSavePath = path.join(getGameSavePath(), steamId, "CivIdle");
-         if (existsSync(oldSavePath)) {
-            ensureFileSync(newSavePath);
-            copySync(oldSavePath, newSavePath);
-         }
-      }
-
+      migrateSave(steam.localplayer.getSteamId().steamId64.toString());
       const mainWindow = new BrowserWindow({
          webPreferences: {
             preload: path.join(__dirname, "preload.js"),
@@ -73,6 +62,28 @@ app.on("ready", createWindow);
 app.on("window-all-closed", () => {
    quit();
 });
+
+function migrateSave(steamId: string): void {
+   const oldSavePath = path.join(app.getAppPath(), "save", steamId, "CivIdle");
+   const migratedPath = path.join(app.getAppPath(), "save", steamId, "MIGRATION_COMPLETE");
+   const newSavePath = path.join(getGameSavePath(), steamId, "CivIdle");
+
+   // New save already exists, no need to migrate
+   if (existsSync(newSavePath)) {
+      return;
+   }
+
+   // "MIGRATION_COMPLETE", no need to migrate
+   if (existsSync(migratedPath)) {
+      return;
+   }
+
+   if (existsSync(oldSavePath)) {
+      ensureFileSync(newSavePath);
+      copySync(oldSavePath, newSavePath);
+      ensureFileSync(migratedPath);
+   }
+}
 
 function quit() {
    app.quit();
