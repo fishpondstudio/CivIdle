@@ -17,9 +17,9 @@ import {
 import { initializeGameState } from "../../shared/logic/InitializeGameState";
 import { rollPermanentGreatPeople } from "../../shared/logic/RebornLogic";
 import { getGreatPeopleChoices } from "../../shared/logic/TechLogic";
-import { type ITileData, makeBuilding } from "../../shared/logic/Tile";
+import { makeBuilding, type ITileData } from "../../shared/logic/Tile";
 import { Grid } from "../../shared/utilities/Grid";
-import { type Tile, firstKeyOf, forEach, xyToTile } from "../../shared/utilities/Helper";
+import { firstKeyOf, forEach, xyToTile, type Tile } from "../../shared/utilities/Helper";
 import { TypedEvent } from "../../shared/utilities/TypedEvent";
 import { SteamClient, isSteam } from "./rpc/SteamClient";
 import { WorldScene } from "./scenes/WorldScene";
@@ -136,24 +136,20 @@ export async function decompressSave(data: Uint8Array): Promise<SavedGame> {
    return deserializeSave(await decompress(data));
 }
 
-export async function loadGame(): Promise<SavedGame | undefined> {
+export async function loadGame(): Promise<SavedGame | null> {
    try {
       if (isSteam()) {
          const bytes = await SteamClient.fileReadBytes(SAVE_KEY);
-         try {
-            // This is for migrating old uncompressed save file. Consider remove this after release!
-            return JSON.parse(new TextDecoder().decode(bytes));
-         } catch (error) {
-            return decompressSave(new Uint8Array(bytes));
-         }
+         return await decompressSave(new Uint8Array(bytes));
       }
       const compressed = await idbGet<Uint8Array>(SAVE_KEY);
       if (!compressed) {
-         return;
+         throw new Error("Save does not exists");
       }
       return await decompressSave(compressed);
    } catch (e) {
       console.warn("loadGame failed", e);
+      return null;
    }
 }
 

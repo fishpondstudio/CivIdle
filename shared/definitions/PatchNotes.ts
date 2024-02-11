@@ -5,6 +5,15 @@ interface PatchNote {
 
 export const PatchNotes: PatchNote[] = [
    {
+      version: "0.1.129",
+      content: [
+         [
+            "Bugfix",
+            "This version will migrate your progress to prepare for carrying your progress from Demo to Release",
+         ],
+      ],
+   },
+   {
       version: "0.1.128",
       content: [
          ["QoL", "Show progress towards next great person at reborn in resource panel"],

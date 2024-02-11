@@ -21,26 +21,26 @@ export class Camera extends Container {
       this.on("pointerleave", this.onPointerOut);
    }
 
-   private pressedPointers: Record<number, { x: number; y: number; moved: boolean }> = {};
+   private pressedPointers: Map<number, { x: number; y: number; moved: boolean }> = new Map();
 
    private onPointerDown(e: FederatedPointerEvent) {
-      this.pressedPointers[e.pointerId] = { x: e.x, y: e.y, moved: false };
+      this.pressedPointers.set(e.pointerId, { x: e.x, y: e.y, moved: false });
    }
 
    private onPointerOut(e: FederatedPointerEvent) {
-      delete this.pressedPointers[e.pointerId];
+      this.pressedPointers.delete(e.pointerId);
    }
 
    private onPointerUp(e: FederatedPointerEvent) {
-      const p = this.pressedPointers[e.pointerId];
-      delete this.pressedPointers[e.pointerId];
-      if (!p?.moved) {
+      const p = this.pressedPointers.get(e.pointerId);
+      this.pressedPointers.delete(e.pointerId);
+      if (p && !p.moved) {
          this.emit("clicked", e);
       }
    }
 
    private onPointerMove(e: FederatedPointerEvent) {
-      const active = this.pressedPointers[e.pointerId];
+      const active = this.pressedPointers.get(e.pointerId);
       if (!active) {
          return;
       }

@@ -1,13 +1,30 @@
 import { BrowserWindow, Menu, app, dialog, ipcMain } from "electron";
+import { existsSync } from "fs";
+import { copySync, ensureFileSync } from "fs-extra";
 import path from "path";
 import { init, type Client } from "steamworks.js";
 import { IPCService } from "./IPCService";
 
 export type SteamClient = Omit<Client, "init" | "runCallbacks">;
 
+export function getGameSavePath(): string {
+   return path.join(app.getPath("appData"), "CivIdleSaves");
+}
+
 const createWindow = () => {
    try {
       const steam = init();
+
+      // FIXME: Migrate save, consider removing this later!
+      if (!existsSync(getGameSavePath())) {
+         const steamId = steam.localplayer.getSteamId().steamId64.toString();
+         const oldSavePath = path.join(app.getAppPath(), "save", steamId, "CivIdle");
+         const newSavePath = path.join(getGameSavePath(), steamId, "CivIdle");
+         if (existsSync(oldSavePath)) {
+            ensureFileSync(newSavePath);
+            copySync(oldSavePath, newSavePath);
+         }
+      }
 
       const mainWindow = new BrowserWindow({
          webPreferences: {
@@ -31,7 +48,7 @@ const createWindow = () => {
       mainWindow.maximize();
       mainWindow.show();
 
-      const service = new IPCService(app, steam);
+      const service = new IPCService(steam);
 
       ipcMain.handle("__RPCCall", (e, method: keyof IPCService, args) => {
          // @ts-expect-error
