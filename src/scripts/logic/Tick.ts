@@ -132,4 +132,6 @@ if (import.meta.env.DEV) {
       }
       console.timeEnd(`TickGameState(${tick})`);
    };
+   // @ts-expect-error
+   window.Config = Config;
 }

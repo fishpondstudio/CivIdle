@@ -872,6 +872,8 @@ export const EN = {
    CanEarnGreatPeopleFromRebornNo: "This run cannot earn great people from reborn",
    TribuneUpgradeDesc:
       "Upgrading from Tribune to Quaestor will allow your account to unlock all online features. However, only <b>permanent great people up to level %{level}</b> can be carried over",
+   TribuneUpgradeDescGreatPeopleWarning:
+      "Your current run has great people. You should <b>reborn first</b>. Upgrading to Quaestor rank will reset your current run",
    TribuneGreatPeopleLevelWarning:
       "Your current account rank is Tribune. Upgrading to Quaestor will carry over permanent great people <b>up to level %{level}</b>",
    RebornModalDesc:
@@ -880,7 +882,7 @@ export const EN = {
    AccountLevelUpgradeConditionAny:
       "To upgrade your account, you only need to satisfy one of the following criteria:",
    AccountLevelPlayTime: "Active Online Playtime > %{requiredTime} (Your play time is %{actualTime})",
-   AccountUpgradeButton: "Upgrade Account To Quaestor",
+   AccountUpgradeButton: "Upgrade To Quaestor Rank",
    AccountUpgradeConfirm: "Account Upgrade",
    AccountUpgradeConfirmDesc:
       "Upgrading your account will <b>reset your current run</b> and carry over permanent great people <b>up to level %{level}</b>. This <b>cannot</b> be undone, are you sure to continue?",

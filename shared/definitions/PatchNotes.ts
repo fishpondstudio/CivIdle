@@ -5,6 +5,16 @@ interface PatchNote {
 
 export const PatchNotes: PatchNote[] = [
    {
+      version: "0.1.130",
+      content: [
+         ["QoL", "Improve chat performance, especially when typing chat message"],
+         [
+            "QoL",
+            "Disallow upgrading account rank when there's great people in the current run (you should reborn first in this case)",
+         ],
+      ],
+   },
+   {
       version: "0.1.129",
       content: [
          [

@@ -6,15 +6,15 @@ import {
    TRIBUNE_UPGRADE_PLAYTIME,
 } from "../../../shared/logic/Constants";
 import { getGameOptions, getGameState } from "../../../shared/logic/GameStateLogic";
-import { upgradeAllPermanentGreatPeople } from "../../../shared/logic/RebornLogic";
+import { getGreatPeopleAtReborn, upgradeAllPermanentGreatPeople } from "../../../shared/logic/RebornLogic";
 import { AccountLevel } from "../../../shared/utilities/Database";
-import { forEach, formatHM } from "../../../shared/utilities/Helper";
+import { forEach, formatHM, sizeOf } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import { resetToCity, saveGame, useGameState } from "../Global";
 import { AccountLevelImages, AccountLevelNames } from "../logic/AccountLevel";
 import { canEarnGreatPeopleFromReborn, client, useUser } from "../rpc/RPCClient";
 import { getCountryName, getFlagUrl } from "../utilities/CountryCode";
-import { playError } from "../visuals/Sound";
+import { playClick, playError, playLevelUp } from "../visuals/Sound";
 import { ChangePlayerHandleModal } from "./ChangePlayerHandleModal";
 import { ConfirmModal } from "./ConfirmModal";
 import { showModal, showToast } from "./GlobalModal";
@@ -90,6 +90,12 @@ function AccountDetails(): React.ReactNode {
       })();
    }, [user]);
    const cond1 = playTime * 1000 > TRIBUNE_UPGRADE_PLAYTIME;
+   const canRankUp = () =>
+      getGreatPeopleAtReborn() +
+         sizeOf(getGameState().greatPeople) +
+         getGameState().greatPeopleChoices.length +
+         getGameOptions().greatPeopleChoices.length <=
+      0;
    return (
       <>
          <div className="separator" />
@@ -230,13 +236,22 @@ function AccountDetails(): React.ReactNode {
          {user?.level === AccountLevel.Tribune ? (
             <>
                <div className="separator" />
-               <WarningComponent icon="info">
+               <WarningComponent className="mb10" icon="info">
                   <RenderHTML
                      className="text-small"
                      html={t(L.TribuneUpgradeDesc, { level: MAX_TRIBUNE_CARRY_OVER_LEVEL })}
                   />
                </WarningComponent>
-               <div className="sep10" />
+               {canRankUp() ? null : (
+                  <WarningComponent className="mb10" icon="warning">
+                     <RenderHTML
+                        className="text-small"
+                        html={t(L.TribuneUpgradeDescGreatPeopleWarning, {
+                           level: MAX_TRIBUNE_CARRY_OVER_LEVEL,
+                        })}
+                     />
+                  </WarningComponent>
+               )}
                <div className="text-strong">{t(L.AccountLevelUpgradeConditionAny)}</div>
                <div className="sep5" />
                <div className="row">
@@ -255,14 +270,16 @@ function AccountDetails(): React.ReactNode {
                <div className="sep10" />
                <button
                   className="w100 text-strong row"
-                  disabled={!cond1}
+                  disabled={!cond1 || !canRankUp()}
                   onClick={() => {
+                     playClick();
                      showModal(
                         <ConfirmModal
                            title={t(L.AccountUpgradeConfirm)}
                            onConfirm={async () => {
                               try {
                                  await client.upgrade();
+                                 playLevelUp();
                                  resetToCity(getGameState().city);
                                  getGameOptions().greatPeopleChoices = [];
                                  upgradeAllPermanentGreatPeople(getGameOptions());

@@ -40,7 +40,7 @@ export const OnPlayerMapChanged = new TypedEvent<Record<string, IClientMapEntry>
 export const OnPlayerMapMessage = new TypedEvent<IMapMessage>();
 export const OnNewPendingClaims = new TypedEvent<void>();
 
-interface IClientChat extends IChat {
+export interface IClientChat extends IChat {
    id: number;
 }
 
