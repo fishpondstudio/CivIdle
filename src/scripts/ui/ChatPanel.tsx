@@ -36,12 +36,11 @@ export function ChatPanel(): React.ReactNode {
    const user = useUser();
    const bottomRef = useRef<HTMLDivElement>(null);
    const [showChatWindow, setShowChatWindow] = useState(false);
-   const chatInput = useRef<HTMLInputElement>(null);
 
    // biome-ignore lint/correctness/useExhaustiveDependencies:
    useEffect(() => {
       bottomRef.current?.scrollIntoView({ behavior: "smooth" });
-   }, [messages.length > 0 ? messages[messages.length - 1].id : 0]);
+   }, [messages.length > 0 ? messages[messages.length - 1].id : messages.length]);
 
    // biome-ignore lint/correctness/useExhaustiveDependencies:
    useEffect(() => {
@@ -100,16 +99,17 @@ export function ChatPanel(): React.ReactNode {
                      )}
                   </div>
                </div>
-               <ChatInput inputRef={chatInput} />
+               <ChatInput />
             </div>
          ) : null}
       </div>
    );
 }
 
-function ChatInput({ inputRef }: { inputRef: React.RefObject<HTMLInputElement> }): React.ReactNode {
+function ChatInput(): React.ReactNode {
    const options = useGameOptions();
    const [chat, setChat] = useState("");
+   const chatInput = useRef<HTMLInputElement>(null);
    const sendChat = () => {
       if (!chat) return;
       if (chat.startsWith("/")) {
@@ -123,7 +123,7 @@ function ChatInput({ inputRef }: { inputRef: React.RefObject<HTMLInputElement> }
    };
    useTypedEvent(OnSetChatInput, (content) => {
       setChat(content);
-      inputRef.current?.focus();
+      chatInput.current?.focus();
    });
    return (
       <div className="row" style={{ padding: "2px" }}>
@@ -138,7 +138,7 @@ function ChatInput({ inputRef }: { inputRef: React.RefObject<HTMLInputElement> }
             </div>
          </Tippy>
          <input
-            ref={inputRef}
+            ref={chatInput}
             className="f1"
             type="text"
             style={{ margin: "0 2px 0 0" }}
