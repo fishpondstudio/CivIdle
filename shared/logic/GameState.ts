@@ -6,6 +6,7 @@ import type { RomeProvince } from "../definitions/RomeProvinceDefinitions";
 import type { Tech } from "../definitions/TechDefinitions";
 import { EN } from "../languages/en";
 import { RU } from "../languages/ru";
+import { ZH_CN } from "../languages/zh-cn";
 import type { ChatChannel } from "../utilities/Database";
 import { IPointData, forEach, uuid4, type Tile } from "../utilities/Helper";
 import type { PartialSet, PartialTabulate } from "../utilities/TypeDefinitions";
@@ -115,6 +116,7 @@ export class GameOptions {
 export const Languages = {
    en: EN,
    ru: RU,
+   zh_CN: ZH_CN,
 } as const;
 
 export const SAVE_FILE_VERSION = 1;
