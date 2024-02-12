@@ -35,6 +35,7 @@ if (isRelease && process.env.STEAMWORKS_PATH) {
 }
 
 cmd("npm run build", rootPath);
+cmd("npm run optimize", rootPath);
 
 console.log("========== Copy to Electron ==========");
 
