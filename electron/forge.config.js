@@ -14,6 +14,9 @@ module.exports = {
          /tsconfig\.json/,
          /clean\.js/,
       ],
+      asar: {
+         unpack: "*.{node,dll,dylib,so,lib}",
+      },
    },
    rebuildConfig: {},
    makers: [

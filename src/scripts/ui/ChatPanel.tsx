@@ -34,20 +34,33 @@ export function ChatPanel(): React.ReactNode {
       (m) => !("channel" in m) || options.chatReceiveChannel[m.channel],
    );
    const user = useUser();
-   const bottomRef = useRef<HTMLDivElement>(null);
+   const scrollAreaRef = useRef<HTMLDivElement>(null);
    const [showChatWindow, setShowChatWindow] = useState(false);
 
    // biome-ignore lint/correctness/useExhaustiveDependencies:
    useEffect(() => {
-      bottomRef.current?.scrollIntoView({ behavior: "smooth" });
-   }, [messages.length > 0 ? messages[messages.length - 1].id : messages.length]);
+      scrollAreaRef.current?.scrollTo({
+         top: scrollAreaRef.current.scrollHeight,
+         behavior: "smooth",
+      });
+   }, [messages.length > 0 ? messages[messages.length - 1].id : messages.length, user]);
 
    // biome-ignore lint/correctness/useExhaustiveDependencies:
    useEffect(() => {
-      bottomRef.current?.scrollIntoView({ behavior: "instant" });
+      scrollAreaRef.current?.scrollTo({
+         top: scrollAreaRef.current.scrollHeight,
+         behavior: "instant",
+      });
    }, [showChatWindow]);
 
-   const onImageLoaded = useCallback(() => bottomRef.current?.scrollIntoView({ behavior: "smooth" }), []);
+   const onImageLoaded = useCallback(
+      () =>
+         scrollAreaRef.current?.scrollTo({
+            top: scrollAreaRef.current.scrollHeight,
+            behavior: "smooth",
+         }),
+      [],
+   );
    const receiveMultipleChannels = sizeOf(options.chatReceiveChannel) > 1;
 
    return (
@@ -74,7 +87,7 @@ export function ChatPanel(): React.ReactNode {
                      <button aria-label="Close" onClick={() => setShowChatWindow(false)}></button>
                   </div>
                </div>
-               <div className="window-content inset-shallow">
+               <div ref={scrollAreaRef} className="window-content inset-shallow">
                   {messages.map((c) => {
                      if (!("channel" in c)) {
                         return (
@@ -93,11 +106,9 @@ export function ChatPanel(): React.ReactNode {
                         />
                      );
                   })}
-                  <div ref={bottomRef}>
-                     {user !== null ? null : (
-                        <div className="text-desc text-center text-small mv10">{t(L.ChatReconnect)}</div>
-                     )}
-                  </div>
+                  {user !== null ? null : (
+                     <div className="text-desc text-center text-small mv10">{t(L.ChatReconnect)}</div>
+                  )}
                </div>
                <ChatInput />
             </div>
