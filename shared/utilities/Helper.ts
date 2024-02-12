@@ -73,13 +73,25 @@ export function formatNumber(num: number | undefined | null, binary = false, sci
    return humanFormat(num, NUMBER_SUFFIX_1);
 }
 
-export function round(num: number, decimal: number): number {
-   const fac = Math.pow(10, decimal);
-   return Math.round(num * fac) / fac;
+export enum Rounding {
+   Floor = 0,
+   Ceil = 1,
+   Round = 2,
 }
 
-export function formatPercent(p: number, decimal = 2) {
-   return `${round(p * 100, decimal)}%`;
+const FormatFunc: Record<Rounding, (v: number) => number> = {
+   [Rounding.Floor]: Math.floor,
+   [Rounding.Ceil]: Math.ceil,
+   [Rounding.Round]: Math.round,
+};
+
+export function round(num: number, decimal: number, mode = Rounding.Round): number {
+   const fac = Math.pow(10, decimal);
+   return FormatFunc[mode](num * fac) / fac;
+}
+
+export function formatPercent(p: number, decimal = 2, mode = Rounding.Round) {
+   return `${round(p * 100, Math.abs(p) < 0.1 ? decimal + 1 : decimal, mode)}%`;
 }
 
 // eslint-disable-next-line @typescript-eslint/ban-types

@@ -5,6 +5,13 @@ interface PatchNote {
 
 export const PatchNotes: PatchNote[] = [
    {
+      version: "0.1.131",
+      content: [
+         ["Bugfix", "Fix a bug where sound does not play when the window is not focused"],
+         ["QoL", "Add batch operations in Caravansary and Warehouse to manage resource transports"],
+      ],
+   },
+   {
       version: "0.1.130",
       content: [
          ["QoL", "Improve chat performance, especially when typing chat message"],

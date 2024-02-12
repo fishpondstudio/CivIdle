@@ -891,4 +891,11 @@ export const EN = {
    UpgradeBuildingNotProducingDesc:
       "This building is being upgraded - production will halt until upgrade is complete",
    Tutorial: "Tutorial",
+   SelectedCount: "%{count} Selected",
+   SelectedAll: "Select All",
+   InverseSelection: "Inverse",
+   ClearSelection: "Clear",
+   RedistributeAmongSelected: "Redistribute Among Selected",
+   RedistributeAmongSelectedImport: "Import",
+   RedistributeAmongSelectedCap: "Cap",
 };

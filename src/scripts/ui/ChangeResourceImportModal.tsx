@@ -1,6 +1,5 @@
 import { useState } from "react";
 import type { Resource } from "../../../shared/definitions/ResourceDefinitions";
-import { getWarehouseCapacity } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
 import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
 import type { IResourceImport, IResourceImportBuildingData } from "../../../shared/logic/Tile";
@@ -13,21 +12,22 @@ export function ChangeResourceImportModal({
    building,
    resource,
    storage,
+   capacity,
 }: {
    building: IResourceImportBuildingData;
    resource: Resource;
    storage: number;
+   capacity: number;
 }): React.ReactNode {
    const [resourceImport, setResourceImport] = useState<IResourceImport>(
       building.resourceImports[resource] ?? { cap: 0, perCycle: 0 },
    );
-   const totalCapacity = getWarehouseCapacity(building);
    const usedCapacity = reduceOf(
       building.resourceImports,
       (prev, res, val) => (res === resource ? prev : prev + val.perCycle),
       0,
    );
-   const max = clamp(totalCapacity - usedCapacity, 0, totalCapacity);
+   const max = clamp(capacity - usedCapacity, 0, capacity);
    const isValid = resourceImport.perCycle >= 0 && resourceImport.perCycle <= max;
    return (
       <div className="window">

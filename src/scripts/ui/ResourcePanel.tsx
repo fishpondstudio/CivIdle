@@ -6,7 +6,7 @@ import { getHappinessIcon } from "../../../shared/logic/HappinessLogic";
 import { getSpecialBuildings } from "../../../shared/logic/IntraTickCache";
 import { getProgressTowardsNextGreatPerson } from "../../../shared/logic/RebornLogic";
 import { getResourceAmount } from "../../../shared/logic/ResourceLogic";
-import { clamp, sizeOf, type Tile } from "../../../shared/utilities/Helper";
+import { Rounding, clamp, formatPercent, sizeOf, type Tile } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import { useGameState } from "../Global";
 import { useCurrentTick } from "../logic/Tick";
@@ -133,8 +133,8 @@ export function ResourcePanel(): React.ReactNode {
                </div>
             </Tippy>
             <Tippy content={t(L.ProgressTowardsNextGreatPerson)}>
-               <div className="text-desc text-right" style={{ width: "30px", fontWeight: "normal" }}>
-                  {Math.floor(clamp(getProgressTowardsNextGreatPerson(), 0, 1) * 100)}%
+               <div className="text-desc text-right" style={{ width: "40px", fontWeight: "normal" }}>
+                  {formatPercent(clamp(getProgressTowardsNextGreatPerson(), 0, 1), 0, Rounding.Floor)}
                </div>
             </Tippy>
          </div>

@@ -4,7 +4,6 @@ import type { Resource } from "../definitions/ResourceDefinitions";
 import {
    HOUR,
    IPointData,
-   type Tile,
    clamp,
    filterInPlace,
    filterOf,
@@ -19,6 +18,7 @@ import {
    shuffle,
    sizeOf,
    tileToPoint,
+   type Tile,
 } from "../utilities/Helper";
 import { srand } from "../utilities/Random";
 import { TypedEvent } from "../utilities/TypedEvent";
@@ -344,7 +344,9 @@ function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
       return;
    }
 
-   const hasEnoughStorage = isEmpty(output) || used + getStorageRequired(output) <= total;
+   const hasEnoughStorage =
+      isEmpty(output) ||
+      used + getStorageRequired(output) + getStorageRequired(input) * building.stockpileCapacity <= total;
    const hasEnoughWorker = getAvailableWorkers("Worker") >= worker.output;
    const hasEnoughInput = hasEnoughResources(building.resources, input);
 

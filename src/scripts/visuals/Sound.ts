@@ -8,6 +8,8 @@ import kaching from "../../sounds/kaching.mp3";
 import levelup from "../../sounds/levelup.mp3";
 import music from "../../sounds/music/pilgrimage-ancient-mediaeval-harp.mp3";
 
+sound.disableAutoPause = false;
+
 sound.add("click", click);
 sound.add("beep", beep);
 sound.add("error", error);
