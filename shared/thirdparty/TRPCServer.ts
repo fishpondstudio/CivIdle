@@ -97,7 +97,6 @@ export async function handleRpc(
       const result = await service[method](...params);
       return { jsonrpc, id, result };
    } catch (err) {
-      console.error(err);
       return {
          jsonrpc,
          id,
