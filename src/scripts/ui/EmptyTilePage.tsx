@@ -1,5 +1,5 @@
 import { useState } from "react";
-import type { Building } from "../../../shared/definitions/BuildingDefinitions";
+import type { Building, IBuildingDefinition } from "../../../shared/definitions/BuildingDefinitions";
 import {
    applyBuildingDefaults,
    checkBuildingMax,
@@ -49,6 +49,9 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
       tile.building = applyBuildingDefaults(makeBuilding({ type: k }), getGameOptions());
       notifyGameStateUpdate();
       lastBuild = k;
+   };
+   const usesDeposit = (b: IBuildingDefinition) => {
+      return b.deposit && setContains(tile.deposit, b.deposit);
    };
    useShortcut(
       "EmptyTilePageBuildLastBuilding",
@@ -120,6 +123,18 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
                   <tbody>
                      {keysOf(unlockedBuildings(gs))
                         .sort((a, b) => {
+                           if (usesDeposit(Config.Building[a]) && !usesDeposit(Config.Building[b])) {
+                              return -1;
+                           }
+                           if (usesDeposit(Config.Building[b]) && !usesDeposit(Config.Building[a])) {
+                              return 1;
+                           }
+                           if (lastBuild === a && lastBuild !== b) {
+                              return -1;
+                           }
+                           if (lastBuild === b && lastBuild !== a) {
+                              return 1;
+                           }
                            if (isWorldOrNaturalWonder(a) && !isWorldOrNaturalWonder(b)) {
                               return -1;
                            }
@@ -197,7 +212,7 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
                                              </span>
                                           )}
                                        </div>
-                                       {building.deposit && setContains(tile.deposit, building.deposit) ? (
+                                       {usesDeposit(building) ? (
                                           <div className="m-icon small text-orange ml5">stars</div>
                                        ) : null}
                                        {k === lastBuild ? (
