@@ -2,7 +2,7 @@ import classNames from "classnames";
 import { getMultipliersFor, getStorageFor } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
 import { Tick } from "../../../shared/logic/TickLogic";
-import { formatPercent } from "../../../shared/utilities/Helper";
+import { formatPercent, keysOf } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import warning from "../../images/warning.png";
 import { jsxMapOf } from "../utilities/Helper";
@@ -85,24 +85,28 @@ export function BuildingStorageComponent({ gameState, xy }: IBuildingComponentPr
                      </div>
                   </summary>
                   <ul>
-                     {jsxMapOf(building.resources, (res, value) => {
-                        return (
-                           <li className="row" key={res}>
-                              <div
-                                 className="m-icon small text-red mr5 pointer"
-                                 onClick={() => {
-                                    showModal(<DeleteResourceModal building={building} resource={res} />);
-                                 }}
-                              >
-                                 delete
-                              </div>
-                              <div className="f1">{Config.Resource[res].name()}</div>
-                              <div>
-                                 <FormatNumber value={value} />
-                              </div>
-                           </li>
-                        );
-                     })}
+                     {keysOf(building.resources)
+                        .sort((a, b) => {
+                           return building.resources[b]! - building.resources[a]!;
+                        })
+                        .map((res) => {
+                           return (
+                              <li className="row" key={res}>
+                                 <div
+                                    className="m-icon small text-red mr5 pointer"
+                                    onClick={() => {
+                                       showModal(<DeleteResourceModal building={building} resource={res} />);
+                                    }}
+                                 >
+                                    delete
+                                 </div>
+                                 <div className="f1">{Config.Resource[res].name()}</div>
+                                 <div>
+                                    <FormatNumber value={building.resources[res]} />
+                                 </div>
+                              </li>
+                           );
+                        })}
                   </ul>
                </details>
             </li>
