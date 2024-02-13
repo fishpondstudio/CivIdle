@@ -164,8 +164,7 @@ export const ZH_CN = {
    Deposit: "沉积资源",
    UniqueBuildings: "独特建筑",
    RequiredDeposit: "所需沉积资源",
-   NoDepositDesc:
-      "该地块无沉积资源。当你解锁新科技时，可能会发现更多沉积资源。",
+   NoDepositDesc: "该地块无沉积资源。当你解锁新科技时，可能会发现更多沉积资源。",
    UnlockBuilding: "解锁",
    UpgradeBuilding: "升级",
    RevealDeposit: "显露",
