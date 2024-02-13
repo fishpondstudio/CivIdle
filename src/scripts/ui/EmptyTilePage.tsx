@@ -39,6 +39,7 @@ let lastBuild: Building | null = null;
 export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
    const gs = useGameState();
    const [, setSelected] = useState<Building | null>(null);
+   const [notBuilt, setNotBuilt] = useState<boolean>(false);
    const [filter, setFilter] = useState<string>("");
    const constructed = getTypeBuildings(gs);
    const build = (k: Building) => {
@@ -106,6 +107,23 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
                   placeholder={t(L.BuildingSearchText)}
                   onChange={(e) => setFilter(e.target.value)}
                />
+               <div className="sep5"></div>
+               <div className="separator"></div>
+               <div className="row">
+                  <div className="f1">{t(L.ShowNotBuilt)}</div>
+                  <div
+                     className="pointer"
+                     onClick={() => {
+                        setNotBuilt(!notBuilt);
+                     }}
+                  >
+                     {notBuilt === true ? (
+                        <div className="m-icon text-green">toggle_on</div>
+                     ) : (
+                        <div className="m-icon text-desc">toggle_off</div>
+                     )}
+                  </div>
+               </div>
             </fieldset>
             <div className="table-view sticky-header building-list f1">
                <table>
@@ -133,15 +151,24 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
                            return Config.Building[a].name().localeCompare(Config.Building[b].name());
                         })
                         .filter((v) => {
+                           let filterNotBuilt = false;
+                           if (notBuilt === true) {
+                              if (sizeOf(buildingByType.get(v)) === 0) {
+                                 filterNotBuilt = true;
+                              }
+                           } else {
+                              filterNotBuilt = true;
+                           }
                            const f = filter.toLowerCase();
                            return (
-                              Config.Building[v].name().toLowerCase().includes(f) ||
-                              anyOf(Config.Building[v].input, (res) =>
-                                 Config.Resource[res].name().toLowerCase().includes(f),
-                              ) ||
-                              anyOf(Config.Building[v].output, (res) =>
-                                 Config.Resource[res].name().toLowerCase().includes(f),
-                              )
+                              filterNotBuilt &&
+                              (Config.Building[v].name().toLowerCase().includes(f) ||
+                                 anyOf(Config.Building[v].input, (res) =>
+                                    Config.Resource[res].name().toLowerCase().includes(f),
+                                 ) ||
+                                 anyOf(Config.Building[v].output, (res) =>
+                                    Config.Resource[res].name().toLowerCase().includes(f),
+                                 ))
                            );
                         })
                         .map((k) => {
