@@ -10,6 +10,8 @@ import CabinSketchBold from "../fonts/CabinSketchBold.ttf?url";
 import MarcellusRegular from "../fonts/MarcellusRegular.ttf?url";
 import TextureBuildingsDef from "../images/textures_buildings.json";
 import TextureBuildings from "../images/textures_buildings.png";
+import TextureFlagsDef from "../images/textures_flags.json";
+import TextureFlags from "../images/textures_flags.png";
 import TextureMiscDef from "../images/textures_misc.json";
 import TextureMisc from "../images/textures_misc.png";
 import TexturePeopleDef from "../images/textures_people.json";
@@ -65,6 +67,7 @@ const mainBundle = {
    TextureRome,
    TextureTiles,
    TextureMisc,
+   TextureFlags,
 };
 export const fonts = [
    new FontFace(Fonts.Cabin, `url("${CabinMedium}")`),
@@ -123,6 +126,7 @@ export async function loadBundle() {
       new Spritesheet(main.TextureRome, TextureRomeDef as any).parse(),
       new Spritesheet(main.TextureTiles, TextureTilesDef as any).parse(),
       new Spritesheet(main.TextureMisc, TextureMiscDef as any).parse(),
+      new Spritesheet(main.TextureFlags, TextureFlagsDef as any).parse(),
    ]);
 
    altas.forEach((a) => {

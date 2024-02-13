@@ -3,6 +3,7 @@ import { L, t } from "../../../shared/utilities/i18n";
 import { OnUserChanged, client, useUser } from "../rpc/RPCClient";
 import { CountryCode, getCountryName, getFlagUrl } from "../utilities/CountryCode";
 import { jsxMapOf } from "../utilities/Helper";
+import { playError } from "../visuals/Sound";
 import { hideModal, showToast } from "./GlobalModal";
 
 export function ChangePlayerHandleModal(): React.ReactNode {
@@ -77,6 +78,7 @@ export function ChangePlayerHandleModal(): React.ReactNode {
                         OnUserChanged.emit({ ...user });
                         hideModal();
                      } catch (error) {
+                        playError();
                         showToast(String(error));
                      }
                   }}

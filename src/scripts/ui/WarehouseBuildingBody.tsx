@@ -31,7 +31,6 @@ export function WarehouseBuildingBody({ gameState, xy }: IBuildingComponentProps
                <div className="sep10"></div>
             </>
          ) : null}
-
          <ResourceImportComponent gameState={gameState} xy={xy} />
          <BuildingStorageComponent gameState={gameState} xy={xy} />
          {!hasFeature(GameFeature.WarehouseUpgrade, gameState) ? null : (

@@ -23,6 +23,7 @@ import { tickEverySecond } from "./logic/Tick";
 import { getBuildingTexture, getTileTexture } from "./logic/VisualLogic";
 import type { MainBundleAssets } from "./main";
 import { connectWebSocket } from "./rpc/RPCClient";
+import { PlayerMapScene } from "./scenes/PlayerMapScene";
 import { TechTreeScene } from "./scenes/TechTreeScene";
 import { WorldScene } from "./scenes/WorldScene";
 import { ErrorPage } from "./ui/ErrorPage";
@@ -161,6 +162,10 @@ export async function startGame(
    switch (params.get("scene")) {
       case "Tech": {
          Singleton().sceneManager.loadScene(TechTreeScene);
+         break;
+      }
+      case "Trade": {
+         Singleton().sceneManager.loadScene(PlayerMapScene);
          break;
       }
       default: {

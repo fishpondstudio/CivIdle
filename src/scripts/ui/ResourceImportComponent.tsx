@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { Resource } from "../../../shared/definitions/ResourceDefinitions";
 import { getStorageFor, getWarehouseCapacity } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
@@ -17,6 +17,8 @@ import { TableView } from "./TableView";
 export function ResourceImportComponent({ gameState, xy }: IBuildingComponentProps): React.ReactNode {
    const building = gameState.tiles.get(xy)?.building as IResourceImportBuildingData;
    const [selected, setSelected] = useState(new Set<Resource>());
+   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+   useEffect(() => setSelected(new Set()), [xy]);
    if (!building) {
       return null;
    }

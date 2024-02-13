@@ -132,6 +132,7 @@ export interface IMapEntry {
 
 export interface IClientMapEntry extends IMapEntry {
    flag: string;
+   level: AccountLevel;
    authenticated: boolean;
 }
 
@@ -139,6 +140,7 @@ export function enrichMapEntry(entry: IMapEntry): IClientMapEntry {
    return {
       ...entry,
       flag: DB.users[entry.userId].flag,
+      level: DB.users[entry.userId].level,
       authenticated: DB.users[entry.userId].authenticated,
    };
 }

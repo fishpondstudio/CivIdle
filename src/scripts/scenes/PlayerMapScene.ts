@@ -3,7 +3,7 @@ import type { FederatedPointerEvent, IPointData } from "pixi.js";
 import { BitmapText, Container, LINE_CAP, LINE_JOIN, Sprite } from "pixi.js";
 import WorldMap from "../../../shared/definitions/WorldMap.json";
 import { getGameOptions } from "../../../shared/logic/GameStateLogic";
-import { type IClientMapEntry, MAP_MAX_X, MAP_MAX_Y } from "../../../shared/utilities/Database";
+import { MAP_MAX_X, MAP_MAX_Y, type IClientMapEntry } from "../../../shared/utilities/Database";
 import {
    drawDashedLine,
    forEach,
@@ -216,6 +216,7 @@ export class PlayerMapScene extends ViewportScene {
    }
 
    private drawTile(xy: string, entry: IClientMapEntry) {
+      const { textures } = this.context;
       const [x, y] = xy.split(",").map((x) => safeParseInt(x));
       const container = this.viewport.addChild(new Container());
       if (this._tiles[xy]) {
@@ -223,6 +224,11 @@ export class PlayerMapScene extends ViewportScene {
       }
       this._tiles[xy] = container;
       const isMyself = entry.userId === getGameOptions().id;
+
+      const flag = container.addChild(new Sprite(textures[`Flag_${entry.flag.toUpperCase()}`]));
+      flag.anchor.set(0.5, 0.5);
+      flag.position.set(x * GridSize + 0.5 * GridSize, y * GridSize + 0.5 * GridSize - 24);
+
       const handle = container.addChild(
          new BitmapText(entry.handle, {
             fontName: Fonts.Cabin,
@@ -230,18 +236,23 @@ export class PlayerMapScene extends ViewportScene {
             tint: isMyself ? 0xffeaa7 : 0xffffff,
          }),
       );
+
+      while (handle.width > GridSize - 10) {
+         handle.fontSize--;
+      }
+
       handle.anchor.set(0.5, 0.5);
-      handle.position.set(x * GridSize + 0.5 * GridSize, y * GridSize + 0.5 * GridSize - 10);
+      handle.position.set(x * GridSize + 0.5 * GridSize, y * GridSize + 0.5 * GridSize);
 
       const tariff = container.addChild(
          new BitmapText(formatPercent(entry.tariffRate), {
             fontName: Fonts.Cabin,
-            fontSize: 14,
+            fontSize: 20,
             tint: isMyself ? 0xffeaa7 : 0xffffff,
          }),
       );
       tariff.anchor.set(0.5, 0.5);
-      tariff.position.set(x * GridSize + 0.5 * GridSize, y * GridSize + 0.5 * GridSize + 15);
+      tariff.position.set(x * GridSize + 0.5 * GridSize, y * GridSize + 0.5 * GridSize + 20);
    }
 
    override onDestroy(): void {
