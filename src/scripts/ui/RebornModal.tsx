@@ -1,21 +1,37 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { City } from "../../../shared/definitions/CityDefinitions";
 import { Config } from "../../../shared/logic/Config";
 import { getGreatPeopleAtReborn, rollPermanentGreatPeople } from "../../../shared/logic/RebornLogic";
 import { Tick } from "../../../shared/logic/TickLogic";
-import { firstKeyOf, forEach, formatPercent, mapOf, reduceOf } from "../../../shared/utilities/Helper";
+import {
+   firstKeyOf,
+   forEach,
+   formatPercent,
+   mapOf,
+   reduceOf,
+   rejectIn,
+} from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import { resetToCity, saveGame, useGameOptions, useGameState } from "../Global";
-import { canEarnGreatPeopleFromReborn } from "../rpc/RPCClient";
+import { canEarnGreatPeopleFromReborn, client, isOnlineUser, useTrades, useUser } from "../rpc/RPCClient";
 import { jsxMapOf } from "../utilities/Helper";
-import { playClick } from "../visuals/Sound";
-import { hideModal } from "./GlobalModal";
+import { playClick, playError } from "../visuals/Sound";
+import { hideModal, showToast } from "./GlobalModal";
 import { FormatNumber } from "./HelperComponents";
 import { RenderHTML } from "./RenderHTMLComponent";
 import { TextWithHelp } from "./TextWithHelpComponent";
 import { WarningComponent } from "./WarningComponent";
 
 export function RebornModal(): React.ReactNode {
+   const trades = useTrades();
+   const user = useUser();
+   const [tradeCount, setTradeCount] = useState<number>(
+      trades.filter((t) => t.fromId === user?.userId).length,
+   );
+   useEffect(() => {
+      client.getPendingClaims().then((c) => setTradeCount((old) => old + c.length));
+   }, []);
+
    const gameState = useGameState();
    const options = useGameOptions();
    const [city, setCity] = useState<City>(firstKeyOf(Config.City)!);
@@ -25,6 +41,11 @@ export function RebornModal(): React.ReactNode {
             <div className="title-bar-text">{t(L.Reborn)}</div>
          </div>
          <div className="window-body">
+            {tradeCount > 0 ? (
+               <WarningComponent icon="warning" className="mb10">
+                  <RenderHTML html={t(L.RebornTradeWarning)} />
+               </WarningComponent>
+            ) : null}
             {canEarnGreatPeopleFromReborn() ? (
                <fieldset>
                   <div className="row">
@@ -131,7 +152,17 @@ export function RebornModal(): React.ReactNode {
                <button
                   style={{ padding: "0 15px" }}
                   className="text-strong"
-                  onClick={() => {
+                  onClick={async () => {
+                     try {
+                        await Promise.race([client.rebirth(), rejectIn(5)]);
+                     } catch (error) {
+                        console.error(error);
+                        if (isOnlineUser()) {
+                           playError();
+                           showToast(t(L.RebornOfflineWarning));
+                           return;
+                        }
+                     }
                      if (canEarnGreatPeopleFromReborn()) {
                         rollPermanentGreatPeople(getGreatPeopleAtReborn());
                         forEach(gameState.greatPeople, (k, v) => {

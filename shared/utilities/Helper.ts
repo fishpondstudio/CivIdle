@@ -1,6 +1,8 @@
 import type { PartialSet, PartialTabulate } from "./TypeDefinitions";
 import { v2 } from "./Vector2";
 
+export const CURRENCY_EPSILON = 0.01;
+
 export interface IPointData {
    x: number;
    y: number;
@@ -92,6 +94,16 @@ export function round(num: number, decimal: number, mode = Rounding.Round): numb
 
 export function formatPercent(p: number, decimal = 2, mode = Rounding.Round) {
    return `${round(p * 100, Math.abs(p) < 0.1 ? decimal + 1 : decimal, mode)}%`;
+}
+
+export function mathSign(n: number, epsilon = Number.EPSILON): string {
+   if (n > epsilon) {
+      return "+";
+   }
+   if (n < -epsilon) {
+      return "-";
+   }
+   return "";
 }
 
 // eslint-disable-next-line @typescript-eslint/ban-types

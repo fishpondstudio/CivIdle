@@ -7,10 +7,12 @@ import type { IMarketBuildingData } from "../../../shared/logic/Tile";
 import { MarketOptions } from "../../../shared/logic/Tile";
 import { convertPriceIdToTime } from "../../../shared/logic/Update";
 import {
+   CURRENCY_EPSILON,
    formatHMS,
    formatPercent,
    hasFlag,
    keysOf,
+   mathSign,
    round,
    toggleFlag,
 } from "../../../shared/utilities/Helper";
@@ -128,7 +130,8 @@ export function MarketBuildingBody({ gameState, xy }: IBuildingComponentProps): 
                            help={t(L.MarketValueDesc, { value: formatPercent(tradeValue, 0) })}
                            noStyle
                         >
-                           {formatPercent(tradeValue, 0)}
+                           {mathSign(tradeValue, CURRENCY_EPSILON)}
+                           {formatPercent(Math.abs(tradeValue), 0)}
                         </TextWithHelp>
                      </td>
                      <td className="right">

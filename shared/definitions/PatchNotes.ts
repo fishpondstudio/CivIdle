@@ -5,6 +5,20 @@ interface PatchNote {
 
 export const PatchNotes: PatchNote[] = [
    {
+      version: "0.1.134",
+      content: [
+         ["QoL", "Add Claim All to Caravansary"],
+         ["QoL", "Show whether a pending claim is from trade tariff or not"],
+         ["QoL", "Add a column indicate trade value compared to average price in Caravansary"],
+         [
+            "Content",
+            "You can evict a player and claim his/her tile after reservation period ends (they are greyed out on map)",
+         ],
+         ["Balance", "Claim tile cooldown has been changed to 4 hours"],
+         ["Bugfix", "You need to cancel/claim all trades before rebirth"],
+      ],
+   },
+   {
       version: "0.1.133",
       content: [
          ["Content", "Show player flag on trade map"],

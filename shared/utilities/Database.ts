@@ -75,11 +75,17 @@ export interface IAddTradeRequest {
    sellAmount: number;
 }
 
+export enum PendingClaimFlag {
+   None = 0,
+   Tariff = 1 << 0,
+}
+
 export interface IPendingClaim {
    id: string;
    resource: string;
    amount: number;
    fillBy: string;
+   flag: PendingClaimFlag;
 }
 
 export interface IFillTradeRequest {
@@ -133,16 +139,8 @@ export interface IMapEntry {
 export interface IClientMapEntry extends IMapEntry {
    flag: string;
    level: AccountLevel;
+   lastSeenAt: number;
    authenticated: boolean;
-}
-
-export function enrichMapEntry(entry: IMapEntry): IClientMapEntry {
-   return {
-      ...entry,
-      flag: DB.users[entry.userId].flag,
-      level: DB.users[entry.userId].level,
-      authenticated: DB.users[entry.userId].authenticated,
-   };
 }
 
 export const DB: {
@@ -161,7 +159,7 @@ export const DB: {
    muteList: {},
 };
 
-export const MoveTileCooldown = 1 * HOUR;
+export const MoveTileCooldown = 4 * HOUR;
 // export const MoveTileCooldown = 0;
 
 export const MAP_MAX_X = 200;
@@ -183,3 +181,11 @@ export enum AccountLevel {
    Praetor = 3,
    Consul = 4,
 }
+
+export const TradeTileReservationDays: Record<AccountLevel, number> = {
+   [AccountLevel.Tribune]: 1,
+   [AccountLevel.Quaestor]: 7,
+   [AccountLevel.Aedile]: 14,
+   [AccountLevel.Praetor]: 21,
+   [AccountLevel.Consul]: 28,
+};

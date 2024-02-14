@@ -7,7 +7,7 @@ import {
 } from "../../../shared/logic/Constants";
 import { getGameOptions, getGameState } from "../../../shared/logic/GameStateLogic";
 import { getGreatPeopleAtReborn, upgradeAllPermanentGreatPeople } from "../../../shared/logic/RebornLogic";
-import { AccountLevel } from "../../../shared/utilities/Database";
+import { AccountLevel, TradeTileReservationDays } from "../../../shared/utilities/Database";
 import { forEach, formatHM, sizeOf } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import { resetToCity, saveGame, useGameState } from "../Global";
@@ -198,11 +198,11 @@ function AccountDetails(): React.ReactNode {
                            {t(L.AccountTradeTileReservationTime)}
                         </TextWithHelp>
                      </td>
-                     <td>1d</td>
-                     <td>7d</td>
-                     <td>14d</td>
-                     <td>21d</td>
-                     <td>28d</td>
+                     <td>{TradeTileReservationDays[AccountLevel.Tribune]}d</td>
+                     <td>{TradeTileReservationDays[AccountLevel.Quaestor]}d</td>
+                     <td>{TradeTileReservationDays[AccountLevel.Aedile]}d</td>
+                     <td>{TradeTileReservationDays[AccountLevel.Praetor]}d</td>
+                     <td>{TradeTileReservationDays[AccountLevel.Consul]}d</td>
                   </tr>
                   <tr>
                      <td>

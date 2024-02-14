@@ -691,6 +691,8 @@ export const EN = {
    PlayerMapClaimTileCondition2: "You haven't been banned by anti-cheat",
    PlayerMapClaimTileCondition3: "You have unlocked required technology: %{tech}",
    PlayerMapClaimTileCondition4: "You haven't claimed a tile or have passed the cooldown of moving your tile",
+   PlayerMapClaimTileNoLongerReserved:
+      "This tile is no longer reserved. You can evict <b>%{name}</b> and claim this tile for yourself",
    PlayerMapClaimTileCooldownLeft: "Cooldown left: %{time}",
    PlayerMapYourTile: "Your Tile",
    PlayerMapTariff: "Tariff",
@@ -700,6 +702,7 @@ export const EN = {
    PlayerMapTariffApply: "Apply Tariff Rate",
    PlayerMapTradesFrom: "Trades from %{name}",
    PlayerMapEstablishedSince: "Est. Since",
+   PlayerMapLastSeenAt: "Last Seen",
    OfflineErrorMessage: "You are currently offline, this operation requires an Internet connection",
    ResourceImport: "Resource Transport",
    ResourceImportResource: "Resource",
@@ -804,6 +807,10 @@ export const EN = {
    LimitOfflineProduction: "Limit Offline Production",
    Reborn: "Rebirth",
    RebornCity: "Select A New City",
+   RebornTradeWarning:
+      "You have trades that are active or can be claimed. <b>Rebirth will erase them</b> - you should consider cancelling or claiming first",
+   RebornOfflineWarning:
+      "You are currently offline. You can only rebirth when you are connected to the server",
    TotalEmpireValue: "Total Empire Value",
    ProgressTowardsNextGreatPerson: "Progress Towards Next Great Person at Rebirth",
    NotProducingBuildings: "Buildings That Are Not Producing",
@@ -900,4 +907,7 @@ export const EN = {
    RedistributeAmongSelected: "Redistribute Among Selected",
    RedistributeAmongSelectedImport: "Import",
    RedistributeAmongSelectedCap: "Cap",
+   PlayerTradeTariffTooltip: "Collected From a Trade Tariff",
+   PlayerTradeClaimAll: "Claim All",
+   PlayerTradeClaimAllMessage: "You have claimed %{count} trades",
 };

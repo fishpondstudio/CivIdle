@@ -190,7 +190,7 @@ export function AddTradeComponent({
                      }
                   }}
                >
-                  <div className="m-icon small mr5">shopping_cart</div>
+                  <div className="m-icon small">shopping_cart</div>
                   <div className="text-strong">{t(L.PlayerTradePlaceTrade)}</div>
                </button>
                <div style={{ width: "10px" }}></div>
@@ -218,8 +218,8 @@ export function AddTradeComponent({
          }}
          disabled={!enabled}
       >
-         <div className="m-icon small mr5">add_circle</div>
-         <div className="text-strong">
+         <div className="m-icon small">add_circle</div>
+         <div className="text-strong f1">
             <TextWithHelp help={enabled ? null : t(L.PlayerTradeMaxTradeExceeded)} noStyle>
                {t(L.PlayerTradeNewTrade)}
             </TextWithHelp>
