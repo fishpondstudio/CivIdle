@@ -63,11 +63,15 @@ export function AddTradeComponent({
                      }
                   }}
                >
-                  {sellResources.map((res) => (
-                     <option key={res} value={res}>
-                        {Config.Resource[res].name()}
-                     </option>
-                  ))}
+                  {sellResources
+                     .sort((a, b) => {
+                        return Config.Resource[a].name().localeCompare(Config.Resource[b].name());
+                     })
+                     .map((res) => (
+                        <option key={res} value={res}>
+                           {Config.Resource[res].name()}
+                        </option>
+                     ))}
                </select>
             </div>
             <div className="sep10"></div>
@@ -125,11 +129,15 @@ export function AddTradeComponent({
                      }
                   }}
                >
-                  {buyResources.map((res) => (
-                     <option key={res} value={res}>
-                        {Config.Resource[res].name()}
-                     </option>
-                  ))}
+                  {buyResources
+                     .sort((a, b) => {
+                        return Config.Resource[a].name().localeCompare(Config.Resource[b].name());
+                     })
+                     .map((res) => (
+                        <option key={res} value={res}>
+                           {Config.Resource[res].name()}
+                        </option>
+                     ))}
                </select>
             </div>
             <div className="sep10"></div>
