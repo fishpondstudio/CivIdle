@@ -1,5 +1,5 @@
 import { useState } from "react";
-import type { Resource } from "../../../shared/definitions/ResourceDefinitions";
+import { NoPrice, NoStorage, type Resource } from "../../../shared/definitions/ResourceDefinitions";
 import { Config } from "../../../shared/logic/Config";
 import type { IClientAddTradeRequest } from "../../../shared/logic/PlayerTradeLogic";
 import { getBuyAmountRange } from "../../../shared/logic/PlayerTradeLogic";
@@ -18,9 +18,7 @@ export function AddTradeComponent({
    xy,
    enabled,
 }: IBuildingComponentProps & { enabled: boolean }): React.ReactNode {
-   const buyResources = keysOf(Tick.next.resourcesByTile).filter(
-      (res) => Config.Resource[res].canPrice && Config.Resource[res].canStore,
-   );
+   const buyResources = keysOf(Tick.next.resourcesByTile).filter((res) => !NoPrice[res] && !NoStorage[res]);
    const resourcesInStorage = gameState.tiles.get(xy)?.building?.resources ?? {};
    const sellResources = keysOf(resourcesInStorage);
    const [trade, setTrade] = useState<IClientAddTradeRequest>({

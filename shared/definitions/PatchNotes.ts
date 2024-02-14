@@ -5,15 +5,18 @@ interface PatchNote {
 
 export const PatchNotes: PatchNote[] = [
    {
-      version: "0.1.132",
+      version: "0.1.133",
       content: [
          ["Content", "Show player flag on trade map"],
-         ["Bugfix", "Fix chat sometimes does not scroll"],
          ["Bugfix", "Fix game does not load on some systems"],
          ["QoL", "Update Simplified Chinese translation (@Shallowsing)"],
          ["QoL", "Sort storage by amount (@Vethon)"],
          ["Bugfix", "Player handle duplication check is now case-insensitive"],
       ],
+   },
+   {
+      version: "0.1.132",
+      content: [["Bugfix", "Fix chat sometimes does not scroll"]],
    },
    {
       version: "0.1.131",

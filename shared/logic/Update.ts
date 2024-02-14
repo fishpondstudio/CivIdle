@@ -1,6 +1,6 @@
 import type { Building } from "../definitions/BuildingDefinitions";
 import type { IUnlockableDefinition } from "../definitions/ITechDefinition";
-import type { Resource } from "../definitions/ResourceDefinitions";
+import { NoPrice, NoStorage, type Resource } from "../definitions/ResourceDefinitions";
 import {
    HOUR,
    IPointData,
@@ -30,7 +30,7 @@ import {
    addTransportation,
    canBeElectrified,
    deductResources,
-   filterResource,
+   filterNonTransportable,
    filterTransportable,
    getAvailableResource,
    getAvailableWorkers,
@@ -245,7 +245,7 @@ function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
       if (amount <= 0) {
          return;
       }
-      Tick.next.totalValue += Config.Resource[res].canPrice ? (Config.ResourcePrice[res] ?? 0) * amount : 0;
+      Tick.next.totalValue += NoPrice[res] ? 0 : (Config.ResourcePrice[res] ?? 0) * amount;
       safePush(Tick.next.resourcesByTile, res, xy);
    });
 
@@ -361,7 +361,7 @@ function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
    }
 
    if (!hasEnoughStorage) {
-      const nonTransportables = filterResource(output, { canStore: false });
+      const nonTransportables = filterNonTransportable(output);
       if (sizeOf(nonTransportables) > 0) {
          const worker = getWorkersFor(
             xy,
@@ -583,10 +583,7 @@ export function tickPrice(gs: GameState) {
       forceUpdatePrice = true;
       gs.lastPriceUpdated = priceId;
    }
-   const resources = filterOf(
-      unlockedResources(gs),
-      (res) => Config.Resource[res].canPrice && Config.Resource[res].canStore,
-   );
+   const resources = filterOf(unlockedResources(gs), (res) => !NoPrice[res] && !NoStorage[res]);
    getXyBuildings(gs).forEach((building, xy) => {
       if (building.type === "Market") {
          const market = building as IMarketBuildingData;

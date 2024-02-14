@@ -1,8 +1,10 @@
 import classNames from "classnames";
+import { getScienceFromWorkers } from "../../../shared/logic/BuildingLogic";
 import { HAPPINESS_MULTIPLIER, HappinessNames, getHappinessIcon } from "../../../shared/logic/HappinessLogic";
 import { Tick } from "../../../shared/logic/TickLogic";
 import { formatPercent } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
+import { useGameState } from "../Global";
 import { useCurrentTick } from "../logic/Tick";
 import { jsxMapOf } from "../utilities/Helper";
 import { FormatNumber } from "./HelperComponents";
@@ -10,6 +12,7 @@ import { ProgressBarComponent } from "./ProgressBarComponent";
 
 export function HappinessComponent({ open }: { open: boolean }): React.ReactNode {
    const happiness = useCurrentTick().happiness;
+   const { workersAvailable, workersAvailableAfterHappiness } = getScienceFromWorkers(useGameState());
    if (!happiness) {
       return null;
    }
@@ -98,6 +101,18 @@ export function HappinessComponent({ open }: { open: boolean }): React.ReactNode
                   </summary>
                   <ul>
                      <li>{t(L.WorkerPercentagePerHappiness, { value: HAPPINESS_MULTIPLIER })}</li>
+                     <li className="row">
+                        <div className="f1">{t(L.WorkersAvailableBeforeHappinessMultiplier)}</div>
+                        <div className="text-strong">
+                           <FormatNumber value={workersAvailable} />
+                        </div>
+                     </li>
+                     <li className="row">
+                        <div className="f1">{t(L.WorkersAvailableAfterHappinessMultiplier)}</div>
+                        <div className="text-strong">
+                           <FormatNumber value={workersAvailableAfterHappiness} />
+                        </div>
+                     </li>
                   </ul>
                </details>
             </li>

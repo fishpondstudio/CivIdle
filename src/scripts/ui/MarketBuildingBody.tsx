@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import type { Resource } from "../../../shared/definitions/ResourceDefinitions";
+import { NoPrice, NoStorage, type Resource } from "../../../shared/definitions/ResourceDefinitions";
 import { applyToAllBuildings, getMarketPrice, totalMultiplierFor } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
 import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
@@ -97,7 +97,7 @@ export function MarketBuildingBody({ gameState, xy }: IBuildingComponentProps): 
             }}
             renderRow={(res) => {
                const r = Config.Resource[res];
-               if (!r || !r.canPrice || !r.canStore) {
+               if (!r || NoPrice[res] || NoStorage[res]) {
                   return null;
                }
                const buy = getBuyResourceAndAmount(res);

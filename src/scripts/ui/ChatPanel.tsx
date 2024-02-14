@@ -26,7 +26,8 @@ import { showModal } from "./GlobalModal";
 import { RenderHTML } from "./RenderHTMLComponent";
 import { SelectChatChannelModal } from "./SelectChatChannelModal";
 
-const OnSetChatInput = new TypedEvent<(old: string) => string>();
+const SetChatInput = new TypedEvent<(old: string) => string>();
+export const ToggleChatWindow = new TypedEvent<boolean>();
 
 export function ChatPanel(): React.ReactNode {
    const options = useGameOptions();
@@ -36,6 +37,10 @@ export function ChatPanel(): React.ReactNode {
    const user = useUser();
    const scrollAreaRef = useRef<HTMLDivElement>(null);
    const [showChatWindow, setShowChatWindow] = useState(false);
+
+   useTypedEvent(ToggleChatWindow, (on) => {
+      setShowChatWindow(on);
+   });
 
    // biome-ignore lint/correctness/useExhaustiveDependencies:
    useEffect(() => {
@@ -132,7 +137,7 @@ function ChatInput(): React.ReactNode {
       }
       setChat("");
    };
-   useTypedEvent(OnSetChatInput, (content) => {
+   useTypedEvent(SetChatInput, (content) => {
       setChat(content);
       chatInput.current?.focus();
    });
@@ -208,7 +213,7 @@ function ChatMessage({
             </div>
          ) : (
             <div className="row text-small text-desc">
-               <div className="pointer" onClick={() => OnSetChatInput.emit((old) => `@${chat.name} ${old}`)}>
+               <div className="pointer" onClick={() => SetChatInput.emit((old) => `@${chat.name} ${old}`)}>
                   {chat.name}
                </div>
                <Tippy content={getCountryName(chat.flag)}>
@@ -229,7 +234,7 @@ function ChatMessage({
                {showChannel ? <div className="chat-channel">{chat.channel}</div> : null}
             </div>
          )}
-         <div>
+         <div className="chat-message-content">
             <ChatMessageContent chat={chat} onImageLoaded={onImageLoaded} />
          </div>
       </div>

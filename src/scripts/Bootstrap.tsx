@@ -1,6 +1,6 @@
 import type { Application, Texture } from "pixi.js";
 import { type City } from "../../shared/definitions/CityDefinitions";
-import { DepositResources } from "../../shared/definitions/ResourceDefinitions";
+import { IsDeposit } from "../../shared/definitions/ResourceDefinitions";
 import { getStorageFor } from "../../shared/logic/BuildingLogic";
 import { Config } from "../../shared/logic/Config";
 import { MAX_OFFLINE_PRODUCTION_SEC, calculateTierAndPrice } from "../../shared/logic/Constants";
@@ -210,7 +210,7 @@ function verifyTextures(textures: Record<string, Texture>, city: City) {
          console.warn(`Building ${b} has "max" defined but "special" undefined. Please define "special"!`);
       }
    });
-   forEach(DepositResources, (k, v) => {
+   forEach(IsDeposit, (k, v) => {
       if (!getTileTexture(k, textures)) {
          console.warn(`Cannot find texture for deposit ${k}`);
       }

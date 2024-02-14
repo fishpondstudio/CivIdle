@@ -704,3 +704,16 @@ export function uuid4(): string {
    ) {}
    return b;
 }
+
+export function logError(e: unknown, logFunc: (message: any) => void = console.error): void {
+   if (typeof e === "string") {
+      logFunc(e);
+   } else if (e instanceof Error) {
+      logFunc(e.message);
+      if (e.stack) {
+         logFunc(e.stack);
+      }
+   } else {
+      logFunc(e);
+   }
+}

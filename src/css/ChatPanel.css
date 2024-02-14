@@ -33,6 +33,9 @@
 
 #chat-panel .chat-message-item {
    padding: 6px 8px;
+}
+
+#chat-panel .chat-message-content {
    user-select: text;
    user-select: contain;
    cursor: text;

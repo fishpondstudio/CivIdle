@@ -1,6 +1,6 @@
 import classNames from "classnames";
 import { useEffect, useState } from "react";
-import type { Resource } from "../../../shared/definitions/ResourceDefinitions";
+import { NoPrice, NoStorage, type Resource } from "../../../shared/definitions/ResourceDefinitions";
 import { getStorageFor, getWarehouseCapacity } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
 import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
@@ -29,7 +29,7 @@ export function ResourceImportComponent({ gameState, xy }: IBuildingComponentPro
 
    const resources: Set<Resource> = new Set();
    forEach(Tick.current.resourcesByTile, (k, v) => {
-      if (Config.Resource[k].canPrice && Config.Resource[k].canStore) {
+      if (!NoPrice[k] && !NoStorage[k]) {
          resources.add(k);
       }
    });

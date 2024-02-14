@@ -1,4 +1,4 @@
-import type { Resource } from "../../../shared/definitions/ResourceDefinitions";
+import { NoStorage, type Resource } from "../../../shared/definitions/ResourceDefinitions";
 import { Config } from "../../../shared/logic/Config";
 import { notifyGameOptionsUpdate } from "../../../shared/logic/GameStateLogic";
 import { L, t } from "../../../shared/utilities/i18n";
@@ -43,7 +43,7 @@ export function BuildingColorComponent({ gameState, xy }: IBuildingComponentProp
 function ResourceColor({ resource }: { resource: Resource }) {
    const r = Config.Resource[resource];
    const gameOptions = useGameOptions();
-   if (r.canStore) {
+   if (!NoStorage[resource]) {
       return (
          <div className="row mv5">
             <div className="f1">{r.name()}</div>
