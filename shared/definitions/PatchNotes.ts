@@ -5,6 +5,15 @@ interface PatchNote {
 
 export const PatchNotes: PatchNote[] = [
    {
+      version: "0.1.135",
+      content: [
+         [
+            "QoL",
+            "This version adds a local backup that is NOT synced with Steam Cloud. In case Steam Cloud fails to migrate from Demo to EA, you can manually migrate your progress",
+         ],
+      ],
+   },
+   {
       version: "0.1.134",
       content: [
          ["QoL", "Add Claim All to Caravansary"],

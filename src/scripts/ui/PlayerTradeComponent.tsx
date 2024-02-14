@@ -8,7 +8,7 @@ import { TRADE_CANCEL_REFUND_PERCENT } from "../../../shared/logic/Constants";
 import { getMaxActiveTrades, getTradePercentage } from "../../../shared/logic/PlayerTradeLogic";
 import { PendingClaimFlag, type IPendingClaim } from "../../../shared/utilities/Database";
 import {
-   CURRENCY_EPSILON,
+   CURRENCY_PERCENT_EPSILON,
    formatPercent,
    hasFlag,
    isNullOrUndefined,
@@ -119,14 +119,14 @@ export function PlayerTradeComponent({ gameState, xy }: IBuildingComponentProps)
                      <td
                         className={classNames({
                            "text-small text-right": true,
-                           "text-red": percentage <= -CURRENCY_EPSILON,
-                           "text-green": percentage >= CURRENCY_EPSILON,
-                           "text-desc": Math.abs(percentage) < CURRENCY_EPSILON,
+                           "text-red": percentage <= -CURRENCY_PERCENT_EPSILON,
+                           "text-green": percentage >= CURRENCY_PERCENT_EPSILON,
+                           "text-desc": Math.abs(percentage) < CURRENCY_PERCENT_EPSILON,
                         })}
                      >
                         <Tippy content={t(L.MarketValueDesc, { value: formatPercent(percentage, 0) })}>
                            <div>
-                              {mathSign(percentage, CURRENCY_EPSILON)}
+                              {mathSign(percentage, CURRENCY_PERCENT_EPSILON)}
                               {formatPercent(Math.abs(percentage), 0)}
                            </div>
                         </Tippy>
@@ -295,7 +295,7 @@ function PendingClaimComponent({ gameState, xy }: IBuildingComponentProps) {
                })}
             </table>
          </div>
-         <div className="sep10"></div>
+         <div className="separator" />
       </>
    );
 }

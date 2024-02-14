@@ -1,7 +1,7 @@
 import { shell } from "electron";
 import { exists, outputFile, readFile, unlink } from "fs-extra";
 import path from "path";
-import { getGameSavePath, type SteamClient } from ".";
+import { getGameSavePath, getLocalGameSavePath, type SteamClient } from ".";
 
 export class IPCService {
    private _client: SteamClient;
@@ -16,6 +16,10 @@ export class IPCService {
 
    public fileWriteBytes(name: string, content: ArrayBuffer): void {
       outputFile(path.join(getGameSavePath(), this.getSteamId(), name), Buffer.from(content));
+      outputFile(
+         path.join(getLocalGameSavePath(), this.getAppId().toString(), this.getSteamId(), name),
+         Buffer.from(content),
+      );
    }
 
    public async fileRead(name: string): Promise<string> {

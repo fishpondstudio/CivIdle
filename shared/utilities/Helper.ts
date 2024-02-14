@@ -2,6 +2,7 @@ import type { PartialSet, PartialTabulate } from "./TypeDefinitions";
 import { v2 } from "./Vector2";
 
 export const CURRENCY_EPSILON = 0.01;
+export const CURRENCY_PERCENT_EPSILON = CURRENCY_EPSILON / 100;
 
 export interface IPointData {
    x: number;
