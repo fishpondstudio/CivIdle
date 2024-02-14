@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { MAX_TARIFF_RATE } from "../../../shared/logic/Constants";
 import { formatPercent, safeParseInt } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import { client, usePlayerMap } from "../rpc/RPCClient";
@@ -27,8 +28,8 @@ export function MyTilePage({ xy }: { xy: string }): React.ReactNode {
                <input
                   type="range"
                   min={0}
-                  max={100}
-                  step="1"
+                  max={100 * 100 * MAX_TARIFF_RATE}
+                  step="10"
                   value={tariffRate * 100 * 100}
                   onChange={(e) => {
                      setTariffRate(safeParseInt(e.target.value) / 100 / 100);
