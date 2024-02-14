@@ -216,6 +216,10 @@ export function mapSafePush<T, K>(obj: Map<T, K[]>, key: T, valueToPush: K): voi
    }
 }
 
+export function clearObject<K extends string | number | symbol>(obj: Record<K, unknown>): void {
+   for (const member in obj) delete obj[member];
+}
+
 export function mapOf<K extends string, V, T>(
    obj: Partial<Record<K, V>> | undefined | null,
    func: (key: K, value: V) => T,

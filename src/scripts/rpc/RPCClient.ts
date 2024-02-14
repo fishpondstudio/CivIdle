@@ -9,6 +9,7 @@ import type {
    IClientMapEntry,
    IClientTrade,
    IMapMessage,
+   IPendingClaimMessage,
    IRPCMessage,
    ITradeMessage,
    IUser,
@@ -16,7 +17,7 @@ import type {
 } from "../../../shared/utilities/Database";
 import { AccountLevel, MessageType } from "../../../shared/utilities/Database";
 import { vacuumChat } from "../../../shared/utilities/DatabaseShared";
-import { forEach } from "../../../shared/utilities/Helper";
+import { SECOND, forEach } from "../../../shared/utilities/Helper";
 import { TypedEvent } from "../../../shared/utilities/TypedEvent";
 import { L, t } from "../../../shared/utilities/i18n";
 import { saveGame } from "../Global";
@@ -36,7 +37,7 @@ export const OnOfflineTime = new TypedEvent<number>();
 export const OnUserChanged = new TypedEvent<IUser | null>();
 export const OnChatMessage = new TypedEvent<LocalChat[]>();
 export const OnTradeMessage = new TypedEvent<IClientTrade[]>();
-export const OnPlayerMapChanged = new TypedEvent<Record<string, IClientMapEntry>>();
+export const OnPlayerMapChanged = new TypedEvent<Map<string, IClientMapEntry>>();
 export const OnPlayerMapMessage = new TypedEvent<IMapMessage>();
 export const OnNewPendingClaims = new TypedEvent<void>();
 
@@ -52,8 +53,8 @@ interface ISystemMessage {
 export type LocalChat = IClientChat | ISystemMessage;
 
 let chatMessages: LocalChat[] = [];
-const trades: Record<string, IClientTrade> = {};
-const playerMap: Record<string, IClientMapEntry> = {};
+const trades: Map<string, IClientTrade> = new Map();
+const playerMap: Map<string, IClientMapEntry> = new Map();
 
 export function getPlayerMap() {
    return playerMap;
@@ -82,7 +83,7 @@ export const client = rpcClient<ServerImpl>({
 
 export const usePlayerMap = makeObservableHook(OnPlayerMapChanged, () => playerMap);
 export const useChatMessages = makeObservableHook(OnChatMessage, () => chatMessages);
-export const useTrades = makeObservableHook(OnTradeMessage, () => Object.values(trades));
+export const useTrades = makeObservableHook(OnTradeMessage, () => Array.from(trades.values()));
 export const useUser = makeObservableHook(OnUserChanged, getUser);
 
 function getUser(): IUser | null {
@@ -117,11 +118,13 @@ let requestId = 0;
 const rpcRequests: Record<number, { resolve: Function; reject: Function; time: number }> = {};
 
 let steamTicket: string | null = null;
+let steamTicketTime = 0;
 
 export async function connectWebSocket(): Promise<number> {
    if (isSteam()) {
-      if (!steamTicket) {
+      if (!steamTicket || Date.now() - steamTicketTime > 30 * SECOND) {
          steamTicket = await SteamClient.getAuthSessionTicket();
+         steamTicketTime = Date.now();
       }
       getGameOptions().id = `steam:${await SteamClient.getSteamId()}`;
       ws = new WebSocket(
@@ -160,6 +163,7 @@ export async function connectWebSocket(): Promise<number> {
             break;
          }
          case MessageType.Welcome: {
+            reconnect = 0;
             const w = message as IWelcomeMessage;
             user = w.user;
             if (user.level <= AccountLevel.Tribune) {
@@ -173,45 +177,42 @@ export async function connectWebSocket(): Promise<number> {
          }
          case MessageType.Trade: {
             const tm = message as ITradeMessage;
-            let pendingClaims = 0;
             if (tm.upsert) {
                tm.upsert.forEach((trade) => {
-                  if (trades[trade.id] && trades[trade.id].fromId === user?.userId) {
-                     pendingClaims++;
-                  }
-                  trades[trade.id] = trade;
+                  trades.set(trade.id, trade);
                });
             }
             if (tm.remove) {
                tm.remove.forEach((id) => {
-                  if (trades[id] && trades[id].fromId === user?.userId) {
-                     pendingClaims++;
-                  }
-                  delete trades[id];
+                  trades.delete(id);
                });
             }
-            if (pendingClaims > 0) {
-               playKaching();
-               showToast(t(L.PlayerTradeClaimAvailable, { count: pendingClaims }));
-               OnNewPendingClaims.emit();
-            }
-            OnTradeMessage.emit(Object.values(trades));
+            OnTradeMessage.emit(Array.from(trades.values()));
             break;
          }
          case MessageType.Map: {
             const m = message as IMapMessage;
             if (m.upsert) {
                forEach(m.upsert, (xy, entry) => {
-                  playerMap[xy] = entry;
+                  playerMap.set(xy, entry);
                });
             }
             if (m.remove) {
                m.remove.forEach((xy) => {
-                  delete playerMap[xy];
+                  playerMap.delete(xy);
                });
             }
             OnPlayerMapChanged.emit({ ...playerMap });
             OnPlayerMapMessage.emit(m);
+            break;
+         }
+         case MessageType.PendingClaim: {
+            const r = message as IPendingClaimMessage;
+            if (user && r.claims[user.userId]) {
+               playKaching();
+               showToast(t(L.PlayerTradeClaimAvailable, { count: r.claims[user.userId] }));
+               OnNewPendingClaims.emit();
+            }
             break;
          }
          case MessageType.RPC: {
@@ -226,7 +227,7 @@ export async function connectWebSocket(): Promise<number> {
       ws = null;
       user = null;
       OnUserChanged.emit(null);
-      setTimeout(connectWebSocket, Math.min(++reconnect * 1000, 5000));
+      setTimeout(connectWebSocket, Math.min(++reconnect * SECOND, 10 * SECOND));
    };
 
    return new Promise<number>((resolve, reject) => {

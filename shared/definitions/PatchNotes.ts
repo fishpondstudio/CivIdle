@@ -15,7 +15,9 @@ export const PatchNotes: PatchNote[] = [
             "You can evict a player and claim his/her tile after reservation period ends (they are greyed out on map)",
          ],
          ["Balance", "Claim tile cooldown has been changed to 4 hours"],
-         ["Bugfix", "You need to cancel/claim all trades before rebirth"],
+         ["Bugfix", "Rebirth will cancel your active/pending trades"],
+         ["Bugfix", "Rebirth will also release your player trade tile"],
+         ["Bugfix", "Fix a bug where sometimes pending claims appear for no reason"],
       ],
    },
    {

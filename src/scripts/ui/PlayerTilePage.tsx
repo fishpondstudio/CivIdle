@@ -15,7 +15,7 @@ import { WarningComponent } from "./WarningComponent";
 
 export function PlayerTilePage({ xy }: { xy: string }): React.ReactNode {
    const playerMap = usePlayerMap();
-   const tile = playerMap[xy];
+   const tile = playerMap.get(xy);
    if (!tile) {
       return null;
    }

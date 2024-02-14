@@ -17,6 +17,7 @@ export enum MessageType {
    Welcome = 2,
    Trade = 3,
    Map = 4,
+   PendingClaim = 5,
 }
 
 export interface IMessage {
@@ -68,6 +69,11 @@ export interface IMapMessage extends IMessage {
    remove?: string[];
 }
 
+export interface IPendingClaimMessage extends IMessage {
+   type: MessageType.PendingClaim;
+   claims: Record<string, number>;
+}
+
 export interface IAddTradeRequest {
    buyResource: Resource;
    buyAmount: number;
@@ -101,7 +107,13 @@ export interface IPoint {
    y: number;
 }
 
-export type AllMessageTypes = IChatMessage | IRPCMessage | IWelcomeMessage | ITradeMessage | IMapMessage;
+export type AllMessageTypes =
+   | IChatMessage
+   | IRPCMessage
+   | IWelcomeMessage
+   | ITradeMessage
+   | IMapMessage
+   | IPendingClaimMessage;
 
 export interface IEmpireValue {
    value: number;

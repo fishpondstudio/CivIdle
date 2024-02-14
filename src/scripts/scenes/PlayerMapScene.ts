@@ -97,7 +97,7 @@ export class PlayerMapScene extends ViewportScene {
          graphics.lineTo(MAP_MAX_X * GridSize, y * GridSize);
       }
 
-      forEach(getPlayerMap(), (xy, entry) => {
+      getPlayerMap().forEach((entry, xy) => {
          this.drawTile(xy, entry);
       });
 
@@ -206,7 +206,7 @@ export class PlayerMapScene extends ViewportScene {
       const myXy = getMyMapXy();
       const map = getPlayerMap();
 
-      if (myXy && map[`${tileX},${tileY}`]) {
+      if (myXy && map.has(`${tileX},${tileY}`)) {
          const path = findPath(xyToPoint(myXy), { x: tileX, y: tileY });
          this.drawPath(path);
       } else {

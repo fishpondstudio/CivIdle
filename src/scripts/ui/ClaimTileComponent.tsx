@@ -17,8 +17,8 @@ export function ClaimTileComponent({ xy }: { xy: string }): React.ReactNode {
    if (!myXy) {
       cooldownLeft = 0;
    } else {
-      const tile = playerMap[myXy];
-      cooldownLeft += tile.createdAt - Date.now();
+      const tile = playerMap.get(myXy);
+      cooldownLeft += tile!.createdAt - Date.now();
    }
    return (
       <fieldset>

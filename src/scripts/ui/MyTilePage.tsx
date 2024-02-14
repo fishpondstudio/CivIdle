@@ -8,7 +8,7 @@ import { PlayerHandleComponent } from "./PlayerHandleComponent";
 
 export function MyTilePage({ xy }: { xy: string }): React.ReactNode {
    const playerMap = usePlayerMap();
-   const [tariffRate, setTariffRate] = useState(playerMap[xy].tariffRate);
+   const [tariffRate, setTariffRate] = useState(playerMap.get(xy)?.tariffRate ?? 0);
    return (
       <div className="window">
          <div className="title-bar">
@@ -39,7 +39,7 @@ export function MyTilePage({ xy }: { xy: string }): React.ReactNode {
                <div className="sep10"></div>
                <button
                   className="w100 row jcc"
-                  disabled={tariffRate === playerMap[xy].tariffRate}
+                  disabled={tariffRate === playerMap.get(xy)?.tariffRate}
                   onClick={async () => {
                      try {
                         await client.setTariffRate(tariffRate);
