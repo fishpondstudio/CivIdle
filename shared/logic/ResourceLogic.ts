@@ -69,7 +69,7 @@ export function getAmountInTransit(xy: Tile, res: Resource, gs: GameState) {
 export function getResourcesValue(resources: PartialTabulate<Resource>): number {
    return reduceOf(
       resources,
-      (prev, res, amount) => prev + (NoPrice[res] ? 0 : Config.ResourcePrice[res]!),
+      (prev, res, amount) => prev + (NoPrice[res] ? 0 : Config.ResourcePrice[res]! * amount),
       0,
    );
 }

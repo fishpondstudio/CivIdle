@@ -260,7 +260,7 @@ export function addWorkers(res: Resource, amount: number): void {
 }
 
 export function useWorkers(res: Resource, amount: number, xy: Tile | null): void {
-   if (!NoStorage[res]) {
+   if (isTransportable(res)) {
       console.error("`useWorkers` can only be called with non-transportable resource!");
       return;
    }
