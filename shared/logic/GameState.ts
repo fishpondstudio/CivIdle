@@ -106,7 +106,7 @@ export class GameOptions {
    buildingDefaults: Partial<Record<Building, Partial<IBuildingData>>> = {};
    defaultPriority = 0x010101;
    chatSendChannel: ChatChannel = "en";
-   chatReceiveChannel: PartialSet<ChatChannel> = {};
+   chatReceiveChannel: PartialSet<ChatChannel> = { en: true };
    // Should be wiped
    greatPeople: Partial<Record<GreatPerson, { level: number; amount: number }>> = {};
    greatPeopleChoices: GreatPeopleChoice[] = [];

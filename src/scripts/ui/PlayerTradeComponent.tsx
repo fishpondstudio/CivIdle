@@ -1,27 +1,22 @@
 import Tippy from "@tippyjs/react";
 import classNames from "classnames";
-import { useEffect, useState } from "react";
-import type { Resource } from "../../../shared/definitions/ResourceDefinitions";
 import { getStorageFor } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
 import { TRADE_CANCEL_REFUND_PERCENT } from "../../../shared/logic/Constants";
 import { getMaxActiveTrades, getTradePercentage } from "../../../shared/logic/PlayerTradeLogic";
-import { PendingClaimFlag, type IPendingClaim } from "../../../shared/utilities/Database";
 import {
    CURRENCY_PERCENT_EPSILON,
    formatPercent,
-   hasFlag,
    isNullOrUndefined,
    mathSign,
    safeAdd,
 } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import { AccountLevelImages, AccountLevelNames } from "../logic/AccountLevel";
-import { OnNewPendingClaims, client, useTrades, useUser } from "../rpc/RPCClient";
+import { client, useTrades, useUser } from "../rpc/RPCClient";
 import { getMyMapXy } from "../scenes/PathFinder";
 import { PlayerMapScene } from "../scenes/PlayerMapScene";
 import { getCountryName, getFlagUrl } from "../utilities/CountryCode";
-import { useTypedEvent } from "../utilities/Hook";
 import { Singleton } from "../utilities/Singleton";
 import { playError, playKaching } from "../visuals/Sound";
 import { AddTradeComponent } from "./AddTradeComponent";
@@ -30,6 +25,7 @@ import { ConfirmModal } from "./ConfirmModal";
 import { FillPlayerTradeModal } from "./FillPlayerTradeModal";
 import { showModal, showToast } from "./GlobalModal";
 import { FormatNumber } from "./HelperComponents";
+import { PendingClaimComponent } from "./PendingClaimComponent";
 import { TableView } from "./TableView";
 import { WarningComponent } from "./WarningComponent";
 
@@ -209,93 +205,5 @@ export function PlayerTradeComponent({ gameState, xy }: IBuildingComponentProps)
             }}
          />
       </fieldset>
-   );
-}
-
-function PendingClaimComponent({ gameState, xy }: IBuildingComponentProps) {
-   const [pendingClaims, setPendingClaims] = useState<IPendingClaim[]>([]);
-   useEffect(() => {
-      client.getPendingClaims().then(setPendingClaims);
-   }, []);
-   useTypedEvent(OnNewPendingClaims, () => {
-      client.getPendingClaims().then(setPendingClaims);
-   });
-
-   if (pendingClaims.length === 0) {
-      return null;
-   }
-   return (
-      <>
-         <button
-            className="w100 jcc row mb10"
-            onClick={async () => {
-               try {
-                  const building = gameState.tiles.get(xy)?.building;
-                  if (!building) {
-                     return;
-                  }
-
-                  const { total, used } = getStorageFor(xy, gameState);
-                  const available = total - used;
-                  const sorted = pendingClaims.slice(0).sort((a, b) => a.amount - b.amount);
-                  const toClaim: string[] = [];
-
-                  let storageNeeded = 0;
-                  for (const claim of sorted) {
-                     if (storageNeeded + claim.amount > available) {
-                        break;
-                     }
-                     toClaim.push(claim.id);
-                     storageNeeded += claim.amount;
-                  }
-                  playKaching();
-                  const result = await client.claimTrades(toClaim);
-                  setPendingClaims(result.pendingClaims);
-                  const confirmed = new Set(result.claimedIds);
-                  for (const claim of sorted) {
-                     if (confirmed.has(claim.id)) {
-                        safeAdd(building.resources, claim.resource, claim.amount);
-                     }
-                  }
-                  showToast(t(L.PlayerTradeClaimAllMessage, { count: confirmed.size }));
-               } catch (error) {
-                  playError();
-                  showToast(String(error));
-               }
-            }}
-         >
-            <div className="m-icon small">local_shipping</div>
-            <div className="f1 text-strong">{t(L.PlayerTradeClaimAll)}</div>
-         </button>
-         <div className="table-view">
-            <table>
-               <tr>
-                  <th style={{ width: "30px" }}></th>
-                  <th>{t(L.PlayerTradeResource)}</th>
-                  <th>{t(L.PlayerTradeFillBy)}</th>
-                  <th className="text-right">{t(L.PlayerTradeAmount)}</th>
-               </tr>
-               {pendingClaims.map((trade) => {
-                  return (
-                     <tr key={trade.id}>
-                        <td>
-                           {hasFlag(trade.flag, PendingClaimFlag.Tariff) ? (
-                              <Tippy content={t(L.PlayerTradeTariffTooltip)}>
-                                 <div className="m-icon small text-center text-orange">currency_exchange</div>
-                              </Tippy>
-                           ) : null}
-                        </td>
-                        <td>{Config.Resource[trade.resource as Resource].name()}</td>
-                        <td>{trade.fillBy}</td>
-                        <td className="text-right">
-                           <FormatNumber value={trade.amount} />
-                        </td>
-                     </tr>
-                  );
-               })}
-            </table>
-         </div>
-         <div className="separator" />
-      </>
    );
 }

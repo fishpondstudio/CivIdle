@@ -195,4 +195,7 @@ function migrateSavedGame(save: SavedGame) {
          });
       }
    });
+   if (save.options.chatSendChannel) {
+      save.options.chatReceiveChannel[save.options.chatSendChannel] = true;
+   }
 }

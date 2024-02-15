@@ -5,6 +5,13 @@ interface PatchNote {
 
 export const PatchNotes: PatchNote[] = [
    {
+      version: "0.1.137",
+      content: [
+         ["QoL", "Add back the ability to claim individual trade"],
+         ["Bugfix", "Fix a bug where chat is not turned on for new players"],
+      ],
+   },
+   {
       version: "0.1.136",
       content: [["Bugfix", "Fix a bug introduced in 0.1.135 that causes incorrect empire value"]],
    },
