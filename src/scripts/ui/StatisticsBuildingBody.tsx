@@ -1,6 +1,11 @@
 import classNames from "classnames";
 import { useState } from "react";
-import type { Resource, ResourceDefinitions } from "../../../shared/definitions/ResourceDefinitions";
+import {
+   NoPrice,
+   NoStorage,
+   type Resource,
+   type ResourceDefinitions,
+} from "../../../shared/definitions/ResourceDefinitions";
 import { IOCalculation, getElectrificationStatus } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
 import { GameFeature, hasFeature } from "../../../shared/logic/FeatureLogic";
@@ -360,7 +365,7 @@ function ResourcesTab({ gameState }: IBuildingComponentProps): React.ReactNode {
                      })
                      .map((res) => {
                         const r = Config.Resource[res];
-                        if (!r.canPrice || !r.canStore) {
+                        if (NoPrice[res] || NoStorage[res]) {
                            return null;
                         }
                         const output = outputs[res] ?? 0;

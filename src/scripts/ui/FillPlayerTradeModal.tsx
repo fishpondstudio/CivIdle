@@ -42,7 +42,7 @@ export function FillPlayerTradeModal({ trade, xy }: { trade: IClientTrade; xy?: 
       setTiles(path.map((x) => pointToXy(x)));
    }, [trade.fromId, myXy]);
    const totalTariff = tiles.reduce((prev, xy, i) => {
-      const tile = map[xy];
+      const tile = map.get(xy);
       if (!tile || i === 0 || i === tiles.length - 1) {
          return prev;
       }
@@ -178,7 +178,7 @@ export function FillPlayerTradeModal({ trade, xy }: { trade: IClientTrade; xy?: 
                      </summary>
                      <ul>
                         {tiles.map((xy, i) => {
-                           const tile = map[xy];
+                           const tile = map.get(xy);
                            if (!tile || i === 0 || i === tiles.length - 1) {
                               return null;
                            }

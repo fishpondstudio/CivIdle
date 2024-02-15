@@ -294,6 +294,8 @@ export const EN = {
    WorkersAvailable: "Workers Available",
    WorkerHappinessPercentage: "Happiness Multiplier",
    WorkerPercentagePerHappiness: "%{value}% Multiplier for Each Happiness",
+   WorkersAvailableBeforeHappinessMultiplier: "Workers Before Happiness Multiplier",
+   WorkersAvailableAfterHappinessMultiplier: "Workers After Happiness Multiplier",
    WorkersBusy: "Workers Busy",
    WorkerScienceProduction: "Worker Science Production",
    ScienceFromIdleWorkers: "Science From Idle Workers",
@@ -689,6 +691,8 @@ export const EN = {
    PlayerMapClaimTileCondition2: "You haven't been banned by anti-cheat",
    PlayerMapClaimTileCondition3: "You have unlocked required technology: %{tech}",
    PlayerMapClaimTileCondition4: "You haven't claimed a tile or have passed the cooldown of moving your tile",
+   PlayerMapClaimTileNoLongerReserved:
+      "This tile is no longer reserved. You can evict <b>%{name}</b> and claim this tile for yourself",
    PlayerMapClaimTileCooldownLeft: "Cooldown left: %{time}",
    PlayerMapYourTile: "Your Tile",
    PlayerMapTariff: "Tariff",
@@ -698,6 +702,7 @@ export const EN = {
    PlayerMapTariffApply: "Apply Tariff Rate",
    PlayerMapTradesFrom: "Trades from %{name}",
    PlayerMapEstablishedSince: "Est. Since",
+   PlayerMapLastSeenAt: "Last Seen",
    OfflineErrorMessage: "You are currently offline, this operation requires an Internet connection",
    ResourceImport: "Resource Transport",
    ResourceImportResource: "Resource",
@@ -800,15 +805,19 @@ export const EN = {
       "Accelerate at a higher speed than your computer can handle might result in data loss: USE AT YOUR OWN RISK",
    PetraNoMultiplier: "Petra is not affected by any multipliers (production, worker capacity, storage, etc)",
    LimitOfflineProduction: "Limit Offline Production",
-   Reborn: "Reborn",
-   RebornCity: "Select Reborn City",
+   Reborn: "Rebirth",
+   RebornCity: "Select A New City",
+   RebornTradeWarning:
+      "You have trades that are active or can be claimed. <b>Rebirth will erase them</b> - you should consider cancelling or claiming first",
+   RebornOfflineWarning:
+      "You are currently offline. You can only rebirth when you are connected to the server",
    TotalEmpireValue: "Total Empire Value",
-   ProgressTowardsNextGreatPerson: "Progress Towards Next Great Person at Reborn",
+   ProgressTowardsNextGreatPerson: "Progress Towards Next Great Person at Rebirth",
    NotProducingBuildings: "Buildings That Are Not Producing",
-   ExtraGreatPeopleAtReborn: "Extra Great People At Reborn",
+   ExtraGreatPeopleAtReborn: "Extra Great People At Rebirth",
    Ok: "OK",
    Cancel: "Cancel",
-   ChooseGreatPersonFromLastReborn: "Choose Great Person From Last Reborn",
+   ChooseGreatPersonFromLastReborn: "Choose Great Person From Last Rebirth",
    BankingAdditionalUpgrade: "All buildings that are level 10 or higher get +1 Storage Multiplier",
    EstimatedTimeLeft: "Estimated Time Left",
    Electrification: "Electrification",
@@ -846,7 +855,7 @@ export const EN = {
    Tutorial5:
       "<b>Science</b> is used to unlock technologies in the tech tree. A technology unlocks new building, wonders and boosts.<br><br><b>Busy workers</b> generate a small amount of science. Later on, you will unlock buildings like libraries and schools that produce science.<br><br>The amount of workers available is affected by <b>happiness</b>. Each building will cost 1 happiness. And you gain happiness from technologies, wonders and great people. Make sure your workers are happy, otherwise your empire's production will halt.<br><br><b>Wonders</b> are one of a kind building - you can only build one and they cannot be removed once built. Wonders can provide significant boost or unlock new mechanisms.",
    Tutorial6:
-      "When you enter a new age, a new <b>great person</b> will be born. You can choose one out of three candidates.<br><br>Great people provide boosts and will be added to your permanent collection. When you reborn, you collect all the great people you've chosen this run, plus some  gone, these permanent great people will remain with you.<br><br><b>Permanent</b> great people can be upgraded by collecting great people from each run. They will help your empire achieve new heights. That's all the basics you need to know.<br><br>If you have questions, the best way to get help is by asking the <b>chat</b> - we have a friendly community that is always ready to help.",
+      "When you enter a new age, a new <b>great person</b> will be born. You can choose one out of three candidates.<br><br>Great people provide boosts and will be added to your permanent collection. When you rebirth, you collect all the great people you've chosen this run, plus some  gone, these permanent great people will remain with you.<br><br><b>Permanent</b> great people can be upgraded by collecting great people from each run. They will help your empire achieve new heights. That's all the basics you need to know.<br><br>If you have questions, the best way to get help is by asking the <b>chat</b> - we have a friendly community that is always ready to help.",
    TutorialPlayerHandle: "Choose your player handle",
    TutorialPlayerFlag: "Choose your player flag",
    JoinDiscord: "Join Discord",
@@ -868,12 +877,12 @@ export const EN = {
    AccountUpgradeCarryOverDesc:
       "When upgrading to the next account rank, this is the maximum level of permanent great people that you can carry over",
    TranslationPercentage: "%{language} is %{percentage} translated. Help improve this translation on GitHub",
-   CanEarnGreatPeopleFromRebornYes: "This run can earn great people from reborn",
-   CanEarnGreatPeopleFromRebornNo: "This run cannot earn great people from reborn",
+   CanEarnGreatPeopleFromRebornYes: "This run can earn great people from rebirth",
+   CanEarnGreatPeopleFromRebornNo: "This run cannot earn great people from rebirth",
    TribuneUpgradeDesc:
       "Upgrading from Tribune to Quaestor will allow your account to unlock all online features. However, only <b>permanent great people up to level %{level}</b> can be carried over",
    TribuneUpgradeDescGreatPeopleWarning:
-      "Your current run has great people. You should <b>reborn first</b>. Upgrading to Quaestor rank will reset your current run",
+      "Your current run has great people. You should <b>rebirth first</b>. Upgrading to Quaestor rank will reset your current run",
    TribuneGreatPeopleLevelWarning:
       "Your current account rank is Tribune. Upgrading to Quaestor will carry over permanent great people <b>up to level %{level}</b>",
    RebornModalDesc:
@@ -898,4 +907,7 @@ export const EN = {
    RedistributeAmongSelected: "Redistribute Among Selected",
    RedistributeAmongSelectedImport: "Import",
    RedistributeAmongSelectedCap: "Cap",
+   PlayerTradeTariffTooltip: "Collected From a Trade Tariff",
+   PlayerTradeClaimAll: "Claim All",
+   PlayerTradeClaimAllMessage: "You have claimed %{count} trades",
 };

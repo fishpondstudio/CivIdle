@@ -1,6 +1,6 @@
 import type { Building } from "../definitions/BuildingDefinitions";
-import type { Deposit, Resource } from "../definitions/ResourceDefinitions";
-import { type Tile, forEach, reduceOf } from "../utilities/Helper";
+import { NoPrice, type Deposit, type Resource } from "../definitions/ResourceDefinitions";
+import { forEach, reduceOf, type Tile } from "../utilities/Helper";
 import type { PartialTabulate } from "../utilities/TypeDefinitions";
 import { Config } from "./Config";
 import type { GameState } from "./GameState";
@@ -69,7 +69,7 @@ export function getAmountInTransit(xy: Tile, res: Resource, gs: GameState) {
 export function getResourcesValue(resources: PartialTabulate<Resource>): number {
    return reduceOf(
       resources,
-      (prev, res, amount) => prev + (Config.Resource[res].canPrice ? Config.ResourcePrice[res]! * amount : 0),
+      (prev, res, amount) => prev + (NoPrice[res] ? 0 : Config.ResourcePrice[res]!),
       0,
    );
 }

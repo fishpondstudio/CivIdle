@@ -17,7 +17,7 @@ function buildPathfinderGrid() {
             continue;
          }
          const map = getPlayerMap();
-         const cost = map[xy]?.tariffRate ?? 0;
+         const cost = map.get(xy)?.tariffRate ?? 0;
          grid[idx] = cost;
       }
    }
@@ -38,9 +38,8 @@ export function findPath(start: IPointData, end: IPointData): IPointData[] {
 
 export function findUserOnMap(userId: string): string | null {
    const map = getPlayerMap();
-   for (const key in map) {
-      const value = map[key];
-      if (value.userId === userId) {
+   for (const [key, value] of map) {
+      if (value?.userId === userId) {
          return key;
       }
    }
@@ -49,8 +48,7 @@ export function findUserOnMap(userId: string): string | null {
 
 export function getMyMapXy() {
    const playerMap = getPlayerMap();
-   for (const xy in playerMap) {
-      const entry = playerMap[xy];
+   for (const [xy, entry] of playerMap) {
       if (entry.userId === getGameOptions().id) {
          return xy;
       }

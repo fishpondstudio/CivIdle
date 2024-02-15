@@ -11,6 +11,10 @@ export function getGameSavePath(): string {
    return path.join(app.getPath("appData"), "CivIdleSaves");
 }
 
+export function getLocalGameSavePath(): string {
+   return path.join(app.getPath("home"), "AppData", "LocalLow", "CivIdleSaves");
+}
+
 const createWindow = () => {
    try {
       const steam = init();

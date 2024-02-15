@@ -5,15 +5,43 @@ interface PatchNote {
 
 export const PatchNotes: PatchNote[] = [
    {
-      version: "0.1.132",
+      version: "0.1.135",
+      content: [
+         [
+            "QoL",
+            "This version adds a local backup that is NOT synced with Steam Cloud. In case Steam Cloud fails to migrate from Demo to EA, you can manually migrate your progress",
+         ],
+      ],
+   },
+   {
+      version: "0.1.134",
+      content: [
+         ["QoL", "Add Claim All to Caravansary"],
+         ["QoL", "Show whether a pending claim is from trade tariff or not"],
+         ["QoL", "Add a column indicate trade value compared to average price in Caravansary"],
+         [
+            "Content",
+            "You can evict a player and claim his/her tile after reservation period ends (they are greyed out on map)",
+         ],
+         ["Balance", "Claim tile cooldown has been changed to 4 hours"],
+         ["Bugfix", "Rebirth will cancel your active/pending trades"],
+         ["Bugfix", "Rebirth will also release your player trade tile"],
+         ["Bugfix", "Fix a bug where sometimes pending claims appear for no reason"],
+      ],
+   },
+   {
+      version: "0.1.133",
       content: [
          ["Content", "Show player flag on trade map"],
-         ["Bugfix", "Fix chat sometimes does not scroll"],
          ["Bugfix", "Fix game does not load on some systems"],
          ["QoL", "Update Simplified Chinese translation (@Shallowsing)"],
          ["QoL", "Sort storage by amount (@Vethon)"],
          ["Bugfix", "Player handle duplication check is now case-insensitive"],
       ],
+   },
+   {
+      version: "0.1.132",
+      content: [["Bugfix", "Fix chat sometimes does not scroll"]],
    },
    {
       version: "0.1.131",

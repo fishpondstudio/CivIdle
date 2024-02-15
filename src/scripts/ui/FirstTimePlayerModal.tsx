@@ -10,6 +10,7 @@ import { refreshOnTypedEvent } from "../utilities/Hook";
 import { playError } from "../visuals/Sound";
 import { ChangeModernUIComponent } from "./ChangeModernUIComponent";
 import { ChangeSoundComponent } from "./ChangeSoundComponent";
+import { ToggleChatWindow } from "./ChatPanel";
 import { hideModal, showToast } from "./GlobalModal";
 import { LanguageSelect } from "./LanguageSelectComponent";
 import { RenderHTML } from "./RenderHTMLComponent";
@@ -136,6 +137,11 @@ export function FirstTimePlayerModal(): React.ReactNode {
                               } finally {
                                  hideModal();
                               }
+                              break;
+                           }
+                           case SetupStep.Tutorial2: {
+                              ToggleChatWindow.emit(true);
+                              setStep(step + 1);
                               break;
                            }
                            default: {

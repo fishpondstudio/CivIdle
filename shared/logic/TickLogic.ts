@@ -1,6 +1,6 @@
 import type { Building } from "../definitions/BuildingDefinitions";
-import type { Resource } from "../definitions/ResourceDefinitions";
-import { type Tile, forEach } from "../utilities/Helper";
+import { NoPrice, type Resource } from "../definitions/ResourceDefinitions";
+import { forEach, type Tile } from "../utilities/Helper";
 import type { RequireAtLeastOne } from "../utilities/Type";
 import type { PartialSet, PartialTabulate } from "../utilities/TypeDefinitions";
 import { TypedEvent } from "../utilities/TypedEvent";
@@ -123,7 +123,7 @@ export function totalEmpireValue(gs: GameState): number {
       if (tile.building) {
          value += getBuildingValue(tile.building);
          forEach(tile.building.resources, (res, amount) => {
-            if (Config.Resource[res].canPrice) {
+            if (!NoPrice[res]) {
                value += (Config.ResourcePrice[res] ?? 0) * amount;
             }
          });

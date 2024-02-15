@@ -1,6 +1,9 @@
 import type { PartialSet, PartialTabulate } from "./TypeDefinitions";
 import { v2 } from "./Vector2";
 
+export const CURRENCY_EPSILON = 0.01;
+export const CURRENCY_PERCENT_EPSILON = CURRENCY_EPSILON / 100;
+
 export interface IPointData {
    x: number;
    y: number;
@@ -92,6 +95,16 @@ export function round(num: number, decimal: number, mode = Rounding.Round): numb
 
 export function formatPercent(p: number, decimal = 2, mode = Rounding.Round) {
    return `${round(p * 100, Math.abs(p) < 0.1 ? decimal + 1 : decimal, mode)}%`;
+}
+
+export function mathSign(n: number, epsilon = Number.EPSILON): string {
+   if (n > epsilon) {
+      return "+";
+   }
+   if (n < -epsilon) {
+      return "-";
+   }
+   return "";
 }
 
 // eslint-disable-next-line @typescript-eslint/ban-types
@@ -202,6 +215,10 @@ export function mapSafePush<T, K>(obj: Map<T, K[]>, key: T, valueToPush: K): voi
    } else {
       obj.set(key, [valueToPush]);
    }
+}
+
+export function clearObject<K extends string | number | symbol>(obj: Record<K, unknown>): void {
+   for (const member in obj) delete obj[member];
 }
 
 export function mapOf<K extends string, V, T>(
@@ -703,4 +720,17 @@ export function uuid4(): string {
             : "-" //  in other cases (if "a" is 9,14,19,24) insert "-"
    ) {}
    return b;
+}
+
+export function logError(e: unknown, logFunc: (message: any) => void = console.error): void {
+   if (typeof e === "string") {
+      logFunc(e);
+   } else if (e instanceof Error) {
+      logFunc(e.message);
+      if (e.stack) {
+         logFunc(e.stack);
+      }
+   } else {
+      logFunc(e);
+   }
 }

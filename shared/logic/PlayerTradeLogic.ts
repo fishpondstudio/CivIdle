@@ -1,5 +1,12 @@
 import type { Resource } from "../definitions/ResourceDefinitions";
-import { AccountLevel, type IAddTradeRequest, type IUser } from "../utilities/Database";
+import {
+   AccountLevel,
+   IClientMapEntry,
+   TradeTileReservationDays,
+   type IAddTradeRequest,
+   type IUser,
+} from "../utilities/Database";
+import { DAY } from "../utilities/Helper";
 import { Config } from "./Config";
 
 export interface IClientAddTradeRequest extends IAddTradeRequest {
@@ -43,4 +50,15 @@ export function getMaxActiveTrades(user: IUser): number {
       default:
          return 2;
    }
+}
+
+export function getTradePercentage(trade: IAddTradeRequest): number {
+   const standardAmount =
+      (trade.buyAmount * Config.ResourcePrice[trade.buyResource]!) /
+      Config.ResourcePrice[trade.sellResource]!;
+   return (trade.sellAmount - standardAmount) / standardAmount;
+}
+
+export function isTileReserved(entry: Pick<IClientMapEntry, "lastSeenAt" | "level">): boolean {
+   return Date.now() - entry.lastSeenAt <= TradeTileReservationDays[entry.level] * DAY;
 }

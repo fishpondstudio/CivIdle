@@ -1,6 +1,6 @@
 import type { Building } from "../definitions/BuildingDefinitions";
 import { BuildingSpecial } from "../definitions/BuildingDefinitions";
-import type { IResourceDefinition, Resource } from "../definitions/ResourceDefinitions";
+import { NoStorage, type Resource } from "../definitions/ResourceDefinitions";
 import {
    clamp,
    forEach,
@@ -169,8 +169,8 @@ export function checkBuildingMax(k: Building, gs: GameState): boolean {
    return buildingCount < (Config.Building[k].max ?? Infinity);
 }
 
-export function isTransportable(res: Resource) {
-   return Config.Resource[res].canStore;
+export function isTransportable(res: Resource): boolean {
+   return !NoStorage[res];
 }
 
 interface IStorageResult {
@@ -260,7 +260,7 @@ export function addWorkers(res: Resource, amount: number): void {
 }
 
 export function useWorkers(res: Resource, amount: number, xy: Tile | null): void {
-   if (Config.Resource[res].canStore) {
+   if (!NoStorage[res]) {
       console.error("`useWorkers` can only be called with non-transportable resource!");
       return;
    }
@@ -299,14 +299,13 @@ export function getBuildingName(xy: Tile, gs: GameState): string {
    return Config.Building[type].name();
 }
 
-export function filterResource<T>(
+export function filterNonTransportable<T>(
    resources: Partial<Record<Resource, T>>,
-   filter: Pick<IResourceDefinition, "canStore">,
 ): Partial<Record<Resource, T>> {
    const result: Partial<Record<Resource, T>> = {};
    let key: Resource;
    for (key in resources) {
-      if (Config.Resource[key].canStore === filter.canStore) {
+      if (!isTransportable(key)) {
          result[key] = resources[key];
       }
    }
@@ -669,7 +668,7 @@ export function canBeElectrified(b: Building): boolean {
    }
    let res: Resource;
    for (res in output) {
-      if (!Config.Resource[res].canStore) {
+      if (NoStorage[res]) {
          return false;
       }
    }

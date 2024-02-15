@@ -22,7 +22,7 @@ export function PlayerMapPage({ xy }: { xy: string }): React.ReactNode {
    if (myXy === xy) {
       return <MyTilePage xy={xy} />;
    }
-   if (playerMap[xy]) {
+   if (playerMap.has(xy)) {
       return <PlayerTilePage xy={xy} />;
    }
    if ((WorldMap as Record<string, boolean>)[xy]) {

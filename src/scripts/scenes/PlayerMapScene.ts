@@ -3,6 +3,7 @@ import type { FederatedPointerEvent, IPointData } from "pixi.js";
 import { BitmapText, Container, LINE_CAP, LINE_JOIN, Sprite } from "pixi.js";
 import WorldMap from "../../../shared/definitions/WorldMap.json";
 import { getGameOptions } from "../../../shared/logic/GameStateLogic";
+import { isTileReserved } from "../../../shared/logic/PlayerTradeLogic";
 import { MAP_MAX_X, MAP_MAX_Y, type IClientMapEntry } from "../../../shared/utilities/Database";
 import {
    drawDashedLine,
@@ -96,7 +97,7 @@ export class PlayerMapScene extends ViewportScene {
          graphics.lineTo(MAP_MAX_X * GridSize, y * GridSize);
       }
 
-      forEach(getPlayerMap(), (xy, entry) => {
+      getPlayerMap().forEach((entry, xy) => {
          this.drawTile(xy, entry);
       });
 
@@ -205,7 +206,7 @@ export class PlayerMapScene extends ViewportScene {
       const myXy = getMyMapXy();
       const map = getPlayerMap();
 
-      if (myXy && map[`${tileX},${tileY}`]) {
+      if (myXy && map.has(`${tileX},${tileY}`)) {
          const path = findPath(xyToPoint(myXy), { x: tileX, y: tileY });
          this.drawPath(path);
       } else {
@@ -223,11 +224,14 @@ export class PlayerMapScene extends ViewportScene {
          this._tiles[xy].destroy({ children: true });
       }
       this._tiles[xy] = container;
+
       const isMyself = entry.userId === getGameOptions().id;
+      const isReserved = isTileReserved(entry);
 
       const flag = container.addChild(new Sprite(textures[`Flag_${entry.flag.toUpperCase()}`]));
       flag.anchor.set(0.5, 0.5);
       flag.position.set(x * GridSize + 0.5 * GridSize, y * GridSize + 0.5 * GridSize - 24);
+      flag.alpha = isReserved ? 1 : 0.5;
 
       const handle = container.addChild(
          new BitmapText(entry.handle, {
@@ -243,6 +247,7 @@ export class PlayerMapScene extends ViewportScene {
 
       handle.anchor.set(0.5, 0.5);
       handle.position.set(x * GridSize + 0.5 * GridSize, y * GridSize + 0.5 * GridSize);
+      handle.alpha = isReserved ? 1 : 0.5;
 
       const tariff = container.addChild(
          new BitmapText(formatPercent(entry.tariffRate), {
@@ -253,6 +258,7 @@ export class PlayerMapScene extends ViewportScene {
       );
       tariff.anchor.set(0.5, 0.5);
       tariff.position.set(x * GridSize + 0.5 * GridSize, y * GridSize + 0.5 * GridSize + 20);
+      tariff.alpha = isReserved ? 1 : 0.5;
    }
 
    override onDestroy(): void {

@@ -2,7 +2,7 @@ import type { Building } from "../definitions/BuildingDefinitions";
 import { BuildingSpecial } from "../definitions/BuildingDefinitions";
 import type { City } from "../definitions/CityDefinitions";
 import type { Resource } from "../definitions/ResourceDefinitions";
-import { DepositResources } from "../definitions/ResourceDefinitions";
+import { IsDeposit, NoPrice } from "../definitions/ResourceDefinitions";
 import type { Tech } from "../definitions/TechDefinitions";
 import { HOUR, forEach, formatNumber, isEmpty, keysOf, numberToRoman, sizeOf } from "../utilities/Helper";
 import type { PartialSet, PartialTabulate } from "../utilities/TypeDefinitions";
@@ -18,6 +18,7 @@ export const TRIBUNE_UPGRADE_PLAYTIME = 48 * HOUR;
 export const MAX_CHAT_PER_CHANNEL = 200;
 export const DISCORD_URL = "https://discord.com/invite/m5JWZtEKMZ";
 export const TRIBUNE_TRADE_VALUE_PER_MINUTE = 10000;
+export const MAX_TARIFF_RATE = 0.1;
 
 interface IRecipe {
    building: Building;
@@ -26,7 +27,7 @@ interface IRecipe {
 }
 
 export function calculateTierAndPrice() {
-   forEach(DepositResources, (k) => {
+   forEach(IsDeposit, (k) => {
       Config.ResourceTier[k] = 1;
       Config.ResourcePrice[k] = 1 + Config.Tech[getDepositUnlockTech(k)].column;
    });
@@ -209,7 +210,7 @@ export function calculateTierAndPrice() {
    let resourceHash = 0;
    forEach(Config.Resource, (r) => {
       Config.ResourceHash[r] = resourceHash++;
-      if (Config.Resource[r].canPrice) {
+      if (!NoPrice[r]) {
          console.assert(!!Config.ResourceTier[r], `Resource = ${r} does not have a tier`);
          console.assert(!!Config.ResourcePrice[r], `Resource = ${r} does not have a price`);
       } else {
@@ -268,9 +269,9 @@ export function calculateTierAndPrice() {
       .sort((a, b) => Config.ResourceTier[a]! - Config.ResourceTier[b]!)
       .forEach((r) => {
          resourcePrice.push(
-            `${r.padEnd(15)}${
-               Config.Resource[r].canPrice && endResources[r] ? "*".padEnd(5) : "".padEnd(5)
-            }${numberToRoman(Config.ResourceTier[r]!)!.padEnd(10)}${formatNumber(Config.ResourcePrice[r]!)}`,
+            `${r.padEnd(15)}${!NoPrice[r] && endResources[r] ? "*".padEnd(5) : "".padEnd(5)}${numberToRoman(
+               Config.ResourceTier[r]!,
+            )!.padEnd(10)}${formatNumber(Config.ResourcePrice[r]!)}`,
          );
       });
 

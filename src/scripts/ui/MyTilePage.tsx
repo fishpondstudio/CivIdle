@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { MAX_TARIFF_RATE } from "../../../shared/logic/Constants";
 import { formatPercent, safeParseInt } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import { client, usePlayerMap } from "../rpc/RPCClient";
@@ -8,7 +9,7 @@ import { PlayerHandleComponent } from "./PlayerHandleComponent";
 
 export function MyTilePage({ xy }: { xy: string }): React.ReactNode {
    const playerMap = usePlayerMap();
-   const [tariffRate, setTariffRate] = useState(playerMap[xy].tariffRate);
+   const [tariffRate, setTariffRate] = useState(playerMap.get(xy)?.tariffRate ?? 0);
    return (
       <div className="window">
          <div className="title-bar">
@@ -27,8 +28,8 @@ export function MyTilePage({ xy }: { xy: string }): React.ReactNode {
                <input
                   type="range"
                   min={0}
-                  max={100}
-                  step="1"
+                  max={100 * 100 * MAX_TARIFF_RATE}
+                  step="10"
                   value={tariffRate * 100 * 100}
                   onChange={(e) => {
                      setTariffRate(safeParseInt(e.target.value) / 100 / 100);
@@ -39,7 +40,7 @@ export function MyTilePage({ xy }: { xy: string }): React.ReactNode {
                <div className="sep10"></div>
                <button
                   className="w100 row jcc"
-                  disabled={tariffRate === playerMap[xy].tariffRate}
+                  disabled={tariffRate === playerMap.get(xy)?.tariffRate}
                   onClick={async () => {
                      try {
                         await client.setTariffRate(tariffRate);

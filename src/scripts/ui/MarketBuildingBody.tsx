@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import type { Resource } from "../../../shared/definitions/ResourceDefinitions";
+import { NoPrice, NoStorage, type Resource } from "../../../shared/definitions/ResourceDefinitions";
 import { applyToAllBuildings, getMarketPrice, totalMultiplierFor } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
 import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
@@ -7,10 +7,12 @@ import type { IMarketBuildingData } from "../../../shared/logic/Tile";
 import { MarketOptions } from "../../../shared/logic/Tile";
 import { convertPriceIdToTime } from "../../../shared/logic/Update";
 import {
+   CURRENCY_EPSILON,
    formatHMS,
    formatPercent,
    hasFlag,
    keysOf,
+   mathSign,
    round,
    toggleFlag,
 } from "../../../shared/utilities/Helper";
@@ -97,7 +99,7 @@ export function MarketBuildingBody({ gameState, xy }: IBuildingComponentProps): 
             }}
             renderRow={(res) => {
                const r = Config.Resource[res];
-               if (!r || !r.canPrice || !r.canStore) {
+               if (!r || NoPrice[res] || NoStorage[res]) {
                   return null;
                }
                const buy = getBuyResourceAndAmount(res);
@@ -128,7 +130,8 @@ export function MarketBuildingBody({ gameState, xy }: IBuildingComponentProps): 
                            help={t(L.MarketValueDesc, { value: formatPercent(tradeValue, 0) })}
                            noStyle
                         >
-                           {formatPercent(tradeValue, 0)}
+                           {mathSign(tradeValue, CURRENCY_EPSILON)}
+                           {formatPercent(Math.abs(tradeValue), 0)}
                         </TextWithHelp>
                      </td>
                      <td className="right">
