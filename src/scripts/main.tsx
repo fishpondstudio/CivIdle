@@ -97,6 +97,7 @@ if (canvas) {
 }
 
 export async function loadBundle() {
+   console.time("Load Default Font");
    fonts.forEach((f) => document.fonts.add(f));
    const result = await Promise.all([Assets.loadBundle(["main"])].concat(fonts.map((f) => f.load())));
    const { main }: { main: MainBundleAssets } = result[0];
@@ -108,18 +109,23 @@ export async function loadBundle() {
          { chars: BitmapFont.ASCII, resolution: 2 },
       ),
    );
+   console.timeEnd("Load Default Font");
 
-   BitmapFont.from(
-      FallbackFont,
-      { fill: "#ffffff", fontSize: 64, fontFamily: "serif" },
-      {
-         chars: Chars.join(""),
-         resolution: 2,
-      },
-   );
+   console.time("Load Fallback Font");
+   if (!import.meta.env.DEV) {
+      BitmapFont.from(
+         FallbackFont,
+         { fill: "#ffffff", fontSize: 64, fontFamily: "serif" },
+         {
+            chars: Chars.join(""),
+            resolution: 2,
+         },
+      );
+   }
+   console.timeEnd("Load Fallback Font");
 
+   console.time("Load Sprite sheets");
    const textures: Record<string, Texture> = {};
-
    const altas = await Promise.all([
       new Spritesheet(main.TextureBuildings, TextureBuildingsDef as any).parse(),
       new Spritesheet(main.TexturePeople, TexturePeopleDef as any).parse(),
@@ -138,6 +144,7 @@ export async function loadBundle() {
          }
       }
    });
+   console.timeEnd("Load Sprite sheets");
 
    return { main, textures };
 }

@@ -905,4 +905,6 @@ export const EN = {
    PlayerTradeTariffTooltip: "Collected From a Trade Tariff",
    PlayerTradeClaimAll: "Claim All",
    PlayerTradeClaimAllMessage: "You have claimed %{count} trades",
+   SteamAchievement: "Steam Achievement",
+   SteamAchievementDetails: "View Steam Achievement",
 };

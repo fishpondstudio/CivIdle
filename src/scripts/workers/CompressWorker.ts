@@ -9,6 +9,7 @@ export interface CompressMessage {
 }
 
 onmessage = (ev: MessageEvent<CompressMessage>) => {
+   console.time(`CompressWorker: ${ev.data.op}`);
    switch (ev.data.op) {
       case "compress": {
          const buffer = pako.deflateRaw(ev.data.buffer);
@@ -21,4 +22,5 @@ onmessage = (ev: MessageEvent<CompressMessage>) => {
          break;
       }
    }
+   console.timeEnd(`CompressWorker: ${ev.data.op}`);
 };

@@ -24,6 +24,7 @@ import { HappinessComponent } from "./HappinessComponent";
 import { FormatNumber } from "./HelperComponents";
 import { PlayerHandleComponent } from "./PlayerHandleComponent";
 import { RebornModal } from "./RebornModal";
+import { SteamAchievementPage } from "./SteamAchievementPage";
 import { WonderPage } from "./WonderPage";
 
 export function HeadquarterBuildingBody({
@@ -317,6 +318,15 @@ export function HeadquarterBuildingBody({
                .join(", ")}
             <div className="mv5 text-link text-strong" onClick={() => Singleton().routeTo(WonderPage, {})}>
                {t(L.ManageWonders)}
+            </div>
+         </fieldset>
+         <fieldset>
+            <legend>{t(L.SteamAchievement)}</legend>
+            <div
+               className="text-link text-strong"
+               onClick={() => Singleton().routeTo(SteamAchievementPage, {})}
+            >
+               {t(L.SteamAchievementDetails)}
             </div>
          </fieldset>
          <BuildingColorComponent gameState={gameState} xy={xy} />
