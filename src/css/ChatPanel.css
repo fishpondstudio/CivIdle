@@ -52,7 +52,7 @@
    border-radius: 5px;
 }
 
-#chat-panel .chat-message-item:nth-child(even) {
+#chat-panel .chat-message-item.is-even {
    background: #efefef;
 }
 

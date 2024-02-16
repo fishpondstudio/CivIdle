@@ -196,6 +196,7 @@ function ChatMessage({
       <div
          className={classNames({
             "chat-message-item": true,
+            "is-even": chat.id % 2 === 0,
             "mentions-me": user ? chat.message.includes(`@${user.handle}`) : false,
          })}
       >
