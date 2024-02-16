@@ -438,7 +438,8 @@ export function isAlphaNumeric(str: string): boolean {
 }
 
 export function containsNonASCII(str: string): boolean {
-   return [...str].some((char) => char.charCodeAt(0) > 127);
+   // biome-ignore lint/suspicious/noControlCharactersInRegex: <explanation>
+   return !/^[\x00-\x7F]*$/.test(str);
 }
 
 export function shuffle<T>(array: T[], rand?: () => number): T[] {

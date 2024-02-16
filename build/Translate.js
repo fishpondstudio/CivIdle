@@ -20,20 +20,10 @@ const sourceFiles = getAllFiles(join(__dirname, "../", "shared"))
    .join()
    .replace(/\s+/g, "");
 
-const chars = new Set();
-
-function collectChars(str) {
-   for (let i = 0; i < str.length; i++) {
-      chars.add(str[i]);
-   }
-}
-
 Object.keys(en).forEach((key) => {
    if (!sourceFiles.includes(`L.${key}`)) {
       console.log(`Translation not used: ${key}`);
       delete en[key];
-   } else {
-      collectChars(en[key]);
    }
    writeFileSync(EN_FILE_PATH, `export const EN = ${JSON.stringify(en)};`);
 });
@@ -63,15 +53,12 @@ readdirSync("./shared/languages").forEach((fileName) => {
    Object.keys(en).forEach((k) => {
       if (language[k]) {
          result[k] = language[k];
-         collectChars(language[k]);
       } else {
          result[k] = en[k];
       }
    });
    writeFileSync(filePath, `export const ${variableName} = ${JSON.stringify(result)};`);
 });
-
-writeFileSync("shared/utilities/Chars.json", JSON.stringify(Array.from(chars)));
 
 console.log("🟡 Format Translation Files");
 

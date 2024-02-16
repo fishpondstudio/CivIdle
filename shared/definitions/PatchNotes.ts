@@ -6,7 +6,11 @@ interface PatchNote {
 export const PatchNotes: PatchNote[] = [
    {
       version: "0.1.138",
-      content: [["QoL", "Chat will not scroll when your cursor is on a chat message"]],
+      content: [
+         ["QoL", "Chat will not scroll when your cursor is on a chat message"],
+         ["Bugfix", "Fix Chinese characters not showing up in Tech Tree"],
+         ["Content", "Add Simplified Chinese translation (@Shallowsing)"],
+      ],
    },
    {
       version: "0.1.137",

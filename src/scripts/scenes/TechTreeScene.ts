@@ -1,20 +1,19 @@
 import { SmoothGraphics } from "@pixi/graphics-smooth";
 import type { ColorSource, FederatedPointerEvent } from "pixi.js";
-import { BitmapText, Color, Container, LINE_CAP, LINE_JOIN, Rectangle } from "pixi.js";
+import { BitmapText, Color, Container, LINE_CAP, LINE_JOIN, Rectangle, Text } from "pixi.js";
 import type { ITechDefinition } from "../../../shared/definitions/ITechDefinition";
 import type { Tech } from "../../../shared/definitions/TechDefinitions";
 import { Config } from "../../../shared/logic/Config";
 import type { GameOptions } from "../../../shared/logic/GameState";
 import { getGameOptions } from "../../../shared/logic/GameStateLogic";
 import { isAgeUnlocked, unlockableTechs } from "../../../shared/logic/TechLogic";
-import { forEach, sizeOf } from "../../../shared/utilities/Helper";
+import { containsNonASCII, forEach, sizeOf } from "../../../shared/utilities/Helper";
 import { TechPage } from "../ui/TechPage";
 import { WheelMode } from "../utilities/Camera";
 import { ViewportScene, destroyAllChildren } from "../utilities/SceneManager";
 import { Singleton } from "../utilities/Singleton";
 import { Actions } from "../utilities/pixi-actions/Actions";
 import { Easing } from "../utilities/pixi-actions/Easing";
-import { fontWithFallback } from "../visuals/Fonts";
 
 const BOX_WIDTH = 300;
 const BOX_HEIGHT = 100;
@@ -277,16 +276,8 @@ export class TechTreeScene extends ViewportScene {
       g.lineStyle({ ...g.line, color });
       g.drawRoundedRect(rect.x, rect.y, rect.width, rect.height, radius);
       g.lineStyle({ ...g.line, color: oldColor });
-      const bitmapText = parent.addChild(
-         new BitmapText(title, {
-            fontName: fontWithFallback("Marcellus"),
-            fontSize: 28,
-            tint: color,
-         }),
-      );
-      while (bitmapText.width > rect.width - 20) {
-         bitmapText.fontSize--;
-      }
+
+      const bitmapText = parent.addChild(this.drawText(title, color, 28, rect.width - 20));
       bitmapText.anchor.x = 0.5;
       bitmapText.anchor.y = 0.5;
       bitmapText.x = rect.x + rect.width / 2;
@@ -294,23 +285,38 @@ export class TechTreeScene extends ViewportScene {
       bitmapText.cullable = true;
 
       if (description) {
-         const bitmapText = parent.addChild(
-            new BitmapText(description, {
-               fontName: fontWithFallback("Marcellus"),
-               tint: color,
-            }),
-         );
-
-         bitmapText.fontSize = 18;
-         while (bitmapText.width > rect.width - 20) {
-            bitmapText.fontSize--;
-         }
-
+         const bitmapText = parent.addChild(this.drawText(description, color, 18, rect.width - 20));
          bitmapText.anchor.x = 0.5;
          bitmapText.anchor.y = 0.5;
          bitmapText.x = rect.x + rect.width / 2;
          bitmapText.y = rect.y + (rect.height * 2) / 3;
          bitmapText.cullable = true;
       }
+   }
+
+   private drawText(text: string, color: ColorSource, size: number, maxWidth: number): Text | BitmapText {
+      if (containsNonASCII(text)) {
+         const result = new Text(text, {
+            fontFamily: "serif",
+            fontSize: size,
+            fill: Color.shared.setValue(color).toHex(),
+         });
+
+         while (result.width > maxWidth) {
+            result.style.fontSize = (result.style.fontSize as number) - 1;
+         }
+         return result;
+      }
+
+      const result = new BitmapText(text, {
+         fontName: "Marcellus",
+         fontSize: size,
+         tint: color,
+      });
+
+      while (result.width > maxWidth) {
+         result.fontSize--;
+      }
+      return result;
    }
 }

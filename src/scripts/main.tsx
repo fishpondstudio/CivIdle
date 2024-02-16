@@ -2,11 +2,9 @@ import * as Sentry from "@sentry/browser";
 import type { Texture } from "pixi.js";
 import { Application, Assets, BitmapFont, Spritesheet } from "pixi.js";
 import { createRoot } from "react-dom/client";
-import Chars from "../../shared/utilities/Chars.json";
 import { TypedEvent } from "../../shared/utilities/TypedEvent";
 import "../css/Main.css";
 import CabinMedium from "../fonts/CabinMedium.ttf?url";
-import CabinSketchBold from "../fonts/CabinSketchBold.ttf?url";
 import MarcellusRegular from "../fonts/MarcellusRegular.ttf?url";
 import TextureBuildingsDef from "../images/textures_buildings.json";
 import TextureBuildings from "../images/textures_buildings.png";
@@ -28,7 +26,7 @@ import { build } from "./Version.json";
 import { ChatPanel } from "./ui/ChatPanel";
 import { GlobalModal, GlobalToast } from "./ui/GlobalModal";
 import { ResourcePanel } from "./ui/ResourcePanel";
-import { FallbackFont, Fonts } from "./visuals/Fonts";
+import { Fonts } from "./visuals/Fonts";
 
 if (!import.meta.env.DEV) {
    Sentry.init({
@@ -72,7 +70,7 @@ const mainBundle = {
 export const fonts = [
    new FontFace(Fonts.Cabin, `url("${CabinMedium}")`),
    new FontFace(Fonts.Marcellus, `url("${MarcellusRegular}")`),
-   new FontFace(Fonts.CabinSketch, `url("${CabinSketchBold}")`),
+   // new FontFace(Fonts.CabinSketch, `url("${CabinSketchBold}")`),
 ];
 
 export type MainBundle = keyof typeof mainBundle;
@@ -110,19 +108,6 @@ export async function loadBundle() {
       ),
    );
    console.timeEnd("Load Default Font");
-
-   console.time("Load Fallback Font");
-   if (!import.meta.env.DEV) {
-      BitmapFont.from(
-         FallbackFont,
-         { fill: "#ffffff", fontSize: 64, fontFamily: "serif" },
-         {
-            chars: Chars.join(""),
-            resolution: 2,
-         },
-      );
-   }
-   console.timeEnd("Load Fallback Font");
 
    console.time("Load Sprite sheets");
    const textures: Record<string, Texture> = {};
