@@ -164,8 +164,7 @@ export const ZH_CN = {
    Deposit: "沉积资源",
    UniqueBuildings: "独特建筑",
    RequiredDeposit: "所需沉积资源",
-   NoDepositDesc:
-      "该地块无沉积资源。当你解锁新科技时，可能会发现更多沉积资源。",
+   NoDepositDesc: "该地块无沉积资源。当你解锁新科技时，可能会发现更多沉积资源。",
    UnlockBuilding: "解锁",
    UpgradeBuilding: "升级",
    RevealDeposit: "显露",
@@ -385,8 +384,7 @@ export const ZH_CN = {
    ConstructionBuilderMultiplierFull: "建造者能力乘数",
    EndConstruction: "取消建造",
    EndConstructionEnd: "取消",
-   EndConstructionDesc:
-      "若你取消建造，已被使用的所有资源将会浪费。",
+   EndConstructionDesc: "若你取消建造，已被使用的所有资源将会浪费。",
    Stonehenge: "巨石阵",
    StonehengeDesc: "所有消耗或产出石头的建筑，获得 +1 生产乘数",
    LighthouseOfAlexandria: "亚历山大灯塔",
@@ -398,37 +396,30 @@ export const ZH_CN = {
    MausoleumAtHalicarnassus: "摩索拉斯陵墓",
    MausoleumAtHalicarnassusDesc: "周围 2 地块范围内免费运输",
    HangingGarden: "空中花园",
-   HangingGardenDesc:
-      "+1 建造者能力乘数。相邻引水渠获得 +1 生产、存储以及劳动者能力乘数",
+   HangingGardenDesc: "+1 建造者能力乘数。相邻引水渠获得 +1 生产、存储以及劳动者能力乘数",
    Colosseum: "斗兽场",
-   ColosseumDesc:
-      "对所有战车工坊，影响的幸福感之和免除 -1 幸福感。消耗 10 战车并产出 10 幸福感",
+   ColosseumDesc: "对所有战车工坊，影响的幸福感之和免除 -1 幸福感。消耗 10 战车并产出 10 幸福感",
    SummerPalace: "颐和园",
    SummerPalaceDesc:
       "所有消耗或产出火药的相邻建筑，免除 -1 幸福感。所有消耗或产出火药的建筑，获得 +1 生产、存储以及劳动者能力乘数",
    Rijksmuseum: "国家博物馆",
-   RijksmuseumDesc:
-      "+5 幸福感。所有消耗或产出文化的建筑，获得 +1 生产、存储以及劳动者能力乘数",
+   RijksmuseumDesc: "+5 幸福感。所有消耗或产出文化的建筑，获得 +1 生产、存储以及劳动者能力乘数",
    EiffelTower: "埃菲尔铁塔",
-   EiffelTowerDesc:
-      "所有相邻炼钢厂，获得 +N 生产、存储以及劳动者乘数。 N 取决于其相邻炼钢厂数量",
+   EiffelTowerDesc: "所有相邻炼钢厂，获得 +N 生产、存储以及劳动者乘数。 N 取决于其相邻炼钢厂数量",
    CircusMaximus: "马克西穆斯角斗场",
-   CircusMaximusDesc:
-      "+5 幸福感。所有演员协会、作家协会以及画家协会，获得 +1 生产以及存储乘数",
+   CircusMaximusDesc: "+5 幸福感。所有演员协会、作家协会以及画家协会，获得 +1 生产以及存储乘数",
    Statistics: "统计大楼",
    StatisticsDesc: "提供消费和生产统计数据",
    GrottaAzzurra: "卡普里岛蓝洞",
    GrottaAzzurraDesc: "当被发现时，你所有的 I 阶建筑，获得 +5 等级",
    StatueOfZeus: "宙斯神像",
-   StatueOfZeusDesc:
-      "在相邻的空白地块，随机产生并显露沉积资源。所有相邻 I 阶建筑，获得 +5 生产以及存储乘数",
+   StatueOfZeusDesc: "在相邻的空白地块，随机产生并显露沉积资源。所有相邻 I 阶建筑，获得 +5 生产以及存储乘数",
    Poseidon: "海神波塞冬",
    PoseidonDesc: "所有相邻建筑，获得免费升级至等级 20 ",
    Aphrodite: "阿佛洛狄忒女神",
    AphroditeDesc: "若升级中的建筑超过等级 20 ，每个等级获得 +1 建造者能力乘数",
    Alps: "阿尔卑斯山",
-   AlpsDesc:
-      "建筑每10等级，获得 +1 生产能力（ +1 消费乘数， +1 生产乘数）",
+   AlpsDesc: "建筑每10等级，获得 +1 生产能力（ +1 消费乘数， +1 生产乘数）",
    GreatDagonPagoda: "大金塔",
    GreatDagonPagodaDesc: "大金塔",
    SagradaFamília: "圣家族大教堂",
@@ -438,11 +429,9 @@ export const ZH_CN = {
    OxfordUniversity: "牛津大学",
    OxfordUniversityDesc: "帝国境内每座建筑升级时，每个周期提供 +1 科学。",
    StPetersBasilica: "圣彼得大教堂",
-   StPetersBasilicaDesc:
-      "所有产出信仰的建筑，获得 +1 存储乘数。根据总存储中的信仰，生成信仰",
+   StPetersBasilicaDesc: "所有产出信仰的建筑，获得 +1 存储乘数。根据总存储中的信仰，生成信仰",
    ForbiddenCity: "紫禁城",
-   ForbiddenCityDesc:
-      "所有造纸作坊、作家协会以及印刷厂， 获得 +1 生产乘数、劳动者能力乘数以及存储乘数",
+   ForbiddenCityDesc: "所有造纸作坊、作家协会以及印刷厂， 获得 +1 生产乘数、劳动者能力乘数以及存储乘数",
    Borobudur: "婆罗浮屠",
    BorobudurDesc: "婆罗浮屠",
    ItsukushimaShrine: "严岛神社",
@@ -456,11 +445,9 @@ export const ZH_CN = {
    HimejiCastleDesc:
       "所有轻快帆船船坞、大帆船船坞以及护卫舰船坞，获得 +1 生产乘数、劳动者能力乘数以及存储乘数",
    TajMahal: "泰姬陵",
-   TajMahalDesc:
-      "一位新的中世纪伟人诞生。当升级中的建筑超过等级 20 时， +5 建造者能力乘数",
+   TajMahalDesc: "一位新的中世纪伟人诞生。当升级中的建筑超过等级 20 时， +5 建造者能力乘数",
    StatueOfLiberty: "自由女神像",
-   StatueOfLibertyDesc:
-      "所有相邻建筑，获得 +N 生产、存储以及劳动者能力乘数。 N 取决于其相邻同种建筑的数量",
+   StatueOfLibertyDesc: "所有相邻建筑，获得 +N 生产、存储以及劳动者能力乘数。 N 取决于其相邻同种建筑的数量",
    Moai: "复活节岛摩艾石像",
    MoaiDesc: "复活节岛摩艾石像",
    BranCastle: "布朗城堡",
@@ -470,8 +457,7 @@ export const ZH_CN = {
    SaintBasilsCathedral: "瓦西里升天教堂",
    SaintBasilsCathedralDesc: "瓦西里升天教堂",
    ChichenItza: "奇琴伊察",
-   ChichenItzaDesc:
-      "所有相邻建筑，获得 +1 生产乘数、存储以及劳动者能力乘数",
+   ChichenItzaDesc: "所有相邻建筑，获得 +1 生产乘数、存储以及劳动者能力乘数",
    Aqueduct: "引水渠",
    FishPond: "鱼塘",
    GarumMaker: "鱼露作坊",
@@ -484,19 +470,16 @@ export const ZH_CN = {
    GreatMosqueOfSamarra: "萨迈拉大清真寺",
    GreatMosqueOfSamarraDesc: "萨迈拉大清真寺",
    HagiaSophia: "圣索菲亚大教堂",
-   HagiaSophiaDesc:
-      "生产能力为 0% 的建筑，将免除 -1 幸福感。消耗 10 信仰并产出 10 幸福感",
+   HagiaSophiaDesc: "生产能力为 0% 的建筑，将免除 -1 幸福感。消耗 10 信仰并产出 10 幸福感",
    AngkorWat: "吴哥窟",
    AngkorWatDesc: "所有相邻建筑，获得 +1 劳动者能力乘数。提供 1000 劳动者",
    TerracottaArmy: "兵马俑",
    TerracottaArmyDesc:
       "所有铁矿，获得 +1 生产乘数、劳动者能力乘数以及存储乘数。与铁锻铺相邻的每座铁矿，使铁锻铺获得 +1 生产乘数",
    Parthenon: "帕特农神庙",
-   ParthenonDesc:
-      "一位新的古典时代伟人诞生。音乐家协会与画家协会，获得 +1 劳动者能力乘数",
+   ParthenonDesc: "一位新的古典时代伟人诞生。音乐家协会与画家协会，获得 +1 劳动者能力乘数",
    Persepolis: "波斯波利斯",
-   PersepolisDesc:
-      "所有铜矿、伐木场以及采石场，获得 +1 生产乘数、劳动者能力乘数以及存储乘数",
+   PersepolisDesc: "所有铜矿、伐木场以及采石场，获得 +1 生产乘数、劳动者能力乘数以及存储乘数",
    ChoghaZanbil: "恰高·占比尔",
    ChoghaZanbilDesc: "恰高·占比尔",
    HatshepsutTemple: "哈特谢普苏特神庙",
@@ -527,12 +510,10 @@ export const ZH_CN = {
    CancelUpgradeDesc: "    所有已被运送的资源将被保留在此建筑中。",
    StockpileSettings: "库存输入系数",
    SellBuilding: "变卖建筑",
-   StockpileDesc:
-      "这座建筑将在每个生产周期运送 %{capacity}x 所需资源，直到最大库存",
+   StockpileDesc: "这座建筑将在每个生产周期运送 %{capacity}x 所需资源，直到最大库存",
    StockpileMax: "最大库存",
    StockpileMaxUnlimited: "无限制",
-   StockpileMaxDesc:
-      "一旦这座建筑有能满足其进行 %{cycle} 个生产周期所需的全部资源，其将停止运送资源",
+   StockpileMaxDesc: "一旦这座建筑有能满足其进行 %{cycle} 个生产周期所需的全部资源，其将停止运送资源",
    StockpileMaxUnlimitedDesc: "直到存储空间填满前，建筑将一直运送资源",
    ProductionPriority: "生产优先级",
    DefaultProductionPriority: "默认生产优先级",
@@ -610,8 +591,7 @@ export const ZH_CN = {
    PlayerHandle: "玩家信息",
    ChangePlayerHandle: "更换",
    ChangePlayerHandleCancel: "取消",
-   ChangePlayerHandledDesc:
-      "    你的玩家名称只能包含 5 ~ 16 个字母与数字，并且要求独一无二",
+   ChangePlayerHandledDesc: "    你的玩家名称只能包含 5 ~ 16 个字母与数字，并且要求独一无二",
    AGreatPersonIsBorn: "一位伟人诞生了",
    BuildingName: "建筑名",
    BuildingTier: "阶",
@@ -680,8 +660,7 @@ export const ZH_CN = {
    PlayerTradeCancelTrade: "取消订单",
    PlayerTradeCancelTradeNo: "不要取消",
    PlayerTradeCancelTradeNotEnoughStorage: "你没有足够存储空间满足取消之需要",
-   PlayerTradeCancelDesc:
-      "取消此项订单只会返还 %{percent} 的支出资源，你确认想要取消吗？",
+   PlayerTradeCancelDesc: "取消此项订单只会返还 %{percent} 的支出资源，你确认想要取消吗？",
    PlayerMapUnclaimedTile: "无宣称地块",
    PlayerMapClaimThisTile: "宣称此地块",
    PlayerMapClaimTileCondition2: "未被反作弊系统查禁",
@@ -712,16 +691,14 @@ export const ZH_CN = {
    PlayerTradeStorageRequired: "所需存储空间",
    PlayerTradeClaimAvailable: "共 %{count} 项已完成订单可被认领",
    PlayerTradeClaimTileFirst: "在贸易地图上宣称你的地块",
-   PlayerTradeClaimTileFirstWarning:
-      "只有在贸易地图上宣称地块后，你才能与其他玩家进行贸易。",
+   PlayerTradeClaimTileFirstWarning: "只有在贸易地图上宣称地块后，你才能与其他玩家进行贸易。",
    ApplyToAll: "应用于全部",
    ApplyToAllBuilding: "应用于全部 %{building}",
    SetAsDefault: "设为默认",
    SetAsDefaultBuilding: "设为全部 %{building} 的默认",
    NothingHere: "此处皆无",
    ContentInDevelopment: "内容开发中",
-   ContentInDevelopmentDesc:
-      "此游戏内容仍在开发中，可在将来的游戏更新中获取，敬请期待！",
+   ContentInDevelopmentDesc: "此游戏内容仍在开发中，可在将来的游戏更新中获取，敬请期待！",
    PatchNotes: "更新日志",
    PlayerTradeNoValidRoute: "未能在你和 %{name} 之间找到有效贸易路径",
    BuildingColor: "建筑色彩",
@@ -778,34 +755,28 @@ export const ZH_CN = {
    OfflineTime: "离线时间",
    TransportCapacity: "运送能力",
    TransportCapacityMultiplier: "运送能力乘数",
-   WonderBuilderCapacityDesc:
-      "建造奇观时的建造者能力，受到解锁奇观时的时代与技术影响。",
+   WonderBuilderCapacityDesc: "建造奇观时的建造者能力，受到解锁奇观时的时代与技术影响。",
    MarketSettings: "市场设定",
    ClearAfterUpdate: "在市场更新后，清除所有交易",
    WarehouseSettings: "仓库设定",
    WarehouseSettingsAutopilot: "自动模式",
    WarehouseSettingsAutopilotDesc:
       "这座仓库将会使用它的闲置能力，从无存储空间的建筑中运送资源。当前闲置能力： %{capacity}",
-   WarehouseUpgrade:
-      "解锁仓库自动模式。仓库与其相邻建筑之间免费运输。",
+   WarehouseUpgrade: "解锁仓库自动模式。仓库与其相邻建筑之间免费运输。",
    WarehouseUpgradeDesc: "这座仓库与其相邻建筑之间免费运输。",
    Warp: "扭曲时间",
    MaxOfflineProductionTime: "最大离线生产时间",
-   WarpConversionDesc:
-      "    超过最大离线生产时间的离线时间，将被转化为扭曲时间。（ 1 秒= 1 扭曲时间）",
+   WarpConversionDesc: "    超过最大离线生产时间的离线时间，将被转化为扭曲时间。（ 1 秒= 1 扭曲时间）",
    TimeWarp: "时间扭曲倍数",
-   TurnOnTimeWarpDesc:
-      "每秒消耗 %{speed} 扭曲时间，同时加速你的帝国，使其以 %{speed} 倍速度运行。",
-   TimeWarpWarning:
-      "以超出计算机处理能力的速度加速，可能会导致数据丢失。<b>使用风险自负！</b>",
+   TurnOnTimeWarpDesc: "每秒消耗 %{speed} 扭曲时间，同时加速你的帝国，使其以 %{speed} 倍速度运行。",
+   TimeWarpWarning: "以超出计算机处理能力的速度加速，可能会导致数据丢失。<b>使用风险自负！</b>",
    PetraNoMultiplier: "佩特拉古城不受任何乘数影响。",
    LimitOfflineProduction: "限制离线生产",
    Reborn: "重生",
    RebornCity: "选择重生城市",
    RebornTradeWarning:
       "你还有发出或可认领的贸易订单。<b>重生将抹去与你相关的所有订单。</b>你应该首先考虑取消及认领订单。",
-   RebornOfflineWarning:
-      "你已离线。你只能在连接上服务器时重生。",
+   RebornOfflineWarning: "你已离线。你只能在连接上服务器时重生。",
    TotalEmpireValue: "帝国总价值",
    ProgressTowardsNextGreatPerson: "接近下一位在重生时出现的伟人之进程",
    NotProducingBuildings: "未运转建筑",
@@ -817,8 +788,7 @@ export const ZH_CN = {
    EstimatedTimeLeft: "预计剩余时间",
    Electrification: "电气化",
    ElectrificationUpgrade: "解锁电气化。允许建筑消耗电能促进生产",
-   ElectrificationDesc:
-      "消耗 %{power}W 电能，提供 +%{level} 消费乘数与生产乘数",
+   ElectrificationDesc: "消耗 %{power}W 电能，提供 +%{level} 消费乘数与生产乘数",
    PowerAvailable: "可获电能",
    PowerUsed: "已使用电能",
    Power: "电能",
@@ -839,11 +809,11 @@ export const ZH_CN = {
    AccountTypeShowDetails: "展示账号细节",
    PlayerHandleOffline: "你正处于离线状态",
    AccountLevel: "账号等级",
-   TrialRunDesc:
-      "财务官及以上等级账号，可以开始受保民官限制的试运营，而且此运营不能获取永恒伟人。",
+   TrialRunDesc: "财务官及以上等级账号，可以开始受保民官限制的试运营，而且此运营不能获取永恒伟人。",
    Tutorial1:
       "    欢迎使用 CivIdle 安装程序。（译者：若翻译存疑，请参照英文版。若欲修改、更新翻译，可在Discord上反馈问题并提出意愿。欢迎更多人的加入！）<br><br>    在游戏中，你将运营你自己的帝国城市：管理生产、解锁科技、与其他玩家开展资源贸易、获得伟人相助以及修建世界奇观。<br><br>    拖动鼠标进行移动。使用滚轮放大或缩小。单击空地块以建造新建筑，单击一座建筑以查看详情。<br><br>",
-   Tutorial2: "我从未玩过类似游戏，并且我愿意通读一篇简短教程。（译者：前作玩家初次接触此游戏，可速读了解基础框架。）",
+   Tutorial2:
+      "我从未玩过类似游戏，并且我愿意通读一篇简短教程。（译者：前作玩家初次接触此游戏，可速读了解基础框架。）",
    Tutorial3: "我玩过 Industry Idle 并且我知道正确游玩方式，请跳过基础教程。",
    Tutorial4:
       "    建筑是你帝国的基本组成部分，把它们放在已探索地图的地块上。某些建筑（比如采石场和引水渠）可获取沉积资源，要正常运行，首先就需要将它们建造在含相应沉积资源的地块上。一座建筑可以驱散其周围（目前半径为2格）地块的迷雾。<br><br>    建筑往往消耗资源并产生新的资源。它们会<b>自动地</b>运送所需资源。所产出的资源将被存储在产出建筑中，可被运送至其它需要这些资源的建筑。然而，一座建筑本身的存储空间是有限的。<br><br>    建筑需要<b>劳动者</b>来进行运输与生产，这意味着你需要建造提供居住的建筑（比如<b>小棚屋</b>）来增加劳动者人口。你可以升级一座建筑，以此来增加它的生产能力与存储空间。",
@@ -869,8 +839,7 @@ export const ZH_CN = {
    AccountTradeTileReservationTimeDesc:
       "    这是从你上次在线之后开始计时，你的玩家贸易地块将被保留的时间。在保留期间结束后，其他玩家可以获取你的宣称地块。",
    AccountUpgradeCarryOver: "可携带等级",
-   AccountUpgradeCarryOverDesc:
-      "    升至下个账号等级时，这是你能携带的永恒伟人的最大等级。",
+   AccountUpgradeCarryOverDesc: "    升至下个账号等级时，这是你能携带的永恒伟人的最大等级。",
    TranslationPercentage: "    %{language}的翻译进度目前为%{percentage}。可在GitHub上帮助改进此语言翻译。",
    CanEarnGreatPeopleFromRebornYes: "本轮重生可以获得伟人",
    CanEarnGreatPeopleFromRebornNo: "本轮重生不能获得伟人",
@@ -883,8 +852,7 @@ export const ZH_CN = {
    RebornModalDesc:
       "    你将开始一个新的帝国，但你能携带所有<b>此生</b>伟人。至于其它额外伟人，则取决于你的<b>帝国总价值</b>。",
    OperationNotAllowedError: "此操作不被允许",
-   AccountLevelUpgradeConditionAny:
-      "为了升级你的账号，你只需要满足下列标准之一：",
+   AccountLevelUpgradeConditionAny: "为了升级你的账号，你只需要满足下列标准之一：",
    AccountLevelPlayTime: "活跃在线游玩时间 > %{requiredTime} （你的游玩时间为 %{actualTime}）",
    AccountUpgradeButton: "升至财务官等级",
    AccountUpgradeConfirm: "账号升级",
@@ -892,8 +860,7 @@ export const ZH_CN = {
       "    升级你的账号将<b>重置你的当前轮</b>并携带<b>达到等级 %{level} </b>的永恒伟人。此操作<b>不能</b>被退回，你确认继续吗？",
    CannotEarnPermanentGreatPeopleDesc: "因为这是一次试运营，永恒伟人不可被获取。",
    BackToCity: "返回城市",
-   UpgradeBuildingNotProducingDesc:
-      "此建筑升级中，生产将停滞，直到升级完成。",
+   UpgradeBuildingNotProducingDesc: "此建筑升级中，生产将停滞，直到升级完成。",
    Tutorial: "教程",
    SelectedCount: "已选择 %{count} 项",
    SelectedAll: "全选",
