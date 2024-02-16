@@ -35,6 +35,7 @@ export function ChatPanel(): React.ReactNode {
       (m) => !("channel" in m) || options.chatReceiveChannel[m.channel],
    );
    const user = useUser();
+   const [shouldScroll, setShouldScroll] = useState(false);
    const scrollAreaRef = useRef<HTMLDivElement>(null);
    const [showChatWindow, setShowChatWindow] = useState(false);
 
@@ -44,11 +45,21 @@ export function ChatPanel(): React.ReactNode {
 
    // biome-ignore lint/correctness/useExhaustiveDependencies:
    useEffect(() => {
+      if (!shouldScroll) return;
       scrollAreaRef.current?.scrollTo({
          top: scrollAreaRef.current.scrollHeight,
          behavior: "smooth",
       });
    }, [messages.length > 0 ? messages[messages.length - 1].id : messages.length, user]);
+
+   // biome-ignore lint/correctness/useExhaustiveDependencies:
+   const onImageLoaded = useCallback(() => {
+      if (!shouldScroll) return;
+      scrollAreaRef.current?.scrollTo({
+         top: scrollAreaRef.current.scrollHeight,
+         behavior: "smooth",
+      });
+   }, []);
 
    // biome-ignore lint/correctness/useExhaustiveDependencies:
    useEffect(() => {
@@ -58,14 +69,6 @@ export function ChatPanel(): React.ReactNode {
       });
    }, [showChatWindow]);
 
-   const onImageLoaded = useCallback(
-      () =>
-         scrollAreaRef.current?.scrollTo({
-            top: scrollAreaRef.current.scrollHeight,
-            behavior: "smooth",
-         }),
-      [],
-   );
    const receiveMultipleChannels = sizeOf(options.chatReceiveChannel) > 1;
 
    return (
@@ -92,7 +95,12 @@ export function ChatPanel(): React.ReactNode {
                      <button aria-label="Close" onClick={() => setShowChatWindow(false)}></button>
                   </div>
                </div>
-               <div ref={scrollAreaRef} className="window-content inset-shallow">
+               <div
+                  ref={scrollAreaRef}
+                  className="window-content inset-shallow"
+                  onMouseEnter={() => setShouldScroll(false)}
+                  onMouseLeave={() => setShouldScroll(true)}
+               >
                   {messages.map((c) => {
                      if (!("channel" in c)) {
                         return (

@@ -5,6 +5,10 @@ interface PatchNote {
 
 export const PatchNotes: PatchNote[] = [
    {
+      version: "0.1.138",
+      content: [["QoL", "Chat will not scroll when your cursor is on a chat message"]],
+   },
+   {
       version: "0.1.137",
       content: [
          ["QoL", "Add back the ability to claim individual trade"],
