@@ -1,10 +1,11 @@
 import type { Building } from "../../../shared/definitions/BuildingDefinitions";
+import { isWorldWonder } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
 import { getSpecialBuildings, getXyBuildings } from "../../../shared/logic/IntraTickCache";
+import { keysOf } from "../../../shared/utilities/Helper";
 import type { PartialSet } from "../../../shared/utilities/TypeDefinitions";
 import { L, t } from "../../../shared/utilities/i18n";
 import { useGameState } from "../Global";
-import { jsxMapOf } from "../utilities/Helper";
 import { Singleton } from "../utilities/Singleton";
 import { MenuComponent } from "./MenuComponent";
 import { TilePage } from "./TilePage";
@@ -47,22 +48,23 @@ export function WonderPage(): React.ReactNode {
                      </tr>
                   </thead>
                   <tbody>
-                     {jsxMapOf(Config.Building, (b, def) => {
-                        if (def.max !== 1 || !def.construction) {
-                           return null;
-                        }
-                        return (
-                           <tr key={b}>
-                              <td>
-                                 {builtWonders[b] ? (
-                                    <div className="m-icon small text-green">check_circle</div>
-                                 ) : null}
-                              </td>
-                              <td>{def.name()}</td>
-                              <td>{def.desc?.()}</td>
-                           </tr>
-                        );
-                     })}
+                     {keysOf(Config.Building)
+                        .filter((b) => isWorldWonder(b))
+                        .sort((a, b) => Config.Building[a].name().localeCompare(Config.Building[b].name()))
+                        .map((b) => {
+                           const def = Config.Building[b];
+                           return (
+                              <tr key={b}>
+                                 <td>
+                                    {builtWonders[b] ? (
+                                       <div className="m-icon small text-green">check_circle</div>
+                                    ) : null}
+                                 </td>
+                                 <td>{def.name()}</td>
+                                 <td>{def.desc?.()}</td>
+                              </tr>
+                           );
+                        })}
                   </tbody>
                </table>
             </div>

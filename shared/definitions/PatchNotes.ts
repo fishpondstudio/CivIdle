@@ -15,6 +15,7 @@ export const PatchNotes: PatchNote[] = [
          ["Bugfix", "Fix Petra does not generate time warp when offline time is set to 0%"],
          ["QoL", "Chat mentions is now case insensitive"],
          ["QoL", "Add a new option to hide the latest chat content (avoid spoiler)"],
+         ["QoL", "The list of wonders are now sorted alphabetically"],
       ],
    },
    {
