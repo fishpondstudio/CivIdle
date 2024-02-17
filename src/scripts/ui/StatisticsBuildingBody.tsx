@@ -245,13 +245,8 @@ function TransportationTab({ gameState }: IBuildingComponentProps): React.ReactN
    );
 }
 
-type SortByOptions = "name" | "amount" | "input" | "output" | "diff";
-type SortOrder = "asc" | "desc";
-
 function ResourcesTab({ gameState }: IBuildingComponentProps): React.ReactNode {
    const [showTheoreticalValue, setShowTheoreticalValue] = useState(true);
-   const [sortBy, setSortBy] = useState<SortByOptions>("name");
-   const [sortOrder, setSortOrder] = useState<SortOrder>("asc");
    const unlockedResourcesList: PartialSet<Resource> = unlockedResources(gameState);
    const resourceAmounts: Partial<Record<keyof ResourceDefinitions, number>> = {};
    const inputs: PartialTabulate<Resource> = {};
@@ -277,11 +272,6 @@ function ResourcesTab({ gameState }: IBuildingComponentProps): React.ReactNode {
             0,
          ) ?? 0;
    });
-
-   const handleSortClick = (sortBy: SortByOptions) => {
-      setSortOrder((prev) => (prev === "asc" ? "desc" : "asc"));
-      setSortBy(sortBy);
-   };
 
    return (
       <article role="tabpanel" className="f1 column" style={{ padding: "8px", overflow: "auto" }}>
