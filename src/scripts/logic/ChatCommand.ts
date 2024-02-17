@@ -15,11 +15,11 @@ import {
    uuid4,
 } from "../../../shared/utilities/Helper";
 import { decompressSave, loadSave } from "../Global";
-import { addSystemMessage, client } from "../rpc/RPCClient";
+import { addSystemMessage, canEarnGreatPeopleFromReborn, client } from "../rpc/RPCClient";
 import { tickEverySecond } from "./Tick";
 
 function requireOfflineRun(): void {
-   if (!getGameState().isOffline) {
+   if (canEarnGreatPeopleFromReborn()) {
       throw new Error("Command is only available for trial run");
    }
 }

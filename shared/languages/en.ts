@@ -649,7 +649,7 @@ export const EN = {
    StatisticsResources: "Resources",
    StatisticsResourcesDeficit: "Deficit",
    StatisticsResourcesRunOut: "Run Out",
-   StatisticsResourcesDeficitDesc: "Output: %{output} - Input: %{input}",
+   StatisticsResourcesDeficitDesc: "Production: %{output} - Consumption: %{input}",
    StatisticsBuildings: "Buildings",
    StatisticsTransportation: "Transportation",
    StatisticsTransportationPercentage: "Percentage of Transportation Workers",
