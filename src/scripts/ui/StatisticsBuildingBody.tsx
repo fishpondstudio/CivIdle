@@ -354,7 +354,7 @@ function ResourcesTab({ gameState }: IBuildingComponentProps): React.ReactNode {
                      </td>
                      <td>
                         <div className={classNames({ "text-right": true, "text-red": deficit < 0 })}>
-                           {deficit}
+                           <FormatNumber value={deficit} />
                         </div>
                         <Tippy
                            content={t(L.StatisticsResourcesDeficitDesc, {
