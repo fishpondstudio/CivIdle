@@ -1,4 +1,4 @@
-# Industry Idle Translations
+# CivIdle Translations
 
 Base language is English and can be found in the list below
 

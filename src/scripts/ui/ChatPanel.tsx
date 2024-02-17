@@ -36,8 +36,11 @@ export function ChatPanel(): React.ReactNode {
    );
    const user = useUser();
    const [shouldScroll, setShouldScroll] = useState(false);
+   const [forceScrollOnce, setForceScrollOnce] = useState(false);
    const scrollAreaRef = useRef<HTMLDivElement>(null);
    const [showChatWindow, setShowChatWindow] = useState(false);
+
+   const lastMessage = messages.length > 0 ? messages[messages.length - 1] : null;
 
    useTypedEvent(ToggleChatWindow, (on) => {
       setShowChatWindow(on);
@@ -45,21 +48,21 @@ export function ChatPanel(): React.ReactNode {
 
    // biome-ignore lint/correctness/useExhaustiveDependencies:
    useEffect(() => {
-      if (!shouldScroll) return;
+      if (!shouldScroll && !forceScrollOnce) return;
       scrollAreaRef.current?.scrollTo({
          top: scrollAreaRef.current.scrollHeight,
          behavior: "smooth",
       });
-   }, [messages.length > 0 ? messages[messages.length - 1].id : messages.length, user]);
+      if (forceScrollOnce) setForceScrollOnce(false);
+   }, [lastMessage?.id ?? 0, user]);
 
-   // biome-ignore lint/correctness/useExhaustiveDependencies:
    const onImageLoaded = useCallback(() => {
       if (!shouldScroll) return;
       scrollAreaRef.current?.scrollTo({
          top: scrollAreaRef.current.scrollHeight,
          behavior: "smooth",
       });
-   }, []);
+   }, [shouldScroll]);
 
    // biome-ignore lint/correctness/useExhaustiveDependencies:
    useEffect(() => {
@@ -123,14 +126,14 @@ export function ChatPanel(): React.ReactNode {
                      <div className="text-desc text-center text-small mv10">{t(L.ChatReconnect)}</div>
                   )}
                </div>
-               <ChatInput />
+               <ChatInput onChatSend={() => setForceScrollOnce(true)} />
             </div>
          ) : null}
       </div>
    );
 }
 
-function ChatInput(): React.ReactNode {
+function ChatInput({ onChatSend }: { onChatSend: (message: string) => void }): React.ReactNode {
    const options = useGameOptions();
    const [chat, setChat] = useState("");
    const chatInput = useRef<HTMLInputElement>(null);
@@ -143,6 +146,7 @@ function ChatInput(): React.ReactNode {
       } else {
          client.chat(chat, options.chatSendChannel);
       }
+      onChatSend(chat);
       setChat("");
    };
    useTypedEvent(SetChatInput, (content) => {

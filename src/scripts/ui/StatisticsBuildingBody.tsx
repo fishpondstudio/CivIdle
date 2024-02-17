@@ -14,12 +14,12 @@ import { Tick } from "../../../shared/logic/TickLogic";
 import type { IBuildingData } from "../../../shared/logic/Tile";
 import {
    forEach,
-   formatPercent,
    formatHMS,
+   formatNumber,
+   formatPercent,
    keysOf,
    mReduceOf,
    safeAdd,
-   formatNumber,
 } from "../../../shared/utilities/Helper";
 import type { PartialSet, PartialTabulate } from "../../../shared/utilities/TypeDefinitions";
 import { L, t } from "../../../shared/utilities/i18n";
@@ -307,7 +307,7 @@ function ResourcesTab({ gameState }: IBuildingComponentProps): React.ReactNode {
             </div>
          </fieldset>
          <TableView
-            extraClasses={"sticky-header f1"}
+            classNames="sticky-header f1"
             header={[
                { name: "", sortable: true },
                { name: t(L.ResourceAmount), sortable: true },
@@ -317,8 +317,6 @@ function ResourcesTab({ gameState }: IBuildingComponentProps): React.ReactNode {
             data={keysOf(unlockedResourcesList)}
             compareFunc={(a, b, i) => {
                switch (i) {
-                  case 0:
-                     return Config.Resource[a].name().localeCompare(Config.Resource[b].name());
                   case 1:
                      return (resourceAmounts[a] ?? 0) - (resourceAmounts[b] ?? 0);
                   case 2:
@@ -331,6 +329,9 @@ function ResourcesTab({ gameState }: IBuildingComponentProps): React.ReactNode {
                      return timeLeftA !== timeLeftB
                         ? timeLeftB - timeLeftA
                         : Config.Resource[a].name().localeCompare(Config.Resource[b].name());
+                  }
+                  default: {
+                     return Config.Resource[a].name().localeCompare(Config.Resource[b].name());
                   }
                }
             }}
@@ -365,7 +366,7 @@ function ResourcesTab({ gameState }: IBuildingComponentProps): React.ReactNode {
                            </div>
                         </TextWithHelp>
                      </td>
-                     <td className={`right ${deficit < 0 ? "text-red" : ""}`}>{formatHMS(timeLeft)}</td>
+                     <td className={deficit < 0 ? "text-red" : ""}>{formatHMS(timeLeft)}</td>
                   </tr>
                );
             }}

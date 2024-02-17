@@ -7,13 +7,13 @@ export interface ITableHeader {
 }
 
 export function TableView<T>({
-   extraClasses = "",
+   classNames,
    header,
    data,
    compareFunc,
    renderRow,
 }: {
-   extraClasses?: string;
+   classNames?: string;
    header: ITableHeader[];
    data: T[];
    renderRow: (item: T) => React.ReactNode;
@@ -22,7 +22,7 @@ export function TableView<T>({
    const [sortColumn, setSortColumn] = useState(header.findIndex((v) => v.sortable));
    const [asc, setAsc] = useState(true);
    return (
-      <div className={`table-view ${extraClasses}`}>
+      <div className={`table-view ${classNames ?? ""}`}>
          <table>
             <tbody>
                <tr>
