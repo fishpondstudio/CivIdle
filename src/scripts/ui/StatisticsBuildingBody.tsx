@@ -12,7 +12,15 @@ import { GameFeature, hasFeature } from "../../../shared/logic/FeatureLogic";
 import { getBuildingIO, unlockedResources } from "../../../shared/logic/IntraTickCache";
 import { Tick } from "../../../shared/logic/TickLogic";
 import type { IBuildingData } from "../../../shared/logic/Tile";
-import { forEach, formatPercent, keysOf, mReduceOf, safeAdd } from "../../../shared/utilities/Helper";
+import {
+   forEach,
+   formatPercent,
+   formatHMS,
+   keysOf,
+   mReduceOf,
+   safeAdd,
+   formatNumber,
+} from "../../../shared/utilities/Helper";
 import type { PartialSet, PartialTabulate } from "../../../shared/utilities/TypeDefinitions";
 import { L, t } from "../../../shared/utilities/i18n";
 import { LookAtMode, WorldScene } from "../scenes/WorldScene";
@@ -22,6 +30,8 @@ import { playClick } from "../visuals/Sound";
 import { BuildingColorComponent } from "./BuildingColorComponent";
 import type { IBuildingComponentProps } from "./BuildingPage";
 import { FormatNumber } from "./HelperComponents";
+import { TableView } from "./TableView";
+import { TextWithHelp } from "./TextWithHelpComponent";
 
 type Tab = "resources" | "buildings" | "transportation";
 
@@ -235,7 +245,7 @@ function TransportationTab({ gameState }: IBuildingComponentProps): React.ReactN
    );
 }
 
-type SortByOptions = "name" | "amount" | "input" | "output";
+type SortByOptions = "name" | "amount" | "input" | "output" | "diff";
 type SortOrder = "asc" | "desc";
 
 function ResourcesTab({ gameState }: IBuildingComponentProps): React.ReactNode {
@@ -296,98 +306,70 @@ function ResourcesTab({ gameState }: IBuildingComponentProps): React.ReactNode {
                </div>
             </div>
          </fieldset>
-         <div className="table-view sticky-header f1">
-            <table>
-               <thead>
-                  <tr>
-                     <th onClick={() => handleSortClick("name")}>
-                        {sortBy === "name" ? (
-                           <div className="f1 m-icon small">
-                              {sortOrder === "asc" ? "arrow_upward" : "arrow_downward"}
+         <TableView
+            extraClasses={"sticky-header f1"}
+            header={[
+               { name: "", sortable: true },
+               { name: t(L.ResourceAmount), sortable: true },
+               { name: t(L.StatisticsResourcesDeficit), sortable: true },
+               { name: t(L.StatisticsResourcesRunOut), sortable: true },
+            ]}
+            data={keysOf(unlockedResourcesList)}
+            compareFunc={(a, b, i) => {
+               switch (i) {
+                  case 0:
+                     return Config.Resource[a].name().localeCompare(Config.Resource[b].name());
+                  case 1:
+                     return (resourceAmounts[a] ?? 0) - (resourceAmounts[b] ?? 0);
+                  case 2:
+                     return (outputs[a] ?? 0) - (inputs[a] ?? 0) - ((outputs[b] ?? 0) - (inputs[b] ?? 0));
+                  case 3: {
+                     const deficitA = (outputs[a] ?? 0) - (inputs[a] ?? 0);
+                     const deficitB = (outputs[b] ?? 0) - (inputs[b] ?? 0);
+                     const timeLeftA = deficitA < 0 ? (resourceAmounts[a] ?? 0) / deficitA : -Infinity;
+                     const timeLeftB = deficitB < 0 ? (resourceAmounts[b] ?? 0) / deficitB : -Infinity;
+                     return timeLeftA !== timeLeftB
+                        ? timeLeftB - timeLeftA
+                        : Config.Resource[a].name().localeCompare(Config.Resource[b].name());
+                  }
+               }
+            }}
+            renderRow={(res) => {
+               const r = Config.Resource[res];
+               if (NoPrice[res] || NoStorage[res]) {
+                  return null;
+               }
+               const output = outputs[res] ?? 0;
+               const input = inputs[res] ?? 0;
+               const deficit = output - input;
+               const amount = resourceAmounts[res] ?? 0;
+               const timeLeft = deficit < 0 ? Math.abs((1000 * amount ?? 0) / deficit) : Infinity;
+
+               return (
+                  <tr key={res}>
+                     <td>{r.name()}</td>
+                     <td className="right">
+                        <FormatNumber value={amount} />
+                     </td>
+                     <td className={`right ${deficit < 0 ? "text-red" : ""}`}>
+                        <TextWithHelp
+                           help={t(L.StatisticsResourcesDeficitDesc, {
+                              output: formatNumber(output, false, false),
+                              input: formatNumber(input, false, false),
+                           })}
+                           noStyle
+                        >
+                           <div>{deficit}</div>
+                           <div className="row jce text-small text-desc">
+                              {output} - {input}
                            </div>
-                        ) : (
-                           <div className="f1" />
-                        )}
-                     </th>
-                     <th onClick={() => handleSortClick("amount")}>
-                        <div className="row">
-                           {sortBy === "amount" ? (
-                              <div className="f1 m-icon small">
-                                 {sortOrder === "asc" ? "arrow_upward" : "arrow_downward"}
-                              </div>
-                           ) : (
-                              <div className="f1" />
-                           )}
-                           <div>{t(L.ResourceAmount)}</div>
-                        </div>
-                     </th>
-                     <th onClick={() => handleSortClick("output")}>
-                        <div className="row">
-                           {sortBy === "output" ? (
-                              <div className="f1 m-icon small">
-                                 {sortOrder === "asc" ? "arrow_upward" : "arrow_downward"}
-                              </div>
-                           ) : (
-                              <div className="f1" />
-                           )}
-                           <div className="m-icon small">output</div>
-                        </div>
-                     </th>
-                     <th onClick={() => handleSortClick("input")}>
-                        <div className="row">
-                           {sortBy === "input" ? (
-                              <div className="f1 m-icon small">
-                                 {sortOrder === "asc" ? "arrow_upward" : "arrow_downward"}
-                              </div>
-                           ) : (
-                              <div className="f1" />
-                           )}
-                           <div className="m-icon small">exit_to_app</div>
-                        </div>
-                     </th>
+                        </TextWithHelp>
+                     </td>
+                     <td className={`right ${deficit < 0 ? "text-red" : ""}`}>{formatHMS(timeLeft)}</td>
                   </tr>
-               </thead>
-               <tbody>
-                  {keysOf(unlockedResourcesList)
-                     .sort((a, b) => {
-                        const aIdx = sortOrder === "asc" ? a : b;
-                        const bIdx = sortOrder === "asc" ? b : a;
-                        if (sortBy === "amount") {
-                           return (resourceAmounts[aIdx] ?? 0) - (resourceAmounts[bIdx] ?? 0);
-                        }
-                        if (sortBy === "input") {
-                           return (inputs[aIdx] ?? 0) - (inputs[bIdx] ?? 0);
-                        }
-                        if (sortBy === "output") {
-                           return (outputs[aIdx] ?? 0) - (outputs[bIdx] ?? 0);
-                        }
-                        return Config.Resource[aIdx].name().localeCompare(Config.Resource[bIdx].name());
-                     })
-                     .map((res) => {
-                        const r = Config.Resource[res];
-                        if (NoPrice[res] || NoStorage[res]) {
-                           return null;
-                        }
-                        const output = outputs[res] ?? 0;
-                        const input = inputs[res] ?? 0;
-                        return (
-                           <tr key={res}>
-                              <td>{r.name()}</td>
-                              <td className="right">
-                                 <FormatNumber value={resourceAmounts[res]} />
-                              </td>
-                              <td className="right">
-                                 <FormatNumber value={output} />
-                              </td>
-                              <td className={classNames({ right: true, "text-red": input > output })}>
-                                 <FormatNumber value={input} />
-                              </td>
-                           </tr>
-                        );
-                     })}
-               </tbody>
-            </table>
-         </div>
+               );
+            }}
+         />
       </article>
    );
 }
