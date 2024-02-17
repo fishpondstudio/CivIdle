@@ -910,4 +910,6 @@ export const EN = {
    PlayerTradeClaimAllMessage: "You have claimed %{count} trades",
    SteamAchievement: "Steam Achievement",
    SteamAchievementDetails: "View Steam Achievement",
+   ChatHideLatestMessage: "Hide Latest Message Content",
+   ChatHideLatestMessageDesc: "Replace the content of latest chat message with asterisks in the chat bar",
 };

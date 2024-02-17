@@ -14,6 +14,7 @@ import { formatPercent } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import { useGameOptions } from "../Global";
 import { openUrl } from "../utilities/Platform";
+import { playClick } from "../visuals/Sound";
 import { ChangeSoundComponent } from "./ChangeSoundComponent";
 import { LanguageSelect } from "./LanguageSelectComponent";
 import { MenuComponent } from "./MenuComponent";
@@ -112,6 +113,29 @@ export function GameplayOptionPage(): React.ReactNode {
             <fieldset>
                <legend>{t(L.Sound)}</legend>
                <ChangeSoundComponent />
+            </fieldset>
+            <fieldset>
+               <legend>{t(L.Chat)}</legend>
+               <div className="row">
+                  <div className="f1">
+                     <div>{t(L.ChatHideLatestMessage)}</div>
+                     <div className="text-desc">{t(L.ChatHideLatestMessageDesc)}</div>
+                  </div>
+                  <div
+                     onClick={() => {
+                        playClick();
+                        options.chatHideLatestMessage = !options.chatHideLatestMessage;
+                        notifyGameOptionsUpdate(options);
+                     }}
+                     className="ml10 pointer"
+                  >
+                     {options.chatHideLatestMessage ? (
+                        <div className="m-icon text-green">toggle_on</div>
+                     ) : (
+                        <div className="m-icon text-grey">toggle_off</div>
+                     )}
+                  </div>
+               </div>
             </fieldset>
          </div>
       </div>

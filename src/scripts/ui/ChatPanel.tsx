@@ -201,7 +201,9 @@ function ChatMessage({
          className={classNames({
             "chat-message-item": true,
             "is-even": chat.id % 2 === 0,
-            "mentions-me": user ? chat.message.includes(`@${user.handle}`) : false,
+            "mentions-me": user
+               ? chat.message.toLowerCase().includes(`@${user.handle.toLowerCase()}`)
+               : false,
          })}
       >
          {chat.name === user?.handle ? (
@@ -255,6 +257,7 @@ function ChatMessage({
 }
 
 function LatestMessage({ messages }: { messages: LocalChat[] }): React.ReactNode {
+   const options = useGameOptions();
    let latestMessage: React.ReactNode = null;
    for (let i = messages.length - 1; i >= 0; --i) {
       const message = messages[i];
@@ -262,7 +265,7 @@ function LatestMessage({ messages }: { messages: LocalChat[] }): React.ReactNode
          latestMessage = (
             <>
                <span className="text-desc">{message.name}: </span>
-               {message.message}
+               {options.chatHideLatestMessage ? message.message.replaceAll(/[\S]/g, "*") : message.message}
             </>
          );
          break;

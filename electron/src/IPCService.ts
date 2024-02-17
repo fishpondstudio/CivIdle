@@ -14,11 +14,15 @@ export class IPCService {
       outputFile(path.join(getGameSavePath(), this.getSteamId(), name), content);
    }
 
+   private counter = 0;
+
    public fileWriteBytes(name: string, content: ArrayBuffer): void {
-      outputFile(path.join(getGameSavePath(), this.getSteamId(), name), Buffer.from(content));
+      const buffer = Buffer.from(content);
+      outputFile(path.join(getGameSavePath(), this.getSteamId(), name), buffer);
+      const backup = `${name}_${(++this.counter % 10) + 1}`;
       outputFile(
-         path.join(getLocalGameSavePath(), this.getAppId().toString(), this.getSteamId(), name),
-         Buffer.from(content),
+         path.join(getLocalGameSavePath(), this.getAppId().toString(), this.getSteamId(), backup),
+         buffer,
       );
    }
 

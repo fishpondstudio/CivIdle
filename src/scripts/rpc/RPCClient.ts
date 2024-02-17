@@ -151,7 +151,7 @@ export async function connectWebSocket(): Promise<number> {
                chatMessages = c.chat.map((c) => ({ ...c, id: ++chatId }));
             } else {
                c.chat.forEach((m) => {
-                  if (user && m.message.includes(`@${user!.handle} `)) {
+                  if (user && m.message.toLowerCase().includes(`@${user.handle.toLowerCase()} `)) {
                      playBubble();
                      showToast(`${m.name}: ${m.message}`);
                   }

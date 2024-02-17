@@ -358,12 +358,12 @@ function ResourcesTab({ gameState }: IBuildingComponentProps): React.ReactNode {
                         </div>
                         <Tippy
                            content={t(L.StatisticsResourcesDeficitDesc, {
-                              output: formatNumber(output, false, false),
-                              input: formatNumber(input, false, false),
+                              output: formatNumber(output),
+                              input: formatNumber(input),
                            })}
                         >
                            <div className="text-small text-right text-desc">
-                              {output} - {input}
+                              <FormatNumber value={output} /> - <FormatNumber value={input} />
                            </div>
                         </Tippy>
                      </td>
