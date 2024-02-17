@@ -34,11 +34,11 @@ export function TechPage({ id }: { id: Tech }): React.ReactNode {
    const gs = useGameState();
    const tech = Config.Tech[id];
    const goBackToCity = () => Singleton().sceneManager.loadScene(WorldScene);
-   const canUnlock = () => {
+   const isTechAvailable = () => {
       return tech.column <= MAX_TECH_COLUMN;
    };
    const unlock = () => {
-      if (!canUnlock()) {
+      if (!isTechAvailable() || !canUnlock()) {
          return;
       }
       if (!tech.requireTech.every((t) => gs.unlockedTech[t]) || progress < 1) {
@@ -64,7 +64,7 @@ export function TechPage({ id }: { id: Tech }): React.ReactNode {
    useShortcut("TechPageGoBackToCity", goBackToCity, [id]);
    useShortcut("TechPageUnlockTech", unlock, [id]);
 
-   if (!canUnlock()) {
+   if (!isTechAvailable()) {
       return <InDevelopmentPage />;
    }
 
@@ -77,6 +77,7 @@ export function TechPage({ id }: { id: Tech }): React.ReactNode {
    const progress =
       reduceOf(availableResources, (prev, k, v) => prev + Math.min(v, unlockCost[k] ?? 0), 0) /
       reduceOf(unlockCost, (prev, _, v) => prev + v, 0);
+   const canUnlock = () => prerequisitesSatisfied && progress >= 1;
 
    let prerequisiteCount = 0;
    return (
@@ -146,7 +147,7 @@ export function TechPage({ id }: { id: Tech }): React.ReactNode {
                            <ProgressBarComponent progress={progress} />
                         </div>
                         <div style={{ width: "10px" }} />
-                        <button disabled={!prerequisitesSatisfied || progress < 1} onClick={() => unlock()}>
+                        <button disabled={!canUnlock()} onClick={() => unlock()}>
                            {t(L.UnlockBuilding)}
                         </button>
                      </div>

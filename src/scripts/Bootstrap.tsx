@@ -109,7 +109,7 @@ export async function startGame(
       const offlineTime = clamp(actualOfflineTime, 0, maxOfflineTime);
 
       routeTo(LoadingPage, { stage: LoadingPageStage.OfflineProduction });
-      if (offlineTime >= 60) {
+      if (actualOfflineTime >= 60) {
          const before = structuredClone(gameState);
          let timeLeft = offlineTime;
          while (timeLeft > 0) {

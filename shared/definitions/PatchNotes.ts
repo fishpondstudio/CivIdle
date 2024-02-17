@@ -7,6 +7,12 @@ export const PatchNotes: PatchNote[] = [
    {
       version: "0.1.139",
       content: [
+         [
+            "Bugfix",
+            "Fix a bug where stockpile input capacity incorrectly affects max stockpile (Thanks @Valeria and @GudKnight for reporting)",
+         ],
+         ["Bugfix", "Fix a bug where unlock tech shortcut key allows unlocking already unlocked tech"],
+         ["Bugfix", "Fix Petra does not generate time warp when offline time is set to 0%"],
          ["QoL", "Chat mentions is now case insensitive"],
          ["QoL", "Add a new option to hide the latest chat content (avoid spoiler)"],
       ],

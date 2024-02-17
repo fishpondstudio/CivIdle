@@ -275,8 +275,8 @@ function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
 
    let hasTransported = false;
 
-   forEach(input, (res, val) => {
-      const amount = val * building.stockpileCapacity;
+   forEach(input, (res, rawAmount) => {
+      const amount = rawAmount * building.stockpileCapacity;
       if (amount <= 0) {
          return;
       }
@@ -284,7 +284,7 @@ function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
          return;
       }
 
-      let maxAmount = getStockpileMax(building) * amount;
+      let maxAmount = getStockpileMax(building) * rawAmount;
       if ("resourceImports" in building) {
          const ri = building as IResourceImportBuildingData;
          maxAmount = ri.resourceImports[res]?.cap ?? 0;
