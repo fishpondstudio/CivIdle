@@ -1,3 +1,4 @@
+import Tippy from "@tippyjs/react";
 import classNames from "classnames";
 import { useState } from "react";
 import {
@@ -31,7 +32,6 @@ import { BuildingColorComponent } from "./BuildingColorComponent";
 import type { IBuildingComponentProps } from "./BuildingPage";
 import { FormatNumber } from "./HelperComponents";
 import { TableView } from "./TableView";
-import { TextWithHelp } from "./TextWithHelpComponent";
 
 type Tab = "resources" | "buildings" | "transportation";
 
@@ -310,9 +310,9 @@ function ResourcesTab({ gameState }: IBuildingComponentProps): React.ReactNode {
             classNames="sticky-header f1"
             header={[
                { name: "", sortable: true },
-               { name: t(L.ResourceAmount), sortable: true },
-               { name: t(L.StatisticsResourcesDeficit), sortable: true },
-               { name: t(L.StatisticsResourcesRunOut), sortable: true },
+               { name: t(L.ResourceAmount), right: true, sortable: true },
+               { name: t(L.StatisticsResourcesDeficit), right: true, sortable: true },
+               { name: t(L.StatisticsResourcesRunOut), right: true, sortable: true },
             ]}
             data={keysOf(unlockedResourcesList)}
             compareFunc={(a, b, i) => {
@@ -352,21 +352,24 @@ function ResourcesTab({ gameState }: IBuildingComponentProps): React.ReactNode {
                      <td className="right">
                         <FormatNumber value={amount} />
                      </td>
-                     <td className={`right ${deficit < 0 ? "text-red" : ""}`}>
-                        <TextWithHelp
-                           help={t(L.StatisticsResourcesDeficitDesc, {
+                     <td>
+                        <div className={classNames({ "text-right": true, "text-red": deficit < 0 })}>
+                           {deficit}
+                        </div>
+                        <Tippy
+                           content={t(L.StatisticsResourcesDeficitDesc, {
                               output: formatNumber(output, false, false),
                               input: formatNumber(input, false, false),
                            })}
-                           noStyle
                         >
-                           <div>{deficit}</div>
-                           <div className="row jce text-small text-desc">
+                           <div className="text-small text-right text-desc">
                               {output} - {input}
                            </div>
-                        </TextWithHelp>
+                        </Tippy>
                      </td>
-                     <td className={deficit < 0 ? "text-red" : ""}>{formatHMS(timeLeft)}</td>
+                     <td className={classNames({ "text-red": deficit < 0, "text-right text-small": true })}>
+                        {formatHMS(timeLeft)}
+                     </td>
                   </tr>
                );
             }}

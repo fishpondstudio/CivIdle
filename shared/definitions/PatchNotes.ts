@@ -7,6 +7,7 @@ export const PatchNotes: PatchNote[] = [
    {
       version: "0.1.138",
       content: [
+         ["QoL", "Improve Statistics Building (Censor's Office) resource UI"],
          ["QoL", "Chat will not scroll when your cursor is on a chat message"],
          ["Bugfix", "Fix Chinese characters not showing up in Tech Tree"],
          ["Content", "Add Simplified Chinese translation (@Shallowsing)"],
