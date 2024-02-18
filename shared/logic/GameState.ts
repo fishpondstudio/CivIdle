@@ -5,6 +5,7 @@ import type { Resource } from "../definitions/ResourceDefinitions";
 import type { RomeProvince } from "../definitions/RomeProvinceDefinitions";
 import type { Tech } from "../definitions/TechDefinitions";
 import { EN } from "../languages/en";
+import { FR } from "../languages/fr";
 import { RU } from "../languages/ru";
 import { ZH_CN } from "../languages/zh-CN";
 import type { ChatChannel } from "../utilities/Database";
@@ -116,6 +117,7 @@ export class GameOptions {
 
 export const Languages = {
    en: EN,
+   fr: FR,
    ru: RU,
    zh_CN: ZH_CN,
 } as const;
