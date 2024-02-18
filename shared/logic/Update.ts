@@ -178,6 +178,14 @@ function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
 
    Tick.next.totalValue += getBuildingValue(building);
 
+   forEach(building.resources, (res, amount) => {
+      if (amount <= 0) {
+         return;
+      }
+      Tick.next.totalValue += NoPrice[res] ? 0 : (Config.ResourcePrice[res] ?? 0) * amount;
+      safePush(Tick.next.resourcesByTile, res, xy);
+   });
+
    if (building.status === "building" || building.status === "upgrading") {
       const cost = getBuildingCost(building);
       let completed = true;
@@ -242,14 +250,6 @@ function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
       getBuildingIO(xy, "input", IOCalculation.Multiplier | IOCalculation.Capacity, gs),
    );
    const output = getBuildingIO(xy, "output", IOCalculation.Multiplier | IOCalculation.Capacity, gs);
-
-   forEach(building.resources, (res, amount) => {
-      if (amount <= 0) {
-         return;
-      }
-      Tick.next.totalValue += NoPrice[res] ? 0 : (Config.ResourcePrice[res] ?? 0) * amount;
-      safePush(Tick.next.resourcesByTile, res, xy);
-   });
 
    const requiredDeposits = Config.Building[building.type].deposit;
    if (requiredDeposits) {
