@@ -5,6 +5,7 @@ import { L, t } from "../../../shared/utilities/i18n";
 import { useGameOptions } from "../Global";
 import { jsxMapOf } from "../utilities/Helper";
 import type { IBuildingComponentProps } from "./BuildingPage";
+import { ColorPicker } from "./ColorPicker";
 
 export function BuildingColorComponent({ gameState, xy }: IBuildingComponentProps): React.ReactNode {
    const tile = gameState.tiles.get(xy);
@@ -20,13 +21,13 @@ export function BuildingColorComponent({ gameState, xy }: IBuildingComponentProp
          <div className="row mv5">
             <div className="f1">{def.name()}</div>
             <div>
-               <input
-                  type="color"
+               <ColorPicker
                   value={gameOptions.buildingColors[building.type] ?? "#ffffff"}
                   onChange={(v) => {
-                     gameOptions.buildingColors[building.type] = v.target.value;
+                     gameOptions.buildingColors[building.type] = v;
                      notifyGameOptionsUpdate();
                   }}
+                  timeout={250}
                />
             </div>
          </div>
@@ -48,13 +49,13 @@ function ResourceColor({ resource }: { resource: Resource }) {
          <div className="row mv5">
             <div className="f1">{r.name()}</div>
             <div>
-               <input
-                  type="color"
+               <ColorPicker
                   value={gameOptions.resourceColors[resource] ?? "#ffffff"}
                   onChange={(v) => {
-                     gameOptions.resourceColors[resource] = v.target.value;
+                     gameOptions.resourceColors[resource] = v;
                      notifyGameOptionsUpdate();
                   }}
+                  timeout={250}
                />
             </div>
          </div>

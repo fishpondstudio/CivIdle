@@ -11,6 +11,7 @@ import { L, t } from "../../../shared/utilities/i18n";
 import { useGameOptions } from "../Global";
 import { playClick } from "../visuals/Sound";
 import { ChangeModernUIComponent } from "./ChangeModernUIComponent";
+import { ColorPicker } from "./ColorPicker";
 import { MenuComponent } from "./MenuComponent";
 
 export function ThemePage(): React.ReactNode {
@@ -32,13 +33,13 @@ export function ThemePage(): React.ReactNode {
                      return (
                         <div key={k} className="row mv5">
                            <div className="f1">{ThemeColorNames[k]()}</div>
-                           <input
-                              type="color"
-                              value={gameOptions.themeColors[k]}
+                           <ColorPicker
+                              value={gameOptions.themeColors[k] as string}
                               onChange={(v) => {
-                                 gameOptions.themeColors[k] = v.target.value as never;
+                                 gameOptions.themeColors[k] = v as never;
                                  notifyGameOptionsUpdate();
                               }}
+                              timeout={250}
                            />
                         </div>
                      );
@@ -85,13 +86,13 @@ export function ThemePage(): React.ReactNode {
                      return (
                         <div key={b} className="row mv5">
                            <div className="f1">{Config.Building[b].name()}</div>
-                           <input
-                              type="color"
+                           <ColorPicker
                               value={gameOptions.buildingColors[b] ?? "#ffffff"}
                               onChange={(v) => {
-                                 gameOptions.buildingColors[b] = v.target.value;
+                                 gameOptions.buildingColors[b] = v;
                                  notifyGameOptionsUpdate();
                               }}
+                              timeout={250}
                            />
                         </div>
                      );
@@ -115,13 +116,13 @@ export function ThemePage(): React.ReactNode {
                      return (
                         <div key={b} className="row mv5">
                            <div className="f1">{Config.Resource[b].name()}</div>
-                           <input
-                              type="color"
+                           <ColorPicker
                               value={gameOptions.resourceColors[b] ?? "#ffffff"}
                               onChange={(v) => {
-                                 gameOptions.resourceColors[b] = v.target.value;
+                                 gameOptions.resourceColors[b] = v;
                                  notifyGameOptionsUpdate();
                               }}
+                              timeout={250}
                            />
                         </div>
                      );

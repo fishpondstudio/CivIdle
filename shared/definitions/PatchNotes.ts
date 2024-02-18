@@ -15,6 +15,7 @@ export const PatchNotes: PatchNote[] = [
             "Bugfix",
             "Fix a bug where sometimes chat still scrolls even if your mouse cursor is on chat message",
          ],
+         ["Bugfix", "Fix a bug where picking a building color causes the game to drop frames"],
       ],
    },
    {
