@@ -189,6 +189,37 @@ export function ResourceImportComponent({ gameState, xy }: IBuildingComponentPro
                {t(L.RedistributeAmongSelectedCap)}
             </div>
          </div>
+         <div className="sep5"></div>
+         <div className="row text-small">
+            <div className="text-desc">{t(L.ClearSelected)}</div>
+            <div className="f1"></div>
+            <div
+               className="text-link mr10"
+               onClick={() => {
+                  forEach(building.resourceImports, (res, v) => {
+                     if (selected.has(res)) {
+                        v.perCycle = 0;
+                     }
+                  });
+                  notifyGameStateUpdate();
+               }}
+            >
+               {t(L.RedistributeAmongSelectedImport)}
+            </div>
+            <div
+               className="text-link"
+               onClick={() => {
+                  forEach(building.resourceImports, (res, v) => {
+                     if (selected.has(res)) {
+                        v.cap = 0;
+                     }
+                  });
+                  notifyGameStateUpdate();
+               }}
+            >
+               {t(L.RedistributeAmongSelectedCap)}
+            </div>
+         </div>
       </fieldset>
    );
 }

@@ -41,9 +41,6 @@ export function TechPage({ id }: { id: Tech }): React.ReactNode {
       if (!isTechAvailable() || !canUnlock()) {
          return;
       }
-      if (!tech.requireTech.every((t) => gs.unlockedTech[t]) || progress < 1) {
-         return;
-      }
       if (!trySpendResources(unlockCost, gs)) {
          return;
       }
@@ -77,7 +74,7 @@ export function TechPage({ id }: { id: Tech }): React.ReactNode {
    const progress =
       reduceOf(availableResources, (prev, k, v) => prev + Math.min(v, unlockCost[k] ?? 0), 0) /
       reduceOf(unlockCost, (prev, _, v) => prev + v, 0);
-   const canUnlock = () => prerequisitesSatisfied && progress >= 1;
+   const canUnlock = () => prerequisitesSatisfied && progress >= 1 && !gs.unlockedTech[id];
 
    let prerequisiteCount = 0;
    return (

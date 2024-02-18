@@ -906,6 +906,7 @@ export const EN = {
    RedistributeAmongSelected: "Redistribute Among Selected",
    RedistributeAmongSelectedImport: "Import",
    RedistributeAmongSelectedCap: "Cap",
+   ClearSelected: "Clear Selected",
    PlayerTradeTariffTooltip: "Collected From a Trade Tariff",
    PlayerTradeClaimAll: "Claim All",
    PlayerTradeClaimAllMessage: "You have claimed %{count} trades",

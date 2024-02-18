@@ -5,7 +5,7 @@ interface PatchNote {
 
 export const PatchNotes: PatchNote[] = [
    {
-      version: "0.1.138",
+      version: "0.1.140",
       content: [
          [
             "Bugfix",
@@ -16,6 +16,8 @@ export const PatchNotes: PatchNote[] = [
             "Fix a bug where sometimes chat still scrolls even if your mouse cursor is on chat message",
          ],
          ["Bugfix", "Fix a bug where picking a building color causes the game to drop frames"],
+         ["QoL", "Support clearing warehouse import/cap in batch mode"],
+         ["QoL", "Typing a chat command will add a dark background to input"],
       ],
    },
    {

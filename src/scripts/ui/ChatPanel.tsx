@@ -22,6 +22,7 @@ import {
 import { getCountryName, getFlagUrl } from "../utilities/CountryCode";
 import { useTypedEvent } from "../utilities/Hook";
 import { openUrl } from "../utilities/Platform";
+import { ProfanityFilter } from "../utilities/ProfanityFilter";
 import { showModal } from "./GlobalModal";
 import { RenderHTML } from "./RenderHTMLComponent";
 import { SelectChatChannelModal } from "./SelectChatChannelModal";
@@ -155,7 +156,7 @@ function ChatInput({ onChatSend }: { onChatSend: (message: string) => void }): R
          addSystemMessage(`$ ${command}`);
          handleChatCommand(command).catch((e) => addSystemMessage(`${command}: ${e}`));
       } else {
-         client.chat(chat, options.chatSendChannel);
+         client.chat(ProfanityFilter.clean(chat), options.chatSendChannel);
       }
       onChatSend(chat);
       setChat("");
@@ -178,7 +179,7 @@ function ChatInput({ onChatSend }: { onChatSend: (message: string) => void }): R
          </Tippy>
          <input
             ref={chatInput}
-            className="f1"
+            className={classNames({ f1: true, "is-chat-command": chat.startsWith("/") })}
             type="text"
             style={{ margin: "0 2px 0 0" }}
             value={chat}

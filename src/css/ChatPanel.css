@@ -92,3 +92,10 @@
    margin: 0 0 0 2px;
    border-radius: 2px;
 }
+
+#chat-panel input.is-chat-command {
+   font-family: "Roboto Mono", monospace;
+   font-weight: 500;
+   color: #fff;
+   background: #333;
+}
