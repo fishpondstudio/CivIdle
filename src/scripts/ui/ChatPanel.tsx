@@ -3,6 +3,7 @@ import classNames from "classnames";
 import React, { memo, useCallback, useEffect, useRef, useState } from "react";
 import { AccountLevel, ChatChannels, type IChat, type IUser } from "../../../shared/utilities/Database";
 import { keysOf, sizeOf } from "../../../shared/utilities/Helper";
+import { censor } from "../../../shared/utilities/ProfanityFilter";
 import { TypedEvent } from "../../../shared/utilities/TypedEvent";
 import { L, t } from "../../../shared/utilities/i18n";
 import AccountLevelMod from "../../images/AccountLevelMod.png";
@@ -22,7 +23,6 @@ import {
 import { getCountryName, getFlagUrl } from "../utilities/CountryCode";
 import { useTypedEvent } from "../utilities/Hook";
 import { openUrl } from "../utilities/Platform";
-import { ProfanityFilter } from "../utilities/ProfanityFilter";
 import { showModal } from "./GlobalModal";
 import { RenderHTML } from "./RenderHTMLComponent";
 import { SelectChatChannelModal } from "./SelectChatChannelModal";
@@ -150,7 +150,7 @@ function ChatInput({ onChatSend }: { onChatSend: (message: string) => void }): R
          addSystemMessage(`$ ${command}`);
          handleChatCommand(command).catch((e) => addSystemMessage(`${command}: ${e}`));
       } else {
-         client.chat(ProfanityFilter.clean(chat), options.chatSendChannel);
+         client.chat(censor(chat), options.chatSendChannel);
       }
       onChatSend(chat);
       setChat("");
