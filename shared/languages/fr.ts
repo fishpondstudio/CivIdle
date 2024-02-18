@@ -35,8 +35,7 @@ export const FR = {
    Gold: "Or",
    PreciousMetal: "Métal précieux",
    Market: "Marché",
-   MarketDesc:
-      "Permet d'échanger une ressource contre une autre. Les ressources disponbiles sont mises à jour toutes les heures",
+   MarketDesc: "Permet d'échanger une ressource contre une autre. Les ressources disponbiles sont mises à jour toutes les heures",
    CityState: "Cité-État",
    Literature: "Littérature",
    Machinery: "Machinerie",
@@ -179,8 +178,7 @@ export const FR = {
    OlivePlantation: "Oliveraie",
    Vineyard: "Vignoble",
    Caravansary: "Caravansérail",
-   CaravansaryDesc:
-      "Permet d'échanger des ressources avec d'autres joueurs et fournit un espace de stockage supplémetaire",
+   CaravansaryDesc: "Permet d'échanger des ressources avec d'autres joueurs et fournit un espace de stockage supplémetaire",
    Winery: "Domaine viticole",
    OilPress: "Presse à huile",
    Wine: "Vin",
@@ -390,16 +388,13 @@ export const FR = {
    EndConstructionDesc:
       "Lorsque vous interrompez la construction d'un bâtiment, toutes les ressources déjà utilisée ne seront pas restituées",
    Stonehenge: "Stonehenge",
-   StonehengeDesc:
-      "Tous les bâtiments qui consomment ou produisent de la pierre obtiennent +1 Multiplicateur de Production",
+   StonehengeDesc: "Tous les bâtiments qui consomment ou produisent de la pierre obtiennent +1 Multiplicateur de Production",
    LighthouseOfAlexandria: "Phare d'Alexandrie",
    LighthouseOfAlexandriaDesc: "Tous les bâtiments adjacents obtiennent +5 Multiplicateur de Stockage",
    PyramidOfGiza: "Pyramide de Gizeh",
-   PyramidOfGizaDesc:
-      "Tous les bâtiments qui produisent des ouvriers obtiennent +1 Multiplicateur de Production",
+   PyramidOfGizaDesc: "Tous les bâtiments qui produisent des ouvriers obtiennent +1 Multiplicateur de Production",
    ColossusOfRhodes: "Colosse de Rhodes",
-   ColossusOfRhodesDesc:
-      "Tous les bâtiments adjacents qui ne produisent pas d'ouvriers obtiennent +1 Bonheur",
+   ColossusOfRhodesDesc: "Tous les bâtiments adjacents qui ne produisent pas d'ouvriers obtiennent +1 Bonheur",
    MausoleumAtHalicarnassus: "Mausolée d'Halicarnasse",
    MausoleumAtHalicarnassusDesc: "Transport gratuit dans un rayon de 2 cases",
    HangingGarden: "Jardins suspendus",
@@ -430,8 +425,7 @@ export const FR = {
    Poseidon: "Poséidon",
    PoseidonDesc: "Tous les bâtiments adjacents obtiennent des améliorations gratuites jusqu'au niveau 20",
    Aphrodite: "Aphrodite",
-   AphroditeDesc:
-      "+1 Multiplicateur de Capacité de construction pour chaque niveau lors de l'amélioration des bâtiments au-délà du niveau 20",
+   AphroditeDesc: "+1 Multiplicateur de Capacité de construction pour chaque niveau lors de l'amélioration des bâtiments au-délà du niveau 20",
    Alps: "Alpes",
    AlpsDesc:
       "À chaque fois que le niveau d'un bâtiment est un compte rond, il obtient +1 Capacité de Production (+1 Multiplicateur de Consommation, +1 Multiplicateur de Production)",
@@ -440,8 +434,7 @@ export const FR = {
    SagradaFamília: "Sagrada Família",
    SagradaFamíliaDesc: "Sagrada Família",
    Petra: "Pétra",
-   PetraDesc:
-      "Génère une distorsion temporelle lorsque vous êtes hors ligne, que vous pouvez utiliser pour accélérer votre empire",
+   PetraDesc: "Génère une distorsion temporelle lorsque vous êtes hors ligne, que vous pouvez utiliser pour accélérer votre empire",
    OxfordUniversity: "Université d'Oxfort",
    OxfordUniversityDesc: "Chaque amélioration de bâtiment dans votre empire vous donne +1 Science par cycle",
    StPetersBasilica: "Basilique Saint-Pierre",
@@ -458,8 +451,7 @@ export const FR = {
    TempleOfArtemisDesc:
       "Toutes les forges d'épées et érmureries obtiennent +5 Niveau. Elles obtiennent également +1 Multiplicateur de Production, Multiplicateur de Capacité des Ouvriers et Multiplicateur de Stockage",
    TempleOfHeaven: "Temple du Ciel",
-   TempleOfHeavenDesc:
-      "Tous les bâtiments de niveau 10 ou supérieur obtiennent +1 Multiplicateur de Capacité des Ouvriers",
+   TempleOfHeavenDesc: "Tous les bâtiments de niveau 10 ou supérieur obtiennent +1 Multiplicateur de Capacité des Ouvriers",
    HimejiCastle: "Château de Himeji",
    HimejiCastleDesc:
       "Tous les constructeurs de caravelles, constructeurs de galions et constructeurs de frégates obtiennent +1 Multiplicateur de Production, Multiplicateur de Capacité des Ouvriers and Multiplicateur de Stockage",
@@ -495,8 +487,7 @@ export const FR = {
    HagiaSophiaDesc:
       "Le fonctionnement des bâtiments avec 0% Capacité de Production vous coûtent 1 bonheur de moins que d'habitude. Consomme 10 foi and produce 10 bonheur",
    AngkorWat: "Angkor Vat",
-   AngkorWatDesc:
-      "Tous les bâtiments adjacents obtiennent +1 Multiplicateur de Capacité des Ouvriers. Octroie 1 000 ouvriers",
+   AngkorWatDesc: "Tous les bâtiments adjacents obtiennent +1 Multiplicateur de Capacité des Ouvriers. Octroie 1 000 ouvriers",
    TerracottaArmy: "Armée de terre cuite",
    TerracottaArmyDesc:
       "Tous les camps miniers de fer obtiennent +1 Multiplicateur de Production, Multiplicateur de Capacité des Ouvriers and Multiplicateur de Stockage. Les forges de fer obtiennent +1 Multiplicateur de Production pour chaque camp minier de fer adjacent",
@@ -542,17 +533,14 @@ export const FR = {
    StockpileMaxUnlimited: "Illimité",
    StockpileMaxDesc:
       "Ce bâtiment cessera de transporter une ressource lorsqu'il y en aura suffisamment pour %{cycle} cycles de production",
-   StockpileMaxUnlimitedDesc:
-      "Ce bâtiment ne cessera jamais de transporter des ressources jusqu'à ce que le stockage soit plein",
+   StockpileMaxUnlimitedDesc: "Ce bâtiment ne cessera jamais de transporter des ressources jusqu'à ce que le stockage soit plein",
    ProductionPriority: "Priorité de production",
    DefaultProductionPriority: "Priorité de production par défaut",
    ConstructionPriority: "Prorité de construction",
    DefaultConstructionPriority: "Priorité de construction par défaut",
    DefaultUpgradePriority: "Priorité d'amélioration par défaut",
-   ProductionPriorityDesc:
-      "Plus la priorité d'un bâtiment est élévée, plus le transport des matériaux nécessaires à sa construction passera avant le reste",
-   TechProductionPriority:
-      "Débloque les priorités - permet de définir la priorité de production pour chaque bâtiment",
+   ProductionPriorityDesc: "Plus la priorité d'un bâtiment est élévée, plus le transport des matériaux nécessaires à sa construction passera avant le reste",
+   TechProductionPriority: "Débloque les priorités - permet de définir la priorité de production pour chaque bâtiment",
    TechStockpileMode: "Débloque le mode de stockage - permet d'ajuster le stock pour chaque bâtiment",
    ConstructionCost: "Coût de construction : %{cost}",
    RomeMapMenu: "Carte",
@@ -586,8 +574,7 @@ export const FR = {
    Apartment: "Appartement",
    Brewery: "Brasserie",
    Warehouse: "Entrepôt",
-   WarehouseDesc:
-      "Permet de transporter des ressources spécifiques et fournit un espace de stockage supplémentaire",
+   WarehouseDesc: "Permet de transporter des ressources spécifiques et fournit un espace de stockage supplémentaire",
    ProvinceHispania: "Hispanie",
    ProvinceCantabri: "Cantabrie",
    ProvinceGallia: "Gaule",
@@ -692,8 +679,7 @@ export const FR = {
    PlayerTradeFillAmountMax: "Vendre tout ce qui est disponible",
    PlayerTradeFillTradeTitle: "Confirmer l'échange",
    PlayerTradeFillTradeButton: "Confirmer l'échange",
-   PlayerTradeMaxTradeExceeded:
-      "Vous avez dépassé le nombre maximum d'échanges actifs pour le rang de votre compte",
+   PlayerTradeMaxTradeExceeded: "Vous avez dépassé le nombre maximum d'échanges actifs pour le rang de votre compte",
    PlayerTradeCancelTrade: "Annuler l'échange",
    PlayerTradeCancelTradeNo: "Ne pas annuler",
    PlayerTradeCancelTradeNotEnoughStorage: "Vous n'avez pas assez de stockage pour annuler cet échange",
@@ -703,8 +689,7 @@ export const FR = {
    PlayerMapClaimThisTile: "Occuper cette case",
    PlayerMapClaimTileCondition2: "Vous n'avez pas été banni par l'anti-triche",
    PlayerMapClaimTileCondition3: "Vous avez débloqué la technologie requise : %{tech}",
-   PlayerMapClaimTileCondition4:
-      "Vous n'avez pas occupé de case ou vous avez dépassé le délai de récupération pour la déplacer",
+   PlayerMapClaimTileCondition4: "Vous n'avez pas occupé de case ou vous avez dépassé le délai de récupération pour la déplacer",
    PlayerMapClaimTileNoLongerReserved:
       "Cette case n'est plus réservée. Vous pouvez expulser %{name} et vous approprier cette case",
    PlayerMapClaimTileCooldownLeft: "Délai de récupération restant : %{time}",
@@ -816,8 +801,7 @@ export const FR = {
       "Coûte %{speed} distorsion temporelle pour chaque seconde et accélère votre empire afin qu'il fonction en vitesse %{speed}x.",
    TimeWarpWarning:
       "L'accélération à une vitesse supérieure à celle que votre ordinateur peut supporter peut entraîner une perte de données : C'EST À VOS RISQUES ET PÉRILS",
-   PetraNoMultiplier:
-      "Pétra n'est affecté par aucun multiplicateur (production, capacité des ouvriers, stockage, etc.)",
+   PetraNoMultiplier: "Pétra n'est affecté par aucun multiplicateur (production, capacité des ouvriers, stockage, etc.)",
    LimitOfflineProduction: "Limite de production hors ligne",
    Reborn: "Réincarnation",
    RebornCity: "Sélectionner une nouvelle ville",
@@ -826,19 +810,16 @@ export const FR = {
    RebornOfflineWarning:
       "Vous êtes actuellement hors ligne. La réincarnation n'est possible que lorsque vous êtes connecté au serveur",
    TotalEmpireValue: "Valeur totale de l'empire",
-   ProgressTowardsNextGreatPerson:
-      "Progression jusqu'au prochain personnage illustre lors de la réincarnation",
+   ProgressTowardsNextGreatPerson: "Progression jusqu'au prochain personnage illustre lors de la réincarnation",
    NotProducingBuildings: "Constructions non productives",
    ExtraGreatPeopleAtReborn: "Personnages illustres bonus lors de la réincarnation",
    Ok: "OK",
    Cancel: "Annuler",
    ChooseGreatPersonFromLastReborn: "Choisissez un personnage illustre de la dernière réincarnation",
-   BankingAdditionalUpgrade:
-      "Toutes les constructions de niveau 10 ou supérieur obtiennent +1 Multiplicateur de Stockage",
+   BankingAdditionalUpgrade: "Toutes les constructions de niveau 10 ou supérieur obtiennent +1 Multiplicateur de Stockage",
    EstimatedTimeLeft: "Temps restant estimé",
    Electrification: "Électrification",
-   ElectrificationUpgrade:
-      "Débloque l'éléctrification. Permet aux bâtiments de consommer de l'énergie pour booster leur production",
+   ElectrificationUpgrade: "Débloque l'éléctrification. Permet aux bâtiments de consommer de l'énergie pour booster leur production",
    ElectrificationDesc:
       "Utilise %{power}W Énergie et vous octroie +%{level} Multiplicateur de Consommation et Multiplicateur de Production",
    PowerAvailable: "Énergie disponible",
@@ -850,8 +831,7 @@ export const FR = {
    ElectrificationStatusActive: "Actif",
    ConfirmYes: "Oui",
    ConfirmNo: "Non",
-   ConfirmDestroyResourceContent:
-      "Vous êtes sur le point de détruire %{amount} %{resource}. Cette action est irréversible",
+   ConfirmDestroyResourceContent: "Vous êtes sur le point de détruire %{amount} %{resource}. Cette action est irréversible",
    BuildingPriority: "Priorité de construction",
    ChatChannel: "Canal de chat",
    ChatChannelLanguage: "Langue",
@@ -867,8 +847,7 @@ export const FR = {
    Tutorial1:
       "Bienvenue dans CivIdle.<br><br>Dans ce jeu, vous dirigerez votre propre empire : gestion de la production, déverrouillage de technologies, échange de ressources avec d'autres joueurs, création de personnages illustres et construction de Merveilles du monde.<br><br>Faites glisser votre souris pour vous déplacer. Utilisez la molette pour zoomer ou dézoomer. Cliquez sur une case vierge afin de construire de nouveaux bâtiments, et cliquez sur l'un d'entre eux pour l'inspecter.<br><br>",
    Tutorial2: "Je n'ai jamais joué à ce type de jeux et j'aimerais suivre un tutoriel rapide",
-   Tutorial3:
-      "J'ai déjà joué à Industry Idle et je connais les règles. J'aimerais passer le tutoriel de base",
+   Tutorial3: "J'ai déjà joué à Industry Idle et je connais les règles. J'aimerais passer le tutoriel de base",
    Tutorial4:
       "Les bâtiments sont les éléments de base de votre empire - placez-les sur les cases explorées de la carte. Certains bâtiments tels que les carrières de pierre et les aquedecus extraient des ressources et doivent être placés sur une case ressource. Un bâtiment dissipera le brouillard des cases environnantes.<br><br>Les bâtiments consomment des ressources et en produisent de nouvelles. Ils transporteront <b>automatiquement</b> les ressources nécessaires. Les ressources produites seront stockées dans les bâtiments et pourront être transportées vers d'autres qui en ont besoin. Cependant, le stockage d'un bâtiment est limité.<br><br>Les bâtiments nécessitent des <b>ouvriers</b> pour le transport et la production - vous devrez bâtir des bâtiments résidentiels tels que des <b>huttes</b> afin d'augmenter la population ouvrière. Vous pouvez améliorer un bâtiment pour augmenter sa production et son stockage.",
    Tutorial5:
@@ -895,12 +874,9 @@ export const FR = {
    AccountUpgradeCarryOver: "Personnages transferables",
    AccountUpgradeCarryOverDesc:
       "Il s'agit du niveau maximal des personnages illustres permanents que vous pouvez conserver lorsque vous passez au rang de compte supérieur",
-   TranslationPercentage:
-      "Le %{language} est traduit à %{percentage}. Aidez-nous à amélioration cette traduction sur GitHub",
-   CanEarnGreatPeopleFromRebornYes:
-      "Cette partie peut vous permettre d'obtenir des personnages illustres de la réincarnation",
-   CanEarnGreatPeopleFromRebornNo:
-      "Cette partie ne peut pas vous permettre d'obtenir des personnages illustres de la réincarnation",
+   TranslationPercentage: "Ce jeu a été traduit à %{percentage} en %{language}. Vous pouvez apporter votre contribution sur GitHub",
+   CanEarnGreatPeopleFromRebornYes: "Cette partie peut vous permettre d'obtenir des personnages illustres de la réincarnation",
+   CanEarnGreatPeopleFromRebornNo: "Cette partie ne peut pas vous permettre d'obtenir des personnages illustres de la réincarnation",
    TribuneUpgradeDesc:
       "Passer du rang Tribun au rang Questeur permettra à votre compte de débloquer les fonctionnalités en ligne. Cependant, seuls les personnages illustres <b>jusqu'au niveau %{level}</b> peuvent être conservés",
    TribuneUpgradeDescGreatPeopleWarning:
@@ -917,8 +893,7 @@ export const FR = {
    AccountUpgradeConfirm: "Amélioration du compte",
    AccountUpgradeConfirmDesc:
       "Passer au rang supérieur <b>réinitialisera votre partie actuelle</b> and conservera les personnages illustres permanents <b>jusqu'au niveau %{level}</b>. Cette action est <b>irréversible</b>, voulez-vous continuer ?",
-   CannotEarnPermanentGreatPeopleDesc:
-      "Vous ne pouvez pas obtenir de personnages illustres permanents car vous êtes en mode difficile",
+   CannotEarnPermanentGreatPeopleDesc: "Vous ne pouvez pas obtenir de personnages illustres permanents car vous êtes en mode difficile",
    BackToCity: "Retourner à la ville",
    UpgradeBuildingNotProducingDesc:
       "Ce bâtiment est en cours d'amélioration - la production sera interrompue jusqu'à ce que l'amélioration soit terminée",
