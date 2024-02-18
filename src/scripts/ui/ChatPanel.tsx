@@ -2,7 +2,7 @@ import Tippy from "@tippyjs/react";
 import classNames from "classnames";
 import React, { memo, useCallback, useEffect, useRef, useState } from "react";
 import { AccountLevel, ChatChannels, type IChat, type IUser } from "../../../shared/utilities/Database";
-import { keysOf, sizeOf } from "../../../shared/utilities/Helper";
+import { isScrolledToBottom, keysOf, sizeOf } from "../../../shared/utilities/Helper";
 import { TypedEvent } from "../../../shared/utilities/TypedEvent";
 import { L, t } from "../../../shared/utilities/i18n";
 import AccountLevelMod from "../../images/AccountLevelMod.png";
@@ -36,13 +36,9 @@ export function ChatPanel(): React.ReactNode {
       (m) => !("channel" in m) || options.chatReceiveChannel[m.channel],
    );
    const user = useUser();
-
-   const shouldScroll = useRef(false);
-   const forceScrollOnce = useRef(false);
-
    const scrollAreaRef = useRef<HTMLDivElement>(null);
    const [showChatWindow, setShowChatWindow] = useState(false);
-
+   const shouldScroll = useRef(false);
    const lastMessage = messages.length > 0 ? messages[messages.length - 1] : null;
 
    useTypedEvent(ToggleChatWindow, (on) => {
@@ -51,13 +47,11 @@ export function ChatPanel(): React.ReactNode {
 
    // biome-ignore lint/correctness/useExhaustiveDependencies:
    useEffect(() => {
-      const isSystemMessage = lastMessage !== null && !("channel" in lastMessage);
-      if (!shouldScroll.current && !forceScrollOnce.current && !isSystemMessage) return;
+      if (!shouldScroll.current) return;
       scrollAreaRef.current?.scrollTo({
          top: scrollAreaRef.current.scrollHeight,
          behavior: "smooth",
       });
-      if (forceScrollOnce.current) forceScrollOnce.current = false;
    }, [lastMessage?.id ?? 0, user]);
 
    const onImageLoaded = useCallback(() => {
@@ -104,13 +98,11 @@ export function ChatPanel(): React.ReactNode {
                </div>
                <div
                   ref={scrollAreaRef}
+                  onScroll={(e) => {
+                     const scrollArea = e.target as HTMLElement;
+                     shouldScroll.current = isScrolledToBottom(scrollArea);
+                  }}
                   className="window-content inset-shallow"
-                  onMouseEnter={() => {
-                     shouldScroll.current = false;
-                  }}
-                  onMouseLeave={() => {
-                     shouldScroll.current = true;
-                  }}
                >
                   {messages.map((c) => {
                      if (!("channel" in c)) {
@@ -136,7 +128,7 @@ export function ChatPanel(): React.ReactNode {
                </div>
                <ChatInput
                   onChatSend={() => {
-                     forceScrollOnce.current = true;
+                     shouldScroll.current = true;
                   }}
                />
             </div>

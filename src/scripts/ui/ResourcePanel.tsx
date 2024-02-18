@@ -1,17 +1,27 @@
 import Tippy from "@tippyjs/react";
 import classNames from "classnames";
+import { useState } from "react";
 import { getScienceFromWorkers } from "../../../shared/logic/BuildingLogic";
 import { GameFeature, hasFeature } from "../../../shared/logic/FeatureLogic";
 import { getHappinessIcon } from "../../../shared/logic/HappinessLogic";
 import { getSpecialBuildings } from "../../../shared/logic/IntraTickCache";
 import { getProgressTowardsNextGreatPerson } from "../../../shared/logic/RebornLogic";
 import { getResourceAmount } from "../../../shared/logic/ResourceLogic";
-import { Rounding, clamp, formatPercent, sizeOf, type Tile } from "../../../shared/utilities/Helper";
+import { CurrentTickChanged } from "../../../shared/logic/TickLogic";
+import {
+   Rounding,
+   clamp,
+   formatPercent,
+   mathSign,
+   sizeOf,
+   type Tile,
+} from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import { useGameState } from "../Global";
 import { useCurrentTick } from "../logic/Tick";
 import { TechTreeScene } from "../scenes/TechTreeScene";
 import { LookAtMode, WorldScene } from "../scenes/WorldScene";
+import { useTypedEvent } from "../utilities/Hook";
 import { Singleton } from "../utilities/Singleton";
 import { FormatNumber } from "./HelperComponents";
 import { TilePage } from "./TilePage";
@@ -19,12 +29,16 @@ import { TilePage } from "./TilePage";
 export function ResourcePanel(): React.ReactNode {
    const tick = useCurrentTick();
    const gs = useGameState();
+   const [empireValues, setEmpireValues] = useState<[number, number]>([tick.totalValue, tick.totalValue]);
+   useTypedEvent(CurrentTickChanged, (current) => {
+      setEmpireValues([current.totalValue, empireValues[0]]);
+   });
    const { workersAvailableAfterHappiness, workersBusy } = getScienceFromWorkers(gs);
-
    const highlightNotProducingReasons = () => {
       const buildingTiles: Tile[] = Array.from(tick.notProducingReasons.keys());
       Singleton().sceneManager.getCurrent(WorldScene)?.drawSelection(null, buildingTiles);
    };
+   const delta = empireValues[0] - empireValues[1];
    return (
       <div className="resource-bar window">
          {tick.happiness ? (
@@ -132,6 +146,13 @@ export function ResourcePanel(): React.ReactNode {
                   <FormatNumber value={tick.totalValue} />
                </div>
             </Tippy>
+            <div
+               className={classNames({ "text-red": delta < 0, "text-green": delta > 0 })}
+               style={{ width: "60px", fontWeight: "normal", textAlign: "left" }}
+            >
+               {mathSign(delta)}
+               <FormatNumber value={delta} />
+            </div>
             <Tippy content={t(L.ProgressTowardsNextGreatPerson)}>
                <div className="text-desc text-right" style={{ width: "40px", fontWeight: "normal" }}>
                   {formatPercent(clamp(getProgressTowardsNextGreatPerson(), 0, 1), 0, Rounding.Floor)}

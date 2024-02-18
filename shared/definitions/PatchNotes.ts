@@ -18,6 +18,7 @@ export const PatchNotes: PatchNote[] = [
          ["Bugfix", "Fix a bug where picking a building color causes the game to drop frames"],
          ["QoL", "Support clearing warehouse import/cap in batch mode"],
          ["QoL", "Typing a chat command will add a dark background to input"],
+         ["QoL", "Add Total Empire Value change in resource bar"],
       ],
    },
    {

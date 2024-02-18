@@ -735,3 +735,7 @@ export function logError(e: unknown, logFunc: (message: any) => void = console.e
       logFunc(e);
    }
 }
+
+export function isScrolledToBottom(ele: HTMLElement): boolean {
+   return Math.abs(ele.scrollHeight - ele.scrollTop - ele.clientHeight) < 1;
+}
