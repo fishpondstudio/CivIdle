@@ -2,7 +2,7 @@ import Tippy from "@tippyjs/react";
 import classNames from "classnames";
 import React, { memo, useCallback, useEffect, useRef, useState } from "react";
 import { AccountLevel, ChatChannels, type IChat, type IUser } from "../../../shared/utilities/Database";
-import { isScrolledToBottom, keysOf, sizeOf } from "../../../shared/utilities/Helper";
+import { keysOf, sizeOf } from "../../../shared/utilities/Helper";
 import { TypedEvent } from "../../../shared/utilities/TypedEvent";
 import { L, t } from "../../../shared/utilities/i18n";
 import AccountLevelMod from "../../images/AccountLevelMod.png";
@@ -50,7 +50,7 @@ export function ChatPanel(): React.ReactNode {
       if (!shouldScroll.current) return;
       scrollAreaRef.current?.scrollTo({
          top: scrollAreaRef.current.scrollHeight,
-         behavior: lastMessage && "channel" in lastMessage ? "smooth" : "instant",
+         behavior: "smooth",
       });
    }, [lastMessage?.id ?? 0, user]);
 
@@ -98,9 +98,11 @@ export function ChatPanel(): React.ReactNode {
                </div>
                <div
                   ref={scrollAreaRef}
-                  onScroll={(e) => {
-                     const scrollArea = e.target as HTMLElement;
-                     shouldScroll.current = isScrolledToBottom(scrollArea);
+                  onMouseEnter={() => {
+                     shouldScroll.current = false;
+                  }}
+                  onMouseLeave={() => {
+                     shouldScroll.current = true;
                   }}
                   className="window-content inset-shallow"
                >
