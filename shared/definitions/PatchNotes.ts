@@ -20,7 +20,7 @@ export const PatchNotes: PatchNote[] = [
          ["QoL", "Typing a chat command will add a dark background to input"],
          ["QoL", "Add Total Empire Value change in resource bar"],
          ["Content", "Add French localization (@Théo Protche)"],
-         ["Bugfix", "Total Empire Value now counts resources in-transit"],
+         ["Bugfix", "Total Empire Value now counts resources in transit"],
       ],
    },
    {
