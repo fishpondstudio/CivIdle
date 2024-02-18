@@ -50,7 +50,7 @@ export function ChatPanel(): React.ReactNode {
       if (!shouldScroll.current) return;
       scrollAreaRef.current?.scrollTo({
          top: scrollAreaRef.current.scrollHeight,
-         behavior: "smooth",
+         behavior: lastMessage && "channel" in lastMessage ? "smooth" : "instant",
       });
    }, [lastMessage?.id ?? 0, user]);
 
