@@ -110,6 +110,9 @@ export function tickTransportations(gs: GameState) {
             return false;
          }
 
+         Tick.next.totalValue += NoPrice[transport.resource]
+            ? 0
+            : transport.amount * (Config.ResourcePrice[transport.resource] ?? 0);
          return true;
       });
    });
