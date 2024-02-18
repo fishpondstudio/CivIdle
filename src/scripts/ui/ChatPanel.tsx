@@ -35,8 +35,10 @@ export function ChatPanel(): React.ReactNode {
       (m) => !("channel" in m) || options.chatReceiveChannel[m.channel],
    );
    const user = useUser();
-   const [shouldScroll, setShouldScroll] = useState(false);
-   const [forceScrollOnce, setForceScrollOnce] = useState(false);
+
+   const shouldScroll = useRef(false);
+   const forceScrollOnce = useRef(false);
+
    const scrollAreaRef = useRef<HTMLDivElement>(null);
    const [showChatWindow, setShowChatWindow] = useState(false);
 
@@ -48,21 +50,22 @@ export function ChatPanel(): React.ReactNode {
 
    // biome-ignore lint/correctness/useExhaustiveDependencies:
    useEffect(() => {
-      if (!shouldScroll && !forceScrollOnce) return;
+      const isSystemMessage = lastMessage !== null && !("channel" in lastMessage);
+      if (!shouldScroll.current && !forceScrollOnce.current && !isSystemMessage) return;
       scrollAreaRef.current?.scrollTo({
          top: scrollAreaRef.current.scrollHeight,
          behavior: "smooth",
       });
-      if (forceScrollOnce) setForceScrollOnce(false);
+      if (forceScrollOnce.current) forceScrollOnce.current = false;
    }, [lastMessage?.id ?? 0, user]);
 
    const onImageLoaded = useCallback(() => {
-      if (!shouldScroll) return;
+      if (!shouldScroll.current) return;
       scrollAreaRef.current?.scrollTo({
          top: scrollAreaRef.current.scrollHeight,
          behavior: "smooth",
       });
-   }, [shouldScroll]);
+   }, []);
 
    // biome-ignore lint/correctness/useExhaustiveDependencies:
    useEffect(() => {
@@ -101,8 +104,12 @@ export function ChatPanel(): React.ReactNode {
                <div
                   ref={scrollAreaRef}
                   className="window-content inset-shallow"
-                  onMouseEnter={() => setShouldScroll(false)}
-                  onMouseLeave={() => setShouldScroll(true)}
+                  onMouseEnter={() => {
+                     shouldScroll.current = false;
+                  }}
+                  onMouseLeave={() => {
+                     shouldScroll.current = true;
+                  }}
                >
                   {messages.map((c) => {
                      if (!("channel" in c)) {
@@ -126,7 +133,11 @@ export function ChatPanel(): React.ReactNode {
                      <div className="text-desc text-center text-small mv10">{t(L.ChatReconnect)}</div>
                   )}
                </div>
-               <ChatInput onChatSend={() => setForceScrollOnce(true)} />
+               <ChatInput
+                  onChatSend={() => {
+                     forceScrollOnce.current = true;
+                  }}
+               />
             </div>
          ) : null}
       </div>

@@ -169,11 +169,15 @@ function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
    if (isNaturalWonder(building.type) && !tile.explored) {
       return;
    }
+
    if (building.desiredLevel > building.level) {
       building.status = "upgrading";
    } else {
       building.desiredLevel = building.level;
    }
+
+   Tick.next.totalValue += getBuildingValue(building);
+
    if (building.status === "building" || building.status === "upgrading") {
       const cost = getBuildingCost(building);
       let completed = true;
@@ -233,8 +237,6 @@ function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
    if (isSpecialBuilding(building.type)) {
       Tick.next.specialBuildings[building.type] = xy;
    }
-
-   Tick.next.totalValue += getBuildingValue(building);
 
    const input = filterTransportable(
       getBuildingIO(xy, "input", IOCalculation.Multiplier | IOCalculation.Capacity, gs),

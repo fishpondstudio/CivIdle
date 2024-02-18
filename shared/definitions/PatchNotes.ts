@@ -5,6 +5,19 @@ interface PatchNote {
 
 export const PatchNotes: PatchNote[] = [
    {
+      version: "0.1.138",
+      content: [
+         [
+            "Bugfix",
+            "Total Empire Value now includes buildings that are being upgraded (Thanks @Kuki42 for reporting)",
+         ],
+         [
+            "Bugfix",
+            "Fix a bug where sometimes chat still scrolls even if your mouse cursor is on chat message",
+         ],
+      ],
+   },
+   {
       version: "0.1.139",
       content: [
          [
