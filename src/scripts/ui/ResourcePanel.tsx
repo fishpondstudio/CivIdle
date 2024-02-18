@@ -15,6 +15,7 @@ import { LookAtMode, WorldScene } from "../scenes/WorldScene";
 import { Singleton } from "../utilities/Singleton";
 import { FormatNumber } from "./HelperComponents";
 import { TilePage } from "./TilePage";
+import { Tick } from "../../../shared/logic/TickLogic";
 
 export function ResourcePanel(): React.ReactNode {
    const tick = useCurrentTick();
@@ -128,8 +129,9 @@ export function ResourcePanel(): React.ReactNode {
                account_balance
             </div>
             <Tippy content={t(L.TotalEmpireValue)} placement="bottom">
-               <div style={{ width: "60px" }}>
-                  <FormatNumber value={tick.totalValue} />
+               <div style={{ width: "120px" }}>
+                  <FormatNumber value={tick.totalValue} /> (
+                  <FormatNumber value={Tick.next.totalValue - tick.totalValue} />)
                </div>
             </Tippy>
             <Tippy content={t(L.ProgressTowardsNextGreatPerson)}>
