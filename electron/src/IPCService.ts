@@ -15,15 +15,22 @@ export class IPCService {
    }
 
    private counter = 0;
+   private lastWriteAt = 0;
 
    public fileWriteBytes(name: string, content: ArrayBuffer): void {
       const buffer = Buffer.from(content);
       outputFile(path.join(getGameSavePath(), this.getSteamId(), name), buffer);
-      const backup = `${name}_${(++this.counter % 10) + 1}`;
-      outputFile(
-         path.join(getLocalGameSavePath(), this.getAppId().toString(), this.getSteamId(), backup),
-         buffer,
-      );
+
+      // 5 mins
+      const now = Date.now();
+      if (now - this.lastWriteAt > 1000 * 60 * 5) {
+         const backup = `${name}_${(++this.counter % 10) + 1}`;
+         outputFile(
+            path.join(getLocalGameSavePath(), this.getAppId().toString(), this.getSteamId(), backup),
+            buffer,
+         );
+         this.lastWriteAt = now;
+      }
    }
 
    public async fileRead(name: string): Promise<string> {
