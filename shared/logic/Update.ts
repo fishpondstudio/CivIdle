@@ -220,6 +220,12 @@ function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
             safeAdd(building.resources, res, -amount);
          });
       }
+      forEach(building.resources, (res, amount) => {
+         if (!Number.isFinite(amount) || amount <= 0) {
+            return;
+         }
+         Tick.next.totalValue += NoPrice[res] ? 0 : (Config.ResourcePrice[res] ?? 0) * amount;
+      });
       return;
    }
 
@@ -244,7 +250,7 @@ function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
    const output = getBuildingIO(xy, "output", IOCalculation.Multiplier | IOCalculation.Capacity, gs);
 
    forEach(building.resources, (res, amount) => {
-      if (amount <= 0) {
+      if (!Number.isFinite(amount) || amount <= 0) {
          return;
       }
       Tick.next.totalValue += NoPrice[res] ? 0 : (Config.ResourcePrice[res] ?? 0) * amount;

@@ -32,7 +32,11 @@ export function SteamAchievementPage(): React.ReactNode {
                         <div className="text-strong">{achievement.name}</div>
                         <div className="text-desc text-small">{achievement.description}</div>
                      </div>
-                     {hasAchieved ? <div className="m-icon ml10 text-green">verified</div> : null}
+                     {hasAchieved ? (
+                        <div className="m-icon ml10 text-green">verified</div>
+                     ) : (
+                        <div className="m-icon ml10 text-desc">cancel</div>
+                     )}
                   </div>
                );
             })}

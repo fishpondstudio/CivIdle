@@ -15,15 +15,15 @@ export class IPCService {
    }
 
    private counter = 0;
-   private lastWriteAt = 0;
+   private lastWriteAt = Date.now();
 
    public fileWriteBytes(name: string, content: ArrayBuffer): void {
       const buffer = Buffer.from(content);
       outputFile(path.join(getGameSavePath(), this.getSteamId(), name), buffer);
 
-      // 5 mins
+      // 10 mins
       const now = Date.now();
-      if (now - this.lastWriteAt > 1000 * 60 * 5) {
+      if (now - this.lastWriteAt > 1000 * 60 * 10) {
          const backup = `${name}_${(++this.counter % 10) + 1}`;
          outputFile(
             path.join(getLocalGameSavePath(), this.getAppId().toString(), this.getSteamId(), backup),
