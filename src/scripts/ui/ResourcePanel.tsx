@@ -151,7 +151,7 @@ export function ResourcePanel(): React.ReactNode {
                style={{ width: "60px", fontWeight: "normal", textAlign: "left" }}
             >
                {mathSign(delta)}
-               <FormatNumber value={delta} />
+               <FormatNumber value={Math.abs(delta)} />
             </div>
             <Tippy content={t(L.ProgressTowardsNextGreatPerson)}>
                <div className="text-desc text-right" style={{ width: "40px", fontWeight: "normal" }}>
