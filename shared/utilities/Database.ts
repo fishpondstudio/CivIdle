@@ -151,7 +151,6 @@ export interface IUser {
 
 export interface IMapEntry {
    userId: string;
-   handle: string;
    tariffRate: number;
    createdAt: number;
 }
@@ -161,6 +160,7 @@ export interface IClientMapEntry extends IMapEntry {
    level: AccountLevel;
    lastSeenAt: number;
    authenticated: boolean;
+   handle: string;
 }
 
 export interface ISlowModeConfig {

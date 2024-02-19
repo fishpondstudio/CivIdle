@@ -177,6 +177,14 @@ export async function handleChatCommand(command: string): Promise<void> {
          });
          break;
       }
+      case "rename": {
+         if (!parts[1] || !parts[2]) {
+            throw new Error("Invalid command format");
+         }
+         const newHandle = await client.renamePlayer(parts[1], parts[2]);
+         addSystemMessage(`Player ${parts[1]} renamed to ${newHandle}`);
+         break;
+      }
       default: {
          addSystemMessage("Command not found");
          break;
