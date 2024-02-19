@@ -312,11 +312,10 @@ export function HeadquarterBuildingBody({
                </li>
             </ul>
             <div className="sep10"></div>
-            <button className="row w100 jcc">
+            <button className="row w100 jcc" onClick={() => showModal(<RebornModal />)}>
                <div className="m-icon small">stroller</div>
                <div className="f1 text-strong">{t(L.Reborn)}</div>
             </button>
-            <div className="text-link text-strong" onClick={() => showModal(<RebornModal />)}></div>
          </fieldset>
          <fieldset>
             <legend>{t(L.Wonder)}</legend>
