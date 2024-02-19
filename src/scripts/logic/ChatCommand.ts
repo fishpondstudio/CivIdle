@@ -2,7 +2,7 @@ import randomColor from "randomcolor";
 import { isSpecialBuilding } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
 import { getGameOptions, getGameState } from "../../../shared/logic/GameStateLogic";
-import { AccountLevel, type ChatChannel } from "../../../shared/utilities/Database";
+import { AccountLevel, ChatChannels, type ChatChannel } from "../../../shared/utilities/Database";
 import {
    HOUR,
    SECOND,
@@ -120,6 +120,9 @@ export async function handleChatCommand(command: string): Promise<void> {
       case "announce": {
          if (!parts[1] || !parts[2]) {
             throw new Error("Invalid command format");
+         }
+         if (!(parts[1] in ChatChannels)) {
+            throw new Error("Invalid chat channel");
          }
          await client.announce(parts[1] as ChatChannel, parts[2]);
          break;
