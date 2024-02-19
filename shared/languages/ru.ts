@@ -1,6 +1,6 @@
 export const RU = {
    CurrentLanguage: "Русский",
-   TranslatorCredit: "WingedLeo",
+   TranslatorCredit: "WingedLeo, schizophrenia",
    Translators: "Переводчики",
    Language: "Язык",
    TechnologyPrerequisite: "Требования",
@@ -452,7 +452,7 @@ export const RU = {
    TempleOfArtemisDesc:
       "All Sword Forges and Armories get +5 Level when completed. All Sword Forges and Armories get +1 Production Multiplier, Worker Capacity Multiplier and Storage Multiplier",
    TempleOfHeaven: "Храм Неба",
-   TempleOfHeavenDesc: "All buildings that are level 10 or higher get +1 Worker Capacity Multiplier",
+   TempleOfHeavenDesc: "Все строения 10 уровня и выше получают +1 Worker Capacity Multiplier",
    HimejiCastle: "Замок Химедзи",
    HimejiCastleDesc:
       "All Caravel Builders, Galleon Builders, and Frigate Builders get +1 Production Multiplier, Worker Capacity Multiplier and Storage Multiplier",
@@ -461,7 +461,7 @@ export const RU = {
       "Рождается новый великий человек Средневековья. +5 Builder Capacity Multiplier when upgrading buildings over Level 20",
    StatueOfLiberty: "Статуя Свободы",
    StatueOfLibertyDesc:
-      "All adjacent buildings get +N Production, Storage and Worker Capacity Multiplier. N = Number of its adjacent buildings of the same type",
+      "Все прилегающие постройки получают +N Production, Storage and Worker Capacity Multiplier. N = Количество прилегающих построек одного типа",
    Moai: "Моаи",
    MoaiDesc: "Moai",
    BranCastle: "Замок Бран",
@@ -472,7 +472,7 @@ export const RU = {
    SaintBasilsCathedralDesc: "Saint Basil's Cathedral",
    ChichenItza: "Чичен-Ица",
    ChichenItzaDesc:
-      "All adjacent buildings get +1 Production Multiplier, Storage and Worker Capacity Multiplier",
+      "Все прилегающие постройки получают +1 Production Multiplier, Storage and Worker Capacity Multiplier",
    Aqueduct: "Акведук",
    FishPond: "Рыбный Пруд",
    GarumMaker: "Производитель Гарума",
@@ -513,7 +513,7 @@ export const RU = {
    GoldenGateBridgeDesc: "Golden Gate Bridge",
    BrandenburgGate: "Бранденбургские Ворота",
    BrandenburgGateDesc:
-      "All coal mines and oil wells get +1 Production, Storage and Worker Capacity Multiplier. Oil refineries get +1 Production, Storage and Worker Capacity Multiplier for each adjacent oil tile",
+      "Все угольные шахты и нефтяные скважины получают +1 Production, Storage and Worker Capacity Multiplier. Нефтеперерабатывающие заводы получают +1 Production, Storage and Worker Capacity Multiplier for each adjacent oil tile",
    ArcDeTriomphe: "Триумфальная Арка",
    ArcDeTriompheDesc: "Arc de Triomphe",
    SydneyOperaHouse: "Sydney Opera House",
@@ -638,7 +638,7 @@ export const RU = {
    CivIdleBuild: "Версия: %{build}",
    GraphicsDriver: "Графический Драйвер: %{driver}",
    UserAgent: "Пользовательский Клиент: %{driver}",
-   MarketYouPay: "You Pay",
+   MarketYouPay: "Вы платите",
    MarketYouGet: "Вы получите",
    MarketValueDesc: "%{value} compared to average price",
    MarketSell: "Продать",
@@ -703,7 +703,7 @@ export const RU = {
    PlayerMapTariffApply: "Применить Налоговую Ставку",
    PlayerMapTradesFrom: "Заявки от %{name}",
    PlayerMapEstablishedSince: "Основано в",
-   PlayerMapLastSeenAt: "Last Seen",
+   PlayerMapLastSeenAt: "Последнее посещение",
    OfflineErrorMessage: "Вы сейчас оффлайн, для выполнения этой операции требуется подключение к Интернету",
    ResourceImport: "Транспортировка Ресурсов",
    ResourceImportResource: "Ресурсы",
@@ -775,7 +775,7 @@ export const RU = {
    ShortcutPressShortcut: "Нажмите на клавишу...",
    ShortcutConflict: "Ваша Горячая Клавиша пересекается с %{name}",
    ShortcutTechPageGoBackToCity: "Вернуться В Город",
-   ShortcutTechPageUnlockTech: "Unlock Selected Tech",
+   ShortcutTechPageUnlockTech: "Разблокировать выбранную технологию",
    EmptyTilePageBuildLastBuilding: "Построить Последнее Здание",
    PlayerMapPageGoBackToCity: "Вернуться в Город",
    UnclaimedGreatPerson: "У вас есть незабранные Великие Люди, Нажмите здесь, чтобы забрать",
@@ -809,9 +809,9 @@ export const RU = {
    Reborn: "Переродиться",
    RebornCity: "Выбрать Город Для Перерождения",
    RebornTradeWarning:
-      "You have trades that are active or can be claimed. <b>Rebirth will erase them</b> - you should consider cancelling or claiming first",
+      "У вас есть активные или завершенные, но не полученные сделки <b>Перерождение безвозвратно удалит их</b> - вам сначал следует рассмотреть возможность отмены или обналичивания",
    RebornOfflineWarning:
-      "You are currently offline. You can only rebirth when you are connected to the server",
+      "Сейчас вы оффлайн. Вы можете перерождаться только когда подключены к серверу",
    TotalEmpireValue: "Общая Стоимость Империи",
    ProgressTowardsNextGreatPerson: "Progress Towards Next Great Person at Reborn",
    NotProducingBuildings: "Здания Которые Не Производят",
@@ -839,8 +839,8 @@ export const RU = {
    BuildingPriority: "Приоритет Зданий",
    ChatChannel: "Канал Чата",
    ChatChannelLanguage: "Язык",
-   ChatChannelSend: "Отравить",
-   ChatChannelReceive: "Получить",
+   ChatChannelSend: "Отправлять",
+   ChatChannelReceive: "Получать",
    FirstTimeGuideNext: "Дальше",
    FirstTimeGuideFinish: "Завершить",
    AccountTypeShowDetails: "Показать Детали Аккаунта",
@@ -885,7 +885,7 @@ export const RU = {
    TribuneUpgradeDesc:
       "Переход с Трибуна на Квестора позволит вашей учетной записи использовать все онлайн функции. Однако, <b>Вы можете перенести Постоянных Великих Людей только до уровня %{level}</b>",
    TribuneUpgradeDescGreatPeopleWarning:
-      "Your current run has great people. You should <b>reborn first</b>. Upgrading to Quaestor rank will reset your current run",
+      "В вашем текущем забеге есть великие люди. Вам следует <b>сначала переродиться</b>. Улучшение до ранга Квестора обнулит ваш текущий забег",
    TribuneGreatPeopleLevelWarning:
       "Уровень вашей учетной записи Трибун - при переходе на Квестор, Вы можете перенести Постоянных Великих Людей до уровня %{level}",
    RebornModalDesc:
@@ -899,11 +899,11 @@ export const RU = {
    AccountUpgradeConfirm: "Улучшить Аккаунт",
    AccountUpgradeConfirmDesc:
       "Улучшение вашего аккаунта приведет к <b>сбросу текущего пробега</b> и переносу постоянных великих людей <b>до уровня %{level}</b>. Это <b>не может</b> быть отменено, Вы уверены, что хотите продолжить?",
-   CannotEarnPermanentGreatPeopleDesc: "Because this is a trial run, permanent great people cannot be earned",
-   BackToCity: "Back To City",
+   CannotEarnPermanentGreatPeopleDesc: "Так как это пробный забег, постоянные великие люди не могут быть получены",
+   BackToCity: "Вернуться в город",
    UpgradeBuildingNotProducingDesc:
-      "This building is being upgraded - production will halt until upgrade is complete",
-   Tutorial: "Tutorial",
+      "Эта постройка улучшается - производство будет остановлено до завершения улучшения",
+   Tutorial: "Обучение",
    SelectedCount: "%{count} Selected",
    SelectedAll: "Select All",
    InverseSelection: "Inverse",
