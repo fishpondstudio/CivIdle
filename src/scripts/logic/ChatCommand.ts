@@ -124,7 +124,7 @@ export async function handleChatCommand(command: string): Promise<void> {
          if (!(parts[1] in ChatChannels)) {
             throw new Error("Invalid chat channel");
          }
-         await client.announce(parts[1] as ChatChannel, parts[2]);
+         await client.announce(parts[1] as ChatChannel, parts.slice(2).join(" "));
          break;
       }
       case "unmakemod": {
