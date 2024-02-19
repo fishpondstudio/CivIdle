@@ -810,8 +810,7 @@ export const RU = {
    RebornCity: "Выбрать Город Для Перерождения",
    RebornTradeWarning:
       "У вас есть активные или завершенные, но не полученные сделки <b>Перерождение безвозвратно удалит их</b> - вам сначал следует рассмотреть возможность отмены или обналичивания",
-   RebornOfflineWarning:
-      "Сейчас вы оффлайн. Вы можете перерождаться только когда подключены к серверу",
+   RebornOfflineWarning: "Сейчас вы оффлайн. Вы можете перерождаться только когда подключены к серверу",
    TotalEmpireValue: "Общая Стоимость Империи",
    ProgressTowardsNextGreatPerson: "Progress Towards Next Great Person at Reborn",
    NotProducingBuildings: "Здания Которые Не Производят",
@@ -899,7 +898,8 @@ export const RU = {
    AccountUpgradeConfirm: "Улучшить Аккаунт",
    AccountUpgradeConfirmDesc:
       "Улучшение вашего аккаунта приведет к <b>сбросу текущего пробега</b> и переносу постоянных великих людей <b>до уровня %{level}</b>. Это <b>не может</b> быть отменено, Вы уверены, что хотите продолжить?",
-   CannotEarnPermanentGreatPeopleDesc: "Так как это пробный забег, постоянные великие люди не могут быть получены",
+   CannotEarnPermanentGreatPeopleDesc:
+      "Так как это пробный забег, постоянные великие люди не могут быть получены",
    BackToCity: "Вернуться в город",
    UpgradeBuildingNotProducingDesc:
       "Эта постройка улучшается - производство будет остановлено до завершения улучшения",

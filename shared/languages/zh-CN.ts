@@ -429,7 +429,8 @@ export const ZH_CN = {
    OxfordUniversity: "牛津大学",
    OxfordUniversityDesc: "帝国境内每个建筑等级，每个周期提供 +1 科学",
    StPetersBasilica: "圣彼得大教堂",
-   StPetersBasilicaDesc: "所有产出信仰的建筑，获得 +1 存储乘数。其产生的信仰，基于其它产出信仰建筑中信仰的存储量",
+   StPetersBasilicaDesc:
+      "所有产出信仰的建筑，获得 +1 存储乘数。其产生的信仰，基于其它产出信仰建筑中信仰的存储量",
    ForbiddenCity: "紫禁城",
    ForbiddenCityDesc: "所有造纸作坊、作家协会以及印刷厂， 获得 +1 生产乘数、劳动者能力乘数以及存储乘数",
    Borobudur: "婆罗浮屠",
