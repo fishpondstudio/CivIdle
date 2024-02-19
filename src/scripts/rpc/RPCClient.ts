@@ -15,9 +15,9 @@ import type {
    IUser,
    IWelcomeMessage,
 } from "../../../shared/utilities/Database";
-import { AccountLevel, MessageType } from "../../../shared/utilities/Database";
+import { AccountLevel, ChatAttributes, MessageType } from "../../../shared/utilities/Database";
 import { vacuumChat } from "../../../shared/utilities/DatabaseShared";
-import { SECOND, forEach } from "../../../shared/utilities/Helper";
+import { SECOND, forEach, hasFlag } from "../../../shared/utilities/Helper";
 import { TypedEvent } from "../../../shared/utilities/TypedEvent";
 import { L, t } from "../../../shared/utilities/i18n";
 import { saveGame } from "../Global";
@@ -151,7 +151,10 @@ export async function connectWebSocket(): Promise<number> {
                chatMessages = c.chat.map((c) => ({ ...c, id: ++chatId }));
             } else {
                c.chat.forEach((m) => {
-                  if (user && m.message.toLowerCase().includes(`@${user.handle.toLowerCase()} `)) {
+                  const mentionsMe =
+                     user && m.message.toLowerCase().includes(`@${user.handle.toLowerCase()} `);
+                  const isAnnounce = hasFlag(m.attr, ChatAttributes.Announce);
+                  if (mentionsMe || isAnnounce) {
                      playBubble();
                      showToast(`${m.name}: ${m.message}`);
                   }

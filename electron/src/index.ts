@@ -41,6 +41,10 @@ const createWindow = () => {
       mainWindow.maximize();
       mainWindow.show();
 
+      if (steam.utils.isSteamRunningOnSteamDeck()) {
+         mainWindow.setFullScreen(true);
+      }
+
       const service = new IPCService(steam);
 
       ipcMain.handle("__RPCCall", (e, method: keyof IPCService, args) => {

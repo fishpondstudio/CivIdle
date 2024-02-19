@@ -15,8 +15,9 @@ export class Heartbeat {
    }
 
    public update(data: Uint8Array): void {
-      if (getGameState().isOffline || !isOnlineUser()) {
-         client.pulse();
+      const gs = getGameState();
+      if (gs.isOffline || !isOnlineUser()) {
+         client.tick(gs.tick);
          return;
       }
       const patch = fossilDeltaCreate(this.data, data);

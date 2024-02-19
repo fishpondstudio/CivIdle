@@ -88,6 +88,7 @@ if (import.meta.env.DEV) {
 }
 
 export const OnUIThemeChanged = new TypedEvent<boolean>();
+export const ToggleChatWindow = new TypedEvent<boolean>();
 
 export function syncUITheme(gameOptions: GameOptions): void {
    gameOptions.useModernUI ? document.body.classList.add("modern") : document.body.classList.remove("modern");

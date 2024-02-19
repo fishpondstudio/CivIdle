@@ -811,6 +811,8 @@ export const EN = {
    RebornOfflineWarning:
       "You are currently offline. You can only rebirth when you are connected to the server",
    TotalEmpireValue: "Total Empire Value",
+   TotalTimeThisRun: "Total Time This Run",
+   TotalEmpireValuePerCycle: "Total Empire Value Per Cycle",
    ProgressTowardsNextGreatPerson: "Progress Towards Next Great Person at Rebirth",
    NotProducingBuildings: "Buildings That Are Not Producing",
    ExtraGreatPeopleAtReborn: "Extra Great People At Rebirth",

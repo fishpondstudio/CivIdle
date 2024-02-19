@@ -7,14 +7,6 @@ import type { Building } from "./BuildingDefinitions";
 import type { TechAge } from "./TechDefinitions";
 
 export class GreatPersonDefinitions {
-   // JuliusCaesar: IGreatPersonDefinition = {
-   //    name: () => t(L.JuliusCaesar),
-   //    desc: () => t(L.JuliusCaesarDesc),
-   //    value: (level) => level,
-   //    maxLevel: Infinity,
-   //    time: "100 BC ~ 44 BC",
-   // };
-
    Hammurabi: IGreatPersonDefinition = boostOf({
       name: () => t(L.Hammurabi),
       boost: {
@@ -509,12 +501,13 @@ function greatPersonBoostDesc(self: IGreatPersonDefinition, level: number) {
 }
 
 function tickGreatPersonBoost(self: IGreatPersonDefinition, level: number, permanent: boolean) {
-   if (!self.boost) {
+   const boost = self.boost;
+   if (!boost) {
       throw new Error("`tickGreatPersonBoost` requires `boost` to be defined");
    }
-   self.boost.buildings.forEach((b) => {
+   boost.buildings.forEach((b) => {
       const multiplier: Partial<Multiplier> = {};
-      self.boost!.multipliers.forEach((m) => {
+      boost.multipliers.forEach((m) => {
          multiplier[m] = self.value(level);
       });
       addMultiplier(

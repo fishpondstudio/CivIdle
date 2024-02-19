@@ -9,7 +9,7 @@ import {
    unlockableTechs,
 } from "../../../shared/logic/TechLogic";
 import { Tick } from "../../../shared/logic/TickLogic";
-import { formatPercent, reduceOf } from "../../../shared/utilities/Helper";
+import { SECOND, formatHMS, formatPercent, reduceOf } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import { TechTreeScene } from "../scenes/TechTreeScene";
 import { jsxMapOf } from "../utilities/Helper";
@@ -277,33 +277,46 @@ export function HeadquarterBuildingBody({
          </fieldset>
          <fieldset>
             <legend>{t(L.Reborn)}</legend>
-            <div className="row">
-               <div className="f1">{t(L.GreatPeopleThisRun)}</div>
-               <div className="text-strong">
-                  {reduceOf(
-                     gameState.greatPeople,
-                     (prev, k, v) => {
-                        return prev + v;
-                     },
-                     0,
-                  )}
-               </div>
-            </div>
-            <div className="sep5"></div>
-            <div className="row">
-               <div className="f1">{t(L.TotalEmpireValue)}</div>
-               <div className="text-strong">
-                  <FormatNumber value={Tick.current.totalValue} />
-               </div>
-            </div>
-            <div className="sep5"></div>
-            <div className="row">
-               <div className="f1">{t(L.ExtraGreatPeopleAtReborn)}</div>
-               <div className="text-strong">{getGreatPeopleAtReborn()}</div>
-            </div>
-            <div className="mv5 text-link text-strong" onClick={() => showModal(<RebornModal />)}>
-               {t(L.Reborn)}
-            </div>
+            <ul className="tree-view">
+               <li className="row">
+                  <div className="f1">{t(L.GreatPeopleThisRun)}</div>
+                  <div className="text-strong">
+                     {reduceOf(
+                        gameState.greatPeople,
+                        (prev, k, v) => {
+                           return prev + v;
+                        },
+                        0,
+                     )}
+                  </div>
+               </li>
+               <li className="row">
+                  <div className="f1">{t(L.TotalEmpireValue)}</div>
+                  <div className="text-strong">
+                     <FormatNumber value={Tick.current.totalValue} />
+                  </div>
+               </li>
+               <ul>
+                  <li className="row text-small">
+                     <div className="f1">{t(L.TotalTimeThisRun)}</div>
+                     <div>{formatHMS(gameState.tick * SECOND)}</div>
+                  </li>
+                  <li className="row text-small">
+                     <div className="f1">{t(L.TotalEmpireValuePerCycle)}</div>
+                     <FormatNumber value={Tick.current.totalValue / gameState.tick} />
+                  </li>
+               </ul>
+               <li className="row">
+                  <div className="f1">{t(L.ExtraGreatPeopleAtReborn)}</div>
+                  <div className="text-strong">{getGreatPeopleAtReborn()}</div>
+               </li>
+            </ul>
+            <div className="sep10"></div>
+            <button className="row w100 jcc">
+               <div className="m-icon small">stroller</div>
+               <div className="f1 text-strong">{t(L.Reborn)}</div>
+            </button>
+            <div className="text-link text-strong" onClick={() => showModal(<RebornModal />)}></div>
          </fieldset>
          <fieldset>
             <legend>{t(L.Wonder)}</legend>

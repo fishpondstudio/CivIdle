@@ -5,6 +5,18 @@ interface PatchNote {
 
 export const PatchNotes: PatchNote[] = [
    {
+      version: "0.1.141",
+      content: [
+         [
+            "QoL",
+            "The game will open full screen on Steam Deck (I don't own a Steam Deck so no idea if it works or not)",
+         ],
+         ["QoL", "Add announcement feature in the chat"],
+         ["QoL", "Add total time and total empire value per cycle in Reborn section"],
+         ["Content", "Update Russian and Simplified Chinese translation"],
+      ],
+   },
+   {
       version: "0.1.140",
       content: [
          [

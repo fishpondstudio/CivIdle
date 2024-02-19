@@ -28,6 +28,15 @@ export function ThemePage(): React.ReactNode {
             </fieldset>
             <fieldset>
                <legend>{t(L.ThemeColor)}</legend>
+               <div
+                  className="mv5 text-link pointer text-strong"
+                  onClick={() => {
+                     playClick();
+                     resetThemeColor();
+                  }}
+               >
+                  {t(L.ThemeColorReset)}
+               </div>
                {keysOf(gameOptions.themeColors).map((k) => {
                   if (typeof gameOptions.themeColors[k] === "string") {
                      return (
@@ -67,19 +76,19 @@ export function ThemePage(): React.ReactNode {
                      );
                   }
                })}
-               <div
-                  className="mv5 text-link pointer text-strong"
-                  onClick={() => {
-                     playClick();
-                     resetThemeColor();
-                  }}
-               >
-                  {t(L.ThemeColorReset)}
-               </div>
             </fieldset>
 
             <fieldset>
                <legend>{t(L.BuildingColor)}</legend>
+               <div
+                  className="mv5 text-link pointer text-strong"
+                  onClick={() => {
+                     playClick();
+                     resetThemeBuildingColors();
+                  }}
+               >
+                  {t(L.ThemeColorResetBuildingColors)}
+               </div>
                {keysOf(gameOptions.buildingColors)
                   .sort((a, b) => Config.Building[a].name().localeCompare(Config.Building[b].name()))
                   .map((b) => {
@@ -97,19 +106,19 @@ export function ThemePage(): React.ReactNode {
                         </div>
                      );
                   })}
-               <div
-                  className="mv5 text-link pointer text-strong"
-                  onClick={() => {
-                     playClick();
-                     resetThemeBuildingColors();
-                  }}
-               >
-                  {t(L.ThemeColorResetBuildingColors)}
-               </div>
             </fieldset>
 
             <fieldset>
                <legend>{t(L.ResourceColor)}</legend>
+               <div
+                  className="mv5 text-link pointer text-strong"
+                  onClick={() => {
+                     playClick();
+                     resetThemeResourceColors();
+                  }}
+               >
+                  {t(L.ThemeColorResetResourceColors)}
+               </div>
                {keysOf(gameOptions.resourceColors)
                   .sort((a, b) => Config.Resource[a].name().localeCompare(Config.Resource[b].name()))
                   .map((b) => {
@@ -127,15 +136,6 @@ export function ThemePage(): React.ReactNode {
                         </div>
                      );
                   })}
-               <div
-                  className="mv5 text-link pointer text-strong"
-                  onClick={() => {
-                     playClick();
-                     resetThemeResourceColors();
-                  }}
-               >
-                  {t(L.ThemeColorResetResourceColors)}
-               </div>
             </fieldset>
          </div>
       </div>

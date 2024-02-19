@@ -1,13 +1,19 @@
 import { Resource } from "../definitions/ResourceDefinitions";
 import { HOUR } from "./Helper";
 
+export enum ChatAttributes {
+   None = 0,
+   Mod = 1 << 0,
+   Announce = 1 << 1,
+}
+
 export interface IChat {
    name: string;
    message: string;
    time: number;
    flag: string;
    level: AccountLevel;
-   isMod: boolean;
+   attr: ChatAttributes;
    channel: ChatChannel;
 }
 
@@ -39,6 +45,7 @@ export interface IWelcomeMessage extends IMessage {
    type: MessageType.Welcome;
    user: IUser;
    offlineTime: number;
+   lastGameTick: number;
 }
 
 export interface ITrade extends IAddTradeRequest {
@@ -133,6 +140,7 @@ export interface IUser {
    token: string | null;
    lastDisconnectAt: number;
    lastHeartbeatAt: number;
+   lastGameTick: number;
    totalPlayTime: number;
    empireValues: IEmpireValue[];
    tradeValues: ITradeValue[];
@@ -155,6 +163,12 @@ export interface IClientMapEntry extends IMapEntry {
    authenticated: boolean;
 }
 
+export interface ISlowModeConfig {
+   until: number;
+   minInterval: number;
+   lastChatAt: number;
+}
+
 export const DB: {
    chat: IChat[];
    users: Record<string, IUser>;
@@ -162,6 +176,7 @@ export const DB: {
    pendingClaims: Record<string, IPendingClaim[]>;
    map: Record<string, IMapEntry>;
    muteList: Record<string, number>;
+   slowList: Record<string, ISlowModeConfig>;
 } = {
    chat: [],
    users: {},
@@ -169,6 +184,7 @@ export const DB: {
    map: {},
    pendingClaims: {},
    muteList: {},
+   slowList: {},
 };
 
 export const MoveTileCooldown = 4 * HOUR;

@@ -2,9 +2,10 @@ import randomColor from "randomcolor";
 import { isSpecialBuilding } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
 import { getGameOptions, getGameState } from "../../../shared/logic/GameStateLogic";
-import { AccountLevel } from "../../../shared/utilities/Database";
+import { AccountLevel, type ChatChannel } from "../../../shared/utilities/Database";
 import {
    HOUR,
+   SECOND,
    clamp,
    forEach,
    formatHM,
@@ -116,6 +117,13 @@ export async function handleChatCommand(command: string): Promise<void> {
          addSystemMessage(`${parts[1]} is now a mod`);
          break;
       }
+      case "announce": {
+         if (!parts[1] || !parts[2]) {
+            throw new Error("Invalid command format");
+         }
+         await client.announce(parts[1] as ChatChannel, parts[2]);
+         break;
+      }
       case "unmakemod": {
          if (!parts[1]) {
             throw new Error("Invalid command format");
@@ -137,10 +145,35 @@ export async function handleChatCommand(command: string): Promise<void> {
          addSystemMessage(`Player ${parts[1]} has been muted until ${new Date(muteUntil).toLocaleString()}`);
          break;
       }
+      case "slowplayer": {
+         if (!parts[1] || !parts[2]) {
+            throw new Error("Invalid command format");
+         }
+         const slow = await client.slowPlayer(
+            parts[1],
+            parseInt(parts[2], 10) * HOUR,
+            parseInt(parts[3] ?? 0, 10) * SECOND,
+         );
+         addSystemMessage(
+            `Player ${parts[1]} has been slowed until ${new Date(slow.time).toLocaleString()} for ${Math.ceil(
+               slow.interval / SECOND,
+            )}s`,
+         );
+         break;
+      }
       case "mutelist": {
          const mutedPlayers = await client.getMutedPlayers();
          mutedPlayers.forEach((m) => {
             addSystemMessage(`${m.handle} muted until ${new Date(m.time).toLocaleString()}`);
+         });
+         break;
+      }
+      case "slowlist": {
+         const mutedPlayers = await client.getSlowedPlayer();
+         mutedPlayers.forEach((m) => {
+            const t = new Date(m.time).toLocaleString();
+            const i = Math.ceil(m.interval / SECOND);
+            addSystemMessage(`${m.handle} slowed for ${i}s until ${t}`);
          });
          break;
       }

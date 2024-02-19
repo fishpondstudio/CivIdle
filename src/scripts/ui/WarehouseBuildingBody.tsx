@@ -3,7 +3,7 @@ import { GameFeature, hasFeature } from "../../../shared/logic/FeatureLogic";
 import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
 import type { IWarehouseBuildingData } from "../../../shared/logic/Tile";
 import { WarehouseOptions } from "../../../shared/logic/Tile";
-import { hasFlag, toggleFlag } from "../../../shared/utilities/Helper";
+import { formatNumber, hasFlag, toggleFlag } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import { playClick } from "../visuals/Sound";
 import { BuildingColorComponent } from "./BuildingColorComponent";
@@ -40,7 +40,7 @@ export function WarehouseBuildingBody({ gameState, xy }: IBuildingComponentProps
                   <div className="f1">
                      {t(L.WarehouseSettingsAutopilot)}
                      <div className="text-small text-desc">
-                        {t(L.WarehouseSettingsAutopilotDesc, { capacity: idleCapacity })}
+                        {t(L.WarehouseSettingsAutopilotDesc, { capacity: formatNumber(idleCapacity) })}
                      </div>
                   </div>
                   <div

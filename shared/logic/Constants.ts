@@ -3,12 +3,17 @@ import { BuildingSpecial } from "../definitions/BuildingDefinitions";
 import type { City } from "../definitions/CityDefinitions";
 import type { Resource } from "../definitions/ResourceDefinitions";
 import { IsDeposit, NoPrice } from "../definitions/ResourceDefinitions";
-import type { Tech } from "../definitions/TechDefinitions";
+import type { Tech, TechAge } from "../definitions/TechDefinitions";
 import { HOUR, forEach, formatNumber, isEmpty, keysOf, numberToRoman, sizeOf } from "../utilities/Helper";
 import type { PartialSet, PartialTabulate } from "../utilities/TypeDefinitions";
-import { getBuildingCost, isWorldWonder } from "./BuildingLogic";
+import { getBuildingCost, isSpecialBuilding, isWorldWonder } from "./BuildingLogic";
 import { Config } from "./Config";
-import { getBuildingUnlockTech, getDepositUnlockTech, getResourceUnlockTech } from "./TechLogic";
+import {
+   getAgeForTech,
+   getBuildingUnlockTech,
+   getDepositUnlockTech,
+   getResourceUnlockTech,
+} from "./TechLogic";
 
 export const MAX_OFFLINE_PRODUCTION_SEC = 60 * 60 * 4;
 export const SCIENCE_VALUE = 0.5;
@@ -275,6 +280,21 @@ export function calculateTierAndPrice() {
          );
       });
 
+   const boostedBuildings = new Set<Building>();
+   const notBoostedBuildings: { building: Building; tech: Tech; age: TechAge }[] = [];
+   forEach(Config.GreatPerson, (p, def) => {
+      def.boost?.buildings.forEach((b) => boostedBuildings.add(b));
+   });
+   forEach(Config.Building, (building, def) => {
+      if (!isSpecialBuilding(building) && !boostedBuildings.has(building)) {
+         const tech = getBuildingUnlockTech(building)!;
+         const age = getAgeForTech(tech)!;
+         notBoostedBuildings.push({ building, tech, age });
+      }
+   });
+
+   notBoostedBuildings.sort((a, b) => Config.Tech[a.tech].column - Config.Tech[b.tech].column);
+
    // console.log("BuildingTier", sortTabulate(Config.BuildingTier));
    // console.log("BuildingTech", sortTabulate(Config.BuildingTech));
    // console.log("ResourceTier", sortTabulate(Config.ResourceTier));
@@ -282,4 +302,9 @@ export function calculateTierAndPrice() {
    // console.log("ResourceTech", sortTabulate(Config.ResourceTech));
    console.log(`>>>>>>>>>> ResourcePrice <<<<<<<<<<\n${resourcePrice.join("\n")}`);
    console.log(`>>>>>>>>>> WonderCost <<<<<<<<<<\n${wonderCost.join("\n")}`);
+   console.log(
+      `>>>>>>>>>> NotBoostedBuildings <<<<<<<<<<\n${notBoostedBuildings
+         .map((a) => `${a.building.padEnd(25)}${a.tech.padEnd(20)}${a.age}`)
+         .join("\n")}`,
+   );
 }

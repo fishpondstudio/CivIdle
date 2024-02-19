@@ -43,7 +43,7 @@ function hasProperty<T, P extends string>(obj: T, prop: P): obj is T & Record<P,
  * Type guard to check if an object has a certain method.
  */
 function hasMethod<T, P extends string>(obj: T, prop: P): obj is T & Record<P, (...params: any[]) => any> {
-   return hasProperty(obj, prop) && typeof obj[prop] === "function";
+   return hasProperty(obj, prop) && !prop.startsWith("_") && typeof obj[prop] === "function";
 }
 
 function getErrorCode(err: unknown) {

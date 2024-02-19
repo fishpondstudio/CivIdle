@@ -1,15 +1,21 @@
 import Tippy from "@tippyjs/react";
 import classNames from "classnames";
 import React, { memo, useCallback, useEffect, useRef, useState } from "react";
-import { AccountLevel, ChatChannels, type IChat, type IUser } from "../../../shared/utilities/Database";
-import { keysOf, sizeOf } from "../../../shared/utilities/Helper";
+import {
+   AccountLevel,
+   ChatAttributes,
+   ChatChannels,
+   type IChat,
+   type IUser,
+} from "../../../shared/utilities/Database";
+import { hasFlag, keysOf, sizeOf } from "../../../shared/utilities/Helper";
 import { censor } from "../../../shared/utilities/ProfanityFilter";
 import { TypedEvent } from "../../../shared/utilities/TypedEvent";
 import { L, t } from "../../../shared/utilities/i18n";
 import AccountLevelMod from "../../images/AccountLevelMod.png";
 import chatActive from "../../images/chat_active.png";
 import chatInactive from "../../images/chat_inactive.png";
-import { useGameOptions } from "../Global";
+import { ToggleChatWindow, useGameOptions } from "../Global";
 import { AccountLevelImages, AccountLevelNames } from "../logic/AccountLevel";
 import { handleChatCommand } from "../logic/ChatCommand";
 import {
@@ -23,12 +29,12 @@ import {
 import { getCountryName, getFlagUrl } from "../utilities/CountryCode";
 import { useTypedEvent } from "../utilities/Hook";
 import { openUrl } from "../utilities/Platform";
-import { showModal } from "./GlobalModal";
+import { playError } from "../visuals/Sound";
+import { showModal, showToast } from "./GlobalModal";
 import { RenderHTML } from "./RenderHTMLComponent";
 import { SelectChatChannelModal } from "./SelectChatChannelModal";
 
 const SetChatInput = new TypedEvent<(old: string) => string>();
-export const ToggleChatWindow = new TypedEvent<boolean>();
 
 export function ChatPanel(): React.ReactNode {
    const options = useGameOptions();
@@ -150,7 +156,10 @@ function ChatInput({ onChatSend }: { onChatSend: (message: string) => void }): R
          addSystemMessage(`$ ${command}`);
          handleChatCommand(command).catch((e) => addSystemMessage(`${command}: ${e}`));
       } else {
-         client.chat(censor(chat), options.chatSendChannel);
+         client.chat(censor(chat), options.chatSendChannel).catch((e) => {
+            playError();
+            showToast(String(e));
+         });
       }
       onChatSend(chat);
       setChat("");
@@ -208,7 +217,8 @@ function ChatMessage({
             "chat-message-item": true,
             "is-even": chat.id % 2 === 0,
             "mentions-me": user
-               ? chat.message.toLowerCase().includes(`@${user.handle.toLowerCase()}`)
+               ? chat.message.toLowerCase().includes(`@${user.handle.toLowerCase()} `) ||
+                 hasFlag(chat.attr, ChatAttributes.Announce)
                : false,
          })}
       >
@@ -226,7 +236,7 @@ function ChatMessage({
                      <img src={AccountLevelImages[chat.level]} className="player-flag game-cursor" />
                   </Tippy>
                ) : null}
-               {chat.isMod ? (
+               {hasFlag(chat.attr, ChatAttributes.Mod) ? (
                   <Tippy content={t(L.AccountLevelCensor)}>
                      <img src={AccountLevelMod} className="player-flag game-cursor" />
                   </Tippy>
@@ -245,7 +255,7 @@ function ChatMessage({
                      <img src={AccountLevelImages[chat.level]} className="player-flag game-cursor" />
                   </Tippy>
                ) : null}
-               {chat.isMod ? (
+               {hasFlag(chat.attr, ChatAttributes.Mod) ? (
                   <Tippy content={t(L.AccountLevelCensor)}>
                      <img src={AccountLevelMod} className="player-flag game-cursor" />
                   </Tippy>
@@ -289,7 +299,7 @@ const ChatMessageContent = memo(
       onImageLoaded,
    }: { chat: IChat; onImageLoaded: () => void }): React.ReactNode {
       const message = chat.message;
-      if (chat.level <= AccountLevel.Tribune && !chat.isMod) {
+      if (chat.level <= AccountLevel.Tribune && hasFlag(chat.attr, ChatAttributes.Mod)) {
          return message;
       }
       const isDomainWhitelisted =
