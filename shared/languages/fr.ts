@@ -826,6 +826,8 @@ export const FR = {
    RebornOfflineWarning:
       "Vous êtes actuellement hors ligne. La réincarnation n'est possible que lorsque vous êtes connecté au serveur",
    TotalEmpireValue: "Valeur totale de l'empire",
+   TotalTimeThisRun: "Total Time This Run",
+   TotalEmpireValuePerCycle: "Total Empire Value Per Cycle",
    ProgressTowardsNextGreatPerson:
       "Progression jusqu'au prochain personnage illustre lors de la réincarnation",
    NotProducingBuildings: "Constructions non productives",
@@ -930,9 +932,12 @@ export const FR = {
    RedistributeAmongSelected: "Redistribuer parmi ce qui est sélectionné",
    RedistributeAmongSelectedImport: "Importer",
    RedistributeAmongSelectedCap: "Limite",
+   ClearSelected: "Clear Selected",
    PlayerTradeTariffTooltip: "Obtenu grâce à une taxe douanière",
    PlayerTradeClaimAll: "Tout récuperer",
    PlayerTradeClaimAllMessage: "Vous avez récupéré %{count} échanges",
    SteamAchievement: "Succès Steam",
    SteamAchievementDetails: "Voir les succès Steam",
+   ChatHideLatestMessage: "Hide Latest Message Content",
+   ChatHideLatestMessageDesc: "Replace the content of latest chat message with asterisks in the chat bar",
 };

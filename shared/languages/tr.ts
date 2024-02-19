@@ -810,6 +810,8 @@ export const TR = {
    RebornOfflineWarning:
       "You are currently offline. You can only rebirth when you are connected to the server",
    TotalEmpireValue: "Total Empire Value",
+   TotalTimeThisRun: "Total Time This Run",
+   TotalEmpireValuePerCycle: "Total Empire Value Per Cycle",
    ProgressTowardsNextGreatPerson: "Progress Towards Next Great Person at Rebirth",
    NotProducingBuildings: "Buildings That Are Not Producing",
    ExtraGreatPeopleAtReborn: "Extra Great People At Rebirth",
@@ -905,9 +907,12 @@ export const TR = {
    RedistributeAmongSelected: "Redistribute Among Selected",
    RedistributeAmongSelectedImport: "Import",
    RedistributeAmongSelectedCap: "Cap",
+   ClearSelected: "Clear Selected",
    PlayerTradeTariffTooltip: "Collected From a Trade Tariff",
    PlayerTradeClaimAll: "Claim All",
    PlayerTradeClaimAllMessage: "You have claimed %{count} trades",
    SteamAchievement: "Steam Achievement",
    SteamAchievementDetails: "View Steam Achievement",
+   ChatHideLatestMessage: "Hide Latest Message Content",
+   ChatHideLatestMessageDesc: "Replace the content of latest chat message with asterisks in the chat bar",
 };
