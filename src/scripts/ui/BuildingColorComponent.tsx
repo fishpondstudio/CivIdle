@@ -1,3 +1,4 @@
+import Tippy from "@tippyjs/react";
 import { NoStorage, type Resource } from "../../../shared/definitions/ResourceDefinitions";
 import { Config } from "../../../shared/logic/Config";
 import { notifyGameOptionsUpdate } from "../../../shared/logic/GameStateLogic";
@@ -15,6 +16,7 @@ export function BuildingColorComponent({ gameState, xy }: IBuildingComponentProp
    }
    const gameOptions = useGameOptions();
    const def = Config.Building[building.type];
+   const buildingColor = gameOptions.buildingColors[building.type] ?? "#ffffff";
    return (
       <fieldset>
          <legend>{t(L.BuildingColor)}</legend>
@@ -22,7 +24,7 @@ export function BuildingColorComponent({ gameState, xy }: IBuildingComponentProp
             <div className="f1">{def.name()}</div>
             <div>
                <ColorPicker
-                  value={gameOptions.buildingColors[building.type] ?? "#ffffff"}
+                  value={buildingColor}
                   onChange={(v) => {
                      gameOptions.buildingColors[building.type] = v;
                      notifyGameOptionsUpdate();
@@ -32,22 +34,33 @@ export function BuildingColorComponent({ gameState, xy }: IBuildingComponentProp
             </div>
          </div>
          {jsxMapOf(def.input, (res) => {
-            return <ResourceColor key={res} resource={res} />;
+            return <ResourceColor key={res} resource={res} buildingColor={buildingColor} />;
          })}
          {jsxMapOf(def.output, (res) => {
-            return <ResourceColor key={res} resource={res} />;
+            return <ResourceColor key={res} resource={res} buildingColor={buildingColor} />;
          })}
       </fieldset>
    );
 }
 
-function ResourceColor({ resource }: { resource: Resource }) {
+function ResourceColor({ resource, buildingColor }: { resource: Resource; buildingColor: string }) {
    const r = Config.Resource[resource];
    const gameOptions = useGameOptions();
    if (!NoStorage[resource]) {
       return (
          <div className="row mv5">
             <div className="f1">{r.name()}</div>
+            <Tippy content={t(L.BuildingColorMatchBuilding)}>
+               <div
+                  className="small pointer mr10 ml10 m-icon"
+                  onClick={() => {
+                     gameOptions.resourceColors[resource] = buildingColor;
+                     notifyGameOptionsUpdate(gameOptions);
+                  }}
+               >
+                  colorize
+               </div>
+            </Tippy>
             <div>
                <ColorPicker
                   value={gameOptions.resourceColors[resource] ?? "#ffffff"}

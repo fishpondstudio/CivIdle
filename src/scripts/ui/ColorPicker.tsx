@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export function ColorPicker({
    value,
@@ -6,6 +6,9 @@ export function ColorPicker({
    timeout,
 }: { value: string; onChange: (newVal: string) => void; timeout: number }): React.ReactNode {
    const [color, setColor] = useState(value);
+   useEffect(() => {
+      setColor(value);
+   }, [value]);
    const timer = useRef(0);
    return (
       <input
@@ -17,7 +20,7 @@ export function ColorPicker({
             if (timer.current) {
                clearTimeout(timer.current);
             }
-            timer.current = window.setTimeout(() => onChange(color));
+            timer.current = window.setTimeout(() => onChange(color), timeout);
          }}
       />
    );

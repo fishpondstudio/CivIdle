@@ -919,4 +919,7 @@ export const EN = {
    SteamAchievementDetails: "View Steam Achievement",
    ChatHideLatestMessage: "Hide Latest Message Content",
    ChatHideLatestMessageDesc: "Replace the content of latest chat message with asterisks in the chat bar",
+   BuildingColorMatchBuilding: "Copy Color From Building",
+   BuildingColorMatchBuildingTooltip:
+      "Copy resource color from the building that produce this resource. If multiple buildings produce this resource, a random one will be selected",
 };

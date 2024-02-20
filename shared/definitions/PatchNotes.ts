@@ -9,6 +9,11 @@ export const PatchNotes: PatchNote[] = [
       content: [
          ["QoL", "Show uncapped happiness value in Happiness breakdown in Home building"],
          ["QoL", "Add default stockpile settings in gameplay options"],
+         ["QoL", "Allow copying the building color to its resources in building page"],
+         [
+            "QoL",
+            "Add a button to copy resource color from the building that produce this resource in theme page",
+         ],
          ["Bugfix", "Fix a bug where building priorities are displayed before unlocked in tech tree"],
       ],
    },

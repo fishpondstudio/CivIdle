@@ -1,3 +1,4 @@
+import Tippy from "@tippyjs/react";
 import { Config } from "../../../shared/logic/Config";
 import {
    ThemeColorNames,
@@ -6,7 +7,8 @@ import {
    resetThemeResourceColors,
 } from "../../../shared/logic/GameState";
 import { notifyGameOptionsUpdate } from "../../../shared/logic/GameStateLogic";
-import { keysOf } from "../../../shared/utilities/Helper";
+import { getBuildingsThatProduce } from "../../../shared/logic/ResourceLogic";
+import { forEach, keysOf } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import { useGameOptions } from "../Global";
 import { playClick } from "../visuals/Sound";
@@ -110,6 +112,25 @@ export function ThemePage(): React.ReactNode {
 
             <fieldset>
                <legend>{t(L.ResourceColor)}</legend>
+               <Tippy content={t(L.BuildingColorMatchBuildingTooltip)}>
+                  <button
+                     onClick={() => {
+                        forEach(Config.Resource, (res) => {
+                           const buildings = getBuildingsThatProduce(res);
+                           for (const building of buildings) {
+                              if (gameOptions.buildingColors[building]) {
+                                 gameOptions.resourceColors[res] = gameOptions.buildingColors[building];
+                                 return;
+                              }
+                           }
+                        });
+                        notifyGameOptionsUpdate();
+                     }}
+                     className="w100 text-strong"
+                  >
+                     {t(L.BuildingColorMatchBuilding)}
+                  </button>
+               </Tippy>
                <div
                   className="mv5 text-link pointer text-strong"
                   onClick={() => {
