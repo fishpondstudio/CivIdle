@@ -220,7 +220,7 @@ export function AddTradeComponent({
       >
          <div className="m-icon small">add_circle</div>
          <div className="text-strong f1">
-            <TextWithHelp help={enabled ? null : t(L.PlayerTradeMaxTradeExceeded)} noStyle>
+            <TextWithHelp content={enabled ? null : t(L.PlayerTradeMaxTradeExceeded)} noStyle>
                {t(L.PlayerTradeNewTrade)}
             </TextWithHelp>
          </div>

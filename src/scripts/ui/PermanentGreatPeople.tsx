@@ -11,21 +11,17 @@ import { playError, playLevelUp } from "../visuals/Sound";
 import { FormatNumber } from "./HelperComponents";
 import { TextWithHelp } from "./TextWithHelpComponent";
 
-export function PermanentGreatPeople({
-   showEffect,
-   stickyHeader,
-   style,
-}: { showEffect: boolean; stickyHeader: boolean; style?: React.CSSProperties }): React.ReactNode {
+export function PermanentGreatPeople({ style }: { style?: React.CSSProperties }): React.ReactNode {
    const options = useGameOptions();
    return (
-      <div className={classNames({ "table-view": true, "sticky-header f1": stickyHeader })} style={style}>
+      <div className={classNames({ "table-view": true, "sticky-header f1": true })} style={style}>
          <table>
             <thead>
                <tr>
                   <th></th>
                   <th>{t(L.GreatPeopleName)}</th>
                   <th className="text-center">{t(L.Level)}</th>
-                  {showEffect ? <th>{t(L.Level)}</th> : null}
+                  <th>{t(L.Level)}</th>
                   <th className="text-center">{t(L.Upgrade)}</th>
                </tr>
             </thead>
@@ -54,12 +50,12 @@ export function PermanentGreatPeople({
                            </td>
                            <td>
                               <div className="text-center">
-                                 <TextWithHelp help={person.desc(person, value.level)}>
+                                 <TextWithHelp content={person.desc(person, value.level)}>
                                     {numberToRoman(value.level)}
                                  </TextWithHelp>
                               </div>
                            </td>
-                           {showEffect ? <td>{person.desc(person, value.level)}</td> : null}
+                           <td>{person.desc(person, value.level)}</td>
                            <td>
                               <button
                                  onClick={() => {

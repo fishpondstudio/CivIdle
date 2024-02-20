@@ -5,25 +5,25 @@ import "tippy.js/dist/tippy.css";
 
 export function TextWithHelp({
    children,
-   help,
+   content,
    placement,
    className,
    noStyle,
 }: React.PropsWithChildren<{
-   help: string | null | undefined;
+   content: string | null | undefined;
    placement?: Placement;
    size?: "small" | "medium" | "large" | "xlarge" | "fit";
    className?: string;
    noStyle?: boolean;
 }>): React.ReactNode {
-   if (!help) {
+   if (!content) {
       return children;
    }
    if (!noStyle) {
       className += " with-help";
    }
    return (
-      <Tippy content={help} placement={placement ?? "auto"}>
+      <Tippy content={content} placement={placement ?? "auto"}>
          <span className={className}>{children}</span>
       </Tippy>
    );

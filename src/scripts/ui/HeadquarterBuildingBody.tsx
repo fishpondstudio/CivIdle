@@ -9,8 +9,17 @@ import {
    unlockableTechs,
 } from "../../../shared/logic/TechLogic";
 import { Tick } from "../../../shared/logic/TickLogic";
-import { SECOND, formatHMS, formatPercent, reduceOf } from "../../../shared/utilities/Helper";
+import {
+   SECOND,
+   filterOf,
+   formatHMS,
+   formatPercent,
+   numberToRoman,
+   reduceOf,
+   sizeOf,
+} from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
+import { useGameOptions } from "../Global";
 import { TechTreeScene } from "../scenes/TechTreeScene";
 import { jsxMapOf } from "../utilities/Helper";
 import { Singleton } from "../utilities/Singleton";
@@ -25,6 +34,7 @@ import { FormatNumber } from "./HelperComponents";
 import { PlayerHandleComponent } from "./PlayerHandleComponent";
 import { RebornModal } from "./RebornModal";
 import { SteamAchievementPage } from "./SteamAchievementPage";
+import { TextWithHelp } from "./TextWithHelpComponent";
 import { WonderPage } from "./WonderPage";
 
 export function HeadquarterBuildingBody({
@@ -45,6 +55,7 @@ export function HeadquarterBuildingBody({
    } = getScienceFromWorkers(gameState);
    const scienceAmount = getScienceAmount();
    const techAge = getCurrentTechAge(gameState);
+   const options = useGameOptions();
    // const patch = PatchNotes[0];
    return (
       <div className="window-body">
@@ -258,22 +269,60 @@ export function HeadquarterBuildingBody({
          </fieldset>
          <fieldset>
             <legend>{t(L.GreatPeople)}</legend>
-            {jsxMapOf(gameState.greatPeople, (person, v) => {
-               return (
-                  <div key={person} className="row mv5">
-                     <div className="f1">{Config.GreatPerson[person].name()}</div>
-                     <div className="text-strong">
-                        <FormatNumber value={v} />
-                     </div>
-                  </div>
-               );
-            })}
-            <div
-               className="mv5 text-link text-strong"
-               onClick={() => Singleton().routeTo(GreatPersonPage, {})}
-            >
-               {t(L.ManageGreatPeople)}
-            </div>
+            <ul className="tree-view">
+               <li>
+                  <details>
+                     <summary className="row">
+                        <div className="f1">{t(L.GreatPeopleThisRun)}</div>
+                        <div className="text-strong">{sizeOf(gameState.greatPeople)}</div>
+                     </summary>
+                     <ul>
+                        {jsxMapOf(gameState.greatPeople, (person, v) => {
+                           const gp = Config.GreatPerson[person];
+                           return (
+                              <li key={person} className="row text-small">
+                                 <div className="f1">{gp.name()}</div>
+                                 <div className="text-strong">
+                                    <TextWithHelp content={gp.desc(gp, v)}>
+                                       <FormatNumber value={v} />
+                                    </TextWithHelp>
+                                 </div>
+                              </li>
+                           );
+                        })}
+                     </ul>
+                  </details>
+               </li>
+               <li>
+                  <details>
+                     <summary className="row">
+                        <div className="f1">{t(L.PermanentGreatPeople)}</div>
+                        <div className="text-strong">
+                           {sizeOf(filterOf(options.greatPeople, (k, v) => v.level > 0))}
+                        </div>
+                     </summary>
+                     <ul>
+                        {jsxMapOf(options.greatPeople, (person, v) => {
+                           const gp = Config.GreatPerson[person];
+                           return (
+                              <li key={person} className="row text-small">
+                                 <div className="f1">{gp.name()}</div>
+                                 <div className="text-strong">
+                                    <TextWithHelp content={gp.desc(gp, v.level)}>
+                                       {numberToRoman(v.level)}
+                                    </TextWithHelp>
+                                 </div>
+                              </li>
+                           );
+                        })}
+                     </ul>
+                  </details>
+               </li>
+            </ul>
+            <button onClick={() => Singleton().routeTo(GreatPersonPage, {})} className="jcc w100 row mt10">
+               <div className="m-icon">person_celebrate</div>
+               <div className="f1 text-strong">{t(L.ManageGreatPeople)}</div>
+            </button>
          </fieldset>
          <fieldset>
             <legend>{t(L.Reborn)}</legend>

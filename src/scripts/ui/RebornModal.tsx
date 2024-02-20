@@ -116,7 +116,7 @@ export function RebornModal(): React.ReactNode {
                            className="mr10"
                            key={building}
                            size="large"
-                           help={Config.Building[building].desc?.()}
+                           content={Config.Building[building].desc?.()}
                         >
                            {Config.Building[building].name()}{" "}
                            <span className="text-desc">({Config.Tech[tech].name()})</span>
@@ -130,7 +130,7 @@ export function RebornModal(): React.ReactNode {
                   {jsxMapOf(Config.City[city].naturalWonders, (building, tech) => {
                      const def = Config.Building[building];
                      return (
-                        <TextWithHelp className="mr10" key={building} size="large" help={def.desc?.()}>
+                        <TextWithHelp className="mr10" key={building} size="large" content={def.desc?.()}>
                            {def.name()}
                         </TextWithHelp>
                      );

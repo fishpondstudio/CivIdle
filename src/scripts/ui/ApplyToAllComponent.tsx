@@ -26,7 +26,7 @@ export function ApplyToAllComponent({
                applyToAllBuildings(building.type, getOptions, gameState);
             }}
          >
-            <TextWithHelp noStyle help={t(L.ApplyToAllBuilding, { building: def.name() })}>
+            <TextWithHelp noStyle content={t(L.ApplyToAllBuilding, { building: def.name() })}>
                {t(L.ApplyToAll, { building: def.name() })}
             </TextWithHelp>
          </div>
@@ -44,7 +44,7 @@ export function ApplyToAllComponent({
          >
             <TextWithHelp
                noStyle
-               help={t(L.SetAsDefaultBuilding, {
+               content={t(L.SetAsDefaultBuilding, {
                   building: def.name(),
                })}
             >

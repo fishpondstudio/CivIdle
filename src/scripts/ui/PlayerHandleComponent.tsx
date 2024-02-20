@@ -105,27 +105,27 @@ function AccountDetails(): React.ReactNode {
                   <tr>
                      <th></th>
                      <th>
-                        <TextWithHelp help={AccountLevelNames[AccountLevel.Tribune]()} noStyle>
+                        <TextWithHelp content={AccountLevelNames[AccountLevel.Tribune]()} noStyle>
                            <img className="player-level" src={AccountLevelImages[AccountLevel.Tribune]} />
                         </TextWithHelp>
                      </th>
                      <th>
-                        <TextWithHelp help={AccountLevelNames[AccountLevel.Quaestor]()} noStyle>
+                        <TextWithHelp content={AccountLevelNames[AccountLevel.Quaestor]()} noStyle>
                            <img className="player-level" src={AccountLevelImages[AccountLevel.Quaestor]} />
                         </TextWithHelp>
                      </th>
                      <th>
-                        <TextWithHelp help={AccountLevelNames[AccountLevel.Aedile]()} noStyle>
+                        <TextWithHelp content={AccountLevelNames[AccountLevel.Aedile]()} noStyle>
                            <img className="player-level" src={AccountLevelImages[AccountLevel.Aedile]} />
                         </TextWithHelp>
                      </th>
                      <th>
-                        <TextWithHelp help={AccountLevelNames[AccountLevel.Praetor]()} noStyle>
+                        <TextWithHelp content={AccountLevelNames[AccountLevel.Praetor]()} noStyle>
                            <img className="player-level" src={AccountLevelImages[AccountLevel.Praetor]} />
                         </TextWithHelp>
                      </th>
                      <th>
-                        <TextWithHelp help={AccountLevelNames[AccountLevel.Consul]()} noStyle>
+                        <TextWithHelp content={AccountLevelNames[AccountLevel.Consul]()} noStyle>
                            <img className="player-level" src={AccountLevelImages[AccountLevel.Consul]} />
                         </TextWithHelp>
                      </th>
@@ -194,7 +194,7 @@ function AccountDetails(): React.ReactNode {
                   </tr>
                   <tr>
                      <td>
-                        <TextWithHelp help={t(L.AccountTradeTileReservationTimeDesc)}>
+                        <TextWithHelp content={t(L.AccountTradeTileReservationTimeDesc)}>
                            {t(L.AccountTradeTileReservationTime)}
                         </TextWithHelp>
                      </td>
@@ -206,7 +206,7 @@ function AccountDetails(): React.ReactNode {
                   </tr>
                   <tr>
                      <td>
-                        <TextWithHelp help={t(L.AccountUpgradeCarryOverDesc)}>
+                        <TextWithHelp content={t(L.AccountUpgradeCarryOverDesc)}>
                            {t(L.AccountUpgradeCarryOver)}
                         </TextWithHelp>
                      </td>

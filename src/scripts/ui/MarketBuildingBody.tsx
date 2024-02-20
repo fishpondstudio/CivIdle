@@ -127,7 +127,7 @@ export function MarketBuildingBody({ gameState, xy }: IBuildingComponentProps): 
                         })}
                      >
                         <TextWithHelp
-                           help={t(L.MarketValueDesc, { value: formatPercent(tradeValue, 0) })}
+                           content={t(L.MarketValueDesc, { value: formatPercent(tradeValue, 0) })}
                            noStyle
                         >
                            {mathSign(tradeValue, CURRENCY_EPSILON)}

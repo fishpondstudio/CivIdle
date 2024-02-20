@@ -7,6 +7,7 @@ export const PatchNotes: PatchNote[] = [
    {
       version: "0.1.142",
       content: [
+         ["QoL", "A more streamlined great people UI in Home building and Manage Great People page"],
          ["QoL", "Show uncapped happiness value in Happiness breakdown in Home building"],
          ["QoL", "Add default stockpile settings in gameplay options"],
          ["QoL", "Allow copying the building color to its resources in building page"],

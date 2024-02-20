@@ -23,7 +23,7 @@ export function UpgradeGreatPersonModal(): React.ReactNode {
                   />
                </WarningComponent>
             )}
-            <PermanentGreatPeople showEffect={true} stickyHeader={true} style={{ height: "50vh" }} />
+            <PermanentGreatPeople style={{ height: "50vh" }} />
          </div>
       </div>
    );
