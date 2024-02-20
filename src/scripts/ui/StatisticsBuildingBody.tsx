@@ -41,7 +41,7 @@ export function StatisticsBuildingBody({ gameState, xy }: IBuildingComponentProp
       return null;
    }
    const [currentTab, setCurrentTab] = useState<Tab>("resources");
-   let content: JSX.Element | null = null;
+   let content: React.ReactNode = null;
    if (currentTab === "resources") {
       content = <ResourcesTab gameState={gameState} xy={xy} />;
    } else if (currentTab === "buildings") {
