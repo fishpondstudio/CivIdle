@@ -1,11 +1,12 @@
 import { Config } from "../../../shared/logic/Config";
+import { GameFeature, hasFeature } from "../../../shared/logic/FeatureLogic";
 import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
 import {
-   type ITileData,
    PRIORITY_MAX,
    PRIORITY_MIN,
    getConstructionPriority,
    setConstructionPriority,
+   type ITileData,
 } from "../../../shared/logic/Tile";
 import { L, t } from "../../../shared/utilities/i18n";
 import { useGameState } from "../Global";
@@ -29,27 +30,29 @@ export function ConstructionPage({ tile }: { tile: ITileData }): React.ReactNode
          <MenuComponent />
          <div className="window-body">
             <BuildingConstructionProgressComponent xy={tile.tile} gameState={gs} />
-            <fieldset>
-               <legend>
-                  {t(L.ConstructionPriority)}: {getConstructionPriority(building.priority)}
-               </legend>
-               <input
-                  type="range"
-                  min={PRIORITY_MIN}
-                  max={PRIORITY_MAX}
-                  step="1"
-                  value={getConstructionPriority(building.priority)}
-                  onChange={(e) => {
-                     building.priority = setConstructionPriority(
-                        building.priority,
-                        parseInt(e.target.value, 10),
-                     );
-                     notifyGameStateUpdate();
-                  }}
-               />
-               <div className="sep15"></div>
-               <div className="text-desc text-small">{t(L.ProductionPriorityDesc)}</div>
-            </fieldset>
+            {hasFeature(GameFeature.BuildingProductionPriority, gs) ? (
+               <fieldset>
+                  <legend>
+                     {t(L.ConstructionPriority)}: {getConstructionPriority(building.priority)}
+                  </legend>
+                  <input
+                     type="range"
+                     min={PRIORITY_MIN}
+                     max={PRIORITY_MAX}
+                     step="1"
+                     value={getConstructionPriority(building.priority)}
+                     onChange={(e) => {
+                        building.priority = setConstructionPriority(
+                           building.priority,
+                           parseInt(e.target.value, 10),
+                        );
+                        notifyGameStateUpdate();
+                     }}
+                  />
+                  <div className="sep15"></div>
+                  <div className="text-desc text-small">{t(L.ProductionPriorityDesc)}</div>
+               </fieldset>
+            ) : null}
             <fieldset>
                <div className="row">
                   <button

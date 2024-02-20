@@ -1,8 +1,13 @@
+import { GameFeature, hasFeature } from "../../../shared/logic/FeatureLogic";
 import { getTranslatedPercentage } from "../../../shared/logic/GameState";
 import { notifyGameOptionsUpdate } from "../../../shared/logic/GameStateLogic";
 import {
    PRIORITY_MAX,
    PRIORITY_MIN,
+   STOCKPILE_CAPACITY_MAX,
+   STOCKPILE_CAPACITY_MIN,
+   STOCKPILE_MAX_MAX,
+   STOCKPILE_MAX_MIN,
    getConstructionPriority,
    getProductionPriority,
    getUpgradePriority,
@@ -12,7 +17,7 @@ import {
 } from "../../../shared/logic/Tile";
 import { formatPercent } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
-import { useGameOptions } from "../Global";
+import { useGameOptions, useGameState } from "../Global";
 import { openUrl } from "../utilities/Platform";
 import { playClick } from "../visuals/Sound";
 import { ChangeSoundComponent } from "./ChangeSoundComponent";
@@ -21,6 +26,7 @@ import { MenuComponent } from "./MenuComponent";
 
 export function GameplayOptionPage(): React.ReactNode {
    const options = useGameOptions();
+   const gs = useGameState();
    return (
       <div className="window">
          <div className="title-bar">
@@ -45,66 +51,109 @@ export function GameplayOptionPage(): React.ReactNode {
                   </div>
                ) : null}
             </fieldset>
+            {hasFeature(GameFeature.BuildingProductionPriority, gs) ? (
+               <fieldset>
+                  <div className="row">
+                     <div className="f1">{t(L.DefaultProductionPriority)}</div>
+                     <div className="text-strong">{getProductionPriority(options.defaultPriority)}</div>
+                  </div>
+                  <div className="sep5" />
+                  <input
+                     type="range"
+                     min={PRIORITY_MIN}
+                     max={PRIORITY_MAX}
+                     step="1"
+                     value={getProductionPriority(options.defaultPriority)}
+                     onChange={(e) => {
+                        options.defaultPriority = setProductionPriority(
+                           options.defaultPriority,
+                           parseInt(e.target.value, 10),
+                        );
+                        notifyGameOptionsUpdate(options);
+                     }}
+                  />
+                  <div className="sep10" />
+                  <div className="separator" />
+                  <legend>{t(L.BuildingPriority)}</legend>
+                  <div className="row">
+                     <div className="f1">{t(L.DefaultConstructionPriority)}</div>
+                     <div className="text-strong">{getConstructionPriority(options.defaultPriority)}</div>
+                  </div>
+                  <div className="sep5" />
+                  <input
+                     type="range"
+                     min={PRIORITY_MIN}
+                     max={PRIORITY_MAX}
+                     step="1"
+                     value={getConstructionPriority(options.defaultPriority)}
+                     onChange={(e) => {
+                        options.defaultPriority = setConstructionPriority(
+                           options.defaultPriority,
+                           parseInt(e.target.value, 10),
+                        );
+                        notifyGameOptionsUpdate(options);
+                     }}
+                  />
+                  <div className="sep10" />
+                  <div className="separator" />
+                  <div className="row">
+                     <div className="f1">{t(L.DefaultUpgradePriority)}</div>
+                     <div className="text-strong">{getUpgradePriority(options.defaultPriority)}</div>
+                  </div>
+                  <div className="sep5" />
+                  <input
+                     type="range"
+                     min={PRIORITY_MIN}
+                     max={PRIORITY_MAX}
+                     step="1"
+                     value={getUpgradePriority(options.defaultPriority)}
+                     onChange={(e) => {
+                        options.defaultPriority = setUpgradePriority(
+                           options.defaultPriority,
+                           parseInt(e.target.value, 10),
+                        );
+                        notifyGameOptionsUpdate(options);
+                     }}
+                  />
+                  <div className="sep10" />
+               </fieldset>
+            ) : null}
             <fieldset>
+               <legend>{t(L.StockpileSettingsHeading)}</legend>
                <div className="row">
-                  <div className="f1">{t(L.DefaultProductionPriority)}</div>
-                  <div className="text-strong">{getProductionPriority(options.defaultPriority)}</div>
+                  <div className="f1">{t(L.DefaultStockpileSettings)}</div>
+                  <div className="text-strong">{options.defaultStockpileCapacity}x</div>
                </div>
                <div className="sep5" />
                <input
                   type="range"
-                  min={PRIORITY_MIN}
-                  max={PRIORITY_MAX}
-                  step="1"
-                  value={getProductionPriority(options.defaultPriority)}
+                  min={STOCKPILE_CAPACITY_MIN}
+                  max={STOCKPILE_CAPACITY_MAX}
+                  value={options.defaultStockpileCapacity}
                   onChange={(e) => {
-                     options.defaultPriority = setProductionPriority(
-                        options.defaultPriority,
-                        parseInt(e.target.value, 10),
-                     );
-                     notifyGameOptionsUpdate(options);
-                  }}
-               />
-               <div className="sep10" />
-               <div className="separator" />
-               <legend>{t(L.BuildingPriority)}</legend>
-               <div className="row">
-                  <div className="f1">{t(L.DefaultConstructionPriority)}</div>
-                  <div className="text-strong">{getConstructionPriority(options.defaultPriority)}</div>
-               </div>
-               <div className="sep5" />
-               <input
-                  type="range"
-                  min={PRIORITY_MIN}
-                  max={PRIORITY_MAX}
-                  step="1"
-                  value={getConstructionPriority(options.defaultPriority)}
-                  onChange={(e) => {
-                     options.defaultPriority = setConstructionPriority(
-                        options.defaultPriority,
-                        parseInt(e.target.value, 10),
-                     );
+                     options.defaultStockpileCapacity = parseInt(e.target.value, 10);
                      notifyGameOptionsUpdate(options);
                   }}
                />
                <div className="sep10" />
                <div className="separator" />
                <div className="row">
-                  <div className="f1">{t(L.DefaultUpgradePriority)}</div>
-                  <div className="text-strong">{getUpgradePriority(options.defaultPriority)}</div>
+                  <div className="f1">{t(L.DefaultStockpileMax)}</div>
+                  <div className="text-strong">
+                     {options.defaultStockpileMax <= 0
+                        ? t(L.StockpileMaxUnlimited)
+                        : `${options.defaultStockpileMax}x`}
+                  </div>
                </div>
-               <div className="sep5" />
+               <div className="sep5"></div>
                <input
                   type="range"
-                  min={PRIORITY_MIN}
-                  max={PRIORITY_MAX}
-                  step="1"
-                  value={getUpgradePriority(options.defaultPriority)}
+                  min={STOCKPILE_MAX_MIN}
+                  max={STOCKPILE_MAX_MAX}
+                  step="5"
+                  value={options.defaultStockpileMax}
                   onChange={(e) => {
-                     options.defaultPriority = setUpgradePriority(
-                        options.defaultPriority,
-                        parseInt(e.target.value, 10),
-                     );
+                     options.defaultStockpileMax = parseInt(e.target.value, 10);
                      notifyGameOptionsUpdate(options);
                   }}
                />

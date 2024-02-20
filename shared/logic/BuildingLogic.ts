@@ -22,7 +22,9 @@ import type { PartialTabulate } from "../utilities/TypeDefinitions";
 import { TypedEvent } from "../utilities/TypedEvent";
 import { L, t } from "../utilities/i18n";
 import { Config } from "./Config";
-import type { GameState } from "./GameState";
+import { GameFeature, hasFeature } from "./FeatureLogic";
+import { DEFAULT_BUILDING_PRIORITY, type GameState } from "./GameState";
+import { getGameOptions, getGameState } from "./GameStateLogic";
 import { getBuildingIO, getBuildingsByType, getGrid, getXyBuildings } from "./IntraTickCache";
 import { getBuildingsThatProduce, getResourcesValue } from "./ResourceLogic";
 import { getAgeForTech, getBuildingUnlockTech } from "./TechLogic";
@@ -698,4 +700,11 @@ export function getElectrificationStatus(xy: Tile, gs: GameState): Electrificati
       return "Active";
    }
    return "NoPower";
+}
+
+export function getDefaultPriority() {
+   if (hasFeature(GameFeature.BuildingProductionPriority, getGameState())) {
+      return getGameOptions().defaultPriority;
+   }
+   return DEFAULT_BUILDING_PRIORITY;
 }

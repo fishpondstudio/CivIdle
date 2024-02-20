@@ -526,11 +526,14 @@ export const EN = {
    Upgrade: "Upgrade",
    CancelUpgrade: "Cancel Upgrade",
    CancelUpgradeDesc: "All the resources that have already been transported will remain in the storage",
+   StockpileSettingsHeading: "Stockpile Settings",
    StockpileSettings: "Stockpile Input Capacity",
+   DefaultStockpileSettings: "Default Stockpile Input Capacity",
    SellBuilding: "Sell Building",
    StockpileDesc:
       "This building will transport %{capacity}x input resources per production cycle until the max is reached",
    StockpileMax: "Max Stockpile",
+   DefaultStockpileMax: "Default Max Stockpile",
    StockpileMaxUnlimited: "Unlimited",
    StockpileMaxDesc:
       "This building will stop transporting a resource once there are enough for %{cycle} production cycles",

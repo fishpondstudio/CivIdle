@@ -86,6 +86,12 @@ export function TechPage({ id }: { id: Tech }): React.ReactNode {
          </div>
          <MenuComponent />
          <div className="window-body">
+            <button className="w100 row jcc mb10" onClick={goBackToCity}>
+               <div className="m-icon" style={{ margin: "0 5px 0 -5px", fontSize: "18px" }}>
+                  arrow_back
+               </div>
+               <div className="f1">{t(L.BackToCity)}</div>
+            </button>
             <fieldset>
                <legend>{t(L.TechnologyPrerequisite)}</legend>
                {tech.requireTech?.map((prerequisite) => {
@@ -152,12 +158,6 @@ export function TechPage({ id }: { id: Tech }): React.ReactNode {
                )}
             </fieldset>
             <UnlockableEffectComponent definition={tech} gameState={gs} />
-            <button className="w100 row jcc" onClick={goBackToCity}>
-               <div className="m-icon" style={{ margin: "0 5px 0 -5px", fontSize: "18px" }}>
-                  arrow_back
-               </div>
-               <div className="f1">{t(L.BackToCity)}</div>
-            </button>
          </div>
       </div>
    );

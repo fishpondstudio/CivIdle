@@ -67,12 +67,7 @@ import {
 import { getAmountInTransit } from "./ResourceLogic";
 import type { Multiplier } from "./TickLogic";
 import { Tick } from "./TickLogic";
-import type {
-   IBuildingData,
-   IMarketBuildingData,
-   IResourceImportBuildingData,
-   IWarehouseBuildingData,
-} from "./Tile";
+import type { IMarketBuildingData, IResourceImportBuildingData, IWarehouseBuildingData } from "./Tile";
 import { MarketOptions, WarehouseOptions } from "./Tile";
 
 export const OnBuildingComplete = new TypedEvent<Tile>();
@@ -145,10 +140,6 @@ function tickTransportation(transport: ITransportationData, mah: IPointData | nu
    } else {
       transport.hasEnoughFuel = false;
    }
-}
-
-function isBuildingOrUpgrading(b: IBuildingData): boolean {
-   return b.status === "building" || b.status === "upgrading";
 }
 
 export function tickTiles(gs: GameState, offline: boolean) {

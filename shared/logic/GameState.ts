@@ -94,6 +94,8 @@ export const ThemeColorNames: Record<keyof typeof DefaultThemeColors, () => stri
    ResearchHighlightColor: () => t(L.ThemeResearchHighlightColor),
 };
 
+export const DEFAULT_BUILDING_PRIORITY = 0x010101;
+
 export class GameOptions {
    useModernUI = true;
    id = uuid4();
@@ -106,7 +108,9 @@ export class GameOptions {
    soundEffect = true;
    chatHideLatestMessage = false;
    buildingDefaults: Partial<Record<Building, Partial<IBuildingData>>> = {};
-   defaultPriority = 0x010101;
+   defaultPriority = DEFAULT_BUILDING_PRIORITY;
+   defaultStockpileCapacity = 1;
+   defaultStockpileMax = 5;
    chatSendChannel: ChatChannel = "en";
    chatReceiveChannel: PartialSet<ChatChannel> = { en: true };
    // Should be wiped

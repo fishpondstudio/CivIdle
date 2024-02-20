@@ -1,5 +1,6 @@
 import classNames from "classnames";
 import { Config } from "../../../shared/logic/Config";
+import { GameFeature, hasFeature } from "../../../shared/logic/FeatureLogic";
 import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
 import {
    PRIORITY_MAX,
@@ -103,24 +104,29 @@ export function UpgradingPage({ tile }: { tile: ITileData }): React.ReactNode {
                   </div>
                </div>
             </fieldset>
-            <fieldset>
-               <legend>
-                  {t(L.ConstructionPriority)}: {getUpgradePriority(building.priority)}
-               </legend>
-               <input
-                  type="range"
-                  min={PRIORITY_MIN}
-                  max={PRIORITY_MAX}
-                  step="1"
-                  value={getUpgradePriority(building.priority)}
-                  onChange={(e) => {
-                     building.priority = setUpgradePriority(building.priority, parseInt(e.target.value, 10));
-                     notifyGameStateUpdate();
-                  }}
-               />
-               <div className="sep15"></div>
-               <div className="text-desc text-small">{t(L.ProductionPriorityDesc)}</div>
-            </fieldset>
+            {hasFeature(GameFeature.BuildingProductionPriority, gs) ? (
+               <fieldset>
+                  <legend>
+                     {t(L.ConstructionPriority)}: {getUpgradePriority(building.priority)}
+                  </legend>
+                  <input
+                     type="range"
+                     min={PRIORITY_MIN}
+                     max={PRIORITY_MAX}
+                     step="1"
+                     value={getUpgradePriority(building.priority)}
+                     onChange={(e) => {
+                        building.priority = setUpgradePriority(
+                           building.priority,
+                           parseInt(e.target.value, 10),
+                        );
+                        notifyGameStateUpdate();
+                     }}
+                  />
+                  <div className="sep15"></div>
+                  <div className="text-desc text-small">{t(L.ProductionPriorityDesc)}</div>
+               </fieldset>
+            ) : null}
          </div>
       </div>
    );
