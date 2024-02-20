@@ -16,6 +16,7 @@ export const PatchNotes: PatchNote[] = [
             "Add a button to copy resource color from the building that produce this resource in theme page",
          ],
          ["Bugfix", "Fix a bug where building priorities are displayed before unlocked in tech tree"],
+         ["Content", "Update French and Russian translation"],
       ],
    },
    {
