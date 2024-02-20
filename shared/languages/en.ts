@@ -884,11 +884,11 @@ export const EN = {
    CanEarnGreatPeopleFromRebornYes: "This run can earn great people from rebirth",
    CanEarnGreatPeopleFromRebornNo: "This run cannot earn great people from rebirth",
    TribuneUpgradeDesc:
-      "Upgrading from Tribune to Quaestor will allow your account to unlock all online features. However, only <b>permanent great people up to level %{level}</b> can be carried over when you upgrade your account. Progress towards level %{level+1} is also reset.",
+      "Upgrading from Tribune to Quaestor will allow your account to unlock all online features. However, only <b>permanent great people up to level %{level}</b> can be carried over when you upgrade your account. Great Person partial progress towards level %{level+1} is also reset.",
    TribuneUpgradeDescGreatPeopleWarning:
       "Your current run has great people. You should <b>rebirth first</b>. Upgrading to Quaestor rank will reset your current run",
    TribuneGreatPeopleLevelWarning:
-      "Your current account rank is Tribune. Upgrading your account to Quaestor will keep all permanent great people. Upgrading to Quaestor <b>will downgrade any Great People above level %{level} to %{level}</b>, and also remove progress above level %{level}",
+      "Your current account rank is Tribune. Upgrading your account to Quaestor will keep all permanent great people. Upgrading to Quaestor <b>will downgrade any Great People above level %{level} to %{level}</b>, and also remove great person partial progress above level %{level}",
    RebornModalDesc:
       "Your will start a new empire but you can take all the great people <b>from this run</b>, which will become permanent great people. You also may choose from random great people based on your <b>total empire value</b> if above 64M" ,
    OperationNotAllowedError: "This operation is not allowed",
