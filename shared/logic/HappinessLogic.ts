@@ -85,18 +85,17 @@ export function calculateHappiness(gs: GameState) {
       fromHighestTierBuilding,
    };
    const negative: PartialTabulate<HappinessType> = { fromBuildings };
-   const value = clamp(
+   const rawValue =
       reduceOf(positive, (prev, _, value) => prev + value, 0) +
-         sum(Tick.current.globalMultipliers.happiness, "value") -
-         reduceOf(negative, (prev, _, value) => prev + value, 0),
-      -50,
-      50,
-   );
+      sum(Tick.current.globalMultipliers.happiness, "value") -
+      reduceOf(negative, (prev, _, value) => prev + value, 0);
+   const value = clamp(rawValue, -50, 50);
    const workerPercentage = (100 + value * HAPPINESS_MULTIPLIER) / 100;
    const normalized = (value + 50) / 100;
    return {
       positive,
       negative,
+      rawValue,
       value,
       normalized,
       workerPercentage,

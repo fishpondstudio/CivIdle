@@ -82,6 +82,18 @@ export function HappinessComponent({ open }: { open: boolean }): React.ReactNode
                            </li>
                         );
                      })}
+                     <li className="row">
+                        <div className="f1">Happiness (Uncapped)</div>
+                        <div
+                           className={classNames({
+                              "text-strong": true,
+                              "text-red": happiness.rawValue < 0,
+                              "text-green": happiness.rawValue > 0,
+                           })}
+                        >
+                           {happiness.rawValue}
+                        </div>
+                     </li>
                   </ul>
                </details>
             </li>
