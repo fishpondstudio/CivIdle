@@ -284,7 +284,7 @@ function AccountDetails(): React.ReactNode {
                                  getGameOptions().greatPeopleChoices = [];
                                  upgradeAllPermanentGreatPeople(getGameOptions());
                                  forEach(getGameOptions().greatPeople, (k, v) => {
-                                    if (v.level > MAX_TRIBUNE_CARRY_OVER_LEVEL) {
+                                    if (v.level >= MAX_TRIBUNE_CARRY_OVER_LEVEL) {
                                        v.level = MAX_TRIBUNE_CARRY_OVER_LEVEL;
                                        v.amount = 0;
                                     }
