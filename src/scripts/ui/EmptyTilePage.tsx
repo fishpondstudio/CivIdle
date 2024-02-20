@@ -3,11 +3,9 @@ import type { Building } from "../../../shared/definitions/BuildingDefinitions";
 import {
    checkBuildingMax,
    getBuildingCost,
-   getDefaultPriority,
    isWorldOrNaturalWonder,
 } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
-import { GameFeature, hasFeature } from "../../../shared/logic/FeatureLogic";
 import { getGameOptions, notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
 import { getTypeBuildings, unlockedBuildings } from "../../../shared/logic/IntraTickCache";
 import type { ITileData } from "../../../shared/logic/Tile";
@@ -48,11 +46,7 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
          return;
       }
       tile.building = makeBuilding({ type: k });
-      tile.building.priority = getDefaultPriority();
-      if (hasFeature(GameFeature.BuildingStockpileMode, gs)) {
-         tile.building.stockpileCapacity = getGameOptions().defaultStockpileCapacity;
-         tile.building.stockpileMax = getGameOptions().defaultStockpileMax;
-      }
+      tile.building.priority = getGameOptions().defaultPriority;
       notifyGameStateUpdate();
       lastBuild = k;
    };

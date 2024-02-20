@@ -1,11 +1,7 @@
 import Tippy from "@tippyjs/react";
-import {
-   getBuildingUpgradeLevels,
-   getDefaultPriority,
-   getTotalBuildingCost,
-} from "../../../shared/logic/BuildingLogic";
+import { getBuildingUpgradeLevels, getTotalBuildingCost } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
-import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
+import { getGameOptions, notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
 import { getUpgradePriority, setUpgradePriority } from "../../../shared/logic/Tile";
 import {
    formatNumber,
@@ -36,7 +32,10 @@ export function BuildingUpgradeComponent({ gameState, xy }: IBuildingComponentPr
    const upgrade = (level: number) => {
       building.desiredLevel = building.level + level;
       building.status = "upgrading";
-      building.priority = setUpgradePriority(building.priority, getUpgradePriority(getDefaultPriority()));
+      building.priority = setUpgradePriority(
+         building.priority,
+         getUpgradePriority(getGameOptions().defaultPriority),
+      );
       notifyGameStateUpdate();
    };
    useShortcut("BuildingPageUpgradeX1", () => upgrade(1), [xy]);

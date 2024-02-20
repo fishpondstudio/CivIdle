@@ -144,10 +144,12 @@ function tickTransportation(transport: ITransportationData, mah: IPointData | nu
 
 export function tickTiles(gs: GameState, offline: boolean) {
    Array.from(getXyBuildings(gs).entries())
-      .sort(([a, buildingA], [b, buildingB]) => {
-         const diff = getCurrentPriority(buildingB) - getCurrentPriority(buildingA);
-         if (diff !== 0) {
-            return diff;
+      .sort(([_a, buildingA], [_b, buildingB]) => {
+         if (hasFeature(GameFeature.BuildingProductionPriority, gs)) {
+            const diff = getCurrentPriority(buildingB) - getCurrentPriority(buildingA);
+            if (diff !== 0) {
+               return diff;
+            }
          }
          return (Config.BuildingTier[buildingA.type] ?? 0) - (Config.BuildingTier[buildingB.type] ?? 0);
       })
@@ -202,9 +204,14 @@ function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
          building.level++;
          if (building.status === "building") {
             building.status = "completed";
-            const defaults = getGameOptions().buildingDefaults[building.type];
+
+            const options = getGameOptions();
+            const defaults = options.buildingDefaults[building.type];
             if (defaults) {
                Object.assign(building, defaults);
+            } else {
+               building.stockpileCapacity = options.defaultStockpileCapacity;
+               building.stockpileMax = options.defaultStockpileMax;
             }
             OnBuildingComplete.emit(xy);
          } else if (building.status === "upgrading" && building.level >= building.desiredLevel) {

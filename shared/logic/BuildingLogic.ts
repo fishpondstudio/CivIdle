@@ -23,13 +23,15 @@ import { TypedEvent } from "../utilities/TypedEvent";
 import { L, t } from "../utilities/i18n";
 import { Config } from "./Config";
 import { GameFeature, hasFeature } from "./FeatureLogic";
-import { DEFAULT_BUILDING_PRIORITY, type GameState } from "./GameState";
-import { getGameOptions, getGameState } from "./GameStateLogic";
+import { type GameState } from "./GameState";
+import { getGameState } from "./GameStateLogic";
 import { getBuildingIO, getBuildingsByType, getGrid, getXyBuildings } from "./IntraTickCache";
 import { getBuildingsThatProduce, getResourcesValue } from "./ResourceLogic";
 import { getAgeForTech, getBuildingUnlockTech } from "./TechLogic";
 import { Tick, type Multiplier, type MultiplierWithSource } from "./TickLogic";
 import {
+   DEFAULT_STOCKPILE_CAPACITY,
+   DEFAULT_STOCKPILE_MAX,
    getConstructionPriority,
    getProductionPriority,
    getUpgradePriority,
@@ -315,7 +317,17 @@ export function filterNonTransportable<T>(
 }
 
 export function getStockpileMax(b: IBuildingData) {
-   return b.stockpileMax === 0 ? Infinity : b.stockpileMax;
+   if (hasFeature(GameFeature.BuildingStockpileMode, getGameState())) {
+      return b.stockpileMax === 0 ? Infinity : b.stockpileMax;
+   }
+   return DEFAULT_STOCKPILE_MAX;
+}
+
+export function getStockpileCapacity(b: IBuildingData) {
+   if (hasFeature(GameFeature.BuildingStockpileMode, getGameState())) {
+      return b.stockpileCapacity;
+   }
+   return DEFAULT_STOCKPILE_CAPACITY;
 }
 
 export function addTransportation(
@@ -700,11 +712,4 @@ export function getElectrificationStatus(xy: Tile, gs: GameState): Electrificati
       return "Active";
    }
    return "NoPower";
-}
-
-export function getDefaultPriority() {
-   if (hasFeature(GameFeature.BuildingProductionPriority, getGameState())) {
-      return getGameOptions().defaultPriority;
-   }
-   return DEFAULT_BUILDING_PRIORITY;
 }

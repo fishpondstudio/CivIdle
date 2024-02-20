@@ -106,6 +106,9 @@ export const STOCKPILE_MAX_MAX = 50;
 export const PRIORITY_MIN = 1;
 export const PRIORITY_MAX = 10;
 
+export const DEFAULT_STOCKPILE_CAPACITY = 1;
+export const DEFAULT_STOCKPILE_MAX = 5;
+
 export function makeBuilding(data: Pick<IBuildingData, "type"> & Partial<IBuildingData>): IBuildingData {
    const building: IBuildingData = {
       level: 0,
@@ -113,8 +116,8 @@ export function makeBuilding(data: Pick<IBuildingData, "type"> & Partial<IBuildi
       resources: {},
       status: "building",
       capacity: 1,
-      stockpileCapacity: 1,
-      stockpileMax: 5,
+      stockpileCapacity: DEFAULT_STOCKPILE_CAPACITY,
+      stockpileMax: DEFAULT_STOCKPILE_MAX,
       priority: 0x010101,
       options: BuildingOptions.None,
       electrification: 0,

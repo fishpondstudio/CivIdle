@@ -118,47 +118,49 @@ export function GameplayOptionPage(): React.ReactNode {
                   <div className="sep10" />
                </fieldset>
             ) : null}
-            <fieldset>
-               <legend>{t(L.StockpileSettingsHeading)}</legend>
-               <div className="row">
-                  <div className="f1">{t(L.DefaultStockpileSettings)}</div>
-                  <div className="text-strong">{options.defaultStockpileCapacity}x</div>
-               </div>
-               <div className="sep5" />
-               <input
-                  type="range"
-                  min={STOCKPILE_CAPACITY_MIN}
-                  max={STOCKPILE_CAPACITY_MAX}
-                  value={options.defaultStockpileCapacity}
-                  onChange={(e) => {
-                     options.defaultStockpileCapacity = parseInt(e.target.value, 10);
-                     notifyGameOptionsUpdate(options);
-                  }}
-               />
-               <div className="sep10" />
-               <div className="separator" />
-               <div className="row">
-                  <div className="f1">{t(L.DefaultStockpileMax)}</div>
-                  <div className="text-strong">
-                     {options.defaultStockpileMax <= 0
-                        ? t(L.StockpileMaxUnlimited)
-                        : `${options.defaultStockpileMax}x`}
+            {hasFeature(GameFeature.BuildingStockpileMode, gs) ? (
+               <fieldset>
+                  <legend>{t(L.StockpileSettingsHeading)}</legend>
+                  <div className="row">
+                     <div className="f1">{t(L.DefaultStockpileSettings)}</div>
+                     <div className="text-strong">{options.defaultStockpileCapacity}x</div>
                   </div>
-               </div>
-               <div className="sep5"></div>
-               <input
-                  type="range"
-                  min={STOCKPILE_MAX_MIN}
-                  max={STOCKPILE_MAX_MAX}
-                  step="5"
-                  value={options.defaultStockpileMax}
-                  onChange={(e) => {
-                     options.defaultStockpileMax = parseInt(e.target.value, 10);
-                     notifyGameOptionsUpdate(options);
-                  }}
-               />
-               <div className="sep10" />
-            </fieldset>
+                  <div className="sep5" />
+                  <input
+                     type="range"
+                     min={STOCKPILE_CAPACITY_MIN}
+                     max={STOCKPILE_CAPACITY_MAX}
+                     value={options.defaultStockpileCapacity}
+                     onChange={(e) => {
+                        options.defaultStockpileCapacity = parseInt(e.target.value, 10);
+                        notifyGameOptionsUpdate(options);
+                     }}
+                  />
+                  <div className="sep10" />
+                  <div className="separator" />
+                  <div className="row">
+                     <div className="f1">{t(L.DefaultStockpileMax)}</div>
+                     <div className="text-strong">
+                        {options.defaultStockpileMax <= 0
+                           ? t(L.StockpileMaxUnlimited)
+                           : `${options.defaultStockpileMax}x`}
+                     </div>
+                  </div>
+                  <div className="sep5"></div>
+                  <input
+                     type="range"
+                     min={STOCKPILE_MAX_MIN}
+                     max={STOCKPILE_MAX_MAX}
+                     step="5"
+                     value={options.defaultStockpileMax}
+                     onChange={(e) => {
+                        options.defaultStockpileMax = parseInt(e.target.value, 10);
+                        notifyGameOptionsUpdate(options);
+                     }}
+                  />
+                  <div className="sep10" />
+               </fieldset>
+            ) : null}
             <fieldset>
                <legend>{t(L.Sound)}</legend>
                <ChangeSoundComponent />
