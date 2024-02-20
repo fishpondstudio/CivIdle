@@ -3,6 +3,8 @@ import { exists, outputFile, readFile, unlink } from "fs-extra";
 import path from "path";
 import { getGameSavePath, getLocalGameSavePath, type SteamClient } from ".";
 
+const BACKUP_FREQ = 1000 * 60 * 10;
+
 export class IPCService {
    private _client: SteamClient;
 
@@ -10,26 +12,24 @@ export class IPCService {
       this._client = steam;
    }
 
-   public fileWrite(name: string, content: string): void {
-      outputFile(path.join(getGameSavePath(), this.getSteamId(), name), content);
+   public async fileWrite(name: string, content: string): Promise<void> {
+      await outputFile(path.join(getGameSavePath(), this.getSteamId(), name), content);
    }
 
    private counter = 0;
    private lastWriteAt = Date.now();
 
-   public fileWriteBytes(name: string, content: ArrayBuffer): void {
+   public async fileWriteBytes(name: string, content: ArrayBuffer): Promise<void> {
       const buffer = Buffer.from(content);
-      outputFile(path.join(getGameSavePath(), this.getSteamId(), name), buffer);
+      await outputFile(path.join(getGameSavePath(), this.getSteamId(), name), buffer);
 
-      // 10 mins
-      const now = Date.now();
-      if (now - this.lastWriteAt > 1000 * 60 * 10) {
+      if (Date.now() - this.lastWriteAt > BACKUP_FREQ) {
          const backup = `${name}_${(++this.counter % 10) + 1}`;
-         outputFile(
+         await outputFile(
             path.join(getLocalGameSavePath(), this.getAppId().toString(), this.getSteamId(), backup),
             buffer,
          );
-         this.lastWriteAt = now;
+         this.lastWriteAt = Date.now();
       }
    }
 
