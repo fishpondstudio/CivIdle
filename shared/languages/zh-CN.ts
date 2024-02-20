@@ -509,10 +509,13 @@ export const ZH_CN = {
    Upgrade: "升级",
    CancelUpgrade: "取消升级",
    CancelUpgradeDesc: "    所有已被运送的资源将被保留在此建筑中。",
+   StockpileSettingsHeading: "Stockpile Settings",
    StockpileSettings: "库存输入系数",
+   DefaultStockpileSettings: "Default Stockpile Input Capacity",
    SellBuilding: "变卖建筑",
    StockpileDesc: "这座建筑将在每个生产周期运送 %{capacity}x 所需资源，直到最大库存",
    StockpileMax: "最大库存",
+   DefaultStockpileMax: "Default Max Stockpile",
    StockpileMaxUnlimited: "无限制",
    StockpileMaxDesc: "一旦这座建筑有能满足其进行 %{cycle} 个生产周期所需的全部资源，其将停止运送资源",
    StockpileMaxUnlimitedDesc: "直到存储空间填满前，建筑将一直运送资源",
@@ -883,4 +886,7 @@ export const ZH_CN = {
    SteamAchievementDetails: "查看 Steam 成就",
    ChatHideLatestMessage: "隐藏最新消息内容",
    ChatHideLatestMessageDesc: "聊天框中最新消息内容打码处理",
+   BuildingColorMatchBuilding: "Copy Color From Building",
+   BuildingColorMatchBuildingTooltip:
+      "Copy resource color from the building that produce this resource. If multiple buildings produce this resource, a random one will be selected",
 };

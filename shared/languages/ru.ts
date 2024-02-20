@@ -527,11 +527,14 @@ export const RU = {
    Upgrade: "Улучшить",
    CancelUpgrade: "Отменить Улучшение",
    CancelUpgradeDesc: "Все ресурсы, которые уже были перемещены, останутся в хранилище",
+   StockpileSettingsHeading: "Stockpile Settings",
    StockpileSettings: "Входная Мощность Хранилища",
+   DefaultStockpileSettings: "Default Stockpile Input Capacity",
    SellBuilding: "Продать Здание",
    StockpileDesc:
       "Это здание будет перевозить %{capacity}x входных ресурсов за производственный цикл до достижения максимального значения",
    StockpileMax: "Максимальный запас",
+   DefaultStockpileMax: "Default Max Stockpile",
    StockpileMaxUnlimited: "Неограниченно",
    StockpileMaxDesc:
       "Это здание перестанет перевозить ресурс, как только его станет достаточно для %{cycle} производственных циклов",
@@ -925,4 +928,7 @@ export const RU = {
    SteamAchievementDetails: "View Steam Achievement",
    ChatHideLatestMessage: "Hide Latest Message Content",
    ChatHideLatestMessageDesc: "Replace the content of latest chat message with asterisks in the chat bar",
+   BuildingColorMatchBuilding: "Copy Color From Building",
+   BuildingColorMatchBuildingTooltip:
+      "Copy resource color from the building that produce this resource. If multiple buildings produce this resource, a random one will be selected",
 };

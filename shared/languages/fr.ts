@@ -534,11 +534,14 @@ export const FR = {
    Upgrade: "Améliorer",
    CancelUpgrade: "Annuler l'amélioration",
    CancelUpgradeDesc: "Toutes les ressources déjà été transportées resteront dans le stockage",
+   StockpileSettingsHeading: "Stockpile Settings",
    StockpileSettings: "Capacité de stockage",
+   DefaultStockpileSettings: "Default Stockpile Input Capacity",
    SellBuilding: "Vendre la construction",
    StockpileDesc:
       "Ce bâtiment transportera %{capacity}x les ressources d'entrée par cycle de production jusqu'à ce que le maximum soit atteint",
    StockpileMax: "Stockage maximum",
+   DefaultStockpileMax: "Default Max Stockpile",
    StockpileMaxUnlimited: "Illimité",
    StockpileMaxDesc:
       "Ce bâtiment cessera de transporter une ressource lorsqu'il y en aura suffisamment pour %{cycle} cycles de production",
@@ -941,4 +944,7 @@ export const FR = {
    ChatHideLatestMessage: "Cacher le contenu du dernier message",
    ChatHideLatestMessageDesc:
       "Remplacer le contenu du dernier message dans le chat par des astérisques lorsque la fenêtre est réduite",
+   BuildingColorMatchBuilding: "Copy Color From Building",
+   BuildingColorMatchBuildingTooltip:
+      "Copy resource color from the building that produce this resource. If multiple buildings produce this resource, a random one will be selected",
 };
