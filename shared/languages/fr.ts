@@ -939,5 +939,6 @@ export const FR = {
    SteamAchievement: "Succès Steam",
    SteamAchievementDetails: "Voir les succès Steam",
    ChatHideLatestMessage: "Cacher le contenu du dernier message",
-   ChatHideLatestMessageDesc: "Remplacer le contenu du dernier message dans le chat par des astérisques lorsque la fenêtre est réduite",
+   ChatHideLatestMessageDesc:
+      "Remplacer le contenu du dernier message dans le chat par des astérisques lorsque la fenêtre est réduite",
 };
