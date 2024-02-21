@@ -14,6 +14,7 @@ import {
    filterOf,
    formatHMS,
    formatPercent,
+   keysOf,
    numberToRoman,
    reduceOf,
    sizeOf,
@@ -21,7 +22,6 @@ import {
 import { L, t } from "../../../shared/utilities/i18n";
 import { useGameOptions } from "../Global";
 import { TechTreeScene } from "../scenes/TechTreeScene";
-import { jsxMapOf } from "../utilities/Helper";
 import { Singleton } from "../utilities/Singleton";
 import { BuildingColorComponent } from "./BuildingColorComponent";
 import type { IBuildingComponentProps } from "./BuildingPage";
@@ -277,19 +277,31 @@ export function HeadquarterBuildingBody({
                         <div className="text-strong">{sizeOf(gameState.greatPeople)}</div>
                      </summary>
                      <ul>
-                        {jsxMapOf(gameState.greatPeople, (person, v) => {
-                           const gp = Config.GreatPerson[person];
-                           return (
-                              <li key={person} className="row text-small">
-                                 <div className="f1">{gp.name()}</div>
-                                 <div className="text-strong">
-                                    <TextWithHelp content={gp.desc(gp, v)}>
-                                       <FormatNumber value={v} />
-                                    </TextWithHelp>
-                                 </div>
-                              </li>
-                           );
-                        })}
+                        {keysOf(gameState.greatPeople)
+                           .sort(
+                              (a, b) =>
+                                 Config.TechAge[Config.GreatPerson[a].age].idx -
+                                 Config.TechAge[Config.GreatPerson[b].age].idx,
+                           )
+                           .map((person) => {
+                              const gp = Config.GreatPerson[person];
+                              const v = gameState.greatPeople[person]!;
+                              return (
+                                 <li key={person} className="row text-small">
+                                    <div className="f1">
+                                       {gp.name()}
+                                       <span className="text-desc ml5">
+                                          ({Config.TechAge[gp.age].name()})
+                                       </span>
+                                    </div>
+                                    <div className="text-strong">
+                                       <TextWithHelp content={gp.desc(gp, v)}>
+                                          <FormatNumber value={v} />
+                                       </TextWithHelp>
+                                    </div>
+                                 </li>
+                              );
+                           })}
                      </ul>
                   </details>
                </li>
@@ -302,19 +314,31 @@ export function HeadquarterBuildingBody({
                         </div>
                      </summary>
                      <ul>
-                        {jsxMapOf(options.greatPeople, (person, v) => {
-                           const gp = Config.GreatPerson[person];
-                           return (
-                              <li key={person} className="row text-small">
-                                 <div className="f1">{gp.name()}</div>
-                                 <div className="text-strong">
-                                    <TextWithHelp content={gp.desc(gp, v.level)}>
-                                       {numberToRoman(v.level)}
-                                    </TextWithHelp>
-                                 </div>
-                              </li>
-                           );
-                        })}
+                        {keysOf(options.greatPeople)
+                           .sort(
+                              (a, b) =>
+                                 Config.TechAge[Config.GreatPerson[a].age].idx -
+                                 Config.TechAge[Config.GreatPerson[b].age].idx,
+                           )
+                           .map((person) => {
+                              const gp = Config.GreatPerson[person];
+                              const v = options.greatPeople[person]!;
+                              return (
+                                 <li key={person} className="row text-small">
+                                    <div className="f1">
+                                       {gp.name()}
+                                       <span className="text-desc ml5">
+                                          ({Config.TechAge[gp.age].name()})
+                                       </span>
+                                    </div>
+                                    <div className="text-strong">
+                                       <TextWithHelp content={gp.desc(gp, v.level)}>
+                                          {numberToRoman(v.level)}
+                                       </TextWithHelp>
+                                    </div>
+                                 </li>
+                              );
+                           })}
                      </ul>
                   </details>
                </li>

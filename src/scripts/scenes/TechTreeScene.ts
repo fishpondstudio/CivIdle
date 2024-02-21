@@ -14,6 +14,7 @@ import { ViewportScene, destroyAllChildren } from "../utilities/SceneManager";
 import { Singleton } from "../utilities/Singleton";
 import { Actions } from "../utilities/pixi-actions/Actions";
 import { Easing } from "../utilities/pixi-actions/Easing";
+import { Fonts } from "../visuals/Fonts";
 
 const BOX_WIDTH = 300;
 const BOX_HEIGHT = 100;
@@ -309,7 +310,7 @@ export class TechTreeScene extends ViewportScene {
       }
 
       const result = new BitmapText(text, {
-         fontName: "Marcellus",
+         fontName: Fonts.Marcellus,
          fontSize: size,
          tint: color,
       });

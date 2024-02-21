@@ -97,13 +97,20 @@ export function GreatPersonPage(): React.ReactNode {
             <TableView
                data={Array.from(greatPeople.values())}
                header={[
-                  { name: "", sortable: false },
+                  { name: "", sortable: true },
                   { name: t(L.GreatPeopleName), sortable: true },
                   { name: t(L.GreatPeopleThisRunColumn), sortable: true },
                   { name: t(L.GreatPeoplePermanentColumn), sortable: true },
                ]}
                compareFunc={(a, b, col) => {
                   switch (col) {
+                     // biome-ignore lint/suspicious/noFallthroughSwitchClause:
+                     case 0: {
+                        const diff =
+                           Config.TechAge[Config.GreatPerson[a].age].idx -
+                           Config.TechAge[Config.GreatPerson[b].age].idx;
+                        if (diff !== 0) return diff;
+                     }
                      // biome-ignore lint/suspicious/noFallthroughSwitchClause:
                      case 2: {
                         const diff = (gs.greatPeople[a] ?? 0) - (gs.greatPeople[b] ?? 0);
