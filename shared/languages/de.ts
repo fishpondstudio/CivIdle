@@ -1,6 +1,6 @@
 export const DE = {
    CurrentLanguage: "Deutsch",
-   TranslatorCredit: "<Setzen Sie Ihren Namen hierher>",
+   TranslatorCredit: "KaterKarlo",
    Translators: "Übersetzerinnen und Übersetzer",
    Language: "Sprache",
    TechnologyPrerequisite: "Voraussetzungen",

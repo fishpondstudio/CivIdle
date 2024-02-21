@@ -13,6 +13,7 @@ export const PatchNotes: PatchNote[] = [
          ],
          ["QoL", "Streamline wonder UI in Home building"],
          ["Content", "Update French and Russian translation"],
+         ["Content", "Add German Translation (@KaterKarlo)"],
       ],
    },
    {
