@@ -5,6 +5,13 @@ interface PatchNote {
 
 export const PatchNotes: PatchNote[] = [
    {
+      version: "0.1.143",
+      content: [
+         ["QoL", "Streamline wonder UI in Home building"],
+         ["Content", "Update French and Russian translation"],
+      ],
+   },
+   {
       version: "0.1.142",
       content: [
          ["QoL", "A more streamlined great people UI in Home building and Manage Great People page"],

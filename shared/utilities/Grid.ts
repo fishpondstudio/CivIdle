@@ -1,4 +1,4 @@
-import { type Tile, tileToPoint } from "./Helper";
+import { tileToPoint, type Tile } from "./Helper";
 import { Hex, Layout, OffsetCoord, Point } from "./Hex";
 
 export class Grid {

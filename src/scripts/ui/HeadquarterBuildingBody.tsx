@@ -1,6 +1,8 @@
-import { getScienceFromWorkers } from "../../../shared/logic/BuildingLogic";
+import type { ReactNode } from "react";
+import { getScienceFromWorkers, isWorldWonder } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
-import { getXyBuildings } from "../../../shared/logic/IntraTickCache";
+import type { GameOptions, GameState } from "../../../shared/logic/GameState";
+import { getXyBuildings, unlockedBuildings } from "../../../shared/logic/IntraTickCache";
 import { getGreatPeopleAtReborn } from "../../../shared/logic/RebornLogic";
 import {
    getCurrentTechAge,
@@ -15,6 +17,7 @@ import {
    formatHMS,
    formatPercent,
    keysOf,
+   mReduceOf,
    numberToRoman,
    reduceOf,
    sizeOf,
@@ -56,7 +59,6 @@ export function HeadquarterBuildingBody({
    const scienceAmount = getScienceAmount();
    const techAge = getCurrentTechAge(gameState);
    const options = useGameOptions();
-   // const patch = PatchNotes[0];
    return (
       <div className="window-body">
          <PlayerHandleComponent />
@@ -267,144 +269,9 @@ export function HeadquarterBuildingBody({
                </table>
             </div>
          </fieldset>
-         <fieldset>
-            <legend>{t(L.GreatPeople)}</legend>
-            <ul className="tree-view">
-               <li>
-                  <details>
-                     <summary className="row">
-                        <div className="f1">{t(L.GreatPeopleThisRun)}</div>
-                        <div className="text-strong">{sizeOf(gameState.greatPeople)}</div>
-                     </summary>
-                     <ul>
-                        {keysOf(gameState.greatPeople)
-                           .sort(
-                              (a, b) =>
-                                 Config.TechAge[Config.GreatPerson[a].age].idx -
-                                 Config.TechAge[Config.GreatPerson[b].age].idx,
-                           )
-                           .map((person) => {
-                              const gp = Config.GreatPerson[person];
-                              const v = gameState.greatPeople[person]!;
-                              return (
-                                 <li key={person} className="row text-small">
-                                    <div className="f1">
-                                       {gp.name()}
-                                       <span className="text-desc ml5">
-                                          ({Config.TechAge[gp.age].name()})
-                                       </span>
-                                    </div>
-                                    <div className="text-strong">
-                                       <TextWithHelp content={gp.desc(gp, v)}>
-                                          <FormatNumber value={v} />
-                                       </TextWithHelp>
-                                    </div>
-                                 </li>
-                              );
-                           })}
-                     </ul>
-                  </details>
-               </li>
-               <li>
-                  <details>
-                     <summary className="row">
-                        <div className="f1">{t(L.PermanentGreatPeople)}</div>
-                        <div className="text-strong">
-                           {sizeOf(filterOf(options.greatPeople, (k, v) => v.level > 0))}
-                        </div>
-                     </summary>
-                     <ul>
-                        {keysOf(options.greatPeople)
-                           .sort(
-                              (a, b) =>
-                                 Config.TechAge[Config.GreatPerson[a].age].idx -
-                                 Config.TechAge[Config.GreatPerson[b].age].idx,
-                           )
-                           .map((person) => {
-                              const gp = Config.GreatPerson[person];
-                              const v = options.greatPeople[person]!;
-                              return (
-                                 <li key={person} className="row text-small">
-                                    <div className="f1">
-                                       {gp.name()}
-                                       <span className="text-desc ml5">
-                                          ({Config.TechAge[gp.age].name()})
-                                       </span>
-                                    </div>
-                                    <div className="text-strong">
-                                       <TextWithHelp content={gp.desc(gp, v.level)}>
-                                          {numberToRoman(v.level)}
-                                       </TextWithHelp>
-                                    </div>
-                                 </li>
-                              );
-                           })}
-                     </ul>
-                  </details>
-               </li>
-            </ul>
-            <button onClick={() => Singleton().routeTo(GreatPersonPage, {})} className="jcc w100 row mt10">
-               <div className="m-icon">person_celebrate</div>
-               <div className="f1 text-strong">{t(L.ManageGreatPeople)}</div>
-            </button>
-         </fieldset>
-         <fieldset>
-            <legend>{t(L.Reborn)}</legend>
-            <ul className="tree-view">
-               <li className="row">
-                  <div className="f1">{t(L.GreatPeopleThisRun)}</div>
-                  <div className="text-strong">
-                     {reduceOf(
-                        gameState.greatPeople,
-                        (prev, k, v) => {
-                           return prev + v;
-                        },
-                        0,
-                     )}
-                  </div>
-               </li>
-               <li className="row">
-                  <div className="f1">{t(L.TotalEmpireValue)}</div>
-                  <div className="text-strong">
-                     <FormatNumber value={Tick.current.totalValue} />
-                  </div>
-               </li>
-               <ul>
-                  <li className="row text-small">
-                     <div className="f1">{t(L.TotalTimeThisRun)}</div>
-                     <div>{formatHMS(gameState.tick * SECOND)}</div>
-                  </li>
-                  <li className="row text-small">
-                     <div className="f1">{t(L.TotalEmpireValuePerCycle)}</div>
-                     <FormatNumber value={Tick.current.totalValue / gameState.tick} />
-                  </li>
-               </ul>
-               <li className="row">
-                  <div className="f1">{t(L.ExtraGreatPeopleAtReborn)}</div>
-                  <div className="text-strong">{getGreatPeopleAtReborn()}</div>
-               </li>
-            </ul>
-            <div className="sep10"></div>
-            <button className="row w100 jcc" onClick={() => showModal(<RebornModal />)}>
-               <div className="m-icon small">stroller</div>
-               <div className="f1 text-strong">{t(L.Reborn)}</div>
-            </button>
-         </fieldset>
-         <fieldset>
-            <legend>{t(L.Wonder)}</legend>
-            {Array.from(getXyBuildings(gameState).entries())
-               .flatMap(([_, building]) => {
-                  const def = Config.Building[building.type];
-                  if (def.max !== 1 || !def.construction) {
-                     return [];
-                  }
-                  return [def.name()];
-               })
-               .join(", ")}
-            <div className="mv5 text-link text-strong" onClick={() => Singleton().routeTo(WonderPage, {})}>
-               {t(L.ManageWonders)}
-            </div>
-         </fieldset>
+         <GreatPeopleComponent gameState={gameState} options={options} />
+         <RebornComponent gameState={gameState} />
+         <WonderComponent gameState={gameState} />
          <fieldset>
             <legend>{t(L.SteamAchievement)}</legend>
             <div
@@ -416,5 +283,167 @@ export function HeadquarterBuildingBody({
          </fieldset>
          <BuildingColorComponent gameState={gameState} xy={xy} />
       </div>
+   );
+}
+
+function GreatPeopleComponent({
+   gameState,
+   options,
+}: { gameState: GameState; options: GameOptions }): React.ReactNode {
+   return (
+      <fieldset>
+         <legend>{t(L.GreatPeople)}</legend>
+         <ul className="tree-view">
+            <li>
+               <details>
+                  <summary className="row">
+                     <div className="f1">{t(L.GreatPeopleThisRun)}</div>
+                     <div className="text-strong">{sizeOf(gameState.greatPeople)}</div>
+                  </summary>
+                  <ul>
+                     {keysOf(gameState.greatPeople)
+                        .sort(
+                           (a, b) =>
+                              Config.TechAge[Config.GreatPerson[a].age].idx -
+                              Config.TechAge[Config.GreatPerson[b].age].idx,
+                        )
+                        .map((person) => {
+                           const gp = Config.GreatPerson[person];
+                           const v = gameState.greatPeople[person]!;
+                           return (
+                              <li key={person} className="row text-small">
+                                 <div className="f1">
+                                    {gp.name()}
+                                    <span className="text-desc ml5">({Config.TechAge[gp.age].name()})</span>
+                                 </div>
+                                 <div className="text-strong">
+                                    <TextWithHelp content={gp.desc(gp, v)}>
+                                       <FormatNumber value={v} />
+                                    </TextWithHelp>
+                                 </div>
+                              </li>
+                           );
+                        })}
+                  </ul>
+               </details>
+            </li>
+            <li>
+               <details>
+                  <summary className="row">
+                     <div className="f1">{t(L.PermanentGreatPeople)}</div>
+                     <div className="text-strong">
+                        {sizeOf(filterOf(options.greatPeople, (k, v) => v.level > 0))}
+                     </div>
+                  </summary>
+                  <ul>
+                     {keysOf(options.greatPeople)
+                        .sort(
+                           (a, b) =>
+                              Config.TechAge[Config.GreatPerson[a].age].idx -
+                              Config.TechAge[Config.GreatPerson[b].age].idx,
+                        )
+                        .map((person) => {
+                           const gp = Config.GreatPerson[person];
+                           const v = options.greatPeople[person]!;
+                           return (
+                              <li key={person} className="row text-small">
+                                 <div className="f1">
+                                    {gp.name()}
+                                    <span className="text-desc ml5">({Config.TechAge[gp.age].name()})</span>
+                                 </div>
+                                 <div className="text-strong">
+                                    <TextWithHelp content={gp.desc(gp, v.level)}>
+                                       {numberToRoman(v.level)}
+                                    </TextWithHelp>
+                                 </div>
+                              </li>
+                           );
+                        })}
+                  </ul>
+               </details>
+            </li>
+         </ul>
+         <button onClick={() => Singleton().routeTo(GreatPersonPage, {})} className="jcc w100 row mt10">
+            <div className="m-icon small">person_celebrate</div>
+            <div className="f1 text-strong">{t(L.ManageGreatPeople)}</div>
+         </button>
+      </fieldset>
+   );
+}
+
+function WonderComponent({ gameState }: { gameState: GameState }): React.ReactNode {
+   return (
+      <fieldset>
+         <legend>{t(L.Wonder)}</legend>
+         <ul className="tree-view">
+            <li className="row">
+               <div className="f1">{t(L.WondersUnlocked)}</div>
+               <div className="text-strong">
+                  {reduceOf(unlockedBuildings(gameState), (prev, b) => prev + (isWorldWonder(b) ? 1 : 0), 0)}
+               </div>
+            </li>
+            <li className="row">
+               <div className="f1">{t(L.WondersBuilt)}</div>
+               <div className="text-strong">
+                  {mReduceOf(
+                     getXyBuildings(gameState),
+                     (prev, _k, v) => prev + (isWorldWonder(v.type) ? 1 : 0),
+                     0,
+                  )}
+               </div>
+            </li>
+         </ul>
+         <button className="mt10 jcc w100 row" onClick={() => Singleton().routeTo(WonderPage, {})}>
+            <div className="m-icon small">account_balance</div>
+            <div className="f1 text-strong">{t(L.ManageWonders)}</div>
+         </button>
+      </fieldset>
+   );
+}
+
+function RebornComponent({ gameState }: { gameState: GameState }): ReactNode {
+   return (
+      <fieldset>
+         <legend>{t(L.Reborn)}</legend>
+         <ul className="tree-view">
+            <li className="row">
+               <div className="f1">{t(L.GreatPeopleThisRun)}</div>
+               <div className="text-strong">
+                  {reduceOf(
+                     gameState.greatPeople,
+                     (prev, k, v) => {
+                        return prev + v;
+                     },
+                     0,
+                  )}
+               </div>
+            </li>
+            <li className="row">
+               <div className="f1">{t(L.TotalEmpireValue)}</div>
+               <div className="text-strong">
+                  <FormatNumber value={Tick.current.totalValue} />
+               </div>
+            </li>
+            <ul>
+               <li className="row text-small">
+                  <div className="f1">{t(L.TotalTimeThisRun)}</div>
+                  <div>{formatHMS(gameState.tick * SECOND)}</div>
+               </li>
+               <li className="row text-small">
+                  <div className="f1">{t(L.TotalEmpireValuePerCycle)}</div>
+                  <FormatNumber value={Tick.current.totalValue / gameState.tick} />
+               </li>
+            </ul>
+            <li className="row">
+               <div className="f1">{t(L.ExtraGreatPeopleAtReborn)}</div>
+               <div className="text-strong">{getGreatPeopleAtReborn()}</div>
+            </li>
+         </ul>
+         <div className="sep10"></div>
+         <button className="row w100 jcc" onClick={() => showModal(<RebornModal />)}>
+            <div className="m-icon small">stroller</div>
+            <div className="f1 text-strong">{t(L.Reborn)}</div>
+         </button>
+      </fieldset>
    );
 }

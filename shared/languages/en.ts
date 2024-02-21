@@ -925,4 +925,6 @@ export const EN = {
    BuildingColorMatchBuilding: "Copy Color From Building",
    BuildingColorMatchBuildingTooltip:
       "Copy resource color from the building that produce this resource. If multiple buildings produce this resource, a random one will be selected",
+   WondersUnlocked: "World Wonders Unlocked",
+   WondersBuilt: "World Wonders Built",
 };

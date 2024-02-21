@@ -787,8 +787,10 @@ export const RU = {
    ShortcutTechPageUnlockTech: "Разблокировать выбранную технологию",
    EmptyTilePageBuildLastBuilding: "Построить Последнее Здание",
    PlayerMapPageGoBackToCity: "Вернуться в Город",
-   UnclaimedGreatPersonThisRun: "У вас есть неполученные <b>Великие люди в этом забеге</b>, нажмите здесь что бы получить",
-   UnclaimedGreatPersonPermanent: "У вас есть неполученные <b>Постоянные Великие Люди</b>, нажмите здесь что бы получить",
+   UnclaimedGreatPersonThisRun:
+      "У вас есть неполученные <b>Великие люди в этом забеге</b>, нажмите здесь что бы получить",
+   UnclaimedGreatPersonPermanent:
+      "У вас есть неполученные <b>Постоянные Великие Люди</b>, нажмите здесь что бы получить",
    OfflineProduction: "Оффлайн Продукция",
    OfflineTime: "Время Оффлайн",
    TransportCapacity: "Мощность Транспорта",
@@ -934,4 +936,6 @@ export const RU = {
    BuildingColorMatchBuilding: "Копировать Цвет Постройки",
    BuildingColorMatchBuildingTooltip:
       "Копирует цвет с постройки, которая производит этот ресурс. Если ресурс производит несколько построек цвет будет выбран случайно",
+   WondersUnlocked: "World Wonders Unlocked",
+   WondersBuilt: "World Wonders Built",
 };

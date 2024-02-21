@@ -1,5 +1,5 @@
-export const TR = {
-   CurrentLanguage: "Türkçe",
+export const KR = {
+   CurrentLanguage: "English",
    TranslatorCredit: "<Put Your Name Here>",
    Translators: "Translators",
    Language: "Language",
@@ -171,7 +171,7 @@ export const TR = {
    RevealDeposit: "Reveal",
    BuildingMultipliers: "Boost",
    BuildingANew: "Build",
-   BuildingSearchText: "Type a building name to search",
+   BuildingSearchText: "Type a building or resource name to search",
    Worker: "Worker",
    WheatFarm: "Wheat Farm",
    FlourMill: "Flour Mill",
@@ -396,7 +396,8 @@ export const TR = {
    ColossusOfRhodes: "Colossus Of Rhodes",
    ColossusOfRhodesDesc: "All adjacent buildings that do not produce workers get +1 Happiness",
    MausoleumAtHalicarnassus: "Mausoleum At Halicarnassus",
-   MausoleumAtHalicarnassusDesc: "Free transportation within 2 tile range",
+   MausoleumAtHalicarnassusDesc:
+      "A transport costs no workers if it is currently within 2 tile range of the Mausoleum",
    HangingGarden: "Hanging Garden",
    HangingGardenDesc:
       "+1 Builder Capacity Multiplier. Adjacent aqueducts get +1 Production, Storage and Worker Capacity Multiplier",
@@ -654,7 +655,7 @@ export const TR = {
    StatisticsResources: "Resources",
    StatisticsResourcesDeficit: "Deficit",
    StatisticsResourcesRunOut: "Run Out",
-   StatisticsResourcesDeficitDesc: "Output: %{output} - Input: %{input}",
+   StatisticsResourcesDeficitDesc: "Production: %{output} - Consumption: %{input}",
    StatisticsBuildings: "Buildings",
    StatisticsTransportation: "Transportation",
    StatisticsTransportationPercentage: "Percentage of Transportation Workers",

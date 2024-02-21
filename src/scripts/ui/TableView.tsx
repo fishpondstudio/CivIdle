@@ -29,6 +29,7 @@ export function TableView<T>({
                <tr>
                   {header.map((h, index) => (
                      <th
+                        key={index}
                         className={h.className}
                         onClick={() => {
                            if (h.sortable) {

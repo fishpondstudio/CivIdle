@@ -796,8 +796,10 @@ export const FR = {
    ShortcutTechPageUnlockTech: "Débloquer la technologie sélectionnée",
    EmptyTilePageBuildLastBuilding: "Bâtir le dernière bâtiment",
    PlayerMapPageGoBackToCity: "Retourner à la ville",
-   UnclaimedGreatPersonThisRun: "Il vous reste des <b>personnages illustres</b> à collecter <b>dans cette partie</b>, cliquez ici pour les récuperer",
-   UnclaimedGreatPersonPermanent: "Il vous reste des <b>personnages illustres permanents</b> à collecter, cliquez ici pour les récuperer",
+   UnclaimedGreatPersonThisRun:
+      "Il vous reste des <b>personnages illustres</b> à collecter <b>dans cette partie</b>, cliquez ici pour les récuperer",
+   UnclaimedGreatPersonPermanent:
+      "Il vous reste des <b>personnages illustres permanents</b> à collecter, cliquez ici pour les récuperer",
    OfflineProduction: "Production hors ligne",
    OfflineTime: "Temps hors ligne",
    TransportCapacity: "Capacité de Transport",
@@ -944,10 +946,12 @@ export const FR = {
    PlayerTradeClaimAllMessage: "Vous avez récupéré %{count} échange(s)",
    SteamAchievement: "Succès Steam",
    SteamAchievementDetails: "Voir les succès Steam",
-      ChatHideLatestMessage: "Masquer le contenu du dernier message",
+   ChatHideLatestMessage: "Masquer le contenu du dernier message",
    ChatHideLatestMessageDesc:
       "Remplacer le contenu du dernier message dans le chat par des astérisques lorsque la fenêtre est réduite",
    BuildingColorMatchBuilding: "Copier la couleur des bâtiments",
    BuildingColorMatchBuildingTooltip:
       "Les ressources seront automatiquement de la même couleur que le bâtiment qui les produit. Si plusieurs bâtiments produisent la même ressource, la couleur sera choisie aléatoirement",
+   WondersUnlocked: "World Wonders Unlocked",
+   WondersBuilt: "World Wonders Built",
 };
