@@ -822,7 +822,7 @@ export const RU = {
       "У вас есть активные или завершенные, но не полученные сделки <b>Перерождение безвозвратно удалит их</b> - вам сначал следует рассмотреть возможность отмены или обналичивания",
    RebornOfflineWarning: "Сейчас вы оффлайн. Вы можете перерождаться только когда подключены к серверу",
    TotalEmpireValue: "Общая Стоимость Империи",
-   TotalTimeThisRun: "Всего времени в этом забеге",
+   TotalTimeThisRun: "Всего Времени В Этом Забеге",
    TotalEmpireValuePerCycle: "Total Empire Value Per Cycle",
    ProgressTowardsNextGreatPerson: "Прогресс до следующего Великого Человека после перерождения",
    NotProducingBuildings: "Здания Которые Не Производят",
