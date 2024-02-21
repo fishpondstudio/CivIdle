@@ -885,14 +885,14 @@ export const EN = {
    TranslationPercentage: "%{language} is %{percentage} translated. Help improve this translation on GitHub",
    CanEarnGreatPeopleFromRebornYes: "This run can earn great people from rebirth",
    CanEarnGreatPeopleFromRebornNo: "This run cannot earn great people from rebirth",
-   TribuneUpgradeDesc:
-      "Upgrading from Tribune to Quaestor will allow your account to unlock all online features. However, only <b>permanent great people up to level %{level}</b> can be carried over",
+   TribuneUpgradeDescV2:
+      "Upgrading from Tribune to Quaestor will unlock all online features. However, only <b>permanent great people up to level %{level}</b> can be carried over. Partial progress above level %{level} will not be carried over",
    TribuneUpgradeDescGreatPeopleWarning:
       "Your current run has great people. You should <b>rebirth first</b>. Upgrading to Quaestor rank will reset your current run",
-   TribuneGreatPeopleLevelWarning:
-      "Your current account rank is Tribune. Upgrading to Quaestor will carry over permanent great people <b>up to level %{level}</b>",
-   RebornModalDesc:
-      "You will start a new empire but you can take all the great people <b>from this run</b>, plus extra great people based on your <b>total empire value</b>",
+   TribuneGreatPeopleLevelWarningV2:
+      "Your current account rank is Tribune. Upgrading to Quaestor will carry over permanent great people <b>up to level %{level}</b>. Partial progress above level %{level} will not be carried over",
+   RebornModalDescV2:
+      "You will start a new empire but you can take all the great people <b>from this run</b>, which will become <b>permanent</b> great people. You can also choose extra great people based on your <b>total empire value</b>",
    OperationNotAllowedError: "This operation is not allowed",
    AccountLevelUpgradeConditionAny:
       "To upgrade your account, you only need to satisfy one of the following criteria:",
