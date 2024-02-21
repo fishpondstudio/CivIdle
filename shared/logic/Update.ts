@@ -189,17 +189,24 @@ function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
 
       forEach(cost, (res, amount) => {
          const amountArrived = building.resources[res] ?? 0;
+         // Already full
          if (amountArrived >= amount) {
+            if (disabledResources) {
+               disabledResources.add(res);
+            } else {
+               Preferences.disabledResources.set(xy, new Set([res]));
+            }
             // continue;
             return false;
          }
+         // Will be full
          if (amountArrived + getAmountInTransit(xy, res, gs) >= amount) {
             completed = false;
             // continue;
             return false;
          }
-         completed = false;
 
+         completed = false;
          if (disabledResources?.has(res) ?? false) {
             // continue;
             return false;

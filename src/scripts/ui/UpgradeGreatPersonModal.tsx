@@ -19,7 +19,7 @@ export function UpgradeGreatPersonModal(): React.ReactNode {
             {isOnlineUser() ? null : (
                <WarningComponent className="mb10" icon="warning">
                   <RenderHTML
-                     html={t(L.TribuneGreatPeopleLevelWarning, { level: MAX_TRIBUNE_CARRY_OVER_LEVEL })}
+                     html={t(L.TribuneGreatPeopleLevelWarningV2, { level: MAX_TRIBUNE_CARRY_OVER_LEVEL })}
                   />
                </WarningComponent>
             )}

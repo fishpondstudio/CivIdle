@@ -910,14 +910,14 @@ export const FR = {
       "Cette partie peut vous permettre d'obtenir des personnages illustres de la réincarnation",
    CanEarnGreatPeopleFromRebornNo:
       "Cette partie ne peut pas vous permettre d'obtenir des personnages illustres de la réincarnation",
-   TribuneUpgradeDesc:
-      "Passer du rang Tribun au rang Questeur permettra à votre compte de débloquer les fonctionnalités en ligne. Cependant, seuls les personnages illustres <b>jusqu'au niveau %{level}</b> peuvent être conservés",
+   TribuneUpgradeDescV2:
+      "Upgrading from Tribune to Quaestor will unlock all online features. However, only <b>permanent great people up to level %{level}</b> can be carried over. Partial progress above level %{level} will not be carried over",
    TribuneUpgradeDescGreatPeopleWarning:
       "Votre partie actuelle contient des personnages illustres. Vous devez <b>d'abord vous réincarner</b>. Passer au rang de Questeur réinitialisera votre partie actuelle",
-   TribuneGreatPeopleLevelWarning:
-      "Votre rang de compte actuel est Tribun. Passer au rang de Questeur conservera vos personnages illustres permanents <b>jusqu'au niveau %{level}</b>",
-   RebornModalDesc:
-      "Vous commencerez un nouvel empire mais vous pourrez récuperer tous les personnages illustres <b>de cette partie</b>, en plus de personnages bonus basés sur la <b>valeur totale de votre empire</b>",
+   TribuneGreatPeopleLevelWarningV2:
+      "Your current account rank is Tribune. Upgrading to Quaestor will carry over permanent great people <b>up to level %{level}</b>. Partial progress above level %{level} will not be carried over",
+   RebornModalDescV2:
+      "Your will start a new empire but you can take all the great people <b>from this run</b>, which will become <b>permanent</b> great people. You can also choose extra great people based on your <b>total empire value</b>",
    OperationNotAllowedError: "Opération impossible",
    AccountLevelUpgradeConditionAny:
       "Pour passer au rang supérieur, vous devez remplir l'une des conditions suivantes :",
@@ -943,6 +943,7 @@ export const FR = {
    PlayerTradeTariffTooltip: "Obtenu grâce à une taxe douanière",
    PlayerTradeClaimAll: "Tout récuperer",
    PlayerTradeClaimAllMessage: "Vous avez récupéré %{count} échange(s)",
+   PlayerTradeClaimAllFailedMessage: "You have claimed %{count} trades - is the storage full?",
    SteamAchievement: "Succès Steam",
    SteamAchievementDetails: "Voir les succès Steam",
    ChatHideLatestMessage: "Masquer le contenu du dernier message",
@@ -954,4 +955,5 @@ export const FR = {
    WondersUnlocked: "World Wonders Unlocked",
    WondersBuilt: "World Wonders Built",
    TransportManualControlTooltip: "Transport this resource for construction/upgrade",
+   TransportAllocatedCapacityTooltip: "Builder Capacity allocated to transporting this resource",
 };

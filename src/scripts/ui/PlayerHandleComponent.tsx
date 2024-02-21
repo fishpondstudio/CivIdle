@@ -239,7 +239,7 @@ function AccountDetails(): React.ReactNode {
                <WarningComponent className="mb10" icon="info">
                   <RenderHTML
                      className="text-small"
-                     html={t(L.TribuneUpgradeDesc, { level: MAX_TRIBUNE_CARRY_OVER_LEVEL })}
+                     html={t(L.TribuneUpgradeDescV2, { level: MAX_TRIBUNE_CARRY_OVER_LEVEL })}
                   />
                </WarningComponent>
                {canRankUp() ? null : (

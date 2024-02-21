@@ -895,14 +895,14 @@ export const RU = {
    TranslationPercentage: "%{language} на %{percentage} переведён. Помогите улучшить этот перевод на GitHub",
    CanEarnGreatPeopleFromRebornYes: "Этот пробег может зарабатывать Великих Людей от перерождения",
    CanEarnGreatPeopleFromRebornNo: "Этот пробег не может зарабатывать Великих Людей от перерождения",
-   TribuneUpgradeDesc:
-      "Переход с Трибуна на Квестора позволит вашей учетной записи использовать все онлайн функции. Однако, <b>Вы можете перенести Постоянных Великих Людей только до уровня %{level}</b>",
+   TribuneUpgradeDescV2:
+      "Upgrading from Tribune to Quaestor will unlock all online features. However, only <b>permanent great people up to level %{level}</b> can be carried over. Partial progress above level %{level} will not be carried over",
    TribuneUpgradeDescGreatPeopleWarning:
       "В вашем текущем забеге есть великие люди. Вам следует <b>сначала переродиться</b>. Улучшение до ранга Квестора обнулит ваш текущий забег",
-   TribuneGreatPeopleLevelWarning:
-      "Уровень вашей учетной записи Трибун - при переходе на Квестор, Вы можете перенести Постоянных Великих Людей до уровня %{level}",
-   RebornModalDesc:
-      "Вы начнете новую империю, но сможете забрать всех Великих Людей <b>из этого пробега</b>, плюс дополнительных великих людей на основе вашей <b>общей стоимости империи</b>",
+   TribuneGreatPeopleLevelWarningV2:
+      "Your current account rank is Tribune. Upgrading to Quaestor will carry over permanent great people <b>up to level %{level}</b>. Partial progress above level %{level} will not be carried over",
+   RebornModalDescV2:
+      "Your will start a new empire but you can take all the great people <b>from this run</b>, which will become <b>permanent</b> great people. You can also choose extra great people based on your <b>total empire value</b>",
    OperationNotAllowedError: "Эта операция не разрешена",
    AccountLevelUpgradeConditionAny:
       "Чтобы повысить уровень аккаунта, вам достаточно соответствовать одному из следующих критериев:",
@@ -929,6 +929,7 @@ export const RU = {
    PlayerTradeTariffTooltip: "Collected From a Trade Tariff",
    PlayerTradeClaimAll: "Получить всё",
    PlayerTradeClaimAllMessage: "You have claimed %{count} trades",
+   PlayerTradeClaimAllFailedMessage: "You have claimed %{count} trades - is the storage full?",
    SteamAchievement: "Steam Achievement",
    SteamAchievementDetails: "View Steam Achievement",
    ChatHideLatestMessage: "Hide Latest Message Content",
@@ -939,4 +940,5 @@ export const RU = {
    WondersUnlocked: "World Wonders Unlocked",
    WondersBuilt: "World Wonders Built",
    TransportManualControlTooltip: "Transport this resource for construction/upgrade",
+   TransportAllocatedCapacityTooltip: "Builder Capacity allocated to transporting this resource",
 };

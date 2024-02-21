@@ -4,6 +4,7 @@ import type { GreatPerson } from "../definitions/GreatPersonDefinitions";
 import type { Resource } from "../definitions/ResourceDefinitions";
 import type { RomeProvince } from "../definitions/RomeProvinceDefinitions";
 import type { Tech } from "../definitions/TechDefinitions";
+import { DE } from "../languages/de";
 import { EN } from "../languages/en";
 import { FR } from "../languages/fr";
 import { RU } from "../languages/ru";
@@ -122,6 +123,7 @@ export const Languages = {
    fr: FR,
    ru: RU,
    zh_CN: ZH_CN,
+   de: DE,
 } as const;
 
 export const SAVE_FILE_VERSION = 1;

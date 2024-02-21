@@ -42,10 +42,13 @@ export function RebornModal(): React.ReactNode {
          </div>
          <div className="window-body">
             {tradeCount > 0 ? (
-               <WarningComponent icon="warning" className="mb10">
+               <WarningComponent icon="warning" className="mb10 text-small">
                   <RenderHTML html={t(L.RebornTradeWarning)} />
                </WarningComponent>
             ) : null}
+            <WarningComponent icon="info" className="mb10 text-small">
+               <RenderHTML html={t(L.RebornModalDescV2)} />
+            </WarningComponent>
             {canEarnGreatPeopleFromReborn() ? (
                <fieldset>
                   <div className="row">
@@ -71,10 +74,6 @@ export function RebornModal(): React.ReactNode {
                   <div className="row">
                      <div className="f1">{t(L.ExtraGreatPeopleAtReborn)}</div>
                      <div className="text-strong">{getGreatPeopleAtReborn()}</div>
-                  </div>
-                  <div className="sep10" />
-                  <div className="text-small text-desc">
-                     <RenderHTML html={t(L.RebornModalDesc)} />
                   </div>
                </fieldset>
             ) : (
