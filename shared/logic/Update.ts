@@ -209,6 +209,10 @@ function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
 
       if (completed) {
          building.level++;
+         forEach(cost, (res, amount) => {
+            safeAdd(building.resources, res, -amount);
+         });
+         Preferences.disabledResources.delete(xy);
          if (building.status === "building") {
             building.status = "completed";
 
@@ -224,10 +228,6 @@ function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
          } else if (building.status === "upgrading" && building.level >= building.desiredLevel) {
             building.status = "completed";
          }
-
-         forEach(cost, (res, amount) => {
-            safeAdd(building.resources, res, -amount);
-         });
       }
       forEach(building.resources, (res, amount) => {
          if (!Number.isFinite(amount) || amount <= 0) {
