@@ -198,11 +198,12 @@ function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
             // continue;
             return false;
          }
+         completed = false;
+
          if (disabledResources?.has(res) ?? false) {
             // continue;
             return false;
          }
-         completed = false;
          // Each transportation costs 1 worker, and deliver Total (=Builder Capacity x Multiplier) resources
          transportResource(res, builderCapacityPerResource, builderCapacityPerResource, xy, gs);
       });
