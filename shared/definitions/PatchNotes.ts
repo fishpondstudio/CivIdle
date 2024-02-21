@@ -7,6 +7,10 @@ export const PatchNotes: PatchNote[] = [
    {
       version: "0.1.143",
       content: [
+         [
+            "QoL",
+            "Now if you construct or upgrade a building, all the resources will be transported in parallel by default. Builder Capacity will be equally shared among them. You can also turn off specific resource transportation which will transfer its builder capacity to other resources",
+         ],
          ["QoL", "Streamline wonder UI in Home building"],
          ["Content", "Update French and Russian translation"],
       ],

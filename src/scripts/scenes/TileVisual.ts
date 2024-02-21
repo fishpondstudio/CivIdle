@@ -12,7 +12,6 @@ import { getGrid } from "../../../shared/logic/IntraTickCache";
 import { Tick } from "../../../shared/logic/TickLogic";
 import type { ITileData } from "../../../shared/logic/Tile";
 import {
-   type Tile,
    clamp,
    forEach,
    formatHMS,
@@ -21,6 +20,7 @@ import {
    pointToTile,
    pointToXy,
    sizeOf,
+   type Tile,
 } from "../../../shared/utilities/Helper";
 import { v2 } from "../../../shared/utilities/Vector2";
 import { getBuildingTexture, getNotProducingTexture, getTileTexture } from "../logic/VisualLogic";
@@ -259,17 +259,6 @@ export class TileVisual extends Container {
             this._spinner.visible = false;
             this._building.alpha = 0.5;
             this.toggleConstructionTween(true);
-            this.showTimeLeft(tileData, gameState);
-            return;
-         }
-         case "paused": {
-            this.toggleConstructionTween(false);
-            this._construction.visible = true;
-            this._notProducing.visible = false;
-            this._upgrade.visible = false;
-            this._level.visible = false;
-            this._spinner.visible = false;
-            this._building.alpha = 0.5;
             this.showTimeLeft(tileData, gameState);
             return;
          }

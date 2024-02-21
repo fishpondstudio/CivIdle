@@ -384,9 +384,8 @@ export const EN = {
    ConstructionBuilderMultiplier: "Capacity Multiplier",
    ConstructionBuilderMultiplierFull: "Builder Capacity Multiplier",
    EndConstruction: "End Construction",
-   EndConstructionEnd: "End",
-   EndConstructionDesc:
-      "When you end the construction, all the resources that have already been used will not be returned",
+   EndConstructionDescHTML:
+      "When you end construction, all the resources that have already been used <b>will not be returned</b>",
    Stonehenge: "Stonehenge",
    StonehengeDesc: "All buildings that consume or produce stone get +1 Production Multiplier",
    LighthouseOfAlexandria: "Lighthouse Of Alexandria",
@@ -788,8 +787,8 @@ export const EN = {
    OfflineTime: "Offline Time",
    TransportCapacity: "Transport Capacity",
    TransportCapacityMultiplier: "Transport Capacity Multiplier",
-   WonderBuilderCapacityDesc:
-      "Builder Capacity when constructing wonders are affect by the age and technology that unlocks the wonder",
+   WonderBuilderCapacityDescHTML:
+      "<b>Builder Capacity</b> when constructing wonders are affect by the <b>age</b> and <b>technology</b> that unlocks the wonder",
    MarketSettings: "Market Settings",
    ClearAfterUpdate: "Clear All Trades After Market Update",
    WarehouseSettings: "Warehouse Settings",
@@ -918,6 +917,7 @@ export const EN = {
    PlayerTradeTariffTooltip: "Collected From a Trade Tariff",
    PlayerTradeClaimAll: "Claim All",
    PlayerTradeClaimAllMessage: "You have claimed %{count} trades",
+   PlayerTradeClaimAllFailedMessage: "You have claimed %{count} trades - is the storage full?",
    SteamAchievement: "Steam Achievement",
    SteamAchievementDetails: "View Steam Achievement",
    ChatHideLatestMessage: "Hide Latest Message Content",
@@ -927,4 +927,6 @@ export const EN = {
       "Copy resource color from the building that produce this resource. If multiple buildings produce this resource, a random one will be selected",
    WondersUnlocked: "World Wonders Unlocked",
    WondersBuilt: "World Wonders Built",
+   TransportManualControlTooltip: "Transport this resource for construction/upgrade",
+   TransportAllocatedCapacityTooltip: "Builder Capacity allocated to transporting this resource",
 };

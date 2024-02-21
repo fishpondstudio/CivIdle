@@ -384,9 +384,8 @@ export const DK = {
    ConstructionBuilderMultiplier: "Capacity Multiplier",
    ConstructionBuilderMultiplierFull: "Builder Capacity Multiplier",
    EndConstruction: "End Construction",
-   EndConstructionEnd: "End",
-   EndConstructionDesc:
-      "When you end the construction, all the resources that have already been used will not be returned",
+   EndConstructionDescHTML:
+      "When you end construction, all the resources that have already been used <b>will not be returned</b>",
    Stonehenge: "Stonehenge",
    StonehengeDesc: "All buildings that consume or produce stone get +1 Production Multiplier",
    LighthouseOfAlexandria: "Lighthouse Of Alexandria",

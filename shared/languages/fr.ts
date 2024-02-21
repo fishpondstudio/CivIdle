@@ -386,9 +386,8 @@ export const FR = {
    ConstructionBuilderMultiplier: "Multiplicateur de Capacité",
    ConstructionBuilderMultiplierFull: "Multiplicateur de Capacité de construction",
    EndConstruction: "Abandonner la construction",
-   EndConstructionEnd: "Abandonner",
-   EndConstructionDesc:
-      "Lorsque vous abandonnez la construction d'un bâtiment, toutes les ressources déjà utilisée ne seront pas restituées",
+   EndConstructionDescHTML:
+      "When you end construction, all the resources that have already been used <b>will not be returned</b>",
    Stonehenge: "Stonehenge",
    StonehengeDesc:
       "Tous les bâtiments qui consomment ou produisent de la pierre obtiennent +1 Multiplicateur de Production",
@@ -804,8 +803,8 @@ export const FR = {
    OfflineTime: "Temps hors ligne",
    TransportCapacity: "Capacité de Transport",
    TransportCapacityMultiplier: "Multiplicateur de Capacité de Transport",
-   WonderBuilderCapacityDesc:
-      "La Capacité de construction lorsque vous bâtissez des Merveilles dépend de l'ère et la technologie qui a permis de la débloquer",
+   WonderBuilderCapacityDescHTML:
+      "<b>Builder Capacity</b> when constructing wonders are affect by the <b>age</b> and <b>technology</b> that unlocks the wonder",
    MarketSettings: "Paramètres du marché",
    ClearAfterUpdate: "Effacer tous les échanges après la mise à jour du marché",
    WarehouseSettings: "Paramètres de l'entrepôt",
@@ -954,4 +953,5 @@ export const FR = {
       "Les ressources seront automatiquement de la même couleur que le bâtiment qui les produit. Si plusieurs bâtiments produisent la même ressource, la couleur sera choisie aléatoirement",
    WondersUnlocked: "World Wonders Unlocked",
    WondersBuilt: "World Wonders Built",
+   TransportManualControlTooltip: "Transport this resource for construction/upgrade",
 };

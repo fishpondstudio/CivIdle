@@ -383,8 +383,8 @@ export const ZH_CN = {
    ConstructionBuilderMultiplier: "能力乘数",
    ConstructionBuilderMultiplierFull: "建造者能力乘数",
    EndConstruction: "取消建造",
-   EndConstructionEnd: "取消",
-   EndConstructionDesc: "若你取消建造，已被使用的所有资源将会浪费。",
+   EndConstructionDescHTML:
+      "When you end construction, all the resources that have already been used <b>will not be returned</b>",
    Stonehenge: "巨石阵",
    StonehengeDesc: "所有消耗或产出石头的建筑，获得 +1 生产乘数",
    LighthouseOfAlexandria: "亚历山大灯塔",
@@ -765,7 +765,8 @@ export const ZH_CN = {
    OfflineTime: "离线时间",
    TransportCapacity: "运送能力",
    TransportCapacityMultiplier: "运送能力乘数",
-   WonderBuilderCapacityDesc: "建造奇观时的建造者能力，受到解锁奇观时的时代与技术影响。",
+   WonderBuilderCapacityDescHTML:
+      "<b>Builder Capacity</b> when constructing wonders are affect by the <b>age</b> and <b>technology</b> that unlocks the wonder",
    MarketSettings: "市场设定",
    ClearAfterUpdate: "在市场更新后，清除所有交易",
    WarehouseSettings: "仓库设定",
@@ -894,4 +895,5 @@ export const ZH_CN = {
       "Copy resource color from the building that produce this resource. If multiple buildings produce this resource, a random one will be selected",
    WondersUnlocked: "World Wonders Unlocked",
    WondersBuilt: "World Wonders Built",
+   TransportManualControlTooltip: "Transport this resource for construction/upgrade",
 };

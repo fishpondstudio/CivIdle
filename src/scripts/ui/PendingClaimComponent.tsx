@@ -54,7 +54,11 @@ export function PendingClaimComponent({ gameState, xy }: IBuildingComponentProps
                safeAdd(building.resources, claim.resource, claim.amount);
             }
          }
-         showToast(t(L.PlayerTradeClaimAllMessage, { count: confirmed.size }));
+         if (confirmed.size > 0) {
+            showToast(t(L.PlayerTradeClaimAllMessage, { count: confirmed.size }));
+         } else {
+            showToast(t(L.PlayerTradeClaimAllFailedMessage, { count: confirmed.size }));
+         }
       } catch (error) {
          playError();
          showToast(String(error));

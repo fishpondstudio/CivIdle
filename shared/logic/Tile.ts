@@ -12,7 +12,7 @@ export interface ITileData {
    building?: IBuildingData;
 }
 
-export type BuildingStatus = "building" | "upgrading" | "paused" | "completed";
+export type BuildingStatus = "building" | "upgrading" | "completed";
 
 export enum BuildingOptions {
    None = 0,

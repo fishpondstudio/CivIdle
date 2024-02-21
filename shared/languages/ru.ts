@@ -384,8 +384,8 @@ export const RU = {
    ConstructionBuilderMultiplier: "Множитель Мощности",
    ConstructionBuilderMultiplierFull: "Множитель Мощности Стоительства",
    EndConstruction: "Прекратить Стоительство",
-   EndConstructionEnd: "Прекратить",
-   EndConstructionDesc: "При прекращении строительства все уже использованные ресурсы не будут возвращены",
+   EndConstructionDescHTML:
+      "When you end construction, all the resources that have already been used <b>will not be returned</b>",
    Stonehenge: "Стоунхендж",
    StonehengeDesc:
       "Все здания, которые потребляют или производят камень, получают +1 к Множителю для Производства",
@@ -795,8 +795,8 @@ export const RU = {
    OfflineTime: "Время Оффлайн",
    TransportCapacity: "Мощность Транспорта",
    TransportCapacityMultiplier: "Множитель Мощности Транспорта",
-   WonderBuilderCapacityDesc:
-      "Мощность Строительства при постройке Чудес зависит от эпохи и технологий, которые открыли Чудеса",
+   WonderBuilderCapacityDescHTML:
+      "<b>Builder Capacity</b> when constructing wonders are affect by the <b>age</b> and <b>technology</b> that unlocks the wonder",
    MarketSettings: "Настройки Рынка",
    ClearAfterUpdate: "Очищать Всю Торговлю После Обновления Рынка",
    WarehouseSettings: "Настройки Склада",
@@ -938,4 +938,5 @@ export const RU = {
       "Копирует цвет с постройки, которая производит этот ресурс. Если ресурс производит несколько построек цвет будет выбран случайно",
    WondersUnlocked: "World Wonders Unlocked",
    WondersBuilt: "World Wonders Built",
+   TransportManualControlTooltip: "Transport this resource for construction/upgrade",
 };
