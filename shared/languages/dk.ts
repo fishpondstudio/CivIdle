@@ -1,4 +1,4 @@
-export const EN = {
+export const DK = {
    CurrentLanguage: "English",
    TranslatorCredit: "<Put Your Name Here>",
    Translators: "Translators",
