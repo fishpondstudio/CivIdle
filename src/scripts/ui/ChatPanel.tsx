@@ -299,7 +299,7 @@ const ChatMessageContent = memo(
       onImageLoaded,
    }: { chat: IChat; onImageLoaded: () => void }): React.ReactNode {
       const message = chat.message;
-      if (chat.level <= AccountLevel.Tribune && hasFlag(chat.attr, ChatAttributes.Mod)) {
+      if (chat.level <= AccountLevel.Tribune && !hasFlag(chat.attr, ChatAttributes.Mod)) {
          return message;
       }
       const isDomainWhitelisted =
