@@ -14,7 +14,35 @@
    text-align: center;
 }
 
-#resource-panel .resource-bar .m-icon {
+#resource-panel .resource-bar .row .m-icon {
    margin: 0 5px;
    font-size: 20px;
+}
+
+#resource-panel .resource-bar .menu-button {
+   padding: 0;
+   height: 26px;
+   width: 26px;
+   text-align: center;
+}
+
+#resource-panel .resource-bar .menu-button .m-icon {
+   line-height: 26px;
+   font-size: 20px;
+}
+
+#resource-panel .resource-bar .menu-popover {
+   top: 26px;
+   font-weight: normal;
+}
+
+#resource-panel .resource-bar .menu-popover-item {
+   padding: 3px 20px 3px 6px;
+   color: #222;
+   text-align: left;
+}
+
+#resource-panel .resource-bar .menu-popover-item:hover,
+#resource-panel .resource-bar .menu-popover-item:hover .text-desc {
+   color: #fff;
 }

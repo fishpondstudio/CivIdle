@@ -1,7 +1,8 @@
 import Tippy from "@tippyjs/react";
+import classNames from "classnames";
 import { NoStorage, type Resource } from "../../../shared/definitions/ResourceDefinitions";
 import { Config } from "../../../shared/logic/Config";
-import { notifyGameOptionsUpdate } from "../../../shared/logic/GameStateLogic";
+import { notifyGameOptionsUpdate, notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
 import { L, t } from "../../../shared/utilities/i18n";
 import { useGameOptions } from "../Global";
 import { jsxMapOf } from "../utilities/Helper";
@@ -39,6 +40,29 @@ export function BuildingColorComponent({ gameState, xy }: IBuildingComponentProp
          {jsxMapOf(def.output, (res) => {
             return <ResourceColor key={res} resource={res} buildingColor={buildingColor} />;
          })}
+         <button
+            className="jcc w100 mt10 row"
+            onClick={() => {
+               if (gameState.favoriteTiles.has(xy)) {
+                  gameState.favoriteTiles.delete(xy);
+               } else {
+                  gameState.favoriteTiles.add(xy);
+               }
+               notifyGameStateUpdate();
+            }}
+         >
+            <div
+               className={classNames({
+                  "m-icon small": true,
+                  "text-orange fill": gameState.favoriteTiles.has(xy),
+               })}
+            >
+               kid_star
+            </div>
+            <div className="f1 text-strong">
+               {gameState.favoriteTiles.has(xy) ? t(L.FavoriteBuildingRemove) : t(L.FavoriteBuildingAdd)}
+            </div>
+         </button>
       </fieldset>
    );
 }

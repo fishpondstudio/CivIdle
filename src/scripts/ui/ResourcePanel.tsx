@@ -1,7 +1,8 @@
 import Tippy from "@tippyjs/react";
 import classNames from "classnames";
-import { useState } from "react";
-import { getScienceFromWorkers } from "../../../shared/logic/BuildingLogic";
+import { useEffect, useState } from "react";
+import { getScienceFromWorkers, isSpecialBuilding } from "../../../shared/logic/BuildingLogic";
+import { Config } from "../../../shared/logic/Config";
 import { GameFeature, hasFeature } from "../../../shared/logic/FeatureLogic";
 import { getHappinessIcon } from "../../../shared/logic/HappinessLogic";
 import { getSpecialBuildings } from "../../../shared/logic/IntraTickCache";
@@ -23,6 +24,8 @@ import { TechTreeScene } from "../scenes/TechTreeScene";
 import { LookAtMode, WorldScene } from "../scenes/WorldScene";
 import { useTypedEvent } from "../utilities/Hook";
 import { Singleton } from "../utilities/Singleton";
+import { playClick, playError } from "../visuals/Sound";
+import { showToast } from "./GlobalModal";
 import { FormatNumber } from "./HelperComponents";
 import { TilePage } from "./TilePage";
 
@@ -39,8 +42,71 @@ export function ResourcePanel(): React.ReactNode {
       Singleton().sceneManager.getCurrent(WorldScene)?.drawSelection(null, buildingTiles);
    };
    const delta = empireValues[0] - empireValues[1];
+   const [favoriteActive, setFavoriteActive] = useState(false);
+   useEffect(() => {
+      function onPointerDown(e: PointerEvent) {
+         setFavoriteActive(false);
+      }
+      window.addEventListener("pointerdown", onPointerDown);
+      return () => {
+         window.removeEventListener("pointerdown", onPointerDown);
+      };
+   }, []);
+   gs.favoriteTiles.forEach((tile) => {
+      if (!gs.tiles.get(tile)?.building) {
+         gs.favoriteTiles.delete(tile);
+      }
+   });
    return (
       <div className="resource-bar window">
+         <div className={classNames({ "menu-button": true, active: favoriteActive })}>
+            <div
+               onPointerDown={(e) => {
+                  if (gs.favoriteTiles.size === 0) {
+                     playError();
+                     showToast(t(L.FavoriteBuildingEmptyToast));
+                     return;
+                  }
+                  e.nativeEvent.stopPropagation();
+                  setFavoriteActive(!favoriteActive);
+               }}
+               className={classNames({ "m-icon fill text-orange": true })}
+            >
+               kid_star
+            </div>
+            <div className={classNames({ "menu-popover": true, active: favoriteActive })}>
+               {Array.from(gs.favoriteTiles)
+                  .sort((a, b) => {
+                     return Config.Building[gs.tiles.get(a)!.building!.type]
+                        .name()
+                        .localeCompare(Config.Building[gs.tiles.get(b)!.building!.type].name());
+                  })
+                  .map((tile) => {
+                     const building = gs.tiles.get(tile)?.building;
+                     if (!building) return null;
+                     return (
+                        <div
+                           key={tile}
+                           className="menu-popover-item row"
+                           onPointerDown={() => {
+                              playClick();
+                              Singleton()
+                                 .sceneManager.getCurrent(WorldScene)
+                                 ?.lookAtTile(tile, LookAtMode.Select);
+                           }}
+                        >
+                           <div className="f1">{Config.Building[building.type].name()}</div>
+                           {!isSpecialBuilding(building.type) ? (
+                              <span className="ml10 text-small text-desc">
+                                 {t(L.LevelX, { level: building.level })}
+                              </span>
+                           ) : null}
+                        </div>
+                     );
+                  })}
+            </div>
+         </div>
+         <div className="separator-vertical" />
          {tick.happiness ? (
             <div
                className="row pointer"

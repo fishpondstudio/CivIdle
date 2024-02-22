@@ -20,6 +20,7 @@ export class IPCService {
    private lastWriteAt = Date.now();
 
    public async fileWriteBytes(name: string, content: ArrayBuffer): Promise<void> {
+      if (content.byteLength <= 0) return;
       const buffer = Buffer.from(content);
       await outputFile(path.join(getGameSavePath(), this.getSteamId(), name), buffer);
 

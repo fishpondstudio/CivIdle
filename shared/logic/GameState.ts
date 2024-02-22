@@ -46,6 +46,7 @@ export class GameState {
    transportId = 0;
    lastPriceUpdated = 0;
    isOffline = false;
+   favoriteTiles: Set<Tile> = new Set();
 }
 
 export type GreatPeopleChoice = [GreatPerson, GreatPerson, GreatPerson];

@@ -46,7 +46,6 @@ export class Grid {
    public maxPosition(): Point {
       const point = this.gridToPosition(new Point(this.maxX - 1, this.maxY - 1));
       // This is to give an extra padding on the right
-      point.x += (Math.sqrt(3) * this.size) / 2;
       return point;
    }
 
