@@ -8,8 +8,8 @@ export const PatchNotes: PatchNote[] = [
       version: "0.1.144",
       content: [
          [
-            "Content",
-            "Favorite buildings: you can add a building to your favorite and access it in the favorite menu in the resource bar",
+            "QoL",
+            "Favorite buildings - you can add a building to your favorite and access it in the favorite menu in the resource bar",
          ],
       ],
    },
