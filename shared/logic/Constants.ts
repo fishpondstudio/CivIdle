@@ -22,6 +22,8 @@ export const TRADE_CANCEL_REFUND_PERCENT = 0.9;
 export const TRIBUNE_UPGRADE_PLAYTIME = 48 * HOUR;
 export const MAX_CHAT_PER_CHANNEL = 200;
 export const DISCORD_URL = "https://discord.com/invite/m5JWZtEKMZ";
+export const BACKUP_RECOVERY_URL =
+   "https://steamcommunity.com/app/2181940/discussions/0/7260435610010445264/";
 export const TRIBUNE_TRADE_VALUE_PER_MINUTE = 10000;
 export const MAX_TARIFF_RATE = 0.1;
 
