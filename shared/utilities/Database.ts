@@ -198,6 +198,8 @@ export const ChatChannels = {
    zh: "中文",
    de: "Deutsch",
    ru: "Русский",
+   fr: "Français",
+   kr: "한국어",
 } as const;
 
 export type ChatChannel = keyof typeof ChatChannels;

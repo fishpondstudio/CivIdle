@@ -7,6 +7,7 @@ import type { Tech } from "../definitions/TechDefinitions";
 import { DE } from "../languages/de";
 import { EN } from "../languages/en";
 import { FR } from "../languages/fr";
+import { KR } from "../languages/kr";
 import { RU } from "../languages/ru";
 import { ZH_CN } from "../languages/zh-CN";
 import type { ChatChannel } from "../utilities/Database";
@@ -124,6 +125,7 @@ export const Languages = {
    ru: RU,
    zh_CN: ZH_CN,
    de: DE,
+   kr: KR,
 } as const;
 
 export const SAVE_FILE_VERSION = 1;
