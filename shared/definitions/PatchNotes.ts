@@ -5,6 +5,15 @@ interface PatchNote {
 
 export const PatchNotes: PatchNote[] = [
    {
+      version: "0.1.144",
+      content: [
+         [
+            "QoL",
+            "Favorite buildings - you can add a building to your favorite and access it in the favorite menu in the resource bar",
+         ],
+      ],
+   },
+   {
       version: "0.1.143",
       content: [
          [

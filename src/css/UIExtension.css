@@ -177,7 +177,7 @@ fieldset .separator {
 }
 
 .text-orange {
-   color: #f39c12;
+   color: #e67e22;
 }
 
 .text-red {
@@ -219,6 +219,13 @@ fieldset .separator {
    src: url(../fonts/MaterialIcons.woff2) format("woff2");
 }
 
+@font-face {
+   font-family: "Material Symbols Filled";
+   font-style: normal;
+   font-weight: 400;
+   src: url(../fonts/MaterialIconsFilled.woff2) format("woff2");
+}
+
 .m-icon {
    font-family: "Material Symbols Outlined";
    font-weight: normal;
@@ -232,6 +239,10 @@ fieldset .separator {
    direction: ltr;
    -webkit-font-feature-settings: "liga";
    -webkit-font-smoothing: antialiased;
+}
+
+.m-icon.fill {
+   font-family: "Material Symbols Filled";
 }
 
 .m-icon.small {
