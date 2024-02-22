@@ -907,4 +907,7 @@ export const KR = {
    WondersBuilt: "불가사의 건설됨",
    TransportManualControlTooltip: "Transport this resource for construction/upgrade",
    TransportAllocatedCapacityTooltip: "Builder Capacity allocated to transporting this resource",
+   FavoriteBuildingAdd: "Add To Favorite",
+   FavoriteBuildingRemove: "Remove From Favorite",
+   FavoriteBuildingEmptyToast: "You don't have any favorite buildings",
 };

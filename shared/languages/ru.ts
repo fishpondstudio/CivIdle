@@ -941,4 +941,7 @@ export const RU = {
    WondersBuilt: "World Wonders Built",
    TransportManualControlTooltip: "Transport this resource for construction/upgrade",
    TransportAllocatedCapacityTooltip: "Builder Capacity allocated to transporting this resource",
+   FavoriteBuildingAdd: "Add To Favorite",
+   FavoriteBuildingRemove: "Remove From Favorite",
+   FavoriteBuildingEmptyToast: "You don't have any favorite buildings",
 };
