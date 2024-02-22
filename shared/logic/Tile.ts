@@ -30,6 +30,7 @@ export interface IBuildingData {
    priority: number;
    options: BuildingOptions;
    electrification: number;
+   disabledInput: Set<Resource>;
 }
 
 export function getProductionPriority(v: number): number {
@@ -121,6 +122,7 @@ export function makeBuilding(data: Pick<IBuildingData, "type"> & Partial<IBuildi
       priority: 0x010101,
       options: BuildingOptions.None,
       electrification: 0,
+      disabledInput: new Set(),
       ...data,
    };
 

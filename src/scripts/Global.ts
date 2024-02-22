@@ -175,6 +175,9 @@ function migrateSavedGame(save: SavedGame) {
          if (tile.building.status === "paused") {
             tile.building.status = "building";
          }
+         if (!tile.building.disabledInput) {
+            tile.building.disabledInput = new Set();
+         }
          if (!Config.Building[tile.building.type]) {
             delete tile.building;
             return;
