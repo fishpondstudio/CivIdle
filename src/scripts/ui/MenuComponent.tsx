@@ -1,7 +1,7 @@
 import classNames from "classnames";
 import type { PropsWithChildren } from "react";
 import { useEffect, useRef, useState } from "react";
-import { DISCORD_URL } from "../../../shared/logic/Constants";
+import { BACKUP_RECOVERY_URL, DISCORD_URL } from "../../../shared/logic/Constants";
 import { Tick } from "../../../shared/logic/TickLogic";
 import { sizeOf } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
@@ -222,6 +222,14 @@ export function MenuComponent(): React.ReactNode {
                   <div
                      className="menu-popover-item"
                      onPointerDown={() => {
+                        Singleton().routeTo(PatchNotesPage, {});
+                     }}
+                  >
+                     <MenuItem check={false}>{t(L.PatchNotes)}</MenuItem>
+                  </div>
+                  <div
+                     className="menu-popover-item"
+                     onPointerDown={() => {
                         openUrl(DISCORD_URL);
                      }}
                   >
@@ -230,10 +238,10 @@ export function MenuComponent(): React.ReactNode {
                   <div
                      className="menu-popover-item"
                      onPointerDown={() => {
-                        Singleton().routeTo(PatchNotesPage, {});
+                        openUrl(BACKUP_RECOVERY_URL);
                      }}
                   >
-                     <MenuItem check={false}>{t(L.PatchNotes)}</MenuItem>
+                     <MenuItem check={false}>{t(L.BackupRecovery)}</MenuItem>
                   </div>
                   <div
                      className="menu-popover-item"
