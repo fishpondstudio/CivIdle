@@ -383,8 +383,8 @@ export const ZH_CN = {
    ConstructionBuilderMultiplier: "能力乘数",
    ConstructionBuilderMultiplierFull: "建造者能力乘数",
    EndConstruction: "取消建造",
-   EndConstructionEnd: "取消",
-   EndConstructionDesc: "若你取消建造，已被使用的所有资源将会浪费。",
+   EndConstructionDescHTML:
+      "When you end construction, all the resources that have already been used <b>will not be returned</b>",
    Stonehenge: "巨石阵",
    StonehengeDesc: "所有消耗或产出石头的建筑，获得 +1 生产乘数",
    LighthouseOfAlexandria: "亚历山大灯塔",
@@ -765,7 +765,8 @@ export const ZH_CN = {
    OfflineTime: "离线时间",
    TransportCapacity: "运送能力",
    TransportCapacityMultiplier: "运送能力乘数",
-   WonderBuilderCapacityDesc: "建造奇观时的建造者能力，受到解锁奇观时的时代与技术影响。",
+   WonderBuilderCapacityDescHTML:
+      "<b>Builder Capacity</b> when constructing wonders are affect by the <b>age</b> and <b>technology</b> that unlocks the wonder",
    MarketSettings: "市场设定",
    ClearAfterUpdate: "在市场更新后，清除所有交易",
    WarehouseSettings: "仓库设定",
@@ -855,14 +856,14 @@ export const ZH_CN = {
    TranslationPercentage: "    %{language}的翻译进度目前为%{percentage}。可在GitHub上帮助改进此语言翻译。",
    CanEarnGreatPeopleFromRebornYes: "本轮重生可以获得伟人",
    CanEarnGreatPeopleFromRebornNo: "本轮重生不能获得伟人",
-   TribuneUpgradeDesc:
-      "    从保民官升至财务官，将允许你的账号解锁全部在线内容。然而，只有<b>不大于等级 %{level} 的永恒伟人</b>能被携带。",
+   TribuneUpgradeDescV2:
+      "Upgrading from Tribune to Quaestor will unlock all online features. However, only <b>permanent great people up to level %{level}</b> can be carried over. Partial progress above level %{level} will not be carried over",
    TribuneUpgradeDescGreatPeopleWarning:
       "    你此轮拥有伟人。你应该<b>先重生</b>。升至财务官级别，将重置你的当前轮。",
-   TribuneGreatPeopleLevelWarning:
-      "    你当前的账号等级为保民官。升至财务官，将使可携带永恒伟人等级<b>上限提升至等级%{level}</b>。",
-   RebornModalDesc:
-      "    你将开始一个新的帝国，但你能携带所有<b>此生</b>伟人。至于其它额外伟人，则取决于你的<b>帝国总价值</b>。",
+   TribuneGreatPeopleLevelWarningV2:
+      "Your current account rank is Tribune. Upgrading to Quaestor will carry over permanent great people <b>up to level %{level}</b>. Partial progress above level %{level} will not be carried over",
+   RebornModalDescV2:
+      "Your will start a new empire but you can take all the great people <b>from this run</b>, which will become <b>permanent</b> great people. You can also choose extra great people based on your <b>total empire value</b>",
    OperationNotAllowedError: "此操作不被允许",
    AccountLevelUpgradeConditionAny: "为了升级你的账号，你只需要满足下列标准之一：",
    AccountLevelPlayTime: "活跃在线游玩时间 > %{requiredTime} （你的游玩时间为 %{actualTime}）",
@@ -885,6 +886,7 @@ export const ZH_CN = {
    PlayerTradeTariffTooltip: "收集自贸易关税",
    PlayerTradeClaimAll: "认领全部贸易订单",
    PlayerTradeClaimAllMessage: "你已认领 %{count} 项订单",
+   PlayerTradeClaimAllFailedMessage: "You have claimed %{count} trades - is the storage full?",
    SteamAchievement: "Steam 成就",
    SteamAchievementDetails: "查看 Steam 成就",
    ChatHideLatestMessage: "隐藏最新消息内容",
@@ -894,4 +896,6 @@ export const ZH_CN = {
       "Copy resource color from the building that produce this resource. If multiple buildings produce this resource, a random one will be selected",
    WondersUnlocked: "World Wonders Unlocked",
    WondersBuilt: "World Wonders Built",
+   TransportManualControlTooltip: "Transport this resource for construction/upgrade",
+   TransportAllocatedCapacityTooltip: "Builder Capacity allocated to transporting this resource",
 };

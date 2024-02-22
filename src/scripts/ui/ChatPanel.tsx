@@ -306,7 +306,8 @@ const ChatMessageContent = memo(
          message.startsWith("https://i.imgur.com/") ||
          message.startsWith("https://i.gyazo.com/") ||
          message.startsWith("https://i.ibb.co/") ||
-         message.startsWith("https://cdn.discordapp.com/attachments/");
+         message.startsWith("https://gcdnb.pbrd.co/") ||
+         message.startsWith("https://i.postimg.cc/");
       const isExtensionWhitelisted =
          message.endsWith(".jpg") || message.endsWith(".png") || message.endsWith(".jpeg");
       if (isDomainWhitelisted && isExtensionWhitelisted) {

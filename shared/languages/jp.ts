@@ -384,9 +384,8 @@ export const JP = {
    ConstructionBuilderMultiplier: "Capacity Multiplier",
    ConstructionBuilderMultiplierFull: "Builder Capacity Multiplier",
    EndConstruction: "End Construction",
-   EndConstructionEnd: "End",
-   EndConstructionDesc:
-      "When you end the construction, all the resources that have already been used will not be returned",
+   EndConstructionDescHTML:
+      "When you end construction, all the resources that have already been used <b>will not be returned</b>",
    Stonehenge: "Stonehenge",
    StonehengeDesc: "All buildings that consume or produce stone get +1 Production Multiplier",
    LighthouseOfAlexandria: "Lighthouse Of Alexandria",
@@ -788,8 +787,8 @@ export const JP = {
    OfflineTime: "Offline Time",
    TransportCapacity: "Transport Capacity",
    TransportCapacityMultiplier: "Transport Capacity Multiplier",
-   WonderBuilderCapacityDesc:
-      "Builder Capacity when constructing wonders are affect by the age and technology that unlocks the wonder",
+   WonderBuilderCapacityDescHTML:
+      "<b>Builder Capacity</b> when constructing wonders are affect by the <b>age</b> and <b>technology</b> that unlocks the wonder",
    MarketSettings: "Market Settings",
    ClearAfterUpdate: "Clear All Trades After Market Update",
    WarehouseSettings: "Warehouse Settings",
@@ -886,14 +885,14 @@ export const JP = {
    TranslationPercentage: "%{language} is %{percentage} translated. Help improve this translation on GitHub",
    CanEarnGreatPeopleFromRebornYes: "This run can earn great people from rebirth",
    CanEarnGreatPeopleFromRebornNo: "This run cannot earn great people from rebirth",
-   TribuneUpgradeDesc:
-      "Upgrading from Tribune to Quaestor will allow your account to unlock all online features. However, only <b>permanent great people up to level %{level}</b> can be carried over",
+   TribuneUpgradeDescV2:
+      "Upgrading from Tribune to Quaestor will unlock all online features. However, only <b>permanent great people up to level %{level}</b> can be carried over. Partial progress above level %{level} will not be carried over",
    TribuneUpgradeDescGreatPeopleWarning:
       "Your current run has great people. You should <b>rebirth first</b>. Upgrading to Quaestor rank will reset your current run",
-   TribuneGreatPeopleLevelWarning:
-      "Your current account rank is Tribune. Upgrading to Quaestor will carry over permanent great people <b>up to level %{level}</b>",
-   RebornModalDesc:
-      "Your will start a new empire but you can take all the great people <b>from this run</b>, plus extra great people based on your <b>total empire value</b>",
+   TribuneGreatPeopleLevelWarningV2:
+      "Your current account rank is Tribune. Upgrading to Quaestor will carry over permanent great people <b>up to level %{level}</b>. Partial progress above level %{level} will not be carried over",
+   RebornModalDescV2:
+      "Your will start a new empire but you can take all the great people <b>from this run</b>, which will become <b>permanent</b> great people. You can also choose extra great people based on your <b>total empire value</b>",
    OperationNotAllowedError: "This operation is not allowed",
    AccountLevelUpgradeConditionAny:
       "To upgrade your account, you only need to satisfy one of the following criteria:",
@@ -918,6 +917,7 @@ export const JP = {
    PlayerTradeTariffTooltip: "Collected From a Trade Tariff",
    PlayerTradeClaimAll: "Claim All",
    PlayerTradeClaimAllMessage: "You have claimed %{count} trades",
+   PlayerTradeClaimAllFailedMessage: "You have claimed %{count} trades - is the storage full?",
    SteamAchievement: "Steam Achievement",
    SteamAchievementDetails: "View Steam Achievement",
    ChatHideLatestMessage: "Hide Latest Message Content",
@@ -927,4 +927,6 @@ export const JP = {
       "Copy resource color from the building that produce this resource. If multiple buildings produce this resource, a random one will be selected",
    WondersUnlocked: "World Wonders Unlocked",
    WondersBuilt: "World Wonders Built",
+   TransportManualControlTooltip: "Transport this resource for construction/upgrade",
+   TransportAllocatedCapacityTooltip: "Builder Capacity allocated to transporting this resource",
 };

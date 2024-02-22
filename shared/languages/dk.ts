@@ -1,6 +1,6 @@
-export const EN = {
+export const DK = {
    CurrentLanguage: "English",
-   TranslatorCredit: "<Shane>",
+   TranslatorCredit: "<Put Your Name Here>",
    Translators: "Translators",
    Language: "Language",
    TechnologyPrerequisite: "Prerequisites",
@@ -35,7 +35,7 @@ export const EN = {
    Gold: "Gold",
    PreciousMetal: "Precious Metal",
    Market: "Market",
-   MarketDesc: "Exchange a resource to another, available resources update every hour",
+   MarketDesc: "Exchange an resource to another, available resources update every hour",
    CityState: "City State",
    Literature: "Literature",
    Machinery: "Machinery",
@@ -138,7 +138,7 @@ export const EN = {
    SpaceProgram: "Space Program",
    Television: "Television",
    Tourism: "Tourism",
-   Skyscrapper: "Skyscraper",
+   Skyscrapper: "Skyscrapper",
    Computer: "Computer",
    Globalization: "Globalization",
    UnitedNation: "United Nation",
@@ -320,14 +320,14 @@ export const EN = {
    UnlockTechProgress: "Progress",
    BoostDescription: "+%{value} %{multipliers} for %{buildings}",
    Hammurabi: "Hammurabi",
-   TangOfShang: "Tang of Shang",
+   TangOfShang: "Tang Of Shang",
    TangOfShangDesc: "+%{value} Science From Idle Workers",
    RamessesII: "Ramesses II",
    RamessesIIDesc: "+%{value} Builder Capacity Multiplier",
    Agamemnon: "Agamemnon",
-   SargonOfAkkad: "Sargon of Akkad",
+   SargonOfAkkad: "Sargon Of Akkad",
    Dido: "Dido",
-   DukeOfZhou: "Duke of Zhou",
+   DukeOfZhou: "Duke Of Zhou",
    Ashurbanipal: "Ashurbanipal",
    NebuchadnezzarII: "Nebuchadnezzar II",
    LaoZi: "Lao Zi",
@@ -388,13 +388,13 @@ export const EN = {
       "When you end construction, all the resources that have already been used <b>will not be returned</b>",
    Stonehenge: "Stonehenge",
    StonehengeDesc: "All buildings that consume or produce stone get +1 Production Multiplier",
-   LighthouseOfAlexandria: "Lighthouse of Alexandria",
+   LighthouseOfAlexandria: "Lighthouse Of Alexandria",
    LighthouseOfAlexandriaDesc: "All adjacent buildings get +5 Storage Multiplier",
-   PyramidOfGiza: "Pyramid of Giza",
+   PyramidOfGiza: "Pyramid Of Giza",
    PyramidOfGizaDesc: "All buildings that produce workers get +1 Production Multiplier",
-   ColossusOfRhodes: "Colossus of Rhodes",
+   ColossusOfRhodes: "Colossus Of Rhodes",
    ColossusOfRhodesDesc: "All adjacent buildings that do not produce workers get +1 Happiness",
-   MausoleumAtHalicarnassus: "Mausoleum at Halicarnassus",
+   MausoleumAtHalicarnassus: "Mausoleum At Halicarnassus",
    MausoleumAtHalicarnassusDesc:
       "A transport costs no workers if it is currently within 2 tile range of the Mausoleum",
    HangingGarden: "Hanging Garden",
@@ -419,7 +419,7 @@ export const EN = {
    StatisticsDesc: "Provide statistics of consumption and production",
    GrottaAzzurra: "Grotta Azzurra",
    GrottaAzzurraDesc: "When discovered, all your Tier I buildings get +5 Level",
-   StatueOfZeus: "Statue of Zeus",
+   StatueOfZeus: "Statue Of Zeus",
    StatueOfZeusDesc:
       "Spawn random deposits that have been revealed on adjacent empty tiles. All adjacent Tier I buildings get +5 Production and Storage Multiplier",
    Poseidon: "Poseidon",
@@ -450,7 +450,7 @@ export const EN = {
    TempleOfArtemis: "Temple Of Artemis",
    TempleOfArtemisDesc:
       "All Sword Forges and Armories get +5 Level when completed. All Sword Forges and Armories get +1 Production Multiplier, Worker Capacity Multiplier and Storage Multiplier",
-   TempleOfHeaven: "Temple of Heaven",
+   TempleOfHeaven: "Temple Of Heaven",
    TempleOfHeavenDesc: "All buildings that are level 10 or higher get +1 Worker Capacity Multiplier",
    HimejiCastle: "Himeji Castle",
    HimejiCastleDesc:
@@ -458,7 +458,7 @@ export const EN = {
    TajMahal: "Taj Mahal",
    TajMahalDesc:
       "A new great person of Middle Age is born. +5 Builder Capacity Multiplier when upgrading buildings over Level 20",
-   StatueOfLiberty: "Statue of Liberty",
+   StatueOfLiberty: "Statue Of Liberty",
    StatueOfLibertyDesc:
       "All adjacent buildings get +N Production, Storage and Worker Capacity Multiplier. N = Number of its adjacent buildings of the same type",
    Moai: "Moai",
@@ -481,8 +481,8 @@ export const EN = {
    Poem: "Poem",
    Flour: "Flour",
    Fish: "Fish",
-   GreatMosqueOfSamarra: "Great Mosque of Samarra",
-   GreatMosqueOfSamarraDesc: "Great Mosque of Samarra",
+   GreatMosqueOfSamarra: "Great Mosque Of Samarra",
+   GreatMosqueOfSamarraDesc: "Great Mosque Of Samarra",
    HagiaSophia: "Hagia Sophia",
    HagiaSophiaDesc:
       "Buildings with 0% Production Capacity are exempt from -1 happiness. Consumes 10 Faith and produce 10 happiness",
@@ -536,13 +536,13 @@ export const EN = {
    StockpileMaxUnlimited: "Unlimited",
    StockpileMaxDesc:
       "This building will stop transporting a resource once there are enough for %{cycle} production cycles",
-   StockpileMaxUnlimitedDesc: "This building will never stop transporting resources, only until the storage is full",
+   StockpileMaxUnlimitedDesc: "The building will never stop transporting resources until the storage is full",
    ProductionPriority: "Production Priority",
    DefaultProductionPriority: "Default Production Priority",
    ConstructionPriority: "Construction Priority",
    DefaultConstructionPriority: "Default Construction Priority",
    DefaultUpgradePriority: "Default Upgrade Priority",
-   ProductionPriorityDesc: "High priority means this building transports before other buildings",
+   ProductionPriorityDesc: "High priority means the building transport before other buildings",
    TechProductionPriority: "Unlock building priority - allow setting production priority for each building",
    TechStockpileMode: "Unlock stockpile mode - allow adjusting stockpile for each building",
    ConstructionCost: "Construction Cost: %{cost}",
@@ -614,7 +614,7 @@ export const EN = {
    ChangePlayerHandle: "Change",
    ChangePlayerHandleCancel: "Cancel",
    ChangePlayerHandledDesc:
-      "Choose a unique player handle 5 ~ 16 characters long. Your player handle may only contain letters and numbers",
+      "Your player handle can only contain 5 ~ 16 alphabets and numbers and has to be unique",
    AGreatPersonIsBorn: "A Great Person Is Born",
    BuildingName: "Name",
    BuildingTier: "Tier",
@@ -702,7 +702,7 @@ export const EN = {
    PlayerMapTariff: "Tariff",
    PlayerMapSetYourTariff: "Set Your Tariff",
    PlayerMapTariffDesc:
-      "Every trade that goes through your tile will pay a tariff to you. It's a balance: if you increase the tariff, the more you will gain from each trade, but fewer trade will go through your tile.",
+      "Every trade that goes through your tile will pay tariff to you. It's a balance: if you increase the tariff, the more you will gain from each trade, but fewer trade will go through your tile.",
    PlayerMapTariffApply: "Apply Tariff Rate",
    PlayerMapTradesFrom: "Trades from %{name}",
    PlayerMapEstablishedSince: "Est. Since",
@@ -788,7 +788,7 @@ export const EN = {
    TransportCapacity: "Transport Capacity",
    TransportCapacityMultiplier: "Transport Capacity Multiplier",
    WonderBuilderCapacityDescHTML:
-      "<b>Builder Capacity</b> when constructing wonders are affected by the <b>age</b> and <b>technology</b> that unlocks the wonder",
+      "<b>Builder Capacity</b> when constructing wonders are affect by the <b>age</b> and <b>technology</b> that unlocks the wonder",
    MarketSettings: "Market Settings",
    ClearAfterUpdate: "Clear All Trades After Market Update",
    WarehouseSettings: "Warehouse Settings",
@@ -853,15 +853,15 @@ export const EN = {
    TrialRunDesc:
       "Quaestor or above can start a trial run that is subject to the Tribune limits and cannot earn permanent great people",
    Tutorial1:
-      "Welcome to CivIdle Setup.<br><br>In this game, you will run your own empire: manage productions, unlock technologies, trade resources with other players, create great people and build world wonders.<br><br>Drag your mouse to move around. Use the scroll wheel to zoom in or out. Click an empty tile to build new buildings, click a building to inspect it.<br><br>",
+      "Welcome to CivIdle Setup.<br><br>In this game, you will run your own empire: manage productions, unlock technologies, trade resources with other players, create great people and build world wonders.<br><br>Drag your mouse to move around. Use scroll wheel to zoom in or out. Click an empty tile to build new buildings, click a building to inspect.<br><br>",
    Tutorial2: "I haven't played similar games and I'd like to go through a quick tutorial",
    Tutorial3: "I have played Industry Idle and I know the drill, please skip the basic tutorial",
    Tutorial4:
-      "Buildings are the basic building block of your empire - place them on the explored map tiles. Certain buildings like Stone Quarries and Aqueducts that extract deposits need to be placed on a deposit tile. A building will lift the fog of its surrounding tiles.<br><br>Buildings consume resources and produce new ones. They will <b>automatically</b> transport required resources. The produced resources will be stored in the buildings which can be transported into other buildings that need these resources. However, a building's storage space is limited.<br><br>Buildings need <b>workers</b> for transportation and production - you need to build residential buildings like <b>huts</b> to increase the worker population. You can upgrade a building to increase its production and storage.",
+      "Buildings are the basic building block of your empire - place them on the explored map tiles. Certain buildings like Stone Quarries and Aqueducts that extract deposit need to be placed on a deposit tile. A building will lift the fog of its surrounding tiles.<br><br>Buildings consume resources and produce new ones. They will <b>automatically</b> transport needed resources. The produced resources will be stored in the buildings which can be transported into other buildings that need these resources. However, a building's storage space is limited.<br><br>Buildings need <b>workers</b> for transportation and production - you need to build residential buildings like <b>huts</b> to increase the worker population. You can upgrade a building to increase its production and storage.",
    Tutorial5:
-      "<b>Science</b> is used to unlock technologies in the tech tree. A technology unlocks new buildings, wonders and boosts.<br><br><b>Busy workers</b> generate a small amount of science. Later on, you will unlock buildings like libraries and schools that produce science.<br><br>The amount of workers available is affected by <b>happiness</b>. Each building will cost 1 happiness. You gain happiness from technologies, wonders and great people. Make sure your workers are happy, otherwise your empire's production will halt.<br><br><b>Wonders</b> are one of a kind building - you can only build one and they cannot be removed once built. Wonders can provide a significant boost or unlock new mechanisms.",
+      "<b>Science</b> is used to unlock technologies in the tech tree. A technology unlocks new building, wonders and boosts.<br><br><b>Busy workers</b> generate a small amount of science. Later on, you will unlock buildings like libraries and schools that produce science.<br><br>The amount of workers available is affected by <b>happiness</b>. Each building will cost 1 happiness. And you gain happiness from technologies, wonders and great people. Make sure your workers are happy, otherwise your empire's production will halt.<br><br><b>Wonders</b> are one of a kind building - you can only build one and they cannot be removed once built. Wonders can provide significant boost or unlock new mechanisms.",
    Tutorial6:
-      "When you enter a new age, a new <b>great person</b> will be born. You can choose one out of three candidates.<br><br>Great people provide boosts and will be added to your permanent collection. When you rebirth, you collect all the great people you've chosen this run, plus extra great people based on your <b>total empire value</b>, these permanent great people will remain with you.<br><br><b>Permanent</b> great people can be upgraded by collecting great people from each run. They will help your empire achieve new heights. That's all the basics you need to know.<br><br>If you have questions, the best way to get help is by asking the <b>chat</b> - we have a friendly community that is always ready to help.",
+      "When you enter a new age, a new <b>great person</b> will be born. You can choose one out of three candidates.<br><br>Great people provide boosts and will be added to your permanent collection. When you rebirth, you collect all the great people you've chosen this run, plus some  gone, these permanent great people will remain with you.<br><br><b>Permanent</b> great people can be upgraded by collecting great people from each run. They will help your empire achieve new heights. That's all the basics you need to know.<br><br>If you have questions, the best way to get help is by asking the <b>chat</b> - we have a friendly community that is always ready to help.",
    TutorialPlayerHandle: "Choose your player handle",
    TutorialPlayerFlag: "Choose your player flag",
    JoinDiscord: "Join Discord",
@@ -878,7 +878,7 @@ export const EN = {
    AccountTradePriceRange: "Trade Price Range",
    AccountTradeTileReservationTime: "Trade Tile Reservation",
    AccountTradeTileReservationTimeDesc:
-      "This is the time your player trade tile will be reserved for you since you were last online. After the reservation period has ended, your tile will become available for other players",
+      "This is the time your player trade tile will be reserved for you since you are last online. After the reservation period has ended, your tile will become available for other players",
    AccountUpgradeCarryOver: "Level Carry-Over",
    AccountUpgradeCarryOverDesc:
       "When upgrading to the next account rank, this is the maximum level of permanent great people that you can carry over",
@@ -892,7 +892,7 @@ export const EN = {
    TribuneGreatPeopleLevelWarningV2:
       "Your current account rank is Tribune. Upgrading to Quaestor will carry over permanent great people <b>up to level %{level}</b>. Partial progress above level %{level} will not be carried over",
    RebornModalDescV2:
-      "You will start a new empire but you can take all the great people <b>from this run</b>, which will become <b>permanent</b> great people. You can also choose extra great people based on your <b>total empire value</b>",
+      "Your will start a new empire but you can take all the great people <b>from this run</b>, which will become <b>permanent</b> great people. You can also choose extra great people based on your <b>total empire value</b>",
    OperationNotAllowedError: "This operation is not allowed",
    AccountLevelUpgradeConditionAny:
       "To upgrade your account, you only need to satisfy one of the following criteria:",
@@ -924,7 +924,7 @@ export const EN = {
    ChatHideLatestMessageDesc: "Replace the content of latest chat message with asterisks in the chat bar",
    BuildingColorMatchBuilding: "Copy Color From Building",
    BuildingColorMatchBuildingTooltip:
-      "Copy resource color from the building that produces this resource. If multiple buildings produce this resource, a random one will be selected",
+      "Copy resource color from the building that produce this resource. If multiple buildings produce this resource, a random one will be selected",
    WondersUnlocked: "World Wonders Unlocked",
    WondersBuilt: "World Wonders Built",
    TransportManualControlTooltip: "Transport this resource for construction/upgrade",

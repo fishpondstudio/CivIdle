@@ -54,7 +54,13 @@ export function replacer(key: string, value: any): any {
    if (value instanceof Map) {
       return {
          $type: "Map",
-         value: Array.from(value.entries()), // or with spread: value: [...value]
+         value: Array.from(value.entries()),
+      };
+   }
+   if (value instanceof Set) {
+      return {
+         $type: "Set",
+         value: Array.from(value).values(),
       };
    }
    return value;
@@ -63,6 +69,9 @@ export function reviver(key: string, value: any): any {
    if (typeof value === "object" && value !== null) {
       if (value.$type === "Map") {
          return new Map(value.value);
+      }
+      if (value.$type === "Set") {
+         return new Set(value.value);
       }
    }
    return value;

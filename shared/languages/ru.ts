@@ -384,8 +384,8 @@ export const RU = {
    ConstructionBuilderMultiplier: "Множитель Мощности",
    ConstructionBuilderMultiplierFull: "Множитель Мощности Стоительства",
    EndConstruction: "Прекратить Стоительство",
-   EndConstructionEnd: "Прекратить",
-   EndConstructionDesc: "При прекращении строительства все уже использованные ресурсы не будут возвращены",
+   EndConstructionDescHTML:
+      "When you end construction, all the resources that have already been used <b>will not be returned</b>",
    Stonehenge: "Стоунхендж",
    StonehengeDesc:
       "Все здания, которые потребляют или производят камень, получают +1 к Множителю для Производства",
@@ -795,8 +795,8 @@ export const RU = {
    OfflineTime: "Время Оффлайн",
    TransportCapacity: "Мощность Транспорта",
    TransportCapacityMultiplier: "Множитель Мощности Транспорта",
-   WonderBuilderCapacityDesc:
-      "Мощность Строительства при постройке Чудес зависит от эпохи и технологий, которые открыли Чудеса",
+   WonderBuilderCapacityDescHTML:
+      "<b>Builder Capacity</b> when constructing wonders are affect by the <b>age</b> and <b>technology</b> that unlocks the wonder",
    MarketSettings: "Настройки Рынка",
    ClearAfterUpdate: "Очищать Всю Торговлю После Обновления Рынка",
    WarehouseSettings: "Настройки Склада",
@@ -895,14 +895,14 @@ export const RU = {
    TranslationPercentage: "%{language} на %{percentage} переведён. Помогите улучшить этот перевод на GitHub",
    CanEarnGreatPeopleFromRebornYes: "Этот пробег может зарабатывать Великих Людей от перерождения",
    CanEarnGreatPeopleFromRebornNo: "Этот пробег не может зарабатывать Великих Людей от перерождения",
-   TribuneUpgradeDesc:
-      "Переход с Трибуна на Квестора позволит вашей учетной записи использовать все онлайн функции. Однако, <b>Вы можете перенести Постоянных Великих Людей только до уровня %{level}</b>",
+   TribuneUpgradeDescV2:
+      "Upgrading from Tribune to Quaestor will unlock all online features. However, only <b>permanent great people up to level %{level}</b> can be carried over. Partial progress above level %{level} will not be carried over",
    TribuneUpgradeDescGreatPeopleWarning:
       "В вашем текущем забеге есть великие люди. Вам следует <b>сначала переродиться</b>. Улучшение до ранга Квестора обнулит ваш текущий забег",
-   TribuneGreatPeopleLevelWarning:
-      "Уровень вашей учетной записи Трибун - при переходе на Квестор, Вы можете перенести Постоянных Великих Людей до уровня %{level}",
-   RebornModalDesc:
-      "Вы начнете новую империю, но сможете забрать всех Великих Людей <b>из этого пробега</b>, плюс дополнительных великих людей на основе вашей <b>общей стоимости империи</b>",
+   TribuneGreatPeopleLevelWarningV2:
+      "Your current account rank is Tribune. Upgrading to Quaestor will carry over permanent great people <b>up to level %{level}</b>. Partial progress above level %{level} will not be carried over",
+   RebornModalDescV2:
+      "Your will start a new empire but you can take all the great people <b>from this run</b>, which will become <b>permanent</b> great people. You can also choose extra great people based on your <b>total empire value</b>",
    OperationNotAllowedError: "Эта операция не разрешена",
    AccountLevelUpgradeConditionAny:
       "Чтобы повысить уровень аккаунта, вам достаточно соответствовать одному из следующих критериев:",
@@ -929,6 +929,7 @@ export const RU = {
    PlayerTradeTariffTooltip: "Collected From a Trade Tariff",
    PlayerTradeClaimAll: "Получить всё",
    PlayerTradeClaimAllMessage: "You have claimed %{count} trades",
+   PlayerTradeClaimAllFailedMessage: "You have claimed %{count} trades - is the storage full?",
    SteamAchievement: "Steam Achievement",
    SteamAchievementDetails: "View Steam Achievement",
    ChatHideLatestMessage: "Hide Latest Message Content",
@@ -938,4 +939,6 @@ export const RU = {
       "Копирует цвет с постройки, которая производит этот ресурс. Если ресурс производит несколько построек цвет будет выбран случайно",
    WondersUnlocked: "World Wonders Unlocked",
    WondersBuilt: "World Wonders Built",
+   TransportManualControlTooltip: "Transport this resource for construction/upgrade",
+   TransportAllocatedCapacityTooltip: "Builder Capacity allocated to transporting this resource",
 };

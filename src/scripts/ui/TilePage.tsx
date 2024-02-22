@@ -20,7 +20,7 @@ export function TilePage(props: { xy: Tile }): React.ReactNode {
    if (!tile.building) {
       return <EmptyTilePage tile={tile} />;
    }
-   if (tile.building.status === "building" || tile.building.status === "paused") {
+   if (tile.building.status === "building") {
       return <ConstructionPage tile={tile} />;
    }
    if (tile.building.status === "upgrading") {

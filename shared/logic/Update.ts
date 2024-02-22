@@ -64,6 +64,7 @@ import {
    getXyBuildings,
    unlockedResources,
 } from "./IntraTickCache";
+import { Preferences } from "./Preferences";
 import { getAmountInTransit } from "./ResourceLogic";
 import type { Multiplier } from "./TickLogic";
 import { Tick } from "./TickLogic";
@@ -159,9 +160,6 @@ export function tickTiles(gs: GameState, offline: boolean) {
 function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
    const tile = gs.tiles.get(xy)!;
    const building = tile.building!;
-   if (building.status === "paused") {
-      return;
-   }
    if (isNaturalWonder(building.type) && !tile.explored) {
       return;
    }
@@ -176,32 +174,53 @@ function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
 
    if (building.status === "building" || building.status === "upgrading") {
       const cost = getBuildingCost(building);
+      const { total } = getBuilderCapacity(building, xy, gs);
+
+      const disabledResources = Preferences.disabledResources.get(xy);
+      const enabledResourceCount = sizeOf(cost) - (disabledResources?.size ?? 0);
+      const builderCapacityPerResource = enabledResourceCount > 0 ? total / enabledResourceCount : 0;
+
+      // Construction / Upgrade is paused!
+      if (builderCapacityPerResource <= 0) {
+         return;
+      }
+
       let completed = true;
+
       forEach(cost, (res, amount) => {
-         const { total } = getBuilderCapacity(building, xy, gs);
          const amountArrived = building.resources[res] ?? 0;
+         // Already full
          if (amountArrived >= amount) {
+            if (disabledResources) {
+               disabledResources.add(res);
+            } else {
+               Preferences.disabledResources.set(xy, new Set([res]));
+            }
             // continue;
             return false;
          }
+         // Will be full
          if (amountArrived + getAmountInTransit(xy, res, gs) >= amount) {
             completed = false;
             // continue;
             return false;
          }
+
          completed = false;
-         // Each transportation costs 1 worker, and deliver Total (=Builder Capacity x Multiplier) resources
-         if (getAvailableWorkers("Worker") >= 1) {
-            Tick.next.notProducingReasons.delete(xy);
-            useWorkers("Worker", 1, xy);
-            transportResource(res, total, total, xy, gs);
-            // break;
-            return true;
+         if (disabledResources?.has(res) ?? false) {
+            // continue;
+            return false;
          }
-         Tick.next.notProducingReasons.set(xy, "NotEnoughWorkers");
+         // Each transportation costs 1 worker, and deliver Total (=Builder Capacity x Multiplier) resources
+         transportResource(res, builderCapacityPerResource, builderCapacityPerResource, xy, gs);
       });
+
       if (completed) {
          building.level++;
+         forEach(cost, (res, amount) => {
+            safeAdd(building.resources, res, -amount);
+         });
+         Preferences.disabledResources.delete(xy);
          if (building.status === "building") {
             building.status = "completed";
 
@@ -217,9 +236,6 @@ function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
          } else if (building.status === "upgrading" && building.level >= building.desiredLevel) {
             building.status = "completed";
          }
-         forEach(cost, (res, amount) => {
-            safeAdd(building.resources, res, -amount);
-         });
       }
       forEach(building.resources, (res, amount) => {
          if (!Number.isFinite(amount) || amount <= 0) {
@@ -491,19 +507,19 @@ export function transportResource(
    workerCapacity: number,
    targetXy: Tile,
    gs: GameState,
-) {
+): number {
    let amountLeft = amount;
    const grid = getGrid(gs);
    const targetPoint = tileToPoint(targetXy);
    // We are out of workers, no need to run the expensive sorting!
    if (getAvailableWorkers("Worker") <= 0) {
-      return;
+      return amountLeft;
    }
    const sources = Tick.current.resourcesByTile[res]?.sort((point1, point2) => {
       return grid.distanceTile(point1, targetXy) - grid.distanceTile(point2, targetXy);
    });
    if (!sources) {
-      return;
+      return amountLeft;
    }
    for (let i = 0; i < sources.length; i++) {
       const fromXy = sources[i];
@@ -548,7 +564,7 @@ export function transportResource(
             addTransportation(res, amountAfterFuel, "Worker", fuelLeft, fromXy, targetXy, gs);
          }
          // Here we return because either we've got all we need, or we run out of workers (no need to continue)
-         return;
+         return amountLeft;
       }
       const amountToTransport = availableAmount!;
       const fuelAmount = Math.ceil(amountToTransport / transportCapacity);
@@ -563,9 +579,10 @@ export function transportResource(
          building.resources[res]! -= amountAfterFuel;
          addTransportation(res, amountAfterFuel, "Worker", fuelLeft, fromXy, targetXy, gs);
          // We return here because we run out of workers (no need to continue)
-         return;
+         return amountLeft;
       }
    }
+   return amountLeft;
 }
 
 export function addMultiplier(k: Building, multiplier: Multiplier, source: string) {

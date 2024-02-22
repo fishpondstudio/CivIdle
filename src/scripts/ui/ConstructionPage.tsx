@@ -1,3 +1,4 @@
+import { isWorldWonder } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
 import { GameFeature, hasFeature } from "../../../shared/logic/FeatureLogic";
 import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
@@ -13,7 +14,10 @@ import { useGameState } from "../Global";
 import { WorldScene } from "../scenes/WorldScene";
 import { Singleton } from "../utilities/Singleton";
 import { BuildingConstructionProgressComponent } from "./BuildingConstructionProgressComponent";
+import { BuildingDescriptionComponent } from "./BuildingDescriptionComponent";
 import { MenuComponent } from "./MenuComponent";
+import { RenderHTML } from "./RenderHTMLComponent";
+import { WarningComponent } from "./WarningComponent";
 
 export function ConstructionPage({ tile }: { tile: ITileData }): React.ReactNode {
    if (tile.building == null) {
@@ -29,6 +33,9 @@ export function ConstructionPage({ tile }: { tile: ITileData }): React.ReactNode
          </div>
          <MenuComponent />
          <div className="window-body">
+            {isWorldWonder(building.type) ? (
+               <BuildingDescriptionComponent gameState={gs} xy={tile.tile} />
+            ) : null}
             <BuildingConstructionProgressComponent xy={tile.tile} gameState={gs} />
             {hasFeature(GameFeature.BuildingProductionPriority, gs) ? (
                <fieldset>
@@ -54,29 +61,20 @@ export function ConstructionPage({ tile }: { tile: ITileData }): React.ReactNode
                </fieldset>
             ) : null}
             <fieldset>
-               <div className="row">
-                  <button
-                     className="f1"
-                     onClick={() => {
-                        building.status = building.status === "paused" ? "building" : "paused";
-                        notifyGameStateUpdate();
-                     }}
-                  >
-                     {t(building.status === "paused" ? L.ResumeConstructionResume : L.PauseConstructionPause)}
-                  </button>
-                  <button
-                     className="f1"
-                     onClick={() => {
-                        delete tile.building;
-                        Singleton().sceneManager.getCurrent(WorldScene)?.resetTile(tile.tile);
-                        notifyGameStateUpdate();
-                     }}
-                  >
-                     {t(L.EndConstructionEnd)}
-                  </button>
-               </div>
-               <div className="sep5"></div>
-               <div className="text-desc text-small">{t(L.EndConstructionDesc)}</div>
+               <WarningComponent icon="warning" className="mb10 text-small">
+                  <RenderHTML html={t(L.EndConstructionDescHTML)} />
+               </WarningComponent>
+               <button
+                  className="jcc w100 row"
+                  onClick={() => {
+                     delete tile.building;
+                     Singleton().sceneManager.getCurrent(WorldScene)?.resetTile(tile.tile);
+                     notifyGameStateUpdate();
+                  }}
+               >
+                  <div className="m-icon small">delete</div>
+                  <div className="f1 text-strong">{t(L.EndConstruction)}</div>
+               </button>
             </fieldset>
          </div>
       </div>

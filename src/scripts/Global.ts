@@ -17,9 +17,9 @@ import {
 import { initializeGameState } from "../../shared/logic/InitializeGameState";
 import { rollPermanentGreatPeople } from "../../shared/logic/RebornLogic";
 import { getGreatPeopleChoices } from "../../shared/logic/TechLogic";
-import { makeBuilding, type ITileData } from "../../shared/logic/Tile";
+import { makeBuilding } from "../../shared/logic/Tile";
 import { Grid } from "../../shared/utilities/Grid";
-import { firstKeyOf, forEach, xyToTile, type Tile } from "../../shared/utilities/Helper";
+import { firstKeyOf, forEach } from "../../shared/utilities/Helper";
 import { TypedEvent } from "../../shared/utilities/TypedEvent";
 import { SteamClient, isSteam } from "./rpc/SteamClient";
 import { WorldScene } from "./scenes/WorldScene";
@@ -169,21 +169,15 @@ export const useGameState = makeObservableHook(GameStateChanged, getGameState);
 export const useGameOptions = makeObservableHook(GameOptionsChanged, getGameOptions);
 
 function migrateSavedGame(save: SavedGame) {
-   if (!(save.current.tiles instanceof Map)) {
-      const tiles = new Map<Tile, ITileData>();
-      forEach(save.current.tiles as Record<string, ITileData>, (xy, tile) => {
-         if ("xy" in tile) {
-            // @ts-expect-error
-            tile.tile = xyToTile(tile.xy);
-            delete tile.xy;
-         }
-         tiles.set(xyToTile(xy), tile);
-      });
-      save.current.tiles = tiles;
-      save.current.transportation = new Map();
-   }
    save.current.tiles.forEach((tile) => {
       if (tile.building) {
+         // @ts-expect-error
+         if (tile.building.status === "paused") {
+            tile.building.status = "building";
+         }
+         if (!tile.building.disabledInput) {
+            tile.building.disabledInput = new Set();
+         }
          if (!Config.Building[tile.building.type]) {
             delete tile.building;
             return;

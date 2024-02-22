@@ -1,3 +1,4 @@
+import Tippy from "@tippyjs/react";
 import {
    getBuilderCapacity,
    getBuildingPercentage,
@@ -5,13 +6,17 @@ import {
    isWorldWonder,
 } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
+import { notifyPreferencesChanged } from "../../../shared/logic/Preferences";
 import { Tick } from "../../../shared/logic/TickLogic";
-import { formatHMS, formatPercent } from "../../../shared/utilities/Helper";
+import { formatHMS, formatPercent, sizeOf } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
+import { useGamePreference } from "../logic/Tick";
 import { jsxMapOf } from "../utilities/Helper";
 import type { IBuildingComponentProps } from "./BuildingPage";
 import { FormatNumber } from "./HelperComponents";
 import { ProgressBarComponent } from "./ProgressBarComponent";
+import { RenderHTML } from "./RenderHTMLComponent";
+import { TextWithHelp } from "./TextWithHelpComponent";
 import { WarningComponent } from "./WarningComponent";
 
 export function BuildingConstructionProgressComponent({
@@ -24,6 +29,10 @@ export function BuildingConstructionProgressComponent({
    }
    const { base, multiplier, total } = getBuilderCapacity(building, xy, gameState);
    const { cost, percent, secondsLeft } = getBuildingPercentage(xy, gameState);
+   const pref = useGamePreference();
+   const disabledResources = pref.disabledResources.get(xy);
+   const enabledResourceCount = sizeOf(cost) - (disabledResources?.size ?? 0);
+   const builderCapacityPerResource = enabledResourceCount > 0 ? total / enabledResourceCount : 0;
    return (
       <fieldset>
          <div className="row">
@@ -36,23 +45,71 @@ export function BuildingConstructionProgressComponent({
             <div>{formatHMS(secondsLeft * 1000)}</div>
          </div>
          <div className="sep5"></div>
-
          <ProgressBarComponent progress={percent} />
-         {jsxMapOf(cost, (res, value) => {
-            return (
-               <div className="row mv5" key={res}>
-                  <div className="f1">{Config.Resource[res].name()}</div>
-                  <div>
-                     <FormatNumber value={building.resources[res] ?? 0} />/
-                     <FormatNumber value={value} />
-                  </div>
-               </div>
-            );
-         })}
+         <div className="sep10"></div>
+         <div className="table-view">
+            <table>
+               <tbody>
+                  <tr>
+                     <th style={{ width: 0 }}></th>
+                     <th>Resource</th>
+                     <th className="text-right">
+                        <TextWithHelp content={t(L.TransportAllocatedCapacityTooltip)}>Capacity</TextWithHelp>
+                     </th>
+                     <th className="text-right">Delivered</th>
+                     <th className="text-right">Total</th>
+                  </tr>
+                  {jsxMapOf(cost, (res, value) => {
+                     return (
+                        <tr key={res}>
+                           <td
+                              className="pointer"
+                              onClick={() => {
+                                 if (disabledResources) {
+                                    disabledResources.has(res)
+                                       ? disabledResources.delete(res)
+                                       : disabledResources.add(res);
+                                 } else {
+                                    pref.disabledResources.set(xy, new Set([res]));
+                                 }
+                                 notifyPreferencesChanged();
+                              }}
+                           >
+                              <Tippy content={t(L.TransportManualControlTooltip)}>
+                                 {pref.disabledResources.get(xy)?.has(res) ?? false ? (
+                                    <div className="m-icon text-red">toggle_off</div>
+                                 ) : (
+                                    <div className="m-icon text-green">toggle_on</div>
+                                 )}
+                              </Tippy>
+                           </td>
+                           <td>{Config.Resource[res].name()}</td>
+                           <td className="text-right">
+                              {disabledResources?.has(res) ? (
+                                 0
+                              ) : (
+                                 <FormatNumber value={builderCapacityPerResource} />
+                              )}
+                           </td>
+                           <td className="text-right">
+                              <FormatNumber value={building.resources[res] ?? 0} />
+                           </td>
+                           <td className="text-right">
+                              <FormatNumber value={value} />
+                           </td>
+                        </tr>
+                     );
+                  })}
+               </tbody>
+            </table>
+         </div>
+
          <div className="separator"></div>
          {isWorldWonder(building.type) ? (
             <>
-               <WarningComponent icon="info">{t(L.WonderBuilderCapacityDesc)}</WarningComponent>
+               <WarningComponent icon="info" className="text-small">
+                  <RenderHTML html={t(L.WonderBuilderCapacityDescHTML)} />
+               </WarningComponent>
                <div className="sep10"></div>
             </>
          ) : null}

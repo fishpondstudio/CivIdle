@@ -386,9 +386,8 @@ export const FR = {
    ConstructionBuilderMultiplier: "Multiplicateur de Capacité",
    ConstructionBuilderMultiplierFull: "Multiplicateur de Capacité de construction",
    EndConstruction: "Abandonner la construction",
-   EndConstructionEnd: "Abandonner",
-   EndConstructionDesc:
-      "Lorsque vous abandonnez la construction d'un bâtiment, toutes les ressources déjà utilisée ne seront pas restituées",
+   EndConstructionDescHTML:
+      "Lorsque vous abandonnez la construction d'un bâtiment, toutes les ressources déjà utilisées <b>ne seront pas restituées</b>",
    Stonehenge: "Stonehenge",
    StonehengeDesc:
       "Tous les bâtiments qui consomment ou produisent de la pierre obtiennent +1 Multiplicateur de Production",
@@ -804,8 +803,8 @@ export const FR = {
    OfflineTime: "Temps hors ligne",
    TransportCapacity: "Capacité de Transport",
    TransportCapacityMultiplier: "Multiplicateur de Capacité de Transport",
-   WonderBuilderCapacityDesc:
-      "La Capacité de construction lorsque vous bâtissez des Merveilles dépend de l'ère et la technologie qui a permis de la débloquer",
+   WonderBuilderCapacityDescHTML:
+      "<b>La Capacité de construction</b> lorsque vous bâtissez des Merveilles dépend de l'<b>ère</b> et la <b>technologie</b> qui vous a permis de la débloquer",
    MarketSettings: "Paramètres du marché",
    ClearAfterUpdate: "Effacer tous les échanges après la mise à jour du marché",
    WarehouseSettings: "Paramètres de l'entrepôt",
@@ -908,17 +907,17 @@ export const FR = {
    TranslationPercentage:
       "Ce jeu a été traduit à %{percentage} en %{language}. Vous pouvez apporter votre contribution sur GitHub",
    CanEarnGreatPeopleFromRebornYes:
-      "Cette partie peut vous permettre d'obtenir des personnages illustres de la réincarnation",
+      "Cette partie vous permet d'obtenir des personnages illustres de la réincarnation",
    CanEarnGreatPeopleFromRebornNo:
-      "Cette partie ne peut pas vous permettre d'obtenir des personnages illustres de la réincarnation",
-   TribuneUpgradeDesc:
-      "Passer du rang Tribun au rang Questeur permettra à votre compte de débloquer les fonctionnalités en ligne. Cependant, seuls les personnages illustres <b>jusqu'au niveau %{level}</b> peuvent être conservés",
+      "Cette partie vous permet pas d'obtenir des personnages illustres de la réincarnation",
+   TribuneUpgradeDescV2:
+      "Passer du rang Tribun au rang Questeur vous permettra de débloquer les fonctionnalités en ligne. Cependant, seuls les personnages illustres <b>jusqu'au niveau %{level}</b> peuvent être conservés. La progression partielle au-délà du niveau %{level} ne sera pas conservée",
    TribuneUpgradeDescGreatPeopleWarning:
       "Votre partie actuelle contient des personnages illustres. Vous devez <b>d'abord vous réincarner</b>. Passer au rang de Questeur réinitialisera votre partie actuelle",
-   TribuneGreatPeopleLevelWarning:
-      "Votre rang de compte actuel est Tribun. Passer au rang de Questeur conservera vos personnages illustres permanents <b>jusqu'au niveau %{level}</b>",
-   RebornModalDesc:
-      "Vous commencerez un nouvel empire mais vous pourrez récuperer tous les personnages illustres <b>de cette partie</b>, en plus de personnages bonus basés sur la <b>valeur totale de votre empire</b>",
+   TribuneGreatPeopleLevelWarningV2:
+      "Votre rang de compte actuel est Tribun. Passer au rang de Questeur vous permettra de conserver vos personnages illustres permanents <b>jusqu'au niveau %{level}</b>. La progression partielle au-délà du niveau %{level} ne sera pas conservée",
+   RebornModalDescV2:
+      "Vous commencerez un nouvel empire mais vous pourrez récuperer tous les personnages illustres <b>de cette partie</b>, qui deviendront alors <b>permanents</b>. Vous aurez également le choix parmi une liste de personnages illustres bonus en fonction de <b>valeur totale de votre empire</b>",
    OperationNotAllowedError: "Opération impossible",
    AccountLevelUpgradeConditionAny:
       "Pour passer au rang supérieur, vous devez remplir l'une des conditions suivantes :",
@@ -926,7 +925,7 @@ export const FR = {
    AccountUpgradeButton: "Passer au rang de Questeur",
    AccountUpgradeConfirm: "Amélioration du compte",
    AccountUpgradeConfirmDesc:
-      "Passer au rang supérieur <b>réinitialisera votre partie actuelle</b> and conservera les personnages illustres permanents <b>jusqu'au niveau %{level}</b>. Cette action est <b>irréversible</b>, voulez-vous continuer ?",
+      "Passer au rang supérieur <b>réinitialisera votre partie actuelle</b> et vous permettra de conserver les personnages illustres permanents <b>jusqu'au niveau %{level}</b>. Cette action est <b>irréversible</b>, voulez-vous continuer ?",
    CannotEarnPermanentGreatPeopleDesc:
       "Vous ne pouvez pas obtenir de personnages illustres permanents car vous êtes en mode difficile",
    BackToCity: "Retourner à la ville",
@@ -944,6 +943,7 @@ export const FR = {
    PlayerTradeTariffTooltip: "Obtenu grâce à une taxe douanière",
    PlayerTradeClaimAll: "Tout récuperer",
    PlayerTradeClaimAllMessage: "Vous avez récupéré %{count} échange(s)",
+   PlayerTradeClaimAllFailedMessage: "Vous avez récupéré %{count} échange(s) - votre stockage est-il plein ?",
    SteamAchievement: "Succès Steam",
    SteamAchievementDetails: "Voir les succès Steam",
    ChatHideLatestMessage: "Masquer le contenu du dernier message",
@@ -952,6 +952,8 @@ export const FR = {
    BuildingColorMatchBuilding: "Copier la couleur des bâtiments",
    BuildingColorMatchBuildingTooltip:
       "Les ressources seront automatiquement de la même couleur que le bâtiment qui les produit. Si plusieurs bâtiments produisent la même ressource, la couleur sera choisie aléatoirement",
-   WondersUnlocked: "World Wonders Unlocked",
-   WondersBuilt: "World Wonders Built",
+   WondersUnlocked: "Merveilles du monde débloquées",
+   WondersBuilt: "Merveilles du monde bâties",
+   TransportManualControlTooltip: "Transporter cette ressource pour la construction/l'amélioration",
+   TransportAllocatedCapacityTooltip: "Capacité de construction accordée au transport de cette ressource",
 };
