@@ -384,9 +384,8 @@ export const KR = {
    ConstructionBuilderMultiplier: "용량 배수",
    ConstructionBuilderMultiplierFull: "건축가 용량 배수",
    EndConstruction: "건축 종료",
-   EndConstructionEnd: "취소",
-   EndConstructionDesc:
-      "건축을 취소해도 이미 사용한 자원은 돌려받을수 없습니다.",
+   EndConstructionDescHTML:
+      "When you end construction, all the resources that have already been used <b>will not be returned</b>",
    Stonehenge: "스톤헨지",
    StonehengeDesc: "돌을 소비하거나 생산하는 모든 건물이 +1의 생산 배수를 얻습니다.",
    LighthouseOfAlexandria: "알렉산드리아의 등대",
@@ -396,14 +395,11 @@ export const KR = {
    ColossusOfRhodes: "로도스의 거상",
    ColossusOfRhodesDesc: "작업자를 생산하지 않는 모든 인접한 건물이 +1의 행복도를 얻습니다.",
    MausoleumAtHalicarnassus: "마우솔로스 영묘",
-   MausoleumAtHalicarnassusDesc:
-      "영묘료부터 2타일 내에서는 운송에 작업자가 필요하지 않습니다.",
+   MausoleumAtHalicarnassusDesc: "영묘료부터 2타일 내에서는 운송에 작업자가 필요하지 않습니다.",
    HangingGarden: "공중정",
-   HangingGardenDesc:
-      "+1 작업자 용량 배수. 인접한 수로가 +1의 생산, 저장소, 작업자 용량 배수를 얻습니다.",
+   HangingGardenDesc: "+1 작업자 용량 배수. 인접한 수로가 +1의 생산, 저장소, 작업자 용량 배수를 얻습니다.",
    Colosseum: "콜로세움",
-   ColosseumDesc:
-      "전차공장은 행복도 -1이 면제 되며, 전차10대를 소모하여 행복10을 생산합니다.",
+   ColosseumDesc: "전차공장은 행복도 -1이 면제 되며, 전차10대를 소모하여 행복10을 생산합니다.",
    SummerPalace: "이화원",
    SummerPalaceDesc:
       "화약을 생산하거나 소비하는 모든 인접한 건물은 행복도 -1이 면제되며, 화약을 소비하거나 생산하는 모든 건물이 +1의 생산, 저장소, 작업자 용량배수를 얻습니다.",
@@ -414,8 +410,7 @@ export const KR = {
    EiffelTowerDesc:
       "모든 인접한 제강공장이 +N 의 생산, 저장소, 작업자 용량 배수를 얻습니다. N = 인접한 제강공장의 수",
    CircusMaximus: "키르쿠스 막시무스",
-   CircusMaximusDesc:
-      "행복도 +5, 모든 배우 길드, 작가 길드, 화가 길드가 +1의 생산, 저장소 배수를 얻습니다",
+   CircusMaximusDesc: "행복도 +5, 모든 배우 길드, 작가 길드, 화가 길드가 +1의 생산, 저장소 배수를 얻습니다",
    Statistics: "통계 건물",
    StatisticsDesc: "소비 및 생산 통계를 제공합니다.",
    GrottaAzzurra: "카프리 푸른 동굴",
@@ -428,8 +423,7 @@ export const KR = {
    Aphrodite: "아프로디테",
    AphroditeDesc: "레벨 20이상의 건물을 업그레이드 할때 각 레벨마다 +1의 건축가 용량 배수를 얻습니다.",
    Alps: "알프스 산맥",
-   AlpsDesc:
-      "건물의 매 10레벨마다 +1의 생산용량을 얻습니다.(+1의 소비 승수, +1의 생산 승수)",
+   AlpsDesc: "건물의 매 10레벨마다 +1의 생산용량을 얻습니다.(+1의 소비 승수, +1의 생산 승수)",
    GreatDagonPagoda: "슈웨다곤 파고다",
    GreatDagonPagodaDesc: "슈웨다곤 파고다",
    SagradaFamília: "사그라다 파밀리아",
@@ -442,8 +436,7 @@ export const KR = {
    StPetersBasilicaDesc:
       "신앙을 생산하는 모든 건물이 +1의 저장소 배수를 얻습니다. 저장된 신앙에 비례하여 신앙을 생성합니다.",
    ForbiddenCity: "자금성",
-   ForbiddenCityDesc:
-      "모든 제지소, 인쇄소, 작가길드가 +1의 생산, 저장소, 작업자 용량배수를 얻습니다",
+   ForbiddenCityDesc: "모든 제지소, 인쇄소, 작가길드가 +1의 생산, 저장소, 작업자 용량배수를 얻습니다",
    Borobudur: "보로부드르",
    BorobudurDesc: "보로부드르",
    ItsukushimaShrine: "이쓰쿠시마 신사",
@@ -471,8 +464,7 @@ export const KR = {
    SaintBasilsCathedral: "성 바실리 대성당",
    SaintBasilsCathedralDesc: "성 바실리 대성당",
    ChichenItza: "치첸 이트사",
-   ChichenItzaDesc:
-      "모든 인접한 건물이 +1의 생산, 저장소, 작업자 용량 배수를 얻습니다.",
+   ChichenItzaDesc: "모든 인접한 건물이 +1의 생산, 저장소, 작업자 용량 배수를 얻습니다.",
    Aqueduct: "수로",
    FishPond: "물고기 연못",
    GarumMaker: "가룸 제작소",
@@ -485,8 +477,7 @@ export const KR = {
    GreatMosqueOfSamarra: "사마라 대모스크",
    GreatMosqueOfSamarraDesc: "사마라 대모스크",
    HagiaSophia: "하기아 소피아",
-   HagiaSophiaDesc:
-      "생산능력이 0%인 건물은 행복도-1이 면제됩니다. 믿음10을 소비하여 행복10을 생산합니다.",
+   HagiaSophiaDesc: "생산능력이 0%인 건물은 행복도-1이 면제됩니다. 믿음10을 소비하여 행복10을 생산합니다.",
    AngkorWat: "앙코르 와트",
    AngkorWatDesc: "모든 인접한 건물이 +1의 작업자 용량 배수를 얻습니다. 1000 작업자를 생산합니다.",
    TerracottaArmy: "병마용",
@@ -496,8 +487,7 @@ export const KR = {
    ParthenonDesc:
       "고전시대의 새로운 위인이 태어납니다. 음악가 길드와 화가 길드가 +1의 작업자 용량 배수를 얻습니다.",
    Persepolis: "페르세폴리스",
-   PersepolisDesc:
-      "모든 벌목장, 채석장, 구리광산이 +1의 생산, 저장소, 작업자 용량 배수를 얻습니다.",
+   PersepolisDesc: "모든 벌목장, 채석장, 구리광산이 +1의 생산, 저장소, 작업자 용량 배수를 얻습니다.",
    ChoghaZanbil: "초가잔빌 지구라트",
    ChoghaZanbilDesc: "초가잔빌 지구라트",
    HatshepsutTemple: "하트셉수트의 장제전",
@@ -530,13 +520,11 @@ export const KR = {
    StockpileSettings: "비축 투입 용량",
    DefaultStockpileSettings: "기본 비축 투입 용량",
    SellBuilding: "건물 판매",
-   StockpileDesc:
-      "이 건물은 최대 비축량에 도달할때까지 %{capacity}x 배의 자원을 전송받습니다. ",
+   StockpileDesc: "이 건물은 최대 비축량에 도달할때까지 %{capacity}x 배의 자원을 전송받습니다. ",
    StockpileMax: "최대 비축량",
    DefaultStockpileMax: "기본 최대 비축량",
    StockpileMaxUnlimited: "무제한",
-   StockpileMaxDesc:
-      "이 건물은 %{cycle} 번의 생산주기만큼 자원이 비축되면 자원을 전송받지 않습니다.",
+   StockpileMaxDesc: "이 건물은 %{cycle} 번의 생산주기만큼 자원이 비축되면 자원을 전송받지 않습니다.",
    StockpileMaxUnlimitedDesc: "이 건물은 저장소가 가득 찰때까지 자원전송을 중단하지 않습니다.",
    ProductionPriority: "생산 우선순위",
    DefaultProductionPriority: "기본 생산 우선순위",
@@ -614,8 +602,7 @@ export const KR = {
    PlayerHandle: "플레이어 핸들값",
    ChangePlayerHandle: "변경",
    ChangePlayerHandleCancel: "닫기",
-   ChangePlayerHandledDesc:
-      "플레이어 핸들값은 5~16개의 알파벳과 숫자만 포함할수 있으며, 중복될 수 없습니다.",
+   ChangePlayerHandledDesc: "플레이어 핸들값은 5~16개의 알파벳과 숫자만 포함할수 있으며, 중복될 수 없습니다.",
    AGreatPersonIsBorn: "위인이 태어났습니다.",
    BuildingName: "이름",
    BuildingTier: "티어",
@@ -689,8 +676,7 @@ export const KR = {
    PlayerTradeCancelTrade: "거래 취소",
    PlayerTradeCancelTradeNo: "취소 안 함",
    PlayerTradeCancelTradeNotEnoughStorage: "이 거래를 취소하기 위한 저장소가 충분하지 않습니다.",
-   PlayerTradeCancelDesc:
-      "이 거래를 취소하면 자원의 %{percent} 만 환불됩니다. 취소 하시겠습니까?",
+   PlayerTradeCancelDesc: "이 거래를 취소하면 자원의 %{percent} 만 환불됩니다. 취소 하시겠습니까?",
    PlayerMapUnclaimedTile: "주인없는 타일",
    PlayerMapClaimThisTile: "이 타일을 획득합니다.",
    PlayerMapClaimTileCondition2: "안티치트로 정지당한적이 없습니다.",
@@ -721,8 +707,7 @@ export const KR = {
    PlayerTradeStorageRequired: "요구 저장소",
    PlayerTradeClaimAvailable: "%{count} 개의 거래가 가능해졌습니다.",
    PlayerTradeClaimTileFirst: "무역 지도에서 타일을 먼저 획득해주세요",
-   PlayerTradeClaimTileFirstWarning:
-      "무역 지도에서 타일을 획득한 후에만 다른 플레이어와 거래할수 있습니다.",
+   PlayerTradeClaimTileFirstWarning: "무역 지도에서 타일을 획득한 후에만 다른 플레이어와 거래할수 있습니다.",
    ApplyToAll: "일괄 적용",
    ApplyToAllBuilding: "일괄 적용 %{building}",
    SetAsDefault: "기본값으로 설정",
@@ -788,24 +773,21 @@ export const KR = {
    OfflineTime: "오프라인 시간",
    TransportCapacity: "수송 용량",
    TransportCapacityMultiplier: "수송 용량 배수",
-   WonderBuilderCapacityDesc:
-      "불가사의를 건축할때 건축가 용량은 불가사의가 해금된 시대와 기술의 영향을 받습니다.",
+   WonderBuilderCapacityDescHTML:
+      "<b>Builder Capacity</b> when constructing wonders are affected by the <b>age</b> and <b>technology</b> that unlocks the wonder",
    MarketSettings: "시장 설정",
    ClearAfterUpdate: "시장 갱신후 모든 거래 초기화",
    WarehouseSettings: "창고 설정",
    WarehouseSettingsAutopilot: "오토파일럿 모드",
    WarehouseSettingsAutopilotDesc:
       "이 창고는 유휴용량을 사용하여 저장소가 가득한 건물로부터 자원을 수송받습니다. 현재 유휴 용량: %{capacity}",
-   WarehouseUpgrade:
-      "창고 오토파일럿 모드 해금. 창고와 인접한 건물간에 무료 운송",
+   WarehouseUpgrade: "창고 오토파일럿 모드 해금. 창고와 인접한 건물간에 무료 운송",
    WarehouseUpgradeDesc: "이 창고와 인접한 건물간은 무료 운송이 적용됩니다",
    Warp: "워프",
    MaxOfflineProductionTime: "최대 오프라인 생산 시간",
-   WarpConversionDesc:
-      "최대 오프라인 생산 시간을 초과하는 오프라인 시간이 워프(1초 = 1워프)로 변환됩니다",
+   WarpConversionDesc: "최대 오프라인 생산 시간을 초과하는 오프라인 시간이 워프(1초 = 1워프)로 변환됩니다",
    TimeWarp: "타임워프",
-   TurnOnTimeWarpDesc:
-      "%{speed} 개의 워프를 소모하여 %{speed}x 배의 속도로 제국이 진행되도록 가속합니다..",
+   TurnOnTimeWarpDesc: "%{speed} 개의 워프를 소모하여 %{speed}x 배의 속도로 제국이 진행되도록 가속합니다..",
    TimeWarpWarning:
       "컴퓨터가 처리할 수 있는 속도보다 더 빠른 속도로 가속하면 데이터 손실이 발생할 수 있습니다. 책임은 사용자에게 있습니다",
    PetraNoMultiplier: "페트라는 배수의 영향을 받지 않습니다 (생산, 저장소, 작업자 용량 등)",
@@ -814,8 +796,7 @@ export const KR = {
    RebornCity: "새로운 도시 선택",
    RebornTradeWarning:
       "활성상태이거나 수취할수있는 거래가 있습니다. <b>환생시 그것들은 사라집니다.</b> - 먼저 취소하거나 수취하는것을 고려해보십시오",
-   RebornOfflineWarning:
-      "현재 오프라인상태입니다, 환생은 서버에 연결되었을때만 할수있습니다.",
+   RebornOfflineWarning: "현재 오프라인상태입니다, 환생은 서버에 연결되었을때만 할수있습니다.",
    TotalEmpireValue: "총 제국 가치",
    TotalTimeThisRun: "이번 회차에서 총 시간",
    TotalEmpireValuePerCycle: "주기당 총 제국 가치",
@@ -829,8 +810,7 @@ export const KR = {
    EstimatedTimeLeft: "남은 예상 시간",
    Electrification: "충전",
    ElectrificationUpgrade: "충전 해금. 건물이 전력을 소모하여 생산을 늘릴수 있습니다.",
-   ElectrificationDesc:
-      "%{power}W 의 전력을 사용해 +%{level} 의 소비승수 및 생산승수를 획득할수 있습니다.",
+   ElectrificationDesc: "%{power}W 의 전력을 사용해 +%{level} 의 소비승수 및 생산승수를 획득할수 있습니다.",
    PowerAvailable: "사용 가능한 전력",
    PowerUsed: "사용한 전력",
    Power: "전력",
@@ -851,8 +831,7 @@ export const KR = {
    AccountTypeShowDetails: "계정 세부 정보 표시",
    PlayerHandleOffline: "현재 오프라인 상태입니다.",
    AccountLevel: "계정 랭크",
-   TrialRunDesc:
-      "재무관 이상은 호민관 제한이 적용되고 영구위인을 얻을수 없는 실험 회차를 진행할수 있습니다.",
+   TrialRunDesc: "재무관 이상은 호민관 제한이 적용되고 영구위인을 얻을수 없는 실험 회차를 진행할수 있습니다.",
    Tutorial1:
       "CivIdle Setup에 오신것을 환영합니다..<br><br>이 게임에서, 여러분은 자신만의 제국을 운영할 것 입니다: 생산관리, 기술 해금, 다른 플레이어와 자원거래, 위인과 불가사의를 만들것 입니다.<br><br> 드래그로 이동하세요. 마우스 휠로 확대 및 축소를 할수있습니다. 빈 타일을 클릭해 새 건물을 짓고, 시찰할 건물을 클릭해보세요.<br><br>",
    Tutorial2: "비슷한 게임을 해본적이 없고 간단한 튜토리얼을 진행하고 싶습니다.",
@@ -881,22 +860,20 @@ export const KR = {
    AccountTradeTileReservationTimeDesc:
       "마지막 온라인 시간으로부터 거래 타일이 보존되는 시간입니다. 보존기간이 끝나면 다른 플레이어가 타일을 사용할수 있습니다.",
    AccountUpgradeCarryOver: "레벨 이월",
-   AccountUpgradeCarryOverDesc:
-      "다음 계정 랭크로 업그레이드 할때 이월할수있는 영구 위인의 최대 레벨입니다.",
+   AccountUpgradeCarryOverDesc: "다음 계정 랭크로 업그레이드 할때 이월할수있는 영구 위인의 최대 레벨입니다.",
    TranslationPercentage: "%{language} 는 %{percentage} 번역되었습니다. GitHub에서 번역에 도움을 주세요",
    CanEarnGreatPeopleFromRebornYes: "이 회차에서 환생시 위인을 획득할수 있습니다.",
    CanEarnGreatPeopleFromRebornNo: "이 회차에서는 환생해도 위인을 획득할수 없습니다.",
-   TribuneUpgradeDesc:
-      "호민관에서 재무관으로 업그레이드하면 계정의 모든 온라인 기능을 잠금해제할수 있습니다. 단, 오직 <b>%{level}</b> 레벨까지의 영구적인 위인만 이월할수 있습니다.",
+   TribuneUpgradeDescV2:
+      "Upgrading from Tribune to Quaestor will unlock all online features. However, only <b>permanent great people up to level %{level}</b> can be carried over. Partial progress above level %{level} will not be carried over",
    TribuneUpgradeDescGreatPeopleWarning:
       "현재 회차에서 위인을 획득했습니다. <b>먼저 환생부터 해야합니다</b>. 재무관으로 업그레이드하면 현재 회차는 리셋됩니다.",
-   TribuneGreatPeopleLevelWarning:
-      "현재 계정 랭크는 호민관입니다. 재무관으로 업그레이드 하면 <b>%{level}</b>레벨까지의 영구적인 위인들을 이월할수 있습니다.",
-   RebornModalDesc:
-      "새 제국을 시작하지만 위인들을 모두 데려갈수 있습니다, 그리고 총 제국 가치에 기반한 추가적인 위인을 획득할수 있습니다.",
+   TribuneGreatPeopleLevelWarningV2:
+      "Your current account rank is Tribune. Upgrading to Quaestor will carry over permanent great people <b>up to level %{level}</b>. Partial progress above level %{level} will not be carried over",
+   RebornModalDescV2:
+      "You will start a new empire but you can take all the great people <b>from this run</b>, which will become <b>permanent</b> great people. You can also choose extra great people based on your <b>total empire value</b>",
    OperationNotAllowedError: "이 작업은 허용되지 않습니다.",
-   AccountLevelUpgradeConditionAny:
-      "계정을 업그레이드 하려면, 다음 기준 중 하나만 충족하면 됩니다.:",
+   AccountLevelUpgradeConditionAny: "계정을 업그레이드 하려면, 다음 기준 중 하나만 충족하면 됩니다.:",
    AccountLevelPlayTime: "활성화된 온라인 플레이시간 > %{requiredTime} (현재 플레이시간 %{actualTime})",
    AccountUpgradeButton: "재무관으로 업그레이드",
    AccountUpgradeConfirm: "계정 업그레이드",
@@ -918,6 +895,7 @@ export const KR = {
    PlayerTradeTariffTooltip: "무역 관세로부터 징수됨",
    PlayerTradeClaimAll: "모두 받기",
    PlayerTradeClaimAllMessage: "거래 %{count} 건을 수령했습니다",
+   PlayerTradeClaimAllFailedMessage: "You have claimed %{count} trades - is the storage full?",
    SteamAchievement: "Steam 도전과제",
    SteamAchievementDetails: "Steam 도전과제 보기",
    ChatHideLatestMessage: "최신 메시지 내용 숨기기",
@@ -927,4 +905,6 @@ export const KR = {
       "이 자원을 생산하는 건물에서 자원 색상을 복사합니다. 여러개의 건물에서 자원을 생산하면 임의의 건물이 선택됩니다.",
    WondersUnlocked: "불가사의 해금됨",
    WondersBuilt: "불가사의 건설됨",
+   TransportManualControlTooltip: "Transport this resource for construction/upgrade",
+   TransportAllocatedCapacityTooltip: "Builder Capacity allocated to transporting this resource",
 };

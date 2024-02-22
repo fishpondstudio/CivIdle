@@ -6,11 +6,10 @@ import {
    isWorldWonder,
 } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
-import { notifyPreferencesChanged } from "../../../shared/logic/Preferences";
+import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
 import { Tick } from "../../../shared/logic/TickLogic";
 import { formatHMS, formatPercent, sizeOf } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
-import { useGamePreference } from "../logic/Tick";
 import { jsxMapOf } from "../utilities/Helper";
 import type { IBuildingComponentProps } from "./BuildingPage";
 import { FormatNumber } from "./HelperComponents";
@@ -29,9 +28,7 @@ export function BuildingConstructionProgressComponent({
    }
    const { base, multiplier, total } = getBuilderCapacity(building, xy, gameState);
    const { cost, percent, secondsLeft } = getBuildingPercentage(xy, gameState);
-   const pref = useGamePreference();
-   const disabledResources = pref.disabledResources.get(xy);
-   const enabledResourceCount = sizeOf(cost) - (disabledResources?.size ?? 0);
+   const enabledResourceCount = sizeOf(cost) - building.disabledInput.size;
    const builderCapacityPerResource = enabledResourceCount > 0 ? total / enabledResourceCount : 0;
    return (
       <fieldset>
@@ -65,18 +62,16 @@ export function BuildingConstructionProgressComponent({
                            <td
                               className="pointer"
                               onClick={() => {
-                                 if (disabledResources) {
-                                    disabledResources.has(res)
-                                       ? disabledResources.delete(res)
-                                       : disabledResources.add(res);
+                                 if (building.disabledInput.has(res)) {
+                                    building.disabledInput.delete(res);
                                  } else {
-                                    pref.disabledResources.set(xy, new Set([res]));
+                                    building.disabledInput.add(res);
                                  }
-                                 notifyPreferencesChanged();
+                                 notifyGameStateUpdate();
                               }}
                            >
                               <Tippy content={t(L.TransportManualControlTooltip)}>
-                                 {pref.disabledResources.get(xy)?.has(res) ?? false ? (
+                                 {building.disabledInput.has(res) ?? false ? (
                                     <div className="m-icon text-red">toggle_off</div>
                                  ) : (
                                     <div className="m-icon text-green">toggle_on</div>
@@ -85,7 +80,7 @@ export function BuildingConstructionProgressComponent({
                            </td>
                            <td>{Config.Resource[res].name()}</td>
                            <td className="text-right">
-                              {disabledResources?.has(res) ? (
+                              {building.disabledInput.has(res) ? (
                                  0
                               ) : (
                                  <FormatNumber value={builderCapacityPerResource} />

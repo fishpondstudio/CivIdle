@@ -60,7 +60,7 @@ export function replacer(key: string, value: any): any {
    if (value instanceof Set) {
       return {
          $type: "Set",
-         value: Array.from(value).values(),
+         value: Array.from(value.values()),
       };
    }
    return value;

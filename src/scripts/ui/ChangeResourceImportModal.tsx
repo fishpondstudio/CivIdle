@@ -5,6 +5,7 @@ import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
 import type { IResourceImport, IResourceImportBuildingData } from "../../../shared/logic/Tile";
 import { clamp, formatPercent, reduceOf, safeParseInt } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
+import { playError } from "../visuals/Sound";
 import { hideModal } from "./GlobalModal";
 import { FormatNumber } from "./HelperComponents";
 
@@ -117,6 +118,10 @@ export function ChangeResourceImportModal({
                   className="text-strong"
                   disabled={!isValid}
                   onClick={() => {
+                     if (!isValid) {
+                        playError();
+                        return;
+                     }
                      building.resourceImports[resource] = resourceImport;
                      notifyGameStateUpdate();
                      hideModal();

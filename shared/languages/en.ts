@@ -1,6 +1,6 @@
 export const EN = {
    CurrentLanguage: "English",
-   TranslatorCredit: "<Shane>",
+   TranslatorCredit: "<Translator: Put Your Name Here>",
    Translators: "Translators",
    Language: "Language",
    TechnologyPrerequisite: "Prerequisites",
@@ -536,7 +536,8 @@ export const EN = {
    StockpileMaxUnlimited: "Unlimited",
    StockpileMaxDesc:
       "This building will stop transporting a resource once there are enough for %{cycle} production cycles",
-   StockpileMaxUnlimitedDesc: "This building will never stop transporting resources, only until the storage is full",
+   StockpileMaxUnlimitedDesc:
+      "This building will never stop transporting resources, only until the storage is full",
    ProductionPriority: "Production Priority",
    DefaultProductionPriority: "Default Production Priority",
    ConstructionPriority: "Construction Priority",

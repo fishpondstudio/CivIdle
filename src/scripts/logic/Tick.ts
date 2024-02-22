@@ -9,7 +9,6 @@ import {
 } from "../../../shared/logic/GameStateLogic";
 import { calculateHappiness } from "../../../shared/logic/HappinessLogic";
 import { clearIntraTickCache, getSpecialBuildings } from "../../../shared/logic/IntraTickCache";
-import { OnPreferencesChanged, Preferences } from "../../../shared/logic/Preferences";
 import { OnResetTile } from "../../../shared/logic/TechLogic";
 import { CurrentTickChanged, EmptyTickData, Tick, freezeTickData } from "../../../shared/logic/TickLogic";
 import {
@@ -115,7 +114,6 @@ OnBuildingComplete.on(onBuildingComplete);
 OnBuildingProductionComplete.on(onProductionComplete);
 
 export const useCurrentTick = makeObservableHook(CurrentTickChanged, () => Tick.current);
-export const useGamePreference = makeObservableHook(OnPreferencesChanged, () => Preferences);
 
 if (import.meta.env.DEV) {
    // @ts-expect-error

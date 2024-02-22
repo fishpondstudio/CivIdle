@@ -64,7 +64,6 @@ import {
    getXyBuildings,
    unlockedResources,
 } from "./IntraTickCache";
-import { Preferences } from "./Preferences";
 import { getAmountInTransit } from "./ResourceLogic";
 import type { Multiplier } from "./TickLogic";
 import { Tick } from "./TickLogic";
@@ -176,8 +175,7 @@ function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
       const cost = getBuildingCost(building);
       const { total } = getBuilderCapacity(building, xy, gs);
 
-      const disabledResources = Preferences.disabledResources.get(xy);
-      const enabledResourceCount = sizeOf(cost) - (disabledResources?.size ?? 0);
+      const enabledResourceCount = sizeOf(cost) - building.disabledInput.size;
       const builderCapacityPerResource = enabledResourceCount > 0 ? total / enabledResourceCount : 0;
 
       // Construction / Upgrade is paused!
@@ -191,11 +189,7 @@ function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
          const amountArrived = building.resources[res] ?? 0;
          // Already full
          if (amountArrived >= amount) {
-            if (disabledResources) {
-               disabledResources.add(res);
-            } else {
-               Preferences.disabledResources.set(xy, new Set([res]));
-            }
+            building.disabledInput.add(res);
             // continue;
             return false;
          }
@@ -207,8 +201,7 @@ function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
          }
 
          completed = false;
-         if (disabledResources?.has(res) ?? false) {
-            // continue;
+         if (building.disabledInput.has(res)) {
             return false;
          }
          // Each transportation costs 1 worker, and deliver Total (=Builder Capacity x Multiplier) resources
@@ -220,7 +213,7 @@ function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
          forEach(cost, (res, amount) => {
             safeAdd(building.resources, res, -amount);
          });
-         Preferences.disabledResources.delete(xy);
+         building.disabledInput.clear();
          if (building.status === "building") {
             building.status = "completed";
 
