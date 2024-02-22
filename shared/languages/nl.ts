@@ -1,6 +1,6 @@
 export const NL = {
-    CurrentLanguage: "English",
-    TranslatorCredit: "<Translator: Thomasthegama>",
+    CurrentLanguage: "Nederlands",
+    TranslatorCredit: "<Vertaler: Thomasthegama>",
     Translators: "Vertalers",
     Language: "Taal",
     TechnologyPrerequisite: "Vereisten",
