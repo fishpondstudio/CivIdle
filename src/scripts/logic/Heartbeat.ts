@@ -8,7 +8,7 @@ export class Heartbeat {
    constructor(private data: Uint8Array) {}
 
    public init(): void {
-      if (!getGameState().isOffline || !isOnlineUser()) {
+      if (getGameState().isOffline || !isOnlineUser()) {
          return;
       }
       compress(this.data).then((d) => client.fullHeartbeat(d));

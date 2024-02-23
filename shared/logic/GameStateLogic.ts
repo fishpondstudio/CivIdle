@@ -17,8 +17,9 @@ export function serializeSave(gs: SavedGame = savedGame): Uint8Array {
 export function serializeSaveLite(gs: SavedGame = savedGame): Uint8Array {
    const transportation = gs.current.transportation;
    gs.current.transportation = new Map();
-   const result = new TextEncoder().encode(JSON.stringify(gs, replacer));
+   const json = JSON.stringify(gs, replacer);
    gs.current.transportation = transportation;
+   const result = new TextEncoder().encode(json);
    return result;
 }
 export function deserializeSave(bytes: Uint8Array): SavedGame {
