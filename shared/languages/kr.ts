@@ -910,4 +910,20 @@ export const KR = {
    FavoriteBuildingRemove: "즐겨찾기 삭제",
    FavoriteBuildingEmptyToast: "즐겨찾기에 추가된 건물이 없습니다.",
    BackupRecovery: "Backup Recovery",
+   ResourceTransportPreference: "Transport Preference",
+   TechResourceTransportPreference:
+      "Unlock building transport preference - allow setting how a building transports resources needed for its production",
+   TechResourceTransportPreferenceDistance: "Distance",
+   TechResourceTransportPreferenceDistanceTooltip:
+      "This building will prefer transporting resources from buildings that are closer in distance",
+   TechResourceTransportPreferenceAmount: "Amount",
+   TechResourceTransportPreferenceAmountTooltip:
+      "This building will prefer transporting resources from buildings that have larger amount in storage",
+   TechResourceTransportPreferenceStorage: "Storage",
+   TechResourceTransportPreferenceStorageTooltip:
+      "This building will prefer transporting resources from buildings that have higher percentage of used storage",
+   TechResourceTransportPreferenceDefault: "Default",
+   TechResourceTransportPreferenceDefaultTooltip:
+      "Do not override transport preference for this resource, will use the building's transport preference instead",
+   TechResourceTransportPreferenceOverrideTooltip: "This resource has transport preference override: %{mode}",
 };
