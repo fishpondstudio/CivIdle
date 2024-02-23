@@ -168,9 +168,8 @@ export async function connectWebSocket(): Promise<number> {
          case MessageType.Welcome: {
             const w = message as IWelcomeMessage;
             user = w.user;
-            if (user.level <= AccountLevel.Tribune) {
-               getGameState().isOffline = true;
-            }
+            // TODO: Review this!
+            getGameState().isOffline = user.level <= AccountLevel.Tribune;
             getGameOptions().token = w.user.token;
             saveGame(false).catch(console.error);
             OnUserChanged.emit({ ...user });
