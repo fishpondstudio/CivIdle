@@ -956,7 +956,7 @@ export const FR = {
    WondersBuilt: "Merveilles du monde bâties",
    TransportManualControlTooltip: "Transporter cette ressource pour la construction/l'amélioration",
    TransportAllocatedCapacityTooltip: "Capacité de construction accordée au transport de cette ressource",
-   FavoriteBuildingAdd: "Add To Favorite",
-   FavoriteBuildingRemove: "Remove From Favorite",
-   FavoriteBuildingEmptyToast: "You don't have any favorite buildings",
+   FavoriteBuildingAdd: "Ajouter aux favoris",
+   FavoriteBuildingRemove: "Retirer des favoris",
+   FavoriteBuildingEmptyToast: "Vous n'avez aucun bâtiment favoris",
 };
