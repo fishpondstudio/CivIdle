@@ -70,7 +70,7 @@ export const KR = {
    Feudalism: "봉건제",
    Theocracy: "신권정치",
    Education: "교육",
-   Navigation: "운할",
+   Navigation: "운항",
    CivilService: "행정 업무",
    Cathedral: "대성당",
    Printing: "인쇄",
