@@ -501,7 +501,7 @@ export const EN = {
    ChoghaZanbilDesc: "Chogha Zanbil",
    HatshepsutTemple: "Hatshepsut Temple",
    HatshepsutTempleDesc:
-      "Reveal all water tiles on the map when completed. Wheat Farms get +1 Production Multiplier for each adjacent water tile",
+      "Reveals all water tiles on the map. Wheat Farms get +1 Production Multiplier for each water tile adjacent to the farm",
    LuxorTemple: "Luxor Temple",
    LuxorTempleDesc: "+1 Science From Busy Workers",
    Neuschwanstein: "Neuschwanstein",
@@ -860,7 +860,7 @@ export const EN = {
    Tutorial4:
       "Buildings are the basic building block of your empire - place them on the explored map tiles. Certain buildings like Stone Quarries and Aqueducts that extract deposits need to be placed on a deposit tile. A building will lift the fog of its surrounding tiles.<br><br>Buildings consume resources and produce new ones. They will <b>automatically</b> transport required resources. The produced resources will be stored in the buildings which can be transported into other buildings that need these resources. However, a building's storage space is limited.<br><br>Buildings need <b>workers</b> for transportation and production - you need to build residential buildings like <b>huts</b> to increase the worker population. You can upgrade a building to increase its production and storage.",
    Tutorial5:
-      "<b>Science</b> is used to unlock technologies in the tech tree. A technology unlocks new buildings, wonders and boosts.<br><br><b>Busy workers</b> generate a small amount of science. Later on, you will unlock buildings like libraries and schools that produce science.<br><br>The amount of workers available is affected by <b>happiness</b>. Each building will cost 1 happiness. You gain happiness from technologies, wonders and great people. Make sure your workers are happy, otherwise your empire's production will halt.<br><br><b>Wonders</b> are one of a kind building - you can only build one and they cannot be removed once built. Wonders can provide a significant boost or unlock new mechanisms.",
+      "<b>Science</b> is used to unlock technologies in the tech tree. A technology unlocks new buildings, wonders and boosts.<br><br><b>Busy workers</b> generate a small amount of science. Later on, you will unlock buildings like libraries and schools that produce science.<br><br>The amount of workers available is affected by <b>happiness</b>. Each building placed will cost 1 happiness. You gain happiness from technologies, wonders and great people. Make sure your workers are happy, otherwise your empire's production will halt.<br><br><b>Wonders</b> are a one of a kind building - you can only build one of each and they cannot be removed once built. There are also Natural Wonders that can be found by exploring the map. Wonders can provide significant boosts or unlock new mechanisms.",
    Tutorial6:
       "When you enter a new age, a new <b>great person</b> will be born. You can choose one out of three candidates.<br><br>Great people provide boosts and will be added to your permanent collection. When you rebirth, you collect all the great people you've chosen this run, plus extra great people based on your <b>total empire value</b>, these permanent great people will remain with you.<br><br><b>Permanent</b> great people can be upgraded by collecting great people from each run. They will help your empire achieve new heights. That's all the basics you need to know.<br><br>If you have questions, the best way to get help is by asking the <b>chat</b> - we have a friendly community that is always ready to help.",
    TutorialPlayerHandle: "Choose your player handle",
@@ -925,7 +925,7 @@ export const EN = {
    ChatHideLatestMessageDesc: "Replace the content of latest chat message with asterisks in the chat bar",
    BuildingColorMatchBuilding: "Copy Color From Building",
    BuildingColorMatchBuildingTooltip:
-      "Copy resource color from the building that produces this resource. If multiple buildings produce this resource, a random one will be selected",
+      "Copies color of production buildings to their resources. If there is more than one option, selects randomly",
    WondersUnlocked: "World Wonders Unlocked",
    WondersBuilt: "World Wonders Built",
    TransportManualControlTooltip: "Transport this resource for construction/upgrade",
