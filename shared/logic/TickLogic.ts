@@ -2,7 +2,6 @@ import type { Building } from "../definitions/BuildingDefinitions";
 import { NoPrice, type Resource } from "../definitions/ResourceDefinitions";
 import { forEach, type Tile } from "../utilities/Helper";
 import type { RequireAtLeastOne } from "../utilities/Type";
-import type { PartialSet, PartialTabulate } from "../utilities/TypeDefinitions";
 import { TypedEvent } from "../utilities/TypedEvent";
 import { L, t } from "../utilities/i18n";
 import { getBuildingValue } from "./BuildingLogic";
@@ -11,20 +10,27 @@ import { GameState } from "./GameState";
 import type { calculateHappiness } from "./HappinessLogic";
 import type { IBuildingData } from "./Tile";
 
+interface IBuildingResource {
+   tile: Tile;
+   amount: number;
+   totalStorage: number;
+   usedStorage: number;
+}
+
 interface ITickData {
    buildingMultipliers: Map<Building, MultiplierWithSource[]>;
    tileMultipliers: Map<Tile, MultiplierWithSource[]>;
-   unlockedBuildings: PartialSet<Building>;
-   workersAvailable: PartialTabulate<Resource>;
+   unlockedBuildings: Set<Building>;
+   workersAvailable: Map<Resource, number>;
    happiness: ReturnType<typeof calculateHappiness> | null;
-   workersUsed: PartialTabulate<Resource>;
+   workersUsed: Map<Resource, number>;
    workersAssignment: Map<Tile, number>;
    electrified: Map<Tile, number>;
-   resourcesByTile: Partial<Record<Resource, Tile[]>>;
+   resourcesByTile: Map<Resource, IBuildingResource[]>;
    playerTradeBuildings: Map<Tile, IBuildingData>;
    globalMultipliers: GlobalMultipliers;
    notProducingReasons: Map<Tile, NotProducingReason>;
-   specialBuildings: Partial<Record<Building, Tile>>;
+   specialBuildings: Map<Building, Tile>;
    totalValue: number;
 }
 
@@ -32,17 +38,17 @@ export function EmptyTickData(): ITickData {
    return {
       electrified: new Map(),
       buildingMultipliers: new Map(),
-      unlockedBuildings: {},
+      unlockedBuildings: new Set(),
       tileMultipliers: new Map(),
-      workersAvailable: {},
-      workersUsed: {},
+      workersAvailable: new Map(),
+      workersUsed: new Map(),
       happiness: null,
       workersAssignment: new Map(),
-      resourcesByTile: {},
+      resourcesByTile: new Map(),
       globalMultipliers: new GlobalMultipliers(),
       notProducingReasons: new Map(),
       playerTradeBuildings: new Map(),
-      specialBuildings: {},
+      specialBuildings: new Map(),
       totalValue: 0,
    };
 }

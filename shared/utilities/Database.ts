@@ -219,3 +219,11 @@ export const TradeTileReservationDays: Record<AccountLevel, number> = {
    [AccountLevel.Praetor]: 21,
    [AccountLevel.Consul]: 28,
 };
+
+export const ChatMaxChars: Record<AccountLevel, number> = {
+   [AccountLevel.Tribune]: 200,
+   [AccountLevel.Quaestor]: 800,
+   [AccountLevel.Aedile]: 800,
+   [AccountLevel.Praetor]: 800,
+   [AccountLevel.Consul]: 800,
+};

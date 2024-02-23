@@ -5,6 +5,7 @@ import {
    AccountLevel,
    ChatAttributes,
    ChatChannels,
+   ChatMaxChars,
    type IChat,
    type IUser,
 } from "../../../shared/utilities/Database";
@@ -147,6 +148,7 @@ export function ChatPanel(): React.ReactNode {
 
 function ChatInput({ onChatSend }: { onChatSend: (message: string) => void }): React.ReactNode {
    const options = useGameOptions();
+   const user = useUser();
    const [chat, setChat] = useState("");
    const chatInput = useRef<HTMLInputElement>(null);
    const sendChat = () => {
@@ -189,6 +191,7 @@ function ChatInput({ onChatSend }: { onChatSend: (message: string) => void }): R
             onInput={(e) => {
                setChat(e.currentTarget.value);
             }}
+            maxLength={ChatMaxChars[user?.level ?? AccountLevel.Tribune]}
             onKeyDown={(e) => {
                if (e.key === "Enter") {
                   sendChat();

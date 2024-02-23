@@ -1,3 +1,4 @@
+import Tippy from "@tippyjs/react";
 import { IOCalculation } from "../../../shared/logic/BuildingLogic";
 import { GameFeature, hasFeature } from "../../../shared/logic/FeatureLogic";
 import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
@@ -29,23 +30,20 @@ export function BuildingStockpileComponent({ gameState, xy }: IBuildingComponent
          <legend>
             {t(L.StockpileSettings)}: {building.stockpileCapacity}x
          </legend>
-
          <div className="sep5"></div>
-         <input
-            type="range"
-            min={STOCKPILE_CAPACITY_MIN}
-            max={STOCKPILE_CAPACITY_MAX}
-            value={building.stockpileCapacity}
-            onChange={(e) => {
-               building.stockpileCapacity = parseInt(e.target.value, 10);
-               notifyGameStateUpdate();
-            }}
-         />
+         <Tippy content={t(L.StockpileDesc, { capacity: building.stockpileCapacity })}>
+            <input
+               type="range"
+               min={STOCKPILE_CAPACITY_MIN}
+               max={STOCKPILE_CAPACITY_MAX}
+               value={building.stockpileCapacity}
+               onChange={(e) => {
+                  building.stockpileCapacity = parseInt(e.target.value, 10);
+                  notifyGameStateUpdate();
+               }}
+            />
+         </Tippy>
          <div className="sep15"></div>
-         <div className="text-desc text-small">
-            {t(L.StockpileDesc, { capacity: building.stockpileCapacity })}
-         </div>
-         <div className="sep5"></div>
          <ApplyToAllComponent
             building={building}
             getOptions={() => ({ stockpileCapacity: building.stockpileCapacity })}
@@ -59,24 +57,26 @@ export function BuildingStockpileComponent({ gameState, xy }: IBuildingComponent
             </div>
          </div>
          <div className="sep5"></div>
-         <input
-            type="range"
-            min={STOCKPILE_MAX_MIN}
-            max={STOCKPILE_MAX_MAX}
-            step="5"
-            value={building.stockpileMax}
-            onChange={(e) => {
-               building.stockpileMax = parseInt(e.target.value, 10);
-               notifyGameStateUpdate();
-            }}
-         />
+         <Tippy
+            content={
+               building.stockpileMax <= 0
+                  ? t(L.StockpileMaxUnlimitedDesc)
+                  : t(L.StockpileMaxDesc, { cycle: building.stockpileMax })
+            }
+         >
+            <input
+               type="range"
+               min={STOCKPILE_MAX_MIN}
+               max={STOCKPILE_MAX_MAX}
+               step="5"
+               value={building.stockpileMax}
+               onChange={(e) => {
+                  building.stockpileMax = parseInt(e.target.value, 10);
+                  notifyGameStateUpdate();
+               }}
+            />
+         </Tippy>
          <div className="sep15"></div>
-         <div className="text-desc text-small">
-            {building.stockpileMax <= 0
-               ? t(L.StockpileMaxUnlimitedDesc)
-               : t(L.StockpileMaxDesc, { cycle: building.stockpileMax })}
-         </div>
-         <div className="sep5" />
          <ApplyToAllComponent
             building={building}
             getOptions={() => ({ stockpileMax: building.stockpileMax })}

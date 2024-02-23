@@ -1,4 +1,5 @@
 import { BuildingColorComponent } from "./BuildingColorComponent";
+import { BuildingInputModeComponent } from "./BuildingInputModeComponent";
 import type { IBuildingComponentProps } from "./BuildingPage";
 import { BuildingProductionPriorityComponent } from "./BuildingProductionPriorityComponent";
 import { BuildingSellComponent } from "./BuildingSellComponent";
@@ -17,6 +18,7 @@ export function PlayerTradeBuildingBody({ gameState, xy }: IBuildingComponentPro
          <BuildingStorageComponent gameState={gameState} xy={xy} />
          <BuildingWorkerComponent gameState={gameState} xy={xy} />
          <BuildingProductionPriorityComponent gameState={gameState} xy={xy} />
+         <BuildingInputModeComponent gameState={gameState} xy={xy} />
          <BuildingColorComponent gameState={gameState} xy={xy} />
          <BuildingSellComponent gameState={gameState} xy={xy} />
       </div>

@@ -142,7 +142,9 @@ export function PlayerTradeComponent({ gameState, xy }: IBuildingComponentProps)
                               />
                            ) : null}
                         </div>
-                        <div className="text-small">{trade.from}</div>
+                        <div className="text-small">
+                           <FixedLengthText text={trade.from} length={10} />
+                        </div>
                      </td>
                      <td>
                         {trade.fromId === user?.userId ? (
@@ -205,5 +207,16 @@ export function PlayerTradeComponent({ gameState, xy }: IBuildingComponentProps)
             }}
          />
       </fieldset>
+   );
+}
+
+function FixedLengthText({ text, length }: { text: string; length: number }): React.ReactNode {
+   if (text.length <= length) {
+      return text;
+   }
+   return (
+      <Tippy content={text}>
+         <span>{text.substring(0, length - 3)}...</span>
+      </Tippy>
    );
 }

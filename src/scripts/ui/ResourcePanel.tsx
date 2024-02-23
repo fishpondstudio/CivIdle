@@ -153,16 +153,18 @@ export function ResourcePanel(): React.ReactNode {
                   <div
                      className={classNames({
                         "m-icon": true,
-                        "text-red": (tick.workersAvailable.Power ?? 0) < (tick.workersUsed.Power ?? 0),
-                        "text-green": (tick.workersAvailable.Power ?? 0) > (tick.workersUsed.Power ?? 0),
+                        "text-red":
+                           (tick.workersAvailable.get("Power") ?? 0) < (tick.workersUsed.get("Power") ?? 0),
+                        "text-green":
+                           (tick.workersAvailable.get("Power") ?? 0) > (tick.workersUsed.get("Power") ?? 0),
                      })}
                   >
                      bolt
                   </div>
                   <Tippy placement="bottom" content={`${t(L.PowerUsed)}/${t(L.PowerAvailable)}`}>
-                     <div style={{ width: "120px" }}>
-                        <FormatNumber value={tick.workersUsed.Power ?? 0} />W{" / "}
-                        <FormatNumber value={tick.workersAvailable.Power ?? 0} />W
+                     <div style={{ width: "140px" }}>
+                        <FormatNumber value={tick.workersUsed.get("Power") ?? 0} />W{" / "}
+                        <FormatNumber value={tick.workersAvailable.get("Power") ?? 0} />W
                      </div>
                   </Tippy>
                </div>

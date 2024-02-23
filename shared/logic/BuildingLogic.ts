@@ -109,17 +109,6 @@ export function deductResources(
    return a;
 }
 
-export function addResources(
-   a: PartialTabulate<Resource>,
-   b: PartialTabulate<Resource>,
-): PartialTabulate<Resource> {
-   let res: Resource;
-   for (res in b) {
-      safeAdd(a, res, b[res]!);
-   }
-   return a;
-}
-
 export function filterTransportable(resources: PartialTabulate<Resource>): PartialTabulate<Resource> {
    const result: PartialTabulate<Resource> = {};
    let res: Resource;
@@ -260,7 +249,7 @@ export function getStorageRequired(res: PartialTabulate<Resource>): number {
 }
 
 export function addWorkers(res: Resource, amount: number): void {
-   safeAdd(Tick.next.workersAvailable, res, amount);
+   mapSafeAdd(Tick.next.workersAvailable, res, amount);
 }
 
 export function useWorkers(res: Resource, amount: number, xy: Tile | null): void {
@@ -269,7 +258,7 @@ export function useWorkers(res: Resource, amount: number, xy: Tile | null): void
       return;
    }
    // Normally, we write to Tick.next and read from Tick.current. This is the only exception!
-   safeAdd(Tick.current.workersUsed, res, amount);
+   mapSafeAdd(Tick.current.workersUsed, res, amount);
    if (isNullOrUndefined(xy)) {
       return;
    }
@@ -282,8 +271,8 @@ export function useWorkers(res: Resource, amount: number, xy: Tile | null): void
 }
 
 export function getAvailableWorkers(res: Resource): number {
-   const workersAvailable = Tick.current.workersAvailable[res] ?? 0;
-   const workersUsed = Tick.current.workersUsed[res] ?? 0;
+   const workersAvailable = Tick.current.workersAvailable.get(res) ?? 0;
+   const workersUsed = Tick.current.workersUsed.get(res) ?? 0;
    let pct = 1;
    if (res === "Worker") {
       pct = Tick.current.happiness?.workerPercentage ?? 1;
@@ -362,10 +351,10 @@ export function addTransportation(
 }
 
 export function getScienceFromWorkers(gs: GameState) {
-   const workersAvailable = Tick.current.workersAvailable.Worker ?? 0;
+   const workersAvailable = Tick.current.workersAvailable.get("Worker") ?? 0;
    const happinessPercentage = Tick.current.happiness?.workerPercentage ?? 1;
    const workersAvailableAfterHappiness = Math.floor(workersAvailable * happinessPercentage);
-   const workersBusy = Tick.current.workersUsed.Worker ?? 0;
+   const workersBusy = Tick.current.workersUsed.get("Worker") ?? 0;
    const sciencePerIdleWorker = sum(Tick.current.globalMultipliers.sciencePerIdleWorker, "value");
    const scienceFromIdleWorkers = sciencePerIdleWorker * (workersAvailableAfterHappiness - workersBusy);
 

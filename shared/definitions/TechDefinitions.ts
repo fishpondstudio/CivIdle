@@ -93,6 +93,7 @@ export class TechDefinitions {
       unlockBuilding: ["House"],
       requireTech: ["Masonry", "Counting"],
       buildingMultiplier: { Hut: { output: 1 } },
+      additionalUpgrades: [() => t(L.TechResourceTransportPreference)],
    };
 
    Herding: ITechDefinition = {

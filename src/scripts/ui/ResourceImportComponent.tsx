@@ -1,3 +1,4 @@
+import Tippy from "@tippyjs/react";
 import classNames from "classnames";
 import { useEffect, useState } from "react";
 import { NoPrice, NoStorage, type Resource } from "../../../shared/definitions/ResourceDefinitions";
@@ -5,8 +6,8 @@ import { getStorageFor, getWarehouseCapacity } from "../../../shared/logic/Build
 import { Config } from "../../../shared/logic/Config";
 import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
 import { Tick } from "../../../shared/logic/TickLogic";
-import type { IResourceImportBuildingData } from "../../../shared/logic/Tile";
-import { forEach } from "../../../shared/utilities/Helper";
+import { BuildingInputModeNames, type IResourceImportBuildingData } from "../../../shared/logic/Tile";
+import { forEach, isNullOrUndefined } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import type { IBuildingComponentProps } from "./BuildingPage";
 import { ChangeResourceImportModal } from "./ChangeResourceImportModal";
@@ -28,9 +29,9 @@ export function ResourceImportComponent({ gameState, xy }: IBuildingComponentPro
    }
 
    const resources: Set<Resource> = new Set();
-   forEach(Tick.current.resourcesByTile, (k, v) => {
-      if (!NoPrice[k] && !NoStorage[k]) {
-         resources.add(k);
+   Tick.current.resourcesByTile.forEach((_, res) => {
+      if (!NoPrice[res] && !NoStorage[res]) {
+         resources.add(res);
       }
    });
    forEach(building.resources, (k, v) => {
@@ -49,9 +50,10 @@ export function ResourceImportComponent({ gameState, xy }: IBuildingComponentPro
             header={[
                { name: "", sortable: false },
                { name: t(L.ResourceImportResource), sortable: true },
-               { name: t(L.ResourceImportStorage), sortable: true },
-               { name: t(L.ResourceImportImportPerCycle), sortable: true },
-               { name: t(L.ResourceImportImportCap), sortable: true },
+               { name: t(L.ResourceImportStorage), sortable: true, right: true },
+               { name: t(L.ResourceImportImportPerCycle), sortable: true, right: true },
+               { name: t(L.ResourceImportImportCap), sortable: true, right: true },
+               { name: "", sortable: false },
                { name: "", sortable: false },
             ]}
             data={Array.from(resources)}
@@ -90,7 +92,18 @@ export function ResourceImportComponent({ gameState, xy }: IBuildingComponentPro
                            <div className="m-icon small text-desc">check_box_outline_blank</div>
                         )}
                      </td>
-                     <td>{Config.Resource[res].name()}</td>
+                     <td className="row">
+                        <div>{Config.Resource[res].name()}</div>
+                        {isNullOrUndefined(ri?.inputMode) ? null : (
+                           <Tippy
+                              content={t(L.TechResourceTransportPreferenceOverrideTooltip, {
+                                 mode: BuildingInputModeNames.get(ri.inputMode)!(),
+                              })}
+                           >
+                              <div className="m-icon text-orange small ml5">local_shipping</div>
+                           </Tippy>
+                        )}
+                     </td>
                      <td className="text-right">
                         <FormatNumber value={building.resources[res] ?? 0} />
                      </td>

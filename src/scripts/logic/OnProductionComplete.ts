@@ -19,13 +19,14 @@ import { Tick } from "../../../shared/logic/TickLogic";
 import type { IPetraBuildingData } from "../../../shared/logic/Tile";
 import { addMultiplier } from "../../../shared/logic/Update";
 import {
-   type Tile,
    forEach,
    keysOf,
+   mapSafeAdd,
    mapSafePush,
    pointToTile,
    safeAdd,
    tileToPoint,
+   type Tile,
 } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import { Singleton } from "../utilities/Singleton";
@@ -138,7 +139,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          break;
       }
       case "AngkorWat": {
-         safeAdd(Tick.next.workersAvailable, "Worker", 1000);
+         mapSafeAdd(Tick.next.workersAvailable, "Worker", 1000);
          for (const neighbor of grid.getNeighbors(tileToPoint(xy))) {
             mapSafePush(Tick.next.tileMultipliers, pointToTile(neighbor), {
                worker: 1,

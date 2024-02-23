@@ -14,6 +14,7 @@ import { useGameState } from "../Global";
 import { useShortcut } from "../utilities/Hook";
 import { playClick } from "../visuals/Sound";
 import { BuildingConstructionProgressComponent } from "./BuildingConstructionProgressComponent";
+import { BuildingInputModeComponent } from "./BuildingInputModeComponent";
 import { MenuComponent } from "./MenuComponent";
 import { WarningComponent } from "./WarningComponent";
 
@@ -126,6 +127,9 @@ export function UpgradingPage({ tile }: { tile: ITileData }): React.ReactNode {
                   <div className="sep15"></div>
                   <div className="text-desc text-small">{t(L.ProductionPriorityDesc)}</div>
                </fieldset>
+            ) : null}
+            {hasFeature(GameFeature.BuildingInputMode, gs) ? (
+               <BuildingInputModeComponent gameState={gs} xy={tile.tile} />
             ) : null}
          </div>
       </div>

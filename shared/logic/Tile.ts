@@ -2,6 +2,7 @@ import type { Building } from "../definitions/BuildingDefinitions";
 import type { Deposit, Resource } from "../definitions/ResourceDefinitions";
 import { clamp, isNullOrUndefined, type Tile } from "../utilities/Helper";
 import type { PartialSet, PartialTabulate } from "../utilities/TypeDefinitions";
+import { L, t } from "../utilities/i18n";
 import { Config } from "./Config";
 import type { GameState } from "./GameState";
 
@@ -18,6 +19,24 @@ export enum BuildingOptions {
    None = 0,
 }
 
+export enum BuildingInputMode {
+   Distance = 0,
+   Amount = 1,
+   StoragePercentage = 2,
+}
+
+export const BuildingInputModeNames: Map<BuildingInputMode, () => string> = new Map([
+   [BuildingInputMode.Distance, () => t(L.TechResourceTransportPreferenceDistance)],
+   [BuildingInputMode.Amount, () => t(L.TechResourceTransportPreferenceAmount)],
+   [BuildingInputMode.StoragePercentage, () => t(L.TechResourceTransportPreferenceStorage)],
+]);
+
+export const BuildingInputModeTooltips: Map<BuildingInputMode, () => string> = new Map([
+   [BuildingInputMode.Distance, () => t(L.TechResourceTransportPreferenceDistanceTooltip)],
+   [BuildingInputMode.Amount, () => t(L.TechResourceTransportPreferenceAmountTooltip)],
+   [BuildingInputMode.StoragePercentage, () => t(L.TechResourceTransportPreferenceStorageTooltip)],
+]);
+
 export interface IBuildingData {
    type: Building;
    level: number;
@@ -31,6 +50,7 @@ export interface IBuildingData {
    options: BuildingOptions;
    electrification: number;
    disabledInput: Set<Resource>;
+   inputMode: BuildingInputMode;
 }
 
 export function getProductionPriority(v: number): number {
@@ -71,6 +91,7 @@ export interface IMarketBuildingData extends IBuildingData {
 export interface IResourceImport {
    perCycle: number;
    cap: number;
+   inputMode?: BuildingInputMode;
 }
 
 export interface IResourceImportBuildingData extends IBuildingData {
@@ -123,6 +144,7 @@ export function makeBuilding(data: Pick<IBuildingData, "type"> & Partial<IBuildi
       options: BuildingOptions.None,
       electrification: 0,
       disabledInput: new Set(),
+      inputMode: BuildingInputMode.Distance,
       ...data,
    };
 

@@ -184,7 +184,7 @@ function TransportationTab({ gameState }: IBuildingComponentProps): React.ReactN
                         gameState.transportation,
                         (prev, k, v) => prev + v.reduce((prev, curr) => prev + curr.currentFuelAmount, 0),
                         0,
-                     ) / Tick.current.workersUsed.Worker!,
+                     ) / Tick.current.workersUsed.get("Power")!,
                   )}
                </div>
             </div>
@@ -267,10 +267,12 @@ function ResourcesTab({ gameState }: IBuildingComponentProps): React.ReactNode {
    });
    keysOf(unlockedResourcesList).map((res) => {
       resourceAmounts[res] =
-         Tick.current.resourcesByTile[res]?.reduce(
-            (prev, curr) => prev + (gameState.tiles.get(curr)?.building?.resources?.[res] ?? 0),
-            0,
-         ) ?? 0;
+         Tick.current.resourcesByTile
+            .get(res)
+            ?.reduce(
+               (prev, curr) => prev + (gameState.tiles.get(curr.tile)?.building?.resources?.[res] ?? 0),
+               0,
+            ) ?? 0;
    });
 
    return (

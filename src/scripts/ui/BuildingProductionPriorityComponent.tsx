@@ -1,3 +1,4 @@
+import Tippy from "@tippyjs/react";
 import { IOCalculation } from "../../../shared/logic/BuildingLogic";
 import { GameFeature, hasFeature } from "../../../shared/logic/FeatureLogic";
 import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
@@ -35,20 +36,20 @@ export function BuildingProductionPriorityComponent({
          <legend>
             {t(L.ProductionPriority)}: {getProductionPriority(building.priority)}
          </legend>
-         <input
-            type="range"
-            min={PRIORITY_MIN}
-            max={PRIORITY_MAX}
-            step="1"
-            value={getProductionPriority(building.priority)}
-            onChange={(e) => {
-               building.priority = setProductionPriority(building.priority, parseInt(e.target.value, 10));
-               notifyGameStateUpdate();
-            }}
-         />
+         <Tippy content={t(L.ProductionPriorityDesc)}>
+            <input
+               type="range"
+               min={PRIORITY_MIN}
+               max={PRIORITY_MAX}
+               step="1"
+               value={getProductionPriority(building.priority)}
+               onChange={(e) => {
+                  building.priority = setProductionPriority(building.priority, parseInt(e.target.value, 10));
+                  notifyGameStateUpdate();
+               }}
+            />
+         </Tippy>
          <div className="sep15"></div>
-         <div className="text-desc text-small">{t(L.ProductionPriorityDesc)}</div>
-         <div className="sep5" />
          <ApplyToAllComponent
             building={building}
             getOptions={(s) => ({ priority: setProductionPriority(s.priority, building.priority) })}

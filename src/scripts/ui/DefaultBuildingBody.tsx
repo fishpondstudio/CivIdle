@@ -3,6 +3,7 @@ import { BuildingConsumeComponent } from "./BuildingConsumeComponent";
 import { BuildingDepositComponent } from "./BuildingDepositComponent";
 import { BuildingDescriptionComponent } from "./BuildingDescriptionComponent";
 import { BuildingElectricityComponent } from "./BuildingElectricityComponent";
+import { BuildingInputModeComponent } from "./BuildingInputModeComponent";
 import type { IBuildingComponentProps } from "./BuildingPage";
 import { BuildingProduceComponent } from "./BuildingProduceComponent";
 import { BuildingProductionPriorityComponent } from "./BuildingProductionPriorityComponent";
@@ -26,6 +27,7 @@ export function DefaultBuildingBody({ gameState, xy }: IBuildingComponentProps):
          <BuildingElectricityComponent gameState={gameState} xy={xy} />
          <BuildingProductionPriorityComponent gameState={gameState} xy={xy} />
          <BuildingStockpileComponent gameState={gameState} xy={xy} />
+         <BuildingInputModeComponent gameState={gameState} xy={xy} />
          <BuildingWikipediaComponent gameState={gameState} xy={xy} />
          <BuildingColorComponent gameState={gameState} xy={xy} />
          <BuildingSellComponent gameState={gameState} xy={xy} />

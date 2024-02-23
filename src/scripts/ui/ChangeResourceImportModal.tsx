@@ -1,10 +1,26 @@
+import Tippy from "@tippyjs/react";
+import classNames from "classnames";
 import { useState } from "react";
 import type { Resource } from "../../../shared/definitions/ResourceDefinitions";
 import { Config } from "../../../shared/logic/Config";
+import { GameFeature, hasFeature } from "../../../shared/logic/FeatureLogic";
 import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
-import type { IResourceImport, IResourceImportBuildingData } from "../../../shared/logic/Tile";
-import { clamp, formatPercent, reduceOf, safeParseInt } from "../../../shared/utilities/Helper";
+import {
+   BuildingInputModeNames,
+   BuildingInputModeTooltips,
+   type IResourceImport,
+   type IResourceImportBuildingData,
+} from "../../../shared/logic/Tile";
+import {
+   clamp,
+   formatPercent,
+   isNullOrUndefined,
+   reduceOf,
+   safeParseInt,
+} from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
+import { useGameState } from "../Global";
+import { jsxMMapOf } from "../utilities/Helper";
 import { playError } from "../visuals/Sound";
 import { hideModal } from "./GlobalModal";
 import { FormatNumber } from "./HelperComponents";
@@ -23,6 +39,7 @@ export function ChangeResourceImportModal({
    const [resourceImport, setResourceImport] = useState<IResourceImport>(
       building.resourceImports[resource] ?? { cap: 0, perCycle: 0 },
    );
+   const gs = useGameState();
    const usedCapacity = reduceOf(
       building.resourceImports,
       (prev, res, val) => (res === resource ? prev : prev + val.perCycle),
@@ -31,7 +48,7 @@ export function ChangeResourceImportModal({
    const max = clamp(capacity - usedCapacity, 0, capacity);
    const isValid = resourceImport.perCycle >= 0 && resourceImport.perCycle <= max;
    return (
-      <div className="window">
+      <div className="window" style={{ width: "450px" }}>
          <div className="title-bar">
             <div className="title-bar-text">
                {t(L.ResourceImportSettings, { res: Config.Resource[resource].name() })}
@@ -42,7 +59,7 @@ export function ChangeResourceImportModal({
          </div>
          <div className="window-body">
             <div className="row mv5">
-               <div style={{ width: "60px" }}>{t(L.ResourceImportImportPerCycle)}</div>
+               <div style={{ width: "100px" }}>{t(L.ResourceImportImportPerCycle)}</div>
                <input
                   className="f1 text-right w100"
                   type="text"
@@ -56,7 +73,7 @@ export function ChangeResourceImportModal({
                />
             </div>
             <div className="row text-small">
-               <div style={{ width: "60px" }}></div>
+               <div style={{ width: "100px" }}></div>
                <div className="text-desc">
                   0 ~ <FormatNumber value={max} />
                </div>
@@ -80,7 +97,7 @@ export function ChangeResourceImportModal({
             </div>
             <div className="sep5"></div>
             <div className="row mv5">
-               <div style={{ width: "60px" }}>{t(L.ResourceImportImportCap)}</div>
+               <div style={{ width: "100px" }}>{t(L.ResourceImportImportCap)}</div>
                <input
                   className="f1 text-right w100"
                   type="text"
@@ -91,7 +108,7 @@ export function ChangeResourceImportModal({
                />
             </div>
             <div className="row text-small">
-               <div style={{ width: "60px" }}></div>
+               <div style={{ width: "100px" }}></div>
                <div className="text-desc">
                   0 ~ <FormatNumber value={storage} />
                </div>
@@ -113,6 +130,53 @@ export function ChangeResourceImportModal({
                </div>
             </div>
             <div className="sep10"></div>
+            {hasFeature(GameFeature.BuildingInputMode, gs) ? (
+               <fieldset className="mb10">
+                  <legend>{t(L.ResourceTransportPreference)}</legend>
+                  <div className="row mv5">
+                     <Tippy content={t(L.TechResourceTransportPreferenceDefaultTooltip)}>
+                        <button
+                           onClick={() => {
+                              delete resourceImport.inputMode;
+                              setResourceImport({
+                                 ...resourceImport,
+                              });
+                           }}
+                           className={classNames({
+                              f1: true,
+                              active: isNullOrUndefined(resourceImport.inputMode),
+                              "text-desc": !isNullOrUndefined(resourceImport.inputMode),
+                           })}
+                        >
+                           {t(L.TechResourceTransportPreferenceDefault)}
+                        </button>
+                     </Tippy>
+                     {jsxMMapOf(BuildingInputModeNames, (mode, name) => {
+                        return (
+                           <Tippy content={BuildingInputModeTooltips.get(mode)?.() ?? ""}>
+                              <button
+                                 key={mode}
+                                 onClick={() => {
+                                    setResourceImport({
+                                       ...resourceImport,
+                                       inputMode: mode,
+                                    });
+                                    notifyGameStateUpdate();
+                                 }}
+                                 className={classNames({
+                                    f1: true,
+                                    active: resourceImport.inputMode === mode,
+                                    "text-desc": resourceImport.inputMode !== mode,
+                                 })}
+                              >
+                                 {name()}
+                              </button>
+                           </Tippy>
+                        );
+                     })}
+                  </div>
+               </fieldset>
+            ) : null}
             <div className="row" style={{ justifyContent: "flex-end" }}>
                <button
                   className="text-strong"

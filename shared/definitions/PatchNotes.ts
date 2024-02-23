@@ -5,6 +5,16 @@ interface PatchNote {
 
 export const PatchNotes: PatchNote[] = [
    {
+      version: "0.1.145",
+      content: [
+         [
+            "QoL",
+            "Add Transport Preference to buildings (unlocked by Housing tech) - you can specify how a building transports resources needed for its production. This is also available when constructing/upgrading a building. For Warehouse and Caravansary, you can also override the preference for individual resource",
+         ],
+         ["Content", "Limit Tribune's chat message to 200 characters, Quaestor or above to 800 characters"],
+      ],
+   },
+   {
       version: "0.1.144",
       content: [
          [

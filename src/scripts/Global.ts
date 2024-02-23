@@ -17,9 +17,9 @@ import {
 import { initializeGameState } from "../../shared/logic/InitializeGameState";
 import { rollPermanentGreatPeople } from "../../shared/logic/RebornLogic";
 import { getGreatPeopleChoices } from "../../shared/logic/TechLogic";
-import { makeBuilding } from "../../shared/logic/Tile";
+import { BuildingInputMode, makeBuilding } from "../../shared/logic/Tile";
 import { Grid } from "../../shared/utilities/Grid";
-import { firstKeyOf, forEach } from "../../shared/utilities/Helper";
+import { firstKeyOf, forEach, isNullOrUndefined } from "../../shared/utilities/Helper";
 import { TypedEvent } from "../../shared/utilities/TypedEvent";
 import { SteamClient, isSteam } from "./rpc/SteamClient";
 import { WorldScene } from "./scenes/WorldScene";
@@ -177,6 +177,9 @@ function migrateSavedGame(save: SavedGame) {
          }
          if (!tile.building.disabledInput) {
             tile.building.disabledInput = new Set();
+         }
+         if (isNullOrUndefined(tile.building.inputMode)) {
+            tile.building.inputMode = BuildingInputMode.Distance;
          }
          if (!Config.Building[tile.building.type]) {
             delete tile.building;

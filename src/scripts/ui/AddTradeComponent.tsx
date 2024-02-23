@@ -18,7 +18,9 @@ export function AddTradeComponent({
    xy,
    enabled,
 }: IBuildingComponentProps & { enabled: boolean }): React.ReactNode {
-   const buyResources = keysOf(Tick.next.resourcesByTile).filter((res) => !NoPrice[res] && !NoStorage[res]);
+   const buyResources = Array.from(Tick.next.resourcesByTile.keys()).filter(
+      (res) => !NoPrice[res] && !NoStorage[res],
+   );
    const resourcesInStorage = gameState.tiles.get(xy)?.building?.resources ?? {};
    const sellResources = keysOf(resourcesInStorage);
    const [trade, setTrade] = useState<IClientAddTradeRequest>({

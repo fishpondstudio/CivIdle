@@ -15,6 +15,7 @@ import { WorldScene } from "../scenes/WorldScene";
 import { Singleton } from "../utilities/Singleton";
 import { BuildingConstructionProgressComponent } from "./BuildingConstructionProgressComponent";
 import { BuildingDescriptionComponent } from "./BuildingDescriptionComponent";
+import { BuildingInputModeComponent } from "./BuildingInputModeComponent";
 import { MenuComponent } from "./MenuComponent";
 import { RenderHTML } from "./RenderHTMLComponent";
 import { WarningComponent } from "./WarningComponent";
@@ -59,6 +60,9 @@ export function ConstructionPage({ tile }: { tile: ITileData }): React.ReactNode
                   <div className="sep15"></div>
                   <div className="text-desc text-small">{t(L.ProductionPriorityDesc)}</div>
                </fieldset>
+            ) : null}
+            {hasFeature(GameFeature.BuildingInputMode, gs) ? (
+               <BuildingInputModeComponent gameState={gs} xy={tile.tile} />
             ) : null}
             <fieldset>
                <WarningComponent icon="warning" className="mb10 text-small">
