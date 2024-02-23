@@ -166,7 +166,6 @@ export async function connectWebSocket(): Promise<number> {
             break;
          }
          case MessageType.Welcome: {
-            reconnect = 0;
             const w = message as IWelcomeMessage;
             user = w.user;
             if (user.level <= AccountLevel.Tribune) {
@@ -227,11 +226,15 @@ export async function connectWebSocket(): Promise<number> {
       }
    };
 
-   ws.onclose = (e) => {
+   ws.onopen = () => {
+      reconnect = 0;
+   };
+
+   ws.onclose = () => {
       ws = null;
       user = null;
       OnUserChanged.emit(null);
-      setTimeout(connectWebSocket, Math.min(++reconnect * SECOND, 10 * SECOND));
+      setTimeout(connectWebSocket, Math.min(Math.pow(2, reconnect++) * SECOND, 16 * SECOND));
    };
 
    return new Promise<number>((resolve, reject) => {
