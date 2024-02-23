@@ -184,7 +184,7 @@ export const KR = {
    Wine: "와인",
    Paper: "종이",
    Olive: "올리브",
-   LivestockFarm: "축산업",
+   LivestockFarm: "외양간",
    Stable: "마구간",
    ChariotWorkshop: "전차 공장",
    PaperMaker: "제지소",
