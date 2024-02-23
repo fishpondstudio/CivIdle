@@ -175,7 +175,8 @@ export async function connectWebSocket(): Promise<number> {
             getGameOptions().token = w.user.token;
             saveGame(false).catch(console.error);
             OnUserChanged.emit({ ...user });
-            OnOfflineTime.emit(w.offlineTime);
+            const offlineTick = w.lastGameTick + w.offlineTime - getGameState().tick;
+            OnOfflineTime.emit(Math.min(w.offlineTime, offlineTick));
             break;
          }
          case MessageType.Trade: {
