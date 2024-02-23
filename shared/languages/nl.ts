@@ -138,7 +138,7 @@ export const NL = {
    SpaceProgram: "Ruimteprogramma",
    Television: "Televisie",
    Tourism: "Toerisme",
-   Skyscraper: "Wolkenkrabber",
+   Skyscrapper: "Skyscraper",
    Computer: "Computer",
    Globalization: "Globalisering",
    UnitedNation: "Verenigde Naties",
@@ -425,7 +425,8 @@ export const NL = {
    Poseidon: "Poseidon",
    PoseidonDesc: "Alle aangrenzende gebouwen krijgen gratis upgrades naar Niveau 20",
    Aphrodite: "Aphrodite",
-   AphroditeDesc: "+1 Bouwcapaciteit Vermenigvuldiger voor elk niveau bij het upgraden van gebouwen boven Niveau 20",
+   AphroditeDesc:
+      "+1 Bouwcapaciteit Vermenigvuldiger voor elk niveau bij het upgraden van gebouwen boven Niveau 20",
    Alps: "Alpen",
    AlpsDesc:
       "Elk 10e niveau van een gebouw krijgt +1 Productiecapaciteit (+1 Consumptie Vermenigvuldiger, +1 Productie Vermenigvuldiger)",
@@ -451,7 +452,8 @@ export const NL = {
    TempleOfArtemisDesc:
       "Alle Zwaardsmederijen en Arsenaal krijgen +5 Niveau bij voltooiing. Alle Zwaardsmederijen en Arsenaal krijgen +1 Productie Vermenigvuldiger, Werknemer Capaciteit Vermenigvuldiger en Opslag Vermenigvuldiger",
    TempleOfHeaven: "Tempel van de Hemel",
-   TempleOfHeavenDesc: "Alle gebouwen die niveau 10 of hoger zijn krijgen +1 Werknemer Capaciteit Vermenigvuldiger",
+   TempleOfHeavenDesc:
+      "Alle gebouwen die niveau 10 of hoger zijn krijgen +1 Werknemer Capaciteit Vermenigvuldiger",
    HimejiCastle: "Kasteel Himeji",
    HimejiCastleDesc:
       "Alle Karveelbouwers, Galjoenbouwers en Fregatbouwers krijgen +1 Productie Vermenigvuldiger, Werknemer Capaciteit Vermenigvuldiger en Opslag Vermenigvuldiger",
@@ -487,7 +489,8 @@ export const NL = {
    HagiaSophiaDesc:
       "Gebouwen met 0% Productiecapaciteit zijn vrijgesteld van -1 geluk. Verbruikt 10 Geloof en produceert 10 geluk",
    AngkorWat: "Angkor Wat",
-   AngkorWatDesc: "Alle aangrenzende gebouwen krijgen +1 Werknemer Capaciteit Vermenigvuldiger. Levert 1000 Werknemers",
+   AngkorWatDesc:
+      "Alle aangrenzende gebouwen krijgen +1 Werknemer Capaciteit Vermenigvuldiger. Levert 1000 Werknemers",
    TerracottaArmy: "Terracottaleger",
    TerracottaArmyDesc:
       "Alle IJzermijnkampen krijgen +1 Productie Vermenigvuldiger, Werknemer Capaciteit Vermenigvuldiger en Opslag Vermenigvuldiger. IJzersmederijen krijgen +1 Productie Vermenigvuldiger voor elk aangrenzend IJzermijnkamp",
@@ -529,22 +532,23 @@ export const NL = {
    StockpileSettings: "Voorraad Invoercapaciteit",
    DefaultStockpileSettings: "Standaard Voorraad Invoercapaciteit",
    SellBuilding: "Verkoop Gebouw",
-    StockpileDesc:
-     "Dit gebouw zal %{capacity}x invoerbronnen per productiecyclus vervoeren totdat het maximum is bereikt",
+   StockpileDesc:
+      "Dit gebouw zal %{capacity}x invoerbronnen per productiecyclus vervoeren totdat het maximum is bereikt",
    StockpileMax: "Max Voorraad",
    DefaultStockpileMax: "Standaard Max Voorraad",
    StockpileMaxUnlimited: "Onbeperkt",
    StockpileMaxDesc:
-     "Dit gebouw stopt met het vervoeren van een bron zodra er genoeg zijn voor %{cycle} productiecycli",
+      "Dit gebouw stopt met het vervoeren van een bron zodra er genoeg zijn voor %{cycle} productiecycli",
    StockpileMaxUnlimitedDesc:
-     "Dit gebouw zal nooit stoppen met het vervoeren van bronnen, alleen totdat de opslag vol is",
+      "Dit gebouw zal nooit stoppen met het vervoeren van bronnen, alleen totdat de opslag vol is",
    ProductionPriority: "Productieprioriteit",
    DefaultProductionPriority: "Standaard Productieprioriteit",
    ConstructionPriority: "Bouwprioriteit",
    DefaultConstructionPriority: "Standaard Bouwprioriteit",
    DefaultUpgradePriority: "Standaard Upgrade Prioriteit",
    ProductionPriorityDesc: "Hoge prioriteit betekent dat dit gebouw voor andere gebouwen transporteert",
-   TechProductionPriority: "Ontgrendel gebouwprioriteit - sta toe om productieprioriteit voor elk gebouw in te stellen",
+   TechProductionPriority:
+      "Ontgrendel gebouwprioriteit - sta toe om productieprioriteit voor elk gebouw in te stellen",
    TechStockpileMode: "Ontgrendel voorraadmodus - laat aanpassing van de voorraad voor elk gebouw toe",
    ConstructionCost: "Bouwkosten: %{cost}",
    RomeMapMenu: "Kaart",
@@ -615,7 +619,7 @@ export const NL = {
    ChangePlayerHandle: "Wijzig",
    ChangePlayerHandleCancel: "Annuleer",
    ChangePlayerHandledDesc:
-     "Kies een unieke spelersnaam van 5 ~ 16 tekens lang. Je spelersnaam mag alleen letters en cijfers bevatten",
+      "Kies een unieke spelersnaam van 5 ~ 16 tekens lang. Je spelersnaam mag alleen letters en cijfers bevatten",
    AGreatPersonIsBorn: "Een Groot Persoon is Geboren",
    BuildingName: "Naam",
    BuildingTier: "Niveau",
@@ -685,25 +689,27 @@ export const NL = {
    PlayerTradeFillAmountMax: "Vul Alle Beschikbare",
    PlayerTradeFillTradeTitle: "Vul Handel",
    PlayerTradeFillTradeButton: "Vul Handel",
-   PlayerTradeMaxTradeExceeded: "Je hebt het maximale aantal actieve handelingen voor je account rang overschreden",
+   PlayerTradeMaxTradeExceeded:
+      "Je hebt het maximale aantal actieve handelingen voor je account rang overschreden",
    PlayerTradeCancelTrade: "Annuleer Handel",
    PlayerTradeCancelTradeNo: "Annuleer Niet",
-PlayerTradeCancelTradeNotEnoughStorage: "Je hebt niet genoeg opslag om deze handel te annuleren",
+   PlayerTradeCancelTradeNotEnoughStorage: "Je hebt niet genoeg opslag om deze handel te annuleren",
    PlayerTradeCancelDesc:
-     "Het annuleren van deze handel zal slechts %{percent} van de bronnen terugbetalen. Weet je zeker dat je wilt annuleren?",
+      "Het annuleren van deze handel zal slechts %{percent} van de bronnen terugbetalen. Weet je zeker dat je wilt annuleren?",
    PlayerMapUnclaimedTile: "Ongeclaimde Tegel",
    PlayerMapClaimThisTile: "Claim Deze Tegel",
    PlayerMapClaimTileCondition2: "Je bent niet verbannen door anti-cheat",
    PlayerMapClaimTileCondition3: "Je hebt de vereiste technologie ontgrendeld: %{tech}",
-   PlayerMapClaimTileCondition4: "Je hebt nog geen tegel geclaimd of de afkoelperiode voor het verplaatsen van je tegel is voorbij",
+   PlayerMapClaimTileCondition4:
+      "Je hebt nog geen tegel geclaimd of de afkoelperiode voor het verplaatsen van je tegel is voorbij",
    PlayerMapClaimTileNoLongerReserved:
-     "Deze tegel is niet langer gereserveerd. Je kunt <b>%{name}</b> verdrijven en deze tegel voor jezelf claimen",
+      "Deze tegel is niet langer gereserveerd. Je kunt <b>%{name}</b> verdrijven en deze tegel voor jezelf claimen",
    PlayerMapClaimTileCooldownLeft: "Afkoeltijd over: %{time}",
    PlayerMapYourTile: "Jouw Tegel",
    PlayerMapTariff: "Tarief",
    PlayerMapSetYourTariff: "Stel Je Tarief In",
    PlayerMapTariffDesc:
-     "Elke handel die via jouw tegel gaat, betaalt een tarief aan jou. Het is een balans: als je het tarief verhoogt, zal je meer verdienen aan elke handel, maar zullen minder handelingen via jouw tegel gaan.",
+      "Elke handel die via jouw tegel gaat, betaalt een tarief aan jou. Het is een balans: als je het tarief verhoogt, zal je meer verdienen aan elke handel, maar zullen minder handelingen via jouw tegel gaan.",
    PlayerMapTariffApply: "Tarieftarief Toepassen",
    PlayerMapTradesFrom: "Handel van %{name}",
    PlayerMapEstablishedSince: "Opgericht Sinds",
@@ -722,7 +728,7 @@ PlayerTradeCancelTradeNotEnoughStorage: "Je hebt niet genoeg opslag om deze hand
    PlayerTradeClaimAvailable: "%{count} handel(s) zijn gevuld beschikbaar om te claimen",
    PlayerTradeClaimTileFirst: "Claim Je Tegel Op Handelskaart",
    PlayerTradeClaimTileFirstWarning:
-     "Je kunt alleen handelen met andere spelers nadat je je tegel op de handelskaart hebt geclaimd",
+      "Je kunt alleen handelen met andere spelers nadat je je tegel op de handelskaart hebt geclaimd",
    ApplyToAll: "Toepassen Op Alles",
    ApplyToAllBuilding: "Toepassen Op Alle %{building}",
    SetAsDefault: "Instellen Als Standaard",
@@ -730,7 +736,7 @@ PlayerTradeCancelTradeNotEnoughStorage: "Je hebt niet genoeg opslag om deze hand
    NothingHere: "Niets hier",
    ContentInDevelopment: "Inhoud In Ontwikkeling",
    ContentInDevelopmentDesc:
-     "Deze spelinhoud is nog in ontwikkeling en zal beschikbaar zijn in een toekomstige spelupdate, blijf op de hoogte!",
+      "Deze spelinhoud is nog in ontwikkeling en zal beschikbaar zijn in een toekomstige spelupdate, blijf op de hoogte!",
    PatchNotes: "Patchnotities",
    PlayerTradeNoValidRoute: "Kan geen geldige handelsroute vinden tussen jou en %{name}",
    BuildingColor: "Gebouwkleur",
@@ -783,39 +789,41 @@ PlayerTradeCancelTradeNotEnoughStorage: "Je hebt niet genoeg opslag om deze hand
    EmptyTilePageBuildLastBuilding: "Bouw Laatste Gebouw",
    PlayerMapPageGoBackToCity: "Ga Terug Naar Stad",
    UnclaimedGreatPersonThisRun: "Je hebt ongeclaimde <b>Grote Personen deze run</b>, klik hier om te claimen",
-   UnclaimedGreatPersonPermanent: "Je hebt ongeclaimde <b>Permanente Grote Personen</b>, klik hier om te claimen",
+   UnclaimedGreatPersonPermanent:
+      "Je hebt ongeclaimde <b>Permanente Grote Personen</b>, klik hier om te claimen",
    OfflineProduction: "Offline Productie",
    OfflineTime: "Offline Tijd",
    TransportCapacity: "Transportcapaciteit",
    TransportCapacityMultiplier: "Transportcapaciteit Vermenigvuldiger",
    WonderBuilderCapacityDescHTML:
-     "<b>Bouwcapaciteit</b> bij het bouwen van wonderen wordt beïnvloed door het <b>tijdperk</b> en de <b>technologie</b> die het wonder ontgrendelt",
+      "<b>Bouwcapaciteit</b> bij het bouwen van wonderen wordt beïnvloed door het <b>tijdperk</b> en de <b>technologie</b> die het wonder ontgrendelt",
    MarketSettings: "Marktinstellingen",
    ClearAfterUpdate: "Verwijder Alle Handel Na Marktupdate",
    WarehouseSettings: "Magazijninstellingen",
    WarehouseSettingsAutopilot: "Autopiloot Modus",
    WarehouseSettingsAutopilotDesc:
-     "Dit magazijn zal zijn ongebruikte capaciteit gebruiken om grondstoffen te transporteren van gebouwen die volle opslag hebben. Huidige ongebruikte capaciteit: %{capacity}",
+      "Dit magazijn zal zijn ongebruikte capaciteit gebruiken om grondstoffen te transporteren van gebouwen die volle opslag hebben. Huidige ongebruikte capaciteit: %{capacity}",
    WarehouseUpgrade:
-     "Ontgrendel magazijn autopiloot modus. Gratis transport tussen een magazijn en zijn aangrenzende gebouwen",
+      "Ontgrendel magazijn autopiloot modus. Gratis transport tussen een magazijn en zijn aangrenzende gebouwen",
    WarehouseUpgradeDesc: "Gratis transport tussen dit magazijn en zijn aangrenzende tegels",
    Warp: "Warp",
    MaxOfflineProductionTime: "Maximale Offline Productietijd",
    WarpConversionDesc:
-     "Je offline tijd die de Maximale Offline Productietijd overschrijdt, wordt omgezet in warp (1 seconde = 1 warp)",
+      "Je offline tijd die de Maximale Offline Productietijd overschrijdt, wordt omgezet in warp (1 seconde = 1 warp)",
    TimeWarp: "Tijd Warp",
    TurnOnTimeWarpDesc:
-     "Kost %{speed} warps per seconde en versnelt je rijk om te draaien op %{speed}x snelheid.",
+      "Kost %{speed} warps per seconde en versnelt je rijk om te draaien op %{speed}x snelheid.",
    TimeWarpWarning:
-     "Versnellen op een hogere snelheid dan je computer aankan kan leiden tot dataverlies: GEBRUIK OP EIGEN RISICO",
-   PetraNoMultiplier: "Petra wordt niet beïnvloed door enige vermenigvuldigers (productie, werknemerscapaciteit, opslag, etc)",
+      "Versnellen op een hogere snelheid dan je computer aankan kan leiden tot dataverlies: GEBRUIK OP EIGEN RISICO",
+   PetraNoMultiplier:
+      "Petra wordt niet beïnvloed door enige vermenigvuldigers (productie, werknemerscapaciteit, opslag, etc)",
    LimitOfflineProduction: "Beperk Offline Productie",
    Reborn: "Herboren",
    RebornCity: "Selecteer Een Nieuwe Stad",
    RebornTradeWarning:
-     "Je hebt actieve handel of handel die geclaimd kan worden. <b>Herboren zal deze verwijderen</b> - overweeg om eerst te annuleren of te claimen",
+      "Je hebt actieve handel of handel die geclaimd kan worden. <b>Herboren zal deze verwijderen</b> - overweeg om eerst te annuleren of te claimen",
    RebornOfflineWarning:
-     "Je bent momenteel offline. Je kunt alleen herboren als je verbonden bent met de server",
+      "Je bent momenteel offline. Je kunt alleen herboren als je verbonden bent met de server",
    TotalEmpireValue: "Totale Rijkwaarde",
    TotalTimeThisRun: "Totale Tijd Deze Run",
    TotalEmpireValuePerCycle: "Totale Rijkwaarde Per Cyclus",
@@ -828,9 +836,10 @@ PlayerTradeCancelTradeNotEnoughStorage: "Je hebt niet genoeg opslag om deze hand
    BankingAdditionalUpgrade: "Alle gebouwen die niveau 10 of hoger zijn krijgen +1 Opslag Vermenigvuldiger",
    EstimatedTimeLeft: "Geschatte Tijd Over",
    Electrification: "Elektrificatie",
-   ElectrificationUpgrade: "Ontgrendel elektrificatie. Sta gebouwen toe om stroom te verbruiken om de productie te verhogen",
+   ElectrificationUpgrade:
+      "Ontgrendel elektrificatie. Sta gebouwen toe om stroom te verbruiken om de productie te verhogen",
    ElectrificationDesc:
-     "Gebruik %{power}W Stroom en Biedt +%{level} Verbruik Vermenigvuldiger en Productie Vermenigvuldiger",
+      "Gebruik %{power}W Stroom en Biedt +%{level} Verbruik Vermenigvuldiger en Productie Vermenigvuldiger",
    PowerAvailable: "Beschikbare Stroom",
    PowerUsed: "Gebruikte Stroom",
    Power: "Stroom",
@@ -840,7 +849,8 @@ PlayerTradeCancelTradeNotEnoughStorage: "Je hebt niet genoeg opslag om deze hand
    ElectrificationStatusActive: "Actief",
    ConfirmYes: "Ja",
    ConfirmNo: "Nee",
-   ConfirmDestroyResourceContent: "Je staat op het punt om %{amount} %{resource} te vernietigen. Dit kan niet ongedaan gemaakt worden",
+   ConfirmDestroyResourceContent:
+      "Je staat op het punt om %{amount} %{resource} te vernietigen. Dit kan niet ongedaan gemaakt worden",
    BuildingPriority: "Gebouwprioriteit",
    ChatChannel: "Chatkanaal",
    ChatChannelLanguage: "Taal",
@@ -852,17 +862,17 @@ PlayerTradeCancelTradeNotEnoughStorage: "Je hebt niet genoeg opslag om deze hand
    PlayerHandleOffline: "Je bent momenteel offline",
    AccountLevel: "Account Rang",
    TrialRunDesc:
-     "Quaestor of hoger kan een proefrun starten die onderworpen is aan de beperkingen van de Tribune en geen permanente grote mensen kan verdienen",
+      "Quaestor of hoger kan een proefrun starten die onderworpen is aan de beperkingen van de Tribune en geen permanente grote mensen kan verdienen",
    Tutorial1:
-     "Welkom bij de CivIdle Setup.<br><br>In dit spel beheer je je eigen rijk: beheer producties, ontgrendel technologieën, handel grondstoffen met andere spelers, creëer grote mensen en bouw wereldwonderen.<br><br>Gebruik je muis om te bewegen. Gebruik het scrollwiel om in of uit te zoomen. Klik op een lege tegel om nieuwe gebouwen te bouwen, klik op een gebouw om het te inspecteren.<br><br>",
+      "Welkom bij de CivIdle Setup.<br><br>In dit spel beheer je je eigen rijk: beheer producties, ontgrendel technologieën, handel grondstoffen met andere spelers, creëer grote mensen en bouw wereldwonderen.<br><br>Gebruik je muis om te bewegen. Gebruik het scrollwiel om in of uit te zoomen. Klik op een lege tegel om nieuwe gebouwen te bouwen, klik op een gebouw om het te inspecteren.<br><br>",
    Tutorial2: "Ik heb soortgelijke spellen niet gespeeld en wil graag een snelle tutorial doorlopen",
    Tutorial3: "Ik heb Industry Idle gespeeld en ken de procedure, sla de basis tutorial over",
    Tutorial4:
-     "Gebouwen zijn de basisbouwstenen van je rijk - plaats ze op de verkende kaarttegels. Bepaalde gebouwen zoals Steengroeven en Aquaducten die afzettingen extraheren, moeten op een afzettingstegel worden geplaatst. Een gebouw zal de mist van zijn omliggende tegels opheffen.<br><br>Gebouwen verbruiken grondstoffen en produceren nieuwe. Ze zullen <b>automatisch</b> de benodigde grondstoffen vervoeren. De geproduceerde grondstoffen worden opgeslagen in de gebouwen die naar andere gebouwen kunnen worden vervoerd die deze grondstoffen nodig hebben. Echter, de opslagruimte van een gebouw is beperkt.<br><br>Gebouwen hebben <b>werknemers</b> nodig voor transport en productie - je moet woongebouwen zoals <b>hutten</b> bouwen om de werknemerspopulatie te verhogen. Je kunt een gebouw upgraden om zijn productie en opslag te vergroten.",
+      "Gebouwen zijn de basisbouwstenen van je rijk - plaats ze op de verkende kaarttegels. Bepaalde gebouwen zoals Steengroeven en Aquaducten die afzettingen extraheren, moeten op een afzettingstegel worden geplaatst. Een gebouw zal de mist van zijn omliggende tegels opheffen.<br><br>Gebouwen verbruiken grondstoffen en produceren nieuwe. Ze zullen <b>automatisch</b> de benodigde grondstoffen vervoeren. De geproduceerde grondstoffen worden opgeslagen in de gebouwen die naar andere gebouwen kunnen worden vervoerd die deze grondstoffen nodig hebben. Echter, de opslagruimte van een gebouw is beperkt.<br><br>Gebouwen hebben <b>werknemers</b> nodig voor transport en productie - je moet woongebouwen zoals <b>hutten</b> bouwen om de werknemerspopulatie te verhogen. Je kunt een gebouw upgraden om zijn productie en opslag te vergroten.",
    Tutorial5:
-     "<b>Wetenschap</b> wordt gebruikt om technologieën in de technologieboom te ontgrendelen. Een technologie ontgrendelt nieuwe gebouwen, wonderen en boosts.<br><br><b>Drukke werknemers</b> genereren een kleine hoeveelheid wetenschap. Later zul je gebouwen zoals bibliotheken en scholen ontgrendelen die wetenschap produceren.<br><br>Het aantal beschikbare werknemers wordt beïnvloed door <b>geluk</b>. Elk gebouw kost 1 geluk. Je krijgt geluk van technologieën, wonderen en grote mensen. Zorg ervoor dat je werknemers gelukkig zijn, anders zal de productie van je rijk stoppen.<br><br><b>Wonderen</b> zijn unieke gebouwen - je kunt er maar één bouwen en ze kunnen niet worden verwijderd nadat ze zijn gebouwd. Wonderen kunnen een aanzienlijke boost geven of nieuwe mechanismen ontgrendelen.",
+      "<b>Wetenschap</b> wordt gebruikt om technologieën in de technologieboom te ontgrendelen. Een technologie ontgrendelt nieuwe gebouwen, wonderen en boosts.<br><br><b>Drukke werknemers</b> genereren een kleine hoeveelheid wetenschap. Later zul je gebouwen zoals bibliotheken en scholen ontgrendelen die wetenschap produceren.<br><br>Het aantal beschikbare werknemers wordt beïnvloed door <b>geluk</b>. Elk gebouw kost 1 geluk. Je krijgt geluk van technologieën, wonderen en grote mensen. Zorg ervoor dat je werknemers gelukkig zijn, anders zal de productie van je rijk stoppen.<br><br><b>Wonderen</b> zijn unieke gebouwen - je kunt er maar één bouwen en ze kunnen niet worden verwijderd nadat ze zijn gebouwd. Wonderen kunnen een aanzienlijke boost geven of nieuwe mechanismen ontgrendelen.",
    Tutorial6:
-     "Wanneer je een nieuw tijdperk betreedt, wordt er een nieuwe <b>groot persoon</b> geboren. Je kunt kiezen uit een van de drie kandidaten.<br><br>Grote mensen bieden boosts en worden toegevoegd aan je permanente collectie. Wanneer je herboren wordt, verzamel je alle grote mensen die je tijdens deze run hebt gekozen, plus extra grote mensen op basis van je <b>totale rijkwaarde</b>, deze permanente grote mensen blijven bij je.<br><br><b>Permanente</b> grote mensen kunnen worden geüpgraded door grote mensen van elke run te verzamelen. Ze zullen je rijk helpen nieuwe hoogtes te bereiken. Dat zijn alle basiszaken die je moet weten.<br><br>Als je vragen hebt, is de beste manier om hulp te krijgen door de <b>chat</b> te vragen - we hebben een vriendelijke gemeenschap die altijd klaar staat om te helpen.",
+      "Wanneer je een nieuw tijdperk betreedt, wordt er een nieuwe <b>groot persoon</b> geboren. Je kunt kiezen uit een van de drie kandidaten.<br><br>Grote mensen bieden boosts en worden toegevoegd aan je permanente collectie. Wanneer je herboren wordt, verzamel je alle grote mensen die je tijdens deze run hebt gekozen, plus extra grote mensen op basis van je <b>totale rijkwaarde</b>, deze permanente grote mensen blijven bij je.<br><br><b>Permanente</b> grote mensen kunnen worden geüpgraded door grote mensen van elke run te verzamelen. Ze zullen je rijk helpen nieuwe hoogtes te bereiken. Dat zijn alle basiszaken die je moet weten.<br><br>Als je vragen hebt, is de beste manier om hulp te krijgen door de <b>chat</b> te vragen - we hebben een vriendelijke gemeenschap die altijd klaar staat om te helpen.",
    TutorialPlayerHandle: "Kies je spelersnaam",
    TutorialPlayerFlag: "Kies je spelersvlag",
    JoinDiscord: "Word lid van Discord",
@@ -879,33 +889,35 @@ PlayerTradeCancelTradeNotEnoughStorage: "Je hebt niet genoeg opslag om deze hand
    AccountTradePriceRange: "Handelsprijsbereik",
    AccountTradeTileReservationTime: "Reserveringstijd Handelstegel",
    AccountTradeTileReservationTimeDesc:
-     "Dit is de tijd dat je handelstegel voor jou gereserveerd blijft sinds je laatste online sessie. Nadat de reserveringsperiode is verstreken, wordt je tegel beschikbaar voor andere spelers",
+      "Dit is de tijd dat je handelstegel voor jou gereserveerd blijft sinds je laatste online sessie. Nadat de reserveringsperiode is verstreken, wordt je tegel beschikbaar voor andere spelers",
    AccountUpgradeCarryOver: "Niveau Overdracht",
    AccountUpgradeCarryOverDesc:
-     "Bij het upgraden naar de volgende account rang is dit het maximale niveau van permanente grote mensen dat kan worden overgedragen",
-   TranslationPercentage: "%{language} is %{percentage} vertaald. Help deze vertaling te verbeteren op GitHub",
+      "Bij het upgraden naar de volgende account rang is dit het maximale niveau van permanente grote mensen dat kan worden overgedragen",
+   TranslationPercentage:
+      "%{language} is %{percentage} vertaald. Help deze vertaling te verbeteren op GitHub",
    CanEarnGreatPeopleFromRebornYes: "Deze run kan grote mensen verdienen van herboren",
    CanEarnGreatPeopleFromRebornNo: "Deze run kan geen grote mensen verdienen van herboren",
    TribuneUpgradeDescV2:
-     "Upgraden van Tribune naar Quaestor ontgrendelt alle online functies. Echter, alleen <b>permanente grote mensen tot niveau %{level}</b> kunnen worden overgedragen. Gedeeltelijke voortgang boven niveau %{level} wordt niet overgedragen",
+      "Upgraden van Tribune naar Quaestor ontgrendelt alle online functies. Echter, alleen <b>permanente grote mensen tot niveau %{level}</b> kunnen worden overgedragen. Gedeeltelijke voortgang boven niveau %{level} wordt niet overgedragen",
    TribuneUpgradeDescGreatPeopleWarning:
-     "Je huidige run heeft grote mensen. Je zou eerst <b>moeten herboren</b>. Upgraden naar Quaestor rang zal je huidige run resetten",
+      "Je huidige run heeft grote mensen. Je zou eerst <b>moeten herboren</b>. Upgraden naar Quaestor rang zal je huidige run resetten",
    TribuneGreatPeopleLevelWarningV2:
-     "Je huidige account rang is Tribune. Upgraden naar Quaestor zal permanente grote mensen <b>tot niveau %{level}</b> overdragen. Gedeeltelijke voortgang boven niveau %{level} wordt niet overgedragen",
+      "Je huidige account rang is Tribune. Upgraden naar Quaestor zal permanente grote mensen <b>tot niveau %{level}</b> overdragen. Gedeeltelijke voortgang boven niveau %{level} wordt niet overgedragen",
    RebornModalDescV2:
-     "Je zult een nieuw rijk starten maar je kunt alle grote mensen <b>van deze run</b> meenemen, die <b>permanent</b> zullen worden. Je kunt ook extra grote mensen kiezen op basis van je <b>totale rijkwaarde</b>",
+      "Je zult een nieuw rijk starten maar je kunt alle grote mensen <b>van deze run</b> meenemen, die <b>permanent</b> zullen worden. Je kunt ook extra grote mensen kiezen op basis van je <b>totale rijkwaarde</b>",
    OperationNotAllowedError: "Deze operatie is niet toegestaan",
    AccountLevelUpgradeConditionAny:
-     "Om je account te upgraden, hoef je slechts aan een van de volgende criteria te voldoen:",
+      "Om je account te upgraden, hoef je slechts aan een van de volgende criteria te voldoen:",
    AccountLevelPlayTime: "Actieve Online Speeltijd > %{requiredTime} (Je speeltijd is %{actualTime})",
    AccountUpgradeButton: "Upgrade Naar Quaestor Rang",
    AccountUpgradeConfirm: "Account Upgrade",
    AccountUpgradeConfirmDesc:
-     "Je account upgraden zal <b>je huidige run resetten</b> en permanente grote mensen <b>tot niveau %{level}</b> overdragen. Dit <b>kan niet</b> ongedaan gemaakt worden, weet je zeker dat je wilt doorgaan?",
-   CannotEarnPermanentGreatPeopleDesc: "Omdat dit een proefrun is, kunnen er geen permanente grote mensen verdiend worden",
+      "Je account upgraden zal <b>je huidige run resetten</b> en permanente grote mensen <b>tot niveau %{level}</b> overdragen. Dit <b>kan niet</b> ongedaan gemaakt worden, weet je zeker dat je wilt doorgaan?",
+   CannotEarnPermanentGreatPeopleDesc:
+      "Omdat dit een proefrun is, kunnen er geen permanente grote mensen verdiend worden",
    BackToCity: "Terug Naar Stad",
    UpgradeBuildingNotProducingDesc:
-     "Dit gebouw wordt geüpgraded - productie zal stoppen tot de upgrade voltooid is",
+      "Dit gebouw wordt geüpgraded - productie zal stoppen tot de upgrade voltooid is",
    Tutorial: "Tutorial",
    SelectedCount: "%{count} Geselecteerd",
    SelectedAll: "Selecteer Alles",
@@ -925,7 +937,7 @@ PlayerTradeCancelTradeNotEnoughStorage: "Je hebt niet genoeg opslag om deze hand
    ChatHideLatestMessageDesc: "Vervang de inhoud van het laatste chatbericht door asterisken in de chatbalk",
    BuildingColorMatchBuilding: "Kopieer Kleur Van Gebouw",
    BuildingColorMatchBuildingTooltip:
-     "Kopieer hulpbronkleur van het gebouw dat deze hulpbron produceert. Als meerdere gebouwen deze hulpbron produceren, wordt er willekeurig een geselecteerd",
+      "Kopieer hulpbronkleur van het gebouw dat deze hulpbron produceert. Als meerdere gebouwen deze hulpbron produceren, wordt er willekeurig een geselecteerd",
    WondersUnlocked: "Wereldwonderen Ontgrendeld",
    WondersBuilt: "Wereldwonderen Gebouwd",
    TransportManualControlTooltip: "Transporteer deze hulpbron voor constructie/upgrade",
@@ -933,4 +945,5 @@ PlayerTradeCancelTradeNotEnoughStorage: "Je hebt niet genoeg opslag om deze hand
    FavoriteBuildingAdd: "Toevoegen Aan Favorieten",
    FavoriteBuildingRemove: "Verwijderen Uit Favorieten",
    FavoriteBuildingEmptyToast: "Je hebt geen favoriete gebouwen",
+   BackupRecovery: "Backup Recovery",
 };

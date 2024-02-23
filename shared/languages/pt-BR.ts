@@ -387,13 +387,16 @@ export const PT_BR = {
    EndConstructionDescHTML:
       "Quando você para a construção, todos os recursos que ja foram usados <b>não serão devolvidos</b>",
    Stonehenge: "Stonehenge",
-   StonehengeDesc: "Todas as construções que consomem ou produzem pedra ganham +1 de Multiplicador de Produção",
+   StonehengeDesc:
+      "Todas as construções que consomem ou produzem pedra ganham +1 de Multiplicador de Produção",
    LighthouseOfAlexandria: "Farol de Alexandria",
    LighthouseOfAlexandriaDesc: "Todas as construções adjacentes ganham +5 de Multiplicador de Armazenamento",
    PyramidOfGiza: "Pirâmides de Gizé",
-   PyramidOfGizaDesc: "Todas as construções que produzem trabalhadores ganham +1 de Multiplicador de Produção",
+   PyramidOfGizaDesc:
+      "Todas as construções que produzem trabalhadores ganham +1 de Multiplicador de Produção",
    ColossusOfRhodes: "Colosso de Rodes",
-   ColossusOfRhodesDesc: "Todas as construções adjacentes que não produzem trabalhadores ganham +1 de Felicidade",
+   ColossusOfRhodesDesc:
+      "Todas as construções adjacentes que não produzem trabalhadores ganham +1 de Felicidade",
    MausoleumAtHalicarnassus: "Mausoléu de Halicarnasso",
    MausoleumAtHalicarnassusDesc:
       "Um transporte não custa trabalhadores se estiver dentro de 2 espaços de alcance do Mausoléu",
@@ -425,7 +428,8 @@ export const PT_BR = {
    Poseidon: "Poseidon",
    PoseidonDesc: "Todas as construções adjacentes ganham melhorias grátis até o Nível 20",
    Aphrodite: "Afrodite",
-   AphroditeDesc: "+1 de Multiplicador de Capacidade de Construtores para cada nível de qualquer construção melhorada acima do Nível 20",
+   AphroditeDesc:
+      "+1 de Multiplicador de Capacidade de Construtores para cada nível de qualquer construção melhorada acima do Nível 20",
    Alps: "Alpes",
    AlpsDesc:
       "Cada 10º nível de uma construção a garante +1 de Capacidade de Produção (+1 de Multiplicador de Consumo, +1 de Multiplicador de Produção)",
@@ -434,7 +438,8 @@ export const PT_BR = {
    SagradaFamília: "Sagrada Família",
    SagradaFamíliaDesc: "Sagrada Família",
    Petra: "Petra",
-   PetraDesc: "Gera distorção temporal enquanto você estiver offline, o que você pode usar para acelerar seu império",
+   PetraDesc:
+      "Gera distorção temporal enquanto você estiver offline, o que você pode usar para acelerar seu império",
    OxfordUniversity: "Universidade de Oxford",
    OxfordUniversityDesc: "Cada melhoria de construção em seu império proporciona +1 de Ciência por cíclo",
    StPetersBasilica: "Basílica de São Pedro",
@@ -451,7 +456,8 @@ export const PT_BR = {
    TempleOfArtemisDesc:
       "Todas as Forjas de Espada e Arsenais ganham +5 Níveis quando completadas. Todas as Forjas de Espada e Arsenais ganham +1 de Multiplicador de Produção, Multiplicador de Capacidade de Trabalhadores e Multiplicador de Armazenamento",
    TempleOfHeaven: "Templo de Céu",
-   TempleOfHeavenDesc: "Todas as construções que estão nível 10 ou maior ganham +1 de Multiplicador de Capacidade de Trabalhadores",
+   TempleOfHeavenDesc:
+      "Todas as construções que estão nível 10 ou maior ganham +1 de Multiplicador de Capacidade de Trabalhadores",
    HimejiCastle: "Castelo Himeji",
    HimejiCastleDesc:
       "Todos os Construtores de Caravelas, Construtores de Galeões, e Construtores de Fragata ganham +1 de Multiplicador de Produção, Multiplicador de Capacidade de Trabalhadores e Multiplicador de Armazenamento",
@@ -487,7 +493,8 @@ export const PT_BR = {
    HagiaSophiaDesc:
       "Construções com 0% de Capacidade de Produção são isentas da penalidade de -1 de felicidade. Consume 10 de Fé e produz 10 de felicidade",
    AngkorWat: "Angkor Wat",
-   AngkorWatDesc: "Todas as construções adjacentes ganham +1 de Multiplicador de Capacidade de Trabalhadores. Proporciona 1000 Trabalhadores",
+   AngkorWatDesc:
+      "Todas as construções adjacentes ganham +1 de Multiplicador de Capacidade de Trabalhadores. Proporciona 1000 Trabalhadores",
    TerracottaArmy: "Exército de Terracota",
    TerracottaArmyDesc:
       "Todas as Minas de Ferro ganham +1 de Multiplicador de Produção, Multiplicador de Capacidade de Trabalhadores e Multiplicador de Armazenamento. Forjas de Ferramenta ganham +1 de Multiplicador de Produção para cada Mina de Ferro adjacente",
@@ -505,7 +512,8 @@ export const PT_BR = {
    LuxorTemple: "Templo de Luxor",
    LuxorTempleDesc: "+1 de Ciência de Trabalhadores Ocupados",
    Neuschwanstein: "Neuschwanstein",
-   NeuschwansteinDesc: "+10 de Multiplicador de Capacidade de Construtores enquanto estiver construindo maravilhas",
+   NeuschwansteinDesc:
+      "+10 de Multiplicador de Capacidade de Construtores enquanto estiver construindo maravilhas",
    CristoRedentor: "Cristo Redentor",
    CristoRedentorDesc: "Cristo Redentor",
    GoldenGateBridge: "Ponte Golden Gate",
@@ -543,8 +551,10 @@ export const PT_BR = {
    ConstructionPriority: "Prioridade de Construção",
    DefaultConstructionPriority: "Prioridade de Construção Padrão",
    DefaultUpgradePriority: "Prioridade de Melhoria Padrão",
-   ProductionPriorityDesc: "Alta prioridade significa que essa construção transporta antes de outras construções",
-   TechProductionPriority: "Desbloqueia prioridade de construção - permite ajustar a prioridade de produção para cada construção",
+   ProductionPriorityDesc:
+      "Alta prioridade significa que essa construção transporta antes de outras construções",
+   TechProductionPriority:
+      "Desbloqueia prioridade de construção - permite ajustar a prioridade de produção para cada construção",
    TechStockpileMode: "Desbloqueia o modo de estoque - permite ajustar o estoque para cada construção",
    ConstructionCost: "Custo de Construção: %{cost}",
    RomeMapMenu: "Mapa",
@@ -782,8 +792,10 @@ export const PT_BR = {
    ShortcutTechPageUnlockTech: "Desbloquear Tecnologia Selecionada",
    EmptyTilePageBuildLastBuilding: "Construir Última Construção",
    PlayerMapPageGoBackToCity: "Voltar Para a Cidade",
-   UnclaimedGreatPersonThisRun: "Você tem <b>Figuras Históricas Dessa Tentativa</b> não coletadas, clique aqui para coletar",
-   UnclaimedGreatPersonPermanent: "Você tem <b>Figuras Históricas Permanentes</b> não coletadas, clique aqui para coletar",
+   UnclaimedGreatPersonThisRun:
+      "Você tem <b>Figuras Históricas Dessa Tentativa</b> não coletadas, clique aqui para coletar",
+   UnclaimedGreatPersonPermanent:
+      "Você tem <b>Figuras Históricas Permanentes</b> não coletadas, clique aqui para coletar",
    OfflineProduction: "Produção Offline",
    OfflineTime: "Tempo Offline",
    TransportCapacity: "Capacidade de Transporte",
@@ -808,7 +820,8 @@ export const PT_BR = {
       "Custa %{speed} distorções para cada segundo e acelera seu império em %{speed}x sua velocidade normal.",
    TimeWarpWarning:
       "Acelerar a uma velocidade maior do que seu computador aguenta pode resultar em perda de dados: USE A SEU PRÓPRIO RISCO",
-   PetraNoMultiplier: "Petra não é afetada por nenhum multiplicador (produção, capacidade de trabalhadores, armazenamento, etc)",
+   PetraNoMultiplier:
+      "Petra não é afetada por nenhum multiplicador (produção, capacidade de trabalhadores, armazenamento, etc)",
    LimitOfflineProduction: "Limite de Produção Offline",
    Reborn: "Renascer",
    RebornCity: "Selecione uma Nova Cidade",
@@ -825,10 +838,12 @@ export const PT_BR = {
    Ok: "OK",
    Cancel: "Cancelar",
    ChooseGreatPersonFromLastReborn: "Escolha Figura Histórica do Ultimo Renascimento",
-   BankingAdditionalUpgrade: "Todas as construções que são de nível 10 ou superior ganham +1 de Multiplicador de Armazenamento",
+   BankingAdditionalUpgrade:
+      "Todas as construções que são de nível 10 ou superior ganham +1 de Multiplicador de Armazenamento",
    EstimatedTimeLeft: "Tempo Restante Estimado",
    Electrification: "Eletrificação",
-   ElectrificationUpgrade: "Desbloqueia eletrificação. Permite com que construções consumam energia para impulsionar sua produção",
+   ElectrificationUpgrade:
+      "Desbloqueia eletrificação. Permite com que construções consumam energia para impulsionar sua produção",
    ElectrificationDesc:
       "Usa %{power}W de Energia e proporciona +%{level} Multiplicador de Consumo e Multiplicador de Produçao",
    PowerAvailable: "Energia Disponível",
@@ -840,7 +855,8 @@ export const PT_BR = {
    ElectrificationStatusActive: "Ativa",
    ConfirmYes: "Sim",
    ConfirmNo: "Não",
-   ConfirmDestroyResourceContent: "Você está prestes a destruir %{amount} %{resource}. Isso não pode ser desfeito",
+   ConfirmDestroyResourceContent:
+      "Você está prestes a destruir %{amount} %{resource}. Isso não pode ser desfeito",
    BuildingPriority: "Prioridade de Construção",
    ChatChannel: "Canal do Chat",
    ChatChannelLanguage: "Linguagem",
@@ -883,7 +899,8 @@ export const PT_BR = {
    AccountUpgradeCarryOver: "Nível Transferido",
    AccountUpgradeCarryOverDesc:
       "Ao melhorar para o próximo ranque de conta, esse é o nível máximo de figuras históricas permanentes que você pode transferir",
-   TranslationPercentage: "%{language} está %{percentage} traduzido. Ajude a melhorar esta tradução no GitHub",
+   TranslationPercentage:
+      "%{language} está %{percentage} traduzido. Ajude a melhorar esta tradução no GitHub",
    CanEarnGreatPeopleFromRebornYes: "Essa tentativa pode gerar figuras históricas ao renascer",
    CanEarnGreatPeopleFromRebornNo: "Essa tentativa não pode gerar figuras históricas ao renascer",
    TribuneUpgradeDescV2:
@@ -902,7 +919,8 @@ export const PT_BR = {
    AccountUpgradeConfirm: "Melhoria de Conta",
    AccountUpgradeConfirmDesc:
       "Melhorar sua conta irá <b>reiniciar sua tentativa atual</b> e transferir figuras históricas permanentes <b>até o nível %{level}</b>. Isso <b>não</b> pode ser desfeito, tem certeza de que quer continuar?",
-   CannotEarnPermanentGreatPeopleDesc: "Por essa ser uma tentativa teste, figuras históricas permanentes não podem ser obtidas",
+   CannotEarnPermanentGreatPeopleDesc:
+      "Por essa ser uma tentativa teste, figuras históricas permanentes não podem ser obtidas",
    BackToCity: "Voltar para a Cidade",
    UpgradeBuildingNotProducingDesc:
       "Esta construção está sendo melhorada - produção irá parar até a melhoria estar completa",
@@ -922,7 +940,8 @@ export const PT_BR = {
    SteamAchievement: "Conquista Steam",
    SteamAchievementDetails: "Ver Conquistas Steam",
    ChatHideLatestMessage: "Esconder Conteúdo da Últime Mensagem",
-   ChatHideLatestMessageDesc: "Substituir o conteúdo da última mensagem do chat com asteriscos na barra de chat",
+   ChatHideLatestMessageDesc:
+      "Substituir o conteúdo da última mensagem do chat com asteriscos na barra de chat",
    BuildingColorMatchBuilding: "Copiar Cor De Uma Construção",
    BuildingColorMatchBuildingTooltip:
       "Define a cor dos recursos para a mesma da construção que produz esse recurso. Se multiplas construções produzem esse recurso, uma aleatória será selecionada",
@@ -930,4 +949,8 @@ export const PT_BR = {
    WondersBuilt: "Maravilhas do Mundo Construídas",
    TransportManualControlTooltip: "Transporta esse recurso para construção/melhoria",
    TransportAllocatedCapacityTooltip: "Capacidade de Construtores alocada para transportar esse recurso",
+   FavoriteBuildingAdd: "Add To Favorite",
+   FavoriteBuildingRemove: "Remove From Favorite",
+   FavoriteBuildingEmptyToast: "You don't have any favorite buildings",
+   BackupRecovery: "Backup Recovery",
 };

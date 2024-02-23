@@ -835,7 +835,8 @@ export const DE = {
    TotalEmpireValue: "Gesamtwert des Imperiums",
    TotalTimeThisRun: "Gesamtzeit dieses Laufs",
    TotalEmpireValuePerCycle: "Gesamtwert des Imperiums pro Zyklus",
-   ProgressTowardsNextGreatPerson: "Fortschritte auf dem Weg zur nächsten großen Persönlichkeit bei der Wiedergeburt",
+   ProgressTowardsNextGreatPerson:
+      "Fortschritte auf dem Weg zur nächsten großen Persönlichkeit bei der Wiedergeburt",
    NotProducingBuildings: "Gebäude, die nicht produzieren",
    ExtraGreatPeopleAtReborn: "Zusätzliche große Persönlichkeit bei der Wiedergeburt",
    Ok: "OK",
@@ -957,4 +958,5 @@ export const DE = {
    FavoriteBuildingAdd: "Add To Favorite",
    FavoriteBuildingRemove: "Remove From Favorite",
    FavoriteBuildingEmptyToast: "You don't have any favorite buildings",
+   BackupRecovery: "Backup Recovery",
 };

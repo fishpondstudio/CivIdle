@@ -384,8 +384,7 @@ export const KR = {
    ConstructionBuilderMultiplier: "용량 배수",
    ConstructionBuilderMultiplierFull: "건축가 용량 배수",
    EndConstruction: "건축 종료",
-   EndConstructionDescHTML:
-      "건축을 종료해도, 이미 사용한 자원은 <b>돌려받을 수 없습니다</b>",
+   EndConstructionDescHTML: "건축을 종료해도, 이미 사용한 자원은 <b>돌려받을 수 없습니다</b>",
    Stonehenge: "스톤헨지",
    StonehengeDesc: "돌을 소비하거나 생산하는 모든 건물이 +1의 생산 배수를 얻습니다.",
    LighthouseOfAlexandria: "알렉산드리아의 등대",
@@ -910,4 +909,5 @@ export const KR = {
    FavoriteBuildingAdd: "즐겨찾기 추가",
    FavoriteBuildingRemove: "즐겨찾기 삭제",
    FavoriteBuildingEmptyToast: "즐겨찾기에 추가된 건물이 없습니다.",
+   BackupRecovery: "Backup Recovery",
 };

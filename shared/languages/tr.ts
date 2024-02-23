@@ -931,4 +931,5 @@ export const TR = {
    FavoriteBuildingAdd: "Add To Favorite",
    FavoriteBuildingRemove: "Remove From Favorite",
    FavoriteBuildingEmptyToast: "You don't have any favorite buildings",
+   BackupRecovery: "Backup Recovery",
 };

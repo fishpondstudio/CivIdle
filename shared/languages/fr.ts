@@ -959,4 +959,5 @@ export const FR = {
    FavoriteBuildingAdd: "Ajouter aux favoris",
    FavoriteBuildingRemove: "Retirer des favoris",
    FavoriteBuildingEmptyToast: "Vous n'avez aucun bâtiment favoris",
+   BackupRecovery: "Backup Recovery",
 };
