@@ -19,7 +19,10 @@ export function BuildingInputModeComponent({ gameState, xy }: IBuildingComponent
    if (!hasFeature(GameFeature.BuildingInputMode, gameState)) {
       return null;
    }
-   if (isEmpty(getBuildingIO(xy, "input", IOCalculation.None, gameState))) {
+   if (
+      building.status === "completed" &&
+      isEmpty(getBuildingIO(xy, "input", IOCalculation.None, gameState))
+   ) {
       return null;
    }
    return (
