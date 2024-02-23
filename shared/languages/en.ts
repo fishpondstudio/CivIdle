@@ -501,7 +501,7 @@ export const EN = {
    ChoghaZanbilDesc: "Chogha Zanbil",
    HatshepsutTemple: "Hatshepsut Temple",
    HatshepsutTempleDesc:
-      "Reveals all water tiles on the map. Wheat Farms get +1 Production Multiplier for each water tile adjacent to the farm"",
+      "Reveals all water tiles on the map. Wheat Farms get +1 Production Multiplier for each water tile adjacent to the farm",
    LuxorTemple: "Luxor Temple",
    LuxorTempleDesc: "+1 Science From Busy Workers",
    Neuschwanstein: "Neuschwanstein",
