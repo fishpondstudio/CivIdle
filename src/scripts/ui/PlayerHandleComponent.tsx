@@ -289,7 +289,8 @@ function AccountDetails(): React.ReactNode {
                                        v.amount = 0;
                                     }
                                  });
-                                 saveGame().catch(console.error);
+                                 await saveGame();
+                                 window.location.reload();
                               } catch (error) {
                                  playError();
                                  showToast(String(error));

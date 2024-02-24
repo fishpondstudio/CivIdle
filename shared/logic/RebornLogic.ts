@@ -2,7 +2,7 @@ import type { GreatPerson } from "../definitions/GreatPersonDefinitions";
 import { clamp, forEach, keysOf, shuffle } from "../utilities/Helper";
 import { Config } from "./Config";
 import type { GameOptions, GreatPeopleChoice } from "./GameState";
-import { getGameOptions } from "./GameStateLogic";
+import { getGameOptions, getGameState } from "./GameStateLogic";
 import { Tick } from "./TickLogic";
 
 ////////////////////////////////////////////////
@@ -37,6 +37,18 @@ export function rollPermanentGreatPeople(amount: number): void {
       }
       getGameOptions().greatPeopleChoices.push(choice as GreatPeopleChoice);
    }
+}
+
+export function makeGreatPeopleFromThisRunPermanent(): void {
+   const gs = getGameState();
+   const options = getGameOptions();
+   forEach(gs.greatPeople, (k, v) => {
+      if (options.greatPeople[k]) {
+         options.greatPeople[k]!.amount += v;
+      } else {
+         options.greatPeople[k] = { level: 1, amount: v - 1 };
+      }
+   });
 }
 
 export function upgradeAllPermanentGreatPeople(options: GameOptions): void {
