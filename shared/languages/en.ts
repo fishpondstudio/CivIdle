@@ -769,7 +769,7 @@ export const EN = {
    ShortcutScopePlayerMapPage: "Trade Map Page",
    ShortcutBuildingPageSellBuilding: "Sell Building",
    ShortcutBuildingPageUpgradeX1: "Upgrade x1",
-   ShortcutBuildingPageUpgradeX5: "Upgrade x5",
+   ShortcutBuildingPageUpgradeToNext5: "Upgrade To Next 5",
    ShortcutBuildingPageUpgradeToNext10: "Upgrade To Next 10",
    ShortcutUpgradePageIncreaseLevel: "Increase Upgrade Level",
    ShortcutUpgradePageDecreaseLevel: "Decrease Upgrade Level",

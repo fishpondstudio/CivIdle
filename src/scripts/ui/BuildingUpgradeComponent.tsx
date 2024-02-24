@@ -39,7 +39,7 @@ export function BuildingUpgradeComponent({ gameState, xy }: IBuildingComponentPr
       notifyGameStateUpdate();
    };
    useShortcut("BuildingPageUpgradeX1", () => upgrade(1), [xy]);
-   useShortcut("BuildingPageUpgradeX5", () => upgrade(5), [xy]);
+   useShortcut("BuildingPageUpgradeToNext5", () => upgrade(levels[levels.length - 1]), [xy]);
    useShortcut("BuildingPageUpgradeToNext10", () => upgrade(levels[levels.length - 1]), [xy]);
 
    return (
