@@ -14,7 +14,7 @@ jobs:
         uses: pnpm/action-setup@v3
         with:
           run_install: |
-            - recursive: false
+            - recursive: true
       - name: Run Typescript Compile
         run: pnpm run typecheck
       - name: Run Biome

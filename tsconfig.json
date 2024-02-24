@@ -19,7 +19,7 @@
       "verbatimModuleSyntax": true
    },
    "include": ["src"],
-   "exclude": ["**/node_modules", "**/.*/", "/electron/**/*"],
+   "exclude": ["**/node_modules", "**/.*/"],
    "references": [
       {
          "path": "./tsconfig.node.json"
