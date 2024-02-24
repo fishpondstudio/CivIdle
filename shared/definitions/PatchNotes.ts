@@ -5,6 +5,10 @@ interface PatchNote {
 
 export const PatchNotes: PatchNote[] = [
    {
+      version: "0.1.147",
+      content: [["Bugfix", "Fix Apply All does not work for Building Transport Preference"]],
+   },
+   {
       version: "0.1.146",
       content: [["Bugfix", "Fix erroneous Trial Run flag caused by server crash"]],
    },
