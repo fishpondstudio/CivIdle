@@ -962,4 +962,8 @@ export const NL = {
    TechResourceTransportPreferenceDefaultTooltip:
       "Do not override transport preference for this resource, will use the building's transport preference instead",
    TechResourceTransportPreferenceOverrideTooltip: "This resource has transport preference override: %{mode}",
+   MaxTransportDistance: "Max Transport Distance",
+   DistanceInTiles: "Distance (In Tiles)",
+   DistanceInfinity: "Unlimited",
+   SaveAndExit: "Save And Exit",
 };

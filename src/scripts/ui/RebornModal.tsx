@@ -173,7 +173,7 @@ export function RebornModal(): React.ReactNode {
                         });
                      }
                      resetToCity(city);
-                     saveGame(true).catch(console.error);
+                     saveGame().catch(console.error);
                      playClick();
                   }}
                >

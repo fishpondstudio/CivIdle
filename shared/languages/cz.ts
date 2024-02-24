@@ -384,10 +384,10 @@ export const CZ = {
    ConstructionBuilderMultiplier: "Násobitel kapacity",
    ConstructionBuilderMultiplierFull: "Multiplikátor kapacity stavitele",
    EndConstruction: "Konec výstavby",
-   EndConstructionDescHTML:
-      "Při ukončení stavby se všechny již použité zdroje <b>nevrátí</b>.",
+   EndConstructionDescHTML: "Při ukončení stavby se všechny již použité zdroje <b>nevrátí</b>.",
    Stonehenge: "Stonehenge",
-   StonehengeDesc: "Všechny budovy, které spotřebovávají nebo produkují kámen, získávají +1 produkční násobek.",
+   StonehengeDesc:
+      "Všechny budovy, které spotřebovávají nebo produkují kámen, získávají +1 produkční násobek.",
    LighthouseOfAlexandria: "Alexandrijský maják",
    LighthouseOfAlexandriaDesc: "Všechny přilehlé budovy získají násobitel +5 za skladování",
    PyramidOfGiza: "Pyramida v Gíze",
@@ -434,7 +434,8 @@ export const CZ = {
    SagradaFamília: "Sagrada Família",
    SagradaFamíliaDesc: "Sagrada Família",
    Petra: "Petra",
-   PetraDesc: "Generování časové deformace, když jste offline, kterou můžete použít k urychlení svého impéria",
+   PetraDesc:
+      "Generování časové deformace, když jste offline, kterou můžete použít k urychlení svého impéria",
    OxfordUniversity: "Oxfordská univerzita",
    OxfordUniversityDesc: "Každé vylepšení budovy ve vašem impériu poskytuje +1 vědu za cyklus",
    StPetersBasilica: "Bazilika svatého Petra",
@@ -451,7 +452,8 @@ export const CZ = {
    TempleOfArtemisDesc:
       "Všechny kovárny mečů a zbrojnice získají po dokončení +5 úrovní. Všechny kovárny mečů a zbrojnice získají +1 násobek produkce, násobek kapacity dělníků a násobek skladování.",
    TempleOfHeaven: "Chrám nebes",
-   TempleOfHeavenDesc: "Všechny budovy, které jsou na úrovni 10 nebo vyšší, získají násobitel +1 Kapacita dělníků.",
+   TempleOfHeavenDesc:
+      "Všechny budovy, které jsou na úrovni 10 nebo vyšší, získají násobitel +1 Kapacita dělníků.",
    HimejiCastle: "Hrad Himedži",
    HimejiCastleDesc:
       "Všichni stavitelé karavel, galeon a fregat získají násobek +1 k výrobě, násobek kapacity pracovníků a násobek skladování.",
@@ -470,8 +472,7 @@ export const CZ = {
    SaintBasilsCathedral: "Katedrála sv. Basila",
    SaintBasilsCathedralDesc: "Katedrála svatého Basila",
    ChichenItza: "Chichén Itzá",
-   ChichenItzaDesc:
-      "Všechny přilehlé budovy získají násobitel +1 k produkci, skladování a kapacitě dělníků.",
+   ChichenItzaDesc: "Všechny přilehlé budovy získají násobitel +1 k produkci, skladování a kapacitě dělníků.",
    Aqueduct: "Akvadukt",
    FishPond: "Rybník s rybami",
    GarumMaker: "Garum Maker",
@@ -695,7 +696,8 @@ export const CZ = {
    PlayerMapClaimThisTile: "Reklamovat tuto dlaždici",
    PlayerMapClaimTileCondition2: "Nebyli jste zabanováni anti-cheatem",
    PlayerMapClaimTileCondition3: "Odemkli jste požadovanou technologii: %{tech}",
-   PlayerMapClaimTileCondition4: "Nevyžádali jste si dlaždici nebo jste překročili cooldown pro přesunutí dlaždice",
+   PlayerMapClaimTileCondition4:
+      "Nevyžádali jste si dlaždici nebo jste překročili cooldown pro přesunutí dlaždice",
    PlayerMapClaimTileNoLongerReserved:
       "Tato dlaždice již není rezervovaná. Můžete vystěhovat <b>%{name}</b> a nárokovat si tuto dlaždici pro sebe.",
    PlayerMapClaimTileCooldownLeft: "Zbývající doba platnosti: %{time}",
@@ -782,8 +784,10 @@ export const CZ = {
    ShortcutTechPageUnlockTech: "Odemknout vybranou techniku",
    EmptyTilePageBuildLastBuilding: "Postavit poslední budovu",
    PlayerMapPageGoBackToCity: "Vrátit se do města",
-   UnclaimedGreatPersonThisRun: "V tomto běhu jste si nevyzvedli <b>Velcí lidé</b>, klikněte zde pro vyzvednutí.",
-   UnclaimedGreatPersonPermanent: "Máte nevyzvednuté <b>Stálé skvělé lidi</b>, klikněte zde pro uplatnění nároku.",
+   UnclaimedGreatPersonThisRun:
+      "V tomto běhu jste si nevyzvedli <b>Velcí lidé</b>, klikněte zde pro vyzvednutí.",
+   UnclaimedGreatPersonPermanent:
+      "Máte nevyzvednuté <b>Stálé skvělé lidi</b>, klikněte zde pro uplatnění nároku.",
    OfflineProduction: "Offline výroba",
    OfflineTime: "Čas offline",
    TransportCapacity: "Přepravní kapacita",
@@ -796,16 +800,14 @@ export const CZ = {
    WarehouseSettingsAutopilot: "Režim autopilota",
    WarehouseSettingsAutopilotDesc:
       "Tento sklad bude využívat svou nečinnou kapacitu k přepravě surovin z budov, které mají plný sklad. Aktuální volná kapacita: %{capacity}",
-   WarehouseUpgrade:
-      "Odemkněte režim autopilota skladu. Volná přeprava mezi skladem a přilehlými budovami.",
+   WarehouseUpgrade: "Odemkněte režim autopilota skladu. Volná přeprava mezi skladem a přilehlými budovami.",
    WarehouseUpgradeDesc: "Volná přeprava mezi tímto skladem a jeho sousedními dlaždicemi.",
    Warp: "Warp",
    MaxOfflineProductionTime: "Maximální doba výroby offline",
    WarpConversionDesc:
       "Váš offline čas, který překročí maximální offline čas výroby, bude převeden na warp (1 sekunda = 1 warp).",
    TimeWarp: "Časová deformace",
-   TurnOnTimeWarpDesc:
-      "Stojí %{speed} warpů za každou sekundu a zrychlí vaši říši na %{speed}x rychlost.",
+   TurnOnTimeWarpDesc: "Stojí %{speed} warpů za každou sekundu a zrychlí vaši říši na %{speed}x rychlost.",
    TimeWarpWarning:
       "Zrychlení na vyšší rychlost, než jakou zvládne váš počítač, může vést ke ztrátě dat: POUŽÍVÁNÍ NA VLASTNÍ NEBEZPEČÍ",
    PetraNoMultiplier: "Petra není ovlivněna žádnými násobiči (produkce, kapacita pracovníků, úložiště atd.).",
@@ -825,7 +827,8 @@ export const CZ = {
    Ok: "OK",
    Cancel: "Zrušit",
    ChooseGreatPersonFromLastReborn: "Vybrat skvělou osobu z posledního znovuzrození",
-   BankingAdditionalUpgrade: "Všechny budovy, které jsou na úrovni 10 nebo vyšší, získají násobitel +1 k úložišti.",
+   BankingAdditionalUpgrade:
+      "Všechny budovy, které jsou na úrovni 10 nebo vyšší, získají násobitel +1 k úložišti.",
    EstimatedTimeLeft: "Odhadovaný zbývající čas",
    Electrification: "Elektrifikace",
    ElectrificationUpgrade: "Odemkni elektrifikaci. Umožní budovám spotřebovávat energii pro zvýšení produkce",
@@ -883,7 +886,8 @@ export const CZ = {
    AccountUpgradeCarryOver: "Přenesení úrovně",
    AccountUpgradeCarryOverDesc:
       "Při přechodu na vyšší úroveň účtu se jedná o maximální úroveň stálých skvělých lidí, kterou si můžete přenést.",
-   TranslationPercentage: "%{language} je v překladu %{percentage}. Pomozte vylepšit tento překlad na GitHubu",
+   TranslationPercentage:
+      "%{language} je v překladu %{percentage}. Pomozte vylepšit tento překlad na GitHubu",
    CanEarnGreatPeopleFromRebornYes: "Za tento běh lze získat skvělé lidi ze znovuzrození",
    CanEarnGreatPeopleFromRebornNo: "Tento běh nemůže získat velké lidi z znovuzrození",
    TribuneUpgradeDescV2:
@@ -895,8 +899,7 @@ export const CZ = {
    RebornModalDescV2:
       "Založíte novou říši, ale můžete si vzít všechny skvělé lidi <b>z tohoto běhu</b>, kteří se stanou <b>trvalými</b> skvělými lidmi. Můžete si také vybrat další skvělé lidi podle <b>celkové hodnoty vaší říše</b>.",
    OperationNotAllowedError: "Tato operace není povolena",
-   AccountLevelUpgradeConditionAny:
-      "Pro vylepšení svého účtu stačí splnit jedno z následujících kritérií:",
+   AccountLevelUpgradeConditionAny: "Pro vylepšení svého účtu stačí splnit jedno z následujících kritérií:",
    AccountLevelPlayTime: "Aktivní doba hraní online > %{requiredTime} (Vaše doba hraní je %{actualTime}).",
    AccountUpgradeButton: "Povýšení na hodnost kvestora",
    AccountUpgradeConfirm: "Upgrade účtu",
@@ -949,5 +952,10 @@ export const CZ = {
    TechResourceTransportPreferenceDefault: "Výchozí",
    TechResourceTransportPreferenceDefaultTooltip:
       "Nepřepisuje preference přepravy pro tuto surovinu, místo toho použije preference přepravy budovy",
-   TechResourceTransportPreferenceOverrideTooltip: "Tento zdroj má nadefinovanou preferenci přepravy: %{mode}",
+   TechResourceTransportPreferenceOverrideTooltip:
+      "Tento zdroj má nadefinovanou preferenci přepravy: %{mode}",
+   MaxTransportDistance: "Max Transport Distance",
+   DistanceInTiles: "Distance (In Tiles)",
+   DistanceInfinity: "Unlimited",
+   SaveAndExit: "Save And Exit",
 };

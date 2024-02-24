@@ -32,7 +32,7 @@ export function wipeSaveData() {
    resetToCity(firstKeyOf(Config.City)!);
    savedGame.options.greatPeople = {};
    savedGame.options.greatPeopleChoices = [];
-   saveGame(true).catch(console.error);
+   saveGame().catch(console.error);
 }
 
 export function resetToCity(city: City): void {
@@ -43,9 +43,8 @@ export function resetToCity(city: City): void {
 }
 
 export function loadSave(save: SavedGame): void {
-   saving = true;
    Object.assign(savedGame, save);
-   saveGame(true).catch(console.error);
+   saveGame().catch(console.error);
 }
 
 if (import.meta.env.DEV) {
@@ -53,7 +52,6 @@ if (import.meta.env.DEV) {
    window.savedGame = savedGame;
    // @ts-expect-error
    window.clearGame = async () => {
-      saving = true;
       if (isSteam()) {
          await SteamClient.fileDelete(SAVE_KEY);
          return;
@@ -97,36 +95,32 @@ export function syncUITheme(gameOptions: GameOptions): void {
 
 const SAVE_KEY = "CivIdle";
 
-let saving = false;
+let currentSavePromise: Promise<any> = Promise.resolve();
 
-export function saveGame(forceAndReload: boolean): Promise<void> {
-   if (!forceAndReload && saving) {
-      return Promise.reject(
-         "Received a save request while another one is ongoing, will ignore the new request",
-      );
-   }
-   saving = true;
-   function cleanup() {
-      if (forceAndReload) {
-         window.location.reload();
-      } else {
-         saving = false;
-      }
-   }
+function cleanUpSavePromise() {
+   console.log("Cleanup");
+   currentSavePromise = Promise.resolve();
+}
+
+export function saveGame(): Promise<void> {
    if (isSteam()) {
-      return compressSave(savedGame)
+      currentSavePromise = currentSavePromise
+         .then(() => compressSave(savedGame))
          .then((compressed) => {
             return SteamClient.fileWriteBytes(SAVE_KEY, compressed);
          })
          .catch(console.error)
-         .finally(cleanup);
+         .finally(cleanUpSavePromise);
+   } else {
+      currentSavePromise = currentSavePromise
+         .then(() => compressSave(savedGame))
+         .then((compressed) => {
+            return idbSet(SAVE_KEY, compressed).catch(console.error);
+         })
+         .catch(console.error)
+         .finally(cleanUpSavePromise);
    }
-   return compressSave(savedGame)
-      .then((compressed) => {
-         idbSet(SAVE_KEY, compressed).catch(console.error).finally(cleanup);
-      })
-      .catch(console.error)
-      .finally(cleanup);
+   return currentSavePromise;
 }
 
 export async function compressSave(gs: SavedGame = savedGame): Promise<Uint8Array> {

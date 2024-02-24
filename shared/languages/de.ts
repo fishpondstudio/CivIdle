@@ -396,7 +396,8 @@ export const DE = {
    PyramidOfGiza: "Pyramide von Gizeh",
    PyramidOfGizaDesc: "Alle Gebäude, die Arbeiter produzieren, erhalten +1 Produktionsmultiplikator",
    ColossusOfRhodes: "Koloss von Rhodos",
-   ColossusOfRhodesDesc: "Alle angrenzenden Gebäude, die keine Arbeiter produzieren, erhalten +1 Zufiedenheit",
+   ColossusOfRhodesDesc:
+      "Alle angrenzenden Gebäude, die keine Arbeiter produzieren, erhalten +1 Zufiedenheit",
    MausoleumAtHalicarnassus: "Mausoleum auf Halikarnassos",
    MausoleumAtHalicarnassusDesc:
       "Ein Transport kostet keine Arbeiter, wenn er sich gerade in Reichweite von 2 Kacheln des Mausoleums befindet",
@@ -975,4 +976,8 @@ export const DE = {
    TechResourceTransportPreferenceDefaultTooltip:
       "Do not override transport preference for this resource, will use the building's transport preference instead",
    TechResourceTransportPreferenceOverrideTooltip: "This resource has transport preference override: %{mode}",
+   MaxTransportDistance: "Max Transport Distance",
+   DistanceInTiles: "Distance (In Tiles)",
+   DistanceInfinity: "Unlimited",
+   SaveAndExit: "Save And Exit",
 };

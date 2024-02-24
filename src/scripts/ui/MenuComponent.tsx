@@ -250,7 +250,7 @@ export function MenuComponent(): React.ReactNode {
                      <div
                         className="menu-popover-item"
                         onPointerDown={() => {
-                           saveGame(false)
+                           saveGame()
                               .then(() => SteamClient.quit())
                               .catch((e) => {
                                  playError();
