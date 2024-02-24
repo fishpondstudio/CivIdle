@@ -6,7 +6,8 @@
    "scripts": {
       "dev": "vite",
       "watch": "tsc --build --incremental --watch --force tsconfig.json",
-      "build": "tsc --build && vite build",
+      "compile": "tsc --build --force",
+      "build": "pnpm run compile && vite build",
       "server": "cd server && npm run start",
       "electron": "cd electron && npm run start",
       "optimize": "node ./build/OptimizePNG.js",
@@ -17,7 +18,7 @@
       "translate": "node ./build/Translate.js",
       "achievement": "node ./build/Achievement.js",
       "ci": "biome ci ./src/scripts/ ./shared/ ./server/ --diagnostic-level=error --config-path=./",
-      "typecheck": "tsc --noEmit"
+      "typecheck": "pnpm run compile && tsc --noEmit"
    },
    "dependencies": {
       "@capacitor/android": "^5.4.2",
