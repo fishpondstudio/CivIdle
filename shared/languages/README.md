@@ -28,3 +28,7 @@ Your changes will be reviewed and merged. If you have questions, please ask in D
 ## Add A New Language
 
 Please join Discord channel (https://discord.com/invite/xgNxpsM) and ping **@FishPond**. I will create a new language template for you
+
+## Checks Have Failed
+
+Don't worry. The CI checks are mainly designed for source code - it is most likely complaining about formatting. If you have only touched language files, just ignore the check, I will manually fix the format
