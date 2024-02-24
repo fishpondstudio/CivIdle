@@ -139,7 +139,7 @@ export function ResourcePanel(): React.ReactNode {
             >
                person
             </div>
-            <Tippy content={`${t(L.WorkersBusy)} / ${t(L.WorkersAvailable)}`} placement="bottom">
+            <Tippy content={`${t(L.WorkersBusy)} / ${t(L.TotalWorkers)}`} placement="bottom">
                <div style={{ width: "120px" }}>
                   <FormatNumber value={workersBusy} /> /{" "}
                   <FormatNumber value={workersAvailableAfterHappiness} />

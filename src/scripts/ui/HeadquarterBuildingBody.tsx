@@ -71,14 +71,14 @@ export function HeadquarterBuildingBody({
                <li>
                   <details>
                      <summary className="row">
-                        <div className="f1">{t(L.WorkersAvailable)}</div>
+                        <div className="f1">{t(L.TotalWorkers)}</div>
                         <div className="text-strong">
                            <FormatNumber value={workersAvailableAfterHappiness} />
                         </div>
                      </summary>
                      <ul>
                         <li className="row">
-                           <div className="f1">{t(L.WorkersAvailable)}</div>
+                           <div className="f1">{t(L.WorkersAvailableBeforeHappinessMultiplier)}</div>
                            <div className="text-strong">
                               <FormatNumber value={workersAvailable} />
                            </div>

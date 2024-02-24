@@ -577,21 +577,26 @@ export function getBuilderCapacity(
    let baseCapacity = clamp(building.level, 1, Infinity);
 
    if (isWorldWonder(building.type)) {
-      const tech = getBuildingUnlockTech(building.type);
-      let techIdx = 0;
-      let ageIdx = 0;
-      if (tech) {
-         techIdx = Config.Tech[tech].column;
-         const a = getAgeForTech(tech);
-         if (a) {
-            const age = Config.TechAge[a];
-            ageIdx = age.idx;
-         }
-      }
-      baseCapacity = Math.round(Math.pow(5, ageIdx) + techIdx * 2);
+      baseCapacity = getWonderBaseBuilderCapacity(building.type);
    }
 
    return { multiplier: builder, base: baseCapacity, total: builder * baseCapacity };
+}
+
+export function getWonderBaseBuilderCapacity(type: Building): number {
+   console.assert(isWorldWonder(type), "This only works for World Wonders!");
+   const tech = getBuildingUnlockTech(type);
+   let techIdx = 0;
+   let ageIdx = 0;
+   if (tech) {
+      techIdx = Config.Tech[tech].column;
+      const a = getAgeForTech(tech);
+      if (a) {
+         const age = Config.TechAge[a];
+         ageIdx = age.idx;
+      }
+   }
+   return Math.round(Math.pow(5, ageIdx) + techIdx * 2);
 }
 
 export function applyToAllBuildings<T extends IBuildingData>(

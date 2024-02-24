@@ -127,6 +127,9 @@ export async function loadBundle() {
          } else {
             textures[k] = a[k];
          }
+         // if (k.startsWith("Person") && !(k.substring(6) in Config.GreatPerson)) {
+         //    console.warn("Unused Great Person", k);
+         // }
       }
    });
    console.timeEnd("Load Sprite sheets");

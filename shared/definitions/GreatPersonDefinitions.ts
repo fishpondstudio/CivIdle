@@ -7,6 +7,8 @@ import type { Building } from "./BuildingDefinitions";
 import type { TechAge } from "./TechDefinitions";
 
 export class GreatPersonDefinitions {
+   // Bronze /////////////////////////////////////////////////////////////////////////////////////////////////
+
    Hammurabi: IGreatPersonDefinition = boostOf({
       name: () => t(L.Hammurabi),
       boost: {
@@ -53,10 +55,31 @@ export class GreatPersonDefinitions {
       },
    };
 
-   // SargonOfAkkad: IGreatPersonDefinition = {
-   //    name: () => t(L.SargonOfAkkad),
-   //    time: "c. 2300s BC",
-   // };
+   Hatshepsut: IGreatPersonDefinition = boostOf({
+      name: () => t(L.Hatshepsut),
+      boost: {
+         multipliers: ["output", "storage"],
+         buildings: ["Aqueduct", "Brickworks"],
+      },
+      time: "c. 1507 ~ 1458 BC",
+      value: (level) => level,
+      maxLevel: Infinity,
+      age: "BronzeAge",
+   });
+
+   SargonOfAkkad: IGreatPersonDefinition = boostOf({
+      name: () => t(L.SargonOfAkkad),
+      boost: {
+         multipliers: ["output", "storage"],
+         buildings: ["LoggingCamp", "LumberMill"],
+      },
+      time: "c. 2334 ~2279 BC",
+      value: (level) => level,
+      maxLevel: Infinity,
+      age: "BronzeAge",
+   });
+
+   // Iron ///////////////////////////////////////////////////////////////////////////////////////////////////
 
    Agamemnon: IGreatPersonDefinition = boostOf({
       name: () => t(L.Agamemnon),
@@ -94,10 +117,43 @@ export class GreatPersonDefinitions {
       age: "IronAge",
    });
 
-   // Ashurbanipal: IGreatPersonDefinition = {
-   //    name: () => t(L.Ashurbanipal),
-   //    time: "c. 600s BC",
-   // };
+   Zoroaster: IGreatPersonDefinition = boostOf({
+      name: () => t(L.Zoroaster),
+      boost: {
+         multipliers: ["output", "storage"],
+         buildings: ["CottonPlantation", "CottonMill"],
+      },
+      time: "c. 1500s BC",
+      value: (level) => level,
+      maxLevel: Infinity,
+      age: "IronAge",
+   });
+
+   // Classical //////////////////////////////////////////////////////////////////////////////////////////////
+
+   Aeschylus: IGreatPersonDefinition = boostOf({
+      name: () => t(L.Aeschylus),
+      boost: {
+         multipliers: ["output", "storage"],
+         buildings: ["FlourMill", "Bakery"],
+      },
+      time: "c. 500s",
+      value: (level) => level,
+      maxLevel: Infinity,
+      age: "ClassicalAge",
+   });
+
+   Ashurbanipal: IGreatPersonDefinition = boostOf({
+      name: () => t(L.Ashurbanipal),
+      boost: {
+         multipliers: ["output", "storage"],
+         buildings: ["Sandpit", "Glassworks"],
+      },
+      time: "c. 685 ~ 631 BC",
+      value: (level) => level,
+      maxLevel: Infinity,
+      age: "ClassicalAge",
+   });
 
    NebuchadnezzarII: IGreatPersonDefinition = boostOf({
       name: () => t(L.NebuchadnezzarII),
@@ -152,6 +208,50 @@ export class GreatPersonDefinitions {
       },
    };
 
+   Aristophanes: IGreatPersonDefinition = {
+      name: () => t(L.Aristophanes),
+      desc: (self, level) => t(L.AristophanesDesc, { value: self.value(level) }),
+      time: "446 ~ 386 AD",
+      value: (level) => level,
+      maxLevel: Infinity,
+      age: "ClassicalAge",
+      tick: (self, level, permanent) => {
+         Tick.next.globalMultipliers.happiness.push({
+            value: self.value(level),
+            source: t(permanent ? L.SourceGreatPersonPermanent : L.SourceGreatPerson, {
+               person: self.name(),
+            }),
+         });
+      },
+   };
+
+   Confucius: IGreatPersonDefinition = {
+      name: () => t(L.Confucius),
+      desc: (self, level) => t(L.ConfuciusDesc, { value: self.value(level) }),
+      time: "c. 600s BC",
+      value: (level) => level,
+      maxLevel: Infinity,
+      age: "ClassicalAge",
+      tick: (self, level, permanent) => {
+         const workersUsed = Tick.current.workersUsed.get("Worker") ?? 0;
+         const totalWorkers = Tick.current.workersAvailable.get("Worker") ?? 0;
+         if (workersUsed > 0.5 * totalWorkers) {
+            Tick.next.globalMultipliers.sciencePerBusyWorker.push({
+               value: self.value(level),
+               source: t(permanent ? L.SourceGreatPersonPermanent : L.SourceGreatPerson, {
+                  person: self.name(),
+               }),
+            });
+            Tick.next.globalMultipliers.sciencePerIdleWorker.push({
+               value: self.value(level),
+               source: t(permanent ? L.SourceGreatPersonPermanent : L.SourceGreatPerson, {
+                  person: self.name(),
+               }),
+            });
+         }
+      },
+   };
+
    QinShiHuang: IGreatPersonDefinition = boostOf({
       name: () => t(L.QinShiHuang),
       boost: {
@@ -164,6 +264,8 @@ export class GreatPersonDefinitions {
       age: "ClassicalAge",
    });
 
+   // Middle Age /////////////////////////////////////////////////////////////////////////////////////////////
+
    Justinian: IGreatPersonDefinition = boostOf({
       name: () => t(L.Justinian),
       boost: {
@@ -175,6 +277,23 @@ export class GreatPersonDefinitions {
       maxLevel: Infinity,
       age: "MiddleAge",
    });
+
+   IsidoreOfMiletus: IGreatPersonDefinition = {
+      name: () => t(L.IsidoreOfMiletus),
+      desc: (self, level) => t(L.IsidoreOfMiletusDesc, { value: self.value(level) }),
+      time: "c. 500 AD",
+      value: (level) => level * 2,
+      maxLevel: Infinity,
+      age: "MiddleAge",
+      tick: (self, level, permanent) => {
+         Tick.next.globalMultipliers.builderCapacity.push({
+            value: level,
+            source: t(permanent ? L.SourceGreatPersonPermanent : L.SourceGreatPerson, {
+               person: self.name(),
+            }),
+         });
+      },
+   };
 
    Charlemagne: IGreatPersonDefinition = boostOf({
       name: () => t(L.Charlemagne),
@@ -233,6 +352,25 @@ export class GreatPersonDefinitions {
          });
       },
    };
+
+   Fibonacci: IGreatPersonDefinition = {
+      name: () => t(L.Fibonacci),
+      desc: (self, level) => t(L.FibonacciDesc, { value: self.value(level) }),
+      time: "c. 1170 ~ 1250 AD",
+      value: (level) => level,
+      maxLevel: Infinity,
+      age: "MiddleAge",
+      tick: (self, level, permanent) => {
+         Tick.next.globalMultipliers.sciencePerIdleWorker.push({
+            value: self.value(level),
+            source: t(permanent ? L.SourceGreatPersonPermanent : L.SourceGreatPerson, {
+               person: self.name(),
+            }),
+         });
+      },
+   };
+
+   // Renaissance ////////////////////////////////////////////////////////////////////////////////////////////
 
    LeonardoDaVinci: IGreatPersonDefinition = boostOf({
       name: () => t(L.LeonardoDaVinci),
@@ -305,6 +443,35 @@ export class GreatPersonDefinitions {
       maxLevel: Infinity,
       age: "RenaissanceAge",
    });
+
+   IsaacNewton: IGreatPersonDefinition = {
+      name: () => t(L.IsaacNewton),
+      desc: (self, level) => t(L.IsaacNewtonDesc, { value: self.value(level) }),
+      time: "1642 ~ 1727",
+      value: (level) => level * 2,
+      maxLevel: Infinity,
+      age: "RenaissanceAge",
+      tick: (self, level, permanent) => {
+         const workersUsed = Tick.current.workersUsed.get("Worker") ?? 0;
+         const totalWorkers = Tick.current.workersAvailable.get("Worker") ?? 0;
+         if (workersUsed > 0.5 * totalWorkers) {
+            Tick.next.globalMultipliers.sciencePerBusyWorker.push({
+               value: self.value(level),
+               source: t(permanent ? L.SourceGreatPersonPermanent : L.SourceGreatPerson, {
+                  person: self.name(),
+               }),
+            });
+            Tick.next.globalMultipliers.sciencePerIdleWorker.push({
+               value: self.value(level),
+               source: t(permanent ? L.SourceGreatPersonPermanent : L.SourceGreatPerson, {
+                  person: self.name(),
+               }),
+            });
+         }
+      },
+   };
+
+   // Industrial /////////////////////////////////////////////////////////////////////////////////////////////
 
    JamesWatt: IGreatPersonDefinition = boostOf({
       name: () => t(L.JamesWatt),
@@ -387,88 +554,6 @@ export class GreatPersonDefinitions {
          });
       },
    };
-
-   // LaoZi: IGreatPersonDefinition = {
-   //    name: () => t(L.LaoZi),
-   //    time: "c. 600s BC",
-   // };
-
-   // Solon: IGreatPersonDefinition = {
-   //    name: () => t(L.Solon),
-   //    time: "c. 600s BC",
-   // };
-   // CyrusII: IGreatPersonDefinition = {
-   //    name: () => t(L.CyrusII),
-   //    time: "c. 500s BC",
-   // };
-   // DariusI: IGreatPersonDefinition = {
-   //    name: () => t(L.DariusI),
-   //    time: "c. 500s BC",
-   // };
-   // Confucius: IGreatPersonDefinition = {
-   //    name: () => t(L.Confucius),
-   //    time: "c. 500s BC",
-   // };
-   // Socrates: IGreatPersonDefinition = {
-   //    name: () => t(L.Socrates),
-   //    time: "c. 400s BC",
-   // };
-   // Aeschylus: IGreatPersonDefinition = {
-   //    name: () => t(L.Aeschylus),
-   //    time: "c. 400s BC",
-   // };
-   // Protagoras: IGreatPersonDefinition = {
-   //    name: () => t(L.Protagoras),
-   //    time: "c. 400s BC",
-   // };
-   // Herodotus: IGreatPersonDefinition = {
-   //    name: () => t(L.Herodotus),
-   //    time: "c. 400s BC",
-   // };
-   // Hippocrates: IGreatPersonDefinition = {
-   //    name: () => t(L.Hippocrates),
-   //    time: "c. 400s BC",
-   // };
-   // Plato: IGreatPersonDefinition = {
-   //    name: () => t(L.Plato),
-   //    time: "c. 300s BC",
-   // };
-   // Aristotle: IGreatPersonDefinition = {
-   //    name: () => t(L.Aristotle),
-   //    time: "c. 300s BC",
-   // };
-   // AlexanderIII: IGreatPersonDefinition = {
-   //    name: () => t(L.AlexanderIII),
-   //    time: "c. 300s BC",
-   // };
-   // Ashoka: IGreatPersonDefinition = {
-   //    name: () => t(L.Ashoka),
-   //    time: "c. 200s BC",
-   // };
-   // Hannibal: IGreatPersonDefinition = {
-   //    name: () => t(L.Hannibal),
-   //    time: "c. 200s BC",
-   // };
-   // QinShiHuang: IGreatPersonDefinition = {
-   //    name: () => t(L.QinShiHuang),
-   //    time: "c. 200s BC",
-   // };
-   // SimaQian: IGreatPersonDefinition = {
-   //    name: () => t(L.SimaQian),
-   //    time: "c. 100s BC",
-   // };
-   // Augustus: IGreatPersonDefinition = {
-   //    name: () => t(L.Augustus),
-   //    time: "27 BC ~ 14 BC",
-   // };
-   // CaiLun: IGreatPersonDefinition = {
-   //    name: () => t(L.CaiLun),
-   //    time: "63 AD ~ 121 AD",
-   // };
-   // Cleopatra: IGreatPersonDefinition = {
-   //    name: () => t(L.Cleopatra),
-   //    time: "69 BC ~ 30 BC",
-   // };
 }
 
 export type GreatPerson = keyof GreatPersonDefinitions;
