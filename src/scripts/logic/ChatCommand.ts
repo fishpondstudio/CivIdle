@@ -15,7 +15,7 @@ import {
    sizeOf,
    uuid4,
 } from "../../../shared/utilities/Helper";
-import { decompressSave, loadSave } from "../Global";
+import { decompressSave, overwriteSaveGame, saveGame } from "../Global";
 import { addSystemMessage, canEarnGreatPeopleFromReborn, client } from "../rpc/RPCClient";
 import { tickEverySecond } from "./Tick";
 
@@ -57,8 +57,10 @@ export async function handleChatCommand(command: string): Promise<void> {
          const save = await decompressSave(new Uint8Array(bytes));
          save.options.id = uuid4();
 
-         loadSave(save);
+         overwriteSaveGame(save);
+         await saveGame();
          addSystemMessage("Load save file");
+         window.location.reload();
          break;
       }
       case "playtime": {

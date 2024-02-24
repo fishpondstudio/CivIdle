@@ -1,16 +1,13 @@
 import { useEffect, useState } from "react";
 import type { City } from "../../../shared/definitions/CityDefinitions";
 import { Config } from "../../../shared/logic/Config";
-import { getGreatPeopleAtReborn, rollPermanentGreatPeople } from "../../../shared/logic/RebornLogic";
-import { Tick } from "../../../shared/logic/TickLogic";
 import {
-   firstKeyOf,
-   forEach,
-   formatPercent,
-   mapOf,
-   reduceOf,
-   rejectIn,
-} from "../../../shared/utilities/Helper";
+   getGreatPeopleAtReborn,
+   makeGreatPeopleFromThisRunPermanent,
+   rollPermanentGreatPeople,
+} from "../../../shared/logic/RebornLogic";
+import { Tick } from "../../../shared/logic/TickLogic";
+import { firstKeyOf, formatPercent, mapOf, reduceOf, rejectIn } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import { resetToCity, saveGame, useGameOptions, useGameState } from "../Global";
 import { canEarnGreatPeopleFromReborn, client, isOnlineUser, useTrades, useUser } from "../rpc/RPCClient";
@@ -162,19 +159,21 @@ export function RebornModal(): React.ReactNode {
                            return;
                         }
                      }
+
                      if (canEarnGreatPeopleFromReborn()) {
                         rollPermanentGreatPeople(getGreatPeopleAtReborn());
-                        forEach(gameState.greatPeople, (k, v) => {
-                           if (options.greatPeople[k]) {
-                              options.greatPeople[k]!.amount += v;
-                           } else {
-                              options.greatPeople[k] = { level: 1, amount: v - 1 };
-                           }
-                        });
+                        makeGreatPeopleFromThisRunPermanent();
                      }
                      resetToCity(city);
-                     saveGame().catch(console.error);
                      playClick();
+
+                     try {
+                        await saveGame();
+                        window.location.reload();
+                     } catch (error) {
+                        playError();
+                        showToast(String(error));
+                     }
                   }}
                >
                   {t(L.Reborn)}

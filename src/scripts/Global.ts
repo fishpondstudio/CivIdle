@@ -19,7 +19,7 @@ import { rollPermanentGreatPeople } from "../../shared/logic/RebornLogic";
 import { getGreatPeopleChoices } from "../../shared/logic/TechLogic";
 import { BuildingInputMode, makeBuilding } from "../../shared/logic/Tile";
 import { Grid } from "../../shared/utilities/Grid";
-import { firstKeyOf, forEach, isNullOrUndefined } from "../../shared/utilities/Helper";
+import { forEach, isNullOrUndefined } from "../../shared/utilities/Helper";
 import { TypedEvent } from "../../shared/utilities/TypedEvent";
 import { SteamClient, isSteam } from "./rpc/SteamClient";
 import { WorldScene } from "./scenes/WorldScene";
@@ -28,13 +28,6 @@ import { makeObservableHook } from "./utilities/Hook";
 import { Singleton } from "./utilities/Singleton";
 import { compress, decompress } from "./workers/Compress";
 
-export function wipeSaveData() {
-   resetToCity(firstKeyOf(Config.City)!);
-   savedGame.options.greatPeople = {};
-   savedGame.options.greatPeopleChoices = [];
-   saveGame().catch(console.error);
-}
-
 export function resetToCity(city: City): void {
    savedGame.current = new GameState();
    savedGame.current.city = city;
@@ -42,9 +35,8 @@ export function resetToCity(city: City): void {
    initializeGameState(savedGame.current, new Grid(size, size, TILE_SIZE));
 }
 
-export function loadSave(save: SavedGame): void {
+export function overwriteSaveGame(save: SavedGame): void {
    Object.assign(savedGame, save);
-   saveGame().catch(console.error);
 }
 
 if (import.meta.env.DEV) {

@@ -5,6 +5,10 @@ interface PatchNote {
 
 export const PatchNotes: PatchNote[] = [
    {
+      version: "0.1.149",
+      content: [["Bugfix", "Fix a bug where rebirth is only effective after restarting the game"]],
+   },
+   {
       version: "0.1.148",
       content: [
          ["QoL", "Add Max Transport Distance in Transport Preference"],
