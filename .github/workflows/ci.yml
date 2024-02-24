@@ -16,6 +16,6 @@ jobs:
           run_install: |
             - recursive: false
       - name: Run Typescript Compile
-        run: pnpm run typecheck
+        run: pnpm run compile
       - name: Run Biome
         run: pnpm run ci
