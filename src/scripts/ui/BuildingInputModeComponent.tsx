@@ -53,7 +53,7 @@ export function BuildingInputModeComponent({ gameState, xy }: IBuildingComponent
          <div className="sep10"></div>
          <ApplyToAllComponent
             building={building}
-            getOptions={(s) => ({ inputMode: s.inputMode })}
+            getOptions={(s) => ({ inputMode: building.inputMode })}
             gameState={gameState}
          />
       </fieldset>
