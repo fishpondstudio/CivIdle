@@ -511,14 +511,23 @@ export function getBuildingLevelLabel(b: IBuildingData): string {
    return String(b.level);
 }
 
+export function levelToNext5s(b: IBuildingData) {
+   const l = Math.ceil(b.level / 5) * 5 - b.level;
+   return l > 0 ? l : 5;
+}
+
 export function levelToNext10s(b: IBuildingData) {
    const l = Math.ceil(b.level / 10) * 10 - b.level;
    return l > 0 ? l : 10;
 }
 
 export function getBuildingUpgradeLevels(b: IBuildingData): number[] {
+   const next5s = levelToNext5s(b);
    const next10s = levelToNext10s(b);
-   const levels = [1, 5];
+   const levels = [1];
+   if (!levels.includes(next5s)) {
+      levels.push(next5s);
+   }
    if (!levels.includes(next10s)) {
       levels.push(next10s);
    }
