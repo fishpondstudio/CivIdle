@@ -5,15 +5,11 @@ interface PatchNote {
 
 export const PatchNotes: PatchNote[] = [
    {
-      version: "0.2.0",
+      version: "0.1.148",
       content: [
-         [
-            "Misc",
-            "Version number format has been changed. The new format is 'X.Y.Z Build W'. " +
-               "Y will increase for the weekly content update. Z will increase for the daily QoL/hotfix update. " +
-               "W is a unique number that is produced by the build system. " +
-               "Patch notes will be written against X.Y.Z. If you want to report a bug, please include build number.",
-         ],
+         ["QoL", "Add Max Transport Distance in Transport Preference"],
+         ["QoL", "Add Save And Exit in Help menu"],
+         ["Bugfix", "Fix a bug where buildings that are turned off no longer count in Total Empire Value"],
       ],
    },
    {

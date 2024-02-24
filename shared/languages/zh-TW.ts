@@ -911,4 +911,8 @@ export const ZH_TW = {
    TechResourceTransportPreferenceDefault: "預設",
    TechResourceTransportPreferenceDefaultTooltip: "不要覆蓋此資源的運送偏好，將使用建築物的運送偏好。",
    TechResourceTransportPreferenceOverrideTooltip: "這個資源已經覆蓋了運送偏好。: %{mode}",
+   MaxTransportDistance: "Max Transport Distance",
+   DistanceInTiles: "Distance (In Tiles)",
+   DistanceInfinity: "Unlimited",
+   SaveAndExit: "Save And Exit",
 };

@@ -5,15 +5,18 @@ import { BACKUP_RECOVERY_URL, DISCORD_URL } from "../../../shared/logic/Constant
 import { Tick } from "../../../shared/logic/TickLogic";
 import { sizeOf } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
+import { saveGame } from "../Global";
+import { SteamClient, isSteam } from "../rpc/SteamClient";
 import { PlayerMapScene } from "../scenes/PlayerMapScene";
 import { TechTreeScene } from "../scenes/TechTreeScene";
 import { WorldScene } from "../scenes/WorldScene";
 import { openUrl } from "../utilities/Platform";
 import { Singleton } from "../utilities/Singleton";
+import { playError } from "../visuals/Sound";
 import { AboutModal } from "./AboutModal";
 import { FirstTimePlayerModal } from "./FirstTimePlayerModal";
 import { GameplayOptionPage } from "./GameplayOptionPage";
-import { showModal } from "./GlobalModal";
+import { showModal, showToast } from "./GlobalModal";
 import { PatchNotesPage } from "./PatchNotesPage";
 import { ShortcutPage } from "./ShortcutPage";
 import { ThemePage } from "./ThemePage";
@@ -243,6 +246,21 @@ export function MenuComponent(): React.ReactNode {
                   >
                      <MenuItem check={false}>{t(L.BackupRecovery)}</MenuItem>
                   </div>
+                  {isSteam() ? (
+                     <div
+                        className="menu-popover-item"
+                        onPointerDown={() => {
+                           saveGame()
+                              .then(() => SteamClient.quit())
+                              .catch((e) => {
+                                 playError();
+                                 showToast(String(e));
+                              });
+                        }}
+                     >
+                        <MenuItem check={false}>{t(L.SaveAndExit)}</MenuItem>
+                     </div>
+                  ) : null}
                   <div
                      className="menu-popover-item"
                      onPointerDown={() => {

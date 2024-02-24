@@ -1,4 +1,4 @@
-import { shell } from "electron";
+import { app, shell } from "electron";
 import { exists, outputFile, readFile, unlink } from "fs-extra";
 import path from "path";
 import { getGameSavePath, getLocalGameSavePath, type SteamClient } from ".";
@@ -69,5 +69,9 @@ export class IPCService {
 
    public getBetaName(): string {
       return this._client.apps.currentBetaName() ?? "";
+   }
+
+   public quit(): void {
+      app.exit(0);
    }
 }

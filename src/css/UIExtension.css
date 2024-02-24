@@ -57,6 +57,19 @@ input[type="text"] {
    border: 0 none;
 }
 
+input[type=email]:disabled,
+input[type=email]:read-only,
+input[type=number]:disabled,
+input[type=number]:read-only,
+input[type=password]:disabled,
+input[type=password]:read-only,
+input[type=text]:disabled,
+input[type=text]:read-only,
+textarea:disabled {
+   background-color: silver;
+   cursor: not-allowed;
+}
+
 .separator {
    border-top: 1px solid #808080;
    border-bottom: 1px solid #fff;

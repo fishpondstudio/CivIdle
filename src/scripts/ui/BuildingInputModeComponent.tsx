@@ -5,7 +5,7 @@ import { GameFeature, hasFeature } from "../../../shared/logic/FeatureLogic";
 import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
 import { getBuildingIO } from "../../../shared/logic/IntraTickCache";
 import { BuildingInputModeNames, BuildingInputModeTooltips } from "../../../shared/logic/Tile";
-import { isEmpty } from "../../../shared/utilities/Helper";
+import { clamp, isEmpty, safeParseInt } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import { jsxMMapOf } from "../utilities/Helper";
 import { ApplyToAllComponent } from "./ApplyToAllComponent";
@@ -54,6 +54,62 @@ export function BuildingInputModeComponent({ gameState, xy }: IBuildingComponent
          <ApplyToAllComponent
             building={building}
             getOptions={(s) => ({ inputMode: building.inputMode })}
+            gameState={gameState}
+         />
+         <div className="sep10"></div>
+         <div className="separator has-title">
+            <div>{t(L.MaxTransportDistance)}</div>
+         </div>
+         <div className="sep5"></div>
+         <div className="row">
+            <div
+               className="row"
+               onClick={() => {
+                  if (building.maxInputDistance === Infinity) {
+                     building.maxInputDistance = 10;
+                  } else {
+                     building.maxInputDistance = Infinity;
+                  }
+                  notifyGameStateUpdate();
+               }}
+            >
+               <div
+                  className={classNames({
+                     "m-icon": true,
+                     "text-desc": building.maxInputDistance !== Infinity,
+                  })}
+               >
+                  {building.maxInputDistance === Infinity ? "check_box" : "check_box_outline_blank"}
+               </div>
+               <div
+                  className={classNames({
+                     "text-strong": true,
+                     "text-desc": building.maxInputDistance !== Infinity,
+                  })}
+               >
+                  {t(L.DistanceInfinity)}
+               </div>
+            </div>
+
+            <div className="f1"></div>
+            <div>{t(L.DistanceInTiles)}</div>
+            <input
+               value={building.maxInputDistance}
+               onChange={(e) => {
+                  building.maxInputDistance = clamp(safeParseInt(e.target.value), 1, Infinity);
+                  notifyGameStateUpdate();
+               }}
+               onClick={(e) => (e.target as HTMLInputElement)?.select()}
+               disabled={building.maxInputDistance === Infinity}
+               type="text"
+               className="text-right ml10"
+               style={{ width: "60px" }}
+            />
+         </div>
+         <div className="sep10"></div>
+         <ApplyToAllComponent
+            building={building}
+            getOptions={(s) => ({ maxInputDistance: building.maxInputDistance })}
             gameState={gameState}
          />
       </fieldset>

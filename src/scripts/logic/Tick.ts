@@ -92,7 +92,7 @@ export function tickEverySecond(gs: GameState, offline: boolean) {
          notifyGameStateUpdate();
       }
       if (gs.tick % (saveFreq * speed) === 0) {
-         saveGame(false).catch(console.error);
+         saveGame().catch(console.error);
       }
       if (gs.tick % (heartbeatFreq * speed) === 1) {
          Singleton().heartbeat.update(serializeSaveLite());
