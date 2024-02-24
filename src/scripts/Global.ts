@@ -181,6 +181,9 @@ function migrateSavedGame(save: SavedGame) {
          if (isNullOrUndefined(tile.building.inputMode)) {
             tile.building.inputMode = BuildingInputMode.Distance;
          }
+         if (isNullOrUndefined(tile.building.maxInputDistance)) {
+            tile.building.maxInputDistance = Infinity;
+         }
          if (!Config.Building[tile.building.type]) {
             delete tile.building;
             return;

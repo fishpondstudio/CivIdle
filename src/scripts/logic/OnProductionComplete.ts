@@ -211,7 +211,8 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
             if (tile.building) {
                let adjacentIronMiningCamps = 0;
                for (const neighbor of grid.getNeighbors(tileToPoint(tile.tile))) {
-                  if (gs.tiles.get(pointToTile(neighbor))?.building?.type === "IronMiningCamp") {
+                  const neighborTile = gs.tiles.get(pointToTile(neighbor));
+                  if (neighborTile?.building?.type === "IronMiningCamp" && neighborTile.deposit.Iron) {
                      ++adjacentIronMiningCamps;
                   }
                }

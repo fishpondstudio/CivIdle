@@ -217,6 +217,7 @@ function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
             xy,
             gs,
             building.inputMode,
+            building.maxInputDistance,
          );
       });
 
@@ -266,8 +267,23 @@ function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
       Tick.next.specialBuildings.set(building.type, xy);
    }
 
-   // Return early for buildings that are not working ////////////////////////////////////////////////////////
+   // Tabulate resources before we early return //////////////////////////////////////////////////////////////
+   const { total, used } = getStorageFor(xy, gs);
 
+   forEach(building.resources, (res, amount) => {
+      if (!Number.isFinite(amount) || amount <= 0) {
+         return;
+      }
+      Tick.next.totalValue += NoPrice[res] ? 0 : (Config.ResourcePrice[res] ?? 0) * amount;
+      mapSafePush(Tick.next.resourcesByTile, res, {
+         tile: xy,
+         amount,
+         totalStorage: total,
+         usedStorage: used,
+      });
+   });
+
+   // Return early for buildings that are not working ////////////////////////////////////////////////////////
    const requiredDeposits = Config.Building[building.type].deposit;
    if (requiredDeposits) {
       let key: Resource;
@@ -289,21 +305,6 @@ function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
       getBuildingIO(xy, "input", IOCalculation.Multiplier | IOCalculation.Capacity, gs),
    );
    const output = getBuildingIO(xy, "output", IOCalculation.Multiplier | IOCalculation.Capacity, gs);
-   const { total, used } = getStorageFor(xy, gs);
-
-   forEach(building.resources, (res, amount) => {
-      if (!Number.isFinite(amount) || amount <= 0) {
-         return;
-      }
-      Tick.next.totalValue += NoPrice[res] ? 0 : (Config.ResourcePrice[res] ?? 0) * amount;
-      mapSafePush(Tick.next.resourcesByTile, res, {
-         tile: xy,
-         amount,
-         totalStorage: total,
-         usedStorage: used,
-      });
-   });
-
    const worker = getWorkersFor(xy, { exclude: { Worker: 1 } }, gs);
    const inputWorkerCapacity = totalMultiplierFor(xy, "worker", 1, gs);
 
@@ -342,7 +343,7 @@ function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
          }
       }
 
-      transportResource(res, amount, inputWorkerCapacity, xy, gs, inputMode);
+      transportResource(res, amount, inputWorkerCapacity, xy, gs, inputMode, building.maxInputDistance);
       hasTransported = true;
    });
 
@@ -533,6 +534,7 @@ export function transportResource(
    targetXy: Tile,
    gs: GameState,
    mode: BuildingInputMode,
+   maxDistance: number,
 ): number {
    let amountLeft = amount;
    const grid = getGrid(gs);
@@ -541,16 +543,24 @@ export function transportResource(
    if (getAvailableWorkers("Worker") <= 0) {
       return amountLeft;
    }
-   const sources = Tick.current.resourcesByTile.get(res)?.sort((point1, point2) => {
-      switch (mode) {
-         case BuildingInputMode.Distance:
-            return grid.distanceTile(point1.tile, targetXy) - grid.distanceTile(point2.tile, targetXy);
-         case BuildingInputMode.Amount:
-            return point2.amount - point1.amount;
-         case BuildingInputMode.StoragePercentage:
-            return point2.usedStorage / point2.totalStorage - point1.usedStorage / point1.totalStorage;
-      }
-   });
+   const sources = Tick.current.resourcesByTile
+      .get(res)
+      ?.filter((s) => {
+         if (maxDistance === Infinity) {
+            return true;
+         }
+         return grid.distanceTile(s.tile, targetXy) <= maxDistance;
+      })
+      .sort((point1, point2) => {
+         switch (mode) {
+            case BuildingInputMode.Distance:
+               return grid.distanceTile(point1.tile, targetXy) - grid.distanceTile(point2.tile, targetXy);
+            case BuildingInputMode.Amount:
+               return point2.amount - point1.amount;
+            case BuildingInputMode.StoragePercentage:
+               return point2.usedStorage / point2.totalStorage - point1.usedStorage / point1.totalStorage;
+         }
+      });
    if (!sources) {
       return amountLeft;
    }

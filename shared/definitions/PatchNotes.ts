@@ -5,6 +5,14 @@ interface PatchNote {
 
 export const PatchNotes: PatchNote[] = [
    {
+      version: "0.1.148",
+      content: [
+         ["QoL", "Add Max Transport Distance in Transport Preference"],
+         ["QoL", "Add Save And Exit in Help menu"],
+         ["Bugfix", "Fix a bug where buildings that are turned off no longer count in Total Empire Value"],
+      ],
+   },
+   {
       version: "0.1.147",
       content: [
          ["Bugfix", "Fix Apply All does not work for Building Transport Preference"],

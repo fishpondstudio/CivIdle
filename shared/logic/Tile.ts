@@ -51,6 +51,7 @@ export interface IBuildingData {
    electrification: number;
    disabledInput: Set<Resource>;
    inputMode: BuildingInputMode;
+   maxInputDistance: number;
 }
 
 export function getProductionPriority(v: number): number {
@@ -145,6 +146,7 @@ export function makeBuilding(data: Pick<IBuildingData, "type"> & Partial<IBuildi
       electrification: 0,
       disabledInput: new Set(),
       inputMode: BuildingInputMode.Distance,
+      maxInputDistance: Infinity,
       ...data,
    };
 
