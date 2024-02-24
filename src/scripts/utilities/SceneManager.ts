@@ -28,7 +28,7 @@ export class ViewportScene extends Scene {
    }
 
    override onResize(width: number, height: number): void {
-      // this.viewport.resize(width, height);
+      this.viewport.onResize(width, height);
    }
 
    override onDestroy(): void {

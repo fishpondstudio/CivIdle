@@ -383,8 +383,7 @@ export const ZH_CN = {
    ConstructionBuilderMultiplier: "能力乘数",
    ConstructionBuilderMultiplierFull: "建造者能力乘数",
    EndConstruction: "取消建造",
-   EndConstructionDescHTML:
-      "当你取消建造，所有已被使用的资源<b>将不会返还</b>。",
+   EndConstructionDescHTML: "当你取消建造，所有已被使用的资源<b>将不会返还</b>。",
    Stonehenge: "巨石阵",
    StonehengeDesc: "所有消耗或产出石头的建筑，获得 +1 生产乘数",
    LighthouseOfAlexandria: "亚历山大灯塔",
@@ -903,14 +902,11 @@ export const ZH_CN = {
    FavoriteBuildingEmptyToast: "你没有任何偏好建筑",
    BackupRecovery: "备份恢复",
    ResourceTransportPreference: "运送倾向",
-   TechResourceTransportPreference:
-      "解锁建筑运送倾向————允许设定建筑如何运送其生产所需资源。",
+   TechResourceTransportPreference: "解锁建筑运送倾向————允许设定建筑如何运送其生产所需资源。",
    TechResourceTransportPreferenceDistance: "距离",
-   TechResourceTransportPreferenceDistanceTooltip:
-      "此建筑将倾向于，从更近的建筑中运送资源",
+   TechResourceTransportPreferenceDistanceTooltip: "此建筑将倾向于，从更近的建筑中运送资源",
    TechResourceTransportPreferenceAmount: "数量",
-   TechResourceTransportPreferenceAmountTooltip:
-      "此建筑将倾向于，从有更多存储现量的建筑中运送资源",
+   TechResourceTransportPreferenceAmountTooltip: "此建筑将倾向于，从有更多存储现量的建筑中运送资源",
    TechResourceTransportPreferenceStorage: "存储",
    TechResourceTransportPreferenceStorageTooltip:
       "此建筑将倾向于，从更高已用存储空间所占百分比的建筑中运送资源",

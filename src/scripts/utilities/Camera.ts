@@ -244,7 +244,11 @@ export class Camera extends Container {
       return { x, y };
    }
 
-   private recalculateHitArea() {
+   public onResize(width: number, height: number): void {
+      this.recalculateHitArea();
+   }
+
+   private recalculateHitArea(): void {
       const topLeft = this.screenToWorld({ x: 0, y: 0 });
       this.hitArea = new Rectangle(
          topLeft.x,
