@@ -4,10 +4,12 @@ import type { GreatPerson } from "../definitions/GreatPersonDefinitions";
 import type { Resource } from "../definitions/ResourceDefinitions";
 import type { RomeProvince } from "../definitions/RomeProvinceDefinitions";
 import type { Tech } from "../definitions/TechDefinitions";
+import { CZ } from "../languages/cz";
 import { DE } from "../languages/de";
 import { EN } from "../languages/en";
 import { FR } from "../languages/fr";
 import { KR } from "../languages/kr";
+import { NL } from "../languages/nl";
 import { PT_BR } from "../languages/pt-BR";
 import { RU } from "../languages/ru";
 import { TR } from "../languages/tr";
@@ -125,9 +127,11 @@ export class GameOptions {
 
 export const Languages = {
    en: EN,
+   cz: CZ,
    fr: FR,
    de: DE,
    kr: KR,
+   nl: NL,
    pt_BR: PT_BR,
    ru: RU,
    tr: TR,
