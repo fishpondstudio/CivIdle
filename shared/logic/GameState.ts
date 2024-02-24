@@ -8,8 +8,11 @@ import { DE } from "../languages/de";
 import { EN } from "../languages/en";
 import { FR } from "../languages/fr";
 import { KR } from "../languages/kr";
+import { PT_BR } from "../languages/pt-BR";
 import { RU } from "../languages/ru";
+import { TR } from "../languages/tr";
 import { ZH_CN } from "../languages/zh-CN";
+import { ZH_TW } from "../languages/zh-TW";
 import type { ChatChannel } from "../utilities/Database";
 import { IPointData, forEach, uuid4, type Tile } from "../utilities/Helper";
 import type { PartialSet, PartialTabulate } from "../utilities/TypeDefinitions";
@@ -123,10 +126,13 @@ export class GameOptions {
 export const Languages = {
    en: EN,
    fr: FR,
-   ru: RU,
-   zh_CN: ZH_CN,
    de: DE,
    kr: KR,
+   pt_BR: PT_BR,
+   ru: RU,
+   tr: TR,
+   zh_CN: ZH_CN,
+   zh_TW: ZH_TW,
 } as const;
 
 export const SAVE_FILE_VERSION = 1;

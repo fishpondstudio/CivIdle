@@ -6,7 +6,13 @@ interface PatchNote {
 export const PatchNotes: PatchNote[] = [
    {
       version: "0.1.147",
-      content: [["Bugfix", "Fix Apply All does not work for Building Transport Preference"]],
+      content: [
+         ["Bugfix", "Fix Apply All does not work for Building Transport Preference"],
+         [
+            "Content",
+            "Added Portuguese BR (@ifeellovevenus), Turkish (@RiftGameDev), and Traditional Chinese (@HarchuN)",
+         ],
+      ],
    },
    {
       version: "0.1.146",

@@ -1,6 +1,6 @@
 export const PT_BR = {
    CurrentLanguage: "Português",
-   TranslatorCredit: "<Tradutor: @ifeellovevenus>",
+   TranslatorCredit: "ifeellovevenus",
    Translators: "Tradutores",
    Language: "Linguagem",
    TechnologyPrerequisite: "Pré-requisitos",
