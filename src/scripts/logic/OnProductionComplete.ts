@@ -300,6 +300,14 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          });
          break;
       }
+      case "SaintBasilsCathedral": {
+         forEach(Config.BuildingTier, (building, tier) => {
+            if (tier === 1) {
+               addMultiplier(building, { output: 1, worker: 1, storage: 1 }, buildingName);
+            }
+         });
+         break;
+      }
       case "Aphrodite": {
          getXyBuildings(gs).forEach((building, xy) => {
             if (building.level >= 20 && building.status !== "completed") {

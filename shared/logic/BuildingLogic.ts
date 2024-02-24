@@ -1,6 +1,6 @@
 import type { Building } from "../definitions/BuildingDefinitions";
 import { BuildingSpecial } from "../definitions/BuildingDefinitions";
-import { NoStorage, type Resource } from "../definitions/ResourceDefinitions";
+import { Deposit, NoStorage, type Resource } from "../definitions/ResourceDefinitions";
 import {
    clamp,
    forEach,
@@ -10,6 +10,7 @@ import {
    mReduceOf,
    mapSafeAdd,
    mapSafePush,
+   pointToTile,
    reduceOf,
    safeAdd,
    sizeOf,
@@ -18,7 +19,7 @@ import {
    type Tile,
 } from "../utilities/Helper";
 import { srand } from "../utilities/Random";
-import type { PartialTabulate } from "../utilities/TypeDefinitions";
+import type { PartialSet, PartialTabulate } from "../utilities/TypeDefinitions";
 import { TypedEvent } from "../utilities/TypedEvent";
 import { L, t } from "../utilities/i18n";
 import { Config } from "./Config";
@@ -707,4 +708,37 @@ export function getElectrificationStatus(xy: Tile, gs: GameState): Electrificati
       return "Active";
    }
    return "NoPower";
+}
+
+export function hasRequiredDeposit(
+   deposits: PartialSet<Deposit> | undefined,
+   xy: Tile,
+   gs: GameState,
+): boolean {
+   if (!deposits || sizeOf(deposits) === 0) return true;
+   const tiles: Tile[] = [xy];
+
+   if (Tick.current.specialBuildings.has("SaintBasilsCathedral")) {
+      for (const point of getGrid(gs).getNeighbors(tileToPoint(xy))) {
+         tiles.push(pointToTile(point));
+      }
+   }
+
+   let deposit: Deposit;
+   for (deposit in deposits) {
+      if (!hasDepositOnAnyTile(deposit, tiles, gs)) {
+         return false;
+      }
+   }
+
+   return true;
+}
+
+function hasDepositOnAnyTile(deposit: Deposit, tiles: Tile[], gs: GameState): boolean {
+   for (const xy of tiles) {
+      if (gs.tiles.get(xy)?.deposit[deposit]) {
+         return true;
+      }
+   }
+   return false;
 }

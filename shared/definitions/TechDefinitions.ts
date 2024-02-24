@@ -420,7 +420,7 @@ export class TechDefinitions {
       name: () => t(L.Firearm),
       column: 12,
       requireTech: ["Chemistry"],
-      unlockBuilding: ["GunpowderMill"],
+      unlockBuilding: ["GunpowderMill", "SaintBasilsCathedral"],
    };
 
    Colonialism: ITechDefinition = {

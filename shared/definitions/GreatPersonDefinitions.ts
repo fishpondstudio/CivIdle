@@ -32,7 +32,7 @@ export class GreatPersonDefinitions {
       age: "BronzeAge",
       tick: (self, level, permanent) => {
          Tick.next.globalMultipliers.builderCapacity.push({
-            value: level,
+            value: self.value(level),
             source: t(permanent ? L.SourceGreatPersonPermanent : L.SourceGreatPerson, {
                person: self.name(),
             }),
@@ -272,7 +272,7 @@ export class GreatPersonDefinitions {
       age: "MiddleAge",
       tick: (self, level, permanent) => {
          Tick.next.globalMultipliers.builderCapacity.push({
-            value: level,
+            value: self.value(level),
             source: t(permanent ? L.SourceGreatPersonPermanent : L.SourceGreatPerson, {
                person: self.name(),
             }),
@@ -313,7 +313,7 @@ export class GreatPersonDefinitions {
       age: "MiddleAge",
       tick: (self, level, permanent) => {
          Tick.next.globalMultipliers.transportCapacity.push({
-            value: level,
+            value: self.value(level),
             source: t(permanent ? L.SourceGreatPersonPermanent : L.SourceGreatPerson, {
                person: self.name(),
             }),

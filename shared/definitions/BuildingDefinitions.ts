@@ -742,6 +742,16 @@ export class BuildingDefinitions {
       special: BuildingSpecial.WorldWonder,
       wikipedia: "St._Peter%27s_Basilica",
    };
+   SaintBasilsCathedral: IBuildingDefinition = {
+      name: () => t(L.SaintBasilsCathedral),
+      desc: () => t(L.SaintBasilsCathedralDesc),
+      input: {},
+      output: {},
+      max: 1,
+      construction: { Faith: 100, Gold: 100, Furniture: 100 },
+      special: BuildingSpecial.WorldWonder,
+      wikipedia: "Saint_Basil%27s_Cathedral",
+   };
    ForbiddenCity: IBuildingDefinition = {
       name: () => t(L.ForbiddenCity),
       desc: () => t(L.ForbiddenCityDesc),
@@ -968,15 +978,6 @@ export class BuildingDefinitions {
    //    output: {},
    //    max: 1,
    //    wikipedia: "Bran_Castle",
-   // };
-
-   // SaintBasilsCathedral: IBuildingDefinition = {
-   //    name: () => t(L.SaintBasilsCathedral),
-   //    desc: () => t(L.SaintBasilsCathedralDesc),
-   //    input: {},
-   //    output: {},
-   //    max: 1,
-   //    wikipedia: "Saint_Basil%27s_Cathedral",
    // };
 
    // GreatMosqueOfSamarra: IBuildingDefinition = {

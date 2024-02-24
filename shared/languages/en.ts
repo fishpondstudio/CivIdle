@@ -474,7 +474,8 @@ export const EN = {
    Pantheon: "Pantheon",
    PantheonDesc: "Pantheon",
    SaintBasilsCathedral: "Saint Basil's Cathedral",
-   SaintBasilsCathedralDesc: "Saint Basil's Cathedral",
+   SaintBasilsCathedralDesc:
+      "Allow resource extraction buildings to work adjacent to a deposit. All tier I buildings get +1 Production Multiplier, Worker Capacity Multiplier, and Storage Multiplier",
    ChichenItza: "Chichen Itza",
    ChichenItzaDesc:
       "All adjacent buildings get +1 Production Multiplier, Storage and Worker Capacity Multiplier",
