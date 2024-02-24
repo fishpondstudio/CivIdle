@@ -6,7 +6,7 @@
    "scripts": {
       "dev": "vite",
       "watch": "tsc --build --incremental --watch --force tsconfig.json",
-      "compile": "tsc --build --force",
+      "compile": "tsc --build --force tsconfig.json",
       "build": "pnpm run compile && vite build",
       "server": "cd server && npm run start",
       "electron": "cd electron && npm run start",
