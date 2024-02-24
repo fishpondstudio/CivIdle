@@ -214,21 +214,6 @@ export function MenuComponent(): React.ReactNode {
                      active: active === "help",
                   })}
                >
-                  {isSteam() ? (
-                     <div
-                        className="menu-popover-item"
-                        onPointerDown={() => {
-                           saveGame(false)
-                              .then(() => SteamClient.quit())
-                              .catch((e) => {
-                                 playError();
-                                 showToast(String(e));
-                              });
-                        }}
-                     >
-                        <MenuItem check={false}>{t(L.SaveAndExit)}</MenuItem>
-                     </div>
-                  ) : null}
                   <div
                      className="menu-popover-item"
                      onPointerDown={() => {
@@ -261,6 +246,21 @@ export function MenuComponent(): React.ReactNode {
                   >
                      <MenuItem check={false}>{t(L.BackupRecovery)}</MenuItem>
                   </div>
+                  {isSteam() ? (
+                     <div
+                        className="menu-popover-item"
+                        onPointerDown={() => {
+                           saveGame(false)
+                              .then(() => SteamClient.quit())
+                              .catch((e) => {
+                                 playError();
+                                 showToast(String(e));
+                              });
+                        }}
+                     >
+                        <MenuItem check={false}>{t(L.SaveAndExit)}</MenuItem>
+                     </div>
+                  ) : null}
                   <div
                      className="menu-popover-item"
                      onPointerDown={() => {
