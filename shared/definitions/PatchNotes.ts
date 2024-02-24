@@ -5,6 +5,18 @@ interface PatchNote {
 
 export const PatchNotes: PatchNote[] = [
    {
+      version: "0.2.0",
+      content: [
+         [
+            "Misc",
+            "Version number format has been changed. The new format is 'X.Y.Z Build W'. " +
+               "Y will increase for the weekly content update. Z will increase for the daily QoL/hotfix update. " +
+               "W is a unique number that is produced by the build system. " +
+               "Patch notes will be written against X.Y.Z. If you want to report a bug, please include build number.",
+         ],
+      ],
+   },
+   {
       version: "0.1.147",
       content: [
          ["Bugfix", "Fix Apply All does not work for Building Transport Preference"],
