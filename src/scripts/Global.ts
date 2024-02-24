@@ -98,7 +98,6 @@ const SAVE_KEY = "CivIdle";
 let currentSavePromise: Promise<any> = Promise.resolve();
 
 function cleanUpSavePromise() {
-   console.log("Cleanup");
    currentSavePromise = Promise.resolve();
 }
 
