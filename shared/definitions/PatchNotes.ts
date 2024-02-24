@@ -5,6 +5,10 @@ interface PatchNote {
 
 export const PatchNotes: PatchNote[] = [
    {
+      version: "0.1.146",
+      content: [["Bugfix", "Fix erroneous Trial Run flag caused by server crash"]],
+   },
+   {
       version: "0.1.145",
       content: [
          [

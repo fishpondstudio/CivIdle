@@ -98,9 +98,12 @@ export function getUserLevel(): AccountLevel {
    return user?.level ?? AccountLevel.Tribune;
 }
 
+// TODO: Need to properly implement this after supporting offline run
 export function canEarnGreatPeopleFromReborn(): boolean {
    if (isOnlineUser()) {
-      return !getGameState().isOffline;
+      getGameState().isOffline = false;
+   } else {
+      getGameState().isOffline = true;
    }
    return true;
 }
@@ -168,8 +171,6 @@ export async function connectWebSocket(): Promise<number> {
          case MessageType.Welcome: {
             const w = message as IWelcomeMessage;
             user = w.user;
-            // TODO: Review this!
-            getGameState().isOffline = user.level <= AccountLevel.Tribune;
             getGameOptions().token = w.user.token;
             saveGame(false).catch(console.error);
             OnUserChanged.emit({ ...user });
