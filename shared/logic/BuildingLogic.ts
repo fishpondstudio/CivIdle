@@ -257,8 +257,7 @@ export function useWorkers(res: Resource, amount: number, xy: Tile | null): void
       console.error("`useWorkers` can only be called with non-transportable resource!");
       return;
    }
-   // Normally, we write to Tick.next and read from Tick.current. This is the only exception!
-   mapSafeAdd(Tick.current.workersUsed, res, amount);
+   mapSafeAdd(Tick.next.workersUsed, res, amount);
    if (isNullOrUndefined(xy)) {
       return;
    }
@@ -272,7 +271,9 @@ export function useWorkers(res: Resource, amount: number, xy: Tile | null): void
 
 export function getAvailableWorkers(res: Resource): number {
    const workersAvailable = Tick.current.workersAvailable.get(res) ?? 0;
-   const workersUsed = Tick.current.workersUsed.get(res) ?? 0;
+   // Normally we read from Tick.current. But this is special - because we want to know if we have enough
+   // workers left - Tick.next has that information.
+   const workersUsed = Tick.next.workersUsed.get(res) ?? 0;
    let pct = 1;
    if (res === "Worker") {
       pct = Tick.current.happiness?.workerPercentage ?? 1;

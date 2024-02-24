@@ -1,4 +1,6 @@
+import { getScienceFromWorkers } from "../logic/BuildingLogic";
 import { Config } from "../logic/Config";
+import { getGameState } from "../logic/GameStateLogic";
 import type { Multiplier, MultiplierType } from "../logic/TickLogic";
 import { MultiplierTypeDesc, Tick } from "../logic/TickLogic";
 import { addMultiplier } from "../logic/Update";
@@ -232,24 +234,7 @@ export class GreatPersonDefinitions {
       value: (level) => level,
       maxLevel: Infinity,
       age: "ClassicalAge",
-      tick: (self, level, permanent) => {
-         const workersUsed = Tick.current.workersUsed.get("Worker") ?? 0;
-         const totalWorkers = Tick.current.workersAvailable.get("Worker") ?? 0;
-         if (workersUsed > 0.5 * totalWorkers) {
-            Tick.next.globalMultipliers.sciencePerBusyWorker.push({
-               value: self.value(level),
-               source: t(permanent ? L.SourceGreatPersonPermanent : L.SourceGreatPerson, {
-                  person: self.name(),
-               }),
-            });
-            Tick.next.globalMultipliers.sciencePerIdleWorker.push({
-               value: self.value(level),
-               source: t(permanent ? L.SourceGreatPersonPermanent : L.SourceGreatPerson, {
-                  person: self.name(),
-               }),
-            });
-         }
-      },
+      tick: addScienceBasedOnBusyWorkers.bind(null),
    };
 
    QinShiHuang: IGreatPersonDefinition = boostOf({
@@ -451,24 +436,7 @@ export class GreatPersonDefinitions {
       value: (level) => level * 2,
       maxLevel: Infinity,
       age: "RenaissanceAge",
-      tick: (self, level, permanent) => {
-         const workersUsed = Tick.current.workersUsed.get("Worker") ?? 0;
-         const totalWorkers = Tick.current.workersAvailable.get("Worker") ?? 0;
-         if (workersUsed > 0.5 * totalWorkers) {
-            Tick.next.globalMultipliers.sciencePerBusyWorker.push({
-               value: self.value(level),
-               source: t(permanent ? L.SourceGreatPersonPermanent : L.SourceGreatPerson, {
-                  person: self.name(),
-               }),
-            });
-            Tick.next.globalMultipliers.sciencePerIdleWorker.push({
-               value: self.value(level),
-               source: t(permanent ? L.SourceGreatPersonPermanent : L.SourceGreatPerson, {
-                  person: self.name(),
-               }),
-            });
-         }
-      },
+      tick: addScienceBasedOnBusyWorkers.bind(null),
    };
 
    // Industrial /////////////////////////////////////////////////////////////////////////////////////////////
@@ -616,4 +584,24 @@ function boostOf(
       age: def.age,
       tick: (self, level, permanent) => tickGreatPersonBoost(self, level, permanent),
    };
+}
+
+function addScienceBasedOnBusyWorkers(self: IGreatPersonDefinition, level: number, permanent: boolean): void {
+   const gs = getGameState();
+   const { workersBusy, workersAvailable } = getScienceFromWorkers(gs);
+   console.log(workersBusy, workersAvailable);
+   if (workersBusy >= 0.5 * workersAvailable) {
+      Tick.next.globalMultipliers.sciencePerBusyWorker.push({
+         value: self.value(level),
+         source: t(permanent ? L.SourceGreatPersonPermanent : L.SourceGreatPerson, {
+            person: self.name(),
+         }),
+      });
+      Tick.next.globalMultipliers.sciencePerIdleWorker.push({
+         value: self.value(level),
+         source: t(permanent ? L.SourceGreatPersonPermanent : L.SourceGreatPerson, {
+            person: self.name(),
+         }),
+      });
+   }
 }
