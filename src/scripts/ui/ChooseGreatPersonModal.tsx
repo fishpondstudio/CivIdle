@@ -1,16 +1,19 @@
+import Tippy from "@tippyjs/react";
 import type { GreatPerson } from "../../../shared/definitions/GreatPersonDefinitions";
+import { Config } from "../../../shared/logic/Config";
 import type { GreatPeopleChoice } from "../../../shared/logic/GameState";
 import { notifyGameOptionsUpdate, notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
 import { getGreatPersonUpgradeCost } from "../../../shared/logic/RebornLogic";
 import { safeAdd } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import { useGameOptions, useGameState } from "../Global";
+import { Singleton } from "../utilities/Singleton";
+import { greatPersonImage } from "../visuals/GreatPersonVisual";
 import { playClick, playError } from "../visuals/Sound";
 import { hideModal, showModal } from "./GlobalModal";
-import { GreatPersonCard } from "./GreatPersonCard";
 import { FormatNumber } from "./HelperComponents";
+import { ManagePermanentGreatPersonModal } from "./ManagePermanentGreatPersonModal";
 import { ProgressBarComponent } from "./ProgressBarComponent";
-import { UpgradeGreatPersonModal } from "./UpgradeGreatPersonModal";
 
 export function ChooseGreatPersonModal({ permanent }: { permanent: boolean }): React.ReactNode {
    const gs = useGameState();
@@ -44,7 +47,7 @@ export function ChooseGreatPersonModal({ permanent }: { permanent: boolean }): R
          notifyGameOptionsUpdate(options);
 
          if (options.greatPeopleChoices.length <= 0) {
-            showModal(<UpgradeGreatPersonModal />);
+            showModal(<ManagePermanentGreatPersonModal />);
          }
       };
    }
@@ -84,11 +87,23 @@ export function ChooseGreatPersonModal({ permanent }: { permanent: boolean }): R
          </div>
          <div className="window-body">
             <div className="row" style={{ alignItems: "stretch" }}>
-               <GreatPersonCard greatPerson={greatPeopleChoice[0]} onChosen={onChosen} />
+               <GreatPersonCard
+                  greatPerson={greatPeopleChoice[0]}
+                  permanent={permanent}
+                  onChosen={onChosen}
+               />
                <div style={{ width: "5px" }} />
-               <GreatPersonCard greatPerson={greatPeopleChoice[1]} onChosen={onChosen} />
+               <GreatPersonCard
+                  greatPerson={greatPeopleChoice[1]}
+                  permanent={permanent}
+                  onChosen={onChosen}
+               />
                <div style={{ width: "5px" }} />
-               <GreatPersonCard greatPerson={greatPeopleChoice[2]} onChosen={onChosen} />
+               <GreatPersonCard
+                  greatPerson={greatPeopleChoice[2]}
+                  permanent={permanent}
+                  onChosen={onChosen}
+               />
             </div>
             <div className="sep5"></div>
             <div className="row">
@@ -129,7 +144,7 @@ function GreatPersonLevel({ greatPerson }: { greatPerson: GreatPerson }): React.
    const options = useGameOptions();
    const gs = useGameState();
    const inventory = options.greatPeople[greatPerson];
-   const total = getGreatPersonUpgradeCost((inventory?.level ?? 0) + 1);
+   const total = getGreatPersonUpgradeCost(greatPerson, (inventory?.level ?? 0) + 1);
    return (
       <div className="outset-shallow-2 p8">
          <div className="row text-small">
@@ -155,7 +170,7 @@ function GreatPersonLevel({ greatPerson }: { greatPerson: GreatPerson }): React.
 function PermanentGreatPersonLevel({ greatPerson }: { greatPerson: GreatPerson }): React.ReactNode {
    const options = useGameOptions();
    const inventory = options.greatPeople[greatPerson];
-   const total = getGreatPersonUpgradeCost((inventory?.level ?? 0) + 1);
+   const total = getGreatPersonUpgradeCost(greatPerson, (inventory?.level ?? 0) + 1);
    return (
       <div className="outset-shallow-2 p8">
          <div className="row text-small">
@@ -167,6 +182,53 @@ function PermanentGreatPersonLevel({ greatPerson }: { greatPerson: GreatPerson }
          </div>
          <div className="sep5" />
          <ProgressBarComponent progress={(inventory?.amount ?? 0) / total} />
+      </div>
+   );
+}
+
+function GreatPersonCard({
+   greatPerson,
+   permanent,
+   onChosen,
+}: {
+   greatPerson: GreatPerson;
+   permanent: boolean;
+   onChosen: (chosen: GreatPerson) => void;
+}): React.ReactNode {
+   const p = Config.GreatPerson[greatPerson];
+   const gs = useGameState();
+   return (
+      <div
+         className="inset-shallow white p10 f1 text-center pointer"
+         onClick={() => {
+            onChosen(greatPerson);
+         }}
+      >
+         <img
+            src={greatPersonImage(greatPerson, Singleton().sceneManager.getContext())}
+            style={{ width: "100%" }}
+         />
+         {permanent ? (
+            <>
+               <div className="sep5" />
+               <div>{p.desc(p, 1)}</div>
+            </>
+         ) : (
+            <>
+               {(gs.greatPeople[greatPerson] ?? 0) > 0 ? (
+                  <Tippy
+                     content={t(L.GreatPersonThisRunEffectiveLevel, {
+                        count: gs.greatPeople[greatPerson] ?? 0,
+                        person: p.name(),
+                        effect: 1 + (gs.greatPeople[greatPerson] ?? 0),
+                     })}
+                  >
+                     <div className="m-icon text-orange mb5">release_alert</div>
+                  </Tippy>
+               ) : null}
+               <div>{p.desc(p, Math.round(100 / (1 + (gs.greatPeople[greatPerson] ?? 0))) / 100)}</div>
+            </>
+         )}
       </div>
    );
 }

@@ -16,7 +16,7 @@ import { RenderHTML } from "./RenderHTMLComponent";
 import { TextWithHelp } from "./TextWithHelpComponent";
 import { WarningComponent } from "./WarningComponent";
 
-export function UpgradeGreatPersonModal(): React.ReactNode {
+export function ManagePermanentGreatPersonModal(): React.ReactNode {
    const options = useGameOptions();
    return (
       <div className="window" style={{ width: "650px" }}>
@@ -62,7 +62,7 @@ export function UpgradeGreatPersonModal(): React.ReactNode {
                         .map((k) => {
                            const person = Config.GreatPerson[k];
                            const value = options.greatPeople[k];
-                           const total = value ? getGreatPersonUpgradeCost(value.level + 1) : 0;
+                           const total = value ? getGreatPersonUpgradeCost(k, value.level + 1) : 0;
                            return (
                               <tr key={k}>
                                  <td>

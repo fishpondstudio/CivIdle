@@ -37,7 +37,10 @@ export const PatchNotes: PatchNote[] = [
             "Great Person",
             "Isaac Newton: +2 Science from Busy and Idle Workers if more than 50% of workers are busy (Renaissance)",
          ],
-         ["Great Person", "Fibonacci: +1 Science from Idle Workers (Renaissance)"],
+         [
+            "Great Person",
+            "+0.5 Science from Idle Workers. +1 Science from Busy Workers. Permanent upgrade cost follows Fibonacci sequence (Renaissance)",
+         ],
          [
             "Wonder",
             "Saint Basil's Cathedral: Allow resource extraction buildings to work adjacent to a deposit. All adjacent tier I buildings get +1 Production Multiplier, Worker Capacity Multiplier, and Storage Multiplier (Renaissance/Firearm)",
@@ -52,7 +55,7 @@ export const PatchNotes: PatchNote[] = [
          ],
          [
             "Gameplay",
-            "Entering a new age will allow picking a new great person of each unlocked age (e.g. Entering Classical Age will allow picking 1 Classical Age + 1 Iron Age + 1 Bronze Age great person)",
+            "Entering a new age will allow picking a new great person of each unlocked age (e.g. Entering the Classical Age will allow picking 1 Classical Age + 1 Iron Age + 1 Bronze Age great person). If you pick the same great person more than once, each additional great person will have a diminishing effect during this run. However, all of them will become permanent Great Person when you rebirth (e.g. If you have 3 Confucius from this run, pick the fourth Confucius will have 1/4 of the effect. When you rebirth, you will get 4 Confucius for permanent upgrade)",
          ],
          [
             "Gameplay",

@@ -358,7 +358,10 @@ export function getScienceFromWorkers(gs: GameState) {
    const workersAfterHappiness = Math.floor(workersBeforeHappiness * happinessPercentage);
    const workersBusy = Tick.current.workersUsed.get("Worker") ?? 0;
    const sciencePerIdleWorker = sum(Tick.current.globalMultipliers.sciencePerIdleWorker, "value");
-   const scienceFromIdleWorkers = sciencePerIdleWorker * (workersAfterHappiness - workersBusy);
+   // Because of the worker double buffer, this might be negative. We need to clamp this because we don't
+   // want negative science
+   const scienceFromIdleWorkers =
+      sciencePerIdleWorker * clamp(workersAfterHappiness - workersBusy, 0, Infinity);
 
    const sciencePerBusyWorker = sum(Tick.current.globalMultipliers.sciencePerBusyWorker, "value");
    const scienceFromBusyWorkers = sciencePerBusyWorker * workersBusy;

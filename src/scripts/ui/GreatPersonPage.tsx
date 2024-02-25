@@ -2,6 +2,7 @@ import { type GreatPerson } from "../../../shared/definitions/GreatPersonDefinit
 import { Config } from "../../../shared/logic/Config";
 import { MAX_TRIBUNE_CARRY_OVER_LEVEL } from "../../../shared/logic/Constants";
 import { getSpecialBuildings } from "../../../shared/logic/IntraTickCache";
+import { getGreatPersonThisRunLevel } from "../../../shared/logic/RebornLogic";
 import { forEach, numberToRoman } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import { useGameOptions, useGameState } from "../Global";
@@ -11,12 +12,12 @@ import { greatPersonImage } from "../visuals/GreatPersonVisual";
 import { playLevelUp } from "../visuals/Sound";
 import { ChooseGreatPersonModal } from "./ChooseGreatPersonModal";
 import { showModal } from "./GlobalModal";
+import { ManagePermanentGreatPersonModal } from "./ManagePermanentGreatPersonModal";
 import { MenuComponent } from "./MenuComponent";
 import { RenderHTML } from "./RenderHTMLComponent";
 import { TableView } from "./TableView";
 import { TextWithHelp } from "./TextWithHelpComponent";
 import { TilePage } from "./TilePage";
-import { UpgradeGreatPersonModal } from "./UpgradeGreatPersonModal";
 import { WarningComponent } from "./WarningComponent";
 
 export function GreatPersonPage(): React.ReactNode {
@@ -86,7 +87,7 @@ export function GreatPersonPage(): React.ReactNode {
             ) : null}
             <button
                className="row w100 mb10 text-strong"
-               onClick={() => showModal(<UpgradeGreatPersonModal />)}
+               onClick={() => showModal(<ManagePermanentGreatPersonModal />)}
             >
                <div className="m-icon small">open_in_new</div>
                <div className="f1 text-center">{t(L.ManagePermanentGreatPeople)}</div>
@@ -139,7 +140,12 @@ export function GreatPersonPage(): React.ReactNode {
                            <div></div>
                         </td>
                         <td className="text-center">
-                           <TextWithHelp content={person.desc(person, gs.greatPeople[gp] ?? 0)}>
+                           <TextWithHelp
+                              content={person.desc(
+                                 person,
+                                 getGreatPersonThisRunLevel(gs.greatPeople[gp] ?? 0),
+                              )}
+                           >
                               {gs.greatPeople[gp]}
                            </TextWithHelp>
                         </td>

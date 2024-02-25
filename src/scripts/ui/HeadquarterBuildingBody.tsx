@@ -3,7 +3,7 @@ import { getScienceFromWorkers, isWorldWonder } from "../../../shared/logic/Buil
 import { Config } from "../../../shared/logic/Config";
 import type { GameOptions, GameState } from "../../../shared/logic/GameState";
 import { getXyBuildings, unlockedBuildings } from "../../../shared/logic/IntraTickCache";
-import { getGreatPeopleAtReborn } from "../../../shared/logic/RebornLogic";
+import { getGreatPeopleAtReborn, getGreatPersonThisRunLevel } from "../../../shared/logic/RebornLogic";
 import {
    getCurrentTechAge,
    getScienceAmount,
@@ -298,7 +298,15 @@ function GreatPeopleComponent({
                <details>
                   <summary className="row">
                      <div className="f1">{t(L.GreatPeopleThisRun)}</div>
-                     <div className="text-strong">{sizeOf(gameState.greatPeople)}</div>
+                     <div className="text-strong">
+                        {reduceOf(
+                           gameState.greatPeople,
+                           (prev, k, v) => {
+                              return prev + v;
+                           },
+                           0,
+                        )}
+                     </div>
                   </summary>
                   <ul>
                      {keysOf(gameState.greatPeople)
@@ -317,7 +325,7 @@ function GreatPeopleComponent({
                                     <span className="text-desc ml5">({Config.TechAge[gp.age].name()})</span>
                                  </div>
                                  <div className="text-strong">
-                                    <TextWithHelp content={gp.desc(gp, v)}>
+                                    <TextWithHelp content={gp.desc(gp, getGreatPersonThisRunLevel(v))}>
                                        <FormatNumber value={v} />
                                     </TextWithHelp>
                                  </div>

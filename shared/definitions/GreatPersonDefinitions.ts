@@ -340,13 +340,19 @@ export class GreatPersonDefinitions {
 
    Fibonacci: IGreatPersonDefinition = {
       name: () => t(L.Fibonacci),
-      desc: (self, level) => t(L.FibonacciDesc, { value: self.value(level) }),
+      desc: (self, level) => t(L.FibonacciDesc, { idle: self.value(level) / 2, busy: self.value(level) }),
       time: "c. 1170 ~ 1250 AD",
       value: (level) => level,
       maxLevel: Infinity,
       age: "MiddleAge",
       tick: (self, level, permanent) => {
          Tick.next.globalMultipliers.sciencePerIdleWorker.push({
+            value: self.value(level) / 2,
+            source: t(permanent ? L.SourceGreatPersonPermanent : L.SourceGreatPerson, {
+               person: self.name(),
+            }),
+         });
+         Tick.next.globalMultipliers.sciencePerBusyWorker.push({
             value: self.value(level),
             source: t(permanent ? L.SourceGreatPersonPermanent : L.SourceGreatPerson, {
                person: self.name(),

@@ -18,12 +18,35 @@ export function getValueRequiredForGreatPeople(count: number): number {
 }
 ////////////////////////////////////////////////
 
+export function getGreatPersonThisRunLevel(amount: number): number {
+   let result = 0;
+   for (let i = 1; i <= amount; ++i) {
+      result += 1 / i;
+   }
+   return Math.round(result * 100) / 100;
+}
+
 export function getProgressTowardsNextGreatPerson(): number {
    return Tick.current.totalValue / getValueRequiredForGreatPeople(getGreatPeopleAtReborn() + 1);
 }
 
-export function getGreatPersonUpgradeCost(targetLevel: number): number {
+export function getGreatPersonUpgradeCost(gp: GreatPerson, targetLevel: number): number {
+   if (gp === "Fibonacci") {
+      return getGreatPersonUpgradeCostFib(targetLevel);
+   }
    return Math.pow(2, targetLevel - 1);
+}
+
+export function getGreatPersonUpgradeCostFib(n: number): number {
+   let a = 0;
+   let b = 1;
+   let c = 1;
+   for (let i = 0; i <= n; ++i) {
+      c = a + b;
+      a = b;
+      b = c;
+   }
+   return a;
 }
 
 export function rollPermanentGreatPeople(amount: number, currentTechAge: TechAge): void {
@@ -58,8 +81,9 @@ export function makeGreatPeopleFromThisRunPermanent(): void {
 
 export function upgradeAllPermanentGreatPeople(options: GameOptions): void {
    forEach(options.greatPeople, (greatPerson, inventory) => {
-      while (inventory.amount >= getGreatPersonUpgradeCost(inventory.level + 1)) {
-         inventory.amount -= getGreatPersonUpgradeCost(inventory.level + 1);
+      const cost = getGreatPersonUpgradeCost(greatPerson, inventory.level + 1);
+      while (inventory.amount >= cost) {
+         inventory.amount -= cost;
          ++inventory.level;
       }
    });

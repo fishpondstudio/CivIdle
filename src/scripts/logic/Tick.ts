@@ -9,6 +9,7 @@ import {
 } from "../../../shared/logic/GameStateLogic";
 import { calculateHappiness } from "../../../shared/logic/HappinessLogic";
 import { clearIntraTickCache, getSpecialBuildings } from "../../../shared/logic/IntraTickCache";
+import { getGreatPersonThisRunLevel } from "../../../shared/logic/RebornLogic";
 import { OnResetTile } from "../../../shared/logic/TechLogic";
 import { CurrentTickChanged, EmptyTickData, Tick, freezeTickData } from "../../../shared/logic/TickLogic";
 import {
@@ -67,7 +68,7 @@ export function tickEverySecond(gs: GameState, offline: boolean) {
 
    forEach(gs.greatPeople, (person, level) => {
       const greatPerson = Config.GreatPerson[person];
-      greatPerson.tick(greatPerson, level, false);
+      greatPerson.tick(greatPerson, getGreatPersonThisRunLevel(level), false);
    });
 
    forEach(getGameOptions().greatPeople, (person, v) => {
