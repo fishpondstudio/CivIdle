@@ -496,7 +496,8 @@ export const FR = {
    Flour: "Farine",
    Fish: "Poisson",
    GreatMosqueOfSamarra: "Grande Mosquée de Samarra",
-   GreatMosqueOfSamarraDesc: "Grande Mosquée de Samarra",
+   GreatMosqueOfSamarraDescV2:
+      "+1 building vision range. Reveal 5 random unexplored deposit tiles and build a level 10 resource extraction building on each",
    HagiaSophia: "Sainte-Sophie",
    HagiaSophiaDesc:
       "Le fonctionnement des bâtiments avec 0% Capacité de Production vous coûtent 1 bonheur de moins que d'habitude. Consomme 10 foi and produce 10 bonheur",

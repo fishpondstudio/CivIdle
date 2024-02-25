@@ -489,7 +489,8 @@ export const JP = {
    Flour: "Flour",
    Fish: "Fish",
    GreatMosqueOfSamarra: "Great Mosque Of Samarra",
-   GreatMosqueOfSamarraDesc: "Great Mosque Of Samarra",
+   GreatMosqueOfSamarraDescV2:
+      "+1 building vision range. Reveal 5 random unexplored deposit tiles and build a level 10 resource extraction building on each",
    HagiaSophia: "Hagia Sophia",
    HagiaSophiaDesc:
       "Buildings with 0% Production Capacity are exempt from -1 happiness. Consumes 10 Faith and produce 10 happiness",

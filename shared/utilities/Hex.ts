@@ -110,6 +110,17 @@ export class Hex {
       );
    }
 
+   public range(distance: number): Hex[] {
+      const result: Hex[] = [];
+      for (let q = -distance; q <= distance; ++q) {
+         for (let r = Math.max(-distance, -q - distance); r <= Math.min(distance, -q + distance); ++r) {
+            const s = -q - r;
+            result.push(this.add(new Hex(q, r, s)));
+         }
+      }
+      return result;
+   }
+
    public linedraw(b: Hex): Hex[] {
       const N: number = this.distance(b);
       const a_nudge: Hex = new Hex(this.q + 1e-6, this.r + 1e-6, this.s - 2e-6);

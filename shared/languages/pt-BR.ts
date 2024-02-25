@@ -495,7 +495,8 @@ export const PT_BR = {
    Flour: "Farinha",
    Fish: "Peixe",
    GreatMosqueOfSamarra: "Grande Mesquita de Samarra",
-   GreatMosqueOfSamarraDesc: "Grande Mesquita de Samarra",
+   GreatMosqueOfSamarraDescV2:
+      "+1 building vision range. Reveal 5 random unexplored deposit tiles and build a level 10 resource extraction building on each",
    HagiaSophia: "Santa Sofia",
    HagiaSophiaDesc:
       "Construções com 0% de Capacidade de Produção são isentas da penalidade de -1 de felicidade. Consume 10 de Fé e produz 10 de felicidade",

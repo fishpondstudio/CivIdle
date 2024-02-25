@@ -612,6 +612,16 @@ export class BuildingDefinitions {
       special: BuildingSpecial.WorldWonder,
       wikipedia: "Colossus_of_Rhodes",
    };
+   GreatMosqueOfSamarra: IBuildingDefinition = {
+      name: () => t(L.GreatMosqueOfSamarra),
+      desc: () => t(L.GreatMosqueOfSamarraDescV2),
+      input: {},
+      output: {},
+      construction: { Sand: 100, Brick: 100, Cotton: 100 },
+      max: 1,
+      special: BuildingSpecial.WorldWonder,
+      wikipedia: "Great_Mosque_of_Samarra",
+   };
    HangingGarden: IBuildingDefinition = {
       name: () => t(L.HangingGarden),
       desc: () => t(L.HangingGardenDesc),
@@ -988,15 +998,6 @@ export class BuildingDefinitions {
    //    output: {},
    //    max: 1,
    //    wikipedia: "Bran_Castle",
-   // };
-
-   // GreatMosqueOfSamarra: IBuildingDefinition = {
-   //    name: () => t(L.GreatMosqueOfSamarra),
-   //    desc: () => t(L.GreatMosqueOfSamarraDesc),
-   //    input: {},
-   //    output: {},
-   //    max: 1,
-   //    wikipedia: "Great_Mosque_of_Samarra",
    // };
 
    // ChoghaZanbil: IBuildingDefinition = {

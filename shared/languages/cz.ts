@@ -490,7 +490,8 @@ export const CZ = {
    Flour: "Mouka",
    Fish: "Ryby",
    GreatMosqueOfSamarra: "Velká mešita v Sámarře",
-   GreatMosqueOfSamarraDesc: "Velká mešita v Sámarře",
+   GreatMosqueOfSamarraDescV2:
+      "+1 building vision range. Reveal 5 random unexplored deposit tiles and build a level 10 resource extraction building on each",
    HagiaSophia: "Hagia Sofia",
    HagiaSophiaDesc:
       "Budovy s výrobní kapacitou 0 % jsou osvobozeny od štěstí -1. Spotřebuje 10 víry a vyprodukuje 10 štěstí",

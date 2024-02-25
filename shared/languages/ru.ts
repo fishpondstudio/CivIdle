@@ -491,7 +491,8 @@ export const RU = {
    Flour: "Мука",
    Fish: "Рыба",
    GreatMosqueOfSamarra: "Великая мечеть Самарры",
-   GreatMosqueOfSamarraDesc: "Great Mosque Of Samarra",
+   GreatMosqueOfSamarraDescV2:
+      "+1 building vision range. Reveal 5 random unexplored deposit tiles and build a level 10 resource extraction building on each",
    HagiaSophia: "Собор Святой Софии",
    HagiaSophiaDesc:
       "Здания с 0% Производственной Мощностью освобождаются от -1 Счастья. Потребляет 10 Веры И производит 10 Счастья",

@@ -475,7 +475,8 @@ export const ZH_CN = {
    Flour: "面粉",
    Fish: "鱼",
    GreatMosqueOfSamarra: "萨迈拉大清真寺",
-   GreatMosqueOfSamarraDesc: "萨迈拉大清真寺",
+   GreatMosqueOfSamarraDescV2:
+      "+1 building vision range. Reveal 5 random unexplored deposit tiles and build a level 10 resource extraction building on each",
    HagiaSophia: "圣索菲亚大教堂",
    HagiaSophiaDesc: "生产能力为 0% 的建筑，将免除 -1 幸福感。消耗 10 信仰并产出 10 幸福感",
    AngkorWat: "吴哥窟",

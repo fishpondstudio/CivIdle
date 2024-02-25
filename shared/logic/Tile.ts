@@ -9,7 +9,7 @@ import type { GameState } from "./GameState";
 export interface ITileData {
    tile: Tile;
    explored: boolean;
-   deposit: PartialSet<Resource>;
+   deposit: PartialSet<Deposit>;
    building?: IBuildingData;
 }
 

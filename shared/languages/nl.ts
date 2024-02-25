@@ -491,7 +491,8 @@ export const NL = {
    Flour: "Bloem",
    Fish: "Vis",
    GreatMosqueOfSamarra: "Grote Moskee van Samarra",
-   GreatMosqueOfSamarraDesc: "Grote Moskee van Samarra",
+   GreatMosqueOfSamarraDescV2:
+      "+1 building vision range. Reveal 5 random unexplored deposit tiles and build a level 10 resource extraction building on each",
    HagiaSophia: "Hagia Sophia",
    HagiaSophiaDesc:
       "Gebouwen met 0% Productiecapaciteit zijn vrijgesteld van -1 geluk. Verbruikt 10 Geloof en produceert 10 geluk",

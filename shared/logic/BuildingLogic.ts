@@ -748,3 +748,14 @@ function hasDepositOnAnyTile(deposit: Deposit, tiles: Tile[], gs: GameState): bo
    }
    return false;
 }
+
+export function getBuildingThatExtract(d: Deposit): Building | null {
+   let b: Building;
+   for (b in Config.Building) {
+      const building = Config.Building[b];
+      if (building.deposit?.[d]) {
+         return b;
+      }
+   }
+   return null;
+}

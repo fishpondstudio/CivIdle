@@ -481,7 +481,8 @@ export const KR = {
    Flour: "밀가루",
    Fish: "물고기",
    GreatMosqueOfSamarra: "사마라 대모스크",
-   GreatMosqueOfSamarraDesc: "사마라 대모스크",
+   GreatMosqueOfSamarraDescV2:
+      "+1 building vision range. Reveal 5 random unexplored deposit tiles and build a level 10 resource extraction building on each",
    HagiaSophia: "하기아 소피아",
    HagiaSophiaDesc: "생산능력이 0%인 건물은 행복도-1이 면제됩니다. 믿음10을 소비하여 행복10을 생산합니다.",
    AngkorWat: "앙코르 와트",

@@ -475,7 +475,7 @@ export const EN = {
    PantheonDesc: "Pantheon",
    SaintBasilsCathedral: "Saint Basil's Cathedral",
    SaintBasilsCathedralDescV2:
-      "Allow resource extraction buildings to work adjacent to a deposit. All tier I buildings get +1 Production Multiplier, Worker Capacity Multiplier, and Storage Multiplier",
+      "Allow resource extraction buildings to work adjacent to a deposit. All adjacent Tier I buildings get +1 Production Multiplier, Worker Capacity Multiplier, and Storage Multiplier",
    ChichenItza: "Chichen Itza",
    ChichenItzaDesc:
       "All adjacent buildings get +1 Production Multiplier, Storage and Worker Capacity Multiplier",
@@ -489,7 +489,8 @@ export const EN = {
    Flour: "Flour",
    Fish: "Fish",
    GreatMosqueOfSamarra: "Great Mosque of Samarra",
-   GreatMosqueOfSamarraDesc: "Great Mosque of Samarra",
+   GreatMosqueOfSamarraDescV2:
+      "+1 building vision range. Reveal 5 random unexplored deposit tiles and build a level 10 resource extraction building on each",
    HagiaSophia: "Hagia Sophia",
    HagiaSophiaDesc:
       "Buildings with 0% Production Capacity are exempt from -1 happiness. Consumes 10 Faith and produce 10 happiness",

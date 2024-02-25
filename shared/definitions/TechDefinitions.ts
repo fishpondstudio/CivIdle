@@ -159,7 +159,7 @@ export class TechDefinitions {
       name: () => t(L.RoadAndWheel),
       column: 4,
       requireTech: ["Market", "Stateship"],
-      unlockBuilding: ["Warehouse"],
+      unlockBuilding: ["Warehouse", "GreatMosqueOfSamarra"],
       buildingMultiplier: { House: { worker: 1 } },
    };
 

@@ -303,11 +303,18 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          break;
       }
       case "SaintBasilsCathedral": {
-         forEach(Config.BuildingTier, (building, tier) => {
-            if (tier === 1) {
-               addMultiplier(building, { output: 1, worker: 1, storage: 1 }, buildingName);
+         for (const neighbor of grid.getNeighbors(tileToPoint(xy))) {
+            const neighborXy = pointToTile(neighbor);
+            const building = getCompletedBuilding(neighborXy, gs);
+            if (building && Config.BuildingTier[building.type] === 1) {
+               mapSafePush(Tick.next.tileMultipliers, neighborXy, {
+                  output: 1,
+                  worker: 1,
+                  storage: 1,
+                  source: buildingName,
+               });
             }
-         });
+         }
          break;
       }
       case "Aphrodite": {
