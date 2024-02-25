@@ -5,7 +5,7 @@ import { getGreatPersonUpgradeCost } from "../../../shared/logic/RebornLogic";
 import { safeAdd } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import { useGameOptions, useGameState } from "../Global";
-import { playClick } from "../visuals/Sound";
+import { playClick, playError } from "../visuals/Sound";
 import { hideModal, showModal } from "./GlobalModal";
 import { GreatPersonCard } from "./GreatPersonCard";
 import { FormatNumber } from "./HelperComponents";
@@ -18,21 +18,31 @@ export function ChooseGreatPersonModal({ permanent }: { permanent: boolean }): R
 
    let greatPeopleChoice: GreatPeopleChoice | null = null;
    let onChosen: ((gp: GreatPerson) => void) | null = null;
+   let choicesLeft = 0;
 
    if (permanent && options.greatPeopleChoices.length > 0) {
       greatPeopleChoice = options.greatPeopleChoices[0];
+      choicesLeft = options.greatPeopleChoices.length;
       onChosen = (greatPerson) => {
          if (!greatPeopleChoice) {
+            playError();
             return;
          }
+         const idx = options.greatPeopleChoices.indexOf(greatPeopleChoice);
+         if (idx === -1) {
+            playError();
+            return;
+         }
+
          playClick();
-         options.greatPeopleChoices.splice(options.greatPeopleChoices.indexOf(greatPeopleChoice), 1);
+         options.greatPeopleChoices.splice(idx, 1);
          if (!options.greatPeople[greatPerson]) {
             options.greatPeople[greatPerson] = { level: 1, amount: 0 };
          } else {
             ++options.greatPeople[greatPerson]!.amount;
          }
          notifyGameOptionsUpdate(options);
+
          if (options.greatPeopleChoices.length <= 0) {
             showModal(<UpgradeGreatPersonModal />);
          }
@@ -41,16 +51,30 @@ export function ChooseGreatPersonModal({ permanent }: { permanent: boolean }): R
 
    if (!permanent && gs.greatPeopleChoices.length > 0) {
       greatPeopleChoice = gs.greatPeopleChoices[0];
+      choicesLeft = gs.greatPeopleChoices.length;
       onChosen = (greatPerson) => {
+         if (!greatPeopleChoice) {
+            playError();
+            return;
+         }
+         const idx = gs.greatPeopleChoices.indexOf(greatPeopleChoice);
+         if (idx === -1) {
+            playError();
+            return;
+         }
+
          playClick();
-         gs.greatPeopleChoices.splice(gs.greatPeopleChoices.indexOf(greatPeopleChoice), 1);
+         gs.greatPeopleChoices.splice(idx, 1);
          safeAdd(gs.greatPeople, greatPerson, 1);
          notifyGameStateUpdate();
-         hideModal();
+
+         if (gs.greatPeopleChoices.length <= 0) {
+            hideModal();
+         }
       };
    }
 
-   if (greatPeopleChoice === null) {
+   if (greatPeopleChoice === null || onChosen === null) {
       return null;
    }
    return (
@@ -69,16 +93,32 @@ export function ChooseGreatPersonModal({ permanent }: { permanent: boolean }): R
             <div className="sep5"></div>
             <div className="row">
                <div className="f1">
-                  <GreatPersonLevel greatPerson={greatPeopleChoice[0]} />
+                  {permanent ? (
+                     <PermanentGreatPersonLevel greatPerson={greatPeopleChoice[0]} />
+                  ) : (
+                     <GreatPersonLevel greatPerson={greatPeopleChoice[0]} />
+                  )}
                </div>
                <div style={{ width: "5px" }} />
                <div className="f1">
-                  <GreatPersonLevel greatPerson={greatPeopleChoice[1]} />
+                  {permanent ? (
+                     <PermanentGreatPersonLevel greatPerson={greatPeopleChoice[1]} />
+                  ) : (
+                     <GreatPersonLevel greatPerson={greatPeopleChoice[1]} />
+                  )}
                </div>
                <div style={{ width: "5px" }} />
                <div className="f1">
-                  <GreatPersonLevel greatPerson={greatPeopleChoice[2]} />
+                  {permanent ? (
+                     <PermanentGreatPersonLevel greatPerson={greatPeopleChoice[2]} />
+                  ) : (
+                     <GreatPersonLevel greatPerson={greatPeopleChoice[2]} />
+                  )}
                </div>
+            </div>
+            <div className="sep10" />
+            <div className="f1 text-desc text-small text-center">
+               {t(L.ChooseGreatPersonChoicesLeft, { count: choicesLeft })}
             </div>
          </div>
       </div>

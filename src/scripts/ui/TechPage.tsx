@@ -59,7 +59,7 @@ export function TechPage({ id }: { id: Tech }): React.ReactNode {
          });
       }
       if (gs.greatPeopleChoices.length > 0) {
-         showModal(<ChooseGreatPersonModal greatPeopleChoice={gs.greatPeopleChoices[0]} />);
+         showModal(<ChooseGreatPersonModal permanent={false} />);
       }
       notifyGameStateUpdate();
       Singleton().sceneManager.getCurrent(TechTreeScene)?.renderTechTree("animate", true);

@@ -37,7 +37,7 @@ export function onBuildingComplete(xy: Tile): void {
             gs.greatPeopleChoices.push(candidates);
          }
          if (gs.greatPeopleChoices.length > 0) {
-            showModal(<ChooseGreatPersonModal greatPeopleChoice={gs.greatPeopleChoices[0]} />);
+            showModal(<ChooseGreatPersonModal permanent={false} />);
          }
          break;
       }
@@ -47,7 +47,7 @@ export function onBuildingComplete(xy: Tile): void {
             gs.greatPeopleChoices.push(candidates);
          }
          if (gs.greatPeopleChoices.length > 0) {
-            showModal(<ChooseGreatPersonModal greatPeopleChoice={gs.greatPeopleChoices[0]} />);
+            showModal(<ChooseGreatPersonModal permanent={false} />);
          }
          break;
       }

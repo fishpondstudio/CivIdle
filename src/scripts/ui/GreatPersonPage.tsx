@@ -11,7 +11,6 @@ import { greatPersonImage } from "../visuals/GreatPersonVisual";
 import { playLevelUp } from "../visuals/Sound";
 import { ChooseGreatPersonModal } from "./ChooseGreatPersonModal";
 import { showModal } from "./GlobalModal";
-import { ManageRebornModal } from "./ManageRebornModal";
 import { MenuComponent } from "./MenuComponent";
 import { RenderHTML } from "./RenderHTMLComponent";
 import { TableView } from "./TableView";
@@ -62,7 +61,7 @@ export function GreatPersonPage(): React.ReactNode {
                      onClick={() => {
                         if (gs.greatPeopleChoices.length > 0) {
                            playLevelUp();
-                           showModal(<ChooseGreatPersonModal greatPeopleChoice={gs.greatPeopleChoices[0]} />);
+                           showModal(<ChooseGreatPersonModal permanent={false} />);
                         }
                      }}
                   >
@@ -77,7 +76,7 @@ export function GreatPersonPage(): React.ReactNode {
                      onClick={() => {
                         if (options.greatPeopleChoices.length > 0) {
                            playLevelUp();
-                           showModal(<ManageRebornModal />);
+                           showModal(<ChooseGreatPersonModal permanent={true} />);
                         }
                      }}
                   >
