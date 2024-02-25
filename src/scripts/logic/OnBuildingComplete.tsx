@@ -1,11 +1,26 @@
 import type { Deposit } from "../../../shared/definitions/ResourceDefinitions";
-import { exploreTile, isSpecialBuilding } from "../../../shared/logic/BuildingLogic";
+import {
+   exploreTile,
+   getBuildingThatExtract,
+   isNaturalWonder,
+   isSpecialBuilding,
+} from "../../../shared/logic/BuildingLogic";
 import { getGameState } from "../../../shared/logic/GameStateLogic";
 import { getGrid, getXyBuildings } from "../../../shared/logic/IntraTickCache";
 import { getRevealedDeposits } from "../../../shared/logic/ResourceLogic";
 import { OnResetTile, addDeposit, getGreatPeopleChoices } from "../../../shared/logic/TechLogic";
 import { ensureTileFogOfWar } from "../../../shared/logic/TerrainLogic";
-import { type Tile, isEmpty, pointToTile, shuffle, tileToPoint } from "../../../shared/utilities/Helper";
+import { Tick } from "../../../shared/logic/TickLogic";
+import { makeBuilding } from "../../../shared/logic/Tile";
+import {
+   firstKeyOf,
+   isEmpty,
+   pointToTile,
+   shuffle,
+   sizeOf,
+   tileToPoint,
+   type Tile,
+} from "../../../shared/utilities/Helper";
 import { WorldScene } from "../scenes/WorldScene";
 import { ChooseGreatPersonModal } from "../ui/ChooseGreatPersonModal";
 import { showModal } from "../ui/GlobalModal";
@@ -13,7 +28,7 @@ import { Singleton } from "../utilities/Singleton";
 
 export function onBuildingComplete(xy: Tile): void {
    const gs = getGameState();
-   for (const g of ensureTileFogOfWar(xy, gs, getGrid(gs))) {
+   for (const g of ensureTileFogOfWar(xy, gs)) {
       Singleton().sceneManager.getCurrent(WorldScene)?.getTile(g)?.reveal().catch(console.error);
    }
    const building = gs.tiles.get(xy)?.building;
@@ -32,16 +47,22 @@ export function onBuildingComplete(xy: Tile): void {
          break;
       }
       case "Parthenon": {
-         gs.greatPeopleChoices.push(getGreatPeopleChoices("ClassicalAge"));
+         const candidates = getGreatPeopleChoices("ClassicalAge");
+         if (candidates) {
+            gs.greatPeopleChoices.push(candidates);
+         }
          if (gs.greatPeopleChoices.length > 0) {
-            showModal(<ChooseGreatPersonModal greatPeopleChoice={gs.greatPeopleChoices[0]} />);
+            showModal(<ChooseGreatPersonModal permanent={false} />);
          }
          break;
       }
       case "TajMahal": {
-         gs.greatPeopleChoices.push(getGreatPeopleChoices("MiddleAge"));
+         const candidates = getGreatPeopleChoices("MiddleAge");
+         if (candidates) {
+            gs.greatPeopleChoices.push(candidates);
+         }
          if (gs.greatPeopleChoices.length > 0) {
-            showModal(<ChooseGreatPersonModal greatPeopleChoice={gs.greatPeopleChoices[0]} />);
+            showModal(<ChooseGreatPersonModal permanent={false} />);
          }
          break;
       }
@@ -66,6 +87,48 @@ export function onBuildingComplete(xy: Tile): void {
             }
             if (building.type === "Armory" || building.type === "SwordForge") {
                building.level += 5;
+            }
+         });
+         break;
+      }
+      case "GreatMosqueOfSamarra": {
+         // ensureTileFogOfWar check buildings from `Tick.current.specialBuildings`.
+         // We set it here just to be sure!
+         Tick.current.specialBuildings.set("GreatMosqueOfSamarra", xy);
+
+         const unexploredDepositTiles: Tile[] = [];
+         gs.tiles.forEach((tile, xy) => {
+            if (!tile.explored && sizeOf(tile.deposit) > 0) {
+               unexploredDepositTiles.push(xy);
+            }
+         });
+
+         shuffle(unexploredDepositTiles);
+         let count = 0;
+         for (const xy of unexploredDepositTiles) {
+            const tile = gs.tiles.get(xy);
+            if (!tile) continue;
+            const deposit = firstKeyOf(tile.deposit);
+            if (!deposit) continue;
+            const type = getBuildingThatExtract(deposit);
+            if (!type) continue;
+
+            tile.explored = true;
+            tile.building = makeBuilding({
+               type: type,
+               level: 10,
+               status: "completed",
+            });
+            ++count;
+
+            if (count >= 5) break;
+         }
+
+         gs.tiles.forEach((tile, xy) => {
+            if (tile.building?.status === "completed" && !isNaturalWonder(tile.building.type)) {
+               for (const g of ensureTileFogOfWar(xy, gs)) {
+                  Singleton().sceneManager.getCurrent(WorldScene)?.getTile(g)?.reveal().catch(console.error);
+               }
             }
          });
          break;

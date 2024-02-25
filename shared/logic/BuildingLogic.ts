@@ -1,6 +1,6 @@
 import type { Building } from "../definitions/BuildingDefinitions";
 import { BuildingSpecial } from "../definitions/BuildingDefinitions";
-import { NoStorage, type Resource } from "../definitions/ResourceDefinitions";
+import { Deposit, NoStorage, type Resource } from "../definitions/ResourceDefinitions";
 import {
    clamp,
    forEach,
@@ -10,6 +10,7 @@ import {
    mReduceOf,
    mapSafeAdd,
    mapSafePush,
+   pointToTile,
    reduceOf,
    safeAdd,
    sizeOf,
@@ -18,7 +19,7 @@ import {
    type Tile,
 } from "../utilities/Helper";
 import { srand } from "../utilities/Random";
-import type { PartialTabulate } from "../utilities/TypeDefinitions";
+import type { PartialSet, PartialTabulate } from "../utilities/TypeDefinitions";
 import { TypedEvent } from "../utilities/TypedEvent";
 import { L, t } from "../utilities/i18n";
 import { Config } from "./Config";
@@ -257,8 +258,7 @@ export function useWorkers(res: Resource, amount: number, xy: Tile | null): void
       console.error("`useWorkers` can only be called with non-transportable resource!");
       return;
    }
-   // Normally, we write to Tick.next and read from Tick.current. This is the only exception!
-   mapSafeAdd(Tick.current.workersUsed, res, amount);
+   mapSafeAdd(Tick.next.workersUsed, res, amount);
    if (isNullOrUndefined(xy)) {
       return;
    }
@@ -272,7 +272,9 @@ export function useWorkers(res: Resource, amount: number, xy: Tile | null): void
 
 export function getAvailableWorkers(res: Resource): number {
    const workersAvailable = Tick.current.workersAvailable.get(res) ?? 0;
-   const workersUsed = Tick.current.workersUsed.get(res) ?? 0;
+   // Normally we read from Tick.current. But this is special - because we want to know if we have enough
+   // workers left - Tick.next has that information.
+   const workersUsed = Tick.next.workersUsed.get(res) ?? 0;
    let pct = 1;
    if (res === "Worker") {
       pct = Tick.current.happiness?.workerPercentage ?? 1;
@@ -351,21 +353,21 @@ export function addTransportation(
 }
 
 export function getScienceFromWorkers(gs: GameState) {
-   const workersAvailable = Tick.current.workersAvailable.get("Worker") ?? 0;
+   const workersBeforeHappiness = Tick.current.workersAvailable.get("Worker") ?? 0;
    const happinessPercentage = Tick.current.happiness?.workerPercentage ?? 1;
-   const workersAvailableAfterHappiness = Math.floor(workersAvailable * happinessPercentage);
+   const workersAfterHappiness = Math.floor(workersBeforeHappiness * happinessPercentage);
    const workersBusy = Tick.current.workersUsed.get("Worker") ?? 0;
    const sciencePerIdleWorker = sum(Tick.current.globalMultipliers.sciencePerIdleWorker, "value");
-   const scienceFromIdleWorkers = sciencePerIdleWorker * (workersAvailableAfterHappiness - workersBusy);
+   const scienceFromIdleWorkers = sciencePerIdleWorker * (workersAfterHappiness - workersBusy);
 
    const sciencePerBusyWorker = sum(Tick.current.globalMultipliers.sciencePerBusyWorker, "value");
    const scienceFromBusyWorkers = sciencePerBusyWorker * workersBusy;
    const scienceFromWorkers = scienceFromBusyWorkers + scienceFromIdleWorkers;
 
    return {
-      workersAvailable,
+      workersBeforeHappiness,
       happinessPercentage,
-      workersAvailableAfterHappiness,
+      workersAfterHappiness,
       workersBusy,
       scienceFromBusyWorkers,
       sciencePerBusyWorker,
@@ -577,21 +579,26 @@ export function getBuilderCapacity(
    let baseCapacity = clamp(building.level, 1, Infinity);
 
    if (isWorldWonder(building.type)) {
-      const tech = getBuildingUnlockTech(building.type);
-      let techIdx = 0;
-      let ageIdx = 0;
-      if (tech) {
-         techIdx = Config.Tech[tech].column;
-         const a = getAgeForTech(tech);
-         if (a) {
-            const age = Config.TechAge[a];
-            ageIdx = age.idx;
-         }
-      }
-      baseCapacity = Math.round(Math.pow(5, ageIdx) + techIdx * 2);
+      baseCapacity = getWonderBaseBuilderCapacity(building.type);
    }
 
    return { multiplier: builder, base: baseCapacity, total: builder * baseCapacity };
+}
+
+export function getWonderBaseBuilderCapacity(type: Building): number {
+   console.assert(isWorldWonder(type), "This only works for World Wonders!");
+   const tech = getBuildingUnlockTech(type);
+   let techIdx = 0;
+   let ageIdx = 0;
+   if (tech) {
+      techIdx = Config.Tech[tech].column;
+      const a = getAgeForTech(tech);
+      if (a) {
+         const age = Config.TechAge[a];
+         ageIdx = age.idx;
+      }
+   }
+   return Math.round(Math.pow(5, ageIdx) + techIdx * 2);
 }
 
 export function applyToAllBuildings<T extends IBuildingData>(
@@ -701,4 +708,54 @@ export function getElectrificationStatus(xy: Tile, gs: GameState): Electrificati
       return "Active";
    }
    return "NoPower";
+}
+
+export function hasRequiredDeposit(
+   deposits: PartialSet<Deposit> | undefined,
+   xy: Tile,
+   gs: GameState,
+): boolean {
+   if (!deposits || sizeOf(deposits) === 0) return true;
+   const tiles: Tile[] = [xy];
+
+   if (Tick.current.specialBuildings.has("SaintBasilsCathedral")) {
+      for (const point of getGrid(gs).getNeighbors(tileToPoint(xy))) {
+         tiles.push(pointToTile(point));
+      }
+   }
+
+   let deposit: Deposit;
+   for (deposit in deposits) {
+      if (!hasDepositOnAnyTile(deposit, tiles, gs)) {
+         return false;
+      }
+   }
+
+   return true;
+}
+
+export function getCompletedBuilding(xy: Tile, gs: GameState): IBuildingData | null {
+   const tile = gs.tiles.get(xy);
+   if (!tile || !tile.building || tile.building.status === "building") return null;
+   return tile.building;
+}
+
+function hasDepositOnAnyTile(deposit: Deposit, tiles: Tile[], gs: GameState): boolean {
+   for (const xy of tiles) {
+      if (gs.tiles.get(xy)?.deposit[deposit]) {
+         return true;
+      }
+   }
+   return false;
+}
+
+export function getBuildingThatExtract(d: Deposit): Building | null {
+   let b: Building;
+   for (b in Config.Building) {
+      const building = Config.Building[b];
+      if (building.deposit?.[d]) {
+         return b;
+      }
+   }
+   return null;
 }

@@ -1,3 +1,4 @@
+import { hasRequiredDeposit } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
 import { sizeOf } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
@@ -25,7 +26,7 @@ export function BuildingDepositComponent({ gameState, xy }: IBuildingComponentPr
                return (
                   <li key={k} className="row">
                      <div className="f1">{Config.Resource[k].name()}</div>
-                     {tile.deposit[k] ? (
+                     {hasRequiredDeposit({ [k]: true }, xy, gameState) ? (
                         <div className="m-icon small text-green">check_circle</div>
                      ) : (
                         <div className="m-icon small text-red">cancel</div>

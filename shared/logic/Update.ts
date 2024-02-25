@@ -46,6 +46,7 @@ import {
    getWarehouseIdleCapacity,
    getWorkersFor,
    hasEnoughResources,
+   hasRequiredDeposit,
    isNaturalWonder,
    isSpecialBuilding,
    isTransportable,
@@ -284,15 +285,9 @@ function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
    });
 
    // Return early for buildings that are not working ////////////////////////////////////////////////////////
-   const requiredDeposits = Config.Building[building.type].deposit;
-   if (requiredDeposits) {
-      let key: Resource;
-      for (key in requiredDeposits) {
-         if (!tile.deposit[key]) {
-            Tick.next.notProducingReasons.set(xy, "NotOnDeposit");
-            return;
-         }
-      }
+   if (!hasRequiredDeposit(Config.Building[building.type].deposit, xy, gs)) {
+      Tick.next.notProducingReasons.set(xy, "NotOnDeposit");
+      return;
    }
 
    if (building.capacity <= 0) {

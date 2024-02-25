@@ -44,15 +44,22 @@ export function TechPage({ id }: { id: Tech }): React.ReactNode {
       if (!trySpendResources(unlockCost, gs)) {
          return;
       }
+      playLevelUp();
       const oldAge = getCurrentTechAge(gs);
       unlockTech(id, OnResetTile, gs);
-      playLevelUp();
       const newAge = getCurrentTechAge(gs);
-      if (oldAge !== newAge) {
-         gs.greatPeopleChoices.push(getGreatPeopleChoices(newAge!));
+      if (oldAge && newAge && oldAge !== newAge) {
+         forEach(Config.TechAge, (age, def) => {
+            if (def.idx <= Config.TechAge[newAge].idx) {
+               const candidates = getGreatPeopleChoices(age);
+               if (candidates) {
+                  gs.greatPeopleChoices.push(candidates);
+               }
+            }
+         });
       }
       if (gs.greatPeopleChoices.length > 0) {
-         showModal(<ChooseGreatPersonModal greatPeopleChoice={gs.greatPeopleChoices[0]} />);
+         showModal(<ChooseGreatPersonModal permanent={false} />);
       }
       notifyGameStateUpdate();
       Singleton().sceneManager.getCurrent(TechTreeScene)?.renderTechTree("animate", true);

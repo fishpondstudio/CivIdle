@@ -12,7 +12,7 @@ import { ProgressBarComponent } from "./ProgressBarComponent";
 
 export function HappinessComponent({ open }: { open: boolean }): React.ReactNode {
    const happiness = useCurrentTick().happiness;
-   const { workersAvailable, workersAvailableAfterHappiness } = getScienceFromWorkers(useGameState());
+   const { workersBeforeHappiness, workersAfterHappiness } = getScienceFromWorkers(useGameState());
    if (!happiness) {
       return null;
    }
@@ -116,13 +116,13 @@ export function HappinessComponent({ open }: { open: boolean }): React.ReactNode
                      <li className="row">
                         <div className="f1">{t(L.WorkersAvailableBeforeHappinessMultiplier)}</div>
                         <div className="text-strong">
-                           <FormatNumber value={workersAvailable} />
+                           <FormatNumber value={workersBeforeHappiness} />
                         </div>
                      </li>
                      <li className="row">
                         <div className="f1">{t(L.WorkersAvailableAfterHappinessMultiplier)}</div>
                         <div className="text-strong">
-                           <FormatNumber value={workersAvailableAfterHappiness} />
+                           <FormatNumber value={workersAfterHappiness} />
                         </div>
                      </li>
                   </ul>

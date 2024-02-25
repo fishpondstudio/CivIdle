@@ -1,5 +1,6 @@
 import type { City } from "../../shared/definitions/CityDefinitions";
 import type { TechAge } from "../../shared/definitions/TechDefinitions";
+import { getBuildingCost } from "../../shared/logic/BuildingLogic";
 import { Config } from "../../shared/logic/Config";
 import type { GameOptions, SavedGame } from "../../shared/logic/GameState";
 import { GameState } from "../../shared/logic/GameState";
@@ -70,10 +71,21 @@ if (import.meta.env.DEV) {
    // @ts-expect-error
    window.rollGreatPeople = (age: TechAge) => {
       const gs = getGameState();
-      if (age) {
-         gs.greatPeopleChoices.push(getGreatPeopleChoices(age));
+      const candidates = getGreatPeopleChoices(age);
+      if (candidates) {
+         gs.greatPeopleChoices.push(candidates);
       }
       notifyGameStateUpdate(gs);
+   };
+
+   // @ts-expect-error
+   window.completeBuilding = (xy: Tile) => {
+      const building = getGameState().tiles.get(xy)?.building;
+      if (building) {
+         forEach(getBuildingCost(building), (res, amount) => {
+            building.resources[res] = amount;
+         });
+      }
    };
 }
 

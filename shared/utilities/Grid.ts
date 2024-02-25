@@ -90,6 +90,19 @@ export class Grid {
       return result;
    }
 
+   public getRange(grid: Point, distance: number): Point[] {
+      const result: Point[] = [];
+      this.gridToHex(grid)
+         .range(distance)
+         .forEach((h) => {
+            const g = this.hexToGrid(h);
+            if (this.isValid(g)) {
+               result.push(g);
+            }
+         });
+      return result;
+   }
+
    private _distanceCache: Map<number, number> = new Map();
 
    public distanceTile(xy1: Tile, xy2: Tile): number {

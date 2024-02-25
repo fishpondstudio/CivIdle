@@ -31,9 +31,8 @@ export function BuildingInputModeComponent({ gameState, xy }: IBuildingComponent
          <div className="row">
             {jsxMMapOf(BuildingInputModeNames, (mode, name) => {
                return (
-                  <Tippy content={BuildingInputModeTooltips.get(mode)?.() ?? ""}>
+                  <Tippy key={mode} content={BuildingInputModeTooltips.get(mode)?.() ?? ""}>
                      <button
-                        key={mode}
                         onClick={() => {
                            building.inputMode = mode;
                            notifyGameStateUpdate();

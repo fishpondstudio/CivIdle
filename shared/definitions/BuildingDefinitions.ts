@@ -612,6 +612,16 @@ export class BuildingDefinitions {
       special: BuildingSpecial.WorldWonder,
       wikipedia: "Colossus_of_Rhodes",
    };
+   GreatMosqueOfSamarra: IBuildingDefinition = {
+      name: () => t(L.GreatMosqueOfSamarra),
+      desc: () => t(L.GreatMosqueOfSamarraDescV2),
+      input: {},
+      output: {},
+      construction: { Sand: 100, Brick: 100, Cotton: 100 },
+      max: 1,
+      special: BuildingSpecial.WorldWonder,
+      wikipedia: "Great_Mosque_of_Samarra",
+   };
    HangingGarden: IBuildingDefinition = {
       name: () => t(L.HangingGarden),
       desc: () => t(L.HangingGardenDesc),
@@ -742,6 +752,16 @@ export class BuildingDefinitions {
       special: BuildingSpecial.WorldWonder,
       wikipedia: "St._Peter%27s_Basilica",
    };
+   SaintBasilsCathedral: IBuildingDefinition = {
+      name: () => t(L.SaintBasilsCathedral),
+      desc: () => t(L.SaintBasilsCathedralDescV2),
+      input: {},
+      output: {},
+      max: 1,
+      construction: { Faith: 100, Gold: 100, Furniture: 100 },
+      special: BuildingSpecial.WorldWonder,
+      wikipedia: "Saint_Basil%27s_Cathedral",
+   };
    ForbiddenCity: IBuildingDefinition = {
       name: () => t(L.ForbiddenCity),
       desc: () => t(L.ForbiddenCityDesc),
@@ -767,8 +787,8 @@ export class BuildingDefinitions {
       desc: () => t(L.TajMahalDesc),
       input: {},
       output: {},
-      max: 1,
       construction: { Faith: 100, Marble: 100, Garment: 100 },
+      max: 1,
       special: BuildingSpecial.WorldWonder,
       wikipedia: "Taj_Mahal",
    };
@@ -781,6 +801,16 @@ export class BuildingDefinitions {
       max: 1,
       special: BuildingSpecial.WorldWonder,
       wikipedia: "Colosseum",
+   };
+   MogaoCaves: IBuildingDefinition = {
+      name: () => t(L.MogaoCaves),
+      desc: () => t(L.MogaoCavesDescV2),
+      input: {},
+      output: {},
+      construction: { Faith: 100, Marble: 100, Painting: 100 },
+      max: 1,
+      special: BuildingSpecial.WorldWonder,
+      wikipedia: "Mogao_Caves",
    };
    StatueOfZeus: IBuildingDefinition = {
       name: () => t(L.StatueOfZeus),
@@ -970,24 +1000,6 @@ export class BuildingDefinitions {
    //    wikipedia: "Bran_Castle",
    // };
 
-   // SaintBasilsCathedral: IBuildingDefinition = {
-   //    name: () => t(L.SaintBasilsCathedral),
-   //    desc: () => t(L.SaintBasilsCathedralDesc),
-   //    input: {},
-   //    output: {},
-   //    max: 1,
-   //    wikipedia: "Saint_Basil%27s_Cathedral",
-   // };
-
-   // GreatMosqueOfSamarra: IBuildingDefinition = {
-   //    name: () => t(L.GreatMosqueOfSamarra),
-   //    desc: () => t(L.GreatMosqueOfSamarraDesc),
-   //    input: {},
-   //    output: {},
-   //    max: 1,
-   //    wikipedia: "Great_Mosque_of_Samarra",
-   // };
-
    // ChoghaZanbil: IBuildingDefinition = {
    //    name: () => t(L.ChoghaZanbil),
    //    desc: () => t(L.ChoghaZanbilDesc),
@@ -1022,15 +1034,6 @@ export class BuildingDefinitions {
    //    output: {},
    //    max: 1,
    //    wikipedia: "Sydney_Opera_House",
-   // };
-
-   // MogaoCaves: IBuildingDefinition = {
-   //    name: () => t(L.MogaoCaves),
-   //    desc: () => t(L.MogaoCavesDesc),
-   //    input: {},
-   //    output: {},
-   //    max: 1,
-   //    wikipedia: "Mogao_Caves",
    // };
 
    // FishPond: IBuildingDefinition = {

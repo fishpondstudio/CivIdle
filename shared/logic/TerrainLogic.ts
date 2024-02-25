@@ -1,39 +1,37 @@
 import { BUILDING_DEFAULT_VISION } from "../definitions/BuildingDefinitions";
 import type { Grid } from "../utilities/Grid";
-import { IPointData, type Tile, pointToTile, tileToPoint } from "../utilities/Helper";
+import { IPointData, pointToTile, tileToPoint, type Tile } from "../utilities/Helper";
 import { v2 } from "../utilities/Vector2";
 import { exploreTile, isNaturalWonder } from "./BuildingLogic";
 import { Config } from "./Config";
 import type { GameState } from "./GameState";
+import { getGrid } from "./IntraTickCache";
+import { Tick } from "./TickLogic";
 import type { ITileData } from "./Tile";
 
-export function ensureTileFogOfWar(xy: Tile, gameState: GameState, grid: Grid): Tile[] {
+export function ensureTileFogOfWar(xy: Tile, gameState: GameState): Tile[] {
    const tile = gameState.tiles.get(xy);
+   const grid = getGrid(gameState);
    const building = tile?.building;
-   if (!building || isNaturalWonder(building.type)) {
+   if (!building || building.status === "building" || isNaturalWonder(building.type)) {
       return [];
    }
    const result: Set<Tile> = new Set();
    exploreTile(xy, gameState);
    result.add(xy);
-   const point = tileToPoint(xy);
-   let targets = [point];
-   for (let i = 0; i < (Config.Building[building.type]?.vision ?? BUILDING_DEFAULT_VISION); i++) {
-      const newTargets: IPointData[] = [];
-      targets.forEach((t) => {
-         const neighbors = grid.getNeighbors(t);
-         neighbors.forEach((n) => {
-            const xy = pointToTile(n);
-            const tile = gameState.tiles.get(xy);
-            if (tile) {
-               exploreTile(xy, gameState);
-               result.add(xy);
-               newTargets.push(n);
-            }
-         });
-      });
-      targets = newTargets;
+   let visionRange = Config.Building[building.type]?.vision ?? BUILDING_DEFAULT_VISION;
+   if (Tick.current.specialBuildings.get("GreatMosqueOfSamarra")) {
+      ++visionRange;
    }
+   grid.getRange(tileToPoint(xy), visionRange).forEach((n) => {
+      const xy = pointToTile(n);
+      const tile = gameState.tiles.get(xy);
+      if (tile && !tile.explored) {
+         exploreTile(xy, gameState);
+         result.add(xy);
+      }
+   });
+
    return Array.from(result.values());
 }
 

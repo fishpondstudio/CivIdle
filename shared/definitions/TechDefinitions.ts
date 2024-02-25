@@ -159,7 +159,7 @@ export class TechDefinitions {
       name: () => t(L.RoadAndWheel),
       column: 4,
       requireTech: ["Market", "Stateship"],
-      unlockBuilding: ["Warehouse"],
+      unlockBuilding: ["Warehouse", "GreatMosqueOfSamarra"],
       buildingMultiplier: { House: { worker: 1 } },
    };
 
@@ -321,7 +321,7 @@ export class TechDefinitions {
       name: () => t(L.Theocracy),
       column: 9,
       requireTech: ["Autocracy", "Religion"],
-      unlockBuilding: ["Church", "Mosque"],
+      unlockBuilding: ["Church", "Mosque", "MogaoCaves"],
    };
 
    Navigation: ITechDefinition = {
@@ -420,7 +420,7 @@ export class TechDefinitions {
       name: () => t(L.Firearm),
       column: 12,
       requireTech: ["Chemistry"],
-      unlockBuilding: ["GunpowderMill"],
+      unlockBuilding: ["GunpowderMill", "SaintBasilsCathedral"],
    };
 
    Colonialism: ITechDefinition = {

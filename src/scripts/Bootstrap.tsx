@@ -26,11 +26,11 @@ import { connectWebSocket } from "./rpc/RPCClient";
 import { PlayerMapScene } from "./scenes/PlayerMapScene";
 import { TechTreeScene } from "./scenes/TechTreeScene";
 import { WorldScene } from "./scenes/WorldScene";
+import { ChooseGreatPersonModal } from "./ui/ChooseGreatPersonModal";
 import { ErrorPage } from "./ui/ErrorPage";
 import { FirstTimePlayerModal } from "./ui/FirstTimePlayerModal";
 import { showModal, showToast } from "./ui/GlobalModal";
 import { LoadingPage, LoadingPageStage } from "./ui/LoadingPage";
-import { ManageRebornModal } from "./ui/ManageRebornModal";
 import { OfflineProductionModal } from "./ui/OfflineProductionModal";
 import { GameTicker } from "./utilities/GameTicker";
 import { SceneManager } from "./utilities/SceneManager";
@@ -146,7 +146,7 @@ export async function startGame(
    } else if (isNewPlayer) {
       showModal(<FirstTimePlayerModal />);
    } else if (getGameOptions().greatPeopleChoices.length > 0) {
-      showModal(<ManageRebornModal />);
+      showModal(<ChooseGreatPersonModal permanent={true} />);
    }
 
    Singleton().heartbeat.init();

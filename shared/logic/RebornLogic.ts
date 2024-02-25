@@ -1,4 +1,5 @@
 import type { GreatPerson } from "../definitions/GreatPersonDefinitions";
+import { TechAge } from "../definitions/TechDefinitions";
 import { clamp, forEach, keysOf, shuffle } from "../utilities/Helper";
 import { Config } from "./Config";
 import type { GameOptions, GreatPeopleChoice } from "./GameState";
@@ -25,13 +26,17 @@ export function getGreatPersonUpgradeCost(targetLevel: number): number {
    return Math.pow(2, targetLevel - 1);
 }
 
-export function rollPermanentGreatPeople(amount: number): void {
-   let candidates = shuffle(keysOf(Config.GreatPerson));
+export function rollPermanentGreatPeople(amount: number, currentTechAge: TechAge): void {
+   const currentTechAgeIdx = Config.TechAge[currentTechAge].idx;
+   const pool = keysOf(Config.GreatPerson).filter(
+      (p) => Config.TechAge[Config.GreatPerson[p].age].idx <= currentTechAgeIdx + 1,
+   );
+   let candidates = shuffle([...pool]);
    for (let i = 0; i < amount; i++) {
       const choice: GreatPerson[] = [];
       for (let i = 0; i < 3; i++) {
          if (candidates.length === 0) {
-            candidates = shuffle(keysOf(Config.GreatPerson));
+            candidates = shuffle([...pool]);
          }
          choice.push(candidates.pop()!);
       }

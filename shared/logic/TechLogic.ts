@@ -4,13 +4,13 @@ import type { GreatPerson } from "../definitions/GreatPersonDefinitions";
 import type { Deposit, Resource } from "../definitions/ResourceDefinitions";
 import type { Tech, TechAge } from "../definitions/TechDefinitions";
 import {
-   type Tile,
    filterOf,
    forEach,
    isEmpty,
    isNullOrUndefined,
    keysOf,
    shuffle,
+   type Tile,
 } from "../utilities/Helper";
 import { TypedEvent } from "../utilities/TypedEvent";
 import { Config } from "./Config";
@@ -173,10 +173,12 @@ export function unlockableTechs(gs: GameState): Tech[] {
    return result;
 }
 
-export function getGreatPeopleChoices(age: TechAge): GreatPeopleChoice {
+export function getGreatPeopleChoices(age: TechAge): GreatPeopleChoice | null {
    const choices: GreatPerson[] = [];
    const pool = shuffle(keysOf(filterOf(Config.GreatPerson, (_, v) => v.age === age)));
-   console.assert(pool.length >= 3);
+   if (pool.length < 3) {
+      return null;
+   }
    for (let i = 0; i < 3; i++) {
       choices.push(pool[i]);
    }

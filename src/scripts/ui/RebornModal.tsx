@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
 import type { City } from "../../../shared/definitions/CityDefinitions";
 import { Config } from "../../../shared/logic/Config";
+import { getGameState } from "../../../shared/logic/GameStateLogic";
 import {
    getGreatPeopleAtReborn,
    makeGreatPeopleFromThisRunPermanent,
    rollPermanentGreatPeople,
 } from "../../../shared/logic/RebornLogic";
+import { getCurrentTechAge } from "../../../shared/logic/TechLogic";
 import { Tick } from "../../../shared/logic/TickLogic";
 import { firstKeyOf, formatPercent, mapOf, reduceOf, rejectIn } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
@@ -161,7 +163,10 @@ export function RebornModal(): React.ReactNode {
                      }
 
                      if (canEarnGreatPeopleFromReborn()) {
-                        rollPermanentGreatPeople(getGreatPeopleAtReborn());
+                        const age = getCurrentTechAge(getGameState());
+                        if (age) {
+                           rollPermanentGreatPeople(getGreatPeopleAtReborn(), age);
+                        }
                         makeGreatPeopleFromThisRunPermanent();
                      }
                      resetToCity(city);

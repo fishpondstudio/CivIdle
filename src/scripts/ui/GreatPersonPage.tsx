@@ -2,7 +2,7 @@ import { type GreatPerson } from "../../../shared/definitions/GreatPersonDefinit
 import { Config } from "../../../shared/logic/Config";
 import { MAX_TRIBUNE_CARRY_OVER_LEVEL } from "../../../shared/logic/Constants";
 import { getSpecialBuildings } from "../../../shared/logic/IntraTickCache";
-import { forEach, isEmpty, numberToRoman } from "../../../shared/utilities/Helper";
+import { forEach, numberToRoman } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import { useGameOptions, useGameState } from "../Global";
 import { isOnlineUser } from "../rpc/RPCClient";
@@ -11,7 +11,6 @@ import { greatPersonImage } from "../visuals/GreatPersonVisual";
 import { playLevelUp } from "../visuals/Sound";
 import { ChooseGreatPersonModal } from "./ChooseGreatPersonModal";
 import { showModal } from "./GlobalModal";
-import { ManageRebornModal } from "./ManageRebornModal";
 import { MenuComponent } from "./MenuComponent";
 import { RenderHTML } from "./RenderHTMLComponent";
 import { TableView } from "./TableView";
@@ -62,7 +61,7 @@ export function GreatPersonPage(): React.ReactNode {
                      onClick={() => {
                         if (gs.greatPeopleChoices.length > 0) {
                            playLevelUp();
-                           showModal(<ChooseGreatPersonModal greatPeopleChoice={gs.greatPeopleChoices[0]} />);
+                           showModal(<ChooseGreatPersonModal permanent={false} />);
                         }
                      }}
                   >
@@ -77,7 +76,7 @@ export function GreatPersonPage(): React.ReactNode {
                      onClick={() => {
                         if (options.greatPeopleChoices.length > 0) {
                            playLevelUp();
-                           showModal(<ManageRebornModal />);
+                           showModal(<ChooseGreatPersonModal permanent={true} />);
                         }
                      }}
                   >
@@ -85,15 +84,13 @@ export function GreatPersonPage(): React.ReactNode {
                   </div>
                </WarningComponent>
             ) : null}
-            {isEmpty(options.greatPeople) ? null : (
-               <button
-                  className="row w100 mb10 text-strong"
-                  onClick={() => showModal(<UpgradeGreatPersonModal />)}
-               >
-                  <div className="m-icon small">open_in_new</div>
-                  <div className="f1 text-center">{t(L.ManagePermanentGreatPeople)}</div>
-               </button>
-            )}
+            <button
+               className="row w100 mb10 text-strong"
+               onClick={() => showModal(<UpgradeGreatPersonModal />)}
+            >
+               <div className="m-icon small">open_in_new</div>
+               <div className="f1 text-center">{t(L.ManagePermanentGreatPeople)}</div>
+            </button>
             <TableView
                data={Array.from(greatPeople.values())}
                header={[
@@ -141,12 +138,12 @@ export function GreatPersonPage(): React.ReactNode {
                            <div className="text-desc text-small">{Config.TechAge[person.age].name()}</div>
                            <div></div>
                         </td>
-                        <td>
+                        <td className="text-center">
                            <TextWithHelp content={person.desc(person, gs.greatPeople[gp] ?? 0)}>
                               {gs.greatPeople[gp]}
                            </TextWithHelp>
                         </td>
-                        <td>
+                        <td className="text-center">
                            <TextWithHelp content={person.desc(person, options.greatPeople[gp]?.level ?? 0)}>
                               {numberToRoman(options.greatPeople[gp]?.level ?? 0)}
                            </TextWithHelp>

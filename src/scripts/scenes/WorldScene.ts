@@ -273,9 +273,12 @@ export class WorldScene extends ViewportScene {
             case "EiffelTower":
             case "BrandenburgGate":
             case "SummerPalace":
-            case "StatueOfLiberty":
+            case "MogaoCaves":
+            case "SaintBasilsCathedral":
+            case "StatueOfLiberty": {
                this.highlightAdjacentTiles(grid);
                break;
+            }
          }
       }
    }
