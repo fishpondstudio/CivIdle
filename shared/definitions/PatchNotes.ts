@@ -4,7 +4,66 @@ interface PatchNote {
 }
 
 export const PatchNotes: PatchNote[] = [
-   { version: "0.2.0", content: [["Content", "TODO"]] },
+   {
+      version: "0.2.0",
+      content: [
+         [
+            "Great Person",
+            "Hatshepsut: +1 Production Multiplier, Storage Multiplier for Aqueduct, Brickworks (Bronze Age)",
+         ],
+         [
+            "Great Person",
+            "Sargon Of Akkad: +1 Production Multiplier, Storage Multiplier for Logging Camp, Lumber Mill (Bronze Age)",
+         ],
+         [
+            "Great Person",
+            "Zoroaster: +1 Production Multiplier, Storage Multiplier for Cotton Plantation, Cotton Mill (Iron Age)",
+         ],
+         [
+            "Great Person",
+            "Aeschylus: +1 Production Multiplier, Storage Multiplier for Flour Mill, Bakery (Classical Age)",
+         ],
+         [
+            "Great Person",
+            "Ashurbanipal: +1 Production Multiplier, Storage Multiplier for Sandpit, Glassworks (Classical Age)",
+         ],
+         [
+            "Great Person",
+            "Confucius: +1 Science from Busy and Idle Workers if more than 50% of workers are busy (Classical Age)",
+         ],
+         ["Great Person", "Aristophanes: +1 Happiness (Classical Age)"],
+         ["Great Person", "Isidore of Miletus: +2 Builder Capacity Multiplier (Middle Age)"],
+         [
+            "Great Person",
+            "Isaac Newton: +2 Science from Busy and Idle Workers if more than 50% of workers are busy (Renaissance)",
+         ],
+         [
+            "Wonder",
+            "Saint Basil's Cathedral: Allow resource extraction buildings to work adjacent to a deposit. All adjacent tier I buildings get +1 Production Multiplier, Worker Capacity Multiplier, and Storage Multiplier (Renaissance/Firearm)",
+         ],
+         [
+            "Wonder",
+            "Great Mosque of Samarra: +1 building vision range. Reveal 5 random unexplored deposit tiles and build a level 10 resource extraction building on each (Iron Age / Road & Wheel)",
+         ],
+         [
+            "Wonder",
+            "Mogao Caves: +1 happiness for every 10% of busy workers. All adjacent shrines are exempt from -1 happiness (Middle Age / Theocracy)",
+         ],
+         [
+            "Gameplay",
+            "Entering a new age will allow picking a new great person of each unlocked age (e.g. Entering Classical Age will allow picking 1 Classical Age + 1 Iron Age + 1 Bronze Age great person)",
+         ],
+         [
+            "Gameplay",
+            "Extra Great Person from Total Empire Value will be chosen from Great People up to Current Age + 1",
+         ],
+         [
+            "Misc",
+            "Version number format has been changed. The new format is 'X.Y.Z Build W'. Y will increase for the weekly content update. Z will increase for the daily QoL/hotfix update. W is a unique number that is produced by the build system. Patch notes will be written against X.Y.Z. If you want to report a bug, please include build number",
+         ],
+         ["Misc", "Add Czech (@MikeCZ) and Dutch (@Thomasthegama) translation"],
+      ],
+   },
    {
       version: "0.1.149",
       content: [["Bugfix", "Fix a bug where rebirth is only effective after restarting the game"]],
