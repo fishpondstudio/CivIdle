@@ -971,4 +971,6 @@ export const CZ = {
    IsaacNewton: "Isaac Newton",
    IsaacNewtonDesc: "+%{value} Věda od všech pracovníků, pokud je více než 50% pracovníků zaneprázdněno.",
    ChooseGreatPersonChoicesLeft: "Máte %{count} zbývající možnosti",
+   GreatPersonThisRunEffectiveLevel:
+      "You currently have %{count} %{person} from this run. An additional %{person} will have 1/%{effect} of the effect",
 };

@@ -363,7 +363,8 @@ export const FR = {
    Aristophanes: "Aristophane",
    AristophanesDesc: "+%{value} Bonheur",
    Fibonacci: "Fibonacci",
-   FibonacciDesc: "+%{value} Science produite par les ouvriers inactifs",
+   FibonacciDesc:
+      "+%{idle} Science from Idle Workers. +%{busy} Science from Busy Workers. Permanent upgrade cost follows Fibonacci sequence",
    LeonardoDaVinci: "Léonard de Vinci",
    MartinLuther: "Martin Luther",
    WilliamShakespeare: "William Shakespeare",
@@ -993,4 +994,6 @@ export const FR = {
    IsaacNewton: "Isaac Newton",
    IsaacNewtonDesc: "+%{value} Science produite par tous les ouvriers si plus de 50% d'entre eux sont actifs",
    ChooseGreatPersonChoicesLeft: "Il vous reste %{count} choix",
+   GreatPersonThisRunEffectiveLevel:
+      "You currently have %{count} %{person} from this run. An additional %{person} will have 1/%{effect} of the effect",
 };
