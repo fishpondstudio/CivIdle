@@ -970,4 +970,6 @@ export const EN = {
    ChooseGreatPersonChoicesLeft: "You have %{count} choices left",
    GreatPersonThisRunEffectiveLevel:
       "You currently have %{count} %{person} from this run. An additional %{person} will have 1/%{effect} of the effect",
+   OpenSaveFolder: "Open Save Folder",
+   OpenSaveBackupFolder: "Open Backup Folder",
 };

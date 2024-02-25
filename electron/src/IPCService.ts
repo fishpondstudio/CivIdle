@@ -71,6 +71,14 @@ export class IPCService {
       return this._client.apps.currentBetaName() ?? "";
    }
 
+   public openMainSaveFolder(): void {
+      shell.openPath(path.join(getGameSavePath(), this.getSteamId()));
+   }
+
+   public openBackupSaveFolder(): void {
+      shell.openPath(path.join(getLocalGameSavePath(), this.getAppId().toString(), this.getSteamId()));
+   }
+
    public quit(): void {
       app.exit(0);
    }
