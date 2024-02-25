@@ -166,7 +166,7 @@ export const CZ = {
    RequiredDeposit: "Požadovaná záloha",
    NoDepositDesc:
       "Na tuto dlaždici není požadován žádný vklad. Další vklady mohou být objeveny při odemykání nových technologií",
-   UnlockBuilding: "Odemkněte stránku",
+   UnlockBuilding: "Odemknout",
    UpgradeBuilding: "Vylepšení",
    RevealDeposit: "Odhalení",
    BuildingMultipliers: "Zvýšení",
@@ -963,12 +963,12 @@ export const CZ = {
       "Nepřepisuje preference přepravy pro tuto surovinu, místo toho použije preference přepravy budovy",
    TechResourceTransportPreferenceOverrideTooltip:
       "Tento zdroj má nadefinovanou preferenci přepravy: %{mode}",
-   MaxTransportDistance: "Max Transport Distance",
-   DistanceInTiles: "Distance (In Tiles)",
-   DistanceInfinity: "Unlimited",
-   SaveAndExit: "Save And Exit",
+   MaxTransportDistance: "Maximální přepravní vzdálenost",
+   DistanceInTiles: "Vzdálenost (v dlaždicích)",
+   DistanceInfinity: "Neomezené",
+   SaveAndExit: "Uložit a ukončit",
    Hatshepsut: "Hatshepsut",
    IsaacNewton: "Isaac Newton",
-   IsaacNewtonDesc: "+%{value} Science from All Workers if more than 50% of workers are busy",
-   ChooseGreatPersonChoicesLeft: "You have %{count} choices left",
+   IsaacNewtonDesc: "+%{value} Věda od všech pracovníků, pokud je více než 50% pracovníků zaneprázdněno.",
+   ChooseGreatPersonChoicesLeft: "Máte %{count} zbývající možnosti",
 };
