@@ -81,9 +81,8 @@ export function makeGreatPeopleFromThisRunPermanent(): void {
 
 export function upgradeAllPermanentGreatPeople(options: GameOptions): void {
    forEach(options.greatPeople, (greatPerson, inventory) => {
-      const cost = getGreatPersonUpgradeCost(greatPerson, inventory.level + 1);
-      while (inventory.amount >= cost) {
-         inventory.amount -= cost;
+      while (inventory.amount >= getGreatPersonUpgradeCost(greatPerson, inventory.level + 1)) {
+         inventory.amount -= getGreatPersonUpgradeCost(greatPerson, inventory.level + 1);
          ++inventory.level;
       }
    });
