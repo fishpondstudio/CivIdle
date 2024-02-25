@@ -35,11 +35,11 @@ export const PatchNotes: PatchNote[] = [
          ["Great Person", "Isidore of Miletus: +2 Builder Capacity Multiplier (Middle Age)"],
          [
             "Great Person",
-            "Isaac Newton: +2 Science from Busy and Idle Workers if more than 50% of workers are busy (Renaissance)",
+            "+0.5 Science from Idle Workers. +1 Science from Busy Workers. Permanent upgrade cost follows Fibonacci sequence (Middle Age)",
          ],
          [
             "Great Person",
-            "+0.5 Science from Idle Workers. +1 Science from Busy Workers. Permanent upgrade cost follows Fibonacci sequence (Renaissance)",
+            "Isaac Newton: +2 Science from Busy and Idle Workers if more than 50% of workers are busy (Renaissance)",
          ],
          [
             "Wonder",
