@@ -6,10 +6,7 @@ console.log("========== Building CivIdle ==========");
 
 const rootPath = path.resolve(path.join(__dirname, "../"));
 
-const commitMessage = execSync("git log -1").toString("utf8");
-const isRelease = commitMessage.toLowerCase().includes("[release]");
-
-if (isRelease && process.env.STEAMWORKS_PATH) {
+if (process.env.STEAMWORKS_PATH) {
    console.log("========== Increase Build Number ==========");
    const versionFilePath = path.join(rootPath, "src", "scripts", "Version.json");
    const ver = JSON.parse(fs.readFileSync(versionFilePath, { encoding: "utf8" }));

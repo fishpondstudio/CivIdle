@@ -4,6 +4,7 @@ interface PatchNote {
 }
 
 export const PatchNotes: PatchNote[] = [
+   { version: "0.2.0", content: [["Content", "TODO"]] },
    {
       version: "0.1.149",
       content: [["Bugfix", "Fix a bug where rebirth is only effective after restarting the game"]],
