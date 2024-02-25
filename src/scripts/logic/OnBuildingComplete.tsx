@@ -5,7 +5,7 @@ import { getGrid, getXyBuildings } from "../../../shared/logic/IntraTickCache";
 import { getRevealedDeposits } from "../../../shared/logic/ResourceLogic";
 import { OnResetTile, addDeposit, getGreatPeopleChoices } from "../../../shared/logic/TechLogic";
 import { ensureTileFogOfWar } from "../../../shared/logic/TerrainLogic";
-import { type Tile, isEmpty, pointToTile, shuffle, tileToPoint } from "../../../shared/utilities/Helper";
+import { isEmpty, pointToTile, shuffle, tileToPoint, type Tile } from "../../../shared/utilities/Helper";
 import { WorldScene } from "../scenes/WorldScene";
 import { ChooseGreatPersonModal } from "../ui/ChooseGreatPersonModal";
 import { showModal } from "../ui/GlobalModal";
@@ -32,14 +32,20 @@ export function onBuildingComplete(xy: Tile): void {
          break;
       }
       case "Parthenon": {
-         gs.greatPeopleChoices.push(getGreatPeopleChoices("ClassicalAge"));
+         const candidates = getGreatPeopleChoices("ClassicalAge");
+         if (candidates) {
+            gs.greatPeopleChoices.push(candidates);
+         }
          if (gs.greatPeopleChoices.length > 0) {
             showModal(<ChooseGreatPersonModal greatPeopleChoice={gs.greatPeopleChoices[0]} />);
          }
          break;
       }
       case "TajMahal": {
-         gs.greatPeopleChoices.push(getGreatPeopleChoices("MiddleAge"));
+         const candidates = getGreatPeopleChoices("MiddleAge");
+         if (candidates) {
+            gs.greatPeopleChoices.push(candidates);
+         }
          if (gs.greatPeopleChoices.length > 0) {
             showModal(<ChooseGreatPersonModal greatPeopleChoice={gs.greatPeopleChoices[0]} />);
          }

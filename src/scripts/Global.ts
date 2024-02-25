@@ -70,8 +70,9 @@ if (import.meta.env.DEV) {
    // @ts-expect-error
    window.rollGreatPeople = (age: TechAge) => {
       const gs = getGameState();
-      if (age) {
-         gs.greatPeopleChoices.push(getGreatPeopleChoices(age));
+      const candidates = getGreatPeopleChoices(age);
+      if (candidates) {
+         gs.greatPeopleChoices.push(candidates);
       }
       notifyGameStateUpdate(gs);
    };
