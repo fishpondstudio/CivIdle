@@ -588,8 +588,8 @@ function boostOf(
 
 function addScienceBasedOnBusyWorkers(self: IGreatPersonDefinition, level: number, permanent: boolean): void {
    const gs = getGameState();
-   const { workersBusy, workersAfterHappiness: workersAvailableAfterHappiness } = getScienceFromWorkers(gs);
-   if (workersBusy >= 0.5 * workersAvailableAfterHappiness) {
+   const { workersBusy, workersAfterHappiness } = getScienceFromWorkers(gs);
+   if (workersBusy >= 0.5 * workersAfterHappiness) {
       Tick.next.globalMultipliers.sciencePerBusyWorker.push({
          value: self.value(level),
          source: t(permanent ? L.SourceGreatPersonPermanent : L.SourceGreatPerson, {

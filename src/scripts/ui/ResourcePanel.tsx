@@ -36,7 +36,7 @@ export function ResourcePanel(): React.ReactNode {
    useTypedEvent(CurrentTickChanged, (current) => {
       setEmpireValues([current.totalValue, empireValues[0]]);
    });
-   const { workersAfterHappiness: workersAvailableAfterHappiness, workersBusy } = getScienceFromWorkers(gs);
+   const { workersAfterHappiness, workersBusy } = getScienceFromWorkers(gs);
    const highlightNotProducingReasons = () => {
       const buildingTiles: Tile[] = Array.from(tick.notProducingReasons.keys());
       Singleton().sceneManager.getCurrent(WorldScene)?.drawSelection(null, buildingTiles);
@@ -141,8 +141,7 @@ export function ResourcePanel(): React.ReactNode {
             </div>
             <Tippy content={`${t(L.WorkersBusy)} / ${t(L.TotalWorkers)}`} placement="bottom">
                <div style={{ width: "120px" }}>
-                  <FormatNumber value={workersBusy} /> /{" "}
-                  <FormatNumber value={workersAvailableAfterHappiness} />
+                  <FormatNumber value={workersBusy} /> / <FormatNumber value={workersAfterHappiness} />
                </div>
             </Tippy>
          </div>

@@ -47,8 +47,8 @@ export function HeadquarterBuildingBody({
 }: IBuildingComponentProps & { expandHappiness?: boolean }): React.ReactNode {
    const {
       happinessPercentage,
-      workersAvailable,
-      workersAfterHappiness: workersAvailableAfterHappiness,
+      workersBeforeHappiness,
+      workersAfterHappiness,
       workersBusy,
       scienceFromBusyWorkers,
       scienceFromIdleWorkers,
@@ -73,14 +73,14 @@ export function HeadquarterBuildingBody({
                      <summary className="row">
                         <div className="f1">{t(L.TotalWorkers)}</div>
                         <div className="text-strong">
-                           <FormatNumber value={workersAvailableAfterHappiness} />
+                           <FormatNumber value={workersAfterHappiness} />
                         </div>
                      </summary>
                      <ul>
                         <li className="row">
                            <div className="f1">{t(L.WorkersAvailableBeforeHappinessMultiplier)}</div>
                            <div className="text-strong">
-                              <FormatNumber value={workersAvailable} />
+                              <FormatNumber value={workersBeforeHappiness} />
                            </div>
                         </li>
                         <li className="row">

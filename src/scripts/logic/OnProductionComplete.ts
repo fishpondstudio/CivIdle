@@ -402,12 +402,9 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          break;
       }
       case "MogaoCaves": {
-         const { workersAfterHappiness: workersAvailableAfterHappiness, workersBusy } =
-            getScienceFromWorkers(gs);
+         const { workersAfterHappiness, workersBusy } = getScienceFromWorkers(gs);
          const fromBusyWorkers =
-            workersAvailableAfterHappiness === 0
-               ? 0
-               : Math.floor((10 * workersBusy) / workersAvailableAfterHappiness);
+            workersAfterHappiness === 0 ? 0 : Math.floor((10 * workersBusy) / workersAfterHappiness);
          let count = 0;
          for (const neighbor of grid.getNeighbors(tileToPoint(xy))) {
             const neighborXy = pointToTile(neighbor);
