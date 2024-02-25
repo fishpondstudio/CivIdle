@@ -37,6 +37,7 @@ export const PatchNotes: PatchNote[] = [
             "Great Person",
             "Isaac Newton: +2 Science from Busy and Idle Workers if more than 50% of workers are busy (Renaissance)",
          ],
+         ["Great Person", "Fibonacci: +1 Science from Idle Workers (Renaissance)"],
          [
             "Wonder",
             "Saint Basil's Cathedral: Allow resource extraction buildings to work adjacent to a deposit. All adjacent tier I buildings get +1 Production Multiplier, Worker Capacity Multiplier, and Storage Multiplier (Renaissance/Firearm)",
