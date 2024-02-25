@@ -12,7 +12,9 @@ import { ProgressBarComponent } from "./ProgressBarComponent";
 
 export function HappinessComponent({ open }: { open: boolean }): React.ReactNode {
    const happiness = useCurrentTick().happiness;
-   const { workersAvailable, workersAvailableAfterHappiness } = getScienceFromWorkers(useGameState());
+   const { workersAvailable, workersAfterHappiness: workersAvailableAfterHappiness } = getScienceFromWorkers(
+      useGameState(),
+   );
    if (!happiness) {
       return null;
    }

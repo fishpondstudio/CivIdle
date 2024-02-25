@@ -461,7 +461,8 @@ export const ZH_TW = {
    Pantheon: "萬神殿",
    PantheonDesc: "位於義大利羅馬的古羅馬神廟",
    SaintBasilsCathedral: "瓦西里升天教堂",
-   SaintBasilsCathedralDesc: "位於俄羅斯首都莫斯科市中心紅場的東正教教堂",
+   SaintBasilsCathedralDescV2:
+      "Allow resource extraction buildings to work adjacent to a deposit. All tier I buildings get +1 Production Multiplier, Worker Capacity Multiplier, and Storage Multiplier",
    ChichenItza: "奇琴伊察",
    ChichenItzaDesc: "所有相鄰建築，獲得 +1 生產指數、存儲以及勞動者能力指數",
    Aqueduct: "水渠",
@@ -507,7 +508,8 @@ export const ZH_TW = {
    SydneyOperaHouse: "雪梨歌劇院",
    SydneyOperaHouseDesc: "雪梨的多場館表演藝術中心",
    MogaoCaves: "千佛洞",
-   MogaoCavesDesc: "庫木吐喇千佛洞",
+   MogaoCavesDescV2:
+      "+1 happiness for every 10% of busy workers. All adjacent shrines are exempt from -1 happiness",
    Wonder: "奇觀",
    PauseConstructionPause: "暫停",
    ResumeConstructionResume: "繼續",
@@ -924,4 +926,5 @@ export const ZH_TW = {
    Hatshepsut: "Hatshepsut",
    IsaacNewton: "Isaac Newton",
    IsaacNewtonDesc: "+%{value} Science from All Workers if more than 50% of workers are busy",
+   ChooseGreatPersonChoicesLeft: "You have %{count} choices left",
 };

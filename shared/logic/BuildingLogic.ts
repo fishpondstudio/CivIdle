@@ -353,21 +353,21 @@ export function addTransportation(
 }
 
 export function getScienceFromWorkers(gs: GameState) {
-   const workersAvailable = Tick.current.workersAvailable.get("Worker") ?? 0;
+   const workersBeforeHappiness = Tick.current.workersAvailable.get("Worker") ?? 0;
    const happinessPercentage = Tick.current.happiness?.workerPercentage ?? 1;
-   const workersAvailableAfterHappiness = Math.floor(workersAvailable * happinessPercentage);
+   const workersAfterHappiness = Math.floor(workersBeforeHappiness * happinessPercentage);
    const workersBusy = Tick.current.workersUsed.get("Worker") ?? 0;
    const sciencePerIdleWorker = sum(Tick.current.globalMultipliers.sciencePerIdleWorker, "value");
-   const scienceFromIdleWorkers = sciencePerIdleWorker * (workersAvailableAfterHappiness - workersBusy);
+   const scienceFromIdleWorkers = sciencePerIdleWorker * (workersAfterHappiness - workersBusy);
 
    const sciencePerBusyWorker = sum(Tick.current.globalMultipliers.sciencePerBusyWorker, "value");
    const scienceFromBusyWorkers = sciencePerBusyWorker * workersBusy;
    const scienceFromWorkers = scienceFromBusyWorkers + scienceFromIdleWorkers;
 
    return {
-      workersAvailable,
+      workersBeforeHappiness,
       happinessPercentage,
-      workersAvailableAfterHappiness,
+      workersAfterHappiness,
       workersBusy,
       scienceFromBusyWorkers,
       sciencePerBusyWorker,
@@ -732,6 +732,12 @@ export function hasRequiredDeposit(
    }
 
    return true;
+}
+
+export function getCompletedBuilding(xy: Tile, gs: GameState): IBuildingData | null {
+   const tile = gs.tiles.get(xy);
+   if (!tile || !tile.building || tile.building.status === "building") return null;
+   return tile.building;
 }
 
 function hasDepositOnAnyTile(deposit: Deposit, tiles: Tile[], gs: GameState): boolean {

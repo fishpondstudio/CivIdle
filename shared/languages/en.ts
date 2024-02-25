@@ -474,7 +474,7 @@ export const EN = {
    Pantheon: "Pantheon",
    PantheonDesc: "Pantheon",
    SaintBasilsCathedral: "Saint Basil's Cathedral",
-   SaintBasilsCathedralDesc:
+   SaintBasilsCathedralDescV2:
       "Allow resource extraction buildings to work adjacent to a deposit. All tier I buildings get +1 Production Multiplier, Worker Capacity Multiplier, and Storage Multiplier",
    ChichenItza: "Chichen Itza",
    ChichenItzaDesc:
@@ -525,7 +525,8 @@ export const EN = {
    SydneyOperaHouse: "Sydney Opera House",
    SydneyOperaHouseDesc: "Sydney Opera House",
    MogaoCaves: "Mogao Caves",
-   MogaoCavesDesc: "Mogao Caves",
+   MogaoCavesDescV2:
+      "+1 happiness for every 10% of busy workers. All adjacent shrines are exempt from -1 happiness",
    Wonder: "Wonder",
    PauseConstructionPause: "Pause",
    ResumeConstructionResume: "Resume",

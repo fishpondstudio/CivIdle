@@ -476,7 +476,8 @@ export const CZ = {
    Pantheon: "Pantheon",
    PantheonDesc: "Pantheon",
    SaintBasilsCathedral: "Katedrála sv. Basila",
-   SaintBasilsCathedralDesc: "Katedrála svatého Basila",
+   SaintBasilsCathedralDescV2:
+      "Allow resource extraction buildings to work adjacent to a deposit. All tier I buildings get +1 Production Multiplier, Worker Capacity Multiplier, and Storage Multiplier",
    ChichenItza: "Chichén Itzá",
    ChichenItzaDesc: "Všechny přilehlé budovy získají násobitel +1 k produkci, skladování a kapacitě dělníků.",
    Aqueduct: "Akvadukt",
@@ -525,7 +526,8 @@ export const CZ = {
    SydneyOperaHouse: "Opera v Sydney",
    SydneyOperaHouseDesc: "Opera v Sydney",
    MogaoCaves: "Jeskyně Mogao",
-   MogaoCavesDesc: "Jeskyně Mogao",
+   MogaoCavesDescV2:
+      "+1 happiness for every 10% of busy workers. All adjacent shrines are exempt from -1 happiness",
    Wonder: "Zázrak",
    PauseConstructionPause: "Pauza",
    ResumeConstructionResume: "Resume",
@@ -967,4 +969,5 @@ export const CZ = {
    Hatshepsut: "Hatshepsut",
    IsaacNewton: "Isaac Newton",
    IsaacNewtonDesc: "+%{value} Science from All Workers if more than 50% of workers are busy",
+   ChooseGreatPersonChoicesLeft: "You have %{count} choices left",
 };

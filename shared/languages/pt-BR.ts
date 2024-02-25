@@ -480,7 +480,8 @@ export const PT_BR = {
    Pantheon: "Panteão",
    PantheonDesc: "Panteão",
    SaintBasilsCathedral: "Catedral de São Basílio",
-   SaintBasilsCathedralDesc: "Catedral de São Basílio",
+   SaintBasilsCathedralDescV2:
+      "Allow resource extraction buildings to work adjacent to a deposit. All tier I buildings get +1 Production Multiplier, Worker Capacity Multiplier, and Storage Multiplier",
    ChichenItza: "Chichén-Itzá",
    ChichenItzaDesc:
       "Todas as construções adjacentes ganham +1 de Multiplicador de Produção, Armazenamento e Capacidade de Trabalhadores",
@@ -532,7 +533,8 @@ export const PT_BR = {
    SydneyOperaHouse: "Ópera de Sydney",
    SydneyOperaHouseDesc: "Ópera de Sydney",
    MogaoCaves: "Mogao Caves",
-   MogaoCavesDesc: "Mogao Caves",
+   MogaoCavesDescV2:
+      "+1 happiness for every 10% of busy workers. All adjacent shrines are exempt from -1 happiness",
    Wonder: "Maravilha",
    PauseConstructionPause: "Parar",
    ResumeConstructionResume: "Retomar",
@@ -982,4 +984,5 @@ export const PT_BR = {
    Hatshepsut: "Hatshepsut",
    IsaacNewton: "Isaac Newton",
    IsaacNewtonDesc: "+%{value} Science from All Workers if more than 50% of workers are busy",
+   ChooseGreatPersonChoicesLeft: "You have %{count} choices left",
 };

@@ -467,7 +467,8 @@ export const KR = {
    Pantheon: "판테온",
    PantheonDesc: "판테온",
    SaintBasilsCathedral: "성 바실리 대성당",
-   SaintBasilsCathedralDesc: "성 바실리 대성당",
+   SaintBasilsCathedralDescV2:
+      "Allow resource extraction buildings to work adjacent to a deposit. All tier I buildings get +1 Production Multiplier, Worker Capacity Multiplier, and Storage Multiplier",
    ChichenItza: "치첸 이트사",
    ChichenItzaDesc: "모든 인접한 건물이 +1의 생산, 저장소, 작업자 용량 배수를 얻습니다.",
    Aqueduct: "수로",
@@ -514,7 +515,8 @@ export const KR = {
    SydneyOperaHouse: "시드니 오페라 하우스",
    SydneyOperaHouseDesc: "시드니 오페라 하우스",
    MogaoCaves: "막고굴",
-   MogaoCavesDesc: "막고굴",
+   MogaoCavesDescV2:
+      "+1 happiness for every 10% of busy workers. All adjacent shrines are exempt from -1 happiness",
    Wonder: "불가사의",
    PauseConstructionPause: "정지",
    ResumeConstructionResume: "재개",
@@ -939,4 +941,5 @@ export const KR = {
    Hatshepsut: "Hatshepsut",
    IsaacNewton: "Isaac Newton",
    IsaacNewtonDesc: "+%{value} Science from All Workers if more than 50% of workers are busy",
+   ChooseGreatPersonChoicesLeft: "You have %{count} choices left",
 };

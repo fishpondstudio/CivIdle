@@ -461,7 +461,8 @@ export const ZH_CN = {
    Pantheon: "万神殿",
    PantheonDesc: "万神殿",
    SaintBasilsCathedral: "瓦西里升天教堂",
-   SaintBasilsCathedralDesc: "瓦西里升天教堂",
+   SaintBasilsCathedralDescV2:
+      "Allow resource extraction buildings to work adjacent to a deposit. All tier I buildings get +1 Production Multiplier, Worker Capacity Multiplier, and Storage Multiplier",
    ChichenItza: "奇琴伊察",
    ChichenItzaDesc: "所有相邻建筑，获得 +1 生产乘数、存储以及劳动者能力乘数",
    Aqueduct: "引水渠",
@@ -507,7 +508,8 @@ export const ZH_CN = {
    SydneyOperaHouse: "悉尼歌剧院",
    SydneyOperaHouseDesc: "悉尼歌剧院",
    MogaoCaves: "莫高窟",
-   MogaoCavesDesc: "莫高窟",
+   MogaoCavesDescV2:
+      "+1 happiness for every 10% of busy workers. All adjacent shrines are exempt from -1 happiness",
    Wonder: "奇观",
    PauseConstructionPause: "暂停",
    ResumeConstructionResume: "继续",
@@ -927,4 +929,5 @@ export const ZH_CN = {
    Hatshepsut: "Hatshepsut",
    IsaacNewton: "Isaac Newton",
    IsaacNewtonDesc: "+%{value} Science from All Workers if more than 50% of workers are busy",
+   ChooseGreatPersonChoicesLeft: "You have %{count} choices left",
 };

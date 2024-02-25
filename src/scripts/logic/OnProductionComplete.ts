@@ -1,6 +1,8 @@
 import {
    ST_PETERS_FAITH_MULTIPLIER,
    ST_PETERS_STORAGE_MULTIPLIER,
+   getCompletedBuilding,
+   getScienceFromWorkers,
    getTotalBuildingUpgrades,
    isSpecialBuilding,
    isWorldWonder,
@@ -358,8 +360,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          let count = 0;
          for (const neighbor of grid.getNeighbors(tileToPoint(xy))) {
             const neighborXy = pointToTile(neighbor);
-            const building = gs.tiles.get(neighborXy)?.building;
-            if (building && building.type === "SteelMill") {
+            if (getCompletedBuilding(neighborXy, gs)?.type === "SteelMill") {
                neighborXys.push(neighborXy);
                ++count;
             }
@@ -392,12 +393,32 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          let count = 0;
          for (const neighbor of grid.getNeighbors(tileToPoint(xy))) {
             const neighborXy = pointToTile(neighbor);
-            const b = gs.tiles.get(neighborXy)?.building;
+            const b = getCompletedBuilding(neighborXy, gs);
             if (b && (Config.Building[b.type].input.Gunpowder || Config.Building[b.type].output.Gunpowder)) {
                ++count;
             }
          }
          Tick.next.globalMultipliers.happiness.push({ value: count, source: buildingName });
+         break;
+      }
+      case "MogaoCaves": {
+         const { workersAfterHappiness: workersAvailableAfterHappiness, workersBusy } =
+            getScienceFromWorkers(gs);
+         const fromBusyWorkers =
+            workersAvailableAfterHappiness === 0
+               ? 0
+               : Math.floor((10 * workersBusy) / workersAvailableAfterHappiness);
+         let count = 0;
+         for (const neighbor of grid.getNeighbors(tileToPoint(xy))) {
+            const neighborXy = pointToTile(neighbor);
+            if (getCompletedBuilding(neighborXy, gs)?.type === "Shrine") {
+               ++count;
+            }
+         }
+         Tick.next.globalMultipliers.happiness.push({
+            value: count + fromBusyWorkers,
+            source: buildingName,
+         });
          break;
       }
       case "Neuschwanstein": {
@@ -416,7 +437,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
                const type = b.type;
                let count = 0;
                for (const n of grid.getNeighbors(neighbor)) {
-                  if (gs.tiles.get(pointToTile(n))?.building?.type === type) {
+                  if (getCompletedBuilding(pointToTile(n), gs)?.type === type) {
                      ++count;
                   }
                }

@@ -744,7 +744,7 @@ export class BuildingDefinitions {
    };
    SaintBasilsCathedral: IBuildingDefinition = {
       name: () => t(L.SaintBasilsCathedral),
-      desc: () => t(L.SaintBasilsCathedralDesc),
+      desc: () => t(L.SaintBasilsCathedralDescV2),
       input: {},
       output: {},
       max: 1,
@@ -777,8 +777,8 @@ export class BuildingDefinitions {
       desc: () => t(L.TajMahalDesc),
       input: {},
       output: {},
-      max: 1,
       construction: { Faith: 100, Marble: 100, Garment: 100 },
+      max: 1,
       special: BuildingSpecial.WorldWonder,
       wikipedia: "Taj_Mahal",
    };
@@ -791,6 +791,16 @@ export class BuildingDefinitions {
       max: 1,
       special: BuildingSpecial.WorldWonder,
       wikipedia: "Colosseum",
+   };
+   MogaoCaves: IBuildingDefinition = {
+      name: () => t(L.MogaoCaves),
+      desc: () => t(L.MogaoCavesDescV2),
+      input: {},
+      output: {},
+      construction: { Faith: 100, Marble: 100, Painting: 100 },
+      max: 1,
+      special: BuildingSpecial.WorldWonder,
+      wikipedia: "Mogao_Caves",
    };
    StatueOfZeus: IBuildingDefinition = {
       name: () => t(L.StatueOfZeus),
@@ -1023,15 +1033,6 @@ export class BuildingDefinitions {
    //    output: {},
    //    max: 1,
    //    wikipedia: "Sydney_Opera_House",
-   // };
-
-   // MogaoCaves: IBuildingDefinition = {
-   //    name: () => t(L.MogaoCaves),
-   //    desc: () => t(L.MogaoCavesDesc),
-   //    input: {},
-   //    output: {},
-   //    max: 1,
-   //    wikipedia: "Mogao_Caves",
    // };
 
    // FishPond: IBuildingDefinition = {

@@ -48,7 +48,7 @@ export function HeadquarterBuildingBody({
    const {
       happinessPercentage,
       workersAvailable,
-      workersAvailableAfterHappiness,
+      workersAfterHappiness: workersAvailableAfterHappiness,
       workersBusy,
       scienceFromBusyWorkers,
       scienceFromIdleWorkers,
