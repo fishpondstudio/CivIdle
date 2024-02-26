@@ -361,7 +361,8 @@ export const CZ = {
    Aristophanes: "Aristophanes",
    AristophanesDesc: "+%{value} Happiness",
    Fibonacci: "Fibonacci",
-   FibonacciDesc: "+%{value} Science from Idle Workers",
+   FibonacciDesc:
+      "+%{idle} Science from Idle Workers. +%{busy} Science from Busy Workers. Permanent upgrade cost follows Fibonacci sequence",
    LeonardoDaVinci: "Leonardo da Vinci",
    MartinLuther: "Martin Luther",
    WilliamShakespeare: "William Shakespeare",
@@ -973,4 +974,6 @@ export const CZ = {
    ChooseGreatPersonChoicesLeft: "Máte %{count} zbývající možnosti",
    GreatPersonThisRunEffectiveLevel:
       "V současné době máte %{count} %{person} z tohoto běhu. Další %{person} bude mít 1/%{effect} efektu.",
+   OpenSaveFolder: "Open Save Folder",
+   OpenSaveBackupFolder: "Open Backup Folder",
 };

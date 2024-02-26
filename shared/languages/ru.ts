@@ -361,7 +361,8 @@ export const RU = {
    Aristophanes: "Aristophanes",
    AristophanesDesc: "+%{value} Happiness",
    Fibonacci: "Fibonacci",
-   FibonacciDesc: "+%{value} Science from Idle Workers",
+   FibonacciDesc:
+      "+%{idle} Science from Idle Workers. +%{busy} Science from Busy Workers. Permanent upgrade cost follows Fibonacci sequence",
    LeonardoDaVinci: "Леонардо да Винчи",
    MartinLuther: "Мартин Лютер",
    WilliamShakespeare: "Уильям Шекспир",
@@ -980,4 +981,6 @@ export const RU = {
    ChooseGreatPersonChoicesLeft: "You have %{count} choices left",
    GreatPersonThisRunEffectiveLevel:
       "You currently have %{count} %{person} from this run. An additional %{person} will have 1/%{effect} of the effect",
+   OpenSaveFolder: "Open Save Folder",
+   OpenSaveBackupFolder: "Open Backup Folder",
 };
