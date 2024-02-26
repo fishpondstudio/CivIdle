@@ -3,14 +3,8 @@ import classNames from "classnames";
 import { getStorageFor } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
 import { TRADE_CANCEL_REFUND_PERCENT } from "../../../shared/logic/Constants";
-import { getMaxActiveTrades, getTradePercentage } from "../../../shared/logic/PlayerTradeLogic";
-import {
-   CURRENCY_PERCENT_EPSILON,
-   formatPercent,
-   isNullOrUndefined,
-   mathSign,
-   safeAdd,
-} from "../../../shared/utilities/Helper";
+import { getTradePercentage } from "../../../shared/logic/PlayerTradeLogic";
+import { CURRENCY_PERCENT_EPSILON, formatPercent, mathSign, safeAdd } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import { AccountLevelImages, AccountLevelNames } from "../logic/AccountLevel";
 import { client, useTrades, useUser } from "../rpc/RPCClient";
@@ -58,14 +52,7 @@ export function PlayerTradeComponent({ gameState, xy }: IBuildingComponentProps)
       <fieldset>
          <legend>{t(L.PlayerTrade)}</legend>
          <PendingClaimComponent gameState={gameState} xy={xy} />
-         <AddTradeComponent
-            enabled={
-               !isNullOrUndefined(user) &&
-               trades.filter((t) => t.fromId === user.userId).length < getMaxActiveTrades(user)
-            }
-            gameState={gameState}
-            xy={xy}
-         />
+         <AddTradeComponent gameState={gameState} xy={xy} />
          <TableView
             header={[
                { name: t(L.PlayerTradeWant), sortable: true },

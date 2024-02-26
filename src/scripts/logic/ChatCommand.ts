@@ -173,6 +173,14 @@ export async function handleChatCommand(command: string): Promise<void> {
          });
          break;
       }
+      case "removeTrade": {
+         if (!parts[1]) {
+            throw new Error("Invalid command format");
+         }
+         const count = await client.removeTrade(parts[1]);
+         addSystemMessage(`${count} trades has been removed`);
+         break;
+      }
       case "slowlist": {
          const mutedPlayers = await client.getSlowedPlayer();
          mutedPlayers.forEach((m) => {

@@ -1,23 +1,27 @@
 import { useState } from "react";
 import { NoPrice, NoStorage, type Resource } from "../../../shared/definitions/ResourceDefinitions";
 import { Config } from "../../../shared/logic/Config";
-import type { IClientAddTradeRequest } from "../../../shared/logic/PlayerTradeLogic";
-import { getBuyAmountRange } from "../../../shared/logic/PlayerTradeLogic";
+import {
+   getBuyAmountRange,
+   getMaxActiveTrades,
+   type IClientAddTradeRequest,
+} from "../../../shared/logic/PlayerTradeLogic";
 import { Tick } from "../../../shared/logic/TickLogic";
-import { keysOf, safeParseInt } from "../../../shared/utilities/Helper";
+import { isNullOrUndefined, keysOf, safeParseInt } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
-import { client, useUser } from "../rpc/RPCClient";
+import { client, useTrades, useUser } from "../rpc/RPCClient";
 import { playError, playKaching } from "../visuals/Sound";
 import type { IBuildingComponentProps } from "./BuildingPage";
 import { showToast } from "./GlobalModal";
 import { FormatNumber } from "./HelperComponents";
 import { TextWithHelp } from "./TextWithHelpComponent";
 
-export function AddTradeComponent({
-   gameState,
-   xy,
-   enabled,
-}: IBuildingComponentProps & { enabled: boolean }): React.ReactNode {
+export function AddTradeComponent({ gameState, xy }: IBuildingComponentProps): React.ReactNode {
+   const user = useUser();
+   const trades = useTrades();
+   const enabled =
+      !isNullOrUndefined(user) &&
+      trades.filter((t) => t.fromId === user.userId).length < getMaxActiveTrades(user);
    const buyResources = Array.from(Tick.next.resourcesByTile.keys()).filter(
       (res) => !NoPrice[res] && !NoStorage[res],
    );
@@ -30,7 +34,6 @@ export function AddTradeComponent({
       sellAmount: 0,
    });
    const [showTrade, setShowTrade] = useState(false);
-   const user = useUser();
    const [rangeMin, rangeMax] = getBuyAmountRange(trade, user);
 
    function isTradeValid(trade: IClientAddTradeRequest): boolean {
