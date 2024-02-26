@@ -12,7 +12,7 @@ if (process.env.STEAMWORKS_PATH) {
    const ver = JSON.parse(fs.readFileSync(versionFilePath, { encoding: "utf8" }));
    ver.build++;
    fs.writeFileSync(versionFilePath, JSON.stringify(ver));
-
+   console.log(`🔔 Build Number: ${ver.build}`);
    fs.copyFileSync(
       path.join(rootPath, "build", "CivIdle.vdf"),
       path.join(process.env.STEAMWORKS_PATH, "cividle", "CivIdle.vdf"),
