@@ -2,6 +2,7 @@ import type { Deposit } from "../../../shared/definitions/ResourceDefinitions";
 import {
    exploreTile,
    getBuildingThatExtract,
+   getExtraVisionRange,
    isNaturalWonder,
    isSpecialBuilding,
 } from "../../../shared/logic/BuildingLogic";
@@ -10,7 +11,6 @@ import { getGrid, getXyBuildings } from "../../../shared/logic/IntraTickCache";
 import { getRevealedDeposits } from "../../../shared/logic/ResourceLogic";
 import { OnResetTile, addDeposit, getGreatPeopleChoices } from "../../../shared/logic/TechLogic";
 import { ensureTileFogOfWar } from "../../../shared/logic/TerrainLogic";
-import { Tick } from "../../../shared/logic/TickLogic";
 import { makeBuilding } from "../../../shared/logic/Tile";
 import {
    firstKeyOf,
@@ -28,7 +28,7 @@ import { Singleton } from "../utilities/Singleton";
 
 export function onBuildingComplete(xy: Tile): void {
    const gs = getGameState();
-   for (const g of ensureTileFogOfWar(xy, gs)) {
+   for (const g of ensureTileFogOfWar(xy, getExtraVisionRange(), gs)) {
       Singleton().sceneManager.getCurrent(WorldScene)?.getTile(g)?.reveal().catch(console.error);
    }
    const building = gs.tiles.get(xy)?.building;
@@ -92,10 +92,6 @@ export function onBuildingComplete(xy: Tile): void {
          break;
       }
       case "GreatMosqueOfSamarra": {
-         // ensureTileFogOfWar check buildings from `Tick.current.specialBuildings`.
-         // We set it here just to be sure!
-         Tick.current.specialBuildings.set("GreatMosqueOfSamarra", xy);
-
          const unexploredDepositTiles: Tile[] = [];
          gs.tiles.forEach((tile, xy) => {
             if (!tile.explored && sizeOf(tile.deposit) > 0) {
@@ -126,7 +122,7 @@ export function onBuildingComplete(xy: Tile): void {
 
          gs.tiles.forEach((tile, xy) => {
             if (tile.building?.status === "completed" && !isNaturalWonder(tile.building.type)) {
-               for (const g of ensureTileFogOfWar(xy, gs)) {
+               for (const g of ensureTileFogOfWar(xy, 1, gs)) {
                   Singleton().sceneManager.getCurrent(WorldScene)?.getTile(g)?.reveal().catch(console.error);
                }
             }

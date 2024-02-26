@@ -6,10 +6,9 @@ import { exploreTile, isNaturalWonder } from "./BuildingLogic";
 import { Config } from "./Config";
 import type { GameState } from "./GameState";
 import { getGrid } from "./IntraTickCache";
-import { Tick } from "./TickLogic";
 import type { ITileData } from "./Tile";
 
-export function ensureTileFogOfWar(xy: Tile, gameState: GameState): Tile[] {
+export function ensureTileFogOfWar(xy: Tile, extraVisionRange: number, gameState: GameState): Tile[] {
    const tile = gameState.tiles.get(xy);
    const grid = getGrid(gameState);
    const building = tile?.building;
@@ -19,10 +18,7 @@ export function ensureTileFogOfWar(xy: Tile, gameState: GameState): Tile[] {
    const result: Set<Tile> = new Set();
    exploreTile(xy, gameState);
    result.add(xy);
-   let visionRange = Config.Building[building.type]?.vision ?? BUILDING_DEFAULT_VISION;
-   if (Tick.current.specialBuildings.get("GreatMosqueOfSamarra")) {
-      ++visionRange;
-   }
+   const visionRange = Config.Building[building.type]?.vision ?? BUILDING_DEFAULT_VISION + extraVisionRange;
    grid.getRange(tileToPoint(xy), visionRange).forEach((n) => {
       const xy = pointToTile(n);
       const tile = gameState.tiles.get(xy);

@@ -762,3 +762,7 @@ export function getBuildingThatExtract(d: Deposit): Building | null {
    }
    return null;
 }
+
+export function getExtraVisionRange(): number {
+   return Tick.current.specialBuildings.has("GreatMosqueOfSamarra") ? 1 : 0;
+}

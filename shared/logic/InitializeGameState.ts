@@ -68,7 +68,7 @@ export function initializeGameState(gameState: GameState, grid: Grid) {
 
    gameState.tiles.forEach((tile, xy) => {
       if (tile.building) {
-         ensureTileFogOfWar(xy, gameState);
+         ensureTileFogOfWar(xy, 0, gameState);
       }
    });
 
