@@ -361,7 +361,8 @@ export const DK = {
    Aristophanes: "Aristophanes",
    AristophanesDesc: "+%{value} Happiness",
    Fibonacci: "Fibonacci",
-   FibonacciDesc: "+%{value} Science from Idle Workers",
+   FibonacciDesc:
+      "+%{idle} Science from Idle Workers. +%{busy} Science from Busy Workers. Permanent upgrade cost follows Fibonacci sequence",
    LeonardoDaVinci: "Leonardo da Vinci",
    MartinLuther: "Martin Luther",
    WilliamShakespeare: "William Shakespeare",
@@ -968,4 +969,6 @@ export const DK = {
    ChooseGreatPersonChoicesLeft: "You have %{count} choices left",
    GreatPersonThisRunEffectiveLevel:
       "You currently have %{count} %{person} from this run. An additional %{person} will have 1/%{effect} of the effect",
+   OpenSaveFolder: "Open Save Folder",
+   OpenSaveBackupFolder: "Open Backup Folder",
 };

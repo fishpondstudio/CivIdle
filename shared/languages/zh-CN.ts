@@ -360,7 +360,8 @@ export const ZH_CN = {
    Aristophanes: "Aristophanes",
    AristophanesDesc: "+%{value} Happiness",
    Fibonacci: "Fibonacci",
-   FibonacciDesc: "+%{value} Science from Idle Workers",
+   FibonacciDesc:
+      "+%{idle} Science from Idle Workers. +%{busy} Science from Busy Workers. Permanent upgrade cost follows Fibonacci sequence",
    LeonardoDaVinci: "列奥纳多·达·芬奇",
    MartinLuther: "马丁·路德",
    WilliamShakespeare: "威廉·莎士比亚",
@@ -933,4 +934,6 @@ export const ZH_CN = {
    ChooseGreatPersonChoicesLeft: "You have %{count} choices left",
    GreatPersonThisRunEffectiveLevel:
       "You currently have %{count} %{person} from this run. An additional %{person} will have 1/%{effect} of the effect",
+   OpenSaveFolder: "Open Save Folder",
+   OpenSaveBackupFolder: "Open Backup Folder",
 };
