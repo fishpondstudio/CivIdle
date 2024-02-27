@@ -35,8 +35,17 @@ export function BuildingWorkerComponent({ gameState, xy }: IBuildingComponentPro
       building.capacity = val;
       notifyGameStateUpdate();
    };
+   const toggleBuildingSetAllSimilar = () => {
+      const val = building.capacity > 0 ? 0 : 1;
+      const buildings = [...gameState.tiles.values()].filter((t) => t.building?.type === building.type);
+      buildings.forEach((t) => {
+         t.building!.capacity = val;
+      });
+      notifyGameStateUpdate();
+   };
    if (!isSpecialBuilding(building.type)) {
       useShortcut("BuildingPageToggleBuilding", toggleBuilding, [xy]);
+      useShortcut("BuildingPageToggleBuildingSetAllSimilar", toggleBuildingSetAllSimilar, [xy]);
    }
    return (
       <fieldset>

@@ -972,5 +972,6 @@ export const EN = {
       "You currently have %{count} %{person} from this run. An additional %{person} will have 1/%{effect} of the effect",
    OpenSaveFolder: "Open Save Folder",
    OpenSaveBackupFolder: "Open Backup Folder",
-   ShortcutBuildingPageToggleBuilding: "Toggle building's production",
+   ShortcutBuildingPageToggleBuilding: "Toggle production",
+   BuildingPageToggleBuildingSetAllSimilar: "Toggle production, then apply to all the same type",
 };
