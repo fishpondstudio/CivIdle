@@ -992,4 +992,6 @@ export const ES = {
       "Actualmente tienes %{count} %{person} en esta partida. Un %{person} adicional tendrá un 1/%{effect} de efecto",
    OpenSaveFolder: "Abrir directorio de guardado",
    OpenSaveBackupFolder: "Abrir copias de seguridad",
+   ShortcutBuildingPageToggleBuilding: "Toggle Production",
+   ShortcutBuildingPageToggleBuildingSetAllSimilar: "Toggle Production And Apply To All",
 };

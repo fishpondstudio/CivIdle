@@ -983,4 +983,6 @@ export const RU = {
       "You currently have %{count} %{person} from this run. An additional %{person} will have 1/%{effect} of the effect",
    OpenSaveFolder: "Open Save Folder",
    OpenSaveBackupFolder: "Open Backup Folder",
+   ShortcutBuildingPageToggleBuilding: "Toggle Production",
+   ShortcutBuildingPageToggleBuildingSetAllSimilar: "Toggle Production And Apply To All",
 };

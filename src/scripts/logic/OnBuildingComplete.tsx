@@ -1,5 +1,6 @@
 import type { Deposit } from "../../../shared/definitions/ResourceDefinitions";
 import {
+   applyDefaultSettings,
    exploreTile,
    getBuildingThatExtract,
    getExtraVisionRange,
@@ -12,6 +13,7 @@ import { getRevealedDeposits } from "../../../shared/logic/ResourceLogic";
 import { OnResetTile, addDeposit, getGreatPeopleChoices } from "../../../shared/logic/TechLogic";
 import { ensureTileFogOfWar } from "../../../shared/logic/TerrainLogic";
 import { makeBuilding } from "../../../shared/logic/Tile";
+import { OnBuildingComplete } from "../../../shared/logic/Update";
 import {
    firstKeyOf,
    isEmpty,
@@ -115,6 +117,8 @@ export function onBuildingComplete(xy: Tile): void {
                level: 10,
                status: "completed",
             });
+            applyDefaultSettings(tile.building);
+            OnBuildingComplete.emit(xy);
             ++count;
 
             if (count >= 5) break;

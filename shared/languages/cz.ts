@@ -976,4 +976,6 @@ export const CZ = {
       "V současné době máte %{count} %{person} z tohoto běhu. Další %{person} bude mít 1/%{effect} efektu.",
    OpenSaveFolder: "Open Save Folder",
    OpenSaveBackupFolder: "Otevření záložní složky",
+   ShortcutBuildingPageToggleBuilding: "Toggle Production",
+   ShortcutBuildingPageToggleBuildingSetAllSimilar: "Toggle Production And Apply To All",
 };

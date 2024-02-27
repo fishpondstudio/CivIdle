@@ -1,6 +1,7 @@
 import classNames from "classnames";
 import {
    IOCalculation,
+   applyToAllBuildings,
    getBuildingName,
    getMultipliersFor,
    getResourceName,
@@ -13,10 +14,10 @@ import { Tick } from "../../../shared/logic/TickLogic";
 import { formatPercent, isEmpty } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import warning from "../../images/warning.png";
+import { useShortcut } from "../utilities/Hook";
 import { ApplyToAllComponent } from "./ApplyToAllComponent";
 import type { IBuildingComponentProps } from "./BuildingPage";
 import { FormatNumber, fmtNumber } from "./HelperComponents";
-import { useShortcut } from "../utilities/Hook";
 
 export function BuildingWorkerComponent({ gameState, xy }: IBuildingComponentProps): React.ReactNode {
    const workersRequired = getWorkersFor(xy, { exclude: { Worker: 1 } }, gameState);
@@ -31,22 +32,16 @@ export function BuildingWorkerComponent({ gameState, xy }: IBuildingComponentPro
    }
    const showWarning = Tick.current.notProducingReasons.get(xy) === "NotEnoughWorkers";
    const toggleBuilding = () => {
-      const val = building.capacity > 0 ? 0 : 1;
-      building.capacity = val;
+      building.capacity = building.capacity > 0 ? 0 : 1;
       notifyGameStateUpdate();
    };
    const toggleBuildingSetAllSimilar = () => {
-      const val = building.capacity > 0 ? 0 : 1;
-      const buildings = [...gameState.tiles.values()].filter((t) => t.building?.type === building.type);
-      buildings.forEach((t) => {
-         t.building!.capacity = val;
-      });
+      building.capacity = building.capacity > 0 ? 0 : 1;
+      applyToAllBuildings(building.type, () => ({ capacity: building.capacity }), gameState);
       notifyGameStateUpdate();
    };
-   if (!isSpecialBuilding(building.type)) {
-      useShortcut("BuildingPageToggleBuilding", toggleBuilding, [xy]);
-      useShortcut("BuildingPageToggleBuildingSetAllSimilar", toggleBuildingSetAllSimilar, [xy]);
-   }
+   useShortcut("BuildingPageToggleBuilding", toggleBuilding, [xy]);
+   useShortcut("BuildingPageToggleBuildingSetAllSimilar", toggleBuildingSetAllSimilar, [xy]);
    return (
       <fieldset>
          <legend>{t(L.Workers)}</legend>
