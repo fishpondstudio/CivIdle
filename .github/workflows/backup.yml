@@ -10,4 +10,4 @@ jobs:
     runs-on: [self-hosted]
     steps:
       - name: Backup Database
-        run: /usr/bin/scp ubuntu@uk.fishpondstudio.com:/home/ubuntu/CivIdle/server/db /home/insraq/CivIdleDB/db-$(date +"%Y_%m_%d_%H")
+        run: /usr/bin/scp ubuntu@de.fishpondstudio.com:/home/ubuntu/CivIdle/server/db /home/insraq/CivIdleDB/db-$(date +"%Y_%m_%d_%H")
