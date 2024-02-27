@@ -16,6 +16,7 @@ import warning from "../../images/warning.png";
 import { ApplyToAllComponent } from "./ApplyToAllComponent";
 import type { IBuildingComponentProps } from "./BuildingPage";
 import { FormatNumber, fmtNumber } from "./HelperComponents";
+import { useShortcut } from "../utilities/Hook";
 
 export function BuildingWorkerComponent({ gameState, xy }: IBuildingComponentProps): React.ReactNode {
    const workersRequired = getWorkersFor(xy, { exclude: { Worker: 1 } }, gameState);
@@ -29,6 +30,14 @@ export function BuildingWorkerComponent({ gameState, xy }: IBuildingComponentPro
       return null;
    }
    const showWarning = Tick.current.notProducingReasons.get(xy) === "NotEnoughWorkers";
+   const toggleBuilding = () => {
+      const val = building.capacity > 0 ? 0 : 1;
+      building.capacity = val;
+      notifyGameStateUpdate();
+   };
+   if (!isSpecialBuilding(building.type)) {
+      useShortcut("BuildingPageToggleBuilding", toggleBuilding, [xy]);
+   }
    return (
       <fieldset>
          <legend>{t(L.Workers)}</legend>

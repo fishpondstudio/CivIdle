@@ -24,6 +24,10 @@ export const ShortcutActions = {
       scope: "BuildingPage",
       name: () => t(L.ShortcutBuildingPageUpgradeToNext10),
    },
+   BuildingPageToggleBuilding: {
+      scope: "BuildingPage",
+      name: () => t(L.ShortcutBuildingPageToggleBuilding),
+   },
    UpgradePageIncreaseLevel: { scope: "UpgradePage", name: () => t(L.ShortcutUpgradePageIncreaseLevel) },
    UpgradePageDecreaseLevel: { scope: "UpgradePage", name: () => t(L.ShortcutUpgradePageDecreaseLevel) },
    TechPageGoBackToCity: { scope: "TechPage", name: () => t(L.ShortcutTechPageGoBackToCity) },
