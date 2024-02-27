@@ -175,6 +175,11 @@ function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
       building.desiredLevel = building.level;
    }
 
+   if (!hasFeature(GameFeature.BuildingInputMode, gs)) {
+      building.maxInputDistance = Infinity;
+      building.inputMode = BuildingInputMode.Distance;
+   }
+
    Tick.next.totalValue += getBuildingValue(building);
 
    if (building.status === "building" || building.status === "upgrading") {
