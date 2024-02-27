@@ -90,6 +90,15 @@ export class Grid {
       return result;
    }
 
+   public getNeighbor(grid: Point, direction: Direction): Point | null {
+      const hex = this.gridToHex(grid).neighbor(direction);
+      const g = this.hexToGrid(hex);
+      if (this.isValid(g)) {
+         return g;
+      }
+      return null;
+   }
+
    public getRange(grid: Point, distance: number): Point[] {
       const result: Point[] = [];
       this.gridToHex(grid)
@@ -154,4 +163,14 @@ export class Grid {
    public hexToPosition(hex: Hex): Point {
       return this.layout.hexToPixel(hex);
    }
+}
+
+// Must match the numeric values from the hex library
+export enum Direction {
+   East = 0,
+   Northeast = 1,
+   Northwest = 2,
+   West = 3,
+   Southwest = 4,
+   Southeast = 5,
 }
