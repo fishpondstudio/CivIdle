@@ -241,7 +241,7 @@ export const CZ = {
    Wheat: "Pšenice",
    Meat: "Maso",
    Wood: "Dřevo",
-   Lumber: "Dřevo",
+   Lumber: "Prkno",
    Brick: "Cihly",
    Horse: "Koně",
    Marble: "Mramor",
@@ -975,5 +975,5 @@ export const CZ = {
    GreatPersonThisRunEffectiveLevel:
       "V současné době máte %{count} %{person} z tohoto běhu. Další %{person} bude mít 1/%{effect} efektu.",
    OpenSaveFolder: "Open Save Folder",
-   OpenSaveBackupFolder: "Open Backup Folder",
+   OpenSaveBackupFolder: "Otevření záložní složky",
 };
