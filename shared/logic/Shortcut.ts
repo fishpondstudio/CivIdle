@@ -9,6 +9,7 @@ export const ShortcutScopes = {
    EmptyTilePage: () => t(L.ShortcutScopeEmptyTilePage),
    UpgradePage: () => t(L.ShortcutScopeUpgradePage),
    PlayerMapPage: () => t(L.ShortcutScopePlayerMapPage),
+   CityMap: () => t(L.ShortcutScopeCityMap),
 } as const;
 
 export type ShortcutScope = keyof typeof ShortcutScopes;
@@ -44,6 +45,12 @@ export const ShortcutActions = {
       scope: "PlayerMapPage",
       name: () => t(L.PlayerMapPageGoBackToCity),
    },
+   CityMapSelectEast: { scope: "CityMap", name: () => t(L.CityMapSelectEast) },
+   CityMapSelectNortheast: { scope: "CityMap", name: () => t(L.CityMapSelectNortheast) },
+   CityMapSelectNorthwest: { scope: "CityMap", name: () => t(L.CityMapSelectNorthwest) },
+   CityMapSelectWest: { scope: "CityMap", name: () => t(L.CityMapSelectWest) },
+   CityMapSelectSouthwest: { scope: "CityMap", name: () => t(L.CityMapSelectSouthwest) },
+   CityMapSelectSoutheast: { scope: "CityMap", name: () => t(L.CityMapSelectSoutheast) },
 } satisfies Record<string, IShortcutNameAndScope>;
 
 export interface IShortcutNameAndScope {

@@ -974,4 +974,11 @@ export const EN = {
    OpenSaveBackupFolder: "Open Backup Folder",
    ShortcutBuildingPageToggleBuilding: "Toggle Production",
    ShortcutBuildingPageToggleBuildingSetAllSimilar: "Toggle Production And Apply To All",
+   ShortcutScopeCityMap: "City Map",
+   CityMapSelectEast: "Select East",
+   CityMapSelectNortheast: "Select Northeast",
+   CityMapSelectNorthwest: "Select Northwest",
+   CityMapSelectWest: "Select West",
+   CityMapSelectSouthwest: "Select Southwest",
+   CityMapSelectSoutheast: "Select Southeast",
 };
