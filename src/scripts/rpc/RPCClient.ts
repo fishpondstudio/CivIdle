@@ -29,7 +29,6 @@ import { SteamClient, isSteam } from "./SteamClient";
 const url = new URLSearchParams(window.location.search);
 const devServerAddress = url.get("server") ?? "ws://localhost:8000";
 const serverAddress = import.meta.env.DEV ? devServerAddress : "wss://api.cividle.com";
-// const serverAddress = "wss://api.cividle.com";
 
 let user: IUser | null = null;
 

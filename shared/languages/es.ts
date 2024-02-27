@@ -1,4 +1,4 @@
-export const ES_ES = {
+export const ES = {
    CurrentLanguage: "Español",
    TranslatorCredit: "Nuzkito",
    Translators: "Traductores",
@@ -394,13 +394,17 @@ export const ES_ES = {
    EndConstructionDescHTML:
       "Cuando cancelas una construcción todos los recursos que ya han sido usados <b>no se devolverán</b>",
    Stonehenge: "Stonehenge",
-   StonehengeDesc: "Todas las construcciones que consumen o producen piedra obtienen +1 multiplicador de producción",
+   StonehengeDesc:
+      "Todas las construcciones que consumen o producen piedra obtienen +1 multiplicador de producción",
    LighthouseOfAlexandria: "Faro de Alejandría",
-   LighthouseOfAlexandriaDesc: "Todas las construcciones adyacentes obtienen +5 multiplicadores de almacenaje",
+   LighthouseOfAlexandriaDesc:
+      "Todas las construcciones adyacentes obtienen +5 multiplicadores de almacenaje",
    PyramidOfGiza: "Pirámide of Giza",
-   PyramidOfGizaDesc: "Todas las construcciones que producen trabajadores obtienen +1 multiplicador de producción",
+   PyramidOfGizaDesc:
+      "Todas las construcciones que producen trabajadores obtienen +1 multiplicador de producción",
    ColossusOfRhodes: "Coloso de Rodas",
-   ColossusOfRhodesDesc: "Todas las construcciones adyacentes que no producen trabajadores obtienen +1 de felicidad",
+   ColossusOfRhodesDesc:
+      "Todas las construcciones adyacentes que no producen trabajadores obtienen +1 de felicidad",
    MausoleumAtHalicarnassus: "Mausoleo de Halicarnaso",
    MausoleumAtHalicarnassusDesc:
       "Un transporte no cuesta trabajadores si está en un rango de 2 casillas del Mausoleo",
@@ -432,7 +436,8 @@ export const ES_ES = {
    Poseidon: "Poseidón",
    PoseidonDesc: "Todas las construcciones adyacentes se mejoran de forma gratuita al nivel 20",
    Aphrodite: "Afrodita",
-   AphroditeDesc: "+1 multiplicador de capacidad de construcción por cada nivel cuando se mejoran construcciones por encima del nivel 20",
+   AphroditeDesc:
+      "+1 multiplicador de capacidad de construcción por cada nivel cuando se mejoran construcciones por encima del nivel 20",
    Alps: "Alpes",
    AlpsDesc:
       "Cada 10 niveles de una construcción se obtiene +1 de capacidad de producción (+1 multiplicador de consumo, +1 multiplicador de producción)",
@@ -441,7 +446,8 @@ export const ES_ES = {
    SagradaFamília: "Sagrada Família",
    SagradaFamíliaDesc: "Sagrada Família",
    Petra: "Petra",
-   PetraDesc: "Genera saltos temporales cuando estás desconectado, que se pueden usar para acelerar tu imperio",
+   PetraDesc:
+      "Genera saltos temporales cuando estás desconectado, que se pueden usar para acelerar tu imperio",
    OxfordUniversity: "Universidad de Oxford",
    OxfordUniversityDesc: "Cada mejora de una construcción en tu imperio provee +1 de ciencia por ciclo",
    StPetersBasilica: "Basílica de San Pedro",
@@ -458,7 +464,8 @@ export const ES_ES = {
    TempleOfArtemisDesc:
       "Todas las forjas de espacas y armerías obtienen +5 niveles cuando se completan. Todas las forjas de espadas y armerías obtienen +1 multiplicador de producción, multiplicador de capacidad de trabajo y multiplicador de almacenamiento",
    TempleOfHeaven: "Templo del Cielo",
-   TempleOfHeavenDesc: "Todas las construcciones de nivel 10 o mayor obtienen +1 multiplicador de capacidad de trabajo",
+   TempleOfHeavenDesc:
+      "Todas las construcciones de nivel 10 o mayor obtienen +1 multiplicador de capacidad de trabajo",
    HimejiCastle: "Castillo de Himeji",
    HimejiCastleDesc:
       "Todos los astilletos de caravelas, astilleros de galeones y astilleros de fragatas obtienen +1 multiplicador de producción, multiplicador de capacidad de trabajo y multiplicador de almacenamiento",
@@ -496,7 +503,8 @@ export const ES_ES = {
    HagiaSophiaDesc:
       "Construcciones con un 0% de capacidad de producción extán extentas del -1 de felicidad. Consume 10 de fé y produce 10 de felicidad",
    AngkorWat: "Angkor Wat",
-   AngkorWatDesc: "Todas las construcciones adyacentes obtienen +1 multiplicador de capacidad de trabajo. Añade 1000 trabajadores",
+   AngkorWatDesc:
+      "Todas las construcciones adyacentes obtienen +1 multiplicador de capacidad de trabajo. Añade 1000 trabajadores",
    TerracottaArmy: "Guerreros de terracota",
    TerracottaArmyDesc:
       "Todas las minas de hierro obtienen +1 multiplicador de producción, multiplicador de capacidad de trabajo and multiplicador de almacenamiento. Las forjas de hierro obtienen +1 multiplicador de producción por cada mina de hierro adyacente",
@@ -553,8 +561,10 @@ export const ES_ES = {
    ConstructionPriority: "Prioridad de construcción",
    DefaultConstructionPriority: "Prioridad de construcción predeterminada",
    DefaultUpgradePriority: "Prioridad de mejora predeterminada",
-   ProductionPriorityDesc: "Alta prioridad signigica que a esta construcción se transportan recursos antes que a otras construcciones",
-   TechProductionPriority: "Desbloquea la prioridad de construcción - permite configurar la prioridad de producción para cada construcción",
+   ProductionPriorityDesc:
+      "Alta prioridad signigica que a esta construcción se transportan recursos antes que a otras construcciones",
+   TechProductionPriority:
+      "Desbloquea la prioridad de construcción - permite configurar la prioridad de producción para cada construcción",
    TechStockpileMode: "Desbloquea el modo de reserva - permite ajustar la reserva para cada construcción",
    ConstructionCost: "Coste de construcción: %{cost}",
    RomeMapMenu: "Mapa",
@@ -695,7 +705,8 @@ export const ES_ES = {
    PlayerTradeFillAmountMax: "Enviar todo lo disponible",
    PlayerTradeFillTradeTitle: "Enviar comercio",
    PlayerTradeFillTradeButton: "Enviar comercio",
-   PlayerTradeMaxTradeExceeded: "Has excedido el máximo número de comercios activos para el rango de tu cuenta",
+   PlayerTradeMaxTradeExceeded:
+      "Has excedido el máximo número de comercios activos para el rango de tu cuenta",
    PlayerTradeCancelTrade: "Cancelar comercio",
    PlayerTradeCancelTradeNo: "No cancelar",
    PlayerTradeCancelTradeNotEnoughStorage: "No tienes suficiente almacenamiento para cancelar el comercio",
@@ -705,7 +716,8 @@ export const ES_ES = {
    PlayerMapClaimThisTile: "Reclama esta casilla",
    PlayerMapClaimTileCondition2: "No has sido baneado por el anti-cheat",
    PlayerMapClaimTileCondition3: "Has desbloqueado la tecnología necesaria: %{tech}",
-   PlayerMapClaimTileCondition4: "No has reclamado una casilla o ha pasado el tiempo de espera para moverte de casilla",
+   PlayerMapClaimTileCondition4:
+      "No has reclamado una casilla o ha pasado el tiempo de espera para moverte de casilla",
    PlayerMapClaimTileNoLongerReserved:
       "Esta casilla ya no está reservada. Puedes desalojar a <b>%{name}</b> y reclamar esta casilla para ti",
    PlayerMapClaimTileCooldownLeft: "Tiempo de espera restante: %{time}",
@@ -792,8 +804,10 @@ export const ES_ES = {
    ShortcutTechPageUnlockTech: "Desbloquear tecnología seleccionada",
    EmptyTilePageBuildLastBuilding: "Construir la última construcción",
    PlayerMapPageGoBackToCity: "Volver a la ciudad",
-   UnclaimedGreatPersonThisRun: "Tienes <b>personajes históricos</b> sin reclamar, haz click aquí para reclamarlos",
-   UnclaimedGreatPersonPermanent: "Tienes <b>personajes históricos permanentes</b> sin reclamar, haz click aquí para reclamarlos",
+   UnclaimedGreatPersonThisRun:
+      "Tienes <b>personajes históricos</b> sin reclamar, haz click aquí para reclamarlos",
+   UnclaimedGreatPersonPermanent:
+      "Tienes <b>personajes históricos permanentes</b> sin reclamar, haz click aquí para reclamarlos",
    OfflineProduction: "Producción durante la desconexión",
    OfflineTime: "Tiempo de desconexión",
    TransportCapacity: "Capacidad de transporte",
@@ -818,7 +832,8 @@ export const ES_ES = {
       "Gasta %{speed} saltos de tiempo por cada segundo y acelera tu imperio para ir a velocidad x%{speed}.",
    TimeWarpWarning:
       "Acelerar a velocidades más altas de las que tu ordenador pueda soportar puede resultar en pérdida de información: ÚSALO BAJO TU PROPIO RIESGO",
-   PetraNoMultiplier: "Petra no está afectada por ningún multiplicador (producción, capacidad de trabajo, almacenamiento, etc)",
+   PetraNoMultiplier:
+      "Petra no está afectada por ningún multiplicador (producción, capacidad de trabajo, almacenamiento, etc)",
    LimitOfflineProduction: "Límite de producción en desconexión",
    Reborn: "Renacer",
    RebornCity: "Seleccionar una nueva ciudad",
@@ -835,10 +850,12 @@ export const ES_ES = {
    Ok: "OK",
    Cancel: "Cancelar",
    ChooseGreatPersonFromLastReborn: "Elige personade histórico del último renacimiento",
-   BankingAdditionalUpgrade: "Todas las construcciones de nivel 10 o mayor obtienen +1 multiplicador de almacenamiento",
+   BankingAdditionalUpgrade:
+      "Todas las construcciones de nivel 10 o mayor obtienen +1 multiplicador de almacenamiento",
    EstimatedTimeLeft: "Tiempo restante estimado",
    Electrification: "Electrificación",
-   ElectrificationUpgrade: "Desbloquear electrificación. Permite a las construcciones consumir energía para aumentar la producción",
+   ElectrificationUpgrade:
+      "Desbloquear electrificación. Permite a las construcciones consumir energía para aumentar la producción",
    ElectrificationDesc:
       "Usa %{power}W de energía y provee +%{level} mutiplicadores de consumo y multiplicadores de producción",
    PowerAvailable: "Energía disponible",
@@ -893,7 +910,8 @@ export const ES_ES = {
    AccountUpgradeCarryOver: "Nivel traspasable",
    AccountUpgradeCarryOverDesc:
       "Cuando mejores al siguiente rango de cuenta, este es el nivel máximo de los personajes que podrás traspasar.",
-   TranslationPercentage: "Está traducido un %{percentage} del juego a %{language}. Ayuda a mejorar esta traducción en GitHub",
+   TranslationPercentage:
+      "Está traducido un %{percentage} del juego a %{language}. Ayuda a mejorar esta traducción en GitHub",
    CanEarnGreatPeopleFromRebornYes: "Puedes conseguir personajes históricos al renacer",
    CanEarnGreatPeopleFromRebornNo: "No puedes conseguir personajes históricos al renacer",
    TribuneUpgradeDescV2:
@@ -912,7 +930,8 @@ export const ES_ES = {
    AccountUpgradeConfirm: "Mejorar cuenta",
    AccountUpgradeConfirmDesc:
       "Mejorar tu cuenta <b>reiniciará tu partida actual</b> y traspasará los personajes históricos permanentes <b>de hasta nivel %{level}</b>. Esto <b>no puee</b> ser deshecho, ¿estás seguro de que quieres continuar?",
-   CannotEarnPermanentGreatPeopleDesc: "Debido a que es una partida de prueba, no se pueden conseguir personajes históricos permanentes",
+   CannotEarnPermanentGreatPeopleDesc:
+      "Debido a que es una partida de prueba, no se pueden conseguir personajes históricos permanentes",
    BackToCity: "Volver a la ciudad",
    UpgradeBuildingNotProducingDesc:
       "La construcción está siendo mejorada - la producción se detendrá hasta que la mejora sea completada",
@@ -966,7 +985,8 @@ export const ES_ES = {
    SaveAndExit: "Guardar y salir",
    Hatshepsut: "Hatshepsut",
    IsaacNewton: "Isaac Newton",
-   IsaacNewtonDesc: "+%{value} de ciencia de todos los trabajadores si más de un 50% de los trabajadores están ocupados",
+   IsaacNewtonDesc:
+      "+%{value} de ciencia de todos los trabajadores si más de un 50% de los trabajadores están ocupados",
    ChooseGreatPersonChoicesLeft: "Te quedan por elegir %{count} personajes",
    GreatPersonThisRunEffectiveLevel:
       "Actualmente tienes %{count} %{person} en esta partida. Un %{person} adicional tendrá un 1/%{effect} de efecto",

@@ -7,7 +7,7 @@ import type { Tech } from "../definitions/TechDefinitions";
 import { CZ } from "../languages/cz";
 import { DE } from "../languages/de";
 import { EN } from "../languages/en";
-import { ES_ES } from "../languages/es-ES";
+import { ES } from "../languages/es";
 import { FR } from "../languages/fr";
 import { KR } from "../languages/kr";
 import { NL } from "../languages/nl";
@@ -128,7 +128,7 @@ export class GameOptions {
 
 export const Languages = {
    en: EN,
-   es_ES: ES_ES,
+   es: ES,
    cz: CZ,
    fr: FR,
    de: DE,
