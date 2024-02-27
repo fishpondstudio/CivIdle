@@ -25,7 +25,7 @@ import { L, t } from "../utilities/i18n";
 import { Config } from "./Config";
 import { GameFeature, hasFeature } from "./FeatureLogic";
 import { type GameState } from "./GameState";
-import { getGameState } from "./GameStateLogic";
+import { getGameOptions, getGameState } from "./GameStateLogic";
 import { getBuildingIO, getBuildingsByType, getGrid, getXyBuildings } from "./IntraTickCache";
 import { getBuildingsThatProduce, getResourcesValue } from "./ResourceLogic";
 import { getAgeForTech, getBuildingUnlockTech } from "./TechLogic";
@@ -765,4 +765,15 @@ export function getBuildingThatExtract(d: Deposit): Building | null {
 
 export function getExtraVisionRange(): number {
    return Tick.current.specialBuildings.has("GreatMosqueOfSamarra") ? 1 : 0;
+}
+
+export function applyDefaultSettings(building: IBuildingData): void {
+   const options = getGameOptions();
+   const defaults = options.buildingDefaults[building.type];
+   if (defaults) {
+      Object.assign(building, defaults);
+   } else {
+      building.stockpileCapacity = options.defaultStockpileCapacity;
+      building.stockpileMax = options.defaultStockpileMax;
+   }
 }

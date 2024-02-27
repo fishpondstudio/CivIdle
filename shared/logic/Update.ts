@@ -28,6 +28,7 @@ import { L, t } from "../utilities/i18n";
 import {
    IOCalculation,
    addTransportation,
+   applyDefaultSettings,
    canBeElectrified,
    deductResources,
    filterNonTransportable,
@@ -56,7 +57,6 @@ import {
 import { Config } from "./Config";
 import { GameFeature, hasFeature } from "./FeatureLogic";
 import { GameState, type ITransportationData } from "./GameState";
-import { getGameOptions } from "./GameStateLogic";
 import {
    getBuildingIO,
    getGrid,
@@ -230,15 +230,7 @@ function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
          building.disabledInput.clear();
          if (building.status === "building") {
             building.status = "completed";
-
-            const options = getGameOptions();
-            const defaults = options.buildingDefaults[building.type];
-            if (defaults) {
-               Object.assign(building, defaults);
-            } else {
-               building.stockpileCapacity = options.defaultStockpileCapacity;
-               building.stockpileMax = options.defaultStockpileMax;
-            }
+            applyDefaultSettings(building);
             OnBuildingComplete.emit(xy);
          } else if (building.status === "upgrading" && building.level >= building.desiredLevel) {
             building.status = "completed";
