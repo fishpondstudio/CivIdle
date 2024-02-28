@@ -17,6 +17,7 @@ import {
    sum,
    tileToPoint,
    type Tile,
+   round,
 } from "../utilities/Helper";
 import { srand } from "../utilities/Random";
 import type { PartialSet, PartialTabulate } from "../utilities/TypeDefinitions";
@@ -618,6 +619,21 @@ export function getMarketPrice(resource: Resource, xy: Tile, gs: GameState): num
    const rand = srand(gs.lastPriceUpdated + xy + resource);
    const fluctuation = 0.75 + rand() * 0.5;
    return (Config.ResourcePrice[resource] ?? 0) * fluctuation;
+}
+
+export function getMarketExchangeAmount(
+   capacity: number,
+   sellRes: Resource,
+   buyRes: Resource,
+   xy: Tile,
+   gs: GameState,
+   doRound = true,
+) {
+   const amount = (capacity * getMarketPrice(sellRes, xy, gs)) / getMarketPrice(buyRes, xy, gs);
+   if (doRound) {
+      return round(amount, 1);
+   }
+   return amount;
 }
 
 export function getAvailableResource(xy: Tile, res: Resource, gs: GameState): number {
