@@ -1,5 +1,4 @@
-import pako from "pako";
-
+import { deflateSync, inflateSync } from "fflate";
 export type Operation = "compress" | "decompress";
 
 export interface CompressMessage {
@@ -12,12 +11,14 @@ onmessage = (ev: MessageEvent<CompressMessage>) => {
    console.time(`CompressWorker: ${ev.data.op}`);
    switch (ev.data.op) {
       case "compress": {
-         const buffer = pako.deflateRaw(ev.data.buffer);
+         // const buffer = deflateSync(ev.data.buffer);
+         const buffer = deflateSync(ev.data.buffer);
          postMessage({ id: ev.data.id, buffer: buffer }, [buffer.buffer]);
          break;
       }
       case "decompress": {
-         const buffer = pako.inflateRaw(ev.data.buffer);
+         // const buffer = inflateSync(ev.data.buffer);
+         const buffer = inflateSync(ev.data.buffer);
          postMessage({ id: ev.data.id, buffer: buffer }, [buffer.buffer]);
          break;
       }
