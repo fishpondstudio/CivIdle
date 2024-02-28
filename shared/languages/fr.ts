@@ -364,7 +364,7 @@ export const FR = {
    AristophanesDesc: "+%{value} Bonheur",
    Fibonacci: "Fibonacci",
    FibonacciDesc:
-      "+%{idle} Science from Idle Workers. +%{busy} Science from Busy Workers. Permanent upgrade cost follows Fibonacci sequence",
+      "+%{idle} Science produite par les ouvriers inactifs. +%{busy} Science produite par les ouvriers actifs. Le coût de l'amélioration permanente suit la suite de Fibonacci",
    LeonardoDaVinci: "Léonard de Vinci",
    MartinLuther: "Martin Luther",
    WilliamShakespeare: "William Shakespeare",
@@ -995,9 +995,9 @@ export const FR = {
    IsaacNewtonDesc: "+%{value} Science produite par tous les ouvriers si plus de 50% d'entre eux sont actifs",
    ChooseGreatPersonChoicesLeft: "Il vous reste %{count} choix",
    GreatPersonThisRunEffectiveLevel:
-      "You currently have %{count} %{person} from this run. An additional %{person} will have 1/%{effect} of the effect",
-   OpenSaveFolder: "Open Save Folder",
-   OpenSaveBackupFolder: "Open Backup Folder",
-   ShortcutBuildingPageToggleBuilding: "Toggle Production",
-   ShortcutBuildingPageToggleBuildingSetAllSimilar: "Toggle Production And Apply To All",
+      "Vous avez actuellement %{count} %{person} provenant de cette partie. Une %{person} supplémentaire aura 1/%{effect} de l'effet",
+   OpenSaveFolder: "Ouvrir le dossier de sauvegarde",
+   OpenSaveBackupFolder: "Ouvrier le dossier de récupération",
+   ShortcutBuildingPageToggleBuilding: "Basculer la production",
+   ShortcutBuildingPageToggleBuildingSetAllSimilar: "Basculer la production et appliquer à tous",
 };
