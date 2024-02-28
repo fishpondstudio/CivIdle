@@ -349,7 +349,7 @@ export class TechDefinitions {
       name: () => t(L.Education),
       column: 10,
       requireTech: ["Theocracy"],
-      unlockBuilding: ["School", "GrandBazaar"],
+      unlockBuilding: ["School"],
    };
 
    Optics: ITechDefinition = {

@@ -112,15 +112,6 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          }
          break;
       }
-      case "GrandBazaar": {
-         for (const neighbor of grid.getNeighbors(tileToPoint(xy))) {
-            mapSafePush(Tick.next.tileMultipliers, pointToTile(neighbor), {
-               storage: 5,
-               source: buildingName,
-            });
-         }
-         break;
-      }
       case "ColossusOfRhodes": {
          let happiness = 0;
          for (const neighbor of grid.getNeighbors(tileToPoint(xy))) {
