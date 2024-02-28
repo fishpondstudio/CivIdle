@@ -4,7 +4,7 @@ import { L, t } from "../utilities/i18n";
 import { isNaturalWonder, isSpecialBuilding, isWorldWonder } from "./BuildingLogic";
 import { Config } from "./Config";
 import type { GameState } from "./GameState";
-import { getTypeBuildings, getXyBuildings } from "./IntraTickCache";
+import { getHappinessExemptions, getTypeBuildings, getXyBuildings } from "./IntraTickCache";
 import { getCurrentTechAge } from "./TechLogic";
 import { Tick } from "./TickLogic";
 
@@ -32,6 +32,7 @@ export function calculateHappiness(gs: GameState) {
    let fromBuildings = 0;
    let fromWonders = 0;
    let fromHighestTierBuilding = 0;
+
    getXyBuildings(gs).forEach((building, xy) => {
       if (building.status !== "completed") {
          return;
@@ -43,9 +44,11 @@ export function calculateHappiness(gs: GameState) {
                fromHighestTierBuilding = tier;
             }
          }
-         if (building.capacity <= 0 && buildingsByType.has("HagiaSophia")) {
+         if (building.capacity <= 0 && Tick.current.specialBuildings.has("HagiaSophia")) {
             // Do nothing
-         } else if (building.type === "ChariotWorkshop" && buildingsByType.has("Colosseum")) {
+         } else if (building.type === "ChariotWorkshop" && Tick.current.specialBuildings.has("Colosseum")) {
+            // Do nothing
+         } else if (getHappinessExemptions().has(xy)) {
             // Do nothing
          } else {
             ++fromBuildings;

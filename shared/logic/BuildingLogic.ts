@@ -354,7 +354,7 @@ export function addTransportation(
 }
 
 export function getScienceFromWorkers(gs: GameState) {
-   const workersBeforeHappiness = Tick.current.workersAvailable.get("Worker") ?? 0;
+   const workersBeforeHappiness = Math.floor(Tick.current.workersAvailable.get("Worker") ?? 0);
    const happinessPercentage = Tick.current.happiness?.workerPercentage ?? 1;
    const workersAfterHappiness = Math.floor(workersBeforeHappiness * happinessPercentage);
    const workersBusy = Tick.current.workersUsed.get("Worker") ?? 0;
@@ -783,9 +783,9 @@ export function getExtraVisionRange(): number {
    return Tick.current.specialBuildings.has("GreatMosqueOfSamarra") ? 1 : 0;
 }
 
-export function applyDefaultSettings(building: IBuildingData): void {
+export function applyDefaultSettings(building: IBuildingData, gs: GameState): void {
    const options = getGameOptions();
-   const defaults = options.buildingDefaults[building.type];
+   const defaults = gs.buildingDefaults[building.type];
    if (defaults) {
       Object.assign(building, defaults);
    } else {

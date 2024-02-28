@@ -1,7 +1,7 @@
 import type { Building, IBuildingDefinition } from "../definitions/BuildingDefinitions";
 import type { Deposit, Resource } from "../definitions/ResourceDefinitions";
 import { Grid } from "../utilities/Grid";
-import { IPointData, type Tile, forEach, safeAdd, tileToHash, tileToPoint, round } from "../utilities/Helper";
+import { IPointData, forEach, safeAdd, tileToHash, tileToPoint, round, type Tile } from "../utilities/Helper";
 import type { PartialSet, PartialTabulate } from "../utilities/TypeDefinitions";
 import { IOCalculation, getMarketExchangeAmount, getMarketPrice, totalMultiplierFor } from "./BuildingLogic";
 import { Config } from "./Config";
@@ -22,12 +22,17 @@ class IntraTickCache {
       Readonly<PartialTabulate<Resource>>
    >();
    storageFullBuildings: IPointData[] | undefined;
+   happinessExemptions = new Set<Tile>();
 }
 
 let _cache = new IntraTickCache();
 
 export function clearIntraTickCache(): void {
    _cache = new IntraTickCache();
+}
+
+export function getHappinessExemptions(): Set<Tile> {
+   return _cache.happinessExemptions;
 }
 
 export function getBuildingIO(
