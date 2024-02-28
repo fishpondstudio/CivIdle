@@ -239,9 +239,12 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
             break;
          }
          const petra = building as IPetraBuildingData;
-         if (petra.speedUp > 1 && (petra.resources.Warp ?? 0) > 0) {
-            --petra.resources.Warp!;
-            Singleton().ticker.speedUp = petra.speedUp;
+         const speedUp = petra.speedUp;
+         if (speedUp > 1 && (petra.resources.Warp ?? 0) > 0) {
+            const warp = petra.resources.Warp!;
+            const delta = 1 - 1 / speedUp;
+            petra.resources.Warp = Math.max(warp - delta, 0);
+            Singleton().ticker.speedUp = speedUp;
          } else {
             Singleton().ticker.speedUp = 1;
          }
