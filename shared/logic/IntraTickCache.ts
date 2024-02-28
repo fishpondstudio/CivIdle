@@ -1,9 +1,9 @@
 import type { Building, IBuildingDefinition } from "../definitions/BuildingDefinitions";
 import type { Deposit, Resource } from "../definitions/ResourceDefinitions";
 import { Grid } from "../utilities/Grid";
-import { IPointData, type Tile, forEach, safeAdd, tileToHash, tileToPoint } from "../utilities/Helper";
+import { IPointData, type Tile, forEach, safeAdd, tileToHash, tileToPoint, round } from "../utilities/Helper";
 import type { PartialSet, PartialTabulate } from "../utilities/TypeDefinitions";
-import { IOCalculation, totalMultiplierFor } from "./BuildingLogic";
+import { IOCalculation, getMarketPrice, totalMultiplierFor } from "./BuildingLogic";
 import { Config } from "./Config";
 import type { GameState } from "./GameState";
 import { TILE_SIZE } from "./GameStateLogic";
@@ -50,6 +50,18 @@ export function getBuildingIO(
          forEach((b as IMarketBuildingData).sellResources, (k) => {
             resources[k] = 1;
          });
+      }
+      if ("sellResources" in b && type === "output") {
+         const capacity = b.capacity * b.level * totalMultiplierFor(xy, "output", 1, gs);
+         forEach((b as IMarketBuildingData).sellResources, (k) => {
+            const buyResource = (b as IMarketBuildingData).availableResources[k]!;
+            result[buyResource] = round(
+               (capacity * getMarketPrice(k, xy, gs)) / getMarketPrice(buyResource, xy, gs),
+               1,
+            );
+         });
+         // Market output is not affected by multipliers
+         return result;
       }
       if ("resourceImports" in b && type === "input") {
          forEach((b as IResourceImportBuildingData).resourceImports, (k, v) => {
