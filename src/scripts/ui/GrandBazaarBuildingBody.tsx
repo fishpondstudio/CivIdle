@@ -200,13 +200,17 @@ export function GrandBazaarBuildingBody({ gameState, xy }: IBuildingComponentPro
                { name: t(L.MarketYouPay), sortable: true },
                { name: t(L.MarketYouGet), sortable: true },
                { name: "", sortable: true },
-               { name: t(L.Storage), sortable: true },
+               { name: t(L.Storage), sortable: false },
                { name: t(L.MarketSell), sortable: false },
                { name: "", sortable: false },
             ]}
             data={marketBuildingData}
             compareFunc={(a, b, i) => {
                switch (i) {
+                  case 0:
+                     return Config.Resource[a.youPay.res]
+                        .name()
+                        .localeCompare(Config.Resource[b.youPay.res].name());
                   case 1:
                      return (a.youGet.amount ?? 0) - (b.youGet.amount ?? 0);
                   case 2:
