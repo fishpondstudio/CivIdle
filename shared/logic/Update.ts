@@ -235,7 +235,7 @@ function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
          building.disabledInput.clear();
          if (building.status === "building") {
             building.status = "completed";
-            applyDefaultSettings(building);
+            applyDefaultSettings(building, gs);
             OnBuildingComplete.emit(xy);
          } else if (building.status === "upgrading" && building.level >= building.desiredLevel) {
             building.status = "completed";

@@ -3,7 +3,11 @@ import { getScienceFromWorkers, isWorldWonder } from "../../../shared/logic/Buil
 import { Config } from "../../../shared/logic/Config";
 import type { GameOptions, GameState } from "../../../shared/logic/GameState";
 import { getXyBuildings, unlockedBuildings } from "../../../shared/logic/IntraTickCache";
-import { getGreatPeopleAtReborn, getGreatPersonThisRunLevel } from "../../../shared/logic/RebornLogic";
+import {
+   getGreatPeopleAtReborn,
+   getGreatPersonThisRunLevel,
+   getValueRequiredForGreatPeople,
+} from "../../../shared/logic/RebornLogic";
 import {
    getCurrentTechAge,
    getScienceAmount,
@@ -410,6 +414,7 @@ function WonderComponent({ gameState }: { gameState: GameState }): React.ReactNo
 }
 
 function RebornComponent({ gameState }: { gameState: GameState }): ReactNode {
+   const extraGreatPeople = getGreatPeopleAtReborn();
    return (
       <fieldset>
          <legend>{t(L.Reborn)}</legend>
@@ -442,9 +447,26 @@ function RebornComponent({ gameState }: { gameState: GameState }): ReactNode {
                   <FormatNumber value={Tick.current.totalValue / gameState.tick} />
                </li>
             </ul>
-            <li className="row">
-               <div className="f1">{t(L.ExtraGreatPeopleAtReborn)}</div>
-               <div className="text-strong">{getGreatPeopleAtReborn()}</div>
+            <li>
+               <details>
+                  <summary className="row">
+                     <div className="f1">{t(L.ExtraGreatPeopleAtReborn)}</div>
+                     <div className="text-strong">{extraGreatPeople}</div>
+                  </summary>
+                  <ul>
+                     {[0, 1, 2, 3].map((i) => {
+                        const gp = extraGreatPeople + i;
+                        return (
+                           <li key={i} className="text-small row">
+                              <div className="f1">{t(L.ExtraGreatPeople, { count: gp })}</div>
+                              <div>
+                                 <FormatNumber value={getValueRequiredForGreatPeople(extraGreatPeople + i)} />
+                              </div>
+                           </li>
+                        );
+                     })}
+                  </ul>
+               </details>
             </li>
          </ul>
          <div className="sep10"></div>

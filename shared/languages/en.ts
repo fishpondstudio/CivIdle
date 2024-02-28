@@ -979,4 +979,6 @@ export const EN = {
    GrandBazaarFilters: "Filters",
    GrandBazaarFilterYouPay: "You Pay",
    GrandBazaarFilterYouGet: "You Get",
+   HappinessUncapped: "Happiness (Uncapped)",
+   ExtraGreatPeople: "%{count} Extra Great People",
 };

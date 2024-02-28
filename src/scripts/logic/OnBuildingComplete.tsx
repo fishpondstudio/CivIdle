@@ -117,7 +117,7 @@ export function onBuildingComplete(xy: Tile): void {
                level: 10,
                status: "completed",
             });
-            applyDefaultSettings(tile.building);
+            applyDefaultSettings(tile.building, gs);
             OnBuildingComplete.emit(xy);
             ++count;
 

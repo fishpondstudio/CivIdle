@@ -27,7 +27,12 @@ export function getGreatPersonThisRunLevel(amount: number): number {
 }
 
 export function getProgressTowardsNextGreatPerson(): number {
-   return Tick.current.totalValue / getValueRequiredForGreatPeople(getGreatPeopleAtReborn() + 1);
+   const greatPeopleCount = getGreatPeopleAtReborn();
+   const previous = getValueRequiredForGreatPeople(greatPeopleCount);
+   const progress =
+      (Tick.current.totalValue - previous) /
+      (getValueRequiredForGreatPeople(greatPeopleCount + 1) - previous);
+   return progress;
 }
 
 export function getGreatPersonUpgradeCost(gp: GreatPerson, targetLevel: number): number {
