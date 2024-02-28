@@ -115,7 +115,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
       case "ColossusOfRhodes": {
          let happiness = 0;
          for (const neighbor of grid.getNeighbors(tileToPoint(xy))) {
-            const building = gs.tiles.get(pointToTile(neighbor))?.building;
+            const building = getCompletedBuilding(pointToTile(neighbor), gs);
             if (building && !Config.Building[building.type].output.Worker) {
                happiness++;
             }
