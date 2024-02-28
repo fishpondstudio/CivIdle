@@ -265,6 +265,7 @@ export class WorldScene extends ViewportScene {
             }
             case "ColossusOfRhodes":
             case "LighthouseOfAlexandria":
+            case "GrandBazaar":
             case "HangingGarden":
             case "ChichenItza":
             case "AngkorWat":
