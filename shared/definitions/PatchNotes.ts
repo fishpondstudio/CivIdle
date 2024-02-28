@@ -11,6 +11,10 @@ export const PatchNotes: PatchNote[] = [
             "Bugfix",
             "Fix a bug where transport preference / max transport distance are carried over after rebirth before the relevant tech is unlocked",
          ],
+         [
+            "Bugfix",
+            "Fix a bug where Hagia Sophia and Mogao Caves causes double counting of happiness from Shrines",
+         ],
          ["Bugfix", "Fix a bug where happiness fractions are not correctly rounded"],
          [
             "QoL",

@@ -12,6 +12,7 @@ import { getGameState } from "../../../shared/logic/GameStateLogic";
 import {
    getBuildingsByType,
    getGrid,
+   getHappinessExemptions,
    getSpecialBuildings,
    getTypeBuildings,
    getXyBuildings,
@@ -412,15 +413,14 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          const { workersAfterHappiness, workersBusy } = getScienceFromWorkers(gs);
          const fromBusyWorkers =
             workersAfterHappiness === 0 ? 0 : Math.floor((10 * workersBusy) / workersAfterHappiness);
-         let count = 0;
          for (const neighbor of grid.getNeighbors(tileToPoint(xy))) {
             const neighborXy = pointToTile(neighbor);
             if (getCompletedBuilding(neighborXy, gs)?.type === "Shrine") {
-               ++count;
+               getHappinessExemptions().add(neighborXy);
             }
          }
          Tick.next.globalMultipliers.happiness.push({
-            value: count + fromBusyWorkers,
+            value: fromBusyWorkers,
             source: buildingName,
          });
          break;
