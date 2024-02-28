@@ -830,7 +830,7 @@ export const FR = {
       "Le temps hors ligne qui dépasse le temps de production maximal hors ligne sera converti en distorsion temporelle (1 seconde = 1 distorsion temporelle)",
    TimeWarp: "Distorsion temporelle",
    TurnOnTimeWarpDesc:
-      "Coûte %{speed} distorsion temporelle pour chaque seconde et accélère votre empire afin qu'il fonction en vitesse %{speed}x.",
+      "Coûte %{cost} distorsion temporelle pour chaque seconde et accélère votre empire afin qu'il fonction en vitesse %{speed}x.",
    TimeWarpWarning:
       "L'accélération à une vitesse supérieure à celle que votre ordinateur peut supporter peut entraîner une perte de données : C'EST À VOS RISQUES ET PÉRILS",
    PetraNoMultiplier:

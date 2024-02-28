@@ -822,7 +822,7 @@ export const NL = {
       "Je offline tijd die de Maximale Offline Productietijd overschrijdt, wordt omgezet in warp (1 seconde = 1 warp)",
    TimeWarp: "Tijd Warp",
    TurnOnTimeWarpDesc:
-      "Kost %{speed} warps per seconde en versnelt je rijk om te draaien op %{speed}x snelheid.",
+      "Kost %{cost} warps per seconde en versnelt je rijk om te draaien op %{speed}x snelheid.",
    TimeWarpWarning:
       "Versnellen op een hogere snelheid dan je computer aankan kan leiden tot dataverlies: GEBRUIK OP EIGEN RISICO",
    PetraNoMultiplier:

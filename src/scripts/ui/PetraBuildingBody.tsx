@@ -110,7 +110,7 @@ export function PetraBuildingBody({ gameState, xy }: IBuildingComponentProps): R
             <div className="sep15" />
             {building.speedUp > 1 ? (
                <div className="text-small text-desc">
-                  {t(L.TurnOnTimeWarpDesc, { speed: building.speedUp })}
+                  {t(L.TurnOnTimeWarpDesc, { speed: building.speedUp, cost: building.speedUp - 1 })}
                </div>
             ) : null}
             {building.speedUp > 2 ? (

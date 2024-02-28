@@ -829,7 +829,7 @@ export const ES = {
       "El tiempo de desconexión que excede el tiempo de desconexión máximo se convertirá a saltos de tiempo. (1 segundo = 1 salto de tiempo)",
    TimeWarp: "Avance del tiempo",
    TurnOnTimeWarpDesc:
-      "Gasta %{speed} saltos de tiempo por cada segundo y acelera tu imperio para ir a velocidad x%{speed}.",
+      "Gasta %{cost} saltos de tiempo por cada segundo y acelera tu imperio para ir a velocidad x%{speed}.",
    TimeWarpWarning:
       "Acelerar a velocidades más altas de las que tu ordenador pueda soportar puede resultar en pérdida de información: ÚSALO BAJO TU PROPIO RIESGO",
    PetraNoMultiplier:

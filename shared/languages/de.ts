@@ -832,7 +832,7 @@ export const DE = {
       "Ihre Offline-Zeit, die die maximale Offline-Produktionszeit überschreitet, wird in Warp umgewandelt (1 Sekunde = 1 Warp)",
    TimeWarp: "Zeitkrümmung",
    TurnOnTimeWarpDesc:
-      "Kostet %{speed} Warps für jede Sekunde und beschleunige dein Imperium, um mit %{speed}x Geschwindigkeit zu laufen.",
+      "Kostet %{cost} Warps für jede Sekunde und beschleunige dein Imperium, um mit %{speed}x Geschwindigkeit zu laufen.",
    TimeWarpWarning: "BENUTZUNG AUF EIGENE GEFAHR",
    PetraNoMultiplier:
       "Petra wird von keinen Multiplikatoren (Produktion, Arbeitskräftekapazität, Lagerhaltung usw.) beeinflusst",

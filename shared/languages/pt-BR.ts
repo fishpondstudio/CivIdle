@@ -827,7 +827,7 @@ export const PT_BR = {
       "Seu tempo offline que excede o Tempo Máximo de Produção Offline será convertido em distorção (1 segundo = 1 distorção)",
    TimeWarp: "Distorção Temporal",
    TurnOnTimeWarpDesc:
-      "Custa %{speed} distorções para cada segundo e acelera seu império em %{speed}x sua velocidade normal.",
+      "Custa %{cost} distorções para cada segundo e acelera seu império em %{speed}x sua velocidade normal.",
    TimeWarpWarning:
       "Acelerar a uma velocidade maior do que seu computador aguenta pode resultar em perda de dados: USE A SEU PRÓPRIO RISCO",
    PetraNoMultiplier:

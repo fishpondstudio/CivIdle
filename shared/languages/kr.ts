@@ -796,7 +796,7 @@ export const KR = {
    MaxOfflineProductionTime: "최대 오프라인 생산 시간",
    WarpConversionDesc: "최대 오프라인 생산 시간을 초과하는 오프라인 시간이 워프(1초 = 1워프)로 변환됩니다",
    TimeWarp: "타임워프",
-   TurnOnTimeWarpDesc: "%{speed} 개의 워프를 소모하여 %{speed}x 배의 속도로 제국이 진행되도록 가속합니다..",
+   TurnOnTimeWarpDesc: "%{cost} 개의 워프를 소모하여 %{speed}x 배의 속도로 제국이 진행되도록 가속합니다..",
    TimeWarpWarning:
       "컴퓨터가 처리할 수 있는 속도보다 더 빠른 속도로 가속하면 데이터 손실이 발생할 수 있습니다. 책임은 사용자에게 있습니다",
    PetraNoMultiplier: "페트라는 배수의 영향을 받지 않습니다 (생산, 저장소, 작업자 용량 등)",

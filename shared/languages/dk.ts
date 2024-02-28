@@ -814,7 +814,7 @@ export const DK = {
       "Your offline time that exceeds Max Offline Production Time will be converted to warp (1 second = 1 warp)",
    TimeWarp: "Time Warp",
    TurnOnTimeWarpDesc:
-      "Cost %{speed} warps for every second and accelerate your empire to run at %{speed}x speed.",
+      "Cost %{cost} warps for every second and accelerate your empire to run at %{speed}x speed.",
    TimeWarpWarning:
       "Accelerate at a higher speed than your computer can handle might result in data loss: USE AT YOUR OWN RISK",
    PetraNoMultiplier: "Petra is not affected by any multipliers (production, worker capacity, storage, etc)",

@@ -788,7 +788,7 @@ export const ZH_CN = {
    MaxOfflineProductionTime: "最大离线生产时间",
    WarpConversionDesc: "    超过最大离线生产时间的离线时间，将被转化为扭曲时间。（ 1 秒= 1 扭曲时间）",
    TimeWarp: "时间扭曲倍数",
-   TurnOnTimeWarpDesc: "每秒消耗 %{speed} 扭曲时间，同时加速你的帝国，使其以 %{speed} 倍速度运行。",
+   TurnOnTimeWarpDesc: "每秒消耗 %{cost} 扭曲时间，同时加速你的帝国，使其以 %{speed} 倍速度运行。",
    TimeWarpWarning: "以超出计算机处理能力的速度加速，可能会导致数据丢失。使用风险自负！",
    PetraNoMultiplier: "佩特拉古城不受任何乘数影响。",
    LimitOfflineProduction: "限制离线生产",

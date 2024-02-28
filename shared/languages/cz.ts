@@ -817,7 +817,7 @@ export const CZ = {
    WarpConversionDesc:
       "Váš offline čas, který překročí maximální offline čas výroby, bude převeden na warp (1 sekunda = 1 warp).",
    TimeWarp: "Časová deformace",
-   TurnOnTimeWarpDesc: "Stojí %{speed} warpů za každou sekundu a zrychlí vaši říši na %{speed}x rychlost.",
+   TurnOnTimeWarpDesc: "Stojí %{cost} warpů za každou sekundu a zrychlí vaši říši na %{speed}x rychlost.",
    TimeWarpWarning:
       "Zrychlení na vyšší rychlost, než jakou zvládne váš počítač, může vést ke ztrátě dat: POUŽÍVÁNÍ NA VLASTNÍ NEBEZPEČÍ",
    PetraNoMultiplier: "Petra není ovlivněna žádnými násobiči (produkce, kapacita pracovníků, úložiště atd.).",
