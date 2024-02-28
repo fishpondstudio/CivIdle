@@ -1,7 +1,7 @@
 import classNames from "classnames";
 import type { PropsWithChildren } from "react";
 import { useEffect, useRef, useState } from "react";
-import { BACKUP_RECOVERY_URL, DISCORD_URL } from "../../../shared/logic/Constants";
+import { DISCORD_URL } from "../../../shared/logic/Constants";
 import { Tick } from "../../../shared/logic/TickLogic";
 import { sizeOf } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
@@ -237,14 +237,6 @@ export function MenuComponent(): React.ReactNode {
                      }}
                   >
                      <MenuItem check={false}>{t(L.JoinDiscord)}</MenuItem>
-                  </div>
-                  <div
-                     className="menu-popover-item"
-                     onPointerDown={() => {
-                        openUrl(BACKUP_RECOVERY_URL);
-                     }}
-                  >
-                     <MenuItem check={false}>{t(L.BackupRecovery)}</MenuItem>
                   </div>
                   {isSteam() ? (
                      <div

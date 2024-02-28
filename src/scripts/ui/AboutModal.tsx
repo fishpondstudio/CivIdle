@@ -1,7 +1,9 @@
+import { BACKUP_RECOVERY_URL } from "../../../shared/logic/Constants";
 import { L, t } from "../../../shared/utilities/i18n";
 import logo from "../../images/icon.png";
 import { getVersion } from "../logic/Version";
 import { SteamClient, isSteam } from "../rpc/SteamClient";
+import { openUrl } from "../utilities/Platform";
 import { Singleton } from "../utilities/Singleton";
 import { playClick } from "../visuals/Sound";
 import { hideModal } from "./GlobalModal";
@@ -34,7 +36,7 @@ export function AboutModal(): React.ReactNode {
                      {t(L.UserAgent, { driver: navigator.userAgent })}
                   </div>
                   {isSteam() ? (
-                     <div className="row mt5">
+                     <div className="row mv5">
                         <div
                            className="text-small text-link mr10"
                            onClick={() => SteamClient.openMainSaveFolder()}
@@ -49,6 +51,14 @@ export function AboutModal(): React.ReactNode {
                         </div>
                      </div>
                   ) : null}
+                  <div
+                     className="text-small text-link mv5"
+                     onClick={() => {
+                        openUrl(BACKUP_RECOVERY_URL);
+                     }}
+                  >
+                     {t(L.BackupRecovery)}
+                  </div>
                </div>
             </div>
             <div className="text-right" style={{ margin: "20px 0 0 0" }}>

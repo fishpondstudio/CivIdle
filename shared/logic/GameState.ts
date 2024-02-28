@@ -53,6 +53,7 @@ export class GameState {
    lastPriceUpdated = 0;
    isOffline = false;
    favoriteTiles: Set<Tile> = new Set();
+   buildingDefaults: Partial<Record<Building, Partial<IBuildingData>>> = {};
 }
 
 export type GreatPeopleChoice = [GreatPerson, GreatPerson, GreatPerson];
@@ -114,7 +115,6 @@ export class GameOptions {
    shortcuts: Partial<Record<Shortcut, IShortcutConfig>> = {};
    soundEffect = true;
    chatHideLatestMessage = false;
-   buildingDefaults: Partial<Record<Building, Partial<IBuildingData>>> = {};
    defaultPriority = 0x010101;
    defaultStockpileCapacity = 1;
    defaultStockpileMax = 5;

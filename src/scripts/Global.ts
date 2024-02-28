@@ -193,6 +193,12 @@ function migrateSavedGame(save: SavedGame) {
          });
       }
    });
+   if (isNullOrUndefined(save.current.buildingDefaults)) {
+      // @ts-expect-error
+      save.current.buildingDefaults = save.options.buildingDefaults;
+      // @ts-expect-error
+      delete save.options.buildingDefaults;
+   }
    if (save.options.chatSendChannel) {
       save.options.chatReceiveChannel[save.options.chatSendChannel] = true;
    }
