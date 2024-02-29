@@ -737,6 +737,19 @@ export function hasRequiredDeposit(
    return true;
 }
 
+export function hasEnoughResource(xy: Tile, res: Resource, amount: number, gs: GameState): boolean {
+   const resources = gs.tiles.get(xy)?.building?.resources;
+   if (!resources) {
+      return false;
+   }
+   return (resources[res] ?? 0) >= amount;
+}
+
+export function hasEnoughStorage(xy: Tile, amount: number, gs: GameState): boolean {
+   const storage = getStorageFor(xy, gs);
+   return storage.total - storage.used >= amount;
+}
+
 export function getCompletedBuilding(xy: Tile, gs: GameState): IBuildingData | null {
    const tile = gs.tiles.get(xy);
    if (!tile || !tile.building || tile.building.status === "building") return null;

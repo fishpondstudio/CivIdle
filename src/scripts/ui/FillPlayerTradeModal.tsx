@@ -1,6 +1,6 @@
 import classNames from "classnames";
 import { useEffect, useState } from "react";
-import { getStorageFor } from "../../../shared/logic/BuildingLogic";
+import { getStorageFor, hasEnoughResource, hasEnoughStorage } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
 import { Tick } from "../../../shared/logic/TickLogic";
 import type { IClientTrade } from "../../../shared/utilities/Database";
@@ -56,16 +56,8 @@ export function FillPlayerTradeModal({ trade, xy }: { trade: IClientTrade; xy?: 
    const [fillAmount, setFillAmount] = useState(Math.min(maxAmount, trade.buyAmount));
    const percentage = fillAmount / trade.buyAmount;
    const isPercentageValid = percentage > 0 && percentage <= 1;
-   const storageRequired = clamp(
-      (trade.sellAmount * (1 - totalTariff) - trade.buyAmount) * percentage,
-      0,
-      Infinity,
-   );
-   const s = getStorageFor(delivery, gs);
-   const hasEnoughStorage = s.total - s.used >= storageRequired;
-   const hasEnoughResource = trade.buyAmount * percentage <= maxAmount;
+   const storageRequired = clamp(percentage * (trade.sellAmount - trade.buyAmount), 0, Infinity);
    const hasValidPath = tiles.length > 0;
-
    return (
       <div className="window">
          <div className="title-bar">
@@ -150,7 +142,12 @@ export function FillPlayerTradeModal({ trade, xy }: { trade: IClientTrade; xy?: 
             </div>
             <div className="sep10" />
             <ul className="tree-view">
-               <li className={classNames({ row: true, "text-strong text-red": !hasEnoughResource })}>
+               <li
+                  className={classNames({
+                     row: true,
+                     "text-strong text-red": !hasEnoughResource(delivery, trade.buyResource, fillAmount, gs),
+                  })}
+               >
                   <div className="f1">
                      {t(L.PlayerTradeYouPay, {
                         res: Config.Resource[trade.buyResource].name(),
@@ -192,7 +189,12 @@ export function FillPlayerTradeModal({ trade, xy }: { trade: IClientTrade; xy?: 
                      </ul>
                   </details>
                </li>
-               <li className={classNames({ row: true, "text-strong text-red": !hasEnoughStorage })}>
+               <li
+                  className={classNames({
+                     row: true,
+                     "text-strong text-red": !hasEnoughStorage(delivery, storageRequired, gs),
+                  })}
+               >
                   <div className="f1">{t(L.PlayerTradeStorageRequired)}</div>
                   <div>
                      <FormatNumber value={storageRequired} />
@@ -213,29 +215,46 @@ export function FillPlayerTradeModal({ trade, xy }: { trade: IClientTrade; xy?: 
             <div className="row" style={{ justifyContent: "flex-end" }}>
                <button
                   className="text-strong"
-                  disabled={!hasEnoughResource || !hasEnoughStorage || !hasValidPath || !isPercentageValid}
+                  disabled={
+                     !hasEnoughResource(delivery, trade.buyResource, fillAmount, gs) ||
+                     !hasEnoughStorage(delivery, storageRequired, gs) ||
+                     !hasValidPath ||
+                     !isPercentageValid
+                  }
                   onClick={async () => {
-                     if (!hasEnoughResource || !hasEnoughStorage || !hasValidPath || !isPercentageValid) {
+                     if (
+                        !hasEnoughResource(delivery, trade.buyResource, fillAmount, gs) ||
+                        !hasEnoughStorage(delivery, storageRequired, gs) ||
+                        !hasValidPath ||
+                        !isPercentageValid
+                     ) {
+                        showToast(t(L.OperationNotAllowedError));
                         playError();
                         return;
                      }
+
                      try {
+                        // We reserve the amount first, otherwise resource might go negative if a player
+                        // clicks really fast
+                        safeAdd(allTradeBuildings.get(delivery)!.resources, trade.buyResource, -fillAmount);
                         const result = await client.fillTrade({
                            id: trade.id,
                            amount: fillAmount,
                            path: tiles,
                         });
-
                         forEach(result, (res, amount) => {
                            safeAdd(allTradeBuildings.get(delivery)!.resources, res, amount);
                         });
-
                         showToast(t(L.PlayerTradeFillSuccess));
                         playKaching();
                         hideModal();
                      } catch (error) {
                         playError();
                         showToast(String(error));
+                     } finally {
+                        // If the trade fails, we should refund the resource. If the trade success, the result
+                        // from the server contains the correct amount to deduct, we *also* refund the resource
+                        safeAdd(allTradeBuildings.get(delivery)!.resources, trade.buyResource, +fillAmount);
                      }
                   }}
                >
