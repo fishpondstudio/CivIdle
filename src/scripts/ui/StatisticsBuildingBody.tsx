@@ -184,7 +184,7 @@ function TransportationTab({ gameState }: IBuildingComponentProps): React.ReactN
                         gameState.transportation,
                         (prev, k, v) => prev + v.reduce((prev, curr) => prev + curr.currentFuelAmount, 0),
                         0,
-                     ) / Tick.current.workersUsed.get("Power")!,
+                     ) / Tick.current.workersUsed.get("Worker")!,
                   )}
                </div>
             </div>
