@@ -205,7 +205,8 @@ function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
             return false;
          }
          // Will be full
-         if (amountArrived + getAmountInTransit(xy, res, gs) >= amount) {
+         const amountLeft = amount - getAmountInTransit(xy, res, gs) - amountArrived;
+         if (amountLeft <= 0) {
             completed = false;
             // continue;
             return false;
@@ -218,7 +219,7 @@ function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
          // Each transportation costs 1 worker, and deliver Total (=Builder Capacity x Multiplier) resources
          transportResource(
             res,
-            builderCapacityPerResource,
+            clamp(amountLeft, 0, builderCapacityPerResource),
             builderCapacityPerResource,
             xy,
             gs,
