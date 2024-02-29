@@ -16,6 +16,8 @@ export const PatchNotes: PatchNote[] = [
             "Bugfix",
             "Fix a bug where Hagia Sophia, Summer Palace and Mogao Caves causes double counting of happiness from Shrines",
          ],
+         ["Bugfix", "Fix a bug where sometimes building have extra resources after construction / upgrade"],
+         ["Bugfix", "Fix a bug where Statistics does not include market output"],
          ["Bugfix", "Fix a bug where happiness fractions are not correctly rounded"],
          [
             "QoL",
