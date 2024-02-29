@@ -60,8 +60,8 @@ export function getBuildingIO(
          }
          if (type === "output") {
             forEach(market.sellResources, (k) => {
-               resources[k] =
-                  (1 * getMarketPrice(k, xy, gs)) / getMarketPrice(market.availableResources[k]!, xy, gs);
+               const buyResource = market.availableResources[k]!;
+               resources[buyResource] = (1 * getMarketPrice(k, xy, gs)) / getMarketPrice(buyResource, xy, gs);
             });
          }
       }
