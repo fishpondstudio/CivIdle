@@ -602,7 +602,9 @@ export function getWonderBaseBuilderCapacity(type: Building): number {
          ageIdx = age.idx;
       }
    }
-   return Math.round(Math.pow(5, ageIdx) + techIdx * 2);
+   // const capacity = Math.round(Math.pow(5, ageIdx) + techIdx * 2);
+   const capacity = Math.round(-10 * Math.pow(ageIdx, 2) + 20 * techIdx + Math.pow(totalAmount / 3600, 0.85));
+   return capacity;
 }
 
 export function applyToAllBuildings<T extends IBuildingData>(
