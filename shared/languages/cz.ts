@@ -420,8 +420,8 @@ export const CZ = {
    EiffelTowerDesc:
       "Všechny přilehlé ocelárny získají +N Výrobu, Skladování a Násobek pracovníků. N = počet sousedících oceláren",
    CircusMaximus: "Circus Maximus",
-   CircusMaximusDesc:
-      "+5 Štěstí. Všechny herecké cechy, spisovatelské cechy a malířské cechy získají +1 násobek výroby a skladování.",
+   CircusMaximusDescV2:
+      "+5 Happiness. All Musician's Guilds, Writer's Guilds and Painter's Guilds get +1 Production and Storage Multiplier",
    Statistics: "Statistika budovy",
    StatisticsDesc: "Poskytuje statistiky spotřeby a výroby",
    GrottaAzzurra: "Grotta Azzurra",

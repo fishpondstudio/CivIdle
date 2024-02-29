@@ -424,8 +424,8 @@ export const ES = {
    EiffelTowerDesc:
       "Todas las plantas siderúrgicas adjacentes obtienen +N de producción, almacenamiento y multiplicador de trabajo. N = Número de plantas siderúrgicas adyacentes",
    CircusMaximus: "Circo Máximo",
-   CircusMaximusDesc:
-      "+5 de felicidad. Todos los gremios de actores, gremiros de escritores y gremios de pintores obtienen +1 de producción y multiplicador de almacenamiento",
+   CircusMaximusDescV2:
+      "+5 Happiness. All Musician's Guilds, Writer's Guilds and Painter's Guilds get +1 Production and Storage Multiplier",
    Statistics: "Edificio de estadísticas",
    StatisticsDesc: "Provee estadísticas del consumo y la producción",
    GrottaAzzurra: "Gruta Azul",

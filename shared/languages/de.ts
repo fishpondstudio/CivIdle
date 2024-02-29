@@ -424,8 +424,8 @@ export const DE = {
    EiffelTowerDesc:
       "Alle angrenzenden Stahlwerke erhalten +N Produktions-, Lager- und Arbeitermultiplikator. N = Anzahl der benachbarten Stahlwerke",
    CircusMaximus: "Circus Maximus",
-   CircusMaximusDesc:
-      "+5 Glück. Alle Schauspielergilden, Schriftstellergilden und Malergilden erhalten +1 Produktions- und Lagermultiplikator",
+   CircusMaximusDescV2:
+      "+5 Happiness. All Musician's Guilds, Writer's Guilds and Painter's Guilds get +1 Production and Storage Multiplier",
    Statistics: "Statistik-Gebäude",
    StatisticsDesc: "Verbrauchs- und Produktionsstatistiken bereitstellen",
    GrottaAzzurra: "Blaue Grotte",

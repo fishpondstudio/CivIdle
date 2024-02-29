@@ -424,8 +424,8 @@ export const FR = {
    EiffelTowerDesc:
       "Toutes les fonderies adjacentes obtiennent +N Production, Stockage Multiplicateur d'Ouvriers. N = Nombre de fonderies adjacentes",
    CircusMaximus: "Circus Maximus",
-   CircusMaximusDesc:
-      "+5 Bonheur. Toutes les guildes d'acteurs, guildes d'écrivains et guildes de peintres obtiennent +1 Production et Multiplicateur de stockage",
+   CircusMaximusDescV2:
+      "+5 Happiness. All Musician's Guilds, Writer's Guilds and Painter's Guilds get +1 Production and Storage Multiplier",
    Statistics: "Bâtiment des statistiques",
    StatisticsDesc: "Fournit des statistiques sur la consommation et la production",
    GrottaAzzurra: "Grotte bleue",

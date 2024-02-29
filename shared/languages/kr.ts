@@ -416,7 +416,8 @@ export const KR = {
    EiffelTowerDesc:
       "모든 인접한 제강공장이 +N 의 생산, 저장소, 작업자 용량 배수를 얻습니다. N = 인접한 제강공장의 수",
    CircusMaximus: "키르쿠스 막시무스",
-   CircusMaximusDesc: "행복도 +5, 모든 배우 길드, 작가 길드, 화가 길드가 +1의 생산, 저장소 배수를 얻습니다",
+   CircusMaximusDescV2:
+      "+5 Happiness. All Musician's Guilds, Writer's Guilds and Painter's Guilds get +1 Production and Storage Multiplier",
    Statistics: "통계 건물",
    StatisticsDesc: "소비 및 생산 통계를 제공합니다.",
    GrottaAzzurra: "카프리 푸른 동굴",

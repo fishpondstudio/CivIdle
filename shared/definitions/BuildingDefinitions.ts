@@ -824,7 +824,7 @@ export class BuildingDefinitions {
    };
    CircusMaximus: IBuildingDefinition = {
       name: () => t(L.CircusMaximus),
-      desc: () => t(L.CircusMaximusDesc),
+      desc: () => t(L.CircusMaximusDescV2),
       input: {},
       output: {},
       construction: { Music: 100, Poem: 100, Painting: 100 },
