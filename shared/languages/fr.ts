@@ -462,7 +462,7 @@ export const FR = {
    ItsukushimaShrineDesc: "Sanctuaire d'Itsukushima",
    TempleOfArtemis: "Temple d'Artémis",
    TempleOfArtemisDesc:
-      "Toutes les forges d'épées et érmureries obtiennent +5 Niveau. Elles obtiennent également +1 Multiplicateur de Production, Multiplicateur de Capacité des Ouvriers et Multiplicateur de Stockage",
+      "Toutes les forges d'épées et armureries obtiennent +5 Niveau. Elles obtiennent également +1 Multiplicateur de Production, Multiplicateur de Capacité des Ouvriers et Multiplicateur de Stockage",
    TempleOfHeaven: "Temple du Ciel",
    TempleOfHeavenDesc:
       "Tous les bâtiments de niveau 10 ou supérieur obtiennent +1 Multiplicateur de Capacité des Ouvriers",
