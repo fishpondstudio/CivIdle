@@ -591,6 +591,7 @@ export function getBuilderCapacity(
 export function getWonderBaseBuilderCapacity(type: Building): number {
    console.assert(isWorldWonder(type), "This only works for World Wonders!");
    const tech = getBuildingUnlockTech(type);
+   const totalAmount = reduceOf(getBuildingCost({ type, level: 0 }), (prev, res, value) => prev + value, 0);
    let techIdx = 0;
    let ageIdx = 0;
    if (tech) {

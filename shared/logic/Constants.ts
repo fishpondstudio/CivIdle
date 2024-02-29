@@ -4,9 +4,23 @@ import type { City } from "../definitions/CityDefinitions";
 import type { Resource } from "../definitions/ResourceDefinitions";
 import { IsDeposit, NoPrice } from "../definitions/ResourceDefinitions";
 import type { Tech, TechAge } from "../definitions/TechDefinitions";
-import { HOUR, forEach, formatNumber, isEmpty, keysOf, numberToRoman, sizeOf } from "../utilities/Helper";
+import {
+   HOUR,
+   forEach,
+   formatHMS,
+   formatNumber,
+   isEmpty,
+   keysOf,
+   numberToRoman,
+   sizeOf,
+} from "../utilities/Helper";
 import type { PartialSet, PartialTabulate } from "../utilities/TypeDefinitions";
-import { getBuildingCost, isSpecialBuilding, isWorldWonder } from "./BuildingLogic";
+import {
+   getBuildingCost,
+   getWonderBaseBuilderCapacity,
+   isSpecialBuilding,
+   isWorldWonder,
+} from "./BuildingLogic";
 import { Config } from "./Config";
 import {
    getAgeForTech,
@@ -262,11 +276,16 @@ export function calculateTierAndPrice() {
          if (isWorldWonder(k)) {
             let value = 0;
             let cost = "";
+            let totalAmount = 0;
+            const baseBuilderCapacity = getWonderBaseBuilderCapacity(k);
             forEach(getBuildingCost({ type: k, level: 0 }), (res, amount) => {
+               totalAmount += amount;
                cost += `${res}: ${formatNumber(amount)}, `;
                value += Config.ResourcePrice[res]! * amount;
             });
-            cost = `${k.padEnd(25)} ${formatNumber(value).padEnd(10)}${cost}`;
+            cost = `${k.padEnd(25)} ${formatNumber(value).padEnd(10)}${formatHMS(
+               (1000 * totalAmount) / baseBuilderCapacity,
+            ).padEnd(10)}${cost}`;
             wonderCost.push(cost);
          }
       });
