@@ -1,6 +1,7 @@
 import { applyToAllBuildings } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
 import type { GameState } from "../../../shared/logic/GameState";
+import { getGameOptions } from "../../../shared/logic/GameStateLogic";
 import type { IBuildingData } from "../../../shared/logic/Tile";
 import { L, t } from "../../../shared/utilities/i18n";
 import { playClick } from "../visuals/Sound";
@@ -34,7 +35,7 @@ export function ApplyToAllComponent({
             className="text-link"
             onClick={() => {
                playClick();
-               const defaults = gameState.buildingDefaults;
+               const defaults = getGameOptions().buildingDefaults;
                if (!defaults[building.type]) {
                   defaults[building.type] = {};
                }

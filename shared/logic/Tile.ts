@@ -44,12 +44,16 @@ export interface IBuildingData {
    resources: PartialTabulate<Resource>;
    status: BuildingStatus;
    capacity: number;
+
    stockpileCapacity: number;
    stockpileMax: number;
+
    priority: number;
+
    options: BuildingOptions;
    electrification: number;
    disabledInput: Set<Resource>;
+
    inputMode: BuildingInputMode;
    maxInputDistance: number;
 }

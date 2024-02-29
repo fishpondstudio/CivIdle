@@ -769,11 +769,30 @@ export function getExtraVisionRange(): number {
 
 export function applyDefaultSettings(building: IBuildingData, gs: GameState): void {
    const options = getGameOptions();
-   const defaults = gs.buildingDefaults[building.type];
-   if (defaults) {
-      Object.assign(building, defaults);
-   } else {
-      building.stockpileCapacity = options.defaultStockpileCapacity;
-      building.stockpileMax = options.defaultStockpileMax;
+   const defaults = options.buildingDefaults[building.type];
+   const toApply = defaults ? { ...defaults } : {};
+
+   if (isNullOrUndefined(toApply.stockpileCapacity)) {
+      toApply.stockpileCapacity = options.defaultStockpileCapacity;
    }
+   if (isNullOrUndefined(toApply.stockpileCapacity)) {
+      toApply.stockpileMax = options.defaultStockpileMax;
+   }
+
+   if (!hasFeature(GameFeature.BuildingProductionPriority, gs)) {
+      delete toApply.priority;
+   }
+   if (!hasFeature(GameFeature.BuildingStockpileMode, gs)) {
+      delete toApply.stockpileCapacity;
+      delete toApply.stockpileMax;
+   }
+   if (!hasFeature(GameFeature.BuildingInputMode, gs)) {
+      delete toApply.inputMode;
+      delete toApply.maxInputDistance;
+   }
+   if (!hasFeature(GameFeature.Electricity, gs)) {
+      delete toApply.electrification;
+   }
+
+   Object.assign(building, toApply);
 }

@@ -9,7 +9,7 @@ export const PatchNotes: PatchNote[] = [
       content: [
          [
             "Bugfix",
-            "Fix a bug where transport preference / max transport distance are carried over after rebirth before the relevant tech is unlocked. Building default will NO LONGER carries over between rebirths",
+            "Fix a bug where transport preference / max transport distance are carried over after rebirth before the relevant tech is unlocked",
          ],
          ["Bugfix", "Always show transport preference for Warehouse/Caravansary"],
          [

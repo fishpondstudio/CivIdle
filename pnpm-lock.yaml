@@ -14,6 +14,9 @@ dependencies:
   '@capacitor/ios':
     specifier: ^5.4.2
     version: 5.6.0(@capacitor/core@5.6.0)
+  '@hazae41/foras':
+    specifier: ^2.1.4
+    version: 2.1.4
   '@msgpack/msgpack':
     specifier: ^3.0.0-beta2
     version: 3.0.0-beta2
@@ -35,9 +38,6 @@ dependencies:
   classnames:
     specifier: ^2.3.1
     version: 2.3.2
-  fflate:
-    specifier: ^0.8.2
-    version: 0.8.2
   pixi.js:
     specifier: 7.4.0
     version: 7.4.0
@@ -510,6 +510,10 @@ packages:
     requiresBuild: true
     dev: true
     optional: true
+
+  /@hazae41/foras@2.1.4:
+    resolution: {integrity: sha512-obzWFJ7sYYypl0UGjLKLZ8q/pFfY8B2re0oAw+ojc8XJQORz3yHMX8L+hv2r3Tm0zzOxGWAV/j0wdJuGRvhQow==}
+    dev: false
 
   /@ionic/cli-framework-output@2.2.8:
     resolution: {integrity: sha512-TshtaFQsovB4NWRBydbNFawql6yul7d5bMiW1WYYf17hd99V6xdDdk3vtF51bw6sLkxON3bDQpWsnUc9/hVo3g==}
@@ -2537,10 +2541,6 @@ packages:
     dependencies:
       pend: 1.2.0
     dev: true
-
-  /fflate@0.8.2:
-    resolution: {integrity: sha512-cPJU47OaAoCbg0pBvzsgpTPhmhqI5eJjh/JIu8tPj5q+T7iLvW/JAYUqmE7KOB4R1ZyEhzBaIQpQpardBF5z8A==}
-    dev: false
 
   /file-type@9.0.0:
     resolution: {integrity: sha512-Qe/5NJrgIOlwijpq3B7BEpzPFcgzggOTagZmkXQY4LA6bsXKTUstK7Wp12lEJ/mLKTpvIZxmIuRcLYWT6ov9lw==}

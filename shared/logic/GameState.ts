@@ -53,7 +53,6 @@ export class GameState {
    lastPriceUpdated = 0;
    isOffline = false;
    favoriteTiles: Set<Tile> = new Set();
-   buildingDefaults: Partial<Record<Building, Partial<IBuildingData>>> = {};
 }
 
 export type GreatPeopleChoice = [GreatPerson, GreatPerson, GreatPerson];
@@ -120,6 +119,7 @@ export class GameOptions {
    defaultStockpileMax = 5;
    chatSendChannel: ChatChannel = "en";
    chatReceiveChannel: PartialSet<ChatChannel> = { en: true };
+   buildingDefaults: Partial<Record<Building, Partial<IBuildingData>>> = {};
    // Should be wiped
    greatPeople: Partial<Record<GreatPerson, { level: number; amount: number }>> = {};
    greatPeopleChoices: GreatPeopleChoice[] = [];
