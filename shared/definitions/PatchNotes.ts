@@ -14,7 +14,7 @@ export const PatchNotes: PatchNote[] = [
          ["Bugfix", "Always show transport preference for Warehouse/Caravansary"],
          [
             "Bugfix",
-            "Fix a bug where Hagia Sophia and Mogao Caves causes double counting of happiness from Shrines",
+            "Fix a bug where Hagia Sophia, Summer Palace and Mogao Caves causes double counting of happiness from Shrines",
          ],
          ["Bugfix", "Fix a bug where happiness fractions are not correctly rounded"],
          [

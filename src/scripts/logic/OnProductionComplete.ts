@@ -398,15 +398,13 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
                addMultiplier(b, { output: 1, worker: 1, storage: 1 }, buildingName);
             }
          });
-         let count = 0;
          for (const neighbor of grid.getNeighbors(tileToPoint(xy))) {
             const neighborXy = pointToTile(neighbor);
             const b = getCompletedBuilding(neighborXy, gs);
             if (b && (Config.Building[b.type].input.Gunpowder || Config.Building[b.type].output.Gunpowder)) {
-               ++count;
+               getHappinessExemptions().add(neighborXy);
             }
          }
-         Tick.next.globalMultipliers.happiness.push({ value: count, source: buildingName });
          break;
       }
       case "MogaoCaves": {

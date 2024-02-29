@@ -361,8 +361,8 @@ export const ES = {
    Aristophanes: "Aristófanes",
    AristophanesDesc: "+%{value} de felicidad",
    Fibonacci: "Fibonacci",
-   FibonacciDesc:
-      "+%{idle} de ciencia por trabajadores en paro. +%{busy} de ciencia por trabajadores ocupados. El coste de la mejora permanente sigue la secuencia de Fibonacci",
+   FibonacciDescV2:
+      "+%{idle} Science from Idle Workers. +%{busy} Science from Busy Workers. Fibonacci's permanent upgrade cost follows Fibonacci sequence",
    LeonardoDaVinci: "Leonardo da Vinci",
    MartinLuther: "Martin Luther",
    WilliamShakespeare: "William Shakespeare",
@@ -994,4 +994,6 @@ export const ES = {
    OpenSaveBackupFolder: "Abrir copias de seguridad",
    ShortcutBuildingPageToggleBuilding: "Toggle Production",
    ShortcutBuildingPageToggleBuildingSetAllSimilar: "Toggle Production And Apply To All",
+   HappinessUncapped: "Happiness (Uncapped)",
+   ExtraGreatPeople: "%{count} Extra Great People",
 };
