@@ -1,12 +1,15 @@
 import randomColor from "randomcolor";
+import { MAX_TECH_AGE } from "../../../shared/definitions/TechDefinitions";
 import { isSpecialBuilding } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
 import { getGameOptions, getGameState } from "../../../shared/logic/GameStateLogic";
+import { rollPermanentGreatPeople } from "../../../shared/logic/RebornLogic";
 import { AccountLevel, ChatChannels, type ChatChannel } from "../../../shared/utilities/Database";
 import {
    HOUR,
    SECOND,
    clamp,
+   firstKeyOf,
    forEach,
    formatHM,
    formatNumber,
@@ -15,7 +18,7 @@ import {
    sizeOf,
    uuid4,
 } from "../../../shared/utilities/Helper";
-import { decompressSave, overwriteSaveGame, saveGame } from "../Global";
+import { decompressSave, overwriteSaveGame, resetToCity, saveGame } from "../Global";
 import { addSystemMessage, canEarnGreatPeopleFromReborn, client } from "../rpc/RPCClient";
 import { tickEverySecond } from "./Tick";
 
@@ -72,6 +75,22 @@ export async function handleChatCommand(command: string): Promise<void> {
          const onlineCount = await client.getOnlinePlayerCount();
          const totalCount = await client.getTotalPlayerCount();
          addSystemMessage(`There are ${totalCount} players, ${onlineCount} of them are current online`);
+         break;
+      }
+      case "recoverprogress": {
+         if (parts[1] === "confirm") {
+            const number = await client.doGreatPeopleRecovery();
+            getGameOptions().greatPeople = {};
+            getGameOptions().greatPeopleChoices = [];
+            rollPermanentGreatPeople(number, MAX_TECH_AGE);
+            resetToCity(firstKeyOf(Config.City)!);
+            await saveGame();
+            window.location.reload();
+         }
+         const number = await client.getGreatPeopleRecovery();
+         addSystemMessage(
+            `Your pending progress recovery request will grant you ${number} great people. Type "/recoverprogress confirm" to claim them. Your current progress (this run and permanent great people) will be reset`,
+         );
          break;
       }
       case "randomcolor": {
@@ -196,6 +215,23 @@ export async function handleChatCommand(command: string): Promise<void> {
          }
          const newHandle = await client.renamePlayer(parts[1], parts[2]);
          addSystemMessage(`Player ${parts[1]} renamed to ${newHandle}`);
+         break;
+      }
+      case "setgprec": {
+         if (!parts[1] || !parts[2]) {
+            throw new Error("Invalid command format");
+         }
+         const count = parseInt(parts[2], 10);
+         const result = await client.setGreatPeopleRecovery(parts[1], count);
+         addSystemMessage(`Will grant Player ${parts[1]} ${result} great people`);
+         break;
+      }
+      case "getgprec": {
+         if (!parts[1]) {
+            throw new Error("Invalid command format");
+         }
+         const count = await client.queryGreatPeopleRecovery(parts[1]);
+         addSystemMessage(`Player ${parts[1]} will receive ${count} great people`);
          break;
       }
       default: {

@@ -1,6 +1,9 @@
 import { L, t } from "../utilities/i18n";
 import type { ITechAgeDefinition, ITechDefinition } from "./ITechDefinition";
 
+export const MAX_TECH_COLUMN = 17;
+export const MAX_TECH_AGE: TechAge = "IndustrialAge";
+
 export class TechAgeDefinitions {
    StoneAge: ITechAgeDefinition = { idx: 0, from: 0, to: 1, name: () => t(L.StoneAge) };
    BronzeAge: ITechAgeDefinition = { idx: 1, from: 2, to: 3, name: () => t(L.BronzeAge) };
