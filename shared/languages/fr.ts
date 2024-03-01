@@ -364,7 +364,7 @@ export const FR = {
    AristophanesDesc: "+%{value} Bonheur",
    Fibonacci: "Fibonacci",
    FibonacciDescV2:
-      "+%{idle} Science from Idle Workers. +%{busy} Science from Busy Workers. Fibonacci's permanent upgrade cost follows Fibonacci sequence",
+      "+%{idle} Science produite par les ouvriers inactifs. +%{busy} Science produite par les ouvriers actifs. Le coût de l'amélioration permanente de Fibonacci est calculé en fonction de la suite de Fibonacci",
    LeonardoDaVinci: "Léonard de Vinci",
    MartinLuther: "Martin Luther",
    WilliamShakespeare: "William Shakespeare",
@@ -425,7 +425,7 @@ export const FR = {
       "Toutes les fonderies adjacentes obtiennent +N Production, Stockage Multiplicateur d'Ouvriers. N = Nombre de fonderies adjacentes",
    CircusMaximus: "Circus Maximus",
    CircusMaximusDescV2:
-      "+5 Happiness. All Musician's Guilds, Writer's Guilds and Painter's Guilds get +1 Production and Storage Multiplier",
+      "+5 Bonheur. Toutes les guildes de musiciens, guildes d'écrivains et guildes de peintres obtiennent +1 Production et Multiplicateur de Stockage",
    Statistics: "Bâtiment des statistiques",
    StatisticsDesc: "Fournit des statistiques sur la consommation et la production",
    GrottaAzzurra: "Grotte bleue",
@@ -1000,6 +1000,6 @@ export const FR = {
    OpenSaveBackupFolder: "Ouvrier le dossier de récupération",
    ShortcutBuildingPageToggleBuilding: "Basculer la production",
    ShortcutBuildingPageToggleBuildingSetAllSimilar: "Basculer la production et appliquer à tous",
-   HappinessUncapped: "Happiness (Uncapped)",
-   ExtraGreatPeople: "%{count} Extra Great People",
+   HappinessUncapped: "Bonheur (sans limite)",
+   ExtraGreatPeople: "%{count} personnages illustres bonus",
 };
