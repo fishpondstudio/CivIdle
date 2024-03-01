@@ -8,6 +8,7 @@ import {
    isWorldWonder,
 } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
+import { OXFORD_SCIENCE_PER_UPGRADE } from "../../../shared/logic/Constants";
 import { getGameState } from "../../../shared/logic/GameStateLogic";
 import {
    getBuildingsByType,
@@ -255,7 +256,11 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
       }
       case "OxfordUniversity": {
          const upgrades = getTotalBuildingUpgrades(gs);
-         safeAdd(getSpecialBuildings(gs).Headquarter.building.resources, "Science", upgrades);
+         safeAdd(
+            getSpecialBuildings(gs).Headquarter.building.resources,
+            "Science",
+            upgrades * OXFORD_SCIENCE_PER_UPGRADE,
+         );
          break;
       }
       case "StPetersBasilica": {

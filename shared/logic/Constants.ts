@@ -11,6 +11,7 @@ import {
    formatNumber,
    isEmpty,
    keysOf,
+   mapSafeAdd,
    numberToRoman,
    sizeOf,
 } from "../utilities/Helper";
@@ -40,6 +41,7 @@ export const BACKUP_RECOVERY_URL =
    "https://steamcommunity.com/app/2181940/discussions/0/7260435610010445264/";
 export const TRIBUNE_TRADE_VALUE_PER_MINUTE = 10000;
 export const MAX_TARIFF_RATE = 0.1;
+export const OXFORD_SCIENCE_PER_UPGRADE = 5;
 
 interface IRecipe {
    building: Building;
@@ -263,6 +265,7 @@ export function calculateTierAndPrice() {
    });
 
    const wonderCost: string[] = [];
+   const resourcesUsedByWonder = new Map<Resource, number>();
    keysOf(Config.Building)
       .sort((a, b) => {
          const techA = getBuildingUnlockTech(a);
@@ -279,6 +282,7 @@ export function calculateTierAndPrice() {
             let totalAmount = 0;
             const baseBuilderCapacity = getWonderBaseBuilderCapacity(k);
             forEach(getBuildingCost({ type: k, level: 0 }), (res, amount) => {
+               mapSafeAdd(resourcesUsedByWonder, res, 1);
                totalAmount += amount;
                cost += `${res}: ${formatNumber(amount)}, `;
                value += Config.ResourcePrice[res]! * amount;
@@ -297,7 +301,9 @@ export function calculateTierAndPrice() {
          resourcePrice.push(
             `${r.padEnd(15)}${!NoPrice[r] && endResources[r] ? "*".padEnd(5) : "".padEnd(5)}${numberToRoman(
                Config.ResourceTier[r]!,
-            )!.padEnd(10)}${formatNumber(Config.ResourcePrice[r]!)}`,
+            )!.padEnd(10)}${formatNumber(Config.ResourcePrice[r]!).padEnd(10)}${
+               resourcesUsedByWonder.get(r) ?? "0*"
+            }`,
          );
       });
 

@@ -35,13 +35,11 @@ export class BuildingDefinitions {
       name: () => t(L.House),
       input: { Wheat: 1, Water: 1 },
       output: { Worker: 6 },
-      construction: { Brick: 2 },
    };
    Apartment: IBuildingDefinition = {
       name: () => t(L.Apartment),
       input: { Cheese: 1, Meat: 2, Bread: 1 },
       output: { Worker: 84 },
-      construction: { Brick: 2, Lumber: 2 },
    };
    // #endregion /////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -59,7 +57,6 @@ export class BuildingDefinitions {
       output: { Stone: 1 },
       construction: { Wood: 1 },
    };
-
    LoggingCamp: IBuildingDefinition = {
       name: () => t(L.LoggingCamp),
       input: {},
@@ -273,7 +270,6 @@ export class BuildingDefinitions {
       name: () => t(L.Library),
       input: { Paper: 1 },
       output: { Science: 16 },
-      construction: { Marble: 1, Stone: 1 },
    };
    University: IBuildingDefinition = {
       name: () => t(L.University),
@@ -343,7 +339,6 @@ export class BuildingDefinitions {
       name: () => t(L.FlourMill),
       input: { Wheat: 2 },
       output: { Flour: 1 },
-      construction: { Brick: 1, Wood: 1 },
    };
    LivestockFarm: IBuildingDefinition = {
       name: () => t(L.LivestockFarm),
@@ -369,7 +364,6 @@ export class BuildingDefinitions {
       name: () => t(L.Brewery),
       input: { Wheat: 1, Water: 1 },
       output: { Alcohol: 1 },
-      construction: { Lumber: 1, Brick: 1, Copper: 1 },
    };
    PaperMaker: IBuildingDefinition = {
       name: () => t(L.PaperMaker),
@@ -388,13 +382,11 @@ export class BuildingDefinitions {
       name: () => t(L.LumberMill),
       input: { Wood: 2 },
       output: { Lumber: 1 },
-      construction: { Stone: 1, Wood: 1 },
    };
    Glassworks: IBuildingDefinition = {
       name: () => t(L.Glassworks),
       input: { Sand: 2 },
       output: { Glass: 1 },
-      construction: { Stone: 1, Wood: 1 },
    };
    LensWorkshop: IBuildingDefinition = {
       name: () => t(L.LensWorkshop),
@@ -734,7 +726,7 @@ export class BuildingDefinitions {
    };
    OxfordUniversity: IBuildingDefinition = {
       name: () => t(L.OxfordUniversity),
-      desc: () => t(L.OxfordUniversityDesc),
+      desc: () => t(L.OxfordUniversityDescV2),
       input: {},
       output: {},
       max: 1,

@@ -443,7 +443,7 @@ export const EN = {
    Petra: "Petra",
    PetraDesc: "Generate time warp when you are offline, which you can use to accelerate your empire",
    OxfordUniversity: "Oxford University",
-   OxfordUniversityDesc: "Each building upgrade in your empire provides +1 Science per cycle",
+   OxfordUniversityDescV2: "Each building upgrade in your empire provides +5 Science per cycle",
    StPetersBasilica: "St. Peter's Basilica",
    StPetersBasilicaDesc:
       "All buildings that produce Faith get +1 Storage Multiplier. Generate Faith based on Faith in storage",
