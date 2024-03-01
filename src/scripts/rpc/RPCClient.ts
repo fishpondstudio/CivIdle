@@ -1,5 +1,6 @@
 import { decode, encode } from "@msgpack/msgpack";
 import type { ServerImpl } from "../../../server/src/Server";
+import { Config } from "../../../shared/logic/Config";
 import { getGameOptions, getGameState } from "../../../shared/logic/GameStateLogic";
 import { RpcError, removeTrailingUndefs, rpcClient } from "../../../shared/thirdparty/TRPCClient";
 import type {
@@ -80,9 +81,15 @@ export const client = rpcClient<ServerImpl>({
    },
 });
 
+function getTrades(): IClientTrade[] {
+   return Array.from(trades.values()).filter(
+      (trade) => Config.Resource[trade.buyResource] && Config.Resource[trade.sellResource],
+   );
+}
+
 export const usePlayerMap = makeObservableHook(OnPlayerMapChanged, () => playerMap);
 export const useChatMessages = makeObservableHook(OnChatMessage, () => chatMessages);
-export const useTrades = makeObservableHook(OnTradeMessage, () => Array.from(trades.values()));
+export const useTrades = makeObservableHook(OnTradeMessage, getTrades);
 export const useUser = makeObservableHook(OnUserChanged, getUser);
 
 function getUser(): IUser | null {
@@ -189,7 +196,7 @@ export async function connectWebSocket(): Promise<number> {
                   trades.delete(id);
                });
             }
-            OnTradeMessage.emit(Array.from(trades.values()));
+            OnTradeMessage.emit(getTrades());
             break;
          }
          case MessageType.Map: {
