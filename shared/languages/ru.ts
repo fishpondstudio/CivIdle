@@ -478,7 +478,7 @@ export const RU = {
    PantheonDesc: "Pantheon",
    SaintBasilsCathedral: "Храм Василия Блаженного",
    SaintBasilsCathedralDescV2:
-      "Allow resource extraction buildings to work adjacent to a deposit. All tier I buildings get +1 Production Multiplier, Worker Capacity Multiplier, and Storage Multiplier",
+      "Позволяет добывающим зданиям работать рядом с месторождением. Все соседние здания 1-го тира получают +1 к Множителю Производства, Множителю Производительности Работников и Множителю Хранения",
    ChichenItza: "Чичен-Ица",
    ChichenItzaDesc:
       "Все прилегающие постройки получают +1 Production Multiplier, Storage and Worker Capacity Multiplier",
