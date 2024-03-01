@@ -361,8 +361,8 @@ export const KR = {
    Aristophanes: "Aristophanes",
    AristophanesDesc: "+%{value} Happiness",
    Fibonacci: "Fibonacci",
-   FibonacciDesc:
-      "+%{idle} Science from Idle Workers. +%{busy} Science from Busy Workers. Permanent upgrade cost follows Fibonacci sequence",
+   FibonacciDescV2:
+      "+%{idle} Science from Idle Workers. +%{busy} Science from Busy Workers. Fibonacci's permanent upgrade cost follows Fibonacci sequence",
    LeonardoDaVinci: "레오나르도 다 빈치",
    MartinLuther: "마르틴 루터",
    WilliamShakespeare: "윌리엄 셰익스피어",
@@ -416,7 +416,8 @@ export const KR = {
    EiffelTowerDesc:
       "모든 인접한 제강공장이 +N 의 생산, 저장소, 작업자 용량 배수를 얻습니다. N = 인접한 제강공장의 수",
    CircusMaximus: "키르쿠스 막시무스",
-   CircusMaximusDesc: "행복도 +5, 모든 배우 길드, 작가 길드, 화가 길드가 +1의 생산, 저장소 배수를 얻습니다",
+   CircusMaximusDescV2:
+      "+5 Happiness. All Musician's Guilds, Writer's Guilds and Painter's Guilds get +1 Production and Storage Multiplier",
    Statistics: "통계 건물",
    StatisticsDesc: "소비 및 생산 통계를 제공합니다.",
    GrottaAzzurra: "카프리 푸른 동굴",
@@ -950,4 +951,6 @@ export const KR = {
    OpenSaveBackupFolder: "Open Backup Folder",
    ShortcutBuildingPageToggleBuilding: "Toggle Production",
    ShortcutBuildingPageToggleBuildingSetAllSimilar: "Toggle Production And Apply To All",
+   HappinessUncapped: "Happiness (Uncapped)",
+   ExtraGreatPeople: "%{count} Extra Great People",
 };

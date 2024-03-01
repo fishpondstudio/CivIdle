@@ -181,15 +181,23 @@ export function AddTradeComponent({ gameState, xy }: IBuildingComponentProps): R
                   className="row f1 jcc"
                   disabled={!isTradeValid(trade) || !enabled}
                   onClick={async () => {
+                     if (
+                        !isTradeValid(trade) ||
+                        !enabled ||
+                        (resourcesInStorage[trade.sellResource] ?? 0) < trade.sellAmount
+                     ) {
+                        playError();
+                        showToast(t(L.OperationNotAllowedError));
+                     }
                      try {
-                        if (!isTradeValid(trade) || !enabled) {
-                           throw new Error(t(L.OperationNotAllowedError));
-                        }
+                        // Note: we deduct the resources first otherwise resource can go negative if a player
+                        // clicks really fast. If the trade fails, we refund the player
+                        resourcesInStorage[trade.sellResource]! -= trade.sellAmount;
                         await client.addTrade(trade);
                         playKaching();
-                        resourcesInStorage[trade.sellResource]! -= trade.sellAmount;
                         showToast(t(L.PlayerTradeAddSuccess));
                      } catch (error) {
+                        resourcesInStorage[trade.sellResource]! += trade.sellAmount;
                         playError();
                         showToast(String(error));
                      }

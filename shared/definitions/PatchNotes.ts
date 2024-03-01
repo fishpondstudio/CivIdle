@@ -5,6 +5,32 @@ interface PatchNote {
 
 export const PatchNotes: PatchNote[] = [
    {
+      version: "0.2.1",
+      content: [
+         [
+            "Bugfix",
+            "Fix a bug where transport preference / max transport distance are carried over after rebirth before the relevant tech is unlocked",
+         ],
+         ["Bugfix", "Always show transport preference for Warehouse/Caravansary"],
+         [
+            "Bugfix",
+            "Fix a bug where Hagia Sophia, Summer Palace and Mogao Caves causes double counting of happiness from Shrines",
+         ],
+         ["Bugfix", "Fix a bug where sometimes building have extra resources after construction / upgrade"],
+         ["Bugfix", "Fix a bug where Statistics does not include market output"],
+         ["Bugfix", "Fix a bug where happiness fractions are not correctly rounded"],
+         [
+            "QoL",
+            "Add keyboard shortcut for Toggle Building Production and Toggle Building Production and Apply To All (@sextondb)",
+         ],
+         ["QoL", "Progress towards the next great person will now starts at 0%"],
+         [
+            "QoL",
+            "Rebirth section in Home building now shows the total empire value required for the next 3 extra great people",
+         ],
+      ],
+   },
+   {
       version: "0.2.0",
       content: [
          [

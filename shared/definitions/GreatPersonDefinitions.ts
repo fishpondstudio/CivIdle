@@ -340,7 +340,7 @@ export class GreatPersonDefinitions {
 
    Fibonacci: IGreatPersonDefinition = {
       name: () => t(L.Fibonacci),
-      desc: (self, level) => t(L.FibonacciDesc, { idle: self.value(level) / 2, busy: self.value(level) }),
+      desc: (self, level) => t(L.FibonacciDescV2, { idle: self.value(level) / 2, busy: self.value(level) }),
       time: "c. 1170 ~ 1250 AD",
       value: (level) => level,
       maxLevel: Infinity,

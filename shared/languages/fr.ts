@@ -363,8 +363,8 @@ export const FR = {
    Aristophanes: "Aristophane",
    AristophanesDesc: "+%{value} Bonheur",
    Fibonacci: "Fibonacci",
-   FibonacciDesc:
-      "+%{idle} Science from Idle Workers. +%{busy} Science from Busy Workers. Permanent upgrade cost follows Fibonacci sequence",
+   FibonacciDescV2:
+      "+%{idle} Science from Idle Workers. +%{busy} Science from Busy Workers. Fibonacci's permanent upgrade cost follows Fibonacci sequence",
    LeonardoDaVinci: "Léonard de Vinci",
    MartinLuther: "Martin Luther",
    WilliamShakespeare: "William Shakespeare",
@@ -424,8 +424,8 @@ export const FR = {
    EiffelTowerDesc:
       "Toutes les fonderies adjacentes obtiennent +N Production, Stockage Multiplicateur d'Ouvriers. N = Nombre de fonderies adjacentes",
    CircusMaximus: "Circus Maximus",
-   CircusMaximusDesc:
-      "+5 Bonheur. Toutes les guildes d'acteurs, guildes d'écrivains et guildes de peintres obtiennent +1 Production et Multiplicateur de stockage",
+   CircusMaximusDescV2:
+      "+5 Happiness. All Musician's Guilds, Writer's Guilds and Painter's Guilds get +1 Production and Storage Multiplier",
    Statistics: "Bâtiment des statistiques",
    StatisticsDesc: "Fournit des statistiques sur la consommation et la production",
    GrottaAzzurra: "Grotte bleue",
@@ -462,7 +462,7 @@ export const FR = {
    ItsukushimaShrineDesc: "Sanctuaire d'Itsukushima",
    TempleOfArtemis: "Temple d'Artémis",
    TempleOfArtemisDesc:
-      "Toutes les forges d'épées et érmureries obtiennent +5 Niveau. Elles obtiennent également +1 Multiplicateur de Production, Multiplicateur de Capacité des Ouvriers et Multiplicateur de Stockage",
+      "Toutes les forges d'épées et armureries obtiennent +5 Niveau. Elles obtiennent également +1 Multiplicateur de Production, Multiplicateur de Capacité des Ouvriers et Multiplicateur de Stockage",
    TempleOfHeaven: "Temple du Ciel",
    TempleOfHeavenDesc:
       "Tous les bâtiments de niveau 10 ou supérieur obtiennent +1 Multiplicateur de Capacité des Ouvriers",
@@ -995,9 +995,11 @@ export const FR = {
    IsaacNewtonDesc: "+%{value} Science produite par tous les ouvriers si plus de 50% d'entre eux sont actifs",
    ChooseGreatPersonChoicesLeft: "Il vous reste %{count} choix",
    GreatPersonThisRunEffectiveLevel:
-      "You currently have %{count} %{person} from this run. An additional %{person} will have 1/%{effect} of the effect",
-   OpenSaveFolder: "Open Save Folder",
-   OpenSaveBackupFolder: "Open Backup Folder",
-   ShortcutBuildingPageToggleBuilding: "Toggle Production",
-   ShortcutBuildingPageToggleBuildingSetAllSimilar: "Toggle Production And Apply To All",
+      "Vous avez actuellement %{count} %{person} provenant de cette partie. Une %{person} supplémentaire aura 1/%{effect} de l'effet",
+   OpenSaveFolder: "Ouvrir le dossier de sauvegarde",
+   OpenSaveBackupFolder: "Ouvrier le dossier de récupération",
+   ShortcutBuildingPageToggleBuilding: "Basculer la production",
+   ShortcutBuildingPageToggleBuildingSetAllSimilar: "Basculer la production et appliquer à tous",
+   HappinessUncapped: "Happiness (Uncapped)",
+   ExtraGreatPeople: "%{count} Extra Great People",
 };

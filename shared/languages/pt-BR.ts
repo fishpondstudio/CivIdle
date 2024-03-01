@@ -361,8 +361,8 @@ export const PT_BR = {
    Aristophanes: "Aristophanes",
    AristophanesDesc: "+%{value} Happiness",
    Fibonacci: "Fibonacci",
-   FibonacciDesc:
-      "+%{idle} Science from Idle Workers. +%{busy} Science from Busy Workers. Permanent upgrade cost follows Fibonacci sequence",
+   FibonacciDescV2:
+      "+%{idle} Science from Idle Workers. +%{busy} Science from Busy Workers. Fibonacci's permanent upgrade cost follows Fibonacci sequence",
    LeonardoDaVinci: "Leonardo da Vinci",
    MartinLuther: "Martin Luther",
    WilliamShakespeare: "William Shakespeare",
@@ -423,8 +423,8 @@ export const PT_BR = {
    EiffelTowerDesc:
       "Todas as siderúrgicas adjacentes ganham +N Multiplicador de Produção, Armazenamento e Trabalhadores. N = Número de siderúrgicas adjacentes",
    CircusMaximus: "Circo Máximo",
-   CircusMaximusDesc:
-      "+5 de Felicidade. Todas as Associações de Atores, Associações de Escritores e Associações de Pintores ganham +1 de Multiplicador de Produção e Armazenamento",
+   CircusMaximusDescV2:
+      "+5 Happiness. All Musician's Guilds, Writer's Guilds and Painter's Guilds get +1 Production and Storage Multiplier",
    Statistics: "Construção de Estatísticas",
    StatisticsDesc: "Garante estatísticas de consumo e produção",
    GrottaAzzurra: "Gruta Azul",
@@ -993,4 +993,6 @@ export const PT_BR = {
    OpenSaveBackupFolder: "Open Backup Folder",
    ShortcutBuildingPageToggleBuilding: "Toggle Production",
    ShortcutBuildingPageToggleBuildingSetAllSimilar: "Toggle Production And Apply To All",
+   HappinessUncapped: "Happiness (Uncapped)",
+   ExtraGreatPeople: "%{count} Extra Great People",
 };

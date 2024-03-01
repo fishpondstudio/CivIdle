@@ -14,6 +14,9 @@ dependencies:
   '@capacitor/ios':
     specifier: ^5.4.2
     version: 5.6.0(@capacitor/core@5.6.0)
+  '@hazae41/foras':
+    specifier: ^2.1.4
+    version: 2.1.4
   '@msgpack/msgpack':
     specifier: ^3.0.0-beta2
     version: 3.0.0-beta2
@@ -35,9 +38,6 @@ dependencies:
   classnames:
     specifier: ^2.3.1
     version: 2.3.2
-  pako:
-    specifier: ^2.1.0
-    version: 2.1.0
   pixi.js:
     specifier: 7.4.0
     version: 7.4.0
@@ -510,6 +510,10 @@ packages:
     requiresBuild: true
     dev: true
     optional: true
+
+  /@hazae41/foras@2.1.4:
+    resolution: {integrity: sha512-obzWFJ7sYYypl0UGjLKLZ8q/pFfY8B2re0oAw+ojc8XJQORz3yHMX8L+hv2r3Tm0zzOxGWAV/j0wdJuGRvhQow==}
+    dev: false
 
   /@ionic/cli-framework-output@2.2.8:
     resolution: {integrity: sha512-TshtaFQsovB4NWRBydbNFawql6yul7d5bMiW1WYYf17hd99V6xdDdk3vtF51bw6sLkxON3bDQpWsnUc9/hVo3g==}
@@ -3711,10 +3715,6 @@ packages:
   /pako@1.0.11:
     resolution: {integrity: sha512-4hLB8Py4zZce5s4yd9XzopqwVv/yGNhV1Bl8NTmCq1763HeK2+EwVTv+leGeL13Dnh2wfbqowVPXCIO0z4taYw==}
     dev: true
-
-  /pako@2.1.0:
-    resolution: {integrity: sha512-w+eufiZ1WuJYgPXbV/PO3NCMEc3xqylkKHzp8bxp1uW4qaSNQUkwmLLEc3kKsfz8lpV1F8Ht3U1Cm+9Srog2ug==}
-    dev: false
 
   /parse-bmfont-ascii@1.0.6:
     resolution: {integrity: sha512-U4RrVsUFCleIOBsIGYOMKjn9PavsGOXxbvYGtMOEfnId0SVNsgehXh1DxUdVPLoxd5mvcEtvmKs2Mmf0Mpa1ZA==}

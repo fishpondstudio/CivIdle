@@ -21,7 +21,8 @@ export function BuildingInputModeComponent({ gameState, xy }: IBuildingComponent
    }
    if (
       building.status === "completed" &&
-      isEmpty(getBuildingIO(xy, "input", IOCalculation.None, gameState))
+      isEmpty(getBuildingIO(xy, "input", IOCalculation.None, gameState)) &&
+      !("resourceImports" in building)
    ) {
       return null;
    }

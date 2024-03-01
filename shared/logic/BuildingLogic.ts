@@ -353,7 +353,7 @@ export function addTransportation(
 }
 
 export function getScienceFromWorkers(gs: GameState) {
-   const workersBeforeHappiness = Tick.current.workersAvailable.get("Worker") ?? 0;
+   const workersBeforeHappiness = Math.floor(Tick.current.workersAvailable.get("Worker") ?? 0);
    const happinessPercentage = Tick.current.happiness?.workerPercentage ?? 1;
    const workersAfterHappiness = Math.floor(workersBeforeHappiness * happinessPercentage);
    const workersBusy = Tick.current.workersUsed.get("Worker") ?? 0;
@@ -737,6 +737,19 @@ export function hasRequiredDeposit(
    return true;
 }
 
+export function hasEnoughResource(xy: Tile, res: Resource, amount: number, gs: GameState): boolean {
+   const resources = gs.tiles.get(xy)?.building?.resources;
+   if (!resources) {
+      return false;
+   }
+   return (resources[res] ?? 0) >= amount;
+}
+
+export function hasEnoughStorage(xy: Tile, amount: number, gs: GameState): boolean {
+   const storage = getStorageFor(xy, gs);
+   return storage.total - storage.used >= amount;
+}
+
 export function getCompletedBuilding(xy: Tile, gs: GameState): IBuildingData | null {
    const tile = gs.tiles.get(xy);
    if (!tile || !tile.building || tile.building.status === "building") return null;
@@ -767,13 +780,32 @@ export function getExtraVisionRange(): number {
    return Tick.current.specialBuildings.has("GreatMosqueOfSamarra") ? 1 : 0;
 }
 
-export function applyDefaultSettings(building: IBuildingData): void {
+export function applyDefaultSettings(building: IBuildingData, gs: GameState): void {
    const options = getGameOptions();
    const defaults = options.buildingDefaults[building.type];
-   if (defaults) {
-      Object.assign(building, defaults);
-   } else {
-      building.stockpileCapacity = options.defaultStockpileCapacity;
-      building.stockpileMax = options.defaultStockpileMax;
+   const toApply = defaults ? { ...defaults } : {};
+
+   if (isNullOrUndefined(toApply.stockpileCapacity)) {
+      toApply.stockpileCapacity = options.defaultStockpileCapacity;
    }
+   if (isNullOrUndefined(toApply.stockpileCapacity)) {
+      toApply.stockpileMax = options.defaultStockpileMax;
+   }
+
+   if (!hasFeature(GameFeature.BuildingProductionPriority, gs)) {
+      delete toApply.priority;
+   }
+   if (!hasFeature(GameFeature.BuildingStockpileMode, gs)) {
+      delete toApply.stockpileCapacity;
+      delete toApply.stockpileMax;
+   }
+   if (!hasFeature(GameFeature.BuildingInputMode, gs)) {
+      delete toApply.inputMode;
+      delete toApply.maxInputDistance;
+   }
+   if (!hasFeature(GameFeature.Electricity, gs)) {
+      delete toApply.electrification;
+   }
+
+   Object.assign(building, toApply);
 }

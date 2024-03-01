@@ -361,8 +361,8 @@ export const NL = {
    Aristophanes: "Aristophanes",
    AristophanesDesc: "+%{value} Happiness",
    Fibonacci: "Fibonacci",
-   FibonacciDesc:
-      "+%{idle} Science from Idle Workers. +%{busy} Science from Busy Workers. Permanent upgrade cost follows Fibonacci sequence",
+   FibonacciDescV2:
+      "+%{idle} Science from Idle Workers. +%{busy} Science from Busy Workers. Fibonacci's permanent upgrade cost follows Fibonacci sequence",
    LeonardoDaVinci: "Leonardo da Vinci",
    MartinLuther: "Maarten Luther",
    WilliamShakespeare: "William Shakespeare",
@@ -420,8 +420,8 @@ export const NL = {
    EiffelTowerDesc:
       "Alle aangrenzende staalfabrieken krijgen +N Productie, Opslag en Werknemer Vermenigvuldiger. N = Aantal aangrenzende staalfabrieken",
    CircusMaximus: "Circus Maximus",
-   CircusMaximusDesc:
-      "+5 Geluk. Alle Acteursgilden, Schrijversgilden en Schildersgilden krijgen +1 Productie en Opslag Vermenigvuldiger",
+   CircusMaximusDescV2:
+      "+5 Happiness. All Musician's Guilds, Writer's Guilds and Painter's Guilds get +1 Production and Storage Multiplier",
    Statistics: "Statistiekgebouw",
    StatisticsDesc: "Levert statistieken van consumptie en productie",
    GrottaAzzurra: "Grotta Azzurra",
@@ -986,4 +986,6 @@ export const NL = {
    OpenSaveBackupFolder: "Open Backup Folder",
    ShortcutBuildingPageToggleBuilding: "Toggle Production",
    ShortcutBuildingPageToggleBuildingSetAllSimilar: "Toggle Production And Apply To All",
+   HappinessUncapped: "Happiness (Uncapped)",
+   ExtraGreatPeople: "%{count} Extra Great People",
 };

@@ -10,6 +10,7 @@ import { OnNewPendingClaims, client } from "../rpc/RPCClient";
 import { useTypedEvent } from "../utilities/Hook";
 import { playError, playKaching } from "../visuals/Sound";
 import type { IBuildingComponentProps } from "./BuildingPage";
+import { FixedLengthText } from "./FixedLengthText";
 import { showToast } from "./GlobalModal";
 import { FormatNumber } from "./HelperComponents";
 
@@ -94,7 +95,9 @@ export function PendingClaimComponent({ gameState, xy }: IBuildingComponentProps
                            ) : null}
                         </td>
                         <td>{Config.Resource[trade.resource as Resource].name()}</td>
-                        <td>{trade.fillBy}</td>
+                        <td>
+                           <FixedLengthText text={trade.fillBy} length={10} />
+                        </td>
                         <td className="text-right">
                            <FormatNumber value={trade.amount} />
                         </td>

@@ -360,8 +360,8 @@ export const ZH_TW = {
    Aristophanes: "Aristophanes",
    AristophanesDesc: "+%{value} Happiness",
    Fibonacci: "Fibonacci",
-   FibonacciDesc:
-      "+%{idle} Science from Idle Workers. +%{busy} Science from Busy Workers. Permanent upgrade cost follows Fibonacci sequence",
+   FibonacciDescV2:
+      "+%{idle} Science from Idle Workers. +%{busy} Science from Busy Workers. Fibonacci's permanent upgrade cost follows Fibonacci sequence",
    LeonardoDaVinci: "李奧納多·達·芬奇",
    MartinLuther: "馬丁·路德",
    WilliamShakespeare: "威廉·莎士比亞",
@@ -413,7 +413,8 @@ export const ZH_TW = {
    EiffelTower: "埃菲爾鐵塔",
    EiffelTowerDesc: "所有相鄰煉鋼廠，獲得 +N 生產、存儲以及勞動者指數。 N 取決於其相鄰煉鋼廠數量",
    CircusMaximus: "馬克西穆斯競技場",
-   CircusMaximusDesc: "+5 幸福感。所有演員協會、作家協會以及畫家協會，獲得 +1 生產以及存儲指數",
+   CircusMaximusDescV2:
+      "+5 Happiness. All Musician's Guilds, Writer's Guilds and Painter's Guilds get +1 Production and Storage Multiplier",
    Statistics: "統計大樓",
    StatisticsDesc: "提供消費和生產統計數據",
    GrottaAzzurra: "卡普里島藍洞",
@@ -935,4 +936,6 @@ export const ZH_TW = {
    OpenSaveBackupFolder: "Open Backup Folder",
    ShortcutBuildingPageToggleBuilding: "Toggle Production",
    ShortcutBuildingPageToggleBuildingSetAllSimilar: "Toggle Production And Apply To All",
+   HappinessUncapped: "Happiness (Uncapped)",
+   ExtraGreatPeople: "%{count} Extra Great People",
 };

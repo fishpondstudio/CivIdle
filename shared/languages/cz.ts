@@ -361,8 +361,8 @@ export const CZ = {
    Aristophanes: "Aristophanes",
    AristophanesDesc: "+%{value} Happiness",
    Fibonacci: "Fibonacci",
-   FibonacciDesc:
-      "+%{idle} Science from Idle Workers. +%{busy} Science from Busy Workers. Permanent upgrade cost follows Fibonacci sequence",
+   FibonacciDescV2:
+      "+%{idle} Science from Idle Workers. +%{busy} Science from Busy Workers. Fibonacci's permanent upgrade cost follows Fibonacci sequence",
    LeonardoDaVinci: "Leonardo da Vinci",
    MartinLuther: "Martin Luther",
    WilliamShakespeare: "William Shakespeare",
@@ -420,8 +420,8 @@ export const CZ = {
    EiffelTowerDesc:
       "Všechny přilehlé ocelárny získají +N Výrobu, Skladování a Násobek pracovníků. N = počet sousedících oceláren",
    CircusMaximus: "Circus Maximus",
-   CircusMaximusDesc:
-      "+5 Štěstí. Všechny herecké cechy, spisovatelské cechy a malířské cechy získají +1 násobek výroby a skladování.",
+   CircusMaximusDescV2:
+      "+5 Happiness. All Musician's Guilds, Writer's Guilds and Painter's Guilds get +1 Production and Storage Multiplier",
    Statistics: "Statistika budovy",
    StatisticsDesc: "Poskytuje statistiky spotřeby a výroby",
    GrottaAzzurra: "Grotta Azzurra",
@@ -978,4 +978,6 @@ export const CZ = {
    OpenSaveBackupFolder: "Otevření záložní složky",
    ShortcutBuildingPageToggleBuilding: "Toggle Production",
    ShortcutBuildingPageToggleBuildingSetAllSimilar: "Toggle Production And Apply To All",
+   HappinessUncapped: "Happiness (Uncapped)",
+   ExtraGreatPeople: "%{count} Extra Great People",
 };

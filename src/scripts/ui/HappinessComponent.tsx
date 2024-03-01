@@ -49,7 +49,9 @@ export function HappinessComponent({ open }: { open: boolean }): React.ReactNode
                <details open={open}>
                   <summary className="row">
                      <div className="f1">{t(L.Happiness)}</div>
-                     <div className="text-strong">{happiness.value}</div>
+                     <div className="text-strong">
+                        <FormatNumber value={happiness.value} />
+                     </div>
                   </summary>
                   <ul>
                      {jsxMapOf(happiness.positive, (type, value) => {
@@ -83,7 +85,7 @@ export function HappinessComponent({ open }: { open: boolean }): React.ReactNode
                         );
                      })}
                      <li className="row">
-                        <div className="f1">Happiness (Uncapped)</div>
+                        <div className="f1">{t(L.HappinessUncapped)}</div>
                         <div
                            className={classNames({
                               "text-strong": true,
@@ -91,7 +93,7 @@ export function HappinessComponent({ open }: { open: boolean }): React.ReactNode
                               "text-green": happiness.rawValue > 0,
                            })}
                         >
-                           {happiness.rawValue}
+                           <FormatNumber value={happiness.rawValue} />
                         </div>
                      </li>
                   </ul>

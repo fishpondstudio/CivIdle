@@ -361,8 +361,8 @@ export const RU = {
    Aristophanes: "Aristophanes",
    AristophanesDesc: "+%{value} Happiness",
    Fibonacci: "Fibonacci",
-   FibonacciDesc:
-      "+%{idle} Science from Idle Workers. +%{busy} Science from Busy Workers. Permanent upgrade cost follows Fibonacci sequence",
+   FibonacciDescV2:
+      "+%{idle} Science from Idle Workers. +%{busy} Science from Busy Workers. Fibonacci's permanent upgrade cost follows Fibonacci sequence",
    LeonardoDaVinci: "Леонардо да Винчи",
    MartinLuther: "Мартин Лютер",
    WilliamShakespeare: "Уильям Шекспир",
@@ -420,8 +420,8 @@ export const RU = {
    EiffelTowerDesc:
       "Все прилегающие Сталелитейные Заводы получают +N к Множителям Производства, Хранилища и Работника. N = Число прилегащих Сталелитейных Заводов",
    CircusMaximus: "Цирк Максимус",
-   CircusMaximusDesc:
-      "+5 Счастья. Все Гильдии Актеров, Гильдии Писателей и Гильдии Художников получают +1 к Множителям Производства и Хранилища",
+   CircusMaximusDescV2:
+      "+5 Happiness. All Musician's Guilds, Writer's Guilds and Painter's Guilds get +1 Production and Storage Multiplier",
    Statistics: "Здание Статистики",
    StatisticsDesc: "Предоставляет статистику потребления и производства",
    GrottaAzzurra: "Гротта Аццурра",
@@ -985,4 +985,6 @@ export const RU = {
    OpenSaveBackupFolder: "Open Backup Folder",
    ShortcutBuildingPageToggleBuilding: "Toggle Production",
    ShortcutBuildingPageToggleBuildingSetAllSimilar: "Toggle Production And Apply To All",
+   HappinessUncapped: "Happiness (Uncapped)",
+   ExtraGreatPeople: "%{count} Extra Great People",
 };

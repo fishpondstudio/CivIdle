@@ -12,6 +12,7 @@ import { getGameState } from "../../../shared/logic/GameStateLogic";
 import {
    getBuildingsByType,
    getGrid,
+   getHappinessExemptions,
    getSpecialBuildings,
    getTypeBuildings,
    getXyBuildings,
@@ -114,7 +115,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
       case "ColossusOfRhodes": {
          let happiness = 0;
          for (const neighbor of grid.getNeighbors(tileToPoint(xy))) {
-            const building = gs.tiles.get(pointToTile(neighbor))?.building;
+            const building = getCompletedBuilding(pointToTile(neighbor), gs);
             if (building && !Config.Building[building.type].output.Worker) {
                happiness++;
             }
@@ -397,30 +398,27 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
                addMultiplier(b, { output: 1, worker: 1, storage: 1 }, buildingName);
             }
          });
-         let count = 0;
          for (const neighbor of grid.getNeighbors(tileToPoint(xy))) {
             const neighborXy = pointToTile(neighbor);
             const b = getCompletedBuilding(neighborXy, gs);
             if (b && (Config.Building[b.type].input.Gunpowder || Config.Building[b.type].output.Gunpowder)) {
-               ++count;
+               getHappinessExemptions().add(neighborXy);
             }
          }
-         Tick.next.globalMultipliers.happiness.push({ value: count, source: buildingName });
          break;
       }
       case "MogaoCaves": {
          const { workersAfterHappiness, workersBusy } = getScienceFromWorkers(gs);
          const fromBusyWorkers =
             workersAfterHappiness === 0 ? 0 : Math.floor((10 * workersBusy) / workersAfterHappiness);
-         let count = 0;
          for (const neighbor of grid.getNeighbors(tileToPoint(xy))) {
             const neighborXy = pointToTile(neighbor);
             if (getCompletedBuilding(neighborXy, gs)?.type === "Shrine") {
-               ++count;
+               getHappinessExemptions().add(neighborXy);
             }
          }
          Tick.next.globalMultipliers.happiness.push({
-            value: count + fromBusyWorkers,
+            value: fromBusyWorkers,
             source: buildingName,
          });
          break;

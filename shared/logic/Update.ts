@@ -175,6 +175,11 @@ function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
       building.desiredLevel = building.level;
    }
 
+   if (!hasFeature(GameFeature.BuildingInputMode, gs)) {
+      building.maxInputDistance = Infinity;
+      building.inputMode = BuildingInputMode.Distance;
+   }
+
    Tick.next.totalValue += getBuildingValue(building);
 
    if (building.status === "building" || building.status === "upgrading") {
@@ -200,7 +205,8 @@ function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
             return false;
          }
          // Will be full
-         if (amountArrived + getAmountInTransit(xy, res, gs) >= amount) {
+         const amountLeft = amount - getAmountInTransit(xy, res, gs) - amountArrived;
+         if (amountLeft <= 0) {
             completed = false;
             // continue;
             return false;
@@ -213,7 +219,7 @@ function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
          // Each transportation costs 1 worker, and deliver Total (=Builder Capacity x Multiplier) resources
          transportResource(
             res,
-            builderCapacityPerResource,
+            clamp(amountLeft, 0, builderCapacityPerResource),
             builderCapacityPerResource,
             xy,
             gs,
@@ -230,7 +236,7 @@ function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
          building.disabledInput.clear();
          if (building.status === "building") {
             building.status = "completed";
-            applyDefaultSettings(building);
+            applyDefaultSettings(building, gs);
             OnBuildingComplete.emit(xy);
          } else if (building.status === "upgrading" && building.level >= building.desiredLevel) {
             building.status = "completed";
