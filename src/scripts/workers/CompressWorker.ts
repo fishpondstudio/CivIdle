@@ -1,4 +1,4 @@
-import { Foras, Memory, deflate, inflate } from "@hazae41/foras";
+import { deflateSync, inflateSync } from "fflate";
 export type Operation = "compress" | "decompress";
 
 export interface CompressMessage {
@@ -9,15 +9,14 @@ export interface CompressMessage {
 
 onmessage = async (ev: MessageEvent<CompressMessage>) => {
    console.time(`CompressWorker: ${ev.data.op}`);
-   await Foras.initBundledOnce();
    switch (ev.data.op) {
       case "compress": {
-         const buffer = deflate(new Memory(ev.data.buffer)).copyAndDispose();
+         const buffer = deflateSync(ev.data.buffer);
          postMessage({ id: ev.data.id, buffer: buffer }, [buffer.buffer]);
          break;
       }
       case "decompress": {
-         const buffer = inflate(new Memory(ev.data.buffer)).copyAndDispose();
+         const buffer = inflateSync(ev.data.buffer);
          postMessage({ id: ev.data.id, buffer: buffer }, [buffer.buffer]);
          break;
       }

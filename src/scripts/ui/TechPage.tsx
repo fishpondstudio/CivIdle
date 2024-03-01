@@ -1,5 +1,5 @@
 import type { Resource } from "../../../shared/definitions/ResourceDefinitions";
-import type { Tech } from "../../../shared/definitions/TechDefinitions";
+import { MAX_TECH_COLUMN, type Tech } from "../../../shared/definitions/TechDefinitions";
 import { Config } from "../../../shared/logic/Config";
 import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
 import { getResourceAmount, trySpendResources } from "../../../shared/logic/ResourceLogic";
@@ -14,7 +14,6 @@ import { forEach, reduceOf } from "../../../shared/utilities/Helper";
 import type { PartialTabulate } from "../../../shared/utilities/TypeDefinitions";
 import { L, t } from "../../../shared/utilities/i18n";
 import { useGameState } from "../Global";
-import { MAX_TECH_COLUMN } from "../SteamTesting";
 import { TechTreeScene } from "../scenes/TechTreeScene";
 import { WorldScene } from "../scenes/WorldScene";
 import { jsxMapOf } from "../utilities/Helper";

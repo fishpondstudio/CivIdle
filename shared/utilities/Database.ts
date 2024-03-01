@@ -177,6 +177,7 @@ export const DB: {
    map: Record<string, IMapEntry>;
    muteList: Record<string, number>;
    slowList: Record<string, ISlowModeConfig>;
+   greatPeopleRecovery: Record<string, number>;
 } = {
    chat: [],
    users: {},
@@ -185,6 +186,7 @@ export const DB: {
    pendingClaims: {},
    muteList: {},
    slowList: {},
+   greatPeopleRecovery: {},
 };
 
 export const MoveTileCooldown = 4 * HOUR;
