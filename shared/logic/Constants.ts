@@ -23,6 +23,7 @@ import {
    isWorldWonder,
 } from "./BuildingLogic";
 import { Config } from "./Config";
+import { getOrderedTechThatProduce } from "./ResourceLogic";
 import {
    getAgeForTech,
    getBuildingUnlockTech,
@@ -281,10 +282,18 @@ export function calculateTierAndPrice() {
             let cost = "";
             let totalAmount = 0;
             const baseBuilderCapacity = getWonderBaseBuilderCapacity(k);
+            const wonderAge = getAgeForTech(getBuildingUnlockTech(k)!)!;
             forEach(getBuildingCost({ type: k, level: 0 }), (res, amount) => {
                mapSafeAdd(resourcesUsedByWonder, res, 1);
+               const tech = getOrderedTechThatProduce(res);
+               const resourceAge = getAgeForTech(tech[0])!;
                totalAmount += amount;
-               cost += `${res}: ${formatNumber(amount)}, `;
+               const ageDiff = Config.TechAge[wonderAge].idx - Config.TechAge[resourceAge].idx;
+               const ageDiffIndicator: string[] = [];
+               for (let i = 0; i < ageDiff; i++) {
+                  ageDiffIndicator.push("*");
+               }
+               cost += `${ageDiffIndicator.join("")}${res}: ${formatNumber(amount)}, `;
                value += Config.ResourcePrice[res]! * amount;
             });
             cost = `${k.padEnd(25)} ${formatNumber(value).padEnd(10)}${formatHMS(
