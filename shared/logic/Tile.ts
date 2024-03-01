@@ -139,7 +139,7 @@ export const DEFAULT_STOCKPILE_MAX = 5;
 export function makeBuilding(data: Pick<IBuildingData, "type"> & Partial<IBuildingData>): IBuildingData {
    const building: IBuildingData = {
       level: 0,
-      desiredLevel: 0,
+      desiredLevel: 1,
       resources: {},
       status: "building",
       capacity: 1,

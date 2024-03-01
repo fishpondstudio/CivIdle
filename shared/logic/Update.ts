@@ -170,7 +170,7 @@ function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
    }
 
    if (building.desiredLevel > building.level) {
-      building.status = "upgrading";
+      building.status = building.level > 0 ? "upgrading" : "building";
    } else {
       building.desiredLevel = building.level;
    }
@@ -235,10 +235,11 @@ function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
          });
          building.disabledInput.clear();
          if (building.status === "building") {
-            building.status = "completed";
+            building.status = building.desiredLevel > building.level ? "upgrading" : "completed";
             applyDefaultSettings(building, gs);
             OnBuildingComplete.emit(xy);
-         } else if (building.status === "upgrading" && building.level >= building.desiredLevel) {
+         }
+         if (building.status === "upgrading" && building.level >= building.desiredLevel) {
             building.status = "completed";
          }
       }
