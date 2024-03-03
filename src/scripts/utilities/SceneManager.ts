@@ -104,6 +104,6 @@ export class SceneManager {
 export function destroyAllChildren(co: Container): void {
    const removed = co.removeChildren();
    for (let i = 0; i < removed.length; ++i) {
-      removed[i].destroy({ children: true });
+      removed[i].destroy({ children: true, texture: false, baseTexture: false });
    }
 }

@@ -98,7 +98,7 @@ export function tickTech(td: IUnlockableDefinition) {
    });
 }
 
-export function tickTransportations(gs: GameState) {
+export function tickTransports(gs: GameState) {
    const mahTile = Tick.current.specialBuildings.get("MausoleumAtHalicarnassus");
    const mah = mahTile ? getGrid(gs).xyToPosition(mahTile) : null;
    gs.transportation.forEach((queue) => {

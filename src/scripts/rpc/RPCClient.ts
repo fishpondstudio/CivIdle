@@ -36,7 +36,7 @@ let user: IUser | null = null;
 export const OnOfflineTime = new TypedEvent<number>();
 export const OnUserChanged = new TypedEvent<IUser | null>();
 export const OnChatMessage = new TypedEvent<LocalChat[]>();
-export const OnTradeMessage = new TypedEvent<IClientTrade[]>();
+export const OnTradeChanged = new TypedEvent<IClientTrade[]>();
 export const OnPlayerMapChanged = new TypedEvent<Map<string, IClientMapEntry>>();
 export const OnPlayerMapMessage = new TypedEvent<IMapMessage>();
 export const OnNewPendingClaims = new TypedEvent<void>();
@@ -81,7 +81,7 @@ export const client = rpcClient<ServerImpl>({
    },
 });
 
-function getTrades(): IClientTrade[] {
+export function getTrades(): IClientTrade[] {
    return Array.from(trades.values()).filter(
       (trade) => Config.Resource[trade.buyResource] && Config.Resource[trade.sellResource],
    );
@@ -89,7 +89,7 @@ function getTrades(): IClientTrade[] {
 
 export const usePlayerMap = makeObservableHook(OnPlayerMapChanged, () => playerMap);
 export const useChatMessages = makeObservableHook(OnChatMessage, () => chatMessages);
-export const useTrades = makeObservableHook(OnTradeMessage, getTrades);
+export const useTrades = makeObservableHook(OnTradeChanged, getTrades);
 export const useUser = makeObservableHook(OnUserChanged, getUser);
 
 function getUser(): IUser | null {
@@ -196,11 +196,12 @@ export async function connectWebSocket(): Promise<number> {
                   trades.delete(id);
                });
             }
-            OnTradeMessage.emit(getTrades());
+            OnTradeChanged.emit(getTrades());
             break;
          }
          case MessageType.Map: {
             const m = message as IMapMessage;
+            OnPlayerMapMessage.emit(m);
             if (m.upsert) {
                forEach(m.upsert, (xy, entry) => {
                   playerMap.set(xy, entry);
@@ -212,7 +213,6 @@ export async function connectWebSocket(): Promise<number> {
                });
             }
             OnPlayerMapChanged.emit({ ...playerMap });
-            OnPlayerMapMessage.emit(m);
             break;
          }
          case MessageType.PendingClaim: {

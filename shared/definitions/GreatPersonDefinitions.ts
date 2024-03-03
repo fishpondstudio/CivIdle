@@ -249,6 +249,16 @@ export class GreatPersonDefinitions {
       age: "ClassicalAge",
    });
 
+   Zenobia: IGreatPersonDefinition = {
+      name: () => t(L.Zenobia),
+      desc: (self, level) => t(L.ZenobiaDesc, { value: self.value(level) }),
+      time: "240 ~ 274 AD",
+      value: (level) => level,
+      maxLevel: Infinity,
+      age: "ClassicalAge",
+      tick: (self, level, permanent) => {},
+   };
+
    // Middle Age /////////////////////////////////////////////////////////////////////////////////////////////
 
    Justinian: IGreatPersonDefinition = boostOf({

@@ -28,6 +28,7 @@ import { GameFeature, hasFeature } from "./FeatureLogic";
 import { type GameState } from "./GameState";
 import { getGameOptions, getGameState } from "./GameStateLogic";
 import { getBuildingIO, getBuildingsByType, getGrid, getXyBuildings } from "./IntraTickCache";
+import { getGreatPersonThisRunLevel } from "./RebornLogic";
 import { getBuildingsThatProduce, getResourcesValue } from "./ResourceLogic";
 import { getAgeForTech, getBuildingUnlockTech } from "./TechLogic";
 import { Tick, type Multiplier, type MultiplierWithSource } from "./TickLogic";
@@ -204,7 +205,11 @@ export function getStorageFor(xy: Tile, gs: GameState): IStorageResult {
          break;
       }
       case "Petra": {
-         base = 60 * 60 * building.level; // 1 hour
+         const HOUR = 60 * 60;
+         base = HOUR * building.level; // 1 hour
+         base +=
+            HOUR * Config.GreatPerson.Zenobia.value(getGreatPersonThisRunLevel(gs.greatPeople.Zenobia ?? 0));
+         base += HOUR * Config.GreatPerson.Zenobia.value(getGameOptions().greatPeople.Zenobia?.level ?? 0);
          multiplier = 1;
          break;
       }

@@ -991,4 +991,6 @@ export const EN = {
    WarehouseAutopilotSettingsRespectCapSetting: "Require Storage < Cap",
    WarehouseAutopilotSettingsRespectCapSettingTooltip:
       "Autopilot will only transport resources whose amount in storage is below the cap",
+   Zenobia: "Zenobia",
+   ZenobiaDesc: "+%{value}h Petra Warp Storage",
 };

@@ -9,11 +9,12 @@ import {
    drawDashedLine,
    forEach,
    formatPercent,
+   mapSafeAdd,
    safeParseInt,
    xyToPoint,
 } from "../../../shared/utilities/Helper";
 import type { Disposable } from "../../../shared/utilities/TypedEvent";
-import { OnPlayerMapMessage, getPlayerMap } from "../rpc/RPCClient";
+import { OnPlayerMapMessage, OnTradeChanged, getPlayerMap, getTrades } from "../rpc/RPCClient";
 import { PlayerMapPage } from "../ui/PlayerMapPage";
 import { ViewportScene } from "../utilities/SceneManager";
 import { Singleton } from "../utilities/Singleton";
@@ -29,9 +30,12 @@ export class PlayerMapScene extends ViewportScene {
    private _width!: number;
    private _height!: number;
    private _selectedGraphics!: SmoothGraphics;
-   private _tiles: Record<string, Container> = {};
-   private _listener!: Disposable;
+   private _tiles = new Map<string, Container>();
+   private _listeners: Disposable[] = [];
    private _path!: SmoothGraphics;
+   private _idToTradeCount = new Map<string, number>();
+   private _idToTile = new Map<string, string>();
+   private _dirtyTiles = new Set<string>();
 
    override onLoad(): void {
       const { app, textures } = this.context;
@@ -97,23 +101,57 @@ export class PlayerMapScene extends ViewportScene {
          graphics.lineTo(MAP_MAX_X * GridSize, y * GridSize);
       }
 
+      getTrades().forEach((t) => {
+         mapSafeAdd(this._idToTradeCount, t.fromId, 1);
+      });
+
+      this._listeners.push(
+         OnTradeChanged.on((trades) => {
+            const old = Array.from(this._idToTradeCount.keys());
+            this._idToTradeCount.clear();
+
+            trades.forEach((t) => {
+               mapSafeAdd(this._idToTradeCount, t.fromId, 1);
+               this.markDirtyById(t.fromId);
+            });
+            old.forEach((id) => {
+               if (!this._idToTradeCount.has(id)) {
+                  this.markDirtyById(id);
+               }
+            });
+            this._dirtyTiles.forEach((tile) => {
+               const entry = getPlayerMap().get(tile);
+               if (entry) {
+                  this.drawTile(tile, entry);
+               }
+            });
+            this._dirtyTiles.clear();
+         }),
+      );
+
       getPlayerMap().forEach((entry, xy) => {
          this.drawTile(xy, entry);
       });
 
-      this._listener = OnPlayerMapMessage.on((message) => {
-         if (message.remove) {
-            message.remove.forEach((xy) => {
-               this._tiles[xy]?.destroy({ children: true });
-               delete this._tiles[xy];
-            });
-         }
-         if (message.upsert) {
-            forEach(message.upsert, (xy, entry) => {
-               this.drawTile(xy, entry);
-            });
-         }
-      });
+      this._listeners.push(
+         OnPlayerMapMessage.on((message) => {
+            if (message.remove) {
+               message.remove.forEach((xy) => {
+                  const id = getPlayerMap().get(xy)?.userId;
+                  if (id) {
+                     this._idToTile.delete(id);
+                  }
+                  this._tiles.get(xy)?.destroy({ children: true });
+                  this._tiles.delete(xy);
+               });
+            }
+            if (message.upsert) {
+               forEach(message.upsert, (xy, entry) => {
+                  this.drawTile(xy, entry);
+               });
+            }
+         }),
+      );
 
       this._selectedGraphics = this.viewport.addChild(new SmoothGraphics());
       this._path = this.viewport.addChild(new SmoothGraphics());
@@ -153,6 +191,13 @@ export class PlayerMapScene extends ViewportScene {
          viewportCenter = this.viewport.center;
          viewportZoom = this.viewport.zoom;
       });
+   }
+
+   private markDirtyById(userId: string): void {
+      const tile = this._idToTile.get(userId);
+      if (tile) {
+         this._dirtyTiles.add(tile);
+      }
    }
 
    private tileToPosition(tile: IPointData): IPointData {
@@ -220,10 +265,9 @@ export class PlayerMapScene extends ViewportScene {
       const { textures } = this.context;
       const [x, y] = xy.split(",").map((x) => safeParseInt(x));
       const container = this.viewport.addChild(new Container());
-      if (this._tiles[xy]) {
-         this._tiles[xy].destroy({ children: true });
-      }
-      this._tiles[xy] = container;
+      this._tiles.get(xy)?.destroy({ children: true });
+      this._tiles.set(xy, container);
+      this._idToTile.set(entry.userId, xy);
 
       const isMyself = entry.userId === getGameOptions().id;
       const isReserved = isTileReserved(entry);
@@ -232,6 +276,24 @@ export class PlayerMapScene extends ViewportScene {
       flag.anchor.set(0.5, 0.5);
       flag.position.set(x * GridSize + 0.5 * GridSize, y * GridSize + 0.5 * GridSize - 24);
       flag.alpha = isReserved ? 1 : 0.5;
+
+      const count = this._idToTradeCount.get(entry.userId);
+      if (count) {
+         const bg = container.addChild(new Sprite(textures.circle_25));
+         bg.anchor.set(0.5, 0.5);
+         bg.tint = 0xe74c3c;
+         bg.position.set(x * GridSize + 0.9 * GridSize, y * GridSize + 0.12 * GridSize);
+
+         const tradeCount = container.addChild(
+            new BitmapText(String(count), {
+               fontName: Fonts.Cabin,
+               fontSize: 20,
+               tint: 0xffffff,
+            }),
+         );
+         tradeCount.anchor.set(0.5, 0.5);
+         tradeCount.position.set(x * GridSize + 0.9 * GridSize, y * GridSize + 0.1 * GridSize);
+      }
 
       const handle = container.addChild(
          new BitmapText(entry.handle, {
@@ -262,6 +324,6 @@ export class PlayerMapScene extends ViewportScene {
    }
 
    override onDestroy(): void {
-      this._listener.dispose();
+      this._listeners.forEach((l) => l.dispose());
    }
 }
