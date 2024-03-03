@@ -472,7 +472,7 @@ export class TechDefinitions {
       name: () => t(L.SteamEngine),
       column: 14,
       requireTech: ["PrivateOwnership"],
-      unlockBuilding: ["Steamworks"],
+      unlockBuilding: ["Steamworks", "ConcretePlant"],
    };
 
    Capitalism: ITechDefinition = {

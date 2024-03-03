@@ -77,6 +77,7 @@ export class ResourceDefinitions {
    NaturalGas: IResourceDefinition = { name: () => t(L.NaturalGas) };
    Aluminum: IResourceDefinition = { name: () => t(L.Aluminum) };
    Petrol: IResourceDefinition = { name: () => t(L.Petrol) };
+   Concrete: IResourceDefinition = { name: () => t(L.Concrete) };
 }
 
 export type Resource = keyof ResourceDefinitions;

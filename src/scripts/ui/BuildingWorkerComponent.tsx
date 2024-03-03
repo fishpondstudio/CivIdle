@@ -7,6 +7,7 @@ import {
    getResourceName,
    getWorkersFor,
    isSpecialBuilding,
+   shouldAlwaysShowBuildingOptions,
 } from "../../../shared/logic/BuildingLogic";
 import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
 import { getBuildingIO } from "../../../shared/logic/IntraTickCache";
@@ -27,7 +28,7 @@ export function BuildingWorkerComponent({ gameState, xy }: IBuildingComponentPro
    }
    const input = getBuildingIO(xy, "input", IOCalculation.None, gameState);
    const output = getBuildingIO(xy, "output", IOCalculation.None, gameState);
-   if (isEmpty(input) && isEmpty(output)) {
+   if (isEmpty(input) && isEmpty(output) && !shouldAlwaysShowBuildingOptions(building)) {
       return null;
    }
    const showWarning = Tick.current.notProducingReasons.get(xy) === "NotEnoughWorkers";

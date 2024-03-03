@@ -4,6 +4,7 @@ import { Deposit, NoStorage, type Resource } from "../definitions/ResourceDefini
 import {
    clamp,
    forEach,
+   hasFlag,
    isEmpty,
    isNullOrUndefined,
    keysOf,
@@ -33,6 +34,7 @@ import { Tick, type Multiplier, type MultiplierWithSource } from "./TickLogic";
 import {
    DEFAULT_STOCKPILE_CAPACITY,
    DEFAULT_STOCKPILE_MAX,
+   ResourceImportOptions,
    getConstructionPriority,
    getProductionPriority,
    getUpgradePriority,
@@ -617,14 +619,29 @@ export function applyToAllBuildings<T extends IBuildingData>(
    });
 }
 
-export function getMarketPrice(resource: Resource, xy: Tile, gs: GameState): number {
-   const rand = srand(gs.lastPriceUpdated + xy + resource);
-   const fluctuation = 0.75 + rand() * 0.5;
-   return (Config.ResourcePrice[resource] ?? 0) * fluctuation;
+export function getMarketSellAmount(xy: Tile, gs: GameState): number {
+   const building = gs.tiles.get(xy)?.building;
+   if (!building) return 0;
+   return building.capacity * building.level * totalMultiplierFor(xy, "output", 1, gs);
 }
 
-export function getAvailableResource(xy: Tile, res: Resource, gs: GameState): number {
-   const building = getXyBuildings(gs).get(xy);
+export function getMarketBuyAmount(
+   sellResource: Resource,
+   sellAmount: number,
+   buyResource: Resource,
+   xy: Tile,
+   gs: GameState,
+): number {
+   const rand = srand(gs.lastPriceUpdated + xy + sellResource);
+   const fluctuation = 0.75 + rand() * 0.5;
+   return (
+      ((Config.ResourcePrice[sellResource] ?? 0) * sellAmount * fluctuation) /
+      (Config.ResourcePrice[buyResource] ?? 0)
+   );
+}
+
+export function getAvailableResource(sourceXy: Tile, destXy: Tile, res: Resource, gs: GameState): number {
+   const building = getXyBuildings(gs).get(sourceXy);
 
    if (!building) {
       return 0;
@@ -636,17 +653,22 @@ export function getAvailableResource(xy: Tile, res: Resource, gs: GameState): nu
 
    if ("resourceImports" in building) {
       const ri = building as IResourceImportBuildingData;
-      if (ri.resourceImports[res]) {
-         return clamp(building.resources[res]! - (ri.resourceImports[res]?.cap ?? 0), 0, Infinity);
+
+      if (
+         building.type === getXyBuildings(gs).get(destXy)?.type &&
+         !hasFlag(ri.resourceImportOptions, ResourceImportOptions.ExportToSameType)
+      ) {
+         return 0;
       }
-      return building.resources[res]!;
+      const resourceImport = ri.resourceImports[res];
+      if (resourceImport && !hasFlag(ri.resourceImportOptions, ResourceImportOptions.ExportBelowCap)) {
+         return clamp((building.resources[res] ?? 0) - (resourceImport.cap ?? 0), 0, Infinity);
+      }
+
+      return building.resources[res] ?? 0;
    }
 
-   if (!Config.Building[building.type].input[res]) {
-      return building.resources[res]!;
-   }
-
-   const input = getBuildingIO(xy, "input", IOCalculation.Capacity | IOCalculation.Multiplier, gs);
+   const input = getBuildingIO(sourceXy, "input", IOCalculation.Capacity | IOCalculation.Multiplier, gs);
    if (input[res]) {
       return clamp(
          building.resources[res]! - (getStockpileMax(building) + building.stockpileCapacity) * input[res]!,
@@ -811,4 +833,8 @@ export function applyDefaultSettings(building: IBuildingData, gs: GameState): vo
    }
 
    Object.assign(building, toApply);
+}
+
+export function shouldAlwaysShowBuildingOptions(building: IBuildingData): boolean {
+   return "resourceImports" in building || "sellResources" in building;
 }

@@ -141,7 +141,7 @@ export function FillPlayerTradeModal({ trade, xy }: { trade: IClientTrade; xy?: 
                {t(L.PlayerTradeFillAmountMax)}
             </div>
             <div className="sep10" />
-            <ul className="tree-view">
+            <ul className="tree-view" style={{ overflowY: "auto", maxHeight: "50vh" }}>
                <li
                   className={classNames({
                      row: true,

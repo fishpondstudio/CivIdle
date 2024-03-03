@@ -802,8 +802,6 @@ export const EN = {
       "<b>Builder Capacity</b> when constructing wonders are affected by the <b>age</b> and <b>technology</b> that unlocks the wonder",
    MarketSettings: "Market Settings",
    ClearAfterUpdate: "Clear All Trades After Market Update",
-   WarehouseSettings: "Warehouse Settings",
-   WarehouseSettingsAutopilot: "Autopilot Mode",
    WarehouseSettingsAutopilotDesc:
       "This warehouse will use its idle capacity to transport resources from buildings that have full storage. Current idle capacity: %{capacity}",
    WarehouseUpgrade:
@@ -978,4 +976,19 @@ export const EN = {
    ExtraGreatPeople: "%{count} Extra Great People",
    ScrollWheelAdjustLevelTooltip:
       "You can use scroll wheel to adjust the level when your cursor is over this",
+   Concrete: "Concrete",
+   ConcretePlant: "Cement Plant",
+   ResourceExportBelowCap: "Export Below Cap",
+   ResourceExportBelowCapTooltip:
+      "Allow other buildings to transport a resource from this building even when its amount is below the cap",
+   ResourceExportToSameType: "Export to the Same Type",
+   ResourceExportToSameTypeTooltip:
+      "Allow other buildings of the same type to transport a resource from this building",
+   MarketTradeDescHTML:
+      "Markets get <b>one more trade per level</b>. After you upgrade the market, the extra trades will appear",
+   WarehouseAutopilotSettings: "Autopilot Settings",
+   WarehouseAutopilotSettingsEnable: "Enable Autopilot",
+   WarehouseAutopilotSettingsRespectCapSetting: "Require Storage < Cap",
+   WarehouseAutopilotSettingsRespectCapSettingTooltip:
+      "Autopilot will only transport resources whose amount in storage is below the cap",
 };

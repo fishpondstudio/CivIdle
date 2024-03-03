@@ -10,7 +10,7 @@ import { GameState } from "./GameState";
 import type { calculateHappiness } from "./HappinessLogic";
 import type { IBuildingData } from "./Tile";
 
-interface IBuildingResource {
+export interface IBuildingResource {
    tile: Tile;
    amount: number;
    totalStorage: number;

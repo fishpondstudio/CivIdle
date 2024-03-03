@@ -574,3 +574,7 @@ button {
    text-underline-offset: 0.25em;
    cursor: help;
 }
+
+.help-cursor {
+   cursor: help;
+}

@@ -79,7 +79,7 @@ export function ChangeResourceImportModal({
                </div>
                <div className="f1" />
                <div>
-                  {[0.25, 0.5, 0.75, 1].map((p) => (
+                  {[0, 0.25, 0.5, 0.75, 1].map((p) => (
                      <span
                         key={p}
                         className="ml10 text-strong text-link"
@@ -114,7 +114,7 @@ export function ChangeResourceImportModal({
                </div>
                <div className="f1" />
                <div>
-                  {[0.1, 0.25, 0.5, 0.75, 1].map((p) => (
+                  {[0, 0.1, 0.25, 0.5, 0.75, 1].map((p) => (
                      <span
                         className="ml10 text-strong text-link"
                         onClick={() => {

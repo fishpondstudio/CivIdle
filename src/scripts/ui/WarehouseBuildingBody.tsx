@@ -1,3 +1,4 @@
+import Tippy from "@tippyjs/react";
 import { getWarehouseIdleCapacity } from "../../../shared/logic/BuildingLogic";
 import { GameFeature, hasFeature } from "../../../shared/logic/FeatureLogic";
 import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
@@ -26,45 +27,71 @@ export function WarehouseBuildingBody({ gameState, xy }: IBuildingComponentProps
    return (
       <div className="window-body">
          <BuildingUpgradeComponent gameState={gameState} xy={xy} />
-         {hasFeature(GameFeature.WarehouseUpgrade, gameState) ? (
-            <>
-               <WarningComponent icon="info">{t(L.WarehouseUpgradeDesc)}</WarningComponent>
-               <div className="sep10"></div>
-            </>
-         ) : null}
          <ResourceImportComponent gameState={gameState} xy={xy} />
          <BuildingStorageComponent gameState={gameState} xy={xy} />
-         {!hasFeature(GameFeature.WarehouseUpgrade, gameState) ? null : (
-            <fieldset>
-               <legend>{t(L.WarehouseSettings)}</legend>
-               <div className="row">
-                  <div className="f1">
-                     {t(L.WarehouseSettingsAutopilot)}
-                     <div className="text-small text-desc">
-                        {t(L.WarehouseSettingsAutopilotDesc, { capacity: formatNumber(idleCapacity) })}
+         {hasFeature(GameFeature.WarehouseUpgrade, gameState) ? (
+            <>
+               <WarningComponent className="mb10 text-small" icon="info">
+                  {t(L.WarehouseUpgradeDesc)}
+               </WarningComponent>
+               <fieldset>
+                  <legend>{t(L.WarehouseAutopilotSettings)}</legend>
+                  <div className="row">
+                     <div>{t(L.WarehouseAutopilotSettingsEnable)}</div>
+                     <Tippy
+                        content={t(L.WarehouseSettingsAutopilotDesc, {
+                           capacity: formatNumber(idleCapacity),
+                        })}
+                     >
+                        <div className="m-icon small ml5 text-desc help-cursor">help</div>
+                     </Tippy>
+                     <div className="f1"></div>
+                     <div
+                        className="pointer ml20"
+                        onClick={() => {
+                           playClick();
+                           warehouse.warehouseOptions = toggleFlag(
+                              warehouse.warehouseOptions,
+                              WarehouseOptions.Autopilot,
+                           );
+                           notifyGameStateUpdate();
+                        }}
+                     >
+                        {hasFlag(warehouse.warehouseOptions, WarehouseOptions.Autopilot) ? (
+                           <div className="m-icon text-green">toggle_on</div>
+                        ) : (
+                           <div className="m-icon text-desc">toggle_off</div>
+                        )}
                      </div>
                   </div>
-                  <div
-                     className="pointer"
-                     onClick={() => {
-                        playClick();
-                        warehouse.warehouseOptions = toggleFlag(
-                           warehouse.warehouseOptions,
-                           WarehouseOptions.Autopilot,
-                        );
-                        notifyGameStateUpdate();
-                     }}
-                  >
-                     {hasFlag(warehouse.warehouseOptions, WarehouseOptions.Autopilot) ? (
-                        <div className="m-icon text-green">toggle_on</div>
-                     ) : (
-                        <div className="m-icon text-desc">toggle_off</div>
-                     )}
+                  <div className="row">
+                     <div>{t(L.WarehouseAutopilotSettingsRespectCapSetting)}</div>
+                     <Tippy content={t(L.WarehouseAutopilotSettingsRespectCapSettingTooltip)}>
+                        <div className="m-icon small ml5 text-desc help-cursor">help</div>
+                     </Tippy>
+                     <div className="f1"></div>
+                     <div
+                        className="pointer ml20"
+                        onClick={() => {
+                           playClick();
+                           warehouse.warehouseOptions = toggleFlag(
+                              warehouse.warehouseOptions,
+                              WarehouseOptions.AutopilotRespectCap,
+                           );
+                           notifyGameStateUpdate();
+                        }}
+                     >
+                        {hasFlag(warehouse.warehouseOptions, WarehouseOptions.AutopilotRespectCap) ? (
+                           <div className="m-icon text-green">toggle_on</div>
+                        ) : (
+                           <div className="m-icon text-desc">toggle_off</div>
+                        )}
+                     </div>
                   </div>
-               </div>
-               <div className="sep5"></div>
-            </fieldset>
-         )}
+               </fieldset>
+            </>
+         ) : null}
+
          <BuildingWorkerComponent gameState={gameState} xy={xy} />
          <BuildingProductionPriorityComponent gameState={gameState} xy={xy} />
          <BuildingInputModeComponent gameState={gameState} xy={xy} />

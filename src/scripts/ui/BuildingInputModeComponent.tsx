@@ -1,6 +1,6 @@
 import Tippy from "@tippyjs/react";
 import classNames from "classnames";
-import { IOCalculation } from "../../../shared/logic/BuildingLogic";
+import { IOCalculation, shouldAlwaysShowBuildingOptions } from "../../../shared/logic/BuildingLogic";
 import { GameFeature, hasFeature } from "../../../shared/logic/FeatureLogic";
 import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
 import { getBuildingIO } from "../../../shared/logic/IntraTickCache";
@@ -22,7 +22,7 @@ export function BuildingInputModeComponent({ gameState, xy }: IBuildingComponent
    if (
       building.status === "completed" &&
       isEmpty(getBuildingIO(xy, "input", IOCalculation.None, gameState)) &&
-      !("resourceImports" in building)
+      !shouldAlwaysShowBuildingOptions(building)
    ) {
       return null;
    }
@@ -75,7 +75,7 @@ export function BuildingInputModeComponent({ gameState, xy }: IBuildingComponent
             >
                <div
                   className={classNames({
-                     "m-icon": true,
+                     "m-icon small": true,
                      "text-desc": building.maxInputDistance !== Infinity,
                   })}
                >
@@ -83,7 +83,6 @@ export function BuildingInputModeComponent({ gameState, xy }: IBuildingComponent
                </div>
                <div
                   className={classNames({
-                     "text-strong": true,
                      "text-desc": building.maxInputDistance !== Infinity,
                   })}
                >

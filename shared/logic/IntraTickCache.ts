@@ -1,9 +1,9 @@
 import type { Building, IBuildingDefinition } from "../definitions/BuildingDefinitions";
 import type { Deposit, Resource } from "../definitions/ResourceDefinitions";
 import { Grid } from "../utilities/Grid";
-import { IPointData, forEach, safeAdd, tileToHash, tileToPoint, type Tile } from "../utilities/Helper";
+import { forEach, safeAdd, tileToHash, type Tile } from "../utilities/Helper";
 import type { PartialSet, PartialTabulate } from "../utilities/TypeDefinitions";
-import { IOCalculation, getMarketPrice, totalMultiplierFor } from "./BuildingLogic";
+import { IOCalculation, getMarketBuyAmount, totalMultiplierFor } from "./BuildingLogic";
 import { Config } from "./Config";
 import type { GameState } from "./GameState";
 import { TILE_SIZE } from "./GameStateLogic";
@@ -21,7 +21,7 @@ class IntraTickCache {
       number,
       Readonly<PartialTabulate<Resource>>
    >();
-   storageFullBuildings: IPointData[] | undefined;
+   storageFullBuildings: Tile[] | undefined;
    happinessExemptions = new Set<Tile>();
 }
 
@@ -61,7 +61,7 @@ export function getBuildingIO(
          if (type === "output") {
             forEach(market.sellResources, (k) => {
                const buyResource = market.availableResources[k]!;
-               resources[buyResource] = (1 * getMarketPrice(k, xy, gs)) / getMarketPrice(buyResource, xy, gs);
+               resources[buyResource] = getMarketBuyAmount(k, 1, buyResource, xy, gs);
             });
          }
       }
@@ -106,14 +106,14 @@ export function revealedDeposits(gs: GameState): PartialSet<Deposit> {
    return _cache.revealedDeposits;
 }
 
-export function getStorageFullBuildings(gs: GameState): IPointData[] {
+export function getStorageFullBuildings(): Tile[] {
    if (_cache.storageFullBuildings) {
       return _cache.storageFullBuildings;
    }
-   const result: IPointData[] = [];
+   const result: Tile[] = [];
    for (const [xy, reason] of Tick.current.notProducingReasons) {
       if (reason === "StorageFull") {
-         result.push(tileToPoint(xy));
+         result.push(xy);
       }
    }
    _cache.storageFullBuildings = result;

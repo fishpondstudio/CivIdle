@@ -6,9 +6,15 @@ import { getStorageFor, getWarehouseCapacity } from "../../../shared/logic/Build
 import { Config } from "../../../shared/logic/Config";
 import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
 import { Tick } from "../../../shared/logic/TickLogic";
-import { BuildingInputModeNames, type IResourceImportBuildingData } from "../../../shared/logic/Tile";
-import { forEach, isNullOrUndefined } from "../../../shared/utilities/Helper";
+import {
+   BuildingInputModeNames,
+   ResourceImportOptions,
+   type IResourceImportBuildingData,
+} from "../../../shared/logic/Tile";
+import { copyFlag, forEach, hasFlag, isNullOrUndefined, toggleFlag } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
+import { playClick } from "../visuals/Sound";
+import { ApplyToAllComponent } from "./ApplyToAllComponent";
 import type { IBuildingComponentProps } from "./BuildingPage";
 import { ChangeResourceImportModal } from "./ChangeResourceImportModal";
 import { showModal } from "./GlobalModal";
@@ -53,7 +59,6 @@ export function ResourceImportComponent({ gameState, xy }: IBuildingComponentPro
                { name: t(L.ResourceImportStorage), sortable: true, right: true },
                { name: t(L.ResourceImportImportPerCycle), sortable: true, right: true },
                { name: t(L.ResourceImportImportCap), sortable: true, right: true },
-               { name: "", sortable: false },
                { name: "", sortable: false },
             ]}
             data={Array.from(resources)}
@@ -233,6 +238,78 @@ export function ResourceImportComponent({ gameState, xy }: IBuildingComponentPro
                {t(L.RedistributeAmongSelectedCap)}
             </div>
          </div>
+         <div className="separator" />
+         <div className="row">
+            <div>{t(L.ResourceExportBelowCap)}</div>
+            <Tippy content={t(L.ResourceExportBelowCapTooltip)}>
+               <div className="m-icon small ml5 text-desc help-cursor">help</div>
+            </Tippy>
+            <div className="f1"></div>
+            <div
+               className="pointer ml20"
+               onClick={() => {
+                  playClick();
+                  building.resourceImportOptions = toggleFlag(
+                     building.resourceImportOptions,
+                     ResourceImportOptions.ExportBelowCap,
+                  );
+                  notifyGameStateUpdate();
+               }}
+            >
+               {hasFlag(building.resourceImportOptions, ResourceImportOptions.ExportBelowCap) ? (
+                  <div className="m-icon text-green">toggle_on</div>
+               ) : (
+                  <div className="m-icon text-desc">toggle_off</div>
+               )}
+            </div>
+         </div>
+         <ApplyToAllComponent
+            building={building}
+            getOptions={(s) => ({
+               resourceImportOptions: copyFlag(
+                  building.resourceImportOptions,
+                  (s as IResourceImportBuildingData).resourceImportOptions,
+                  ResourceImportOptions.ExportBelowCap,
+               ),
+            })}
+            gameState={gameState}
+         />
+         <div className="separator"></div>
+         <div className="row">
+            <div>{t(L.ResourceExportToSameType)}</div>
+            <Tippy content={t(L.ResourceExportToSameTypeTooltip)}>
+               <div className="m-icon small ml5 text-desc help-cursor">help</div>
+            </Tippy>
+            <div className="f1"></div>
+            <div
+               className="pointer ml20"
+               onClick={() => {
+                  playClick();
+                  building.resourceImportOptions = toggleFlag(
+                     building.resourceImportOptions,
+                     ResourceImportOptions.ExportToSameType,
+                  );
+                  notifyGameStateUpdate();
+               }}
+            >
+               {hasFlag(building.resourceImportOptions, ResourceImportOptions.ExportToSameType) ? (
+                  <div className="m-icon text-green">toggle_on</div>
+               ) : (
+                  <div className="m-icon text-desc">toggle_off</div>
+               )}
+            </div>
+         </div>
+         <ApplyToAllComponent
+            building={building}
+            getOptions={(s) => ({
+               resourceImportOptions: copyFlag(
+                  building.resourceImportOptions,
+                  (s as IResourceImportBuildingData).resourceImportOptions,
+                  ResourceImportOptions.ExportToSameType,
+               ),
+            })}
+            gameState={gameState}
+         />
       </fieldset>
    );
 }
