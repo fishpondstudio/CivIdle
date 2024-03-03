@@ -1,5 +1,5 @@
 import { SmoothGraphics } from "@pixi/graphics-smooth";
-import type { FederatedPointerEvent, IPointData } from "pixi.js";
+import type { ColorSource, FederatedPointerEvent, IPointData } from "pixi.js";
 import { BitmapText, Container, LINE_CAP, LINE_JOIN, Sprite } from "pixi.js";
 import WorldMap from "../../../shared/definitions/WorldMap.json";
 import { getGameOptions } from "../../../shared/logic/GameStateLogic";
@@ -16,7 +16,7 @@ import {
 import type { Disposable } from "../../../shared/utilities/TypedEvent";
 import { OnPlayerMapMessage, OnTradeChanged, getPlayerMap, getTrades } from "../rpc/RPCClient";
 import { PlayerMapPage } from "../ui/PlayerMapPage";
-import { ViewportScene } from "../utilities/SceneManager";
+import { Scene, type ISceneContext } from "../utilities/SceneManager";
 import { Singleton } from "../utilities/Singleton";
 import { Fonts } from "../visuals/Fonts";
 import { findPath, getMyMapXy } from "./PathFinder";
@@ -26,7 +26,7 @@ let viewportZoom: number | null = null;
 
 const GridSize = 100;
 
-export class PlayerMapScene extends ViewportScene {
+export class PlayerMapScene extends Scene {
    private _width!: number;
    private _height!: number;
    private _selectedGraphics!: SmoothGraphics;
@@ -37,43 +37,15 @@ export class PlayerMapScene extends ViewportScene {
    private _idToTile = new Map<string, string>();
    private _dirtyTiles = new Set<string>();
 
-   override onLoad(): void {
-      const { app, textures } = this.context;
+   constructor(context: ISceneContext) {
+      super(context);
+      const { app, textures } = context;
       this._width = MAP_MAX_X * GridSize;
       this._height = MAP_MAX_Y * GridSize;
 
       const minZoom = Math.max(app.screen.width / this._width, app.screen.height / this._height);
       this.viewport.setWorldSize(this._width, this._height);
       this.viewport.setZoomRange(minZoom, 1);
-
-      app.renderer.background.color = 0x2980b9;
-
-      // Assets.load<Texture>("/World.png").then((texture) => {
-      //    const sprite = this.viewport.addChild(new Sprite(texture));
-      //    sprite.anchor.set(0.5, 0.5);
-      //    sprite.position.set(this._width / 2, this._height / 2);
-      //    sprite.scale.set(11);
-      //    sprite.alpha = 0.5;
-
-      //    const pixels: Uint8Array = app.renderer.plugins.extract.pixels(sprite);
-      //    const map: Record<string, true> = {};
-      //    for (let x = 0; x <= MaxX; x++) {
-      //       for (let y = 0; y <= MaxY; y++) {
-      //          const pos = new Vector2((x * GridSize + 0.5 * GridSize) / 11, (y * GridSize + 0.5 * GridSize) / 11);
-      //          const ind = Math.round(pos.x) + Math.round(pos.y) * texture.width;
-      //          if (pixels[ind * 4 + 3] > 0) {
-      //             map[`${x},${y + 3}`] = true;
-      //          }
-      //       }
-      //    }
-      //    forEach(map, (xy) => {
-      //       const point = xyToPoint(xy);
-      //       const sprite = this.viewport.addChild(new Sprite(this.context.textures["100x100"]));
-      //       sprite.position.set(point.x * GridSize, point.y * GridSize);
-      //    });
-      //    navigator.clipboard.writeText(JSON.stringify(map));
-      //    sprite.visible = false;
-      // });
 
       forEach(WorldMap, (xy) => {
          const point = xyToPoint(xy);
@@ -101,6 +73,43 @@ export class PlayerMapScene extends ViewportScene {
          graphics.lineTo(MAP_MAX_X * GridSize, y * GridSize);
       }
 
+      this._selectedGraphics = this.viewport.addChild(new SmoothGraphics());
+      this._path = this.viewport.addChild(new SmoothGraphics());
+
+      // Assets.load<Texture>("/World.png").then((texture) => {
+      //    const sprite = this.viewport.addChild(new Sprite(texture));
+      //    sprite.anchor.set(0.5, 0.5);
+      //    sprite.position.set(this._width / 2, this._height / 2);
+      //    sprite.scale.set(11);
+      //    sprite.alpha = 0.5;
+
+      //    const pixels: Uint8Array = app.renderer.plugins.extract.pixels(sprite);
+      //    const map: Record<string, true> = {};
+      //    for (let x = 0; x <= MaxX; x++) {
+      //       for (let y = 0; y <= MaxY; y++) {
+      //          const pos = new Vector2((x * GridSize + 0.5 * GridSize) / 11, (y * GridSize + 0.5 * GridSize) / 11);
+      //          const ind = Math.round(pos.x) + Math.round(pos.y) * texture.width;
+      //          if (pixels[ind * 4 + 3] > 0) {
+      //             map[`${x},${y + 3}`] = true;
+      //          }
+      //       }
+      //    }
+      //    forEach(map, (xy) => {
+      //       const point = xyToPoint(xy);
+      //       const sprite = this.viewport.addChild(new Sprite(this.context.textures["100x100"]));
+      //       sprite.position.set(point.x * GridSize, point.y * GridSize);
+      //    });
+      //    navigator.clipboard.writeText(JSON.stringify(map));
+      //    sprite.visible = false;
+      // });
+   }
+
+   override backgroundColor(): ColorSource {
+      return 0x2980b9;
+   }
+
+   override onEnable(): void {
+      this._idToTradeCount.clear();
       getTrades().forEach((t) => {
          mapSafeAdd(this._idToTradeCount, t.fromId, 1);
       });
@@ -130,7 +139,7 @@ export class PlayerMapScene extends ViewportScene {
       );
 
       getPlayerMap().forEach((entry, xy) => {
-         this.drawTile(xy, entry);
+         setTimeout(() => this.drawTile(xy, entry), 0);
       });
 
       this._listeners.push(
@@ -153,21 +162,9 @@ export class PlayerMapScene extends ViewportScene {
          }),
       );
 
-      this._selectedGraphics = this.viewport.addChild(new SmoothGraphics());
-      this._path = this.viewport.addChild(new SmoothGraphics());
-
-      this.viewport.on("clicked", (e: FederatedPointerEvent) => {
-         if (e.button === 2) {
-            return;
-         }
-         const pos = this.viewport.screenToWorld(e);
-         const tileX = Math.floor(pos.x / GridSize);
-         const tileY = Math.floor(pos.y / GridSize);
-         this.selectTile(tileX, tileY);
-      });
-
       if (!viewportZoom) {
-         viewportZoom = (minZoom + 1) / 2;
+         const range = this.viewport.getZoomRange();
+         viewportZoom = (range[0] + range[1]) * 0.5;
       }
 
       const xy = getMyMapXy();
@@ -187,10 +184,28 @@ export class PlayerMapScene extends ViewportScene {
       this.viewport.zoom = viewportZoom;
       this.viewport.center = viewportCenter;
 
-      this.viewport.on("moved", () => {
-         viewportCenter = this.viewport.center;
-         viewportZoom = this.viewport.zoom;
-      });
+      super.onEnable();
+   }
+
+   override onClicked(e: FederatedPointerEvent): void {
+      console.log(e);
+      if (e.button === 2) {
+         return;
+      }
+      const pos = this.viewport.screenToWorld(e);
+      const tileX = Math.floor(pos.x / GridSize);
+      const tileY = Math.floor(pos.y / GridSize);
+      this.selectTile(tileX, tileY);
+   }
+
+   override onMoved(point: IPointData): void {
+      viewportCenter = this.viewport.center;
+      viewportZoom = this.viewport.zoom;
+   }
+
+   override onDisable(): void {
+      this._listeners.forEach((l) => l.dispose());
+      super.onDisable();
    }
 
    private markDirtyById(userId: string): void {
@@ -321,9 +336,5 @@ export class PlayerMapScene extends ViewportScene {
       tariff.anchor.set(0.5, 0.5);
       tariff.position.set(x * GridSize + 0.5 * GridSize, y * GridSize + 0.5 * GridSize + 20);
       tariff.alpha = isReserved ? 1 : 0.5;
-   }
-
-   override onDestroy(): void {
-      this._listeners.forEach((l) => l.dispose());
    }
 }

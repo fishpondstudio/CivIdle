@@ -128,6 +128,10 @@ export class Camera extends Container {
       this.wheelMode = WheelMode.Zoom;
    }
 
+   public getZoomRange(): [number, number] {
+      return [this.minZoom, this.maxZoom];
+   }
+
    private targetZoom: number | null = null;
    private targetOrigin: IPointData | null = null;
    private cursorPos: IPointData | null = null;

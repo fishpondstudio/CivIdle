@@ -10,7 +10,7 @@ import { isAgeUnlocked, unlockableTechs } from "../../../shared/logic/TechLogic"
 import { containsNonASCII, forEach, sizeOf } from "../../../shared/utilities/Helper";
 import { TechPage } from "../ui/TechPage";
 import { WheelMode } from "../utilities/Camera";
-import { ViewportScene, destroyAllChildren } from "../utilities/SceneManager";
+import { Scene, destroyAllChildren, type ISceneContext } from "../utilities/SceneManager";
 import { Singleton } from "../utilities/Singleton";
 import { Actions } from "../utilities/pixi-actions/Actions";
 import { Easing } from "../utilities/pixi-actions/Easing";
@@ -32,15 +32,18 @@ const LINE_STYLE = {
 
 type AnimateType = "animate" | "jump" | "no";
 
-export class TechTreeScene extends ViewportScene {
+export class TechTreeScene extends Scene {
    private _selectedContainer: Container | undefined;
    private _selectedGraphics: SmoothGraphics | undefined;
    private _boxPositions: Partial<Record<Tech, Rectangle>> = {};
    private _selectedTech: Tech | undefined;
    private _layout: Record<number, Tech[]> = [];
 
-   override onLoad(): void {
-      const { app, gameState } = this.context;
+   constructor(context: ISceneContext) {
+      super(context);
+
+      const { app } = context;
+
       forEach(Config.Tech, (k, v) => {
          if (this._layout[v.column]) {
             this._layout[v.column].push(k);
@@ -54,31 +57,36 @@ export class TechTreeScene extends ViewportScene {
       this.viewport.setWorldSize(width, PAGE_HEIGHT);
       this.viewport.zoom = Math.max(app.screen.width / width, app.screen.height / (PAGE_HEIGHT * 1.05));
       this.viewport.wheelMode = WheelMode.HorizontalScroll;
+   }
 
-      app.renderer.background.color = getGameOptions().themeColors.ResearchBackground;
+   override backgroundColor(): ColorSource {
+      return getGameOptions().themeColors.ResearchBackground;
+   }
 
-      this.viewport.on("clicked", (e: FederatedPointerEvent) => {
-         const pos = this.viewport.screenToWorld(e);
-         forEach(this._boxPositions, (k, v) => {
-            if (v?.contains(pos.x, pos.y)) {
-               this.selectNode(k, "no", true);
-               return true;
-            }
-            return false;
-         });
-      });
-
+   override onEnable(): void {
       this.renderTechTree("jump", true);
+      super.onEnable();
+   }
+
+   override onClicked(e: FederatedPointerEvent): void {
+      const pos = this.viewport.screenToWorld(e);
+      forEach(this._boxPositions, (k, v) => {
+         if (v?.contains(pos.x, pos.y)) {
+            this.selectNode(k, "no", true);
+            return true;
+         }
+         return false;
+      });
+   }
+
+   override onDisable(): void {
+      super.onDisable();
+      Actions.clear(this);
    }
 
    override onGameOptionsChanged(gameOptions: GameOptions): void {
-      this.context.app.renderer.background.color = gameOptions.themeColors.ResearchBackground;
+      this.setBackgroundColor(gameOptions.themeColors.ResearchBackground);
       this.renderTechTree("jump", false);
-   }
-
-   override onDestroy(): void {
-      Actions.clear(this);
-      this.viewport.destroy({ children: true });
    }
 
    private getTechDescription(def: ITechDefinition): string {

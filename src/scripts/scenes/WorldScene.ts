@@ -1,5 +1,5 @@
 import { SmoothGraphics } from "@pixi/graphics-smooth";
-import type { FederatedPointerEvent, IPointData, Sprite } from "pixi.js";
+import type { ColorSource, FederatedPointerEvent, IPointData, Sprite } from "pixi.js";
 import { Color, Container, LINE_CAP, LINE_JOIN, ParticleContainer, TilingSprite } from "pixi.js";
 import { checkBuildingMax } from "../../../shared/logic/BuildingLogic";
 import { GameFeature, hasFeature } from "../../../shared/logic/FeatureLogic";
@@ -15,7 +15,7 @@ import { makeBuilding } from "../../../shared/logic/Tile";
 import { clamp, lerp, lookAt, pointToTile, tileToPoint, type Tile } from "../../../shared/utilities/Helper";
 import { Vector2, v2 } from "../../../shared/utilities/Vector2";
 import { TilePage } from "../ui/TilePage";
-import { ViewportScene } from "../utilities/SceneManager";
+import { Scene, type ISceneContext } from "../utilities/SceneManager";
 import { Singleton } from "../utilities/Singleton";
 import { Actions } from "../utilities/pixi-actions/Actions";
 import { Easing } from "../utilities/pixi-actions/Easing";
@@ -30,7 +30,7 @@ import { TransportPool } from "./TransportPool";
 let viewportCenter: IPointData | null = null;
 let viewportZoom: number | null = null;
 
-export class WorldScene extends ViewportScene {
+export class WorldScene extends Scene {
    private _width!: number;
    private _height!: number;
    private _selectedGraphics!: SmoothGraphics;
@@ -44,8 +44,9 @@ export class WorldScene extends ViewportScene {
    private _graphics!: SmoothGraphics;
    private _selectedXy: Tile | null = null;
 
-   override onLoad(): void {
-      const { app, textures } = this.context;
+   constructor(context: ISceneContext) {
+      super(context);
+      const { app, textures } = context;
       const maxPosition = getGrid(getGameState()).maxPosition();
       this._width = maxPosition.x;
       this._height = maxPosition.y;
@@ -55,7 +56,6 @@ export class WorldScene extends ViewportScene {
          Math.max(app.screen.width / this._width, app.screen.height / this._height),
          2,
       );
-
       this._bg = this.viewport.addChild(new TilingSprite(textures.Paper, this._width, this._height));
       this._bg.tint = Color.shared.setValue(getGameOptions().themeColors.WorldBackground);
       this._bg.position.set((this._width - this._bg.width) / 2, (this._height - this._bg.height) / 2);
@@ -69,12 +69,10 @@ export class WorldScene extends ViewportScene {
       });
       this._graphics.alpha = 0.1;
       drawGrid(getGrid(getGameState()), this._graphics);
-
       getGrid(getGameState()).forEach((grid) => {
          const xy = pointToTile(grid);
          this._tiles.set(xy, this.viewport.addChild(new TileVisual(this, grid)));
       });
-
       this.tooltipPool = new TooltipPool(this.viewport.addChild(new Container()));
       this._transportPool = new TransportPool(
          textures.Transport,
@@ -88,40 +86,46 @@ export class WorldScene extends ViewportScene {
       );
       this._selectedGraphics = this.viewport.addChild(new SmoothGraphics());
       this._transportLines = this.viewport.addChild(new SmoothGraphics());
+   }
 
+   override backgroundColor(): ColorSource {
+      return getGameOptions().themeColors.WorldBackground;
+   }
+
+   override onEnable(): void {
       if (viewportZoom) {
          this.viewport.zoom = viewportZoom;
       }
-
       if (!viewportCenter) {
          viewportCenter = { x: this._width / 2, y: this._height / 2 };
       }
       this.viewport.center = viewportCenter;
 
-      this.viewport.on("moved", () => {
-         viewportCenter = this.viewport.center;
-         viewportZoom = this.viewport.zoom;
-      });
-
-      this.viewport.on("clicked", (e: FederatedPointerEvent) => {
-         const gs = getGameState();
-         const grid = getGrid(gs).positionToGrid(this.viewport.screenToWorld(e));
-         switch (e.button) {
-            case 0: {
-               this.selectGrid(grid);
-               break;
-            }
-            case 1: {
-               this.copyBuilding(grid, gs);
-               break;
-            }
-            case 2: {
-               break;
-            }
-         }
-      });
-
       this.selectGrid(tileToPoint(getSpecialBuildings(getGameState()).Headquarter.tile));
+      super.onEnable();
+   }
+
+   override onMoved(point: IPointData): void {
+      viewportCenter = this.viewport.center;
+      viewportZoom = this.viewport.zoom;
+   }
+
+   override onClicked(e: FederatedPointerEvent): void {
+      const gs = getGameState();
+      const grid = getGrid(gs).positionToGrid(this.viewport.screenToWorld(e));
+      switch (e.button) {
+         case 0: {
+            this.selectGrid(grid);
+            break;
+         }
+         case 1: {
+            this.copyBuilding(grid, gs);
+            break;
+         }
+         case 2: {
+            break;
+         }
+      }
    }
 
    copyBuilding(grid: IPointData, gs: GameState): void {
