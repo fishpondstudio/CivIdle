@@ -874,7 +874,7 @@ export class BuildingDefinitions {
       desc: () => t(L.NeuschwansteinDesc),
       input: {},
       output: {},
-      construction: { Rifle: 100, Bond: 100, Concrete: 100 },
+      construction: { Rifle: 100, Bond: 100, Cannon: 100 },
       max: 1,
       special: BuildingSpecial.WorldWonder,
       wikipedia: "Neuschwanstein_Castle",

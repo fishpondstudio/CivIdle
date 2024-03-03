@@ -188,7 +188,6 @@ export class PlayerMapScene extends Scene {
    }
 
    override onClicked(e: FederatedPointerEvent): void {
-      console.log(e);
       if (e.button === 2) {
          return;
       }
