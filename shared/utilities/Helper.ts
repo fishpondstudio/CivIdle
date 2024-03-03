@@ -429,6 +429,11 @@ export function safeParseInt(str: string, fallback = 0): number {
    return Number.isFinite(parsed) ? parsed : fallback;
 }
 
+export function safeParseFloat(str: string, fallback = 0): number {
+   const parsed = parseFloat(str);
+   return Number.isFinite(parsed) ? parsed : fallback;
+}
+
 export function alphaNumericOf(str: string): string {
    return str.replace(/[^0-9a-z]/gi, "");
 }

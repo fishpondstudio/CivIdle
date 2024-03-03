@@ -92,6 +92,7 @@ body {
 }
 
 #global-toast .toast {
+   max-width: 80vw;
    position: absolute;
    top: 20px;
 }

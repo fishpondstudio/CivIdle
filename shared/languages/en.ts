@@ -690,9 +690,9 @@ export const EN = {
    PlayerTradeFill: "Fill",
    PlayerTradeClaim: "Claim",
    PlayerTradeFillAmount: "Fill Amount",
-   PlayerTradeFillSuccess: "The trade has been successfully filled",
+   PlayerTradeFillSuccessV2:
+      "<b>%{success}/%{total}</b> trades have been filled. You paid <b>%{fillAmount} %{fillResource}</b> and received <b>%{receivedAmount} %{receivedResource}</b>",
    PlayerTradeAddSuccess: "The trade has been successfully added",
-   PlayerTradeFillAmountMax: "Fill All Available",
    PlayerTradeFillTradeTitle: "Fill Trade",
    PlayerTradeFillTradeButton: "Fill Trade",
    PlayerTradeMaxTradeExceeded: "You have exceeded max number of active trades for your account rank",
@@ -726,6 +726,7 @@ export const EN = {
    ResourceImportImportCap: "Cap",
    ResourceImportSettings: "Resource Transport: %{res}",
    PlayerTradeYouPay: "You Pay: %{res}",
+   PlayerTradeFillPercentage: "Fill Percentage",
    PlayerTradeYouGetGross: "You Get (Before Tariff): %{res}",
    PlayerTradeYouGetNet: "You Get (After Tariff): %{res}",
    PlayerTradeStorageRequired: "Storage Required",
@@ -993,4 +994,5 @@ export const EN = {
       "Autopilot will only transport resources whose amount in storage is below the cap",
    Zenobia: "Zenobia",
    ZenobiaDesc: "+%{value}h Petra Warp Storage",
+   PlayerTradeFillAmountMaxV2: "Fill Max",
 };

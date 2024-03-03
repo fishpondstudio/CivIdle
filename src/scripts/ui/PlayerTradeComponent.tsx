@@ -182,7 +182,7 @@ export function PlayerTradeComponent({ gameState, xy }: IBuildingComponentProps)
                               })}
                               onClick={() => {
                                  if (!disableFill) {
-                                    showModal(<FillPlayerTradeModal trade={trade} xy={xy} />);
+                                    showModal(<FillPlayerTradeModal tradeId={trade.id} xy={xy} />);
                                  }
                               }}
                            >

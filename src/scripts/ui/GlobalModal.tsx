@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 import { useState } from "react";
 import { TypedEvent } from "../../../shared/utilities/TypedEvent";
 import { useTypedEvent } from "../utilities/Hook";
+import { RenderHTML } from "./RenderHTMLComponent";
 
 const showModalEvent = new TypedEvent<ReactNode>();
 const hideModalEvent = new TypedEvent<void>();
@@ -49,7 +50,7 @@ export function GlobalToast(): React.ReactNode {
       if (toastTimeout) {
          clearTimeout(toastTimeout);
       }
-      toastTimeout = window.setTimeout(() => setContent(null), 3500);
+      toastTimeout = window.setTimeout(() => setContent(null), 5000);
    });
 
    useTypedEvent(hideToastEvent, (e) => {
@@ -60,5 +61,5 @@ export function GlobalToast(): React.ReactNode {
       return null;
    }
 
-   return <div className="toast">{content}</div>;
+   return <RenderHTML className="toast" html={content} />;
 }
