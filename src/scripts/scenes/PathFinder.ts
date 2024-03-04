@@ -1,7 +1,12 @@
 import type { IPointData } from "pixi.js";
 import WorldMap from "../../../shared/definitions/WorldMap.json";
-import { getGameOptions } from "../../../shared/logic/GameStateLogic";
-import { wrapX } from "../../../shared/logic/PlayerTradeLogic";
+import { getGameOptions, getGameState } from "../../../shared/logic/GameStateLogic";
+import {
+   DEFAULT_LAND_TILE_COST,
+   RequestPathFinderGridUpdate,
+   getSeaTileCost,
+   wrapX,
+} from "../../../shared/logic/PlayerTradeLogic";
 import { MAP_MAX_X, MAP_MAX_Y } from "../../../shared/utilities/Database";
 import { OnPlayerMapChanged, getPlayerMap } from "../rpc/RPCClient";
 import { dijkstra } from "../utilities/dijkstra";
@@ -9,18 +14,16 @@ import { dijkstra } from "../utilities/dijkstra";
 export const GRID1: number[] = [];
 export const GRID2: number[] = [];
 
-const DEFAULT_LAND_TILE_COST = 0.001;
-const DEFAULT_SEA_TILE_COST = 0.001;
-
-function buildPathfinderGrid() {
+export function buildPathfinderGrid() {
+   const seaTileCost = getSeaTileCost(getGameState());
    for (let y = 0; y < MAP_MAX_Y; y++) {
       for (let x = 0; x < MAP_MAX_X; x++) {
          const xy = `${x},${y}`;
          const idx1 = y * MAP_MAX_X + x;
          const idx2 = y * MAP_MAX_X + wrapX(x);
          if (!(WorldMap as Record<string, boolean>)[xy]) {
-            GRID1[idx1] = DEFAULT_SEA_TILE_COST;
-            GRID2[idx2] = DEFAULT_SEA_TILE_COST;
+            GRID1[idx1] = seaTileCost;
+            GRID2[idx2] = seaTileCost;
             continue;
          }
          const map = getPlayerMap();
@@ -32,6 +35,7 @@ function buildPathfinderGrid() {
 }
 
 OnPlayerMapChanged.on(buildPathfinderGrid);
+RequestPathFinderGridUpdate.on(buildPathfinderGrid);
 
 function getTotalCost(path: IPointData[], grid: number[]): number {
    return path.reduce((prev, curr) => {

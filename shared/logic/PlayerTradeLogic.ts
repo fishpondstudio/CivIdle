@@ -1,4 +1,5 @@
 import type { Resource } from "../definitions/ResourceDefinitions";
+import { Tech } from "../definitions/TechDefinitions";
 import {
    AccountLevel,
    IClientMapEntry,
@@ -8,7 +9,10 @@ import {
    type IUser,
 } from "../utilities/Database";
 import { DAY, IPointData } from "../utilities/Helper";
+import { PartialTabulate } from "../utilities/TypeDefinitions";
+import { TypedEvent } from "../utilities/TypedEvent";
 import { Config } from "./Config";
+import { GameState } from "./GameState";
 
 export interface IClientAddTradeRequest extends IAddTradeRequest {
    buyResource: Resource;
@@ -84,3 +88,29 @@ export function isTradePathValid(path: IPointData[]): boolean {
    }
    return true;
 }
+
+export const DEFAULT_LAND_TILE_COST = 0.001;
+export const SEA_TILE_COST_1 = 0.01;
+export const SEA_TILE_COST_2 = 0.005;
+export const SEA_TILE_COST_3 = 0.001;
+
+export const SEA_TILE_COSTS = {
+   Capitalism: SEA_TILE_COST_3,
+   Optics: SEA_TILE_COST_2,
+   Geography: SEA_TILE_COST_1,
+} satisfies PartialTabulate<Tech>;
+
+export function getSeaTileCost(gs: GameState): number {
+   if (gs.unlockedTech.Capitalism) {
+      return SEA_TILE_COSTS.Capitalism;
+   }
+   if (gs.unlockedTech.Optics) {
+      return SEA_TILE_COSTS.Optics;
+   }
+   if (gs.unlockedTech.Geography) {
+      return SEA_TILE_COSTS.Geography;
+   }
+   return -1;
+}
+
+export const RequestPathFinderGridUpdate = new TypedEvent<void>();

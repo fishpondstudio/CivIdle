@@ -1,3 +1,5 @@
+import { SEA_TILE_COST_1, SEA_TILE_COST_2, SEA_TILE_COST_3 } from "../logic/PlayerTradeLogic";
+import { formatPercent } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
 import type { ITechAgeDefinition, ITechDefinition } from "./ITechDefinition";
 
@@ -304,6 +306,7 @@ export class TechDefinitions {
       buildingMultiplier: {
          Library: { output: 10, input: 10 },
       },
+      additionalUpgrades: [() => t(L.SeaTradeUpgrade, { tariff: formatPercent(SEA_TILE_COST_1) })],
    };
 
    Physics: ITechDefinition = {
@@ -365,6 +368,7 @@ export class TechDefinitions {
          Library: { output: 10, input: 10 },
          School: { output: 10, input: 10 },
       },
+      additionalUpgrades: [() => t(L.SeaTradeUpgrade, { tariff: formatPercent(SEA_TILE_COST_2) })],
    };
 
    Banking: ITechDefinition = {
@@ -483,6 +487,7 @@ export class TechDefinitions {
          builderCapacity: 1,
       },
       unlockBuilding: ["Parliament"],
+      additionalUpgrades: [() => t(L.SeaTradeUpgrade, { tariff: formatPercent(SEA_TILE_COST_3) })],
    };
 
    RapidFire: ITechDefinition = {

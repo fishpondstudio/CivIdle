@@ -995,4 +995,5 @@ export const EN = {
    Zenobia: "Zenobia",
    ZenobiaDesc: "+%{value}h Petra Warp Storage",
    PlayerTradeFillAmountMaxV2: "Fill Max",
+   SeaTradeUpgrade: "Trading with players across the sea. Tariff for each sea tile: %{tariff}",
 };
