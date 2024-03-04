@@ -3,10 +3,9 @@ import type { ColorSource, FederatedPointerEvent, IPointData } from "pixi.js";
 import { BitmapText, Container, LINE_CAP, LINE_JOIN, Sprite } from "pixi.js";
 import WorldMap from "../../../shared/definitions/WorldMap.json";
 import { getGameOptions } from "../../../shared/logic/GameStateLogic";
-import { isTileReserved } from "../../../shared/logic/PlayerTradeLogic";
+import { isTileReserved, isTradePathValid } from "../../../shared/logic/PlayerTradeLogic";
 import { MAP_MAX_X, MAP_MAX_Y, type IClientMapEntry } from "../../../shared/utilities/Database";
 import {
-   drawDashedLine,
    forEach,
    formatPercent,
    mapSafeAdd,
@@ -16,7 +15,7 @@ import {
 import type { Disposable } from "../../../shared/utilities/TypedEvent";
 import { OnPlayerMapMessage, OnTradeChanged, getPlayerMap, getTrades } from "../rpc/RPCClient";
 import { PlayerMapPage } from "../ui/PlayerMapPage";
-import { Scene, type ISceneContext } from "../utilities/SceneManager";
+import { Scene, destroyAllChildren, type ISceneContext } from "../utilities/SceneManager";
 import { Singleton } from "../utilities/Singleton";
 import { Fonts } from "../visuals/Fonts";
 import { findPath, getMyMapXy } from "./PathFinder";
@@ -27,12 +26,12 @@ let viewportZoom: number | null = null;
 const GridSize = 100;
 
 export class PlayerMapScene extends Scene {
-   private _width!: number;
-   private _height!: number;
-   private _selectedGraphics!: SmoothGraphics;
+   private _width: number;
+   private _height: number;
+   private _selectedGraphics: SmoothGraphics;
    private _tiles = new Map<string, Container>();
    private _listeners: Disposable[] = [];
-   private _path!: SmoothGraphics;
+   private _path: Container;
    private _idToTradeCount = new Map<string, number>();
    private _idToTile = new Map<string, string>();
    private _dirtyTiles = new Set<string>();
@@ -54,6 +53,8 @@ export class PlayerMapScene extends Scene {
          sprite.position.set(point.x * GridSize, point.y * GridSize);
       });
 
+      this._path = this.viewport.addChild(new Container());
+
       const graphics = this.viewport.addChild(new SmoothGraphics()).lineStyle({
          color: 0xffffff,
          width: 2,
@@ -74,7 +75,6 @@ export class PlayerMapScene extends Scene {
       }
 
       this._selectedGraphics = this.viewport.addChild(new SmoothGraphics());
-      this._path = this.viewport.addChild(new SmoothGraphics());
 
       // Assets.load<Texture>("/World.png").then((texture) => {
       //    const sprite = this.viewport.addChild(new Sprite(texture));
@@ -195,6 +195,7 @@ export class PlayerMapScene extends Scene {
       const tileX = Math.floor(pos.x / GridSize);
       const tileY = Math.floor(pos.y / GridSize);
       this.selectTile(tileX, tileY);
+      console.log(tileX, tileY);
    }
 
    override onMoved(point: IPointData): void {
@@ -219,27 +220,18 @@ export class PlayerMapScene extends Scene {
    }
 
    public drawPath(path: IPointData[]): void {
-      this._path.clear().lineStyle({
-         color: 0xffff99,
-         width: 4,
-         cap: LINE_CAP.ROUND,
-         join: LINE_JOIN.ROUND,
-         alignment: 0.5,
-      });
-      this._path.alpha = 0.5;
-      let count = 0;
+      destroyAllChildren(this._path);
       path.forEach((point, idx) => {
-         const pos = this.tileToPosition(point);
-         if (idx === 0) {
-            this._path.moveTo(pos.x, pos.y);
-         } else {
-            count = drawDashedLine(this._path, this.tileToPosition(path[idx - 1]), pos, count, 5, 10);
-         }
+         const sprite = this._path.addChild(new Sprite(this.context.textures["100x100"]));
+         sprite.tint = 0xffffff;
+         sprite.alpha = 0.25;
+         sprite.scale.set(0.9, 0.9);
+         sprite.position.set((point.x + 0.05) * GridSize, (point.y + 0.05) * GridSize);
       });
    }
 
    public clearPath() {
-      this._path.clear();
+      destroyAllChildren(this._path);
    }
 
    private selectTile(tileX: number, tileY: number) {
@@ -267,6 +259,7 @@ export class PlayerMapScene extends Scene {
 
       if (myXy && map.has(`${tileX},${tileY}`)) {
          const path = findPath(xyToPoint(myXy), { x: tileX, y: tileY });
+         console.log(isTradePathValid(path));
          this.drawPath(path);
       } else {
          this.clearPath();

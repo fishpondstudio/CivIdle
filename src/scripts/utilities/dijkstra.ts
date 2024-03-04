@@ -23,14 +23,16 @@ export function dijkstra(grid: number[], stride: number, start: IPointData, end:
    costSoFar.set(key, 0);
 
    function expandFrontier(nextX: number, nextY: number, current: IPointData) {
-      const newCost = costSoFar.get(hash(current.x, current.y))! + grid[hash(nextX, nextY)];
       const nextXy = hash(nextX, nextY);
-      if (!costSoFar.has(nextXy) || newCost < costSoFar.get(nextXy)!) {
-         costSoFar.set(nextXy, newCost);
-         const priority = newCost + Math.abs(nextX - end.x) + Math.abs(nextY - end.y);
-         frontier.queue({ value: { x: nextX, y: nextY }, priority });
-         cameFrom.set(nextXy, current);
+      const currentXy = hash(current.x, current.y);
+      const newCost = costSoFar.get(currentXy)! + grid[nextXy];
+      if (newCost >= (costSoFar.get(nextXy) ?? Infinity)) {
+         return;
       }
+      costSoFar.set(nextXy, newCost);
+      const priority = newCost + Math.abs(nextX - end.x) + Math.abs(nextY - end.y);
+      frontier.queue({ value: { x: nextX, y: nextY }, priority });
+      cameFrom.set(nextXy, current);
    }
 
    function isPassable(x: number, y: number): boolean {

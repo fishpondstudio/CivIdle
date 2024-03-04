@@ -1,39 +1,62 @@
 import type { IPointData } from "pixi.js";
 import WorldMap from "../../../shared/definitions/WorldMap.json";
 import { getGameOptions } from "../../../shared/logic/GameStateLogic";
+import { wrapX } from "../../../shared/logic/PlayerTradeLogic";
 import { MAP_MAX_X, MAP_MAX_Y } from "../../../shared/utilities/Database";
 import { OnPlayerMapChanged, getPlayerMap } from "../rpc/RPCClient";
 import { dijkstra } from "../utilities/dijkstra";
 
-export const grid: number[] = [];
+export const GRID1: number[] = [];
+export const GRID2: number[] = [];
+
+const DEFAULT_LAND_TILE_COST = 0.001;
+const DEFAULT_SEA_TILE_COST = 0.001;
 
 function buildPathfinderGrid() {
    for (let y = 0; y < MAP_MAX_Y; y++) {
       for (let x = 0; x < MAP_MAX_X; x++) {
          const xy = `${x},${y}`;
-         const idx = y * MAP_MAX_X + x;
+         const idx1 = y * MAP_MAX_X + x;
+         const idx2 = y * MAP_MAX_X + wrapX(x);
          if (!(WorldMap as Record<string, boolean>)[xy]) {
-            grid[idx] = -1;
+            GRID1[idx1] = DEFAULT_SEA_TILE_COST;
+            GRID2[idx2] = DEFAULT_SEA_TILE_COST;
             continue;
          }
          const map = getPlayerMap();
-         const cost = map.get(xy)?.tariffRate ?? 0;
-         grid[idx] = cost;
+         const cost = map.get(xy)?.tariffRate ?? DEFAULT_LAND_TILE_COST;
+         GRID1[idx1] = cost;
+         GRID2[idx2] = cost;
       }
    }
-
-   // console.time("PathFinder.findPath");
-   // for (let i = 0; i < 100; i++) {
-   //    findPath({ x: 106, y: 33 }, { x: 106, y: 38 });
-   // }
-   // console.timeEnd("PathFinder.findPath");
 }
 
 OnPlayerMapChanged.on(buildPathfinderGrid);
 
+function getTotalCost(path: IPointData[], grid: number[]): number {
+   return path.reduce((prev, curr) => {
+      const idx = curr.y * MAP_MAX_X + curr.x;
+      if (grid[idx] > 0) {
+         return prev + grid[idx];
+      }
+      return prev + 0.001;
+   }, 0);
+}
+
 export function findPath(start: IPointData, end: IPointData): IPointData[] {
-   const result = dijkstra(grid, MAP_MAX_X, start, end);
-   return result;
+   const result1 = dijkstra(GRID1, MAP_MAX_X, start, end);
+   const cost1 = getTotalCost(result1, GRID1);
+   const result2 = dijkstra(
+      GRID2,
+      MAP_MAX_X,
+      { x: wrapX(start.x), y: start.y },
+      { x: wrapX(end.x), y: end.y },
+   );
+   const cost2 = getTotalCost(result2, GRID2);
+   if (cost2 < cost1) {
+      return result2.map((p) => ({ x: wrapX(p.x), y: p.y }));
+   }
+   return result1;
 }
 
 export function findUserOnMap(userId: string): string | null {
