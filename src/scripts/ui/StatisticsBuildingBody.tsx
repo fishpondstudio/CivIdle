@@ -7,20 +7,34 @@ import {
    type Resource,
    type ResourceDefinitions,
 } from "../../../shared/definitions/ResourceDefinitions";
-import { IOCalculation, getElectrificationStatus } from "../../../shared/logic/BuildingLogic";
+import {
+   IOCalculation,
+   getBuildingValue,
+   getElectrificationStatus,
+   isHeadquarters,
+   isNaturalWonder,
+} from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
 import { GameFeature, hasFeature } from "../../../shared/logic/FeatureLogic";
-import { getBuildingIO, unlockedResources } from "../../../shared/logic/IntraTickCache";
+import {
+   getBuildingIO,
+   getTypeBuildings,
+   getXyBuildings,
+   unlockedResources,
+} from "../../../shared/logic/IntraTickCache";
 import { Tick } from "../../../shared/logic/TickLogic";
 import type { IBuildingData } from "../../../shared/logic/Tile";
 import {
+   SECOND,
    forEach,
    formatHMS,
    formatNumber,
    formatPercent,
    keysOf,
    mReduceOf,
+   reduceOf,
    safeAdd,
+   type Tile,
 } from "../../../shared/utilities/Helper";
 import type { PartialSet, PartialTabulate } from "../../../shared/utilities/TypeDefinitions";
 import { L, t } from "../../../shared/utilities/i18n";
@@ -32,8 +46,10 @@ import { BuildingColorComponent } from "./BuildingColorComponent";
 import type { IBuildingComponentProps } from "./BuildingPage";
 import { FormatNumber } from "./HelperComponents";
 import { TableView } from "./TableView";
+import type { Building, IBuildingDefinition } from "../../../shared/definitions/BuildingDefinitions";
+import { getValueRequiredForGreatPeople } from "../../../shared/logic/RebornLogic";
 
-type Tab = "resources" | "buildings" | "transportation";
+type Tab = "resources" | "buildings" | "transportation" | "empire";
 
 export function StatisticsBuildingBody({ gameState, xy }: IBuildingComponentProps): React.ReactNode {
    const building = gameState.tiles.get(xy)?.building as IBuildingData;
@@ -48,6 +64,8 @@ export function StatisticsBuildingBody({ gameState, xy }: IBuildingComponentProp
       content = <BuildingTab gameState={gameState} xy={xy} />;
    } else if (currentTab === "transportation") {
       content = <TransportationTab gameState={gameState} xy={xy} />;
+   } else if (currentTab === "empire") {
+      content = <EmpireTab gameState={gameState} xy={xy} />;
    }
    return (
       <div className="window-body column">
@@ -70,10 +88,190 @@ export function StatisticsBuildingBody({ gameState, xy }: IBuildingComponentProp
             >
                {t(L.StatisticsTransportation)}
             </button>
+            <button
+               onClick={() => setCurrentTab("empire")}
+               aria-selected={currentTab === "empire" ? true : false}
+            >
+               Empire
+            </button>
          </menu>
          {content}
          <BuildingColorComponent gameState={gameState} xy={xy} />
       </div>
+   );
+}
+
+function EmpireTab({ gameState }: IBuildingComponentProps): React.ReactNode {
+   const unlockedResourcesList: PartialSet<Resource> = unlockedResources(gameState);
+   const resourceAmounts: Partial<Record<keyof ResourceDefinitions, number>> = {};
+   keysOf(unlockedResourcesList).map((res) => {
+      resourceAmounts[res] =
+         Tick.current.resourcesByTile
+            .get(res)
+            ?.reduce(
+               (prev, curr) => prev + (gameState.tiles.get(curr.tile)?.building?.resources?.[res] ?? 0),
+               0,
+            ) ?? 0;
+   });
+
+   const totalResourceValue = reduceOf(
+      resourceAmounts,
+      (prev, res, value) =>
+         prev + (!NoPrice[res] && !NoStorage[res] ? value * Config.ResourcePrice[res]! : 0),
+      0,
+   );
+
+   let totalBuildingScience = 0;
+   const buildingTypeScience: Partial<Record<Building, number>> = {};
+   let totalBuildingValue = 0;
+   const buildingTypeValues: Partial<Record<Building, number>> = {};
+   getTypeBuildings(gameState).forEach((buildings, v) => {
+      const buildingTypeValue = mReduceOf(
+         buildings,
+         (prev, i, value) => {
+            const buildingValue = getBuildingValue(value.building);
+            return prev + buildingValue;
+         },
+         0,
+      );
+      buildingTypeValues[v] = buildingTypeValue;
+      totalBuildingValue += buildingTypeValue;
+
+      // Does this building type output science
+      /*if ("Science" in Config.Building[v].output) {
+         const scienceOutput = mReduceOf(
+            buildings,
+            (prev, i, value) => {
+               const output = getBuildingIO(
+                  value.tile,
+                  "output",
+                  IOCalculation.Multiplier | IOCalculation.Capacity,
+                  gameState,
+               );
+
+               return prev + output.Science ?? 0;
+            },
+            0,
+         );
+         buildingTypeScience[v] = scienceOutput;
+         totalBuildingScience += scienceOutput;
+      }*/
+   });
+
+   totalBuildingScience = mReduceOf(
+      Tick.next.scienceProduced,
+      (prev, _, value) => {
+         return prev + value;
+      },
+      0,
+   );
+
+   return (
+      <article role="tabpanel" className="f1" style={{ padding: "8px", overflow: "auto" }}>
+         <fieldset>
+            <div className="row">
+               <div className="f1">{t(L.TotalEmpireValue)}</div>
+               <div className="text-strong">
+                  <FormatNumber value={Tick.current.totalValue} />
+               </div>
+            </div>
+         </fieldset>
+         <fieldset>
+            <legend>Resources</legend>
+            <div className="sep5" />
+            <ul className="tree-view">
+               <details>
+                  <summary className="row">
+                     <div className="f1">Empire Value From Resources</div>
+                     <div className="text-strong">
+                        <FormatNumber value={totalResourceValue} />
+                     </div>
+                  </summary>
+                  <ul className="text-small">
+                     {keysOf(resourceAmounts)
+                        .sort(
+                           (a, b) =>
+                              resourceAmounts[b]! * Config.ResourcePrice[b]! -
+                              resourceAmounts[a]! * Config.ResourcePrice[a]!,
+                        )
+                        .map((res) => {
+                           if (NoPrice[res] || NoStorage[res]) {
+                              return null;
+                           }
+                           return (
+                              <li key={res} className="row">
+                                 <div className="f1">{Config.Resource[res].name()}</div>
+                                 <FormatNumber value={resourceAmounts[res]! * Config.ResourcePrice[res]!} />
+                              </li>
+                           );
+                        })}
+                  </ul>
+               </details>
+            </ul>
+         </fieldset>
+
+         <fieldset>
+            <legend>Buildings</legend>
+            <div className="sep5" />
+            <ul className="tree-view">
+               <details>
+                  <summary className="row">
+                     <div className="f1">Empire Value From Buildings</div>
+                     <div className="text-strong">
+                        <FormatNumber value={totalBuildingValue} />
+                     </div>
+                  </summary>
+                  <ul className="text-small">
+                     {keysOf(buildingTypeValues)
+                        .sort((a, b) => buildingTypeValues[b]! - buildingTypeValues[a]!)
+                        .map((b) => {
+                           if (isNaturalWonder(b) || isHeadquarters(b)) {
+                              return null;
+                           }
+                           return (
+                              <li key={b} className="row">
+                                 <div className="f1">{Config.Building[b].name()}</div>
+                                 <FormatNumber value={buildingTypeValues[b]!} />
+                              </li>
+                           );
+                        })}
+                  </ul>
+               </details>
+            </ul>
+         </fieldset>
+
+         <fieldset>
+            <legend>Science</legend>
+            <div className="sep5" />
+            <ul className="tree-view">
+               <details>
+                  <summary className="row">
+                     <div className="f1">Extra GP's</div>
+                     <div className="text-strong">
+                        <FormatNumber value={totalBuildingScience} />
+                     </div>
+                  </summary>
+                  <ul className="text-small">
+                     {Array.from(Tick.current.scienceProduced.keys())
+                        .sort(
+                           (a, b) =>
+                              Tick.current.scienceProduced.get(b)! - Tick.current.scienceProduced.get(a)!,
+                        )
+                        .map((xy) => {
+                           const tile = gameState.tiles.get(xy);
+                           const b = tile?.building;
+                           return (
+                              <li key={xy} className="row">
+                                 <div className="f1">{Config.Building[b!.type].name()}</div>
+                                 <FormatNumber value={Tick.current.scienceProduced.get(xy)} />
+                              </li>
+                           );
+                        })}
+                  </ul>
+               </details>
+            </ul>
+         </fieldset>
+      </article>
    );
 }
 
@@ -275,6 +473,28 @@ function ResourcesTab({ gameState }: IBuildingComponentProps): React.ReactNode {
             ) ?? 0;
    });
 
+   const highlightResourcesUsed = (
+      res: Resource,
+      type: keyof Pick<IBuildingDefinition, "input" | "output">,
+   ) => {
+      const inputOutputTiles: Tile[] = [];
+
+      gameState.tiles.forEach((tile, xy) => {
+         const inputOutput = getBuildingIO(
+            xy,
+            type,
+            IOCalculation.Multiplier | IOCalculation.Capacity,
+            gameState,
+         );
+         forEach(inputOutput, (r, amount) => {
+            if (res === r) {
+               inputOutputTiles.push(tile.tile);
+            }
+         });
+      });
+      Singleton().sceneManager.getCurrent(WorldScene)?.drawSelection(null, inputOutputTiles);
+   };
+
    return (
       <article role="tabpanel" className="f1 column" style={{ padding: "8px", overflow: "auto" }}>
          <fieldset>
@@ -355,7 +575,13 @@ function ResourcesTab({ gameState }: IBuildingComponentProps): React.ReactNode {
                            })}
                         >
                            <div className="text-small text-right text-desc">
-                              <FormatNumber value={output} /> - <FormatNumber value={input} />
+                              <span className="pointer" onClick={() => highlightResourcesUsed(res, "output")}>
+                                 <FormatNumber value={output} />
+                              </span>{" "}
+                              -{" "}
+                              <span className="pointer" onClick={() => highlightResourcesUsed(res, "input")}>
+                                 <FormatNumber value={input} />
+                              </span>
                            </div>
                         </Tippy>
                      </td>

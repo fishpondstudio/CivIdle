@@ -549,6 +549,13 @@ export function isNaturalWonder(building?: Building): boolean {
    return Config.Building[building].special === BuildingSpecial.NaturalWonder;
 }
 
+export function isHeadquarters(building?: Building): boolean {
+   if (!building) {
+      return false;
+   }
+   return Config.Building[building].special === BuildingSpecial.HQ;
+}
+
 export function isWorldWonder(building?: Building): boolean {
    if (!building) {
       return false;
