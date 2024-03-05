@@ -25,6 +25,8 @@ import { playError } from "../visuals/Sound";
 import { hideModal } from "./GlobalModal";
 import { FormatNumber } from "./HelperComponents";
 
+const LABEL_WIDTH = 150;
+
 export function ChangeResourceImportModal({
    building,
    resource,
@@ -59,7 +61,12 @@ export function ChangeResourceImportModal({
          </div>
          <div className="window-body">
             <div className="row mv5">
-               <div style={{ width: "100px" }}>{t(L.ResourceImportImportPerCycleV2)}</div>
+               <div className="row" style={{ width: LABEL_WIDTH }}>
+                  <div>{t(L.ResourceImportImportPerCycleV2)}</div>
+                  <Tippy content={t(L.ResourceImportImportPerCycleV2ToolTip)}>
+                     <div className="m-icon small ml5 text-desc">help</div>
+                  </Tippy>
+               </div>
                <input
                   className="f1 text-right w100"
                   type="text"
@@ -73,7 +80,7 @@ export function ChangeResourceImportModal({
                />
             </div>
             <div className="row text-small">
-               <div style={{ width: "100px" }}></div>
+               <div style={{ width: LABEL_WIDTH }}></div>
                <div className="text-desc">
                   0 ~ <FormatNumber value={max} />
                </div>
@@ -97,7 +104,12 @@ export function ChangeResourceImportModal({
             </div>
             <div className="sep5"></div>
             <div className="row mv5">
-               <div style={{ width: "100px" }}>{t(L.ResourceImportImportCapV2)}</div>
+               <div className="row" style={{ width: LABEL_WIDTH }}>
+                  <div>{t(L.ResourceImportImportCapV2)}</div>
+                  <Tippy content={t(L.ResourceImportImportCapV2Tooltip)}>
+                     <div className="m-icon small ml5 text-desc">help</div>
+                  </Tippy>
+               </div>
                <input
                   className="f1 text-right w100"
                   type="text"
@@ -108,7 +120,7 @@ export function ChangeResourceImportModal({
                />
             </div>
             <div className="row text-small">
-               <div style={{ width: "100px" }}></div>
+               <div style={{ width: LABEL_WIDTH }}></div>
                <div className="text-desc">
                   0 ~ <FormatNumber value={storage} />
                </div>

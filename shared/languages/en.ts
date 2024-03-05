@@ -723,7 +723,10 @@ export const EN = {
    ResourceImportResource: "Resource",
    ResourceImportStorage: "Storage",
    ResourceImportImportPerCycleV2: "Per Cycle",
+   ResourceImportImportPerCycleV2ToolTip: "The amount of this resource that is transported per cycle",
    ResourceImportImportCapV2: "Max Amount",
+   ResourceImportImportCapV2Tooltip:
+      "This building will stop transporting thhis resource when the max amount is reached",
    ResourceImportSettings: "Resource Transport: %{res}",
    ResourceImportCapacity: "Resource Transport Capacity",
    PlayerTradeYouPay: "You Pay: %{res}",
@@ -980,9 +983,9 @@ export const EN = {
       "You can use scroll wheel to adjust the level when your cursor is over this",
    Concrete: "Concrete",
    ConcretePlant: "Concrete Plant",
-   ResourceExportBelowCap: "Export Below Cap",
+   ResourceExportBelowCap: "Export Below Max Amount",
    ResourceExportBelowCapTooltip:
-      "Allow other buildings to transport a resource from this building even when its amount is below the cap",
+      "Allow other buildings to transport a resource from this building even when its amount is below the max amount",
    ResourceExportToSameType: "Export to the Same Type",
    ResourceExportToSameTypeTooltip:
       "Allow other buildings of the same type to transport a resource from this building",
