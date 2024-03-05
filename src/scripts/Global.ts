@@ -18,7 +18,7 @@ import {
 import { initializeGameState } from "../../shared/logic/InitializeGameState";
 import { rollPermanentGreatPeople } from "../../shared/logic/RebornLogic";
 import { getGreatPeopleChoices } from "../../shared/logic/TechLogic";
-import { BuildingInputMode, makeBuilding } from "../../shared/logic/Tile";
+import { BuildingInputMode, ResourceImportOptions, makeBuilding } from "../../shared/logic/Tile";
 import { Grid } from "../../shared/utilities/Grid";
 import { forEach, isNullOrUndefined } from "../../shared/utilities/Helper";
 import { TypedEvent } from "../../shared/utilities/TypedEvent";
@@ -180,6 +180,10 @@ function migrateSavedGame(save: SavedGame) {
          }
          if (isNullOrUndefined(tile.building.maxInputDistance)) {
             tile.building.maxInputDistance = Infinity;
+         }
+         if ("resourceImports" in tile.building && !("resourceImportOptions" in tile.building)) {
+            // @ts-expect-error
+            tile.building.resourceImportOptions = ResourceImportOptions.None;
          }
          if (!Config.Building[tile.building.type]) {
             delete tile.building;

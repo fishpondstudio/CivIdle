@@ -172,8 +172,7 @@ export const DE = {
    RevealDeposit: "Lagerstätte entdecken",
    BuildingMultipliers: "Beschleunigung der Baugeschwindigkeit",
    BuildingANew: "Bauen",
-   BuildingSearchText:
-      "Nach welchem Gebäuder/welcher Ressource wollen Sie suchen?",
+   BuildingSearchText: "Nach welchem Gebäuder/welcher Ressource wollen Sie suchen?",
    Worker: "Arbeiter",
    WheatFarm: "Weizenfarm",
    FlourMill: "Mühle",
@@ -294,8 +293,10 @@ export const DE = {
    TotalWorkers: "Arbeitskräfte",
    WorkerHappinessPercentage: "Zufriedenheits-Multiplikator",
    WorkerPercentagePerHappiness: "%{value}% Multiplikator für Zufriedenheit",
-   WorkersAvailableBeforeHappinessMultiplier: "Arbeitskräfte bis zum Erreichen des Multiplikators für Zufriedenheit",
-   WorkersAvailableAfterHappinessMultiplier: "Verfügbare Arbeitskräfte nach Erreichen des Multiplikators für Zufriedenheit",
+   WorkersAvailableBeforeHappinessMultiplier:
+      "Arbeitskräfte bis zum Erreichen des Multiplikators für Zufriedenheit",
+   WorkersAvailableAfterHappinessMultiplier:
+      "Verfügbare Arbeitskräfte nach Erreichen des Multiplikators für Zufriedenheit",
    WorkersBusy: "Beschäftigte Arbeitskräfte",
    WorkerScienceProduction: "Forschung durch Arbeitskräfte",
    ScienceFromIdleWorkers: "Forschung durch Arbeitskräfte ohne Beschäftigung",
@@ -338,7 +339,8 @@ export const DE = {
    CyrusII: "Kyros II.",
    DariusI: "Dareios I.",
    Confucius: "Konfuzius",
-   ConfuciusDesc: "+%{value} Forschung durch alle Arbeitskräfte, wenn mehr als 50% von ihnen beschäftigt sind.",
+   ConfuciusDesc:
+      "+%{value} Forschung durch alle Arbeitskräfte, wenn mehr als 50% von ihnen beschäftigt sind.",
    Socrates: "Sokrates",
    SocratesDesc: "+%{value} Forschung durch beschäftigten Arbeitskräfte",
    Aeschylus: "Aischylos",
@@ -393,22 +395,20 @@ export const DE = {
    ConstructionBuilderMultiplier: "Multiplikator für Bauarbeitern",
    ConstructionBuilderMultiplierFull: "Gesamter Multiplikator für Bauarbeitern",
    EndConstruction: "Bau abbrechen",
-   EndConstructionDescHTML:
-      "Wenn Sie den Bau abbrechen, gehen alle bereits verbrauchten Ressourcen verloren",
+   EndConstructionDescHTML: "Wenn Sie den Bau abbrechen, gehen alle bereits verbrauchten Ressourcen verloren",
    Stonehenge: "Stonehenge",
    StonehengeDesc:
       "Bei allen Gebäuden, die Stein verbrauchen oder ihn produzieren erhöht sich der Multiplikator für die Produktion um 1.",
    LighthouseOfAlexandria: "Leuchtturm von Alexandria",
-   LighthouseOfAlexandriaDesc: 
+   LighthouseOfAlexandriaDesc:
       "Bei allen angrenzenden Gebäuden erhöht sich der Multiplikator für die Lagerkapazität um 5.",
    PyramidOfGiza: "Pyramide von Gizeh",
-   PyramidOfGizaDesc: 
+   PyramidOfGizaDesc:
       "Bei allen Gebäuden, die Arbeitskräfte produzieren, erhöht sich der Multiplikator für die Produktion um 1.",
    ColossusOfRhodes: "Koloss von Rhodos",
    ColossusOfRhodesDesc:
       "Durch jedes angrenzenden Gebäude, das keine Arbeitskräfte produziert, erhöht sich die Zufriedenheit um 1.",
-   MausoleumAtHalicarnassus: 
-      "Mausoleum von Halikarnassos",
+   MausoleumAtHalicarnassus: "Mausoleum von Halikarnassos",
    MausoleumAtHalicarnassusDesc:
       "Ein Transport kostet keine Arbeitskräfte, wenn er sich gerade in Reichweite von 2 Kacheln des Mausoleums befindet",
    HangingGarden: "Hängender Garten",
@@ -452,7 +452,7 @@ export const DE = {
    PetraDesc:
       "Wenn du offline bist wird eine Zeitschleife erzeugt, durch die dein Imperium beschleunigen kannst.",
    OxfordUniversity: "Universität Oxford",
-   OxfordUniversityDesc: "Jede Gebäudeverbesserung in deinem Imperium erhöht die Forschung pro Zyklus um 1.",
+   OxfordUniversityDescV2: "Each building upgrade in your empire provides +5 Science per cycle",
    StPetersBasilica: "Petersdom",
    StPetersBasilicaDesc:
       "Bei allen Gebäuden, die Glauben produzieren, erhöht sich der Multiplikator des Lagers um 1. Durch eingelagerten Glauben wird zusätzlicher Glaube erzeugt. (Unglaublich, nicht wahr?)",
@@ -525,8 +525,7 @@ export const DE = {
    LuxorTemple: "Luxor-Tempel",
    LuxorTempleDesc: "Forschung durch beschäftigte Arbeitskräfte steigt um 1.",
    Neuschwanstein: "Neuschwanstein",
-   NeuschwansteinDesc: 
-      "Der Multiplikator für Bauarbeiter erhöht sich beim Bau von Wundern um 10.",
+   NeuschwansteinDesc: "Der Multiplikator für Bauarbeiter erhöht sich beim Bau von Wundern um 10.",
    CristoRedentor: "Christus, der Erlöser",
    CristoRedentorDesc: "Christus, der Erlöser",
    GoldenGateBridge: "Golden Gate Bridge",
@@ -558,8 +557,7 @@ export const DE = {
    StockpileMaxUnlimited: "Unbegrenzt",
    StockpileMaxDesc:
       "Wenn genug Ressourcen für %{cycle} Produktionszyklen geliefert wurde, wird der Transport eingestellt.",
-   StockpileMaxUnlimitedDesc:
-      "Ressourcen werden so lange transportiert, bis bis das Lager voll ist",
+   StockpileMaxUnlimitedDesc: "Ressourcen werden so lange transportiert, bis bis das Lager voll ist",
    ProductionPriority: "Priorität der Produktion",
    DefaultProductionPriority: "Standard-Produktionspriorität",
    ConstructionPriority: "Priorität Bau",
@@ -656,7 +654,8 @@ export const DE = {
    GreatPeopleThisRunShort: "Dieser Durchgang",
    GreatPeoplePermanentShort: "in allen weiteren Durchgängen",
    PermanentGreatPeople: "Herausragende Persönlichkeiten in allen weiteren Durchgängen ",
-   ManagePermanentGreatPeople: "Verwalten Sie herausragende Persönlichkeiten, die in allen weiteren Durchgängen erhalten bleiben",
+   ManagePermanentGreatPeople:
+      "Verwalten Sie herausragende Persönlichkeiten, die in allen weiteren Durchgängen erhalten bleiben",
    GreatPeopleWiki: "Wiki der herausragenden Persönlichkeiten",
    GoBack: "Geh zurück",
    CivIdle: "CivIdle",
@@ -704,9 +703,9 @@ export const DE = {
    PlayerTradeFill: "erfüllen",
    PlayerTradeClaim: "Anspruch",
    PlayerTradeFillAmount: "Füllmenge",
-   PlayerTradeFillSuccess: "Der Handel wurde erfolgreich ausgefüllt.",
+   PlayerTradeFillSuccessV2:
+      "<b>%{success}/%{total}</b> trades have been filled. You paid <b>%{fillAmount} %{fillResource}</b> and received <b>%{receivedAmount} %{receivedResource}</b>",
    PlayerTradeAddSuccess: "Der Handel wurde erfolgreich hinzugefügt.",
-   PlayerTradeFillAmountMax: "Alle verfügbaren ausfüllen",
    PlayerTradeFillTradeTitle: "Handelstitel ausfüllen",
    PlayerTradeFillTradeButton: "Handel einreichen",
    PlayerTradeMaxTradeExceeded:
@@ -740,10 +739,12 @@ export const DE = {
    ResourceImport: "Ressourcentransport",
    ResourceImportResource: "Ressource",
    ResourceImportStorage: "Lagerung",
-   ResourceImportImportPerCycle: "einlagern",
-   ResourceImportImportCap: "Max",
+   ResourceImportImportPerCycleV2: "Per Cycle",
+   ResourceImportImportCapV2: "Max Amount",
    ResourceImportSettings: "Ressourcen-Transport",
+   ResourceImportCapacity: "Resource Transport Capacity",
    PlayerTradeYouPay: "Du bezahlst",
+   PlayerTradeFillPercentage: "Fill Percentage",
    PlayerTradeYouGetGross: "Du bekommst (vor Zoll)",
    PlayerTradeYouGetNet: "Du bekommst (nach Zoll)",
    PlayerTradeStorageRequired: "Lager erforderlich",
@@ -823,8 +824,6 @@ export const DE = {
       "Das <b>Zeitalter</b> und die <b>Technologie</b> durch die ein Wunder freigeschaltet wird beeinflussen die <b>Anzahl Bauarbeiter</b>, die zum Errichten des Wunders benötigt werden.",
    MarketSettings: "Markteinstellungen",
    ClearAfterUpdate: "Löschen Sie alle Handelsangebote nach dem Markt-Update",
-   WarehouseSettings: "Lager-Einstellungen",
-   WarehouseSettingsAutopilot: "Autopilot-Modus",
    WarehouseSettingsAutopilotDesc:
       "Dieses Lager wird seine ungenutzte Kapazität nutzen, um Ressourcen aus Gebäuden zu transportieren, der Lagen vollständig gefüllt sind. Derzeitige Leerlaufkapazität",
    WarehouseUpgrade:
@@ -857,11 +856,11 @@ export const DE = {
    Ok: "OK",
    Cancel: "Abbrechen",
    ChooseGreatPersonFromLastReborn: "Wähle eine herausragende Persönlichkeit aus der letzten Wiedergeburt",
-   BankingAdditionalUpgrade: "Bei allen Gebäude, die mindestens auf Stufe 10 ausgebaut wurden, erhöht sich der Multiplikator fürs Lager um 1.",
+   BankingAdditionalUpgrade:
+      "Bei allen Gebäude, die mindestens auf Stufe 10 ausgebaut wurden, erhöht sich der Multiplikator fürs Lager um 1.",
    EstimatedTimeLeft: "Geschätzte verbleibende Zeit",
    Electrification: "Elektrifizierung",
-   ElectrificationUpgrade:
-      "Damit kannst du die Produktivität von Gebäuden erhöhen.",
+   ElectrificationUpgrade: "Damit kannst du die Produktivität von Gebäuden erhöhen.",
    ElectrificationDesc:
       "Verwende %{Leistung}W Leistung und bietet +%{level} Verbrauchsmultiplikator und Produktionsmultiplikator",
    PowerAvailable: "Strom verfügbar",
@@ -933,8 +932,7 @@ export const DE = {
    RebornModalDescV2:
       "Du wirst mit einem neuen Imperium beginnen. Dabei kannst du alle herausragenden Persönlichkeiten <b>aus diesem Durchgang übernehmen</b>, die dadurch zu <b>dauerhaften</b> herausragenden Persönlichkeiten werden. Basierend auf dem <b>Gesamtwert deines Imperiums</b> kannst du zusätzliche herausragende Persönlichkeiten auswählen.",
    OperationNotAllowedError: "Dieser Vorgang ist nicht zulässig",
-   AccountLevelUpgradeConditionAny:
-      "Um Dein Konto zu aktualisieren, reichte eine der folgenden Bedingungen:",
+   AccountLevelUpgradeConditionAny: "Um Dein Konto zu aktualisieren, reichte eine der folgenden Bedingungen:",
    AccountLevelPlayTime: "Aktive Online-Spielzeit > %{requiredTime} (Deine Spielzeit ist %{actualTime})",
    AccountUpgradeButton: "Upgrade auf Quästor-Rang",
    AccountUpgradeConfirm: "Konto-Upgrade",
@@ -943,8 +941,8 @@ export const DE = {
    CannotEarnPermanentGreatPeopleDesc:
       "Da es sich um einen Probelauf handelt, können <b>keine</b> dauerhaften herausragenden Persönlichkeiten verdient werden",
    BackToCity: "Zurück in die Stadt",
-   UpgradeBuildingNotProducingDesc:
-      "Dieses Gebäude wird modernisiert - Bis zum Abschluss der Arbeiten wird es weder produzieren noch gelagerte Ressourcen bereitstellen.",
+   UpgradeBuildingNotProducingDescV2:
+      "This building is being upgraded - <b>production will halt until upgrade is complete</b>",
    Tutorial: "Tutorial",
    SelectedCount: "%{count} ausgewählt",
    SelectedAll: "Alle",
@@ -997,7 +995,7 @@ export const DE = {
    SaveAndExit: "Speichern und Verlassen",
    Hatshepsut: "Hatshepsut",
    IsaacNewton: "Isaac Newton",
-   IsaacNewtonDesc: 
+   IsaacNewtonDesc:
       "Wenn mehr als die Hälfte der Arbeitskräfte einer Beschäftigung nachgehen erhöht sich die Forschung durch alle Arbeitskräfte um +%{value}.",
    ChooseGreatPersonChoicesLeft: "Du kannst noch %{count} herausragende Persönlichkeiten auswählen.",
    GreatPersonThisRunEffectiveLevel:
@@ -1008,4 +1006,31 @@ export const DE = {
    ShortcutBuildingPageToggleBuildingSetAllSimilar: "Produktion wechseln und auf alle anwenden.",
    HappinessUncapped: "Zufriedenheit (ohne Beschränkung)",
    ExtraGreatPeople: "%{count} Zusätzliche herausragende Persönlichkeiten",
+   ScrollWheelAdjustLevelTooltip:
+      "You can use scroll wheel to adjust the level when your cursor is over this",
+   Concrete: "Concrete",
+   ConcretePlant: "Cement Plant",
+   ResourceExportBelowCap: "Export Below Cap",
+   ResourceExportBelowCapTooltip:
+      "Allow other buildings to transport a resource from this building even when its amount is below the cap",
+   ResourceExportToSameType: "Export to the Same Type",
+   ResourceExportToSameTypeTooltip:
+      "Allow other buildings of the same type to transport a resource from this building",
+   MarketTradeDescHTML:
+      "Markets get <b>one more trade per level</b>. After you upgrade the market, the extra trades will appear",
+   WarehouseAutopilotSettings: "Autopilot Settings",
+   WarehouseAutopilotSettingsEnable: "Enable Autopilot",
+   WarehouseAutopilotSettingsRespectCapSetting: "Require Storage < Cap",
+   WarehouseAutopilotSettingsRespectCapSettingTooltip:
+      "Autopilot will only transport resources whose amount in storage is below the cap",
+   Zenobia: "Zenobia",
+   ZenobiaDesc: "+%{value}h Petra Warp Storage",
+   PlayerTradeFillAmountMaxV2: "Fill Max",
+   GrandBazaar: "Grand Bazaar",
+   GrandBazaarDesc: "Control all markets in one place!. All adjacent buildings get +5 Storage Multiplier",
+   GrandBazaarFilters: "Filters",
+   GrandBazaarFilterYouPay: "You Pay",
+   GrandBazaarFilterYouGet: "You Get",
+   SeaTradeUpgrade: "Trading with players across the sea. Tariff for each sea tile: %{tariff}",
+   SeaTradeCost: "Sea Trade Cost",
 };

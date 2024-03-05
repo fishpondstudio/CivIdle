@@ -17,6 +17,7 @@ import { Config } from "./Config";
 import type { GameState, GreatPeopleChoice } from "./GameState";
 import { getGameState } from "./GameStateLogic";
 import { getSpecialBuildings } from "./IntraTickCache";
+import { RequestPathFinderGridUpdate, SEA_TILE_COSTS } from "./PlayerTradeLogic";
 import { getBuildingsThatProduce } from "./ResourceLogic";
 import { getDepositTileCount } from "./Tile";
 
@@ -106,6 +107,10 @@ export function unlockTech(tech: Tech, event: TypedEvent<Tile> | null, gs: GameS
          addDeposit(xy, deposit, event, gs);
       });
    });
+
+   if (tech in SEA_TILE_COSTS) {
+      RequestPathFinderGridUpdate.emit();
+   }
 }
 
 export const OnResetTile = new TypedEvent<Tile>();

@@ -155,7 +155,7 @@ export async function startGame(
    tickEverySecond(gameState, false);
 
    if (import.meta.env.DEV) {
-      // createRoot(document.getElementById("debug-ui")!).render(<GreatPersonDebug />);
+      // createRoot(document.getElementById("debug-ui")!).render(<DebugPage />);
    }
 
    const params = new URLSearchParams(location.href.split("?")[1]);

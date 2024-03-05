@@ -35,13 +35,13 @@ export class BuildingDefinitions {
       name: () => t(L.House),
       input: { Wheat: 1, Water: 1 },
       output: { Worker: 6 },
-      construction: { Brick: 2 },
+      construction: { Wood: 1, Stone: 1, Water: 1 },
    };
    Apartment: IBuildingDefinition = {
       name: () => t(L.Apartment),
       input: { Cheese: 1, Meat: 2, Bread: 1 },
       output: { Worker: 84 },
-      construction: { Brick: 2, Lumber: 2 },
+      construction: { Brick: 1, Cheese: 1, Meat: 1, Bread: 1 },
    };
    // #endregion /////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -59,7 +59,6 @@ export class BuildingDefinitions {
       output: { Stone: 1 },
       construction: { Wood: 1 },
    };
-
    LoggingCamp: IBuildingDefinition = {
       name: () => t(L.LoggingCamp),
       input: {},
@@ -79,14 +78,14 @@ export class BuildingDefinitions {
       input: {},
       deposit: { Iron: true },
       output: { Iron: 1 },
-      construction: { Stone: 1 },
+      construction: { Brick: 1 },
    };
    CopperMiningCamp: IBuildingDefinition = {
       name: () => t(L.CopperMiningCamp),
       input: {},
       deposit: { Copper: true },
       output: { Copper: 1 },
-      construction: { Brick: 1 },
+      construction: { Stone: 1, Wood: 1 },
    };
 
    CoalMine: IBuildingDefinition = {
@@ -94,7 +93,7 @@ export class BuildingDefinitions {
       input: {},
       deposit: { Coal: true },
       output: { Coal: 1 },
-      construction: { Brick: 1 },
+      construction: { Iron: 1, Brick: 1, Lumber: 1 },
    };
 
    Sandpit: IBuildingDefinition = {
@@ -109,7 +108,7 @@ export class BuildingDefinitions {
       input: {},
       deposit: { Gold: true },
       output: { Gold: 1 },
-      construction: { Stone: 1 },
+      construction: { Brick: 1, Copper: 1 },
    };
 
    OilWell: IBuildingDefinition = {
@@ -117,7 +116,7 @@ export class BuildingDefinitions {
       input: {},
       deposit: { Oil: true },
       output: { Oil: 1 },
-      construction: { Steel: 1, Dynamite: 1 },
+      construction: { Brick: 1, Tool: 1, Sand: 1 },
    };
 
    NaturalGasWell: IBuildingDefinition = {
@@ -125,7 +124,7 @@ export class BuildingDefinitions {
       input: {},
       deposit: { NaturalGas: true },
       output: { NaturalGas: 1 },
-      construction: { Steel: 1, Dynamite: 1 },
+      construction: { Brick: 1, Tool: 1, Lumber: 1 },
    };
 
    AluminumSmelter: IBuildingDefinition = {
@@ -133,14 +132,14 @@ export class BuildingDefinitions {
       input: {},
       deposit: { Aluminum: true },
       output: { Aluminum: 1 },
-      construction: { Steel: 1 },
+      construction: { Tool: 1, Brick: 1, Lumber: 1 },
    };
 
    CoalPowerPlant: IBuildingDefinition = {
       name: () => t(L.CoalPowerPlant),
       input: { Coal: 1 },
       output: { Power: 1 },
-      construction: { Steel: 1 },
+      construction: { Lumber: 1, Brick: 1, Iron: 1 },
    };
    // #endregion /////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -149,16 +148,19 @@ export class BuildingDefinitions {
       name: () => t(L.SwordForge),
       input: { Tool: 2 },
       output: { Sword: 1 },
+      construction: { Tool: 1, Brick: 1, Copper: 2 },
    };
    Armory: IBuildingDefinition = {
       name: () => t(L.Armory),
       input: { Tool: 2 },
       output: { Armor: 1 },
+      construction: { Tool: 1, Brick: 1, Iron: 1, Wood: 1 },
    };
    ChariotWorkshop: IBuildingDefinition = {
       name: () => t(L.ChariotWorkshop),
       input: { Horse: 2, Lumber: 2, Copper: 1 },
       output: { Chariot: 1 },
+      construction: { Horse: 1, Copper: 1, Lumber: 2, Brick: 2 },
    };
    KnightCamp: IBuildingDefinition = {
       name: () => t(L.KnightCamp),
@@ -169,26 +171,31 @@ export class BuildingDefinitions {
       name: () => t(L.CannonWorkshop),
       input: { Iron: 2, Wood: 1, Tool: 1 },
       output: { Cannon: 1 },
+      construction: { Iron: 1, Wood: 1, Tool: 1, Brick: 1, Stone: 1 },
    };
    GunpowderMill: IBuildingDefinition = {
       name: () => t(L.GunpowderMill),
       input: { Wood: 1, Coal: 1 },
       output: { Gunpowder: 1 },
+      construction: { Stone: 1, Coal: 1 },
    };
    DynamiteWorkshop: IBuildingDefinition = {
       name: () => t(L.DynamiteWorkshop),
       input: { Wheat: 1, Gunpowder: 1, Coal: 1 },
       output: { Dynamite: 1 },
+      construction: { Stone: 2, Gunpowder: 1, Coal: 1 },
    };
    SiegeWorkshop: IBuildingDefinition = {
       name: () => t(L.SiegeWorkshop),
       input: { Lumber: 2, Iron: 2, Tool: 1 },
       output: { SiegeRam: 1 },
+      construction: { Lumber: 2, Iron: 1, Brick: 1, Tool: 1, Stone: 1 },
    };
    CaravelBuilder: IBuildingDefinition = {
       name: () => t(L.CaravelBuilder),
       input: { Lumber: 5, Cloth: 2, Tool: 2 },
       output: { Caravel: 1 },
+      construction: { Lumber: 5, Marble: 1, Brick: 2, Tool: 2 },
    };
    GalleonBuilder: IBuildingDefinition = {
       name: () => t(L.GalleonBuilder),
@@ -227,16 +234,19 @@ export class BuildingDefinitions {
       name: () => t(L.WritersGuild),
       input: { Paper: 2 },
       output: { Poem: 1 },
+      construction: { Brick: 2 },
    };
    PaintersGuild: IBuildingDefinition = {
       name: () => t(L.PaintersGuild),
       input: { Paper: 2 },
       output: { Painting: 1 },
+      construction: { Lumber: 1, Brick: 1 },
    };
    MusiciansGuild: IBuildingDefinition = {
       name: () => t(L.MusiciansGuild),
       input: { Alcohol: 2 },
       output: { Music: 1 },
+      construction: { Lumber: 2, Brick: 1 },
    };
    ActorsGuild: IBuildingDefinition = {
       name: () => t(L.ActorsGuild),
@@ -245,8 +255,9 @@ export class BuildingDefinitions {
    };
    Shrine: IBuildingDefinition = {
       name: () => t(L.Shrine),
-      input: { Horse: 1, Alcohol: 1 },
+      input: { Alcohol: 1 },
       output: { Faith: 1 },
+      construction: { Brick: 1, Wood: 2 },
    };
    Church: IBuildingDefinition = {
       name: () => t(L.Church),
@@ -273,7 +284,7 @@ export class BuildingDefinitions {
       name: () => t(L.Library),
       input: { Paper: 1 },
       output: { Science: 16 },
-      construction: { Marble: 1, Stone: 1 },
+      construction: { Brick: 1 },
    };
    University: IBuildingDefinition = {
       name: () => t(L.University),
@@ -323,6 +334,7 @@ export class BuildingDefinitions {
       name: () => t(L.CottonMill),
       input: { Cotton: 2 },
       output: { Cloth: 1 },
+      construction: { Brick: 1, Lumber: 1 },
    };
    GarmentWorkshop: IBuildingDefinition = {
       name: () => t(L.GarmentWorkshop),
@@ -343,38 +355,43 @@ export class BuildingDefinitions {
       name: () => t(L.FlourMill),
       input: { Wheat: 2 },
       output: { Flour: 1 },
-      construction: { Brick: 1, Wood: 1 },
+      construction: { Brick: 1 },
    };
    LivestockFarm: IBuildingDefinition = {
       name: () => t(L.LivestockFarm),
       input: { Wheat: 2 },
       output: { Meat: 1, Milk: 1 },
+      construction: { Lumber: 1 },
    };
    Stable: IBuildingDefinition = {
       name: () => t(L.Stable),
       input: { Wheat: 2 },
       output: { Horse: 1 },
+      construction: { Lumber: 1 },
    };
    Bakery: IBuildingDefinition = {
       name: () => t(L.Bakery),
       input: { Water: 1, Flour: 1 },
       output: { Bread: 1 },
+      construction: { Brick: 1, Lumber: 1, Stone: 1 },
    };
    CheeseMaker: IBuildingDefinition = {
       name: () => t(L.CheeseMaker),
       input: { Milk: 2 },
       output: { Cheese: 1 },
+      construction: { Brick: 1, Lumber: 1 },
    };
    Brewery: IBuildingDefinition = {
       name: () => t(L.Brewery),
       input: { Wheat: 1, Water: 1 },
       output: { Alcohol: 1 },
-      construction: { Lumber: 1, Brick: 1, Copper: 1 },
+      construction: { Copper: 1 },
    };
    PaperMaker: IBuildingDefinition = {
       name: () => t(L.PaperMaker),
       input: { Wood: 1, Water: 1 },
       output: { Paper: 1 },
+      construction: { Wood: 1, Stone: 1 },
    };
    Pizzeria: IBuildingDefinition = {
       name: () => t(L.Pizzeria),
@@ -388,13 +405,13 @@ export class BuildingDefinitions {
       name: () => t(L.LumberMill),
       input: { Wood: 2 },
       output: { Lumber: 1 },
-      construction: { Stone: 1, Wood: 1 },
+      construction: { Stone: 2 },
    };
    Glassworks: IBuildingDefinition = {
       name: () => t(L.Glassworks),
       input: { Sand: 2 },
       output: { Glass: 1 },
-      construction: { Stone: 1, Wood: 1 },
+      construction: { Brick: 1, Wood: 2 },
    };
    LensWorkshop: IBuildingDefinition = {
       name: () => t(L.LensWorkshop),
@@ -405,31 +422,41 @@ export class BuildingDefinitions {
       name: () => t(L.Blacksmith),
       input: { Copper: 1, Wood: 1 },
       output: { Tool: 1 },
+      construction: { Brick: 1 },
    };
    IronForge: IBuildingDefinition = {
       name: () => t(L.IronForge),
       input: { Iron: 1 },
       output: { Tool: 1 },
+      construction: { Brick: 1 },
    };
    Brickworks: IBuildingDefinition = {
       name: () => t(L.Brickworks),
       input: { Stone: 2 },
       output: { Brick: 1 },
+      construction: { Wood: 2 },
    };
    Marbleworks: IBuildingDefinition = {
       name: () => t(L.Marbleworks),
       input: { Stone: 2, Tool: 1 },
       output: { Marble: 1 },
    };
+   ConcretePlant: IBuildingDefinition = {
+      name: () => t(L.ConcretePlant),
+      input: { Brick: 1, Sand: 2, Tool: 1 },
+      output: { Concrete: 1 },
+   };
    SteelMill: IBuildingDefinition = {
       name: () => t(L.SteelMill),
       input: { Iron: 1, Coal: 1 },
       output: { Steel: 1 },
+      construction: { Brick: 1, Coal: 1 },
    };
    Steamworks: IBuildingDefinition = {
       name: () => t(L.Steamworks),
       input: { Iron: 1, Coal: 1, Tool: 1 },
       output: { Engine: 1 },
+      construction: { Iron: 1, Coal: 1, Lumber: 1, Brick: 1, Water: 2 },
    };
    LocomotiveFactory: IBuildingDefinition = {
       name: () => t(L.LocomotiveFactory),
@@ -440,7 +467,7 @@ export class BuildingDefinitions {
       name: () => t(L.OilRefinery),
       input: { Oil: 2 },
       output: { Petrol: 1 },
-      construction: { Steel: 1, Oil: 1 },
+      construction: { Steel: 1 },
    };
    // #endregion /////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -449,6 +476,7 @@ export class BuildingDefinitions {
       name: () => t(L.CoinMint),
       input: { Gold: 3 },
       output: { Coin: 1 },
+      construction: { Gold: 2, Lumber: 1, Copper: 1 },
    };
    Bank: IBuildingDefinition = {
       name: () => t(L.Bank),
@@ -470,7 +498,7 @@ export class BuildingDefinitions {
       desc: () => t(L.CaravansaryDesc),
       input: {},
       output: {},
-      construction: { Brick: 2 },
+      construction: { Brick: 1, Horse: 1, Tool: 1 },
    };
    Market: IBuildingDefinition = {
       name: () => t(L.Market),
@@ -696,7 +724,7 @@ export class BuildingDefinitions {
       name: () => t(L.HagiaSophia),
       desc: () => t(L.HagiaSophiaDesc),
       input: { Faith: 10 },
-      construction: { Faith: 100, Marble: 100, Brick: 100 },
+      construction: { Faith: 100, Marble: 100, Knight: 100 },
       output: {},
       max: 1,
       special: BuildingSpecial.WorldWonder,
@@ -707,7 +735,7 @@ export class BuildingDefinitions {
       desc: () => t(L.AngkorWatDesc),
       input: {},
       output: {},
-      construction: { Faith: 100, Tool: 100, Stone: 100 },
+      construction: { Faith: 100, Tool: 100, Marble: 100 },
       max: 1,
       special: BuildingSpecial.WorldWonder,
       wikipedia: "Angkor_Wat",
@@ -734,11 +762,11 @@ export class BuildingDefinitions {
    };
    OxfordUniversity: IBuildingDefinition = {
       name: () => t(L.OxfordUniversity),
-      desc: () => t(L.OxfordUniversityDesc),
+      desc: () => t(L.OxfordUniversityDescV2),
       input: {},
       output: {},
       max: 1,
-      construction: { Faith: 100, Marble: 100, Poem: 100 },
+      construction: { Faith: 100, Philosophy: 100, Poem: 100 },
       special: BuildingSpecial.WorldWonder,
       wikipedia: "University_of_Oxford",
    };
@@ -758,7 +786,7 @@ export class BuildingDefinitions {
       input: {},
       output: {},
       max: 1,
-      construction: { Faith: 100, Gold: 100, Furniture: 100 },
+      construction: { Furniture: 100, Gunpowder: 100, Lens: 100 },
       special: BuildingSpecial.WorldWonder,
       wikipedia: "Saint_Basil%27s_Cathedral",
    };
@@ -768,7 +796,7 @@ export class BuildingDefinitions {
       input: {},
       output: {},
       max: 1,
-      construction: { Paper: 100, Poem: 100, Book: 100 },
+      construction: { Banknote: 100, Marble: 100, Book: 100 },
       special: BuildingSpecial.WorldWonder,
       wikipedia: "Forbidden_City",
    };
@@ -778,7 +806,7 @@ export class BuildingDefinitions {
       input: {},
       output: {},
       max: 1,
-      construction: { Caravel: 100, Galleon: 1, Frigate: 1 },
+      construction: { Caravel: 100, Galleon: 100, Frigate: 100 },
       special: BuildingSpecial.WorldWonder,
       wikipedia: "Himeji_Castle",
    };
@@ -847,7 +875,7 @@ export class BuildingDefinitions {
       desc: () => t(L.RijksmuseumDesc),
       input: {},
       output: {},
-      construction: { Painting: 300 },
+      construction: { Newspaper: 100, Culture: 100, Concrete: 100 },
       max: 1,
       special: BuildingSpecial.WorldWonder,
       wikipedia: "Rijksmuseum",
@@ -857,7 +885,7 @@ export class BuildingDefinitions {
       desc: () => t(L.SummerPalaceDesc),
       input: {},
       output: {},
-      construction: { Gunpowder: 100, Rifle: 100, Brick: 100 },
+      construction: { Gunpowder: 100, Rifle: 100, GatlingGun: 100 },
       max: 1,
       special: BuildingSpecial.WorldWonder,
       wikipedia: "Summer_Palace",
@@ -877,7 +905,7 @@ export class BuildingDefinitions {
       desc: () => t(L.NeuschwansteinDesc),
       input: {},
       output: {},
-      construction: { Dynamite: 100, Brick: 100, Marble: 100 },
+      construction: { Rifle: 100, Bond: 100, Cannon: 100 },
       max: 1,
       special: BuildingSpecial.WorldWonder,
       wikipedia: "Neuschwanstein_Castle",
@@ -887,11 +915,21 @@ export class BuildingDefinitions {
       desc: () => t(L.BrandenburgGateDesc),
       input: {},
       output: {},
-      construction: { Train: 100, Brick: 100, Marble: 100 },
+      construction: { Train: 100, Politics: 100, Concrete: 100 },
       max: 1,
       special: BuildingSpecial.WorldWonder,
       wikipedia: "Brandenburg_Gate",
    };
+   // GrandBazaar: IBuildingDefinition = {
+   //    name: () => t(L.GrandBazaar),
+   //    desc: () => t(L.GrandBazaarDesc),
+   //    input: {},
+   //    output: {},
+   //    max: 1,
+   //    construction: { Wood: 1 },
+   //    special: BuildingSpecial.WorldWonder,
+   //    wikipedia: "Grand_Bazaar,_Istanbul",
+   // };
    // ArcDeTriomphe: IBuildingDefinition = {
    //    name: () => t(L.ArcDeTriomphe),
    //    desc: () => t(L.ArcDeTriompheDesc),

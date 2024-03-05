@@ -5,7 +5,6 @@ import { BuildingPage } from "./BuildingPage";
 import { ConstructionPage } from "./ConstructionPage";
 import { EmptyTilePage } from "./EmptyTilePage";
 import { UnexploredTile } from "./UnexploredTile";
-import { UpgradingPage } from "./UpgradingPage";
 
 export function TilePage(props: { xy: Tile }): React.ReactNode {
    const gameState = useGameState();
@@ -20,11 +19,8 @@ export function TilePage(props: { xy: Tile }): React.ReactNode {
    if (!tile.building) {
       return <EmptyTilePage tile={tile} />;
    }
-   if (tile.building.status === "building") {
+   if (tile.building.status !== "completed") {
       return <ConstructionPage tile={tile} />;
-   }
-   if (tile.building.status === "upgrading") {
-      return <UpgradingPage tile={tile} />;
    }
    return <BuildingPage {...props} tile={tile} />;
 }

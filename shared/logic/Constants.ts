@@ -4,10 +4,27 @@ import type { City } from "../definitions/CityDefinitions";
 import type { Resource } from "../definitions/ResourceDefinitions";
 import { IsDeposit, NoPrice } from "../definitions/ResourceDefinitions";
 import type { Tech, TechAge } from "../definitions/TechDefinitions";
-import { HOUR, forEach, formatNumber, isEmpty, keysOf, numberToRoman, sizeOf } from "../utilities/Helper";
+import {
+   HOUR,
+   forEach,
+   formatHMS,
+   formatNumber,
+   isEmpty,
+   keysOf,
+   mapSafeAdd,
+   numberToRoman,
+   round,
+   sizeOf,
+} from "../utilities/Helper";
 import type { PartialSet, PartialTabulate } from "../utilities/TypeDefinitions";
-import { getBuildingCost, isSpecialBuilding, isWorldWonder } from "./BuildingLogic";
+import {
+   getBuildingCost,
+   getWonderBaseBuilderCapacity,
+   isSpecialBuilding,
+   isWorldWonder,
+} from "./BuildingLogic";
 import { Config } from "./Config";
+import { getOrderedTechThatProduce } from "./ResourceLogic";
 import {
    getAgeForTech,
    getBuildingUnlockTech,
@@ -26,6 +43,8 @@ export const BACKUP_RECOVERY_URL =
    "https://steamcommunity.com/app/2181940/discussions/0/7260435610010445264/";
 export const TRIBUNE_TRADE_VALUE_PER_MINUTE = 10000;
 export const MAX_TARIFF_RATE = 0.1;
+export const OXFORD_SCIENCE_PER_UPGRADE = 5;
+export const MARKET_DEFAULT_TRADE_COUNT = 5;
 
 interface IRecipe {
    building: Building;
@@ -249,6 +268,7 @@ export function calculateTierAndPrice() {
    });
 
    const wonderCost: string[] = [];
+   const resourcesUsedByWonder = new Map<Resource, number>();
    keysOf(Config.Building)
       .sort((a, b) => {
          const techA = getBuildingUnlockTech(a);
@@ -262,11 +282,25 @@ export function calculateTierAndPrice() {
          if (isWorldWonder(k)) {
             let value = 0;
             let cost = "";
+            let totalAmount = 0;
+            const baseBuilderCapacity = getWonderBaseBuilderCapacity(k);
+            const wonderAge = getAgeForTech(getBuildingUnlockTech(k)!)!;
             forEach(getBuildingCost({ type: k, level: 0 }), (res, amount) => {
-               cost += `${res}: ${formatNumber(amount)}, `;
+               mapSafeAdd(resourcesUsedByWonder, res, 1);
+               const tech = getOrderedTechThatProduce(res);
+               const resourceAge = getAgeForTech(tech[0])!;
+               totalAmount += amount;
+               const ageDiff = Config.TechAge[wonderAge].idx - Config.TechAge[resourceAge].idx;
+               const ageDiffIndicator: string[] = [];
+               for (let i = 0; i < ageDiff; i++) {
+                  ageDiffIndicator.push("*");
+               }
+               cost += `${ageDiffIndicator.join("")}${res}: ${formatNumber(amount)}, `;
                value += Config.ResourcePrice[res]! * amount;
             });
-            cost = `${k.padEnd(25)} ${formatNumber(value).padEnd(10)}${cost}`;
+            cost = `${k.padEnd(25)} ${formatNumber(value).padEnd(10)}${formatHMS(
+               (1000 * totalAmount) / baseBuilderCapacity,
+            ).padEnd(10)}${cost}`;
             wonderCost.push(cost);
          }
       });
@@ -278,7 +312,9 @@ export function calculateTierAndPrice() {
          resourcePrice.push(
             `${r.padEnd(15)}${!NoPrice[r] && endResources[r] ? "*".padEnd(5) : "".padEnd(5)}${numberToRoman(
                Config.ResourceTier[r]!,
-            )!.padEnd(10)}${formatNumber(Config.ResourcePrice[r]!)}`,
+            )!.padEnd(10)}${formatNumber(Config.ResourcePrice[r]!).padEnd(10)}${
+               resourcesUsedByWonder.get(r) ?? "0*"
+            }`,
          );
       });
 
@@ -287,13 +323,46 @@ export function calculateTierAndPrice() {
    forEach(Config.GreatPerson, (p, def) => {
       def.boost?.buildings.forEach((b) => boostedBuildings.add(b));
    });
-   forEach(Config.Building, (building, def) => {
-      if (!isSpecialBuilding(building) && !boostedBuildings.has(building)) {
-         const tech = getBuildingUnlockTech(building)!;
-         const age = getAgeForTech(tech)!;
-         notBoostedBuildings.push({ building, tech, age });
-      }
-   });
+
+   const buildingInputCost: string[] = [];
+   keysOf(Config.Building)
+      .sort((a, b) => Config.BuildingTier[a]! - Config.BuildingTier[b]!)
+      .forEach((building) => {
+         const def = Config.Building[building];
+         if (isSpecialBuilding(building)) {
+            return;
+         }
+         if (!boostedBuildings.has(building)) {
+            const tech = getBuildingUnlockTech(building)!;
+            const age = getAgeForTech(tech)!;
+            notBoostedBuildings.push({ building, tech, age });
+         }
+         let cost = 0;
+         forEach(def.input, (res, amount) => {
+            cost += Config.ResourcePrice[res]! * amount;
+         });
+         let construction = 0;
+         forEach(def.construction, (res, amount) => {
+            construction += Config.ResourcePrice[res]! * amount;
+         });
+         let constructionCost = "";
+         if (construction > 0) {
+            constructionCost = String(construction).padStart(10);
+            if (construction !== cost) {
+               constructionCost += "*";
+            }
+         }
+         if (cost > 0) {
+            buildingInputCost.push(
+               `${def.name().padEnd(30)}${numberToRoman(Config.BuildingTier[building]!)!.padStart(10)}${round(
+                  cost,
+                  2,
+               )
+                  .toString()
+                  .padStart(10)}${constructionCost}`,
+            );
+         }
+      });
 
    notBoostedBuildings.sort((a, b) => Config.Tech[a.tech].column - Config.Tech[b.tech].column);
 
@@ -309,4 +378,5 @@ export function calculateTierAndPrice() {
          .map((a) => `${a.building.padEnd(25)}${a.tech.padEnd(20)}${a.age}`)
          .join("\n")}`,
    );
+   console.log(`>>>>>>>>>> Building Input Cost <<<<<<<<<<\n${buildingInputCost.join("\n")}`);
 }

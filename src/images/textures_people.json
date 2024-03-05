@@ -288,7 +288,7 @@
                 "h": 350
             }
         },
-        "PersonZhengHe": {
+        "PersonZenobia": {
             "frame": {
                 "x": 2106,
                 "y": 0,
@@ -296,10 +296,18 @@
                 "h": 350
             }
         },
-        "PersonZoroaster": {
+        "PersonZhengHe": {
             "frame": {
                 "x": 2106,
                 "y": 351,
+                "w": 350,
+                "h": 350
+            }
+        },
+        "PersonZoroaster": {
+            "frame": {
+                "x": 2106,
+                "y": 702,
                 "w": 350,
                 "h": 350
             }

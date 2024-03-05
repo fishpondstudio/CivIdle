@@ -14,7 +14,6 @@ import {
    keysOf,
    mapSafeAdd,
    mapSafePush,
-   pointToTile,
    safeAdd,
    shuffle,
    sizeOf,
@@ -39,7 +38,7 @@ import {
    getBuildingCost,
    getBuildingValue,
    getCurrentPriority,
-   getMarketPrice,
+   getMarketBuyAmount,
    getPowerRequired,
    getStockpileMax,
    getStorageFor,
@@ -55,8 +54,10 @@ import {
    useWorkers,
 } from "./BuildingLogic";
 import { Config } from "./Config";
+import { MARKET_DEFAULT_TRADE_COUNT } from "./Constants";
 import { GameFeature, hasFeature } from "./FeatureLogic";
 import { GameState, type ITransportationData } from "./GameState";
+import { getGameState } from "./GameStateLogic";
 import {
    getBuildingIO,
    getGrid,
@@ -66,10 +67,11 @@ import {
    unlockedResources,
 } from "./IntraTickCache";
 import { getAmountInTransit } from "./ResourceLogic";
-import type { Multiplier } from "./TickLogic";
+import type { IBuildingResource, Multiplier } from "./TickLogic";
 import { Tick } from "./TickLogic";
 import {
    BuildingInputMode,
+   IBuildingData,
    IMarketBuildingData,
    IResourceImportBuildingData,
    IWarehouseBuildingData,
@@ -96,7 +98,7 @@ export function tickTech(td: IUnlockableDefinition) {
    });
 }
 
-export function tickTransportations(gs: GameState) {
+export function tickTransports(gs: GameState) {
    const mahTile = Tick.current.specialBuildings.get("MausoleumAtHalicarnassus");
    const mah = mahTile ? getGrid(gs).xyToPosition(mahTile) : null;
    gs.transportation.forEach((queue) => {
@@ -170,7 +172,7 @@ function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
    }
 
    if (building.desiredLevel > building.level) {
-      building.status = "upgrading";
+      building.status = building.level > 0 ? "upgrading" : "building";
    } else {
       building.desiredLevel = building.level;
    }
@@ -224,7 +226,7 @@ function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
             xy,
             gs,
             building.inputMode,
-            building.maxInputDistance,
+            defaultTransportFilter(building),
          );
       });
 
@@ -235,10 +237,11 @@ function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
          });
          building.disabledInput.clear();
          if (building.status === "building") {
-            building.status = "completed";
+            building.status = building.desiredLevel > building.level ? "upgrading" : "completed";
             applyDefaultSettings(building, gs);
             OnBuildingComplete.emit(xy);
-         } else if (building.status === "upgrading" && building.level >= building.desiredLevel) {
+         }
+         if (building.status === "upgrading" && building.level >= building.desiredLevel) {
             building.status = "completed";
          }
       }
@@ -336,16 +339,17 @@ function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
          }
       }
 
-      transportResource(res, amount, inputWorkerCapacity, xy, gs, inputMode, building.maxInputDistance);
+      transportResource(
+         res,
+         amount,
+         inputWorkerCapacity,
+         xy,
+         gs,
+         inputMode,
+         defaultTransportFilter(building),
+      );
       hasTransported = true;
    });
-
-   if (hasFeature(GameFeature.WarehouseUpgrade, gs) && "warehouseOptions" in building) {
-      const warehouse = building as IWarehouseBuildingData;
-      if (hasFlag(warehouse.warehouseOptions, WarehouseOptions.Autopilot)) {
-         hasTransported = tickWarehouseAutopilot(warehouse, xy, gs);
-      }
-   }
 
    // If a building is a resourceImport type but has not transported, we consider it not working
    if ("resourceImports" in building && !hasTransported) {
@@ -366,7 +370,7 @@ function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
             building.resources[res] ?? 0,
          );
          const buyResource = market.availableResources[res]!;
-         const buyAmount = (amount * getMarketPrice(res, xy, gs)) / getMarketPrice(buyResource, xy, gs);
+         const buyAmount = getMarketBuyAmount(res, amount, buyResource, xy, gs);
          if (used - amount + buyAmount > total) {
             Tick.next.notProducingReasons.set(xy, "StorageFull");
             return;
@@ -383,6 +387,12 @@ function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
    }
 
    if ("resourceImports" in building) {
+      if (hasFeature(GameFeature.WarehouseUpgrade, gs) && "warehouseOptions" in building) {
+         const warehouse = building as IWarehouseBuildingData;
+         if (hasFlag(warehouse.warehouseOptions, WarehouseOptions.Autopilot)) {
+            tickWarehouseAutopilot(warehouse, xy, gs);
+         }
+      }
       return;
    }
 
@@ -459,11 +469,11 @@ function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
    OnBuildingProductionComplete.emit({ xy, offline });
 }
 
-function tickWarehouseAutopilot(warehouse: IWarehouseBuildingData, xy: Tile, gs: GameState): boolean {
+function tickWarehouseAutopilot(warehouse: IWarehouseBuildingData, xy: Tile, gs: GameState): void {
    let capacity = getWarehouseIdleCapacity(warehouse);
-   let hasTransported = false;
+   const workerCapacity = totalMultiplierFor(xy, "worker", 1, gs);
    const transportCapacity =
-      totalMultiplierFor(xy, "worker", 1, gs) +
+      workerCapacity +
       Tick.current.globalMultipliers.transportCapacity.reduce((prev, curr) => prev + curr.value, 0);
 
    // Not enough workers, capacity will be capped
@@ -476,48 +486,72 @@ function tickWarehouseAutopilot(warehouse: IWarehouseBuildingData, xy: Tile, gs:
    capacity = clamp(capacity, 0, total - used);
 
    if (capacity <= 0) {
-      return false;
+      return;
    }
-   const me = tileToPoint(xy);
-   const result = getStorageFullBuildings(gs).sort(
-      (a, b) => getGrid(gs).distance(a.x, a.y, me.x, me.y) - getGrid(gs).distance(b.x, b.y, me.x, me.y),
+
+   const resourceFilter = new Set<Resource>();
+   if (hasFlag(warehouse.warehouseOptions, WarehouseOptions.AutopilotRespectCap)) {
+      forEach(warehouse.resourceImports, (res, ri) => {
+         if ((warehouse.resources[res] ?? 0) < ri.cap) {
+            resourceFilter.add(res);
+         } else {
+            resourceFilter.delete(res);
+         }
+      });
+   }
+
+   const result = getStorageFullBuildings().sort(
+      (a, b) => getGrid(gs).distanceTile(a, xy) - getGrid(gs).distanceTile(b, xy),
    );
-   const buildings = getXyBuildings(gs);
-   for (let i = 0; i < result.length; i++) {
-      const fromXy = pointToTile(result[i]);
-      const building = buildings.get(fromXy);
-      if (!building || fromXy === xy) {
+
+   for (const tile of result) {
+      const building = gs.tiles.get(tile)?.building;
+      if (!building || tile === xy) {
          continue;
       }
-      const resources = building.resources;
-      const output = Config.Building[building.type].output;
-      const candidates = keysOf(resources)
-         .filter((r) => output[r])
-         .sort((a, b) => resources[b]! - resources[a]!);
-      for (let i = 0; i < candidates.length; i++) {
-         const candidate = candidates[i];
-         // Note: this is questionable. capacity are capped by transportCapacity first, without taking into account
-         // the warehouse upgrade. This will result in less transports than it is. But fixing it is really complicated
-         const upgradedTransportCapacity =
-            getGrid(gs).distanceTile(fromXy, xy) <= 1 ? Infinity : Math.ceil(capacity / transportCapacity);
-         if (resources[candidate]! >= capacity) {
-            const workers = Math.ceil(capacity / upgradedTransportCapacity);
-            useWorkers("Worker", workers, xy);
-            resources[candidate]! -= capacity;
-            addTransportation(candidate, capacity, "Worker", workers, fromXy, xy, gs);
-            hasTransported = true;
-            return hasTransported;
+      const output = getBuildingIO(tile, "output", IOCalculation.None, gs);
+      const candidates = keysOf(building.resources)
+         .filter((r) => {
+            if (resourceFilter.size > 0) {
+               return resourceFilter.has(r) && output[r];
+            }
+            return output[r];
+         })
+         .sort((a, b) => (building.resources[b] ?? 0) - (building.resources[a] ?? 0));
+      for (const res of candidates) {
+         const capacityLeft = transportResource(
+            res,
+            capacity,
+            workerCapacity,
+            xy,
+            gs,
+            BuildingInputMode.Distance,
+            (source, destTile) => {
+               return source.tile === tile;
+            },
+         );
+         if (capacityLeft < capacity) {
+            Tick.next.notProducingReasons.delete(xy);
          }
-         const amount = resources[candidate]!;
-         const workers = Math.ceil(amount / upgradedTransportCapacity);
-         useWorkers("Worker", workers, xy);
-         resources[candidate]! -= amount;
-         capacity -= amount;
-         hasTransported = true;
-         addTransportation(candidate, amount, "Worker", workers, fromXy, xy, gs);
+         capacity = capacityLeft;
+         if (capacity <= 0) {
+            return;
+         }
       }
    }
-   return hasTransported;
+}
+
+type TransportFilterFunc = (source: IBuildingResource, dest: Tile) => boolean;
+
+function defaultTransportFilter(building: IBuildingData): TransportFilterFunc {
+   return (source: IBuildingResource, dest: Tile) => {
+      const grid = getGrid(getGameState());
+      const maxDistance = building.maxInputDistance;
+      if (maxDistance === Infinity) {
+         return true;
+      }
+      return grid.distanceTile(source.tile, dest) <= maxDistance;
+   };
 }
 
 export function transportResource(
@@ -527,7 +561,7 @@ export function transportResource(
    targetXy: Tile,
    gs: GameState,
    mode: BuildingInputMode,
-   maxDistance: number,
+   filterFunc: TransportFilterFunc,
 ): number {
    let amountLeft = amount;
    const grid = getGrid(gs);
@@ -538,12 +572,7 @@ export function transportResource(
    }
    const sources = Tick.current.resourcesByTile
       .get(res)
-      ?.filter((s) => {
-         if (maxDistance === Infinity) {
-            return true;
-         }
-         return grid.distanceTile(s.tile, targetXy) <= maxDistance;
-      })
+      ?.filter((s) => filterFunc(s, targetXy))
       .sort((point1, point2) => {
          switch (mode) {
             case BuildingInputMode.Distance:
@@ -568,7 +597,7 @@ export function transportResource(
          continue;
       }
 
-      const availableAmount = getAvailableResource(from.tile, res, gs);
+      const availableAmount = getAvailableResource(from.tile, targetXy, res, gs);
       if (availableAmount <= 0) {
          continue;
       }
@@ -596,12 +625,14 @@ export function transportResource(
             from.amount -= amountLeft;
             from.usedStorage -= amountLeft;
             addTransportation(res, amountLeft, "Worker", fuelAmount, from.tile, targetXy, gs);
+            amountLeft = 0;
          } else if (fuelLeft > 0) {
             const amountAfterFuel = (amountLeft * fuelLeft) / fuelAmount;
             building.resources[res]! -= amountAfterFuel;
             from.amount -= amountAfterFuel;
             from.usedStorage -= amountAfterFuel;
             addTransportation(res, amountAfterFuel, "Worker", fuelLeft, from.tile, targetXy, gs);
+            amountLeft -= amountAfterFuel;
          }
          // Here we return because either we've got all we need, or we run out of workers (no need to continue)
          return amountLeft;
@@ -610,11 +641,11 @@ export function transportResource(
       const fuelAmount = Math.ceil(amountToTransport / transportCapacity);
       const fuelLeft = getAvailableWorkers("Worker");
       if (fuelLeft >= fuelAmount) {
-         amountLeft -= amountToTransport;
          building.resources[res]! -= amountToTransport;
          from.amount -= amountToTransport;
          from.usedStorage -= amountToTransport;
          addTransportation(res, amountToTransport, "Worker", fuelAmount, from.tile, targetXy, gs);
+         amountLeft -= amountToTransport;
          // We continue here because the next source might have what we need
       } else if (fuelLeft > 0) {
          const amountAfterFuel = (amountToTransport * fuelLeft) / fuelAmount;
@@ -622,6 +653,7 @@ export function transportResource(
          from.amount -= amountAfterFuel;
          from.usedStorage -= amountAfterFuel;
          addTransportation(res, amountAfterFuel, "Worker", fuelLeft, from.tile, targetXy, gs);
+         amountLeft -= amountAfterFuel;
          // We return here because we run out of workers (no need to continue)
          return amountLeft;
       }
@@ -655,15 +687,14 @@ export function tickPrice(gs: GameState) {
    }
    const resources = filterOf(unlockedResources(gs), (res) => !NoPrice[res] && !NoStorage[res]);
    getXyBuildings(gs).forEach((building, xy) => {
-      if (building.type === "Market") {
+      if (building.type === "Market" && building.status === "completed") {
          const market = building as IMarketBuildingData;
-         if (!market.availableResources) {
-            market.availableResources = {};
-         }
-         if (sizeOf(market.availableResources) <= 0 || forceUpdatePrice) {
+         const tradeCount = market.level + MARKET_DEFAULT_TRADE_COUNT;
+         if (sizeOf(market.availableResources) !== tradeCount || forceUpdatePrice) {
             const seed = `${priceId},${xy}`;
-            const sell = shuffle(keysOf(resources), srand(seed));
             const buy = shuffle(keysOf(resources), srand(seed));
+            const sell = shuffle(keysOf(resources), srand(seed)).slice(0, tradeCount);
+            market.availableResources = {};
             let idx = 0;
             for (const res of sell) {
                while (buy[idx % buy.length] === res) {
@@ -674,6 +705,12 @@ export function tickPrice(gs: GameState) {
          }
          if (forceUpdatePrice && hasFlag(market.marketOptions, MarketOptions.ClearAfterUpdate)) {
             market.sellResources = {};
+         } else {
+            forEach(market.sellResources, (res) => {
+               if (!market.availableResources[res]) {
+                  delete market.sellResources[res];
+               }
+            });
          }
       }
    });

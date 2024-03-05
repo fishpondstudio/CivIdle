@@ -153,6 +153,13 @@ export class TileVisual extends Container {
       world.viewport.on("zoomed", this.onZoomed, this);
    }
 
+   override destroy(options?: boolean | IDestroyOptions | undefined): void {
+      super.destroy(options);
+      this._world.viewport.off("zoomed-end", this.onZoomed, this);
+      this._upgradeAnimation.stop();
+      this._constructionAnimation.stop();
+   }
+
    public updateDepositColor(options: GameOptions) {
       forEach(this._deposits, (deposit, sprite) => {
          sprite.tint = Color.shared.setValue(options.resourceColors[deposit] ?? "#ffffff");
@@ -186,13 +193,6 @@ export class TileVisual extends Container {
       forEach(this._deposits, (_, sprite) => {
          sprite.visible = !this._tile.building || zoom >= 1;
       });
-   }
-
-   override destroy(options?: boolean | IDestroyOptions | undefined): void {
-      super.destroy(options);
-      this._world.viewport.off("zoomed-end", this.onZoomed, this);
-      this._upgradeAnimation.stop();
-      this._constructionAnimation.stop();
    }
 
    public async reveal(): Promise<TileVisual> {

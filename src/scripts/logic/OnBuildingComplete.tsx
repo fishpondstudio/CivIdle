@@ -125,7 +125,11 @@ export function onBuildingComplete(xy: Tile): void {
          }
 
          gs.tiles.forEach((tile, xy) => {
-            if (tile.building?.status === "completed" && !isNaturalWonder(tile.building.type)) {
+            if (
+               tile.building &&
+               tile.building.status !== "building" &&
+               !isNaturalWonder(tile.building.type)
+            ) {
                for (const g of ensureTileFogOfWar(xy, 1, gs)) {
                   Singleton().sceneManager.getCurrent(WorldScene)?.getTile(g)?.reveal().catch(console.error);
                }

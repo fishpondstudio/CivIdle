@@ -2,21 +2,22 @@ import classNames from "classnames";
 import { useEffect, useState } from "react";
 import { getStorageFor, hasEnoughResource, hasEnoughStorage } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
+import { getSeaTileCost, getTotalSeaTileCost } from "../../../shared/logic/PlayerTradeLogic";
 import { Tick } from "../../../shared/logic/TickLogic";
-import type { IClientTrade } from "../../../shared/utilities/Database";
 import {
    clamp,
    forEach,
+   formatNumber,
    formatPercent,
-   mFirstKeyOf,
    pointToXy,
    safeAdd,
+   safeParseFloat,
    xyToPoint,
    type Tile,
 } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import { useGameState } from "../Global";
-import { client, usePlayerMap } from "../rpc/RPCClient";
+import { client, usePlayerMap, useTrades } from "../rpc/RPCClient";
 import { findPath, findUserOnMap, getMyMapXy } from "../scenes/PathFinder";
 import { jsxMMapOf } from "../utilities/Helper";
 import { playError, playKaching } from "../visuals/Sound";
@@ -24,42 +25,134 @@ import { hideModal, showToast } from "./GlobalModal";
 import { FormatNumber } from "./HelperComponents";
 import { WarningComponent } from "./WarningComponent";
 
-export function FillPlayerTradeModal({ trade, xy }: { trade: IClientTrade; xy?: Tile }): React.ReactNode {
+export function FillPlayerTradeModal({ tradeId, xy }: { tradeId: string; xy?: Tile }): React.ReactNode {
    const [tiles, setTiles] = useState<string[]>([]);
    const map = usePlayerMap();
+   const gs = useGameState();
+   const trades = useTrades();
+   const trade = trades.find((t) => t.id === tradeId);
    const myXy = getMyMapXy();
-   if (!myXy) {
-      hideModal();
-      playError();
-      showToast(t(L.PlayerTradeClaimTileFirstWarning));
-   }
+   const allTradeBuildings = Tick.current.playerTradeBuildings;
+   const [fills, setFills] = useState(new Map<Tile, number>());
+
    useEffect(() => {
+      if (!trade) {
+         return;
+      }
       const targetXy = findUserOnMap(trade.fromId);
       if (!myXy || !targetXy) {
          return;
       }
       const path = findPath(xyToPoint(myXy), xyToPoint(targetXy));
       setTiles(path.map((x) => pointToXy(x)));
-   }, [trade.fromId, myXy]);
-   const totalTariff = tiles.reduce((prev, xy, i) => {
-      const tile = map.get(xy);
-      if (!tile || i === 0 || i === tiles.length - 1) {
-         return prev;
-      }
-      return prev + tile.tariffRate;
-   }, 0);
+   }, [trade, myXy]);
 
-   const gs = useGameState();
-   const allTradeBuildings = Tick.current.playerTradeBuildings;
-   const [delivery, setDelivery] = useState<Tile>(xy ? xy : mFirstKeyOf(allTradeBuildings)!);
-   const maxAmount = allTradeBuildings.get(delivery)?.resources[trade.buyResource] ?? 0;
-   const [fillAmount, setFillAmount] = useState(Math.min(maxAmount, trade.buyAmount));
-   const percentage = fillAmount / trade.buyAmount;
-   const isPercentageValid = percentage > 0 && percentage <= 1;
-   const storageRequired = clamp(percentage * (trade.sellAmount - trade.buyAmount), 0, Infinity);
-   const hasValidPath = tiles.length > 0;
+   const seaTileCost = getTotalSeaTileCost(tiles, getSeaTileCost(gs));
+
+   const totalTariff =
+      seaTileCost +
+      tiles.reduce((prev, xy, i) => {
+         const tile = map.get(xy);
+         if (!tile || i === 0 || i === tiles.length - 1) {
+            return prev;
+         }
+         return prev + tile.tariffRate;
+      }, 0);
+
+   if (!trade) {
+      hideModal();
+      playError();
+      return null;
+   }
+   if (!myXy) {
+      hideModal();
+      playError();
+      showToast(t(L.PlayerTradeClaimTileFirstWarning));
+      return null;
+   }
+
+   const hasValidPath = () => tiles.length > 0;
+
+   const fillsHaveEnoughResource = (fills: Map<Tile, number>) => {
+      for (const [tile, amount] of fills) {
+         if (!hasEnoughResource(tile, trade.buyResource, amount, gs)) {
+            return false;
+         }
+      }
+      return true;
+   };
+
+   const getStorageRequired = (amount: number) => {
+      return clamp((trade.sellAmount * amount) / trade.buyAmount - amount, 0, Infinity);
+   };
+
+   const fillsHaveEnoughStorage = (fills: Map<Tile, number>) => {
+      if (!requireExtraStorage()) {
+         return true;
+      }
+      for (const [tile, amount] of fills) {
+         const storageRequired = getStorageRequired(amount);
+         if (!hasEnoughStorage(tile, storageRequired, gs)) {
+            return false;
+         }
+      }
+      return true;
+   };
+
+   const getTotalFillAmount = (fills: Map<Tile, number>) => {
+      let total = 0;
+      for (const [tile, amount] of fills) {
+         total += amount;
+      }
+      return total;
+   };
+
+   const getTotalStorageRequired = (fills: Map<Tile, number>) => {
+      let total = 0;
+      for (const [tile, amount] of fills) {
+         total += getStorageRequired(amount);
+      }
+      return total;
+   };
+
+   const requireExtraStorage = () => {
+      return trade.sellAmount > trade.buyAmount;
+   };
+
+   const getMaxFill = (tile: Tile) => {
+      let amount = trade.buyAmount;
+      amount = clamp(amount, 0, gs.tiles.get(tile)?.building?.resources[trade.buyResource] ?? 0);
+      if (trade.sellAmount > trade.buyAmount) {
+         const storage = getStorageFor(tile, gs);
+         const availableStorage = storage.total - storage.used;
+         amount = clamp(
+            amount,
+            0,
+            (availableStorage * trade.buyAmount) / (trade.sellAmount - trade.buyAmount),
+         );
+      }
+      return amount;
+   };
+
+   const fillsAreValid = (fills: Map<Tile, number>) => {
+      const fillAmount = getTotalFillAmount(fills);
+      return (
+         fillsHaveEnoughResource(fills) &&
+         fillsHaveEnoughStorage(fills) &&
+         fillAmount > 0 &&
+         fillAmount <= trade.buyAmount
+      );
+   };
+
+   const isFillValid = (tile: Tile, amount: number) => {
+      return (
+         hasEnoughResource(tile, trade.buyResource, amount, gs) &&
+         (!requireExtraStorage() || hasEnoughStorage(tile, getStorageRequired(amount), gs))
+      );
+   };
+
    return (
-      <div className="window">
+      <div className="window" style={{ width: 500 }}>
          <div className="title-bar">
             <div className="title-bar-text">{t(L.PlayerTradeFillTradeTitle)}</div>
             <div className="title-bar-controls">
@@ -67,7 +160,7 @@ export function FillPlayerTradeModal({ trade, xy }: { trade: IClientTrade; xy?: 
             </div>
          </div>
          <div className="window-body">
-            {!hasValidPath ? (
+            {!hasValidPath() ? (
                <>
                   <WarningComponent icon="warning">
                      {t(L.PlayerTradeNoValidRoute, { name: trade.from })}
@@ -82,31 +175,61 @@ export function FillPlayerTradeModal({ trade, xy }: { trade: IClientTrade; xy?: 
                         <th></th>
                         <th className="text-right">{Config.Resource[trade.buyResource].name()}</th>
                         <th className="text-right">{t(L.StorageLeft)}</th>
+                        <th className="text-right">{t(L.PlayerTradeFillAmount)}</th>
+                        <th></th>
                      </tr>
                      {jsxMMapOf(allTradeBuildings, (xy, building) => {
                         const storage = getStorageFor(xy, gs);
-                        const uniqueId = `tile_${xy}`;
                         return (
                            <tr key={xy}>
                               <td>
-                                 <input
-                                    type="radio"
-                                    id={uniqueId}
-                                    checked={delivery === xy}
-                                    onChange={() => setDelivery(xy)}
-                                 />
-                                 <label htmlFor={uniqueId}>
-                                    {Config.Building[building.type].name()} (
-                                    {t(L.LevelX, { level: building.level })})
-                                 </label>
+                                 <div>{Config.Building[building.type].name()}</div>
+                                 <div className="text-desc text-small">
+                                    {t(L.LevelX, { level: building.level })}
+                                 </div>
                               </td>
                               <td className="text-right">
                                  <FormatNumber
                                     value={allTradeBuildings.get(xy)?.resources[trade.buyResource] ?? 0}
                                  />
+                                 <div
+                                    className="text-right text-small text-link"
+                                    onClick={() => {
+                                       setFills((old) => {
+                                          old.set(xy, getMaxFill(xy));
+                                          return new Map(fills);
+                                       });
+                                    }}
+                                 >
+                                    {t(L.PlayerTradeFillAmountMaxV2)}
+                                 </div>
                               </td>
                               <td className="text-right">
                                  <FormatNumber value={storage.total - storage.used} />
+                                 <div className="text-right text-desc text-small">
+                                    {formatPercent(1 - storage.used / storage.total)}
+                                 </div>
+                              </td>
+                              <td style={{ width: 0 }}>
+                                 <input
+                                    type="text"
+                                    className="text-right"
+                                    value={fills.get(xy) ?? 0}
+                                    onChange={(e) => {
+                                       setFills((old) => {
+                                          old.set(xy, safeParseFloat(e.target.value, 0));
+                                          return new Map(old);
+                                       });
+                                    }}
+                                    style={{ width: 150 }}
+                                 />
+                              </td>
+                              <td style={{ width: 0 }}>
+                                 {isFillValid(xy, fills.get(xy) ?? 0) ? (
+                                    <div className="m-icon small text-green">check_circle</div>
+                                 ) : (
+                                    <div className="m-icon small text-red">cancel</div>
+                                 )}
                               </td>
                            </tr>
                         );
@@ -114,38 +237,12 @@ export function FillPlayerTradeModal({ trade, xy }: { trade: IClientTrade; xy?: 
                   </tbody>
                </table>
             </div>
-            <div className="sep15"></div>
-            <div className="row">
-               <div className="mr20">{t(L.PlayerTradeFillAmount)}</div>
-               <input
-                  type="text"
-                  className="f1 text-right"
-                  value={fillAmount}
-                  onChange={(e) => {
-                     const parsed = parseInt(e.target.value, 10);
-                     if (Number.isFinite(parsed)) {
-                        setFillAmount(clamp(parsed, 0, Math.min(maxAmount, trade.buyAmount)));
-                     } else {
-                        setFillAmount(0);
-                     }
-                  }}
-               />
-            </div>
-            <div className="sep5" />
-            <div
-               className="text-right text-small text-link"
-               onClick={() => {
-                  setFillAmount(Math.min(trade.buyAmount, maxAmount));
-               }}
-            >
-               {t(L.PlayerTradeFillAmountMax)}
-            </div>
             <div className="sep10" />
-            <ul className="tree-view">
+            <ul className="tree-view" style={{ overflowY: "auto", maxHeight: 150 }}>
                <li
                   className={classNames({
                      row: true,
-                     "text-strong text-red": !hasEnoughResource(delivery, trade.buyResource, fillAmount, gs),
+                     "text-strong text-red": !fillsHaveEnoughResource(fills),
                   })}
                >
                   <div className="f1">
@@ -154,9 +251,20 @@ export function FillPlayerTradeModal({ trade, xy }: { trade: IClientTrade; xy?: 
                      })}
                   </div>
                   <div>
-                     <FormatNumber value={trade.buyAmount * percentage} />
+                     <FormatNumber value={getTotalFillAmount(fills)} />
                   </div>
                </li>
+               <ul>
+                  <li
+                     className={classNames({
+                        "text-small row": true,
+                        "text-strong text-red": getTotalFillAmount(fills) > trade.buyAmount,
+                     })}
+                  >
+                     <div className="f1">{t(L.PlayerTradeFillPercentage)}</div>
+                     <div>{formatPercent(getTotalFillAmount(fills) / trade.buyAmount)}</div>
+                  </li>
+               </ul>
                <li className="row">
                   <div className="f1">
                      {t(L.PlayerTradeYouGetGross, {
@@ -164,7 +272,7 @@ export function FillPlayerTradeModal({ trade, xy }: { trade: IClientTrade; xy?: 
                      })}
                   </div>
                   <div>
-                     <FormatNumber value={trade.sellAmount * percentage} />
+                     <FormatNumber value={(getTotalFillAmount(fills) * trade.sellAmount) / trade.buyAmount} />
                   </div>
                </li>
                <li>
@@ -173,7 +281,13 @@ export function FillPlayerTradeModal({ trade, xy }: { trade: IClientTrade; xy?: 
                         <div className="f1">{t(L.PlayerMapTariff)}</div>
                         <div>{formatPercent(totalTariff)}</div>
                      </summary>
-                     <ul>
+                     <ul className="text-small">
+                        {seaTileCost > 0 ? (
+                           <li className="row">
+                              <div className="f1">{t(L.SeaTradeCost)}</div>
+                              <div>{formatPercent(seaTileCost)}</div>
+                           </li>
+                        ) : null}
                         {tiles.map((xy, i) => {
                            const tile = map.get(xy);
                            if (!tile || i === 0 || i === tiles.length - 1) {
@@ -189,17 +303,6 @@ export function FillPlayerTradeModal({ trade, xy }: { trade: IClientTrade; xy?: 
                      </ul>
                   </details>
                </li>
-               <li
-                  className={classNames({
-                     row: true,
-                     "text-strong text-red": !hasEnoughStorage(delivery, storageRequired, gs),
-                  })}
-               >
-                  <div className="f1">{t(L.PlayerTradeStorageRequired)}</div>
-                  <div>
-                     <FormatNumber value={storageRequired} />
-                  </div>
-               </li>
                <li className="row">
                   <div className="f1">
                      {t(L.PlayerTradeYouGetNet, {
@@ -207,54 +310,92 @@ export function FillPlayerTradeModal({ trade, xy }: { trade: IClientTrade; xy?: 
                      })}
                   </div>
                   <div className="text-strong">
-                     <FormatNumber value={(1 - totalTariff) * trade.sellAmount * percentage} />
+                     <FormatNumber
+                        value={
+                           ((1 - totalTariff) * trade.sellAmount * getTotalFillAmount(fills)) /
+                           trade.buyAmount
+                        }
+                     />
                   </div>
                </li>
+               <ul>
+                  <li
+                     className={classNames({
+                        "text-small row": true,
+                        "text-strong text-red": !fillsHaveEnoughStorage(fills),
+                     })}
+                  >
+                     <div className="f1">{t(L.PlayerTradeStorageRequired)}</div>
+                     <div>
+                        <FormatNumber value={getTotalStorageRequired(fills)} />
+                     </div>
+                  </li>
+               </ul>
             </ul>
             <div className="sep15"></div>
             <div className="row" style={{ justifyContent: "flex-end" }}>
                <button
                   className="text-strong"
-                  disabled={
-                     !hasEnoughResource(delivery, trade.buyResource, fillAmount, gs) ||
-                     !hasEnoughStorage(delivery, storageRequired, gs) ||
-                     !hasValidPath ||
-                     !isPercentageValid
-                  }
+                  disabled={!fillsAreValid(fills)}
                   onClick={async () => {
-                     if (
-                        !hasEnoughResource(delivery, trade.buyResource, fillAmount, gs) ||
-                        !hasEnoughStorage(delivery, storageRequired, gs) ||
-                        !hasValidPath ||
-                        !isPercentageValid
-                     ) {
+                     if (!fillsAreValid(fills) || !hasValidPath()) {
                         showToast(t(L.OperationNotAllowedError));
                         playError();
                         return;
                      }
-
-                     try {
-                        // We reserve the amount first, otherwise resource might go negative if a player
-                        // clicks really fast
-                        safeAdd(allTradeBuildings.get(delivery)!.resources, trade.buyResource, -fillAmount);
-                        const result = await client.fillTrade({
-                           id: trade.id,
-                           amount: fillAmount,
-                           path: tiles,
-                        });
-                        forEach(result, (res, amount) => {
-                           safeAdd(allTradeBuildings.get(delivery)!.resources, res, amount);
-                        });
-                        showToast(t(L.PlayerTradeFillSuccess));
+                     let total = 0;
+                     let success = 0;
+                     let fillAmount = 0;
+                     let receivedAmount = 0;
+                     const errors: string[] = [];
+                     for (const [tile, amount] of fills) {
+                        try {
+                           if (amount <= 0) continue;
+                           // We reserve the amount first, otherwise resource might go negative if a player
+                           // clicks really fast
+                           ++total;
+                           safeAdd(allTradeBuildings.get(tile)!.resources, trade.buyResource, -amount);
+                           const result = await client.fillTrade({
+                              id: trade.id,
+                              amount: amount,
+                              path: tiles,
+                              seaTileCost: getSeaTileCost(gs),
+                           });
+                           forEach(result, (res, amount) => {
+                              if (amount > 0) {
+                                 receivedAmount += amount;
+                              }
+                              if (amount < 0) {
+                                 fillAmount += Math.abs(amount);
+                              }
+                              safeAdd(allTradeBuildings.get(tile)!.resources, res, amount);
+                           });
+                           ++success;
+                        } catch (error) {
+                           errors.push(String(error));
+                        } finally {
+                           // If the trade fails, we should refund the resource. If the trade success, the result
+                           // from the server contains the correct amount to deduct, we *also* refund the resource
+                           safeAdd(allTradeBuildings.get(tile)!.resources, trade.buyResource, amount);
+                        }
+                     }
+                     if (success > 0) {
                         playKaching();
+                        errors.unshift(
+                           t(L.PlayerTradeFillSuccessV2, {
+                              success,
+                              total,
+                              fillAmount: formatNumber(fillAmount),
+                              fillResource: Config.Resource[trade.buyResource].name(),
+                              receivedAmount: formatNumber(receivedAmount),
+                              receivedResource: Config.Resource[trade.sellResource].name(),
+                           }),
+                        );
+                        showToast(errors.join("<br />"));
                         hideModal();
-                     } catch (error) {
+                     } else {
                         playError();
-                        showToast(String(error));
-                     } finally {
-                        // If the trade fails, we should refund the resource. If the trade success, the result
-                        // from the server contains the correct amount to deduct, we *also* refund the resource
-                        safeAdd(allTradeBuildings.get(delivery)!.resources, trade.buyResource, +fillAmount);
+                        showToast(errors.join("<br />"));
                      }
                   }}
                >

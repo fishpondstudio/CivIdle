@@ -4,6 +4,7 @@ import { Deposit, NoStorage, type Resource } from "../definitions/ResourceDefini
 import {
    clamp,
    forEach,
+   hasFlag,
    isEmpty,
    isNullOrUndefined,
    keysOf,
@@ -27,12 +28,14 @@ import { GameFeature, hasFeature } from "./FeatureLogic";
 import { type GameState } from "./GameState";
 import { getGameOptions, getGameState } from "./GameStateLogic";
 import { getBuildingIO, getBuildingsByType, getGrid, getXyBuildings } from "./IntraTickCache";
+import { getGreatPersonThisRunLevel } from "./RebornLogic";
 import { getBuildingsThatProduce, getResourcesValue } from "./ResourceLogic";
 import { getAgeForTech, getBuildingUnlockTech } from "./TechLogic";
 import { Tick, type Multiplier, type MultiplierWithSource } from "./TickLogic";
 import {
    DEFAULT_STOCKPILE_CAPACITY,
    DEFAULT_STOCKPILE_MAX,
+   ResourceImportOptions,
    getConstructionPriority,
    getProductionPriority,
    getUpgradePriority,
@@ -188,21 +191,24 @@ export function getStorageFor(xy: Tile, gs: GameState): IStorageResult {
    let base = 0;
 
    switch (building?.type) {
-      case "Caravansary": {
-         base = building.level * STORAGE_TO_PRODUCTION * 10;
-         break;
-      }
       case "Market": {
          base = building.level * STORAGE_TO_PRODUCTION * 10;
          break;
       }
+      case "Caravansary": {
+         base = getResourceImportCapacity(building) * STORAGE_TO_PRODUCTION;
+         break;
+      }
       case "Warehouse": {
-         base = building.level * STORAGE_TO_PRODUCTION * 100;
-
+         base = getResourceImportCapacity(building) * STORAGE_TO_PRODUCTION * 10;
          break;
       }
       case "Petra": {
-         base = 60 * 60 * building.level; // 1 hour
+         const HOUR = 60 * 60;
+         base = HOUR * building.level; // 1 hour
+         base +=
+            HOUR * Config.GreatPerson.Zenobia.value(getGreatPersonThisRunLevel(gs.greatPeople.Zenobia ?? 0));
+         base += HOUR * Config.GreatPerson.Zenobia.value(getGameOptions().greatPeople.Zenobia?.level ?? 0);
          multiplier = 1;
          break;
       }
@@ -555,13 +561,13 @@ export function isWorldOrNaturalWonder(building?: Building): boolean {
    return isNaturalWonder(building) || isWorldWonder(building);
 }
 
-export function getWarehouseCapacity(building: IHaveTypeAndLevel): number {
+export function getResourceImportCapacity(building: IHaveTypeAndLevel): number {
    return building.level * 10;
 }
 
 export function getWarehouseIdleCapacity(warehouse: IWarehouseBuildingData): number {
    return (
-      getWarehouseCapacity(warehouse) -
+      getResourceImportCapacity(warehouse) -
       reduceOf(
          warehouse.resourceImports,
          (prev, k, v) => {
@@ -591,6 +597,7 @@ export function getBuilderCapacity(
 export function getWonderBaseBuilderCapacity(type: Building): number {
    console.assert(isWorldWonder(type), "This only works for World Wonders!");
    const tech = getBuildingUnlockTech(type);
+   const totalAmount = reduceOf(getBuildingCost({ type, level: 0 }), (prev, res, value) => prev + value, 0);
    let techIdx = 0;
    let ageIdx = 0;
    if (tech) {
@@ -601,7 +608,9 @@ export function getWonderBaseBuilderCapacity(type: Building): number {
          ageIdx = age.idx;
       }
    }
-   return Math.round(Math.pow(5, ageIdx) + techIdx * 2);
+   // const capacity = Math.round(Math.pow(5, ageIdx) + techIdx * 2);
+   const capacity = Math.round(-10 * Math.pow(ageIdx, 2) + 20 * techIdx + Math.pow(totalAmount / 3600, 0.85));
+   return capacity;
 }
 
 export function applyToAllBuildings<T extends IBuildingData>(
@@ -614,14 +623,29 @@ export function applyToAllBuildings<T extends IBuildingData>(
    });
 }
 
-export function getMarketPrice(resource: Resource, xy: Tile, gs: GameState): number {
-   const rand = srand(gs.lastPriceUpdated + xy + resource);
-   const fluctuation = 0.75 + rand() * 0.5;
-   return (Config.ResourcePrice[resource] ?? 0) * fluctuation;
+export function getMarketSellAmount(xy: Tile, gs: GameState): number {
+   const building = gs.tiles.get(xy)?.building;
+   if (!building) return 0;
+   return building.capacity * building.level * totalMultiplierFor(xy, "output", 1, gs);
 }
 
-export function getAvailableResource(xy: Tile, res: Resource, gs: GameState): number {
-   const building = getXyBuildings(gs).get(xy);
+export function getMarketBuyAmount(
+   sellResource: Resource,
+   sellAmount: number,
+   buyResource: Resource,
+   xy: Tile,
+   gs: GameState,
+): number {
+   const rand = srand(gs.lastPriceUpdated + xy + sellResource);
+   const fluctuation = 0.75 + rand() * 0.5;
+   return (
+      ((Config.ResourcePrice[sellResource] ?? 0) * sellAmount * fluctuation) /
+      (Config.ResourcePrice[buyResource] ?? 0)
+   );
+}
+
+export function getAvailableResource(sourceXy: Tile, destXy: Tile, res: Resource, gs: GameState): number {
+   const building = getXyBuildings(gs).get(sourceXy);
 
    if (!building) {
       return 0;
@@ -633,17 +657,22 @@ export function getAvailableResource(xy: Tile, res: Resource, gs: GameState): nu
 
    if ("resourceImports" in building) {
       const ri = building as IResourceImportBuildingData;
-      if (ri.resourceImports[res]) {
-         return clamp(building.resources[res]! - (ri.resourceImports[res]?.cap ?? 0), 0, Infinity);
+
+      if (
+         building.type === getXyBuildings(gs).get(destXy)?.type &&
+         !hasFlag(ri.resourceImportOptions, ResourceImportOptions.ExportToSameType)
+      ) {
+         return 0;
       }
-      return building.resources[res]!;
+      const resourceImport = ri.resourceImports[res];
+      if (resourceImport && !hasFlag(ri.resourceImportOptions, ResourceImportOptions.ExportBelowCap)) {
+         return clamp((building.resources[res] ?? 0) - (resourceImport.cap ?? 0), 0, Infinity);
+      }
+
+      return building.resources[res] ?? 0;
    }
 
-   if (!Config.Building[building.type].input[res]) {
-      return building.resources[res]!;
-   }
-
-   const input = getBuildingIO(xy, "input", IOCalculation.Capacity | IOCalculation.Multiplier, gs);
+   const input = getBuildingIO(sourceXy, "input", IOCalculation.Capacity | IOCalculation.Multiplier, gs);
    if (input[res]) {
       return clamp(
          building.resources[res]! - (getStockpileMax(building) + building.stockpileCapacity) * input[res]!,
@@ -808,4 +837,8 @@ export function applyDefaultSettings(building: IBuildingData, gs: GameState): vo
    }
 
    Object.assign(building, toApply);
+}
+
+export function shouldAlwaysShowBuildingOptions(building: IBuildingData): boolean {
+   return "resourceImports" in building || "sellResources" in building;
 }

@@ -10,9 +10,11 @@ export class Camera extends Container {
       super();
       this.eventMode = "static";
       this.interactiveChildren = false;
+
       this.app.renderer.events.domElement.addEventListener("contextmenu", this.disableContextMenu.bind(this));
       this.app.renderer.events.domElement.addEventListener("wheel", this.onMouseWheel);
       this.app.ticker.add(this.update);
+
       this.on("pointerdown", this.onPointerDown);
       this.on("pointermove", this.onPointerMove);
       this.on("pointerup", this.onPointerUp);
@@ -126,11 +128,13 @@ export class Camera extends Container {
       this.wheelMode = WheelMode.Zoom;
    }
 
+   public getZoomRange(): [number, number] {
+      return [this.minZoom, this.maxZoom];
+   }
+
    private targetZoom: number | null = null;
    private targetOrigin: IPointData | null = null;
    private cursorPos: IPointData | null = null;
-
-   private resize(): void {}
 
    public get zoom(): number {
       return this.scale.x;
@@ -259,10 +263,10 @@ export class Camera extends Container {
    }
 
    override destroy(options?: boolean | IDestroyOptions | undefined): void {
+      super.destroy(options);
       this.app.renderer.events.domElement.removeEventListener("contextmenu", this.disableContextMenu);
       this.app.renderer.events.domElement.removeEventListener("wheel", this.onMouseWheel);
       this.app.ticker.remove(this.update);
-      super.destroy(options);
    }
 }
 

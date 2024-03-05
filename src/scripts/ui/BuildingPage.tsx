@@ -27,6 +27,7 @@ const BuildingBodyOverride: Partial<Record<Building, FunctionComponent<IBuilding
    Petra: PetraBuildingBody,
    OxfordUniversity: OxfordUniversityBuildingBody,
    StPetersBasilica: StPetersBasilicaBuildingBody,
+   // GrandBazaar: GrandBazaarBuildingBody,
 };
 
 export function BuildingPage(props: { tile: ITileData }): React.ReactNode {

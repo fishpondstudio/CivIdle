@@ -99,13 +99,21 @@ export interface IResourceImport {
    inputMode?: BuildingInputMode;
 }
 
+export enum ResourceImportOptions {
+   None = 0,
+   ExportBelowCap = 1 << 0,
+   ExportToSameType = 1 << 1,
+}
+
 export interface IResourceImportBuildingData extends IBuildingData {
+   resourceImportOptions: ResourceImportOptions;
    resourceImports: Partial<Record<Resource, IResourceImport>>;
 }
 
 export enum WarehouseOptions {
    None = 0,
    Autopilot = 1 << 0,
+   AutopilotRespectCap = 1 << 1,
 }
 
 export interface IWarehouseBuildingData extends IResourceImportBuildingData {
@@ -139,7 +147,7 @@ export const DEFAULT_STOCKPILE_MAX = 5;
 export function makeBuilding(data: Pick<IBuildingData, "type"> & Partial<IBuildingData>): IBuildingData {
    const building: IBuildingData = {
       level: 0,
-      desiredLevel: 0,
+      desiredLevel: 1,
       resources: {},
       status: "building",
       capacity: 1,
@@ -159,6 +167,8 @@ export function makeBuilding(data: Pick<IBuildingData, "type"> & Partial<IBuildi
          const market = building as IMarketBuildingData;
          if (!market.sellResources) {
             market.sellResources = {};
+         }
+         if (!market.availableResources) {
             market.availableResources = {};
          }
          if (isNullOrUndefined(market.marketOptions)) {
@@ -171,6 +181,9 @@ export function makeBuilding(data: Pick<IBuildingData, "type"> & Partial<IBuildi
          if (!trade.resourceImports) {
             trade.resourceImports = {};
          }
+         if (isNullOrUndefined(trade.resourceImportOptions)) {
+            trade.resourceImportOptions = ResourceImportOptions.None;
+         }
          break;
       }
       case "Warehouse": {
@@ -180,6 +193,9 @@ export function makeBuilding(data: Pick<IBuildingData, "type"> & Partial<IBuildi
          }
          if (isNullOrUndefined(warehouse.warehouseOptions)) {
             warehouse.warehouseOptions = WarehouseOptions.None;
+         }
+         if (isNullOrUndefined(warehouse.resourceImportOptions)) {
+            warehouse.resourceImportOptions = ResourceImportOptions.None;
          }
          break;
       }

@@ -1,6 +1,6 @@
 import classNames from "classnames";
 import { NoPrice, NoStorage, type Resource } from "../../../shared/definitions/ResourceDefinitions";
-import { applyToAllBuildings, getMarketPrice, totalMultiplierFor } from "../../../shared/logic/BuildingLogic";
+import { getMarketBuyAmount, getMarketSellAmount } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
 import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
 import type { IMarketBuildingData } from "../../../shared/logic/Tile";
@@ -8,16 +8,18 @@ import { MarketOptions } from "../../../shared/logic/Tile";
 import { convertPriceIdToTime } from "../../../shared/logic/Update";
 import {
    CURRENCY_EPSILON,
+   copyFlag,
+   forEach,
    formatHMS,
    formatPercent,
    hasFlag,
    keysOf,
    mathSign,
-   round,
    toggleFlag,
 } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import { playClick } from "../visuals/Sound";
+import { ApplyToAllComponent } from "./ApplyToAllComponent";
 import { BuildingColorComponent } from "./BuildingColorComponent";
 import { BuildingInputModeComponent } from "./BuildingInputModeComponent";
 import type { IBuildingComponentProps } from "./BuildingPage";
@@ -28,8 +30,10 @@ import { BuildingStorageComponent } from "./BuildingStorageComponent";
 import { BuildingUpgradeComponent } from "./BuildingUpgradeComponent";
 import { BuildingWorkerComponent } from "./BuildingWorkerComponent";
 import { FormatNumber } from "./HelperComponents";
+import { RenderHTML } from "./RenderHTMLComponent";
 import { TableView } from "./TableView";
 import { TextWithHelp } from "./TextWithHelpComponent";
+import { WarningComponent } from "./WarningComponent";
 
 export function MarketBuildingBody({ gameState, xy }: IBuildingComponentProps): React.ReactNode {
    const building = gameState.tiles.get(xy)?.building as IMarketBuildingData;
@@ -37,27 +41,14 @@ export function MarketBuildingBody({ gameState, xy }: IBuildingComponentProps): 
       return null;
    }
    const market = building as IMarketBuildingData;
-   const capacity = building.capacity * building.level * totalMultiplierFor(xy, "output", 1, gameState);
-   const getBuyResourceAndAmount = (sellResource: Resource) => {
-      const buyResource = market.availableResources[sellResource]!;
-      return {
-         resource: buyResource,
-         amount: round(
-            (capacity * getMarketPrice(sellResource, xy, gameState)) /
-               getMarketPrice(buyResource, xy, gameState),
-            1,
-         ),
-      };
-   };
-
+   const sellAmount = getMarketSellAmount(xy, gameState);
    const tradeValues: Map<Resource, number> = new Map();
 
-   keysOf(market.availableResources).forEach((res) => {
-      const buy = getBuyResourceAndAmount(res);
-      const sellValue = Config.ResourcePrice[res]! * capacity;
-      const buyValue = Config.ResourcePrice[buy.resource]! * buy.amount;
-
-      tradeValues.set(res, buyValue / sellValue - 1);
+   forEach(market.availableResources, (sellResource, buyResource) => {
+      const buyAmount = getMarketBuyAmount(sellResource, sellAmount, buyResource, xy, gameState);
+      const sellValue = Config.ResourcePrice[sellResource]! * sellAmount;
+      const buyValue = Config.ResourcePrice[buyResource]! * buyAmount;
+      tradeValues.set(sellResource, buyValue / sellValue - 1);
    });
 
    return (
@@ -103,7 +94,8 @@ export function MarketBuildingBody({ gameState, xy }: IBuildingComponentProps): 
                if (!r || NoPrice[res] || NoStorage[res]) {
                   return null;
                }
-               const buy = getBuyResourceAndAmount(res);
+               const buyResource = market.availableResources[res]!;
+               const buyAmount = getMarketBuyAmount(res, sellAmount, buyResource, xy, gameState);
                const tradeValue = tradeValues.get(res) ?? 0;
 
                return (
@@ -111,13 +103,13 @@ export function MarketBuildingBody({ gameState, xy }: IBuildingComponentProps): 
                      <td>
                         <div>{r.name()}</div>
                         <div className="text-small text-desc text-strong">
-                           <FormatNumber value={capacity} />
+                           <FormatNumber value={sellAmount} />
                         </div>
                      </td>
                      <td>
-                        <div>{Config.Resource[buy.resource].name()}</div>
+                        <div>{Config.Resource[buyResource].name()}</div>
                         <div className="text-small text-desc text-strong">
-                           <FormatNumber value={buy.amount} />
+                           <FormatNumber value={buyAmount} />
                         </div>
                      </td>
                      <td
@@ -160,7 +152,9 @@ export function MarketBuildingBody({ gameState, xy }: IBuildingComponentProps): 
                );
             }}
          />
-         <div className="sep10"></div>
+         <WarningComponent icon="info" className="mv10 text-small">
+            <RenderHTML html={t(L.MarketTradeDescHTML)} />
+         </WarningComponent>
          <BuildingUpgradeComponent gameState={gameState} xy={xy} />
          <BuildingWorkerComponent gameState={gameState} xy={xy} />
          <BuildingStorageComponent gameState={gameState} xy={xy} />
@@ -186,20 +180,20 @@ export function MarketBuildingBody({ gameState, xy }: IBuildingComponentProps): 
                   )}
                </div>
             </div>
-            <div className="sep5"></div>
-            <div
-               className="text-link text-small"
-               onClick={() => {
-                  playClick();
-                  applyToAllBuildings<IMarketBuildingData>(
-                     market.type,
-                     () => ({ marketOptions: market.marketOptions }),
-                     gameState,
-                  );
+            <div className="sep10"></div>
+            <ApplyToAllComponent
+               building={market}
+               getOptions={(s) => {
+                  return {
+                     marketOptions: copyFlag(
+                        market.marketOptions,
+                        (s as IMarketBuildingData).marketOptions,
+                        MarketOptions.ClearAfterUpdate,
+                     ),
+                  };
                }}
-            >
-               {t(L.ApplyToAll, { building: Config.Building[building.type].name() })}
-            </div>
+               gameState={gameState}
+            />
          </fieldset>
          <BuildingColorComponent gameState={gameState} xy={xy} />
          <BuildingSellComponent gameState={gameState} xy={xy} />

@@ -7,13 +7,13 @@ import { L, t } from "../../../shared/utilities/i18n";
 import { playClick } from "../visuals/Sound";
 import { TextWithHelp } from "./TextWithHelpComponent";
 
-export function ApplyToAllComponent({
+export function ApplyToAllComponent<T extends IBuildingData>({
    building,
    getOptions,
    gameState,
 }: {
-   building: IBuildingData;
-   getOptions: (s: IBuildingData) => Partial<IBuildingData>;
+   building: T;
+   getOptions: (s: IBuildingData) => Partial<T>;
    gameState: GameState;
 }): React.ReactNode {
    const def = Config.Building[building.type];

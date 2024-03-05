@@ -37,7 +37,7 @@ body {
    position: absolute;
    width: 350px;
    left: 10px;
-   top: 10px;
+   top: 50px;
 }
 
 #debug-ui .window .table-view {
@@ -92,6 +92,7 @@ body {
 }
 
 #global-toast .toast {
+   max-width: 80vw;
    position: absolute;
    top: 20px;
 }

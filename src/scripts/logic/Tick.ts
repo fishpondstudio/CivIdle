@@ -19,7 +19,7 @@ import {
    tickPrice,
    tickTech,
    tickTiles,
-   tickTransportations,
+   tickTransports,
 } from "../../../shared/logic/Update";
 import { forEach, safeAdd } from "../../../shared/utilities/Helper";
 import { saveGame } from "../Global";
@@ -77,7 +77,7 @@ export function tickEverySecond(gs: GameState, offline: boolean) {
    });
 
    tickPrice(gs);
-   tickTransportations(gs);
+   tickTransports(gs);
    tickTiles(gs, offline);
 
    Tick.next.happiness = calculateHappiness(gs);

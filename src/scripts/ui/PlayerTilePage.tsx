@@ -90,7 +90,7 @@ export function PlayerTilePage({ xy }: { xy: string }): React.ReactNode {
                                        <div
                                           className="text-strong text-blue pointer"
                                           onClick={() => {
-                                             showModal(<FillPlayerTradeModal trade={trade} />);
+                                             showModal(<FillPlayerTradeModal tradeId={trade.id} />);
                                           }}
                                        >
                                           {t(L.PlayerTradeFill)}
