@@ -997,7 +997,8 @@ export const EN = {
    ZenobiaDesc: "+%{value}h Petra Warp Storage",
    PlayerTradeFillAmountMaxV2: "Fill Max",
    GrandBazaar: "Grand Bazaar",
-   GrandBazaarDesc: "Control all markets in one place!. All adjacent buildings get +5 Storage Multiplier",
+   GrandBazaarDesc:
+      "Manage all your markets. Adjacent caravansaries get +5 Production and Storage Multiplier",
    GrandBazaarFilters: "Filters",
    GrandBazaarFilterYouPay: "You Pay",
    GrandBazaarFilterYouGet: "You Get",

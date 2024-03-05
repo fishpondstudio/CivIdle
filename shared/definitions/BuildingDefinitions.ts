@@ -926,7 +926,7 @@ export class BuildingDefinitions {
       input: {},
       output: {},
       max: 1,
-      construction: { Wood: 1 },
+      construction: { Coin: 100, Garment: 100, Furniture: 100 },
       special: BuildingSpecial.WorldWonder,
       wikipedia: "Grand_Bazaar,_Istanbul",
    };
