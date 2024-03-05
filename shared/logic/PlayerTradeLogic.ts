@@ -1,5 +1,6 @@
 import type { Resource } from "../definitions/ResourceDefinitions";
 import { Tech } from "../definitions/TechDefinitions";
+import _WorldMap from "../definitions/WorldMap.json";
 import {
    AccountLevel,
    IClientMapEntry,
@@ -13,6 +14,8 @@ import { PartialTabulate } from "../utilities/TypeDefinitions";
 import { TypedEvent } from "../utilities/TypedEvent";
 import { Config } from "./Config";
 import { GameState } from "./GameState";
+
+const WorldMap = _WorldMap as Record<string, boolean>;
 
 export interface IClientAddTradeRequest extends IAddTradeRequest {
    buyResource: Resource;
@@ -111,6 +114,16 @@ export function getSeaTileCost(gs: GameState): number {
       return SEA_TILE_COSTS.Geography;
    }
    return -1;
+}
+
+export function getTotalSeaTileCost(path: string[], seaTileCost: number): number {
+   const seaTileCount = path.reduce((prev, xy) => {
+      return prev + (WorldMap[xy] ? 0 : 1);
+   }, 0);
+   if (seaTileCount > 0 && seaTileCost < 0) {
+      throw new Error("You cannot trade across the sea");
+   }
+   return seaTileCount * seaTileCost;
 }
 
 export const RequestPathFinderGridUpdate = new TypedEvent<void>();

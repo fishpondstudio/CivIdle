@@ -3,7 +3,7 @@ import type { ColorSource, FederatedPointerEvent, IPointData } from "pixi.js";
 import { BitmapText, Container, LINE_CAP, LINE_JOIN, Sprite } from "pixi.js";
 import WorldMap from "../../../shared/definitions/WorldMap.json";
 import { getGameOptions } from "../../../shared/logic/GameStateLogic";
-import { isTileReserved, isTradePathValid } from "../../../shared/logic/PlayerTradeLogic";
+import { isTileReserved } from "../../../shared/logic/PlayerTradeLogic";
 import { MAP_MAX_X, MAP_MAX_Y, type IClientMapEntry } from "../../../shared/utilities/Database";
 import {
    forEach,
@@ -195,7 +195,6 @@ export class PlayerMapScene extends Scene {
       const tileX = Math.floor(pos.x / GridSize);
       const tileY = Math.floor(pos.y / GridSize);
       this.selectTile(tileX, tileY);
-      console.log(tileX, tileY);
    }
 
    override onMoved(point: IPointData): void {
@@ -259,7 +258,6 @@ export class PlayerMapScene extends Scene {
 
       if (myXy && map.has(`${tileX},${tileY}`)) {
          const path = findPath(xyToPoint(myXy), { x: tileX, y: tileY });
-         console.log(isTradePathValid(path));
          this.drawPath(path);
       } else {
          this.clearPath();

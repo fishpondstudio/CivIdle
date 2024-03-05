@@ -2,6 +2,7 @@ import classNames from "classnames";
 import { useEffect, useState } from "react";
 import { getStorageFor, hasEnoughResource, hasEnoughStorage } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
+import { getSeaTileCost, getTotalSeaTileCost } from "../../../shared/logic/PlayerTradeLogic";
 import { Tick } from "../../../shared/logic/TickLogic";
 import {
    clamp,
@@ -46,13 +47,17 @@ export function FillPlayerTradeModal({ tradeId, xy }: { tradeId: string; xy?: Ti
       setTiles(path.map((x) => pointToXy(x)));
    }, [trade, myXy]);
 
-   const totalTariff = tiles.reduce((prev, xy, i) => {
-      const tile = map.get(xy);
-      if (!tile || i === 0 || i === tiles.length - 1) {
-         return prev;
-      }
-      return prev + tile.tariffRate;
-   }, 0);
+   const seaTileCost = getTotalSeaTileCost(tiles, getSeaTileCost(gs));
+
+   const totalTariff =
+      seaTileCost +
+      tiles.reduce((prev, xy, i) => {
+         const tile = map.get(xy);
+         if (!tile || i === 0 || i === tiles.length - 1) {
+            return prev;
+         }
+         return prev + tile.tariffRate;
+      }, 0);
 
    if (!trade) {
       hideModal();
@@ -277,6 +282,12 @@ export function FillPlayerTradeModal({ tradeId, xy }: { tradeId: string; xy?: Ti
                         <div>{formatPercent(totalTariff)}</div>
                      </summary>
                      <ul className="text-small">
+                        {seaTileCost > 0 ? (
+                           <li className="row">
+                              <div className="f1">{t(L.SeaTradeCost)}</div>
+                              <div>{formatPercent(seaTileCost)}</div>
+                           </li>
+                        ) : null}
                         {tiles.map((xy, i) => {
                            const tile = map.get(xy);
                            if (!tile || i === 0 || i === tiles.length - 1) {
@@ -339,6 +350,7 @@ export function FillPlayerTradeModal({ tradeId, xy }: { tradeId: string; xy?: Ti
                      const errors: string[] = [];
                      for (const [tile, amount] of fills) {
                         try {
+                           if (amount <= 0) continue;
                            // We reserve the amount first, otherwise resource might go negative if a player
                            // clicks really fast
                            ++total;
@@ -347,6 +359,7 @@ export function FillPlayerTradeModal({ tradeId, xy }: { tradeId: string; xy?: Ti
                               id: trade.id,
                               amount: amount,
                               path: tiles,
+                              seaTileCost: getSeaTileCost(gs),
                            });
                            forEach(result, (res, amount) => {
                               if (amount > 0) {

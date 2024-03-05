@@ -105,6 +105,7 @@ export interface IFillTradeRequest {
    id: string;
    amount: number;
    path: string[];
+   seaTileCost: number;
 }
 
 export type TradeStatus = "open" | "filled" | "closed" | "cancelled";
