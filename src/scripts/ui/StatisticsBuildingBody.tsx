@@ -11,6 +11,7 @@ import {
    IOCalculation,
    getBuildingValue,
    getElectrificationStatus,
+   getScienceFromWorkers,
    isHeadquarters,
    isNaturalWonder,
 } from "../../../shared/logic/BuildingLogic";
@@ -48,6 +49,7 @@ import { FormatNumber } from "./HelperComponents";
 import { TableView } from "./TableView";
 import type { Building, IBuildingDefinition } from "../../../shared/definitions/BuildingDefinitions";
 import { getValueRequiredForGreatPeople } from "../../../shared/logic/RebornLogic";
+import { getScienceAmount } from "../../../shared/logic/TechLogic";
 
 type Tab = "resources" | "buildings" | "transportation" | "empire";
 
@@ -166,8 +168,27 @@ function EmpireTab({ gameState }: IBuildingComponentProps): React.ReactNode {
       0,
    );
 
+   const {
+      happinessPercentage,
+      workersBeforeHappiness,
+      workersAfterHappiness,
+      workersBusy,
+      scienceFromBusyWorkers,
+      scienceFromIdleWorkers,
+      scienceFromWorkers,
+      sciencePerBusyWorker,
+      sciencePerIdleWorker,
+   } = getScienceFromWorkers(gameState);
+   const scienceAmount = getScienceAmount();
+
+   const sciencePerTick = scienceFromWorkers + totalBuildingScience;
+
    return (
-      <article role="tabpanel" className="f1" style={{ padding: "8px", overflow: "auto" }}>
+      <article
+         role="tabpanel"
+         className="f1 column"
+         style={{ marginBottom: "5px", padding: "8px", overflow: "auto" }}
+      >
          <fieldset>
             <div className="row">
                <div className="f1">{t(L.TotalEmpireValue)}</div>
@@ -242,33 +263,109 @@ function EmpireTab({ gameState }: IBuildingComponentProps): React.ReactNode {
 
          <fieldset>
             <legend>Science</legend>
+            <div className="row">
+               <div className="f1">Total</div>
+               <div className="text-strong">
+                  <FormatNumber value={scienceAmount} />
+               </div>
+            </div>
+            <div className="row">
+               <div className="f1">Science Per Tick</div>
+               <div className="text-strong">
+                  <FormatNumber value={sciencePerTick} />
+               </div>
+            </div>
             <div className="sep5" />
             <ul className="tree-view">
-               <details>
-                  <summary className="row">
-                     <div className="f1">Extra GP's</div>
-                     <div className="text-strong">
-                        <FormatNumber value={totalBuildingScience} />
-                     </div>
-                  </summary>
-                  <ul className="text-small">
-                     {Array.from(Tick.current.scienceProduced.keys())
-                        .sort(
-                           (a, b) =>
-                              Tick.current.scienceProduced.get(b)! - Tick.current.scienceProduced.get(a)!,
-                        )
-                        .map((xy) => {
-                           const tile = gameState.tiles.get(xy);
-                           const b = tile?.building;
-                           return (
-                              <li key={xy} className="row">
-                                 <div className="f1">{Config.Building[b!.type].name()}</div>
-                                 <FormatNumber value={Tick.current.scienceProduced.get(xy)} />
-                              </li>
-                           );
-                        })}
-                  </ul>
-               </details>
+               <li>
+                  <details>
+                     <summary className="row">
+                        <div className="f1">Science From Workers</div>
+                        <div className="text-strong">
+                           <FormatNumber value={scienceFromWorkers} />
+                        </div>
+                     </summary>
+                     <ul>
+                        <li>
+                           <details>
+                              <summary className="row">
+                                 <div className="f1">{t(L.ScienceFromIdleWorkers)}</div>
+                                 <div className="text-strong">
+                                    <FormatNumber value={scienceFromIdleWorkers} />
+                                 </div>
+                              </summary>
+                              <ul>
+                                 <li className="row">
+                                    <div className="f1">{t(L.SciencePerIdleWorker)}</div>
+                                    <div>{sciencePerIdleWorker}</div>
+                                 </li>
+                                 <ul className="text-small">
+                                    {Tick.current.globalMultipliers.sciencePerIdleWorker.map((m) => (
+                                       <li key={m.source} className="row">
+                                          <div className="f1">{m.source}</div>
+                                          <div>{m.value}</div>
+                                       </li>
+                                    ))}
+                                 </ul>
+                              </ul>
+                           </details>
+                        </li>
+                        <li>
+                           <details>
+                              <summary className="row">
+                                 <div className="f1">{t(L.ScienceFromBusyWorkers)}</div>
+                                 <div className="text-strong">
+                                    <FormatNumber value={scienceFromBusyWorkers} />
+                                 </div>
+                              </summary>
+                              <ul>
+                                 <li className="row">
+                                    <div className="f1">{t(L.SciencePerBusyWorker)}</div>
+                                    <div>{sciencePerBusyWorker}</div>
+                                 </li>
+                                 <ul className="text-small">
+                                    {Tick.current.globalMultipliers.sciencePerBusyWorker.map((m) => (
+                                       <li key={m.source} className="row">
+                                          <div className="f1">{m.source}</div>
+                                          <div>
+                                             <FormatNumber value={m.value} />
+                                          </div>
+                                       </li>
+                                    ))}
+                                 </ul>
+                              </ul>
+                           </details>
+                        </li>
+                     </ul>
+                  </details>
+               </li>
+               <li>
+                  <details>
+                     <summary className="row">
+                        <div className="f1">Science From Buildings</div>
+                        <div className="text-strong">
+                           <FormatNumber value={totalBuildingScience} />
+                        </div>
+                     </summary>
+                     <ul className="text-small">
+                        {Array.from(Tick.current.scienceProduced.keys())
+                           .sort(
+                              (a, b) =>
+                                 Tick.current.scienceProduced.get(b)! - Tick.current.scienceProduced.get(a)!,
+                           )
+                           .map((xy) => {
+                              const tile = gameState.tiles.get(xy);
+                              const b = tile?.building;
+                              return (
+                                 <li key={xy} className="row">
+                                    <div className="f1">{Config.Building[b!.type].name()}</div>
+                                    <FormatNumber value={Tick.current.scienceProduced.get(xy)} />
+                                 </li>
+                              );
+                           })}
+                     </ul>
+                  </details>
+               </li>
             </ul>
          </fieldset>
       </article>
