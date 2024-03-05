@@ -3,7 +3,12 @@ import type { Deposit, Resource } from "../definitions/ResourceDefinitions";
 import { Grid } from "../utilities/Grid";
 import { forEach, safeAdd, tileToHash, type Tile } from "../utilities/Helper";
 import type { PartialSet, PartialTabulate } from "../utilities/TypeDefinitions";
-import { IOCalculation, getMarketBuyAmount, totalMultiplierFor } from "./BuildingLogic";
+import {
+   IOCalculation,
+   getMarketBuyAmount,
+   getResourceImportCapacity,
+   totalMultiplierFor,
+} from "./BuildingLogic";
 import { Config } from "./Config";
 import type { GameState } from "./GameState";
 import { TILE_SIZE } from "./GameStateLogic";
@@ -66,11 +71,19 @@ export function getBuildingIO(
          }
       }
       if ("resourceImports" in b && type === "input") {
+         const totalCapacity = getResourceImportCapacity(b) * totalMultiplierFor(xy, "output", 1, gs);
+         let used = 0;
          forEach((b as IResourceImportBuildingData).resourceImports, (k, v) => {
-            result[k] = v.perCycle;
+            if (used + v.perCycle > totalCapacity) {
+               // Somehow a player manages to assign more capacity than allowed. We correct this case here
+               v.perCycle = 0;
+            } else {
+               used += v.perCycle;
+               result[k] = v.perCycle;
+            }
          });
-         // Resource imports is not affected by multipliers
          _cache.buildingIO.set(key, Object.freeze(result));
+         // Resource imports is not affected by multipliers
          return result;
       }
       // Apply multipliers

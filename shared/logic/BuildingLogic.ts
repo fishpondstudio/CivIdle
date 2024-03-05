@@ -191,17 +191,16 @@ export function getStorageFor(xy: Tile, gs: GameState): IStorageResult {
    let base = 0;
 
    switch (building?.type) {
-      case "Caravansary": {
-         base = building.level * STORAGE_TO_PRODUCTION * 10;
-         break;
-      }
       case "Market": {
          base = building.level * STORAGE_TO_PRODUCTION * 10;
          break;
       }
+      case "Caravansary": {
+         base = getResourceImportCapacity(building) * STORAGE_TO_PRODUCTION;
+         break;
+      }
       case "Warehouse": {
-         base = building.level * STORAGE_TO_PRODUCTION * 100;
-
+         base = getResourceImportCapacity(building) * STORAGE_TO_PRODUCTION * 10;
          break;
       }
       case "Petra": {
@@ -562,13 +561,13 @@ export function isWorldOrNaturalWonder(building?: Building): boolean {
    return isNaturalWonder(building) || isWorldWonder(building);
 }
 
-export function getWarehouseCapacity(building: IHaveTypeAndLevel): number {
+export function getResourceImportCapacity(building: IHaveTypeAndLevel): number {
    return building.level * 10;
 }
 
 export function getWarehouseIdleCapacity(warehouse: IWarehouseBuildingData): number {
    return (
-      getWarehouseCapacity(warehouse) -
+      getResourceImportCapacity(warehouse) -
       reduceOf(
          warehouse.resourceImports,
          (prev, k, v) => {

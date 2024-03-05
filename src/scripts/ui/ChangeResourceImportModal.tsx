@@ -59,7 +59,7 @@ export function ChangeResourceImportModal({
          </div>
          <div className="window-body">
             <div className="row mv5">
-               <div style={{ width: "100px" }}>{t(L.ResourceImportImportPerCycle)}</div>
+               <div style={{ width: "100px" }}>{t(L.ResourceImportImportPerCycleV2)}</div>
                <input
                   className="f1 text-right w100"
                   type="text"
@@ -97,7 +97,7 @@ export function ChangeResourceImportModal({
             </div>
             <div className="sep5"></div>
             <div className="row mv5">
-               <div style={{ width: "100px" }}>{t(L.ResourceImportImportCap)}</div>
+               <div style={{ width: "100px" }}>{t(L.ResourceImportImportCapV2)}</div>
                <input
                   className="f1 text-right w100"
                   type="text"
@@ -116,6 +116,7 @@ export function ChangeResourceImportModal({
                <div>
                   {[0, 0.1, 0.25, 0.5, 0.75, 1].map((p) => (
                      <span
+                        key={p}
                         className="ml10 text-strong text-link"
                         onClick={() => {
                            setResourceImport({
@@ -153,9 +154,8 @@ export function ChangeResourceImportModal({
                      </Tippy>
                      {jsxMMapOf(BuildingInputModeNames, (mode, name) => {
                         return (
-                           <Tippy content={BuildingInputModeTooltips.get(mode)?.() ?? ""}>
+                           <Tippy key={mode} content={BuildingInputModeTooltips.get(mode)?.() ?? ""}>
                               <button
-                                 key={mode}
                                  onClick={() => {
                                     setResourceImport({
                                        ...resourceImport,

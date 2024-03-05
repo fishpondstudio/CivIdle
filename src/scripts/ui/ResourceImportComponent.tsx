@@ -2,7 +2,12 @@ import Tippy from "@tippyjs/react";
 import classNames from "classnames";
 import { useEffect, useState } from "react";
 import { NoPrice, NoStorage, type Resource } from "../../../shared/definitions/ResourceDefinitions";
-import { getStorageFor, getWarehouseCapacity } from "../../../shared/logic/BuildingLogic";
+import {
+   getMultipliersFor,
+   getResourceImportCapacity,
+   getStorageFor,
+   totalMultiplierFor,
+} from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
 import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
 import { Tick } from "../../../shared/logic/TickLogic";
@@ -47,7 +52,8 @@ export function ResourceImportComponent({ gameState, xy }: IBuildingComponentPro
       resources.add(k);
    });
    const storage = getStorageFor(xy, gameState);
-   const totalCapacity = getWarehouseCapacity(building);
+   const baseCapacity = getResourceImportCapacity(building);
+   const capacityMultiplier = totalMultiplierFor(xy, "output", 1, gameState);
 
    return (
       <fieldset>
@@ -57,8 +63,8 @@ export function ResourceImportComponent({ gameState, xy }: IBuildingComponentPro
                { name: "", sortable: false },
                { name: t(L.ResourceImportResource), sortable: true },
                { name: t(L.ResourceImportStorage), sortable: true, right: true },
-               { name: t(L.ResourceImportImportPerCycle), sortable: true, right: true },
-               { name: t(L.ResourceImportImportCap), sortable: true, right: true },
+               { name: t(L.ResourceImportImportPerCycleV2), sortable: true, right: true },
+               { name: t(L.ResourceImportImportCapV2), sortable: true, right: true },
                { name: "", sortable: false },
             ]}
             data={Array.from(resources)}
@@ -124,7 +130,7 @@ export function ResourceImportComponent({ gameState, xy }: IBuildingComponentPro
                            showModal(
                               <ChangeResourceImportModal
                                  storage={storage.total}
-                                 capacity={totalCapacity}
+                                 capacity={baseCapacity * capacityMultiplier}
                                  building={building}
                                  resource={res}
                               />,
@@ -174,7 +180,7 @@ export function ResourceImportComponent({ gameState, xy }: IBuildingComponentPro
                   forEach(building.resourceImports, (res, v) => {
                      v.perCycle = 0;
                   });
-                  const amount = totalCapacity / selected.size;
+                  const amount = baseCapacity / selected.size;
                   selected.forEach((res) => {
                      if (building.resourceImports[res]) {
                         building.resourceImports[res]!.perCycle = amount;
@@ -238,6 +244,50 @@ export function ResourceImportComponent({ gameState, xy }: IBuildingComponentPro
                {t(L.RedistributeAmongSelectedCap)}
             </div>
          </div>
+         <div className="separator"></div>
+         <ul className="tree-view">
+            <li>
+               <details>
+                  <summary className="row">
+                     <div className="f1">{t(L.ResourceImportCapacity)}</div>
+                     <div className="text-strong">
+                        <FormatNumber value={baseCapacity * capacityMultiplier} />
+                     </div>
+                  </summary>
+                  <ul>
+                     <li className="row">
+                        <div className="f1">Base Capacity</div>
+                        <div className="text-strong">
+                           <FormatNumber value={baseCapacity} />
+                        </div>
+                     </li>
+                     <li className="row">
+                        <div className="f1">{t(L.ProductionMultiplier)}</div>
+                        <div className="text-strong">
+                           <FormatNumber value={capacityMultiplier} />
+                        </div>
+                     </li>
+                     <ul className="text-small">
+                        <li className="row">
+                           <div className="f1">{t(L.BaseMultiplier)}</div>
+                           <div>1</div>
+                        </li>
+                        {getMultipliersFor(xy, gameState).map((m, idx) => {
+                           if (!m.output) {
+                              return null;
+                           }
+                           return (
+                              <li key={idx} className="row">
+                                 <div className="f1">{m.source}</div>
+                                 <div>{m.output}</div>
+                              </li>
+                           );
+                        })}
+                     </ul>
+                  </ul>
+               </details>
+            </li>
+         </ul>
          <div className="separator" />
          <div className="row">
             <div>{t(L.ResourceExportBelowCap)}</div>
