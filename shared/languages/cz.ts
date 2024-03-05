@@ -421,7 +421,7 @@ export const CZ = {
       "Všechny přilehlé ocelárny získají +N Výrobu, Skladování a Násobek pracovníků. N = počet sousedících oceláren",
    CircusMaximus: "Circus Maximus",
    CircusMaximusDescV2:
-      "+5 Happiness. All Musician's Guilds, Writer's Guilds and Painter's Guilds get +1 Production and Storage Multiplier",
+      "+5 Štěstí. Všechny cechy hudebníků, spisovatelů a malířů získávají +1 násobek produkce a skladování.",
    Statistics: "Statistika budovy",
    StatisticsDesc: "Poskytuje statistiky spotřeby a výroby",
    GrottaAzzurra: "Grotta Azzurra",
@@ -478,7 +478,7 @@ export const CZ = {
    PantheonDesc: "Pantheon",
    SaintBasilsCathedral: "Katedrála sv. Basila",
    SaintBasilsCathedralDescV2:
-      "Allow resource extraction buildings to work adjacent to a deposit. All tier I buildings get +1 Production Multiplier, Worker Capacity Multiplier, and Storage Multiplier",
+      "Povolení staveb pro těžbu surovin v sousedství ložiska. Všechny budovy I. úrovně získají násobitel +1 k produkci, násobitel kapacity pracovníků a násobitel skladování.",
    ChichenItza: "Chichén Itzá",
    ChichenItzaDesc: "Všechny přilehlé budovy získají násobitel +1 k produkci, skladování a kapacitě dělníků.",
    Aqueduct: "Akvadukt",
@@ -976,8 +976,8 @@ export const CZ = {
       "V současné době máte %{count} %{person} z tohoto běhu. Další %{person} bude mít 1/%{effect} efektu.",
    OpenSaveFolder: "Open Save Folder",
    OpenSaveBackupFolder: "Otevření záložní složky",
-   ShortcutBuildingPageToggleBuilding: "Toggle Production",
-   ShortcutBuildingPageToggleBuildingSetAllSimilar: "Toggle Production And Apply To All",
-   HappinessUncapped: "Happiness (Uncapped)",
-   ExtraGreatPeople: "%{count} Extra Great People",
+   ShortcutBuildingPageToggleBuilding: "Přepínání výroby",
+   ShortcutBuildingPageToggleBuildingSetAllSimilar: "Přepnout výrobu a použít na všechny",
+   HappinessUncapped: "Štěstí (neomezené)",
+   ExtraGreatPeople: "%{count} Extra Skvělí lidé",
 };

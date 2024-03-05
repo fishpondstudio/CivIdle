@@ -13,6 +13,7 @@ import {
    keysOf,
    mapSafeAdd,
    numberToRoman,
+   round,
    sizeOf,
 } from "../utilities/Helper";
 import type { PartialSet, PartialTabulate } from "../utilities/TypeDefinitions";
@@ -322,13 +323,46 @@ export function calculateTierAndPrice() {
    forEach(Config.GreatPerson, (p, def) => {
       def.boost?.buildings.forEach((b) => boostedBuildings.add(b));
    });
-   forEach(Config.Building, (building, def) => {
-      if (!isSpecialBuilding(building) && !boostedBuildings.has(building)) {
-         const tech = getBuildingUnlockTech(building)!;
-         const age = getAgeForTech(tech)!;
-         notBoostedBuildings.push({ building, tech, age });
-      }
-   });
+
+   const buildingInputCost: string[] = [];
+   keysOf(Config.Building)
+      .sort((a, b) => Config.BuildingTier[a]! - Config.BuildingTier[b]!)
+      .forEach((building) => {
+         const def = Config.Building[building];
+         if (isSpecialBuilding(building)) {
+            return;
+         }
+         if (!boostedBuildings.has(building)) {
+            const tech = getBuildingUnlockTech(building)!;
+            const age = getAgeForTech(tech)!;
+            notBoostedBuildings.push({ building, tech, age });
+         }
+         let cost = 0;
+         forEach(def.input, (res, amount) => {
+            cost += Config.ResourcePrice[res]! * amount;
+         });
+         let construction = 0;
+         forEach(def.construction, (res, amount) => {
+            construction += Config.ResourcePrice[res]! * amount;
+         });
+         let constructionCost = "";
+         if (construction > 0) {
+            constructionCost = String(construction).padStart(10);
+            if (construction !== cost) {
+               constructionCost += "*";
+            }
+         }
+         if (cost > 0) {
+            buildingInputCost.push(
+               `${def.name().padEnd(30)}${numberToRoman(Config.BuildingTier[building]!)!.padStart(10)}${round(
+                  cost,
+                  2,
+               )
+                  .toString()
+                  .padStart(10)}${constructionCost}`,
+            );
+         }
+      });
 
    notBoostedBuildings.sort((a, b) => Config.Tech[a.tech].column - Config.Tech[b.tech].column);
 
@@ -344,4 +378,5 @@ export function calculateTierAndPrice() {
          .map((a) => `${a.building.padEnd(25)}${a.tech.padEnd(20)}${a.age}`)
          .join("\n")}`,
    );
+   console.log(`>>>>>>>>>> Building Input Cost <<<<<<<<<<\n${buildingInputCost.join("\n")}`);
 }
