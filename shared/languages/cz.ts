@@ -444,7 +444,7 @@ export const CZ = {
    PetraDesc:
       "Generování časové deformace, když jste offline, kterou můžete použít k urychlení svého impéria",
    OxfordUniversity: "Oxfordská univerzita",
-   OxfordUniversityDesc: "Každé vylepšení budovy ve vašem impériu poskytuje +1 vědu za cyklus",
+   OxfordUniversityDescV2: "Each building upgrade in your empire provides +5 Science per cycle",
    StPetersBasilica: "Bazilika svatého Petra",
    StPetersBasilicaDesc:
       "Všechny budovy, které produkují víru, získávají +1 násobek skladování. Generuje Víru na základě Víry ve skladu",
@@ -691,9 +691,9 @@ export const CZ = {
    PlayerTradeFill: "Vyplňte",
    PlayerTradeClaim: "Nárok",
    PlayerTradeFillAmount: "Částka plnění",
-   PlayerTradeFillSuccess: "Obchod byl úspěšně vyplněn",
+   PlayerTradeFillSuccessV2:
+      "<b>%{success}/%{total}</b> trades have been filled. You paid <b>%{fillAmount} %{fillResource}</b> and received <b>%{receivedAmount} %{receivedResource}</b>",
    PlayerTradeAddSuccess: "Obchod byl úspěšně přidán",
-   PlayerTradeFillAmountMax: "Vyplnit vše, co je k dispozici",
    PlayerTradeFillTradeTitle: "Vyplnit obchod",
    PlayerTradeFillTradeButton: "Vyplnit obchod",
    PlayerTradeMaxTradeExceeded: "Překročili jste maximální počet aktivních obchodů pro hodnost vašeho účtu.",
@@ -724,10 +724,12 @@ export const CZ = {
    ResourceImport: "Přeprava zdrojů",
    ResourceImportResource: "Resource",
    ResourceImportStorage: "Úložiště",
-   ResourceImportImportPerCycle: "Import",
-   ResourceImportImportCap: "Cap",
+   ResourceImportImportPerCycleV2: "Per Cycle",
+   ResourceImportImportCapV2: "Max Amount",
    ResourceImportSettings: "Přeprava zdrojů: %{res}",
+   ResourceImportCapacity: "Resource Transport Capacity",
    PlayerTradeYouPay: "Platíte: %{res}",
+   PlayerTradeFillPercentage: "Fill Percentage",
    PlayerTradeYouGetGross: "Dostanete (před tarifem): %{res}",
    PlayerTradeYouGetNet: " %{res}",
    PlayerTradeStorageRequired: "Požadované skladování",
@@ -806,8 +808,6 @@ export const CZ = {
       "<b>Kapacita stavitele</b> při stavbě divů je ovlivněna <b>věkem</b> a <b>technologií</b>, která div odemyká.",
    MarketSettings: "Nastavení trhu",
    ClearAfterUpdate: "Vymazat všechny obchody po aktualizaci trhu",
-   WarehouseSettings: "Nastavení skladu",
-   WarehouseSettingsAutopilot: "Režim autopilota",
    WarehouseSettingsAutopilotDesc:
       "Tento sklad bude využívat svou nečinnou kapacitu k přepravě surovin z budov, které mají plný sklad. Aktuální volná kapacita: %{capacity}",
    WarehouseUpgrade: "Odemkněte režim autopilota skladu. Volná přeprava mezi skladem a přilehlými budovami.",
@@ -917,8 +917,8 @@ export const CZ = {
       "Vylepšení vašeho účtu <b>zruší váš aktuální běh</b> a přenese trvalé skvělé lidi <b>na úroveň %{level}</b>. To <b>nelze</b> vrátit zpět, jste si jisti, že chcete pokračovat?",
    CannotEarnPermanentGreatPeopleDesc: "Protože se jedná o zkušební běh, nelze získat trvalé skvělé lidi.",
    BackToCity: "Zpět do města",
-   UpgradeBuildingNotProducingDesc:
-      "Tato budova se vylepšuje - výroba bude zastavena, dokud nebude vylepšení dokončeno.",
+   UpgradeBuildingNotProducingDescV2:
+      "This building is being upgraded - <b>production will halt until upgrade is complete</b>",
    Tutorial: "Výukový program",
    SelectedCount: "%{count} Vybrané",
    SelectedAll: "Vybrat vše",
@@ -980,4 +980,31 @@ export const CZ = {
    ShortcutBuildingPageToggleBuildingSetAllSimilar: "Přepnout výrobu a použít na všechny",
    HappinessUncapped: "Štěstí (neomezené)",
    ExtraGreatPeople: "%{count} Extra Skvělí lidé",
+   ScrollWheelAdjustLevelTooltip:
+      "You can use scroll wheel to adjust the level when your cursor is over this",
+   Concrete: "Concrete",
+   ConcretePlant: "Cement Plant",
+   ResourceExportBelowCap: "Export Below Cap",
+   ResourceExportBelowCapTooltip:
+      "Allow other buildings to transport a resource from this building even when its amount is below the cap",
+   ResourceExportToSameType: "Export to the Same Type",
+   ResourceExportToSameTypeTooltip:
+      "Allow other buildings of the same type to transport a resource from this building",
+   MarketTradeDescHTML:
+      "Markets get <b>one more trade per level</b>. After you upgrade the market, the extra trades will appear",
+   WarehouseAutopilotSettings: "Autopilot Settings",
+   WarehouseAutopilotSettingsEnable: "Enable Autopilot",
+   WarehouseAutopilotSettingsRespectCapSetting: "Require Storage < Cap",
+   WarehouseAutopilotSettingsRespectCapSettingTooltip:
+      "Autopilot will only transport resources whose amount in storage is below the cap",
+   Zenobia: "Zenobia",
+   ZenobiaDesc: "+%{value}h Petra Warp Storage",
+   PlayerTradeFillAmountMaxV2: "Fill Max",
+   GrandBazaar: "Grand Bazaar",
+   GrandBazaarDesc: "Control all markets in one place!. All adjacent buildings get +5 Storage Multiplier",
+   GrandBazaarFilters: "Filters",
+   GrandBazaarFilterYouPay: "You Pay",
+   GrandBazaarFilterYouGet: "You Get",
+   SeaTradeUpgrade: "Trading with players across the sea. Tariff for each sea tile: %{tariff}",
+   SeaTradeCost: "Sea Trade Cost",
 };

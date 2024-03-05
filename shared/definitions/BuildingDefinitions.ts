@@ -920,16 +920,16 @@ export class BuildingDefinitions {
       special: BuildingSpecial.WorldWonder,
       wikipedia: "Brandenburg_Gate",
    };
-   GrandBazaar: IBuildingDefinition = {
-      name: () => t(L.GrandBazaar),
-      desc: () => t(L.GrandBazaarDesc),
-      input: {},
-      output: {},
-      max: 1,
-      construction: { Wood: 1 },
-      special: BuildingSpecial.WorldWonder,
-      wikipedia: "Grand_Bazaar,_Istanbul",
-   };
+   // GrandBazaar: IBuildingDefinition = {
+   //    name: () => t(L.GrandBazaar),
+   //    desc: () => t(L.GrandBazaarDesc),
+   //    input: {},
+   //    output: {},
+   //    max: 1,
+   //    construction: { Wood: 1 },
+   //    special: BuildingSpecial.WorldWonder,
+   //    wikipedia: "Grand_Bazaar,_Istanbul",
+   // };
    // ArcDeTriomphe: IBuildingDefinition = {
    //    name: () => t(L.ArcDeTriomphe),
    //    desc: () => t(L.ArcDeTriompheDesc),

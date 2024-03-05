@@ -438,7 +438,7 @@ export const KR = {
    Petra: "페트라",
    PetraDesc: "오프라인 상태에서 타임워프를 생성하여 제국을 가속화하는 데 사용할 수 있습니다",
    OxfordUniversity: "옥스포드 대학",
-   OxfordUniversityDesc: "제국의 각 건물 업그레이드는 사이클당 +1 과학을 제공합니다",
+   OxfordUniversityDescV2: "Each building upgrade in your empire provides +5 Science per cycle",
    StPetersBasilica: "성 베드로 대성당",
    StPetersBasilicaDesc:
       "신앙을 생산하는 모든 건물이 +1의 저장소 배수를 얻습니다. 저장된 신앙에 비례하여 신앙을 생성합니다.",
@@ -677,9 +677,9 @@ export const KR = {
    PlayerTradeFill: "수락",
    PlayerTradeClaim: "받기",
    PlayerTradeFillAmount: "금액 채우기",
-   PlayerTradeFillSuccess: "거래가 성공적으로 완료되었습니다.",
+   PlayerTradeFillSuccessV2:
+      "<b>%{success}/%{total}</b> trades have been filled. You paid <b>%{fillAmount} %{fillResource}</b> and received <b>%{receivedAmount} %{receivedResource}</b>",
    PlayerTradeAddSuccess: "거래가 성공적으로 추가되었습니다.",
-   PlayerTradeFillAmountMax: "가능한 모든 양 채우기",
    PlayerTradeFillTradeTitle: "거래하기",
    PlayerTradeFillTradeButton: "거래하기",
    PlayerTradeMaxTradeExceeded: "계정 랭크에 대한 최대 거래 횟수를 초과했습니다.",
@@ -708,10 +708,12 @@ export const KR = {
    ResourceImport: "자원 수송",
    ResourceImportResource: "자원",
    ResourceImportStorage: "저장소",
-   ResourceImportImportPerCycle: "투입",
-   ResourceImportImportCap: "상한",
+   ResourceImportImportPerCycleV2: "Per Cycle",
+   ResourceImportImportCapV2: "Max Amount",
    ResourceImportSettings: "자원수송: %{res}",
+   ResourceImportCapacity: "Resource Transport Capacity",
    PlayerTradeYouPay: "지불: %{res}",
+   PlayerTradeFillPercentage: "Fill Percentage",
    PlayerTradeYouGetGross: "획득량 (관세 지불 전): %{res}",
    PlayerTradeYouGetNet: "획득량 (관세 지불 후): %{res}",
    PlayerTradeStorageRequired: "요구 저장소",
@@ -787,8 +789,6 @@ export const KR = {
       "불가사의를 건축할때 <b>건축가 용량</b>은 불가사의가 해금된 <b>시대</b> 와 <b>기술</b>에 영향을 받습니다.",
    MarketSettings: "시장 설정",
    ClearAfterUpdate: "시장 갱신후 모든 거래 초기화",
-   WarehouseSettings: "창고 설정",
-   WarehouseSettingsAutopilot: "오토파일럿 모드",
    WarehouseSettingsAutopilotDesc:
       "이 창고는 유휴용량을 사용하여 저장소가 가득한 건물로부터 자원을 수송받습니다. 현재 유휴 용량: %{capacity}",
    WarehouseUpgrade: "창고 오토파일럿 모드 해금. 창고와 인접한 건물간에 무료 운송",
@@ -891,8 +891,8 @@ export const KR = {
       "계정을 업그레이드 하면 <b>현재 회차가 초기화되며</b> 영구 위인들을 <b>%{level} 레벨까지 이월합니다</b>. <b>이 작업은 취소할수 없습니다</b>, 계속하시겠습니까?",
    CannotEarnPermanentGreatPeopleDesc: "실험회차에서는 영구 위인들을 얻을수 없습니다",
    BackToCity: "도시로 돌아가기",
-   UpgradeBuildingNotProducingDesc:
-      "이 건물은 업그레이드중입니다 - 업그레이드가 완료될때까지 생산이 중단됩니다.",
+   UpgradeBuildingNotProducingDescV2:
+      "This building is being upgraded - <b>production will halt until upgrade is complete</b>",
    Tutorial: "튜토리얼",
    SelectedCount: "%{count} 선택됨",
    SelectedAll: "모두선택",
@@ -953,4 +953,31 @@ export const KR = {
    ShortcutBuildingPageToggleBuildingSetAllSimilar: "Toggle Production And Apply To All",
    HappinessUncapped: "Happiness (Uncapped)",
    ExtraGreatPeople: "%{count} Extra Great People",
+   ScrollWheelAdjustLevelTooltip:
+      "You can use scroll wheel to adjust the level when your cursor is over this",
+   Concrete: "Concrete",
+   ConcretePlant: "Cement Plant",
+   ResourceExportBelowCap: "Export Below Cap",
+   ResourceExportBelowCapTooltip:
+      "Allow other buildings to transport a resource from this building even when its amount is below the cap",
+   ResourceExportToSameType: "Export to the Same Type",
+   ResourceExportToSameTypeTooltip:
+      "Allow other buildings of the same type to transport a resource from this building",
+   MarketTradeDescHTML:
+      "Markets get <b>one more trade per level</b>. After you upgrade the market, the extra trades will appear",
+   WarehouseAutopilotSettings: "Autopilot Settings",
+   WarehouseAutopilotSettingsEnable: "Enable Autopilot",
+   WarehouseAutopilotSettingsRespectCapSetting: "Require Storage < Cap",
+   WarehouseAutopilotSettingsRespectCapSettingTooltip:
+      "Autopilot will only transport resources whose amount in storage is below the cap",
+   Zenobia: "Zenobia",
+   ZenobiaDesc: "+%{value}h Petra Warp Storage",
+   PlayerTradeFillAmountMaxV2: "Fill Max",
+   GrandBazaar: "Grand Bazaar",
+   GrandBazaarDesc: "Control all markets in one place!. All adjacent buildings get +5 Storage Multiplier",
+   GrandBazaarFilters: "Filters",
+   GrandBazaarFilterYouPay: "You Pay",
+   GrandBazaarFilterYouGet: "You Get",
+   SeaTradeUpgrade: "Trading with players across the sea. Tariff for each sea tile: %{tariff}",
+   SeaTradeCost: "Sea Trade Cost",
 };

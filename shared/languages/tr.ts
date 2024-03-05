@@ -442,7 +442,7 @@ export const TR = {
    Petra: "Petra",
    PetraDesc: "Generate time warp when you are offline, which you can use to accelerate your empire",
    OxfordUniversity: "Oxford University",
-   OxfordUniversityDesc: "Each building upgrade in your empire provides +1 Science per cycle",
+   OxfordUniversityDescV2: "Each building upgrade in your empire provides +5 Science per cycle",
    StPetersBasilica: "St. Peter's Basilica",
    StPetersBasilicaDesc:
       "All buildings that produce Faith get +1 Storage Multiplier. Generate Faith based on Faith in storage",
@@ -688,9 +688,9 @@ export const TR = {
    PlayerTradeFill: "Fill",
    PlayerTradeClaim: "Claim",
    PlayerTradeFillAmount: "Fill Amount",
-   PlayerTradeFillSuccess: "The trade has been successfully filled",
+   PlayerTradeFillSuccessV2:
+      "<b>%{success}/%{total}</b> trades have been filled. You paid <b>%{fillAmount} %{fillResource}</b> and received <b>%{receivedAmount} %{receivedResource}</b>",
    PlayerTradeAddSuccess: "The trade has been successfully added",
-   PlayerTradeFillAmountMax: "Fill All Available",
    PlayerTradeFillTradeTitle: "Fill Trade",
    PlayerTradeFillTradeButton: "Fill Trade",
    PlayerTradeMaxTradeExceeded: "You have exceeded max number of active trades for your account rank",
@@ -720,10 +720,12 @@ export const TR = {
    ResourceImport: "Resource Transport",
    ResourceImportResource: "Resource",
    ResourceImportStorage: "Storage",
-   ResourceImportImportPerCycle: "Import",
-   ResourceImportImportCap: "Cap",
+   ResourceImportImportPerCycleV2: "Per Cycle",
+   ResourceImportImportCapV2: "Max Amount",
    ResourceImportSettings: "Resource Transport: %{res}",
+   ResourceImportCapacity: "Resource Transport Capacity",
    PlayerTradeYouPay: "You Pay: %{res}",
+   PlayerTradeFillPercentage: "Fill Percentage",
    PlayerTradeYouGetGross: "You Get (Before Tariff): %{res}",
    PlayerTradeYouGetNet: "You Get (After Tariff): %{res}",
    PlayerTradeStorageRequired: "Storage Required",
@@ -800,8 +802,6 @@ export const TR = {
       "<b>Builder Capacity</b> when constructing wonders are affect by the <b>age</b> and <b>technology</b> that unlocks the wonder",
    MarketSettings: "Market Settings",
    ClearAfterUpdate: "Clear All Trades After Market Update",
-   WarehouseSettings: "Warehouse Settings",
-   WarehouseSettingsAutopilot: "Autopilot Mode",
    WarehouseSettingsAutopilotDesc:
       "This warehouse will use its idle capacity to transport resources from buildings that have full storage. Current idle capacity: %{capacity}",
    WarehouseUpgrade:
@@ -912,8 +912,8 @@ export const TR = {
       "Upgrading your account will <b>reset your current run</b> and carry over permanent great people <b>up to level %{level}</b>. This <b>cannot</b> be undone, are you sure to continue?",
    CannotEarnPermanentGreatPeopleDesc: "Because this is a trial run, permanent great people cannot be earned",
    BackToCity: "Back To City",
-   UpgradeBuildingNotProducingDesc:
-      "This building is being upgraded - production will halt until upgrade is complete",
+   UpgradeBuildingNotProducingDescV2:
+      "This building is being upgraded - <b>production will halt until upgrade is complete</b>",
    Tutorial: "Tutorial",
    SelectedCount: "%{count} Selected",
    SelectedAll: "Select All",
@@ -974,4 +974,31 @@ export const TR = {
    ShortcutBuildingPageToggleBuildingSetAllSimilar: "Toggle Production And Apply To All",
    HappinessUncapped: "Happiness (Uncapped)",
    ExtraGreatPeople: "%{count} Extra Great People",
+   ScrollWheelAdjustLevelTooltip:
+      "You can use scroll wheel to adjust the level when your cursor is over this",
+   Concrete: "Concrete",
+   ConcretePlant: "Cement Plant",
+   ResourceExportBelowCap: "Export Below Cap",
+   ResourceExportBelowCapTooltip:
+      "Allow other buildings to transport a resource from this building even when its amount is below the cap",
+   ResourceExportToSameType: "Export to the Same Type",
+   ResourceExportToSameTypeTooltip:
+      "Allow other buildings of the same type to transport a resource from this building",
+   MarketTradeDescHTML:
+      "Markets get <b>one more trade per level</b>. After you upgrade the market, the extra trades will appear",
+   WarehouseAutopilotSettings: "Autopilot Settings",
+   WarehouseAutopilotSettingsEnable: "Enable Autopilot",
+   WarehouseAutopilotSettingsRespectCapSetting: "Require Storage < Cap",
+   WarehouseAutopilotSettingsRespectCapSettingTooltip:
+      "Autopilot will only transport resources whose amount in storage is below the cap",
+   Zenobia: "Zenobia",
+   ZenobiaDesc: "+%{value}h Petra Warp Storage",
+   PlayerTradeFillAmountMaxV2: "Fill Max",
+   GrandBazaar: "Grand Bazaar",
+   GrandBazaarDesc: "Control all markets in one place!. All adjacent buildings get +5 Storage Multiplier",
+   GrandBazaarFilters: "Filters",
+   GrandBazaarFilterYouPay: "You Pay",
+   GrandBazaarFilterYouGet: "You Get",
+   SeaTradeUpgrade: "Trading with players across the sea. Tariff for each sea tile: %{tariff}",
+   SeaTradeCost: "Sea Trade Cost",
 };

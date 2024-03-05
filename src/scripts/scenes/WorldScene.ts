@@ -269,7 +269,7 @@ export class WorldScene extends Scene {
             }
             case "ColossusOfRhodes":
             case "LighthouseOfAlexandria":
-            case "GrandBazaar":
+            // case "GrandBazaar":
             case "HangingGarden":
             case "ChichenItza":
             case "AngkorWat":
