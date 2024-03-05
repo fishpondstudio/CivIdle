@@ -979,7 +979,7 @@ export const EN = {
    ScrollWheelAdjustLevelTooltip:
       "You can use scroll wheel to adjust the level when your cursor is over this",
    Concrete: "Concrete",
-   ConcretePlant: "Cement Plant",
+   ConcretePlant: "Concrete Plant",
    ResourceExportBelowCap: "Export Below Cap",
    ResourceExportBelowCapTooltip:
       "Allow other buildings to transport a resource from this building even when its amount is below the cap",
