@@ -5,6 +5,10 @@ interface PatchNote {
 
 export const PatchNotes: PatchNote[] = [
    {
+      version: "0.3.0",
+      content: [["Content", "This is a placeholder"]],
+   },
+   {
       version: "0.2.1",
       content: [
          [
