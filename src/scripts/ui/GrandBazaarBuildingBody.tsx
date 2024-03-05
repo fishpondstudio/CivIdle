@@ -134,13 +134,15 @@ export function GrandBazaarBuildingBody({ gameState, xy }: IBuildingComponentPro
          const sellValue = Config.ResourcePrice[sellResource]! * capacity;
          const buy = getBuyResourceAndAmount(market, sellResource, capacity, xy);
          const buyValue = Config.ResourcePrice[buy.resource]! * buy.amount;
-         addMarketData({
-            tile: tile.tile,
-            youPay: { res: sellResource, amount: capacity },
-            youGet: { res: buy.resource, amount: buy.amount },
-            tradeValue: buyValue / sellValue - 1,
-            selling: market.sellResources[sellResource] ? true : false,
-         });
+         if (buy.resource) {
+            addMarketData({
+               tile: tile.tile,
+               youPay: { res: sellResource, amount: capacity },
+               youGet: { res: buy.resource, amount: buy.amount },
+               tradeValue: buyValue / sellValue - 1,
+               selling: market.sellResources[sellResource] ? true : false,
+            });
+         }
       }
    });
 
