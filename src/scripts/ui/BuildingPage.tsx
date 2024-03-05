@@ -7,6 +7,7 @@ import type { Tile } from "../../../shared/utilities/Helper";
 import { useGameState } from "../Global";
 import { Singleton } from "../utilities/Singleton";
 import { DefaultBuildingBody } from "./DefaultBuildingBody";
+import { GrandBazaarBuildingBody } from "./GrandBazaarBuildingBody";
 import { HeadquarterBuildingBody } from "./HeadquarterBuildingBody";
 import { LoadingPage, LoadingPageStage } from "./LoadingPage";
 import { MarketBuildingBody } from "./MarketBuildingBody";
@@ -27,7 +28,7 @@ const BuildingBodyOverride: Partial<Record<Building, FunctionComponent<IBuilding
    Petra: PetraBuildingBody,
    OxfordUniversity: OxfordUniversityBuildingBody,
    StPetersBasilica: StPetersBasilicaBuildingBody,
-   // GrandBazaar: GrandBazaarBuildingBody,
+   GrandBazaar: GrandBazaarBuildingBody,
 };
 
 export function BuildingPage(props: { tile: ITileData }): React.ReactNode {

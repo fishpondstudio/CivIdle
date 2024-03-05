@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { L, t } from "../../../shared/utilities/i18n";
 
 export interface ITableHeader {
    name: React.ReactNode;
@@ -60,6 +61,11 @@ export function TableView<T>({
                {data
                   .sort((a, b) => (asc ? compareFunc(a, b, sortColumn) : -compareFunc(a, b, sortColumn)))
                   .map(renderRow)}
+               {data.length === 0 ? (
+                  <tr className="text-center text-desc">
+                     <td colSpan={999}>{t(L.NothingHere)}</td>
+                  </tr>
+               ) : null}
             </tbody>
          </table>
       </div>

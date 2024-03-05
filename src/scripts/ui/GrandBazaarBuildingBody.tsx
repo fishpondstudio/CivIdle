@@ -1,22 +1,17 @@
 import classNames from "classnames";
 import { useState } from "react";
-import type { Building } from "../../../shared/definitions/BuildingDefinitions";
 import type { Resource } from "../../../shared/definitions/ResourceDefinitions";
-import {
-   getMarketBuyAmount,
-   getMarketSellAmount,
-   totalMultiplierFor,
-} from "../../../shared/logic/BuildingLogic";
+import { getMarketBuyAmount, getMarketSellAmount } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
 import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
 import { getBuildingsByType } from "../../../shared/logic/IntraTickCache";
-import type { IMarketBuildingData, ITileData } from "../../../shared/logic/Tile";
+import type { IMarketBuildingData } from "../../../shared/logic/Tile";
 import { convertPriceIdToTime } from "../../../shared/logic/Update";
 import {
    CURRENCY_EPSILON,
+   forEach,
    formatHMS,
    formatPercent,
-   keysOf,
    mathSign,
    type Tile,
 } from "../../../shared/utilities/Helper";
@@ -33,123 +28,57 @@ import { TableView } from "./TableView";
 import { TextWithHelp } from "./TextWithHelpComponent";
 
 interface IGrandBazaarMarketData {
-   tile: number;
-   youPay: { res: Resource; amount: number };
-   youGet: { res: Resource; amount: number };
-   tradeValue: number;
-   selling: boolean;
+   xy: Tile;
+   sellResource: Resource;
+   sellAmount: number;
+   buyResource: Resource;
+   buyAmount: number;
 }
 
-function getResourcesFromAllMarkets(marketBuildings: Map<Tile, Required<ITileData>> | undefined) {
-   const marketResources: Resource[] = [];
-   marketBuildings?.forEach((tile, xy) => {
-      const market = tile.building as IMarketBuildingData;
-      keysOf(market.availableResources).forEach((res) => {
-         if (!marketResources.includes(res)) {
-            marketResources.push(res);
-         }
-      });
-   });
-
-   return marketResources.sort((a, b) => Config.Resource[a].name().localeCompare(Config.Resource[b].name()));
-}
-
-function getSellResourceFromBuyResource(market: IMarketBuildingData, buy: Resource | null) {
-   if (!buy) {
-      return null;
-   }
-   let resource = null;
-   keysOf(market.availableResources).forEach((res) => {
-      if (market.availableResources[res] === buy) {
-         resource = res;
-      }
-   });
-   return resource;
+function calculateTradeValue(item: IGrandBazaarMarketData): number {
+   return (
+      (item.buyAmount * Config.ResourcePrice[item.buyResource]!) /
+         (item.sellAmount * Config.ResourcePrice[item.sellResource]!) -
+      1
+   );
 }
 
 export function GrandBazaarBuildingBody({ gameState, xy }: IBuildingComponentProps): React.ReactNode {
-   const [youPayFilter, setYouPayFilter] = useState<Resource | null>(null);
-   const [youGetFilter, setYouGetFilter] = useState<Resource | null>(null);
+   const [buyResourceFilter, setBuyResourceFilter] = useState<Resource | null>(null);
+   const [sellResourceFilter, setSellResourceFilter] = useState<Resource | null>(null);
 
    const building = gameState.tiles.get(xy)?.building;
    if (!building) {
       return null;
    }
 
-   const filterSellResource = (value: string) => {
-      setYouPayFilter(value === "" ? null : (value as Resource));
-   };
-   const filterBuyResource = (value: string) => {
-      setYouGetFilter(value === "" ? null : (value as Resource));
-   };
-   const getBuyResourceAndAmount = (
-      market: IMarketBuildingData,
-      sellResource: Resource,
-      capacity: number,
-      xy: Tile,
-   ) => {
-      const buyResource = market.availableResources[sellResource]!;
-      const sellAmount = getMarketSellAmount(xy, gameState);
-      return {
-         resource: buyResource,
-         amount: getMarketBuyAmount(sellResource, sellAmount, buyResource, xy, gameState),
-      };
-   };
-   /*amount: round(
-    (capacity * getMarketPrice(sellResource, xy, gameState)) /
-       getMarketPrice(buyResource, xy, gameState),
-    1,
- ),*/
+   const marketBuildings = getBuildingsByType("Market", gameState);
+   const availableResourcesSet = new Set<Resource>();
 
-   const marketBuildings = getBuildingsByType("Market" as Building, gameState);
-   const avaliableResources = getResourcesFromAllMarkets(marketBuildings);
-
-   const marketBuildingData: IGrandBazaarMarketData[] = [];
-   const addMarketData = (marketData: IGrandBazaarMarketData) => {
-      marketBuildingData.push(marketData);
-   };
-
+   const allMarketTrades: IGrandBazaarMarketData[] = [];
    marketBuildings?.forEach((tile, xy) => {
       const market = tile.building as IMarketBuildingData;
-      // Get input(sell) capacity for the market
-      const capacity = market.capacity * market.level * totalMultiplierFor(xy, "output", 1, gameState);
-
-      // Get the pay resource if filtering a get resource
-      let sellResource: Resource | null = getSellResourceFromBuyResource(market, youGetFilter);
-      if (youPayFilter) {
-         if (sellResource && sellResource === youPayFilter) {
-            // If filtering by both pay and get
-            sellResource = youPayFilter;
-         } else if (!sellResource) {
-            // If filtering by pay
-            sellResource = youPayFilter;
-         } else {
-            // If no filtering is set
-            sellResource = null;
-         }
-      }
-
-      // Only add data for the table if we have something to filter by
-      if (sellResource) {
-         const sellValue = Config.ResourcePrice[sellResource]! * capacity;
-         const buy = getBuyResourceAndAmount(market, sellResource, capacity, xy);
-         const buyValue = Config.ResourcePrice[buy.resource]! * buy.amount;
-         if (buy.resource) {
-            addMarketData({
-               tile: tile.tile,
-               youPay: { res: sellResource, amount: capacity },
-               youGet: { res: buy.resource, amount: buy.amount },
-               tradeValue: buyValue / sellValue - 1,
-               selling: market.sellResources[sellResource] ? true : false,
-            });
-         }
-      }
+      const sellAmount = market.capacity * getMarketSellAmount(xy, gameState);
+      forEach(market.availableResources, (sellResource, buyResource) => {
+         availableResourcesSet.add(sellResource);
+         availableResourcesSet.add(buyResource);
+         allMarketTrades.push({
+            xy,
+            sellResource,
+            sellAmount,
+            buyResource,
+            buyAmount: getMarketBuyAmount(sellResource, sellAmount, buyResource, xy, gameState),
+         });
+      });
    });
+
+   const availableResources = Array.from(availableResourcesSet).sort((a, b) =>
+      Config.Resource[a].name().localeCompare(Config.Resource[b].name()),
+   );
 
    return (
       <div className="window-body">
          <BuildingDescriptionComponent gameState={gameState} xy={xy} />
-
          <fieldset>
             <div className="row">
                <div className="f1">{t(L.NextMarketUpdateIn)}</div>
@@ -158,22 +87,24 @@ export function GrandBazaarBuildingBody({ gameState, xy }: IBuildingComponentPro
                </div>
             </div>
          </fieldset>
-
          <fieldset>
             <legend>{t(L.GrandBazaarFilters)}</legend>
             <div className="row">
                <div style={{ width: "120px" }}>{t(L.GrandBazaarFilterYouPay)}</div>
                <select
                   className="f1"
-                  value={youPayFilter ? youPayFilter : ""}
+                  value={sellResourceFilter ? sellResourceFilter : ""}
                   onChange={(e) => {
-                     if (e.target.value in Config.Resource || e.target.value === "") {
-                        filterSellResource(e.target.value);
+                     if (e.target.value === "") {
+                        setSellResourceFilter(null);
+                     }
+                     if (e.target.value in Config.Resource) {
+                        setSellResourceFilter(e.target.value as Resource);
                      }
                   }}
                >
                   <option value=""></option>
-                  {avaliableResources.map((res) => (
+                  {availableResources.map((res) => (
                      <option key={res} value={res}>
                         {Config.Resource[res].name()}
                      </option>
@@ -185,15 +116,18 @@ export function GrandBazaarBuildingBody({ gameState, xy }: IBuildingComponentPro
                <div style={{ width: "120px" }}>{t(L.GrandBazaarFilterYouGet)}</div>
                <select
                   className="f1"
-                  value={youGetFilter ? youGetFilter : ""}
+                  value={buyResourceFilter ? buyResourceFilter : ""}
                   onChange={(e) => {
-                     if (e.target.value in Config.Resource || e.target.value === "") {
-                        filterBuyResource(e.target.value);
+                     if (e.target.value === "") {
+                        setBuyResourceFilter(null);
+                     }
+                     if (e.target.value in Config.Resource) {
+                        setBuyResourceFilter(e.target.value as Resource);
                      }
                   }}
                >
                   <option value=""></option>
-                  {avaliableResources.map((res) => (
+                  {availableResources.map((res) => (
                      <option key={res} value={res}>
                         {Config.Resource[res].name()}
                      </option>
@@ -208,85 +142,98 @@ export function GrandBazaarBuildingBody({ gameState, xy }: IBuildingComponentPro
                { name: t(L.MarketYouPay), sortable: true },
                { name: t(L.MarketYouGet), sortable: true },
                { name: "", sortable: true },
-               { name: t(L.Storage), sortable: true },
-               { name: t(L.MarketSell), sortable: false },
+               { name: t(L.MarketSell), sortable: true },
                { name: "", sortable: false },
             ]}
-            data={marketBuildingData}
+            data={allMarketTrades.filter((m) => {
+               let buyFilter = false;
+               let sellFilter = false;
+               if (buyResourceFilter != null) {
+                  buyFilter = buyResourceFilter === m.buyResource;
+               } else {
+                  buyFilter = true;
+               }
+               if (sellResourceFilter != null) {
+                  sellFilter = sellResourceFilter === m.sellResource;
+               } else {
+                  sellFilter = true;
+               }
+               return buyFilter && sellFilter;
+            })}
             compareFunc={(a, b, i) => {
                switch (i) {
+                  case 0:
+                     return (a.sellAmount ?? 0) - (b.sellAmount ?? 0);
                   case 1:
-                     return (a.youGet.amount ?? 0) - (b.youGet.amount ?? 0);
+                     return (a.buyAmount ?? 0) - (b.buyAmount ?? 0);
                   case 2:
-                     return (a.tradeValue ?? 0) - (b.tradeValue ?? 0);
+                     return (calculateTradeValue(a) ?? 0) - (calculateTradeValue(b) ?? 0);
                   default:
                      return 0;
                }
             }}
             renderRow={(item) => {
-               const building = gameState.tiles.get(item.tile)?.building as IMarketBuildingData;
-               const youPayResource = Config.Resource[item.youPay.res];
-               const youGetResource = Config.Resource[item.youGet.res];
+               const building = gameState.tiles.get(item.xy)?.building as IMarketBuildingData;
+               const sellResource = Config.Resource[item.sellResource];
+               const buyResource = Config.Resource[item.buyResource];
+               const tradeValue = calculateTradeValue(item);
                return (
                   <tr>
                      <td>
-                        <div>{youPayResource.name()}</div>
+                        <div>{sellResource.name()}</div>
                         <div className="text-small text-desc text-strong">
-                           <FormatNumber value={item.youPay.amount} />
+                           <FormatNumber value={item.sellAmount} />
                         </div>
                      </td>
                      <td>
-                        <div>{youGetResource.name()}</div>
+                        <div>{buyResource.name()}</div>
                         <div className="text-small text-desc text-strong">
-                           <FormatNumber value={item.youGet.amount} />
+                           <FormatNumber value={item.buyAmount} />
                         </div>
                      </td>
                      <td
                         className={classNames({
-                           "text-green": item.tradeValue > 0,
-                           "text-red": item.tradeValue < 0,
+                           "text-green": tradeValue > 0,
+                           "text-red": tradeValue < 0,
                            "text-right text-small": true,
                         })}
                      >
                         <TextWithHelp
                            content={t(L.MarketValueDesc, {
-                              value: formatPercent(item.tradeValue, 0),
+                              value: formatPercent(tradeValue, 0),
                            })}
                            noStyle
                         >
-                           {mathSign(item.tradeValue, CURRENCY_EPSILON)}
-                           {formatPercent(Math.abs(item.tradeValue), 0)}
+                           {mathSign(tradeValue, CURRENCY_EPSILON)}
+                           {formatPercent(Math.abs(tradeValue), 0)}
                         </TextWithHelp>
-                     </td>
-                     <td className="right">
-                        <FormatNumber value={building.resources[item.youPay.res] ?? 0} />
                      </td>
                      <td
                         className="pointer"
                         onClick={() => {
                            playClick();
-                           if (building.sellResources[item.youPay.res]) {
-                              delete building.sellResources[item.youPay.res];
+                           if (building.sellResources[item.sellResource]) {
+                              delete building.sellResources[item.sellResource];
                            } else {
-                              building.sellResources[item.youPay.res] = true;
+                              building.sellResources[item.sellResource] = true;
                            }
                            notifyGameStateUpdate();
                         }}
                      >
-                        {item.selling ? (
+                        {building.sellResources[item.sellResource] ? (
                            <div className="m-icon text-green">toggle_on</div>
                         ) : (
                            <div className="m-icon text-grey">toggle_off</div>
                         )}
                      </td>
-                     <td>
+                     <td style={{ width: 0 }}>
                         <div
                            className="m-icon small pointer"
                            onPointerDown={() => {
                               playClick();
                               Singleton()
                                  .sceneManager.getCurrent(WorldScene)
-                                 ?.lookAtTile(item.tile, LookAtMode.Select);
+                                 ?.lookAtTile(item.xy, LookAtMode.Select);
                            }}
                         >
                            open_in_new
@@ -296,7 +243,6 @@ export function GrandBazaarBuildingBody({ gameState, xy }: IBuildingComponentPro
                );
             }}
          />
-
          <div className="sep10"></div>
          <BuildingWikipediaComponent gameState={gameState} xy={xy} />
          <BuildingColorComponent gameState={gameState} xy={xy} />
