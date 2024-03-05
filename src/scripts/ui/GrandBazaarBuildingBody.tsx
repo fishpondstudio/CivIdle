@@ -1,5 +1,16 @@
 import classNames from "classnames";
 import { useState } from "react";
+import type { Building } from "../../../shared/definitions/BuildingDefinitions";
+import type { Resource } from "../../../shared/definitions/ResourceDefinitions";
+import {
+   getMarketBuyAmount,
+   getMarketSellAmount,
+   totalMultiplierFor,
+} from "../../../shared/logic/BuildingLogic";
+import { Config } from "../../../shared/logic/Config";
+import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
+import { getBuildingsByType } from "../../../shared/logic/IntraTickCache";
+import type { IMarketBuildingData, ITileData } from "../../../shared/logic/Tile";
 import { convertPriceIdToTime } from "../../../shared/logic/Update";
 import {
    CURRENCY_EPSILON,
@@ -7,32 +18,19 @@ import {
    formatPercent,
    keysOf,
    mathSign,
-   round,
    type Tile,
 } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
+import { LookAtMode, WorldScene } from "../scenes/WorldScene";
+import { Singleton } from "../utilities/Singleton";
+import { playClick } from "../visuals/Sound";
 import { BuildingColorComponent } from "./BuildingColorComponent";
 import { BuildingDescriptionComponent } from "./BuildingDescriptionComponent";
 import type { IBuildingComponentProps } from "./BuildingPage";
 import { BuildingWikipediaComponent } from "./BuildingWikipediaComponent";
-import { TableView } from "./TableView";
-import { getBuildingsByType } from "../../../shared/logic/IntraTickCache";
-import type { Building } from "../../../shared/definitions/BuildingDefinitions";
-import { Config } from "../../../shared/logic/Config";
-import type { IMarketBuildingData, ITileData } from "../../../shared/logic/Tile";
-import type { Resource } from "../../../shared/definitions/ResourceDefinitions";
-import {
-   getMarketBuyAmount,
-   getMarketPrice,
-   getMarketSellAmount,
-   totalMultiplierFor,
-} from "../../../shared/logic/BuildingLogic";
 import { FormatNumber } from "./HelperComponents";
+import { TableView } from "./TableView";
 import { TextWithHelp } from "./TextWithHelpComponent";
-import { playClick } from "../visuals/Sound";
-import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
-import { Singleton } from "../utilities/Singleton";
-import { LookAtMode, WorldScene } from "../scenes/WorldScene";
 
 interface IGrandBazaarMarketData {
    tile: number;
@@ -136,13 +134,15 @@ export function GrandBazaarBuildingBody({ gameState, xy }: IBuildingComponentPro
          const sellValue = Config.ResourcePrice[sellResource]! * capacity;
          const buy = getBuyResourceAndAmount(market, sellResource, capacity, xy);
          const buyValue = Config.ResourcePrice[buy.resource]! * buy.amount;
-         addMarketData({
-            tile: tile.tile,
-            youPay: { res: sellResource, amount: capacity },
-            youGet: { res: buy.resource, amount: buy.amount },
-            tradeValue: buyValue / sellValue - 1,
-            selling: market.sellResources[sellResource] ? true : false,
-         });
+         if (buy.resource) {
+            addMarketData({
+               tile: tile.tile,
+               youPay: { res: sellResource, amount: capacity },
+               youGet: { res: buy.resource, amount: buy.amount },
+               tradeValue: buyValue / sellValue - 1,
+               selling: market.sellResources[sellResource] ? true : false,
+            });
+         }
       }
    });
 
