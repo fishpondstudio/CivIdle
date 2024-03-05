@@ -187,7 +187,11 @@ function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
    if (building.status === "building" || building.status === "upgrading") {
       const cost = getBuildingCost(building);
       const { total } = getBuilderCapacity(building, xy, gs);
-
+      building.disabledInput.forEach((res) => {
+         if (!cost[res]) {
+            building.disabledInput.delete(res);
+         }
+      });
       const enabledResourceCount = sizeOf(cost) - building.disabledInput.size;
       const builderCapacityPerResource = enabledResourceCount > 0 ? total / enabledResourceCount : 0;
 
