@@ -38,14 +38,11 @@ interface IGrandBazaarMarketData {
 }
 
 function calculateTradeValue(item: IGrandBazaarMarketData): number {
-   const tradeValue =
+   return (
       (item.buyAmount * Config.ResourcePrice[item.buyResource]!) /
          (item.sellAmount * Config.ResourcePrice[item.sellResource]!) -
-      1;
-   if (!Number.isFinite(tradeValue)) {
-      return 0;
-   }
-   return tradeValue;
+      1
+   );
 }
 
 export function GrandBazaarBuildingBody({ gameState, xy }: IBuildingComponentProps): React.ReactNode {
@@ -66,7 +63,7 @@ export function GrandBazaarBuildingBody({ gameState, xy }: IBuildingComponentPro
       if (market.status !== "completed") {
          return;
       }
-      const sellAmount = 1 * getMarketSellAmount(xy, gameState, true);
+      const sellAmount = getMarketSellAmount(xy, gameState);
       forEach(market.availableResources, (sellResource, buyResource) => {
          availableResourcesSet.add(sellResource);
          availableResourcesSet.add(buyResource);

@@ -39,6 +39,7 @@ import {
    getBuildingValue,
    getCurrentPriority,
    getMarketBuyAmount,
+   getMarketSellAmount,
    getPowerRequired,
    getStockpileMax,
    getStorageFor,
@@ -373,17 +374,17 @@ function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
             delete market.sellResources[res];
             return;
          }
-         const amount = clamp(
-            building.capacity * building.level * totalMultiplierFor(xy, "output", 1, gs),
+         const sellAmount = clamp(
+            building.capacity * getMarketSellAmount(xy, gs),
             0,
             building.resources[res] ?? 0,
          );
-         const buyAmount = getMarketBuyAmount(res, amount, buyResource, xy, gs);
-         if (used - amount + buyAmount > total) {
+         const buyAmount = getMarketBuyAmount(res, sellAmount, buyResource, xy, gs);
+         if (used - sellAmount + buyAmount > total) {
             Tick.next.notProducingReasons.set(xy, "StorageFull");
             return;
          }
-         safeAdd(building.resources, res, -amount);
+         safeAdd(building.resources, res, -sellAmount);
          safeAdd(building.resources, buyResource, buyAmount);
          totalBought += buyAmount;
       });

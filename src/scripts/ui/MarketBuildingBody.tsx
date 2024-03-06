@@ -48,10 +48,7 @@ export function MarketBuildingBody({ gameState, xy }: IBuildingComponentProps): 
       const buyAmount = getMarketBuyAmount(sellResource, sellAmount, buyResource, xy, gameState);
       const sellValue = Config.ResourcePrice[sellResource]! * sellAmount;
       const buyValue = Config.ResourcePrice[buyResource]! * buyAmount;
-      let tradeValue = buyValue / sellValue - 1;
-      if (!Number.isFinite(tradeValue)) {
-         tradeValue = 0;
-      }
+      const tradeValue = buyValue / sellValue - 1;
       tradeValues.set(sellResource, tradeValue);
    });
 
