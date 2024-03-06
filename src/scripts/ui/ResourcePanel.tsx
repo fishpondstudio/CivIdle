@@ -14,6 +14,7 @@ import {
    clamp,
    formatPercent,
    mathSign,
+   round,
    sizeOf,
    type Tile,
 } from "../../../shared/utilities/Helper";
@@ -126,7 +127,7 @@ export function ResourcePanel(): React.ReactNode {
                   {getHappinessIcon(tick.happiness.value)}
                </div>
                <Tippy placement="bottom" content={t(L.Happiness)}>
-                  <div style={{ width: "50px" }}>{tick.happiness.value}</div>
+                  <div style={{ width: "50px" }}>{round(tick.happiness.value, 0)}</div>
                </Tippy>
             </div>
          ) : null}

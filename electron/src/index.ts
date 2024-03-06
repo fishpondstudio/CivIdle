@@ -7,6 +7,9 @@ import { IPCService } from "./IPCService";
 
 export type SteamClient = Omit<Client, "init" | "runCallbacks">;
 
+app.commandLine.appendSwitch("enable-logging", "file");
+app.commandLine.appendSwitch("--log-file=", path.join(getLocalGameSavePath(), "CivIdle.log"));
+
 export function getGameSavePath(): string {
    return path.join(app.getPath("appData"), "CivIdleSaves");
 }

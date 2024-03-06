@@ -368,12 +368,16 @@ function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
       const market = building as IMarketBuildingData;
       let totalBought = 0;
       forEach(market.sellResources, (res) => {
+         const buyResource = market.availableResources[res];
+         if (!buyResource) {
+            delete market.sellResources[res];
+            return;
+         }
          const amount = clamp(
             building.capacity * building.level * totalMultiplierFor(xy, "output", 1, gs),
             0,
             building.resources[res] ?? 0,
          );
-         const buyResource = market.availableResources[res]!;
          const buyAmount = getMarketBuyAmount(res, amount, buyResource, xy, gs);
          if (used - amount + buyAmount > total) {
             Tick.next.notProducingReasons.set(xy, "StorageFull");
