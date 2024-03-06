@@ -155,17 +155,21 @@ export function GrandBazaarBuildingBody({ gameState, xy }: IBuildingComponentPro
                { name: "", sortable: false },
             ]}
             data={allMarketTrades.filter((m) => {
+               // No filter, we show nothing, should revisit this later
+               if (buyResourceFilter === null && buyResourceFilter === null) {
+                  return false;
+               }
                let buyFilter = false;
                let sellFilter = false;
                if (buyResourceFilter != null) {
                   buyFilter = buyResourceFilter === m.buyResource;
                } else {
-                  buyFilter = false;
+                  buyFilter = true;
                }
                if (sellResourceFilter != null) {
                   sellFilter = sellResourceFilter === m.sellResource;
                } else {
-                  sellFilter = false;
+                  sellFilter = true;
                }
                return buyFilter && sellFilter;
             })}
