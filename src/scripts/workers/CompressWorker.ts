@@ -8,7 +8,6 @@ export interface CompressMessage {
 }
 
 onmessage = async (ev: MessageEvent<CompressMessage>) => {
-   console.time(`CompressWorker: ${ev.data.op}`);
    switch (ev.data.op) {
       case "compress": {
          const buffer = deflateSync(ev.data.buffer);
@@ -21,5 +20,4 @@ onmessage = async (ev: MessageEvent<CompressMessage>) => {
          break;
       }
    }
-   console.timeEnd(`CompressWorker: ${ev.data.op}`);
 };

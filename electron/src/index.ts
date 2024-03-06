@@ -18,7 +18,7 @@ export function getLocalGameSavePath(): string {
    return path.join(app.getPath("home"), "AppData", "LocalLow", "CivIdleSaves");
 }
 
-const createWindow = () => {
+const createWindow = async () => {
    try {
       const steam = init();
       migrateSave(steam.localplayer.getSteamId().steamId64.toString());
@@ -32,6 +32,16 @@ const createWindow = () => {
          minWidth: 1136,
          show: false,
       });
+
+      try {
+         await Promise.all([
+            mainWindow.webContents.session.clearCache(),
+            mainWindow.webContents.session.clearAuthCache(),
+            mainWindow.webContents.session.clearCodeCaches({}),
+         ]);
+      } catch (error) {
+         console.error("Failed to clear cache:", error);
+      }
 
       if (app.isPackaged) {
          mainWindow.loadFile(path.join(__dirname, "..", "dist", "index.html"));
