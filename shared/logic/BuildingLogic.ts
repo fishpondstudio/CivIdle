@@ -623,11 +623,10 @@ export function applyToAllBuildings<T extends IBuildingData>(
    });
 }
 
-export function getMarketSellAmount(xy: Tile, gs: GameState, maxCapacity = false): number {
+export function getMarketSellAmount(xy: Tile, gs: GameState): number {
    const building = gs.tiles.get(xy)?.building;
    if (!building) return 0;
-   const capacity = maxCapacity ? 1 : building.capacity;
-   return capacity * building.level * totalMultiplierFor(xy, "output", 1, gs);
+   return building.level * totalMultiplierFor(xy, "output", 1, gs);
 }
 
 export function getMarketBuyAmount(
