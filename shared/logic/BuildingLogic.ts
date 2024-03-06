@@ -38,7 +38,6 @@ import {
    ResourceImportOptions,
    getConstructionPriority,
    getProductionPriority,
-   getUpgradePriority,
    type IBuildingData,
    type IHaveTypeAndLevel,
    type IResourceImportBuildingData,
@@ -470,9 +469,8 @@ export function getBuildingValue(building: IBuildingData): number {
 export function getCurrentPriority(building: IBuildingData): number {
    switch (building.status) {
       case "building":
-         return getConstructionPriority(building.priority);
       case "upgrading":
-         return getUpgradePriority(building.priority);
+         return getConstructionPriority(building.priority);
       case "completed":
          return getProductionPriority(building.priority);
       default:

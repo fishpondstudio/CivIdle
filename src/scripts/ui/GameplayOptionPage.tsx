@@ -10,10 +10,8 @@ import {
    STOCKPILE_MAX_MIN,
    getConstructionPriority,
    getProductionPriority,
-   getUpgradePriority,
    setConstructionPriority,
    setProductionPriority,
-   setUpgradePriority,
 } from "../../../shared/logic/Tile";
 import { formatPercent } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
@@ -88,27 +86,6 @@ export function GameplayOptionPage(): React.ReactNode {
                      value={getConstructionPriority(options.defaultPriority)}
                      onChange={(e) => {
                         options.defaultPriority = setConstructionPriority(
-                           options.defaultPriority,
-                           parseInt(e.target.value, 10),
-                        );
-                        notifyGameOptionsUpdate(options);
-                     }}
-                  />
-                  <div className="sep10" />
-                  <div className="separator" />
-                  <div className="row">
-                     <div className="f1">{t(L.DefaultUpgradePriority)}</div>
-                     <div className="text-strong">{getUpgradePriority(options.defaultPriority)}</div>
-                  </div>
-                  <div className="sep5" />
-                  <input
-                     type="range"
-                     min={PRIORITY_MIN}
-                     max={PRIORITY_MAX}
-                     step="1"
-                     value={getUpgradePriority(options.defaultPriority)}
-                     onChange={(e) => {
-                        options.defaultPriority = setUpgradePriority(
                            options.defaultPriority,
                            parseInt(e.target.value, 10),
                         );

@@ -186,6 +186,7 @@ function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
    Tick.next.totalValue += getBuildingValue(building);
 
    if (building.status === "building" || building.status === "upgrading") {
+      console.log(building);
       const cost = getBuildingCost(building);
       const { total } = getBuilderCapacity(building, xy, gs);
       building.disabledInput.forEach((res) => {
