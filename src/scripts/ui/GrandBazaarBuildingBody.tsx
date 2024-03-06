@@ -94,9 +94,6 @@ export function GrandBazaarBuildingBody({ gameState, xy }: IBuildingComponentPro
          </fieldset>
          <fieldset>
             <legend>{t(L.GrandBazaarFilters)}</legend>
-            <WarningComponent icon="info" className="mb10 text-small">
-               <RenderHTML html={t(L.GrandBazaarFilterWarningHTML)} />
-            </WarningComponent>
             <div className="row">
                <div style={{ width: "120px" }}>{t(L.GrandBazaarFilterYouPay)}</div>
                <select
@@ -143,7 +140,11 @@ export function GrandBazaarBuildingBody({ gameState, xy }: IBuildingComponentPro
                </select>
             </div>
          </fieldset>
-
+         {buyResourceFilter === null && sellResourceFilter === null ? (
+            <WarningComponent icon="info" className="mb10 text-small">
+               <RenderHTML html={t(L.GrandBazaarFilterWarningHTML)} />
+            </WarningComponent>
+         ) : null}
          <TableView
             classNames="sticky-header f1"
             header={[
@@ -156,18 +157,15 @@ export function GrandBazaarBuildingBody({ gameState, xy }: IBuildingComponentPro
             data={allMarketTrades.filter((m) => {
                let buyFilter = false;
                let sellFilter = false;
-               if (buyResourceFilter === null && sellResourceFilter === null) {
-                  return false;
-               }
                if (buyResourceFilter != null) {
                   buyFilter = buyResourceFilter === m.buyResource;
                } else {
-                  buyFilter = true;
+                  buyFilter = false;
                }
                if (sellResourceFilter != null) {
                   sellFilter = sellResourceFilter === m.sellResource;
                } else {
-                  sellFilter = true;
+                  sellFilter = false;
                }
                return buyFilter && sellFilter;
             })}
@@ -193,7 +191,7 @@ export function GrandBazaarBuildingBody({ gameState, xy }: IBuildingComponentPro
                const buyResource = Config.Resource[item.buyResource];
                const tradeValue = calculateTradeValue(item);
                return (
-                  <tr>
+                  <tr key={`Res:${item.sellResource}Tile:${item.xy}`}>
                      <td>
                         <div>{sellResource.name()}</div>
                         <div className="text-small text-desc text-strong">
