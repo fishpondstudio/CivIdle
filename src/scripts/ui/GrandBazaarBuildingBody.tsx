@@ -156,7 +156,7 @@ export function GrandBazaarBuildingBody({ gameState, xy }: IBuildingComponentPro
             ]}
             data={allMarketTrades.filter((m) => {
                // No filter, we show nothing, should revisit this later
-               if (buyResourceFilter === null && buyResourceFilter === null) {
+               if (buyResourceFilter === null && sellResourceFilter === null) {
                   return false;
                }
                let buyFilter = false;
