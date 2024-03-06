@@ -1005,6 +1005,7 @@ export const EN = {
    GrandBazaarFilters: "Filters",
    GrandBazaarFilterYouPay: "You Pay",
    GrandBazaarFilterYouGet: "You Get",
+   GrandBazaarFilterWarningHTML: "You must select a filter before any market trades are shown",
    SeaTradeUpgrade: "Trading with players across the sea. Tariff for each sea tile: %{tariff}",
    SeaTradeCost: "Sea Trade Cost",
 };
