@@ -74,8 +74,10 @@ export function getBuildingIO(
          const totalCapacity = getResourceImportCapacity(b) * totalMultiplierFor(xy, "output", 1, gs);
          let used = 0;
          forEach((b as IResourceImportBuildingData).resourceImports, (k, v) => {
-            if (used + v.perCycle > totalCapacity) {
-               // Somehow a player manages to assign more capacity than allowed. We correct this case here
+            if (Tick.current.totalValue > 0 && used + v.perCycle > totalCapacity) {
+               // Somehow a player manages to assign more capacity than allowed. We correct this case here.
+               // But we only want to correct this when Tick is fully initialized. Currently it's done by
+               // checking Tick.current.totalValue, but we should revisit this later
                v.perCycle = 0;
             } else {
                used += v.perCycle;
