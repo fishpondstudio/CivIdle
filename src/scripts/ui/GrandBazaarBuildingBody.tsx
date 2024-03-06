@@ -63,7 +63,7 @@ export function GrandBazaarBuildingBody({ gameState, xy }: IBuildingComponentPro
    const allMarketTrades: IGrandBazaarMarketData[] = [];
    marketBuildings?.forEach((tile, xy) => {
       const market = tile.building as IMarketBuildingData;
-      if (market.status === "building" || market.status === "upgrading") {
+      if (market.status !== "completed") {
          return;
       }
       const sellAmount = 1 * getMarketSellAmount(xy, gameState, true);
@@ -159,9 +159,9 @@ export function GrandBazaarBuildingBody({ gameState, xy }: IBuildingComponentPro
             data={allMarketTrades.filter((m) => {
                let buyFilter = false;
                let sellFilter = false;
-               /*if (buyResourceFilter === null && sellResourceFilter === null) {
+               if (buyResourceFilter === null && sellResourceFilter === null) {
                   return false;
-               }*/
+               }
                if (buyResourceFilter != null) {
                   buyFilter = buyResourceFilter === m.buyResource;
                } else {
@@ -181,9 +181,6 @@ export function GrandBazaarBuildingBody({ gameState, xy }: IBuildingComponentPro
                         .name()
                         .localeCompare(Config.Resource[b.sellResource].name());
                   case 1:
-                     if (buyResourceFilter != null) {
-                        return (a.buyAmount ?? 0) - (b.buyAmount ?? 0);
-                     }
                      return Config.Resource[a.buyResource]
                         .name()
                         .localeCompare(Config.Resource[b.buyResource].name());
