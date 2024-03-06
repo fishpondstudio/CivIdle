@@ -24,8 +24,10 @@ import { BuildingDescriptionComponent } from "./BuildingDescriptionComponent";
 import type { IBuildingComponentProps } from "./BuildingPage";
 import { BuildingWikipediaComponent } from "./BuildingWikipediaComponent";
 import { FormatNumber } from "./HelperComponents";
+import { RenderHTML } from "./RenderHTMLComponent";
 import { TableView } from "./TableView";
 import { TextWithHelp } from "./TextWithHelpComponent";
+import { WarningComponent } from "./WarningComponent";
 
 interface IGrandBazaarMarketData {
    xy: Tile;
@@ -36,11 +38,14 @@ interface IGrandBazaarMarketData {
 }
 
 function calculateTradeValue(item: IGrandBazaarMarketData): number {
-   return (
+   const tradeValue =
       (item.buyAmount * Config.ResourcePrice[item.buyResource]!) /
          (item.sellAmount * Config.ResourcePrice[item.sellResource]!) -
-      1
-   );
+      1;
+   if (!Number.isFinite(tradeValue)) {
+      return 0;
+   }
+   return tradeValue;
 }
 
 export function GrandBazaarBuildingBody({ gameState, xy }: IBuildingComponentProps): React.ReactNode {
@@ -58,7 +63,10 @@ export function GrandBazaarBuildingBody({ gameState, xy }: IBuildingComponentPro
    const allMarketTrades: IGrandBazaarMarketData[] = [];
    marketBuildings?.forEach((tile, xy) => {
       const market = tile.building as IMarketBuildingData;
-      const sellAmount = market.capacity * getMarketSellAmount(xy, gameState);
+      if (market.status === "building" || market.status === "upgrading") {
+         return;
+      }
+      const sellAmount = 1 * getMarketSellAmount(xy, gameState, true);
       forEach(market.availableResources, (sellResource, buyResource) => {
          availableResourcesSet.add(sellResource);
          availableResourcesSet.add(buyResource);
@@ -89,6 +97,9 @@ export function GrandBazaarBuildingBody({ gameState, xy }: IBuildingComponentPro
          </fieldset>
          <fieldset>
             <legend>{t(L.GrandBazaarFilters)}</legend>
+            <WarningComponent icon="info" className="mb10 text-small">
+               <RenderHTML html={t(L.GrandBazaarFilterWarningHTML)} />
+            </WarningComponent>
             <div className="row">
                <div style={{ width: "120px" }}>{t(L.GrandBazaarFilterYouPay)}</div>
                <select
@@ -148,6 +159,9 @@ export function GrandBazaarBuildingBody({ gameState, xy }: IBuildingComponentPro
             data={allMarketTrades.filter((m) => {
                let buyFilter = false;
                let sellFilter = false;
+               /*if (buyResourceFilter === null && sellResourceFilter === null) {
+                  return false;
+               }*/
                if (buyResourceFilter != null) {
                   buyFilter = buyResourceFilter === m.buyResource;
                } else {
@@ -163,9 +177,16 @@ export function GrandBazaarBuildingBody({ gameState, xy }: IBuildingComponentPro
             compareFunc={(a, b, i) => {
                switch (i) {
                   case 0:
-                     return (a.sellAmount ?? 0) - (b.sellAmount ?? 0);
+                     return Config.Resource[a.sellResource]
+                        .name()
+                        .localeCompare(Config.Resource[b.sellResource].name());
                   case 1:
-                     return (a.buyAmount ?? 0) - (b.buyAmount ?? 0);
+                     if (buyResourceFilter != null) {
+                        return (a.buyAmount ?? 0) - (b.buyAmount ?? 0);
+                     }
+                     return Config.Resource[a.buyResource]
+                        .name()
+                        .localeCompare(Config.Resource[b.buyResource].name());
                   case 2:
                      return (calculateTradeValue(a) ?? 0) - (calculateTradeValue(b) ?? 0);
                   default:
@@ -215,6 +236,8 @@ export function GrandBazaarBuildingBody({ gameState, xy }: IBuildingComponentPro
                            if (building.sellResources[item.sellResource]) {
                               delete building.sellResources[item.sellResource];
                            } else {
+                              // Turn the market on if it's been turned off, else keep capacity the same.
+                              building.capacity = building.capacity === 0 ? 1 : building.capacity;
                               building.sellResources[item.sellResource] = true;
                            }
                            notifyGameStateUpdate();
