@@ -499,7 +499,7 @@ export const EN = {
    AngkorWatDesc: "All adjacent buildings get +1 Worker Capacity Multiplier. Provide 1000 Workers",
    TerracottaArmy: "Terracotta Army",
    TerracottaArmyDesc:
-      "All Iron Mining Camps get +1 Production Multiplier, Worker Capacity Multiplier and Storage Multiplier. Iron Forges get +1 Production Multiplier for each adjacent Iron Mining Camp",
+      "All Iron Mining Camps get +1 Production Multiplier, Worker Capacity Multiplier and Storage Multiplier. Iron Forges get +1 Production Multiplier for each adjacent Iron Mining Camp that is built on top of an Iron deposit",
    Parthenon: "Parthenon",
    ParthenonDesc:
       "A new great person of Classical Age is born. Musician's Guilds and Painter's Guilds get +1 Worker Capacity Multiplier",
