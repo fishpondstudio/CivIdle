@@ -255,7 +255,7 @@ export class BuildingDefinitions {
    };
    Shrine: IBuildingDefinition = {
       name: () => t(L.Shrine),
-      input: { Alcohol: 1 },
+      input: { Horse: 1, Alcohol: 1 },
       output: { Faith: 1 },
       construction: { Brick: 1, Wood: 2 },
    };
