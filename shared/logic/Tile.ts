@@ -85,6 +85,8 @@ export function setUpgradePriority(priority: number, v: number): number {
 export enum MarketOptions {
    None = 0,
    ClearAfterUpdate = 1 << 0,
+   UniqueTrades = 1 << 1,
+   ForceUpdateOnce = 1 << 2,
 }
 
 export interface IMarketBuildingData extends IBuildingData {

@@ -63,10 +63,10 @@ export function GrandBazaarBuildingBody({ gameState, xy }: IBuildingComponentPro
       if (market.status !== "completed") {
          return;
       }
-      const sellAmount = getMarketSellAmount(xy, gameState);
       forEach(market.availableResources, (sellResource, buyResource) => {
          availableResourcesSet.add(sellResource);
          availableResourcesSet.add(buyResource);
+         const sellAmount = getMarketSellAmount(sellResource, xy, gameState);
          allMarketTrades.push({
             xy,
             sellResource,

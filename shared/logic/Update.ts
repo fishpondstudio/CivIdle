@@ -5,6 +5,7 @@ import {
    HOUR,
    IPointData,
    clamp,
+   clearFlag,
    filterInPlace,
    filterOf,
    forEach,
@@ -55,12 +56,12 @@ import {
    useWorkers,
 } from "./BuildingLogic";
 import { Config } from "./Config";
-import { MARKET_DEFAULT_TRADE_COUNT } from "./Constants";
 import { GameFeature, hasFeature } from "./FeatureLogic";
 import { GameState, type ITransportationData } from "./GameState";
 import { getGameState } from "./GameStateLogic";
 import {
    getBuildingIO,
+   getBuildingsByType,
    getGrid,
    getSpecialBuildings,
    getStorageFullBuildings,
@@ -369,23 +370,23 @@ function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
    if (building.type === "Market") {
       const market = building as IMarketBuildingData;
       let totalBought = 0;
-      forEach(market.sellResources, (res) => {
-         const buyResource = market.availableResources[res];
+      forEach(market.sellResources, (sellResource) => {
+         const buyResource = market.availableResources[sellResource];
          if (!buyResource) {
-            delete market.sellResources[res];
+            delete market.sellResources[sellResource];
             return;
          }
          const sellAmount = clamp(
-            building.capacity * getMarketSellAmount(xy, gs),
+            building.capacity * getMarketSellAmount(sellResource, xy, gs),
             0,
-            building.resources[res] ?? 0,
+            building.resources[sellResource] ?? 0,
          );
-         const buyAmount = getMarketBuyAmount(res, sellAmount, buyResource, xy, gs);
+         const buyAmount = getMarketBuyAmount(sellResource, sellAmount, buyResource, xy, gs);
          if (used - sellAmount + buyAmount > total) {
             Tick.next.notProducingReasons.set(xy, "StorageFull");
             return;
          }
-         safeAdd(building.resources, res, -sellAmount);
+         safeAdd(building.resources, sellResource, -sellAmount);
          safeAdd(building.resources, buyResource, buyAmount);
          totalBought += buyAmount;
       });
@@ -696,32 +697,40 @@ export function tickPrice(gs: GameState) {
       gs.lastPriceUpdated = priceId;
    }
    const resources = filterOf(unlockedResources(gs), (res) => !NoPrice[res] && !NoStorage[res]);
-   getXyBuildings(gs).forEach((building, xy) => {
-      if (building.type === "Market" && building.status === "completed") {
-         const market = building as IMarketBuildingData;
-         const tradeCount = market.level + MARKET_DEFAULT_TRADE_COUNT;
-         if (sizeOf(market.availableResources) !== tradeCount || forceUpdatePrice) {
-            const seed = `${priceId},${xy}`;
-            const buy = shuffle(keysOf(resources), srand(seed));
-            const sell = shuffle(keysOf(resources), srand(seed)).slice(0, tradeCount);
-            market.availableResources = {};
-            let idx = 0;
-            for (const res of sell) {
-               while (buy[idx % buy.length] === res) {
-                  idx++;
-               }
-               market.availableResources[res] = buy[idx % buy.length];
+   getBuildingsByType("Market", gs)?.forEach((tile, xy) => {
+      const building = gs.tiles.get(xy)?.building;
+      if (!building || building.type !== "Market" || building.status !== "completed") {
+         return;
+      }
+      const market = building as IMarketBuildingData;
+      if (
+         sizeOf(market.availableResources) !== sizeOf(resources) ||
+         hasFlag(market.marketOptions, MarketOptions.ForceUpdateOnce) ||
+         forceUpdatePrice
+      ) {
+         const seed = hasFlag(market.marketOptions, MarketOptions.UniqueTrades)
+            ? `${priceId},${xy}`
+            : `${priceId}`;
+         const buy = shuffle(keysOf(resources), srand(seed));
+         const sell = shuffle(keysOf(resources), srand(seed));
+         market.marketOptions = clearFlag(market.marketOptions, MarketOptions.ForceUpdateOnce);
+         market.availableResources = {};
+         let idx = 0;
+         for (const res of sell) {
+            while (buy[idx % buy.length] === res) {
+               idx++;
             }
+            market.availableResources[res] = buy[idx % buy.length];
          }
-         if (forceUpdatePrice && hasFlag(market.marketOptions, MarketOptions.ClearAfterUpdate)) {
-            market.sellResources = {};
-         } else {
-            forEach(market.sellResources, (res) => {
-               if (!market.availableResources[res]) {
-                  delete market.sellResources[res];
-               }
-            });
-         }
+      }
+      if (forceUpdatePrice && hasFlag(market.marketOptions, MarketOptions.ClearAfterUpdate)) {
+         market.sellResources = {};
+      } else {
+         forEach(market.sellResources, (res) => {
+            if (!market.availableResources[res]) {
+               delete market.sellResources[res];
+            }
+         });
       }
    });
 }

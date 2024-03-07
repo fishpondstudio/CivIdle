@@ -41,10 +41,10 @@ export function MarketBuildingBody({ gameState, xy }: IBuildingComponentProps): 
       return null;
    }
    const market = building as IMarketBuildingData;
-   const sellAmount = getMarketSellAmount(xy, gameState);
    const tradeValues: Map<Resource, number> = new Map();
 
    forEach(market.availableResources, (sellResource, buyResource) => {
+      const sellAmount = getMarketSellAmount(sellResource, xy, gameState);
       const buyAmount = getMarketBuyAmount(sellResource, sellAmount, buyResource, xy, gameState);
       const sellValue = Config.ResourcePrice[sellResource]! * sellAmount;
       const buyValue = Config.ResourcePrice[buyResource]! * buyAmount;
@@ -90,16 +90,17 @@ export function MarketBuildingBody({ gameState, xy }: IBuildingComponentProps): 
                      return 0;
                }
             }}
-            renderRow={(res) => {
-               const r = Config.Resource[res];
-               if (!r || NoPrice[res] || NoStorage[res]) {
+            renderRow={(sellResource) => {
+               const r = Config.Resource[sellResource];
+               if (!r || NoPrice[sellResource] || NoStorage[sellResource]) {
                   return null;
                }
-               const buyResource = market.availableResources[res]!;
-               const buyAmount = getMarketBuyAmount(res, sellAmount, buyResource, xy, gameState);
-               const tradeValue = tradeValues.get(res) ?? 0;
+               const sellAmount = getMarketSellAmount(sellResource, xy, gameState);
+               const buyResource = market.availableResources[sellResource]!;
+               const buyAmount = getMarketBuyAmount(sellResource, sellAmount, buyResource, xy, gameState);
+               const tradeValue = tradeValues.get(sellResource) ?? 0;
                return (
-                  <tr key={res}>
+                  <tr key={sellResource}>
                      <td>
                         <div>{r.name()}</div>
                         <div className="text-small text-desc text-strong">
@@ -128,21 +129,21 @@ export function MarketBuildingBody({ gameState, xy }: IBuildingComponentProps): 
                         </TextWithHelp>
                      </td>
                      <td className="right">
-                        <FormatNumber value={building.resources[res] ?? 0} />
+                        <FormatNumber value={building.resources[sellResource] ?? 0} />
                      </td>
                      <td
                         className="pointer"
                         onClick={() => {
                            playClick();
-                           if (building.sellResources[res]) {
-                              delete building.sellResources[res];
+                           if (building.sellResources[sellResource]) {
+                              delete building.sellResources[sellResource];
                            } else {
-                              building.sellResources[res] = true;
+                              building.sellResources[sellResource] = true;
                            }
                            notifyGameStateUpdate();
                         }}
                      >
-                        {building.sellResources[res] ? (
+                        {building.sellResources[sellResource] ? (
                            <div className="m-icon text-green">toggle_on</div>
                         ) : (
                            <div className="m-icon text-grey">toggle_off</div>

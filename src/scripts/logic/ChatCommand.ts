@@ -138,6 +138,14 @@ export async function handleChatCommand(command: string): Promise<void> {
          addSystemMessage(`${parts[1]} is now a mod`);
          break;
       }
+      case "queryplayer": {
+         if (!parts[1]) {
+            throw new Error("Invalid command format");
+         }
+         const user = await client.queryPlayer(parts[1]);
+         addSystemMessage(JSON.stringify(user));
+         break;
+      }
       case "announce": {
          if (!parts[1] || !parts[2]) {
             throw new Error("Invalid command format");

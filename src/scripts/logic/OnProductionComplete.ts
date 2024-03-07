@@ -20,15 +20,17 @@ import {
 } from "../../../shared/logic/IntraTickCache";
 import { getBuildingsThatProduce } from "../../../shared/logic/ResourceLogic";
 import { Tick } from "../../../shared/logic/TickLogic";
-import type { IPetraBuildingData } from "../../../shared/logic/Tile";
+import { MarketOptions, type IMarketBuildingData, type IPetraBuildingData } from "../../../shared/logic/Tile";
 import { addMultiplier } from "../../../shared/logic/Update";
 import {
    forEach,
+   hasFlag,
    keysOf,
    mapSafeAdd,
    mapSafePush,
    pointToTile,
    safeAdd,
+   setFlag,
    tileToPoint,
    type Tile,
 } from "../../../shared/utilities/Helper";
@@ -123,6 +125,13 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
                   storage: 5,
                   source: buildingName,
                });
+            }
+            if (building?.type === "Market") {
+               const market = building as IMarketBuildingData;
+               if (!hasFlag(market.marketOptions, MarketOptions.UniqueTrades)) {
+                  market.marketOptions = setFlag(market.marketOptions, MarketOptions.UniqueTrades);
+                  market.marketOptions = setFlag(market.marketOptions, MarketOptions.ForceUpdateOnce);
+               }
             }
          }
          break;

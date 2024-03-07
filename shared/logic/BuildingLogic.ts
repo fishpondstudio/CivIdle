@@ -35,6 +35,7 @@ import { Tick, type Multiplier, type MultiplierWithSource } from "./TickLogic";
 import {
    DEFAULT_STOCKPILE_CAPACITY,
    DEFAULT_STOCKPILE_MAX,
+   IMarketBuildingData,
    ResourceImportOptions,
    getConstructionPriority,
    getProductionPriority,
@@ -621,10 +622,21 @@ export function applyToAllBuildings<T extends IBuildingData>(
    });
 }
 
-export function getMarketSellAmount(xy: Tile, gs: GameState): number {
+export function getMarketBaseAmount(sellResource: Resource, buyResource: Resource): number {
+   return Math.sqrt((Config.ResourcePrice[sellResource] ?? 0) * (Config.ResourcePrice[buyResource] ?? 0));
+}
+
+export function getMarketSellAmount(sellResource: Resource, xy: Tile, gs: GameState): number {
    const building = gs.tiles.get(xy)?.building;
-   if (!building) return 0;
-   return building.level * totalMultiplierFor(xy, "output", 1, gs);
+   if (!building || !("availableResources" in building)) return 0;
+   const market = building as IMarketBuildingData;
+   const buyResource = market.availableResources[sellResource];
+   if (!buyResource) return 0;
+   return (
+      building.level *
+      getMarketBaseAmount(sellResource, buyResource) *
+      totalMultiplierFor(xy, "output", 1, gs)
+   );
 }
 
 export function getMarketBuyAmount(
@@ -635,7 +647,9 @@ export function getMarketBuyAmount(
    gs: GameState,
 ): number {
    const rand = srand(gs.lastPriceUpdated + xy + sellResource);
-   const fluctuation = 0.75 + rand() * 0.5;
+   const fluctuation =
+      1 +
+      (1 + (Config.ResourceTier[buyResource] ?? 0) - (Config.ResourceTier[sellResource] ?? 0)) * rand() * 0.1;
    return (
       ((Config.ResourcePrice[sellResource] ?? 0) * sellAmount * fluctuation) /
       (Config.ResourcePrice[buyResource] ?? 0)

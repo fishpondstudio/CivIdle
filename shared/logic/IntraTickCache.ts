@@ -5,6 +5,7 @@ import { forEach, safeAdd, tileToHash, type Tile } from "../utilities/Helper";
 import type { PartialSet, PartialTabulate } from "../utilities/TypeDefinitions";
 import {
    IOCalculation,
+   getMarketBaseAmount,
    getMarketBuyAmount,
    getResourceImportCapacity,
    totalMultiplierFor,
@@ -59,14 +60,23 @@ export function getBuildingIO(
       if ("sellResources" in b) {
          const market = b as IMarketBuildingData;
          if (type === "input") {
-            forEach(market.sellResources, (k) => {
-               resources[k] = 1;
+            forEach(market.sellResources, (sellResource) => {
+               const buyResource = market.availableResources[sellResource];
+               if (buyResource) {
+                  resources[sellResource] = getMarketBaseAmount(sellResource, buyResource);
+               }
             });
          }
          if (type === "output") {
-            forEach(market.sellResources, (k) => {
-               const buyResource = market.availableResources[k]!;
-               resources[buyResource] = getMarketBuyAmount(k, 1, buyResource, xy, gs);
+            forEach(market.sellResources, (sellResource) => {
+               const buyResource = market.availableResources[sellResource]!;
+               resources[buyResource] = getMarketBuyAmount(
+                  sellResource,
+                  getMarketBaseAmount(sellResource, buyResource),
+                  buyResource,
+                  xy,
+                  gs,
+               );
             });
          }
       }

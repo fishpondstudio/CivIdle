@@ -1001,7 +1001,7 @@ export const EN = {
    PlayerTradeFillAmountMaxV2: "Fill Max",
    GrandBazaar: "Grand Bazaar",
    GrandBazaarDesc:
-      "Manage all your markets. Adjacent caravansaries get +5 Production and Storage Multiplier",
+      "Manage all your markets. Adjacent caravansaries get +5 Production and Storage Multiplier. Adjacent markets get different trades",
    GrandBazaarFilters: "Filters",
    GrandBazaarFilterYouPay: "You Pay",
    GrandBazaarFilterYouGet: "You Get",
