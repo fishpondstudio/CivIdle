@@ -622,10 +622,10 @@ export function applyToAllBuildings<T extends IBuildingData>(
    });
 }
 
-export function getMarketBaseAmount(sellResource: Resource, buyResource: Resource): number {
-   return Math.sqrt(
-      ((Config.ResourcePrice[sellResource] ?? 0) * (Config.ResourcePrice[buyResource] ?? 0)) /
-         (Config.ResourcePrice[sellResource] ?? 1),
+export function getMarketBaseSellAmount(sellResource: Resource, buyResource: Resource): number {
+   return (
+      Math.sqrt((Config.ResourcePrice[sellResource] ?? 0) * (Config.ResourcePrice[buyResource] ?? 0)) /
+      (Config.ResourcePrice[sellResource] ?? 1)
    );
 }
 
@@ -637,7 +637,7 @@ export function getMarketSellAmount(sellResource: Resource, xy: Tile, gs: GameSt
    if (!buyResource) return 0;
    return (
       building.level *
-      getMarketBaseAmount(sellResource, buyResource) *
+      getMarketBaseSellAmount(sellResource, buyResource) *
       totalMultiplierFor(xy, "output", 1, gs)
    );
 }
