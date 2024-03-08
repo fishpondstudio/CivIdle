@@ -38,6 +38,9 @@ OnPlayerMapChanged.on(buildPathfinderGrid);
 RequestPathFinderGridUpdate.on(buildPathfinderGrid);
 
 function getTotalCost(path: IPointData[], grid: number[]): number {
+   if (path.length === 0) {
+      return Infinity;
+   }
    return path.reduce((prev, curr) => {
       const idx = curr.y * MAP_MAX_X + curr.x;
       if (grid[idx] > 0) {

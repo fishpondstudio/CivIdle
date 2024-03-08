@@ -480,7 +480,7 @@ function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
 }
 
 function tickWarehouseAutopilot(warehouse: IWarehouseBuildingData, xy: Tile, gs: GameState): void {
-   let capacity = getWarehouseIdleCapacity(warehouse);
+   let capacity = getWarehouseIdleCapacity(xy, gs);
    const workerCapacity = totalMultiplierFor(xy, "worker", 1, gs);
    const transportCapacity =
       workerCapacity +

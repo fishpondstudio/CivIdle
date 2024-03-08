@@ -52,7 +52,7 @@ export function ResourceImportComponent({ gameState, xy }: IBuildingComponentPro
       resources.add(k);
    });
    const storage = getStorageFor(xy, gameState);
-   const baseCapacity = getResourceImportCapacity(building);
+   const baseCapacity = getResourceImportCapacity(building, 1);
    const capacityMultiplier = totalMultiplierFor(xy, "output", 1, gameState);
 
    return (

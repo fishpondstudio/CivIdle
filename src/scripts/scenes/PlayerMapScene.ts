@@ -255,15 +255,16 @@ export class PlayerMapScene extends Scene {
 
       const myXy = getMyMapXy();
       const map = getPlayerMap();
+      const selectedXy = `${tileX},${tileY}`;
 
-      if (myXy && map.has(`${tileX},${tileY}`)) {
+      if (myXy && map.has(selectedXy) && selectedXy !== myXy) {
          const path = findPath(xyToPoint(myXy), { x: tileX, y: tileY });
          this.drawPath(path);
       } else {
          this.clearPath();
       }
 
-      Singleton().routeTo(PlayerMapPage, { xy: `${tileX},${tileY}` });
+      Singleton().routeTo(PlayerMapPage, { xy: selectedXy });
    }
 
    private drawTile(xy: string, entry: IClientMapEntry) {

@@ -81,7 +81,7 @@ export function getBuildingIO(
          }
       }
       if ("resourceImports" in b && type === "input") {
-         const totalCapacity = getResourceImportCapacity(b) * totalMultiplierFor(xy, "output", 1, gs);
+         const totalCapacity = getResourceImportCapacity(b, totalMultiplierFor(xy, "output", 1, gs));
          let used = 0;
          forEach((b as IResourceImportBuildingData).resourceImports, (k, v) => {
             if (Tick.current.totalValue > 0 && used + v.perCycle > totalCapacity) {

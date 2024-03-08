@@ -5,6 +5,13 @@ interface PatchNote {
 
 export const PatchNotes: PatchNote[] = [
    {
+      version: "0.3.1",
+      content: [
+         ["Bugfix", "Fix a bug where Warehouse Autopilot does not take production multiplier into account"],
+         ["Bugfix", "Fix a bug where player trades fail to find a path even if there's a valid one"],
+      ],
+   },
+   {
       version: "0.3.0",
       content: [
          [

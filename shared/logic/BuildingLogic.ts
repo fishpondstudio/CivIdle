@@ -196,11 +196,11 @@ export function getStorageFor(xy: Tile, gs: GameState): IStorageResult {
          break;
       }
       case "Caravansary": {
-         base = getResourceImportCapacity(building) * STORAGE_TO_PRODUCTION;
+         base = getResourceImportCapacity(building, 1) * STORAGE_TO_PRODUCTION;
          break;
       }
       case "Warehouse": {
-         base = getResourceImportCapacity(building) * STORAGE_TO_PRODUCTION * 10;
+         base = getResourceImportCapacity(building, 1) * STORAGE_TO_PRODUCTION * 10;
          break;
       }
       case "Petra": {
@@ -560,13 +560,16 @@ export function isWorldOrNaturalWonder(building?: Building): boolean {
    return isNaturalWonder(building) || isWorldWonder(building);
 }
 
-export function getResourceImportCapacity(building: IHaveTypeAndLevel): number {
-   return building.level * 10;
+export function getResourceImportCapacity(building: IHaveTypeAndLevel, multiplier: number): number {
+   return multiplier * building.level * 10;
 }
 
-export function getWarehouseIdleCapacity(warehouse: IWarehouseBuildingData): number {
+export function getWarehouseIdleCapacity(xy: Tile, gs: GameState): number {
+   const building = gs.tiles.get(xy)?.building;
+   if (building?.type !== "Warehouse") return 0;
+   const warehouse = building as IWarehouseBuildingData;
    return (
-      getResourceImportCapacity(warehouse) -
+      getResourceImportCapacity(warehouse, totalMultiplierFor(xy, "output", 1, gs)) -
       reduceOf(
          warehouse.resourceImports,
          (prev, k, v) => {

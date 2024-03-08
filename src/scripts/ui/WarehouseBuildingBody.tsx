@@ -23,7 +23,7 @@ export function WarehouseBuildingBody({ gameState, xy }: IBuildingComponentProps
    if (!warehouse) {
       return null;
    }
-   const idleCapacity = getWarehouseIdleCapacity(warehouse);
+   const idleCapacity = getWarehouseIdleCapacity(xy, gameState);
    return (
       <div className="window-body">
          <BuildingUpgradeComponent gameState={gameState} xy={xy} />
