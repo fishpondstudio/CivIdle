@@ -17,6 +17,8 @@ import { ProgressBarComponent } from "./ProgressBarComponent";
 import { RenderHTML } from "./RenderHTMLComponent";
 import { TextWithHelp } from "./TextWithHelpComponent";
 import { WarningComponent } from "./WarningComponent";
+import {useShortcut} from "../utilities/Hook";
+import {navigateToSameTypeBuilding} from "../utilities/Building";
 
 export function BuildingConstructionProgressComponent({
    gameState,
@@ -30,36 +32,51 @@ export function BuildingConstructionProgressComponent({
    const { cost, percent, secondsLeft } = getBuildingPercentage(xy, gameState);
    const enabledResourceCount = sizeOf(cost) - building.disabledInput.size;
    const builderCapacityPerResource = enabledResourceCount > 0 ? total / enabledResourceCount : 0;
+
+   const prevBuilding = () => navigateToSameTypeBuilding(gameState, building, xy, 'prev');
+   const nextBuilding = () => navigateToSameTypeBuilding(gameState, building, xy, 'next');
+   useShortcut("ShowPrevBuilding", () => prevBuilding(), [gameState, building, xy]);
+   useShortcut("ShowNextBuilding", () => nextBuilding(), [gameState, building, xy]);
+
    return (
-      <fieldset>
-         <div className="row">
-            <div className="f1">{t(L.ConstructionProgress)}</div>
-            <div>{formatPercent(percent, 0)}</div>
-         </div>
-         <div className="sep5"></div>
-         <div className="row">
-            <div className="f1">{t(L.EstimatedTimeLeft)}</div>
-            <div>{formatHMS(secondsLeft * 1000)}</div>
-         </div>
-         <div className="sep5"></div>
-         <ProgressBarComponent progress={percent} />
-         <div className="sep10"></div>
-         <div className="table-view">
-            <table>
-               <tbody>
-                  <tr>
-                     <th style={{ width: 0 }}></th>
-                     <th>Resource</th>
-                     <th className="text-right">
-                        <TextWithHelp content={t(L.TransportAllocatedCapacityTooltip)}>Capacity</TextWithHelp>
-                     </th>
-                     <th className="text-right">Delivered</th>
-                     <th className="text-right">Total</th>
-                  </tr>
-                  {jsxMapOf(cost, (res, value) => {
-                     return (
-                        <tr key={res}>
-                           <td
+       <fieldset>
+          <div className="row">
+             <button className="f1" onClick={prevBuilding}>
+                {t(L.ShowPrevBuilding)}
+             </button>
+             <button className="f1" onClick={nextBuilding}>
+                {t(L.ShowNextBuilding)}
+             </button>
+          </div>
+          <div className="separator"></div>
+          <div className="row">
+             <div className="f1">{t(L.ConstructionProgress)}</div>
+             <div>{formatPercent(percent, 0)}</div>
+          </div>
+          <div className="sep5"></div>
+          <div className="row">
+             <div className="f1">{t(L.EstimatedTimeLeft)}</div>
+             <div>{formatHMS(secondsLeft * 1000)}</div>
+          </div>
+          <div className="sep5"></div>
+          <ProgressBarComponent progress={percent}/>
+          <div className="sep10"></div>
+          <div className="table-view">
+             <table>
+                <tbody>
+                <tr>
+                   <th style={{width: 0}}></th>
+                   <th>Resource</th>
+                   <th className="text-right">
+                      <TextWithHelp content={t(L.TransportAllocatedCapacityTooltip)}>Capacity</TextWithHelp>
+                   </th>
+                   <th className="text-right">Delivered</th>
+                   <th className="text-right">Total</th>
+                </tr>
+                {jsxMapOf(cost, (res, value) => {
+                   return (
+                       <tr key={res}>
+                          <td
                               className="pointer"
                               onClick={() => {
                                  if (building.disabledInput.has(res)) {
@@ -69,91 +86,91 @@ export function BuildingConstructionProgressComponent({
                                  }
                                  notifyGameStateUpdate();
                               }}
-                           >
-                              <Tippy content={t(L.TransportManualControlTooltip)}>
-                                 {building.disabledInput.has(res) ?? false ? (
+                          >
+                             <Tippy content={t(L.TransportManualControlTooltip)}>
+                                {building.disabledInput.has(res) ?? false ? (
                                     <div className="m-icon text-red">toggle_off</div>
-                                 ) : (
+                                ) : (
                                     <div className="m-icon text-green">toggle_on</div>
-                                 )}
-                              </Tippy>
-                           </td>
-                           <td>{Config.Resource[res].name()}</td>
-                           <td className="text-right">
-                              {building.disabledInput.has(res) ? (
+                                )}
+                             </Tippy>
+                          </td>
+                          <td>{Config.Resource[res].name()}</td>
+                          <td className="text-right">
+                             {building.disabledInput.has(res) ? (
                                  0
-                              ) : (
-                                 <FormatNumber value={builderCapacityPerResource} />
-                              )}
-                           </td>
-                           <td className="text-right">
-                              <FormatNumber value={building.resources[res] ?? 0} />
-                           </td>
-                           <td className="text-right">
-                              <FormatNumber value={value} />
-                           </td>
-                        </tr>
-                     );
-                  })}
-               </tbody>
-            </table>
-         </div>
+                             ) : (
+                                 <FormatNumber value={builderCapacityPerResource}/>
+                             )}
+                          </td>
+                          <td className="text-right">
+                             <FormatNumber value={building.resources[res] ?? 0}/>
+                          </td>
+                          <td className="text-right">
+                             <FormatNumber value={value}/>
+                          </td>
+                       </tr>
+                   );
+                })}
+                </tbody>
+             </table>
+          </div>
 
-         <div className="separator"></div>
-         {isWorldWonder(building.type) ? (
-            <>
-               <WarningComponent icon="info" className="text-small">
-                  <RenderHTML html={t(L.WonderBuilderCapacityDescHTML)} />
-               </WarningComponent>
-               <div className="sep10"></div>
-            </>
-         ) : null}
-         <ul className="tree-view">
-            <details>
-               <summary className="row">
-                  <div className="f1">{t(L.ConstructionBuilderCapacity)}</div>
-                  <div className="text-strong">
-                     <FormatNumber value={total} />
-                  </div>
-               </summary>
-               <ul>
-                  <li className="row">
-                     <div className="f1">{t(L.ConstructionBuilderBaseCapacity)}</div>
-                     <div className="text-strong">
-                        <FormatNumber value={base} />
-                     </div>
-                  </li>
-                  <li className="row">
-                     <div className="f1">{t(L.ConstructionBuilderMultiplier)}</div>
-                     <div className="text-strong">
-                        x
-                        <FormatNumber value={multiplier} />
-                     </div>
-                  </li>
-                  <ul>
-                     {Tick.current.globalMultipliers.builderCapacity.map((value) => {
-                        return (
-                           <li key={value.source} className="text-small row">
-                              <div className="f1">{value.source}</div>
-                              <div>{value.value}</div>
-                           </li>
-                        );
-                     })}
-                     {getMultipliersFor(xy, gameState).map((value) => {
-                        if (!value.worker) {
-                           return null;
-                        }
-                        return (
-                           <li key={value.source} className="text-small row">
-                              <div className="f1">{value.source}</div>
-                              <div>{value.worker}</div>
-                           </li>
-                        );
-                     })}
-                  </ul>
-               </ul>
-            </details>
-         </ul>
-      </fieldset>
+          <div className="separator"></div>
+          {isWorldWonder(building.type) ? (
+              <>
+                 <WarningComponent icon="info" className="text-small">
+                    <RenderHTML html={t(L.WonderBuilderCapacityDescHTML)}/>
+                 </WarningComponent>
+                 <div className="sep10"></div>
+              </>
+          ) : null}
+          <ul className="tree-view">
+             <details>
+                <summary className="row">
+                   <div className="f1">{t(L.ConstructionBuilderCapacity)}</div>
+                   <div className="text-strong">
+                      <FormatNumber value={total}/>
+                   </div>
+                </summary>
+                <ul>
+                   <li className="row">
+                      <div className="f1">{t(L.ConstructionBuilderBaseCapacity)}</div>
+                      <div className="text-strong">
+                         <FormatNumber value={base}/>
+                      </div>
+                   </li>
+                   <li className="row">
+                      <div className="f1">{t(L.ConstructionBuilderMultiplier)}</div>
+                      <div className="text-strong">
+                         x
+                         <FormatNumber value={multiplier}/>
+                      </div>
+                   </li>
+                   <ul>
+                      {Tick.current.globalMultipliers.builderCapacity.map((value) => {
+                         return (
+                             <li key={value.source} className="text-small row">
+                                <div className="f1">{value.source}</div>
+                                <div>{value.value}</div>
+                             </li>
+                         );
+                      })}
+                      {getMultipliersFor(xy, gameState).map((value) => {
+                         if (!value.worker) {
+                            return null;
+                         }
+                         return (
+                             <li key={value.source} className="text-small row">
+                                <div className="f1">{value.source}</div>
+                                <div>{value.worker}</div>
+                             </li>
+                         );
+                      })}
+                   </ul>
+                </ul>
+             </details>
+          </ul>
+       </fieldset>
    );
 }

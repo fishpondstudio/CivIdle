@@ -1,22 +1,16 @@
 import Tippy from "@tippyjs/react";
-import { getBuildingUpgradeLevels, getTotalBuildingCost } from "../../../shared/logic/BuildingLogic";
-import { Config } from "../../../shared/logic/Config";
-import { getGameOptions, notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
-import { getUpgradePriority, setUpgradePriority } from "../../../shared/logic/Tile";
-import {
-   formatNumber,
-   isEmpty,
-   mapOf,
-   numberToRoman,
-   tileToPoint,
-   type Tile,
-} from "../../../shared/utilities/Helper";
-import { L, t } from "../../../shared/utilities/i18n";
-import { WorldScene } from "../scenes/WorldScene";
-import { jsxMapOf } from "../utilities/Helper";
-import { useShortcut } from "../utilities/Hook";
-import { Singleton } from "../utilities/Singleton";
-import type { IBuildingComponentProps } from "./BuildingPage";
+import {getBuildingUpgradeLevels, getTotalBuildingCost} from "../../../shared/logic/BuildingLogic";
+import {Config} from "../../../shared/logic/Config";
+import {getGameOptions, notifyGameStateUpdate} from "../../../shared/logic/GameStateLogic";
+import {getUpgradePriority, setUpgradePriority} from "../../../shared/logic/Tile";
+import {formatNumber, isEmpty, mapOf, numberToRoman, type Tile, tileToPoint,} from "../../../shared/utilities/Helper";
+import {L, t} from "../../../shared/utilities/i18n";
+import {WorldScene} from "../scenes/WorldScene";
+import {jsxMapOf} from "../utilities/Helper";
+import {useShortcut} from "../utilities/Hook";
+import {Singleton} from "../utilities/Singleton";
+import type {IBuildingComponentProps} from "./BuildingPage";
+import {navigateToSameTypeBuilding} from "../utilities/Building";
 
 export function BuildingUpgradeComponent({ gameState, xy }: IBuildingComponentProps): React.ReactNode {
    const tile = gameState.tiles.get(xy);
@@ -38,9 +32,15 @@ export function BuildingUpgradeComponent({ gameState, xy }: IBuildingComponentPr
       );
       notifyGameStateUpdate();
    };
+
+   const prevBuilding = () => navigateToSameTypeBuilding(gameState, building, xy, 'prev');
+   const nextBuilding = () => navigateToSameTypeBuilding(gameState, building, xy, 'next');
+
    useShortcut("BuildingPageUpgradeX1", () => upgrade(1), [xy]);
    useShortcut("BuildingPageUpgradeX5", () => upgrade(5), [xy]);
    useShortcut("BuildingPageUpgradeToNext10", () => upgrade(levels[levels.length - 1]), [xy]);
+   useShortcut("ShowPrevBuilding", () => prevBuilding(), [gameState, building, xy]);
+   useShortcut("ShowNextBuilding", () => nextBuilding(), [gameState, building, xy]);
 
    return (
       <>
@@ -56,6 +56,15 @@ export function BuildingUpgradeComponent({ gameState, xy }: IBuildingComponentPr
                   </div>
                   <div className="text-small text-desc">{t(L.BuildingTier)}</div>
                </div>
+            </div>
+            <div className="separator"></div>
+            <div className="row">
+               <button className="f1" onClick={prevBuilding}>
+                  {t(L.ShowPrevBuilding)}
+               </button>
+               <button className="f1" onClick={nextBuilding}>
+                  {t(L.ShowNextBuilding)}
+               </button>
             </div>
             <div className="separator"></div>
             <div className="row">

@@ -977,6 +977,10 @@ export const EN = {
    OpenSaveBackupFolder: "Open Backup Folder",
    ShortcutBuildingPageToggleBuilding: "Toggle Production",
    ShortcutBuildingPageToggleBuildingSetAllSimilar: "Toggle Production And Apply To All",
+   ShortcutShowPrevBuilding: "Show Previous Building",
+   ShortcutShowNextBuilding: "Show Next Building",
+   ShowPrevBuilding: "Previous Building",
+   ShowNextBuilding: "Next Building",
    HappinessUncapped: "Happiness (Uncapped)",
    ExtraGreatPeople: "%{count} Extra Great People",
    ScrollWheelAdjustLevelTooltip:
