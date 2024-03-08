@@ -6,7 +6,73 @@ interface PatchNote {
 export const PatchNotes: PatchNote[] = [
    {
       version: "0.3.0",
-      content: [["Content", "This is a placeholder"]],
+      content: [
+         [
+            "Wonder",
+            "Grand Bazaar: Manage all your markets. Adjacent caravansaries get +5 Production and Storage Multiplier. Adjacent markets get different trades (Education)",
+         ],
+         ["Great Person", "Zenobia - +1h Petra Warp Storage (Classical)"],
+         ["Building", "Concrete Plant - 1 Brick + 2 Sand + 1 Tool -> 1 Concrete (Steam Engine)"],
+         ["Building", "Gunpowder Mill's visual has been revamped"],
+         [
+            "Warehouse",
+            "Export Below Max Amount: Allow other buildings to transport a resource from this building even when its amount is below the max amount",
+         ],
+         [
+            "Warehouse",
+            "Autopilot Setting: Require Storage < Cap - autopilot will only transport resources whose amount in storage is below the cap",
+         ],
+         ["Player Trade", "You can fill a trade from multiple caravansaries at once"],
+         ["Player Trade", "Show tiles with active trades on the world map"],
+         [
+            "Player Trade",
+            "Sea Trades (unlocked by Geography with 1% Tariff. Optics reduces tariff to 0.5%. Capitalism reduces tariff to 0.1%)",
+         ],
+         [
+            "Player Trade",
+            "Production multipliers will now apply to Caravansary and Warehouse - it will increase the resource transport capacity",
+         ],
+         [
+            "Market",
+            "All markets will have the same trades, different markets still have different price fluctuations",
+         ],
+         ["Market", "Market trade amount will be based on the value of the buy and sell resources"],
+         [
+            "Market",
+            "Markets will have less price fluctuation, which will be based on the tier difference between the buy and sell resources Selling a low-tier resource and buying a high-tier resource will result in positive price fluctuation and vice versa",
+         ],
+         ["Market", "Market trades will update immediately after a new resource has been unlocked"],
+         [
+            "Balancing",
+            "Oxford University: Each building upgrade in your empire provides +5 Science per cycle (from +1 Science per cycle)",
+         ],
+         [
+            "Balancing",
+            "Wonder building time is be more streamlined: wonders from the same era have similar build time, with earlier wonders take significantly less time to build",
+         ],
+         [
+            "Balancing",
+            "Construction and upgrade costs of Tier I, II and III buildings have been adjusted. They now require a small amount of materials other than their input for construction and upgrade",
+         ],
+         ["Balancing", "Hagia Sophia: costs Knight instead of Brick"],
+         ["Balancing", "Angkor Wat: cost Marble instead of Stone"],
+         ["Balancing", "Oxford University: cost Philosophy instead of Marble"],
+         ["Balancing", "Saint Basil's Cathedral: cost Gunpowder and Lens instead of Faith and Gold"],
+         ["Balancing", "Forbidden City: cost Banknote and Marble instead of Paper and Poem"],
+         ["Balancing", "Himeji Castle: fix the cost of Galleon and Frigate (it was incorrect before)"],
+         ["Balancing", "Rijksmuseum: cost Newspaper, Culture and Concrete instead of Painting"],
+         ["Balancing", "Summer Palace: cost Gatling Gun instead of Brick"],
+         ["Balancing", "Neuschwanstein: cost Rifle, Bond and Cannon instead of Dynamite, Brick and Marble"],
+         ["Balancing", "Brandenburg Gate: cost Politics and Concrete instead of Brick and Marble"],
+         [
+            "Gameplay",
+            "Streamline Construction/Upgrade Flow: You can adjust the building upgrade level when a building is being constructed. The building will be upgraded immediately after being constructed. Because of this change, the upgrade priority has been removed - both construction and upgrade will take construction priority instead",
+         ],
+         [
+            "Gameplay",
+            "Optimize performance when switching between game scenes (City View -> Tech Tree -> Trade World Map)",
+         ],
+      ],
    },
    {
       version: "0.2.1",
