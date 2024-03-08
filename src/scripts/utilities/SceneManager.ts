@@ -58,12 +58,15 @@ export interface ISceneContext {
    gameState: GameState;
 }
 
+export type SceneAction = (s: Scene) => void;
+
 export class SceneManager {
-   protected currentScene: Scene | undefined;
-   protected context: ISceneContext;
-   protected gameStateWatcher: (() => void) | undefined;
-   protected gameOptionsWatcher: (() => void) | undefined;
-   protected scenes = new Map<string, Scene>();
+   private currentScene: Scene | undefined;
+   private context: ISceneContext;
+   private gameStateWatcher: (() => void) | undefined;
+   private gameOptionsWatcher: (() => void) | undefined;
+   private scenes = new Map<string, Scene>();
+   private queuedActions = new Map<string, SceneAction[]>();
 
    constructor(context: ISceneContext) {
       this.context = context;
@@ -105,6 +108,15 @@ export class SceneManager {
       this.gameOptionsWatcher = watchGameOptions((gameOptions) =>
          this.currentScene?.onGameOptionsChanged(gameOptions),
       );
+
+      const queuedActions = this.queuedActions.get(SceneClass.name);
+      if (queuedActions) {
+         for (const action of queuedActions) {
+            action(scene);
+         }
+         queuedActions.length = 0;
+      }
+
       return this.currentScene as T;
    }
 
@@ -121,6 +133,18 @@ export class SceneManager {
          return this.currentScene as T;
       }
       return null;
+   }
+
+   enqueue<T extends Scene>(SceneClass: new (context: ISceneContext) => T, action: (s: T) => void): void {
+      if (this.isCurrent(SceneClass)) {
+         action(this.currentScene as T);
+         return;
+      }
+      if (this.queuedActions.has(SceneClass.name)) {
+         this.queuedActions.get(SceneClass.name)?.push(action as SceneAction);
+      } else {
+         this.queuedActions.set(SceneClass.name, [action as SceneAction]);
+      }
    }
 }
 

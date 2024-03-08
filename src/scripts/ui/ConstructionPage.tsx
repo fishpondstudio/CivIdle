@@ -160,7 +160,7 @@ export function ConstructionPage({ tile }: { tile: ITileData }): React.ReactNode
                      className="jcc w100 row"
                      onClick={() => {
                         delete tile.building;
-                        Singleton().sceneManager.getCurrent(WorldScene)?.resetTile(tile.tile);
+                        Singleton().sceneManager.enqueue(WorldScene, (s) => s.resetTile(tile.tile));
                         notifyGameStateUpdate();
                      }}
                   >

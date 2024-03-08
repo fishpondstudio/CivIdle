@@ -31,7 +31,7 @@ import { Singleton } from "../utilities/Singleton";
 export function onBuildingComplete(xy: Tile): void {
    const gs = getGameState();
    for (const g of ensureTileFogOfWar(xy, getExtraVisionRange(), gs)) {
-      Singleton().sceneManager.getCurrent(WorldScene)?.getTile(g)?.reveal().catch(console.error);
+      Singleton().sceneManager.enqueue(WorldScene, (s) => s.revealTile(g));
    }
    const building = gs.tiles.get(xy)?.building;
    if (!building) {
@@ -43,7 +43,7 @@ export function onBuildingComplete(xy: Tile): void {
          gs.tiles.forEach((tile, xy) => {
             if (tile.deposit.Water) {
                exploreTile(xy, gs);
-               Singleton().sceneManager.getCurrent(WorldScene)?.getTile(xy)?.reveal().catch(console.error);
+               Singleton().sceneManager.enqueue(WorldScene, (s) => s.revealTile(xy));
             }
          });
          break;
@@ -131,7 +131,7 @@ export function onBuildingComplete(xy: Tile): void {
                !isNaturalWonder(tile.building.type)
             ) {
                for (const g of ensureTileFogOfWar(xy, 1, gs)) {
-                  Singleton().sceneManager.getCurrent(WorldScene)?.getTile(g)?.reveal().catch(console.error);
+                  Singleton().sceneManager.enqueue(WorldScene, (s) => s.revealTile(g));
                }
             }
          });

@@ -166,46 +166,14 @@ export class TileVisual extends Container {
       });
    }
 
-   public updateLayout() {
-      if (!this._tile.explored) {
-         return;
-      }
-      let position = v2({ x: 0, y: 0 });
-      let scale = 0.25;
-      if (this._tile.building) {
-         position = v2({ x: 0, y: 30 });
-         scale = 0.15;
-      }
-      const width = scale * 100;
-      let i = 0;
-      const total = sizeOf(this._tile.deposit);
-      forEach(this._deposits, (_, sprite) => {
-         sprite.visible = true;
-         sprite.position.copyFrom(position.add({ x: layoutCenter(width, 4, total, i++), y: 0 }));
-         sprite.scale.set(scale);
-      });
-   }
-
-   private onZoomed(zoom: number) {
-      if (!this._tile.explored) {
-         return;
-      }
-      forEach(this._deposits, (_, sprite) => {
-         sprite.visible = !this._tile.building || zoom >= 1;
-      });
-   }
-
-   public async reveal(): Promise<TileVisual> {
+   public reveal(): void {
       this.updateLayout();
-      return await new Promise((resolve) => {
-         Actions.sequence(
-            Actions.to(this._fog, { alpha: 0, scale: { x: 0.5, y: 0.5 } }, 1, Easing.InQuad),
-            Actions.runFunc(() => {
-               this._fog.visible = false;
-               resolve(this);
-            }),
-         ).start();
-      });
+      Actions.sequence(
+         Actions.to(this._fog, { alpha: 0, scale: { x: 0.5, y: 0.5 } }, 1, Easing.InQuad),
+         Actions.runFunc(() => {
+            this._fog.visible = false;
+         }),
+      ).start();
    }
 
    public showFloater(value: number): void {
@@ -227,6 +195,43 @@ export class TileVisual extends Container {
             this._world.tooltipPool.release(t);
          }),
       ).start();
+   }
+
+   public update(gs: GameState, dt: number) {
+      if (!this._tile || !this._tile.building) {
+         return;
+      }
+
+      const color = getGameOptions().buildingColors[this._tile.building.type];
+      if (color) {
+         const c = Color.shared.setValue(color);
+         this._building.tint = c;
+         this._notProducing.tint = c;
+         this._spinner.tint = c;
+      } else {
+         this._building.tint = 0xffffff;
+         this._notProducing.tint = 0xffffff;
+         this._spinner.tint = 0xffffff;
+      }
+
+      if (this._tile.building.status !== "completed") {
+         return;
+      }
+
+      this._spinner.angle += Tick.current.electrified.has(this._tile.tile) ? dt * 180 : dt * 90;
+      if (Tick.current.notProducingReasons.has(this._xy)) {
+         this._spinner.alpha -= dt;
+         this._building.alpha -= dt;
+      } else {
+         this._spinner.alpha += dt;
+         this._building.alpha += dt;
+      }
+      this._spinner.alpha = clamp(this._spinner.alpha, 0, 0.5);
+      this._building.alpha = clamp(
+         this._building.alpha,
+         getGameOptions().themeColors.InactiveBuildingAlpha,
+         1,
+      );
    }
 
    public onTileDataChanged(tileData: ITileData) {
@@ -303,6 +308,15 @@ export class TileVisual extends Container {
       }
    }
 
+   private onZoomed(zoom: number) {
+      if (!this._tile.explored) {
+         return;
+      }
+      forEach(this._deposits, (_, sprite) => {
+         sprite.visible = !this._tile.building || zoom >= 1;
+      });
+   }
+
    private fadeOutTopLeftIcon(): void {
       if (this._notProducing.visible) {
          Actions.sequence(
@@ -328,43 +342,6 @@ export class TileVisual extends Container {
       this._timeLeft.visible = true;
    }
 
-   public update(gs: GameState, dt: number) {
-      if (!this._tile || !this._tile.building) {
-         return;
-      }
-
-      const color = getGameOptions().buildingColors[this._tile.building.type];
-      if (color) {
-         const c = Color.shared.setValue(color);
-         this._building.tint = c;
-         this._notProducing.tint = c;
-         this._spinner.tint = c;
-      } else {
-         this._building.tint = 0xffffff;
-         this._notProducing.tint = 0xffffff;
-         this._spinner.tint = 0xffffff;
-      }
-
-      if (this._tile.building.status !== "completed") {
-         return;
-      }
-
-      this._spinner.angle += Tick.current.electrified.has(this._tile.tile) ? dt * 180 : dt * 90;
-      if (Tick.current.notProducingReasons.has(this._xy)) {
-         this._spinner.alpha -= dt;
-         this._building.alpha -= dt;
-      } else {
-         this._spinner.alpha += dt;
-         this._building.alpha += dt;
-      }
-      this._spinner.alpha = clamp(this._spinner.alpha, 0, 0.5);
-      this._building.alpha = clamp(
-         this._building.alpha,
-         getGameOptions().themeColors.InactiveBuildingAlpha,
-         1,
-      );
-   }
-
    private toggleConstructionTween(on: boolean) {
       if (on && !this._constructionAnimation.isPlaying()) {
          this._constructionAnimation.start();
@@ -381,5 +358,25 @@ export class TileVisual extends Container {
       if (!on) {
          this._upgradeAnimation.stop();
       }
+   }
+
+   private updateLayout() {
+      if (!this._tile.explored) {
+         return;
+      }
+      let position = v2({ x: 0, y: 0 });
+      let scale = 0.25;
+      if (this._tile.building) {
+         position = v2({ x: 0, y: 30 });
+         scale = 0.15;
+      }
+      const width = scale * 100;
+      let i = 0;
+      const total = sizeOf(this._tile.deposit);
+      forEach(this._deposits, (_, sprite) => {
+         sprite.visible = true;
+         sprite.position.copyFrom(position.add({ x: layoutCenter(width, 4, total, i++), y: 0 }));
+         sprite.scale.set(scale);
+      });
    }
 }

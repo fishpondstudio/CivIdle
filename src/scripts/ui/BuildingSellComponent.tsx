@@ -14,7 +14,7 @@ export function BuildingSellComponent({ gameState, xy }: IBuildingComponentProps
    }
    const sellBuilding = () => {
       delete tile!.building;
-      Singleton().sceneManager.getCurrent(WorldScene)?.resetTile(tile!.tile);
+      Singleton().sceneManager.enqueue(WorldScene, (s) => s.resetTile(tile!.tile));
       notifyGameStateUpdate();
    };
    useShortcut("BuildingPageSellBuilding", sellBuilding, [xy]);

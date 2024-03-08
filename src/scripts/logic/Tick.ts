@@ -42,7 +42,7 @@ export function tickEveryFrame(gs: GameState, dt: number) {
    if (worldScene) {
       gs.tiles.forEach((tile, xy) => {
          if (tile.building != null) {
-            worldScene.getTile(xy)?.update(gs, dt);
+            worldScene.updateTile(xy, gs, dt);
          }
       });
       worldScene.updateTransportVisual(gs, timeSinceLastTick);
@@ -105,10 +105,10 @@ export function tickEverySecond(gs: GameState, offline: boolean) {
 // eliminated by the dead code elimination!
 
 OnShowFloater.on(({ xy, amount }) => {
-   Singleton().sceneManager.getCurrent(WorldScene)?.getTile(xy)?.showFloater(amount);
+   Singleton().sceneManager.getCurrent(WorldScene)?.showFloater(xy, amount);
 });
 OnResetTile.on((xy) => {
-   Singleton().sceneManager.getCurrent(WorldScene)?.resetTile(xy);
+   Singleton().sceneManager.enqueue(WorldScene, (s) => s.resetTile(xy));
 });
 OnTileExplored.on(onTileExplored);
 OnBuildingComplete.on(onBuildingComplete);

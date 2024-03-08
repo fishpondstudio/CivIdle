@@ -326,13 +326,21 @@ export class WorldScene extends Scene {
       });
    }
 
-   getTile(xy: Tile): TileVisual | undefined {
-      return this._tiles.get(xy);
+   updateTile(xy: Tile, gs: GameState, dt: number): void {
+      this._tiles.get(xy)?.update(gs, dt);
    }
 
    resetTile(xy: Tile): void {
       this._tiles.get(xy)?.destroy({ children: true });
       this._tiles.set(xy, this.viewport.addChild(new TileVisual(this, tileToPoint(xy))));
+   }
+
+   revealTile(xy: Tile): void {
+      this._tiles.get(xy)?.reveal();
+   }
+
+   showFloater(xy: Tile, value: number): void {
+      this._tiles.get(xy)?.showFloater(value);
    }
 
    private _ticked: Set<number> = new Set();
