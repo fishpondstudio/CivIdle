@@ -114,12 +114,14 @@ export class GameOptions {
    shortcuts: Partial<Record<Shortcut, IShortcutConfig>> = {};
    soundEffect = true;
    chatHideLatestMessage = false;
+   chatSendChannel: ChatChannel = "en";
+   chatReceiveChannel: PartialSet<ChatChannel> = { en: true };
+   useMirrorServer = false;
+   buildingDefaults: Partial<Record<Building, Partial<IBuildingData>>> = {};
+   // TODO: change this
    defaultPriority = 0x010101;
    defaultStockpileCapacity = 1;
    defaultStockpileMax = 5;
-   chatSendChannel: ChatChannel = "en";
-   chatReceiveChannel: PartialSet<ChatChannel> = { en: true };
-   buildingDefaults: Partial<Record<Building, Partial<IBuildingData>>> = {};
    // Should be wiped
    greatPeople: Partial<Record<GreatPerson, { level: number; amount: number }>> = {};
    greatPeopleChoices: GreatPeopleChoice[] = [];

@@ -21,6 +21,7 @@ import { playClick } from "../visuals/Sound";
 import { ChangeSoundComponent } from "./ChangeSoundComponent";
 import { LanguageSelect } from "./LanguageSelectComponent";
 import { MenuComponent } from "./MenuComponent";
+import { RenderHTML } from "./RenderHTMLComponent";
 
 export function GameplayOptionPage(): React.ReactNode {
    const options = useGameOptions();
@@ -158,6 +159,29 @@ export function GameplayOptionPage(): React.ReactNode {
                      className="ml10 pointer"
                   >
                      {options.chatHideLatestMessage ? (
+                        <div className="m-icon text-green">toggle_on</div>
+                     ) : (
+                        <div className="m-icon text-grey">toggle_off</div>
+                     )}
+                  </div>
+               </div>
+            </fieldset>
+            <fieldset>
+               <legend>{t(L.Server)}</legend>
+               <div className="row">
+                  <div className="f1">
+                     <div>{t(L.UseMirrorServer)}</div>
+                     <RenderHTML className="text-desc" html={t(L.UseMirrorServerDescHTML)} />
+                  </div>
+                  <div
+                     onClick={() => {
+                        playClick();
+                        options.useMirrorServer = !options.useMirrorServer;
+                        notifyGameOptionsUpdate(options);
+                     }}
+                     className="ml10 pointer"
+                  >
+                     {options.useMirrorServer ? (
                         <div className="m-icon text-green">toggle_on</div>
                      ) : (
                         <div className="m-icon text-grey">toggle_off</div>

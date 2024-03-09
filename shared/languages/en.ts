@@ -1008,4 +1008,8 @@ export const EN = {
    GrandBazaarFilterWarningHTML: "You must select a filter before any market trades are shown",
    SeaTradeUpgrade: "Trading with players across the sea. Tariff for each sea tile: %{tariff}",
    SeaTradeCost: "Sea Trade Cost",
+   Server: "Server",
+   UseMirrorServer: "Use Mirror Server",
+   UseMirrorServerDescHTML:
+      "If you have problems accessing the main server, you can connect to the mirror server instead. <b>Require restarting your game to take effect</b>",
 };

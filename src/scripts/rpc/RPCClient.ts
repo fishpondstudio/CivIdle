@@ -27,10 +27,6 @@ import { makeObservableHook } from "../utilities/Hook";
 import { playBubble, playKaching } from "../visuals/Sound";
 import { SteamClient, isSteam } from "./SteamClient";
 
-const url = new URLSearchParams(window.location.search);
-const devServerAddress = url.get("server") ?? "ws://localhost:8000";
-const serverAddress = import.meta.env.DEV ? devServerAddress : "wss://de.cividle.com";
-
 let user: IUser | null = null;
 
 export const OnOfflineTime = new TypedEvent<number>();
@@ -80,6 +76,17 @@ export const client = rpcClient<ServerImpl>({
       });
    },
 });
+
+function getServerAddress(): string {
+   if (import.meta.env.DEV) {
+      const url = new URLSearchParams(window.location.search);
+      return url.get("server") ?? "ws://localhost:8000";
+   }
+   if (getGameOptions().useMirrorServer) {
+      return "wss://api.cividle.com";
+   }
+   return "wss://de.cividle.com";
+}
 
 export function getTrades(): IClientTrade[] {
    return Array.from(trades.values()).filter(
@@ -137,11 +144,11 @@ export async function connectWebSocket(): Promise<number> {
       }
       getGameOptions().id = `steam:${await SteamClient.getSteamId()}`;
       ws = new WebSocket(
-         `${serverAddress}/?appId=${await SteamClient.getAppId()}&ticket=${steamTicket}&platform=steam&steamId=${await SteamClient.getSteamId()}`,
+         `${getServerAddress()}/?appId=${await SteamClient.getAppId()}&ticket=${steamTicket}&platform=steam&steamId=${await SteamClient.getSteamId()}`,
       );
    } else {
       const token = `${getGameOptions().id}:${getGameOptions().token ?? getGameOptions().id}`;
-      ws = new WebSocket(`${serverAddress}/?platform=web&ticket=${token}`);
+      ws = new WebSocket(`${getServerAddress()}/?platform=web&ticket=${token}`);
    }
 
    if (!ws) {
