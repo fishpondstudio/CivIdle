@@ -1,6 +1,6 @@
 import type { Deposit } from "../../../shared/definitions/ResourceDefinitions";
 import {
-   applyDefaultSettings,
+   applyBuildingDefaults,
    exploreTile,
    getBuildingThatExtract,
    getExtraVisionRange,
@@ -117,7 +117,7 @@ export function onBuildingComplete(xy: Tile): void {
                level: 10,
                status: "completed",
             });
-            applyDefaultSettings(tile.building, gs);
+            applyBuildingDefaults(tile.building);
             OnBuildingComplete.emit(xy);
             ++count;
 

@@ -827,7 +827,7 @@ export function getExtraVisionRange(): number {
    return Tick.current.specialBuildings.has("GreatMosqueOfSamarra") ? 1 : 0;
 }
 
-export function applyDefaultSettings(building: IBuildingData, gs: GameState): void {
+export function applyBuildingDefaults(building: IBuildingData): IBuildingData {
    const options = getGameOptions();
    const defaults = options.buildingDefaults[building.type];
    const toApply = defaults ? { ...defaults } : {};
@@ -839,22 +839,22 @@ export function applyDefaultSettings(building: IBuildingData, gs: GameState): vo
       toApply.stockpileMax = options.defaultStockpileMax;
    }
 
-   if (!hasFeature(GameFeature.BuildingProductionPriority, gs)) {
-      delete toApply.priority;
-   }
-   if (!hasFeature(GameFeature.BuildingStockpileMode, gs)) {
-      delete toApply.stockpileCapacity;
-      delete toApply.stockpileMax;
-   }
-   if (!hasFeature(GameFeature.BuildingInputMode, gs)) {
-      delete toApply.inputMode;
-      delete toApply.maxInputDistance;
-   }
-   if (!hasFeature(GameFeature.Electricity, gs)) {
-      delete toApply.electrification;
-   }
+   // if (!hasFeature(GameFeature.BuildingProductionPriority, gs)) {
+   //    delete toApply.priority;
+   // }
+   // if (!hasFeature(GameFeature.BuildingStockpileMode, gs)) {
+   //    delete toApply.stockpileCapacity;
+   //    delete toApply.stockpileMax;
+   // }
+   // if (!hasFeature(GameFeature.BuildingInputMode, gs)) {
+   //    delete toApply.inputMode;
+   //    delete toApply.maxInputDistance;
+   // }
+   // if (!hasFeature(GameFeature.Electricity, gs)) {
+   //    delete toApply.electrification;
+   // }
 
-   Object.assign(building, toApply);
+   return Object.assign(building, toApply);
 }
 
 export function shouldAlwaysShowBuildingOptions(building: IBuildingData): boolean {

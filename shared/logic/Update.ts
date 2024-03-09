@@ -28,7 +28,7 @@ import { L, t } from "../utilities/i18n";
 import {
    IOCalculation,
    addTransportation,
-   applyDefaultSettings,
+   applyBuildingDefaults,
    canBeElectrified,
    deductResources,
    filterNonTransportable,
@@ -245,7 +245,7 @@ function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
          building.disabledInput.clear();
          if (building.status === "building") {
             building.status = building.desiredLevel > building.level ? "upgrading" : "completed";
-            applyDefaultSettings(building, gs);
+            applyBuildingDefaults(building);
             OnBuildingComplete.emit(xy);
          }
          if (building.status === "upgrading" && building.level >= building.desiredLevel) {
