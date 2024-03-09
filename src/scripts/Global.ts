@@ -1,3 +1,4 @@
+import type { Application } from "pixi.js";
 import type { City } from "../../shared/definitions/CityDefinitions";
 import type { TechAge } from "../../shared/definitions/TechDefinitions";
 import { getBuildingCost } from "../../shared/logic/BuildingLogic";
@@ -91,6 +92,13 @@ export const ToggleChatWindow = new TypedEvent<boolean>();
 export function syncUITheme(gameOptions: GameOptions): void {
    gameOptions.useModernUI ? document.body.classList.add("modern") : document.body.classList.remove("modern");
    OnUIThemeChanged.emit(getGameOptions().useModernUI);
+}
+
+export function syncSidePanelWidth(app: Application, options: GameOptions): void {
+   if (options.sidePanelWidth !== 400) {
+      document.documentElement.style.setProperty("--game-ui-width", `${options.sidePanelWidth}px`);
+      app.resize();
+   }
 }
 
 const SAVE_KEY = "CivIdle";

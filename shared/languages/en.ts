@@ -350,6 +350,7 @@ export const EN = {
    Hannibal: "Hannibal",
    QinShiHuang: "Qin Shi Huang",
    Justinian: "Justinian",
+   Theodora: "Theodora",
    IsidoreOfMiletus: "Isidore of Miletus",
    IsidoreOfMiletusDesc: "+%{value} Builder Capacity Multiplier",
    Charlemagne: "Charlemagne",
@@ -376,6 +377,7 @@ export const EN = {
    CharlesDarwin: "Charles Darwin",
    FlorenceNightingale: "Florence Nightingale",
    FlorenceNightingaleDesc: "+%{value} Happiness",
+   JPMorgan: "J.P. Morgan",
    CharlesDarwinDesc: "+%{value} Science From Busy Workers",
    Augustus: "Augustus",
    CaiLun: "Cai Lun",
@@ -784,7 +786,7 @@ export const EN = {
    ShortcutScopePlayerMapPage: "Trade Map Page",
    ShortcutBuildingPageSellBuilding: "Sell Building",
    ShortcutBuildingPageUpgradeX1: "Upgrade x1",
-   ShortcutBuildingPageUpgradeX5: "Upgrade x5",
+   ShortcutBuildingPageUpgradeX5V2: "Upgrade To Next 5",
    ShortcutBuildingPageUpgradeToNext10: "Upgrade To Next 10",
    ShortcutUpgradePageIncreaseLevel: "Increase Upgrade Level",
    ShortcutUpgradePageDecreaseLevel: "Decrease Upgrade Level",
@@ -968,6 +970,7 @@ export const EN = {
    DistanceInfinity: "Unlimited",
    SaveAndExit: "Save And Exit",
    Hatshepsut: "Hatshepsut",
+   GeorgiusAgricola: "Georgius Agricola",
    IsaacNewton: "Isaac Newton",
    IsaacNewtonDesc: "+%{value} Science from All Workers if more than 50% of workers are busy",
    ChooseGreatPersonChoicesLeft: "You have %{count} choices left",
@@ -1012,4 +1015,7 @@ export const EN = {
    UseMirrorServer: "Use Mirror Server",
    UseMirrorServerDescHTML:
       "If you have problems accessing the main server, you can connect to the mirror server instead. <b>Require restarting your game to take effect</b>",
+   SidePanelWidth: "Side Panel Width",
+   SidePanelWidthDescHTML:
+      "Change the width of the side panel. <b>Require restarting your game to take effect</b>",
 };

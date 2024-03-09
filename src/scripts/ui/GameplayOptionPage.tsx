@@ -138,7 +138,7 @@ export function GameplayOptionPage(): React.ReactNode {
                <div className="row">
                   <div className="f1">
                      <div>{t(L.ChatHideLatestMessage)}</div>
-                     <div className="text-desc">{t(L.ChatHideLatestMessageDesc)}</div>
+                     <div className="text-desc text-small">{t(L.ChatHideLatestMessageDesc)}</div>
                   </div>
                   <div
                      onClick={() => {
@@ -161,7 +161,7 @@ export function GameplayOptionPage(): React.ReactNode {
                <div className="row">
                   <div className="f1">
                      <div>{t(L.UseMirrorServer)}</div>
-                     <RenderHTML className="text-desc" html={t(L.UseMirrorServerDescHTML)} />
+                     <RenderHTML className="text-desc text-small" html={t(L.UseMirrorServerDescHTML)} />
                   </div>
                   <div
                      onClick={() => {

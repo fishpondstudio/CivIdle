@@ -16,7 +16,7 @@ import { getSpecialBuildings } from "../../shared/logic/IntraTickCache";
 import type { IPetraBuildingData } from "../../shared/logic/Tile";
 import { clamp, forEach, isNullOrUndefined, rejectIn, schedule } from "../../shared/utilities/Helper";
 import type { TypedEvent } from "../../shared/utilities/TypedEvent";
-import { isGameDataCompatible, loadGame, syncUITheme } from "./Global";
+import { isGameDataCompatible, loadGame, syncSidePanelWidth, syncUITheme } from "./Global";
 import type { RouteChangeEvent } from "./Route";
 import { Heartbeat } from "./logic/Heartbeat";
 import { tickEverySecond } from "./logic/Tick";
@@ -73,15 +73,17 @@ export async function startGame(
    // ========== Game data is loaded ==========
    routeTo(LoadingPage, { stage: LoadingPageStage.CheckSave });
    const gameState = getGameState();
+   const options = getGameOptions();
    verifyTextures(textures, gameState.city);
    if (isNewPlayer) {
-      initializeGameState(gameState, getGameOptions());
+      initializeGameState(gameState, options);
    }
 
    // ========== Game state is initialized ==========
    routeTo(LoadingPage, { stage: LoadingPageStage.CheckSave });
-   syncLanguage(Languages[getGameOptions().language]);
-   syncUITheme(getGameOptions());
+   syncLanguage(Languages[options.language]);
+   syncUITheme(options);
+   syncSidePanelWidth(app, options);
    calculateTierAndPrice();
    initializeSingletons({
       sceneManager: new SceneManager({ app, assets: resources, textures, gameState }),
@@ -145,7 +147,7 @@ export async function startGame(
       // Do nothing
    } else if (isNewPlayer) {
       showModal(<FirstTimePlayerModal />);
-   } else if (getGameOptions().greatPeopleChoices.length > 0) {
+   } else if (options.greatPeopleChoices.length > 0) {
       showModal(<ChooseGreatPersonModal permanent={true} />);
    }
 

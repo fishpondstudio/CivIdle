@@ -59,4 +59,11 @@ export function migrateSavedGame(save: SavedGame) {
    }
    // @ts-expect-error
    delete save.options.defaultPriority;
+   forEach(save.options.buildingDefaults, (building, d) => {
+      forEach(d, (k, v) => {
+         if (isNullOrUndefined(v)) {
+            delete d[k];
+         }
+      });
+   });
 }

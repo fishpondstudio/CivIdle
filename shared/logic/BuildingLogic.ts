@@ -538,18 +538,13 @@ export function getBuildingLevelLabel(b: IBuildingData): string {
    return String(b.level);
 }
 
-export function levelToNext10s(b: IBuildingData) {
-   const l = Math.ceil(b.level / 10) * 10 - b.level;
-   return l > 0 ? l : 10;
+function levelToNext(b: IBuildingData, x: number) {
+   const l = Math.ceil(b.level / x) * x - b.level;
+   return l > 0 ? l : x;
 }
 
 export function getBuildingUpgradeLevels(b: IBuildingData): number[] {
-   const next10s = levelToNext10s(b);
-   const levels = [1, 5];
-   if (!levels.includes(next10s)) {
-      levels.push(next10s);
-   }
-   return levels;
+   return [1, levelToNext(b, 5), levelToNext(b, 10)];
 }
 
 export function isSpecialBuilding(building?: Building): boolean {
@@ -847,6 +842,15 @@ export function getExtraVisionRange(): number {
 
 export function applyBuildingDefaults(building: IBuildingData, options: GameOptions): IBuildingData {
    const defaults = options.buildingDefaults[building.type];
+
+   if (defaults) {
+      forEach(defaults, (k, v) => {
+         if (isNullOrUndefined(v)) {
+            delete defaults[k];
+         }
+      });
+   }
+
    const toApply = defaults ? { ...defaults } : {};
 
    if (isNullOrUndefined(toApply.stockpileCapacity)) {
