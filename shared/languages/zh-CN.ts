@@ -702,7 +702,10 @@ export const ZH_CN = {
    ResourceImportResource: "资源",
    ResourceImportStorage: "现存量",
    ResourceImportImportPerCycleV2: "Per Cycle",
+   ResourceImportImportPerCycleV2ToolTip: "The amount of this resource that is transported per cycle",
    ResourceImportImportCapV2: "Max Amount",
+   ResourceImportImportCapV2Tooltip:
+      "This building will stop transporting thhis resource when the max amount is reached",
    ResourceImportSettings: "运送资源： %{res}",
    ResourceImportCapacity: "Resource Transport Capacity",
    PlayerTradeYouPay: "支付： %{res}",
@@ -967,6 +970,11 @@ export const ZH_CN = {
    GrandBazaarFilters: "Filters",
    GrandBazaarFilterYouPay: "You Pay",
    GrandBazaarFilterYouGet: "You Get",
+   GrandBazaarFilterWarningHTML: "You must select a filter before any market trades are shown",
    SeaTradeUpgrade: "Trading with players across the sea. Tariff for each sea tile: %{tariff}",
    SeaTradeCost: "Sea Trade Cost",
+   Server: "Server",
+   UseMirrorServer: "Use Mirror Server",
+   UseMirrorServerDescHTML:
+      "If you have problems accessing the main server, you can connect to the mirror server instead. <b>Require restarting your game to take effect</b>",
 };

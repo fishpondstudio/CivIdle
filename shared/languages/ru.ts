@@ -498,7 +498,8 @@ export const RU = {
    HagiaSophiaDesc:
       "Здания с 0% Производственной Мощностью освобождаются от -1 Счастья. Потребляет 10 Веры И производит 10 Счастья",
    AngkorWat: "Ангкор-Ват",
-   AngkorWatDesc: "Все примыкающие здания получают +1 к Множителю Производительности Работников. Производит 1000 Работников",
+   AngkorWatDesc:
+      "Все примыкающие здания получают +1 к Множителю Производительности Работников. Производит 1000 Работников",
    TerracottaArmy: "Терракотовая Армия",
    TerracottaArmyDesc:
       "Все Железодобывающие Лагеря получают +1 к Множителю Производства, Множителю Производительности Работников и Множителю Хранения. Кузницы Железа получают +1 к Множителю Производства за каждый примыкающий Железодобывающий Лагерь, который построен на месте месторождения железа",
@@ -953,7 +954,8 @@ export const RU = {
    WondersUnlocked: "Разблокированные Чудеса Света",
    WondersBuilt: "Построенные Чудеса Света",
    TransportManualControlTooltip: "Транспортировать этот ресурс для строительства/улучшения",
-   TransportAllocatedCapacityTooltip: "Мощность строительства, используемая для транспортировки данного ресурса",
+   TransportAllocatedCapacityTooltip:
+      "Мощность строительства, используемая для транспортировки данного ресурса",
    FavoriteBuildingAdd: "Добавить в Избранное",
    FavoriteBuildingRemove: "Удалить из Избранного",
    FavoriteBuildingEmptyToast: "У вас нет избранных зданий",
@@ -973,7 +975,8 @@ export const RU = {
    TechResourceTransportPreferenceDefault: "Стандартно",
    TechResourceTransportPreferenceDefaultTooltip:
       "Не переопределять транспортные предпочтения для этого ресурса, вместо этого будут использоваться транспортные предпочтения здания",
-   TechResourceTransportPreferenceOverrideTooltip: "У этого ресурса установлено предпочтение транспортировки: %{mode}",
+   TechResourceTransportPreferenceOverrideTooltip:
+      "У этого ресурса установлено предпочтение транспортировки: %{mode}",
    MaxTransportDistance: "Максимальная Дистанция Транспортировки",
    DistanceInTiles: "Дистанция (В Плитках)",
    DistanceInfinity: "Не ограничено",
@@ -1011,10 +1014,16 @@ export const RU = {
    ZenobiaDesc: "+%{value}ч Хранилища Временного Разрыва в Петре",
    PlayerTradeFillAmountMaxV2: "Заполнить Мах",
    GrandBazaar: "Большой Базар",
-   GrandBazaarDesc: "Управляйте всеми вашими рынками. Прилегающие базары получают +5 к Множителю производста и Хранилища. Прилегающие рынки получают разные сделки",
+   GrandBazaarDesc:
+      "Управляйте всеми вашими рынками. Прилегающие базары получают +5 к Множителю производста и Хранилища. Прилегающие рынки получают разные сделки",
    GrandBazaarFilters: "Фильтры",
    GrandBazaarFilterYouPay: "Вы платите",
    GrandBazaarFilterYouGet: "Вы получаете",
+   GrandBazaarFilterWarningHTML: "You must select a filter before any market trades are shown",
    SeaTradeUpgrade: "Торговля с игроками через море. Тариф для каждой морской плитки: %{tariff}",
    SeaTradeCost: "Стоимость морской торговли",
+   Server: "Server",
+   UseMirrorServer: "Use Mirror Server",
+   UseMirrorServerDescHTML:
+      "If you have problems accessing the main server, you can connect to the mirror server instead. <b>Require restarting your game to take effect</b>",
 };
