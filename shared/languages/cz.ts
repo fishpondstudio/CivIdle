@@ -1004,7 +1004,8 @@ export const CZ = {
    ZenobiaDesc: "+%{value}h Petra Warp Storage",
    PlayerTradeFillAmountMaxV2: "Naplnění maxima",
    GrandBazaar: "Grand Bazaar",
-   GrandBazaarDesc: "Ovládejte všechny trhy na jednom místě!. Všechny sousední budovy získají násobek +5 ke skladování.",
+   GrandBazaarDesc:
+      "Ovládejte všechny trhy na jednom místě!. Všechny sousední budovy získají násobek +5 ke skladování.",
    GrandBazaarFilters: "Filtry",
    GrandBazaarFilterYouPay: "Zaplatíš",
    GrandBazaarFilterYouGet: "Získáš",
