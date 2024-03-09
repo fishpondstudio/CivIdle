@@ -1,7 +1,7 @@
 import { SmoothGraphics } from "@pixi/graphics-smooth";
 import type { ColorSource, FederatedPointerEvent, IPointData, Sprite } from "pixi.js";
 import { Color, Container, LINE_CAP, LINE_JOIN, ParticleContainer, TilingSprite } from "pixi.js";
-import { checkBuildingMax } from "../../../shared/logic/BuildingLogic";
+import { applyBuildingDefaults, checkBuildingMax } from "../../../shared/logic/BuildingLogic";
 import { GameFeature, hasFeature } from "../../../shared/logic/FeatureLogic";
 import type { GameOptions, GameState } from "../../../shared/logic/GameState";
 import {
@@ -153,8 +153,10 @@ export class WorldScene extends Scene {
          playError();
          return;
       }
-      currentTile.building = makeBuilding({ type: selectBuilding.type });
-      currentTile.building.priority = getGameOptions().defaultPriority;
+      currentTile.building = applyBuildingDefaults(
+         makeBuilding({ type: selectBuilding.type }),
+         getGameOptions(),
+      );
       notifyGameStateUpdate();
    }
 

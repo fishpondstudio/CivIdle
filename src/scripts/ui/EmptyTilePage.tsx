@@ -1,6 +1,7 @@
 import { useState } from "react";
 import type { Building } from "../../../shared/definitions/BuildingDefinitions";
 import {
+   applyBuildingDefaults,
    checkBuildingMax,
    getBuildingCost,
    isWorldOrNaturalWonder,
@@ -45,8 +46,7 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
          playError();
          return;
       }
-      tile.building = makeBuilding({ type: k });
-      tile.building.priority = getGameOptions().defaultPriority;
+      tile.building = applyBuildingDefaults(makeBuilding({ type: k }), getGameOptions());
       notifyGameStateUpdate();
       lastBuild = k;
    };

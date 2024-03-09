@@ -12,7 +12,7 @@ import {
    serializeSave,
 } from "../../shared/logic/GameStateLogic";
 import { initializeGameState } from "../../shared/logic/InitializeGameState";
-import { getGrid, getSpecialBuildings } from "../../shared/logic/IntraTickCache";
+import { getSpecialBuildings } from "../../shared/logic/IntraTickCache";
 import type { IPetraBuildingData } from "../../shared/logic/Tile";
 import { clamp, forEach, isNullOrUndefined, rejectIn, schedule } from "../../shared/utilities/Helper";
 import type { TypedEvent } from "../../shared/utilities/TypedEvent";
@@ -75,7 +75,7 @@ export async function startGame(
    const gameState = getGameState();
    verifyTextures(textures, gameState.city);
    if (isNewPlayer) {
-      initializeGameState(gameState, getGrid(gameState));
+      initializeGameState(gameState, getGameOptions());
    }
 
    // ========== Game state is initialized ==========

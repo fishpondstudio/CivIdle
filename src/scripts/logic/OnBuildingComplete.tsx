@@ -7,7 +7,7 @@ import {
    isNaturalWonder,
    isSpecialBuilding,
 } from "../../../shared/logic/BuildingLogic";
-import { getGameState } from "../../../shared/logic/GameStateLogic";
+import { getGameOptions, getGameState } from "../../../shared/logic/GameStateLogic";
 import { getGrid, getXyBuildings } from "../../../shared/logic/IntraTickCache";
 import { getRevealedDeposits } from "../../../shared/logic/ResourceLogic";
 import { OnResetTile, addDeposit, getGreatPeopleChoices } from "../../../shared/logic/TechLogic";
@@ -112,12 +112,14 @@ export function onBuildingComplete(xy: Tile): void {
             if (!type) continue;
 
             tile.explored = true;
-            tile.building = makeBuilding({
-               type: type,
-               level: 10,
-               status: "completed",
-            });
-            applyBuildingDefaults(tile.building);
+            tile.building = applyBuildingDefaults(
+               makeBuilding({
+                  type: type,
+                  level: 10,
+                  status: "completed",
+               }),
+               getGameOptions(),
+            );
             OnBuildingComplete.emit(xy);
             ++count;
 

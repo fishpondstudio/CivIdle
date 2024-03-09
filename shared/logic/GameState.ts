@@ -22,7 +22,7 @@ import type { PartialSet, PartialTabulate } from "../utilities/TypeDefinitions";
 import { L, t } from "../utilities/i18n";
 import { getGameOptions, notifyGameOptionsUpdate } from "./GameStateLogic";
 import type { IShortcutConfig, Shortcut } from "./Shortcut";
-import type { IBuildingData, ITileData } from "./Tile";
+import { PRIORITY_MIN, type IBuildingData, type ITileData } from "./Tile";
 
 export interface ITransportationData {
    id: number;
@@ -119,7 +119,9 @@ export class GameOptions {
    useMirrorServer = false;
    buildingDefaults: Partial<Record<Building, Partial<IBuildingData>>> = {};
    // TODO: change this
-   defaultPriority = 0x010101;
+   // defaultPriority = 0x010101;
+   defaultProductionPriority = PRIORITY_MIN;
+   defaultConstructionPriority = PRIORITY_MIN;
    defaultStockpileCapacity = 1;
    defaultStockpileMax = 5;
    // Should be wiped

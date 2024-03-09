@@ -4,19 +4,15 @@ import { isSpecialBuilding, isWorldWonder } from "../../../shared/logic/Building
 import { Config } from "../../../shared/logic/Config";
 import { GameFeature, hasFeature } from "../../../shared/logic/FeatureLogic";
 import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
-import {
-   PRIORITY_MAX,
-   PRIORITY_MIN,
-   getConstructionPriority,
-   setConstructionPriority,
-   type ITileData,
-} from "../../../shared/logic/Tile";
+import { PRIORITY_MAX, PRIORITY_MIN, type ITileData } from "../../../shared/logic/Tile";
+import { safeParseInt } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import { useGameState } from "../Global";
 import { WorldScene } from "../scenes/WorldScene";
 import { useShortcut } from "../utilities/Hook";
 import { Singleton } from "../utilities/Singleton";
 import { playClick } from "../visuals/Sound";
+import { ApplyToAllComponent } from "./ApplyToAllComponent";
 import { BuildingConstructionProgressComponent } from "./BuildingConstructionProgressComponent";
 import { BuildingDescriptionComponent } from "./BuildingDescriptionComponent";
 import { BuildingInputModeComponent } from "./BuildingInputModeComponent";
@@ -111,24 +107,25 @@ export function ConstructionPage({ tile }: { tile: ITileData }): React.ReactNode
             {hasFeature(GameFeature.BuildingProductionPriority, gs) ? (
                <fieldset>
                   <legend>
-                     {t(L.ConstructionPriority)}: {getConstructionPriority(building.priority)}
+                     {t(L.ConstructionPriority)}: {building.constructionPriority}
                   </legend>
                   <input
                      type="range"
                      min={PRIORITY_MIN}
                      max={PRIORITY_MAX}
                      step="1"
-                     value={getConstructionPriority(building.priority)}
+                     value={building.constructionPriority}
                      onChange={(e) => {
-                        building.priority = setConstructionPriority(
-                           building.priority,
-                           parseInt(e.target.value, 10),
-                        );
+                        building.constructionPriority = safeParseInt(e.target.value, PRIORITY_MIN);
                         notifyGameStateUpdate();
                      }}
                   />
                   <div className="sep15"></div>
-                  <div className="text-desc text-small">{t(L.ProductionPriorityDesc)}</div>
+                  <ApplyToAllComponent
+                     building={building}
+                     getOptions={(s) => ({ constructionPriority: building.constructionPriority })}
+                     gameState={gs}
+                  />
                </fieldset>
             ) : null}
             {hasFeature(GameFeature.BuildingInputMode, gs) ? (

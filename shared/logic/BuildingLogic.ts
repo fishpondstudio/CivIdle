@@ -25,7 +25,7 @@ import { TypedEvent } from "../utilities/TypedEvent";
 import { L, t } from "../utilities/i18n";
 import { Config } from "./Config";
 import { GameFeature, hasFeature } from "./FeatureLogic";
-import { type GameState } from "./GameState";
+import { GameOptions, type GameState } from "./GameState";
 import { getGameOptions, getGameState } from "./GameStateLogic";
 import { getBuildingIO, getBuildingsByType, getGrid, getXyBuildings } from "./IntraTickCache";
 import { getGreatPersonThisRunLevel } from "./RebornLogic";
@@ -33,12 +33,12 @@ import { getBuildingsThatProduce, getResourcesValue } from "./ResourceLogic";
 import { getAgeForTech, getBuildingUnlockTech } from "./TechLogic";
 import { Tick, type Multiplier, type MultiplierWithSource } from "./TickLogic";
 import {
+   BuildingInputMode,
    DEFAULT_STOCKPILE_CAPACITY,
    DEFAULT_STOCKPILE_MAX,
    IMarketBuildingData,
+   PRIORITY_MIN,
    ResourceImportOptions,
-   getConstructionPriority,
-   getProductionPriority,
    type IBuildingData,
    type IHaveTypeAndLevel,
    type IResourceImportBuildingData,
@@ -467,16 +467,33 @@ export function getBuildingValue(building: IBuildingData): number {
    return getResourcesValue(getTotalBuildingCost(building.type, 0, building.level));
 }
 
-export function getCurrentPriority(building: IBuildingData): number {
+export function getCurrentPriority(building: IBuildingData, gs: GameState): number {
+   if (!hasFeature(GameFeature.BuildingProductionPriority, gs)) {
+      return PRIORITY_MIN;
+   }
    switch (building.status) {
       case "building":
       case "upgrading":
-         return getConstructionPriority(building.priority);
+         return building.constructionPriority;
       case "completed":
-         return getProductionPriority(building.priority);
+         return building.productionPriority;
       default:
          return 0;
    }
+}
+
+export function getInputMode(building: IBuildingData, gs: GameState): BuildingInputMode {
+   if (!hasFeature(GameFeature.BuildingInputMode, gs)) {
+      return BuildingInputMode.Distance;
+   }
+   return building.inputMode;
+}
+
+export function getMaxInputDistance(building: IBuildingData, gs: GameState): number {
+   if (!hasFeature(GameFeature.BuildingInputMode, gs)) {
+      return Infinity;
+   }
+   return building.maxInputDistance;
 }
 
 export function getTotalBuildingUpgrades(gs: GameState): number {
@@ -693,7 +710,8 @@ export function getAvailableResource(sourceXy: Tile, destXy: Tile, res: Resource
    const input = getBuildingIO(sourceXy, "input", IOCalculation.Capacity | IOCalculation.Multiplier, gs);
    if (input[res]) {
       return clamp(
-         building.resources[res]! - (getStockpileMax(building) + building.stockpileCapacity) * input[res]!,
+         building.resources[res]! -
+            (getStockpileMax(building) + getStockpileCapacity(building)) * input[res]!,
          0,
          Infinity,
       );
@@ -827,8 +845,7 @@ export function getExtraVisionRange(): number {
    return Tick.current.specialBuildings.has("GreatMosqueOfSamarra") ? 1 : 0;
 }
 
-export function applyBuildingDefaults(building: IBuildingData): IBuildingData {
-   const options = getGameOptions();
+export function applyBuildingDefaults(building: IBuildingData, options: GameOptions): IBuildingData {
    const defaults = options.buildingDefaults[building.type];
    const toApply = defaults ? { ...defaults } : {};
 
@@ -838,22 +855,6 @@ export function applyBuildingDefaults(building: IBuildingData): IBuildingData {
    if (isNullOrUndefined(toApply.stockpileCapacity)) {
       toApply.stockpileMax = options.defaultStockpileMax;
    }
-
-   // if (!hasFeature(GameFeature.BuildingProductionPriority, gs)) {
-   //    delete toApply.priority;
-   // }
-   // if (!hasFeature(GameFeature.BuildingStockpileMode, gs)) {
-   //    delete toApply.stockpileCapacity;
-   //    delete toApply.stockpileMax;
-   // }
-   // if (!hasFeature(GameFeature.BuildingInputMode, gs)) {
-   //    delete toApply.inputMode;
-   //    delete toApply.maxInputDistance;
-   // }
-   // if (!hasFeature(GameFeature.Electricity, gs)) {
-   //    delete toApply.electrification;
-   // }
-
    return Object.assign(building, toApply);
 }
 

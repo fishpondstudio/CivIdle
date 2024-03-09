@@ -8,12 +8,8 @@ import {
    STOCKPILE_CAPACITY_MIN,
    STOCKPILE_MAX_MAX,
    STOCKPILE_MAX_MIN,
-   getConstructionPriority,
-   getProductionPriority,
-   setConstructionPriority,
-   setProductionPriority,
 } from "../../../shared/logic/Tile";
-import { formatPercent } from "../../../shared/utilities/Helper";
+import { formatPercent, safeParseInt } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import { useGameOptions, useGameState } from "../Global";
 import { openUrl } from "../utilities/Platform";
@@ -54,7 +50,7 @@ export function GameplayOptionPage(): React.ReactNode {
                <fieldset>
                   <div className="row">
                      <div className="f1">{t(L.DefaultProductionPriority)}</div>
-                     <div className="text-strong">{getProductionPriority(options.defaultPriority)}</div>
+                     <div className="text-strong">{options.defaultProductionPriority}</div>
                   </div>
                   <div className="sep5" />
                   <input
@@ -62,12 +58,9 @@ export function GameplayOptionPage(): React.ReactNode {
                      min={PRIORITY_MIN}
                      max={PRIORITY_MAX}
                      step="1"
-                     value={getProductionPriority(options.defaultPriority)}
+                     value={options.defaultProductionPriority}
                      onChange={(e) => {
-                        options.defaultPriority = setProductionPriority(
-                           options.defaultPriority,
-                           parseInt(e.target.value, 10),
-                        );
+                        options.defaultProductionPriority = safeParseInt(e.target.value, PRIORITY_MIN);
                         notifyGameOptionsUpdate(options);
                      }}
                   />
@@ -76,7 +69,7 @@ export function GameplayOptionPage(): React.ReactNode {
                   <legend>{t(L.BuildingPriority)}</legend>
                   <div className="row">
                      <div className="f1">{t(L.DefaultConstructionPriority)}</div>
-                     <div className="text-strong">{getConstructionPriority(options.defaultPriority)}</div>
+                     <div className="text-strong">{options.defaultConstructionPriority}</div>
                   </div>
                   <div className="sep5" />
                   <input
@@ -84,12 +77,9 @@ export function GameplayOptionPage(): React.ReactNode {
                      min={PRIORITY_MIN}
                      max={PRIORITY_MAX}
                      step="1"
-                     value={getConstructionPriority(options.defaultPriority)}
+                     value={options.defaultConstructionPriority}
                      onChange={(e) => {
-                        options.defaultPriority = setConstructionPriority(
-                           options.defaultPriority,
-                           parseInt(e.target.value, 10),
-                        );
+                        options.defaultConstructionPriority = safeParseInt(e.target.value, PRIORITY_MIN);
                         notifyGameOptionsUpdate(options);
                      }}
                   />
