@@ -42,6 +42,7 @@ import {
    getMarketBuyAmount,
    getMarketSellAmount,
    getPowerRequired,
+   getStockpileCapacity,
    getStockpileMax,
    getStorageFor,
    getStorageRequired,
@@ -317,7 +318,7 @@ function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
    let hasTransported = false;
 
    forEach(input, (res, rawAmount) => {
-      const amount = rawAmount * building.stockpileCapacity;
+      let amount = rawAmount * getStockpileCapacity(building);
       if (amount <= 0) {
          return;
       }
@@ -328,6 +329,7 @@ function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
       let maxAmount = getStockpileMax(building) * rawAmount;
       if ("resourceImports" in building) {
          const ri = building as IResourceImportBuildingData;
+         amount = rawAmount;
          maxAmount = ri.resourceImports[res]?.cap ?? 0;
       }
 
@@ -343,6 +345,10 @@ function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
          if (ri && !isNullOrUndefined(ri.inputMode)) {
             inputMode = ri.inputMode;
          }
+      }
+
+      if (xy === 655378) {
+         console.log(res, amount);
       }
 
       transportResource(
@@ -408,7 +414,7 @@ function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
 
    const hasEnoughStorage =
       isEmpty(output) ||
-      used + getStorageRequired(output) + getStorageRequired(input) * building.stockpileCapacity <= total;
+      used + getStorageRequired(output) + getStorageRequired(input) * getStockpileCapacity(building) <= total;
    const hasEnoughWorker = getAvailableWorkers("Worker") >= worker.output;
    const hasEnoughInput = hasEnoughResources(building.resources, input);
 
@@ -469,6 +475,9 @@ function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
          if (res === "Science") {
             safeAdd(getSpecialBuildings(gs).Headquarter.building.resources, res, v);
          } else {
+            if (xy === 589848) {
+               console.log(res, v);
+            }
             safeAdd(building.resources, res, v);
          }
          OnShowFloater.emit({ xy, amount: v });

@@ -9,6 +9,10 @@ export const PatchNotes: PatchNote[] = [
       content: [
          ["Bugfix", "Fix a bug where Warehouse Autopilot does not take production multiplier into account"],
          ["Bugfix", "Fix a bug where player trades fail to find a path even if there's a valid one"],
+         [
+            "Bugfix",
+            "Fix a bug where default stockpile settings are incorrectly applied to Warehouse/Caravansary",
+         ],
          ["QoL", "Add an option to use mirror server in case you have trouble connecting to the main server"],
       ],
    },
