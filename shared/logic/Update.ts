@@ -347,10 +347,6 @@ function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
          }
       }
 
-      if (xy === 655378) {
-         console.log(res, amount);
-      }
-
       transportResource(
          res,
          amount,
@@ -475,9 +471,6 @@ function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
          if (res === "Science") {
             safeAdd(getSpecialBuildings(gs).Headquarter.building.resources, res, v);
          } else {
-            if (xy === 589848) {
-               console.log(res, v);
-            }
             safeAdd(building.resources, res, v);
          }
          OnShowFloater.emit({ xy, amount: v });
