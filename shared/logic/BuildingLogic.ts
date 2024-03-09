@@ -386,6 +386,16 @@ export function getScienceFromWorkers(gs: GameState) {
    };
 }
 
+export function getScienceFromBuildings() {
+   return mReduceOf(
+      Tick.next.scienceProduced,
+      (prev, _, value) => {
+         return prev + value;
+      },
+      0,
+   );
+}
+
 const buildingCostCache: Map<number, Readonly<PartialTabulate<Resource>>> = new Map();
 
 export function getBuildingCost(building: Pick<IBuildingData, "type" | "level">): PartialTabulate<Resource> {

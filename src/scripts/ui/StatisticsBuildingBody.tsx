@@ -1,6 +1,7 @@
 import Tippy from "@tippyjs/react";
 import classNames from "classnames";
 import { useState } from "react";
+import type { Building, IBuildingDefinition } from "../../../shared/definitions/BuildingDefinitions";
 import {
    NoPrice,
    NoStorage,
@@ -11,22 +12,18 @@ import {
    IOCalculation,
    getBuildingValue,
    getElectrificationStatus,
+   getScienceFromBuildings,
    getScienceFromWorkers,
    isHeadquarters,
    isNaturalWonder,
 } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
 import { GameFeature, hasFeature } from "../../../shared/logic/FeatureLogic";
-import {
-   getBuildingIO,
-   getTypeBuildings,
-   getXyBuildings,
-   unlockedResources,
-} from "../../../shared/logic/IntraTickCache";
+import { getBuildingIO, getTypeBuildings, unlockedResources } from "../../../shared/logic/IntraTickCache";
+import { getCurrentTechAge, getScienceAmount } from "../../../shared/logic/TechLogic";
 import { Tick } from "../../../shared/logic/TickLogic";
 import type { IBuildingData } from "../../../shared/logic/Tile";
 import {
-   SECOND,
    forEach,
    formatHMS,
    formatNumber,
@@ -47,9 +44,7 @@ import { BuildingColorComponent } from "./BuildingColorComponent";
 import type { IBuildingComponentProps } from "./BuildingPage";
 import { FormatNumber } from "./HelperComponents";
 import { TableView } from "./TableView";
-import type { Building, IBuildingDefinition } from "../../../shared/definitions/BuildingDefinitions";
-import { getValueRequiredForGreatPeople } from "../../../shared/logic/RebornLogic";
-import { getScienceAmount } from "../../../shared/logic/TechLogic";
+import { WorkerScienceComponent } from "./WorkerScienceComponent";
 
 type Tab = "resources" | "buildings" | "transportation" | "empire";
 
@@ -58,7 +53,7 @@ export function StatisticsBuildingBody({ gameState, xy }: IBuildingComponentProp
    if (building == null) {
       return null;
    }
-   const [currentTab, setCurrentTab] = useState<Tab>("resources");
+   const [currentTab, setCurrentTab] = useState<Tab>("empire");
    let content: React.ReactNode = null;
    if (currentTab === "resources") {
       content = <ResourcesTab gameState={gameState} xy={xy} />;
@@ -72,6 +67,12 @@ export function StatisticsBuildingBody({ gameState, xy }: IBuildingComponentProp
    return (
       <div className="window-body column">
          <menu role="tablist">
+            <button
+               onClick={() => setCurrentTab("empire")}
+               aria-selected={currentTab === "empire" ? true : false}
+            >
+               Empire
+            </button>
             <button
                onClick={() => setCurrentTab("resources")}
                aria-selected={currentTab === "resources" ? true : false}
@@ -90,12 +91,6 @@ export function StatisticsBuildingBody({ gameState, xy }: IBuildingComponentProp
             >
                {t(L.StatisticsTransportation)}
             </button>
-            <button
-               onClick={() => setCurrentTab("empire")}
-               aria-selected={currentTab === "empire" ? true : false}
-            >
-               Empire
-            </button>
          </menu>
          {content}
          <BuildingColorComponent gameState={gameState} xy={xy} />
@@ -103,7 +98,7 @@ export function StatisticsBuildingBody({ gameState, xy }: IBuildingComponentProp
    );
 }
 
-function EmpireTab({ gameState }: IBuildingComponentProps): React.ReactNode {
+function EmpireTab({ gameState, xy }: IBuildingComponentProps): React.ReactNode {
    const unlockedResourcesList: PartialSet<Resource> = unlockedResources(gameState);
    const resourceAmounts: Partial<Record<keyof ResourceDefinitions, number>> = {};
    keysOf(unlockedResourcesList).map((res) => {
@@ -116,6 +111,7 @@ function EmpireTab({ gameState }: IBuildingComponentProps): React.ReactNode {
             ) ?? 0;
    });
 
+   // Get total resource value
    const totalResourceValue = reduceOf(
       resourceAmounts,
       (prev, res, value) =>
@@ -123,11 +119,13 @@ function EmpireTab({ gameState }: IBuildingComponentProps): React.ReactNode {
       0,
    );
 
-   let totalBuildingScience = 0;
-   const buildingTypeScience: Partial<Record<Building, number>> = {};
+   // Get buildings value
    let totalBuildingValue = 0;
    const buildingTypeValues: Partial<Record<Building, number>> = {};
    getTypeBuildings(gameState).forEach((buildings, v) => {
+      if (isNaturalWonder(v) || isHeadquarters(v)) {
+         return;
+      }
       const buildingTypeValue = mReduceOf(
          buildings,
          (prev, i, value) => {
@@ -138,57 +136,16 @@ function EmpireTab({ gameState }: IBuildingComponentProps): React.ReactNode {
       );
       buildingTypeValues[v] = buildingTypeValue;
       totalBuildingValue += buildingTypeValue;
-
-      // Does this building type output science
-      /*if ("Science" in Config.Building[v].output) {
-         const scienceOutput = mReduceOf(
-            buildings,
-            (prev, i, value) => {
-               const output = getBuildingIO(
-                  value.tile,
-                  "output",
-                  IOCalculation.Multiplier | IOCalculation.Capacity,
-                  gameState,
-               );
-
-               return prev + output.Science ?? 0;
-            },
-            0,
-         );
-         buildingTypeScience[v] = scienceOutput;
-         totalBuildingScience += scienceOutput;
-      }*/
    });
 
-   totalBuildingScience = mReduceOf(
-      Tick.next.scienceProduced,
-      (prev, _, value) => {
-         return prev + value;
-      },
-      0,
-   );
-
-   const {
-      happinessPercentage,
-      workersBeforeHappiness,
-      workersAfterHappiness,
-      workersBusy,
-      scienceFromBusyWorkers,
-      scienceFromIdleWorkers,
-      scienceFromWorkers,
-      sciencePerBusyWorker,
-      sciencePerIdleWorker,
-   } = getScienceFromWorkers(gameState);
+   // Get science from buildings
+   const totalBuildingScience = getScienceFromBuildings();
+   const { scienceFromWorkers } = getScienceFromWorkers(gameState);
    const scienceAmount = getScienceAmount();
-
    const sciencePerTick = scienceFromWorkers + totalBuildingScience;
-
+   const techAge = getCurrentTechAge(gameState);
    return (
-      <article
-         role="tabpanel"
-         className="f1 column"
-         style={{ marginBottom: "5px", padding: "8px", overflow: "auto" }}
-      >
+      <article role="tabpanel" className="f1 column" style={{ padding: "8px", overflow: "auto" }}>
          <fieldset>
             <div className="row">
                <div className="f1">{t(L.TotalEmpireValue)}</div>
@@ -203,7 +160,7 @@ function EmpireTab({ gameState }: IBuildingComponentProps): React.ReactNode {
             <ul className="tree-view">
                <details>
                   <summary className="row">
-                     <div className="f1">Empire Value From Resources</div>
+                     <div className="f1">{t(L.EmpireValueFromResources)}</div>
                      <div className="text-strong">
                         <FormatNumber value={totalResourceValue} />
                      </div>
@@ -237,7 +194,7 @@ function EmpireTab({ gameState }: IBuildingComponentProps): React.ReactNode {
             <ul className="tree-view">
                <details>
                   <summary className="row">
-                     <div className="f1">Empire Value From Buildings</div>
+                     <div className="f1">{t(L.EmpireValueFromBuildings)}</div>
                      <div className="text-strong">
                         <FormatNumber value={totalBuildingValue} />
                      </div>
@@ -246,9 +203,6 @@ function EmpireTab({ gameState }: IBuildingComponentProps): React.ReactNode {
                      {keysOf(buildingTypeValues)
                         .sort((a, b) => buildingTypeValues[b]! - buildingTypeValues[a]!)
                         .map((b) => {
-                           if (isNaturalWonder(b) || isHeadquarters(b)) {
-                              return null;
-                           }
                            return (
                               <li key={b} className="row">
                                  <div className="f1">{Config.Building[b].name()}</div>
@@ -262,87 +216,38 @@ function EmpireTab({ gameState }: IBuildingComponentProps): React.ReactNode {
          </fieldset>
 
          <fieldset>
-            <legend>Science</legend>
+            <legend>{techAge != null ? Config.TechAge[techAge].name() : "Unknown Age"}</legend>
             <div className="row">
-               <div className="f1">Total</div>
+               <div className="f1">{t(L.StatisticsScience)}</div>
                <div className="text-strong">
                   <FormatNumber value={scienceAmount} />
                </div>
             </div>
-            <div className="row">
-               <div className="f1">Science Per Tick</div>
-               <div className="text-strong">
-                  <FormatNumber value={sciencePerTick} />
-               </div>
-            </div>
             <div className="sep5" />
             <ul className="tree-view">
+               <li className="row">
+                  <div className="f1">{t(L.StatisticsScienceProduction)}</div>
+                  <div className="text-strong">
+                     <FormatNumber value={sciencePerTick} />
+                  </div>
+               </li>
                <li>
                   <details>
                      <summary className="row">
-                        <div className="f1">Science From Workers</div>
+                        <div className="f1">{t(L.StatisticsScienceFromWorkers)}</div>
                         <div className="text-strong">
                            <FormatNumber value={scienceFromWorkers} />
                         </div>
                      </summary>
                      <ul>
-                        <li>
-                           <details>
-                              <summary className="row">
-                                 <div className="f1">{t(L.ScienceFromIdleWorkers)}</div>
-                                 <div className="text-strong">
-                                    <FormatNumber value={scienceFromIdleWorkers} />
-                                 </div>
-                              </summary>
-                              <ul>
-                                 <li className="row">
-                                    <div className="f1">{t(L.SciencePerIdleWorker)}</div>
-                                    <div>{sciencePerIdleWorker}</div>
-                                 </li>
-                                 <ul className="text-small">
-                                    {Tick.current.globalMultipliers.sciencePerIdleWorker.map((m) => (
-                                       <li key={m.source} className="row">
-                                          <div className="f1">{m.source}</div>
-                                          <div>{m.value}</div>
-                                       </li>
-                                    ))}
-                                 </ul>
-                              </ul>
-                           </details>
-                        </li>
-                        <li>
-                           <details>
-                              <summary className="row">
-                                 <div className="f1">{t(L.ScienceFromBusyWorkers)}</div>
-                                 <div className="text-strong">
-                                    <FormatNumber value={scienceFromBusyWorkers} />
-                                 </div>
-                              </summary>
-                              <ul>
-                                 <li className="row">
-                                    <div className="f1">{t(L.SciencePerBusyWorker)}</div>
-                                    <div>{sciencePerBusyWorker}</div>
-                                 </li>
-                                 <ul className="text-small">
-                                    {Tick.current.globalMultipliers.sciencePerBusyWorker.map((m) => (
-                                       <li key={m.source} className="row">
-                                          <div className="f1">{m.source}</div>
-                                          <div>
-                                             <FormatNumber value={m.value} />
-                                          </div>
-                                       </li>
-                                    ))}
-                                 </ul>
-                              </ul>
-                           </details>
-                        </li>
+                        <WorkerScienceComponent gameState={gameState} xy={xy} />
                      </ul>
                   </details>
                </li>
                <li>
                   <details>
                      <summary className="row">
-                        <div className="f1">Science From Buildings</div>
+                        <div className="f1">{t(L.StatisticsScienceFromBuildings)}</div>
                         <div className="text-strong">
                            <FormatNumber value={totalBuildingScience} />
                         </div>
@@ -355,10 +260,10 @@ function EmpireTab({ gameState }: IBuildingComponentProps): React.ReactNode {
                            )
                            .map((xy) => {
                               const tile = gameState.tiles.get(xy);
-                              const b = tile?.building;
+                              const building = tile?.building;
                               return (
                                  <li key={xy} className="row">
-                                    <div className="f1">{Config.Building[b!.type].name()}</div>
+                                    <div className="f1">{Config.Building[building!.type].name()}</div>
                                     <FormatNumber value={Tick.current.scienceProduced.get(xy)} />
                                  </li>
                               );
