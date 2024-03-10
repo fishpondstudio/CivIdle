@@ -8,13 +8,14 @@ import {
 } from "../../../shared/logic/GameState";
 import { notifyGameOptionsUpdate } from "../../../shared/logic/GameStateLogic";
 import { getBuildingsThatProduce } from "../../../shared/logic/ResourceLogic";
-import { forEach, keysOf } from "../../../shared/utilities/Helper";
+import { forEach, keysOf, safeParseInt } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import { useGameOptions } from "../Global";
 import { playClick } from "../visuals/Sound";
 import { ChangeModernUIComponent } from "./ChangeModernUIComponent";
 import { ColorPicker } from "./ColorPicker";
 import { MenuComponent } from "./MenuComponent";
+import { RenderHTML } from "./RenderHTMLComponent";
 
 export function ThemePage(): React.ReactNode {
    const gameOptions = useGameOptions();
@@ -27,6 +28,24 @@ export function ThemePage(): React.ReactNode {
          <div className="window-body">
             <fieldset>
                <ChangeModernUIComponent />
+               <div className="separator" />
+               <div className="row">
+                  <div className="f1">
+                     <div>{t(L.SidePanelWidth)}</div>
+                     <RenderHTML className="text-desc text-small" html={t(L.SidePanelWidthDescHTML)} />
+                  </div>
+                  <select
+                     value={gameOptions.sidePanelWidth}
+                     onChange={(e) => {
+                        gameOptions.sidePanelWidth = safeParseInt(e.target.value, 400);
+                        notifyGameOptionsUpdate(gameOptions);
+                     }}
+                  >
+                     <option value={400}>400px</option>
+                     <option value={450}>450px</option>
+                     <option value={500}>500px</option>
+                  </select>
+               </div>
             </fieldset>
             <fieldset>
                <legend>{t(L.ThemeColor)}</legend>

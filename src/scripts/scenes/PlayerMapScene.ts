@@ -5,13 +5,7 @@ import WorldMap from "../../../shared/definitions/WorldMap.json";
 import { getGameOptions } from "../../../shared/logic/GameStateLogic";
 import { isTileReserved } from "../../../shared/logic/PlayerTradeLogic";
 import { MAP_MAX_X, MAP_MAX_Y, type IClientMapEntry } from "../../../shared/utilities/Database";
-import {
-   forEach,
-   formatPercent,
-   mapSafeAdd,
-   safeParseInt,
-   xyToPoint,
-} from "../../../shared/utilities/Helper";
+import { forEach, formatPercent, mapSafeAdd, xyToPoint } from "../../../shared/utilities/Helper";
 import type { Disposable } from "../../../shared/utilities/TypedEvent";
 import { OnPlayerMapMessage, OnTradeChanged, getPlayerMap, getTrades } from "../rpc/RPCClient";
 import { PlayerMapPage } from "../ui/PlayerMapPage";
@@ -76,6 +70,19 @@ export class PlayerMapScene extends Scene {
 
       this._selectedGraphics = this.viewport.addChild(new SmoothGraphics());
 
+      getPlayerMap().forEach((entry, xy) => {
+         this.addOrReplaceTile(xy, entry);
+      });
+
+      OnPlayerMapMessage.on((message) => {
+         if (message.remove) {
+            message.remove.forEach((xy) => this.removeTile(xy));
+         }
+         if (message.upsert) {
+            forEach(message.upsert, (xy, entry) => this.addOrReplaceTile(xy, entry));
+         }
+      });
+
       // Assets.load<Texture>("/World.png").then((texture) => {
       //    const sprite = this.viewport.addChild(new Sprite(texture));
       //    sprite.anchor.set(0.5, 0.5);
@@ -131,34 +138,10 @@ export class PlayerMapScene extends Scene {
             this._dirtyTiles.forEach((tile) => {
                const entry = getPlayerMap().get(tile);
                if (entry) {
-                  this.drawTile(tile, entry);
+                  this.addOrReplaceTile(tile, entry);
                }
             });
             this._dirtyTiles.clear();
-         }),
-      );
-
-      getPlayerMap().forEach((entry, xy) => {
-         setTimeout(() => this.drawTile(xy, entry), 0);
-      });
-
-      this._listeners.push(
-         OnPlayerMapMessage.on((message) => {
-            if (message.remove) {
-               message.remove.forEach((xy) => {
-                  const id = getPlayerMap().get(xy)?.userId;
-                  if (id) {
-                     this._idToTile.delete(id);
-                  }
-                  this._tiles.get(xy)?.destroy({ children: true });
-                  this._tiles.delete(xy);
-               });
-            }
-            if (message.upsert) {
-               forEach(message.upsert, (xy, entry) => {
-                  this.drawTile(xy, entry);
-               });
-            }
          }),
       );
 
@@ -267,31 +250,48 @@ export class PlayerMapScene extends Scene {
       Singleton().routeTo(PlayerMapPage, { xy: selectedXy });
    }
 
-   private drawTile(xy: string, entry: IClientMapEntry) {
-      const { textures } = this.context;
-      const [x, y] = xy.split(",").map((x) => safeParseInt(x));
-      const container = this.viewport.addChild(new Container());
+   private addOrReplaceTile(xy: string, entry: IClientMapEntry) {
       this._tiles.get(xy)?.destroy({ children: true });
+      const count = this._idToTradeCount.get(entry.userId);
+      const container = this.viewport.addChild(
+         new PlayerTile(xyToPoint(xy), entry, count ?? 0, this.context),
+      );
       this._tiles.set(xy, container);
       this._idToTile.set(entry.userId, xy);
+   }
 
-      const isMyself = entry.userId === getGameOptions().id;
-      const isReserved = isTileReserved(entry);
+   private removeTile(xy: string) {
+      const id = getPlayerMap().get(xy)?.userId;
+      if (id) {
+         this._idToTile.delete(id);
+      }
+      this._tiles.get(xy)?.destroy({ children: true });
+      this._tiles.delete(xy);
+   }
+}
 
-      const flag = container.addChild(new Sprite(textures[`Flag_${entry.flag.toUpperCase()}`]));
+class PlayerTile extends Container {
+   constructor(tile: IPointData, data: IClientMapEntry, trade: number, context: ISceneContext) {
+      super();
+      const { textures } = context;
+      const { x, y } = tile;
+
+      const isMyself = data.userId === getGameOptions().id;
+      const isReserved = isTileReserved(data);
+
+      const flag = this.addChild(new Sprite(textures[`Flag_${data.flag.toUpperCase()}`]));
       flag.anchor.set(0.5, 0.5);
       flag.position.set(x * GridSize + 0.5 * GridSize, y * GridSize + 0.5 * GridSize - 24);
       flag.alpha = isReserved ? 1 : 0.5;
 
-      const count = this._idToTradeCount.get(entry.userId);
-      if (count) {
-         const bg = container.addChild(new Sprite(textures.circle_25));
+      if (trade > 0) {
+         const bg = this.addChild(new Sprite(textures.circle_25));
          bg.anchor.set(0.5, 0.5);
          bg.tint = 0xe74c3c;
          bg.position.set(x * GridSize + 0.9 * GridSize, y * GridSize + 0.12 * GridSize);
 
-         const tradeCount = container.addChild(
-            new BitmapText(String(count), {
+         const tradeCount = this.addChild(
+            new BitmapText(String(trade), {
                fontName: Fonts.Cabin,
                fontSize: 20,
                tint: 0xffffff,
@@ -301,8 +301,8 @@ export class PlayerMapScene extends Scene {
          tradeCount.position.set(x * GridSize + 0.9 * GridSize, y * GridSize + 0.1 * GridSize);
       }
 
-      const handle = container.addChild(
-         new BitmapText(entry.handle, {
+      const handle = this.addChild(
+         new BitmapText(data.handle, {
             fontName: Fonts.Cabin,
             fontSize: 16,
             tint: isMyself ? 0xffeaa7 : 0xffffff,
@@ -317,8 +317,8 @@ export class PlayerMapScene extends Scene {
       handle.position.set(x * GridSize + 0.5 * GridSize, y * GridSize + 0.5 * GridSize);
       handle.alpha = isReserved ? 1 : 0.5;
 
-      const tariff = container.addChild(
-         new BitmapText(formatPercent(entry.tariffRate), {
+      const tariff = this.addChild(
+         new BitmapText(formatPercent(data.tariffRate), {
             fontName: Fonts.Cabin,
             fontSize: 20,
             tint: isMyself ? 0xffeaa7 : 0xffffff,

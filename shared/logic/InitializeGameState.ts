@@ -1,12 +1,14 @@
-import type { Grid } from "../utilities/Grid";
 import { forEach, isEmpty, keysOf, pointToTile, shuffle } from "../utilities/Helper";
+import { applyBuildingDefaults } from "./BuildingLogic";
 import { Config } from "./Config";
-import { GameState } from "./GameState";
+import { GameOptions, GameState } from "./GameState";
+import { getGrid } from "./IntraTickCache";
 import { unlockTech } from "./TechLogic";
 import { ensureTileFogOfWar, findNearest } from "./TerrainLogic";
 import { makeBuilding } from "./Tile";
 
-export function initializeGameState(gameState: GameState, grid: Grid) {
+export function initializeGameState(gameState: GameState, options: GameOptions) {
+   const grid = getGrid(gameState);
    const center = grid.center();
    const centerXy = pointToTile(center);
 
@@ -22,11 +24,14 @@ export function initializeGameState(gameState: GameState, grid: Grid) {
       });
    });
 
-   gameState.tiles.get(centerXy)!.building = makeBuilding({
-      type: "Headquarter",
-      level: 1,
-      status: "completed",
-   });
+   gameState.tiles.get(centerXy)!.building = applyBuildingDefaults(
+      makeBuilding({
+         type: "Headquarter",
+         level: 1,
+         status: "completed",
+      }),
+      options,
+   );
 
    // forEach(Config.Tech, (k, v) => {
    //    if (v.column === 0) {
@@ -41,29 +46,40 @@ export function initializeGameState(gameState: GameState, grid: Grid) {
 
    const wood = findNearest((tile) => !!tile.deposit.Wood && !tile.building, center, grid, gameState);
    if (wood) {
-      gameState.tiles.get(wood.tile)!.building = makeBuilding({
-         type: "LoggingCamp",
-         level: 1,
-         status: "completed",
-      });
+      gameState.tiles.get(wood.tile)!.building = applyBuildingDefaults(
+         makeBuilding(
+            makeBuilding({
+               type: "LoggingCamp",
+               level: 1,
+               status: "completed",
+            }),
+         ),
+         options,
+      );
    }
 
    const stone = findNearest((tile) => !!tile.deposit.Stone && !tile.building, center, grid, gameState);
    if (stone) {
-      gameState.tiles.get(stone.tile)!.building = makeBuilding({
-         type: "StoneQuarry",
-         level: 1,
-         status: "completed",
-      });
+      gameState.tiles.get(stone.tile)!.building = applyBuildingDefaults(
+         makeBuilding({
+            type: "StoneQuarry",
+            level: 1,
+            status: "completed",
+         }),
+         options,
+      );
    }
 
    const water = findNearest((tile) => !!tile.deposit.Water && !tile.building, center, grid, gameState);
    if (water) {
-      gameState.tiles.get(water.tile)!.building = makeBuilding({
-         type: "Aqueduct",
-         level: 1,
-         status: "completed",
-      });
+      gameState.tiles.get(water.tile)!.building = applyBuildingDefaults(
+         makeBuilding({
+            type: "Aqueduct",
+            level: 1,
+            status: "completed",
+         }),
+         options,
+      );
    }
 
    gameState.tiles.forEach((tile, xy) => {

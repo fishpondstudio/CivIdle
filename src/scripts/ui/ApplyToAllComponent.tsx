@@ -2,7 +2,7 @@ import { applyToAllBuildings } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
 import type { GameState } from "../../../shared/logic/GameState";
 import { getGameOptions } from "../../../shared/logic/GameStateLogic";
-import type { IBuildingData } from "../../../shared/logic/Tile";
+import { type IBuildingData } from "../../../shared/logic/Tile";
 import { L, t } from "../../../shared/utilities/i18n";
 import { playClick } from "../visuals/Sound";
 import { TextWithHelp } from "./TextWithHelpComponent";
@@ -17,6 +17,7 @@ export function ApplyToAllComponent<T extends IBuildingData>({
    gameState: GameState;
 }): React.ReactNode {
    const def = Config.Building[building.type];
+   const defaults = getGameOptions().buildingDefaults[building.type];
    return (
       <div className="text-small row">
          <div

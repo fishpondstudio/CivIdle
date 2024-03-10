@@ -28,7 +28,6 @@ import { L, t } from "../utilities/i18n";
 import {
    IOCalculation,
    addTransportation,
-   applyDefaultSettings,
    canBeElectrified,
    deductResources,
    filterNonTransportable,
@@ -39,9 +38,12 @@ import {
    getBuildingCost,
    getBuildingValue,
    getCurrentPriority,
+   getInputMode,
    getMarketBuyAmount,
    getMarketSellAmount,
+   getMaxInputDistance,
    getPowerRequired,
+   getStockpileCapacity,
    getStockpileMax,
    getStorageFor,
    getStorageRequired,
@@ -155,11 +157,9 @@ function tickTransportation(transport: ITransportationData, mah: IPointData | nu
 export function tickTiles(gs: GameState, offline: boolean) {
    Array.from(getXyBuildings(gs).entries())
       .sort(([_a, buildingA], [_b, buildingB]) => {
-         if (hasFeature(GameFeature.BuildingProductionPriority, gs)) {
-            const diff = getCurrentPriority(buildingB) - getCurrentPriority(buildingA);
-            if (diff !== 0) {
-               return diff;
-            }
+         const diff = getCurrentPriority(buildingB, gs) - getCurrentPriority(buildingA, gs);
+         if (diff !== 0) {
+            return diff;
          }
          return (Config.BuildingTier[buildingA.type] ?? 0) - (Config.BuildingTier[buildingB.type] ?? 0);
       })
@@ -177,11 +177,6 @@ function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
       building.status = building.level > 0 ? "upgrading" : "building";
    } else {
       building.desiredLevel = building.level;
-   }
-
-   if (!hasFeature(GameFeature.BuildingInputMode, gs)) {
-      building.maxInputDistance = Infinity;
-      building.inputMode = BuildingInputMode.Distance;
    }
 
    Tick.next.totalValue += getBuildingValue(building);
@@ -231,8 +226,8 @@ function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
             builderCapacityPerResource,
             xy,
             gs,
-            building.inputMode,
-            defaultTransportFilter(building),
+            getInputMode(building, gs),
+            defaultTransportFilter(building, gs),
          );
       });
 
@@ -244,7 +239,6 @@ function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
          building.disabledInput.clear();
          if (building.status === "building") {
             building.status = building.desiredLevel > building.level ? "upgrading" : "completed";
-            applyDefaultSettings(building, gs);
             OnBuildingComplete.emit(xy);
          }
          if (building.status === "upgrading" && building.level >= building.desiredLevel) {
@@ -317,7 +311,7 @@ function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
    let hasTransported = false;
 
    forEach(input, (res, rawAmount) => {
-      const amount = rawAmount * building.stockpileCapacity;
+      let amount = rawAmount * getStockpileCapacity(building);
       if (amount <= 0) {
          return;
       }
@@ -328,6 +322,7 @@ function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
       let maxAmount = getStockpileMax(building) * rawAmount;
       if ("resourceImports" in building) {
          const ri = building as IResourceImportBuildingData;
+         amount = rawAmount;
          maxAmount = ri.resourceImports[res]?.cap ?? 0;
       }
 
@@ -335,7 +330,7 @@ function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
          return;
       }
 
-      let inputMode = building.inputMode;
+      let inputMode = getInputMode(building, gs);
 
       if ("resourceImports" in building) {
          const rib = building as IResourceImportBuildingData;
@@ -352,7 +347,7 @@ function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
          xy,
          gs,
          inputMode,
-         defaultTransportFilter(building),
+         defaultTransportFilter(building, gs),
       );
       hasTransported = true;
    });
@@ -408,7 +403,7 @@ function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
 
    const hasEnoughStorage =
       isEmpty(output) ||
-      used + getStorageRequired(output) + getStorageRequired(input) * building.stockpileCapacity <= total;
+      used + getStorageRequired(output) + getStorageRequired(input) * getStockpileCapacity(building) <= total;
    const hasEnoughWorker = getAvailableWorkers("Worker") >= worker.output;
    const hasEnoughInput = hasEnoughResources(building.resources, input);
 
@@ -554,10 +549,10 @@ function tickWarehouseAutopilot(warehouse: IWarehouseBuildingData, xy: Tile, gs:
 
 type TransportFilterFunc = (source: IBuildingResource, dest: Tile) => boolean;
 
-function defaultTransportFilter(building: IBuildingData): TransportFilterFunc {
+function defaultTransportFilter(building: IBuildingData, gs: GameState): TransportFilterFunc {
    return (source: IBuildingResource, dest: Tile) => {
       const grid = getGrid(getGameState());
-      const maxDistance = building.maxInputDistance;
+      const maxDistance = getMaxInputDistance(building, gs);
       if (maxDistance === Infinity) {
          return true;
       }
