@@ -27,6 +27,7 @@ import { WorldScene } from "../scenes/WorldScene";
 import { ChooseGreatPersonModal } from "../ui/ChooseGreatPersonModal";
 import { showModal } from "../ui/GlobalModal";
 import { Singleton } from "../utilities/Singleton";
+import { playLevelUp } from "../visuals/Sound";
 
 export function onBuildingComplete(xy: Tile): void {
    const gs = getGameState();
@@ -54,6 +55,7 @@ export function onBuildingComplete(xy: Tile): void {
             gs.greatPeopleChoices.push(candidates);
          }
          if (gs.greatPeopleChoices.length > 0) {
+            playLevelUp();
             showModal(<ChooseGreatPersonModal permanent={false} />);
          }
          break;
@@ -64,6 +66,7 @@ export function onBuildingComplete(xy: Tile): void {
             gs.greatPeopleChoices.push(candidates);
          }
          if (gs.greatPeopleChoices.length > 0) {
+            playLevelUp();
             showModal(<ChooseGreatPersonModal permanent={false} />);
          }
          break;

@@ -37,6 +37,7 @@ export function UnexploredTile({ xy, gameState }: IBuildingComponentProps): Reac
             </WarningComponent>
             <button
                className="w100 jcc row mb10"
+               disabled={explorers <= 0}
                onClick={() => {
                   const tile = gameState.tiles.get(xy);
                   if (!tile || tile.explored || !statistics) {

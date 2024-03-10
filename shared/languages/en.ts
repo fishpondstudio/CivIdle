@@ -391,6 +391,7 @@ export const EN = {
    SimaQian: "Sima Qian",
    Athens: "Athens",
    Rome: "Rome",
+   Memphis: "Memphis",
    DepositTileCountDesc: "%{count} tile(s) of %{deposit} can be found in %{city}",
    Build: "Build",
    ConstructionProgress: "Progress",
@@ -430,8 +431,7 @@ export const EN = {
    CircusMaximus: "Circus Maximus",
    CircusMaximusDescV2:
       "+5 Happiness. All Musician's Guilds, Writer's Guilds and Painter's Guilds get +1 Production and Storage Multiplier",
-   Statistics: "Statistics Building",
-   StatisticsDesc: "Provide statistics of consumption and production",
+   StatisticsOfficeDesc: "Provide statistics of your empire. Generate explorers for exploring the map",
    GrottaAzzurra: "Grotta Azzurra",
    GrottaAzzurraDesc: "When discovered, all your Tier I buildings get +5 Level",
    StatueOfZeus: "Statue of Zeus",
@@ -441,6 +441,12 @@ export const EN = {
    PoseidonDesc: "All adjacent buildings get free upgrades to Level 20",
    Aphrodite: "Aphrodite",
    AphroditeDesc: "+1 Builder Capacity Multiplier for each level when upgrading buildings over Level 20",
+   NileRiver: "Nile River",
+   NileRiverDesc:
+      "Double the effect of Hatshepsut. All wheat farms get +1 Production and Storage Multiplier. All adjacent wheat farms get +5 Production and Storage Multiplier",
+   MountSinai: "Mount Sinai",
+   MountSinaiDesc:
+      "When discovered, a great person of the current age is born. All buildings that produce faith get +5 Storage Multiplier",
    Alps: "Alps",
    AlpsDesc:
       "Every 10th level of a building gets +1 Production Capacity (+1 Consumption Multiplier, +1 Production Multiplier)",
@@ -664,6 +670,7 @@ export const EN = {
    MarketSell: "Sell",
    ResourceAmount: "Amount",
    RomanForum: "Roman Forum",
+   TempleOfPtah: "Temple of Ptah",
    Acropolis: "Acropolis",
    CensorsOffice: "Censor's Office",
    StatisticsOffice: "Statistics Office",
@@ -1021,6 +1028,11 @@ export const EN = {
    GrandBazaarFilterYouPay: "You Pay",
    GrandBazaarFilterYouGet: "You Get",
    GrandBazaarFilterWarningHTML: "You must select a filter before any market trades are shown",
+   AbuSimbel: "Abu Simbel",
+   AbuSimbelDesc: "Double the effect of Ramesses II. All Adjacent wonders get +1 Happiness",
+   GreatSphinx: "Great Sphinx",
+   GreatSphinxDesc:
+      "All Tier II or above buildings within 2 tiles get +N Consumption, Production Multiplier. N = Number of its adjacent buildings of the same type",
    SeaTradeUpgrade: "Trading with players across the sea. Tariff for each sea tile: %{tariff}",
    SeaTradeCost: "Sea Trade Cost",
    Server: "Server",

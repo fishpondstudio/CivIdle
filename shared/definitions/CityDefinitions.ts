@@ -47,10 +47,33 @@ export class CityDefinitions {
       size: 40,
       buildingNames: {
          Headquarter: () => t(L.Acropolis),
-         Statistics: () => t(L.StatisticsOffice),
       },
       uniqueBuildings: { StatueOfZeus: "Theater", Parthenon: "Democracy" },
       naturalWonders: { Aphrodite: true, Poseidon: true },
+   };
+   Memphis: ICityDefinition = {
+      name: () => t(L.Memphis),
+      deposits: {
+         Water: 0.1,
+         Copper: 0.01,
+         Iron: 0.025,
+         Wood: 0.025,
+         Stone: 0.02,
+         Gold: 0.02,
+         Coal: 0.025,
+         Oil: 0.015,
+         Aluminum: 0.025,
+         NaturalGas: 0.025,
+      },
+      size: 50,
+      buildingNames: {
+         Headquarter: () => t(L.TempleOfPtah),
+      },
+      uniqueBuildings: {
+         AbuSimbel: "Housing",
+         GreatSphinx: "Arithmetic",
+      },
+      naturalWonders: { NileRiver: true, MountSinai: true },
    };
 }
 

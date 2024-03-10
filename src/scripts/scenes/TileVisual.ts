@@ -57,7 +57,7 @@ export class TileVisual extends Container {
       const gs = getGameState();
       this._xy = pointToTile(this._grid);
       this._tile = gs.tiles.get(this._xy)!;
-
+      console.assert(this._tile, "Expect tile to exist!");
       this.position = getGrid(gs).gridToPosition(this._grid);
       this.cullable = true;
 

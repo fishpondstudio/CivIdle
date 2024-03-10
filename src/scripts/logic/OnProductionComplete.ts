@@ -1,3 +1,4 @@
+import { tickGreatPersonBoost } from "../../../shared/definitions/GreatPersonDefinitions";
 import {
    ST_PETERS_FAITH_MULTIPLIER,
    ST_PETERS_STORAGE_MULTIPLIER,
@@ -9,7 +10,7 @@ import {
 } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
 import { EXPLORER_SECONDS, MAX_EXPLORER, OXFORD_SCIENCE_PER_UPGRADE } from "../../../shared/logic/Constants";
-import { getGameState } from "../../../shared/logic/GameStateLogic";
+import { getGameOptions, getGameState } from "../../../shared/logic/GameStateLogic";
 import {
    getBuildingsByType,
    getGrid,
@@ -18,6 +19,7 @@ import {
    getTypeBuildings,
    getXyBuildings,
 } from "../../../shared/logic/IntraTickCache";
+import { getGreatPersonThisRunLevel } from "../../../shared/logic/RebornLogic";
 import { getBuildingsThatProduce } from "../../../shared/logic/ResourceLogic";
 import { Tick } from "../../../shared/logic/TickLogic";
 import { MarketOptions, type IMarketBuildingData, type IPetraBuildingData } from "../../../shared/logic/Tile";
@@ -368,12 +370,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          for (const neighbor of grid.getNeighbors(tileToPoint(xy))) {
             const neighborXy = pointToTile(neighbor);
             const building = gs.tiles.get(neighborXy)?.building;
-            if (
-               building &&
-               !isSpecialBuilding(building.type) &&
-               building.status === "completed" &&
-               building.level < 20
-            ) {
+            if (building && !isSpecialBuilding(building.type) && building.level < 20) {
                building.level = 20;
             }
          }
@@ -509,6 +506,76 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          });
          addMultiplier("OilWell", { output: 1, worker: 1, storage: 1 }, buildingName);
          addMultiplier("CoalMine", { output: 1, worker: 1, storage: 1 }, buildingName);
+         break;
+      }
+      case "MountSinai": {
+         forEach(Config.Building, (building, def) => {
+            if (def.output.Faith) {
+               addMultiplier(building, { storage: 5 }, buildingName);
+            }
+         });
+         break;
+      }
+      case "NileRiver": {
+         addMultiplier("WheatFarm", { output: 1, storage: 1 }, buildingName);
+         for (const neighbor of grid.getNeighbors(tileToPoint(xy))) {
+            const neighborXy = pointToTile(neighbor);
+            const building = getCompletedBuilding(neighborXy, gs);
+            if (building?.type === "WheatFarm") {
+               mapSafePush(Tick.next.tileMultipliers, neighborXy, {
+                  storage: 5,
+                  output: 5,
+                  source: buildingName,
+               });
+            }
+         }
+         const total =
+            getGreatPersonThisRunLevel(gs.greatPeople.Hatshepsut ?? 0) +
+            (getGameOptions().greatPeople.Hatshepsut?.level ?? 0);
+         if (total > 0) {
+            tickGreatPersonBoost(Config.GreatPerson.Hatshepsut, total, buildingName);
+         }
+         break;
+      }
+      case "AbuSimbel": {
+         let count = 0;
+         for (const neighbor of grid.getNeighbors(tileToPoint(xy))) {
+            const neighborXy = pointToTile(neighbor);
+            if (isWorldWonder(getCompletedBuilding(neighborXy, gs)?.type)) {
+               ++count;
+            }
+         }
+         Tick.next.globalMultipliers.happiness.push({ value: count, source: buildingName });
+         const total =
+            getGreatPersonThisRunLevel(gs.greatPeople.RamessesII ?? 0) +
+            (getGameOptions().greatPeople.RamessesII?.level ?? 0);
+         if (total > 0) {
+            Tick.next.globalMultipliers.builderCapacity.push({
+               value: Config.GreatPerson.RamessesII.value(total),
+               source: buildingName,
+            });
+         }
+         break;
+      }
+      case "GreatSphinx": {
+         for (const tile of grid.getRange(tileToPoint(xy), 2)) {
+            const tileXy = pointToTile(tile);
+            const b = gs.tiles.get(tileXy)?.building;
+            if (b && (Config.BuildingTech[b.type] ?? 0) > 1) {
+               const type = b.type;
+               let count = 0;
+               for (const n of grid.getNeighbors(tile)) {
+                  if (getCompletedBuilding(pointToTile(n), gs)?.type === type) {
+                     ++count;
+                  }
+               }
+               mapSafePush(Tick.next.tileMultipliers, tileXy, {
+                  input: count,
+                  output: count,
+                  source: buildingName,
+               });
+            }
+         }
          break;
       }
       // case "ArcDeTriomphe": {

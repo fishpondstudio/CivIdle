@@ -9,9 +9,9 @@ import {
 } from "../../../shared/logic/RebornLogic";
 import { getCurrentTechAge } from "../../../shared/logic/TechLogic";
 import { Tick } from "../../../shared/logic/TickLogic";
-import { firstKeyOf, formatPercent, mapOf, reduceOf, rejectIn } from "../../../shared/utilities/Helper";
+import { formatPercent, mapOf, reduceOf, rejectIn } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
-import { resetToCity, saveGame, useGameOptions, useGameState } from "../Global";
+import { resetToCity, saveGame, useGameState } from "../Global";
 import { canEarnGreatPeopleFromReborn, client, isOnlineUser, useTrades, useUser } from "../rpc/RPCClient";
 import { jsxMapOf } from "../utilities/Helper";
 import { playClick, playError } from "../visuals/Sound";
@@ -32,8 +32,7 @@ export function RebornModal(): React.ReactNode {
    }, []);
 
    const gameState = useGameState();
-   const options = useGameOptions();
-   const [city, setCity] = useState<City>(firstKeyOf(Config.City)!);
+   const [city, setCity] = useState<City>(gameState.city);
    return (
       <div className="window" style={{ width: "450px" }}>
          <div className="title-bar">
@@ -99,7 +98,12 @@ export function RebornModal(): React.ReactNode {
                   </select>
                </div>
                <div className="separator"></div>
-               <div className="text-strong">{t(L.Deposit)}</div>
+               <div className="row">
+                  <div className="text-strong">{t(L.Deposit)}</div>
+                  <div className="text-desc ml5">
+                     ({Config.City[city].size}x{Config.City[city].size})
+                  </div>
+               </div>
                <div>
                   {mapOf(Config.City[city].deposits, (dep, value) => {
                      return `${Config.Resource[dep].name()}: ${formatPercent(value)}`;

@@ -1,7 +1,7 @@
 import type { Application } from "pixi.js";
 import type { City } from "../../shared/definitions/CityDefinitions";
 import type { TechAge } from "../../shared/definitions/TechDefinitions";
-import { getBuildingCost } from "../../shared/logic/BuildingLogic";
+import { exploreTile, getBuildingCost } from "../../shared/logic/BuildingLogic";
 import type { GameOptions, SavedGame } from "../../shared/logic/GameState";
 import { GameState } from "../../shared/logic/GameState";
 import {
@@ -83,6 +83,17 @@ if (import.meta.env.DEV) {
             building.resources[res] = amount;
          });
       }
+   };
+
+   // @ts-expect-error
+   window.revealAllTiles = () => {
+      const gs = getGameState();
+      gs.tiles.forEach((tile, xy) => {
+         if (!tile.explored) {
+            exploreTile(xy, gs);
+            Singleton().sceneManager.enqueue(WorldScene, (s) => s.revealTile(xy));
+         }
+      });
    };
 }
 

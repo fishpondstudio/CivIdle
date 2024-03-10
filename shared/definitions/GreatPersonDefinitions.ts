@@ -663,7 +663,7 @@ function greatPersonBoostDesc(self: IGreatPersonDefinition, level: number) {
    });
 }
 
-function tickGreatPersonBoost(self: IGreatPersonDefinition, level: number, permanent: boolean) {
+export function tickGreatPersonBoost(self: IGreatPersonDefinition, level: number, source: string) {
    const boost = self.boost;
    if (!boost) {
       throw new Error("`tickGreatPersonBoost` requires `boost` to be defined");
@@ -673,11 +673,7 @@ function tickGreatPersonBoost(self: IGreatPersonDefinition, level: number, perma
       boost.multipliers.forEach((m) => {
          multiplier[m] = self.value(level);
       });
-      addMultiplier(
-         b,
-         multiplier as Multiplier,
-         t(permanent ? L.SourceGreatPersonPermanent : L.SourceGreatPerson, { person: self.name() }),
-      );
+      addMultiplier(b, multiplier as Multiplier, source);
    });
 }
 
@@ -692,7 +688,12 @@ function boostOf(
       value: def.value,
       maxLevel: def.maxLevel,
       age: def.age,
-      tick: (self, level, permanent) => tickGreatPersonBoost(self, level, permanent),
+      tick: (self, level, permanent) =>
+         tickGreatPersonBoost(
+            self,
+            level,
+            t(permanent ? L.SourceGreatPersonPermanent : L.SourceGreatPerson, { person: self.name() }),
+         ),
    };
 }
 
