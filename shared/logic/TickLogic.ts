@@ -32,6 +32,7 @@ interface ITickData {
    notProducingReasons: Map<Tile, NotProducingReason>;
    specialBuildings: Map<Building, Tile>;
    totalValue: number;
+   scienceProduced: Map<Tile, number>;
 }
 
 export function EmptyTickData(): ITickData {
@@ -50,6 +51,7 @@ export function EmptyTickData(): ITickData {
       playerTradeBuildings: new Map(),
       specialBuildings: new Map(),
       totalValue: 0,
+      scienceProduced: new Map(),
    };
 }
 

@@ -463,6 +463,7 @@ function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
       if (isTransportable(res)) {
          if (res === "Science") {
             safeAdd(getSpecialBuildings(gs).Headquarter.building.resources, res, v);
+            Tick.next.scienceProduced.set(xy, v);
          } else {
             safeAdd(building.resources, res, v);
          }

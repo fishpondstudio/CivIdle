@@ -1021,6 +1021,12 @@ export const EN = {
    UseMirrorServer: "Use Mirror Server",
    UseMirrorServerDescHTML:
       "If you have problems accessing the main server, you can connect to the mirror server instead. <b>Require restarting your game to take effect</b>",
+   EmpireValueFromResources: "Empire Value From Resources",
+   EmpireValueFromBuildings: "Empire Value From Buildings",
+   StatisticsScience: "Science",
+   StatisticsScienceProduction: "Science Production",
+   StatisticsScienceFromWorkers: "Science From Workers",
+   StatisticsScienceFromBuildings: "Science From Buildings",
    SidePanelWidth: "Side Panel Width",
    SidePanelWidthDescHTML:
       "Change the width of the side panel. <b>Require restarting your game to take effect</b>",
