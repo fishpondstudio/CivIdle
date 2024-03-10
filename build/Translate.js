@@ -21,10 +21,10 @@ const sourceFiles = getAllFiles(join(__dirname, "../", "shared"))
    .replace(/\s+/g, "");
 
 Object.keys(en).forEach((key) => {
-   // if (!sourceFiles.includes(`L.${key}`)) {
-   //    console.log(`Translation not used: ${key}`);
-   //    delete en[key];
-   // }
+   if (!sourceFiles.includes(`L.${key}`)) {
+      console.log(`Translation not used: ${key}`);
+      delete en[key];
+   }
    writeFileSync(EN_FILE_PATH, `export const EN = ${JSON.stringify(en)};`);
 });
 
