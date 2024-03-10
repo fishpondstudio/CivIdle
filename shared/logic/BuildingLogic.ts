@@ -386,6 +386,16 @@ export function getScienceFromWorkers(gs: GameState) {
    };
 }
 
+export function getScienceFromBuildings() {
+   return mReduceOf(
+      Tick.next.scienceProduced,
+      (prev, _, value) => {
+         return prev + value;
+      },
+      0,
+   );
+}
+
 const buildingCostCache: Map<number, Readonly<PartialTabulate<Resource>>> = new Map();
 
 export function getBuildingCost(building: Pick<IBuildingData, "type" | "level">): PartialTabulate<Resource> {
@@ -559,6 +569,13 @@ export function isNaturalWonder(building?: Building): boolean {
       return false;
    }
    return Config.Building[building].special === BuildingSpecial.NaturalWonder;
+}
+
+export function isHeadquarters(building?: Building): boolean {
+   if (!building) {
+      return false;
+   }
+   return Config.Building[building].special === BuildingSpecial.HQ;
 }
 
 export function isWorldWonder(building?: Building): boolean {

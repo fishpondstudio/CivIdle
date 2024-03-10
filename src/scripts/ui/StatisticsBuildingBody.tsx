@@ -1,16 +1,26 @@
 import Tippy from "@tippyjs/react";
 import classNames from "classnames";
 import { useState } from "react";
+import type { Building, IBuildingDefinition } from "../../../shared/definitions/BuildingDefinitions";
 import {
    NoPrice,
    NoStorage,
    type Resource,
    type ResourceDefinitions,
 } from "../../../shared/definitions/ResourceDefinitions";
-import { IOCalculation, getElectrificationStatus } from "../../../shared/logic/BuildingLogic";
+import {
+   IOCalculation,
+   getBuildingValue,
+   getElectrificationStatus,
+   getScienceFromBuildings,
+   getScienceFromWorkers,
+   isHeadquarters,
+   isNaturalWonder,
+} from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
 import { GameFeature, hasFeature } from "../../../shared/logic/FeatureLogic";
-import { getBuildingIO, unlockedResources } from "../../../shared/logic/IntraTickCache";
+import { getBuildingIO, getTypeBuildings, unlockedResources } from "../../../shared/logic/IntraTickCache";
+import { getCurrentTechAge, getScienceAmount } from "../../../shared/logic/TechLogic";
 import { Tick } from "../../../shared/logic/TickLogic";
 import type { IBuildingData } from "../../../shared/logic/Tile";
 import {
@@ -20,7 +30,9 @@ import {
    formatPercent,
    keysOf,
    mReduceOf,
+   reduceOf,
    safeAdd,
+   type Tile,
 } from "../../../shared/utilities/Helper";
 import type { PartialSet, PartialTabulate } from "../../../shared/utilities/TypeDefinitions";
 import { L, t } from "../../../shared/utilities/i18n";
@@ -32,15 +44,16 @@ import { BuildingColorComponent } from "./BuildingColorComponent";
 import type { IBuildingComponentProps } from "./BuildingPage";
 import { FormatNumber } from "./HelperComponents";
 import { TableView } from "./TableView";
+import { WorkerScienceComponent } from "./WorkerScienceComponent";
 
-type Tab = "resources" | "buildings" | "transportation";
+type Tab = "resources" | "buildings" | "transportation" | "empire";
 
 export function StatisticsBuildingBody({ gameState, xy }: IBuildingComponentProps): React.ReactNode {
    const building = gameState.tiles.get(xy)?.building as IBuildingData;
    if (building == null) {
       return null;
    }
-   const [currentTab, setCurrentTab] = useState<Tab>("resources");
+   const [currentTab, setCurrentTab] = useState<Tab>("empire");
    let content: React.ReactNode = null;
    if (currentTab === "resources") {
       content = <ResourcesTab gameState={gameState} xy={xy} />;
@@ -48,10 +61,18 @@ export function StatisticsBuildingBody({ gameState, xy }: IBuildingComponentProp
       content = <BuildingTab gameState={gameState} xy={xy} />;
    } else if (currentTab === "transportation") {
       content = <TransportationTab gameState={gameState} xy={xy} />;
+   } else if (currentTab === "empire") {
+      content = <EmpireTab gameState={gameState} xy={xy} />;
    }
    return (
       <div className="window-body column">
          <menu role="tablist">
+            <button
+               onClick={() => setCurrentTab("empire")}
+               aria-selected={currentTab === "empire" ? true : false}
+            >
+               Empire
+            </button>
             <button
                onClick={() => setCurrentTab("resources")}
                aria-selected={currentTab === "resources" ? true : false}
@@ -74,6 +95,185 @@ export function StatisticsBuildingBody({ gameState, xy }: IBuildingComponentProp
          {content}
          <BuildingColorComponent gameState={gameState} xy={xy} />
       </div>
+   );
+}
+
+function EmpireTab({ gameState, xy }: IBuildingComponentProps): React.ReactNode {
+   const unlockedResourcesList: PartialSet<Resource> = unlockedResources(gameState);
+   const resourceAmounts: Partial<Record<keyof ResourceDefinitions, number>> = {};
+   keysOf(unlockedResourcesList).map((res) => {
+      resourceAmounts[res] =
+         Tick.current.resourcesByTile
+            .get(res)
+            ?.reduce(
+               (prev, curr) => prev + (gameState.tiles.get(curr.tile)?.building?.resources?.[res] ?? 0),
+               0,
+            ) ?? 0;
+   });
+
+   // Get total resource value
+   const totalResourceValue = reduceOf(
+      resourceAmounts,
+      (prev, res, value) =>
+         prev + (!NoPrice[res] && !NoStorage[res] ? value * Config.ResourcePrice[res]! : 0),
+      0,
+   );
+
+   // Get buildings value
+   let totalBuildingValue = 0;
+   const buildingTypeValues: Partial<Record<Building, number>> = {};
+   getTypeBuildings(gameState).forEach((buildings, v) => {
+      if (isNaturalWonder(v) || isHeadquarters(v)) {
+         return;
+      }
+      const buildingTypeValue = mReduceOf(
+         buildings,
+         (prev, i, value) => {
+            const buildingValue = getBuildingValue(value.building);
+            return prev + buildingValue;
+         },
+         0,
+      );
+      buildingTypeValues[v] = buildingTypeValue;
+      totalBuildingValue += buildingTypeValue;
+   });
+
+   // Get science from buildings
+   const totalBuildingScience = getScienceFromBuildings();
+   const { scienceFromWorkers } = getScienceFromWorkers(gameState);
+   const scienceAmount = getScienceAmount();
+   const sciencePerTick = scienceFromWorkers + totalBuildingScience;
+   const techAge = getCurrentTechAge(gameState);
+   return (
+      <article role="tabpanel" className="f1 column" style={{ padding: "8px", overflow: "auto" }}>
+         <fieldset>
+            <div className="row">
+               <div className="f1">{t(L.TotalEmpireValue)}</div>
+               <div className="text-strong">
+                  <FormatNumber value={Tick.current.totalValue} />
+               </div>
+            </div>
+         </fieldset>
+         <fieldset>
+            <legend>Resources</legend>
+            <div className="sep5" />
+            <ul className="tree-view">
+               <details>
+                  <summary className="row">
+                     <div className="f1">{t(L.EmpireValueFromResources)}</div>
+                     <div className="text-strong">
+                        <FormatNumber value={totalResourceValue} />
+                     </div>
+                  </summary>
+                  <ul className="text-small">
+                     {keysOf(resourceAmounts)
+                        .sort(
+                           (a, b) =>
+                              resourceAmounts[b]! * Config.ResourcePrice[b]! -
+                              resourceAmounts[a]! * Config.ResourcePrice[a]!,
+                        )
+                        .map((res) => {
+                           if (NoPrice[res] || NoStorage[res]) {
+                              return null;
+                           }
+                           return (
+                              <li key={res} className="row">
+                                 <div className="f1">{Config.Resource[res].name()}</div>
+                                 <FormatNumber value={resourceAmounts[res]! * Config.ResourcePrice[res]!} />
+                              </li>
+                           );
+                        })}
+                  </ul>
+               </details>
+            </ul>
+         </fieldset>
+
+         <fieldset>
+            <legend>Buildings</legend>
+            <div className="sep5" />
+            <ul className="tree-view">
+               <details>
+                  <summary className="row">
+                     <div className="f1">{t(L.EmpireValueFromBuildings)}</div>
+                     <div className="text-strong">
+                        <FormatNumber value={totalBuildingValue} />
+                     </div>
+                  </summary>
+                  <ul className="text-small">
+                     {keysOf(buildingTypeValues)
+                        .sort((a, b) => buildingTypeValues[b]! - buildingTypeValues[a]!)
+                        .map((b) => {
+                           return (
+                              <li key={b} className="row">
+                                 <div className="f1">{Config.Building[b].name()}</div>
+                                 <FormatNumber value={buildingTypeValues[b]!} />
+                              </li>
+                           );
+                        })}
+                  </ul>
+               </details>
+            </ul>
+         </fieldset>
+
+         <fieldset>
+            <legend>{techAge != null ? Config.TechAge[techAge].name() : "Unknown Age"}</legend>
+            <div className="row">
+               <div className="f1">{t(L.StatisticsScience)}</div>
+               <div className="text-strong">
+                  <FormatNumber value={scienceAmount} />
+               </div>
+            </div>
+            <div className="sep5" />
+            <ul className="tree-view">
+               <li className="row">
+                  <div className="f1">{t(L.StatisticsScienceProduction)}</div>
+                  <div className="text-strong">
+                     <FormatNumber value={sciencePerTick} />
+                  </div>
+               </li>
+               <li>
+                  <details>
+                     <summary className="row">
+                        <div className="f1">{t(L.StatisticsScienceFromWorkers)}</div>
+                        <div className="text-strong">
+                           <FormatNumber value={scienceFromWorkers} />
+                        </div>
+                     </summary>
+                     <ul>
+                        <WorkerScienceComponent gameState={gameState} xy={xy} />
+                     </ul>
+                  </details>
+               </li>
+               <li>
+                  <details>
+                     <summary className="row">
+                        <div className="f1">{t(L.StatisticsScienceFromBuildings)}</div>
+                        <div className="text-strong">
+                           <FormatNumber value={totalBuildingScience} />
+                        </div>
+                     </summary>
+                     <ul className="text-small">
+                        {Array.from(Tick.current.scienceProduced.keys())
+                           .sort(
+                              (a, b) =>
+                                 Tick.current.scienceProduced.get(b)! - Tick.current.scienceProduced.get(a)!,
+                           )
+                           .map((xy) => {
+                              const tile = gameState.tiles.get(xy);
+                              const building = tile?.building;
+                              return (
+                                 <li key={xy} className="row">
+                                    <div className="f1">{Config.Building[building!.type].name()}</div>
+                                    <FormatNumber value={Tick.current.scienceProduced.get(xy)} />
+                                 </li>
+                              );
+                           })}
+                     </ul>
+                  </details>
+               </li>
+            </ul>
+         </fieldset>
+      </article>
    );
 }
 
@@ -275,6 +475,28 @@ function ResourcesTab({ gameState }: IBuildingComponentProps): React.ReactNode {
             ) ?? 0;
    });
 
+   const highlightResourcesUsed = (
+      res: Resource,
+      type: keyof Pick<IBuildingDefinition, "input" | "output">,
+   ) => {
+      const inputOutputTiles: Tile[] = [];
+
+      gameState.tiles.forEach((tile, xy) => {
+         const inputOutput = getBuildingIO(
+            xy,
+            type,
+            IOCalculation.Multiplier | IOCalculation.Capacity,
+            gameState,
+         );
+         forEach(inputOutput, (r, amount) => {
+            if (res === r) {
+               inputOutputTiles.push(tile.tile);
+            }
+         });
+      });
+      Singleton().sceneManager.getCurrent(WorldScene)?.drawSelection(null, inputOutputTiles);
+   };
+
    return (
       <article role="tabpanel" className="f1 column" style={{ padding: "8px", overflow: "auto" }}>
          <fieldset>
@@ -355,7 +577,13 @@ function ResourcesTab({ gameState }: IBuildingComponentProps): React.ReactNode {
                            })}
                         >
                            <div className="text-small text-right text-desc">
-                              <FormatNumber value={output} /> - <FormatNumber value={input} />
+                              <span className="pointer" onClick={() => highlightResourcesUsed(res, "output")}>
+                                 <FormatNumber value={output} />
+                              </span>{" "}
+                              -{" "}
+                              <span className="pointer" onClick={() => highlightResourcesUsed(res, "input")}>
+                                 <FormatNumber value={input} />
+                              </span>
                            </div>
                         </Tippy>
                      </td>
