@@ -1048,4 +1048,5 @@ export const EN = {
    SidePanelWidth: "Side Panel Width",
    SidePanelWidthDescHTML:
       "Change the width of the side panel. <b>Require restarting your game to take effect</b>",
+   ShowNotBuilt: "Show Not Buit",
 };
