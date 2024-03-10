@@ -119,8 +119,6 @@ export class GameOptions {
    chatReceiveChannel: PartialSet<ChatChannel> = { en: true };
    useMirrorServer = false;
    buildingDefaults: Partial<Record<Building, Partial<IBuildingData>>> = {};
-   // TODO: change this
-   // defaultPriority = 0x010101;
    defaultProductionPriority = PRIORITY_MIN;
    defaultConstructionPriority = PRIORITY_MIN;
    defaultStockpileCapacity = 1;

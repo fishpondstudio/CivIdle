@@ -11,7 +11,12 @@ import { watchGameOptions, watchGameState } from "../../../shared/logic/GameStat
 import type { MainBundleAssets } from "../main";
 import { Camera } from "./Camera";
 
-export abstract class Scene {
+export interface SceneLifecycle {
+   onEnable(): void;
+   onDisable(): void;
+}
+
+export abstract class Scene implements SceneLifecycle {
    public readonly viewport: Camera;
    public readonly context: ISceneContext;
 
@@ -36,12 +41,14 @@ export abstract class Scene {
       this.viewport.on("moved", this.onMoved, this);
       this.viewport.on("zoomed", this.onZoomed, this);
       this.viewport.on("clicked", this.onClicked, this);
+      this.viewport.onEnable();
    }
 
    onDisable(): void {
       this.viewport.off("moved", this.onMoved, this);
       this.viewport.off("zoomed", this.onZoomed, this);
       this.viewport.off("clicked", this.onClicked, this);
+      this.viewport.onDisable();
    }
 
    onResize(width: number, height: number): void {

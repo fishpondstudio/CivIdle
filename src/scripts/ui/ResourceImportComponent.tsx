@@ -1,7 +1,7 @@
 import Tippy from "@tippyjs/react";
 import classNames from "classnames";
 import { useEffect, useState } from "react";
-import { type Resource } from "../../../shared/definitions/ResourceDefinitions";
+import { NoPrice, NoStorage, type Resource } from "../../../shared/definitions/ResourceDefinitions";
 import {
    getMultipliersFor,
    getResourceImportCapacity,
@@ -49,7 +49,7 @@ export function ResourceImportComponent({ gameState, xy }: IBuildingComponentPro
    const storage = getStorageFor(xy, gameState);
    const baseCapacity = getResourceImportCapacity(building, 1);
    const capacityMultiplier = totalMultiplierFor(xy, "output", 1, gameState);
-   const resources = keysOf(unlockedResources(gameState));
+   const resources = keysOf(unlockedResources(gameState)).filter((r) => !NoStorage[r] && !NoPrice[r]);
 
    return (
       <fieldset>
