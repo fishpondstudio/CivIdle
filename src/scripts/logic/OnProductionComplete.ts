@@ -8,7 +8,7 @@ import {
    isWorldWonder,
 } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
-import { OXFORD_SCIENCE_PER_UPGRADE } from "../../../shared/logic/Constants";
+import { EXPLORER_SECONDS, MAX_EXPLORER, OXFORD_SCIENCE_PER_UPGRADE } from "../../../shared/logic/Constants";
 import { getGameState } from "../../../shared/logic/GameStateLogic";
 import {
    getBuildingsByType,
@@ -268,6 +268,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
             --petra.resources.Warp!;
             Singleton().ticker.speedUp = petra.speedUp;
          } else {
+            petra.speedUp = 1;
             Singleton().ticker.speedUp = 1;
          }
          for (const res of keysOf(petra.resources)) {
@@ -315,6 +316,12 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          addMultiplier("PaperMaker", { output: 1, worker: 1, storage: 1 }, buildingName);
          addMultiplier("WritersGuild", { output: 1, worker: 1, storage: 1 }, buildingName);
          addMultiplier("PrintingHouse", { output: 1, worker: 1, storage: 1 }, buildingName);
+         break;
+      }
+      case "Statistics": {
+         if (gs.tick % EXPLORER_SECONDS === 0 && (building.resources?.Explorer ?? 0) < MAX_EXPLORER) {
+            safeAdd(building.resources, "Explorer", 1);
+         }
          break;
       }
       case "HimejiCastle": {

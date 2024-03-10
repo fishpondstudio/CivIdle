@@ -5,7 +5,6 @@ import { Tick } from "../../../shared/logic/TickLogic";
 import { formatPercent, keysOf } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import warning from "../../images/warning.png";
-import { jsxMapOf } from "../utilities/Helper";
 import type { IBuildingComponentProps } from "./BuildingPage";
 import { DeleteResourceModal } from "./DeleteResourceModal";
 import { showModal } from "./GlobalModal";
@@ -92,14 +91,18 @@ export function BuildingStorageComponent({ gameState, xy }: IBuildingComponentPr
                         .map((res) => {
                            return (
                               <li className="row" key={res}>
-                                 <div
-                                    className="m-icon small text-red mr5 pointer"
-                                    onClick={() => {
-                                       showModal(<DeleteResourceModal building={building} resource={res} />);
-                                    }}
-                                 >
-                                    delete
-                                 </div>
+                                 {(building.resources[res] ?? 0) > 0 ? (
+                                    <div
+                                       className="m-icon small text-red mr5 pointer"
+                                       onClick={() => {
+                                          showModal(
+                                             <DeleteResourceModal building={building} resource={res} />,
+                                          );
+                                       }}
+                                    >
+                                       delete
+                                    </div>
+                                 ) : null}
                                  <div className="f1">{Config.Resource[res].name()}</div>
                                  <div>
                                     <FormatNumber value={building.resources[res]} />

@@ -159,14 +159,13 @@ export function HeadquarterBuildingBody({
          </fieldset>
          <fieldset>
             <legend>{techAge != null ? Config.TechAge[techAge].name() : "Unknown Age"}</legend>
-            <div className="row">
-               <div className="f1">{t(L.Science)}</div>
-               <div className="text-strong">
-                  <FormatNumber value={scienceAmount} />
-               </div>
-            </div>
-            <div className="sep5" />
             <ul className="tree-view">
+               <li className="row">
+                  <div className="f1">{t(L.Science)}</div>
+                  <div className="text-strong">
+                     <FormatNumber value={scienceAmount} />
+                  </div>
+               </li>
                <li className="row">
                   <div className="f1">{t(L.WorkerScienceProduction)}</div>
                   <div className="text-strong">

@@ -18,9 +18,11 @@ import {
    isNaturalWonder,
 } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
+import { EXPLORER_SECONDS, MAX_EXPLORER } from "../../../shared/logic/Constants";
 import { GameFeature, hasFeature } from "../../../shared/logic/FeatureLogic";
 import { getBuildingIO, getTypeBuildings, unlockedResources } from "../../../shared/logic/IntraTickCache";
-import { getCurrentTechAge, getScienceAmount } from "../../../shared/logic/TechLogic";
+import { getTransportStat } from "../../../shared/logic/ResourceLogic";
+import { getScienceAmount } from "../../../shared/logic/TechLogic";
 import { Tick } from "../../../shared/logic/TickLogic";
 import type { IBuildingData } from "../../../shared/logic/Tile";
 import {
@@ -30,14 +32,12 @@ import {
    formatPercent,
    keysOf,
    mReduceOf,
-   reduceOf,
    safeAdd,
    type Tile,
 } from "../../../shared/utilities/Helper";
 import type { PartialSet, PartialTabulate } from "../../../shared/utilities/TypeDefinitions";
 import { L, t } from "../../../shared/utilities/i18n";
 import { LookAtMode, WorldScene } from "../scenes/WorldScene";
-import { jsxMMapOf } from "../utilities/Helper";
 import { Singleton } from "../utilities/Singleton";
 import { playClick } from "../visuals/Sound";
 import { BuildingColorComponent } from "./BuildingColorComponent";
@@ -46,7 +46,7 @@ import { FormatNumber } from "./HelperComponents";
 import { TableView } from "./TableView";
 import { WorkerScienceComponent } from "./WorkerScienceComponent";
 
-type Tab = "resources" | "buildings" | "transportation" | "empire";
+type Tab = "resources" | "buildings" | "empire";
 
 export function StatisticsBuildingBody({ gameState, xy }: IBuildingComponentProps): React.ReactNode {
    const building = gameState.tiles.get(xy)?.building as IBuildingData;
@@ -59,8 +59,6 @@ export function StatisticsBuildingBody({ gameState, xy }: IBuildingComponentProp
       content = <ResourcesTab gameState={gameState} xy={xy} />;
    } else if (currentTab === "buildings") {
       content = <BuildingTab gameState={gameState} xy={xy} />;
-   } else if (currentTab === "transportation") {
-      content = <TransportationTab gameState={gameState} xy={xy} />;
    } else if (currentTab === "empire") {
       content = <EmpireTab gameState={gameState} xy={xy} />;
    }
@@ -85,12 +83,6 @@ export function StatisticsBuildingBody({ gameState, xy }: IBuildingComponentProp
             >
                {t(L.StatisticsBuildings)}
             </button>
-            <button
-               onClick={() => setCurrentTab("transportation")}
-               aria-selected={currentTab === "transportation" ? true : false}
-            >
-               {t(L.StatisticsTransportation)}
-            </button>
          </menu>
          {content}
          <BuildingColorComponent gameState={gameState} xy={xy} />
@@ -99,20 +91,26 @@ export function StatisticsBuildingBody({ gameState, xy }: IBuildingComponentProp
 }
 
 function EmpireTab({ gameState, xy }: IBuildingComponentProps): React.ReactNode {
+   const building = gameState.tiles.get(xy)?.building;
+   if (!building) {
+      return null;
+   }
    const unlockedResourcesList: PartialSet<Resource> = unlockedResources(gameState);
-   const resourceAmounts: Partial<Record<keyof ResourceDefinitions, number>> = {};
+   const resourceAmounts = new Map<Resource, number>();
    keysOf(unlockedResourcesList).map((res) => {
-      resourceAmounts[res] =
+      resourceAmounts.set(
+         res,
          Tick.current.resourcesByTile
             .get(res)
             ?.reduce(
                (prev, curr) => prev + (gameState.tiles.get(curr.tile)?.building?.resources?.[res] ?? 0),
                0,
-            ) ?? 0;
+            ) ?? 0,
+      );
    });
 
    // Get total resource value
-   const totalResourceValue = reduceOf(
+   const totalResourceValue = mReduceOf(
       resourceAmounts,
       (prev, res, value) =>
          prev + (!NoPrice[res] && !NoStorage[res] ? value * Config.ResourcePrice[res]! : 0),
@@ -121,7 +119,7 @@ function EmpireTab({ gameState, xy }: IBuildingComponentProps): React.ReactNode 
 
    // Get buildings value
    let totalBuildingValue = 0;
-   const buildingTypeValues: Partial<Record<Building, number>> = {};
+   const buildingTypeValues = new Map<Building, number>();
    getTypeBuildings(gameState).forEach((buildings, v) => {
       if (isNaturalWonder(v) || isHeadquarters(v)) {
          return;
@@ -134,7 +132,7 @@ function EmpireTab({ gameState, xy }: IBuildingComponentProps): React.ReactNode 
          },
          0,
       );
-      buildingTypeValues[v] = buildingTypeValue;
+      buildingTypeValues.set(v, buildingTypeValue);
       totalBuildingValue += buildingTypeValue;
    });
 
@@ -143,88 +141,83 @@ function EmpireTab({ gameState, xy }: IBuildingComponentProps): React.ReactNode 
    const { scienceFromWorkers } = getScienceFromWorkers(gameState);
    const scienceAmount = getScienceAmount();
    const sciencePerTick = scienceFromWorkers + totalBuildingScience;
-   const techAge = getCurrentTechAge(gameState);
+
+   const transportStat = getTransportStat(gameState);
    return (
       <article role="tabpanel" className="f1 column" style={{ padding: "8px", overflow: "auto" }}>
          <fieldset>
-            <div className="row">
-               <div className="f1">{t(L.TotalEmpireValue)}</div>
-               <div className="text-strong">
-                  <FormatNumber value={Tick.current.totalValue} />
-               </div>
-            </div>
-         </fieldset>
-         <fieldset>
-            <legend>Resources</legend>
-            <div className="sep5" />
+            <legend>{t(L.TotalEmpireValue)}</legend>
             <ul className="tree-view">
-               <details>
-                  <summary className="row">
-                     <div className="f1">{t(L.EmpireValueFromResources)}</div>
-                     <div className="text-strong">
-                        <FormatNumber value={totalResourceValue} />
-                     </div>
-                  </summary>
-                  <ul className="text-small">
-                     {keysOf(resourceAmounts)
-                        .sort(
-                           (a, b) =>
-                              resourceAmounts[b]! * Config.ResourcePrice[b]! -
-                              resourceAmounts[a]! * Config.ResourcePrice[a]!,
-                        )
-                        .map((res) => {
-                           if (NoPrice[res] || NoStorage[res]) {
-                              return null;
-                           }
-                           return (
-                              <li key={res} className="row">
-                                 <div className="f1">{Config.Resource[res].name()}</div>
-                                 <FormatNumber value={resourceAmounts[res]! * Config.ResourcePrice[res]!} />
-                              </li>
-                           );
-                        })}
-                  </ul>
-               </details>
+               <li className="row">
+                  <div className="f1">{t(L.TotalEmpireValue)}</div>
+                  <div className="text-strong">
+                     <FormatNumber value={Tick.current.totalValue} />
+                  </div>
+               </li>
+               <li>
+                  <details>
+                     <summary className="row">
+                        <div className="f1">{t(L.EmpireValueFromResources)}</div>
+                        <div className="text-strong">
+                           <FormatNumber value={totalResourceValue} />
+                        </div>
+                     </summary>
+                     <ul className="text-small">
+                        {Array.from(resourceAmounts.keys())
+                           .sort(
+                              (a, b) =>
+                                 resourceAmounts.get(b)! * Config.ResourcePrice[b]! -
+                                 resourceAmounts.get(a)! * Config.ResourcePrice[a]!,
+                           )
+                           .map((res) => {
+                              if (NoPrice[res] || NoStorage[res]) {
+                                 return null;
+                              }
+                              return (
+                                 <li key={res} className="row">
+                                    <div className="f1">{Config.Resource[res].name()}</div>
+                                    <FormatNumber
+                                       value={resourceAmounts.get(res)! * Config.ResourcePrice[res]!}
+                                    />
+                                 </li>
+                              );
+                           })}
+                     </ul>
+                  </details>
+               </li>
+               <li>
+                  <details>
+                     <summary className="row">
+                        <div className="f1">{t(L.EmpireValueFromBuildings)}</div>
+                        <div className="text-strong">
+                           <FormatNumber value={totalBuildingValue} />
+                        </div>
+                     </summary>
+                     <ul className="text-small">
+                        {Array.from(buildingTypeValues.keys())
+                           .sort((a, b) => buildingTypeValues.get(b)! - buildingTypeValues.get(a)!)
+                           .map((b) => {
+                              return (
+                                 <li key={b} className="row">
+                                    <div className="f1">{Config.Building[b].name()}</div>
+                                    <FormatNumber value={buildingTypeValues.get(b)!} />
+                                 </li>
+                              );
+                           })}
+                     </ul>
+                  </details>
+               </li>
             </ul>
          </fieldset>
-
          <fieldset>
-            <legend>Buildings</legend>
-            <div className="sep5" />
+            <legend>{t(L.Science)}</legend>
             <ul className="tree-view">
-               <details>
-                  <summary className="row">
-                     <div className="f1">{t(L.EmpireValueFromBuildings)}</div>
-                     <div className="text-strong">
-                        <FormatNumber value={totalBuildingValue} />
-                     </div>
-                  </summary>
-                  <ul className="text-small">
-                     {keysOf(buildingTypeValues)
-                        .sort((a, b) => buildingTypeValues[b]! - buildingTypeValues[a]!)
-                        .map((b) => {
-                           return (
-                              <li key={b} className="row">
-                                 <div className="f1">{Config.Building[b].name()}</div>
-                                 <FormatNumber value={buildingTypeValues[b]!} />
-                              </li>
-                           );
-                        })}
-                  </ul>
-               </details>
-            </ul>
-         </fieldset>
-
-         <fieldset>
-            <legend>{techAge != null ? Config.TechAge[techAge].name() : "Unknown Age"}</legend>
-            <div className="row">
-               <div className="f1">{t(L.StatisticsScience)}</div>
-               <div className="text-strong">
-                  <FormatNumber value={scienceAmount} />
-               </div>
-            </div>
-            <div className="sep5" />
-            <ul className="tree-view">
+               <li className="row">
+                  <div className="f1">{t(L.StatisticsScience)}</div>
+                  <div className="text-strong">
+                     <FormatNumber value={scienceAmount} />
+                  </div>
+               </li>
                <li className="row">
                   <div className="f1">{t(L.StatisticsScienceProduction)}</div>
                   <div className="text-strong">
@@ -271,6 +264,58 @@ function EmpireTab({ gameState, xy }: IBuildingComponentProps): React.ReactNode 
                      </ul>
                   </details>
                </li>
+            </ul>
+         </fieldset>
+         <fieldset>
+            <legend>{t(L.StatisticsTransportation)}</legend>
+            <ul className="tree-view">
+               <li className="row">
+                  <div className="f1">{t(L.StatisticsTotalTransportation)}</div>
+                  <div className="text-strong">
+                     <FormatNumber value={transportStat.totalTransports} />
+                  </div>
+               </li>
+               <li className="row">
+                  <div className="f1">{t(L.StatisticsStalledTransportation)}</div>
+                  <div className="text-strong">
+                     <FormatNumber value={transportStat.stalled} />
+                  </div>
+               </li>
+               <li className="row">
+                  <div className="f1">{t(L.StatisticsTransportationPercentage)}</div>
+                  <div className="text-strong">
+                     {formatPercent(transportStat.totalFuel / (Tick.current.workersUsed.get("Worker") || 1))}
+                  </div>
+               </li>
+            </ul>
+         </fieldset>
+         <fieldset>
+            <legend>{t(L.StatisticsExploration)}</legend>
+            <ul className="tree-view">
+               <details>
+                  <summary className="row">
+                     <div className="f1">{t(L.Explorer)}</div>
+                     <div className="text-strong">
+                        <FormatNumber value={building.resources.Explorer ?? 0} />
+                     </div>
+                  </summary>
+                  <ul>
+                     <li className="row text-small">
+                        <div className="f1">{t(L.NextExplorersIn)}</div>
+                        {(building.resources.Explorer ?? 0) >= 10 ? (
+                           <div>-</div>
+                        ) : (
+                           <div>{EXPLORER_SECONDS - (gameState.tick % EXPLORER_SECONDS)}s</div>
+                        )}
+                     </li>
+                     <li className="row text-small">
+                        <div className="f1">{t(L.MaxExplorers)}</div>
+                        <div>
+                           <FormatNumber value={MAX_EXPLORER} />
+                        </div>
+                     </li>
+                  </ul>
+               </details>
             </ul>
          </fieldset>
       </article>
@@ -365,79 +410,6 @@ function BuildingTab({ gameState }: IBuildingComponentProps): React.ReactNode {
                            </tr>
                         );
                      })}
-               </tbody>
-            </table>
-         </div>
-      </article>
-   );
-}
-
-function TransportationTab({ gameState }: IBuildingComponentProps): React.ReactNode {
-   return (
-      <article role="tabpanel" className="f1 column" style={{ padding: "8px", overflowY: "auto" }}>
-         <fieldset>
-            <div className="row">
-               <div className="f1">{t(L.StatisticsTransportationPercentage)}</div>
-               <div className="text-strong">
-                  {formatPercent(
-                     mReduceOf(
-                        gameState.transportation,
-                        (prev, k, v) => prev + v.reduce((prev, curr) => prev + curr.currentFuelAmount, 0),
-                        0,
-                     ) / Tick.current.workersUsed.get("Worker")!,
-                  )}
-               </div>
-            </div>
-         </fieldset>
-         <div className="table-view sticky-header f1">
-            <table>
-               <thead>
-                  <tr>
-                     <th></th>
-                     <th>{t(L.StatisticsTransportationBuilding)}</th>
-                     <th>{t(L.StatisticsTransportationResource)}</th>
-                     <th className="right">{t(L.StatisticsTransportationAmount)}</th>
-                     <th className="right">
-                        <div className="m-icon small">group</div>
-                     </th>
-                     <th className="right">
-                        <div className="m-icon small">hourglass_empty</div>
-                     </th>
-                  </tr>
-               </thead>
-               <tbody>
-                  {jsxMMapOf(gameState.transportation, (xy, transportations) => {
-                     return transportations.map((transportation, i) => {
-                        const buildingType = gameState.tiles.get(xy)?.building?.type;
-                        return (
-                           <tr key={transportation.id}>
-                              <td>
-                                 {transportation.hasEnoughFuel ? (
-                                    <div className="m-icon text-green small">check_circle</div>
-                                 ) : (
-                                    <div className="m-icon text-red small">error</div>
-                                 )}
-                              </td>
-                              <td className="text-strong">
-                                 {i === 0 && buildingType ? Config.Building[buildingType].name() : null}
-                              </td>
-                              <td>{Config.Resource[transportation.resource].name()}</td>
-                              <td className="text-right">
-                                 <FormatNumber value={transportation.amount} />
-                              </td>
-                              <td className="text-right">
-                                 <FormatNumber value={transportation.currentFuelAmount} />
-                              </td>
-                              <td className="text-right">
-                                 <FormatNumber
-                                    value={(100 * transportation.ticksSpent) / transportation.ticksRequired}
-                                 />
-                                 %
-                              </td>
-                           </tr>
-                        );
-                     });
-                  })}
                </tbody>
             </table>
          </div>

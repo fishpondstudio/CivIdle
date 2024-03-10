@@ -168,7 +168,7 @@ export function FillPlayerTradeModal({ tradeId, xy }: { tradeId: string; xy?: Ti
                   <div className="sep10"></div>
                </>
             ) : null}
-            <div className="table-view">
+            <div className="table-view" style={{ overflowY: "auto", maxHeight: "40vh" }}>
                <table>
                   <tbody>
                      <tr>
@@ -238,7 +238,7 @@ export function FillPlayerTradeModal({ tradeId, xy }: { tradeId: string; xy?: Ti
                </table>
             </div>
             <div className="sep10" />
-            <ul className="tree-view" style={{ overflowY: "auto", maxHeight: 150 }}>
+            <ul className="tree-view" style={{ overflowY: "auto", maxHeight: "20vh" }}>
                <li
                   className={classNames({
                      row: true,

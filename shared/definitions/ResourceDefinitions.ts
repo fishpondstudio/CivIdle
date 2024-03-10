@@ -78,6 +78,7 @@ export class ResourceDefinitions {
    Aluminum: IResourceDefinition = { name: () => t(L.Aluminum) };
    Petrol: IResourceDefinition = { name: () => t(L.Petrol) };
    Concrete: IResourceDefinition = { name: () => t(L.Concrete) };
+   Explorer: IResourceDefinition = { name: () => t(L.Explorer) };
 }
 
 export type Resource = keyof ResourceDefinitions;
@@ -87,6 +88,7 @@ export const NoPrice: PartialSet<Resource> = {
    Power: true,
    Science: true,
    Warp: true,
+   Explorer: true,
 } as const;
 
 export const NoStorage: PartialSet<Resource> = {

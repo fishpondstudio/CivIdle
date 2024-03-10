@@ -45,6 +45,8 @@ export const TRIBUNE_TRADE_VALUE_PER_MINUTE = 10000;
 export const MAX_TARIFF_RATE = 0.1;
 export const OXFORD_SCIENCE_PER_UPGRADE = 5;
 export const MARKET_DEFAULT_TRADE_COUNT = 5;
+export const MAX_EXPLORER = 10;
+export const EXPLORER_SECONDS = 60;
 
 interface IRecipe {
    building: Building;

@@ -5,7 +5,7 @@ import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
 import type { IBuildingData } from "../../../shared/logic/Tile";
 import { clamp, formatNumber, safeAdd, safeParseInt } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
-import { playClick } from "../visuals/Sound";
+import { playClick, playError } from "../visuals/Sound";
 import { hideModal } from "./GlobalModal";
 import { WarningComponent } from "./WarningComponent";
 
@@ -43,7 +43,12 @@ export function DeleteResourceModal({
             <div className="row" style={{ justifyContent: "flex-end" }}>
                <button
                   style={{ width: "80px", fontWeight: "bold" }}
+                  disabled={amount <= 0}
                   onClick={() => {
+                     if (amount <= 0) {
+                        playError();
+                        return;
+                     }
                      safeAdd(
                         building.resources,
                         resource,
