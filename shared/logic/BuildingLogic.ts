@@ -25,7 +25,7 @@ import { TypedEvent } from "../utilities/TypedEvent";
 import { L, t } from "../utilities/i18n";
 import { Config } from "./Config";
 import { GameFeature, hasFeature } from "./FeatureLogic";
-import { type GameState } from "./GameState";
+import { GameOptions, type GameState } from "./GameState";
 import { getGameOptions, getGameState } from "./GameStateLogic";
 import { getBuildingIO, getBuildingsByType, getGrid, getXyBuildings } from "./IntraTickCache";
 import { getGreatPersonThisRunLevel } from "./RebornLogic";
@@ -33,12 +33,12 @@ import { getBuildingsThatProduce, getResourcesValue } from "./ResourceLogic";
 import { getAgeForTech, getBuildingUnlockTech } from "./TechLogic";
 import { Tick, type Multiplier, type MultiplierWithSource } from "./TickLogic";
 import {
+   BuildingInputMode,
    DEFAULT_STOCKPILE_CAPACITY,
    DEFAULT_STOCKPILE_MAX,
    IMarketBuildingData,
+   PRIORITY_MIN,
    ResourceImportOptions,
-   getConstructionPriority,
-   getProductionPriority,
    type IBuildingData,
    type IHaveTypeAndLevel,
    type IResourceImportBuildingData,
@@ -177,6 +177,11 @@ interface IStorageResult {
    used: number;
 }
 
+export function getPetraBaseStorage(petra: IBuildingData): number {
+   const HOUR = 60 * 60;
+   return HOUR * petra.level;
+}
+
 // 1 hour
 const STORAGE_TO_PRODUCTION = 3600;
 
@@ -205,7 +210,7 @@ export function getStorageFor(xy: Tile, gs: GameState): IStorageResult {
       }
       case "Petra": {
          const HOUR = 60 * 60;
-         base = HOUR * building.level; // 1 hour
+         base = getPetraBaseStorage(building);
          base +=
             HOUR * Config.GreatPerson.Zenobia.value(getGreatPersonThisRunLevel(gs.greatPeople.Zenobia ?? 0));
          base += HOUR * Config.GreatPerson.Zenobia.value(getGameOptions().greatPeople.Zenobia?.level ?? 0);
@@ -386,6 +391,16 @@ export function getScienceFromWorkers(gs: GameState) {
    };
 }
 
+export function getScienceFromBuildings() {
+   return mReduceOf(
+      Tick.next.scienceProduced,
+      (prev, _, value) => {
+         return prev + value;
+      },
+      0,
+   );
+}
+
 const buildingCostCache: Map<number, Readonly<PartialTabulate<Resource>>> = new Map();
 
 export function getBuildingCost(building: Pick<IBuildingData, "type" | "level">): PartialTabulate<Resource> {
@@ -467,16 +482,33 @@ export function getBuildingValue(building: IBuildingData): number {
    return getResourcesValue(getTotalBuildingCost(building.type, 0, building.level));
 }
 
-export function getCurrentPriority(building: IBuildingData): number {
+export function getCurrentPriority(building: IBuildingData, gs: GameState): number {
+   if (!hasFeature(GameFeature.BuildingProductionPriority, gs)) {
+      return PRIORITY_MIN;
+   }
    switch (building.status) {
       case "building":
       case "upgrading":
-         return getConstructionPriority(building.priority);
+         return building.constructionPriority;
       case "completed":
-         return getProductionPriority(building.priority);
+         return building.productionPriority;
       default:
          return 0;
    }
+}
+
+export function getInputMode(building: IBuildingData, gs: GameState): BuildingInputMode {
+   if (!hasFeature(GameFeature.BuildingInputMode, gs)) {
+      return BuildingInputMode.Distance;
+   }
+   return building.inputMode;
+}
+
+export function getMaxInputDistance(building: IBuildingData, gs: GameState): number {
+   if (!hasFeature(GameFeature.BuildingInputMode, gs)) {
+      return Infinity;
+   }
+   return building.maxInputDistance;
 }
 
 export function getTotalBuildingUpgrades(gs: GameState): number {
@@ -521,18 +553,13 @@ export function getBuildingLevelLabel(b: IBuildingData): string {
    return String(b.level);
 }
 
-export function levelToNext10s(b: IBuildingData) {
-   const l = Math.ceil(b.level / 10) * 10 - b.level;
-   return l > 0 ? l : 10;
+function levelToNext(b: IBuildingData, x: number) {
+   const l = Math.ceil(b.level / x) * x - b.level;
+   return l > 0 ? l : x;
 }
 
 export function getBuildingUpgradeLevels(b: IBuildingData): number[] {
-   const next10s = levelToNext10s(b);
-   const levels = [1, 5];
-   if (!levels.includes(next10s)) {
-      levels.push(next10s);
-   }
-   return levels;
+   return [1, levelToNext(b, 5), levelToNext(b, 10)];
 }
 
 export function isSpecialBuilding(building?: Building): boolean {
@@ -547,6 +574,13 @@ export function isNaturalWonder(building?: Building): boolean {
       return false;
    }
    return Config.Building[building].special === BuildingSpecial.NaturalWonder;
+}
+
+export function isHeadquarters(building?: Building): boolean {
+   if (!building) {
+      return false;
+   }
+   return Config.Building[building].special === BuildingSpecial.HQ;
 }
 
 export function isWorldWonder(building?: Building): boolean {
@@ -693,7 +727,8 @@ export function getAvailableResource(sourceXy: Tile, destXy: Tile, res: Resource
    const input = getBuildingIO(sourceXy, "input", IOCalculation.Capacity | IOCalculation.Multiplier, gs);
    if (input[res]) {
       return clamp(
-         building.resources[res]! - (getStockpileMax(building) + building.stockpileCapacity) * input[res]!,
+         building.resources[res]! -
+            (getStockpileMax(building) + getStockpileCapacity(building)) * input[res]!,
          0,
          Infinity,
       );
@@ -827,9 +862,17 @@ export function getExtraVisionRange(): number {
    return Tick.current.specialBuildings.has("GreatMosqueOfSamarra") ? 1 : 0;
 }
 
-export function applyDefaultSettings(building: IBuildingData, gs: GameState): void {
-   const options = getGameOptions();
+export function applyBuildingDefaults(building: IBuildingData, options: GameOptions): IBuildingData {
    const defaults = options.buildingDefaults[building.type];
+
+   if (defaults) {
+      forEach(defaults, (k, v) => {
+         if (isNullOrUndefined(v)) {
+            delete defaults[k];
+         }
+      });
+   }
+
    const toApply = defaults ? { ...defaults } : {};
 
    if (isNullOrUndefined(toApply.stockpileCapacity)) {
@@ -838,23 +881,7 @@ export function applyDefaultSettings(building: IBuildingData, gs: GameState): vo
    if (isNullOrUndefined(toApply.stockpileCapacity)) {
       toApply.stockpileMax = options.defaultStockpileMax;
    }
-
-   if (!hasFeature(GameFeature.BuildingProductionPriority, gs)) {
-      delete toApply.priority;
-   }
-   if (!hasFeature(GameFeature.BuildingStockpileMode, gs)) {
-      delete toApply.stockpileCapacity;
-      delete toApply.stockpileMax;
-   }
-   if (!hasFeature(GameFeature.BuildingInputMode, gs)) {
-      delete toApply.inputMode;
-      delete toApply.maxInputDistance;
-   }
-   if (!hasFeature(GameFeature.Electricity, gs)) {
-      delete toApply.electrification;
-   }
-
-   Object.assign(building, toApply);
+   return Object.assign(building, toApply);
 }
 
 export function shouldAlwaysShowBuildingOptions(building: IBuildingData): boolean {

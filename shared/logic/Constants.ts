@@ -45,6 +45,8 @@ export const TRIBUNE_TRADE_VALUE_PER_MINUTE = 10000;
 export const MAX_TARIFF_RATE = 0.1;
 export const OXFORD_SCIENCE_PER_UPGRADE = 5;
 export const MARKET_DEFAULT_TRADE_COUNT = 5;
+export const MAX_EXPLORER = 10;
+export const EXPLORER_SECONDS = 60;
 
 interface IRecipe {
    building: Building;
@@ -224,7 +226,12 @@ export function calculateTierAndPrice() {
             }
             forEach(output, (res) => {
                const price = (2 * inputResourcesValue - notPricedResourceValue) / allOutputAmount;
-               if (!Config.ResourcePrice[res] || price > Config.ResourcePrice[res]!) {
+               if (!Config.ResourcePrice[res]) {
+                  Config.ResourcePrice[res] = price;
+               } else if (price > Config.ResourcePrice[res]!) {
+                  console.warn(
+                     `Price of ${res} changed from ${Config.ResourcePrice[res]!} to ${price} by ${building}`,
+                  );
                   Config.ResourcePrice[res] = price;
                }
             });
@@ -321,7 +328,12 @@ export function calculateTierAndPrice() {
    const boostedBuildings = new Set<Building>();
    const notBoostedBuildings: { building: Building; tech: Tech; age: TechAge }[] = [];
    forEach(Config.GreatPerson, (p, def) => {
-      def.boost?.buildings.forEach((b) => boostedBuildings.add(b));
+      def.boost?.buildings.forEach((b) => {
+         if (boostedBuildings.has(b)) {
+            console.error(`${b} is boosted by two great people`);
+         }
+         boostedBuildings.add(b);
+      });
    });
 
    const buildingInputCost: string[] = [];

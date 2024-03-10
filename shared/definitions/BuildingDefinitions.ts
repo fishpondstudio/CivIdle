@@ -526,8 +526,8 @@ export class BuildingDefinitions {
       special: BuildingSpecial.HQ,
    };
    Statistics: IBuildingDefinition = {
-      name: () => t(L.Statistics),
-      desc: () => t(L.StatisticsDesc),
+      name: () => t(L.StatisticsOffice),
+      desc: () => t(L.StatisticsOfficeDesc),
       input: {},
       output: {},
       construction: { Brick: 100, Wood: 100, Lumber: 100 },
@@ -585,6 +585,26 @@ export class BuildingDefinitions {
       construction: {},
       max: 0,
       wikipedia: "Poseidon",
+      special: BuildingSpecial.NaturalWonder,
+   };
+   NileRiver: IBuildingDefinition = {
+      name: () => t(L.NileRiver),
+      desc: () => t(L.NileRiverDesc),
+      input: {},
+      output: {},
+      construction: {},
+      max: 0,
+      wikipedia: "Nile",
+      special: BuildingSpecial.NaturalWonder,
+   };
+   MountSinai: IBuildingDefinition = {
+      name: () => t(L.MountSinai),
+      desc: () => t(L.MountSinaiDesc),
+      input: {},
+      output: {},
+      construction: {},
+      max: 0,
+      wikipedia: "Mount_Sinai",
       special: BuildingSpecial.NaturalWonder,
    };
    // #endregion /////////////////////////////////////////////////////////////////////////////////////////////
@@ -929,6 +949,26 @@ export class BuildingDefinitions {
       construction: { Coin: 100, Garment: 100, Furniture: 100 },
       special: BuildingSpecial.WorldWonder,
       wikipedia: "Grand_Bazaar,_Istanbul",
+   };
+   AbuSimbel: IBuildingDefinition = {
+      name: () => t(L.AbuSimbel),
+      desc: () => t(L.AbuSimbelDesc),
+      input: {},
+      output: {},
+      max: 1,
+      construction: { Stone: 100, Brick: 100, Lumber: 100 },
+      special: BuildingSpecial.WorldWonder,
+      wikipedia: "Abu_Simbel",
+   };
+   GreatSphinx: IBuildingDefinition = {
+      name: () => t(L.GreatSphinx),
+      desc: () => t(L.GreatSphinxDesc),
+      input: {},
+      output: {},
+      max: 1,
+      construction: { Stone: 100, Brick: 100, Lumber: 100 },
+      special: BuildingSpecial.WorldWonder,
+      wikipedia: "Great_Sphinx_of_Giza",
    };
    // ArcDeTriomphe: IBuildingDefinition = {
    //    name: () => t(L.ArcDeTriomphe),

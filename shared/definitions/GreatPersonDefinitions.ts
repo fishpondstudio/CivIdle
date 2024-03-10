@@ -385,6 +385,35 @@ export class GreatPersonDefinitions {
       age: "RenaissanceAge",
    });
 
+   JohannesKepler: IGreatPersonDefinition = boostOf({
+      name: () => t(L.JohannesKepler),
+      boost: {
+         multipliers: ["output", "storage"],
+         buildings: ["Shrine", "LensWorkshop"],
+      },
+      time: "1571 ~ 1630 AD",
+      value: (level) => level,
+      maxLevel: Infinity,
+      age: "RenaissanceAge",
+   });
+
+   GalileoGalilei: IGreatPersonDefinition = {
+      name: () => t(L.GalileoGalilei),
+      desc: (self, level) => t(L.GalileoGalileiDesc, { value: self.value(level) }),
+      time: "1564 ~ 1642 AD",
+      value: (level) => level * 1,
+      maxLevel: Infinity,
+      age: "RenaissanceAge",
+      tick: (self, level, permanent) => {
+         Tick.next.globalMultipliers.sciencePerIdleWorker.push({
+            value: self.value(level),
+            source: t(permanent ? L.SourceGreatPersonPermanent : L.SourceGreatPerson, {
+               person: self.name(),
+            }),
+         });
+      },
+   };
+
    MartinLuther: IGreatPersonDefinition = boostOf({
       name: () => t(L.MartinLuther),
       boost: {
@@ -401,7 +430,7 @@ export class GreatPersonDefinitions {
       name: () => t(L.WilliamShakespeare),
       boost: {
          multipliers: ["output", "storage"],
-         buildings: ["PaperMaker", "PrintingHouse"],
+         buildings: ["PaperMaker", "ActorsGuild"],
       },
       time: "1564 ~ 1616 AD",
       value: (level) => level,
@@ -424,7 +453,7 @@ export class GreatPersonDefinitions {
    ZhengHe: IGreatPersonDefinition = boostOf({
       name: () => t(L.ZhengHe),
       boost: {
-         multipliers: ["storage", "output"],
+         multipliers: ["output", "storage"],
          buildings: ["CaravelBuilder", "GalleonBuilder"],
       },
       time: "1371 ~ 1435 AD",
@@ -436,7 +465,7 @@ export class GreatPersonDefinitions {
    CosimoDeMedici: IGreatPersonDefinition = boostOf({
       name: () => t(L.CosimoDeMedici),
       boost: {
-         multipliers: ["storage", "output"],
+         multipliers: ["output", "storage"],
          buildings: ["GoldMiningCamp", "CoinMint"],
       },
       time: "1389 ~ 1464 AD",
@@ -455,12 +484,24 @@ export class GreatPersonDefinitions {
       tick: addScienceBasedOnBusyWorkers.bind(null),
    };
 
+   GeorgiusAgricola: IGreatPersonDefinition = boostOf({
+      name: () => t(L.GeorgiusAgricola),
+      boost: {
+         multipliers: ["output", "storage"],
+         buildings: ["SiegeWorkshop", "CoalMine"],
+      },
+      time: "1494 ~ 1555 AD",
+      value: (level) => level,
+      maxLevel: Infinity,
+      age: "RenaissanceAge",
+   });
+
    // Industrial /////////////////////////////////////////////////////////////////////////////////////////////
 
    JamesWatt: IGreatPersonDefinition = boostOf({
       name: () => t(L.JamesWatt),
       boost: {
-         multipliers: ["storage", "output"],
+         multipliers: ["output", "storage"],
          buildings: ["Steamworks", "DynamiteWorkshop"],
       },
       time: "1736 ~ 1819 AD",
@@ -469,10 +510,39 @@ export class GreatPersonDefinitions {
       age: "IndustrialAge",
    });
 
+   IsambardKingdomBrunel: IGreatPersonDefinition = boostOf({
+      name: () => t(L.IsambardKingdomBrunel),
+      boost: {
+         multipliers: ["output", "storage"],
+         buildings: ["FrigateBuilder", "ConcretePlant"],
+      },
+      time: "1806 ~ 1859 AD",
+      value: (level) => level,
+      maxLevel: Infinity,
+      age: "IndustrialAge",
+   });
+
+   LouisSullivan: IGreatPersonDefinition = {
+      name: () => t(L.LouisSullivan),
+      desc: (self, level) => t(L.LouisSullivanDesc, { value: self.value(level) }),
+      time: "1856 ~ 1924 AD",
+      value: (level) => level * 3,
+      maxLevel: Infinity,
+      age: "IndustrialAge",
+      tick: (self, level, permanent) => {
+         Tick.next.globalMultipliers.builderCapacity.push({
+            value: self.value(level),
+            source: t(permanent ? L.SourceGreatPersonPermanent : L.SourceGreatPerson, {
+               person: self.name(),
+            }),
+         });
+      },
+   };
+
    KarlMarx: IGreatPersonDefinition = boostOf({
       name: () => t(L.KarlMarx),
       boost: {
-         multipliers: ["storage", "output"],
+         multipliers: ["output", "storage"],
          buildings: ["Courthouse", "Parliament"],
       },
       time: "1818 ~ 1883 AD",
@@ -484,7 +554,7 @@ export class GreatPersonDefinitions {
    AdaLovelace: IGreatPersonDefinition = boostOf({
       name: () => t(L.AdaLovelace),
       boost: {
-         multipliers: ["storage", "output"],
+         multipliers: ["output", "storage"],
          buildings: ["PrintingHouse", "Museum"],
       },
       time: "1815 ~ 1852 AD",
@@ -496,7 +566,7 @@ export class GreatPersonDefinitions {
    NapoleonBonaparte: IGreatPersonDefinition = boostOf({
       name: () => t(L.NapoleonBonaparte),
       boost: {
-         multipliers: ["storage", "output"],
+         multipliers: ["output", "storage"],
          buildings: ["CannonWorkshop", "GunpowderMill"],
       },
       time: "1769 ~ 1821 AD",
@@ -538,6 +608,30 @@ export class GreatPersonDefinitions {
          });
       },
    };
+
+   JPMorgan: IGreatPersonDefinition = boostOf({
+      name: () => t(L.JPMorgan),
+      boost: {
+         multipliers: ["output", "storage"],
+         buildings: ["BondMarket", "RifleFactory"],
+      },
+      time: "1837 ~ 1913 AD",
+      value: (level) => level,
+      maxLevel: Infinity,
+      age: "IndustrialAge",
+   });
+
+   AndrewCarnegie: IGreatPersonDefinition = boostOf({
+      name: () => t(L.AndrewCarnegie),
+      boost: {
+         multipliers: ["output", "storage"],
+         buildings: ["Bank", "SteelMill"],
+      },
+      time: "1837 ~ 1913 AD",
+      value: (level) => level,
+      maxLevel: Infinity,
+      age: "IndustrialAge",
+   });
 }
 
 export type GreatPerson = keyof GreatPersonDefinitions;
@@ -569,7 +663,7 @@ function greatPersonBoostDesc(self: IGreatPersonDefinition, level: number) {
    });
 }
 
-function tickGreatPersonBoost(self: IGreatPersonDefinition, level: number, permanent: boolean) {
+export function tickGreatPersonBoost(self: IGreatPersonDefinition, level: number, source: string) {
    const boost = self.boost;
    if (!boost) {
       throw new Error("`tickGreatPersonBoost` requires `boost` to be defined");
@@ -579,11 +673,7 @@ function tickGreatPersonBoost(self: IGreatPersonDefinition, level: number, perma
       boost.multipliers.forEach((m) => {
          multiplier[m] = self.value(level);
       });
-      addMultiplier(
-         b,
-         multiplier as Multiplier,
-         t(permanent ? L.SourceGreatPersonPermanent : L.SourceGreatPerson, { person: self.name() }),
-      );
+      addMultiplier(b, multiplier as Multiplier, source);
    });
 }
 
@@ -598,7 +688,12 @@ function boostOf(
       value: def.value,
       maxLevel: def.maxLevel,
       age: def.age,
-      tick: (self, level, permanent) => tickGreatPersonBoost(self, level, permanent),
+      tick: (self, level, permanent) =>
+         tickGreatPersonBoost(
+            self,
+            level,
+            t(permanent ? L.SourceGreatPersonPermanent : L.SourceGreatPerson, { person: self.name() }),
+         ),
    };
 }
 

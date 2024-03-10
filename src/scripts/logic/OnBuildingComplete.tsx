@@ -1,13 +1,13 @@
 import type { Deposit } from "../../../shared/definitions/ResourceDefinitions";
 import {
-   applyDefaultSettings,
+   applyBuildingDefaults,
    exploreTile,
    getBuildingThatExtract,
    getExtraVisionRange,
    isNaturalWonder,
    isSpecialBuilding,
 } from "../../../shared/logic/BuildingLogic";
-import { getGameState } from "../../../shared/logic/GameStateLogic";
+import { getGameOptions, getGameState } from "../../../shared/logic/GameStateLogic";
 import { getGrid, getXyBuildings } from "../../../shared/logic/IntraTickCache";
 import { getRevealedDeposits } from "../../../shared/logic/ResourceLogic";
 import { OnResetTile, addDeposit, getGreatPeopleChoices } from "../../../shared/logic/TechLogic";
@@ -27,6 +27,7 @@ import { WorldScene } from "../scenes/WorldScene";
 import { ChooseGreatPersonModal } from "../ui/ChooseGreatPersonModal";
 import { showModal } from "../ui/GlobalModal";
 import { Singleton } from "../utilities/Singleton";
+import { playLevelUp } from "../visuals/Sound";
 
 export function onBuildingComplete(xy: Tile): void {
    const gs = getGameState();
@@ -54,6 +55,7 @@ export function onBuildingComplete(xy: Tile): void {
             gs.greatPeopleChoices.push(candidates);
          }
          if (gs.greatPeopleChoices.length > 0) {
+            playLevelUp();
             showModal(<ChooseGreatPersonModal permanent={false} />);
          }
          break;
@@ -64,6 +66,7 @@ export function onBuildingComplete(xy: Tile): void {
             gs.greatPeopleChoices.push(candidates);
          }
          if (gs.greatPeopleChoices.length > 0) {
+            playLevelUp();
             showModal(<ChooseGreatPersonModal permanent={false} />);
          }
          break;
@@ -112,12 +115,14 @@ export function onBuildingComplete(xy: Tile): void {
             if (!type) continue;
 
             tile.explored = true;
-            tile.building = makeBuilding({
-               type: type,
-               level: 10,
-               status: "completed",
-            });
-            applyDefaultSettings(tile.building, gs);
+            tile.building = applyBuildingDefaults(
+               makeBuilding({
+                  type: type,
+                  level: 10,
+                  status: "completed",
+               }),
+               getGameOptions(),
+            );
             OnBuildingComplete.emit(xy);
             ++count;
 

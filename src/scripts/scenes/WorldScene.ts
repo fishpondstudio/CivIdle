@@ -1,7 +1,7 @@
 import { SmoothGraphics } from "@pixi/graphics-smooth";
 import type { ColorSource, FederatedPointerEvent, IPointData, Sprite } from "pixi.js";
 import { Color, Container, LINE_CAP, LINE_JOIN, ParticleContainer, TilingSprite } from "pixi.js";
-import { checkBuildingMax } from "../../../shared/logic/BuildingLogic";
+import { applyBuildingDefaults, checkBuildingMax } from "../../../shared/logic/BuildingLogic";
 import { GameFeature, hasFeature } from "../../../shared/logic/FeatureLogic";
 import type { GameOptions, GameState } from "../../../shared/logic/GameState";
 import {
@@ -153,8 +153,10 @@ export class WorldScene extends Scene {
          playError();
          return;
       }
-      currentTile.building = makeBuilding({ type: selectBuilding.type });
-      currentTile.building.priority = getGameOptions().defaultPriority;
+      currentTile.building = applyBuildingDefaults(
+         makeBuilding({ type: selectBuilding.type }),
+         getGameOptions(),
+      );
       notifyGameStateUpdate();
    }
 
@@ -263,7 +265,7 @@ export class WorldScene extends Scene {
             }
             case "Warehouse": {
                if (hasFeature(GameFeature.WarehouseUpgrade, gs)) {
-                  this.highlightAdjacentTiles(grid);
+                  this.highlightRange(grid, 1);
                }
                break;
             }
@@ -281,7 +283,11 @@ export class WorldScene extends Scene {
             case "MogaoCaves":
             case "SaintBasilsCathedral":
             case "StatueOfLiberty": {
-               this.highlightAdjacentTiles(grid);
+               this.highlightRange(grid, 1);
+               break;
+            }
+            case "GreatSphinx": {
+               this.highlightRange(grid, 2);
                break;
             }
          }
@@ -316,9 +322,9 @@ export class WorldScene extends Scene {
       });
    }
 
-   private highlightAdjacentTiles(grid: IPointData) {
+   private highlightRange(grid: IPointData, range: number) {
       const g = getGrid(getGameState());
-      g.getNeighbors(grid).forEach((neighbor) => {
+      g.getRange(grid, range).forEach((neighbor) => {
          this._selectedGraphics.lineStyle({ width: 0 });
          this._selectedGraphics.beginFill(0xffffff, 0.2, true);
          drawSelected(g, neighbor, this._selectedGraphics);

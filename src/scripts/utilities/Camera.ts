@@ -2,18 +2,15 @@ import type { Application, FederatedPointerEvent, IDestroyOptions, IPointData } 
 import { Container, Rectangle } from "pixi.js";
 import { clamp, lerp, sizeOf } from "../../../shared/utilities/Helper";
 import { Vector2, v2 } from "../../../shared/utilities/Vector2";
+import type { SceneLifecycle } from "./SceneManager";
 
 const DEAD_ZONE_SQR = 25;
 
-export class Camera extends Container {
+export class Camera extends Container implements SceneLifecycle {
    constructor(private app: Application) {
       super();
       this.eventMode = "static";
       this.interactiveChildren = false;
-
-      this.app.renderer.events.domElement.addEventListener("contextmenu", this.disableContextMenu.bind(this));
-      this.app.renderer.events.domElement.addEventListener("wheel", this.onMouseWheel);
-      this.app.ticker.add(this.update);
 
       this.on("pointerdown", this.onPointerDown);
       this.on("pointermove", this.onPointerMove);
@@ -262,11 +259,21 @@ export class Camera extends Container {
       );
    }
 
-   override destroy(options?: boolean | IDestroyOptions | undefined): void {
-      super.destroy(options);
+   public onEnable(): void {
+      this.app.renderer.events.domElement.addEventListener("contextmenu", this.disableContextMenu.bind(this));
+      this.app.renderer.events.domElement.addEventListener("wheel", this.onMouseWheel);
+      this.app.ticker.add(this.update);
+   }
+
+   public onDisable(): void {
       this.app.renderer.events.domElement.removeEventListener("contextmenu", this.disableContextMenu);
       this.app.renderer.events.domElement.removeEventListener("wheel", this.onMouseWheel);
       this.app.ticker.remove(this.update);
+   }
+
+   override destroy(options?: boolean | IDestroyOptions | undefined): void {
+      super.destroy(options);
+      this.onDisable();
    }
 }
 

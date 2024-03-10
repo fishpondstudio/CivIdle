@@ -1,8 +1,7 @@
 import Tippy from "@tippyjs/react";
 import { getBuildingUpgradeLevels, getTotalBuildingCost } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
-import { getGameOptions, notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
-import { getUpgradePriority, setUpgradePriority } from "../../../shared/logic/Tile";
+import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
 import {
    formatNumber,
    isEmpty,
@@ -32,15 +31,11 @@ export function BuildingUpgradeComponent({ gameState, xy }: IBuildingComponentPr
    const upgrade = (level: number) => {
       building.desiredLevel = building.level + level;
       building.status = "upgrading";
-      building.priority = setUpgradePriority(
-         building.priority,
-         getUpgradePriority(getGameOptions().defaultPriority),
-      );
       notifyGameStateUpdate();
    };
-   useShortcut("BuildingPageUpgradeX1", () => upgrade(1), [xy]);
-   useShortcut("BuildingPageUpgradeX5", () => upgrade(5), [xy]);
-   useShortcut("BuildingPageUpgradeToNext10", () => upgrade(levels[levels.length - 1]), [xy]);
+   useShortcut("BuildingPageUpgradeX1", () => upgrade(levels[0]), [xy]);
+   useShortcut("BuildingPageUpgradeX5", () => upgrade(levels[1]), [xy]);
+   useShortcut("BuildingPageUpgradeToNext10", () => upgrade(levels[2]), [xy]);
 
    return (
       <>
@@ -60,9 +55,9 @@ export function BuildingUpgradeComponent({ gameState, xy }: IBuildingComponentPr
             <div className="separator"></div>
             <div className="row">
                <div className="text-strong mr10">{t(L.UpgradeBuilding)}</div>
-               {levels.map((level) => (
+               {levels.map((level, idx) => (
                   <Tippy
-                     key={level}
+                     key={idx}
                      content={`${t(L.Upgrade)} x${level}: ${mapOf(
                         getTotalBuildingCost(building.type, building.level, building.level + level),
                         (res, amount) => {

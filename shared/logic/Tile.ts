@@ -48,38 +48,16 @@ export interface IBuildingData {
    stockpileCapacity: number;
    stockpileMax: number;
 
-   priority: number;
+   productionPriority: number;
+   constructionPriority: number;
+
+   electrification: number;
 
    options: BuildingOptions;
-   electrification: number;
    disabledInput: Set<Resource>;
 
    inputMode: BuildingInputMode;
    maxInputDistance: number;
-}
-
-export function getProductionPriority(v: number): number {
-   return v & 0x0000ff;
-}
-
-export function setProductionPriority(priority: number, v: number): number {
-   return (priority & 0xffff00) | (v & 0xff);
-}
-
-export function getConstructionPriority(v: number): number {
-   return (v & 0x00ff00) >> 8;
-}
-
-export function setConstructionPriority(priority: number, v: number): number {
-   return (priority & 0xff00ff) | ((v & 0xff) << 8);
-}
-
-export function getUpgradePriority(v: number): number {
-   return (v & 0xff0000) >> 16;
-}
-
-export function setUpgradePriority(priority: number, v: number): number {
-   return (priority & 0x00ffff) | ((v & 0xff) << 16);
 }
 
 export enum MarketOptions {
@@ -155,12 +133,13 @@ export function makeBuilding(data: Pick<IBuildingData, "type"> & Partial<IBuildi
       capacity: 1,
       stockpileCapacity: DEFAULT_STOCKPILE_CAPACITY,
       stockpileMax: DEFAULT_STOCKPILE_MAX,
-      priority: 0x010101,
       options: BuildingOptions.None,
       electrification: 0,
       disabledInput: new Set(),
       inputMode: BuildingInputMode.Distance,
       maxInputDistance: Infinity,
+      productionPriority: PRIORITY_MIN,
+      constructionPriority: PRIORITY_MIN,
       ...data,
    };
 
@@ -218,18 +197,8 @@ export function makeBuilding(data: Pick<IBuildingData, "type"> & Partial<IBuildi
       STOCKPILE_CAPACITY_MAX,
    );
    building.stockpileMax = clamp(building.stockpileMax, STOCKPILE_MAX_MIN, STOCKPILE_MAX_MAX);
-   building.priority = setProductionPriority(
-      building.priority,
-      clamp(getProductionPriority(building.priority), PRIORITY_MIN, PRIORITY_MAX),
-   );
-   building.priority = setConstructionPriority(
-      building.priority,
-      clamp(getConstructionPriority(building.priority), PRIORITY_MIN, PRIORITY_MAX),
-   );
-   building.priority = setUpgradePriority(
-      building.priority,
-      clamp(getUpgradePriority(building.priority), PRIORITY_MIN, PRIORITY_MAX),
-   );
+   building.productionPriority = clamp(building.productionPriority, PRIORITY_MIN, PRIORITY_MAX);
+   building.constructionPriority = clamp(building.constructionPriority, PRIORITY_MIN, PRIORITY_MAX);
    return building;
 }
 

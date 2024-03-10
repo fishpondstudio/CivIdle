@@ -24,10 +24,18 @@
                 "h": 350
             }
         },
-        "PersonAristophanes": {
+        "PersonAndrewCarnegie": {
             "frame": {
                 "x": 351,
                 "y": 351,
+                "w": 350,
+                "h": 350
+            }
+        },
+        "PersonAristophanes": {
+            "frame": {
+                "x": 702,
+                "y": 0,
                 "w": 350,
                 "h": 350
             }
@@ -35,22 +43,22 @@
         "PersonAshurbanipal": {
             "frame": {
                 "x": 702,
-                "y": 0,
+                "y": 351,
                 "w": 350,
                 "h": 350
             }
         },
         "PersonCharlemagne": {
             "frame": {
-                "x": 702,
-                "y": 351,
+                "x": 0,
+                "y": 702,
                 "w": 350,
                 "h": 350
             }
         },
         "PersonCharlesDarwin": {
             "frame": {
-                "x": 0,
+                "x": 351,
                 "y": 702,
                 "w": 350,
                 "h": 350
@@ -58,7 +66,7 @@
         },
         "PersonConfucius": {
             "frame": {
-                "x": 351,
+                "x": 702,
                 "y": 702,
                 "w": 350,
                 "h": 350
@@ -66,8 +74,8 @@
         },
         "PersonCosimoDeMedici": {
             "frame": {
-                "x": 702,
-                "y": 702,
+                "x": 1053,
+                "y": 0,
                 "w": 350,
                 "h": 350
             }
@@ -75,7 +83,7 @@
         "PersonCyrusII": {
             "frame": {
                 "x": 1053,
-                "y": 0,
+                "y": 351,
                 "w": 350,
                 "h": 350
             }
@@ -83,22 +91,22 @@
         "PersonDido": {
             "frame": {
                 "x": 1053,
-                "y": 351,
+                "y": 702,
                 "w": 350,
                 "h": 350
             }
         },
         "PersonDukeOfZhou": {
             "frame": {
-                "x": 1053,
-                "y": 702,
+                "x": 0,
+                "y": 1053,
                 "w": 350,
                 "h": 350
             }
         },
         "PersonFibonacci": {
             "frame": {
-                "x": 0,
+                "x": 351,
                 "y": 1053,
                 "w": 350,
                 "h": 350
@@ -106,24 +114,40 @@
         },
         "PersonFlorenceNightingale": {
             "frame": {
-                "x": 351,
-                "y": 1053,
-                "w": 350,
-                "h": 350
-            }
-        },
-        "PersonHammurabi": {
-            "frame": {
                 "x": 702,
                 "y": 1053,
                 "w": 350,
                 "h": 350
             }
         },
-        "PersonHarunAlRashid": {
+        "PersonGalileoGalilei": {
             "frame": {
                 "x": 1053,
                 "y": 1053,
+                "w": 350,
+                "h": 350
+            }
+        },
+        "PersonGeorgiusAgricola": {
+            "frame": {
+                "x": 1404,
+                "y": 0,
+                "w": 350,
+                "h": 350
+            }
+        },
+        "PersonHammurabi": {
+            "frame": {
+                "x": 1404,
+                "y": 351,
+                "w": 350,
+                "h": 350
+            }
+        },
+        "PersonHarunAlRashid": {
+            "frame": {
+                "x": 1404,
+                "y": 702,
                 "w": 350,
                 "h": 350
             }
@@ -131,36 +155,12 @@
         "PersonHatshepsut": {
             "frame": {
                 "x": 1404,
-                "y": 0,
-                "w": 350,
-                "h": 350
-            }
-        },
-        "PersonHerodotus": {
-            "frame": {
-                "x": 1404,
-                "y": 351,
-                "w": 350,
-                "h": 350
-            }
-        },
-        "PersonIsaacNewton": {
-            "frame": {
-                "x": 1404,
-                "y": 702,
-                "w": 350,
-                "h": 350
-            }
-        },
-        "PersonIsidoreOfMiletus": {
-            "frame": {
-                "x": 1404,
                 "y": 1053,
                 "w": 350,
                 "h": 350
             }
         },
-        "PersonJamesWatt": {
+        "PersonHerodotus": {
             "frame": {
                 "x": 0,
                 "y": 1404,
@@ -168,7 +168,7 @@
                 "h": 350
             }
         },
-        "PersonJustinian": {
+        "PersonIsaacNewton": {
             "frame": {
                 "x": 351,
                 "y": 1404,
@@ -176,7 +176,7 @@
                 "h": 350
             }
         },
-        "PersonKarlMarx": {
+        "PersonIsambardKingdomBrunel": {
             "frame": {
                 "x": 702,
                 "y": 1404,
@@ -184,7 +184,7 @@
                 "h": 350
             }
         },
-        "PersonLeonardoDaVinci": {
+        "PersonIsidoreOfMiletus": {
             "frame": {
                 "x": 1053,
                 "y": 1404,
@@ -192,7 +192,7 @@
                 "h": 350
             }
         },
-        "PersonMartinLuther": {
+        "PersonJamesWatt": {
             "frame": {
                 "x": 1404,
                 "y": 1404,
@@ -200,7 +200,7 @@
                 "h": 350
             }
         },
-        "PersonNapoleonBonaparte": {
+        "PersonJohannesKepler": {
             "frame": {
                 "x": 1755,
                 "y": 0,
@@ -208,7 +208,7 @@
                 "h": 350
             }
         },
-        "PersonNebuchadnezzarII": {
+        "PersonJPMorgan": {
             "frame": {
                 "x": 1755,
                 "y": 351,
@@ -216,10 +216,66 @@
                 "h": 350
             }
         },
-        "PersonQinShiHuang": {
+        "PersonJustinian": {
             "frame": {
                 "x": 1755,
                 "y": 702,
+                "w": 350,
+                "h": 350
+            }
+        },
+        "PersonKarlMarx": {
+            "frame": {
+                "x": 1755,
+                "y": 1053,
+                "w": 350,
+                "h": 350
+            }
+        },
+        "PersonLeonardoDaVinci": {
+            "frame": {
+                "x": 1755,
+                "y": 1404,
+                "w": 350,
+                "h": 350
+            }
+        },
+        "PersonLouisSullivan": {
+            "frame": {
+                "x": 0,
+                "y": 1755,
+                "w": 350,
+                "h": 350
+            }
+        },
+        "PersonMartinLuther": {
+            "frame": {
+                "x": 351,
+                "y": 1755,
+                "w": 350,
+                "h": 350
+            }
+        },
+        "PersonNapoleonBonaparte": {
+            "frame": {
+                "x": 702,
+                "y": 1755,
+                "w": 350,
+                "h": 350
+            }
+        },
+        "PersonNebuchadnezzarII": {
+            "frame": {
+                "x": 1053,
+                "y": 1755,
+                "w": 350,
+                "h": 350
+            }
+        },
+        "PersonQinShiHuang": {
+            "frame": {
+                "x": 1404,
+                "y": 1755,
                 "w": 350,
                 "h": 350
             }
@@ -227,68 +283,12 @@
         "PersonRamessesII": {
             "frame": {
                 "x": 1755,
-                "y": 1053,
+                "y": 1755,
                 "w": 350,
                 "h": 350
             }
         },
         "PersonReneDescartes": {
-            "frame": {
-                "x": 1755,
-                "y": 1404,
-                "w": 350,
-                "h": 350
-            }
-        },
-        "PersonRurik": {
-            "frame": {
-                "x": 0,
-                "y": 1755,
-                "w": 350,
-                "h": 350
-            }
-        },
-        "PersonSargonOfAkkad": {
-            "frame": {
-                "x": 351,
-                "y": 1755,
-                "w": 350,
-                "h": 350
-            }
-        },
-        "PersonSocrates": {
-            "frame": {
-                "x": 702,
-                "y": 1755,
-                "w": 350,
-                "h": 350
-            }
-        },
-        "PersonTangOfShang": {
-            "frame": {
-                "x": 1053,
-                "y": 1755,
-                "w": 350,
-                "h": 350
-            }
-        },
-        "PersonWilliamShakespeare": {
-            "frame": {
-                "x": 1404,
-                "y": 1755,
-                "w": 350,
-                "h": 350
-            }
-        },
-        "PersonWuZetian": {
-            "frame": {
-                "x": 1755,
-                "y": 1755,
-                "w": 350,
-                "h": 350
-            }
-        },
-        "PersonZenobia": {
             "frame": {
                 "x": 2106,
                 "y": 0,
@@ -296,7 +296,7 @@
                 "h": 350
             }
         },
-        "PersonZhengHe": {
+        "PersonRurik": {
             "frame": {
                 "x": 2106,
                 "y": 351,
@@ -304,10 +304,66 @@
                 "h": 350
             }
         },
-        "PersonZoroaster": {
+        "PersonSargonOfAkkad": {
             "frame": {
                 "x": 2106,
                 "y": 702,
+                "w": 350,
+                "h": 350
+            }
+        },
+        "PersonSocrates": {
+            "frame": {
+                "x": 2106,
+                "y": 1053,
+                "w": 350,
+                "h": 350
+            }
+        },
+        "PersonTangOfShang": {
+            "frame": {
+                "x": 2106,
+                "y": 1404,
+                "w": 350,
+                "h": 350
+            }
+        },
+        "PersonWilliamShakespeare": {
+            "frame": {
+                "x": 2106,
+                "y": 1755,
+                "w": 350,
+                "h": 350
+            }
+        },
+        "PersonWuZetian": {
+            "frame": {
+                "x": 0,
+                "y": 2106,
+                "w": 350,
+                "h": 350
+            }
+        },
+        "PersonZenobia": {
+            "frame": {
+                "x": 351,
+                "y": 2106,
+                "w": 350,
+                "h": 350
+            }
+        },
+        "PersonZhengHe": {
+            "frame": {
+                "x": 702,
+                "y": 2106,
+                "w": 350,
+                "h": 350
+            }
+        },
+        "PersonZoroaster": {
+            "frame": {
+                "x": 1053,
+                "y": 2106,
                 "w": 350,
                 "h": 350
             }
@@ -320,7 +376,7 @@
         "scale": 1,
         "size": {
             "w": 2456,
-            "h": 2105
+            "h": 2456
         }
     }
 }

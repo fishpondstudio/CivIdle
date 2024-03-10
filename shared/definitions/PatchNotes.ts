@@ -5,6 +5,10 @@ interface PatchNote {
 
 export const PatchNotes: PatchNote[] = [
    {
+      version: "0.4.0",
+      content: [["Patch Notes", "https://github.com/fishpondstudio/CivIdle/issues/134"]],
+   },
+   {
       version: "0.3.1",
       content: [
          ["Bugfix", "Fix a bug where Warehouse Autopilot does not take production multiplier into account"],

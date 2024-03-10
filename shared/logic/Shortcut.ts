@@ -19,7 +19,7 @@ export const ShortcutActions = {
       name: () => t(L.ShortcutBuildingPageSellBuilding),
    },
    BuildingPageUpgradeX1: { scope: "BuildingPage", name: () => t(L.ShortcutBuildingPageUpgradeX1) },
-   BuildingPageUpgradeX5: { scope: "BuildingPage", name: () => t(L.ShortcutBuildingPageUpgradeX5) },
+   BuildingPageUpgradeX5: { scope: "BuildingPage", name: () => t(L.ShortcutBuildingPageUpgradeX5V2) },
    BuildingPageUpgradeToNext10: {
       scope: "BuildingPage",
       name: () => t(L.ShortcutBuildingPageUpgradeToNext10),

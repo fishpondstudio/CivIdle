@@ -1,13 +1,12 @@
+import type { Application } from "pixi.js";
 import type { City } from "../../shared/definitions/CityDefinitions";
 import type { TechAge } from "../../shared/definitions/TechDefinitions";
-import { getBuildingCost } from "../../shared/logic/BuildingLogic";
-import { Config } from "../../shared/logic/Config";
+import { exploreTile, getBuildingCost } from "../../shared/logic/BuildingLogic";
 import type { GameOptions, SavedGame } from "../../shared/logic/GameState";
 import { GameState } from "../../shared/logic/GameState";
 import {
    GameOptionsChanged,
    GameStateChanged,
-   TILE_SIZE,
    deserializeSave,
    getGameOptions,
    getGameState,
@@ -18,10 +17,9 @@ import {
 import { initializeGameState } from "../../shared/logic/InitializeGameState";
 import { rollPermanentGreatPeople } from "../../shared/logic/RebornLogic";
 import { getGreatPeopleChoices } from "../../shared/logic/TechLogic";
-import { BuildingInputMode, ResourceImportOptions, makeBuilding } from "../../shared/logic/Tile";
-import { Grid } from "../../shared/utilities/Grid";
-import { forEach, isNullOrUndefined } from "../../shared/utilities/Helper";
+import { forEach } from "../../shared/utilities/Helper";
 import { TypedEvent } from "../../shared/utilities/TypedEvent";
+import { migrateSavedGame } from "./MigrateSavedGame";
 import { SteamClient, isSteam } from "./rpc/SteamClient";
 import { WorldScene } from "./scenes/WorldScene";
 import { idbDel, idbGet, idbSet } from "./utilities/BrowserStorage";
@@ -32,8 +30,7 @@ import { compress, decompress } from "./workers/Compress";
 export function resetToCity(city: City): void {
    savedGame.current = new GameState();
    savedGame.current.city = city;
-   const size = Config.City[savedGame.current.city].size;
-   initializeGameState(savedGame.current, new Grid(size, size, TILE_SIZE));
+   initializeGameState(savedGame.current, savedGame.options);
 }
 
 export function overwriteSaveGame(save: SavedGame): void {
@@ -87,6 +84,17 @@ if (import.meta.env.DEV) {
          });
       }
    };
+
+   // @ts-expect-error
+   window.revealAllTiles = () => {
+      const gs = getGameState();
+      gs.tiles.forEach((tile, xy) => {
+         if (!tile.explored) {
+            exploreTile(xy, gs);
+            Singleton().sceneManager.enqueue(WorldScene, (s) => s.revealTile(xy));
+         }
+      });
+   };
 }
 
 export const OnUIThemeChanged = new TypedEvent<boolean>();
@@ -95,6 +103,13 @@ export const ToggleChatWindow = new TypedEvent<boolean>();
 export function syncUITheme(gameOptions: GameOptions): void {
    gameOptions.useModernUI ? document.body.classList.add("modern") : document.body.classList.remove("modern");
    OnUIThemeChanged.emit(getGameOptions().useModernUI);
+}
+
+export function syncSidePanelWidth(app: Application, options: GameOptions): void {
+   if (options.sidePanelWidth !== 400) {
+      document.documentElement.style.setProperty("--game-ui-width", `${options.sidePanelWidth}px`);
+      app.resize();
+   }
 }
 
 const SAVE_KEY = "CivIdle";
@@ -165,39 +180,26 @@ export function isGameDataCompatible(gs: SavedGame): boolean {
 export const useGameState = makeObservableHook(GameStateChanged, getGameState);
 export const useGameOptions = makeObservableHook(GameOptionsChanged, getGameOptions);
 
-function migrateSavedGame(save: SavedGame) {
-   save.current.tiles.forEach((tile) => {
-      if (tile.building) {
-         // @ts-expect-error
-         if (tile.building.status === "paused") {
-            tile.building.status = "building";
-         }
-         if (!tile.building.disabledInput) {
-            tile.building.disabledInput = new Set();
-         }
-         if (isNullOrUndefined(tile.building.inputMode)) {
-            tile.building.inputMode = BuildingInputMode.Distance;
-         }
-         if (isNullOrUndefined(tile.building.maxInputDistance)) {
-            tile.building.maxInputDistance = Infinity;
-         }
-         if ("resourceImports" in tile.building && !("resourceImportOptions" in tile.building)) {
-            // @ts-expect-error
-            tile.building.resourceImportOptions = ResourceImportOptions.None;
-         }
-         if (!Config.Building[tile.building.type]) {
-            delete tile.building;
-            return;
-         }
-         tile.building = makeBuilding(tile.building);
-         forEach(tile.building.resources, (res, amount) => {
-            if (!Config.Resource[res] || !Number.isFinite(amount)) {
-               delete tile.building!.resources[res];
-            }
-         });
-      }
-   });
-   if (save.options.chatSendChannel) {
-      save.options.chatReceiveChannel[save.options.chatSendChannel] = true;
-   }
+export function getProductionPriority(v: number): number {
+   return v & 0x0000ff;
+}
+
+function setProductionPriority(priority: number, v: number): number {
+   return (priority & 0xffff00) | (v & 0xff);
+}
+
+export function getConstructionPriority(v: number): number {
+   return (v & 0x00ff00) >> 8;
+}
+
+function setConstructionPriority(priority: number, v: number): number {
+   return (priority & 0xff00ff) | ((v & 0xff) << 8);
+}
+
+function getUpgradePriority(v: number): number {
+   return (v & 0xff0000) >> 16;
+}
+
+function setUpgradePriority(priority: number, v: number): number {
+   return (priority & 0x00ffff) | ((v & 0xff) << 16);
 }

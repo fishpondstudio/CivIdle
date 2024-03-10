@@ -1,6 +1,9 @@
+import Tippy from "@tippyjs/react";
+import classNames from "classnames";
 import { useState } from "react";
-import type { Building } from "../../../shared/definitions/BuildingDefinitions";
+import type { Building, IBuildingDefinition } from "../../../shared/definitions/BuildingDefinitions";
 import {
+   applyBuildingDefaults,
    checkBuildingMax,
    getBuildingCost,
    isWorldOrNaturalWonder,
@@ -38,6 +41,7 @@ let lastBuild: Building | null = null;
 export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
    const gs = useGameState();
    const [, setSelected] = useState<Building | null>(null);
+   const [showUnbuiltOnly, setShowUnbuiltOnly] = useState<boolean>(false);
    const [filter, setFilter] = useState<string>("");
    const constructed = getTypeBuildings(gs);
    const build = (k: Building) => {
@@ -45,10 +49,12 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
          playError();
          return;
       }
-      tile.building = makeBuilding({ type: k });
-      tile.building.priority = getGameOptions().defaultPriority;
+      tile.building = applyBuildingDefaults(makeBuilding({ type: k }), getGameOptions());
       notifyGameStateUpdate();
       lastBuild = k;
+   };
+   const extractsDeposit = (b: IBuildingDefinition) => {
+      return b.deposit && setContains(tile.deposit, b.deposit);
    };
    useShortcut(
       "EmptyTilePageBuildLastBuilding",
@@ -100,12 +106,25 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
             </fieldset>
             <fieldset>
                <legend>{t(L.BuildingANew)}</legend>
-               <input
-                  type="text"
-                  style={{ width: "100%" }}
-                  placeholder={t(L.BuildingSearchText)}
-                  onChange={(e) => setFilter(e.target.value)}
-               />
+               <div className="row">
+                  <input
+                     type="text"
+                     style={{ width: "100%" }}
+                     placeholder={t(L.BuildingSearchText)}
+                     onChange={(e) => setFilter(e.target.value)}
+                  />
+                  <Tippy content={t(L.ShowUnbuiltOnly)}>
+                     <button
+                        className={classNames({ ml10: true, active: showUnbuiltOnly })}
+                        style={{ padding: "0 5px" }}
+                        onClick={() => {
+                           setShowUnbuiltOnly(!showUnbuiltOnly);
+                        }}
+                     >
+                        <div className="m-icon small">filter_list</div>
+                     </button>
+                  </Tippy>
+               </div>
             </fieldset>
             <div className="table-view sticky-header building-list f1">
                <table>
@@ -120,6 +139,18 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
                   <tbody>
                      {keysOf(unlockedBuildings(gs))
                         .sort((a, b) => {
+                           if (extractsDeposit(Config.Building[a]) && !extractsDeposit(Config.Building[b])) {
+                              return -1;
+                           }
+                           if (extractsDeposit(Config.Building[b]) && !extractsDeposit(Config.Building[a])) {
+                              return 1;
+                           }
+                           if (lastBuild === a && lastBuild !== b) {
+                              return -1;
+                           }
+                           if (lastBuild === b && lastBuild !== a) {
+                              return 1;
+                           }
                            if (isWorldOrNaturalWonder(a) && !isWorldOrNaturalWonder(b)) {
                               return -1;
                            }
@@ -133,15 +164,24 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
                            return Config.Building[a].name().localeCompare(Config.Building[b].name());
                         })
                         .filter((v) => {
+                           let filterNotBuilt = false;
+                           if (showUnbuiltOnly === true) {
+                              if (sizeOf(buildingByType.get(v)) === 0) {
+                                 filterNotBuilt = true;
+                              }
+                           } else {
+                              filterNotBuilt = true;
+                           }
                            const f = filter.toLowerCase();
                            return (
-                              Config.Building[v].name().toLowerCase().includes(f) ||
-                              anyOf(Config.Building[v].input, (res) =>
-                                 Config.Resource[res].name().toLowerCase().includes(f),
-                              ) ||
-                              anyOf(Config.Building[v].output, (res) =>
-                                 Config.Resource[res].name().toLowerCase().includes(f),
-                              )
+                              filterNotBuilt &&
+                              (Config.Building[v].name().toLowerCase().includes(f) ||
+                                 anyOf(Config.Building[v].input, (res) =>
+                                    Config.Resource[res].name().toLowerCase().includes(f),
+                                 ) ||
+                                 anyOf(Config.Building[v].output, (res) =>
+                                    Config.Resource[res].name().toLowerCase().includes(f),
+                                 ))
                            );
                         })
                         .map((k) => {
@@ -197,7 +237,7 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
                                              </span>
                                           )}
                                        </div>
-                                       {building.deposit && setContains(tile.deposit, building.deposit) ? (
+                                       {extractsDeposit(building) ? (
                                           <div className="m-icon small text-orange ml5">stars</div>
                                        ) : null}
                                        {k === lastBuild ? (

@@ -10,13 +10,20 @@ import {
 } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
 import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
-import { Tick } from "../../../shared/logic/TickLogic";
+import { unlockedResources } from "../../../shared/logic/IntraTickCache";
 import {
    BuildingInputModeNames,
    ResourceImportOptions,
    type IResourceImportBuildingData,
 } from "../../../shared/logic/Tile";
-import { copyFlag, forEach, hasFlag, isNullOrUndefined, toggleFlag } from "../../../shared/utilities/Helper";
+import {
+   copyFlag,
+   forEach,
+   hasFlag,
+   isNullOrUndefined,
+   keysOf,
+   toggleFlag,
+} from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import { playClick } from "../visuals/Sound";
 import { ApplyToAllComponent } from "./ApplyToAllComponent";
@@ -39,21 +46,10 @@ export function ResourceImportComponent({ gameState, xy }: IBuildingComponentPro
       building.resourceImports = {};
    }
 
-   const resources: Set<Resource> = new Set();
-   Tick.current.resourcesByTile.forEach((_, res) => {
-      if (!NoPrice[res] && !NoStorage[res]) {
-         resources.add(res);
-      }
-   });
-   forEach(building.resources, (k, v) => {
-      resources.add(k);
-   });
-   forEach(building.resourceImports, (k, v) => {
-      resources.add(k);
-   });
    const storage = getStorageFor(xy, gameState);
    const baseCapacity = getResourceImportCapacity(building, 1);
    const capacityMultiplier = totalMultiplierFor(xy, "output", 1, gameState);
+   const resources = keysOf(unlockedResources(gameState)).filter((r) => !NoStorage[r] && !NoPrice[r]);
 
    return (
       <fieldset>
@@ -67,7 +63,7 @@ export function ResourceImportComponent({ gameState, xy }: IBuildingComponentPro
                { name: t(L.ResourceImportImportCapV2), sortable: true, right: true },
                { name: "", sortable: false },
             ]}
-            data={Array.from(resources)}
+            data={resources}
             compareFunc={(a, b, col) => {
                switch (col) {
                   case 2:

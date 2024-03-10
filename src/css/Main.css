@@ -4,6 +4,10 @@
 @import "ChatPanel.css";
 @import "ResourcePanel.css";
 
+:root {
+   --game-ui-width: 400px;
+}
+
 .game-cursor {
    cursor: url("../images/w98normal.png"), default;
 }
@@ -27,7 +31,7 @@ body {
 
 #game-ui {
    position: absolute;
-   width: 400px;
+   width: var(--game-ui-width);
    right: 0;
    top: 0;
    bottom: 0;
@@ -51,7 +55,7 @@ body {
    left: 0;
    top: 0;
    bottom: 0;
-   right: 400px;
+   right: var(--game-ui-width);
 }
 
 #game-ui .window {

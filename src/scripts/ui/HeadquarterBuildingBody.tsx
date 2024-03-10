@@ -43,6 +43,7 @@ import { RebornModal } from "./RebornModal";
 import { SteamAchievementPage } from "./SteamAchievementPage";
 import { TextWithHelp } from "./TextWithHelpComponent";
 import { WonderPage } from "./WonderPage";
+import { WorkerScienceComponent } from "./WorkerScienceComponent";
 
 export function HeadquarterBuildingBody({
    gameState,
@@ -158,70 +159,20 @@ export function HeadquarterBuildingBody({
          </fieldset>
          <fieldset>
             <legend>{techAge != null ? Config.TechAge[techAge].name() : "Unknown Age"}</legend>
-            <div className="row">
-               <div className="f1">{t(L.Science)}</div>
-               <div className="text-strong">
-                  <FormatNumber value={scienceAmount} />
-               </div>
-            </div>
-            <div className="sep5" />
             <ul className="tree-view">
+               <li className="row">
+                  <div className="f1">{t(L.Science)}</div>
+                  <div className="text-strong">
+                     <FormatNumber value={scienceAmount} />
+                  </div>
+               </li>
                <li className="row">
                   <div className="f1">{t(L.WorkerScienceProduction)}</div>
                   <div className="text-strong">
                      <FormatNumber value={scienceFromWorkers} />
                   </div>
                </li>
-               <li>
-                  <details>
-                     <summary className="row">
-                        <div className="f1">{t(L.ScienceFromIdleWorkers)}</div>
-                        <div className="text-strong">
-                           <FormatNumber value={scienceFromIdleWorkers} />
-                        </div>
-                     </summary>
-                     <ul>
-                        <li className="row">
-                           <div className="f1">{t(L.SciencePerIdleWorker)}</div>
-                           <div>{sciencePerIdleWorker}</div>
-                        </li>
-                        <ul className="text-small">
-                           {Tick.current.globalMultipliers.sciencePerIdleWorker.map((m) => (
-                              <li key={m.source} className="row">
-                                 <div className="f1">{m.source}</div>
-                                 <div>{m.value}</div>
-                              </li>
-                           ))}
-                        </ul>
-                     </ul>
-                  </details>
-               </li>
-               <li>
-                  <details>
-                     <summary className="row">
-                        <div className="f1">{t(L.ScienceFromBusyWorkers)}</div>
-                        <div className="text-strong">
-                           <FormatNumber value={scienceFromBusyWorkers} />
-                        </div>
-                     </summary>
-                     <ul>
-                        <li className="row">
-                           <div className="f1">{t(L.SciencePerBusyWorker)}</div>
-                           <div>{sciencePerBusyWorker}</div>
-                        </li>
-                        <ul className="text-small">
-                           {Tick.current.globalMultipliers.sciencePerBusyWorker.map((m) => (
-                              <li key={m.source} className="row">
-                                 <div className="f1">{m.source}</div>
-                                 <div>
-                                    <FormatNumber value={m.value} />
-                                 </div>
-                              </li>
-                           ))}
-                        </ul>
-                     </ul>
-                  </details>
-               </li>
+               <WorkerScienceComponent gameState={gameState} xy={xy} />
             </ul>
             <div className="sep10" />
             <div className="separator has-title">

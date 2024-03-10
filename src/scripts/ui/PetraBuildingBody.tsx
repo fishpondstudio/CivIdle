@@ -1,4 +1,4 @@
-import { getStorageFor } from "../../../shared/logic/BuildingLogic";
+import { getPetraBaseStorage, getStorageFor } from "../../../shared/logic/BuildingLogic";
 import { MAX_OFFLINE_PRODUCTION_SEC } from "../../../shared/logic/Constants";
 import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
 import type { IPetraBuildingData } from "../../../shared/logic/Tile";
@@ -18,6 +18,7 @@ export function PetraBuildingBody({ gameState, xy }: IBuildingComponentProps): R
       return null;
    }
    const { used, total } = getStorageFor(xy, gameState);
+   const baseStorage = getPetraBaseStorage(building);
    return (
       <div className="window-body">
          <fieldset>
@@ -54,10 +55,10 @@ export function PetraBuildingBody({ gameState, xy }: IBuildingComponentProps): R
          <fieldset>
             <legend className="text-strong">{t(L.LevelX, { level: building.level })}</legend>
             <button
-               disabled={(building.resources.Warp ?? 0) < total}
+               disabled={(building.resources.Warp ?? 0) < baseStorage}
                className="row w100 jcc"
                onClick={() => {
-                  if ((building.resources.Warp ?? 0) >= total) {
+                  if ((building.resources.Warp ?? 0) >= baseStorage) {
                      building.resources.Warp = 0;
                      building.level++;
                      notifyGameStateUpdate();
@@ -71,7 +72,7 @@ export function PetraBuildingBody({ gameState, xy }: IBuildingComponentProps): R
                </div>
                <div className="f1 row text-strong">{t(L.Upgrade)}</div>
                <div className="text-desc">
-                  <FormatNumber value={total} /> {t(L.Warp)}
+                  <FormatNumber value={baseStorage} /> {t(L.Warp)}
                </div>
             </button>
             <div className="sep10"></div>

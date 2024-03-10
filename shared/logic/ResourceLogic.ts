@@ -103,3 +103,19 @@ export function getRevealedDeposits(gs: GameState): Deposit[] {
    });
    return deposits;
 }
+
+export function getTransportStat(gs: GameState) {
+   let totalFuel = 0;
+   let totalTransports = 0;
+   let stalled = 0;
+   gs.transportation.forEach((target) => {
+      target.forEach((t) => {
+         totalFuel += t.currentFuelAmount;
+         ++totalTransports;
+         if (t.hasEnoughFuel) {
+            ++stalled;
+         }
+      });
+   });
+   return { totalFuel, totalTransports, stalled };
+}

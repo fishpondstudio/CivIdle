@@ -14,7 +14,7 @@ export function TilePage(props: { xy: Tile }): React.ReactNode {
    }
    const tile = gameState.tiles.get(xy);
    if (!tile?.explored) {
-      return <UnexploredTile />;
+      return <UnexploredTile xy={xy} gameState={gameState} />;
    }
    if (!tile.building) {
       return <EmptyTilePage tile={tile} />;

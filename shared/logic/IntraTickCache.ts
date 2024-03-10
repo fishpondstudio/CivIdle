@@ -219,8 +219,8 @@ export interface Cached {
 let grid: Grid | null = null;
 
 export function getGrid(gs: GameState): Grid {
-   if (grid === null) {
-      const size = Config.City[gs.city].size;
+   const size = Config.City[gs.city].size;
+   if (grid === null || grid.maxX !== size || grid.maxY !== size || grid.size !== TILE_SIZE) {
       grid = new Grid(size, size, TILE_SIZE);
    }
    return grid;

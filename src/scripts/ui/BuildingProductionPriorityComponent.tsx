@@ -3,13 +3,8 @@ import { IOCalculation, shouldAlwaysShowBuildingOptions } from "../../../shared/
 import { GameFeature, hasFeature } from "../../../shared/logic/FeatureLogic";
 import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
 import { getBuildingIO } from "../../../shared/logic/IntraTickCache";
-import {
-   PRIORITY_MAX,
-   PRIORITY_MIN,
-   getProductionPriority,
-   setProductionPriority,
-} from "../../../shared/logic/Tile";
-import { isEmpty } from "../../../shared/utilities/Helper";
+import { PRIORITY_MAX, PRIORITY_MIN } from "../../../shared/logic/Tile";
+import { isEmpty, safeParseInt } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import { ApplyToAllComponent } from "./ApplyToAllComponent";
 import type { IBuildingComponentProps } from "./BuildingPage";
@@ -35,7 +30,7 @@ export function BuildingProductionPriorityComponent({
    return (
       <fieldset>
          <legend>
-            {t(L.ProductionPriority)}: {getProductionPriority(building.priority)}
+            {t(L.ProductionPriority)}: {building.productionPriority}
          </legend>
          <Tippy content={t(L.ProductionPriorityDesc)}>
             <input
@@ -43,9 +38,9 @@ export function BuildingProductionPriorityComponent({
                min={PRIORITY_MIN}
                max={PRIORITY_MAX}
                step="1"
-               value={getProductionPriority(building.priority)}
+               value={building.productionPriority}
                onChange={(e) => {
-                  building.priority = setProductionPriority(building.priority, parseInt(e.target.value, 10));
+                  building.productionPriority = safeParseInt(e.target.value, PRIORITY_MIN);
                   notifyGameStateUpdate();
                }}
             />
@@ -53,7 +48,7 @@ export function BuildingProductionPriorityComponent({
          <div className="sep15"></div>
          <ApplyToAllComponent
             building={building}
-            getOptions={(s) => ({ priority: setProductionPriority(s.priority, building.priority) })}
+            getOptions={(s) => ({ productionPriority: building.productionPriority })}
             gameState={gameState}
          />
       </fieldset>

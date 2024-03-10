@@ -148,6 +148,7 @@ export interface IUser {
    level: AccountLevel;
    isMod: boolean;
    flag: string;
+   ip: string;
 }
 
 export interface IMapEntry {
