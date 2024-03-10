@@ -54,16 +54,16 @@ export class CityDefinitions {
    Memphis: ICityDefinition = {
       name: () => t(L.Memphis),
       deposits: {
-         Water: 0.1,
+         Water: 0.01,
          Copper: 0.01,
          Iron: 0.025,
          Wood: 0.025,
-         Stone: 0.02,
-         Gold: 0.02,
+         Stone: 0.025,
+         Gold: 0.025,
          Coal: 0.025,
-         Oil: 0.015,
+         Oil: 0.01,
          Aluminum: 0.025,
-         NaturalGas: 0.025,
+         NaturalGas: 0.02,
       },
       size: 50,
       buildingNames: {

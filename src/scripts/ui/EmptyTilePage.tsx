@@ -1,3 +1,5 @@
+import Tippy from "@tippyjs/react";
+import classNames from "classnames";
 import { useState } from "react";
 import type { Building, IBuildingDefinition } from "../../../shared/definitions/BuildingDefinitions";
 import {
@@ -39,7 +41,7 @@ let lastBuild: Building | null = null;
 export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
    const gs = useGameState();
    const [, setSelected] = useState<Building | null>(null);
-   const [notBuilt, setNotBuilt] = useState<boolean>(false);
+   const [showUnbuiltOnly, setShowUnbuiltOnly] = useState<boolean>(false);
    const [filter, setFilter] = useState<string>("");
    const constructed = getTypeBuildings(gs);
    const build = (k: Building) => {
@@ -51,7 +53,7 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
       notifyGameStateUpdate();
       lastBuild = k;
    };
-   const usesDeposit = (b: IBuildingDefinition) => {
+   const extractsDeposit = (b: IBuildingDefinition) => {
       return b.deposit && setContains(tile.deposit, b.deposit);
    };
    useShortcut(
@@ -104,28 +106,24 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
             </fieldset>
             <fieldset>
                <legend>{t(L.BuildingANew)}</legend>
-               <input
-                  type="text"
-                  style={{ width: "100%" }}
-                  placeholder={t(L.BuildingSearchText)}
-                  onChange={(e) => setFilter(e.target.value)}
-               />
-               <div className="sep5"></div>
-               <div className="separator"></div>
                <div className="row">
-                  <div className="f1">{t(L.ShowNotBuilt)}</div>
-                  <div
-                     className="pointer"
-                     onClick={() => {
-                        setNotBuilt(!notBuilt);
-                     }}
-                  >
-                     {notBuilt === true ? (
-                        <div className="m-icon text-green">toggle_on</div>
-                     ) : (
-                        <div className="m-icon text-desc">toggle_off</div>
-                     )}
-                  </div>
+                  <input
+                     type="text"
+                     style={{ width: "100%" }}
+                     placeholder={t(L.BuildingSearchText)}
+                     onChange={(e) => setFilter(e.target.value)}
+                  />
+                  <Tippy content={t(L.ShowUnbuiltOnly)}>
+                     <button
+                        className={classNames({ ml10: true, active: showUnbuiltOnly })}
+                        style={{ padding: "0 5px" }}
+                        onClick={() => {
+                           setShowUnbuiltOnly(!showUnbuiltOnly);
+                        }}
+                     >
+                        <div className="m-icon small">filter_list</div>
+                     </button>
+                  </Tippy>
                </div>
             </fieldset>
             <div className="table-view sticky-header building-list f1">
@@ -141,10 +139,10 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
                   <tbody>
                      {keysOf(unlockedBuildings(gs))
                         .sort((a, b) => {
-                           if (usesDeposit(Config.Building[a]) && !usesDeposit(Config.Building[b])) {
+                           if (extractsDeposit(Config.Building[a]) && !extractsDeposit(Config.Building[b])) {
                               return -1;
                            }
-                           if (usesDeposit(Config.Building[b]) && !usesDeposit(Config.Building[a])) {
+                           if (extractsDeposit(Config.Building[b]) && !extractsDeposit(Config.Building[a])) {
                               return 1;
                            }
                            if (lastBuild === a && lastBuild !== b) {
@@ -167,7 +165,7 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
                         })
                         .filter((v) => {
                            let filterNotBuilt = false;
-                           if (notBuilt === true) {
+                           if (showUnbuiltOnly === true) {
                               if (sizeOf(buildingByType.get(v)) === 0) {
                                  filterNotBuilt = true;
                               }
@@ -239,7 +237,7 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
                                              </span>
                                           )}
                                        </div>
-                                       {usesDeposit(building) ? (
+                                       {extractsDeposit(building) ? (
                                           <div className="m-icon small text-orange ml5">stars</div>
                                        ) : null}
                                        {k === lastBuild ? (
