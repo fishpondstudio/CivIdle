@@ -878,9 +878,16 @@ export function applyBuildingDefaults(building: IBuildingData, options: GameOpti
    if (isNullOrUndefined(toApply.stockpileCapacity)) {
       toApply.stockpileCapacity = options.defaultStockpileCapacity;
    }
-   if (isNullOrUndefined(toApply.stockpileCapacity)) {
+   if (isNullOrUndefined(toApply.stockpileMax)) {
       toApply.stockpileMax = options.defaultStockpileMax;
    }
+   if (isNullOrUndefined(toApply.constructionPriority)) {
+      toApply.constructionPriority = options.defaultConstructionPriority;
+   }
+   if (isNullOrUndefined(toApply.productionPriority)) {
+      toApply.productionPriority = options.defaultProductionPriority;
+   }
+   console.log(toApply);
    return Object.assign(building, toApply);
 }
 

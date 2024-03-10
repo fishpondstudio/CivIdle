@@ -112,7 +112,7 @@ export function getTransportStat(gs: GameState) {
       target.forEach((t) => {
          totalFuel += t.currentFuelAmount;
          ++totalTransports;
-         if (t.hasEnoughFuel) {
+         if (!t.hasEnoughFuel) {
             ++stalled;
          }
       });

@@ -17,7 +17,6 @@ export function ApplyToAllComponent<T extends IBuildingData>({
    gameState: GameState;
 }): React.ReactNode {
    const def = Config.Building[building.type];
-   const defaults = getGameOptions().buildingDefaults[building.type];
    return (
       <div className="text-small row">
          <div
