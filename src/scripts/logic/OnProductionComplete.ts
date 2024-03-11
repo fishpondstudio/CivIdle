@@ -561,7 +561,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          for (const tile of grid.getRange(tileToPoint(xy), 2)) {
             const tileXy = pointToTile(tile);
             const b = gs.tiles.get(tileXy)?.building;
-            if (b && (Config.BuildingTech[b.type] ?? 0) > 1) {
+            if (b && (Config.BuildingTier[b.type] ?? 0) > 1) {
                const type = b.type;
                let count = 0;
                for (const n of grid.getNeighbors(tile)) {
