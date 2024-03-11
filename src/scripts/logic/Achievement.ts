@@ -45,6 +45,10 @@ export function checkRebirthAchievements(extraGP: number, gs: GameState): void {
             SteamClient.unlockAchievement("Olympian");
             break;
          }
+         case "Memphis": {
+            SteamClient.unlockAchievement("EyeOfHorus");
+            break;
+         }
       }
    }
 }
