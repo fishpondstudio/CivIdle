@@ -16,14 +16,14 @@ export function SteamAchievementPage(): React.ReactNode {
    return (
       <div className="window">
          <div className="title-bar">
-            <div className="title-bar-text">{t(L.Wonder)}</div>
+            <div className="title-bar-text">{t(L.SteamAchievement)}</div>
          </div>
          <MenuComponent />
          <div className="window-body">
             {jsxMapOf(allAchievements, (key, achievement) => {
                const hasAchieved = achieved.has(key);
                return (
-                  <div key={key} className="inset-shallow white row p10">
+                  <div key={key} className="inset-shallow white row p10 mb10">
                      <img
                         style={{ width: "50px", margin: "0 10px 0 0" }}
                         src={hasAchieved ? achievement.icon : achievement.iconDisabled}
