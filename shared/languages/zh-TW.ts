@@ -627,7 +627,7 @@ export const ZH_TW = {
    MarketSell: "交易",
    ResourceAmount: "數量",
    RomanForum: "古羅馬議院廣場",
-   TempleOfPtah: "卜塔神殿Temple of Ptah",
+   TempleOfPtah: "卜塔神殿(Temple of Ptah)",
    Acropolis: "雅典衛城",
    CensorsOffice: "審查辦公室",
    StatisticsOffice: "統計局",
