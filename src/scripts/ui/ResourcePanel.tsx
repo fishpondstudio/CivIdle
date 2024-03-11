@@ -20,7 +20,7 @@ import {
 } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import { useGameState } from "../Global";
-import { useCurrentTick } from "../logic/Tick";
+import { useCurrentTick } from "../logic/ClientUpdate";
 import { TechTreeScene } from "../scenes/TechTreeScene";
 import { LookAtMode, WorldScene } from "../scenes/WorldScene";
 import { useTypedEvent } from "../utilities/Hook";

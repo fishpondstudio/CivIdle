@@ -8,6 +8,7 @@ import {
 import { Config } from "../../../shared/logic/Config";
 import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
 import { Tick } from "../../../shared/logic/TickLogic";
+import { SuspendedInput } from "../../../shared/logic/Tile";
 import { formatHMS, formatPercent, sizeOf } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import { jsxMapOf } from "../utilities/Helper";
@@ -28,7 +29,7 @@ export function BuildingConstructionProgressComponent({
    }
    const { base, multiplier, total } = getBuilderCapacity(building, xy, gameState);
    const { cost, percent, secondsLeft } = getBuildingPercentage(xy, gameState);
-   const enabledResourceCount = sizeOf(cost) - building.disabledInput.size;
+   const enabledResourceCount = sizeOf(cost) - building.suspendedInput.size;
    const builderCapacityPerResource = enabledResourceCount > 0 ? total / enabledResourceCount : 0;
    return (
       <fieldset>
@@ -62,16 +63,16 @@ export function BuildingConstructionProgressComponent({
                            <td
                               className="pointer"
                               onClick={() => {
-                                 if (building.disabledInput.has(res)) {
-                                    building.disabledInput.delete(res);
+                                 if (building.suspendedInput.has(res)) {
+                                    building.suspendedInput.delete(res);
                                  } else {
-                                    building.disabledInput.add(res);
+                                    building.suspendedInput.set(res, SuspendedInput.ManualSuspended);
                                  }
                                  notifyGameStateUpdate();
                               }}
                            >
                               <Tippy content={t(L.TransportManualControlTooltip)}>
-                                 {building.disabledInput.has(res) ?? false ? (
+                                 {building.suspendedInput.has(res) ?? false ? (
                                     <div className="m-icon text-red">toggle_off</div>
                                  ) : (
                                     <div className="m-icon text-green">toggle_on</div>
@@ -80,7 +81,7 @@ export function BuildingConstructionProgressComponent({
                            </td>
                            <td>{Config.Resource[res].name()}</td>
                            <td className="text-right">
-                              {building.disabledInput.has(res) ? (
+                              {building.suspendedInput.has(res) ? (
                                  0
                               ) : (
                                  <FormatNumber value={builderCapacityPerResource} />

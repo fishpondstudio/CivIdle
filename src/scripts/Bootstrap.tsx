@@ -18,8 +18,8 @@ import { clamp, forEach, isNullOrUndefined, rejectIn, schedule } from "../../sha
 import type { TypedEvent } from "../../shared/utilities/TypedEvent";
 import { isGameDataCompatible, loadGame, syncSidePanelWidth, syncUITheme } from "./Global";
 import type { RouteChangeEvent } from "./Route";
+import { tickEverySecond } from "./logic/ClientUpdate";
 import { Heartbeat } from "./logic/Heartbeat";
-import { tickEverySecond } from "./logic/Tick";
 import { getBuildingTexture, getTileTexture } from "./logic/VisualLogic";
 import type { MainBundleAssets } from "./main";
 import { connectWebSocket } from "./rpc/RPCClient";

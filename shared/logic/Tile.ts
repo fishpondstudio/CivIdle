@@ -37,6 +37,11 @@ export const BuildingInputModeTooltips: Map<BuildingInputMode, () => string> = n
    [BuildingInputMode.StoragePercentage, () => t(L.TechResourceTransportPreferenceStorageTooltip)],
 ]);
 
+export enum SuspendedInput {
+   AutoSuspended = 0,
+   ManualSuspended = 1,
+}
+
 export interface IBuildingData {
    type: Building;
    level: number;
@@ -54,7 +59,10 @@ export interface IBuildingData {
    electrification: number;
 
    options: BuildingOptions;
-   disabledInput: Set<Resource>;
+
+   suspendedInput: Map<Resource, SuspendedInput>;
+
+   // disabledInput: Set<Resource>;
 
    inputMode: BuildingInputMode;
    maxInputDistance: number;
@@ -135,7 +143,7 @@ export function makeBuilding(data: Pick<IBuildingData, "type"> & Partial<IBuildi
       stockpileMax: DEFAULT_STOCKPILE_MAX,
       options: BuildingOptions.None,
       electrification: 0,
-      disabledInput: new Set(),
+      suspendedInput: new Map(),
       inputMode: BuildingInputMode.Distance,
       maxInputDistance: Infinity,
       productionPriority: PRIORITY_MIN,

@@ -11,8 +11,13 @@ export function migrateSavedGame(save: SavedGame) {
          if (tile.building.status === "paused") {
             tile.building.status = "building";
          }
-         if (!tile.building.disabledInput) {
-            tile.building.disabledInput = new Set();
+         // @ts-expect-error
+         if (tile.building.disabledInput) {
+            // @ts-expect-error
+            delete tile.building.disabledInput;
+         }
+         if (isNullOrUndefined(tile.building.suspendedInput)) {
+            tile.building.suspendedInput = new Map();
          }
          if (isNullOrUndefined(tile.building.inputMode)) {
             tile.building.inputMode = BuildingInputMode.Distance;

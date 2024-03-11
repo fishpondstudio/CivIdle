@@ -12,6 +12,7 @@ import { Tick } from "../../../shared/logic/TickLogic";
 import { formatPercent, mapOf, reduceOf, rejectIn } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import { resetToCity, saveGame, useGameState } from "../Global";
+import { checkRebirthAchievements } from "../logic/Achievement";
 import { canEarnGreatPeopleFromReborn, client, isOnlineUser, useTrades, useUser } from "../rpc/RPCClient";
 import { jsxMapOf } from "../utilities/Helper";
 import { playClick, playError } from "../visuals/Sound";
@@ -173,6 +174,9 @@ export function RebornModal(): React.ReactNode {
                         }
                         makeGreatPeopleFromThisRunPermanent();
                      }
+
+                     checkRebirthAchievements(getGreatPeopleAtReborn(), gameState);
+
                      resetToCity(city);
                      playClick();
 

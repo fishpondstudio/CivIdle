@@ -5,7 +5,7 @@ import { Tick } from "../../../shared/logic/TickLogic";
 import { formatPercent } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import { useGameState } from "../Global";
-import { useCurrentTick } from "../logic/Tick";
+import { useCurrentTick } from "../logic/ClientUpdate";
 import { jsxMapOf } from "../utilities/Helper";
 import { FormatNumber } from "./HelperComponents";
 import { ProgressBarComponent } from "./ProgressBarComponent";

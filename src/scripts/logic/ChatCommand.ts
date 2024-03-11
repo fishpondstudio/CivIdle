@@ -20,7 +20,7 @@ import {
 } from "../../../shared/utilities/Helper";
 import { decompressSave, overwriteSaveGame, resetToCity, saveGame } from "../Global";
 import { addSystemMessage, canEarnGreatPeopleFromReborn, client } from "../rpc/RPCClient";
-import { tickEverySecond } from "./Tick";
+import { tickEverySecond } from "./ClientUpdate";
 
 function requireOfflineRun(): void {
    if (canEarnGreatPeopleFromReborn()) {

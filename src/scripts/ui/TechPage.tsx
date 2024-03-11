@@ -56,6 +56,7 @@ export function TechPage({ id }: { id: Tech }): React.ReactNode {
                }
             }
          });
+         checkAgeAchievements(newAge);
       }
       if (gs.greatPeopleChoices.length > 0) {
          showModal(<ChooseGreatPersonModal permanent={false} />);
@@ -167,4 +168,7 @@ export function TechPage({ id }: { id: Tech }): React.ReactNode {
          </div>
       </div>
    );
+}
+function checkAgeAchievements(newAge: string) {
+   throw new Error("Function not implemented.");
 }

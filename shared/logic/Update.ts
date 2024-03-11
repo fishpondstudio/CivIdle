@@ -80,6 +80,7 @@ import {
    IResourceImportBuildingData,
    IWarehouseBuildingData,
    MarketOptions,
+   SuspendedInput,
    WarehouseOptions,
 } from "./Tile";
 
@@ -184,12 +185,12 @@ function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
    if (building.status === "building" || building.status === "upgrading") {
       const cost = getBuildingCost(building);
       const { total } = getBuilderCapacity(building, xy, gs);
-      building.disabledInput.forEach((res) => {
+      building.suspendedInput.forEach((_, res) => {
          if (!cost[res]) {
-            building.disabledInput.delete(res);
+            building.suspendedInput.delete(res);
          }
       });
-      const enabledResourceCount = sizeOf(cost) - building.disabledInput.size;
+      const enabledResourceCount = sizeOf(cost) - building.suspendedInput.size;
       const builderCapacityPerResource = enabledResourceCount > 0 ? total / enabledResourceCount : 0;
 
       // Construction / Upgrade is paused!
@@ -203,7 +204,7 @@ function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
          const amountArrived = building.resources[res] ?? 0;
          // Already full
          if (amountArrived >= amount) {
-            building.disabledInput.add(res);
+            building.suspendedInput.set(res, SuspendedInput.AutoSuspended);
             // continue;
             return false;
          }
@@ -214,11 +215,12 @@ function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
             // continue;
             return false;
          }
-
          completed = false;
-         if (building.disabledInput.has(res)) {
+         if (building.suspendedInput.get(res) === SuspendedInput.ManualSuspended) {
             return false;
          }
+
+         building.suspendedInput.delete(res);
          // Each transportation costs 1 worker, and deliver Total (=Builder Capacity x Multiplier) resources
          transportResource(
             res,
@@ -236,7 +238,7 @@ function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
          forEach(cost, (res, amount) => {
             safeAdd(building.resources, res, -amount);
          });
-         building.disabledInput.clear();
+         building.suspendedInput.clear();
          if (building.status === "building") {
             building.status = building.desiredLevel > building.level ? "upgrading" : "completed";
             OnBuildingComplete.emit(xy);
@@ -698,11 +700,7 @@ export function tickPrice(gs: GameState) {
          return;
       }
       const market = building as IMarketBuildingData;
-      if (
-         sizeOf(market.availableResources) !== sizeOf(resources) ||
-         hasFlag(market.marketOptions, MarketOptions.ForceUpdateOnce) ||
-         forceUpdatePrice
-      ) {
+      if (hasFlag(market.marketOptions, MarketOptions.ForceUpdateOnce) || forceUpdatePrice) {
          const seed = hasFlag(market.marketOptions, MarketOptions.UniqueTrades)
             ? `${priceId},${xy}`
             : `${priceId}`;
@@ -717,15 +715,15 @@ export function tickPrice(gs: GameState) {
             }
             market.availableResources[res] = buy[idx % buy.length];
          }
-      }
-      if (forceUpdatePrice && hasFlag(market.marketOptions, MarketOptions.ClearAfterUpdate)) {
-         market.sellResources = {};
-      } else {
-         forEach(market.sellResources, (res) => {
-            if (!market.availableResources[res]) {
-               delete market.sellResources[res];
-            }
-         });
+         if (hasFlag(market.marketOptions, MarketOptions.ClearAfterUpdate)) {
+            market.sellResources = {};
+         } else {
+            forEach(market.sellResources, (res) => {
+               if (!market.availableResources[res]) {
+                  delete market.sellResources[res];
+               }
+            });
+         }
       }
    });
 }
