@@ -20,7 +20,12 @@ import {
 import { Config } from "../../../shared/logic/Config";
 import { EXPLORER_SECONDS, MAX_EXPLORER } from "../../../shared/logic/Constants";
 import { GameFeature, hasFeature } from "../../../shared/logic/FeatureLogic";
-import { getBuildingIO, getTypeBuildings, unlockedResources } from "../../../shared/logic/IntraTickCache";
+import {
+   getBuildingIO,
+   getTypeBuildings,
+   getXyBuildings,
+   unlockedResources,
+} from "../../../shared/logic/IntraTickCache";
 import { getTransportStat } from "../../../shared/logic/ResourceLogic";
 import { getScienceAmount } from "../../../shared/logic/TechLogic";
 import { Tick } from "../../../shared/logic/TickLogic";
@@ -423,7 +428,10 @@ function ResourcesTab({ gameState }: IBuildingComponentProps): React.ReactNode {
    const resourceAmounts: Partial<Record<keyof ResourceDefinitions, number>> = {};
    const inputs: PartialTabulate<Resource> = {};
    const outputs: PartialTabulate<Resource> = {};
-   gameState.tiles.forEach((tile, xy) => {
+   getXyBuildings(gameState).forEach((building, xy) => {
+      if ("resourceImports" in building) {
+         return;
+      }
       const input = getBuildingIO(xy, "input", IOCalculation.Multiplier | IOCalculation.Capacity, gameState);
       const output = getBuildingIO(
          xy,
