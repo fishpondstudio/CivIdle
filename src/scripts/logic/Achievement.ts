@@ -2,7 +2,7 @@ import type { TechAge } from "../../../shared/definitions/TechDefinitions";
 import type { GameState } from "../../../shared/logic/GameState";
 import { SteamClient, isSteam } from "../rpc/SteamClient";
 
-function checkAgeAchievements(currentAge: TechAge): void {
+export function checkAgeAchievements(currentAge: TechAge): void {
    if (!isSteam()) {
       return;
    }

@@ -14,6 +14,7 @@ import { forEach, reduceOf } from "../../../shared/utilities/Helper";
 import type { PartialTabulate } from "../../../shared/utilities/TypeDefinitions";
 import { L, t } from "../../../shared/utilities/i18n";
 import { useGameState } from "../Global";
+import { checkAgeAchievements } from "../logic/Achievement";
 import { TechTreeScene } from "../scenes/TechTreeScene";
 import { WorldScene } from "../scenes/WorldScene";
 import { jsxMapOf } from "../utilities/Helper";
@@ -168,7 +169,4 @@ export function TechPage({ id }: { id: Tech }): React.ReactNode {
          </div>
       </div>
    );
-}
-function checkAgeAchievements(newAge: string) {
-   throw new Error("Function not implemented.");
 }
