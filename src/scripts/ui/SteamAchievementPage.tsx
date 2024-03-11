@@ -9,7 +9,7 @@ export function SteamAchievementPage(): React.ReactNode {
    const [allAchievements, setAllAchievements] = useState<Record<string, Achievement>>({});
    const [achieved, setAchieved] = useState<Set<string>>(new Set());
    useEffect(() => {
-      client.getAllAchievements().then(setAllAchievements);
+      client.getAllAchievements().then((r) => setAllAchievements(r));
       client.getAchievedAchievements().then((s) => setAchieved(new Set(s)));
    }, []);
 
