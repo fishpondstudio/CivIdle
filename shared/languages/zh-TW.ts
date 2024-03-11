@@ -960,7 +960,7 @@ export const ZH_TW = {
    GrandBazaarFilterYouGet: "你獲得",
    GrandBazaarFilterWarningHTML: "在顯示任何市場交易之前，你必須選擇一個過濾器",
    AbuSimbel: "阿布辛貝神殿(Abu Simbel)",
-   AbuSimbelDesc: "偉人:拉美西斯二世 (含永久)的效果200%。 相鄰的<b>奇觀<b>獲得 +1 幸福感",
+   AbuSimbelDesc: "偉人:拉美西斯二世 (含永久)的效果200%。 相鄰的<b>奇觀</b>獲得 +1 幸福感",
    GreatSphinx: "獅身人面像(Great Sphinx)",
    GreatSphinxDesc:
       "周圍二格範圍建築獲得 +N 消耗、生產能力指數，限制:二階或以上建築，N=與受益建築相鄰的同類建築數量。",
@@ -978,6 +978,6 @@ export const ZH_TW = {
    StatisticsScienceFromBuildings: "建築產出科技",
    SidePanelWidth: "側邊欄介面寬度",
    SidePanelWidthDescHTML:
-      "更改側邊欄的寬度。<b>需要重新啟動您的遊戲才能生效<b>。",
+      "更改側邊欄的寬度。<b>需要重新啟動您的遊戲才能生效</b>。",
    ShowUnbuiltOnly: "只顯示尚未建造(數量為0)的建築物",
 };
