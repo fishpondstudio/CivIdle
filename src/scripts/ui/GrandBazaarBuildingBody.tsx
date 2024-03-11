@@ -285,7 +285,7 @@ export function GrandBazaarBuildingBody({ gameState, xy }: IBuildingComponentPro
                const building = gameState.tiles.get(item.xy)?.building as IMarketBuildingData;
                return building.sellResources[item.sellResource]
             })} 
-            renderRow={function (item): ReactNode {
+            renderRow={(item) => {
                const building = gameState.tiles.get(item.xy)?.building as IMarketBuildingData;
                const sellResource = Config.Resource[item.sellResource];
                const buyResource = Config.Resource[item.buyResource];
