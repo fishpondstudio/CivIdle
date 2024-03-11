@@ -28,7 +28,7 @@ export function SteamAchievementPage(): React.ReactNode {
                         style={{ width: "50px", margin: "0 10px 0 0" }}
                         src={hasAchieved ? achievement.icon : achievement.iconDisabled}
                      />
-                     <div>
+                     <div className="f1">
                         <div className="text-strong">{achievement.name}</div>
                         <div className="text-desc text-small">{achievement.description}</div>
                      </div>
