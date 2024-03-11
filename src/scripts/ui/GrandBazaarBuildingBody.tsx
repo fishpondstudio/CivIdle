@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import { useState } from "react";
+import { useState, type ReactNode } from "react";
 import type { Resource } from "../../../shared/definitions/ResourceDefinitions";
 import { getMarketBuyAmount, getMarketSellAmount } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
@@ -269,6 +269,102 @@ export function GrandBazaarBuildingBody({ gameState, xy }: IBuildingComponentPro
                );
             }}
          />
+         <div className="sep10"></div>
+         <fieldset>
+            <legend>{t(L.ActiveMarketTrades)}</legend>
+            <TableView             
+            classNames="sticky-header f1"
+            header={[
+               { name: t(L.MarketYouPay), sortable: true },
+               { name: t(L.MarketYouGet), sortable: true },
+               { name: "", sortable: true },
+               { name: "", sortable: false },
+               { name: "", sortable: false },
+            ]}
+            data={allMarketTrades.filter(item => {
+               const building = gameState.tiles.get(item.xy)?.building as IMarketBuildingData;
+               return building.sellResources[item.sellResource]
+            })} 
+            renderRow={function (item): ReactNode {
+               const building = gameState.tiles.get(item.xy)?.building as IMarketBuildingData;
+               const sellResource = Config.Resource[item.sellResource];
+               const buyResource = Config.Resource[item.buyResource];
+               const tradeValue = calculateTradeValue(item);
+               return (
+                  <tr key={`Res:${item.sellResource}Tile:${item.xy}`}>
+                     <td>
+                        <div>{sellResource.name()}</div>
+                        <div className="text-small text-desc text-strong">
+                           <FormatNumber value={item.sellAmount} />
+                        </div>
+                     </td>
+                     <td>
+                        <div>{buyResource.name()}</div>
+                        <div className="text-small text-desc text-strong">
+                           <FormatNumber value={item.buyAmount} />
+                        </div>
+                     </td>
+                     <td
+                        className={classNames({
+                           "text-green": tradeValue > 0,
+                           "text-red": tradeValue < 0,
+                           "text-right text-small": true,
+                        })}
+                     >
+                        <TextWithHelp
+                           content={t(L.MarketValueDesc, {
+                              value: formatPercent(tradeValue, 0),
+                           })}
+                           noStyle
+                        >
+                           {mathSign(tradeValue, CURRENCY_EPSILON)}
+                           {formatPercent(Math.abs(tradeValue), 0)}
+                        </TextWithHelp>
+                     </td>
+                     <td  style={{ width: 0 }}>
+                        <div
+                        className="m-icon small text-red pointer"
+                        onClick={() => {
+                           playClick();
+                           delete building.sellResources[item.sellResource];
+                           notifyGameStateUpdate();
+                        }}>
+                           delete
+                        </div>
+                     </td>
+                     <td style={{ width: 0 }}>
+                        <div
+                           className="m-icon small pointer"
+                           onPointerDown={() => {
+                              playClick();
+                              Singleton()
+                                 .sceneManager.getCurrent(WorldScene)
+                                 ?.lookAtTile(item.xy, LookAtMode.Select);
+                           }}
+                        >
+                           open_in_new
+                        </div>
+                     </td>
+                  </tr>
+               );
+            } } 
+            compareFunc={(a, b, i) => {
+               switch (i) {
+                  case 0:
+                     return Config.Resource[a.sellResource]
+                        .name()
+                        .localeCompare(Config.Resource[b.sellResource].name());
+                  case 1:
+                     return Config.Resource[a.buyResource]
+                        .name()
+                        .localeCompare(Config.Resource[b.buyResource].name());
+                  case 2:
+                     return (calculateTradeValue(a) ?? 0) - (calculateTradeValue(b) ?? 0);
+                  default:
+                     return 0;
+               }
+            }} />
+         </fieldset>
          <div className="sep10"></div>
          <BuildingWikipediaComponent gameState={gameState} xy={xy} />
          <BuildingColorComponent gameState={gameState} xy={xy} />
