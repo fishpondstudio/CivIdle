@@ -59,7 +59,7 @@ export function PetraBuildingBody({ gameState, xy }: IBuildingComponentProps): R
                className="row w100 jcc"
                onClick={() => {
                   if ((building.resources.Warp ?? 0) >= baseStorage) {
-                     building.resources.Warp = 0;
+                     building.resources.Warp! -= baseStorage;
                      building.level++;
                      notifyGameStateUpdate();
                   } else {
