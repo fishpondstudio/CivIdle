@@ -964,7 +964,7 @@ export const ZH_TW = {
    GreatSphinx: "獅身人面像(Great Sphinx)",
    GreatSphinxDesc:
       "周圍二格範圍建築獲得 +N 消耗、生產能力指數，限制:二階或以上建築，N=與受益建築相鄰的同類建築數量。",
-   SeaTradeUpgrade: "與海上的玩家進行交易。每個海洋地塊的關稅：%{tariff}",
+   SeaTradeUpgrade: "從海上航行與玩家進行貿易。每個海洋地塊的關稅：%{tariff}",
    SeaTradeCost: "海上貿易成本",
    Server: "服務器",
    UseMirrorServer: "使用鏡像服務器",
