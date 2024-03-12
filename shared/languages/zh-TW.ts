@@ -421,8 +421,7 @@ export const ZH_TW = {
    NileRiverDesc:
       "偉人:哈特謝普蘇特 (含永久)的效果增加+100%。所有的麥田獲得+1的生產和儲存乘數。相鄰的麥田獲得+5的生產、儲存乘數",
    MountSinai: "西奈山(Mount Sinai)",
-   MountSinaiDesc:
-      "當被發現時，根據帝國所處時代抽選一個偉人。所有產生信仰的建築物將獲得+5的儲存乘數",
+   MountSinaiDesc: "當被發現時，根據帝國所處時代抽選一個偉人。所有產生信仰的建築物將獲得+5的儲存乘數",
    Alps: "阿爾卑斯山",
    AlpsDesc: "建築每10等級，獲得 +1 生產能力（ +1 消費指數， +1 生產指數）",
    GreatDagonPagoda: "仰光大金塔",
@@ -977,7 +976,6 @@ export const ZH_TW = {
    StatisticsScienceFromWorkers: "勞動者產出科技",
    StatisticsScienceFromBuildings: "建築產出科技",
    SidePanelWidth: "側邊欄介面寬度",
-   SidePanelWidthDescHTML:
-      "更改側邊欄的寬度。<b>需要重新啟動您的遊戲才能生效</b>。",
+   SidePanelWidthDescHTML: "更改側邊欄的寬度。<b>需要重新啟動您的遊戲才能生效</b>。",
    ShowUnbuiltOnly: "只顯示尚未建造(數量為0)的建築物",
 };

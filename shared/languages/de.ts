@@ -1030,11 +1030,13 @@ export const DE = {
    ZenobiaDesc: "+%{value}h Petra Warp Speicher",
    PlayerTradeFillAmountMaxV2: "Fill Max",
    GrandBazaar: "Großer Bazar",
-   GrandBazaarDesc: "Alle Märkte an einer Stelle kontrollieren!. Alle umgebenden Gebäude erhalten +5 Speichermultiplikator",
+   GrandBazaarDesc:
+      "Alle Märkte an einer Stelle kontrollieren!. Alle umgebenden Gebäude erhalten +5 Speichermultiplikator",
    GrandBazaarFilters: "Filter",
    GrandBazaarFilterYouPay: "You Pay",
    GrandBazaarFilterYouGet: "You Get",
-   GrandBazaarFilterWarningHTML: "Um den Handel irgendeines Markts anzuzeigen, muß vorher ein Filter gewählt werden",
+   GrandBazaarFilterWarningHTML:
+      "Um den Handel irgendeines Markts anzuzeigen, muß vorher ein Filter gewählt werden",
    AbuSimbel: "Abu Simbel",
    AbuSimbelDesc: "Double the effect of Ramesses II. All Adjacent wonders get +1 Happiness",
    GreatSphinx: "Great Sphinx",

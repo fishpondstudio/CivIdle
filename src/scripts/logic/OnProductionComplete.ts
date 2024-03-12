@@ -369,7 +369,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
       case "Poseidon": {
          for (const neighbor of grid.getNeighbors(tileToPoint(xy))) {
             const neighborXy = pointToTile(neighbor);
-            const building = gs.tiles.get(neighborXy)?.building;
+            const building = getCompletedBuilding(neighborXy, gs);
             if (building && !isSpecialBuilding(building.type) && building.level < 20) {
                building.level = 20;
             }
