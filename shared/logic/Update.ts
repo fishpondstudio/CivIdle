@@ -700,7 +700,11 @@ export function tickPrice(gs: GameState) {
          return;
       }
       const market = building as IMarketBuildingData;
-      if (hasFlag(market.marketOptions, MarketOptions.ForceUpdateOnce) || forceUpdatePrice) {
+      if (
+         hasFlag(market.marketOptions, MarketOptions.ForceUpdateOnce) ||
+         forceUpdatePrice ||
+         sizeOf(market.availableResources) === 0
+      ) {
          const seed = hasFlag(market.marketOptions, MarketOptions.UniqueTrades)
             ? `${priceId},${xy}`
             : `${priceId}`;
