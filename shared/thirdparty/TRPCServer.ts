@@ -1,3 +1,5 @@
+import { logError } from "../utilities/Helper";
+
 export interface JsonRpcRequest {
    jsonrpc: "2.0";
    id?: string | number | null;
@@ -97,6 +99,7 @@ export async function handleRpc(
       const result = await service[method](...params);
       return { jsonrpc, id, result };
    } catch (err) {
+      logError(err);
       return {
          jsonrpc,
          id,
