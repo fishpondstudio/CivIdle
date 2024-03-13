@@ -282,11 +282,9 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
       }
       case "OxfordUniversity": {
          const upgrades = getTotalBuildingUpgrades(gs);
-         safeAdd(
-            getSpecialBuildings(gs).Headquarter.building.resources,
-            "Science",
-            upgrades * OXFORD_SCIENCE_PER_UPGRADE,
-         );
+         const scienceProduced = upgrades * OXFORD_SCIENCE_PER_UPGRADE;
+         safeAdd(getSpecialBuildings(gs).Headquarter.building.resources, "Science", scienceProduced);
+         Tick.next.scienceProduced.set(xy, scienceProduced);
          break;
       }
       case "StPetersBasilica": {
