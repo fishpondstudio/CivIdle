@@ -8,15 +8,25 @@ export class Heartbeat {
    constructor(private data: Uint8Array) {}
 
    public init(): void {
-      if (getGameState().isOffline || !isOnlineUser()) {
+      if (!this.shouldSendBytes()) {
          return;
       }
       compress(this.data).then((d) => client.fullHeartbeat(d));
    }
 
+   private shouldSendBytes(): boolean {
+      if (import.meta.env.DEV) {
+         return true;
+      }
+      if (getGameState().isOffline || !isOnlineUser()) {
+         return false;
+      }
+      return true;
+   }
+
    public update(data: Uint8Array): void {
       const gs = getGameState();
-      if (gs.isOffline || !isOnlineUser()) {
+      if (!this.shouldSendBytes()) {
          client.tick(gs.tick);
          return;
       }

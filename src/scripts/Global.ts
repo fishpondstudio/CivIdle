@@ -13,6 +13,7 @@ import {
    notifyGameStateUpdate,
    savedGame,
    serializeSave,
+   serializeSaveLite,
 } from "../../shared/logic/GameStateLogic";
 import { initializeGameState } from "../../shared/logic/InitializeGameState";
 import { rollPermanentGreatPeople } from "../../shared/logic/RebornLogic";
@@ -94,6 +95,11 @@ if (import.meta.env.DEV) {
             Singleton().sceneManager.enqueue(WorldScene, (s) => s.revealTile(xy));
          }
       });
+   };
+
+   // @ts-expect-error
+   window.heartbeat = () => {
+      Singleton().heartbeat.update(serializeSaveLite());
    };
 }
 
