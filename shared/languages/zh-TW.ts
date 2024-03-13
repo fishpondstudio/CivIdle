@@ -461,9 +461,9 @@ export const ZH_TW = {
    PantheonDesc: "位於義大利羅馬的古羅馬神廟",
    SaintBasilsCathedral: "瓦西里升天教堂",
    SaintBasilsCathedralDescV2:
-      "與資源地塊相鄰的採集建築可進行生產。所有I階建築 生產、儲存、勞動者能力指數增加+1",
+      "與資源地塊相鄰的採集建築可進行生產。相鄰的I階建築 生產、儲存、勞動者能力指數增加+1",
    ChichenItza: "奇琴伊察",
-   ChichenItzaDesc: "所有相鄰建築，獲得 +1 生產指數、存儲以及勞動者能力指數",
+   ChichenItzaDesc: "相鄰的建築，獲得 +1 生產指數、存儲以及勞動者能力指數",
    Aqueduct: "水渠",
    FishPond: "魚塘",
    GarumMaker: "魚露作坊",
