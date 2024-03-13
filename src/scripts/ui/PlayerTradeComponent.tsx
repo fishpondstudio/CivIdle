@@ -1,10 +1,19 @@
 import Tippy from "@tippyjs/react";
 import classNames from "classnames";
+import { useEffect, useState } from "react";
+import { NoPrice, NoStorage, type Resource } from "../../../shared/definitions/ResourceDefinitions";
 import { getStorageFor } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
 import { TRADE_CANCEL_REFUND_PERCENT } from "../../../shared/logic/Constants";
+import { unlockedResources } from "../../../shared/logic/IntraTickCache";
 import { getTradePercentage } from "../../../shared/logic/PlayerTradeLogic";
-import { CURRENCY_PERCENT_EPSILON, formatPercent, mathSign, safeAdd } from "../../../shared/utilities/Helper";
+import {
+   CURRENCY_PERCENT_EPSILON,
+   formatPercent,
+   keysOf,
+   mathSign,
+   safeAdd,
+} from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import { AccountLevelImages, AccountLevelNames } from "../logic/AccountLevel";
 import { client, useTrades, useUser } from "../rpc/RPCClient";
@@ -24,8 +33,17 @@ import { PendingClaimComponent } from "./PendingClaimComponent";
 import { TableView } from "./TableView";
 import { WarningComponent } from "./WarningComponent";
 
+const caravanResourceFilters: Set<Resource> = new Set();
+
 export function PlayerTradeComponent({ gameState, xy }: IBuildingComponentProps): React.ReactNode {
    const building = gameState.tiles.get(xy)?.building;
+   const [resourceFilters, setResourceFilters] = useState(new Set<Resource>());
+   const [showFilters, setShowFilters] = useState(false);
+   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+   useEffect(() => {
+      setResourceFilters(new Set(caravanResourceFilters));
+   }, [xy]);
+
    if (!building) {
       return null;
    }
@@ -49,11 +67,66 @@ export function PlayerTradeComponent({ gameState, xy }: IBuildingComponentProps)
       );
    }
 
+   const resources = keysOf(unlockedResources(gameState)).filter((r) => !NoStorage[r] && !NoPrice[r]);
    return (
       <fieldset>
          <legend>{t(L.PlayerTrade)}</legend>
          <PendingClaimComponent gameState={gameState} xy={xy} />
          <AddTradeComponent gameState={gameState} xy={xy} />
+         {showFilters ? (
+            <fieldset>
+               <legend className="text-strong">{t(L.PlayerTradeFilters)}</legend>
+               <ul className="tree-view" style={{ overflowY: "auto", maxHeight: "200px" }}>
+                  {resources
+                     .sort((a, b) => Config.Resource[a].name().localeCompare(Config.Resource[b].name()))
+                     .map((res) => (
+                        <li key={res} className="row">
+                           <div className="f1">{Config.Resource[res].name()}</div>
+                           <div
+                              className="text-strong"
+                              onClick={() => {
+                                 if (caravanResourceFilters.has(res)) {
+                                    caravanResourceFilters.delete(res);
+                                 } else {
+                                    caravanResourceFilters.add(res);
+                                 }
+                                 setResourceFilters(new Set(caravanResourceFilters));
+                              }}
+                           >
+                              {caravanResourceFilters.has(res) ? (
+                                 <div className="m-icon small text-blue">check_box</div>
+                              ) : (
+                                 <div className="m-icon small text-desc">check_box_outline_blank</div>
+                              )}
+                           </div>
+                        </li>
+                     ))}
+               </ul>
+               <div className="sep10"></div>
+               <div className="row">
+                  <button
+                     className="row f1 jcc"
+                     onClick={() => {
+                        setShowFilters(false);
+                     }}
+                  >
+                     {t(L.PlayerTradeFiltersClose)}
+                  </button>
+               </div>
+            </fieldset>
+         ) : (
+            <button
+               className="row w100 jcc mb10"
+               onClick={() => {
+                  setShowFilters(true);
+               }}
+            >
+               <div className="m-icon small">add_circle</div>
+               <div className="text-strong f1">
+                  {t(L.PlayerTradeFilters)} ({caravanResourceFilters.size})
+               </div>
+            </button>
+         )}
          <TableView
             header={[
                { name: t(L.PlayerTradeWant), sortable: true },
@@ -62,7 +135,12 @@ export function PlayerTradeComponent({ gameState, xy }: IBuildingComponentProps)
                { name: t(L.PlayerTradeFrom), sortable: true },
                { name: "", sortable: false },
             ]}
-            data={trades}
+            data={trades.filter(
+               (trade) =>
+                  resourceFilters.size === 0 ||
+                  resourceFilters.has(trade.buyResource) ||
+                  resourceFilters.has(trade.sellResource),
+            )}
             compareFunc={(a, b, col) => {
                switch (col) {
                   case 0:
