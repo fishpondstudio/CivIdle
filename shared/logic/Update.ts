@@ -520,7 +520,7 @@ function tickWarehouseAutopilot(warehouse: IWarehouseBuildingData, xy: Tile, gs:
       const output = getBuildingIO(tile, "output", IOCalculation.None, gs);
       const candidates = keysOf(building.resources)
          .filter((r) => {
-            if (resourceFilter.size > 0) {
+            if (hasFlag(warehouse.warehouseOptions, WarehouseOptions.AutopilotRespectCap)) {
                return resourceFilter.has(r) && output[r];
             }
             return output[r];
