@@ -122,7 +122,9 @@ export function PlayerTradeComponent({ gameState, xy }: IBuildingComponentProps)
                }}
             >
                <div className="m-icon small">add_circle</div>
-               <div className="text-strong f1">{t(L.PlayerTradeFilters)}} ({caravanResourceFilters.size})</div>
+               <div className="text-strong f1">
+                  {t(L.PlayerTradeFilters)} ({caravanResourceFilters.size})
+               </div>
             </button>
          )}
          <TableView
