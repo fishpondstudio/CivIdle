@@ -1,6 +1,6 @@
 import Tippy from "@tippyjs/react";
 import classNames from "classnames";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { NoPrice, NoStorage, type Resource } from "../../../shared/definitions/ResourceDefinitions";
 import { getStorageFor } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
@@ -33,16 +33,12 @@ import { PendingClaimComponent } from "./PendingClaimComponent";
 import { TableView } from "./TableView";
 import { WarningComponent } from "./WarningComponent";
 
-const caravanResourceFilters: Set<Resource> = new Set();
+const savedResourceFilters: Set<Resource> = new Set();
 
 export function PlayerTradeComponent({ gameState, xy }: IBuildingComponentProps): React.ReactNode {
    const building = gameState.tiles.get(xy)?.building;
-   const [resourceFilters, setResourceFilters] = useState(new Set<Resource>());
+   const [resourceFilters, setResourceFilters] = useState(savedResourceFilters);
    const [showFilters, setShowFilters] = useState(false);
-   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
-   useEffect(() => {
-      setResourceFilters(new Set(caravanResourceFilters));
-   }, [xy]);
 
    if (!building) {
       return null;
@@ -76,41 +72,57 @@ export function PlayerTradeComponent({ gameState, xy }: IBuildingComponentProps)
          {showFilters ? (
             <fieldset>
                <legend className="text-strong">{t(L.PlayerTradeFilters)}</legend>
-               <ul className="tree-view" style={{ overflowY: "auto", maxHeight: "200px" }}>
-                  {resources
-                     .sort((a, b) => Config.Resource[a].name().localeCompare(Config.Resource[b].name()))
-                     .map((res) => (
-                        <li key={res} className="row">
-                           <div className="f1">{Config.Resource[res].name()}</div>
-                           <div
-                              className="text-strong"
-                              onClick={() => {
-                                 if (caravanResourceFilters.has(res)) {
-                                    caravanResourceFilters.delete(res);
-                                 } else {
-                                    caravanResourceFilters.add(res);
-                                 }
-                                 setResourceFilters(new Set(caravanResourceFilters));
-                              }}
-                           >
-                              {caravanResourceFilters.has(res) ? (
-                                 <div className="m-icon small text-blue">check_box</div>
-                              ) : (
-                                 <div className="m-icon small text-desc">check_box_outline_blank</div>
-                              )}
-                           </div>
-                        </li>
-                     ))}
-               </ul>
+               <div className="table-view" style={{ overflowY: "auto", maxHeight: "200px" }}>
+                  <table>
+                     <tbody>
+                        {resources
+                           .sort((a, b) => Config.Resource[a].name().localeCompare(Config.Resource[b].name()))
+                           .map((res) => (
+                              <tr key={res}>
+                                 <td>{Config.Resource[res].name()}</td>
+                                 <td
+                                    style={{ width: 0 }}
+                                    className="text-strong"
+                                    onClick={() => {
+                                       if (savedResourceFilters.has(res)) {
+                                          savedResourceFilters.delete(res);
+                                       } else {
+                                          savedResourceFilters.add(res);
+                                       }
+                                       setResourceFilters(new Set(savedResourceFilters));
+                                    }}
+                                 >
+                                    {savedResourceFilters.has(res) ? (
+                                       <div className="m-icon small text-blue">check_box</div>
+                                    ) : (
+                                       <div className="m-icon small text-desc">check_box_outline_blank</div>
+                                    )}
+                                 </td>
+                              </tr>
+                           ))}
+                     </tbody>
+                  </table>
+               </div>
                <div className="sep10"></div>
                <div className="row">
                   <button
-                     className="row f1 jcc"
+                     className="f1 text-center text-strong"
                      onClick={() => {
                         setShowFilters(false);
                      }}
                   >
-                     {t(L.PlayerTradeFiltersClose)}
+                     {t(L.PlayerTradeFiltersApply)}
+                  </button>
+                  <div style={{ width: 10 }} />
+                  <button
+                     className="f1 text-center"
+                     onClick={() => {
+                        savedResourceFilters.clear();
+                        setResourceFilters(new Set(savedResourceFilters));
+                        setShowFilters(false);
+                     }}
+                  >
+                     {t(L.PlayerTradeFiltersClear)}
                   </button>
                </div>
             </fieldset>
@@ -121,9 +133,9 @@ export function PlayerTradeComponent({ gameState, xy }: IBuildingComponentProps)
                   setShowFilters(true);
                }}
             >
-               <div className="m-icon small">add_circle</div>
+               <div className="m-icon small">filter_list</div>
                <div className="text-strong f1">
-                  {t(L.PlayerTradeFilters)} ({caravanResourceFilters.size})
+                  {t(L.PlayerTradeFilters)} ({resourceFilters.size})
                </div>
             </button>
          )}
