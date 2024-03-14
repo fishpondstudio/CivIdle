@@ -123,7 +123,7 @@ export const EN = {
    GasPipeline: "Gas Pipeline",
    Urbanization: "Urbanization",
    Aeroplane: "Aeroplane",
-   AtomTheory: "Atom Theory",
+   AtomicTheory: "Atomic Theory",
    Synthetics: "Synthetics",
    MotionPicture: "Motion Picture",
    Assembly: "Assembly",

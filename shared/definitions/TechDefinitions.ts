@@ -603,8 +603,8 @@ export class TechDefinitions {
       requireTech: ["Combustion", "Electrolysis"],
    };
 
-   AtomTheory: ITechDefinition = {
-      name: () => t(L.AtomTheory),
+   AtomicTheory: ITechDefinition = {
+      name: () => t(L.AtomicTheory),
       column: 18,
       requireTech: ["Refinery", "Electrolysis"],
    };
