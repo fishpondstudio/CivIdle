@@ -84,7 +84,7 @@ export async function startGame(
    syncLanguage(Languages[options.language]);
    syncUITheme(options);
    syncSidePanelWidth(app, options);
-   calculateTierAndPrice();
+   calculateTierAndPrice(console.log);
    initializeSingletons({
       sceneManager: new SceneManager({ app, assets: resources, textures, gameState }),
       routeTo,

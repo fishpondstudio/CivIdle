@@ -54,7 +54,7 @@ interface IRecipe {
    output: PartialTabulate<Resource>;
 }
 
-export function calculateTierAndPrice() {
+export function calculateTierAndPrice(log?: (val: string) => void) {
    forEach(IsDeposit, (k) => {
       Config.ResourceTier[k] = 1;
       Config.ResourcePrice[k] = 1 + Config.Tech[getDepositUnlockTech(k)].column;
@@ -200,7 +200,7 @@ export function calculateTierAndPrice() {
                      if (v === res) {
                         delete resourceTierDependency[k];
                         delete Config.ResourceTier[k];
-                        console.log(
+                        log?.(
                            `Resource Tier of ${k} is decided by ${res}, but its tier has changed from ${
                               oldTier ?? "?"
                            } to ${targetTier}`,
@@ -211,7 +211,7 @@ export function calculateTierAndPrice() {
                      if (v === res) {
                         delete buildingTierDependency[k];
                         delete Config.BuildingTier[k];
-                        console.log(
+                        log?.(
                            `Building Tier of ${k} is decided by ${res}, but its tier has changed from ${
                               oldTier ?? "?"
                            } to ${targetTier}`,
@@ -229,7 +229,7 @@ export function calculateTierAndPrice() {
                if (!Config.ResourcePrice[res]) {
                   Config.ResourcePrice[res] = price;
                } else if (price > Config.ResourcePrice[res]!) {
-                  console.warn(
+                  log?.(
                      `Price of ${res} changed from ${Config.ResourcePrice[res]!} to ${price} by ${building}`,
                   );
                   Config.ResourcePrice[res] = price;
@@ -378,17 +378,17 @@ export function calculateTierAndPrice() {
 
    notBoostedBuildings.sort((a, b) => Config.Tech[a.tech].column - Config.Tech[b.tech].column);
 
-   // console.log("BuildingTier", sortTabulate(Config.BuildingTier));
-   // console.log("BuildingTech", sortTabulate(Config.BuildingTech));
-   // console.log("ResourceTier", sortTabulate(Config.ResourceTier));
-   // console.log("ResourcePrice", sortTabulate(Config.ResourcePrice));
-   // console.log("ResourceTech", sortTabulate(Config.ResourceTech));
-   console.log(`>>>>>>>>>> ResourcePrice <<<<<<<<<<\n${resourcePrice.join("\n")}`);
-   console.log(`>>>>>>>>>> WonderCost <<<<<<<<<<\n${wonderCost.join("\n")}`);
-   console.log(
+   // console.log?.("BuildingTier", sortTabulate(Config.BuildingTier));
+   // console.log?.("BuildingTech", sortTabulate(Config.BuildingTech));
+   // console.log?.("ResourceTier", sortTabulate(Config.ResourceTier));
+   // console.log?.("ResourcePrice", sortTabulate(Config.ResourcePrice));
+   // console.log?.("ResourceTech", sortTabulate(Config.ResourceTech));
+   log?.(`>>>>>>>>>> ResourcePrice <<<<<<<<<<\n${resourcePrice.join("\n")}`);
+   log?.(`>>>>>>>>>> WonderCost <<<<<<<<<<\n${wonderCost.join("\n")}`);
+   log?.(
       `>>>>>>>>>> NotBoostedBuildings <<<<<<<<<<\n${notBoostedBuildings
          .map((a) => `${a.building.padEnd(25)}${a.tech.padEnd(20)}${a.age}`)
          .join("\n")}`,
    );
-   console.log(`>>>>>>>>>> Building Input Cost <<<<<<<<<<\n${buildingInputCost.join("\n")}`);
+   log?.(`>>>>>>>>>> Building Input Cost <<<<<<<<<<\n${buildingInputCost.join("\n")}`);
 }
