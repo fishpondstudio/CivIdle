@@ -52,19 +52,23 @@ import { TableView } from "./TableView";
 import { WorkerScienceComponent } from "./WorkerScienceComponent";
 
 type Tab = "resources" | "buildings" | "empire";
+let savedStatisticsTab: Tab = "empire";
 
 export function StatisticsBuildingBody({ gameState, xy }: IBuildingComponentProps): React.ReactNode {
    const building = gameState.tiles.get(xy)?.building as IBuildingData;
    if (building == null) {
       return null;
    }
-   const [currentTab, setCurrentTab] = useState<Tab>("empire");
+   const [currentTab, setCurrentTab] = useState<Tab>(savedStatisticsTab);
    let content: React.ReactNode = null;
    if (currentTab === "resources") {
+      savedStatisticsTab = "resources";
       content = <ResourcesTab gameState={gameState} xy={xy} />;
    } else if (currentTab === "buildings") {
+      savedStatisticsTab = "buildings";
       content = <BuildingTab gameState={gameState} xy={xy} />;
    } else if (currentTab === "empire") {
+      savedStatisticsTab = "empire";
       content = <EmpireTab gameState={gameState} xy={xy} />;
    }
    return (
