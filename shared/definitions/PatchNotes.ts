@@ -6,7 +6,117 @@ interface PatchNote {
 export const PatchNotes: PatchNote[] = [
    {
       version: "0.4.0",
-      content: [["Patch Notes", "https://github.com/fishpondstudio/CivIdle/issues/134"]],
+      content: [
+         ["New Map", "Memphis"],
+         [
+            "Memphis Unique Wonder",
+            "Great Sphinx: All Tier II or above buildings within 2 tiles get +N Consumption, Production Multiplier. N = Number of its adjacent buildings of the same type",
+         ],
+         [
+            "Memphis Unique Wonder",
+            "Abu Simbel: Double the effect of Ramesses II. All Adjacent wonders get +1 Happiness",
+         ],
+         [
+            "Memphis Natural Wonder",
+            "Nile River: Double the effect of Hatshepsut. All wheat farms get +1 Production and Storage Multiplier. All adjacent wheat farms get +5 Production and Storage Multiplier",
+         ],
+         [
+            "Memphis Natural Wonder",
+            "Mount Sinai: When discovered, a great person of the current age is born. All buildings that produce faith get +5 Storage Multiplier",
+         ],
+         [
+            "Wonder Change",
+            "Statistics Office (Censor's Office) generates 1 explorer every minute which can be used to reveal an unexplored tile and its adjacent tiles",
+         ],
+         [
+            "Wonder Change",
+            "UI of Statistics Office (Censor's Office) has been redone. An 'Empire' tab listing a detailed breakdown of empire value, science production has been added (@Vethon)",
+         ],
+         [
+            "Great People",
+            "Johannes Kepler: +1 Production Multiplier, Storage Multiplier for Shrine, Lens Workshop (Renaissance)",
+         ],
+         [
+            "Great People",
+            "Georgius Agricola: +1 Production Multiplier, Storage Multiplier for Siege Workshop, Coal Mine (Renaissance)",
+         ],
+         ["Great People", "Galileo Galilei: +1 Science From Idle Workers (Renaissance)"],
+         [
+            "Great People",
+            "J. P. Morgan: +1 Storage Multiplier, Production Multiplier for Bond Market, Rifle Factory (Industrial)",
+         ],
+         [
+            "Great People",
+            "Andrew Carnegie: +1 Storage Multiplier, Production Multiplier for Bank, Steel Mill (Industrial)",
+         ],
+         ["Great People", "Louis Sullivan: +3 Builder Capacity Multiplier (Industrial)"],
+         [
+            "Great People",
+            "Isambard Kingdom Brunel: +1 Production Multiplier, Storage Multiplier for Frigate Builder, Concrete Plant (Industrial)",
+         ],
+         ["Great People", "William Shakespeare now boosts Actor's Guild instead of Printing House"],
+
+         [
+            "Achievement",
+            "Pax Romana: Rebirth with at least 1 Extra Great Person in Rome (Reach 64M Empire Value when rebirth)",
+         ],
+         [
+            "Achievement",
+            "Olympian: Rebirth with at least 1 Extra Great Person in Athens (Reach 64M Empire Value when rebirth)",
+         ],
+         [
+            "Achievement",
+            "Bronze: Reach Bronze Age in any city (granted when you unlock any technology in that age)",
+         ],
+         [
+            "Achievement",
+            "Iron: Reach Iron Age in any city (granted when you unlock any technology in that age)",
+         ],
+         [
+            "Achievement",
+            "Classical: Reach Classical Age in any city (granted when you unlock any technology in that age)",
+         ],
+         [
+            "Achievement",
+            "Medieval: Reach Middle Age in any city (granted when you unlock any technology in that age)",
+         ],
+         [
+            "Achievement",
+            "Renaissance: Reach Renaissance in any city (granted when you unlock any technology in that age)",
+         ],
+         [
+            "Achievement",
+            "Industrial: Reach Industrial in any city (granted when you unlock any technology in that age)",
+         ],
+         [
+            "Achievement",
+            "Eye of Horus: Rebirth with at least 1 Extra Great Person in Memphis (Reach 64M Empire Value when rebirth)",
+         ],
+         ["Bugfix", "Petra upgrade cost should not be affected by Zenobia"],
+         ["Bugfix", "Fix broken UI when there are lots of caravansaries"],
+         ["Bugfix", "Fix sometimes building input resources are turned off even before it is fulfilled"],
+         ["Bugfix", "Market will not update when a new resource is unlocked"],
+         ["Bugfix", "Statistics Building should not count Warehouse/Caravansary"],
+
+         [
+            "QoL",
+            "Rework building defaults: now building defaults will carry over when you rebirth and will be applied to your building once you unlock the relevant technology",
+         ],
+         ["QoL", "Optimize player trade map performance"],
+         ["QoL", "Allow changing the side panel width in Options -> Theme"],
+         [
+            "QoL",
+            "Warehouse/Caravansary will list all your currently unlocked resources, this is to stop the list from jumping around",
+         ],
+         [
+            "QoL",
+            "Upgrade x5 is now Upgrade to Next 5. And 'Upgrade to Next 10' will always appear even if the next 5 and next 10 level are the same (and the shortcut will always work)",
+         ],
+         [
+            "QoL",
+            "Petra's speed up will be set to 1x once Warp runs out. This is to prevent Petra from immediately running when logging into the game thus being able to upgrade its storage",
+         ],
+      ],
    },
    {
       version: "0.3.1",
