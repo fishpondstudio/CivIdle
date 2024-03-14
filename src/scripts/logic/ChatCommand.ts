@@ -7,6 +7,7 @@ import { rollPermanentGreatPeople } from "../../../shared/logic/RebornLogic";
 import { AccountLevel, ChatChannels, type ChatChannel } from "../../../shared/utilities/Database";
 import {
    HOUR,
+   MINUTE,
    SECOND,
    clamp,
    firstKeyOf,
@@ -173,7 +174,7 @@ export async function handleChatCommand(command: string): Promise<void> {
          if (!parts[1] || !parts[2]) {
             throw new Error("Invalid command format");
          }
-         const muteUntil = await client.mutePlayer(parts[1], parseInt(parts[2], 10) * HOUR);
+         const muteUntil = await client.mutePlayer(parts[1], parseInt(parts[2], 10) * MINUTE);
          addSystemMessage(`Player ${parts[1]} has been muted until ${new Date(muteUntil).toLocaleString()}`);
          break;
       }
