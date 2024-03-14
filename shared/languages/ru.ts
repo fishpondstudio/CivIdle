@@ -64,7 +64,7 @@ export const RU = {
    Democracy: "Демократия",
    Autocracy: "Автократия",
    Religion: "Религия",
-   Geography: "Георграфия",
+   Geography: "География",
    Physics: "Физика",
    Feudalism: "Феодализм",
    Theocracy: "Теократия",
@@ -921,7 +921,7 @@ export const RU = {
       "Чтобы повысить уровень аккаунта, вам достаточно соответствовать одному из следующих критериев:",
    AccountLevelPlayTime:
       "Активное время в режиме онлайн > %{requiredTime} (Ваше игровое время: %{actualTime})",
-   AccountUpgradeButton: "Улучшить аккаунт до Квестор",
+   AccountUpgradeButton: "Улучшить аккаунт до Квестора",
    AccountUpgradeConfirm: "Улучшить Аккаунт",
    AccountUpgradeConfirmDesc:
       "Улучшение вашего аккаунта приведет к <b>сбросу текущего пробега</b> и переносу постоянных великих людей <b>до уровня %{level}</b>. Это <b>не может</b> быть отменено, Вы уверены, что хотите продолжить?",
@@ -939,7 +939,7 @@ export const RU = {
    RedistributeAmongSelectedImport: "Импорт",
    RedistributeAmongSelectedCap: "Предел",
    ClearSelected: "Очистить Выбранное",
-   PlayerTradeTariffTooltip: "Полученно от торгового налога",
+   PlayerTradeTariffTooltip: "Получено от торгового налога",
    PlayerTradeClaimAll: "Получить всё",
    PlayerTradeClaimAllMessage: "Вы получили %{count} заявок",
    PlayerTradeClaimAllFailedMessage: "Вы получили %{count} заявок - хранилище полное?",
@@ -989,7 +989,7 @@ export const RU = {
       "Сейчас у вас есть %{count} %{person} с этого пробега. Дополнительный %{person} будет иметь 1/%{effect} эффекта",
    OpenSaveFolder: "Открыть Папку Сохранения",
    OpenSaveBackupFolder: "Откройте Папку Резервных Копий",
-   ShortcutBuildingPageToggleBuilding: "Переключиение Производства",
+   ShortcutBuildingPageToggleBuilding: "Переключение Производства",
    ShortcutBuildingPageToggleBuildingSetAllSimilar: "Переключить Производство И Применить Ко Всем",
    HappinessUncapped: "Счастье (Без Лимита)",
    ExtraGreatPeople: "%{count} Дополнительных Великих Людей",
@@ -1015,13 +1015,13 @@ export const RU = {
    PlayerTradeFillAmountMaxV2: "Заполнить Мах",
    GrandBazaar: "Большой Базар",
    GrandBazaarDesc:
-      "Управляйте всеми вашими рынками. Прилегающие базары получают +5 к Множителю производста и Хранилища. Прилегающие рынки получают разные сделки",
+      "Управляйте всеми вашими рынками. Прилегающие базары получают +5 к Множителю производства и Хранилища. Прилегающие рынки получают разные сделки",
    GrandBazaarFilters: "Фильтры",
    GrandBazaarFilterYouPay: "Вы платите",
    GrandBazaarFilterYouGet: "Вы получаете",
    GrandBazaarFilterWarningHTML: "Вы должны настроить фильтр, прежде чем будут показаны все рыночные сделки",
    AbuSimbel: "Абу-Симбел",
-   AbuSimbelDesc: "Удвойте эффект Рамесса II. Все Примыкающие чудеса получают +1 счастье",
+   AbuSimbelDesc: "Удвойте эффект Рамзесса II. Все Примыкающие чудеса получают +1 счастье",
    GreatSphinx: "Великий Сфинкс",
    GreatSphinxDesc:
       "Все здания Тира II и выше в пределах 2 плиток получают +N к Множителю Потребления, Производства. N = количество прилегающих к нему зданий того же типа",
@@ -1041,4 +1041,7 @@ export const RU = {
    SidePanelWidthDescHTML:
       "Изменение ширины боковой панели. <b>Для вступления в силу требуется перезапуск игры</b>",
    ShowUnbuiltOnly: "Показывайте только те здания, которые еще не построены",
+   PlayerTradeFilters: "Фильтры",
+   PlayerTradeFiltersApply: "Применить",
+   PlayerTradeFiltersClear: "Очистить",
 };
