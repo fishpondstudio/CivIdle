@@ -134,11 +134,7 @@ function ChatWindow({
    return (
       <div className="chat-content window" style={style}>
          <div className="title-bar">
-            <div className="title-bar-text">
-               {t(L.Chat)}
-               {": "}
-               {ChatChannels[channel]}
-            </div>
+            <div className="title-bar-text">{ChatChannels[channel]}</div>
             <div className="title-bar-controls">
                <button aria-label="Minimize" onClick={onMinimize}></button>
                <button aria-label="Close" onClick={onClose}></button>
