@@ -59,7 +59,8 @@ export function migrateSavedGame(save: SavedGame) {
       // @ts-expect-error
       save.options.defaultConstructionPriority = getConstructionPriority(save.options.defaultPriority);
    }
-   if (save.options.chatChannels.size === 0) {
+   if (isNullOrUndefined(save.options.chatChannels) || save.options.chatChannels.size === 0) {
+      save.options.chatChannels = new Set();
       // @ts-expect-error
       if (save.options.chatSendChannel) {
          // @ts-expect-error
