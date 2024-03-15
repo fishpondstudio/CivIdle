@@ -9,8 +9,6 @@ import { useGameOptions, useGameState } from "../Global";
 import { isOnlineUser } from "../rpc/RPCClient";
 import { Singleton } from "../utilities/Singleton";
 import { greatPersonImage } from "../visuals/GreatPersonVisual";
-import { playLevelUp } from "../visuals/Sound";
-import { ChooseGreatPersonModal } from "./ChooseGreatPersonModal";
 import { showModal } from "./GlobalModal";
 import { ManagePermanentGreatPersonModal } from "./ManagePermanentGreatPersonModal";
 import { MenuComponent } from "./MenuComponent";
@@ -55,36 +53,6 @@ export function GreatPersonPage(): React.ReactNode {
                   />
                </WarningComponent>
             )}
-            {gs.greatPeopleChoices.length > 0 ? (
-               <WarningComponent className="mb10" icon="info">
-                  <div
-                     className="pointer"
-                     onClick={() => {
-                        if (gs.greatPeopleChoices.length > 0) {
-                           playLevelUp();
-                           showModal(<ChooseGreatPersonModal permanent={false} />);
-                        }
-                     }}
-                  >
-                     <RenderHTML html={t(L.UnclaimedGreatPersonThisRun)} />
-                  </div>
-               </WarningComponent>
-            ) : null}
-            {options.greatPeopleChoices.length > 0 ? (
-               <WarningComponent className="mb10" icon="info">
-                  <div
-                     className="pointer"
-                     onClick={() => {
-                        if (options.greatPeopleChoices.length > 0) {
-                           playLevelUp();
-                           showModal(<ChooseGreatPersonModal permanent={true} />);
-                        }
-                     }}
-                  >
-                     <RenderHTML html={t(L.UnclaimedGreatPersonPermanent)} />
-                  </div>
-               </WarningComponent>
-            ) : null}
             <button
                className="row w100 mb10 text-strong"
                onClick={() => showModal(<ManagePermanentGreatPersonModal />)}
