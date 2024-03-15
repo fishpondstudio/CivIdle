@@ -45,9 +45,12 @@ function calculateTradeValue(item: IGrandBazaarMarketData): number {
    );
 }
 
+let savedBuyResourceFilter: Resource | null = null;
+let savedSellResourceFilter: Resource | null = null;
+
 export function GrandBazaarBuildingBody({ gameState, xy }: IBuildingComponentProps): React.ReactNode {
-   const [buyResourceFilter, setBuyResourceFilter] = useState<Resource | null>(null);
-   const [sellResourceFilter, setSellResourceFilter] = useState<Resource | null>(null);
+   const [buyResourceFilter, setBuyResourceFilter] = useState<Resource | null>(savedBuyResourceFilter);
+   const [sellResourceFilter, setSellResourceFilter] = useState<Resource | null>(savedSellResourceFilter);
 
    const building = gameState.tiles.get(xy)?.building;
    if (!building) {
@@ -101,10 +104,12 @@ export function GrandBazaarBuildingBody({ gameState, xy }: IBuildingComponentPro
                   value={sellResourceFilter ? sellResourceFilter : ""}
                   onChange={(e) => {
                      if (e.target.value === "") {
-                        setSellResourceFilter(null);
+                        savedSellResourceFilter = null;
+                        setSellResourceFilter(savedSellResourceFilter);
                      }
                      if (e.target.value in Config.Resource) {
-                        setSellResourceFilter(e.target.value as Resource);
+                        savedSellResourceFilter = e.target.value as Resource;
+                        setSellResourceFilter(savedSellResourceFilter);
                      }
                   }}
                >
@@ -124,10 +129,12 @@ export function GrandBazaarBuildingBody({ gameState, xy }: IBuildingComponentPro
                   value={buyResourceFilter ? buyResourceFilter : ""}
                   onChange={(e) => {
                      if (e.target.value === "") {
-                        setBuyResourceFilter(null);
+                        savedBuyResourceFilter = null;
+                        setBuyResourceFilter(savedBuyResourceFilter);
                      }
                      if (e.target.value in Config.Resource) {
-                        setBuyResourceFilter(e.target.value as Resource);
+                        savedBuyResourceFilter = e.target.value as Resource;
+                        setBuyResourceFilter(savedBuyResourceFilter);
                      }
                   }}
                >
