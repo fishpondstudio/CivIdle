@@ -111,11 +111,11 @@ export type Multiplier = RequireAtLeastOne<IMultiplier>;
 export type MultiplierWithSource = Multiplier & { source: string };
 
 export type MultiplierType = keyof IMultiplier;
-export const MultiplierTypeDesc: Record<MultiplierType, string> = {
-   output: t(L.ProductionMultiplier),
-   worker: t(L.WorkerMultiplier),
-   storage: t(L.StorageMultiplier),
-   input: t(L.ConsumptionMultiplier),
+export const MultiplierTypeDesc: Record<MultiplierType, () => string> = {
+   output: () => t(L.ProductionMultiplier),
+   worker: () => t(L.WorkerMultiplier),
+   storage: () => t(L.StorageMultiplier),
+   input: () => t(L.ConsumptionMultiplier),
 };
 
 export interface IValueWithSource {

@@ -123,7 +123,7 @@ export const PT_BR = {
    GasPipeline: "Gasoduto",
    Urbanization: "Urbanização",
    Aeroplane: "Avião",
-   AtomTheory: "Teoria Atômica",
+   AtomicTheory: "Atomic Theory",
    Synthetics: "Sintetização",
    MotionPicture: "Filme",
    Assembly: "Montagem",
@@ -833,8 +833,8 @@ export const PT_BR = {
       "Custa %{speed} distorções para cada segundo e acelera seu império em %{speed}x sua velocidade normal.",
    TimeWarpWarning:
       "Acelerar a uma velocidade maior do que seu computador aguenta pode resultar em perda de dados: USE A SEU PRÓPRIO RISCO",
-   PetraNoMultiplier:
-      "Petra não é afetada por nenhum multiplicador (produção, capacidade de trabalhadores, armazenamento, etc)",
+   BuildingNoMultiplier:
+      "%{building} is <b>not affected</b> by any multipliers (production, worker capacity, storage, etc)",
    LimitOfflineProduction: "Limite de Produção Offline",
    Reborn: "Renascer",
    RebornCity: "Selecione uma Nova Cidade",
@@ -872,8 +872,6 @@ export const PT_BR = {
    BuildingPriority: "Prioridade de Construção",
    ChatChannel: "Canal do Chat",
    ChatChannelLanguage: "Linguagem",
-   ChatChannelSend: "Enviar",
-   ChatChannelReceive: "Receber",
    FirstTimeGuideNext: "Próximo",
    FirstTimeGuideFinish: "Concluir",
    AccountTypeShowDetails: "Mostrar Detalhes da Conta",
@@ -1045,4 +1043,7 @@ export const PT_BR = {
    SidePanelWidthDescHTML:
       "Change the width of the side panel. <b>Require restarting your game to take effect</b>",
    ShowUnbuiltOnly: "Only show buildings that haven't been built yet",
+   PlayerTradeFilters: "Filters",
+   PlayerTradeFiltersApply: "Apply",
+   PlayerTradeFiltersClear: "Clear",
 };

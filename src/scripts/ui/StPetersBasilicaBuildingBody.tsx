@@ -13,6 +13,8 @@ import type { IBuildingComponentProps } from "./BuildingPage";
 import { BuildingStorageComponent } from "./BuildingStorageComponent";
 import { BuildingWikipediaComponent } from "./BuildingWikipediaComponent";
 import { FormatNumber } from "./HelperComponents";
+import { RenderHTML } from "./RenderHTMLComponent";
+import { WarningComponent } from "./WarningComponent";
 
 export function StPetersBasilicaBuildingBody({ gameState, xy }: IBuildingComponentProps): React.ReactNode {
    const building = gameState.tiles.get(xy)?.building;
@@ -81,6 +83,11 @@ export function StPetersBasilicaBuildingBody({ gameState, xy }: IBuildingCompone
             </table>
          </div>
          <div className="sep10"></div>
+         <WarningComponent icon="info" className="text-small mb10">
+            <RenderHTML
+               html={t(L.BuildingNoMultiplier, { building: Config.Building[building.type].name() })}
+            />
+         </WarningComponent>
          <BuildingStorageComponent gameState={gameState} xy={xy} />
          <BuildingWikipediaComponent gameState={gameState} xy={xy} />
          <BuildingColorComponent gameState={gameState} xy={xy} />

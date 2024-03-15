@@ -123,7 +123,7 @@ export const NL = {
    GasPipeline: "Gaspipeline",
    Urbanization: "Verstedelijking",
    Aeroplane: "Vliegtuig",
-   AtomTheory: "Atoomtheorie",
+   AtomicTheory: "Atomic Theory",
    Synthetics: "Synthetica",
    MotionPicture: "Film",
    Assembly: "Assemblage",
@@ -828,8 +828,8 @@ export const NL = {
       "Kost %{speed} warps per seconde en versnelt je rijk om te draaien op %{speed}x snelheid.",
    TimeWarpWarning:
       "Versnellen op een hogere snelheid dan je computer aankan kan leiden tot dataverlies: GEBRUIK OP EIGEN RISICO",
-   PetraNoMultiplier:
-      "Petra wordt niet beïnvloed door enige vermenigvuldigers (productie, werknemerscapaciteit, opslag, etc)",
+   BuildingNoMultiplier:
+      "%{building} is <b>not affected</b> by any multipliers (production, worker capacity, storage, etc)",
    LimitOfflineProduction: "Beperk Offline Productie",
    Reborn: "Herboren",
    RebornCity: "Selecteer Een Nieuwe Stad",
@@ -866,8 +866,6 @@ export const NL = {
    BuildingPriority: "Gebouwprioriteit",
    ChatChannel: "Chatkanaal",
    ChatChannelLanguage: "Taal",
-   ChatChannelSend: "Verstuur",
-   ChatChannelReceive: "Ontvang",
    FirstTimeGuideNext: "Volgende",
    FirstTimeGuideFinish: "Afronden",
    AccountTypeShowDetails: "Toon Accountgegevens",
@@ -1038,4 +1036,7 @@ export const NL = {
    SidePanelWidthDescHTML:
       "Change the width of the side panel. <b>Require restarting your game to take effect</b>",
    ShowUnbuiltOnly: "Only show buildings that haven't been built yet",
+   PlayerTradeFilters: "Filters",
+   PlayerTradeFiltersApply: "Apply",
+   PlayerTradeFiltersClear: "Clear",
 };

@@ -658,7 +658,7 @@ function greatPersonBoostDesc(self: IGreatPersonDefinition, level: number) {
    }
    return t(L.BoostDescription, {
       value: self.value(level),
-      multipliers: self.boost.multipliers.map((m) => MultiplierTypeDesc[m]).join(", "),
+      multipliers: self.boost.multipliers.map((m) => MultiplierTypeDesc[m]()).join(", "),
       buildings: self.boost.buildings.map((b) => Config.Building[b].name()).join(", "),
    });
 }

@@ -624,17 +624,17 @@ export class TechDefinitions {
    Aeroplane: ITechDefinition = {
       name: () => t(L.Aeroplane),
       column: 19,
-      requireTech: ["Assembly", "AtomTheory"],
+      requireTech: ["Assembly", "AtomicTheory"],
    };
    Medicine: ITechDefinition = {
       name: () => t(L.Medicine),
       column: 19,
-      requireTech: ["AtomTheory"],
+      requireTech: ["AtomicTheory"],
    };
    Hospital: ITechDefinition = {
       name: () => t(L.Hospital),
       column: 19,
-      requireTech: ["AtomTheory", "Synthetics"],
+      requireTech: ["AtomicTheory", "Synthetics"],
    };
    Greenhouse: ITechDefinition = {
       name: () => t(L.Greenhouse),

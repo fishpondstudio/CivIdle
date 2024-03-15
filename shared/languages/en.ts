@@ -821,7 +821,8 @@ export const EN = {
       "Cost %{speed} warps for every second and accelerate your empire to run at %{speed}x speed.",
    TimeWarpWarning:
       "Accelerate at a higher speed than your computer can handle might result in data loss: USE AT YOUR OWN RISK",
-   PetraNoMultiplier: "Petra is not affected by any multipliers (production, worker capacity, storage, etc)",
+   BuildingNoMultiplier:
+      "%{building} is <b>not affected</b> by any multipliers (production, worker capacity, storage, etc)",
    LimitOfflineProduction: "Limit Offline Production",
    Reborn: "Rebirth",
    RebornCity: "Select A New City",
@@ -856,8 +857,6 @@ export const EN = {
    BuildingPriority: "Building Priority",
    ChatChannel: "Chat Channel",
    ChatChannelLanguage: "Language",
-   ChatChannelSend: "Send",
-   ChatChannelReceive: "Receive",
    FirstTimeGuideNext: "Next",
    FirstTimeGuideFinish: "Finish",
    AccountTypeShowDetails: "Show Account Details",

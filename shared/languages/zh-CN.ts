@@ -123,7 +123,7 @@ export const ZH_CN = {
    GasPipeline: "天然气管道",
    Urbanization: "城市化",
    Aeroplane: "航空",
-   AtomTheory: "原子理论",
+   AtomicTheory: "Atomic Theory",
    Synthetics: "合成材料",
    MotionPicture: "电影",
    Assembly: "装配",
@@ -794,7 +794,8 @@ export const ZH_CN = {
    TimeWarp: "时间扭曲倍数",
    TurnOnTimeWarpDesc: "每秒消耗 %{speed} 扭曲时间，同时加速你的帝国，使其以 %{speed} 倍速度运行。",
    TimeWarpWarning: "以超出计算机处理能力的速度加速，可能会导致数据丢失。使用风险自负！",
-   PetraNoMultiplier: "佩特拉古城不受任何乘数影响。",
+   BuildingNoMultiplier:
+      "%{building} is <b>not affected</b> by any multipliers (production, worker capacity, storage, etc)",
    LimitOfflineProduction: "限制离线生产",
    Reborn: "重生",
    RebornCity: "选择重生城市",
@@ -827,8 +828,6 @@ export const ZH_CN = {
    BuildingPriority: "建筑优先级",
    ChatChannel: "聊天频道",
    ChatChannelLanguage: "语言",
-   ChatChannelSend: "发送端",
-   ChatChannelReceive: "接收端",
    FirstTimeGuideNext: "下一步",
    FirstTimeGuideFinish: "完成",
    AccountTypeShowDetails: "展示账号细节",
@@ -992,4 +991,7 @@ export const ZH_CN = {
    SidePanelWidthDescHTML:
       "Change the width of the side panel. <b>Require restarting your game to take effect</b>",
    ShowUnbuiltOnly: "Only show buildings that haven't been built yet",
+   PlayerTradeFilters: "Filters",
+   PlayerTradeFiltersApply: "Apply",
+   PlayerTradeFiltersClear: "Clear",
 };

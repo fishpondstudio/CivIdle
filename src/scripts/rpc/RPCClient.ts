@@ -18,7 +18,7 @@ import type {
 } from "../../../shared/utilities/Database";
 import { AccountLevel, ChatAttributes, MessageType } from "../../../shared/utilities/Database";
 import { vacuumChat } from "../../../shared/utilities/DatabaseShared";
-import { SECOND, forEach, hasFlag } from "../../../shared/utilities/Helper";
+import { SECOND, clamp, forEach, hasFlag } from "../../../shared/utilities/Helper";
 import { TypedEvent } from "../../../shared/utilities/TypedEvent";
 import { L, t } from "../../../shared/utilities/i18n";
 import { saveGame } from "../Global";
@@ -187,8 +187,8 @@ export async function connectWebSocket(): Promise<number> {
             getGameOptions().token = w.user.token;
             saveGame().catch(console.error);
             OnUserChanged.emit({ ...user });
-            const offlineTick = w.lastGameTick + w.offlineTime - getGameState().tick;
-            OnOfflineTime.emit(Math.min(w.offlineTime, offlineTick));
+            const offlineTicks = clamp(w.lastGameTick + w.offlineTime - getGameState().tick, 0, Infinity);
+            OnOfflineTime.emit(Math.min(w.offlineTime, offlineTicks));
             break;
          }
          case MessageType.Trade: {

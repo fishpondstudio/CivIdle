@@ -51,9 +51,6 @@ export function migrateSavedGame(save: SavedGame) {
          });
       }
    });
-   if (save.options.chatSendChannel) {
-      save.options.chatReceiveChannel[save.options.chatSendChannel] = true;
-   }
    if (isNullOrUndefined(save.options.defaultProductionPriority)) {
       // @ts-expect-error
       save.options.defaultProductionPriority = getProductionPriority(save.options.defaultPriority);
@@ -62,6 +59,19 @@ export function migrateSavedGame(save: SavedGame) {
       // @ts-expect-error
       save.options.defaultConstructionPriority = getConstructionPriority(save.options.defaultPriority);
    }
+   if (save.options.chatChannels.size === 0) {
+      // @ts-expect-error
+      if (save.options.chatSendChannel) {
+         // @ts-expect-error
+         save.options.chatChannels.add(save.options.chatSendChannel);
+      } else {
+         save.options.chatChannels.add("en");
+      }
+   }
+   // @ts-expect-error
+   delete save.options.chatSendChannel;
+   // @ts-expect-error
+   delete save.options.chatReceiveChannel;
    // @ts-expect-error
    delete save.options.defaultPriority;
    forEach(save.options.buildingDefaults, (building, d) => {

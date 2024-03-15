@@ -1,15 +1,17 @@
 import Tippy from "@tippyjs/react";
 import classNames from "classnames";
-import React, { memo, useCallback, useEffect, useRef, useState } from "react";
+import React, { memo, useCallback, useEffect, useRef, useState, useTransition } from "react";
+import { notifyGameOptionsUpdate } from "../../../shared/logic/GameStateLogic";
 import {
    AccountLevel,
    ChatAttributes,
    ChatChannels,
    ChatMaxChars,
+   type ChatChannel,
    type IChat,
    type IUser,
 } from "../../../shared/utilities/Database";
-import { hasFlag, keysOf, sizeOf } from "../../../shared/utilities/Helper";
+import { hasFlag } from "../../../shared/utilities/Helper";
 import { censor } from "../../../shared/utilities/ProfanityFilter";
 import { TypedEvent } from "../../../shared/utilities/TypedEvent";
 import { L, t } from "../../../shared/utilities/i18n";
@@ -39,18 +41,70 @@ const SetChatInput = new TypedEvent<(old: string) => string>();
 
 export function ChatPanel(): React.ReactNode {
    const options = useGameOptions();
-   const messages = useChatMessages().filter(
-      (m) => !("channel" in m) || options.chatReceiveChannel[m.channel],
-   );
-   const user = useUser();
-   const scrollAreaRef = useRef<HTMLDivElement>(null);
+   const messages = useChatMessages().filter((m) => !("channel" in m) || options.chatChannels.has(m.channel));
+   const [isPending, startTransition] = useTransition();
    const [showChatWindow, setShowChatWindow] = useState(false);
-   const shouldScroll = useRef(false);
-   const lastMessage = messages.length > 0 ? messages[messages.length - 1] : null;
+   const user = useUser();
 
    useTypedEvent(ToggleChatWindow, (on) => {
       setShowChatWindow(on);
    });
+
+   return (
+      <div className="chat-bar window">
+         <img
+            style={{ width: "16px", height: "16px", margin: "0 5px 0 0" }}
+            src={user != null ? chatActive : chatInactive}
+         />
+         <div
+            className="chat-message pointer"
+            onClick={() => startTransition(() => setShowChatWindow(!showChatWindow))}
+         >
+            <LatestMessage messages={messages} />
+         </div>
+         {showChatWindow
+            ? Array.from(options.chatChannels).map((channel, i) => (
+                 <ChatWindow
+                    style={{ left: 350 * i }}
+                    key={channel}
+                    channel={channel}
+                    show={showChatWindow}
+                    onClose={() =>
+                       startTransition(() => {
+                          if (options.chatChannels.size <= 1) {
+                             setShowChatWindow(false);
+                          } else {
+                             options.chatChannels.delete(channel);
+                             notifyGameOptionsUpdate(options);
+                          }
+                       })
+                    }
+                    onMinimize={() => startTransition(() => setShowChatWindow(false))}
+                 />
+              ))
+            : null}
+      </div>
+   );
+}
+
+function ChatWindow({
+   show,
+   channel,
+   style,
+   onClose,
+   onMinimize,
+}: {
+   show: boolean;
+   channel: ChatChannel;
+   style?: React.CSSProperties;
+   onClose: () => void;
+   onMinimize: () => void;
+}): React.ReactNode {
+   const scrollAreaRef = useRef<HTMLDivElement>(null);
+   const shouldScroll = useRef(false);
+   const messages = useChatMessages().filter((m) => !("channel" in m) || channel === m.channel);
+   const lastMessage = messages.length > 0 ? messages[messages.length - 1] : null;
+   const user = useUser();
 
    // biome-ignore lint/correctness/useExhaustiveDependencies:
    useEffect(() => {
@@ -75,79 +129,59 @@ export function ChatPanel(): React.ReactNode {
          top: scrollAreaRef.current.scrollHeight,
          behavior: "instant",
       });
-   }, [showChatWindow]);
-
-   const receiveMultipleChannels = sizeOf(options.chatReceiveChannel) > 1;
+   }, [show]);
 
    return (
-      <div className="chat-bar window">
-         <img
-            style={{ width: "16px", height: "16px", margin: "0 5px 0 0" }}
-            src={user != null ? chatActive : chatInactive}
-         />
-         <div className="chat-message pointer" onClick={() => setShowChatWindow(!showChatWindow)}>
-            <LatestMessage messages={messages} />
-         </div>
-         {showChatWindow ? (
-            <div className="chat-content window">
-               <div className="title-bar">
-                  <div className="title-bar-text">
-                     {t(L.Chat)}
-                     {": "}
-                     {keysOf(options.chatReceiveChannel)
-                        .sort()
-                        .map((c) => ChatChannels[c])
-                        .join(", ")}
-                  </div>
-                  <div className="title-bar-controls">
-                     <button aria-label="Close" onClick={() => setShowChatWindow(false)}></button>
-                  </div>
-               </div>
-               <div
-                  ref={scrollAreaRef}
-                  onMouseEnter={() => {
-                     shouldScroll.current = false;
-                  }}
-                  onMouseLeave={() => {
-                     shouldScroll.current = true;
-                  }}
-                  className="window-content inset-shallow"
-               >
-                  {messages.map((c) => {
-                     if (!("channel" in c)) {
-                        return (
-                           <div className="chat-command-item" key={c.id}>
-                              <RenderHTML html={c.message} />
-                           </div>
-                        );
-                     }
-                     return (
-                        <ChatMessage
-                           key={c.id}
-                           user={user}
-                           chat={c}
-                           showChannel={receiveMultipleChannels}
-                           onImageLoaded={onImageLoaded}
-                        />
-                     );
-                  })}
-                  {user !== null ? null : (
-                     <div className="text-desc text-center text-small mv10">{t(L.ChatReconnect)}</div>
-                  )}
-               </div>
-               <ChatInput
-                  onChatSend={() => {
-                     shouldScroll.current = true;
-                  }}
-               />
+      <div className="chat-content window" style={style}>
+         <div className="title-bar">
+            <div className="title-bar-text">
+               {t(L.Chat)}
+               {": "}
+               {ChatChannels[channel]}
             </div>
-         ) : null}
+            <div className="title-bar-controls">
+               <button aria-label="Minimize" onClick={onMinimize}></button>
+               <button aria-label="Close" onClick={onClose}></button>
+            </div>
+         </div>
+         <div
+            ref={scrollAreaRef}
+            onMouseEnter={() => {
+               shouldScroll.current = false;
+            }}
+            onMouseLeave={() => {
+               shouldScroll.current = true;
+            }}
+            className="window-content inset-shallow"
+         >
+            {messages.map((c) => {
+               if (!("channel" in c)) {
+                  return (
+                     <div className="chat-command-item" key={c.id}>
+                        <RenderHTML html={c.message} />
+                     </div>
+                  );
+               }
+               return <ChatMessage key={c.id} user={user} chat={c} onImageLoaded={onImageLoaded} />;
+            })}
+            {user !== null ? null : (
+               <div className="text-desc text-center text-small mv10">{t(L.ChatReconnect)}</div>
+            )}
+         </div>
+         <ChatInput
+            channel={channel}
+            onChatSend={() => {
+               shouldScroll.current = true;
+            }}
+         />
       </div>
    );
 }
 
-function ChatInput({ onChatSend }: { onChatSend: (message: string) => void }): React.ReactNode {
-   const options = useGameOptions();
+function ChatInput({
+   onChatSend,
+   channel,
+}: { onChatSend: (message: string) => void; channel: ChatChannel }): React.ReactNode {
    const user = useUser();
    const [chat, setChat] = useState("");
    const chatInput = useRef<HTMLInputElement>(null);
@@ -158,7 +192,7 @@ function ChatInput({ onChatSend }: { onChatSend: (message: string) => void }): R
          addSystemMessage(`$ ${command}`);
          handleChatCommand(command).catch((e) => addSystemMessage(`${command}: ${e}`));
       } else {
-         client.chat(censor(chat), options.chatSendChannel).catch((e) => {
+         client.chat(censor(chat), channel).catch((e) => {
             playError();
             showToast(String(e));
          });
@@ -172,14 +206,14 @@ function ChatInput({ onChatSend }: { onChatSend: (message: string) => void }): R
    });
    return (
       <div className="row" style={{ padding: "2px" }}>
-         <Tippy content={ChatChannels[options.chatSendChannel]}>
+         <Tippy content={ChatChannels[channel]}>
             <div
                className="language-switch pointer"
                onClick={() => {
                   showModal(<SelectChatChannelModal />);
                }}
             >
-               {options.chatSendChannel.toUpperCase()}
+               {channel.toUpperCase()}
             </div>
          </Tippy>
          <input
@@ -206,12 +240,10 @@ function ChatInput({ onChatSend }: { onChatSend: (message: string) => void }): R
 function ChatMessage({
    user,
    chat,
-   showChannel,
    onImageLoaded,
 }: {
    user: IUser | null;
    chat: IClientChat;
-   showChannel: boolean;
    onImageLoaded: () => void;
 }): React.ReactNode {
    return (
@@ -228,7 +260,6 @@ function ChatMessage({
          {chat.name === user?.handle ? (
             <div className="row text-small text-desc">
                <div>{new Date(chat.time ?? 0).toLocaleTimeString()}</div>
-               {showChannel ? <div className="chat-channel">{chat.channel}</div> : null}
                <div className="f1"></div>
                <div className="text-strong">{chat.name}</div>
                <Tippy content={getCountryName(chat.flag)}>
@@ -265,7 +296,6 @@ function ChatMessage({
                ) : null}
                <div className="f1"></div>
                <div>{new Date(chat.time ?? 0).toLocaleTimeString()}</div>
-               {showChannel ? <div className="chat-channel">{chat.channel}</div> : null}
             </div>
          )}
          <div className="chat-message-content">

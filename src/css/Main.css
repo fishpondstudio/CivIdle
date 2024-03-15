@@ -81,7 +81,7 @@ body {
    align-items: center;
    justify-content: center;
    background: rgba(0, 0, 0, 0.5);
-   z-index: 2;
+   z-index: 10;
 }
 
 #global-modal .window {

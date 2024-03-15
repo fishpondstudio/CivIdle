@@ -123,7 +123,7 @@ export const RU = {
    GasPipeline: "Газопровод",
    Urbanization: "Урбанизация",
    Aeroplane: "Аэроплан",
-   AtomTheory: "Теория атомов",
+   AtomicTheory: "Atomic Theory",
    Synthetics: "Синтетика",
    MotionPicture: "Кинокартина",
    Assembly: "Установка",
@@ -829,8 +829,8 @@ export const RU = {
       "Стоит %{speed} Временного Разрыва за каждую секунду и ускоряет вашу империю в %{speed}x раза.",
    TimeWarpWarning:
       "Ускорение на более высокой скорости, чем может выдержать ваш компьютер, может привести к потере данных.: ИСПОЛЬЗУЙТЕ НА СВОЙ СТРАХ И РИСК",
-   PetraNoMultiplier:
-      "На Петру не действуют никакие множители (продукции, мощности Работников, хранилища, и т.д.)",
+   BuildingNoMultiplier:
+      "%{building} is <b>not affected</b> by any multipliers (production, worker capacity, storage, etc)",
    LimitOfflineProduction: "Ограничение Оффлайн Продукции",
    Reborn: "Переродиться",
    RebornCity: "Выбрать Новый Город",
@@ -865,8 +865,6 @@ export const RU = {
    BuildingPriority: "Приоритет Зданий",
    ChatChannel: "Канал Чата",
    ChatChannelLanguage: "Язык",
-   ChatChannelSend: "Отправлять",
-   ChatChannelReceive: "Получать",
    FirstTimeGuideNext: "Дальше",
    FirstTimeGuideFinish: "Завершить",
    AccountTypeShowDetails: "Показать Детали Аккаунта",
@@ -1041,4 +1039,7 @@ export const RU = {
    SidePanelWidthDescHTML:
       "Изменение ширины боковой панели. <b>Для вступления в силу требуется перезапуск игры</b>",
    ShowUnbuiltOnly: "Показывайте только те здания, которые еще не построены",
+   PlayerTradeFilters: "Filters",
+   PlayerTradeFiltersApply: "Apply",
+   PlayerTradeFiltersClear: "Clear",
 };

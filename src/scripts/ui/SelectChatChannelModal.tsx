@@ -1,15 +1,15 @@
 import classNames from "classnames";
-import React from "react";
+import React, { useTransition } from "react";
 import { notifyGameOptionsUpdate } from "../../../shared/logic/GameStateLogic";
 import { ChatChannels } from "../../../shared/utilities/Database";
 import { L, t } from "../../../shared/utilities/i18n";
 import { useGameOptions } from "../Global";
 import { jsxMapOf } from "../utilities/Helper";
-import { playError } from "../visuals/Sound";
 import { hideModal } from "./GlobalModal";
 
 export function SelectChatChannelModal(): React.ReactNode {
    const options = useGameOptions();
+   const [isPending, startTransition] = useTransition();
    return (
       <div className="window">
          <div className="title-bar">
@@ -24,8 +24,7 @@ export function SelectChatChannelModal(): React.ReactNode {
                   <tbody>
                      <tr>
                         <th>{t(L.ChatChannelLanguage)}</th>
-                        <th>{t(L.ChatChannelSend)}</th>
-                        <th>{t(L.ChatChannelReceive)}</th>
+                        <th style={{ width: 0 }}></th>
                      </tr>
                      {jsxMapOf(ChatChannels, (channel, value) => {
                         return (
@@ -34,42 +33,20 @@ export function SelectChatChannelModal(): React.ReactNode {
                               <td>
                                  <div
                                     className={classNames({
-                                       "m-icon small pointer": true,
-                                       "text-green": options.chatSendChannel === channel,
-                                       "text-desc": options.chatSendChannel !== channel,
-                                    })}
-                                    onClick={() => {
-                                       options.chatSendChannel = channel;
-                                       options.chatReceiveChannel[channel] = true;
-                                       notifyGameOptionsUpdate(options);
-                                    }}
-                                 >
-                                    {options.chatSendChannel === channel
-                                       ? "check_circle"
-                                       : "radio_button_unchecked"}
-                                 </div>
-                              </td>
-                              <td>
-                                 <div
-                                    className={classNames({
                                        "m-icon pointer": true,
-                                       "text-desc": !options.chatReceiveChannel[channel],
-                                       "text-green": options.chatReceiveChannel[channel],
+                                       "text-desc": !options.chatChannels.has(channel),
+                                       "text-green": options.chatChannels.has(channel),
                                     })}
                                     onClick={() => {
-                                       if (options.chatReceiveChannel[channel]) {
-                                          if (channel === options.chatSendChannel) {
-                                             playError();
-                                          } else {
-                                             delete options.chatReceiveChannel[channel];
-                                          }
+                                       if (options.chatChannels.has(channel)) {
+                                          options.chatChannels.delete(channel);
                                        } else {
-                                          options.chatReceiveChannel[channel] = true;
+                                          options.chatChannels.add(channel);
                                        }
-                                       notifyGameOptionsUpdate(options);
+                                       startTransition(() => notifyGameOptionsUpdate(options));
                                     }}
                                  >
-                                    {options.chatReceiveChannel[channel] ? "toggle_on" : "toggle_off"}
+                                    {options.chatChannels.has(channel) ? "toggle_on" : "toggle_off"}
                                  </div>
                               </td>
                            </tr>

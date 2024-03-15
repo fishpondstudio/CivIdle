@@ -115,8 +115,9 @@ export class GameOptions {
    shortcuts: Partial<Record<Shortcut, IShortcutConfig>> = {};
    soundEffect = true;
    chatHideLatestMessage = false;
-   chatSendChannel: ChatChannel = "en";
-   chatReceiveChannel: PartialSet<ChatChannel> = { en: true };
+   chatChannels: Set<ChatChannel> = new Set(["en"]);
+   // chatSendChannel: ChatChannel = "en";
+   // chatReceiveChannel: PartialSet<ChatChannel> = { en: true };
    useMirrorServer = false;
    buildingDefaults: Partial<Record<Building, Partial<IBuildingData>>> = {};
    defaultProductionPriority = PRIORITY_MIN;

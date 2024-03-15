@@ -5,6 +5,13 @@ interface PatchNote {
 
 export const PatchNotes: PatchNote[] = [
    {
+      version: "0.4.1",
+      content: [
+         ["QoL", "Support multiple chat windows"],
+         ["QoL", "Save selected tab in Grand Bazaar and Statistics Building"],
+      ],
+   },
+   {
       version: "0.4.0",
       content: [
          ["New Map", "Memphis"],

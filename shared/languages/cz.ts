@@ -123,7 +123,7 @@ export const CZ = {
    GasPipeline: "Plynovod",
    Urbanization: "Urbanizace",
    Aeroplane: "Letadlo",
-   AtomTheory: "Teorie atomu",
+   AtomicTheory: "Atomic Theory",
    Synthetics: "Syntetika",
    MotionPicture: "Pohyblivý obraz",
    Assembly: "Montáž",
@@ -823,7 +823,8 @@ export const CZ = {
    TurnOnTimeWarpDesc: "Stojí %{speed} warpů za každou sekundu a zrychlí vaši říši na %{speed}x rychlost.",
    TimeWarpWarning:
       "Zrychlení na vyšší rychlost, než jakou zvládne váš počítač, může vést ke ztrátě dat: POUŽÍVÁNÍ NA VLASTNÍ NEBEZPEČÍ",
-   PetraNoMultiplier: "Petra není ovlivněna žádnými násobiči (produkce, kapacita pracovníků, úložiště atd.).",
+   BuildingNoMultiplier:
+      "%{building} is <b>not affected</b> by any multipliers (production, worker capacity, storage, etc)",
    LimitOfflineProduction: "Omezení výroby v režimu offline",
    Reborn: "Znovuzrození",
    RebornCity: "Vyberte nové město",
@@ -859,8 +860,6 @@ export const CZ = {
    BuildingPriority: "Priorita budovy",
    ChatChannel: "Chatovací kanál",
    ChatChannelLanguage: "Jazyk",
-   ChatChannelSend: "Odeslat",
-   ChatChannelReceive: "Přijmout",
    FirstTimeGuideNext: "Další",
    FirstTimeGuideFinish: "Dokončit",
    AccountTypeShowDetails: "Zobrazit podrobnosti o účtu",
@@ -1031,4 +1030,7 @@ export const CZ = {
    SidePanelWidthDescHTML:
       "Change the width of the side panel. <b>Require restarting your game to take effect</b>",
    ShowUnbuiltOnly: "Only show buildings that haven't been built yet",
+   PlayerTradeFilters: "Filters",
+   PlayerTradeFiltersApply: "Apply",
+   PlayerTradeFiltersClear: "Clear",
 };

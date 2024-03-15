@@ -123,7 +123,7 @@ export const KR = {
    GasPipeline: "가스관",
    Urbanization: "도시화",
    Aeroplane: "항공기",
-   AtomTheory: "원자이론",
+   AtomicTheory: "Atomic Theory",
    Synthetics: "합성화학",
    MotionPicture: "영화",
    Assembly: "조립",
@@ -803,7 +803,8 @@ export const KR = {
    TurnOnTimeWarpDesc: "%{speed} 개의 워프를 소모하여 %{speed}x 배의 속도로 제국이 진행되도록 가속합니다..",
    TimeWarpWarning:
       "컴퓨터가 처리할 수 있는 속도보다 더 빠른 속도로 가속하면 데이터 손실이 발생할 수 있습니다. 책임은 사용자에게 있습니다",
-   PetraNoMultiplier: "페트라는 배수의 영향을 받지 않습니다 (생산, 저장소, 작업자 용량 등)",
+   BuildingNoMultiplier:
+      "%{building} is <b>not affected</b> by any multipliers (production, worker capacity, storage, etc)",
    LimitOfflineProduction: "오프라인 생산 제한",
    Reborn: "환생",
    RebornCity: "새로운 도시 선택",
@@ -836,8 +837,6 @@ export const KR = {
    BuildingPriority: "건물 우선 순위",
    ChatChannel: "채팅 채널",
    ChatChannelLanguage: "언어",
-   ChatChannelSend: "보내기",
-   ChatChannelReceive: "받기",
    FirstTimeGuideNext: "다음",
    FirstTimeGuideFinish: "끝",
    AccountTypeShowDetails: "계정 세부 정보 표시",
@@ -1003,4 +1002,7 @@ export const KR = {
    SidePanelWidthDescHTML:
       "Change the width of the side panel. <b>Require restarting your game to take effect</b>",
    ShowUnbuiltOnly: "Only show buildings that haven't been built yet",
+   PlayerTradeFilters: "Filters",
+   PlayerTradeFiltersApply: "Apply",
+   PlayerTradeFiltersClear: "Clear",
 };

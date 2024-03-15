@@ -123,7 +123,7 @@ export const JP = {
    GasPipeline: "Gas Pipeline",
    Urbanization: "Urbanization",
    Aeroplane: "Aeroplane",
-   AtomTheory: "Atom Theory",
+   AtomicTheory: "Atomic Theory",
    Synthetics: "Synthetics",
    MotionPicture: "Motion Picture",
    Assembly: "Assembly",
@@ -820,7 +820,8 @@ export const JP = {
       "Cost %{speed} warps for every second and accelerate your empire to run at %{speed}x speed.",
    TimeWarpWarning:
       "Accelerate at a higher speed than your computer can handle might result in data loss: USE AT YOUR OWN RISK",
-   PetraNoMultiplier: "Petra is not affected by any multipliers (production, worker capacity, storage, etc)",
+   BuildingNoMultiplier:
+      "%{building} is <b>not affected</b> by any multipliers (production, worker capacity, storage, etc)",
    LimitOfflineProduction: "Limit Offline Production",
    Reborn: "Rebirth",
    RebornCity: "Select A New City",
@@ -855,8 +856,6 @@ export const JP = {
    BuildingPriority: "Building Priority",
    ChatChannel: "Chat Channel",
    ChatChannelLanguage: "Language",
-   ChatChannelSend: "Send",
-   ChatChannelReceive: "Receive",
    FirstTimeGuideNext: "Next",
    FirstTimeGuideFinish: "Finish",
    AccountTypeShowDetails: "Show Account Details",
@@ -1025,4 +1024,7 @@ export const JP = {
    SidePanelWidthDescHTML:
       "Change the width of the side panel. <b>Require restarting your game to take effect</b>",
    ShowUnbuiltOnly: "Only show buildings that haven't been built yet",
+   PlayerTradeFilters: "Filters",
+   PlayerTradeFiltersApply: "Apply",
+   PlayerTradeFiltersClear: "Clear",
 };
