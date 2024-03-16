@@ -405,7 +405,7 @@ export const DE = {
    MausoleumAtHalicarnassus: "Mausoleum von Halikarnassos",
    MausoleumAtHalicarnassusDesc:
       "Ein Transport kostet keine Arbeitskräfte, wenn er sich gerade in Reichweite von 2 Kacheln des Mausoleums befindet",
-   HangingGarden: "Hängender Garten",
+   HangingGarden: "Hängende Gärten",
    HangingGardenDesc:
       "Der Multiplikator für Bauarbeiter erhöht sich um 1. Bei benachbarten Aquädukten erhöht sich der Multiplikator für Produktion, Lagerung und Arbeitskräfte um 1.",
    Colosseum: "Kolosseum",
@@ -439,7 +439,7 @@ export const DE = {
       "Double the effect of Hatshepsut. All wheat farms get +1 Production and Storage Multiplier. All adjacent wheat farms get +5 Production and Storage Multiplier",
    MountSinai: "Mount Sinai",
    MountSinaiDesc:
-      "When discovered, a great person of the current age is born. All buildings that produce faith get +5 Storage Multiplier",
+      "Wenn entdeck erhalten Sie eine große Persönlichkeit des aktuellen Zeitalters. Alle Gebäude die Glauben generieren bekommen einen Multiplier von +5 auf die Lagergröße",
    Alps: "Alpen",
    AlpsDesc:
       "Bei jeder 10. Stufe eines Gebäudes erhöht sich der Multiplikator für Verbrauch und Produktion um 1.",
@@ -1008,15 +1008,15 @@ export const DE = {
    HappinessUncapped: "Zufriedenheit (ohne Beschränkung)",
    ExtraGreatPeople: "%{count} Zusätzliche herausragende Persönlichkeiten",
    ScrollWheelAdjustLevelTooltip:
-      "You can use scroll wheel to adjust the level when your cursor is over this",
+      "Mit dem Mausrad kannst du das Level anpassen wenn dein Mauszeiger über dem Symbol ist",
    Concrete: "Beton",
    ConcretePlant: "Zement Fabrik",
-   ResourceExportBelowCap: "Export Below Cap",
+   ResourceExportBelowCap: "Exportiere unterhalb der Kapazität",
    ResourceExportBelowCapTooltip:
-      "Allow other buildings to transport a resource from this building even when its amount is below the cap",
-   ResourceExportToSameType: "Export to the Same Type",
+      "Erlaube Gebäuden den Transport von hier selbst wenn die Menge unter der Kapazität liegt.",
+   ResourceExportToSameType: "Exportiere zum gleichen Typ",
    ResourceExportToSameTypeTooltip:
-      "Allow other buildings of the same type to transport a resource from this building",
+      "Erlaube Gebäude des gleichen Typs Ware von hier zu Transportieren.",
    MarketTradeDescHTML:
       "Märkte erhalten <b>einen zusätzlichen Handel pro Level</b>, der nach der Verbesserung des Markts erscheint",
    WarehouseAutopilotSettings: "Einstellungen Autopilot",
@@ -1031,32 +1031,32 @@ export const DE = {
    GrandBazaarDesc:
       "Alle Märkte an einer Stelle kontrollieren!. Alle umgebenden Gebäude erhalten +5 Speichermultiplikator",
    GrandBazaarFilters: "Filter",
-   GrandBazaarFilterYouPay: "You Pay",
-   GrandBazaarFilterYouGet: "You Get",
+   GrandBazaarFilterYouPay: "Du bezahlst",
+   GrandBazaarFilterYouGet: "Du bekommst",
    GrandBazaarFilterWarningHTML:
       "Um den Handel irgendeines Markts anzuzeigen, muß vorher ein Filter gewählt werden",
    AbuSimbel: "Abu Simbel",
-   AbuSimbelDesc: "Double the effect of Ramesses II. All Adjacent wonders get +1 Happiness",
+   AbuSimbelDesc: "Verdoppel den Effekt von Ramsses II. All angrenzenden Wunder generieren +1 Happiness",
    GreatSphinx: "Great Sphinx",
    GreatSphinxDesc:
       "All Tier II or above buildings within 2 tiles get +N Consumption, Production Multiplier. N = Number of its adjacent buildings of the same type",
    SeaTradeUpgrade: "Trading with players across the sea. Tariff for each sea tile: %{tariff}",
-   SeaTradeCost: "Sea Trade Cost",
+   SeaTradeCost: "Kosten für Seehandel",
    Server: "Server",
-   UseMirrorServer: "Use Mirror Server",
+   UseMirrorServer: "Verbindung zum Mirror Server",
    UseMirrorServerDescHTML:
-      "If you have problems accessing the main server, you can connect to the mirror server instead. <b>Require restarting your game to take effect</b>",
-   EmpireValueFromResources: "From Resources",
-   EmpireValueFromBuildings: "From Buildings",
-   StatisticsScience: "Science",
-   StatisticsScienceProduction: "Science Production",
-   StatisticsScienceFromWorkers: "Science From Workers",
-   StatisticsScienceFromBuildings: "Science From Buildings",
-   SidePanelWidth: "Side Panel Width",
+      "Wenn Sie Probleme haben den Hauptserver zu erreichen,können Sie auf den Mirror Server ausweichen. <b>Ein Neustart des Spiels ist erforderlich</b>",
+   EmpireValueFromResources: "Durch Ressoursen",
+   EmpireValueFromBuildings: "Durch Gebäude",
+   StatisticsScience: "Forschung",
+   StatisticsScienceProduction: "FOrschungsproduktion",
+   StatisticsScienceFromWorkers: "Forschung durch Wunder",
+   StatisticsScienceFromBuildings: "Forschung durch Gebäude",
+   SidePanelWidth: "Breite des seitlichen Menüfensters",
    SidePanelWidthDescHTML:
-      "Change the width of the side panel. <b>Require restarting your game to take effect</b>",
-   ShowUnbuiltOnly: "Only show buildings that haven't been built yet",
-   PlayerTradeFilters: "Filters",
-   PlayerTradeFiltersApply: "Apply",
-   PlayerTradeFiltersClear: "Clear",
+      "Breitenanpassung für das seitliche Menüfensters. <b>Ein Neustart des Spiels ist erforderlich</b>",
+   ShowUnbuiltOnly: "Zeige nur Gebäude die noch nicht gebaut wurden",
+   PlayerTradeFilters: "Filter",
+   PlayerTradeFiltersApply: "Anwenden",
+   PlayerTradeFiltersClear: "Löschen",
 };
