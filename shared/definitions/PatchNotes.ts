@@ -9,6 +9,10 @@ export const PatchNotes: PatchNote[] = [
       content: [
          ["QoL", "Support multiple chat windows"],
          ["QoL", "Save selected tab in Grand Bazaar and Statistics Building"],
+         [
+            "Bugfix",
+            "Fix rounding issues causing Warehouse/Caravansary's distribute equally feature to function incorrectly",
+         ],
       ],
    },
    {
