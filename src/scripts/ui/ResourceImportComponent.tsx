@@ -176,7 +176,7 @@ export function ResourceImportComponent({ gameState, xy }: IBuildingComponentPro
                   forEach(building.resourceImports, (res, v) => {
                      v.perCycle = 0;
                   });
-                  const amount = (baseCapacity * capacityMultiplier) / selected.size;
+                  const amount = Math.floor((baseCapacity * capacityMultiplier) / selected.size);
                   selected.forEach((res) => {
                      if (building.resourceImports[res]) {
                         building.resourceImports[res]!.perCycle = amount;

@@ -37,7 +37,7 @@ import { showModal, showToast } from "./GlobalModal";
 import { RenderHTML } from "./RenderHTMLComponent";
 import { SelectChatChannelModal } from "./SelectChatChannelModal";
 
-const SetChatInput = new TypedEvent<(old: string) => string>();
+const SetChatInput = new TypedEvent<{ channel: ChatChannel; getContent: (old: string) => string }>();
 
 export function ChatPanel(): React.ReactNode {
    const options = useGameOptions();
@@ -196,9 +196,11 @@ function ChatInput({
       onChatSend(chat);
       setChat("");
    };
-   useTypedEvent(SetChatInput, (content) => {
-      setChat(content);
-      chatInput.current?.focus();
+   useTypedEvent(SetChatInput, (e) => {
+      if (e.channel === channel) {
+         setChat(e.getContent);
+         chatInput.current?.focus();
+      }
    });
    return (
       <div className="row" style={{ padding: "2px" }}>
@@ -274,7 +276,12 @@ function ChatMessage({
             </div>
          ) : (
             <div className="row text-small text-desc">
-               <div className="pointer" onClick={() => SetChatInput.emit((old) => `@${chat.name} ${old}`)}>
+               <div
+                  className="pointer"
+                  onClick={() =>
+                     SetChatInput.emit({ getContent: (old) => `@${chat.name} ${old}`, channel: chat.channel })
+                  }
+               >
                   {chat.name}
                </div>
                <Tippy content={getCountryName(chat.flag)}>
