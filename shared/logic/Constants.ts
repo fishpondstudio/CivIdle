@@ -48,6 +48,8 @@ export const MARKET_DEFAULT_TRADE_COUNT = 5;
 export const MAX_EXPLORER = 10;
 export const EXPLORER_SECONDS = 60;
 
+export const GOLDEN_RATIO = (1 + Math.sqrt(5)) / 2;
+
 interface IRecipe {
    building: Building;
    input: PartialTabulate<Resource>;
@@ -57,7 +59,10 @@ interface IRecipe {
 export function calculateTierAndPrice(log?: (val: string) => void) {
    forEach(IsDeposit, (k) => {
       Config.ResourceTier[k] = 1;
-      Config.ResourcePrice[k] = 1 + Config.Tech[getDepositUnlockTech(k)].column;
+      const tech = getDepositUnlockTech(k);
+      Config.ResourcePrice[k] = Math.round(
+         Config.Tech[tech].column + Math.pow(Config.TechAge[getAgeForTech(tech)!].idx, 2),
+      );
    });
 
    const allRecipes: IRecipe[] = [];
@@ -224,8 +229,12 @@ export function calculateTierAndPrice(log?: (val: string) => void) {
             if (!Config.BuildingTier[building] || targetTier > Config.BuildingTier[building]!) {
                Config.BuildingTier[building] = targetTier;
             }
+            // const multiplier = 0.5 + Math.sqrt(sizeOf(input));
+            const multiplier = 1.5 + 0.25 * sizeOf(input);
             forEach(output, (res) => {
-               const price = (2 * inputResourcesValue - notPricedResourceValue) / allOutputAmount;
+               const price = Math.round(
+                  (multiplier * inputResourcesValue - notPricedResourceValue) / allOutputAmount,
+               );
                if (!Config.ResourcePrice[res]) {
                   Config.ResourcePrice[res] = price;
                } else if (price > Config.ResourcePrice[res]!) {
@@ -315,11 +324,12 @@ export function calculateTierAndPrice(log?: (val: string) => void) {
    const resourcePrice: string[] = [];
    keysOf(Config.Resource)
       .sort((a, b) => Config.ResourceTier[a]! - Config.ResourceTier[b]!)
+      .filter((r) => !NoPrice[r])
       .forEach((r) => {
          resourcePrice.push(
             `${r.padEnd(15)}${!NoPrice[r] && endResources[r] ? "*".padEnd(5) : "".padEnd(5)}${numberToRoman(
                Config.ResourceTier[r]!,
-            )!.padEnd(10)}${formatNumber(Config.ResourcePrice[r]!).padEnd(10)}${
+            )!.padEnd(10)}${String(Config.ResourcePrice[r]!).padEnd(10)}${
                resourcesUsedByWonder.get(r) ?? "0*"
             }`,
          );

@@ -111,6 +111,14 @@ export class BuildingDefinitions {
       construction: { Brick: 1, Copper: 1 },
    };
 
+   UraniumMine: IBuildingDefinition = {
+      name: () => t(L.UraniumMine),
+      input: {},
+      deposit: { Uranium: true },
+      output: { Uranium: 1 },
+      construction: { Concrete: 1, Tool: 1 },
+   };
+
    OilWell: IBuildingDefinition = {
       name: () => t(L.OilWell),
       input: {},
@@ -224,7 +232,7 @@ export class BuildingDefinitions {
    };
    TankFactory: IBuildingDefinition = {
       name: () => t(L.TankFactory),
-      input: { Engine: 1, Steel: 10, Cannon: 1, GatlingGun: 1, Rifle: 1 },
+      input: { Engine: 1, Steel: 10, Cannon: 1, GatlingGun: 1 },
       output: { Tank: 1 },
    };
    // #endregion /////////////////////////////////////////////////////////////////////////////////////////////
@@ -398,6 +406,11 @@ export class BuildingDefinitions {
       input: { Cheese: 1, Meat: 1, Flour: 2, Water: 2 },
       output: { Pizza: 1 },
    };
+   PlasticsFactory: IBuildingDefinition = {
+      name: () => t(L.PlasticsFactory),
+      input: { Oil: 2 },
+      output: { Plastics: 1 },
+   };
    // #endregion /////////////////////////////////////////////////////////////////////////////////////////////
 
    // #region Heavy Industry /////////////////////////////////////////////////////////////////////////////////
@@ -462,6 +475,11 @@ export class BuildingDefinitions {
       name: () => t(L.LocomotiveFactory),
       input: { Engine: 1, Steel: 10 },
       output: { Train: 1 },
+   };
+   CarFactory: IBuildingDefinition = {
+      name: () => t(L.CarFactory),
+      input: { Engine: 1, Steel: 1, Furniture: 1 },
+      output: { Car: 1 },
    };
    OilRefinery: IBuildingDefinition = {
       name: () => t(L.OilRefinery),

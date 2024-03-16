@@ -79,6 +79,9 @@ export class ResourceDefinitions {
    Petrol: IResourceDefinition = { name: () => t(L.Petrol) };
    Concrete: IResourceDefinition = { name: () => t(L.Concrete) };
    Explorer: IResourceDefinition = { name: () => t(L.Explorer) };
+   Plastics: IResourceDefinition = { name: () => t(L.Plastics) };
+   Uranium: IResourceDefinition = { name: () => t(L.Uranium) };
+   Car: IResourceDefinition = { name: () => t(L.Car) };
 }
 
 export type Resource = keyof ResourceDefinitions;
@@ -107,6 +110,7 @@ export const IsDeposit = {
    Oil: true,
    Aluminum: true,
    NaturalGas: true,
+   Uranium: true,
 } as const satisfies PartialSet<Resource>;
 
 export type Deposit = keyof typeof IsDeposit;
