@@ -1015,8 +1015,7 @@ export const DE = {
    ResourceExportBelowCapTooltip:
       "Erlaube Gebäuden den Transport von hier selbst wenn die Menge unter der Kapazität liegt.",
    ResourceExportToSameType: "Exportiere zum gleichen Typ",
-   ResourceExportToSameTypeTooltip:
-      "Erlaube Gebäude des gleichen Typs Ware von hier zu Transportieren.",
+   ResourceExportToSameTypeTooltip: "Erlaube Gebäude des gleichen Typs Ware von hier zu Transportieren.",
    MarketTradeDescHTML:
       "Märkte erhalten <b>einen zusätzlichen Handel pro Level</b>, der nach der Verbesserung des Markts erscheint",
    WarehouseAutopilotSettings: "Einstellungen Autopilot",
