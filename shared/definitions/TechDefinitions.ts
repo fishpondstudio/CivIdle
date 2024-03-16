@@ -597,73 +597,86 @@ export class TechDefinitions {
       unlockBuilding: ["Pizzeria", "MagazinePublisher"],
    };
 
-   Assembly: ITechDefinition = {
-      name: () => t(L.Assembly),
+   Aviation: ITechDefinition = {
+      name: () => t(L.Aviation),
       column: 18,
       requireTech: ["Combustion", "Electrolysis"],
-      unlockBuilding: ["CarFactory"],
-   };
-
-   AtomicTheory: ITechDefinition = {
-      name: () => t(L.AtomicTheory),
-      column: 18,
-      requireTech: ["Refinery", "Electrolysis"],
-      revealDeposit: ["Uranium"],
-      unlockBuilding: ["UraniumMine"],
+      unlockBuilding: ["BiplaneFactory"],
    };
 
    Synthetics: ITechDefinition = {
       name: () => t(L.Synthetics),
       column: 18,
+      requireTech: ["Refinery", "Electrolysis"],
+      unlockBuilding: ["PlasticsFactory", "GasPowerPlant"],
+   };
+
+   AtomicTheory: ITechDefinition = {
+      name: () => t(L.AtomicTheory),
+      column: 18,
       requireTech: ["Refinery", "GasPipeline"],
-      unlockBuilding: ["PlasticsFactory"],
+      revealDeposit: ["Uranium"],
+      unlockBuilding: ["UraniumMine"],
    };
 
    MotionPicture: ITechDefinition = {
       name: () => t(L.MotionPicture),
       column: 18,
       requireTech: ["Urbanization"],
+      unlockBuilding: ["MovieStudio"],
    };
 
-   Aviation: ITechDefinition = {
-      name: () => t(L.Aviation),
+   Assembly: ITechDefinition = {
+      name: () => t(L.Assembly),
       column: 19,
-      requireTech: ["Assembly", "AtomicTheory"],
+      requireTech: ["Aviation", "Synthetics"],
+      unlockBuilding: ["CarFactory"],
    };
+
    Ballistics: ITechDefinition = {
       name: () => t(L.Ballistics),
       column: 19,
-      requireTech: ["AtomicTheory"],
+      requireTech: ["Synthetics"],
+      unlockBuilding: ["ArtilleryFactory"],
    };
-   Medicine: ITechDefinition = {
-      name: () => t(L.Medicine),
+
+   Hydroelectricity: ITechDefinition = {
+      name: () => t(L.Hydroelectricity),
       column: 19,
       requireTech: ["AtomicTheory", "Synthetics"],
+      unlockBuilding: ["HydroDam"],
    };
-   Greenhouse: ITechDefinition = {
-      name: () => t(L.Greenhouse),
+
+   Radio: ITechDefinition = {
+      name: () => t(L.Radio),
       column: 19,
-      requireTech: ["Synthetics", "MotionPicture"],
+      requireTech: ["AtomicTheory", "MotionPicture"],
+      unlockBuilding: ["RadioStation"],
    };
+
    Rocketry: ITechDefinition = {
       name: () => t(L.Rocketry),
       column: 20,
-      requireTech: ["Aviation", "Ballistics"],
+      requireTech: ["Assembly", "Ballistics"],
    };
+
    NuclearFission: ITechDefinition = {
       name: () => t(L.NuclearFission),
       column: 20,
       requireTech: ["Ballistics"],
+      unlockBuilding: ["BattleshipBuilder"],
    };
+
    UnitedNations: ITechDefinition = {
-      name: () => t(L.UnitedNation),
+      name: () => t(L.UnitedNations),
       column: 20,
-      requireTech: ["Ballistics", "Greenhouse", "Medicine"],
+      requireTech: ["Ballistics", "Radio", "Hydroelectricity"],
    };
+
    Refrigeration: ITechDefinition = {
       name: () => t(L.Refrigeration),
       column: 20,
-      requireTech: ["Greenhouse"],
+      requireTech: ["Radio"],
    };
 
    SpaceProgram: ITechDefinition = {
@@ -671,6 +684,7 @@ export class TechDefinitions {
       column: 21,
       requireTech: ["Rocketry", "NuclearFission"],
    };
+
    Semiconductor: ITechDefinition = {
       name: () => t(L.Semiconductor),
       column: 21,

@@ -69,6 +69,9 @@ export class ResourceDefinitions {
    Rifle: IResourceDefinition = { name: () => t(L.Rifle) };
    GatlingGun: IResourceDefinition = { name: () => t(L.GatlingGun) };
    Ironclad: IResourceDefinition = { name: () => t(L.Ironclad) };
+   Battleship: IResourceDefinition = { name: () => t(L.Battleship) };
+   Artillery: IResourceDefinition = { name: () => t(L.Artillery) };
+   Biplane: IResourceDefinition = { name: () => t(L.Biplane) };
    Sports: IResourceDefinition = { name: () => t(L.Sports) };
    Stock: IResourceDefinition = { name: () => t(L.Stock) };
    Tank: IResourceDefinition = { name: () => t(L.Tank) };
@@ -82,6 +85,8 @@ export class ResourceDefinitions {
    Plastics: IResourceDefinition = { name: () => t(L.Plastics) };
    Uranium: IResourceDefinition = { name: () => t(L.Uranium) };
    Car: IResourceDefinition = { name: () => t(L.Car) };
+   Movie: IResourceDefinition = { name: () => t(L.Car) };
+   Radio: IResourceDefinition = { name: () => t(L.Radio) };
 }
 
 export type Resource = keyof ResourceDefinitions;
