@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { L, t } from "../../../shared/utilities/i18n";
 
 export interface ITableHeader {
@@ -14,15 +14,27 @@ export function TableView<T>({
    data,
    compareFunc,
    renderRow,
+   defaultSortOrder = true,
+   defaultSortColumn,
+   onSort = () => {},
 }: {
    classNames?: string;
    header: ITableHeader[];
    data: T[];
    renderRow: (item: T) => React.ReactNode;
    compareFunc: (a: T, b: T, col: number) => number;
+   defaultSortOrder?: boolean;
+   defaultSortColumn?: number;
+   onSort?: (o: boolean, i: number) => void;
 }): React.ReactNode {
-   const [sortColumn, setSortColumn] = useState(header.findIndex((v) => v.sortable));
-   const [asc, setAsc] = useState(true);
+   if (defaultSortColumn === undefined) {
+      defaultSortColumn = header.findIndex((v) => v.sortable);
+   }
+   const [sortColumn, setSortColumn] = useState(defaultSortColumn);
+   const [asc, setAsc] = useState(defaultSortOrder);
+   useEffect(() => {
+      onSort(asc, sortColumn);
+   }, [onSort, asc, sortColumn]);
    return (
       <div className={`table-view ${classNames ?? ""}`}>
          <table>
