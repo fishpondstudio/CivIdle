@@ -4,7 +4,7 @@ import type { Resource } from "../../../shared/definitions/ResourceDefinitions";
 import { getStorageFor } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
 import { PendingClaimFlag, type IPendingClaim } from "../../../shared/utilities/Database";
-import { hasFlag, safeAdd } from "../../../shared/utilities/Helper";
+import { forEach, formatNumber, hasFlag, mapOf, safeAdd, sizeOf } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import { OnNewPendingClaims, client } from "../rpc/RPCClient";
 import { useTypedEvent } from "../utilities/Hook";
@@ -37,28 +37,34 @@ export function PendingClaimComponent({ gameState, xy }: IBuildingComponentProps
          }
          const { total, used } = getStorageFor(xy, gameState);
          const available = total - used;
-         const toClaim: string[] = [];
+         const toClaim: Record<string, number> = {};
          let storageNeeded = 0;
          for (const claim of trades) {
             if (storageNeeded + claim.amount > available) {
+               toClaim[claim.id] = available - storageNeeded;
                break;
             }
-            toClaim.push(claim.id);
+            toClaim[claim.id] = claim.amount;
             storageNeeded += claim.amount;
          }
-         playKaching();
-         const result = await client.claimTrades(toClaim);
-         setPendingClaims(result.pendingClaims);
-         const confirmed = new Set(result.claimedIds);
-         for (const claim of trades) {
-            if (confirmed.has(claim.id)) {
-               safeAdd(building.resources, claim.resource, claim.amount);
-            }
-         }
-         if (confirmed.size > 0) {
-            showToast(t(L.PlayerTradeClaimAllMessage, { count: confirmed.size }));
+         const { pendingClaims, resources } = await client.claimTradesV2(toClaim);
+         setPendingClaims(pendingClaims);
+         forEach(resources, (res, amount) => {
+            safeAdd(building.resources, res, amount);
+         });
+         if (sizeOf(resources) > 0) {
+            playKaching();
+            showToast(
+               t(L.PlayerTradeClaimAllMessageV2, {
+                  resources: mapOf(
+                     resources,
+                     (res, amount) => `${Config.Resource[res].name()}: ${formatNumber(amount)}`,
+                  ).join(", "),
+               }),
+            );
          } else {
-            showToast(t(L.PlayerTradeClaimAllFailedMessage, { count: confirmed.size }));
+            playError();
+            showToast(t(L.PlayerTradeClaimAllFailedMessageV2));
          }
       } catch (error) {
          playError();
