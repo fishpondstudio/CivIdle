@@ -426,8 +426,7 @@ function BuildingTab({ gameState }: IBuildingComponentProps): React.ReactNode {
    );
 }
 
-// biome-ignore lint/style/useConst:
-let resourceTabSortingState = { column: 0, asc: true };
+const resourceTabSortingState = { column: 0, asc: true };
 
 function ResourcesTab({ gameState }: IBuildingComponentProps): React.ReactNode {
    const [showTheoreticalValue, setShowTheoreticalValue] = useState(true);
