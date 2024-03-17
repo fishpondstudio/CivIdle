@@ -593,7 +593,7 @@ export class TechDefinitions {
    Urbanization: ITechDefinition = {
       name: () => t(L.Urbanization),
       column: 17,
-      requireTech: ["Olympics", "StockMarket"],
+      requireTech: ["Olympics", "StockMarket", "Electricity"],
       unlockBuilding: ["Pizzeria", "MagazinePublisher"],
    };
 
@@ -663,14 +663,14 @@ export class TechDefinitions {
    NuclearFission: ITechDefinition = {
       name: () => t(L.NuclearFission),
       column: 20,
-      requireTech: ["Ballistics"],
+      requireTech: ["Hydroelectricity", "Ballistics"],
       unlockBuilding: ["BattleshipBuilder"],
    };
 
    UnitedNations: ITechDefinition = {
       name: () => t(L.UnitedNations),
       column: 20,
-      requireTech: ["Ballistics", "Radio", "Hydroelectricity"],
+      requireTech: ["Radio", "Hydroelectricity"],
    };
 
    Refrigeration: ITechDefinition = {
