@@ -279,9 +279,9 @@ export class BuildingDefinitions {
       output: { Rocket: 1 },
    };
    AtomicBombFactory: IBuildingDefinition = {
-      name: () => t(L.RocketFactory),
-      input: { Engine: 1, Artillery: 1, Petrol: 10 },
-      output: { Rocket: 1 },
+      name: () => t(L.AtomicBombFactory),
+      input: { Dynamite: 10, Uranium: 10 },
+      output: { AtomicBomb: 1 },
    };
    // #endregion /////////////////////////////////////////////////////////////////////////////////////////////
 
