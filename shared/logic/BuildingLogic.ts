@@ -44,6 +44,7 @@ import {
    type IResourceImportBuildingData,
    type IWarehouseBuildingData,
 } from "./Tile";
+import { addMultiplier } from "./Update";
 
 export function totalMultiplierFor(xy: Tile, type: keyof Multiplier, base: number, gs: GameState): number {
    let result = base;
@@ -893,4 +894,20 @@ export function applyBuildingDefaults(building: IBuildingData, options: GameOpti
 
 export function shouldAlwaysShowBuildingOptions(building: IBuildingData): boolean {
    return "resourceImports" in building || "sellResources" in building;
+}
+
+export function getFaithProduced(gs: GameState, buildingName: string) {
+   let totalFaith = 0;
+   let totalLevel = 0;
+   getBuildingsThatProduce("Faith").forEach((b) => {
+      addMultiplier(b, { storage: 1 }, buildingName);
+      getBuildingsByType(b, gs)?.forEach((tile, xy) => {
+         if (tile.building.status === "completed") {
+            totalFaith += tile.building.resources.Faith ?? 0;
+            totalLevel += tile.building.level;
+         }
+      });
+   });
+
+   return { totalFaith, totalLevel };
 }

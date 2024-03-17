@@ -1,10 +1,16 @@
-import type { Building, IBuildingDefinition } from "../definitions/BuildingDefinitions";
+import {
+   BuildingDefinitions,
+   type Building,
+   type IBuildingDefinition,
+} from "../definitions/BuildingDefinitions";
 import type { Deposit, Resource } from "../definitions/ResourceDefinitions";
 import { Grid } from "../utilities/Grid";
 import { forEach, safeAdd, tileToHash, type Tile } from "../utilities/Helper";
 import type { PartialSet, PartialTabulate } from "../utilities/TypeDefinitions";
 import {
    IOCalculation,
+   ST_PETERS_FAITH_MULTIPLIER,
+   getFaithProduced,
    getMarketBaseSellAmount,
    getMarketBuyAmount,
    getResourceImportCapacity,

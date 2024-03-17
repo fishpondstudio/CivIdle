@@ -10,8 +10,10 @@ import {
 } from "../../../shared/definitions/ResourceDefinitions";
 import {
    IOCalculation,
+   ST_PETERS_FAITH_MULTIPLIER,
    getBuildingValue,
    getElectrificationStatus,
+   getFaithProduced,
    getScienceFromBuildings,
    getScienceFromWorkers,
    isHeadquarters,
@@ -448,6 +450,12 @@ function ResourcesTab({ gameState }: IBuildingComponentProps): React.ReactNode {
       }
       forEach(input, (res, amount) => safeAdd(inputs, res, amount));
       forEach(output, (res, amount) => safeAdd(outputs, res, amount));
+
+      if (building.type === "StPetersBasilica") {
+         const { totalFaith, totalLevel } = getFaithProduced(gameState, "StPetersBasilica");
+         const toProduce = Math.floor(totalFaith * ST_PETERS_FAITH_MULTIPLIER);
+         safeAdd(outputs, "Faith", toProduce);
+      }
    });
    keysOf(unlockedResourcesList).map((res) => {
       resourceAmounts[res] =

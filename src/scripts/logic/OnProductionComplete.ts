@@ -3,6 +3,7 @@ import {
    ST_PETERS_FAITH_MULTIPLIER,
    ST_PETERS_STORAGE_MULTIPLIER,
    getCompletedBuilding,
+   getFaithProduced,
    getScienceFromWorkers,
    getTotalBuildingUpgrades,
    isSpecialBuilding,
@@ -288,17 +289,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          break;
       }
       case "StPetersBasilica": {
-         let totalFaith = 0;
-         let totalLevel = 0;
-         getBuildingsThatProduce("Faith").forEach((b) => {
-            addMultiplier(b, { storage: 1 }, buildingName);
-            getBuildingsByType(b, gs)?.forEach((tile, xy) => {
-               if (tile.building.status === "completed") {
-                  totalFaith += tile.building.resources.Faith ?? 0;
-                  totalLevel += tile.building.level;
-               }
-            });
-         });
+         const { totalFaith, totalLevel } = getFaithProduced(gs, buildingName);
          const toProduce = Math.floor(totalFaith * ST_PETERS_FAITH_MULTIPLIER);
          safeAdd(building.resources, "Faith", toProduce);
          const max = totalLevel * ST_PETERS_STORAGE_MULTIPLIER;
