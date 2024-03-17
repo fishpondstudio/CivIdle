@@ -94,8 +94,8 @@ export function unlockTech(tech: Tech, event: TypedEvent<Tile> | null, gs: GameS
             if (!isNullOrUndefined(Config.Building[type].special)) {
                return false;
             }
-            // We do not spawn 3 resources on a single tile
-            if (sizeOf(tile.deposit) >= 3) {
+            // We do not spawn 2 resources on a single tile
+            if (sizeOf(tile.deposit) >= 2) {
                return false;
             }
             return true;

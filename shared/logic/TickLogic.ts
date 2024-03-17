@@ -33,6 +33,7 @@ interface ITickData {
    specialBuildings: Map<Building, Tile>;
    totalValue: number;
    scienceProduced: Map<Tile, number>;
+   powerGrid: Set<Tile>;
 }
 
 export function EmptyTickData(): ITickData {
@@ -52,6 +53,7 @@ export function EmptyTickData(): ITickData {
       specialBuildings: new Map(),
       totalValue: 0,
       scienceProduced: new Map(),
+      powerGrid: new Set(),
    };
 }
 

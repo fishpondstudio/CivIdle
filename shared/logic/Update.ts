@@ -15,6 +15,7 @@ import {
    keysOf,
    mapSafeAdd,
    mapSafePush,
+   pointToTile,
    safeAdd,
    shuffle,
    sizeOf,
@@ -472,6 +473,12 @@ function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
          OnShowFloater.emit({ xy, amount: v });
       } else {
          mapSafeAdd(Tick.next.workersAvailable, res, v);
+         if (res === "Power") {
+            Tick.next.powerGrid.add(xy);
+            for (const neighbor of getGrid(gs).getNeighbors(tileToPoint(xy))) {
+               Tick.next.powerGrid.add(pointToTile(neighbor));
+            }
+         }
       }
    });
    OnBuildingProductionComplete.emit({ xy, offline });

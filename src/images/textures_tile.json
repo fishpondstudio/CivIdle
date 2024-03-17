@@ -56,7 +56,7 @@
                 "h": 100
             }
         },
-        "Tile_Stone": {
+        "Tile_Power": {
             "frame": {
                 "x": 101,
                 "y": 202,
@@ -64,7 +64,7 @@
                 "h": 100
             }
         },
-        "Tile_Uranium": {
+        "Tile_Stone": {
             "frame": {
                 "x": 202,
                 "y": 202,
@@ -72,7 +72,7 @@
                 "h": 100
             }
         },
-        "Tile_Water": {
+        "Tile_Uranium": {
             "frame": {
                 "x": 303,
                 "y": 0,
@@ -80,10 +80,18 @@
                 "h": 100
             }
         },
-        "Tile_Wood": {
+        "Tile_Water": {
             "frame": {
                 "x": 303,
                 "y": 101,
+                "w": 100,
+                "h": 100
+            }
+        },
+        "Tile_Wood": {
+            "frame": {
+                "x": 303,
+                "y": 202,
                 "w": 100,
                 "h": 100
             }
