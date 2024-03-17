@@ -15,6 +15,7 @@ import type { IBuildingComponentProps } from "./BuildingPage";
 import { showToast } from "./GlobalModal";
 import { FormatNumber } from "./HelperComponents";
 import { TextWithHelp } from "./TextWithHelpComponent";
+import { unlockedResources } from "../../../shared/logic/IntraTickCache";
 
 export function AddTradeComponent({ gameState, xy }: IBuildingComponentProps): React.ReactNode {
    const user = useUser();
@@ -22,9 +23,7 @@ export function AddTradeComponent({ gameState, xy }: IBuildingComponentProps): R
    const enabled =
       !isNullOrUndefined(user) &&
       trades.filter((t) => t.fromId === user.userId).length < getMaxActiveTrades(user);
-   const buyResources = Array.from(Tick.next.resourcesByTile.keys()).filter(
-      (res) => !NoPrice[res] && !NoStorage[res],
-   );
+   const buyResources = keysOf(unlockedResources(gameState)).filter((r) => !NoStorage[r] && !NoPrice[r]);
    const resourcesInStorage = gameState.tiles.get(xy)?.building?.resources ?? {};
    const sellResources = keysOf(resourcesInStorage);
    const [trade, setTrade] = useState<IClientAddTradeRequest>({
