@@ -14,15 +14,17 @@ export function TableView<T>({
    data,
    compareFunc,
    renderRow,
+   sortingState,
 }: {
    classNames?: string;
    header: ITableHeader[];
    data: T[];
    renderRow: (item: T) => React.ReactNode;
    compareFunc: (a: T, b: T, col: number) => number;
+   sortingState?: { column: number; asc: boolean };
 }): React.ReactNode {
-   const [sortColumn, setSortColumn] = useState(header.findIndex((v) => v.sortable));
-   const [asc, setAsc] = useState(true);
+   const [sortColumn, setSortColumn] = useState(sortingState?.column ?? header.findIndex((v) => v.sortable));
+   const [asc, setAsc] = useState(sortingState?.asc ?? true);
    return (
       <div className={`table-view ${classNames ?? ""}`}>
          <table>
@@ -36,6 +38,10 @@ export function TableView<T>({
                            if (h.sortable) {
                               setSortColumn(index);
                               setAsc(!asc);
+                              if (sortingState) {
+                                 sortingState.asc = !asc;
+                                 sortingState.column = index;
+                              }
                            }
                         }}
                      >

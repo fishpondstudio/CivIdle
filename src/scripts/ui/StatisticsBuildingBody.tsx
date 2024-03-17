@@ -426,6 +426,8 @@ function BuildingTab({ gameState }: IBuildingComponentProps): React.ReactNode {
    );
 }
 
+const resourceTabSortingState = { column: 0, asc: true };
+
 function ResourcesTab({ gameState }: IBuildingComponentProps): React.ReactNode {
    const [showTheoreticalValue, setShowTheoreticalValue] = useState(true);
    const unlockedResourcesList: PartialSet<Resource> = unlockedResources(gameState);
@@ -512,6 +514,7 @@ function ResourcesTab({ gameState }: IBuildingComponentProps): React.ReactNode {
                { name: t(L.StatisticsResourcesDeficit), right: true, sortable: true },
                { name: t(L.StatisticsResourcesRunOut), right: true, sortable: true },
             ]}
+            sortingState={resourceTabSortingState}
             data={keysOf(unlockedResourcesList)}
             compareFunc={(a, b, i) => {
                switch (i) {
