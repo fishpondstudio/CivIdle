@@ -51,110 +51,199 @@ let savedSellResourceFilter: Resource | null = null;
 
 function TradesTab({
    allMarketTrades,
+   availableResourcesSet,
    gs,
-}: { allMarketTrades: IGrandBazaarMarketData[]; gs: GameState }): React.ReactNode {
+}: {
+   allMarketTrades: IGrandBazaarMarketData[];
+   availableResourcesSet: Set<Resource>;
+   gs: GameState;
+}): React.ReactNode {
+   const [buyResourceFilter, setBuyResourceFilter] = useState<Resource | null>(savedBuyResourceFilter);
+   const [sellResourceFilter, setSellResourceFilter] = useState<Resource | null>(savedSellResourceFilter);
+
+   const availableResources = Array.from(availableResourcesSet).sort((a, b) =>
+      Config.Resource[a].name().localeCompare(Config.Resource[b].name()),
+   );
+
    return (
-      <article role="tabpanel" className="f1 column" style={{ padding: "8px", overflow: "auto" }}>
-         <TableView
-            classNames="sticky-header f1"
-            header={[
-               { name: t(L.MarketYouPay), sortable: true },
-               { name: t(L.MarketYouGet), sortable: true },
-               { name: "", sortable: true },
-               { name: t(L.MarketSell), sortable: true },
-               { name: "", sortable: false },
-            ]}
-            data={allMarketTrades.filter((e) => false)}
-            compareFunc={(a, b, i) => {
-               switch (i) {
-                  case 0:
-                     return Config.Resource[a.sellResource]
-                        .name()
-                        .localeCompare(Config.Resource[b.sellResource].name());
-                  case 1:
-                     return Config.Resource[a.buyResource]
-                        .name()
-                        .localeCompare(Config.Resource[b.buyResource].name());
-                  case 2:
-                     return (calculateTradeValue(a) ?? 0) - (calculateTradeValue(b) ?? 0);
-                  default:
-                     return 0;
-               }
-            }}
-            renderRow={(item) => {
-               const building = gs.tiles.get(item.xy)?.building as IMarketBuildingData;
-               const sellResource = Config.Resource[item.sellResource];
-               const buyResource = Config.Resource[item.buyResource];
-               const tradeValue = calculateTradeValue(item);
-               return (
-                  <tr key={`Res:${item.sellResource}Tile:${item.xy}`}>
-                     <td>
-                        <div>{sellResource.name()}</div>
-                        <div className="text-small text-desc text-strong">
-                           <FormatNumber value={item.sellAmount} />
-                        </div>
-                     </td>
-                     <td>
-                        <div>{buyResource.name()}</div>
-                        <div className="text-small text-desc text-strong">
-                           <FormatNumber value={item.buyAmount} />
-                        </div>
-                     </td>
-                     <td
-                        className={classNames({
-                           "text-green": tradeValue > 0,
-                           "text-red": tradeValue < 0,
-                           "text-right text-small": true,
-                        })}
-                     >
-                        <TextWithHelp
-                           content={t(L.MarketValueDesc, {
-                              value: formatPercent(tradeValue, 0),
+      <>
+         <article role="tabpanel" className="f1 column" style={{ padding: "8px", overflow: "auto" }}>
+            <fieldset>
+               <legend>{t(L.GrandBazaarFilters)}</legend>
+               <div className="row">
+                  <div style={{ width: "120px" }}>{t(L.GrandBazaarFilterYouPay)}</div>
+                  <select
+                     className="f1"
+                     value={sellResourceFilter ? sellResourceFilter : ""}
+                     onChange={(e) => {
+                        if (e.target.value === "") {
+                           savedSellResourceFilter = null;
+                           setSellResourceFilter(savedSellResourceFilter);
+                        }
+                        if (e.target.value in Config.Resource) {
+                           savedSellResourceFilter = e.target.value as Resource;
+                           setSellResourceFilter(savedSellResourceFilter);
+                        }
+                     }}
+                  >
+                     <option value=""></option>
+                     {availableResources.map((res) => (
+                        <option key={res} value={res}>
+                           {Config.Resource[res].name()}
+                        </option>
+                     ))}
+                  </select>
+               </div>
+               <div className="sep10"></div>
+               <div className="row">
+                  <div style={{ width: "120px" }}>{t(L.GrandBazaarFilterYouGet)}</div>
+                  <select
+                     className="f1"
+                     value={buyResourceFilter ? buyResourceFilter : ""}
+                     onChange={(e) => {
+                        if (e.target.value === "") {
+                           savedBuyResourceFilter = null;
+                           setBuyResourceFilter(savedBuyResourceFilter);
+                        }
+                        if (e.target.value in Config.Resource) {
+                           savedBuyResourceFilter = e.target.value as Resource;
+                           setBuyResourceFilter(savedBuyResourceFilter);
+                        }
+                     }}
+                  >
+                     <option value=""></option>
+                     {availableResources.map((res) => (
+                        <option key={res} value={res}>
+                           {Config.Resource[res].name()}
+                        </option>
+                     ))}
+                  </select>
+               </div>
+            </fieldset>
+            {buyResourceFilter === null && sellResourceFilter === null ? (
+               <WarningComponent icon="info" className="mb10 text-small">
+                  <RenderHTML html={t(L.GrandBazaarFilterWarningHTML)} />
+               </WarningComponent>
+            ) : null}
+            <TableView
+               classNames="sticky-header f1"
+               header={[
+                  { name: t(L.MarketYouPay), sortable: true },
+                  { name: t(L.MarketYouGet), sortable: true },
+                  { name: "", sortable: true },
+                  { name: t(L.MarketSell), sortable: true },
+                  { name: "", sortable: false },
+               ]}
+               data={allMarketTrades.filter((m) => {
+                  // No filter, we show nothing, should revisit this later
+                  if (buyResourceFilter === null && sellResourceFilter === null) {
+                     return false;
+                  }
+                  let buyFilter = false;
+                  let sellFilter = false;
+                  if (buyResourceFilter != null) {
+                     buyFilter = buyResourceFilter === m.buyResource;
+                  } else {
+                     buyFilter = true;
+                  }
+                  if (sellResourceFilter != null) {
+                     sellFilter = sellResourceFilter === m.sellResource;
+                  } else {
+                     sellFilter = true;
+                  }
+                  return buyFilter && sellFilter;
+               })}
+               compareFunc={(a, b, i) => {
+                  switch (i) {
+                     case 0:
+                        return Config.Resource[a.sellResource]
+                           .name()
+                           .localeCompare(Config.Resource[b.sellResource].name());
+                     case 1:
+                        return Config.Resource[a.buyResource]
+                           .name()
+                           .localeCompare(Config.Resource[b.buyResource].name());
+                     case 2:
+                        return (calculateTradeValue(a) ?? 0) - (calculateTradeValue(b) ?? 0);
+                     default:
+                        return 0;
+                  }
+               }}
+               renderRow={(item) => {
+                  const building = gs.tiles.get(item.xy)?.building as IMarketBuildingData;
+                  const sellResource = Config.Resource[item.sellResource];
+                  const buyResource = Config.Resource[item.buyResource];
+                  const tradeValue = calculateTradeValue(item);
+                  return (
+                     <tr key={`Res:${item.sellResource}Tile:${item.xy}`}>
+                        <td>
+                           <div>{sellResource.name()}</div>
+                           <div className="text-small text-desc text-strong">
+                              <FormatNumber value={item.sellAmount} />
+                           </div>
+                        </td>
+                        <td>
+                           <div>{buyResource.name()}</div>
+                           <div className="text-small text-desc text-strong">
+                              <FormatNumber value={item.buyAmount} />
+                           </div>
+                        </td>
+                        <td
+                           className={classNames({
+                              "text-green": tradeValue > 0,
+                              "text-red": tradeValue < 0,
+                              "text-right text-small": true,
                            })}
-                           noStyle
                         >
-                           {mathSign(tradeValue, CURRENCY_EPSILON)}
-                           {formatPercent(Math.abs(tradeValue), 0)}
-                        </TextWithHelp>
-                     </td>
-                     <td
-                        className="pointer"
-                        onClick={() => {
-                           playClick();
-                           if (building.sellResources[item.sellResource]) {
-                              delete building.sellResources[item.sellResource];
-                           } else {
-                              // Turn the market on if it's been turned off, else keep capacity the same.
-                              building.capacity = building.capacity === 0 ? 1 : building.capacity;
-                              building.sellResources[item.sellResource] = true;
-                           }
-                           notifyGameStateUpdate();
-                        }}
-                     >
-                        {building.sellResources[item.sellResource] ? (
-                           <div className="m-icon text-green">toggle_on</div>
-                        ) : (
-                           <div className="m-icon text-grey">toggle_off</div>
-                        )}
-                     </td>
-                     <td style={{ width: 0 }}>
-                        <div
-                           className="m-icon small pointer"
-                           onPointerDown={() => {
+                           <TextWithHelp
+                              content={t(L.MarketValueDesc, {
+                                 value: formatPercent(tradeValue, 0),
+                              })}
+                              noStyle
+                           >
+                              {mathSign(tradeValue, CURRENCY_EPSILON)}
+                              {formatPercent(Math.abs(tradeValue), 0)}
+                           </TextWithHelp>
+                        </td>
+                        <td
+                           className="pointer"
+                           onClick={() => {
                               playClick();
-                              Singleton()
-                                 .sceneManager.getCurrent(WorldScene)
-                                 ?.lookAtTile(item.xy, LookAtMode.Select);
+                              if (building.sellResources[item.sellResource]) {
+                                 delete building.sellResources[item.sellResource];
+                              } else {
+                                 // Turn the market on if it's been turned off, else keep capacity the same.
+                                 building.capacity = building.capacity === 0 ? 1 : building.capacity;
+                                 building.sellResources[item.sellResource] = true;
+                              }
+                              notifyGameStateUpdate();
                            }}
                         >
-                           open_in_new
-                        </div>
-                     </td>
-                  </tr>
-               );
-            }}
-         />
-      </article>
+                           {building.sellResources[item.sellResource] ? (
+                              <div className="m-icon text-green">toggle_on</div>
+                           ) : (
+                              <div className="m-icon text-grey">toggle_off</div>
+                           )}
+                        </td>
+                        <td style={{ width: 0 }}>
+                           <div
+                              className="m-icon small pointer"
+                              onPointerDown={() => {
+                                 playClick();
+                                 Singleton()
+                                    .sceneManager.getCurrent(WorldScene)
+                                    ?.lookAtTile(item.xy, LookAtMode.Select);
+                              }}
+                           >
+                              open_in_new
+                           </div>
+                        </td>
+                     </tr>
+                  );
+               }}
+            />
+         </article>
+      </>
    );
 }
 
@@ -265,9 +354,6 @@ function ActiveTradesTab({
 type Tab = "trades" | "active";
 
 export function GrandBazaarBuildingBody({ gameState, xy }: IBuildingComponentProps): React.ReactNode {
-   const [buyResourceFilter, setBuyResourceFilter] = useState<Resource | null>(savedBuyResourceFilter);
-   const [sellResourceFilter, setSellResourceFilter] = useState<Resource | null>(savedSellResourceFilter);
-
    const building = gameState.tiles.get(xy)?.building;
    if (!building) {
       return null;
@@ -296,14 +382,16 @@ export function GrandBazaarBuildingBody({ gameState, xy }: IBuildingComponentPro
       });
    });
 
-   const availableResources = Array.from(availableResourcesSet).sort((a, b) =>
-      Config.Resource[a].name().localeCompare(Config.Resource[b].name()),
-   );
-
    const [currentTab, setCurrentTab] = useState<Tab>("trades");
    let content: React.ReactNode = null;
    if (currentTab === "trades") {
-      content = <TradesTab gs={gameState} allMarketTrades={allMarketTrades} />;
+      content = (
+         <TradesTab
+            gs={gameState}
+            availableResourcesSet={availableResourcesSet}
+            allMarketTrades={allMarketTrades}
+         />
+      );
    } else if (currentTab === "active") {
       content = <ActiveTradesTab gs={gameState} allMarketTrades={allMarketTrades} />;
    }
@@ -318,63 +406,6 @@ export function GrandBazaarBuildingBody({ gameState, xy }: IBuildingComponentPro
                </div>
             </div>
          </fieldset>
-         <fieldset>
-            <legend>{t(L.GrandBazaarFilters)}</legend>
-            <div className="row">
-               <div style={{ width: "120px" }}>{t(L.GrandBazaarFilterYouPay)}</div>
-               <select
-                  className="f1"
-                  value={sellResourceFilter ? sellResourceFilter : ""}
-                  onChange={(e) => {
-                     if (e.target.value === "") {
-                        savedSellResourceFilter = null;
-                        setSellResourceFilter(savedSellResourceFilter);
-                     }
-                     if (e.target.value in Config.Resource) {
-                        savedSellResourceFilter = e.target.value as Resource;
-                        setSellResourceFilter(savedSellResourceFilter);
-                     }
-                  }}
-               >
-                  <option value=""></option>
-                  {availableResources.map((res) => (
-                     <option key={res} value={res}>
-                        {Config.Resource[res].name()}
-                     </option>
-                  ))}
-               </select>
-            </div>
-            <div className="sep10"></div>
-            <div className="row">
-               <div style={{ width: "120px" }}>{t(L.GrandBazaarFilterYouGet)}</div>
-               <select
-                  className="f1"
-                  value={buyResourceFilter ? buyResourceFilter : ""}
-                  onChange={(e) => {
-                     if (e.target.value === "") {
-                        savedBuyResourceFilter = null;
-                        setBuyResourceFilter(savedBuyResourceFilter);
-                     }
-                     if (e.target.value in Config.Resource) {
-                        savedBuyResourceFilter = e.target.value as Resource;
-                        setBuyResourceFilter(savedBuyResourceFilter);
-                     }
-                  }}
-               >
-                  <option value=""></option>
-                  {availableResources.map((res) => (
-                     <option key={res} value={res}>
-                        {Config.Resource[res].name()}
-                     </option>
-                  ))}
-               </select>
-            </div>
-         </fieldset>
-         {buyResourceFilter === null && sellResourceFilter === null ? (
-            <WarningComponent icon="info" className="mb10 text-small">
-               <RenderHTML html={t(L.GrandBazaarFilterWarningHTML)} />
-            </WarningComponent>
-         ) : null}
 
          <div className="column">
             <menu role="tablist">
@@ -382,13 +413,13 @@ export function GrandBazaarBuildingBody({ gameState, xy }: IBuildingComponentPro
                   onClick={() => setCurrentTab("trades")}
                   aria-selected={currentTab === "trades" ? true : false}
                >
-                  Trades
+                  {t(L.GrandBazaarTabTrades)}
                </button>
                <button
                   onClick={() => setCurrentTab("active")}
                   aria-selected={currentTab === "active" ? true : false}
                >
-                  Active
+                  {t(L.GrandBazaarTabActive)}
                </button>
             </menu>
             {content}
