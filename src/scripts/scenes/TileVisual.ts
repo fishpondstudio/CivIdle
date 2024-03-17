@@ -23,7 +23,7 @@ import {
    type Tile,
 } from "../../../shared/utilities/Helper";
 import { v2 } from "../../../shared/utilities/Vector2";
-import { getBuildingTexture, getNotProducingTexture, getTileTexture } from "../logic/VisualLogic";
+import { getBuildingTexture, getNotProducingTexture, getTexture, getTileTexture } from "../logic/VisualLogic";
 import { Singleton } from "../utilities/Singleton";
 import { Actions } from "../utilities/pixi-actions/Actions";
 import { Easing } from "../utilities/pixi-actions/Easing";
@@ -63,7 +63,7 @@ export class TileVisual extends Container {
 
       const { textures } = this._world.context;
 
-      this._spinner = this.addChild(new Sprite(textures.Spinner));
+      this._spinner = this.addChild(new Sprite(getTexture("Misc_Spinner", textures)));
       this._spinner.anchor.set(0.5);
       this._spinner.visible = false;
       this._spinner.alpha = 0;
@@ -72,7 +72,7 @@ export class TileVisual extends Container {
       this._building.anchor.set(0.5);
       this._building.scale.set(0.5);
 
-      this._construction = this.addChild(new Sprite(textures.Construction));
+      this._construction = this.addChild(new Sprite(getTexture("Misc_Construction", textures)));
       this._construction.position.set(-25, -5);
       this._construction.anchor.set(0, 1);
       this._construction.scale.set(0.5);
@@ -91,7 +91,7 @@ export class TileVisual extends Container {
          ),
       );
 
-      this._upgrade = this.addChild(new Sprite(textures.Upgrade));
+      this._upgrade = this.addChild(new Sprite(getTexture("Misc_Upgrade", textures)));
       this._upgrade.position.set(-25, 10);
       this._upgrade.anchor.set(0, 1);
       this._upgrade.scale.set(0.5);
@@ -133,7 +133,7 @@ export class TileVisual extends Container {
       this._timeLeft.visible = false;
       this._timeLeft.cullable = true;
 
-      this._fog = this.addChild(new Sprite(textures.Cloud));
+      this._fog = this.addChild(new Sprite(getTexture("Misc_Cloud", textures)));
       this._fog.anchor.set(0.5);
       this._fog.visible = !this._tile.explored;
 
@@ -297,7 +297,7 @@ export class TileVisual extends Container {
                this._notProducing.texture = getNotProducingTexture(reason, textures);
                this.fadeInTopLeftIcon();
             } else if (Tick.current.electrified.has(tileData.tile)) {
-               this._notProducing.texture = textures.Bolt;
+               this._notProducing.texture = getTexture("Misc_Bolt", textures);
                this.fadeInTopLeftIcon();
             } else {
                this.fadeOutTopLeftIcon();

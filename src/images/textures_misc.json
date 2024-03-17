@@ -1,6 +1,6 @@
 {
     "frames": {
-        "100x100": {
+        "Misc_100x100": {
             "frame": {
                 "x": 622,
                 "y": 451,
@@ -8,7 +8,7 @@
                 "h": 100
             }
         },
-        "Bolt": {
+        "Misc_Bolt": {
             "frame": {
                 "x": 824,
                 "y": 508,
@@ -16,7 +16,7 @@
                 "h": 40
             }
         },
-        "circle_25": {
+        "Misc_Circle_25": {
             "frame": {
                 "x": 857,
                 "y": 508,
@@ -24,7 +24,7 @@
                 "h": 25
             }
         },
-        "circle_50": {
+        "Misc_Circle_50": {
             "frame": {
                 "x": 890,
                 "y": 451,
@@ -32,7 +32,7 @@
                 "h": 50
             }
         },
-        "circle": {
+        "Misc_Circle": {
             "frame": {
                 "x": 301,
                 "y": 601,
@@ -40,7 +40,7 @@
                 "h": 50
             }
         },
-        "Cloud": {
+        "Misc_Cloud": {
             "frame": {
                 "x": 501,
                 "y": 451,
@@ -48,7 +48,7 @@
                 "h": 128
             }
         },
-        "Construction": {
+        "Misc_Construction": {
             "frame": {
                 "x": 301,
                 "y": 652,
@@ -56,7 +56,7 @@
                 "h": 53
             }
         },
-        "GreatPersonBackground": {
+        "Misc_GreatPersonBackground": {
             "frame": {
                 "x": 0,
                 "y": 0,
@@ -64,7 +64,7 @@
                 "h": 600
             }
         },
-        "GreatPersonFrame": {
+        "Misc_GreatPersonFrame": {
             "frame": {
                 "x": 501,
                 "y": 0,
@@ -72,7 +72,7 @@
                 "h": 450
             }
         },
-        "NotEnoughResources": {
+        "Misc_NotEnoughResources": {
             "frame": {
                 "x": 352,
                 "y": 601,
@@ -80,7 +80,7 @@
                 "h": 50
             }
         },
-        "NotEnoughWorkers": {
+        "Misc_NotEnoughWorkers": {
             "frame": {
                 "x": 403,
                 "y": 601,
@@ -88,7 +88,7 @@
                 "h": 50
             }
         },
-        "NotProducingGeneral": {
+        "Misc_NotProducingGeneral": {
             "frame": {
                 "x": 454,
                 "y": 601,
@@ -96,7 +96,7 @@
                 "h": 50
             }
         },
-        "Paper": {
+        "Misc_Paper": {
             "frame": {
                 "x": 0,
                 "y": 601,
@@ -104,7 +104,7 @@
                 "h": 300
             }
         },
-        "Spinner": {
+        "Misc_Spinner": {
             "frame": {
                 "x": 723,
                 "y": 451,
@@ -112,7 +112,7 @@
                 "h": 100
             }
         },
-        "StorageFull": {
+        "Misc_StorageFull": {
             "frame": {
                 "x": 505,
                 "y": 601,
@@ -120,7 +120,7 @@
                 "h": 50
             }
         },
-        "Transport": {
+        "Misc_Transport": {
             "frame": {
                 "x": 824,
                 "y": 451,
@@ -128,7 +128,7 @@
                 "h": 56
             }
         },
-        "Upgrade": {
+        "Misc_Upgrade": {
             "frame": {
                 "x": 556,
                 "y": 601,

@@ -6,18 +6,18 @@ import { TypedEvent } from "../../shared/utilities/TypedEvent";
 import "../css/Main.css";
 import CabinMedium from "../fonts/CabinMedium.ttf?url";
 import MarcellusRegular from "../fonts/MarcellusRegular.ttf?url";
-import TextureBuildingsDef from "../images/textures_buildings.json";
-import TextureBuildings from "../images/textures_buildings.png";
-import TextureFlagsDef from "../images/textures_flags.json";
-import TextureFlags from "../images/textures_flags.png";
+import TextureBuildingDef from "../images/textures_building.json";
+import TextureBuilding from "../images/textures_building.png";
+import TextureFlagDef from "../images/textures_flag.json";
+import TextureFlag from "../images/textures_flag.png";
 import TextureMiscDef from "../images/textures_misc.json";
 import TextureMisc from "../images/textures_misc.png";
-import TexturePeopleDef from "../images/textures_people.json";
-import TexturePeople from "../images/textures_people.png";
+import TexturePersonDef from "../images/textures_person.json";
+import TexturePerson from "../images/textures_person.png";
 import TextureRomeDef from "../images/textures_rome.json";
 import TextureRome from "../images/textures_rome.png";
-import TextureTilesDef from "../images/textures_tiles.json";
-import TextureTiles from "../images/textures_tiles.png";
+import TextureTileDef from "../images/textures_tile.json";
+import TextureTile from "../images/textures_tile.png";
 import { startGame } from "./Bootstrap";
 import { BG_COLOR } from "./Colors";
 import type { RouteChangeEvent } from "./Route";
@@ -60,12 +60,12 @@ createRoot(document.getElementById("global-toast")!).render(<GlobalToast />);
 
 const canvas = document.getElementById("game-canvas");
 const mainBundle = {
-   TextureBuildings,
-   TexturePeople,
+   TextureBuilding,
+   TexturePerson,
    TextureRome,
-   TextureTiles,
+   TextureTile,
    TextureMisc,
-   TextureFlags,
+   TextureFlag,
 };
 export const fonts = [
    new FontFace(Fonts.Cabin, `url("${CabinMedium}")`),
@@ -112,12 +112,12 @@ export async function loadBundle() {
    console.time("Load Sprite sheets");
    const textures: Record<string, Texture> = {};
    const altas = await Promise.all([
-      new Spritesheet(main.TextureBuildings, TextureBuildingsDef as any).parse(),
-      new Spritesheet(main.TexturePeople, TexturePeopleDef as any).parse(),
+      new Spritesheet(main.TextureBuilding, TextureBuildingDef as any).parse(),
+      new Spritesheet(main.TexturePerson, TexturePersonDef as any).parse(),
       new Spritesheet(main.TextureRome, TextureRomeDef as any).parse(),
-      new Spritesheet(main.TextureTiles, TextureTilesDef as any).parse(),
+      new Spritesheet(main.TextureTile, TextureTileDef as any).parse(),
       new Spritesheet(main.TextureMisc, TextureMiscDef as any).parse(),
-      new Spritesheet(main.TextureFlags, TextureFlagsDef as any).parse(),
+      new Spritesheet(main.TextureFlag, TextureFlagDef as any).parse(),
    ]);
 
    altas.forEach((a) => {

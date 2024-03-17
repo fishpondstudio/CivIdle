@@ -125,8 +125,8 @@ devDependencies:
     specifier: ^4.5.2
     version: 4.5.2(@types/node@18.19.3)
   vite-plugin-spritesmith:
-    specifier: fishpondstudio/vite-plugin-spritesmith
-    version: github.com/fishpondstudio/vite-plugin-spritesmith/a933c5fbda1b7288100781618078cc322071f1d4
+    specifier: github:fishpondstudio/vite-plugin-spritesmith
+    version: github.com/fishpondstudio/vite-plugin-spritesmith/efa59813fb05a1faa962b789906591ce2b490ee8
 
 packages:
 
@@ -4993,8 +4993,8 @@ packages:
       fd-slicer: 1.1.0
     dev: true
 
-  github.com/fishpondstudio/vite-plugin-spritesmith/a933c5fbda1b7288100781618078cc322071f1d4:
-    resolution: {tarball: https://codeload.github.com/fishpondstudio/vite-plugin-spritesmith/tar.gz/a933c5fbda1b7288100781618078cc322071f1d4}
+  github.com/fishpondstudio/vite-plugin-spritesmith/efa59813fb05a1faa962b789906591ce2b490ee8:
+    resolution: {tarball: https://codeload.github.com/fishpondstudio/vite-plugin-spritesmith/tar.gz/efa59813fb05a1faa962b789906591ce2b490ee8}
     name: vite-plugin-spritesmith
     version: 0.1.0
     dependencies:

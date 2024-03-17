@@ -658,13 +658,14 @@ export class TechDefinitions {
       name: () => t(L.Rocketry),
       column: 20,
       requireTech: ["Assembly", "Ballistics"],
+      unlockBuilding: ["RocketFactory", "BattleshipBuilder"],
    };
 
    NuclearFission: ITechDefinition = {
       name: () => t(L.NuclearFission),
       column: 20,
       requireTech: ["Hydroelectricity", "Ballistics"],
-      unlockBuilding: ["BattleshipBuilder"],
+      unlockBuilding: ["AtomicBombFactory"],
    };
 
    Enrichment: ITechDefinition = {

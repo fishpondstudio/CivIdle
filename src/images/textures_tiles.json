@@ -1,102 +1,13 @@
 {
-    "frames": {
-        "TileAluminum": {
-            "frame": {
-                "x": 0,
-                "y": 0,
-                "w": 100,
-                "h": 100
-            }
-        },
-        "TileCoal": {
-            "frame": {
-                "x": 101,
-                "y": 0,
-                "w": 100,
-                "h": 100
-            }
-        },
-        "TileCopper": {
-            "frame": {
-                "x": 0,
-                "y": 101,
-                "w": 100,
-                "h": 100
-            }
-        },
-        "TileGold": {
-            "frame": {
-                "x": 101,
-                "y": 101,
-                "w": 100,
-                "h": 100
-            }
-        },
-        "TileIron": {
-            "frame": {
-                "x": 202,
-                "y": 0,
-                "w": 100,
-                "h": 100
-            }
-        },
-        "TileNaturalGas": {
-            "frame": {
-                "x": 202,
-                "y": 101,
-                "w": 100,
-                "h": 100
-            }
-        },
-        "TileOil": {
-            "frame": {
-                "x": 0,
-                "y": 202,
-                "w": 100,
-                "h": 100
-            }
-        },
-        "TileStone": {
-            "frame": {
-                "x": 101,
-                "y": 202,
-                "w": 100,
-                "h": 100
-            }
-        },
-        "TileUranium": {
-            "frame": {
-                "x": 202,
-                "y": 202,
-                "w": 100,
-                "h": 100
-            }
-        },
-        "TileWater": {
-            "frame": {
-                "x": 303,
-                "y": 0,
-                "w": 100,
-                "h": 100
-            }
-        },
-        "TileWood": {
-            "frame": {
-                "x": 303,
-                "y": 101,
-                "w": 100,
-                "h": 100
-            }
-        }
-    },
+    "frames": {},
     "meta": {
         "app": "spritesheet-templates",
         "version": "10.5.2",
         "image": "./src/images/textures_tiles.png",
         "scale": 1,
         "size": {
-            "w": 403,
-            "h": 302
+            "w": 0,
+            "h": 0
         }
     }
 }

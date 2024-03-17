@@ -87,6 +87,7 @@ export class ResourceDefinitions {
    Car: IResourceDefinition = { name: () => t(L.Car) };
    Movie: IResourceDefinition = { name: () => t(L.Car) };
    Radio: IResourceDefinition = { name: () => t(L.Radio) };
+   Rocket: IResourceDefinition = { name: () => t(L.Rocket) };
    NuclearFuelRod: IResourceDefinition = { name: () => t(L.NuclearFuelRod) };
 }
 

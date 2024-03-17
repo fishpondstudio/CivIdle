@@ -270,8 +270,18 @@ export class BuildingDefinitions {
    };
    BiplaneFactory: IBuildingDefinition = {
       name: () => t(L.BiplaneFactory),
-      input: { Engine: 1, Steel: 1, Aluminum: 1 },
+      input: { Engine: 1, Steel: 1, Aluminum: 1, Petrol: 5 },
       output: { Biplane: 1 },
+   };
+   RocketFactory: IBuildingDefinition = {
+      name: () => t(L.RocketFactory),
+      input: { Engine: 1, Artillery: 1, Petrol: 10 },
+      output: { Rocket: 1 },
+   };
+   AtomicBombFactory: IBuildingDefinition = {
+      name: () => t(L.RocketFactory),
+      input: { Engine: 1, Artillery: 1, Petrol: 10 },
+      output: { Rocket: 1 },
    };
    // #endregion /////////////////////////////////////////////////////////////////////////////////////////////
 

@@ -3,6 +3,7 @@ import { BitmapText, Sprite, Text } from "pixi.js";
 import type { GreatPerson } from "../../../shared/definitions/GreatPersonDefinitions";
 import { Config } from "../../../shared/logic/Config";
 import { containsNonASCII } from "../../../shared/utilities/Helper";
+import { getTexture } from "../logic/VisualLogic";
 import type { ISceneContext } from "../utilities/SceneManager";
 import { Fonts } from "./Fonts";
 
@@ -33,14 +34,14 @@ export function greatPersonSprite(greatPerson: GreatPerson, context: ISceneConte
    const { textures } = context;
    const { time, name, age } = Config.GreatPerson[greatPerson];
 
-   const bg = new Sprite(textures.GreatPersonBackground);
+   const bg = new Sprite(getTexture("Misc_GreatPersonBackground", textures));
 
-   const frame = bg.addChild(new Sprite(textures.GreatPersonFrame));
+   const frame = bg.addChild(new Sprite(getTexture("Misc_GreatPersonFrame", textures)));
    frame.anchor.set(0.5, 0.5);
    frame.position.set(bg.width / 2, 260);
    frame.scale.set(400 / frame.width);
 
-   const sprite = frame.addChild(new Sprite(textures[`Person${greatPerson}`]));
+   const sprite = frame.addChild(new Sprite(getTexture(`Person_${greatPerson}`, textures)));
    const graphics = sprite.addChild(new SmoothGraphics());
    graphics.beginFill(0xffffff);
    graphics.drawCircle(0, 0, Math.min(sprite.width, sprite.height) / 2);

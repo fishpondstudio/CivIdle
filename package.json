@@ -61,6 +61,6 @@
       "node-7z": "^3.0.0",
       "typescript": "5.3.2",
       "vite": "^4.5.2",
-      "vite-plugin-spritesmith": "fishpondstudio/vite-plugin-spritesmith"
+      "vite-plugin-spritesmith": "github:fishpondstudio/vite-plugin-spritesmith"
    }
 }
