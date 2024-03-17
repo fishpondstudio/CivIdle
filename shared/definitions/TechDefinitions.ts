@@ -667,14 +667,15 @@ export class TechDefinitions {
       unlockBuilding: ["BattleshipBuilder"],
    };
 
-   UnitedNations: ITechDefinition = {
-      name: () => t(L.UnitedNations),
+   Enrichment: ITechDefinition = {
+      name: () => t(L.Enrichment),
       column: 20,
       requireTech: ["Radio", "Hydroelectricity"],
+      unlockBuilding: ["UraniumEnrichmentPlant"],
    };
 
-   Refrigeration: ITechDefinition = {
-      name: () => t(L.Refrigeration),
+   UnitedNations: ITechDefinition = {
+      name: () => t(L.UnitedNations),
       column: 20,
       requireTech: ["Radio"],
    };
@@ -688,17 +689,17 @@ export class TechDefinitions {
    Semiconductor: ITechDefinition = {
       name: () => t(L.Semiconductor),
       column: 21,
-      requireTech: ["NuclearFission"],
+      requireTech: ["NuclearFission", "Enrichment"],
    };
    Television: ITechDefinition = {
       name: () => t(L.Television),
       column: 21,
-      requireTech: ["UnitedNations", "NuclearFission"],
+      requireTech: ["UnitedNations", "Enrichment"],
    };
    Skyscrapper: ITechDefinition = {
       name: () => t(L.Skyscrapper),
       column: 21,
-      requireTech: ["Refrigeration"],
+      requireTech: ["UnitedNations"],
    };
    Computer: ITechDefinition = {
       name: () => t(L.Computer),

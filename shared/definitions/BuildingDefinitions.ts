@@ -120,6 +120,13 @@ export class BuildingDefinitions {
       construction: { Concrete: 1, Tool: 1 },
    };
 
+   UraniumEnrichmentPlant: IBuildingDefinition = {
+      name: () => t(L.UraniumEnrichmentPlant),
+      input: { Uranium: 10 },
+      output: { NuclearFuelRod: 1 },
+      construction: { Concrete: 4, Steel: 5 },
+   };
+
    OilWell: IBuildingDefinition = {
       name: () => t(L.OilWell),
       input: {},
@@ -155,7 +162,7 @@ export class BuildingDefinitions {
       name: () => t(L.GasPowerPlant),
       input: { NaturalGas: 2 },
       output: { Power: 3 },
-      construction: { Concrete: 2, Steel: 2 },
+      construction: { Concrete: 2 },
    };
 
    HydroDam: IBuildingDefinition = {
