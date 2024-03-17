@@ -6,10 +6,15 @@
 
 :root {
    --game-ui-width: 400px;
+   --base-font-size: 62.5%;
 }
 
 .game-cursor {
    cursor: url("../images/w98normal.png"), default;
+}
+
+html {
+   font-size: var(--base-font-size);
 }
 
 body {
@@ -96,13 +101,13 @@ body {
 }
 
 #global-toast .toast {
-   max-width: 80vw;
+   max-width: 50vw;
    position: absolute;
    top: 20px;
 }
 
 body .tippy-box {
-   font-size: 11px;
+   font-size: 1.1rem;
    font-family: "Pixelated MS Sans Serif", sans-serif;
    -webkit-font-smoothing: none;
 }

@@ -55,6 +55,11 @@ const createWindow = async () => {
          mainWindow.setFullScreen(true);
       }
 
+      mainWindow.on("close", (e) => {
+         e.preventDefault();
+         mainWindow.webContents.send("close");
+      });
+
       const service = new IPCService(steam);
 
       ipcMain.handle("__RPCCall", (e, method: keyof IPCService, args) => {

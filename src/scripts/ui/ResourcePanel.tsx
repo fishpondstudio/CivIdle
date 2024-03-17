@@ -127,7 +127,7 @@ export function ResourcePanel(): React.ReactNode {
                   {getHappinessIcon(tick.happiness.value)}
                </div>
                <Tippy placement="bottom" content={t(L.Happiness)}>
-                  <div style={{ width: "50px" }}>{round(tick.happiness.value, 0)}</div>
+                  <div style={{ width: "5rem" }}>{round(tick.happiness.value, 0)}</div>
                </Tippy>
             </div>
          ) : null}
@@ -141,7 +141,7 @@ export function ResourcePanel(): React.ReactNode {
                person
             </div>
             <Tippy content={`${t(L.WorkersBusy)} / ${t(L.TotalWorkers)}`} placement="bottom">
-               <div style={{ width: "120px" }}>
+               <div style={{ width: "12rem" }}>
                   <FormatNumber value={workersBusy} /> / <FormatNumber value={workersAfterHappiness} />
                </div>
             </Tippy>
@@ -162,7 +162,7 @@ export function ResourcePanel(): React.ReactNode {
                      bolt
                   </div>
                   <Tippy placement="bottom" content={`${t(L.PowerUsed)}/${t(L.PowerAvailable)}`}>
-                     <div style={{ width: "140px" }}>
+                     <div style={{ width: "140rem" }}>
                         <FormatNumber value={tick.workersUsed.get("Power") ?? 0} />W{" / "}
                         <FormatNumber value={tick.workersAvailable.get("Power") ?? 0} />W
                      </div>
@@ -180,7 +180,7 @@ export function ResourcePanel(): React.ReactNode {
                science
             </div>
             <Tippy content={t(L.Science)} placement="bottom">
-               <div style={{ width: "60px" }}>
+               <div style={{ width: "6rem" }}>
                   <FormatNumber value={getResourceAmount("Science", gs)} />
                </div>
             </Tippy>
@@ -195,7 +195,7 @@ export function ResourcePanel(): React.ReactNode {
                domain_disabled
             </div>
             <Tippy content={t(L.NotProducingBuildings)} placement="bottom">
-               <div style={{ width: "60px" }}>
+               <div style={{ width: "6rem" }}>
                   <FormatNumber value={sizeOf(tick.notProducingReasons)} />
                </div>
             </Tippy>
@@ -210,19 +210,19 @@ export function ResourcePanel(): React.ReactNode {
                account_balance
             </div>
             <Tippy content={t(L.TotalEmpireValue)} placement="bottom">
-               <div style={{ width: "60px" }}>
+               <div style={{ width: "6rem" }}>
                   <FormatNumber value={tick.totalValue} />
                </div>
             </Tippy>
             <div
                className={classNames({ "text-red": delta < 0, "text-green": delta > 0 })}
-               style={{ width: "60px", fontWeight: "normal", textAlign: "left" }}
+               style={{ width: "6rem", fontWeight: "normal", textAlign: "left" }}
             >
                {mathSign(delta)}
                <FormatNumber value={Math.abs(delta)} />
             </div>
             <Tippy content={t(L.ProgressTowardsNextGreatPerson)}>
-               <div className="text-desc text-right" style={{ width: "40px", fontWeight: "normal" }}>
+               <div className="text-desc text-right" style={{ width: "4rem", fontWeight: "normal" }}>
                   {formatPercent(clamp(getProgressTowardsNextGreatPerson(), 0, 1), 0, Rounding.Floor)}
                </div>
             </Tippy>

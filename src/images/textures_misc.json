@@ -1,150 +1,150 @@
 {
-    "frames": {
-        "Misc_100x100": {
-            "frame": {
-                "x": 622,
-                "y": 451,
-                "w": 100,
-                "h": 100
-            }
-        },
-        "Misc_Bolt": {
-            "frame": {
-                "x": 824,
-                "y": 508,
-                "w": 32,
-                "h": 40
-            }
-        },
-        "Misc_Circle_25": {
-            "frame": {
-                "x": 857,
-                "y": 508,
-                "w": 25,
-                "h": 25
-            }
-        },
-        "Misc_Circle_50": {
-            "frame": {
-                "x": 890,
-                "y": 451,
-                "w": 50,
-                "h": 50
-            }
-        },
-        "Misc_Circle": {
-            "frame": {
-                "x": 301,
-                "y": 601,
-                "w": 50,
-                "h": 50
-            }
-        },
-        "Misc_Cloud": {
-            "frame": {
-                "x": 501,
-                "y": 451,
-                "w": 120,
-                "h": 128
-            }
-        },
-        "Misc_Construction": {
-            "frame": {
-                "x": 301,
-                "y": 652,
-                "w": 38,
-                "h": 53
-            }
-        },
-        "Misc_GreatPersonBackground": {
-            "frame": {
-                "x": 0,
-                "y": 0,
-                "w": 500,
-                "h": 600
-            }
-        },
-        "Misc_GreatPersonFrame": {
-            "frame": {
-                "x": 501,
-                "y": 0,
-                "w": 450,
-                "h": 450
-            }
-        },
-        "Misc_NotEnoughResources": {
-            "frame": {
-                "x": 352,
-                "y": 601,
-                "w": 50,
-                "h": 50
-            }
-        },
-        "Misc_NotEnoughWorkers": {
-            "frame": {
-                "x": 403,
-                "y": 601,
-                "w": 50,
-                "h": 50
-            }
-        },
-        "Misc_NotProducingGeneral": {
-            "frame": {
-                "x": 454,
-                "y": 601,
-                "w": 50,
-                "h": 50
-            }
-        },
-        "Misc_Paper": {
-            "frame": {
-                "x": 0,
-                "y": 601,
-                "w": 300,
-                "h": 300
-            }
-        },
-        "Misc_Spinner": {
-            "frame": {
-                "x": 723,
-                "y": 451,
-                "w": 100,
-                "h": 100
-            }
-        },
-        "Misc_StorageFull": {
-            "frame": {
-                "x": 505,
-                "y": 601,
-                "w": 50,
-                "h": 50
-            }
-        },
-        "Misc_Transport": {
-            "frame": {
-                "x": 824,
-                "y": 451,
-                "w": 65,
-                "h": 56
-            }
-        },
-        "Misc_Upgrade": {
-            "frame": {
-                "x": 556,
-                "y": 601,
-                "w": 40,
-                "h": 46
-            }
-        }
-    },
-    "meta": {
-        "app": "spritesheet-templates",
-        "version": "10.5.2",
-        "image": "./src/images/textures_misc.png",
-        "scale": 1,
-        "size": {
-            "w": 951,
-            "h": 901
-        }
-    }
+   "frames": {
+      "Misc_100x100": {
+         "frame": {
+            "x": 622,
+            "y": 451,
+            "w": 100,
+            "h": 100
+         }
+      },
+      "Misc_Bolt": {
+         "frame": {
+            "x": 824,
+            "y": 508,
+            "w": 32,
+            "h": 40
+         }
+      },
+      "Misc_Circle_25": {
+         "frame": {
+            "x": 857,
+            "y": 508,
+            "w": 25,
+            "h": 25
+         }
+      },
+      "Misc_Circle_50": {
+         "frame": {
+            "x": 890,
+            "y": 451,
+            "w": 50,
+            "h": 50
+         }
+      },
+      "Misc_Circle": {
+         "frame": {
+            "x": 301,
+            "y": 601,
+            "w": 50,
+            "h": 50
+         }
+      },
+      "Misc_Cloud": {
+         "frame": {
+            "x": 501,
+            "y": 451,
+            "w": 120,
+            "h": 128
+         }
+      },
+      "Misc_Construction": {
+         "frame": {
+            "x": 301,
+            "y": 652,
+            "w": 38,
+            "h": 53
+         }
+      },
+      "Misc_GreatPersonBackground": {
+         "frame": {
+            "x": 0,
+            "y": 0,
+            "w": 500,
+            "h": 600
+         }
+      },
+      "Misc_GreatPersonFrame": {
+         "frame": {
+            "x": 501,
+            "y": 0,
+            "w": 450,
+            "h": 450
+         }
+      },
+      "Misc_NotEnoughResources": {
+         "frame": {
+            "x": 352,
+            "y": 601,
+            "w": 50,
+            "h": 50
+         }
+      },
+      "Misc_NotEnoughWorkers": {
+         "frame": {
+            "x": 403,
+            "y": 601,
+            "w": 50,
+            "h": 50
+         }
+      },
+      "Misc_NotProducingGeneral": {
+         "frame": {
+            "x": 454,
+            "y": 601,
+            "w": 50,
+            "h": 50
+         }
+      },
+      "Misc_Paper": {
+         "frame": {
+            "x": 0,
+            "y": 601,
+            "w": 300,
+            "h": 300
+         }
+      },
+      "Misc_Spinner": {
+         "frame": {
+            "x": 723,
+            "y": 451,
+            "w": 100,
+            "h": 100
+         }
+      },
+      "Misc_StorageFull": {
+         "frame": {
+            "x": 505,
+            "y": 601,
+            "w": 50,
+            "h": 50
+         }
+      },
+      "Misc_Transport": {
+         "frame": {
+            "x": 824,
+            "y": 451,
+            "w": 65,
+            "h": 56
+         }
+      },
+      "Misc_Upgrade": {
+         "frame": {
+            "x": 556,
+            "y": 601,
+            "w": 40,
+            "h": 46
+         }
+      }
+   },
+   "meta": {
+      "app": "spritesheet-templates",
+      "version": "10.5.2",
+      "image": "./src/images/textures_misc.png",
+      "scale": 1,
+      "size": {
+         "w": 951,
+         "h": 901
+      }
+   }
 }

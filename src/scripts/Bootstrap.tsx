@@ -16,7 +16,7 @@ import { getSpecialBuildings } from "../../shared/logic/IntraTickCache";
 import type { IPetraBuildingData } from "../../shared/logic/Tile";
 import { clamp, forEach, isNullOrUndefined, rejectIn, schedule } from "../../shared/utilities/Helper";
 import type { TypedEvent } from "../../shared/utilities/TypedEvent";
-import { isGameDataCompatible, loadGame, syncSidePanelWidth, syncUITheme } from "./Global";
+import { isGameDataCompatible, loadGame, syncFontSizeScale, syncSidePanelWidth, syncUITheme } from "./Global";
 import type { RouteChangeEvent } from "./Route";
 import { tickEverySecond } from "./logic/ClientUpdate";
 import { Heartbeat } from "./logic/Heartbeat";
@@ -84,6 +84,7 @@ export async function startGame(
    syncLanguage(Languages[options.language]);
    syncUITheme(options);
    syncSidePanelWidth(app, options);
+   syncFontSizeScale(options);
    calculateTierAndPrice(console.log);
    initializeSingletons({
       sceneManager: new SceneManager({ app, assets: resources, textures, gameState }),
