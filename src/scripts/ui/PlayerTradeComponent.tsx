@@ -34,7 +34,7 @@ import { TableView } from "./TableView";
 import { WarningComponent } from "./WarningComponent";
 
 const savedResourceFilters: Set<Resource> = new Set();
-const caravanTradesSortingState = { column: 0, asc: true };
+const playerTradesSortingState = { column: 0, asc: true };
 
 export function PlayerTradeComponent({ gameState, xy }: IBuildingComponentProps): React.ReactNode {
    const building = gameState.tiles.get(xy)?.building;
@@ -148,7 +148,7 @@ export function PlayerTradeComponent({ gameState, xy }: IBuildingComponentProps)
                { name: t(L.PlayerTradeFrom), sortable: true },
                { name: "", sortable: false },
             ]}
-            sortingState={caravanTradesSortingState}
+            sortingState={playerTradesSortingState}
             data={trades.filter(
                (trade) =>
                   resourceFilters.size === 0 ||
