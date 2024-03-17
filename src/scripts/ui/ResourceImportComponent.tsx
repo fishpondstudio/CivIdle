@@ -33,7 +33,7 @@ import { showModal } from "./GlobalModal";
 import { FormatNumber } from "./HelperComponents";
 import { TableView } from "./TableView";
 
-const resourceImportSortingState = { column: 0, asc: true };
+const resourceImportSortingState = { column: 1, asc: true };
 
 export function ResourceImportComponent({ gameState, xy }: IBuildingComponentProps): React.ReactNode {
    const building = gameState.tiles.get(xy)?.building as IResourceImportBuildingData;
