@@ -6,7 +6,11 @@ interface PatchNote {
 export const PatchNotes: PatchNote[] = [
    {
       version: "0.4.2",
-      content: [["Bugfix", "Fix a bug where upgrade shortcut key is incorrectly applied for Wonder"]],
+      content: [
+         ["Bugfix", "Fix a bug where upgrade shortcut key is incorrectly applied for Wonder"],
+         ["QoL", "Grand Bazaar now shows all active market trades"],
+         ["Bugfix", "Fix a bug where Caravansary resource selection jumps around"],
+      ],
    },
    {
       version: "0.4.1",
