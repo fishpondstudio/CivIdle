@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { L, t } from "../../../shared/utilities/i18n";
 
 export interface ITableHeader {
