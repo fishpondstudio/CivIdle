@@ -1029,7 +1029,6 @@ export const EN = {
    PlayerTradeFilters: "Filters",
    PlayerTradeFiltersApply: "Apply",
    PlayerTradeFiltersClear: "Clear",
-   ActiveMarketTrades: "Active Market Trades",
    GrandBazaarTabTrades: "Trades",
    GrandBazaarTabActive: "Active",
 };
