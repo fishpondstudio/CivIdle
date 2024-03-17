@@ -5,6 +5,7 @@ import { ChatChannels } from "../../../shared/utilities/Database";
 import { L, t } from "../../../shared/utilities/i18n";
 import { useGameOptions } from "../Global";
 import { jsxMapOf } from "../utilities/Helper";
+import { playError } from "../visuals/Sound";
 import { hideModal } from "./GlobalModal";
 
 export function SelectChatChannelModal(): React.ReactNode {
@@ -38,6 +39,10 @@ export function SelectChatChannelModal(): React.ReactNode {
                                        "text-green": options.chatChannels.has(channel),
                                     })}
                                     onClick={() => {
+                                       if (options.chatChannels.size <= 1) {
+                                          playError();
+                                          return;
+                                       }
                                        if (options.chatChannels.has(channel)) {
                                           options.chatChannels.delete(channel);
                                        } else {

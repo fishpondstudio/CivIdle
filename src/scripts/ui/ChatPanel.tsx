@@ -11,7 +11,7 @@ import {
    type IChat,
    type IUser,
 } from "../../../shared/utilities/Database";
-import { hasFlag } from "../../../shared/utilities/Helper";
+import { firstKeyOf, hasFlag } from "../../../shared/utilities/Helper";
 import { censor } from "../../../shared/utilities/ProfanityFilter";
 import { TypedEvent } from "../../../shared/utilities/TypedEvent";
 import { L, t } from "../../../shared/utilities/i18n";
@@ -41,6 +41,9 @@ const SetChatInput = new TypedEvent<{ channel: ChatChannel; getContent: (old: st
 
 export function ChatPanel(): React.ReactNode {
    const options = useGameOptions();
+   if (options.chatChannels.size === 0) {
+      options.chatChannels.add(firstKeyOf(ChatChannels)!);
+   }
    const messages = useChatMessages().filter((m) => !("channel" in m) || options.chatChannels.has(m.channel));
    const [isPending, startTransition] = useTransition();
    const [showChatWindow, setShowChatWindow] = useState(false);

@@ -117,8 +117,6 @@ export class GameOptions {
    soundEffect = true;
    chatHideLatestMessage = false;
    chatChannels: Set<ChatChannel> = new Set(["en"]);
-   // chatSendChannel: ChatChannel = "en";
-   // chatReceiveChannel: PartialSet<ChatChannel> = { en: true };
    useMirrorServer = false;
    buildingDefaults: Partial<Record<Building, Partial<IBuildingData>>> = {};
    defaultProductionPriority = PRIORITY_MIN;
