@@ -149,11 +149,9 @@ export function PlayerTradeComponent({ gameState, xy }: IBuildingComponentProps)
             ]}
             data={trades.filter(
                (trade) =>
-                  resources.includes(trade.buyResource) &&
-                  resources.includes(trade.sellResource) &&
-                  (resourceFilters.size === 0 ||
-                     resourceFilters.has(trade.buyResource) ||
-                     resourceFilters.has(trade.sellResource)),
+                  resourceFilters.size === 0 ||
+                  resourceFilters.has(trade.buyResource) ||
+                  resourceFilters.has(trade.sellResource),
             )}
             compareFunc={(a, b, col) => {
                switch (col) {
