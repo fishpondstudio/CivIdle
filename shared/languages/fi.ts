@@ -203,7 +203,7 @@ export const FI = {
    OptionsMenu: "Options",
    HelpMenu: "Help",
    Census: "Census",
-   OptionsUseModernUI: "Eye Protection UI",
+   OptionsUseModernUIV2: "Use Anti-Aliased Font",
    About: "About CivIdle",
    ResearchMenu: "Research",
    CityViewMap: "City",
@@ -928,8 +928,8 @@ export const FI = {
    ClearSelected: "Clear Selected",
    PlayerTradeTariffTooltip: "Collected From a Trade Tariff",
    PlayerTradeClaimAll: "Claim All",
-   PlayerTradeClaimAllMessage: "You have claimed %{count} trades",
-   PlayerTradeClaimAllFailedMessage: "You have claimed %{count} trades - is the storage full?",
+   PlayerTradeClaimAllFailedMessageV2: "Failed to claim any trades - is the storage full?",
+   PlayerTradeClaimAllMessageV2: "You have claimed: <b>%{resources}</b>",
    SteamAchievement: "Steam Achievement",
    SteamAchievementDetails: "View Steam Achievement",
    ChatHideLatestMessage: "Hide Latest Message Content",
@@ -1024,8 +1024,13 @@ export const FI = {
    SidePanelWidth: "Side Panel Width",
    SidePanelWidthDescHTML:
       "Change the width of the side panel. <b>Require restarting your game to take effect</b>",
+   FontSizeScale: "Font Size Scale",
+   FontSizeScaleDescHTML:
+      "Change the font size scale of the game's UI. <b>Setting the scale greater than 1x might break some UI layouts</b>",
    ShowUnbuiltOnly: "Only show buildings that haven't been built yet",
    PlayerTradeFilters: "Filters",
    PlayerTradeFiltersApply: "Apply",
    PlayerTradeFiltersClear: "Clear",
+   GrandBazaarTabTrades: "Trades",
+   GrandBazaarTabActive: "Active",
 };

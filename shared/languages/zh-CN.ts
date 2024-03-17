@@ -202,7 +202,7 @@ export const ZH_CN = {
    OptionsMenu: "选项",
    HelpMenu: "帮助",
    Census: "人口统计",
-   OptionsUseModernUI: "用户界面护眼模式",
+   OptionsUseModernUIV2: "Use Anti-Aliased Font",
    About: "关于 CivIdle",
    ResearchMenu: "研究",
    CityViewMap: "城市",
@@ -897,8 +897,8 @@ export const ZH_CN = {
    ClearSelected: "清除选中",
    PlayerTradeTariffTooltip: "收集自贸易关税",
    PlayerTradeClaimAll: "认领全部贸易订单",
-   PlayerTradeClaimAllMessage: "你已认领 %{count} 项订单",
-   PlayerTradeClaimAllFailedMessage: "你已认领 %{count} 项订单，但存储空间可能满了。",
+   PlayerTradeClaimAllFailedMessageV2: "Failed to claim any trades - is the storage full?",
+   PlayerTradeClaimAllMessageV2: "You have claimed: <b>%{resources}</b>",
    SteamAchievement: "Steam 成就",
    SteamAchievementDetails: "查看 Steam 成就",
    ChatHideLatestMessage: "隐藏最新消息内容",
@@ -990,8 +990,13 @@ export const ZH_CN = {
    SidePanelWidth: "Side Panel Width",
    SidePanelWidthDescHTML:
       "Change the width of the side panel. <b>Require restarting your game to take effect</b>",
+   FontSizeScale: "Font Size Scale",
+   FontSizeScaleDescHTML:
+      "Change the font size scale of the game's UI. <b>Setting the scale greater than 1x might break some UI layouts</b>",
    ShowUnbuiltOnly: "Only show buildings that haven't been built yet",
    PlayerTradeFilters: "Filters",
    PlayerTradeFiltersApply: "Apply",
    PlayerTradeFiltersClear: "Clear",
+   GrandBazaarTabTrades: "Trades",
+   GrandBazaarTabActive: "Active",
 };

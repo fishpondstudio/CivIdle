@@ -203,7 +203,7 @@ export const RU = {
    OptionsMenu: "Опции",
    HelpMenu: "Помощь",
    Census: "Перепись Населения",
-   OptionsUseModernUI: "Защита Глаз",
+   OptionsUseModernUIV2: "Use Anti-Aliased Font",
    About: "О CivIdle",
    ResearchMenu: "Исследования",
    CityViewMap: "Город",
@@ -940,8 +940,8 @@ export const RU = {
    ClearSelected: "Очистить Выбранное",
    PlayerTradeTariffTooltip: "Получено от торгового налога",
    PlayerTradeClaimAll: "Получить всё",
-   PlayerTradeClaimAllMessage: "Вы получили %{count} заявок",
-   PlayerTradeClaimAllFailedMessage: "Вы получили %{count} заявок - хранилище полное?",
+   PlayerTradeClaimAllFailedMessageV2: "Failed to claim any trades - is the storage full?",
+   PlayerTradeClaimAllMessageV2: "You have claimed: <b>%{resources}</b>",
    SteamAchievement: "Достижения Steam",
    SteamAchievementDetails: "Посмотреть Достижения Steam",
    ChatHideLatestMessage: "Скрыть Содержание Последнего Сообщения",
@@ -1039,8 +1039,13 @@ export const RU = {
    SidePanelWidth: "Ширина Боковой Панели",
    SidePanelWidthDescHTML:
       "Изменение ширины боковой панели. <b>Для вступления в силу требуется перезапуск игры</b>",
+   FontSizeScale: "Font Size Scale",
+   FontSizeScaleDescHTML:
+      "Change the font size scale of the game's UI. <b>Setting the scale greater than 1x might break some UI layouts</b>",
    ShowUnbuiltOnly: "Показывайте только те здания, которые еще не построены",
    PlayerTradeFilters: "Фильтры",
    PlayerTradeFiltersApply: "Применить",
    PlayerTradeFiltersClear: "Очистить",
+   GrandBazaarTabTrades: "Trades",
+   GrandBazaarTabActive: "Active",
 };
