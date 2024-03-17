@@ -203,7 +203,7 @@ export const EN = {
    OptionsMenu: "Options",
    HelpMenu: "Help",
    Census: "Census",
-   OptionsUseModernUI: "Eye Protection UI",
+   OptionsUseModernUIV2: "Use Anti-Aliased Font",
    About: "About CivIdle",
    ResearchMenu: "Research",
    CityViewMap: "City",
@@ -1025,6 +1025,9 @@ export const EN = {
    SidePanelWidth: "Side Panel Width",
    SidePanelWidthDescHTML:
       "Change the width of the side panel. <b>Require restarting your game to take effect</b>",
+   FontSizeScale: "Font Size Scale",
+   FontSizeScaleDescHTML:
+      "Change the font size scale of the game's UI. <b>Setting the scale greater than 1x might break some UI layouts</b>",
    ShowUnbuiltOnly: "Only show buildings that haven't been built yet",
    PlayerTradeFilters: "Filters",
    PlayerTradeFiltersApply: "Apply",

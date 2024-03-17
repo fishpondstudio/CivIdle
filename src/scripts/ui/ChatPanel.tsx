@@ -216,7 +216,7 @@ function ChatInput({
          </Tippy>
          <input
             ref={chatInput}
-            className={classNames({ f1: true, "is-chat-command": chat.startsWith("/") })}
+            className={classNames({ "f1 w100": true, "is-chat-command": chat.startsWith("/") })}
             type="text"
             style={{ margin: "0 2px 0 0" }}
             value={chat}

@@ -10,6 +10,7 @@ export const PatchNotes: PatchNote[] = [
          ["Bugfix", "Fix a bug where upgrade shortcut key is incorrectly applied for Wonder"],
          ["QoL", "Grand Bazaar now shows all active market trades"],
          ["QoL", "Allow partially claiming a trade in Caravansary (up to available storage)"],
+         ["QoL", "Allowing setting custom font size scale in Options -> Theme (Experimental)"],
          ["Bugfix", "Fix a bug where Caravansary resource selection jumps around"],
       ],
    },

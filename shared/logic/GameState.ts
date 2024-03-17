@@ -108,6 +108,7 @@ export class GameOptions {
    id = uuid4();
    token: string | null = null;
    sidePanelWidth = 400;
+   fontSizeScale = 1;
    version = SAVE_FILE_VERSION;
    buildingColors: Partial<Record<Building, string>> = {};
    resourceColors: Partial<Record<Resource, string>> = {};

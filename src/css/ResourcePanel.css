@@ -1,8 +1,8 @@
 #resource-panel .resource-bar {
-   height: 30px;
+   height: 3rem;
    position: absolute;
-   top: 10px;
-   left: 10px;
+   top: 1rem;
+   left: 1rem;
    display: flex;
    align-items: center;
    font-weight: bold;
@@ -16,23 +16,23 @@
 
 #resource-panel .resource-bar .row .m-icon {
    margin: 0 5px;
-   font-size: 20px;
+   font-size: 2rem;
 }
 
 #resource-panel .resource-bar .menu-button {
    padding: 0;
-   height: 26px;
-   width: 26px;
+   height: 2.6rem;
+   width: 2.6rem;
    text-align: center;
 }
 
 #resource-panel .resource-bar .menu-button .m-icon {
-   line-height: 26px;
-   font-size: 20px;
+   line-height: 2.6rem;
+   font-size: 2rem;
 }
 
 #resource-panel .resource-bar .menu-popover {
-   top: 26px;
+   top: 2.6rem;
    font-weight: normal;
 }
 

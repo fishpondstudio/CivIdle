@@ -36,12 +36,12 @@
 .modern .toast,
 .modern ul.tree-view {
    font-family: "Inter Tight", sans-serif;
-   font-size: 14px;
+   font-size: 1.4rem;
 }
 
 .modern .tippy-box {
    font-family: "Inter Tight", sans-serif;
-   font-size: 14px;
+   font-size: 1.4rem;
 }
 
 .modern ul.tree-view details>summary:before {
@@ -79,7 +79,7 @@
 }
 
 .modern .title-bar {
-   font-size: 14px;
+   font-size: 1.4rem;
 }
 
 .modern .text-small {
@@ -100,7 +100,7 @@
 }
 
 .modern .m-icon.small {
-   font-size: 17px;
+   font-size: 1.7rem;
 }
 
 .modern #chat-panel .language-switch {

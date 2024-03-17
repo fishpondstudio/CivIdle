@@ -8,9 +8,9 @@ import {
 } from "../../../shared/logic/GameState";
 import { notifyGameOptionsUpdate } from "../../../shared/logic/GameStateLogic";
 import { getBuildingsThatProduce } from "../../../shared/logic/ResourceLogic";
-import { forEach, keysOf, safeParseInt } from "../../../shared/utilities/Helper";
+import { forEach, keysOf, safeParseFloat, safeParseInt } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
-import { useGameOptions } from "../Global";
+import { syncFontSizeScale, useGameOptions } from "../Global";
 import { playClick } from "../visuals/Sound";
 import { ChangeModernUIComponent } from "./ChangeModernUIComponent";
 import { ColorPicker } from "./ColorPicker";
@@ -28,6 +28,34 @@ export function ThemePage(): React.ReactNode {
          <div className="window-body">
             <fieldset>
                <ChangeModernUIComponent />
+               {gameOptions.useModernUI ? (
+                  <>
+                     <div className="separator" />
+                     <div className="row">
+                        <div className="f1">
+                           <div>{t(L.FontSizeScale)}</div>
+                           <RenderHTML className="text-desc text-small" html={t(L.FontSizeScaleDescHTML)} />
+                        </div>
+                        <select
+                           className="ml10"
+                           value={gameOptions.fontSizeScale}
+                           onChange={(e) => {
+                              gameOptions.fontSizeScale = safeParseFloat(e.target.value, 1);
+                              syncFontSizeScale(gameOptions);
+                              notifyGameOptionsUpdate(gameOptions);
+                           }}
+                        >
+                           <option value={0.9}>0.9x</option>
+                           <option value={1}>1x</option>
+                           <option value={1.1}>1.1x</option>
+                           <option value={1.2}>1.2x</option>
+                           <option value={1.3}>1.3x</option>
+                           <option value={1.4}>1.4x</option>
+                           <option value={1.5}>1.5x</option>
+                        </select>
+                     </div>
+                  </>
+               ) : null}
                <div className="separator" />
                <div className="row">
                   <div className="f1">
@@ -35,6 +63,7 @@ export function ThemePage(): React.ReactNode {
                      <RenderHTML className="text-desc text-small" html={t(L.SidePanelWidthDescHTML)} />
                   </div>
                   <select
+                     className="ml10"
                      value={gameOptions.sidePanelWidth}
                      onChange={(e) => {
                         gameOptions.sidePanelWidth = safeParseInt(e.target.value, 400);

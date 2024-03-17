@@ -8,7 +8,7 @@ export function ChangeModernUIComponent(): React.ReactNode {
    const gameOptions = useGameOptions();
    return (
       <div className="row">
-         <div className="f1">{t(L.OptionsUseModernUI)}</div>
+         <div className="f1">{t(L.OptionsUseModernUIV2)}</div>
          <div
             onClick={() => {
                playClick();
