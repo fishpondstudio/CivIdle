@@ -203,7 +203,7 @@ export const KR = {
    OptionsMenu: "설정",
    HelpMenu: "지원",
    Census: "인구조사",
-   OptionsUseModernUI: "편하게 보기",
+   OptionsUseModernUIV2: "Use Anti-Aliased Font",
    About: "CivIdle에 대하여",
    ResearchMenu: "연구",
    CityViewMap: "도시",
@@ -905,8 +905,8 @@ export const KR = {
    ClearSelected: "선택한 항목 초기화",
    PlayerTradeTariffTooltip: "무역 관세로부터 징수됨",
    PlayerTradeClaimAll: "모두 받기",
-   PlayerTradeClaimAllMessage: "%{count} 건의 거래를 완료했습니다",
-   PlayerTradeClaimAllFailedMessage: "%{count} 건의 거래를 완료했습니다.- 저장소 용량을 확인하세요.",
+   PlayerTradeClaimAllFailedMessageV2: "Failed to claim any trades - is the storage full?",
+   PlayerTradeClaimAllMessageV2: "You have claimed: <b>%{resources}</b>",
    SteamAchievement: "Steam 도전과제",
    SteamAchievementDetails: "Steam 도전과제 보기",
    ChatHideLatestMessage: "최신 메시지 내용 숨기기",
@@ -1001,8 +1001,13 @@ export const KR = {
    SidePanelWidth: "Side Panel Width",
    SidePanelWidthDescHTML:
       "Change the width of the side panel. <b>Require restarting your game to take effect</b>",
+   FontSizeScale: "Font Size Scale",
+   FontSizeScaleDescHTML:
+      "Change the font size scale of the game's UI. <b>Setting the scale greater than 1x might break some UI layouts</b>",
    ShowUnbuiltOnly: "Only show buildings that haven't been built yet",
    PlayerTradeFilters: "Filters",
    PlayerTradeFiltersApply: "Apply",
    PlayerTradeFiltersClear: "Clear",
+   GrandBazaarTabTrades: "Trades",
+   GrandBazaarTabActive: "Active",
 };

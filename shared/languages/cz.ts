@@ -203,7 +203,7 @@ export const CZ = {
    OptionsMenu: "Možnosti",
    HelpMenu: "Nápověda",
    Census: "Sčítání lidu",
-   OptionsUseModernUI: "Uživatelské rozhraní pro ochranu očí",
+   OptionsUseModernUIV2: "Use Anti-Aliased Font",
    About: "O službě CivIdle",
    ResearchMenu: "Výzkum",
    CityViewMap: "Město",
@@ -931,8 +931,8 @@ export const CZ = {
    ClearSelected: "Vymazat vybrané",
    PlayerTradeTariffTooltip: "Vybrané z obchodního cla",
    PlayerTradeClaimAll: "Nárok na všechny",
-   PlayerTradeClaimAllMessage: "Nárokovali jste %{count} obchodů",
-   PlayerTradeClaimAllFailedMessage: "Reklamovali jste %{count} obchodů - je sklad plný?",
+   PlayerTradeClaimAllFailedMessageV2: "Failed to claim any trades - is the storage full?",
+   PlayerTradeClaimAllMessageV2: "You have claimed: <b>%{resources}</b>",
    SteamAchievement: "Steam Achievement",
    SteamAchievementDetails: "Zobrazit Steam Achievement",
    ChatHideLatestMessage: "Skrýt obsah poslední zprávy",
@@ -1029,8 +1029,13 @@ export const CZ = {
    SidePanelWidth: "Side Panel Width",
    SidePanelWidthDescHTML:
       "Change the width of the side panel. <b>Require restarting your game to take effect</b>",
+   FontSizeScale: "Font Size Scale",
+   FontSizeScaleDescHTML:
+      "Change the font size scale of the game's UI. <b>Setting the scale greater than 1x might break some UI layouts</b>",
    ShowUnbuiltOnly: "Only show buildings that haven't been built yet",
    PlayerTradeFilters: "Filters",
    PlayerTradeFiltersApply: "Apply",
    PlayerTradeFiltersClear: "Clear",
+   GrandBazaarTabTrades: "Trades",
+   GrandBazaarTabActive: "Active",
 };
