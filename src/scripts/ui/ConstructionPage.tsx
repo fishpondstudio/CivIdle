@@ -31,11 +31,17 @@ export function ConstructionPage({ tile }: { tile: ITileData }): React.ReactNode
    const canDecreaseDesiredLevel = () => building.desiredLevel > building.level + 1;
 
    const increaseDesiredLevel = () => {
+      if (isSpecialBuilding(building.type)) {
+         return;
+      }
       playClick();
       building.desiredLevel++;
       notifyGameStateUpdate();
    };
    const decreaseDesiredLevel = () => {
+      if (isSpecialBuilding(building.type)) {
+         return;
+      }
       if (canDecreaseDesiredLevel()) {
          playClick();
          building.desiredLevel--;
