@@ -887,7 +887,6 @@ export function applyBuildingDefaults(building: IBuildingData, options: GameOpti
    if (isNullOrUndefined(toApply.productionPriority)) {
       toApply.productionPriority = options.defaultProductionPriority;
    }
-   console.log(toApply);
    return Object.assign(building, toApply);
 }
 
