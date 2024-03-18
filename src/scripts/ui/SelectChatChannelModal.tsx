@@ -39,11 +39,11 @@ export function SelectChatChannelModal(): React.ReactNode {
                                        "text-green": options.chatChannels.has(channel),
                                     })}
                                     onClick={() => {
-                                       if (options.chatChannels.size <= 1) {
-                                          playError();
-                                          return;
-                                       }
                                        if (options.chatChannels.has(channel)) {
+                                          if (options.chatChannels.size <= 1) {
+                                             playError();
+                                             return;
+                                          }
                                           options.chatChannels.delete(channel);
                                        } else {
                                           options.chatChannels.add(channel);
