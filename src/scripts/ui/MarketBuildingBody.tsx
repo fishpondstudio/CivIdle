@@ -35,6 +35,8 @@ import { TableView } from "./TableView";
 import { TextWithHelp } from "./TextWithHelpComponent";
 import { WarningComponent } from "./WarningComponent";
 
+const marketSortingState = { column: 0, asc: true };
+
 export function MarketBuildingBody({ gameState, xy }: IBuildingComponentProps): React.ReactNode {
    const building = gameState.tiles.get(xy)?.building as IMarketBuildingData;
    if (building == null || !building.sellResources) {
@@ -70,6 +72,7 @@ export function MarketBuildingBody({ gameState, xy }: IBuildingComponentProps): 
                { name: t(L.Storage), sortable: true },
                { name: t(L.MarketSell), sortable: false },
             ]}
+            sortingState={marketSortingState}
             data={keysOf(market.availableResources)}
             compareFunc={(a, b, i) => {
                switch (i) {
