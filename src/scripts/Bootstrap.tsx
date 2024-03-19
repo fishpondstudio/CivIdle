@@ -97,7 +97,7 @@ export async function startGame(
 
    // ========== Connect to server ==========
    routeTo(LoadingPage, { stage: LoadingPageStage.SteamSignIn });
-   const TIMEOUT = import.meta.env.DEV ? 1 : 10;
+   const TIMEOUT = import.meta.env.DEV ? 1 : 15;
    let hasOfflineProductionModal = false;
    try {
       const actualOfflineTime = await Promise.race([

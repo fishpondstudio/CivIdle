@@ -703,7 +703,7 @@ export function tickPrice(gs: GameState) {
    const resources = filterOf(unlockedResources(gs), (res) => !NoPrice[res] && !NoStorage[res]);
    getBuildingsByType("Market", gs)?.forEach((tile, xy) => {
       const building = gs.tiles.get(xy)?.building;
-      if (!building || building.type !== "Market" || building.status !== "completed") {
+      if (!building || building.type !== "Market") {
          return;
       }
       const market = building as IMarketBuildingData;

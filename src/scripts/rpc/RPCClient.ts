@@ -29,7 +29,6 @@ import { SteamClient, isSteam } from "./SteamClient";
 
 let user: IUser | null = null;
 
-export const OnOfflineTime = new TypedEvent<number>();
 export const OnUserChanged = new TypedEvent<IUser | null>();
 export const OnChatMessage = new TypedEvent<LocalChat[]>();
 export const OnTradeChanged = new TypedEvent<IClientTrade[]>();
@@ -157,6 +156,12 @@ export async function connectWebSocket(): Promise<number> {
 
    ws.binaryType = "arraybuffer";
 
+   let resolve: ((v: number) => void) | null = null;
+
+   const promise = new Promise<number>((resolve_) => {
+      resolve = resolve_;
+   });
+
    ws.onmessage = (e) => {
       const message = decode(e.data as ArrayBuffer) as AllMessageTypes;
       const type = message.type as MessageType;
@@ -188,7 +193,7 @@ export async function connectWebSocket(): Promise<number> {
             saveGame().catch(console.error);
             OnUserChanged.emit({ ...user });
             const offlineTicks = clamp(w.lastGameTick + w.offlineTime - getGameState().tick, 0, Infinity);
-            OnOfflineTime.emit(Math.min(w.offlineTime, offlineTicks));
+            resolve?.(Math.min(w.offlineTime, offlineTicks));
             break;
          }
          case MessageType.Trade: {
@@ -250,9 +255,7 @@ export async function connectWebSocket(): Promise<number> {
       setTimeout(connectWebSocket, Math.min(Math.pow(2, reconnect++) * SECOND, 16 * SECOND));
    };
 
-   return new Promise<number>((resolve, reject) => {
-      OnOfflineTime.once((e) => resolve(e));
-   });
+   return promise;
 }
 
 function handleRpcResponse(response: any) {
