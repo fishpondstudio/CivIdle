@@ -162,7 +162,7 @@ export function ResourcePanel(): React.ReactNode {
                      bolt
                   </div>
                   <Tippy placement="bottom" content={`${t(L.PowerUsed)}/${t(L.PowerAvailable)}`}>
-                     <div style={{ width: "auto" }}>
+                     <div style={{ width: "14rem" }}>
                         <FormatNumber value={tick.workersUsed.get("Power") ?? 0} />W{" / "}
                         <FormatNumber value={tick.workersAvailable.get("Power") ?? 0} />W
                      </div>
