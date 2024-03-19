@@ -33,6 +33,8 @@ import { showModal } from "./GlobalModal";
 import { FormatNumber } from "./HelperComponents";
 import { TableView } from "./TableView";
 
+const resourceImportSortingState = { column: 1, asc: true };
+
 export function ResourceImportComponent({ gameState, xy }: IBuildingComponentProps): React.ReactNode {
    const building = gameState.tiles.get(xy)?.building as IResourceImportBuildingData;
    const [selected, setSelected] = useState(new Set<Resource>());
@@ -63,6 +65,7 @@ export function ResourceImportComponent({ gameState, xy }: IBuildingComponentPro
                { name: t(L.ResourceImportImportCapV2), sortable: true, right: true },
                { name: "", sortable: false },
             ]}
+            sortingState={resourceImportSortingState}
             data={resources}
             compareFunc={(a, b, col) => {
                switch (col) {
