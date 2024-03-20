@@ -260,7 +260,7 @@ export class BuildingDefinitions {
    };
    BattleshipBuilder: IBuildingDefinition = {
       name: () => t(L.BattleshipBuilder),
-      input: { Ironclad: 1, Artillery: 1, Steel: 5, Aluminum: 10 },
+      input: { Ironclad: 1, Artillery: 1, Cable: 5, Steel: 5, Aluminum: 5 },
       output: { Battleship: 1 },
    };
    TankFactory: IBuildingDefinition = {
@@ -270,12 +270,12 @@ export class BuildingDefinitions {
    };
    BiplaneFactory: IBuildingDefinition = {
       name: () => t(L.BiplaneFactory),
-      input: { Engine: 1, Steel: 1, Aluminum: 1, Petrol: 5 },
+      input: { Engine: 1, Steel: 1, Lens: 1, Petrol: 5 },
       output: { Biplane: 1 },
    };
    RocketFactory: IBuildingDefinition = {
       name: () => t(L.RocketFactory),
-      input: { Engine: 1, Artillery: 1, Petrol: 10 },
+      input: { Engine: 1, Artillery: 1, Steel: 5, Cable: 5, Petrol: 10 },
       output: { Rocket: 1 },
    };
    AtomicFacility: IBuildingDefinition = {
@@ -359,17 +359,17 @@ export class BuildingDefinitions {
    };
    Courthouse: IBuildingDefinition = {
       name: () => t(L.Courthouse),
-      input: { Philosophy: 1, Faith: 1 },
+      input: { Philosophy: 1, Faith: 1, Culture: 1 },
       output: { Law: 1 },
    };
    Stadium: IBuildingDefinition = {
       name: () => t(L.Stadium),
-      input: { Culture: 1, Opera: 1 },
+      input: { Culture: 1, Opera: 1, Philosophy: 1 },
       output: { Sports: 1 },
    };
    Parliament: IBuildingDefinition = {
       name: () => t(L.Parliament),
-      input: { Culture: 1, Philosophy: 1 },
+      input: { Culture: 1, Philosophy: 1, Law: 1 },
       output: { Politics: 1 },
    };
    MagazinePublisher: IBuildingDefinition = {
@@ -384,8 +384,13 @@ export class BuildingDefinitions {
    };
    RadioStation: IBuildingDefinition = {
       name: () => t(L.RadioStation),
-      input: { Magazine: 2, Newspaper: 2 },
+      input: { Magazine: 1, Newspaper: 1, Culture: 1 },
       output: { Radio: 1 },
+   };
+   Embassy: IBuildingDefinition = {
+      name: () => t(L.Embassy),
+      input: { Law: 1, Politics: 1 },
+      output: { Diplomacy: 1 },
    };
    // #endregion /////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -523,11 +528,15 @@ export class BuildingDefinitions {
       output: { Steel: 1 },
       construction: { Brick: 1, Coal: 1 },
    };
+   CableFactory: IBuildingDefinition = {
+      name: () => t(L.CableFactory),
+      input: { Copper: 5 },
+      output: { Cable: 1 },
+   };
    Steamworks: IBuildingDefinition = {
       name: () => t(L.Steamworks),
       input: { Iron: 1, Coal: 1, Tool: 1 },
       output: { Engine: 1 },
-      construction: { Iron: 1, Coal: 1, Lumber: 1, Brick: 1, Water: 2 },
    };
    LocomotiveFactory: IBuildingDefinition = {
       name: () => t(L.LocomotiveFactory),

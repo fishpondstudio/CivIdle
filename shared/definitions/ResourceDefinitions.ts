@@ -90,6 +90,8 @@ export class ResourceDefinitions {
    Rocket: IResourceDefinition = { name: () => t(L.Rocket) };
    NuclearFuelRod: IResourceDefinition = { name: () => t(L.NuclearFuelRod) };
    AtomicBomb: IResourceDefinition = { name: () => t(L.AtomicBomb) };
+   Diplomacy: IResourceDefinition = { name: () => t(L.Diplomacy) };
+   Cable: IResourceDefinition = { name: () => t(L.Cable) };
 }
 
 export type Resource = keyof ResourceDefinitions;

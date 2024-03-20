@@ -6,7 +6,6 @@ import {
    applyBuildingDefaults,
    checkBuildingMax,
    getBuildingCost,
-   isWorldOrNaturalWonder,
 } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
 import { getGameOptions, notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
@@ -36,6 +35,7 @@ import { useShortcut } from "../utilities/Hook";
 import { Singleton } from "../utilities/Singleton";
 import { playError } from "../visuals/Sound";
 import { MenuComponent } from "./MenuComponent";
+import { TableView } from "./TableView";
 import { TextWithHelp } from "./TextWithHelpComponent";
 
 enum BuildingFilter {
@@ -59,6 +59,7 @@ enum BuildingFilter {
 
 let lastBuild: Building | null = null;
 let savedFilter = BuildingFilter.None;
+const savedSorting = { column: 0, asc: true };
 
 export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
    const gs = useGameState();
@@ -134,7 +135,7 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
                   placeholder={t(L.BuildingSearchText)}
                   onChange={(e) => setSearch(e.target.value)}
                />
-               <div className="row mt5">
+               <div className="row mt10">
                   <Filter
                      filter={buildingFilter}
                      current={BuildingFilter.Wonder}
@@ -166,171 +167,147 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
                   </Filter>
                </div>
             </fieldset>
-            <div className="table-view sticky-header building-list f1">
-               <table>
-                  <thead>
-                     <tr>
-                        <th className="text-center">{t(L.BuildingTier)}</th>
-                        <th>{t(L.BuildingName)}</th>
-                        <th className="right">{t(L.BuildingCost)}</th>
-                        <th />
-                     </tr>
-                  </thead>
-                  <tbody>
-                     {keysOf(unlockedBuildings(gs))
-                        .sort((a, b) => {
-                           if (extractsDeposit(Config.Building[a]) && !extractsDeposit(Config.Building[b])) {
-                              return -1;
-                           }
-                           if (extractsDeposit(Config.Building[b]) && !extractsDeposit(Config.Building[a])) {
-                              return 1;
-                           }
-                           if (lastBuild === a && lastBuild !== b) {
-                              return -1;
-                           }
-                           if (lastBuild === b && lastBuild !== a) {
-                              return 1;
-                           }
-                           if (isWorldOrNaturalWonder(a) && !isWorldOrNaturalWonder(b)) {
-                              return -1;
-                           }
-                           if (isWorldOrNaturalWonder(b) && !isWorldOrNaturalWonder(a)) {
-                              return 1;
-                           }
-                           const tier = (Config.BuildingTier[a] ?? 0) - (Config.BuildingTier[b] ?? 0);
-                           if (tier !== 0) {
-                              return tier;
-                           }
-                           return Config.Building[a].name().localeCompare(Config.Building[b].name());
-                        })
-                        .filter((v) => {
-                           let filter = buildingFilter === 0;
+            <TableView
+               classNames="sticky-header building-list f1"
+               sortingState={savedSorting}
+               header={[
+                  { name: t(L.BuildingTier), sortable: true },
+                  { name: t(L.BuildingName), sortable: true },
+                  { name: t(L.BuildingCost), sortable: false },
+                  { name: "", sortable: false },
+               ]}
+               data={keysOf(unlockedBuildings(gs)).filter((v) => {
+                  let filter = buildingFilter === 0;
 
-                           if (hasFlag(buildingFilter, BuildingFilter.NotBuilt)) {
-                              filter &&= (buildingByType.get(v)?.size ?? 0) === 0;
-                           }
+                  if (hasFlag(buildingFilter, BuildingFilter.NotBuilt)) {
+                     filter &&= (buildingByType.get(v)?.size ?? 0) === 0;
+                  }
 
-                           for (let i = 0; i < 12; i++) {
-                              if (hasFlag(buildingFilter, 1 << i)) {
-                                 filter ||= Config.BuildingTier[v] === i;
-                              }
-                           }
+                  for (let i = 0; i < 12; i++) {
+                     if (hasFlag(buildingFilter, 1 << i)) {
+                        filter ||= Config.BuildingTier[v] === i;
+                     }
+                  }
 
-                           const s = search.toLowerCase();
-                           return (
-                              filter &&
-                              (Config.Building[v].name().toLowerCase().includes(s) ||
-                                 anyOf(Config.Building[v].input, (res) =>
-                                    Config.Resource[res].name().toLowerCase().includes(s),
-                                 ) ||
-                                 anyOf(Config.Building[v].output, (res) =>
-                                    Config.Resource[res].name().toLowerCase().includes(s),
-                                 ))
-                           );
-                        })
-                        .map((k) => {
-                           if ((sizeOf(constructed.get(k)) ?? 0) >= (Config.Building[k].max ?? Infinity)) {
-                              return null;
-                           }
-                           const building = Config.Building[k];
-                           const buildCost = getBuildingCost({
-                              type: k,
-                              level: 0,
-                           });
-                           return (
-                              <tr
-                                 key={k}
-                                 onPointerDown={(e) => {
-                                    setSelected(k);
-                                    e.stopPropagation();
+                  const s = search.toLowerCase();
+                  return (
+                     filter &&
+                     (Config.Building[v].name().toLowerCase().includes(s) ||
+                        anyOf(Config.Building[v].input, (res) =>
+                           Config.Resource[res].name().toLowerCase().includes(s),
+                        ) ||
+                        anyOf(Config.Building[v].output, (res) =>
+                           Config.Resource[res].name().toLowerCase().includes(s),
+                        ))
+                  );
+               })}
+               compareFunc={(a, b, col) => {
+                  switch (col) {
+                     case 1:
+                        return Config.Building[a]!.name().localeCompare(Config.Building[b]!.name());
+                     default:
+                        return (Config.BuildingTier[a] ?? 0) - (Config.BuildingTier[b] ?? 0);
+                  }
+               }}
+               renderRow={(k) => {
+                  if ((sizeOf(constructed.get(k)) ?? 0) >= (Config.Building[k].max ?? Infinity)) {
+                     return null;
+                  }
+                  const building = Config.Building[k];
+                  const buildCost = getBuildingCost({
+                     type: k,
+                     level: 0,
+                  });
+                  return (
+                     <tr
+                        key={k}
+                        onPointerDown={(e) => {
+                           setSelected(k);
+                           e.stopPropagation();
+                        }}
+                     >
+                        <td className="text-center text-strong">
+                           {(building?.max ?? Infinity) <= 1 ? (
+                              <div className="m-icon small">
+                                 <TextWithHelp content={building.desc?.()} noStyle>
+                                    public
+                                 </TextWithHelp>
+                              </div>
+                           ) : (
+                              <div
+                                 className="pointer"
+                                 onClick={() => {
+                                    const result: Tile[] = [];
+                                    gs.tiles.forEach((tile, xy) => {
+                                       if (tile.building?.type === k) {
+                                          result.push(xy);
+                                       }
+                                    });
+                                    Singleton()
+                                       .sceneManager.getCurrent(WorldScene)
+                                       ?.drawSelection(tileToPoint(tile.tile), result);
                                  }}
                               >
-                                 <td className="text-center text-strong">
-                                    {(building?.max ?? Infinity) <= 1 ? (
-                                       <div className="m-icon small">
-                                          <TextWithHelp content={building.desc?.()} noStyle>
-                                             public
-                                          </TextWithHelp>
-                                       </div>
-                                    ) : (
-                                       <div
-                                          className="pointer"
-                                          onClick={() => {
-                                             const result: Tile[] = [];
-                                             gs.tiles.forEach((tile, xy) => {
-                                                if (tile.building?.type === k) {
-                                                   result.push(xy);
-                                                }
-                                             });
-                                             Singleton()
-                                                .sceneManager.getCurrent(WorldScene)
-                                                ?.drawSelection(tileToPoint(tile.tile), result);
-                                          }}
-                                       >
-                                          {numberToRoman(Config.BuildingTier[k] ?? 1)}
-                                       </div>
-                                    )}
-                                 </td>
-                                 <td>
-                                    <div className="row">
-                                       <div>
-                                          <span className="text-strong">{building.name()}</span>
-                                          {building.max === 1 ? null : (
-                                             <span className="text-desc text-small ml5">
-                                                {sizeOf(buildingByType.get(k))}
-                                             </span>
-                                          )}
-                                       </div>
-                                       {extractsDeposit(building) ? (
-                                          <div className="m-icon small text-orange ml5">stars</div>
-                                       ) : null}
-                                       {k === lastBuild ? (
-                                          <div className="m-icon small text-orange ml5">replay</div>
-                                       ) : null}
-                                    </div>
-                                    <div className="row text-small text-desc">
-                                       {isEmpty(building.input) ? null : (
-                                          <div className="m-icon small mr2">exit_to_app</div>
-                                       )}
-                                       {mapOf(
-                                          building.input,
-                                          (res, amount) =>
-                                             `${Config.Resource[res].name()} x${formatNumber(amount)}`,
-                                       ).join(", ")}
-                                    </div>
-                                    <div className="row text-small text-desc">
-                                       {isEmpty(building.output) ? null : (
-                                          <div className="m-icon small mr2">output</div>
-                                       )}
-                                       {mapOf(
-                                          building.output,
-                                          (res, amount) =>
-                                             `${Config.Resource[res].name()} x${formatNumber(amount)}`,
-                                       ).join(", ")}
-                                    </div>
-                                 </td>
-                                 <td className="right text-small">
-                                    {jsxMapOf(buildCost, (res, amount) => {
-                                       return (
-                                          <div className="nowrap" key={res}>
-                                             {Config.Resource[res].name()} x{formatNumber(amount)}
-                                          </div>
-                                       );
-                                    })}
-                                 </td>
-                                 <td>
-                                    <div className="row text-link" onClick={() => build(k)}>
-                                       <div className="f1" />
-                                       <div className="m-icon small">construction</div>
-                                       <div className="text-link">{t(L.Build)}</div>
-                                    </div>
-                                 </td>
-                              </tr>
-                           );
-                        })}
-                  </tbody>
-               </table>
-            </div>
+                                 {numberToRoman(Config.BuildingTier[k] ?? 1)}
+                              </div>
+                           )}
+                        </td>
+                        <td>
+                           <div className="row">
+                              <div>
+                                 <span className="text-strong">{building.name()}</span>
+                                 {building.max === 1 ? null : (
+                                    <span className="text-desc text-small ml5">
+                                       {sizeOf(buildingByType.get(k))}
+                                    </span>
+                                 )}
+                              </div>
+                              {extractsDeposit(building) ? (
+                                 <div className="m-icon small text-orange ml5">stars</div>
+                              ) : null}
+                              {k === lastBuild ? (
+                                 <div className="m-icon small text-orange ml5">replay</div>
+                              ) : null}
+                           </div>
+                           <div className="row text-small text-desc">
+                              {isEmpty(building.input) ? null : (
+                                 <div className="m-icon small mr2">exit_to_app</div>
+                              )}
+                              {mapOf(
+                                 building.input,
+                                 (res, amount) => `${Config.Resource[res].name()} x${formatNumber(amount)}`,
+                              ).join(", ")}
+                           </div>
+                           <div className="row text-small text-desc">
+                              {isEmpty(building.output) ? null : (
+                                 <div className="m-icon small mr2">output</div>
+                              )}
+                              {mapOf(
+                                 building.output,
+                                 (res, amount) => `${Config.Resource[res].name()} x${formatNumber(amount)}`,
+                              ).join(", ")}
+                           </div>
+                        </td>
+                        <td className="right text-small">
+                           {jsxMapOf(buildCost, (res, amount) => {
+                              return (
+                                 <div className="nowrap" key={res}>
+                                    {Config.Resource[res].name()} x{formatNumber(amount)}
+                                 </div>
+                              );
+                           })}
+                        </td>
+                        <td>
+                           <div className="row text-link" onClick={() => build(k)}>
+                              <div className="f1" />
+                              <div className="m-icon small">construction</div>
+                              <div className="text-link">{t(L.Build)}</div>
+                           </div>
+                        </td>
+                     </tr>
+                  );
+               }}
+            />
          </div>
       </div>
    );

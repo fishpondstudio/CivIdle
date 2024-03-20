@@ -511,7 +511,7 @@ export class TechDefinitions {
       name: () => t(L.Drilling),
       column: 15,
       requireTech: ["Capitalism", "SteamEngine"],
-      unlockBuilding: ["OilWell"],
+      unlockBuilding: ["OilWell", "CableFactory"],
       revealDeposit: ["Oil"],
    };
 
@@ -679,7 +679,7 @@ export class TechDefinitions {
       name: () => t(L.UnitedNations),
       column: 20,
       requireTech: ["Radio"],
-      unlockBuilding: ["UnitedNations"],
+      unlockBuilding: ["Embassy", "UnitedNations"],
    };
 
    SpaceProgram: ITechDefinition = {
