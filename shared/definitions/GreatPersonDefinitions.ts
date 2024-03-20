@@ -173,7 +173,7 @@ export class GreatPersonDefinitions {
       name: () => t(L.Herodotus),
       boost: {
          multipliers: ["output", "storage"],
-         buildings: ["WritersGuild", "MusiciansGuild"],
+         buildings: ["PaperMaker", "MusiciansGuild"],
       },
       time: "c. 600s BC",
       value: (level) => level,
@@ -430,7 +430,7 @@ export class GreatPersonDefinitions {
       name: () => t(L.WilliamShakespeare),
       boost: {
          multipliers: ["output", "storage"],
-         buildings: ["PaperMaker", "ActorsGuild"],
+         buildings: ["WritersGuild", "ActorsGuild"],
       },
       time: "1564 ~ 1616 AD",
       value: (level) => level,
