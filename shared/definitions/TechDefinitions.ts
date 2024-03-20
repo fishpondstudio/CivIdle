@@ -623,14 +623,14 @@ export class TechDefinitions {
       name: () => t(L.MotionPicture),
       column: 18,
       requireTech: ["Urbanization"],
-      unlockBuilding: ["MovieStudio"],
+      unlockBuilding: ["MovieStudio", "Hollywood"],
    };
 
    Assembly: ITechDefinition = {
       name: () => t(L.Assembly),
       column: 19,
       requireTech: ["Aviation", "Synthetics"],
-      unlockBuilding: ["CarFactory"],
+      unlockBuilding: ["CarFactory", "SagradaFamilia"],
    };
 
    Ballistics: ITechDefinition = {
@@ -644,14 +644,14 @@ export class TechDefinitions {
       name: () => t(L.Hydroelectricity),
       column: 19,
       requireTech: ["AtomicTheory", "Synthetics"],
-      unlockBuilding: ["HydroDam"],
+      unlockBuilding: ["HydroDam", "GoldenGateBridge"],
    };
 
    Radio: ITechDefinition = {
       name: () => t(L.Radio),
       column: 19,
       requireTech: ["AtomicTheory", "MotionPicture"],
-      unlockBuilding: ["RadioStation"],
+      unlockBuilding: ["RadioStation", "CristoRedentor"],
    };
 
    Rocketry: ITechDefinition = {
@@ -665,7 +665,7 @@ export class TechDefinitions {
       name: () => t(L.NuclearFission),
       column: 20,
       requireTech: ["Hydroelectricity", "Ballistics"],
-      unlockBuilding: ["AtomicBombFactory"],
+      unlockBuilding: ["AtomicFacility", "ManhattanProject"],
    };
 
    Enrichment: ITechDefinition = {
@@ -679,6 +679,7 @@ export class TechDefinitions {
       name: () => t(L.UnitedNations),
       column: 20,
       requireTech: ["Radio"],
+      unlockBuilding: ["UnitedNations"],
    };
 
    SpaceProgram: ITechDefinition = {

@@ -278,8 +278,8 @@ export class BuildingDefinitions {
       input: { Engine: 1, Artillery: 1, Petrol: 10 },
       output: { Rocket: 1 },
    };
-   AtomicBombFactory: IBuildingDefinition = {
-      name: () => t(L.AtomicBombFactory),
+   AtomicFacility: IBuildingDefinition = {
+      name: () => t(L.AtomicFacility),
       input: { Dynamite: 10, Uranium: 10 },
       output: { AtomicBomb: 1 },
    };
@@ -1046,6 +1046,66 @@ export class BuildingDefinitions {
       special: BuildingSpecial.WorldWonder,
       wikipedia: "Great_Sphinx_of_Giza",
    };
+   Hollywood: IBuildingDefinition = {
+      name: () => t(L.Hollywood),
+      desc: () => t(L.HollywoodDesc),
+      input: {},
+      output: {},
+      max: 1,
+      construction: { Stone: 100, Brick: 100, Lumber: 100 },
+      special: BuildingSpecial.WorldWonder,
+      wikipedia: "Hollywood,_Los_Angeles",
+   };
+   GoldenGateBridge: IBuildingDefinition = {
+      name: () => t(L.GoldenGateBridge),
+      desc: () => t(L.GoldenGateBridgeDesc),
+      input: {},
+      output: {},
+      construction: { Stone: 100, Brick: 100, Lumber: 100 },
+      max: 1,
+      special: BuildingSpecial.WorldWonder,
+      wikipedia: "Golden_Gate_Bridge",
+   };
+   CristoRedentor: IBuildingDefinition = {
+      name: () => t(L.CristoRedentor),
+      desc: () => t(L.CristoRedentorDesc),
+      input: {},
+      output: {},
+      construction: { Stone: 100, Brick: 100, Lumber: 100 },
+      max: 1,
+      special: BuildingSpecial.WorldWonder,
+      wikipedia: "Christ_the_Redeemer_(statue)",
+   };
+   UnitedNations: IBuildingDefinition = {
+      name: () => t(L.UnitedNations),
+      desc: () => t(L.UnitedNationsDesc),
+      input: {},
+      output: {},
+      construction: { Stone: 100, Brick: 100, Lumber: 100 },
+      max: 1,
+      special: BuildingSpecial.WorldWonder,
+      wikipedia: "United_Nations",
+   };
+   ManhattanProject: IBuildingDefinition = {
+      name: () => t(L.ManhattanProject),
+      desc: () => t(L.ManhattanProjectDesc),
+      input: {},
+      output: {},
+      construction: { Stone: 100, Brick: 100, Lumber: 100 },
+      max: 1,
+      special: BuildingSpecial.WorldWonder,
+      wikipedia: "Manhattan_Project",
+   };
+   SagradaFamilia: IBuildingDefinition = {
+      name: () => t(L.SagradaFamilia),
+      desc: () => t(L.SagradaFamiliaDesc),
+      input: {},
+      output: {},
+      construction: { Stone: 100, Brick: 100, Lumber: 100 },
+      max: 1,
+      special: BuildingSpecial.WorldWonder,
+      wikipedia: "Sagrada_Família",
+   };
    // ArcDeTriomphe: IBuildingDefinition = {
    //    name: () => t(L.ArcDeTriomphe),
    //    desc: () => t(L.ArcDeTriompheDesc),
@@ -1100,15 +1160,6 @@ export class BuildingDefinitions {
    //    wikipedia: "Shwedagon_Pagoda",
    // };
 
-   // SagradaFamília: IBuildingDefinition = {
-   //    name: () => t(L.SagradaFamília),
-   //    desc: () => t(L.SagradaFamíliaDesc),
-   //    input: {},
-   //    output: {},
-   //    max: 1,
-   //    wikipedia: "Sagrada_Família",
-   // };
-
    // Borobudur: IBuildingDefinition = {
    //    name: () => t(L.Borobudur),
    //    desc: () => t(L.BorobudurDesc),
@@ -1125,15 +1176,6 @@ export class BuildingDefinitions {
    //    output: {},
    //    max: 1,
    //    wikipedia: "Itsukushima_Shrine",
-   // };
-
-   // StatueOfLiberty: IBuildingDefinition = {
-   //    name: () => t(L.StatueOfLiberty),
-   //    desc: () => t(L.StatueOfLibertyDesc),
-   //    input: {},
-   //    output: {},
-   //    max: 1,
-   //    wikipedia: "Statue_of_Liberty",
    // };
 
    // Moai: IBuildingDefinition = {
@@ -1161,24 +1203,6 @@ export class BuildingDefinitions {
    //    output: {},
    //    max: 1,
    //    wikipedia: "Chogha_Zanbil",
-   // };
-
-   // CristoRedentor: IBuildingDefinition = {
-   //    name: () => t(L.CristoRedentor),
-   //    desc: () => t(L.CristoRedentorDesc),
-   //    input: {},
-   //    output: {},
-   //    max: 1,
-   //    wikipedia: "Christ_the_Redeemer_(statue)",
-   // };
-
-   // GoldenGateBridge: IBuildingDefinition = {
-   //    name: () => t(L.GoldenGateBridge),
-   //    desc: () => t(L.GoldenGateBridgeDesc),
-   //    input: {},
-   //    output: {},
-   //    max: 1,
-   //    wikipedia: "Golden_Gate_Bridge",
    // };
 
    // SydneyOperaHouse: IBuildingDefinition = {

@@ -16,6 +16,7 @@ import { makeBuilding } from "../../../shared/logic/Tile";
 import {
    anyOf,
    formatNumber,
+   hasFlag,
    isEmpty,
    keysOf,
    mapOf,
@@ -23,6 +24,7 @@ import {
    setContains,
    sizeOf,
    tileToPoint,
+   toggleFlag,
    type Tile,
 } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
@@ -36,13 +38,33 @@ import { playError } from "../visuals/Sound";
 import { MenuComponent } from "./MenuComponent";
 import { TextWithHelp } from "./TextWithHelpComponent";
 
+enum BuildingFilter {
+   None = 0,
+   Wonder = 1 << 0,
+   Tier1 = 1 << 1,
+   Tier2 = 1 << 2,
+   Tier3 = 1 << 3,
+   Tier4 = 1 << 4,
+   Tier5 = 1 << 5,
+   Tier6 = 1 << 6,
+   Tier7 = 1 << 7,
+   Tier8 = 1 << 8,
+   Tier9 = 1 << 9,
+   Tier10 = 1 << 10,
+   Tier11 = 1 << 11,
+   Tier12 = 1 << 12,
+
+   NotBuilt = 1 << 21,
+}
+
 let lastBuild: Building | null = null;
+let savedFilter = BuildingFilter.None;
 
 export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
    const gs = useGameState();
    const [, setSelected] = useState<Building | null>(null);
-   const [showUnbuiltOnly, setShowUnbuiltOnly] = useState<boolean>(false);
-   const [filter, setFilter] = useState<string>("");
+   const [buildingFilter, setBuildingFilter] = useState<BuildingFilter>(savedFilter);
+   const [search, setSearch] = useState<string>("");
    const constructed = getTypeBuildings(gs);
    const build = (k: Building) => {
       if (!checkBuildingMax(k, gs)) {
@@ -106,24 +128,42 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
             </fieldset>
             <fieldset>
                <legend>{t(L.BuildingANew)}</legend>
-               <div className="row">
-                  <input
-                     type="text"
-                     style={{ width: "100%" }}
-                     placeholder={t(L.BuildingSearchText)}
-                     onChange={(e) => setFilter(e.target.value)}
-                  />
-                  <Tippy content={t(L.ShowUnbuiltOnly)}>
-                     <button
-                        className={classNames({ ml10: true, active: showUnbuiltOnly })}
-                        style={{ padding: "0 5px" }}
-                        onClick={() => {
-                           setShowUnbuiltOnly(!showUnbuiltOnly);
-                        }}
-                     >
-                        <div className="m-icon small">filter_list</div>
-                     </button>
-                  </Tippy>
+               <input
+                  type="text"
+                  style={{ width: "100%" }}
+                  placeholder={t(L.BuildingSearchText)}
+                  onChange={(e) => setSearch(e.target.value)}
+               />
+               <div className="row mt5">
+                  <Filter
+                     filter={buildingFilter}
+                     current={BuildingFilter.Wonder}
+                     onFilterChange={setBuildingFilter}
+                  >
+                     <div className="m-icon small">globe</div>
+                  </Filter>
+                  {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((tier) => {
+                     return (
+                        <Filter
+                           key={tier}
+                           filter={buildingFilter}
+                           current={1 << tier}
+                           onFilterChange={setBuildingFilter}
+                        >
+                           {numberToRoman(tier)}
+                        </Filter>
+                     );
+                  })}
+                  <div className="f1"></div>
+
+                  <Filter
+                     tooltip={t(L.ShowUnbuiltOnly)}
+                     filter={buildingFilter}
+                     current={BuildingFilter.NotBuilt}
+                     onFilterChange={setBuildingFilter}
+                  >
+                     <div className="m-icon small">lightbulb</div>
+                  </Filter>
                </div>
             </fieldset>
             <div className="table-view sticky-header building-list f1">
@@ -164,23 +204,27 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
                            return Config.Building[a].name().localeCompare(Config.Building[b].name());
                         })
                         .filter((v) => {
-                           let filterNotBuilt = false;
-                           if (showUnbuiltOnly === true) {
-                              if (sizeOf(buildingByType.get(v)) === 0) {
-                                 filterNotBuilt = true;
-                              }
-                           } else {
-                              filterNotBuilt = true;
+                           let filter = buildingFilter === 0;
+
+                           if (hasFlag(buildingFilter, BuildingFilter.NotBuilt)) {
+                              filter &&= (buildingByType.get(v)?.size ?? 0) === 0;
                            }
-                           const f = filter.toLowerCase();
+
+                           for (let i = 0; i < 12; i++) {
+                              if (hasFlag(buildingFilter, 1 << i)) {
+                                 filter ||= Config.BuildingTier[v] === i;
+                              }
+                           }
+
+                           const s = search.toLowerCase();
                            return (
-                              filterNotBuilt &&
-                              (Config.Building[v].name().toLowerCase().includes(f) ||
+                              filter &&
+                              (Config.Building[v].name().toLowerCase().includes(s) ||
                                  anyOf(Config.Building[v].input, (res) =>
-                                    Config.Resource[res].name().toLowerCase().includes(f),
+                                    Config.Resource[res].name().toLowerCase().includes(s),
                                  ) ||
                                  anyOf(Config.Building[v].output, (res) =>
-                                    Config.Resource[res].name().toLowerCase().includes(f),
+                                    Config.Resource[res].name().toLowerCase().includes(s),
                                  ))
                            );
                         })
@@ -290,4 +334,36 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
          </div>
       </div>
    );
+}
+
+function Filter({
+   tooltip,
+   children,
+   filter,
+   current,
+   onFilterChange,
+}: React.PropsWithChildren<{
+   tooltip?: string;
+   filter: BuildingFilter;
+   current: BuildingFilter;
+   onFilterChange: (f: BuildingFilter) => void;
+}>): React.ReactNode {
+   const content = (
+      <button
+         className={classNames({
+            active: hasFlag(filter, current),
+         })}
+         style={{ width: 27, padding: 0 }}
+         onClick={() => {
+            savedFilter = toggleFlag(filter, current);
+            onFilterChange(savedFilter);
+         }}
+      >
+         {children}
+      </button>
+   );
+   if (!tooltip) {
+      return content;
+   }
+   return <Tippy content={tooltip}>{content}</Tippy>;
 }

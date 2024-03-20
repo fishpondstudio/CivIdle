@@ -248,6 +248,12 @@ export function calculateTierAndPrice(log?: (val: string) => void) {
       });
    }
 
+   forEach(Config.BuildingTier, (building) => {
+      if (isSpecialBuilding(building)) {
+         Config.BuildingTier[building] = 0;
+      }
+   });
+
    const endResources: PartialSet<Resource> = {};
    let resourceHash = 0;
    forEach(Config.Resource, (r) => {
