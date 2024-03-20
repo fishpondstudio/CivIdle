@@ -9,7 +9,7 @@ const file = readFileSync(EN_FILE_PATH, {
 })
    .replace("export const EN =", "")
    .replace("};", "}");
-const en = eval(`(${file})`);
+let en = eval(`(${file})`);
 
 const sourceFiles = getAllFiles(join(__dirname, "../", "shared"))
    .concat(getAllFiles(join(__dirname, "../", "src", "scripts")))
@@ -25,8 +25,9 @@ Object.keys(en).forEach((key) => {
       console.log(`Translation not used: ${key}`);
       delete en[key];
    }
-   writeFileSync(EN_FILE_PATH, `export const EN = ${JSON.stringify(en)};`);
 });
+en = Object.fromEntries(Object.entries(en).sort(([a], [b]) => a.localeCompare(b)));
+writeFileSync(EN_FILE_PATH, `export const EN = ${JSON.stringify(en)};`);
 
 console.log("🟡 Adjust Other Translation Based On English");
 
