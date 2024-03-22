@@ -103,14 +103,14 @@ export const DE = {
    BuildingColor: "Farbe des Gebäudes",
    BuildingColorMatchBuilding: "Farbe aus Gebäude kopieren",
    BuildingColorMatchBuildingTooltip:
-      "Kopieren Sie die Ressourcenfarbe aus dem Gebäude, das diese Ressource produziert. Wenn mehrere Gebäude diese Ressource produzieren, wird ein zufälliges ausgewählt",
+      "Kopiert die Ressourcenfarbe aus dem Gebäude, das diese Ressource produziert. Wenn mehrere Gebäude diese Ressource produzieren, wird ein zufälliges ausgewählt",
    BuildingCost: "Kosten",
    BuildingMultipliers: "Beschleunigung der Baugeschwindigkeit",
    BuildingName: "Name",
    BuildingNoMultiplier:
       "%{building} is <b>not affected</b> by any multipliers (production, worker capacity, storage, etc)",
    BuildingPriority: "Priorität des Bauens",
-   BuildingSearchText: "Nach welchem Gebäuder/welcher Ressource wollen Sie suchen?",
+   BuildingSearchText: "Welches Gebäude/welche Ressource soll gesucht werden?",
    BuildingTier: "Stufe",
    Calendar: "Kalender",
    Cancel: "Abbrechen",
@@ -147,7 +147,7 @@ export const DE = {
    ChatChannelLanguage: "Sprache",
    ChatHideLatestMessage: "Neuesten Nachrichteninhalt ausblenden",
    ChatHideLatestMessageDesc:
-      "Ersetzen Sie den Inhalt der letzten Chat-Nachricht durch Sternchen in der Chatleiste",
+      "Den Inhalt der letzten Chat-Nachricht durch Sternchen in der Chatleiste ersetzen",
    ChatNoMessage: "Keine Chat-Nachrichten",
    ChatReconnect: "Getrennt, Verbindung wird wieder hergestellt...",
    ChatSend: "Senden",
@@ -170,7 +170,7 @@ export const DE = {
    CivIdleInfo: "stolz präsentiert vom Fish Pond Studio",
    CivilService: "Öffentlicher Dienst",
    ClassicalAge: "Antike",
-   ClearAfterUpdate: "Löschen Sie alle Handelsangebote nach dem Markt-Update",
+   ClearAfterUpdate: "Alle Handelsangebote nach dem Markt-Update löschen",
    ClearSelected: "Auswahl löschen",
    ClearSelection: "Löschen",
    Cloth: "Stoffe",
@@ -261,7 +261,7 @@ export const DE = {
    EmpireValueFromResources: "Durch Ressoursen",
    EmptyTilePageBuildLastBuilding: "Letztes Gebäude bauen",
    EndConstruction: "Bau abbrechen",
-   EndConstructionDescHTML: "Wenn Sie den Bau abbrechen, gehen alle bereits verbrauchten Ressourcen verloren",
+   EndConstructionDescHTML: "Wenn Du den Bau abbrichst, gehen alle bereits verbrauchten Ressourcen verloren",
    Engine: "Motor",
    Engineering: "Ingenieurswesen",
    Enlightenment: "Erleuchtung",
@@ -276,7 +276,7 @@ export const DE = {
    Faith: "Glaube",
    Farming: "Landwirtschaft",
    FavoriteBuildingAdd: "Zu Favoriten hinzufügen",
-   FavoriteBuildingEmptyToast: "Sie haben keine favorisierten Gebäude",
+   FavoriteBuildingEmptyToast: "Du hast keine favorisierten Gebäude",
    FavoriteBuildingRemove: "Aus Favoriten entfernen",
    Feudalism: "Feudalismus",
    Fibonacci: "Fibonacci",
@@ -451,13 +451,13 @@ export const DE = {
    MagazinePublisher: "Zeitschriftenverlag",
    ManageGreatPeople: "Herausragende Persönlichkeiten verwalten",
    ManagePermanentGreatPeople:
-      "Verwalten Sie herausragende Persönlichkeiten, die in allen weiteren Durchgängen erhalten bleiben",
+      "Herausragende Persönlichkeiten verwalten",
    ManageWonders: "Wunder verwalten",
    Marble: "Marmor",
    Marbleworks: "Marmorwerke",
    Market: "Markt",
    MarketDesc:
-      "Tauschen Sie eine Ressource gegen eine andere aus, verfügbare Ressourcen werden stündlich aktualisiert",
+      "Eine Ressource gegen eine andere austauschen, verfügbare Ressourcen werden stündlich aktualisiert",
    MarketSell: "Verkaufen",
    MarketSettings: "Markteinstellungen",
    MarketTradeDescHTML:
@@ -489,7 +489,7 @@ export const DE = {
    MotionPicture: "Spielfilm",
    MountSinai: "Mount Sinai",
    MountSinaiDesc:
-      "Wenn entdeck erhalten Sie eine große Persönlichkeit des aktuellen Zeitalters. Alle Gebäude die Glauben generieren bekommen einen Multiplier von +5 auf die Lagergröße",
+      "Bei der Entdeckung erhältst Du eine große Persönlichkeit des aktuellen Zeitalters. Alle Gebäude, die Glauben generieren, bekommen einen Multiplier von +5 auf die Lagergröße",
    Museum: "Museum",
    Music: "Musik",
    MusiciansGuild: "Musikergilde",
@@ -511,12 +511,12 @@ export const DE = {
    NileRiverDesc:
       "Double the effect of Hatshepsut. All wheat farms get +1 Production and Storage Multiplier. All adjacent wheat farms get +5 Production and Storage Multiplier",
    NoDepositDesc:
-      "In diesem Gebiet gibt es keine Lagerstätte. Weitere Vorkommen können entdeckt werden, wenn Sie neue Technologien freischalten",
+      "In diesem Gebiet gibt es keine Lagerstätte. Weitere Vorkommen können entdeckt werden, wenn Du neue Technologien freischaltest",
    NothingHere: "Noch keine Inhalte",
    NotProducingBuildings: "Gebäude, die nicht produzieren",
    NuclearFission: "Kernspaltung",
    OfflineErrorMessage:
-      "Sie sind derzeit offline, für diesen Vorgang ist eine Internetverbindung erforderlich",
+      "Du bist derzeit offline, für diesen Vorgang ist eine Internetverbindung erforderlich",
    OfflineProduction: "Offline-Produktion",
    OfflineTime: "Offline-Zeit",
    Oil: "Rohöl",
@@ -560,10 +560,10 @@ export const DE = {
    Pizza: "Pizza",
    Pizzeria: "Pizzeria",
    PlayerHandle: "Spieler-Handle",
-   PlayerHandleOffline: "Sie sind gerade offline",
+   PlayerHandleOffline: "Du bist gerade offline",
    PlayerMapClaimThisTile: "Dieses Gebiet beanspruchen",
    PlayerMapClaimTileCondition2: "Du wurdest nicht von Anti-Cheat gebannt.",
-   PlayerMapClaimTileCondition3: "Sie haben die erforderliche Technologie freigeschaltet.",
+   PlayerMapClaimTileCondition3: "Du hast die erforderliche Technologie freigeschaltet.",
    PlayerMapClaimTileCondition4:
       "Entweder hast Du kein Gebiet beansprucht oder zu lange fürs Ändern des Gebietes gebraucht.",
    PlayerMapClaimTileCooldownLeft: "Abklingzeit übrig",
@@ -573,7 +573,7 @@ export const DE = {
    PlayerMapLastSeenAt: "Zuletzt gesehen",
    PlayerMapMenu: "Handel",
    PlayerMapPageGoBackToCity: "Geh zurück in die Stadt",
-   PlayerMapSetYourTariff: "Legen Sie Ihren Zollsatz fest",
+   PlayerMapSetYourTariff: "Lege deinen Zollsatz fest",
    PlayerMapTariff: "Zoll",
    PlayerMapTariffApply: "Zollsatz anwenden",
    PlayerMapTariffDesc:
@@ -586,11 +586,11 @@ export const DE = {
    PlayerTradeAddTradeCancel: "Abbrechen",
    PlayerTradeAmount: "Betrag",
    PlayerTradeCancelDesc:
-      "Wenn Sie diesen Handel abbrechen, werden nur %{Prozent} der Ressourcen zurückerstattet. Sind Sie sicher, dass Sie stornieren möchten?",
+      "Wenn du diesen Handel abbrichst, werden nur %{percent} der Ressourcen zurückerstattet. Bist du sicher, dass du stornieren möchtest?",
    PlayerTradeCancelTrade: "Handel abbrechen",
    PlayerTradeCancelTradeNo: "Nicht stornieren",
    PlayerTradeCancelTradeNotEnoughStorage:
-      "Sie haben nicht genügend Lagerkapaziät, um diesen Handel zu stornieren.",
+      "Du hast nicht genügend Lagerkapaziät, um diesen Handel zu stornieren.",
    PlayerTradeClaim: "Anspruch",
    PlayerTradeClaimAll: "Alle beanspruchen",
    PlayerTradeClaimAllFailedMessageV2: "Failed to claim any trades - is the storage full?",
@@ -616,7 +616,7 @@ export const DE = {
    PlayerTradeIOffer: "Ich biete",
    PlayerTradeIWant: "Ich will",
    PlayerTradeMaxTradeExceeded:
-      "Sie haben die maximale Anzahl aktiver Handelsaufträge für Ihren Kontorang überschritten.",
+      "Du hast die maximale Anzahl aktiver Handelsaufträge für Ihren Kontorang überschritten.",
    PlayerTradeNewTrade: "Neuer Handel",
    PlayerTradeNoValidRoute: "Es kann keine gültige Handelsroute zwischen Dir und %{name} gefunden werden",
    PlayerTradeOffer: "Angebot",
@@ -690,7 +690,7 @@ export const DE = {
    RamessesIIDesc: "+%{value} Multiplikator für Baukapazität",
    RapidFire: "Schnellfeuer",
    Reborn: "Wiedergeburt",
-   RebornCity: "Wählen Sie eine neue Stadt aus",
+   RebornCity: "Wähle eine neue Stadt aus",
    RebornModalDescV2:
       "Du wirst mit einem neuen Imperium beginnen. Dabei kannst du alle herausragenden Persönlichkeiten <b>aus diesem Durchgang übernehmen</b>, die dadurch zu <b>dauerhaften</b> herausragenden Persönlichkeiten werden. Basierend auf dem <b>Gesamtwert deines Imperiums</b> kannst du zusätzliche herausragende Persönlichkeiten auswählen.",
    RebornOfflineWarning:
@@ -894,7 +894,7 @@ export const DE = {
    TechProductionPriority:
       "Gebäudepriorität entsperren - ermöglicht das Festlegen der Produktionspriorität für jedes Gebäude",
    TechResourceTransportPreference:
-      "Schalten Sie die Transportpräferenz für Gebäude frei – ermöglichen Sie die Einstellung, wie ein Gebäude die für seine Produktion benötigten Ressourcen transportiert",
+      "Schalte die Transportpräferenz für Gebäude frei – ermöglicht die Einstellung, wie ein Gebäude die für seine Produktion benötigten Ressourcen transportiert",
    TechResourceTransportPreferenceAmount: "Menge",
    TechResourceTransportPreferenceAmountTooltip:
       "Dieses Gebäude bevorzugt den Transport von Ressourcen aus Gebäuden, die über größere Lagermengen verfügen",
@@ -950,13 +950,13 @@ export const DE = {
    Tourism: "Tourismus",
    Train: "Zug",
    TranslationPercentage:
-      "%{language} ist %{percentage} übersetzt. Helfen Sie mit, diese Übersetzung auf GitHub zu verbessern",
+      "%{language} ist %{percentage} übersetzt. Hilf mit, diese Übersetzung auf GitHub zu verbessern",
    TranslatorCredit: "KaterKarlo, szoepf, MalcolmJacquard, xyzzycgn",
    Translators: "Übersetzerinnen und Übersetzer",
    TransportAllocatedCapacityTooltip: "Bau-Kapazität, die dem Transport dieser Ressource zugewiesen ist",
    TransportCapacity: "Transportkapazität",
    TransportCapacityMultiplier: "Multiplikator für die Transportkapazität",
-   TransportManualControlTooltip: "Transportieren Sie diese Ressource zum Bau/Upgrade",
+   TransportManualControlTooltip: "Transportiere diese Ressource zum Bau/Upgrade",
    TrialRunDesc:
       "Quästor oder höher kann einen Probelauf starten, der den Tribune-Beschränkungen unterliegt und keine dauerhaften großartigen Leute verdienen kann",
    TribuneGreatPeopleLevelWarningV2:
@@ -979,8 +979,8 @@ export const DE = {
       "<b>Forschung</b> wird verwendet, um Technologien im Technologiebaum freizuschalten. Eine Technologie stellt dir neue Gebäude und Wunder zur Verfügung.<br><br><b>Arbeitskräfte mit einer Beschäftigung</b> generieren eine kleine Menge an Forschung. Später schaltest du Gebäude wie Bibliotheken und Schulen frei, die Forschung produzieren.<br><br>Die Anzahl der verfügbaren Arbeitskräfte wird von <b>Zufriedenheit</b> beeinflusst. Jedes Gebäude kostet einen Punkt Zufriedenheit. Mit jeder erforschten Technologie, jedem Wunder und jeder herausragenden Persönlichkeit steigerst du die Zufriedenheit. Sorge dafür, dass deine Arbeitskräfte zufrieden sind, sonst kommt die Produktion deines Imperiums zum Erliegen.<br><br><b>Wunder</b> sind einzigartige Gebäude - du kannst nur eines bauen und sie können nicht entfernt werden, wenn sie einmal gebaut sind. Wunder können einen deutlichen Schub geben oder neue Mechanismen freischalten.",
    Tutorial6:
       "Wenn du in ein neues Zeitalter eintrittst, wird eine neue <b>herausragende Persönlichkeit</b> geboren. Du kannst einen von drei Kandidaten auswählen.<br><br>Herausragende Persönlichkeiten sorgen für Beschleunigungen. Wenn du wiedergeboren wirst, erhältst du alle herausragenden Personen, die du im vorigen Durchgang ausgewählt hast, plus einige, die du bei früheren Wiedergeburten ausgewählt hast. Diese werden als permanente herausragende Persönlichkeiten bezeichnet.<br><br><b>Permanente</b> herausragende Persönlichkeiten können verbessert werden, indem du herausragende Persönlichkeiten aus jedem Durchgang sammelst. Sie werden deinem Imperium helfen, neue Höhen zu erreichen. Das sind alle Grundlagen, die du wissen musst.<br><br>Stelle alle weiteren Fragen einfach im <b>Chat</b>. - Wir haben eine freundliche Community, die immer bereit ist zu helfen.",
-   TutorialPlayerFlag: "Wählen Sie Ihre Spielerflagge",
-   TutorialPlayerHandle: "Wählen Sie Ihren Spieler-Namen",
+   TutorialPlayerFlag: "Wähle deine Spielerflagge",
+   TutorialPlayerHandle: "Wähle deinen Spieler-Namen",
    UnclaimedGreatPersonPermanent:
       "Du hast eine <b>herausragende Persönlichkeit</b> nicht beansprucht, <b>die dir in allen weiteren Duchgängen erhalten bleibt</b>. Klicke hier, um das nachzuholen.",
    UnclaimedGreatPersonThisRun:
@@ -1000,7 +1000,7 @@ export const DE = {
    Urbanization: "Urbanisierung",
    UseMirrorServer: "Verbindung zum Mirror Server",
    UseMirrorServerDescHTML:
-      "Wenn Sie Probleme haben den Hauptserver zu erreichen,können Sie auf den Mirror Server ausweichen. <b>Ein Neustart des Spiels ist erforderlich</b>",
+      "Wenn du Probleme hast den Hauptserver zu erreichen, kannst Du auf den Mirror Server ausweichen. <b>Ein Neustart des Spiels ist erforderlich</b>",
    UserAgent: "Benutzer-Agent",
    Vaccine: "Impfstoff",
    VentureCapital: "Risikokapital",
@@ -1016,11 +1016,11 @@ export const DE = {
    WarehouseAutopilotSettingsRespectCapSettingTooltip:
       "Der Autopilot transportiert nur Güter, deren Lagervorrat unter dem Cap liegt",
    WarehouseDesc:
-      "Transportieren Sie bestimmte Ressourcen und stellen Sie zusätzlichen Speicher zur Verfügung.",
+      "Transportiert bestimmte Ressourcen und stellt zusätzlichen Speicher zur Verfügung.",
    WarehouseSettingsAutopilotDesc:
       "Dieses Lager wird seine ungenutzte Kapazität nutzen, um Ressourcen aus Gebäuden zu transportieren, der Lagen vollständig gefüllt sind. Derzeitige Leerlaufkapazität",
    WarehouseUpgrade:
-      "Schalten Sie den Autopilot-Modus des Lagers frei. Kostenloser Transport zwischen einem Lager und den angrenzenden Gebäuden",
+      "Schaltet den Autopilot-Modus des Lagers frei. Kostenloser Transport zwischen einem Lager und den angrenzenden Gebäuden",
    WarehouseUpgradeDesc: "Kostenloser Transport zwischen diesem Lager und den angrenzenden Kacheln",
    Warp: "Verkrümmen",
    WarpConversionDesc:
