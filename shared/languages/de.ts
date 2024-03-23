@@ -450,8 +450,7 @@ export const DE = {
    Magazine: "Magazin",
    MagazinePublisher: "Zeitschriftenverlag",
    ManageGreatPeople: "Herausragende Persönlichkeiten verwalten",
-   ManagePermanentGreatPeople:
-      "Herausragende Persönlichkeiten verwalten",
+   ManagePermanentGreatPeople: "Herausragende Persönlichkeiten verwalten",
    ManageWonders: "Wunder verwalten",
    Marble: "Marmor",
    Marbleworks: "Marmorwerke",
@@ -1015,8 +1014,7 @@ export const DE = {
    WarehouseAutopilotSettingsRespectCapSetting: "Speicher < Cap erforderlich",
    WarehouseAutopilotSettingsRespectCapSettingTooltip:
       "Der Autopilot transportiert nur Güter, deren Lagervorrat unter dem Cap liegt",
-   WarehouseDesc:
-      "Transportiert bestimmte Ressourcen und stellt zusätzlichen Speicher zur Verfügung.",
+   WarehouseDesc: "Transportiert bestimmte Ressourcen und stellt zusätzlichen Speicher zur Verfügung.",
    WarehouseSettingsAutopilotDesc:
       "Dieses Lager wird seine ungenutzte Kapazität nutzen, um Ressourcen aus Gebäuden zu transportieren, der Lagen vollständig gefüllt sind. Derzeitige Leerlaufkapazität",
    WarehouseUpgrade:
