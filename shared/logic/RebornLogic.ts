@@ -37,12 +37,12 @@ export function getProgressTowardsNextGreatPerson(): number {
 
 export function getGreatPersonUpgradeCost(gp: GreatPerson, targetLevel: number): number {
    if (gp === "Fibonacci") {
-      return getGreatPersonUpgradeCostFib(targetLevel);
+      return getUpgradeCostFib(targetLevel);
    }
    return Math.pow(2, targetLevel - 1);
 }
 
-export function getGreatPersonUpgradeCostFib(n: number): number {
+export function getUpgradeCostFib(n: number): number {
    let a = 0;
    let b = 1;
    let c = 1;
@@ -52,6 +52,25 @@ export function getGreatPersonUpgradeCostFib(n: number): number {
       b = c;
    }
    return a;
+}
+
+export function getTribuneUpgradeMaxLevel(age: TechAge): number {
+   switch (age) {
+      case "BronzeAge":
+         return 3;
+      case "IronAge":
+         return 3;
+      case "ClassicalAge":
+         return 3;
+      case "MiddleAge":
+         return 2;
+      case "RenaissanceAge":
+         return 2;
+      case "IndustrialAge":
+         return 2;
+      default:
+         return 1;
+   }
 }
 
 export function rollPermanentGreatPeople(amount: number, currentTechAge: TechAge): void {

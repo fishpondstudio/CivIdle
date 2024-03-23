@@ -25,8 +25,8 @@ export const CZ = {
    AccountUpgradeCarryOverDesc:
       "Při přechodu na vyšší úroveň účtu se jedná o maximální úroveň stálých skvělých lidí, kterou si můžete přenést.",
    AccountUpgradeConfirm: "Upgrade účtu",
-   AccountUpgradeConfirmDesc:
-      "Vylepšení vašeho účtu <b>zruší váš aktuální běh</b> a přenese trvalé skvělé lidi <b>na úroveň %{level}</b>. To <b>nelze</b> vrátit zpět, jste si jisti, že chcete pokračovat?",
+   AccountUpgradeConfirmDescV2:
+      "Upgrading your account will <b>reset your current run</b> and carry over permanent great people within the allowed levels. This <b>cannot</b> be undone, are you sure to continue?",
    Acropolis: "Akropolis",
    ActorsGuild: "Cech herců",
    AdaLovelace: "Ada Lovelace",
@@ -111,7 +111,6 @@ export const CZ = {
    BuildingColorMatchBuilding: "Zkopírovat barvu z budovy",
    BuildingColorMatchBuildingTooltip:
       "Zkopíruje barvu výrobních budov do jejich zdrojů. Pokud je k dispozici více než jedna možnost, vybere náhodně",
-   BuildingCost: "Cena",
    BuildingMultipliers: "Zvýšení",
    BuildingName: "Jméno",
    BuildingNoMultiplier:
@@ -119,6 +118,8 @@ export const CZ = {
    BuildingPriority: "Priorita budovy",
    BuildingSearchText: "Zadejte název budovy nebo zdroje pro vyhledávání",
    BuildingTier: "Úroveň",
+   Cable: "Cable",
+   CableFactory: "Cable Factory",
    Calendar: "Kalendář",
    Cancel: "Zrušit",
    CancelUpgrade: "Zrušit aktualizaci",
@@ -238,6 +239,7 @@ export const CZ = {
    Deposit: "Vklad",
    DepositTileCountDesc: "%{count} dlaždice %{deposit} lze nalézt v %{city}",
    Dido: "Dido",
+   Diplomacy: "Diplomacy",
    DistanceInfinity: "Neomezené",
    DistanceInTiles: "Vzdálenost (v dlaždicích)",
    Drilling: "Vrtání",
@@ -250,14 +252,14 @@ export const CZ = {
       "Všechny přilehlé ocelárny získají +N Výrobu, Skladování a Násobek pracovníků. N = počet sousedících oceláren",
    Electricity: "Elektřina",
    Electrification: "Elektrifikace",
-   ElectrificationDesc:
-      "Spotřebuje %{power}W energie a poskytne +%{level} Multiplikátor spotřeby a multiplikátor produkce",
+   ElectrificationPowerRequired: "Power Required",
    ElectrificationStatus: "Aktuální stav",
    ElectrificationStatusActive: "Aktivní",
    ElectrificationStatusNoPower: "Žádné napájení",
    ElectrificationStatusNotActive: "Není aktivní",
    ElectrificationUpgrade: "Odemkni elektrifikaci. Umožní budovám spotřebovávat energii pro zvýšení produkce",
    Electrolysis: "Elektrolýza",
+   Embassy: "Embassy",
    EmpireValueFromBuildings: "From Buildings",
    EmpireValueFromResources: "From Resources",
    EmptyTilePageBuildLastBuilding: "Postavit poslední budovu",
@@ -705,6 +707,9 @@ export const CZ = {
    RenaissanceAge: "Renesance",
    ReneDescartes: "René Descartes",
    RequiredDeposit: "Požadovaná záloha",
+   RequirePower: "Require Power",
+   RequirePowerDesc:
+      "This building needs to be built on a tile with power and can extend the power to its adjacent tiles",
    Research: "Výzkum",
    ResearchMenu: "Výzkum",
    ResourceAmount: "Částka",
@@ -961,12 +966,10 @@ export const CZ = {
    TransportManualControlTooltip: "Přepraví tuto surovinu ke stavbě/vylepšení",
    TrialRunDesc:
       "Kvestor nebo vyšší může zahájit zkušební provoz, který podléhá limitům tribuny a nemůže získat trvalé skvělé lidi",
-   TribuneGreatPeopleLevelWarningV2:
-      "Vaše aktuální hodnost na účtu je Tribuna. Při povýšení na Quaestora se přenesou stálí skvělí lidé <b>do úrovně %{level}</b>. Částečný postup nad úroveň %{level} se nepřenese.",
    TribuneUpgradeDescGreatPeopleWarning:
       "Váš současný běh má skvělé lidi. Měli byste <b>se nejprve znovu narodit</b>. Povýšení na hodnost kvestora vynuluje váš aktuální běh.",
-   TribuneUpgradeDescV2:
-      "Povýšením z tribunů na kvestory se odemknou všechny online funkce. Přenést však lze pouze <b>stálé velké lidi do úrovně %{level}</b>. Částečný postup nad úroveň %{level} se nepřenáší.",
+   TribuneUpgradeDescV3:
+      "You can play the full game as Tribune if you do not plan to participate in the <b>optional</b> online features. To acquire unrestricted access to the online features, you will need to upgrade to Quaestor. <b>This is an anti-bot measure to keep the game free for everyone.</b> However, <b>when upgrading to Quaestor</b> you can carry over great people: <ul><li>Up to Level <b>3</b> for Bronze, Iron and Classical Age</li><li>Up to Level <b>2</b> for Middle Age, Renaissance and Industrial Age</li><li>Up to Level <b>1</b> for World Wars, Cold War and Information Age</li></ul>Partial progress above the level cannot be carried over.",
    TurnOnTimeWarpDesc: "Stojí %{speed} warpů za každou sekundu a zrychlí vaši říši na %{speed}x rychlost.",
    Tutorial: "Výukový program",
    Tutorial1:
@@ -1027,6 +1030,8 @@ export const CZ = {
    WarpConversionDesc:
       "Váš offline čas, který překročí maximální offline čas výroby, bude převeden na warp (1 sekunda = 1 warp).",
    Water: "Voda",
+   WellStockedTooltip:
+      "Well-stocked buildings are buildings that have enough resources for its production, which include buildings that are producing, that have full storage or not producing due to lack of workers",
    Wheat: "Pšenice",
    WheatFarm: "Pšeničná farma",
    WilliamShakespeare: "William Shakespeare",

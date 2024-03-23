@@ -26,8 +26,8 @@ export const PT_BR = {
    AccountUpgradeCarryOverDesc:
       "Ao melhorar para o próximo ranque de conta, esse é o nível máximo de figuras históricas permanentes que você pode transferir",
    AccountUpgradeConfirm: "Melhoria de Conta",
-   AccountUpgradeConfirmDesc:
-      "Melhorar sua conta irá <b>reiniciar sua tentativa atual</b> e transferir figuras históricas permanentes <b>até o nível %{level}</b>. Isso <b>não</b> pode ser desfeito, tem certeza de que quer continuar?",
+   AccountUpgradeConfirmDescV2:
+      "Upgrading your account will <b>reset your current run</b> and carry over permanent great people within the allowed levels. This <b>cannot</b> be undone, are you sure to continue?",
    Acropolis: "Acrópole",
    ActorsGuild: "Associação de Atores",
    AdaLovelace: "Ada Lovelace",
@@ -114,7 +114,6 @@ export const PT_BR = {
    BuildingColorMatchBuilding: "Copiar Cor De Uma Construção",
    BuildingColorMatchBuildingTooltip:
       "Define a cor dos recursos para a mesma da construção que produz esse recurso. Se multiplas construções produzem esse recurso, uma aleatória será selecionada",
-   BuildingCost: "Custo",
    BuildingMultipliers: "Boost",
    BuildingName: "Nome",
    BuildingNoMultiplier:
@@ -122,6 +121,8 @@ export const PT_BR = {
    BuildingPriority: "Prioridade de Construção",
    BuildingSearchText: "Digite o nome de uma construção ou recurso para pesquisar",
    BuildingTier: "Tier",
+   Cable: "Cable",
+   CableFactory: "Cable Factory",
    Calendar: "Calendário",
    Cancel: "Cancelar",
    CancelUpgrade: "Cancelar Melhoria",
@@ -246,6 +247,7 @@ export const PT_BR = {
    Deposit: "Depósito",
    DepositTileCountDesc: "%{count} espaço(s) de %{deposit} podem ser encontrados em %{city}",
    Dido: "Dido",
+   Diplomacy: "Diplomacy",
    DistanceInfinity: "Unlimited",
    DistanceInTiles: "Distance (In Tiles)",
    Drilling: "Perfuração",
@@ -258,8 +260,7 @@ export const PT_BR = {
       "Todas as siderúrgicas adjacentes ganham +N Multiplicador de Produção, Armazenamento e Trabalhadores. N = Número de siderúrgicas adjacentes",
    Electricity: "Eletricidade",
    Electrification: "Eletrificação",
-   ElectrificationDesc:
-      "Usa %{power}W de Energia e proporciona +%{level} Multiplicador de Consumo e Multiplicador de Produçao",
+   ElectrificationPowerRequired: "Power Required",
    ElectrificationStatus: "Condição Atual",
    ElectrificationStatusActive: "Ativa",
    ElectrificationStatusNoPower: "Sem Energia",
@@ -267,6 +268,7 @@ export const PT_BR = {
    ElectrificationUpgrade:
       "Desbloqueia eletrificação. Permite com que construções consumam energia para impulsionar sua produção",
    Electrolysis: "Eletrólise",
+   Embassy: "Embassy",
    EmpireValueFromBuildings: "From Buildings",
    EmpireValueFromResources: "From Resources",
    EmptyTilePageBuildLastBuilding: "Construir Última Construção",
@@ -716,6 +718,9 @@ export const PT_BR = {
    RenaissanceAge: "Renascença",
    ReneDescartes: "René Descartes",
    RequiredDeposit: "Depósito Necessário",
+   RequirePower: "Require Power",
+   RequirePowerDesc:
+      "This building needs to be built on a tile with power and can extend the power to its adjacent tiles",
    Research: "Pesquisa",
    ResearchMenu: "Pesquisa",
    ResourceAmount: "Quantidade",
@@ -972,12 +977,10 @@ export const PT_BR = {
    TransportManualControlTooltip: "Transporta esse recurso para construção/melhoria",
    TrialRunDesc:
       "Quaestor or above can start a trial run that is subject to the Tribune limits and cannot earn permanent great people",
-   TribuneGreatPeopleLevelWarningV2:
-      "Seu ranque de conta atual é Tribune. Melhorar para Quaestor irá transferir figuras históricas permanentes <b>até o nível %{level}</b>. Progresso parcial acima do nível %{level} não será transferido",
    TribuneUpgradeDescGreatPeopleWarning:
       "Sua tentativa atual possui figuras históricas. Você deve <b>renascer primeiro</b>. Melhorar para o ranque Quaestor irá reiniciar sua tentativa atual",
-   TribuneUpgradeDescV2:
-      "Melhorar de Tribune a Quaestor irá desbloquear todos os recursos online. Porém, apenas <b>figuras históricas permanentes até nível %{level}</b> podem ser transferidas. Progresso parcial acima do nível %{level} não será transferido",
+   TribuneUpgradeDescV3:
+      "You can play the full game as Tribune if you do not plan to participate in the <b>optional</b> online features. To acquire unrestricted access to the online features, you will need to upgrade to Quaestor. <b>This is an anti-bot measure to keep the game free for everyone.</b> However, <b>when upgrading to Quaestor</b> you can carry over great people: <ul><li>Up to Level <b>3</b> for Bronze, Iron and Classical Age</li><li>Up to Level <b>2</b> for Middle Age, Renaissance and Industrial Age</li><li>Up to Level <b>1</b> for World Wars, Cold War and Information Age</li></ul>Partial progress above the level cannot be carried over.",
    TurnOnTimeWarpDesc:
       "Custa %{speed} distorções para cada segundo e acelera seu império em %{speed}x sua velocidade normal.",
    Tutorial: "Tutorial",
@@ -1040,6 +1043,8 @@ export const PT_BR = {
    WarpConversionDesc:
       "Seu tempo offline que excede o Tempo Máximo de Produção Offline será convertido em distorção (1 segundo = 1 distorção)",
    Water: "Água",
+   WellStockedTooltip:
+      "Well-stocked buildings are buildings that have enough resources for its production, which include buildings that are producing, that have full storage or not producing due to lack of workers",
    Wheat: "Trigo",
    WheatFarm: "Campo de Trigo",
    WilliamShakespeare: "William Shakespeare",

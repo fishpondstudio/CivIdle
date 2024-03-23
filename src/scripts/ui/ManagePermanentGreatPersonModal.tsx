@@ -1,6 +1,5 @@
 import classNames from "classnames";
 import { Config } from "../../../shared/logic/Config";
-import { MAX_TRIBUNE_CARRY_OVER_LEVEL } from "../../../shared/logic/Constants";
 import { notifyGameOptionsUpdate } from "../../../shared/logic/GameStateLogic";
 import { getGreatPersonUpgradeCost } from "../../../shared/logic/RebornLogic";
 import { keysOf, numberToRoman } from "../../../shared/utilities/Helper";
@@ -28,10 +27,8 @@ export function ManagePermanentGreatPersonModal(): React.ReactNode {
          </div>
          <div className="window-body">
             {isOnlineUser() ? null : (
-               <WarningComponent className="mb10" icon="warning">
-                  <RenderHTML
-                     html={t(L.TribuneGreatPeopleLevelWarningV2, { level: MAX_TRIBUNE_CARRY_OVER_LEVEL })}
-                  />
+               <WarningComponent className="mb10" icon="info">
+                  <RenderHTML className="text-small" html={t(L.TribuneUpgradeDescV3)} />
                </WarningComponent>
             )}
             <div

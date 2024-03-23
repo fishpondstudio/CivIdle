@@ -16,6 +16,8 @@ export function getNotProducingTexture(reason: NotProducingReason, textures: Rec
          return getTexture("Misc_NotEnoughWorkers", textures);
       case "StorageFull":
          return getTexture("Misc_StorageFull", textures);
+      case "NoPower":
+         return getTexture("Misc_NoPower", textures);
       default:
          return getTexture("Misc_NotProducingGeneral", textures);
    }

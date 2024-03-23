@@ -3,8 +3,8 @@ import { formatPercent } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
 import type { ITechAgeDefinition, ITechDefinition } from "./ITechDefinition";
 
-export const MAX_TECH_COLUMN = 17;
-export const MAX_TECH_AGE: TechAge = "IndustrialAge";
+export const MAX_TECH_COLUMN = 20;
+export const MAX_TECH_AGE: TechAge = "WorldWarAge";
 
 export class TechAgeDefinitions {
    StoneAge: ITechAgeDefinition = { idx: 0, from: 0, to: 1, name: () => t(L.StoneAge) };
@@ -640,11 +640,11 @@ export class TechDefinitions {
       unlockBuilding: ["ArtilleryFactory"],
    };
 
-   Hydroelectricity: ITechDefinition = {
-      name: () => t(L.Hydroelectricity),
+   Enrichment: ITechDefinition = {
+      name: () => t(L.Enrichment),
       column: 19,
       requireTech: ["AtomicTheory", "Synthetics"],
-      unlockBuilding: ["HydroDam", "GoldenGateBridge"],
+      unlockBuilding: ["UraniumEnrichmentPlant"],
    };
 
    Radio: ITechDefinition = {
@@ -664,15 +664,15 @@ export class TechDefinitions {
    NuclearFission: ITechDefinition = {
       name: () => t(L.NuclearFission),
       column: 20,
-      requireTech: ["Hydroelectricity", "Ballistics"],
+      requireTech: ["Enrichment", "Ballistics"],
       unlockBuilding: ["AtomicFacility", "ManhattanProject"],
    };
 
-   Enrichment: ITechDefinition = {
-      name: () => t(L.Enrichment),
+   Hydroelectricity: ITechDefinition = {
+      name: () => t(L.Hydroelectricity),
       column: 20,
-      requireTech: ["Radio", "Hydroelectricity"],
-      unlockBuilding: ["UraniumEnrichmentPlant"],
+      requireTech: ["Radio"],
+      unlockBuilding: ["HydroDam", "GoldenGateBridge"],
    };
 
    UnitedNations: ITechDefinition = {
@@ -691,12 +691,12 @@ export class TechDefinitions {
    Semiconductor: ITechDefinition = {
       name: () => t(L.Semiconductor),
       column: 21,
-      requireTech: ["NuclearFission", "Enrichment"],
+      requireTech: ["NuclearFission", "Hydroelectricity"],
    };
    Television: ITechDefinition = {
       name: () => t(L.Television),
       column: 21,
-      requireTech: ["UnitedNations", "Enrichment"],
+      requireTech: ["UnitedNations", "Hydroelectricity"],
    };
    Skyscrapper: ITechDefinition = {
       name: () => t(L.Skyscrapper),

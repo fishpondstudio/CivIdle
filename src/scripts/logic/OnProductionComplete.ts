@@ -5,6 +5,7 @@ import {
    getCompletedBuilding,
    getScienceFromWorkers,
    getTotalBuildingUpgrades,
+   isBuildingWellStocked,
    isSpecialBuilding,
    isWorldWonder,
 } from "../../../shared/logic/BuildingLogic";
@@ -574,6 +575,22 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
                });
             }
          }
+         break;
+      }
+      case "Hollywood": {
+         let count = 0;
+         for (const tile of grid.getRange(tileToPoint(xy), 2)) {
+            const tileXy = pointToTile(tile);
+            const b = gs.tiles.get(tileXy)?.building;
+            if (
+               b &&
+               isBuildingWellStocked(tileXy, gs) &&
+               (Config.Building[b.type].input.Culture || Config.Building[b.type].output.Culture)
+            ) {
+               ++count;
+            }
+         }
+         Tick.next.globalMultipliers.happiness.push({ value: count + 5, source: buildingName });
          break;
       }
       // case "ArcDeTriomphe": {

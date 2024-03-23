@@ -26,8 +26,8 @@ export const TR = {
    AccountUpgradeCarryOverDesc:
       "When upgrading to the next account rank, this is the maximum level of permanent great people that you can carry over",
    AccountUpgradeConfirm: "Account Upgrade",
-   AccountUpgradeConfirmDesc:
-      "Upgrading your account will <b>reset your current run</b> and carry over permanent great people <b>up to level %{level}</b>. This <b>cannot</b> be undone, are you sure to continue?",
+   AccountUpgradeConfirmDescV2:
+      "Upgrading your account will <b>reset your current run</b> and carry over permanent great people within the allowed levels. This <b>cannot</b> be undone, are you sure to continue?",
    Acropolis: "Acropolis",
    ActorsGuild: "Oyuncular Birliği",
    AdaLovelace: "Ada Lovelace",
@@ -111,7 +111,6 @@ export const TR = {
    BuildingColorMatchBuilding: "Copy Color From Building",
    BuildingColorMatchBuildingTooltip:
       "Copy resource color from the building that produce this resource. If multiple buildings produce this resource, a random one will be selected",
-   BuildingCost: "Cost",
    BuildingMultipliers: "Güçlendirme",
    BuildingName: "Name",
    BuildingNoMultiplier:
@@ -119,6 +118,8 @@ export const TR = {
    BuildingPriority: "Building Priority",
    BuildingSearchText: "Aramak için bir bina adı yazın",
    BuildingTier: "Tier",
+   Cable: "Cable",
+   CableFactory: "Cable Factory",
    Calendar: "Takvim",
    Cancel: "Cancel",
    CancelUpgrade: "Cancel Upgrade",
@@ -239,6 +240,7 @@ export const TR = {
    Deposit: "Kaynak",
    DepositTileCountDesc: "%{count} tile(s) of %{deposit} can be found in %{city}",
    Dido: "Dido",
+   Diplomacy: "Diplomacy",
    DistanceInfinity: "Unlimited",
    DistanceInTiles: "Distance (In Tiles)",
    Drilling: "Sondaj",
@@ -251,14 +253,14 @@ export const TR = {
       "All adjacent steel mills get +N Production, Storage and Worker Multiplier. N = Number of adjacent steel mills",
    Electricity: "Elektrik",
    Electrification: "Electrification",
-   ElectrificationDesc:
-      "Use %{power}W Power and Provides +%{level} Consumption Multiplier and Production Multiplier",
+   ElectrificationPowerRequired: "Power Required",
    ElectrificationStatus: "Current Status",
    ElectrificationStatusActive: "Active",
    ElectrificationStatusNoPower: "No Power",
    ElectrificationStatusNotActive: "Not Active",
    ElectrificationUpgrade: "Unlock electrification. Allow buildings to consume power to boost production",
    Electrolysis: "Elektroliz",
+   Embassy: "Embassy",
    EmpireValueFromBuildings: "From Buildings",
    EmpireValueFromResources: "From Resources",
    EmptyTilePageBuildLastBuilding: "Build Last Building",
@@ -703,6 +705,9 @@ export const TR = {
    RenaissanceAge: "Rönesans",
    ReneDescartes: "René Descartes",
    RequiredDeposit: "Gerekli Kaynak",
+   RequirePower: "Require Power",
+   RequirePowerDesc:
+      "This building needs to be built on a tile with power and can extend the power to its adjacent tiles",
    Research: "Araştırma",
    ResearchMenu: "Araştırma",
    ResourceAmount: "Amount",
@@ -954,12 +959,10 @@ export const TR = {
    TransportManualControlTooltip: "Transport this resource for construction/upgrade",
    TrialRunDesc:
       "Quaestor or above can start a trial run that is subject to the Tribune limits and cannot earn permanent great people",
-   TribuneGreatPeopleLevelWarningV2:
-      "Your current account rank is Tribune. Upgrading to Quaestor will carry over permanent great people <b>up to level %{level}</b>. Partial progress above level %{level} will not be carried over",
    TribuneUpgradeDescGreatPeopleWarning:
       "Your current run has great people. You should <b>rebirth first</b>. Upgrading to Quaestor rank will reset your current run",
-   TribuneUpgradeDescV2:
-      "Upgrading from Tribune to Quaestor will unlock all online features. However, only <b>permanent great people up to level %{level}</b> can be carried over. Partial progress above level %{level} will not be carried over",
+   TribuneUpgradeDescV3:
+      "You can play the full game as Tribune if you do not plan to participate in the <b>optional</b> online features. To acquire unrestricted access to the online features, you will need to upgrade to Quaestor. <b>This is an anti-bot measure to keep the game free for everyone.</b> However, <b>when upgrading to Quaestor</b> you can carry over great people: <ul><li>Up to Level <b>3</b> for Bronze, Iron and Classical Age</li><li>Up to Level <b>2</b> for Middle Age, Renaissance and Industrial Age</li><li>Up to Level <b>1</b> for World Wars, Cold War and Information Age</li></ul>Partial progress above the level cannot be carried over.",
    TurnOnTimeWarpDesc:
       "Cost %{speed} warps for every second and accelerate your empire to run at %{speed}x speed.",
    Tutorial: "Tutorial",
@@ -1020,6 +1023,8 @@ export const TR = {
    WarpConversionDesc:
       "Your offline time that exceeds Max Offline Production Time will be converted to warp (1 second = 1 warp)",
    Water: "Su",
+   WellStockedTooltip:
+      "Well-stocked buildings are buildings that have enough resources for its production, which include buildings that are producing, that have full storage or not producing due to lack of workers",
    Wheat: "Buğday",
    WheatFarm: "Buğday Çiftliği",
    WilliamShakespeare: "William Shakespeare",

@@ -1,3 +1,4 @@
+import { NoPrice, NoStorage } from "../../../shared/definitions/ResourceDefinitions";
 import { OnTileExplored, getScienceFromWorkers } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
 import { GameState } from "../../../shared/logic/GameState";
@@ -133,6 +134,16 @@ if (import.meta.env.DEV) {
       }
       console.timeEnd(`TickGameState(${tick})`);
    };
+   // @ts-expect-error
+   window.addAllResources = (amount: number) => {
+      forEach(Config.Resource, (res, def) => {
+         if (NoStorage[res] || NoPrice[res]) {
+            return;
+         }
+         safeAdd(getSpecialBuildings(getGameState()).Headquarter.building.resources, res, amount);
+      });
+   };
+
    // @ts-expect-error
    window.Config = Config;
 }

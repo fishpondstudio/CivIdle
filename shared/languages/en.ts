@@ -26,8 +26,8 @@ export const EN = {
    AccountUpgradeCarryOverDesc:
       "When upgrading to the next account rank, this is the maximum level of permanent great people that you can carry over",
    AccountUpgradeConfirm: "Account Upgrade",
-   AccountUpgradeConfirmDesc:
-      "Upgrading your account will <b>reset your current run</b> and carry over permanent great people <b>up to level %{level}</b>. This <b>cannot</b> be undone, are you sure to continue?",
+   AccountUpgradeConfirmDescV2:
+      "Upgrading your account will <b>reset your current run</b> and carry over permanent great people within the allowed levels. This <b>cannot</b> be undone, are you sure to continue?",
    Acropolis: "Acropolis",
    ActorsGuild: "Actor's Guild",
    AdaLovelace: "Ada Lovelace",
@@ -111,7 +111,6 @@ export const EN = {
    BuildingColorMatchBuilding: "Copy Color From Building",
    BuildingColorMatchBuildingTooltip:
       "Copies color of production buildings to their resources. If there is more than one option, selects randomly",
-   BuildingCost: "Cost",
    BuildingMultipliers: "Boost",
    BuildingName: "Name",
    BuildingNoMultiplier:
@@ -119,6 +118,8 @@ export const EN = {
    BuildingPriority: "Building Priority",
    BuildingSearchText: "Type a building or resource name to search",
    BuildingTier: "Tier",
+   Cable: "Cable",
+   CableFactory: "Cable Factory",
    Calendar: "Calendar",
    Cancel: "Cancel",
    CancelUpgrade: "Cancel Upgrade",
@@ -160,8 +161,7 @@ export const EN = {
    CheeseMaker: "Cheese Maker",
    Chemistry: "Chemistry",
    ChichenItza: "Chichen Itza",
-   ChichenItzaDesc:
-      "All adjacent buildings get +1 Production Multiplier, Storage and Worker Capacity Multiplier",
+   ChichenItzaDesc: "All adjacent buildings get +1 Production, Worker Capacity and Storage Multiplier",
    ChoghaZanbil: "Chogha Zanbil",
    ChoghaZanbilDesc: "Chogha Zanbil",
    ChooseGreatPersonChoicesLeft: "You have %{count} choices left",
@@ -239,6 +239,7 @@ export const EN = {
    Deposit: "Deposit",
    DepositTileCountDesc: "%{count} tile(s) of %{deposit} can be found in %{city}",
    Dido: "Dido",
+   Diplomacy: "Diplomacy",
    DistanceInfinity: "Unlimited",
    DistanceInTiles: "Distance (In Tiles)",
    Drilling: "Drilling",
@@ -251,14 +252,14 @@ export const EN = {
       "All adjacent steel mills get +N Production, Storage and Worker Multiplier. N = Number of adjacent steel mills",
    Electricity: "Electricity",
    Electrification: "Electrification",
-   ElectrificationDesc:
-      "Use %{power}W Power and Provides +%{level} Consumption Multiplier and Production Multiplier",
+   ElectrificationPowerRequired: "Power Required",
    ElectrificationStatus: "Current Status",
    ElectrificationStatusActive: "Active",
    ElectrificationStatusNoPower: "No Power",
    ElectrificationStatusNotActive: "Not Active",
    ElectrificationUpgrade: "Unlock electrification. Allow buildings to consume power to boost production",
    Electrolysis: "Electrolysis",
+   Embassy: "Embassy",
    EmpireValueFromBuildings: "From Buildings",
    EmpireValueFromResources: "From Resources",
    EmptyTilePageBuildLastBuilding: "Build Last Building",
@@ -301,7 +302,7 @@ export const EN = {
       "Change the font size scale of the game's UI. <b>Setting the scale greater than 1x might break some UI layouts</b>",
    ForbiddenCity: "Forbidden City",
    ForbiddenCityDesc:
-      "All Paper Makers, Writer's Guilds and Printing Houses get +1 Production Multiplier, Worker Capacity Multiplier and Storage Multiplier",
+      "All Paper Makers, Writer's Guilds and Printing Houses get +1 Production, Worker Capacity and Storage Multiplier",
    Frigate: "Frigate",
    FrigateBuilder: "Frigate Builder",
    Furniture: "Furniture",
@@ -328,7 +329,8 @@ export const EN = {
    GoBack: "Go Back",
    Gold: "Gold",
    GoldenGateBridge: "Golden Gate Bridge",
-   GoldenGateBridgeDesc: "Golden Gate Bridge",
+   GoldenGateBridgeDesc:
+      "All power plants get +1 Production Multiplier. Provide power to all tiles within 2 tile range",
    GoldMiningCamp: "Gold Mining Camp",
    GrandBazaar: "Grand Bazaar",
    GrandBazaarDesc:
@@ -388,9 +390,10 @@ export const EN = {
    Herodotus: "Herodotus",
    HimejiCastle: "Himeji Castle",
    HimejiCastleDesc:
-      "All Caravel Builders, Galleon Builders, and Frigate Builders get +1 Production Multiplier, Worker Capacity Multiplier and Storage Multiplier",
+      "All Caravel Builders, Galleon Builders, and Frigate Builders get +1 Production, Worker Capacity and Storage Multiplier",
    Hollywood: "Hollywood",
-   HollywoodDesc: "Hollywood Description",
+   HollywoodDesc:
+      "+5 Happiness. +1 Happiness for each well-stocked building that consumes or produces culture within 2 tile range",
    HolyEmpire: "Holy Empire",
    Horse: "Horse",
    HorsebackRiding: "Horseback Riding",
@@ -457,7 +460,8 @@ export const EN = {
    ManagePermanentGreatPeople: "Manage Permanent Great People",
    ManageWonders: "Manage Wonders",
    ManhattanProject: "Manhattan Project",
-   ManhattanProjectDesc: "Manhattan Project",
+   ManhattanProjectDesc:
+      "All uranium mines get +2 Production, Worker Capacity and Storage Multiplier. Uranium enrichment plants and atomic facilities get +1 Production Multiplier for each adjacent uranium mine that is built on top of a uranium deposit",
    Marble: "Marble",
    Marbleworks: "Marbleworks",
    Market: "Market",
@@ -552,7 +556,7 @@ export const EN = {
    PermanentGreatPeople: "Permanent Great People",
    Persepolis: "Persepolis",
    PersepolisDesc:
-      "All Copper Mining Camps, Logging Camps and Stone Quarries get +1 Production Multiplier, Worker Capacity Multiplier and Storage Multiplier",
+      "All Copper Mining Camps, Logging Camps and Stone Quarries get +1 Production, Worker Capacity and Storage Multiplier",
    Petra: "Petra",
    PetraDesc: "Generate time warp when you are offline, which you can use to accelerate your empire",
    Petrol: "Petrol",
@@ -684,8 +688,6 @@ export const EN = {
    QinShiHuang: "Qin Shi Huang",
    Radio: "Radio",
    RadioStation: "Radio Station",
-   Embassy: "Embassy",
-   Diplomacy: "Diplomacy",
    Railway: "Railway",
    RamessesII: "Ramesses II",
    RamessesIIDesc: "+%{value} Builder Capacity Multiplier",
@@ -707,6 +709,9 @@ export const EN = {
    RenaissanceAge: "Renaissance",
    ReneDescartes: "René Descartes",
    RequiredDeposit: "Required Deposit",
+   RequirePower: "Require Power",
+   RequirePowerDesc:
+      "This building needs to be built on a tile with power and can extend the power to its adjacent tiles",
    Research: "Research",
    ResearchMenu: "Research",
    ResourceAmount: "Amount",
@@ -736,7 +741,7 @@ export const EN = {
    Rifling: "Rifling",
    Rijksmuseum: "Rijksmuseum",
    RijksmuseumDesc:
-      "+5 Happiness. All buildings that consume or produce Culture get +1 Production, Storage and Worker Capacity",
+      "+5 Happiness. All buildings that consume or produce Culture get +1 Production, Storage and Worker Capacity Multiplier",
    RoadAndWheel: "Road & Wheel",
    Robotics: "Robotics",
    Rocket: "Rocket",
@@ -751,7 +756,7 @@ export const EN = {
    SagradaFamiliaDesc: "Sagrada Familia",
    SaintBasilsCathedral: "Saint Basil's Cathedral",
    SaintBasilsCathedralDescV2:
-      "Allow resource extraction buildings to work adjacent to a deposit. All adjacent Tier I buildings get +1 Production Multiplier, Worker Capacity Multiplier, and Storage Multiplier",
+      "Allow resource extraction buildings to work adjacent to a deposit. All adjacent Tier I buildings get +1 Production, Worker Capacity and Storage Multiplier",
    Sand: "Sand",
    Sandpit: "Sandpit",
    SargonOfAkkad: "Sargon of Akkad",
@@ -847,8 +852,6 @@ export const EN = {
    Steamworks: "Steamworks",
    Steel: "Steel",
    SteelMill: "Steel Mill",
-   CableFactory: "Cable Factory",
-   Cable: "Cable",
    Stock: "Stock",
    StockExchange: "Stock Exchange",
    StockMarket: "Stock Market",
@@ -916,13 +919,13 @@ export const EN = {
    Television: "Television",
    TempleOfArtemis: "Temple Of Artemis",
    TempleOfArtemisDesc:
-      "All Sword Forges and Armories get +5 Level when completed. All Sword Forges and Armories get +1 Production Multiplier, Worker Capacity Multiplier and Storage Multiplier",
+      "All Sword Forges and Armories get +5 Level when completed. All Sword Forges and Armories get +1 Production, Worker Capacity and Storage Multiplier",
    TempleOfHeaven: "Temple of Heaven",
    TempleOfHeavenDesc: "All buildings that are level 10 or higher get +1 Worker Capacity Multiplier",
    TempleOfPtah: "Temple of Ptah",
    TerracottaArmy: "Terracotta Army",
    TerracottaArmyDesc:
-      "All Iron Mining Camps get +1 Production Multiplier, Worker Capacity Multiplier and Storage Multiplier. Iron Forges get +1 Production Multiplier for each adjacent Iron Mining Camp that is built on top of an Iron deposit",
+      "All Iron Mining Camps get +1 Production, Worker Capacity and Storage Multiplier. Iron Forges get +1 Production Multiplier for each adjacent Iron Mining Camp that is built on top of an Iron deposit",
    Theater: "Theater",
    Theme: "Theme",
    ThemeColor: "Theme Color",
@@ -961,12 +964,10 @@ export const EN = {
    TransportManualControlTooltip: "Transport this resource for construction/upgrade",
    TrialRunDesc:
       "Quaestor or above can start a trial run that is subject to the Tribune limits and cannot earn permanent great people",
-   TribuneGreatPeopleLevelWarningV2:
-      "Your current account rank is Tribune. Upgrading to Quaestor will carry over permanent great people <b>up to level %{level}</b>. Partial progress above level %{level} will not be carried over",
    TribuneUpgradeDescGreatPeopleWarning:
       "Your current run has great people. You should <b>rebirth first</b>. Upgrading to Quaestor rank will reset your current run",
-   TribuneUpgradeDescV2:
-      "Upgrading from Tribune to Quaestor will unlock all online features. However, only <b>permanent great people up to level %{level}</b> can be carried over. Partial progress above level %{level} will not be carried over",
+   TribuneUpgradeDescV3:
+      "You can play the full game as Tribune if you do not plan to participate in the <b>optional</b> online features. To acquire unrestricted access to the online features, you will need to upgrade to Quaestor. <b>This is an anti-bot measure to keep the game free for everyone.</b> However, <b>when upgrading to Quaestor</b> you can carry over great people: <ul><li>Up to Level <b>3</b> for Bronze, Iron and Classical Age</li><li>Up to Level <b>2</b> for Middle Age, Renaissance and Industrial Age</li><li>Up to Level <b>1</b> for World Wars, Cold War and Information Age</li></ul>Partial progress above the level cannot be carried over.",
    TurnOnTimeWarpDesc:
       "Cost %{speed} warps for every second and accelerate your empire to run at %{speed}x speed.",
    Tutorial: "Tutorial",
@@ -1027,6 +1028,8 @@ export const EN = {
    WarpConversionDesc:
       "Your offline time that exceeds Max Offline Production Time will be converted to warp (1 second = 1 warp)",
    Water: "Water",
+   WellStockedTooltip:
+      "Well-stocked buildings are buildings that have enough resources for its production, which include buildings that are producing, that have full storage or not producing due to lack of workers",
    Wheat: "Wheat",
    WheatFarm: "Wheat Farm",
    WilliamShakespeare: "William Shakespeare",

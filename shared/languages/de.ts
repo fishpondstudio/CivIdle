@@ -25,8 +25,8 @@ export const DE = {
    AccountUpgradeCarryOverDesc:
       "Wenn du auf den nächsten Account-Rang aufsteigst, ist dies die maximale Stufe an dauerhaften herausragenden Persönlichkeiten, die du übernehmen kannst.",
    AccountUpgradeConfirm: "Konto-Upgrade",
-   AccountUpgradeConfirmDesc:
-      "Wenn du das Upgrade deines Accounts durchführst, wird <b>dein aktueller Durchgang beendet</b>. All deine herausragenden Persönlichkeiten <b>bis zur Stufe %{level}</b> werden dabei in den nächsten Durchgang übernommen. Das kannst du anschließend <b>nicht wieder rückgängig</b> machen. Bist du sicher, dass du das willst?",
+   AccountUpgradeConfirmDescV2:
+      "Upgrading your account will <b>reset your current run</b> and carry over permanent great people within the allowed levels. This <b>cannot</b> be undone, are you sure to continue?",
    Acropolis: "Akropolis",
    ActorsGuild: "Schauspielergilde",
    AdaLovelace: "Ada Lovelace",
@@ -113,7 +113,6 @@ export const DE = {
    BuildingColorMatchBuilding: "Farbe aus Gebäude kopieren",
    BuildingColorMatchBuildingTooltip:
       "Kopieren Sie die Ressourcenfarbe aus dem Gebäude, das diese Ressource produziert. Wenn mehrere Gebäude diese Ressource produzieren, wird ein zufälliges ausgewählt",
-   BuildingCost: "Kosten",
    BuildingMultipliers: "Beschleunigung der Baugeschwindigkeit",
    BuildingName: "Name",
    BuildingNoMultiplier:
@@ -121,6 +120,8 @@ export const DE = {
    BuildingPriority: "Priorität des Bauens",
    BuildingSearchText: "Nach welchem Gebäuder/welcher Ressource wollen Sie suchen?",
    BuildingTier: "Stufe",
+   Cable: "Cable",
+   CableFactory: "Cable Factory",
    Calendar: "Kalender",
    Cancel: "Abbrechen",
    CancelUpgrade: "Verbesserung abbrechen",
@@ -248,6 +249,7 @@ export const DE = {
    Deposit: "Vorkommen",
    DepositTileCountDesc: "In %{city} gibt es %{count} Gebiet(e) mit %{deposit}.",
    Dido: "Dido",
+   Diplomacy: "Diplomacy",
    DistanceInfinity: "Unbegrenzt",
    DistanceInTiles: "Entfernung (in Kacheln)",
    Drilling: "Bohren",
@@ -260,14 +262,14 @@ export const DE = {
       "Bei allen angrenzenden Stahlwerken erhöht sich der Multiplikator für Produktion, Lager und Arbeitskräfte um die Anzahl der jeweils angrenzenden Stahlwerke.",
    Electricity: "Elektrizität",
    Electrification: "Elektrifizierung",
-   ElectrificationDesc:
-      "Verwende %{Leistung}W Leistung und bietet +%{level} Verbrauchsmultiplikator und Produktionsmultiplikator",
+   ElectrificationPowerRequired: "Power Required",
    ElectrificationStatus: "Aktueller Stand",
    ElectrificationStatusActive: "Aktiv",
    ElectrificationStatusNoPower: "Kein Strom",
    ElectrificationStatusNotActive: "Nicht aktiv",
    ElectrificationUpgrade: "Damit kannst du die Produktivität von Gebäuden erhöhen.",
    Electrolysis: "Elektrolyse",
+   Embassy: "Embassy",
    EmpireValueFromBuildings: "Durch Gebäude",
    EmpireValueFromResources: "Durch Ressoursen",
    EmptyTilePageBuildLastBuilding: "Letztes Gebäude bauen",
@@ -726,6 +728,9 @@ export const DE = {
    RenaissanceAge: "Renaissance",
    ReneDescartes: "René Descartes",
    RequiredDeposit: "Erforderliches Vorkommen",
+   RequirePower: "Require Power",
+   RequirePowerDesc:
+      "This building needs to be built on a tile with power and can extend the power to its adjacent tiles",
    Research: "Forschung",
    ResearchMenu: "Forschung",
    ResourceAmount: "Betrag",
@@ -980,12 +985,10 @@ export const DE = {
    TransportManualControlTooltip: "Transportieren Sie diese Ressource zum Bau/Upgrade",
    TrialRunDesc:
       "Quästor oder höher kann einen Probelauf starten, der den Tribune-Beschränkungen unterliegt und keine dauerhaften großartigen Leute verdienen kann",
-   TribuneGreatPeopleLevelWarningV2:
-      "Dein aktueller Rang ist Tribun. Bei einem Upgrade auf den Rang Quästor werden deine permananten herausragenden Persönlichkeinten <b>bis Stude %{level}</b> übernommen. Teilweiser Fortschritt über %{level} wird nicht übernommen.",
    TribuneUpgradeDescGreatPeopleWarning:
       "In deinem aktuellen Durchgang hast du herausragende Persönlichkeiten. Du solltest zuerst eine <b>Wiedergeburt</b> durchführen. Wenn du auf Quästor-Rang aufsteigst, wird dein aktueller Lauf zurückgesetzt.",
-   TribuneUpgradeDescV2:
-      "Durch ein Upgrade von Tribune auf Quästor werden alle Online-Funktionen freigeschaltet. Nur herausragende Persönlichkeiten bis Stufe %{level}</b> können übernommen werden. Teilweiser Fortschritt über %{level} wird nicht übertragen.",
+   TribuneUpgradeDescV3:
+      "You can play the full game as Tribune if you do not plan to participate in the <b>optional</b> online features. To acquire unrestricted access to the online features, you will need to upgrade to Quaestor. <b>This is an anti-bot measure to keep the game free for everyone.</b> However, <b>when upgrading to Quaestor</b> you can carry over great people: <ul><li>Up to Level <b>3</b> for Bronze, Iron and Classical Age</li><li>Up to Level <b>2</b> for Middle Age, Renaissance and Industrial Age</li><li>Up to Level <b>1</b> for World Wars, Cold War and Information Age</li></ul>Partial progress above the level cannot be carried over.",
    TurnOnTimeWarpDesc:
       "Kostet %{speed} Warps für jede Sekunde und beschleunige dein Imperium, um mit %{speed}x Geschwindigkeit zu laufen.",
    Tutorial: "Tutorial",
@@ -1050,6 +1053,8 @@ export const DE = {
    WarpConversionDesc:
       "Jede Sekunde, in der du länger offline bist als deine maximale Offline-Produktionszeit überschreitet, wird in 1 Warp umgewandelt.",
    Water: "Wasser",
+   WellStockedTooltip:
+      "Well-stocked buildings are buildings that have enough resources for its production, which include buildings that are producing, that have full storage or not producing due to lack of workers",
    Wheat: "Weizen",
    WheatFarm: "Weizenfarm",
    WilliamShakespeare: "William Shakespeare",

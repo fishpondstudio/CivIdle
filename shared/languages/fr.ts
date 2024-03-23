@@ -26,8 +26,8 @@ export const FR = {
    AccountUpgradeCarryOverDesc:
       "Il s'agit du niveau maximal des personnages illustres permanents que vous pouvez conserver lorsque vous passez au rang de compte supérieur",
    AccountUpgradeConfirm: "Amélioration du compte",
-   AccountUpgradeConfirmDesc:
-      "Passer au rang supérieur <b>réinitialisera votre partie actuelle</b> et vous permettra de conserver les personnages illustres permanents <b>jusqu'au niveau %{level}</b>. Cette action est <b>irréversible</b>, voulez-vous continuer ?",
+   AccountUpgradeConfirmDescV2:
+      "Upgrading your account will <b>reset your current run</b> and carry over permanent great people within the allowed levels. This <b>cannot</b> be undone, are you sure to continue?",
    Acropolis: "Acropolis",
    ActorsGuild: "Guilde des acteurs",
    AdaLovelace: "Ada Lovelace",
@@ -114,7 +114,6 @@ export const FR = {
    BuildingColorMatchBuilding: "Copier la couleur des bâtiments",
    BuildingColorMatchBuildingTooltip:
       "Les ressources seront automatiquement de la même couleur que le bâtiment qui les produit. Si plusieurs bâtiments produisent la même ressource, la couleur sera choisie aléatoirement",
-   BuildingCost: "Coût",
    BuildingMultipliers: "Boost",
    BuildingName: "Nom",
    BuildingNoMultiplier:
@@ -122,6 +121,8 @@ export const FR = {
    BuildingPriority: "Priorité de construction",
    BuildingSearchText: "Entrez le nom du bâtiment que vous recherchez",
    BuildingTier: "Catégorie",
+   Cable: "Cable",
+   CableFactory: "Cable Factory",
    Calendar: "Calendrier",
    Cancel: "Annuler",
    CancelUpgrade: "Annuler l'amélioration",
@@ -249,6 +250,7 @@ export const FR = {
    Deposit: "Ressource",
    DepositTileCountDesc: "%{count} case(s) de %{deposit} seront révélées ici : %{city}",
    Dido: "Dido",
+   Diplomacy: "Diplomacy",
    DistanceInfinity: "Illimitée",
    DistanceInTiles: "Distance (en cases)",
    Drilling: "Forage",
@@ -261,8 +263,7 @@ export const FR = {
       "Toutes les fonderies adjacentes obtiennent +N Production, Stockage Multiplicateur d'Ouvriers. N = Nombre de fonderies adjacentes",
    Electricity: "Électricité",
    Electrification: "Électrification",
-   ElectrificationDesc:
-      "Utilise %{power}W Énergie et vous octroie +%{level} Multiplicateur de Consommation et Multiplicateur de Production",
+   ElectrificationPowerRequired: "Power Required",
    ElectrificationStatus: "Statut actuel",
    ElectrificationStatusActive: "Actif",
    ElectrificationStatusNoPower: "Pas d'énergie",
@@ -270,6 +271,7 @@ export const FR = {
    ElectrificationUpgrade:
       "Débloque l'éléctrification. Permet aux bâtiments de consommer de l'énergie pour booster leur production",
    Electrolysis: "Électrolyse",
+   Embassy: "Embassy",
    EmpireValueFromBuildings: "From Buildings",
    EmpireValueFromResources: "From Resources",
    EmptyTilePageBuildLastBuilding: "Bâtir le dernière bâtiment",
@@ -721,6 +723,9 @@ export const FR = {
    RenaissanceAge: "Renaissance",
    ReneDescartes: "René Descartes",
    RequiredDeposit: "Ressource requise",
+   RequirePower: "Require Power",
+   RequirePowerDesc:
+      "This building needs to be built on a tile with power and can extend the power to its adjacent tiles",
    Research: "Recherche",
    ResearchMenu: "Technologies",
    ResourceAmount: "Quantité",
@@ -977,12 +982,10 @@ export const FR = {
    TransportManualControlTooltip: "Transporter cette ressource pour la construction/l'amélioration",
    TrialRunDesc:
       "Les joueurs de rang Questeur ou supérieur peuvent commencer une partie en mode difficile. Elle sera soumise aux limites du rang Tribun et ne pourra pas contenir de personnages illustres permanents",
-   TribuneGreatPeopleLevelWarningV2:
-      "Votre rang de compte actuel est Tribun. Passer au rang de Questeur vous permettra de conserver vos personnages illustres permanents <b>jusqu'au niveau %{level}</b>. La progression partielle au-délà du niveau %{level} ne sera pas conservée",
    TribuneUpgradeDescGreatPeopleWarning:
       "Votre partie actuelle contient des personnages illustres. Vous devez <b>d'abord vous réincarner</b>. Passer au rang de Questeur réinitialisera votre partie actuelle",
-   TribuneUpgradeDescV2:
-      "Passer du rang Tribun au rang Questeur vous permettra de débloquer les fonctionnalités en ligne. Cependant, seuls les personnages illustres <b>jusqu'au niveau %{level}</b> peuvent être conservés. La progression partielle au-délà du niveau %{level} ne sera pas conservée",
+   TribuneUpgradeDescV3:
+      "You can play the full game as Tribune if you do not plan to participate in the <b>optional</b> online features. To acquire unrestricted access to the online features, you will need to upgrade to Quaestor. <b>This is an anti-bot measure to keep the game free for everyone.</b> However, <b>when upgrading to Quaestor</b> you can carry over great people: <ul><li>Up to Level <b>3</b> for Bronze, Iron and Classical Age</li><li>Up to Level <b>2</b> for Middle Age, Renaissance and Industrial Age</li><li>Up to Level <b>1</b> for World Wars, Cold War and Information Age</li></ul>Partial progress above the level cannot be carried over.",
    TurnOnTimeWarpDesc:
       "Coûte %{speed} distorsion temporelle pour chaque seconde et accélère votre empire afin qu'il fonction en vitesse %{speed}x.",
    Tutorial: "Tutoriel",
@@ -1047,6 +1050,8 @@ export const FR = {
    WarpConversionDesc:
       "Le temps hors ligne qui dépasse le temps de production maximal hors ligne sera converti en distorsion temporelle (1 seconde = 1 distorsion temporelle)",
    Water: "Eau",
+   WellStockedTooltip:
+      "Well-stocked buildings are buildings that have enough resources for its production, which include buildings that are producing, that have full storage or not producing due to lack of workers",
    Wheat: "Blé",
    WheatFarm: "Ferme à blé",
    WilliamShakespeare: "William Shakespeare",

@@ -125,6 +125,7 @@ export class BuildingDefinitions {
       input: { Uranium: 10 },
       output: { NuclearFuelRod: 1 },
       construction: { Concrete: 4, Steel: 5 },
+      power: true,
    };
 
    OilWell: IBuildingDefinition = {
@@ -262,6 +263,7 @@ export class BuildingDefinitions {
       name: () => t(L.BattleshipBuilder),
       input: { Ironclad: 1, Artillery: 1, Cable: 5, Steel: 5, Aluminum: 5 },
       output: { Battleship: 1 },
+      power: true,
    };
    TankFactory: IBuildingDefinition = {
       name: () => t(L.TankFactory),
@@ -277,11 +279,13 @@ export class BuildingDefinitions {
       name: () => t(L.RocketFactory),
       input: { Engine: 1, Artillery: 1, Steel: 5, Cable: 5, Petrol: 10 },
       output: { Rocket: 1 },
+      power: true,
    };
    AtomicFacility: IBuildingDefinition = {
       name: () => t(L.AtomicFacility),
       input: { Dynamite: 10, Uranium: 10 },
       output: { AtomicBomb: 1 },
+      power: true,
    };
    // #endregion /////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -381,11 +385,13 @@ export class BuildingDefinitions {
       name: () => t(L.MovieStudio),
       input: { Sports: 10, Lens: 10, Garment: 10 },
       output: { Movie: 1 },
+      power: true,
    };
    RadioStation: IBuildingDefinition = {
       name: () => t(L.RadioStation),
       input: { Magazine: 1, Newspaper: 1, Culture: 1 },
       output: { Radio: 1 },
+      power: true,
    };
    Embassy: IBuildingDefinition = {
       name: () => t(L.Embassy),
@@ -547,6 +553,7 @@ export class BuildingDefinitions {
       name: () => t(L.CarFactory),
       input: { Engine: 1, Steel: 1, Furniture: 1, Plastics: 1, Petrol: 5 },
       output: { Car: 1 },
+      power: true,
    };
    OilRefinery: IBuildingDefinition = {
       name: () => t(L.OilRefinery),
@@ -1061,7 +1068,7 @@ export class BuildingDefinitions {
       input: {},
       output: {},
       max: 1,
-      construction: { Stone: 100, Brick: 100, Lumber: 100 },
+      construction: { Magazine: 100, Sports: 100, Newspaper: 100 },
       special: BuildingSpecial.WorldWonder,
       wikipedia: "Hollywood,_Los_Angeles",
    };
@@ -1070,7 +1077,7 @@ export class BuildingDefinitions {
       desc: () => t(L.GoldenGateBridgeDesc),
       input: {},
       output: {},
-      construction: { Stone: 100, Brick: 100, Lumber: 100 },
+      construction: { Steel: 100, Movie: 100, Radio: 100 },
       max: 1,
       special: BuildingSpecial.WorldWonder,
       wikipedia: "Golden_Gate_Bridge",
@@ -1100,7 +1107,7 @@ export class BuildingDefinitions {
       desc: () => t(L.ManhattanProjectDesc),
       input: {},
       output: {},
-      construction: { Stone: 100, Brick: 100, Lumber: 100 },
+      construction: { Uranium: 500 },
       max: 1,
       special: BuildingSpecial.WorldWonder,
       wikipedia: "Manhattan_Project",

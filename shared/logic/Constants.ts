@@ -34,7 +34,6 @@ import {
 
 export const MAX_OFFLINE_PRODUCTION_SEC = 60 * 60 * 4;
 export const SCIENCE_VALUE = 0.5;
-export const MAX_TRIBUNE_CARRY_OVER_LEVEL = 2;
 export const TRADE_CANCEL_REFUND_PERCENT = 0.9;
 export const TRIBUNE_UPGRADE_PLAYTIME = 48 * HOUR;
 export const MAX_CHAT_PER_CHANNEL = 200;

@@ -24,8 +24,8 @@ export const ZH_CN = {
    AccountUpgradeCarryOver: "可携带等级",
    AccountUpgradeCarryOverDesc: "    升至下个账号等级时，这是你能携带的永恒伟人的最大等级。",
    AccountUpgradeConfirm: "账号升级",
-   AccountUpgradeConfirmDesc:
-      "    升级你的账号将<b>重置你的当前轮</b>并携带<b>达到等级 %{level} </b>的永恒伟人。此操作<b>不能</b>被退回，你确认继续吗？",
+   AccountUpgradeConfirmDescV2:
+      "Upgrading your account will <b>reset your current run</b> and carry over permanent great people within the allowed levels. This <b>cannot</b> be undone, are you sure to continue?",
    Acropolis: "雅典卫城",
    ActorsGuild: "演员协会",
    AdaLovelace: "阿达·洛芙莱斯",
@@ -108,7 +108,6 @@ export const ZH_CN = {
    BuildingColorMatchBuilding: "与建筑色彩一致",
    BuildingColorMatchBuildingTooltip:
       "将资源色彩与产出该资源建筑的色彩同步。若多种建筑产出该资源，将从中随机选择一种。",
-   BuildingCost: "建造消耗",
    BuildingMultipliers: "增强",
    BuildingName: "建筑名",
    BuildingNoMultiplier:
@@ -116,6 +115,8 @@ export const ZH_CN = {
    BuildingPriority: "建筑优先级",
    BuildingSearchText: "输入建筑物名称进行搜索",
    BuildingTier: "阶",
+   Cable: "Cable",
+   CableFactory: "Cable Factory",
    Calendar: "历法",
    Cancel: "取消",
    CancelUpgrade: "取消升级",
@@ -232,6 +233,7 @@ export const ZH_CN = {
    Deposit: "沉积资源",
    DepositTileCountDesc: "在 %{city} 有 %{count} 个地块可以找到 %{deposit}",
    Dido: "狄多",
+   Diplomacy: "Diplomacy",
    DistanceInfinity: "Unlimited",
    DistanceInTiles: "Distance (In Tiles)",
    Drilling: "钻井",
@@ -243,13 +245,14 @@ export const ZH_CN = {
    EiffelTowerDesc: "所有相邻炼钢厂，获得 +N 生产、存储以及劳动者乘数。 N 取决于其相邻炼钢厂数量",
    Electricity: "电能",
    Electrification: "电气化",
-   ElectrificationDesc: "消耗 %{power}W 电能，提供 +%{level} 消费乘数与生产乘数",
+   ElectrificationPowerRequired: "Power Required",
    ElectrificationStatus: "现状",
    ElectrificationStatusActive: "运转中",
    ElectrificationStatusNoPower: "无电能",
    ElectrificationStatusNotActive: "未运转",
    ElectrificationUpgrade: "解锁电气化。允许建筑消耗电能促进生产",
    Electrolysis: "电解作用",
+   Embassy: "Embassy",
    EmpireValueFromBuildings: "From Buildings",
    EmpireValueFromResources: "From Resources",
    EmptyTilePageBuildLastBuilding: "建造上一个建筑",
@@ -684,6 +687,9 @@ export const ZH_CN = {
    RenaissanceAge: "文艺复兴时期",
    ReneDescartes: "勒内·笛卡尔",
    RequiredDeposit: "所需沉积资源",
+   RequirePower: "Require Power",
+   RequirePowerDesc:
+      "This building needs to be built on a tile with power and can extend the power to its adjacent tiles",
    Research: "研究",
    ResearchMenu: "研究",
    ResourceAmount: "数量",
@@ -924,12 +930,10 @@ export const ZH_CN = {
    TransportCapacityMultiplier: "运送能力乘数",
    TransportManualControlTooltip: "运送此资源以建造/升级",
    TrialRunDesc: "财务官及以上等级账号，可以开始受保民官限制的试运营，而且此运营不能获取永恒伟人。",
-   TribuneGreatPeopleLevelWarningV2:
-      "你当前的账号等级为保民官。升至财务官，将能携带<b>超过等级 %{level}</b> 的永恒伟人。等级 %{level} 以上的部分将不纳入结算。",
    TribuneUpgradeDescGreatPeopleWarning:
       "    你此轮拥有伟人。你应该<b>先重生</b>。升至财务官级别，将重置你的当前轮。",
-   TribuneUpgradeDescV2:
-      "账号等级由Ⅰ升至Ⅱ将解锁全部线上功能。然而，只有<b>不超过等级 %{level} 的永恒伟人</b>能被携带。等级 %{level} 以上的部分将不纳入结算。",
+   TribuneUpgradeDescV3:
+      "You can play the full game as Tribune if you do not plan to participate in the <b>optional</b> online features. To acquire unrestricted access to the online features, you will need to upgrade to Quaestor. <b>This is an anti-bot measure to keep the game free for everyone.</b> However, <b>when upgrading to Quaestor</b> you can carry over great people: <ul><li>Up to Level <b>3</b> for Bronze, Iron and Classical Age</li><li>Up to Level <b>2</b> for Middle Age, Renaissance and Industrial Age</li><li>Up to Level <b>1</b> for World Wars, Cold War and Information Age</li></ul>Partial progress above the level cannot be carried over.",
    TurnOnTimeWarpDesc: "每秒消耗 %{speed} 扭曲时间，同时加速你的帝国，使其以 %{speed} 倍速度运行。",
    Tutorial: "教程",
    Tutorial1:
@@ -988,6 +992,8 @@ export const ZH_CN = {
    Warp: "扭曲时间",
    WarpConversionDesc: "    超过最大离线生产时间的离线时间，将被转化为扭曲时间。（ 1 秒= 1 扭曲时间）",
    Water: "水",
+   WellStockedTooltip:
+      "Well-stocked buildings are buildings that have enough resources for its production, which include buildings that are producing, that have full storage or not producing due to lack of workers",
    Wheat: "小麦",
    WheatFarm: "小麦农场",
    WilliamShakespeare: "威廉·莎士比亚",

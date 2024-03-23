@@ -63,7 +63,8 @@ export type NotProducingReason =
    | "StorageFull"
    | "TurnedOff"
    | "NotOnDeposit"
-   | "NoActiveTransports";
+   | "NoActiveTransports"
+   | "NoPower";
 
 export class GlobalMultipliers {
    sciencePerIdleWorker: IValueWithSource[] = [];

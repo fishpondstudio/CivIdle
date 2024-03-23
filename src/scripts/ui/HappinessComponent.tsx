@@ -9,6 +9,7 @@ import { useCurrentTick } from "../logic/ClientUpdate";
 import { jsxMapOf } from "../utilities/Helper";
 import { FormatNumber } from "./HelperComponents";
 import { ProgressBarComponent } from "./ProgressBarComponent";
+import { TextWithHelp } from "./TextWithHelpComponent";
 
 export function HappinessComponent({ open }: { open: boolean }): React.ReactNode {
    const happiness = useCurrentTick().happiness;
@@ -57,7 +58,13 @@ export function HappinessComponent({ open }: { open: boolean }): React.ReactNode
                      {jsxMapOf(happiness.positive, (type, value) => {
                         return (
                            <li className="row" key={type}>
-                              <div className="f1">{HappinessNames[type]()}</div>
+                              <div className="f1">
+                                 <TextWithHelp
+                                    content={type === "fromBuildingTypes" ? t(L.WellStockedTooltip) : null}
+                                 >
+                                    {HappinessNames[type]()}
+                                 </TextWithHelp>
+                              </div>
                               <div className="text-green">
                                  +<FormatNumber value={value} />
                               </div>

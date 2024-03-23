@@ -27,8 +27,8 @@ export const RU = {
    AccountUpgradeCarryOverDesc:
       "При переходе на следующий уровень аккаунта это максимальный уровень постоянных великих людей, который вы можете перенести",
    AccountUpgradeConfirm: "Улучшить Аккаунт",
-   AccountUpgradeConfirmDesc:
-      "Улучшение вашего аккаунта приведет к <b>сбросу текущего пробега</b> и переносу постоянных великих людей <b>до уровня %{level}</b>. Это <b>не может</b> быть отменено, Вы уверены, что хотите продолжить?",
+   AccountUpgradeConfirmDescV2:
+      "Upgrading your account will <b>reset your current run</b> and carry over permanent great people within the allowed levels. This <b>cannot</b> be undone, are you sure to continue?",
    Acropolis: "Акрополь",
    ActorsGuild: "Гильдия Актёров",
    AdaLovelace: "Ада Лавлейс",
@@ -114,7 +114,6 @@ export const RU = {
    BuildingColorMatchBuilding: "Скопировать Цвет Из Здания",
    BuildingColorMatchBuildingTooltip:
       "Копирует цвет с постройки, которая производит этот ресурс. Если есть более одного варианта, выбирает случайным образом",
-   BuildingCost: "Стоимость",
    BuildingMultipliers: "Усиление",
    BuildingName: "Название",
    BuildingNoMultiplier:
@@ -122,6 +121,8 @@ export const RU = {
    BuildingPriority: "Приоритет Зданий",
    BuildingSearchText: "Введите название здания или ресурса для поиска",
    BuildingTier: "Тир",
+   Cable: "Cable",
+   CableFactory: "Cable Factory",
    Calendar: "Календарь",
    Cancel: "Отменить",
    CancelUpgrade: "Отменить Улучшение",
@@ -243,6 +244,7 @@ export const RU = {
    Deposit: "Месторождение",
    DepositTileCountDesc: "%{count} плиток(и) %{deposit} может быть найдено в %{city}",
    Dido: "Дидона",
+   Diplomacy: "Diplomacy",
    DistanceInfinity: "Не ограничено",
    DistanceInTiles: "Дистанция (В Плитках)",
    Drilling: "Бурение",
@@ -255,8 +257,7 @@ export const RU = {
       "Все прилегающие Сталелитейные Заводы получают +N к Множителям Производства, Хранилища и Работника. N = Число прилегащих Сталелитейных Заводов",
    Electricity: "Электричество",
    Electrification: "Электрификация",
-   ElectrificationDesc:
-      "Использует %{power}W Энергии и Даёт +%{level} Множитель Потребления и Множитель Производства",
+   ElectrificationPowerRequired: "Power Required",
    ElectrificationStatus: "Текущий Статус",
    ElectrificationStatusActive: "Активно",
    ElectrificationStatusNoPower: "Нет Энергии",
@@ -264,6 +265,7 @@ export const RU = {
    ElectrificationUpgrade:
       "Разблокирует электрификацию. Позволяет зданиям потреблять энергию для увеличения производства",
    Electrolysis: "Электролиз",
+   Embassy: "Embassy",
    EmpireValueFromBuildings: "От Зданий",
    EmpireValueFromResources: "От Ресурсов",
    EmptyTilePageBuildLastBuilding: "Построить Последнее Здание",
@@ -711,6 +713,9 @@ export const RU = {
    RenaissanceAge: "Ренессанс",
    ReneDescartes: "Рене Декарт",
    RequiredDeposit: "Требуется Месторождение",
+   RequirePower: "Require Power",
+   RequirePowerDesc:
+      "This building needs to be built on a tile with power and can extend the power to its adjacent tiles",
    Research: "Исследование",
    ResearchMenu: "Исследования",
    ResourceAmount: "Количество",
@@ -968,12 +973,10 @@ export const RU = {
    TransportManualControlTooltip: "Транспортировать этот ресурс для строительства/улучшения",
    TrialRunDesc:
       "Квестор или выше может начать пробный запуск, который подчиняется ограничениям Трибуна и не может заработать постоянных великих людей.",
-   TribuneGreatPeopleLevelWarningV2:
-      "Ваш текущий уровень аккаунта - Трибун. Повышение до Квестора перенесёт постоянных великих людей <b>до уровня %{level}</b>. Частичный прогресс выше уровня %{level} не будет перенесён",
    TribuneUpgradeDescGreatPeopleWarning:
       "В вашем текущем забеге есть великие люди. Вам следует <b>сначала переродиться</b>. Улучшение до ранга Квестора сбросит ваш текущий забег",
-   TribuneUpgradeDescV2:
-      "Повышение уровня от Трибуна до Квестора откроет все онлайн-возможности. Однако только <b>постоянные великие люди до уровня %{level}</b> могут быть перенесены. Частичный прогресс выше уровня %{level} не будет перенесён",
+   TribuneUpgradeDescV3:
+      "You can play the full game as Tribune if you do not plan to participate in the <b>optional</b> online features. To acquire unrestricted access to the online features, you will need to upgrade to Quaestor. <b>This is an anti-bot measure to keep the game free for everyone.</b> However, <b>when upgrading to Quaestor</b> you can carry over great people: <ul><li>Up to Level <b>3</b> for Bronze, Iron and Classical Age</li><li>Up to Level <b>2</b> for Middle Age, Renaissance and Industrial Age</li><li>Up to Level <b>1</b> for World Wars, Cold War and Information Age</li></ul>Partial progress above the level cannot be carried over.",
    TurnOnTimeWarpDesc:
       "Стоит %{speed} Временного Разрыва за каждую секунду и ускоряет вашу империю в %{speed}x раза.",
    Tutorial: "Обучение",
@@ -1037,6 +1040,8 @@ export const RU = {
    WarpConversionDesc:
       "Время Оффлайна, превышающее максимальное время Оффлайна, будет преобразовано во Временной Разрыв (1 Секунда = 1 Временной Разрыв)",
    Water: "Вода",
+   WellStockedTooltip:
+      "Well-stocked buildings are buildings that have enough resources for its production, which include buildings that are producing, that have full storage or not producing due to lack of workers",
    Wheat: "Пшеница",
    WheatFarm: "Пшеничная ферма",
    WilliamShakespeare: "Уильям Шекспир",

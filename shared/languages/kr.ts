@@ -24,8 +24,8 @@ export const KR = {
    AccountUpgradeCarryOver: "레벨 이월",
    AccountUpgradeCarryOverDesc: "다음 계정 랭크로 업그레이드 할때 이월할수있는 영구 위인의 최대 레벨입니다.",
    AccountUpgradeConfirm: "계정 업그레이드",
-   AccountUpgradeConfirmDesc:
-      "계정을 업그레이드 하면 <b>현재 회차가 초기화되며</b> 영구 위인들을 <b>%{level} 레벨까지 이월합니다</b>. <b>이 작업은 취소할수 없습니다</b>, 계속하시겠습니까?",
+   AccountUpgradeConfirmDescV2:
+      "Upgrading your account will <b>reset your current run</b> and carry over permanent great people within the allowed levels. This <b>cannot</b> be undone, are you sure to continue?",
    Acropolis: "아크로폴리스",
    ActorsGuild: "배우 길드",
    AdaLovelace: "에이다 러브레이스",
@@ -108,7 +108,6 @@ export const KR = {
    BuildingColorMatchBuilding: "건물에서 색상 복사",
    BuildingColorMatchBuildingTooltip:
       "이 자원을 생산하는 건물에서 자원 색상을 복사합니다. 여러개의 건물에서 자원을 생산하면 임의의 건물이 선택됩니다.",
-   BuildingCost: "비용",
    BuildingMultipliers: "가속",
    BuildingName: "이름",
    BuildingNoMultiplier:
@@ -116,6 +115,8 @@ export const KR = {
    BuildingPriority: "건물 우선 순위",
    BuildingSearchText: "검색할 자원이나 건물을 입력하세요",
    BuildingTier: "티어",
+   Cable: "Cable",
+   CableFactory: "Cable Factory",
    Calendar: "달력",
    Cancel: "취소",
    CancelUpgrade: "업그레이드 취소",
@@ -233,6 +234,7 @@ export const KR = {
    Deposit: "자원 매장층",
    DepositTileCountDesc: "%{count} 개의  %{deposit} 타일이 %{city} 에서 발견됩니다.",
    Dido: "디도",
+   Diplomacy: "Diplomacy",
    DistanceInfinity: "Unlimited",
    DistanceInTiles: "Distance (In Tiles)",
    Drilling: "시추",
@@ -245,13 +247,14 @@ export const KR = {
       "모든 인접한 제강공장이 +N 의 생산, 저장소, 작업자 용량 배수를 얻습니다. N = 인접한 제강공장의 수",
    Electricity: "전력",
    Electrification: "충전",
-   ElectrificationDesc: "%{power}W 의 전력을 사용해 +%{level} 의 소비승수 및 생산승수를 획득할수 있습니다.",
+   ElectrificationPowerRequired: "Power Required",
    ElectrificationStatus: "현재상태",
    ElectrificationStatusActive: "활성화",
    ElectrificationStatusNoPower: "전력 없음",
    ElectrificationStatusNotActive: "활성화되지 않음",
    ElectrificationUpgrade: "충전 해금. 건물이 전력을 소모하여 생산을 늘릴수 있습니다.",
    Electrolysis: "전기분해",
+   Embassy: "Embassy",
    EmpireValueFromBuildings: "From Buildings",
    EmpireValueFromResources: "From Resources",
    EmptyTilePageBuildLastBuilding: "마지막에 지었던 건물 건축",
@@ -688,6 +691,9 @@ export const KR = {
    RenaissanceAge: "르네상스시대",
    ReneDescartes: "르네 데카르트",
    RequiredDeposit: "필요 자원",
+   RequirePower: "Require Power",
+   RequirePowerDesc:
+      "This building needs to be built on a tile with power and can extend the power to its adjacent tiles",
    Research: "연구",
    ResearchMenu: "연구",
    ResourceAmount: "양",
@@ -936,12 +942,10 @@ export const KR = {
    TransportCapacityMultiplier: "수송 용량 배수",
    TransportManualControlTooltip: "이 자원을 건축/업그레이드용으로 전송합니다.",
    TrialRunDesc: "재무관 이상은 호민관 제한이 적용되고 영구위인을 얻을수 없는 실험 회차를 진행할수 있습니다.",
-   TribuneGreatPeopleLevelWarningV2:
-      "현재 계정 랭크는 호민관입니다. 재무관으로 업그레이드하면 영구적인 위인들을 <b>%{level} 까지 이월할수 있습니다</b>. %{level}이상의 진행도는 이월되지 않습니다.",
    TribuneUpgradeDescGreatPeopleWarning:
       "현재 회차에서 위인을 획득했습니다. <b>먼저 환생을 해야합니다</b>. 재무관으로 업그레이드하면 현재 회차는 리셋됩니다.",
-   TribuneUpgradeDescV2:
-      "호민관에서 재무관으로 업그레이드하면 모든 온라인 기능이 잠금해제됩니다. 단, <b>오직 %{level} 레벨까지의 영구 위인들만 이월됩니다</b>. %{level} 이상의 진행도는 이월되지 않습니다.",
+   TribuneUpgradeDescV3:
+      "You can play the full game as Tribune if you do not plan to participate in the <b>optional</b> online features. To acquire unrestricted access to the online features, you will need to upgrade to Quaestor. <b>This is an anti-bot measure to keep the game free for everyone.</b> However, <b>when upgrading to Quaestor</b> you can carry over great people: <ul><li>Up to Level <b>3</b> for Bronze, Iron and Classical Age</li><li>Up to Level <b>2</b> for Middle Age, Renaissance and Industrial Age</li><li>Up to Level <b>1</b> for World Wars, Cold War and Information Age</li></ul>Partial progress above the level cannot be carried over.",
    TurnOnTimeWarpDesc: "%{speed} 개의 워프를 소모하여 %{speed}x 배의 속도로 제국이 진행되도록 가속합니다..",
    Tutorial: "튜토리얼",
    Tutorial1:
@@ -999,6 +1003,8 @@ export const KR = {
    Warp: "워프",
    WarpConversionDesc: "최대 오프라인 생산 시간을 초과하는 오프라인 시간이 워프(1초 = 1워프)로 변환됩니다",
    Water: "물",
+   WellStockedTooltip:
+      "Well-stocked buildings are buildings that have enough resources for its production, which include buildings that are producing, that have full storage or not producing due to lack of workers",
    Wheat: "밀",
    WheatFarm: "밀농장",
    WilliamShakespeare: "윌리엄 셰익스피어",

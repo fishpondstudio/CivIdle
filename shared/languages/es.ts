@@ -26,8 +26,8 @@ export const ES = {
    AccountUpgradeCarryOverDesc:
       "Cuando mejores al siguiente rango de cuenta, este es el nivel máximo de los personajes que podrás traspasar.",
    AccountUpgradeConfirm: "Mejorar cuenta",
-   AccountUpgradeConfirmDesc:
-      "Mejorar tu cuenta <b>reiniciará tu partida actual</b> y traspasará los personajes históricos permanentes <b>de hasta nivel %{level}</b>. Esto <b>no puee</b> ser deshecho, ¿estás seguro de que quieres continuar?",
+   AccountUpgradeConfirmDescV2:
+      "Upgrading your account will <b>reset your current run</b> and carry over permanent great people within the allowed levels. This <b>cannot</b> be undone, are you sure to continue?",
    Acropolis: "Acrópolis",
    ActorsGuild: "Gremio de actores",
    AdaLovelace: "Ada Lovelace",
@@ -114,7 +114,6 @@ export const ES = {
    BuildingColorMatchBuilding: "Copiar color de la construcción",
    BuildingColorMatchBuildingTooltip:
       "Copia el color de las construcciones de producción a sus recursos. Si hay más de una opción, elige una de forma aleatoria",
-   BuildingCost: "Coste",
    BuildingMultipliers: "Aumento",
    BuildingName: "Nombre",
    BuildingNoMultiplier:
@@ -122,6 +121,8 @@ export const ES = {
    BuildingPriority: "Prioridad de construcción",
    BuildingSearchText: "Escribe el nombre de una construcción o recurso para buscar",
    BuildingTier: "Rango",
+   Cable: "Cable",
+   CableFactory: "Cable Factory",
    Calendar: "Calendario",
    Cancel: "Cancelar",
    CancelUpgrade: "Cancelar mejora",
@@ -244,6 +245,7 @@ export const ES = {
    Deposit: "Depósito de recursos",
    DepositTileCountDesc: "%{count} casilla(s) de %{deposit} se pueden encontrar en %{city}",
    Dido: "Dido",
+   Diplomacy: "Diplomacy",
    DistanceInfinity: "Ilimitado",
    DistanceInTiles: "Distancia (en casillas)",
    Drilling: "Perforación",
@@ -256,7 +258,7 @@ export const ES = {
       "Todas las plantas siderúrgicas adjacentes obtienen +N multiplicadores de producción, almacenamiento y capacidad de trabajo. N = Número de plantas siderúrgicas adyacentes",
    Electricity: "Electricidad",
    Electrification: "Electrificación",
-   ElectrificationDesc: "Usa %{power}W de energía y provee +%{level} mutiplicadores de consumo y producción",
+   ElectrificationPowerRequired: "Power Required",
    ElectrificationStatus: "Estado actual",
    ElectrificationStatusActive: "Activo",
    ElectrificationStatusNoPower: "Sin energía",
@@ -264,6 +266,7 @@ export const ES = {
    ElectrificationUpgrade:
       "Desbloquea la electrificación. Permite a las construcciones consumir energía para aumentar la producción",
    Electrolysis: "Electrolisis",
+   Embassy: "Embassy",
    EmpireValueFromBuildings: "From Buildings",
    EmpireValueFromResources: "From Resources",
    EmptyTilePageBuildLastBuilding: "Construir la última construcción",
@@ -717,6 +720,9 @@ export const ES = {
    RenaissanceAge: "Renacimiento",
    ReneDescartes: "René Descartes",
    RequiredDeposit: "Recurso necesario",
+   RequirePower: "Require Power",
+   RequirePowerDesc:
+      "This building needs to be built on a tile with power and can extend the power to its adjacent tiles",
    Research: "Investigación",
    ResearchMenu: "Investigación",
    ResourceAmount: "Cantidad",
@@ -973,12 +979,10 @@ export const ES = {
    TransportManualControlTooltip: "Transporta este recurso para construir/mejorar",
    TrialRunDesc:
       "Cuestor o siguientes pueden comenzar una partida de prueba que está sujeta a los límites de los tribunos en la que no pueden ganar personajes históricos permanentes",
-   TribuneGreatPeopleLevelWarningV2:
-      "Tu rango de cuenta actual es Tribuno. Actualizar a Cuestor traspasará los personajes históricos permanentes <b>de hasta nivel %{level}</b>. El progreso parcial sobre el nivel %{level} no se traspasará",
    TribuneUpgradeDescGreatPeopleWarning:
       "Tu partida actual tiene personajes históricos. Deberías <b>renacer primero</b>. Mejorar al rango Cuestor reiniciará tu partida actual",
-   TribuneUpgradeDescV2:
-      "Mejorar de Tribuno a Cuestor desbloqueará todas las características en línea. Sin embargo, sólo los <b>personajes históricos permanentes de hasta nivel %{level}</b> se pueden traspasar. El progreso parcial sobre el nivel %{level} no se traspasará",
+   TribuneUpgradeDescV3:
+      "You can play the full game as Tribune if you do not plan to participate in the <b>optional</b> online features. To acquire unrestricted access to the online features, you will need to upgrade to Quaestor. <b>This is an anti-bot measure to keep the game free for everyone.</b> However, <b>when upgrading to Quaestor</b> you can carry over great people: <ul><li>Up to Level <b>3</b> for Bronze, Iron and Classical Age</li><li>Up to Level <b>2</b> for Middle Age, Renaissance and Industrial Age</li><li>Up to Level <b>1</b> for World Wars, Cold War and Information Age</li></ul>Partial progress above the level cannot be carried over.",
    TurnOnTimeWarpDesc:
       "Gasta %{speed} saltos de tiempo por cada segundo y acelera tu imperio para ir a velocidad x%{speed}.",
    Tutorial: "Tutorial",
@@ -1041,6 +1045,8 @@ export const ES = {
    WarpConversionDesc:
       "El tiempo de desconexión que exceda el máximo se convertirá a saltos de tiempo. (1 segundo = 1 salto de tiempo)",
    Water: "Agua",
+   WellStockedTooltip:
+      "Well-stocked buildings are buildings that have enough resources for its production, which include buildings that are producing, that have full storage or not producing due to lack of workers",
    Wheat: "Trigo",
    WheatFarm: "Cultivo de trigo",
    WilliamShakespeare: "William Shakespeare",

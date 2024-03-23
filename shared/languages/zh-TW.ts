@@ -24,8 +24,8 @@ export const ZH_TW = {
    AccountUpgradeCarryOver: "可攜帶等級",
    AccountUpgradeCarryOverDesc: "升至下個帳號等級時，這是你能攜帶的永恆偉人的最大等級。",
    AccountUpgradeConfirm: "帳號升級",
-   AccountUpgradeConfirmDesc:
-      "升級你的帳號將<b>重置你的當前輪</b>並攜帶<b>達到等級 %{level} </b>的永恆偉人。此操作<b>不能</b>被退回，你確認繼續嗎？",
+   AccountUpgradeConfirmDescV2:
+      "Upgrading your account will <b>reset your current run</b> and carry over permanent great people within the allowed levels. This <b>cannot</b> be undone, are you sure to continue?",
    Acropolis: "雅典衛城",
    ActorsGuild: "演員協會",
    AdaLovelace: "愛達·勒芙蕾絲",
@@ -108,7 +108,6 @@ export const ZH_TW = {
    BuildingColorMatchBuilding: "從建築物複製顏色",
    BuildingColorMatchBuildingTooltip:
       "複製這資源的建築物顏色。如果有多座建築物生產此資源，將隨機選擇其中一座。",
-   BuildingCost: "建造消耗",
    BuildingMultipliers: "增強",
    BuildingName: "建築名",
    BuildingNoMultiplier:
@@ -116,6 +115,8 @@ export const ZH_TW = {
    BuildingPriority: "建築優先級",
    BuildingSearchText: "輸入建築物名稱進行搜索",
    BuildingTier: "階",
+   Cable: "Cable",
+   CableFactory: "Cable Factory",
    Calendar: "曆法",
    Cancel: "取消",
    CancelUpgrade: "取消升級",
@@ -231,6 +232,7 @@ export const ZH_TW = {
    Deposit: "地塊資源",
    DepositTileCountDesc: "在 %{city} 有 %{count} 個地塊可以找到 %{deposit}",
    Dido: "狄多",
+   Diplomacy: "Diplomacy",
    DistanceInfinity: "無限制",
    DistanceInTiles: "距離格數",
    Drilling: "鑽井",
@@ -242,13 +244,14 @@ export const ZH_TW = {
    EiffelTowerDesc: "所有相鄰煉鋼廠，獲得 +N 生產、存儲以及勞動者指數。 N 取決於其相鄰煉鋼廠數量",
    Electricity: "電能",
    Electrification: "電氣化",
-   ElectrificationDesc: "消耗 %{power}W 電能，提供 +%{level} 消費指數與生產指數",
+   ElectrificationPowerRequired: "Power Required",
    ElectrificationStatus: "現狀",
    ElectrificationStatusActive: "運轉中",
    ElectrificationStatusNoPower: "無電能",
    ElectrificationStatusNotActive: "未運轉",
    ElectrificationUpgrade: "解鎖電氣化。允許建築消耗電能促進生產",
    Electrolysis: "電解作用",
+   Embassy: "Embassy",
    EmpireValueFromBuildings: "來自建築",
    EmpireValueFromResources: "來自資源",
    EmptyTilePageBuildLastBuilding: "建造上一個建築",
@@ -680,6 +683,9 @@ export const ZH_TW = {
    RenaissanceAge: "文藝復興時期",
    ReneDescartes: "勒內·笛卡爾",
    RequiredDeposit: "所需沉積資源",
+   RequirePower: "Require Power",
+   RequirePowerDesc:
+      "This building needs to be built on a tile with power and can extend the power to its adjacent tiles",
    Research: "研究",
    ResearchMenu: "研究",
    ResourceAmount: "數量",
@@ -913,12 +919,10 @@ export const ZH_TW = {
    TransportCapacityMultiplier: "運送能力指數",
    TransportManualControlTooltip: "運送這種資源用於建造/升級。",
    TrialRunDesc: "財務官及以下等級帳號，受軍官限制的試運營，而且此運營不能獲取永恆偉人。",
-   TribuneGreatPeopleLevelWarningV2:
-      "您目前的帳戶等級是 軍官。升級為 財務官 將保留永久偉大人物，直到第 %{level} 等級。超過 %{level} 等級的部分進度將不會被保留。",
    TribuneUpgradeDescGreatPeopleWarning:
       "你此輪擁有偉人。你應該<b>先重生</b>。升至財務官級別，將重置你的當前輪。",
-   TribuneUpgradeDescV2:
-      "從 軍官 升級到 財務官 將解鎖所有在線功能。然而，只有永久偉大人物，直到第 %{level} 等級的部分將被保留。超過 %{level} 等級的部分進度將不會被保留。",
+   TribuneUpgradeDescV3:
+      "You can play the full game as Tribune if you do not plan to participate in the <b>optional</b> online features. To acquire unrestricted access to the online features, you will need to upgrade to Quaestor. <b>This is an anti-bot measure to keep the game free for everyone.</b> However, <b>when upgrading to Quaestor</b> you can carry over great people: <ul><li>Up to Level <b>3</b> for Bronze, Iron and Classical Age</li><li>Up to Level <b>2</b> for Middle Age, Renaissance and Industrial Age</li><li>Up to Level <b>1</b> for World Wars, Cold War and Information Age</li></ul>Partial progress above the level cannot be carried over.",
    TurnOnTimeWarpDesc: "每秒消耗 %{speed} 扭曲時間，同時加速你的帝國，使其以 %{speed} 倍速度運行。",
    Tutorial: "新手教學",
    Tutorial1:
@@ -975,6 +979,8 @@ export const ZH_TW = {
    Warp: "扭曲時間",
    WarpConversionDesc: "超過最大離線生產時間的離線時間，將被轉化為扭曲時間。（ 1 秒= 1 扭曲時間）",
    Water: "水",
+   WellStockedTooltip:
+      "Well-stocked buildings are buildings that have enough resources for its production, which include buildings that are producing, that have full storage or not producing due to lack of workers",
    Wheat: "小麥",
    WheatFarm: "小麥農場",
    WilliamShakespeare: "威廉·莎士比亞",

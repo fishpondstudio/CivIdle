@@ -28,7 +28,7 @@ import { GameFeature, hasFeature } from "./FeatureLogic";
 import { GameOptions, type GameState } from "./GameState";
 import { getGameOptions, getGameState } from "./GameStateLogic";
 import { getBuildingIO, getBuildingsByType, getGrid, getXyBuildings } from "./IntraTickCache";
-import { getGreatPersonThisRunLevel } from "./RebornLogic";
+import { getGreatPersonThisRunLevel, getUpgradeCostFib } from "./RebornLogic";
 import { getBuildingsThatProduce, getResourcesValue } from "./ResourceLogic";
 import { getAgeForTech, getBuildingUnlockTech } from "./TechLogic";
 import { Tick, type Multiplier, type MultiplierWithSource } from "./TickLogic";
@@ -749,8 +749,14 @@ export const OnTileExplored = new TypedEvent<Tile>();
 export const ST_PETERS_FAITH_MULTIPLIER = 0.01;
 export const ST_PETERS_STORAGE_MULTIPLIER = 10 * 60 * 60;
 
-export function getPowerRequired(electrification: number): number {
-   return electrification <= 0 ? 0 : Math.round(Math.pow(2, electrification - 1) * 10);
+export function getPowerRequired(building: IBuildingData): number {
+   if (building.electrification <= 0) {
+      return 0;
+   }
+   if (Config.Building[building.type].power) {
+      return Math.round(getUpgradeCostFib(building.electrification) * 10);
+   }
+   return Math.round(Math.pow(2, building.electrification - 1) * 10);
 }
 
 export function canBeElectrified(b: Building): boolean {
@@ -892,4 +898,25 @@ export function applyBuildingDefaults(building: IBuildingData, options: GameOpti
 
 export function shouldAlwaysShowBuildingOptions(building: IBuildingData): boolean {
    return "resourceImports" in building || "sellResources" in building;
+}
+
+export function isBuildingWellStocked(xy: Tile, gs: GameState): boolean {
+   const building = gs.tiles.get(xy)?.building;
+   if (!building) {
+      return false;
+   }
+   return (
+      !isSpecialBuilding(building.type) &&
+      building.status === "completed" &&
+      (!Tick.current.notProducingReasons.has(xy) ||
+         Tick.current.notProducingReasons.get(xy) === "StorageFull" ||
+         Tick.current.notProducingReasons.get(xy) === "NotEnoughWorkers")
+   );
+}
+
+export function getElectrificationEfficiency(b: Building) {
+   if (Config.Building[b].power) {
+      return 0.5;
+   }
+   return 1;
 }

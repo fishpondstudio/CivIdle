@@ -26,8 +26,8 @@ export const NL = {
    AccountUpgradeCarryOverDesc:
       "Bij het upgraden naar de volgende account rang is dit het maximale niveau van permanente grote mensen dat kan worden overgedragen",
    AccountUpgradeConfirm: "Account Upgrade",
-   AccountUpgradeConfirmDesc:
-      "Je account upgraden zal <b>je huidige run resetten</b> en permanente grote mensen <b>tot niveau %{level}</b> overdragen. Dit <b>kan niet</b> ongedaan gemaakt worden, weet je zeker dat je wilt doorgaan?",
+   AccountUpgradeConfirmDescV2:
+      "Upgrading your account will <b>reset your current run</b> and carry over permanent great people within the allowed levels. This <b>cannot</b> be undone, are you sure to continue?",
    Acropolis: "Acropolis",
    ActorsGuild: "Acteursgilde",
    AdaLovelace: "Ada Lovelace",
@@ -113,7 +113,6 @@ export const NL = {
    BuildingColorMatchBuilding: "Kopieer Kleur Van Gebouw",
    BuildingColorMatchBuildingTooltip:
       "Kopieer hulpbronkleur van het gebouw dat deze hulpbron produceert. Als meerdere gebouwen deze hulpbron produceren, wordt er willekeurig een geselecteerd",
-   BuildingCost: "Kosten",
    BuildingMultipliers: "Boost",
    BuildingName: "Naam",
    BuildingNoMultiplier:
@@ -121,6 +120,8 @@ export const NL = {
    BuildingPriority: "Gebouwprioriteit",
    BuildingSearchText: "Typ een gebouw- of grondstofnaam om te zoeken",
    BuildingTier: "Niveau",
+   Cable: "Cable",
+   CableFactory: "Cable Factory",
    Calendar: "Kalender",
    Cancel: "Annuleren",
    CancelUpgrade: "Upgrade Annuleren",
@@ -243,6 +244,7 @@ export const NL = {
    Deposit: "Bron",
    DepositTileCountDesc: "%{count} tegel(s) van %{deposit} kunnen worden gevonden in %{city}",
    Dido: "Dido",
+   Diplomacy: "Diplomacy",
    DistanceInfinity: "Unlimited",
    DistanceInTiles: "Distance (In Tiles)",
    Drilling: "Boren",
@@ -255,8 +257,7 @@ export const NL = {
       "Alle aangrenzende staalfabrieken krijgen +N Productie, Opslag en Werknemer Vermenigvuldiger. N = Aantal aangrenzende staalfabrieken",
    Electricity: "Elektriciteit",
    Electrification: "Elektrificatie",
-   ElectrificationDesc:
-      "Gebruik %{power}W Stroom en Biedt +%{level} Verbruik Vermenigvuldiger en Productie Vermenigvuldiger",
+   ElectrificationPowerRequired: "Power Required",
    ElectrificationStatus: "Huidige Status",
    ElectrificationStatusActive: "Actief",
    ElectrificationStatusNoPower: "Geen Stroom",
@@ -264,6 +265,7 @@ export const NL = {
    ElectrificationUpgrade:
       "Ontgrendel elektrificatie. Sta gebouwen toe om stroom te verbruiken om de productie te verhogen",
    Electrolysis: "Elektrolyse",
+   Embassy: "Embassy",
    EmpireValueFromBuildings: "From Buildings",
    EmpireValueFromResources: "From Resources",
    EmptyTilePageBuildLastBuilding: "Bouw Laatste Gebouw",
@@ -711,6 +713,9 @@ export const NL = {
    RenaissanceAge: "Renaissance",
    ReneDescartes: "René Descartes",
    RequiredDeposit: "Vereiste Bron",
+   RequirePower: "Require Power",
+   RequirePowerDesc:
+      "This building needs to be built on a tile with power and can extend the power to its adjacent tiles",
    Research: "Onderzoek",
    ResearchMenu: "Onderzoek",
    ResourceAmount: "Aantal",
@@ -966,12 +971,10 @@ export const NL = {
    TransportManualControlTooltip: "Transporteer deze hulpbron voor constructie/upgrade",
    TrialRunDesc:
       "Quaestor of hoger kan een proefrun starten die onderworpen is aan de beperkingen van de Tribune en geen permanente grote mensen kan verdienen",
-   TribuneGreatPeopleLevelWarningV2:
-      "Je huidige account rang is Tribune. Upgraden naar Quaestor zal permanente grote mensen <b>tot niveau %{level}</b> overdragen. Gedeeltelijke voortgang boven niveau %{level} wordt niet overgedragen",
    TribuneUpgradeDescGreatPeopleWarning:
       "Je huidige run heeft grote mensen. Je zou eerst <b>moeten herboren</b>. Upgraden naar Quaestor rang zal je huidige run resetten",
-   TribuneUpgradeDescV2:
-      "Upgraden van Tribune naar Quaestor ontgrendelt alle online functies. Echter, alleen <b>permanente grote mensen tot niveau %{level}</b> kunnen worden overgedragen. Gedeeltelijke voortgang boven niveau %{level} wordt niet overgedragen",
+   TribuneUpgradeDescV3:
+      "You can play the full game as Tribune if you do not plan to participate in the <b>optional</b> online features. To acquire unrestricted access to the online features, you will need to upgrade to Quaestor. <b>This is an anti-bot measure to keep the game free for everyone.</b> However, <b>when upgrading to Quaestor</b> you can carry over great people: <ul><li>Up to Level <b>3</b> for Bronze, Iron and Classical Age</li><li>Up to Level <b>2</b> for Middle Age, Renaissance and Industrial Age</li><li>Up to Level <b>1</b> for World Wars, Cold War and Information Age</li></ul>Partial progress above the level cannot be carried over.",
    TurnOnTimeWarpDesc:
       "Kost %{speed} warps per seconde en versnelt je rijk om te draaien op %{speed}x snelheid.",
    Tutorial: "Tutorial",
@@ -1033,6 +1036,8 @@ export const NL = {
    WarpConversionDesc:
       "Je offline tijd die de Maximale Offline Productietijd overschrijdt, wordt omgezet in warp (1 seconde = 1 warp)",
    Water: "Water",
+   WellStockedTooltip:
+      "Well-stocked buildings are buildings that have enough resources for its production, which include buildings that are producing, that have full storage or not producing due to lack of workers",
    Wheat: "Tarwe",
    WheatFarm: "Tarweboerderij",
    WilliamShakespeare: "William Shakespeare",
