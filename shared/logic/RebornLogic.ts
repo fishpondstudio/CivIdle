@@ -1,6 +1,6 @@
 import type { GreatPerson } from "../definitions/GreatPersonDefinitions";
 import { TechAge } from "../definitions/TechDefinitions";
-import { clamp, forEach, keysOf, shuffle } from "../utilities/Helper";
+import { clamp, filterOf, forEach, keysOf, shuffle } from "../utilities/Helper";
 import { Config } from "./Config";
 import type { GameOptions, GreatPeopleChoice } from "./GameState";
 import { getGameOptions, getGameState } from "./GameStateLogic";
@@ -73,24 +73,6 @@ export function getTribuneUpgradeMaxLevel(age: TechAge): number {
    }
 }
 
-export function rollPermanentGreatPeople(amount: number, currentTechAge: TechAge): void {
-   const currentTechAgeIdx = Config.TechAge[currentTechAge].idx;
-   const pool = keysOf(Config.GreatPerson).filter(
-      (p) => Config.TechAge[Config.GreatPerson[p].age].idx <= currentTechAgeIdx + 1,
-   );
-   let candidates = shuffle([...pool]);
-   for (let i = 0; i < amount; i++) {
-      const choice: GreatPerson[] = [];
-      for (let i = 0; i < 3; i++) {
-         if (candidates.length === 0) {
-            candidates = shuffle([...pool]);
-         }
-         choice.push(candidates.pop()!);
-      }
-      getGameOptions().greatPeopleChoices.push(choice as GreatPeopleChoice);
-   }
-}
-
 export function makeGreatPeopleFromThisRunPermanent(): void {
    const gs = getGameState();
    const options = getGameOptions();
@@ -110,4 +92,34 @@ export function upgradeAllPermanentGreatPeople(options: GameOptions): void {
          ++inventory.level;
       }
    });
+}
+
+export function rollPermanentGreatPeople(amount: number, currentTechAge: TechAge): void {
+   const currentTechAgeIdx = Config.TechAge[currentTechAge].idx;
+   const pool = keysOf(Config.GreatPerson).filter(
+      (p) => Config.TechAge[Config.GreatPerson[p].age].idx <= currentTechAgeIdx + 1,
+   );
+   let candidates = shuffle([...pool]);
+   for (let i = 0; i < amount; i++) {
+      const choice: GreatPerson[] = [];
+      for (let i = 0; i < 3; i++) {
+         if (candidates.length === 0) {
+            candidates = shuffle([...pool]);
+         }
+         choice.push(candidates.pop()!);
+      }
+      getGameOptions().greatPeopleChoices.push(choice);
+   }
+}
+
+export function rollGreatPeopleThisRun(age: TechAge, amount = 3): GreatPeopleChoice | null {
+   const choices: GreatPerson[] = [];
+   const pool = shuffle(keysOf(filterOf(Config.GreatPerson, (_, v) => v.age === age)));
+   if (pool.length < amount) {
+      return null;
+   }
+   for (let i = 0; i < amount; i++) {
+      choices.push(pool[i]);
+   }
+   return choices as GreatPeopleChoice;
 }

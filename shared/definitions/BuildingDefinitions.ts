@@ -353,7 +353,7 @@ export class BuildingDefinitions {
    };
    PublishingHouse: IBuildingDefinition = {
       name: () => t(L.PublishingHouse),
-      input: { Politics: 1, Book: 1 },
+      input: { Philosophy: 1, Book: 10 },
       output: { Newspaper: 1, Science: 200 },
    };
    Museum: IBuildingDefinition = {
@@ -373,7 +373,7 @@ export class BuildingDefinitions {
    };
    Parliament: IBuildingDefinition = {
       name: () => t(L.Parliament),
-      input: { Culture: 1, Philosophy: 1, Law: 1 },
+      input: { Culture: 2, Philosophy: 2, Law: 2 },
       output: { Politics: 1 },
    };
    MagazinePublisher: IBuildingDefinition = {
@@ -383,19 +383,19 @@ export class BuildingDefinitions {
    };
    MovieStudio: IBuildingDefinition = {
       name: () => t(L.MovieStudio),
-      input: { Sports: 10, Lens: 10, Garment: 10 },
+      input: { Sports: 5, Lens: 5, Garment: 5 },
       output: { Movie: 1 },
       power: true,
    };
    RadioStation: IBuildingDefinition = {
       name: () => t(L.RadioStation),
-      input: { Magazine: 1, Newspaper: 1, Culture: 1 },
+      input: { Magazine: 5, Newspaper: 5, Culture: 5 },
       output: { Radio: 1 },
       power: true,
    };
    Embassy: IBuildingDefinition = {
       name: () => t(L.Embassy),
-      input: { Law: 1, Politics: 1 },
+      input: { Law: 5, Politics: 5, Philosophy: 5 },
       output: { Diplomacy: 1 },
    };
    // #endregion /////////////////////////////////////////////////////////////////////////////////////////////
@@ -784,7 +784,7 @@ export class BuildingDefinitions {
    };
    Parthenon: IBuildingDefinition = {
       name: () => t(L.Parthenon),
-      desc: () => t(L.ParthenonDesc),
+      desc: () => t(L.ParthenonDescV2),
       input: {},
       output: {},
       max: 1,
@@ -924,7 +924,7 @@ export class BuildingDefinitions {
    };
    TajMahal: IBuildingDefinition = {
       name: () => t(L.TajMahal),
-      desc: () => t(L.TajMahalDesc),
+      desc: () => t(L.TajMahalDescV2),
       input: {},
       output: {},
       construction: { Faith: 100, Marble: 100, Garment: 100 },
@@ -1068,7 +1068,7 @@ export class BuildingDefinitions {
       input: {},
       output: {},
       max: 1,
-      construction: { Magazine: 100, Sports: 100, Newspaper: 100 },
+      construction: { Magazine: 100, Movie: 100, Newspaper: 100 },
       special: BuildingSpecial.WorldWonder,
       wikipedia: "Hollywood,_Los_Angeles",
    };
@@ -1087,7 +1087,7 @@ export class BuildingDefinitions {
       desc: () => t(L.CristoRedentorDesc),
       input: {},
       output: {},
-      construction: { Stone: 100, Brick: 100, Lumber: 100 },
+      construction: { Concrete: 100, Sports: 100, Politics: 100 },
       max: 1,
       special: BuildingSpecial.WorldWonder,
       wikipedia: "Christ_the_Redeemer_(statue)",
@@ -1097,7 +1097,7 @@ export class BuildingDefinitions {
       desc: () => t(L.UnitedNationsDesc),
       input: {},
       output: {},
-      construction: { Stone: 100, Brick: 100, Lumber: 100 },
+      construction: { Politics: 100, Law: 100, Diplomacy: 100 },
       max: 1,
       special: BuildingSpecial.WorldWonder,
       wikipedia: "United_Nations",
@@ -1117,7 +1117,7 @@ export class BuildingDefinitions {
       desc: () => t(L.SagradaFamiliaDesc),
       input: {},
       output: {},
-      construction: { Stone: 100, Brick: 100, Lumber: 100 },
+      construction: { Tank: 100, Biplane: 100, Train: 100 },
       max: 1,
       special: BuildingSpecial.WorldWonder,
       wikipedia: "Sagrada_Família",
@@ -1133,20 +1133,6 @@ export class BuildingDefinitions {
    //    wikipedia: "Arc_de_Triomphe",
    // };
    // #endregion /////////////////////////////////////////////////////////////////////////////////////////////
-
-   // GarumMaker: IBuildingDefinition = {
-   //    name: () => t(L.GarumMaker),
-   //    input: { Water: 1, Fish: 1 },
-   //    output: { Garum: 1 },
-   //    construction: { Brick: 1, Copper: 1 },
-   // };
-
-   // Castrum: IBuildingDefinition = {
-   //    name: () => t(L.Castrum),
-   //    input: { Sword: 2 },
-   //    output: { Legion: 1 },
-   //    construction: { Sword: 2, Stone: 2 },
-   // };
 
    // Winery: IBuildingDefinition = {
    //    name: () => t(L.Winery),

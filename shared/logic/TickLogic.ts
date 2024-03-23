@@ -34,6 +34,7 @@ interface ITickData {
    totalValue: number;
    scienceProduced: Map<Tile, number>;
    powerGrid: Set<Tile>;
+   happinessExemptions: Set<Tile>;
 }
 
 export function EmptyTickData(): ITickData {
@@ -54,6 +55,7 @@ export function EmptyTickData(): ITickData {
       totalValue: 0,
       scienceProduced: new Map(),
       powerGrid: new Set(),
+      happinessExemptions: new Set(),
    };
 }
 

@@ -2,7 +2,8 @@ import { isNaturalWonder, isSpecialBuilding } from "../../../shared/logic/Buildi
 import { Config } from "../../../shared/logic/Config";
 import { getGameState } from "../../../shared/logic/GameStateLogic";
 import { getXyBuildings } from "../../../shared/logic/IntraTickCache";
-import { getCurrentTechAge, getGreatPeopleChoices } from "../../../shared/logic/TechLogic";
+import { rollGreatPeopleThisRun } from "../../../shared/logic/RebornLogic";
+import { getCurrentTechAge } from "../../../shared/logic/TechLogic";
 import { type Tile } from "../../../shared/utilities/Helper";
 import { ChooseGreatPersonModal } from "../ui/ChooseGreatPersonModal";
 import { showModal } from "../ui/GlobalModal";
@@ -27,7 +28,7 @@ export function onTileExplored(xy: Tile): void {
          case "MountSinai": {
             const age = getCurrentTechAge(gs);
             if (!age) return;
-            const candidates = getGreatPeopleChoices(age);
+            const candidates = rollGreatPeopleThisRun(age);
             if (candidates) {
                gs.greatPeopleChoices.push(candidates);
             }

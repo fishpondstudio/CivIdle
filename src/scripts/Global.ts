@@ -1,7 +1,9 @@
 import type { Application } from "pixi.js";
 import type { City } from "../../shared/definitions/CityDefinitions";
+import { NoPrice, NoStorage } from "../../shared/definitions/ResourceDefinitions";
 import type { TechAge } from "../../shared/definitions/TechDefinitions";
 import { exploreTile, getBuildingCost } from "../../shared/logic/BuildingLogic";
+import { Config } from "../../shared/logic/Config";
 import type { GameOptions, SavedGame } from "../../shared/logic/GameState";
 import { GameState } from "../../shared/logic/GameState";
 import {
@@ -16,11 +18,12 @@ import {
    serializeSaveLite,
 } from "../../shared/logic/GameStateLogic";
 import { initializeGameState } from "../../shared/logic/InitializeGameState";
-import { rollPermanentGreatPeople } from "../../shared/logic/RebornLogic";
-import { getGreatPeopleChoices } from "../../shared/logic/TechLogic";
-import { forEach } from "../../shared/utilities/Helper";
+import { getSpecialBuildings } from "../../shared/logic/IntraTickCache";
+import { rollGreatPeopleThisRun, rollPermanentGreatPeople } from "../../shared/logic/RebornLogic";
+import { forEach, safeAdd } from "../../shared/utilities/Helper";
 import { TypedEvent } from "../../shared/utilities/TypedEvent";
 import { migrateSavedGame } from "./MigrateSavedGame";
+import { tickEverySecond } from "./logic/ClientUpdate";
 import { SteamClient, isSteam } from "./rpc/SteamClient";
 import { WorldScene } from "./scenes/WorldScene";
 import { idbDel, idbGet, idbSet } from "./utilities/BrowserStorage";
@@ -36,71 +39,6 @@ export function resetToCity(city: City): void {
 
 export function overwriteSaveGame(save: SavedGame): void {
    Object.assign(savedGame, save);
-}
-
-if (import.meta.env.DEV) {
-   // @ts-expect-error
-   window.savedGame = savedGame;
-   // @ts-expect-error
-   window.clearGame = async () => {
-      if (isSteam()) {
-         await SteamClient.fileDelete(SAVE_KEY);
-         return;
-      }
-      await idbDel(SAVE_KEY);
-      window.location.reload();
-   };
-   // @ts-expect-error
-   window.clearAllResources = () => {
-      getGameState().tiles.forEach((tile) => {
-         if (tile.building) {
-            tile.building.resources = {};
-         }
-      });
-   };
-   // @ts-expect-error
-   window.saveGame = saveGame;
-   // @ts-expect-error
-   window.rollPermanentGreatPeople = rollPermanentGreatPeople;
-   // @ts-expect-error
-   window.cameraPan = (target: number, time: number) => {
-      Singleton().sceneManager.getCurrent(WorldScene)?.cameraPan(target, time);
-   };
-   // @ts-expect-error
-   window.rollGreatPeople = (age: TechAge) => {
-      const gs = getGameState();
-      const candidates = getGreatPeopleChoices(age);
-      if (candidates) {
-         gs.greatPeopleChoices.push(candidates);
-      }
-      notifyGameStateUpdate(gs);
-   };
-
-   // @ts-expect-error
-   window.completeBuilding = (xy: Tile) => {
-      const building = getGameState().tiles.get(xy)?.building;
-      if (building) {
-         forEach(getBuildingCost(building), (res, amount) => {
-            building.resources[res] = amount;
-         });
-      }
-   };
-
-   // @ts-expect-error
-   window.revealAllTiles = () => {
-      const gs = getGameState();
-      gs.tiles.forEach((tile, xy) => {
-         if (!tile.explored) {
-            exploreTile(xy, gs);
-            Singleton().sceneManager.enqueue(WorldScene, (s) => s.revealTile(xy));
-         }
-      });
-   };
-
-   // @ts-expect-error
-   window.heartbeat = () => {
-      Singleton().heartbeat.update(serializeSaveLite());
-   };
 }
 
 export const OnUIThemeChanged = new TypedEvent<boolean>();
@@ -216,4 +154,98 @@ function getUpgradePriority(v: number): number {
 
 function setUpgradePriority(priority: number, v: number): number {
    return (priority & 0x00ffff) | ((v & 0xff) << 16);
+}
+
+if (import.meta.env.DEV) {
+   // @ts-expect-error
+   window.savedGame = savedGame;
+   // @ts-expect-error
+   window.clearGame = async () => {
+      if (isSteam()) {
+         await SteamClient.fileDelete(SAVE_KEY);
+         return;
+      }
+      await idbDel(SAVE_KEY);
+      window.location.reload();
+   };
+   // @ts-expect-error
+   window.clearAllResources = () => {
+      getGameState().tiles.forEach((tile) => {
+         if (tile.building) {
+            tile.building.resources = {};
+         }
+      });
+   };
+   // @ts-expect-error
+   window.saveGame = saveGame;
+   // @ts-expect-error
+   window.rollPermanentGreatPeople = rollPermanentGreatPeople;
+   // @ts-expect-error
+   window.cameraPan = (target: number, time: number) => {
+      Singleton().sceneManager.getCurrent(WorldScene)?.cameraPan(target, time);
+   };
+   // @ts-expect-error
+   window.rollGreatPeople = (age: TechAge, candidate: number) => {
+      const gs = getGameState();
+      const candidates = rollGreatPeopleThisRun(age, candidate);
+      if (candidates) {
+         gs.greatPeopleChoices.push(candidates);
+      }
+      notifyGameStateUpdate(gs);
+   };
+
+   // @ts-expect-error
+   window.completeBuilding = (xy: Tile) => {
+      const building = getGameState().tiles.get(xy)?.building;
+      if (building) {
+         forEach(getBuildingCost(building), (res, amount) => {
+            building.resources[res] = amount;
+         });
+      }
+   };
+
+   // @ts-expect-error
+   window.revealAllTiles = () => {
+      const gs = getGameState();
+      gs.tiles.forEach((tile, xy) => {
+         if (!tile.explored) {
+            exploreTile(xy, gs);
+            Singleton().sceneManager.enqueue(WorldScene, (s) => s.revealTile(xy));
+         }
+      });
+   };
+
+   // @ts-expect-error
+   window.heartbeat = () => {
+      Singleton().heartbeat.update(serializeSaveLite());
+   };
+
+   // @ts-expect-error
+   window.tickGameState = (tick: number) => {
+      const gs = getGameState();
+      for (let i = 0; i < tick; i++) {
+         tickEverySecond(gs, true);
+      }
+   };
+   // @ts-expect-error
+   window.benchmarkTick = (tick: number) => {
+      console.time(`TickGameState(${tick})`);
+      const gs = getGameState();
+      for (let i = 0; i < tick; i++) {
+         tickEverySecond(gs, true);
+      }
+      console.timeEnd(`TickGameState(${tick})`);
+   };
+   // @ts-expect-error
+   window.addAllResources = (amount: number) => {
+      forEach(Config.Resource, (res, def) => {
+         if (NoStorage[res] || NoPrice[res]) {
+            return;
+         }
+         safeAdd(getSpecialBuildings(getGameState()).Headquarter.building.resources, res, amount);
+      });
+   };
+
+   // @ts-expect-error
+   window.Config = Config;
 }

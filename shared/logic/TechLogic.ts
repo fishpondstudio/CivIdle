@@ -1,21 +1,11 @@
 import type { Building } from "../definitions/BuildingDefinitions";
 import type { City } from "../definitions/CityDefinitions";
-import type { GreatPerson } from "../definitions/GreatPersonDefinitions";
 import type { Deposit, Resource } from "../definitions/ResourceDefinitions";
 import type { Tech, TechAge } from "../definitions/TechDefinitions";
-import {
-   filterOf,
-   forEach,
-   isEmpty,
-   isNullOrUndefined,
-   keysOf,
-   shuffle,
-   sizeOf,
-   type Tile,
-} from "../utilities/Helper";
+import { forEach, isEmpty, isNullOrUndefined, shuffle, sizeOf, type Tile } from "../utilities/Helper";
 import { TypedEvent } from "../utilities/TypedEvent";
 import { Config } from "./Config";
-import type { GameState, GreatPeopleChoice } from "./GameState";
+import type { GameState } from "./GameState";
 import { getGameState } from "./GameStateLogic";
 import { getSpecialBuildings } from "./IntraTickCache";
 import { RequestPathFinderGridUpdate, SEA_TILE_COSTS } from "./PlayerTradeLogic";
@@ -181,16 +171,4 @@ export function unlockableTechs(gs: GameState): Tech[] {
       }
    });
    return result;
-}
-
-export function getGreatPeopleChoices(age: TechAge): GreatPeopleChoice | null {
-   const choices: GreatPerson[] = [];
-   const pool = shuffle(keysOf(filterOf(Config.GreatPerson, (_, v) => v.age === age)));
-   if (pool.length < 3) {
-      return null;
-   }
-   for (let i = 0; i < 3; i++) {
-      choices.push(pool[i]);
-   }
-   return choices as GreatPeopleChoice;
 }

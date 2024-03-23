@@ -433,13 +433,19 @@ export function getBuildingCost(building: Pick<IBuildingData, "type" | "level">)
          }
       }
       const multiplier = Math.round(
-         100 + 100 * Math.pow(techIdx, 2) + Math.pow(5, ageIdx) * Math.pow(1.5, techIdx),
+         500 * techIdx + 5 * Math.pow(techIdx, 3) + Math.pow(5, ageIdx) * Math.pow(1.5, techIdx),
       );
+      // console.log(
+      //    building.type,
+      //    500 * techIdx,
+      //    100 * Math.pow(techIdx, 3),
+      //    Math.pow(5, ageIdx) * Math.pow(1.5, techIdx),
+      // );
 
       keysOf(cost).forEach((res) => {
          const tier = Config.ResourceTier[res] ?? 1;
          const price = Config.ResourcePrice[res] ?? 1;
-         cost[res] = (multiplier * cost[res]! * tier) / Math.pow(price, 0.9);
+         cost[res] = (multiplier * cost[res]!) / price;
       });
    } else {
       const multiplier = 10;
@@ -449,6 +455,25 @@ export function getBuildingCost(building: Pick<IBuildingData, "type" | "level">)
    }
    buildingCostCache.set(key, Object.freeze(cost));
    return cost;
+}
+
+export function getWonderBaseBuilderCapacity(type: Building): number {
+   console.assert(isWorldWonder(type), "This only works for World Wonders!");
+   const tech = getBuildingUnlockTech(type);
+   const totalAmount = reduceOf(getBuildingCost({ type, level: 0 }), (prev, res, value) => prev + value, 0);
+   let techIdx = 0;
+   let ageIdx = 0;
+   if (tech) {
+      techIdx = Config.Tech[tech].column;
+      const a = getAgeForTech(tech);
+      if (a) {
+         const age = Config.TechAge[a];
+         ageIdx = age.idx;
+      }
+   }
+   // const capacity = Math.round(Math.pow(5, ageIdx) + techIdx * 2);
+   const capacity = totalAmount / (1800 * (ageIdx + 1));
+   return capacity;
 }
 
 const totalBuildingCostCache: Map<number, Readonly<PartialTabulate<Resource>>> = new Map();
@@ -628,25 +653,6 @@ export function getBuilderCapacity(
    }
 
    return { multiplier: builder, base: baseCapacity, total: builder * baseCapacity };
-}
-
-export function getWonderBaseBuilderCapacity(type: Building): number {
-   console.assert(isWorldWonder(type), "This only works for World Wonders!");
-   const tech = getBuildingUnlockTech(type);
-   const totalAmount = reduceOf(getBuildingCost({ type, level: 0 }), (prev, res, value) => prev + value, 0);
-   let techIdx = 0;
-   let ageIdx = 0;
-   if (tech) {
-      techIdx = Config.Tech[tech].column;
-      const a = getAgeForTech(tech);
-      if (a) {
-         const age = Config.TechAge[a];
-         ageIdx = age.idx;
-      }
-   }
-   // const capacity = Math.round(Math.pow(5, ageIdx) + techIdx * 2);
-   const capacity = Math.round(-10 * Math.pow(ageIdx, 2) + 20 * techIdx + Math.pow(totalAmount / 3600, 0.85));
-   return capacity;
 }
 
 export function applyToAllBuildings<T extends IBuildingData>(

@@ -97,7 +97,7 @@ export const EN = {
    BranCastleDesc: "Bran Castle",
    BrandenburgGate: "Brandenburg Gate",
    BrandenburgGateDesc:
-      "All coal mines and oil wells get +1 Production, Storage and Worker Capacity Multiplier. Oil refineries get +1 Production, Storage and Worker Capacity Multiplier for each adjacent oil tile",
+      "All coal mines and oil wells get +1 Production, Worker Capacity and Storage Multiplier. Oil refineries get +1 Production, Worker Capacity and Storage Multiplier for each adjacent oil tile",
    Bread: "Bread",
    Brewery: "Brewery",
    Brick: "Brick",
@@ -226,7 +226,7 @@ export const EN = {
    Counting: "Counting",
    Courthouse: "Courthouse",
    CristoRedentor: "Cristo Redentor",
-   CristoRedentorDesc: "Cristo Redentor",
+   CristoRedentorDesc: "All buildings within 2 tile range are exempt from -1 Happiness",
    Cryptocurrency: "Cryptocurrency",
    Culture: "Culture",
    CurrentLanguage: "English",
@@ -249,7 +249,7 @@ export const EN = {
    Education: "Education",
    EiffelTower: "Eiffel Tower",
    EiffelTowerDesc:
-      "All adjacent steel mills get +N Production, Storage and Worker Multiplier. N = Number of adjacent steel mills",
+      "All adjacent steel mills get +N Production, Worker Capacity and Storage Multiplier. N = Number of adjacent steel mills",
    Electricity: "Electricity",
    Electrification: "Electrification",
    ElectrificationPowerRequired: "Power Required",
@@ -370,7 +370,7 @@ export const EN = {
    Hammurabi: "Hammurabi",
    HangingGarden: "Hanging Garden",
    HangingGardenDesc:
-      "+1 Builder Capacity Multiplier. Adjacent aqueducts get +1 Production, Storage and Worker Capacity Multiplier",
+      "+1 Builder Capacity Multiplier. Adjacent aqueducts get +1 Production, Worker Capacity and Storage Multiplier",
    Happiness: "Happiness",
    HappinessFromBuilding: "From Buildings (excl. Wonders)",
    HappinessFromBuildingTypes: "From Well-Stocked Building Types",
@@ -550,8 +550,8 @@ export const EN = {
    PaperMaker: "Paper Maker",
    Parliament: "Parliament",
    Parthenon: "Parthenon",
-   ParthenonDesc:
-      "A new great person of Classical Age is born. Musician's Guilds and Painter's Guilds get +1 Worker Capacity Multiplier",
+   ParthenonDescV2:
+      "Two great people of Classical Age are born and you get 4 choices for each. Musician's Guilds and Painter's Guilds get +1 Production, Worker Capacity and Storage Multiplier and are exempt from -1 Happiness",
    PatchNotes: "Patch Notes",
    PermanentGreatPeople: "Permanent Great People",
    Persepolis: "Persepolis",
@@ -741,7 +741,7 @@ export const EN = {
    Rifling: "Rifling",
    Rijksmuseum: "Rijksmuseum",
    RijksmuseumDesc:
-      "+5 Happiness. All buildings that consume or produce Culture get +1 Production, Storage and Worker Capacity Multiplier",
+      "+5 Happiness. All buildings that consume or produce Culture get +1 Production, Worker Capacity and Storage Multiplier",
    RoadAndWheel: "Road & Wheel",
    Robotics: "Robotics",
    Rocket: "Rocket",
@@ -753,7 +753,8 @@ export const EN = {
    Rurik: "Rurik",
    RurikDesc: "+%{value} Happiness",
    SagradaFamilia: "Sagrada Familia",
-   SagradaFamiliaDesc: "Sagrada Familia",
+   SagradaFamiliaDesc:
+      "All buildings that consume engines get +1 Production, Worker Capacity and Storage Multiplier. All buildings that consume engines get +1 Production Multiplier for each adjacent building that produces engines",
    SaintBasilsCathedral: "Saint Basil's Cathedral",
    SaintBasilsCathedralDescV2:
       "Allow resource extraction buildings to work adjacent to a deposit. All adjacent Tier I buildings get +1 Production, Worker Capacity and Storage Multiplier",
@@ -842,7 +843,7 @@ export const EN = {
    StatisticsTransportationPercentage: "Percentage of Transportation Workers",
    StatueOfLiberty: "Statue of Liberty",
    StatueOfLibertyDesc:
-      "All adjacent buildings get +N Production, Storage and Worker Capacity Multiplier. N = Number of its adjacent buildings of the same type",
+      "All adjacent buildings get +N Production, Worker Capacity and Storage Multiplier. N = Number of its adjacent buildings of the same type",
    StatueOfZeus: "Statue of Zeus",
    StatueOfZeusDesc:
       "Spawn random deposits that have been revealed on adjacent empty tiles. All adjacent Tier I buildings get +5 Production and Storage Multiplier",
@@ -882,15 +883,15 @@ export const EN = {
       "All buildings that produce Faith get +1 Storage Multiplier. Generate Faith based on Faith in storage",
    SummerPalace: "Summer Palace",
    SummerPalaceDesc:
-      "All adjacent buildings that consume or produce Gunpowder are exempt from -1 Happiness. All buildings that consume or produce Gunpowder get +1 Production, Storage and Worker Capacity",
+      "All adjacent buildings that consume or produce Gunpowder are exempt from -1 Happiness. All buildings that consume or produce Gunpowder get +1 Production, Worker Capacity and Storage Multiplier",
    Sword: "Sword",
    SwordForge: "Sword Forge",
    SydneyOperaHouse: "Sydney Opera House",
    SydneyOperaHouseDesc: "Sydney Opera House",
    Synthetics: "Synthetics",
    TajMahal: "Taj Mahal",
-   TajMahalDesc:
-      "A new great person of Middle Age is born. +5 Builder Capacity Multiplier when upgrading buildings over Level 20",
+   TajMahalDescV2:
+      "A great person of Classical Age and a great person of Middle Age are born. +5 Builder Capacity Multiplier when upgrading buildings over Level 20",
    TangOfShang: "Tang of Shang",
    TangOfShangDesc: "+%{value} Science From Idle Workers",
    Tank: "Tank",

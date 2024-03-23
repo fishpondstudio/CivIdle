@@ -32,6 +32,7 @@ import {
    getResourceUnlockTech,
 } from "./TechLogic";
 
+export const SAVE_KEY = "CivIdle";
 export const MAX_OFFLINE_PRODUCTION_SEC = 60 * 60 * 4;
 export const SCIENCE_VALUE = 0.5;
 export const TRADE_CANCEL_REFUND_PERCENT = 0.9;
@@ -291,6 +292,7 @@ export function calculateTierAndPrice(log?: (val: string) => void) {
    const wonderCost: string[] = [];
    const resourcesUsedByWonder = new Map<Resource, number>();
    keysOf(Config.Building)
+      .filter((b) => isWorldWonder(b))
       .sort((a, b) => {
          const techA = getBuildingUnlockTech(a);
          const techB = getBuildingUnlockTech(b);
@@ -300,30 +302,28 @@ export function calculateTierAndPrice(log?: (val: string) => void) {
          return 0;
       })
       .forEach((k) => {
-         if (isWorldWonder(k)) {
-            let value = 0;
-            let cost = "";
-            let totalAmount = 0;
-            const baseBuilderCapacity = getWonderBaseBuilderCapacity(k);
-            const wonderAge = getAgeForTech(getBuildingUnlockTech(k)!)!;
-            forEach(getBuildingCost({ type: k, level: 0 }), (res, amount) => {
-               mapSafeAdd(resourcesUsedByWonder, res, 1);
-               const tech = getOrderedTechThatProduce(res);
-               const resourceAge = getAgeForTech(tech[0])!;
-               totalAmount += amount;
-               const ageDiff = Config.TechAge[wonderAge].idx - Config.TechAge[resourceAge].idx;
-               const ageDiffIndicator: string[] = [];
-               for (let i = 0; i < ageDiff; i++) {
-                  ageDiffIndicator.push("*");
-               }
-               cost += `${ageDiffIndicator.join("")}${res}: ${formatNumber(amount)}, `;
-               value += Config.ResourcePrice[res]! * amount;
-            });
-            cost = `${k.padEnd(25)} ${formatNumber(value).padEnd(10)}${formatHMS(
-               (1000 * totalAmount) / baseBuilderCapacity,
-            ).padEnd(10)}${cost}`;
-            wonderCost.push(cost);
-         }
+         let value = 0;
+         let cost = "";
+         let totalAmount = 0;
+         const baseBuilderCapacity = getWonderBaseBuilderCapacity(k);
+         const wonderAge = getAgeForTech(getBuildingUnlockTech(k)!)!;
+         forEach(getBuildingCost({ type: k, level: 0 }), (res, amount) => {
+            mapSafeAdd(resourcesUsedByWonder, res, 1);
+            const tech = getOrderedTechThatProduce(res);
+            const resourceAge = getAgeForTech(tech[0])!;
+            totalAmount += amount;
+            const ageDiff = Config.TechAge[wonderAge].idx - Config.TechAge[resourceAge].idx;
+            const ageDiffIndicator: string[] = [];
+            for (let i = 0; i < ageDiff; i++) {
+               ageDiffIndicator.push("*");
+            }
+            cost += `${ageDiffIndicator.join("")}${res}: ${formatNumber(amount)}, `;
+            value += Config.ResourcePrice[res]! * amount;
+         });
+         cost = `${k.padEnd(25)} ${formatNumber(value).padEnd(10)}${formatHMS(
+            (1000 * totalAmount) / baseBuilderCapacity,
+         ).padEnd(10)}${cost}`;
+         wonderCost.push(cost);
       });
 
    const resourcePrice: string[] = [];

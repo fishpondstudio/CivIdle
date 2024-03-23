@@ -1,10 +1,8 @@
-import { NoPrice, NoStorage } from "../../../shared/definitions/ResourceDefinitions";
 import { OnTileExplored, getScienceFromWorkers } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
 import { GameState } from "../../../shared/logic/GameState";
 import {
    getGameOptions,
-   getGameState,
    notifyGameStateUpdate,
    serializeSaveLite,
 } from "../../../shared/logic/GameStateLogic";
@@ -116,34 +114,3 @@ OnBuildingComplete.on(onBuildingComplete);
 OnBuildingProductionComplete.on(onProductionComplete);
 
 export const useCurrentTick = makeObservableHook(CurrentTickChanged, () => Tick.current);
-
-if (import.meta.env.DEV) {
-   // @ts-expect-error
-   window.tickGameState = (tick: number) => {
-      const gs = getGameState();
-      for (let i = 0; i < tick; i++) {
-         tickEverySecond(gs, true);
-      }
-   };
-   // @ts-expect-error
-   window.benchmarkTick = (tick: number) => {
-      console.time(`TickGameState(${tick})`);
-      const gs = getGameState();
-      for (let i = 0; i < tick; i++) {
-         tickEverySecond(gs, true);
-      }
-      console.timeEnd(`TickGameState(${tick})`);
-   };
-   // @ts-expect-error
-   window.addAllResources = (amount: number) => {
-      forEach(Config.Resource, (res, def) => {
-         if (NoStorage[res] || NoPrice[res]) {
-            return;
-         }
-         safeAdd(getSpecialBuildings(getGameState()).Headquarter.building.resources, res, amount);
-      });
-   };
-
-   // @ts-expect-error
-   window.Config = Config;
-}

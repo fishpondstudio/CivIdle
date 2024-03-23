@@ -85,7 +85,7 @@ export class ResourceDefinitions {
    Plastics: IResourceDefinition = { name: () => t(L.Plastics) };
    Uranium: IResourceDefinition = { name: () => t(L.Uranium) };
    Car: IResourceDefinition = { name: () => t(L.Car) };
-   Movie: IResourceDefinition = { name: () => t(L.Car) };
+   Movie: IResourceDefinition = { name: () => t(L.Movie) };
    Radio: IResourceDefinition = { name: () => t(L.Radio) };
    Rocket: IResourceDefinition = { name: () => t(L.Rocket) };
    NuclearFuelRod: IResourceDefinition = { name: () => t(L.NuclearFuelRod) };

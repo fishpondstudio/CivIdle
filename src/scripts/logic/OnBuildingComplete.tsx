@@ -9,8 +9,9 @@ import {
 } from "../../../shared/logic/BuildingLogic";
 import { getGameOptions, getGameState } from "../../../shared/logic/GameStateLogic";
 import { getGrid, getXyBuildings } from "../../../shared/logic/IntraTickCache";
+import { rollGreatPeopleThisRun } from "../../../shared/logic/RebornLogic";
 import { getRevealedDeposits } from "../../../shared/logic/ResourceLogic";
-import { OnResetTile, addDeposit, getGreatPeopleChoices } from "../../../shared/logic/TechLogic";
+import { OnResetTile, addDeposit } from "../../../shared/logic/TechLogic";
 import { ensureTileFogOfWar } from "../../../shared/logic/TerrainLogic";
 import { makeBuilding } from "../../../shared/logic/Tile";
 import { OnBuildingComplete } from "../../../shared/logic/Update";
@@ -50,10 +51,16 @@ export function onBuildingComplete(xy: Tile): void {
          break;
       }
       case "Parthenon": {
-         const candidates = getGreatPeopleChoices("ClassicalAge");
-         if (candidates) {
-            gs.greatPeopleChoices.push(candidates);
+         const candidates1 = rollGreatPeopleThisRun("ClassicalAge", 4);
+         if (candidates1) {
+            gs.greatPeopleChoices.push(candidates1);
          }
+
+         const candidates2 = rollGreatPeopleThisRun("ClassicalAge", 4);
+         if (candidates2) {
+            gs.greatPeopleChoices.push(candidates2);
+         }
+
          if (gs.greatPeopleChoices.length > 0) {
             playLevelUp();
             showModal(<ChooseGreatPersonModal permanent={false} />);
@@ -61,10 +68,16 @@ export function onBuildingComplete(xy: Tile): void {
          break;
       }
       case "TajMahal": {
-         const candidates = getGreatPeopleChoices("MiddleAge");
-         if (candidates) {
-            gs.greatPeopleChoices.push(candidates);
+         const candidates1 = rollGreatPeopleThisRun("ClassicalAge");
+         if (candidates1) {
+            gs.greatPeopleChoices.push(candidates1);
          }
+
+         const candidates2 = rollGreatPeopleThisRun("MiddleAge");
+         if (candidates2) {
+            gs.greatPeopleChoices.push(candidates2);
+         }
+
          if (gs.greatPeopleChoices.length > 0) {
             playLevelUp();
             showModal(<ChooseGreatPersonModal permanent={false} />);
