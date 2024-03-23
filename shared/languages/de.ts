@@ -534,7 +534,8 @@ export const DE = {
    OptionsMenu: "Optionen",
    OptionsUseModernUIV2: "Use Anti-Aliased Font",
    OxfordUniversity: "Universität Oxford",
-   OxfordUniversityDescV2: "Jede Verbesserung eines Gebäudes deines Imperiums gibt +5 Wissenschaft pro Zyklus",
+   OxfordUniversityDescV2:
+      "Jede Verbesserung eines Gebäudes deines Imperiums gibt +5 Wissenschaft pro Zyklus",
    PaintersGuild: "Malergilde",
    Painting: "Malerei",
    Pantheon: "Pantheon",
