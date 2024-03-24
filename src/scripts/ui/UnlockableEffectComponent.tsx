@@ -63,6 +63,12 @@ export function UnlockableEffectComponent({
                         </div>
                      );
                   })}
+                  {building.power ? (
+                     <div className="row mv5 text-orange text-strong">
+                        <div className="m-icon small">bolt</div>
+                        <div className="f1">{t(L.RequirePower)}</div>
+                     </div>
+                  ) : null}
                   {building.desc ? <div className="row mv5">{building.desc()}</div> : null}
                   <div className="text-desc">
                      {t(L.ConstructionCost, {

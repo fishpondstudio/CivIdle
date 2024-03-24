@@ -1,4 +1,5 @@
 import Tippy from "@tippyjs/react";
+import { Fragment } from "react";
 import type { GreatPerson } from "../../../shared/definitions/GreatPersonDefinitions";
 import { Config } from "../../../shared/logic/Config";
 import type { GreatPeopleChoice } from "../../../shared/logic/GameState";
@@ -80,56 +81,43 @@ export function ChooseGreatPersonModal({ permanent }: { permanent: boolean }): R
    if (greatPeopleChoice === null || onChosen === null) {
       return null;
    }
+
    return (
-      <div className="window" style={{ width: "650px" }}>
+      <div className="window" style={{ width: greatPeopleChoice.length * 250, maxWidth: "75vw" }}>
          <div className="title-bar">
             <div className="title-bar-text">{t(L.AGreatPersonIsBorn)}</div>
          </div>
          <div className="window-body">
             <div className="row" style={{ alignItems: "stretch" }}>
-               <GreatPersonCard
-                  greatPerson={greatPeopleChoice[0]}
-                  permanent={permanent}
-                  onChosen={onChosen}
-               />
-               <div style={{ width: "5px" }} />
-               <GreatPersonCard
-                  greatPerson={greatPeopleChoice[1]}
-                  permanent={permanent}
-                  onChosen={onChosen}
-               />
-               <div style={{ width: "5px" }} />
-               <GreatPersonCard
-                  greatPerson={greatPeopleChoice[2]}
-                  permanent={permanent}
-                  onChosen={onChosen}
-               />
+               {greatPeopleChoice.map((greatPerson, index) => {
+                  return (
+                     <Fragment key={greatPerson}>
+                        {index === 0 ? null : <div style={{ width: "5px" }} />}
+                        <GreatPersonCard
+                           greatPerson={greatPerson}
+                           permanent={permanent}
+                           onChosen={onChosen!}
+                        />
+                     </Fragment>
+                  );
+               })}
             </div>
             <div className="sep5"></div>
             <div className="row">
-               <div className="f1">
-                  {permanent ? (
-                     <PermanentGreatPersonLevel greatPerson={greatPeopleChoice[0]} />
-                  ) : (
-                     <GreatPersonLevel greatPerson={greatPeopleChoice[0]} />
-                  )}
-               </div>
-               <div style={{ width: "5px" }} />
-               <div className="f1">
-                  {permanent ? (
-                     <PermanentGreatPersonLevel greatPerson={greatPeopleChoice[1]} />
-                  ) : (
-                     <GreatPersonLevel greatPerson={greatPeopleChoice[1]} />
-                  )}
-               </div>
-               <div style={{ width: "5px" }} />
-               <div className="f1">
-                  {permanent ? (
-                     <PermanentGreatPersonLevel greatPerson={greatPeopleChoice[2]} />
-                  ) : (
-                     <GreatPersonLevel greatPerson={greatPeopleChoice[2]} />
-                  )}
-               </div>
+               {greatPeopleChoice.map((greatPerson, index) => {
+                  return (
+                     <Fragment key={greatPerson}>
+                        {index === 0 ? null : <div style={{ width: "5px" }} />}
+                        <div className="f1">
+                           {permanent ? (
+                              <PermanentGreatPersonLevel greatPerson={greatPerson} />
+                           ) : (
+                              <GreatPersonLevel greatPerson={greatPerson} />
+                           )}
+                        </div>
+                     </Fragment>
+                  );
+               })}
             </div>
             <div className="sep10" />
             <div className="f1 text-desc text-small text-center">

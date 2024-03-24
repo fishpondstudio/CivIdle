@@ -26,6 +26,7 @@ export const SECOND = 1000;
 export const MINUTE = SECOND * 60;
 export const HOUR = 60 * MINUTE;
 export const DAY = 24 * HOUR;
+export const WEEK = 7 * DAY;
 
 export function escapeHtml(unsafe: string): string {
    return unsafe
@@ -67,7 +68,7 @@ export function formatNumber(num: number | undefined | null, binary = false, sci
    if (!Number.isFinite(num)) {
       return String(num);
    }
-   if (scientific && num >= 1e15) {
+   if (scientific) {
       return scientificFormat(num);
    }
    if (binary) {
@@ -572,13 +573,13 @@ export function getHMS(t: number): [number, number, number] {
    return [h, m, s];
 }
 
-export function formatHMS(t: number) {
+export function formatHMS(t: number, alwaysShowHour = false) {
    if (!Number.isFinite(t)) {
       return "--:--";
    }
    t = clamp(t, 0, Infinity);
    const hms = getHMS(t);
-   if (hms[0] === 0) {
+   if (hms[0] === 0 && !alwaysShowHour) {
       return `${pad(hms[1])}:${pad(hms[2])}`;
    }
    if (hms[0] > 24 * 4) {

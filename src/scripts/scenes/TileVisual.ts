@@ -23,7 +23,7 @@ import {
    type Tile,
 } from "../../../shared/utilities/Helper";
 import { v2 } from "../../../shared/utilities/Vector2";
-import { getBuildingTexture, getNotProducingTexture, getTileTexture } from "../logic/VisualLogic";
+import { getBuildingTexture, getNotProducingTexture, getTexture, getTileTexture } from "../logic/VisualLogic";
 import { Singleton } from "../utilities/Singleton";
 import { Actions } from "../utilities/pixi-actions/Actions";
 import { Easing } from "../utilities/pixi-actions/Easing";
@@ -37,7 +37,7 @@ export class TileVisual extends Container {
    private _spinner: Sprite;
    private _building: Sprite;
    private readonly _grid: IPointData;
-   private readonly _deposits: Partial<Record<Resource, Sprite>> = {};
+   private readonly _deposits: Map<Resource, Sprite> = new Map();
    private readonly _tile: ITileData;
    private readonly _construction: Sprite;
    private readonly _notProducing: Sprite;
@@ -63,7 +63,7 @@ export class TileVisual extends Container {
 
       const { textures } = this._world.context;
 
-      this._spinner = this.addChild(new Sprite(textures.Spinner));
+      this._spinner = this.addChild(new Sprite(getTexture("Misc_Spinner", textures)));
       this._spinner.anchor.set(0.5);
       this._spinner.visible = false;
       this._spinner.alpha = 0;
@@ -72,7 +72,7 @@ export class TileVisual extends Container {
       this._building.anchor.set(0.5);
       this._building.scale.set(0.5);
 
-      this._construction = this.addChild(new Sprite(textures.Construction));
+      this._construction = this.addChild(new Sprite(getTexture("Misc_Construction", textures)));
       this._construction.position.set(-25, -5);
       this._construction.anchor.set(0, 1);
       this._construction.scale.set(0.5);
@@ -91,7 +91,7 @@ export class TileVisual extends Container {
          ),
       );
 
-      this._upgrade = this.addChild(new Sprite(textures.Upgrade));
+      this._upgrade = this.addChild(new Sprite(getTexture("Misc_Upgrade", textures)));
       this._upgrade.position.set(-25, 10);
       this._upgrade.anchor.set(0, 1);
       this._upgrade.scale.set(0.5);
@@ -133,41 +133,40 @@ export class TileVisual extends Container {
       this._timeLeft.visible = false;
       this._timeLeft.cullable = true;
 
-      this._fog = this.addChild(new Sprite(textures.Cloud));
+      this._fog = this.addChild(new Sprite(getTexture("Misc_Cloud", textures)));
       this._fog.anchor.set(0.5);
       this._fog.visible = !this._tile.explored;
 
       if (this._tile) {
-         forEach(this._tile.deposit, (deposit) => {
+         // Deposit
+         forEach(Object.assign({}, this._tile.deposit, { Power: true }), (deposit) => {
             const sprite = this.addChild(new Sprite(getTileTexture(deposit, textures)));
             sprite.alpha = 0.5;
             sprite.anchor.set(0.5);
             sprite.visible = this._tile.explored;
-            this._deposits[deposit] = sprite;
+            this._deposits.set(deposit, sprite);
          });
-         this.updateLayout();
+         this.updateDepositLayout();
          this.updateDepositColor(getGameOptions());
       }
 
       this.update(getGameState(), 0);
-      world.viewport.on("zoomed", this.onZoomed, this);
    }
 
    override destroy(options?: boolean | IDestroyOptions | undefined): void {
       super.destroy(options);
-      this._world.viewport.off("zoomed-end", this.onZoomed, this);
       this._upgradeAnimation.stop();
       this._constructionAnimation.stop();
    }
 
    public updateDepositColor(options: GameOptions) {
-      forEach(this._deposits, (deposit, sprite) => {
+      this._deposits.forEach((sprite, deposit) => {
          sprite.tint = Color.shared.setValue(options.resourceColors[deposit] ?? "#ffffff");
       });
    }
 
    public reveal(): void {
-      this.updateLayout();
+      this.updateDepositLayout();
       Actions.sequence(
          Actions.to(this._fog, { alpha: 0, scale: { x: 0.5, y: 0.5 } }, 1, Easing.InQuad),
          Actions.runFunc(() => {
@@ -244,6 +243,9 @@ export class TileVisual extends Container {
          this._building.visible = false;
          return;
       }
+
+      this.updateDepositLayout();
+
       if (!this._tile.building) {
          this._building.visible = false;
          this._spinner.visible = false;
@@ -252,7 +254,6 @@ export class TileVisual extends Container {
       this._building.visible = true;
       if (this._building.texture.noFrame) {
          this._building.texture = getBuildingTexture(this._tile.building.type, textures, gameState.city);
-         this.updateLayout();
       }
 
       switch (this._tile.building.status) {
@@ -297,7 +298,7 @@ export class TileVisual extends Container {
                this._notProducing.texture = getNotProducingTexture(reason, textures);
                this.fadeInTopLeftIcon();
             } else if (Tick.current.electrified.has(tileData.tile)) {
-               this._notProducing.texture = textures.Bolt;
+               this._notProducing.texture = getTexture("Misc_Bolt", textures);
                this.fadeInTopLeftIcon();
             } else {
                this.fadeOutTopLeftIcon();
@@ -306,15 +307,6 @@ export class TileVisual extends Container {
             this._spinner.visible = true;
          }
       }
-   }
-
-   private onZoomed(zoom: number) {
-      if (!this._tile.explored) {
-         return;
-      }
-      forEach(this._deposits, (_, sprite) => {
-         sprite.visible = !this._tile.building || zoom >= 1;
-      });
    }
 
    private fadeOutTopLeftIcon(): void {
@@ -360,7 +352,7 @@ export class TileVisual extends Container {
       }
    }
 
-   private updateLayout() {
+   private updateDepositLayout() {
       if (!this._tile.explored) {
          return;
       }
@@ -371,9 +363,19 @@ export class TileVisual extends Container {
          scale = 0.15;
       }
       const width = scale * 100;
+
+      let total = sizeOf(this._tile.deposit);
+      const power = Tick.current.powerGrid.has(this._tile.tile);
+      if (power) {
+         ++total;
+      }
+
       let i = 0;
-      const total = sizeOf(this._tile.deposit);
-      forEach(this._deposits, (_, sprite) => {
+      this._deposits.forEach((sprite, res) => {
+         if (res === "Power" && !power) {
+            sprite.visible = false;
+            return;
+         }
          sprite.visible = true;
          sprite.position.copyFrom(position.add({ x: layoutCenter(width, 4, total, i++), y: 0 }));
          sprite.scale.set(scale);

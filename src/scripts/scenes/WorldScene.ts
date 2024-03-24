@@ -14,6 +14,7 @@ import { getGrid, getSpecialBuildings } from "../../../shared/logic/IntraTickCac
 import { makeBuilding } from "../../../shared/logic/Tile";
 import { clamp, lerp, lookAt, pointToTile, tileToPoint, type Tile } from "../../../shared/utilities/Helper";
 import { Vector2, v2 } from "../../../shared/utilities/Vector2";
+import { getTexture } from "../logic/VisualLogic";
 import { TilePage } from "../ui/TilePage";
 import { Scene, type ISceneContext } from "../utilities/SceneManager";
 import { Singleton } from "../utilities/Singleton";
@@ -56,7 +57,9 @@ export class WorldScene extends Scene {
          Math.max(app.screen.width / this._width, app.screen.height / this._height),
          2,
       );
-      this._bg = this.viewport.addChild(new TilingSprite(textures.Paper, this._width, this._height));
+      this._bg = this.viewport.addChild(
+         new TilingSprite(getTexture("Misc_Paper", textures), this._width, this._height),
+      );
       this._bg.tint = Color.shared.setValue(getGameOptions().themeColors.WorldBackground);
       this._bg.position.set((this._width - this._bg.width) / 2, (this._height - this._bg.height) / 2);
 
@@ -75,7 +78,7 @@ export class WorldScene extends Scene {
       });
       this.tooltipPool = new TooltipPool(this.viewport.addChild(new Container()));
       this._transportPool = new TransportPool(
-         textures.Transport,
+         getTexture("Misc_Transport", textures),
          this.viewport.addChild(
             new ParticleContainer(100_000, {
                position: true,
@@ -287,7 +290,11 @@ export class WorldScene extends Scene {
                this.highlightRange(grid, 1);
                break;
             }
-            case "GreatSphinx": {
+            case "GreatSphinx":
+            case "Hollywood":
+            case "SagradaFamilia":
+            case "CristoRedentor":
+            case "GoldenGateBridge": {
                this.highlightRange(grid, 2);
                break;
             }

@@ -4,7 +4,7 @@ import { L, t } from "../utilities/i18n";
 import { isNaturalWonder, isSpecialBuilding, isWorldWonder } from "./BuildingLogic";
 import { Config } from "./Config";
 import type { GameState } from "./GameState";
-import { getHappinessExemptions, getTypeBuildings, getXyBuildings } from "./IntraTickCache";
+import { getTypeBuildings, getXyBuildings } from "./IntraTickCache";
 import { getCurrentTechAge } from "./TechLogic";
 import { Tick } from "./TickLogic";
 
@@ -46,9 +46,7 @@ export function calculateHappiness(gs: GameState) {
          }
          if (building.capacity <= 0 && Tick.current.specialBuildings.has("HagiaSophia")) {
             // Do nothing
-         } else if (building.type === "ChariotWorkshop" && Tick.current.specialBuildings.has("Colosseum")) {
-            // Do nothing
-         } else if (getHappinessExemptions().has(xy)) {
+         } else if (Tick.current.happinessExemptions.has(xy)) {
             // Do nothing
          } else {
             ++fromBuildings;

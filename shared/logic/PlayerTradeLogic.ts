@@ -9,7 +9,7 @@ import {
    type IAddTradeRequest,
    type IUser,
 } from "../utilities/Database";
-import { DAY, IPointData } from "../utilities/Helper";
+import { DAY, IPointData, WEEK } from "../utilities/Helper";
 import { PartialTabulate } from "../utilities/TypeDefinitions";
 import { TypedEvent } from "../utilities/TypedEvent";
 import { Config } from "./Config";
@@ -127,3 +127,11 @@ export function getTotalSeaTileCost(path: string[], seaTileCost: number): number
 }
 
 export const RequestPathFinderGridUpdate = new TypedEvent<void>();
+
+export function getVotedBoostId(): number {
+   return Math.floor(Date.now() / WEEK);
+}
+
+export function getVotingTime(): number {
+   return (getVotedBoostId() + 1) * WEEK - Date.now();
+}

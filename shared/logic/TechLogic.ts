@@ -1,20 +1,11 @@
 import type { Building } from "../definitions/BuildingDefinitions";
 import type { City } from "../definitions/CityDefinitions";
-import type { GreatPerson } from "../definitions/GreatPersonDefinitions";
 import type { Deposit, Resource } from "../definitions/ResourceDefinitions";
 import type { Tech, TechAge } from "../definitions/TechDefinitions";
-import {
-   filterOf,
-   forEach,
-   isEmpty,
-   isNullOrUndefined,
-   keysOf,
-   shuffle,
-   type Tile,
-} from "../utilities/Helper";
+import { forEach, isEmpty, isNullOrUndefined, shuffle, sizeOf, type Tile } from "../utilities/Helper";
 import { TypedEvent } from "../utilities/TypedEvent";
 import { Config } from "./Config";
-import type { GameState, GreatPeopleChoice } from "./GameState";
+import type { GameState } from "./GameState";
 import { getGameState } from "./GameStateLogic";
 import { getSpecialBuildings } from "./IntraTickCache";
 import { RequestPathFinderGridUpdate, SEA_TILE_COSTS } from "./PlayerTradeLogic";
@@ -91,6 +82,10 @@ export function unlockTech(tech: Tech, event: TypedEvent<Tile> | null, gs: GameS
             // Do not spawn deposit under headquarter or wonders! Also use Config.Building because
             // this code can happen in Initialize logic, which is very early
             if (!isNullOrUndefined(Config.Building[type].special)) {
+               return false;
+            }
+            // We do not spawn 2 resources on a single tile
+            if (sizeOf(tile.deposit) >= 2) {
                return false;
             }
             return true;
@@ -176,16 +171,4 @@ export function unlockableTechs(gs: GameState): Tech[] {
       }
    });
    return result;
-}
-
-export function getGreatPeopleChoices(age: TechAge): GreatPeopleChoice | null {
-   const choices: GreatPerson[] = [];
-   const pool = shuffle(keysOf(filterOf(Config.GreatPerson, (_, v) => v.age === age)));
-   if (pool.length < 3) {
-      return null;
-   }
-   for (let i = 0; i < 3; i++) {
-      choices.push(pool[i]);
-   }
-   return choices as GreatPeopleChoice;
 }

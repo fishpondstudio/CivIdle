@@ -327,6 +327,10 @@ fieldset .separator {
    flex: 1;
 }
 
+.row .fs {
+   align-self: flex-start;
+}
+
 .w100 {
    width: 100%;
 }
@@ -450,6 +454,15 @@ ul.tree-view>li:first-child {
    border: 1px solid grey;
    color: #333;
    border-radius: 3px;
+}
+
+.warning-banner ul {
+   padding: 0;
+   margin: 5px 0;
+}
+
+.warning-banner ul li {
+   list-style-type: square;
 }
 
 .table-view {

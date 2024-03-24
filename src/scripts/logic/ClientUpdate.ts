@@ -3,7 +3,6 @@ import { Config } from "../../../shared/logic/Config";
 import { GameState } from "../../../shared/logic/GameState";
 import {
    getGameOptions,
-   getGameState,
    notifyGameStateUpdate,
    serializeSaveLite,
 } from "../../../shared/logic/GameStateLogic";
@@ -50,7 +49,7 @@ export function tickEveryFrame(gs: GameState, dt: number) {
 }
 
 const heartbeatFreq = import.meta.env.DEV ? 10 : 60;
-const saveFreq = isSteam() ? 5 * 60 : 60;
+const saveFreq = isSteam() ? 5 * 60 : 10;
 
 export function tickEverySecond(gs: GameState, offline: boolean) {
    // We should always tick when offline
@@ -115,24 +114,3 @@ OnBuildingComplete.on(onBuildingComplete);
 OnBuildingProductionComplete.on(onProductionComplete);
 
 export const useCurrentTick = makeObservableHook(CurrentTickChanged, () => Tick.current);
-
-if (import.meta.env.DEV) {
-   // @ts-expect-error
-   window.tickGameState = (tick: number) => {
-      const gs = getGameState();
-      for (let i = 0; i < tick; i++) {
-         tickEverySecond(gs, true);
-      }
-   };
-   // @ts-expect-error
-   window.benchmarkTick = (tick: number) => {
-      console.time(`TickGameState(${tick})`);
-      const gs = getGameState();
-      for (let i = 0; i < tick; i++) {
-         tickEverySecond(gs, true);
-      }
-      console.timeEnd(`TickGameState(${tick})`);
-   };
-   // @ts-expect-error
-   window.Config = Config;
-}

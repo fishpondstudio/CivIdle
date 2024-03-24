@@ -5,6 +5,7 @@ import {
    getCompletedBuilding,
    getScienceFromWorkers,
    getTotalBuildingUpgrades,
+   isBuildingWellStocked,
    isSpecialBuilding,
    isWorldWonder,
 } from "../../../shared/logic/BuildingLogic";
@@ -14,17 +15,19 @@ import { getGameOptions, getGameState } from "../../../shared/logic/GameStateLog
 import {
    getBuildingsByType,
    getGrid,
-   getHappinessExemptions,
    getSpecialBuildings,
    getTypeBuildings,
    getXyBuildings,
 } from "../../../shared/logic/IntraTickCache";
+import { getVotedBoostId } from "../../../shared/logic/PlayerTradeLogic";
 import { getGreatPersonThisRunLevel } from "../../../shared/logic/RebornLogic";
 import { getBuildingsThatProduce } from "../../../shared/logic/ResourceLogic";
 import { Tick } from "../../../shared/logic/TickLogic";
 import { MarketOptions, type IMarketBuildingData, type IPetraBuildingData } from "../../../shared/logic/Tile";
 import { addMultiplier } from "../../../shared/logic/Update";
+import { VotedBoostType, type IGetVotedBoostResponse } from "../../../shared/utilities/Database";
 import {
+   MINUTE,
    forEach,
    hasFlag,
    keysOf,
@@ -37,7 +40,11 @@ import {
    type Tile,
 } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
+import { client } from "../rpc/RPCClient";
 import { Singleton } from "../utilities/Singleton";
+
+let votedBoost: IGetVotedBoostResponse | null = null;
+const lastVotedBoostUpdatedAt = 0;
 
 export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boolean }): void {
    const gs = getGameState();
@@ -165,6 +172,9 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
                source: buildingName,
             });
          }
+         getBuildingsByType("ChariotWorkshop", gs)?.forEach((tile, xy) => {
+            Tick.next.happinessExemptions.add(xy);
+         });
          break;
       }
       case "AngkorWat": {
@@ -214,8 +224,14 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          break;
       }
       case "Parthenon": {
-         addMultiplier("MusiciansGuild", { worker: 1 }, buildingName);
-         addMultiplier("PaintersGuild", { worker: 1 }, buildingName);
+         addMultiplier("MusiciansGuild", { output: 1, worker: 1, storage: 1 }, buildingName);
+         addMultiplier("PaintersGuild", { output: 1, worker: 1, storage: 1 }, buildingName);
+         getBuildingsByType("MusiciansGuild", gs)?.forEach((tile, xy) => {
+            Tick.next.happinessExemptions.add(xy);
+         });
+         getBuildingsByType("PaintersGuild", gs)?.forEach((tile, xy) => {
+            Tick.next.happinessExemptions.add(xy);
+         });
          break;
       }
       case "Stonehenge": {
@@ -432,7 +448,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
             const neighborXy = pointToTile(neighbor);
             const b = getCompletedBuilding(neighborXy, gs);
             if (b && (Config.Building[b.type].input.Gunpowder || Config.Building[b.type].output.Gunpowder)) {
-               getHappinessExemptions().add(neighborXy);
+               Tick.next.happinessExemptions.add(neighborXy);
             }
          }
          break;
@@ -444,7 +460,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          for (const neighbor of grid.getNeighbors(tileToPoint(xy))) {
             const neighborXy = pointToTile(neighbor);
             if (getCompletedBuilding(neighborXy, gs)?.type === "Shrine") {
-               getHappinessExemptions().add(neighborXy);
+               Tick.next.happinessExemptions.add(neighborXy);
             }
          }
          Tick.next.globalMultipliers.happiness.push({
@@ -556,13 +572,13 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          break;
       }
       case "GreatSphinx": {
-         for (const tile of grid.getRange(tileToPoint(xy), 2)) {
-            const tileXy = pointToTile(tile);
+         for (const point of grid.getRange(tileToPoint(xy), 2)) {
+            const tileXy = pointToTile(point);
             const b = gs.tiles.get(tileXy)?.building;
             if (b && (Config.BuildingTier[b.type] ?? 0) > 1) {
                const type = b.type;
                let count = 0;
-               for (const n of grid.getNeighbors(tile)) {
+               for (const n of grid.getNeighbors(point)) {
                   if (getCompletedBuilding(pointToTile(n), gs)?.type === type) {
                      ++count;
                   }
@@ -575,6 +591,86 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
             }
          }
          break;
+      }
+      case "Hollywood": {
+         let count = 0;
+         for (const point of grid.getRange(tileToPoint(xy), 2)) {
+            const tileXy = pointToTile(point);
+            const b = gs.tiles.get(tileXy)?.building;
+            if (
+               b &&
+               isBuildingWellStocked(tileXy, gs) &&
+               (Config.Building[b.type].input.Culture || Config.Building[b.type].output.Culture)
+            ) {
+               ++count;
+            }
+         }
+         Tick.next.globalMultipliers.happiness.push({ value: count + 5, source: buildingName });
+         break;
+      }
+      case "GoldenGateBridge": {
+         forEach(Config.Building, (b, def) => {
+            if (def.output.Power) {
+               addMultiplier(b, { output: 1 }, buildingName);
+            }
+         });
+         for (const point of grid.getRange(tileToPoint(xy), 2)) {
+            Tick.next.powerGrid.add(pointToTile(point));
+         }
+         break;
+      }
+      case "CristoRedentor": {
+         for (const point of grid.getRange(tileToPoint(xy), 2)) {
+            Tick.next.happinessExemptions.add(pointToTile(point));
+         }
+         break;
+      }
+      case "SagradaFamilia": {
+         const grid = getGrid(gs);
+         let minTier = Number.MAX_SAFE_INTEGER;
+         let maxTier = 0;
+         for (const neighbor of grid.getNeighbors(tileToPoint(xy))) {
+            const neighborXy = pointToTile(neighbor);
+            const building = getCompletedBuilding(neighborXy, gs)?.type;
+            if (!building) continue;
+            const tier = Config.BuildingTier[building] ?? 0;
+            if (tier <= 0) continue;
+            minTier = Math.min(minTier, tier);
+            maxTier = Math.max(maxTier, tier);
+         }
+         const diff = maxTier - minTier;
+         if (diff > 0) {
+            for (const point of grid.getRange(tileToPoint(xy), 2)) {
+               mapSafePush(Tick.next.tileMultipliers, pointToTile(point), {
+                  output: diff,
+                  storage: diff,
+                  worker: diff,
+                  source: buildingName,
+               });
+            }
+         }
+         break;
+      }
+      case "UnitedNations": {
+         if (Date.now() - lastVotedBoostUpdatedAt < MINUTE) {
+            return;
+         }
+         if (votedBoost === null || getVotedBoostId() !== votedBoost.id) {
+            client.getVotedBoosts().then((resp) => {
+               votedBoost = resp;
+            });
+         }
+         if (votedBoost) {
+            const current = votedBoost.current.options[votedBoost.current.voted];
+            switch (current.type) {
+               case VotedBoostType.Multipliers: {
+                  current.buildings.forEach((b) => {
+                     addMultiplier(b, { output: 5, worker: 5, storage: 5 }, buildingName);
+                  });
+                  break;
+               }
+            }
+         }
       }
       // case "ArcDeTriomphe": {
       //    forEach(Config.Building, (b, def) => {

@@ -5,6 +5,10 @@ interface PatchNote {
 
 export const PatchNotes: PatchNote[] = [
    {
+      version: "0.5.0",
+      content: [["Draft", "https://github.com/fishpondstudio/CivIdle/issues/144"]],
+   },
+   {
       version: "0.4.3",
       content: [["Bugfix", "This version contains code that prepares for version 0.5.0"]],
    },

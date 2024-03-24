@@ -28,17 +28,12 @@ class IntraTickCache {
       Readonly<PartialTabulate<Resource>>
    >();
    storageFullBuildings: Tile[] | undefined;
-   happinessExemptions = new Set<Tile>();
 }
 
 let _cache = new IntraTickCache();
 
 export function clearIntraTickCache(): void {
    _cache = new IntraTickCache();
-}
-
-export function getHappinessExemptions(): Set<Tile> {
-   return _cache.happinessExemptions;
 }
 
 export function getBuildingIO(

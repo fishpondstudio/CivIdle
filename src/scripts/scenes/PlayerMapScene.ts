@@ -7,6 +7,7 @@ import { isTileReserved } from "../../../shared/logic/PlayerTradeLogic";
 import { MAP_MAX_X, MAP_MAX_Y, type IClientMapEntry } from "../../../shared/utilities/Database";
 import { forEach, formatPercent, mapSafeAdd, xyToPoint } from "../../../shared/utilities/Helper";
 import type { Disposable } from "../../../shared/utilities/TypedEvent";
+import { getTexture } from "../logic/VisualLogic";
 import { OnPlayerMapMessage, OnTradeChanged, getPlayerMap, getTrades } from "../rpc/RPCClient";
 import { PlayerMapPage } from "../ui/PlayerMapPage";
 import { Scene, destroyAllChildren, type ISceneContext } from "../utilities/SceneManager";
@@ -42,7 +43,7 @@ export class PlayerMapScene extends Scene {
 
       forEach(WorldMap, (xy) => {
          const point = xyToPoint(xy);
-         const sprite = this.viewport.addChild(new Sprite(this.context.textures["100x100"]));
+         const sprite = this.viewport.addChild(new Sprite(this.context.textures.Misc_100x100));
          sprite.tint = 0x3498db;
          sprite.position.set(point.x * GridSize, point.y * GridSize);
       });
@@ -204,7 +205,7 @@ export class PlayerMapScene extends Scene {
    public drawPath(path: IPointData[]): void {
       destroyAllChildren(this._path);
       path.forEach((point, idx) => {
-         const sprite = this._path.addChild(new Sprite(this.context.textures["100x100"]));
+         const sprite = this._path.addChild(new Sprite(this.context.textures.Misc_100x100));
          sprite.tint = 0xffffff;
          sprite.alpha = 0.25;
          sprite.scale.set(0.9, 0.9);
@@ -285,7 +286,7 @@ class PlayerTile extends Container {
       flag.alpha = isReserved ? 1 : 0.5;
 
       if (trade > 0) {
-         const bg = this.addChild(new Sprite(textures.circle_25));
+         const bg = this.addChild(new Sprite(getTexture("Misc_Circle25", textures)));
          bg.anchor.set(0.5, 0.5);
          bg.tint = 0xe74c3c;
          bg.position.set(x * GridSize + 0.9 * GridSize, y * GridSize + 0.12 * GridSize);

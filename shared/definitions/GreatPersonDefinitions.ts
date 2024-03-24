@@ -173,7 +173,7 @@ export class GreatPersonDefinitions {
       name: () => t(L.Herodotus),
       boost: {
          multipliers: ["output", "storage"],
-         buildings: ["WritersGuild", "MusiciansGuild"],
+         buildings: ["PaperMaker", "MusiciansGuild"],
       },
       time: "c. 600s BC",
       value: (level) => level,
@@ -430,7 +430,7 @@ export class GreatPersonDefinitions {
       name: () => t(L.WilliamShakespeare),
       boost: {
          multipliers: ["output", "storage"],
-         buildings: ["PaperMaker", "ActorsGuild"],
+         buildings: ["WritersGuild", "ActorsGuild"],
       },
       time: "1564 ~ 1616 AD",
       value: (level) => level,
@@ -631,6 +631,90 @@ export class GreatPersonDefinitions {
       value: (level) => level,
       maxLevel: Infinity,
       age: "IndustrialAge",
+   });
+
+   JohnDRockefeller: IGreatPersonDefinition = boostOf({
+      name: () => t(L.JohnDRockefeller),
+      boost: {
+         multipliers: ["output", "storage"],
+         buildings: ["OilWell", "StockExchange"],
+      },
+      time: "1839 ~ 1937 AD",
+      value: (level) => level,
+      maxLevel: Infinity,
+      age: "WorldWarAge",
+   });
+
+   RudolfDiesel: IGreatPersonDefinition = boostOf({
+      name: () => t(L.RudolfDiesel),
+      boost: {
+         multipliers: ["output", "storage"],
+         buildings: ["OilRefinery", "LocomotiveFactory"],
+      },
+      time: "1858 ~ 1913 AD",
+      value: (level) => level,
+      maxLevel: Infinity,
+      age: "WorldWarAge",
+   });
+
+   PierreDeCoubertin: IGreatPersonDefinition = boostOf({
+      name: () => t(L.PierreDeCoubertin),
+      boost: {
+         multipliers: ["output", "storage"],
+         buildings: ["PublishingHouse", "Stadium"],
+      },
+      time: "1863 ~ 1937 AD",
+      value: (level) => level,
+      maxLevel: Infinity,
+      age: "WorldWarAge",
+   });
+
+   CharlesParsons: IGreatPersonDefinition = boostOf({
+      name: () => t(L.CharlesParsons),
+      boost: {
+         multipliers: ["output", "storage"],
+         buildings: ["CoalPowerPlant", "IroncladBuilder"],
+      },
+      time: "1854 ~ 1931 AD",
+      value: (level) => level,
+      maxLevel: Infinity,
+      age: "WorldWarAge",
+   });
+
+   RichardJordanGatling: IGreatPersonDefinition = boostOf({
+      name: () => t(L.RichardJordanGatling),
+      boost: {
+         multipliers: ["output", "storage"],
+         buildings: ["GatlingGunFactory", "TankFactory"],
+      },
+      time: "1818 ~ 1903 AD",
+      value: (level) => level,
+      maxLevel: Infinity,
+      age: "WorldWarAge",
+   });
+
+   JosephPulitzer: IGreatPersonDefinition = boostOf({
+      name: () => t(L.JosephPulitzer),
+      boost: {
+         multipliers: ["output", "storage"],
+         buildings: ["MagazinePublisher", "Pizzeria"],
+      },
+      time: "1847 ~ 1911 AD",
+      value: (level) => level,
+      maxLevel: Infinity,
+      age: "WorldWarAge",
+   });
+
+   CharlesMartinHall: IGreatPersonDefinition = boostOf({
+      name: () => t(L.CharlesMartinHall),
+      boost: {
+         multipliers: ["output", "storage"],
+         buildings: ["NaturalGasWell", "AluminumSmelter"],
+      },
+      time: "1863 ~ 1914 AD",
+      value: (level) => level,
+      maxLevel: Infinity,
+      age: "WorldWarAge",
    });
 }
 

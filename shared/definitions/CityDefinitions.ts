@@ -18,6 +18,7 @@ export class CityDefinitions {
          Oil: 0.02,
          Aluminum: 0.02,
          NaturalGas: 0.02,
+         Uranium: 0.02,
       },
       size: 40,
       buildingNames: {
@@ -42,7 +43,8 @@ export class CityDefinitions {
          Coal: 0.03,
          Oil: 0.02,
          Aluminum: 0.02,
-         NaturalGas: 0.02,
+         NaturalGas: 0.03,
+         Uranium: 0.01,
       },
       size: 40,
       buildingNames: {
@@ -63,7 +65,8 @@ export class CityDefinitions {
          Coal: 0.025,
          Oil: 0.01,
          Aluminum: 0.025,
-         NaturalGas: 0.02,
+         NaturalGas: 0.015,
+         Uranium: 0.025,
       },
       size: 50,
       buildingNames: {

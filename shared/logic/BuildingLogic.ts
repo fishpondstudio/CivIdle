@@ -28,10 +28,10 @@ import { GameFeature, hasFeature } from "./FeatureLogic";
 import { GameOptions, type GameState } from "./GameState";
 import { getGameOptions, getGameState } from "./GameStateLogic";
 import { getBuildingIO, getBuildingsByType, getGrid, getXyBuildings } from "./IntraTickCache";
-import { getGreatPersonThisRunLevel } from "./RebornLogic";
+import { getGreatPersonThisRunLevel, getUpgradeCostFib } from "./RebornLogic";
 import { getBuildingsThatProduce, getResourcesValue } from "./ResourceLogic";
 import { getAgeForTech, getBuildingUnlockTech } from "./TechLogic";
-import { Tick, type Multiplier, type MultiplierWithSource } from "./TickLogic";
+import { AllMultiplierTypes, Tick, type Multiplier, type MultiplierWithSource } from "./TickLogic";
 import {
    BuildingInputMode,
    DEFAULT_STOCKPILE_CAPACITY,
@@ -68,7 +68,11 @@ function forEachMultiplier(
    if (b) {
       Tick.current.buildingMultipliers.get(b.type)?.forEach((m) => func(m));
    }
-   Tick.current.globalMultipliers.storage.forEach((m) => func({ storage: m.value, source: m.source }));
+   AllMultiplierTypes.forEach((type) => {
+      Tick.current.globalMultipliers[type].forEach((m) =>
+         func({ [type]: m.value, source: m.source } as MultiplierWithSource),
+      );
+   });
    return result;
 }
 
@@ -433,13 +437,14 @@ export function getBuildingCost(building: Pick<IBuildingData, "type" | "level">)
          }
       }
       const multiplier = Math.round(
-         100 + 100 * Math.pow(techIdx, 2) + Math.pow(5, ageIdx) * Math.pow(1.5, techIdx),
+         300 +
+            10 * Math.pow(ageIdx, 3) * Math.pow(techIdx, 2) +
+            (100 * Math.pow(5, ageIdx) * Math.pow(1.5, techIdx)) / Math.pow(techIdx, 2),
       );
 
       keysOf(cost).forEach((res) => {
-         const tier = Config.ResourceTier[res] ?? 1;
          const price = Config.ResourcePrice[res] ?? 1;
-         cost[res] = (multiplier * cost[res]! * tier) / Math.pow(price, 0.9);
+         cost[res] = (multiplier * cost[res]!) / price;
       });
    } else {
       const multiplier = 10;
@@ -449,6 +454,24 @@ export function getBuildingCost(building: Pick<IBuildingData, "type" | "level">)
    }
    buildingCostCache.set(key, Object.freeze(cost));
    return cost;
+}
+
+export function getWonderBaseBuilderCapacity(type: Building): number {
+   console.assert(isWorldWonder(type), "This only works for World Wonders!");
+   const tech = getBuildingUnlockTech(type);
+   const totalAmount = reduceOf(getBuildingCost({ type, level: 0 }), (prev, res, value) => prev + value, 0);
+   let techIdx = 0;
+   let ageIdx = 0;
+   if (tech) {
+      techIdx = Config.Tech[tech].column;
+      const a = getAgeForTech(tech);
+      if (a) {
+         const age = Config.TechAge[a];
+         ageIdx = age.idx;
+      }
+   }
+   const capacity = totalAmount / (500 * (Math.pow(ageIdx, 1.5) + 3) + 50 * Math.pow(techIdx, 1.5));
+   return capacity;
 }
 
 const totalBuildingCostCache: Map<number, Readonly<PartialTabulate<Resource>>> = new Map();
@@ -630,25 +653,6 @@ export function getBuilderCapacity(
    return { multiplier: builder, base: baseCapacity, total: builder * baseCapacity };
 }
 
-export function getWonderBaseBuilderCapacity(type: Building): number {
-   console.assert(isWorldWonder(type), "This only works for World Wonders!");
-   const tech = getBuildingUnlockTech(type);
-   const totalAmount = reduceOf(getBuildingCost({ type, level: 0 }), (prev, res, value) => prev + value, 0);
-   let techIdx = 0;
-   let ageIdx = 0;
-   if (tech) {
-      techIdx = Config.Tech[tech].column;
-      const a = getAgeForTech(tech);
-      if (a) {
-         const age = Config.TechAge[a];
-         ageIdx = age.idx;
-      }
-   }
-   // const capacity = Math.round(Math.pow(5, ageIdx) + techIdx * 2);
-   const capacity = Math.round(-10 * Math.pow(ageIdx, 2) + 20 * techIdx + Math.pow(totalAmount / 3600, 0.85));
-   return capacity;
-}
-
 export function applyToAllBuildings<T extends IBuildingData>(
    building: Building,
    getOptions: (b: IBuildingData) => Partial<T>,
@@ -749,8 +753,14 @@ export const OnTileExplored = new TypedEvent<Tile>();
 export const ST_PETERS_FAITH_MULTIPLIER = 0.01;
 export const ST_PETERS_STORAGE_MULTIPLIER = 10 * 60 * 60;
 
-export function getPowerRequired(electrification: number): number {
-   return electrification <= 0 ? 0 : Math.round(Math.pow(2, electrification - 1) * 10);
+export function getPowerRequired(building: IBuildingData): number {
+   if (building.electrification <= 0) {
+      return 0;
+   }
+   if (Config.Building[building.type].power) {
+      return Math.round(getUpgradeCostFib(building.electrification) * 10);
+   }
+   return Math.round(Math.pow(2, building.electrification - 1) * 10);
 }
 
 export function canBeElectrified(b: Building): boolean {
@@ -887,10 +897,30 @@ export function applyBuildingDefaults(building: IBuildingData, options: GameOpti
    if (isNullOrUndefined(toApply.productionPriority)) {
       toApply.productionPriority = options.defaultProductionPriority;
    }
-   console.log(toApply);
    return Object.assign(building, toApply);
 }
 
 export function shouldAlwaysShowBuildingOptions(building: IBuildingData): boolean {
    return "resourceImports" in building || "sellResources" in building;
+}
+
+export function isBuildingWellStocked(xy: Tile, gs: GameState): boolean {
+   const building = gs.tiles.get(xy)?.building;
+   if (!building) {
+      return false;
+   }
+   return (
+      !isSpecialBuilding(building.type) &&
+      building.status === "completed" &&
+      (!Tick.current.notProducingReasons.has(xy) ||
+         Tick.current.notProducingReasons.get(xy) === "StorageFull" ||
+         Tick.current.notProducingReasons.get(xy) === "NotEnoughWorkers")
+   );
+}
+
+export function getElectrificationEfficiency(b: Building) {
+   if (Config.Building[b].power) {
+      return 0.5;
+   }
+   return 1;
 }

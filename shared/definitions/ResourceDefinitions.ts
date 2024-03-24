@@ -69,6 +69,9 @@ export class ResourceDefinitions {
    Rifle: IResourceDefinition = { name: () => t(L.Rifle) };
    GatlingGun: IResourceDefinition = { name: () => t(L.GatlingGun) };
    Ironclad: IResourceDefinition = { name: () => t(L.Ironclad) };
+   Battleship: IResourceDefinition = { name: () => t(L.Battleship) };
+   Artillery: IResourceDefinition = { name: () => t(L.Artillery) };
+   Biplane: IResourceDefinition = { name: () => t(L.Biplane) };
    Sports: IResourceDefinition = { name: () => t(L.Sports) };
    Stock: IResourceDefinition = { name: () => t(L.Stock) };
    Tank: IResourceDefinition = { name: () => t(L.Tank) };
@@ -79,6 +82,16 @@ export class ResourceDefinitions {
    Petrol: IResourceDefinition = { name: () => t(L.Petrol) };
    Concrete: IResourceDefinition = { name: () => t(L.Concrete) };
    Explorer: IResourceDefinition = { name: () => t(L.Explorer) };
+   Plastics: IResourceDefinition = { name: () => t(L.Plastics) };
+   Uranium: IResourceDefinition = { name: () => t(L.Uranium) };
+   Car: IResourceDefinition = { name: () => t(L.Car) };
+   Movie: IResourceDefinition = { name: () => t(L.Movie) };
+   Radio: IResourceDefinition = { name: () => t(L.Radio) };
+   Rocket: IResourceDefinition = { name: () => t(L.Rocket) };
+   NuclearFuelRod: IResourceDefinition = { name: () => t(L.NuclearFuelRod) };
+   AtomicBomb: IResourceDefinition = { name: () => t(L.AtomicBomb) };
+   Diplomacy: IResourceDefinition = { name: () => t(L.Diplomacy) };
+   Cable: IResourceDefinition = { name: () => t(L.Cable) };
 }
 
 export type Resource = keyof ResourceDefinitions;
@@ -107,6 +120,7 @@ export const IsDeposit = {
    Oil: true,
    Aluminum: true,
    NaturalGas: true,
+   Uranium: true,
 } as const satisfies PartialSet<Resource>;
 
 export type Deposit = keyof typeof IsDeposit;

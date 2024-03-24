@@ -33,6 +33,8 @@ interface ITickData {
    specialBuildings: Map<Building, Tile>;
    totalValue: number;
    scienceProduced: Map<Tile, number>;
+   powerGrid: Set<Tile>;
+   happinessExemptions: Set<Tile>;
 }
 
 export function EmptyTickData(): ITickData {
@@ -52,6 +54,8 @@ export function EmptyTickData(): ITickData {
       specialBuildings: new Map(),
       totalValue: 0,
       scienceProduced: new Map(),
+      powerGrid: new Set(),
+      happinessExemptions: new Set(),
    };
 }
 
@@ -61,7 +65,8 @@ export type NotProducingReason =
    | "StorageFull"
    | "TurnedOff"
    | "NotOnDeposit"
-   | "NoActiveTransports";
+   | "NoActiveTransports"
+   | "NoPower";
 
 export class GlobalMultipliers {
    sciencePerIdleWorker: IValueWithSource[] = [];
@@ -69,6 +74,9 @@ export class GlobalMultipliers {
    builderCapacity: IValueWithSource[] = [{ value: 1, source: t(L.BaseMultiplier) }];
    transportCapacity: IValueWithSource[] = [];
    happiness: IValueWithSource[] = [];
+   input: IValueWithSource[] = [];
+   output: IValueWithSource[] = [];
+   worker: IValueWithSource[] = [];
    storage: IValueWithSource[] = [];
 }
 
@@ -78,6 +86,9 @@ export const GlobalMultiplierNames: Record<keyof GlobalMultipliers, () => string
    builderCapacity: () => t(L.BuilderCapacity),
    happiness: () => t(L.Happiness),
    transportCapacity: () => t(L.TransportCapacity),
+   input: () => t(L.ConsumptionMultiplier),
+   output: () => t(L.ProductionMultiplier),
+   worker: () => t(L.WorkerCapacityMultiplier),
    storage: () => t(L.StorageMultiplier),
 };
 
@@ -109,6 +120,8 @@ interface IMultiplier {
 
 export type Multiplier = RequireAtLeastOne<IMultiplier>;
 export type MultiplierWithSource = Multiplier & { source: string };
+
+export const AllMultiplierTypes = ["input", "output", "worker", "storage"] satisfies (keyof IMultiplier)[];
 
 export type MultiplierType = keyof IMultiplier;
 export const MultiplierTypeDesc: Record<MultiplierType, () => string> = {

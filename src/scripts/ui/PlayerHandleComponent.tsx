@@ -1,12 +1,13 @@
 import classNames from "classnames";
 import { useEffect, useState } from "react";
-import {
-   MAX_TRIBUNE_CARRY_OVER_LEVEL,
-   TRIBUNE_TRADE_VALUE_PER_MINUTE,
-   TRIBUNE_UPGRADE_PLAYTIME,
-} from "../../../shared/logic/Constants";
+import { Config } from "../../../shared/logic/Config";
+import { TRIBUNE_TRADE_VALUE_PER_MINUTE, TRIBUNE_UPGRADE_PLAYTIME } from "../../../shared/logic/Constants";
 import { getGameOptions, getGameState } from "../../../shared/logic/GameStateLogic";
-import { getGreatPeopleAtReborn, upgradeAllPermanentGreatPeople } from "../../../shared/logic/RebornLogic";
+import {
+   getGreatPeopleAtReborn,
+   getTribuneUpgradeMaxLevel,
+   upgradeAllPermanentGreatPeople,
+} from "../../../shared/logic/RebornLogic";
 import { AccountLevel, TradeTileReservationDays } from "../../../shared/utilities/Database";
 import { forEach, formatHM, sizeOf } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
@@ -237,19 +238,11 @@ function AccountDetails(): React.ReactNode {
             <>
                <div className="separator" />
                <WarningComponent className="mb10" icon="info">
-                  <RenderHTML
-                     className="text-small"
-                     html={t(L.TribuneUpgradeDescV2, { level: MAX_TRIBUNE_CARRY_OVER_LEVEL })}
-                  />
+                  <RenderHTML className="text-small" html={t(L.TribuneUpgradeDescV3)} />
                </WarningComponent>
                {canRankUp() ? null : (
                   <WarningComponent className="mb10" icon="warning">
-                     <RenderHTML
-                        className="text-small"
-                        html={t(L.TribuneUpgradeDescGreatPeopleWarning, {
-                           level: MAX_TRIBUNE_CARRY_OVER_LEVEL,
-                        })}
-                     />
+                     <RenderHTML className="text-small" html={t(L.TribuneUpgradeDescGreatPeopleWarning)} />
                   </WarningComponent>
                )}
                <div className="text-strong">{t(L.AccountLevelUpgradeConditionAny)}</div>
@@ -284,8 +277,9 @@ function AccountDetails(): React.ReactNode {
                                  getGameOptions().greatPeopleChoices = [];
                                  upgradeAllPermanentGreatPeople(getGameOptions());
                                  forEach(getGameOptions().greatPeople, (k, v) => {
-                                    if (v.level >= MAX_TRIBUNE_CARRY_OVER_LEVEL) {
-                                       v.level = MAX_TRIBUNE_CARRY_OVER_LEVEL;
+                                    const maxLevel = getTribuneUpgradeMaxLevel(Config.GreatPerson[k].age);
+                                    if (v.level >= maxLevel) {
+                                       v.level = maxLevel;
                                        v.amount = 0;
                                     }
                                  });
@@ -297,9 +291,7 @@ function AccountDetails(): React.ReactNode {
                               }
                            }}
                         >
-                           <RenderHTML
-                              html={t(L.AccountUpgradeConfirmDesc, { level: MAX_TRIBUNE_CARRY_OVER_LEVEL })}
-                           />
+                           <RenderHTML html={t(L.AccountUpgradeConfirmDescV2)} />
                         </ConfirmModal>,
                      );
                   }}

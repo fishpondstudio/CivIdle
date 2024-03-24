@@ -1,0 +1,110 @@
+{
+    "frames": {
+        "Tile_Aluminum": {
+            "frame": {
+                "x": 0,
+                "y": 0,
+                "w": 100,
+                "h": 100
+            }
+        },
+        "Tile_Coal": {
+            "frame": {
+                "x": 101,
+                "y": 0,
+                "w": 100,
+                "h": 100
+            }
+        },
+        "Tile_Copper": {
+            "frame": {
+                "x": 0,
+                "y": 101,
+                "w": 100,
+                "h": 100
+            }
+        },
+        "Tile_Gold": {
+            "frame": {
+                "x": 101,
+                "y": 101,
+                "w": 100,
+                "h": 100
+            }
+        },
+        "Tile_Iron": {
+            "frame": {
+                "x": 202,
+                "y": 0,
+                "w": 100,
+                "h": 100
+            }
+        },
+        "Tile_NaturalGas": {
+            "frame": {
+                "x": 202,
+                "y": 101,
+                "w": 100,
+                "h": 100
+            }
+        },
+        "Tile_Oil": {
+            "frame": {
+                "x": 0,
+                "y": 202,
+                "w": 100,
+                "h": 100
+            }
+        },
+        "Tile_Power": {
+            "frame": {
+                "x": 101,
+                "y": 202,
+                "w": 100,
+                "h": 100
+            }
+        },
+        "Tile_Stone": {
+            "frame": {
+                "x": 202,
+                "y": 202,
+                "w": 100,
+                "h": 100
+            }
+        },
+        "Tile_Uranium": {
+            "frame": {
+                "x": 303,
+                "y": 0,
+                "w": 100,
+                "h": 100
+            }
+        },
+        "Tile_Water": {
+            "frame": {
+                "x": 303,
+                "y": 101,
+                "w": 100,
+                "h": 100
+            }
+        },
+        "Tile_Wood": {
+            "frame": {
+                "x": 303,
+                "y": 202,
+                "w": 100,
+                "h": 100
+            }
+        }
+    },
+    "meta": {
+        "app": "spritesheet-templates",
+        "version": "10.5.2",
+        "image": "./src/images/textures_tile.png",
+        "scale": 1,
+        "size": {
+            "w": 403,
+            "h": 302
+        }
+    }
+}

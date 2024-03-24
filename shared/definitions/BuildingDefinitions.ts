@@ -15,6 +15,7 @@ export interface IBuildingDefinition {
    output: PartialTabulate<Resource>;
    vision?: number;
    deposit?: PartialSet<Deposit>;
+   power?: true;
    max?: number;
    wikipedia?: string;
    desc?: () => string;
@@ -111,6 +112,22 @@ export class BuildingDefinitions {
       construction: { Brick: 1, Copper: 1 },
    };
 
+   UraniumMine: IBuildingDefinition = {
+      name: () => t(L.UraniumMine),
+      input: {},
+      deposit: { Uranium: true },
+      output: { Uranium: 1 },
+      construction: { Concrete: 1, Tool: 1 },
+   };
+
+   UraniumEnrichmentPlant: IBuildingDefinition = {
+      name: () => t(L.UraniumEnrichmentPlant),
+      input: { Uranium: 10 },
+      output: { NuclearFuelRod: 1 },
+      construction: { Concrete: 4, Steel: 5 },
+      power: true,
+   };
+
    OilWell: IBuildingDefinition = {
       name: () => t(L.OilWell),
       input: {},
@@ -139,7 +156,22 @@ export class BuildingDefinitions {
       name: () => t(L.CoalPowerPlant),
       input: { Coal: 1 },
       output: { Power: 1 },
-      construction: { Lumber: 1, Brick: 1, Iron: 1 },
+      construction: { Lumber: 5, Brick: 4 },
+   };
+
+   GasPowerPlant: IBuildingDefinition = {
+      name: () => t(L.GasPowerPlant),
+      input: { NaturalGas: 2 },
+      output: { Power: 3 },
+      construction: { Concrete: 2 },
+   };
+
+   HydroDam: IBuildingDefinition = {
+      name: () => t(L.HydroDam),
+      input: {},
+      deposit: { Water: true },
+      output: { Water: 1, Power: 2 },
+      construction: { Dynamite: 1, Concrete: 1 },
    };
    // #endregion /////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -217,15 +249,43 @@ export class BuildingDefinitions {
       input: { Rifle: 1, Gunpowder: 5 },
       output: { GatlingGun: 1 },
    };
+   ArtilleryFactory: IBuildingDefinition = {
+      name: () => t(L.ArtilleryFactory),
+      input: { GatlingGun: 1, Dynamite: 1, Aluminum: 5 },
+      output: { Artillery: 1 },
+   };
    IroncladBuilder: IBuildingDefinition = {
       name: () => t(L.IroncladBuilder),
       input: { GatlingGun: 1, Rifle: 1, Frigate: 1 },
       output: { Ironclad: 1 },
    };
+   BattleshipBuilder: IBuildingDefinition = {
+      name: () => t(L.BattleshipBuilder),
+      input: { Ironclad: 1, Artillery: 1, Cable: 5, Steel: 5, Aluminum: 5 },
+      output: { Battleship: 1 },
+      power: true,
+   };
    TankFactory: IBuildingDefinition = {
       name: () => t(L.TankFactory),
-      input: { Engine: 1, Steel: 10, Cannon: 1, GatlingGun: 1, Rifle: 1 },
+      input: { Engine: 1, Steel: 10, Cannon: 1, GatlingGun: 1 },
       output: { Tank: 1 },
+   };
+   BiplaneFactory: IBuildingDefinition = {
+      name: () => t(L.BiplaneFactory),
+      input: { Engine: 1, Steel: 1, Lens: 1, Petrol: 5 },
+      output: { Biplane: 1 },
+   };
+   RocketFactory: IBuildingDefinition = {
+      name: () => t(L.RocketFactory),
+      input: { Engine: 1, Artillery: 1, Steel: 5, Cable: 5, Petrol: 10 },
+      output: { Rocket: 1 },
+      power: true,
+   };
+   AtomicFacility: IBuildingDefinition = {
+      name: () => t(L.AtomicFacility),
+      input: { Dynamite: 10, Uranium: 10 },
+      output: { AtomicBomb: 1 },
+      power: true,
    };
    // #endregion /////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -291,6 +351,11 @@ export class BuildingDefinitions {
       input: { Poem: 1, Painting: 1, Faith: 1 },
       output: { Philosophy: 1, Science: 100 },
    };
+   PublishingHouse: IBuildingDefinition = {
+      name: () => t(L.PublishingHouse),
+      input: { Philosophy: 1, Book: 10 },
+      output: { Newspaper: 1, Science: 200 },
+   };
    Museum: IBuildingDefinition = {
       name: () => t(L.Museum),
       input: { Music: 1, Painting: 1, Faith: 1 },
@@ -298,28 +363,40 @@ export class BuildingDefinitions {
    };
    Courthouse: IBuildingDefinition = {
       name: () => t(L.Courthouse),
-      input: { Philosophy: 1, Faith: 1 },
+      input: { Philosophy: 1, Faith: 1, Culture: 1 },
       output: { Law: 1 },
    };
    Stadium: IBuildingDefinition = {
       name: () => t(L.Stadium),
-      input: { Culture: 1, Opera: 1 },
+      input: { Culture: 1, Opera: 1, Philosophy: 1 },
       output: { Sports: 1 },
    };
    Parliament: IBuildingDefinition = {
       name: () => t(L.Parliament),
-      input: { Culture: 1, Philosophy: 1 },
+      input: { Culture: 2, Philosophy: 2, Law: 2 },
       output: { Politics: 1 },
-   };
-   PublishingHouse: IBuildingDefinition = {
-      name: () => t(L.PublishingHouse),
-      input: { Politics: 1, Book: 1 },
-      output: { Newspaper: 1, Science: 200 },
    };
    MagazinePublisher: IBuildingDefinition = {
       name: () => t(L.MagazinePublisher),
       input: { Sports: 1, Book: 10 },
       output: { Magazine: 1 },
+   };
+   MovieStudio: IBuildingDefinition = {
+      name: () => t(L.MovieStudio),
+      input: { Sports: 5, Lens: 5, Garment: 5 },
+      output: { Movie: 1 },
+      power: true,
+   };
+   RadioStation: IBuildingDefinition = {
+      name: () => t(L.RadioStation),
+      input: { Magazine: 5, Newspaper: 5, Culture: 5 },
+      output: { Radio: 1 },
+      power: true,
+   };
+   Embassy: IBuildingDefinition = {
+      name: () => t(L.Embassy),
+      input: { Law: 5, Politics: 5, Philosophy: 5 },
+      output: { Diplomacy: 1 },
    };
    // #endregion /////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -398,6 +475,11 @@ export class BuildingDefinitions {
       input: { Cheese: 1, Meat: 1, Flour: 2, Water: 2 },
       output: { Pizza: 1 },
    };
+   PlasticsFactory: IBuildingDefinition = {
+      name: () => t(L.PlasticsFactory),
+      input: { Oil: 2 },
+      output: { Plastics: 1 },
+   };
    // #endregion /////////////////////////////////////////////////////////////////////////////////////////////
 
    // #region Heavy Industry /////////////////////////////////////////////////////////////////////////////////
@@ -452,16 +534,26 @@ export class BuildingDefinitions {
       output: { Steel: 1 },
       construction: { Brick: 1, Coal: 1 },
    };
+   CableFactory: IBuildingDefinition = {
+      name: () => t(L.CableFactory),
+      input: { Copper: 5 },
+      output: { Cable: 1 },
+   };
    Steamworks: IBuildingDefinition = {
       name: () => t(L.Steamworks),
       input: { Iron: 1, Coal: 1, Tool: 1 },
       output: { Engine: 1 },
-      construction: { Iron: 1, Coal: 1, Lumber: 1, Brick: 1, Water: 2 },
    };
    LocomotiveFactory: IBuildingDefinition = {
       name: () => t(L.LocomotiveFactory),
       input: { Engine: 1, Steel: 10 },
       output: { Train: 1 },
+   };
+   CarFactory: IBuildingDefinition = {
+      name: () => t(L.CarFactory),
+      input: { Engine: 1, Steel: 1, Furniture: 1, Cable: 1, Plastics: 1, Petrol: 5 },
+      output: { Car: 1 },
+      power: true,
    };
    OilRefinery: IBuildingDefinition = {
       name: () => t(L.OilRefinery),
@@ -692,7 +784,7 @@ export class BuildingDefinitions {
    };
    Parthenon: IBuildingDefinition = {
       name: () => t(L.Parthenon),
-      desc: () => t(L.ParthenonDesc),
+      desc: () => t(L.ParthenonDescV2),
       input: {},
       output: {},
       max: 1,
@@ -744,7 +836,7 @@ export class BuildingDefinitions {
       name: () => t(L.HagiaSophia),
       desc: () => t(L.HagiaSophiaDesc),
       input: { Faith: 10 },
-      construction: { Faith: 100, Marble: 100, Knight: 100 },
+      construction: { Faith: 150, Marble: 150, Knight: 150 },
       output: {},
       max: 1,
       special: BuildingSpecial.WorldWonder,
@@ -832,7 +924,7 @@ export class BuildingDefinitions {
    };
    TajMahal: IBuildingDefinition = {
       name: () => t(L.TajMahal),
-      desc: () => t(L.TajMahalDesc),
+      desc: () => t(L.TajMahalDescV2),
       input: {},
       output: {},
       construction: { Faith: 100, Marble: 100, Garment: 100 },
@@ -970,6 +1062,66 @@ export class BuildingDefinitions {
       special: BuildingSpecial.WorldWonder,
       wikipedia: "Great_Sphinx_of_Giza",
    };
+   Hollywood: IBuildingDefinition = {
+      name: () => t(L.Hollywood),
+      desc: () => t(L.HollywoodDesc),
+      input: {},
+      output: {},
+      max: 1,
+      construction: { Magazine: 100, Movie: 100, Newspaper: 100 },
+      special: BuildingSpecial.WorldWonder,
+      wikipedia: "Hollywood,_Los_Angeles",
+   };
+   GoldenGateBridge: IBuildingDefinition = {
+      name: () => t(L.GoldenGateBridge),
+      desc: () => t(L.GoldenGateBridgeDesc),
+      input: {},
+      output: {},
+      construction: { Steel: 100, Movie: 100, Radio: 100 },
+      max: 1,
+      special: BuildingSpecial.WorldWonder,
+      wikipedia: "Golden_Gate_Bridge",
+   };
+   CristoRedentor: IBuildingDefinition = {
+      name: () => t(L.CristoRedentor),
+      desc: () => t(L.CristoRedentorDesc),
+      input: {},
+      output: {},
+      construction: { Concrete: 100, Sports: 100, Politics: 100 },
+      max: 1,
+      special: BuildingSpecial.WorldWonder,
+      wikipedia: "Christ_the_Redeemer_(statue)",
+   };
+   UnitedNations: IBuildingDefinition = {
+      name: () => t(L.UnitedNations),
+      desc: () => t(L.UnitedNationsDesc),
+      input: {},
+      output: {},
+      construction: { Politics: 100, Law: 100, Diplomacy: 100 },
+      max: 1,
+      special: BuildingSpecial.WorldWonder,
+      wikipedia: "United_Nations",
+   };
+   ManhattanProject: IBuildingDefinition = {
+      name: () => t(L.ManhattanProject),
+      desc: () => t(L.ManhattanProjectDesc),
+      input: {},
+      output: {},
+      construction: { Uranium: 500 },
+      max: 1,
+      special: BuildingSpecial.WorldWonder,
+      wikipedia: "Manhattan_Project",
+   };
+   SagradaFamilia: IBuildingDefinition = {
+      name: () => t(L.SagradaFamilia),
+      desc: () => t(L.SagradaFamiliaDesc),
+      input: {},
+      output: {},
+      construction: { Tank: 100, Biplane: 100, Train: 100 },
+      max: 1,
+      special: BuildingSpecial.WorldWonder,
+      wikipedia: "Sagrada_Família",
+   };
    // ArcDeTriomphe: IBuildingDefinition = {
    //    name: () => t(L.ArcDeTriomphe),
    //    desc: () => t(L.ArcDeTriompheDesc),
@@ -981,20 +1133,6 @@ export class BuildingDefinitions {
    //    wikipedia: "Arc_de_Triomphe",
    // };
    // #endregion /////////////////////////////////////////////////////////////////////////////////////////////
-
-   // GarumMaker: IBuildingDefinition = {
-   //    name: () => t(L.GarumMaker),
-   //    input: { Water: 1, Fish: 1 },
-   //    output: { Garum: 1 },
-   //    construction: { Brick: 1, Copper: 1 },
-   // };
-
-   // Castrum: IBuildingDefinition = {
-   //    name: () => t(L.Castrum),
-   //    input: { Sword: 2 },
-   //    output: { Legion: 1 },
-   //    construction: { Sword: 2, Stone: 2 },
-   // };
 
    // Winery: IBuildingDefinition = {
    //    name: () => t(L.Winery),
@@ -1024,15 +1162,6 @@ export class BuildingDefinitions {
    //    wikipedia: "Shwedagon_Pagoda",
    // };
 
-   // SagradaFamília: IBuildingDefinition = {
-   //    name: () => t(L.SagradaFamília),
-   //    desc: () => t(L.SagradaFamíliaDesc),
-   //    input: {},
-   //    output: {},
-   //    max: 1,
-   //    wikipedia: "Sagrada_Família",
-   // };
-
    // Borobudur: IBuildingDefinition = {
    //    name: () => t(L.Borobudur),
    //    desc: () => t(L.BorobudurDesc),
@@ -1049,15 +1178,6 @@ export class BuildingDefinitions {
    //    output: {},
    //    max: 1,
    //    wikipedia: "Itsukushima_Shrine",
-   // };
-
-   // StatueOfLiberty: IBuildingDefinition = {
-   //    name: () => t(L.StatueOfLiberty),
-   //    desc: () => t(L.StatueOfLibertyDesc),
-   //    input: {},
-   //    output: {},
-   //    max: 1,
-   //    wikipedia: "Statue_of_Liberty",
    // };
 
    // Moai: IBuildingDefinition = {
@@ -1085,24 +1205,6 @@ export class BuildingDefinitions {
    //    output: {},
    //    max: 1,
    //    wikipedia: "Chogha_Zanbil",
-   // };
-
-   // CristoRedentor: IBuildingDefinition = {
-   //    name: () => t(L.CristoRedentor),
-   //    desc: () => t(L.CristoRedentorDesc),
-   //    input: {},
-   //    output: {},
-   //    max: 1,
-   //    wikipedia: "Christ_the_Redeemer_(statue)",
-   // };
-
-   // GoldenGateBridge: IBuildingDefinition = {
-   //    name: () => t(L.GoldenGateBridge),
-   //    desc: () => t(L.GoldenGateBridgeDesc),
-   //    input: {},
-   //    output: {},
-   //    max: 1,
-   //    wikipedia: "Golden_Gate_Bridge",
    // };
 
    // SydneyOperaHouse: IBuildingDefinition = {

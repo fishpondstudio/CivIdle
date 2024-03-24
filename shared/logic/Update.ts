@@ -15,6 +15,7 @@ import {
    keysOf,
    mapSafeAdd,
    mapSafePush,
+   pointToTile,
    safeAdd,
    shuffle,
    sizeOf,
@@ -38,6 +39,7 @@ import {
    getBuildingCost,
    getBuildingValue,
    getCurrentPriority,
+   getElectrificationEfficiency,
    getInputMode,
    getMarketBuyAmount,
    getMarketSellAmount,
@@ -403,22 +405,37 @@ function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
       return;
    }
 
-   const hasEnoughStorage =
-      isEmpty(output) ||
-      used + getStorageRequired(output) + getStorageRequired(input) * getStockpileCapacity(building) <= total;
-   const hasEnoughWorker = getAvailableWorkers("Worker") >= worker.output;
-   const hasEnoughInput = hasEnoughResources(building.resources, input);
+   ////////// Power
+   const requiresPower = Config.Building[building.type].power;
+   const hasPower = !requiresPower || Tick.current.powerGrid.has(xy);
+   if (!hasPower) {
+      Tick.next.notProducingReasons.set(xy, "NoPower");
+      return;
+   }
+   if (requiresPower) {
+      for (const point of getGrid(gs).getNeighbors(tileToPoint(xy))) {
+         Tick.next.powerGrid.add(pointToTile(point));
+      }
+   }
 
+   ////////// Worker
+   const hasEnoughWorker = getAvailableWorkers("Worker") >= worker.output;
    if (!hasEnoughWorker) {
       Tick.next.notProducingReasons.set(xy, "NotEnoughWorkers");
       return;
    }
 
+   ////////// Input
+   const hasEnoughInput = hasEnoughResources(building.resources, input);
    if (!hasEnoughInput) {
       Tick.next.notProducingReasons.set(xy, "NotEnoughResources");
       return;
    }
 
+   ////////// Storage
+   const hasEnoughStorage =
+      isEmpty(output) ||
+      used + getStorageRequired(output) + getStorageRequired(input) * getStockpileCapacity(building) <= total;
    if (!hasEnoughStorage) {
       const nonTransportables = filterNonTransportable(output);
       if (sizeOf(nonTransportables) > 0) {
@@ -441,18 +458,19 @@ function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
       return;
    }
 
+   ////////// Electrification
    if (
       hasFeature(GameFeature.Electricity, gs) &&
       canBeElectrified(building.type) &&
       building.electrification > 0
    ) {
       building.electrification = clamp(building.electrification, 0, building.level);
-      const requiredPower = getPowerRequired(building.electrification);
+      const requiredPower = getPowerRequired(building);
       if (getAvailableWorkers("Power") >= requiredPower) {
          useWorkers("Power", requiredPower, xy);
          mapSafePush(Tick.next.tileMultipliers, xy, {
             source: t(L.Electrification),
-            input: building.electrification,
+            input: getElectrificationEfficiency(building.type),
             output: building.electrification,
          });
          Tick.next.electrified.set(xy, building.electrification);
@@ -472,6 +490,12 @@ function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
          OnShowFloater.emit({ xy, amount: v });
       } else {
          mapSafeAdd(Tick.next.workersAvailable, res, v);
+         if (res === "Power") {
+            Tick.next.powerGrid.add(xy);
+            for (const neighbor of getGrid(gs).getNeighbors(tileToPoint(xy))) {
+               Tick.next.powerGrid.add(pointToTile(neighbor));
+            }
+         }
       }
    });
    OnBuildingProductionComplete.emit({ xy, offline });

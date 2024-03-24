@@ -31,7 +31,7 @@ export function TableView<T>({
    return (
       <div className={`table-view ${classNames ?? ""}`}>
          <table>
-            <tbody>
+            <thead>
                <tr>
                   {header.map((h, index) => (
                      <th
@@ -67,6 +67,8 @@ export function TableView<T>({
                      </th>
                   ))}
                </tr>
+            </thead>
+            <tbody>
                {data
                   .sort((a, b) => (asc ? compareFunc(a, b, sortColumn) : -compareFunc(a, b, sortColumn)))
                   .map(renderRow)}

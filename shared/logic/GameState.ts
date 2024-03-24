@@ -55,7 +55,7 @@ export class GameState {
    favoriteTiles: Set<Tile> = new Set();
 }
 
-export type GreatPeopleChoice = [GreatPerson, GreatPerson, GreatPerson];
+export type GreatPeopleChoice = GreatPerson[];
 
 export class SavedGame {
    current = new GameState();
