@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { NoPrice, NoStorage, type Resource } from "../../../shared/definitions/ResourceDefinitions";
 import { Config } from "../../../shared/logic/Config";
+import { unlockedResources } from "../../../shared/logic/IntraTickCache";
 import {
    getBuyAmountRange,
    getMaxActiveTrades,
    type IClientAddTradeRequest,
 } from "../../../shared/logic/PlayerTradeLogic";
-import { Tick } from "../../../shared/logic/TickLogic";
 import { isNullOrUndefined, keysOf, safeParseInt } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import { client, useTrades, useUser } from "../rpc/RPCClient";
@@ -15,7 +15,6 @@ import type { IBuildingComponentProps } from "./BuildingPage";
 import { showToast } from "./GlobalModal";
 import { FormatNumber } from "./HelperComponents";
 import { TextWithHelp } from "./TextWithHelpComponent";
-import { unlockedResources } from "../../../shared/logic/IntraTickCache";
 
 export function AddTradeComponent({ gameState, xy }: IBuildingComponentProps): React.ReactNode {
    const user = useUser();
@@ -187,6 +186,7 @@ export function AddTradeComponent({ gameState, xy }: IBuildingComponentProps): R
                      ) {
                         playError();
                         showToast(t(L.OperationNotAllowedError));
+                        return;
                      }
                      try {
                         // Note: we deduct the resources first otherwise resource can go negative if a player
