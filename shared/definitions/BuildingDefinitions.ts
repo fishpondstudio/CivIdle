@@ -836,7 +836,7 @@ export class BuildingDefinitions {
       name: () => t(L.HagiaSophia),
       desc: () => t(L.HagiaSophiaDesc),
       input: { Faith: 10 },
-      construction: { Faith: 100, Marble: 100, Knight: 100 },
+      construction: { Faith: 150, Marble: 150, Knight: 150 },
       output: {},
       max: 1,
       special: BuildingSpecial.WorldWonder,

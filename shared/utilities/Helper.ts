@@ -67,7 +67,7 @@ export function formatNumber(num: number | undefined | null, binary = false, sci
    if (!Number.isFinite(num)) {
       return String(num);
    }
-   if (scientific && num >= 1e15) {
+   if (scientific) {
       return scientificFormat(num);
    }
    if (binary) {
