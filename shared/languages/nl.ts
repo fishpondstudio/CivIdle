@@ -139,7 +139,6 @@ export const NL = {
    Caravel: "Karveel",
    CaravelBuilder: "Karveelbouwer",
    CarFactory: "Car Factory",
-   Castrum: "Castrum",
    Cathedral: "Kathedraal",
    CensorsOffice: "Censors Kantoor",
    Census: "Volkstelling",
@@ -320,8 +319,6 @@ export const NL = {
    Gameplay: "Spelverloop",
    Garment: "Kledingstuk",
    GarmentWorkshop: "Kledingmakerij",
-   Garum: "Garum",
-   GarumMaker: "Garum Maker",
    GasPipeline: "Gaspipeline",
    GasPowerPlant: "Gas Power Plant",
    GatlingGun: "Gatlinggeweer",
@@ -552,8 +549,8 @@ export const NL = {
    PaperMaker: "Papiermaker",
    Parliament: "Parlement",
    Parthenon: "Parthenon",
-   ParthenonDesc:
-      "Een nieuw groot persoon van de Klassieke Oudheid wordt geboren. Muzikantengilden en Schildersgilden krijgen +1 Werknemer Capaciteit Vermenigvuldiger",
+   ParthenonDescV2:
+      "Two great people of Classical Age are born and you get 4 choices for each. Musician's Guilds and Painter's Guilds get +1 Production, Worker Capacity and Storage Multiplier and are exempt from -1 Happiness",
    PatchNotes: "Patchnotities",
    PermanentGreatPeople: "Permanente Grote Personen",
    Persepolis: "Persepolis",
@@ -893,8 +890,8 @@ export const NL = {
    SydneyOperaHouseDesc: "Sydney Opera Huis",
    Synthetics: "Synthetica",
    TajMahal: "Taj Mahal",
-   TajMahalDesc:
-      "Een nieuw groot persoon van de Middeleeuwen wordt geboren. +5 Bouwcapaciteit Vermenigvuldiger bij het upgraden van gebouwen boven Niveau 20",
+   TajMahalDescV2:
+      "A great person of Classical Age and a great person of Middle Age are born. +5 Builder Capacity Multiplier when upgrading buildings over Level 20",
    TangOfShang: "Tang van Shang",
    TangOfShangDesc: "+%{value} Wetenschap Van Inactieve Werknemers",
    Tank: "Tank",
@@ -1050,6 +1047,7 @@ export const NL = {
    WondersUnlocked: "Wereldwonderen Ontgrendeld",
    Wood: "Hout",
    Worker: "Werknemer",
+   WorkerCapacityMultiplier: "Worker Capacity Multiplier",
    WorkerHappinessPercentage: "Geluk Vermenigvuldiger",
    WorkerMultiplier: "Werknemerscapaciteit",
    WorkerPercentagePerHappiness: "%{value}% Vermenigvuldiger voor Elk Geluk",

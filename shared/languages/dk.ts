@@ -136,7 +136,6 @@ export const DK = {
    Caravel: "Caravel",
    CaravelBuilder: "Caravel Builder",
    CarFactory: "Car Factory",
-   Castrum: "Castrum",
    Cathedral: "Cathedral",
    CensorsOffice: "Censor's Office",
    Census: "Census",
@@ -315,8 +314,6 @@ export const DK = {
    Gameplay: "Gameplay",
    Garment: "Garment",
    GarmentWorkshop: "Garment Workshop",
-   Garum: "Garum",
-   GarumMaker: "Garum Maker",
    GasPipeline: "Gas Pipeline",
    GasPowerPlant: "Gas Power Plant",
    GatlingGun: "Gatling Gun",
@@ -547,8 +544,8 @@ export const DK = {
    PaperMaker: "Paper Maker",
    Parliament: "Parliament",
    Parthenon: "Parthenon",
-   ParthenonDesc:
-      "A new great person of Classical Age is born. Musician's Guilds and Painter's Guilds get +1 Worker Capacity Multiplier",
+   ParthenonDescV2:
+      "Two great people of Classical Age are born and you get 4 choices for each. Musician's Guilds and Painter's Guilds get +1 Production, Worker Capacity and Storage Multiplier and are exempt from -1 Happiness",
    PatchNotes: "Patch Notes",
    PermanentGreatPeople: "Permanent Great People",
    Persepolis: "Persepolis",
@@ -885,8 +882,8 @@ export const DK = {
    SydneyOperaHouseDesc: "Sydney Opera House",
    Synthetics: "Synthetics",
    TajMahal: "Taj Mahal",
-   TajMahalDesc:
-      "A new great person of Middle Age is born. +5 Builder Capacity Multiplier when upgrading buildings over Level 20",
+   TajMahalDescV2:
+      "A great person of Classical Age and a great person of Middle Age are born. +5 Builder Capacity Multiplier when upgrading buildings over Level 20",
    TangOfShang: "Tang Of Shang",
    TangOfShangDesc: "+%{value} Science From Idle Workers",
    Tank: "Tank",
@@ -1038,6 +1035,7 @@ export const DK = {
    WondersUnlocked: "World Wonders Unlocked",
    Wood: "Wood",
    Worker: "Worker",
+   WorkerCapacityMultiplier: "Worker Capacity Multiplier",
    WorkerHappinessPercentage: "Happiness Multiplier",
    WorkerMultiplier: "Worker Capacity",
    WorkerPercentagePerHappiness: "%{value}% Multiplier for Each Happiness",

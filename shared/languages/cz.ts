@@ -136,7 +136,6 @@ export const CZ = {
    Caravel: "Caravel",
    CaravelBuilder: "Stavitel karavel",
    CarFactory: "Car Factory",
-   Castrum: "Castrum",
    Cathedral: "Katedrála",
    CensorsOffice: "Cenzorský úřad",
    Census: "Sčítání lidu",
@@ -313,8 +312,6 @@ export const CZ = {
    Gameplay: "Hra",
    Garment: "Oděvní",
    GarmentWorkshop: "Oděvní dílna",
-   Garum: "Garum",
-   GarumMaker: "Garum Maker",
    GasPipeline: "Plynovod",
    GasPowerPlant: "Gas Power Plant",
    GatlingGun: "Gatlingovo dělo",
@@ -546,8 +543,8 @@ export const CZ = {
    PaperMaker: "Výrobce papíru",
    Parliament: "Parlament",
    Parthenon: "Parthenon",
-   ParthenonDesc:
-      "Zrodí se nová velká osobnost klasického věku. Cechy hudebníků a malířů získávají násobitel +1 k počtu pracovníků.",
+   ParthenonDescV2:
+      "Two great people of Classical Age are born and you get 4 choices for each. Musician's Guilds and Painter's Guilds get +1 Production, Worker Capacity and Storage Multiplier and are exempt from -1 Happiness",
    PatchNotes: "Poznámky k záplatám",
    PermanentGreatPeople: "Stálý Skvělí lidé",
    Persepolis: "Persepolis",
@@ -888,8 +885,8 @@ export const CZ = {
    SydneyOperaHouseDesc: "Opera v Sydney",
    Synthetics: "Syntetika",
    TajMahal: "Tádž Mahal",
-   TajMahalDesc:
-      "Zrodí se nová velká osobnost středního věku. Násobitel kapacity stavitele +5 při vylepšování budov nad 20. úroveň.",
+   TajMahalDescV2:
+      "A great person of Classical Age and a great person of Middle Age are born. +5 Builder Capacity Multiplier when upgrading buildings over Level 20",
    TangOfShang: "Tang ze Shang",
    TangOfShangDesc: "+%{value} Věda od nečinných dělníků",
    Tank: "Tank",
@@ -1044,6 +1041,7 @@ export const CZ = {
    WondersUnlocked: "Odemčené divy světa",
    Wood: "Dřevo",
    Worker: "Pracovník",
+   WorkerCapacityMultiplier: "Worker Capacity Multiplier",
    WorkerHappinessPercentage: "Multiplikátor štěstí",
    WorkerMultiplier: "Kapacita pracovníků",
    WorkerPercentagePerHappiness: "%{value}% Multiplikátor pro každé štěstí",

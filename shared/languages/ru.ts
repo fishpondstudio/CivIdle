@@ -140,7 +140,6 @@ export const RU = {
    Caravel: "Каравелла",
    CaravelBuilder: "Верфь Каравелл",
    CarFactory: "Car Factory",
-   Castrum: "Каструм",
    Cathedral: "Кафедральный Собор",
    CensorsOffice: "Офис Цензора",
    Census: "Перепись Населения",
@@ -320,8 +319,6 @@ export const RU = {
    Gameplay: "Гемплей",
    Garment: "Одежда",
    GarmentWorkshop: "Швейная Мастерская",
-   Garum: "Гарум",
-   GarumMaker: "Производитель Гарума",
    GasPipeline: "Газопровод",
    GasPowerPlant: "Gas Power Plant",
    GatlingGun: "Гатлинг",
@@ -552,8 +549,8 @@ export const RU = {
    PaperMaker: "Завод Бумаги",
    Parliament: "Парламент",
    Parthenon: "Парфенон",
-   ParthenonDesc:
-      "Новый Великий Человек Классического Века был рождён. Гильдии Музыкантов и Гильдии Художников получают +1 к Множителю Производительности Работников",
+   ParthenonDescV2:
+      "Two great people of Classical Age are born and you get 4 choices for each. Musician's Guilds and Painter's Guilds get +1 Production, Worker Capacity and Storage Multiplier and are exempt from -1 Happiness",
    PatchNotes: "Примечания к Патчам",
    PermanentGreatPeople: "Постоянные Великие Люди",
    Persepolis: "Персеполис",
@@ -895,8 +892,8 @@ export const RU = {
    SydneyOperaHouseDesc: "Сиднейский Оперный Театр",
    Synthetics: "Синтетика",
    TajMahal: "Тадж-Махал",
-   TajMahalDesc:
-      "Рождается новый великий человек Средневековья. +5 к Множителю Мощности Строительства, когда улучшаемое здание выше 20 уровня",
+   TajMahalDescV2:
+      "A great person of Classical Age and a great person of Middle Age are born. +5 Builder Capacity Multiplier when upgrading buildings over Level 20",
    TangOfShang: "Тан из Шан",
    TangOfShangDesc: "+%{value} Науки от Незанятых Работников",
    Tank: "Танк",
@@ -1054,6 +1051,7 @@ export const RU = {
    WondersUnlocked: "Разблокированные Чудеса Света",
    Wood: "Дерево",
    Worker: "Работник",
+   WorkerCapacityMultiplier: "Worker Capacity Multiplier",
    WorkerHappinessPercentage: "Множитель Счастья",
    WorkerMultiplier: "Мощность Работника",
    WorkerPercentagePerHappiness: "%{value}% Множителя за Каждое Счастье",

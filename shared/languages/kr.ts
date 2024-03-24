@@ -133,7 +133,6 @@ export const KR = {
    Caravel: "캐러벨",
    CaravelBuilder: "캐러벨 조선소",
    CarFactory: "Car Factory",
-   Castrum: "요새",
    Cathedral: "대성당",
    CensorsOffice: "감찰관실",
    Census: "인구조사",
@@ -307,8 +306,6 @@ export const KR = {
    Gameplay: "일반",
    Garment: "의류",
    GarmentWorkshop: "의류 공장",
-   Garum: "가룸",
-   GarumMaker: "가룸 제작소",
    GasPipeline: "가스관",
    GasPowerPlant: "Gas Power Plant",
    GatlingGun: "개틀링건",
@@ -536,8 +533,8 @@ export const KR = {
    PaperMaker: "제지소",
    Parliament: "국회",
    Parthenon: "파르테논 신전",
-   ParthenonDesc:
-      "고전시대의 새로운 위인이 태어납니다. 음악가 길드와 화가 길드가 +1의 작업자 용량 배수를 얻습니다.",
+   ParthenonDescV2:
+      "Two great people of Classical Age are born and you get 4 choices for each. Musician's Guilds and Painter's Guilds get +1 Production, Worker Capacity and Storage Multiplier and are exempt from -1 Happiness",
    PatchNotes: "패치노트",
    PermanentGreatPeople: "영구적인 위인",
    Persepolis: "페르세폴리스",
@@ -868,8 +865,8 @@ export const KR = {
    SydneyOperaHouseDesc: "시드니 오페라 하우스",
    Synthetics: "합성화학",
    TajMahal: "타지마할",
-   TajMahalDesc:
-      "중세의 새로운 위인이 태어납니다. 레벨20이상의 건물을 업그레이드 할때 +5의 건축가 용량배수를 얻습니다.",
+   TajMahalDescV2:
+      "A great person of Classical Age and a great person of Middle Age are born. +5 Builder Capacity Multiplier when upgrading buildings over Level 20",
    TangOfShang: "탕왕",
    TangOfShangDesc: "+%{value} 잉여 작업자당 과학 생산",
    Tank: "탱크",
@@ -1017,6 +1014,7 @@ export const KR = {
    WondersUnlocked: "불가사의 해금됨",
    Wood: "나무",
    Worker: "노동자",
+   WorkerCapacityMultiplier: "Worker Capacity Multiplier",
    WorkerHappinessPercentage: "행복도 배수",
    WorkerMultiplier: "작업자 용량",
    WorkerPercentagePerHappiness: "행복도당 %{value}% 배수",

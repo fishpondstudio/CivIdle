@@ -113,7 +113,6 @@ export const DE = {
    BuildingColorMatchBuilding: "Farbe aus Gebäude kopieren",
    BuildingColorMatchBuildingTooltip:
       "Kopiert die Ressourcenfarbe aus dem Gebäude, das diese Ressource produziert. Wenn mehrere Gebäude diese Ressource produzieren, wird ein zufälliges ausgewählt",
-   BuildingCost: "Kosten",
    BuildingMultipliers: "Beschleunigung der Baugeschwindigkeit",
    BuildingName: "Name",
    BuildingNoMultiplier:
@@ -142,7 +141,6 @@ export const DE = {
    Caravel: "Karavelle",
    CaravelBuilder: "Karavellenbauer",
    CarFactory: "Car Factory",
-   Castrum: "Castrum",
    Cathedral: "Kathedrale",
    CensorsOffice: "Zensus",
    Census: "Volkszählung",
@@ -324,8 +322,6 @@ export const DE = {
    Gameplay: "Spielablauf",
    Garment: "Bekleidung",
    GarmentWorkshop: "Schneiderei",
-   Garum: "Garum",
-   GarumMaker: "Garum-Maker",
    GasPipeline: "Gas-Pipeline",
    GasPowerPlant: "Gas Power Plant",
    GatlingGun: "Gatling Gun",
@@ -370,7 +366,6 @@ export const DE = {
    GreatSphinx: "Große Sphinx",
    GreatSphinxDesc:
       "Alle Gebäude der Ebene II oder höher innerhalb von 2 Feldern erhalten +N Verbrauch und Multiplikator für Produktion. N = Zahl der benachbarten Gebäude des selben Types",
-   Greenhouse: "Gewächshaus",
    GrottaAzzurra: "Blaue Grotte",
    GrottaAzzurraDesc: "Wenn sie entdeckt wird, erhöht sich die Stufe aller Gebäude der Ebene I um 5.",
    Gunpowder: "Schießpulver",
@@ -506,6 +501,8 @@ export const DE = {
    MountSinai: "Mount Sinai",
    MountSinaiDesc:
       "Bei der Entdeckung erhältst Du eine große Persönlichkeit des aktuellen Zeitalters. Alle Gebäude, die Glauben generieren, bekommen einen Multiplier von +5 auf die Lagergröße",
+   Movie: "Movie",
+   MovieStudio: "Movie Studio",
    Museum: "Museum",
    Music: "Musik",
    MusiciansGuild: "Musikergilde",
@@ -562,8 +559,8 @@ export const DE = {
    PaperMaker: "Papiermacher",
    Parliament: "Parlament",
    Parthenon: "Parthenon",
-   ParthenonDesc:
-      "Eine neue herausragende Persönlichkeit der Antike wird geboren. Der Multiplikator für Arbeitskräfte erhöht sich in Musiker- und Malergilden um 1.",
+   ParthenonDescV2:
+      "Two great people of Classical Age are born and you get 4 choices for each. Musician's Guilds and Painter's Guilds get +1 Production, Worker Capacity and Storage Multiplier and are exempt from -1 Happiness",
    PatchNotes: "Patch Notes",
    PermanentGreatPeople: "Herausragende Persönlichkeiten in allen weiteren Durchgängen ",
    Persepolis: "Persepolis",
@@ -907,8 +904,8 @@ export const DE = {
    SydneyOperaHouseDesc: "Opernhaus von Sydney",
    Synthetics: "Synthetik",
    TajMahal: "Taj Mahal",
-   TajMahalDesc:
-      "Eine neue herausragende Persönlichkeit des Mittelalters wird geboren. Bei allen Gebäuden ab Stufe 21 wird der Multiplikator für Bauarbeiter um 5 erhöht.",
+   TajMahalDescV2:
+      "A great person of Classical Age and a great person of Middle Age are born. +5 Builder Capacity Multiplier when upgrading buildings over Level 20",
    TangOfShang: "Tang von Shang",
    TangOfShangDesc: "+%{value} Forschung von unbeschäftigten Arbeitskräfte",
    Tank: "Panzer",
@@ -1066,6 +1063,7 @@ export const DE = {
    WondersUnlocked: "Freigeschaltete Weltwunder",
    Wood: "Holz",
    Worker: "Arbeiter",
+   WorkerCapacityMultiplier: "Worker Capacity Multiplier",
    WorkerHappinessPercentage: "Zufriedenheits-Multiplikator",
    WorkerMultiplier: "Arbeitskräfte",
    WorkerPercentagePerHappiness: "%{value}% Multiplikator für Zufriedenheit",

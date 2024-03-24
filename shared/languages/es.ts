@@ -140,7 +140,6 @@ export const ES = {
    Caravel: "Carabela",
    CaravelBuilder: "Astillero de carabelas",
    CarFactory: "Car Factory",
-   Castrum: "Castro",
    Cathedral: "Catedral",
    CensorsOffice: "Oficina del Censor",
    Census: "Censo",
@@ -321,8 +320,6 @@ export const ES = {
    Gameplay: "Juego",
    Garment: "Prenda",
    GarmentWorkshop: "Taller de confección",
-   Garum: "Garum",
-   GarumMaker: "Factoría de garum",
    GasPipeline: "Gaseoducto",
    GasPowerPlant: "Gas Power Plant",
    GatlingGun: "Ametralladora Gatling",
@@ -556,8 +553,8 @@ export const ES = {
    PaperMaker: "Papelera",
    Parliament: "Parlamento",
    Parthenon: "Partenón",
-   ParthenonDesc:
-      "Una nueva personaje histórico de la Edad Antigua ha nacido. El gremio de los músicos y el gremio de los pintores obtienen +1 multiplicador de capacidad de trabajo",
+   ParthenonDescV2:
+      "Two great people of Classical Age are born and you get 4 choices for each. Musician's Guilds and Painter's Guilds get +1 Production, Worker Capacity and Storage Multiplier and are exempt from -1 Happiness",
    PatchNotes: "Notas del parche",
    PermanentGreatPeople: "Personajes históricos permanentes",
    Persepolis: "Persépolis",
@@ -901,8 +898,8 @@ export const ES = {
    SydneyOperaHouseDesc: "Ópera de Sídney",
    Synthetics: "Sintéticos",
    TajMahal: "Taj Mahal",
-   TajMahalDesc:
-      "Una nueva personaje histórico de la Edad Media ha nacido. +5 multiplicadores de capacidad de construcción cuando se mejoran construcciones por encima del nivel 20",
+   TajMahalDescV2:
+      "A great person of Classical Age and a great person of Middle Age are born. +5 Builder Capacity Multiplier when upgrading buildings over Level 20",
    TangOfShang: "Shāng Tāng",
    TangOfShangDesc: "+%{value} de ciencia por trabajadores en paro",
    Tank: "Tanque",
@@ -1059,6 +1056,7 @@ export const ES = {
    WondersUnlocked: "Maravillas del mundo desbloqueadas",
    Wood: "Madera",
    Worker: "Trabajador",
+   WorkerCapacityMultiplier: "Worker Capacity Multiplier",
    WorkerHappinessPercentage: "Multiplicador de felicidad",
    WorkerMultiplier: "Capacidad de trabajo",
    WorkerPercentagePerHappiness: "%{value}% multiplicador de trabajo por felicidad",
