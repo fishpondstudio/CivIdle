@@ -620,26 +620,28 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
       }
       case "SagradaFamilia": {
          const grid = getGrid(gs);
-         forEach(Config.Building, (b, def) => {
-            if (def.input.Engine) {
-               addMultiplier(b, { output: 1, worker: 1, storage: 1 }, buildingName);
-               getBuildingsByType(b, gs)?.forEach((tile, thisXy) => {
-                  let count = 0;
-                  for (const point of grid.getNeighbors(tileToPoint(thisXy))) {
-                     const b = gs.tiles.get(pointToTile(point))?.building;
-                     if (b && Config.Building[b.type].output.Engine) {
-                        ++count;
-                     }
-                  }
-                  if (count > 0) {
-                     mapSafePush(Tick.next.tileMultipliers, thisXy, {
-                        output: count,
-                        source: buildingName,
-                     });
-                  }
+         let minTier = Number.MAX_SAFE_INTEGER;
+         let maxTier = 0;
+         for (const neighbor of grid.getNeighbors(tileToPoint(xy))) {
+            const neighborXy = pointToTile(neighbor);
+            const building = getCompletedBuilding(neighborXy, gs)?.type;
+            if (!building) continue;
+            const tier = Config.BuildingTier[building] ?? 0;
+            if (tier <= 0) continue;
+            minTier = Math.min(minTier, tier);
+            maxTier = Math.max(maxTier, tier);
+         }
+         const diff = maxTier - minTier;
+         if (diff > 0) {
+            for (const point of grid.getRange(tileToPoint(xy), 2)) {
+               mapSafePush(Tick.next.tileMultipliers, pointToTile(point), {
+                  output: diff,
+                  storage: diff,
+                  worker: diff,
+                  source: buildingName,
                });
             }
-         });
+         }
          break;
       }
       // case "ArcDeTriomphe": {

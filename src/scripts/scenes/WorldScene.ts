@@ -292,6 +292,7 @@ export class WorldScene extends Scene {
             }
             case "GreatSphinx":
             case "Hollywood":
+            case "SagradaFamilia":
             case "CristoRedentor":
             case "GoldenGateBridge": {
                this.highlightRange(grid, 2);

@@ -755,7 +755,7 @@ export const EN = {
    RurikDesc: "+%{value} Happiness",
    SagradaFamilia: "Sagrada Familia",
    SagradaFamiliaDesc:
-      "All buildings that consume engines get +1 Production, Worker Capacity and Storage Multiplier. All buildings that consume engines get +1 Production Multiplier for each adjacent building that produces engines",
+      "All buildings within 2 tile range get +N Production, Worker Capacity and Storage Multipliers. N = max tier difference among adjacent buildings",
    SaintBasilsCathedral: "Saint Basil's Cathedral",
    SaintBasilsCathedralDescV2:
       "Allow resource extraction buildings to work adjacent to a deposit. All adjacent Tier I buildings get +1 Production, Worker Capacity and Storage Multiplier",
@@ -990,7 +990,8 @@ export const EN = {
    UnexploredTile: "Unexplored Tile",
    UniqueBuildings: "Unique Buildings",
    UnitedNations: "United Nations",
-   UnitedNationsDesc: "United Nations Descriptions",
+   UnitedNationsDesc:
+      "All adjacent buildings get +N Production, Worker Capacity and Storage Multipliers. N = max tier difference among adjacent buildings",
    UniversalHealthcare: "Universal Healthcare",
    University: "University",
    UnlockableResearch: "Unlockable Research",
