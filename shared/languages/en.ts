@@ -649,6 +649,7 @@ export const EN = {
    Produce: "Produce",
    ProduceResource: "Produce: %{resource}",
    ProductionMultiplier: "Production Multiplier",
+   WorkerCapacityMultiplier: "Worker Capacity Multiplier",
    ProductionPriority: "Production Priority",
    ProductionPriorityDesc: "High priority means this building transports before other buildings",
    Progress: "Progress",

@@ -209,6 +209,9 @@ export class TechDefinitions {
       column: 5,
       requireTech: ["Astronomy", "LandTrade"],
       unlockBuilding: ["CottonMill", "HangingGarden"],
+      globalMultiplier: {
+         storage: 1,
+      },
    };
 
    Engineering: ITechDefinition = {
@@ -314,6 +317,9 @@ export class TechDefinitions {
       column: 9,
       requireTech: ["Architecture"],
       unlockBuilding: ["GarmentWorkshop"],
+      globalMultiplier: {
+         storage: 1,
+      },
    };
 
    Feudalism: ITechDefinition = {
@@ -365,8 +371,8 @@ export class TechDefinitions {
       unlockBuilding: ["LensWorkshop"],
       globalMultiplier: { builderCapacity: 1 },
       buildingMultiplier: {
-         Library: { output: 10, input: 10 },
-         School: { output: 10, input: 10 },
+         Library: { output: 5 },
+         School: { output: 5 },
       },
       additionalUpgrades: [() => t(L.SeaTradeUpgrade, { tariff: formatPercent(SEA_TILE_COST_2) })],
    };
@@ -477,6 +483,9 @@ export class TechDefinitions {
       column: 14,
       requireTech: ["PrivateOwnership"],
       unlockBuilding: ["Steamworks", "ConcretePlant"],
+      globalMultiplier: {
+         storage: 1,
+      },
    };
 
    Capitalism: ITechDefinition = {

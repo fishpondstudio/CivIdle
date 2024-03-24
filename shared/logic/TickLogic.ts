@@ -74,6 +74,9 @@ export class GlobalMultipliers {
    builderCapacity: IValueWithSource[] = [{ value: 1, source: t(L.BaseMultiplier) }];
    transportCapacity: IValueWithSource[] = [];
    happiness: IValueWithSource[] = [];
+   input: IValueWithSource[] = [];
+   output: IValueWithSource[] = [];
+   worker: IValueWithSource[] = [];
    storage: IValueWithSource[] = [];
 }
 
@@ -83,6 +86,9 @@ export const GlobalMultiplierNames: Record<keyof GlobalMultipliers, () => string
    builderCapacity: () => t(L.BuilderCapacity),
    happiness: () => t(L.Happiness),
    transportCapacity: () => t(L.TransportCapacity),
+   input: () => t(L.ConsumptionMultiplier),
+   output: () => t(L.ProductionMultiplier),
+   worker: () => t(L.WorkerCapacityMultiplier),
    storage: () => t(L.StorageMultiplier),
 };
 
@@ -114,6 +120,8 @@ interface IMultiplier {
 
 export type Multiplier = RequireAtLeastOne<IMultiplier>;
 export type MultiplierWithSource = Multiplier & { source: string };
+
+export const AllMultiplierTypes = ["input", "output", "worker", "storage"] satisfies (keyof IMultiplier)[];
 
 export type MultiplierType = keyof IMultiplier;
 export const MultiplierTypeDesc: Record<MultiplierType, () => string> = {

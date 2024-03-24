@@ -31,7 +31,7 @@ import { getBuildingIO, getBuildingsByType, getGrid, getXyBuildings } from "./In
 import { getGreatPersonThisRunLevel, getUpgradeCostFib } from "./RebornLogic";
 import { getBuildingsThatProduce, getResourcesValue } from "./ResourceLogic";
 import { getAgeForTech, getBuildingUnlockTech } from "./TechLogic";
-import { Tick, type Multiplier, type MultiplierWithSource } from "./TickLogic";
+import { AllMultiplierTypes, Tick, type Multiplier, type MultiplierWithSource } from "./TickLogic";
 import {
    BuildingInputMode,
    DEFAULT_STOCKPILE_CAPACITY,
@@ -68,7 +68,11 @@ function forEachMultiplier(
    if (b) {
       Tick.current.buildingMultipliers.get(b.type)?.forEach((m) => func(m));
    }
-   Tick.current.globalMultipliers.storage.forEach((m) => func({ storage: m.value, source: m.source }));
+   AllMultiplierTypes.forEach((type) => {
+      Tick.current.globalMultipliers[type].forEach((m) =>
+         func({ [type]: m.value, source: m.source } as MultiplierWithSource),
+      );
+   });
    return result;
 }
 

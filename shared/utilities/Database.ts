@@ -170,6 +170,7 @@ export interface ISlowModeConfig {
 }
 
 export enum BanFlag {
+   None = 0,
    Completely = 1 << 0,
    TribuneOnly = 1 << 1,
    NoRename = 1 << 2,

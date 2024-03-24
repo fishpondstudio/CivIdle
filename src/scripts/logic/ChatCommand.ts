@@ -4,7 +4,7 @@ import { isSpecialBuilding } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
 import { getGameOptions, getGameState } from "../../../shared/logic/GameStateLogic";
 import { rollPermanentGreatPeople } from "../../../shared/logic/RebornLogic";
-import { AccountLevel, ChatChannels, type ChatChannel } from "../../../shared/utilities/Database";
+import { AccountLevel, BanFlag, ChatChannels, type ChatChannel } from "../../../shared/utilities/Database";
 import {
    HOUR,
    MINUTE,
@@ -14,6 +14,7 @@ import {
    forEach,
    formatHM,
    formatNumber,
+   hasFlag,
    reduceOf,
    safeParseInt,
    sizeOf,
@@ -160,6 +161,36 @@ export async function handleChatCommand(command: string): Promise<void> {
          } catch (error) {
             addSystemMessage(String(error));
          }
+         break;
+      }
+      case "getplayerflag": {
+         if (!parts[1]) {
+            throw new Error("Invalid command format");
+         }
+         const flag = await client.getPlayerFlag(parts[1]);
+         addSystemMessage(
+            [
+               `Flag=${flag.toString(2)}`,
+               `Completely=${hasFlag(flag, BanFlag.Completely)}`,
+               `TribuneOnly=${hasFlag(flag, BanFlag.TribuneOnly)}`,
+               `NoRename=${hasFlag(flag, BanFlag.NoRename)}`,
+            ].join(", "),
+         );
+         break;
+      }
+      case "setplayerflag": {
+         if (!parts[1] || !parts[2]) {
+            throw new Error("Invalid command format");
+         }
+         const flag = await client.setPlayerFlag(parts[1], parseInt(parts[2], 2));
+         addSystemMessage(
+            [
+               `Flag=${flag.toString(2)}`,
+               `Completely=${hasFlag(flag, BanFlag.Completely)}`,
+               `TribuneOnly=${hasFlag(flag, BanFlag.TribuneOnly)}`,
+               `NoRename=${hasFlag(flag, BanFlag.NoRename)}`,
+            ].join(", "),
+         );
          break;
       }
       case "announce": {
