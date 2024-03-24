@@ -233,12 +233,10 @@ export function HeadquarterBuildingBody({
          <WonderComponent gameState={gameState} />
          <fieldset>
             <legend>{t(L.SteamAchievement)}</legend>
-            <div
-               className="text-link text-strong"
-               onClick={() => Singleton().routeTo(SteamAchievementPage, {})}
-            >
-               {t(L.SteamAchievementDetails)}
-            </div>
+            <button onClick={() => Singleton().routeTo(SteamAchievementPage, {})} className="jcc w100 row">
+               <div className="m-icon small">emoji_events</div>
+               <div className="f1 text-strong">{t(L.SteamAchievementDetails)}</div>
+            </button>
          </fieldset>
          <BuildingColorComponent gameState={gameState} xy={xy} />
       </div>

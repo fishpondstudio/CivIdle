@@ -27,6 +27,7 @@ import { SECOND, clamp, forEach, hasFlag } from "../../../shared/utilities/Helpe
 import { TypedEvent } from "../../../shared/utilities/TypedEvent";
 import { L, t } from "../../../shared/utilities/i18n";
 import { saveGame } from "../Global";
+import { getBuildNumber, getVersion } from "../logic/Version";
 import { showToast } from "../ui/GlobalModal";
 import { makeObservableHook } from "../utilities/Hook";
 import { playBubble, playKaching } from "../visuals/Sound";
@@ -150,12 +151,24 @@ export async function connectWebSocket(): Promise<number> {
          steamTicketTime = Date.now();
       }
       getGameOptions().id = `steam:${await SteamClient.getSteamId()}`;
-      ws = new WebSocket(
-         `${getServerAddress()}/?appId=${await SteamClient.getAppId()}&ticket=${steamTicket}&platform=steam&steamId=${await SteamClient.getSteamId()}`,
-      );
+      const params = [
+         `appId=${await SteamClient.getAppId()}`,
+         `ticket=${steamTicket}`,
+         "platform=steam",
+         `steamId=${await SteamClient.getSteamId()}`,
+         `version=${getVersion()}`,
+         `build=${getBuildNumber()}`,
+      ];
+      ws = new WebSocket(`${getServerAddress()}/?${params.join("&")}`);
    } else {
       const token = `${getGameOptions().id}:${getGameOptions().token ?? getGameOptions().id}`;
-      ws = new WebSocket(`${getServerAddress()}/?platform=web&ticket=${token}`);
+      const params = [
+         `ticket=${token}`,
+         "platform=web",
+         `version=${getVersion()}`,
+         `build=${getBuildNumber()}`,
+      ];
+      ws = new WebSocket(`${getServerAddress()}/?${params.join("&")}`);
    }
 
    if (!ws) {

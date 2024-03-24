@@ -1,7 +1,7 @@
 import { BACKUP_RECOVERY_URL } from "../../../shared/logic/Constants";
 import { L, t } from "../../../shared/utilities/i18n";
 import logo from "../../images/icon.png";
-import { getVersion } from "../logic/Version";
+import { getFullVersion } from "../logic/Version";
 import { SteamClient, isSteam } from "../rpc/SteamClient";
 import { openUrl } from "../utilities/Platform";
 import { Singleton } from "../utilities/Singleton";
@@ -21,7 +21,7 @@ export function AboutModal(): React.ReactNode {
                </div>
                <div className="f1">
                   <div className="text-strong">{t(L.CivIdle)}</div>
-                  <div>{getVersion()}</div>
+                  <div>{getFullVersion()}</div>
                   <div>{t(L.CivIdleInfo)}</div>
                   {L.CurrentLanguage === "English" ? null : (
                      <div>

@@ -4,7 +4,7 @@ import { OnKeydown } from "../../../shared/logic/Shortcut";
 import { formatPercent } from "../../../shared/utilities/Helper";
 import "../../css/LoadingPage.css";
 import energyStar from "../../images/energy_star.png";
-import { getVersion } from "../logic/Version";
+import { getFullVersion } from "../logic/Version";
 import { useTypedEvent } from "../utilities/Hook";
 import { openUrl } from "../utilities/Platform";
 
@@ -37,7 +37,7 @@ export function LoadingPage({
    return (
       <div className="loading-page">
          <img className="energy-star" src={energyStar} />
-         CivIdle {getVersion()}
+         CivIdle {getFullVersion()}
          <br />
          Proudly Presented by Fish Pond Studio
          <br />
