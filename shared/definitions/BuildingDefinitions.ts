@@ -551,7 +551,7 @@ export class BuildingDefinitions {
    };
    CarFactory: IBuildingDefinition = {
       name: () => t(L.CarFactory),
-      input: { Engine: 1, Steel: 1, Furniture: 1, Plastics: 1, Petrol: 5 },
+      input: { Engine: 1, Steel: 1, Furniture: 1, Cable: 1, Plastics: 1, Petrol: 5 },
       output: { Car: 1 },
       power: true,
    };

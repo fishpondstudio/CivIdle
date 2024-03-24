@@ -1070,4 +1070,11 @@ export const EN = {
    UNGeneralAssemblyVoteEndIn: "You can change your vote any time before the voting ends in <b>%{time}</b>",
    UNGeneralAssemblyMultipliers:
       "<b>+%{count}</b> Production, Worker Capacity and Storage Multpliers for <b>%{buildings}</b>",
+   JohnDRockefeller: "John D. Rockefeller",
+   RudolfDiesel: "Rudolf Diesel",
+   PierreDeCoubertin: "Pierre de Coubertin",
+   CharlesParsons: "Charles Parsons",
+   RichardJordanGatling: "Richard Jordan Gatling",
+   JosephPulitzer: "Joseph Pulitzer",
+   CharlesMartinHall: "Charles Martin Hall",
 };
