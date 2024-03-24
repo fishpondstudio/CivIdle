@@ -54,7 +54,7 @@ enum BuildingFilter {
    Tier11 = 1 << 11,
    Tier12 = 1 << 12,
 
-   NotBuilt = 1 << 21,
+   NotBuilt = 1 << 28,
 }
 
 let lastBuild: Building | null = null;
@@ -177,7 +177,11 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
                   { name: "", sortable: false },
                ]}
                data={keysOf(unlockedBuildings(gs)).filter((v) => {
-                  let filter = buildingFilter === 0;
+                  if ((sizeOf(constructed.get(v)) ?? 0) >= (Config.Building[v].max ?? Infinity)) {
+                     return false;
+                  }
+
+                  let filter = (buildingFilter & 0x0fffffff) === 0;
 
                   for (let i = 0; i < 12; i++) {
                      if (hasFlag(buildingFilter, 1 << i)) {
@@ -186,7 +190,6 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
                   }
 
                   if (hasFlag(buildingFilter, BuildingFilter.NotBuilt)) {
-                     console.log(v, (buildingByType.get(v)?.size ?? 0) === 0);
                      filter &&= (buildingByType.get(v)?.size ?? 0) === 0;
                   }
 
@@ -214,9 +217,6 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
                   }
                }}
                renderRow={(k) => {
-                  if ((sizeOf(constructed.get(k)) ?? 0) >= (Config.Building[k].max ?? Infinity)) {
-                     return null;
-                  }
                   const building = Config.Building[k];
                   const buildCost = getBuildingCost({
                      type: k,

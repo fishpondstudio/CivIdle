@@ -37,6 +37,7 @@ import {
    DEFAULT_STOCKPILE_CAPACITY,
    DEFAULT_STOCKPILE_MAX,
    IMarketBuildingData,
+   PRIORITY_MAX,
    PRIORITY_MIN,
    ResourceImportOptions,
    type IBuildingData,
@@ -509,6 +510,10 @@ export function getCurrentPriority(building: IBuildingData, gs: GameState): numb
    if (!hasFeature(GameFeature.BuildingProductionPriority, gs)) {
       return PRIORITY_MIN;
    }
+
+   building.constructionPriority = clamp(building.constructionPriority, PRIORITY_MIN, PRIORITY_MAX);
+   building.productionPriority = clamp(building.productionPriority, PRIORITY_MIN, PRIORITY_MAX);
+
    switch (building.status) {
       case "building":
       case "upgrading":
@@ -516,7 +521,7 @@ export function getCurrentPriority(building: IBuildingData, gs: GameState): numb
       case "completed":
          return building.productionPriority;
       default:
-         return 0;
+         return PRIORITY_MIN;
    }
 }
 
