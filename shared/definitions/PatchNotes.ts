@@ -5,6 +5,10 @@ interface PatchNote {
 
 export const PatchNotes: PatchNote[] = [
    {
+      version: "0.4.3",
+      content: [["Bugfix", "This version contains code that prepares for version 0.5.0"]],
+   },
+   {
       version: "0.4.2",
       content: [
          ["Bugfix", "Fix a bug where upgrade shortcut key is incorrectly applied for Wonder"],

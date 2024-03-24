@@ -16,7 +16,12 @@ import type {
    IUser,
    IWelcomeMessage,
 } from "../../../shared/utilities/Database";
-import { AccountLevel, ChatAttributes, MessageType } from "../../../shared/utilities/Database";
+import {
+   AccountLevel,
+   ChatAttributes,
+   MessageType,
+   ServerWSErrorCode,
+} from "../../../shared/utilities/Database";
 import { vacuumChat } from "../../../shared/utilities/DatabaseShared";
 import { SECOND, clamp, forEach, hasFlag } from "../../../shared/utilities/Helper";
 import { TypedEvent } from "../../../shared/utilities/TypedEvent";
@@ -88,9 +93,12 @@ function getServerAddress(): string {
 }
 
 export function getTrades(): IClientTrade[] {
-   return Array.from(trades.values()).filter(
-      (trade) => Config.Resource[trade.buyResource] && Config.Resource[trade.sellResource],
-   );
+   return Array.from(trades.values()).filter((trade) => {
+      if (Config.Resource[trade.buyResource] && Config.Resource[trade.sellResource]) {
+         return true;
+      }
+      return false;
+   });
 }
 
 export const usePlayerMap = makeObservableHook(OnPlayerMapChanged, () => playerMap);
@@ -248,14 +256,29 @@ export async function connectWebSocket(): Promise<number> {
       reconnect = 0;
    };
 
-   ws.onclose = () => {
+   ws.onclose = (ev) => {
       ws = null;
       user = null;
       OnUserChanged.emit(null);
-      setTimeout(connectWebSocket, Math.min(Math.pow(2, reconnect++) * SECOND, 16 * SECOND));
+      switch (ev.code) {
+         case ServerWSErrorCode.BadRequest:
+         case ServerWSErrorCode.NotAllowed:
+            break;
+         case ServerWSErrorCode.InvalidTicket:
+            steamTicket = null;
+            retryConnect();
+            break;
+         default:
+            retryConnect();
+            break;
+      }
    };
 
    return promise;
+}
+
+function retryConnect() {
+   setTimeout(connectWebSocket, Math.min(Math.pow(2, reconnect++) * SECOND, 16 * SECOND));
 }
 
 function handleRpcResponse(response: any) {

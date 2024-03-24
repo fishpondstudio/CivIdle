@@ -147,6 +147,21 @@ export async function handleChatCommand(command: string): Promise<void> {
          addSystemMessage(JSON.stringify(user));
          break;
       }
+      case "playersave": {
+         if (!parts[1]) {
+            throw new Error("Invalid command format");
+         }
+         try {
+            const save = await client.queryPlayerSave(parts[1]);
+            const newHandle = await window.showSaveFilePicker();
+            const writableStream = await newHandle.createWritable();
+            await writableStream.write(save);
+            await writableStream.close();
+         } catch (error) {
+            addSystemMessage(String(error));
+         }
+         break;
+      }
       case "announce": {
          if (!parts[1] || !parts[2]) {
             throw new Error("Invalid command format");

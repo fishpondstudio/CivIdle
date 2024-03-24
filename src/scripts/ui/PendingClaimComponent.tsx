@@ -15,7 +15,8 @@ import { showToast } from "./GlobalModal";
 import { FormatNumber } from "./HelperComponents";
 
 export function PendingClaimComponent({ gameState, xy }: IBuildingComponentProps) {
-   const [pendingClaims, setPendingClaims] = useState<IPendingClaim[]>([]);
+   const [_pendingClaims, setPendingClaims] = useState<IPendingClaim[]>([]);
+   const pendingClaims = _pendingClaims.filter((trade) => trade.resource in Config.Resource);
 
    useEffect(() => {
       client.getPendingClaims().then(setPendingClaims);
@@ -90,35 +91,31 @@ export function PendingClaimComponent({ gameState, xy }: IBuildingComponentProps
                   <th className="text-right">{t(L.PlayerTradeAmount)}</th>
                   <th></th>
                </tr>
-               {pendingClaims
-                  .filter((trade) => trade.resource in Config.Resource)
-                  .map((trade) => {
-                     return (
-                        <tr key={trade.id}>
-                           <td>
-                              {hasFlag(trade.flag, PendingClaimFlag.Tariff) ? (
-                                 <Tippy content={t(L.PlayerTradeTariffTooltip)}>
-                                    <div className="m-icon small text-center text-orange">
-                                       currency_exchange
-                                    </div>
-                                 </Tippy>
-                              ) : null}
-                           </td>
-                           <td>{Config.Resource[trade.resource as Resource].name()}</td>
-                           <td>
-                              <FixedLengthText text={trade.fillBy} length={10} />
-                           </td>
-                           <td className="text-right">
-                              <FormatNumber value={trade.amount} />
-                           </td>
-                           <td className="text-right">
-                              <div className="text-link text-strong" onClick={() => claimTrades([trade])}>
-                                 {t(L.PlayerTradeClaim)}
-                              </div>
-                           </td>
-                        </tr>
-                     );
-                  })}
+               {pendingClaims.map((trade) => {
+                  return (
+                     <tr key={trade.id}>
+                        <td>
+                           {hasFlag(trade.flag, PendingClaimFlag.Tariff) ? (
+                              <Tippy content={t(L.PlayerTradeTariffTooltip)}>
+                                 <div className="m-icon small text-center text-orange">currency_exchange</div>
+                              </Tippy>
+                           ) : null}
+                        </td>
+                        <td>{Config.Resource[trade.resource as Resource].name()}</td>
+                        <td>
+                           <FixedLengthText text={trade.fillBy} length={10} />
+                        </td>
+                        <td className="text-right">
+                           <FormatNumber value={trade.amount} />
+                        </td>
+                        <td className="text-right">
+                           <div className="text-link text-strong" onClick={() => claimTrades([trade])}>
+                              {t(L.PlayerTradeClaim)}
+                           </div>
+                        </td>
+                     </tr>
+                  );
+               })}
             </table>
          </div>
          <div className="separator" />
