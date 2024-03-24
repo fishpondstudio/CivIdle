@@ -276,7 +276,7 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
                                  )}
                                  <div>
                                     {jsxMapOf(building.input, (res, amount) => (
-                                       <span className="mr5">
+                                       <span key={res} className="mr5">
                                           {Config.Resource[res].name()} x{formatNumber(amount)}
                                        </span>
                                     ))}
@@ -288,7 +288,7 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
                                  )}
                                  <div>
                                     {jsxMapOf(building.output, (res, amount) => (
-                                       <span className="mr5">
+                                       <span key={res} className="mr5">
                                           {Config.Resource[res].name()} x{formatNumber(amount)}
                                        </span>
                                     ))}

@@ -26,6 +26,7 @@ export const SECOND = 1000;
 export const MINUTE = SECOND * 60;
 export const HOUR = 60 * MINUTE;
 export const DAY = 24 * HOUR;
+export const WEEK = 7 * DAY;
 
 export function escapeHtml(unsafe: string): string {
    return unsafe

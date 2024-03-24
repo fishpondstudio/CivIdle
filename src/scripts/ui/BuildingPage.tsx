@@ -17,6 +17,7 @@ import { PetraBuildingBody } from "./PetraBuildingBody";
 import { PlayerTradeBuildingBody } from "./PlayerTradeBuildingBody";
 import { StPetersBasilicaBuildingBody } from "./StPetersBasilicaBuildingBody";
 import { StatisticsBuildingBody } from "./StatisticsBuildingBody";
+import { UnitedNationsBuildingBody } from "./UnitedNationsBuildingBody";
 import { WarehouseBuildingBody } from "./WarehouseBuildingBody";
 
 const BuildingBodyOverride: Partial<Record<Building, FunctionComponent<IBuildingComponentProps>>> = {
@@ -29,6 +30,7 @@ const BuildingBodyOverride: Partial<Record<Building, FunctionComponent<IBuilding
    OxfordUniversity: OxfordUniversityBuildingBody,
    StPetersBasilica: StPetersBasilicaBuildingBody,
    GrandBazaar: GrandBazaarBuildingBody,
+   UnitedNations: UnitedNationsBuildingBody,
 };
 
 export function BuildingPage(props: { tile: ITileData }): React.ReactNode {

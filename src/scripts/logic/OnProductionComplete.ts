@@ -19,12 +19,15 @@ import {
    getTypeBuildings,
    getXyBuildings,
 } from "../../../shared/logic/IntraTickCache";
+import { getVotedBoostId } from "../../../shared/logic/PlayerTradeLogic";
 import { getGreatPersonThisRunLevel } from "../../../shared/logic/RebornLogic";
 import { getBuildingsThatProduce } from "../../../shared/logic/ResourceLogic";
 import { Tick } from "../../../shared/logic/TickLogic";
 import { MarketOptions, type IMarketBuildingData, type IPetraBuildingData } from "../../../shared/logic/Tile";
 import { addMultiplier } from "../../../shared/logic/Update";
+import { VotedBoostType, type IGetVotedBoostResponse } from "../../../shared/utilities/Database";
 import {
+   MINUTE,
    forEach,
    hasFlag,
    keysOf,
@@ -37,7 +40,11 @@ import {
    type Tile,
 } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
+import { client } from "../rpc/RPCClient";
 import { Singleton } from "../utilities/Singleton";
+
+let votedBoost: IGetVotedBoostResponse | null = null;
+const lastVotedBoostUpdatedAt = 0;
 
 export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boolean }): void {
    const gs = getGameState();
@@ -643,6 +650,27 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
             }
          }
          break;
+      }
+      case "UnitedNations": {
+         if (Date.now() - lastVotedBoostUpdatedAt < MINUTE) {
+            return;
+         }
+         if (votedBoost === null || getVotedBoostId() !== votedBoost.id) {
+            client.getVotedBoosts().then((resp) => {
+               votedBoost = resp;
+            });
+         }
+         if (votedBoost) {
+            const current = votedBoost.current.options[votedBoost.current.voted];
+            switch (current.type) {
+               case VotedBoostType.Multipliers: {
+                  current.buildings.forEach((b) => {
+                     addMultiplier(b, { output: 5, worker: 5, storage: 5 }, buildingName);
+                  });
+                  break;
+               }
+            }
+         }
       }
       // case "ArcDeTriomphe": {
       //    forEach(Config.Building, (b, def) => {

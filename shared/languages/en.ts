@@ -1065,4 +1065,9 @@ export const EN = {
    ZenobiaDesc: "+%{value}h Petra Warp Storage",
    ZhengHe: "Zheng He",
    Zoroaster: "Zoroaster",
+   UNGeneralAssemblyCurrent: "Current UN General Assembly #%{id}",
+   UNGeneralAssemblyNext: "Upcoming UN General Assembly #%{id}",
+   UNGeneralAssemblyVoteEndIn: "You can change your vote any time before the voting ends in <b>%{time}</b>",
+   UNGeneralAssemblyMultipliers:
+      "<b>+%{count}</b> Production, Worker Capacity and Storage Multpliers for <b>%{buildings}</b>",
 };
