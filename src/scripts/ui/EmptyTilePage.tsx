@@ -179,14 +179,15 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
                data={keysOf(unlockedBuildings(gs)).filter((v) => {
                   let filter = buildingFilter === 0;
 
-                  if (hasFlag(buildingFilter, BuildingFilter.NotBuilt)) {
-                     filter &&= (buildingByType.get(v)?.size ?? 0) === 0;
-                  }
-
                   for (let i = 0; i < 12; i++) {
                      if (hasFlag(buildingFilter, 1 << i)) {
                         filter ||= Config.BuildingTier[v] === i;
                      }
+                  }
+
+                  if (hasFlag(buildingFilter, BuildingFilter.NotBuilt)) {
+                     console.log(v, (buildingByType.get(v)?.size ?? 0) === 0);
+                     filter &&= (buildingByType.get(v)?.size ?? 0) === 0;
                   }
 
                   const s = search.toLowerCase();
@@ -205,8 +206,11 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
                   switch (col) {
                      case 1:
                         return Config.Building[a]!.name().localeCompare(Config.Building[b]!.name());
-                     default:
-                        return (Config.BuildingTier[a] ?? 0) - (Config.BuildingTier[b] ?? 0);
+                     default: {
+                        const diff = (Config.BuildingTier[a] ?? 0) - (Config.BuildingTier[b] ?? 0);
+                        if (diff !== 0) return diff;
+                        return Config.Building[a]!.name().localeCompare(Config.Building[b]!.name());
+                     }
                   }
                }}
                renderRow={(k) => {
