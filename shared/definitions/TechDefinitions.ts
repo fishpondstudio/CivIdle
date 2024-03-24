@@ -307,7 +307,7 @@ export class TechDefinitions {
       requireTech: ["Architecture"],
       unlockBuilding: ["CaravelBuilder"],
       buildingMultiplier: {
-         Library: { output: 10, input: 10 },
+         Library: { output: 1 },
       },
       additionalUpgrades: [() => t(L.SeaTradeUpgrade, { tariff: formatPercent(SEA_TILE_COST_1) })],
    };
@@ -371,8 +371,8 @@ export class TechDefinitions {
       unlockBuilding: ["LensWorkshop"],
       globalMultiplier: { builderCapacity: 1 },
       buildingMultiplier: {
-         Library: { output: 5 },
-         School: { output: 5 },
+         Library: { output: 1 },
+         School: { output: 1 },
       },
       additionalUpgrades: [() => t(L.SeaTradeUpgrade, { tariff: formatPercent(SEA_TILE_COST_2) })],
    };
@@ -494,6 +494,11 @@ export class TechDefinitions {
       requireTech: ["Constitution", "Revolution", "PrivateOwnership"],
       globalMultiplier: {
          builderCapacity: 1,
+      },
+      buildingMultiplier: {
+         Library: { output: 1 },
+         School: { output: 1 },
+         University: { output: 1 },
       },
       unlockBuilding: ["Parliament"],
       additionalUpgrades: [() => t(L.SeaTradeUpgrade, { tariff: formatPercent(SEA_TILE_COST_3) })],
@@ -626,6 +631,12 @@ export class TechDefinitions {
       requireTech: ["Refinery", "GasPipeline"],
       revealDeposit: ["Uranium"],
       unlockBuilding: ["UraniumMine"],
+      buildingMultiplier: {
+         Library: { output: 1 },
+         School: { output: 1 },
+         University: { output: 1 },
+         PublishingHouse: { output: 1 },
+      },
    };
 
    MotionPicture: ITechDefinition = {
