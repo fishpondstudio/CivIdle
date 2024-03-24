@@ -572,13 +572,13 @@ export function getHMS(t: number): [number, number, number] {
    return [h, m, s];
 }
 
-export function formatHMS(t: number) {
+export function formatHMS(t: number, alwaysShowHour = false) {
    if (!Number.isFinite(t)) {
       return "--:--";
    }
    t = clamp(t, 0, Infinity);
    const hms = getHMS(t);
-   if (hms[0] === 0) {
+   if (hms[0] === 0 && !alwaysShowHour) {
       return `${pad(hms[1])}:${pad(hms[2])}`;
    }
    if (hms[0] > 24 * 4) {

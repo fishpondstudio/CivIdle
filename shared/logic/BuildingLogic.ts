@@ -433,22 +433,14 @@ export function getBuildingCost(building: Pick<IBuildingData, "type" | "level">)
          }
       }
       const multiplier = Math.round(
-         100 * techIdx + 100 * Math.pow(techIdx, 3) + 5 * Math.pow(5, ageIdx) * techIdx,
+         300 +
+            10 * Math.pow(ageIdx, 3) * Math.pow(techIdx, 2) +
+            (100 * Math.pow(5, ageIdx) * Math.pow(1.5, techIdx)) / Math.pow(techIdx, 2),
       );
-      // const multiplier = Math.round(
-      //    100 + 100 * Math.pow(techIdx, 2) + Math.pow(5, ageIdx) * Math.pow(1.5, techIdx),
-      // );
-      // console.log(
-      //    building.type,
-      //    500 * techIdx,
-      //    100 * Math.pow(techIdx, 3),
-      //    Math.pow(5, ageIdx) * Math.pow(1.5, techIdx),
-      // );
 
       keysOf(cost).forEach((res) => {
          const price = Config.ResourcePrice[res] ?? 1;
          cost[res] = (multiplier * cost[res]!) / price;
-         // cost[res] = (multiplier * cost[res]! * tier) / Math.pow(price, 0.9);
       });
    } else {
       const multiplier = 10;
@@ -474,8 +466,7 @@ export function getWonderBaseBuilderCapacity(type: Building): number {
          ageIdx = age.idx;
       }
    }
-   // const capacity = Math.round(-10 * Math.pow(ageIdx, 2) + 20 * techIdx + Math.pow(totalAmount / 3600, 0.85));
-   const capacity = totalAmount / (1500 * (ageIdx + 1));
+   const capacity = totalAmount / (500 * (Math.pow(ageIdx, 1.5) + 3) + 50 * Math.pow(techIdx, 1.5));
    return capacity;
 }
 
