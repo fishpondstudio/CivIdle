@@ -7,6 +7,7 @@ export type SteamClient = Omit<Client, "init" | "runCallbacks">;
 
 app.commandLine.appendSwitch("enable-logging", "file");
 app.commandLine.appendSwitch("log-file", path.join(getLocalGameSavePath(), "CivIdle.log"));
+app.commandLine.appendSwitch("enable-experimental-web-platform-features");
 
 export function getGameSavePath(): string {
    return path.join(app.getPath("appData"), "CivIdleSaves");
