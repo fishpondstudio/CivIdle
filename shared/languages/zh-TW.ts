@@ -110,8 +110,7 @@ export const ZH_TW = {
       "複製這資源的建築物顏色。如果有多座建築物生產此資源，將隨機選擇其中一座。",
    BuildingMultipliers: "增強",
    BuildingName: "建築名",
-   BuildingNoMultiplier:
-      "%{building} <b>不受任何乘數影響</b>（生產、勞動能力、儲存等）",
+   BuildingNoMultiplier: "%{building} <b>不受任何乘數影響</b>（生產、勞動能力、儲存等）",
    BuildingPriority: "建築優先級",
    BuildingSearchText: "輸入建築物名稱進行搜索",
    BuildingTier: "階",
@@ -288,8 +287,7 @@ export const ZH_TW = {
    Flour: "麵粉",
    FlourMill: "麵粉磨坊",
    FontSizeScale: "字體大小比例(Font Size Scale)",
-   FontSizeScaleDescHTML:
-      "更改遊戲 UI 的字體大小比例。 <b>將比例設為大於 1 倍可能會破壞某些 UI 佈局</b>",
+   FontSizeScaleDescHTML: "更改遊戲 UI 的字體大小比例。 <b>將比例設為大於 1 倍可能會破壞某些 UI 佈局</b>",
    ForbiddenCity: "紫禁城",
    ForbiddenCityDesc: "所有造紙作坊、作家協會以及印刷廠， 獲得 +1 生產指數、勞動者能力指數以及存儲指數",
    Frigate: "護衛艦",
@@ -375,7 +373,8 @@ export const ZH_TW = {
    HimejiCastleDesc:
       "所有輕快帆船船塢、大帆船船塢以及護衛艦船塢，獲得 +1 生產指數、勞動者能力指數以及存儲指數",
    Hollywood: "好萊塢(Hollywood)",
-   HollywoodDesc: "+5 幸福感。 鄰近2格範圍的消耗或產生文化 儲備充足(well-stocked) 的建築物，都可以增加 +1 幸福感。",
+   HollywoodDesc:
+      "+5 幸福感。 鄰近2格範圍的消耗或產生文化 儲備充足(well-stocked) 的建築物，都可以增加 +1 幸福感。",
    HolyEmpire: "神職",
    Horse: "馬匹",
    HorsebackRiding: "馬術",
@@ -442,7 +441,8 @@ export const ZH_TW = {
    ManagePermanentGreatPeople: "管理永久性的偉人",
    ManageWonders: "奇觀管理",
    ManhattanProject: "曼哈頓計畫(Manhattan Project)",
-   ManhattanProjectDesc: "所有鈾礦，生產、勞動者和儲存 的能力指數+2。 與鈾礦(建於鈾地塊上的)相鄰的，鈾濃縮場與原子設施的生產指數+1",
+   ManhattanProjectDesc:
+      "所有鈾礦，生產、勞動者和儲存 的能力指數+2。 與鈾礦(建於鈾地塊上的)相鄰的，鈾濃縮場與原子設施的生產指數+1",
    Marble: "石雕",
    Marbleworks: "石雕鋪",
    Market: "集市",
@@ -682,8 +682,7 @@ export const ZH_TW = {
    ReneDescartes: "勒內·笛卡爾",
    RequiredDeposit: "所需沉積資源",
    RequirePower: "需要供電(Require Power)",
-   RequirePowerDesc:
-      "該建築物需要建在有電源的地塊上，並且可以將電源延伸到其相鄰的地塊",
+   RequirePowerDesc: "該建築物需要建在有電源的地塊上，並且可以將電源延伸到其相鄰的地塊",
    Research: "研究",
    ResearchMenu: "研究",
    ResourceAmount: "數量",
@@ -850,8 +849,7 @@ export const ZH_TW = {
    SydneyOperaHouseDesc: "雪梨的多場館表演藝術中心",
    Synthetics: "合成材料",
    TajMahal: "泰姬陵",
-   TajMahalDescV2:
-      "古典和中世紀各誕生了一位偉人。 升級 20 級以上的建築物時 +5 建造者能力指數,"
+   TajMahalDescV2: "古典和中世紀各誕生了一位偉人。 升級 20 級以上的建築物時 +5 建造者能力指數",
    TangOfShang: "商湯",
    TangOfShangDesc: "閒置勞動者產出科技 +%{value}",
    Tank: "坦克",
@@ -942,7 +940,8 @@ export const ZH_TW = {
    UnexploredTile: "未探索地塊",
    UniqueBuildings: "獨特建築",
    UnitedNations: "聯合國(United Nations)",
-   UnitedNationsDesc: "所有 IV、V和VI 階級建築，生產、勞動者和儲存 能力指數 +1。 參加聯合國大會並每週投票支持額外獎勵",
+   UnitedNationsDesc:
+      "所有 IV、V和VI 階級建築，生產、勞動者和儲存 能力指數 +1。 參加聯合國大會並每週投票支持額外獎勵",
    UniversalHealthcare: "全民醫療保健",
    University: "大學",
    UnlockableResearch: "可解鎖研究",
