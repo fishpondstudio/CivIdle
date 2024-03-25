@@ -652,6 +652,12 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          break;
       }
       case "UnitedNations": {
+         forEach(Config.BuildingTier, (building, tier) => {
+            if (tier >= 4 && tier <= 6) {
+               addMultiplier(building, { output: 1, worker: 1, storage: 1 }, buildingName);
+            }
+         });
+
          if (Date.now() - lastVotedBoostUpdatedAt < MINUTE) {
             return;
          }
