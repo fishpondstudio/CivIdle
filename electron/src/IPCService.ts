@@ -79,6 +79,10 @@ export class IPCService {
       shell.openPath(path.join(getLocalGameSavePath(), this.getAppId().toString(), this.getSteamId()));
    }
 
+   public openLogFolder(): void {
+      shell.openPath(getLocalGameSavePath());
+   }
+
    public unlockAchievement(key: string): boolean {
       return this._client.achievement.activate(key);
    }

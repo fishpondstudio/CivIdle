@@ -11,6 +11,7 @@ import {
    formatNumber,
    isEmpty,
    keysOf,
+   mapOf,
    mapSafeAdd,
    numberToRoman,
    round,
@@ -407,4 +408,25 @@ export function calculateTierAndPrice(log?: (val: string) => void) {
          .join("\n")}`,
    );
    log?.(`>>>>>>>>>> Building Input Cost <<<<<<<<<<\n${buildingInputCost.join("\n")}`);
+
+   // keysOf(Config.Tech)
+   //    .sort((a, b) => Config.Tech[a].column - Config.Tech[b].column)
+   //    .forEach((tech) => {
+   //       Config.Tech[tech].unlockBuilding?.forEach((b) => {
+   //          if (!isSpecialBuilding(b)) {
+   //             log?.(logBuildingFormula(b));
+   //          }
+   //       });
+   //    });
+
+   function logBuildingFormula(b: Building): string {
+      const building = Config.Building[b];
+      return [
+         building.name(),
+         ": ",
+         mapOf(building.input, (res, value) => `${Config.Resource[res].name()} x${value}`).join(" + "),
+         " => ",
+         mapOf(building.output, (res, value) => `${Config.Resource[res].name()} x${value}`).join(" + "),
+      ].join("");
+   }
 }

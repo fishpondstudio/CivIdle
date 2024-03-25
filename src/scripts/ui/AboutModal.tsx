@@ -36,9 +36,9 @@ export function AboutModal(): React.ReactNode {
                      {t(L.UserAgent, { driver: navigator.userAgent })}
                   </div>
                   {isSteam() ? (
-                     <div className="row mv5">
+                     <>
                         <div
-                           className="text-small text-link mr10"
+                           className="text-small text-link mt5"
                            onClick={() => SteamClient.openMainSaveFolder()}
                         >
                            {t(L.OpenSaveFolder)}
@@ -49,10 +49,13 @@ export function AboutModal(): React.ReactNode {
                         >
                            {t(L.OpenSaveBackupFolder)}
                         </div>
-                     </div>
+                        <div className="text-small text-link" onClick={() => SteamClient.openLogFolder()}>
+                           {t(L.OpenLogFolder)}
+                        </div>
+                     </>
                   ) : null}
                   <div
-                     className="text-small text-link mv5"
+                     className="text-small text-link"
                      onClick={() => {
                         openUrl(BACKUP_RECOVERY_URL);
                      }}

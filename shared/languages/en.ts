@@ -532,6 +532,7 @@ export const EN = {
    Olympics: "Olympics",
    OpenSaveBackupFolder: "Open Backup Folder",
    OpenSaveFolder: "Open Save Folder",
+   OpenLogFolder: "Open Log Folder",
    Opera: "Opera",
    OperationNotAllowedError: "This operation is not allowed",
    Optics: "Optics",
