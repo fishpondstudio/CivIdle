@@ -512,7 +512,7 @@ export const EN = {
    NextMarketUpdateIn: "Next Market Update In",
    NileRiver: "Nile River",
    NileRiverDesc:
-      "Double the effect of Hatshepsut. All wheat farms get +1 Production and Storage Multiplier. All adjacent wheat farms get +5 Production and Storage Multiplier",
+      "Double the effect of Hatshepsut (Great Person). All wheat farms get +1 Production and Storage Multiplier. All adjacent wheat farms get +5 Production and Storage Multiplier",
    NoDepositDesc:
       "There's no deposit on this tile. More deposits may be discovered when you unlock new technologies",
    NothingHere: "Nothing here",
