@@ -43,15 +43,15 @@
         "Building_Apartment": {
             "frame": {
                 "x": 830,
-                "y": 505,
+                "y": 606,
                 "w": 92,
                 "h": 100
             }
         },
         "Building_Aphrodite": {
             "frame": {
-                "x": 1119,
-                "y": 404,
+                "x": 1120,
+                "y": 505,
                 "w": 80,
                 "h": 99
             }
@@ -75,7 +75,7 @@
         "Building_Armory": {
             "frame": {
                 "x": 926,
-                "y": 403,
+                "y": 504,
                 "w": 90,
                 "h": 100
             }
@@ -234,8 +234,8 @@
         },
         "Building_Cathedral": {
             "frame": {
-                "x": 1119,
-                "y": 101,
+                "x": 1120,
+                "y": 202,
                 "w": 85,
                 "h": 100
             }
@@ -243,7 +243,7 @@
         "Building_ChariotWorkshop": {
             "frame": {
                 "x": 926,
-                "y": 303,
+                "y": 404,
                 "w": 91,
                 "h": 99
             }
@@ -290,7 +290,7 @@
         },
         "Building_CoalMine": {
             "frame": {
-                "x": 1207,
+                "x": 1208,
                 "y": 94,
                 "w": 90,
                 "h": 89
@@ -322,7 +322,7 @@
         },
         "Building_ColossusOfRhodes": {
             "frame": {
-                "x": 1298,
+                "x": 1299,
                 "y": 86,
                 "w": 75,
                 "h": 100
@@ -338,7 +338,7 @@
         },
         "Building_CopperMiningCamp": {
             "frame": {
-                "x": 1207,
+                "x": 1208,
                 "y": 184,
                 "w": 90,
                 "h": 89
@@ -371,7 +371,7 @@
         "Building_CristoRedentor": {
             "frame": {
                 "x": 830,
-                "y": 606,
+                "y": 707,
                 "w": 92,
                 "h": 100
             }
@@ -394,7 +394,7 @@
         },
         "Building_EiffelTower": {
             "frame": {
-                "x": 1298,
+                "x": 1299,
                 "y": 471,
                 "w": 65,
                 "h": 100
@@ -410,7 +410,7 @@
         },
         "Building_FishPond": {
             "frame": {
-                "x": 1207,
+                "x": 1208,
                 "y": 274,
                 "w": 90,
                 "h": 89
@@ -418,7 +418,7 @@
         },
         "Building_FlourMill": {
             "frame": {
-                "x": 1207,
+                "x": 1208,
                 "y": 814,
                 "w": 80,
                 "h": 100
@@ -498,7 +498,7 @@
         },
         "Building_GoldMiningCamp": {
             "frame": {
-                "x": 1207,
+                "x": 1208,
                 "y": 364,
                 "w": 90,
                 "h": 89
@@ -507,7 +507,7 @@
         "Building_GrandBazaar": {
             "frame": {
                 "x": 926,
-                "y": 504,
+                "y": 605,
                 "w": 90,
                 "h": 100
             }
@@ -523,7 +523,7 @@
         "Building_GreatMosqueOfSamarra": {
             "frame": {
                 "x": 926,
-                "y": 705,
+                "y": 806,
                 "w": 87,
                 "h": 100
             }
@@ -587,7 +587,7 @@
         "Building_Headquarter_Athens": {
             "frame": {
                 "x": 830,
-                "y": 303,
+                "y": 404,
                 "w": 93,
                 "h": 100
             }
@@ -634,7 +634,7 @@
         },
         "Building_House": {
             "frame": {
-                "x": 1298,
+                "x": 1299,
                 "y": 0,
                 "w": 89,
                 "h": 85
@@ -642,8 +642,8 @@
         },
         "Building_Hut": {
             "frame": {
-                "x": 1119,
-                "y": 202,
+                "x": 1120,
+                "y": 303,
                 "w": 85,
                 "h": 100
             }
@@ -674,7 +674,7 @@
         },
         "Building_IronMiningCamp": {
             "frame": {
-                "x": 1207,
+                "x": 1208,
                 "y": 454,
                 "w": 90,
                 "h": 89
@@ -690,7 +690,7 @@
         },
         "Building_KnightCamp": {
             "frame": {
-                "x": 1207,
+                "x": 1208,
                 "y": 915,
                 "w": 80,
                 "h": 100
@@ -699,14 +699,14 @@
         "Building_LensWorkshop": {
             "frame": {
                 "x": 926,
-                "y": 0,
+                "y": 101,
                 "w": 91,
                 "h": 100
             }
         },
         "Building_Library": {
             "frame": {
-                "x": 1018,
+                "x": 1019,
                 "y": 0,
                 "w": 100,
                 "h": 90
@@ -714,8 +714,8 @@
         },
         "Building_LighthouseOfAlexandria": {
             "frame": {
-                "x": 1119,
-                "y": 594,
+                "x": 1120,
+                "y": 695,
                 "w": 76,
                 "h": 100
             }
@@ -738,8 +738,8 @@
         },
         "Building_LoggingCamp": {
             "frame": {
-                "x": 1119,
-                "y": 504,
+                "x": 1120,
+                "y": 605,
                 "w": 86,
                 "h": 89
             }
@@ -770,8 +770,8 @@
         },
         "Building_ManhattanProject": {
             "frame": {
-                "x": 830,
-                "y": 707,
+                "x": 926,
+                "y": 0,
                 "w": 92,
                 "h": 100
             }
@@ -786,7 +786,7 @@
         },
         "Building_Market": {
             "frame": {
-                "x": 1298,
+                "x": 1299,
                 "y": 389,
                 "w": 89,
                 "h": 81
@@ -795,7 +795,7 @@
         "Building_MausoleumAtHalicarnassus": {
             "frame": {
                 "x": 926,
-                "y": 101,
+                "y": 202,
                 "w": 91,
                 "h": 100
             }
@@ -843,22 +843,22 @@
         "Building_MovieStudio": {
             "frame": {
                 "x": 830,
-                "y": 404,
+                "y": 505,
                 "w": 93,
                 "h": 100
             }
         },
         "Building_Museum": {
             "frame": {
-                "x": 926,
-                "y": 806,
+                "x": 1120,
+                "y": 0,
                 "w": 87,
                 "h": 100
             }
         },
         "Building_MusiciansGuild": {
             "frame": {
-                "x": 1207,
+                "x": 1208,
                 "y": 0,
                 "w": 90,
                 "h": 93
@@ -890,8 +890,8 @@
         },
         "Building_OilPress": {
             "frame": {
-                "x": 1119,
-                "y": 303,
+                "x": 1120,
+                "y": 404,
                 "w": 85,
                 "h": 100
             }
@@ -906,7 +906,7 @@
         },
         "Building_OilWell": {
             "frame": {
-                "x": 1018,
+                "x": 1019,
                 "y": 91,
                 "w": 100,
                 "h": 90
@@ -923,7 +923,7 @@
         "Building_OxfordUniversity": {
             "frame": {
                 "x": 926,
-                "y": 202,
+                "y": 303,
                 "w": 91,
                 "h": 100
             }
@@ -994,7 +994,7 @@
         },
         "Building_PlasticsFactory": {
             "frame": {
-                "x": 1018,
+                "x": 1019,
                 "y": 182,
                 "w": 90,
                 "h": 100
@@ -1026,7 +1026,7 @@
         },
         "Building_PublishingHouse": {
             "frame": {
-                "x": 1018,
+                "x": 1019,
                 "y": 283,
                 "w": 100,
                 "h": 90
@@ -1048,9 +1048,17 @@
                 "h": 95
             }
         },
+        "Building_ResearchLab": {
+            "frame": {
+                "x": 830,
+                "y": 0,
+                "w": 95,
+                "h": 100
+            }
+        },
         "Building_RifleFactory": {
             "frame": {
-                "x": 1018,
+                "x": 1019,
                 "y": 374,
                 "w": 100,
                 "h": 90
@@ -1075,7 +1083,7 @@
         "Building_SagradaFamilia": {
             "frame": {
                 "x": 926,
-                "y": 605,
+                "y": 706,
                 "w": 90,
                 "h": 99
             }
@@ -1083,14 +1091,14 @@
         "Building_SaintBasilsCathedral": {
             "frame": {
                 "x": 830,
-                "y": 0,
+                "y": 101,
                 "w": 95,
                 "h": 100
             }
         },
         "Building_Sandpit": {
             "frame": {
-                "x": 1018,
+                "x": 1019,
                 "y": 465,
                 "w": 100,
                 "h": 90
@@ -1122,7 +1130,7 @@
         },
         "Building_SiliconMiningCamp": {
             "frame": {
-                "x": 1207,
+                "x": 1208,
                 "y": 544,
                 "w": 90,
                 "h": 89
@@ -1130,7 +1138,7 @@
         },
         "Building_SilkRoad": {
             "frame": {
-                "x": 1018,
+                "x": 1019,
                 "y": 556,
                 "w": 100,
                 "h": 90
@@ -1146,7 +1154,7 @@
         },
         "Building_Stadium": {
             "frame": {
-                "x": 1018,
+                "x": 1019,
                 "y": 647,
                 "w": 100,
                 "h": 90
@@ -1178,7 +1186,7 @@
         },
         "Building_Steamworks": {
             "frame": {
-                "x": 1018,
+                "x": 1019,
                 "y": 738,
                 "w": 100,
                 "h": 90
@@ -1194,7 +1202,7 @@
         },
         "Building_StockExchange": {
             "frame": {
-                "x": 1018,
+                "x": 1019,
                 "y": 829,
                 "w": 100,
                 "h": 90
@@ -1210,7 +1218,7 @@
         },
         "Building_StoneQuarry": {
             "frame": {
-                "x": 1207,
+                "x": 1208,
                 "y": 634,
                 "w": 90,
                 "h": 89
@@ -1235,7 +1243,7 @@
         "Building_SwordForge": {
             "frame": {
                 "x": 830,
-                "y": 101,
+                "y": 202,
                 "w": 95,
                 "h": 100
             }
@@ -1282,7 +1290,7 @@
         },
         "Building_TerracottaArmy": {
             "frame": {
-                "x": 1207,
+                "x": 1208,
                 "y": 1016,
                 "w": 80,
                 "h": 100
@@ -1306,7 +1314,7 @@
         },
         "Building_University": {
             "frame": {
-                "x": 1018,
+                "x": 1019,
                 "y": 920,
                 "w": 100,
                 "h": 90
@@ -1322,7 +1330,7 @@
         },
         "Building_UraniumMine": {
             "frame": {
-                "x": 1207,
+                "x": 1208,
                 "y": 724,
                 "w": 90,
                 "h": 89
@@ -1338,7 +1346,7 @@
         },
         "Building_Vineyard": {
             "frame": {
-                "x": 1298,
+                "x": 1299,
                 "y": 187,
                 "w": 75,
                 "h": 100
@@ -1362,15 +1370,15 @@
         },
         "Building_WindMill": {
             "frame": {
-                "x": 1119,
-                "y": 0,
+                "x": 1120,
+                "y": 101,
                 "w": 87,
                 "h": 100
             }
         },
         "Building_Winery": {
             "frame": {
-                "x": 1298,
+                "x": 1299,
                 "y": 288,
                 "w": 75,
                 "h": 100
@@ -1379,7 +1387,7 @@
         "Building_WritersGuild": {
             "frame": {
                 "x": 830,
-                "y": 202,
+                "y": 303,
                 "w": 95,
                 "h": 100
             }
@@ -1391,7 +1399,7 @@
         "image": "./src/images/textures_building.png",
         "scale": 1,
         "size": {
-            "w": 1387,
+            "w": 1388,
             "h": 1334
         }
     }

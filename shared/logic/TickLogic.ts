@@ -25,7 +25,7 @@ interface ITickData {
    happiness: ReturnType<typeof calculateHappiness> | null;
    workersUsed: Map<Resource, number>;
    workersAssignment: Map<Tile, number>;
-   electrified: Map<Tile, number>;
+   electrified: Set<Tile>;
    resourcesByTile: Map<Resource, IBuildingResource[]>;
    playerTradeBuildings: Map<Tile, IBuildingData>;
    globalMultipliers: GlobalMultipliers;
@@ -34,12 +34,14 @@ interface ITickData {
    totalValue: number;
    scienceProduced: Map<Tile, number>;
    powerGrid: Set<Tile>;
+   powerPlants: Set<Tile>;
+   powerBuildings: Set<Tile>;
    happinessExemptions: Set<Tile>;
 }
 
 export function EmptyTickData(): ITickData {
    return {
-      electrified: new Map(),
+      electrified: new Set(),
       buildingMultipliers: new Map(),
       unlockedBuildings: new Set(),
       tileMultipliers: new Map(),
@@ -55,6 +57,8 @@ export function EmptyTickData(): ITickData {
       totalValue: 0,
       scienceProduced: new Map(),
       powerGrid: new Set(),
+      powerPlants: new Set(),
+      powerBuildings: new Set(),
       happinessExemptions: new Set(),
    };
 }
@@ -119,7 +123,7 @@ interface IMultiplier {
 }
 
 export type Multiplier = RequireAtLeastOne<IMultiplier>;
-export type MultiplierWithSource = Multiplier & { source: string };
+export type MultiplierWithSource = Multiplier & { source: string; unstable?: boolean };
 
 export const AllMultiplierTypes = ["input", "output", "worker", "storage"] satisfies (keyof IMultiplier)[];
 

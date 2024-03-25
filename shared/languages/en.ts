@@ -547,6 +547,7 @@ export const EN = {
    Paper: "Paper",
    PaperMaker: "Paper Maker",
    Parliament: "Parliament",
+   ResearchLab: "Research Lab",
    Parthenon: "Parthenon",
    ParthenonDescV2:
       "Two great people of Classical Age are born and you get 4 choices for each. Musician's Guilds and Painter's Guilds get +1 Production, Worker Capacity and Storage Multiplier and are exempt from -1 Happiness",

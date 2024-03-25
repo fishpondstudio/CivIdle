@@ -90,7 +90,7 @@ export const OnBuildingComplete = new TypedEvent<Tile>();
 export const OnBuildingProductionComplete = new TypedEvent<{ xy: Tile; offline: boolean }>();
 export const OnShowFloater = new TypedEvent<{ xy: Tile; amount: number }>();
 
-export function tickTech(td: IUnlockableDefinition) {
+export function tickTech(td: IUnlockableDefinition): void {
    td.unlockBuilding?.forEach((b) => {
       Tick.next.unlockedBuildings.add(b);
    });
@@ -105,7 +105,7 @@ export function tickTech(td: IUnlockableDefinition) {
    });
 }
 
-export function tickTransports(gs: GameState) {
+export function tickTransports(gs: GameState): void {
    const mahTile = Tick.current.specialBuildings.get("MausoleumAtHalicarnassus");
    const mah = mahTile ? getGrid(gs).xyToPosition(mahTile) : null;
    gs.transportation.forEach((queue) => {
@@ -128,7 +128,7 @@ export function tickTransports(gs: GameState) {
    });
 }
 
-function tickTransportation(transport: ITransportationData, mah: IPointData | null) {
+function tickTransportation(transport: ITransportationData, mah: IPointData | null): void {
    // TODO: This needs to be double checked when fuel is implemented!
    if (isTransportable(transport.fuel)) {
       transport.ticksSpent++;
@@ -157,7 +157,31 @@ function tickTransportation(transport: ITransportationData, mah: IPointData | nu
    }
 }
 
-export function tickTiles(gs: GameState, offline: boolean) {
+// This needs to be called after tickTiles
+export function tickPower(gs: GameState): void {
+   const grid = getGrid(gs);
+   console.assert(Tick.next.powerGrid.size === 0);
+
+   Tick.next.powerPlants.forEach((tile) => {
+      for (const point of grid.getNeighbors(tileToPoint(tile))) {
+         Tick.next.powerGrid.add(pointToTile(point));
+      }
+   });
+
+   let size = 0;
+   do {
+      size = Tick.next.powerGrid.size;
+      Tick.next.powerBuildings.forEach((tile) => {
+         if (Tick.next.powerGrid.has(tile)) {
+            for (const point of grid.getNeighbors(tileToPoint(tile))) {
+               Tick.next.powerGrid.add(pointToTile(point));
+            }
+         }
+      });
+   } while (size !== Tick.next.powerGrid.size);
+}
+
+export function tickTiles(gs: GameState, offline: boolean): void {
    Array.from(getXyBuildings(gs).entries())
       .sort(([_a, buildingA], [_b, buildingB]) => {
          const diff = getCurrentPriority(buildingB, gs) - getCurrentPriority(buildingA, gs);
@@ -306,7 +330,7 @@ function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
    );
    const output = getBuildingIO(xy, "output", IOCalculation.Multiplier | IOCalculation.Capacity, gs);
    const worker = getWorkersFor(xy, { exclude: { Worker: 1 } }, gs);
-   const inputWorkerCapacity = totalMultiplierFor(xy, "worker", 1, gs);
+   const inputWorkerCapacity = totalMultiplierFor(xy, "worker", 1, false, gs);
 
    //////////////////////////////////////////////////
    // Transport
@@ -413,9 +437,7 @@ function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
       return;
    }
    if (requiresPower) {
-      for (const point of getGrid(gs).getNeighbors(tileToPoint(xy))) {
-         Tick.next.powerGrid.add(pointToTile(point));
-      }
+      Tick.next.powerBuildings.add(xy);
    }
 
    ////////// Worker
@@ -447,7 +469,12 @@ function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
          useWorkers("Worker", worker.output, xy);
          deductResources(building.resources, input);
          forEach(nonTransportables, (res, amount) => {
-            mapSafeAdd(Tick.next.workersAvailable, res, amount);
+            if (res === "Science") {
+               safeAdd(getSpecialBuildings(gs).Headquarter.building.resources, res, amount);
+               Tick.next.scienceProduced.set(xy, amount);
+            } else {
+               mapSafeAdd(Tick.next.workersAvailable, res, amount);
+            }
          });
          if (!isEmpty(filterTransportable(output))) {
             Tick.next.notProducingReasons.set(xy, "StorageFull");
@@ -470,10 +497,11 @@ function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
          useWorkers("Power", requiredPower, xy);
          mapSafePush(Tick.next.tileMultipliers, xy, {
             source: t(L.Electrification),
-            input: getElectrificationEfficiency(building.type),
+            input: building.electrification * getElectrificationEfficiency(building.type),
             output: building.electrification,
+            unstable: true,
          });
-         Tick.next.electrified.set(xy, building.electrification);
+         Tick.next.electrified.add(xy);
       }
    }
 
@@ -491,10 +519,7 @@ function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
       } else {
          mapSafeAdd(Tick.next.workersAvailable, res, v);
          if (res === "Power") {
-            Tick.next.powerGrid.add(xy);
-            for (const neighbor of getGrid(gs).getNeighbors(tileToPoint(xy))) {
-               Tick.next.powerGrid.add(pointToTile(neighbor));
-            }
+            Tick.next.powerPlants.add(xy);
          }
       }
    });
@@ -503,7 +528,7 @@ function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
 
 function tickWarehouseAutopilot(warehouse: IWarehouseBuildingData, xy: Tile, gs: GameState): void {
    let capacity = getWarehouseIdleCapacity(xy, gs);
-   const workerCapacity = totalMultiplierFor(xy, "worker", 1, gs);
+   const workerCapacity = totalMultiplierFor(xy, "worker", 1, false, gs);
    const transportCapacity =
       workerCapacity +
       Tick.current.globalMultipliers.transportCapacity.reduce((prev, curr) => prev + curr.value, 0);

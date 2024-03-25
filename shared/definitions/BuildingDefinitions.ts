@@ -353,8 +353,8 @@ export class BuildingDefinitions {
    };
    PublishingHouse: IBuildingDefinition = {
       name: () => t(L.PublishingHouse),
-      input: { Philosophy: 1, Book: 10 },
-      output: { Newspaper: 1, Science: 200 },
+      input: { Politics: 2, Book: 5 },
+      output: { Newspaper: 1, Science: 400 },
    };
    Museum: IBuildingDefinition = {
       name: () => t(L.Museum),
@@ -375,6 +375,11 @@ export class BuildingDefinitions {
       name: () => t(L.Parliament),
       input: { Culture: 2, Philosophy: 2, Law: 2 },
       output: { Politics: 1 },
+   };
+   ResearchLab: IBuildingDefinition = {
+      name: () => t(L.ResearchLab),
+      input: { Culture: 1, Philosophy: 1 },
+      output: { Science: 960 },
    };
    MagazinePublisher: IBuildingDefinition = {
       name: () => t(L.MagazinePublisher),

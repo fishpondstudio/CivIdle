@@ -409,15 +409,15 @@ export function calculateTierAndPrice(log?: (val: string) => void) {
    );
    log?.(`>>>>>>>>>> Building Input Cost <<<<<<<<<<\n${buildingInputCost.join("\n")}`);
 
-   // keysOf(Config.Tech)
-   //    .sort((a, b) => Config.Tech[a].column - Config.Tech[b].column)
-   //    .forEach((tech) => {
-   //       Config.Tech[tech].unlockBuilding?.forEach((b) => {
-   //          if (!isSpecialBuilding(b)) {
-   //             log?.(logBuildingFormula(b));
-   //          }
-   //       });
-   //    });
+   keysOf(Config.Tech)
+      .sort((a, b) => Config.Tech[a].column - Config.Tech[b].column)
+      .forEach((tech) => {
+         Config.Tech[tech].unlockBuilding?.forEach((b) => {
+            if (!isSpecialBuilding(b)) {
+               log?.(logBuildingFormula(b));
+            }
+         });
+      });
 
    function logBuildingFormula(b: Building): string {
       const building = Config.Building[b];

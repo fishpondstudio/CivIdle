@@ -46,13 +46,20 @@ import {
    type IWarehouseBuildingData,
 } from "./Tile";
 
-export function totalMultiplierFor(xy: Tile, type: keyof Multiplier, base: number, gs: GameState): number {
+export function totalMultiplierFor(
+   xy: Tile,
+   type: keyof Multiplier,
+   base: number,
+   stableOnly: boolean,
+   gs: GameState,
+): number {
    let result = base;
    forEachMultiplier(
       xy,
       (m) => {
          result += m[type] ?? 0;
       },
+      stableOnly,
       gs,
    );
    return result;
@@ -61,17 +68,21 @@ export function totalMultiplierFor(xy: Tile, type: keyof Multiplier, base: numbe
 function forEachMultiplier(
    xy: Tile,
    func: (m: MultiplierWithSource) => void,
+   stableOnly: boolean,
    gs: GameState,
 ): MultiplierWithSource[] {
    const result: MultiplierWithSource[] = [];
    const b = gs.tiles.get(xy)?.building;
-   Tick.current.tileMultipliers.get(xy)?.forEach((m) => func(m));
+   Tick.current.tileMultipliers.get(xy)?.forEach((m) => {
+      if (stableOnly && m.unstable) return;
+      func(m);
+   });
    if (b) {
       Tick.current.buildingMultipliers.get(b.type)?.forEach((m) => func(m));
    }
    AllMultiplierTypes.forEach((type) => {
       Tick.current.globalMultipliers[type].forEach((m) =>
-         func({ [type]: m.value, source: m.source } as MultiplierWithSource),
+         func({ [type]: m.value, source: m.source, unstable: false } as MultiplierWithSource),
       );
    });
    return result;
@@ -79,7 +90,7 @@ function forEachMultiplier(
 
 export function getMultipliersFor(xy: Tile, gs: GameState): MultiplierWithSource[] {
    const result: MultiplierWithSource[] = [];
-   forEachMultiplier(xy, (m) => result.push(m), gs);
+   forEachMultiplier(xy, (m) => result.push(m), false, gs);
    return result;
 }
 
@@ -156,7 +167,7 @@ export function getWorkersFor(
             result.rawOutput += v;
          }
       });
-      result.multiplier = totalMultiplierFor(xy, "worker", 1, gs);
+      result.multiplier = totalMultiplierFor(xy, "worker", 1, false, gs);
    }
    result.output = Math.ceil(result.rawOutput / result.multiplier);
    return result;
@@ -196,7 +207,7 @@ export function getStorageFor(xy: Tile, gs: GameState): IStorageResult {
    };
    const building = gs.tiles.get(xy)?.building;
    const used = reduceOf(building?.resources, accumulate, 0);
-   let multiplier = totalMultiplierFor(xy, "storage", 1, gs);
+   let multiplier = totalMultiplierFor(xy, "storage", 1, true, gs);
 
    let base = 0;
 
@@ -631,7 +642,7 @@ export function getWarehouseIdleCapacity(xy: Tile, gs: GameState): number {
    if (building?.type !== "Warehouse") return 0;
    const warehouse = building as IWarehouseBuildingData;
    return (
-      getResourceImportCapacity(warehouse, totalMultiplierFor(xy, "output", 1, gs)) -
+      getResourceImportCapacity(warehouse, totalMultiplierFor(xy, "output", 1, false, gs)) -
       reduceOf(
          warehouse.resourceImports,
          (prev, k, v) => {
@@ -648,7 +659,8 @@ export function getBuilderCapacity(
    gs: GameState,
 ): { multiplier: number; base: number; total: number } {
    const builder =
-      sum(Tick.current.globalMultipliers.builderCapacity, "value") + totalMultiplierFor(xy, "worker", 0, gs);
+      sum(Tick.current.globalMultipliers.builderCapacity, "value") +
+      totalMultiplierFor(xy, "worker", 0, false, gs);
    let baseCapacity = clamp(building.level, 1, Infinity);
 
    if (isWorldWonder(building.type)) {
@@ -684,7 +696,7 @@ export function getMarketSellAmount(sellResource: Resource, xy: Tile, gs: GameSt
    return (
       building.level *
       getMarketBaseSellAmount(sellResource, buyResource) *
-      totalMultiplierFor(xy, "output", 1, gs)
+      totalMultiplierFor(xy, "output", 1, false, gs)
    );
 }
 

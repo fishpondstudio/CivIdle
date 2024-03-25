@@ -21,7 +21,7 @@ export function BuildingIOTreeViewComponent({
    type: keyof Pick<Multiplier, "input" | "output">;
 }): React.ReactNode {
    const data = getBuildingIO(xy, type, IOCalculation.Multiplier | IOCalculation.Capacity, gameState);
-   const totalMultiplier = totalMultiplierFor(xy, type, 1, gameState);
+   const totalMultiplier = totalMultiplierFor(xy, type, 1, false, gameState);
    return (
       <ul className="tree-view">
          {jsxMapOf(data, (k, v) => {

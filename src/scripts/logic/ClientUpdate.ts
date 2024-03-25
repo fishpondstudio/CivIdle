@@ -15,6 +15,7 @@ import {
    OnBuildingComplete,
    OnBuildingProductionComplete,
    OnShowFloater,
+   tickPower,
    tickPrice,
    tickTech,
    tickTiles,
@@ -78,6 +79,7 @@ export function tickEverySecond(gs: GameState, offline: boolean) {
    tickPrice(gs);
    tickTransports(gs);
    tickTiles(gs, offline);
+   tickPower(gs);
 
    Tick.next.happiness = calculateHappiness(gs);
    const { scienceFromWorkers } = getScienceFromWorkers(gs);

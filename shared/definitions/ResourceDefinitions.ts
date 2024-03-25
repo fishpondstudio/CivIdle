@@ -107,6 +107,7 @@ export const NoPrice: PartialSet<Resource> = {
 export const NoStorage: PartialSet<Resource> = {
    Worker: true,
    Power: true,
+   Science: true,
 } as const;
 
 export const IsDeposit = {
