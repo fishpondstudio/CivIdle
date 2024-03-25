@@ -29,6 +29,7 @@ function processBuffer(data: Uint8Array, op: Operation): Promise<Uint8Array> {
       setTimeout(() => {
          if (pending[id]) {
             pending[id].reject(new Error("Timeout"));
+            delete pending[id];
          }
       }, 5000);
    });

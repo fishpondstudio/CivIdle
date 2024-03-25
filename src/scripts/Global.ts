@@ -72,25 +72,51 @@ function cleanUpSavePromise() {
    currentSavePromise = Promise.resolve();
 }
 
-export function saveGame(): Promise<void> {
-   if (isSteam()) {
-      currentSavePromise = currentSavePromise
-         .then(() => compressSave(savedGame))
-         .then((compressed) => {
-            return SteamClient.fileWriteBytes(SAVE_KEY, compressed);
-         })
-         .catch(console.error)
-         .finally(cleanUpSavePromise);
-   } else {
-      currentSavePromise = currentSavePromise
-         .then(() => compressSave(savedGame))
-         .then((compressed) => {
-            return idbSet(SAVE_KEY, compressed).catch(console.error);
-         })
-         .catch(console.error)
-         .finally(cleanUpSavePromise);
+interface ISaveGameTask {
+   resolve: () => void;
+   reject: (err: any) => void;
+}
+
+const saveGameQueue: ISaveGameTask[] = [];
+
+export async function saveGame(): Promise<void> {
+   let resolve: (() => void) | null = null;
+   let reject: (() => void) | null = null;
+
+   const promise = new Promise<void>((_resolve, _reject) => {
+      resolve = _resolve;
+      reject = _reject;
+   });
+
+   saveGameQueue.push({ resolve: resolve!, reject: reject! });
+
+   if (saveGameQueue.length === 1) {
+      doSaveGame(saveGameQueue[0]);
    }
-   return currentSavePromise;
+
+   return promise;
+}
+
+export async function doSaveGame(task: ISaveGameTask): Promise<void> {
+   try {
+      const compressed = await compressSave(savedGame);
+      if (isSteam()) {
+         await SteamClient.fileWriteBytes(SAVE_KEY, compressed);
+      } else {
+         await idbSet(SAVE_KEY, compressed);
+      }
+      task.resolve();
+   } catch (error) {
+      task.reject(error);
+   } finally {
+      const index = saveGameQueue.indexOf(task);
+      if (index !== -1) {
+         saveGameQueue.splice(index, 1);
+      }
+      if (saveGameQueue.length > 0) {
+         doSaveGame(saveGameQueue[0]);
+      }
+   }
 }
 
 export async function compressSave(gs: SavedGame = savedGame): Promise<Uint8Array> {

@@ -75,6 +75,11 @@ export function unlockTech(tech: Tech, event: TypedEvent<Tile> | null, gs: GameS
       const tileCount = getDepositTileCount(deposit, gs);
       const depositTiles = shuffle(
          Array.from(gs.tiles.entries()).filter(([xy, tile]) => {
+            // We do not spawn 2 resources on a single tile
+            if (sizeOf(tile.deposit) >= 2) {
+               return false;
+            }
+
             const type = tile.building?.type;
             if (!type) {
                return true;
@@ -84,10 +89,7 @@ export function unlockTech(tech: Tech, event: TypedEvent<Tile> | null, gs: GameS
             if (!isNullOrUndefined(Config.Building[type].special)) {
                return false;
             }
-            // We do not spawn 2 resources on a single tile
-            if (sizeOf(tile.deposit) >= 2) {
-               return false;
-            }
+
             return true;
          }),
       ).slice(0, tileCount);

@@ -49,7 +49,7 @@ export function tickEveryFrame(gs: GameState, dt: number) {
 }
 
 const heartbeatFreq = import.meta.env.DEV ? 10 : 60;
-const saveFreq = isSteam() ? 5 * 60 : 10;
+const saveFreq = isSteam() ? 60 : 10;
 
 export function tickEverySecond(gs: GameState, offline: boolean) {
    // We should always tick when offline
