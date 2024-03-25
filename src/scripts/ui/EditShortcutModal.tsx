@@ -68,6 +68,10 @@ export function EditShortcutModal({ action }: { action: Shortcut }): React.React
                      try {
                         if (key) {
                            forEach(options.shortcuts, (a, value) => {
+                              if (!ShortcutActions[a]) {
+                                 delete options.shortcuts[a];
+                                 return;
+                              }
                               if (
                                  ShortcutActions[a].scope === shortcut.scope &&
                                  isShortcutEqual(value, key) &&

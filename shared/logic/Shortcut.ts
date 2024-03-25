@@ -7,7 +7,7 @@ export const ShortcutScopes = {
    BuildingPage: () => t(L.ShortcutScopeBuildingPage),
    TechPage: () => t(L.ShortcutScopeTechPage),
    EmptyTilePage: () => t(L.ShortcutScopeEmptyTilePage),
-   UpgradePage: () => t(L.ShortcutScopeUpgradePage),
+   ConstructionPage: () => t(L.ShortcutScopeConstructionPage),
    PlayerMapPage: () => t(L.ShortcutScopePlayerMapPage),
 } as const;
 
@@ -32,8 +32,13 @@ export const ShortcutActions = {
       scope: "BuildingPage",
       name: () => t(L.ShortcutBuildingPageToggleBuildingSetAllSimilar),
    },
-   UpgradePageIncreaseLevel: { scope: "UpgradePage", name: () => t(L.ShortcutUpgradePageIncreaseLevel) },
-   UpgradePageDecreaseLevel: { scope: "UpgradePage", name: () => t(L.ShortcutUpgradePageDecreaseLevel) },
+   UpgradePageIncreaseLevel: { scope: "ConstructionPage", name: () => t(L.ShortcutUpgradePageIncreaseLevel) },
+   UpgradePageDecreaseLevel: { scope: "ConstructionPage", name: () => t(L.ShortcutUpgradePageDecreaseLevel) },
+   UpgradePageEndConstruction: {
+      scope: "ConstructionPage",
+      name: () => t(L.ShortcutUpgradePageEndConstruction),
+   },
+   UpgradePageCancelUpgrade: { scope: "ConstructionPage", name: () => t(L.ShortcutUpgradePageCancelUpgrade) },
    TechPageGoBackToCity: { scope: "TechPage", name: () => t(L.ShortcutTechPageGoBackToCity) },
    TechPageUnlockTech: { scope: "TechPage", name: () => t(L.ShortcutTechPageUnlockTech) },
    EmptyTilePageBuildLastBuilding: {
@@ -109,11 +114,17 @@ export function getShortcutKey(s: IShortcutConfig): string {
       keys.push(s.key);
    }
 
-   return keys.join(" + ");
+   return keys.join(" + ").toUpperCase();
 }
 
 export function isShortcutEqual(a: IShortcutConfig, b: IShortcutConfig): boolean {
-   return a.ctrl === b.ctrl && a.shift === b.shift && a.alt === b.alt && a.meta === b.meta && a.key === b.key;
+   return (
+      a.ctrl === b.ctrl &&
+      a.shift === b.shift &&
+      a.alt === b.alt &&
+      a.meta === b.meta &&
+      a.key.toUpperCase() === b.key.toUpperCase()
+   );
 }
 
 export function makeShortcut(e: KeyboardEvent): IShortcutConfig {

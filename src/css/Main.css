@@ -104,6 +104,7 @@ body {
    max-width: 50vw;
    position: absolute;
    top: 20px;
+   z-index: 11;
 }
 
 body .tippy-box {
