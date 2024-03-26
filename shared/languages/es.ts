@@ -573,6 +573,8 @@ export const ES = {
    Petra: "Petra",
    PetraDesc:
       "Genera saltos temporales cuando estás desconectado, que se pueden usar para acelerar tu imperio",
+   PetraOfflineTimeReconciliation:
+      "You have been credited %{count} warp after server offline time reconciliation",
    Petrol: "Gasolina",
    Philosophy: "Filosofía",
    Physics: "Física",

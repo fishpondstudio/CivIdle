@@ -1,7 +1,7 @@
 import type { Application, Texture } from "pixi.js";
 import { type City } from "../../shared/definitions/CityDefinitions";
 import { IsDeposit } from "../../shared/definitions/ResourceDefinitions";
-import { getStorageFor } from "../../shared/logic/BuildingLogic";
+import { addPetraOfflineTime } from "../../shared/logic/BuildingLogic";
 import { Config } from "../../shared/logic/Config";
 import { MAX_OFFLINE_PRODUCTION_SEC, calculateTierAndPrice } from "../../shared/logic/Constants";
 import { Languages, syncLanguage, type GameState } from "../../shared/logic/GameState";
@@ -126,15 +126,7 @@ export async function startGame(
             timeLeft -= batchSize;
          }
          const petraOfflineTime = actualOfflineTime - offlineTime;
-         if (petra) {
-            const storage = getStorageFor(petra.tile, gameState);
-            if (!petra.building.resources.Warp) {
-               petra.building.resources.Warp = 0;
-            }
-            petra.building.resources.Warp += petraOfflineTime;
-            petra.building.resources.Warp = clamp(petra.building.resources.Warp, 0, storage.total);
-         }
-
+         addPetraOfflineTime(petraOfflineTime, gameState);
          const after = structuredClone(gameState);
          hasOfflineProductionModal = true;
          showModal(<OfflineProductionModal before={before} after={after} time={offlineTime} />);

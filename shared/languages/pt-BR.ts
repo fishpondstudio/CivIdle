@@ -573,6 +573,8 @@ export const PT_BR = {
    Petra: "Petra",
    PetraDesc:
       "Gera distorção temporal enquanto você estiver offline, o que você pode usar para acelerar seu império",
+   PetraOfflineTimeReconciliation:
+      "You have been credited %{count} warp after server offline time reconciliation",
    Petrol: "Gasolina",
    Philosophy: "Filosofia",
    Physics: "Física",

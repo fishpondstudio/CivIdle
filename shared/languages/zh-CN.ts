@@ -548,6 +548,8 @@ export const ZH_CN = {
    PersepolisDesc: "所有铜矿、伐木场以及采石场，获得 +1 生产乘数、劳动者能力乘数以及存储乘数",
    Petra: "佩特拉古城",
    PetraDesc: "当你离线时生成扭曲时间，你可以用它来加速你的帝国",
+   PetraOfflineTimeReconciliation:
+      "You have been credited %{count} warp after server offline time reconciliation",
    Petrol: "汽油",
    Philosophy: "哲学",
    Physics: "物理学",

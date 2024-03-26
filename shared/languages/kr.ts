@@ -551,6 +551,8 @@ export const KR = {
    PersepolisDesc: "모든 벌목장, 채석장, 구리광산이 +1의 생산, 저장소, 작업자 용량 배수를 얻습니다.",
    Petra: "페트라",
    PetraDesc: "오프라인 상태에서 타임워프를 생성하여 제국을 가속화하는 데 사용할 수 있습니다",
+   PetraOfflineTimeReconciliation:
+      "You have been credited %{count} warp after server offline time reconciliation",
    Petrol: "휘발유",
    Philosophy: "철학",
    Physics: "물리학",

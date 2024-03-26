@@ -568,6 +568,8 @@ export const NL = {
       "Alle Kopermijnkampen, Houtkapkampen en Steenhouwerijen krijgen +1 Productie Vermenigvuldiger, Werknemer Capaciteit Vermenigvuldiger en Opslag Vermenigvuldiger",
    Petra: "Petra",
    PetraDesc: "Genereer tijd warp wanneer je offline bent, die je kunt gebruiken om je rijk te versnellen",
+   PetraOfflineTimeReconciliation:
+      "You have been credited %{count} warp after server offline time reconciliation",
    Petrol: "Petroleum",
    Philosophy: "Filosofie",
    Physics: "Natuurkunde",

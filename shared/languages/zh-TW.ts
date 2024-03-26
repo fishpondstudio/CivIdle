@@ -545,6 +545,8 @@ export const ZH_TW = {
    PersepolisDesc: "所有銅礦、伐木場以及採石場，獲得 +1 生產指數、勞動者能力指數以及存儲指數",
    Petra: "佩特拉古城",
    PetraDesc: "當你離線時生成扭曲時間，你可以用它來加速你的帝國",
+   PetraOfflineTimeReconciliation:
+      "You have been credited %{count} warp after server offline time reconciliation",
    Petrol: "汽油",
    Philosophy: "哲學",
    Physics: "物理學",

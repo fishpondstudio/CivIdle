@@ -563,6 +563,8 @@ export const CZ = {
    Petra: "Petra",
    PetraDesc:
       "Generování časové deformace, když jste offline, kterou můžete použít k urychlení svého impéria",
+   PetraOfflineTimeReconciliation:
+      "You have been credited %{count} warp after server offline time reconciliation",
    Petrol: "Benzín",
    Philosophy: "Filozofie",
    Physics: "Fyzika",

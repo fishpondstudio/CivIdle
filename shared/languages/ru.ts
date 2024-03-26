@@ -569,6 +569,8 @@ export const RU = {
    Petra: "Петра",
    PetraDesc:
       "Создаёт временной разрыв, когда вы не в сети, который вы можете использовать для ускорения вашей империи",
+   PetraOfflineTimeReconciliation:
+      "You have been credited %{count} warp after server offline time reconciliation",
    Petrol: "Бензин",
    Philosophy: "Философия",
    Physics: "Физика",

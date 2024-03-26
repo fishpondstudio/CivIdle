@@ -27,7 +27,13 @@ import { Config } from "./Config";
 import { GameFeature, hasFeature } from "./FeatureLogic";
 import { GameOptions, type GameState } from "./GameState";
 import { getGameOptions, getGameState } from "./GameStateLogic";
-import { getBuildingIO, getBuildingsByType, getGrid, getXyBuildings } from "./IntraTickCache";
+import {
+   getBuildingIO,
+   getBuildingsByType,
+   getGrid,
+   getSpecialBuildings,
+   getXyBuildings,
+} from "./IntraTickCache";
 import { getGreatPersonThisRunLevel, getUpgradeCostFib } from "./RebornLogic";
 import { getBuildingsThatProduce, getResourcesValue } from "./ResourceLogic";
 import { getAgeForTech, getBuildingUnlockTech } from "./TechLogic";
@@ -934,4 +940,16 @@ export function getElectrificationEfficiency(b: Building) {
       return 0.5;
    }
    return 1;
+}
+
+export function addPetraOfflineTime(time: number, gs: GameState): void {
+   const petra = getSpecialBuildings(gs).Petra;
+   if (petra) {
+      const storage = getStorageFor(petra.tile, gs);
+      if (!petra.building.resources.Warp) {
+         petra.building.resources.Warp = 0;
+      }
+      petra.building.resources.Warp += time;
+      petra.building.resources.Warp = clamp(petra.building.resources.Warp, 0, storage.total);
+   }
 }

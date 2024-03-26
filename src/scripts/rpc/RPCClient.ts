@@ -1,5 +1,6 @@
 import { decode, encode } from "@msgpack/msgpack";
 import type { ServerImpl } from "../../../server/src/Server";
+import { addPetraOfflineTime } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
 import { getGameOptions, getGameState } from "../../../shared/logic/GameStateLogic";
 import { RpcError, removeTrailingUndefs, rpcClient } from "../../../shared/thirdparty/TRPCClient";
@@ -213,7 +214,9 @@ export async function connectWebSocket(): Promise<number> {
             getGameOptions().token = w.user.token;
             saveGame().catch(console.error);
             OnUserChanged.emit({ ...user });
-            const offlineTicks = clamp(w.lastGameTick + w.offlineTime - getGameState().tick, 0, Infinity);
+            const tick = getGameState().tick;
+            const offlineTicks = clamp(w.lastGameTick + w.offlineTime - tick, 0, Infinity);
+            console.log("User:", w, "CurrentTick:", tick, "OfflineTicks:", offlineTicks);
             resolve?.(Math.min(w.offlineTime, offlineTicks));
             break;
          }
@@ -291,7 +294,18 @@ export async function connectWebSocket(): Promise<number> {
 }
 
 function retryConnect() {
-   setTimeout(connectWebSocket, Math.min(Math.pow(2, reconnect++) * SECOND, 16 * SECOND));
+   setTimeout(
+      () => {
+         connectWebSocket().then((offlineTime) => {
+            if (offlineTime >= 60) {
+               playBubble();
+               showToast(t(L.PetraOfflineTimeReconciliation, { count: offlineTime }));
+               addPetraOfflineTime(offlineTime, getGameState());
+            }
+         });
+      },
+      Math.min(Math.pow(2, reconnect++) * SECOND, 16 * SECOND),
+   );
 }
 
 function handleRpcResponse(response: any) {

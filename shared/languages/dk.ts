@@ -563,6 +563,8 @@ export const DK = {
       "All Copper Mining Camps, Logging Camps and Stone Quarries get +1 Production Multiplier, Worker Capacity Multiplier and Storage Multiplier",
    Petra: "Petra",
    PetraDesc: "Generate time warp when you are offline, which you can use to accelerate your empire",
+   PetraOfflineTimeReconciliation:
+      "You have been credited %{count} warp after server offline time reconciliation",
    Petrol: "Petrol",
    Philosophy: "Philosophy",
    Physics: "Physics",
