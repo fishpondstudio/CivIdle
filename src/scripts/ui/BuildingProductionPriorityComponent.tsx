@@ -32,7 +32,7 @@ export function BuildingProductionPriorityComponent({
          <legend>
             {t(L.ProductionPriority)}: {building.productionPriority}
          </legend>
-         <Tippy content={t(L.ProductionPriorityDesc)}>
+         <Tippy content={t(L.ProductionPriorityDescV2)}>
             <input
                type="range"
                min={PRIORITY_MIN}

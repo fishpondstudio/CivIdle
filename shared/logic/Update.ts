@@ -470,6 +470,7 @@ function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
                safeAdd(getSpecialBuildings(gs).Headquarter.building.resources, res, amount);
                Tick.next.scienceProduced.set(xy, amount);
             } else {
+               if (res === "Power") Tick.next.powerPlants.add(xy);
                mapSafeAdd(Tick.next.workersAvailable, res, amount);
             }
          });
@@ -505,21 +506,17 @@ function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
    useWorkers("Worker", worker.output, xy);
    deductResources(building.resources, input);
    forEach(output, (res, v) => {
+      if (res === "Power") Tick.next.powerPlants.add(xy);
       if (isTransportable(res)) {
          safeAdd(building.resources, res, v);
          OnShowFloater.emit({ xy, amount: v });
          return;
       }
-
       if (res === "Science") {
          safeAdd(getSpecialBuildings(gs).Headquarter.building.resources, res, v);
          Tick.next.scienceProduced.set(xy, v);
          OnShowFloater.emit({ xy, amount: v });
          return;
-      }
-
-      if (res === "Power") {
-         Tick.next.powerPlants.add(xy);
       }
       mapSafeAdd(Tick.next.workersAvailable, res, v);
    });

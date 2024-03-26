@@ -660,8 +660,8 @@ export const RU = {
    ProduceResource: "Производит: %{resource}",
    ProductionMultiplier: "Множитель Производства",
    ProductionPriority: "Приоритет Производства",
-   ProductionPriorityDesc:
-      "Высокий приоритет означает, что это здание транспортирует ресурсы, раньше других зданий",
+   ProductionPriorityDescV2:
+      "Higher priority means this building transports before other buildings. Bigger number means higher priority",
    Progress: "Прогресс",
    ProgressTowardsNextGreatPerson: "Прогресс до следующего Великого Человека после перерождения",
    Province: "Провинция",
@@ -719,6 +719,8 @@ export const RU = {
    RenaissanceAge: "Ренессанс",
    ReneDescartes: "Рене Декарт",
    RequiredDeposit: "Требуется Месторождение",
+   RequiredWorkersTooltip:
+      "Required number of workers for production is equal to the sum of all resources consumed and produced after multipliers (except electrification)",
    RequirePower: "Require Power",
    RequirePowerDesc:
       "This building needs to be built on a tile with power and can extend the power to its adjacent tiles",

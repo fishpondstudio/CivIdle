@@ -654,7 +654,8 @@ export const CZ = {
    ProduceResource: "Produkovat: %{resource}",
    ProductionMultiplier: "Multiplikátor produkce",
    ProductionPriority: "Priorita výroby",
-   ProductionPriorityDesc: "Vysoká priorita znamená, že se tato budova přepravuje před ostatními budovami.",
+   ProductionPriorityDescV2:
+      "Higher priority means this building transports before other buildings. Bigger number means higher priority",
    Progress: "Pokrok",
    ProgressTowardsNextGreatPerson: "Postup k další velké osobě při znovuzrození",
    Province: "Provincie",
@@ -713,6 +714,8 @@ export const CZ = {
    RenaissanceAge: "Renesance",
    ReneDescartes: "René Descartes",
    RequiredDeposit: "Požadovaná záloha",
+   RequiredWorkersTooltip:
+      "Required number of workers for production is equal to the sum of all resources consumed and produced after multipliers (except electrification)",
    RequirePower: "Require Power",
    RequirePowerDesc:
       "This building needs to be built on a tile with power and can extend the power to its adjacent tiles",
@@ -814,8 +817,7 @@ export const CZ = {
    ShowUnbuiltOnly: "Zobrazit pouze budovy, které ještě nebyly postaveny.",
    Shrine: "Svatyně",
    SidePanelWidth: "Side Panel Width",
-   SidePanelWidthDescHTML:
-      "Změnit šířku bočního panelu. <b>Aby se projevilo, je nutné restartovat hru.</b>",
+   SidePanelWidthDescHTML: "Změnit šířku bočního panelu. <b>Aby se projevilo, je nutné restartovat hru.</b>",
    SiegeRam: "Obléhací beranidlo",
    SiegeWorkshop: "Obléhací dílna",
    Skyscrapper: "Mrakodrap",

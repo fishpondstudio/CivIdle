@@ -31,7 +31,7 @@ import {
    getAgeForTech,
    getBuildingUnlockTech,
    getDepositUnlockTech,
-   getResourceUnlockTech,
+   getResourceUnlockTechs,
 } from "./TechLogic";
 
 export const SAVE_KEY = "CivIdle";
@@ -70,6 +70,7 @@ export function calculateTierAndPrice(log?: (val: string) => void) {
    const allRecipes: IRecipe[] = [];
 
    let buildingHash = 0;
+
    forEach(Config.Building, (building, buildingDef) => {
       Config.BuildingHash[building] = buildingHash++;
       if (isEmpty(buildingDef.input)) {
@@ -101,26 +102,36 @@ export function calculateTierAndPrice(log?: (val: string) => void) {
       const tech = getBuildingUnlockTech(building);
       if (tech) {
          forEach(buildingDef.input, (res) => {
-            const t = getResourceUnlockTech(res);
-            if (t) {
-               console.assert(
-                  Config.Tech[t].column < Config.Tech[tech].column,
-                  `Input: Expect Unlock(${building}=${tech},${Config.Tech[tech].column}) > Unlock(${res}=${t},${Config.Tech[t].column})`,
-               );
-            } else {
-               console.error(
-                  `Input: Expect Unlock(${building}=${tech},${Config.Tech[tech].column}) > Unlock(${res}=${t},NotFound)`,
-               );
-            }
+            const deps = getResourceUnlockTechs(res);
+            console.assert(
+               deps.some((t) => t === tech || Config.Tech[t].column < Config.Tech[tech].column),
+               `${building} (Input: ${res}): Expect ${deps.join(", ")} to be before ${tech}`,
+            );
+            // if (t) {
+            //    console.assert(
+            //       Config.Tech[t].column < Config.Tech[tech].column,
+            //       `Input: Expect Unlock(${building}=${tech},${Config.Tech[tech].column}) > Unlock(${res}=${t},${Config.Tech[t].column})`,
+            //    );
+            // } else {
+            //    console.error(
+            //       `Input: Expect Unlock(${building}=${tech},${Config.Tech[tech].column}) > Unlock(${res}=${t},NotFound)`,
+            //    );
+            // }
+            // console.assert(
+            //    deps.some((t) => isPrerequisiteOf(t, tech)),
+            //    `${res} (${deps.join(", ")}) is not a prerequisite of ${tech} (${building}'s input)`,
+            // );
          });
          forEach(buildingDef.construction, (res) => {
-            const t = getResourceUnlockTech(res);
-            if (t && t !== tech && Config.Tech[t].column > 0) {
-               console.assert(
-                  Config.Tech[t].column < Config.Tech[tech].column,
-                  `Construction: Expect Unlock(${building}=${tech},${Config.Tech[tech].column}) > Unlock(${res}=${t},${Config.Tech[t].column})`,
-               );
-            }
+            const deps = getResourceUnlockTechs(res);
+            // console.assert(
+            //    deps.some((t) => isPrerequisiteOf(t, tech)),
+            //    `${res} (${deps.join(", ")}) is not a prerequisite of ${building}'s construction`,
+            // );
+            console.assert(
+               deps.some((t) => t === tech || Config.Tech[t].column <= Config.Tech[tech].column),
+               `${building} (Construction: ${res}): Expect ${deps.join(", ")} to be before ${tech}`,
+            );
          });
       } else {
          if (

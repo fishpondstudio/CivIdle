@@ -639,7 +639,8 @@ export const KR = {
    ProduceResource: "생산: %{resource}",
    ProductionMultiplier: "생산 승수",
    ProductionPriority: "생산 우선순위",
-   ProductionPriorityDesc: "우선순위가 높은 건물일수록 자원 전송을 우선적으로 받습니다.",
+   ProductionPriorityDescV2:
+      "Higher priority means this building transports before other buildings. Bigger number means higher priority",
    Progress: "진행도",
    ProgressTowardsNextGreatPerson: "재탄생시 다음 위인까지의 진척",
    Province: "지방",
@@ -697,6 +698,8 @@ export const KR = {
    RenaissanceAge: "르네상스시대",
    ReneDescartes: "르네 데카르트",
    RequiredDeposit: "필요 자원",
+   RequiredWorkersTooltip:
+      "Required number of workers for production is equal to the sum of all resources consumed and produced after multipliers (except electrification)",
    RequirePower: "Require Power",
    RequirePowerDesc:
       "This building needs to be built on a tile with power and can extend the power to its adjacent tiles",

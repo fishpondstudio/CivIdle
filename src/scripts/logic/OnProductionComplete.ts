@@ -34,6 +34,7 @@ import {
    mapSafeAdd,
    mapSafePush,
    pointToTile,
+   reduceOf,
    safeAdd,
    setFlag,
    tileToPoint,
@@ -48,6 +49,7 @@ const lastVotedBoostUpdatedAt = 0;
 
 export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boolean }): void {
    const gs = getGameState();
+   const options = getGameOptions();
    const building = gs.tiles.get(xy)?.building;
    if (!building) {
       return;
@@ -57,6 +59,13 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
    const buildingName = Config.Building[building.type].name();
 
    switch (building.type) {
+      case "Headquarter": {
+         mapSafePush(Tick.next.tileMultipliers, xy, {
+            output: reduceOf(options.greatPeople, (prev, gp, inv) => prev + inv.level, 0) * 0.5,
+            source: t(L.PermanentGreatPeople),
+         });
+         break;
+      }
       case "HatshepsutTemple": {
          buildingsByType.get("WheatFarm")?.forEach((tile, xy) => {
             if (tile.building) {

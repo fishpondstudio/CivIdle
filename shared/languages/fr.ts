@@ -667,8 +667,8 @@ export const FR = {
    ProduceResource: "Produit : %{resource}",
    ProductionMultiplier: "Multiplicateur de Production",
    ProductionPriority: "Priorité de production",
-   ProductionPriorityDesc:
-      "Plus la priorité d'un bâtiment est élévée, plus le transport de ses matériaux passera avant celui des autres",
+   ProductionPriorityDescV2:
+      "Higher priority means this building transports before other buildings. Bigger number means higher priority",
    Progress: "Progression",
    ProgressTowardsNextGreatPerson:
       "Progression jusqu'au prochain personnage illustre lors de la réincarnation",
@@ -729,6 +729,8 @@ export const FR = {
    RenaissanceAge: "Renaissance",
    ReneDescartes: "René Descartes",
    RequiredDeposit: "Ressource requise",
+   RequiredWorkersTooltip:
+      "Required number of workers for production is equal to the sum of all resources consumed and produced after multipliers (except electrification)",
    RequirePower: "Require Power",
    RequirePowerDesc:
       "This building needs to be built on a tile with power and can extend the power to its adjacent tiles",

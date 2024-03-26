@@ -145,9 +145,9 @@ export function getBuildingUnlockTech(building: Building): Tech | null {
    return null;
 }
 
-export function getResourceUnlockTech(res: Resource): Tech | null {
+export function getResourceUnlockTechs(res: Resource): Tech[] {
    const buildings = getBuildingsThatProduce(res);
-   const techs = buildings
+   return buildings
       .flatMap((a) => {
          const tech = getBuildingUnlockTech(a);
          if (!tech) {
@@ -156,10 +156,6 @@ export function getResourceUnlockTech(res: Resource): Tech | null {
          return [tech];
       })
       .sort((a, b) => Config.Tech[a].column - Config.Tech[b].column);
-   if (buildings.length > 0) {
-      return techs[0];
-   }
-   return null;
 }
 
 export function unlockableTechs(gs: GameState): Tech[] {
@@ -173,4 +169,16 @@ export function unlockableTechs(gs: GameState): Tech[] {
       }
    });
    return result;
+}
+
+export function isPrerequisiteOf(prerequisite: Tech, tech: Tech): boolean {
+   const result = new Set();
+   let dep: Tech[] = Config.Tech[tech].requireTech.slice(0);
+   while (dep.length > 0) {
+      dep = dep.flatMap((d) => {
+         result.add(d);
+         return Config.Tech[d].requireTech.slice(0);
+      });
+   }
+   return result.has(prerequisite);
 }

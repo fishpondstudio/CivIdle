@@ -632,7 +632,8 @@ export const ZH_TW = {
    ProduceResource: "產出： %{resource}",
    ProductionMultiplier: "生產指數",
    ProductionPriority: "生產優先級",
-   ProductionPriorityDesc: "級別越高，越先運送",
+   ProductionPriorityDescV2:
+      "Higher priority means this building transports before other buildings. Bigger number means higher priority",
    Progress: "進程",
    ProgressTowardsNextGreatPerson: "接近下一位在重生時出現的偉人之進程",
    Province: "領域",
@@ -690,6 +691,8 @@ export const ZH_TW = {
    RenaissanceAge: "文藝復興時期",
    ReneDescartes: "勒內·笛卡爾",
    RequiredDeposit: "所需沉積資源",
+   RequiredWorkersTooltip:
+      "Required number of workers for production is equal to the sum of all resources consumed and produced after multipliers (except electrification)",
    RequirePower: "需要供電(Require Power)",
    RequirePowerDesc: "該建築物需要建在有電源的地塊上，並且可以將電源延伸到其相鄰的地塊",
    Research: "研究",

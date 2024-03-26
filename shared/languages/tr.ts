@@ -652,7 +652,8 @@ export const TR = {
    ProduceResource: "Üretim: %{resource}",
    ProductionMultiplier: "Üretim Çarpanı",
    ProductionPriority: "Production Priority",
-   ProductionPriorityDesc: "High priority means the building transport before other buildings",
+   ProductionPriorityDescV2:
+      "Higher priority means this building transports before other buildings. Bigger number means higher priority",
    Progress: "Progress",
    ProgressTowardsNextGreatPerson: "Progress Towards Next Great Person at Rebirth",
    Province: "Province",
@@ -711,6 +712,8 @@ export const TR = {
    RenaissanceAge: "Rönesans",
    ReneDescartes: "René Descartes",
    RequiredDeposit: "Gerekli Kaynak",
+   RequiredWorkersTooltip:
+      "Required number of workers for production is equal to the sum of all resources consumed and produced after multipliers (except electrification)",
    RequirePower: "Require Power",
    RequirePowerDesc:
       "This building needs to be built on a tile with power and can extend the power to its adjacent tiles",

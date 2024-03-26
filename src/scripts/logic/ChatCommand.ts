@@ -22,6 +22,8 @@ import {
 } from "../../../shared/utilities/Helper";
 import { decompressSave, overwriteSaveGame, resetToCity, saveGame } from "../Global";
 import { addSystemMessage, canEarnGreatPeopleFromReborn, client } from "../rpc/RPCClient";
+import { WorldScene } from "../scenes/WorldScene";
+import { Singleton } from "../utilities/Singleton";
 import { tickEverySecond } from "./ClientUpdate";
 
 function requireOfflineRun(): void {
@@ -113,6 +115,22 @@ export async function handleChatCommand(command: string): Promise<void> {
             getGameOptions().resourceColors[k] = colors.pop();
          });
          addSystemMessage("Assign random colors to buildings and resources");
+         break;
+      }
+      case "locate": {
+         if (!parts[1]) {
+            throw new Error("Invalid command format");
+         }
+         const results = Array.from(getGameState().tiles)
+            .filter(
+               ([, tile]) =>
+                  tile.explored &&
+                  tile.building &&
+                  Config.Building[tile.building.type].name().toLowerCase().includes(parts[1].toLowerCase()),
+            )
+            .map(([xy]) => xy);
+         addSystemMessage(`Found ${results.length} building(s) that contains "${parts[1]}"`);
+         Singleton().sceneManager.getCurrent(WorldScene)?.drawSelection(null, results);
          break;
       }
       case "changelevel": {
