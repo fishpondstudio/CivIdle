@@ -1,6 +1,6 @@
 import type { Building } from "../definitions/BuildingDefinitions";
 import { BuildingSpecial } from "../definitions/BuildingDefinitions";
-import { Deposit, NoStorage, type Resource } from "../definitions/ResourceDefinitions";
+import { Deposit, NoPrice, NoStorage, type Resource } from "../definitions/ResourceDefinitions";
 import {
    clamp,
    forEach,
@@ -146,26 +146,20 @@ interface IWorkerRequirement {
    output: number;
 }
 
-export function getWorkersFor(
-   xy: Tile,
-   filter: { include: Partial<Record<Resource, number>> } | { exclude: Partial<Record<Resource, number>> },
-   gs: GameState,
-): IWorkerRequirement {
+export function getWorkersFor(xy: Tile, gs: GameState): IWorkerRequirement {
    const result: IWorkerRequirement = {
       rawOutput: 0,
       multiplier: 1,
       output: 0,
    };
    const b = gs.tiles.get(xy)?.building;
-   if (b) {
-      forEach(getBuildingIO(xy, "output", IOCalculation.Capacity, gs), (k, v) => {
-         if ("include" in filter && k in filter.include) {
-            result.rawOutput += v;
-            return;
-         }
-         if ("exclude" in filter && !(k in filter.exclude)) {
-            result.rawOutput += v;
-         }
+   // Buildings that produce workers do not cost workers
+   if (b && !Config.Building[b.type].output.Worker) {
+      forEach(getBuildingIO(xy, "input", IOCalculation.MultiplierExcludeElectrification, gs), (k, v) => {
+         if (!NoPrice[k]) result.rawOutput += v;
+      });
+      forEach(getBuildingIO(xy, "output", IOCalculation.MultiplierExcludeElectrification, gs), (k, v) => {
+         if (!NoPrice[k]) result.rawOutput += v;
       });
       result.multiplier = totalMultiplierFor(xy, "worker", 1, false, gs);
    }

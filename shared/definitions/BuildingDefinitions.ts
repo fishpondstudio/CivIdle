@@ -334,32 +334,37 @@ export class BuildingDefinitions {
       input: { Sword: 1, Armor: 1 },
       output: { Faith: 6 },
    };
-   // Science is valued at 0.5
+   // Science is valued at 0.2
    School: IBuildingDefinition = {
       name: () => t(L.School),
       input: { Faith: 1, Poem: 1 },
-      output: { Science: 172 },
+      output: { Science: 470 },
    };
    Library: IBuildingDefinition = {
       name: () => t(L.Library),
       input: { Paper: 1 },
-      output: { Science: 16 },
+      output: { Science: 35 },
       construction: { Brick: 1 },
    };
    University: IBuildingDefinition = {
       name: () => t(L.University),
       input: { Poem: 1, Painting: 1, Faith: 1 },
-      output: { Philosophy: 1, Science: 100 },
+      output: { Philosophy: 1, Science: 250 },
    };
    PublishingHouse: IBuildingDefinition = {
       name: () => t(L.PublishingHouse),
       input: { Philosophy: 2, Book: 10 },
-      output: { Newspaper: 1, Science: 400 },
+      output: { Newspaper: 1, Science: 1000 },
    };
    MagazinePublisher: IBuildingDefinition = {
       name: () => t(L.MagazinePublisher),
       input: { Sports: 2, Book: 10 },
-      output: { Magazine: 1, Science: 400 },
+      output: { Magazine: 1, Science: 1000 },
+   };
+   ResearchLab: IBuildingDefinition = {
+      name: () => t(L.ResearchLab),
+      input: { Culture: 2, Philosophy: 2 },
+      output: { Science: 4800 },
    };
    Museum: IBuildingDefinition = {
       name: () => t(L.Museum),
@@ -380,11 +385,6 @@ export class BuildingDefinitions {
       name: () => t(L.Parliament),
       input: { Culture: 2, Philosophy: 2, Law: 2 },
       output: { Politics: 1 },
-   };
-   ResearchLab: IBuildingDefinition = {
-      name: () => t(L.ResearchLab),
-      input: { Culture: 2, Philosophy: 2 },
-      output: { Science: 1920 },
    };
    MovieStudio: IBuildingDefinition = {
       name: () => t(L.MovieStudio),

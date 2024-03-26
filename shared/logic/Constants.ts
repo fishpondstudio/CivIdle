@@ -14,6 +14,7 @@ import {
    mapOf,
    mapSafeAdd,
    numberToRoman,
+   reduceOf,
    round,
    sizeOf,
 } from "../utilities/Helper";
@@ -35,7 +36,7 @@ import {
 
 export const SAVE_KEY = "CivIdle";
 export const MAX_OFFLINE_PRODUCTION_SEC = 60 * 60 * 4;
-export const SCIENCE_VALUE = 0.5;
+export const SCIENCE_VALUE = 0.2;
 export const TRADE_CANCEL_REFUND_PERCENT = 0.9;
 export const TRIBUNE_UPGRADE_PLAYTIME = 48 * HOUR;
 export const MAX_CHAT_PER_CHANNEL = 200;
@@ -278,6 +279,32 @@ export function calculateTierAndPrice(log?: (val: string) => void) {
       }
    });
 
+   forEach(Config.Building, (b, def) => {
+      if (def.output.Science) {
+         const multiplier = 1.5 + 0.25 * sizeOf(def.input);
+         const inputValue = Math.round(
+            multiplier *
+               reduceOf(
+                  def.input,
+                  (prev, res, amount) => prev + (Config.ResourcePrice[res] ?? 0) * amount,
+                  0,
+               ),
+         );
+         const outputValue = Math.round(
+            reduceOf(
+               def.output,
+               (prev, res, amount) =>
+                  prev + (res === "Science" ? SCIENCE_VALUE : Config.ResourcePrice[res] ?? 0) * amount,
+               0,
+            ),
+         );
+         console.assert(
+            inputValue === outputValue,
+            `Expect ${b} Input Value: ${inputValue} == Output Value: ${outputValue}`,
+         );
+      }
+   });
+
    const uniqueBuildings: Partial<Record<Building, City>> = {};
 
    forEach(Config.City, (city, def) => {
@@ -409,15 +436,15 @@ export function calculateTierAndPrice(log?: (val: string) => void) {
    );
    log?.(`>>>>>>>>>> Building Input Cost <<<<<<<<<<\n${buildingInputCost.join("\n")}`);
 
-   keysOf(Config.Tech)
-      .sort((a, b) => Config.Tech[a].column - Config.Tech[b].column)
-      .forEach((tech) => {
-         Config.Tech[tech].unlockBuilding?.forEach((b) => {
-            if (!isSpecialBuilding(b)) {
-               log?.(logBuildingFormula(b));
-            }
-         });
-      });
+   // keysOf(Config.Tech)
+   //    .sort((a, b) => Config.Tech[a].column - Config.Tech[b].column)
+   //    .forEach((tech) => {
+   //       Config.Tech[tech].unlockBuilding?.forEach((b) => {
+   //          if (!isSpecialBuilding(b)) {
+   //             log?.(logBuildingFormula(b));
+   //          }
+   //       });
+   //    });
 
    function logBuildingFormula(b: Building): string {
       const building = Config.Building[b];

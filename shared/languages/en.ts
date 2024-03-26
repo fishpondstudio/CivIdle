@@ -1084,4 +1084,6 @@ export const EN = {
    ZenobiaDesc: "+%{value}h Petra Warp Storage",
    ZhengHe: "Zheng He",
    Zoroaster: "Zoroaster",
+   RequiredWorkersTooltip:
+      "Required number of workers for production is equal to the sum of all resources consumed and produced after multipliers (except electrification)",
 };

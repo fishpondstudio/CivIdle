@@ -19,9 +19,10 @@ import { useShortcut } from "../utilities/Hook";
 import { ApplyToAllComponent } from "./ApplyToAllComponent";
 import type { IBuildingComponentProps } from "./BuildingPage";
 import { FormatNumber, fmtNumber } from "./HelperComponents";
+import { TextWithHelp } from "./TextWithHelpComponent";
 
 export function BuildingWorkerComponent({ gameState, xy }: IBuildingComponentProps): React.ReactNode {
-   const workersRequired = getWorkersFor(xy, { exclude: { Worker: 1 } }, gameState);
+   const workersRequired = getWorkersFor(xy, gameState);
    const building = gameState.tiles.get(xy)?.building;
    if (building == null) {
       return null;
@@ -153,7 +154,9 @@ export function BuildingWorkerComponent({ gameState, xy }: IBuildingComponentPro
                            <li className="row">
                               <div className="f1">{t(L.WorkersRequiredBeforeMultiplier)}</div>
                               <div>
-                                 <FormatNumber value={workersRequired.rawOutput} />
+                                 <TextWithHelp content={t(L.RequiredWorkersTooltip)}>
+                                    <FormatNumber value={workersRequired.rawOutput} />
+                                 </TextWithHelp>
                               </div>
                            </li>
                            <li className="row">

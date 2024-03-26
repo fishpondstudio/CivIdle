@@ -329,7 +329,7 @@ function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
       getBuildingIO(xy, "input", IOCalculation.Multiplier | IOCalculation.Capacity, gs),
    );
    const output = getBuildingIO(xy, "output", IOCalculation.Multiplier | IOCalculation.Capacity, gs);
-   const worker = getWorkersFor(xy, { exclude: { Worker: 1 } }, gs);
+   const worker = getWorkersFor(xy, gs);
    const inputWorkerCapacity = totalMultiplierFor(xy, "worker", 1, false, gs);
 
    //////////////////////////////////////////////////
@@ -461,11 +461,7 @@ function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
    if (!hasEnoughStorage) {
       const nonTransportables = filterNonTransportable(output);
       if (sizeOf(nonTransportables) > 0) {
-         const worker = getWorkersFor(
-            xy,
-            { include: filterOf(nonTransportables, (k) => k !== "Worker") },
-            gs,
-         );
+         const worker = getWorkersFor(xy, gs);
          useWorkers("Worker", worker.output, xy);
          deductResources(building.resources, input);
          forEach(nonTransportables, (res, amount) => {
