@@ -545,6 +545,8 @@ export const KR = {
       "Two great people of Classical Age are born and you get 4 choices for each. Musician's Guilds and Painter's Guilds get +1 Production, Worker Capacity and Storage Multiplier and are exempt from -1 Happiness",
    PatchNotes: "패치노트",
    PermanentGreatPeople: "영구적인 위인",
+   PermanentGreatPeopleAcquired: "Permanent Great People Acquired",
+   PermanentGreatPeopleLevels: "Permanent Great People Levels",
    Persepolis: "페르세폴리스",
    PersepolisDesc: "모든 벌목장, 채석장, 구리광산이 +1의 생산, 저장소, 작업자 용량 배수를 얻습니다.",
    Petra: "페트라",

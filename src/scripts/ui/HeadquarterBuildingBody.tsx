@@ -6,6 +6,7 @@ import { getXyBuildings, unlockedBuildings } from "../../../shared/logic/IntraTi
 import {
    getGreatPeopleAtReborn,
    getGreatPersonThisRunLevel,
+   getTotalGreatPeopleUpgradeCost,
    getValueRequiredForGreatPeople,
 } from "../../../shared/logic/RebornLogic";
 import {
@@ -331,6 +332,23 @@ function GreatPeopleComponent({
                      </div>
                   </summary>
                   <ul>
+                     <li className="row text-small">
+                        <div className="f1">{t(L.PermanentGreatPeopleAcquired)}</div>
+                        <div className="text-strong">
+                           {reduceOf(
+                              options.greatPeople,
+                              (prev, gp, inv) =>
+                                 prev + getTotalGreatPeopleUpgradeCost(gp, inv.level) + inv.amount,
+                              0,
+                           )}
+                        </div>
+                     </li>
+                     <li className="row text-small">
+                        <div className="f1">{t(L.PermanentGreatPeopleLevels)}</div>
+                        <div className="text-strong">
+                           {reduceOf(options.greatPeople, (prev, gp, inv) => prev + inv.level, 0)}
+                        </div>
+                     </li>
                      {keysOf(options.greatPeople)
                         .sort(
                            (a, b) =>

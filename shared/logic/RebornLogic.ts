@@ -42,6 +42,14 @@ export function getGreatPersonUpgradeCost(gp: GreatPerson, targetLevel: number):
    return Math.pow(2, targetLevel - 1);
 }
 
+export function getTotalGreatPeopleUpgradeCost(gp: GreatPerson, targetLevel: number): number {
+   let result = 0;
+   for (let i = 1; i <= targetLevel; ++i) {
+      result += getGreatPersonUpgradeCost(gp, i);
+   }
+   return result;
+}
+
 export function getUpgradeCostFib(n: number): number {
    let a = 0;
    let b = 1;

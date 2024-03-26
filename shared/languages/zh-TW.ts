@@ -539,6 +539,8 @@ export const ZH_TW = {
       "古典時代的兩位偉人誕生了，每個人都有 4 個選擇。所有音樂家協會和畫家協會的生產和儲存倍數增加+1，並免除-1幸福感",
    PatchNotes: "更新日誌",
    PermanentGreatPeople: "永恆偉人",
+   PermanentGreatPeopleAcquired: "Permanent Great People Acquired",
+   PermanentGreatPeopleLevels: "Permanent Great People Levels",
    Persepolis: "波斯波利斯",
    PersepolisDesc: "所有銅礦、伐木場以及採石場，獲得 +1 生產指數、勞動者能力指數以及存儲指數",
    Petra: "佩特拉古城",

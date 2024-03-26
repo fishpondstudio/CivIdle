@@ -542,6 +542,8 @@ export const ZH_CN = {
       "Two great people of Classical Age are born and you get 4 choices for each. Musician's Guilds and Painter's Guilds get +1 Production, Worker Capacity and Storage Multiplier and are exempt from -1 Happiness",
    PatchNotes: "更新日志",
    PermanentGreatPeople: "永恒伟人",
+   PermanentGreatPeopleAcquired: "Permanent Great People Acquired",
+   PermanentGreatPeopleLevels: "Permanent Great People Levels",
    Persepolis: "波斯波利斯",
    PersepolisDesc: "所有铜矿、伐木场以及采石场，获得 +1 生产乘数、劳动者能力乘数以及存储乘数",
    Petra: "佩特拉古城",

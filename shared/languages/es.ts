@@ -565,6 +565,8 @@ export const ES = {
       "Two great people of Classical Age are born and you get 4 choices for each. Musician's Guilds and Painter's Guilds get +1 Production, Worker Capacity and Storage Multiplier and are exempt from -1 Happiness",
    PatchNotes: "Notas del parche",
    PermanentGreatPeople: "Personajes históricos permanentes",
+   PermanentGreatPeopleAcquired: "Permanent Great People Acquired",
+   PermanentGreatPeopleLevels: "Permanent Great People Levels",
    Persepolis: "Persépolis",
    PersepolisDesc:
       "Todas las minas de cobre, campamentos madederos y canteras de piedra obtienen +1 multiplicador de producción, capacidad de trabajo y almacenamiento",

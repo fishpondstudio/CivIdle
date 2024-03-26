@@ -555,6 +555,8 @@ export const CZ = {
       "Two great people of Classical Age are born and you get 4 choices for each. Musician's Guilds and Painter's Guilds get +1 Production, Worker Capacity and Storage Multiplier and are exempt from -1 Happiness",
    PatchNotes: "Poznámky k záplatám",
    PermanentGreatPeople: "Stálý Skvělí lidé",
+   PermanentGreatPeopleAcquired: "Permanent Great People Acquired",
+   PermanentGreatPeopleLevels: "Permanent Great People Levels",
    Persepolis: "Persepolis",
    PersepolisDesc:
       "Všechny měděné těžební tábory, dřevařské tábory a kamenolomy získají +1 násobek produkce, násobek kapacity pracovníků a násobek skladování",
