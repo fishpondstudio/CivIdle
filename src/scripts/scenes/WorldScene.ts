@@ -281,7 +281,6 @@ export class WorldScene extends Scene {
             case "StatueOfZeus":
             case "Poseidon":
             case "EiffelTower":
-            case "BrandenburgGate":
             case "SummerPalace":
             case "MogaoCaves":
             case "SaintBasilsCathedral":

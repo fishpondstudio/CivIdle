@@ -674,10 +674,13 @@ export function applyToAllBuildings<T extends IBuildingData>(
    building: Building,
    getOptions: (b: IBuildingData) => Partial<T>,
    gs: GameState,
-) {
+): number {
+   let count = 0;
    getBuildingsByType(building, gs)?.forEach((tile, xy) => {
       Object.assign(tile.building, getOptions(tile.building));
+      ++count;
    });
+   return count;
 }
 
 export function getMarketBaseSellAmount(sellResource: Resource, buyResource: Resource): number {

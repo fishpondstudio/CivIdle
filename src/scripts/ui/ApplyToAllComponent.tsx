@@ -8,6 +8,7 @@ import { firstKeyOf, sizeOf } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import { useGameOptions } from "../Global";
 import { playClick } from "../visuals/Sound";
+import { showToast } from "./GlobalModal";
 
 export function ApplyToAllComponent<T extends IBuildingData>({
    building,
@@ -30,7 +31,8 @@ export function ApplyToAllComponent<T extends IBuildingData>({
                style={{ width: 27, padding: 0 }}
                onClick={() => {
                   playClick();
-                  applyToAllBuildings(building.type, getOptions, gameState);
+                  const count = applyToAllBuildings(building.type, getOptions, gameState);
+                  showToast(t(L.ApplyToBuildingsToastHTML, { count, building: def.name() }));
                }}
             >
                <div className="m-icon small">published_with_changes</div>

@@ -348,7 +348,7 @@ export class BuildingDefinitions {
    };
    University: IBuildingDefinition = {
       name: () => t(L.University),
-      input: { Poem: 1, Painting: 1, Faith: 1 },
+      input: { Poem: 2, Faith: 2 },
       output: { Philosophy: 1, Science: 250 },
    };
    PublishingHouse: IBuildingDefinition = {
@@ -364,11 +364,11 @@ export class BuildingDefinitions {
    ResearchLab: IBuildingDefinition = {
       name: () => t(L.ResearchLab),
       input: { Culture: 2, Philosophy: 2 },
-      output: { Science: 4800 },
+      output: { Science: 5560 },
    };
    Museum: IBuildingDefinition = {
       name: () => t(L.Museum),
-      input: { Music: 1, Painting: 1, Faith: 1 },
+      input: { Music: 2, Painting: 2 },
       output: { Culture: 1 },
    };
    Courthouse: IBuildingDefinition = {

@@ -938,7 +938,7 @@ export const EN = {
    Television: "Television",
    TempleOfArtemis: "Temple Of Artemis",
    TempleOfArtemisDesc:
-      "All Sword Forges and Armories get +5 Level when completed. All Sword Forges and Armories get +1 Production, Worker Capacity and Storage Multiplier",
+      "All Sword Forges and Armories get +5 Level when Temple Of Artemis is completed. All Sword Forges and Armories get +1 Production, Worker Capacity and Storage Multiplier",
    TempleOfHeaven: "Temple of Heaven",
    TempleOfHeavenDesc: "All buildings that are level 10 or higher get +1 Worker Capacity Multiplier",
    TempleOfPtah: "Temple of Ptah",
@@ -1091,4 +1091,5 @@ export const EN = {
    ZenobiaDesc: "+%{value}h Petra Warp Storage",
    ZhengHe: "Zheng He",
    Zoroaster: "Zoroaster",
+   ApplyToBuildingsToastHTML: "Successfully applied to <b>%{count} %{building}</b>",
 };
