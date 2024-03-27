@@ -628,7 +628,7 @@ export class TechDefinitions {
    AtomicTheory: ITechDefinition = {
       name: () => t(L.AtomicTheory),
       column: 18,
-      requireTech: ["Refinery", "GasPipeline"],
+      requireTech: ["Refinery", "GasPipeline", "Urbanization"],
       revealDeposit: ["Uranium"],
       unlockBuilding: ["UraniumMine"],
       buildingMultiplier: {
