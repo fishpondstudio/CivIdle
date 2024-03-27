@@ -8,6 +8,7 @@ export const PatchNotes: PatchNote[] = [
    {
       version: "0.5.1",
       content: [
+         ["QoL", "Show wonder build cost in building list"],
          ["Bugfix", "Fix a bug where certain trade tiles does not show up correctly"],
          ["Bugfix", "Fix a bug where natural wonders' highlight shows up before it is discovered"],
       ],
