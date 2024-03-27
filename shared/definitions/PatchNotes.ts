@@ -6,6 +6,10 @@ interface PatchNote {
 
 export const PatchNotes: PatchNote[] = [
    {
+      version: "0.5.1",
+      content: [["Bugfix", "Fix a bug where certain trade tiles does not show up correctly"]],
+   },
+   {
       version: "0.5.0",
       content: [],
       link: "https://store.steampowered.com/news/app/2181940/view/4115799931702229087",
