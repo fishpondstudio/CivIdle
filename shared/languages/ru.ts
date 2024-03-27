@@ -53,6 +53,7 @@ export const RU = {
       "+1 к Множителю Мощности Строительства за каждый уровень при улучшении здания выше 20-го уровня",
    ApplyToAll: "Применить Для Всех",
    ApplyToAllBuilding: "Применить Для Всех %{building}",
+   ApplyToBuildingsToastHTML: "Successfully applied to <b>%{count} %{building}</b>",
    Aqueduct: "Акведук",
    ArcDeTriomphe: "Триумфальная Арка",
    ArcDeTriompheDesc: "Arc de Triomphe",
@@ -572,6 +573,8 @@ export const RU = {
    Petra: "Петра",
    PetraDesc:
       "Создаёт временной разрыв, когда вы не в сети, который вы можете использовать для ускорения вашей империи",
+   PetraOfflineTimeReconciliation:
+      "You have been credited %{count} warp after server offline time reconciliation",
    Petrol: "Бензин",
    Philosophy: "Философия",
    Physics: "Физика",
@@ -708,6 +711,7 @@ export const RU = {
    RamessesII: "Рамзес II",
    RamessesIIDesc: "+%{value} Множитель Мощности Стоительства",
    RapidFire: "Шквальный Огонь",
+   ReadFullPatchNotes: "Read Patch Notes",
    Reborn: "Переродиться",
    RebornCity: "Выбрать Новый Город",
    RebornModalDescV2:

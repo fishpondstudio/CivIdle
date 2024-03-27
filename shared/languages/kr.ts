@@ -47,6 +47,7 @@ export const KR = {
    AphroditeDesc: "레벨 20이상의 건물을 업그레이드 할때 각 레벨마다 +1의 건축가 용량 배수를 얻습니다.",
    ApplyToAll: "일괄 적용",
    ApplyToAllBuilding: "일괄 적용 %{building}",
+   ApplyToBuildingsToastHTML: "Successfully applied to <b>%{count} %{building}</b>",
    Aqueduct: "수로",
    ArcDeTriomphe: "에투알 개선문",
    ArcDeTriompheDesc: "에투알 개선문",
@@ -686,6 +687,7 @@ export const KR = {
    RamessesII: "람세스 2세",
    RamessesIIDesc: "+%{value} 건축가 용량 배수",
    RapidFire: "속사",
+   ReadFullPatchNotes: "Read Patch Notes",
    Reborn: "환생",
    RebornCity: "새로운 도시 선택",
    RebornModalDescV2:

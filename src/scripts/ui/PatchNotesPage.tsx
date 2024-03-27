@@ -1,5 +1,6 @@
 import { PatchNotes } from "../../../shared/definitions/PatchNotes";
 import { L, t } from "../../../shared/utilities/i18n";
+import { openUrl } from "../utilities/Platform";
 import { MenuComponent } from "./MenuComponent";
 
 export function PatchNotesPage(): React.ReactNode {
@@ -21,6 +22,11 @@ export function PatchNotesPage(): React.ReactNode {
                            </div>
                         );
                      })}
+                     {note.link ? (
+                        <div className="text-link text-strong" onClick={() => openUrl(note.link!)}>
+                           {t(L.ReadFullPatchNotes)}
+                        </div>
+                     ) : null}
                   </fieldset>
                );
             })}

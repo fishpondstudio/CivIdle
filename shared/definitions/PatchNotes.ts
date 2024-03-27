@@ -1,12 +1,14 @@
 interface PatchNote {
    version: string;
    content: string[][];
+   link?: string;
 }
 
 export const PatchNotes: PatchNote[] = [
    {
       version: "0.5.0",
-      content: [["Draft", "https://github.com/fishpondstudio/CivIdle/issues/144"]],
+      content: [],
+      link: "https://store.steampowered.com/news/app/2181940/view/4115799931702229087",
    },
    {
       version: "0.4.3",
@@ -35,117 +37,8 @@ export const PatchNotes: PatchNote[] = [
    },
    {
       version: "0.4.0",
-      content: [
-         ["New Map", "Memphis"],
-         [
-            "Memphis Unique Wonder",
-            "Great Sphinx: All Tier II or above buildings within 2 tiles get +N Consumption, Production Multiplier. N = Number of its adjacent buildings of the same type",
-         ],
-         [
-            "Memphis Unique Wonder",
-            "Abu Simbel: Double the effect of Ramesses II. All Adjacent wonders get +1 Happiness",
-         ],
-         [
-            "Memphis Natural Wonder",
-            "Nile River: Double the effect of Hatshepsut. All wheat farms get +1 Production and Storage Multiplier. All adjacent wheat farms get +5 Production and Storage Multiplier",
-         ],
-         [
-            "Memphis Natural Wonder",
-            "Mount Sinai: When discovered, a great person of the current age is born. All buildings that produce faith get +5 Storage Multiplier",
-         ],
-         [
-            "Wonder Change",
-            "Statistics Office (Censor's Office) generates 1 explorer every minute which can be used to reveal an unexplored tile and its adjacent tiles",
-         ],
-         [
-            "Wonder Change",
-            "UI of Statistics Office (Censor's Office) has been redone. An 'Empire' tab listing a detailed breakdown of empire value, science production has been added (@Vethon)",
-         ],
-         [
-            "Great People",
-            "Johannes Kepler: +1 Production Multiplier, Storage Multiplier for Shrine, Lens Workshop (Renaissance)",
-         ],
-         [
-            "Great People",
-            "Georgius Agricola: +1 Production Multiplier, Storage Multiplier for Siege Workshop, Coal Mine (Renaissance)",
-         ],
-         ["Great People", "Galileo Galilei: +1 Science From Idle Workers (Renaissance)"],
-         [
-            "Great People",
-            "J. P. Morgan: +1 Storage Multiplier, Production Multiplier for Bond Market, Rifle Factory (Industrial)",
-         ],
-         [
-            "Great People",
-            "Andrew Carnegie: +1 Storage Multiplier, Production Multiplier for Bank, Steel Mill (Industrial)",
-         ],
-         ["Great People", "Louis Sullivan: +3 Builder Capacity Multiplier (Industrial)"],
-         [
-            "Great People",
-            "Isambard Kingdom Brunel: +1 Production Multiplier, Storage Multiplier for Frigate Builder, Concrete Plant (Industrial)",
-         ],
-         ["Great People", "William Shakespeare now boosts Actor's Guild instead of Printing House"],
-
-         [
-            "Achievement",
-            "Pax Romana: Rebirth with at least 1 Extra Great Person in Rome (Reach 64M Empire Value when rebirth)",
-         ],
-         [
-            "Achievement",
-            "Olympian: Rebirth with at least 1 Extra Great Person in Athens (Reach 64M Empire Value when rebirth)",
-         ],
-         [
-            "Achievement",
-            "Bronze: Reach Bronze Age in any city (granted when you unlock any technology in that age)",
-         ],
-         [
-            "Achievement",
-            "Iron: Reach Iron Age in any city (granted when you unlock any technology in that age)",
-         ],
-         [
-            "Achievement",
-            "Classical: Reach Classical Age in any city (granted when you unlock any technology in that age)",
-         ],
-         [
-            "Achievement",
-            "Medieval: Reach Middle Age in any city (granted when you unlock any technology in that age)",
-         ],
-         [
-            "Achievement",
-            "Renaissance: Reach Renaissance in any city (granted when you unlock any technology in that age)",
-         ],
-         [
-            "Achievement",
-            "Industrial: Reach Industrial in any city (granted when you unlock any technology in that age)",
-         ],
-         [
-            "Achievement",
-            "Eye of Horus: Rebirth with at least 1 Extra Great Person in Memphis (Reach 64M Empire Value when rebirth)",
-         ],
-         ["Bugfix", "Petra upgrade cost should not be affected by Zenobia"],
-         ["Bugfix", "Fix broken UI when there are lots of caravansaries"],
-         ["Bugfix", "Fix sometimes building input resources are turned off even before it is fulfilled"],
-         ["Bugfix", "Market will not update when a new resource is unlocked"],
-         ["Bugfix", "Statistics Building should not count Warehouse/Caravansary"],
-
-         [
-            "QoL",
-            "Rework building defaults: now building defaults will carry over when you rebirth and will be applied to your building once you unlock the relevant technology",
-         ],
-         ["QoL", "Optimize player trade map performance"],
-         ["QoL", "Allow changing the side panel width in Options -> Theme"],
-         [
-            "QoL",
-            "Warehouse/Caravansary will list all your currently unlocked resources, this is to stop the list from jumping around",
-         ],
-         [
-            "QoL",
-            "Upgrade x5 is now Upgrade to Next 5. And 'Upgrade to Next 10' will always appear even if the next 5 and next 10 level are the same (and the shortcut will always work)",
-         ],
-         [
-            "QoL",
-            "Petra's speed up will be set to 1x once Warp runs out. This is to prevent Petra from immediately running when logging into the game thus being able to upgrade its storage",
-         ],
-      ],
+      content: [],
+      link: "https://steamcommunity.com/games/2181940/announcements/detail/5923994639393729778",
    },
    {
       version: "0.3.1",
@@ -161,73 +54,8 @@ export const PatchNotes: PatchNote[] = [
    },
    {
       version: "0.3.0",
-      content: [
-         [
-            "Wonder",
-            "Grand Bazaar: Manage all your markets. Adjacent caravansaries get +5 Production and Storage Multiplier. Adjacent markets get different trades (Education)",
-         ],
-         ["Great Person", "Zenobia - +1h Petra Warp Storage (Classical)"],
-         ["Building", "Concrete Plant - 1 Brick + 2 Sand + 1 Tool -> 1 Concrete (Steam Engine)"],
-         ["Building", "Gunpowder Mill's visual has been revamped"],
-         [
-            "Warehouse",
-            "Export Below Max Amount: Allow other buildings to transport a resource from this building even when its amount is below the max amount",
-         ],
-         [
-            "Warehouse",
-            "Autopilot Setting: Require Storage < Cap - autopilot will only transport resources whose amount in storage is below the cap",
-         ],
-         ["Player Trade", "You can fill a trade from multiple caravansaries at once"],
-         ["Player Trade", "Show tiles with active trades on the world map"],
-         [
-            "Player Trade",
-            "Sea Trades (unlocked by Geography with 1% Tariff. Optics reduces tariff to 0.5%. Capitalism reduces tariff to 0.1%)",
-         ],
-         [
-            "Player Trade",
-            "Production multipliers will now apply to Caravansary and Warehouse - it will increase the resource transport capacity",
-         ],
-         [
-            "Market",
-            "All markets will have the same trades, different markets still have different price fluctuations",
-         ],
-         ["Market", "Market trade amount will be based on the value of the buy and sell resources"],
-         [
-            "Market",
-            "Markets will have less price fluctuation, which will be based on the tier difference between the buy and sell resources Selling a low-tier resource and buying a high-tier resource will result in positive price fluctuation and vice versa",
-         ],
-         ["Market", "Market trades will update immediately after a new resource has been unlocked"],
-         [
-            "Balancing",
-            "Oxford University: Each building upgrade in your empire provides +5 Science per cycle (from +1 Science per cycle)",
-         ],
-         [
-            "Balancing",
-            "Wonder building time is be more streamlined: wonders from the same era have similar build time, with earlier wonders take significantly less time to build",
-         ],
-         [
-            "Balancing",
-            "Construction and upgrade costs of Tier I, II and III buildings have been adjusted. They now require a small amount of materials other than their input for construction and upgrade",
-         ],
-         ["Balancing", "Hagia Sophia: costs Knight instead of Brick"],
-         ["Balancing", "Angkor Wat: cost Marble instead of Stone"],
-         ["Balancing", "Oxford University: cost Philosophy instead of Marble"],
-         ["Balancing", "Saint Basil's Cathedral: cost Gunpowder and Lens instead of Faith and Gold"],
-         ["Balancing", "Forbidden City: cost Banknote and Marble instead of Paper and Poem"],
-         ["Balancing", "Himeji Castle: fix the cost of Galleon and Frigate (it was incorrect before)"],
-         ["Balancing", "Rijksmuseum: cost Newspaper, Culture and Concrete instead of Painting"],
-         ["Balancing", "Summer Palace: cost Gatling Gun instead of Brick"],
-         ["Balancing", "Neuschwanstein: cost Rifle, Bond and Cannon instead of Dynamite, Brick and Marble"],
-         ["Balancing", "Brandenburg Gate: cost Politics and Concrete instead of Brick and Marble"],
-         [
-            "Gameplay",
-            "Streamline Construction/Upgrade Flow: You can adjust the building upgrade level when a building is being constructed. The building will be upgraded immediately after being constructed. Because of this change, the upgrade priority has been removed - both construction and upgrade will take construction priority instead",
-         ],
-         [
-            "Gameplay",
-            "Optimize performance when switching between game scenes (City View -> Tech Tree -> Trade World Map)",
-         ],
-      ],
+      content: [],
+      link: "https://store.steampowered.com/news/app/2181940/view/4130435365845781807",
    },
    {
       version: "0.2.1",
@@ -257,67 +85,8 @@ export const PatchNotes: PatchNote[] = [
    },
    {
       version: "0.2.0",
-      content: [
-         [
-            "Great Person",
-            "Hatshepsut: +1 Production Multiplier, Storage Multiplier for Aqueduct, Brickworks (Bronze Age)",
-         ],
-         [
-            "Great Person",
-            "Sargon Of Akkad: +1 Production Multiplier, Storage Multiplier for Logging Camp, Lumber Mill (Bronze Age)",
-         ],
-         [
-            "Great Person",
-            "Zoroaster: +1 Production Multiplier, Storage Multiplier for Cotton Plantation, Cotton Mill (Iron Age)",
-         ],
-         [
-            "Great Person",
-            "Aeschylus: +1 Production Multiplier, Storage Multiplier for Flour Mill, Bakery (Classical Age)",
-         ],
-         [
-            "Great Person",
-            "Ashurbanipal: +1 Production Multiplier, Storage Multiplier for Sandpit, Glassworks (Classical Age)",
-         ],
-         [
-            "Great Person",
-            "Confucius: +1 Science from Busy and Idle Workers if more than 50% of workers are busy (Classical Age)",
-         ],
-         ["Great Person", "Aristophanes: +1 Happiness (Classical Age)"],
-         ["Great Person", "Isidore of Miletus: +2 Builder Capacity Multiplier (Middle Age)"],
-         [
-            "Great Person",
-            "Fibonacci: +0.5 Science from Idle Workers. +1 Science from Busy Workers. Permanent upgrade cost follows Fibonacci sequence (Middle Age)",
-         ],
-         [
-            "Great Person",
-            "Isaac Newton: +2 Science from Busy and Idle Workers if more than 50% of workers are busy (Renaissance)",
-         ],
-         [
-            "Wonder",
-            "Saint Basil's Cathedral: Allow resource extraction buildings to work adjacent to a deposit. All adjacent tier I buildings get +1 Production Multiplier, Worker Capacity Multiplier, and Storage Multiplier (Renaissance/Firearm)",
-         ],
-         [
-            "Wonder",
-            "Great Mosque of Samarra: +1 building vision range. Reveal 5 random unexplored deposit tiles and build a level 10 resource extraction building on each (Iron Age / Road & Wheel)",
-         ],
-         [
-            "Wonder",
-            "Mogao Caves: +1 happiness for every 10% of busy workers. All adjacent shrines are exempt from -1 happiness (Middle Age / Theocracy)",
-         ],
-         [
-            "Gameplay",
-            "Entering a new age will allow picking a new great person of each unlocked age (e.g. Entering the Classical Age will allow picking 1 Classical Age + 1 Iron Age + 1 Bronze Age great person). If you pick the same great person more than once, each additional great person will have a diminishing effect during this run. However, all of them will become permanent Great Person when you rebirth (e.g. If you have 3 Confucius from this run, pick the fourth Confucius will have 1/4 of the effect. When you rebirth, you will get 4 Confucius for permanent upgrade)",
-         ],
-         [
-            "Gameplay",
-            "Extra Great Person from Total Empire Value will be chosen from Great People up to Current Age + 1",
-         ],
-         [
-            "Misc",
-            "Version number format has been changed. The new format is 'X.Y.Z Build W'. Y will increase for the weekly content update. Z will increase for the daily QoL/hotfix update. W is a unique number that is produced by the build system. Patch notes will be written against X.Y.Z. If you want to report a bug, please include build number",
-         ],
-         ["Misc", "Add Czech (@MikeCZ) and Dutch (@Thomasthegama) translation"],
-      ],
+      content: [],
+      link: "https://store.steampowered.com/news/app/2181940/view/4194610392083731932",
    },
    {
       version: "0.1.149",

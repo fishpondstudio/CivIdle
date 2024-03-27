@@ -50,6 +50,7 @@ export const EN = {
    AphroditeDesc: "+1 Builder Capacity Multiplier for each level when upgrading buildings over Level 20",
    ApplyToAll: "Apply To All",
    ApplyToAllBuilding: "Apply To All %{building}",
+   ApplyToBuildingsToastHTML: "Successfully applied to <b>%{count} %{building}</b>",
    Aqueduct: "Aqueduct",
    ArcDeTriomphe: "Arc de Triomphe",
    ArcDeTriompheDesc: "Arc de Triomphe",
@@ -703,6 +704,7 @@ export const EN = {
    RamessesII: "Ramesses II",
    RamessesIIDesc: "+%{value} Builder Capacity Multiplier",
    RapidFire: "Rapid Fire",
+   ReadFullPatchNotes: "Read Patch Notes",
    Reborn: "Rebirth",
    RebornCity: "Select A New City",
    RebornModalDescV2:
@@ -1091,5 +1093,4 @@ export const EN = {
    ZenobiaDesc: "+%{value}h Petra Warp Storage",
    ZhengHe: "Zheng He",
    Zoroaster: "Zoroaster",
-   ApplyToBuildingsToastHTML: "Successfully applied to <b>%{count} %{building}</b>",
 };

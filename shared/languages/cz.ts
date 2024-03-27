@@ -49,6 +49,7 @@ export const CZ = {
    AphroditeDesc: "Násobitel kapacity stavitele +1 za každou úroveň při vylepšování budov nad 20. úroveň",
    ApplyToAll: "Použít pro všechny",
    ApplyToAllBuilding: "Použít na všechny %{building}",
+   ApplyToBuildingsToastHTML: "Successfully applied to <b>%{count} %{building}</b>",
    Aqueduct: "Akvadukt",
    ArcDeTriomphe: "Vítězný oblouk",
    ArcDeTriompheDesc: "Vítězný oblouk",
@@ -701,6 +702,7 @@ export const CZ = {
    RamessesII: "Ramses II.",
    RamessesIIDesc: "+%{value} Násobitel kapacity stavitelů",
    RapidFire: "Rychlá palba",
+   ReadFullPatchNotes: "Read Patch Notes",
    Reborn: "Znovuzrození",
    RebornCity: "Vyberte nové město",
    RebornModalDescV2:

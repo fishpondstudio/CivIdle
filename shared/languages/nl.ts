@@ -52,6 +52,7 @@ export const NL = {
       "+1 Bouwcapaciteit Vermenigvuldiger voor elk niveau bij het upgraden van gebouwen boven Niveau 20",
    ApplyToAll: "Toepassen Op Alles",
    ApplyToAllBuilding: "Toepassen Op Alle %{building}",
+   ApplyToBuildingsToastHTML: "Successfully applied to <b>%{count} %{building}</b>",
    Aqueduct: "Aquaduct",
    ArcDeTriomphe: "Arc de Triomphe",
    ArcDeTriompheDesc: "Arc de Triomphe",
@@ -707,6 +708,7 @@ export const NL = {
    RamessesII: "Ramses II",
    RamessesIIDesc: "+%{value} Bouwcapaciteit Vermenigvuldiger",
    RapidFire: "Snelvuur",
+   ReadFullPatchNotes: "Read Patch Notes",
    Reborn: "Herboren",
    RebornCity: "Selecteer Een Nieuwe Stad",
    RebornModalDescV2:

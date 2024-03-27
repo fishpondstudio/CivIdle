@@ -47,6 +47,7 @@ export const ZH_TW = {
    AphroditeDesc: "若升級中的建築超過等級 20 ，每個等級獲得 +1 建造者能力指數",
    ApplyToAll: "應用於全部",
    ApplyToAllBuilding: "應用於全部 %{building}",
+   ApplyToBuildingsToastHTML: "Successfully applied to <b>%{count} %{building}</b>",
    Aqueduct: "水渠",
    ArcDeTriomphe: "凱旋門",
    ArcDeTriompheDesc: "凱旋門",
@@ -679,6 +680,7 @@ export const ZH_TW = {
    RamessesII: "拉美西斯二世",
    RamessesIIDesc: "建造者能力指數 +%{value}",
    RapidFire: "速射",
+   ReadFullPatchNotes: "Read Patch Notes",
    Reborn: "重生",
    RebornCity: "選擇重生城市",
    RebornModalDescV2:

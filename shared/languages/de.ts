@@ -51,6 +51,7 @@ export const DE = {
       "Bei allen Gebäuden, die mindestens auf Stufe 21 ausgebaut wurden erhöht sich der Multiplikator für Bauarbeiter pro Stufe um 1.",
    ApplyToAll: "Für alle gelten",
    ApplyToAllBuilding: "Auf alle %{building} anwenden",
+   ApplyToBuildingsToastHTML: "Successfully applied to <b>%{count} %{building}</b>",
    Aqueduct: "Aquädukt",
    ArcDeTriomphe: "Arc de Triomphe",
    ArcDeTriompheDesc: "Arc de Triomphe",
@@ -722,6 +723,7 @@ export const DE = {
    RamessesII: "Ramses II.",
    RamessesIIDesc: "+%{value} Multiplikator für Baukapazität",
    RapidFire: "Schnellfeuer",
+   ReadFullPatchNotes: "Read Patch Notes",
    Reborn: "Wiedergeburt",
    RebornCity: "Wähle eine neue Stadt aus",
    RebornModalDescV2:

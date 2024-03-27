@@ -52,6 +52,7 @@ export const PT_BR = {
       "+1 de Multiplicador de Capacidade de Construtores para cada nível de qualquer construção melhorada acima do Nível 20",
    ApplyToAll: "Aplicar A Todos",
    ApplyToAllBuilding: "Aplicar A Todos %{building}",
+   ApplyToBuildingsToastHTML: "Successfully applied to <b>%{count} %{building}</b>",
    Aqueduct: "Aqueduto",
    ArcDeTriomphe: "Arco do Triunfo",
    ArcDeTriompheDesc: "Arco do Triunfo",
@@ -711,6 +712,7 @@ export const PT_BR = {
    RamessesII: "Ramessés II",
    RamessesIIDesc: "+%{value} Multiplicador de Capacidade de Construtores",
    RapidFire: "Fogo Rápido",
+   ReadFullPatchNotes: "Read Patch Notes",
    Reborn: "Renascer",
    RebornCity: "Selecione uma Nova Cidade",
    RebornModalDescV2:
