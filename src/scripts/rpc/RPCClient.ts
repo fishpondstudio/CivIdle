@@ -276,6 +276,7 @@ export async function connectWebSocket(): Promise<number> {
       ws = null;
       user = null;
       OnUserChanged.emit(null);
+      console.log("WebSocket connection closed. Code:", ev.code);
       switch (ev.code) {
          case ServerWSErrorCode.BadRequest:
          case ServerWSErrorCode.NotAllowed:

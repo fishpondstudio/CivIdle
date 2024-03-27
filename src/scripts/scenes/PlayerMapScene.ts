@@ -4,7 +4,12 @@ import { BitmapText, Container, LINE_CAP, LINE_JOIN, Sprite } from "pixi.js";
 import WorldMap from "../../../shared/definitions/WorldMap.json";
 import { getGameOptions } from "../../../shared/logic/GameStateLogic";
 import { isTileReserved } from "../../../shared/logic/PlayerTradeLogic";
-import { MAP_MAX_X, MAP_MAX_Y, type IClientMapEntry } from "../../../shared/utilities/Database";
+import {
+   MAP_MAX_X,
+   MAP_MAX_Y,
+   type IClientMapEntry,
+   type IClientTrade,
+} from "../../../shared/utilities/Database";
 import { forEach, formatPercent, mapSafeAdd, xyToPoint } from "../../../shared/utilities/Helper";
 import type { Disposable } from "../../../shared/utilities/TypedEvent";
 import { getTexture } from "../logic/VisualLogic";
@@ -122,29 +127,8 @@ export class PlayerMapScene extends Scene {
          mapSafeAdd(this._idToTradeCount, t.fromId, 1);
       });
 
-      this._listeners.push(
-         OnTradeChanged.on((trades) => {
-            const old = Array.from(this._idToTradeCount.keys());
-            this._idToTradeCount.clear();
-
-            trades.forEach((t) => {
-               mapSafeAdd(this._idToTradeCount, t.fromId, 1);
-               this.markDirtyById(t.fromId);
-            });
-            old.forEach((id) => {
-               if (!this._idToTradeCount.has(id)) {
-                  this.markDirtyById(id);
-               }
-            });
-            this._dirtyTiles.forEach((tile) => {
-               const entry = getPlayerMap().get(tile);
-               if (entry) {
-                  this.addOrReplaceTile(tile, entry);
-               }
-            });
-            this._dirtyTiles.clear();
-         }),
-      );
+      this.onTradeChanged(getTrades());
+      this._listeners.push(OnTradeChanged.on(this.onTradeChanged.bind(this)));
 
       if (!viewportZoom) {
          const range = this.viewport.getZoomRange();
@@ -169,6 +153,29 @@ export class PlayerMapScene extends Scene {
       this.viewport.center = viewportCenter;
 
       super.onEnable();
+   }
+
+   onTradeChanged(trades: IClientTrade[]): void {
+      const old = Array.from(this._idToTradeCount.keys());
+      this._idToTradeCount.clear();
+
+      trades.forEach((t) => {
+         mapSafeAdd(this._idToTradeCount, t.fromId, 1);
+         this.markDirtyById(t.fromId);
+      });
+
+      old.forEach((id) => {
+         if (!this._idToTradeCount.has(id)) {
+            this.markDirtyById(id);
+         }
+      });
+      this._dirtyTiles.forEach((tile) => {
+         const entry = getPlayerMap().get(tile);
+         if (entry) {
+            this.addOrReplaceTile(tile, entry);
+         }
+      });
+      this._dirtyTiles.clear();
    }
 
    override onClicked(e: FederatedPointerEvent): void {
@@ -286,7 +293,7 @@ class PlayerTile extends Container {
       flag.alpha = isReserved ? 1 : 0.5;
 
       if (trade > 0) {
-         const bg = this.addChild(new Sprite(getTexture("Misc_Circle25", textures)));
+         const bg = this.addChild(new Sprite(getTexture("Misc_Circle_25", textures)));
          bg.anchor.set(0.5, 0.5);
          bg.tint = 0xe74c3c;
          bg.position.set(x * GridSize + 0.9 * GridSize, y * GridSize + 0.12 * GridSize);
