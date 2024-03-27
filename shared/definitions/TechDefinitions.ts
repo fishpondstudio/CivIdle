@@ -568,7 +568,7 @@ export class TechDefinitions {
       name: () => t(L.Olympics),
       column: 16,
       requireTech: ["Journalism"],
-      unlockBuilding: ["Stadium"],
+      unlockBuilding: ["Stadium", "MagazinePublisher"],
       globalMultiplier: {
          happiness: 5,
       },
@@ -608,7 +608,7 @@ export class TechDefinitions {
       name: () => t(L.Urbanization),
       column: 17,
       requireTech: ["Olympics", "StockMarket", "Electricity"],
-      unlockBuilding: ["Pizzeria", "MagazinePublisher"],
+      unlockBuilding: ["Pizzeria", "ResearchLab"],
    };
 
    Aviation: ITechDefinition = {
@@ -630,7 +630,7 @@ export class TechDefinitions {
       column: 18,
       requireTech: ["Refinery", "GasPipeline"],
       revealDeposit: ["Uranium"],
-      unlockBuilding: ["UraniumMine", "ResearchLab"],
+      unlockBuilding: ["UraniumMine"],
       buildingMultiplier: {
          Library: { output: 1 },
          School: { output: 1 },
