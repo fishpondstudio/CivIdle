@@ -454,7 +454,7 @@ function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
       return;
    }
 
-   ////////// Storage
+   ////////// Storage + Partial Production (when storage is full)
    const hasEnoughStorage =
       isEmpty(output) ||
       used + getStorageRequired(output) + getStorageRequired(input) * getStockpileCapacity(building) <= total;

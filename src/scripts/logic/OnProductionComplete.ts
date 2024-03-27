@@ -623,8 +623,8 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
                addMultiplier(b, { output: 1 }, buildingName);
             }
          });
-         for (const point of grid.getRange(tileToPoint(xy), 2)) {
-            Tick.next.powerGrid.add(pointToTile(point));
+         for (const point of grid.getNeighbors(tileToPoint(xy))) {
+            Tick.next.powerPlants.add(pointToTile(point));
          }
          break;
       }
