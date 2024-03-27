@@ -252,7 +252,9 @@ export class WorldScene extends Scene {
       if (!xy) {
          return;
       }
-      const building = gs.tiles.get(xy)?.building;
+      const tile = gs.tiles.get(xy);
+      if (!tile?.explored) return;
+      const building = tile?.building;
       const grid = tileToPoint(xy);
       if (building) {
          switch (building.type) {

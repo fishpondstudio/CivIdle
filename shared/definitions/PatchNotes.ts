@@ -7,7 +7,10 @@ interface PatchNote {
 export const PatchNotes: PatchNote[] = [
    {
       version: "0.5.1",
-      content: [["Bugfix", "Fix a bug where certain trade tiles does not show up correctly"]],
+      content: [
+         ["Bugfix", "Fix a bug where certain trade tiles does not show up correctly"],
+         ["Bugfix", "Fix a bug where natural wonders' highlight shows up before it is discovered"],
+      ],
    },
    {
       version: "0.5.0",
