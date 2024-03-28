@@ -98,10 +98,11 @@ export class CityDefinitions {
          Headquarter: () => t(L.HallOfSupremeHarmony),
       },
       uniqueBuildings: {
-         AbuSimbel: "Housing",
-         GreatSphinx: "Arithmetic",
+         GreatWall: "Housing",
+         YellowCraneTower: "Arithmetic",
+         PorcelainTower: "PrivateOwnership",
       },
-      naturalWonders: { NileRiver: true, MountSinai: true },
+      naturalWonders: { MountTai: true, YangtzeRiver: true },
    };
 }
 

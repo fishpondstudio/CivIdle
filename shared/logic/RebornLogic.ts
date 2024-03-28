@@ -1,6 +1,7 @@
+import { City } from "../definitions/CityDefinitions";
 import type { GreatPerson } from "../definitions/GreatPersonDefinitions";
 import { TechAge } from "../definitions/TechDefinitions";
-import { clamp, filterOf, forEach, keysOf, shuffle } from "../utilities/Helper";
+import { clamp, filterOf, forEach, isNullOrUndefined, keysOf, shuffle } from "../utilities/Helper";
 import { Config } from "./Config";
 import type { GameOptions, GreatPeopleChoice } from "./GameState";
 import { getGameOptions, getGameState } from "./GameStateLogic";
@@ -102,10 +103,15 @@ export function upgradeAllPermanentGreatPeople(options: GameOptions): void {
    });
 }
 
-export function rollPermanentGreatPeople(amount: number, currentTechAge: TechAge): void {
+export function rollPermanentGreatPeople(amount: number, currentTechAge: TechAge, city: City): void {
    const currentTechAgeIdx = Config.TechAge[currentTechAge].idx;
-   const pool = keysOf(Config.GreatPerson).filter(
-      (p) => Config.TechAge[Config.GreatPerson[p].age].idx <= currentTechAgeIdx + 1,
+   const pool = keysOf(
+      filterOf(
+         Config.GreatPerson,
+         (_, v) =>
+            (isNullOrUndefined(v.city) || v.city === city) &&
+            Config.TechAge[v.age].idx <= currentTechAgeIdx + 1,
+      ),
    );
    let candidates = shuffle([...pool]);
    for (let i = 0; i < amount; i++) {
@@ -120,9 +126,16 @@ export function rollPermanentGreatPeople(amount: number, currentTechAge: TechAge
    }
 }
 
-export function rollGreatPeopleThisRun(age: TechAge, amount = 3): GreatPeopleChoice | null {
+export function rollGreatPeopleThisRun(age: TechAge, city: City, amount = 3): GreatPeopleChoice | null {
    const choices: GreatPerson[] = [];
-   const pool = shuffle(keysOf(filterOf(Config.GreatPerson, (_, v) => v.age === age)));
+   const pool = shuffle(
+      keysOf(
+         filterOf(
+            Config.GreatPerson,
+            (_, v) => (isNullOrUndefined(v.city) || v.city === city) && v.age === age,
+         ),
+      ),
+   );
    if (pool.length < amount) {
       return null;
    }

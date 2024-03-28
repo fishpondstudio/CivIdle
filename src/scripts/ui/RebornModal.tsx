@@ -170,7 +170,7 @@ export function RebornModal(): React.ReactNode {
                      if (canEarnGreatPeopleFromReborn()) {
                         const age = getCurrentTechAge(getGameState());
                         if (age) {
-                           rollPermanentGreatPeople(getGreatPeopleAtReborn(), age);
+                           rollPermanentGreatPeople(getGreatPeopleAtReborn(), age, gameState.city);
                         }
                         makeGreatPeopleFromThisRunPermanent();
                      }

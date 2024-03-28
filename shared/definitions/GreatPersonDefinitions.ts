@@ -6,6 +6,7 @@ import { MultiplierTypeDesc, Tick } from "../logic/TickLogic";
 import { addMultiplier } from "../logic/Update";
 import { L, t } from "../utilities/i18n";
 import type { Building } from "./BuildingDefinitions";
+import { City } from "./CityDefinitions";
 import type { TechAge } from "./TechDefinitions";
 
 export class GreatPersonDefinitions {
@@ -236,6 +237,31 @@ export class GreatPersonDefinitions {
       age: "ClassicalAge",
       tick: addScienceBasedOnBusyWorkers.bind(null),
    };
+
+   Archimedes: IGreatPersonDefinition = boostOf({
+      name: () => t(L.Archimedes),
+      boost: {
+         multipliers: ["output", "storage"],
+         buildings: ["Caravansary", "Warehouse"],
+      },
+      time: "c. 200 BC",
+      value: (level) => level,
+      maxLevel: Infinity,
+      age: "ClassicalAge",
+   });
+
+   EmperorWuOfHan: IGreatPersonDefinition = boostOf({
+      name: () => t(L.EmperorWuOfHan),
+      boost: {
+         multipliers: ["output", "storage"],
+         buildings: ["Caravansary"],
+      },
+      time: "156 ~ 87 BC",
+      value: (level) => level * 2,
+      maxLevel: Infinity,
+      age: "ClassicalAge",
+      city: "Beijing",
+   });
 
    QinShiHuang: IGreatPersonDefinition = boostOf({
       name: () => t(L.QinShiHuang),
@@ -733,6 +759,7 @@ export interface IGreatPersonDefinition {
    maxLevel: number;
    age: TechAge;
    boost?: IGreatPersonBoost;
+   city?: City;
    tick: (self: IGreatPersonDefinition, level: number, permanent: boolean) => void;
 }
 
@@ -772,6 +799,7 @@ function boostOf(
       value: def.value,
       maxLevel: def.maxLevel,
       age: def.age,
+      city: def.city,
       tick: (self, level, permanent) =>
          tickGreatPersonBoost(
             self,

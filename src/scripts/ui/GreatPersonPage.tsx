@@ -1,3 +1,4 @@
+import Tippy from "@tippyjs/react";
 import { type GreatPerson } from "../../../shared/definitions/GreatPersonDefinitions";
 import { Config } from "../../../shared/logic/Config";
 import { getSpecialBuildings } from "../../../shared/logic/IntraTickCache";
@@ -102,7 +103,18 @@ export function GreatPersonPage(): React.ReactNode {
                         <td>
                            <div className="text-strong">{person.name()}</div>
                            <div className="text-desc text-small">{Config.TechAge[person.age].name()}</div>
-                           <div></div>
+                           {person.city ? (
+                              <div className="row text-orange text-small">
+                                 <div className="m-icon small mr2">map</div>
+                                 <Tippy
+                                    content={t(L.GreatPersonOnlyIn, {
+                                       city: Config.City[person.city].name(),
+                                    })}
+                                 >
+                                    <div>{Config.City[person.city].name()}</div>
+                                 </Tippy>
+                              </div>
+                           ) : null}
                         </td>
                         <td className="text-center">
                            <TextWithHelp

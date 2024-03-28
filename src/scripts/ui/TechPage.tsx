@@ -46,7 +46,7 @@ export function TechPage({ id }: { id: Tech }): React.ReactNode {
       if (oldAge && newAge && oldAge !== newAge) {
          forEach(Config.TechAge, (age, def) => {
             if (def.idx <= Config.TechAge[newAge].idx) {
-               const candidates = rollGreatPeopleThisRun(age);
+               const candidates = rollGreatPeopleThisRun(age, gs.city);
                if (candidates) {
                   gs.greatPeopleChoices.push(candidates);
                }

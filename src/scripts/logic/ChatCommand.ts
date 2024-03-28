@@ -86,7 +86,7 @@ export async function handleChatCommand(command: string): Promise<void> {
             const number = await client.doGreatPeopleRecovery();
             getGameOptions().greatPeople = {};
             getGameOptions().greatPeopleChoices = [];
-            rollPermanentGreatPeople(number, MAX_TECH_AGE);
+            rollPermanentGreatPeople(number, MAX_TECH_AGE, getGameState().city);
             resetToCity(firstKeyOf(Config.City)!);
             await saveGame();
             window.location.reload();

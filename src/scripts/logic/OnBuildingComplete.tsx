@@ -51,12 +51,12 @@ export function onBuildingComplete(xy: Tile): void {
          break;
       }
       case "Parthenon": {
-         const candidates1 = rollGreatPeopleThisRun("ClassicalAge", 4);
+         const candidates1 = rollGreatPeopleThisRun("ClassicalAge", gs.city, 4);
          if (candidates1) {
             gs.greatPeopleChoices.push(candidates1);
          }
 
-         const candidates2 = rollGreatPeopleThisRun("ClassicalAge", 4);
+         const candidates2 = rollGreatPeopleThisRun("ClassicalAge", gs.city, 4);
          if (candidates2) {
             gs.greatPeopleChoices.push(candidates2);
          }
@@ -68,12 +68,12 @@ export function onBuildingComplete(xy: Tile): void {
          break;
       }
       case "TajMahal": {
-         const candidates1 = rollGreatPeopleThisRun("ClassicalAge");
+         const candidates1 = rollGreatPeopleThisRun("ClassicalAge", gs.city);
          if (candidates1) {
             gs.greatPeopleChoices.push(candidates1);
          }
 
-         const candidates2 = rollGreatPeopleThisRun("MiddleAge");
+         const candidates2 = rollGreatPeopleThisRun("MiddleAge", gs.city);
          if (candidates2) {
             gs.greatPeopleChoices.push(candidates2);
          }

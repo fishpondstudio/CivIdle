@@ -28,7 +28,7 @@ export function onTileExplored(xy: Tile): void {
          case "MountSinai": {
             const age = getCurrentTechAge(gs);
             if (!age) return;
-            const candidates = rollGreatPeopleThisRun(age);
+            const candidates = rollGreatPeopleThisRun(age, gs.city);
             if (candidates) {
                gs.greatPeopleChoices.push(candidates);
             }
