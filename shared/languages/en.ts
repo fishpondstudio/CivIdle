@@ -486,6 +486,7 @@ export const EN = {
    MaxTransportDistance: "Max Transport Distance",
    Meat: "Meat",
    Memphis: "Memphis",
+   Beijing: "Beijing",
    Metallurgy: "Metallurgy",
    MiddleAge: "Middle Age",
    Milk: "Milk",
@@ -944,6 +945,7 @@ export const EN = {
    TempleOfHeaven: "Temple of Heaven",
    TempleOfHeavenDesc: "All buildings that are level 10 or higher get +1 Worker Capacity Multiplier",
    TempleOfPtah: "Temple of Ptah",
+   HallOfSupremeHarmony: "Hall of Supreme Harmony",
    TerracottaArmy: "Terracotta Army",
    TerracottaArmyDesc:
       "All Iron Mining Camps get +1 Production, Worker Capacity and Storage Multiplier. Iron Forges get +1 Production Multiplier for each adjacent Iron Mining Camp that is built on top of an Iron deposit",

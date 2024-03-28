@@ -3,9 +3,7 @@ import type { GameState } from "../../../shared/logic/GameState";
 import { SteamClient, isSteam } from "../rpc/SteamClient";
 
 export function checkAgeAchievements(currentAge: TechAge): void {
-   if (!isSteam()) {
-      return;
-   }
+   if (!isSteam()) return;
    switch (currentAge) {
       case "BronzeAge": {
          SteamClient.unlockAchievement("Bronze");
@@ -39,6 +37,7 @@ export function checkAgeAchievements(currentAge: TechAge): void {
 }
 
 export function checkRebirthAchievements(extraGP: number, gs: GameState): void {
+   if (!isSteam()) return;
    if (extraGP >= 1) {
       switch (gs.city) {
          case "Rome": {
