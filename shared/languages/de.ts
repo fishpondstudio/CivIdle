@@ -26,7 +26,7 @@ export const DE = {
       "Wenn du auf den nächsten Account-Rang aufsteigst, ist dies die maximale Stufe an dauerhaften herausragenden Persönlichkeiten, die du übernehmen kannst.",
    AccountUpgradeConfirm: "Konto-Upgrade",
    AccountUpgradeConfirmDescV2:
-      "Upgrading your account will <b>reset your current run</b> and carry over permanent great people within the allowed levels. This <b>cannot</b> be undone, are you sure to continue?",
+      "Der Aufstieg zum nächsten Account-Rang <b>setzt den aktuellen Lauf zurück</b> und überträgt die permanenten herausragenden Persönlichkeiten im Rahmen der erlaubten Grenzen. Dies <b>kann nicht</b> rückgängig gemacht werden - soll wirklich fortgefahren werden?",
    Acropolis: "Akropolis",
    ActorsGuild: "Schauspielergilde",
    AdaLovelace: "Ada Lovelace",
@@ -530,7 +530,7 @@ export const DE = {
    NextMarketUpdateIn: "Nächste Aktualisierung der Angebote in",
    NileRiver: "Nile River",
    NileRiverDesc:
-      "Double the effect of Hatshepsut. All wheat farms get +1 Production and Storage Multiplier. All adjacent wheat farms get +5 Production and Storage Multiplier",
+      "Verdoppelt den Effekt von Hatshepsut. Alle Weizenfarmen erhalten +1 Multiplikator für Produktion und Speicher. Alle benachbarten Weizenfarmen erhalten +5 Multiplikator für Produktion und Speicher",
    NoDepositDesc:
       "In diesem Gebiet gibt es keine Lagerstätte. Weitere Vorkommen können entdeckt werden, wenn Du neue Technologien freischaltest",
    NothingHere: "Noch keine Inhalte",
@@ -742,10 +742,10 @@ export const DE = {
    ReneDescartes: "René Descartes",
    RequiredDeposit: "Erforderliches Vorkommen",
    RequiredWorkersTooltip:
-      "Required number of workers for production is equal to the sum of all resources consumed and produced after multipliers (except electrification)",
-   RequirePower: "Require Power",
+      "Zahl der benötigten Arbeiter für die Produktion ist die Summe aller verbrauchten und erzeugten Ressourcen nach Multiplikatoren (außer Elektrifizierung)",
+   RequirePower: "braucht Stromversorgung",
    RequirePowerDesc:
-      "This building needs to be built on a tile with power and can extend the power to its adjacent tiles",
+      "Dieses Gebäude muß auf einem Feld mit Stromversorgung gebaut werden und kann die Stromversorgung auf seine Nachbarfelder erweitern",
    Research: "Forschung",
    ResearchLab: "Research Lab",
    ResearchMenu: "Forschung",
@@ -758,12 +758,12 @@ export const DE = {
    ResourceExportToSameTypeTooltip: "Erlaube Gebäude des gleichen Typs Ware von hier zu Transportieren.",
    ResourceFromBuilding: "%{resource} von %{building}",
    ResourceImport: "Ressourcentransport",
-   ResourceImportCapacity: "Resource Transport Capacity",
-   ResourceImportImportCapV2: "Max Amount",
+   ResourceImportCapacity: "Kapazität für Ressourcentransport",
+   ResourceImportImportCapV2: "Max. Menge",
    ResourceImportImportCapV2Tooltip:
-      "This building will stop transporting thhis resource when the max amount is reached",
+      "Dieses Gebäude beendet den Transport dieser Ressource, wenn die max. Menge erreicht ist",
    ResourceImportImportPerCycleV2: "Per Cycle",
-   ResourceImportImportPerCycleV2ToolTip: "The amount of this resource that is transported per cycle",
+   ResourceImportImportPerCycleV2ToolTip: "Die Menge dieser Ressource, die pro Zyklus transportiert wird",
    ResourceImportResource: "Ressource",
    ResourceImportSettings: "Ressourcen-Transport",
    ResourceImportStorage: "Lagerung",
@@ -806,7 +806,7 @@ export const DE = {
    ScrollWheelAdjustLevelTooltip:
       "Mit dem Mausrad kannst du das Level anpassen wenn dein Mauszeiger über dem Symbol ist",
    SeaTradeCost: "Kosten für Seehandel",
-   SeaTradeUpgrade: "Trading with players across the sea. Tariff for each sea tile: %{tariff}",
+   SeaTradeUpgrade: "Mit Spielern über das Meer handeln. Zoll je Meeresfeld: %{tariff}",
    SelectedAll: "Alle",
    SelectedCount: "%{count} ausgewählt",
    SellBuilding: "Gebäude verkaufen",
@@ -863,9 +863,9 @@ export const DE = {
    Stadium: "Stadion",
    Stateship: "Eigenstaatlichkeit",
    StatisticsBuildings: "Gebäude",
-   StatisticsExploration: "Exploration",
+   StatisticsExploration: "Entdeckung",
    StatisticsOffice: "Statistisches Amt",
-   StatisticsOfficeDesc: "Provide statistics of your empire. Generate explorers for exploring the map",
+   StatisticsOfficeDesc: "Bietet Statistiken deines Reiches. Erzeugt Entdecker, die die Karte aufdecken",
    StatisticsResources: "Ressourcen",
    StatisticsResourcesDeficit: "Defizit",
    StatisticsResourcesDeficitDesc: "Produktion",
@@ -1008,7 +1008,7 @@ export const DE = {
    TribuneUpgradeDescGreatPeopleWarning:
       "In deinem aktuellen Durchgang hast du herausragende Persönlichkeiten. Du solltest zuerst eine <b>Wiedergeburt</b> durchführen. Wenn du auf Quästor-Rang aufsteigst, wird dein aktueller Lauf zurückgesetzt.",
    TribuneUpgradeDescV3:
-      "You can play the full game as Tribune if you do not plan to participate in the <b>optional</b> online features. To acquire unrestricted access to the online features, you will need to upgrade to Quaestor. <b>This is an anti-bot measure to keep the game free for everyone.</b> However, <b>when upgrading to Quaestor</b> you can carry over great people: <ul><li>Up to Level <b>3</b> for Bronze, Iron and Classical Age</li><li>Up to Level <b>2</b> for Middle Age, Renaissance and Industrial Age</li><li>Up to Level <b>1</b> for World Wars, Cold War and Information Age</li></ul>Partial progress above the level cannot be carried over.",
+      "Du kannst das ganze Spiel als Tribun spielen, wenn du nicht planst die <b>optionalen</b> online Leistungsmerkmale zu nutzen. Um den unbeschränkten Zugang zu ihnen zu erhalten, mußt du in den Rang Quaestor austeigen. <b>Dies ist eine anti-bot Maßnahme, um das Spiel für alle kostenlos zu halten.</b> Du kannst aber <b>beim Aufstieg zu Quaestor</b>  herausragende Personen übernehmen: <ul><li>Bis zur Stufe <b>3</b> für Bronze-, Eisenzeit und Klassik</li><li>bis zur Stufe <b>2</b> für Mittelalter, Renaissance und Industriezeitalter</li><li>bis zur Stufe <b>1</b> for Weltkriege, Kalter Krieg und Informationszeitalter</li></ul>Teilweiser Fortschritt oberhalb dieser Stufen kann nicht übertragen werden.",
    TurnOnTimeWarpDesc:
       "Kostet %{speed} Warps für jede Sekunde und beschleunige dein Imperium, um mit %{speed}x Geschwindigkeit zu laufen.",
    Tutorial: "Tutorial",
