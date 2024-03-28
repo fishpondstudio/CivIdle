@@ -12,7 +12,17 @@ All localizations are contribute by the community. If you'd like to help, visit 
 
 ## Build
 
-TODO
+Prerequisites:
+- Have [VSCode](https://code.visualstudio.com/download) installed 
+- Have [pnpm](https://pnpm.io/installation) installed
+
+Setting up dependencies:
+- Run 'pnpm install' in the terminal
+- If the above throws an error stating that the ps1 is not digitally signed then run the following command in the terminal: 'Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass' and run 'pnmp install' again after this
+
+Running the Project:
+- Run 'pnpm run dev' in the terminal
+- Browse to 'http://localhost:3000/' 
 
 # License
 
