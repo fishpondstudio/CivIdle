@@ -158,6 +158,11 @@ export async function handleChatCommand(command: string): Promise<void> {
          addSystemMessage(`${parts[1]} is now a mod`);
          break;
       }
+      case "tabulate": {
+         const resp = await client.tabulateVotedBoost();
+         addSystemMessage(JSON.stringify(resp));
+         break;
+      }
       case "queryplayer": {
          if (!parts[1]) {
             throw new Error("Invalid command format");
