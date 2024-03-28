@@ -845,7 +845,7 @@ export const DE = {
    SidePanelWidth: "Breite des seitlichen Menüfensters",
    SidePanelWidthDescHTML:
       "Breitenanpassung für das seitliche Menüfensters. <b>Ein Neustart des Spiels ist erforderlich</b>",
-   SiegeRam: "Belagerungswidder",
+   SiegeRam: "Ramme",
    SiegeWorkshop: "Belagerungswerkstatt",
    Skyscrapper: "Wolkenkratzer",
    Smartphone: "Smartphone",
