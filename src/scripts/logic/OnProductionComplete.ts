@@ -61,7 +61,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
    switch (building.type) {
       case "Headquarter": {
          mapSafePush(Tick.next.tileMultipliers, xy, {
-            output: reduceOf(options.greatPeople, (prev, gp, inv) => prev + inv.level, 0) * 0.5,
+            output: reduceOf(options.greatPeople, (prev, gp, inv) => prev + inv.level, 0) * 0.1,
             source: t(L.PermanentGreatPeople),
          });
          break;

@@ -11,6 +11,8 @@ export const PatchNotes: PatchNote[] = [
          ["QoL", "Show wonder build cost in building list"],
          ["Bugfix", "Fix a bug where certain trade tiles does not show up correctly"],
          ["Bugfix", "Fix a bug where natural wonders' highlight shows up before it is discovered"],
+         ["Bugfix", "Fix a bug where United Nation's vote are not correctly tabulated"],
+         ["Balance", "Each level of permanent great people provides 1 worker (reduced from 5)"],
       ],
    },
    {

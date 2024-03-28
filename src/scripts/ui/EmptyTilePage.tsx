@@ -6,7 +6,6 @@ import {
    applyBuildingDefaults,
    checkBuildingMax,
    getBuildingCost,
-   isSpecialBuilding,
 } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
 import { getGameOptions, notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
@@ -19,7 +18,6 @@ import {
    hasFlag,
    isEmpty,
    keysOf,
-   mapOf,
    numberToRoman,
    setContains,
    sizeOf,
@@ -175,7 +173,6 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
                   { name: t(L.BuildingTier), sortable: true },
                   { name: t(L.BuildingName), sortable: true },
                   { name: "", sortable: false },
-                  { name: "", sortable: false },
                ]}
                data={keysOf(unlockedBuildings(gs)).filter((v) => {
                   if ((sizeOf(constructed.get(v)) ?? 0) >= (Config.Building[v].max ?? Infinity)) {
@@ -231,7 +228,7 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
                            e.stopPropagation();
                         }}
                      >
-                        <td className="text-center text-strong">
+                        <td className="text-center text-strong" style={{ width: 0 }}>
                            {(building?.max ?? Infinity) <= 1 ? (
                               <div className="m-icon small">
                                  <TextWithHelp content={building.desc?.()} noStyle>
@@ -274,7 +271,7 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
                                  <div className="m-icon small text-orange ml5">replay</div>
                               ) : null}
                            </div>
-                           {isSpecialBuilding(k) ? (
+                           {building.construction ? (
                               <div>
                                  <div className="row text-small text-desc">
                                     {isEmpty(buildCost) ? null : (
@@ -289,57 +286,41 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
                                     </div>
                                  </div>
                               </div>
-                           ) : (
-                              <div>
-                                 <div className="row text-small text-desc">
-                                    {isEmpty(building.input) ? null : (
-                                       <div className="m-icon small mr2 fs">exit_to_app</div>
-                                    )}
-                                    <div>
-                                       {jsxMapOf(building.input, (res, amount) => (
-                                          <span key={res} className="mr5">
-                                             {Config.Resource[res].name()} x{formatNumber(amount)}
-                                          </span>
-                                       ))}
-                                    </div>
-                                 </div>
-                                 <div className="row text-small text-desc">
-                                    {isEmpty(building.output) ? null : (
-                                       <div className="m-icon small mr2 fs">output</div>
-                                    )}
-                                    <div>
-                                       {jsxMapOf(building.output, (res, amount) => (
-                                          <span key={res} className="mr5">
-                                             {Config.Resource[res].name()} x{formatNumber(amount)}
-                                          </span>
-                                       ))}
-                                    </div>
-                                 </div>
-                                 {building.power ? (
-                                    <div className="row text-small text-desc">
-                                       <div className="m-icon small mr2">bolt</div>
-                                       <div>{t(L.RequirePower)}</div>
-                                    </div>
-                                 ) : null}
-                              </div>
-                           )}
-                        </td>
-                        <td className="right text-small">
-                           {building.construction ? (
-                              <Tippy
-                                 content={t(L.ConstructionCost, {
-                                    cost: mapOf(
-                                       buildCost,
-                                       (res, amount) =>
-                                          `${Config.Resource[res].name()} x${formatNumber(amount)}`,
-                                    ).join(", "),
-                                 })}
-                              >
-                                 <div className="m-icon small text-desc">build</div>
-                              </Tippy>
                            ) : null}
+                           <div>
+                              <div className="row text-small text-desc">
+                                 {isEmpty(building.input) ? null : (
+                                    <div className="m-icon small mr2 fs">exit_to_app</div>
+                                 )}
+                                 <div>
+                                    {jsxMapOf(building.input, (res, amount) => (
+                                       <span key={res} className="mr5">
+                                          {Config.Resource[res].name()} x{formatNumber(amount)}
+                                       </span>
+                                    ))}
+                                 </div>
+                              </div>
+                              <div className="row text-small text-desc">
+                                 {isEmpty(building.output) ? null : (
+                                    <div className="m-icon small mr2 fs">output</div>
+                                 )}
+                                 <div>
+                                    {jsxMapOf(building.output, (res, amount) => (
+                                       <span key={res} className="mr5">
+                                          {Config.Resource[res].name()} x{formatNumber(amount)}
+                                       </span>
+                                    ))}
+                                 </div>
+                              </div>
+                              {building.power ? (
+                                 <div className="row text-small text-desc">
+                                    <div className="m-icon small mr2">bolt</div>
+                                    <div>{t(L.RequirePower)}</div>
+                                 </div>
+                              ) : null}
+                           </div>
                         </td>
-                        <td>
+                        <td style={{ width: 0 }}>
                            <div className="text-link text-strong" onClick={() => build(k)}>
                               {t(L.Build)}
                            </div>
