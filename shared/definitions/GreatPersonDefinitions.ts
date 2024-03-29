@@ -742,6 +742,30 @@ export class GreatPersonDefinitions {
       maxLevel: Infinity,
       age: "WorldWarAge",
    });
+
+   MarieCurie: IGreatPersonDefinition = boostOf({
+      name: () => t(L.CharlesMartinHall),
+      boost: {
+         multipliers: ["output", "storage"],
+         buildings: ["CableFactory", "UraniumMine"],
+      },
+      time: "1867 ~ 1934 AD",
+      value: (level) => level,
+      maxLevel: Infinity,
+      age: "WorldWarAge",
+   });
+
+   AlbertEinstein: IGreatPersonDefinition = boostOf({
+      name: () => t(L.CharlesMartinHall),
+      boost: {
+         multipliers: ["output", "storage"],
+         buildings: ["ResearchLab", "PlasticsFactory"],
+      },
+      time: "1879 ~ 1955 AD",
+      value: (level) => level,
+      maxLevel: Infinity,
+      age: "WorldWarAge",
+   });
 }
 
 export type GreatPerson = keyof GreatPersonDefinitions;

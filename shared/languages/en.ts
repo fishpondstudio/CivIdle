@@ -153,6 +153,7 @@ export const EN = {
    CharlesDarwin: "Charles Darwin",
    CharlesDarwinDesc: "+%{value} Science From Busy Workers",
    CharlesMartinHall: "Charles Martin Hall",
+   MarieCurie: "Marie Curie",
    CharlesParsons: "Charles Parsons",
    Chat: "Chat",
    ChatChannel: "Chat Channel",
