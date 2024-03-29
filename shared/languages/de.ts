@@ -890,7 +890,7 @@ export const DE = {
    Steamworks: "Dampfmaschine",
    Steel: "Stahl",
    SteelMill: "Stahlwerk",
-   Stock: "Lagerbestand",
+   Stock: "Aktien",
    StockExchange: "Börse",
    StockMarket: "Börse",
    StockpileDesc:
