@@ -6,6 +6,10 @@ interface PatchNote {
 
 export const PatchNotes: PatchNote[] = [
    {
+      version: "0.5.2",
+      content: [["Bugfix", "Fix a bug where Permanent Great Person UI sometimes shows incorrect choices"]],
+   },
+   {
       version: "0.5.1",
       content: [
          ["QoL", "Show wonder build cost in building list"],
