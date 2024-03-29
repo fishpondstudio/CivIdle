@@ -747,7 +747,7 @@ export const EN = {
    ResourceImportCapacity: "Resource Transport Capacity",
    ResourceImportImportCapV2: "Max Amount",
    ResourceImportImportCapV2Tooltip:
-      "This building will stop transporting thhis resource when the max amount is reached",
+      "This building will stop transporting this resource when the max amount is reached",
    ResourceImportImportPerCycleV2: "Per Cycle",
    ResourceImportImportPerCycleV2ToolTip: "The amount of this resource that is transported per cycle",
    ResourceImportResource: "Resource",

@@ -91,7 +91,8 @@ export function ChooseGreatPersonModal({ permanent }: { permanent: boolean }): R
             <div className="row" style={{ alignItems: "stretch" }}>
                {greatPeopleChoice.map((greatPerson, index) => {
                   return (
-                     <Fragment key={greatPerson}>
+                     // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
+                     <Fragment key={index}>
                         {index === 0 ? null : <div style={{ width: "5px" }} />}
                         <GreatPersonCard
                            greatPerson={greatPerson}
@@ -106,7 +107,8 @@ export function ChooseGreatPersonModal({ permanent }: { permanent: boolean }): R
             <div className="row">
                {greatPeopleChoice.map((greatPerson, index) => {
                   return (
-                     <Fragment key={greatPerson}>
+                     // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
+                     <Fragment key={index}>
                         {index === 0 ? null : <div style={{ width: "5px" }} />}
                         <div className="f1">
                            {permanent ? (
