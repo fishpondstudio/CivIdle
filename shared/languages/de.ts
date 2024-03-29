@@ -1034,7 +1034,7 @@ export const DE = {
    UNGeneralAssemblyMultipliers:
       "<b>+%{count}</b> Produktion, Arbeiterkapazität und Speichermultiplikatoren für <b>%{buildings}</b>",
    UNGeneralAssemblyNext: "Kommende UN Generalversammlung #%{id}",
-   UNGeneralAssemblyVoteEndIn: 
+   UNGeneralAssemblyVoteEndIn:
       "Du kannst Deine Stimme jederzeit ändern, bevor die Abstimmung in <b>%{time}</b> endet",
    UniqueBuildings: "Einzigartige Gebäude",
    UnitedNations: "Vereinte Nationen",
