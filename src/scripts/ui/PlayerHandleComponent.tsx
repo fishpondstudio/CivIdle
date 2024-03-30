@@ -150,24 +150,6 @@ function AccountDetails(): React.ReactNode {
                      </td>
                   </tr>
                   <tr>
-                     <td>{t(L.AccountLeaderboard)}</td>
-                     <td>
-                        <div className="m-icon small text-red">cancel</div>
-                     </td>
-                     <td>
-                        <div className="m-icon small text-green">check_circle</div>
-                     </td>
-                     <td>
-                        <div className="m-icon small text-green">check_circle</div>
-                     </td>
-                     <td>
-                        <div className="m-icon small text-green">check_circle</div>
-                     </td>
-                     <td>
-                        <div className="m-icon small text-green">check_circle</div>
-                     </td>
-                  </tr>
-                  <tr>
                      <td>{t(L.AccountActiveTrade)}</td>
                      <td>2</td>
                      <td>4</td>
@@ -204,18 +186,6 @@ function AccountDetails(): React.ReactNode {
                      <td>{TradeTileReservationDays[AccountLevel.Aedile]}d</td>
                      <td>{TradeTileReservationDays[AccountLevel.Praetor]}d</td>
                      <td>{TradeTileReservationDays[AccountLevel.Consul]}d</td>
-                  </tr>
-                  <tr>
-                     <td>
-                        <TextWithHelp content={t(L.AccountUpgradeCarryOverDesc)}>
-                           {t(L.AccountUpgradeCarryOver)}
-                        </TextWithHelp>
-                     </td>
-                     <td>2</td>
-                     <td>∞</td>
-                     <td>∞</td>
-                     <td>∞</td>
-                     <td>∞</td>
                   </tr>
                </tbody>
             </table>

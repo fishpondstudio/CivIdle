@@ -203,7 +203,9 @@ if (import.meta.env.DEV) {
       });
    };
    // @ts-expect-error
-   window.saveGame = saveGame;
+   window.saveGame = () => {
+      saveGame().then(() => window.location.reload());
+   };
    // @ts-expect-error
    window.rollPermanentGreatPeople = rollPermanentGreatPeople;
    // @ts-expect-error
