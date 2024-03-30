@@ -99,7 +99,7 @@ export class CityDefinitions {
       },
       uniqueBuildings: {
          GreatWall: "Housing",
-         YellowCraneTower: "Arithmetic",
+         YellowCraneTower: "Geography",
          PorcelainTower: "PrivateOwnership",
       },
       naturalWonders: { MountTai: true, YangtzeRiver: true },

@@ -384,9 +384,6 @@ export function calculateTierAndPrice(log?: (val: string) => void) {
    const notBoostedBuildings: { building: Building; tech: Tech; age: TechAge }[] = [];
    forEach(Config.GreatPerson, (p, def) => {
       def.boost?.buildings.forEach((b) => {
-         if (boostedBuildings.has(b)) {
-            console.error(`${b} is boosted by two great people`);
-         }
          boostedBuildings.add(b);
       });
    });

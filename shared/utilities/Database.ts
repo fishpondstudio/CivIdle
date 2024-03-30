@@ -6,6 +6,7 @@ export enum ChatAttributes {
    None = 0,
    Mod = 1 << 0,
    Announce = 1 << 1,
+   Supporter = 1 << 2,
 }
 
 export interface IChat {
@@ -60,9 +61,11 @@ export interface IClientTrade extends ITrade {
    from: string;
    fromFlag: string;
    fromLevel: AccountLevel;
+   fromAttr: UserAttributes;
    fillBy?: string;
    fillByFlag?: string;
    fillByLevel?: AccountLevel;
+   fillByAttr?: UserAttributes;
 }
 
 export interface ITradeMessage extends IMessage {
@@ -135,6 +138,19 @@ export interface ITradeValue {
    time: number;
 }
 
+export enum UserAttributes {
+   None = 0,
+   Mod = 1 << 0,
+   DLC1 = 1 << 1,
+   DLC2 = 1 << 2,
+   DLC3 = 1 << 3,
+   DLC4 = 1 << 4,
+   DLC5 = 1 << 5,
+   Banned = 1 << 6,
+   TribuneOnly = 1 << 7,
+   DisableRename = 1 << 8,
+}
+
 export interface IUser {
    userId: string;
    handle: string;
@@ -146,9 +162,9 @@ export interface IUser {
    empireValues: IEmpireValue[];
    tradeValues: ITradeValue[];
    level: AccountLevel;
-   isMod: boolean;
    flag: string;
    ip: string;
+   attr: UserAttributes;
 }
 
 export interface IMapEntry {
@@ -158,6 +174,7 @@ export interface IMapEntry {
 }
 
 export interface IClientMapEntry extends IMapEntry {
+   attr: UserAttributes;
    flag: string;
    level: AccountLevel;
    lastSeenAt: number;
@@ -168,13 +185,6 @@ export interface ISlowModeConfig {
    until: number;
    minInterval: number;
    lastChatAt: number;
-}
-
-export enum BanFlag {
-   None = 0,
-   Completely = 1 << 0,
-   TribuneOnly = 1 << 1,
-   NoRename = 1 << 2,
 }
 
 export interface IVotedBoost extends IClientVotedBoost {
@@ -209,7 +219,6 @@ export const DB: {
    map: Record<string, IMapEntry>;
    muteList: Record<string, number>;
    slowList: Record<string, ISlowModeConfig>;
-   banList: Record<string, BanFlag>;
    greatPeopleRecovery: Record<string, number>;
    votedBoosts: Record<number, IVotedBoost>;
 } = {
@@ -220,7 +229,6 @@ export const DB: {
    pendingClaims: {},
    muteList: {},
    slowList: {},
-   banList: {},
    greatPeopleRecovery: {},
    votedBoosts: {},
 };

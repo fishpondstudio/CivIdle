@@ -3,8 +3,9 @@ import type { GreatPerson } from "../definitions/GreatPersonDefinitions";
 import { TechAge } from "../definitions/TechDefinitions";
 import { clamp, filterOf, forEach, isNullOrUndefined, keysOf, shuffle } from "../utilities/Helper";
 import { Config } from "./Config";
-import type { GameOptions, GreatPeopleChoice } from "./GameState";
+import type { GameOptions, GameState, GreatPeopleChoice } from "./GameState";
 import { getGameOptions, getGameState } from "./GameStateLogic";
+import { getBuildingsByType } from "./IntraTickCache";
 import { Tick } from "./TickLogic";
 
 ////////////////////////////////////////////////
@@ -103,8 +104,13 @@ export function upgradeAllPermanentGreatPeople(options: GameOptions): void {
    });
 }
 
-export function rollPermanentGreatPeople(amount: number, currentTechAge: TechAge, city: City): void {
-   const currentTechAgeIdx = Config.TechAge[currentTechAge].idx;
+export function rollPermanentGreatPeople(
+   rollCount: number,
+   choiceCount: number,
+   currentAge: TechAge,
+   city: City,
+): void {
+   const currentTechAgeIdx = Config.TechAge[currentAge].idx;
    const pool = keysOf(
       filterOf(
          Config.GreatPerson,
@@ -114,9 +120,9 @@ export function rollPermanentGreatPeople(amount: number, currentTechAge: TechAge
       ),
    );
    let candidates = shuffle([...pool]);
-   for (let i = 0; i < amount; i++) {
+   for (let i = 0; i < rollCount; i++) {
       const choice: GreatPerson[] = [];
-      for (let i = 0; i < 3; i++) {
+      for (let i = 0; i < choiceCount; i++) {
          if (candidates.length === 0) {
             candidates = shuffle([...pool]);
          }
@@ -126,7 +132,11 @@ export function rollPermanentGreatPeople(amount: number, currentTechAge: TechAge
    }
 }
 
-export function rollGreatPeopleThisRun(age: TechAge, city: City, amount = 3): GreatPeopleChoice | null {
+export function rollGreatPeopleThisRun(
+   age: TechAge,
+   city: City,
+   choiceCount: number,
+): GreatPeopleChoice | null {
    const choices: GreatPerson[] = [];
    const pool = shuffle(
       keysOf(
@@ -136,11 +146,21 @@ export function rollGreatPeopleThisRun(age: TechAge, city: City, amount = 3): Gr
          ),
       ),
    );
-   if (pool.length < amount) {
+   if (pool.length < choiceCount) {
       return null;
    }
-   for (let i = 0; i < amount; i++) {
+   for (let i = 0; i < choiceCount; i++) {
       choices.push(pool[i]);
    }
    return choices as GreatPeopleChoice;
+}
+
+export const DEFAULT_GREAT_PEOPLE_CHOICE_COUNT = 3;
+
+export function getGreatPeopleChoiceCount(gs: GameState): number {
+   const yct = getBuildingsByType("YellowCraneTower", gs);
+   if (yct) {
+      return 1 + DEFAULT_GREAT_PEOPLE_CHOICE_COUNT;
+   }
+   return DEFAULT_GREAT_PEOPLE_CHOICE_COUNT;
 }

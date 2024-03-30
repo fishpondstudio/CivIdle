@@ -10,11 +10,12 @@ export const EN = {
    AccountLevelCensor: "Censor",
    AccountLevelConsul: "Consul",
    AccountLevelPlayTime: "Active Online Playtime > %{requiredTime} (Your play time is %{actualTime})",
+   AccountLevelSupporterPack: "Owns Supporter Pack",
    AccountLevelPraetor: "Praetor",
    AccountLevelQuaestor: "Quaestor",
    AccountLevelTribune: "Tribune",
-   AccountLevelUpgradeConditionAny:
-      "To upgrade your account, you only need to satisfy one of the following criteria:",
+   AccountLevelUpgradeConditionAnyHTML:
+      "To upgrade your account, you only need to satisfy <b>one of the following</b> criteria:",
    AccountTradePriceRange: "Trade Price Range",
    AccountTradeTileReservationTime: "Trade Tile Reservation",
    AccountTradeTileReservationTimeDesc:
@@ -992,6 +993,7 @@ export const EN = {
       "Quaestor or above can start a trial run that is subject to the Tribune limits and cannot earn permanent great people",
    TribuneUpgradeDescGreatPeopleWarning:
       "Your current run has great people. You should <b>rebirth first</b>. Upgrading to Quaestor rank will reset your current run",
+   TribuneUpgradeDescGreatPeopleWarningTitle: "Please Rebirth First",
    TribuneUpgradeDescV3:
       "You can play the full game as Tribune if you do not plan to participate in the <b>optional</b> online features. To acquire unrestricted access to the online features, you will need to upgrade to Quaestor. <b>This is an anti-bot measure to keep the game free for everyone.</b> However, <b>when upgrading to Quaestor</b> you can carry over great people: <ul><li>Up to Level <b>3</b> for Bronze, Iron and Classical Age</li><li>Up to Level <b>2</b> for Middle Age, Renaissance and Industrial Age</li><li>Up to Level <b>1</b> for World Wars, Cold War and Information Age</li></ul>Partial progress above the level cannot be carried over.",
    TurnOnTimeWarpDesc:
@@ -1109,4 +1111,5 @@ export const EN = {
    GreatWall: "Great Wall",
    GreatWallDesc: "Great Wall Desc",
    GreatPersonOnlyIn: "This great person is only born in %{city}",
+   AccountSupporter: "Supporter Pack Owner",
 };

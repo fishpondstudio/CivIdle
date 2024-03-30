@@ -4,6 +4,7 @@ import { Config } from "../../../shared/logic/Config";
 import { getGameState } from "../../../shared/logic/GameStateLogic";
 import {
    getGreatPeopleAtReborn,
+   getGreatPeopleChoiceCount,
    makeGreatPeopleFromThisRunPermanent,
    rollPermanentGreatPeople,
 } from "../../../shared/logic/RebornLogic";
@@ -32,8 +33,8 @@ export function RebornModal(): React.ReactNode {
       client.getPendingClaims().then((c) => setTradeCount((old) => old + c.length));
    }, []);
 
-   const gameState = useGameState();
-   const [city, setCity] = useState<City>(gameState.city);
+   const gs = useGameState();
+   const [city, setCity] = useState<City>(gs.city);
    return (
       <div className="window" style={{ width: "450px" }}>
          <div className="title-bar">
@@ -54,7 +55,7 @@ export function RebornModal(): React.ReactNode {
                      <div className="f1">{t(L.GreatPeopleThisRun)}</div>
                      <div className="text-strong">
                         {reduceOf(
-                           gameState.greatPeople,
+                           gs.greatPeople,
                            (prev, k, v) => {
                               return prev + v;
                            },
@@ -170,12 +171,17 @@ export function RebornModal(): React.ReactNode {
                      if (canEarnGreatPeopleFromReborn()) {
                         const age = getCurrentTechAge(getGameState());
                         if (age) {
-                           rollPermanentGreatPeople(getGreatPeopleAtReborn(), age, gameState.city);
+                           rollPermanentGreatPeople(
+                              getGreatPeopleAtReborn(),
+                              getGreatPeopleChoiceCount(gs),
+                              age,
+                              gs.city,
+                           );
                         }
                         makeGreatPeopleFromThisRunPermanent();
                      }
 
-                     checkRebirthAchievements(getGreatPeopleAtReborn(), gameState);
+                     checkRebirthAchievements(getGreatPeopleAtReborn(), gs);
 
                      resetToCity(city);
                      playClick();

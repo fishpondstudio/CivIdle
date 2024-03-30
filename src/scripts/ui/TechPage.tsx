@@ -2,7 +2,7 @@ import type { Resource } from "../../../shared/definitions/ResourceDefinitions";
 import { MAX_TECH_COLUMN, type Tech } from "../../../shared/definitions/TechDefinitions";
 import { Config } from "../../../shared/logic/Config";
 import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
-import { rollGreatPeopleThisRun } from "../../../shared/logic/RebornLogic";
+import { getGreatPeopleChoiceCount, rollGreatPeopleThisRun } from "../../../shared/logic/RebornLogic";
 import { getResourceAmount, trySpendResources } from "../../../shared/logic/ResourceLogic";
 import { OnResetTile, getCurrentTechAge, getUnlockCost, unlockTech } from "../../../shared/logic/TechLogic";
 import { forEach, reduceOf } from "../../../shared/utilities/Helper";
@@ -46,7 +46,7 @@ export function TechPage({ id }: { id: Tech }): React.ReactNode {
       if (oldAge && newAge && oldAge !== newAge) {
          forEach(Config.TechAge, (age, def) => {
             if (def.idx <= Config.TechAge[newAge].idx) {
-               const candidates = rollGreatPeopleThisRun(age, gs.city);
+               const candidates = rollGreatPeopleThisRun(age, gs.city, getGreatPeopleChoiceCount(gs));
                if (candidates) {
                   gs.greatPeopleChoices.push(candidates);
                }

@@ -9,7 +9,7 @@ import {
 } from "../../../shared/logic/BuildingLogic";
 import { getGameOptions, getGameState } from "../../../shared/logic/GameStateLogic";
 import { getGrid, getXyBuildings } from "../../../shared/logic/IntraTickCache";
-import { rollGreatPeopleThisRun } from "../../../shared/logic/RebornLogic";
+import { getGreatPeopleChoiceCount, rollGreatPeopleThisRun } from "../../../shared/logic/RebornLogic";
 import { getRevealedDeposits } from "../../../shared/logic/ResourceLogic";
 import { OnResetTile, addDeposit } from "../../../shared/logic/TechLogic";
 import { ensureTileFogOfWar } from "../../../shared/logic/TerrainLogic";
@@ -68,12 +68,12 @@ export function onBuildingComplete(xy: Tile): void {
          break;
       }
       case "TajMahal": {
-         const candidates1 = rollGreatPeopleThisRun("ClassicalAge", gs.city);
+         const candidates1 = rollGreatPeopleThisRun("ClassicalAge", gs.city, getGreatPeopleChoiceCount(gs));
          if (candidates1) {
             gs.greatPeopleChoices.push(candidates1);
          }
 
-         const candidates2 = rollGreatPeopleThisRun("MiddleAge", gs.city);
+         const candidates2 = rollGreatPeopleThisRun("MiddleAge", gs.city, getGreatPeopleChoiceCount(gs));
          if (candidates2) {
             gs.greatPeopleChoices.push(candidates2);
          }
