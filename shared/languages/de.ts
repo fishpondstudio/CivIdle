@@ -286,10 +286,10 @@ export const DE = {
    Enrichment: "Enrichment",
    EstimatedTimeLeft: "Geschätzte verbleibende Zeit",
    Exploration: "Erkundung",
-   Explorer: "Explorer",
-   ExploreThisTile: "Send An Explorer",
+   Explorer: "Erkunder",
+   ExploreThisTile: "Erkunder schicken",
    ExploreThisTileHTML:
-      "An explorer will explore <b>this tile and its adjacent tiles</b>. Explorers are generated in %{name}. You have %{count} explorers left",
+      "Ein Erkunder wird <b>dieses Feld und seine Nachbarfelder</b> erforschen. Erkunder werden in %{name} erzeugt. Du hast %{count} Erkunder übrig",
    ExtraGreatPeople: "%{count} Zusätzliche herausragende Persönlichkeiten",
    ExtraGreatPeopleAtReborn: "Zusätzliche herausragende Persönlichkeiten bei der Wiedergeburt",
    Faith: "Glaube",
@@ -569,19 +569,18 @@ export const DE = {
    Parliament: "Parlament",
    Parthenon: "Parthenon",
    ParthenonDescV2:
-      "Two great people of Classical Age are born and you get 4 choices for each. Musician's Guilds and Painter's Guilds get +1 Production, Worker Capacity and Storage Multiplier and are exempt from -1 Happiness",
+      "2 herausragende Persönlichkeiten der Klassik werden geboren und Du kannst jeweils aus 4 auswählen. Musiker- und  Malergilden erhalten +1 Produktion, Arbeiter- und Speicherkapzität und sind von -1 Happiness befreit",
    PatchNotes: "Patch Notes",
    PermanentGreatPeople: "Herausragende Persönlichkeiten in allen weiteren Durchgängen ",
-   PermanentGreatPeopleAcquired: "Permanent Great People Acquired",
-   PermanentGreatPeopleLevels: "Permanent Great People Levels",
+   PermanentGreatPeopleAcquired: "Erlangte permanente herausragende Persönlichkeiten",
+   PermanentGreatPeopleLevels: "Stufen der permanenten herausragenden Persönlichkeiten",
    Persepolis: "Persepolis",
    PersepolisDesc:
       "In allen Kupferminen, Holzfällerlagern und Steinbrüchen erhöht sich der Multiplikator für Produktion, Arbeitskräfte und Lagerkapazität um 1.",
    Petra: "Petra",
    PetraDesc:
       "Wenn du offline bist wird eine Zeitschleife erzeugt, durch die dein Imperium beschleunigen kannst.",
-   PetraOfflineTimeReconciliation:
-      "You have been credited %{count} warp after server offline time reconciliation",
+   PetraOfflineTimeReconciliation: "Du bekommst %{count} warp nach dem Abgleich der Server offline Zeit",
    Petrol: "Benzin",
    Philosophy: "Philosophie",
    Physics: "Physik",
@@ -679,7 +678,7 @@ export const DE = {
    ProductionMultiplier: "Produktionsmultiplikator",
    ProductionPriority: "Priorität der Produktion",
    ProductionPriorityDescV2:
-      "Higher priority means this building transports before other buildings. Bigger number means higher priority",
+      "Höhere Priorität bedeutet, daß dieses Gebäude vor anderen beliefert wird. Größere Zahl ist höhere Priorität",
    Progress: "Fortschritt",
    ProgressTowardsNextGreatPerson:
       "Fortschritte auf dem Weg zur nächsten herausragenden Persönlichkeit bei der Wiedergeburt",
@@ -747,7 +746,7 @@ export const DE = {
    RequirePowerDesc:
       "Dieses Gebäude muß auf einem Feld mit Stromversorgung gebaut werden und kann die Stromversorgung auf seine Nachbarfelder erweitern",
    Research: "Forschung",
-   ResearchLab: "Research Lab",
+   ResearchLab: "Forschungslabor",
    ResearchMenu: "Forschung",
    ResourceAmount: "Betrag",
    ResourceColor: "Farbe der Ressource",
@@ -755,7 +754,7 @@ export const DE = {
    ResourceExportBelowCapTooltip:
       "Erlaube Gebäuden den Transport von hier selbst wenn die Menge unter der Kapazität liegt.",
    ResourceExportToSameType: "Exportiere zum gleichen Typ",
-   ResourceExportToSameTypeTooltip: "Erlaube Gebäude des gleichen Typs Ware von hier zu Transportieren.",
+   ResourceExportToSameTypeTooltip: "Erlaube Gebäude des gleichen Typs Ware von hier zu transportieren.",
    ResourceFromBuilding: "%{resource} von %{building}",
    ResourceImport: "Ressourcentransport",
    ResourceImportCapacity: "Kapazität für Ressourcentransport",
@@ -890,7 +889,7 @@ export const DE = {
    Steamworks: "Dampfmaschine",
    Steel: "Stahl",
    SteelMill: "Stahlwerk",
-   Stock: "Lagerbestand",
+   Stock: "Aktien",
    StockExchange: "Börse",
    StockMarket: "Börse",
    StockpileDesc:
@@ -928,7 +927,7 @@ export const DE = {
    Synthetics: "Synthetik",
    TajMahal: "Taj Mahal",
    TajMahalDescV2:
-      "A great person of Classical Age and a great person of Middle Age are born. +5 Builder Capacity Multiplier when upgrading buildings over Level 20",
+      "Je eine herausragende Persönlichkeit der Klassik und des Mittelalters werden geboren. +5 Multiplikator für Kapazität, wenn Gebäude über Stufe 20 verbessert werden",
    TangOfShang: "Tang von Shang",
    TangOfShangDesc: "+%{value} Forschung von unbeschäftigten Arbeitskräfte",
    Tank: "Panzer",
@@ -1030,14 +1029,15 @@ export const DE = {
    UnclaimedGreatPersonThisRun:
       "Du hast in diesem Durchgang mindestens eine <b>herausragende Persönlichkeit nicht beansprucht</b>. klicke hier, um das nachzuholen.",
    UnexploredTile: "Unerforschtes Gebiet",
-   UNGeneralAssemblyCurrent: "Current UN General Assembly #%{id}",
+   UNGeneralAssemblyCurrent: "Aktuelle UN Generalversammlung #%{id}",
    UNGeneralAssemblyMultipliers:
-      "<b>+%{count}</b> Production, Worker Capacity and Storage Multpliers for <b>%{buildings}</b>",
-   UNGeneralAssemblyNext: "Upcoming UN General Assembly #%{id}",
-   UNGeneralAssemblyVoteEndIn: "You can change your vote any time before the voting ends in <b>%{time}</b>",
+      "<b>+%{count}</b> Produktion, Arbeiterkapazität und Speichermultiplikatoren für <b>%{buildings}</b>",
+   UNGeneralAssemblyNext: "Kommende UN Generalversammlung #%{id}",
+   UNGeneralAssemblyVoteEndIn:
+      "Du kannst Deine Stimme jederzeit ändern, bevor die Abstimmung in <b>%{time}</b> endet",
    UniqueBuildings: "Einzigartige Gebäude",
-   UnitedNations: "United Nations",
-   UnitedNationsDesc: "United Nations Descriptions",
+   UnitedNations: "Vereinte Nationen",
+   UnitedNationsDesc: "Beschreibung Vereinte Nationen",
    UniversalHealthcare: "Universelle Gesundheitsversorgung",
    University: "Universität",
    UnlockableResearch: "Freischaltbare Forschung",
@@ -1047,9 +1047,9 @@ export const DE = {
    UpgradeBuilding: "Gebäude verbessern",
    UpgradeBuildingNotProducingDescV2:
       "Dieses Gebäude wird verbessert - <b>Produktion ist angehalten bis zum Abschluß</b>",
-   Uranium: "Uranium",
-   UraniumEnrichmentPlant: "Uranium Enrichment Plant",
-   UraniumMine: "Uranium Mine",
+   Uranium: "Uran",
+   UraniumEnrichmentPlant: "Urananreicherung",
+   UraniumMine: "Uranmine",
    Urbanization: "Urbanisierung",
    UseMirrorServer: "Verbindung zum Mirror Server",
    UseMirrorServerDescHTML:
