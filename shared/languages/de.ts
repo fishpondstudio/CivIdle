@@ -581,7 +581,7 @@ export const DE = {
    PetraDesc:
       "Wenn du offline bist wird eine Zeitschleife erzeugt, durch die dein Imperium beschleunigen kannst.",
    PetraOfflineTimeReconciliation:
-      "You have been credited %{count} warp after server offline time reconciliation",
+      "Du bekommst %{count} warp nach dem Abgleich der Server offline Zeit",
    Petrol: "Benzin",
    Philosophy: "Philosophie",
    Physics: "Physik",
@@ -679,7 +679,7 @@ export const DE = {
    ProductionMultiplier: "Produktionsmultiplikator",
    ProductionPriority: "Priorität der Produktion",
    ProductionPriorityDescV2:
-      "Higher priority means this building transports before other buildings. Bigger number means higher priority",
+      "Höhere Priorität bedeutet, daß dieses Gebäude vor anderen beliefert wird. Größere Zahl ist höhere Priorität",
    Progress: "Fortschritt",
    ProgressTowardsNextGreatPerson:
       "Fortschritte auf dem Weg zur nächsten herausragenden Persönlichkeit bei der Wiedergeburt",
@@ -755,7 +755,7 @@ export const DE = {
    ResourceExportBelowCapTooltip:
       "Erlaube Gebäuden den Transport von hier selbst wenn die Menge unter der Kapazität liegt.",
    ResourceExportToSameType: "Exportiere zum gleichen Typ",
-   ResourceExportToSameTypeTooltip: "Erlaube Gebäude des gleichen Typs Ware von hier zu Transportieren.",
+   ResourceExportToSameTypeTooltip: "Erlaube Gebäude des gleichen Typs Ware von hier zu transportieren.",
    ResourceFromBuilding: "%{resource} von %{building}",
    ResourceImport: "Ressourcentransport",
    ResourceImportCapacity: "Kapazität für Ressourcentransport",
