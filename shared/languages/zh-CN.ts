@@ -945,7 +945,7 @@ export const ZH_CN = {
    Tourism: "旅游业",
    Train: "火车",
    TranslationPercentage: "    %{language}的翻译进度目前为%{percentage}。可在GitHub上帮助改进此语言翻译。",
-   TranslatorCredit: "JLQ1134",
+   TranslatorCredit: "Shallowsing，JLQ1134",
    Translators: "翻译人员",
    TransportAllocatedCapacityTooltip: "分配用于运送此资源的建造者能力",
    TransportCapacity: "运送能力",
