@@ -580,8 +580,7 @@ export const DE = {
    Petra: "Petra",
    PetraDesc:
       "Wenn du offline bist wird eine Zeitschleife erzeugt, durch die dein Imperium beschleunigen kannst.",
-   PetraOfflineTimeReconciliation:
-      "Du bekommst %{count} warp nach dem Abgleich der Server offline Zeit",
+   PetraOfflineTimeReconciliation: "Du bekommst %{count} warp nach dem Abgleich der Server offline Zeit",
    Petrol: "Benzin",
    Philosophy: "Philosophie",
    Physics: "Physik",
