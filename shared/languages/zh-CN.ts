@@ -283,7 +283,7 @@ export const ZH_CN = {
    Feudalism: "封建主义",
    Fibonacci: "斐波那契",
    FibonacciDescV2:
-      "+%{idle} 闲置工人科学产出. +%{busy} 忙碌工人科学产出. 斐波那契的升级成本遵循斐波那奇序列,
+      "+%{idle} 闲置工人科学产出. +%{busy} 忙碌工人科学产出. 斐波那契的升级成本遵循斐波那奇序列",
    Fire: "火",
    Firearm: "火器",
    FirstTimeGuideFinish: "完成",
