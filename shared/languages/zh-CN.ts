@@ -13,7 +13,7 @@ export const ZH_CN = {
    AccountLevelPraetor: "裁判官",
    AccountLevelQuaestor: "财务官",
    AccountLevelTribune: "保民官",
-   AccountLevelUpgradeConditionAny: "为了升级你的账号，你只需要满足下列标准之一：",
+   AccountLevelUpgradeConditionAny: "你只需要满足下列标准之一即可升级你的账号，：",
    AccountTradePriceRange: "贸易价格范围",
    AccountTradeTileReservationTime: "贸易地块留存时间",
    AccountTradeTileReservationTimeDesc:
@@ -115,7 +115,7 @@ export const ZH_CN = {
    BuildingMultipliers: "增强",
    BuildingName: "建筑名",
    BuildingNoMultiplier:
-      "%{building} is <b>not affected</b> by any multipliers (production, worker capacity, storage, etc)",
+      "%{building} <b>不受</b>任何乘数（生产、劳动者能力、存储等）的影响",
    BuildingPriority: "建筑优先级",
    BuildingSearchText: "输入建筑物名称进行搜索",
    BuildingTier: "阶",
@@ -165,7 +165,7 @@ export const ZH_CN = {
    ChichenItzaDesc: "所有相邻建筑，获得 +1 生产乘数、存储以及劳动者能力乘数",
    ChoghaZanbil: "恰高·占比尔",
    ChoghaZanbilDesc: "恰高·占比尔",
-   ChooseGreatPersonChoicesLeft: "您还有%{count}个选择",
+   ChooseGreatPersonChoicesLeft: "您还有 %{count} 个选择",
    Church: "礼拜堂",
    CircusMaximus: "马克西穆斯角斗场",
    CircusMaximusDescV2:
@@ -283,7 +283,7 @@ export const ZH_CN = {
    Feudalism: "封建主义",
    Fibonacci: "斐波那契",
    FibonacciDescV2:
-      "+%{idle} 闲置工人科学产出. +%{busy} 忙碌工人科学产出. 斐波那契的升级成本遵循斐波那奇序列,
+      "+%{idle} 闲置工人科学产出. +%{busy} 忙碌工人科学产出. 斐波那契的升级成本遵循斐波那奇序列"
    Fire: "火",
    Firearm: "火器",
    FirstTimeGuideFinish: "完成",
