@@ -283,13 +283,13 @@ export const ZH_CN = {
    Feudalism: "封建主义",
    Fibonacci: "斐波那契",
    FibonacciDescV2:
-      "+%{idle} 闲置工人科学产出. +%{busy} 忙碌工人科学产出. 斐波那契的升级成本遵循斐波那奇序列,
+      "+%{idle} 闲置工人科学产出. +%{busy} 忙碌工人科学产出. 斐波那契的升级成本遵循斐波那奇序列",
    Fire: "火",
    Firearm: "火器",
    FirstTimeGuideFinish: "完成",
    FirstTimeGuideNext: "下一步",
-   Fish: "鱼",
-   FishPond: "鱼塘",
+   Fish: "Fish",
+   FishPond: "FishPond",
    FlorenceNightingale: "弗洛伦斯·南丁格尔",
    FlorenceNightingaleDesc: "幸福感 +%{value}",
    Flour: "面粉",
@@ -338,7 +338,7 @@ export const ZH_CN = {
    GreatDagonPagodaDesc: "大金塔",
    GreatMosqueOfSamarra: "萨迈拉大清真寺",
    GreatMosqueOfSamarraDescV2:
-      " +1 建筑视野范围。随机揭示5个的未勘探矿床地块，并在每个揭示的地块上建造一个10级该资源的生产建筑",
+      " +1 建筑视野范围。随机揭示5个未勘探的矿床地块，并在每个揭示的地块上建造一个10级该资源的生产建筑",
    GreatPeople: "伟人",
    GreatPeopleEffect: "效应",
    GreatPeopleName: "名字",
@@ -955,7 +955,7 @@ export const ZH_CN = {
    TribuneUpgradeDescGreatPeopleWarning:
       "    你此轮拥有伟人。你应该<b>先重生</b>。升至财务官级别，将重置你的当前轮。",
    TribuneUpgradeDescV3:
-      "如果您不打算参与 <b>可选</b> 在线功能，可以以保民官的身份玩完整的游戏, 要获得对在线功能的无限制访问，您需要升级到财务官. <b>这是一种反机器人措施，可以让每个人都免费玩游戏.</b> 但是, <b>升级到财务官时</b> 您可以继承伟人: <ul><li>青铜、铁器和古典时代<b>3</b> 最高等级</li><li>中世纪、文艺复兴和工业时代 <b>2</b> 最高等级</li><li>世界大战、冷战和信息时代 <b>1</b> 最高等级</li></ul>超过该级别的部分无法结转.",
+      "如果您不打算参与 <b>可选</b> 在线功能，可以以保民官的身份玩完整的游戏, 要获得对在线功能的无限制访问，您需要升级到财务官. <b>这是一种反机器人措施，可以让每个人都免费游玩.</b> 但是, <b>升级到财务官时</b> 您可以继承伟人: <ul><li>青铜、铁器和古典时代<b>3</b> 最高等级</li><li>中世纪、文艺复兴和工业时代 <b>2</b> 最高等级</li><li>世界大战、冷战和信息时代 <b>1</b> 最高等级</li></ul>超过该级别的部分无法结转.",
    TurnOnTimeWarpDesc: "每秒消耗 %{speed} 扭曲时间，同时加速你的帝国，使其以 %{speed} 倍速度运行。",
    Tutorial: "教程",
    Tutorial1:
@@ -964,7 +964,7 @@ export const ZH_CN = {
       "我从未玩过类似游戏，并且我愿意通读一篇简短教程。（译者：前作玩家初次接触此游戏，可速读了解基础框架。）",
    Tutorial3: "我玩过 Industry Idle 并且我知道正确游玩方式，请跳过基础教程。",
    Tutorial4:
-      "    建筑是你帝国的基本组成部分，把它们放在已探索地图的地块上。某些建筑（比如采石场和引水渠）可获取沉积资源，要正常运行，首先就需要将它们建造在含相应沉积资源的地块上。一座建筑可以驱散其周围（目前半径为2格）地块的迷雾。<br><br>    建筑往往消耗资源并产生新的资源。它们会<b>自动地</b>运送所需资源。所产出的资源将被存储在产出建筑中，可被运送至其它需要这些资源的建筑。然而，一座建筑本身的存储空间是有限的。<br><br>    建筑需要<b>劳动者</b>来进行运输与生产，这意味着你需要建造提供居住的建筑（比如<b>小棚屋</b>）来增加劳动者人口。你可以升级一座建筑，以此来增加它的生产能力与存储空间。",
+      "    建筑是你帝国的基本组成部分，请将它们放在已探索地图的地块上。某些建筑（比如采石场和引水渠）可获取沉积资源，要正常运行，首先就需要将它们建造在含相应沉积资源的地块上。一座建筑可以驱散其周围（目前半径为2格）地块的迷雾。<br><br>    建筑往往消耗资源并产生新的资源。它们会<b>自动地</b>运送所需资源。所产出的资源将被存储在产出建筑中，可被运送至其它需要这些资源的建筑。然而，一座建筑本身的存储空间是有限的。<br><br>    建筑需要<b>劳动者</b>来进行运输与生产，这意味着你需要建造提供居住的建筑（比如<b>小棚屋</b>）来增加劳动者人口。你可以升级一座建筑，以此来增加它的生产能力与存储空间。",
    Tutorial5:
       "    <b>科学</b>被用来在科技树中解锁科技。一项科技研究可能解锁新的建筑、奇观以及增强。<br><br>    <b>忙碌劳动者</b>可产出少量科学。随着发展，你将解锁一些能产出科学的建筑（比如图书馆与学校）。<br><br>    可获劳动者数量受到<b>幸福感</b>的影响。每座建筑将会消耗 1 幸福感。你也可以从科技、奇观以及伟人获得幸福感。确保你麾下劳动者们的幸福，否则你帝国的生产将陷入停滞。<br><br>    <b>奇观</b>是独一无二的建筑，你只能建造一座，并且它们一旦建成将不能被移除。奇观可以提供显著增强或者解锁新的机制。",
    Tutorial6:
@@ -1009,15 +1009,14 @@ export const ZH_CN = {
    WarehouseAutopilotSettings: "自动寻路设置",
    WarehouseAutopilotSettingsEnable: "启用自动寻路",
    WarehouseAutopilotSettingsRespectCapSetting: "需求存储 < 上限",
-   WarehouseAutopilotSettingsRespectCapSettingTooltip:
-      "自动寻路将只运输存储量低于上限的资源",
+   WarehouseAutopilotSettingsRespectCapSettingTooltip: "自动寻路将只运输存储量低于上限的资源",
    WarehouseDesc: "运送特定资源并提供额外存储空间",
    WarehouseSettingsAutopilotDesc:
-      "这座仓库将会使用它的闲置能力，从无存储空间的建筑中运送资源。当前闲置能力： %{capacity}",
+      "这座仓库将会使用它的闲置能力，从无存储空间的建筑中运送资源。当前闲置能力为 %{capacity}",
    WarehouseUpgrade: "解锁仓库自动模式。仓库与其相邻建筑之间免费运输。",
    WarehouseUpgradeDesc: "这座仓库与其相邻建筑之间免费运输。",
    Warp: "扭曲时间",
-   WarpConversionDesc: "    超过最大离线生产时间的离线时间，将被转化为扭曲时间。（ 1 秒= 1 扭曲时间）",
+   WarpConversionDesc: "超过最大离线生产时间的离线时间，将被转化为扭曲时间。（ 1 秒= 1 扭曲时间）",
    Water: "水",
    WellStockedTooltip:
       "库存充足的建筑是指有足够资源进行生产的建筑，包括正在生产、储存充足或因缺少劳动者而无法生产的建筑",
@@ -1028,7 +1027,7 @@ export const ZH_CN = {
    Winery: "葡萄酒厂",
    Wonder: "奇观",
    WonderBuilderCapacityDescHTML:
-      "建造奇观时的<b>建造者能力</b>，受解锁奇观的<b>时代</b>与<b>科技</b>之影响。",
+      "建造奇观时的<b>建造者能力</b>，受解锁奇观的<b>时代</b>与<b>科技</b>的影响。",
    WondersBuilt: "现有世界奇观",
    WondersUnlocked: "已解锁世界奇观",
    Wood: "原木",
