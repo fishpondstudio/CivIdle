@@ -13,7 +13,7 @@ export const ZH_CN = {
    AccountLevelPraetor: "裁判官",
    AccountLevelQuaestor: "财务官",
    AccountLevelTribune: "保民官",
-   AccountLevelUpgradeConditionAny: "你只需要满足下列标准之一即可升级你的账号，：",
+   AccountLevelUpgradeConditionAny: "为了升级你的账号，你只需要满足下列标准之一：",
    AccountTradePriceRange: "贸易价格范围",
    AccountTradeTileReservationTime: "贸易地块留存时间",
    AccountTradeTileReservationTimeDesc:
@@ -115,7 +115,7 @@ export const ZH_CN = {
    BuildingMultipliers: "增强",
    BuildingName: "建筑名",
    BuildingNoMultiplier:
-      "%{building} <b>不受</b>任何乘数（生产、劳动者能力、存储等）的影响",
+      "%{building} <b>不受任何</b> 乘数（生产、工人能力、存储等）的影响",
    BuildingPriority: "建筑优先级",
    BuildingSearchText: "输入建筑物名称进行搜索",
    BuildingTier: "阶",
@@ -165,11 +165,12 @@ export const ZH_CN = {
    ChichenItzaDesc: "所有相邻建筑，获得 +1 生产乘数、存储以及劳动者能力乘数",
    ChoghaZanbil: "恰高·占比尔",
    ChoghaZanbilDesc: "恰高·占比尔",
-   ChooseGreatPersonChoicesLeft: "您还有 %{count} 个选择",
+   ChooseGreatPersonChoicesLeft: "您还有%{count}个选择",
    Church: "礼拜堂",
    CircusMaximus: "马克西穆斯角斗场",
    CircusMaximusDescV2:
       "+5幸福感。所有音乐家协会、作家协会和画家协会获得+1生产和存储乘数",
+   CircusMaximusDescV2: "+5幸福感。所有音乐家协会、作家协会和画家协会获得+1生产和存储乘数",
    CityState: "城邦国家",
    CityViewMap: "城市",
    CivIdle: "CivIdle",
@@ -283,13 +284,14 @@ export const ZH_CN = {
    Feudalism: "封建主义",
    Fibonacci: "斐波那契",
    FibonacciDescV2:
-      "+%{idle} 闲置工人科学产出. +%{busy} 忙碌工人科学产出. 斐波那契的升级成本遵循斐波那奇序列"
+      "+%{idle} 闲置工人科学产出. +%{busy} 忙碌工人科学产出. 斐波那契的升级成本遵循斐波那奇序列,
+      "+%{idle} 闲置工人科学产出. +%{busy} 忙碌工人科学产出. 斐波那契的升级成本遵循斐波那奇序列",
    Fire: "火",
    Firearm: "火器",
    FirstTimeGuideFinish: "完成",
    FirstTimeGuideNext: "下一步",
-   Fish: "鱼",
-   FishPond: "鱼塘",
+   Fish: "Fish",
+   FishPond: "FishPond",
    FlorenceNightingale: "弗洛伦斯·南丁格尔",
    FlorenceNightingaleDesc: "幸福感 +%{value}",
    Flour: "面粉",
@@ -297,6 +299,7 @@ export const ZH_CN = {
    FontSizeScale: "字体大小比例",
    FontSizeScaleDescHTML:
       "更改游戏UI的字体大小比例. <b>若将比例设置为大于 1x 可能会破坏某些UI布局</b>",
+   FontSizeScaleDescHTML: "更改游戏UI的字体大小比例. <b>若将比例设置为大于 1x 可能会破坏某些UI布局</b>",
    ForbiddenCity: "紫禁城",
    ForbiddenCityDesc: "所有造纸作坊、作家协会以及印刷厂， 获得 +1 生产乘数、劳动者能力乘数以及存储乘数",
    Frigate: "护卫舰",
@@ -338,7 +341,7 @@ export const ZH_CN = {
    GreatDagonPagodaDesc: "大金塔",
    GreatMosqueOfSamarra: "萨迈拉大清真寺",
    GreatMosqueOfSamarraDescV2:
-      " +1 建筑视野范围。随机揭示5个的未勘探矿床地块，并在每个揭示的地块上建造一个10级该资源的生产建筑",
+      " +1 建筑视野范围。随机揭示5个未勘探的矿床地块，并在每个揭示的地块上建造一个10级该资源的生产建筑",
    GreatPeople: "伟人",
    GreatPeopleEffect: "效应",
    GreatPeopleName: "名字",
@@ -352,6 +355,7 @@ export const ZH_CN = {
    GreatSphinx: "大狮身人面像",
    GreatSphinxDesc:
       "2 格内的 II 及 II 以上建筑获得 +N 消耗，生产乘数效果（N=该建筑相邻同建筑物的数量）",
+   GreatSphinxDesc: "2 格内的 II 及 II 以上建筑获得 +N 消耗，生产乘数效果（N=该建筑相邻同建筑物的数量）",
    GrottaAzzurra: "卡普里岛蓝洞",
    GrottaAzzurraDesc: "当被发现时，你所有的 I 阶建筑，获得 +5 等级",
    Gunpowder: "火药",
@@ -382,7 +386,7 @@ export const ZH_CN = {
    HimejiCastleDesc:
       "所有轻快帆船船坞、大帆船船坞以及护卫舰船坞，获得 +1 生产乘数、劳动者能力乘数以及存储乘数",
    Hollywood: "好莱坞",
-   HollywoodDesc: "好莱坞影城",
+   HollywoodDesc: "+5幸福感。两格范围内，所有生产或消耗文化的建筑 +1 幸福感",
    HolyEmpire: "神圣帝国",
    Horse: "马",
    HorsebackRiding: "马术",
@@ -478,11 +482,13 @@ export const ZH_CN = {
    MogaoCaves: "莫高窟",
    MogaoCavesDescV2:
       "每 10% 忙碌工人获得 +1 幸福感 . 所有相邻的圣祠获得 -1 幸福感",
+   MogaoCavesDescV2: "每 10% 忙碌工人获得 +1 幸福感 . 所有相邻的圣祠获得 -1 幸福感",
    Mosque: "清真寺",
    MotionPicture: "电影",
    MountSinai: "西奈山",
    MountSinaiDesc:
       "当此奇观被发现时，诞生一个当今时代的伟人. 所有生产信仰的建筑获得 +5 存储乘数",
+   MountSinaiDesc: "当此奇观被发现时，诞生一个当今时代的伟人. 所有生产信仰的建筑获得 +5 存储乘数",
    Movie: "电影",
    MovieStudio: "电影制片厂",
    Museum: "博物馆",
@@ -551,6 +557,7 @@ export const ZH_CN = {
    PetraDesc: "当你离线时生成扭曲时间，你可以用它来加速你的帝国",
    PetraOfflineTimeReconciliation:
       "与服务器脱机时间核准后，您获得 %{count} 扭曲时间",
+   PetraOfflineTimeReconciliation: "与服务器脱机时间核准后，您获得 %{count} 扭曲时间",
    Petrol: "汽油",
    Philosophy: "哲学",
    Physics: "物理学",
@@ -643,6 +650,7 @@ export const ZH_CN = {
    ProductionPriority: "生产优先级",
    ProductionPriorityDescV2:
       "更高的优先级意味着该建筑先于其他建筑运输。数字越大优先级越高",
+   ProductionPriorityDescV2: "更高的优先级意味着该建筑先于其他建筑运输。数字越大优先级越高",
    Progress: "进程",
    ProgressTowardsNextGreatPerson: "接近下一位在重生时出现的伟人之进程",
    Province: "领域",
@@ -703,9 +711,11 @@ export const ZH_CN = {
    RequiredDeposit: "所需沉积资源",
    RequiredWorkersTooltip:
       "生产所需的工人人数等于乘数加成后消耗和生产的所有资源的总和（电气化除外）",
+   RequiredWorkersTooltip: "生产所需的工人人数等于乘数加成后消耗和生产的所有资源的总和（电气化除外）",
    RequirePower: "需要电源",
    RequirePowerDesc:
       "这座建筑需要建在有电源的地块上，并可以将电源扩展到相邻的地块上",
+   RequirePowerDesc: "这座建筑需要建在有电源的地块上，并可以将电源扩展到相邻的地块上",
    Research: "研究",
    ResearchLab: "研究实验室",
    ResearchMenu: "研究",
@@ -714,15 +724,18 @@ export const ZH_CN = {
    ResourceExportBelowCap: "输出低于上限",
    ResourceExportBelowCapTooltip:
       "允许其他建筑从该建筑运输资源，即使其数量低于设置的上限",
+   ResourceExportBelowCapTooltip: "允许其他建筑从该建筑运输资源，即使其数量低于设置的上限",
    ResourceExportToSameType: "输出到相同类型",
    ResourceExportToSameTypeTooltip:
       "允许其他相同类型的建筑从此建筑运输资源",
+   ResourceExportToSameTypeTooltip: "允许其他相同类型的建筑从此建筑运输资源",
    ResourceFromBuilding: "%{resource} 来自 %{building}",
    ResourceImport: "资源运送",
    ResourceImportCapacity: "资源运输能力",
    ResourceImportImportCapV2: "最大数值",
    ResourceImportImportCapV2Tooltip:
       "当达到最大数量时，该建筑将停止运输该资源",
+   ResourceImportImportCapV2Tooltip: "当达到最大数量时，该建筑将停止运输该资源",
    ResourceImportImportPerCycleV2: "每个周期",
    ResourceImportImportPerCycleV2ToolTip: "每个周期运输的资源量",
    ResourceImportResource: "资源",
@@ -765,6 +778,7 @@ export const ZH_CN = {
    SciencePerIdleWorker: "每个闲置劳动者",
    ScrollWheelAdjustLevelTooltip:
       "当光标位于此位置时，可以使用滚轮调整等级",
+   ScrollWheelAdjustLevelTooltip: "当光标位于此位置时，可以使用滚轮调整等级",
    SeaTradeCost: "海上贸易成本",
    SeaTradeUpgrade: "与跨海玩家进行交易。每个海洋地块的关税: %{tariff}",
    SelectedAll: "全选",
@@ -805,6 +819,7 @@ export const ZH_CN = {
    SidePanelWidth: "侧板宽度",
    SidePanelWidthDescHTML:
       "更改侧板的宽度. <b>需要重新启动游戏才能生效</b>",
+   SidePanelWidthDescHTML: "更改侧板的宽度. <b>需要重新启动游戏才能生效</b>",
    SiegeRam: "攻城槌",
    SiegeWorkshop: "攻城工坊",
    Skyscrapper: "摩天大楼",
@@ -899,6 +914,7 @@ export const ZH_CN = {
    TechResourceTransportPreferenceDefault: "默认",
    TechResourceTransportPreferenceDefaultTooltip:
       "不覆盖此资源的运输首选项，而是使用建筑的运输首选选项",
+   TechResourceTransportPreferenceDefaultTooltip: "不覆盖此资源的运输首选项，而是使用建筑的运输首选选项",
    TechResourceTransportPreferenceDistance: "距离",
    TechResourceTransportPreferenceDistanceTooltip: "此建筑将倾向于，从更近的建筑中运送资源",
    TechResourceTransportPreferenceOverrideTooltip: "此资源具有运输首选项覆盖: %{mode}",
@@ -977,20 +993,22 @@ export const ZH_CN = {
    UNGeneralAssemblyCurrent: "本届联合国大会 #%{id}",
    UNGeneralAssemblyMultipliers:
       "<b>+%{count}</b> 生产乘数，劳动者能力乘数，存储乘数 <b>%{buildings}</b>",
+   UNGeneralAssemblyMultipliers: "<b>+%{count}</b> 生产乘数，劳动者能力乘数，存储乘数 <b>%{buildings}</b>",
    UNGeneralAssemblyNext: "即将召开的联合国大会 #%{id}",
    UNGeneralAssemblyVoteEndIn: "您可以在投票结束前随时更改投票 <b>%{time}</b>",
    UniqueBuildings: "独特建筑",
    UnitedNations: "联合国",
-   UnitedNationsDesc: "联合国总部",
+   UnitedNationsDesc: "所有IV, V和VI阶建筑获得+1生产、劳动者能力和存储乘数，参加联合国大会，每周投票支持额外的激励措施。",
    UniversalHealthcare: "全民医疗保健",
    University: "大学",
    UnlockableResearch: "可解锁研究",
    UnlockBuilding: "解锁",
    UnlockTechProgress: "进程",
    Upgrade: "升级",
-   UpgradeBuilding: "升级",
+   UpgradeBuilding: "升级建筑",
    UpgradeBuildingNotProducingDescV2:
       "该建筑正在升级 - <b>生产将停止，直到升级完成</b>",
+   UpgradeBuildingNotProducingDescV2: "该建筑正在升级 - <b>生产将停止，直到升级完成</b>",
    Uranium: "铀",
    UraniumEnrichmentPlant: "铀浓缩厂",
    UraniumMine: "铀矿",
@@ -1011,6 +1029,7 @@ export const ZH_CN = {
    WarehouseAutopilotSettingsRespectCapSetting: "需求存储 < 上限",
    WarehouseAutopilotSettingsRespectCapSettingTooltip:
       "自动寻路将只运输存储量低于上限的资源",
+   WarehouseAutopilotSettingsRespectCapSettingTooltip: "自动寻路将只运输存储量低于上限的资源",
    WarehouseDesc: "运送特定资源并提供额外存储空间",
    WarehouseSettingsAutopilotDesc:
       "这座仓库将会使用它的闲置能力，从无存储空间的建筑中运送资源。当前闲置能力： %{capacity}",
@@ -1051,7 +1070,7 @@ export const ZH_CN = {
    WorldWarAge: "世界大战",
    WritersGuild: "作家协会",
    Writing: "写作",
-   WuZetian: "女皇武曌",
+   WuZetian: "武则天",
    WuZetianDesc: "运送能力乘数 +%{value}",
    Zenobia: "芝诺比娅",
    ZenobiaDesc: "+%{value}小时 佩特拉扭曲时间存储",
