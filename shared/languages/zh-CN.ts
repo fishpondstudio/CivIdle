@@ -168,8 +168,7 @@ export const ZH_CN = {
    ChooseGreatPersonChoicesLeft: "您还有%{count}个选择",
    Church: "礼拜堂",
    CircusMaximus: "马克西穆斯角斗场",
-   CircusMaximusDescV2:
-      "+5幸福感。所有音乐家协会、作家协会和画家协会获得+1生产和存储乘数",
+   CircusMaximusDescV2: "+5幸福感。所有音乐家协会、作家协会和画家协会获得+1生产和存储乘数",
    CityState: "城邦国家",
    CityViewMap: "城市",
    CivIdle: "CivIdle",
@@ -295,8 +294,7 @@ export const ZH_CN = {
    Flour: "面粉",
    FlourMill: "面粉磨坊",
    FontSizeScale: "字体大小比例",
-   FontSizeScaleDescHTML:
-      "更改游戏UI的字体大小比例. <b>若将比例设置为大于 1x 可能会破坏某些UI布局</b>",
+   FontSizeScaleDescHTML: "更改游戏UI的字体大小比例. <b>若将比例设置为大于 1x 可能会破坏某些UI布局</b>",
    ForbiddenCity: "紫禁城",
    ForbiddenCityDesc: "所有造纸作坊、作家协会以及印刷厂， 获得 +1 生产乘数、劳动者能力乘数以及存储乘数",
    Frigate: "护卫舰",
@@ -350,8 +348,7 @@ export const ZH_CN = {
    GreatPersonThisRunEffectiveLevel:
       "您此轮拥有 %{count} %{person} . 额外的 %{person} 将拥有该效果的 1/%{effect} ",
    GreatSphinx: "大狮身人面像",
-   GreatSphinxDesc:
-      "2 格内的 II 及 II 以上建筑获得 +N 消耗，生产乘数效果（N=该建筑相邻同建筑物的数量）",
+   GreatSphinxDesc: "2 格内的 II 及 II 以上建筑获得 +N 消耗，生产乘数效果（N=该建筑相邻同建筑物的数量）",
    GrottaAzzurra: "卡普里岛蓝洞",
    GrottaAzzurraDesc: "当被发现时，你所有的 I 阶建筑，获得 +5 等级",
    Gunpowder: "火药",
@@ -476,13 +473,11 @@ export const ZH_CN = {
    Moai: "复活节岛摩艾石像",
    MoaiDesc: "复活节岛摩艾石像",
    MogaoCaves: "莫高窟",
-   MogaoCavesDescV2:
-      "每 10% 忙碌工人获得 +1 幸福感 . 所有相邻的圣祠获得 -1 幸福感",
+   MogaoCavesDescV2: "每 10% 忙碌工人获得 +1 幸福感 . 所有相邻的圣祠获得 -1 幸福感",
    Mosque: "清真寺",
    MotionPicture: "电影",
    MountSinai: "西奈山",
-   MountSinaiDesc:
-      "当此奇观被发现时，诞生一个当今时代的伟人. 所有生产信仰的建筑获得 +5 存储乘数",
+   MountSinaiDesc: "当此奇观被发现时，诞生一个当今时代的伟人. 所有生产信仰的建筑获得 +5 存储乘数",
    Movie: "电影",
    MovieStudio: "电影制片厂",
    Museum: "博物馆",
@@ -549,8 +544,7 @@ export const ZH_CN = {
    PersepolisDesc: "所有铜矿、伐木场以及采石场，获得 +1 生产乘数、劳动者能力乘数以及存储乘数",
    Petra: "佩特拉古城",
    PetraDesc: "当你离线时生成扭曲时间，你可以用它来加速你的帝国",
-   PetraOfflineTimeReconciliation:
-      "与服务器脱机时间核准后，您获得 %{count} 扭曲时间",
+   PetraOfflineTimeReconciliation: "与服务器脱机时间核准后，您获得 %{count} 扭曲时间",
    Petrol: "汽油",
    Philosophy: "哲学",
    Physics: "物理学",
@@ -641,8 +635,7 @@ export const ZH_CN = {
    ProduceResource: "产出： %{resource}",
    ProductionMultiplier: "生产乘数",
    ProductionPriority: "生产优先级",
-   ProductionPriorityDescV2:
-      "更高的优先级意味着该建筑先于其他建筑运输。数字越大优先级越高",
+   ProductionPriorityDescV2: "更高的优先级意味着该建筑先于其他建筑运输。数字越大优先级越高",
    Progress: "进程",
    ProgressTowardsNextGreatPerson: "接近下一位在重生时出现的伟人之进程",
    Province: "领域",
@@ -701,28 +694,23 @@ export const ZH_CN = {
    RenaissanceAge: "文艺复兴时期",
    ReneDescartes: "勒内·笛卡尔",
    RequiredDeposit: "所需沉积资源",
-   RequiredWorkersTooltip:
-      "生产所需的工人人数等于乘数加成后消耗和生产的所有资源的总和（电气化除外）",
+   RequiredWorkersTooltip: "生产所需的工人人数等于乘数加成后消耗和生产的所有资源的总和（电气化除外）",
    RequirePower: "需要电源",
-   RequirePowerDesc:
-      "这座建筑需要建在有电源的地块上，并可以将电源扩展到相邻的地块上",
+   RequirePowerDesc: "这座建筑需要建在有电源的地块上，并可以将电源扩展到相邻的地块上",
    Research: "研究",
    ResearchLab: "研究实验室",
    ResearchMenu: "研究",
    ResourceAmount: "数量",
    ResourceColor: "资源色彩",
    ResourceExportBelowCap: "输出低于上限",
-   ResourceExportBelowCapTooltip:
-      "允许其他建筑从该建筑运输资源，即使其数量低于设置的上限",
+   ResourceExportBelowCapTooltip: "允许其他建筑从该建筑运输资源，即使其数量低于设置的上限",
    ResourceExportToSameType: "输出到相同类型",
-   ResourceExportToSameTypeTooltip:
-      "允许其他相同类型的建筑从此建筑运输资源",
+   ResourceExportToSameTypeTooltip: "允许其他相同类型的建筑从此建筑运输资源",
    ResourceFromBuilding: "%{resource} 来自 %{building}",
    ResourceImport: "资源运送",
    ResourceImportCapacity: "资源运输能力",
    ResourceImportImportCapV2: "最大数值",
-   ResourceImportImportCapV2Tooltip:
-      "当达到最大数量时，该建筑将停止运输该资源",
+   ResourceImportImportCapV2Tooltip: "当达到最大数量时，该建筑将停止运输该资源",
    ResourceImportImportPerCycleV2: "每个周期",
    ResourceImportImportPerCycleV2ToolTip: "每个周期运输的资源量",
    ResourceImportResource: "资源",
@@ -763,8 +751,7 @@ export const ZH_CN = {
    ScienceFromIdleWorkers: "闲置劳动者产出科学",
    SciencePerBusyWorker: "每个忙碌劳动者",
    SciencePerIdleWorker: "每个闲置劳动者",
-   ScrollWheelAdjustLevelTooltip:
-      "当光标位于此位置时，可以使用滚轮调整等级",
+   ScrollWheelAdjustLevelTooltip: "当光标位于此位置时，可以使用滚轮调整等级",
    SeaTradeCost: "海上贸易成本",
    SeaTradeUpgrade: "与跨海玩家进行交易。每个海洋地块的关税: %{tariff}",
    SelectedAll: "全选",
@@ -803,8 +790,7 @@ export const ZH_CN = {
    ShowUnbuiltOnly: "仅显示尚未建成的建筑",
    Shrine: "圣祠",
    SidePanelWidth: "侧板宽度",
-   SidePanelWidthDescHTML:
-      "更改侧板的宽度. <b>需要重新启动游戏才能生效</b>",
+   SidePanelWidthDescHTML: "更改侧板的宽度. <b>需要重新启动游戏才能生效</b>",
    SiegeRam: "攻城槌",
    SiegeWorkshop: "攻城工坊",
    Skyscrapper: "摩天大楼",
@@ -897,8 +883,7 @@ export const ZH_CN = {
    TechResourceTransportPreferenceAmount: "数量",
    TechResourceTransportPreferenceAmountTooltip: "此建筑将倾向于，从有更多存储现量的建筑中运送资源",
    TechResourceTransportPreferenceDefault: "默认",
-   TechResourceTransportPreferenceDefaultTooltip:
-      "不覆盖此资源的运输首选项，而是使用建筑的运输首选选项",
+   TechResourceTransportPreferenceDefaultTooltip: "不覆盖此资源的运输首选项，而是使用建筑的运输首选选项",
    TechResourceTransportPreferenceDistance: "距离",
    TechResourceTransportPreferenceDistanceTooltip: "此建筑将倾向于，从更近的建筑中运送资源",
    TechResourceTransportPreferenceOverrideTooltip: "此资源具有运输首选项覆盖: %{mode}",
@@ -975,8 +960,7 @@ export const ZH_CN = {
    UnclaimedGreatPersonThisRun: "你有未迎接的<b>此生伟人</b>，点此欢迎。",
    UnexploredTile: "未探索地块",
    UNGeneralAssemblyCurrent: "本届联合国大会 #%{id}",
-   UNGeneralAssemblyMultipliers:
-      "<b>+%{count}</b> 生产乘数，劳动者能力乘数，存储乘数 <b>%{buildings}</b>",
+   UNGeneralAssemblyMultipliers: "<b>+%{count}</b> 生产乘数，劳动者能力乘数，存储乘数 <b>%{buildings}</b>",
    UNGeneralAssemblyNext: "即将召开的联合国大会 #%{id}",
    UNGeneralAssemblyVoteEndIn: "您可以在投票结束前随时更改投票 <b>%{time}</b>",
    UniqueBuildings: "独特建筑",
@@ -989,8 +973,7 @@ export const ZH_CN = {
    UnlockTechProgress: "进程",
    Upgrade: "升级",
    UpgradeBuilding: "升级",
-   UpgradeBuildingNotProducingDescV2:
-      "该建筑正在升级 - <b>生产将停止，直到升级完成</b>",
+   UpgradeBuildingNotProducingDescV2: "该建筑正在升级 - <b>生产将停止，直到升级完成</b>",
    Uranium: "铀",
    UraniumEnrichmentPlant: "铀浓缩厂",
    UraniumMine: "铀矿",
@@ -1009,8 +992,7 @@ export const ZH_CN = {
    WarehouseAutopilotSettings: "自动寻路设置",
    WarehouseAutopilotSettingsEnable: "启用自动寻路",
    WarehouseAutopilotSettingsRespectCapSetting: "需求存储 < 上限",
-   WarehouseAutopilotSettingsRespectCapSettingTooltip:
-      "自动寻路将只运输存储量低于上限的资源",
+   WarehouseAutopilotSettingsRespectCapSettingTooltip: "自动寻路将只运输存储量低于上限的资源",
    WarehouseDesc: "运送特定资源并提供额外存储空间",
    WarehouseSettingsAutopilotDesc:
       "这座仓库将会使用它的闲置能力，从无存储空间的建筑中运送资源。当前闲置能力： %{capacity}",
