@@ -40,12 +40,11 @@ export function getMostAdvancedTech(gs: GameState): Tech | null {
 export function getBuildingUnlockTech(building: Building): Tech | null {
    const tech = Config.BuildingTech[building];
    if (tech) return tech;
-
    let city: City;
    for (city in Config.City) {
       const def = Config.City[city];
       const uniqueTech = def.uniqueBuildings[building];
-      if (uniqueTech) uniqueTech;
+      if (uniqueTech) return uniqueTech;
    }
    return null;
 }

@@ -758,7 +758,7 @@ export class GreatPersonDefinitions {
    });
 
    MarieCurie: IGreatPersonDefinition = boostOf({
-      name: () => t(L.CharlesMartinHall),
+      name: () => t(L.MarieCurie),
       boost: {
          multipliers: ["output", "storage"],
          buildings: ["CableFactory", "UraniumMine"],
@@ -770,7 +770,7 @@ export class GreatPersonDefinitions {
    });
 
    AlbertEinstein: IGreatPersonDefinition = boostOf({
-      name: () => t(L.CharlesMartinHall),
+      name: () => t(L.AlbertEinstein),
       boost: {
          multipliers: ["output", "storage"],
          buildings: ["ResearchLab", "PlasticsFactory"],
