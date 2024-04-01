@@ -39,7 +39,7 @@ RequestPathFinderGridUpdate.on(buildPathfinderGrid);
 
 function getTotalCost(path: IPointData[], grid: number[]): number {
    if (path.length === 0) {
-      return Infinity;
+      return Number.POSITIVE_INFINITY;
    }
    return path.reduce((prev, curr) => {
       const idx = curr.y * MAP_MAX_X + curr.x;

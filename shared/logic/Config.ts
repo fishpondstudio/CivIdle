@@ -2,7 +2,7 @@ import { BuildingDefinitions, type Building } from "../definitions/BuildingDefin
 import { CityDefinitions } from "../definitions/CityDefinitions";
 import { GreatPersonDefinitions } from "../definitions/GreatPersonDefinitions";
 import { ResourceDefinitions, type Resource } from "../definitions/ResourceDefinitions";
-import { Tech, TechAge, TechAgeDefinitions, TechDefinitions } from "../definitions/TechDefinitions";
+import { type Tech, type TechAge, TechAgeDefinitions, TechDefinitions } from "../definitions/TechDefinitions";
 import { deepFreeze } from "../utilities/Helper";
 import type { PartialTabulate } from "../utilities/TypeDefinitions";
 

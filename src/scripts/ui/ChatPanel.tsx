@@ -1,6 +1,7 @@
 import Tippy from "@tippyjs/react";
 import classNames from "classnames";
-import React, { memo, useCallback, useEffect, useRef, useState, useTransition } from "react";
+import type React from "react";
+import { memo, useCallback, useEffect, useRef, useState, useTransition } from "react";
 import { notifyGameOptionsUpdate } from "../../../shared/logic/GameStateLogic";
 import {
    AccountLevel,

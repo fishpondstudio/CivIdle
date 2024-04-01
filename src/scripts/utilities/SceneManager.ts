@@ -1,10 +1,10 @@
-import {
+import type {
    Container,
    FederatedPointerEvent,
-   type Application,
-   type ColorSource,
-   type IPointData,
-   type Texture,
+   Application,
+   ColorSource,
+   IPointData,
+   Texture,
 } from "pixi.js";
 import type { GameOptions, GameState } from "../../../shared/logic/GameState";
 import { watchGameOptions, watchGameState } from "../../../shared/logic/GameStateLogic";

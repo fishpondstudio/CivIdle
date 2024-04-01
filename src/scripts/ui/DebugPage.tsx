@@ -49,7 +49,11 @@ export function DebugPage(): React.ReactNode {
                                        className="m-icon small text-desc"
                                        onClick={() => {
                                           safeAdd(selectedResource, res, -1);
-                                          selectedResource[res] = clamp(selectedResource[res]!, 0, Infinity);
+                                          selectedResource[res] = clamp(
+                                             selectedResource[res]!,
+                                             0,
+                                             Number.POSITIVE_INFINITY,
+                                          );
                                           setSelectedResource({ ...selectedResource });
                                        }}
                                     >

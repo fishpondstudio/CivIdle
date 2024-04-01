@@ -115,7 +115,7 @@ export function ThemePage(): React.ReactNode {
                               style={{ width: "50px" }}
                               value={gameOptions.themeColors[k]}
                               onChange={(v) => {
-                                 const parsed = parseFloat(v.target.value);
+                                 const parsed = Number.parseFloat(v.target.value);
                                  if (Number.isFinite(parsed) && parsed >= 0 && parsed <= 1) {
                                     gameOptions.themeColors[k] = parsed as never;
                                     notifyGameOptionsUpdate();

@@ -23,7 +23,7 @@ export function BuildingUpgradeComponent({ gameState, xy }: IBuildingComponentPr
    if (!building) {
       return null;
    }
-   if ((Config.Building[building.type]?.max ?? Infinity) <= 1) {
+   if ((Config.Building[building.type]?.max ?? Number.POSITIVE_INFINITY) <= 1) {
       return null;
    }
    const deposits = tile.deposit;

@@ -1,5 +1,6 @@
 import classNames from "classnames";
-import React, { useTransition } from "react";
+import type React from "react";
+import { useTransition } from "react";
 import { notifyGameOptionsUpdate } from "../../../shared/logic/GameStateLogic";
 import { ChatChannels } from "../../../shared/utilities/Database";
 import { L, t } from "../../../shared/utilities/i18n";

@@ -1,5 +1,5 @@
-import { Building } from "../definitions/BuildingDefinitions";
-import { Resource } from "../definitions/ResourceDefinitions";
+import type { Building } from "../definitions/BuildingDefinitions";
+import type { Resource } from "../definitions/ResourceDefinitions";
 import { HOUR } from "./Helper";
 
 export enum ChatAttributes {

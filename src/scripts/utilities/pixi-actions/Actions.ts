@@ -1,7 +1,7 @@
 import type * as PIXI from "pixi.js";
 import type { EasingFunction } from "./Easing";
 import { Easing } from "./Easing";
-import { Action } from "./actions/Action";
+import type { Action } from "./actions/Action";
 import Delay from "./actions/Delay";
 import Parallel from "./actions/Parallel";
 import Repeat from "./actions/Repeat";

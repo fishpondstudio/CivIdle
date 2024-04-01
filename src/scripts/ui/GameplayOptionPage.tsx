@@ -100,7 +100,7 @@ export function GameplayOptionPage(): React.ReactNode {
                   max={STOCKPILE_CAPACITY_MAX}
                   value={options.defaultStockpileCapacity}
                   onChange={(e) => {
-                     options.defaultStockpileCapacity = parseInt(e.target.value, 10);
+                     options.defaultStockpileCapacity = Number.parseInt(e.target.value, 10);
                      notifyGameOptionsUpdate(options);
                   }}
                />
@@ -122,7 +122,7 @@ export function GameplayOptionPage(): React.ReactNode {
                   step="5"
                   value={options.defaultStockpileMax}
                   onChange={(e) => {
-                     options.defaultStockpileMax = parseInt(e.target.value, 10);
+                     options.defaultStockpileMax = Number.parseInt(e.target.value, 10);
                      notifyGameOptionsUpdate(options);
                   }}
                />

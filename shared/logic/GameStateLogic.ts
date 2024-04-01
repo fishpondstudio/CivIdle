@@ -1,5 +1,5 @@
 import { TypedEvent } from "../utilities/TypedEvent";
-import { GameOptions, GameState, SavedGame } from "./GameState";
+import { type GameOptions, type GameState, SavedGame } from "./GameState";
 
 export const savedGame = new SavedGame();
 export const TILE_SIZE = 64;

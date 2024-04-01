@@ -17,7 +17,7 @@ import { TR } from "../languages/tr";
 import { ZH_CN } from "../languages/zh-CN";
 import { ZH_TW } from "../languages/zh-TW";
 import type { ChatChannel } from "../utilities/Database";
-import { IPointData, forEach, uuid4, type Tile } from "../utilities/Helper";
+import { forEach, uuid4, type IPointData, type Tile } from "../utilities/Helper";
 import type { PartialSet, PartialTabulate } from "../utilities/TypeDefinitions";
 import { L, t } from "../utilities/i18n";
 import { getGameOptions, notifyGameOptionsUpdate } from "./GameStateLogic";

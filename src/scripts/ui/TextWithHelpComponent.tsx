@@ -1,6 +1,6 @@
 import Tippy from "@tippyjs/react";
-import React from "react";
-import { type Placement } from "tippy.js";
+import type React from "react";
+import type { Placement } from "tippy.js";
 import "tippy.js/dist/tippy.css";
 
 export function TextWithHelp({

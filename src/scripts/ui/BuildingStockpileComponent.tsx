@@ -41,7 +41,7 @@ export function BuildingStockpileComponent({ gameState, xy }: IBuildingComponent
                max={STOCKPILE_CAPACITY_MAX}
                value={building.stockpileCapacity}
                onChange={(e) => {
-                  building.stockpileCapacity = parseInt(e.target.value, 10);
+                  building.stockpileCapacity = Number.parseInt(e.target.value, 10);
                   notifyGameStateUpdate();
                }}
             />
@@ -74,7 +74,7 @@ export function BuildingStockpileComponent({ gameState, xy }: IBuildingComponent
                step="5"
                value={building.stockpileMax}
                onChange={(e) => {
-                  building.stockpileMax = parseInt(e.target.value, 10);
+                  building.stockpileMax = Number.parseInt(e.target.value, 10);
                   notifyGameStateUpdate();
                }}
             />

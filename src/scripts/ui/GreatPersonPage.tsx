@@ -1,5 +1,5 @@
 import Tippy from "@tippyjs/react";
-import { type GreatPerson } from "../../../shared/definitions/GreatPersonDefinitions";
+import type { GreatPerson } from "../../../shared/definitions/GreatPersonDefinitions";
 import { Config } from "../../../shared/logic/Config";
 import { getSpecialBuildings } from "../../../shared/logic/IntraTickCache";
 import { getGreatPersonThisRunLevel } from "../../../shared/logic/RebornLogic";

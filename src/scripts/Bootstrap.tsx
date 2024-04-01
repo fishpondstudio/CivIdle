@@ -1,5 +1,5 @@
 import type { Application, Texture } from "pixi.js";
-import { type City } from "../../shared/definitions/CityDefinitions";
+import type { City } from "../../shared/definitions/CityDefinitions";
 import { IsDeposit } from "../../shared/definitions/ResourceDefinitions";
 import { addPetraOfflineTime } from "../../shared/logic/BuildingLogic";
 import { Config } from "../../shared/logic/Config";
