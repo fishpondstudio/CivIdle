@@ -106,7 +106,9 @@ export function PendingClaimComponent({ gameState, xy }: IBuildingComponentProps
                            <FixedLengthText text={trade.fillBy} length={10} />
                         </td>
                         <td className="text-right">
-                           <FormatNumber value={trade.amount} />
+                           <Tippy content={trade.amount}>
+                              <FormatNumber value={trade.amount} />
+                           </Tippy>
                         </td>
                         <td className="text-right">
                            <div className="text-link text-strong" onClick={() => claimTrades([trade])}>

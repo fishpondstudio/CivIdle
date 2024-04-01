@@ -1,13 +1,14 @@
-import { type Building, BuildingDefinitions } from "../definitions/BuildingDefinitions";
+import { BuildingDefinitions, type Building } from "../definitions/BuildingDefinitions";
 import { CityDefinitions } from "../definitions/CityDefinitions";
 import { GreatPersonDefinitions } from "../definitions/GreatPersonDefinitions";
-import { type Resource, ResourceDefinitions } from "../definitions/ResourceDefinitions";
-import { TechAgeDefinitions, TechDefinitions } from "../definitions/TechDefinitions";
+import { ResourceDefinitions, type Resource } from "../definitions/ResourceDefinitions";
+import { Tech, TechAge, TechAgeDefinitions, TechDefinitions } from "../definitions/TechDefinitions";
 import { deepFreeze } from "../utilities/Helper";
 import type { PartialTabulate } from "../utilities/TypeDefinitions";
 
 const BuildingTier: PartialTabulate<Building> = {};
-const BuildingTech: PartialTabulate<Building> = {};
+const BuildingTech: Partial<Record<Building, Tech>> = {};
+const BuildingTechAge: Partial<Record<Building, TechAge>> = {};
 
 const ResourceTier: PartialTabulate<Resource> = {};
 const ResourcePrice: PartialTabulate<Resource> = {};
@@ -25,6 +26,7 @@ export const Config = {
    TechAge: deepFreeze(new TechAgeDefinitions()),
    BuildingTier,
    BuildingTech,
+   BuildingTechAge,
    ResourceTier,
    ResourceTech,
    ResourcePrice,

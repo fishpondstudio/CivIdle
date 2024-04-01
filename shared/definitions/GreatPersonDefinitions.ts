@@ -235,7 +235,14 @@ export class GreatPersonDefinitions {
       value: (level) => level,
       maxLevel: Infinity,
       age: "ClassicalAge",
-      tick: addScienceBasedOnBusyWorkers.bind(null),
+      tick: (self, level, permanent) => {
+         addScienceBasedOnBusyWorkers(
+            self.value(level),
+            t(permanent ? L.SourceGreatPersonPermanent : L.SourceGreatPerson, {
+               person: self.name(),
+            }),
+         );
+      },
    };
 
    Archimedes: IGreatPersonDefinition = boostOf({
@@ -507,7 +514,14 @@ export class GreatPersonDefinitions {
       value: (level) => level * 2,
       maxLevel: Infinity,
       age: "RenaissanceAge",
-      tick: addScienceBasedOnBusyWorkers.bind(null),
+      tick: (self, level, permanent) => {
+         addScienceBasedOnBusyWorkers(
+            self.value(level),
+            t(permanent ? L.SourceGreatPersonPermanent : L.SourceGreatPerson, {
+               person: self.name(),
+            }),
+         );
+      },
    };
 
    GeorgiusAgricola: IGreatPersonDefinition = boostOf({
@@ -833,21 +847,11 @@ function boostOf(
    };
 }
 
-function addScienceBasedOnBusyWorkers(self: IGreatPersonDefinition, level: number, permanent: boolean): void {
+export function addScienceBasedOnBusyWorkers(value: number, name: string): void {
    const gs = getGameState();
    const { workersBusy, workersAfterHappiness } = getScienceFromWorkers(gs);
    if (workersBusy >= 0.5 * workersAfterHappiness) {
-      Tick.next.globalMultipliers.sciencePerBusyWorker.push({
-         value: self.value(level),
-         source: t(permanent ? L.SourceGreatPersonPermanent : L.SourceGreatPerson, {
-            person: self.name(),
-         }),
-      });
-      Tick.next.globalMultipliers.sciencePerIdleWorker.push({
-         value: self.value(level),
-         source: t(permanent ? L.SourceGreatPersonPermanent : L.SourceGreatPerson, {
-            person: self.name(),
-         }),
-      });
+      Tick.next.globalMultipliers.sciencePerBusyWorker.push({ value, source: name });
+      Tick.next.globalMultipliers.sciencePerIdleWorker.push({ value, source: name });
    }
 }

@@ -550,7 +550,8 @@ export const EN = {
    OptionsMenu: "Options",
    OptionsUseModernUIV2: "Use Anti-Aliased Font",
    OxfordUniversity: "Oxford University",
-   OxfordUniversityDescV2: "Each building upgrade in your empire provides +5 Science per cycle",
+   OxfordUniversityDescV3:
+      "+10% science output for buildings that produce science. When completed, generate one-time science equivalent to the cost of the most expensive unlocked technology",
    PaintersGuild: "Painter's Guild",
    Painting: "Painting",
    Pantheon: "Pantheon",

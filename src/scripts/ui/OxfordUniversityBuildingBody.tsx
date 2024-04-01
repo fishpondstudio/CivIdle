@@ -1,5 +1,4 @@
-import { getTotalBuildingUpgrades } from "../../../shared/logic/BuildingLogic";
-import { OXFORD_SCIENCE_PER_UPGRADE } from "../../../shared/logic/Constants";
+import { Tick } from "../../../shared/logic/TickLogic";
 import { L, t } from "../../../shared/utilities/i18n";
 import { BuildingColorComponent } from "./BuildingColorComponent";
 import { BuildingDescriptionComponent } from "./BuildingDescriptionComponent";
@@ -19,7 +18,7 @@ export function OxfordUniversityBuildingBody({ gameState, xy }: IBuildingCompone
             <div className="row">
                <div className="f1">{t(L.Science)}</div>
                <div className="text-strong">
-                  +<FormatNumber value={OXFORD_SCIENCE_PER_UPGRADE * getTotalBuildingUpgrades(gameState)} />
+                  +<FormatNumber value={Tick.current.scienceProduced.get(xy) ?? 0} />
                </div>
             </div>
          </fieldset>

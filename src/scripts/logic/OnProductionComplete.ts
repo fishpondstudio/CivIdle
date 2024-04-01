@@ -1,16 +1,18 @@
-import { tickGreatPersonBoost } from "../../../shared/definitions/GreatPersonDefinitions";
+import {
+   addScienceBasedOnBusyWorkers,
+   tickGreatPersonBoost,
+} from "../../../shared/definitions/GreatPersonDefinitions";
 import {
    ST_PETERS_FAITH_MULTIPLIER,
    ST_PETERS_STORAGE_MULTIPLIER,
    getCompletedBuilding,
    getScienceFromWorkers,
-   getTotalBuildingUpgrades,
    isBuildingWellStocked,
    isSpecialBuilding,
    isWorldWonder,
 } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
-import { EXPLORER_SECONDS, MAX_EXPLORER, OXFORD_SCIENCE_PER_UPGRADE } from "../../../shared/logic/Constants";
+import { EXPLORER_SECONDS, MAX_EXPLORER } from "../../../shared/logic/Constants";
 import { getGameOptions, getGameState } from "../../../shared/logic/GameStateLogic";
 import {
    getBuildingsByType,
@@ -20,7 +22,7 @@ import {
    getXyBuildings,
 } from "../../../shared/logic/IntraTickCache";
 import { getVotedBoostId } from "../../../shared/logic/PlayerTradeLogic";
-import { getGreatPersonThisRunLevel } from "../../../shared/logic/RebornLogic";
+import { getGreatPersonThisRunLevel, getYellowCraneTowerRange } from "../../../shared/logic/RebornLogic";
 import { getBuildingsThatProduce } from "../../../shared/logic/ResourceLogic";
 import { Tick } from "../../../shared/logic/TickLogic";
 import { MarketOptions, type IMarketBuildingData, type IPetraBuildingData } from "../../../shared/logic/Tile";
@@ -35,6 +37,7 @@ import {
    mapSafePush,
    pointToTile,
    reduceOf,
+   round,
    safeAdd,
    setFlag,
    tileToPoint,
@@ -61,7 +64,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
    switch (building.type) {
       case "Headquarter": {
          mapSafePush(Tick.next.tileMultipliers, xy, {
-            output: reduceOf(options.greatPeople, (prev, gp, inv) => prev + inv.level, 0) * 0.1,
+            output: round(reduceOf(options.greatPeople, (prev, gp, inv) => prev + inv.level, 0) * 0.1, 1),
             source: t(L.PermanentGreatPeople),
          });
          break;
@@ -306,10 +309,15 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          break;
       }
       case "OxfordUniversity": {
-         const upgrades = getTotalBuildingUpgrades(gs);
-         const scienceProduced = upgrades * OXFORD_SCIENCE_PER_UPGRADE;
-         safeAdd(getSpecialBuildings(gs).Headquarter.building.resources, "Science", scienceProduced);
-         Tick.next.scienceProduced.set(xy, scienceProduced);
+         let science = 0;
+         Tick.current.scienceProduced.forEach((amount, tileXy) => {
+            if (xy !== tileXy) {
+               science += amount;
+            }
+         });
+         science *= 0.1;
+         safeAdd(getSpecialBuildings(gs).Headquarter.building.resources, "Science", science);
+         Tick.next.scienceProduced.set(xy, science);
          break;
       }
       case "StPetersBasilica": {
@@ -660,6 +668,17 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          }
          break;
       }
+      case "YellowCraneTower": {
+         for (const point of grid.getRange(tileToPoint(xy), getYellowCraneTowerRange(xy, gs))) {
+            mapSafePush(Tick.next.tileMultipliers, pointToTile(point), {
+               output: 1,
+               storage: 1,
+               worker: 1,
+               source: buildingName,
+            });
+         }
+         break;
+      }
       case "UnitedNations": {
          forEach(Config.BuildingTier, (building, tier) => {
             if (tier >= 4 && tier <= 6) {
@@ -686,6 +705,19 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
                }
             }
          }
+         break;
+      }
+      case "MountTai": {
+         forEach(Config.Building, (b, def) => {
+            if (!isSpecialBuilding(b) && def.output.Science) {
+               addMultiplier(b, { output: 1 }, buildingName);
+            }
+         });
+         const total =
+            getGreatPersonThisRunLevel(gs.greatPeople.Confucius ?? 0) +
+            (getGameOptions().greatPeople.Confucius?.level ?? 0);
+
+         addScienceBasedOnBusyWorkers(Config.GreatPerson.Confucius.value(total), buildingName);
       }
       // case "ArcDeTriomphe": {
       //    forEach(Config.Building, (b, def) => {

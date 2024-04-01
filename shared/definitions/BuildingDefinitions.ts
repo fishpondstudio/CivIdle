@@ -879,7 +879,7 @@ export class BuildingDefinitions {
    };
    OxfordUniversity: IBuildingDefinition = {
       name: () => t(L.OxfordUniversity),
-      desc: () => t(L.OxfordUniversityDescV2),
+      desc: () => t(L.OxfordUniversityDescV3),
       input: {},
       output: {},
       max: 1,

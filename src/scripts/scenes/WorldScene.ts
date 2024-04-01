@@ -11,6 +11,7 @@ import {
    notifyGameStateUpdate,
 } from "../../../shared/logic/GameStateLogic";
 import { getGrid, getSpecialBuildings } from "../../../shared/logic/IntraTickCache";
+import { getYellowCraneTowerRange } from "../../../shared/logic/RebornLogic";
 import { makeBuilding } from "../../../shared/logic/Tile";
 import { clamp, lerp, lookAt, pointToTile, tileToPoint, type Tile } from "../../../shared/utilities/Helper";
 import { Vector2, v2 } from "../../../shared/utilities/Vector2";
@@ -276,7 +277,7 @@ export class WorldScene extends Scene {
             }
             case "ColossusOfRhodes":
             case "LighthouseOfAlexandria":
-            // case "GrandBazaar":
+            case "GrandBazaar":
             case "HangingGarden":
             case "ChichenItza":
             case "AngkorWat":
@@ -298,6 +299,9 @@ export class WorldScene extends Scene {
             case "GoldenGateBridge": {
                this.highlightRange(grid, 2);
                break;
+            }
+            case "YellowCraneTower": {
+               this.highlightRange(grid, getYellowCraneTowerRange(xy, gs));
             }
          }
       }

@@ -8,10 +8,10 @@ import {
    isSpecialBuilding,
 } from "../../../shared/logic/BuildingLogic";
 import { getGameOptions, getGameState } from "../../../shared/logic/GameStateLogic";
-import { getGrid, getXyBuildings } from "../../../shared/logic/IntraTickCache";
+import { getGrid, getSpecialBuildings, getXyBuildings } from "../../../shared/logic/IntraTickCache";
 import { getGreatPeopleChoiceCount, rollGreatPeopleThisRun } from "../../../shared/logic/RebornLogic";
 import { getRevealedDeposits } from "../../../shared/logic/ResourceLogic";
-import { OnResetTile, addDeposit } from "../../../shared/logic/TechLogic";
+import { OnResetTile, addDeposit, getMostAdvancedTech, getUnlockCost } from "../../../shared/logic/TechLogic";
 import { ensureTileFogOfWar } from "../../../shared/logic/TerrainLogic";
 import { makeBuilding } from "../../../shared/logic/Tile";
 import { OnBuildingComplete } from "../../../shared/logic/Update";
@@ -19,6 +19,7 @@ import {
    firstKeyOf,
    isEmpty,
    pointToTile,
+   safeAdd,
    shuffle,
    sizeOf,
    tileToPoint,
@@ -81,6 +82,13 @@ export function onBuildingComplete(xy: Tile): void {
          if (gs.greatPeopleChoices.length > 0) {
             playLevelUp();
             showModal(<ChooseGreatPersonModal permanent={false} />);
+         }
+         break;
+      }
+      case "OxfordUniversity": {
+         const tech = getMostAdvancedTech(gs);
+         if (tech) {
+            safeAdd(getSpecialBuildings(gs).Headquarter.building.resources, "Science", getUnlockCost(tech));
          }
          break;
       }

@@ -1,11 +1,21 @@
 import { City } from "../definitions/CityDefinitions";
 import type { GreatPerson } from "../definitions/GreatPersonDefinitions";
 import { TechAge } from "../definitions/TechDefinitions";
-import { clamp, filterOf, forEach, isNullOrUndefined, keysOf, shuffle } from "../utilities/Helper";
+import {
+   Tile,
+   clamp,
+   filterOf,
+   forEach,
+   isNullOrUndefined,
+   keysOf,
+   pointToTile,
+   shuffle,
+   tileToPoint,
+} from "../utilities/Helper";
 import { Config } from "./Config";
 import type { GameOptions, GameState, GreatPeopleChoice } from "./GameState";
 import { getGameOptions, getGameState } from "./GameStateLogic";
-import { getBuildingsByType } from "./IntraTickCache";
+import { getBuildingsByType, getGrid } from "./IntraTickCache";
 import { Tick } from "./TickLogic";
 
 ////////////////////////////////////////////////
@@ -163,4 +173,18 @@ export function getGreatPeopleChoiceCount(gs: GameState): number {
       return 1 + DEFAULT_GREAT_PEOPLE_CHOICE_COUNT;
    }
    return DEFAULT_GREAT_PEOPLE_CHOICE_COUNT;
+}
+
+export function getYellowCraneTowerRange(xy: Tile, gs: GameState): number {
+   const building = gs.tiles.get(xy)?.building;
+   if (building?.type !== "YellowCraneTower") {
+      return 0;
+   }
+   for (const point of getGrid(gs).getNeighbors(tileToPoint(xy))) {
+      const neighbor = gs.tiles.get(pointToTile(point));
+      if (neighbor?.explored && neighbor?.building?.type === "YangtzeRiver") {
+         return 2;
+      }
+   }
+   return 1;
 }

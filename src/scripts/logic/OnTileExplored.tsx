@@ -1,10 +1,10 @@
 import { isNaturalWonder, isSpecialBuilding } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
 import { getGameState } from "../../../shared/logic/GameStateLogic";
-import { getXyBuildings } from "../../../shared/logic/IntraTickCache";
+import { getSpecialBuildings, getXyBuildings } from "../../../shared/logic/IntraTickCache";
 import { getGreatPeopleChoiceCount, rollGreatPeopleThisRun } from "../../../shared/logic/RebornLogic";
-import { getCurrentTechAge } from "../../../shared/logic/TechLogic";
-import { type Tile } from "../../../shared/utilities/Helper";
+import { getCurrentTechAge, getMostAdvancedTech, getUnlockCost } from "../../../shared/logic/TechLogic";
+import { safeAdd, type Tile } from "../../../shared/utilities/Helper";
 import { ChooseGreatPersonModal } from "../ui/ChooseGreatPersonModal";
 import { showModal } from "../ui/GlobalModal";
 import { playLevelUp } from "../visuals/Sound";
@@ -35,6 +35,17 @@ export function onTileExplored(xy: Tile): void {
             if (gs.greatPeopleChoices.length > 0) {
                playLevelUp();
                showModal(<ChooseGreatPersonModal permanent={false} />);
+            }
+            break;
+         }
+         case "MountTai": {
+            const tech = getMostAdvancedTech(gs);
+            if (tech) {
+               safeAdd(
+                  getSpecialBuildings(gs).Headquarter.building.resources,
+                  "Science",
+                  getUnlockCost(tech),
+               );
             }
             break;
          }
