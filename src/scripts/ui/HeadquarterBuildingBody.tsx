@@ -4,13 +4,14 @@ import { Config } from "../../../shared/logic/Config";
 import type { GameOptions, GameState } from "../../../shared/logic/GameState";
 import { getXyBuildings, unlockedBuildings } from "../../../shared/logic/IntraTickCache";
 import {
-   getGreatPeopleAtReborn,
    getGreatPersonThisRunLevel,
+   getPermanentGreatPeopleLevel,
+   getRebirthGreatPeopleCount,
    getTotalGreatPeopleUpgradeCost,
    getValueRequiredForGreatPeople,
 } from "../../../shared/logic/RebornLogic";
 import {
-   getCurrentTechAge,
+   getCurrentAge,
    getScienceAmount,
    getUnlockCost,
    unlockableTechs,
@@ -67,7 +68,7 @@ export function HeadquarterBuildingBody({
       sciencePerIdleWorker,
    } = getScienceFromWorkers(gameState);
    const scienceAmount = getScienceAmount();
-   const techAge = getCurrentTechAge(gameState);
+   const techAge = getCurrentAge(gameState);
    const options = useGameOptions();
    return (
       <div className="window-body">
@@ -345,9 +346,7 @@ function GreatPeopleComponent({
                      </li>
                      <li className="row text-small">
                         <div className="f1">{t(L.PermanentGreatPeopleLevels)}</div>
-                        <div className="text-strong">
-                           {reduceOf(options.greatPeople, (prev, gp, inv) => prev + inv.level, 0)}
-                        </div>
+                        <div className="text-strong">{getPermanentGreatPeopleLevel()}</div>
                      </li>
                      {keysOf(options.greatPeople)
                         .sort(
@@ -415,7 +414,7 @@ function WonderComponent({ gameState }: { gameState: GameState }): React.ReactNo
 }
 
 function RebornComponent({ gameState }: { gameState: GameState }): ReactNode {
-   const extraGreatPeople = getGreatPeopleAtReborn();
+   const extraGreatPeople = getRebirthGreatPeopleCount();
    return (
       <fieldset>
          <legend>{t(L.Reborn)}</legend>

@@ -8,9 +8,9 @@ import {
    rollPermanentGreatPeople,
 } from "../../../shared/logic/RebornLogic";
 import {
-   AccountLevel,
    ChatChannels,
    UserAttributes,
+   type AccountLevel,
    type ChatChannel,
 } from "../../../shared/utilities/Database";
 import {
@@ -93,8 +93,7 @@ export async function handleChatCommand(command: string): Promise<void> {
          if (parts[1] === "confirm") {
             const number = await client.doGreatPeopleRecovery();
             getGameOptions().greatPeople = {};
-            getGameOptions().greatPeopleChoices = [];
-            rollPermanentGreatPeople(
+            getGameOptions().greatPeopleChoices = rollPermanentGreatPeople(
                number,
                DEFAULT_GREAT_PEOPLE_CHOICE_COUNT,
                MAX_TECH_AGE,
@@ -150,7 +149,7 @@ export async function handleChatCommand(command: string): Promise<void> {
          if (!parts[1] || !parts[2]) {
             throw new Error("Invalid command format");
          }
-         await client.changePlayerLevel(parts[1], parseInt(parts[2], 10) as AccountLevel);
+         await client.changePlayerLevel(parts[1], Number.parseInt(parts[2], 10) as AccountLevel);
          addSystemMessage("Player level has been changed");
          break;
       }
@@ -158,7 +157,7 @@ export async function handleChatCommand(command: string): Promise<void> {
          if (!parts[1] || !parts[2]) {
             throw new Error("Invalid command format");
          }
-         const time = parseInt(parts[2], 10);
+         const time = Number.parseInt(parts[2], 10);
          addSystemMessage(`Play time has been changed to ${time}h`);
          await client.setPlayTime(parts[1], time * 60 * 60);
          break;
@@ -220,7 +219,7 @@ export async function handleChatCommand(command: string): Promise<void> {
          if (!parts[1] || !parts[2]) {
             throw new Error("Invalid command format");
          }
-         const attr = await client.setPlayerAttr(parts[1], parseInt(parts[2], 2));
+         const attr = await client.setPlayerAttr(parts[1], Number.parseInt(parts[2], 2));
          addSystemMessage(
             [
                `Flag=${attr.toString(2)}`,
@@ -260,7 +259,7 @@ export async function handleChatCommand(command: string): Promise<void> {
          if (!parts[1] || !parts[2]) {
             throw new Error("Invalid command format");
          }
-         const muteUntil = await client.mutePlayer(parts[1], parseInt(parts[2], 10) * MINUTE);
+         const muteUntil = await client.mutePlayer(parts[1], Number.parseInt(parts[2], 10) * MINUTE);
          addSystemMessage(`Player ${parts[1]} has been muted until ${new Date(muteUntil).toLocaleString()}`);
          break;
       }
@@ -270,8 +269,8 @@ export async function handleChatCommand(command: string): Promise<void> {
          }
          const slow = await client.slowPlayer(
             parts[1],
-            parseInt(parts[2], 10) * HOUR,
-            parseInt(parts[3] ?? 0, 10) * SECOND,
+            Number.parseInt(parts[2], 10) * HOUR,
+            Number.parseInt(parts[3] ?? 0, 10) * SECOND,
          );
          addSystemMessage(
             `Player ${parts[1]} has been slowed until ${new Date(slow.time).toLocaleString()} for ${Math.ceil(
@@ -316,7 +315,7 @@ export async function handleChatCommand(command: string): Promise<void> {
          if (!parts[1] || !parts[2]) {
             throw new Error("Invalid command format");
          }
-         const count = parseInt(parts[2], 10);
+         const count = Number.parseInt(parts[2], 10);
          const result = await client.setGreatPeopleRecovery(parts[1], count);
          addSystemMessage(`Will grant Player ${parts[1]} ${result} great people`);
          break;

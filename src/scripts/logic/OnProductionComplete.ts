@@ -6,7 +6,9 @@ import {
    ST_PETERS_FAITH_MULTIPLIER,
    ST_PETERS_STORAGE_MULTIPLIER,
    getCompletedBuilding,
+   getGreatWallRange,
    getScienceFromWorkers,
+   getYellowCraneTowerRange,
    isBuildingWellStocked,
    isSpecialBuilding,
    isWorldWonder,
@@ -22,8 +24,9 @@ import {
    getXyBuildings,
 } from "../../../shared/logic/IntraTickCache";
 import { getVotedBoostId } from "../../../shared/logic/PlayerTradeLogic";
-import { getGreatPersonThisRunLevel, getYellowCraneTowerRange } from "../../../shared/logic/RebornLogic";
+import { getGreatPersonThisRunLevel } from "../../../shared/logic/RebornLogic";
 import { getBuildingsThatProduce } from "../../../shared/logic/ResourceLogic";
+import { getBuildingUnlockAge, getCurrentAge } from "../../../shared/logic/TechLogic";
 import { Tick } from "../../../shared/logic/TickLogic";
 import { MarketOptions, type IMarketBuildingData, type IPetraBuildingData } from "../../../shared/logic/Tile";
 import { addMultiplier } from "../../../shared/logic/Update";
@@ -649,7 +652,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          for (const neighbor of grid.getNeighbors(tileToPoint(xy))) {
             const neighborXy = pointToTile(neighbor);
             const building = getCompletedBuilding(neighborXy, gs)?.type;
-            if (!building) continue;
+            if (!building || isSpecialBuilding(building)) continue;
             const tier = Config.BuildingTier[building] ?? 0;
             if (tier <= 0) continue;
             minTier = Math.min(minTier, tier);
@@ -718,6 +721,41 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
             (getGameOptions().greatPeople.Confucius?.level ?? 0);
 
          addScienceBasedOnBusyWorkers(Config.GreatPerson.Confucius.value(total), buildingName);
+         break;
+      }
+      case "GreatWall": {
+         for (const point of grid.getRange(tileToPoint(xy), getGreatWallRange(xy, gs))) {
+            const building = getCompletedBuilding(pointToTile(point), gs);
+            if (!building || isSpecialBuilding(building.type)) continue;
+            const count = Math.abs(
+               Config.TechAge[getCurrentAge(gs)].idx -
+                  Config.TechAge[getBuildingUnlockAge(building.type)].idx,
+            );
+            mapSafePush(Tick.next.tileMultipliers, pointToTile(point), {
+               output: count,
+               storage: count,
+               worker: count,
+               source: buildingName,
+            });
+         }
+         break;
+      }
+      case "YangtzeRiver": {
+         const level = getGameOptions().greatPeople.WuZetian?.level ?? 0;
+         forEach(Config.Building, (b, def) => {
+            if (def.input.Water) {
+               addMultiplier(b, { output: 1, worker: 1, storage: 1 + level }, buildingName);
+            } else if (level > 0) {
+               addMultiplier(b, { storage: level }, buildingName);
+            }
+         });
+         const total =
+            getGreatPersonThisRunLevel(gs.greatPeople.ZhengHe ?? 0) +
+            (getGameOptions().greatPeople.ZhengHe?.level ?? 0);
+         if (total > 0) {
+            tickGreatPersonBoost(Config.GreatPerson.ZhengHe, total, buildingName);
+         }
+         break;
       }
       // case "ArcDeTriomphe": {
       //    forEach(Config.Building, (b, def) => {

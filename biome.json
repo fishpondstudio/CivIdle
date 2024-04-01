@@ -38,8 +38,8 @@
          "**/*.js",
          "**/*.d.ts",
          "shared/thirdparty/*",
-         "src/scripts/Version.json",
-         "shared/utilities/Chars.json"
+         "shared/languages/*",
+         "src/scripts/Version.json"
       ]
    }
 }

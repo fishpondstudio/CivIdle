@@ -3,7 +3,7 @@ import { Config } from "../../../shared/logic/Config";
 import { getGameState } from "../../../shared/logic/GameStateLogic";
 import { getSpecialBuildings, getXyBuildings } from "../../../shared/logic/IntraTickCache";
 import { getGreatPeopleChoiceCount, rollGreatPeopleThisRun } from "../../../shared/logic/RebornLogic";
-import { getCurrentTechAge, getMostAdvancedTech, getUnlockCost } from "../../../shared/logic/TechLogic";
+import { getCurrentAge, getMostAdvancedTech, getUnlockCost } from "../../../shared/logic/TechLogic";
 import { safeAdd, type Tile } from "../../../shared/utilities/Helper";
 import { ChooseGreatPersonModal } from "../ui/ChooseGreatPersonModal";
 import { showModal } from "../ui/GlobalModal";
@@ -26,7 +26,7 @@ export function onTileExplored(xy: Tile): void {
             break;
          }
          case "MountSinai": {
-            const age = getCurrentTechAge(gs);
+            const age = getCurrentAge(gs);
             if (!age) return;
             const candidates = rollGreatPeopleThisRun(age, gs.city, getGreatPeopleChoiceCount(gs));
             if (candidates) {

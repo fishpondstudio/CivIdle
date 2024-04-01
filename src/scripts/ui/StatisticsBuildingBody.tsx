@@ -14,7 +14,7 @@ import {
    getElectrificationStatus,
    getScienceFromBuildings,
    getScienceFromWorkers,
-   isHeadquarters,
+   isHeadquarter,
    isNaturalWonder,
 } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
@@ -130,7 +130,7 @@ function EmpireTab({ gameState, xy }: IBuildingComponentProps): React.ReactNode 
    let totalBuildingValue = 0;
    const buildingTypeValues = new Map<Building, number>();
    getTypeBuildings(gameState).forEach((buildings, v) => {
-      if (isNaturalWonder(v) || isHeadquarters(v)) {
+      if (isNaturalWonder(v) || isHeadquarter(v)) {
          return;
       }
       const buildingTypeValue = mReduceOf(
@@ -525,8 +525,10 @@ function ResourcesTab({ gameState }: IBuildingComponentProps): React.ReactNode {
                   case 3: {
                      const deficitA = (outputs[a] ?? 0) - (inputs[a] ?? 0);
                      const deficitB = (outputs[b] ?? 0) - (inputs[b] ?? 0);
-                     const timeLeftA = deficitA < 0 ? (resourceAmounts[a] ?? 0) / deficitA : -Infinity;
-                     const timeLeftB = deficitB < 0 ? (resourceAmounts[b] ?? 0) / deficitB : -Infinity;
+                     const timeLeftA =
+                        deficitA < 0 ? (resourceAmounts[a] ?? 0) / deficitA : Number.NEGATIVE_INFINITY;
+                     const timeLeftB =
+                        deficitB < 0 ? (resourceAmounts[b] ?? 0) / deficitB : Number.NEGATIVE_INFINITY;
                      return timeLeftA !== timeLeftB
                         ? timeLeftB - timeLeftA
                         : Config.Resource[a].name().localeCompare(Config.Resource[b].name());
@@ -545,7 +547,8 @@ function ResourcesTab({ gameState }: IBuildingComponentProps): React.ReactNode {
                const input = inputs[res] ?? 0;
                const deficit = output - input;
                const amount = resourceAmounts[res] ?? 0;
-               const timeLeft = deficit < 0 ? Math.abs((1000 * amount ?? 0) / deficit) : Infinity;
+               const timeLeft =
+                  deficit < 0 ? Math.abs((1000 * amount ?? 0) / deficit) : Number.POSITIVE_INFINITY;
 
                return (
                   <tr key={res}>

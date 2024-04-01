@@ -1,28 +1,18 @@
-import { City } from "../definitions/CityDefinitions";
+import type { City } from "../definitions/CityDefinitions";
 import type { GreatPerson } from "../definitions/GreatPersonDefinitions";
-import { TechAge } from "../definitions/TechDefinitions";
-import {
-   Tile,
-   clamp,
-   filterOf,
-   forEach,
-   isNullOrUndefined,
-   keysOf,
-   pointToTile,
-   shuffle,
-   tileToPoint,
-} from "../utilities/Helper";
+import type { TechAge } from "../definitions/TechDefinitions";
+import { clamp, filterOf, forEach, isNullOrUndefined, keysOf, reduceOf, shuffle } from "../utilities/Helper";
 import { Config } from "./Config";
 import type { GameOptions, GameState, GreatPeopleChoice } from "./GameState";
 import { getGameOptions, getGameState } from "./GameStateLogic";
-import { getBuildingsByType, getGrid } from "./IntraTickCache";
+import { getBuildingsByType } from "./IntraTickCache";
 import { Tick } from "./TickLogic";
 
 ////////////////////////////////////////////////
 // These two functions needed to be kept in sync manually! If you modify any of them, please also change the
 // other one!
-export function getGreatPeopleAtReborn(): number {
-   return clamp(Math.floor(Math.cbrt(Tick.current.totalValue / 1e6) / 4), 0, Infinity);
+export function getRebirthGreatPeopleCount(): number {
+   return clamp(Math.floor(Math.cbrt(Tick.current.totalValue / 1e6) / 4), 0, Number.POSITIVE_INFINITY);
 }
 
 export function getValueRequiredForGreatPeople(count: number): number {
@@ -39,7 +29,7 @@ export function getGreatPersonThisRunLevel(amount: number): number {
 }
 
 export function getProgressTowardsNextGreatPerson(): number {
-   const greatPeopleCount = getGreatPeopleAtReborn();
+   const greatPeopleCount = getRebirthGreatPeopleCount();
    const previous = getValueRequiredForGreatPeople(greatPeopleCount);
    const progress =
       (Tick.current.totalValue - previous) /
@@ -119,7 +109,8 @@ export function rollPermanentGreatPeople(
    choiceCount: number,
    currentAge: TechAge,
    city: City,
-): void {
+): GreatPeopleChoice[] {
+   const result: GreatPeopleChoice[] = [];
    const currentTechAgeIdx = Config.TechAge[currentAge].idx;
    const pool = keysOf(
       filterOf(
@@ -138,8 +129,9 @@ export function rollPermanentGreatPeople(
          }
          choice.push(candidates.pop()!);
       }
-      getGameOptions().greatPeopleChoices.push(choice);
+      result.push(choice);
    }
+   return result;
 }
 
 export function rollGreatPeopleThisRun(
@@ -147,7 +139,7 @@ export function rollGreatPeopleThisRun(
    city: City,
    choiceCount: number,
 ): GreatPeopleChoice | null {
-   const choices: GreatPerson[] = [];
+   const choices: GreatPeopleChoice = [];
    const pool = shuffle(
       keysOf(
          filterOf(
@@ -162,7 +154,7 @@ export function rollGreatPeopleThisRun(
    for (let i = 0; i < choiceCount; i++) {
       choices.push(pool[i]);
    }
-   return choices as GreatPeopleChoice;
+   return choices;
 }
 
 export const DEFAULT_GREAT_PEOPLE_CHOICE_COUNT = 3;
@@ -175,16 +167,14 @@ export function getGreatPeopleChoiceCount(gs: GameState): number {
    return DEFAULT_GREAT_PEOPLE_CHOICE_COUNT;
 }
 
-export function getYellowCraneTowerRange(xy: Tile, gs: GameState): number {
-   const building = gs.tiles.get(xy)?.building;
-   if (building?.type !== "YellowCraneTower") {
-      return 0;
-   }
-   for (const point of getGrid(gs).getNeighbors(tileToPoint(xy))) {
-      const neighbor = gs.tiles.get(pointToTile(point));
-      if (neighbor?.explored && neighbor?.building?.type === "YangtzeRiver") {
-         return 2;
-      }
-   }
-   return 1;
+export function getPermanentGreatPeopleLevel(): number {
+   return reduceOf(getGameOptions().greatPeople, (prev, gp, inv) => prev + inv.level, 0);
+}
+
+export function getPermanentGreatPeopleCount(): number {
+   return reduceOf(
+      getGameOptions().greatPeople,
+      (prev, gp, inv) => prev + getTotalGreatPeopleUpgradeCost(gp, inv.level) + inv.amount,
+      0,
+   );
 }

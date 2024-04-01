@@ -1,5 +1,5 @@
-import { Building } from "../definitions/BuildingDefinitions";
-import { City } from "../definitions/CityDefinitions";
+import type { Building } from "../definitions/BuildingDefinitions";
+import type { City } from "../definitions/CityDefinitions";
 import type { Deposit } from "../definitions/ResourceDefinitions";
 import type { Tech, TechAge } from "../definitions/TechDefinitions";
 import { forEach, isEmpty, isNullOrUndefined, shuffle, sizeOf, type Tile } from "../utilities/Helper";
@@ -37,7 +37,7 @@ export function getMostAdvancedTech(gs: GameState): Tech | null {
    return tech;
 }
 
-export function getBuildingUnlockTech(building: Building): Tech | null {
+export function getBuildingUnlockTech(building: Building): Tech {
    const tech = Config.BuildingTech[building];
    if (tech) return tech;
    let city: City;
@@ -46,13 +46,22 @@ export function getBuildingUnlockTech(building: Building): Tech | null {
       const uniqueTech = def.uniqueBuildings[building];
       if (uniqueTech) return uniqueTech;
    }
-   return null;
+   throw new Error(`Cannot find tech for building: ${building}`);
 }
 
-export function getCurrentTechAge(gs: GameState): TechAge | null {
+export function getBuildingUnlockAge(building: Building): TechAge {
+   const age = Config.BuildingTechAge[building];
+   if (age) return age;
+
+   const tech = getBuildingUnlockTech(building);
+   if (tech) return getAgeForTech(tech);
+   throw new Error(`Cannot find age for building: ${building}`);
+}
+
+export function getCurrentAge(gs: GameState): TechAge {
    const tech = getMostAdvancedTech(gs);
    if (!tech) {
-      return null;
+      throw new Error("Cannot find current tech age!");
    }
    return getAgeForTech(tech);
 }
@@ -65,8 +74,8 @@ export function isAgeUnlocked(age: TechAge, gs: GameState): boolean {
    return Config.Tech[tech].column >= Config.TechAge[age].from;
 }
 
-export function getAgeForTech(tech: string): TechAge | null {
-   const techColumn = Config.Tech[tech as Tech].column;
+export function getAgeForTech(tech: Tech): TechAge {
+   const techColumn = Config.Tech[tech].column;
    let age: TechAge;
    for (age in Config.TechAge) {
       const ageDef = Config.TechAge[age];
@@ -74,7 +83,7 @@ export function getAgeForTech(tech: string): TechAge | null {
          return age;
       }
    }
-   return null;
+   throw new Error(`Cannot find age for tech: ${tech}`);
 }
 
 export function unlockTech(tech: Tech, event: TypedEvent<Tile> | null, gs: GameState): void {

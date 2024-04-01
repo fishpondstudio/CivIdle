@@ -5,7 +5,7 @@ import { Config } from "../../../shared/logic/Config";
 import { TRIBUNE_TRADE_VALUE_PER_MINUTE, TRIBUNE_UPGRADE_PLAYTIME } from "../../../shared/logic/Constants";
 import { getGameOptions, getGameState } from "../../../shared/logic/GameStateLogic";
 import {
-   getGreatPeopleAtReborn,
+   getRebirthGreatPeopleCount,
    getTribuneUpgradeMaxLevel,
    upgradeAllPermanentGreatPeople,
 } from "../../../shared/logic/RebornLogic";
@@ -99,7 +99,7 @@ function AccountDetails(): React.ReactNode {
    const cond1 = playTime * 1000 > TRIBUNE_UPGRADE_PLAYTIME;
    const cond2 = hasFlag(user?.attr ?? 0, UserAttributes.DLC1);
    const noPendingGreatPerson = () =>
-      getGreatPeopleAtReborn() +
+      getRebirthGreatPeopleCount() +
          sizeOf(getGameState().greatPeople) +
          getGameState().greatPeopleChoices.length +
          getGameOptions().greatPeopleChoices.length <=

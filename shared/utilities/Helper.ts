@@ -366,7 +366,7 @@ export function xyToPoint(str: string): IPointData {
       return { x: cached.x, y: cached.y };
    }
    const parts = str.split(",");
-   const point = { x: parseInt(parts[0], 10), y: parseInt(parts[1], 10) };
+   const point = { x: Number.parseInt(parts[0], 10), y: Number.parseInt(parts[1], 10) };
    xyToPointCache.set(str, Object.freeze(point));
    return point;
 }
@@ -426,12 +426,12 @@ export function tabulateAdd<T extends string>(...params: Array<PartialTabulate<T
 }
 
 export function safeParseInt(str: string, fallback = 0): number {
-   const parsed = parseInt(str, 10);
+   const parsed = Number.parseInt(str, 10);
    return Number.isFinite(parsed) ? parsed : fallback;
 }
 
 export function safeParseFloat(str: string, fallback = 0): number {
-   const parsed = parseFloat(str);
+   const parsed = Number.parseFloat(str);
    return Number.isFinite(parsed) ? parsed : fallback;
 }
 
@@ -577,7 +577,7 @@ export function formatHMS(t: number, alwaysShowHour = false) {
    if (!Number.isFinite(t)) {
       return "--:--";
    }
-   t = clamp(t, 0, Infinity);
+   t = clamp(t, 0, Number.POSITIVE_INFINITY);
    const hms = getHMS(t);
    if (hms[0] === 0 && !alwaysShowHour) {
       return `${pad(hms[1])}:${pad(hms[2])}`;
@@ -601,7 +601,7 @@ export function formatHMS(t: number, alwaysShowHour = false) {
 }
 
 export function formatHM(t: number) {
-   t = clamp(t, 0, Infinity);
+   t = clamp(t, 0, Number.POSITIVE_INFINITY);
    const hms = getHMS(t);
    if (hms[0] === 0) {
       return `${hms[1]}m`;

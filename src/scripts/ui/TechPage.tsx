@@ -4,7 +4,7 @@ import { Config } from "../../../shared/logic/Config";
 import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
 import { getGreatPeopleChoiceCount, rollGreatPeopleThisRun } from "../../../shared/logic/RebornLogic";
 import { getResourceAmount, trySpendResources } from "../../../shared/logic/ResourceLogic";
-import { OnResetTile, getCurrentTechAge, getUnlockCost, unlockTech } from "../../../shared/logic/TechLogic";
+import { OnResetTile, getCurrentAge, getUnlockCost, unlockTech } from "../../../shared/logic/TechLogic";
 import { forEach, reduceOf } from "../../../shared/utilities/Helper";
 import type { PartialTabulate } from "../../../shared/utilities/TypeDefinitions";
 import { L, t } from "../../../shared/utilities/i18n";
@@ -40,9 +40,9 @@ export function TechPage({ id }: { id: Tech }): React.ReactNode {
          return;
       }
       playLevelUp();
-      const oldAge = getCurrentTechAge(gs);
+      const oldAge = getCurrentAge(gs);
       unlockTech(id, OnResetTile, gs);
-      const newAge = getCurrentTechAge(gs);
+      const newAge = getCurrentAge(gs);
       if (oldAge && newAge && oldAge !== newAge) {
          forEach(Config.TechAge, (age, def) => {
             if (def.idx <= Config.TechAge[newAge].idx) {

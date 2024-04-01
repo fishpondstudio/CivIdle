@@ -1,7 +1,12 @@
 import { SmoothGraphics } from "@pixi/graphics-smooth";
 import type { ColorSource, FederatedPointerEvent, IPointData, Sprite } from "pixi.js";
 import { Color, Container, LINE_CAP, LINE_JOIN, ParticleContainer, TilingSprite } from "pixi.js";
-import { applyBuildingDefaults, checkBuildingMax } from "../../../shared/logic/BuildingLogic";
+import {
+   applyBuildingDefaults,
+   checkBuildingMax,
+   getGreatWallRange,
+   getYellowCraneTowerRange,
+} from "../../../shared/logic/BuildingLogic";
 import { GameFeature, hasFeature } from "../../../shared/logic/FeatureLogic";
 import type { GameOptions, GameState } from "../../../shared/logic/GameState";
 import {
@@ -11,7 +16,6 @@ import {
    notifyGameStateUpdate,
 } from "../../../shared/logic/GameStateLogic";
 import { getGrid, getSpecialBuildings } from "../../../shared/logic/IntraTickCache";
-import { getYellowCraneTowerRange } from "../../../shared/logic/RebornLogic";
 import { makeBuilding } from "../../../shared/logic/Tile";
 import { clamp, lerp, lookAt, pointToTile, tileToPoint, type Tile } from "../../../shared/utilities/Helper";
 import { Vector2, v2 } from "../../../shared/utilities/Vector2";
@@ -302,6 +306,11 @@ export class WorldScene extends Scene {
             }
             case "YellowCraneTower": {
                this.highlightRange(grid, getYellowCraneTowerRange(xy, gs));
+               break;
+            }
+            case "GreatWall": {
+               this.highlightRange(grid, getGreatWallRange(xy, gs));
+               break;
             }
          }
       }
