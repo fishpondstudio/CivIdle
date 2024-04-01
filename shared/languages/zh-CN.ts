@@ -247,7 +247,7 @@ export const ZH_CN = {
    DynamiteWorkshop: "炸药工坊",
    Education: "教育学",
    EiffelTower: "埃菲尔铁塔",
-   EiffelTowerDesc: "所有相邻炼钢厂，获得 +N 生产、存储以及劳动者乘数。 N 取决于其相邻炼钢厂数量",
+   EiffelTowerDesc: "所有相邻的炼钢厂获得 +N 生产、存储以及劳动者乘数。 N 取决于其相邻炼钢厂数量",
    Electricity: "电能",
    Electrification: "电气化",
    ElectrificationPowerRequired: "所需功率",
@@ -338,7 +338,7 @@ export const ZH_CN = {
    GreatDagonPagodaDesc: "大金塔",
    GreatMosqueOfSamarra: "萨迈拉大清真寺",
    GreatMosqueOfSamarraDescV2:
-      " +1 建筑视野范围。随机揭示5个未勘探的矿床地块，并在每个揭示的地块上建造一个该资源的10级生产建筑",
+      " +1 建筑视野范围。随机揭示5个未勘探的矿床地块，并在每个揭示的地块上建造一个该资源10级的生产建筑",
    GreatPeople: "伟人",
    GreatPeopleEffect: "效应",
    GreatPeopleName: "名字",
@@ -353,7 +353,7 @@ export const ZH_CN = {
    GreatSphinxDesc:
       "2 格内的 II 及 II 以上建筑获得 +N 消耗，生产乘数效果（N=该建筑相邻同建筑物的数量）",
    GrottaAzzurra: "卡普里岛蓝洞",
-   GrottaAzzurraDesc: "当被发现时，你所有的 I 阶建筑，获得 +5 等级",
+   GrottaAzzurraDesc: "当被发现时，你所有的 I 阶建筑获得 +5 等级",
    Gunpowder: "火药",
    GunpowderMill: "火药厂",
    HagiaSophia: "圣索菲亚大教堂",
@@ -504,7 +504,7 @@ export const ZH_CN = {
    NextMarketUpdateIn: "下次市场更新剩余时间",
    NileRiver: "尼罗河",
    NileRiverDesc:
-      "使哈特谢普苏特的效果加倍。所有小麦农场都获得 +1 的生产和储存乘数。所有相邻的小麦农场都获得 +5 的生产和储存乘数",
+      "使伟人哈特谢普苏特的效果加倍。所有小麦农场都获得 +1 的生产和储存乘数。所有相邻的小麦农场都获得 +5 的生产和储存乘数",
    NoDepositDesc: "该地块无沉积资源。当你解锁新科技时，可能会发现更多沉积资源。",
    NothingHere: "此处皆无",
    NotProducingBuildings: "未运转建筑",
