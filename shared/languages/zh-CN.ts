@@ -115,7 +115,7 @@ export const ZH_CN = {
    BuildingMultipliers: "增强",
    BuildingName: "建筑名",
    BuildingNoMultiplier:
-      "%{building} is <b>not affected</b> by any multipliers (production, worker capacity, storage, etc)",
+      "%{building} <b>不受任何乘数</b>（生产、工人容量、存储等）的影响",
    BuildingPriority: "建筑优先级",
    BuildingSearchText: "输入建筑物名称进行搜索",
    BuildingTier: "阶",
@@ -326,8 +326,8 @@ export const ZH_CN = {
    GoldenGateBridgeDesc: "金门大桥",
    GoldMiningCamp: "金矿",
    GrandBazaar: "大巴扎集市",
-   GrandBazaarDesc: "在一个地方控制所有市场。所有相邻市场获得+5存储乘数",
-   GrandBazaarFilters: "过滤器",
+   GrandBazaarDesc: "在一个地方控制所有市场。所有相邻市场与商队旅馆获得+5存储乘数",
+   GrandBazaarFilters: "筛选器",
    GrandBazaarFilterWarningHTML: "在显示任何市场交易之前，您必须选择一个筛选器",
    GrandBazaarFilterYouGet: "你得到了",
    GrandBazaarFilterYouPay: "你支付了",
@@ -1028,7 +1028,7 @@ export const ZH_CN = {
    Winery: "葡萄酒厂",
    Wonder: "奇观",
    WonderBuilderCapacityDescHTML:
-      "建造奇观时的<b>建造者能力</b>，受解锁奇观的<b>时代</b>与<b>科技</b>之影响。",
+      "建造奇观时的<b>建造者能力</b>，受解锁奇观的<b>时代</b>与<b>科技</b>影响。",
    WondersBuilt: "现有世界奇观",
    WondersUnlocked: "已解锁世界奇观",
    Wood: "原木",
