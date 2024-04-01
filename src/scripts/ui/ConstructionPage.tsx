@@ -1,11 +1,11 @@
 import Tippy from "@tippyjs/react";
 import classNames from "classnames";
-import { isSpecialBuilding, isWorldWonder } from "../../../shared/logic/BuildingLogic";
+import { isSpecialBuilding, isWorldWonder, getTotalBuildingCost } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
 import { GameFeature, hasFeature } from "../../../shared/logic/FeatureLogic";
 import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
 import { PRIORITY_MAX, PRIORITY_MIN, type IBuildingData, type ITileData } from "../../../shared/logic/Tile";
-import { safeParseInt } from "../../../shared/utilities/Helper";
+import { formatNumber, mapOf, safeParseInt } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import { useGameState } from "../Global";
 import { WorldScene } from "../scenes/WorldScene";
@@ -19,6 +19,15 @@ import { BuildingInputModeComponent } from "./BuildingInputModeComponent";
 import { MenuComponent } from "./MenuComponent";
 import { RenderHTML } from "./RenderHTMLComponent";
 import { WarningComponent } from "./WarningComponent";
+
+function levelToNextDesiredLevel(b: IBuildingData, x: number) {
+   const l = Math.ceil(b.desiredLevel / x) * x - b.desiredLevel;
+   return l > 0 ? l : x;
+}
+
+function getBuildingUpgradeLevels(b: IBuildingData): number[] {
+   return [levelToNextDesiredLevel(b, 5), levelToNextDesiredLevel(b, 10)];
+}
 
 export function ConstructionPage({ tile }: { tile: ITileData }): React.ReactNode {
    const building = tile.building;
@@ -48,8 +57,19 @@ export function ConstructionPage({ tile }: { tile: ITileData }): React.ReactNode
          notifyGameStateUpdate();
       }
    };
+
+   const levels = getBuildingUpgradeLevels(building);
+   const upgrade = (level: number) => {
+      building.desiredLevel = building.desiredLevel + level;
+      building.status = "upgrading";
+      notifyGameStateUpdate();
+   };
+
    useShortcut("UpgradePageIncreaseLevel", () => increaseDesiredLevel(), [tile]);
    useShortcut("UpgradePageDecreaseLevel", () => decreaseDesiredLevel(), [tile]);
+
+   useShortcut("BuildingPageUpgradeX5", () => upgrade(levels[0]), [tile]);
+   useShortcut("BuildingPageUpgradeToNext10", () => upgrade(levels[1]), [tile]);
 
    return (
       <div className="window">
@@ -106,6 +126,25 @@ export function ConstructionPage({ tile }: { tile: ITileData }): React.ReactNode
                         <div className="m-icon ml5 text-link" onClick={() => increaseDesiredLevel()}>
                            add_box
                         </div>
+                     </div>
+                     <div className="f1 row jce">
+                        <div className="f1 row jce">&nbsp;</div>
+                        {levels.map((level, idx) => (
+                           <Tippy
+                              key={idx}
+                              content={`${t(L.Upgrade)} x${level}: ${mapOf(
+                                 getTotalBuildingCost(building.type, building.level, building.level + level),
+                                 (res, amount) => {
+                                    return `${Config.Resource[res].name()} ${formatNumber(amount)}`;
+                                 },
+                              ).join(", ")}`}
+                              placement="top"
+                           >
+                              <button className="f1" onClick={() => upgrade(level)}>
+                                 x{level}
+                              </button>
+                           </Tippy>
+                        ))}
                      </div>
                   </div>
                </fieldset>
