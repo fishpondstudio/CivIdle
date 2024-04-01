@@ -7,6 +7,7 @@ export interface CompressMessage {
    op: Operation;
 }
 
+// biome-ignore lint/suspicious/noGlobalAssign:
 onmessage = async (ev: MessageEvent<CompressMessage>) => {
    switch (ev.data.op) {
       case "compress": {

@@ -29,6 +29,7 @@ import { Config } from "./Config";
 import { getBuildingsThatProduce } from "./ResourceLogic";
 import { getAgeForTech } from "./TechLogic";
 
+export const SAVE_FILE_VERSION = 1;
 export const SAVE_KEY = "CivIdle";
 export const MAX_OFFLINE_PRODUCTION_SEC = 60 * 60 * 4;
 export const SCIENCE_VALUE = 0.2;

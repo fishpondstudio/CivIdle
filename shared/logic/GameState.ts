@@ -20,6 +20,7 @@ import type { ChatChannel } from "../utilities/Database";
 import { forEach, uuid4, type IPointData, type Tile } from "../utilities/Helper";
 import type { PartialSet, PartialTabulate } from "../utilities/TypeDefinitions";
 import { L, t } from "../utilities/i18n";
+import { SAVE_FILE_VERSION } from "./Constants";
 import { getGameOptions, notifyGameOptionsUpdate } from "./GameStateLogic";
 import type { IShortcutConfig, Shortcut } from "./Shortcut";
 import { PRIORITY_MIN, type IBuildingData, type ITileData } from "./Tile";
@@ -143,8 +144,6 @@ export const Languages = {
    zh_CN: ZH_CN,
    zh_TW: ZH_TW,
 } as const;
-
-export const SAVE_FILE_VERSION = 1;
 
 let translatePercentage = 1;
 
