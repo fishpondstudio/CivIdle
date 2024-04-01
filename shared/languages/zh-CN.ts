@@ -348,7 +348,7 @@ export const ZH_CN = {
       "您此轮拥有 %{count} %{person}。额外的 %{person} 将拥有该效果的 1/%{effect} ",
    GreatSphinx: "狮身人面像",
    GreatSphinxDesc:
-      "周围 2 地块范围内的所有 II 阶及以上建筑，获得 +N 消费、生产乘数（N=其相邻相同类型建筑数量）",
+      "周围 2 地块范围内的所有 II 阶及以上建筑，获得 +N 消费、生产乘数(N=其相邻相同类型建筑数量）",
    GrottaAzzurra: "卡普里岛蓝洞",
    GrottaAzzurraDesc: "当被发现时，你所有的 I 阶建筑获得 +5 等级",
    Gunpowder: "火药",
