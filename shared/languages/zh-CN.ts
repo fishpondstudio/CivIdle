@@ -338,7 +338,7 @@ export const ZH_CN = {
    GreatDagonPagodaDesc: "大金塔",
    GreatMosqueOfSamarra: "萨迈拉大清真寺",
    GreatMosqueOfSamarraDescV2:
-      " +1 建筑视野范围。随机揭示5个的未勘探的矿床地块，并在每个揭示的地块上建造一个10级该资源的生产建筑",
+      " +1 建筑视野范围。随机揭示5个未勘探的矿床地块，并在每个揭示的地块上建造一个该资源的10级生产建筑",
    GreatPeople: "伟人",
    GreatPeopleEffect: "效应",
    GreatPeopleName: "名字",
@@ -1013,7 +1013,7 @@ export const ZH_CN = {
       "自动寻路将只运输存储量低于上限的资源",
    WarehouseDesc: "运送特定资源并提供额外存储空间",
    WarehouseSettingsAutopilotDesc:
-      "这座仓库将会使用它的闲置能力，从无存储空间的建筑中运送资源。当前闲置能力： %{capacity}",
+      "这座仓库将会使用它的闲置能力，从无存储空间的建筑中运送资源。当前闲置能力为 %{capacity}",
    WarehouseUpgrade: "解锁仓库自动模式。仓库与其相邻建筑之间免费运输。",
    WarehouseUpgradeDesc: "这座仓库与其相邻建筑之间免费运输。",
    Warp: "扭曲时间",
@@ -1028,7 +1028,7 @@ export const ZH_CN = {
    Winery: "葡萄酒厂",
    Wonder: "奇观",
    WonderBuilderCapacityDescHTML:
-      "建造奇观时的<b>建造者能力</b>，受解锁奇观的<b>时代</b>与<b>科技</b>之影响。",
+      "建造奇观时的<b>建造者能力</b>，受解锁奇观的<b>时代</b>与<b>科技</b>影响。",
    WondersBuilt: "现有世界奇观",
    WondersUnlocked: "已解锁世界奇观",
    Wood: "原木",
