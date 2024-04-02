@@ -1,7 +1,7 @@
 import { forEach, isEmpty, keysOf, pointToTile, shuffle } from "../utilities/Helper";
 import { applyBuildingDefaults } from "./BuildingLogic";
 import { Config } from "./Config";
-import { GameOptions, GameState } from "./GameState";
+import type { GameOptions, GameState } from "./GameState";
 import { getGrid } from "./IntraTickCache";
 import { unlockTech } from "./TechLogic";
 import { ensureTileFogOfWar, findNearest } from "./TerrainLogic";

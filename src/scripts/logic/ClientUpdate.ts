@@ -1,6 +1,6 @@
 import { OnTileExplored, getScienceFromWorkers } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
-import { GameState } from "../../../shared/logic/GameState";
+import type { GameState } from "../../../shared/logic/GameState";
 import {
    getGameOptions,
    notifyGameStateUpdate,

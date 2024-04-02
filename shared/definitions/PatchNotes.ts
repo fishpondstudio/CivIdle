@@ -6,6 +6,11 @@ interface PatchNote {
 
 export const PatchNotes: PatchNote[] = [
    {
+      version: "0.6.0",
+      content: [],
+      link: "https://github.com/fishpondstudio/CivIdle/issues/177",
+   },
+   {
       version: "0.5.2",
       content: [["Bugfix", "Fix a bug where Permanent Great Person UI sometimes shows incorrect choices"]],
    },

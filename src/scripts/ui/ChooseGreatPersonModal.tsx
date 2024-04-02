@@ -1,11 +1,11 @@
 import Tippy from "@tippyjs/react";
 import { Fragment } from "react";
-import type { GreatPerson } from "../../../shared/definitions/GreatPersonDefinitions";
+import { GreatPersonType, type GreatPerson } from "../../../shared/definitions/GreatPersonDefinitions";
 import { Config } from "../../../shared/logic/Config";
 import type { GreatPeopleChoice } from "../../../shared/logic/GameState";
 import { notifyGameOptionsUpdate, notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
 import { getGreatPersonUpgradeCost } from "../../../shared/logic/RebornLogic";
-import { safeAdd } from "../../../shared/utilities/Helper";
+import { formatNumber, safeAdd } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import { useGameOptions, useGameState } from "../Global";
 import { Singleton } from "../utilities/Singleton";
@@ -133,6 +133,7 @@ export function ChooseGreatPersonModal({ permanent }: { permanent: boolean }): R
 function GreatPersonLevel({ greatPerson }: { greatPerson: GreatPerson }): React.ReactNode {
    const options = useGameOptions();
    const gs = useGameState();
+   const isWildcard = Config.GreatPerson[greatPerson].type === GreatPersonType.Wildcard;
    const inventory = options.greatPeople[greatPerson];
    const total = getGreatPersonUpgradeCost(greatPerson, (inventory?.level ?? 0) + 1);
    return (
@@ -140,11 +141,11 @@ function GreatPersonLevel({ greatPerson }: { greatPerson: GreatPerson }): React.
          <div className="row text-small">
             <div className="f1">
                {t(L.GreatPeoplePermanentShort)}{" "}
-               {inventory ? `(${t(L.LevelX, { level: inventory.level })})` : null}
+               {!isWildcard && inventory ? `(${t(L.LevelX, { level: inventory.level })})` : null}
             </div>
             <div className="text-right">
                <FormatNumber value={inventory?.amount ?? 0} />
-               /<FormatNumber value={total} />
+               {isWildcard ? null : `/${formatNumber(total)}`}
             </div>
          </div>
          <div className="row text-small">
@@ -161,17 +162,18 @@ function PermanentGreatPersonLevel({ greatPerson }: { greatPerson: GreatPerson }
    const options = useGameOptions();
    const inventory = options.greatPeople[greatPerson];
    const total = getGreatPersonUpgradeCost(greatPerson, (inventory?.level ?? 0) + 1);
+   const isWildcard = Config.GreatPerson[greatPerson].type === GreatPersonType.Wildcard;
    return (
       <div className="outset-shallow-2 p8">
          <div className="row text-small">
-            <div>{inventory ? t(L.LevelX, { level: inventory.level }) : null}</div>
+            {isWildcard ? null : <div>{inventory ? t(L.LevelX, { level: inventory.level }) : null}</div>}
             <div className="f1 text-right">
                <FormatNumber value={inventory?.amount ?? 0} />
-               /<FormatNumber value={total} />
+               {isWildcard ? null : `/${formatNumber(total)}`}
             </div>
          </div>
          <div className="sep5" />
-         <ProgressBarComponent progress={(inventory?.amount ?? 0) / total} />
+         <ProgressBarComponent progress={isWildcard ? 1 : (inventory?.amount ?? 0) / total} />
       </div>
    );
 }
@@ -205,7 +207,7 @@ function GreatPersonCard({
             </>
          ) : (
             <>
-               {(gs.greatPeople[greatPerson] ?? 0) > 0 ? (
+               {p.type === GreatPersonType.Normal && (gs.greatPeople[greatPerson] ?? 0) > 0 ? (
                   <Tippy
                      content={t(L.GreatPersonThisRunEffectiveLevel, {
                         count: gs.greatPeople[greatPerson] ?? 0,

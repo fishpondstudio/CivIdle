@@ -63,7 +63,7 @@ readdirSync("./shared/languages").forEach((fileName) => {
 
 console.log("🟡 Format Translation Files");
 
-execSync("npx @biomejs/biome format --write shared/languages/", {
+execSync("npx @biomejs/biome format --config-path=shared/languages/ --write shared/languages/", {
    encoding: "utf8",
 });
 

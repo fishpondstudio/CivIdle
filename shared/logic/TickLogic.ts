@@ -6,7 +6,7 @@ import { TypedEvent } from "../utilities/TypedEvent";
 import { L, t } from "../utilities/i18n";
 import { getBuildingValue } from "./BuildingLogic";
 import { Config } from "./Config";
-import { GameState } from "./GameState";
+import type { GameState } from "./GameState";
 import type { calculateHappiness } from "./HappinessLogic";
 import type { IBuildingData } from "./Tile";
 

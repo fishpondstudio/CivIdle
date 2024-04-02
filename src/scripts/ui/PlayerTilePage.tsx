@@ -1,7 +1,10 @@
+import Tippy from "@tippyjs/react";
 import { Config } from "../../../shared/logic/Config";
 import { isTileReserved } from "../../../shared/logic/PlayerTradeLogic";
-import { formatPercent } from "../../../shared/utilities/Helper";
+import { UserAttributes } from "../../../shared/utilities/Database";
+import { formatPercent, hasFlag } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
+import Supporter from "../../images/Supporter.png";
 import { AccountLevelImages, AccountLevelNames } from "../logic/AccountLevel";
 import { usePlayerMap, useTrades } from "../rpc/RPCClient";
 import { getCountryName, getFlagUrl } from "../utilities/CountryCode";
@@ -39,16 +42,17 @@ export function PlayerTilePage({ xy }: { xy: string }): React.ReactNode {
             <fieldset>
                <legend className="row">
                   {tile.handle}
-                  <img
-                     src={getFlagUrl(tile.flag)}
-                     className="player-flag ml5"
-                     title={getCountryName(tile.flag)}
-                  />
-                  <img
-                     src={AccountLevelImages[tile.level]}
-                     className="player-flag ml5"
-                     title={AccountLevelNames[tile.level]()}
-                  />
+                  <Tippy content={getCountryName(tile.flag)}>
+                     <img src={getFlagUrl(tile.flag)} className="player-flag ml5" />
+                  </Tippy>
+                  <Tippy content={AccountLevelNames[tile.level]()}>
+                     <img src={AccountLevelImages[tile.level]} className="player-flag ml5" />
+                  </Tippy>
+                  {hasFlag(tile.attr, UserAttributes.DLC1) ? (
+                     <Tippy content={t(L.AccountSupporter)}>
+                        <img src={Supporter} className="player-flag ml5" />
+                     </Tippy>
+                  ) : null}
                </legend>
                <div className="row mv5">
                   <div className="f1">{t(L.PlayerMapTariff)}</div>

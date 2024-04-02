@@ -83,7 +83,7 @@ export function FillPlayerTradeModal({ tradeId, xy }: { tradeId: string; xy?: Ti
    };
 
    const getStorageRequired = (amount: number) => {
-      return clamp((trade.sellAmount * amount) / trade.buyAmount - amount, 0, Infinity);
+      return clamp((trade.sellAmount * amount) / trade.buyAmount - amount, 0, Number.POSITIVE_INFINITY);
    };
 
    const fillsHaveEnoughStorage = (fills: Map<Tile, number>) => {

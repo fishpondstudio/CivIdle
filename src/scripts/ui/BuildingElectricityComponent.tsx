@@ -96,7 +96,7 @@ export function BuildingElectricityComponent({ gameState, xy }: IBuildingCompone
             step="1"
             value={building.electrification}
             onChange={(e) => {
-               building.electrification = parseFloat(e.target.value);
+               building.electrification = Number.parseFloat(e.target.value);
                notifyGameStateUpdate();
             }}
             className="mh0"

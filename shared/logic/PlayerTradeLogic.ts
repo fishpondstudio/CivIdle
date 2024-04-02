@@ -1,19 +1,19 @@
 import type { Resource } from "../definitions/ResourceDefinitions";
-import { Tech } from "../definitions/TechDefinitions";
+import type { Tech } from "../definitions/TechDefinitions";
 import _WorldMap from "../definitions/WorldMap.json";
 import {
    AccountLevel,
-   IClientMapEntry,
+   type IClientMapEntry,
    MAP_MAX_X,
    TradeTileReservationDays,
    type IAddTradeRequest,
    type IUser,
 } from "../utilities/Database";
-import { DAY, IPointData, WEEK } from "../utilities/Helper";
-import { PartialTabulate } from "../utilities/TypeDefinitions";
+import { DAY, type IPointData, WEEK } from "../utilities/Helper";
+import type { PartialTabulate } from "../utilities/TypeDefinitions";
 import { TypedEvent } from "../utilities/TypedEvent";
 import { Config } from "./Config";
-import { GameState } from "./GameState";
+import type { GameState } from "./GameState";
 
 const WorldMap = _WorldMap as Record<string, boolean>;
 

@@ -7,14 +7,17 @@ import { Config } from "../../../shared/logic/Config";
 import { TRADE_CANCEL_REFUND_PERCENT } from "../../../shared/logic/Constants";
 import { unlockedResources } from "../../../shared/logic/IntraTickCache";
 import { getTradePercentage } from "../../../shared/logic/PlayerTradeLogic";
+import { UserAttributes } from "../../../shared/utilities/Database";
 import {
    CURRENCY_PERCENT_EPSILON,
    formatPercent,
+   hasFlag,
    keysOf,
    mathSign,
    safeAdd,
 } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
+import Supporter from "../../images/Supporter.png";
 import { AccountLevelImages, AccountLevelNames } from "../logic/AccountLevel";
 import { client, useTrades, useUser } from "../rpc/RPCClient";
 import { getMyMapXy } from "../scenes/PathFinder";
@@ -177,7 +180,7 @@ export function PlayerTradeComponent({ gameState, xy }: IBuildingComponentProps)
                const disableFill = user === null || trade.fromId === user.userId;
                const percentage = getTradePercentage(trade);
                return (
-                  <tr key={trade.id} className={classNames({ "text-strong": trade.fromId === user?.userId })}>
+                  <tr key={trade.id} className={classNames({ blue: trade.fromId === user?.userId })}>
                      <td>
                         <div className={classNames({ "text-strong": building.resources[trade.buyResource] })}>
                            {Config.Resource[trade.buyResource].name()}
@@ -209,17 +212,18 @@ export function PlayerTradeComponent({ gameState, xy }: IBuildingComponentProps)
                      </td>
                      <td>
                         <div className="row">
-                           <img
-                              src={getFlagUrl(trade.fromFlag)}
-                              className="player-flag game-cursor"
-                              title={getCountryName(trade.fromFlag)}
-                           />
+                           <Tippy content={getCountryName(trade.fromFlag)}>
+                              <img src={getFlagUrl(trade.fromFlag)} className="player-flag game-cursor" />
+                           </Tippy>
                            {trade.fromLevel > 0 ? (
-                              <img
-                                 src={AccountLevelImages[trade.fromLevel]}
-                                 className="player-flag"
-                                 title={AccountLevelNames[trade.fromLevel]()}
-                              />
+                              <Tippy content={AccountLevelNames[trade.fromLevel]()}>
+                                 <img src={AccountLevelImages[trade.fromLevel]} className="player-flag" />
+                              </Tippy>
+                           ) : null}
+                           {hasFlag(trade.fromAttr, UserAttributes.DLC1) ? (
+                              <Tippy content={t(L.AccountSupporter)}>
+                                 <img src={Supporter} className="player-flag" />
+                              </Tippy>
                            ) : null}
                         </div>
                         <div className="text-small">

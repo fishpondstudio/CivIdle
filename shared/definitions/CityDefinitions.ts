@@ -30,6 +30,7 @@ export class CityDefinitions {
          Colosseum: "Theater",
       },
       naturalWonders: { Alps: true, GrottaAzzurra: true },
+      requiredGreatPeopleLevel: 0,
    };
    Athens: ICityDefinition = {
       name: () => t(L.Athens),
@@ -52,6 +53,7 @@ export class CityDefinitions {
       },
       uniqueBuildings: { StatueOfZeus: "Theater", Parthenon: "Democracy" },
       naturalWonders: { Aphrodite: true, Poseidon: true },
+      requiredGreatPeopleLevel: 5,
    };
    Memphis: ICityDefinition = {
       name: () => t(L.Memphis),
@@ -77,6 +79,34 @@ export class CityDefinitions {
          GreatSphinx: "Arithmetic",
       },
       naturalWonders: { NileRiver: true, MountSinai: true },
+      requiredGreatPeopleLevel: 10,
+   };
+   Beijing: ICityDefinition = {
+      name: () => t(L.Beijing),
+      deposits: {
+         Water: 0.01,
+         Copper: 0.02,
+         Iron: 0.03,
+         Wood: 0.01,
+         Stone: 0.02,
+         Gold: 0.03,
+         Coal: 0.01,
+         Oil: 0.02,
+         Aluminum: 0.03,
+         NaturalGas: 0.01,
+         Uranium: 0.03,
+      },
+      size: 50,
+      buildingNames: {
+         Headquarter: () => t(L.HallOfSupremeHarmony),
+      },
+      uniqueBuildings: {
+         GreatWall: "LandTrade",
+         YellowCraneTower: "Geography",
+         PorcelainTower: "Banking",
+      },
+      naturalWonders: { MountTai: true, YangtzeRiver: true },
+      requiredGreatPeopleLevel: 15,
    };
 }
 
@@ -89,4 +119,5 @@ interface ICityDefinition {
    naturalWonders: PartialSet<Building>;
    buildingNames: Partial<Record<Building, () => string>>;
    uniqueBuildings: Partial<Record<Building, Tech>>;
+   requiredGreatPeopleLevel: number;
 }

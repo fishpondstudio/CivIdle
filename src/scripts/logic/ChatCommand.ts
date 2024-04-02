@@ -3,8 +3,16 @@ import { MAX_TECH_AGE } from "../../../shared/definitions/TechDefinitions";
 import { isSpecialBuilding } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
 import { getGameOptions, getGameState } from "../../../shared/logic/GameStateLogic";
-import { rollPermanentGreatPeople } from "../../../shared/logic/RebornLogic";
-import { AccountLevel, BanFlag, ChatChannels, type ChatChannel } from "../../../shared/utilities/Database";
+import {
+   DEFAULT_GREAT_PEOPLE_CHOICE_COUNT,
+   rollPermanentGreatPeople,
+} from "../../../shared/logic/RebornLogic";
+import {
+   ChatChannels,
+   UserAttributes,
+   type AccountLevel,
+   type ChatChannel,
+} from "../../../shared/utilities/Database";
 import {
    HOUR,
    MINUTE,
@@ -85,8 +93,12 @@ export async function handleChatCommand(command: string): Promise<void> {
          if (parts[1] === "confirm") {
             const number = await client.doGreatPeopleRecovery();
             getGameOptions().greatPeople = {};
-            getGameOptions().greatPeopleChoices = [];
-            rollPermanentGreatPeople(number, MAX_TECH_AGE);
+            getGameOptions().greatPeopleChoices = rollPermanentGreatPeople(
+               number,
+               DEFAULT_GREAT_PEOPLE_CHOICE_COUNT,
+               MAX_TECH_AGE,
+               getGameState().city,
+            );
             resetToCity(firstKeyOf(Config.City)!);
             await saveGame();
             window.location.reload();
@@ -137,7 +149,7 @@ export async function handleChatCommand(command: string): Promise<void> {
          if (!parts[1] || !parts[2]) {
             throw new Error("Invalid command format");
          }
-         await client.changePlayerLevel(parts[1], parseInt(parts[2], 10) as AccountLevel);
+         await client.changePlayerLevel(parts[1], Number.parseInt(parts[2], 10) as AccountLevel);
          addSystemMessage("Player level has been changed");
          break;
       }
@@ -145,7 +157,7 @@ export async function handleChatCommand(command: string): Promise<void> {
          if (!parts[1] || !parts[2]) {
             throw new Error("Invalid command format");
          }
-         const time = parseInt(parts[2], 10);
+         const time = Number.parseInt(parts[2], 10);
          addSystemMessage(`Play time has been changed to ${time}h`);
          await client.setPlayTime(parts[1], time * 60 * 60);
          break;
@@ -186,32 +198,36 @@ export async function handleChatCommand(command: string): Promise<void> {
          }
          break;
       }
-      case "getplayerflag": {
+      case "getplayerattr": {
          if (!parts[1]) {
             throw new Error("Invalid command format");
          }
-         const flag = await client.getPlayerFlag(parts[1]);
+         const attr = await client.getPlayerAttr(parts[1]);
          addSystemMessage(
             [
-               `Flag=${flag.toString(2)}`,
-               `Completely=${hasFlag(flag, BanFlag.Completely)}`,
-               `TribuneOnly=${hasFlag(flag, BanFlag.TribuneOnly)}`,
-               `NoRename=${hasFlag(flag, BanFlag.NoRename)}`,
+               `Flag=${attr.toString(2)}`,
+               `Mod=${hasFlag(attr, UserAttributes.Mod)}`,
+               `DLC1=${hasFlag(attr, UserAttributes.DLC1)}`,
+               `Banned=${hasFlag(attr, UserAttributes.Banned)}`,
+               `TribuneOnly=${hasFlag(attr, UserAttributes.TribuneOnly)}`,
+               `NoRename=${hasFlag(attr, UserAttributes.DisableRename)}`,
             ].join(", "),
          );
          break;
       }
-      case "setplayerflag": {
+      case "setplayerattr": {
          if (!parts[1] || !parts[2]) {
             throw new Error("Invalid command format");
          }
-         const flag = await client.setPlayerFlag(parts[1], parseInt(parts[2], 2));
+         const attr = await client.setPlayerAttr(parts[1], Number.parseInt(parts[2], 2));
          addSystemMessage(
             [
-               `Flag=${flag.toString(2)}`,
-               `Completely=${hasFlag(flag, BanFlag.Completely)}`,
-               `TribuneOnly=${hasFlag(flag, BanFlag.TribuneOnly)}`,
-               `NoRename=${hasFlag(flag, BanFlag.NoRename)}`,
+               `Flag=${attr.toString(2)}`,
+               `Mod=${hasFlag(attr, UserAttributes.Mod)}`,
+               `DLC1=${hasFlag(attr, UserAttributes.DLC1)}`,
+               `Banned=${hasFlag(attr, UserAttributes.Banned)}`,
+               `TribuneOnly=${hasFlag(attr, UserAttributes.TribuneOnly)}`,
+               `NoRename=${hasFlag(attr, UserAttributes.DisableRename)}`,
             ].join(", "),
          );
          break;
@@ -243,7 +259,7 @@ export async function handleChatCommand(command: string): Promise<void> {
          if (!parts[1] || !parts[2]) {
             throw new Error("Invalid command format");
          }
-         const muteUntil = await client.mutePlayer(parts[1], parseInt(parts[2], 10) * MINUTE);
+         const muteUntil = await client.mutePlayer(parts[1], Number.parseInt(parts[2], 10) * MINUTE);
          addSystemMessage(`Player ${parts[1]} has been muted until ${new Date(muteUntil).toLocaleString()}`);
          break;
       }
@@ -253,8 +269,8 @@ export async function handleChatCommand(command: string): Promise<void> {
          }
          const slow = await client.slowPlayer(
             parts[1],
-            parseInt(parts[2], 10) * HOUR,
-            parseInt(parts[3] ?? 0, 10) * SECOND,
+            Number.parseInt(parts[2], 10) * HOUR,
+            Number.parseInt(parts[3] ?? 0, 10) * SECOND,
          );
          addSystemMessage(
             `Player ${parts[1]} has been slowed until ${new Date(slow.time).toLocaleString()} for ${Math.ceil(
@@ -299,7 +315,7 @@ export async function handleChatCommand(command: string): Promise<void> {
          if (!parts[1] || !parts[2]) {
             throw new Error("Invalid command format");
          }
-         const count = parseInt(parts[2], 10);
+         const count = Number.parseInt(parts[2], 10);
          const result = await client.setGreatPeopleRecovery(parts[1], count);
          addSystemMessage(`Will grant Player ${parts[1]} ${result} great people`);
          break;

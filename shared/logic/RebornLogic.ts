@@ -1,16 +1,18 @@
+import type { City } from "../definitions/CityDefinitions";
 import type { GreatPerson } from "../definitions/GreatPersonDefinitions";
-import { TechAge } from "../definitions/TechDefinitions";
-import { clamp, filterOf, forEach, keysOf, shuffle } from "../utilities/Helper";
+import type { TechAge } from "../definitions/TechDefinitions";
+import { clamp, filterOf, forEach, isNullOrUndefined, keysOf, reduceOf, shuffle } from "../utilities/Helper";
 import { Config } from "./Config";
-import type { GameOptions, GreatPeopleChoice } from "./GameState";
+import type { GameOptions, GameState, GreatPeopleChoice } from "./GameState";
 import { getGameOptions, getGameState } from "./GameStateLogic";
+import { getBuildingsByType } from "./IntraTickCache";
 import { Tick } from "./TickLogic";
 
 ////////////////////////////////////////////////
 // These two functions needed to be kept in sync manually! If you modify any of them, please also change the
 // other one!
-export function getGreatPeopleAtReborn(): number {
-   return clamp(Math.floor(Math.cbrt(Tick.current.totalValue / 1e6) / 4), 0, Infinity);
+export function getRebirthGreatPeopleCount(): number {
+   return clamp(Math.floor(Math.cbrt(Tick.current.totalValue / 1e6) / 4), 0, Number.POSITIVE_INFINITY);
 }
 
 export function getValueRequiredForGreatPeople(count: number): number {
@@ -27,7 +29,7 @@ export function getGreatPersonThisRunLevel(amount: number): number {
 }
 
 export function getProgressTowardsNextGreatPerson(): number {
-   const greatPeopleCount = getGreatPeopleAtReborn();
+   const greatPeopleCount = getRebirthGreatPeopleCount();
    const previous = getValueRequiredForGreatPeople(greatPeopleCount);
    const progress =
       (Tick.current.totalValue - previous) /
@@ -102,32 +104,77 @@ export function upgradeAllPermanentGreatPeople(options: GameOptions): void {
    });
 }
 
-export function rollPermanentGreatPeople(amount: number, currentTechAge: TechAge): void {
-   const currentTechAgeIdx = Config.TechAge[currentTechAge].idx;
-   const pool = keysOf(Config.GreatPerson).filter(
-      (p) => Config.TechAge[Config.GreatPerson[p].age].idx <= currentTechAgeIdx + 1,
+export function rollPermanentGreatPeople(
+   rollCount: number,
+   choiceCount: number,
+   currentAge: TechAge,
+   city: City,
+): GreatPeopleChoice[] {
+   const result: GreatPeopleChoice[] = [];
+   const currentTechAgeIdx = Config.TechAge[currentAge].idx;
+   const pool = keysOf(
+      filterOf(
+         Config.GreatPerson,
+         (_, v) =>
+            (isNullOrUndefined(v.city) || v.city === city) &&
+            Config.TechAge[v.age].idx <= currentTechAgeIdx + 1,
+      ),
    );
    let candidates = shuffle([...pool]);
-   for (let i = 0; i < amount; i++) {
+   for (let i = 0; i < rollCount; i++) {
       const choice: GreatPerson[] = [];
-      for (let i = 0; i < 3; i++) {
+      for (let i = 0; i < choiceCount; i++) {
          if (candidates.length === 0) {
             candidates = shuffle([...pool]);
          }
          choice.push(candidates.pop()!);
       }
-      getGameOptions().greatPeopleChoices.push(choice);
+      result.push(choice);
    }
+   return result;
 }
 
-export function rollGreatPeopleThisRun(age: TechAge, amount = 3): GreatPeopleChoice | null {
-   const choices: GreatPerson[] = [];
-   const pool = shuffle(keysOf(filterOf(Config.GreatPerson, (_, v) => v.age === age)));
-   if (pool.length < amount) {
+export function rollGreatPeopleThisRun(
+   age: TechAge,
+   city: City,
+   choiceCount: number,
+): GreatPeopleChoice | null {
+   const choices: GreatPeopleChoice = [];
+   const pool = shuffle(
+      keysOf(
+         filterOf(
+            Config.GreatPerson,
+            (_, v) => (isNullOrUndefined(v.city) || v.city === city) && v.age === age,
+         ),
+      ),
+   );
+   if (pool.length < choiceCount) {
       return null;
    }
-   for (let i = 0; i < amount; i++) {
+   for (let i = 0; i < choiceCount; i++) {
       choices.push(pool[i]);
    }
-   return choices as GreatPeopleChoice;
+   return choices;
+}
+
+export const DEFAULT_GREAT_PEOPLE_CHOICE_COUNT = 3;
+
+export function getGreatPeopleChoiceCount(gs: GameState): number {
+   const yct = getBuildingsByType("YellowCraneTower", gs);
+   if (yct) {
+      return 1 + DEFAULT_GREAT_PEOPLE_CHOICE_COUNT;
+   }
+   return DEFAULT_GREAT_PEOPLE_CHOICE_COUNT;
+}
+
+export function getPermanentGreatPeopleLevel(): number {
+   return reduceOf(getGameOptions().greatPeople, (prev, gp, inv) => prev + inv.level, 0);
+}
+
+export function getPermanentGreatPeopleCount(): number {
+   return reduceOf(
+      getGameOptions().greatPeople,
+      (prev, gp, inv) => prev + getTotalGreatPeopleUpgradeCost(gp, inv.level) + inv.amount,
+      0,
+   );
 }

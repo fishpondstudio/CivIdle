@@ -1,6 +1,4 @@
-export interface Listener<T> {
-   (event: T): void;
-}
+export type Listener<T> = (event: T) => void;
 
 export interface Disposable {
    dispose(): void;

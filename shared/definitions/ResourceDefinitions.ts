@@ -1,4 +1,4 @@
-import { PartialSet } from "../utilities/TypeDefinitions";
+import type { PartialSet } from "../utilities/TypeDefinitions";
 import { L, t } from "../utilities/i18n";
 
 export interface IResourceDefinition {

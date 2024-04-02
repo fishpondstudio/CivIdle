@@ -145,7 +145,7 @@ export function makeBuilding(data: Pick<IBuildingData, "type"> & Partial<IBuildi
       electrification: 0,
       suspendedInput: new Map(),
       inputMode: BuildingInputMode.Distance,
-      maxInputDistance: Infinity,
+      maxInputDistance: Number.POSITIVE_INFINITY,
       productionPriority: PRIORITY_MIN,
       constructionPriority: PRIORITY_MIN,
       ...data,

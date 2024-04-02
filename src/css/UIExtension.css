@@ -185,6 +185,10 @@ fieldset .separator {
    background-color: #fff;
 }
 
+.text-none {
+   color: transparent;
+}
+
 .text-green {
    color: #047e00;
 }
@@ -513,7 +517,12 @@ ul.tree-view>li:first-child {
    background: #efefef;
 }
 
-.table-view tr:hover {
+.table-view tr.blue {
+   background: rgb(188, 235, 255);
+}
+
+.table-view tr:hover,
+.table-view tr.blue:hover {
    background: #ffc;
 }
 

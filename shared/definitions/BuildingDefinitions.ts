@@ -742,7 +742,7 @@ export class BuildingDefinitions {
       desc: () => t(L.PyramidOfGizaDesc),
       input: {},
       output: {},
-      construction: { Brick: 300 },
+      construction: { Stone: 300 },
       max: 1,
       special: BuildingSpecial.WorldWonder,
       wikipedia: "Great_Pyramid_of_Giza",
@@ -879,7 +879,7 @@ export class BuildingDefinitions {
    };
    OxfordUniversity: IBuildingDefinition = {
       name: () => t(L.OxfordUniversity),
-      desc: () => t(L.OxfordUniversityDescV2),
+      desc: () => t(L.OxfordUniversityDescV3),
       input: {},
       output: {},
       max: 1,
@@ -1122,10 +1122,60 @@ export class BuildingDefinitions {
       desc: () => t(L.SagradaFamiliaDesc),
       input: {},
       output: {},
-      construction: { Tank: 100, Biplane: 100, Train: 100 },
+      construction: { Stone: 100 },
       max: 1,
       special: BuildingSpecial.WorldWonder,
       wikipedia: "Sagrada_Família",
+   };
+   GreatWall: IBuildingDefinition = {
+      name: () => t(L.GreatWall),
+      desc: () => t(L.GreatWallDesc),
+      input: {},
+      output: {},
+      construction: { Brick: 100, Tool: 100, Horse: 100 },
+      max: 1,
+      special: BuildingSpecial.WorldWonder,
+      wikipedia: "Great_Wall_of_China",
+   };
+   YellowCraneTower: IBuildingDefinition = {
+      name: () => t(L.YellowCraneTower),
+      desc: () => t(L.YellowCraneTowerDesc),
+      input: {},
+      output: {},
+      construction: { Furniture: 100, Sword: 100, Coin: 100 },
+      max: 1,
+      special: BuildingSpecial.WorldWonder,
+      wikipedia: "Yellow_Crane_Tower",
+   };
+   PorcelainTower: IBuildingDefinition = {
+      name: () => t(L.PorcelainTower),
+      desc: () => t(L.PorcelainTowerDesc),
+      input: {},
+      output: {},
+      construction: { Banknote: 100, Garment: 100, Knight: 100 },
+      max: 1,
+      special: BuildingSpecial.WorldWonder,
+      wikipedia: "Porcelain_Tower_of_Nanjing",
+   };
+   MountTai: IBuildingDefinition = {
+      name: () => t(L.MountTai),
+      desc: () => t(L.MountTaiDesc),
+      input: {},
+      output: {},
+      construction: {},
+      max: 0,
+      special: BuildingSpecial.NaturalWonder,
+      wikipedia: "Mount_Tai",
+   };
+   YangtzeRiver: IBuildingDefinition = {
+      name: () => t(L.YangtzeRiver),
+      desc: () => t(L.YangtzeRiverDesc),
+      input: {},
+      output: {},
+      construction: {},
+      max: 0,
+      special: BuildingSpecial.NaturalWonder,
+      wikipedia: "Yangtze",
    };
    // ArcDeTriomphe: IBuildingDefinition = {
    //    name: () => t(L.ArcDeTriomphe),

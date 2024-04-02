@@ -1,6 +1,6 @@
 import type { Building } from "../definitions/BuildingDefinitions";
 import { BuildingSpecial } from "../definitions/BuildingDefinitions";
-import { Deposit, NoPrice, NoStorage, type Resource } from "../definitions/ResourceDefinitions";
+import { NoPrice, NoStorage, type Deposit, type Resource } from "../definitions/ResourceDefinitions";
 import {
    clamp,
    forEach,
@@ -25,7 +25,7 @@ import { TypedEvent } from "../utilities/TypedEvent";
 import { L, t } from "../utilities/i18n";
 import { Config } from "./Config";
 import { GameFeature, hasFeature } from "./FeatureLogic";
-import { GameOptions, type GameState } from "./GameState";
+import type { GameOptions, GameState } from "./GameState";
 import { getGameOptions, getGameState } from "./GameStateLogic";
 import {
    getBuildingIO,
@@ -42,12 +42,12 @@ import {
    BuildingInputMode,
    DEFAULT_STOCKPILE_CAPACITY,
    DEFAULT_STOCKPILE_MAX,
-   IMarketBuildingData,
    PRIORITY_MAX,
    PRIORITY_MIN,
    ResourceImportOptions,
    type IBuildingData,
    type IHaveTypeAndLevel,
+   type IMarketBuildingData,
    type IResourceImportBuildingData,
    type IWarehouseBuildingData,
 } from "./Tile";
@@ -179,7 +179,7 @@ export function checkBuildingMax(k: Building, gs: GameState): boolean {
       (prev, _xy, tile) => prev + (tile.building?.type === k ? 1 : 0),
       0,
    );
-   return buildingCount < (Config.Building[k].max ?? Infinity);
+   return buildingCount < (Config.Building[k].max ?? Number.POSITIVE_INFINITY);
 }
 
 export function isTransportable(res: Resource): boolean {
@@ -336,7 +336,7 @@ export function filterNonTransportable<T>(
 
 export function getStockpileMax(b: IBuildingData) {
    if (hasFeature(GameFeature.BuildingStockpileMode, getGameState())) {
-      return b.stockpileMax === 0 ? Infinity : b.stockpileMax;
+      return b.stockpileMax === 0 ? Number.POSITIVE_INFINITY : b.stockpileMax;
    }
    return DEFAULT_STOCKPILE_MAX;
 }
@@ -388,7 +388,7 @@ export function getScienceFromWorkers(gs: GameState) {
    // Because of the worker double buffer, this might be negative. We need to clamp this because we don't
    // want negative science
    const scienceFromIdleWorkers =
-      sciencePerIdleWorker * clamp(workersAfterHappiness - workersBusy, 0, Infinity);
+      sciencePerIdleWorker * clamp(workersAfterHappiness - workersBusy, 0, Number.POSITIVE_INFINITY);
 
    const sciencePerBusyWorker = sum(Tick.current.globalMultipliers.sciencePerBusyWorker, "value");
    const scienceFromBusyWorkers = sciencePerBusyWorker * workersBusy;
@@ -545,7 +545,7 @@ export function getInputMode(building: IBuildingData, gs: GameState): BuildingIn
 
 export function getMaxInputDistance(building: IBuildingData, gs: GameState): number {
    if (!hasFeature(GameFeature.BuildingInputMode, gs)) {
-      return Infinity;
+      return Number.POSITIVE_INFINITY;
    }
    return building.maxInputDistance;
 }
@@ -569,7 +569,7 @@ interface BuildingPercentageResult {
 export function getBuildingPercentage(xy: Tile, gs: GameState): BuildingPercentageResult {
    const building = gs.tiles.get(xy)?.building;
    if (!building) {
-      return { percent: 0, secondsLeft: Infinity, cost: {} };
+      return { percent: 0, secondsLeft: Number.POSITIVE_INFINITY, cost: {} };
    }
    if (building.status === "completed") {
       return { percent: 1, secondsLeft: 0, cost: {} };
@@ -615,7 +615,7 @@ export function isNaturalWonder(building?: Building): boolean {
    return Config.Building[building].special === BuildingSpecial.NaturalWonder;
 }
 
-export function isHeadquarters(building?: Building): boolean {
+export function isHeadquarter(building?: Building): boolean {
    if (!building) {
       return false;
    }
@@ -661,7 +661,7 @@ export function getBuilderCapacity(
    const builder =
       sum(Tick.current.globalMultipliers.builderCapacity, "value") +
       totalMultiplierFor(xy, "worker", 0, false, gs);
-   let baseCapacity = clamp(building.level, 1, Infinity);
+   let baseCapacity = clamp(building.level, 1, Number.POSITIVE_INFINITY);
 
    if (isWorldWonder(building.type)) {
       baseCapacity = getWonderBaseBuilderCapacity(building.type);
@@ -742,7 +742,11 @@ export function getAvailableResource(sourceXy: Tile, destXy: Tile, res: Resource
       }
       const resourceImport = ri.resourceImports[res];
       if (resourceImport && !hasFlag(ri.resourceImportOptions, ResourceImportOptions.ExportBelowCap)) {
-         return clamp((building.resources[res] ?? 0) - (resourceImport.cap ?? 0), 0, Infinity);
+         return clamp(
+            (building.resources[res] ?? 0) - (resourceImport.cap ?? 0),
+            0,
+            Number.POSITIVE_INFINITY,
+         );
       }
 
       return building.resources[res] ?? 0;
@@ -754,7 +758,7 @@ export function getAvailableResource(sourceXy: Tile, destXy: Tile, res: Resource
          building.resources[res]! -
             (getStockpileMax(building) + getStockpileCapacity(building)) * input[res]!,
          0,
-         Infinity,
+         Number.POSITIVE_INFINITY,
       );
    }
    return building.resources[res]!;
@@ -955,4 +959,30 @@ export function addPetraOfflineTime(time: number, gs: GameState): void {
       petra.building.resources.Warp += time;
       petra.building.resources.Warp = clamp(petra.building.resources.Warp, 0, storage.total);
    }
+}
+export function getYellowCraneTowerRange(xy: Tile, gs: GameState): number {
+   const building = gs.tiles.get(xy)?.building;
+   if (building?.type !== "YellowCraneTower") {
+      return 0;
+   }
+   for (const point of getGrid(gs).getNeighbors(tileToPoint(xy))) {
+      const neighbor = gs.tiles.get(pointToTile(point));
+      if (neighbor?.explored && neighbor?.building?.type === "YangtzeRiver") {
+         return 2;
+      }
+   }
+   return 1;
+}
+
+export function getGreatWallRange(xy: Tile, gs: GameState): number {
+   const building = gs.tiles.get(xy)?.building;
+   if (building?.type !== "GreatWall") {
+      return 0;
+   }
+   for (const point of getGrid(gs).getNeighbors(tileToPoint(xy))) {
+      if (getCompletedBuilding(pointToTile(point), gs)?.type === "ForbiddenCity") {
+         return 2;
+      }
+   }
+   return 1;
 }

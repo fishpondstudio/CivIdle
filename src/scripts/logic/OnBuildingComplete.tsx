@@ -8,10 +8,21 @@ import {
    isSpecialBuilding,
 } from "../../../shared/logic/BuildingLogic";
 import { getGameOptions, getGameState } from "../../../shared/logic/GameStateLogic";
-import { getGrid, getXyBuildings } from "../../../shared/logic/IntraTickCache";
-import { rollGreatPeopleThisRun } from "../../../shared/logic/RebornLogic";
+import { getGrid, getSpecialBuildings, getXyBuildings } from "../../../shared/logic/IntraTickCache";
+import {
+   getGreatPeopleChoiceCount,
+   getRebirthGreatPeopleCount,
+   rollGreatPeopleThisRun,
+   rollPermanentGreatPeople,
+} from "../../../shared/logic/RebornLogic";
 import { getRevealedDeposits } from "../../../shared/logic/ResourceLogic";
-import { OnResetTile, addDeposit } from "../../../shared/logic/TechLogic";
+import {
+   OnResetTile,
+   addDeposit,
+   getCurrentAge,
+   getMostAdvancedTech,
+   getUnlockCost,
+} from "../../../shared/logic/TechLogic";
 import { ensureTileFogOfWar } from "../../../shared/logic/TerrainLogic";
 import { makeBuilding } from "../../../shared/logic/Tile";
 import { OnBuildingComplete } from "../../../shared/logic/Update";
@@ -19,6 +30,7 @@ import {
    firstKeyOf,
    isEmpty,
    pointToTile,
+   safeAdd,
    shuffle,
    sizeOf,
    tileToPoint,
@@ -51,12 +63,12 @@ export function onBuildingComplete(xy: Tile): void {
          break;
       }
       case "Parthenon": {
-         const candidates1 = rollGreatPeopleThisRun("ClassicalAge", 4);
+         const candidates1 = rollGreatPeopleThisRun("ClassicalAge", gs.city, 4);
          if (candidates1) {
             gs.greatPeopleChoices.push(candidates1);
          }
 
-         const candidates2 = rollGreatPeopleThisRun("ClassicalAge", 4);
+         const candidates2 = rollGreatPeopleThisRun("ClassicalAge", gs.city, 4);
          if (candidates2) {
             gs.greatPeopleChoices.push(candidates2);
          }
@@ -68,12 +80,12 @@ export function onBuildingComplete(xy: Tile): void {
          break;
       }
       case "TajMahal": {
-         const candidates1 = rollGreatPeopleThisRun("ClassicalAge");
+         const candidates1 = rollGreatPeopleThisRun("ClassicalAge", gs.city, getGreatPeopleChoiceCount(gs));
          if (candidates1) {
             gs.greatPeopleChoices.push(candidates1);
          }
 
-         const candidates2 = rollGreatPeopleThisRun("MiddleAge");
+         const candidates2 = rollGreatPeopleThisRun("MiddleAge", gs.city, getGreatPeopleChoiceCount(gs));
          if (candidates2) {
             gs.greatPeopleChoices.push(candidates2);
          }
@@ -81,6 +93,13 @@ export function onBuildingComplete(xy: Tile): void {
          if (gs.greatPeopleChoices.length > 0) {
             playLevelUp();
             showModal(<ChooseGreatPersonModal permanent={false} />);
+         }
+         break;
+      }
+      case "OxfordUniversity": {
+         const tech = getMostAdvancedTech(gs);
+         if (tech) {
+            safeAdd(getSpecialBuildings(gs).Headquarter.building.resources, "Science", getUnlockCost(tech));
          }
          break;
       }
@@ -107,6 +126,23 @@ export function onBuildingComplete(xy: Tile): void {
                building.level += 5;
             }
          });
+         break;
+      }
+      case "PorcelainTower": {
+         if (gs.claimedGreatPeople > 0) {
+            return;
+         }
+         gs.claimedGreatPeople = getRebirthGreatPeopleCount();
+         rollPermanentGreatPeople(
+            gs.claimedGreatPeople,
+            getGreatPeopleChoiceCount(gs),
+            getCurrentAge(gs),
+            gs.city,
+         ).forEach((c) => gs.greatPeopleChoices.push(c));
+         if (gs.greatPeopleChoices.length > 0) {
+            playLevelUp();
+            showModal(<ChooseGreatPersonModal permanent={false} />);
+         }
          break;
       }
       case "GreatMosqueOfSamarra": {

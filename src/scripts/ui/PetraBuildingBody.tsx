@@ -47,7 +47,7 @@ export function PetraBuildingBody({ gameState, xy }: IBuildingComponentProps): R
                step="0.01"
                value={building.offlineProductionPercent}
                onChange={(e) => {
-                  building.offlineProductionPercent = parseFloat(e.target.value);
+                  building.offlineProductionPercent = Number.parseFloat(e.target.value);
                   notifyGameStateUpdate();
                }}
                className="mh0"
@@ -106,7 +106,7 @@ export function PetraBuildingBody({ gameState, xy }: IBuildingComponentProps): R
                step="1"
                value={building.speedUp}
                onChange={(e) => {
-                  building.speedUp = clamp(parseInt(e.target.value, 10), 1, 8);
+                  building.speedUp = clamp(Number.parseInt(e.target.value, 10), 1, 8);
                   notifyGameStateUpdate();
                }}
             />

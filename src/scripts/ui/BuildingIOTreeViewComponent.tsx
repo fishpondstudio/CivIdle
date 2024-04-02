@@ -5,7 +5,7 @@ import type { GameState } from "../../../shared/logic/GameState";
 import { getBuildingIO } from "../../../shared/logic/IntraTickCache";
 import type { Multiplier } from "../../../shared/logic/TickLogic";
 import { Tick } from "../../../shared/logic/TickLogic";
-import { type Tile } from "../../../shared/utilities/Helper";
+import type { Tile } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import warning from "../../images/warning.png";
 import { jsxMapOf } from "../utilities/Helper";

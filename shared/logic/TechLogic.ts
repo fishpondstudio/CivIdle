@@ -1,6 +1,6 @@
 import type { Building } from "../definitions/BuildingDefinitions";
 import type { City } from "../definitions/CityDefinitions";
-import type { Deposit, Resource } from "../definitions/ResourceDefinitions";
+import type { Deposit } from "../definitions/ResourceDefinitions";
 import type { Tech, TechAge } from "../definitions/TechDefinitions";
 import { forEach, isEmpty, isNullOrUndefined, shuffle, sizeOf, type Tile } from "../utilities/Helper";
 import { TypedEvent } from "../utilities/TypedEvent";
@@ -9,7 +9,6 @@ import type { GameState } from "./GameState";
 import { getGameState } from "./GameStateLogic";
 import { getSpecialBuildings } from "./IntraTickCache";
 import { RequestPathFinderGridUpdate, SEA_TILE_COSTS } from "./PlayerTradeLogic";
-import { getBuildingsThatProduce } from "./ResourceLogic";
 import { getDepositTileCount } from "./Tile";
 
 export function getUnlockCost(tech: Tech): number {
@@ -29,8 +28,8 @@ export function getScienceAmount(): number {
 export function getMostAdvancedTech(gs: GameState): Tech | null {
    let column = 0;
    let tech: Tech | null = null;
-   forEach(Config.Tech, (k) => {
-      if (gs.unlockedTech[k] && Config.Tech[k].column >= column) {
+   forEach(gs.unlockedTech, (k) => {
+      if (Config.Tech[k].column >= column) {
          column = Config.Tech[k].column;
          tech = k;
       }
@@ -38,10 +37,31 @@ export function getMostAdvancedTech(gs: GameState): Tech | null {
    return tech;
 }
 
-export function getCurrentTechAge(gs: GameState): TechAge | null {
+export function getBuildingUnlockTech(building: Building): Tech {
+   const tech = Config.BuildingTech[building];
+   if (tech) return tech;
+   let city: City;
+   for (city in Config.City) {
+      const def = Config.City[city];
+      const uniqueTech = def.uniqueBuildings[building];
+      if (uniqueTech) return uniqueTech;
+   }
+   throw new Error(`Cannot find tech for building: ${building}`);
+}
+
+export function getBuildingUnlockAge(building: Building): TechAge {
+   const age = Config.BuildingTechAge[building];
+   if (age) return age;
+
+   const tech = getBuildingUnlockTech(building);
+   if (tech) return getAgeForTech(tech);
+   throw new Error(`Cannot find age for building: ${building}`);
+}
+
+export function getCurrentAge(gs: GameState): TechAge {
    const tech = getMostAdvancedTech(gs);
    if (!tech) {
-      return null;
+      throw new Error("Cannot find current tech age!");
    }
    return getAgeForTech(tech);
 }
@@ -54,8 +74,8 @@ export function isAgeUnlocked(age: TechAge, gs: GameState): boolean {
    return Config.Tech[tech].column >= Config.TechAge[age].from;
 }
 
-export function getAgeForTech(tech: string): TechAge | null {
-   const techColumn = Config.Tech[tech as Tech].column;
+export function getAgeForTech(tech: Tech): TechAge {
+   const techColumn = Config.Tech[tech].column;
    let age: TechAge;
    for (age in Config.TechAge) {
       const ageDef = Config.TechAge[age];
@@ -63,7 +83,7 @@ export function getAgeForTech(tech: string): TechAge | null {
          return age;
       }
    }
-   return null;
+   throw new Error(`Cannot find age for tech: ${tech}`);
 }
 
 export function unlockTech(tech: Tech, event: TypedEvent<Tile> | null, gs: GameState): void {
@@ -115,47 +135,6 @@ export const OnResetTile = new TypedEvent<Tile>();
 export function addDeposit(xy: Tile, deposit: Deposit, event: TypedEvent<Tile> | null, gs: GameState): void {
    gs.tiles.get(xy)!.deposit[deposit] = true;
    event?.emit(xy);
-}
-
-export function getDepositUnlockTech(deposit: Deposit): Tech {
-   let key: Tech;
-   for (key in Config.Tech) {
-      if (Config.Tech[key].revealDeposit?.includes(deposit)) {
-         return key;
-      }
-   }
-   throw new Error(`Deposit ${deposit} is not revealed by any technology, check TechDefinitions`);
-}
-
-export function getBuildingUnlockTech(building: Building): Tech | null {
-   let key: Tech;
-   for (key in Config.Tech) {
-      if (Config.Tech[key].unlockBuilding?.includes(building)) {
-         return key;
-      }
-   }
-
-   let city: City;
-   for (city in Config.City) {
-      const def = Config.City[city];
-      if (def.uniqueBuildings[building]) {
-         return def.uniqueBuildings[building]!;
-      }
-   }
-   return null;
-}
-
-export function getResourceUnlockTechs(res: Resource): Tech[] {
-   const buildings = getBuildingsThatProduce(res);
-   return buildings
-      .flatMap((a) => {
-         const tech = getBuildingUnlockTech(a);
-         if (!tech) {
-            return [];
-         }
-         return [tech];
-      })
-      .sort((a, b) => Config.Tech[a].column - Config.Tech[b].column);
 }
 
 export function unlockableTechs(gs: GameState): Tech[] {

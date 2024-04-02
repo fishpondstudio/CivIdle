@@ -1,7 +1,7 @@
 import type { Building } from "../definitions/BuildingDefinitions";
 import { BuildingSpecial } from "../definitions/BuildingDefinitions";
 import type { City } from "../definitions/CityDefinitions";
-import type { Resource } from "../definitions/ResourceDefinitions";
+import type { Deposit, Resource } from "../definitions/ResourceDefinitions";
 import { IsDeposit, NoPrice } from "../definitions/ResourceDefinitions";
 import type { Tech, TechAge } from "../definitions/TechDefinitions";
 import {
@@ -26,14 +26,10 @@ import {
    isWorldWonder,
 } from "./BuildingLogic";
 import { Config } from "./Config";
-import { getOrderedTechThatProduce } from "./ResourceLogic";
-import {
-   getAgeForTech,
-   getBuildingUnlockTech,
-   getDepositUnlockTech,
-   getResourceUnlockTechs,
-} from "./TechLogic";
+import { getBuildingsThatProduce } from "./ResourceLogic";
+import { getAgeForTech } from "./TechLogic";
 
+export const SAVE_FILE_VERSION = 1;
 export const SAVE_KEY = "CivIdle";
 export const MAX_OFFLINE_PRODUCTION_SEC = 60 * 60 * 4;
 export const SCIENCE_VALUE = 0.2;
@@ -79,7 +75,7 @@ export function calculateTierAndPrice(log?: (val: string) => void) {
                Config.ResourceTier[res] = 1;
             }
             if (!Config.ResourcePrice[res]) {
-               const tech = getBuildingUnlockTech(building);
+               const tech = getBuildingUnlockTechSlow(building);
                if (tech) {
                   Config.ResourcePrice[res] = 1 + Config.Tech[tech].column;
                } else {
@@ -99,7 +95,7 @@ export function calculateTierAndPrice(log?: (val: string) => void) {
          });
       }
 
-      const tech = getBuildingUnlockTech(building);
+      const tech = getBuildingUnlockTechSlow(building);
       if (tech) {
          forEach(buildingDef.input, (res) => {
             const deps = getResourceUnlockTechs(res);
@@ -158,7 +154,11 @@ export function calculateTierAndPrice(log?: (val: string) => void) {
    forEach(Config.Tech, (tech, techDef) => {
       techDef.unlockBuilding?.forEach((b) => {
          const techLevel = techDef.column + 1;
-         Config.BuildingTech[b] = techLevel;
+         if (Config.BuildingTech[b]) {
+            throw new Error(`A building is unlocked by two techs: ${Config.BuildingTech[b]}, ${tech}`);
+         }
+         Config.BuildingTech[b] = tech;
+         Config.BuildingTechAge[b] = getAgeForTech(tech)!;
          forEach(Config.Building[b].output, (res) => {
             if (Config.ResourceTech[res] && Config.ResourceTech[res]! > techLevel) {
                return;
@@ -291,6 +291,11 @@ export function calculateTierAndPrice(log?: (val: string) => void) {
    });
 
    forEach(Config.Building, (b, def) => {
+      if (def.special === BuildingSpecial.NaturalWonder || def.special === BuildingSpecial.HQ) {
+         if (def.max !== 0) {
+            throw new Error(`Natural Wonder: ${b} should have max = 0`);
+         }
+      }
       if (def.output.Science) {
          const multiplier = 1.5 + 0.25 * sizeOf(def.input);
          const inputValue = Math.round(
@@ -333,8 +338,8 @@ export function calculateTierAndPrice(log?: (val: string) => void) {
    keysOf(Config.Building)
       .filter((b) => isWorldWonder(b))
       .sort((a, b) => {
-         const techA = getBuildingUnlockTech(a);
-         const techB = getBuildingUnlockTech(b);
+         const techA = getBuildingUnlockTechSlow(a);
+         const techB = getBuildingUnlockTechSlow(b);
          if (techA && techB) {
             return Config.Tech[techA].column - Config.Tech[techB].column;
          }
@@ -345,7 +350,7 @@ export function calculateTierAndPrice(log?: (val: string) => void) {
          let cost = "";
          let totalAmount = 0;
          const baseBuilderCapacity = getWonderBaseBuilderCapacity(k);
-         const wonderAge = getAgeForTech(getBuildingUnlockTech(k)!)!;
+         const wonderAge = getAgeForTech(getBuildingUnlockTechSlow(k)!)!;
          forEach(getBuildingCost({ type: k, level: 0 }), (res, amount) => {
             mapSafeAdd(resourcesUsedByWonder, res, 1);
             const tech = getOrderedTechThatProduce(res);
@@ -384,9 +389,6 @@ export function calculateTierAndPrice(log?: (val: string) => void) {
    const notBoostedBuildings: { building: Building; tech: Tech; age: TechAge }[] = [];
    forEach(Config.GreatPerson, (p, def) => {
       def.boost?.buildings.forEach((b) => {
-         if (boostedBuildings.has(b)) {
-            console.error(`${b} is boosted by two great people`);
-         }
          boostedBuildings.add(b);
       });
    });
@@ -400,7 +402,7 @@ export function calculateTierAndPrice(log?: (val: string) => void) {
             return;
          }
          if (!boostedBuildings.has(building)) {
-            const tech = getBuildingUnlockTech(building)!;
+            const tech = getBuildingUnlockTechSlow(building)!;
             const age = getAgeForTech(tech)!;
             notBoostedBuildings.push({ building, tech, age });
          }
@@ -467,4 +469,55 @@ export function calculateTierAndPrice(log?: (val: string) => void) {
          mapOf(building.output, (res, value) => `${Config.Resource[res].name()} x${value}`).join(" + "),
       ].join("");
    }
+}
+
+function getBuildingUnlockTechSlow(building: Building): Tech | null {
+   let key: Tech;
+   for (key in Config.Tech) {
+      if (Config.Tech[key].unlockBuilding?.includes(building)) {
+         return key;
+      }
+   }
+
+   let city: City;
+   for (city in Config.City) {
+      const def = Config.City[city];
+      if (def.uniqueBuildings[building]) {
+         return def.uniqueBuildings[building]!;
+      }
+   }
+   return null;
+}
+
+function getResourceUnlockTechs(res: Resource): Tech[] {
+   const buildings = getBuildingsThatProduce(res);
+   return buildings
+      .flatMap((a) => {
+         const tech = getBuildingUnlockTechSlow(a);
+         if (!tech) {
+            return [];
+         }
+         return [tech];
+      })
+      .sort((a, b) => Config.Tech[a].column - Config.Tech[b].column);
+}
+
+function getDepositUnlockTech(deposit: Deposit): Tech {
+   let key: Tech;
+   for (key in Config.Tech) {
+      if (Config.Tech[key].revealDeposit?.includes(deposit)) {
+         return key;
+      }
+   }
+   throw new Error(`Deposit ${deposit} is not revealed by any technology, check TechDefinitions`);
+}
+
+function getOrderedTechThatProduce(res: Resource): Tech[] {
+   const tech: Tech[] = getBuildingsThatProduce(res).flatMap((b) => {
+      const t = getBuildingUnlockTechSlow(b);
+      return t ? [t] : [];
+   });
+
+   const result = Array.from(new Set(tech)).sort((a, b) => Config.Tech[a].column - Config.Tech[b].column);
+   return result;
 }

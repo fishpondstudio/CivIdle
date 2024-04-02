@@ -1,15 +1,17 @@
 import { useEffect, useState } from "react";
 import type { City } from "../../../shared/definitions/CityDefinitions";
 import { Config } from "../../../shared/logic/Config";
-import { getGameState } from "../../../shared/logic/GameStateLogic";
+import { getGameOptions } from "../../../shared/logic/GameStateLogic";
 import {
-   getGreatPeopleAtReborn,
+   getGreatPeopleChoiceCount,
+   getPermanentGreatPeopleLevel,
+   getRebirthGreatPeopleCount,
    makeGreatPeopleFromThisRunPermanent,
    rollPermanentGreatPeople,
 } from "../../../shared/logic/RebornLogic";
-import { getCurrentTechAge } from "../../../shared/logic/TechLogic";
+import { getCurrentAge } from "../../../shared/logic/TechLogic";
 import { Tick } from "../../../shared/logic/TickLogic";
-import { formatPercent, mapOf, reduceOf, rejectIn } from "../../../shared/utilities/Helper";
+import { clamp, formatPercent, mapOf, reduceOf, rejectIn } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import { resetToCity, saveGame, useGameState } from "../Global";
 import { checkRebirthAchievements } from "../logic/Achievement";
@@ -32,10 +34,12 @@ export function RebornModal(): React.ReactNode {
       client.getPendingClaims().then((c) => setTradeCount((old) => old + c.length));
    }, []);
 
-   const gameState = useGameState();
-   const [city, setCity] = useState<City>(gameState.city);
+   const gs = useGameState();
+   const [city, setCity] = useState<City>(gs.city);
+   const permanentGreatPeopleLevel = getPermanentGreatPeopleLevel();
+   const greatPeopleAtRebirthCount = getRebirthGreatPeopleCount();
    return (
-      <div className="window" style={{ width: "450px" }}>
+      <div className="window" style={{ width: "500px" }}>
          <div className="title-bar">
             <div className="title-bar-text">{t(L.Reborn)}</div>
          </div>
@@ -49,37 +53,53 @@ export function RebornModal(): React.ReactNode {
                <RenderHTML html={t(L.RebornModalDescV2)} />
             </WarningComponent>
             {canEarnGreatPeopleFromReborn() ? (
-               <fieldset>
-                  <div className="row">
+               <ul className="tree-view">
+                  <li className="row">
                      <div className="f1">{t(L.GreatPeopleThisRun)}</div>
                      <div className="text-strong">
                         {reduceOf(
-                           gameState.greatPeople,
+                           gs.greatPeople,
                            (prev, k, v) => {
                               return prev + v;
                            },
                            0,
                         )}
                      </div>
-                  </div>
-                  <div className="sep5"></div>
-                  <div className="row">
+                  </li>
+                  <li className="row">
                      <div className="f1">{t(L.TotalEmpireValue)}</div>
                      <div className="text-strong">
                         <FormatNumber value={Tick.current.totalValue} />
                      </div>
-                  </div>
-                  <div className="sep5"></div>
-                  <div className="row">
+                  </li>
+                  <li className="row">
                      <div className="f1">{t(L.ExtraGreatPeopleAtReborn)}</div>
-                     <div className="text-strong">{getGreatPeopleAtReborn()}</div>
-                  </div>
-               </fieldset>
+                     <div className="text-strong">
+                        <TextWithHelp
+                           content={t(L.ClaimedGreatPeopleTooltip, {
+                              total: greatPeopleAtRebirthCount,
+                              claimed: gs.claimedGreatPeople,
+                           })}
+                        >
+                           {clamp(
+                              greatPeopleAtRebirthCount - gs.claimedGreatPeople,
+                              0,
+                              Number.POSITIVE_INFINITY,
+                           )}
+                        </TextWithHelp>
+                     </div>
+                  </li>
+                  <ul>
+                     <li className="row">
+                        <div className="f1">{t(L.ClaimedGreatPeople)}</div>
+                        <div className="text-strong">{gs.claimedGreatPeople}</div>
+                     </li>
+                  </ul>
+               </ul>
             ) : (
-               <WarningComponent icon="warning" className="mb10">
-                  {t(L.CannotEarnPermanentGreatPeopleDesc)}
-               </WarningComponent>
+               <WarningComponent icon="warning">{t(L.CannotEarnPermanentGreatPeopleDesc)}</WarningComponent>
             )}
+            <div className="sep10" />
             <fieldset>
                <div className="row">
                   <div className="f1">{t(L.RebornCity)}</div>
@@ -139,6 +159,26 @@ export function RebornModal(): React.ReactNode {
                      );
                   })}
                </div>
+               <div className="separator" />
+               <div className="row">
+                  <div className=" f1">{t(L.GreatPersonLevelRequired)}</div>
+                  {permanentGreatPeopleLevel >= Config.City[city].requiredGreatPeopleLevel ? (
+                     <div className="m-icon small mr5 text-green">check_circle</div>
+                  ) : (
+                     <div className="m-icon small mr5 text-red">cancel</div>
+                  )}
+                  <div className="text-strong">
+                     <TextWithHelp
+                        content={t(L.GreatPersonLevelRequiredDesc, {
+                           city: Config.City[city].name(),
+                           required: Config.City[city].requiredGreatPeopleLevel,
+                           current: permanentGreatPeopleLevel,
+                        })}
+                     >
+                        {Config.City[city].requiredGreatPeopleLevel}
+                     </TextWithHelp>
+                  </div>
+               </div>
             </fieldset>
             <div className="sep5"></div>
             <div className="text-right row" style={{ justifyContent: "flex-end" }}>
@@ -153,9 +193,15 @@ export function RebornModal(): React.ReactNode {
                </button>
                <div style={{ width: "6px" }} />
                <button
+                  disabled={permanentGreatPeopleLevel < Config.City[city].requiredGreatPeopleLevel}
                   style={{ padding: "0 15px" }}
                   className="text-strong"
                   onClick={async () => {
+                     if (getPermanentGreatPeopleLevel() < Config.City[city].requiredGreatPeopleLevel) {
+                        playError();
+                        return;
+                     }
+
                      try {
                         await Promise.race([client.rebirth(), rejectIn(5)]);
                      } catch (error) {
@@ -167,15 +213,25 @@ export function RebornModal(): React.ReactNode {
                         }
                      }
 
+                     const greatPeopleCount = clamp(
+                        greatPeopleAtRebirthCount - gs.claimedGreatPeople,
+                        0,
+                        Number.POSITIVE_INFINITY,
+                     );
+
                      if (canEarnGreatPeopleFromReborn()) {
-                        const age = getCurrentTechAge(getGameState());
-                        if (age) {
-                           rollPermanentGreatPeople(getGreatPeopleAtReborn(), age);
-                        }
+                        rollPermanentGreatPeople(
+                           greatPeopleCount,
+                           getGreatPeopleChoiceCount(gs),
+                           getCurrentAge(gs),
+                           gs.city,
+                        ).forEach((gp) => {
+                           getGameOptions().greatPeopleChoices.push(gp);
+                        });
                         makeGreatPeopleFromThisRunPermanent();
                      }
 
-                     checkRebirthAchievements(getGreatPeopleAtReborn(), gameState);
+                     checkRebirthAchievements(greatPeopleCount, gs);
 
                      resetToCity(city);
                      playClick();

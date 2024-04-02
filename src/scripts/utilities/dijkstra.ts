@@ -26,7 +26,7 @@ export function dijkstra(grid: number[], stride: number, start: IPointData, end:
       const nextXy = hash(nextX, nextY);
       const currentXy = hash(current.x, current.y);
       const newCost = costSoFar.get(currentXy)! + grid[nextXy];
-      if (newCost >= (costSoFar.get(nextXy) ?? Infinity)) {
+      if (newCost >= (costSoFar.get(nextXy) ?? Number.POSITIVE_INFINITY)) {
          return;
       }
       costSoFar.set(nextXy, newCost);

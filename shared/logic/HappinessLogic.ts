@@ -5,7 +5,7 @@ import { isNaturalWonder, isSpecialBuilding, isWorldWonder } from "./BuildingLog
 import { Config } from "./Config";
 import type { GameState } from "./GameState";
 import { getTypeBuildings, getXyBuildings } from "./IntraTickCache";
-import { getCurrentTechAge } from "./TechLogic";
+import { getCurrentAge } from "./TechLogic";
 import { Tick } from "./TickLogic";
 
 export const HappinessNames = {
@@ -23,7 +23,7 @@ export const HAPPINESS_MULTIPLIER = 2;
 
 export function calculateHappiness(gs: GameState) {
    const fromUnlockedTech = sizeOf(gs.unlockedTech);
-   const techAge = getCurrentTechAge(gs);
+   const techAge = getCurrentAge(gs);
    const buildingsByType = getTypeBuildings(gs);
    let fromUnlockedAge = 0;
    if (techAge) {

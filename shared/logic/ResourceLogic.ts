@@ -1,11 +1,9 @@
 import type { Building } from "../definitions/BuildingDefinitions";
 import { NoPrice, type Deposit, type Resource } from "../definitions/ResourceDefinitions";
-import { Tech } from "../definitions/TechDefinitions";
 import { forEach, reduceOf, type Tile } from "../utilities/Helper";
 import type { PartialTabulate } from "../utilities/TypeDefinitions";
 import { Config } from "./Config";
 import type { GameState } from "./GameState";
-import { getBuildingUnlockTech } from "./TechLogic";
 import { Tick } from "./TickLogic";
 
 export function getResourceAmount(res: Resource, gs: GameState): number {
@@ -83,16 +81,6 @@ export function getBuildingsThatProduce(res: Resource): Building[] {
          result.push(b);
       }
    });
-   return result;
-}
-
-export function getOrderedTechThatProduce(res: Resource): Tech[] {
-   const tech: Tech[] = getBuildingsThatProduce(res).flatMap((b) => {
-      const t = getBuildingUnlockTech(b);
-      return t ? [t] : [];
-   });
-
-   const result = Array.from(new Set(tech)).sort((a, b) => Config.Tech[a].column - Config.Tech[b].column);
    return result;
 }
 

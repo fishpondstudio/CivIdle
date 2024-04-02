@@ -65,10 +65,10 @@ export function BuildingInputModeComponent({ gameState, xy }: IBuildingComponent
             <div
                className="row"
                onClick={() => {
-                  if (building.maxInputDistance === Infinity) {
+                  if (building.maxInputDistance === Number.POSITIVE_INFINITY) {
                      building.maxInputDistance = 10;
                   } else {
-                     building.maxInputDistance = Infinity;
+                     building.maxInputDistance = Number.POSITIVE_INFINITY;
                   }
                   notifyGameStateUpdate();
                }}
@@ -76,14 +76,16 @@ export function BuildingInputModeComponent({ gameState, xy }: IBuildingComponent
                <div
                   className={classNames({
                      "m-icon small": true,
-                     "text-desc": building.maxInputDistance !== Infinity,
+                     "text-desc": building.maxInputDistance !== Number.POSITIVE_INFINITY,
                   })}
                >
-                  {building.maxInputDistance === Infinity ? "check_box" : "check_box_outline_blank"}
+                  {building.maxInputDistance === Number.POSITIVE_INFINITY
+                     ? "check_box"
+                     : "check_box_outline_blank"}
                </div>
                <div
                   className={classNames({
-                     "text-desc": building.maxInputDistance !== Infinity,
+                     "text-desc": building.maxInputDistance !== Number.POSITIVE_INFINITY,
                   })}
                >
                   {t(L.DistanceInfinity)}
@@ -95,11 +97,15 @@ export function BuildingInputModeComponent({ gameState, xy }: IBuildingComponent
             <input
                value={building.maxInputDistance}
                onChange={(e) => {
-                  building.maxInputDistance = clamp(safeParseInt(e.target.value), 1, Infinity);
+                  building.maxInputDistance = clamp(
+                     safeParseInt(e.target.value),
+                     1,
+                     Number.POSITIVE_INFINITY,
+                  );
                   notifyGameStateUpdate();
                }}
                onClick={(e) => (e.target as HTMLInputElement)?.select()}
-               disabled={building.maxInputDistance === Infinity}
+               disabled={building.maxInputDistance === Number.POSITIVE_INFINITY}
                type="text"
                className="text-right ml10"
                style={{ width: "60px" }}

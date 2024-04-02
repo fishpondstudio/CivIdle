@@ -114,7 +114,7 @@ export class Camera extends Container implements SceneLifecycle {
    }
 
    private minZoom = 0;
-   private maxZoom = Infinity;
+   private maxZoom = Number.POSITIVE_INFINITY;
 
    public wheelMode = WheelMode.Zoom;
 

@@ -1,5 +1,6 @@
 import { app, shell } from "electron";
 import { exists, outputFile, readFile, unlink } from "fs-extra";
+import { copyFile } from "fs/promises";
 import path from "path";
 import { getGameSavePath, getLocalGameSavePath, type SteamClient } from ".";
 
@@ -22,7 +23,12 @@ export class IPCService {
    public async fileWriteBytes(name: string, content: ArrayBuffer): Promise<void> {
       if (content.byteLength <= 0) return;
       const buffer = Buffer.from(content);
-      await outputFile(path.join(getGameSavePath(), this.getSteamId(), name), buffer);
+
+      // To make it more reliable, we first write to a temporary file, then copy it over to the main save file
+      const tempFile = `${name}.tmp`;
+      const tempPath = path.join(getGameSavePath(), this.getSteamId(), tempFile);
+      await outputFile(tempPath, buffer);
+      await copyFile(tempPath, path.join(getGameSavePath(), this.getSteamId(), name));
 
       if (Date.now() - this.lastWriteAt > BACKUP_FREQ) {
          const backup = `${name}_${(++this.counter % 10) + 1}`;

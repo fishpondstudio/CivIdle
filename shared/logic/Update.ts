@@ -3,7 +3,7 @@ import type { IUnlockableDefinition } from "../definitions/ITechDefinition";
 import { NoPrice, NoStorage, type Resource } from "../definitions/ResourceDefinitions";
 import {
    HOUR,
-   IPointData,
+   type IPointData,
    clamp,
    clearFlag,
    filterInPlace,
@@ -61,7 +61,7 @@ import {
 } from "./BuildingLogic";
 import { Config } from "./Config";
 import { GameFeature, hasFeature } from "./FeatureLogic";
-import { GameState, type ITransportationData } from "./GameState";
+import type { GameState, ITransportationData } from "./GameState";
 import { getGameState } from "./GameStateLogic";
 import {
    getBuildingIO,
@@ -77,10 +77,10 @@ import type { IBuildingResource, Multiplier } from "./TickLogic";
 import { Tick } from "./TickLogic";
 import {
    BuildingInputMode,
-   IBuildingData,
-   IMarketBuildingData,
-   IResourceImportBuildingData,
-   IWarehouseBuildingData,
+   type IBuildingData,
+   type IMarketBuildingData,
+   type IResourceImportBuildingData,
+   type IWarehouseBuildingData,
    MarketOptions,
    SuspendedInput,
    WarehouseOptions,
@@ -601,7 +601,7 @@ function defaultTransportFilter(building: IBuildingData, gs: GameState): Transpo
    return (source: IBuildingResource, dest: Tile) => {
       const grid = getGrid(getGameState());
       const maxDistance = getMaxInputDistance(building, gs);
-      if (maxDistance === Infinity) {
+      if (maxDistance === Number.POSITIVE_INFINITY) {
          return true;
       }
       return grid.distanceTile(source.tile, dest) <= maxDistance;
@@ -667,7 +667,7 @@ export function transportResource(
       ) {
          const distance = getGrid(gs).distance(point.x, point.y, targetPoint.x, targetPoint.y);
          if (distance <= 1) {
-            transportCapacity = Infinity;
+            transportCapacity = Number.POSITIVE_INFINITY;
          }
       }
 

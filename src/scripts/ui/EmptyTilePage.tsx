@@ -175,7 +175,9 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
                   { name: "", sortable: false },
                ]}
                data={keysOf(unlockedBuildings(gs)).filter((v) => {
-                  if ((sizeOf(constructed.get(v)) ?? 0) >= (Config.Building[v].max ?? Infinity)) {
+                  if (
+                     (sizeOf(constructed.get(v)) ?? 0) >= (Config.Building[v].max ?? Number.POSITIVE_INFINITY)
+                  ) {
                      return false;
                   }
 
@@ -229,7 +231,7 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
                         }}
                      >
                         <td className="text-center text-strong" style={{ width: 0 }}>
-                           {(building?.max ?? Infinity) <= 1 ? (
+                           {(building?.max ?? Number.POSITIVE_INFINITY) <= 1 ? (
                               <div className="m-icon small">
                                  <TextWithHelp content={building.desc?.()} noStyle>
                                     public

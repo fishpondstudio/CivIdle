@@ -23,7 +23,7 @@ export function migrateSavedGame(save: SavedGame) {
             tile.building.inputMode = BuildingInputMode.Distance;
          }
          if (isNullOrUndefined(tile.building.maxInputDistance)) {
-            tile.building.maxInputDistance = Infinity;
+            tile.building.maxInputDistance = Number.POSITIVE_INFINITY;
          }
          if (isNullOrUndefined(tile.building.productionPriority)) {
             // @ts-expect-error

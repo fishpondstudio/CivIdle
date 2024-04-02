@@ -19,7 +19,11 @@ import {
 } from "../../shared/logic/GameStateLogic";
 import { initializeGameState } from "../../shared/logic/InitializeGameState";
 import { getSpecialBuildings } from "../../shared/logic/IntraTickCache";
-import { rollGreatPeopleThisRun, rollPermanentGreatPeople } from "../../shared/logic/RebornLogic";
+import {
+   getGreatPeopleChoiceCount,
+   rollGreatPeopleThisRun,
+   rollPermanentGreatPeople,
+} from "../../shared/logic/RebornLogic";
 import { forEach, safeAdd } from "../../shared/utilities/Helper";
 import { TypedEvent } from "../../shared/utilities/TypedEvent";
 import { migrateSavedGame } from "./MigrateSavedGame";
@@ -203,9 +207,16 @@ if (import.meta.env.DEV) {
       });
    };
    // @ts-expect-error
-   window.saveGame = saveGame;
+   window.saveGame = () => {
+      saveGame().then(() => window.location.reload());
+   };
    // @ts-expect-error
-   window.rollPermanentGreatPeople = rollPermanentGreatPeople;
+   window.rollPermanentGreatPeople = (rollCount: number, age: TechAge) => {
+      const gs = getGameState();
+      rollPermanentGreatPeople(rollCount, getGreatPeopleChoiceCount(gs), age, gs.city).forEach((gp) => {
+         getGameOptions().greatPeopleChoices.push(gp);
+      });
+   };
    // @ts-expect-error
    window.cameraPan = (target: number, time: number) => {
       Singleton().sceneManager.getCurrent(WorldScene)?.cameraPan(target, time);
@@ -213,7 +224,7 @@ if (import.meta.env.DEV) {
    // @ts-expect-error
    window.rollGreatPeople = (age: TechAge, candidate: number) => {
       const gs = getGameState();
-      const candidates = rollGreatPeopleThisRun(age, candidate);
+      const candidates = rollGreatPeopleThisRun(age, getGameState().city, candidate);
       if (candidates) {
          gs.greatPeopleChoices.push(candidates);
       }

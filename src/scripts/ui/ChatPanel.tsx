@@ -1,6 +1,7 @@
 import Tippy from "@tippyjs/react";
 import classNames from "classnames";
-import React, { memo, useCallback, useEffect, useRef, useState, useTransition } from "react";
+import type React from "react";
+import { memo, useCallback, useEffect, useRef, useState, useTransition } from "react";
 import { notifyGameOptionsUpdate } from "../../../shared/logic/GameStateLogic";
 import {
    AccountLevel,
@@ -16,6 +17,7 @@ import { censor } from "../../../shared/utilities/ProfanityFilter";
 import { TypedEvent } from "../../../shared/utilities/TypedEvent";
 import { L, t } from "../../../shared/utilities/i18n";
 import AccountLevelMod from "../../images/AccountLevelMod.png";
+import Supporter from "../../images/Supporter.png";
 import chatActive from "../../images/chat_active.png";
 import chatInactive from "../../images/chat_inactive.png";
 import { ToggleChatWindow, useGameOptions } from "../Global";
@@ -271,6 +273,11 @@ function ChatMessage({
                      <img src={AccountLevelImages[chat.level]} className="player-flag game-cursor" />
                   </Tippy>
                ) : null}
+               {hasFlag(chat.attr, ChatAttributes.Supporter) ? (
+                  <Tippy content={t(L.AccountSupporter)}>
+                     <img src={Supporter} className="player-flag game-cursor" />
+                  </Tippy>
+               ) : null}
                {hasFlag(chat.attr, ChatAttributes.Mod) ? (
                   <Tippy content={t(L.AccountLevelCensor)}>
                      <img src={AccountLevelMod} className="player-flag game-cursor" />
@@ -293,6 +300,11 @@ function ChatMessage({
                {chat.level > 0 ? (
                   <Tippy content={AccountLevelNames[chat.level]()}>
                      <img src={AccountLevelImages[chat.level]} className="player-flag game-cursor" />
+                  </Tippy>
+               ) : null}
+               {hasFlag(chat.attr, ChatAttributes.Supporter) ? (
+                  <Tippy content={t(L.AccountSupporter)}>
+                     <img src={Supporter} className="player-flag game-cursor" />
                   </Tippy>
                ) : null}
                {hasFlag(chat.attr, ChatAttributes.Mod) ? (

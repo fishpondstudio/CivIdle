@@ -213,7 +213,7 @@ export function BuildingWorkerComponent({ gameState, xy }: IBuildingComponentPro
                   step="0.01"
                   value={building.capacity}
                   onChange={(e) => {
-                     building.capacity = parseFloat(e.target.value);
+                     building.capacity = Number.parseFloat(e.target.value);
                      notifyGameStateUpdate();
                   }}
                   className="mh0"
