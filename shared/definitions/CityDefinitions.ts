@@ -101,9 +101,9 @@ export class CityDefinitions {
          Headquarter: () => t(L.HallOfSupremeHarmony),
       },
       uniqueBuildings: {
-         GreatWall: "Housing",
+         GreatWall: "LandTrade",
          YellowCraneTower: "Geography",
-         PorcelainTower: "PrivateOwnership",
+         PorcelainTower: "Banking",
       },
       naturalWonders: { MountTai: true, YangtzeRiver: true },
       requiredGreatPeopleLevel: 15,

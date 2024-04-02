@@ -275,7 +275,7 @@ export class TechDefinitions {
    Architecture: ITechDefinition = {
       name: () => t(L.Architecture),
       column: 8,
-      requireTech: ["Machinery"],
+      requireTech: ["Machinery", "Politics"],
       unlockBuilding: ["SwordForge", "ChichenItza"],
       globalMultiplier: { builderCapacity: 1 },
    };

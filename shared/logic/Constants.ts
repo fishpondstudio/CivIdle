@@ -291,6 +291,11 @@ export function calculateTierAndPrice(log?: (val: string) => void) {
    });
 
    forEach(Config.Building, (b, def) => {
+      if (def.special === BuildingSpecial.NaturalWonder || def.special === BuildingSpecial.HQ) {
+         if (def.max !== 0) {
+            throw new Error(`Natural Wonder: ${b} should have max = 0`);
+         }
+      }
       if (def.output.Science) {
          const multiplier = 1.5 + 0.25 * sizeOf(def.input);
          const inputValue = Math.round(

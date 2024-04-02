@@ -620,7 +620,7 @@ export const EN = {
    Poem: "Poem",
    Politics: "Politics",
    PorcelainTower: "Porcelain Tower",
-   PorcelainTowerDesc: "Porcelain Tower Desc",
+   PorcelainTowerDesc: "+5 Happiness. When constructed, all your extra great people at rebirth will become available for this run (they are rolled following the same rule as permanent great people)",
    Poseidon: "Poseidon",
    PoseidonDesc: "All adjacent buildings get free upgrades to Level 20",
    Power: "Power",
@@ -1036,4 +1036,6 @@ export const EN = {
    GreatPersonLevelRequiredDesc: "Rebirth in %{city} requires %{required} permanent great people levels. You currently have %{current}",
    GreatPersonWildCardBirth: "Birth",
    GreatPersonWildCardBirthDescHTML: "1 <b>%{from}<b> has been born as <b>%{to}</b>",
+   ClaimedGreatPeople: "Claimed Great People",
+   ClaimedGreatPeopleTooltip: "You have %{total} great people at rebirth, %{claimed} of them are already claimed",
 };

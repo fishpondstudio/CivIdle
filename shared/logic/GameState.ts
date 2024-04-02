@@ -54,6 +54,7 @@ export class GameState {
    lastPriceUpdated = 0;
    isOffline = false;
    favoriteTiles: Set<Tile> = new Set();
+   claimedGreatPeople = 0;
 }
 
 export type GreatPeopleChoice = GreatPerson[];

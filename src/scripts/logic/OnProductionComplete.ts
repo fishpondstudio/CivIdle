@@ -757,6 +757,10 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          }
          break;
       }
+      case "PorcelainTower": {
+         Tick.next.globalMultipliers.happiness.push({ value: 5, source: buildingName });
+         break;
+      }
       // case "ArcDeTriomphe": {
       //    forEach(Config.Building, (b, def) => {
       //       if (def.input.Culture || def.output.Culture) {

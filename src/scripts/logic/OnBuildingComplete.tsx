@@ -9,9 +9,20 @@ import {
 } from "../../../shared/logic/BuildingLogic";
 import { getGameOptions, getGameState } from "../../../shared/logic/GameStateLogic";
 import { getGrid, getSpecialBuildings, getXyBuildings } from "../../../shared/logic/IntraTickCache";
-import { getGreatPeopleChoiceCount, rollGreatPeopleThisRun } from "../../../shared/logic/RebornLogic";
+import {
+   getGreatPeopleChoiceCount,
+   getRebirthGreatPeopleCount,
+   rollGreatPeopleThisRun,
+   rollPermanentGreatPeople,
+} from "../../../shared/logic/RebornLogic";
 import { getRevealedDeposits } from "../../../shared/logic/ResourceLogic";
-import { OnResetTile, addDeposit, getMostAdvancedTech, getUnlockCost } from "../../../shared/logic/TechLogic";
+import {
+   OnResetTile,
+   addDeposit,
+   getCurrentAge,
+   getMostAdvancedTech,
+   getUnlockCost,
+} from "../../../shared/logic/TechLogic";
 import { ensureTileFogOfWar } from "../../../shared/logic/TerrainLogic";
 import { makeBuilding } from "../../../shared/logic/Tile";
 import { OnBuildingComplete } from "../../../shared/logic/Update";
@@ -115,6 +126,23 @@ export function onBuildingComplete(xy: Tile): void {
                building.level += 5;
             }
          });
+         break;
+      }
+      case "PorcelainTower": {
+         if (gs.claimedGreatPeople > 0) {
+            return;
+         }
+         gs.claimedGreatPeople = getRebirthGreatPeopleCount();
+         rollPermanentGreatPeople(
+            gs.claimedGreatPeople,
+            getGreatPeopleChoiceCount(gs),
+            getCurrentAge(gs),
+            gs.city,
+         ).forEach((c) => gs.greatPeopleChoices.push(c));
+         if (gs.greatPeopleChoices.length > 0) {
+            playLevelUp();
+            showModal(<ChooseGreatPersonModal permanent={false} />);
+         }
          break;
       }
       case "GreatMosqueOfSamarra": {

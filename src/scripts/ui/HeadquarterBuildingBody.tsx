@@ -468,6 +468,12 @@ function RebornComponent({ gameState }: { gameState: GameState }): ReactNode {
                   </ul>
                </details>
             </li>
+            {gameState.claimedGreatPeople > 0 ? (
+               <li className="row">
+                  <div className="f1">{t(L.ClaimedGreatPeople)}</div>
+                  <div className="text-strong">{gameState.claimedGreatPeople}</div>
+               </li>
+            ) : null}
          </ul>
          <div className="sep10"></div>
          <button className="row w100 jcc" onClick={() => showModal(<RebornModal />)}>
