@@ -318,7 +318,8 @@ export const DE = {
    GoldenGateBridgeDesc: "Golden Gate Bridge",
    GoldMiningCamp: "Goldschürfer",
    GrandBazaar: "Großer Bazar",
-   GrandBazaarDesc: "Alle Märkte an einer Stelle kontrollieren!. Alle umgebenden Gebäude erhalten +5 Speichermultiplikator",
+   GrandBazaarDesc:
+      "Alle Märkte kontrollieren. Angrenzende Karawansereien erhalten +5 Produktions- und Speichermultiplikator. Angrenzende Märkte erhalten verschiedene Marktangebote",
    GrandBazaarFilters: "Filter",
    GrandBazaarFilterWarningHTML: "Um den Handel irgendeines Markts anzuzeigen, muß vorher ein Filter gewählt werden",
    GrandBazaarFilterYouGet: "Du bekommst",
