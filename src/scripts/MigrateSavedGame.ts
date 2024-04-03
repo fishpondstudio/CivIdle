@@ -1,3 +1,4 @@
+import { GreatPersonType } from "../../shared/definitions/GreatPersonDefinitions";
 import { Config } from "../../shared/logic/Config";
 import type { SavedGame } from "../../shared/logic/GameState";
 import { BuildingInputMode, ResourceImportOptions, makeBuilding } from "../../shared/logic/Tile";
@@ -69,6 +70,12 @@ export function migrateSavedGame(save: SavedGame) {
          save.options.chatChannels.add("en");
       }
    }
+   forEach(save.options.greatPeople, (k, v) => {
+      if (Config.GreatPerson[k].type === GreatPersonType.Wildcard && v.level > 0) {
+         v.amount += v.level;
+         v.level = 0;
+      }
+   });
    // @ts-expect-error
    delete save.options.chatSendChannel;
    // @ts-expect-error

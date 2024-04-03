@@ -243,6 +243,7 @@ function AccountDetails(): React.ReactNode {
                   onClick={() => {
                      playClick();
                      if (!noPendingGreatPerson()) {
+                        playError();
                         showModal(
                            <AlertModal title={t(L.TribuneUpgradeDescGreatPeopleWarningTitle)}>
                               <RenderHTML html={t(L.TribuneUpgradeDescGreatPeopleWarning)} />

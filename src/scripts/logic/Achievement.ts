@@ -52,6 +52,10 @@ export function checkRebirthAchievements(extraGP: number, gs: GameState): void {
             SteamClient.unlockAchievement("EyeOfHorus");
             break;
          }
+         case "Beijing": {
+            SteamClient.unlockAchievement("MandateOfHeaven");
+            break;
+         }
       }
    }
 }

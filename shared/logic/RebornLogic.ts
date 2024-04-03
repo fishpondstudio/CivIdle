@@ -1,5 +1,5 @@
 import type { City } from "../definitions/CityDefinitions";
-import type { GreatPerson } from "../definitions/GreatPersonDefinitions";
+import { GreatPersonType, type GreatPerson } from "../definitions/GreatPersonDefinitions";
 import type { TechAge } from "../definitions/TechDefinitions";
 import { clamp, filterOf, forEach, isNullOrUndefined, keysOf, reduceOf, shuffle } from "../utilities/Helper";
 import { Config } from "./Config";
@@ -85,14 +85,22 @@ export function getTribuneUpgradeMaxLevel(age: TechAge): number {
 
 export function makeGreatPeopleFromThisRunPermanent(): void {
    const gs = getGameState();
-   const options = getGameOptions();
    forEach(gs.greatPeople, (k, v) => {
-      if (options.greatPeople[k]) {
-         options.greatPeople[k]!.amount += v;
-      } else {
-         options.greatPeople[k] = { level: 1, amount: v - 1 };
-      }
+      addPermanentGreatPerson(k, v);
    });
+}
+
+export function addPermanentGreatPerson(gp: GreatPerson, amount: number): void {
+   const options = getGameOptions();
+   const inv = options.greatPeople[gp];
+   if (inv) {
+      inv.amount += amount;
+   } else {
+      options.greatPeople[gp] =
+         Config.GreatPerson[gp].type === GreatPersonType.Wildcard
+            ? { level: 0, amount }
+            : { level: 1, amount: amount - 1 };
+   }
 }
 
 export function upgradeAllPermanentGreatPeople(options: GameOptions): void {

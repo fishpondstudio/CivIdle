@@ -4,7 +4,7 @@ import { useState } from "react";
 import { GreatPersonType, type GreatPerson } from "../../../shared/definitions/GreatPersonDefinitions";
 import { Config } from "../../../shared/logic/Config";
 import { notifyGameOptionsUpdate } from "../../../shared/logic/GameStateLogic";
-import { getGreatPersonUpgradeCost } from "../../../shared/logic/RebornLogic";
+import { addPermanentGreatPerson, getGreatPersonUpgradeCost } from "../../../shared/logic/RebornLogic";
 import { keysOf, numberToRoman } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import { useGameOptions } from "../Global";
@@ -183,14 +183,14 @@ function GreatPersonWildcardRow({ greatPerson }: { greatPerson: GreatPerson }): 
                disabled={!value || value.amount <= 0}
                className="w100 text-strong"
                onClick={() => {
+                  if (Config.GreatPerson[choice].type === GreatPersonType.Wildcard) {
+                     playError();
+                     return;
+                  }
                   if (value && value.amount > 0) {
                      --value.amount;
                   }
-                  if (!options.greatPeople[choice]) {
-                     options.greatPeople[choice] = { level: 1, amount: 0 };
-                  } else {
-                     ++options.greatPeople[choice]!.amount;
-                  }
+                  addPermanentGreatPerson(choice, 1);
                   playLevelUp();
                   notifyGameOptionsUpdate();
                }}

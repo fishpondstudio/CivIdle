@@ -4,7 +4,7 @@ import { GreatPersonType, type GreatPerson } from "../../../shared/definitions/G
 import { Config } from "../../../shared/logic/Config";
 import type { GreatPeopleChoice } from "../../../shared/logic/GameState";
 import { notifyGameOptionsUpdate, notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
-import { getGreatPersonUpgradeCost } from "../../../shared/logic/RebornLogic";
+import { addPermanentGreatPerson, getGreatPersonUpgradeCost } from "../../../shared/logic/RebornLogic";
 import { formatNumber, safeAdd } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import { useGameOptions, useGameState } from "../Global";
@@ -40,11 +40,7 @@ export function ChooseGreatPersonModal({ permanent }: { permanent: boolean }): R
 
          playClick();
          options.greatPeopleChoices.splice(idx, 1);
-         if (!options.greatPeople[greatPerson]) {
-            options.greatPeople[greatPerson] = { level: 1, amount: 0 };
-         } else {
-            ++options.greatPeople[greatPerson]!.amount;
-         }
+         addPermanentGreatPerson(greatPerson, 1);
          notifyGameOptionsUpdate(options);
 
          if (options.greatPeopleChoices.length <= 0) {
