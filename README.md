@@ -13,12 +13,12 @@ All localizations are contribute by the community. If you'd like to help, visit 
 ## Build
 
 Prerequisites:
-- Have [VSCode](https://code.visualstudio.com/download) installed 
-- Have [pnpm](https://pnpm.io/installation) installed
+- Install Node.JS (18.x is recommended)
+- Install [VSCode](https://code.visualstudio.com/download) and [BiomeJS](https://biomejs.dev/reference/vscode/) extension
+- Install [pnpm](https://pnpm.io/installation)
 
 Setting up dependencies:
-- Run 'pnpm install' in the terminal
-- If the above throws an error stating that the ps1 is not digitally signed then run the following command in the terminal: 'Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass' and run 'pnmp install' again after this
+- Clone this repository and run `pnpm install` in the terminal
 
 Running the Project:
 - Run 'pnpm run dev' in the terminal
@@ -29,4 +29,3 @@ Running the Project:
 - Game's source code is licensed under **GNU General Public License v3.0**
 - Third party libraries are licensed under their corresponding licenses
 - Game's artworks and assets are included in this repository for development convenience. However, due to the complications of the original licenses, please **do not redistribute them**
-
