@@ -1,6 +1,6 @@
 import { app, shell } from "electron";
 import { exists, outputFile, readFile, unlink } from "fs-extra";
-import { copyFile } from "fs/promises";
+import { rename } from "fs/promises";
 import path from "path";
 import { getGameSavePath, getLocalGameSavePath, type SteamClient } from ".";
 
@@ -28,7 +28,7 @@ export class IPCService {
       const tempFile = `${name}.tmp`;
       const tempPath = path.join(getGameSavePath(), this.getSteamId(), tempFile);
       await outputFile(tempPath, buffer);
-      await copyFile(tempPath, path.join(getGameSavePath(), this.getSteamId(), name));
+      await rename(tempPath, path.join(getGameSavePath(), this.getSteamId(), name));
 
       if (Date.now() - this.lastWriteAt > BACKUP_FREQ) {
          const backup = `${name}_${(++this.counter % 10) + 1}`;
