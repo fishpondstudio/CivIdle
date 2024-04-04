@@ -5,7 +5,6 @@ import { clamp, filterOf, forEach, isNullOrUndefined, keysOf, reduceOf, shuffle 
 import { Config } from "./Config";
 import type { GameOptions, GameState, GreatPeopleChoice } from "./GameState";
 import { getGameOptions, getGameState } from "./GameStateLogic";
-import { getBuildingsByType } from "./IntraTickCache";
 import { Tick } from "./TickLogic";
 
 ////////////////////////////////////////////////
@@ -168,7 +167,7 @@ export function rollGreatPeopleThisRun(
 export const DEFAULT_GREAT_PEOPLE_CHOICE_COUNT = 3;
 
 export function getGreatPeopleChoiceCount(gs: GameState): number {
-   const yct = getBuildingsByType("YellowCraneTower", gs);
+   const yct = Tick.current.specialBuildings.get("YellowCraneTower");
    if (yct) {
       return 1 + DEFAULT_GREAT_PEOPLE_CHOICE_COUNT;
    }
