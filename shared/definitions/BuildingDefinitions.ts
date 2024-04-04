@@ -1122,7 +1122,7 @@ export class BuildingDefinitions {
       desc: () => t(L.SagradaFamiliaDesc),
       input: {},
       output: {},
-      construction: { Stone: 100 },
+      construction: { Tank: 100, Biplane: 100, Train: 100 },
       max: 1,
       special: BuildingSpecial.WorldWonder,
       wikipedia: "Sagrada_Família",
