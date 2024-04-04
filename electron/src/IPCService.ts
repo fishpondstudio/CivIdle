@@ -1,7 +1,7 @@
 import { app, shell } from "electron";
 import { exists, outputFile, readFile, unlink } from "fs-extra";
-import { rename } from "fs/promises";
-import path from "path";
+import { rename } from "node:fs/promises";
+import path from "node:path";
 import { getGameSavePath, getLocalGameSavePath, type SteamClient } from ".";
 
 const BACKUP_FREQ = 1000 * 60 * 10;
