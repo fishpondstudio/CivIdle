@@ -706,7 +706,7 @@ export const TR = {
    ResourceImportImportPerCycleV2: "Döngü Başına",
    ResourceImportImportPerCycleV2ToolTip: "Bu kaynağın döngü başına taşınan miktarı",
    ResourceImportResource: "Kaynak",
-   ResourceImportSettings: "Kaynak Taşıma": %{res}",
+   ResourceImportSettings: "Kaynak Taşıma: %{res}",
    ResourceImportStorage: "Depo",
    ResourceTransportPreference: "Taşıma Tercihi",
    RevealDeposit: "Göster",

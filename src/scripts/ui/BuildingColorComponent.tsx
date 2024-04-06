@@ -3,9 +3,12 @@ import classNames from "classnames";
 import { NoStorage, type Resource } from "../../../shared/definitions/ResourceDefinitions";
 import { Config } from "../../../shared/logic/Config";
 import { notifyGameOptionsUpdate, notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
+import { tileToPoint, type Tile } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
-import { useGameOptions } from "../Global";
+import { useGameOptions, useGameState } from "../Global";
+import { WorldScene } from "../scenes/WorldScene";
 import { jsxMapOf } from "../utilities/Helper";
+import { Singleton } from "../utilities/Singleton";
 import type { IBuildingComponentProps } from "./BuildingPage";
 import { ColorPicker } from "./ColorPicker";
 
@@ -22,6 +25,20 @@ export function BuildingColorComponent({ gameState, xy }: IBuildingComponentProp
       <fieldset>
          <legend>{t(L.BuildingColor)}</legend>
          <div className="row mv5">
+            <div
+               className="m-icon small text-link mr2"
+               onClick={() => {
+                  const result: Tile[] = [];
+                  gameState.tiles.forEach((tile, xy) => {
+                     if (tile.building?.type === building.type) {
+                        result.push(xy);
+                     }
+                  });
+                  Singleton().sceneManager.getCurrent(WorldScene)?.drawSelection(tileToPoint(xy), result);
+               }}
+            >
+               search
+            </div>
             <div className="f1">{def.name()}</div>
             <div>
                <ColorPicker
@@ -70,13 +87,28 @@ export function BuildingColorComponent({ gameState, xy }: IBuildingComponentProp
 function ResourceColor({ resource, buildingColor }: { resource: Resource; buildingColor: string }) {
    const r = Config.Resource[resource];
    const gameOptions = useGameOptions();
+   const gs = useGameState();
    if (!NoStorage[resource]) {
       return (
          <div className="row mv5">
+            <div
+               className="m-icon small text-link mr2"
+               onClick={() => {
+                  const result: Tile[] = [];
+                  gs.tiles.forEach((tile, xy) => {
+                     if (tile.explored && resource in tile.deposit) {
+                        result.push(xy);
+                     }
+                  });
+                  Singleton().sceneManager.getCurrent(WorldScene)?.drawSelection(null, result);
+               }}
+            >
+               search
+            </div>
             <div className="f1">{r.name()}</div>
             <Tippy content={t(L.BuildingColorMatchBuilding)}>
                <div
-                  className="small pointer mr10 ml10 m-icon"
+                  className="small mr10 ml10 m-icon text-link"
                   onClick={() => {
                      gameOptions.resourceColors[resource] = buildingColor;
                      notifyGameOptionsUpdate(gameOptions);

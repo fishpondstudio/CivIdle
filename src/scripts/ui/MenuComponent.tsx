@@ -6,6 +6,7 @@ import { Tick } from "../../../shared/logic/TickLogic";
 import { sizeOf } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import { saveGame } from "../Global";
+import { useUser } from "../rpc/RPCClient";
 import { SteamClient, isSteam } from "../rpc/SteamClient";
 import { PlayerMapScene } from "../scenes/PlayerMapScene";
 import { TechTreeScene } from "../scenes/TechTreeScene";
@@ -59,6 +60,7 @@ function MenuItem({ check, children }: PropsWithChildren<{ check: boolean }>): R
 export function MenuComponent(): React.ReactNode {
    const [active, setActive] = useState<MenuItemOptions>(null);
    const buttonRef = useRef(null);
+   const user = useUser();
    useEffect(() => {
       function onPointerDown(e: PointerEvent) {
          setActive(null);
@@ -237,6 +239,17 @@ export function MenuComponent(): React.ReactNode {
                      }}
                   >
                      <MenuItem check={false}>{t(L.JoinDiscord)}</MenuItem>
+                  </div>
+                  <div
+                     className="menu-popover-item"
+                     onPointerDown={() => {
+                        const subject = `Your Subject Here (CivIdle/${user?.userId ?? "Unknown Id"}/${
+                           user?.handle ?? "Unknown Handle"
+                        })`;
+                        openUrl(`mailto:hi@fishpondstudio.com?subject=${encodeURIComponent(subject)}`);
+                     }}
+                  >
+                     <MenuItem check={false}>{t(L.EmailDeveloper)}</MenuItem>
                   </div>
                   {isSteam() ? (
                      <div

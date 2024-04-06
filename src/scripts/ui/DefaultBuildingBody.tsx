@@ -18,7 +18,7 @@ export function DefaultBuildingBody({ gameState, xy }: IBuildingComponentProps):
    return (
       <div className="window-body">
          <BuildingDescriptionComponent gameState={gameState} xy={xy} />
-         <BuildingUpgradeComponent gameState={gameState} xy={xy} />
+         <BuildingUpgradeComponent gameState={gameState} xy={xy} key={xy} />
          <BuildingDepositComponent gameState={gameState} xy={xy} />
          <BuildingConsumeComponent gameState={gameState} xy={xy} />
          <BuildingProduceComponent gameState={gameState} xy={xy} />

@@ -31,13 +31,8 @@ export class GreatPersonDefinitions {
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "BronzeAge",
-      tick: (self, level, permanent) => {
-         Tick.next.globalMultipliers.builderCapacity.push({
-            value: self.value(level),
-            source: t(permanent ? L.SourceGreatPersonPermanent : L.SourceGreatPerson, {
-               person: self.name(),
-            }),
-         });
+      tick: (self, level, source) => {
+         Tick.next.globalMultipliers.builderCapacity.push({ value: self.value(level), source });
       },
       type: GreatPersonType.Normal,
    };
@@ -49,13 +44,8 @@ export class GreatPersonDefinitions {
       value: (level) => level * 0.5,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "BronzeAge",
-      tick: (self, level, permanent) => {
-         Tick.next.globalMultipliers.sciencePerIdleWorker.push({
-            value: self.value(level),
-            source: t(permanent ? L.SourceGreatPersonPermanent : L.SourceGreatPerson, {
-               person: self.name(),
-            }),
-         });
+      tick: (self, level, source) => {
+         Tick.next.globalMultipliers.sciencePerIdleWorker.push({ value: self.value(level), source });
       },
       type: GreatPersonType.Normal,
    };
@@ -203,13 +193,8 @@ export class GreatPersonDefinitions {
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "ClassicalAge",
-      tick: (self, level, permanent) => {
-         Tick.next.globalMultipliers.sciencePerBusyWorker.push({
-            value: self.value(level),
-            source: t(permanent ? L.SourceGreatPersonPermanent : L.SourceGreatPerson, {
-               person: self.name(),
-            }),
-         });
+      tick: (self, level, source) => {
+         Tick.next.globalMultipliers.sciencePerBusyWorker.push({ value: self.value(level), source });
       },
       type: GreatPersonType.Normal,
    };
@@ -221,13 +206,8 @@ export class GreatPersonDefinitions {
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "ClassicalAge",
-      tick: (self, level, permanent) => {
-         Tick.next.globalMultipliers.happiness.push({
-            value: self.value(level),
-            source: t(permanent ? L.SourceGreatPersonPermanent : L.SourceGreatPerson, {
-               person: self.name(),
-            }),
-         });
+      tick: (self, level, source) => {
+         Tick.next.globalMultipliers.happiness.push({ value: self.value(level), source });
       },
       type: GreatPersonType.Normal,
    };
@@ -239,13 +219,8 @@ export class GreatPersonDefinitions {
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "ClassicalAge",
-      tick: (self, level, permanent) => {
-         addScienceBasedOnBusyWorkers(
-            self.value(level),
-            t(permanent ? L.SourceGreatPersonPermanent : L.SourceGreatPerson, {
-               person: self.name(),
-            }),
-         );
+      tick: (self, level, source) => {
+         addScienceBasedOnBusyWorkers(self.value(level), source);
       },
       type: GreatPersonType.Normal,
    };
@@ -294,7 +269,7 @@ export class GreatPersonDefinitions {
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "ClassicalAge",
-      tick: (self, level, permanent) => {},
+      tick: (self, level, source) => {},
       type: GreatPersonType.Normal,
    };
 
@@ -305,7 +280,7 @@ export class GreatPersonDefinitions {
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "ClassicalAge",
-      tick: (self, level, permanent) => {},
+      tick: (self, level, source) => {},
       type: GreatPersonType.Wildcard,
    };
 
@@ -330,13 +305,8 @@ export class GreatPersonDefinitions {
       value: (level) => level * 2,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "MiddleAge",
-      tick: (self, level, permanent) => {
-         Tick.next.globalMultipliers.builderCapacity.push({
-            value: self.value(level),
-            source: t(permanent ? L.SourceGreatPersonPermanent : L.SourceGreatPerson, {
-               person: self.name(),
-            }),
-         });
+      tick: (self, level, source) => {
+         Tick.next.globalMultipliers.builderCapacity.push({ value: self.value(level), source });
       },
       type: GreatPersonType.Normal,
    };
@@ -372,13 +342,8 @@ export class GreatPersonDefinitions {
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "MiddleAge",
-      tick: (self, level, permanent) => {
-         Tick.next.globalMultipliers.transportCapacity.push({
-            value: self.value(level),
-            source: t(permanent ? L.SourceGreatPersonPermanent : L.SourceGreatPerson, {
-               person: self.name(),
-            }),
-         });
+      tick: (self, level, source) => {
+         Tick.next.globalMultipliers.transportCapacity.push({ value: self.value(level), source });
       },
       type: GreatPersonType.Normal,
    };
@@ -390,13 +355,8 @@ export class GreatPersonDefinitions {
       value: (level) => level * 2,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "MiddleAge",
-      tick: (self, level, permanent) => {
-         Tick.next.globalMultipliers.happiness.push({
-            value: self.value(level),
-            source: t(permanent ? L.SourceGreatPersonPermanent : L.SourceGreatPerson, {
-               person: self.name(),
-            }),
-         });
+      tick: (self, level, source) => {
+         Tick.next.globalMultipliers.happiness.push({ value: self.value(level), source });
       },
       type: GreatPersonType.Normal,
    };
@@ -408,19 +368,9 @@ export class GreatPersonDefinitions {
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "MiddleAge",
-      tick: (self, level, permanent) => {
-         Tick.next.globalMultipliers.sciencePerIdleWorker.push({
-            value: self.value(level) / 2,
-            source: t(permanent ? L.SourceGreatPersonPermanent : L.SourceGreatPerson, {
-               person: self.name(),
-            }),
-         });
-         Tick.next.globalMultipliers.sciencePerBusyWorker.push({
-            value: self.value(level),
-            source: t(permanent ? L.SourceGreatPersonPermanent : L.SourceGreatPerson, {
-               person: self.name(),
-            }),
-         });
+      tick: (self, level, source) => {
+         Tick.next.globalMultipliers.sciencePerIdleWorker.push({ value: self.value(level) / 2, source });
+         Tick.next.globalMultipliers.sciencePerBusyWorker.push({ value: self.value(level), source });
       },
       type: GreatPersonType.Normal,
    };
@@ -432,7 +382,7 @@ export class GreatPersonDefinitions {
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "MiddleAge",
-      tick: (self, level, permanent) => {},
+      tick: (self, level, source) => {},
       type: GreatPersonType.Wildcard,
    };
 
@@ -469,13 +419,8 @@ export class GreatPersonDefinitions {
       value: (level) => level * 1,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "RenaissanceAge",
-      tick: (self, level, permanent) => {
-         Tick.next.globalMultipliers.sciencePerIdleWorker.push({
-            value: self.value(level),
-            source: t(permanent ? L.SourceGreatPersonPermanent : L.SourceGreatPerson, {
-               person: self.name(),
-            }),
-         });
+      tick: (self, level, source) => {
+         Tick.next.globalMultipliers.sciencePerIdleWorker.push({ value: self.value(level), source });
       },
       type: GreatPersonType.Normal,
    };
@@ -547,13 +492,8 @@ export class GreatPersonDefinitions {
       value: (level) => level * 2,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "RenaissanceAge",
-      tick: (self, level, permanent) => {
-         addScienceBasedOnBusyWorkers(
-            self.value(level),
-            t(permanent ? L.SourceGreatPersonPermanent : L.SourceGreatPerson, {
-               person: self.name(),
-            }),
-         );
+      tick: (self, level, source) => {
+         addScienceBasedOnBusyWorkers(self.value(level), source);
       },
       type: GreatPersonType.Normal,
    };
@@ -577,7 +517,7 @@ export class GreatPersonDefinitions {
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "RenaissanceAge",
-      tick: (self, level, permanent) => {},
+      tick: (self, level, source) => {},
       type: GreatPersonType.Wildcard,
    };
 
@@ -614,13 +554,8 @@ export class GreatPersonDefinitions {
       value: (level) => level * 3,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "IndustrialAge",
-      tick: (self, level, permanent) => {
-         Tick.next.globalMultipliers.builderCapacity.push({
-            value: self.value(level),
-            source: t(permanent ? L.SourceGreatPersonPermanent : L.SourceGreatPerson, {
-               person: self.name(),
-            }),
-         });
+      tick: (self, level, source) => {
+         Tick.next.globalMultipliers.builderCapacity.push({ value: self.value(level), source });
       },
       type: GreatPersonType.Normal,
    };
@@ -668,13 +603,8 @@ export class GreatPersonDefinitions {
       value: (level) => level * 2,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "IndustrialAge",
-      tick: (self, level, permanent) => {
-         Tick.next.globalMultipliers.sciencePerBusyWorker.push({
-            value: self.value(level),
-            source: t(permanent ? L.SourceGreatPersonPermanent : L.SourceGreatPerson, {
-               person: self.name(),
-            }),
-         });
+      tick: (self, level, source) => {
+         Tick.next.globalMultipliers.sciencePerBusyWorker.push({ value: self.value(level), source });
       },
       type: GreatPersonType.Normal,
    };
@@ -686,13 +616,8 @@ export class GreatPersonDefinitions {
       value: (level) => level * 3,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "IndustrialAge",
-      tick: (self, level, permanent) => {
-         Tick.next.globalMultipliers.happiness.push({
-            value: self.value(level),
-            source: t(permanent ? L.SourceGreatPersonPermanent : L.SourceGreatPerson, {
-               person: self.name(),
-            }),
-         });
+      tick: (self, level, source) => {
+         Tick.next.globalMultipliers.happiness.push({ value: self.value(level), source });
       },
       type: GreatPersonType.Normal,
    };
@@ -728,7 +653,7 @@ export class GreatPersonDefinitions {
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "IndustrialAge",
-      tick: (self, level, permanent) => {},
+      tick: (self, level, source) => {},
       type: GreatPersonType.Wildcard,
    };
 
@@ -849,13 +774,8 @@ export class GreatPersonDefinitions {
       value: (level) => level * 3,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "WorldWarAge",
-      tick: (self, level, permanent) => {
-         Tick.next.globalMultipliers.sciencePerIdleWorker.push({
-            value: self.value(level),
-            source: t(permanent ? L.SourceGreatPersonPermanent : L.SourceGreatPerson, {
-               person: self.name(),
-            }),
-         });
+      tick: (self, level, source) => {
+         Tick.next.globalMultipliers.sciencePerIdleWorker.push({ value: self.value(level), source });
       },
       type: GreatPersonType.Normal,
    };
@@ -867,13 +787,8 @@ export class GreatPersonDefinitions {
       value: (level) => level * 3,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "WorldWarAge",
-      tick: (self, level, permanent) => {
-         addScienceBasedOnBusyWorkers(
-            self.value(level),
-            t(permanent ? L.SourceGreatPersonPermanent : L.SourceGreatPerson, {
-               person: self.name(),
-            }),
-         );
+      tick: (self, level, source) => {
+         addScienceBasedOnBusyWorkers(self.value(level), source);
       },
       type: GreatPersonType.Normal,
    };
@@ -885,7 +800,7 @@ export class GreatPersonDefinitions {
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "WorldWarAge",
-      tick: (self, level, permanent) => {},
+      tick: (self, level, source) => {},
       type: GreatPersonType.Wildcard,
    };
 }
@@ -912,7 +827,7 @@ export interface IGreatPersonDefinition {
    age: TechAge;
    boost?: IGreatPersonBoost;
    city?: City;
-   tick: (self: IGreatPersonDefinition, level: number, permanent: boolean) => void;
+   tick: (self: IGreatPersonDefinition, level: number, source: string) => void;
 }
 
 function greatPersonBoostDesc(self: IGreatPersonDefinition, level: number) {
@@ -954,12 +869,7 @@ function boostOf(
       age: def.age,
       city: def.city,
       type: GreatPersonType.Normal,
-      tick: (self, level, permanent) =>
-         tickGreatPersonBoost(
-            self,
-            level,
-            t(permanent ? L.SourceGreatPersonPermanent : L.SourceGreatPerson, { person: self.name() }),
-         ),
+      tick: (self, level, source) => tickGreatPersonBoost(self, level, source),
    };
 }
 

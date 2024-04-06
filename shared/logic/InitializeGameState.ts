@@ -1,4 +1,4 @@
-import { forEach, isEmpty, keysOf, pointToTile, shuffle } from "../utilities/Helper";
+import { forEach, isEmpty, keysOf, pointToTile, shuffle, tileToPoint } from "../utilities/Helper";
 import { applyBuildingDefaults } from "./BuildingLogic";
 import { Config } from "./Config";
 import type { GameOptions, GameState } from "./GameState";
@@ -93,7 +93,7 @@ export function initializeGameState(gameState: GameState, options: GameOptions) 
    for (let i = 0; i < xys.length; i++) {
       const xy = xys[i];
       const tile = gameState.tiles.get(xy)!;
-      if (tile.building || !isEmpty(tile.deposit) || tile.explored) {
+      if (tile.building || !isEmpty(tile.deposit) || tile.explored || grid.isEdge(tileToPoint(xy), 2)) {
          continue;
       }
       if (naturalWonders.length <= 0) {

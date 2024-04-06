@@ -43,7 +43,6 @@ export function PlayerTradeComponent({ gameState, xy }: IBuildingComponentProps)
    const building = gameState.tiles.get(xy)?.building;
    const [resourceFilters, setResourceFilters] = useState(savedResourceFilters);
    const [showFilters, setShowFilters] = useState(false);
-
    if (!building) {
       return null;
    }

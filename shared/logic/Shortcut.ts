@@ -18,11 +18,19 @@ export const ShortcutActions = {
       scope: "BuildingPage",
       name: () => t(L.ShortcutBuildingPageSellBuilding),
    },
-   BuildingPageUpgradeX1: { scope: "BuildingPage", name: () => t(L.ShortcutBuildingPageUpgradeX1) },
-   BuildingPageUpgradeX5: { scope: "BuildingPage", name: () => t(L.ShortcutBuildingPageUpgradeX5V2) },
-   BuildingPageUpgradeToNext10: {
+   BuildingPageUpgrade1: { scope: "BuildingPage", name: () => t(L.ShortcutBuildingPageUpgrade1) },
+   BuildingPageUpgrade2: { scope: "BuildingPage", name: () => t(L.ShortcutBuildingPageUpgrade2) },
+   BuildingPageUpgrade3: {
       scope: "BuildingPage",
-      name: () => t(L.ShortcutBuildingPageUpgradeToNext10),
+      name: () => t(L.ShortcutBuildingPageUpgrade3),
+   },
+   BuildingPageUpgrade4: {
+      scope: "BuildingPage",
+      name: () => t(L.ShortcutBuildingPageUpgrade4),
+   },
+   BuildingPageUpgrade5: {
+      scope: "BuildingPage",
+      name: () => t(L.ShortcutBuildingPageUpgrade5),
    },
    BuildingPageToggleBuilding: {
       scope: "BuildingPage",

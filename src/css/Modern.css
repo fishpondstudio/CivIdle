@@ -73,9 +73,16 @@
 }
 
 .modern select {
-   background-size: 23px 23px;
-   height: 27px;
+   background-size: 19px 19px;
+   height: 23px;
    padding-left: 5px;
+}
+
+.modern select.condensed {
+   background-size: 17px 17px;
+   height: 21px;
+   padding-left: 5px;
+   font-size: 1.2rem;
 }
 
 .modern .title-bar {

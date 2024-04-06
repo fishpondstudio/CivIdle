@@ -195,7 +195,7 @@ export async function connectWebSocket(): Promise<number> {
             } else {
                c.chat.forEach((m) => {
                   const mentionsMe =
-                     user && m.message.toLowerCase().includes(`@${user.handle.toLowerCase()}`);
+                     user && m.message.toLowerCase().includes(` @${user.handle.toLowerCase()}`);
                   const isAnnounce = hasFlag(m.attr, ChatAttributes.Announce);
                   if (mentionsMe || isAnnounce) {
                      playBubble();

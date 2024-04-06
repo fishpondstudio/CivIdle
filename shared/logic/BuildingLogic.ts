@@ -195,7 +195,7 @@ interface IStorageResult {
 
 export function getPetraBaseStorage(petra: IBuildingData): number {
    const HOUR = 60 * 60;
-   return HOUR * petra.level;
+   return HOUR * (3 + petra.level);
 }
 
 // 1 hour
@@ -592,13 +592,13 @@ export function getBuildingLevelLabel(b: IBuildingData): string {
    return String(b.level);
 }
 
-function levelToNext(b: IBuildingData, x: number) {
-   const l = Math.ceil(b.level / x) * x - b.level;
-   return l > 0 ? l : x;
+function getNextLevel(currentLevel: number, x: number) {
+   return (Math.floor(currentLevel / x) + 1) * x;
 }
 
-export function getBuildingUpgradeLevels(b: IBuildingData): number[] {
-   return [1, levelToNext(b, 5), levelToNext(b, 10)];
+export function getUpgradeTargetLevels(b: IBuildingData): number[] {
+   const next5 = getNextLevel(b.level, 5);
+   return [b.level + 1, next5, next5 + 5, next5 + 10, next5 + 15];
 }
 
 export function isSpecialBuilding(building?: Building): boolean {
@@ -921,6 +921,11 @@ export function applyBuildingDefaults(building: IBuildingData, options: GameOpti
    if (isNullOrUndefined(toApply.productionPriority)) {
       toApply.productionPriority = options.defaultProductionPriority;
    }
+
+   if (!isSpecialBuilding(building.type)) {
+      toApply.desiredLevel = options.defaultBuildingLevel;
+   }
+
    return Object.assign(building, toApply);
 }
 

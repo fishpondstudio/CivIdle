@@ -1,6 +1,7 @@
 import { GreatPersonType } from "../../shared/definitions/GreatPersonDefinitions";
 import { Config } from "../../shared/logic/Config";
 import type { SavedGame } from "../../shared/logic/GameState";
+import { ShortcutActions } from "../../shared/logic/Shortcut";
 import { BuildingInputMode, ResourceImportOptions, makeBuilding } from "../../shared/logic/Tile";
 import { forEach, isNullOrUndefined } from "../../shared/utilities/Helper";
 import { getConstructionPriority, getProductionPriority } from "./Global";
@@ -74,6 +75,11 @@ export function migrateSavedGame(save: SavedGame) {
       if (Config.GreatPerson[k].type === GreatPersonType.Wildcard && v.level > 0) {
          v.amount += v.level;
          v.level = 0;
+      }
+   });
+   forEach(save.options.shortcuts, (k) => {
+      if (!(k in ShortcutActions)) {
+         delete save.options.shortcuts[k];
       }
    });
    // @ts-expect-error

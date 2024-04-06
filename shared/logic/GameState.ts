@@ -125,6 +125,7 @@ export class GameOptions {
    defaultConstructionPriority = PRIORITY_MIN;
    defaultStockpileCapacity = 1;
    defaultStockpileMax = 5;
+   defaultBuildingLevel = 1;
    // Should be wiped
    greatPeople: Partial<Record<GreatPerson, { level: number; amount: number }>> = {};
    greatPeopleChoices: GreatPeopleChoice[] = [];

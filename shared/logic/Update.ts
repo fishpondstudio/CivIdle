@@ -3,7 +3,6 @@ import type { IUnlockableDefinition } from "../definitions/ITechDefinition";
 import { NoPrice, NoStorage, type Resource } from "../definitions/ResourceDefinitions";
 import {
    HOUR,
-   type IPointData,
    clamp,
    clearFlag,
    filterInPlace,
@@ -20,6 +19,7 @@ import {
    shuffle,
    sizeOf,
    tileToPoint,
+   type IPointData,
    type Tile,
 } from "../utilities/Helper";
 import { srand } from "../utilities/Random";
@@ -77,13 +77,13 @@ import type { IBuildingResource, Multiplier } from "./TickLogic";
 import { Tick } from "./TickLogic";
 import {
    BuildingInputMode,
+   MarketOptions,
+   SuspendedInput,
+   WarehouseOptions,
    type IBuildingData,
    type IMarketBuildingData,
    type IResourceImportBuildingData,
    type IWarehouseBuildingData,
-   MarketOptions,
-   SuspendedInput,
-   WarehouseOptions,
 } from "./Tile";
 
 export const OnBuildingComplete = new TypedEvent<Tile>();
@@ -204,6 +204,11 @@ function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
       building.status = building.level > 0 ? "upgrading" : "building";
    } else {
       building.desiredLevel = building.level;
+   }
+
+   if (isSpecialBuilding(building.type)) {
+      building.level = 1;
+      building.desiredLevel = 1;
    }
 
    Tick.next.totalValue += getBuildingValue(building);

@@ -12,7 +12,7 @@ import { ResourceImportComponent } from "./ResourceImportComponent";
 export function PlayerTradeBuildingBody({ gameState, xy }: IBuildingComponentProps): React.ReactNode {
    return (
       <div className="window-body">
-         <BuildingUpgradeComponent gameState={gameState} xy={xy} />
+         <BuildingUpgradeComponent gameState={gameState} xy={xy} key={xy} />
          <PlayerTradeComponent gameState={gameState} xy={xy} />
          <ResourceImportComponent gameState={gameState} xy={xy} />
          <BuildingStorageComponent gameState={gameState} xy={xy} />

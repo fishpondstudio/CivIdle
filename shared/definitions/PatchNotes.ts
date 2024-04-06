@@ -6,6 +6,11 @@ interface PatchNote {
 
 export const PatchNotes: PatchNote[] = [
    {
+      version: "0.7.0",
+      content: [],
+      link: "https://github.com/fishpondstudio/CivIdle/issues/198",
+   },
+   {
       version: "0.6.0",
       content: [],
       link: "https://store.steampowered.com/news/app/2181940/view/4193488293618751981",

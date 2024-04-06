@@ -206,35 +206,27 @@ function AccountDetails(): React.ReactNode {
                </WarningComponent>
                <RenderHTML html={t(L.AccountLevelUpgradeConditionAnyHTML)} />
                <div className="separator" />
-               <div className="row">
+               <div className="row text-small">
                   <div className="f1">
                      {t(L.AccountLevelPlayTime, {
                         requiredTime: formatHM(TRIBUNE_UPGRADE_PLAYTIME),
                         actualTime: formatHM(playTime * 1000),
                      })}
                   </div>
-                  <div
-                     className={classNames({
-                        "m-icon small ml10": true,
-                        "text-green": cond1,
-                        "text-none": !cond1,
-                     })}
-                  >
-                     check_circle
-                  </div>
+                  {cond1 ? (
+                     <div className="m-icon small ml10 text-green">check_circle</div>
+                  ) : (
+                     <div className="m-icon small ml10 text-red">cancel</div>
+                  )}
                </div>
                <div className="separator" />
-               <div className="row">
+               <div className="row text-small">
                   <div className="f1">{t(L.AccountLevelSupporterPack)}</div>
-                  <div
-                     className={classNames({
-                        "m-icon small ml10": true,
-                        "text-green": cond2,
-                        "text-none": !cond2,
-                     })}
-                  >
-                     check_circle
-                  </div>
+                  {cond2 ? (
+                     <div className="m-icon small ml10 text-green">check_circle</div>
+                  ) : (
+                     <div className="m-icon small ml10 text-red">cancel</div>
+                  )}
                </div>
                <div className="separator" />
                <button

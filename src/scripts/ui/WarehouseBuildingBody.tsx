@@ -26,7 +26,7 @@ export function WarehouseBuildingBody({ gameState, xy }: IBuildingComponentProps
    const idleCapacity = getWarehouseIdleCapacity(xy, gameState);
    return (
       <div className="window-body">
-         <BuildingUpgradeComponent gameState={gameState} xy={xy} />
+         <BuildingUpgradeComponent gameState={gameState} xy={xy} key={xy} />
          <ResourceImportComponent gameState={gameState} xy={xy} />
          <BuildingStorageComponent gameState={gameState} xy={xy} />
          {hasFeature(GameFeature.WarehouseUpgrade, gameState) ? (

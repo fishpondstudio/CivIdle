@@ -10,7 +10,7 @@ import {
    STOCKPILE_MAX_MAX,
    STOCKPILE_MAX_MIN,
 } from "../../../shared/logic/Tile";
-import { formatPercent, safeParseInt, sizeOf } from "../../../shared/utilities/Helper";
+import { clamp, formatPercent, safeParseInt, sizeOf } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import { useGameOptions, useGameState } from "../Global";
 import { jsxMapOf } from "../utilities/Helper";
@@ -50,11 +50,28 @@ export function GameplayOptionPage(): React.ReactNode {
                ) : null}
             </fieldset>
             <fieldset>
-               <div className="row">
+               <legend>{t(L.GlobalBuildingDefault)}</legend>
+               <div className="row mb5">
+                  <div className="f1">{t(L.DefaultBuildingLevel)}</div>
+                  <div className="text-strong">{options.defaultBuildingLevel}</div>
+               </div>
+               <input
+                  type="range"
+                  min={1}
+                  max={50}
+                  step="1"
+                  value={options.defaultBuildingLevel}
+                  onChange={(e) => {
+                     options.defaultBuildingLevel = clamp(safeParseInt(e.target.value, 1), 1, 50);
+                     notifyGameOptionsUpdate(options);
+                  }}
+               />
+               <div className="sep10" />
+               <div className="separator"></div>
+               <div className="row mb5">
                   <div className="f1">{t(L.DefaultProductionPriority)}</div>
                   <div className="text-strong">{options.defaultProductionPriority}</div>
                </div>
-               <div className="sep5" />
                <input
                   type="range"
                   min={PRIORITY_MIN}
@@ -68,12 +85,10 @@ export function GameplayOptionPage(): React.ReactNode {
                />
                <div className="sep10" />
                <div className="separator" />
-               <legend>{t(L.BuildingPriority)}</legend>
-               <div className="row">
+               <div className="row mb5">
                   <div className="f1">{t(L.DefaultConstructionPriority)}</div>
                   <div className="text-strong">{options.defaultConstructionPriority}</div>
                </div>
-               <div className="sep5" />
                <input
                   type="range"
                   min={PRIORITY_MIN}
@@ -86,14 +101,11 @@ export function GameplayOptionPage(): React.ReactNode {
                   }}
                />
                <div className="sep10" />
-            </fieldset>
-            <fieldset>
-               <legend>{t(L.StockpileSettingsHeading)}</legend>
-               <div className="row">
+               <div className="separator"></div>
+               <div className="row mb5">
                   <div className="f1">{t(L.DefaultStockpileSettings)}</div>
                   <div className="text-strong">{options.defaultStockpileCapacity}x</div>
                </div>
-               <div className="sep5" />
                <input
                   type="range"
                   min={STOCKPILE_CAPACITY_MIN}
@@ -106,7 +118,7 @@ export function GameplayOptionPage(): React.ReactNode {
                />
                <div className="sep10" />
                <div className="separator" />
-               <div className="row">
+               <div className="row mb5">
                   <div className="f1">{t(L.DefaultStockpileMax)}</div>
                   <div className="text-strong">
                      {options.defaultStockpileMax <= 0
@@ -114,7 +126,6 @@ export function GameplayOptionPage(): React.ReactNode {
                         : `${options.defaultStockpileMax}x`}
                   </div>
                </div>
-               <div className="sep5"></div>
                <input
                   type="range"
                   min={STOCKPILE_MAX_MIN}
@@ -122,48 +133,50 @@ export function GameplayOptionPage(): React.ReactNode {
                   step="5"
                   value={options.defaultStockpileMax}
                   onChange={(e) => {
-                     options.defaultStockpileMax = Number.parseInt(e.target.value, 10);
+                     options.defaultStockpileMax = safeParseInt(e.target.value, 1);
                      notifyGameOptionsUpdate(options);
                   }}
                />
                <div className="sep10" />
             </fieldset>
-            <fieldset>
-               <legend>{t(L.BuildingDefaults)}</legend>
-               <div className="table-view">
-                  <table>
-                     <tbody>
-                        {jsxMapOf(options.buildingDefaults, (building, value) => {
-                           return (
-                              <tr>
-                                 <td>{Config.Building[building].name()}</td>
-                                 <td>
-                                    <TextWithHelp
-                                       content={t(L.BuildingDefaultsCount, { count: sizeOf(value) })}
-                                    >
-                                       {sizeOf(value)}
-                                    </TextWithHelp>
-                                 </td>
-                                 <td style={{ width: 0 }}>
-                                    <Tippy content={t(L.BuildingDefaultsRemove)}>
-                                       <div
-                                          className="text-red m-icon small"
-                                          onClick={() => {
-                                             delete options.buildingDefaults[building];
-                                             notifyGameOptionsUpdate();
-                                          }}
+            {sizeOf(options.buildingDefaults) > 0 ? (
+               <fieldset>
+                  <legend>{t(L.BuildingDefaults)}</legend>
+                  <div className="table-view">
+                     <table>
+                        <tbody>
+                           {jsxMapOf(options.buildingDefaults, (building, value) => {
+                              return (
+                                 <tr>
+                                    <td>{Config.Building[building].name()}</td>
+                                    <td>
+                                       <TextWithHelp
+                                          content={t(L.BuildingDefaultsCount, { count: sizeOf(value) })}
                                        >
-                                          delete
-                                       </div>
-                                    </Tippy>
-                                 </td>
-                              </tr>
-                           );
-                        })}
-                     </tbody>
-                  </table>
-               </div>
-            </fieldset>
+                                          {sizeOf(value)}
+                                       </TextWithHelp>
+                                    </td>
+                                    <td style={{ width: 0 }}>
+                                       <Tippy content={t(L.BuildingDefaultsRemove)}>
+                                          <div
+                                             className="text-red m-icon small"
+                                             onClick={() => {
+                                                delete options.buildingDefaults[building];
+                                                notifyGameOptionsUpdate();
+                                             }}
+                                          >
+                                             delete
+                                          </div>
+                                       </Tippy>
+                                    </td>
+                                 </tr>
+                              );
+                           })}
+                        </tbody>
+                     </table>
+                  </div>
+               </fieldset>
+            ) : null}
             <fieldset>
                <legend>{t(L.Sound)}</legend>
                <ChangeSoundComponent />

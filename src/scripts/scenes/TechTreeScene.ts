@@ -7,7 +7,7 @@ import { Config } from "../../../shared/logic/Config";
 import type { GameOptions } from "../../../shared/logic/GameState";
 import { getGameOptions } from "../../../shared/logic/GameStateLogic";
 import { isAgeUnlocked, unlockableTechs } from "../../../shared/logic/TechLogic";
-import { containsNonASCII, forEach, sizeOf } from "../../../shared/utilities/Helper";
+import { containsNonASCII, forEach, numberToRoman, sizeOf } from "../../../shared/utilities/Helper";
 import { TechPage } from "../ui/TechPage";
 import { WheelMode } from "../utilities/Camera";
 import { Scene, destroyAllChildren, type ISceneContext } from "../utilities/SceneManager";
@@ -135,7 +135,7 @@ export class TechTreeScene extends Scene {
             g,
             v.from,
             v.to,
-            v.name(),
+            `${numberToRoman(v.idx + 1)}.  ${v.name()}`,
             isAgeUnlocked(k, this.context.gameState) ? unlockedColor : lockedColor,
          );
       });

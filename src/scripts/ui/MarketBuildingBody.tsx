@@ -154,7 +154,7 @@ export function MarketBuildingBody({ gameState, xy }: IBuildingComponentProps): 
                );
             }}
          />
-         <BuildingUpgradeComponent gameState={gameState} xy={xy} />
+         <BuildingUpgradeComponent gameState={gameState} xy={xy} key={xy} />
          <BuildingWorkerComponent gameState={gameState} xy={xy} />
          <BuildingStorageComponent gameState={gameState} xy={xy} />
          <BuildingProductionPriorityComponent gameState={gameState} xy={xy} />

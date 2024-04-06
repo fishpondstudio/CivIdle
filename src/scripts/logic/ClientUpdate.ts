@@ -22,6 +22,7 @@ import {
    tickTransports,
 } from "../../../shared/logic/Update";
 import { forEach, safeAdd } from "../../../shared/utilities/Helper";
+import { L, t } from "../../../shared/utilities/i18n";
 import { saveGame } from "../Global";
 import { isSteam } from "../rpc/SteamClient";
 import { WorldScene } from "../scenes/WorldScene";
@@ -68,12 +69,16 @@ export function tickEverySecond(gs: GameState, offline: boolean) {
 
    forEach(gs.greatPeople, (person, level) => {
       const greatPerson = Config.GreatPerson[person];
-      greatPerson.tick(greatPerson, getGreatPersonThisRunLevel(level), false);
+      greatPerson.tick(
+         greatPerson,
+         getGreatPersonThisRunLevel(level),
+         t(L.SourceGreatPerson, { person: greatPerson.name() }),
+      );
    });
 
    forEach(getGameOptions().greatPeople, (person, v) => {
       const greatPerson = Config.GreatPerson[person];
-      greatPerson.tick(greatPerson, v.level, true);
+      greatPerson.tick(greatPerson, v.level, t(L.SourceGreatPersonPermanent, { person: greatPerson.name() }));
    });
 
    tickPrice(gs);
