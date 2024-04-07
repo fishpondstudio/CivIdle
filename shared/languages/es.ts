@@ -67,7 +67,7 @@ export const ES = {
    AtomicFacility: "Atomic Facility",
    AtomicTheory: "Atomic Theory",
    Autocracy: "Autocracia",
-   Aviation: "Avición",
+   Aviation: "Aviación",
    BackToCity: "Volver a la ciudad",
    BackupRecovery: "Recuperar copia de seguridad",
    Bakery: "Panadería",
