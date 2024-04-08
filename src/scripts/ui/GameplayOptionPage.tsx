@@ -139,6 +139,63 @@ export function GameplayOptionPage(): React.ReactNode {
                />
                <div className="sep10" />
             </fieldset>
+            <fieldset>
+               <legend>{t(L.ResourceBar)}</legend>
+               <div className="row">
+                  <div className="f1">{t(L.ResourceBarShowUncappedHappiness)}</div>
+                  <div
+                     onClick={() => {
+                        playClick();
+                        options.resourceBarShowUncappedHappiness = !options.resourceBarShowUncappedHappiness;
+                        notifyGameOptionsUpdate(options);
+                     }}
+                     className="ml10 pointer"
+                  >
+                     {options.resourceBarShowUncappedHappiness ? (
+                        <div className="m-icon text-green">toggle_on</div>
+                     ) : (
+                        <div className="m-icon text-grey">toggle_off</div>
+                     )}
+                  </div>
+               </div>
+               <div className="separator" />
+               <div className="row">
+                  <RenderHTML className="f1" html={t(L.ResourceBarExcludeTurnedOffOrNoActiveTransportHTML)} />
+                  <div
+                     onClick={() => {
+                        playClick();
+                        options.resourceBarExcludeTurnedOffOrNoActiveTransport =
+                           !options.resourceBarExcludeTurnedOffOrNoActiveTransport;
+                        notifyGameOptionsUpdate(options);
+                     }}
+                     className="ml10 pointer"
+                  >
+                     {options.resourceBarExcludeTurnedOffOrNoActiveTransport ? (
+                        <div className="m-icon text-green">toggle_on</div>
+                     ) : (
+                        <div className="m-icon text-grey">toggle_off</div>
+                     )}
+                  </div>
+               </div>
+               <div className="separator" />
+               <div className="row">
+                  <RenderHTML className="f1" html={t(L.ResourceBarExcludeStorageFullHTML)} />
+                  <div
+                     onClick={() => {
+                        playClick();
+                        options.resourceBarExcludeStorageFull = !options.resourceBarExcludeStorageFull;
+                        notifyGameOptionsUpdate(options);
+                     }}
+                     className="ml10 pointer"
+                  >
+                     {options.resourceBarExcludeStorageFull ? (
+                        <div className="m-icon text-green">toggle_on</div>
+                     ) : (
+                        <div className="m-icon text-grey">toggle_off</div>
+                     )}
+                  </div>
+               </div>
+            </fieldset>
             {sizeOf(options.buildingDefaults) > 0 ? (
                <fieldset>
                   <legend>{t(L.BuildingDefaults)}</legend>

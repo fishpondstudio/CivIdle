@@ -96,11 +96,11 @@ export function HappinessComponent({ open }: { open: boolean }): React.ReactNode
                         <div
                            className={classNames({
                               "text-strong": true,
-                              "text-red": happiness.rawValue < 0,
-                              "text-green": happiness.rawValue > 0,
+                              "text-red": happiness.uncapped < 0,
+                              "text-green": happiness.uncapped > 0,
                            })}
                         >
-                           <FormatNumber value={happiness.rawValue} />
+                           <FormatNumber value={happiness.uncapped} />
                         </div>
                      </li>
                   </ul>

@@ -71,14 +71,15 @@ export function EmptyTickData(): ITickData {
    };
 }
 
-export type NotProducingReason =
-   | "NotEnoughResources"
-   | "NotEnoughWorkers"
-   | "StorageFull"
-   | "TurnedOff"
-   | "NotOnDeposit"
-   | "NoActiveTransports"
-   | "NoPower";
+export enum NotProducingReason {
+   NotEnoughResources = 0,
+   NotEnoughWorkers = 1,
+   StorageFull = 2,
+   TurnedOff = 3,
+   NotOnDeposit = 4,
+   NoActiveTransports = 5,
+   NoPower = 6,
+}
 
 export class GlobalMultipliers {
    sciencePerIdleWorker: IValueWithSource[] = [];

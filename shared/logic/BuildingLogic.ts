@@ -37,7 +37,13 @@ import {
 import { getGreatPersonThisRunLevel, getUpgradeCostFib } from "./RebornLogic";
 import { getBuildingsThatProduce, getResourcesValue } from "./ResourceLogic";
 import { getAgeForTech, getBuildingUnlockTech } from "./TechLogic";
-import { AllMultiplierTypes, Tick, type Multiplier, type MultiplierWithSource } from "./TickLogic";
+import {
+   AllMultiplierTypes,
+   NotProducingReason,
+   Tick,
+   type Multiplier,
+   type MultiplierWithSource,
+} from "./TickLogic";
 import {
    BuildingInputMode,
    DEFAULT_STOCKPILE_CAPACITY,
@@ -942,8 +948,8 @@ export function isBuildingWellStocked(xy: Tile, gs: GameState): boolean {
       !isSpecialBuilding(building.type) &&
       building.status === "completed" &&
       (!Tick.current.notProducingReasons.has(xy) ||
-         Tick.current.notProducingReasons.get(xy) === "StorageFull" ||
-         Tick.current.notProducingReasons.get(xy) === "NotEnoughWorkers")
+         Tick.current.notProducingReasons.get(xy) === NotProducingReason.StorageFull ||
+         Tick.current.notProducingReasons.get(xy) === NotProducingReason.NotEnoughWorkers)
    );
 }
 

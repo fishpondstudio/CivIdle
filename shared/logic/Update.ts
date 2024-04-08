@@ -75,7 +75,7 @@ import {
 import { calculateEmpireValue } from "./RebornLogic";
 import { getAmountInTransit } from "./ResourceLogic";
 import type { IBuildingResource, Multiplier } from "./TickLogic";
-import { Tick } from "./TickLogic";
+import { NotProducingReason, Tick } from "./TickLogic";
 import {
    BuildingInputMode,
    MarketOptions,
@@ -333,12 +333,12 @@ function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
 
    // Return early for buildings that are not working ////////////////////////////////////////////////////////
    if (!hasRequiredDeposit(Config.Building[building.type].deposit, xy, gs)) {
-      Tick.next.notProducingReasons.set(xy, "NotOnDeposit");
+      Tick.next.notProducingReasons.set(xy, NotProducingReason.NotOnDeposit);
       return;
    }
 
    if (building.capacity <= 0) {
-      Tick.next.notProducingReasons.set(xy, "TurnedOff");
+      Tick.next.notProducingReasons.set(xy, NotProducingReason.TurnedOff);
       return;
    }
    ///////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -400,7 +400,7 @@ function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
 
    // If a building is a resourceImport type but has not transported, we consider it not working
    if ("resourceImports" in building && !hasTransported) {
-      Tick.next.notProducingReasons.set(xy, "NoActiveTransports");
+      Tick.next.notProducingReasons.set(xy, NotProducingReason.NoActiveTransports);
    }
 
    //////////////////////////////////////////////////
@@ -423,7 +423,7 @@ function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
          );
          const buyAmount = getMarketBuyAmount(sellResource, sellAmount, buyResource, xy, gs);
          if (used - sellAmount + buyAmount > total) {
-            Tick.next.notProducingReasons.set(xy, "StorageFull");
+            Tick.next.notProducingReasons.set(xy, NotProducingReason.StorageFull);
             return;
          }
          safeAdd(building.resources, sellResource, -sellAmount);
@@ -451,7 +451,7 @@ function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
    const requiresPower = Config.Building[building.type].power;
    const hasPower = !requiresPower || Tick.current.powerGrid.has(xy);
    if (!hasPower) {
-      Tick.next.notProducingReasons.set(xy, "NoPower");
+      Tick.next.notProducingReasons.set(xy, NotProducingReason.NoPower);
       return;
    }
    if (requiresPower) {
@@ -461,14 +461,14 @@ function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
    ////////// Worker
    const hasEnoughWorker = getAvailableWorkers("Worker") >= worker.output;
    if (!hasEnoughWorker) {
-      Tick.next.notProducingReasons.set(xy, "NotEnoughWorkers");
+      Tick.next.notProducingReasons.set(xy, NotProducingReason.NotEnoughWorkers);
       return;
    }
 
    ////////// Input
    const hasEnoughInput = hasEnoughResources(building.resources, input);
    if (!hasEnoughInput) {
-      Tick.next.notProducingReasons.set(xy, "NotEnoughResources");
+      Tick.next.notProducingReasons.set(xy, NotProducingReason.NotEnoughResources);
       return;
    }
 
@@ -493,10 +493,10 @@ function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
             }
          });
          if (!isEmpty(filterTransportable(output))) {
-            Tick.next.notProducingReasons.set(xy, "StorageFull");
+            Tick.next.notProducingReasons.set(xy, NotProducingReason.StorageFull);
          }
       } else {
-         Tick.next.notProducingReasons.set(xy, "StorageFull");
+         Tick.next.notProducingReasons.set(xy, NotProducingReason.StorageFull);
       }
       return;
    }

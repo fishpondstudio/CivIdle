@@ -6,7 +6,7 @@ import { Config } from "./Config";
 import type { GameState } from "./GameState";
 import { getTypeBuildings, getXyBuildings } from "./IntraTickCache";
 import { getCurrentAge } from "./TechLogic";
-import { Tick } from "./TickLogic";
+import { NotProducingReason, Tick } from "./TickLogic";
 
 export const HappinessNames = {
    fromUnlockedTech: () => t(L.HappinessFromUnlockedTech),
@@ -67,8 +67,8 @@ export function calculateHappiness(gs: GameState) {
                return (
                   !isSpecialBuilding(tile.building.type) &&
                   (!Tick.current.notProducingReasons.has(xy) ||
-                     Tick.current.notProducingReasons.get(xy) === "StorageFull" ||
-                     Tick.current.notProducingReasons.get(xy) === "NotEnoughWorkers") &&
+                     Tick.current.notProducingReasons.get(xy) === NotProducingReason.StorageFull ||
+                     Tick.current.notProducingReasons.get(xy) === NotProducingReason.NotEnoughWorkers) &&
                   tile.building.status === "completed"
                );
             }),
@@ -86,17 +86,17 @@ export function calculateHappiness(gs: GameState) {
       fromHighestTierBuilding,
    };
    const negative: PartialTabulate<HappinessType> = { fromBuildings };
-   const rawValue =
+   const uncapped =
       reduceOf(positive, (prev, _, value) => prev + value, 0) +
       sum(Tick.current.globalMultipliers.happiness, "value") -
       reduceOf(negative, (prev, _, value) => prev + value, 0);
-   const value = clamp(rawValue, -50, 50);
+   const value = clamp(uncapped, -50, 50);
    const workerPercentage = (100 + value * HAPPINESS_MULTIPLIER) / 100;
    const normalized = (value + 50) / 100;
    return {
       positive,
       negative,
-      rawValue,
+      uncapped,
       value,
       normalized,
       workerPercentage,

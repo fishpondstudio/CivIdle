@@ -13,7 +13,7 @@ import {
 import { Config } from "./Config";
 import type { GameState } from "./GameState";
 import { TILE_SIZE } from "./GameStateLogic";
-import { Tick } from "./TickLogic";
+import { NotProducingReason, Tick } from "./TickLogic";
 import type { IBuildingData, IMarketBuildingData, IResourceImportBuildingData, ITileData } from "./Tile";
 
 class IntraTickCache {
@@ -132,7 +132,7 @@ export function getStorageFullBuildings(): Tile[] {
    }
    const result: Tile[] = [];
    for (const [xy, reason] of Tick.current.notProducingReasons) {
-      if (reason === "StorageFull") {
+      if (reason === NotProducingReason.StorageFull) {
          result.push(xy);
       }
    }

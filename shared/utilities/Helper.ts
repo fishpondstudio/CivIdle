@@ -333,6 +333,16 @@ export function sizeOf(obj: any): number {
    return Object.keys(obj).length;
 }
 
+export function mapCount<K, V>(map: Map<K, V>, func: (value: V, key: K, map: Map<K, V>) => boolean): number {
+   let result = 0;
+   map.forEach((value, key, map) => {
+      if (func(value, key, map)) {
+         ++result;
+      }
+   });
+   return result;
+}
+
 const xyToTileCache: Map<string, Tile> = new Map();
 export type Tile = number;
 export function xyToTile(xy: string): Tile {

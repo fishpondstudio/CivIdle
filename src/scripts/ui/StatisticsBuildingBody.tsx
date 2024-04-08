@@ -19,7 +19,7 @@ import { EXPLORER_SECONDS, MAX_EXPLORER } from "../../../shared/logic/Constants"
 import { getBuildingIO, getXyBuildings, unlockedResources } from "../../../shared/logic/IntraTickCache";
 import { getTransportStat } from "../../../shared/logic/ResourceLogic";
 import { getScienceAmount } from "../../../shared/logic/TechLogic";
-import { Tick } from "../../../shared/logic/TickLogic";
+import { NotProducingReason, Tick } from "../../../shared/logic/TickLogic";
 import type { IBuildingData } from "../../../shared/logic/Tile";
 import {
    forEach,
@@ -332,7 +332,7 @@ function BuildingTab({ gameState }: IBuildingComponentProps): React.ReactNode {
                         if (building.status !== "completed") {
                            icon = <div className="m-icon small text-orange">build_circle</div>;
                         } else if (notProducingReason) {
-                           if (notProducingReason === "StorageFull") {
+                           if (notProducingReason === NotProducingReason.StorageFull) {
                               icon = <div className="m-icon small text-red">stroke_full</div>;
                            } else {
                               icon = <div className="m-icon small text-red">error</div>;
@@ -381,7 +381,8 @@ function BuildingTab({ gameState }: IBuildingComponentProps): React.ReactNode {
                               <td
                                  className={classNames({
                                     "text-red":
-                                       Tick.current.notProducingReasons.get(xy) === "NotEnoughWorkers",
+                                       Tick.current.notProducingReasons.get(xy) ===
+                                       NotProducingReason.NotEnoughWorkers,
                                     "text-right": true,
                                  })}
                               >

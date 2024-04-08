@@ -121,6 +121,9 @@ export class GameOptions {
    chatHideLatestMessage = false;
    chatChannels: Set<ChatChannel> = new Set(["en"]);
    useMirrorServer = false;
+   resourceBarShowUncappedHappiness = false;
+   resourceBarExcludeTurnedOffOrNoActiveTransport = false;
+   resourceBarExcludeStorageFull = false;
    buildingDefaults: Partial<Record<Building, Partial<IBuildingData>>> = {};
    defaultProductionPriority = PRIORITY_MIN;
    defaultConstructionPriority = PRIORITY_MIN;

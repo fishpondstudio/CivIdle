@@ -8,18 +8,18 @@ import { getHappinessIcon } from "../../../shared/logic/HappinessLogic";
 import { getSpecialBuildings } from "../../../shared/logic/IntraTickCache";
 import { getProgressTowardsNextGreatPerson } from "../../../shared/logic/RebornLogic";
 import { getResourceAmount } from "../../../shared/logic/ResourceLogic";
-import { CurrentTickChanged } from "../../../shared/logic/TickLogic";
+import { CurrentTickChanged, NotProducingReason } from "../../../shared/logic/TickLogic";
 import {
    Rounding,
    clamp,
    formatPercent,
+   mapCount,
    mathSign,
    round,
-   sizeOf,
    type Tile,
 } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
-import { useGameState } from "../Global";
+import { useGameOptions, useGameState } from "../Global";
 import { useCurrentTick } from "../logic/ClientUpdate";
 import { TechTreeScene } from "../scenes/TechTreeScene";
 import { LookAtMode, WorldScene } from "../scenes/WorldScene";
@@ -33,6 +33,7 @@ import { TilePage } from "./TilePage";
 export function ResourcePanel(): React.ReactNode {
    const tick = useCurrentTick();
    const gs = useGameState();
+   const options = useGameOptions();
    const [empireValues, setEmpireValues] = useState<[number, number]>([tick.totalValue, tick.totalValue]);
    useTypedEvent(CurrentTickChanged, (current) => {
       setEmpireValues([current.totalValue, empireValues[0]]);
@@ -126,8 +127,18 @@ export function ResourcePanel(): React.ReactNode {
                >
                   {getHappinessIcon(tick.happiness.value)}
                </div>
-               <Tippy placement="bottom" content={t(L.Happiness)}>
-                  <div style={{ width: "5rem" }}>{round(tick.happiness.value, 0)}</div>
+               <Tippy
+                  placement="bottom"
+                  content={options.resourceBarShowUncappedHappiness ? t(L.HappinessUncapped) : t(L.Happiness)}
+               >
+                  <div style={{ width: "5rem" }}>
+                     {round(
+                        options.resourceBarShowUncappedHappiness
+                           ? tick.happiness.uncapped
+                           : tick.happiness.value,
+                        0,
+                     )}
+                  </div>
                </Tippy>
             </div>
          ) : null}
@@ -196,7 +207,20 @@ export function ResourcePanel(): React.ReactNode {
             </div>
             <Tippy content={t(L.NotProducingBuildings)} placement="bottom">
                <div style={{ width: "6rem" }}>
-                  <FormatNumber value={sizeOf(tick.notProducingReasons)} />
+                  <FormatNumber
+                     value={mapCount(tick.notProducingReasons, (v) => {
+                        if (options.resourceBarExcludeStorageFull && v === NotProducingReason.StorageFull) {
+                           return false;
+                        }
+                        if (
+                           options.resourceBarExcludeTurnedOffOrNoActiveTransport &&
+                           (v === NotProducingReason.TurnedOff || v === NotProducingReason.NoActiveTransports)
+                        ) {
+                           return false;
+                        }
+                        return true;
+                     })}
+                  />
                </div>
             </Tippy>
          </div>

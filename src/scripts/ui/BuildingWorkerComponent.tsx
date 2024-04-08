@@ -11,7 +11,7 @@ import {
 } from "../../../shared/logic/BuildingLogic";
 import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
 import { getBuildingIO } from "../../../shared/logic/IntraTickCache";
-import { Tick } from "../../../shared/logic/TickLogic";
+import { NotProducingReason, Tick } from "../../../shared/logic/TickLogic";
 import { formatNumber, formatPercent, isEmpty } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import warning from "../../images/warning.png";
@@ -32,7 +32,7 @@ export function BuildingWorkerComponent({ gameState, xy }: IBuildingComponentPro
    if (isEmpty(input) && isEmpty(output) && !shouldAlwaysShowBuildingOptions(building)) {
       return null;
    }
-   const showWarning = Tick.current.notProducingReasons.get(xy) === "NotEnoughWorkers";
+   const showWarning = Tick.current.notProducingReasons.get(xy) === NotProducingReason.NotEnoughWorkers;
    const toggleBuilding = () => {
       building.capacity = building.capacity > 0 ? 0 : 1;
       notifyGameStateUpdate();

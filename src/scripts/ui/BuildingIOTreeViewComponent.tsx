@@ -4,7 +4,7 @@ import { Config } from "../../../shared/logic/Config";
 import type { GameState } from "../../../shared/logic/GameState";
 import { getBuildingIO } from "../../../shared/logic/IntraTickCache";
 import type { Multiplier } from "../../../shared/logic/TickLogic";
-import { Tick } from "../../../shared/logic/TickLogic";
+import { NotProducingReason, Tick } from "../../../shared/logic/TickLogic";
 import type { Tile } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import warning from "../../images/warning.png";
@@ -28,7 +28,7 @@ export function BuildingIOTreeViewComponent({
             const resourceInStorage = gameState.tiles.get(xy)?.building?.resources[k] ?? 0;
             const showWarning =
                type === "input" &&
-               Tick.current.notProducingReasons.get(xy) === "NotEnoughResources" &&
+               Tick.current.notProducingReasons.get(xy) === NotProducingReason.NotEnoughResources &&
                resourceInStorage < v;
             return (
                <li key={k}>

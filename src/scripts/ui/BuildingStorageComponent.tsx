@@ -1,7 +1,7 @@
 import classNames from "classnames";
 import { getMultipliersFor, getStorageFor } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
-import { Tick } from "../../../shared/logic/TickLogic";
+import { NotProducingReason, Tick } from "../../../shared/logic/TickLogic";
 import { formatPercent, keysOf } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import warning from "../../images/warning.png";
@@ -18,7 +18,7 @@ export function BuildingStorageComponent({ gameState, xy }: IBuildingComponentPr
       return null;
    }
    const percentage = storage.used / storage.total;
-   const showWarning = Tick.current.notProducingReasons.get(xy) === "StorageFull";
+   const showWarning = Tick.current.notProducingReasons.get(xy) === NotProducingReason.StorageFull;
    return (
       <fieldset>
          <legend className="row">

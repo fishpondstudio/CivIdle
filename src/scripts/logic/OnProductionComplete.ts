@@ -27,7 +27,7 @@ import { getVotedBoostId } from "../../../shared/logic/PlayerTradeLogic";
 import { getGreatPersonThisRunLevel } from "../../../shared/logic/RebornLogic";
 import { getBuildingsThatProduce } from "../../../shared/logic/ResourceLogic";
 import { getBuildingUnlockAge, getCurrentAge } from "../../../shared/logic/TechLogic";
-import { Tick } from "../../../shared/logic/TickLogic";
+import { NotProducingReason, Tick } from "../../../shared/logic/TickLogic";
 import { MarketOptions, type IMarketBuildingData, type IPetraBuildingData } from "../../../shared/logic/Tile";
 import { addMultiplier } from "../../../shared/logic/Update";
 import { VotedBoostType, type IGetVotedBoostResponse } from "../../../shared/utilities/Database";
@@ -340,11 +340,11 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          const max = totalLevel * ST_PETERS_STORAGE_MULTIPLIER;
          if ((building.resources.Faith ?? 0) > max) {
             building.resources.Faith = max;
-            Tick.next.notProducingReasons.set(xy, "StorageFull");
+            Tick.next.notProducingReasons.set(xy, NotProducingReason.StorageFull);
          } else if (toProduce > 0) {
             Tick.next.notProducingReasons.delete(xy);
          } else {
-            Tick.next.notProducingReasons.set(xy, "NotEnoughResources");
+            Tick.next.notProducingReasons.set(xy, NotProducingReason.NotEnoughResources);
          }
          break;
       }
