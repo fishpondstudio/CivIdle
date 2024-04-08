@@ -72,8 +72,7 @@ export function PlayerHandleComponent() {
                      {t(L.ChangePlayerHandle)}
                   </div>
                </div>
-               <div className="sep5" />
-               <div className="row text-strong">
+               <div className="row text-strong mt5">
                   <div className="f1">{t(L.AccountLevel)}</div>
                   <img
                      src={AccountLevelImages[accountLevel]}
@@ -82,34 +81,35 @@ export function PlayerHandleComponent() {
                   />
                   <div>{AccountLevelNames[accountLevel]()}</div>
                </div>
-               <div className="sep5" />
-               <div className="row text-strong">
-                  <div className="f1">{t(L.AccountCustomColor)}</div>
-                  <select
-                     value={user.color}
-                     onChange={async (e) => {
-                        try {
-                           const color = safeParseInt(e.target.value, 0) as UserColors;
-                           user.color = color;
-                           OnUserChanged.emit({ ...user });
-                           OnUserChanged.emit(await client.changeColor(color));
-                        } catch (error) {
-                           showToast(String(error));
-                           playError();
-                        }
-                     }}
-                     className="condensed code"
-                     style={{ color: UserColorsMapping.get(user.color) }}
-                  >
-                     {jsxMMapOf(UserColorsMapping, (key, color) => {
-                        return (
-                           <option className="code" style={{ color }} value={key} key={key}>
-                              {color ?? t(L.AccountCustomColorDefault)}
-                           </option>
-                        );
-                     })}
-                  </select>
-               </div>
+               {hasFlag(user.attr, UserAttributes.DLC1) ? (
+                  <div className="row text-strong mt5">
+                     <div className="f1">{t(L.AccountCustomColor)}</div>
+                     <select
+                        value={user.color}
+                        onChange={async (e) => {
+                           try {
+                              const color = safeParseInt(e.target.value, 0) as UserColors;
+                              user.color = color;
+                              OnUserChanged.emit({ ...user });
+                              OnUserChanged.emit(await client.changeColor(color));
+                           } catch (error) {
+                              showToast(String(error));
+                              playError();
+                           }
+                        }}
+                        className="condensed code"
+                        style={{ color: UserColorsMapping.get(user.color) }}
+                     >
+                        {jsxMMapOf(UserColorsMapping, (key, color) => {
+                           return (
+                              <option className="code" style={{ color }} value={key} key={key}>
+                                 {color ?? t(L.AccountCustomColorDefault)}
+                              </option>
+                           );
+                        })}
+                     </select>
+                  </div>
+               ) : null}
             </>
          )}
          {showDetails ? (
