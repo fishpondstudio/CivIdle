@@ -196,6 +196,26 @@ export function GameplayOptionPage(): React.ReactNode {
                   </div>
                </div>
             </fieldset>
+            <fieldset>
+               <legend>{t(L.GameVisual)}</legend>
+               <div className="row">
+                  <RenderHTML className="f1" html={t(L.GameVisualShowEmpireValue)} />
+                  <div
+                     onClick={() => {
+                        playClick();
+                        options.gameVisualShowEmpireValue = !options.gameVisualShowEmpireValue;
+                        notifyGameOptionsUpdate(options);
+                     }}
+                     className="ml10 pointer"
+                  >
+                     {options.gameVisualShowEmpireValue ? (
+                        <div className="m-icon text-green">toggle_on</div>
+                     ) : (
+                        <div className="m-icon text-grey">toggle_off</div>
+                     )}
+                  </div>
+               </div>
+            </fieldset>
             {sizeOf(options.buildingDefaults) > 0 ? (
                <fieldset>
                   <legend>{t(L.BuildingDefaults)}</legend>

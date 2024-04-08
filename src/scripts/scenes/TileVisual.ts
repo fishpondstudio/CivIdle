@@ -298,7 +298,7 @@ export class TileVisual extends Container {
             const ev =
                (Tick.current.buildingValueByTile.get(tileData.tile) ?? 0) +
                (Tick.current.resourceValueByTile.get(tileData.tile) ?? 0);
-            if (ev > 0) {
+            if (ev > 0 && getGameOptions().gameVisualShowEmpireValue) {
                this._empireValue.visible = true;
                this._empireValue.text = formatNumber(ev);
             } else {

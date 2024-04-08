@@ -18,6 +18,8 @@ export function getNotProducingTexture(reason: NotProducingReason, textures: Rec
          return getTexture("Misc_StorageFull", textures);
       case NotProducingReason.NoPower:
          return getTexture("Misc_NoPower", textures);
+      // case NotProducingReason.NoActiveTransports:
+      //    return Texture.EMPTY;
       default:
          return getTexture("Misc_NotProducingGeneral", textures);
    }

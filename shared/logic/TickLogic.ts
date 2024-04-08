@@ -72,13 +72,14 @@ export function EmptyTickData(): ITickData {
 }
 
 export enum NotProducingReason {
-   NotEnoughResources = 0,
-   NotEnoughWorkers = 1,
-   StorageFull = 2,
-   TurnedOff = 3,
-   NotOnDeposit = 4,
-   NoActiveTransports = 5,
-   NoPower = 6,
+   None = 0,
+   NotEnoughResources = 1,
+   NotEnoughWorkers = 2,
+   StorageFull = 3,
+   TurnedOff = 4,
+   NotOnDeposit = 5,
+   NoActiveTransports = 6,
+   NoPower = 7,
 }
 
 export class GlobalMultipliers {

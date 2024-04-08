@@ -1064,4 +1064,6 @@ export const EN = {
    ZenobiaDesc: "+%{value}h Petra Warp Storage",
    ZhengHe: "Zheng He",
    Zoroaster: "Zoroaster",
+   GameVisual: "Game Visual",
+   GameVisualShowEmpireValue: "Show Empire Value in building tile",
 };

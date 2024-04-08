@@ -40,7 +40,20 @@ export function ResourcePanel(): React.ReactNode {
    });
    const { workersAfterHappiness, workersBusy } = getScienceFromWorkers(gs);
    const highlightNotProducingReasons = () => {
-      const buildingTiles: Tile[] = Array.from(tick.notProducingReasons.keys());
+      const buildingTiles: Tile[] = Array.from(tick.notProducingReasons.entries())
+         .filter(([_, reason]) => {
+            if (options.resourceBarExcludeStorageFull && reason === NotProducingReason.StorageFull) {
+               return false;
+            }
+            if (
+               options.resourceBarExcludeTurnedOffOrNoActiveTransport &&
+               (reason === NotProducingReason.TurnedOff || reason === NotProducingReason.NoActiveTransports)
+            ) {
+               return false;
+            }
+            return true;
+         })
+         .map(([xy]) => xy);
       Singleton().sceneManager.getCurrent(WorldScene)?.drawSelection(null, buildingTiles);
    };
    const delta = empireValues[0] - empireValues[1];
