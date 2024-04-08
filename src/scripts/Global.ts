@@ -24,21 +24,31 @@ import {
    rollGreatPeopleThisRun,
    rollPermanentGreatPeople,
 } from "../../shared/logic/RebornLogic";
-import { forEach, safeAdd } from "../../shared/utilities/Helper";
+import { forEach, rejectIn, safeAdd } from "../../shared/utilities/Helper";
 import { TypedEvent } from "../../shared/utilities/TypedEvent";
 import { migrateSavedGame } from "./MigrateSavedGame";
 import { tickEverySecond } from "./logic/ClientUpdate";
+import { client } from "./rpc/RPCClient";
 import { SteamClient, isSteam } from "./rpc/SteamClient";
 import { WorldScene } from "./scenes/WorldScene";
+import { showToast } from "./ui/GlobalModal";
 import { idbDel, idbGet, idbSet } from "./utilities/BrowserStorage";
 import { makeObservableHook } from "./utilities/Hook";
 import { Singleton } from "./utilities/Singleton";
 import { compress, decompress } from "./workers/Compress";
 
-export function resetToCity(city: City): void {
+export async function resetToCity(city: City): Promise<void> {
    savedGame.current = new GameState();
    savedGame.current.city = city;
    initializeGameState(savedGame.current, savedGame.options);
+   try {
+      await Promise.race([
+         client.tickV2(savedGame.current.id, savedGame.current.tick),
+         rejectIn(10, "Connection timeout"),
+      ]);
+   } catch (e) {
+      showToast(String(e));
+   }
 }
 
 export function overwriteSaveGame(save: SavedGame): void {

@@ -132,6 +132,7 @@ export interface IEmpireValue {
    value: number;
    time: number;
    tick: number;
+   totalGreatPeopleLevel?: number;
 }
 
 export interface ITradeValue {
@@ -189,6 +190,7 @@ export interface IUser {
    flag: string;
    ip: string;
    attr: UserAttributes;
+   lastGameId?: string;
 }
 
 export interface IMapEntry {

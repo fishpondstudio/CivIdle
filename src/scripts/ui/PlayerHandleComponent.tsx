@@ -287,7 +287,7 @@ function AccountDetails(): React.ReactNode {
                               try {
                                  await client.upgrade();
                                  playLevelUp();
-                                 resetToCity(getGameState().city);
+                                 await resetToCity(getGameState().city);
                                  getGameOptions().greatPeopleChoices = [];
                                  upgradeAllPermanentGreatPeople(getGameOptions());
                                  forEach(getGameOptions().greatPeople, (k, v) => {

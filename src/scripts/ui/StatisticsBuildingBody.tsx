@@ -151,7 +151,7 @@ function EmpireTab({ gameState, xy }: IBuildingComponentProps): React.ReactNode 
                <li>
                   <details>
                      <summary className="row">
-                        <div className="f1">{t(L.StatEmpireValueFromBuildings)}</div>
+                        <div className="f1">{t(L.EmpireValueFromBuildingsStat)}</div>
                         <div className="text-strong">
                            <FormatNumber value={totalBuildingValue} />
                         </div>

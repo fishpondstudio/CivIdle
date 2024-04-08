@@ -203,7 +203,7 @@ export function RebornModal(): React.ReactNode {
                      }
 
                      try {
-                        await Promise.race([client.rebirth(), rejectIn(5)]);
+                        await Promise.race([client.rebirth(), rejectIn(10)]);
                      } catch (error) {
                         console.error(error);
                         if (isOnlineUser()) {
@@ -233,7 +233,7 @@ export function RebornModal(): React.ReactNode {
 
                      checkRebirthAchievements(greatPeopleCount, gs);
 
-                     resetToCity(city);
+                     await resetToCity(city);
                      playClick();
 
                      try {

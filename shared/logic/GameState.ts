@@ -42,6 +42,7 @@ export interface ITransportationData {
 }
 
 export class GameState {
+   id = uuid4();
    city: City = "Rome";
    unlockedTech: PartialSet<Tech> = {};
    unlockedProvince: PartialSet<RomeProvince> = {};

@@ -27,7 +27,7 @@ export class Heartbeat {
    public update(data: Uint8Array): void {
       const gs = getGameState();
       if (!this.shouldSendBytes()) {
-         client.tick(gs.tick);
+         client.tickV2(gs.id, gs.tick);
          return;
       }
       const patch = fossilDeltaCreate(this.data, data);

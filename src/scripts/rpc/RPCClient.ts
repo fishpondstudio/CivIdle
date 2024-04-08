@@ -159,6 +159,7 @@ export async function connectWebSocket(): Promise<number> {
          `steamId=${await SteamClient.getSteamId()}`,
          `version=${getVersion()}`,
          `build=${getBuildNumber()}`,
+         `gameId=${getGameState().id}`,
       ];
       ws = new WebSocket(`${getServerAddress()}/?${params.join("&")}`);
    } else {
@@ -168,6 +169,7 @@ export async function connectWebSocket(): Promise<number> {
          "platform=web",
          `version=${getVersion()}`,
          `build=${getBuildNumber()}`,
+         `gameId=${getGameState().id}`,
       ];
       ws = new WebSocket(`${getServerAddress()}/?${params.join("&")}`);
    }
