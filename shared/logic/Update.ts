@@ -72,6 +72,7 @@ import {
    getXyBuildings,
    unlockedResources,
 } from "./IntraTickCache";
+import { calculateEmpireValue } from "./RebornLogic";
 import { getAmountInTransit } from "./ResourceLogic";
 import type { IBuildingResource, Multiplier } from "./TickLogic";
 import { Tick } from "./TickLogic";
@@ -120,9 +121,9 @@ export function tickTransports(gs: GameState): void {
             return false;
          }
 
-         Tick.next.totalValue += NoPrice[transport.resource]
-            ? 0
-            : transport.amount * (Config.ResourcePrice[transport.resource] ?? 0);
+         const ev = calculateEmpireValue(transport.resource, transport.amount);
+         mapSafeAdd(Tick.next.resourceValues, transport.resource, ev);
+         Tick.next.totalValue += ev;
          return true;
       });
    });
@@ -211,7 +212,10 @@ function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
       building.desiredLevel = 1;
    }
 
-   Tick.next.totalValue += getBuildingValue(building);
+   const bev = getBuildingValue(building);
+   mapSafeAdd(Tick.next.buildingValueByTile, xy, bev);
+   mapSafeAdd(Tick.next.buildingValues, building.type, bev);
+   Tick.next.totalValue += bev;
 
    if (building.status === "building" || building.status === "upgrading") {
       const cost = getBuildingCost(building);
@@ -282,7 +286,11 @@ function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
          if (!Number.isFinite(amount) || amount <= 0) {
             return;
          }
-         Tick.next.totalValue += NoPrice[res] ? 0 : (Config.ResourcePrice[res] ?? 0) * amount;
+
+         const rev = calculateEmpireValue(res, amount);
+         Tick.next.totalValue += rev;
+         mapSafeAdd(Tick.next.resourceValueByTile, xy, rev);
+         mapSafeAdd(Tick.next.resourceValues, res, rev);
       });
       return;
    }
@@ -309,7 +317,12 @@ function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
       if (!Number.isFinite(amount) || amount <= 0) {
          return;
       }
-      Tick.next.totalValue += NoPrice[res] ? 0 : (Config.ResourcePrice[res] ?? 0) * amount;
+
+      const rev = calculateEmpireValue(res, amount);
+      Tick.next.totalValue += rev;
+      mapSafeAdd(Tick.next.resourceValueByTile, xy, rev);
+      mapSafeAdd(Tick.next.resourceValues, res, rev);
+
       mapSafePush(Tick.next.resourcesByTile, res, {
          tile: xy,
          amount,

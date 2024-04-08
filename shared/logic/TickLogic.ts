@@ -31,12 +31,16 @@ interface ITickData {
    globalMultipliers: GlobalMultipliers;
    notProducingReasons: Map<Tile, NotProducingReason>;
    specialBuildings: Map<Building, Tile>;
-   totalValue: number;
    scienceProduced: Map<Tile, number>;
    powerGrid: Set<Tile>;
    powerPlants: Set<Tile>;
    powerBuildings: Set<Tile>;
    happinessExemptions: Set<Tile>;
+   totalValue: number;
+   resourceValues: Map<Resource, number>;
+   buildingValues: Map<Building, number>;
+   buildingValueByTile: Map<Tile, number>;
+   resourceValueByTile: Map<Tile, number>;
 }
 
 export function EmptyTickData(): ITickData {
@@ -54,12 +58,16 @@ export function EmptyTickData(): ITickData {
       notProducingReasons: new Map(),
       playerTradeBuildings: new Map(),
       specialBuildings: new Map(),
-      totalValue: 0,
       scienceProduced: new Map(),
       powerGrid: new Set(),
       powerPlants: new Set(),
       powerBuildings: new Set(),
       happinessExemptions: new Set(),
+      totalValue: 0,
+      resourceValues: new Map(),
+      buildingValues: new Map(),
+      buildingValueByTile: new Map(),
+      resourceValueByTile: new Map(),
    };
 }
 

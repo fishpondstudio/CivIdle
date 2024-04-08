@@ -98,7 +98,9 @@ export function BuildingUpgradeComponent({ gameState, xy }: IBuildingComponentPr
             <div className="separator" />
             <div className="row text-small text-strong">
                <Tippy content={t(L.BatchModeTooltip, { count: selected.size })}>
-                  <div>Batch Upgrade: {selected.size}</div>
+                  <div>
+                     {t(L.BatchUpgrade)}: {selected.size}
+                  </div>
                </Tippy>
                <div className="f1"></div>
                <select
@@ -149,14 +151,14 @@ export function BuildingUpgradeComponent({ gameState, xy }: IBuildingComponentPr
                      }
                   }}
                >
-                  <option value={0}>This</option>
-                  <option value={1}>All Same Type</option>
-                  <option value={2}>Same Type in 1 Tile</option>
-                  <option value={3}>Same Type in 2 Tile</option>
-                  <option value={4}>Same Type in 3 Tile</option>
-                  <option value={5}>Any Type in 1 Tile</option>
-                  <option value={6}>Any Type in 2 Tile</option>
-                  <option value={7}>Any Type in 3 Tile</option>
+                  <option value={0}>{t(L.BatchSelectThisBuilding)}</option>
+                  <option value={1}>{t(L.BatchSelectAllSameType)}</option>
+                  <option value={2}>{t(L.BatchSelectSameType1Tile)}</option>
+                  <option value={3}>{t(L.BatchSelectSameType2Tile)}</option>
+                  <option value={4}>{t(L.BatchSelectSameType3Tile)}</option>
+                  <option value={5}>{t(L.BatchSelectAnyType1Tile)}</option>
+                  <option value={6}>{t(L.BatchSelectAnyType2Tile)}</option>
+                  <option value={7}>{t(L.BatchSelectAnyType3Tile)}</option>
                </select>
             </div>
             <div className="separator" />

@@ -103,7 +103,17 @@ export async function loadBundle() {
    fonts.forEach((f) =>
       BitmapFont.from(
          f.family,
-         { fill: "#ffffff", fontSize: 64, fontFamily: f.family },
+         {
+            fill: "#ffffff",
+            fontSize: 64,
+            fontFamily: f.family,
+            dropShadow: true,
+            dropShadowAlpha: 0.75,
+            dropShadowColor: "#000000",
+            dropShadowAngle: Math.PI / 6,
+            dropShadowBlur: 0,
+            dropShadowDistance: 3,
+         },
          { chars: BitmapFont.ASCII, resolution: 2 },
       ),
    );

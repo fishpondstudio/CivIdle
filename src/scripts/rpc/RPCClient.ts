@@ -194,6 +194,7 @@ export async function connectWebSocket(): Promise<number> {
                chatMessages = c.chat.map((c) => ({ ...c, id: ++chatId }));
             } else {
                c.chat.forEach((m) => {
+                  console.log(m);
                   const mentionsMe =
                      user && m.message.toLowerCase().includes(` @${user.handle.toLowerCase()}`);
                   const isAnnounce = hasFlag(m.attr, ChatAttributes.Announce);

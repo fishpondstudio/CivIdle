@@ -14,6 +14,7 @@ export interface IChat {
    message: string;
    time: number;
    flag: string;
+   color: UserColors;
    level: AccountLevel;
    attr: ChatAttributes;
    channel: ChatChannel;
@@ -151,6 +152,28 @@ export enum UserAttributes {
    DisableRename = 1 << 8,
 }
 
+export enum UserColors {
+   Default = 0,
+   Green = 1,
+   Turquoise = 2,
+   Blue = 3,
+   Purple = 4,
+   Orange = 5,
+   Red = 6,
+   Pink = 7,
+}
+
+export const UserColorsMapping: Map<UserColors, string | undefined> = new Map([
+   [UserColors.Default, undefined],
+   [UserColors.Green, "#00b894"],
+   [UserColors.Turquoise, "#00cec9"],
+   [UserColors.Blue, "#0984e3"],
+   [UserColors.Purple, "#6c5ce7"],
+   [UserColors.Orange, "#f0932b"],
+   [UserColors.Red, "#d63031"],
+   [UserColors.Pink, "#e84393"],
+]);
+
 export interface IUser {
    userId: string;
    handle: string;
@@ -159,6 +182,7 @@ export interface IUser {
    lastHeartbeatAt: number;
    lastGameTick: number;
    totalPlayTime: number;
+   color: UserColors;
    empireValues: IEmpireValue[];
    tradeValues: ITradeValue[];
    level: AccountLevel;
@@ -176,6 +200,7 @@ export interface IMapEntry {
 export interface IClientMapEntry extends IMapEntry {
    attr: UserAttributes;
    flag: string;
+   color: UserColors;
    level: AccountLevel;
    lastSeenAt: number;
    handle: string;

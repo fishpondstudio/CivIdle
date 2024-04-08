@@ -8,6 +8,7 @@ import {
    ChatAttributes,
    ChatChannels,
    ChatMaxChars,
+   UserColorsMapping,
    type ChatChannel,
    type IChat,
    type IUser,
@@ -264,7 +265,9 @@ function ChatMessage({
             <div className="row text-small text-desc">
                <div>{new Date(chat.time ?? 0).toLocaleTimeString()}</div>
                <div className="f1"></div>
-               <div className="text-strong">{chat.name}</div>
+               <div style={{ color: UserColorsMapping.get(chat.color) ?? undefined }} className="text-strong">
+                  {chat.name}
+               </div>
                <Tippy content={getCountryName(chat.flag)}>
                   <img src={getFlagUrl(chat.flag)} className="player-flag game-cursor" />
                </Tippy>
@@ -287,6 +290,7 @@ function ChatMessage({
          ) : (
             <div className="row text-small text-desc">
                <div
+                  style={{ color: UserColorsMapping.get(chat.color) ?? undefined }}
                   className="pointer"
                   onClick={() =>
                      SetChatInput.emit({ getContent: (old) => `@${chat.name} ${old}`, channel: chat.channel })

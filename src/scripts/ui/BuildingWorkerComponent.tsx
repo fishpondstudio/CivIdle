@@ -12,13 +12,13 @@ import {
 import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
 import { getBuildingIO } from "../../../shared/logic/IntraTickCache";
 import { Tick } from "../../../shared/logic/TickLogic";
-import { formatPercent, isEmpty } from "../../../shared/utilities/Helper";
+import { formatNumber, formatPercent, isEmpty } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import warning from "../../images/warning.png";
 import { useShortcut } from "../utilities/Hook";
 import { ApplyToAllComponent } from "./ApplyToAllComponent";
 import type { IBuildingComponentProps } from "./BuildingPage";
-import { FormatNumber, fmtNumber } from "./HelperComponents";
+import { FormatNumber } from "./HelperComponents";
 import { TextWithHelp } from "./TextWithHelpComponent";
 
 export function BuildingWorkerComponent({ gameState, xy }: IBuildingComponentProps): React.ReactNode {
@@ -66,7 +66,7 @@ export function BuildingWorkerComponent({ gameState, xy }: IBuildingComponentPro
                                  <li className="row" key={v.id}>
                                     <div className="f1">
                                        {t(L.ResourceFromBuilding, {
-                                          resource: `${fmtNumber(v.amount, gameState)} ${getResourceName(
+                                          resource: `${formatNumber(v.amount)} ${getResourceName(
                                              v.resource,
                                           )}`,
                                           building: getBuildingName(v.fromXy, gameState),
@@ -216,7 +216,6 @@ export function BuildingWorkerComponent({ gameState, xy }: IBuildingComponentPro
                      building.capacity = Number.parseFloat(e.target.value);
                      notifyGameStateUpdate();
                   }}
-                  className="mh0"
                />
                <div className="sep10" />
                <ApplyToAllComponent

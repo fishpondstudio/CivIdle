@@ -9,14 +9,21 @@ import {
    getTribuneUpgradeMaxLevel,
    upgradeAllPermanentGreatPeople,
 } from "../../../shared/logic/RebornLogic";
-import { AccountLevel, TradeTileReservationDays, UserAttributes } from "../../../shared/utilities/Database";
-import { forEach, formatHM, hasFlag, sizeOf } from "../../../shared/utilities/Helper";
+import {
+   AccountLevel,
+   TradeTileReservationDays,
+   UserAttributes,
+   UserColorsMapping,
+   type UserColors,
+} from "../../../shared/utilities/Database";
+import { forEach, formatHM, hasFlag, safeParseInt, sizeOf } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import Supporter from "../../images/Supporter.png";
 import { resetToCity, saveGame, useGameState } from "../Global";
 import { AccountLevelImages, AccountLevelNames } from "../logic/AccountLevel";
-import { client, useUser } from "../rpc/RPCClient";
+import { OnUserChanged, client, useUser } from "../rpc/RPCClient";
 import { getCountryName, getFlagUrl } from "../utilities/CountryCode";
+import { jsxMMapOf } from "../utilities/Helper";
 import { playClick, playError, playLevelUp } from "../visuals/Sound";
 import { AlertModal } from "./AlertModal";
 import { ChangePlayerHandleModal } from "./ChangePlayerHandleModal";
@@ -40,9 +47,11 @@ export function PlayerHandleComponent() {
          ) : (
             <>
                <div className="row">
-                  <div className="text-strong">{user?.handle}</div>
+                  <div style={{ color: UserColorsMapping.get(user.color) }} className="text-strong">
+                     {user.handle}
+                  </div>
                   <Tippy content={getCountryName(user?.flag)}>
-                     <img className="ml5 player-flag" src={getFlagUrl(user?.flag)} />
+                     <img className="ml5 player-flag" src={getFlagUrl(user.flag)} />
                   </Tippy>
                   {hasFlag(user.attr, UserAttributes.DLC1) ? (
                      <Tippy content={t(L.AccountSupporter)}>
@@ -72,6 +81,34 @@ export function PlayerHandleComponent() {
                      className="player-level mr5"
                   />
                   <div>{AccountLevelNames[accountLevel]()}</div>
+               </div>
+               <div className="sep5" />
+               <div className="row text-strong">
+                  <div className="f1">{t(L.AccountCustomColor)}</div>
+                  <select
+                     value={user.color}
+                     onChange={async (e) => {
+                        try {
+                           const color = safeParseInt(e.target.value, 0) as UserColors;
+                           user.color = color;
+                           OnUserChanged.emit({ ...user });
+                           OnUserChanged.emit(await client.changeColor(color));
+                        } catch (error) {
+                           showToast(String(error));
+                           playError();
+                        }
+                     }}
+                     className="condensed code"
+                     style={{ color: UserColorsMapping.get(user.color) }}
+                  >
+                     {jsxMMapOf(UserColorsMapping, (key, color) => {
+                        return (
+                           <option className="code" style={{ color }} value={key} key={key}>
+                              {color ?? t(L.AccountCustomColorDefault)}
+                           </option>
+                        );
+                     })}
+                  </select>
                </div>
             </>
          )}

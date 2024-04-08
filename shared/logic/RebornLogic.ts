@@ -1,5 +1,6 @@
 import type { City } from "../definitions/CityDefinitions";
 import { GreatPersonType, type GreatPerson } from "../definitions/GreatPersonDefinitions";
+import { NoPrice, type Resource } from "../definitions/ResourceDefinitions";
 import type { TechAge } from "../definitions/TechDefinitions";
 import { clamp, filterOf, forEach, isNullOrUndefined, keysOf, reduceOf, shuffle } from "../utilities/Helper";
 import { Config } from "./Config";
@@ -184,4 +185,8 @@ export function getPermanentGreatPeopleCount(): number {
       (prev, gp, inv) => prev + getTotalGreatPeopleUpgradeCost(gp, inv.level) + inv.amount,
       0,
    );
+}
+
+export function calculateEmpireValue(resource: Resource, amount: number): number {
+   return NoPrice[resource] ? 0 : amount * (Config.ResourcePrice[resource] ?? 0);
 }

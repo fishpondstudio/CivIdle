@@ -6,6 +6,7 @@ import {
    applyBuildingDefaults,
    checkBuildingMax,
    getBuildingCost,
+   isSpecialBuilding,
 } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
 import { getGameOptions, notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
@@ -73,7 +74,9 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
       }
       tile.building = applyBuildingDefaults(makeBuilding({ type: k }), getGameOptions());
       notifyGameStateUpdate();
-      lastBuild = k;
+      if (!isSpecialBuilding(k)) {
+         lastBuild = k;
+      }
    };
    const extractsDeposit = (b: IBuildingDefinition) => {
       return b.deposit && setContains(tile.deposit, b.deposit);

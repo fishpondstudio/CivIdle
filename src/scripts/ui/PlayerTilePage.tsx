@@ -1,7 +1,7 @@
 import Tippy from "@tippyjs/react";
 import { Config } from "../../../shared/logic/Config";
 import { isTileReserved } from "../../../shared/logic/PlayerTradeLogic";
-import { UserAttributes } from "../../../shared/utilities/Database";
+import { UserAttributes, UserColorsMapping } from "../../../shared/utilities/Database";
 import { formatPercent, hasFlag } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import Supporter from "../../images/Supporter.png";
@@ -40,8 +40,8 @@ export function PlayerTilePage({ xy }: { xy: string }): React.ReactNode {
                </>
             )}
             <fieldset>
-               <legend className="row">
-                  {tile.handle}
+               <legend className="text-strong row">
+                  <div style={{ color: UserColorsMapping.get(tile.color) }}>{tile.handle}</div>
                   <Tippy content={getCountryName(tile.flag)}>
                      <img src={getFlagUrl(tile.flag)} className="player-flag ml5" />
                   </Tippy>

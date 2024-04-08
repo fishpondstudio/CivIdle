@@ -1,7 +1,7 @@
 import Tippy from "@tippyjs/react";
 import classNames from "classnames";
 import { useState } from "react";
-import type { Building, IBuildingDefinition } from "../../../shared/definitions/BuildingDefinitions";
+import type { IBuildingDefinition } from "../../../shared/definitions/BuildingDefinitions";
 import {
    NoPrice,
    NoStorage,
@@ -10,22 +10,13 @@ import {
 } from "../../../shared/definitions/ResourceDefinitions";
 import {
    IOCalculation,
-   getBuildingValue,
    getElectrificationStatus,
    getScienceFromBuildings,
    getScienceFromWorkers,
-   isHeadquarter,
-   isNaturalWonder,
 } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
 import { EXPLORER_SECONDS, MAX_EXPLORER } from "../../../shared/logic/Constants";
-import { GameFeature, hasFeature } from "../../../shared/logic/FeatureLogic";
-import {
-   getBuildingIO,
-   getTypeBuildings,
-   getXyBuildings,
-   unlockedResources,
-} from "../../../shared/logic/IntraTickCache";
+import { getBuildingIO, getXyBuildings, unlockedResources } from "../../../shared/logic/IntraTickCache";
 import { getTransportStat } from "../../../shared/logic/ResourceLogic";
 import { getScienceAmount } from "../../../shared/logic/TechLogic";
 import { Tick } from "../../../shared/logic/TickLogic";
@@ -37,10 +28,10 @@ import {
    formatPercent,
    keysOf,
    mReduceOf,
-   safeAdd,
+   mapSafeAdd,
    type Tile,
 } from "../../../shared/utilities/Helper";
-import type { PartialSet, PartialTabulate } from "../../../shared/utilities/TypeDefinitions";
+import type { PartialSet } from "../../../shared/utilities/TypeDefinitions";
 import { L, t } from "../../../shared/utilities/i18n";
 import { LookAtMode, WorldScene } from "../scenes/WorldScene";
 import { Singleton } from "../utilities/Singleton";
@@ -104,46 +95,11 @@ function EmpireTab({ gameState, xy }: IBuildingComponentProps): React.ReactNode 
    if (!building) {
       return null;
    }
-   const unlockedResourcesList: PartialSet<Resource> = unlockedResources(gameState);
-   const resourceAmounts = new Map<Resource, number>();
-   keysOf(unlockedResourcesList).map((res) => {
-      resourceAmounts.set(
-         res,
-         Tick.current.resourcesByTile
-            .get(res)
-            ?.reduce(
-               (prev, curr) => prev + (gameState.tiles.get(curr.tile)?.building?.resources?.[res] ?? 0),
-               0,
-            ) ?? 0,
-      );
-   });
-
    // Get total resource value
-   const totalResourceValue = mReduceOf(
-      resourceAmounts,
-      (prev, res, value) =>
-         prev + (!NoPrice[res] && !NoStorage[res] ? value * Config.ResourcePrice[res]! : 0),
-      0,
-   );
+   const totalResourceValue = mReduceOf(Tick.current.resourceValues, (prev, res, value) => prev + value, 0);
 
    // Get buildings value
-   let totalBuildingValue = 0;
-   const buildingTypeValues = new Map<Building, number>();
-   getTypeBuildings(gameState).forEach((buildings, v) => {
-      if (isNaturalWonder(v) || isHeadquarter(v)) {
-         return;
-      }
-      const buildingTypeValue = mReduceOf(
-         buildings,
-         (prev, i, value) => {
-            const buildingValue = getBuildingValue(value.building);
-            return prev + buildingValue;
-         },
-         0,
-      );
-      buildingTypeValues.set(v, buildingTypeValue);
-      totalBuildingValue += buildingTypeValue;
-   });
+   const totalBuildingValue = mReduceOf(Tick.current.buildingValues, (prev, res, value) => prev + value, 0);
 
    // Get science from buildings
    const totalBuildingScience = getScienceFromBuildings();
@@ -166,17 +122,17 @@ function EmpireTab({ gameState, xy }: IBuildingComponentProps): React.ReactNode 
                <li>
                   <details>
                      <summary className="row">
-                        <div className="f1">{t(L.EmpireValueFromResources)}</div>
+                        <div className="f1">{t(L.EmpireValueFromResourcesStat)}</div>
                         <div className="text-strong">
                            <FormatNumber value={totalResourceValue} />
                         </div>
                      </summary>
                      <ul className="text-small">
-                        {Array.from(resourceAmounts.keys())
+                        {Array.from(Tick.current.resourceValues.keys())
                            .sort(
                               (a, b) =>
-                                 resourceAmounts.get(b)! * Config.ResourcePrice[b]! -
-                                 resourceAmounts.get(a)! * Config.ResourcePrice[a]!,
+                                 (Tick.current.resourceValues.get(b) ?? 0) -
+                                 (Tick.current.resourceValues.get(a) ?? 0),
                            )
                            .map((res) => {
                               if (NoPrice[res] || NoStorage[res]) {
@@ -185,9 +141,7 @@ function EmpireTab({ gameState, xy }: IBuildingComponentProps): React.ReactNode 
                               return (
                                  <li key={res} className="row">
                                     <div className="f1">{Config.Resource[res].name()}</div>
-                                    <FormatNumber
-                                       value={resourceAmounts.get(res)! * Config.ResourcePrice[res]!}
-                                    />
+                                    <FormatNumber value={Tick.current.resourceValues.get(res)} />
                                  </li>
                               );
                            })}
@@ -197,19 +151,23 @@ function EmpireTab({ gameState, xy }: IBuildingComponentProps): React.ReactNode 
                <li>
                   <details>
                      <summary className="row">
-                        <div className="f1">{t(L.EmpireValueFromBuildings)}</div>
+                        <div className="f1">{t(L.StatEmpireValueFromBuildings)}</div>
                         <div className="text-strong">
                            <FormatNumber value={totalBuildingValue} />
                         </div>
                      </summary>
                      <ul className="text-small">
-                        {Array.from(buildingTypeValues.keys())
-                           .sort((a, b) => buildingTypeValues.get(b)! - buildingTypeValues.get(a)!)
+                        {Array.from(Tick.current.buildingValues.keys())
+                           .sort(
+                              (a, b) =>
+                                 (Tick.current.buildingValues.get(b) ?? 0) -
+                                 (Tick.current.buildingValues.get(a) ?? 0),
+                           )
                            .map((b) => {
                               return (
                                  <li key={b} className="row">
                                     <div className="f1">{Config.Building[b].name()}</div>
-                                    <FormatNumber value={buildingTypeValues.get(b)!} />
+                                    <FormatNumber value={Tick.current.buildingValues.get(b)} />
                                  </li>
                               );
                            })}
@@ -339,14 +297,21 @@ function BuildingTab({ gameState }: IBuildingComponentProps): React.ReactNode {
                <thead>
                   <tr>
                      <th></th>
-                     {hasFeature(GameFeature.Electricity, gameState) ? <th></th> : null}
                      <th></th>
-                     <th className="right">{t(L.Level)}</th>
                      <th className="right">
-                        <div className="m-icon small">local_shipping</div>
+                        <Tippy content={t(L.BuildingEmpireValue)}>
+                           <div className="m-icon small">account_balance</div>
+                        </Tippy>
                      </th>
                      <th className="right">
-                        <div className="m-icon small">settings</div>
+                        <Tippy content={t(L.TransportationWorkers)}>
+                           <div className="m-icon small">local_shipping</div>
+                        </Tippy>
+                     </th>
+                     <th className="right">
+                        <Tippy content={t(L.ProductionWorkers)}>
+                           <div className="m-icon small">settings</div>
+                        </Tippy>
                      </th>
                   </tr>
                </thead>
@@ -375,14 +340,12 @@ function BuildingTab({ gameState }: IBuildingComponentProps): React.ReactNode {
                         }
                         return (
                            <tr key={xy}>
-                              <td>{icon}</td>
-                              {hasFeature(GameFeature.Electricity, gameState) ? (
-                                 <td>
-                                    {getElectrificationStatus(xy, gameState) === "Active" ? (
-                                       <div className="m-icon small text-orange">bolt</div>
-                                    ) : null}
-                                 </td>
-                              ) : null}
+                              <td>
+                                 {icon}
+                                 {getElectrificationStatus(xy, gameState) === "Active" ? (
+                                    <div className="m-icon small text-orange">bolt</div>
+                                 ) : null}
+                              </td>
                               <td>
                                  <div
                                     className="pointer"
@@ -394,9 +357,17 @@ function BuildingTab({ gameState }: IBuildingComponentProps): React.ReactNode {
                                  >
                                     {Config.Building[building.type].name()}
                                  </div>
+                                 <div className="text-small text-desc">
+                                    {t(L.LevelX, { level: building.level })}
+                                 </div>
                               </td>
-                              <td className="right">
-                                 <FormatNumber value={building.level} />
+                              <td className="text-small right">
+                                 <div>
+                                    <FormatNumber value={Tick.current.buildingValueByTile.get(xy) ?? 0} />
+                                 </div>
+                                 <div>
+                                    <FormatNumber value={Tick.current.resourceValueByTile.get(xy) ?? 0} />
+                                 </div>
                               </td>
                               <td className="right">
                                  <FormatNumber
@@ -432,8 +403,8 @@ function ResourcesTab({ gameState }: IBuildingComponentProps): React.ReactNode {
    const [showTheoreticalValue, setShowTheoreticalValue] = useState(true);
    const unlockedResourcesList: PartialSet<Resource> = unlockedResources(gameState);
    const resourceAmounts: Partial<Record<keyof ResourceDefinitions, number>> = {};
-   const inputs: PartialTabulate<Resource> = {};
-   const outputs: PartialTabulate<Resource> = {};
+   const inputs = new Map<Resource, number>();
+   const outputs = new Map<Resource, number>();
    getXyBuildings(gameState).forEach((building, xy) => {
       if ("resourceImports" in building) {
          return;
@@ -448,8 +419,8 @@ function ResourcesTab({ gameState }: IBuildingComponentProps): React.ReactNode {
       if (!showTheoreticalValue && Tick.current.notProducingReasons.has(xy)) {
          return;
       }
-      forEach(input, (res, amount) => safeAdd(inputs, res, amount));
-      forEach(output, (res, amount) => safeAdd(outputs, res, amount));
+      forEach(input, (res, amount) => mapSafeAdd(inputs, res, amount));
+      forEach(output, (res, amount) => mapSafeAdd(outputs, res, amount));
    });
    keysOf(unlockedResourcesList).map((res) => {
       resourceAmounts[res] =
@@ -499,6 +470,7 @@ function ResourcesTab({ gameState }: IBuildingComponentProps): React.ReactNode {
                         playClick();
                         setShowTheoreticalValue(!showTheoreticalValue);
                      }}
+                     style={{ margin: "-10px 0" }}
                      className="pointer m-icon"
                   >
                      {showTheoreticalValue ? "toggle_on" : "toggle_off"}
@@ -521,10 +493,14 @@ function ResourcesTab({ gameState }: IBuildingComponentProps): React.ReactNode {
                   case 1:
                      return (resourceAmounts[a] ?? 0) - (resourceAmounts[b] ?? 0);
                   case 2:
-                     return (outputs[a] ?? 0) - (inputs[a] ?? 0) - ((outputs[b] ?? 0) - (inputs[b] ?? 0));
+                     return (
+                        (outputs.get(a) ?? 0) -
+                        (inputs.get(a) ?? 0) -
+                        ((outputs.get(b) ?? 0) - (inputs.get(b) ?? 0))
+                     );
                   case 3: {
-                     const deficitA = (outputs[a] ?? 0) - (inputs[a] ?? 0);
-                     const deficitB = (outputs[b] ?? 0) - (inputs[b] ?? 0);
+                     const deficitA = (outputs.get(a) ?? 0) - (inputs.get(a) ?? 0);
+                     const deficitB = (outputs.get(b) ?? 0) - (inputs.get(b) ?? 0);
                      const timeLeftA =
                         deficitA < 0 ? (resourceAmounts[a] ?? 0) / deficitA : Number.NEGATIVE_INFINITY;
                      const timeLeftB =
@@ -543,8 +519,8 @@ function ResourcesTab({ gameState }: IBuildingComponentProps): React.ReactNode {
                if (NoPrice[res] || NoStorage[res]) {
                   return null;
                }
-               const output = outputs[res] ?? 0;
-               const input = inputs[res] ?? 0;
+               const output = outputs.get(res) ?? 0;
+               const input = inputs.get(res) ?? 0;
                const deficit = output - input;
                const amount = resourceAmounts[res] ?? 0;
                const timeLeft =

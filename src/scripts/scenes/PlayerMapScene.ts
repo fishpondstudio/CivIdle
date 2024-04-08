@@ -1,12 +1,13 @@
 import { SmoothGraphics } from "@pixi/graphics-smooth";
 import type { ColorSource, FederatedPointerEvent, IPointData } from "pixi.js";
-import { BitmapText, Container, LINE_CAP, LINE_JOIN, Sprite } from "pixi.js";
+import { BitmapText, Color, Container, LINE_CAP, LINE_JOIN, Sprite } from "pixi.js";
 import WorldMap from "../../../shared/definitions/WorldMap.json";
 import { getGameOptions } from "../../../shared/logic/GameStateLogic";
 import { isTileReserved } from "../../../shared/logic/PlayerTradeLogic";
 import {
    MAP_MAX_X,
    MAP_MAX_Y,
+   UserColorsMapping,
    type IClientMapEntry,
    type IClientTrade,
 } from "../../../shared/utilities/Database";
@@ -35,6 +36,7 @@ export class PlayerMapScene extends Scene {
    private _idToTradeCount = new Map<string, number>();
    private _idToTile = new Map<string, string>();
    private _dirtyTiles = new Set<string>();
+   private _landTiles: Container;
 
    constructor(context: ISceneContext) {
       super(context);
@@ -46,9 +48,10 @@ export class PlayerMapScene extends Scene {
       this.viewport.setWorldSize(this._width, this._height);
       this.viewport.setZoomRange(minZoom, 1);
 
+      this._landTiles = this.viewport.addChild(new Container());
       forEach(WorldMap, (xy) => {
          const point = xyToPoint(xy);
-         const sprite = this.viewport.addChild(new Sprite(this.context.textures.Misc_100x100));
+         const sprite = this._landTiles.addChild(new Sprite(this.context.textures.Misc_100x100));
          sprite.tint = 0x3498db;
          sprite.position.set(point.x * GridSize, point.y * GridSize);
       });
@@ -188,6 +191,14 @@ export class PlayerMapScene extends Scene {
       this.selectTile(tileX, tileY);
    }
 
+   lookAt(xy: string): void {
+      const point = xyToPoint(xy);
+      const posX = GridSize * point.x;
+      const posY = GridSize * point.y;
+      this.viewport.center = { x: posX + GridSize / 2, y: posY + GridSize / 2 };
+      this.selectTile(point.x, point.y);
+   }
+
    override onMoved(point: IPointData): void {
       viewportCenter = this.viewport.center;
       viewportZoom = this.viewport.zoom;
@@ -261,7 +272,7 @@ export class PlayerMapScene extends Scene {
    private addOrReplaceTile(xy: string, entry: IClientMapEntry) {
       this._tiles.get(xy)?.destroy({ children: true });
       const count = this._idToTradeCount.get(entry.userId);
-      const container = this.viewport.addChild(
+      const container = this._landTiles.addChild(
          new PlayerTile(xyToPoint(xy), entry, count ?? 0, this.context),
       );
       this._tiles.set(xy, container);
@@ -286,6 +297,14 @@ class PlayerTile extends Container {
 
       const isMyself = data.userId === getGameOptions().id;
       const isReserved = isTileReserved(data);
+
+      const color = UserColorsMapping.get(data.color);
+      if (color) {
+         console.log(color);
+         const sprite = this.addChild(new Sprite(context.textures.Misc_100x100));
+         sprite.position.set(x * GridSize, y * GridSize);
+         sprite.tint = Color.shared.setValue(color);
+      }
 
       const flag = this.addChild(new Sprite(textures[`Flag_${data.flag.toUpperCase()}`]));
       flag.anchor.set(0.5, 0.5);

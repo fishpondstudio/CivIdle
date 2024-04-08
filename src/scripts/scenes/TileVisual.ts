@@ -43,6 +43,7 @@ export class TileVisual extends Container {
    private readonly _notProducing: Sprite;
    private readonly _upgrade: Sprite;
    private readonly _level: BitmapText;
+   private readonly _empireValue: BitmapText;
    private readonly _constructionAnimation: Action;
    private readonly _upgradeAnimation: Action;
    private readonly _xy: Tile;
@@ -121,12 +122,16 @@ export class TileVisual extends Container {
       this._level.visible = true;
       this._level.cullable = true;
 
+      this._empireValue = this.addChild(
+         new BitmapText("", { fontName: Fonts.Cabin, fontSize: 12, tint: 0xffffff }),
+      );
+      this._empireValue.anchor.set(0.5, 0.5);
+      this._empireValue.position.set(0, 35);
+      this._empireValue.visible = true;
+      this._empireValue.cullable = true;
+
       this._timeLeft = this.addChild(
-         new BitmapText("", {
-            fontName: Fonts.Cabin,
-            fontSize: 14,
-            tint: 0xffffff,
-         }),
+         new BitmapText("", { fontName: Fonts.Cabin, fontSize: 14, tint: 0xffffff }),
       );
       this._timeLeft.anchor.set(0.5, 0.5);
       this._timeLeft.position.set(0, 30);
@@ -265,6 +270,7 @@ export class TileVisual extends Container {
             this._spinner.visible = false;
             this._building.alpha = 0.5;
             this.toggleConstructionTween(true);
+            this._empireValue.visible = false;
             this.showTimeLeft(tileData, gameState);
             return;
          }
@@ -278,6 +284,7 @@ export class TileVisual extends Container {
                this._level.visible = true;
                this._level.text = getBuildingLevelLabel(this._tile.building);
             }
+            this._empireValue.visible = false;
             this.showTimeLeft(tileData, gameState);
             return;
          }
@@ -287,6 +294,16 @@ export class TileVisual extends Container {
             this._upgrade.visible = false;
             this._timeLeft.visible = false;
             this.toggleUpgradeTween(false);
+
+            const ev =
+               (Tick.current.buildingValueByTile.get(tileData.tile) ?? 0) +
+               (Tick.current.resourceValueByTile.get(tileData.tile) ?? 0);
+            if (ev > 0) {
+               this._empireValue.visible = true;
+               this._empireValue.text = formatNumber(ev);
+            } else {
+               this._empireValue.visible = false;
+            }
 
             if (!isWorldOrNaturalWonder(this._tile.building.type)) {
                this._level.visible = true;
@@ -359,7 +376,7 @@ export class TileVisual extends Container {
       let position = v2({ x: 0, y: 0 });
       let scale = 0.25;
       if (this._tile.building) {
-         position = v2({ x: 0, y: 30 });
+         position = v2({ x: 0, y: 28 });
          scale = 0.15;
       }
       const width = scale * 100;

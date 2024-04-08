@@ -29,7 +29,8 @@ import {
    uuid4,
 } from "../../../shared/utilities/Helper";
 import { decompressSave, overwriteSaveGame, resetToCity, saveGame } from "../Global";
-import { addSystemMessage, canEarnGreatPeopleFromReborn, client } from "../rpc/RPCClient";
+import { addSystemMessage, canEarnGreatPeopleFromReborn, client, getPlayerMap } from "../rpc/RPCClient";
+import { PlayerMapScene } from "../scenes/PlayerMapScene";
 import { WorldScene } from "../scenes/WorldScene";
 import { Singleton } from "../utilities/Singleton";
 import { tickEverySecond } from "./ClientUpdate";
@@ -143,6 +144,21 @@ export async function handleChatCommand(command: string): Promise<void> {
             .map(([xy]) => xy);
          addSystemMessage(`Found ${results.length} building(s) that contains "${parts[1]}"`);
          Singleton().sceneManager.getCurrent(WorldScene)?.drawSelection(null, results);
+         break;
+      }
+      case "find": {
+         if (!parts[1]) {
+            throw new Error("Invalid command format");
+         }
+         const query = parts[1].toLowerCase();
+         for (const [xy, tile] of getPlayerMap()) {
+            if (tile.handle.toLowerCase() === query) {
+               addSystemMessage(`Found player ${parts[1]}, will pan camera to the tile`);
+               Singleton().sceneManager.getCurrent(PlayerMapScene)?.lookAt(xy);
+               break;
+            }
+         }
+         addSystemMessage(`Failed to find player ${parts[1]}`);
          break;
       }
       case "changelevel": {

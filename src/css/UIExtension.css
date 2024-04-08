@@ -5,6 +5,8 @@
    src: url(../fonts/RobotoMono-Medium.ttf) format("ttf");
 }
 
+
+.modern .code,
 .code,
 code {
    font-family: "Roboto Mono", monospace;
@@ -68,6 +70,12 @@ input[type=text]:read-only,
 textarea:disabled {
    background-color: silver;
    cursor: not-allowed;
+}
+
+input[type=range] {
+   margin: 0;
+   height: 16px;
+   cursor: url("../images/w98normal.png"), default;
 }
 
 .separator {
@@ -316,6 +324,10 @@ fieldset .separator {
 .col {
    display: flex;
    flex-direction: column;
+}
+
+.jcc {
+   justify-content: center;
 }
 
 .jcc {
