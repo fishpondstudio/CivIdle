@@ -164,7 +164,6 @@ export const ZH_CN = {
    ChatChannel: "聊天频道",
    ChatChannelLanguage: "语言",
    ChatHideLatestMessage: "隐藏最新消息内容",
-   ChatHideLatestMessageDesc: "聊天框中最新消息内容打码处理",
    ChatNoMessage: "没有消息",
    ChatReconnect: "已断开连接，正在重新连接……",
    ChatSend: "发送",
@@ -323,6 +322,8 @@ export const ZH_CN = {
    Galleon: "大帆船",
    GalleonBuilder: "大帆船船坞",
    Gameplay: "游戏设置",
+   GameVisual: "游戏视角",
+   GameVisualShowEmpireValue: "在建筑地块中，显示相应帝国价值",
    Garment: "服装",
    GarmentWorkshop: "制衣工坊",
    GasPipeline: "天然气管道",
@@ -1064,6 +1065,4 @@ export const ZH_CN = {
    ZenobiaDesc: "佩特拉扭曲时间存储 +%{value} 小时",
    ZhengHe: "郑和",
    Zoroaster: "琐罗亚斯德",
-   GameVisual: "游戏视角",
-   GameVisualShowEmpireValue: "在建筑地块中，显示相应帝国价值",
 };

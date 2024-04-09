@@ -164,7 +164,6 @@ export const EN = {
    ChatChannel: "Chat Channel",
    ChatChannelLanguage: "Language",
    ChatHideLatestMessage: "Hide Latest Message Content",
-   ChatHideLatestMessageDescV2: "Hide the content of latest chat message in the chat bar",
    ChatNoMessage: "No Chat Messages",
    ChatReconnect: "Disconnected, reconnecting...",
    ChatSend: "Send",
@@ -323,6 +322,8 @@ export const EN = {
    Galleon: "Galleon",
    GalleonBuilder: "Galleon Builder",
    Gameplay: "Gameplay",
+   GameVisual: "Game Visual",
+   GameVisualShowEmpireValue: "Show Empire Value in building tile",
    Garment: "Garment",
    GarmentWorkshop: "Garment Workshop",
    GasPipeline: "Gas Pipeline",
@@ -1064,6 +1065,4 @@ export const EN = {
    ZenobiaDesc: "+%{value}h Petra Warp Storage",
    ZhengHe: "Zheng He",
    Zoroaster: "Zoroaster",
-   GameVisual: "Game Visual",
-   GameVisualShowEmpireValue: "Show Empire Value in building tile",
 };
