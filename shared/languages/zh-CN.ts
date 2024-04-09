@@ -645,7 +645,7 @@ export const ZH_CN = {
    Poem: "文章",
    Politics: "政治",
    PorcelainTower: "大报恩寺琉璃塔",
-   PorcelainTowerDesc: "+5 幸福度。当建造完成时，你可提前结算现有的重生额外伟人并在本轮游戏获得此生伟人加成（他们与永久伟人遵循相同的规则）",
+   PorcelainTowerDesc: "+5 幸福度。当建造完成时，你可提前结算现有的重生额外伟人并在本轮游戏获得此生伟人加成（他们与永恒伟人遵循相同的规则）",
    Poseidon: "海神波塞冬",
    PoseidonDesc: "所有相邻建筑，获得免费升级至等级 20 ",
    Power: "电能",
