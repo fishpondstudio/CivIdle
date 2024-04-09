@@ -164,7 +164,7 @@ export const EN = {
    ChatChannel: "Chat Channel",
    ChatChannelLanguage: "Language",
    ChatHideLatestMessage: "Hide Latest Message Content",
-   ChatHideLatestMessageDesc: "Replace the content of latest chat message with asterisks in the chat bar",
+   ChatHideLatestMessageDescV2: "Hide the content of latest chat message in the chat bar",
    ChatNoMessage: "No Chat Messages",
    ChatReconnect: "Disconnected, reconnecting...",
    ChatSend: "Send",

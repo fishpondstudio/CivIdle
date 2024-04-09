@@ -261,10 +261,7 @@ export function GameplayOptionPage(): React.ReactNode {
             <fieldset>
                <legend>{t(L.Chat)}</legend>
                <div className="row">
-                  <div className="f1">
-                     <div>{t(L.ChatHideLatestMessage)}</div>
-                     <div className="text-desc text-small">{t(L.ChatHideLatestMessageDesc)}</div>
-                  </div>
+                  <div className="f1">{t(L.ChatHideLatestMessage)}</div>
                   <div
                      onClick={() => {
                         playClick();

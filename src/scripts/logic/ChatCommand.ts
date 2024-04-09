@@ -29,7 +29,13 @@ import {
    uuid4,
 } from "../../../shared/utilities/Helper";
 import { decompressSave, overwriteSaveGame, resetToCity, saveGame } from "../Global";
-import { addSystemMessage, canEarnGreatPeopleFromReborn, client, getPlayerMap } from "../rpc/RPCClient";
+import {
+   addSystemMessage,
+   canEarnGreatPeopleFromReborn,
+   clearSystemMessages,
+   client,
+   getPlayerMap,
+} from "../rpc/RPCClient";
 import { PlayerMapScene } from "../scenes/PlayerMapScene";
 import { WorldScene } from "../scenes/WorldScene";
 import { Singleton } from "../utilities/Singleton";
@@ -82,6 +88,10 @@ export async function handleChatCommand(command: string): Promise<void> {
       case "playtime": {
          const playTime = await client.getPlayTime();
          addSystemMessage(`You have played actively and online for ${formatHM(playTime * 1000)}`);
+         break;
+      }
+      case "clear": {
+         clearSystemMessages();
          break;
       }
       case "playercount": {
@@ -205,7 +215,7 @@ export async function handleChatCommand(command: string): Promise<void> {
          }
          try {
             const save = await client.queryPlayerSave(parts[1]);
-            const newHandle = await window.showSaveFilePicker();
+            const newHandle = await window.showSaveFilePicker({ suggestedName: parts[1] });
             const writableStream = await newHandle.createWritable();
             await writableStream.write(save);
             await writableStream.close();
@@ -264,6 +274,52 @@ export async function handleChatCommand(command: string): Promise<void> {
          }
          await client.makeMod(parts[1], false);
          addSystemMessage(`${parts[1]} is no longer a mod`);
+         break;
+      }
+      case "gprank": {
+         if (!parts[1]) {
+            throw new Error("Invalid command format");
+         }
+         const result = await client.getGreatPeopleLevelRank(safeParseInt(parts[1], 10));
+         const json = JSON.stringify(result);
+         navigator.clipboard.writeText(json);
+         addSystemMessage(json);
+         addSystemMessage(
+            `<code>${result
+               .map((user) => {
+                  const ev = user.empireValues[user.empireValues.length - 1];
+                  const gp = ev.totalGreatPeopleLevel ?? 0;
+                  return [
+                     user.handle.padEnd(16),
+                     formatNumber(gp / (user.totalPlayTime / 3600)).padStart(8),
+                     gp.toString().padStart(8),
+                  ].join("");
+               })
+               .join("\n")}<code>`,
+         );
+         break;
+      }
+      case "evrank": {
+         if (!parts[1]) {
+            throw new Error("Invalid command format");
+         }
+         const result = await client.getEmpireValueRank(safeParseInt(parts[1], 10));
+         const json = JSON.stringify(result);
+         navigator.clipboard.writeText(json);
+         addSystemMessage(json);
+         addSystemMessage(
+            `<code>${result
+               .map((user) => {
+                  const ev = user.empireValues[user.empireValues.length - 1];
+                  return [
+                     user.handle.padEnd(16),
+                     formatNumber(ev.value).padStart(8),
+                     formatNumber(ev.value / ev.tick).padStart(8),
+                     formatNumber(ev.value / ev.tick / (ev.totalGreatPeopleLevel ?? 1)).padStart(8),
+                  ].join("");
+               })
+               .join("\n")}<code>`,
+         );
          break;
       }
       case "modlist": {

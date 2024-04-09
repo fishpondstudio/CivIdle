@@ -137,6 +137,11 @@ export function addSystemMessage(message: string): void {
    OnChatMessage.emit(chatMessages);
 }
 
+export function clearSystemMessages(): void {
+   chatMessages = chatMessages.filter((c) => "channel" in c);
+   OnChatMessage.emit(chatMessages);
+}
+
 let reconnect = 0;
 let requestId = 0;
 // biome-ignore lint/complexity/noBannedTypes: <explanation>

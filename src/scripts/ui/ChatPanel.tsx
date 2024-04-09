@@ -57,17 +57,27 @@ export function ChatPanel(): React.ReactNode {
    });
 
    return (
-      <div className="chat-bar window">
-         <img
-            style={{ width: "16px", height: "16px", margin: "0 5px 0 0" }}
-            src={user != null ? chatActive : chatInactive}
-         />
+      <div
+         className={classNames({ "chat-bar window": true, "last-message": !options.chatHideLatestMessage })}
+      >
          <div
-            className="chat-message pointer"
+            className="row pointer"
+            style={{ width: "100%", height: "100%", padding: "0 5px" }}
             onClick={() => startTransition(() => setShowChatWindow(!showChatWindow))}
          >
-            <LatestMessage messages={messages} />
+            <img
+               style={{
+                  width: 16,
+                  height: 16,
+                  margin: options.chatHideLatestMessage ? 0 : "0 5px 0 0",
+               }}
+               src={user != null ? chatActive : chatInactive}
+            />
+            <div className="chat-message pointer">
+               <LatestMessage messages={messages} />
+            </div>
          </div>
+
          {showChatWindow
             ? Array.from(options.chatChannels).map((channel, i) => (
                  <ChatWindow
@@ -329,6 +339,9 @@ function ChatMessage({
 
 function LatestMessage({ messages }: { messages: LocalChat[] }): React.ReactNode {
    const options = useGameOptions();
+   if (options.chatHideLatestMessage) {
+      return null;
+   }
    let latestMessage: React.ReactNode = null;
    for (let i = messages.length - 1; i >= 0; --i) {
       const message = messages[i];
@@ -336,7 +349,7 @@ function LatestMessage({ messages }: { messages: LocalChat[] }): React.ReactNode
          latestMessage = (
             <>
                <span className="text-desc">{message.name}: </span>
-               {options.chatHideLatestMessage ? message.message.replaceAll(/[\S]/g, "*") : message.message}
+               {message.message}
             </>
          );
          break;

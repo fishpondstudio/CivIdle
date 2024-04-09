@@ -1,12 +1,14 @@
 #chat-panel .chat-bar {
-   width: 350px;
    height: 30px;
    position: absolute;
    bottom: 10px;
    left: 10px;
    display: flex;
    align-items: center;
-   padding: 0 10px;
+}
+
+#chat-panel .chat-bar.last-message {
+   width: 350px;
 }
 
 #chat-panel .chat-content {
@@ -72,6 +74,10 @@
    font-family: "Roboto Mono", monospace;
    font-weight: 500;
    font-size: 1.3rem;
+}
+
+#chat-panel .chat-command-item code {
+   white-space: pre;
 }
 
 #chat-panel .language-switch {
