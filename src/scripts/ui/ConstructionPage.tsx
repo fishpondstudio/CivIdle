@@ -128,7 +128,7 @@ export function ConstructionPage({ tile }: { tile: ITileData }): React.ReactNode
                   />
                   <div className="sep15"></div>
                   <ApplyToAllComponent
-                     building={building}
+                     xy={tile.tile}
                      getOptions={(s) => ({ constructionPriority: building.constructionPriority })}
                      gameState={gs}
                   />

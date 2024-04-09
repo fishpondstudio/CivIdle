@@ -103,7 +103,7 @@ export function BuildingElectricityComponent({ gameState, xy }: IBuildingCompone
          />
          <div className="sep15" />
          <ApplyToAllComponent
-            building={building}
+            xy={xy}
             getOptions={() => ({ electrification: building.electrification })}
             gameState={gameState}
          />

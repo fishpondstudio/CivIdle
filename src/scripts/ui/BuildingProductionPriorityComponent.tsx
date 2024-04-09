@@ -47,7 +47,7 @@ export function BuildingProductionPriorityComponent({
          </Tippy>
          <div className="sep15"></div>
          <ApplyToAllComponent
-            building={building}
+            xy={xy}
             getOptions={(s) => ({ productionPriority: building.productionPriority })}
             gameState={gameState}
          />

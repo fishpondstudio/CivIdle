@@ -181,7 +181,7 @@ export function MarketBuildingBody({ gameState, xy }: IBuildingComponentProps): 
             </div>
             <div className="sep10"></div>
             <ApplyToAllComponent
-               building={market}
+               xy={xy}
                getOptions={(s) => {
                   return {
                      marketOptions: copyFlag(
@@ -189,7 +189,7 @@ export function MarketBuildingBody({ gameState, xy }: IBuildingComponentProps): 
                         (s as IMarketBuildingData).marketOptions,
                         MarketOptions.ClearAfterUpdate,
                      ),
-                  };
+                  } as IMarketBuildingData;
                }}
                gameState={gameState}
             />

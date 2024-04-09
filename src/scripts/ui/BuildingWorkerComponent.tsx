@@ -219,7 +219,7 @@ export function BuildingWorkerComponent({ gameState, xy }: IBuildingComponentPro
                />
                <div className="sep10" />
                <ApplyToAllComponent
-                  building={building}
+                  xy={xy}
                   getOptions={() => ({ capacity: building.capacity })}
                   gameState={gameState}
                />

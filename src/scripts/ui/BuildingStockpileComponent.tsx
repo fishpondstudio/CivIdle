@@ -48,7 +48,7 @@ export function BuildingStockpileComponent({ gameState, xy }: IBuildingComponent
          </Tippy>
          <div className="sep15"></div>
          <ApplyToAllComponent
-            building={building}
+            xy={xy}
             getOptions={() => ({ stockpileCapacity: building.stockpileCapacity })}
             gameState={gameState}
          />
@@ -81,7 +81,7 @@ export function BuildingStockpileComponent({ gameState, xy }: IBuildingComponent
          </Tippy>
          <div className="sep15"></div>
          <ApplyToAllComponent
-            building={building}
+            xy={xy}
             getOptions={() => ({ stockpileMax: building.stockpileMax })}
             gameState={gameState}
          />

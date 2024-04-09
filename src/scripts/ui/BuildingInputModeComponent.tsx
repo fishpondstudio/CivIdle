@@ -52,7 +52,7 @@ export function BuildingInputModeComponent({ gameState, xy }: IBuildingComponent
          </div>
          <div className="sep10"></div>
          <ApplyToAllComponent
-            building={building}
+            xy={xy}
             getOptions={(s) => ({ inputMode: building.inputMode })}
             gameState={gameState}
          />
@@ -113,7 +113,7 @@ export function BuildingInputModeComponent({ gameState, xy }: IBuildingComponent
          </div>
          <div className="sep10"></div>
          <ApplyToAllComponent
-            building={building}
+            xy={xy}
             getOptions={(s) => ({ maxInputDistance: building.maxInputDistance })}
             gameState={gameState}
          />

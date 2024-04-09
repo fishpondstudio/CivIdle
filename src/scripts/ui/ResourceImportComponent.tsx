@@ -313,14 +313,16 @@ export function ResourceImportComponent({ gameState, xy }: IBuildingComponentPro
             </div>
          </div>
          <ApplyToAllComponent
-            building={building}
-            getOptions={(s) => ({
-               resourceImportOptions: copyFlag(
-                  building.resourceImportOptions,
-                  (s as IResourceImportBuildingData).resourceImportOptions,
-                  ResourceImportOptions.ExportBelowCap,
-               ),
-            })}
+            xy={xy}
+            getOptions={(s) =>
+               ({
+                  resourceImportOptions: copyFlag(
+                     building.resourceImportOptions,
+                     (s as IResourceImportBuildingData).resourceImportOptions,
+                     ResourceImportOptions.ExportBelowCap,
+                  ),
+               }) as IResourceImportBuildingData
+            }
             gameState={gameState}
          />
          <div className="separator"></div>
@@ -349,14 +351,16 @@ export function ResourceImportComponent({ gameState, xy }: IBuildingComponentPro
             </div>
          </div>
          <ApplyToAllComponent
-            building={building}
-            getOptions={(s) => ({
-               resourceImportOptions: copyFlag(
-                  building.resourceImportOptions,
-                  (s as IResourceImportBuildingData).resourceImportOptions,
-                  ResourceImportOptions.ExportToSameType,
-               ),
-            })}
+            xy={xy}
+            getOptions={(s) =>
+               ({
+                  resourceImportOptions: copyFlag(
+                     building.resourceImportOptions,
+                     (s as IResourceImportBuildingData).resourceImportOptions,
+                     ResourceImportOptions.ExportToSameType,
+                  ),
+               }) as IResourceImportBuildingData
+            }
             gameState={gameState}
          />
       </fieldset>

@@ -678,12 +678,12 @@ export function getBuilderCapacity(
 
 export function applyToAllBuildings<T extends IBuildingData>(
    building: Building,
-   getOptions: (b: IBuildingData) => Partial<T>,
+   getOptions: (b: T) => Partial<T>,
    gs: GameState,
 ): number {
    let count = 0;
    getBuildingsByType(building, gs)?.forEach((tile, xy) => {
-      Object.assign(tile.building, getOptions(tile.building));
+      Object.assign(tile.building, getOptions(tile.building as T));
       ++count;
    });
    return count;
