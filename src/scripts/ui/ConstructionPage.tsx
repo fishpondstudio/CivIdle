@@ -149,9 +149,11 @@ export function ConstructionPage({ tile }: { tile: ITileData }): React.ReactNode
 
 function EndConstructionComponent({ tile }: { tile: ITileData }): React.ReactNode {
    const endConstruction = () => {
-      delete tile.building;
-      Singleton().sceneManager.enqueue(WorldScene, (s) => s.resetTile(tile.tile));
-      notifyGameStateUpdate();
+      if (tile.building?.status === "building") {
+         delete tile.building;
+         Singleton().sceneManager.enqueue(WorldScene, (s) => s.resetTile(tile.tile));
+         notifyGameStateUpdate();
+      }
    };
    useShortcut("UpgradePageEndConstruction", endConstruction, [tile]);
    return (
@@ -169,9 +171,11 @@ function EndConstructionComponent({ tile }: { tile: ITileData }): React.ReactNod
 
 function CancelUpgradeComponent({ building }: { building: IBuildingData }): React.ReactNode {
    const cancelUpgrade = () => {
-      building.status = "completed";
-      building.desiredLevel = building.level;
-      notifyGameStateUpdate();
+      if (building.status === "upgrading") {
+         building.status = "completed";
+         building.desiredLevel = building.level;
+         notifyGameStateUpdate();
+      }
    };
    useShortcut("UpgradePageCancelUpgrade", cancelUpgrade, [building]);
    return (

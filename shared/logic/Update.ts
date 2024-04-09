@@ -208,8 +208,8 @@ function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
    }
 
    if (isSpecialBuilding(building.type)) {
-      building.level = 1;
-      building.desiredLevel = 1;
+      building.level = clamp(building.level, 0, 1);
+      building.desiredLevel = clamp(building.desiredLevel, 0, 1);
    }
 
    const bev = getBuildingValue(building);
