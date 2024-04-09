@@ -10,10 +10,9 @@ import {
    STOCKPILE_MAX_MAX,
    STOCKPILE_MAX_MIN,
 } from "../../../shared/logic/Tile";
-import { clamp, formatPercent, safeParseInt, sizeOf } from "../../../shared/utilities/Helper";
+import { clamp, formatPercent, keysOf, safeParseInt, sizeOf } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import { useGameOptions, useGameState } from "../Global";
-import { jsxMapOf } from "../utilities/Helper";
 import { openUrl } from "../utilities/Platform";
 import { playClick } from "../visuals/Sound";
 import { ChangeSoundComponent } from "./ChangeSoundComponent";
@@ -222,33 +221,38 @@ export function GameplayOptionPage(): React.ReactNode {
                   <div className="table-view">
                      <table>
                         <tbody>
-                           {jsxMapOf(options.buildingDefaults, (building, value) => {
-                              return (
-                                 <tr>
-                                    <td>{Config.Building[building].name()}</td>
-                                    <td>
-                                       <TextWithHelp
-                                          content={t(L.BuildingDefaultsCount, { count: sizeOf(value) })}
-                                       >
-                                          {sizeOf(value)}
-                                       </TextWithHelp>
-                                    </td>
-                                    <td style={{ width: 0 }}>
-                                       <Tippy content={t(L.BuildingDefaultsRemove)}>
-                                          <div
-                                             className="text-red m-icon small"
-                                             onClick={() => {
-                                                delete options.buildingDefaults[building];
-                                                notifyGameOptionsUpdate();
-                                             }}
+                           {keysOf(options.buildingDefaults)
+                              .sort((a, b) =>
+                                 Config.Building[a].name().localeCompare(Config.Building[b].name()),
+                              )
+                              .map((building) => {
+                                 const value = options.buildingDefaults[building];
+                                 return (
+                                    <tr>
+                                       <td>{Config.Building[building].name()}</td>
+                                       <td>
+                                          <TextWithHelp
+                                             content={t(L.BuildingDefaultsCount, { count: sizeOf(value) })}
                                           >
-                                             delete
-                                          </div>
-                                       </Tippy>
-                                    </td>
-                                 </tr>
-                              );
-                           })}
+                                             {sizeOf(value)}
+                                          </TextWithHelp>
+                                       </td>
+                                       <td style={{ width: 0 }}>
+                                          <Tippy content={t(L.BuildingDefaultsRemove)}>
+                                             <div
+                                                className="text-red m-icon small"
+                                                onClick={() => {
+                                                   delete options.buildingDefaults[building];
+                                                   notifyGameOptionsUpdate();
+                                                }}
+                                             >
+                                                delete
+                                             </div>
+                                          </Tippy>
+                                       </td>
+                                    </tr>
+                                 );
+                              })}
                         </tbody>
                      </table>
                   </div>
