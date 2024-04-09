@@ -243,10 +243,19 @@ export function MenuComponent(): React.ReactNode {
                   <div
                      className="menu-popover-item"
                      onPointerDown={() => {
-                        const subject = `Your Subject Here (CivIdle/${user?.userId ?? "Unknown Id"}/${
-                           user?.handle ?? "Unknown Handle"
-                        })`;
-                        openUrl(`mailto:hi@fishpondstudio.com?subject=${encodeURIComponent(subject)}`);
+                        const userId = user?.userId ?? "Unknown Id";
+                        const tag = `(CivIdle/${userId}/${user?.handle ?? "Unknown Handle"})`;
+                        const subject = `Your Subject Here ${tag}`;
+                        const body = [
+                           "Please provide as much details as possible (step-by-step reproductions, screenshots, screen recording, etc)\n",
+                           "----- Keep the following tag for identification -----",
+                           tag,
+                        ];
+                        openUrl(
+                           `mailto:hi@fishpondstudio.com?subject=${encodeURIComponent(
+                              subject,
+                           )}&body=${encodeURIComponent(body.join("\n"))}`,
+                        );
                      }}
                   >
                      <MenuItem check={false}>{t(L.EmailDeveloper)}</MenuItem>
