@@ -1,6 +1,6 @@
 import Tippy from "@tippyjs/react";
 import { useState } from "react";
-import type { Resource } from "../../../shared/definitions/ResourceDefinitions";
+import type { Resource, ResourceDefinitions } from "../../../shared/definitions/ResourceDefinitions";
 import {
    getTotalBuildingCost,
    getUpgradeTargetLevels,
@@ -8,7 +8,8 @@ import {
 } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
 import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
-import { getGrid } from "../../../shared/logic/IntraTickCache";
+import { getGrid, unlockedResources } from "../../../shared/logic/IntraTickCache";
+import { Tick } from "../../../shared/logic/TickLogic";
 import {
    formatNumber,
    keysOf,
@@ -18,7 +19,7 @@ import {
    tileToPoint,
    type Tile,
 } from "../../../shared/utilities/Helper";
-import type { PartialTabulate } from "../../../shared/utilities/TypeDefinitions";
+import type { PartialSet, PartialTabulate } from "../../../shared/utilities/TypeDefinitions";
 import { L, t } from "../../../shared/utilities/i18n";
 import { WorldScene } from "../scenes/WorldScene";
 import { useShortcut } from "../utilities/Hook";
@@ -75,7 +76,20 @@ export function BuildingUpgradeComponent({ gameState, xy }: IBuildingComponentPr
       Singleton().sceneManager.getCurrent(WorldScene)?.drawSelection(null, Array.from(result));
    };
 
-   const buildCost = (level: number) => {
+   const unlockedResourcesList: PartialSet<Resource> = unlockedResources(gameState);
+   const resourceAmounts: Partial<Record<keyof ResourceDefinitions, number>> = {};
+
+   keysOf(unlockedResourcesList).map((res) => {
+      resourceAmounts[res] =
+         Tick.current.resourcesByTile
+            .get(res)
+            ?.reduce(
+               (prev, curr) => prev + (gameState.tiles.get(curr.tile)?.building?.resources?.[res] ?? 0),
+               0,
+            ) ?? 0;
+   });
+
+   const buildCost = (idx: number, level: number) => {
       const resCost: PartialTabulate<Resource> = {};
 
       selected.forEach((xy) => {
@@ -90,11 +104,21 @@ export function BuildingUpgradeComponent({ gameState, xy }: IBuildingComponentPr
          });
       });
 
-      return keysOf(resCost)
-         .map((item) => {
-            return `${Config.Resource[item].name()} ${formatNumber(resCost[item])}`;
-         })
-         .join(", ");
+      return (
+         <span>
+            {idx === 0 ? `${t(L.Upgrade)} +1: ` : `${t(L.UpgradeTo, { level })}: `}
+            {keysOf(resCost).map((item, idx) => {
+               return (
+                  <>
+                     <span className={resourceAmounts[item]! < resCost[item]! ? "text-red" : ""}>
+                        {Config.Resource[item].name()} {formatNumber(resCost[item])}
+                     </span>
+                     {idx < keysOf(resCost).length - 1 ? ", " : ""}
+                  </>
+               );
+            })}
+         </span>
+      );
    };
 
    return (
@@ -189,13 +213,7 @@ export function BuildingUpgradeComponent({ gameState, xy }: IBuildingComponentPr
             <div className="separator" />
             <div className="row">
                {levels.map((level, idx) => (
-                  <Tippy
-                     key={idx}
-                     content={`${idx === 0 ? `${t(L.Upgrade)} +1` : t(L.UpgradeTo, { level })}: ${buildCost(
-                        level,
-                     )}`}
-                     placement="top"
-                  >
+                  <Tippy key={idx} content={buildCost(idx, level)} placement="top">
                      <button className="f1" onClick={() => upgradeTo(idx === 0 ? -1 : level)}>
                         {idx === 0 ? "+1" : `~${level}`}
                      </button>
