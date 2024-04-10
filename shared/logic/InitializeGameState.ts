@@ -24,13 +24,15 @@ export function initializeGameState(gameState: GameState, options: GameOptions) 
       });
    });
 
+   const opt = Object.assign({}, options, { defaultBuildingLevel: 1 });
+
    gameState.tiles.get(centerXy)!.building = applyBuildingDefaults(
       makeBuilding({
          type: "Headquarter",
          level: 1,
          status: "completed",
       }),
-      options,
+      opt,
    );
 
    // forEach(Config.Tech, (k, v) => {
@@ -54,7 +56,7 @@ export function initializeGameState(gameState: GameState, options: GameOptions) 
                status: "completed",
             }),
          ),
-         options,
+         opt,
       );
    }
 
@@ -66,7 +68,7 @@ export function initializeGameState(gameState: GameState, options: GameOptions) 
             level: 1,
             status: "completed",
          }),
-         options,
+         opt,
       );
    }
 
@@ -78,7 +80,7 @@ export function initializeGameState(gameState: GameState, options: GameOptions) 
             level: 1,
             status: "completed",
          }),
-         options,
+         opt,
       );
    }
 
