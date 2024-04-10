@@ -16,7 +16,7 @@ import {
    numberToRoman,
    pointToTile,
    tileToPoint,
-   type Tile
+   type Tile,
 } from "../../../shared/utilities/Helper";
 import type { PartialTabulate } from "../../../shared/utilities/TypeDefinitions";
 import { L, t } from "../../../shared/utilities/i18n";
@@ -80,23 +80,22 @@ export function BuildingUpgradeComponent({ gameState, xy }: IBuildingComponentPr
 
       selected.forEach((xy) => {
          const b = gameState.tiles.get(xy)?.building;
-         if (!b) return;                
-         mapOf(
-            getTotalBuildingCost(building.type, building.level, level),
-            (res, amount) => {
-               if ( res in resCost ) {
-                  resCost[res] = resCost[res]! + amount;
-               } else {
-                  resCost[res] = amount;
-               }               
-            },
-         );
-      })
+         if (!b) return;
+         mapOf(getTotalBuildingCost(b.type, b.level, level), (res, amount) => {
+            if (res in resCost) {
+               resCost[res] = resCost[res]! + amount;
+            } else {
+               resCost[res] = amount;
+            }
+         });
+      });
 
-      return keysOf(resCost).map((item) => {
-         return `${Config.Resource[item].name()} ${formatNumber(resCost[item])}`;
-      }).join(", ");
-   }
+      return keysOf(resCost)
+         .map((item) => {
+            return `${Config.Resource[item].name()} ${formatNumber(resCost[item])}`;
+         })
+         .join(", ");
+   };
 
    return (
       <>
@@ -192,8 +191,9 @@ export function BuildingUpgradeComponent({ gameState, xy }: IBuildingComponentPr
                {levels.map((level, idx) => (
                   <Tippy
                      key={idx}
-                     content={`${idx === 0 ? `${t(L.Upgrade)} +1` : t(L.UpgradeTo, { level })}: ${buildCost(level)}`
-                  }
+                     content={`${idx === 0 ? `${t(L.Upgrade)} +1` : t(L.UpgradeTo, { level })}: ${buildCost(
+                        level,
+                     )}`}
                      placement="top"
                   >
                      <button className="f1" onClick={() => upgradeTo(idx === 0 ? -1 : level)}>
