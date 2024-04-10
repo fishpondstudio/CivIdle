@@ -44,7 +44,7 @@ export function UnexploredTile({ xy, gameState }: IBuildingComponentProps): Reac
             const neighborXy = pointToTile(neighbor);
             exploreTile(neighborXy, gameState);
             Singleton().sceneManager.enqueue(WorldScene, (s) => s.revealTile(neighborXy));
-         });      
+         });
    };
    useShortcut("SendAnExplorer", () => explore(), [xy]);
 
