@@ -1,5 +1,6 @@
 import Tippy from "@tippyjs/react";
 import { useState } from "react";
+import type { Resource } from "../../../shared/definitions/ResourceDefinitions";
 import {
    getTotalBuildingCost,
    getUpgradeTargetLevels,
@@ -10,12 +11,14 @@ import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
 import { getGrid } from "../../../shared/logic/IntraTickCache";
 import {
    formatNumber,
+   keysOf,
    mapOf,
    numberToRoman,
    pointToTile,
    tileToPoint,
-   type Tile,
+   type Tile
 } from "../../../shared/utilities/Helper";
+import type { PartialTabulate } from "../../../shared/utilities/TypeDefinitions";
 import { L, t } from "../../../shared/utilities/i18n";
 import { WorldScene } from "../scenes/WorldScene";
 import { useShortcut } from "../utilities/Hook";
@@ -71,6 +74,29 @@ export function BuildingUpgradeComponent({ gameState, xy }: IBuildingComponentPr
       setSelected(result);
       Singleton().sceneManager.getCurrent(WorldScene)?.drawSelection(null, Array.from(result));
    };
+
+   const buildCost = (level: number) => {
+      const resCost: PartialTabulate<Resource> = {};
+
+      selected.forEach((xy) => {
+         const b = gameState.tiles.get(xy)?.building;
+         if (!b) return;                
+         mapOf(
+            getTotalBuildingCost(building.type, building.level, level),
+            (res, amount) => {
+               if ( res in resCost ) {
+                  resCost[res] = resCost[res]! + amount;
+               } else {
+                  resCost[res] = amount;
+               }               
+            },
+         );
+      })
+
+      return keysOf(resCost).map((item) => {
+         return `${Config.Resource[item].name()} ${formatNumber(resCost[item])}`;
+      }).join(", ");
+   }
 
    return (
       <>
@@ -166,12 +192,8 @@ export function BuildingUpgradeComponent({ gameState, xy }: IBuildingComponentPr
                {levels.map((level, idx) => (
                   <Tippy
                      key={idx}
-                     content={`${idx === 0 ? `${t(L.Upgrade)} +1` : t(L.UpgradeTo, { level })}: ${mapOf(
-                        getTotalBuildingCost(building.type, building.level, level),
-                        (res, amount) => {
-                           return `${Config.Resource[res].name()} ${formatNumber(amount)}`;
-                        },
-                     ).join(", ")}`}
+                     content={`${idx === 0 ? `${t(L.Upgrade)} +1` : t(L.UpgradeTo, { level })}: ${buildCost(level)}`
+                  }
                      placement="top"
                   >
                      <button className="f1" onClick={() => upgradeTo(idx === 0 ? -1 : level)}>
