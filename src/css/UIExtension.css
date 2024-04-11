@@ -294,6 +294,10 @@ fieldset .separator {
    margin-right: 20px;
 }
 
+.ml2 {
+   margin-left: 2px;
+}
+
 .ml5 {
    margin-left: 5px;
 }

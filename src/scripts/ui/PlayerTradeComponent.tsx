@@ -151,6 +151,7 @@ export function PlayerTradeComponent({ gameState, xy }: IBuildingComponentProps)
                { name: "", sortable: false },
             ]}
             sortingState={playerTradesSortingState}
+            paginate={true}
             data={trades.filter(
                (trade) =>
                   resourceFilters.size === 0 ||
