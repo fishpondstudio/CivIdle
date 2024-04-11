@@ -8,6 +8,7 @@ export const ShortcutScopes = {
    TechPage: () => t(L.ShortcutScopeTechPage),
    EmptyTilePage: () => t(L.ShortcutScopeEmptyTilePage),
    ConstructionPage: () => t(L.ShortcutScopeConstructionPage),
+   UnexploredPage: () => t(L.ShortcutScopeUnexploredPage),
    PlayerMapPage: () => t(L.ShortcutScopePlayerMapPage),
 } as const;
 
@@ -52,6 +53,10 @@ export const ShortcutActions = {
    EmptyTilePageBuildLastBuilding: {
       scope: "EmptyTilePage",
       name: () => t(L.EmptyTilePageBuildLastBuilding),
+   },
+   SendAnExplorer: {
+      scope: "UnexploredPage",
+      name: () => t(L.SendExplorer),
    },
    PlayerMapPageGoBackToCity: {
       scope: "PlayerMapPage",

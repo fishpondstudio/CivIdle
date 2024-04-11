@@ -808,6 +808,7 @@ export const EN = {
    ShortcutSave: "Save",
    ShortcutScopeBuildingPage: "Building Page",
    ShortcutScopeConstructionPage: "Consctruction/Upgrade Page",
+   ShortcutScopeUnexploredPage: "Unexplored Page",
    ShortcutScopeEmptyTilePage: "Empty Tile Page",
    ShortcutScopePlayerMapPage: "Trade Map Page",
    ShortcutScopeTechPage: "Tech Page",
@@ -1066,4 +1067,5 @@ export const EN = {
    ZenobiaDesc: "+%{value}h Petra Warp Storage",
    ZhengHe: "Zheng He",
    Zoroaster: "Zoroaster",
+   SendExplorer: "Send Explorer",
 };

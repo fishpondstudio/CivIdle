@@ -6,6 +6,7 @@ import { pointToTile, safeAdd, tileToPoint } from "../../../shared/utilities/Hel
 import { L, t } from "../../../shared/utilities/i18n";
 import Discovery from "../../images/Discovery.jpg";
 import { WorldScene } from "../scenes/WorldScene";
+import { useShortcut } from "../utilities/Hook";
 import { Singleton } from "../utilities/Singleton";
 import { playError } from "../visuals/Sound";
 import type { IBuildingComponentProps } from "./BuildingPage";
@@ -19,6 +20,34 @@ export function UnexploredTile({ xy, gameState }: IBuildingComponentProps): Reac
    if (statistics) {
       explorers = gameState.tiles.get(statistics)?.building?.resources.Explorer ?? 0;
    }
+
+   const explore = () => {
+      const tile = gameState.tiles.get(xy);
+      if (!tile || tile.explored || !statistics) {
+         playError();
+         return;
+      }
+      const stat = gameState.tiles.get(statistics)?.building;
+      if (!stat) {
+         playError();
+         return;
+      }
+
+      if ((stat.resources.Explorer ?? 0) > 0) {
+         safeAdd(stat.resources, "Explorer", -1);
+      }
+      exploreTile(xy, gameState);
+      Singleton().sceneManager.enqueue(WorldScene, (s) => s.revealTile(xy));
+      getGrid(gameState)
+         .getNeighbors(tileToPoint(xy))
+         .forEach((neighbor) => {
+            const neighborXy = pointToTile(neighbor);
+            exploreTile(neighborXy, gameState);
+            Singleton().sceneManager.enqueue(WorldScene, (s) => s.revealTile(neighborXy));
+         });
+   };
+   useShortcut("SendAnExplorer", () => explore(), [xy]);
+
    return (
       <div className="window">
          <div className="title-bar">
@@ -39,29 +68,7 @@ export function UnexploredTile({ xy, gameState }: IBuildingComponentProps): Reac
                className="w100 jcc row mb10"
                disabled={explorers <= 0}
                onClick={() => {
-                  const tile = gameState.tiles.get(xy);
-                  if (!tile || tile.explored || !statistics) {
-                     playError();
-                     return;
-                  }
-                  const stat = gameState.tiles.get(statistics)?.building;
-                  if (!stat) {
-                     playError();
-                     return;
-                  }
-
-                  if ((stat.resources.Explorer ?? 0) > 0) {
-                     safeAdd(stat.resources, "Explorer", -1);
-                  }
-                  exploreTile(xy, gameState);
-                  Singleton().sceneManager.enqueue(WorldScene, (s) => s.revealTile(xy));
-                  getGrid(gameState)
-                     .getNeighbors(tileToPoint(xy))
-                     .forEach((neighbor) => {
-                        const neighborXy = pointToTile(neighbor);
-                        exploreTile(neighborXy, gameState);
-                        Singleton().sceneManager.enqueue(WorldScene, (s) => s.revealTile(neighborXy));
-                     });
+                  explore();
                }}
             >
                <div className="m-icon small">explore</div>
