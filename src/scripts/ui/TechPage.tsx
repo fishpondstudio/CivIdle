@@ -1,18 +1,21 @@
-import type { Resource } from "../../../shared/definitions/ResourceDefinitions";
 import { MAX_TECH_COLUMN, type Tech } from "../../../shared/definitions/TechDefinitions";
 import { Config } from "../../../shared/logic/Config";
 import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
 import { getGreatPeopleChoiceCount, rollGreatPeopleThisRun } from "../../../shared/logic/RebornLogic";
-import { getResourceAmount, trySpendResources } from "../../../shared/logic/ResourceLogic";
-import { OnResetTile, getCurrentAge, getUnlockCost, unlockTech } from "../../../shared/logic/TechLogic";
-import { forEach, reduceOf } from "../../../shared/utilities/Helper";
-import type { PartialTabulate } from "../../../shared/utilities/TypeDefinitions";
+import {
+   OnResetTile,
+   getCurrentAge,
+   getScienceAmount,
+   getTechUnlockCost,
+   tryDeductScience,
+   unlockTech,
+} from "../../../shared/logic/TechLogic";
+import { forEach } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import { useGameState } from "../Global";
 import { checkAgeAchievements } from "../logic/Achievement";
 import { TechTreeScene } from "../scenes/TechTreeScene";
 import { WorldScene } from "../scenes/WorldScene";
-import { jsxMapOf } from "../utilities/Helper";
 import { useShortcut } from "../utilities/Hook";
 import { Singleton } from "../utilities/Singleton";
 import { playLevelUp } from "../visuals/Sound";
@@ -36,7 +39,7 @@ export function TechPage({ id }: { id: Tech }): React.ReactNode {
       if (!isTechAvailable() || !canUnlock()) {
          return;
       }
-      if (!trySpendResources(unlockCost, gs)) {
+      if (!tryDeductScience(getTechUnlockCost(id), gs)) {
          return;
       }
       playLevelUp();
@@ -69,14 +72,9 @@ export function TechPage({ id }: { id: Tech }): React.ReactNode {
    }
 
    const prerequisitesSatisfied = tech.requireTech.every((t) => gs.unlockedTech[t]);
-   const unlockCost: PartialTabulate<Resource> = { Science: getUnlockCost(id) };
-   const availableResources: PartialTabulate<Resource> = {};
-   forEach(unlockCost, (k, v) => {
-      availableResources[k] = getResourceAmount(k, gs);
-   });
-   const progress =
-      reduceOf(availableResources, (prev, k, v) => prev + Math.min(v, unlockCost[k] ?? 0), 0) /
-      reduceOf(unlockCost, (prev, _, v) => prev + v, 0);
+   const unlockScienceCost = getTechUnlockCost(id);
+   const availableScience = getScienceAmount();
+   const progress = availableScience / unlockScienceCost;
    const canUnlock = () => prerequisitesSatisfied && progress >= 1 && !gs.unlockedTech[id];
 
    let prerequisiteCount = 0;
@@ -127,26 +125,21 @@ export function TechPage({ id }: { id: Tech }): React.ReactNode {
                   </div>
                ) : (
                   <>
-                     {jsxMapOf(unlockCost, (res, cost) => {
-                        const availableAmount = availableResources[res] ?? 0;
-                        return (
-                           <div className="row mv5" key={res}>
-                              {availableAmount >= cost ? (
-                                 <div className="m-icon small text-green mr5">check_circle</div>
-                              ) : (
-                                 <div className="m-icon small text-red mr5">cancel</div>
-                              )}
-                              <div className="mr5">{Config.Resource[res].name()}: </div>
-                              <div className="f1" />
-                              <div className="ml5">
-                                 <FormatNumber value={availableAmount} /> /{" "}
-                                 <strong>
-                                    <FormatNumber value={cost} />
-                                 </strong>
-                              </div>
-                           </div>
-                        );
-                     })}
+                     <div className="row mv5">
+                        {availableScience >= unlockScienceCost ? (
+                           <div className="m-icon small text-green mr5">check_circle</div>
+                        ) : (
+                           <div className="m-icon small text-red mr5">cancel</div>
+                        )}
+                        <div className="mr5">{Config.Resource.Science.name()}: </div>
+                        <div className="f1" />
+                        <div className="ml5">
+                           <FormatNumber value={availableScience} /> /{" "}
+                           <strong>
+                              <FormatNumber value={unlockScienceCost} />
+                           </strong>
+                        </div>
+                     </div>
                      <div className="sep5" />
                      <div className="row">
                         <div className="f1">

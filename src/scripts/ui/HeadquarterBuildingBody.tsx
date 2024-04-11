@@ -13,7 +13,7 @@ import {
 import {
    getCurrentAge,
    getScienceAmount,
-   getUnlockCost,
+   getTechUnlockCost,
    unlockableTechs,
 } from "../../../shared/logic/TechLogic";
 import { Tick } from "../../../shared/logic/TickLogic";
@@ -197,7 +197,7 @@ export function HeadquarterBuildingBody({
                   </thead>
                   <tbody>
                      {unlockableTechs(gameState).map((k) => {
-                        const unlockCost = getUnlockCost(k);
+                        const unlockCost = getTechUnlockCost(k);
                         return (
                            <tr key={k}>
                               <td>{Config.Tech[k].name()}</td>

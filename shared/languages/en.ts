@@ -1068,4 +1068,5 @@ export const EN = {
    ZhengHe: "Zheng He",
    Zoroaster: "Zoroaster",
    SendExplorer: "Send Explorer",
+   WarehouseExtension: "Unlock warehouse caravansary extension mode. Allow warehouses adjacent to caravansaries to be included in player trading"
 };

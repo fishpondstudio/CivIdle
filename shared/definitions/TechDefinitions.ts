@@ -320,6 +320,7 @@ export class TechDefinitions {
       globalMultiplier: {
          storage: 1,
       },
+      additionalUpgrades: [() => t(L.WarehouseExtension)],
    };
 
    Feudalism: ITechDefinition = {

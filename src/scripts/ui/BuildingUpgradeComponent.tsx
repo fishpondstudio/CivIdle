@@ -81,12 +81,7 @@ export function BuildingUpgradeComponent({ gameState, xy }: IBuildingComponentPr
 
    keysOf(unlockedResourcesList).map((res) => {
       resourceAmounts[res] =
-         Tick.current.resourcesByTile
-            .get(res)
-            ?.reduce(
-               (prev, curr) => prev + (gameState.tiles.get(curr.tile)?.building?.resources?.[res] ?? 0),
-               0,
-            ) ?? 0;
+         Tick.current.resourcesByTile.get(res)?.reduce((prev, curr) => prev + curr.amount, 0) ?? 0;
    });
 
    const buildCost = (idx: number, level: number) => {
@@ -110,10 +105,10 @@ export function BuildingUpgradeComponent({ gameState, xy }: IBuildingComponentPr
             {keysOf(resCost).map((item, idx) => {
                return (
                   <>
+                     {idx === 0 ? "" : ", "}
                      <span className={resourceAmounts[item]! < resCost[item]! ? "text-red" : ""}>
                         {Config.Resource[item].name()} {formatNumber(resCost[item])}
                      </span>
-                     {idx < keysOf(resCost).length - 1 ? ", " : ""}
                   </>
                );
             })}
@@ -213,7 +208,7 @@ export function BuildingUpgradeComponent({ gameState, xy }: IBuildingComponentPr
             <div className="separator" />
             <div className="row">
                {levels.map((level, idx) => (
-                  <Tippy key={idx} content={buildCost(idx, level)} placement="top">
+                  <Tippy key={idx} content={buildCost(idx, level)}>
                      <button className="f1" onClick={() => upgradeTo(idx === 0 ? -1 : level)}>
                         {idx === 0 ? "+1" : `~${level}`}
                      </button>

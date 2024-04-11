@@ -43,11 +43,10 @@ export class TileVisual extends Container {
    private readonly _notProducing: Sprite;
    private readonly _upgrade: Sprite;
    private readonly _level: BitmapText;
-   private readonly _empireValue: BitmapText;
+   private readonly _bottomText: BitmapText;
    private readonly _constructionAnimation: Action;
    private readonly _upgradeAnimation: Action;
    private readonly _xy: Tile;
-   private readonly _timeLeft: BitmapText;
    private _lastFloaterShownAt = 0;
    private _floaterValue = 0;
 
@@ -122,21 +121,13 @@ export class TileVisual extends Container {
       this._level.visible = true;
       this._level.cullable = true;
 
-      this._empireValue = this.addChild(
+      this._bottomText = this.addChild(
          new BitmapText("", { fontName: Fonts.Cabin, fontSize: 12, tint: 0xffffff }),
       );
-      this._empireValue.anchor.set(0.5, 0.5);
-      this._empireValue.position.set(0, 35);
-      this._empireValue.visible = true;
-      this._empireValue.cullable = true;
-
-      this._timeLeft = this.addChild(
-         new BitmapText("", { fontName: Fonts.Cabin, fontSize: 14, tint: 0xffffff }),
-      );
-      this._timeLeft.anchor.set(0.5, 0.5);
-      this._timeLeft.position.set(0, 30);
-      this._timeLeft.visible = false;
-      this._timeLeft.cullable = true;
+      this._bottomText.anchor.set(0.5, 0.5);
+      this._bottomText.position.set(0, 35);
+      this._bottomText.visible = true;
+      this._bottomText.cullable = true;
 
       this._fog = this.addChild(new Sprite(getTexture("Misc_Cloud", textures)));
       this._fog.anchor.set(0.5);
@@ -270,7 +261,6 @@ export class TileVisual extends Container {
             this._spinner.visible = false;
             this._building.alpha = 0.5;
             this.toggleConstructionTween(true);
-            this._empireValue.visible = false;
             this.showTimeLeft(tileData, gameState);
             return;
          }
@@ -284,7 +274,6 @@ export class TileVisual extends Container {
                this._level.visible = true;
                this._level.text = getBuildingLevelLabel(this._tile.building);
             }
-            this._empireValue.visible = false;
             this.showTimeLeft(tileData, gameState);
             return;
          }
@@ -292,17 +281,16 @@ export class TileVisual extends Container {
             this._construction.visible = false;
             this.toggleConstructionTween(false);
             this._upgrade.visible = false;
-            this._timeLeft.visible = false;
             this.toggleUpgradeTween(false);
 
             const ev =
                (Tick.current.buildingValueByTile.get(tileData.tile) ?? 0) +
                (Tick.current.resourceValueByTile.get(tileData.tile) ?? 0);
             if (ev > 0 && getGameOptions().gameVisualShowEmpireValue) {
-               this._empireValue.visible = true;
-               this._empireValue.text = formatNumber(ev);
+               this._bottomText.visible = true;
+               this._bottomText.text = formatNumber(ev);
             } else {
-               this._empireValue.visible = false;
+               this._bottomText.visible = false;
             }
 
             if (!isWorldOrNaturalWonder(this._tile.building.type)) {
@@ -347,8 +335,8 @@ export class TileVisual extends Container {
 
    private showTimeLeft(tileData: ITileData, gameState: GameState) {
       const { secondsLeft } = getBuildingPercentage(tileData.tile, gameState);
-      this._timeLeft.text = formatHMS(secondsLeft * 1000);
-      this._timeLeft.visible = true;
+      this._bottomText.text = formatHMS(secondsLeft * 1000);
+      this._bottomText.visible = true;
    }
 
    private toggleConstructionTween(on: boolean) {

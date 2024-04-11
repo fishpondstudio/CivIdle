@@ -21,7 +21,7 @@ import {
    addDeposit,
    getCurrentAge,
    getMostAdvancedTech,
-   getUnlockCost,
+   getTechUnlockCost,
 } from "../../../shared/logic/TechLogic";
 import { ensureTileFogOfWar } from "../../../shared/logic/TerrainLogic";
 import { makeBuilding } from "../../../shared/logic/Tile";
@@ -99,7 +99,11 @@ export function onBuildingComplete(xy: Tile): void {
       case "OxfordUniversity": {
          const tech = getMostAdvancedTech(gs);
          if (tech) {
-            safeAdd(getSpecialBuildings(gs).Headquarter.building.resources, "Science", getUnlockCost(tech));
+            safeAdd(
+               getSpecialBuildings(gs).Headquarter.building.resources,
+               "Science",
+               getTechUnlockCost(tech),
+            );
          }
          break;
       }

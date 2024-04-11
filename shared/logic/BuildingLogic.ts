@@ -201,7 +201,7 @@ interface IStorageResult {
 
 export function getPetraBaseStorage(petra: IBuildingData): number {
    const HOUR = 60 * 60;
-   return HOUR * (3 + petra.level);
+   return HOUR * petra.level;
 }
 
 // 1 hour
@@ -232,7 +232,7 @@ export function getStorageFor(xy: Tile, gs: GameState): IStorageResult {
       }
       case "Petra": {
          const HOUR = 60 * 60;
-         base = getPetraBaseStorage(building);
+         base = 3 * HOUR + getPetraBaseStorage(building);
          base +=
             HOUR * Config.GreatPerson.Zenobia.value(getGreatPersonThisRunLevel(gs.greatPeople.Zenobia ?? 0));
          base += HOUR * Config.GreatPerson.Zenobia.value(getGameOptions().greatPeople.Zenobia?.level ?? 0);

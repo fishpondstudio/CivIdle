@@ -207,10 +207,12 @@ function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
       building.desiredLevel = building.level;
    }
 
-   if (isSpecialBuilding(building.type)) {
-      building.level = clamp(building.level, 0, 1);
-      building.desiredLevel = clamp(building.desiredLevel, 0, 1);
-   }
+   // The following code is wrong, but I keep it here to avoid making the same mistake again. Don't assume
+   // wonders don't have levels. Some do! Like Petra!
+   // if (isSpecialBuilding(building.type)) {
+   //    building.level = clamp(building.level, 0, 1);
+   //    building.desiredLevel = clamp(building.desiredLevel, 0, 1);
+   // }
 
    const bev = getBuildingValue(building);
    mapSafeAdd(Tick.next.buildingValueByTile, xy, bev);
@@ -304,6 +306,15 @@ function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
 
    if (building.type === "Caravansary") {
       Tick.next.playerTradeBuildings.set(xy, building);
+      if (hasFeature(GameFeature.WarehouseExtension, gs)) {
+         for (const point of getGrid(gs).getNeighbors(tileToPoint(xy))) {
+            const nxy = pointToTile(point);
+            const b = gs.tiles.get(nxy)?.building;
+            if (b?.type === "Warehouse" && b.status === "completed") {
+               Tick.next.playerTradeBuildings.set(nxy, b);
+            }
+         }
+      }
    }
 
    if (isSpecialBuilding(building.type)) {

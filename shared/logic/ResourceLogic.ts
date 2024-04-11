@@ -1,6 +1,6 @@
 import type { Building } from "../definitions/BuildingDefinitions";
 import { NoPrice, type Deposit, type Resource } from "../definitions/ResourceDefinitions";
-import { forEach, reduceOf, type Tile } from "../utilities/Helper";
+import { clamp, forEach, reduceOf, safeAdd, type Tile } from "../utilities/Helper";
 import type { PartialTabulate } from "../utilities/TypeDefinitions";
 import { Config } from "./Config";
 import type { GameState } from "./GameState";
@@ -18,46 +18,6 @@ export function getResourceAmount(res: Resource, gs: GameState): number {
    );
 }
 
-export function trySpendResources(resources: PartialTabulate<Resource>, gs: GameState): boolean {
-   let res: Resource;
-
-   for (res in resources) {
-      const amount = resources[res] ?? 0;
-      if (getResourceAmount(res, gs) < amount) {
-         return false;
-      }
-   }
-
-   for (res in resources) {
-      let amount = resources[res] ?? 0;
-      const buildings = Tick.current.resourcesByTile.get(res) ?? [];
-      buildings.sort((a, b) => {
-         return (
-            (gs.tiles.get(a.tile)?.building?.resources[res] ?? 0) -
-            (gs.tiles.get(b.tile)?.building?.resources[res] ?? 0)
-         );
-      });
-      for (const br of buildings) {
-         const building = gs.tiles.get(br.tile)?.building;
-         if (!building) {
-            continue;
-         }
-         const amountInStorage = building.resources[res] ?? 0;
-         if (amountInStorage >= amount) {
-            building.resources[res]! -= amount;
-            return true;
-         }
-         amount -= amountInStorage;
-         building.resources[res] = 0;
-         if (amount <= 0) {
-            break;
-         }
-      }
-      console.error(`trySpendResource: Res = ${res}, Amount = ${amount}`);
-   }
-   return false;
-}
-
 export function getAmountInTransit(xy: Tile, res: Resource, gs: GameState) {
    return (
       gs.transportation.get(xy)?.reduce((prev, curr) => {
@@ -72,6 +32,43 @@ export function getResourcesValue(resources: PartialTabulate<Resource>): number 
       (prev, res, amount) => prev + (NoPrice[res] ? 0 : Config.ResourcePrice[res]! * amount),
       0,
    );
+}
+
+export function deductResourceFrom(
+   res: Resource,
+   amount: number,
+   tiles: Tile[],
+   gs: GameState,
+): { amount: number; rollback: () => void } {
+   const rollbacks: (() => void)[] = [];
+   let amountLeft = amount;
+
+   for (const tile of tiles) {
+      const resources = gs.tiles.get(tile)?.building?.resources;
+      if (!resources || !resources[res]) {
+         continue;
+      }
+      if (resources[res]! >= amountLeft) {
+         const amountToDeduct = amountLeft;
+         resources[res]! -= amountToDeduct;
+         rollbacks.push(() => {
+            resources[res]! += amountToDeduct;
+         });
+         amountLeft = 0;
+         break;
+      }
+      const amountToDeduct = resources[res]!;
+      amountLeft -= amountToDeduct;
+      resources[res]! -= amountToDeduct;
+      rollbacks.push(() => {
+         resources[res]! += amountToDeduct;
+      });
+   }
+
+   return {
+      amount: clamp(amount - amountLeft, 0, Number.POSITIVE_INFINITY),
+      rollback: () => rollbacks.forEach((r) => r()),
+   };
 }
 
 export function getBuildingsThatProduce(res: Resource): Building[] {
@@ -106,4 +103,14 @@ export function getTransportStat(gs: GameState) {
       });
    });
    return { totalFuel, totalTransports, stalled };
+}
+
+export function combineResources(resources: PartialTabulate<Resource>[]): PartialTabulate<Resource> {
+   const result: PartialTabulate<Resource> = {};
+   resources.forEach((r) => {
+      forEach(r, (res, amount) => {
+         safeAdd(result, res, amount);
+      });
+   });
+   return result;
 }

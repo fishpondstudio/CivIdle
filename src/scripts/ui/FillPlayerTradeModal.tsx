@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { getStorageFor, hasEnoughResource, hasEnoughStorage } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
 import { getSeaTileCost, getTotalSeaTileCost } from "../../../shared/logic/PlayerTradeLogic";
+import { deductResourceFrom } from "../../../shared/logic/ResourceLogic";
 import { Tick } from "../../../shared/logic/TickLogic";
 import {
    clamp,
@@ -349,15 +350,15 @@ export function FillPlayerTradeModal({ tradeId, xy }: { tradeId: string; xy?: Ti
                      let receivedAmount = 0;
                      const errors: string[] = [];
                      for (const [tile, amount] of fills) {
+                        if (amount <= 0) continue;
+                        // We reserve the amount first, otherwise resource might go negative if a player
+                        // clicks really fast
+                        ++total;
+                        const r = deductResourceFrom(trade.buyResource, amount, [tile], gs);
                         try {
-                           if (amount <= 0) continue;
-                           // We reserve the amount first, otherwise resource might go negative if a player
-                           // clicks really fast
-                           ++total;
-                           safeAdd(allTradeBuildings.get(tile)!.resources, trade.buyResource, -amount);
                            const result = await client.fillTrade({
                               id: trade.id,
-                              amount: amount,
+                              amount: r.amount,
                               path: tiles,
                               seaTileCost: getSeaTileCost(gs),
                            });
@@ -376,7 +377,7 @@ export function FillPlayerTradeModal({ tradeId, xy }: { tradeId: string; xy?: Ti
                         } finally {
                            // If the trade fails, we should refund the resource. If the trade success, the result
                            // from the server contains the correct amount to deduct, we *also* refund the resource
-                           safeAdd(allTradeBuildings.get(tile)!.resources, trade.buyResource, amount);
+                           r.rollback();
                         }
                      }
                      if (success > 0) {

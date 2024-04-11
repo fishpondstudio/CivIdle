@@ -46,7 +46,7 @@ export function UnexploredTile({ xy, gameState }: IBuildingComponentProps): Reac
             Singleton().sceneManager.enqueue(WorldScene, (s) => s.revealTile(neighborXy));
          });
    };
-   useShortcut("SendAnExplorer", () => explore(), [xy]);
+   useShortcut("SendAnExplorer", explore, [xy]);
 
    return (
       <div className="window">
@@ -64,13 +64,7 @@ export function UnexploredTile({ xy, gameState }: IBuildingComponentProps): Reac
                   })}
                />
             </WarningComponent>
-            <button
-               className="w100 jcc row mb10"
-               disabled={explorers <= 0}
-               onClick={() => {
-                  explore();
-               }}
-            >
+            <button className="w100 jcc row mb10" disabled={explorers <= 0} onClick={explore}>
                <div className="m-icon small">explore</div>
                <div className="f1 text-strong">{t(L.ExploreThisTile)}</div>
             </button>
