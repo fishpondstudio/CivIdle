@@ -99,12 +99,13 @@ export function getBuildingIO(
          if (options & IOCalculation.Capacity) {
             value *= b.capacity;
          }
+
          if (options & IOCalculation.Multiplier) {
             value *= totalMultiplierFor(xy, type, 1, false, gs);
-         }
-         if (options & IOCalculation.MultiplierExcludeElectrification) {
+         } else if (options & IOCalculation.MultiplierExcludeElectrification) {
             value *= totalMultiplierFor(xy, type, 1, true, gs);
          }
+
          safeAdd(result, k, value);
       });
    }

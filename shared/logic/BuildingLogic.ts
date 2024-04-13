@@ -189,7 +189,7 @@ export function checkBuildingMax(k: Building, gs: GameState): boolean {
 }
 
 export function isTransportable(res: Resource): boolean {
-   return !NoStorage[res];
+   return !NoStorage[res] && !NoPrice[res];
 }
 
 interface IStorageResult {

@@ -9,6 +9,7 @@ import {
    totalMultiplierFor,
 } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
+import { RANGED_IMPORT_MAX_RANGE } from "../../../shared/logic/Constants";
 import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
 import { unlockedResources } from "../../../shared/logic/IntraTickCache";
 import {
@@ -17,6 +18,7 @@ import {
    type IResourceImportBuildingData,
 } from "../../../shared/logic/Tile";
 import {
+   clamp,
    copyFlag,
    forEach,
    hasFlag,
@@ -358,6 +360,48 @@ export function ResourceImportComponent({ gameState, xy }: IBuildingComponentPro
                      building.resourceImportOptions,
                      (s as IResourceImportBuildingData).resourceImportOptions,
                      ResourceImportOptions.ExportToSameType,
+                  ),
+               }) as IResourceImportBuildingData
+            }
+            gameState={gameState}
+         />
+         <div className="separator"></div>
+         <div className="row">
+            <div>{t(L.RangedImport)}</div>
+            <Tippy
+               content={t(L.RangedImportDesc, {
+                  range: clamp(building.maxInputDistance, 0, RANGED_IMPORT_MAX_RANGE),
+               })}
+            >
+               <div className="m-icon small ml5 text-desc help-cursor">help</div>
+            </Tippy>
+            <div className="f1"></div>
+            <div
+               className="pointer ml20"
+               onClick={() => {
+                  playClick();
+                  building.resourceImportOptions = toggleFlag(
+                     building.resourceImportOptions,
+                     ResourceImportOptions.RangedImport,
+                  );
+                  notifyGameStateUpdate();
+               }}
+            >
+               {hasFlag(building.resourceImportOptions, ResourceImportOptions.RangedImport) ? (
+                  <div className="m-icon text-green">toggle_on</div>
+               ) : (
+                  <div className="m-icon text-desc">toggle_off</div>
+               )}
+            </div>
+         </div>
+         <ApplyToAllComponent
+            xy={xy}
+            getOptions={(s) =>
+               ({
+                  resourceImportOptions: copyFlag(
+                     building.resourceImportOptions,
+                     (s as IResourceImportBuildingData).resourceImportOptions,
+                     ResourceImportOptions.RangedImport,
                   ),
                }) as IResourceImportBuildingData
             }

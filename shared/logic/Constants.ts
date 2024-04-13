@@ -45,6 +45,7 @@ export const OXFORD_SCIENCE_PER_UPGRADE = 5;
 export const MARKET_DEFAULT_TRADE_COUNT = 5;
 export const MAX_EXPLORER = 10;
 export const EXPLORER_SECONDS = 60;
+export const RANGED_IMPORT_MAX_RANGE = 2;
 
 export const GOLDEN_RATIO = (1 + Math.sqrt(5)) / 2;
 
