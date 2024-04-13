@@ -23,7 +23,7 @@ export function UnexploredTile({ xy, gameState }: IBuildingComponentProps): Reac
 
    const explore = () => {
       const tile = gameState.tiles.get(xy);
-      if (!tile || tile.explored || !statistics) {
+      if (!tile || tile.explored || !statistics || explorers <= 0) {
          playError();
          return;
       }
