@@ -10,7 +10,13 @@ import {
 } from "../../../shared/logic/PlayerTradeLogic";
 import { combineResources, deductResourceFrom } from "../../../shared/logic/ResourceLogic";
 import { Tick } from "../../../shared/logic/TickLogic";
-import { formatPercent, isNullOrUndefined, keysOf, safeParseInt } from "../../../shared/utilities/Helper";
+import {
+   clamp,
+   formatPercent,
+   isNullOrUndefined,
+   keysOf,
+   safeParseInt,
+} from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import { client, useTrades, useUser } from "../rpc/RPCClient";
 import { playError, playKaching } from "../visuals/Sound";
@@ -150,7 +156,14 @@ export function AddTradeComponent({ gameState, xy }: IBuildingComponentProps): R
                      <div
                         className="text-link text-strong ml10"
                         onClick={() =>
-                           setTrade({ ...trade, buyAmount: Math.floor(buyAmountRange.amount * (1 + pct)) })
+                           setTrade({
+                              ...trade,
+                              buyAmount: clamp(
+                                 Math.round(buyAmountRange.amount * (1 + pct)),
+                                 buyAmountRange.min,
+                                 buyAmountRange.max,
+                              ),
+                           })
                         }
                      >
                         {formatPercent(pct)}
