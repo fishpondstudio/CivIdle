@@ -701,6 +701,8 @@ export const NL = {
    Railway: "Spoorweg",
    RamessesII: "Ramses II",
    RamessesIIDesc: "+%{value} Bouwcapaciteit Vermenigvuldiger",
+   RangedImport: "Ranged Import",
+   RangedImportDesc: "This building will automatically import resources produced within %{range} tile range. Resource tranports for this building cannot be manually changed. Max transport distance are capped to %{range}",
    RapidFire: "Snelvuur",
    ReadFullPatchNotes: "Read Patch Notes",
    Reborn: "Herboren",

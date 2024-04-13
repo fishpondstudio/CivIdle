@@ -701,6 +701,8 @@ export const DE = {
    Railway: "Eisenbahn",
    RamessesII: "Ramses II.",
    RamessesIIDesc: "+%{value} Multiplikator für Baukapazität",
+   RangedImport: "Ranged Import",
+   RangedImportDesc: "This building will automatically import resources produced within %{range} tile range. Resource tranports for this building cannot be manually changed. Max transport distance are capped to %{range}",
    RapidFire: "Schnellfeuer",
    ReadFullPatchNotes: "Read Patch Notes",
    Reborn: "Wiedergeburt",

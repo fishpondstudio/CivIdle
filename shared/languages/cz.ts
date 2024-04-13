@@ -701,6 +701,8 @@ export const CZ = {
    Railway: "Železnice",
    RamessesII: "Ramses II.",
    RamessesIIDesc: "+%{value} Násobitel kapacity stavitelů",
+   RangedImport: "Ranged Import",
+   RangedImportDesc: "This building will automatically import resources produced within %{range} tile range. Resource tranports for this building cannot be manually changed. Max transport distance are capped to %{range}",
    RapidFire: "Rychlá palba",
    ReadFullPatchNotes: "Read Patch Notes",
    Reborn: "Znovuzrození",

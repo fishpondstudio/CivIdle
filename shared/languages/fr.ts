@@ -701,6 +701,8 @@ export const FR = {
    Railway: "Voie ferrée",
    RamessesII: "Ramsès II",
    RamessesIIDesc: "+%{value} Multiplicateur de Capacité de construction",
+   RangedImport: "Ranged Import",
+   RangedImportDesc: "This building will automatically import resources produced within %{range} tile range. Resource tranports for this building cannot be manually changed. Max transport distance are capped to %{range}",
    RapidFire: "Rafale",
    ReadFullPatchNotes: "Read Patch Notes",
    Reborn: "Réincarnation",

@@ -701,6 +701,8 @@ export const RU = {
    Railway: "Железная Дорога",
    RamessesII: "Рамзес II",
    RamessesIIDesc: "+%{value} Множитель Мощности Стоительства",
+   RangedImport: "Ranged Import",
+   RangedImportDesc: "This building will automatically import resources produced within %{range} tile range. Resource tranports for this building cannot be manually changed. Max transport distance are capped to %{range}",
    RapidFire: "Шквальный Огонь",
    ReadFullPatchNotes: "Прочесть примечания к патчу",
    Reborn: "Переродиться",

@@ -701,6 +701,8 @@ export const KR = {
    Railway: "선로",
    RamessesII: "람세스 2세",
    RamessesIIDesc: "+%{value} 건축가 용량 배수",
+   RangedImport: "Ranged Import",
+   RangedImportDesc: "This building will automatically import resources produced within %{range} tile range. Resource tranports for this building cannot be manually changed. Max transport distance are capped to %{range}",
    RapidFire: "속사",
    ReadFullPatchNotes: "Read Patch Notes",
    Reborn: "환생",

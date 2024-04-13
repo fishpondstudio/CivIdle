@@ -701,6 +701,8 @@ export const ZH_CN = {
    Railway: "铁路",
    RamessesII: "拉美西斯二世",
    RamessesIIDesc: "建造者能力乘数 +%{value}",
+   RangedImport: "Ranged Import",
+   RangedImportDesc: "This building will automatically import resources produced within %{range} tile range. Resource tranports for this building cannot be manually changed. Max transport distance are capped to %{range}",
    RapidFire: "速射",
    ReadFullPatchNotes: "阅读补丁说明",
    Reborn: "重生",

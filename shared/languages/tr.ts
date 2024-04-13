@@ -701,6 +701,8 @@ export const TR = {
    Railway: "Demiryolu",
    RamessesII: "Ramses II",
    RamessesIIDesc: "+%{value} İnşaat Kapasitesi Çarpanı",
+   RangedImport: "Ranged Import",
+   RangedImportDesc: "This building will automatically import resources produced within %{range} tile range. Resource tranports for this building cannot be manually changed. Max transport distance are capped to %{range}",
    RapidFire: "Seri Ateş",
    ReadFullPatchNotes: "Yama Notunu Oku",
    Reborn: "Rebirth",
