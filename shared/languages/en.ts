@@ -702,7 +702,7 @@ export const EN = {
    RamessesII: "Ramesses II",
    RamessesIIDesc: "+%{value} Builder Capacity Multiplier",
    RangedImport: "Ranged Import",
-   RangedImportDesc: "This building will automatically import resources produced within %{range} tile range. Resource tranports for this building cannot be manually changed. Max transport distance are capped to %{range}",
+   RangedImportDesc: "This building will automatically import resources produced within %{range} tile range. Resource transports for this building cannot be manually changed. Max transport distance is capped to %{range}",
    RapidFire: "Rapid Fire",
    ReadFullPatchNotes: "Read Patch Notes",
    Reborn: "Rebirth",
