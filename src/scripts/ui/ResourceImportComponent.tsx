@@ -9,7 +9,7 @@ import {
    totalMultiplierFor,
 } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
-import { RANGED_IMPORT_MAX_RANGE } from "../../../shared/logic/Constants";
+import { RANGED_IMPORT_MAX_RANGE as MANAGED_IMPORT_MAX_RANGE } from "../../../shared/logic/Constants";
 import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
 import { unlockedResources } from "../../../shared/logic/IntraTickCache";
 import {
@@ -367,10 +367,10 @@ export function ResourceImportComponent({ gameState, xy }: IBuildingComponentPro
          />
          <div className="separator"></div>
          <div className="row">
-            <div>{t(L.RangedImport)}</div>
+            <div>{t(L.ManagedImport)}</div>
             <Tippy
-               content={t(L.RangedImportDesc, {
-                  range: clamp(building.maxInputDistance, 0, RANGED_IMPORT_MAX_RANGE),
+               content={t(L.ManagedImportDesc, {
+                  range: clamp(building.maxInputDistance, 0, MANAGED_IMPORT_MAX_RANGE),
                })}
             >
                <div className="m-icon small ml5 text-desc help-cursor">help</div>
@@ -382,12 +382,12 @@ export function ResourceImportComponent({ gameState, xy }: IBuildingComponentPro
                   playClick();
                   building.resourceImportOptions = toggleFlag(
                      building.resourceImportOptions,
-                     ResourceImportOptions.RangedImport,
+                     ResourceImportOptions.ManagedImport,
                   );
                   notifyGameStateUpdate();
                }}
             >
-               {hasFlag(building.resourceImportOptions, ResourceImportOptions.RangedImport) ? (
+               {hasFlag(building.resourceImportOptions, ResourceImportOptions.ManagedImport) ? (
                   <div className="m-icon text-green">toggle_on</div>
                ) : (
                   <div className="m-icon text-desc">toggle_off</div>
@@ -401,7 +401,7 @@ export function ResourceImportComponent({ gameState, xy }: IBuildingComponentPro
                   resourceImportOptions: copyFlag(
                      building.resourceImportOptions,
                      (s as IResourceImportBuildingData).resourceImportOptions,
-                     ResourceImportOptions.RangedImport,
+                     ResourceImportOptions.ManagedImport,
                   ),
                }) as IResourceImportBuildingData
             }

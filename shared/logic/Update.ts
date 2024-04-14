@@ -323,7 +323,7 @@ function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
 
    if ("resourceImports" in building) {
       const ri = building as IResourceImportBuildingData;
-      if (hasFlag(ri.resourceImportOptions, ResourceImportOptions.RangedImport)) {
+      if (hasFlag(ri.resourceImportOptions, ResourceImportOptions.ManagedImport)) {
          ri.maxInputDistance = clamp(ri.maxInputDistance, 0, RANGED_IMPORT_MAX_RANGE);
          const storage = getStorageFor(xy, gs);
          const totalCapacity = getResourceImportCapacity(ri, totalMultiplierFor(xy, "output", 1, false, gs));
