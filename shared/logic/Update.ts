@@ -93,7 +93,7 @@ import {
 
 export const OnBuildingComplete = new TypedEvent<Tile>();
 export const OnBuildingProductionComplete = new TypedEvent<{ xy: Tile; offline: boolean }>();
-export const OnShowFloater = new TypedEvent<{ xy: Tile; amount: number }>();
+export const RequestFloater = new TypedEvent<{ xy: Tile; amount: number }>();
 
 export function tickTech(td: IUnlockableDefinition): void {
    td.unlockBuilding?.forEach((b) => {
@@ -481,7 +481,7 @@ function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
          totalBought += buyAmount;
       });
       if (totalBought > 0) {
-         OnShowFloater.emit({ xy, amount: totalBought });
+         RequestFloater.emit({ xy, amount: totalBought });
          OnBuildingProductionComplete.emit({ xy, offline });
       }
       return;
@@ -534,7 +534,7 @@ function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
          deductResources(building.resources, input);
          forEach(nonTransportables, (res, amount) => {
             if (res === "Science") {
-               OnShowFloater.emit({ xy, amount });
+               RequestFloater.emit({ xy, amount });
                safeAdd(getSpecialBuildings(gs).Headquarter.building.resources, res, amount);
                Tick.next.scienceProduced.set(xy, amount);
             } else {
@@ -577,13 +577,13 @@ function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
       if (res === "Power") Tick.next.powerPlants.add(xy);
       if (isTransportable(res)) {
          safeAdd(building.resources, res, v);
-         OnShowFloater.emit({ xy, amount: v });
+         RequestFloater.emit({ xy, amount: v });
          return;
       }
       if (res === "Science") {
          safeAdd(getSpecialBuildings(gs).Headquarter.building.resources, res, v);
          Tick.next.scienceProduced.set(xy, v);
-         OnShowFloater.emit({ xy, amount: v });
+         RequestFloater.emit({ xy, amount: v });
          return;
       }
       mapSafeAdd(Tick.next.workersAvailable, res, v);

@@ -15,6 +15,7 @@ export const PatchNotes: PatchNote[] = [
          ["Bugfix", "Fix a bug where sometimes managed import cause certain import to be set to 0"],
          ["QoL", "Highlight 2-tile range when managed import is activated"],
          ["Bugfix", "Throttle sound effect to one instance per sound"],
+         ["QoL", "Improve performance of a very large map"],
       ],
    },
    {

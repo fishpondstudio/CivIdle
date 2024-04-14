@@ -395,7 +395,13 @@ export class WorldScene extends Scene {
    }
 
    showFloater(xy: Tile, value: number): void {
-      this._tiles.get(xy)?.showFloater(value);
+      this._tiles.get(xy)?.addFloater(value);
+   }
+
+   flushFloater(speed: number): void {
+      for (const tile of this._tiles.values()) {
+         tile.flushFloater(speed);
+      }
    }
 
    private _ticked: Set<number> = new Set();

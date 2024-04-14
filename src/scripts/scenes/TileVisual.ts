@@ -1,5 +1,5 @@
 import type { IDestroyOptions, IPointData } from "pixi.js";
-import { BitmapText, Color, Container, Sprite } from "pixi.js";
+import { BitmapText, Color, Container, Rectangle, Sprite } from "pixi.js";
 import type { Resource } from "../../../shared/definitions/ResourceDefinitions";
 import {
    getBuildingLevelLabel,
@@ -24,7 +24,6 @@ import {
 } from "../../../shared/utilities/Helper";
 import { v2 } from "../../../shared/utilities/Vector2";
 import { getBuildingTexture, getNotProducingTexture, getTexture, getTileTexture } from "../logic/VisualLogic";
-import { Singleton } from "../utilities/Singleton";
 import { Actions } from "../utilities/pixi-actions/Actions";
 import { Easing } from "../utilities/pixi-actions/Easing";
 import type { Action } from "../utilities/pixi-actions/actions/Action";
@@ -47,8 +46,8 @@ export class TileVisual extends Container {
    private readonly _constructionAnimation: Action;
    private readonly _upgradeAnimation: Action;
    private readonly _xy: Tile;
-   private _lastFloaterShownAt = 0;
    private _floaterValue = 0;
+   private _aabb: Rectangle;
 
    constructor(world: WorldScene, grid: IPointData) {
       super();
@@ -59,6 +58,10 @@ export class TileVisual extends Container {
       this._tile = gs.tiles.get(this._xy)!;
       console.assert(this._tile, "Expect tile to exist!");
       this.position = getGrid(gs).gridToPosition(this._grid);
+
+      const aabb = getGrid(gs).aabb(this.position);
+      this._aabb = new Rectangle(aabb[0], aabb[1], aabb[2], aabb[3]);
+
       this.cullable = true;
 
       const { textures } = this._world.context;
@@ -149,6 +152,12 @@ export class TileVisual extends Container {
       this.update(getGameState(), 0);
    }
 
+   public isInViewport(): boolean {
+      const rect = this._world.viewport.visibleWorldRect();
+      if (!rect) return true;
+      return rect.intersects(this._aabb);
+   }
+
    override destroy(options?: boolean | IDestroyOptions | undefined): void {
       super.destroy(options);
       this._upgradeAnimation.stop();
@@ -171,15 +180,14 @@ export class TileVisual extends Container {
       ).start();
    }
 
-   public showFloater(value: number): void {
-      if (Date.now() - this._lastFloaterShownAt < 1000) {
-         this._floaterValue += value;
-         return;
-      }
-      const speed = Singleton().ticker.speedUp;
-      this._lastFloaterShownAt = Date.now();
+   public addFloater(value: number): void {
+      this._floaterValue += value;
+   }
+
+   public flushFloater(speed: number): void {
+      if (this._floaterValue <= 0 || !this.isInViewport()) return;
       const t = this._world.tooltipPool.allocate();
-      t.text = `+${formatNumber(this._floaterValue + value)}`;
+      t.text = `+${formatNumber(this._floaterValue)}`;
       this._floaterValue = 0;
       t.position = this.position;
       t.y = t.y - 20;
@@ -193,6 +201,16 @@ export class TileVisual extends Container {
    }
 
    public update(gs: GameState, dt: number) {
+      if (!this.isInViewport()) {
+         this.visible = false;
+         return;
+      }
+
+      if (!this.visible) {
+         this.visible = true;
+         this.onTileDataChanged(this._tile);
+      }
+
       if (!this._tile || !this._tile.building) {
          return;
       }
@@ -208,11 +226,9 @@ export class TileVisual extends Container {
          this._notProducing.tint = 0xffffff;
          this._spinner.tint = 0xffffff;
       }
-
       if (this._tile.building.status !== "completed") {
          return;
       }
-
       this._spinner.angle += Tick.current.electrified.has(this._tile.tile) ? dt * 180 : dt * 90;
       if (Tick.current.notProducingReasons.has(this._xy)) {
          this._spinner.alpha -= dt;
@@ -235,8 +251,13 @@ export class TileVisual extends Container {
          console.warn(`[TileVisual] Cannot find tile data for ${pointToXy(this._grid)}`);
          return;
       }
+
       if (!this._tile.explored) {
          this._building.visible = false;
+         return;
+      }
+
+      if (!this.isInViewport()) {
          return;
       }
 
