@@ -469,7 +469,7 @@ export const NL = {
    Magazine: "Tijdschrift",
    MagazinePublisher: "Tijdschriftuitgever",
    ManagedImport: "Managed Import",
-   ManagedImportDesc: "This building will automatically import resources produced within %{range} tile range. Resource transports for this building cannot be manually changed. Max transport distance is capped to %{range}",
+   ManagedImportDescV2: "This building will automatically import resources produced within %{range} tile range. Resource transports for this building cannot be manually changed. Max transport distance will be ignored",
    ManageGreatPeople: "Beheer Grote Personen",
    ManagePermanentGreatPeople: "Beheer Permanente Grote Personen",
    ManageWonders: "Beheer Wereldwonderen",

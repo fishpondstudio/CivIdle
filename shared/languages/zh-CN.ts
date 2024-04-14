@@ -469,7 +469,7 @@ export const ZH_CN = {
    Magazine: "杂志",
    MagazinePublisher: "杂志出版商",
    ManagedImport: "Managed Import",
-   ManagedImportDesc: "This building will automatically import resources produced within %{range} tile range. Resource transports for this building cannot be manually changed. Max transport distance is capped to %{range}",
+   ManagedImportDescV2: "This building will automatically import resources produced within %{range} tile range. Resource transports for this building cannot be manually changed. Max transport distance will be ignored",
    ManageGreatPeople: "伟人管理",
    ManagePermanentGreatPeople: "管理永恒伟人",
    ManageWonders: "奇观管理",

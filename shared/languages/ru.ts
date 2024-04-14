@@ -469,7 +469,7 @@ export const RU = {
    Magazine: "Журнал",
    MagazinePublisher: "Издатель Журналов",
    ManagedImport: "Managed Import",
-   ManagedImportDesc: "This building will automatically import resources produced within %{range} tile range. Resource transports for this building cannot be manually changed. Max transport distance is capped to %{range}",
+   ManagedImportDescV2: "This building will automatically import resources produced within %{range} tile range. Resource transports for this building cannot be manually changed. Max transport distance will be ignored",
    ManageGreatPeople: "Управление Великими Людьми",
    ManagePermanentGreatPeople: "Управление Постоянными Великими Людьми",
    ManageWonders: "Управление Чудесами",

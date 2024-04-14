@@ -469,7 +469,7 @@ export const KR = {
    Magazine: "잡지",
    MagazinePublisher: "잡지사",
    ManagedImport: "Managed Import",
-   ManagedImportDesc: "This building will automatically import resources produced within %{range} tile range. Resource transports for this building cannot be manually changed. Max transport distance is capped to %{range}",
+   ManagedImportDescV2: "This building will automatically import resources produced within %{range} tile range. Resource transports for this building cannot be manually changed. Max transport distance will be ignored",
    ManageGreatPeople: "위인 관리",
    ManagePermanentGreatPeople: "영구적인 위인 관리",
    ManageWonders: "불가사의 관리",

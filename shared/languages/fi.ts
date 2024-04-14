@@ -469,7 +469,7 @@ export const FI = {
    Magazine: "Magazine",
    MagazinePublisher: "Magazine Publisher",
    ManagedImport: "Managed Import",
-   ManagedImportDesc: "This building will automatically import resources produced within %{range} tile range. Resource transports for this building cannot be manually changed. Max transport distance is capped to %{range}",
+   ManagedImportDescV2: "This building will automatically import resources produced within %{range} tile range. Resource transports for this building cannot be manually changed. Max transport distance will be ignored",
    ManageGreatPeople: "Manage Great People",
    ManagePermanentGreatPeople: "Manage Permanent Great People",
    ManageWonders: "Manage Wonders",
