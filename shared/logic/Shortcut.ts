@@ -17,7 +17,7 @@ export type ShortcutScope = keyof typeof ShortcutScopes;
 export const ShortcutActions = {
    BuildingPageSellBuilding: {
       scope: "BuildingPage",
-      name: () => t(L.ShortcutBuildingPageSellBuilding),
+      name: () => t(L.ShortcutBuildingPageSellBuildingV2),
    },
    BuildingPageUpgrade1: { scope: "BuildingPage", name: () => t(L.ShortcutBuildingPageUpgrade1) },
    BuildingPageUpgrade2: { scope: "BuildingPage", name: () => t(L.ShortcutBuildingPageUpgrade2) },
