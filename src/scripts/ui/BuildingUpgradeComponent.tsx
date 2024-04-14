@@ -1,5 +1,5 @@
 import Tippy from "@tippyjs/react";
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import type { Resource, ResourceDefinitions } from "../../../shared/definitions/ResourceDefinitions";
 import {
    getTotalBuildingCost,
@@ -104,12 +104,12 @@ export function BuildingUpgradeComponent({ gameState, xy }: IBuildingComponentPr
             {idx === 0 ? `${t(L.Upgrade)} +1: ` : `${t(L.UpgradeTo, { level })}: `}
             {keysOf(resCost).map((item, idx) => {
                return (
-                  <>
+                  <Fragment key={item}>
                      {idx === 0 ? "" : ", "}
                      <span className={resourceAmounts[item]! < resCost[item]! ? "text-red" : ""}>
                         {Config.Resource[item].name()} {formatNumber(resCost[item])}
                      </span>
-                  </>
+                  </Fragment>
                );
             })}
          </span>
@@ -155,7 +155,7 @@ export function BuildingUpgradeComponent({ gameState, xy }: IBuildingComponentPr
                      switch (e.target.value) {
                         case "0": {
                            setSelected(new Set([xy]));
-                           Singleton().sceneManager.getCurrent(WorldScene)?.drawSelection(null);
+                           Singleton().sceneManager.getCurrent(WorldScene)?.drawSelection(null, []);
                            break;
                         }
                         case "1": {

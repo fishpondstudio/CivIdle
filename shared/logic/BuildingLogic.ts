@@ -24,6 +24,7 @@ import type { PartialSet, PartialTabulate } from "../utilities/TypeDefinitions";
 import { TypedEvent } from "../utilities/TypedEvent";
 import { L, t } from "../utilities/i18n";
 import { Config } from "./Config";
+import { MANAGED_IMPORT_RANGE } from "./Constants";
 import { GameFeature, hasFeature } from "./FeatureLogic";
 import type { GameOptions, GameState } from "./GameState";
 import { getGameOptions, getGameState } from "./GameStateLogic";
@@ -552,6 +553,12 @@ export function getInputMode(building: IBuildingData, gs: GameState): BuildingIn
 export function getMaxInputDistance(building: IBuildingData, gs: GameState): number {
    if (!hasFeature(GameFeature.BuildingInputMode, gs)) {
       return Number.POSITIVE_INFINITY;
+   }
+   if ("resourceImports" in building) {
+      const ri = building as IResourceImportBuildingData;
+      if (hasFlag(ri.resourceImportOptions, ResourceImportOptions.ManagedImport)) {
+         return MANAGED_IMPORT_RANGE;
+      }
    }
    return building.maxInputDistance;
 }

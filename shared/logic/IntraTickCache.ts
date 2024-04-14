@@ -1,7 +1,7 @@
 import type { Building, IBuildingDefinition } from "../definitions/BuildingDefinitions";
 import type { Deposit, Resource } from "../definitions/ResourceDefinitions";
 import { Grid } from "../utilities/Grid";
-import { forEach, safeAdd, tileToHash, type Tile } from "../utilities/Helper";
+import { clamp, forEach, safeAdd, tileToHash, type Tile } from "../utilities/Helper";
 import type { PartialSet, PartialTabulate } from "../utilities/TypeDefinitions";
 import {
    IOCalculation,
@@ -83,7 +83,7 @@ export function getBuildingIO(
                // Somehow a player manages to assign more capacity than allowed. We correct this case here.
                // But we only want to correct this when Tick is fully initialized. Currently it's done by
                // checking Tick.current.totalValue, but we should revisit this later
-               v.perCycle = 0;
+               v.perCycle = clamp(totalCapacity - used, 0, v.perCycle);
             } else {
                used += v.perCycle;
                result[k] = v.perCycle;

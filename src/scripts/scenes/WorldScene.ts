@@ -7,6 +7,7 @@ import {
    getGreatWallRange,
    getYellowCraneTowerRange,
 } from "../../../shared/logic/BuildingLogic";
+import { MANAGED_IMPORT_RANGE } from "../../../shared/logic/Constants";
 import { GameFeature, hasFeature } from "../../../shared/logic/FeatureLogic";
 import type { GameOptions, GameState } from "../../../shared/logic/GameState";
 import {
@@ -16,8 +17,20 @@ import {
    notifyGameStateUpdate,
 } from "../../../shared/logic/GameStateLogic";
 import { getGrid, getSpecialBuildings } from "../../../shared/logic/IntraTickCache";
-import { makeBuilding } from "../../../shared/logic/Tile";
-import { clamp, lerp, lookAt, pointToTile, tileToPoint, type Tile } from "../../../shared/utilities/Helper";
+import {
+   ResourceImportOptions,
+   makeBuilding,
+   type IResourceImportBuildingData,
+} from "../../../shared/logic/Tile";
+import {
+   clamp,
+   hasFlag,
+   lerp,
+   lookAt,
+   pointToTile,
+   tileToPoint,
+   type Tile,
+} from "../../../shared/utilities/Helper";
 import { Vector2, v2 } from "../../../shared/utilities/Vector2";
 import { getTexture } from "../logic/VisualLogic";
 import { TilePage } from "../ui/TilePage";
@@ -216,7 +229,7 @@ export class WorldScene extends Scene {
       }
    }
 
-   drawSelection(selected: IPointData | null, highlights: Tile[] = []) {
+   drawSelection(selected: IPointData | null, highlights: Tile[]) {
       if (!this._selectedGraphics || !this._selectedXy) {
          return;
       }
@@ -234,22 +247,26 @@ export class WorldScene extends Scene {
          alignment: 0.5,
       });
       drawSelected(grid, selected, this._selectedGraphics);
-      highlights.forEach((tile) => {
-         this._selectedGraphics.lineStyle({ width: 0 });
-         this._selectedGraphics.beginFill(0xffffff, 0.2, true);
-         drawSelected(grid, tileToPoint(tile), this._selectedGraphics);
-         this._selectedGraphics.endFill();
-      });
+
+      if (highlights.length > 0) {
+         highlights.forEach((tile) => {
+            this._selectedGraphics.lineStyle({ width: 0 });
+            this._selectedGraphics.beginFill(0xffffff, 0.2, true);
+            drawSelected(grid, tileToPoint(tile), this._selectedGraphics);
+            this._selectedGraphics.endFill();
+         });
+      } else {
+         this.drawBuildingDecors(getGameState());
+      }
    }
 
    selectGrid(grid: IPointData) {
-      this.drawSelection(grid);
       const xy = pointToTile(grid);
       this._selectedXy = xy;
       Singleton().routeTo(TilePage, { xy: xy });
       const gs = getGameState();
+      this.drawSelection(grid, []);
       this.drawTransportation(gs);
-      this.drawBuildingDecors(gs);
    }
 
    private drawBuildingDecors(gs: GameState) {
@@ -265,15 +282,25 @@ export class WorldScene extends Scene {
          switch (building.type) {
             case "MausoleumAtHalicarnassus": {
                const pos = getGrid(gs).gridToPosition(grid);
-
                this._selectedGraphics.lineStyle({ width: 0 });
                this._selectedGraphics.beginFill(0xffffff, 0.2, true);
                this._selectedGraphics.drawCircle(pos.x, pos.y, TILE_SIZE * 4);
                this._selectedGraphics.endFill();
-
+               break;
+            }
+            case "Caravansary": {
+               const ri = building as IResourceImportBuildingData;
+               if (hasFlag(ri.resourceImportOptions, ResourceImportOptions.ManagedImport)) {
+                  this.highlightRange(grid, MANAGED_IMPORT_RANGE);
+               }
                break;
             }
             case "Warehouse": {
+               const ri = building as IResourceImportBuildingData;
+               if (hasFlag(ri.resourceImportOptions, ResourceImportOptions.ManagedImport)) {
+                  this.highlightRange(grid, 2);
+                  break;
+               }
                if (hasFeature(GameFeature.WarehouseUpgrade, gs)) {
                   this.highlightRange(grid, 1);
                }

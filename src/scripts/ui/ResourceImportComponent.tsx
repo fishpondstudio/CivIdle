@@ -9,7 +9,7 @@ import {
    totalMultiplierFor,
 } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
-import { RANGED_IMPORT_MAX_RANGE as MANAGED_IMPORT_MAX_RANGE } from "../../../shared/logic/Constants";
+import { MANAGED_IMPORT_RANGE } from "../../../shared/logic/Constants";
 import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
 import { unlockedResources } from "../../../shared/logic/IntraTickCache";
 import {
@@ -18,7 +18,6 @@ import {
    type IResourceImportBuildingData,
 } from "../../../shared/logic/Tile";
 import {
-   clamp,
    copyFlag,
    forEach,
    hasFlag,
@@ -27,6 +26,8 @@ import {
    toggleFlag,
 } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
+import { WorldScene } from "../scenes/WorldScene";
+import { Singleton } from "../utilities/Singleton";
 import { playClick } from "../visuals/Sound";
 import { ApplyToAllComponent } from "./ApplyToAllComponent";
 import type { IBuildingComponentProps } from "./BuildingPage";
@@ -368,11 +369,7 @@ export function ResourceImportComponent({ gameState, xy }: IBuildingComponentPro
          <div className="separator"></div>
          <div className="row">
             <div>{t(L.ManagedImport)}</div>
-            <Tippy
-               content={t(L.ManagedImportDesc, {
-                  range: clamp(building.maxInputDistance, 0, MANAGED_IMPORT_MAX_RANGE),
-               })}
-            >
+            <Tippy content={t(L.ManagedImportDescV2, { range: MANAGED_IMPORT_RANGE })}>
                <div className="m-icon small ml5 text-desc help-cursor">help</div>
             </Tippy>
             <div className="f1"></div>
@@ -384,6 +381,7 @@ export function ResourceImportComponent({ gameState, xy }: IBuildingComponentPro
                      building.resourceImportOptions,
                      ResourceImportOptions.ManagedImport,
                   );
+                  Singleton().sceneManager.getCurrent(WorldScene)?.drawSelection(null, []);
                   notifyGameStateUpdate();
                }}
             >

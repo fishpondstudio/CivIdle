@@ -62,7 +62,7 @@ import {
    useWorkers,
 } from "./BuildingLogic";
 import { Config } from "./Config";
-import { RANGED_IMPORT_MAX_RANGE } from "./Constants";
+import { MANAGED_IMPORT_RANGE } from "./Constants";
 import { GameFeature, hasFeature } from "./FeatureLogic";
 import type { GameState, ITransportationData } from "./GameState";
 import { getGameState } from "./GameStateLogic";
@@ -324,13 +324,12 @@ function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
    if ("resourceImports" in building) {
       const ri = building as IResourceImportBuildingData;
       if (hasFlag(ri.resourceImportOptions, ResourceImportOptions.ManagedImport)) {
-         ri.maxInputDistance = clamp(ri.maxInputDistance, 0, RANGED_IMPORT_MAX_RANGE);
          const storage = getStorageFor(xy, gs);
          const totalCapacity = getResourceImportCapacity(ri, totalMultiplierFor(xy, "output", 1, false, gs));
 
          const result = new Map<Resource, number>();
          let total = 0;
-         for (const point of getGrid(gs).getRange(tileToPoint(xy), ri.maxInputDistance)) {
+         for (const point of getGrid(gs).getRange(tileToPoint(xy), MANAGED_IMPORT_RANGE)) {
             const nxy = pointToTile(point);
             const b = getCompletedBuilding(nxy, gs);
             if (!b) continue;
@@ -347,11 +346,10 @@ function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
          if (total > 0) {
             const averageStorage = storage.total / total;
             const averageCapacity = totalCapacity / total;
-            ri.resourceImports = {};
             result.forEach((value, res) => {
                ri.resourceImports[res] = {
-                  perCycle: averageCapacity * value,
-                  cap: averageStorage * value,
+                  perCycle: Math.floor(averageCapacity * value),
+                  cap: Math.floor(averageStorage * value),
                };
             });
          }
