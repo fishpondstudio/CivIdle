@@ -1069,4 +1069,5 @@ export const EN = {
    ZenobiaDesc: "+%{value}h Petra Warp Storage",
    ZhengHe: "Zheng He",
    Zoroaster: "Zoroaster",
+   AntiCheatFailure: "Your account rank has been restricted due to <b>failing to pass anti-cheat</b> check. Contact the developer if you want to appeal this",
 };

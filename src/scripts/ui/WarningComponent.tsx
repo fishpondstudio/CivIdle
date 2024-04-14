@@ -1,3 +1,4 @@
+import classNames from "classnames";
 import type { PropsWithChildren } from "react";
 import error from "../../images/error.png";
 import info from "../../images/info.png";
@@ -15,12 +16,18 @@ export function WarningComponent({
    children,
    icon,
    className,
+   onClick,
 }: PropsWithChildren<{
    icon: "warning" | "error" | "info" | "question";
    className?: string;
+   onClick?: React.MouseEventHandler<HTMLDivElement>;
 }>): React.ReactNode {
+   const classList: Record<string, boolean> = { "warning-banner row": true, pointer: !!onClick };
+   if (className) {
+      classList[className] = true;
+   }
    return (
-      <div className={className ? `${className} warning-banner row` : "warning-banner row"}>
+      <div className={classNames(classList)} onClick={onClick}>
          <img src={ICONS[icon]} style={{ alignSelf: "flex-start", margin: "2px 5px 2px 0" }} />
          <div className="f1">{children}</div>
       </div>
