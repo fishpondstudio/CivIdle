@@ -20,7 +20,7 @@ export function TableView<T>({
    header: ITableHeader[];
    data: T[];
    renderRow: (item: T) => React.ReactNode;
-   compareFunc: (a: T, b: T, col: number) => number;
+   compareFunc: (a: T, b: T, col: number, asc: 1 | -1) => number;
    sortingState?: { column: number; asc: boolean };
 }): React.ReactNode {
    const [sortColumn, setSortColumn] = useState(sortingState?.column ?? header.findIndex((v) => v.sortable));
@@ -70,7 +70,10 @@ export function TableView<T>({
             </thead>
             <tbody>
                {data
-                  .sort((a, b) => (asc ? compareFunc(a, b, sortColumn) : -compareFunc(a, b, sortColumn)))
+                  .sort((a, b) => {
+                     const o = asc ? 1 : -1;
+                     return o * compareFunc(a, b, sortColumn, o);
+                  })
                   .map(renderRow)}
                {data.length === 0 ? (
                   <tr className="text-center text-desc">

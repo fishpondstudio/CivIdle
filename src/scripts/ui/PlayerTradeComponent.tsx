@@ -157,7 +157,13 @@ export function PlayerTradeComponent({ gameState, xy }: IBuildingComponentProps)
                   resourceFilters.has(trade.buyResource) ||
                   resourceFilters.has(trade.sellResource),
             )}
-            compareFunc={(a, b, col) => {
+            compareFunc={(a, b, col, asc) => {
+               if (a.fromId === user?.userId && b.fromId !== user?.userId) {
+                  return -asc;
+               }
+               if (a.fromId !== user?.userId && b.fromId === user?.userId) {
+                  return asc;
+               }
                switch (col) {
                   case 0:
                      return Config.Resource[a.buyResource]

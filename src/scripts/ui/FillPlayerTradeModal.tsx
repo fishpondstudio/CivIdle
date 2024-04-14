@@ -20,7 +20,6 @@ import { L, t } from "../../../shared/utilities/i18n";
 import { useGameState } from "../Global";
 import { client, usePlayerMap, useTrades } from "../rpc/RPCClient";
 import { findPath, findUserOnMap, getMyMapXy } from "../scenes/PathFinder";
-import { jsxMMapOf } from "../utilities/Helper";
 import { playError, playKaching } from "../visuals/Sound";
 import { hideModal, showToast } from "./GlobalModal";
 import { FormatNumber } from "./HelperComponents";
@@ -179,62 +178,65 @@ export function FillPlayerTradeModal({ tradeId, xy }: { tradeId: string; xy?: Ti
                         <th className="text-right">{t(L.PlayerTradeFillAmount)}</th>
                         <th></th>
                      </tr>
-                     {jsxMMapOf(allTradeBuildings, (xy, building) => {
-                        const storage = getStorageFor(xy, gs);
-                        return (
-                           <tr key={xy}>
-                              <td>
-                                 <div>{Config.Building[building.type].name()}</div>
-                                 <div className="text-desc text-small">
-                                    {t(L.LevelX, { level: building.level })}
-                                 </div>
-                              </td>
-                              <td className="text-right">
-                                 <FormatNumber
-                                    value={allTradeBuildings.get(xy)?.resources[trade.buyResource] ?? 0}
-                                 />
-                                 <div
-                                    className="text-right text-small text-link"
-                                    onClick={() => {
-                                       setFills((old) => {
-                                          old.set(xy, getMaxFill(xy));
-                                          return new Map(fills);
-                                       });
-                                    }}
-                                 >
-                                    {t(L.PlayerTradeFillAmountMaxV2)}
-                                 </div>
-                              </td>
-                              <td className="text-right">
-                                 <FormatNumber value={storage.total - storage.used} />
-                                 <div className="text-right text-desc text-small">
-                                    {formatPercent(1 - storage.used / storage.total)}
-                                 </div>
-                              </td>
-                              <td style={{ width: 0 }}>
-                                 <input
-                                    type="text"
-                                    className="text-right"
-                                    value={fills.get(xy) ?? 0}
-                                    onChange={(e) => {
-                                       setFills((old) => {
-                                          old.set(xy, safeParseFloat(e.target.value, 0));
-                                          return new Map(old);
-                                       });
-                                    }}
-                                    style={{ width: 150 }}
-                                 />
-                              </td>
-                              <td style={{ width: 0 }}>
-                                 {isFillValid(xy, fills.get(xy) ?? 0) ? (
-                                    <div className="m-icon small text-green">check_circle</div>
-                                 ) : (
-                                    <div className="m-icon small text-red">cancel</div>
-                                 )}
-                              </td>
-                           </tr>
-                        );
-                     })}
+                     {Array.from(allTradeBuildings.entries())
+                        .sort(
+                           ([, a], [, b]) =>
+                              (b.resources[trade.buyResource] ?? 0) - (a.resources[trade.buyResource] ?? 0),
+                        )
+                        .map(([xy, building]) => {
+                           const storage = getStorageFor(xy, gs);
+                           return (
+                              <tr key={xy}>
+                                 <td>
+                                    <div>{Config.Building[building.type].name()}</div>
+                                    <div className="text-desc text-small">
+                                       {t(L.LevelX, { level: building.level })}
+                                    </div>
+                                 </td>
+                                 <td className="text-right">
+                                    <FormatNumber value={building.resources[trade.buyResource] ?? 0} />
+                                    <div
+                                       className="text-right text-small text-link"
+                                       onClick={() => {
+                                          setFills((old) => {
+                                             old.set(xy, getMaxFill(xy));
+                                             return new Map(fills);
+                                          });
+                                       }}
+                                    >
+                                       {t(L.PlayerTradeFillAmountMaxV2)}
+                                    </div>
+                                 </td>
+                                 <td className="text-right">
+                                    <FormatNumber value={storage.total - storage.used} />
+                                    <div className="text-right text-desc text-small">
+                                       {formatPercent(1 - storage.used / storage.total)}
+                                    </div>
+                                 </td>
+                                 <td style={{ width: 0 }}>
+                                    <input
+                                       type="text"
+                                       className="text-right"
+                                       value={fills.get(xy) ?? 0}
+                                       onChange={(e) => {
+                                          setFills((old) => {
+                                             old.set(xy, safeParseFloat(e.target.value, 0));
+                                             return new Map(old);
+                                          });
+                                       }}
+                                       style={{ width: 150 }}
+                                    />
+                                 </td>
+                                 <td style={{ width: 0 }}>
+                                    {isFillValid(xy, fills.get(xy) ?? 0) ? (
+                                       <div className="m-icon small text-green">check_circle</div>
+                                    ) : (
+                                       <div className="m-icon small text-red">cancel</div>
+                                    )}
+                                 </td>
+                              </tr>
+                           );
+                        })}
                   </tbody>
                </table>
             </div>
