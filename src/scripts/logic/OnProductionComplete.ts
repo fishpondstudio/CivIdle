@@ -736,9 +736,9 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
             for (const point of grid.getNeighbors(tileToPoint(xy))) {
                const neighborTile = gs.tiles.get(pointToTile(point));
                if (
-                  neighborTile?.building?.type === "IronMiningCamp" &&
+                  neighborTile?.building?.type === "UraniumMine" &&
                   neighborTile.building.status !== "building" &&
-                  neighborTile.deposit.Iron
+                  neighborTile.deposit.Uranium
                ) {
                   ++adjacentUraniumMines;
                }
