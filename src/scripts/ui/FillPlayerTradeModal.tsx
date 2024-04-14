@@ -132,7 +132,7 @@ export function FillPlayerTradeModal({ tradeId, xy }: { tradeId: string; xy?: Ti
             (availableStorage * trade.buyAmount) / (trade.sellAmount - trade.buyAmount),
          );
       }
-      return amount;
+      return Math.floor(amount);
    };
 
    const fillsAreValid = (fills: Map<Tile, number>) => {
@@ -153,7 +153,7 @@ export function FillPlayerTradeModal({ tradeId, xy }: { tradeId: string; xy?: Ti
    };
 
    return (
-      <div className="window" style={{ width: 500 }}>
+      <div className="window" style={{ width: 550 }}>
          <div className="title-bar">
             <div className="title-bar-text">{t(L.PlayerTradeFillTradeTitle)}</div>
             <div className="title-bar-controls">
@@ -169,13 +169,13 @@ export function FillPlayerTradeModal({ tradeId, xy }: { tradeId: string; xy?: Ti
                   <div className="sep10"></div>
                </>
             ) : null}
-            <div className="table-view" style={{ overflowY: "auto", maxHeight: "40vh" }}>
+            <div className="table-view sticky-header" style={{ overflowY: "auto", maxHeight: "40vh" }}>
                <table>
                   <tbody>
                      <tr>
                         <th></th>
                         <th className="text-right">{Config.Resource[trade.buyResource].name()}</th>
-                        <th className="text-right">{t(L.StorageLeft)}</th>
+                        <th className="text-right">{t(L.Storage)}</th>
                         <th className="text-right">{t(L.PlayerTradeFillAmount)}</th>
                         <th></th>
                      </tr>
@@ -238,43 +238,61 @@ export function FillPlayerTradeModal({ tradeId, xy }: { tradeId: string; xy?: Ti
                   </tbody>
                </table>
             </div>
-            <div className="sep10" />
-            <ul className="tree-view" style={{ overflowY: "auto", maxHeight: "20vh" }}>
-               <li
-                  className={classNames({
-                     row: true,
-                     "text-strong text-red": !fillsHaveEnoughResource(fills),
-                  })}
+            <div className="row mb5 mt5 text-small">
+               <div className="f1" />
+               <div
+                  className="text-strong text-link mr20"
+                  onClick={() => {
+                     setFills(() => new Map());
+                  }}
                >
-                  <div className="f1">
-                     {t(L.PlayerTradeYouPay, {
-                        res: Config.Resource[trade.buyResource].name(),
-                     })}
-                  </div>
-                  <div>
-                     <FormatNumber value={getTotalFillAmount(fills)} />
-                  </div>
-               </li>
-               <ul>
-                  <li
-                     className={classNames({
-                        "text-small row": true,
-                        "text-strong text-red": getTotalFillAmount(fills) > trade.buyAmount,
-                     })}
-                  >
-                     <div className="f1">{t(L.PlayerTradeFillPercentage)}</div>
-                     <div>{formatPercent(getTotalFillAmount(fills) / trade.buyAmount)}</div>
-                  </li>
-               </ul>
-               <li className="row">
-                  <div className="f1">
-                     {t(L.PlayerTradeYouGetGross, {
-                        res: Config.Resource[trade.sellResource].name(),
-                     })}
-                  </div>
-                  <div>
-                     <FormatNumber value={(getTotalFillAmount(fills) * trade.sellAmount) / trade.buyAmount} />
-                  </div>
+                  {t(L.PlayerTradeClearAll)}
+               </div>
+               <div
+                  className="text-strong text-link"
+                  onClick={() => {
+                     setFills(() => {
+                        const result = new Map<Tile, number>();
+                        for (const xy of allTradeBuildings.keys()) {
+                           result.set(xy, getMaxFill(xy));
+                        }
+                        return result;
+                     });
+                  }}
+               >
+                  {t(L.PlayerTradeMaxAll)}
+               </div>
+            </div>
+            <ul className="tree-view" style={{ overflowY: "auto", maxHeight: "20vh" }}>
+               <li>
+                  <details>
+                     <summary
+                        className={classNames({
+                           row: true,
+                           "text-strong text-red": !fillsHaveEnoughResource(fills),
+                        })}
+                     >
+                        <div className="f1">
+                           {t(L.PlayerTradeYouPay, {
+                              res: Config.Resource[trade.buyResource].name(),
+                           })}
+                        </div>
+                        <div>
+                           <FormatNumber value={getTotalFillAmount(fills)} />
+                        </div>
+                     </summary>
+                     <ul>
+                        <li
+                           className={classNames({
+                              "text-small row": true,
+                              "text-strong text-red": getTotalFillAmount(fills) > trade.buyAmount,
+                           })}
+                        >
+                           <div className="f1">{t(L.PlayerTradeFillPercentage)}</div>
+                           <div>{formatPercent(getTotalFillAmount(fills) / trade.buyAmount)}</div>
+                        </li>
+                     </ul>
+                  </details>
                </li>
                <li>
                   <details>
@@ -304,37 +322,54 @@ export function FillPlayerTradeModal({ tradeId, xy }: { tradeId: string; xy?: Ti
                      </ul>
                   </details>
                </li>
-               <li className="row">
-                  <div className="f1">
-                     {t(L.PlayerTradeYouGetNet, {
-                        res: Config.Resource[trade.sellResource].name(),
-                     })}
-                  </div>
-                  <div className="text-strong">
-                     <FormatNumber
-                        value={
-                           ((1 - totalTariff) * trade.sellAmount * getTotalFillAmount(fills)) /
-                           trade.buyAmount
-                        }
-                     />
-                  </div>
+               <li>
+                  <details>
+                     <summary className="row">
+                        <div className="f1">
+                           {t(L.PlayerTradeYouGetNet, {
+                              res: Config.Resource[trade.sellResource].name(),
+                           })}
+                        </div>
+                        <div className="text-strong">
+                           <FormatNumber
+                              value={
+                                 ((1 - totalTariff) * trade.sellAmount * getTotalFillAmount(fills)) /
+                                 trade.buyAmount
+                              }
+                           />
+                        </div>
+                     </summary>
+                     <ul>
+                        <li className="row text-small">
+                           <div className="f1">
+                              {t(L.PlayerTradeYouGetGross, {
+                                 res: Config.Resource[trade.sellResource].name(),
+                              })}
+                           </div>
+                           <div>
+                              <FormatNumber
+                                 value={(getTotalFillAmount(fills) * trade.sellAmount) / trade.buyAmount}
+                              />
+                           </div>
+                        </li>
+                        <li
+                           className={classNames({
+                              "text-small row": true,
+                              "text-strong text-red": !fillsHaveEnoughStorage(fills),
+                           })}
+                        >
+                           <div className="f1">{t(L.PlayerTradeStorageRequired)}</div>
+                           <div>
+                              <FormatNumber value={getTotalStorageRequired(fills)} />
+                           </div>
+                        </li>
+                     </ul>
+                  </details>
                </li>
-               <ul>
-                  <li
-                     className={classNames({
-                        "text-small row": true,
-                        "text-strong text-red": !fillsHaveEnoughStorage(fills),
-                     })}
-                  >
-                     <div className="f1">{t(L.PlayerTradeStorageRequired)}</div>
-                     <div>
-                        <FormatNumber value={getTotalStorageRequired(fills)} />
-                     </div>
-                  </li>
-               </ul>
             </ul>
             <div className="sep15"></div>
-            <div className="row" style={{ justifyContent: "flex-end" }}>
+            <div className="row">
+               <div className="f1"></div>
                <button
                   className="text-strong"
                   disabled={!fillsAreValid(fills)}

@@ -209,7 +209,7 @@ const STORAGE_TO_PRODUCTION = 3600;
 
 export function getStorageFor(xy: Tile, gs: GameState): IStorageResult {
    const accumulate = (prev: number, k: Resource, v: number): number => {
-      return isTransportable(k) ? prev + v : prev;
+      return NoStorage[k] ? prev : prev + v;
    };
    const building = gs.tiles.get(xy)?.building;
    const used = reduceOf(building?.resources, accumulate, 0);
