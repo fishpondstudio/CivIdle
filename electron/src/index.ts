@@ -1,5 +1,5 @@
 import { BrowserWindow, Menu, app, dialog, ipcMain } from "electron";
-import path from "path";
+import path from "node:path";
 import { init, type Client } from "steamworks.js";
 import { IPCService } from "./IPCService";
 
@@ -14,7 +14,7 @@ export function getGameSavePath(): string {
 }
 
 export function getLocalGameSavePath(): string {
-   return path.join(app.getPath("home"), "AppData", "LocalLow", "CivIdleSaves");
+   return path.join(app.getPath("appData"), "CivIdleLocal");
 }
 
 const createWindow = async () => {

@@ -6,6 +6,15 @@ interface PatchNote {
 
 export const PatchNotes: PatchNote[] = [
    {
+      version: "0.7.2",
+      content: [
+         [
+            "QoL",
+            "Backup folder has been moved to make it work in Linux. You can access the latest path in Help -> About",
+         ],
+      ],
+   },
+   {
       version: "0.7.1",
       content: [
          [

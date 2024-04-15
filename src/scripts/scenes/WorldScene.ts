@@ -1,6 +1,17 @@
 import { SmoothGraphics } from "@pixi/graphics-smooth";
-import type { ColorSource, FederatedPointerEvent, IPointData, Sprite } from "pixi.js";
-import { Color, Container, LINE_CAP, LINE_JOIN, ParticleContainer, TilingSprite } from "pixi.js";
+import {
+   Color,
+   Container,
+   LINE_CAP,
+   LINE_JOIN,
+   ParticleContainer,
+   Rectangle,
+   TilingSprite,
+   type ColorSource,
+   type FederatedPointerEvent,
+   type IPointData,
+   type Sprite,
+} from "pixi.js";
 import {
    applyBuildingDefaults,
    checkBuildingMax,
@@ -34,6 +45,7 @@ import {
 import { Vector2, v2 } from "../../../shared/utilities/Vector2";
 import { getTexture } from "../logic/VisualLogic";
 import { TilePage } from "../ui/TilePage";
+import { getColorCached } from "../utilities/CachedColor";
 import { Scene, type ISceneContext } from "../utilities/SceneManager";
 import { Singleton } from "../utilities/Singleton";
 import { Actions } from "../utilities/pixi-actions/Actions";
@@ -405,25 +417,40 @@ export class WorldScene extends Scene {
    }
 
    private _ticked: Set<number> = new Set();
+   private _rect = new Rectangle(0, 0, 9.75, 9.75);
+   private _pos: IPointData = { x: 0, y: 0 };
 
    updateTransportVisual(gs: GameState, timeSinceLastTick: number) {
       this._ticked.clear();
       const options = getGameOptions();
+      const worldRect = this.viewport.visibleWorldRect();
       gs.transportation.forEach((transports) => {
          transports.forEach((t) => {
-            if (!this._transport.get(t.id)) {
-               const visual = this._transportPool.allocate();
+            Vector2.lerp(
+               t.fromPosition,
+               t.toPosition,
+               (t.ticksSpent + timeSinceLastTick) / t.ticksRequired,
+               this._pos,
+            );
+
+            this._rect.x = this._pos.x;
+            this._rect.y = this._pos.y;
+            if (!worldRect.intersects(this._rect)) {
+               return;
+            }
+
+            let visual = this._transport.get(t.id);
+            if (!visual) {
+               visual = this._transportPool.allocate();
                visual.position = t.fromPosition;
-               visual.tint = Color.shared.setValue(options.resourceColors[t.resource] ?? "#ffffff");
+               visual.tint = getColorCached(options.resourceColors[t.resource] ?? "#ffffff");
                lookAt(visual, t.toPosition);
                this._transport.set(t.id, visual);
-            } else if (t.hasEnoughFuel) {
+            }
+
+            if (t.hasEnoughFuel) {
                const visual = this._transport.get(t.id);
-               visual!.position = Vector2.lerp(
-                  t.fromPosition,
-                  t.toPosition,
-                  (t.ticksSpent + timeSinceLastTick) / t.ticksRequired,
-               );
+               visual!.position = this._pos;
                // This is the last tick
                if (t.ticksSpent >= t.ticksRequired - 1) {
                   visual!.alpha = lerp(

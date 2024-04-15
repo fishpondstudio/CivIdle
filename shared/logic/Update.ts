@@ -133,6 +133,8 @@ export function tickTransports(gs: GameState): void {
    });
 }
 
+const _positionCache: IPointData = { x: 0, y: 0 };
+
 function tickTransportation(transport: ITransportationData, mah: IPointData | null): void {
    // TODO: This needs to be double checked when fuel is implemented!
    if (isTransportable(transport.fuel)) {
@@ -143,12 +145,13 @@ function tickTransportation(transport: ITransportationData, mah: IPointData | nu
 
    transport.currentFuelAmount = transport.fuelAmount;
    if (mah) {
-      const position = Vector2.lerp(
+      Vector2.lerp(
          transport.fromPosition,
          transport.toPosition,
          transport.ticksSpent / transport.ticksRequired,
+         _positionCache,
       );
-      if (v2(position).subtractSelf(mah).lengthSqr() <= 200 * 200) {
+      if (v2(_positionCache).subtractSelf(mah).lengthSqr() <= 200 * 200) {
          transport.currentFuelAmount = 0;
       }
    }

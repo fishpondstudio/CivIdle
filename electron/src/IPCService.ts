@@ -32,10 +32,7 @@ export class IPCService {
 
       if (Date.now() - this.lastWriteAt > BACKUP_FREQ) {
          const backup = `${name}_${(++this.counter % 10) + 1}`;
-         await outputFile(
-            path.join(getLocalGameSavePath(), this.getAppId().toString(), this.getSteamId(), backup),
-            buffer,
-         );
+         await outputFile(path.join(getLocalGameSavePath(), this.getSteamId(), backup), buffer);
          this.lastWriteAt = Date.now();
       }
    }

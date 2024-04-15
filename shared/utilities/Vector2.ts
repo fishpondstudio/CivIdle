@@ -14,8 +14,15 @@ export class Vector2 {
       return new Vector2(x, y);
    }
 
-   public static lerp(p1: IHaveXY, p2: IHaveXY, amount: number): IHaveXY {
-      return { x: p1.x + (p2.x - p1.x) * amount, y: p1.y + (p2.y - p1.y) * amount };
+   public static lerp(p1: IHaveXY, p2: IHaveXY, amount: number, result?: IHaveXY): IHaveXY {
+      const x = p1.x + (p2.x - p1.x) * amount;
+      const y = p1.y + (p2.y - p1.y) * amount;
+      if (result) {
+         result.x = x;
+         result.y = y;
+         return result;
+      }
+      return { x, y };
    }
 
    /**
