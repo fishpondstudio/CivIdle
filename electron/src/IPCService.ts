@@ -79,7 +79,7 @@ export class IPCService {
    }
 
    public openBackupSaveFolder(): void {
-      shell.openPath(path.join(getLocalGameSavePath(), this.getAppId().toString(), this.getSteamId()));
+      shell.openPath(path.join(getLocalGameSavePath(), this.getSteamId()));
    }
 
    public openLogFolder(): void {
