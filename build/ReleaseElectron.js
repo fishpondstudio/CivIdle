@@ -18,12 +18,12 @@ if (process.env.STEAMWORKS_PATH) {
       path.join(process.env.STEAMWORKS_PATH, "cividle", "CivIdle.vdf"),
    );
    fs.copyFileSync(
-      path.join(rootPath, "build", "CivIdle-Demo.vdf"),
-      path.join(process.env.STEAMWORKS_PATH, "cividle", "CivIdle-Demo.vdf"),
+      path.join(rootPath, "build", "CivIdle-Linux.vdf"),
+      path.join(process.env.STEAMWORKS_PATH, "cividle", "CivIdle-Linux.vdf"),
    );
 
    replaceVersion(path.join(process.env.STEAMWORKS_PATH, "cividle", "CivIdle.vdf"));
-   replaceVersion(path.join(process.env.STEAMWORKS_PATH, "cividle", "CivIdle-Demo.vdf"));
+   replaceVersion(path.join(process.env.STEAMWORKS_PATH, "cividle", "CivIdle-Linux.vdf"));
 
    function replaceVersion(path) {
       const content = fs.readFileSync(path, { encoding: "utf8" });
@@ -40,7 +40,7 @@ fs.copySync(path.join(rootPath, "dist"), path.join(rootPath, "electron", "dist")
 
 console.log("========== Build Electron ==========");
 
-cmd("npm run package -- --platform=win32", path.join(rootPath, "electron"));
+cmd("npm run package -- --platform=win32,linux", path.join(rootPath, "electron"));
 
 console.log("========== Uploading to Steam ==========");
 
@@ -50,10 +50,16 @@ if (!process.env.STEAMWORKS_PATH) {
 }
 
 fs.removeSync(path.join(process.env.STEAMWORKS_PATH, "cividle-win32-x64"));
+fs.removeSync(path.join(process.env.STEAMWORKS_PATH, "cividle-linux-x64"));
 
 fs.copySync(
    path.join(rootPath, "electron", "out", "cividle-win32-x64"),
    path.join(process.env.STEAMWORKS_PATH, "cividle-win32-x64"),
+);
+
+fs.copySync(
+   path.join(rootPath, "electron", "out", "cividle-linux-x64"),
+   path.join(process.env.STEAMWORKS_PATH, "cividle-linux-x64"),
 );
 
 cmd(
