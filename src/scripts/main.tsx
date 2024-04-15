@@ -70,7 +70,6 @@ const mainBundle = {
 export const fonts = [
    new FontFace(Fonts.Cabin, `url("${CabinMedium}")`),
    new FontFace(Fonts.Marcellus, `url("${MarcellusRegular}")`),
-   // new FontFace(Fonts.CabinSketch, `url("${CabinSketchBold}")`),
 ];
 
 export type MainBundle = keyof typeof mainBundle;
@@ -107,7 +106,7 @@ export async function loadBundle() {
             fill: "#ffffff",
             fontSize: 64,
             fontFamily: f.family,
-            dropShadow: true,
+            dropShadow: f.family !== Fonts.Marcellus,
             dropShadowAlpha: 0.75,
             dropShadowColor: "#000000",
             dropShadowAngle: Math.PI / 6,
