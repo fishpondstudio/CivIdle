@@ -1,10 +1,12 @@
 import { BrowserWindow, Menu, app, dialog, ipcMain } from "electron";
+import { ensureDirSync } from "fs-extra";
 import path from "node:path";
 import { init, type Client } from "steamworks.js";
 import { IPCService } from "./IPCService";
 
 export type SteamClient = Omit<Client, "init" | "runCallbacks">;
 
+ensureDirSync(getLocalGameSavePath());
 app.commandLine.appendSwitch("enable-logging", "file");
 app.commandLine.appendSwitch("log-file", path.join(getLocalGameSavePath(), "CivIdle.log"));
 app.commandLine.appendSwitch("enable-experimental-web-platform-features");
