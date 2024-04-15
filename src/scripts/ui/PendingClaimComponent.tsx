@@ -84,40 +84,44 @@ export function PendingClaimComponent({ gameState, xy }: IBuildingComponentProps
          </button>
          <div className="table-view">
             <table>
-               <tr>
-                  <th style={{ width: "30px" }}></th>
-                  <th>{t(L.PlayerTradeResource)}</th>
-                  <th>{t(L.PlayerTradeFillBy)}</th>
-                  <th className="text-right">{t(L.PlayerTradeAmount)}</th>
-                  <th></th>
-               </tr>
-               {pendingClaims.map((trade) => {
-                  return (
-                     <tr key={trade.id}>
-                        <td>
-                           {hasFlag(trade.flag, PendingClaimFlag.Tariff) ? (
-                              <Tippy content={t(L.PlayerTradeTariffTooltip)}>
-                                 <div className="m-icon small text-center text-orange">currency_exchange</div>
+               <tbody>
+                  <tr>
+                     <th style={{ width: "30px" }}></th>
+                     <th>{t(L.PlayerTradeResource)}</th>
+                     <th>{t(L.PlayerTradeFillBy)}</th>
+                     <th className="text-right">{t(L.PlayerTradeAmount)}</th>
+                     <th></th>
+                  </tr>
+                  {pendingClaims.map((trade) => {
+                     return (
+                        <tr key={trade.id}>
+                           <td>
+                              {hasFlag(trade.flag, PendingClaimFlag.Tariff) ? (
+                                 <Tippy content={t(L.PlayerTradeTariffTooltip)}>
+                                    <div className="m-icon small text-center text-orange">
+                                       currency_exchange
+                                    </div>
+                                 </Tippy>
+                              ) : null}
+                           </td>
+                           <td>{Config.Resource[trade.resource as Resource].name()}</td>
+                           <td>
+                              <FixedLengthText text={trade.fillBy} length={10} />
+                           </td>
+                           <td className="text-right">
+                              <Tippy content={trade.amount}>
+                                 <FormatNumber value={trade.amount} />
                               </Tippy>
-                           ) : null}
-                        </td>
-                        <td>{Config.Resource[trade.resource as Resource].name()}</td>
-                        <td>
-                           <FixedLengthText text={trade.fillBy} length={10} />
-                        </td>
-                        <td className="text-right">
-                           <Tippy content={trade.amount}>
-                              <FormatNumber value={trade.amount} />
-                           </Tippy>
-                        </td>
-                        <td className="text-right">
-                           <div className="text-link text-strong" onClick={() => claimTrades([trade])}>
-                              {t(L.PlayerTradeClaim)}
-                           </div>
-                        </td>
-                     </tr>
-                  );
-               })}
+                           </td>
+                           <td className="text-right">
+                              <div className="text-link text-strong" onClick={() => claimTrades([trade])}>
+                                 {t(L.PlayerTradeClaim)}
+                              </div>
+                           </td>
+                        </tr>
+                     );
+                  })}
+               </tbody>
             </table>
          </div>
          <div className="separator" />

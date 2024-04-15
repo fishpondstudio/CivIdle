@@ -1,6 +1,6 @@
 import type { IPointData } from "pixi.js";
 import WorldMap from "../../../shared/definitions/WorldMap.json";
-import { getGameOptions, getGameState } from "../../../shared/logic/GameStateLogic";
+import { getGameState } from "../../../shared/logic/GameStateLogic";
 import {
    DEFAULT_LAND_TILE_COST,
    RequestPathFinderGridUpdate,
@@ -8,7 +8,7 @@ import {
    wrapX,
 } from "../../../shared/logic/PlayerTradeLogic";
 import { MAP_MAX_X, MAP_MAX_Y } from "../../../shared/utilities/Database";
-import { OnPlayerMapChanged, getPlayerMap } from "../rpc/RPCClient";
+import { OnPlayerMapChanged, getPlayerMap, getUser } from "../rpc/RPCClient";
 import { dijkstra } from "../utilities/dijkstra";
 
 export const GRID1: number[] = [];
@@ -78,8 +78,10 @@ export function findUserOnMap(userId: string): string | null {
 
 export function getMyMapXy() {
    const playerMap = getPlayerMap();
+   const userId = getUser()?.userId;
+   if (!userId) return null;
    for (const [xy, entry] of playerMap) {
-      if (entry.userId === getGameOptions().id) {
+      if (entry.userId === userId) {
          return xy;
       }
    }

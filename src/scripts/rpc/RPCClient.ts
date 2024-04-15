@@ -108,7 +108,7 @@ export const useChatMessages = makeObservableHook(OnChatMessage, () => chatMessa
 export const useTrades = makeObservableHook(OnTradeChanged, getTrades);
 export const useUser = makeObservableHook(OnUserChanged, getUser);
 
-function getUser(): IUser | null {
+export function getUser(): IUser | null {
    return user;
 }
 
