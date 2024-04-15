@@ -3,7 +3,7 @@ import { Config } from "../../../shared/logic/Config";
 import { getGameState } from "../../../shared/logic/GameStateLogic";
 import { getSpecialBuildings, getXyBuildings } from "../../../shared/logic/IntraTickCache";
 import { getGreatPeopleChoiceCount, rollGreatPeopleThisRun } from "../../../shared/logic/RebornLogic";
-import { getCurrentAge, getMostAdvancedTech, getUnlockCost } from "../../../shared/logic/TechLogic";
+import { getCurrentAge, getMostAdvancedTech, getTechUnlockCost } from "../../../shared/logic/TechLogic";
 import { safeAdd, type Tile } from "../../../shared/utilities/Helper";
 import { ChooseGreatPersonModal } from "../ui/ChooseGreatPersonModal";
 import { showModal } from "../ui/GlobalModal";
@@ -44,7 +44,7 @@ export function onTileExplored(xy: Tile): void {
                safeAdd(
                   getSpecialBuildings(gs).Headquarter.building.resources,
                   "Science",
-                  getUnlockCost(tech),
+                  getTechUnlockCost(tech),
                );
             }
             break;

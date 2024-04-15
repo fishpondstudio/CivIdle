@@ -259,6 +259,10 @@ export class Camera extends Container implements SceneLifecycle {
       );
    }
 
+   public visibleWorldRect(): Rectangle {
+      return this.hitArea as Rectangle;
+   }
+
    public onEnable(): void {
       this.app.renderer.events.domElement.addEventListener("contextmenu", this.disableContextMenu.bind(this));
       this.app.renderer.events.domElement.addEventListener("wheel", this.onMouseWheel);

@@ -14,7 +14,7 @@ import { CurrentTickChanged, EmptyTickData, Tick, freezeTickData } from "../../.
 import {
    OnBuildingComplete,
    OnBuildingProductionComplete,
-   OnShowFloater,
+   RequestFloater,
    tickPower,
    tickPrice,
    tickTech,
@@ -96,6 +96,7 @@ export function tickEverySecond(gs: GameState, offline: boolean) {
       const speed = Singleton().ticker.speedUp;
       if (gs.tick % speed === 0) {
          CurrentTickChanged.emit(Tick.current);
+         Singleton().sceneManager.getCurrent(WorldScene)?.flushFloater(speed);
          notifyGameStateUpdate();
       }
       if (gs.tick % (saveFreq * speed) === 0) {
@@ -110,7 +111,7 @@ export function tickEverySecond(gs: GameState, offline: boolean) {
 // Make sure we do event subscription here. If we do it in the individual file, it might mistakenly get
 // eliminated by the dead code elimination!
 
-OnShowFloater.on(({ xy, amount }) => {
+RequestFloater.on(({ xy, amount }) => {
    Singleton().sceneManager.getCurrent(WorldScene)?.showFloater(xy, amount);
 });
 OnResetTile.on((xy) => {

@@ -8,6 +8,7 @@ export const ShortcutScopes = {
    TechPage: () => t(L.ShortcutScopeTechPage),
    EmptyTilePage: () => t(L.ShortcutScopeEmptyTilePage),
    ConstructionPage: () => t(L.ShortcutScopeConstructionPage),
+   UnexploredPage: () => t(L.ShortcutScopeUnexploredPage),
    PlayerMapPage: () => t(L.ShortcutScopePlayerMapPage),
 } as const;
 
@@ -16,7 +17,7 @@ export type ShortcutScope = keyof typeof ShortcutScopes;
 export const ShortcutActions = {
    BuildingPageSellBuilding: {
       scope: "BuildingPage",
-      name: () => t(L.ShortcutBuildingPageSellBuilding),
+      name: () => t(L.ShortcutBuildingPageSellBuildingV2),
    },
    BuildingPageUpgrade1: { scope: "BuildingPage", name: () => t(L.ShortcutBuildingPageUpgrade1) },
    BuildingPageUpgrade2: { scope: "BuildingPage", name: () => t(L.ShortcutBuildingPageUpgrade2) },
@@ -52,6 +53,10 @@ export const ShortcutActions = {
    EmptyTilePageBuildLastBuilding: {
       scope: "EmptyTilePage",
       name: () => t(L.EmptyTilePageBuildLastBuilding),
+   },
+   SendAnExplorer: {
+      scope: "UnexploredPage",
+      name: () => t(L.SendExplorer),
    },
    PlayerMapPageGoBackToCity: {
       scope: "PlayerMapPage",

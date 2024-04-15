@@ -9,6 +9,7 @@ import {
    totalMultiplierFor,
 } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
+import { MANAGED_IMPORT_RANGE } from "../../../shared/logic/Constants";
 import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
 import { unlockedResources } from "../../../shared/logic/IntraTickCache";
 import {
@@ -25,6 +26,8 @@ import {
    toggleFlag,
 } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
+import { WorldScene } from "../scenes/WorldScene";
+import { Singleton } from "../utilities/Singleton";
 import { playClick } from "../visuals/Sound";
 import { ApplyToAllComponent } from "./ApplyToAllComponent";
 import type { IBuildingComponentProps } from "./BuildingPage";
@@ -358,6 +361,45 @@ export function ResourceImportComponent({ gameState, xy }: IBuildingComponentPro
                      building.resourceImportOptions,
                      (s as IResourceImportBuildingData).resourceImportOptions,
                      ResourceImportOptions.ExportToSameType,
+                  ),
+               }) as IResourceImportBuildingData
+            }
+            gameState={gameState}
+         />
+         <div className="separator"></div>
+         <div className="row">
+            <div>{t(L.ManagedImport)}</div>
+            <Tippy content={t(L.ManagedImportDescV2, { range: MANAGED_IMPORT_RANGE })}>
+               <div className="m-icon small ml5 text-desc help-cursor">help</div>
+            </Tippy>
+            <div className="f1"></div>
+            <div
+               className="pointer ml20"
+               onClick={() => {
+                  playClick();
+                  building.resourceImportOptions = toggleFlag(
+                     building.resourceImportOptions,
+                     ResourceImportOptions.ManagedImport,
+                  );
+                  Singleton().sceneManager.getCurrent(WorldScene)?.drawSelection(null, []);
+                  notifyGameStateUpdate();
+               }}
+            >
+               {hasFlag(building.resourceImportOptions, ResourceImportOptions.ManagedImport) ? (
+                  <div className="m-icon text-green">toggle_on</div>
+               ) : (
+                  <div className="m-icon text-desc">toggle_off</div>
+               )}
+            </div>
+         </div>
+         <ApplyToAllComponent
+            xy={xy}
+            getOptions={(s) =>
+               ({
+                  resourceImportOptions: copyFlag(
+                     building.resourceImportOptions,
+                     (s as IResourceImportBuildingData).resourceImportOptions,
+                     ResourceImportOptions.ManagedImport,
                   ),
                }) as IResourceImportBuildingData
             }

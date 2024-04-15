@@ -24,6 +24,7 @@ import type { PartialSet, PartialTabulate } from "../utilities/TypeDefinitions";
 import { TypedEvent } from "../utilities/TypedEvent";
 import { L, t } from "../utilities/i18n";
 import { Config } from "./Config";
+import { MANAGED_IMPORT_RANGE } from "./Constants";
 import { GameFeature, hasFeature } from "./FeatureLogic";
 import type { GameOptions, GameState } from "./GameState";
 import { getGameOptions, getGameState } from "./GameStateLogic";
@@ -189,7 +190,7 @@ export function checkBuildingMax(k: Building, gs: GameState): boolean {
 }
 
 export function isTransportable(res: Resource): boolean {
-   return !NoStorage[res];
+   return !NoStorage[res] && !NoPrice[res];
 }
 
 interface IStorageResult {
@@ -201,7 +202,7 @@ interface IStorageResult {
 
 export function getPetraBaseStorage(petra: IBuildingData): number {
    const HOUR = 60 * 60;
-   return HOUR * (3 + petra.level);
+   return HOUR * petra.level;
 }
 
 // 1 hour
@@ -209,7 +210,7 @@ const STORAGE_TO_PRODUCTION = 3600;
 
 export function getStorageFor(xy: Tile, gs: GameState): IStorageResult {
    const accumulate = (prev: number, k: Resource, v: number): number => {
-      return isTransportable(k) ? prev + v : prev;
+      return NoStorage[k] ? prev : prev + v;
    };
    const building = gs.tiles.get(xy)?.building;
    const used = reduceOf(building?.resources, accumulate, 0);
@@ -232,7 +233,7 @@ export function getStorageFor(xy: Tile, gs: GameState): IStorageResult {
       }
       case "Petra": {
          const HOUR = 60 * 60;
-         base = getPetraBaseStorage(building);
+         base = 3 * HOUR + getPetraBaseStorage(building);
          base +=
             HOUR * Config.GreatPerson.Zenobia.value(getGreatPersonThisRunLevel(gs.greatPeople.Zenobia ?? 0));
          base += HOUR * Config.GreatPerson.Zenobia.value(getGameOptions().greatPeople.Zenobia?.level ?? 0);
@@ -552,6 +553,12 @@ export function getInputMode(building: IBuildingData, gs: GameState): BuildingIn
 export function getMaxInputDistance(building: IBuildingData, gs: GameState): number {
    if (!hasFeature(GameFeature.BuildingInputMode, gs)) {
       return Number.POSITIVE_INFINITY;
+   }
+   if ("resourceImports" in building) {
+      const ri = building as IResourceImportBuildingData;
+      if (hasFlag(ri.resourceImportOptions, ResourceImportOptions.ManagedImport)) {
+         return MANAGED_IMPORT_RANGE;
+      }
    }
    return building.maxInputDistance;
 }

@@ -28,7 +28,12 @@ import { getGreatPersonThisRunLevel } from "../../../shared/logic/RebornLogic";
 import { getBuildingsThatProduce } from "../../../shared/logic/ResourceLogic";
 import { getBuildingUnlockAge, getCurrentAge } from "../../../shared/logic/TechLogic";
 import { NotProducingReason, Tick } from "../../../shared/logic/TickLogic";
-import { MarketOptions, type IMarketBuildingData, type IPetraBuildingData } from "../../../shared/logic/Tile";
+import {
+   MarketOptions,
+   type IMarketBuildingData,
+   type IPetraBuildingData,
+   type ITileData,
+} from "../../../shared/logic/Tile";
 import { addMultiplier } from "../../../shared/logic/Update";
 import { VotedBoostType, type IGetVotedBoostResponse } from "../../../shared/utilities/Database";
 import {
@@ -721,6 +726,32 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
             (getGameOptions().greatPeople.Confucius?.level ?? 0);
 
          addScienceBasedOnBusyWorkers(Config.GreatPerson.Confucius.value(total), buildingName);
+         break;
+      }
+      case "ManhattanProject": {
+         addMultiplier("UraniumMine", { output: 2, worker: 2, storage: 2 }, buildingName);
+         const tick = (tile: Required<ITileData>, xy: Tile) => {
+            if (!tile.building) return;
+            let adjacentUraniumMines = 0;
+            for (const point of grid.getNeighbors(tileToPoint(xy))) {
+               const neighborTile = gs.tiles.get(pointToTile(point));
+               if (
+                  neighborTile?.building?.type === "UraniumMine" &&
+                  neighborTile.building.status !== "building" &&
+                  neighborTile.deposit.Uranium
+               ) {
+                  ++adjacentUraniumMines;
+               }
+            }
+            if (adjacentUraniumMines > 0) {
+               mapSafePush(Tick.next.tileMultipliers, xy, {
+                  output: adjacentUraniumMines,
+                  source: buildingName,
+               });
+            }
+         };
+         buildingsByType.get("UraniumEnrichmentPlant")?.forEach(tick);
+         buildingsByType.get("AtomicFacility")?.forEach(tick);
          break;
       }
       case "GreatWall": {

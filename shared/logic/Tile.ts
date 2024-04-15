@@ -91,6 +91,7 @@ export enum ResourceImportOptions {
    None = 0,
    ExportBelowCap = 1 << 0,
    ExportToSameType = 1 << 1,
+   ManagedImport = 1 << 2,
 }
 
 export interface IResourceImportBuildingData extends IBuildingData {

@@ -69,7 +69,7 @@
 .modern input[type="text"],
 .modern input[type="email"],
 .modern input[type="password"] {
-   height: 27px;
+   height: 25px;
 }
 
 .modern select {
@@ -99,7 +99,7 @@
 }
 
 .modern button {
-   min-height: 27px;
+   min-height: 25px;
 }
 
 .modern .separator.has-title>div {

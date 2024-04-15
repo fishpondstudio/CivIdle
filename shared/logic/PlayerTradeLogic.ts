@@ -3,17 +3,18 @@ import type { Tech } from "../definitions/TechDefinitions";
 import _WorldMap from "../definitions/WorldMap.json";
 import {
    AccountLevel,
-   type IClientMapEntry,
    MAP_MAX_X,
    TradeTileReservationDays,
    type IAddTradeRequest,
+   type IClientMapEntry,
    type IUser,
 } from "../utilities/Database";
-import { DAY, type IPointData, WEEK } from "../utilities/Helper";
+import { DAY, WEEK, type IPointData } from "../utilities/Helper";
 import type { PartialTabulate } from "../utilities/TypeDefinitions";
 import { TypedEvent } from "../utilities/TypedEvent";
 import { Config } from "./Config";
 import type { GameState } from "./GameState";
+import { Tick } from "./TickLogic";
 
 const WorldMap = _WorldMap as Record<string, boolean>;
 
@@ -22,15 +23,18 @@ export interface IClientAddTradeRequest extends IAddTradeRequest {
    sellResource: Resource;
 }
 
-export function getBuyAmountRange(trade: IClientAddTradeRequest, user: IUser | null): [number, number] {
+export function getBuyAmountRange(trade: IClientAddTradeRequest, user: IUser | null) {
    const amount =
       (trade.sellAmount * (Config.ResourcePrice[trade.sellResource] ?? 0)) /
       (Config.ResourcePrice[trade.buyResource] ?? 0);
-   const range = user ? getUserTradePriceRange(user) : 0.05;
-   return [Math.round(amount * (1 - range)), Math.round(amount * (1 + range))];
+   const range = getUserTradePriceRange(user);
+   return { min: Math.round(amount * (1 - range)), max: Math.round(amount * (1 + range)), amount };
 }
 
-export function getUserTradePriceRange(user: IUser): number {
+export function getUserTradePriceRange(user: IUser | null): number {
+   if (!user) {
+      return 0.05;
+   }
    switch (user.level) {
       case AccountLevel.Quaestor:
          return 0.1;
@@ -134,4 +138,13 @@ export function getVotedBoostId(): number {
 
 export function getVotingTime(): number {
    return (getVotedBoostId() + 1) * WEEK - Date.now();
+}
+
+export function hasResourceForPlayerTrade(res: Resource): boolean {
+   for (const [xy, building] of Tick.current.playerTradeBuildings) {
+      if ((building.resources[res] ?? 0) > 0) {
+         return true;
+      }
+   }
+   return false;
 }

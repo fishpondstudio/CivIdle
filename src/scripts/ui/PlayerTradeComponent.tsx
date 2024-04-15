@@ -6,7 +6,7 @@ import { getStorageFor } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
 import { TRADE_CANCEL_REFUND_PERCENT } from "../../../shared/logic/Constants";
 import { unlockedResources } from "../../../shared/logic/IntraTickCache";
-import { getTradePercentage } from "../../../shared/logic/PlayerTradeLogic";
+import { getTradePercentage, hasResourceForPlayerTrade } from "../../../shared/logic/PlayerTradeLogic";
 import { UserAttributes } from "../../../shared/utilities/Database";
 import {
    CURRENCY_PERCENT_EPSILON,
@@ -157,7 +157,13 @@ export function PlayerTradeComponent({ gameState, xy }: IBuildingComponentProps)
                   resourceFilters.has(trade.buyResource) ||
                   resourceFilters.has(trade.sellResource),
             )}
-            compareFunc={(a, b, col) => {
+            compareFunc={(a, b, col, asc) => {
+               if (a.fromId === user?.userId && b.fromId !== user?.userId) {
+                  return -asc;
+               }
+               if (a.fromId !== user?.userId && b.fromId === user?.userId) {
+                  return asc;
+               }
                switch (col) {
                   case 0:
                      return Config.Resource[a.buyResource]
@@ -181,7 +187,11 @@ export function PlayerTradeComponent({ gameState, xy }: IBuildingComponentProps)
                return (
                   <tr key={trade.id} className={classNames({ blue: trade.fromId === user?.userId })}>
                      <td>
-                        <div className={classNames({ "text-strong": building.resources[trade.buyResource] })}>
+                        <div
+                           className={classNames({
+                              "text-strong": hasResourceForPlayerTrade(trade.buyResource),
+                           })}
+                        >
                            {Config.Resource[trade.buyResource].name()}
                         </div>
                         <div className="text-small text-strong text-desc">

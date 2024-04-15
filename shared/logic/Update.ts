@@ -38,6 +38,7 @@ import {
    getBuilderCapacity,
    getBuildingCost,
    getBuildingValue,
+   getCompletedBuilding,
    getCurrentPriority,
    getElectrificationEfficiency,
    getInputMode,
@@ -45,6 +46,7 @@ import {
    getMarketSellAmount,
    getMaxInputDistance,
    getPowerRequired,
+   getResourceImportCapacity,
    getStockpileCapacity,
    getStockpileMax,
    getStorageFor,
@@ -60,6 +62,7 @@ import {
    useWorkers,
 } from "./BuildingLogic";
 import { Config } from "./Config";
+import { MANAGED_IMPORT_RANGE } from "./Constants";
 import { GameFeature, hasFeature } from "./FeatureLogic";
 import type { GameState, ITransportationData } from "./GameState";
 import { getGameState } from "./GameStateLogic";
@@ -79,6 +82,7 @@ import { NotProducingReason, Tick } from "./TickLogic";
 import {
    BuildingInputMode,
    MarketOptions,
+   ResourceImportOptions,
    SuspendedInput,
    WarehouseOptions,
    type IBuildingData,
@@ -89,7 +93,7 @@ import {
 
 export const OnBuildingComplete = new TypedEvent<Tile>();
 export const OnBuildingProductionComplete = new TypedEvent<{ xy: Tile; offline: boolean }>();
-export const OnShowFloater = new TypedEvent<{ xy: Tile; amount: number }>();
+export const RequestFloater = new TypedEvent<{ xy: Tile; amount: number }>();
 
 export function tickTech(td: IUnlockableDefinition): void {
    td.unlockBuilding?.forEach((b) => {
@@ -207,10 +211,12 @@ function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
       building.desiredLevel = building.level;
    }
 
-   if (isSpecialBuilding(building.type)) {
-      building.level = clamp(building.level, 0, 1);
-      building.desiredLevel = clamp(building.desiredLevel, 0, 1);
-   }
+   // The following code is wrong, but I keep it here to avoid making the same mistake again. Don't assume
+   // wonders don't have levels. Some do! Like Petra!
+   // if (isSpecialBuilding(building.type)) {
+   //    building.level = clamp(building.level, 0, 1);
+   //    building.desiredLevel = clamp(building.desiredLevel, 0, 1);
+   // }
 
    const bev = getBuildingValue(building);
    mapSafeAdd(Tick.next.buildingValueByTile, xy, bev);
@@ -304,6 +310,50 @@ function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
 
    if (building.type === "Caravansary") {
       Tick.next.playerTradeBuildings.set(xy, building);
+      if (hasFeature(GameFeature.WarehouseExtension, gs)) {
+         for (const point of getGrid(gs).getNeighbors(tileToPoint(xy))) {
+            const nxy = pointToTile(point);
+            const b = gs.tiles.get(nxy)?.building;
+            if (b?.type === "Warehouse" && b.status === "completed") {
+               Tick.next.playerTradeBuildings.set(nxy, b);
+            }
+         }
+      }
+   }
+
+   if ("resourceImports" in building) {
+      const ri = building as IResourceImportBuildingData;
+      if (hasFlag(ri.resourceImportOptions, ResourceImportOptions.ManagedImport)) {
+         const storage = getStorageFor(xy, gs);
+         const totalCapacity = getResourceImportCapacity(ri, totalMultiplierFor(xy, "output", 1, false, gs));
+
+         const result = new Map<Resource, number>();
+         let total = 0;
+         for (const point of getGrid(gs).getRange(tileToPoint(xy), MANAGED_IMPORT_RANGE)) {
+            const nxy = pointToTile(point);
+            const b = getCompletedBuilding(nxy, gs);
+            if (!b) continue;
+            forEach(
+               filterTransportable(
+                  getBuildingIO(nxy, "output", IOCalculation.Capacity | IOCalculation.Multiplier, gs),
+               ),
+               (res, value) => {
+                  mapSafeAdd(result, res, value);
+                  total += value;
+               },
+            );
+         }
+         if (total > 0) {
+            const averageStorage = storage.total / total;
+            const averageCapacity = totalCapacity / total;
+            result.forEach((value, res) => {
+               ri.resourceImports[res] = {
+                  perCycle: Math.floor(averageCapacity * value),
+                  cap: Math.floor(averageStorage * value),
+               };
+            });
+         }
+      }
    }
 
    if (isSpecialBuilding(building.type)) {
@@ -431,7 +481,7 @@ function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
          totalBought += buyAmount;
       });
       if (totalBought > 0) {
-         OnShowFloater.emit({ xy, amount: totalBought });
+         RequestFloater.emit({ xy, amount: totalBought });
          OnBuildingProductionComplete.emit({ xy, offline });
       }
       return;
@@ -484,7 +534,7 @@ function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
          deductResources(building.resources, input);
          forEach(nonTransportables, (res, amount) => {
             if (res === "Science") {
-               OnShowFloater.emit({ xy, amount });
+               RequestFloater.emit({ xy, amount });
                safeAdd(getSpecialBuildings(gs).Headquarter.building.resources, res, amount);
                Tick.next.scienceProduced.set(xy, amount);
             } else {
@@ -527,13 +577,13 @@ function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
       if (res === "Power") Tick.next.powerPlants.add(xy);
       if (isTransportable(res)) {
          safeAdd(building.resources, res, v);
-         OnShowFloater.emit({ xy, amount: v });
+         RequestFloater.emit({ xy, amount: v });
          return;
       }
       if (res === "Science") {
          safeAdd(getSpecialBuildings(gs).Headquarter.building.resources, res, v);
          Tick.next.scienceProduced.set(xy, v);
-         OnShowFloater.emit({ xy, amount: v });
+         RequestFloater.emit({ xy, amount: v });
          return;
       }
       mapSafeAdd(Tick.next.workersAvailable, res, v);

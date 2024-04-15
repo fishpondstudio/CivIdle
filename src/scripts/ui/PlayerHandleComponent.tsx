@@ -19,11 +19,12 @@ import {
 import { forEach, formatHM, hasFlag, safeParseInt, sizeOf } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import Supporter from "../../images/Supporter.png";
-import { resetToCity, saveGame, useGameState } from "../Global";
+import { resetToCity, saveGame } from "../Global";
 import { AccountLevelImages, AccountLevelNames } from "../logic/AccountLevel";
 import { OnUserChanged, client, useUser } from "../rpc/RPCClient";
 import { getCountryName, getFlagUrl } from "../utilities/CountryCode";
 import { jsxMMapOf } from "../utilities/Helper";
+import { openUrl } from "../utilities/Platform";
 import { playClick, playError, playLevelUp } from "../visuals/Sound";
 import { AlertModal } from "./AlertModal";
 import { ChangePlayerHandleModal } from "./ChangePlayerHandleModal";
@@ -36,12 +37,22 @@ import { WarningComponent } from "./WarningComponent";
 
 export function PlayerHandleComponent() {
    const user = useUser();
-   const gs = useGameState();
    const [showDetails, setShowDetails] = useState(false);
    const accountLevel = user?.level ?? AccountLevel.Tribune;
    return (
       <fieldset>
          <legend>{t(L.PlayerHandle)}</legend>
+         {hasFlag(user?.attr ?? UserAttributes.None, UserAttributes.TribuneOnly) ? (
+            <WarningComponent
+               icon="error"
+               className="mb10"
+               onClick={() =>
+                  openUrl("https://steamcommunity.com/app/2181940/discussions/0/6629936675071563255/")
+               }
+            >
+               <RenderHTML className="text-small" html={t(L.AntiCheatFailure)} />
+            </WarningComponent>
+         ) : null}
          {user == null ? (
             <div className="text-strong">{t(L.PlayerHandleOffline)}</div>
          ) : (

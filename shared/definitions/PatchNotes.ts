@@ -6,9 +6,22 @@ interface PatchNote {
 
 export const PatchNotes: PatchNote[] = [
    {
+      version: "0.7.1",
+      content: [
+         [
+            "Bugfix",
+            "Managed import will no longer modify the max input distance of a building - instead, the max input distance will simply be ignored. This allows the max input distance to take effect when upgrading",
+         ],
+         ["Bugfix", "Fix a bug where sometimes managed import cause certain import to be set to 0"],
+         ["QoL", "Highlight 2-tile range when managed import is activated"],
+         ["Bugfix", "Throttle sound effect to one instance per sound"],
+         ["QoL", "Improve performance of a very large map"],
+      ],
+   },
+   {
       version: "0.7.0",
       content: [],
-      link: "https://github.com/fishpondstudio/CivIdle/issues/198",
+      link: "https://store.steampowered.com/news/app/2181940/view/6292166527284545655",
    },
    {
       version: "0.6.0",

@@ -11,7 +11,7 @@ import { getSpecialBuildings } from "./IntraTickCache";
 import { RequestPathFinderGridUpdate, SEA_TILE_COSTS } from "./PlayerTradeLogic";
 import { getDepositTileCount } from "./Tile";
 
-export function getUnlockCost(tech: Tech): number {
+export function getTechUnlockCost(tech: Tech): number {
    const a = getAgeForTech(tech);
    let ageIdx = 0;
    if (a) {
@@ -23,6 +23,16 @@ export function getUnlockCost(tech: Tech): number {
 
 export function getScienceAmount(): number {
    return getSpecialBuildings(getGameState()).Headquarter.building.resources.Science ?? 0;
+}
+
+export function tryDeductScience(amount: number, gs: GameState): boolean {
+   const storage = getSpecialBuildings(gs).Headquarter.building.resources;
+   if (!storage.Science) return false;
+   if (storage.Science >= amount) {
+      storage.Science -= amount;
+      return true;
+   }
+   return false;
 }
 
 export function getMostAdvancedTech(gs: GameState): Tech | null {

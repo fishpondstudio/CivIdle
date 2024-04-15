@@ -54,6 +54,7 @@ export function MarketBuildingBody({ gameState, xy }: IBuildingComponentProps): 
 
    return (
       <div className="window-body">
+         <BuildingUpgradeComponent gameState={gameState} xy={xy} key={xy} />
          <fieldset>
             <div className="row">
                <div className="f1">{t(L.NextMarketUpdateIn)}</div>
@@ -154,7 +155,6 @@ export function MarketBuildingBody({ gameState, xy }: IBuildingComponentProps): 
                );
             }}
          />
-         <BuildingUpgradeComponent gameState={gameState} xy={xy} key={xy} />
          <BuildingWorkerComponent gameState={gameState} xy={xy} />
          <BuildingStorageComponent gameState={gameState} xy={xy} />
          <BuildingProductionPriorityComponent gameState={gameState} xy={xy} />

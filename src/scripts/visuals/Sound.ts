@@ -10,13 +10,13 @@ import music from "../../sounds/music/pilgrimage-ancient-mediaeval-harp.mp3";
 
 sound.disableAutoPause = true;
 
-sound.add("click", click);
-sound.add("beep", beep);
-sound.add("error", error);
-sound.add("kaching", kaching);
-sound.add("levelup", levelup);
-sound.add("bubble", bubble);
-sound.add("music", music);
+sound.add("click", click).singleInstance = true;
+sound.add("beep", beep).singleInstance = true;
+sound.add("error", error).singleInstance = true;
+sound.add("kaching", kaching).singleInstance = true;
+sound.add("levelup", levelup).singleInstance = true;
+sound.add("bubble", bubble).singleInstance = true;
+sound.add("music", music).singleInstance = true;
 
 export function playClick() {
    if (!getGameOptions().soundEffect) {
