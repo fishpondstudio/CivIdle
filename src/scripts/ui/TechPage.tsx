@@ -3,7 +3,6 @@ import { Config } from "../../../shared/logic/Config";
 import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
 import { getGreatPeopleChoiceCount, rollGreatPeopleThisRun } from "../../../shared/logic/RebornLogic";
 import {
-   OnResetTile,
    getCurrentAge,
    getScienceAmount,
    getTechUnlockCost,
@@ -44,7 +43,7 @@ export function TechPage({ id }: { id: Tech }): React.ReactNode {
       }
       playLevelUp();
       const oldAge = getCurrentAge(gs);
-      unlockTech(id, OnResetTile, gs);
+      unlockTech(id, true, gs);
       const newAge = getCurrentAge(gs);
       if (oldAge && newAge && oldAge !== newAge) {
          forEach(Config.TechAge, (age, def) => {

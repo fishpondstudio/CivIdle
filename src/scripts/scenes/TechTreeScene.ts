@@ -9,6 +9,7 @@ import { getGameOptions } from "../../../shared/logic/GameStateLogic";
 import { isAgeUnlocked, unlockableTechs } from "../../../shared/logic/TechLogic";
 import { containsNonASCII, forEach, numberToRoman, sizeOf } from "../../../shared/utilities/Helper";
 import { TechPage } from "../ui/TechPage";
+import { getColorCached } from "../utilities/CachedColor";
 import { WheelMode } from "../utilities/Camera";
 import { Scene, destroyAllChildren, type ISceneContext } from "../utilities/SceneManager";
 import { Singleton } from "../utilities/Singleton";
@@ -103,7 +104,7 @@ export class TechTreeScene extends Scene {
       const unlockedColor = Color.shared
          .setValue(getGameOptions().themeColors.ResearchUnlockedColor)
          .toNumber();
-      const lockedColor = Color.shared.setValue(getGameOptions().themeColors.ResearchLockedColor).toNumber();
+      const lockedColor = getColorCached(getGameOptions().themeColors.ResearchLockedColor).toNumber();
       destroyAllChildren(this.viewport);
       const g = new SmoothGraphics();
       this.viewport.addChild(g).lineStyle(LINE_STYLE);
@@ -308,7 +309,7 @@ export class TechTreeScene extends Scene {
          const result = new Text(text, {
             fontFamily: "serif",
             fontSize: size,
-            fill: Color.shared.setValue(color).toHex(),
+            fill: getColorCached(color).toHex(),
          });
 
          while (result.width > maxWidth) {

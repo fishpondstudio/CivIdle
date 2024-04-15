@@ -41,11 +41,9 @@ export function tickEveryFrame(gs: GameState, dt: number) {
    timeSinceLastTick = Math.min(timeSinceLastTick + dt, 1);
    const worldScene = Singleton().sceneManager.getCurrent(WorldScene);
    if (worldScene) {
-      gs.tiles.forEach((tile, xy) => {
-         if (tile.building != null) {
-            worldScene.updateTile(xy, gs, dt);
-         }
-      });
+      for (const xy of gs.tiles.keys()) {
+         worldScene.updateTile(xy, dt);
+      }
       worldScene.updateTransportVisual(gs, timeSinceLastTick);
    }
 }

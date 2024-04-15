@@ -1,9 +1,6 @@
 import { tileToPoint, type Tile } from "./Helper";
 import { Hex, Layout, OffsetCoord, Point } from "./Hex";
 
-const X_OFFSET = Math.cos(Math.PI / 6);
-const Y_OFFSET = 0.5 + Math.sin(Math.PI / 6);
-
 export class Grid {
    layout: Layout;
    maxX: number;
@@ -156,14 +153,5 @@ export class Grid {
 
    public hexToPosition(hex: Hex): Point {
       return this.layout.hexToPixel(hex);
-   }
-
-   public aabb(centerPos: Point): [number, number, number, number] {
-      return [
-         centerPos.x - this.size * X_OFFSET,
-         centerPos.y - this.size * Y_OFFSET,
-         2 * this.size * X_OFFSET,
-         2 * this.size * Y_OFFSET,
-      ];
    }
 }

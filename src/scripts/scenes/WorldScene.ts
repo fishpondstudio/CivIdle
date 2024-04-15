@@ -1,6 +1,5 @@
 import { SmoothGraphics } from "@pixi/graphics-smooth";
 import {
-   Color,
    Container,
    LINE_CAP,
    LINE_JOIN,
@@ -90,7 +89,7 @@ export class WorldScene extends Scene {
       this._bg = this.viewport.addChild(
          new TilingSprite(getTexture("Misc_Paper", textures), this._width, this._height),
       );
-      this._bg.tint = Color.shared.setValue(getGameOptions().themeColors.WorldBackground);
+      this._bg.tint = getColorCached(getGameOptions().themeColors.WorldBackground);
       this._bg.position.set((this._width - this._bg.width) / 2, (this._height - this._bg.height) / 2);
 
       this._graphics = this.viewport.addChild(new SmoothGraphics()).lineStyle({
@@ -208,10 +207,10 @@ export class WorldScene extends Scene {
    }
 
    override onGameOptionsChanged(gameOptions: GameOptions): void {
-      this._bg.tint = Color.shared.setValue(gameOptions.themeColors.WorldBackground);
-      this._graphics.tint = Color.shared.setValue(gameOptions.themeColors.GridColor);
+      this._bg.tint = getColorCached(gameOptions.themeColors.WorldBackground);
+      this._graphics.tint = getColorCached(gameOptions.themeColors.GridColor);
       this._graphics.alpha = gameOptions.themeColors.GridAlpha;
-      this._selectedGraphics.tint = Color.shared.setValue(gameOptions.themeColors.SelectedGridColor);
+      this._selectedGraphics.tint = getColorCached(gameOptions.themeColors.SelectedGridColor);
       this._tiles.forEach((visual, xy) => visual.updateDepositColor(gameOptions));
    }
 
@@ -259,6 +258,8 @@ export class WorldScene extends Scene {
          alignment: 0.5,
       });
       drawSelected(grid, selected, this._selectedGraphics);
+
+      // this._tiles.get(this._selectedXy)?.debugDraw(this._selectedGraphics);
 
       if (highlights.length > 0) {
          highlights.forEach((tile) => {
@@ -371,7 +372,7 @@ export class WorldScene extends Scene {
          }
          lines[key] = true;
          this._transportLines.lineStyle({
-            color: Color.shared.setValue(getGameOptions().resourceColors[t.resource] ?? "#ffffff"),
+            color: getColorCached(getGameOptions().resourceColors[t.resource] ?? "#ffffff"),
             width: 2,
             cap: LINE_CAP.ROUND,
             join: LINE_JOIN.ROUND,
@@ -393,8 +394,8 @@ export class WorldScene extends Scene {
       });
    }
 
-   updateTile(xy: Tile, gs: GameState, dt: number): void {
-      this._tiles.get(xy)?.update(gs, dt);
+   updateTile(xy: Tile, dt: number): void {
+      this._tiles.get(xy)?.update(dt);
    }
 
    resetTile(xy: Tile): void {

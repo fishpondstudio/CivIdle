@@ -17,7 +17,6 @@ import {
 } from "../../../shared/logic/RebornLogic";
 import { getRevealedDeposits } from "../../../shared/logic/ResourceLogic";
 import {
-   OnResetTile,
    addDeposit,
    getCurrentAge,
    getMostAdvancedTech,
@@ -116,7 +115,7 @@ export function onBuildingComplete(xy: Tile): void {
             const neighborXy = pointToTile(neighbor);
             if (isEmpty(gs.tiles.get(neighborXy)!.deposit)) {
                const deposit = deposits.pop()!;
-               addDeposit(neighborXy, deposit, OnResetTile, gs);
+               addDeposit(neighborXy, deposit, true, gs);
             }
          }
          break;

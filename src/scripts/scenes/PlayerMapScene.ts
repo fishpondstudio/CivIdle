@@ -1,6 +1,6 @@
 import { SmoothGraphics } from "@pixi/graphics-smooth";
 import type { ColorSource, FederatedPointerEvent, IPointData } from "pixi.js";
-import { BitmapText, Color, Container, LINE_CAP, LINE_JOIN, Sprite } from "pixi.js";
+import { BitmapText, Container, LINE_CAP, LINE_JOIN, Sprite } from "pixi.js";
 import WorldMap from "../../../shared/definitions/WorldMap.json";
 import { getGameOptions } from "../../../shared/logic/GameStateLogic";
 import { isTileReserved } from "../../../shared/logic/PlayerTradeLogic";
@@ -16,6 +16,7 @@ import type { Disposable } from "../../../shared/utilities/TypedEvent";
 import { getTexture } from "../logic/VisualLogic";
 import { OnPlayerMapMessage, OnTradeChanged, getPlayerMap, getTrades } from "../rpc/RPCClient";
 import { PlayerMapPage } from "../ui/PlayerMapPage";
+import { getColorCached } from "../utilities/CachedColor";
 import { Scene, destroyAllChildren, type ISceneContext } from "../utilities/SceneManager";
 import { Singleton } from "../utilities/Singleton";
 import { Fonts } from "../visuals/Fonts";
@@ -303,7 +304,7 @@ class PlayerTile extends Container {
          console.log(color);
          const sprite = this.addChild(new Sprite(context.textures.Misc_100x100));
          sprite.position.set(x * GridSize, y * GridSize);
-         sprite.tint = Color.shared.setValue(color);
+         sprite.tint = getColorCached(color);
       }
 
       const flag = this.addChild(new Sprite(textures[`Flag_${data.flag.toUpperCase()}`]));

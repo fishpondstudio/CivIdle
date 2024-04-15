@@ -96,7 +96,7 @@ export function getAgeForTech(tech: Tech): TechAge {
    throw new Error(`Cannot find age for tech: ${tech}`);
 }
 
-export function unlockTech(tech: Tech, event: TypedEvent<Tile> | null, gs: GameState): void {
+export function unlockTech(tech: Tech, dispatchEvent: boolean, gs: GameState): void {
    if (gs.unlockedTech[tech]) {
       return;
    }
@@ -131,7 +131,7 @@ export function unlockTech(tech: Tech, event: TypedEvent<Tile> | null, gs: GameS
          depositTiles[0] = shuffle(exploredEmptyTiles)[0].xy;
       }
       depositTiles.forEach(([xy, tile]) => {
-         addDeposit(xy, deposit, event, gs);
+         addDeposit(xy, deposit, dispatchEvent, gs);
       });
    });
 
@@ -142,9 +142,14 @@ export function unlockTech(tech: Tech, event: TypedEvent<Tile> | null, gs: GameS
 
 export const OnResetTile = new TypedEvent<Tile>();
 
-export function addDeposit(xy: Tile, deposit: Deposit, event: TypedEvent<Tile> | null, gs: GameState): void {
-   gs.tiles.get(xy)!.deposit[deposit] = true;
-   event?.emit(xy);
+export function addDeposit(xy: Tile, deposit: Deposit, dispatchEvent: boolean, gs: GameState): void {
+   const tile = gs.tiles.get(xy);
+   if (tile) {
+      tile.deposit[deposit] = true;
+      if (dispatchEvent) {
+         OnResetTile.emit(xy);
+      }
+   }
 }
 
 export function unlockableTechs(gs: GameState): Tech[] {

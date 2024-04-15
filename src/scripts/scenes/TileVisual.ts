@@ -1,5 +1,6 @@
+import type { SmoothGraphics } from "@pixi/graphics-smooth";
 import type { IDestroyOptions, IPointData } from "pixi.js";
-import { BitmapText, Color, Container, Rectangle, Sprite } from "pixi.js";
+import { BitmapText, Container, Rectangle, Sprite } from "pixi.js";
 import type { Resource } from "../../../shared/definitions/ResourceDefinitions";
 import {
    getBuildingLevelLabel,
@@ -24,6 +25,7 @@ import {
 } from "../../../shared/utilities/Helper";
 import { v2 } from "../../../shared/utilities/Vector2";
 import { getBuildingTexture, getNotProducingTexture, getTexture, getTileTexture } from "../logic/VisualLogic";
+import { getColorCached } from "../utilities/CachedColor";
 import { Actions } from "../utilities/pixi-actions/Actions";
 import { Easing } from "../utilities/pixi-actions/Easing";
 import type { Action } from "../utilities/pixi-actions/actions/Action";
@@ -53,14 +55,21 @@ export class TileVisual extends Container {
       super();
       this._world = world;
       this._grid = grid;
-      const gs = getGameState();
       this._xy = pointToTile(this._grid);
+
+      const gs = getGameState();
       this._tile = gs.tiles.get(this._xy)!;
       console.assert(this._tile, "Expect tile to exist!");
-      this.position = getGrid(gs).gridToPosition(this._grid);
+      const g = getGrid(gs);
+      this.position = g.gridToPosition(this._grid);
 
-      const aabb = getGrid(gs).aabb(this.position);
-      this._aabb = new Rectangle(aabb[0], aabb[1], aabb[2], aabb[3]);
+      // We use a very large AABB to avoid flickering when zooming
+      this._aabb = new Rectangle(
+         this.position.x - 2 * g.size,
+         this.position.y - 2 * g.size,
+         4 * g.size,
+         4 * g.size,
+      );
 
       this.cullable = true;
 
@@ -149,13 +158,17 @@ export class TileVisual extends Container {
          this.updateDepositColor(getGameOptions());
       }
 
-      this.update(getGameState(), 0);
+      this.update(0);
    }
 
    public isInViewport(): boolean {
       const rect = this._world.viewport.visibleWorldRect();
       if (!rect) return true;
       return rect.intersects(this._aabb);
+   }
+
+   public debugDraw(g: SmoothGraphics): void {
+      g.drawRect(this._aabb.x, this._aabb.y, this._aabb.width, this._aabb.height);
    }
 
    override destroy(options?: boolean | IDestroyOptions | undefined): void {
@@ -166,7 +179,7 @@ export class TileVisual extends Container {
 
    public updateDepositColor(options: GameOptions) {
       this._deposits.forEach((sprite, deposit) => {
-         sprite.tint = Color.shared.setValue(options.resourceColors[deposit] ?? "#ffffff");
+         sprite.tint = getColorCached(options.resourceColors[deposit] ?? "#ffffff");
       });
    }
 
@@ -200,7 +213,7 @@ export class TileVisual extends Container {
       ).start();
    }
 
-   public update(gs: GameState, dt: number) {
+   public update(dt: number) {
       if (!this.isInViewport()) {
          this.visible = false;
          return;
@@ -217,7 +230,7 @@ export class TileVisual extends Container {
 
       const color = getGameOptions().buildingColors[this._tile.building.type];
       if (color) {
-         const c = Color.shared.setValue(color);
+         const c = getColorCached(color);
          this._building.tint = c;
          this._notProducing.tint = c;
          this._spinner.tint = c;
