@@ -8,6 +8,7 @@ export const PatchNotes: PatchNote[] = [
    {
       version: "0.7.2",
       content: [
+         ["Bugfix", "Fix a fog and deposit visual glitch introduced in 0.7.1"],
          [
             "QoL",
             "Backup folder has been moved to make it work in Linux. You can access the latest path in Help -> About",
