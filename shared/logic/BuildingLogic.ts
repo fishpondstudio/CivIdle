@@ -554,7 +554,8 @@ export function getMaxInputDistance(building: IBuildingData, gs: GameState): num
    if (!hasFeature(GameFeature.BuildingInputMode, gs)) {
       return Number.POSITIVE_INFINITY;
    }
-   if ("resourceImports" in building) {
+   // Managed import rule does not apply when the building is being upgraded!
+   if (building.status === "completed" && "resourceImports" in building) {
       const ri = building as IResourceImportBuildingData;
       if (hasFlag(ri.resourceImportOptions, ResourceImportOptions.ManagedImport)) {
          return MANAGED_IMPORT_RANGE;

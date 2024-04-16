@@ -6,6 +6,20 @@ interface PatchNote {
 
 export const PatchNotes: PatchNote[] = [
    {
+      version: "0.7.3",
+      content: [
+         [
+            "Bugfix",
+            "Fix a bug where setting managed import as default will prevent new warehouses being built/upgraded",
+         ],
+         [
+            "Bugfix",
+            "Fix a bug where construction priority ranged-apply does not work for buildings being constructed",
+         ],
+         ["Bugfix", "Reduce the glibc version dependency (from 2.33 to 2.31) for Linux build"],
+      ],
+   },
+   {
       version: "0.7.2",
       content: [
          ["Bugfix", "Fix a fog and deposit visual glitch introduced in 0.7.1"],
