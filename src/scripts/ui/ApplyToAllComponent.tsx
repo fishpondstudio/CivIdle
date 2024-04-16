@@ -58,7 +58,7 @@ export function ApplyToAllComponent<T extends IBuildingData>({
                               getGrid(gameState)
                                  .getRange(tileToPoint(xy), tile)
                                  .map((p) => pointToTile(p))
-                                 .filter((xy) => getCompletedBuilding(xy, gameState)?.type === building.type),
+                                 .filter((xy) => gameState.tiles.get(xy)?.building?.type === building.type),
                            );
                      }}
                      onMouseLeave={() => {
