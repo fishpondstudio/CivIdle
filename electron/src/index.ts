@@ -1,6 +1,6 @@
+import { init, type Client } from "@fishpondstudio/steamworks.js";
 import { BrowserWindow, Menu, app, dialog, ipcMain } from "electron";
 import path from "node:path";
-import { init, type Client } from "steamworks.js";
 import { IPCService } from "./IPCService";
 
 export type SteamClient = Omit<Client, "init" | "runCallbacks">;

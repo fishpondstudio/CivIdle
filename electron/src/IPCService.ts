@@ -63,7 +63,7 @@ export class IPCService {
    }
 
    public async getAuthSessionTicket(): Promise<string> {
-      return (await this._client.auth.getSessionTicket()).getBytes().toString("hex");
+      return (await this._client.auth.getAuthTicketForWebApi("")).getBytes().toString("hex");
    }
 
    public getAppId(): number {
