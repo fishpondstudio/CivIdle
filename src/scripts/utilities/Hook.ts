@@ -1,5 +1,5 @@
-import { type DependencyList, useEffect, useState } from "react";
-import { type Shortcut, getShortcuts } from "../../../shared/logic/Shortcut";
+import { useEffect, useState, type DependencyList } from "react";
+import { getShortcuts, type Shortcut } from "../../../shared/logic/Shortcut";
 import type { TypedEvent } from "../../../shared/utilities/TypedEvent";
 
 export function makeObservableHook<T>(event: TypedEvent<T>, getter: () => T) {
@@ -13,7 +13,7 @@ export function makeObservableHook<T>(event: TypedEvent<T>, getter: () => T) {
          return () => {
             event.off(handleEvent);
          };
-      }, [event]);
+      }, [event, handleEvent]);
       return getter();
    };
 }
@@ -37,7 +37,7 @@ export function refreshOnTypedEvent<T>(event: TypedEvent<T>) {
       return () => {
          event.off(listener);
       };
-   }, [event]);
+   }, [event, listener]);
 }
 
 export function useShortcut(shortcut: Shortcut, callback: () => void, deps: DependencyList) {

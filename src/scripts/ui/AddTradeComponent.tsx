@@ -103,6 +103,7 @@ export function AddTradeComponent({ gameState, xy }: IBuildingComponentProps): R
                {[0.1, 0.25, 0.5, 1].map((pct) => {
                   return (
                      <div
+                        key={pct}
                         className="text-link text-strong ml10"
                         onClick={() =>
                            setTrade({
@@ -154,6 +155,7 @@ export function AddTradeComponent({ gameState, xy }: IBuildingComponentProps): R
                {[-percentage, -percentage / 2, 0, percentage / 2, percentage].map((pct) => {
                   return (
                      <div
+                        key={pct}
                         className="text-link text-strong ml10"
                         onClick={() =>
                            setTrade({

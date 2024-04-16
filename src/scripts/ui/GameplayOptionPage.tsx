@@ -228,7 +228,7 @@ export function GameplayOptionPage(): React.ReactNode {
                               .map((building) => {
                                  const value = options.buildingDefaults[building];
                                  return (
-                                    <tr>
+                                    <tr key={building}>
                                        <td>{Config.Building[building].name()}</td>
                                        <td>
                                           <TextWithHelp

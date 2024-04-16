@@ -74,6 +74,7 @@ export function DebugPage(): React.ReactNode {
                <div>Selected</div>
                <div className="f1 text-right">
                   {mapOf(selectedResource, (res, amount) => Config.ResourcePrice[res]! * amount).reduce(
+                     // biome-ignore lint/correctness/useJsxKeyInIterable: <explanation>
                      (prev, curr) => prev + curr,
                      0,
                   )}

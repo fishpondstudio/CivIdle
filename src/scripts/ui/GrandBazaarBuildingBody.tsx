@@ -3,6 +3,7 @@ import { useState } from "react";
 import type { Resource } from "../../../shared/definitions/ResourceDefinitions";
 import { getMarketBuyAmount, getMarketSellAmount } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
+import type { GameState } from "../../../shared/logic/GameState";
 import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
 import { getBuildingsByType } from "../../../shared/logic/IntraTickCache";
 import type { IMarketBuildingData } from "../../../shared/logic/Tile";
@@ -28,7 +29,6 @@ import { RenderHTML } from "./RenderHTMLComponent";
 import { TableView } from "./TableView";
 import { TextWithHelp } from "./TextWithHelpComponent";
 import { WarningComponent } from "./WarningComponent";
-import type { GameState } from "../../../shared/logic/GameState";
 
 interface IGrandBazaarMarketData {
    xy: Tile;
@@ -409,16 +409,10 @@ export function GrandBazaarBuildingBody({ gameState, xy }: IBuildingComponentPro
 
          <div className="column">
             <menu role="tablist">
-               <button
-                  onClick={() => setCurrentTab("trades")}
-                  aria-selected={currentTab === "trades" ? true : false}
-               >
+               <button onClick={() => setCurrentTab("trades")} aria-selected={currentTab === "trades"}>
                   {t(L.GrandBazaarTabTrades)}
                </button>
-               <button
-                  onClick={() => setCurrentTab("active")}
-                  aria-selected={currentTab === "active" ? true : false}
-               >
+               <button onClick={() => setCurrentTab("active")} aria-selected={currentTab === "active"}>
                   {t(L.GrandBazaarTabActive)}
                </button>
             </menu>

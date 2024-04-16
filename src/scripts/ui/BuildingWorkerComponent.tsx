@@ -112,6 +112,7 @@ export function BuildingWorkerComponent({ gameState, xy }: IBuildingComponentPro
                               <div className="f1">{t(L.TransportCapacityMultiplier)}</div>
                               <div>
                                  {Tick.current.globalMultipliers.transportCapacity.reduce(
+                                    // biome-ignore lint/correctness/useJsxKeyInIterable: <explanation>
                                     (prev, curr) => prev + curr.value,
                                     0,
                                  )}

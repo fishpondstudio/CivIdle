@@ -729,8 +729,8 @@ export function uuid4(): string {
               // @ts-expect-error
               (a ^ 15 // if "a" is not 15
                  ? // genetate a random number from 0 to 15
-                    // @ts-expect-error
-                    8 ^ (Math.random() * (a ^ 20 ? 16 : 4)) // unless "a" is 20, in which case a random number from 8 to 11
+                   // @ts-expect-error
+                   8 ^ (Math.random() * (a ^ 20 ? 16 : 4)) // unless "a" is 20, in which case a random number from 8 to 11
                  : 4
               ) //  otherwise 4
                  .toString(16)

@@ -174,7 +174,9 @@ function GreatPersonWildcardRow({ greatPerson }: { greatPerson: GreatPerson }): 
                }}
             >
                {choices.map((g) => (
-                  <option value={g}>{Config.GreatPerson[g].name()}</option>
+                  <option key={g} value={g}>
+                     {Config.GreatPerson[g].name()}
+                  </option>
                ))}
             </select>
          </td>
