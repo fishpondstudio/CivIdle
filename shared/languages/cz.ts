@@ -953,6 +953,7 @@ export const CZ = {
    Tool: "Nářadí",
    TotalEmpireValue: "Celková hodnota říše",
    TotalEmpireValuePerCycle: "Celková hodnota říše za cyklus",
+   TotalEmpireValuePerCyclePerGreatPeopleLevel: "Total Empire Value Per Cycle Per Great People Level",
    TotalStorage: "Skladování celkem",
    TotalTimeThisRun: "Celkový čas tohoto běhu",
    TotalWorkers: "Celkem pracovníků",

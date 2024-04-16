@@ -953,6 +953,7 @@ export const FR = {
    Tool: "Outil",
    TotalEmpireValue: "Valeur totale de l'empire",
    TotalEmpireValuePerCycle: "Valeur totale de l'empire par cycle",
+   TotalEmpireValuePerCyclePerGreatPeopleLevel: "Total Empire Value Per Cycle Per Great People Level",
    TotalStorage: "Stockage total",
    TotalTimeThisRun: "Durée totale de cette partie",
    TotalWorkers: "Nombre total d'ouvriers",

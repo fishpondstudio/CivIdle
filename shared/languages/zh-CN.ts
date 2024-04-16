@@ -953,6 +953,7 @@ export const ZH_CN = {
    Tool: "工具",
    TotalEmpireValue: "帝国总价值",
    TotalEmpireValuePerCycle: "每周期帝国价值",
+   TotalEmpireValuePerCyclePerGreatPeopleLevel: "Total Empire Value Per Cycle Per Great People Level",
    TotalStorage: "总存储空间",
    TotalTimeThisRun: "帝国存续时长",
    TotalWorkers: "劳动者总数",

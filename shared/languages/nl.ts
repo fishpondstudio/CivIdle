@@ -953,6 +953,7 @@ export const NL = {
    Tool: "Gereedschap",
    TotalEmpireValue: "Totale Rijkwaarde",
    TotalEmpireValuePerCycle: "Totale Rijkwaarde Per Cyclus",
+   TotalEmpireValuePerCyclePerGreatPeopleLevel: "Total Empire Value Per Cycle Per Great People Level",
    TotalStorage: "Totale Opslag",
    TotalTimeThisRun: "Totale Tijd Deze Run",
    TotalWorkers: "Total Workers",

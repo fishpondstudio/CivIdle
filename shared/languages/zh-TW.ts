@@ -953,6 +953,7 @@ export const ZH_TW = {
    Tool: "工具",
    TotalEmpireValue: "帝國總價值",
    TotalEmpireValuePerCycle: "每個周期的總帝國價值",
+   TotalEmpireValuePerCyclePerGreatPeopleLevel: "Total Empire Value Per Cycle Per Great People Level",
    TotalStorage: "總存儲空間",
    TotalTimeThisRun: "這場次的總遊戲時間",
    TotalWorkers: "總人口",

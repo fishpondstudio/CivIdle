@@ -953,6 +953,7 @@ export const RU = {
    Tool: "Инструменты",
    TotalEmpireValue: "Общая Стоимость Империи",
    TotalEmpireValuePerCycle: "Общая Стоимость Империи За Цикл",
+   TotalEmpireValuePerCyclePerGreatPeopleLevel: "Total Empire Value Per Cycle Per Great People Level",
    TotalStorage: "Общее Хранилище",
    TotalTimeThisRun: "Всего Времени В Этом Забеге",
    TotalWorkers: "Всего Работников",

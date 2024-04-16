@@ -953,6 +953,7 @@ export const KR = {
    Tool: "도구",
    TotalEmpireValue: "총 제국 가치",
    TotalEmpireValuePerCycle: "주기당 총 제국 가치",
+   TotalEmpireValuePerCyclePerGreatPeopleLevel: "Total Empire Value Per Cycle Per Great People Level",
    TotalStorage: "총 저장량",
    TotalTimeThisRun: "이번 회차에서 총 시간",
    TotalWorkers: "Total Workers",

@@ -446,6 +446,12 @@ function RebornComponent({ gameState }: { gameState: GameState }): ReactNode {
                   <div className="f1">{t(L.TotalEmpireValuePerCycle)}</div>
                   <FormatNumber value={Tick.current.totalValue / gameState.tick} />
                </li>
+               <li className="row text-small">
+                  <div className="f1">{t(L.TotalEmpireValuePerCyclePerGreatPeopleLevel)}</div>
+                  <FormatNumber
+                     value={Tick.current.totalValue / gameState.tick / getPermanentGreatPeopleLevel()}
+                  />
+               </li>
             </ul>
             <li>
                <details>

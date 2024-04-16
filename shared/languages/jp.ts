@@ -953,6 +953,7 @@ export const JP = {
    Tool: "Tool",
    TotalEmpireValue: "Total Empire Value",
    TotalEmpireValuePerCycle: "Total Empire Value Per Cycle",
+   TotalEmpireValuePerCyclePerGreatPeopleLevel: "Total Empire Value Per Cycle Per Great People Level",
    TotalStorage: "Total Storage",
    TotalTimeThisRun: "Total Time This Run",
    TotalWorkers: "Total Workers",

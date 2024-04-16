@@ -953,6 +953,7 @@ export const TR = {
    Tool: "Alet",
    TotalEmpireValue: "İmparatorluğun Toplam Değeri",
    TotalEmpireValuePerCycle: "Döngü Başına Toplam İmparatorluk Değeri",
+   TotalEmpireValuePerCyclePerGreatPeopleLevel: "Total Empire Value Per Cycle Per Great People Level",
    TotalStorage: "Toplam Depolama",
    TotalTimeThisRun: "Bu Turdaki Toplam Süre",
    TotalWorkers: "Toplam İşçiler",

@@ -17,6 +17,7 @@ export const PatchNotes: PatchNote[] = [
             "Fix a bug where construction priority ranged-apply does not work for buildings being constructed",
          ],
          ["Bugfix", "Reduce the glibc version dependency (from 2.33 to 2.31) for Linux build"],
+         ["QoL", "Add Total Empire Value Per Cycle Per Great People Level in Home Building -> Rebirth"],
       ],
    },
    {
