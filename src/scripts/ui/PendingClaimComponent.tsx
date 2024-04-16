@@ -4,7 +4,15 @@ import type { Resource } from "../../../shared/definitions/ResourceDefinitions";
 import { getStorageFor } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
 import { PendingClaimFlag, type IPendingClaim } from "../../../shared/utilities/Database";
-import { forEach, formatNumber, hasFlag, mapOf, safeAdd, sizeOf } from "../../../shared/utilities/Helper";
+import {
+   clamp,
+   forEach,
+   formatNumber,
+   hasFlag,
+   mapOf,
+   safeAdd,
+   sizeOf,
+} from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import { OnNewPendingClaims, client } from "../rpc/RPCClient";
 import { useTypedEvent } from "../utilities/Hook";
@@ -37,16 +45,16 @@ export function PendingClaimComponent({ gameState, xy }: IBuildingComponentProps
             return;
          }
          const { total, used } = getStorageFor(xy, gameState);
-         const available = total - used;
+         const storageAvailable = total - used;
          const toClaim: Record<string, number> = {};
-         let storageNeeded = 0;
+         let storageUsed = 0;
          for (const claim of trades) {
-            if (storageNeeded + claim.amount > available) {
-               toClaim[claim.id] = available - storageNeeded;
+            if (storageUsed + claim.amount > storageAvailable) {
+               toClaim[claim.id] = clamp(storageAvailable - storageUsed, 0, Number.POSITIVE_INFINITY);
                break;
             }
             toClaim[claim.id] = claim.amount;
-            storageNeeded += claim.amount;
+            storageUsed += claim.amount;
          }
          const { pendingClaims, resources } = await client.claimTradesV2(toClaim);
          setPendingClaims(pendingClaims);
