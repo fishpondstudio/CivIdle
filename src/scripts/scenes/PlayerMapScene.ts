@@ -301,7 +301,6 @@ class PlayerTile extends Container {
 
       const color = UserColorsMapping.get(data.color);
       if (color) {
-         console.log(color);
          const sprite = this.addChild(new Sprite(context.textures.Misc_100x100));
          sprite.position.set(x * GridSize, y * GridSize);
          sprite.tint = getColorCached(color);
