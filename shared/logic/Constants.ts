@@ -18,7 +18,7 @@ import {
    round,
    sizeOf,
 } from "../utilities/Helper";
-import type { PartialSet, PartialTabulate } from "../utilities/TypeDefinitions";
+import type { PartialTabulate } from "../utilities/TypeDefinitions";
 import {
    getBuildingCost,
    getWonderBaseBuilderCapacity,
@@ -268,7 +268,6 @@ export function calculateTierAndPrice(log?: (val: string) => void) {
       }
    });
 
-   const endResources: PartialSet<Resource> = {};
    let resourceHash = 0;
    forEach(Config.Resource, (r) => {
       Config.ResourceHash[r] = resourceHash++;
@@ -279,24 +278,18 @@ export function calculateTierAndPrice(log?: (val: string) => void) {
          Config.ResourcePrice[r] = 1;
          Config.ResourceTier[r] = 1;
       }
-
-      let isEndResource = true;
-      forEach(Config.Building, (b, def) => {
-         if (def.input[r]) {
-            isEndResource = false;
-         }
-      });
-      if (isEndResource) {
-         endResources[r] = true;
-      }
    });
 
+   const resourcesUsedByBuildings = new Map<Resource, number>();
    forEach(Config.Building, (b, def) => {
       if (def.special === BuildingSpecial.NaturalWonder || def.special === BuildingSpecial.HQ) {
          if (def.max !== 0) {
             throw new Error(`Natural Wonder: ${b} should have max = 0`);
          }
       }
+      forEach(def.input, (res) => {
+         mapSafeAdd(resourcesUsedByBuildings, res, 1);
+      });
       if (def.output.Science) {
          const multiplier = 1.5 + 0.25 * sizeOf(def.input);
          const inputValue = Math.round(
@@ -378,10 +371,10 @@ export function calculateTierAndPrice(log?: (val: string) => void) {
       .filter((r) => !NoPrice[r])
       .forEach((r) => {
          resourcePrice.push(
-            `${r.padEnd(15)}${!NoPrice[r] && endResources[r] ? "*".padEnd(5) : "".padEnd(5)}${numberToRoman(
-               Config.ResourceTier[r]!,
-            )!.padEnd(10)}${String(Config.ResourcePrice[r]!).padEnd(10)}${
-               resourcesUsedByWonder.get(r) ?? "0*"
+            `${r.padEnd(20)}${numberToRoman(Config.ResourceTier[r]!)!.padEnd(10)}${String(
+               Config.ResourcePrice[r]!,
+            ).padEnd(10)}${String(resourcesUsedByWonder.get(r) ?? "0*").padEnd(10)}${
+               resourcesUsedByBuildings.get(r) ?? "0*"
             }`,
          );
       });

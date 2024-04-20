@@ -80,6 +80,7 @@ if (canvas) {
       resizeTo: canvas,
       backgroundColor: BG_COLOR,
       sharedTicker: true,
+      autoDensity: true,
    });
    canvas.appendChild(app.view as any);
    registerPixiInspector(app);

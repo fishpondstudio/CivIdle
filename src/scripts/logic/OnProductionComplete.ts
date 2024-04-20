@@ -56,7 +56,7 @@ import { client } from "../rpc/RPCClient";
 import { Singleton } from "../utilities/Singleton";
 
 let votedBoost: IGetVotedBoostResponse | null = null;
-const lastVotedBoostUpdatedAt = 0;
+let lastVotedBoostUpdatedAt = 0;
 
 export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boolean }): void {
    const gs = getGameState();
@@ -694,14 +694,16 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
             }
          });
 
-         if (Date.now() - lastVotedBoostUpdatedAt < MINUTE) {
-            return;
+         // We update this every minute to reduce server load
+         if (Date.now() - lastVotedBoostUpdatedAt > MINUTE) {
+            lastVotedBoostUpdatedAt = Date.now();
+            if (votedBoost === null || getVotedBoostId() !== votedBoost.id) {
+               client.getVotedBoosts().then((resp) => {
+                  votedBoost = resp;
+               });
+            }
          }
-         if (votedBoost === null || getVotedBoostId() !== votedBoost.id) {
-            client.getVotedBoosts().then((resp) => {
-               votedBoost = resp;
-            });
-         }
+
          if (votedBoost) {
             const current = votedBoost.current.options[votedBoost.current.voted];
             switch (current.type) {
@@ -713,6 +715,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
                }
             }
          }
+
          break;
       }
       case "MountTai": {
