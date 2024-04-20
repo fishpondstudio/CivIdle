@@ -960,7 +960,7 @@ export const DK = {
    Tourism: "Turisme",
    Train: "Tog",
    TranslationPercentage: "%{language} er %{percentage} oversat. Hjælp med at forbedre denne oversættelse på GitHub",
-   TranslatorCredit: "<Indsæt Dit Navn Her>",
+   TranslatorCredit: "UnpredictedUwU",
    Translators: "Oversættere",
    TransportAllocatedCapacityTooltip: "Byggerkapacitet allokeret til at transportere denne ressource",
    TransportationWorkers: "Transportarbejdere",
