@@ -199,7 +199,7 @@ function showOfflineProductionProgress(progress: number, routeTo: RouteTo): Prom
 function verifyTextures(textures: Record<string, Texture>, city: City) {
    forEach(Config.Building, (b, def) => {
       if (!getBuildingTexture(b, textures, city)) {
-         console.warn(`Cannot find texture for building ${b}`);
+         console.warn(`Missing texture for building ${b}`);
       }
       if (!isNullOrUndefined(def.max) && isNullOrUndefined(def.special)) {
          console.warn(`Building ${b} has "max" defined but "special" undefined. Please define "special"!`);
@@ -207,7 +207,12 @@ function verifyTextures(textures: Record<string, Texture>, city: City) {
    });
    forEach(IsDeposit, (k, v) => {
       if (!getTileTexture(k, textures)) {
-         console.warn(`Cannot find texture for deposit ${k}`);
+         console.warn(`Missing texture for deposit ${k}`);
+      }
+   });
+   forEach(Config.GreatPerson, (p, def) => {
+      if (!textures[`Person_${p}`]) {
+         console.warn(`Missing texture for great person: ${p}`);
       }
    });
 }

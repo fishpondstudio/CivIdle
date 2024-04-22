@@ -793,13 +793,168 @@ export class GreatPersonDefinitions {
       type: GreatPersonType.Normal,
    };
 
-   AmeliaEarhart: IGreatPersonDefinition = {
+   AmeliaEarhart: IGreatPersonDefinition = boostOf({
       name: () => t(L.AmeliaEarhart),
-      desc: (self, level) => t(L.WildCardGreatPersonDesc),
+      boost: {
+         multipliers: ["output"],
+         buildings: ["BiplaneFactory", "GasPowerPlant"],
+      },
       time: "1897 ~ 1937 AD",
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "WorldWarAge",
+   });
+
+   HenryFord: IGreatPersonDefinition = boostOf({
+      name: () => t(L.HenryFord),
+      boost: {
+         multipliers: ["output"],
+         buildings: ["CarFactory", "PlasticsFactory"],
+      },
+      time: "1863 ~ 1947 AD",
+      value: (level) => level,
+      maxLevel: Number.POSITIVE_INFINITY,
+      age: "WorldWarAge",
+   });
+
+   MahatmaGandhi: IGreatPersonDefinition = {
+      name: () => t(L.MahatmaGandhi),
+      desc: (self, level) => t(L.WildCardGreatPersonDesc),
+      time: "1869 ~ 1948 AD",
+      value: (level) => level,
+      maxLevel: Number.POSITIVE_INFINITY,
+      age: "WorldWarAge",
+      tick: (self, level, source) => {},
+      type: GreatPersonType.Wildcard,
+   };
+
+   JRobertOppenheimer: IGreatPersonDefinition = boostOf({
+      name: () => t(L.JRobertOppenheimer),
+      boost: {
+         multipliers: ["output"],
+         buildings: ["UraniumEnrichmentPlant", "AtomicFacility"],
+      },
+      time: "1904 ~ 1967 AD",
+      value: (level) => level,
+      maxLevel: Number.POSITIVE_INFINITY,
+      age: "ColdWarAge",
+   });
+
+   WaltDisney: IGreatPersonDefinition = boostOf({
+      name: () => t(L.WaltDisney),
+      boost: {
+         multipliers: ["output"],
+         buildings: ["MovieStudio", "RadioStation"],
+      },
+      time: "1901 ~ 1966 AD",
+      value: (level) => level,
+      maxLevel: Number.POSITIVE_INFINITY,
+      age: "ColdWarAge",
+   });
+
+   WernherVonBraun: IGreatPersonDefinition = boostOf({
+      name: () => t(L.WernherVonBraun),
+      boost: {
+         multipliers: ["output"],
+         buildings: ["RocketFactory", "ArtilleryFactory"],
+      },
+      time: "1912 ~ 1977 AD",
+      value: (level) => level,
+      maxLevel: Number.POSITIVE_INFINITY,
+      age: "ColdWarAge",
+   });
+
+   ChesterWNimitz: IGreatPersonDefinition = boostOf({
+      name: () => t(L.ChesterWNimitz),
+      boost: {
+         multipliers: ["output"],
+         buildings: ["BattleshipBuilder", "HydroDam"],
+      },
+      time: "1885 ~ 1966 AD",
+      value: (level) => level,
+      maxLevel: Number.POSITIVE_INFINITY,
+      age: "ColdWarAge",
+   });
+
+   FrankWhittle: IGreatPersonDefinition = boostOf({
+      name: () => t(L.FrankWhittle),
+      boost: {
+         multipliers: ["output"],
+         buildings: ["AirplaneFactory", "FighterJetPlant"],
+      },
+      time: "1907 ~ 1996 AD",
+      value: (level) => level,
+      maxLevel: Number.POSITIVE_INFINITY,
+      age: "ColdWarAge",
+   });
+
+   EnricoFermi: IGreatPersonDefinition = boostOf({
+      name: () => t(L.EnricoFermi),
+      boost: {
+         multipliers: ["output"],
+         buildings: ["NuclearPowerPlant", "SubmarineYard"],
+      },
+      time: "1901 ~ 1954 AD",
+      value: (level) => level,
+      maxLevel: Number.POSITIVE_INFINITY,
+      age: "ColdWarAge",
+   });
+
+   PhiloFarnsworth: IGreatPersonDefinition = boostOf({
+      name: () => t(L.PhiloFarnsworth),
+      boost: {
+         multipliers: ["output"],
+         buildings: ["TVStation", "NuclearMissileSilo"],
+      },
+      time: "1906 ~ 1971 AD",
+      value: (level) => level,
+      maxLevel: Number.POSITIVE_INFINITY,
+      age: "ColdWarAge",
+   });
+
+   SergeiKorolev: IGreatPersonDefinition = boostOf({
+      name: () => t(L.SergeiKorolev),
+      boost: {
+         multipliers: ["output"],
+         buildings: ["SatelliteFactory", "SpacecraftFactory"],
+      },
+      time: "1907 ~ 1966 AD",
+      value: (level) => level,
+      maxLevel: Number.POSITIVE_INFINITY,
+      age: "ColdWarAge",
+   });
+
+   GeorgeCMarshall: IGreatPersonDefinition = boostOf({
+      name: () => t(L.GeorgeCMarshall),
+      boost: {
+         multipliers: ["output"],
+         buildings: ["Embassy", "ForexMarket"],
+      },
+      time: "1880 ~ 1959 AD",
+      value: (level) => level,
+      maxLevel: Number.POSITIVE_INFINITY,
+      age: "ColdWarAge",
+   });
+
+   RobertNoyce: IGreatPersonDefinition = boostOf({
+      name: () => t(L.RobertNoyce),
+      boost: {
+         multipliers: ["output"],
+         buildings: ["SemiconductorFab", "SiliconSmelter"],
+      },
+      time: "1927 ~ 1990 AD",
+      value: (level) => level,
+      maxLevel: Number.POSITIVE_INFINITY,
+      age: "ColdWarAge",
+   });
+
+   ElvisPresley: IGreatPersonDefinition = {
+      name: () => t(L.ElvisPresley),
+      desc: (self, level) => t(L.WildCardGreatPersonDesc),
+      time: "1935 ~ 1977 AD",
+      value: (level) => level,
+      maxLevel: Number.POSITIVE_INFINITY,
+      age: "ColdWarAge",
       tick: (self, level, source) => {},
       type: GreatPersonType.Wildcard,
    };
