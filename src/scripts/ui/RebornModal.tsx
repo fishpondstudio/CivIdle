@@ -219,7 +219,7 @@ export function RebornModal(): React.ReactNode {
                         Number.POSITIVE_INFINITY,
                      );
 
-                     if (canEarnGreatPeopleFromReborn()) {
+                     if (!gs.rebirthed && canEarnGreatPeopleFromReborn()) {
                         rollPermanentGreatPeople(
                            greatPeopleCount,
                            getGreatPeopleChoiceCount(gs),
@@ -229,6 +229,7 @@ export function RebornModal(): React.ReactNode {
                            getGameOptions().greatPeopleChoices.push(gp);
                         });
                         makeGreatPeopleFromThisRunPermanent();
+                        gs.rebirthed = true;
                      }
 
                      checkRebirthAchievements(greatPeopleCount, gs);

@@ -54,6 +54,7 @@ export class GameState {
    transportId = 0;
    lastPriceUpdated = 0;
    isOffline = false;
+   rebirthed = false;
    favoriteTiles: Set<Tile> = new Set();
    claimedGreatPeople = 0;
 }
