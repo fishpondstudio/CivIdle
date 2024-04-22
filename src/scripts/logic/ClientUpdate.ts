@@ -14,6 +14,7 @@ import { CurrentTickChanged, EmptyTickData, Tick, freezeTickData } from "../../.
 import {
    OnBuildingComplete,
    OnBuildingProductionComplete,
+   OnPriceUpdated,
    RequestFloater,
    tickPower,
    tickPrice,
@@ -28,6 +29,7 @@ import { isSteam } from "../rpc/SteamClient";
 import { WorldScene } from "../scenes/WorldScene";
 import { makeObservableHook } from "../utilities/Hook";
 import { Singleton } from "../utilities/Singleton";
+import { playDing } from "../visuals/Sound";
 import { onBuildingComplete } from "./OnBuildingComplete";
 import { onProductionComplete } from "./OnProductionComplete";
 import { onTileExplored } from "./OnTileExplored";
@@ -118,5 +120,6 @@ OnResetTile.on((xy) => {
 OnTileExplored.on(onTileExplored);
 OnBuildingComplete.on(onBuildingComplete);
 OnBuildingProductionComplete.on(onProductionComplete);
+OnPriceUpdated.on(playDing);
 
 export const useCurrentTick = makeObservableHook(CurrentTickChanged, () => Tick.current);

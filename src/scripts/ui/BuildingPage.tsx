@@ -12,9 +12,9 @@ import { HeadquarterBuildingBody } from "./HeadquarterBuildingBody";
 import { LoadingPage, LoadingPageStage } from "./LoadingPage";
 import { MarketBuildingBody } from "./MarketBuildingBody";
 import { MenuComponent } from "./MenuComponent";
-import { OxfordUniversityBuildingBody } from "./OxfordUniversityBuildingBody";
 import { PetraBuildingBody } from "./PetraBuildingBody";
 import { PlayerTradeBuildingBody } from "./PlayerTradeBuildingBody";
+import { ScienceProductionWonderBuildingBody } from "./ScienceProductionWonderBuildingBody";
 import { StPetersBasilicaBuildingBody } from "./StPetersBasilicaBuildingBody";
 import { StatisticsBuildingBody } from "./StatisticsBuildingBody";
 import { UnitedNationsBuildingBody } from "./UnitedNationsBuildingBody";
@@ -27,7 +27,8 @@ const BuildingBodyOverride: Partial<Record<Building, FunctionComponent<IBuilding
    Caravansary: PlayerTradeBuildingBody,
    Warehouse: WarehouseBuildingBody,
    Petra: PetraBuildingBody,
-   OxfordUniversity: OxfordUniversityBuildingBody,
+   OxfordUniversity: ScienceProductionWonderBuildingBody,
+   GatewayArch: ScienceProductionWonderBuildingBody,
    StPetersBasilica: StPetersBasilicaBuildingBody,
    GrandBazaar: GrandBazaarBuildingBody,
    UnitedNations: UnitedNationsBuildingBody,

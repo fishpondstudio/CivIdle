@@ -714,21 +714,21 @@ export class TechDefinitions {
       name: () => t(L.JetPropulsion),
       column: 21,
       requireTech: ["NuclearFission"],
-      unlockBuilding: ["AirplaneFactory"],
+      unlockBuilding: ["AirplaneFactory", "SiliconSmelter"],
    };
 
    NuclearReactor: ITechDefinition = {
       name: () => t(L.NuclearReactor),
       column: 21,
       requireTech: ["NuclearFission", "Hydroelectricity"],
-      unlockBuilding: ["NuclearPowerPlant", "SiliconSmelter"],
+      unlockBuilding: ["NuclearPowerPlant", "Atomium"],
    };
 
    Skyscrapper: ITechDefinition = {
       name: () => t(L.Skyscrapper),
       column: 21,
       requireTech: ["UnitedNations", "Hydroelectricity"],
-      unlockBuilding: ["Condo"],
+      unlockBuilding: ["Condo", "SpaceNeedle"],
    };
 
    MilitaryTactics: ITechDefinition = {
@@ -749,7 +749,7 @@ export class TechDefinitions {
       name: () => t(L.Television),
       column: 22,
       requireTech: ["Skyscrapper", "NuclearReactor"],
-      unlockBuilding: ["TVStation"],
+      unlockBuilding: ["TVStation", "CNTower"],
    };
 
    MonetarySystem: ITechDefinition = {
@@ -763,7 +763,7 @@ export class TechDefinitions {
       name: () => t(L.SpaceProgram),
       column: 23,
       requireTech: ["MilitaryTactics"],
-      unlockBuilding: ["SpacecraftFactory"],
+      unlockBuilding: ["SpacecraftFactory", "ApolloProgram"],
    };
 
    MutualAssuredDestruction: ITechDefinition = {

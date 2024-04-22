@@ -438,7 +438,7 @@ export function calculateTierAndPrice(log?: (val: string) => void) {
    log?.(`>>>>>>>>>> WonderCost <<<<<<<<<<\n${wonderCost.join("\n")}`);
    log?.(
       `>>>>>>>>>> NotBoostedBuildings <<<<<<<<<<\n${notBoostedBuildings
-         .map((a) => `${a.building.padEnd(25)}${a.tech.padEnd(20)}${a.age}`)
+         .map((a) => `${a.building.padEnd(25)}${a.tech.padEnd(30)}${a.age}`)
          .join("\n")}`,
    );
    log?.(`>>>>>>>>>> Building Input Cost <<<<<<<<<<\n${buildingInputCost.join("\n")}`);

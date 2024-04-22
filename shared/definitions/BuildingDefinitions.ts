@@ -1269,6 +1269,66 @@ export class BuildingDefinitions {
       special: BuildingSpecial.NaturalWonder,
       wikipedia: "Yangtze",
    };
+   // SydneyOperaHouse: IBuildingDefinition = {
+   //    name: () => t(L.SydneyOperaHouse),
+   //    desc: () => t(L.SydneyOperaHouseDescV2),
+   //    input: {},
+   //    output: {},
+   //    construction: { Forex: 300 },
+   //    max: 1,
+   //    special: BuildingSpecial.WorldWonder,
+   //    wikipedia: "Sydney_Opera_House",
+   // };
+   CNTower: IBuildingDefinition = {
+      name: () => t(L.CNTower),
+      desc: () => t(L.CNTowerDesc),
+      input: {},
+      output: {},
+      construction: { Forex: 300 },
+      max: 1,
+      special: BuildingSpecial.WorldWonder,
+      wikipedia: "CN_Tower",
+   };
+   // GatewayArch: IBuildingDefinition = {
+   //    name: () => t(L.GatewayArch),
+   //    desc: () => t(L.GatewayArchDesc),
+   //    input: {},
+   //    output: {},
+   //    construction: { Forex: 300 },
+   //    max: 1,
+   //    special: BuildingSpecial.WorldWonder,
+   //    wikipedia: "Gateway_Arch",
+   // };
+   SpaceNeedle: IBuildingDefinition = {
+      name: () => t(L.SpaceNeedle),
+      desc: () => t(L.SpaceNeedleDesc),
+      input: {},
+      output: {},
+      construction: { Forex: 300 },
+      max: 1,
+      special: BuildingSpecial.WorldWonder,
+      wikipedia: "Space_Needle",
+   };
+   ApolloProgram: IBuildingDefinition = {
+      name: () => t(L.ApolloProgram),
+      desc: () => t(L.ApolloProgramDesc),
+      input: {},
+      output: {},
+      construction: { Forex: 300 },
+      max: 1,
+      special: BuildingSpecial.WorldWonder,
+      wikipedia: "Apollo_program",
+   };
+   Atomium: IBuildingDefinition = {
+      name: () => t(L.Atomium),
+      desc: () => t(L.AtomiumDesc),
+      input: {},
+      output: {},
+      construction: { Forex: 300 },
+      max: 1,
+      special: BuildingSpecial.WorldWonder,
+      wikipedia: "Atomium",
+   };
    // ArcDeTriomphe: IBuildingDefinition = {
    //    name: () => t(L.ArcDeTriomphe),
    //    desc: () => t(L.ArcDeTriompheDesc),

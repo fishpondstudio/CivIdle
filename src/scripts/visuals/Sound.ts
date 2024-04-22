@@ -3,7 +3,9 @@ import { getGameOptions } from "../../../shared/logic/GameStateLogic";
 import beep from "../../sounds/beep.mp3";
 import bubble from "../../sounds/bubble.mp3";
 import click from "../../sounds/click.mp3";
+import ding from "../../sounds/ding.mp3";
 import error from "../../sounds/error.mp3";
+import gong from "../../sounds/gong.mp3";
 import kaching from "../../sounds/kaching.mp3";
 import levelup from "../../sounds/levelup.mp3";
 import music from "../../sounds/music/pilgrimage-ancient-mediaeval-harp.mp3";
@@ -17,6 +19,8 @@ sound.add("kaching", kaching).singleInstance = true;
 sound.add("levelup", levelup).singleInstance = true;
 sound.add("bubble", bubble).singleInstance = true;
 sound.add("music", music).singleInstance = true;
+sound.add("gong", gong).singleInstance = true;
+sound.add("ding", ding).singleInstance = true;
 
 export function playClick() {
    if (!getGameOptions().soundEffect) {
@@ -46,6 +50,13 @@ export function playKaching() {
    sound.play("kaching");
 }
 
+export function playGong() {
+   if (!getGameOptions().soundEffect) {
+      return;
+   }
+   sound.play("gong");
+}
+
 export function playLevelUp() {
    if (!getGameOptions().soundEffect) {
       return;
@@ -58,4 +69,11 @@ export function playBubble() {
       return;
    }
    sound.play("bubble");
+}
+
+export function playDing() {
+   if (!getGameOptions().soundEffect) {
+      return;
+   }
+   sound.play("ding");
 }

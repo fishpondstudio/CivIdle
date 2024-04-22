@@ -7,7 +7,7 @@ import { getCurrentAge, getMostAdvancedTech, getTechUnlockCost } from "../../../
 import { safeAdd, type Tile } from "../../../shared/utilities/Helper";
 import { ChooseGreatPersonModal } from "../ui/ChooseGreatPersonModal";
 import { showModal } from "../ui/GlobalModal";
-import { playLevelUp } from "../visuals/Sound";
+import { playGong } from "../visuals/Sound";
 
 export function onTileExplored(xy: Tile): void {
    const gs = getGameState();
@@ -33,7 +33,7 @@ export function onTileExplored(xy: Tile): void {
                gs.greatPeopleChoices.push(candidates);
             }
             if (gs.greatPeopleChoices.length > 0) {
-               playLevelUp();
+               playGong();
                showModal(<ChooseGreatPersonModal permanent={false} />);
             }
             break;
