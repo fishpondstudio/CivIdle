@@ -28,7 +28,7 @@ const BuildingBodyOverride: Partial<Record<Building, FunctionComponent<IBuilding
    Warehouse: WarehouseBuildingBody,
    Petra: PetraBuildingBody,
    OxfordUniversity: ScienceProductionWonderBuildingBody,
-   GatewayArch: ScienceProductionWonderBuildingBody,
+   Atomium: ScienceProductionWonderBuildingBody,
    StPetersBasilica: StPetersBasilicaBuildingBody,
    GrandBazaar: GrandBazaarBuildingBody,
    UnitedNations: UnitedNationsBuildingBody,
