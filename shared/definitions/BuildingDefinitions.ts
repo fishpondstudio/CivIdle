@@ -44,6 +44,13 @@ export class BuildingDefinitions {
       output: { Worker: 84 },
       construction: { Brick: 1, Cheese: 1, Meat: 1, Bread: 1 },
    };
+   Condo: IBuildingDefinition = {
+      name: () => t(L.Condo),
+      input: { Pizza: 3 },
+      output: { Worker: 510 },
+      construction: { Concrete: 3, Steel: 1 },
+      power: true,
+   };
    // #endregion /////////////////////////////////////////////////////////////////////////////////////////////
 
    // #region Resources //////////////////////////////////////////////////////////////////////////////////////
@@ -173,6 +180,13 @@ export class BuildingDefinitions {
       output: { Water: 1, Power: 2 },
       construction: { Dynamite: 1, Concrete: 1 },
    };
+
+   NuclearPowerPlant: IBuildingDefinition = {
+      name: () => t(L.NuclearPowerPlant),
+      input: { NuclearFuelRod: 2 },
+      output: { Power: 65 },
+      construction: { Concrete: 16, Steel: 16 },
+   };
    // #endregion /////////////////////////////////////////////////////////////////////////////////////////////
 
    // #region Military ///////////////////////////////////////////////////////////////////////////////////////
@@ -287,6 +301,30 @@ export class BuildingDefinitions {
       output: { AtomicBomb: 1 },
       power: true,
    };
+   FighterJetPlant: IBuildingDefinition = {
+      name: () => t(L.FighterJetPlant),
+      input: { Airplane: 1, Artillery: 1 },
+      output: { FighterJet: 2 },
+      power: true,
+   };
+   AircraftCarrierYard: IBuildingDefinition = {
+      name: () => t(L.AircraftCarrierYard),
+      input: { Battleship: 1, FighterJet: 10 },
+      output: { AircraftCarrier: 1 },
+      power: true,
+   };
+   SubmarineYard: IBuildingDefinition = {
+      name: () => t(L.SubmarineYard),
+      input: { Ironclad: 2 },
+      output: { Submarine: 1 },
+      power: true,
+   };
+   NuclearMissileSilo: IBuildingDefinition = {
+      name: () => t(L.NuclearMissileSilo),
+      input: { AtomicBomb: 1, Rocket: 1 },
+      output: { NuclearMissile: 1 },
+      power: true,
+   };
    // #endregion /////////////////////////////////////////////////////////////////////////////////////////////
 
    // #region Culture ////////////////////////////////////////////////////////////////////////////////////////
@@ -335,16 +373,16 @@ export class BuildingDefinitions {
       output: { Faith: 6 },
    };
    // Science is valued at 0.2
+   Library: IBuildingDefinition = {
+      name: () => t(L.Library),
+      input: { Paper: 3 },
+      output: { Science: 105 },
+      construction: { Brick: 1 },
+   };
    School: IBuildingDefinition = {
       name: () => t(L.School),
       input: { Faith: 1, Poem: 1 },
       output: { Science: 470 },
-   };
-   Library: IBuildingDefinition = {
-      name: () => t(L.Library),
-      input: { Paper: 1 },
-      output: { Science: 35 },
-      construction: { Brick: 1 },
    };
    University: IBuildingDefinition = {
       name: () => t(L.University),
@@ -402,6 +440,12 @@ export class BuildingDefinitions {
       name: () => t(L.Embassy),
       input: { Law: 5, Politics: 5, Philosophy: 5 },
       output: { Diplomacy: 1 },
+   };
+   TVStation: IBuildingDefinition = {
+      name: () => t(L.TVStation),
+      input: { Radio: 2, Movie: 10 },
+      output: { TV: 1 },
+      power: true,
    };
    // #endregion /////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -539,6 +583,13 @@ export class BuildingDefinitions {
       output: { Steel: 1 },
       construction: { Brick: 1, Coal: 1 },
    };
+   SiliconSmelter: IBuildingDefinition = {
+      name: () => t(L.SiliconSmelter),
+      input: { Sand: 5 },
+      output: { Silicon: 1 },
+      construction: { Brick: 1, Coal: 1 },
+      power: true,
+   };
    CableFactory: IBuildingDefinition = {
       name: () => t(L.CableFactory),
       input: { Copper: 5 },
@@ -566,6 +617,42 @@ export class BuildingDefinitions {
       output: { Petrol: 1 },
       construction: { Steel: 1 },
    };
+   SatelliteFactory: IBuildingDefinition = {
+      name: () => t(L.SatelliteFactory),
+      input: { Rocket: 2 },
+      output: { Satellite: 1 },
+      power: true,
+   };
+   AirplaneFactory: IBuildingDefinition = {
+      name: () => t(L.AirplaneFactory),
+      input: { Biplane: 2 },
+      output: { Airplane: 1 },
+      power: true,
+   };
+   SpacecraftFactory: IBuildingDefinition = {
+      name: () => t(L.SpacecraftFactory),
+      input: { Rocket: 2, Satellite: 2, Airplane: 2 },
+      output: { Spacecraft: 1 },
+      power: true,
+   };
+   SemiconductorFab: IBuildingDefinition = {
+      name: () => t(L.SemiconductorFab),
+      input: { Silicon: 10, Copper: 10 },
+      output: { Semiconductor: 1 },
+      power: true,
+   };
+   ComputerFactory: IBuildingDefinition = {
+      name: () => t(L.ComputerFactory),
+      input: { Semiconductor: 5, Plastics: 5, Aluminum: 5 },
+      output: { Computer: 1 },
+      power: true,
+   };
+   OpticalFiberPlant: IBuildingDefinition = {
+      name: () => t(L.OpticalFiberPlant),
+      input: { Cable: 10, Glass: 10, Plastics: 10 },
+      output: { OpticalFiber: 1 },
+      power: true,
+   };
    // #endregion /////////////////////////////////////////////////////////////////////////////////////////////
 
    // #region Financial & Trade //////////////////////////////////////////////////////////////////////////////
@@ -589,6 +676,11 @@ export class BuildingDefinitions {
       name: () => t(L.StockExchange),
       input: { Bond: 3 },
       output: { Stock: 1 },
+   };
+   ForexMarket: IBuildingDefinition = {
+      name: () => t(L.ForexMarket),
+      input: { Banknote: 2, Bond: 2 },
+      output: { Forex: 1 },
    };
    Caravansary: IBuildingDefinition = {
       name: () => t(L.Caravansary),
@@ -1176,6 +1268,66 @@ export class BuildingDefinitions {
       max: 0,
       special: BuildingSpecial.NaturalWonder,
       wikipedia: "Yangtze",
+   };
+   // SydneyOperaHouse: IBuildingDefinition = {
+   //    name: () => t(L.SydneyOperaHouse),
+   //    desc: () => t(L.SydneyOperaHouseDescV2),
+   //    input: {},
+   //    output: {},
+   //    construction: { Forex: 300 },
+   //    max: 1,
+   //    special: BuildingSpecial.WorldWonder,
+   //    wikipedia: "Sydney_Opera_House",
+   // };
+   CNTower: IBuildingDefinition = {
+      name: () => t(L.CNTower),
+      desc: () => t(L.CNTowerDesc),
+      input: {},
+      output: {},
+      construction: { Movie: 100, Radio: 100, Diplomacy: 100 },
+      max: 1,
+      special: BuildingSpecial.WorldWonder,
+      wikipedia: "CN_Tower",
+   };
+   // GatewayArch: IBuildingDefinition = {
+   //    name: () => t(L.GatewayArch),
+   //    desc: () => t(L.GatewayArchDesc),
+   //    input: {},
+   //    output: {},
+   //    construction: { Forex: 300 },
+   //    max: 1,
+   //    special: BuildingSpecial.WorldWonder,
+   //    wikipedia: "Gateway_Arch",
+   // };
+   SpaceNeedle: IBuildingDefinition = {
+      name: () => t(L.SpaceNeedle),
+      desc: () => t(L.SpaceNeedleDesc),
+      input: {},
+      output: {},
+      construction: { Battleship: 150, Rocket: 150, Car: 150 },
+      max: 1,
+      special: BuildingSpecial.WorldWonder,
+      wikipedia: "Space_Needle",
+   };
+   ApolloProgram: IBuildingDefinition = {
+      name: () => t(L.ApolloProgram),
+      desc: () => t(L.ApolloProgramDesc),
+      input: {},
+      output: {},
+      construction: { FighterJet: 100, Satellite: 100, Spacecraft: 100 },
+      max: 1,
+      special: BuildingSpecial.WorldWonder,
+      wikipedia: "Apollo_program",
+   };
+   Atomium: IBuildingDefinition = {
+      name: () => t(L.Atomium),
+      desc: () => t(L.AtomiumDesc),
+      input: {},
+      output: {},
+      construction: { NuclearFuelRod: 100, AtomicBomb: 100, Artillery: 100 },
+      max: 1,
+      special: BuildingSpecial.WorldWonder,
+      wikipedia: "Atomium",
    };
    // ArcDeTriomphe: IBuildingDefinition = {
    //    name: () => t(L.ArcDeTriomphe),

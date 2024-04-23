@@ -56,7 +56,7 @@ import { client } from "../rpc/RPCClient";
 import { Singleton } from "../utilities/Singleton";
 
 let votedBoost: IGetVotedBoostResponse | null = null;
-const lastVotedBoostUpdatedAt = 0;
+let lastVotedBoostUpdatedAt = 0;
 
 export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boolean }): void {
    const gs = getGameState();
@@ -694,14 +694,16 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
             }
          });
 
-         if (Date.now() - lastVotedBoostUpdatedAt < MINUTE) {
-            return;
+         // We update this every minute to reduce server load
+         if (Date.now() - lastVotedBoostUpdatedAt > MINUTE) {
+            lastVotedBoostUpdatedAt = Date.now();
+            if (votedBoost === null || getVotedBoostId() !== votedBoost.id) {
+               client.getVotedBoosts().then((resp) => {
+                  votedBoost = resp;
+               });
+            }
          }
-         if (votedBoost === null || getVotedBoostId() !== votedBoost.id) {
-            client.getVotedBoosts().then((resp) => {
-               votedBoost = resp;
-            });
-         }
+
          if (votedBoost) {
             const current = votedBoost.current.options[votedBoost.current.voted];
             switch (current.type) {
@@ -713,6 +715,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
                }
             }
          }
+
          break;
       }
       case "MountTai": {
@@ -790,6 +793,71 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
       }
       case "PorcelainTower": {
          Tick.next.globalMultipliers.happiness.push({ value: 5, source: buildingName });
+         break;
+      }
+      case "Atomium": {
+         let science = 0;
+         for (const point of grid.getRange(tileToPoint(xy), 2)) {
+            const nxy = pointToTile(point);
+            if (nxy !== xy) {
+               science += Tick.current.scienceProduced.get(nxy) ?? 0;
+               const b = getCompletedBuilding(nxy, gs);
+               if (b && Config.Building[b.type].output.Science) {
+                  mapSafePush(Tick.next.tileMultipliers, nxy, { output: 5, source: buildingName });
+               }
+            }
+         }
+         safeAdd(getSpecialBuildings(gs).Headquarter.building.resources, "Science", science);
+         console.log(science);
+         Tick.next.scienceProduced.set(xy, science);
+         break;
+      }
+      case "CNTower": {
+         getBuildingsByType("MovieStudio", gs)?.forEach((tile, xy) => {
+            Tick.next.happinessExemptions.add(xy);
+         });
+         getBuildingsByType("RadioStation", gs)?.forEach((tile, xy) => {
+            Tick.next.happinessExemptions.add(xy);
+         });
+         getBuildingsByType("TVStation", gs)?.forEach((tile, xy) => {
+            Tick.next.happinessExemptions.add(xy);
+         });
+         forEach(Config.BuildingTechAge, (b, age) => {
+            if (age === "WorldWarAge" || age === "ColdWarAge") {
+               const m = Math.abs(Config.TechAge[age].idx + 1 - (Config.BuildingTier[b] ?? 1));
+               addMultiplier(b, { output: m, storage: m, worker: m }, buildingName);
+            }
+         });
+         break;
+      }
+      case "SpaceNeedle": {
+         let happiness = 0;
+         Tick.current.specialBuildings.forEach((xy, b) => {
+            if (isWorldWonder(b)) {
+               ++happiness;
+            }
+         });
+         Tick.next.globalMultipliers.happiness.push({ value: happiness, source: buildingName });
+         break;
+      }
+      case "ApolloProgram": {
+         addMultiplier("RocketFactory", { output: 2, worker: 2, storage: 2 }, buildingName);
+         const tick = (tile: Required<ITileData>, xy: Tile) => {
+            if (!tile.building) return;
+            let adjacent = 0;
+            for (const point of grid.getNeighbors(tileToPoint(xy))) {
+               const nxy = pointToTile(point);
+               if (getCompletedBuilding(nxy, gs)?.type === "RocketFactory") {
+                  ++adjacent;
+               }
+            }
+            if (adjacent > 0) {
+               mapSafePush(Tick.next.tileMultipliers, xy, { output: adjacent, source: buildingName });
+            }
+         };
+         buildingsByType.get("SatelliteFactory")?.forEach(tick);
+         buildingsByType.get("SpacecraftFactory")?.forEach(tick);
+         buildingsByType.get("NuclearMissileSilo")?.forEach(tick);
          break;
       }
       // case "ArcDeTriomphe": {

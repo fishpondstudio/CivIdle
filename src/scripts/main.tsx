@@ -80,7 +80,10 @@ if (canvas) {
       resizeTo: canvas,
       backgroundColor: BG_COLOR,
       sharedTicker: true,
+      autoDensity: true,
+      resolution: window.devicePixelRatio,
    });
+
    canvas.appendChild(app.view as any);
    registerPixiInspector(app);
    Assets.addBundle("main", mainBundle);

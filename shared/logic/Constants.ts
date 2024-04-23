@@ -18,7 +18,7 @@ import {
    round,
    sizeOf,
 } from "../utilities/Helper";
-import type { PartialSet, PartialTabulate } from "../utilities/TypeDefinitions";
+import type { PartialTabulate } from "../utilities/TypeDefinitions";
 import {
    getBuildingCost,
    getWonderBaseBuilderCapacity,
@@ -46,6 +46,7 @@ export const MARKET_DEFAULT_TRADE_COUNT = 5;
 export const MAX_EXPLORER = 10;
 export const EXPLORER_SECONDS = 60;
 export const MANAGED_IMPORT_RANGE = 2;
+export const DISABLE_PLAYER_TRADES = true;
 
 export const GOLDEN_RATIO = (1 + Math.sqrt(5)) / 2;
 
@@ -268,7 +269,6 @@ export function calculateTierAndPrice(log?: (val: string) => void) {
       }
    });
 
-   const endResources: PartialSet<Resource> = {};
    let resourceHash = 0;
    forEach(Config.Resource, (r) => {
       Config.ResourceHash[r] = resourceHash++;
@@ -279,24 +279,18 @@ export function calculateTierAndPrice(log?: (val: string) => void) {
          Config.ResourcePrice[r] = 1;
          Config.ResourceTier[r] = 1;
       }
-
-      let isEndResource = true;
-      forEach(Config.Building, (b, def) => {
-         if (def.input[r]) {
-            isEndResource = false;
-         }
-      });
-      if (isEndResource) {
-         endResources[r] = true;
-      }
    });
 
+   const resourcesUsedByBuildings = new Map<Resource, number>();
    forEach(Config.Building, (b, def) => {
       if (def.special === BuildingSpecial.NaturalWonder || def.special === BuildingSpecial.HQ) {
          if (def.max !== 0) {
             throw new Error(`Natural Wonder: ${b} should have max = 0`);
          }
       }
+      forEach(def.input, (res) => {
+         mapSafeAdd(resourcesUsedByBuildings, res, 1);
+      });
       if (def.output.Science) {
          const multiplier = 1.5 + 0.25 * sizeOf(def.input);
          const inputValue = Math.round(
@@ -378,10 +372,10 @@ export function calculateTierAndPrice(log?: (val: string) => void) {
       .filter((r) => !NoPrice[r])
       .forEach((r) => {
          resourcePrice.push(
-            `${r.padEnd(15)}${!NoPrice[r] && endResources[r] ? "*".padEnd(5) : "".padEnd(5)}${numberToRoman(
-               Config.ResourceTier[r]!,
-            )!.padEnd(10)}${String(Config.ResourcePrice[r]!).padEnd(10)}${
-               resourcesUsedByWonder.get(r) ?? "0*"
+            `${r.padEnd(20)}${numberToRoman(Config.ResourceTier[r]!)!.padEnd(10)}${String(
+               Config.ResourcePrice[r]!,
+            ).padEnd(10)}${String(resourcesUsedByWonder.get(r) ?? "0*").padEnd(10)}${
+               resourcesUsedByBuildings.get(r) ?? "0*"
             }`,
          );
       });
@@ -445,7 +439,7 @@ export function calculateTierAndPrice(log?: (val: string) => void) {
    log?.(`>>>>>>>>>> WonderCost <<<<<<<<<<\n${wonderCost.join("\n")}`);
    log?.(
       `>>>>>>>>>> NotBoostedBuildings <<<<<<<<<<\n${notBoostedBuildings
-         .map((a) => `${a.building.padEnd(25)}${a.tech.padEnd(20)}${a.age}`)
+         .map((a) => `${a.building.padEnd(25)}${a.tech.padEnd(30)}${a.age}`)
          .join("\n")}`,
    );
    log?.(`>>>>>>>>>> Building Input Cost <<<<<<<<<<\n${buildingInputCost.join("\n")}`);

@@ -1,7 +1,11 @@
 import Tippy from "@tippyjs/react";
 import classNames from "classnames";
 import { useEffect, useState } from "react";
-import { getScienceFromWorkers, isSpecialBuilding } from "../../../shared/logic/BuildingLogic";
+import {
+   getScienceFromBuildings,
+   getScienceFromWorkers,
+   isSpecialBuilding,
+} from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
 import { GameFeature, hasFeature } from "../../../shared/logic/FeatureLogic";
 import { getHappinessIcon } from "../../../shared/logic/HappinessLogic";
@@ -38,7 +42,7 @@ export function ResourcePanel(): React.ReactNode {
    useTypedEvent(CurrentTickChanged, (current) => {
       setEmpireValues([current.totalValue, empireValues[0]]);
    });
-   const { workersAfterHappiness, workersBusy } = getScienceFromWorkers(gs);
+   const { workersAfterHappiness, workersBusy, scienceFromWorkers } = getScienceFromWorkers(gs);
    const highlightNotProducingReasons = () => {
       const buildingTiles: Tile[] = Array.from(tick.notProducingReasons.entries())
          .filter(([_, reason]) => {
@@ -57,6 +61,8 @@ export function ResourcePanel(): React.ReactNode {
       Singleton().sceneManager.getCurrent(WorldScene)?.drawSelection(null, buildingTiles);
    };
    const delta = empireValues[0] - empireValues[1];
+   const totalBuildingScience = getScienceFromBuildings();
+   const scienceProduction = scienceFromWorkers + totalBuildingScience;
    const [favoriteActive, setFavoriteActive] = useState(false);
    useEffect(() => {
       function onPointerDown(e: PointerEvent) {
@@ -208,6 +214,16 @@ export function ResourcePanel(): React.ReactNode {
                   <FormatNumber value={getResourceAmount("Science", gs)} />
                </div>
             </Tippy>
+            <div
+               className={classNames({
+                  "text-red": scienceProduction < 0,
+                  "text-green": scienceProduction > 0,
+               })}
+               style={{ width: "6rem", fontWeight: "normal", textAlign: "left" }}
+            >
+               {mathSign(scienceProduction)}
+               <FormatNumber value={Math.abs(scienceProduction)} />
+            </div>
          </div>
          <div className="separator-vertical" />
          <div className="row pointer" onClick={() => highlightNotProducingReasons()}>

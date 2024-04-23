@@ -39,7 +39,7 @@ import { WorldScene } from "../scenes/WorldScene";
 import { ChooseGreatPersonModal } from "../ui/ChooseGreatPersonModal";
 import { showModal } from "../ui/GlobalModal";
 import { Singleton } from "../utilities/Singleton";
-import { playLevelUp } from "../visuals/Sound";
+import { playGong } from "../visuals/Sound";
 
 export function onBuildingComplete(xy: Tile): void {
    const gs = getGameState();
@@ -73,7 +73,7 @@ export function onBuildingComplete(xy: Tile): void {
          }
 
          if (gs.greatPeopleChoices.length > 0) {
-            playLevelUp();
+            playGong();
             showModal(<ChooseGreatPersonModal permanent={false} />);
          }
          break;
@@ -90,7 +90,7 @@ export function onBuildingComplete(xy: Tile): void {
          }
 
          if (gs.greatPeopleChoices.length > 0) {
-            playLevelUp();
+            playGong();
             showModal(<ChooseGreatPersonModal permanent={false} />);
          }
          break;
@@ -143,7 +143,7 @@ export function onBuildingComplete(xy: Tile): void {
             gs.city,
          ).forEach((c) => gs.greatPeopleChoices.push(c));
          if (gs.greatPeopleChoices.length > 0) {
-            playLevelUp();
+            playGong();
             showModal(<ChooseGreatPersonModal permanent={false} />);
          }
          break;

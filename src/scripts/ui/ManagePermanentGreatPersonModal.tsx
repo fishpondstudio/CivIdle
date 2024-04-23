@@ -72,7 +72,7 @@ export function ManagePermanentGreatPersonModal(): React.ReactNode {
                                        style={{ height: "50px", display: "block" }}
                                     />
                                  </td>
-                                 <td>
+                                 <td style={{ userSelect: import.meta.env.DEV ? "text" : "none" }}>
                                     <div className="text-strong">{person.name()}</div>
                                     <div className="text-desc text-small">
                                        {Config.TechAge[person.age].name()}
@@ -103,7 +103,9 @@ export function ManagePermanentGreatPersonModal(): React.ReactNode {
                                              </div>
                                           ) : null}
                                        </td>
-                                       <td>{person.desc(person, value?.level ?? 1)}</td>
+                                       <td style={{ userSelect: import.meta.env.DEV ? "text" : "none" }}>
+                                          {person.desc(person, value?.level ?? 1)}
+                                       </td>
                                        <td>
                                           <button
                                              onClick={() => {

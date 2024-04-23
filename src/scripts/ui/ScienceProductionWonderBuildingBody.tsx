@@ -6,7 +6,10 @@ import type { IBuildingComponentProps } from "./BuildingPage";
 import { BuildingWikipediaComponent } from "./BuildingWikipediaComponent";
 import { FormatNumber } from "./HelperComponents";
 
-export function OxfordUniversityBuildingBody({ gameState, xy }: IBuildingComponentProps): React.ReactNode {
+export function ScienceProductionWonderBuildingBody({
+   gameState,
+   xy,
+}: IBuildingComponentProps): React.ReactNode {
    const building = gameState.tiles.get(xy)?.building;
    if (!building) {
       return null;

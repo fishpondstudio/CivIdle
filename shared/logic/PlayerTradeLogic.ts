@@ -96,7 +96,7 @@ export function isTradePathValid(path: IPointData[]): boolean {
    return true;
 }
 
-export const DEFAULT_LAND_TILE_COST = 0.001;
+export const DEFAULT_LAND_TILE_COST = 0;
 export const SEA_TILE_COST_1 = 0.01;
 export const SEA_TILE_COST_2 = 0.005;
 export const SEA_TILE_COST_3 = 0.001;

@@ -92,6 +92,19 @@ export class ResourceDefinitions {
    AtomicBomb: IResourceDefinition = { name: () => t(L.AtomicBomb) };
    Diplomacy: IResourceDefinition = { name: () => t(L.Diplomacy) };
    Cable: IResourceDefinition = { name: () => t(L.Cable) };
+   Satellite: IResourceDefinition = { name: () => t(L.Satellite) };
+   Airplane: IResourceDefinition = { name: () => t(L.Airplane) };
+   Spacecraft: IResourceDefinition = { name: () => t(L.Spacecraft) };
+   Silicon: IResourceDefinition = { name: () => t(L.Silicon) };
+   Forex: IResourceDefinition = { name: () => t(L.Forex) };
+   FighterJet: IResourceDefinition = { name: () => t(L.FighterJet) };
+   NuclearMissile: IResourceDefinition = { name: () => t(L.NuclearMissile) };
+   AircraftCarrier: IResourceDefinition = { name: () => t(L.AircraftCarrier) };
+   Semiconductor: IResourceDefinition = { name: () => t(L.Semiconductor) };
+   TV: IResourceDefinition = { name: () => t(L.Television) };
+   Computer: IResourceDefinition = { name: () => t(L.Computer) };
+   OpticalFiber: IResourceDefinition = { name: () => t(L.OpticalFiber) };
+   Submarine: IResourceDefinition = { name: () => t(L.Submarine) };
 }
 
 export type Resource = keyof ResourceDefinitions;

@@ -254,9 +254,18 @@ export function FillPlayerTradeModal({ tradeId, xy }: { tradeId: string; xy?: Ti
                   className="text-strong text-link"
                   onClick={() => {
                      setFills(() => {
+                        let amountLeft = trade.buyAmount;
                         const result = new Map<Tile, number>();
                         for (const xy of allTradeBuildings.keys()) {
-                           result.set(xy, getMaxFill(xy));
+                           const amount = getMaxFill(xy);
+                           if (amountLeft > amount) {
+                              result.set(xy, amount);
+                              amountLeft -= amount;
+                           } else {
+                              result.set(xy, amountLeft);
+                              amountLeft = 0;
+                              break;
+                           }
                         }
                         return result;
                      });
