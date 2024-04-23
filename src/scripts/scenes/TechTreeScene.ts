@@ -178,12 +178,12 @@ export class TechTreeScene extends Scene {
       }
       this._selectedGraphics?.lineStyle(LINE_STYLE);
       let targets = [tech];
-      const drawnBoxes: Partial<Record<string, true>> = {};
-      const drawnConnections: Record<string, true> = {};
+      const drawnBoxes = new Set<Tech>();
+      const drawnConnections = new Set<string>();
       while (targets.length > 0) {
          const newTo: Tech[] = [];
          targets.forEach((to) => {
-            if (!drawnBoxes[to] && (!this.context.gameState.unlockedTech[to] || to === tech)) {
+            if (!drawnBoxes.has(to) && (!this.context.gameState.unlockedTech[to] || to === tech)) {
                const def = Config.Tech[to];
                this.drawBox(
                   this._selectedGraphics!,
@@ -194,13 +194,15 @@ export class TechTreeScene extends Scene {
                   10,
                   this._selectedContainer,
                );
-               drawnBoxes[to] = true;
+               drawnBoxes.add(to);
             }
             Config.Tech[to].requireTech.forEach((from) => {
-               newTo.push(from);
+               if (!this.context.gameState.unlockedTech[to]) {
+                  newTo.push(from);
+               }
                const key = `${from} -> ${to}`;
                if (
-                  !drawnConnections[key] &&
+                  !drawnConnections.has(key) &&
                   !this.context.gameState.unlockedTech[from] &&
                   !this.context.gameState.unlockedTech[to]
                ) {
@@ -212,7 +214,7 @@ export class TechTreeScene extends Scene {
                      this._boxPositions[to]!.y + BOX_HEIGHT / 2,
                      highlightColor,
                   );
-                  drawnConnections[key] = true;
+                  drawnConnections.add(key);
                }
             });
          });

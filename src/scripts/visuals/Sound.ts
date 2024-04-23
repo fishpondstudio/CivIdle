@@ -9,6 +9,8 @@ import gong from "../../sounds/gong.mp3";
 import kaching from "../../sounds/kaching.mp3";
 import levelup from "../../sounds/levelup.mp3";
 import music from "../../sounds/music/pilgrimage-ancient-mediaeval-harp.mp3";
+import success from "../../sounds/success.mp3";
+import upgrade from "../../sounds/upgrade.mp3";
 
 sound.disableAutoPause = true;
 
@@ -21,6 +23,8 @@ sound.add("bubble", bubble).singleInstance = true;
 sound.add("music", music).singleInstance = true;
 sound.add("gong", gong).singleInstance = true;
 sound.add("ding", ding).singleInstance = true;
+sound.add("success", success).singleInstance = true;
+sound.add("upgrade", upgrade).singleInstance = true;
 
 export function playClick() {
    if (!getGameOptions().soundEffect) {
@@ -76,4 +80,18 @@ export function playDing() {
       return;
    }
    sound.play("ding");
+}
+
+export function playUpgrade() {
+   if (!getGameOptions().soundEffect) {
+      return;
+   }
+   sound.play("upgrade");
+}
+
+export function playSuccess() {
+   if (!getGameOptions().soundEffect) {
+      return;
+   }
+   sound.play("success");
 }
