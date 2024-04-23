@@ -348,6 +348,18 @@ export class GreatPersonDefinitions {
       type: GreatPersonType.Normal,
    };
 
+   Xuanzang: IGreatPersonDefinition = boostOf({
+      name: () => t(L.Xuanzang),
+      boost: {
+         multipliers: ["output"],
+         buildings: ["School"],
+      },
+      time: "602 ~ 664 AD",
+      value: (level) => 2 * level,
+      maxLevel: Number.POSITIVE_INFINITY,
+      age: "MiddleAge",
+   });
+
    Rurik: IGreatPersonDefinition = {
       name: () => t(L.Rurik),
       desc: (self, level) => t(L.RurikDesc, { value: self.value(level) }),
@@ -453,10 +465,10 @@ export class GreatPersonDefinitions {
       name: () => t(L.ReneDescartes),
       boost: {
          multipliers: ["output"],
-         buildings: ["School", "Library"],
+         buildings: ["School"],
       },
       time: "1596 ~ 1650 AD",
-      value: (level) => level * 2,
+      value: (level) => 2 * level,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "RenaissanceAge",
    });

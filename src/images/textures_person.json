@@ -562,7 +562,7 @@
         },
         "Person_WaltDisney": {
             "frame": {
-                "x": 1404,
+                "x": 1755,
                 "y": 2808,
                 "w": 349,
                 "h": 349
@@ -592,7 +592,7 @@
                 "h": 350
             }
         },
-        "Person_Zenobia": {
+        "Person_Xuanzang": {
             "frame": {
                 "x": 351,
                 "y": 2808,
@@ -600,7 +600,7 @@
                 "h": 350
             }
         },
-        "Person_ZhengHe": {
+        "Person_Zenobia": {
             "frame": {
                 "x": 702,
                 "y": 2808,
@@ -608,9 +608,17 @@
                 "h": 350
             }
         },
-        "Person_Zoroaster": {
+        "Person_ZhengHe": {
             "frame": {
                 "x": 1053,
+                "y": 2808,
+                "w": 350,
+                "h": 350
+            }
+        },
+        "Person_Zoroaster": {
+            "frame": {
+                "x": 1404,
                 "y": 2808,
                 "w": 350,
                 "h": 350

@@ -637,6 +637,7 @@ export class TechDefinitions {
          School: { output: 1 },
          University: { output: 1 },
          PublishingHouse: { output: 1 },
+         ResearchLab: { output: 1 },
       },
    };
 
@@ -707,7 +708,7 @@ export class TechDefinitions {
       name: () => t(L.Satellite),
       column: 21,
       requireTech: ["Rocketry", "NuclearFission"],
-      unlockBuilding: ["SatelliteFactory"],
+      unlockBuilding: ["SatelliteFactory", "SpaceNeedle"],
    };
 
    JetPropulsion: ITechDefinition = {
@@ -728,7 +729,14 @@ export class TechDefinitions {
       name: () => t(L.Skyscrapper),
       column: 21,
       requireTech: ["UnitedNations", "Hydroelectricity"],
-      unlockBuilding: ["Condo", "SpaceNeedle"],
+      unlockBuilding: ["Condo"],
+      buildingMultiplier: {
+         Library: { output: 1 },
+         School: { output: 1 },
+         University: { output: 1 },
+         PublishingHouse: { output: 1 },
+         ResearchLab: { output: 1 },
+      },
    };
 
    MilitaryTactics: ITechDefinition = {

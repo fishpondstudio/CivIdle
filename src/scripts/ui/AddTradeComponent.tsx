@@ -1,6 +1,8 @@
+import Tippy from "@tippyjs/react";
 import { useState } from "react";
 import { NoPrice, NoStorage, type Resource } from "../../../shared/definitions/ResourceDefinitions";
 import { Config } from "../../../shared/logic/Config";
+import { DISABLE_PLAYER_TRADES } from "../../../shared/logic/Constants";
 import { unlockedResources } from "../../../shared/logic/IntraTickCache";
 import {
    getBuyAmountRange,
@@ -23,7 +25,6 @@ import { playError, playKaching } from "../visuals/Sound";
 import type { IBuildingComponentProps } from "./BuildingPage";
 import { showToast } from "./GlobalModal";
 import { FormatNumber } from "./HelperComponents";
-import { TextWithHelp } from "./TextWithHelpComponent";
 
 const INPUT_WIDTH = 100;
 
@@ -228,6 +229,13 @@ export function AddTradeComponent({ gameState, xy }: IBuildingComponentProps): R
          </fieldset>
       );
    }
+   let tooltip: string | null = null;
+   if (DISABLE_PLAYER_TRADES) {
+      tooltip = t(L.PlayerTradeDisabledBeta);
+   } else if (!enabled) {
+      tooltip = t(L.PlayerTradeMaxTradeExceeded);
+   }
+
    return (
       <button
          className="row w100 jcc mb10"
@@ -238,14 +246,12 @@ export function AddTradeComponent({ gameState, xy }: IBuildingComponentProps): R
                playError();
             }
          }}
-         disabled={!enabled}
+         disabled={!enabled || DISABLE_PLAYER_TRADES}
       >
          <div className="m-icon small">add_circle</div>
-         <div className="text-strong f1">
-            <TextWithHelp content={enabled ? null : t(L.PlayerTradeMaxTradeExceeded)} noStyle>
-               {t(L.PlayerTradeNewTrade)}
-            </TextWithHelp>
-         </div>
+         <Tippy content={tooltip}>
+            <div className="text-strong f1">{t(L.PlayerTradeNewTrade)}</div>
+         </Tippy>
       </button>
    );
 }

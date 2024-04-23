@@ -373,16 +373,16 @@ export class BuildingDefinitions {
       output: { Faith: 6 },
    };
    // Science is valued at 0.2
+   Library: IBuildingDefinition = {
+      name: () => t(L.Library),
+      input: { Paper: 3 },
+      output: { Science: 105 },
+      construction: { Brick: 1 },
+   };
    School: IBuildingDefinition = {
       name: () => t(L.School),
       input: { Faith: 1, Poem: 1 },
       output: { Science: 470 },
-   };
-   Library: IBuildingDefinition = {
-      name: () => t(L.Library),
-      input: { Paper: 1 },
-      output: { Science: 35 },
-      construction: { Brick: 1 },
    };
    University: IBuildingDefinition = {
       name: () => t(L.University),
@@ -1284,7 +1284,7 @@ export class BuildingDefinitions {
       desc: () => t(L.CNTowerDesc),
       input: {},
       output: {},
-      construction: { Forex: 300 },
+      construction: { Movie: 100, Radio: 100, Diplomacy: 100 },
       max: 1,
       special: BuildingSpecial.WorldWonder,
       wikipedia: "CN_Tower",
@@ -1304,7 +1304,7 @@ export class BuildingDefinitions {
       desc: () => t(L.SpaceNeedleDesc),
       input: {},
       output: {},
-      construction: { Forex: 300 },
+      construction: { Battleship: 150, Rocket: 150, Car: 150 },
       max: 1,
       special: BuildingSpecial.WorldWonder,
       wikipedia: "Space_Needle",
@@ -1314,7 +1314,7 @@ export class BuildingDefinitions {
       desc: () => t(L.ApolloProgramDesc),
       input: {},
       output: {},
-      construction: { Forex: 300 },
+      construction: { FighterJet: 100, Satellite: 100, Spacecraft: 100 },
       max: 1,
       special: BuildingSpecial.WorldWonder,
       wikipedia: "Apollo_program",
@@ -1324,7 +1324,7 @@ export class BuildingDefinitions {
       desc: () => t(L.AtomiumDesc),
       input: {},
       output: {},
-      construction: { Forex: 300 },
+      construction: { NuclearFuelRod: 100, AtomicBomb: 100, Artillery: 100 },
       max: 1,
       special: BuildingSpecial.WorldWonder,
       wikipedia: "Atomium",

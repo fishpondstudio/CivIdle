@@ -46,6 +46,7 @@ export const MARKET_DEFAULT_TRADE_COUNT = 5;
 export const MAX_EXPLORER = 10;
 export const EXPLORER_SECONDS = 60;
 export const MANAGED_IMPORT_RANGE = 2;
+export const DISABLE_PLAYER_TRADES = true;
 
 export const GOLDEN_RATIO = (1 + Math.sqrt(5)) / 2;
 

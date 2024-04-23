@@ -1128,4 +1128,6 @@ export const EN = {
    RobertNoyce: "Robert Noyce",
    PhiloFarnsworth: "Philo Farnsworth",
    ElvisPresley: "Elvis Presley",
+   Xuanzang: "Xuanzang",
+   PlayerTradeDisabledBeta: "You can ony create player trades once the beta version is released"
 };
