@@ -47,8 +47,6 @@ if (!import.meta.env.DEV) {
       consoleError.apply(this, args);
       Sentry.captureMessage(args.map((a) => JSON.stringify(a)).join(" "), "error");
    };
-
-   console.log = () => {};
 }
 
 const routeChanged = new TypedEvent<RouteChangeEvent>();
