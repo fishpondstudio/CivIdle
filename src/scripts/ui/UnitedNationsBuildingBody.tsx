@@ -23,7 +23,6 @@ export function UnitedNationsBuildingBody({ gameState, xy }: IBuildingComponentP
       client.getVotedBoosts().then(setResponse);
    }, []);
 
-   console.log(response);
    return (
       <div className="window-body">
          <BuildingDescriptionComponent gameState={gameState} xy={xy} />

@@ -132,20 +132,20 @@ export function BuildingConstructionProgressComponent({
                      </div>
                   </li>
                   <ul>
-                     {Tick.current.globalMultipliers.builderCapacity.map((value) => {
+                     {Tick.current.globalMultipliers.builderCapacity.map((value, i) => {
                         return (
-                           <li key={value.source} className="text-small row">
+                           <li key={i} className="text-small row">
                               <div className="f1">{value.source}</div>
                               <div>{value.value}</div>
                            </li>
                         );
                      })}
-                     {getMultipliersFor(xy, gameState).map((value) => {
+                     {getMultipliersFor(xy, gameState).map((value, i) => {
                         if (!value.worker) {
                            return null;
                         }
                         return (
-                           <li key={value.source} className="text-small row">
+                           <li key={i} className="text-small row">
                               <div className="f1">{value.source}</div>
                               <div>{value.worker}</div>
                            </li>

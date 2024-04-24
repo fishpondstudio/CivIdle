@@ -352,7 +352,7 @@ export class GreatPersonDefinitions {
       name: () => t(L.Xuanzang),
       boost: {
          multipliers: ["output"],
-         buildings: ["School"],
+         buildings: ["Library"],
       },
       time: "602 ~ 664 AD",
       value: (level) => 2 * level,

@@ -350,6 +350,7 @@ function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
          if (total > 0) {
             const averageStorage = storage.total / total;
             const averageCapacity = totalCapacity / total;
+            ri.resourceImports = {};
             result.forEach((value, res) => {
                ri.resourceImports[res] = {
                   perCycle: Math.floor(averageCapacity * value),

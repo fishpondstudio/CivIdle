@@ -97,12 +97,12 @@ export function BuildingWorkerComponent({ gameState, xy }: IBuildingComponentPro
                               <div className="f1">{t(L.BaseMultiplier)}</div>
                               <div>1</div>
                            </li>
-                           {getMultipliersFor(xy, gameState).map((m) => {
+                           {getMultipliersFor(xy, gameState).map((m, i) => {
                               if (!m.worker) {
                                  return null;
                               }
                               return (
-                                 <li key={m.source} className="row">
+                                 <li key={i} className="row">
                                     <div className="f1">{m.source}</div>
                                     <div>{m.worker}</div>
                                  </li>
@@ -119,9 +119,9 @@ export function BuildingWorkerComponent({ gameState, xy }: IBuildingComponentPro
                               </div>
                            </li>
                            <ul className="text-small">
-                              {Tick.current.globalMultipliers.transportCapacity.map((m) => {
+                              {Tick.current.globalMultipliers.transportCapacity.map((m, i) => {
                                  return (
-                                    <li key={m.source} className="row">
+                                    <li key={i} className="row">
                                        <div className="f1">{m.source}</div>
                                        <div>{m.value}</div>
                                     </li>

@@ -654,7 +654,7 @@ export const EN = {
    PlayerTradeClaimTileFirst: "Claim Your Tile On Trade Map",
    PlayerTradeClaimTileFirstWarning: "You can only trade with other players after you've claimed your tile on the trade map",
    PlayerTradeClearAll: "Clear All Fills",
-   PlayerTradeDisabledBeta: "You can ony create player trades once the beta version is released",
+   PlayerTradeDisabledBeta: "You can only create player trades once the beta version is released",
    PlayerTradeFill: "Fill",
    PlayerTradeFillAmount: "Fill Amount",
    PlayerTradeFillAmountMaxV2: "Fill Max",
