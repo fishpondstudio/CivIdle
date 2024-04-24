@@ -85,7 +85,7 @@ export async function startGame(
    syncUITheme(options);
    syncSidePanelWidth(app, options);
    syncFontSizeScale(options);
-   calculateTierAndPrice(console.log);
+   calculateTierAndPrice(import.meta.env.DEV ? console.log : undefined);
    initializeSingletons({
       sceneManager: new SceneManager({ app, assets: resources, textures, gameState }),
       routeTo,

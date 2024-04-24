@@ -430,11 +430,11 @@ export function calculateTierAndPrice(log?: (val: string) => void) {
 
    notBoostedBuildings.sort((a, b) => Config.Tech[a.tech].column - Config.Tech[b.tech].column);
 
-   // console.log?.("BuildingTier", sortTabulate(Config.BuildingTier));
-   // console.log?.("BuildingTech", sortTabulate(Config.BuildingTech));
-   // console.log?.("ResourceTier", sortTabulate(Config.ResourceTier));
-   // console.log?.("ResourcePrice", sortTabulate(Config.ResourcePrice));
-   // console.log?.("ResourceTech", sortTabulate(Config.ResourceTech));
+   // log?.("BuildingTier", sortTabulate(Config.BuildingTier));
+   // log?.("BuildingTech", sortTabulate(Config.BuildingTech));
+   // log?.("ResourceTier", sortTabulate(Config.ResourceTier));
+   // log?.("ResourcePrice", sortTabulate(Config.ResourcePrice));
+   // log?.("ResourceTech", sortTabulate(Config.ResourceTech));
    log?.(`>>>>>>>>>> ResourcePrice <<<<<<<<<<\n${resourcePrice.join("\n")}`);
    log?.(`>>>>>>>>>> WonderCost <<<<<<<<<<\n${wonderCost.join("\n")}`);
    log?.(
