@@ -319,6 +319,12 @@ export class BuildingDefinitions {
       output: { Submarine: 1 },
       power: true,
    };
+   NuclearSubmarineYard: IBuildingDefinition = {
+      name: () => t(L.NuclearSubmarineYard),
+      input: { Submarine: 2, NuclearFuelRod: 100 },
+      output: { NuclearSubmarine: 1 },
+      power: true,
+   };
    NuclearMissileSilo: IBuildingDefinition = {
       name: () => t(L.NuclearMissileSilo),
       input: { AtomicBomb: 1, Rocket: 1 },

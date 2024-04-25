@@ -659,7 +659,7 @@ export class TechDefinitions {
       name: () => t(L.Ballistics),
       column: 19,
       requireTech: ["Synthetics"],
-      unlockBuilding: ["ArtilleryFactory"],
+      unlockBuilding: ["ArtilleryFactory", "SubmarineYard"],
    };
 
    Enrichment: ITechDefinition = {
@@ -743,7 +743,7 @@ export class TechDefinitions {
       name: () => t(L.MilitaryTactics),
       column: 22,
       requireTech: ["JetPropulsion", "Satellite"],
-      unlockBuilding: ["FighterJetPlant", "SubmarineYard"],
+      unlockBuilding: ["FighterJetPlant", "NuclearSubmarineYard"],
    };
 
    Semiconductor: ITechDefinition = {

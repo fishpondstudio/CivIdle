@@ -1123,4 +1123,6 @@ export const EN = {
    ZenobiaDesc: "+%{value}h Petra Warp Storage",
    ZhengHe: "Zheng He",
    Zoroaster: "Zoroaster",
+   NuclearSubmarine: "Nuclear Submarine",
+   NuclearSubmarineYard: "Nuclear Submarine Yard"
 };
