@@ -584,7 +584,7 @@ export const EN = {
    OpenSaveFolder: "Open Save Folder",
    Opera: "Opera",
    OperationNotAllowedError: "This operation is not allowed",
-   OpticalFiber: "OpticalFiber",
+   OpticalFiber: "Optical Fiber",
    OpticalFiberPlant: "Optical Fiber Factory",
    Optics: "Optics",
    OptionsMenu: "Options",
