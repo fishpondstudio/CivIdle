@@ -10,6 +10,10 @@ export const PatchNotes: PatchNote[] = [
       content: [
          ["Bugfix", "Fix a bug where Production Multipliers causes market to have incorrect transport"],
          ["Bugfix", "Fix a bug where there's an empty tooltip on Add Trade button in Caravansary"],
+         [
+            "Bugfix",
+            "Fix a bug where buildings that are turned off still provide adjacent bonus (this affects Terracotta Army, Manhattan Project, Apollo Program and Great Sphinx)",
+         ],
       ],
    },
    {

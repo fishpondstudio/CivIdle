@@ -276,7 +276,11 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
                let adjacentIronMiningCamps = 0;
                for (const neighbor of grid.getNeighbors(tileToPoint(tile.tile))) {
                   const neighborTile = gs.tiles.get(pointToTile(neighbor));
-                  if (neighborTile?.building?.type === "IronMiningCamp" && neighborTile.deposit.Iron) {
+                  if (
+                     neighborTile?.building?.type === "IronMiningCamp" &&
+                     neighborTile.deposit.Iron &&
+                     neighborTile.building.capacity > 0
+                  ) {
                      ++adjacentIronMiningCamps;
                   }
                }
@@ -609,7 +613,8 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
                const type = b.type;
                let count = 0;
                for (const n of grid.getNeighbors(point)) {
-                  if (getCompletedBuilding(pointToTile(n), gs)?.type === type) {
+                  const neighborBuilding = getCompletedBuilding(pointToTile(n), gs);
+                  if (neighborBuilding?.type === type && neighborBuilding.capacity > 0) {
                      ++count;
                   }
                }
@@ -746,7 +751,8 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
                if (
                   neighborTile?.building?.type === "UraniumMine" &&
                   neighborTile.building.status !== "building" &&
-                  neighborTile.deposit.Uranium
+                  neighborTile.deposit.Uranium &&
+                  neighborTile.building.capacity > 0
                ) {
                   ++adjacentUraniumMines;
                }
@@ -855,7 +861,8 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
             let adjacent = 0;
             for (const point of grid.getNeighbors(tileToPoint(xy))) {
                const nxy = pointToTile(point);
-               if (getCompletedBuilding(nxy, gs)?.type === "RocketFactory") {
+               const neighborBuilding = getCompletedBuilding(nxy, gs);
+               if (neighborBuilding?.type === "RocketFactory" && neighborBuilding.capacity > 0) {
                   ++adjacent;
                }
             }
