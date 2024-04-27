@@ -99,9 +99,9 @@ export async function startGame(
    routeTo(LoadingPage, { stage: LoadingPageStage.SteamSignIn });
    const TIMEOUT = import.meta.env.DEV ? 1 : 15;
    let hasOfflineProductionModal = false;
-   try {
-      let offlineProduction = true;
+   let offlineProduction = true;
 
+   try {
       const actualOfflineTime = await Promise.race([
          connectWebSocket().then<number>((time) => {
             // This means when we reach here, we are already too late to do offline production (due to timeout),
@@ -144,6 +144,7 @@ export async function startGame(
          showModal(<OfflineProductionModal before={before} after={after} time={offlineTime} />);
       }
    } catch (error) {
+      offlineProduction = false;
       playError();
       showToast(String(error));
    }
