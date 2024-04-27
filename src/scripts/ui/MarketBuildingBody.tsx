@@ -155,6 +155,7 @@ export function MarketBuildingBody({ gameState, xy }: IBuildingComponentProps): 
                );
             }}
          />
+         <div className="sep10" />
          <BuildingWorkerComponent gameState={gameState} xy={xy} />
          <BuildingStorageComponent gameState={gameState} xy={xy} />
          <BuildingProductionPriorityComponent gameState={gameState} xy={xy} />

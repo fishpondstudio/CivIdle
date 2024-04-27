@@ -100,13 +100,13 @@ export function getBuildingIO(
          if (options & IOCalculation.Capacity) {
             value *= b.capacity;
          }
-
          if (options & IOCalculation.Multiplier) {
-            value *= totalMultiplierFor(xy, type, 1, false, gs);
+            // For market, we always apply production multiplier, regardless of type!
+            value *= totalMultiplierFor(xy, b.type === "Market" ? "output" : type, 1, false, gs);
          } else if (options & IOCalculation.MultiplierExcludeElectrification) {
-            value *= totalMultiplierFor(xy, type, 1, true, gs);
+            // For market, we always apply production multiplier, regardless of type!
+            value *= totalMultiplierFor(xy, b.type === "Market" ? "output" : type, 1, true, gs);
          }
-
          safeAdd(result, k, value);
       });
    }
