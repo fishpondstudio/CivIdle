@@ -815,6 +815,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          const hq = Tick.current.specialBuildings.get("Headquarter")?.building.resources;
          if (hq) {
             safeAdd(hq, "Science", science);
+            mapSafeAdd(Tick.next.wonderProductions, "Science", science);
             Tick.next.scienceProduced.set(xy, science);
          }
          break;

@@ -414,6 +414,7 @@ function ResourcesTab({ gameState }: IBuildingComponentProps): React.ReactNode {
       forEach(input, (res, amount) => mapSafeAdd(inputs, res, amount));
       forEach(output, (res, amount) => mapSafeAdd(outputs, res, amount));
    });
+   Tick.current.wonderProductions.forEach((amount, res) => mapSafeAdd(outputs, res, amount));
    keysOf(unlockedResourcesList).map((res) => {
       resourceAmounts[res] =
          Tick.current.resourcesByTile
