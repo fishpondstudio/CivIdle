@@ -21,7 +21,7 @@ import { tickEverySecond } from "./logic/ClientUpdate";
 import { Heartbeat } from "./logic/Heartbeat";
 import { getBuildingTexture, getTileTexture } from "./logic/VisualLogic";
 import type { MainBundleAssets } from "./main";
-import { connectWebSocket } from "./rpc/RPCClient";
+import { connectWebSocket, convertOfflineTimeToWarp } from "./rpc/RPCClient";
 import { PlayerMapScene } from "./scenes/PlayerMapScene";
 import { TechTreeScene } from "./scenes/TechTreeScene";
 import { WorldScene } from "./scenes/WorldScene";
@@ -99,10 +99,22 @@ export async function startGame(
    const TIMEOUT = import.meta.env.DEV ? 1 : 15;
    let hasOfflineProductionModal = false;
    try {
+      let offlineProduction = true;
+
       const actualOfflineTime = await Promise.race([
-         connectWebSocket(),
+         connectWebSocket().then<number>((time) => {
+            // This means when we reach here, we are already too late to do offline production (due to timeout),
+            // so we convert the time to warp instead!
+            if (!offlineProduction) {
+               convertOfflineTimeToWarp(time);
+               return 0;
+            }
+            return time;
+         }),
          rejectIn<number>(TIMEOUT, "Connection Timeout"),
       ]);
+
+      offlineProduction = false;
 
       const petra = findBuilding("Petra", gameState);
       const maxOfflineTime =

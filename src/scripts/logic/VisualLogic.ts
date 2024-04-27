@@ -1,4 +1,4 @@
-import type { Texture } from "pixi.js";
+import { Texture } from "pixi.js";
 import type { Building } from "../../../shared/definitions/BuildingDefinitions";
 import type { City } from "../../../shared/definitions/CityDefinitions";
 import type { Resource } from "../../../shared/definitions/ResourceDefinitions";
@@ -16,12 +16,13 @@ export function getNotProducingTexture(reason: NotProducingReason, textures: Rec
          return getTexture("Misc_NotEnoughWorkers", textures);
       case NotProducingReason.StorageFull:
          return getTexture("Misc_StorageFull", textures);
+      case NotProducingReason.TurnedOff:
+      case NotProducingReason.NotOnDeposit:
+         return getTexture("Misc_NotProducingGeneral", textures);
       case NotProducingReason.NoPower:
          return getTexture("Misc_NoPower", textures);
-      // case NotProducingReason.NoActiveTransports:
-      //    return Texture.EMPTY;
       default:
-         return getTexture("Misc_NotProducingGeneral", textures);
+         return Texture.EMPTY;
    }
 }
 

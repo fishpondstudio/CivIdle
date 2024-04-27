@@ -304,17 +304,17 @@ export async function connectWebSocket(): Promise<number> {
 
 function retryConnect() {
    setTimeout(
-      () => {
-         connectWebSocket().then((offlineTime) => {
-            if (offlineTime >= 60) {
-               playBubble();
-               showToast(t(L.PetraOfflineTimeReconciliation, { count: offlineTime }));
-               addPetraOfflineTime(offlineTime, getGameState());
-            }
-         });
-      },
+      () => connectWebSocket().then(convertOfflineTimeToWarp),
       Math.min(Math.pow(2, reconnect++) * SECOND, 16 * SECOND),
    );
+}
+
+export function convertOfflineTimeToWarp(offlineTime: number): void {
+   if (offlineTime >= 60) {
+      playBubble();
+      showToast(t(L.PetraOfflineTimeReconciliation, { count: offlineTime }));
+      addPetraOfflineTime(offlineTime, getGameState());
+   }
 }
 
 function handleRpcResponse(response: any) {
