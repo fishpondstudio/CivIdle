@@ -201,7 +201,6 @@ export async function connectWebSocket(): Promise<number> {
                chatMessages = c.chat.map((c) => ({ ...c, id: ++chatId }));
             } else {
                c.chat.forEach((m) => {
-                  console.log(m);
                   const mentionsMe =
                      user && m.message.toLowerCase().includes(` @${user.handle.toLowerCase()}`);
                   const isAnnounce = hasFlag(m.attr, ChatAttributes.Announce);
@@ -224,7 +223,18 @@ export async function connectWebSocket(): Promise<number> {
             OnUserChanged.emit({ ...user });
             const tick = getGameState().tick;
             const offlineTicks = clamp(w.lastGameTick + w.offlineTime - tick, 0, Number.POSITIVE_INFINITY);
-            console.log("User:", JSON.stringify(w), "CurrentTick:", tick, "OfflineTicks:", offlineTicks);
+            console.log(
+               "[WelcomeMessage]",
+               "CurrentTick:",
+               tick,
+               "OfflineTicks:",
+               offlineTicks,
+               "User:",
+               "OfflineTime:",
+               w.offlineTime,
+               "User:",
+               JSON.stringify(w),
+            );
             resolve?.(Math.min(w.offlineTime, offlineTicks));
             break;
          }
