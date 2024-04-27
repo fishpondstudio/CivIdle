@@ -67,7 +67,7 @@ export function HeadquarterBuildingBody({
       sciencePerBusyWorker,
       sciencePerIdleWorker,
    } = getScienceFromWorkers(gameState);
-   const scienceAmount = getScienceAmount();
+   const scienceAmount = getScienceAmount(gameState);
    const techAge = getCurrentAge(gameState);
    const options = useGameOptions();
    return (

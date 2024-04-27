@@ -325,6 +325,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          });
          science *= 0.1;
          safeAdd(getSpecialBuildings(gs).Headquarter.building.resources, "Science", science);
+         mapSafeAdd(Tick.next.wonderProductions, "Science", science);
          Tick.next.scienceProduced.set(xy, science);
          break;
       }
@@ -342,6 +343,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          });
          const toProduce = Math.floor(totalFaith * ST_PETERS_FAITH_MULTIPLIER);
          safeAdd(building.resources, "Faith", toProduce);
+         mapSafeAdd(Tick.next.wonderProductions, "Faith", toProduce);
          const max = totalLevel * ST_PETERS_STORAGE_MULTIPLIER;
          if ((building.resources.Faith ?? 0) > max) {
             building.resources.Faith = max;

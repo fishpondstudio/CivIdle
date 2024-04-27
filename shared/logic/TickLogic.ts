@@ -8,7 +8,7 @@ import { getBuildingValue } from "./BuildingLogic";
 import { Config } from "./Config";
 import type { GameState } from "./GameState";
 import type { calculateHappiness } from "./HappinessLogic";
-import type { IBuildingData } from "./Tile";
+import type { IBuildingData, ITileData } from "./Tile";
 
 export interface IBuildingResource {
    tile: Tile;
@@ -27,10 +27,11 @@ interface ITickData {
    workersAssignment: Map<Tile, number>;
    electrified: Set<Tile>;
    resourcesByTile: Map<Resource, IBuildingResource[]>;
+   wonderProductions: Map<Resource, number>;
    playerTradeBuildings: Map<Tile, IBuildingData>;
    globalMultipliers: GlobalMultipliers;
    notProducingReasons: Map<Tile, NotProducingReason>;
-   specialBuildings: Map<Building, Tile>;
+   specialBuildings: Map<Building, Required<ITileData>>;
    scienceProduced: Map<Tile, number>;
    powerGrid: Set<Tile>;
    powerPlants: Set<Tile>;
@@ -57,6 +58,7 @@ export function EmptyTickData(): ITickData {
       globalMultipliers: new GlobalMultipliers(),
       notProducingReasons: new Map(),
       playerTradeBuildings: new Map(),
+      wonderProductions: new Map(),
       specialBuildings: new Map(),
       scienceProduced: new Map(),
       powerGrid: new Set(),

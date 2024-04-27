@@ -6,7 +6,6 @@ import { forEach, isEmpty, isNullOrUndefined, shuffle, sizeOf, type Tile } from 
 import { TypedEvent } from "../utilities/TypedEvent";
 import { Config } from "./Config";
 import type { GameState } from "./GameState";
-import { getGameState } from "./GameStateLogic";
 import { getSpecialBuildings } from "./IntraTickCache";
 import { RequestPathFinderGridUpdate, SEA_TILE_COSTS } from "./PlayerTradeLogic";
 import { getDepositTileCount } from "./Tile";
@@ -21,8 +20,8 @@ export function getTechUnlockCost(tech: Tech): number {
    return Math.pow(5, ageIdx) * Math.pow(1.5, Config.Tech[tech].column) * 5000;
 }
 
-export function getScienceAmount(): number {
-   return getSpecialBuildings(getGameState()).Headquarter.building.resources.Science ?? 0;
+export function getScienceAmount(gs: GameState): number {
+   return getSpecialBuildings(gs).Headquarter.building.resources.Science ?? 0;
 }
 
 export function tryDeductScience(amount: number, gs: GameState): boolean {

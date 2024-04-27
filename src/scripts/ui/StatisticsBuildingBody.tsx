@@ -95,7 +95,7 @@ function EmpireTab({ gameState, xy }: IBuildingComponentProps): React.ReactNode 
    // Get science from buildings
    const totalBuildingScience = getScienceFromBuildings();
    const { scienceFromWorkers } = getScienceFromWorkers(gameState);
-   const scienceAmount = getScienceAmount();
+   const scienceAmount = getScienceAmount(gameState);
    const sciencePerTick = scienceFromWorkers + totalBuildingScience;
 
    const transportStat = getTransportStat(gameState);

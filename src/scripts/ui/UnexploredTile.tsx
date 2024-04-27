@@ -18,7 +18,7 @@ export function UnexploredTile({ xy, gameState }: IBuildingComponentProps): Reac
    const statistics = Tick.current.specialBuildings.get("Statistics");
    let explorers = 0;
    if (statistics) {
-      explorers = gameState.tiles.get(statistics)?.building?.resources.Explorer ?? 0;
+      explorers = statistics.building.resources.Explorer ?? 0;
    }
 
    const explore = () => {
@@ -27,7 +27,7 @@ export function UnexploredTile({ xy, gameState }: IBuildingComponentProps): Reac
          playError();
          return;
       }
-      const stat = gameState.tiles.get(statistics)?.building;
+      const stat = statistics.building;
       if (!stat) {
          playError();
          return;

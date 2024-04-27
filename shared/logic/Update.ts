@@ -88,6 +88,7 @@ import {
    type IBuildingData,
    type IMarketBuildingData,
    type IResourceImportBuildingData,
+   type ITileData,
    type IWarehouseBuildingData,
 } from "./Tile";
 
@@ -113,10 +114,10 @@ export function tickTech(td: IUnlockableDefinition): void {
 
 export function tickTransports(gs: GameState): void {
    const mahTile = Tick.current.specialBuildings.get("MausoleumAtHalicarnassus");
-   const mah = mahTile ? getGrid(gs).xyToPosition(mahTile) : null;
+   const mahPos = mahTile ? getGrid(gs).xyToPosition(mahTile.tile) : null;
    gs.transportation.forEach((queue) => {
       filterInPlace(queue, (transport) => {
-         tickTransportation(transport, mah);
+         tickTransportation(transport, mahPos);
          // Has arrived!
          if (transport.ticksSpent >= transport.ticksRequired) {
             const building = gs.tiles.get(transport.toXy)?.building;
@@ -362,7 +363,7 @@ function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
    }
 
    if (isSpecialBuilding(building.type)) {
-      Tick.next.specialBuildings.set(building.type, xy);
+      Tick.next.specialBuildings.set(building.type, tile as Required<ITileData>);
    }
 
    // Tabulate resources before we early return //////////////////////////////////////////////////////////////

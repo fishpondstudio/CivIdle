@@ -74,7 +74,7 @@ export function TechPage({ id }: { id: Tech }): React.ReactNode {
 
    const prerequisitesSatisfied = tech.requireTech.every((t) => gs.unlockedTech[t]);
    const unlockScienceCost = getTechUnlockCost(id);
-   const availableScience = getScienceAmount();
+   const availableScience = getScienceAmount(gs);
    const progress = availableScience / unlockScienceCost;
    const canUnlock = () => prerequisitesSatisfied && progress >= 1 && !gs.unlockedTech[id];
 

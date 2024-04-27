@@ -1,17 +1,14 @@
 import Tippy from "@tippyjs/react";
 import classNames from "classnames";
 import { useEffect, useState } from "react";
-import {
-   getScienceFromBuildings,
-   getScienceFromWorkers,
-   isSpecialBuilding,
-} from "../../../shared/logic/BuildingLogic";
+import { getScienceFromWorkers, isSpecialBuilding } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
 import { GameFeature, hasFeature } from "../../../shared/logic/FeatureLogic";
 import { getHappinessIcon } from "../../../shared/logic/HappinessLogic";
 import { getSpecialBuildings } from "../../../shared/logic/IntraTickCache";
 import { getProgressTowardsNextGreatPerson } from "../../../shared/logic/RebornLogic";
 import { getResourceAmount } from "../../../shared/logic/ResourceLogic";
+import { getScienceAmount } from "../../../shared/logic/TechLogic";
 import { CurrentTickChanged, NotProducingReason } from "../../../shared/logic/TickLogic";
 import {
    Rounding,
@@ -39,10 +36,12 @@ export function ResourcePanel(): React.ReactNode {
    const gs = useGameState();
    const options = useGameOptions();
    const [empireValues, setEmpireValues] = useState<[number, number]>([tick.totalValue, tick.totalValue]);
+   const [scienceAmount, setScienceAmount] = useState<[number, number]>([0, 0]);
    useTypedEvent(CurrentTickChanged, (current) => {
       setEmpireValues([current.totalValue, empireValues[0]]);
+      setScienceAmount([getScienceAmount(gs), scienceAmount[0]]);
    });
-   const { workersAfterHappiness, workersBusy, scienceFromWorkers } = getScienceFromWorkers(gs);
+   const { workersAfterHappiness, workersBusy } = getScienceFromWorkers(gs);
    const highlightNotProducingReasons = () => {
       const buildingTiles: Tile[] = Array.from(tick.notProducingReasons.entries())
          .filter(([_, reason]) => {
@@ -61,8 +60,7 @@ export function ResourcePanel(): React.ReactNode {
       Singleton().sceneManager.getCurrent(WorldScene)?.drawSelection(null, buildingTiles);
    };
    const delta = empireValues[0] - empireValues[1];
-   const totalBuildingScience = getScienceFromBuildings();
-   const scienceProduction = scienceFromWorkers + totalBuildingScience;
+   const scienceProduction = scienceAmount[0] - scienceAmount[1];
    const [favoriteActive, setFavoriteActive] = useState(false);
    useEffect(() => {
       function onPointerDown(e: PointerEvent) {

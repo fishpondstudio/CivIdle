@@ -105,7 +105,7 @@ export class ResourceDefinitions {
    Computer: IResourceDefinition = { name: () => t(L.Computer) };
    OpticalFiber: IResourceDefinition = { name: () => t(L.OpticalFiber) };
    Submarine: IResourceDefinition = { name: () => t(L.Submarine) };
-   NuclearSubmarine: IResourceDefinition = { name: () => t(L.Submarine) };
+   NuclearSubmarine: IResourceDefinition = { name: () => t(L.NuclearSubmarine) };
 }
 
 export type Resource = keyof ResourceDefinitions;
