@@ -19,7 +19,6 @@ import { getGameOptions, getGameState } from "../../../shared/logic/GameStateLog
 import {
    getBuildingsByType,
    getGrid,
-   getSpecialBuildings,
    getTypeBuildings,
    getXyBuildings,
 } from "../../../shared/logic/IntraTickCache";
@@ -324,9 +323,13 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
             }
          });
          science *= 0.1;
-         safeAdd(getSpecialBuildings(gs).Headquarter.building.resources, "Science", science);
-         mapSafeAdd(Tick.next.wonderProductions, "Science", science);
-         Tick.next.scienceProduced.set(xy, science);
+
+         const storage = Tick.current.specialBuildings.get("Headquarter")?.building.resources;
+         if (storage) {
+            safeAdd(storage, "Science", science);
+            mapSafeAdd(Tick.next.wonderProductions, "Science", science);
+            Tick.next.scienceProduced.set(xy, science);
+         }
          break;
       }
       case "StPetersBasilica": {
@@ -809,9 +812,11 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
                }
             }
          }
-         safeAdd(getSpecialBuildings(gs).Headquarter.building.resources, "Science", science);
-         console.log(science);
-         Tick.next.scienceProduced.set(xy, science);
+         const hq = Tick.current.specialBuildings.get("Headquarter")?.building.resources;
+         if (hq) {
+            safeAdd(hq, "Science", science);
+            Tick.next.scienceProduced.set(xy, science);
+         }
          break;
       }
       case "CNTower": {

@@ -14,6 +14,7 @@ import {
 import {
    applyBuildingDefaults,
    checkBuildingMax,
+   findBuilding,
    getGreatWallRange,
    getYellowCraneTowerRange,
 } from "../../../shared/logic/BuildingLogic";
@@ -26,7 +27,7 @@ import {
    getGameState,
    notifyGameStateUpdate,
 } from "../../../shared/logic/GameStateLogic";
-import { getGrid, getSpecialBuildings } from "../../../shared/logic/IntraTickCache";
+import { getGrid } from "../../../shared/logic/IntraTickCache";
 import {
    ResourceImportOptions,
    makeBuilding,
@@ -133,7 +134,10 @@ export class WorldScene extends Scene {
       }
       this.viewport.center = viewportCenter;
 
-      this.selectGrid(tileToPoint(getSpecialBuildings(getGameState()).Headquarter.tile));
+      const hq = findBuilding("Headquarter", getGameState());
+      if (hq) {
+         this.selectGrid(tileToPoint(hq.tile));
+      }
       super.onEnable();
    }
 

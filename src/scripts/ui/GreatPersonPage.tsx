@@ -1,8 +1,8 @@
 import Tippy from "@tippyjs/react";
 import type { GreatPerson } from "../../../shared/definitions/GreatPersonDefinitions";
 import { Config } from "../../../shared/logic/Config";
-import { getSpecialBuildings } from "../../../shared/logic/IntraTickCache";
 import { getGreatPersonThisRunLevel } from "../../../shared/logic/RebornLogic";
+import { Tick } from "../../../shared/logic/TickLogic";
 import { forEach, numberToRoman } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import { useGameOptions, useGameState } from "../Global";
@@ -38,7 +38,11 @@ export function GreatPersonPage(): React.ReactNode {
          <div className="window-body">
             <button
                className="w100 row jcc"
-               onClick={() => Singleton().routeTo(TilePage, { xy: getSpecialBuildings(gs).Headquarter.tile })}
+               onClick={() =>
+                  Singleton().routeTo(TilePage, {
+                     xy: Tick.current.specialBuildings.get("Headquarter")?.tile,
+                  })
+               }
             >
                <div className="m-icon" style={{ margin: "0 5px 0 -5px", fontSize: "18px" }}>
                   arrow_back

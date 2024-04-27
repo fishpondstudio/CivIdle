@@ -70,7 +70,6 @@ import {
    getBuildingIO,
    getBuildingsByType,
    getGrid,
-   getSpecialBuildings,
    getStorageFullBuildings,
    getXyBuildings,
    unlockedResources,
@@ -540,9 +539,12 @@ function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
          deductResources(building.resources, input);
          forEach(nonTransportables, (res, amount) => {
             if (res === "Science") {
-               RequestFloater.emit({ xy, amount });
-               safeAdd(getSpecialBuildings(gs).Headquarter.building.resources, res, amount);
-               Tick.next.scienceProduced.set(xy, amount);
+               const storage = Tick.current.specialBuildings.get("Headquarter")?.building.resources;
+               if (storage) {
+                  RequestFloater.emit({ xy, amount });
+                  safeAdd(storage, res, amount);
+                  Tick.next.scienceProduced.set(xy, amount);
+               }
             } else {
                if (res === "Power") Tick.next.powerPlants.add(xy);
                mapSafeAdd(Tick.next.workersAvailable, res, amount);
@@ -587,9 +589,12 @@ function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
          return;
       }
       if (res === "Science") {
-         safeAdd(getSpecialBuildings(gs).Headquarter.building.resources, res, v);
-         Tick.next.scienceProduced.set(xy, v);
-         RequestFloater.emit({ xy, amount: v });
+         const storage = Tick.current.specialBuildings.get("Headquarter")?.building.resources;
+         if (storage) {
+            safeAdd(storage, res, v);
+            Tick.next.scienceProduced.set(xy, v);
+            RequestFloater.emit({ xy, amount: v });
+         }
          return;
       }
       mapSafeAdd(Tick.next.workersAvailable, res, v);

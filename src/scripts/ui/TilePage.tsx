@@ -6,7 +6,7 @@ import { ConstructionPage } from "./ConstructionPage";
 import { EmptyTilePage } from "./EmptyTilePage";
 import { UnexploredTile } from "./UnexploredTile";
 
-export function TilePage(props: { xy: Tile }): React.ReactNode {
+export function TilePage(props: { xy: Tile | undefined }): React.ReactNode {
    const gameState = useGameState();
    const { xy } = props;
    if (!xy || !isSingletonReady()) {

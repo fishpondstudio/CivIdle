@@ -18,12 +18,12 @@ import {
    serializeSaveLite,
 } from "../../shared/logic/GameStateLogic";
 import { initializeGameState } from "../../shared/logic/InitializeGameState";
-import { getSpecialBuildings } from "../../shared/logic/IntraTickCache";
 import {
    getGreatPeopleChoiceCount,
    rollGreatPeopleThisRun,
    rollPermanentGreatPeople,
 } from "../../shared/logic/RebornLogic";
+import { Tick } from "../../shared/logic/TickLogic";
 import { forEach, rejectIn, safeAdd } from "../../shared/utilities/Helper";
 import { TypedEvent } from "../../shared/utilities/TypedEvent";
 import { migrateSavedGame } from "./MigrateSavedGame";
@@ -289,7 +289,7 @@ if (import.meta.env.DEV) {
          if (NoStorage[res] || NoPrice[res]) {
             return;
          }
-         safeAdd(getSpecialBuildings(getGameState()).Headquarter.building.resources, res, amount);
+         safeAdd(Tick.current.specialBuildings.get("Headquarter")!.building.resources, res, amount);
       });
    };
 

@@ -1,9 +1,10 @@
 import { isNaturalWonder, isSpecialBuilding } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
 import { getGameState } from "../../../shared/logic/GameStateLogic";
-import { getSpecialBuildings, getXyBuildings } from "../../../shared/logic/IntraTickCache";
+import { getXyBuildings } from "../../../shared/logic/IntraTickCache";
 import { getGreatPeopleChoiceCount, rollGreatPeopleThisRun } from "../../../shared/logic/RebornLogic";
 import { getCurrentAge, getMostAdvancedTech, getTechUnlockCost } from "../../../shared/logic/TechLogic";
+import { Tick } from "../../../shared/logic/TickLogic";
 import { safeAdd, type Tile } from "../../../shared/utilities/Helper";
 import { ChooseGreatPersonModal } from "../ui/ChooseGreatPersonModal";
 import { showModal } from "../ui/GlobalModal";
@@ -40,12 +41,9 @@ export function onTileExplored(xy: Tile): void {
          }
          case "MountTai": {
             const tech = getMostAdvancedTech(gs);
-            if (tech) {
-               safeAdd(
-                  getSpecialBuildings(gs).Headquarter.building.resources,
-                  "Science",
-                  getTechUnlockCost(tech),
-               );
+            const hq = Tick.current.specialBuildings.get("Headquarter")?.building.resources;
+            if (tech && hq) {
+               safeAdd(hq, "Science", getTechUnlockCost(tech));
             }
             break;
          }

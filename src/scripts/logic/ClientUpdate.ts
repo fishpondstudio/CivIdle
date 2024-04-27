@@ -7,7 +7,7 @@ import {
    serializeSaveLite,
 } from "../../../shared/logic/GameStateLogic";
 import { calculateHappiness } from "../../../shared/logic/HappinessLogic";
-import { clearIntraTickCache, getSpecialBuildings } from "../../../shared/logic/IntraTickCache";
+import { clearIntraTickCache } from "../../../shared/logic/IntraTickCache";
 import { getGreatPersonThisRunLevel } from "../../../shared/logic/RebornLogic";
 import { OnResetTile } from "../../../shared/logic/TechLogic";
 import { CurrentTickChanged, EmptyTickData, Tick, freezeTickData } from "../../../shared/logic/TickLogic";
@@ -88,7 +88,10 @@ export function tickEverySecond(gs: GameState, offline: boolean) {
 
    Tick.next.happiness = calculateHappiness(gs);
    const { scienceFromWorkers } = getScienceFromWorkers(gs);
-   safeAdd(getSpecialBuildings(gs).Headquarter.building.resources, "Science", scienceFromWorkers);
+   const hq = Tick.current.specialBuildings.get("Headquarter")?.building.resources;
+   if (hq) {
+      safeAdd(hq, "Science", scienceFromWorkers);
+   }
 
    ++gs.tick;
 

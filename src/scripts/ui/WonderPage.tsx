@@ -1,7 +1,8 @@
 import type { Building } from "../../../shared/definitions/BuildingDefinitions";
 import { isWorldWonder } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
-import { getSpecialBuildings, getXyBuildings } from "../../../shared/logic/IntraTickCache";
+import { getXyBuildings } from "../../../shared/logic/IntraTickCache";
+import { Tick } from "../../../shared/logic/TickLogic";
 import { keysOf } from "../../../shared/utilities/Helper";
 import type { PartialSet } from "../../../shared/utilities/TypeDefinitions";
 import { L, t } from "../../../shared/utilities/i18n";
@@ -29,7 +30,9 @@ export function WonderPage(): React.ReactNode {
                <button
                   className="w100 row jcc"
                   onClick={() =>
-                     Singleton().routeTo(TilePage, { xy: getSpecialBuildings(gs).Headquarter.tile })
+                     Singleton().routeTo(TilePage, {
+                        xy: Tick.current.specialBuildings.get("Headquarter")?.tile,
+                     })
                   }
                >
                   <div className="m-icon" style={{ margin: "0 5px 0 -5px", fontSize: "18px" }}>

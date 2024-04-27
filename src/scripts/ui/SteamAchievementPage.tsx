@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getSpecialBuildings } from "../../../shared/logic/IntraTickCache";
+import { Tick } from "../../../shared/logic/TickLogic";
 import type { Achievement } from "../../../shared/utilities/SteamAchievement";
 import { L, t } from "../../../shared/utilities/i18n";
 import { useGameState } from "../Global";
@@ -27,7 +27,11 @@ export function SteamAchievementPage(): React.ReactNode {
          <div className="window-body">
             <button
                className="w100 row jcc mb10"
-               onClick={() => Singleton().routeTo(TilePage, { xy: getSpecialBuildings(gs).Headquarter.tile })}
+               onClick={() =>
+                  Singleton().routeTo(TilePage, {
+                     xy: Tick.current.specialBuildings.get("Headquarter")?.tile,
+                  })
+               }
             >
                <div className="m-icon" style={{ margin: "0 5px 0 -5px", fontSize: "18px" }}>
                   arrow_back

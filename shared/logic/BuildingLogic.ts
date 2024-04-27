@@ -28,13 +28,7 @@ import { MANAGED_IMPORT_RANGE } from "./Constants";
 import { GameFeature, hasFeature } from "./FeatureLogic";
 import type { GameOptions, GameState } from "./GameState";
 import { getGameOptions, getGameState } from "./GameStateLogic";
-import {
-   getBuildingIO,
-   getBuildingsByType,
-   getGrid,
-   getSpecialBuildings,
-   getXyBuildings,
-} from "./IntraTickCache";
+import { getBuildingIO, getBuildingsByType, getGrid, getXyBuildings } from "./IntraTickCache";
 import { getGreatPersonThisRunLevel, getUpgradeCostFib } from "./RebornLogic";
 import { getBuildingsThatProduce, getResourcesValue } from "./ResourceLogic";
 import { getAgeForTech, getBuildingUnlockTech } from "./TechLogic";
@@ -56,6 +50,7 @@ import {
    type IHaveTypeAndLevel,
    type IMarketBuildingData,
    type IResourceImportBuildingData,
+   type ITileData,
    type IWarehouseBuildingData,
 } from "./Tile";
 
@@ -968,8 +963,17 @@ export function getElectrificationEfficiency(b: Building) {
    return 1;
 }
 
+export function findBuilding(type: Building, gs: GameState): Required<ITileData> | null {
+   for (const tile of gs.tiles.values()) {
+      if (tile.building?.type === type) {
+         return tile as Required<ITileData>;
+      }
+   }
+   return null;
+}
+
 export function addPetraOfflineTime(time: number, gs: GameState): void {
-   const petra = getSpecialBuildings(gs).Petra;
+   const petra = findBuilding("Petra", gs);
    if (petra) {
       const storage = getStorageFor(petra.tile, gs);
       if (!petra.building.resources.Warp) {

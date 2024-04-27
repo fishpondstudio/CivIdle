@@ -8,7 +8,7 @@ import {
    isSpecialBuilding,
 } from "../../../shared/logic/BuildingLogic";
 import { getGameOptions, getGameState } from "../../../shared/logic/GameStateLogic";
-import { getGrid, getSpecialBuildings, getXyBuildings } from "../../../shared/logic/IntraTickCache";
+import { getGrid, getXyBuildings } from "../../../shared/logic/IntraTickCache";
 import {
    getGreatPeopleChoiceCount,
    getRebirthGreatPeopleCount,
@@ -23,6 +23,7 @@ import {
    getTechUnlockCost,
 } from "../../../shared/logic/TechLogic";
 import { ensureTileFogOfWar } from "../../../shared/logic/TerrainLogic";
+import { Tick } from "../../../shared/logic/TickLogic";
 import { makeBuilding } from "../../../shared/logic/Tile";
 import { OnBuildingComplete } from "../../../shared/logic/Update";
 import {
@@ -97,12 +98,9 @@ export function onBuildingComplete(xy: Tile): void {
       }
       case "OxfordUniversity": {
          const tech = getMostAdvancedTech(gs);
-         if (tech) {
-            safeAdd(
-               getSpecialBuildings(gs).Headquarter.building.resources,
-               "Science",
-               getTechUnlockCost(tech),
-            );
+         const hq = Tick.current.specialBuildings.get("Headquarter")?.building.resources;
+         if (tech && hq) {
+            safeAdd(hq, "Science", getTechUnlockCost(tech));
          }
          break;
       }

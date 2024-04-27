@@ -5,11 +5,10 @@ import { getScienceFromWorkers, isSpecialBuilding } from "../../../shared/logic/
 import { Config } from "../../../shared/logic/Config";
 import { GameFeature, hasFeature } from "../../../shared/logic/FeatureLogic";
 import { getHappinessIcon } from "../../../shared/logic/HappinessLogic";
-import { getSpecialBuildings } from "../../../shared/logic/IntraTickCache";
 import { getProgressTowardsNextGreatPerson } from "../../../shared/logic/RebornLogic";
 import { getResourceAmount } from "../../../shared/logic/ResourceLogic";
 import { getScienceAmount } from "../../../shared/logic/TechLogic";
-import { CurrentTickChanged, NotProducingReason } from "../../../shared/logic/TickLogic";
+import { CurrentTickChanged, NotProducingReason, Tick } from "../../../shared/logic/TickLogic";
 import {
    Rounding,
    clamp,
@@ -130,9 +129,11 @@ export function ResourcePanel(): React.ReactNode {
             <div
                className="row pointer"
                onClick={() => {
-                  const xy = getSpecialBuildings(gs).Headquarter.tile;
-                  Singleton().sceneManager.getCurrent(WorldScene)?.lookAtTile(xy, LookAtMode.Select);
-                  Singleton().routeTo(TilePage, { xy, expandHappiness: true });
+                  const xy = Tick.current.specialBuildings.get("Headquarter")?.tile;
+                  if (xy) {
+                     Singleton().sceneManager.getCurrent(WorldScene)?.lookAtTile(xy, LookAtMode.Select);
+                     Singleton().routeTo(TilePage, { xy, expandHappiness: true });
+                  }
                }}
             >
                <div

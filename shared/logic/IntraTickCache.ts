@@ -207,11 +207,6 @@ export function unlockedResources(gs: GameState): PartialSet<Resource> {
    return _cache.unlockedResources;
 }
 
-export interface Cached {
-   grid: Grid;
-   buildings: ISpecialBuildings;
-}
-
 let grid: Grid | null = null;
 
 export function getGrid(gs: GameState): Grid {
@@ -220,46 +215,4 @@ export function getGrid(gs: GameState): Grid {
       grid = new Grid(size, size, TILE_SIZE);
    }
    return grid;
-}
-
-let specialBuildings: ISpecialBuildings | null = null;
-
-export function getSpecialBuildings(gs: GameState): ISpecialBuildings {
-   if (specialBuildings === null) {
-      specialBuildings = findSpecialBuildings(gs);
-   }
-   return specialBuildings;
-}
-
-function findSpecialBuildings(gameState: GameState): ISpecialBuildings {
-   const buildings: Partial<Record<Building, ITileData>> = {};
-   gameState.tiles.forEach((tile) => {
-      if (tile.building?.type === "Headquarter") {
-         console.assert(
-            buildings.Headquarter === undefined,
-            "There should be only one Headquarter. One =",
-            buildings.Headquarter,
-            "Another = ",
-            tile,
-         );
-         buildings.Headquarter = tile;
-      }
-      if (tile.building?.type === "Petra") {
-         console.assert(
-            buildings.Petra === undefined,
-            "There should be only one Petra. One =",
-            buildings.Petra,
-            "Another = ",
-            tile,
-         );
-         buildings.Petra = tile;
-      }
-   });
-   console.assert(!!buildings.Headquarter, "Should find 1 Headquarter");
-   return buildings as ISpecialBuildings;
-}
-
-export interface ISpecialBuildings {
-   Headquarter: Required<ITileData>;
-   Petra?: Required<ITileData>;
 }
