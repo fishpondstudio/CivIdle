@@ -19,6 +19,7 @@ import { isGameDataCompatible, loadGame, syncFontSizeScale, syncSidePanelWidth, 
 import type { RouteChangeEvent } from "./Route";
 import { tickEverySecond } from "./logic/ClientUpdate";
 import { Heartbeat } from "./logic/Heartbeat";
+import { getFullVersion } from "./logic/Version";
 import { getBuildingTexture, getTileTexture } from "./logic/VisualLogic";
 import type { MainBundleAssets } from "./main";
 import { connectWebSocket, convertOfflineTimeToWarp } from "./rpc/RPCClient";
@@ -43,7 +44,7 @@ export async function startGame(
    routeChanged: TypedEvent<RouteChangeEvent>,
 ) {
    const routeTo: RouteTo = (component, params) => routeChanged.emit({ component, params });
-
+   console.log("CivIdle version:", getFullVersion());
    // ========== Load game data ==========
    routeTo(LoadingPage, { stage: LoadingPageStage.LoadSave });
 

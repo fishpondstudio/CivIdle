@@ -979,8 +979,13 @@ export function addPetraOfflineTime(time: number, gs: GameState): void {
       if (!petra.building.resources.Warp) {
          petra.building.resources.Warp = 0;
       }
+      const before = petra.building.resources.Warp;
       petra.building.resources.Warp += time;
       petra.building.resources.Warp = clamp(petra.building.resources.Warp, 0, storage.total);
+      const after = petra.building.resources.Warp;
+      console.log("[addPetraOfflineTime]: Before:", before, "After:", after);
+   } else {
+      console.log("[addPetraOfflineTime]: No Petra");
    }
 }
 export function getYellowCraneTowerRange(xy: Tile, gs: GameState): number {

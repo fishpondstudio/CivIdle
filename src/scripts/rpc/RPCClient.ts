@@ -310,6 +310,7 @@ function retryConnect() {
 }
 
 export function convertOfflineTimeToWarp(offlineTime: number): void {
+   console.log("[convertOfflineTimeToWarp] offlineTime:", offlineTime);
    if (offlineTime >= 60) {
       playBubble();
       showToast(t(L.PetraOfflineTimeReconciliation, { count: offlineTime }));
