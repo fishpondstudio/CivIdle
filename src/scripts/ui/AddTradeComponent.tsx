@@ -249,7 +249,7 @@ export function AddTradeComponent({ gameState, xy }: IBuildingComponentProps): R
          disabled={!enabled || DISABLE_PLAYER_TRADES}
       >
          <div className="m-icon small">add_circle</div>
-         <Tippy content={tooltip} visible={!!tooltip}>
+         <Tippy content={tooltip} disabled={!tooltip}>
             <div className="text-strong f1">{t(L.PlayerTradeNewTrade)}</div>
          </Tippy>
       </button>
