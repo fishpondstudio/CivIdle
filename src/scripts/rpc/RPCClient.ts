@@ -229,7 +229,6 @@ export async function connectWebSocket(): Promise<number> {
                tick,
                "OfflineTicks:",
                offlineTicks,
-               "User:",
                "OfflineTime:",
                w.offlineTime,
                "User:",

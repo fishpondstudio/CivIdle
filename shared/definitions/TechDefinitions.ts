@@ -743,7 +743,7 @@ export class TechDefinitions {
       name: () => t(L.MilitaryTactics),
       column: 22,
       requireTech: ["JetPropulsion", "Satellite"],
-      unlockBuilding: ["FighterJetPlant", "NuclearSubmarineYard"],
+      unlockBuilding: ["FighterJetPlant", "NuclearMissileSilo"],
    };
 
    Semiconductor: ITechDefinition = {
@@ -778,7 +778,7 @@ export class TechDefinitions {
       name: () => t(L.MutualAssuredDestruction),
       column: 23,
       requireTech: ["MilitaryTactics", "Semiconductor"],
-      unlockBuilding: ["NuclearMissileSilo", "AircraftCarrierYard"],
+      unlockBuilding: ["NuclearSubmarineYard", "AircraftCarrierYard"],
    };
 
    Computer: ITechDefinition = {
