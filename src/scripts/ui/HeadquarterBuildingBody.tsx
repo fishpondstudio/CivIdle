@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 import { getScienceFromWorkers, isWorldWonder } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
 import type { GameOptions, GameState } from "../../../shared/logic/GameState";
-import { getXyBuildings, unlockedBuildings } from "../../../shared/logic/IntraTickCache";
+import { getTransportStat, getXyBuildings, unlockedBuildings } from "../../../shared/logic/IntraTickCache";
 import {
    getGreatPersonThisRunLevel,
    getPermanentGreatPeopleLevel,
@@ -70,6 +70,7 @@ export function HeadquarterBuildingBody({
    const scienceAmount = getScienceAmount(gameState);
    const techAge = getCurrentAge(gameState);
    const options = useGameOptions();
+   const transportStat = getTransportStat(gameState);
    return (
       <div className="window-body">
          <PlayerHandleComponent />
@@ -101,15 +102,17 @@ export function HeadquarterBuildingBody({
                      </ul>
                   </details>
                </li>
-               <li>
-                  <details>
-                     <summary className="row">
-                        <div className="f1">{t(L.WorkersBusy)}</div>
-                        <div className="text-strong">
-                           <FormatNumber value={workersBusy} />
-                        </div>
-                     </summary>
-                  </details>
+               <li className="row">
+                  <div className="f1">{t(L.WorkersBusy)}</div>
+                  <div className="text-strong">
+                     <FormatNumber value={workersBusy} />
+                  </div>
+               </li>
+               <li className="row">
+                  <div className="f1">{t(L.StatisticsTransportationPercentage)}</div>
+                  <div className="text-strong">
+                     {formatPercent(transportStat.totalFuel / (Tick.current.workersUsed.get("Worker") || 1))}
+                  </div>
                </li>
                <li>
                   <details>

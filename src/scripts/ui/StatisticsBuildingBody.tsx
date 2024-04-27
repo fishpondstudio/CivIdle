@@ -16,8 +16,12 @@ import {
 } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
 import { EXPLORER_SECONDS, MAX_EXPLORER } from "../../../shared/logic/Constants";
-import { getBuildingIO, getXyBuildings, unlockedResources } from "../../../shared/logic/IntraTickCache";
-import { getTransportStat } from "../../../shared/logic/ResourceLogic";
+import {
+   getBuildingIO,
+   getTransportStat,
+   getXyBuildings,
+   unlockedResources,
+} from "../../../shared/logic/IntraTickCache";
 import { getScienceAmount } from "../../../shared/logic/TechLogic";
 import { NotProducingReason, Tick } from "../../../shared/logic/TickLogic";
 import type { IBuildingData } from "../../../shared/logic/Tile";
@@ -25,7 +29,6 @@ import {
    forEach,
    formatHMS,
    formatNumber,
-   formatPercent,
    keysOf,
    mReduceOf,
    mapSafeAdd,
@@ -237,12 +240,6 @@ function EmpireTab({ gameState, xy }: IBuildingComponentProps): React.ReactNode 
                   <div className="f1">{t(L.StatisticsStalledTransportation)}</div>
                   <div className="text-strong">
                      <FormatNumber value={transportStat.stalled} />
-                  </div>
-               </li>
-               <li className="row">
-                  <div className="f1">{t(L.StatisticsTransportationPercentage)}</div>
-                  <div className="text-strong">
-                     {formatPercent(transportStat.totalFuel / (Tick.current.workersUsed.get("Worker") || 1))}
                   </div>
                </li>
             </ul>

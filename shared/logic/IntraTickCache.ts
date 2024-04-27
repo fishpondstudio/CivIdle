@@ -22,6 +22,7 @@ class IntraTickCache {
    unlockedResources: PartialSet<Resource> | undefined;
    buildingsByType: Map<Building, Map<Tile, Required<ITileData>>> | undefined;
    buildingsByXy: Map<Tile, IBuildingData> | undefined;
+   transportStat: ITransportStat | undefined;
    resourceAmount: PartialTabulate<Resource> | undefined;
    buildingIO: Map<number, Readonly<PartialTabulate<Resource>>> = new Map<
       number,
@@ -138,6 +139,33 @@ export function getStorageFullBuildings(): Tile[] {
       }
    }
    _cache.storageFullBuildings = result;
+   return result;
+}
+
+export interface ITransportStat {
+   totalFuel: number;
+   totalTransports: number;
+   stalled: number;
+}
+
+export function getTransportStat(gs: GameState): ITransportStat {
+   if (_cache.transportStat) {
+      return _cache.transportStat;
+   }
+   let totalFuel = 0;
+   let totalTransports = 0;
+   let stalled = 0;
+   gs.transportation.forEach((target) => {
+      target.forEach((t) => {
+         totalFuel += t.currentFuelAmount;
+         ++totalTransports;
+         if (!t.hasEnoughFuel) {
+            ++stalled;
+         }
+      });
+   });
+   const result: ITransportStat = { totalFuel, totalTransports, stalled };
+   _cache.transportStat = result;
    return result;
 }
 
