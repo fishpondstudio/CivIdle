@@ -1040,7 +1040,7 @@ export const EN = {
    UnclaimedGreatPersonThisRun: "You have unclaimed <b>Great People this run</b>, click here to claim",
    UnexploredTile: "Unexplored Tile",
    UNGeneralAssemblyCurrent: "Current UN General Assembly #%{id}",
-   UNGeneralAssemblyMultipliers: "<b>+%{count}</b> Production, Worker Capacity and Storage Multpliers for <b>%{buildings}</b>",
+   UNGeneralAssemblyMultipliers: "<b>+%{count}</b> Production, Worker Capacity and Storage Multipliers for <b>%{buildings}</b>",
    UNGeneralAssemblyNext: "Upcoming UN General Assembly #%{id}",
    UNGeneralAssemblyVoteEndIn: "You can change your vote any time before the voting ends in <b>%{time}</b>",
    UniqueBuildings: "Unique Buildings",
