@@ -8,7 +8,7 @@ import { Tick } from "../../../shared/logic/TickLogic";
 import { safeAdd, type Tile } from "../../../shared/utilities/Helper";
 import { ChooseGreatPersonModal } from "../ui/ChooseGreatPersonModal";
 import { showModal } from "../ui/GlobalModal";
-import { playGong } from "../visuals/Sound";
+import { playAgeUp } from "../visuals/Sound";
 
 export function onTileExplored(xy: Tile): void {
    const gs = getGameState();
@@ -34,7 +34,7 @@ export function onTileExplored(xy: Tile): void {
                gs.greatPeopleChoices.push(candidates);
             }
             if (gs.greatPeopleChoices.length > 0) {
-               playGong();
+               playAgeUp();
                showModal(<ChooseGreatPersonModal permanent={false} />);
             }
             break;

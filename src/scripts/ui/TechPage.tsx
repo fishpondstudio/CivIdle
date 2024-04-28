@@ -17,7 +17,7 @@ import { TechTreeScene } from "../scenes/TechTreeScene";
 import { WorldScene } from "../scenes/WorldScene";
 import { useShortcut } from "../utilities/Hook";
 import { Singleton } from "../utilities/Singleton";
-import { playGong, playUpgrade } from "../visuals/Sound";
+import { playAgeUp, playUpgrade } from "../visuals/Sound";
 import { ChooseGreatPersonModal } from "./ChooseGreatPersonModal";
 import { showModal } from "./GlobalModal";
 import { FormatNumber } from "./HelperComponents";
@@ -56,7 +56,7 @@ export function TechPage({ id }: { id: Tech }): React.ReactNode {
          checkAgeAchievements(newAge);
       }
       if (gs.greatPeopleChoices.length > 0) {
-         playGong();
+         playAgeUp();
          showModal(<ChooseGreatPersonModal permanent={false} />);
       } else {
          playUpgrade();

@@ -32,7 +32,7 @@ import { L, t } from "../../../shared/utilities/i18n";
 import { useGameOptions } from "../Global";
 import { TechTreeScene } from "../scenes/TechTreeScene";
 import { Singleton } from "../utilities/Singleton";
-import { playGong } from "../visuals/Sound";
+import { playAgeUp } from "../visuals/Sound";
 import { BuildingColorComponent } from "./BuildingColorComponent";
 import type { IBuildingComponentProps } from "./BuildingPage";
 import { BuildingProduceComponent } from "./BuildingProduceComponent";
@@ -261,7 +261,7 @@ function GreatPeopleComponent({
                   className="pointer"
                   onClick={() => {
                      if (gameState.greatPeopleChoices.length > 0) {
-                        playGong();
+                        playAgeUp();
                         showModal(<ChooseGreatPersonModal permanent={false} />);
                      }
                   }}
@@ -276,7 +276,7 @@ function GreatPeopleComponent({
                   className="pointer"
                   onClick={() => {
                      if (options.greatPeopleChoices.length > 0) {
-                        playGong();
+                        playAgeUp();
                         showModal(<ChooseGreatPersonModal permanent={true} />);
                      }
                   }}

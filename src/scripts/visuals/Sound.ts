@@ -1,11 +1,11 @@
 import { sound } from "@pixi/sound";
 import { getGameOptions } from "../../../shared/logic/GameStateLogic";
+import ageup from "../../sounds/ageup.mp3";
 import beep from "../../sounds/beep.mp3";
 import bubble from "../../sounds/bubble.mp3";
 import click from "../../sounds/click.mp3";
 import ding from "../../sounds/ding.mp3";
 import error from "../../sounds/error.mp3";
-import gong from "../../sounds/gong.mp3";
 import kaching from "../../sounds/kaching.mp3";
 import levelup from "../../sounds/levelup.mp3";
 import music from "../../sounds/music/pilgrimage-ancient-mediaeval-harp.mp3";
@@ -21,7 +21,7 @@ sound.add("kaching", kaching).singleInstance = true;
 sound.add("levelup", levelup).singleInstance = true;
 sound.add("bubble", bubble).singleInstance = true;
 sound.add("music", music).singleInstance = true;
-sound.add("gong", gong).singleInstance = true;
+sound.add("ageup", ageup).singleInstance = true;
 sound.add("ding", ding).singleInstance = true;
 sound.add("success", success).singleInstance = true;
 sound.add("upgrade", upgrade).singleInstance = true;
@@ -54,11 +54,11 @@ export function playKaching() {
    sound.play("kaching");
 }
 
-export function playGong() {
+export function playAgeUp() {
    if (!getGameOptions().soundEffect) {
       return;
    }
-   sound.play("gong");
+   sound.play("ageup");
 }
 
 export function playLevelUp() {
