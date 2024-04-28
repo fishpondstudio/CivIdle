@@ -10,6 +10,7 @@ export const PatchNotes: PatchNote[] = [
       content: [
          ["Bugfix", "Fix a bug where Production Multipliers causes market to have incorrect transport"],
          ["Bugfix", "Fix a bug where there's an empty tooltip on Add Trade button in Caravansary"],
+         ["Content", "Add Cold War Steam achievement"],
          ["QoL", "Censor's Office in Rome is renamed as Statistics Office (aligned with other maps)"],
          ["QoL", "Censor is renamed to Moderator"],
          ["QoL", "Update tech unlock and age unlock sound effects"],

@@ -33,6 +33,10 @@ export function checkAgeAchievements(currentAge: TechAge): void {
          SteamClient.unlockAchievement("WorldWars");
          break;
       }
+      case "ColdWarAge": {
+         SteamClient.unlockAchievement("ColdWar");
+         break;
+      }
    }
 }
 
