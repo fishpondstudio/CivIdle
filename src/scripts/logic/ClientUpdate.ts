@@ -7,7 +7,7 @@ import {
    serializeSaveLite,
 } from "../../../shared/logic/GameStateLogic";
 import { calculateHappiness } from "../../../shared/logic/HappinessLogic";
-import { clearIntraTickCache } from "../../../shared/logic/IntraTickCache";
+import { clearIntraTickCache, getBuildingsByType } from "../../../shared/logic/IntraTickCache";
 import { getGreatPersonThisRunLevel } from "../../../shared/logic/RebornLogic";
 import { OnResetTile } from "../../../shared/logic/TechLogic";
 import { CurrentTickChanged, EmptyTickData, Tick, freezeTickData } from "../../../shared/logic/TickLogic";
@@ -123,6 +123,10 @@ OnResetTile.on((xy) => {
 OnTileExplored.on(onTileExplored);
 OnBuildingComplete.on(onBuildingComplete);
 OnBuildingProductionComplete.on(onProductionComplete);
-OnPriceUpdated.on(playDing);
+OnPriceUpdated.on((gs) => {
+   if ((getBuildingsByType("Market", gs)?.size ?? 0) > 0) {
+      playDing();
+   }
+});
 
 export const useCurrentTick = makeObservableHook(CurrentTickChanged, () => Tick.current);

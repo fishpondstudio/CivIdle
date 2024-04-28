@@ -91,7 +91,7 @@ import {
    type IWarehouseBuildingData,
 } from "./Tile";
 
-export const OnPriceUpdated = new TypedEvent<void>();
+export const OnPriceUpdated = new TypedEvent<GameState>();
 export const OnBuildingComplete = new TypedEvent<Tile>();
 export const OnBuildingProductionComplete = new TypedEvent<{ xy: Tile; offline: boolean }>();
 export const RequestFloater = new TypedEvent<{ xy: Tile; amount: number }>();
@@ -817,7 +817,7 @@ export function tickPrice(gs: GameState) {
    if (gs.lastPriceUpdated !== priceId) {
       forceUpdatePrice = true;
       gs.lastPriceUpdated = priceId;
-      OnPriceUpdated.emit();
+      OnPriceUpdated.emit(gs);
    }
    const resources = filterOf(unlockedResources(gs), (res) => !NoPrice[res] && !NoStorage[res]);
    getBuildingsByType("Market", gs)?.forEach((tile, xy) => {
