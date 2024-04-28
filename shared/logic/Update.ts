@@ -38,7 +38,6 @@ import {
    getBuilderCapacity,
    getBuildingCost,
    getBuildingValue,
-   getCompletedBuilding,
    getCurrentPriority,
    getElectrificationEfficiency,
    getInputMode,
@@ -53,6 +52,7 @@ import {
    getStorageRequired,
    getWarehouseIdleCapacity,
    getWorkersFor,
+   getWorkingBuilding,
    hasEnoughResources,
    hasRequiredDeposit,
    isNaturalWonder,
@@ -335,7 +335,7 @@ function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
          let total = 0;
          for (const point of getGrid(gs).getRange(tileToPoint(xy), MANAGED_IMPORT_RANGE)) {
             const nxy = pointToTile(point);
-            const b = getCompletedBuilding(nxy, gs);
+            const b = getWorkingBuilding(nxy, gs);
             if (!b) continue;
             forEach(
                filterTransportable(

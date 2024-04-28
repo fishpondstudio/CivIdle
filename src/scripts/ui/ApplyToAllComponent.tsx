@@ -1,5 +1,5 @@
 import Tippy from "@tippyjs/react";
-import { applyToAllBuildings, getCompletedBuilding } from "../../../shared/logic/BuildingLogic";
+import { applyToAllBuildings, getWorkingBuilding } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
 import type { GameState } from "../../../shared/logic/GameState";
 import { notifyGameOptionsUpdate } from "../../../shared/logic/GameStateLogic";
@@ -69,7 +69,7 @@ export function ApplyToAllComponent<T extends IBuildingData>({
                         let count = 0;
                         getGrid(gameState)
                            .getRange(tileToPoint(xy), tile)
-                           .map((p) => getCompletedBuilding(pointToTile(p), gameState))
+                           .map((p) => getWorkingBuilding(pointToTile(p), gameState))
                            .forEach((b) => {
                               if (b?.type === building.type) {
                                  ++count;

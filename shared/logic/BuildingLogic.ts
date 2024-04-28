@@ -875,9 +875,11 @@ export function hasEnoughStorage(xy: Tile, amount: number, gs: GameState): boole
    return storage.total - storage.used >= amount;
 }
 
-export function getCompletedBuilding(xy: Tile, gs: GameState): IBuildingData | null {
+export function getWorkingBuilding(xy: Tile, gs: GameState): IBuildingData | null {
    const tile = gs.tiles.get(xy);
-   if (!tile || !tile.building || tile.building.status === "building") return null;
+   if (!tile || !tile.building || tile.building.status === "building" || tile.building.capacity <= 0) {
+      return null;
+   }
    return tile.building;
 }
 
@@ -1008,7 +1010,7 @@ export function getGreatWallRange(xy: Tile, gs: GameState): number {
       return 0;
    }
    for (const point of getGrid(gs).getNeighbors(tileToPoint(xy))) {
-      if (getCompletedBuilding(pointToTile(point), gs)?.type === "ForbiddenCity") {
+      if (getWorkingBuilding(pointToTile(point), gs)?.type === "ForbiddenCity") {
          return 2;
       }
    }

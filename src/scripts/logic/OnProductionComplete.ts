@@ -5,9 +5,9 @@ import {
 import {
    ST_PETERS_FAITH_MULTIPLIER,
    ST_PETERS_STORAGE_MULTIPLIER,
-   getCompletedBuilding,
    getGreatWallRange,
    getScienceFromWorkers,
+   getWorkingBuilding,
    getYellowCraneTowerRange,
    isBuildingWellStocked,
    isSpecialBuilding,
@@ -146,7 +146,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
       case "GrandBazaar": {
          for (const neighbor of grid.getNeighbors(tileToPoint(xy))) {
             const xy = pointToTile(neighbor);
-            const building = getCompletedBuilding(xy, gs);
+            const building = getWorkingBuilding(xy, gs);
             if (building?.type === "Caravansary") {
                mapSafePush(Tick.next.tileMultipliers, xy, {
                   output: 5,
@@ -167,7 +167,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
       case "ColossusOfRhodes": {
          let happiness = 0;
          for (const neighbor of grid.getNeighbors(tileToPoint(xy))) {
-            const building = getCompletedBuilding(pointToTile(neighbor), gs);
+            const building = getWorkingBuilding(pointToTile(neighbor), gs);
             if (building && !Config.Building[building.type].output.Worker) {
                happiness++;
             }
@@ -391,7 +391,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
       case "SaintBasilsCathedral": {
          for (const neighbor of grid.getNeighbors(tileToPoint(xy))) {
             const neighborXy = pointToTile(neighbor);
-            const building = getCompletedBuilding(neighborXy, gs);
+            const building = getWorkingBuilding(neighborXy, gs);
             if (building && Config.BuildingTier[building.type] === 1) {
                mapSafePush(Tick.next.tileMultipliers, neighborXy, {
                   output: 1,
@@ -417,7 +417,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
       case "Poseidon": {
          for (const neighbor of grid.getNeighbors(tileToPoint(xy))) {
             const neighborXy = pointToTile(neighbor);
-            const building = getCompletedBuilding(neighborXy, gs);
+            const building = getWorkingBuilding(neighborXy, gs);
             if (building && !isSpecialBuilding(building.type) && building.level < 20) {
                building.level = 20;
             }
@@ -448,7 +448,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          let count = 0;
          for (const neighbor of grid.getNeighbors(tileToPoint(xy))) {
             const neighborXy = pointToTile(neighbor);
-            if (getCompletedBuilding(neighborXy, gs)?.type === "SteelMill") {
+            if (getWorkingBuilding(neighborXy, gs)?.type === "SteelMill") {
                neighborXys.push(neighborXy);
                ++count;
             }
@@ -480,7 +480,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          });
          for (const neighbor of grid.getNeighbors(tileToPoint(xy))) {
             const neighborXy = pointToTile(neighbor);
-            const b = getCompletedBuilding(neighborXy, gs);
+            const b = getWorkingBuilding(neighborXy, gs);
             if (b && (Config.Building[b.type].input.Gunpowder || Config.Building[b.type].output.Gunpowder)) {
                Tick.next.happinessExemptions.add(neighborXy);
             }
@@ -493,7 +493,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
             workersAfterHappiness === 0 ? 0 : Math.floor((10 * workersBusy) / workersAfterHappiness);
          for (const neighbor of grid.getNeighbors(tileToPoint(xy))) {
             const neighborXy = pointToTile(neighbor);
-            if (getCompletedBuilding(neighborXy, gs)?.type === "Shrine") {
+            if (getWorkingBuilding(neighborXy, gs)?.type === "Shrine") {
                Tick.next.happinessExemptions.add(neighborXy);
             }
          }
@@ -519,7 +519,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
                const type = b.type;
                let count = 0;
                for (const n of grid.getNeighbors(neighbor)) {
-                  if (getCompletedBuilding(pointToTile(n), gs)?.type === type) {
+                  if (getWorkingBuilding(pointToTile(n), gs)?.type === type) {
                      ++count;
                   }
                }
@@ -568,7 +568,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          addMultiplier("WheatFarm", { output: 1, storage: 1 }, buildingName);
          for (const neighbor of grid.getNeighbors(tileToPoint(xy))) {
             const neighborXy = pointToTile(neighbor);
-            const building = getCompletedBuilding(neighborXy, gs);
+            const building = getWorkingBuilding(neighborXy, gs);
             if (building?.type === "WheatFarm") {
                mapSafePush(Tick.next.tileMultipliers, neighborXy, {
                   storage: 5,
@@ -589,7 +589,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          let count = 0;
          for (const neighbor of grid.getNeighbors(tileToPoint(xy))) {
             const neighborXy = pointToTile(neighbor);
-            if (isWorldWonder(getCompletedBuilding(neighborXy, gs)?.type)) {
+            if (isWorldWonder(getWorkingBuilding(neighborXy, gs)?.type)) {
                ++count;
             }
          }
@@ -613,8 +613,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
                const type = b.type;
                let count = 0;
                for (const n of grid.getNeighbors(point)) {
-                  const neighborBuilding = getCompletedBuilding(pointToTile(n), gs);
-                  if (neighborBuilding?.type === type && neighborBuilding.capacity > 0) {
+                  if (getWorkingBuilding(pointToTile(n), gs)?.type === type) {
                      ++count;
                   }
                }
@@ -666,7 +665,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          let maxTier = 0;
          for (const neighbor of grid.getNeighbors(tileToPoint(xy))) {
             const neighborXy = pointToTile(neighbor);
-            const building = getCompletedBuilding(neighborXy, gs)?.type;
+            const building = getWorkingBuilding(neighborXy, gs)?.type;
             if (!building || isSpecialBuilding(building)) continue;
             const tier = Config.BuildingTier[building] ?? 0;
             if (tier <= 0) continue;
@@ -770,7 +769,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
       }
       case "GreatWall": {
          for (const point of grid.getRange(tileToPoint(xy), getGreatWallRange(xy, gs))) {
-            const building = getCompletedBuilding(pointToTile(point), gs);
+            const building = getWorkingBuilding(pointToTile(point), gs);
             if (!building || isSpecialBuilding(building.type)) continue;
             const count = Math.abs(
                Config.TechAge[getCurrentAge(gs)].idx -
@@ -812,7 +811,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
             const nxy = pointToTile(point);
             if (nxy !== xy) {
                science += Tick.current.scienceProduced.get(nxy) ?? 0;
-               const b = getCompletedBuilding(nxy, gs);
+               const b = getWorkingBuilding(nxy, gs);
                if (b && Config.Building[b.type].output.Science) {
                   mapSafePush(Tick.next.tileMultipliers, nxy, { output: 5, source: buildingName });
                }
@@ -861,8 +860,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
             let adjacent = 0;
             for (const point of grid.getNeighbors(tileToPoint(xy))) {
                const nxy = pointToTile(point);
-               const neighborBuilding = getCompletedBuilding(nxy, gs);
-               if (neighborBuilding?.type === "RocketFactory" && neighborBuilding.capacity > 0) {
+               if (getWorkingBuilding(nxy, gs)?.type === "RocketFactory") {
                   ++adjacent;
                }
             }
