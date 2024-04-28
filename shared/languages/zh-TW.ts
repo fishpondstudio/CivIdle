@@ -568,6 +568,8 @@ export const ZH_TW = {
    NuclearMissileSilo: "核子飛彈發射井(Nuclear Missile Silo)",
    NuclearPowerPlant: "核電廠(Nuclear Power Plant)",
    NuclearReactor: "核反應器(Nuclear Reactor)",
+   NuclearSubmarine: "Nuclear Submarine",
+   NuclearSubmarineYard: "Nuclear Submarine Yard",
    OfflineErrorMessage: "你正處於離線狀態，此操作需要網絡連接",
    OfflineProduction: "離線生產",
    OfflineTime: "離線時間",

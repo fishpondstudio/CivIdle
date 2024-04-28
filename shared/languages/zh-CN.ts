@@ -568,6 +568,8 @@ export const ZH_CN = {
    NuclearMissileSilo: "核导弹发射井",
    NuclearPowerPlant: "核电站",
    NuclearReactor: "核反应堆",
+   NuclearSubmarine: "核潜艇",
+   NuclearSubmarineYard: "核潜艇基地",
    OfflineErrorMessage: "你正处于离线状态，此操作需要网络连接",
    OfflineProduction: "离线生产",
    OfflineTime: "离线时间",
@@ -1123,6 +1125,4 @@ export const ZH_CN = {
    ZenobiaDesc: "佩特拉扭曲时间存储 +%{value} 小时",
    ZhengHe: "郑和",
    Zoroaster: "琐罗亚斯德",
-   NuclearSubmarine: "核潜艇",
-   NuclearSubmarineYard: "核潜艇基地"
 };

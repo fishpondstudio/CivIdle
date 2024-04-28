@@ -568,6 +568,8 @@ export const FR = {
    NuclearMissileSilo: "Nuclear Missile Silo",
    NuclearPowerPlant: "Nuclear Power Plant",
    NuclearReactor: "Nuclear Reactor",
+   NuclearSubmarine: "Nuclear Submarine",
+   NuclearSubmarineYard: "Nuclear Submarine Yard",
    OfflineErrorMessage: "Vous êtes actuellement hors ligne, cette opération nécessite un accès à Internet",
    OfflineProduction: "Production hors ligne",
    OfflineTime: "Temps hors ligne",

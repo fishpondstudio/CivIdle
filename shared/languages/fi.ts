@@ -568,6 +568,8 @@ export const FI = {
    NuclearMissileSilo: "Nuclear Missile Silo",
    NuclearPowerPlant: "Nuclear Power Plant",
    NuclearReactor: "Nuclear Reactor",
+   NuclearSubmarine: "Nuclear Submarine",
+   NuclearSubmarineYard: "Nuclear Submarine Yard",
    OfflineErrorMessage: "You are currently offline, this operation requires an Internet connection",
    OfflineProduction: "Offline Production",
    OfflineTime: "Offline Time",

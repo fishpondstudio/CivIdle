@@ -568,6 +568,8 @@ export const EN = {
    NuclearMissileSilo: "Nuclear Missile Silo",
    NuclearPowerPlant: "Nuclear Power Plant",
    NuclearReactor: "Nuclear Reactor",
+   NuclearSubmarine: "Nuclear Submarine",
+   NuclearSubmarineYard: "Nuclear Submarine Yard",
    OfflineErrorMessage: "You are currently offline, this operation requires an Internet connection",
    OfflineProduction: "Offline Production",
    OfflineTime: "Offline Time",
@@ -1123,6 +1125,4 @@ export const EN = {
    ZenobiaDesc: "+%{value}h Petra Warp Storage",
    ZhengHe: "Zheng He",
    Zoroaster: "Zoroaster",
-   NuclearSubmarine: "Nuclear Submarine",
-   NuclearSubmarineYard: "Nuclear Submarine Yard"
 };

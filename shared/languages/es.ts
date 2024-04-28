@@ -568,6 +568,8 @@ export const ES = {
    NuclearMissileSilo: "Nuclear Missile Silo",
    NuclearPowerPlant: "Nuclear Power Plant",
    NuclearReactor: "Nuclear Reactor",
+   NuclearSubmarine: "Nuclear Submarine",
+   NuclearSubmarineYard: "Nuclear Submarine Yard",
    OfflineErrorMessage: "Estás desconectado. Esta operación requiere conexión a Internet",
    OfflineProduction: "Producción durante la desconexión",
    OfflineTime: "Tiempo de desconexión",

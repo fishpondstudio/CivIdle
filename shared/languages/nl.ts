@@ -568,6 +568,8 @@ export const NL = {
    NuclearMissileSilo: "Nuclear Missile Silo",
    NuclearPowerPlant: "Nuclear Power Plant",
    NuclearReactor: "Nuclear Reactor",
+   NuclearSubmarine: "Nuclear Submarine",
+   NuclearSubmarineYard: "Nuclear Submarine Yard",
    OfflineErrorMessage: "Je bent momenteel offline, deze bewerking vereist een internetverbinding",
    OfflineProduction: "Offline Productie",
    OfflineTime: "Offline Tijd",

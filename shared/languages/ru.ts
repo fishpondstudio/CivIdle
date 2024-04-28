@@ -568,6 +568,8 @@ export const RU = {
    NuclearMissileSilo: "Nuclear Missile Silo",
    NuclearPowerPlant: "Nuclear Power Plant",
    NuclearReactor: "Nuclear Reactor",
+   NuclearSubmarine: "Nuclear Submarine",
+   NuclearSubmarineYard: "Nuclear Submarine Yard",
    OfflineErrorMessage: "Вы сейчас оффлайн, для выполнения этой операции требуется подключение к Интернету",
    OfflineProduction: "Оффлайн Продукция",
    OfflineTime: "Время Оффлайн",

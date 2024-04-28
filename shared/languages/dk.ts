@@ -569,6 +569,8 @@ export const DK = {
    NuclearMissileSilo: "Nuclear Missile Silo",
    NuclearPowerPlant: "Nuclear Power Plant",
    NuclearReactor: "Nuclear Reactor",
+   NuclearSubmarine: "Nuclear Submarine",
+   NuclearSubmarineYard: "Nuclear Submarine Yard",
    OfflineErrorMessage: "Du er i øjeblikket offline. Denne operation kræver en internetforbindelse",
    OfflineProduction: "Offline Produktion",
    OfflineTime: "Offline Tid",

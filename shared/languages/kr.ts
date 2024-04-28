@@ -568,6 +568,8 @@ export const KR = {
    NuclearMissileSilo: "Nuclear Missile Silo",
    NuclearPowerPlant: "Nuclear Power Plant",
    NuclearReactor: "Nuclear Reactor",
+   NuclearSubmarine: "Nuclear Submarine",
+   NuclearSubmarineYard: "Nuclear Submarine Yard",
    OfflineErrorMessage: "현재 오프라인 상태입니다, 이 작업을 수행하려면 인터넷 연결이 필요합니다.",
    OfflineProduction: "오프라인 생산",
    OfflineTime: "오프라인 시간",

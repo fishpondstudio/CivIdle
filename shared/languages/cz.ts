@@ -568,6 +568,8 @@ export const CZ = {
    NuclearMissileSilo: "Nuclear Missile Silo",
    NuclearPowerPlant: "Nuclear Power Plant",
    NuclearReactor: "Nuclear Reactor",
+   NuclearSubmarine: "Nuclear Submarine",
+   NuclearSubmarineYard: "Nuclear Submarine Yard",
    OfflineErrorMessage: "V současné době jste offline, tato operace vyžaduje připojení k internetu.",
    OfflineProduction: "Offline výroba",
    OfflineTime: "Čas offline",

@@ -568,6 +568,8 @@ export const TR = {
    NuclearMissileSilo: "Nuclear Missile Silo",
    NuclearPowerPlant: "Nuclear Power Plant",
    NuclearReactor: "Nuclear Reactor",
+   NuclearSubmarine: "Nuclear Submarine",
+   NuclearSubmarineYard: "Nuclear Submarine Yard",
    OfflineErrorMessage: "Şu anda çevrimdışısınız, bu işlem için İnternet bağlantısı gerekir",
    OfflineProduction: "Çevrimdışı Üretim",
    OfflineTime: "Çevrimdışı Zaman",
