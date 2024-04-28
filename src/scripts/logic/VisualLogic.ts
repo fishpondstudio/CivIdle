@@ -17,6 +17,7 @@ export function getNotProducingTexture(reason: NotProducingReason, textures: Rec
       case NotProducingReason.StorageFull:
          return getTexture("Misc_StorageFull", textures);
       case NotProducingReason.TurnedOff:
+         return getTexture("Misc_TurnedOff", textures);
       case NotProducingReason.NotOnDeposit:
          return getTexture("Misc_NotProducingGeneral", textures);
       case NotProducingReason.NoPower:

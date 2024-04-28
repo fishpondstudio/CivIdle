@@ -10,6 +10,8 @@ export const PatchNotes: PatchNote[] = [
       content: [
          ["Bugfix", "Fix a bug where Production Multipliers causes market to have incorrect transport"],
          ["Bugfix", "Fix a bug where there's an empty tooltip on Add Trade button in Caravansary"],
+         ["QoL", "Update tech unlock and age unlock sound effects"],
+         ["QoL", "Add a unique icon indicating a building is turned off"],
          [
             "Bugfix",
             "Fix a bug where buildings that are turned off still provide adjacent bonus (this affects Terracotta Army, Colossus Of Rhodes, Great Wall, Eiffel Tower, Sagrada Familia, Manhattan Project, Statue Of Liberty, Apollo Program and Great Sphinx)",

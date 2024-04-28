@@ -136,9 +136,17 @@
                 "h": 56
             }
         },
-        "Misc_Upgrade": {
+        "Misc_TurnedOff": {
             "frame": {
                 "x": 607,
+                "y": 601,
+                "w": 50,
+                "h": 50
+            }
+        },
+        "Misc_Upgrade": {
+            "frame": {
+                "x": 658,
                 "y": 601,
                 "w": 40,
                 "h": 46
