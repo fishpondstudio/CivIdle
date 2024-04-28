@@ -8,7 +8,7 @@ export const EN = {
    AccountCustomColorDefault: "Default",
    AccountLevel: "Account Rank",
    AccountLevelAedile: "Aedile",
-   AccountLevelCensor: "Censor",
+   AccountLevelMod: "Moderator",
    AccountLevelConsul: "Consul",
    AccountLevelPlayTime: "Active Online Playtime > %{requiredTime} (Your play time is %{actualTime})",
    AccountLevelPraetor: "Praetor",

@@ -292,7 +292,7 @@ function ChatMessage({
                   </Tippy>
                ) : null}
                {hasFlag(chat.attr, ChatAttributes.Mod) ? (
-                  <Tippy content={t(L.AccountLevelCensor)}>
+                  <Tippy content={t(L.AccountLevelMod)}>
                      <img src={AccountLevelMod} className="player-flag game-cursor" />
                   </Tippy>
                ) : null}
@@ -322,7 +322,7 @@ function ChatMessage({
                   </Tippy>
                ) : null}
                {hasFlag(chat.attr, ChatAttributes.Mod) ? (
-                  <Tippy content={t(L.AccountLevelCensor)}>
+                  <Tippy content={t(L.AccountLevelMod)}>
                      <img src={AccountLevelMod} className="player-flag game-cursor" />
                   </Tippy>
                ) : null}

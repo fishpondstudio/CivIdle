@@ -23,7 +23,6 @@ export class CityDefinitions {
       size: 40,
       buildingNames: {
          Headquarter: () => t(L.RomanForum),
-         Statistics: () => t(L.CensorsOffice),
       },
       uniqueBuildings: {
          CircusMaximus: "CivilService",
