@@ -8,7 +8,7 @@ import Discovery from "../../images/Discovery.jpg";
 import { WorldScene } from "../scenes/WorldScene";
 import { useShortcut } from "../utilities/Hook";
 import { Singleton } from "../utilities/Singleton";
-import { playError } from "../visuals/Sound";
+import { playError, playSuccess } from "../visuals/Sound";
 import type { IBuildingComponentProps } from "./BuildingPage";
 import { MenuComponent } from "./MenuComponent";
 import { RenderHTML } from "./RenderHTMLComponent";
@@ -33,6 +33,7 @@ export function UnexploredTile({ xy, gameState }: IBuildingComponentProps): Reac
          return;
       }
 
+      playSuccess();
       if ((stat.resources.Explorer ?? 0) > 0) {
          safeAdd(stat.resources, "Explorer", -1);
       }
