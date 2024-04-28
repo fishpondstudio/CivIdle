@@ -10,7 +10,7 @@ import { L, t } from "../../../shared/utilities/i18n";
 import { useGameOptions } from "../Global";
 import { WorldScene } from "../scenes/WorldScene";
 import { Singleton } from "../utilities/Singleton";
-import { playClick } from "../visuals/Sound";
+import { playSuccess } from "../visuals/Sound";
 import { showToast } from "./GlobalModal";
 
 export function ApplyToAllComponent<T extends IBuildingData>({
@@ -36,7 +36,7 @@ export function ApplyToAllComponent<T extends IBuildingData>({
             <button
                style={{ width: 27, padding: 0 }}
                onClick={() => {
-                  playClick();
+                  playSuccess();
                   const count = applyToAllBuildings(building.type, getOptions, gameState);
                   showToast(t(L.ApplyToBuildingsToastHTML, { count, building: def.name() }));
                }}
@@ -65,7 +65,7 @@ export function ApplyToAllComponent<T extends IBuildingData>({
                         Singleton().sceneManager.getCurrent(WorldScene)?.drawSelection(null, []);
                      }}
                      onClick={() => {
-                        playClick();
+                        playSuccess();
                         let count = 0;
                         getGrid(gameState)
                            .getRange(tileToPoint(xy), tile)
@@ -93,7 +93,7 @@ export function ApplyToAllComponent<T extends IBuildingData>({
             <button
                style={{ width: 27, padding: 0 }}
                onClick={() => {
-                  playClick();
+                  playSuccess();
                   const defaults = options.buildingDefaults;
                   if (!defaults[building.type]) {
                      defaults[building.type] = {};
