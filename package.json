@@ -42,6 +42,7 @@
    "devDependencies": {
       "7zip-bin": "^5.2.0",
       "@biomejs/biome": "1.7.0",
+      "@capacitor/assets": "^3.0.5",
       "@capacitor/cli": "^5.4.2",
       "@types/gaze": "^1.1.2",
       "@types/node": "^18.7.23",
