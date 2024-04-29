@@ -27,6 +27,7 @@ interface ITickData {
    workersAssignment: Map<Tile, number>;
    electrified: Set<Tile>;
    resourcesByTile: Map<Resource, IBuildingResource[]>;
+   storagePercentages: Map<Tile, number>;
    wonderProductions: Map<Resource, number>;
    playerTradeBuildings: Map<Tile, IBuildingData>;
    globalMultipliers: GlobalMultipliers;
@@ -55,6 +56,7 @@ export function EmptyTickData(): ITickData {
       happiness: null,
       workersAssignment: new Map(),
       resourcesByTile: new Map(),
+      storagePercentages: new Map(),
       globalMultipliers: new GlobalMultipliers(),
       notProducingReasons: new Map(),
       playerTradeBuildings: new Map(),

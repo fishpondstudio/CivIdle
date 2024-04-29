@@ -1,6 +1,10 @@
 import Tippy from "@tippyjs/react";
 import { Config } from "../../../shared/logic/Config";
-import { getTranslatedPercentage } from "../../../shared/logic/GameState";
+import {
+   ExtraTileInfoTypes,
+   getTranslatedPercentage,
+   type ExtraTileInfoType,
+} from "../../../shared/logic/GameState";
 import { notifyGameOptionsUpdate } from "../../../shared/logic/GameStateLogic";
 import {
    PRIORITY_MAX,
@@ -13,6 +17,7 @@ import {
 import { clamp, formatPercent, keysOf, safeParseInt, sizeOf } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import { useGameOptions, useGameState } from "../Global";
+import { jsxMapOf } from "../utilities/Helper";
 import { openUrl } from "../utilities/Platform";
 import { playClick } from "../visuals/Sound";
 import { ChangeSoundComponent } from "./ChangeSoundComponent";
@@ -196,24 +201,24 @@ export function GameplayOptionPage(): React.ReactNode {
                </div>
             </fieldset>
             <fieldset>
-               <legend>{t(L.GameVisual)}</legend>
-               <div className="row">
-                  <RenderHTML className="f1" html={t(L.GameVisualShowEmpireValue)} />
-                  <div
-                     onClick={() => {
-                        playClick();
-                        options.gameVisualShowEmpireValue = !options.gameVisualShowEmpireValue;
-                        notifyGameOptionsUpdate(options);
-                     }}
-                     className="ml10 pointer"
-                  >
-                     {options.gameVisualShowEmpireValue ? (
-                        <div className="m-icon text-green">toggle_on</div>
-                     ) : (
-                        <div className="m-icon text-grey">toggle_off</div>
-                     )}
-                  </div>
-               </div>
+               <legend>{t(L.ExtraTileInfoType)}</legend>
+               <RenderHTML className="f1 mb5" html={t(L.ExtraTileInfoTypeDesc)} />
+               <select
+                  value={options.extraTileInfoType}
+                  onChange={(e) => {
+                     options.extraTileInfoType = e.target.value as ExtraTileInfoType;
+                     notifyGameOptionsUpdate(options);
+                  }}
+                  className="w100"
+               >
+                  {jsxMapOf(ExtraTileInfoTypes, (type, name) => {
+                     return (
+                        <option key={type} value={type}>
+                           {name()}
+                        </option>
+                     );
+                  })}
+               </select>
             </fieldset>
             {sizeOf(options.buildingDefaults) > 0 ? (
                <fieldset>

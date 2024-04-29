@@ -1124,4 +1124,9 @@ export const EN = {
    ZenobiaDesc: "+%{value}h Petra Warp Storage",
    ZhengHe: "Zheng He",
    Zoroaster: "Zoroaster",
+   ExtraTileInfoType: "Extra Tile Info",
+   ExtraTileInfoTypeDesc: "Choose what information is shown below each tile",
+   ExtraTileInfoTypeNone: "None",
+   ExtraTileInfoTypeEmpireValue: "Empire Value",
+   ExtraTileInfoTypeStoragePercentage: "Storage Percentage",
 };

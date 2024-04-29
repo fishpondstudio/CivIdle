@@ -386,6 +386,10 @@ function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
       });
    });
 
+   if (total > 0) {
+      Tick.next.storagePercentages.set(xy, used / total);
+   }
+
    // Return early for buildings that are not working ////////////////////////////////////////////////////////
    if (!hasRequiredDeposit(Config.Building[building.type].deposit, xy, gs)) {
       Tick.next.notProducingReasons.set(xy, NotProducingReason.NotOnDeposit);
