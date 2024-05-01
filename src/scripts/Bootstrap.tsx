@@ -9,7 +9,7 @@ import {
    getGameOptions,
    getGameState,
    notifyGameStateUpdate,
-   serializeSave,
+   serializeSaveLite,
 } from "../../shared/logic/GameStateLogic";
 import { initializeGameState } from "../../shared/logic/InitializeGameState";
 import type { IPetraBuildingData } from "../../shared/logic/Tile";
@@ -90,7 +90,7 @@ export async function startGame(
       sceneManager: new SceneManager({ app, assets: resources, textures, gameState }),
       routeTo,
       ticker: new GameTicker(app.ticker, gameState),
-      heartbeat: new Heartbeat(serializeSave()),
+      heartbeat: new Heartbeat(serializeSaveLite()),
    });
 
    setCityOverride(gameState);

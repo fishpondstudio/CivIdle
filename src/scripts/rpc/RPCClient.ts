@@ -2,7 +2,7 @@ import { decode, encode } from "@msgpack/msgpack";
 import type { ServerImpl } from "../../../server/src/Server";
 import { addPetraOfflineTime } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
-import { getGameOptions, getGameState } from "../../../shared/logic/GameStateLogic";
+import { checksum, getGameOptions, getGameState } from "../../../shared/logic/GameStateLogic";
 import { RpcError, removeTrailingUndefs, rpcClient } from "../../../shared/thirdparty/TRPCClient";
 import type {
    AllMessageTypes,
@@ -165,6 +165,7 @@ export async function connectWebSocket(): Promise<number> {
          `version=${getVersion()}`,
          `build=${getBuildNumber()}`,
          `gameId=${getGameState().id}`,
+         `checksum=${checksum.expected}:${checksum.actual}`,
       ];
       ws = new WebSocket(`${getServerAddress()}/?${params.join("&")}`);
    } else {
@@ -175,6 +176,7 @@ export async function connectWebSocket(): Promise<number> {
          `version=${getVersion()}`,
          `build=${getBuildNumber()}`,
          `gameId=${getGameState().id}`,
+         `checksum=${checksum.expected}:${checksum.actual}`,
       ];
       ws = new WebSocket(`${getServerAddress()}/?${params.join("&")}`);
    }
