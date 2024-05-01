@@ -10,6 +10,7 @@ export const PatchNotes: PatchNote[] = [
       content: [
          ["Balance", "Condo no longer requires Power"],
          ["QoL", "Add more tooltip in Building Power/Electrification"],
+         ["Bugfix", "Fix a bug where Atomium is missing 2 tile highlight"],
       ],
    },
    {
