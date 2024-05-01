@@ -32,6 +32,7 @@ import {
    deductResources,
    filterNonTransportable,
    filterTransportable,
+   findBuilding,
    getAvailableResource,
    getAvailableWorkers,
    getBuilderCapacity,
@@ -819,7 +820,7 @@ export function tickPrice(gs: GameState) {
       OnPriceUpdated.emit(gs);
    }
    const resources = filterOf(unlockedResources(gs), (res) => !NoPrice[res] && !NoStorage[res]);
-   const grandBazaar = Tick.current.specialBuildings.get("GrandBazaar");
+   const grandBazaar = findBuilding("GrandBazaar", gs);
    const grid = getGrid(gs);
    getBuildingsByType("Market", gs)?.forEach((tile, xy) => {
       const building = gs.tiles.get(xy)?.building;
@@ -827,11 +828,8 @@ export function tickPrice(gs: GameState) {
          return;
       }
       const market = building as IMarketBuildingData;
-      let nextToGrandBazaar = false;
-      if (grandBazaar && grid.distanceTile(grandBazaar.tile, xy) <= 1) {
-         nextToGrandBazaar = true;
-      }
       if (forceUpdatePrice || sizeOf(market.availableResources) === 0) {
+         const nextToGrandBazaar = grandBazaar && grid.distanceTile(grandBazaar.tile, xy) <= 1;
          const seed = nextToGrandBazaar ? `${priceId},${xy}` : `${priceId}`;
          const buy = shuffle(keysOf(resources), srand(seed));
          const sell = shuffle(keysOf(resources), srand(seed));
