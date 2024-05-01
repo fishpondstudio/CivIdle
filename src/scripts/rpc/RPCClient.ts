@@ -165,7 +165,7 @@ export async function connectWebSocket(): Promise<number> {
          `version=${getVersion()}`,
          `build=${getBuildNumber()}`,
          `gameId=${getGameState().id}`,
-         `checksum=${checksum.expected}:${checksum.actual}`,
+         `checksum=${checksum.expected}${checksum.actual}`,
       ];
       ws = new WebSocket(`${getServerAddress()}/?${params.join("&")}`);
    } else {
@@ -176,7 +176,7 @@ export async function connectWebSocket(): Promise<number> {
          `version=${getVersion()}`,
          `build=${getBuildNumber()}`,
          `gameId=${getGameState().id}`,
-         `checksum=${checksum.expected}:${checksum.actual}`,
+         `checksum=${checksum.expected}${checksum.actual}`,
       ];
       ws = new WebSocket(`${getServerAddress()}/?${params.join("&")}`);
    }

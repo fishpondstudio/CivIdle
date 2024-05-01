@@ -755,3 +755,12 @@ export function logError(e: unknown, logFunc: (message: any) => void = console.e
 export function isScrolledToBottom(ele: HTMLElement): boolean {
    return Math.abs(ele.scrollHeight - ele.scrollTop - ele.clientHeight) < 1;
 }
+
+export function isSymmetric(str: string): boolean {
+   for (let i = 0; i < str.length / 2; i++) {
+      if (str[i] !== str[str.length - 1 - i]) {
+         return false;
+      }
+   }
+   return true;
+}
