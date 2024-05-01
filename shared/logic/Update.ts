@@ -386,7 +386,9 @@ function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
       });
    });
 
-   if (total > 0) {
+   // Tick.current.totalValue > 0 here is to check whether the tick is ready! Otherwise we get a split second
+   // of wrong number
+   if (Tick.current.totalValue > 0 && total > 0) {
       Tick.next.storagePercentages.set(xy, used / total);
    }
 
