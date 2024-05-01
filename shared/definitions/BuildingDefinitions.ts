@@ -49,7 +49,6 @@ export class BuildingDefinitions {
       input: { Pizza: 3 },
       output: { Worker: 510 },
       construction: { Concrete: 3, Steel: 1 },
-      power: true,
    };
    // #endregion /////////////////////////////////////////////////////////////////////////////////////////////
 

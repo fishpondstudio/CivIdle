@@ -1,3 +1,4 @@
+import Tippy from "@tippyjs/react";
 import classNames from "classnames";
 import {
    ElectrificationStatus,
@@ -15,7 +16,6 @@ import warning from "../../images/warning.png";
 import { ApplyToAllComponent } from "./ApplyToAllComponent";
 import type { IBuildingComponentProps } from "./BuildingPage";
 import { FormatNumber } from "./HelperComponents";
-import { TextWithHelp } from "./TextWithHelpComponent";
 
 export function BuildingElectricityComponent({ gameState, xy }: IBuildingComponentProps): React.ReactNode {
    const building = gameState.tiles.get(xy)?.building;
@@ -31,27 +31,35 @@ export function BuildingElectricityComponent({ gameState, xy }: IBuildingCompone
       <fieldset>
          <legend>{t(L.Electrification)}</legend>
          {Config.Building[building.type].power ? (
-            <div className="row text-strong">
-               {hasPower ? null : <img src={warning} style={{ margin: "0 2px 0 0" }} />}
-               <div className="f1">
-                  <TextWithHelp content={t(L.RequirePowerDesc)}>{t(L.RequirePower)}</TextWithHelp>
+            <>
+               <div className="row">
+                  {hasPower ? null : <img src={warning} style={{ margin: "0 2px 0 0" }} />}
+                  {t(L.RequirePower)}
+                  <Tippy content={t(L.RequirePowerDesc)}>
+                     <div className="m-icon small ml5 text-desc help-cursor">help</div>
+                  </Tippy>
+                  <div className="f1"></div>
+                  <div className="ml10">
+                     {hasPower ? (
+                        <div className="m-icon text-green" style={{ fontSize: "2rem", margin: "-5px 0" }}>
+                           power
+                        </div>
+                     ) : (
+                        <div className="m-icon text-red" style={{ fontSize: "2rem", margin: "-5px 0" }}>
+                           power_off
+                        </div>
+                     )}
+                  </div>
                </div>
-               <div className="ml10">
-                  {hasPower ? (
-                     <div className="m-icon text-green" style={{ fontSize: "2rem", margin: "-5px 0" }}>
-                        power
-                     </div>
-                  ) : (
-                     <div className="m-icon text-red" style={{ fontSize: "2rem", margin: "-5px 0" }}>
-                        power_off
-                     </div>
-                  )}
-               </div>
-            </div>
+               <div className="separator"></div>
+            </>
          ) : null}
-         <div className="sep5" />
          <div className="row">
-            <div className="f1">{t(L.ElectrificationStatus)}</div>
+            {t(L.ElectrificationStatusV2)}
+            <Tippy content={t(L.ElectrificationStatusDesc)}>
+               <div className="m-icon small ml5 text-desc help-cursor">help</div>
+            </Tippy>
+            <div className="f1"></div>
             {status === "Active" ? <div className="m-icon small text-green">bolt</div> : null}
             <div
                className={classNames({
@@ -63,7 +71,7 @@ export function BuildingElectricityComponent({ gameState, xy }: IBuildingCompone
                {ElectrificationStatus[status]()}
             </div>
          </div>
-         <div className="separator"></div>
+         <div className="sep5" />
          <ul className="tree-view">
             <li className="row">
                <div className="f1">{t(L.ElectrificationPowerRequired)}</div>
@@ -87,7 +95,7 @@ export function BuildingElectricityComponent({ gameState, xy }: IBuildingCompone
                </div>
             </li>
          </ul>
-         <div className="sep5"></div>
+         <div className="sep10"></div>
          <input
             id="building-capacity"
             type="range"

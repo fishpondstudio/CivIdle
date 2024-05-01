@@ -6,6 +6,13 @@ interface PatchNote {
 
 export const PatchNotes: PatchNote[] = [
    {
+      version: "0.8.2",
+      content: [
+         ["Balance", "Condo no longer requires Power"],
+         ["QoL", "Add more tooltip in Building Power/Electrification"],
+      ],
+   },
+   {
       version: "0.8.1",
       content: [
          ["Bugfix", "Fix a bug where Production Multipliers causes market to have incorrect transport"],

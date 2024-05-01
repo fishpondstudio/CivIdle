@@ -815,7 +815,7 @@ export function canBeElectrified(b: Building): boolean {
 
 export const ElectrificationStatus = {
    NotActive: () => t(L.ElectrificationStatusNotActive),
-   NoPower: () => t(L.ElectrificationStatusNoPower),
+   NoPower: () => t(L.ElectrificationStatusNoPowerV2),
    Active: () => t(L.ElectrificationStatusActive),
 } as const satisfies Record<string, () => string>;
 
