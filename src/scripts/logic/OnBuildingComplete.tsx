@@ -146,6 +146,10 @@ export function onBuildingComplete(xy: Tile): void {
          }
          break;
       }
+      case "GrandBazaar": {
+         gs.lastPriceUpdated = 0;
+         break;
+      }
       case "GreatMosqueOfSamarra": {
          const unexploredDepositTiles: Tile[] = [];
          gs.tiles.forEach((tile, xy) => {

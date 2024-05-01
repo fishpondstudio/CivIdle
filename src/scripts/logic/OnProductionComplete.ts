@@ -27,18 +27,12 @@ import { getGreatPersonThisRunLevel } from "../../../shared/logic/RebornLogic";
 import { getBuildingsThatProduce } from "../../../shared/logic/ResourceLogic";
 import { getBuildingUnlockAge, getCurrentAge } from "../../../shared/logic/TechLogic";
 import { NotProducingReason, Tick } from "../../../shared/logic/TickLogic";
-import {
-   MarketOptions,
-   type IMarketBuildingData,
-   type IPetraBuildingData,
-   type ITileData,
-} from "../../../shared/logic/Tile";
+import type { IPetraBuildingData, ITileData } from "../../../shared/logic/Tile";
 import { addMultiplier } from "../../../shared/logic/Update";
 import { VotedBoostType, type IGetVotedBoostResponse } from "../../../shared/utilities/Database";
 import {
    MINUTE,
    forEach,
-   hasFlag,
    keysOf,
    mapSafeAdd,
    mapSafePush,
@@ -46,7 +40,6 @@ import {
    reduceOf,
    round,
    safeAdd,
-   setFlag,
    tileToPoint,
    type Tile,
 } from "../../../shared/utilities/Helper";
@@ -153,13 +146,6 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
                   storage: 5,
                   source: buildingName,
                });
-            }
-            if (building?.type === "Market") {
-               const market = building as IMarketBuildingData;
-               if (!hasFlag(market.marketOptions, MarketOptions.UniqueTrades)) {
-                  market.marketOptions = setFlag(market.marketOptions, MarketOptions.UniqueTrades);
-                  market.marketOptions = setFlag(market.marketOptions, MarketOptions.ForceUpdateOnce);
-               }
             }
          }
          break;
