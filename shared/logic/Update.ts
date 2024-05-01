@@ -4,7 +4,6 @@ import { NoPrice, NoStorage, type Resource } from "../definitions/ResourceDefini
 import {
    HOUR,
    clamp,
-   clearFlag,
    filterInPlace,
    filterOf,
    forEach,
@@ -826,23 +825,22 @@ export function tickPrice(gs: GameState) {
       OnPriceUpdated.emit(gs);
    }
    const resources = filterOf(unlockedResources(gs), (res) => !NoPrice[res] && !NoStorage[res]);
+   const grandBazaar = Tick.current.specialBuildings.get("GrandBazaar");
+   const grid = getGrid(gs);
    getBuildingsByType("Market", gs)?.forEach((tile, xy) => {
       const building = gs.tiles.get(xy)?.building;
       if (!building || building.type !== "Market") {
          return;
       }
       const market = building as IMarketBuildingData;
-      if (
-         hasFlag(market.marketOptions, MarketOptions.ForceUpdateOnce) ||
-         forceUpdatePrice ||
-         sizeOf(market.availableResources) === 0
-      ) {
-         const seed = hasFlag(market.marketOptions, MarketOptions.UniqueTrades)
-            ? `${priceId},${xy}`
-            : `${priceId}`;
+      let nextToGrandBazaar = false;
+      if (grandBazaar && grid.distanceTile(grandBazaar.tile, xy) <= 1) {
+         nextToGrandBazaar = true;
+      }
+      if (forceUpdatePrice || sizeOf(market.availableResources) === 0) {
+         const seed = nextToGrandBazaar ? `${priceId},${xy}` : `${priceId}`;
          const buy = shuffle(keysOf(resources), srand(seed));
          const sell = shuffle(keysOf(resources), srand(seed));
-         market.marketOptions = clearFlag(market.marketOptions, MarketOptions.ForceUpdateOnce);
          market.availableResources = {};
          let idx = 0;
          for (const res of sell) {
