@@ -1,5 +1,6 @@
+import { wyhash } from "../thirdparty/wyhash";
 import { TypedEvent } from "../utilities/TypedEvent";
-import { type GameOptions, type GameState, SavedGame } from "./GameState";
+import { SavedGame, type GameOptions, type GameState } from "./GameState";
 
 export const savedGame = new SavedGame();
 export const TILE_SIZE = 64;
@@ -11,8 +12,11 @@ export function getGameState(): GameState {
 export function getGameOptions(): GameOptions {
    return savedGame.options;
 }
-export function serializeSave(gs: SavedGame = savedGame): Uint8Array {
-   return new TextEncoder().encode(JSON.stringify(gs, replacer));
+export function serializeSave(save: SavedGame = savedGame): Uint8Array {
+   save.options.checksum = null;
+   const checksum = wyhash(serializeSaveLite(save), BigInt(0)).toString(16);
+   save.options.checksum = checksum;
+   return new TextEncoder().encode(JSON.stringify(save, replacer));
 }
 export function serializeSaveLite(gs: SavedGame = savedGame): Uint8Array {
    const transportation = gs.current.transportation;
@@ -22,8 +26,17 @@ export function serializeSaveLite(gs: SavedGame = savedGame): Uint8Array {
    const result = new TextEncoder().encode(json);
    return result;
 }
+export const checksum = { expected: "", actual: "" };
 export function deserializeSave(bytes: Uint8Array): SavedGame {
-   return JSON.parse(new TextDecoder().decode(bytes), reviver);
+   const saveGame = JSON.parse(new TextDecoder().decode(bytes), reviver) as SavedGame;
+   const expected = saveGame.options.checksum;
+   if (!expected) {
+      return saveGame;
+   }
+   checksum.expected = expected;
+   saveGame.options.checksum = null;
+   checksum.actual = wyhash(serializeSaveLite(saveGame), BigInt(0)).toString(16);
+   return saveGame;
 }
 export function notifyGameStateUpdate(gameState?: GameState): void {
    GameStateChanged.emit(gameState ?? getGameState());

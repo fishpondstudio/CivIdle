@@ -111,6 +111,7 @@ export class GameOptions {
    useModernUI = true;
    id = uuid4();
    token: string | null = null;
+   checksum: string | null = null;
    sidePanelWidth = 400;
    fontSizeScale = 1;
    version = SAVE_FILE_VERSION;
