@@ -2,19 +2,20 @@ import Tippy from "@tippyjs/react";
 import classNames from "classnames";
 import { useState } from "react";
 import { NoPrice, NoStorage, type Resource } from "../../../shared/definitions/ResourceDefinitions";
-import { getStorageFor } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
 import { TRADE_CANCEL_REFUND_PERCENT } from "../../../shared/logic/Constants";
 import { unlockedResources } from "../../../shared/logic/IntraTickCache";
 import { getTradePercentage, hasResourceForPlayerTrade } from "../../../shared/logic/PlayerTradeLogic";
+import { addResourceTo, getAvailableStorage } from "../../../shared/logic/ResourceLogic";
+import { Tick } from "../../../shared/logic/TickLogic";
 import { UserAttributes } from "../../../shared/utilities/Database";
 import {
    CURRENCY_PERCENT_EPSILON,
+   formatNumber,
    formatPercent,
    hasFlag,
    keysOf,
    mathSign,
-   safeAdd,
 } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import Supporter from "../../images/Supporter.png";
@@ -33,6 +34,7 @@ import { FixedLengthText } from "./FixedLengthText";
 import { showModal, showToast } from "./GlobalModal";
 import { FormatNumber } from "./HelperComponents";
 import { PendingClaimComponent } from "./PendingClaimComponent";
+import { RenderHTML } from "./RenderHTMLComponent";
 import { TableView } from "./TableView";
 import { WarningComponent } from "./WarningComponent";
 
@@ -244,23 +246,26 @@ export function PlayerTradeComponent({ gameState, xy }: IBuildingComponentProps)
                            <div
                               className="m-icon small text-link"
                               onClick={() => {
+                                 const availableStorage = getAvailableStorage(
+                                    Array.from(Tick.current.playerTradeBuildings.keys()),
+                                    gameState,
+                                 );
+                                 let storageOverflow =
+                                    trade.sellAmount * TRADE_CANCEL_REFUND_PERCENT - availableStorage;
+                                 if (storageOverflow <= 0) {
+                                    storageOverflow = 0;
+                                 }
                                  showModal(
                                     <ConfirmModal
                                        title={t(L.PlayerTradeCancelTrade)}
                                        onConfirm={async () => {
                                           try {
-                                             const { total, used } = getStorageFor(xy, gameState);
-                                             if (
-                                                used + trade.sellAmount * TRADE_CANCEL_REFUND_PERCENT >
-                                                total
-                                             ) {
-                                                throw new Error(t(L.PlayerTradeCancelTradeNotEnoughStorage));
-                                             }
                                              const cancelledTrade = await client.cancelTrade(trade.id);
-                                             safeAdd(
-                                                building.resources,
+                                             addResourceTo(
                                                 cancelledTrade.sellResource,
                                                 cancelledTrade.sellAmount * TRADE_CANCEL_REFUND_PERCENT,
+                                                Array.from(Tick.current.playerTradeBuildings.keys()),
+                                                gameState,
                                              );
                                              playKaching();
                                           } catch (error) {
@@ -269,9 +274,15 @@ export function PlayerTradeComponent({ gameState, xy }: IBuildingComponentProps)
                                           }
                                        }}
                                     >
-                                       {t(L.PlayerTradeCancelDesc, {
-                                          percent: formatPercent(TRADE_CANCEL_REFUND_PERCENT),
-                                       })}
+                                       <RenderHTML
+                                          html={t(L.PlayerTradeCancelDescHTML, {
+                                             percent: formatPercent(1 - TRADE_CANCEL_REFUND_PERCENT),
+                                             res: `${formatNumber(
+                                                trade.sellAmount * TRADE_CANCEL_REFUND_PERCENT,
+                                             )} ${Config.Resource[trade.sellResource].name()}`,
+                                             discard: formatNumber(storageOverflow),
+                                          })}
+                                       />
                                     </ConfirmModal>,
                                  );
                               }}

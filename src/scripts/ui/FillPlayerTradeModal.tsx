@@ -124,14 +124,14 @@ export function FillPlayerTradeModal({ tradeId, xy }: { tradeId: string; xy?: Ti
       amount = clamp(amount, 0, gs.tiles.get(tile)?.building?.resources[trade.buyResource] ?? 0);
       if (trade.sellAmount > trade.buyAmount) {
          const storage = getStorageFor(tile, gs);
-         const availableStorage = storage.total - storage.used;
+         const availableStorage = clamp(storage.total - storage.used, 0, Number.POSITIVE_INFINITY);
          amount = clamp(
             amount,
             0,
             (availableStorage * trade.buyAmount) / (trade.sellAmount - trade.buyAmount),
          );
       }
-      return Math.floor(amount);
+      return amount;
    };
 
    const fillsAreValid = (fills: Map<Tile, number>) => {

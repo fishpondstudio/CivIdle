@@ -2,6 +2,7 @@ import type { Building } from "../definitions/BuildingDefinitions";
 import { NoPrice, type Deposit, type Resource } from "../definitions/ResourceDefinitions";
 import { clamp, forEach, reduceOf, safeAdd, type Tile } from "../utilities/Helper";
 import type { PartialTabulate } from "../utilities/TypeDefinitions";
+import { getStorageFor } from "./BuildingLogic";
 import { Config } from "./Config";
 import type { GameState } from "./GameState";
 import { Tick } from "./TickLogic";
@@ -69,6 +70,57 @@ export function deductResourceFrom(
       amount: clamp(amount - amountLeft, 0, Number.POSITIVE_INFINITY),
       rollback: () => rollbacks.forEach((r) => r()),
    };
+}
+
+export function addResourceTo(
+   res: Resource,
+   amount: number,
+   tiles: Tile[],
+   gs: GameState,
+): { amount: number; rollback: () => void } {
+   const rollbacks: (() => void)[] = [];
+   let amountLeft = amount;
+
+   for (const tile of tiles) {
+      const resources = gs.tiles.get(tile)?.building?.resources;
+      if (!resources) {
+         continue;
+      }
+
+      const { total, used } = getStorageFor(tile, gs);
+      const available = total - used;
+
+      if (available >= amountLeft) {
+         const amountToAdd = amountLeft;
+         safeAdd(resources, res, amountToAdd);
+         rollbacks.push(() => {
+            safeAdd(resources, res, -amountToAdd);
+         });
+         amountLeft = 0;
+         break;
+      }
+
+      const amountToAdd = available;
+      amountLeft -= amountToAdd;
+      safeAdd(resources, res, amountToAdd);
+      rollbacks.push(() => {
+         safeAdd(resources, res, -amountToAdd);
+      });
+   }
+
+   return {
+      amount: clamp(amount - amountLeft, 0, Number.POSITIVE_INFINITY),
+      rollback: () => rollbacks.forEach((r) => r()),
+   };
+}
+
+export function getAvailableStorage(tiles: Tile[], gs: GameState): number {
+   let result = 0;
+   for (const tile of tiles) {
+      const { total, used } = getStorageFor(tile, gs);
+      result += clamp(total - used, 0, Number.POSITIVE_INFINITY);
+   }
+   return result;
 }
 
 export function getBuildingsThatProduce(res: Resource): Building[] {

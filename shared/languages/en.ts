@@ -644,7 +644,7 @@ export const EN = {
    PlayerTradeAddSuccess: "The trade has been successfully added",
    PlayerTradeAddTradeCancel: "Cancel",
    PlayerTradeAmount: "Amount",
-   PlayerTradeCancelDesc: "Cancelling this trade will only refund %{percent} of the resources. Are you sure you want to cancel?",
+   PlayerTradeCancelDescHTML: "You will get <b>%{res}</b> back after cancelling this trade: <b>%{percent}</b> charged for refund and <b>%{discard}</b> discarded due to storage overflow<br><b>Are you sure you want to cancel?</b>",
    PlayerTradeCancelTrade: "Cancel Trade",
    PlayerTradeCancelTradeNo: "Do Not Cancel",
    PlayerTradeCancelTradeNotEnoughStorage: "You do not have enough storage to cancel this trade",

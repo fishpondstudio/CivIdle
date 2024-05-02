@@ -1,18 +1,11 @@
 import Tippy from "@tippyjs/react";
 import { useEffect, useState } from "react";
 import type { Resource } from "../../../shared/definitions/ResourceDefinitions";
-import { getStorageFor } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
+import { addResourceTo, getAvailableStorage } from "../../../shared/logic/ResourceLogic";
+import { Tick } from "../../../shared/logic/TickLogic";
 import { PendingClaimFlag, type IPendingClaim } from "../../../shared/utilities/Database";
-import {
-   clamp,
-   forEach,
-   formatNumber,
-   hasFlag,
-   mapOf,
-   safeAdd,
-   sizeOf,
-} from "../../../shared/utilities/Helper";
+import { clamp, forEach, formatNumber, hasFlag, mapOf, sizeOf } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import { OnNewPendingClaims, client } from "../rpc/RPCClient";
 import { useTypedEvent } from "../utilities/Hook";
@@ -40,12 +33,8 @@ export function PendingClaimComponent({ gameState, xy }: IBuildingComponentProps
 
    const claimTrades = async (trades: IPendingClaim[]) => {
       try {
-         const building = gameState.tiles.get(xy)?.building;
-         if (!building) {
-            return;
-         }
-         const { total, used } = getStorageFor(xy, gameState);
-         const storageAvailable = total - used;
+         const tiles = Array.from(Tick.current.playerTradeBuildings.keys());
+         const storageAvailable = getAvailableStorage(tiles, gameState);
          const toClaim: Record<string, number> = {};
          let storageUsed = 0;
          for (const claim of trades) {
@@ -59,7 +48,8 @@ export function PendingClaimComponent({ gameState, xy }: IBuildingComponentProps
          const { pendingClaims, resources } = await client.claimTradesV2(toClaim);
          setPendingClaims(pendingClaims);
          forEach(resources, (res, amount) => {
-            safeAdd(building.resources, res, amount);
+            const result = addResourceTo(res, amount, tiles, gameState);
+            console.assert(result.amount === amount);
          });
          if (sizeOf(resources) > 0) {
             playKaching();
