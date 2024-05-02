@@ -1,7 +1,7 @@
 import type { Building, IBuildingDefinition } from "../definitions/BuildingDefinitions";
 import type { Deposit, Resource } from "../definitions/ResourceDefinitions";
 import { Grid } from "../utilities/Grid";
-import { clamp, forEach, safeAdd, tileToHash, type Tile } from "../utilities/Helper";
+import { clamp, forEach, mapSafeAdd, safeAdd, tileToHash, type Tile } from "../utilities/Helper";
 import type { PartialSet, PartialTabulate } from "../utilities/TypeDefinitions";
 import {
    IOCalculation,
@@ -29,6 +29,14 @@ class IntraTickCache {
       Readonly<PartialTabulate<Resource>>
    >();
    storageFullBuildings: Tile[] | undefined;
+   resourceIO: IResourceIO | undefined;
+}
+
+export interface IResourceIO {
+   theoreticalInput: Map<Resource, number>;
+   actualInput: Map<Resource, number>;
+   theoreticalOutput: Map<Resource, number>;
+   actualOutput: Map<Resource, number>;
 }
 
 let _cache = new IntraTickCache();
@@ -193,6 +201,41 @@ export function getBuildingsByType(
    gs: GameState,
 ): Map<Tile, Required<ITileData>> | undefined {
    return getTypeBuildings(gs).get(building);
+}
+
+export function getResourceIO(gameState: GameState): IResourceIO {
+   if (_cache.resourceIO) return _cache.resourceIO;
+
+   const result: IResourceIO = {
+      theoreticalInput: new Map(),
+      actualInput: new Map(),
+      theoreticalOutput: new Map(),
+      actualOutput: new Map(),
+   };
+
+   getXyBuildings(gameState).forEach((building, xy) => {
+      if ("resourceImports" in building) {
+         return;
+      }
+      const input = getBuildingIO(xy, "input", IOCalculation.Multiplier | IOCalculation.Capacity, gameState);
+      const output = getBuildingIO(
+         xy,
+         "output",
+         IOCalculation.Multiplier | IOCalculation.Capacity,
+         gameState,
+      );
+      if (!Tick.current.notProducingReasons.has(xy)) {
+         forEach(input, (res, amount) => mapSafeAdd(result.actualInput, res, amount));
+         forEach(output, (res, amount) => mapSafeAdd(result.actualOutput, res, amount));
+      }
+      forEach(input, (res, amount) => mapSafeAdd(result.theoreticalInput, res, amount));
+      forEach(output, (res, amount) => mapSafeAdd(result.theoreticalOutput, res, amount));
+   });
+
+   Tick.current.wonderProductions.forEach((amount, res) => mapSafeAdd(result.theoreticalOutput, res, amount));
+   Tick.current.wonderProductions.forEach((amount, res) => mapSafeAdd(result.actualOutput, res, amount));
+
+   return result;
 }
 
 export function getXyBuildings(gs: GameState): Map<Tile, IBuildingData> {

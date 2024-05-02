@@ -1,10 +1,12 @@
 import Tippy from "@tippyjs/react";
 import classNames from "classnames";
 import { useEffect, useState } from "react";
+import type { Resource } from "../../../shared/definitions/ResourceDefinitions";
 import { getScienceFromWorkers, isSpecialBuilding } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
 import { GameFeature, hasFeature } from "../../../shared/logic/FeatureLogic";
 import { getHappinessIcon } from "../../../shared/logic/HappinessLogic";
+import { getResourceIO } from "../../../shared/logic/IntraTickCache";
 import { getProgressTowardsNextGreatPerson } from "../../../shared/logic/RebornLogic";
 import { getResourceAmount } from "../../../shared/logic/ResourceLogic";
 import { getScienceAmount } from "../../../shared/logic/TechLogic";
@@ -12,6 +14,7 @@ import { CurrentTickChanged, NotProducingReason, Tick } from "../../../shared/lo
 import {
    Rounding,
    clamp,
+   formatNumber,
    formatPercent,
    mapCount,
    mathSign,
@@ -23,6 +26,7 @@ import { useGameOptions, useGameState } from "../Global";
 import { useCurrentTick } from "../logic/ClientUpdate";
 import { TechTreeScene } from "../scenes/TechTreeScene";
 import { LookAtMode, WorldScene } from "../scenes/WorldScene";
+import { jsxMMapOf } from "../utilities/Helper";
 import { useTypedEvent } from "../utilities/Hook";
 import { Singleton } from "../utilities/Singleton";
 import { playClick, playError } from "../visuals/Sound";
@@ -201,13 +205,7 @@ export function ResourcePanel(): React.ReactNode {
             </>
          ) : null}
          <div className="row pointer" onClick={() => Singleton().sceneManager.loadScene(TechTreeScene)}>
-            <div
-               className={classNames({
-                  "m-icon": true,
-               })}
-            >
-               science
-            </div>
+            <div className={classNames({ "m-icon": true })}>science</div>
             <Tippy content={t(L.Science)} placement="bottom">
                <div style={{ width: "6rem" }}>
                   <FormatNumber value={getResourceAmount("Science", gs)} />
@@ -226,13 +224,7 @@ export function ResourcePanel(): React.ReactNode {
          </div>
          <div className="separator-vertical" />
          <div className="row pointer" onClick={() => highlightNotProducingReasons()}>
-            <div
-               className={classNames({
-                  "m-icon": true,
-               })}
-            >
-               domain_disabled
-            </div>
+            <div className={classNames({ "m-icon": true })}>domain_disabled</div>
             <Tippy content={t(L.NotProducingBuildings)} placement="bottom">
                <div style={{ width: "6rem" }}>
                   <FormatNumber
@@ -253,6 +245,7 @@ export function ResourcePanel(): React.ReactNode {
             </Tippy>
          </div>
          <div className="separator-vertical" />
+         <DeficitResources />
          <div className="row">
             <div
                className={classNames({
@@ -280,5 +273,59 @@ export function ResourcePanel(): React.ReactNode {
             </Tippy>
          </div>
       </div>
+   );
+}
+
+function DeficitResources(): React.ReactNode {
+   const gs = useGameState();
+
+   if (!Tick.current.specialBuildings.has("Statistics")) {
+      return null;
+   }
+
+   const deficit = new Map<Resource, number>();
+   const { theoreticalInput, theoreticalOutput } = getResourceIO(gs);
+   theoreticalInput.forEach((input, res) => {
+      const diff = (theoreticalOutput.get(res) ?? 0) - input;
+      if (diff < 0) {
+         deficit.set(res, diff);
+      }
+   });
+
+   return (
+      <>
+         <div
+            className="row pointer"
+            onClick={() => {
+               const s = Tick.current.specialBuildings.get("Statistics");
+               if (s) {
+                  Singleton().sceneManager.getCurrent(WorldScene)?.lookAtTile(s.tile, LookAtMode.Select);
+               }
+            }}
+         >
+            <div className={classNames({ "m-icon": true })}>do_not_disturb_on</div>
+            <Tippy
+               content={
+                  <div>
+                     <div className="text-strong">{t(L.DeficitResources)}</div>
+                     {jsxMMapOf(deficit, (res, amount) => {
+                        return (
+                           <div className="row text-small" key={res}>
+                              <div className="f1">{Config.Resource[res].name()}</div>
+                              <div className="ml20">{formatNumber(amount)}</div>
+                           </div>
+                        );
+                     })}
+                  </div>
+               }
+               placement="bottom"
+            >
+               <div style={{ width: "6rem" }}>
+                  <FormatNumber value={deficit.size} />
+               </div>
+            </Tippy>
+         </div>
+         <div className="separator-vertical" />
+      </>
    );
 }

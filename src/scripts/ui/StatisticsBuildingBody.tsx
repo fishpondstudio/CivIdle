@@ -18,8 +18,8 @@ import { Config } from "../../../shared/logic/Config";
 import { EXPLORER_SECONDS, MAX_EXPLORER } from "../../../shared/logic/Constants";
 import {
    getBuildingIO,
+   getResourceIO,
    getTransportStat,
-   getXyBuildings,
    unlockedResources,
 } from "../../../shared/logic/IntraTickCache";
 import { getScienceAmount } from "../../../shared/logic/TechLogic";
@@ -31,7 +31,6 @@ import {
    formatNumber,
    keysOf,
    mReduceOf,
-   mapSafeAdd,
    type Tile,
 } from "../../../shared/utilities/Helper";
 import type { PartialSet } from "../../../shared/utilities/TypeDefinitions";
@@ -392,26 +391,10 @@ function ResourcesTab({ gameState }: IBuildingComponentProps): React.ReactNode {
    const [showTheoreticalValue, setShowTheoreticalValue] = useState(true);
    const unlockedResourcesList: PartialSet<Resource> = unlockedResources(gameState);
    const resourceAmounts: Partial<Record<keyof ResourceDefinitions, number>> = {};
-   const inputs = new Map<Resource, number>();
-   const outputs = new Map<Resource, number>();
-   getXyBuildings(gameState).forEach((building, xy) => {
-      if ("resourceImports" in building) {
-         return;
-      }
-      const input = getBuildingIO(xy, "input", IOCalculation.Multiplier | IOCalculation.Capacity, gameState);
-      const output = getBuildingIO(
-         xy,
-         "output",
-         IOCalculation.Multiplier | IOCalculation.Capacity,
-         gameState,
-      );
-      if (!showTheoreticalValue && Tick.current.notProducingReasons.has(xy)) {
-         return;
-      }
-      forEach(input, (res, amount) => mapSafeAdd(inputs, res, amount));
-      forEach(output, (res, amount) => mapSafeAdd(outputs, res, amount));
-   });
-   Tick.current.wonderProductions.forEach((amount, res) => mapSafeAdd(outputs, res, amount));
+   const io = getResourceIO(gameState);
+   const inputs = showTheoreticalValue ? io.theoreticalInput : io.actualInput;
+   const outputs = showTheoreticalValue ? io.theoreticalOutput : io.actualOutput;
+
    keysOf(unlockedResourcesList).map((res) => {
       resourceAmounts[res] =
          Tick.current.resourcesByTile

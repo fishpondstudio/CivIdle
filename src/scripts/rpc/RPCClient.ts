@@ -24,7 +24,7 @@ import {
    ServerWSErrorCode,
 } from "../../../shared/utilities/Database";
 import { vacuumChat } from "../../../shared/utilities/DatabaseShared";
-import { SECOND, clamp, forEach, hasFlag } from "../../../shared/utilities/Helper";
+import { SECOND, clamp, forEach, hasFlag, uuid4 } from "../../../shared/utilities/Helper";
 import { TypedEvent } from "../../../shared/utilities/TypedEvent";
 import { L, t } from "../../../shared/utilities/i18n";
 import { saveGame } from "../Global";
@@ -156,12 +156,16 @@ export async function connectWebSocket(): Promise<number> {
          steamTicket = await SteamClient.getAuthSessionTicket();
          steamTicketTime = Date.now();
       }
-      getGameOptions().id = `steam:${await SteamClient.getSteamId()}`;
+      const steamId = await SteamClient.getSteamId();
+      if (!getGameOptions().userId) {
+         getGameOptions().userId = `steam:${steamId}`;
+      }
       const params = [
          `appId=${await SteamClient.getAppId()}`,
          `ticket=${steamTicket}`,
          "platform=steam",
-         `steamId=${await SteamClient.getSteamId()}`,
+         `steamId=${steamId}`,
+         `userId=${getGameOptions().userId}`,
          `version=${getVersion()}`,
          `build=${getBuildNumber()}`,
          `gameId=${getGameState().id}`,
@@ -169,12 +173,19 @@ export async function connectWebSocket(): Promise<number> {
       ];
       ws = new WebSocket(`${getServerAddress()}/?${params.join("&")}`);
    } else {
-      const token = `${getGameOptions().id}:${getGameOptions().token ?? getGameOptions().id}`;
+      if (!getGameOptions().userId) {
+         getGameOptions().userId = `web:${uuid4()}`;
+      }
+      if (!getGameOptions().token) {
+         getGameOptions().token = uuid4();
+      }
+      const token = `${getGameOptions().userId}:${getGameOptions().token}`;
       const params = [
          `ticket=${token}`,
          "platform=web",
          `version=${getVersion()}`,
          `build=${getBuildNumber()}`,
+         `userId=${getGameOptions().userId}`,
          `gameId=${getGameState().id}`,
          `checksum=${checksum.expected}${checksum.actual}`,
       ];
@@ -220,7 +231,8 @@ export async function connectWebSocket(): Promise<number> {
          case MessageType.Welcome: {
             const w = message as IWelcomeMessage;
             user = w.user;
-            getGameOptions().token = w.user.token;
+            const options = getGameOptions();
+            options.token = w.user.token;
             saveGame().catch(console.error);
             OnUserChanged.emit({ ...user });
             const tick = getGameState().tick;

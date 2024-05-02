@@ -117,7 +117,7 @@ export type ExtraTileInfoType = keyof typeof ExtraTileInfoTypes;
 
 export class GameOptions {
    useModernUI = true;
-   id = uuid4();
+   userId: string | null = null;
    token: string | null = null;
    checksum: string | null = null;
    sidePanelWidth = 400;

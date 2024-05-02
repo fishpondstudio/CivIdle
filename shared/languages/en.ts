@@ -1130,4 +1130,5 @@ export const EN = {
    ExtraTileInfoTypeNone: "None",
    ExtraTileInfoTypeEmpireValue: "Empire Value",
    ExtraTileInfoTypeStoragePercentage: "Storage Percentage",
+   DeficitResources: "Deficit Resources",
 };
