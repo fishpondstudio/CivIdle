@@ -97,14 +97,15 @@ export function addPermanentGreatPerson(gp: GreatPerson, amount: number): void {
       inv.amount += amount;
    } else {
       options.greatPeople[gp] =
-         Config.GreatPerson[gp].type === GreatPersonType.Wildcard
-            ? { level: 0, amount }
-            : { level: 1, amount: amount - 1 };
+         Config.GreatPerson[gp].type === GreatPersonType.Normal
+            ? { level: 1, amount: amount - 1 }
+            : { level: 0, amount };
    }
 }
 
 export function upgradeAllPermanentGreatPeople(options: GameOptions): void {
    forEach(options.greatPeople, (greatPerson, inventory) => {
+      if (Config.GreatPerson[greatPerson].type !== GreatPersonType.Normal) return;
       while (inventory.amount >= getGreatPersonUpgradeCost(greatPerson, inventory.level + 1)) {
          inventory.amount -= getGreatPersonUpgradeCost(greatPerson, inventory.level + 1);
          ++inventory.level;

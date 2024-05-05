@@ -110,9 +110,7 @@ export function HeadquarterBuildingBody({
                </li>
                <li className="row">
                   <div className="f1">{t(L.StatisticsTransportationPercentage)}</div>
-                  <div className="text-strong">
-                     {formatPercent(transportStat.totalFuel / (Tick.current.workersUsed.get("Worker") || 1))}
-                  </div>
+                  <div className="text-strong">{formatPercent(transportStat.totalFuel / workersBusy)}</div>
                </li>
                <li>
                   <details>

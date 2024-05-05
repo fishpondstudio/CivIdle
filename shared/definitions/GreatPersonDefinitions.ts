@@ -1,6 +1,7 @@
 import { getScienceFromWorkers } from "../logic/BuildingLogic";
 import { Config } from "../logic/Config";
 import { getGameState } from "../logic/GameStateLogic";
+import { getTransportStat } from "../logic/IntraTickCache";
 import type { Multiplier, MultiplierType } from "../logic/TickLogic";
 import { MultiplierTypeDesc, Tick } from "../logic/TickLogic";
 import { addMultiplier } from "../logic/Update";
@@ -214,7 +215,7 @@ export class GreatPersonDefinitions {
 
    Confucius: IGreatPersonDefinition = {
       name: () => t(L.Confucius),
-      desc: (self, level) => t(L.ConfuciusDesc, { value: self.value(level) }),
+      desc: (self, level) => t(L.ConfuciusDescV2, { value: self.value(level) }),
       time: "c. 600s BC",
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
@@ -282,6 +283,17 @@ export class GreatPersonDefinitions {
       age: "ClassicalAge",
       tick: (self, level, source) => {},
       type: GreatPersonType.Wildcard,
+   };
+
+   AshokaTheGreat: IGreatPersonDefinition = {
+      name: () => t(L.AshokaTheGreat),
+      desc: (self, level) => t(L.PromotionGreatPersonDesc),
+      time: "304 ~ 232 BC",
+      value: (level) => level,
+      maxLevel: Number.POSITIVE_INFINITY,
+      age: "ClassicalAge",
+      tick: (self, level, source) => {},
+      type: GreatPersonType.Promotion,
    };
 
    // Middle Age /////////////////////////////////////////////////////////////////////////////////////////////
@@ -398,6 +410,17 @@ export class GreatPersonDefinitions {
       type: GreatPersonType.Wildcard,
    };
 
+   MarcoPolo: IGreatPersonDefinition = {
+      name: () => t(L.MarcoPolo),
+      desc: (self, level) => t(L.PromotionGreatPersonDesc),
+      time: "1254 ~ 1324 AD",
+      value: (level) => level,
+      maxLevel: Number.POSITIVE_INFINITY,
+      age: "MiddleAge",
+      tick: (self, level, source) => {},
+      type: GreatPersonType.Promotion,
+   };
+
    // Renaissance ////////////////////////////////////////////////////////////////////////////////////////////
 
    LeonardoDaVinci: IGreatPersonDefinition = boostOf({
@@ -499,7 +522,7 @@ export class GreatPersonDefinitions {
 
    IsaacNewton: IGreatPersonDefinition = {
       name: () => t(L.IsaacNewton),
-      desc: (self, level) => t(L.IsaacNewtonDesc, { value: self.value(level) }),
+      desc: (self, level) => t(L.IsaacNewtonDescV2, { value: self.value(level) }),
       time: "1642 ~ 1727",
       value: (level) => level * 2,
       maxLevel: Number.POSITIVE_INFINITY,
@@ -531,6 +554,17 @@ export class GreatPersonDefinitions {
       age: "RenaissanceAge",
       tick: (self, level, source) => {},
       type: GreatPersonType.Wildcard,
+   };
+
+   JohannesGutenberg: IGreatPersonDefinition = {
+      name: () => t(L.JohannesGutenberg),
+      desc: (self, level) => t(L.PromotionGreatPersonDesc),
+      time: "1393 ~ 1406 AD",
+      value: (level) => level,
+      maxLevel: Number.POSITIVE_INFINITY,
+      age: "RenaissanceAge",
+      tick: (self, level, source) => {},
+      type: GreatPersonType.Promotion,
    };
 
    // Industrial /////////////////////////////////////////////////////////////////////////////////////////////
@@ -669,6 +703,17 @@ export class GreatPersonDefinitions {
       type: GreatPersonType.Wildcard,
    };
 
+   AdamSmith: IGreatPersonDefinition = {
+      name: () => t(L.AdamSmith),
+      desc: (self, level) => t(L.PromotionGreatPersonDesc),
+      time: "1723 ~ 1790 AD",
+      value: (level) => level,
+      maxLevel: Number.POSITIVE_INFINITY,
+      age: "IndustrialAge",
+      tick: (self, level, source) => {},
+      type: GreatPersonType.Promotion,
+   };
+
    // World Wars /////////////////////////////////////////////////////////////////////////////////////////////
 
    JohnDRockefeller: IGreatPersonDefinition = boostOf({
@@ -794,7 +839,7 @@ export class GreatPersonDefinitions {
 
    NielsBohr: IGreatPersonDefinition = {
       name: () => t(L.NielsBohr),
-      desc: (self, level) => t(L.NielsBohrDesc, { value: self.value(level) }),
+      desc: (self, level) => t(L.NielsBohrDescV2, { value: self.value(level) }),
       time: "1885 ~ 1962",
       value: (level) => level * 3,
       maxLevel: Number.POSITIVE_INFINITY,
@@ -839,6 +884,19 @@ export class GreatPersonDefinitions {
       tick: (self, level, source) => {},
       type: GreatPersonType.Wildcard,
    };
+
+   PabloPicasso: IGreatPersonDefinition = {
+      name: () => t(L.PabloPicasso),
+      desc: (self, level) => t(L.PromotionGreatPersonDesc),
+      time: "1881 ~ 1973 AD",
+      value: (level) => level,
+      maxLevel: Number.POSITIVE_INFINITY,
+      age: "WorldWarAge",
+      tick: (self, level, source) => {},
+      type: GreatPersonType.Promotion,
+   };
+
+   // Cold Wars /////////////////////////////////////////////////////////////////////////////////////////////
 
    JRobertOppenheimer: IGreatPersonDefinition = boostOf({
       name: () => t(L.JRobertOppenheimer),
@@ -982,6 +1040,7 @@ interface IGreatPersonBoost {
 export enum GreatPersonType {
    Normal = 0,
    Wildcard = 1,
+   Promotion = 2,
 }
 
 export interface IGreatPersonDefinition {
@@ -1043,7 +1102,8 @@ function boostOf(
 export function addScienceBasedOnBusyWorkers(value: number, name: string): void {
    const gs = getGameState();
    const { workersBusy, workersAfterHappiness } = getScienceFromWorkers(gs);
-   if (workersBusy >= 0.5 * workersAfterHappiness) {
+   const transportStat = getTransportStat(gs);
+   if (workersBusy >= 0.5 * workersAfterHappiness && transportStat.totalFuel <= 0.5 * workersBusy) {
       Tick.next.globalMultipliers.sciencePerBusyWorker.push({ value, source: name });
       Tick.next.globalMultipliers.sciencePerIdleWorker.push({ value, source: name });
    }

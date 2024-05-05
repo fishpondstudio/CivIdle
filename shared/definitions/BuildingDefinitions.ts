@@ -1326,7 +1326,7 @@ export class BuildingDefinitions {
    };
    Atomium: IBuildingDefinition = {
       name: () => t(L.Atomium),
-      desc: () => t(L.AtomiumDesc),
+      desc: () => t(L.AtomiumDescV2),
       input: {},
       output: {},
       construction: { NuclearFuelRod: 100, AtomicBomb: 100, Artillery: 100 },

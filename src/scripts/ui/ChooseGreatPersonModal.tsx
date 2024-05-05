@@ -8,8 +8,7 @@ import { addPermanentGreatPerson, getGreatPersonUpgradeCost } from "../../../sha
 import { formatNumber, safeAdd } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import { useGameOptions, useGameState } from "../Global";
-import { Singleton } from "../utilities/Singleton";
-import { greatPersonImage } from "../visuals/GreatPersonVisual";
+import { GreatPersonImage } from "../visuals/GreatPersonVisual";
 import { playClick, playError } from "../visuals/Sound";
 import { hideModal, showModal } from "./GlobalModal";
 import { FormatNumber } from "./HelperComponents";
@@ -129,7 +128,7 @@ export function ChooseGreatPersonModal({ permanent }: { permanent: boolean }): R
 function GreatPersonLevel({ greatPerson }: { greatPerson: GreatPerson }): React.ReactNode {
    const options = useGameOptions();
    const gs = useGameState();
-   const isWildcard = Config.GreatPerson[greatPerson].type === GreatPersonType.Wildcard;
+   const isNormal = Config.GreatPerson[greatPerson].type === GreatPersonType.Normal;
    const inventory = options.greatPeople[greatPerson];
    const total = getGreatPersonUpgradeCost(greatPerson, (inventory?.level ?? 0) + 1);
    return (
@@ -137,11 +136,11 @@ function GreatPersonLevel({ greatPerson }: { greatPerson: GreatPerson }): React.
          <div className="row text-small">
             <div className="f1">
                {t(L.GreatPeoplePermanentShort)}{" "}
-               {!isWildcard && inventory ? `(${t(L.LevelX, { level: inventory.level })})` : null}
+               {isNormal && inventory ? `(${t(L.LevelX, { level: inventory.level })})` : null}
             </div>
             <div className="text-right">
                <FormatNumber value={inventory?.amount ?? 0} />
-               {isWildcard ? null : `/${formatNumber(total)}`}
+               {isNormal ? `/${formatNumber(total)}` : null}
             </div>
          </div>
          <div className="row text-small">
@@ -158,18 +157,18 @@ function PermanentGreatPersonLevel({ greatPerson }: { greatPerson: GreatPerson }
    const options = useGameOptions();
    const inventory = options.greatPeople[greatPerson];
    const total = getGreatPersonUpgradeCost(greatPerson, (inventory?.level ?? 0) + 1);
-   const isWildcard = Config.GreatPerson[greatPerson].type === GreatPersonType.Wildcard;
+   const isNormal = Config.GreatPerson[greatPerson].type === GreatPersonType.Normal;
    return (
       <div className="outset-shallow-2 p8">
          <div className="row text-small">
-            {isWildcard ? null : <div>{inventory ? t(L.LevelX, { level: inventory.level }) : null}</div>}
+            {isNormal ? <div>{inventory ? t(L.LevelX, { level: inventory.level }) : null}</div> : null}
             <div className="f1 text-right">
                <FormatNumber value={inventory?.amount ?? 0} />
-               {isWildcard ? null : `/${formatNumber(total)}`}
+               {isNormal ? `/${formatNumber(total)}` : null}
             </div>
          </div>
          <div className="sep5" />
-         <ProgressBarComponent progress={isWildcard ? 1 : (inventory?.amount ?? 0) / total} />
+         <ProgressBarComponent progress={isNormal ? 1 : (inventory?.amount ?? 0) / total} />
       </div>
    );
 }
@@ -192,10 +191,7 @@ function GreatPersonCard({
             onChosen(greatPerson);
          }}
       >
-         <img
-            src={greatPersonImage(greatPerson, Singleton().sceneManager.getContext())}
-            style={{ width: "100%" }}
-         />
+         <GreatPersonImage greatPerson={greatPerson} style={{ width: "100%" }} />
          {permanent ? (
             <>
                <div className="sep5" />
