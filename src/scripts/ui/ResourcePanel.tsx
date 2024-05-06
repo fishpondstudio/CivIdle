@@ -26,7 +26,6 @@ import { useGameOptions, useGameState } from "../Global";
 import { useCurrentTick } from "../logic/ClientUpdate";
 import { TechTreeScene } from "../scenes/TechTreeScene";
 import { LookAtMode, WorldScene } from "../scenes/WorldScene";
-import { jsxMMapOf } from "../utilities/Helper";
 import { useTypedEvent } from "../utilities/Hook";
 import { Singleton } from "../utilities/Singleton";
 import { playClick, playError } from "../visuals/Sound";
@@ -308,14 +307,18 @@ function DeficitResources(): React.ReactNode {
                content={
                   <div>
                      <div className="text-strong">{t(L.DeficitResources)}</div>
-                     {jsxMMapOf(deficit, (res, amount) => {
-                        return (
-                           <div className="row text-small" key={res}>
-                              <div className="f1">{Config.Resource[res].name()}</div>
-                              <div className="ml20">{formatNumber(amount)}</div>
-                           </div>
-                        );
-                     })}
+                     {Array.from(deficit)
+                        .sort(([a], [b]) =>
+                           Config.Resource[a].name().localeCompare(Config.Resource[b].name()),
+                        )
+                        .map(([res, amount]) => {
+                           return (
+                              <div className="row text-small" key={res}>
+                                 <div className="f1">{Config.Resource[res].name()}</div>
+                                 <div className="ml20">{formatNumber(amount)}</div>
+                              </div>
+                           );
+                        })}
                   </div>
                }
                placement="bottom"
