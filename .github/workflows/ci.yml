@@ -22,8 +22,8 @@ jobs:
         with:
           run_install: |
             - recursive: false
-            - cwd: "./text"
+            - cwd: "./test"
       - name: Run Test
-        working-directory: ./text
+        working-directory: ./test
         run:
           pnpm run ci
