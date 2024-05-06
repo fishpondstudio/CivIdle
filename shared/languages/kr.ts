@@ -1122,7 +1122,7 @@ export const KR = {
    YellowCraneTower: "황학루",
    YellowCraneTowerDesc: "위인을 선택할 때 선택지 +1. 1 타일 범위 내의 모든 건물은 +1 생산, 일꾼 수용력 및 저장소 배수를 얻습니다. 양쯔강 옆에 건설 시 범위가 2타일로 증가합니다.",
    Zenobia: "제노비아",
-   ZenobiaDesc: "페트라 워프 최대치 +%{value}" 시간,
+   ZenobiaDesc: "페트라 워프 최대치 +%{value} 시간",
    ZhengHe: "정화",
    Zoroaster: "조로아스터",
 };
