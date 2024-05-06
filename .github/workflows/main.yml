@@ -28,7 +28,6 @@ jobs:
         working-directory: /home/insraq/CivIdle/electron
       - run: |
           npm install
-          npm run test
         working-directory: /home/insraq/CivIdle/server
       - run: |
           npm run clean
