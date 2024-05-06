@@ -108,9 +108,12 @@ export class Camera extends Container implements SceneLifecycle {
 
    private _worldWidth = 0;
    private _worldHeight = 0;
-   public setWorldSize(width: number, height: number): void {
+   private _margin = 0;
+
+   public setWorldSize(width: number, height: number, margin = 0): void {
       this._worldWidth = width;
       this._worldHeight = height;
+      this._margin = margin;
    }
 
    private minZoom = 0;
@@ -233,10 +236,12 @@ export class Camera extends Container implements SceneLifecycle {
    }
 
    public clampOrigin(point: IPointData, result?: IPointData): IPointData {
-      const maxX = this._worldWidth - this.screenWidth / this.scale.x;
-      const maxY = this._worldHeight - this.screenHeight / this.scale.y;
-      const x = maxX < 0 ? maxX / 2 : clamp(point.x, 0, maxX);
-      const y = maxY < 0 ? maxY / 2 : clamp(point.y, 0, maxY);
+      const minX = -this._margin;
+      const maxX = this._worldWidth + this._margin - this.screenWidth / this.scale.x;
+      const minY = -this._margin;
+      const maxY = this._worldHeight + this._margin - this.screenHeight / this.scale.y;
+      const x = maxX < 0 ? (minX + maxX) / 2 : clamp(point.x, minX, maxX);
+      const y = maxY < 0 ? (minY + maxY) / 2 : clamp(point.y, minY, maxY);
       if (result) {
          result.x = x;
          result.y = y;

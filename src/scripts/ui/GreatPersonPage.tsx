@@ -8,7 +8,7 @@ import { L, t } from "../../../shared/utilities/i18n";
 import { useGameOptions, useGameState } from "../Global";
 import { isOnlineUser } from "../rpc/RPCClient";
 import { Singleton } from "../utilities/Singleton";
-import { greatPersonImage } from "../visuals/GreatPersonVisual";
+import { GreatPersonImage } from "../visuals/GreatPersonVisual";
 import { showModal } from "./GlobalModal";
 import { ManagePermanentGreatPersonModal } from "./ManagePermanentGreatPersonModal";
 import { MenuComponent } from "./MenuComponent";
@@ -99,10 +99,7 @@ export function GreatPersonPage(): React.ReactNode {
                   return (
                      <tr key={gp}>
                         <td>
-                           <img
-                              src={greatPersonImage(gp, Singleton().sceneManager.getContext())}
-                              style={{ height: "50px", display: "block" }}
-                           />
+                           <GreatPersonImage greatPerson={gp} style={{ height: "50px", display: "block" }} />
                         </td>
                         <td>
                            <div className="text-strong">{person.name()}</div>

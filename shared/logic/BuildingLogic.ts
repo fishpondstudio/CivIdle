@@ -872,7 +872,9 @@ export function hasEnoughResource(xy: Tile, res: Resource, amount: number, gs: G
 
 export function hasEnoughStorage(xy: Tile, amount: number, gs: GameState): boolean {
    const storage = getStorageFor(xy, gs);
-   return storage.total - storage.used >= amount;
+   // Note: total - used can be negative! In this case, we clamp it so if the amount is zero,
+   // we consider there IS enough storage
+   return clamp(storage.total - storage.used, 0, Number.POSITIVE_INFINITY) >= amount;
 }
 
 export function getWorkingBuilding(xy: Tile, gs: GameState): IBuildingData | null {

@@ -1,4 +1,3 @@
-import { GreatPersonType } from "../../shared/definitions/GreatPersonDefinitions";
 import { Config } from "../../shared/logic/Config";
 import type { SavedGame } from "../../shared/logic/GameState";
 import { ShortcutActions } from "../../shared/logic/Shortcut";
@@ -72,9 +71,8 @@ export function migrateSavedGame(save: SavedGame) {
       }
    }
    forEach(save.options.greatPeople, (k, v) => {
-      if (Config.GreatPerson[k].type === GreatPersonType.Wildcard && v.level > 0) {
-         v.amount += v.level;
-         v.level = 0;
+      if (!Config.GreatPerson[k]) {
+         delete save.options.greatPeople[k];
       }
    });
    forEach(save.options.shortcuts, (k) => {

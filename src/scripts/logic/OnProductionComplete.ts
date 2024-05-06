@@ -1,7 +1,4 @@
-import {
-   addScienceBasedOnBusyWorkers,
-   tickGreatPersonBoost,
-} from "../../../shared/definitions/GreatPersonDefinitions";
+import { tickGreatPersonBoost } from "../../../shared/definitions/GreatPersonDefinitions";
 import {
    ST_PETERS_FAITH_MULTIPLIER,
    ST_PETERS_STORAGE_MULTIPLIER,
@@ -723,7 +720,9 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
             getGreatPersonThisRunLevel(gs.greatPeople.Confucius ?? 0) +
             (getGameOptions().greatPeople.Confucius?.level ?? 0);
 
-         addScienceBasedOnBusyWorkers(Config.GreatPerson.Confucius.value(total), buildingName);
+         if (total > 0) {
+            Config.GreatPerson.Confucius.tick(Config.GreatPerson.Confucius, total, buildingName);
+         }
          break;
       }
       case "ManhattanProject": {
@@ -782,8 +781,9 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          const total =
             getGreatPersonThisRunLevel(gs.greatPeople.ZhengHe ?? 0) +
             (getGameOptions().greatPeople.ZhengHe?.level ?? 0);
+
          if (total > 0) {
-            tickGreatPersonBoost(Config.GreatPerson.ZhengHe, total, buildingName);
+            Config.GreatPerson.ZhengHe.tick(Config.GreatPerson.ZhengHe, total, buildingName);
          }
          break;
       }

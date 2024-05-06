@@ -77,7 +77,7 @@ export async function handleChatCommand(command: string): Promise<void> {
          const bytes = await file.arrayBuffer();
 
          const save = await decompressSave(new Uint8Array(bytes));
-         save.options.id = uuid4();
+         save.options.userId = `web:${uuid4()}`;
 
          overwriteSaveGame(save);
          await saveGame();

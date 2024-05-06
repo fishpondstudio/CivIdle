@@ -2,7 +2,6 @@ import { SmoothGraphics } from "@pixi/graphics-smooth";
 import type { ColorSource, FederatedPointerEvent, IPointData } from "pixi.js";
 import { BitmapText, Container, LINE_CAP, LINE_JOIN, Sprite } from "pixi.js";
 import WorldMap from "../../../shared/definitions/WorldMap.json";
-import { getGameOptions } from "../../../shared/logic/GameStateLogic";
 import { isTileReserved } from "../../../shared/logic/PlayerTradeLogic";
 import {
    MAP_MAX_X,
@@ -14,7 +13,7 @@ import {
 import { forEach, formatPercent, mapSafeAdd, xyToPoint } from "../../../shared/utilities/Helper";
 import type { Disposable } from "../../../shared/utilities/TypedEvent";
 import { getTexture } from "../logic/VisualLogic";
-import { OnPlayerMapMessage, OnTradeChanged, getPlayerMap, getTrades } from "../rpc/RPCClient";
+import { OnPlayerMapMessage, OnTradeChanged, getPlayerMap, getTrades, getUser } from "../rpc/RPCClient";
 import { PlayerMapPage } from "../ui/PlayerMapPage";
 import { getColorCached } from "../utilities/CachedColor";
 import { Scene, destroyAllChildren, type ISceneContext } from "../utilities/SceneManager";
@@ -296,7 +295,7 @@ class PlayerTile extends Container {
       const { textures } = context;
       const { x, y } = tile;
 
-      const isMyself = data.userId === getGameOptions().id;
+      const isMyself = data.userId === getUser()?.userId;
       const isReserved = isTileReserved(data);
 
       const color = UserColorsMapping.get(data.color);

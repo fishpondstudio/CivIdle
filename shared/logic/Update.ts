@@ -386,6 +386,12 @@ function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
       });
    });
 
+   // Tick.current.totalValue > 0 here is to check whether the tick is ready! Otherwise we get a split second
+   // of wrong number
+   if (Tick.current.totalValue > 0 && total > 0) {
+      Tick.next.storagePercentages.set(xy, used / total);
+   }
+
    // Return early for buildings that are not working ////////////////////////////////////////////////////////
    if (!hasRequiredDeposit(Config.Building[building.type].deposit, xy, gs)) {
       Tick.next.notProducingReasons.set(xy, NotProducingReason.NotOnDeposit);

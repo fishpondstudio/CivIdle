@@ -113,6 +113,10 @@ export function keysOf<T extends {}>(obj: T): Array<keyof T> {
    return Object.keys(obj) as Array<keyof T>;
 }
 
+export function entriesOf<K extends string, V>(obj: Record<K, V>): [K, V][] {
+   return Object.entries(obj) as [K, V][];
+}
+
 export function forEach<T extends {}>(
    obj: T | undefined,
    // biome-ignore lint/suspicious/noConfusingVoidType: <explanation>

@@ -5,21 +5,20 @@ import { GreatPersonType, type GreatPerson } from "../../../shared/definitions/G
 import { Config } from "../../../shared/logic/Config";
 import { notifyGameOptionsUpdate } from "../../../shared/logic/GameStateLogic";
 import { addPermanentGreatPerson, getGreatPersonUpgradeCost } from "../../../shared/logic/RebornLogic";
-import { keysOf, numberToRoman } from "../../../shared/utilities/Helper";
+import { entriesOf, keysOf, numberToRoman, shuffle } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import { useGameOptions } from "../Global";
 import { isOnlineUser } from "../rpc/RPCClient";
-import { Singleton } from "../utilities/Singleton";
-import { greatPersonImage } from "../visuals/GreatPersonVisual";
-import { playError, playLevelUp } from "../visuals/Sound";
-import { hideModal } from "./GlobalModal";
+import { GreatPersonImage } from "../visuals/GreatPersonVisual";
+import { playAgeUp, playError, playLevelUp } from "../visuals/Sound";
+import { ChooseGreatPersonModal } from "./ChooseGreatPersonModal";
+import { hideModal, showModal } from "./GlobalModal";
 import { FormatNumber } from "./HelperComponents";
 import { RenderHTML } from "./RenderHTMLComponent";
 import { TextWithHelp } from "./TextWithHelpComponent";
 import { WarningComponent } from "./WarningComponent";
 
 export function ManagePermanentGreatPersonModal(): React.ReactNode {
-   const options = useGameOptions();
    return (
       <div className="window" style={{ width: "800px" }}>
          <div className="title-bar">
@@ -61,14 +60,11 @@ export function ManagePermanentGreatPersonModal(): React.ReactNode {
                         })
                         .map((k) => {
                            const person = Config.GreatPerson[k];
-                           const isWildcard = person.type === GreatPersonType.Wildcard;
-                           const value = options.greatPeople[k];
-                           const total = value ? getGreatPersonUpgradeCost(k, value.level + 1) : 0;
                            return (
                               <tr key={k}>
                                  <td>
-                                    <img
-                                       src={greatPersonImage(k, Singleton().sceneManager.getContext())}
+                                    <GreatPersonImage
+                                       greatPerson={k}
                                        style={{ height: "50px", display: "block" }}
                                     />
                                  </td>
@@ -90,51 +86,7 @@ export function ManagePermanentGreatPersonModal(): React.ReactNode {
                                        </div>
                                     ) : null}
                                  </td>
-                                 {isWildcard ? (
-                                    <GreatPersonWildcardRow greatPerson={k} />
-                                 ) : (
-                                    <>
-                                       <td>
-                                          {value ? (
-                                             <div className="text-center">
-                                                <TextWithHelp content={person.desc(person, value.level)}>
-                                                   {numberToRoman(value.level)}
-                                                </TextWithHelp>
-                                             </div>
-                                          ) : null}
-                                       </td>
-                                       <td style={{ userSelect: import.meta.env.DEV ? "text" : "none" }}>
-                                          {person.desc(person, value?.level ?? 1)}
-                                       </td>
-                                       <td>
-                                          <button
-                                             onClick={() => {
-                                                if (value && value.amount >= total) {
-                                                   value.amount -= total;
-                                                   value.level++;
-                                                   notifyGameOptionsUpdate(options);
-                                                   playLevelUp();
-                                                } else {
-                                                   playError();
-                                                }
-                                             }}
-                                             className="w100 row text-strong w100"
-                                             disabled={!value || value.amount < total}
-                                          >
-                                             <div
-                                                className="m-icon"
-                                                style={{ margin: "0 5px 0 -5px", fontSize: "18px" }}
-                                             >
-                                                input_circle
-                                             </div>
-                                             <div className="f1 text-right">
-                                                <FormatNumber value={value?.amount ?? 0} />/
-                                                <FormatNumber value={total} />
-                                             </div>
-                                          </button>
-                                       </td>
-                                    </>
-                                 )}
+                                 <GreatPersonRow greatPerson={k} />
                               </tr>
                            );
                         })}
@@ -146,9 +98,72 @@ export function ManagePermanentGreatPersonModal(): React.ReactNode {
    );
 }
 
+function GreatPersonRow({ greatPerson }: { greatPerson: GreatPerson }): React.ReactNode {
+   switch (Config.GreatPerson[greatPerson].type) {
+      case GreatPersonType.Wildcard:
+         return <GreatPersonWildcardRow greatPerson={greatPerson} />;
+      case GreatPersonType.Promotion:
+         return <GreatPersonPromotionRow greatPerson={greatPerson} />;
+      case GreatPersonType.Normal:
+         return <GreatPersonNormalRow greatPerson={greatPerson} />;
+      default:
+         return null;
+   }
+}
+
+function GreatPersonNormalRow({ greatPerson }: { greatPerson: GreatPerson }): React.ReactNode {
+   const options = useGameOptions();
+   const value = options.greatPeople[greatPerson];
+   const person = Config.GreatPerson[greatPerson];
+   const total = value ? getGreatPersonUpgradeCost(greatPerson, value.level + 1) : 0;
+   return (
+      <>
+         <td>
+            {value ? (
+               <div className="text-center">
+                  <TextWithHelp content={person.desc(person, value.level)}>
+                     {numberToRoman(value.level)}
+                  </TextWithHelp>
+               </div>
+            ) : null}
+         </td>
+         <td style={{ userSelect: import.meta.env.DEV ? "text" : "none" }}>
+            {person.desc(person, value?.level ?? 1)}
+         </td>
+         <td>
+            <button
+               onClick={() => {
+                  if (value && value.amount >= total) {
+                     value.amount -= total;
+                     value.level++;
+                     notifyGameOptionsUpdate(options);
+                     playLevelUp();
+                  } else {
+                     playError();
+                  }
+               }}
+               className="w100 row text-strong w100"
+               disabled={!value || value.amount < total}
+            >
+               <div className="m-icon" style={{ margin: "0 5px 0 -5px", fontSize: "18px" }}>
+                  input_circle
+               </div>
+               <div className="f1 text-right">
+                  <FormatNumber value={value?.amount ?? 0} />/
+                  <FormatNumber value={total} />
+               </div>
+            </button>
+         </td>
+      </>
+   );
+}
+
 function GreatPersonWildcardRow({ greatPerson }: { greatPerson: GreatPerson }): React.ReactNode {
    const options = useGameOptions();
    const value = options.greatPeople[greatPerson];
+   if (!options.greatPeople[greatPerson]) {
+      options.greatPeople[greatPerson] = { amount: 0, level: 0 };
+   }
    const person = Config.GreatPerson[greatPerson];
    const choices = keysOf(Config.GreatPerson)
       .filter(
@@ -177,7 +192,7 @@ function GreatPersonWildcardRow({ greatPerson }: { greatPerson: GreatPerson }): 
             >
                {choices.map((g) => (
                   <option key={g} value={g}>
-                     {Config.GreatPerson[g].name()}
+                     ({options.greatPeople[g]?.amount ?? 0}) {Config.GreatPerson[g].name()}
                   </option>
                ))}
             </select>
@@ -193,13 +208,89 @@ function GreatPersonWildcardRow({ greatPerson }: { greatPerson: GreatPerson }): 
                   }
                   if (value && value.amount > 0) {
                      --value.amount;
+                     addPermanentGreatPerson(choice, 1);
+                     playLevelUp();
+                     notifyGameOptionsUpdate();
+                     return;
                   }
-                  addPermanentGreatPerson(choice, 1);
-                  playLevelUp();
-                  notifyGameOptionsUpdate();
                }}
             >
                {t(L.GreatPersonWildCardBirth)}
+            </button>
+         </td>
+      </>
+   );
+}
+
+function GreatPersonPromotionRow({ greatPerson }: { greatPerson: GreatPerson }): React.ReactNode {
+   const options = useGameOptions();
+   if (!options.greatPeople[greatPerson]) {
+      options.greatPeople[greatPerson] = { amount: 0, level: 0 };
+   }
+   const value = options.greatPeople[greatPerson];
+   const person = Config.GreatPerson[greatPerson];
+   const choices = keysOf(Config.GreatPerson)
+      .filter(
+         (g) =>
+            Config.GreatPerson[g].age === person.age &&
+            Config.GreatPerson[g].type !== GreatPersonType.Promotion,
+      )
+      .sort((a, b) => Config.GreatPerson[a].name().localeCompare(Config.GreatPerson[b].name()));
+   const [choice, setChoice] = useState(choices[0]);
+   return (
+      <>
+         <td className="text-center">
+            {value ? (
+               <div className="text-center">
+                  <TextWithHelp content={person.desc(person, value.level)}>{value.amount}</TextWithHelp>
+               </div>
+            ) : null}
+         </td>
+         <td>
+            <select
+               value={choice}
+               className="w100"
+               onChange={(e) => {
+                  setChoice(e.target.value as GreatPerson);
+               }}
+            >
+               {choices.map((g) => (
+                  <option key={g} value={g}>
+                     ({options.greatPeople[g]?.amount ?? 0}) {Config.GreatPerson[g].name()}
+                  </option>
+               ))}
+            </select>
+         </td>
+         <td>
+            <button
+               disabled={(value?.amount ?? 0) <= 0 || (options.greatPeople[choice]?.amount ?? 0) <= 0}
+               className="w100 text-strong"
+               onClick={() => {
+                  if (Config.GreatPerson[choice].type === GreatPersonType.Wildcard) {
+                     playError();
+                     return;
+                  }
+                  const target = options.greatPeople[choice];
+                  const targetAgeIndex = Config.TechAge[person.age].idx + 1;
+                  if (value && value.amount > 0 && target && target.amount > 0) {
+                     --value.amount;
+                     --target.amount;
+                     const pool = entriesOf(Config.GreatPerson).filter(
+                        ([gp, def]) => Config.TechAge[def.age].idx === targetAgeIndex,
+                     );
+                     shuffle(pool);
+                     const choice: GreatPerson[] = [];
+                     for (let i = 0; i < 3; i++) {
+                        choice.push(pool[i][0]);
+                     }
+                     options.greatPeopleChoices.push(choice);
+                     notifyGameOptionsUpdate();
+                     playAgeUp();
+                     showModal(<ChooseGreatPersonModal permanent={true} />);
+                  }
+               }}
+            >
+               {t(L.GreatPersonPromotionPromote)}
             </button>
          </td>
       </>

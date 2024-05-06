@@ -107,9 +107,17 @@ export const ThemeColorNames: Record<keyof typeof DefaultThemeColors, () => stri
    ResearchHighlightColor: () => t(L.ThemeResearchHighlightColor),
 };
 
+export const ExtraTileInfoTypes = {
+   None: () => t(L.ExtraTileInfoTypeNone),
+   EmpireValue: () => t(L.ExtraTileInfoTypeEmpireValue),
+   StoragePercentage: () => t(L.ExtraTileInfoTypeStoragePercentage),
+} as const;
+
+export type ExtraTileInfoType = keyof typeof ExtraTileInfoTypes;
+
 export class GameOptions {
    useModernUI = true;
-   id = uuid4();
+   userId: string | null = null;
    token: string | null = null;
    checksum: string | null = null;
    sidePanelWidth = 400;
@@ -126,7 +134,7 @@ export class GameOptions {
    resourceBarShowUncappedHappiness = false;
    resourceBarExcludeTurnedOffOrNoActiveTransport = false;
    resourceBarExcludeStorageFull = false;
-   gameVisualShowEmpireValue = true;
+   extraTileInfoType: ExtraTileInfoType = "EmpireValue";
    buildingDefaults: Partial<Record<Building, Partial<IBuildingData>>> = {};
    defaultProductionPriority = PRIORITY_MIN;
    defaultConstructionPriority = PRIORITY_MIN;

@@ -1,6 +1,7 @@
 import { getScienceFromWorkers } from "../logic/BuildingLogic";
 import { Config } from "../logic/Config";
 import { getGameState } from "../logic/GameStateLogic";
+import { getTransportStat } from "../logic/IntraTickCache";
 import type { Multiplier, MultiplierType } from "../logic/TickLogic";
 import { MultiplierTypeDesc, Tick } from "../logic/TickLogic";
 import { addMultiplier } from "../logic/Update";
@@ -214,7 +215,7 @@ export class GreatPersonDefinitions {
 
    Confucius: IGreatPersonDefinition = {
       name: () => t(L.Confucius),
-      desc: (self, level) => t(L.ConfuciusDesc, { value: self.value(level) }),
+      desc: (self, level) => t(L.ConfuciusDescV2, { value: self.value(level) }),
       time: "c. 600s BC",
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
@@ -282,6 +283,17 @@ export class GreatPersonDefinitions {
       age: "ClassicalAge",
       tick: (self, level, source) => {},
       type: GreatPersonType.Wildcard,
+   };
+
+   AshokaTheGreat: IGreatPersonDefinition = {
+      name: () => t(L.AshokaTheGreat),
+      desc: (self, level) => t(L.PromotionGreatPersonDesc),
+      time: "304 ~ 232 BC",
+      value: (level) => level,
+      maxLevel: Number.POSITIVE_INFINITY,
+      age: "ClassicalAge",
+      tick: (self, level, source) => {},
+      type: GreatPersonType.Promotion,
    };
 
    // Middle Age /////////////////////////////////////////////////////////////////////////////////////////////
@@ -398,6 +410,17 @@ export class GreatPersonDefinitions {
       type: GreatPersonType.Wildcard,
    };
 
+   MarcoPolo: IGreatPersonDefinition = {
+      name: () => t(L.MarcoPolo),
+      desc: (self, level) => t(L.PromotionGreatPersonDesc),
+      time: "1254 ~ 1324 AD",
+      value: (level) => level,
+      maxLevel: Number.POSITIVE_INFINITY,
+      age: "MiddleAge",
+      tick: (self, level, source) => {},
+      type: GreatPersonType.Promotion,
+   };
+
    // Renaissance ////////////////////////////////////////////////////////////////////////////////////////////
 
    LeonardoDaVinci: IGreatPersonDefinition = boostOf({
@@ -499,8 +522,8 @@ export class GreatPersonDefinitions {
 
    IsaacNewton: IGreatPersonDefinition = {
       name: () => t(L.IsaacNewton),
-      desc: (self, level) => t(L.IsaacNewtonDesc, { value: self.value(level) }),
-      time: "1642 ~ 1727",
+      desc: (self, level) => t(L.IsaacNewtonDescV2, { value: self.value(level) }),
+      time: "1642 ~ 1727 AD",
       value: (level) => level * 2,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "RenaissanceAge",
@@ -531,6 +554,17 @@ export class GreatPersonDefinitions {
       age: "RenaissanceAge",
       tick: (self, level, source) => {},
       type: GreatPersonType.Wildcard,
+   };
+
+   JohannesGutenberg: IGreatPersonDefinition = {
+      name: () => t(L.JohannesGutenberg),
+      desc: (self, level) => t(L.PromotionGreatPersonDesc),
+      time: "1393 ~ 1406 AD",
+      value: (level) => level,
+      maxLevel: Number.POSITIVE_INFINITY,
+      age: "RenaissanceAge",
+      tick: (self, level, source) => {},
+      type: GreatPersonType.Promotion,
    };
 
    // Industrial /////////////////////////////////////////////////////////////////////////////////////////////
@@ -621,6 +655,21 @@ export class GreatPersonDefinitions {
       type: GreatPersonType.Normal,
    };
 
+   CarlFriedrichGauss: IGreatPersonDefinition = {
+      name: () => t(L.CarlFriedrichGauss),
+      desc: (self, level) =>
+         t(L.CarlFriedrichGaussDesc, { idle: 0.5 * self.value(level), busy: 1.5 * self.value(level) }),
+      time: "c. 1777 ~ 1855 AD",
+      value: (level) => level,
+      maxLevel: Number.POSITIVE_INFINITY,
+      age: "IndustrialAge",
+      tick: (self, level, source) => {
+         Tick.next.globalMultipliers.sciencePerIdleWorker.push({ value: 0.5 * self.value(level), source });
+         Tick.next.globalMultipliers.sciencePerBusyWorker.push({ value: 1.5 * self.value(level), source });
+      },
+      type: GreatPersonType.Normal,
+   };
+
    FlorenceNightingale: IGreatPersonDefinition = {
       name: () => t(L.FlorenceNightingale),
       desc: (self, level) => t(L.FlorenceNightingaleDesc, { value: self.value(level) }),
@@ -667,6 +716,17 @@ export class GreatPersonDefinitions {
       age: "IndustrialAge",
       tick: (self, level, source) => {},
       type: GreatPersonType.Wildcard,
+   };
+
+   AdamSmith: IGreatPersonDefinition = {
+      name: () => t(L.AdamSmith),
+      desc: (self, level) => t(L.PromotionGreatPersonDesc),
+      time: "1723 ~ 1790 AD",
+      value: (level) => level,
+      maxLevel: Number.POSITIVE_INFINITY,
+      age: "IndustrialAge",
+      tick: (self, level, source) => {},
+      type: GreatPersonType.Promotion,
    };
 
    // World Wars /////////////////////////////////////////////////////////////////////////////////////////////
@@ -783,7 +843,7 @@ export class GreatPersonDefinitions {
       name: () => t(L.AlanTuring),
       desc: (self, level) => t(L.AlanTuringDesc, { value: self.value(level) }),
       time: "1912 ~ 1954 AD",
-      value: (level) => level * 3,
+      value: (level) => level * 2,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "WorldWarAge",
       tick: (self, level, source) => {
@@ -794,7 +854,7 @@ export class GreatPersonDefinitions {
 
    NielsBohr: IGreatPersonDefinition = {
       name: () => t(L.NielsBohr),
-      desc: (self, level) => t(L.NielsBohrDesc, { value: self.value(level) }),
+      desc: (self, level) => t(L.NielsBohrDescV2, { value: self.value(level) }),
       time: "1885 ~ 1962",
       value: (level) => level * 3,
       maxLevel: Number.POSITIVE_INFINITY,
@@ -839,6 +899,58 @@ export class GreatPersonDefinitions {
       tick: (self, level, source) => {},
       type: GreatPersonType.Wildcard,
    };
+
+   PabloPicasso: IGreatPersonDefinition = {
+      name: () => t(L.PabloPicasso),
+      desc: (self, level) => t(L.PromotionGreatPersonDesc),
+      time: "1881 ~ 1973 AD",
+      value: (level) => level,
+      maxLevel: Number.POSITIVE_INFINITY,
+      age: "WorldWarAge",
+      tick: (self, level, source) => {},
+      type: GreatPersonType.Promotion,
+   };
+
+   JohnVonNeumann: IGreatPersonDefinition = {
+      name: () => t(L.JohnVonNeumann),
+      desc: (self, level) => t(L.JohnVonNeumannDesc, { value: self.value(level) }),
+      time: "1903 ~ 1957 AD",
+      value: (level) => level * 3,
+      maxLevel: Number.POSITIVE_INFINITY,
+      age: "WorldWarAge",
+      tick: (self, level, source) => {
+         Tick.next.globalMultipliers.sciencePerBusyWorker.push({ value: self.value(level), source });
+      },
+      type: GreatPersonType.Normal,
+   };
+
+   CharlieChaplin: IGreatPersonDefinition = {
+      name: () => t(L.CharlieChaplin),
+      desc: (self, level) => t(L.CharlieChaplinDesc, { value: self.value(level) }),
+      time: "1889 ~ 1977 AD",
+      value: (level) => level * 4,
+      maxLevel: Number.POSITIVE_INFINITY,
+      age: "WorldWarAge",
+      tick: (self, level, source) => {
+         Tick.next.globalMultipliers.happiness.push({ value: self.value(level), source });
+      },
+      type: GreatPersonType.Normal,
+   };
+
+   FrankLloydWright: IGreatPersonDefinition = {
+      name: () => t(L.FrankLloydWright),
+      desc: (self, level) => t(L.FrankLloydWrightDesc, { value: self.value(level) }),
+      time: "1867 ~ 1959 AD",
+      value: (level) => level * 4,
+      maxLevel: Number.POSITIVE_INFINITY,
+      age: "WorldWarAge",
+      tick: (self, level, source) => {
+         Tick.next.globalMultipliers.builderCapacity.push({ value: self.value(level), source });
+      },
+      type: GreatPersonType.Normal,
+   };
+
+   // Cold Wars /////////////////////////////////////////////////////////////////////////////////////////////
 
    JRobertOppenheimer: IGreatPersonDefinition = boostOf({
       name: () => t(L.JRobertOppenheimer),
@@ -970,6 +1082,71 @@ export class GreatPersonDefinitions {
       tick: (self, level, source) => {},
       type: GreatPersonType.Wildcard,
    };
+
+   JamesWatson: IGreatPersonDefinition = {
+      name: () => t(L.JamesWatson),
+      desc: (self, level) => t(L.JamesWatsonDesc, { value: self.value(level) }),
+      time: "1928 ~ AD",
+      value: (level) => level * 4,
+      maxLevel: Number.POSITIVE_INFINITY,
+      age: "ColdWarAge",
+      tick: (self, level, source) => {
+         Tick.next.globalMultipliers.sciencePerBusyWorker.push({ value: self.value(level), source });
+      },
+      type: GreatPersonType.Normal,
+   };
+
+   RichardFeynman: IGreatPersonDefinition = {
+      name: () => t(L.RichardFeynman),
+      desc: (self, level) => t(L.RichardFeynmanDesc, { value: self.value(level) }),
+      time: "1918 ~ 1988",
+      value: (level) => level * 4,
+      maxLevel: Number.POSITIVE_INFINITY,
+      age: "ColdWarAge",
+      tick: (self, level, source) => {
+         addScienceBasedOnBusyWorkers(self.value(level), source);
+      },
+      type: GreatPersonType.Normal,
+   };
+
+   LinusPauling: IGreatPersonDefinition = {
+      name: () => t(L.LinusPauling),
+      desc: (self, level) => t(L.LinusPaulingDesc, { value: self.value(level) }),
+      time: "1901 ~ 1994",
+      value: (level) => level * 3,
+      maxLevel: Number.POSITIVE_INFINITY,
+      age: "ColdWarAge",
+      tick: (self, level, source) => {
+         Tick.next.globalMultipliers.sciencePerIdleWorker.push({ value: self.value(level), source });
+      },
+      type: GreatPersonType.Normal,
+   };
+
+   IMPei: IGreatPersonDefinition = {
+      name: () => t(L.IMPei),
+      desc: (self, level) => t(L.IMPeiDesc, { value: self.value(level) }),
+      time: "1917 ~ 2019 AD",
+      value: (level) => level * 5,
+      maxLevel: Number.POSITIVE_INFINITY,
+      age: "ColdWarAge",
+      tick: (self, level, source) => {
+         Tick.next.globalMultipliers.builderCapacity.push({ value: self.value(level), source });
+      },
+      type: GreatPersonType.Normal,
+   };
+
+   BobHope: IGreatPersonDefinition = {
+      name: () => t(L.BobHope),
+      desc: (self, level) => t(L.BobHopeDesc, { value: self.value(level) }),
+      time: "1903 ~ 2003 AD",
+      value: (level) => level * 5,
+      maxLevel: Number.POSITIVE_INFINITY,
+      age: "ColdWarAge",
+      tick: (self, level, source) => {
+         Tick.next.globalMultipliers.happiness.push({ value: self.value(level), source });
+      },
+      type: GreatPersonType.Normal,
+   };
 }
 
 export type GreatPerson = keyof GreatPersonDefinitions;
@@ -982,6 +1159,7 @@ interface IGreatPersonBoost {
 export enum GreatPersonType {
    Normal = 0,
    Wildcard = 1,
+   Promotion = 2,
 }
 
 export interface IGreatPersonDefinition {
@@ -1043,7 +1221,8 @@ function boostOf(
 export function addScienceBasedOnBusyWorkers(value: number, name: string): void {
    const gs = getGameState();
    const { workersBusy, workersAfterHappiness } = getScienceFromWorkers(gs);
-   if (workersBusy >= 0.5 * workersAfterHappiness) {
+   const transportStat = getTransportStat(gs);
+   if (workersBusy >= 0.5 * workersAfterHappiness && transportStat.totalFuel <= 0.5 * workersBusy) {
       Tick.next.globalMultipliers.sciencePerBusyWorker.push({ value, source: name });
       Tick.next.globalMultipliers.sciencePerIdleWorker.push({ value, source: name });
    }

@@ -61,6 +61,8 @@ import { TransportPool } from "./TransportPool";
 let viewportCenter: IPointData | null = null;
 let viewportZoom: number | null = null;
 
+const MARGIN = 200;
+
 export class WorldScene extends Scene {
    private _width!: number;
    private _height!: number;
@@ -82,13 +84,20 @@ export class WorldScene extends Scene {
       this._width = maxPosition.x;
       this._height = maxPosition.y;
 
-      this.viewport.setWorldSize(this._width, this._height);
+      this.viewport.setWorldSize(this._width, this._height, MARGIN);
       this.viewport.setZoomRange(
-         Math.max(app.screen.width / this._width, app.screen.height / this._height),
+         Math.max(
+            app.screen.width / (this._width + MARGIN * 2),
+            app.screen.height / (this._height + MARGIN * 2),
+         ),
          2,
       );
       this._bg = this.viewport.addChild(
-         new TilingSprite(getTexture("Misc_Paper", textures), this._width, this._height),
+         new TilingSprite(
+            getTexture("Misc_Paper", textures),
+            this._width + MARGIN * 2,
+            this._height + MARGIN * 2,
+         ),
       );
       this._bg.tint = getColorCached(getGameOptions().themeColors.WorldBackground);
       this._bg.position.set((this._width - this._bg.width) / 2, (this._height - this._bg.height) / 2);
@@ -200,7 +209,10 @@ export class WorldScene extends Scene {
       super.onResize(width, height);
       const { app } = this.context;
       this.viewport.setZoomRange(
-         Math.max(app.screen.width / this._width, app.screen.height / this._height),
+         Math.max(
+            app.screen.width / (this._width + MARGIN * 2),
+            app.screen.height / (this._height + MARGIN * 2),
+         ),
          2,
       );
    }

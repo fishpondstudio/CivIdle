@@ -17,6 +17,7 @@ import {
    forEach,
    formatHMS,
    formatNumber,
+   formatPercent,
    layoutCenter,
    pointToTile,
    pointToXy,
@@ -317,14 +318,32 @@ export class TileVisual extends Container {
             this._upgrade.visible = false;
             this.toggleUpgradeTween(false);
 
-            const ev =
-               (Tick.current.buildingValueByTile.get(tileData.tile) ?? 0) +
-               (Tick.current.resourceValueByTile.get(tileData.tile) ?? 0);
-            if (ev > 0 && getGameOptions().gameVisualShowEmpireValue) {
-               this._bottomText.visible = true;
-               this._bottomText.text = formatNumber(ev);
-            } else {
-               this._bottomText.visible = false;
+            switch (getGameOptions().extraTileInfoType) {
+               case "None": {
+                  this._bottomText.visible = false;
+                  break;
+               }
+               case "EmpireValue": {
+                  const ev =
+                     (Tick.current.buildingValueByTile.get(tileData.tile) ?? 0) +
+                     (Tick.current.resourceValueByTile.get(tileData.tile) ?? 0);
+                  if (ev > 0) {
+                     this._bottomText.visible = true;
+                     this._bottomText.text = formatNumber(ev);
+                  } else {
+                     this._bottomText.visible = false;
+                  }
+                  break;
+               }
+               case "StoragePercentage": {
+                  const pct = Tick.current.storagePercentages.get(tileData.tile);
+                  if (pct) {
+                     this._bottomText.visible = true;
+                     this._bottomText.text = formatPercent(pct);
+                  } else {
+                     this._bottomText.visible = false;
+                  }
+               }
             }
 
             if (!isWorldOrNaturalWonder(this._tile.building.type)) {

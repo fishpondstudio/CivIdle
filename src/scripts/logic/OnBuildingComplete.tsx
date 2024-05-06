@@ -96,7 +96,8 @@ export function onBuildingComplete(xy: Tile): void {
          }
          break;
       }
-      case "OxfordUniversity": {
+      case "OxfordUniversity":
+      case "Atomium": {
          const tech = getMostAdvancedTech(gs);
          const hq = Tick.current.specialBuildings.get("Headquarter")?.building.resources;
          if (tech && hq) {
