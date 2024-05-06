@@ -10,10 +10,20 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Setup PNPM
+      - name: Setup pnmp
         uses: pnpm/action-setup@v3
         with:
           run_install: |
             - recursive: false
       - name: Run Biome
         run: pnpm run ci
+      - name: Setup Test
+        uses: pnpm/action-setup@v3
+        with:
+          run_install: |
+            - recursive: false
+            - cwd: "./text"
+      - name: Run Test
+        working-directory: ./text
+        run:
+          pnpm run ci
