@@ -1,8 +1,9 @@
 @font-face {
-   font-family: "Roboto Mono";
+   font-family: 'Roboto Mono';
    font-style: normal;
    font-weight: 500;
-   src: url(../fonts/RobotoMono-Medium.ttf) format("ttf");
+   font-display: swap;
+   src: url(../fonts/RobotoMono.woff2) format("woff2");
 }
 
 
