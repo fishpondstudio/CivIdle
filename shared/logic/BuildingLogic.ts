@@ -879,7 +879,7 @@ export function hasEnoughStorage(xy: Tile, amount: number, gs: GameState): boole
 
 export function getWorkingBuilding(xy: Tile, gs: GameState): IBuildingData | null {
    const tile = gs.tiles.get(xy);
-   if (!tile || !tile.building || tile.building.status === "building" || tile.building.capacity <= 0) {
+   if (!tile || !tile.building || tile.building.status !== "completed" || tile.building.capacity <= 0) {
       return null;
    }
    return tile.building;

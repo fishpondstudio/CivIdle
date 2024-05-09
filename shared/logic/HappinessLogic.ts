@@ -34,8 +34,7 @@ export function calculateHappiness(gs: GameState) {
    let fromHighestTierBuilding = 0;
 
    getXyBuildings(gs).forEach((building, xy) => {
-      // Buildings that are producing/upgrading should cost happiness!
-      if (building.status === "building") {
+      if (building.status !== "completed") {
          return;
       }
       if (!isSpecialBuilding(building.type)) {
