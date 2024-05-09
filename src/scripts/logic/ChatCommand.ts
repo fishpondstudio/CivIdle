@@ -161,14 +161,18 @@ export async function handleChatCommand(command: string): Promise<void> {
             throw new Error("Invalid command format");
          }
          const query = parts[1].toLowerCase();
+         let hasFound = false;
          for (const [xy, tile] of getPlayerMap()) {
             if (tile.handle.toLowerCase() === query) {
                addSystemMessage(`Found player ${parts[1]}, will pan camera to the tile`);
                Singleton().sceneManager.getCurrent(PlayerMapScene)?.lookAt(xy);
+               hasFound = true;
                break;
             }
          }
-         addSystemMessage(`Failed to find player ${parts[1]}`);
+         if (!hasFound) {
+            addSystemMessage(`Failed to find player ${parts[1]}`);
+         }
          break;
       }
       case "changelevel": {
