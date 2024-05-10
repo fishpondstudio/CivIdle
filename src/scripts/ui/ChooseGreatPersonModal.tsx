@@ -168,7 +168,7 @@ function PermanentGreatPersonLevel({ greatPerson }: { greatPerson: GreatPerson }
             </div>
          </div>
          <div className="sep5" />
-         <ProgressBarComponent progress={isNormal ? 1 : (inventory?.amount ?? 0) / total} />
+         <ProgressBarComponent progress={isNormal ? (inventory?.amount ?? 0) / total : 1} />
       </div>
    );
 }

@@ -55,7 +55,7 @@ export const EN = {
    Aphrodite: "Aphrodite",
    AphroditeDesc: "+1 Builder Capacity Multiplier for each level when upgrading buildings over Level 20",
    ApolloProgram: "Apollo Program",
-   ApolloProgramDesc: "All rocket factories get +2 Production, Worker Capacity and Storage Multiplier. Satellite factories, spaceship factories and nuclear missile silos get +1 Production Multiplier for each adjacent rocket factory",
+   ApolloProgramDesc: "All rocket factories get +2 Production, Worker Capacity and Storage Multiplier. Satellite factories, spacecraft factories and nuclear missile silos get +1 Production Multiplier for each adjacent rocket factory",
    ApplyToAll: "Apply To All",
    ApplyToAllBuilding: "Apply To All %{building}",
    ApplyToBuildingInTile: "Apply To All %{building} Within %{tile} Tile",

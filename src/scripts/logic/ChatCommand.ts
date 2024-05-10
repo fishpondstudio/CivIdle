@@ -328,7 +328,7 @@ export async function handleChatCommand(command: string): Promise<void> {
       }
       case "modlist": {
          const result = await client.getMods();
-         addSystemMessage(`Current censors: ${result.join(", ")}`);
+         addSystemMessage(`Current moderators: ${result.join(", ")}`);
          break;
       }
       case "muteplayer": {
