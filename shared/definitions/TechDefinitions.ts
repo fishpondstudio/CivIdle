@@ -7,25 +7,51 @@ export const MAX_TECH_COLUMN = 23;
 export const MAX_TECH_AGE: TechAge = "ColdWarAge";
 
 export class TechAgeDefinitions {
-   StoneAge: ITechAgeDefinition = { idx: 0, from: 0, to: 1, name: () => t(L.StoneAge) };
-   BronzeAge: ITechAgeDefinition = { idx: 1, from: 2, to: 3, name: () => t(L.BronzeAge) };
-   IronAge: ITechAgeDefinition = { idx: 2, from: 4, to: 5, name: () => t(L.IronAge) };
-   ClassicalAge: ITechAgeDefinition = { idx: 3, from: 6, to: 8, name: () => t(L.ClassicalAge) };
-   MiddleAge: ITechAgeDefinition = { idx: 4, from: 9, to: 10, name: () => t(L.MiddleAge) };
+   StoneAge: ITechAgeDefinition = { idx: 0, from: 0, to: 1, name: () => t(L.StoneAge), color: 0xb2bec3 };
+   BronzeAge: ITechAgeDefinition = { idx: 1, from: 2, to: 3, name: () => t(L.BronzeAge), color: 0xb2bec3 };
+   IronAge: ITechAgeDefinition = { idx: 2, from: 4, to: 5, name: () => t(L.IronAge), color: 0x596275 };
+   ClassicalAge: ITechAgeDefinition = {
+      idx: 3,
+      from: 6,
+      to: 8,
+      name: () => t(L.ClassicalAge),
+      color: 0x81ecec,
+   };
+   MiddleAge: ITechAgeDefinition = { idx: 4, from: 9, to: 10, name: () => t(L.MiddleAge), color: 0xff7675 };
    RenaissanceAge: ITechAgeDefinition = {
       idx: 5,
       from: 11,
       to: 13,
       name: () => t(L.RenaissanceAge),
+      color: 0xa29bfe,
    };
-   IndustrialAge: ITechAgeDefinition = { idx: 6, from: 14, to: 17, name: () => t(L.IndustrialAge) };
-   WorldWarAge: ITechAgeDefinition = { idx: 7, from: 18, to: 20, name: () => t(L.WorldWarAge) };
-   ColdWarAge: ITechAgeDefinition = { idx: 8, from: 21, to: 23, name: () => t(L.ColdWarAge) };
+   IndustrialAge: ITechAgeDefinition = {
+      idx: 6,
+      from: 14,
+      to: 17,
+      name: () => t(L.IndustrialAge),
+      color: 0xfd79a8,
+   };
+   WorldWarAge: ITechAgeDefinition = {
+      idx: 7,
+      from: 18,
+      to: 20,
+      name: () => t(L.WorldWarAge),
+      color: 0xfdcb6e,
+   };
+   ColdWarAge: ITechAgeDefinition = {
+      idx: 8,
+      from: 21,
+      to: 23,
+      name: () => t(L.ColdWarAge),
+      color: 0x74b9ff,
+   };
    InformationAge: ITechAgeDefinition = {
       idx: 9,
       from: 24,
       to: 26,
       name: () => t(L.InformationAge),
+      color: 0x55efc4,
    };
 }
 

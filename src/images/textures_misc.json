@@ -2,39 +2,39 @@
     "frames": {
         "Misc_100x100": {
             "frame": {
-                "x": 622,
-                "y": 451,
+                "x": 1103,
+                "y": 441,
                 "w": 100,
                 "h": 100
             }
         },
         "Misc_Bolt": {
             "frame": {
-                "x": 824,
-                "y": 508,
+                "x": 1305,
+                "y": 498,
                 "w": 32,
                 "h": 40
             }
         },
         "Misc_Circle_25": {
             "frame": {
-                "x": 857,
-                "y": 508,
+                "x": 1338,
+                "y": 498,
                 "w": 25,
                 "h": 25
             }
         },
         "Misc_Circle_50": {
             "frame": {
-                "x": 890,
-                "y": 451,
+                "x": 1371,
+                "y": 441,
                 "w": 50,
                 "h": 50
             }
         },
         "Misc_Circle": {
             "frame": {
-                "x": 301,
+                "x": 652,
                 "y": 601,
                 "w": 50,
                 "h": 50
@@ -42,15 +42,15 @@
         },
         "Misc_Cloud": {
             "frame": {
-                "x": 501,
-                "y": 451,
+                "x": 982,
+                "y": 441,
                 "w": 120,
                 "h": 128
             }
         },
         "Misc_Construction": {
             "frame": {
-                "x": 301,
+                "x": 652,
                 "y": 652,
                 "w": 38,
                 "h": 53
@@ -58,23 +58,39 @@
         },
         "Misc_GreatPersonBackground": {
             "frame": {
+                "x": 501,
+                "y": 0,
+                "w": 480,
+                "h": 580
+            }
+        },
+        "Misc_GreatPersonFrame": {
+            "frame": {
                 "x": 0,
                 "y": 0,
                 "w": 500,
                 "h": 600
             }
         },
-        "Misc_GreatPersonFrame": {
+        "Misc_GreatPersonPhoto": {
             "frame": {
-                "x": 501,
+                "x": 982,
                 "y": 0,
-                "w": 450,
-                "h": 450
+                "w": 440,
+                "h": 440
+            }
+        },
+        "Misc_GreatPersonPhotoMask": {
+            "frame": {
+                "x": 0,
+                "y": 601,
+                "w": 350,
+                "h": 350
             }
         },
         "Misc_NoPower": {
             "frame": {
-                "x": 352,
+                "x": 703,
                 "y": 601,
                 "w": 50,
                 "h": 50
@@ -82,7 +98,7 @@
         },
         "Misc_NotEnoughResources": {
             "frame": {
-                "x": 403,
+                "x": 754,
                 "y": 601,
                 "w": 50,
                 "h": 50
@@ -90,7 +106,7 @@
         },
         "Misc_NotEnoughWorkers": {
             "frame": {
-                "x": 454,
+                "x": 805,
                 "y": 601,
                 "w": 50,
                 "h": 50
@@ -98,7 +114,7 @@
         },
         "Misc_NotProducingGeneral": {
             "frame": {
-                "x": 505,
+                "x": 856,
                 "y": 601,
                 "w": 50,
                 "h": 50
@@ -106,7 +122,7 @@
         },
         "Misc_Paper": {
             "frame": {
-                "x": 0,
+                "x": 351,
                 "y": 601,
                 "w": 300,
                 "h": 300
@@ -114,15 +130,15 @@
         },
         "Misc_Spinner": {
             "frame": {
-                "x": 723,
-                "y": 451,
+                "x": 1204,
+                "y": 441,
                 "w": 100,
                 "h": 100
             }
         },
         "Misc_StorageFull": {
             "frame": {
-                "x": 556,
+                "x": 907,
                 "y": 601,
                 "w": 50,
                 "h": 50
@@ -130,15 +146,15 @@
         },
         "Misc_Transport": {
             "frame": {
-                "x": 824,
-                "y": 451,
+                "x": 1305,
+                "y": 441,
                 "w": 65,
                 "h": 56
             }
         },
         "Misc_TurnedOff": {
             "frame": {
-                "x": 607,
+                "x": 958,
                 "y": 601,
                 "w": 50,
                 "h": 50
@@ -146,7 +162,7 @@
         },
         "Misc_Upgrade": {
             "frame": {
-                "x": 658,
+                "x": 1009,
                 "y": 601,
                 "w": 40,
                 "h": 46
@@ -159,8 +175,8 @@
         "image": "./src/images/textures_misc.png",
         "scale": 1,
         "size": {
-            "w": 951,
-            "h": 901
+            "w": 1422,
+            "h": 951
         }
     }
 }

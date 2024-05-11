@@ -199,6 +199,9 @@ function GreatPersonCard({
             </>
          ) : (
             <>
+               <div className="mt10">
+                  {p.desc(p, Math.round(100 / (1 + (gs.greatPeople[greatPerson] ?? 0))) / 100)}
+               </div>
                {p.type === GreatPersonType.Normal && (gs.greatPeople[greatPerson] ?? 0) > 0 ? (
                   <Tippy
                      content={t(L.GreatPersonThisRunEffectiveLevel, {
@@ -207,10 +210,9 @@ function GreatPersonCard({
                         effect: 1 + (gs.greatPeople[greatPerson] ?? 0),
                      })}
                   >
-                     <div className="m-icon text-orange mb5">release_alert</div>
+                     <div className="m-icon text-orange mt5">release_alert</div>
                   </Tippy>
                ) : null}
-               <div>{p.desc(p, Math.round(100 / (1 + (gs.greatPeople[greatPerson] ?? 0))) / 100)}</div>
             </>
          )}
       </div>

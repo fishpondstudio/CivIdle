@@ -24,4 +24,5 @@ export interface ITechAgeDefinition {
    from: number;
    to: number;
    name: () => string;
+   color: number;
 }
