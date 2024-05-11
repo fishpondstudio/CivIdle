@@ -29,6 +29,7 @@ import { addMultiplier } from "../../../shared/logic/Update";
 import { VotedBoostType, type IGetVotedBoostResponse } from "../../../shared/utilities/Database";
 import {
    MINUTE,
+   clamp,
    forEach,
    keysOf,
    mapSafeAdd,
@@ -750,6 +751,15 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          };
          buildingsByType.get("UraniumEnrichmentPlant")?.forEach(tick);
          buildingsByType.get("AtomicFacility")?.forEach(tick);
+         // This is an easter egg :-)
+         const amount = options.greatPeople.MahatmaGandhi?.amount ?? 0;
+         if (amount > 0) {
+            addMultiplier(
+               "AtomicFacility",
+               { storage: amount, output: clamp(amount, 1, 5) },
+               Config.GreatPerson.MahatmaGandhi.name(),
+            );
+         }
          break;
       }
       case "GreatWall": {
