@@ -74,10 +74,10 @@ export async function startGame(
    routeTo(LoadingPage, { stage: LoadingPageStage.CheckSave });
    const gameState = getGameState();
    const options = getGameOptions();
-   verifyTextures(textures, gameState.city);
    if (isNewPlayer) {
       initializeGameState(gameState, options);
    }
+   verifyTextures(textures, gameState.city);
 
    // ========== Game state is initialized ==========
    routeTo(LoadingPage, { stage: LoadingPageStage.CheckSave });

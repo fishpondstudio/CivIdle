@@ -2,7 +2,15 @@ import type { Building } from "../definitions/BuildingDefinitions";
 import type { City } from "../definitions/CityDefinitions";
 import type { Deposit } from "../definitions/ResourceDefinitions";
 import type { Tech, TechAge } from "../definitions/TechDefinitions";
-import { forEach, isEmpty, isNullOrUndefined, shuffle, sizeOf, type Tile } from "../utilities/Helper";
+import {
+   firstKeyOf,
+   forEach,
+   isEmpty,
+   isNullOrUndefined,
+   shuffle,
+   sizeOf,
+   type Tile,
+} from "../utilities/Helper";
 import { TypedEvent } from "../utilities/TypedEvent";
 import { Config } from "./Config";
 import type { GameState } from "./GameState";
@@ -70,7 +78,7 @@ export function getBuildingUnlockAge(building: Building): TechAge {
 export function getCurrentAge(gs: GameState): TechAge {
    const tech = getMostAdvancedTech(gs);
    if (!tech) {
-      throw new Error("Cannot find current tech age!");
+      return firstKeyOf(Config.TechAge)!;
    }
    return getAgeForTech(tech);
 }

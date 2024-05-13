@@ -1,6 +1,6 @@
 import { BitmapText, Container, Sprite, Text } from "pixi.js";
 import { useEffect, useRef } from "react";
-import type { GreatPerson } from "../../../shared/definitions/GreatPersonDefinitions";
+import { GreatPersonType, type GreatPerson } from "../../../shared/definitions/GreatPersonDefinitions";
 import { Config } from "../../../shared/logic/Config";
 import { containsNonASCII, numberToRoman } from "../../../shared/utilities/Helper";
 import { getTexture } from "../logic/VisualLogic";
@@ -33,7 +33,7 @@ function makeTextAutoSize(text: string, font: string, size: number, tint: number
 
 export function greatPersonSprite(greatPerson: GreatPerson, context: ISceneContext): Container {
    const { textures } = context;
-   const { time, name, age } = Config.GreatPerson[greatPerson];
+   const { time, name, age, type } = Config.GreatPerson[greatPerson];
 
    const container = new Container();
 
@@ -42,7 +42,24 @@ export function greatPersonSprite(greatPerson: GreatPerson, context: ISceneConte
 
    const cardFrame = container.addChild(new Sprite(getTexture("Misc_GreatPersonFrame", textures)));
    cardFrame.position.set(0, 0);
-   cardFrame.tint = Config.TechAge[age].color;
+   const primaryColor = Config.TechAge[age].color;
+   cardFrame.tint = primaryColor;
+
+   if (type !== GreatPersonType.Normal) {
+      const ring = container.addChild(new Sprite(getTexture("Misc_GreatPersonRing", textures)));
+      ring.tint = primaryColor;
+      ring.anchor.set(1, 1);
+      ring.position.set(cardFrame.width, cardFrame.height);
+      ring.alpha = 0.7;
+
+      const typeText = container.addChild(
+         makeText(GreatPersonType[type].charAt(0).toUpperCase(), Fonts.Marcellus, 80, primaryColor),
+      );
+      typeText.anchor.set(0.5, 0.5);
+      typeText.angle = -20;
+      typeText.position.set(440, 530);
+      typeText.alpha = 0.7;
+   }
 
    const photoFrame = container.addChild(new Sprite(getTexture("Misc_GreatPersonPhoto", textures)));
 
@@ -58,18 +75,19 @@ export function greatPersonSprite(greatPerson: GreatPerson, context: ISceneConte
    sprite.position.set((photoFrame.width - sprite.width) / 2, (photoFrame.height - sprite.width) / 2);
 
    const ageText = container.addChild(
-      makeTextAutoSize(Config.TechAge[age].name(), Fonts.OldTypefaces, 40, 0xffffff, 350),
+      makeTextAutoSize(Config.TechAge[age].name(), Fonts.OldTypefaces, 46, 0xffffff, 350),
    );
-   ageText.position.set(30, 15);
+   ageText.position.set(30, 12);
 
    const ageNumber = container.addChild(
-      makeTextAutoSize(numberToRoman(Config.TechAge[age].idx + 1) ?? "", Fonts.Marcellus, 50, 0xffffff, 50),
+      makeText(numberToRoman(Config.TechAge[age].idx + 1) ?? "", Fonts.Marcellus, 50, primaryColor),
    );
    ageNumber.anchor.set(0.5, 0.5);
-   ageNumber.position.set(439, 50);
+   ageNumber.position.set(439, 40);
 
    const nameText = container.addChild(makeTextAutoSize(name(), Fonts.OldTypefaces, 50, 0x636e72, 400));
-   nameText.position.set((container.width - nameText.width) / 2, 460);
+   nameText.position.set(cardFrame.width / 2, 490);
+   nameText.anchor.set(0.5, 0.5);
 
    const timeText = container.addChild(makeText(time, Fonts.Marcellus, 25, 0xffffff));
    timeText.position.set((container.width - timeText.width) / 2, 560);
