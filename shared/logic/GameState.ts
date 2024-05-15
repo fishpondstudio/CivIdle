@@ -2,7 +2,6 @@ import type { Building } from "../definitions/BuildingDefinitions";
 import type { City } from "../definitions/CityDefinitions";
 import type { GreatPerson } from "../definitions/GreatPersonDefinitions";
 import type { Resource } from "../definitions/ResourceDefinitions";
-import type { RomeProvince } from "../definitions/RomeProvinceDefinitions";
 import type { Tech } from "../definitions/TechDefinitions";
 import { CZ } from "../languages/cz";
 import { DE } from "../languages/de";
@@ -45,7 +44,6 @@ export class GameState {
    id = uuid4();
    city: City = "Rome";
    unlockedTech: PartialSet<Tech> = {};
-   unlockedProvince: PartialSet<RomeProvince> = {};
    tiles: Map<Tile, ITileData> = new Map();
    transportation: Map<Tile, ITransportationData[]> = new Map();
    tick = 0;

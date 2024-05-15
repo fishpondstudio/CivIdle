@@ -220,7 +220,7 @@ export class TechDefinitions {
       name: () => t(L.Construction),
       column: 5,
       requireTech: ["RoadAndWheel"],
-      unlockBuilding: ["IronForge", "Marbleworks"],
+      unlockBuilding: ["IronForge", "Marbleworks", "ChoghaZanbil"],
    };
 
    Music: ITechDefinition = {

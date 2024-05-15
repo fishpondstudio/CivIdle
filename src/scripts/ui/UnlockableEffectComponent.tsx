@@ -1,4 +1,4 @@
-import type { IUnlockableDefinition } from "../../../shared/definitions/ITechDefinition";
+import type { ITechDefinition } from "../../../shared/definitions/ITechDefinition";
 import { getBuildingCost } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
 import type { GameState } from "../../../shared/logic/GameState";
@@ -12,7 +12,7 @@ export function UnlockableEffectComponent({
    definition,
    gameState,
 }: {
-   definition: IUnlockableDefinition;
+   definition: ITechDefinition;
    gameState: GameState;
 }): React.ReactNode {
    return (

@@ -17,6 +17,7 @@ import { PlayerTradeBuildingBody } from "./PlayerTradeBuildingBody";
 import { ScienceProductionWonderBuildingBody } from "./ScienceProductionWonderBuildingBody";
 import { StPetersBasilicaBuildingBody } from "./StPetersBasilicaBuildingBody";
 import { StatisticsBuildingBody } from "./StatisticsBuildingBody";
+import { TraditionBuildingBody } from "./TraditionBuildingBody";
 import { UnitedNationsBuildingBody } from "./UnitedNationsBuildingBody";
 import { WarehouseBuildingBody } from "./WarehouseBuildingBody";
 
@@ -32,6 +33,7 @@ const BuildingBodyOverride: Partial<Record<Building, FunctionComponent<IBuilding
    StPetersBasilica: StPetersBasilicaBuildingBody,
    GrandBazaar: GrandBazaarBuildingBody,
    UnitedNations: UnitedNationsBuildingBody,
+   ChoghaZanbil: TraditionBuildingBody,
 };
 
 export function BuildingPage(props: { tile: ITileData }): React.ReactNode {

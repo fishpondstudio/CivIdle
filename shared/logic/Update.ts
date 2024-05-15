@@ -1,5 +1,5 @@
 import type { Building } from "../definitions/BuildingDefinitions";
-import type { IUnlockableDefinition } from "../definitions/ITechDefinition";
+import type { ITechDefinition } from "../definitions/ITechDefinition";
 import { NoPrice, NoStorage, type Resource } from "../definitions/ResourceDefinitions";
 import {
    HOUR,
@@ -96,7 +96,7 @@ export const OnBuildingComplete = new TypedEvent<Tile>();
 export const OnBuildingProductionComplete = new TypedEvent<{ xy: Tile; offline: boolean }>();
 export const RequestFloater = new TypedEvent<{ xy: Tile; amount: number }>();
 
-export function tickTech(td: IUnlockableDefinition): void {
+export function tickTech(td: ITechDefinition): void {
    td.unlockBuilding?.forEach((b) => {
       Tick.next.unlockedBuildings.add(b);
    });

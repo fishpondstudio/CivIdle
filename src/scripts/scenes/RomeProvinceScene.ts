@@ -1,13 +1,13 @@
-import type { IProvinceVisual } from "../../../shared/definitions/RomeProvinceDefinitions";
+// import type { IProvinceVisual } from "../../../shared/definitions/RomeProvinceDefinitions";
 
-const WIDTH = 3000;
-const HEIGHT = 1743;
+// const WIDTH = 3000;
+// const HEIGHT = 1743;
 
-const UNKNOWN: Record<string, IProvinceVisual> = {
-   RomeUnknown1: { x: 614, y: 72 },
-   RomeUnknown2: { x: 1950, y: 872 },
-   RomeUnknown3: { x: 1172, y: 1516 },
-};
+// const UNKNOWN: Record<string, IProvinceVisual> = {
+//    RomeUnknown1: { x: 614, y: 72 },
+//    RomeUnknown2: { x: 1950, y: 872 },
+//    RomeUnknown3: { x: 1172, y: 1516 },
+// };
 
 // export class RomeProvinceScene extends ViewportScene {
 //    private readonly _provinces: ProvinceVisual[] = [];
