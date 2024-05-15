@@ -937,6 +937,8 @@ export const EN = {
    StatisticsTotalTransportation: "Total Transportation",
    StatisticsTransportation: "Transportation",
    StatisticsTransportationPercentage: "Percentage of Transportation Workers",
+   StatisticsBuildingsFilters: "Filters",
+   StatisticsBuildingsSearchText: "Type a building name to search",
    StatueOfLiberty: "Statue of Liberty",
    StatueOfLibertyDesc: "All buildings adjacent to the Statue of Liberty get +N Production, Worker Capacity and Storage Multiplier. N = Number of its adjacent buildings of the same type",
    StatueOfZeus: "Statue of Zeus",
