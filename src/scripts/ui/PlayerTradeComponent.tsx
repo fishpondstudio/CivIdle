@@ -38,13 +38,19 @@ import { RenderHTML } from "./RenderHTMLComponent";
 import { TableView } from "./TableView";
 import { WarningComponent } from "./WarningComponent";
 
-const savedResourceFilters: Set<Resource> = new Set();
+const savedResourceWantFilters: Set<Resource> = new Set();
+const savedResourceOfferFilters: Set<Resource> = new Set();
+let savedPlayerNameFilters = "";
+let savedMaxTradeAmountFilter = 0;
 const playerTradesSortingState = { column: 0, asc: true };
 
 export function PlayerTradeComponent({ gameState, xy }: IBuildingComponentProps): React.ReactNode {
    const building = gameState.tiles.get(xy)?.building;
-   const [resourceFilters, setResourceFilters] = useState(savedResourceFilters);
+   const [resourceWantFilters, setResourceWantFilters] = useState(savedResourceWantFilters);
+   const [resourceOfferFilters, setResourceOfferFilters] = useState(savedResourceOfferFilters);
    const [showFilters, setShowFilters] = useState(false);
+   const [playerNameFilter, setPlayerNameFilter] = useState<string>(savedPlayerNameFilters);
+   const [tradeAmountFilter, setTradeAmountFilter] = useState<number>(savedMaxTradeAmountFilter);
    if (!building) {
       return null;
    }
@@ -77,8 +83,15 @@ export function PlayerTradeComponent({ gameState, xy }: IBuildingComponentProps)
          {showFilters ? (
             <fieldset>
                <legend className="text-strong">{t(L.PlayerTradeFilters)}</legend>
-               <div className="table-view" style={{ overflowY: "auto", maxHeight: "200px" }}>
+               <div className="table-view sticky-header" style={{ overflowY: "auto", maxHeight: "200px" }}>
                   <table>
+                     <thead>
+                        <tr>
+                           <th>Resource</th>
+                           <th>Want</th>
+                           <th>Offer</th>
+                        </tr>
+                     </thead>
                      <tbody>
                         {resources
                            .sort((a, b) => Config.Resource[a].name().localeCompare(Config.Resource[b].name()))
@@ -89,15 +102,33 @@ export function PlayerTradeComponent({ gameState, xy }: IBuildingComponentProps)
                                     style={{ width: 0 }}
                                     className="text-strong"
                                     onClick={() => {
-                                       if (savedResourceFilters.has(res)) {
-                                          savedResourceFilters.delete(res);
+                                       if (savedResourceWantFilters.has(res)) {
+                                          savedResourceWantFilters.delete(res);
                                        } else {
-                                          savedResourceFilters.add(res);
+                                          savedResourceWantFilters.add(res);
                                        }
-                                       setResourceFilters(new Set(savedResourceFilters));
+                                       setResourceWantFilters(new Set(savedResourceWantFilters));
                                     }}
                                  >
-                                    {savedResourceFilters.has(res) ? (
+                                    {savedResourceWantFilters.has(res) ? (
+                                       <div className="m-icon small text-blue">check_box</div>
+                                    ) : (
+                                       <div className="m-icon small text-desc">check_box_outline_blank</div>
+                                    )}
+                                 </td>
+                                 <td
+                                    style={{ width: 0 }}
+                                    className="text-strong"
+                                    onClick={() => {
+                                       if (savedResourceOfferFilters.has(res)) {
+                                          savedResourceOfferFilters.delete(res);
+                                       } else {
+                                          savedResourceOfferFilters.add(res);
+                                       }
+                                       setResourceOfferFilters(new Set(savedResourceOfferFilters));
+                                    }}
+                                 >
+                                    {savedResourceOfferFilters.has(res) ? (
                                        <div className="m-icon small text-blue">check_box</div>
                                     ) : (
                                        <div className="m-icon small text-desc">check_box_outline_blank</div>
@@ -122,13 +153,43 @@ export function PlayerTradeComponent({ gameState, xy }: IBuildingComponentProps)
                   <button
                      className="f1 text-center"
                      onClick={() => {
-                        savedResourceFilters.clear();
-                        setResourceFilters(new Set(savedResourceFilters));
+                        savedResourceWantFilters.clear();
+                        setResourceWantFilters(new Set(savedResourceWantFilters));
+                        savedResourceOfferFilters.clear();
+                        setResourceOfferFilters(new Set(savedResourceOfferFilters));
                         setShowFilters(false);
                      }}
                   >
                      {t(L.PlayerTradeFiltersClear)}
                   </button>
+               </div>
+               <div className="sep10"></div>
+               <div className="row">
+                  <div>{t(L.PlayerTradePlayerNameFilter)}</div>
+                  <input
+                     type="text"
+                     className="ml5 f1"
+                     value={playerNameFilter}
+                     onChange={(e) => {
+                        savedPlayerNameFilters = e.target.value;
+                        setPlayerNameFilter(savedPlayerNameFilters);
+                     }}
+                     onClick={(e) => (e.target as HTMLInputElement)?.select()}
+                  />
+               </div>
+               <div className="sep10"></div>
+               <div className="row">
+                  <div>{t(L.PlayerTradeMaxTradeAmountFilter)}</div>
+                  <input
+                     type="number"
+                     className="ml5 f1"
+                     value={tradeAmountFilter}
+                     onChange={(e) => {
+                        savedMaxTradeAmountFilter = Number(e.target.value);
+                        setTradeAmountFilter(savedMaxTradeAmountFilter);
+                     }}
+                     onClick={(e) => (e.target as HTMLInputElement)?.select()}
+                  />
                </div>
             </fieldset>
          ) : (
@@ -140,7 +201,12 @@ export function PlayerTradeComponent({ gameState, xy }: IBuildingComponentProps)
             >
                <div className="m-icon small">filter_list</div>
                <div className="text-strong f1">
-                  {t(L.PlayerTradeFilters)} ({resourceFilters.size})
+                  {t(L.PlayerTradeFilters)} (
+                  {resourceWantFilters.size +
+                     resourceOfferFilters.size +
+                     (playerNameFilter.length > 0 ? 1 : 0) +
+                     (tradeAmountFilter > 0 ? 1 : 0)}
+                  )
                </div>
             </button>
          )}
@@ -155,9 +221,12 @@ export function PlayerTradeComponent({ gameState, xy }: IBuildingComponentProps)
             sortingState={playerTradesSortingState}
             data={trades.filter(
                (trade) =>
-                  resourceFilters.size === 0 ||
-                  resourceFilters.has(trade.buyResource) ||
-                  resourceFilters.has(trade.sellResource),
+                  ((resourceWantFilters.size === 0 && resourceOfferFilters.size === 0) ||
+                     resourceWantFilters.has(trade.buyResource) ||
+                     resourceOfferFilters.has(trade.sellResource)) &&
+                  trade.from.toLocaleLowerCase().includes(playerNameFilter) &&
+                  (tradeAmountFilter === 0 ||
+                     (tradeAmountFilter > 0 && trade.buyAmount <= tradeAmountFilter)),
             )}
             compareFunc={(a, b, col, asc) => {
                if (a.fromId === user?.userId && b.fromId !== user?.userId) {
