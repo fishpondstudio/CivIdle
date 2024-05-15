@@ -1,5 +1,3 @@
-import Tippy from "@tippyjs/react";
-import classNames from "classnames";
 import { useState } from "react";
 import type { Building, IBuildingDefinition } from "../../../shared/definitions/BuildingDefinitions";
 import {
@@ -23,7 +21,6 @@ import {
    setContains,
    sizeOf,
    tileToPoint,
-   toggleFlag,
    type Tile,
 } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
@@ -34,28 +31,10 @@ import { jsxMapOf } from "../utilities/Helper";
 import { useShortcut } from "../utilities/Hook";
 import { Singleton } from "../utilities/Singleton";
 import { playError } from "../visuals/Sound";
+import { BuildingFilter, Filter } from "./FilterComponent";
 import { MenuComponent } from "./MenuComponent";
 import { TableView } from "./TableView";
 import { TextWithHelp } from "./TextWithHelpComponent";
-
-enum BuildingFilter {
-   None = 0,
-   Wonder = 1 << 0,
-   Tier1 = 1 << 1,
-   Tier2 = 1 << 2,
-   Tier3 = 1 << 3,
-   Tier4 = 1 << 4,
-   Tier5 = 1 << 5,
-   Tier6 = 1 << 6,
-   Tier7 = 1 << 7,
-   Tier8 = 1 << 8,
-   Tier9 = 1 << 9,
-   Tier10 = 1 << 10,
-   Tier11 = 1 << 11,
-   Tier12 = 1 << 12,
-
-   NotBuilt = 1 << 28,
-}
 
 let lastBuild: Building | null = null;
 let savedFilter = BuildingFilter.None;
@@ -64,7 +43,11 @@ const savedSorting = { column: 0, asc: true };
 export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
    const gs = useGameState();
    const [, setSelected] = useState<Building | null>(null);
-   const [buildingFilter, setBuildingFilter] = useState<BuildingFilter>(savedFilter);
+   const [buildingFilter, _setBuildingFilter] = useState<BuildingFilter>(savedFilter);
+   const setBuildingFilter = (newFilter: BuildingFilter) => {
+      _setBuildingFilter(newFilter);
+      savedFilter = newFilter;
+   };
    const [search, setSearch] = useState<string>("");
    const constructed = getTypeBuildings(gs);
    const build = (k: Building) => {
@@ -141,6 +124,7 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
                   <Filter
                      filter={buildingFilter}
                      current={BuildingFilter.Wonder}
+                     savedFilter={savedFilter}
                      onFilterChange={setBuildingFilter}
                   >
                      <div className="m-icon small">globe</div>
@@ -151,6 +135,7 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
                            key={tier}
                            filter={buildingFilter}
                            current={1 << tier}
+                           savedFilter={savedFilter}
                            onFilterChange={setBuildingFilter}
                         >
                            {numberToRoman(tier)}
@@ -163,6 +148,7 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
                      tooltip={t(L.ShowUnbuiltOnly)}
                      filter={buildingFilter}
                      current={BuildingFilter.NotBuilt}
+                     savedFilter={savedFilter}
                      onFilterChange={setBuildingFilter}
                   >
                      <div className="m-icon small">lightbulb</div>
@@ -337,36 +323,4 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
          </div>
       </div>
    );
-}
-
-function Filter({
-   tooltip,
-   children,
-   filter,
-   current,
-   onFilterChange,
-}: React.PropsWithChildren<{
-   tooltip?: string;
-   filter: BuildingFilter;
-   current: BuildingFilter;
-   onFilterChange: (f: BuildingFilter) => void;
-}>): React.ReactNode {
-   const content = (
-      <button
-         className={classNames({
-            active: hasFlag(filter, current),
-         })}
-         style={{ width: 27, padding: 0 }}
-         onClick={() => {
-            savedFilter = toggleFlag(filter, current);
-            onFilterChange(savedFilter);
-         }}
-      >
-         {children}
-      </button>
-   );
-   if (!tooltip) {
-      return content;
-   }
-   return <Tippy content={tooltip}>{content}</Tippy>;
 }
