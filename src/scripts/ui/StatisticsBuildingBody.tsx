@@ -29,8 +29,10 @@ import {
    forEach,
    formatHMS,
    formatNumber,
+   hasFlag,
    keysOf,
    mReduceOf,
+   numberToRoman,
    type Tile,
 } from "../../../shared/utilities/Helper";
 import type { PartialSet } from "../../../shared/utilities/TypeDefinitions";
@@ -40,6 +42,7 @@ import { Singleton } from "../utilities/Singleton";
 import { playClick } from "../visuals/Sound";
 import { BuildingColorComponent } from "./BuildingColorComponent";
 import type { IBuildingComponentProps } from "./BuildingPage";
+import { BuildingFilter, Filter } from "./FilterComponent";
 import { FormatNumber } from "./HelperComponents";
 import { TableView } from "./TableView";
 import { WorkerScienceComponent } from "./WorkerScienceComponent";
@@ -386,8 +389,15 @@ function BuildingTab({ gameState }: IBuildingComponentProps): React.ReactNode {
 }
 
 const resourceTabSortingState = { column: 0, asc: true };
+let savedResourceTierFilter = BuildingFilter.None;
 
 function ResourcesTab({ gameState }: IBuildingComponentProps): React.ReactNode {
+   const [resourceTierFilter, _setResourceTierFilter] = useState<BuildingFilter>(savedResourceTierFilter);
+   const setResourceTierFilter = (newFilter: BuildingFilter) => {
+      _setResourceTierFilter(newFilter);
+      savedResourceTierFilter = newFilter;
+   };
+   const [search, setSearch] = useState<string>("");
    const [showTheoreticalValue, setShowTheoreticalValue] = useState(true);
    const unlockedResourcesList: PartialSet<Resource> = unlockedResources(gameState);
    const resourceAmounts: Partial<Record<keyof ResourceDefinitions, number>> = {};
@@ -451,6 +461,30 @@ function ResourcesTab({ gameState }: IBuildingComponentProps): React.ReactNode {
                </div>
             </div>
          </fieldset>
+         <fieldset>
+            <legend>{t(L.StatisticsResourcesFilters)}</legend>
+            <input
+               type="text"
+               style={{ width: "100%" }}
+               placeholder={t(L.StatisticsResourcesSearchText)}
+               onChange={(e) => setSearch(e.target.value)}
+            />
+            <div className="row mt10">
+               {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((tier) => {
+                  return (
+                     <Filter
+                        key={tier}
+                        filter={resourceTierFilter}
+                        current={1 << tier}
+                        savedFilter={savedResourceTierFilter}
+                        onFilterChange={setResourceTierFilter}
+                     >
+                        {numberToRoman(tier)}
+                     </Filter>
+                  );
+               })}
+            </div>
+         </fieldset>
          <TableView
             classNames="sticky-header f1"
             header={[
@@ -460,7 +494,17 @@ function ResourcesTab({ gameState }: IBuildingComponentProps): React.ReactNode {
                { name: t(L.StatisticsResourcesRunOut), right: true, sortable: true },
             ]}
             sortingState={resourceTabSortingState}
-            data={keysOf(unlockedResourcesList)}
+            data={keysOf(unlockedResourcesList).filter((v) => {
+               let filter = (savedResourceTierFilter & 0x0fffffff) === 0;
+               for (let i = 0; i < 12; i++) {
+                  if (hasFlag(savedResourceTierFilter, 1 << i)) {
+                     filter ||= Config.ResourceTier[v] === i;
+                  }
+               }
+
+               const s = search.toLowerCase();
+               return filter && Config.Resource[v].name().toLowerCase().includes(s);
+            })}
             compareFunc={(a, b, i) => {
                switch (i) {
                   case 1:

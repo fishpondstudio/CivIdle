@@ -927,6 +927,8 @@ export const EN = {
    StatisticsResourcesDeficit: "Deficit",
    StatisticsResourcesDeficitDesc: "Production: %{output} - Consumption: %{input}",
    StatisticsResourcesRunOut: "Run Out",
+   StatisticsResourcesFilters: "Filters",
+   StatisticsResourcesSearchText: "Type a resource name to search",
    StatisticsScience: "Science",
    StatisticsScienceFromBuildings: "Science From Buildings",
    StatisticsScienceFromWorkers: "Science From Workers",
