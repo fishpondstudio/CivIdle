@@ -40,7 +40,10 @@ cmd("npm run optimize", rootPath);
 if (build > 0) {
    cmd("sentry-cli sourcemaps inject ./dist/", rootPath);
    cmd(`sentry-cli sourcemaps upload --org fish-pond-studio --project cividle --release Build.${build} ./dist/`, rootPath);
-   rimrafSync(path.join(rootPath, "dist", "*.js.map"), { glob: true });
+
+   const sourceMaps = path.join(rootPath, "dist", "assets", "*.js.map");
+   console.log(`rimraf ${sourceMaps}`)
+   rimrafSync(sourceMaps, { glob: true });
 }
 
 console.log("========== Copy to Electron ==========");
