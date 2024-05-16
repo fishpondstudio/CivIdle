@@ -34,6 +34,12 @@ if (process.env.STEAMWORKS_PATH) {
 cmd("npm run build", rootPath);
 cmd("npm run optimize", rootPath);
 
+if (process.env.STEAMWORKS_PATH) {
+   const ver = JSON.parse(fs.readFileSync(versionFilePath, { encoding: "utf8" }));
+   cmd("sentry-cli sourcemaps inject ./dist/", rootPath);
+   cmd(`sentry-cli sourcemaps upload --org fish-pond-studio --project cividle --release Build.${ver.build} ./dist/ --log-level=debug`, rootPath);
+}
+
 console.log("========== Copy to Electron ==========");
 
 fs.copySync(path.join(rootPath, "dist"), path.join(rootPath, "electron", "dist"));
