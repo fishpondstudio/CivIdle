@@ -3,7 +3,7 @@
       "composite": true,
       "module": "ESNext",
       "moduleResolution": "Bundler",
-      "noEmit": true
+      "outDir": "temp"
    },
    "include": ["vite.config.ts"]
 }
