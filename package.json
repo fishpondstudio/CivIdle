@@ -58,6 +58,7 @@
       "glob": "^8.0.3",
       "madge": "^6.1.0",
       "node-7z": "^3.0.0",
+      "rimraf": "^5.0.7",
       "typescript": "5.4.3",
       "vite": "^4.5.3",
       "vite-plugin-spritesmith": "github:fishpondstudio/vite-plugin-spritesmith"

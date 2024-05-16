@@ -1,6 +1,7 @@
 const { execSync } = require("child_process");
 const path = require("path");
 const fs = require("fs-extra");
+const { rimrafSync } = require('rimraf')
 
 console.log("========== Building CivIdle ==========");
 
@@ -39,6 +40,10 @@ cmd("npm run optimize", rootPath);
 if (build > 0) {
    cmd("sentry-cli sourcemaps inject ./dist/", rootPath);
    cmd(`sentry-cli sourcemaps upload --org fish-pond-studio --project cividle --release Build.${build} ./dist/`, rootPath);
+
+   const sourceMaps = path.join(rootPath, "dist", "assets", "*.js.map");
+   console.log(`rimraf ${sourceMaps}`)
+   rimrafSync(sourceMaps, { glob: true });
 }
 
 console.log("========== Copy to Electron ==========");
