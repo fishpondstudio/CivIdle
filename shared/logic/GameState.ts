@@ -147,7 +147,7 @@ export class GameOptions {
    language: keyof typeof Languages = "en";
 }
 
-export const Languages = {
+export const Languages: Record<string, Record<string, string>> = {
    en: EN,
    es: ES,
    cz: CZ,

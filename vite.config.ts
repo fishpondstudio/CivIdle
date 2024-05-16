@@ -1,5 +1,5 @@
 import react from "@vitejs/plugin-react-swc";
-import path from "path";
+import path from "node:path";
 import { defineConfig } from "vite";
 import Spritesmith from "vite-plugin-spritesmith";
 
@@ -21,6 +21,7 @@ export default defineConfig(({ command }) => {
          host: true,
       },
       build: {
+         sourcemap: true,
          target: "es2015",
       },
       test: {
