@@ -6,13 +6,15 @@ console.log("========== Building CivIdle ==========");
 
 const rootPath = path.resolve(path.join(__dirname, "../"));
 
+let build = 0;
+
 if (process.env.STEAMWORKS_PATH) {
    console.log("========== Increase Build Number ==========");
    const versionFilePath = path.join(rootPath, "src", "scripts", "Version.json");
    const ver = JSON.parse(fs.readFileSync(versionFilePath, { encoding: "utf8" }));
-   ver.build++;
+   build = ++ver.build;
    fs.writeFileSync(versionFilePath, JSON.stringify(ver));
-   console.log(`🔔 Build Number: ${ver.build}`);
+   console.log(`🔔 Build Number: ${build}`);
    fs.copyFileSync(
       path.join(rootPath, "build", "CivIdle.vdf"),
       path.join(process.env.STEAMWORKS_PATH, "cividle", "CivIdle.vdf"),
@@ -34,10 +36,9 @@ if (process.env.STEAMWORKS_PATH) {
 cmd("npm run build", rootPath);
 cmd("npm run optimize", rootPath);
 
-if (process.env.STEAMWORKS_PATH) {
-   const ver = JSON.parse(fs.readFileSync(versionFilePath, { encoding: "utf8" }));
+if (build > 0) {
    cmd("sentry-cli sourcemaps inject ./dist/", rootPath);
-   cmd(`sentry-cli sourcemaps upload --org fish-pond-studio --project cividle --release Build.${ver.build} ./dist/ --log-level=debug`, rootPath);
+   cmd(`sentry-cli sourcemaps upload --org fish-pond-studio --project cividle --release Build.${build} ./dist/`, rootPath);
 }
 
 console.log("========== Copy to Electron ==========");
