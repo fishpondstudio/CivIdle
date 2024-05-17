@@ -95,6 +95,7 @@ export const OnPriceUpdated = new TypedEvent<GameState>();
 export const OnBuildingComplete = new TypedEvent<Tile>();
 export const OnBuildingProductionComplete = new TypedEvent<{ xy: Tile; offline: boolean }>();
 export const RequestFloater = new TypedEvent<{ xy: Tile; amount: number }>();
+export const RequestChooseGreatPerson = new TypedEvent<{ permanent: boolean }>();
 
 export function tickUnlockable(td: IUnlockable, source: string, gs: GameState): void {
    td.unlockBuilding?.forEach((b) => {

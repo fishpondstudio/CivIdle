@@ -2,14 +2,17 @@ import Tippy from "@tippyjs/react";
 import { getBuildingCost } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
 import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
+import { GlobalMultiplierNames } from "../../../shared/logic/TickLogic";
 import type { ITraditionBuildingData } from "../../../shared/logic/Tile";
 import { formatNumber, mapOf, numberToRoman } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import { jsxMapOf } from "../utilities/Helper";
-import { playClick, playError } from "../visuals/Sound";
+import { playClick, playError, playUpgrade } from "../visuals/Sound";
 import { BuildingColorComponent } from "./BuildingColorComponent";
 import type { IBuildingComponentProps } from "./BuildingPage";
 import { BuildingWikipediaComponent } from "./BuildingWikipediaComponent";
+import { RenderHTML } from "./RenderHTMLComponent";
+import { WarningComponent } from "./WarningComponent";
 
 export function TraditionBuildingBody({ gameState, xy }: IBuildingComponentProps): React.ReactNode {
    const building = gameState.tiles.get(xy)?.building as ITraditionBuildingData;
@@ -18,6 +21,11 @@ export function TraditionBuildingBody({ gameState, xy }: IBuildingComponentProps
    }
    return (
       <div className="window-body">
+         {!building.tradition ? (
+            <WarningComponent icon="info" className="text-small mb10">
+               <RenderHTML html={t(L.TraditionDescHTML)} />
+            </WarningComponent>
+         ) : null}
          {jsxMapOf(Config.Tradition, (tradition, def) => {
             if (building.tradition && building.tradition !== tradition) {
                return null;
@@ -53,6 +61,7 @@ export function TraditionBuildingBody({ gameState, xy }: IBuildingComponentProps
                                              }
                                              playClick();
                                              if (!building.tradition) {
+                                                playUpgrade();
                                                 building.tradition = tradition;
                                              } else {
                                                 building.desiredLevel++;
@@ -110,6 +119,35 @@ export function TraditionBuildingBody({ gameState, xy }: IBuildingComponentProps
                                                    </div>
                                                 ) : null}
                                              </div>
+                                          );
+                                       })}
+                                       {jsxMapOf(unlockable.globalMultiplier, (k, v) => {
+                                          return (
+                                             <div
+                                                key={k}
+                                                className="row"
+                                                style={{
+                                                   border: "1px dashed #ccc",
+                                                   margin: "5px 0",
+                                                   padding: 5,
+                                                }}
+                                             >
+                                                <div className="f1">{GlobalMultiplierNames[k]()}</div>
+                                                <div className="text-strong">+{v}</div>
+                                             </div>
+                                          );
+                                       })}
+                                       {unlockable.additionalUpgrades?.().map((v, i) => {
+                                          return (
+                                             <RenderHTML
+                                                key={i}
+                                                style={{
+                                                   border: "1px dashed #ccc",
+                                                   margin: "5px 0",
+                                                   padding: 5,
+                                                }}
+                                                html={v}
+                                             />
                                           );
                                        })}
                                     </td>

@@ -1165,6 +1165,7 @@ export const EN = {
    Zoroaster: "Zoroaster",
    ChoghaZanbil: "Chogha Zanbil",
    ChoghaZanbilDescV2: "Choose an empire tradition, unlock more boost with each choice",
+   TraditionDescHTML: "Choose from <b>Cultivation, Commerce, Expansion and Honor</b> as your empire tradition. You <b>cannot switch tradition</b> after it is chosen. You can unlock more boost within each tradition",
    TraditionCultivation: "Cultivation",
    TraditionCommerce: "Commerce",
    TraditionHonor: "Honor",
@@ -1173,4 +1174,8 @@ export const EN = {
    CommerceLevelX: "Commerce %{level}",
    HonorLevelX: "Honor %{level}",
    ExpansionLevelX: "Expansion %{level}",
+   Cultivation4UpgradeHTML: "A great person of <b>Renaissance Age</b> is born",
+   Commerce4UpgradeHTML: "Upgrade all banks to <b>Level 30</b> for free",
+   Expansion4UpgradeHTML: "<b>+1</b> Science From All Workers",
+   Honor4UpgradeHTML: "Double the effect of <b>Zheng He</b> (Great Person)",
 };

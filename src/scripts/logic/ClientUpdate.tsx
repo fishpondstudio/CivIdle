@@ -15,6 +15,7 @@ import {
    OnBuildingComplete,
    OnBuildingProductionComplete,
    OnPriceUpdated,
+   RequestChooseGreatPerson,
    RequestFloater,
    tickPower,
    tickPrice,
@@ -27,9 +28,11 @@ import { L, t } from "../../../shared/utilities/i18n";
 import { saveGame } from "../Global";
 import { isSteam } from "../rpc/SteamClient";
 import { WorldScene } from "../scenes/WorldScene";
+import { ChooseGreatPersonModal } from "../ui/ChooseGreatPersonModal";
+import { showModal } from "../ui/GlobalModal";
 import { makeObservableHook } from "../utilities/Hook";
 import { Singleton } from "../utilities/Singleton";
-import { playDing } from "../visuals/Sound";
+import { playAgeUp, playDing } from "../visuals/Sound";
 import { onBuildingComplete } from "./OnBuildingComplete";
 import { onProductionComplete } from "./OnProductionComplete";
 import { onTileExplored } from "./OnTileExplored";
@@ -128,6 +131,10 @@ OnPriceUpdated.on((gs) => {
    if ((getBuildingsByType("Market", gs)?.size ?? 0) > 0) {
       playDing();
    }
+});
+RequestChooseGreatPerson.on(({ permanent }) => {
+   playAgeUp();
+   showModal(<ChooseGreatPersonModal permanent={permanent} />);
 });
 
 export const useCurrentTick = makeObservableHook(CurrentTickChanged, () => Tick.current);

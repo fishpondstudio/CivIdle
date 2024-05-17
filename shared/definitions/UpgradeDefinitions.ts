@@ -1,9 +1,20 @@
+import { Config } from "../logic/Config";
+import { getGameOptions } from "../logic/GameStateLogic";
+import { getBuildingsByType } from "../logic/IntraTickCache";
+import {
+   getGreatPeopleChoiceCount,
+   getGreatPersonThisRunLevel,
+   rollGreatPeopleThisRun,
+} from "../logic/RebornLogic";
+import { RequestChooseGreatPerson } from "../logic/Update";
 import { deepFreeze } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
 import { BuildingDefinitions } from "./BuildingDefinitions";
+import { GreatPersonDefinitions, tickGreatPersonBoost } from "./GreatPersonDefinitions";
 import type { IUpgradeDefinition } from "./ITechDefinition";
 
 const Buildings = deepFreeze(new BuildingDefinitions());
+const GreatPerson = deepFreeze(new GreatPersonDefinitions());
 
 export class UpgradeDefinitions {
    Cultivation1: IUpgradeDefinition = {
@@ -38,6 +49,14 @@ export class UpgradeDefinitions {
          PaperMaker: { output: 1 },
          Library: { output: 1 },
          School: { output: 1 },
+      },
+      additionalUpgrades: () => [t(L.Cultivation4UpgradeHTML)],
+      onUnlocked: (gs) => {
+         const candidates = rollGreatPeopleThisRun("RenaissanceAge", gs.city, getGreatPeopleChoiceCount(gs));
+         if (candidates) {
+            gs.greatPeopleChoices.push(candidates);
+         }
+         RequestChooseGreatPerson.emit({ permanent: false });
       },
    };
 
@@ -74,6 +93,14 @@ export class UpgradeDefinitions {
          GoldMiningCamp: { output: 1 },
          CoinMint: { output: 1 },
       },
+      additionalUpgrades: () => [t(L.Commerce4UpgradeHTML)],
+      onUnlocked: (gs) => {
+         getBuildingsByType("Bank", gs)?.forEach((tile) => {
+            if (tile.building.status === "completed" && tile.building.level < 30) {
+               tile.building.level = 30;
+            }
+         });
+      },
    };
 
    Honor1: IUpgradeDefinition = {
@@ -108,6 +135,15 @@ export class UpgradeDefinitions {
          LumberMill: { output: 1 },
          SiegeWorkshop: { output: 1 },
          KnightCamp: { output: 1 },
+      },
+      additionalUpgrades: () => [t(L.Honor4UpgradeHTML)],
+      tick: (gs) => {
+         const total =
+            getGreatPersonThisRunLevel(gs.greatPeople.ZhengHe ?? 0) +
+            (getGameOptions().greatPeople.ZhengHe?.level ?? 0);
+         if (total > 0) {
+            tickGreatPersonBoost(Config.GreatPerson.ZhengHe, total, t(L.ExpansionLevelX, { level: "IV" }));
+         }
       },
    };
 
@@ -144,6 +180,7 @@ export class UpgradeDefinitions {
          Bakery: { output: 1 },
          Apartment: { output: 1 },
       },
+      globalMultiplier: { sciencePerBusyWorker: 1, sciencePerIdleWorker: 1 },
    };
 }
 

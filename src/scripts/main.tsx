@@ -85,7 +85,10 @@ if (canvas) {
    });
 
    canvas.appendChild(app.view as any);
-   registerPixiInspector(app);
+   if (import.meta.env.DEV) {
+      registerPixiInspector(app);
+      document.body.style.userSelect = "auto";
+   }
    Assets.addBundle("main", mainBundle);
    loadBundle()
       .then(({ main, textures }) => {
