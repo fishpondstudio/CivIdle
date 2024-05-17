@@ -4,7 +4,7 @@ import { GreatPersonDefinitions } from "../definitions/GreatPersonDefinitions";
 import { ResourceDefinitions, type Resource } from "../definitions/ResourceDefinitions";
 import { TechAgeDefinitions, TechDefinitions, type Tech, type TechAge } from "../definitions/TechDefinitions";
 import { TraditionDefinitions } from "../definitions/TraditionDefinitions";
-import { UnlockableDefinitions } from "../definitions/UnlockableDefinitions";
+import { UpgradeDefinitions } from "../definitions/UpgradeDefinitions";
 import { deepFreeze } from "../utilities/Helper";
 import type { PartialTabulate } from "../utilities/TypeDefinitions";
 
@@ -27,7 +27,7 @@ export const Config = {
    Tech: new TechDefinitions(),
    TechAge: deepFreeze(new TechAgeDefinitions()),
    Tradition: deepFreeze(new TraditionDefinitions()),
-   Unlockable: deepFreeze(new UnlockableDefinitions()),
+   Upgrade: deepFreeze(new UpgradeDefinitions()),
    BuildingTier,
    BuildingTech,
    BuildingTechAge,

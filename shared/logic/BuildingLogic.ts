@@ -1,6 +1,7 @@
 import type { Building } from "../definitions/BuildingDefinitions";
 import { BuildingSpecial } from "../definitions/BuildingDefinitions";
 import { NoPrice, NoStorage, type Deposit, type Resource } from "../definitions/ResourceDefinitions";
+import type { Tradition } from "../definitions/TraditionDefinitions";
 import {
    clamp,
    forEach,
@@ -419,16 +420,11 @@ export function getScienceFromBuildings() {
    );
 }
 
-const buildingCostCache: Map<number, Readonly<PartialTabulate<Resource>>> = new Map();
-
-export function getBuildingCost(building: Pick<IBuildingData, "type" | "level">): PartialTabulate<Resource> {
+export function getBuildingCost(
+   building: Pick<IBuildingData, "type" | "level"> & { tradition?: Tradition | null },
+): PartialTabulate<Resource> {
    const type = building.type;
    const level = building.level;
-   const key = (Config.BuildingHash[building.type]! << 16) + level;
-   const cached = buildingCostCache.get(key);
-   if (cached) {
-      return cached;
-   }
    let cost = { ...Config.Building[type].construction };
    if (isEmpty(cost)) {
       cost = { ...Config.Building[type].input };
@@ -438,24 +434,15 @@ export function getBuildingCost(building: Pick<IBuildingData, "type" | "level">)
    }
 
    // This is a wonder, we apply the wonder multiplier here
-   if (isWorldWonder(building.type)) {
-      const tech = getBuildingUnlockTech(building.type);
-      let techIdx = 0;
-      let ageIdx = 0;
-      if (tech) {
-         techIdx = Config.Tech[tech].column;
-         const a = getAgeForTech(tech);
-         if (a) {
-            const age = Config.TechAge[a];
-            ageIdx = age.idx;
-         }
+   if (isWorldWonder(type)) {
+      const multiplier = getWonderCostMultiplier(type);
+      if (building.tradition && building.level > 0) {
+         const unlockable = Config.Tradition[building.tradition].content[building.level];
+         cost = structuredClone(Config.Upgrade[unlockable].requireResources);
+         forEach(cost, (k, v) => {
+            cost[k] = v * 100 * Math.pow(2, building.level);
+         });
       }
-      const multiplier = Math.round(
-         300 +
-            10 * Math.pow(ageIdx, 3) * Math.pow(techIdx, 2) +
-            (100 * Math.pow(5, ageIdx) * Math.pow(1.5, techIdx)) / Math.pow(techIdx, 2),
-      );
-
       keysOf(cost).forEach((res) => {
          const price = Config.ResourcePrice[res] ?? 1;
          cost[res] = (multiplier * cost[res]!) / price;
@@ -466,8 +453,27 @@ export function getBuildingCost(building: Pick<IBuildingData, "type" | "level">)
          cost[res] = Math.pow(1.5, level) * multiplier * cost[res]!;
       });
    }
-   buildingCostCache.set(key, Object.freeze(cost));
    return cost;
+}
+
+export function getWonderCostMultiplier(type: Building): number {
+   const tech = getBuildingUnlockTech(type);
+   let techIdx = 0;
+   let ageIdx = 0;
+   if (tech) {
+      techIdx = Config.Tech[tech].column;
+      const a = getAgeForTech(tech);
+      if (a) {
+         const age = Config.TechAge[a];
+         ageIdx = age.idx;
+      }
+   }
+   const multiplier = Math.round(
+      300 +
+         10 * Math.pow(ageIdx, 3) * Math.pow(techIdx, 2) +
+         (100 * Math.pow(5, ageIdx) * Math.pow(1.5, techIdx)) / Math.pow(techIdx, 2),
+   );
+   return multiplier;
 }
 
 export function getWonderBaseBuilderCapacity(type: Building): number {

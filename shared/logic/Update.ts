@@ -1,5 +1,5 @@
 import type { Building } from "../definitions/BuildingDefinitions";
-import type { ITechDefinition } from "../definitions/ITechDefinition";
+import type { IUnlockable } from "../definitions/ITechDefinition";
 import { NoPrice, NoStorage, type Resource } from "../definitions/ResourceDefinitions";
 import {
    HOUR,
@@ -96,19 +96,17 @@ export const OnBuildingComplete = new TypedEvent<Tile>();
 export const OnBuildingProductionComplete = new TypedEvent<{ xy: Tile; offline: boolean }>();
 export const RequestFloater = new TypedEvent<{ xy: Tile; amount: number }>();
 
-export function tickTech(td: ITechDefinition): void {
+export function tickUnlockable(td: IUnlockable, source: string, gs: GameState): void {
    td.unlockBuilding?.forEach((b) => {
       Tick.next.unlockedBuildings.add(b);
    });
    forEach(td.buildingMultiplier, (k, v) => {
-      addMultiplier(k, v, t(L.SourceResearch, { tech: td.name() }));
+      addMultiplier(k, v, source);
    });
    forEach(td.globalMultiplier, (k, v) => {
-      Tick.next.globalMultipliers[k].push({
-         value: v,
-         source: t(L.SourceResearch, { tech: td.name() }),
-      });
+      Tick.next.globalMultipliers[k].push({ value: v, source });
    });
+   td.tick?.(gs);
 }
 
 export function tickTransports(gs: GameState): void {

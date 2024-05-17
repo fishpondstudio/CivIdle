@@ -124,7 +124,7 @@ export class TechDefinitions {
       unlockBuilding: ["House"],
       requireTech: ["Masonry", "Counting"],
       buildingMultiplier: { Hut: { output: 1 } },
-      additionalUpgrades: [() => t(L.TechResourceTransportPreference)],
+      additionalUpgrades: () => [t(L.TechResourceTransportPreference)],
    };
 
    Herding: ITechDefinition = {
@@ -132,13 +132,13 @@ export class TechDefinitions {
       column: 2,
       unlockBuilding: ["LivestockFarm"],
       requireTech: ["Counting", "Farming"],
-      additionalUpgrades: [() => t(L.TechProductionPriority)],
+      additionalUpgrades: () => [t(L.TechProductionPriority)],
    };
 
    HorsebackRiding: ITechDefinition = {
       name: () => t(L.HorsebackRiding),
       column: 2,
-      additionalUpgrades: [() => t(L.TechStockpileMode)],
+      additionalUpgrades: () => [t(L.TechStockpileMode)],
       unlockBuilding: ["Stable", "Sandpit"],
       requireTech: ["Farming"],
    };
@@ -274,7 +274,7 @@ export class TechDefinitions {
       column: 7,
       requireTech: ["PreciousMetal", "Engineering"],
       unlockBuilding: ["SiegeWorkshop", "TerracottaArmy"],
-      additionalUpgrades: [() => t(L.WarehouseUpgrade)],
+      additionalUpgrades: () => [t(L.WarehouseUpgrade)],
    };
 
    Politics: ITechDefinition = {
@@ -335,7 +335,7 @@ export class TechDefinitions {
       buildingMultiplier: {
          Library: { output: 1 },
       },
-      additionalUpgrades: [() => t(L.SeaTradeUpgrade, { tariff: formatPercent(SEA_TILE_COST_1) })],
+      additionalUpgrades: () => [t(L.SeaTradeUpgrade, { tariff: formatPercent(SEA_TILE_COST_1) })],
    };
 
    Physics: ITechDefinition = {
@@ -346,7 +346,7 @@ export class TechDefinitions {
       globalMultiplier: {
          storage: 1,
       },
-      additionalUpgrades: [() => t(L.WarehouseExtension)],
+      additionalUpgrades: () => [t(L.WarehouseExtension)],
    };
 
    Feudalism: ITechDefinition = {
@@ -401,7 +401,7 @@ export class TechDefinitions {
          Library: { output: 1 },
          School: { output: 1 },
       },
-      additionalUpgrades: [() => t(L.SeaTradeUpgrade, { tariff: formatPercent(SEA_TILE_COST_2) })],
+      additionalUpgrades: () => [t(L.SeaTradeUpgrade, { tariff: formatPercent(SEA_TILE_COST_2) })],
    };
 
    Banking: ITechDefinition = {
@@ -409,7 +409,7 @@ export class TechDefinitions {
       column: 11,
       requireTech: ["CivilService", "Navigation"],
       unlockBuilding: ["Bank"],
-      additionalUpgrades: [() => t(L.BankingAdditionalUpgrade)],
+      additionalUpgrades: () => [t(L.BankingAdditionalUpgrade)],
    };
 
    University: ITechDefinition = {
@@ -528,7 +528,7 @@ export class TechDefinitions {
          University: { output: 1 },
       },
       unlockBuilding: ["Parliament"],
-      additionalUpgrades: [() => t(L.SeaTradeUpgrade, { tariff: formatPercent(SEA_TILE_COST_3) })],
+      additionalUpgrades: () => [t(L.SeaTradeUpgrade, { tariff: formatPercent(SEA_TILE_COST_3) })],
    };
 
    RapidFire: ITechDefinition = {
@@ -578,7 +578,7 @@ export class TechDefinitions {
       column: 16,
       requireTech: ["Railway", "Drilling"],
       unlockBuilding: ["CoalPowerPlant"],
-      additionalUpgrades: [() => t(L.ElectrificationUpgrade)],
+      additionalUpgrades: () => [t(L.ElectrificationUpgrade)],
    };
 
    StockMarket: ITechDefinition = {

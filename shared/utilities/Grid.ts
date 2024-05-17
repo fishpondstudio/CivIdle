@@ -81,8 +81,9 @@ export class Grid {
    public getNeighbors(grid: Point): Point[] {
       const result: Point[] = [];
       for (let i = 0; i < 6; i++) {
-         const hex = this.gridToHex(grid).neighbor(i);
-         const g = this.hexToGrid(hex);
+         this.gridToHex(grid, Grid._hex1);
+         Grid._hex1.neighbor(i, Grid._hex1);
+         const g = this.hexToGrid(Grid._hex1);
          if (this.isValid(g)) {
             result.push(g);
          }
@@ -92,14 +93,16 @@ export class Grid {
 
    public getRange(grid: Point, distance: number): Point[] {
       const result: Point[] = [];
-      this.gridToHex(grid)
-         .range(distance)
-         .forEach((h) => {
+      this.gridToHex(grid).forEachInRange(
+         distance,
+         (h) => {
             const g = this.hexToGrid(h);
             if (this.isValid(g)) {
                result.push(g);
             }
-         });
+         },
+         Grid._hex1,
+      );
       return result;
    }
 
@@ -128,13 +131,13 @@ export class Grid {
       const oc1 = Grid._oc1;
       oc1.col = x1;
       oc1.row = y1;
-      OffsetCoord.roffsetToCubeNoAlloc(OffsetCoord.ODD, oc1, hex1);
+      OffsetCoord.roffsetToCube(OffsetCoord.ODD, oc1, hex1);
 
       const hex2 = Grid._hex2;
       const oc2 = Grid._oc2;
       oc2.col = x2;
       oc2.row = y2;
-      OffsetCoord.roffsetToCubeNoAlloc(OffsetCoord.ODD, oc2, hex2);
+      OffsetCoord.roffsetToCube(OffsetCoord.ODD, oc2, hex2);
 
       const distance = hex1.distanceSelf(hex2);
 
@@ -142,13 +145,15 @@ export class Grid {
       return distance;
    }
 
-   public gridToHex(grid: Point): Hex {
-      return OffsetCoord.roffsetToCube(OffsetCoord.ODD, new OffsetCoord(grid.x, grid.y));
+   public gridToHex(grid: Point, result?: Hex): Hex {
+      Grid._oc1.col = grid.x;
+      Grid._oc1.row = grid.y;
+      return OffsetCoord.roffsetToCube(OffsetCoord.ODD, Grid._oc1, result);
    }
 
    public hexToGrid(hex: Hex): Point {
-      const oc = OffsetCoord.roffsetFromCube(OffsetCoord.ODD, hex);
-      return { x: oc.col, y: oc.row };
+      OffsetCoord.roffsetFromCube(OffsetCoord.ODD, hex, Grid._oc1);
+      return { x: Grid._oc1.col, y: Grid._oc1.row };
    }
 
    public hexToPosition(hex: Hex): Point {

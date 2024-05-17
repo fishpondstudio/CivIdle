@@ -129,13 +129,13 @@ export function UnlockableEffectComponent({
                })}
             </fieldset>
          ) : null}
-         {definition.additionalUpgrades?.map((v, idx) => {
+         {definition.additionalUpgrades?.().map((v, idx) => {
             return (
                <fieldset key={idx}>
                   <legend>
                      <b>{t(L.UnlockBuilding)}</b>
                   </legend>
-                  <div className="mv5">{v()}</div>
+                  <div className="mv5">{v}</div>
                </fieldset>
             );
          })}

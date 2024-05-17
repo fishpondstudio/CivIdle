@@ -3,6 +3,7 @@ import type { City } from "../definitions/CityDefinitions";
 import type { GreatPerson } from "../definitions/GreatPersonDefinitions";
 import type { Resource } from "../definitions/ResourceDefinitions";
 import type { Tech } from "../definitions/TechDefinitions";
+import type { Upgrade } from "../definitions/UpgradeDefinitions";
 import { CZ } from "../languages/cz";
 import { DE } from "../languages/de";
 import { EN } from "../languages/en";
@@ -44,6 +45,7 @@ export class GameState {
    id = uuid4();
    city: City = "Rome";
    unlockedTech: PartialSet<Tech> = {};
+   unlockedUpgrades: PartialSet<Upgrade> = {};
    tiles: Map<Tile, ITileData> = new Map();
    transportation: Map<Tile, ITransportationData[]> = new Map();
    tick = 0;

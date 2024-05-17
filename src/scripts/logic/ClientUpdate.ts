@@ -18,9 +18,9 @@ import {
    RequestFloater,
    tickPower,
    tickPrice,
-   tickTech,
    tickTiles,
    tickTransports,
+   tickUnlockable,
 } from "../../../shared/logic/Update";
 import { forEach, safeAdd } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
@@ -64,7 +64,8 @@ export function tickEverySecond(gs: GameState, offline: boolean) {
    clearIntraTickCache();
 
    forEach(gs.unlockedTech, (tech) => {
-      tickTech(Config.Tech[tech]);
+      const td = Config.Tech[tech];
+      tickUnlockable(td, t(L.SourceResearch, { tech: td.name() }), gs);
    });
 
    forEach(gs.greatPeople, (person, level) => {

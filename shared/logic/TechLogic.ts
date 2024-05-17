@@ -108,7 +108,9 @@ export function unlockTech(tech: Tech, dispatchEvent: boolean, gs: GameState): v
       return;
    }
    gs.unlockedTech[tech] = true;
-   Config.Tech[tech].revealDeposit?.forEach((deposit) => {
+   const def = Config.Tech[tech];
+   // Deposits
+   def.revealDeposit?.forEach((deposit) => {
       const tileCount = getDepositTileCount(deposit, gs);
       const depositTiles = shuffle(
          Array.from(gs.tiles.entries()).filter(([xy, tile]) => {
@@ -141,7 +143,8 @@ export function unlockTech(tech: Tech, dispatchEvent: boolean, gs: GameState): v
          addDeposit(xy, deposit, dispatchEvent, gs);
       });
    });
-
+   // Callbacks
+   def.onUnlocked?.(gs);
    if (tech in SEA_TILE_COSTS) {
       RequestPathFinderGridUpdate.emit();
    }

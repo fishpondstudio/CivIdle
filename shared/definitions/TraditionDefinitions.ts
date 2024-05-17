@@ -1,5 +1,5 @@
 import { L, t } from "../utilities/i18n";
-import type { Unlockable } from "./UnlockableDefinitions";
+import type { Upgrade } from "./UpgradeDefinitions";
 
 export class TraditionDefinitions {
    Cultivation: ITradition = {
@@ -11,7 +11,7 @@ export class TraditionDefinitions {
       content: ["Commerce1", "Commerce2", "Commerce3", "Commerce4"],
    };
    Expansion: ITradition = {
-      name: () => t(L.TraditionHonor),
+      name: () => t(L.TraditionExpansion),
       content: ["Expansion1", "Expansion2", "Expansion3", "Expansion4"],
    };
    Honor: ITradition = {
@@ -21,4 +21,4 @@ export class TraditionDefinitions {
 }
 
 export type Tradition = keyof TraditionDefinitions;
-export type ITradition = { name: () => string; content: [Unlockable, Unlockable, Unlockable, Unlockable] };
+export type ITradition = { name: () => string; content: [Upgrade, Upgrade, Upgrade, Upgrade] };

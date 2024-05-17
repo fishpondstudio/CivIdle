@@ -24,8 +24,8 @@ import { getGreatPersonThisRunLevel } from "../../../shared/logic/RebornLogic";
 import { getBuildingsThatProduce } from "../../../shared/logic/ResourceLogic";
 import { getBuildingUnlockAge, getCurrentAge } from "../../../shared/logic/TechLogic";
 import { NotProducingReason, Tick } from "../../../shared/logic/TickLogic";
-import type { IPetraBuildingData, ITileData } from "../../../shared/logic/Tile";
-import { addMultiplier } from "../../../shared/logic/Update";
+import type { IPetraBuildingData, ITileData, ITraditionBuildingData } from "../../../shared/logic/Tile";
+import { addMultiplier, tickUnlockable } from "../../../shared/logic/Update";
 import { VotedBoostType, type IGetVotedBoostResponse } from "../../../shared/utilities/Database";
 import {
    MINUTE,
@@ -867,6 +867,22 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          buildingsByType.get("SatelliteFactory")?.forEach(tick);
          buildingsByType.get("SpacecraftFactory")?.forEach(tick);
          buildingsByType.get("NuclearMissileSilo")?.forEach(tick);
+         break;
+      }
+      case "ChoghaZanbil": {
+         const cz = building as ITraditionBuildingData;
+         if (cz.tradition) {
+            const tradition = Config.Tradition[cz.tradition].content;
+            for (let i = 0; i < cz.level; i++) {
+               const trad = tradition[i];
+               const def = Config.Upgrade[trad];
+               if (!gs.unlockedUpgrades[trad]) {
+                  gs.unlockedUpgrades[trad] = true;
+                  def.onUnlocked?.(gs);
+               }
+               tickUnlockable(def, t(L.SourceTradition, { tradition: def.name() }), gs);
+            }
+         }
          break;
       }
       // case "ArcDeTriomphe": {

@@ -1,39 +1,28 @@
-import type { GlobalMultipliers, Multiplier } from "../logic/TickLogic";
 import { deepFreeze } from "../utilities/Helper";
-import type { PartialTabulate } from "../utilities/TypeDefinitions";
 import { L, t } from "../utilities/i18n";
-import { BuildingDefinitions, type Building } from "./BuildingDefinitions";
-import type { Resource } from "./ResourceDefinitions";
-
-export interface IUnlockableDefinition {
-   name: () => string;
-   desc?: () => string;
-   requireResources: PartialTabulate<Resource>;
-   unlockBuilding?: Building[];
-   buildingMultiplier?: Partial<Record<Building, Multiplier>>;
-   globalMultiplier?: Partial<Record<keyof GlobalMultipliers, number>>;
-}
+import { BuildingDefinitions } from "./BuildingDefinitions";
+import type { IUpgradeDefinition } from "./ITechDefinition";
 
 const Buildings = deepFreeze(new BuildingDefinitions());
 
-export class UnlockableDefinitions {
-   Cultivation1: IUnlockableDefinition = {
-      name: () => t(L.CultivationLevelX, { level: 1 }),
+export class UpgradeDefinitions {
+   Cultivation1: IUpgradeDefinition = {
+      name: () => t(L.CultivationLevelX, { level: "I" }),
       requireResources: {},
       buildingMultiplier: {
          Aqueduct: { output: 1 },
       },
    };
-   Cultivation2: IUnlockableDefinition = {
-      name: () => t(L.CultivationLevelX, { level: 2 }),
+   Cultivation2: IUpgradeDefinition = {
+      name: () => t(L.CultivationLevelX, { level: "II" }),
       requireResources: Buildings.PaperMaker.input,
       buildingMultiplier: {
          Aqueduct: { output: 1 },
          PaperMaker: { output: 1 },
       },
    };
-   Cultivation3: IUnlockableDefinition = {
-      name: () => t(L.CultivationLevelX, { level: 3 }),
+   Cultivation3: IUpgradeDefinition = {
+      name: () => t(L.CultivationLevelX, { level: "III" }),
       requireResources: Buildings.Library.input,
       buildingMultiplier: {
          Aqueduct: { output: 1 },
@@ -41,8 +30,8 @@ export class UnlockableDefinitions {
          Library: { output: 1 },
       },
    };
-   Cultivation4: IUnlockableDefinition = {
-      name: () => t(L.CultivationLevelX, { level: 4 }),
+   Cultivation4: IUpgradeDefinition = {
+      name: () => t(L.CultivationLevelX, { level: "IV" }),
       requireResources: Buildings.School.input,
       buildingMultiplier: {
          Aqueduct: { output: 1 },
@@ -52,32 +41,32 @@ export class UnlockableDefinitions {
       },
    };
 
-   Commerce1: IUnlockableDefinition = {
-      name: () => t(L.CommerceLevelX, { level: 1 }),
+   Commerce1: IUpgradeDefinition = {
+      name: () => t(L.CommerceLevelX, { level: "I" }),
       requireResources: {},
       buildingMultiplier: {
          StoneQuarry: { output: 1 },
       },
    };
-   Commerce2: IUnlockableDefinition = {
-      name: () => t(L.CommerceLevelX, { level: 2 }),
+   Commerce2: IUpgradeDefinition = {
+      name: () => t(L.CommerceLevelX, { level: "II" }),
       requireResources: Buildings.Brickworks.input,
       buildingMultiplier: {
          StoneQuarry: { output: 1 },
          Brickworks: { output: 1 },
       },
    };
-   Commerce3: IUnlockableDefinition = {
-      name: () => t(L.CommerceLevelX, { level: 3 }),
-      requireResources: Buildings.GoldMiningCamp.input,
+   Commerce3: IUpgradeDefinition = {
+      name: () => t(L.CommerceLevelX, { level: "III" }),
+      requireResources: Buildings.GoldMiningCamp.output,
       buildingMultiplier: {
          StoneQuarry: { output: 1 },
          Brickworks: { output: 1 },
          GoldMiningCamp: { output: 1 },
       },
    };
-   Commerce4: IUnlockableDefinition = {
-      name: () => t(L.CommerceLevelX, { level: 4 }),
+   Commerce4: IUpgradeDefinition = {
+      name: () => t(L.CommerceLevelX, { level: "IV" }),
       requireResources: Buildings.CoinMint.input,
       buildingMultiplier: {
          StoneQuarry: { output: 1 },
@@ -87,23 +76,23 @@ export class UnlockableDefinitions {
       },
    };
 
-   Honor1: IUnlockableDefinition = {
-      name: () => t(L.HonorLevelX, { level: 1 }),
+   Honor1: IUpgradeDefinition = {
+      name: () => t(L.HonorLevelX, { level: "I" }),
       requireResources: {},
       buildingMultiplier: {
          LoggingCamp: { output: 1 },
       },
    };
-   Honor2: IUnlockableDefinition = {
-      name: () => t(L.HonorLevelX, { level: 2 }),
+   Honor2: IUpgradeDefinition = {
+      name: () => t(L.HonorLevelX, { level: "II" }),
       requireResources: Buildings.LumberMill.input,
       buildingMultiplier: {
          LoggingCamp: { output: 1 },
          LumberMill: { output: 1 },
       },
    };
-   Honor3: IUnlockableDefinition = {
-      name: () => t(L.HonorLevelX, { level: 3 }),
+   Honor3: IUpgradeDefinition = {
+      name: () => t(L.HonorLevelX, { level: "III" }),
       requireResources: Buildings.SiegeWorkshop.input,
       buildingMultiplier: {
          LoggingCamp: { output: 1 },
@@ -111,8 +100,8 @@ export class UnlockableDefinitions {
          SiegeWorkshop: { output: 1 },
       },
    };
-   Honor4: IUnlockableDefinition = {
-      name: () => t(L.HonorLevelX, { level: 4 }),
+   Honor4: IUpgradeDefinition = {
+      name: () => t(L.HonorLevelX, { level: "IV" }),
       requireResources: Buildings.KnightCamp.input,
       buildingMultiplier: {
          LoggingCamp: { output: 1 },
@@ -122,23 +111,23 @@ export class UnlockableDefinitions {
       },
    };
 
-   Expansion1: IUnlockableDefinition = {
-      name: () => t(L.ExpansionLevelX, { level: 1 }),
+   Expansion1: IUpgradeDefinition = {
+      name: () => t(L.ExpansionLevelX, { level: "I" }),
       requireResources: {},
       buildingMultiplier: {
          WheatFarm: { output: 1 },
       },
    };
-   Expansion2: IUnlockableDefinition = {
-      name: () => t(L.ExpansionLevelX, { level: 2 }),
+   Expansion2: IUpgradeDefinition = {
+      name: () => t(L.ExpansionLevelX, { level: "II" }),
       requireResources: Buildings.FlourMill.input,
       buildingMultiplier: {
          WheatFarm: { output: 1 },
          FlourMill: { output: 1 },
       },
    };
-   Expansion3: IUnlockableDefinition = {
-      name: () => t(L.ExpansionLevelX, { level: 3 }),
+   Expansion3: IUpgradeDefinition = {
+      name: () => t(L.ExpansionLevelX, { level: "III" }),
       requireResources: Buildings.Bakery.input,
       buildingMultiplier: {
          WheatFarm: { output: 1 },
@@ -146,8 +135,8 @@ export class UnlockableDefinitions {
          Bakery: { output: 1 },
       },
    };
-   Expansion4: IUnlockableDefinition = {
-      name: () => t(L.ExpansionLevelX, { level: 4 }),
+   Expansion4: IUpgradeDefinition = {
+      name: () => t(L.ExpansionLevelX, { level: "IV" }),
       requireResources: Buildings.Apartment.input,
       buildingMultiplier: {
          WheatFarm: { output: 1 },
@@ -158,4 +147,4 @@ export class UnlockableDefinitions {
    };
 }
 
-export type Unlockable = keyof UnlockableDefinitions;
+export type Upgrade = keyof UpgradeDefinitions;
