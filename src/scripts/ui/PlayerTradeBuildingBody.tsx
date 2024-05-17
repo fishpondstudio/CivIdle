@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { L, t } from "../../../shared/utilities/i18n";
 import { BuildingColorComponent } from "./BuildingColorComponent";
 import { BuildingInputModeComponent } from "./BuildingInputModeComponent";
 import type { IBuildingComponentProps } from "./BuildingPage";
@@ -39,13 +40,13 @@ export function PlayerTradeBuildingBody({ gameState, xy }: IBuildingComponentPro
 
          <menu role="tablist">
             <button onClick={() => setCurrentTab("trades")} aria-selected={currentTab === "trades"}>
-               Trades
+               {t(L.PlayerTradeTabTrades)}
             </button>
             <button onClick={() => setCurrentTab("pending")} aria-selected={currentTab === "pending"}>
-               Pending Trades
+               {t(L.PlayerTradeTabPendingTrades)}
             </button>
             <button onClick={() => setCurrentTab("import")} aria-selected={currentTab === "import"}>
-               Import
+               {t(L.PlayerTradeTabImport)}
             </button>
          </menu>
          {content}

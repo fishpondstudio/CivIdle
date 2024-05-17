@@ -71,7 +71,7 @@ export function StatisticsBuildingBody({ gameState, xy }: IBuildingComponentProp
       <div className="window-body column">
          <menu role="tablist">
             <button onClick={() => setCurrentTab("empire")} aria-selected={currentTab === "empire"}>
-               Empire
+               {t(L.StatisticsEmpire)}
             </button>
             <button onClick={() => setCurrentTab("resources")} aria-selected={currentTab === "resources"}>
                {t(L.StatisticsResources)}

@@ -86,9 +86,9 @@ export function PlayerTradeComponent({ gameState, xy }: IBuildingComponentProps)
                      <table>
                         <thead>
                            <tr>
-                              <th>Resource</th>
-                              <th>Want</th>
-                              <th>Offer</th>
+                              <th>{t(L.PlayerTradeResource)}</th>
+                              <th>{t(L.PlayerTradeWant)}</th>
+                              <th>{t(L.PlayerTradeOffer)}</th>
                            </tr>
                         </thead>
                         <tbody>
