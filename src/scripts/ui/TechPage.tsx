@@ -34,26 +34,58 @@ export function TechPage({ id }: { id: Tech }): React.ReactNode {
    const isTechAvailable = () => {
       return tech.column <= MAX_TECH_COLUMN;
    };
-   const unlock = () => {
-      if (!isTechAvailable() || !canUnlock()) {
-         return;
-      }
-      if (!tryDeductScience(getTechUnlockCost(id), gs)) {
-         return;
-      }
-      const oldAge = getCurrentAge(gs);
-      unlockTech(id, true, gs);
-      const newAge = getCurrentAge(gs);
-      if (oldAge && newAge && oldAge !== newAge) {
-         forEach(Config.TechAge, (age, def) => {
-            if (def.idx <= Config.TechAge[newAge].idx) {
-               const candidates = rollGreatPeopleThisRun(age, gs.city, getGreatPeopleChoiceCount(gs));
-               if (candidates) {
-                  gs.greatPeopleChoices.push(candidates);
-               }
+   const unlockPrerequisites = (id: Tech) => {
+      let unlocked = false;
+      Config.Tech[id].requireTech.forEach((preq) => {
+         if (!gs.unlockedTech[preq]) {
+            if (unlockPrerequisites(preq) === true) {
+               unlocked = true;
             }
-         });
-         checkAgeAchievements(newAge);
+            if (!tryDeductScience(getTechUnlockCost(preq), gs)) {
+               return;
+            }
+            const oldAge = getCurrentAge(gs);
+            unlockTech(preq, true, gs);
+            const newAge = getCurrentAge(gs);
+            if (oldAge && newAge && oldAge !== newAge) {
+               forEach(Config.TechAge, (age, def) => {
+                  if (def.idx <= Config.TechAge[newAge].idx) {
+                     const candidates = rollGreatPeopleThisRun(age, gs.city, getGreatPeopleChoiceCount(gs));
+                     if (candidates) {
+                        gs.greatPeopleChoices.push(candidates);
+                     }
+                  }
+               });
+               checkAgeAchievements(newAge);
+            }
+            unlocked = true;
+         }
+      });
+      return unlocked;
+   };
+   const unlock = () => {
+      if (unlockPrerequisites(id)) {
+         notifyGameStateUpdate();
+         Singleton().sceneManager.getCurrent(TechTreeScene)?.renderTechTree("animate", true);
+      }
+
+      if (isTechAvailable() && canUnlock()) {
+         if (tryDeductScience(getTechUnlockCost(id), gs)) {
+            const oldAge = getCurrentAge(gs);
+            unlockTech(id, true, gs);
+            const newAge = getCurrentAge(gs);
+            if (oldAge && newAge && oldAge !== newAge) {
+               forEach(Config.TechAge, (age, def) => {
+                  if (def.idx <= Config.TechAge[newAge].idx) {
+                     const candidates = rollGreatPeopleThisRun(age, gs.city, getGreatPeopleChoiceCount(gs));
+                     if (candidates) {
+                        gs.greatPeopleChoices.push(candidates);
+                     }
+                  }
+               });
+               checkAgeAchievements(newAge);
+            }
+         }
       }
       if (gs.greatPeopleChoices.length > 0) {
          playAgeUp();
@@ -72,11 +104,11 @@ export function TechPage({ id }: { id: Tech }): React.ReactNode {
       return <InDevelopmentPage />;
    }
 
-   const prerequisitesSatisfied = tech.requireTech.every((t) => gs.unlockedTech[t]);
+   const prerequisitesSatisfied = () => tech.requireTech.every((t) => gs.unlockedTech[t]);
    const unlockScienceCost = getTechUnlockCost(id);
    const availableScience = getScienceAmount(gs);
    const progress = availableScience / unlockScienceCost;
-   const canUnlock = () => prerequisitesSatisfied && progress >= 1 && !gs.unlockedTech[id];
+   const canUnlock = () => prerequisitesSatisfied() && progress >= 1 && !gs.unlockedTech[id];
 
    let prerequisiteCount = 0;
    return (
@@ -150,9 +182,7 @@ export function TechPage({ id }: { id: Tech }): React.ReactNode {
                            <ProgressBarComponent progress={progress} />
                         </div>
                         <div style={{ width: "10px" }} />
-                        <button disabled={!canUnlock()} onClick={() => unlock()}>
-                           {t(L.UnlockBuilding)}
-                        </button>
+                        <button onClick={() => unlock()}>{t(L.UnlockBuilding)}</button>
                      </div>
                   </>
                )}
