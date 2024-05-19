@@ -114,14 +114,14 @@ interface GreatPersonImageProps extends React.HTMLAttributes<HTMLElement> {
    greatPerson: GreatPerson;
 }
 
-export function GreatPersonImage(props: GreatPersonImageProps): React.ReactNode {
+export function GreatPersonImage({ greatPerson, ...htmlProps }: GreatPersonImageProps): React.ReactNode {
    const imgRef = useRef<HTMLImageElement>(null);
    useEffect(() => {
       setTimeout(() => {
          if (imgRef.current) {
-            imgRef.current.src = greatPersonImage(props.greatPerson, Singleton().sceneManager.getContext());
+            imgRef.current.src = greatPersonImage(greatPerson, Singleton().sceneManager.getContext());
          }
       }, 0);
-   }, [props.greatPerson]);
-   return <img ref={imgRef} {...props} />;
+   }, [greatPerson]);
+   return <img ref={imgRef} {...htmlProps} />;
 }

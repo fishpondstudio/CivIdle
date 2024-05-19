@@ -47,6 +47,8 @@ export const MAX_EXPLORER = 10;
 export const EXPLORER_SECONDS = 60;
 export const MANAGED_IMPORT_RANGE = 2;
 export const DISABLE_PLAYER_TRADES = false;
+export const MAX_TELEPORT = 10;
+export const TELEPORT_SECONDS = 60;
 
 export const GOLDEN_RATIO = (1 + Math.sqrt(5)) / 2;
 

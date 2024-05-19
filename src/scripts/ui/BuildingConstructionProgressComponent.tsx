@@ -50,12 +50,11 @@ export function BuildingConstructionProgressComponent({
                <tbody>
                   <tr>
                      <th style={{ width: 0 }}></th>
-                     <th>Resource</th>
+                     <th>{t(L.ConstructionResource)}</th>
                      <th className="text-right">
                         <TextWithHelp content={t(L.TransportAllocatedCapacityTooltip)}>Capacity</TextWithHelp>
                      </th>
-                     <th className="text-right">Delivered</th>
-                     <th className="text-right">Total</th>
+                     <th className="text-right">{t(L.ConstructionDelivered)}</th>
                   </tr>
                   {jsxMapOf(cost, (res, value) => {
                      return (
@@ -88,10 +87,11 @@ export function BuildingConstructionProgressComponent({
                               )}
                            </td>
                            <td className="text-right">
-                              <FormatNumber value={building.resources[res] ?? 0} />
-                           </td>
-                           <td className="text-right">
+                              <FormatNumber value={building.resources[res] ?? 0} />/
                               <FormatNumber value={value} />
+                              <span className="text-desc ml5">
+                                 {formatPercent((building.resources[res] ?? 0) / value)}
+                              </span>
                            </td>
                         </tr>
                      );

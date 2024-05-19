@@ -298,7 +298,7 @@ export function PlayerTradeComponent({ gameState, xy }: IBuildingComponentProps)
                         <td>
                            <div className="row">
                               <Tippy content={getCountryName(trade.fromFlag)}>
-                                 <img src={getFlagUrl(trade.fromFlag)} className="player-flag game-cursor" />
+                                 <img src={getFlagUrl(trade.fromFlag)} className="player-flag" />
                               </Tippy>
                               {trade.fromLevel > 0 ? (
                                  <Tippy content={AccountLevelNames[trade.fromLevel]()}>

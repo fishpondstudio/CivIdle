@@ -150,14 +150,14 @@ export function unlockTech(tech: Tech, dispatchEvent: boolean, gs: GameState): v
    }
 }
 
-export const OnResetTile = new TypedEvent<Tile>();
+export const RequestResetTile = new TypedEvent<Tile>();
 
 export function addDeposit(xy: Tile, deposit: Deposit, dispatchEvent: boolean, gs: GameState): void {
    const tile = gs.tiles.get(xy);
    if (tile) {
       tile.deposit[deposit] = true;
       if (dispatchEvent) {
-         OnResetTile.emit(xy);
+         RequestResetTile.emit(xy);
       }
    }
 }

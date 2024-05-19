@@ -29,7 +29,8 @@ export class CityDefinitions {
          Colosseum: "Theater",
       },
       naturalWonders: { Alps: true, GrottaAzzurra: true },
-      requiredGreatPeopleLevel: 0,
+      requireGreatPeopleLevel: 0,
+      requireSupporterPack: false,
    };
    Athens: ICityDefinition = {
       name: () => t(L.Athens),
@@ -52,7 +53,8 @@ export class CityDefinitions {
       },
       uniqueBuildings: { StatueOfZeus: "Theater", Parthenon: "Democracy" },
       naturalWonders: { Aphrodite: true, Poseidon: true },
-      requiredGreatPeopleLevel: 5,
+      requireGreatPeopleLevel: 5,
+      requireSupporterPack: false,
    };
    Memphis: ICityDefinition = {
       name: () => t(L.Memphis),
@@ -78,7 +80,8 @@ export class CityDefinitions {
          GreatSphinx: "Arithmetic",
       },
       naturalWonders: { NileRiver: true, MountSinai: true },
-      requiredGreatPeopleLevel: 10,
+      requireGreatPeopleLevel: 10,
+      requireSupporterPack: false,
    };
    Beijing: ICityDefinition = {
       name: () => t(L.Beijing),
@@ -105,7 +108,35 @@ export class CityDefinitions {
          PorcelainTower: "Banking",
       },
       naturalWonders: { MountTai: true, YangtzeRiver: true },
-      requiredGreatPeopleLevel: 15,
+      requireGreatPeopleLevel: 15,
+      requireSupporterPack: false,
+   };
+   NewYork: ICityDefinition = {
+      name: () => t(L.NewYork),
+      deposits: {
+         Water: 0.03,
+         Copper: 0.03,
+         Iron: 0.03,
+         Wood: 0.03,
+         Stone: 0.03,
+         Gold: 0.03,
+         Coal: 0.03,
+         Oil: 0.03,
+         Aluminum: 0.03,
+         NaturalGas: 0.03,
+         Uranium: 0.03,
+      },
+      size: 30,
+      buildingNames: {
+         Headquarter: () => t(L.Manhattan),
+      },
+      uniqueBuildings: {
+         Broadway: "Railway",
+         TheMet: "Capitalism",
+      },
+      naturalWonders: { Alps: true, GrottaAzzurra: true },
+      requireGreatPeopleLevel: 20,
+      requireSupporterPack: true,
    };
 }
 
@@ -118,5 +149,6 @@ interface ICityDefinition {
    naturalWonders: PartialSet<Building>;
    buildingNames: Partial<Record<Building, () => string>>;
    uniqueBuildings: Partial<Record<Building, Tech>>;
-   requiredGreatPeopleLevel: number;
+   requireGreatPeopleLevel: number;
+   requireSupporterPack: boolean;
 }

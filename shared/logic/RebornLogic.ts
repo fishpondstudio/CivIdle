@@ -28,6 +28,14 @@ export function getGreatPersonThisRunLevel(amount: number): number {
    return Math.round(result * 100) / 100;
 }
 
+export function getGreatPersonTotalEffect(
+   gp: GreatPerson,
+   gs: GameState = getGameState(),
+   options: GameOptions = getGameOptions(),
+): number {
+   return getGreatPersonThisRunLevel(gs.greatPeople[gp] ?? 0) + (options.greatPeople[gp]?.level ?? 0);
+}
+
 export function getProgressTowardsNextGreatPerson(): number {
    const greatPeopleCount = getRebirthGreatPeopleCount();
    const previous = getValueRequiredForGreatPeople(greatPeopleCount);
@@ -190,4 +198,14 @@ export function getPermanentGreatPeopleCount(): number {
 
 export function calculateEmpireValue(resource: Resource, amount: number): number {
    return NoPrice[resource] ? 0 : amount * (Config.ResourcePrice[resource] ?? 0);
+}
+
+export function sortGreatPeople(a: GreatPerson, b: GreatPerson): number {
+   const gpa = Config.GreatPerson[a];
+   const gpb = Config.GreatPerson[b];
+   const diff = Config.TechAge[gpa.age].idx - Config.TechAge[gpb.age].idx;
+   if (diff !== 0) {
+      return diff;
+   }
+   return gpa.name().localeCompare(gpb.name());
 }

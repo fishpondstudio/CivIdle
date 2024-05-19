@@ -1344,6 +1344,26 @@ export class BuildingDefinitions {
       special: BuildingSpecial.WorldWonder,
       wikipedia: "Chogha_Zanbil",
    };
+   Broadway: IBuildingDefinition = {
+      name: () => t(L.Broadway),
+      desc: () => t(L.BroadwayDesc),
+      input: {},
+      output: {},
+      construction: { Opera: 100, Culture: 100, Bond: 100 },
+      max: 1,
+      special: BuildingSpecial.WorldWonder,
+      wikipedia: "Broadway_theatre",
+   };
+   TheMet: IBuildingDefinition = {
+      name: () => t(L.TheMet),
+      desc: () => t(L.TheMetDesc),
+      input: {},
+      output: {},
+      construction: { Water: 100, Wood: 100, Stone: 100, Wheat: 100 },
+      max: 1,
+      special: BuildingSpecial.WorldWonder,
+      wikipedia: "Metropolitan_Museum_of_Art",
+   };
    // ArcDeTriomphe: IBuildingDefinition = {
    //    name: () => t(L.ArcDeTriomphe),
    //    desc: () => t(L.ArcDeTriompheDesc),

@@ -113,7 +113,14 @@ export const ExtraTileInfoTypes = {
    StoragePercentage: () => t(L.ExtraTileInfoTypeStoragePercentage),
 } as const;
 
+export const CursorOptions = {
+   OldFashioned: () => t(L.CursorOldFashioned),
+   BigOldFashioned: () => t(L.CursorBigOldFashioned),
+   System: () => t(L.CursorSystem),
+} as const;
+
 export type ExtraTileInfoType = keyof typeof ExtraTileInfoTypes;
+export type CursorOption = keyof typeof CursorOptions;
 
 export class GameOptions {
    useModernUI = true;
@@ -122,6 +129,7 @@ export class GameOptions {
    checksum: string | null = null;
    sidePanelWidth = 400;
    fontSizeScale = 1;
+   cursor: CursorOption = "OldFashioned";
    version = SAVE_FILE_VERSION;
    buildingColors: Partial<Record<Building, string>> = {};
    resourceColors: Partial<Record<Resource, string>> = {};

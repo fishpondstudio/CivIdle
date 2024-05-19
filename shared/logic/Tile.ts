@@ -1,4 +1,5 @@
 import type { Building } from "../definitions/BuildingDefinitions";
+import type { GreatPerson } from "../definitions/GreatPersonDefinitions";
 import type { Deposit, Resource } from "../definitions/ResourceDefinitions";
 import type { Tradition } from "../definitions/TraditionDefinitions";
 import { clamp, isNullOrUndefined, type Tile } from "../utilities/Helper";
@@ -122,6 +123,10 @@ export interface ITraditionBuildingData extends IBuildingData {
    tradition: Tradition | null;
 }
 
+export interface IGreatPeopleBuildingData extends IBuildingData {
+   greatPeople: Set<GreatPerson>;
+}
+
 export type IHaveTypeAndLevel = Pick<IBuildingData, "type" | "level">;
 
 export const STOCKPILE_CAPACITY_MIN = 0;
@@ -206,6 +211,13 @@ export function makeBuilding(data: Pick<IBuildingData, "type"> & Partial<IBuildi
          const tradition = building as ITraditionBuildingData;
          if (!tradition.tradition) {
             tradition.tradition = null;
+         }
+         break;
+      }
+      case "Broadway": {
+         const tradition = building as IGreatPeopleBuildingData;
+         if (!tradition.greatPeople) {
+            tradition.greatPeople = new Set();
          }
          break;
       }

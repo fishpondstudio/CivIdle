@@ -28,9 +28,9 @@ import { Config } from "./Config";
 import { MANAGED_IMPORT_RANGE } from "./Constants";
 import { GameFeature, hasFeature } from "./FeatureLogic";
 import type { GameOptions, GameState } from "./GameState";
-import { getGameOptions, getGameState } from "./GameStateLogic";
+import { getGameState } from "./GameStateLogic";
 import { getBuildingIO, getBuildingsByType, getGrid, getXyBuildings } from "./IntraTickCache";
-import { getGreatPersonThisRunLevel, getUpgradeCostFib } from "./RebornLogic";
+import { getGreatPersonTotalEffect, getUpgradeCostFib } from "./RebornLogic";
 import { getBuildingsThatProduce, getResourcesValue } from "./ResourceLogic";
 import { getAgeForTech, getBuildingUnlockTech } from "./TechLogic";
 import {
@@ -230,9 +230,7 @@ export function getStorageFor(xy: Tile, gs: GameState): IStorageResult {
       case "Petra": {
          const HOUR = 60 * 60;
          base = 3 * HOUR + getPetraBaseStorage(building);
-         base +=
-            HOUR * Config.GreatPerson.Zenobia.value(getGreatPersonThisRunLevel(gs.greatPeople.Zenobia ?? 0));
-         base += HOUR * Config.GreatPerson.Zenobia.value(getGameOptions().greatPeople.Zenobia?.level ?? 0);
+         base += HOUR * Config.GreatPerson.Zenobia.value(getGreatPersonTotalEffect("Zenobia"));
          multiplier = 1;
          break;
       }

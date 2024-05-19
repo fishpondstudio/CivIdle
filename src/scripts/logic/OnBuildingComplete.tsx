@@ -7,6 +7,7 @@ import {
    isNaturalWonder,
    isSpecialBuilding,
 } from "../../../shared/logic/BuildingLogic";
+import { Config } from "../../../shared/logic/Config";
 import { getGameOptions, getGameState } from "../../../shared/logic/GameStateLogic";
 import { getGrid, getXyBuildings } from "../../../shared/logic/IntraTickCache";
 import {
@@ -27,6 +28,7 @@ import { Tick } from "../../../shared/logic/TickLogic";
 import { makeBuilding } from "../../../shared/logic/Tile";
 import { OnBuildingComplete } from "../../../shared/logic/Update";
 import {
+   filterOf,
    firstKeyOf,
    isEmpty,
    pointToTile,
@@ -195,6 +197,30 @@ export function onBuildingComplete(xy: Tile): void {
                }
             }
          });
+         break;
+      }
+      case "Broadway": {
+         const age = getCurrentAge(gs);
+         const candidates1 = rollGreatPeopleThisRun(age, gs.city, getGreatPeopleChoiceCount(gs));
+         if (candidates1) {
+            gs.greatPeopleChoices.push(candidates1);
+         }
+
+         const previousAge = firstKeyOf(
+            filterOf(Config.TechAge, (k, v) => v.idx === Config.TechAge[age].idx - 1),
+         );
+
+         if (previousAge) {
+            const candidates2 = rollGreatPeopleThisRun(previousAge, gs.city, getGreatPeopleChoiceCount(gs));
+            if (candidates2) {
+               gs.greatPeopleChoices.push(candidates2);
+            }
+         }
+
+         if (gs.greatPeopleChoices.length > 0) {
+            playAgeUp();
+            showModal(<ChooseGreatPersonModal permanent={false} />);
+         }
          break;
       }
    }

@@ -1,4 +1,3 @@
-import { tickGreatPersonBoost } from "../../../shared/definitions/GreatPersonDefinitions";
 import {
    ST_PETERS_FAITH_MULTIPLIER,
    ST_PETERS_STORAGE_MULTIPLIER,
@@ -11,7 +10,12 @@ import {
    isWorldWonder,
 } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
-import { EXPLORER_SECONDS, MAX_EXPLORER } from "../../../shared/logic/Constants";
+import {
+   EXPLORER_SECONDS,
+   MAX_EXPLORER,
+   MAX_TELEPORT,
+   TELEPORT_SECONDS,
+} from "../../../shared/logic/Constants";
 import { getGameOptions, getGameState } from "../../../shared/logic/GameStateLogic";
 import {
    getBuildingsByType,
@@ -20,11 +24,16 @@ import {
    getXyBuildings,
 } from "../../../shared/logic/IntraTickCache";
 import { getVotedBoostId } from "../../../shared/logic/PlayerTradeLogic";
-import { getGreatPersonThisRunLevel } from "../../../shared/logic/RebornLogic";
+import { getGreatPersonTotalEffect } from "../../../shared/logic/RebornLogic";
 import { getBuildingsThatProduce } from "../../../shared/logic/ResourceLogic";
 import { getBuildingUnlockAge, getCurrentAge } from "../../../shared/logic/TechLogic";
 import { NotProducingReason, Tick } from "../../../shared/logic/TickLogic";
-import type { IPetraBuildingData, ITileData, ITraditionBuildingData } from "../../../shared/logic/Tile";
+import type {
+   IGreatPeopleBuildingData,
+   IPetraBuildingData,
+   ITileData,
+   ITraditionBuildingData,
+} from "../../../shared/logic/Tile";
 import { addMultiplier, tickUnlockable } from "../../../shared/logic/Update";
 import { VotedBoostType, type IGetVotedBoostResponse } from "../../../shared/utilities/Database";
 import {
@@ -561,11 +570,9 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
                });
             }
          }
-         const total =
-            getGreatPersonThisRunLevel(gs.greatPeople.Hatshepsut ?? 0) +
-            (getGameOptions().greatPeople.Hatshepsut?.level ?? 0);
+         const total = getGreatPersonTotalEffect("Hatshepsut", gs);
          if (total > 0) {
-            tickGreatPersonBoost(Config.GreatPerson.Hatshepsut, total, buildingName);
+            Config.GreatPerson.Hatshepsut.tick(Config.GreatPerson.Hatshepsut, total, buildingName);
          }
          break;
       }
@@ -578,9 +585,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
             }
          }
          Tick.next.globalMultipliers.happiness.push({ value: count, source: buildingName });
-         const total =
-            getGreatPersonThisRunLevel(gs.greatPeople.RamessesII ?? 0) +
-            (getGameOptions().greatPeople.RamessesII?.level ?? 0);
+         const total = getGreatPersonTotalEffect("RamessesII", gs);
          if (total > 0) {
             Tick.next.globalMultipliers.builderCapacity.push({
                value: Config.GreatPerson.RamessesII.value(total),
@@ -717,10 +722,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
                addMultiplier(b, { output: 1 }, buildingName);
             }
          });
-         const total =
-            getGreatPersonThisRunLevel(gs.greatPeople.Confucius ?? 0) +
-            (getGameOptions().greatPeople.Confucius?.level ?? 0);
-
+         const total = getGreatPersonTotalEffect("Confucius", gs);
          if (total > 0) {
             Config.GreatPerson.Confucius.tick(Config.GreatPerson.Confucius, total, buildingName);
          }
@@ -788,10 +790,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
                addMultiplier(b, { storage: level }, buildingName);
             }
          });
-         const total =
-            getGreatPersonThisRunLevel(gs.greatPeople.ZhengHe ?? 0) +
-            (getGameOptions().greatPeople.ZhengHe?.level ?? 0);
-
+         const total = getGreatPersonTotalEffect("ZhengHe", gs);
          if (total > 0) {
             Config.GreatPerson.ZhengHe.tick(Config.GreatPerson.ZhengHe, total, buildingName);
          }
@@ -882,6 +881,31 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
                }
                tickUnlockable(def, t(L.SourceTradition, { tradition: def.name() }), gs);
             }
+         }
+         break;
+      }
+      case "Broadway": {
+         const broadway = building as IGreatPeopleBuildingData;
+         broadway.greatPeople.forEach((gp) => {
+            const def = Config.GreatPerson[gp];
+            const total = getGreatPersonTotalEffect(gp, gs, options);
+            if (total > 0) {
+               def.tick(def, total, buildingName);
+            }
+         });
+         break;
+      }
+      case "TheMet": {
+         if (gs.tick % TELEPORT_SECONDS === 0 && (building.resources?.Teleport ?? 0) < MAX_TELEPORT) {
+            safeAdd(building.resources, "Teleport", 1);
+         }
+         for (const point of grid.getRange(tileToPoint(xy), 2)) {
+            mapSafePush(Tick.next.tileMultipliers, pointToTile(point), {
+               output: 1,
+               worker: 1,
+               storage: 1,
+               source: buildingName,
+            });
          }
          break;
       }

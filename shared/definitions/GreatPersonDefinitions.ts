@@ -1186,7 +1186,7 @@ function greatPersonBoostDesc(self: IGreatPersonDefinition, level: number) {
    });
 }
 
-export function tickGreatPersonBoost(self: IGreatPersonDefinition, level: number, source: string) {
+function tickGreatPersonBoost(self: IGreatPersonDefinition, level: number, source: string) {
    const boost = self.boost;
    if (!boost) {
       throw new Error("`tickGreatPersonBoost` requires `boost` to be defined");

@@ -106,6 +106,7 @@ export class ResourceDefinitions {
    OpticalFiber: IResourceDefinition = { name: () => t(L.OpticalFiber) };
    Submarine: IResourceDefinition = { name: () => t(L.Submarine) };
    NuclearSubmarine: IResourceDefinition = { name: () => t(L.NuclearSubmarine) };
+   Teleport: IResourceDefinition = { name: () => t(L.NuclearSubmarine) };
 }
 
 export type Resource = keyof ResourceDefinitions;
@@ -116,6 +117,7 @@ export const NoPrice: PartialSet<Resource> = {
    Science: true,
    Warp: true,
    Explorer: true,
+   Teleport: true,
 } as const;
 
 export const NoStorage: PartialSet<Resource> = {

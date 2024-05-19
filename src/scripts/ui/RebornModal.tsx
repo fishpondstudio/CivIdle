@@ -162,7 +162,7 @@ export function RebornModal(): React.ReactNode {
                <div className="separator" />
                <div className="row">
                   <div className=" f1">{t(L.GreatPersonLevelRequired)}</div>
-                  {permanentGreatPeopleLevel >= Config.City[city].requiredGreatPeopleLevel ? (
+                  {permanentGreatPeopleLevel >= Config.City[city].requireGreatPeopleLevel ? (
                      <div className="m-icon small mr5 text-green">check_circle</div>
                   ) : (
                      <div className="m-icon small mr5 text-red">cancel</div>
@@ -171,11 +171,11 @@ export function RebornModal(): React.ReactNode {
                      <TextWithHelp
                         content={t(L.GreatPersonLevelRequiredDesc, {
                            city: Config.City[city].name(),
-                           required: Config.City[city].requiredGreatPeopleLevel,
+                           required: Config.City[city].requireGreatPeopleLevel,
                            current: permanentGreatPeopleLevel,
                         })}
                      >
-                        {Config.City[city].requiredGreatPeopleLevel}
+                        {Config.City[city].requireGreatPeopleLevel}
                      </TextWithHelp>
                   </div>
                </div>
@@ -193,11 +193,11 @@ export function RebornModal(): React.ReactNode {
                </button>
                <div style={{ width: "6px" }} />
                <button
-                  disabled={permanentGreatPeopleLevel < Config.City[city].requiredGreatPeopleLevel}
+                  disabled={permanentGreatPeopleLevel < Config.City[city].requireGreatPeopleLevel}
                   style={{ padding: "0 15px" }}
                   className="text-strong"
                   onClick={async () => {
-                     if (getPermanentGreatPeopleLevel() < Config.City[city].requiredGreatPeopleLevel) {
+                     if (getPermanentGreatPeopleLevel() < Config.City[city].requireGreatPeopleLevel) {
                         playError();
                         return;
                      }

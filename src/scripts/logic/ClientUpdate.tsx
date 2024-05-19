@@ -9,7 +9,7 @@ import {
 import { calculateHappiness } from "../../../shared/logic/HappinessLogic";
 import { clearIntraTickCache, getBuildingsByType } from "../../../shared/logic/IntraTickCache";
 import { getGreatPersonThisRunLevel } from "../../../shared/logic/RebornLogic";
-import { OnResetTile } from "../../../shared/logic/TechLogic";
+import { RequestResetTile } from "../../../shared/logic/TechLogic";
 import { CurrentTickChanged, EmptyTickData, Tick, freezeTickData } from "../../../shared/logic/TickLogic";
 import {
    OnBuildingComplete,
@@ -29,7 +29,7 @@ import { saveGame } from "../Global";
 import { isSteam } from "../rpc/SteamClient";
 import { WorldScene } from "../scenes/WorldScene";
 import { ChooseGreatPersonModal } from "../ui/ChooseGreatPersonModal";
-import { showModal } from "../ui/GlobalModal";
+import { showModal, showToast } from "../ui/GlobalModal";
 import { makeObservableHook } from "../utilities/Hook";
 import { Singleton } from "../utilities/Singleton";
 import { playAgeUp, playDing } from "../visuals/Sound";
@@ -121,14 +121,16 @@ export function tickEverySecond(gs: GameState, offline: boolean) {
 RequestFloater.on(({ xy, amount }) => {
    Singleton().sceneManager.getCurrent(WorldScene)?.showFloater(xy, amount);
 });
-OnResetTile.on((xy) => {
+RequestResetTile.on((xy) => {
    Singleton().sceneManager.enqueue(WorldScene, (s) => s.resetTile(xy));
 });
 OnTileExplored.on(onTileExplored);
 OnBuildingComplete.on(onBuildingComplete);
 OnBuildingProductionComplete.on(onProductionComplete);
 OnPriceUpdated.on((gs) => {
-   if ((getBuildingsByType("Market", gs)?.size ?? 0) > 0) {
+   const count = getBuildingsByType("Market", gs)?.size ?? 0;
+   if (count > 0) {
+      showToast(t(L.MarketRefreshMessage, { count }));
       playDing();
    }
 });

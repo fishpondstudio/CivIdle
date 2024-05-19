@@ -1,16 +1,15 @@
 import { Config } from "../logic/Config";
-import { getGameOptions } from "../logic/GameStateLogic";
 import { getBuildingsByType } from "../logic/IntraTickCache";
 import {
    getGreatPeopleChoiceCount,
-   getGreatPersonThisRunLevel,
+   getGreatPersonTotalEffect,
    rollGreatPeopleThisRun,
 } from "../logic/RebornLogic";
 import { RequestChooseGreatPerson } from "../logic/Update";
 import { deepFreeze } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
 import { BuildingDefinitions } from "./BuildingDefinitions";
-import { GreatPersonDefinitions, tickGreatPersonBoost } from "./GreatPersonDefinitions";
+import { GreatPersonDefinitions } from "./GreatPersonDefinitions";
 import type { IUpgradeDefinition } from "./ITechDefinition";
 
 const Buildings = deepFreeze(new BuildingDefinitions());
@@ -138,11 +137,10 @@ export class UpgradeDefinitions {
       },
       additionalUpgrades: () => [t(L.Honor4UpgradeHTML)],
       tick: (gs) => {
-         const total =
-            getGreatPersonThisRunLevel(gs.greatPeople.ZhengHe ?? 0) +
-            (getGameOptions().greatPeople.ZhengHe?.level ?? 0);
+         const total = getGreatPersonTotalEffect("ZhengHe", gs);
          if (total > 0) {
-            tickGreatPersonBoost(Config.GreatPerson.ZhengHe, total, t(L.ExpansionLevelX, { level: "IV" }));
+            const def = Config.GreatPerson.ZhengHe;
+            def.tick(def, total, t(L.ExpansionLevelX, { level: "IV" }));
          }
       },
    };

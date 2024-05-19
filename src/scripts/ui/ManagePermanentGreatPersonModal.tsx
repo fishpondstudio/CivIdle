@@ -4,7 +4,11 @@ import { useState } from "react";
 import { GreatPersonType, type GreatPerson } from "../../../shared/definitions/GreatPersonDefinitions";
 import { Config } from "../../../shared/logic/Config";
 import { notifyGameOptionsUpdate } from "../../../shared/logic/GameStateLogic";
-import { addPermanentGreatPerson, getGreatPersonUpgradeCost } from "../../../shared/logic/RebornLogic";
+import {
+   addPermanentGreatPerson,
+   getGreatPersonUpgradeCost,
+   sortGreatPeople,
+} from "../../../shared/logic/RebornLogic";
 import { keysOf, numberToRoman } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import { useGameOptions } from "../Global";
@@ -48,15 +52,7 @@ export function ManagePermanentGreatPersonModal(): React.ReactNode {
                   </thead>
                   <tbody>
                      {keysOf(Config.GreatPerson)
-                        .sort((a, b) => {
-                           const gpa = Config.GreatPerson[a];
-                           const gpb = Config.GreatPerson[b];
-                           const diff = Config.TechAge[gpa.age].idx - Config.TechAge[gpb.age].idx;
-                           if (diff !== 0) {
-                              return diff;
-                           }
-                           return gpa.name().localeCompare(gpb.name());
-                        })
+                        .sort(sortGreatPeople)
                         .map((k) => {
                            const person = Config.GreatPerson[k];
                            return (
@@ -227,17 +223,30 @@ function GreatPersonPromotionRow({ greatPerson }: { greatPerson: GreatPerson }):
    const value = options.greatPeople[greatPerson];
    const person = Config.GreatPerson[greatPerson];
    const fromChoices = keysOf(Config.GreatPerson)
-      .filter(
-         (g) =>
-            Config.GreatPerson[g].age === person.age &&
-            Config.GreatPerson[g].type !== GreatPersonType.Promotion,
-      )
+      .filter((g) => Config.GreatPerson[g].age === person.age)
       .sort((a, b) => Config.GreatPerson[a].name().localeCompare(Config.GreatPerson[b].name()));
    const toChoices = keysOf(Config.GreatPerson)
       .filter((g) => Config.TechAge[Config.GreatPerson[g].age].idx === Config.TechAge[person.age].idx + 1)
       .sort((a, b) => Config.GreatPerson[a].name().localeCompare(Config.GreatPerson[b].name()));
    const [fromChoice, setFromChoice] = useState(fromChoices[0]);
    const [toChoice, setToChoice] = useState(toChoices[0]);
+   const canPromote = () => {
+      const from = options.greatPeople[fromChoice];
+      if (!from) {
+         return false;
+      }
+      // I am promoting myself, need 2 of myself!
+      if (fromChoice === greatPerson && from.amount < 2) {
+         return false;
+      }
+      if (fromChoice !== greatPerson && from.amount < 2) {
+         return false;
+      }
+      if (!value || value.amount < 1) {
+         return false;
+      }
+      return true;
+   };
    return (
       <>
          <td className="text-center">
@@ -282,21 +291,19 @@ function GreatPersonPromotionRow({ greatPerson }: { greatPerson: GreatPerson }):
          </td>
          <td>
             <button
-               disabled={(value?.amount ?? 0) <= 0 || (options.greatPeople[fromChoice]?.amount ?? 0) <= 0}
+               disabled={!canPromote()}
                className="w100 text-strong"
                onClick={() => {
-                  if (Config.GreatPerson[fromChoice].type === GreatPersonType.Promotion) {
+                  const from = options.greatPeople[fromChoice];
+                  if (!canPromote || !value || !from) {
                      playError();
                      return;
                   }
-                  const from = options.greatPeople[fromChoice];
-                  if (value && value.amount > 0 && from && from.amount > 0) {
-                     --value.amount;
-                     --from.amount;
-                     addPermanentGreatPerson(toChoice, 1);
-                     notifyGameOptionsUpdate();
-                     playAgeUp();
-                  }
+                  --value.amount;
+                  --from.amount;
+                  addPermanentGreatPerson(toChoice, 1);
+                  notifyGameOptionsUpdate();
+                  playAgeUp();
                }}
             >
                {t(L.GreatPersonPromotionPromote)}
