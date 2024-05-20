@@ -1205,4 +1205,8 @@ export const EN = {
    SupporterPackRequired: "Supporter Pack Required",
    FreeThisWeek: "Free This Week",
    FreeThisWeekDescHTML: "<b>Every week</b>, one of the premium cities is free to play. This week's free city is <b>%{city}</b>",
+   Shenandoah: "Shenandoah",
+   ShenandoahDesc: "Buildings unlocked in the current age get +1 Production, Worker Capacity and Storage Multiplier. Double the effect of J.P. Morgan",
+   NiagaraFalls: "Niagara Falls",
+   NiagaraFallsDesc: "All warehouses, markets and caravansaries get +N storage multiplier. N = number of unlocked ages. Albert Einstein provides +1 Production Multiplier to Research Fund",
 };

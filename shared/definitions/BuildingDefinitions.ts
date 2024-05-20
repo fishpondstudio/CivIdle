@@ -1379,6 +1379,28 @@ export class BuildingDefinitions {
       special: BuildingSpecial.WorldWonder,
       wikipedia: "Wall_Street",
    };
+
+   Shenandoah: IBuildingDefinition = {
+      name: () => t(L.Shenandoah),
+      desc: () => t(L.ShenandoahDesc),
+      input: {},
+      output: {},
+      construction: {},
+      max: 0,
+      wikipedia: "Shenandoah_Valley",
+      special: BuildingSpecial.NaturalWonder,
+   };
+
+   NiagaraFalls: IBuildingDefinition = {
+      name: () => t(L.NiagaraFalls),
+      desc: () => t(L.NiagaraFallsDesc),
+      input: {},
+      output: {},
+      construction: {},
+      max: 0,
+      wikipedia: "Niagara_Falls",
+      special: BuildingSpecial.NaturalWonder,
+   };
    // ArcDeTriomphe: IBuildingDefinition = {
    //    name: () => t(L.ArcDeTriomphe),
    //    desc: () => t(L.ArcDeTriompheDesc),

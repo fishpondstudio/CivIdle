@@ -573,7 +573,11 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          }
          const total = getGreatPersonTotalEffect("Hatshepsut", gs);
          if (total > 0) {
-            Config.GreatPerson.Hatshepsut.tick(Config.GreatPerson.Hatshepsut, total, buildingName);
+            Config.GreatPerson.Hatshepsut.tick(
+               Config.GreatPerson.Hatshepsut,
+               total,
+               `${buildingName}: ${Config.GreatPerson.Hatshepsut.name()}`,
+            );
          }
          break;
       }
@@ -725,7 +729,11 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          });
          const total = getGreatPersonTotalEffect("Confucius", gs);
          if (total > 0) {
-            Config.GreatPerson.Confucius.tick(Config.GreatPerson.Confucius, total, buildingName);
+            Config.GreatPerson.Confucius.tick(
+               Config.GreatPerson.Confucius,
+               total,
+               `${buildingName}: ${Config.GreatPerson.Confucius.name()}`,
+            );
          }
          break;
       }
@@ -793,7 +801,11 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          });
          const total = getGreatPersonTotalEffect("ZhengHe", gs);
          if (total > 0) {
-            Config.GreatPerson.ZhengHe.tick(Config.GreatPerson.ZhengHe, total, buildingName);
+            Config.GreatPerson.ZhengHe.tick(
+               Config.GreatPerson.ZhengHe,
+               total,
+               `${buildingName}: ${Config.GreatPerson.ZhengHe.name()}`,
+            );
          }
          break;
       }
@@ -891,7 +903,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
             const def = Config.GreatPerson[gp];
             const total = getGreatPersonTotalEffect(gp, gs, options);
             if (total > 0) {
-               def.tick(def, total, buildingName);
+               def.tick(def, total, `${buildingName}: ${def.name()}`);
             }
          });
          break;
@@ -936,7 +948,40 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
             Config.GreatPerson.JohnDRockefeller.tick(
                Config.GreatPerson.JohnDRockefeller,
                total,
-               buildingName,
+               `${buildingName}: ${Config.GreatPerson.JohnDRockefeller.name()}`,
+            );
+         }
+         break;
+      }
+      case "Shenandoah": {
+         const currentAge = getCurrentAge(gs);
+         forEach(Config.BuildingTechAge, (building, age) => {
+            if (age === currentAge) {
+               addMultiplier(building, { output: 1, storage: 1, worker: 1, unstable: true }, buildingName);
+            }
+         });
+         const total = getGreatPersonTotalEffect("JPMorgan", gs, options);
+         if (total > 0) {
+            Config.GreatPerson.JPMorgan.tick(
+               Config.GreatPerson.JPMorgan,
+               total,
+               `${buildingName}: ${Config.GreatPerson.JPMorgan.name()}`,
+            );
+         }
+         break;
+      }
+      case "NiagaraFalls": {
+         const currentAge = getCurrentAge(gs);
+         const count = Config.TechAge[currentAge].idx + 1;
+         addMultiplier("Warehouse", { storage: count }, buildingName);
+         addMultiplier("Market", { storage: count }, buildingName);
+         addMultiplier("Caravansary", { storage: count }, buildingName);
+         const total = getGreatPersonTotalEffect("AlbertEinstein", gs, options);
+         if (total > 0) {
+            addMultiplier(
+               "ResearchFund",
+               { output: total },
+               `${buildingName}: ${Config.GreatPerson.AlbertEinstein.name()}`,
             );
          }
          break;

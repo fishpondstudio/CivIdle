@@ -800,7 +800,7 @@ export function transportResource(
    return amountLeft;
 }
 
-export function addMultiplier(k: Building, multiplier: Multiplier, source: string) {
+export function addMultiplier(k: Building, multiplier: Multiplier & { unstable?: boolean }, source: string) {
    let m = Tick.next.buildingMultipliers.get(k);
    if (m == null) {
       m = [];
