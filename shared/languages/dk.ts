@@ -225,7 +225,7 @@ export const DK = {
    ColossusOfRhodes: "Kolossen på Rhodos",
    ColossusOfRhodesDesc: "Alle tilstødende bygninger, der ikke producerer arbejdere, får +1 lykke",
    Combustion: "Forbrænding",
-   Commerce4UpgradeHTML: "All <b>adjacent banks</b> get free upgrade to <b>level 30</b>",
+   Commerce4UpgradeHTMLV2: "When unlocked, all <b>adjacent banks</b> get free upgrade to <b>level 30</b>",
    CommerceLevelX: "Commerce %{level}",
    Computer: "komputer",
    ComputerFactory: "Computer Factory",

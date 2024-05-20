@@ -225,7 +225,7 @@ export const ZH_TW = {
    ColossusOfRhodes: "羅得島太陽神銅像",
    ColossusOfRhodesDesc: "所有不生產勞動者的相鄰建築，獲得 +1 幸福感",
    Combustion: "內燃機",
-   Commerce4UpgradeHTML: "All <b>adjacent banks</b> get free upgrade to <b>level 30</b>",
+   Commerce4UpgradeHTMLV2: "When unlocked, all <b>adjacent banks</b> get free upgrade to <b>level 30</b>",
    CommerceLevelX: "Commerce %{level}",
    Computer: "計算機",
    ComputerFactory: "電腦廠(Computer Factory)",

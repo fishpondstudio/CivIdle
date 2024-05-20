@@ -225,7 +225,7 @@ export const TR = {
    ColossusOfRhodes: "Rodos Heykeli",
    ColossusOfRhodesDesc: "İşçi üretmeyen tüm bitişik binalara +1 Mutluluk verir",
    Combustion: "Yanma",
-   Commerce4UpgradeHTML: "All <b>adjacent banks</b> get free upgrade to <b>level 30</b>",
+   Commerce4UpgradeHTMLV2: "When unlocked, all <b>adjacent banks</b> get free upgrade to <b>level 30</b>",
    CommerceLevelX: "Commerce %{level}",
    Computer: "Bilgisayar",
    ComputerFactory: "Computer Factory",

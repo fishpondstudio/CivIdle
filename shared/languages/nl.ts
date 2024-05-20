@@ -225,7 +225,7 @@ export const NL = {
    ColossusOfRhodes: "Kolossus van Rodos",
    ColossusOfRhodesDesc: "Alle aangrenzende gebouwen die geen werknemers produceren krijgen +1 Geluk",
    Combustion: "Verbranding",
-   Commerce4UpgradeHTML: "All <b>adjacent banks</b> get free upgrade to <b>level 30</b>",
+   Commerce4UpgradeHTMLV2: "When unlocked, all <b>adjacent banks</b> get free upgrade to <b>level 30</b>",
    CommerceLevelX: "Commerce %{level}",
    Computer: "Computer",
    ComputerFactory: "Computer Factory",

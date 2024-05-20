@@ -225,7 +225,7 @@ export const FR = {
    ColossusOfRhodes: "Colosse de Rhodes",
    ColossusOfRhodesDesc: "Tous les bâtiments adjacents qui ne produisent pas d'ouvriers obtiennent +1 Bonheur",
    Combustion: "Combustion",
-   Commerce4UpgradeHTML: "All <b>adjacent banks</b> get free upgrade to <b>level 30</b>",
+   Commerce4UpgradeHTMLV2: "When unlocked, all <b>adjacent banks</b> get free upgrade to <b>level 30</b>",
    CommerceLevelX: "Commerce %{level}",
    Computer: "Ordinateur",
    ComputerFactory: "Computer Factory",

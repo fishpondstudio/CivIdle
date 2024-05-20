@@ -225,7 +225,7 @@ export const CZ = {
    ColossusOfRhodes: "Rhodský kolos",
    ColossusOfRhodesDesc: "Všechny přilehlé budovy, které neprodukují dělníky, získají +1 Štěstí",
    Combustion: "Spalování",
-   Commerce4UpgradeHTML: "All <b>adjacent banks</b> get free upgrade to <b>level 30</b>",
+   Commerce4UpgradeHTMLV2: "When unlocked, all <b>adjacent banks</b> get free upgrade to <b>level 30</b>",
    CommerceLevelX: "Commerce %{level}",
    Computer: "Počítač",
    ComputerFactory: "Továrna na počítače",

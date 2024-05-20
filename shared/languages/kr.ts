@@ -225,7 +225,7 @@ export const KR = {
    ColossusOfRhodes: "로도스의 거상",
    ColossusOfRhodesDesc: "노동자를 생산하지 않는 모든 인접한 건물이 +1의 행복도를 얻습니다.",
    Combustion: "연소",
-   Commerce4UpgradeHTML: "All <b>adjacent banks</b> get free upgrade to <b>level 30</b>",
+   Commerce4UpgradeHTMLV2: "When unlocked, all <b>adjacent banks</b> get free upgrade to <b>level 30</b>",
    CommerceLevelX: "Commerce %{level}",
    Computer: "컴퓨터",
    ComputerFactory: "컴퓨터 공장",

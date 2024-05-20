@@ -91,7 +91,7 @@ export class UpgradeDefinitions {
          GoldMiningCamp: { output: 1 },
          CoinMint: { output: 1 },
       },
-      additionalUpgrades: () => [t(L.Commerce4UpgradeHTML)],
+      additionalUpgrades: () => [t(L.Commerce4UpgradeHTMLV2)],
       onUnlocked: (gs) => {
          const cz = findBuilding("ChoghaZanbil", gs);
          if (!cz) return;

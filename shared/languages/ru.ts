@@ -225,7 +225,7 @@ export const RU = {
    ColossusOfRhodes: "Колосс Родосский",
    ColossusOfRhodesDesc: "Все прилегающие здания, не производящие Работников, получают +1 Счастье",
    Combustion: "Горение",
-   Commerce4UpgradeHTML: "All <b>adjacent banks</b> get free upgrade to <b>level 30</b>",
+   Commerce4UpgradeHTMLV2: "When unlocked, all <b>adjacent banks</b> get free upgrade to <b>level 30</b>",
    CommerceLevelX: "Commerce %{level}",
    Computer: "Компьютер",
    ComputerFactory: "Компьютерный Завод",
