@@ -16,6 +16,7 @@ import {
    hasFlag,
    keysOf,
    mathSign,
+   safeParseInt,
 } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import Supporter from "../../images/Supporter.png";
@@ -40,6 +41,7 @@ import { WarningComponent } from "./WarningComponent";
 const savedResourceWantFilters: Set<Resource> = new Set();
 const savedResourceOfferFilters: Set<Resource> = new Set();
 let savedPlayerNameFilter = "";
+let savedMaxTradeAmountFilter = 0;
 const playerTradesSortingState = { column: 0, asc: true };
 
 export function PlayerTradeComponent({ gameState, xy }: IBuildingComponentProps): React.ReactNode {
@@ -48,6 +50,7 @@ export function PlayerTradeComponent({ gameState, xy }: IBuildingComponentProps)
    const [resourceOfferFilters, setResourceOfferFilters] = useState(savedResourceOfferFilters);
    const [showFilters, setShowFilters] = useState(false);
    const [playerNameFilter, setPlayerNameFilter] = useState<string>(savedPlayerNameFilter);
+   const [tradeAmountFilter, setTradeAmountFilter] = useState<number>(savedMaxTradeAmountFilter);
    if (!building) {
       return null;
    }
@@ -150,6 +153,21 @@ export function PlayerTradeComponent({ gameState, xy }: IBuildingComponentProps)
                      onClick={(e) => (e.target as HTMLInputElement)?.select()}
                   />
                </div>
+               <div className="sep10" />
+               <div className="row">
+                  <div style={{ width: 100 }}>{t(L.PlayerTradeMaxTradeAmountFilter)}</div>
+                  <input
+                     type="text"
+                     className="f1"
+                     size={1}
+                     value={tradeAmountFilter}
+                     onChange={(e) => {
+                        savedMaxTradeAmountFilter = safeParseInt(e.target.value, 0);
+                        setTradeAmountFilter(savedMaxTradeAmountFilter);
+                     }}
+                     onClick={(e) => (e.target as HTMLInputElement)?.select()}
+                  />
+               </div>
                <div className="separator" />
                <div className="row">
                   <button
@@ -170,6 +188,8 @@ export function PlayerTradeComponent({ gameState, xy }: IBuildingComponentProps)
                         setResourceOfferFilters(new Set(savedResourceOfferFilters));
                         savedPlayerNameFilter = "";
                         setPlayerNameFilter(savedPlayerNameFilter);
+                        savedMaxTradeAmountFilter = 0;
+                        setTradeAmountFilter(savedMaxTradeAmountFilter);
                         setShowFilters(false);
                      }}
                   >
@@ -208,7 +228,9 @@ export function PlayerTradeComponent({ gameState, xy }: IBuildingComponentProps)
                   ((resourceWantFilters.size === 0 && resourceOfferFilters.size === 0) ||
                      resourceWantFilters.has(trade.buyResource) ||
                      resourceOfferFilters.has(trade.sellResource)) &&
-                  trade.from.toLocaleLowerCase().includes(playerNameFilter),
+                  trade.from.toLocaleLowerCase().includes(playerNameFilter) &&
+                  (tradeAmountFilter === 0 ||
+                     (tradeAmountFilter > 0 && trade.buyAmount <= tradeAmountFilter)),
             )}
             compareFunc={(a, b, col, asc) => {
                if (a.fromId === user?.userId && b.fromId !== user?.userId) {
