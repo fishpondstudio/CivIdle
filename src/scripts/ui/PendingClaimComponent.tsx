@@ -28,7 +28,7 @@ export function PendingClaimComponent({ gameState, xy }: IBuildingComponentProps
    });
 
    if (pendingClaims.length === 0) {
-      return null;
+      return <div className="text-desc">{t(L.NothingHere)}</div>;
    }
 
    const claimTrades = async (trades: IPendingClaim[]) => {
@@ -74,7 +74,7 @@ export function PendingClaimComponent({ gameState, xy }: IBuildingComponentProps
    return (
       <>
          <button
-            className="w100 jcc row mb10"
+            className="w100 jcc row mb10 mt5"
             onClick={() => claimTrades(pendingClaims.slice(0).sort((a, b) => a.amount - b.amount))}
          >
             <div className="m-icon small">local_shipping</div>

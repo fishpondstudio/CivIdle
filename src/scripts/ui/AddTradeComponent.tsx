@@ -68,6 +68,7 @@ export function AddTradeComponent({ gameState, xy }: IBuildingComponentProps): R
    if (showTrade) {
       return (
          <fieldset>
+            <legend>{t(L.PlayerTradeNewTrade)}</legend>
             <div className="text-strong mb5">{t(L.PlayerTradeIOffer)}</div>
             <div className="row">
                <select
@@ -238,7 +239,7 @@ export function AddTradeComponent({ gameState, xy }: IBuildingComponentProps): R
 
    return (
       <button
-         className="row w100 jcc mb10"
+         className="row w100 jcc mb5"
          onClick={() => {
             if (enabled) {
                setShowTrade(true);

@@ -13,31 +13,30 @@ import { PlayerTradeComponent } from "./PlayerTradeComponent";
 import { ResourceImportComponent } from "./ResourceImportComponent";
 
 type Tab = "trades" | "pending" | "import";
-let savedCaravanTab: Tab = "trades";
+let savedTab: Tab = "trades";
 
 export function PlayerTradeBuildingBody({ gameState, xy }: IBuildingComponentProps): React.ReactNode {
-   const [currentTab, setCurrentTab] = useState<Tab>(savedCaravanTab);
+   const [currentTab, setCurrentTab] = useState<Tab>(savedTab);
    let content: React.ReactNode = null;
 
    if (currentTab === "trades") {
-      savedCaravanTab = "trades";
+      savedTab = "trades";
       content = <PlayerTradeComponent gameState={gameState} xy={xy} />;
    } else if (currentTab === "pending") {
-      savedCaravanTab = "pending";
+      savedTab = "pending";
       content = <PendingTradesComponent gameState={gameState} xy={xy} />;
    } else if (currentTab === "import") {
-      savedCaravanTab = "import";
+      savedTab = "import";
       content = (
-         <article role="tabpanel" className="f1 column" style={{ padding: "8px" }}>
+         <article role="tabpanel" style={{ padding: "8px" }}>
             <ResourceImportComponent gameState={gameState} xy={xy} />
          </article>
       );
    }
 
    return (
-      <div className="window-body column">
+      <div className="window-body">
          <BuildingUpgradeComponent gameState={gameState} xy={xy} key={xy} />
-
          <menu role="tablist">
             <button onClick={() => setCurrentTab("trades")} aria-selected={currentTab === "trades"}>
                {t(L.PlayerTradeTabTrades)}
@@ -50,7 +49,6 @@ export function PlayerTradeBuildingBody({ gameState, xy }: IBuildingComponentPro
             </button>
          </menu>
          {content}
-
          <BuildingStorageComponent gameState={gameState} xy={xy} />
          <BuildingWorkerComponent gameState={gameState} xy={xy} />
          <BuildingProductionPriorityComponent gameState={gameState} xy={xy} />
