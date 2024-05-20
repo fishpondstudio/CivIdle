@@ -41,6 +41,16 @@ export function RebirthModal(): React.ReactNode {
    const [city, setCity] = useState<City>(gs.city);
    const permanentGreatPeopleLevel = getPermanentGreatPeopleLevel();
    const greatPeopleAtRebirthCount = getRebirthGreatPeopleCount();
+
+   const hasSupporterPack = () => {
+      if (Config.City[city].requireSupporterPack) {
+         return (
+            hasFlag(user?.attr ?? UserAttributes.None, UserAttributes.DLC1) || getFreeCityThisWeek() === city
+         );
+      }
+      return true;
+   };
+
    return (
       <div className="window" style={{ width: "500px" }}>
          <div className="title-bar">
@@ -222,11 +232,17 @@ export function RebirthModal(): React.ReactNode {
                </button>
                <div style={{ width: "6px" }} />
                <button
-                  disabled={permanentGreatPeopleLevel < Config.City[city].requireGreatPeopleLevel}
+                  disabled={
+                     permanentGreatPeopleLevel < Config.City[city].requireGreatPeopleLevel ||
+                     !hasSupporterPack()
+                  }
                   style={{ padding: "0 15px" }}
                   className="text-strong"
                   onClick={async () => {
-                     if (getPermanentGreatPeopleLevel() < Config.City[city].requireGreatPeopleLevel) {
+                     if (
+                        getPermanentGreatPeopleLevel() < Config.City[city].requireGreatPeopleLevel ||
+                        !hasSupporterPack()
+                     ) {
                         playError();
                         return;
                      }

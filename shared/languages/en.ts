@@ -1175,7 +1175,7 @@ export const EN = {
    HonorLevelX: "Honor %{level}",
    ExpansionLevelX: "Expansion %{level}",
    Cultivation4UpgradeHTML: "A great person of <b>Renaissance Age</b> is born",
-   Commerce4UpgradeHTML: "Upgrade all banks to <b>Level 30</b> for free",
+   Commerce4UpgradeHTML: "All <b>adjacent banks</b> get free upgrade to <b>level 30</b>",
    Expansion4UpgradeHTML: "<b>+1</b> Science From All Workers",
    Honor4UpgradeHTML: "Double the effect of <b>Zheng He</b> (Great Person)",
    CursorOldFashioned: "3D",

@@ -1,12 +1,13 @@
 import { Config } from "../logic/Config";
-import { getBuildingsByType } from "../logic/IntraTickCache";
+import { getGrid } from "../logic/IntraTickCache";
 import {
    getGreatPeopleChoiceCount,
    getGreatPersonTotalEffect,
    rollGreatPeopleThisRun,
 } from "../logic/RebirthLogic";
+import { Tick } from "../logic/TickLogic";
 import { RequestChooseGreatPerson } from "../logic/Update";
-import { deepFreeze } from "../utilities/Helper";
+import { deepFreeze, pointToTile, tileToPoint } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
 import { BuildingDefinitions } from "./BuildingDefinitions";
 import { GreatPersonDefinitions } from "./GreatPersonDefinitions";
@@ -94,11 +95,20 @@ export class UpgradeDefinitions {
       },
       additionalUpgrades: () => [t(L.Commerce4UpgradeHTML)],
       onUnlocked: (gs) => {
-         getBuildingsByType("Bank", gs)?.forEach((tile) => {
-            if (tile.building.status === "completed" && tile.building.level < 30) {
-               tile.building.level = 30;
+         const cz = Tick.current.specialBuildings.get("ChoghaZanbil");
+         if (!cz) return;
+         for (const point of getGrid(gs).getNeighbors(tileToPoint(cz.tile))) {
+            const tile = pointToTile(point);
+            const building = gs.tiles.get(tile)?.building;
+            if (
+               building &&
+               building.type === "Bank" &&
+               building.status === "completed" &&
+               building.level < 30
+            ) {
+               building.level = 30;
             }
-         });
+         }
       },
    };
 
