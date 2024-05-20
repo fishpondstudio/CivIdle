@@ -409,6 +409,11 @@ export class BuildingDefinitions {
       input: { Culture: 2, Philosophy: 2 },
       output: { Science: 5560 },
    };
+   ResearchFund: IBuildingDefinition = {
+      name: () => t(L.ResearchFund),
+      input: { Banknote: 1, Bond: 1 },
+      output: { Science: 25940 },
+   };
    Museum: IBuildingDefinition = {
       name: () => t(L.Museum),
       input: { Music: 2, Painting: 2 },
@@ -1359,10 +1364,20 @@ export class BuildingDefinitions {
       desc: () => t(L.TheMetDesc),
       input: {},
       output: {},
-      construction: { Water: 100, Wood: 100, Stone: 100, Wheat: 100 },
+      construction: { Book: 100, Law: 100, Rifle: 100 },
       max: 1,
       special: BuildingSpecial.WorldWonder,
       wikipedia: "Metropolitan_Museum_of_Art",
+   };
+   WallStreet: IBuildingDefinition = {
+      name: () => t(L.WallStreet),
+      desc: () => t(L.WallStreetDesc),
+      input: {},
+      output: {},
+      construction: { Water: 100, Wood: 100, Stone: 100, Wheat: 100 },
+      max: 1,
+      special: BuildingSpecial.WorldWonder,
+      wikipedia: "Wall_Street",
    };
    // ArcDeTriomphe: IBuildingDefinition = {
    //    name: () => t(L.ArcDeTriomphe),

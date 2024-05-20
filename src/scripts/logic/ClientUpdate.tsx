@@ -8,7 +8,7 @@ import {
 } from "../../../shared/logic/GameStateLogic";
 import { calculateHappiness } from "../../../shared/logic/HappinessLogic";
 import { clearIntraTickCache, getBuildingsByType } from "../../../shared/logic/IntraTickCache";
-import { getGreatPersonThisRunLevel } from "../../../shared/logic/RebornLogic";
+import { getGreatPersonThisRunLevel } from "../../../shared/logic/RebirthLogic";
 import { RequestResetTile } from "../../../shared/logic/TechLogic";
 import { CurrentTickChanged, EmptyTickData, Tick, freezeTickData } from "../../../shared/logic/TickLogic";
 import {

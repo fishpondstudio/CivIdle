@@ -1,12 +1,18 @@
 import { Config } from "../../shared/logic/Config";
 import type { SavedGame } from "../../shared/logic/GameState";
+import { getGrid } from "../../shared/logic/IntraTickCache";
 import { ShortcutActions } from "../../shared/logic/Shortcut";
 import { BuildingInputMode, ResourceImportOptions, makeBuilding } from "../../shared/logic/Tile";
-import { forEach, isNullOrUndefined } from "../../shared/utilities/Helper";
+import { forEach, isNullOrUndefined, tileToPoint } from "../../shared/utilities/Helper";
 import { getConstructionPriority, getProductionPriority } from "./Global";
 
 export function migrateSavedGame(save: SavedGame) {
-   save.current.tiles.forEach((tile) => {
+   const grid = getGrid(save.current);
+   save.current.tiles.forEach((tile, xy) => {
+      if (!grid.isValid(tileToPoint(xy))) {
+         save.current.tiles.delete(xy);
+         return;
+      }
       if (tile.building) {
          // @ts-expect-error
          if (tile.building.status === "paused") {
@@ -17,6 +23,7 @@ export function migrateSavedGame(save: SavedGame) {
             // @ts-expect-error
             delete tile.building.disabledInput;
          }
+         tile.tile = xy;
          if (isNullOrUndefined(tile.building.suspendedInput)) {
             tile.building.suspendedInput = new Map();
          }

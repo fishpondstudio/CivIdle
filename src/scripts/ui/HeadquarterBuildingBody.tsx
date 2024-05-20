@@ -9,7 +9,7 @@ import {
    getRebirthGreatPeopleCount,
    getTotalGreatPeopleUpgradeCost,
    getValueRequiredForGreatPeople,
-} from "../../../shared/logic/RebornLogic";
+} from "../../../shared/logic/RebirthLogic";
 import {
    getCurrentAge,
    getScienceAmount,
@@ -43,7 +43,7 @@ import { GreatPersonPage } from "./GreatPersonPage";
 import { HappinessComponent } from "./HappinessComponent";
 import { FormatNumber } from "./HelperComponents";
 import { PlayerHandleComponent } from "./PlayerHandleComponent";
-import { RebornModal } from "./RebornModal";
+import { RebirthModal } from "./RebirthModal";
 import { RenderHTML } from "./RenderHTMLComponent";
 import { SteamAchievementPage } from "./SteamAchievementPage";
 import { TextWithHelp } from "./TextWithHelpComponent";
@@ -483,7 +483,7 @@ function RebornComponent({ gameState }: { gameState: GameState }): ReactNode {
             ) : null}
          </ul>
          <div className="sep10"></div>
-         <button className="row w100 jcc" onClick={() => showModal(<RebornModal />)}>
+         <button className="row w100 jcc" onClick={() => showModal(<RebirthModal />)}>
             <div className="m-icon small">stroller</div>
             <div className="f1 text-strong">{t(L.Reborn)}</div>
          </button>

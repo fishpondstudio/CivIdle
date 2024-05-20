@@ -7,7 +7,7 @@ import { Config } from "../../../shared/logic/Config";
 import { GameFeature, hasFeature } from "../../../shared/logic/FeatureLogic";
 import { getHappinessIcon } from "../../../shared/logic/HappinessLogic";
 import { getResourceIO } from "../../../shared/logic/IntraTickCache";
-import { getProgressTowardsNextGreatPerson } from "../../../shared/logic/RebornLogic";
+import { getProgressTowardsNextGreatPerson } from "../../../shared/logic/RebirthLogic";
 import { getResourceAmount } from "../../../shared/logic/ResourceLogic";
 import { getScienceAmount } from "../../../shared/logic/TechLogic";
 import { CurrentTickChanged, NotProducingReason, Tick } from "../../../shared/logic/TickLogic";

@@ -6,7 +6,7 @@ import { getGameOptions, getGameState, savedGame } from "../../../shared/logic/G
 import {
    DEFAULT_GREAT_PEOPLE_CHOICE_COUNT,
    rollPermanentGreatPeople,
-} from "../../../shared/logic/RebornLogic";
+} from "../../../shared/logic/RebirthLogic";
 import {
    ChatChannels,
    UserAttributes,

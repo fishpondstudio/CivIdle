@@ -1,7 +1,7 @@
 import Tippy from "@tippyjs/react";
 import type { GreatPerson } from "../../../shared/definitions/GreatPersonDefinitions";
 import { Config } from "../../../shared/logic/Config";
-import { getGreatPersonThisRunLevel } from "../../../shared/logic/RebornLogic";
+import { getGreatPersonThisRunLevel } from "../../../shared/logic/RebirthLogic";
 import { Tick } from "../../../shared/logic/TickLogic";
 import { forEach, numberToRoman } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";

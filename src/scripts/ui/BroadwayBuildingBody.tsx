@@ -2,7 +2,7 @@ import classNames from "classnames";
 import { GreatPersonType } from "../../../shared/definitions/GreatPersonDefinitions";
 import { Config } from "../../../shared/logic/Config";
 import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
-import { getGreatPersonTotalEffect, sortGreatPeople } from "../../../shared/logic/RebornLogic";
+import { getGreatPersonTotalEffect, sortGreatPeople } from "../../../shared/logic/RebirthLogic";
 import type { IGreatPeopleBuildingData } from "../../../shared/logic/Tile";
 import { keysOf } from "../../../shared/utilities/Helper";
 import { GreatPersonImage } from "../visuals/GreatPersonVisual";

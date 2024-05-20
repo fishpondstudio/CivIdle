@@ -11,7 +11,6 @@ import {
    formatNumber,
    isEmpty,
    keysOf,
-   mapOf,
    mapSafeAdd,
    numberToRoman,
    reduceOf,
@@ -21,6 +20,7 @@ import {
 import type { PartialTabulate } from "../utilities/TypeDefinitions";
 import {
    getBuildingCost,
+   getBuildingDescription,
    getWonderBaseBuilderCapacity,
    isSpecialBuilding,
    isWorldWonder,
@@ -179,6 +179,13 @@ export function calculateTierAndPrice(log?: (val: string) => void) {
             !isEmpty(Config.Building[b].input) || !isEmpty(Config.Building[b].construction),
             `${b}: A building should have either 'input' or 'construction' defined`,
          );
+      });
+   });
+
+   forEach(Config.City, (city, def) => {
+      forEach(def.uniqueBuildings, (building, tech) => {
+         Config.BuildingTech[building] = tech;
+         Config.BuildingTechAge[building] = getAgeForTech(tech)!;
       });
    });
 
@@ -458,13 +465,7 @@ export function calculateTierAndPrice(log?: (val: string) => void) {
 
    function logBuildingFormula(b: Building): string {
       const building = Config.Building[b];
-      return [
-         building.name(),
-         ": ",
-         mapOf(building.input, (res, value) => `${Config.Resource[res].name()} x${value}`).join(" + "),
-         " => ",
-         mapOf(building.output, (res, value) => `${Config.Resource[res].name()} x${value}`).join(" + "),
-      ].join("");
+      return [building.name(), ": ", getBuildingDescription(b)].join("");
    }
 }
 

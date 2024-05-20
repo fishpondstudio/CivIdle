@@ -74,7 +74,7 @@ import {
    getXyBuildings,
    unlockedResources,
 } from "./IntraTickCache";
-import { calculateEmpireValue } from "./RebornLogic";
+import { calculateEmpireValue } from "./RebirthLogic";
 import { getAmountInTransit } from "./ResourceLogic";
 import type { IBuildingResource, Multiplier } from "./TickLogic";
 import { NotProducingReason, Tick } from "./TickLogic";
@@ -584,6 +584,7 @@ function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
       }
    }
 
+   ////////// Production (when storage is NOT full)
    useWorkers("Worker", worker.output, xy);
    deductResources(building.resources, input);
    forEach(output, (res, v) => {

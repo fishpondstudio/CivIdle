@@ -10,6 +10,7 @@ import {
    isNullOrUndefined,
    keysOf,
    mReduceOf,
+   mapOf,
    mapSafeAdd,
    mapSafePush,
    pointToTile,
@@ -30,7 +31,7 @@ import { GameFeature, hasFeature } from "./FeatureLogic";
 import type { GameOptions, GameState } from "./GameState";
 import { getGameState } from "./GameStateLogic";
 import { getBuildingIO, getBuildingsByType, getGrid, getXyBuildings } from "./IntraTickCache";
-import { getGreatPersonTotalEffect, getUpgradeCostFib } from "./RebornLogic";
+import { getGreatPersonTotalEffect, getUpgradeCostFib } from "./RebirthLogic";
 import { getBuildingsThatProduce, getResourcesValue } from "./ResourceLogic";
 import { getAgeForTech, getBuildingUnlockTech } from "./TechLogic";
 import {
@@ -107,7 +108,7 @@ export enum IOCalculation {
    None = 0,
    Capacity = 1 << 0,
    Multiplier = 1 << 1,
-   MultiplierExcludeElectrification = 1 << 2,
+   MultiplierStableOnly = 1 << 2,
    TotalUsedBits = 3,
 }
 
@@ -164,10 +165,10 @@ export function getWorkersFor(xy: Tile, gs: GameState): IWorkerRequirement {
    const b = gs.tiles.get(xy)?.building;
    // Buildings that produce workers do not cost workers
    if (b && !Config.Building[b.type].output.Worker) {
-      forEach(getBuildingIO(xy, "input", IOCalculation.MultiplierExcludeElectrification, gs), (k, v) => {
+      forEach(getBuildingIO(xy, "input", IOCalculation.MultiplierStableOnly, gs), (k, v) => {
          if (!NoPrice[k]) result.rawOutput += v;
       });
-      forEach(getBuildingIO(xy, "output", IOCalculation.MultiplierExcludeElectrification, gs), (k, v) => {
+      forEach(getBuildingIO(xy, "output", IOCalculation.MultiplierStableOnly, gs), (k, v) => {
          if (!NoPrice[k]) result.rawOutput += v;
       });
       result.multiplier = totalMultiplierFor(xy, "worker", 1, false, gs);
@@ -249,18 +250,9 @@ export function getStorageFor(xy: Tile, gs: GameState): IStorageResult {
       }
       default: {
          base =
-            60 *
-               reduceOf(
-                  getBuildingIO(xy, "input", IOCalculation.MultiplierExcludeElectrification, gs),
-                  accumulate,
-                  0,
-               ) +
+            60 * reduceOf(getBuildingIO(xy, "input", IOCalculation.MultiplierStableOnly, gs), accumulate, 0) +
             STORAGE_TO_PRODUCTION *
-               reduceOf(
-                  getBuildingIO(xy, "output", IOCalculation.MultiplierExcludeElectrification, gs),
-                  accumulate,
-                  0,
-               );
+               reduceOf(getBuildingIO(xy, "output", IOCalculation.MultiplierStableOnly, gs), accumulate, 0);
          break;
       }
    }
@@ -1021,4 +1013,15 @@ export function getGreatWallRange(xy: Tile, gs: GameState): number {
       }
    }
    return 1;
+}
+
+export function getBuildingDescription(b: Building): string {
+   const building = Config.Building[b];
+   const desc = building.desc?.();
+   if (desc) return desc;
+   return [
+      mapOf(building.input, (res, value) => `${Config.Resource[res].name()} x${value}`).join(" + "),
+      " => ",
+      mapOf(building.output, (res, value) => `${Config.Resource[res].name()} x${value}`).join(" + "),
+   ].join("");
 }

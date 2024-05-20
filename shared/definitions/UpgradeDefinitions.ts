@@ -4,7 +4,7 @@ import {
    getGreatPeopleChoiceCount,
    getGreatPersonTotalEffect,
    rollGreatPeopleThisRun,
-} from "../logic/RebornLogic";
+} from "../logic/RebirthLogic";
 import { RequestChooseGreatPerson } from "../logic/Update";
 import { deepFreeze } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";

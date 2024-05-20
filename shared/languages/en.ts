@@ -1195,8 +1195,14 @@ export const EN = {
    TeleportDescHTML: "A teleport is generated <b>every %{time} seconds</b>. A teleport can be used to <b>move a building (wonders excluded)</b> once",
    MoveBuilding: "Move Building",   
    MoveBuildingSelectTile: "Select An Tile...",   
-   MoveBuildingSelectTileToastHTML: "Select <b>an empty tile</b> on the map as the target",   
+   MoveBuildingSelectTileToastHTML: "Select <b>an empty explored tile</b> on the map as the target",   
    MoveBuildingFail: "Selected tile is not valid",  
    MoveBuildingNoTeleport: "You don't have enough teleport",  
-   MarketRefreshMessage: "Trades in %{count} markets has been refreshed" 
+   MarketRefreshMessage: "Trades in %{count} markets has been refreshed", 
+   WallStreet: "Wall Street",
+   WallStreetDesc: "All buildings that produce coin, banknote, bond, stock and forex within 2 tile range get +N production multiplier. N = Random value between 1 to 5 which is different per building and changes with every market refresh. Double the effect of John D. Rockefeller",
+   ResearchFund: "Research Fund",
+   SupporterPackRequired: "Supporter Pack Required",
+   FreeThisWeek: "Free This Week",
+   FreeThisWeekDescHTML: "<b>Every week</b>, one of the premium cities is free to play. This week's free city is <b>%{city}</b>",
 };

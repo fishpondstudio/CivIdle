@@ -50,7 +50,7 @@ export function BuildingSellComponent({ gameState, xy }: IBuildingComponentProps
                   }
                   const xy = pointToTile(point);
                   const newTile = gameState.tiles.get(xy);
-                  if (newTile && !newTile.building) {
+                  if (newTile && !newTile.building && newTile.explored) {
                      playSuccess();
                      newTile.building = building;
                      safeAdd(theMet.building.resources, "Teleport", -1);

@@ -8,7 +8,7 @@ import {
    addPermanentGreatPerson,
    getGreatPersonUpgradeCost,
    sortGreatPeople,
-} from "../../../shared/logic/RebornLogic";
+} from "../../../shared/logic/RebirthLogic";
 import { keysOf, numberToRoman } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import { useGameOptions } from "../Global";

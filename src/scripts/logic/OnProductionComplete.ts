@@ -24,7 +24,7 @@ import {
    getXyBuildings,
 } from "../../../shared/logic/IntraTickCache";
 import { getVotedBoostId } from "../../../shared/logic/PlayerTradeLogic";
-import { getGreatPersonTotalEffect } from "../../../shared/logic/RebornLogic";
+import { getGreatPersonTotalEffect } from "../../../shared/logic/RebirthLogic";
 import { getBuildingsThatProduce } from "../../../shared/logic/ResourceLogic";
 import { getBuildingUnlockAge, getCurrentAge } from "../../../shared/logic/TechLogic";
 import { NotProducingReason, Tick } from "../../../shared/logic/TickLogic";
@@ -50,6 +50,7 @@ import {
    tileToPoint,
    type Tile,
 } from "../../../shared/utilities/Helper";
+import { srand } from "../../../shared/utilities/Random";
 import { L, t } from "../../../shared/utilities/i18n";
 import { client } from "../rpc/RPCClient";
 import { Singleton } from "../utilities/Singleton";
@@ -906,6 +907,37 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
                storage: 1,
                source: buildingName,
             });
+         }
+         break;
+      }
+      case "WallStreet": {
+         for (const point of grid.getRange(tileToPoint(xy), 2)) {
+            const t = pointToTile(point);
+            const b = gs.tiles.get(t)?.building;
+            if (
+               b &&
+               b.status === "completed" &&
+               (Config.Building[b.type].output.Coin ||
+                  Config.Building[b.type].output.Banknote ||
+                  Config.Building[b.type].output.Bond ||
+                  Config.Building[b.type].output.Stock ||
+                  Config.Building[b.type].output.Forex)
+            ) {
+               const multiplier = Math.round(srand(gs.id + gs.lastPriceUpdated + t)() * 4 + 1);
+               mapSafePush(Tick.next.tileMultipliers, t, {
+                  unstable: true,
+                  output: multiplier,
+                  source: buildingName,
+               });
+            }
+         }
+         const total = getGreatPersonTotalEffect("JohnDRockefeller", gs, options);
+         if (total > 0) {
+            Config.GreatPerson.JohnDRockefeller.tick(
+               Config.GreatPerson.JohnDRockefeller,
+               total,
+               buildingName,
+            );
          }
          break;
       }

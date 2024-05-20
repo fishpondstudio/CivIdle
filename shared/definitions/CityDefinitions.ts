@@ -132,7 +132,9 @@ export class CityDefinitions {
       },
       uniqueBuildings: {
          Broadway: "Railway",
-         TheMet: "Capitalism",
+         WallStreet: "Capitalism",
+         TheMet: "RapidFire",
+         ResearchFund: "UnitedNations",
       },
       naturalWonders: { Alps: true, GrottaAzzurra: true },
       requireGreatPeopleLevel: 20,

@@ -4,7 +4,7 @@ import { GreatPersonType, type GreatPerson } from "../../../shared/definitions/G
 import { Config } from "../../../shared/logic/Config";
 import type { GreatPeopleChoice } from "../../../shared/logic/GameState";
 import { notifyGameOptionsUpdate, notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
-import { addPermanentGreatPerson, getGreatPersonUpgradeCost } from "../../../shared/logic/RebornLogic";
+import { addPermanentGreatPerson, getGreatPersonUpgradeCost } from "../../../shared/logic/RebirthLogic";
 import { formatNumber, safeAdd } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import { useGameOptions, useGameState } from "../Global";

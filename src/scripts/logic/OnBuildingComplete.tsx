@@ -15,7 +15,7 @@ import {
    getRebirthGreatPeopleCount,
    rollGreatPeopleThisRun,
    rollPermanentGreatPeople,
-} from "../../../shared/logic/RebornLogic";
+} from "../../../shared/logic/RebirthLogic";
 import { getRevealedDeposits } from "../../../shared/logic/ResourceLogic";
 import {
    addDeposit,

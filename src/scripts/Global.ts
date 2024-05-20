@@ -22,7 +22,7 @@ import {
    getGreatPeopleChoiceCount,
    rollGreatPeopleThisRun,
    rollPermanentGreatPeople,
-} from "../../shared/logic/RebornLogic";
+} from "../../shared/logic/RebirthLogic";
 import { Tick } from "../../shared/logic/TickLogic";
 import { forEach, rejectIn, safeAdd } from "../../shared/utilities/Helper";
 import { TypedEvent } from "../../shared/utilities/TypedEvent";
