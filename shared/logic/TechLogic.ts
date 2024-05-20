@@ -2,7 +2,15 @@ import type { Building } from "../definitions/BuildingDefinitions";
 import type { City } from "../definitions/CityDefinitions";
 import type { Deposit } from "../definitions/ResourceDefinitions";
 import type { Tech, TechAge } from "../definitions/TechDefinitions";
-import { forEach, isEmpty, isNullOrUndefined, shuffle, sizeOf, type Tile } from "../utilities/Helper";
+import {
+   firstKeyOf,
+   forEach,
+   isEmpty,
+   isNullOrUndefined,
+   shuffle,
+   sizeOf,
+   type Tile,
+} from "../utilities/Helper";
 import { TypedEvent } from "../utilities/TypedEvent";
 import { Config } from "./Config";
 import type { GameState } from "./GameState";
@@ -70,7 +78,7 @@ export function getBuildingUnlockAge(building: Building): TechAge {
 export function getCurrentAge(gs: GameState): TechAge {
    const tech = getMostAdvancedTech(gs);
    if (!tech) {
-      throw new Error("Cannot find current tech age!");
+      return firstKeyOf(Config.TechAge)!;
    }
    return getAgeForTech(tech);
 }
@@ -100,7 +108,9 @@ export function unlockTech(tech: Tech, dispatchEvent: boolean, gs: GameState): v
       return;
    }
    gs.unlockedTech[tech] = true;
-   Config.Tech[tech].revealDeposit?.forEach((deposit) => {
+   const def = Config.Tech[tech];
+   // Deposits
+   def.revealDeposit?.forEach((deposit) => {
       const tileCount = getDepositTileCount(deposit, gs);
       const depositTiles = shuffle(
          Array.from(gs.tiles.entries()).filter(([xy, tile]) => {
@@ -133,20 +143,21 @@ export function unlockTech(tech: Tech, dispatchEvent: boolean, gs: GameState): v
          addDeposit(xy, deposit, dispatchEvent, gs);
       });
    });
-
+   // Callbacks
+   def.onUnlocked?.(gs);
    if (tech in SEA_TILE_COSTS) {
       RequestPathFinderGridUpdate.emit();
    }
 }
 
-export const OnResetTile = new TypedEvent<Tile>();
+export const RequestResetTile = new TypedEvent<Tile>();
 
 export function addDeposit(xy: Tile, deposit: Deposit, dispatchEvent: boolean, gs: GameState): void {
    const tile = gs.tiles.get(xy);
    if (tile) {
       tile.deposit[deposit] = true;
       if (dispatchEvent) {
-         OnResetTile.emit(xy);
+         RequestResetTile.emit(xy);
       }
    }
 }

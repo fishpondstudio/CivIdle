@@ -122,7 +122,7 @@ export function PendingClaimComponent({ gameState, xy }: IBuildingComponentProps
                </tbody>
             </table>
          </div>
-         <div className="separator" />
+         <div className="sep10" />
       </>
    );
 }

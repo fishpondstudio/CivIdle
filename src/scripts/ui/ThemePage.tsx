@@ -1,16 +1,19 @@
 import Tippy from "@tippyjs/react";
 import { Config } from "../../../shared/logic/Config";
 import {
+   CursorOptions,
    ThemeColorNames,
    resetThemeBuildingColors,
    resetThemeColor,
    resetThemeResourceColors,
+   type CursorOption,
 } from "../../../shared/logic/GameState";
 import { notifyGameOptionsUpdate } from "../../../shared/logic/GameStateLogic";
 import { getBuildingsThatProduce } from "../../../shared/logic/ResourceLogic";
 import { forEach, keysOf, safeParseFloat, safeParseInt } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import { syncFontSizeScale, useGameOptions } from "../Global";
+import { jsxMapOf } from "../utilities/Helper";
 import { playClick } from "../visuals/Sound";
 import { ChangeModernUIComponent } from "./ChangeModernUIComponent";
 import { ColorPicker } from "./ColorPicker";
@@ -73,6 +76,25 @@ export function ThemePage(): React.ReactNode {
                      <option value={400}>400px</option>
                      <option value={450}>450px</option>
                      <option value={500}>500px</option>
+                  </select>
+               </div>
+               <div className="separator" />
+               <div className="row">
+                  <div className="f1">
+                     <div>{t(L.CursorStyle)}</div>
+                     <RenderHTML className="text-desc text-small" html={t(L.CursorStyleDescHTML)} />
+                  </div>
+                  <select
+                     className="ml10"
+                     value={gameOptions.cursor}
+                     onChange={(e) => {
+                        gameOptions.cursor = e.target.value as CursorOption;
+                        notifyGameOptionsUpdate(gameOptions);
+                     }}
+                  >
+                     {jsxMapOf(CursorOptions, (k, name) => {
+                        return <option value={k}>{name()}</option>;
+                     })}
                   </select>
                </div>
             </fieldset>

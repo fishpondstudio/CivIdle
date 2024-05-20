@@ -10,7 +10,7 @@ export function PatchNotesPage(): React.ReactNode {
             <div className="title-bar-text">{t(L.PatchNotes)}</div>
          </div>
          <MenuComponent />
-         <div className="window-body" style={{ userSelect: "text" }}>
+         <div className="window-body">
             {PatchNotes.map((note) => {
                return (
                   <fieldset key={note.version}>

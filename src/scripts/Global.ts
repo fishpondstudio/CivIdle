@@ -22,7 +22,7 @@ import {
    getGreatPeopleChoiceCount,
    rollGreatPeopleThisRun,
    rollPermanentGreatPeople,
-} from "../../shared/logic/RebornLogic";
+} from "../../shared/logic/RebirthLogic";
 import { Tick } from "../../shared/logic/TickLogic";
 import { forEach, rejectIn, safeAdd } from "../../shared/utilities/Helper";
 import { TypedEvent } from "../../shared/utilities/TypedEvent";
@@ -60,6 +60,18 @@ export const ToggleChatWindow = new TypedEvent<boolean>();
 
 export function syncUITheme(gameOptions: GameOptions): void {
    gameOptions.useModernUI ? document.body.classList.add("modern") : document.body.classList.remove("modern");
+   switch (gameOptions.cursor) {
+      case "BigOldFashioned":
+         document.body.classList.add("big-old-fashioned-cursor");
+         break;
+      case "OldFashioned":
+         document.body.classList.add("old-fashioned-cursor");
+         break;
+      case "System":
+         break;
+      default:
+         document.body.classList.add("old-fashioned-cursor");
+   }
    OnUIThemeChanged.emit(getGameOptions().useModernUI);
 }
 

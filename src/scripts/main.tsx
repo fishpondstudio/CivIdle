@@ -6,6 +6,7 @@ import { TypedEvent } from "../../shared/utilities/TypedEvent";
 import "../css/Main.css";
 import CabinMedium from "../fonts/CabinMedium.ttf?url";
 import MarcellusRegular from "../fonts/MarcellusRegular.ttf?url";
+import OldTypefaces from "../fonts/OldTypefaces.ttf";
 import TextureBuildingDef from "../images/textures_building.json";
 import TextureBuilding from "../images/textures_building.png";
 import TextureFlagDef from "../images/textures_flag.json";
@@ -68,6 +69,7 @@ const mainBundle = {
 export const fonts = [
    new FontFace(Fonts.Cabin, `url("${CabinMedium}")`),
    new FontFace(Fonts.Marcellus, `url("${MarcellusRegular}")`),
+   new FontFace(Fonts.OldTypefaces, `url("${OldTypefaces}")`),
 ];
 
 export type MainBundle = keyof typeof mainBundle;
@@ -83,7 +85,10 @@ if (canvas) {
    });
 
    canvas.appendChild(app.view as any);
-   registerPixiInspector(app);
+   if (import.meta.env.DEV) {
+      registerPixiInspector(app);
+      document.body.style.userSelect = "auto";
+   }
    Assets.addBundle("main", mainBundle);
    loadBundle()
       .then(({ main, textures }) => {
@@ -103,17 +108,23 @@ export async function loadBundle() {
    fonts.forEach((f) =>
       BitmapFont.from(
          f.family,
-         {
-            fill: "#ffffff",
-            fontSize: 64,
-            fontFamily: f.family,
-            dropShadow: f.family !== Fonts.Marcellus,
-            dropShadowAlpha: 0.75,
-            dropShadowColor: "#000000",
-            dropShadowAngle: Math.PI / 6,
-            dropShadowBlur: 0,
-            dropShadowDistance: 3,
-         },
+         Object.assign(
+            {
+               fill: "#ffffff",
+               fontSize: 64,
+               fontFamily: f.family,
+            },
+            f.family === Fonts.Cabin
+               ? {
+                    dropShadow: true,
+                    dropShadowAlpha: 0.75,
+                    dropShadowColor: "#000000",
+                    dropShadowAngle: Math.PI / 6,
+                    dropShadowBlur: 0,
+                    dropShadowDistance: 3,
+                 }
+               : {},
+         ),
          { chars: BitmapFont.ASCII, resolution: 2 },
       ),
    );

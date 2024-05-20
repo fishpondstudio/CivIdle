@@ -13,7 +13,14 @@ import {
 } from "../../shared/logic/GameStateLogic";
 import { initializeGameState } from "../../shared/logic/InitializeGameState";
 import type { IPetraBuildingData } from "../../shared/logic/Tile";
-import { clamp, forEach, isNullOrUndefined, rejectIn, schedule } from "../../shared/utilities/Helper";
+import {
+   clamp,
+   deepFreeze,
+   forEach,
+   isNullOrUndefined,
+   rejectIn,
+   schedule,
+} from "../../shared/utilities/Helper";
 import type { TypedEvent } from "../../shared/utilities/TypedEvent";
 import { isGameDataCompatible, loadGame, syncFontSizeScale, syncSidePanelWidth, syncUITheme } from "./Global";
 import type { RouteChangeEvent } from "./Route";
@@ -74,10 +81,10 @@ export async function startGame(
    routeTo(LoadingPage, { stage: LoadingPageStage.CheckSave });
    const gameState = getGameState();
    const options = getGameOptions();
-   verifyTextures(textures, gameState.city);
    if (isNewPlayer) {
       initializeGameState(gameState, options);
    }
+   verifyTextures(textures, gameState.city);
 
    // ========== Game state is initialized ==========
    routeTo(LoadingPage, { stage: LoadingPageStage.CheckSave });
@@ -191,6 +198,8 @@ export function setCityOverride(gameState: GameState) {
    forEach(city.buildingNames, (b, name) => {
       Config.Building[b].name = name;
    });
+   deepFreeze(Config.Building);
+
    forEach(city.uniqueBuildings, (building, tech) => {
       if (!Config.Tech[tech].unlockBuilding) {
          Config.Tech[tech].unlockBuilding = [];

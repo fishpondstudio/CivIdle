@@ -4,7 +4,7 @@ import { GreatPersonType, type GreatPerson } from "../../../shared/definitions/G
 import { Config } from "../../../shared/logic/Config";
 import type { GreatPeopleChoice } from "../../../shared/logic/GameState";
 import { notifyGameOptionsUpdate, notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
-import { addPermanentGreatPerson, getGreatPersonUpgradeCost } from "../../../shared/logic/RebornLogic";
+import { addPermanentGreatPerson, getGreatPersonUpgradeCost } from "../../../shared/logic/RebirthLogic";
 import { formatNumber, safeAdd } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import { useGameOptions, useGameState } from "../Global";
@@ -199,6 +199,9 @@ function GreatPersonCard({
             </>
          ) : (
             <>
+               <div className="mt10">
+                  {p.desc(p, Math.round(100 / (1 + (gs.greatPeople[greatPerson] ?? 0))) / 100)}
+               </div>
                {p.type === GreatPersonType.Normal && (gs.greatPeople[greatPerson] ?? 0) > 0 ? (
                   <Tippy
                      content={t(L.GreatPersonThisRunEffectiveLevel, {
@@ -207,10 +210,9 @@ function GreatPersonCard({
                         effect: 1 + (gs.greatPeople[greatPerson] ?? 0),
                      })}
                   >
-                     <div className="m-icon text-orange mb5">release_alert</div>
+                     <div className="m-icon text-orange mt5">release_alert</div>
                   </Tippy>
                ) : null}
-               <div>{p.desc(p, Math.round(100 / (1 + (gs.greatPeople[greatPerson] ?? 0))) / 100)}</div>
             </>
          )}
       </div>

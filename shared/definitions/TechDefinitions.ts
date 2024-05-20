@@ -7,25 +7,51 @@ export const MAX_TECH_COLUMN = 23;
 export const MAX_TECH_AGE: TechAge = "ColdWarAge";
 
 export class TechAgeDefinitions {
-   StoneAge: ITechAgeDefinition = { idx: 0, from: 0, to: 1, name: () => t(L.StoneAge) };
-   BronzeAge: ITechAgeDefinition = { idx: 1, from: 2, to: 3, name: () => t(L.BronzeAge) };
-   IronAge: ITechAgeDefinition = { idx: 2, from: 4, to: 5, name: () => t(L.IronAge) };
-   ClassicalAge: ITechAgeDefinition = { idx: 3, from: 6, to: 8, name: () => t(L.ClassicalAge) };
-   MiddleAge: ITechAgeDefinition = { idx: 4, from: 9, to: 10, name: () => t(L.MiddleAge) };
+   StoneAge: ITechAgeDefinition = { idx: 0, from: 0, to: 1, name: () => t(L.StoneAge), color: 0xb2bec3 };
+   BronzeAge: ITechAgeDefinition = { idx: 1, from: 2, to: 3, name: () => t(L.BronzeAge), color: 0xb2bec3 };
+   IronAge: ITechAgeDefinition = { idx: 2, from: 4, to: 5, name: () => t(L.IronAge), color: 0x596275 };
+   ClassicalAge: ITechAgeDefinition = {
+      idx: 3,
+      from: 6,
+      to: 8,
+      name: () => t(L.ClassicalAge),
+      color: 0x81ecec,
+   };
+   MiddleAge: ITechAgeDefinition = { idx: 4, from: 9, to: 10, name: () => t(L.MiddleAge), color: 0xff7675 };
    RenaissanceAge: ITechAgeDefinition = {
       idx: 5,
       from: 11,
       to: 13,
       name: () => t(L.RenaissanceAge),
+      color: 0xa29bfe,
    };
-   IndustrialAge: ITechAgeDefinition = { idx: 6, from: 14, to: 17, name: () => t(L.IndustrialAge) };
-   WorldWarAge: ITechAgeDefinition = { idx: 7, from: 18, to: 20, name: () => t(L.WorldWarAge) };
-   ColdWarAge: ITechAgeDefinition = { idx: 8, from: 21, to: 23, name: () => t(L.ColdWarAge) };
+   IndustrialAge: ITechAgeDefinition = {
+      idx: 6,
+      from: 14,
+      to: 17,
+      name: () => t(L.IndustrialAge),
+      color: 0xfd79a8,
+   };
+   WorldWarAge: ITechAgeDefinition = {
+      idx: 7,
+      from: 18,
+      to: 20,
+      name: () => t(L.WorldWarAge),
+      color: 0xfdcb6e,
+   };
+   ColdWarAge: ITechAgeDefinition = {
+      idx: 8,
+      from: 21,
+      to: 23,
+      name: () => t(L.ColdWarAge),
+      color: 0x74b9ff,
+   };
    InformationAge: ITechAgeDefinition = {
       idx: 9,
       from: 24,
       to: 26,
       name: () => t(L.InformationAge),
+      color: 0x55efc4,
    };
 }
 
@@ -98,7 +124,7 @@ export class TechDefinitions {
       unlockBuilding: ["House"],
       requireTech: ["Masonry", "Counting"],
       buildingMultiplier: { Hut: { output: 1 } },
-      additionalUpgrades: [() => t(L.TechResourceTransportPreference)],
+      additionalUpgrades: () => [t(L.TechResourceTransportPreference)],
    };
 
    Herding: ITechDefinition = {
@@ -106,13 +132,13 @@ export class TechDefinitions {
       column: 2,
       unlockBuilding: ["LivestockFarm"],
       requireTech: ["Counting", "Farming"],
-      additionalUpgrades: [() => t(L.TechProductionPriority)],
+      additionalUpgrades: () => [t(L.TechProductionPriority)],
    };
 
    HorsebackRiding: ITechDefinition = {
       name: () => t(L.HorsebackRiding),
       column: 2,
-      additionalUpgrades: [() => t(L.TechStockpileMode)],
+      additionalUpgrades: () => [t(L.TechStockpileMode)],
       unlockBuilding: ["Stable", "Sandpit"],
       requireTech: ["Farming"],
    };
@@ -194,7 +220,7 @@ export class TechDefinitions {
       name: () => t(L.Construction),
       column: 5,
       requireTech: ["RoadAndWheel"],
-      unlockBuilding: ["IronForge", "Marbleworks"],
+      unlockBuilding: ["IronForge", "Marbleworks", "ChoghaZanbil"],
    };
 
    Music: ITechDefinition = {
@@ -248,7 +274,7 @@ export class TechDefinitions {
       column: 7,
       requireTech: ["PreciousMetal", "Engineering"],
       unlockBuilding: ["SiegeWorkshop", "TerracottaArmy"],
-      additionalUpgrades: [() => t(L.WarehouseUpgrade)],
+      additionalUpgrades: () => [t(L.WarehouseUpgrade)],
    };
 
    Politics: ITechDefinition = {
@@ -309,7 +335,7 @@ export class TechDefinitions {
       buildingMultiplier: {
          Library: { output: 1 },
       },
-      additionalUpgrades: [() => t(L.SeaTradeUpgrade, { tariff: formatPercent(SEA_TILE_COST_1) })],
+      additionalUpgrades: () => [t(L.SeaTradeUpgrade, { tariff: formatPercent(SEA_TILE_COST_1) })],
    };
 
    Physics: ITechDefinition = {
@@ -320,7 +346,7 @@ export class TechDefinitions {
       globalMultiplier: {
          storage: 1,
       },
-      additionalUpgrades: [() => t(L.WarehouseExtension)],
+      additionalUpgrades: () => [t(L.WarehouseExtension)],
    };
 
    Feudalism: ITechDefinition = {
@@ -375,7 +401,7 @@ export class TechDefinitions {
          Library: { output: 1 },
          School: { output: 1 },
       },
-      additionalUpgrades: [() => t(L.SeaTradeUpgrade, { tariff: formatPercent(SEA_TILE_COST_2) })],
+      additionalUpgrades: () => [t(L.SeaTradeUpgrade, { tariff: formatPercent(SEA_TILE_COST_2) })],
    };
 
    Banking: ITechDefinition = {
@@ -383,7 +409,7 @@ export class TechDefinitions {
       column: 11,
       requireTech: ["CivilService", "Navigation"],
       unlockBuilding: ["Bank"],
-      additionalUpgrades: [() => t(L.BankingAdditionalUpgrade)],
+      additionalUpgrades: () => [t(L.BankingAdditionalUpgrade)],
    };
 
    University: ITechDefinition = {
@@ -502,7 +528,7 @@ export class TechDefinitions {
          University: { output: 1 },
       },
       unlockBuilding: ["Parliament"],
-      additionalUpgrades: [() => t(L.SeaTradeUpgrade, { tariff: formatPercent(SEA_TILE_COST_3) })],
+      additionalUpgrades: () => [t(L.SeaTradeUpgrade, { tariff: formatPercent(SEA_TILE_COST_3) })],
    };
 
    RapidFire: ITechDefinition = {
@@ -552,7 +578,7 @@ export class TechDefinitions {
       column: 16,
       requireTech: ["Railway", "Drilling"],
       unlockBuilding: ["CoalPowerPlant"],
-      additionalUpgrades: [() => t(L.ElectrificationUpgrade)],
+      additionalUpgrades: () => [t(L.ElectrificationUpgrade)],
    };
 
    StockMarket: ITechDefinition = {

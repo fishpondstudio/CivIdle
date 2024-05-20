@@ -9,16 +9,36 @@
    --base-font-size: 62.5%;
 }
 
-.game-cursor {
-   cursor: url("../images/w98normal.png"), default;
-}
-
 html {
    font-size: var(--base-font-size);
 }
 
-body {
+body.old-fashioned-cursor,
+body.old-fashioned-cursor * {
    cursor: url("../images/w98normal.png"), default;
+}
+
+body.old-fashioned-cursor .text-link,
+body.old-fashioned-cursor .text-link *,
+body.old-fashioned-cursor .pointer,
+body.old-fashioned-cursor .pointer * {
+   cursor: url("../images/w98hand.png"), pointer;
+}
+
+body.big-old-fashioned-cursor,
+body.big-old-fashioned-cursor * {
+   cursor: url("../images/w98big.png"), default;
+}
+
+body.big-old-fashioned-cursor .text-link,
+body.big-old-fashioned-cursor .text-link *,
+body.big-old-fashioned-cursor .pointer,
+body.big-old-fashioned-cursor .pointer * {
+   cursor: url("../images/w98handbig.png"), pointer;
+}
+
+body {
+   cursor: default;
    user-select: none;
    overflow: hidden;
    position: fixed;

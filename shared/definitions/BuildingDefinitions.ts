@@ -409,6 +409,11 @@ export class BuildingDefinitions {
       input: { Culture: 2, Philosophy: 2 },
       output: { Science: 5560 },
    };
+   ResearchFund: IBuildingDefinition = {
+      name: () => t(L.ResearchFund),
+      input: { Banknote: 1, Bond: 1 },
+      output: { Science: 25940 },
+   };
    Museum: IBuildingDefinition = {
       name: () => t(L.Museum),
       input: { Music: 2, Painting: 2 },
@@ -1333,6 +1338,68 @@ export class BuildingDefinitions {
       max: 1,
       special: BuildingSpecial.WorldWonder,
       wikipedia: "Atomium",
+   };
+   ChoghaZanbil: IBuildingDefinition = {
+      name: () => t(L.ChoghaZanbil),
+      desc: () => t(L.ChoghaZanbilDescV2),
+      input: {},
+      output: {},
+      construction: { Water: 100, Wood: 100, Stone: 100, Wheat: 100 },
+      max: 1,
+      special: BuildingSpecial.WorldWonder,
+      wikipedia: "Chogha_Zanbil",
+   };
+   Broadway: IBuildingDefinition = {
+      name: () => t(L.Broadway),
+      desc: () => t(L.BroadwayDesc),
+      input: {},
+      output: {},
+      construction: { Opera: 100, Culture: 100, Bond: 100 },
+      max: 1,
+      special: BuildingSpecial.WorldWonder,
+      wikipedia: "Broadway_theatre",
+   };
+   TheMet: IBuildingDefinition = {
+      name: () => t(L.TheMet),
+      desc: () => t(L.TheMetDesc),
+      input: {},
+      output: {},
+      construction: { Book: 100, Law: 100, Rifle: 100 },
+      max: 1,
+      special: BuildingSpecial.WorldWonder,
+      wikipedia: "Metropolitan_Museum_of_Art",
+   };
+   WallStreet: IBuildingDefinition = {
+      name: () => t(L.WallStreet),
+      desc: () => t(L.WallStreetDesc),
+      input: {},
+      output: {},
+      construction: { Water: 100, Wood: 100, Stone: 100, Wheat: 100 },
+      max: 1,
+      special: BuildingSpecial.WorldWonder,
+      wikipedia: "Wall_Street",
+   };
+
+   Shenandoah: IBuildingDefinition = {
+      name: () => t(L.Shenandoah),
+      desc: () => t(L.ShenandoahDesc),
+      input: {},
+      output: {},
+      construction: {},
+      max: 0,
+      wikipedia: "Shenandoah_Valley",
+      special: BuildingSpecial.NaturalWonder,
+   };
+
+   NiagaraFalls: IBuildingDefinition = {
+      name: () => t(L.NiagaraFalls),
+      desc: () => t(L.NiagaraFallsDesc),
+      input: {},
+      output: {},
+      construction: {},
+      max: 0,
+      wikipedia: "Niagara_Falls",
+      special: BuildingSpecial.NaturalWonder,
    };
    // ArcDeTriomphe: IBuildingDefinition = {
    //    name: () => t(L.ArcDeTriomphe),

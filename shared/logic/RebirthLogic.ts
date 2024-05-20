@@ -2,7 +2,16 @@ import type { City } from "../definitions/CityDefinitions";
 import { GreatPersonType, type GreatPerson } from "../definitions/GreatPersonDefinitions";
 import { NoPrice, type Resource } from "../definitions/ResourceDefinitions";
 import type { TechAge } from "../definitions/TechDefinitions";
-import { clamp, filterOf, forEach, isNullOrUndefined, keysOf, reduceOf, shuffle } from "../utilities/Helper";
+import {
+   WEEK,
+   clamp,
+   filterOf,
+   forEach,
+   isNullOrUndefined,
+   keysOf,
+   reduceOf,
+   shuffle,
+} from "../utilities/Helper";
 import { Config } from "./Config";
 import type { GameOptions, GameState, GreatPeopleChoice } from "./GameState";
 import { getGameOptions, getGameState } from "./GameStateLogic";
@@ -26,6 +35,14 @@ export function getGreatPersonThisRunLevel(amount: number): number {
       result += 1 / i;
    }
    return Math.round(result * 100) / 100;
+}
+
+export function getGreatPersonTotalEffect(
+   gp: GreatPerson,
+   gs: GameState = getGameState(),
+   options: GameOptions = getGameOptions(),
+): number {
+   return getGreatPersonThisRunLevel(gs.greatPeople[gp] ?? 0) + (options.greatPeople[gp]?.level ?? 0);
 }
 
 export function getProgressTowardsNextGreatPerson(): number {
@@ -190,4 +207,25 @@ export function getPermanentGreatPeopleCount(): number {
 
 export function calculateEmpireValue(resource: Resource, amount: number): number {
    return NoPrice[resource] ? 0 : amount * (Config.ResourcePrice[resource] ?? 0);
+}
+
+export function sortGreatPeople(a: GreatPerson, b: GreatPerson): number {
+   const gpa = Config.GreatPerson[a];
+   const gpb = Config.GreatPerson[b];
+   const diff = Config.TechAge[gpa.age].idx - Config.TechAge[gpb.age].idx;
+   if (diff !== 0) {
+      return diff;
+   }
+   return gpa.name().localeCompare(gpb.name());
+}
+
+export function getFreeCityThisWeek(): City {
+   const candidates: City[] = [];
+   forEach(Config.City, (city, def) => {
+      if (def.requireSupporterPack) {
+         candidates.push(city);
+      }
+   });
+   const week = Math.floor(Date.now() / WEEK);
+   return candidates[week % candidates.length];
 }

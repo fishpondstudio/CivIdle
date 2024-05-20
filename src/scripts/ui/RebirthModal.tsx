@@ -1,17 +1,20 @@
 import { useEffect, useState } from "react";
 import type { City } from "../../../shared/definitions/CityDefinitions";
+import { getBuildingDescription } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
 import { getGameOptions } from "../../../shared/logic/GameStateLogic";
 import {
+   getFreeCityThisWeek,
    getGreatPeopleChoiceCount,
    getPermanentGreatPeopleLevel,
    getRebirthGreatPeopleCount,
    makeGreatPeopleFromThisRunPermanent,
    rollPermanentGreatPeople,
-} from "../../../shared/logic/RebornLogic";
+} from "../../../shared/logic/RebirthLogic";
 import { getCurrentAge } from "../../../shared/logic/TechLogic";
 import { Tick } from "../../../shared/logic/TickLogic";
-import { clamp, formatPercent, mapOf, reduceOf, rejectIn } from "../../../shared/utilities/Helper";
+import { UserAttributes } from "../../../shared/utilities/Database";
+import { clamp, formatPercent, hasFlag, mapOf, reduceOf, rejectIn } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import { resetToCity, saveGame, useGameState } from "../Global";
 import { checkRebirthAchievements } from "../logic/Achievement";
@@ -24,7 +27,7 @@ import { RenderHTML } from "./RenderHTMLComponent";
 import { TextWithHelp } from "./TextWithHelpComponent";
 import { WarningComponent } from "./WarningComponent";
 
-export function RebornModal(): React.ReactNode {
+export function RebirthModal(): React.ReactNode {
    const trades = useTrades();
    const user = useUser();
    const [tradeCount, setTradeCount] = useState<number>(
@@ -38,6 +41,16 @@ export function RebornModal(): React.ReactNode {
    const [city, setCity] = useState<City>(gs.city);
    const permanentGreatPeopleLevel = getPermanentGreatPeopleLevel();
    const greatPeopleAtRebirthCount = getRebirthGreatPeopleCount();
+
+   const hasSupporterPack = () => {
+      if (Config.City[city].requireSupporterPack) {
+         return (
+            hasFlag(user?.attr ?? UserAttributes.None, UserAttributes.DLC1) || getFreeCityThisWeek() === city
+         );
+      }
+      return true;
+   };
+
    return (
       <div className="window" style={{ width: "500px" }}>
          <div className="title-bar">
@@ -101,6 +114,11 @@ export function RebornModal(): React.ReactNode {
             )}
             <div className="sep10" />
             <fieldset>
+               {hasFlag(user?.attr ?? UserAttributes.None, UserAttributes.DLC1) ? null : (
+                  <WarningComponent icon="info" className="text-small mb10">
+                     <RenderHTML html={t(L.FreeThisWeekDescHTML, { city: Config.City[city].name() })} />
+                  </WarningComponent>
+               )}
                <div className="row">
                   <div className="f1">{t(L.RebornCity)}</div>
                   <select
@@ -113,6 +131,7 @@ export function RebornModal(): React.ReactNode {
                         return (
                            <option key={city} value={city}>
                               {def.name()}
+                              {def.requireSupporterPack ? "*" : ""}
                            </option>
                         );
                      })}
@@ -138,8 +157,7 @@ export function RebornModal(): React.ReactNode {
                         <TextWithHelp
                            className="mr10"
                            key={building}
-                           size="large"
-                           content={Config.Building[building].desc?.()}
+                           content={getBuildingDescription(building)}
                         >
                            {Config.Building[building].name()}{" "}
                            <span className="text-desc">({Config.Tech[tech].name()})</span>
@@ -153,7 +171,11 @@ export function RebornModal(): React.ReactNode {
                   {jsxMapOf(Config.City[city].naturalWonders, (building, tech) => {
                      const def = Config.Building[building];
                      return (
-                        <TextWithHelp className="mr10" key={building} size="large" content={def.desc?.()}>
+                        <TextWithHelp
+                           className="mr10"
+                           key={building}
+                           content={getBuildingDescription(building)}
+                        >
                            {def.name()}
                         </TextWithHelp>
                      );
@@ -162,7 +184,7 @@ export function RebornModal(): React.ReactNode {
                <div className="separator" />
                <div className="row">
                   <div className=" f1">{t(L.GreatPersonLevelRequired)}</div>
-                  {permanentGreatPeopleLevel >= Config.City[city].requiredGreatPeopleLevel ? (
+                  {permanentGreatPeopleLevel >= Config.City[city].requireGreatPeopleLevel ? (
                      <div className="m-icon small mr5 text-green">check_circle</div>
                   ) : (
                      <div className="m-icon small mr5 text-red">cancel</div>
@@ -171,14 +193,31 @@ export function RebornModal(): React.ReactNode {
                      <TextWithHelp
                         content={t(L.GreatPersonLevelRequiredDesc, {
                            city: Config.City[city].name(),
-                           required: Config.City[city].requiredGreatPeopleLevel,
+                           required: Config.City[city].requireGreatPeopleLevel,
                            current: permanentGreatPeopleLevel,
                         })}
                      >
-                        {Config.City[city].requiredGreatPeopleLevel}
+                        {Config.City[city].requireGreatPeopleLevel}
                      </TextWithHelp>
                   </div>
                </div>
+               {Config.City[city].requireSupporterPack ? (
+                  <>
+                     <div className="separator" />
+                     <div className="row">
+                        <div className="f1 mr10">{t(L.SupporterPackRequired)}</div>
+                        <div>
+                           {hasFlag(user?.attr ?? UserAttributes.None, UserAttributes.DLC1) ? (
+                              <div className="m-icon small text-green">check_circle</div>
+                           ) : getFreeCityThisWeek() === city ? (
+                              <div className="text-green text-strong">{t(L.FreeThisWeek)}</div>
+                           ) : (
+                              <div className="m-icon small text-red">cancel</div>
+                           )}
+                        </div>
+                     </div>
+                  </>
+               ) : null}
             </fieldset>
             <div className="sep5"></div>
             <div className="text-right row" style={{ justifyContent: "flex-end" }}>
@@ -193,11 +232,17 @@ export function RebornModal(): React.ReactNode {
                </button>
                <div style={{ width: "6px" }} />
                <button
-                  disabled={permanentGreatPeopleLevel < Config.City[city].requiredGreatPeopleLevel}
+                  disabled={
+                     permanentGreatPeopleLevel < Config.City[city].requireGreatPeopleLevel ||
+                     !hasSupporterPack()
+                  }
                   style={{ padding: "0 15px" }}
                   className="text-strong"
                   onClick={async () => {
-                     if (getPermanentGreatPeopleLevel() < Config.City[city].requiredGreatPeopleLevel) {
+                     if (
+                        getPermanentGreatPeopleLevel() < Config.City[city].requireGreatPeopleLevel ||
+                        !hasSupporterPack()
+                     ) {
                         playError();
                         return;
                      }

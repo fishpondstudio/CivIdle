@@ -279,21 +279,21 @@ function ChatMessage({
                   {chat.name}
                </div>
                <Tippy content={getCountryName(chat.flag)}>
-                  <img src={getFlagUrl(chat.flag)} className="player-flag game-cursor" />
+                  <img src={getFlagUrl(chat.flag)} className="player-flag" />
                </Tippy>
                {chat.level > 0 ? (
                   <Tippy content={AccountLevelNames[chat.level]()}>
-                     <img src={AccountLevelImages[chat.level]} className="player-flag game-cursor" />
+                     <img src={AccountLevelImages[chat.level]} className="player-flag" />
                   </Tippy>
                ) : null}
                {hasFlag(chat.attr, ChatAttributes.Supporter) ? (
                   <Tippy content={t(L.AccountSupporter)}>
-                     <img src={Supporter} className="player-flag game-cursor" />
+                     <img src={Supporter} className="player-flag" />
                   </Tippy>
                ) : null}
                {hasFlag(chat.attr, ChatAttributes.Mod) ? (
                   <Tippy content={t(L.AccountLevelMod)}>
-                     <img src={AccountLevelMod} className="player-flag game-cursor" />
+                     <img src={AccountLevelMod} className="player-flag" />
                   </Tippy>
                ) : null}
             </div>
@@ -309,21 +309,21 @@ function ChatMessage({
                   {chat.name}
                </div>
                <Tippy content={getCountryName(chat.flag)}>
-                  <img src={getFlagUrl(chat.flag)} className="player-flag game-cursor" />
+                  <img src={getFlagUrl(chat.flag)} className="player-flag" />
                </Tippy>
                {chat.level > 0 ? (
                   <Tippy content={AccountLevelNames[chat.level]()}>
-                     <img src={AccountLevelImages[chat.level]} className="player-flag game-cursor" />
+                     <img src={AccountLevelImages[chat.level]} className="player-flag" />
                   </Tippy>
                ) : null}
                {hasFlag(chat.attr, ChatAttributes.Supporter) ? (
                   <Tippy content={t(L.AccountSupporter)}>
-                     <img src={Supporter} className="player-flag game-cursor" />
+                     <img src={Supporter} className="player-flag" />
                   </Tippy>
                ) : null}
                {hasFlag(chat.attr, ChatAttributes.Mod) ? (
                   <Tippy content={t(L.AccountLevelMod)}>
-                     <img src={AccountLevelMod} className="player-flag game-cursor" />
+                     <img src={AccountLevelMod} className="player-flag" />
                   </Tippy>
                ) : null}
                <div className="f1"></div>
@@ -381,7 +381,7 @@ const ChatMessageContent = memo(
       if (isDomainWhitelisted && isExtensionWhitelisted) {
          return (
             <img
-               className="chat-image"
+               className="chat-image pointer"
                src={message}
                onClick={() => openUrl(message)}
                onLoad={onImageLoaded}

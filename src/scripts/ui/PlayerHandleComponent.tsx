@@ -8,7 +8,7 @@ import {
    getRebirthGreatPeopleCount,
    getTribuneUpgradeMaxLevel,
    upgradeAllPermanentGreatPeople,
-} from "../../../shared/logic/RebornLogic";
+} from "../../../shared/logic/RebirthLogic";
 import {
    AccountLevel,
    TradeTileReservationDays,

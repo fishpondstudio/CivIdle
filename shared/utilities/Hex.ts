@@ -16,8 +16,19 @@ export class Hex {
       if (Math.round(q + r + s) !== 0) throw "q + r + s must be 0";
    }
 
-   public add(b: Hex): Hex {
-      return new Hex(this.q + b.q, this.r + b.r, this.s + b.s);
+   public set(q: number, r: number, s: number): Hex {
+      this.q = q;
+      this.r = r;
+      this.s = s;
+      return this;
+   }
+
+   public add(b: Hex, result?: Hex): Hex {
+      result ??= new Hex(0, 0, 0);
+      result.q = this.q + b.q;
+      result.r = this.r + b.r;
+      result.s = this.s + b.s;
+      return result;
    }
 
    public subtract(b: Hex): Hex {
@@ -56,8 +67,10 @@ export class Hex {
       return Hex.directions[direction];
    }
 
-   public neighbor(direction: number): Hex {
-      return this.add(Hex.direction(direction));
+   public neighbor(direction: number, result?: Hex): Hex {
+      result ??= new Hex(0, 0, 0);
+      this.add(Hex.direction(direction), result);
+      return result;
    }
 
    public static diagonals: Hex[] = [
@@ -121,6 +134,20 @@ export class Hex {
       return result;
    }
 
+   public forEachInRange(distance: number, func: (hex: Hex) => void, temp?: Hex): void {
+      for (let q = -distance; q <= distance; ++q) {
+         for (let r = Math.max(-distance, -q - distance); r <= Math.min(distance, -q + distance); ++r) {
+            const s = -q - r;
+            temp ??= new Hex(0, 0, 0);
+            temp.q = q;
+            temp.r = r;
+            temp.s = s;
+            this.add(temp, temp);
+            func(temp);
+         }
+      }
+   }
+
    public linedraw(b: Hex): Hex[] {
       const N: number = this.distance(b);
       const a_nudge: Hex = new Hex(this.q + 1e-6, this.r + 1e-6, this.s - 2e-6);
@@ -161,35 +188,30 @@ export class OffsetCoord {
       return new Hex(q, r, s);
    }
 
-   public static roffsetFromCube(offset: number, h: Hex): OffsetCoord {
+   public static roffsetFromCube(offset: number, h: Hex, result?: OffsetCoord): OffsetCoord {
       const col: number = h.q + (h.r + offset * (h.r & 1)) / 2;
       const row: number = h.r;
       if (offset !== OffsetCoord.EVEN && offset !== OffsetCoord.ODD) {
          throw "offset must be EVEN (+1) or ODD (-1)";
       }
-      return new OffsetCoord(col, row);
+      result ??= new OffsetCoord(0, 0);
+      result.col = col;
+      result.row = row;
+      return result;
    }
 
-   public static roffsetToCube(offset: number, h: OffsetCoord): Hex {
+   public static roffsetToCube(offset: number, h: OffsetCoord, result?: Hex): Hex {
       const q: number = h.col - (h.row + offset * (h.row & 1)) / 2;
       const r: number = h.row;
       const s: number = -q - r;
       if (offset !== OffsetCoord.EVEN && offset !== OffsetCoord.ODD) {
          throw "offset must be EVEN (+1) or ODD (-1)";
       }
-      return new Hex(q, r, s);
-   }
-
-   public static roffsetToCubeNoAlloc(offset: number, h: OffsetCoord, result: Hex): void {
-      const q: number = h.col - (h.row + offset * (h.row & 1)) / 2;
-      const r: number = h.row;
-      const s: number = -q - r;
-      if (offset !== OffsetCoord.EVEN && offset !== OffsetCoord.ODD) {
-         throw "offset must be EVEN (+1) or ODD (-1)";
-      }
+      result ??= new Hex(0, 0, 0);
       result.q = q;
       result.r = r;
       result.s = s;
+      return result;
    }
 }
 

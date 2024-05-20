@@ -1,6 +1,7 @@
 import type { Building } from "../definitions/BuildingDefinitions";
 import { BuildingSpecial } from "../definitions/BuildingDefinitions";
 import { NoPrice, NoStorage, type Deposit, type Resource } from "../definitions/ResourceDefinitions";
+import type { Tradition } from "../definitions/TraditionDefinitions";
 import {
    clamp,
    forEach,
@@ -9,6 +10,7 @@ import {
    isNullOrUndefined,
    keysOf,
    mReduceOf,
+   mapOf,
    mapSafeAdd,
    mapSafePush,
    pointToTile,
@@ -27,9 +29,9 @@ import { Config } from "./Config";
 import { MANAGED_IMPORT_RANGE } from "./Constants";
 import { GameFeature, hasFeature } from "./FeatureLogic";
 import type { GameOptions, GameState } from "./GameState";
-import { getGameOptions, getGameState } from "./GameStateLogic";
+import { getGameState } from "./GameStateLogic";
 import { getBuildingIO, getBuildingsByType, getGrid, getXyBuildings } from "./IntraTickCache";
-import { getGreatPersonThisRunLevel, getUpgradeCostFib } from "./RebornLogic";
+import { getGreatPersonTotalEffect, getUpgradeCostFib } from "./RebirthLogic";
 import { getBuildingsThatProduce, getResourcesValue } from "./ResourceLogic";
 import { getAgeForTech, getBuildingUnlockTech } from "./TechLogic";
 import {
@@ -106,7 +108,7 @@ export enum IOCalculation {
    None = 0,
    Capacity = 1 << 0,
    Multiplier = 1 << 1,
-   MultiplierExcludeElectrification = 1 << 2,
+   MultiplierStableOnly = 1 << 2,
    TotalUsedBits = 3,
 }
 
@@ -163,10 +165,10 @@ export function getWorkersFor(xy: Tile, gs: GameState): IWorkerRequirement {
    const b = gs.tiles.get(xy)?.building;
    // Buildings that produce workers do not cost workers
    if (b && !Config.Building[b.type].output.Worker) {
-      forEach(getBuildingIO(xy, "input", IOCalculation.MultiplierExcludeElectrification, gs), (k, v) => {
+      forEach(getBuildingIO(xy, "input", IOCalculation.MultiplierStableOnly, gs), (k, v) => {
          if (!NoPrice[k]) result.rawOutput += v;
       });
-      forEach(getBuildingIO(xy, "output", IOCalculation.MultiplierExcludeElectrification, gs), (k, v) => {
+      forEach(getBuildingIO(xy, "output", IOCalculation.MultiplierStableOnly, gs), (k, v) => {
          if (!NoPrice[k]) result.rawOutput += v;
       });
       result.multiplier = totalMultiplierFor(xy, "worker", 1, false, gs);
@@ -229,9 +231,7 @@ export function getStorageFor(xy: Tile, gs: GameState): IStorageResult {
       case "Petra": {
          const HOUR = 60 * 60;
          base = 3 * HOUR + getPetraBaseStorage(building);
-         base +=
-            HOUR * Config.GreatPerson.Zenobia.value(getGreatPersonThisRunLevel(gs.greatPeople.Zenobia ?? 0));
-         base += HOUR * Config.GreatPerson.Zenobia.value(getGameOptions().greatPeople.Zenobia?.level ?? 0);
+         base += HOUR * Config.GreatPerson.Zenobia.value(getGreatPersonTotalEffect("Zenobia"));
          multiplier = 1;
          break;
       }
@@ -250,18 +250,9 @@ export function getStorageFor(xy: Tile, gs: GameState): IStorageResult {
       }
       default: {
          base =
-            60 *
-               reduceOf(
-                  getBuildingIO(xy, "input", IOCalculation.MultiplierExcludeElectrification, gs),
-                  accumulate,
-                  0,
-               ) +
+            60 * reduceOf(getBuildingIO(xy, "input", IOCalculation.MultiplierStableOnly, gs), accumulate, 0) +
             STORAGE_TO_PRODUCTION *
-               reduceOf(
-                  getBuildingIO(xy, "output", IOCalculation.MultiplierExcludeElectrification, gs),
-                  accumulate,
-                  0,
-               );
+               reduceOf(getBuildingIO(xy, "output", IOCalculation.MultiplierStableOnly, gs), accumulate, 0);
          break;
       }
    }
@@ -419,16 +410,11 @@ export function getScienceFromBuildings() {
    );
 }
 
-const buildingCostCache: Map<number, Readonly<PartialTabulate<Resource>>> = new Map();
-
-export function getBuildingCost(building: Pick<IBuildingData, "type" | "level">): PartialTabulate<Resource> {
+export function getBuildingCost(
+   building: Pick<IBuildingData, "type" | "level"> & { tradition?: Tradition | null },
+): PartialTabulate<Resource> {
    const type = building.type;
    const level = building.level;
-   const key = (Config.BuildingHash[building.type]! << 16) + level;
-   const cached = buildingCostCache.get(key);
-   if (cached) {
-      return cached;
-   }
    let cost = { ...Config.Building[type].construction };
    if (isEmpty(cost)) {
       cost = { ...Config.Building[type].input };
@@ -438,24 +424,15 @@ export function getBuildingCost(building: Pick<IBuildingData, "type" | "level">)
    }
 
    // This is a wonder, we apply the wonder multiplier here
-   if (isWorldWonder(building.type)) {
-      const tech = getBuildingUnlockTech(building.type);
-      let techIdx = 0;
-      let ageIdx = 0;
-      if (tech) {
-         techIdx = Config.Tech[tech].column;
-         const a = getAgeForTech(tech);
-         if (a) {
-            const age = Config.TechAge[a];
-            ageIdx = age.idx;
-         }
+   if (isWorldWonder(type)) {
+      const multiplier = getWonderCostMultiplier(type);
+      if (building.tradition && building.level > 0) {
+         const unlockable = Config.Tradition[building.tradition].content[building.level];
+         cost = structuredClone(Config.Upgrade[unlockable].requireResources);
+         forEach(cost, (k, v) => {
+            cost[k] = v * 100 * Math.pow(2, building.level);
+         });
       }
-      const multiplier = Math.round(
-         300 +
-            10 * Math.pow(ageIdx, 3) * Math.pow(techIdx, 2) +
-            (100 * Math.pow(5, ageIdx) * Math.pow(1.5, techIdx)) / Math.pow(techIdx, 2),
-      );
-
       keysOf(cost).forEach((res) => {
          const price = Config.ResourcePrice[res] ?? 1;
          cost[res] = (multiplier * cost[res]!) / price;
@@ -466,8 +443,27 @@ export function getBuildingCost(building: Pick<IBuildingData, "type" | "level">)
          cost[res] = Math.pow(1.5, level) * multiplier * cost[res]!;
       });
    }
-   buildingCostCache.set(key, Object.freeze(cost));
    return cost;
+}
+
+export function getWonderCostMultiplier(type: Building): number {
+   const tech = getBuildingUnlockTech(type);
+   let techIdx = 0;
+   let ageIdx = 0;
+   if (tech) {
+      techIdx = Config.Tech[tech].column;
+      const a = getAgeForTech(tech);
+      if (a) {
+         const age = Config.TechAge[a];
+         ageIdx = age.idx;
+      }
+   }
+   const multiplier = Math.round(
+      300 +
+         10 * Math.pow(ageIdx, 3) * Math.pow(techIdx, 2) +
+         (100 * Math.pow(5, ageIdx) * Math.pow(1.5, techIdx)) / Math.pow(techIdx, 2),
+   );
+   return multiplier;
 }
 
 export function getWonderBaseBuilderCapacity(type: Building): number {
@@ -1017,4 +1013,15 @@ export function getGreatWallRange(xy: Tile, gs: GameState): number {
       }
    }
    return 1;
+}
+
+export function getBuildingDescription(b: Building): string {
+   const building = Config.Building[b];
+   const desc = building.desc?.();
+   if (desc) return desc;
+   return [
+      mapOf(building.input, (res, value) => `${Config.Resource[res].name()} x${value}`).join(" + "),
+      " => ",
+      mapOf(building.output, (res, value) => `${Config.Resource[res].name()} x${value}`).join(" + "),
+   ].join("");
 }

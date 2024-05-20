@@ -4,15 +4,18 @@ import { useState } from "react";
 import { GreatPersonType, type GreatPerson } from "../../../shared/definitions/GreatPersonDefinitions";
 import { Config } from "../../../shared/logic/Config";
 import { notifyGameOptionsUpdate } from "../../../shared/logic/GameStateLogic";
-import { addPermanentGreatPerson, getGreatPersonUpgradeCost } from "../../../shared/logic/RebornLogic";
-import { entriesOf, keysOf, numberToRoman, shuffle } from "../../../shared/utilities/Helper";
+import {
+   addPermanentGreatPerson,
+   getGreatPersonUpgradeCost,
+   sortGreatPeople,
+} from "../../../shared/logic/RebirthLogic";
+import { keysOf, numberToRoman } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import { useGameOptions } from "../Global";
 import { isOnlineUser } from "../rpc/RPCClient";
 import { GreatPersonImage } from "../visuals/GreatPersonVisual";
 import { playAgeUp, playError, playLevelUp } from "../visuals/Sound";
-import { ChooseGreatPersonModal } from "./ChooseGreatPersonModal";
-import { hideModal, showModal } from "./GlobalModal";
+import { hideModal } from "./GlobalModal";
 import { FormatNumber } from "./HelperComponents";
 import { RenderHTML } from "./RenderHTMLComponent";
 import { TextWithHelp } from "./TextWithHelpComponent";
@@ -49,15 +52,7 @@ export function ManagePermanentGreatPersonModal(): React.ReactNode {
                   </thead>
                   <tbody>
                      {keysOf(Config.GreatPerson)
-                        .sort((a, b) => {
-                           const gpa = Config.GreatPerson[a];
-                           const gpb = Config.GreatPerson[b];
-                           const diff = Config.TechAge[gpa.age].idx - Config.TechAge[gpb.age].idx;
-                           if (diff !== 0) {
-                              return diff;
-                           }
-                           return gpa.name().localeCompare(gpb.name());
-                        })
+                        .sort(sortGreatPeople)
                         .map((k) => {
                            const person = Config.GreatPerson[k];
                            return (
@@ -68,7 +63,7 @@ export function ManagePermanentGreatPersonModal(): React.ReactNode {
                                        style={{ height: "50px", display: "block" }}
                                     />
                                  </td>
-                                 <td style={{ userSelect: import.meta.env.DEV ? "text" : "none" }}>
+                                 <td>
                                     <div className="text-strong">{person.name()}</div>
                                     <div className="text-desc text-small">
                                        {Config.TechAge[person.age].name()}
@@ -127,9 +122,7 @@ function GreatPersonNormalRow({ greatPerson }: { greatPerson: GreatPerson }): Re
                </div>
             ) : null}
          </td>
-         <td style={{ userSelect: import.meta.env.DEV ? "text" : "none" }}>
-            {person.desc(person, value?.level ?? 1)}
-         </td>
+         <td>{person.desc(person, value?.level ?? 1)}</td>
          <td>
             <button
                onClick={() => {
@@ -229,14 +222,31 @@ function GreatPersonPromotionRow({ greatPerson }: { greatPerson: GreatPerson }):
    }
    const value = options.greatPeople[greatPerson];
    const person = Config.GreatPerson[greatPerson];
-   const choices = keysOf(Config.GreatPerson)
-      .filter(
-         (g) =>
-            Config.GreatPerson[g].age === person.age &&
-            Config.GreatPerson[g].type !== GreatPersonType.Promotion,
-      )
+   const fromChoices = keysOf(Config.GreatPerson)
+      .filter((g) => Config.GreatPerson[g].age === person.age)
       .sort((a, b) => Config.GreatPerson[a].name().localeCompare(Config.GreatPerson[b].name()));
-   const [choice, setChoice] = useState(choices[0]);
+   const toChoices = keysOf(Config.GreatPerson)
+      .filter((g) => Config.TechAge[Config.GreatPerson[g].age].idx === Config.TechAge[person.age].idx + 1)
+      .sort((a, b) => Config.GreatPerson[a].name().localeCompare(Config.GreatPerson[b].name()));
+   const [fromChoice, setFromChoice] = useState(fromChoices[0]);
+   const [toChoice, setToChoice] = useState(toChoices[0]);
+   const canPromote = () => {
+      const from = options.greatPeople[fromChoice];
+      if (!from) {
+         return false;
+      }
+      // I am promoting myself, need 2 of myself!
+      if (fromChoice === greatPerson && from.amount < 2) {
+         return false;
+      }
+      if (fromChoice !== greatPerson && from.amount < 2) {
+         return false;
+      }
+      if (!value || value.amount < 1) {
+         return false;
+      }
+      return true;
+   };
    return (
       <>
          <td className="text-center">
@@ -247,47 +257,53 @@ function GreatPersonPromotionRow({ greatPerson }: { greatPerson: GreatPerson }):
             ) : null}
          </td>
          <td>
-            <select
-               value={choice}
-               className="w100"
-               onChange={(e) => {
-                  setChoice(e.target.value as GreatPerson);
-               }}
-            >
-               {choices.map((g) => (
-                  <option key={g} value={g}>
-                     ({options.greatPeople[g]?.amount ?? 0}) {Config.GreatPerson[g].name()}
-                  </option>
-               ))}
-            </select>
+            <div className="row">
+               <select
+                  value={fromChoice}
+                  className="w100"
+                  onChange={(e) => {
+                     setFromChoice(e.target.value as GreatPerson);
+                  }}
+               >
+                  {fromChoices.map((g) => (
+                     <option key={g} value={g}>
+                        ({options.greatPeople[g]?.amount ?? 0}) {Config.GreatPerson[g].name()}
+                     </option>
+                  ))}
+               </select>
+               <div className="m-icon" style={{ fontSize: "2rem", margin: "0 0.5rem" }}>
+                  double_arrow
+               </div>
+               <select
+                  value={toChoice}
+                  className="w100"
+                  onChange={(e) => {
+                     setToChoice(e.target.value as GreatPerson);
+                  }}
+               >
+                  {toChoices.map((g) => (
+                     <option key={g} value={g}>
+                        ({options.greatPeople[g]?.amount ?? 0}) {Config.GreatPerson[g].name()}
+                     </option>
+                  ))}
+               </select>
+            </div>
          </td>
          <td>
             <button
-               disabled={(value?.amount ?? 0) <= 0 || (options.greatPeople[choice]?.amount ?? 0) <= 0}
+               disabled={!canPromote()}
                className="w100 text-strong"
                onClick={() => {
-                  if (Config.GreatPerson[choice].type === GreatPersonType.Wildcard) {
+                  const from = options.greatPeople[fromChoice];
+                  if (!canPromote || !value || !from) {
                      playError();
                      return;
                   }
-                  const target = options.greatPeople[choice];
-                  const targetAgeIndex = Config.TechAge[person.age].idx + 1;
-                  if (value && value.amount > 0 && target && target.amount > 0) {
-                     --value.amount;
-                     --target.amount;
-                     const pool = entriesOf(Config.GreatPerson).filter(
-                        ([gp, def]) => Config.TechAge[def.age].idx === targetAgeIndex,
-                     );
-                     shuffle(pool);
-                     const choice: GreatPerson[] = [];
-                     for (let i = 0; i < 3; i++) {
-                        choice.push(pool[i][0]);
-                     }
-                     options.greatPeopleChoices.push(choice);
-                     notifyGameOptionsUpdate();
-                     playAgeUp();
-                     showModal(<ChooseGreatPersonModal permanent={true} />);
-                  }
+                  --value.amount;
+                  --from.amount;
+                  addPermanentGreatPerson(toChoice, 1);
+                  notifyGameOptionsUpdate();
+                  playAgeUp();
                }}
             >
                {t(L.GreatPersonPromotionPromote)}

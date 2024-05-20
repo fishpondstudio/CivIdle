@@ -33,11 +33,18 @@ export function GlobalModal(): React.ReactNode {
    return <div className="overlay">{content}</div>;
 }
 
-const showToastEvent = new TypedEvent<string>();
+const showToastEvent = new TypedEvent<{ timeout: number; content: string }>();
 const hideToastEvent = new TypedEvent<void>();
 
-export function showToast(toast: string) {
-   showToastEvent.emit(toast);
+export function showToast(content: string, timeout = 5000): void {
+   showToastEvent.emit({ content, timeout });
+}
+
+export function hideToast(): void {
+   if (toastTimeout) {
+      clearTimeout(toastTimeout);
+   }
+   hideToastEvent.emit();
 }
 
 let toastTimeout = 0;
@@ -46,11 +53,13 @@ export function GlobalToast(): React.ReactNode {
    const [content, setContent] = useState<string | null>(null);
 
    useTypedEvent(showToastEvent, (e) => {
-      setContent(e);
+      setContent(e.content);
       if (toastTimeout) {
          clearTimeout(toastTimeout);
       }
-      toastTimeout = window.setTimeout(() => setContent(null), 5000);
+      if (Number.isFinite(e.timeout)) {
+         toastTimeout = window.setTimeout(() => setContent(null), e.timeout);
+      }
    });
 
    useTypedEvent(hideToastEvent, (e) => {

@@ -2,7 +2,7 @@ import { isNaturalWonder, isSpecialBuilding } from "../../../shared/logic/Buildi
 import { Config } from "../../../shared/logic/Config";
 import { getGameState } from "../../../shared/logic/GameStateLogic";
 import { getXyBuildings } from "../../../shared/logic/IntraTickCache";
-import { getGreatPeopleChoiceCount, rollGreatPeopleThisRun } from "../../../shared/logic/RebornLogic";
+import { getGreatPeopleChoiceCount, rollGreatPeopleThisRun } from "../../../shared/logic/RebirthLogic";
 import { getCurrentAge, getMostAdvancedTech, getTechUnlockCost } from "../../../shared/logic/TechLogic";
 import { Tick } from "../../../shared/logic/TickLogic";
 import { safeAdd, type Tile } from "../../../shared/utilities/Helper";

@@ -454,7 +454,7 @@ export const ZH_TW = {
    Imperialism: "帝國主義",
    IndustrialAge: "工業時代",
    InformationAge: "資訊時代",
-   Internet: 網路",
+   Internet: "網路",
    InverseSelection: "反選",
    Iron: "鐵",
    IronAge: "鐵器時代",

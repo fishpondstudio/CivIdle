@@ -12,7 +12,6 @@ export function TextWithHelp({
 }: React.PropsWithChildren<{
    content: string | null | undefined;
    placement?: Placement;
-   size?: "small" | "medium" | "large" | "xlarge" | "fit";
    className?: string;
    noStyle?: boolean;
 }>): React.ReactNode {

@@ -111,7 +111,7 @@ export function getBuildingIO(
          if (options & IOCalculation.Multiplier) {
             // For market, we always apply production multiplier, regardless of type!
             value *= totalMultiplierFor(xy, b.type === "Market" ? "output" : type, 1, false, gs);
-         } else if (options & IOCalculation.MultiplierExcludeElectrification) {
+         } else if (options & IOCalculation.MultiplierStableOnly) {
             // For market, we always apply production multiplier, regardless of type!
             value *= totalMultiplierFor(xy, b.type === "Market" ? "output" : type, 1, true, gs);
          }

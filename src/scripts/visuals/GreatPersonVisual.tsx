@@ -1,15 +1,14 @@
-import { SmoothGraphics } from "@pixi/graphics-smooth";
-import { BitmapText, Sprite, Text } from "pixi.js";
+import { BitmapText, Container, Sprite, Text } from "pixi.js";
 import { useEffect, useRef } from "react";
-import type { GreatPerson } from "../../../shared/definitions/GreatPersonDefinitions";
+import { GreatPersonType, type GreatPerson } from "../../../shared/definitions/GreatPersonDefinitions";
 import { Config } from "../../../shared/logic/Config";
-import { containsNonASCII } from "../../../shared/utilities/Helper";
+import { containsNonASCII, numberToRoman } from "../../../shared/utilities/Helper";
 import { getTexture } from "../logic/VisualLogic";
 import type { ISceneContext } from "../utilities/SceneManager";
 import { Singleton } from "../utilities/Singleton";
 import { Fonts } from "./Fonts";
 
-function makeText(text: string, size: number, tint: number) {
+function makeText(text: string, font: string, size: number, tint: number) {
    if (containsNonASCII(text)) {
       return new Text(text, {
          fontFamily: "serif",
@@ -18,59 +17,82 @@ function makeText(text: string, size: number, tint: number) {
       });
    }
    return new BitmapText(text, {
-      fontName: Fonts.Marcellus,
+      fontName: font,
       fontSize: size,
       tint,
    });
 }
 
-function makeTextAutoSize(text: string, size: number, tint: number, maxWidth: number) {
-   let result = makeText(text, size, tint);
+function makeTextAutoSize(text: string, font: string, size: number, tint: number, maxWidth: number) {
+   let result = makeText(text, font, size, tint);
    while (result.width > maxWidth) {
-      result = makeText(text, --size, tint);
+      result = makeText(text, font, --size, tint);
    }
    return result;
 }
 
-export function greatPersonSprite(greatPerson: GreatPerson, context: ISceneContext): Sprite {
+export function greatPersonSprite(greatPerson: GreatPerson, context: ISceneContext): Container {
    const { textures } = context;
-   const { time, name, age } = Config.GreatPerson[greatPerson];
+   const { time, name, age, type } = Config.GreatPerson[greatPerson];
 
-   const bg = new Sprite(getTexture("Misc_GreatPersonBackground", textures));
+   const container = new Container();
 
-   const frame = bg.addChild(new Sprite(getTexture("Misc_GreatPersonFrame", textures)));
-   frame.anchor.set(0.5, 0.5);
-   frame.position.set(bg.width / 2, 260);
-   frame.scale.set(400 / frame.width);
+   const bg = container.addChild(new Sprite(getTexture("Misc_GreatPersonBackground", textures)));
+   bg.position.set(10, 10);
 
-   const sprite = frame.addChild(new Sprite(getTexture(`Person_${greatPerson}`, textures)));
-   const graphics = sprite.addChild(new SmoothGraphics());
-   graphics.beginFill(0xffffff);
-   graphics.drawCircle(0, 0, Math.min(sprite.width, sprite.height) / 2);
-   graphics.endFill();
-   sprite.anchor.set(0.5, 0.5);
-   sprite.mask = graphics;
+   const cardFrame = container.addChild(new Sprite(getTexture("Misc_GreatPersonFrame", textures)));
+   cardFrame.position.set(0, 0);
+   const primaryColor = Config.TechAge[age].color;
+   cardFrame.tint = primaryColor;
+
+   if (type !== GreatPersonType.Normal) {
+      const ring = container.addChild(new Sprite(getTexture("Misc_GreatPersonRing", textures)));
+      ring.tint = primaryColor;
+      ring.anchor.set(1, 1);
+      ring.position.set(cardFrame.width, cardFrame.height);
+      ring.alpha = 0.7;
+
+      const typeText = container.addChild(
+         makeText(GreatPersonType[type].charAt(0).toUpperCase(), Fonts.Marcellus, 80, primaryColor),
+      );
+      typeText.anchor.set(0.5, 0.5);
+      typeText.angle = -20;
+      typeText.position.set(440, 530);
+      typeText.alpha = 0.7;
+   }
+
+   const photoFrame = container.addChild(new Sprite(getTexture("Misc_GreatPersonPhoto", textures)));
+
+   photoFrame.position.set(
+      (container.width - photoFrame.width) / 2,
+      (container.height - photoFrame.height) / 2 - 30,
+   );
+
+   const sprite = photoFrame.addChild(new Sprite(getTexture(`Person_${greatPerson}`, textures)));
+   const mask = sprite.addChild(new Sprite(getTexture("Misc_GreatPersonPhotoMask", textures)));
+   sprite.mask = mask;
    sprite.scale.set(350 / Math.max(sprite.width, sprite.height));
+   sprite.position.set((photoFrame.width - sprite.width) / 2, (photoFrame.height - sprite.width) / 2);
 
-   const ageText = bg.addChild(makeTextAutoSize(Config.TechAge[age].name().toUpperCase(), 30, 0x34495e, 400));
+   const ageText = container.addChild(
+      makeTextAutoSize(Config.TechAge[age].name(), Fonts.OldTypefaces, 46, 0xffffff, 350),
+   );
+   ageText.position.set(30, 12);
 
-   ageText.anchor.set(0.5, 0.5);
-   ageText.alpha = 0.8;
-   ageText.position.set(bg.width / 2, 50);
+   const ageNumber = container.addChild(
+      makeText(numberToRoman(Config.TechAge[age].idx + 1) ?? "", Fonts.Marcellus, 50, primaryColor),
+   );
+   ageNumber.anchor.set(0.5, 0.5);
+   ageNumber.position.set(439, 40);
 
-   const nameText = bg.addChild(makeTextAutoSize(name().toUpperCase(), 50, 0x34495e, 400));
-
+   const nameText = container.addChild(makeTextAutoSize(name(), Fonts.OldTypefaces, 50, 0x636e72, 400));
+   nameText.position.set(cardFrame.width / 2, 490);
    nameText.anchor.set(0.5, 0.5);
-   nameText.alpha = 0.8;
-   nameText.position.set(bg.width / 2, 480);
 
-   const timeText = bg.addChild(makeText(time, 25, 0x34495e));
+   const timeText = container.addChild(makeText(time, Fonts.Marcellus, 25, 0xffffff));
+   timeText.position.set((container.width - timeText.width) / 2, 560);
 
-   timeText.anchor.set(0.5, 0.5);
-   timeText.alpha = 0.8;
-   timeText.position.set(bg.width / 2, 540);
-
-   return bg;
+   return container;
 }
 
 const greatPersonImageCache: Map<GreatPerson, string> = new Map();
@@ -92,14 +114,14 @@ interface GreatPersonImageProps extends React.HTMLAttributes<HTMLElement> {
    greatPerson: GreatPerson;
 }
 
-export function GreatPersonImage(props: GreatPersonImageProps): React.ReactNode {
+export function GreatPersonImage({ greatPerson, ...htmlProps }: GreatPersonImageProps): React.ReactNode {
    const imgRef = useRef<HTMLImageElement>(null);
    useEffect(() => {
       setTimeout(() => {
          if (imgRef.current) {
-            imgRef.current.src = greatPersonImage(props.greatPerson, Singleton().sceneManager.getContext());
+            imgRef.current.src = greatPersonImage(greatPerson, Singleton().sceneManager.getContext());
          }
       }, 0);
-   }, [props.greatPerson]);
-   return <img ref={imgRef} {...props} />;
+   }, [greatPerson]);
+   return <img ref={imgRef} {...htmlProps} />;
 }

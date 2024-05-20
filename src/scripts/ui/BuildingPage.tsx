@@ -6,6 +6,7 @@ import type { ITileData } from "../../../shared/logic/Tile";
 import type { Tile } from "../../../shared/utilities/Helper";
 import { useGameState } from "../Global";
 import { Singleton } from "../utilities/Singleton";
+import { BroadwayBuildingBody } from "./BroadwayBuildingBody";
 import { DefaultBuildingBody } from "./DefaultBuildingBody";
 import { GrandBazaarBuildingBody } from "./GrandBazaarBuildingBody";
 import { HeadquarterBuildingBody } from "./HeadquarterBuildingBody";
@@ -17,6 +18,8 @@ import { PlayerTradeBuildingBody } from "./PlayerTradeBuildingBody";
 import { ScienceProductionWonderBuildingBody } from "./ScienceProductionWonderBuildingBody";
 import { StPetersBasilicaBuildingBody } from "./StPetersBasilicaBuildingBody";
 import { StatisticsBuildingBody } from "./StatisticsBuildingBody";
+import { TheMetBuildingBody } from "./TheMetBuildingBody";
+import { TraditionBuildingBody } from "./TraditionBuildingBody";
 import { UnitedNationsBuildingBody } from "./UnitedNationsBuildingBody";
 import { WarehouseBuildingBody } from "./WarehouseBuildingBody";
 
@@ -32,6 +35,9 @@ const BuildingBodyOverride: Partial<Record<Building, FunctionComponent<IBuilding
    StPetersBasilica: StPetersBasilicaBuildingBody,
    GrandBazaar: GrandBazaarBuildingBody,
    UnitedNations: UnitedNationsBuildingBody,
+   ChoghaZanbil: TraditionBuildingBody,
+   Broadway: BroadwayBuildingBody,
+   TheMet: TheMetBuildingBody,
 };
 
 export function BuildingPage(props: { tile: ITileData }): React.ReactNode {

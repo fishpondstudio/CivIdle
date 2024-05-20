@@ -1,5 +1,5 @@
 import type { Building } from "../definitions/BuildingDefinitions";
-import type { IUnlockableDefinition } from "../definitions/ITechDefinition";
+import type { IUnlockable } from "../definitions/ITechDefinition";
 import { NoPrice, NoStorage, type Resource } from "../definitions/ResourceDefinitions";
 import {
    HOUR,
@@ -74,7 +74,7 @@ import {
    getXyBuildings,
    unlockedResources,
 } from "./IntraTickCache";
-import { calculateEmpireValue } from "./RebornLogic";
+import { calculateEmpireValue } from "./RebirthLogic";
 import { getAmountInTransit } from "./ResourceLogic";
 import type { IBuildingResource, Multiplier } from "./TickLogic";
 import { NotProducingReason, Tick } from "./TickLogic";
@@ -95,20 +95,19 @@ export const OnPriceUpdated = new TypedEvent<GameState>();
 export const OnBuildingComplete = new TypedEvent<Tile>();
 export const OnBuildingProductionComplete = new TypedEvent<{ xy: Tile; offline: boolean }>();
 export const RequestFloater = new TypedEvent<{ xy: Tile; amount: number }>();
+export const RequestChooseGreatPerson = new TypedEvent<{ permanent: boolean }>();
 
-export function tickTech(td: IUnlockableDefinition): void {
+export function tickUnlockable(td: IUnlockable, source: string, gs: GameState): void {
    td.unlockBuilding?.forEach((b) => {
       Tick.next.unlockedBuildings.add(b);
    });
    forEach(td.buildingMultiplier, (k, v) => {
-      addMultiplier(k, v, t(L.SourceResearch, { tech: td.name() }));
+      addMultiplier(k, v, source);
    });
    forEach(td.globalMultiplier, (k, v) => {
-      Tick.next.globalMultipliers[k].push({
-         value: v,
-         source: t(L.SourceResearch, { tech: td.name() }),
-      });
+      Tick.next.globalMultipliers[k].push({ value: v, source });
    });
+   td.tick?.(gs);
 }
 
 export function tickTransports(gs: GameState): void {
@@ -585,6 +584,7 @@ function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
       }
    }
 
+   ////////// Production (when storage is NOT full)
    useWorkers("Worker", worker.output, xy);
    deductResources(building.resources, input);
    forEach(output, (res, v) => {
@@ -800,7 +800,7 @@ export function transportResource(
    return amountLeft;
 }
 
-export function addMultiplier(k: Building, multiplier: Multiplier, source: string) {
+export function addMultiplier(k: Building, multiplier: Multiplier & { unstable?: boolean }, source: string) {
    let m = Tick.next.buildingMultipliers.get(k);
    if (m == null) {
       m = [];

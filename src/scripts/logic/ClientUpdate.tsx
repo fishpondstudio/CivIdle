@@ -8,28 +8,31 @@ import {
 } from "../../../shared/logic/GameStateLogic";
 import { calculateHappiness } from "../../../shared/logic/HappinessLogic";
 import { clearIntraTickCache, getBuildingsByType } from "../../../shared/logic/IntraTickCache";
-import { getGreatPersonThisRunLevel } from "../../../shared/logic/RebornLogic";
-import { OnResetTile } from "../../../shared/logic/TechLogic";
+import { getGreatPersonThisRunLevel } from "../../../shared/logic/RebirthLogic";
+import { RequestResetTile } from "../../../shared/logic/TechLogic";
 import { CurrentTickChanged, EmptyTickData, Tick, freezeTickData } from "../../../shared/logic/TickLogic";
 import {
    OnBuildingComplete,
    OnBuildingProductionComplete,
    OnPriceUpdated,
+   RequestChooseGreatPerson,
    RequestFloater,
    tickPower,
    tickPrice,
-   tickTech,
    tickTiles,
    tickTransports,
+   tickUnlockable,
 } from "../../../shared/logic/Update";
 import { forEach, safeAdd } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import { saveGame } from "../Global";
 import { isSteam } from "../rpc/SteamClient";
 import { WorldScene } from "../scenes/WorldScene";
+import { ChooseGreatPersonModal } from "../ui/ChooseGreatPersonModal";
+import { showModal, showToast } from "../ui/GlobalModal";
 import { makeObservableHook } from "../utilities/Hook";
 import { Singleton } from "../utilities/Singleton";
-import { playDing } from "../visuals/Sound";
+import { playAgeUp, playDing } from "../visuals/Sound";
 import { onBuildingComplete } from "./OnBuildingComplete";
 import { onProductionComplete } from "./OnProductionComplete";
 import { onTileExplored } from "./OnTileExplored";
@@ -64,7 +67,8 @@ export function tickEverySecond(gs: GameState, offline: boolean) {
    clearIntraTickCache();
 
    forEach(gs.unlockedTech, (tech) => {
-      tickTech(Config.Tech[tech]);
+      const td = Config.Tech[tech];
+      tickUnlockable(td, t(L.SourceResearch, { tech: td.name() }), gs);
    });
 
    forEach(gs.greatPeople, (person, level) => {
@@ -117,16 +121,22 @@ export function tickEverySecond(gs: GameState, offline: boolean) {
 RequestFloater.on(({ xy, amount }) => {
    Singleton().sceneManager.getCurrent(WorldScene)?.showFloater(xy, amount);
 });
-OnResetTile.on((xy) => {
+RequestResetTile.on((xy) => {
    Singleton().sceneManager.enqueue(WorldScene, (s) => s.resetTile(xy));
 });
 OnTileExplored.on(onTileExplored);
 OnBuildingComplete.on(onBuildingComplete);
 OnBuildingProductionComplete.on(onProductionComplete);
 OnPriceUpdated.on((gs) => {
-   if ((getBuildingsByType("Market", gs)?.size ?? 0) > 0) {
+   const count = getBuildingsByType("Market", gs)?.size ?? 0;
+   if (count > 0) {
+      showToast(t(L.MarketRefreshMessage, { count }));
       playDing();
    }
+});
+RequestChooseGreatPerson.on(({ permanent }) => {
+   playAgeUp();
+   showModal(<ChooseGreatPersonModal permanent={permanent} />);
 });
 
 export const useCurrentTick = makeObservableHook(CurrentTickChanged, () => Tick.current);

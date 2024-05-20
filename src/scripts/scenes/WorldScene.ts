@@ -76,6 +76,7 @@ export class WorldScene extends Scene {
    private _bg!: TilingSprite;
    private _graphics!: SmoothGraphics;
    private _selectedXy: Tile | null = null;
+   private _hijackSelectGridResolve: ((grid: IPointData) => void) | null = null;
 
    constructor(context: ISceneContext) {
       super(context);
@@ -155,9 +156,20 @@ export class WorldScene extends Scene {
       viewportZoom = this.viewport.zoom;
    }
 
+   public hijackSelectGrid(): Promise<IPointData> {
+      return new Promise((resolve) => {
+         this._hijackSelectGridResolve = resolve;
+      });
+   }
+
    override onClicked(e: FederatedPointerEvent): void {
       const gs = getGameState();
       const grid = getGrid(gs).positionToGrid(this.viewport.screenToWorld(e));
+      if (this._hijackSelectGridResolve) {
+         this._hijackSelectGridResolve(grid);
+         this._hijackSelectGridResolve = null;
+         return;
+      }
       switch (e.button) {
          case 0: {
             this.selectGrid(grid);
@@ -357,6 +369,8 @@ export class WorldScene extends Scene {
             case "SagradaFamilia":
             case "CristoRedentor":
             case "Atomium":
+            case "TheMet":
+            case "WallStreet":
             case "GoldenGateBridge": {
                this.highlightRange(grid, 2);
                break;

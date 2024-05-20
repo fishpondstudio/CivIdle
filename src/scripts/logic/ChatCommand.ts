@@ -2,11 +2,11 @@ import randomColor from "randomcolor";
 import { MAX_TECH_AGE } from "../../../shared/definitions/TechDefinitions";
 import { isSpecialBuilding } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
-import { getGameOptions, getGameState } from "../../../shared/logic/GameStateLogic";
+import { getGameOptions, getGameState, savedGame } from "../../../shared/logic/GameStateLogic";
 import {
    DEFAULT_GREAT_PEOPLE_CHOICE_COUNT,
    rollPermanentGreatPeople,
-} from "../../../shared/logic/RebornLogic";
+} from "../../../shared/logic/RebirthLogic";
 import {
    ChatChannels,
    UserAttributes,
@@ -28,7 +28,7 @@ import {
    sizeOf,
    uuid4,
 } from "../../../shared/utilities/Helper";
-import { decompressSave, overwriteSaveGame, resetToCity, saveGame } from "../Global";
+import { compressSave, decompressSave, overwriteSaveGame, resetToCity, saveGame } from "../Global";
 import {
    addSystemMessage,
    canEarnGreatPeopleFromReborn,
@@ -83,6 +83,16 @@ export async function handleChatCommand(command: string): Promise<void> {
          await saveGame();
          addSystemMessage("Load save file");
          window.location.reload();
+         break;
+      }
+      case "exportsave": {
+         requireDevelopment();
+         const handle = await window.showSaveFilePicker();
+         savedGame.options.userId = null;
+         const bytes = await compressSave(savedGame);
+         const stream = await handle.createWritable();
+         await stream.write(bytes);
+         await stream.close();
          break;
       }
       case "playtime": {

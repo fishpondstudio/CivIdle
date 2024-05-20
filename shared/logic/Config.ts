@@ -2,7 +2,9 @@ import { BuildingDefinitions, type Building } from "../definitions/BuildingDefin
 import { CityDefinitions } from "../definitions/CityDefinitions";
 import { GreatPersonDefinitions } from "../definitions/GreatPersonDefinitions";
 import { ResourceDefinitions, type Resource } from "../definitions/ResourceDefinitions";
-import { type Tech, type TechAge, TechAgeDefinitions, TechDefinitions } from "../definitions/TechDefinitions";
+import { TechAgeDefinitions, TechDefinitions, type Tech, type TechAge } from "../definitions/TechDefinitions";
+import { TraditionDefinitions } from "../definitions/TraditionDefinitions";
+import { UpgradeDefinitions } from "../definitions/UpgradeDefinitions";
 import { deepFreeze } from "../utilities/Helper";
 import type { PartialTabulate } from "../utilities/TypeDefinitions";
 
@@ -19,11 +21,13 @@ const ResourceHash: PartialTabulate<Resource> = {};
 
 export const Config = {
    Building: new BuildingDefinitions(),
-   Resource: new ResourceDefinitions(),
+   Resource: deepFreeze(new ResourceDefinitions()),
    GreatPerson: deepFreeze(new GreatPersonDefinitions()),
    City: deepFreeze(new CityDefinitions()),
    Tech: new TechDefinitions(),
    TechAge: deepFreeze(new TechAgeDefinitions()),
+   Tradition: deepFreeze(new TraditionDefinitions()),
+   Upgrade: deepFreeze(new UpgradeDefinitions()),
    BuildingTier,
    BuildingTech,
    BuildingTechAge,

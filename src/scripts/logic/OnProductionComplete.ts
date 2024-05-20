@@ -1,4 +1,3 @@
-import { tickGreatPersonBoost } from "../../../shared/definitions/GreatPersonDefinitions";
 import {
    ST_PETERS_FAITH_MULTIPLIER,
    ST_PETERS_STORAGE_MULTIPLIER,
@@ -11,7 +10,12 @@ import {
    isWorldWonder,
 } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
-import { EXPLORER_SECONDS, MAX_EXPLORER } from "../../../shared/logic/Constants";
+import {
+   EXPLORER_SECONDS,
+   MAX_EXPLORER,
+   MAX_TELEPORT,
+   TELEPORT_SECONDS,
+} from "../../../shared/logic/Constants";
 import { getGameOptions, getGameState } from "../../../shared/logic/GameStateLogic";
 import {
    getBuildingsByType,
@@ -20,12 +24,17 @@ import {
    getXyBuildings,
 } from "../../../shared/logic/IntraTickCache";
 import { getVotedBoostId } from "../../../shared/logic/PlayerTradeLogic";
-import { getGreatPersonThisRunLevel } from "../../../shared/logic/RebornLogic";
+import { getGreatPersonTotalEffect } from "../../../shared/logic/RebirthLogic";
 import { getBuildingsThatProduce } from "../../../shared/logic/ResourceLogic";
 import { getBuildingUnlockAge, getCurrentAge } from "../../../shared/logic/TechLogic";
 import { NotProducingReason, Tick } from "../../../shared/logic/TickLogic";
-import type { IPetraBuildingData, ITileData } from "../../../shared/logic/Tile";
-import { addMultiplier } from "../../../shared/logic/Update";
+import type {
+   IGreatPeopleBuildingData,
+   IPetraBuildingData,
+   ITileData,
+   ITraditionBuildingData,
+} from "../../../shared/logic/Tile";
+import { addMultiplier, tickUnlockable } from "../../../shared/logic/Update";
 import { VotedBoostType, type IGetVotedBoostResponse } from "../../../shared/utilities/Database";
 import {
    MINUTE,
@@ -41,6 +50,7 @@ import {
    tileToPoint,
    type Tile,
 } from "../../../shared/utilities/Helper";
+import { srand } from "../../../shared/utilities/Random";
 import { L, t } from "../../../shared/utilities/i18n";
 import { client } from "../rpc/RPCClient";
 import { Singleton } from "../utilities/Singleton";
@@ -561,11 +571,13 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
                });
             }
          }
-         const total =
-            getGreatPersonThisRunLevel(gs.greatPeople.Hatshepsut ?? 0) +
-            (getGameOptions().greatPeople.Hatshepsut?.level ?? 0);
+         const total = getGreatPersonTotalEffect("Hatshepsut", gs);
          if (total > 0) {
-            tickGreatPersonBoost(Config.GreatPerson.Hatshepsut, total, buildingName);
+            Config.GreatPerson.Hatshepsut.tick(
+               Config.GreatPerson.Hatshepsut,
+               total,
+               `${buildingName}: ${Config.GreatPerson.Hatshepsut.name()}`,
+            );
          }
          break;
       }
@@ -578,9 +590,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
             }
          }
          Tick.next.globalMultipliers.happiness.push({ value: count, source: buildingName });
-         const total =
-            getGreatPersonThisRunLevel(gs.greatPeople.RamessesII ?? 0) +
-            (getGameOptions().greatPeople.RamessesII?.level ?? 0);
+         const total = getGreatPersonTotalEffect("RamessesII", gs);
          if (total > 0) {
             Tick.next.globalMultipliers.builderCapacity.push({
                value: Config.GreatPerson.RamessesII.value(total),
@@ -717,12 +727,13 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
                addMultiplier(b, { output: 1 }, buildingName);
             }
          });
-         const total =
-            getGreatPersonThisRunLevel(gs.greatPeople.Confucius ?? 0) +
-            (getGameOptions().greatPeople.Confucius?.level ?? 0);
-
+         const total = getGreatPersonTotalEffect("Confucius", gs);
          if (total > 0) {
-            Config.GreatPerson.Confucius.tick(Config.GreatPerson.Confucius, total, buildingName);
+            Config.GreatPerson.Confucius.tick(
+               Config.GreatPerson.Confucius,
+               total,
+               `${buildingName}: ${Config.GreatPerson.Confucius.name()}`,
+            );
          }
          break;
       }
@@ -788,12 +799,13 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
                addMultiplier(b, { storage: level }, buildingName);
             }
          });
-         const total =
-            getGreatPersonThisRunLevel(gs.greatPeople.ZhengHe ?? 0) +
-            (getGameOptions().greatPeople.ZhengHe?.level ?? 0);
-
+         const total = getGreatPersonTotalEffect("ZhengHe", gs);
          if (total > 0) {
-            Config.GreatPerson.ZhengHe.tick(Config.GreatPerson.ZhengHe, total, buildingName);
+            Config.GreatPerson.ZhengHe.tick(
+               Config.GreatPerson.ZhengHe,
+               total,
+               `${buildingName}: ${Config.GreatPerson.ZhengHe.name()}`,
+            );
          }
          break;
       }
@@ -867,6 +879,111 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          buildingsByType.get("SatelliteFactory")?.forEach(tick);
          buildingsByType.get("SpacecraftFactory")?.forEach(tick);
          buildingsByType.get("NuclearMissileSilo")?.forEach(tick);
+         break;
+      }
+      case "ChoghaZanbil": {
+         const cz = building as ITraditionBuildingData;
+         if (cz.tradition) {
+            const tradition = Config.Tradition[cz.tradition].content;
+            for (let i = 0; i < cz.level; i++) {
+               const trad = tradition[i];
+               const def = Config.Upgrade[trad];
+               if (!gs.unlockedUpgrades[trad]) {
+                  gs.unlockedUpgrades[trad] = true;
+                  def.onUnlocked?.(gs);
+               }
+               tickUnlockable(def, t(L.SourceTradition, { tradition: def.name() }), gs);
+            }
+         }
+         break;
+      }
+      case "Broadway": {
+         const broadway = building as IGreatPeopleBuildingData;
+         broadway.greatPeople.forEach((gp) => {
+            const def = Config.GreatPerson[gp];
+            const total = getGreatPersonTotalEffect(gp, gs, options);
+            if (total > 0) {
+               def.tick(def, total, `${buildingName}: ${def.name()}`);
+            }
+         });
+         break;
+      }
+      case "TheMet": {
+         if (gs.tick % TELEPORT_SECONDS === 0 && (building.resources?.Teleport ?? 0) < MAX_TELEPORT) {
+            safeAdd(building.resources, "Teleport", 1);
+         }
+         for (const point of grid.getRange(tileToPoint(xy), 2)) {
+            mapSafePush(Tick.next.tileMultipliers, pointToTile(point), {
+               output: 1,
+               worker: 1,
+               storage: 1,
+               source: buildingName,
+            });
+         }
+         break;
+      }
+      case "WallStreet": {
+         for (const point of grid.getRange(tileToPoint(xy), 2)) {
+            const t = pointToTile(point);
+            const b = gs.tiles.get(t)?.building;
+            if (
+               b &&
+               b.status === "completed" &&
+               (Config.Building[b.type].output.Coin ||
+                  Config.Building[b.type].output.Banknote ||
+                  Config.Building[b.type].output.Bond ||
+                  Config.Building[b.type].output.Stock ||
+                  Config.Building[b.type].output.Forex)
+            ) {
+               const multiplier = Math.round(srand(gs.id + gs.lastPriceUpdated + t)() * 4 + 1);
+               mapSafePush(Tick.next.tileMultipliers, t, {
+                  unstable: true,
+                  output: multiplier,
+                  source: buildingName,
+               });
+            }
+         }
+         const total = getGreatPersonTotalEffect("JohnDRockefeller", gs, options);
+         if (total > 0) {
+            Config.GreatPerson.JohnDRockefeller.tick(
+               Config.GreatPerson.JohnDRockefeller,
+               total,
+               `${buildingName}: ${Config.GreatPerson.JohnDRockefeller.name()}`,
+            );
+         }
+         break;
+      }
+      case "Shenandoah": {
+         const currentAge = getCurrentAge(gs);
+         forEach(Config.BuildingTechAge, (building, age) => {
+            if (age === currentAge) {
+               addMultiplier(building, { output: 1, storage: 1, worker: 1, unstable: true }, buildingName);
+            }
+         });
+         const total = getGreatPersonTotalEffect("JPMorgan", gs, options);
+         if (total > 0) {
+            Config.GreatPerson.JPMorgan.tick(
+               Config.GreatPerson.JPMorgan,
+               total,
+               `${buildingName}: ${Config.GreatPerson.JPMorgan.name()}`,
+            );
+         }
+         break;
+      }
+      case "NiagaraFalls": {
+         const currentAge = getCurrentAge(gs);
+         const count = Config.TechAge[currentAge].idx + 1;
+         addMultiplier("Warehouse", { storage: count }, buildingName);
+         addMultiplier("Market", { storage: count }, buildingName);
+         addMultiplier("Caravansary", { storage: count }, buildingName);
+         const total = getGreatPersonTotalEffect("AlbertEinstein", gs, options);
+         if (total > 0) {
+            addMultiplier(
+               "ResearchFund",
+               { output: total },
+               `${buildingName}: ${Config.GreatPerson.AlbertEinstein.name()}`,
+            );
+         }
          break;
       }
       // case "ArcDeTriomphe": {

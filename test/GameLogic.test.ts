@@ -15,7 +15,7 @@ import {
    getTotalGreatPeopleUpgradeCost,
    getUpgradeCostFib,
    upgradeAllPermanentGreatPeople,
-} from "../shared/logic/RebornLogic";
+} from "../shared/logic/RebirthLogic";
 import {
    addResourceTo,
    deductResourceFrom,

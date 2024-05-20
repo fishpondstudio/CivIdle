@@ -1,7 +1,7 @@
 import { MAX_TECH_COLUMN, type Tech } from "../../../shared/definitions/TechDefinitions";
 import { Config } from "../../../shared/logic/Config";
 import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
-import { getGreatPeopleChoiceCount, rollGreatPeopleThisRun } from "../../../shared/logic/RebornLogic";
+import { getGreatPeopleChoiceCount, rollGreatPeopleThisRun } from "../../../shared/logic/RebirthLogic";
 import {
    getCurrentAge,
    getScienceAmount,
@@ -120,9 +120,12 @@ export function TechPage({ id }: { id: Tech }): React.ReactNode {
             <fieldset>
                <legend>{t(L.Progress)}</legend>
                {gs.unlockedTech[id] ? (
-                  <div className="row text-green">
-                     <div className="m-icon small mr5">check_circle</div>
-                     <div>{t(L.TechHasBeenUnlocked, { tech: tech.name() })}</div>
+                  <div className="row">
+                     <div className="m-icon small mr5 text-green">check_circle</div>
+                     <div className="f1 text-strong">{t(L.TechHasBeenUnlocked, { tech: tech.name() })}</div>
+                     <div className="text-desc">
+                        <FormatNumber value={unlockScienceCost} />
+                     </div>
                   </div>
                ) : (
                   <>

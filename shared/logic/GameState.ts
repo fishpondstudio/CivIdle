@@ -2,8 +2,8 @@ import type { Building } from "../definitions/BuildingDefinitions";
 import type { City } from "../definitions/CityDefinitions";
 import type { GreatPerson } from "../definitions/GreatPersonDefinitions";
 import type { Resource } from "../definitions/ResourceDefinitions";
-import type { RomeProvince } from "../definitions/RomeProvinceDefinitions";
 import type { Tech } from "../definitions/TechDefinitions";
+import type { Upgrade } from "../definitions/UpgradeDefinitions";
 import { CZ } from "../languages/cz";
 import { DE } from "../languages/de";
 import { EN } from "../languages/en";
@@ -45,7 +45,7 @@ export class GameState {
    id = uuid4();
    city: City = "Rome";
    unlockedTech: PartialSet<Tech> = {};
-   unlockedProvince: PartialSet<RomeProvince> = {};
+   unlockedUpgrades: PartialSet<Upgrade> = {};
    tiles: Map<Tile, ITileData> = new Map();
    transportation: Map<Tile, ITransportationData[]> = new Map();
    tick = 0;
@@ -113,7 +113,14 @@ export const ExtraTileInfoTypes = {
    StoragePercentage: () => t(L.ExtraTileInfoTypeStoragePercentage),
 } as const;
 
+export const CursorOptions = {
+   OldFashioned: () => t(L.CursorOldFashioned),
+   BigOldFashioned: () => t(L.CursorBigOldFashioned),
+   System: () => t(L.CursorSystem),
+} as const;
+
 export type ExtraTileInfoType = keyof typeof ExtraTileInfoTypes;
+export type CursorOption = keyof typeof CursorOptions;
 
 export class GameOptions {
    useModernUI = true;
@@ -122,6 +129,7 @@ export class GameOptions {
    checksum: string | null = null;
    sidePanelWidth = 400;
    fontSizeScale = 1;
+   cursor: CursorOption = "OldFashioned";
    version = SAVE_FILE_VERSION;
    buildingColors: Partial<Record<Building, string>> = {};
    resourceColors: Partial<Record<Resource, string>> = {};
