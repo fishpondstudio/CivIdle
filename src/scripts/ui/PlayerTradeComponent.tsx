@@ -228,7 +228,7 @@ export function PlayerTradeComponent({ gameState, xy }: IBuildingComponentProps)
                   ((resourceWantFilters.size === 0 && resourceOfferFilters.size === 0) ||
                      resourceWantFilters.has(trade.buyResource) ||
                      resourceOfferFilters.has(trade.sellResource)) &&
-                  trade.from.toLocaleLowerCase().includes(playerNameFilter) &&
+                  trade.from.toLowerCase().includes(playerNameFilter.toLowerCase()) &&
                   (tradeAmountFilter === 0 ||
                      (tradeAmountFilter > 0 && trade.buyAmount <= tradeAmountFilter)),
             )}

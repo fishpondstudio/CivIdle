@@ -499,7 +499,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
       }
       case "Neuschwanstein": {
          getXyBuildings(gs).forEach((building, xy) => {
-            if (isWorldWonder(building.type) && building.status === "building") {
+            if (isWorldWonder(building.type) && building.status !== "completed") {
                mapSafePush(Tick.next.tileMultipliers, xy, { worker: 10, source: buildingName });
             }
          });
