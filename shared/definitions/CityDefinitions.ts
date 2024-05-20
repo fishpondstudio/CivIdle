@@ -136,7 +136,7 @@ export class CityDefinitions {
          TheMet: "RapidFire",
          ResearchFund: "UnitedNations",
       },
-      naturalWonders: { Alps: true, GrottaAzzurra: true },
+      naturalWonders: { Shenandoah: true, NiagaraFalls: true },
       requireGreatPeopleLevel: 20,
       requireSupporterPack: true,
    };

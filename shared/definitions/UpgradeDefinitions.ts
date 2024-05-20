@@ -1,3 +1,4 @@
+import { findBuilding } from "../logic/BuildingLogic";
 import { Config } from "../logic/Config";
 import { getGrid } from "../logic/IntraTickCache";
 import {
@@ -5,16 +6,13 @@ import {
    getGreatPersonTotalEffect,
    rollGreatPeopleThisRun,
 } from "../logic/RebirthLogic";
-import { Tick } from "../logic/TickLogic";
 import { RequestChooseGreatPerson } from "../logic/Update";
 import { deepFreeze, pointToTile, tileToPoint } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
 import { BuildingDefinitions } from "./BuildingDefinitions";
-import { GreatPersonDefinitions } from "./GreatPersonDefinitions";
 import type { IUpgradeDefinition } from "./ITechDefinition";
 
 const Buildings = deepFreeze(new BuildingDefinitions());
-const GreatPerson = deepFreeze(new GreatPersonDefinitions());
 
 export class UpgradeDefinitions {
    Cultivation1: IUpgradeDefinition = {
@@ -95,11 +93,10 @@ export class UpgradeDefinitions {
       },
       additionalUpgrades: () => [t(L.Commerce4UpgradeHTML)],
       onUnlocked: (gs) => {
-         const cz = Tick.current.specialBuildings.get("ChoghaZanbil");
+         const cz = findBuilding("ChoghaZanbil", gs);
          if (!cz) return;
          for (const point of getGrid(gs).getNeighbors(tileToPoint(cz.tile))) {
-            const tile = pointToTile(point);
-            const building = gs.tiles.get(tile)?.building;
+            const building = gs.tiles.get(pointToTile(point))?.building;
             if (
                building &&
                building.type === "Bank" &&
