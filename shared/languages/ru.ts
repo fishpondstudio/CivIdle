@@ -900,7 +900,7 @@ export const RU = {
    Shamanism: "Шаманизм",
    Shelter: "Укрытие",
    Shenandoah: "Shenandoah",
-   ShenandoahDesc: "Buildings unlocked in the current age get +1 Production, Worker Capacity and Storage Multiplier. Double the effect of J.P. Morgan",
+   ShenandoahDescV2: "Buildings unlocked in the current age get +2 Production Multiplier. Double the effect of J.P. Morgan",
    Shortcut: "Горячие Клавиши",
    ShortcutBuildingPageSellBuildingV2: "Снести здание",
    ShortcutBuildingPageToggleBuilding: "Переключение Производственной Мощности",

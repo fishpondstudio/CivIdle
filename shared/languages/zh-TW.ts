@@ -900,7 +900,7 @@ export const ZH_TW = {
    Shamanism: "信仰",
    Shelter: "避難所",
    Shenandoah: "Shenandoah",
-   ShenandoahDesc: "Buildings unlocked in the current age get +1 Production, Worker Capacity and Storage Multiplier. Double the effect of J.P. Morgan",
+   ShenandoahDescV2: "Buildings unlocked in the current age get +2 Production Multiplier. Double the effect of J.P. Morgan",
    Shortcut: "快捷鍵",
    ShortcutBuildingPageSellBuildingV2: "拆除建築物(Demolish Building)",
    ShortcutBuildingPageToggleBuilding: "切換生產",

@@ -900,7 +900,7 @@ export const CZ = {
    Shamanism: "Šamanismus",
    Shelter: "Úkryt",
    Shenandoah: "Shenandoah",
-   ShenandoahDesc: "Buildings unlocked in the current age get +1 Production, Worker Capacity and Storage Multiplier. Double the effect of J.P. Morgan",
+   ShenandoahDescV2: "Buildings unlocked in the current age get +2 Production Multiplier. Double the effect of J.P. Morgan",
    Shortcut: "Zkratka",
    ShortcutBuildingPageSellBuildingV2: "Demolish Building",
    ShortcutBuildingPageToggleBuilding: "Přepínání výroby",

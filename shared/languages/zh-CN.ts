@@ -900,7 +900,7 @@ export const ZH_CN = {
    Shamanism: "萨满教",
    Shelter: "避难所",
    Shenandoah: "谢南多厄河",
-   ShenandoahDesc: "当前时代的解锁建筑，获得 +1 生产、劳动者能力以及存储乘数。约翰·皮尔庞特·摩根效果翻倍",
+   ShenandoahDescV2: "Buildings unlocked in the current age get +2 Production Multiplier. Double the effect of J.P. Morgan",
    Shortcut: "快捷键",
    ShortcutBuildingPageSellBuildingV2: "拆除建筑",
    ShortcutBuildingPageToggleBuilding: "切换生产状态",

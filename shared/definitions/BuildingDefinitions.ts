@@ -1382,7 +1382,7 @@ export class BuildingDefinitions {
 
    Shenandoah: IBuildingDefinition = {
       name: () => t(L.Shenandoah),
-      desc: () => t(L.ShenandoahDesc),
+      desc: () => t(L.ShenandoahDescV2),
       input: {},
       output: {},
       construction: {},

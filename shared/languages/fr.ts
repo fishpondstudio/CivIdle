@@ -900,7 +900,7 @@ export const FR = {
    Shamanism: "Chamanisme",
    Shelter: "Abri",
    Shenandoah: "Shenandoah",
-   ShenandoahDesc: "Buildings unlocked in the current age get +1 Production, Worker Capacity and Storage Multiplier. Double the effect of J.P. Morgan",
+   ShenandoahDescV2: "Buildings unlocked in the current age get +2 Production Multiplier. Double the effect of J.P. Morgan",
    Shortcut: "Raccourcis",
    ShortcutBuildingPageSellBuildingV2: "Demolish Building",
    ShortcutBuildingPageToggleBuilding: "Basculer la production",
