@@ -36,6 +36,7 @@ import {
 import {
    clamp,
    hasFlag,
+   isNullOrUndefined,
    lerp,
    lookAt,
    pointToTile,
@@ -269,11 +270,7 @@ export class WorldScene extends Scene {
    }
 
    drawSelection(selected: IPointData | null, highlights: Tile[]) {
-      if (!this._selectedGraphics || !this._selectedXy) {
-         return;
-      }
-      const grid = getGrid(getGameState());
-      if (selected && !grid.isValid(selected)) {
+      if (!this._selectedGraphics || isNullOrUndefined(this._selectedXy)) {
          return;
       }
       this._selectedGraphics.clear();
@@ -285,7 +282,7 @@ export class WorldScene extends Scene {
          join: LINE_JOIN.ROUND,
          alignment: 0.5,
       });
-      drawSelected(grid, selected, this._selectedGraphics);
+      drawSelected(getGrid(getGameState()), selected, this._selectedGraphics);
 
       // this._tiles.get(this._selectedXy)?.debugDraw(this._selectedGraphics);
 
@@ -301,11 +298,12 @@ export class WorldScene extends Scene {
       }
    }
 
-   selectGrid(grid: IPointData) {
+   selectGrid(grid: IPointData): void {
+      const gs = getGameState();
+      if (!getGrid(gs).isValid(grid)) return;
       const xy = pointToTile(grid);
       this._selectedXy = xy;
       Singleton().routeTo(TilePage, { xy: xy });
-      const gs = getGameState();
       this.drawSelection(grid, []);
       this.drawTransportation(gs);
    }

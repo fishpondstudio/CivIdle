@@ -1,4 +1,4 @@
-import type { Tile } from "../../../shared/utilities/Helper";
+import { isNullOrUndefined, type Tile } from "../../../shared/utilities/Helper";
 import { useGameState } from "../Global";
 import { isSingletonReady } from "../utilities/Singleton";
 import { BuildingPage } from "./BuildingPage";
@@ -9,7 +9,7 @@ import { UnexploredTile } from "./UnexploredTile";
 export function TilePage(props: { xy: Tile | undefined }): React.ReactNode {
    const gameState = useGameState();
    const { xy } = props;
-   if (!xy || !isSingletonReady()) {
+   if (isNullOrUndefined(xy) || !isSingletonReady()) {
       return null;
    }
    const tile = gameState.tiles.get(xy);
