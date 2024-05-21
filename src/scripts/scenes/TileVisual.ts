@@ -60,7 +60,7 @@ export class TileVisual extends Container {
 
       const gs = getGameState();
       this._tile = gs.tiles.get(this._xy)!;
-      console.assert(this._tile, "Expect tile to exist!");
+      console.assert(this._tile, `Expect tile ${this._xy} to exist!`);
       const g = getGrid(gs);
       this.position = g.gridToPosition(this._grid);
 

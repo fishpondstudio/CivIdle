@@ -93,7 +93,11 @@ export function ThemePage(): React.ReactNode {
                      }}
                   >
                      {jsxMapOf(CursorOptions, (k, name) => {
-                        return <option value={k}>{name()}</option>;
+                        return (
+                           <option key={k} value={k}>
+                              {name()}
+                           </option>
+                        );
                      })}
                   </select>
                </div>

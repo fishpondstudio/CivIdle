@@ -131,6 +131,7 @@ export class GameOptions {
    fontSizeScale = 1;
    cursor: CursorOption = "OldFashioned";
    version = SAVE_FILE_VERSION;
+   showTransportArrow = true;
    buildingColors: Partial<Record<Building, string>> = {};
    resourceColors: Partial<Record<Resource, string>> = {};
    themeColors = { ...DefaultThemeColors };

@@ -3,11 +3,20 @@ import type { SavedGame } from "../../shared/logic/GameState";
 import { getGrid } from "../../shared/logic/IntraTickCache";
 import { ShortcutActions } from "../../shared/logic/Shortcut";
 import { BuildingInputMode, ResourceImportOptions, makeBuilding } from "../../shared/logic/Tile";
-import { forEach, isNullOrUndefined, tileToPoint } from "../../shared/utilities/Helper";
+import { forEach, isNullOrUndefined, pointToTile, tileToPoint } from "../../shared/utilities/Helper";
 import { getConstructionPriority, getProductionPriority } from "./Global";
 
 export function migrateSavedGame(save: SavedGame) {
    const grid = getGrid(save.current);
+   grid.forEach((point) => {
+      const xy = pointToTile(point);
+      if (save.current.tiles.has(xy)) return;
+      save.current.tiles.set(xy, {
+         tile: xy,
+         deposit: {},
+         explored: false,
+      });
+   });
    save.current.tiles.forEach((tile, xy) => {
       if (!grid.isValid(tileToPoint(xy))) {
          save.current.tiles.delete(xy);

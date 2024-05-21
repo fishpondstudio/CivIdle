@@ -14,7 +14,7 @@ export function initializeGameState(gameState: GameState, options: GameOptions) 
 
    grid.forEach((point) => {
       const xy = pointToTile(point);
-      if (gameState.tiles.get(xy)) {
+      if (gameState.tiles.has(xy)) {
          return;
       }
       gameState.tiles.set(xy, {

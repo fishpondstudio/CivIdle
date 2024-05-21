@@ -24,9 +24,6 @@ export class Grid {
    public forEach(cb: (grid: Point) => void) {
       for (let x = 0; x < this.maxX; x++) {
          for (let y = 0; y < this.maxY; y++) {
-            if (this.isEdge({ x, y })) {
-               continue;
-            }
             cb({ x, y });
          }
       }
@@ -54,7 +51,7 @@ export class Grid {
       return { x: o.col, y: o.row };
    }
 
-   public isEdge(grid: Point, edgeSize = 1) {
+   public isEdge(grid: Point, edgeSize: number) {
       if (
          grid.x < edgeSize ||
          grid.y < edgeSize ||
@@ -66,8 +63,8 @@ export class Grid {
       return false;
    }
 
-   public isValid(g: Point, edgeSize = 1): boolean {
-      return g.x >= edgeSize && g.x < this.maxX - edgeSize && g.y >= edgeSize && g.y < this.maxY - edgeSize;
+   public isValid(g: Point): boolean {
+      return g.x >= 0 && g.x < this.maxX && g.y >= 0 && g.y < this.maxY;
    }
 
    public gridToPosition(grid: Point): Point {

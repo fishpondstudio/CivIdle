@@ -239,7 +239,7 @@ function GreatPersonPromotionRow({ greatPerson }: { greatPerson: GreatPerson }):
       if (fromChoice === greatPerson && from.amount < 2) {
          return false;
       }
-      if (fromChoice !== greatPerson && from.amount < 2) {
+      if (fromChoice !== greatPerson && from.amount < 1) {
          return false;
       }
       if (!value || value.amount < 1) {

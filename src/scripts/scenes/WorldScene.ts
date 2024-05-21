@@ -272,12 +272,12 @@ export class WorldScene extends Scene {
       if (!this._selectedGraphics || !this._selectedXy) {
          return;
       }
-      this._selectedGraphics.clear();
       const grid = getGrid(getGameState());
-      selected ??= tileToPoint(this._selectedXy);
-      if (grid.isEdge(selected)) {
+      if (selected && !grid.isValid(selected)) {
          return;
       }
+      this._selectedGraphics.clear();
+      selected ??= tileToPoint(this._selectedXy);
       this._selectedGraphics.lineStyle({
          color: 0xffffff,
          width: 2,
@@ -453,9 +453,16 @@ export class WorldScene extends Scene {
    private _pos: IPointData = { x: 0, y: 0 };
 
    updateTransportVisual(gs: GameState, timeSinceLastTick: number) {
-      this._ticked.clear();
       const options = getGameOptions();
+      if (!options.showTransportArrow) {
+         for (const [id, sprite] of this._transport) {
+            this._transportPool.release(sprite);
+            this._transport.delete(id);
+         }
+         return;
+      }
       const worldRect = this.viewport.visibleWorldRect();
+      this._ticked.clear();
       gs.transportation.forEach((transports) => {
          transports.forEach((t) => {
             Vector2.lerp(

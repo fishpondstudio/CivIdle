@@ -130,6 +130,12 @@ export async function handleChatCommand(command: string): Promise<void> {
          );
          break;
       }
+      case "togglearrow": {
+         getGameOptions().showTransportArrow = !getGameOptions().showTransportArrow;
+         await saveGame();
+         window.location.reload();
+         break;
+      }
       case "randomcolor": {
          const colors = randomColor({
             luminosity: "light",
@@ -372,7 +378,7 @@ export async function handleChatCommand(command: string): Promise<void> {
          });
          break;
       }
-      case "removeTrade": {
+      case "removetrade": {
          if (!parts[1]) {
             throw new Error("Invalid command format");
          }
