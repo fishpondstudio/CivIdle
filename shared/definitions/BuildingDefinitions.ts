@@ -1374,7 +1374,7 @@ export class BuildingDefinitions {
       desc: () => t(L.WallStreetDesc),
       input: {},
       output: {},
-      construction: { Water: 100, Wood: 100, Stone: 100, Wheat: 100 },
+      construction: { Bond: 100, Law: 100, Banknote: 100 },
       max: 1,
       special: BuildingSpecial.WorldWonder,
       wikipedia: "Wall_Street",

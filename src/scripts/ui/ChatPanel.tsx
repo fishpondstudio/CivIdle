@@ -36,7 +36,7 @@ import { getCountryName, getFlagUrl } from "../utilities/CountryCode";
 import { useTypedEvent } from "../utilities/Hook";
 import { openUrl } from "../utilities/Platform";
 import { playError } from "../visuals/Sound";
-import { showModal, showToast } from "./GlobalModal";
+import { showToast } from "./GlobalModal";
 import { RenderHTML } from "./RenderHTMLComponent";
 import { SelectChatChannelModal } from "./SelectChatChannelModal";
 
@@ -218,13 +218,19 @@ function ChatInput({
          chatInput.current?.focus();
       }
    });
+   const [showChatChannel, setShowChatChannel] = useState(false);
    return (
-      <div className="row" style={{ padding: "2px" }}>
+      <div className="row" style={{ padding: "2px", position: "relative" }}>
+         <SelectChatChannelModal
+            show={showChatChannel}
+            style={{ position: "absolute", bottom: "100%", left: 0 }}
+            onClose={() => setShowChatChannel(false)}
+         />
          <Tippy content={ChatChannels[channel]}>
             <div
                className="language-switch pointer"
                onClick={() => {
-                  showModal(<SelectChatChannelModal />);
+                  setShowChatChannel(!showChatChannel);
                }}
             >
                {channel.toUpperCase()}

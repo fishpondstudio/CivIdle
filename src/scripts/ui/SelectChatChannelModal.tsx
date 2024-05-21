@@ -7,17 +7,27 @@ import { L, t } from "../../../shared/utilities/i18n";
 import { useGameOptions } from "../Global";
 import { jsxMapOf } from "../utilities/Helper";
 import { playError } from "../visuals/Sound";
-import { hideModal } from "./GlobalModal";
 
-export function SelectChatChannelModal(): React.ReactNode {
+export function SelectChatChannelModal({
+   show,
+   style,
+   onClose,
+}: {
+   show: boolean;
+   onClose: () => void;
+   style?: React.CSSProperties;
+}): React.ReactNode {
    const options = useGameOptions();
    const [isPending, startTransition] = useTransition();
+   if (!show) {
+      return null;
+   }
    return (
-      <div className="window">
+      <div className="window" style={style}>
          <div className="title-bar">
             <div className="title-bar-text">{t(L.ChatChannel)}</div>
             <div className="title-bar-controls">
-               <button aria-label="Close" onClick={() => hideModal()}></button>
+               <button aria-label="Close" onClick={() => onClose()}></button>
             </div>
          </div>
          <div className="window-body">
