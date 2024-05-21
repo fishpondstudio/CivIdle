@@ -282,7 +282,8 @@ export class WorldScene extends Scene {
          join: LINE_JOIN.ROUND,
          alignment: 0.5,
       });
-      drawSelected(getGrid(getGameState()), selected, this._selectedGraphics);
+      const grid = getGrid(getGameState());
+      drawSelected(grid, selected, this._selectedGraphics);
 
       // this._tiles.get(this._selectedXy)?.debugDraw(this._selectedGraphics);
 
@@ -300,7 +301,9 @@ export class WorldScene extends Scene {
 
    selectGrid(grid: IPointData): void {
       const gs = getGameState();
-      if (!getGrid(gs).isValid(grid)) return;
+      if (!getGrid(gs).isValid(grid)) {
+         return;
+      }
       const xy = pointToTile(grid);
       this._selectedXy = xy;
       Singleton().routeTo(TilePage, { xy: xy });
