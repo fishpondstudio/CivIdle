@@ -1,4 +1,4 @@
-import { findBuilding } from "../logic/BuildingLogic";
+import { findSpecialBuilding } from "../logic/BuildingLogic";
 import { Config } from "../logic/Config";
 import { getGrid } from "../logic/IntraTickCache";
 import {
@@ -93,7 +93,7 @@ export class UpgradeDefinitions {
       },
       additionalUpgrades: () => [t(L.Commerce4UpgradeHTMLV2)],
       onUnlocked: (gs) => {
-         const cz = findBuilding("ChoghaZanbil", gs);
+         const cz = findSpecialBuilding("ChoghaZanbil", gs);
          if (!cz) return;
          for (const point of getGrid(gs).getNeighbors(tileToPoint(cz.tile))) {
             const building = gs.tiles.get(pointToTile(point))?.building;

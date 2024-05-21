@@ -32,7 +32,7 @@ import {
    deductResources,
    filterNonTransportable,
    filterTransportable,
-   findBuilding,
+   findSpecialBuilding,
    getAvailableResource,
    getAvailableWorkers,
    getBuilderCapacity,
@@ -826,7 +826,7 @@ export function tickPrice(gs: GameState) {
       OnPriceUpdated.emit(gs);
    }
    const resources = filterOf(unlockedResources(gs), (res) => !NoPrice[res] && !NoStorage[res]);
-   const grandBazaar = findBuilding("GrandBazaar", gs);
+   const grandBazaar = findSpecialBuilding("GrandBazaar", gs);
    const grid = getGrid(gs);
    getBuildingsByType("Market", gs)?.forEach((tile, xy) => {
       const building = gs.tiles.get(xy)?.building;

@@ -1,7 +1,7 @@
 import type { Application, Texture } from "pixi.js";
 import type { City } from "../../shared/definitions/CityDefinitions";
 import { IsDeposit } from "../../shared/definitions/ResourceDefinitions";
-import { addPetraOfflineTime, findBuilding } from "../../shared/logic/BuildingLogic";
+import { addPetraOfflineTime, findSpecialBuilding } from "../../shared/logic/BuildingLogic";
 import { Config } from "../../shared/logic/Config";
 import { MAX_OFFLINE_PRODUCTION_SEC, calculateTierAndPrice } from "../../shared/logic/Constants";
 import { Languages, syncLanguage, type GameState } from "../../shared/logic/GameState";
@@ -124,7 +124,7 @@ export async function startGame(
 
       offlineProduction = false;
 
-      const petra = findBuilding("Petra", gameState);
+      const petra = findSpecialBuilding("Petra", gameState);
       const maxOfflineTime =
          ((petra?.building as IPetraBuildingData | undefined)?.offlineProductionPercent ?? 1) *
          MAX_OFFLINE_PRODUCTION_SEC;

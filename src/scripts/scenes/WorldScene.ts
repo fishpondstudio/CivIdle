@@ -14,7 +14,7 @@ import {
 import {
    applyBuildingDefaults,
    checkBuildingMax,
-   findBuilding,
+   findSpecialBuilding,
    getGreatWallRange,
    getYellowCraneTowerRange,
 } from "../../../shared/logic/BuildingLogic";
@@ -145,7 +145,7 @@ export class WorldScene extends Scene {
       }
       this.viewport.center = viewportCenter;
 
-      const hq = findBuilding("Headquarter", getGameState());
+      const hq = findSpecialBuilding("Headquarter", getGameState());
       if (hq) {
          this.selectGrid(tileToPoint(hq.tile));
       }

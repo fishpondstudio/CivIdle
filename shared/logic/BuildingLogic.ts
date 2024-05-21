@@ -963,7 +963,12 @@ export function getElectrificationEfficiency(b: Building) {
    return 1;
 }
 
-export function findBuilding(type: Building, gs: GameState): Required<ITileData> | null {
+export function findSpecialBuilding(type: Building, gs: GameState): Required<ITileData> | null {
+   if (!isSpecialBuilding(type)) return null;
+
+   const result = Tick.current.specialBuildings.get(type);
+   if (result) return result;
+
    for (const tile of gs.tiles.values()) {
       if (tile.building?.type === type) {
          return tile as Required<ITileData>;
@@ -973,7 +978,7 @@ export function findBuilding(type: Building, gs: GameState): Required<ITileData>
 }
 
 export function addPetraOfflineTime(time: number, gs: GameState): void {
-   const petra = findBuilding("Petra", gs);
+   const petra = findSpecialBuilding("Petra", gs);
    if (petra) {
       const storage = getStorageFor(petra.tile, gs);
       if (!petra.building.resources.Warp) {

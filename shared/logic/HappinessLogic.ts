@@ -1,7 +1,7 @@
 import { clamp, isEmpty, mFilterOf, mReduceOf, reduceOf, sizeOf, sum } from "../utilities/Helper";
 import type { PartialTabulate } from "../utilities/TypeDefinitions";
 import { L, t } from "../utilities/i18n";
-import { isNaturalWonder, isSpecialBuilding, isWorldWonder } from "./BuildingLogic";
+import { findSpecialBuilding, isNaturalWonder, isSpecialBuilding, isWorldWonder } from "./BuildingLogic";
 import { Config } from "./Config";
 import type { GameState } from "./GameState";
 import { getTypeBuildings, getXyBuildings } from "./IntraTickCache";
@@ -44,7 +44,7 @@ export function calculateHappiness(gs: GameState) {
                fromHighestTierBuilding = tier;
             }
          }
-         if (building.capacity <= 0 && Tick.current.specialBuildings.has("HagiaSophia")) {
+         if (building.capacity <= 0 && findSpecialBuilding("HagiaSophia", gs)) {
             // Do nothing
          } else if (Tick.current.happinessExemptions.has(xy)) {
             // Do nothing
