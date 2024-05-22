@@ -5,7 +5,6 @@ import {
    getBuildingThatExtract,
    getExtraVisionRange,
    isNaturalWonder,
-   isSpecialBuilding,
 } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
 import { getGameOptions, getGameState } from "../../../shared/logic/GameStateLogic";
@@ -123,7 +122,7 @@ export function onBuildingComplete(xy: Tile): void {
       }
       case "TempleOfArtemis": {
          getXyBuildings(gs).forEach((building) => {
-            if (isSpecialBuilding(building.type)) {
+            if (building.status !== "completed") {
                return;
             }
             if (building.type === "Armory" || building.type === "SwordForge") {

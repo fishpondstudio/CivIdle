@@ -957,7 +957,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          const currentAge = getCurrentAge(gs);
          forEach(Config.BuildingTechAge, (building, age) => {
             if (age === currentAge) {
-               addMultiplier(building, { output: 1, storage: 1, worker: 1, unstable: true }, buildingName);
+               addMultiplier(building, { output: 2, unstable: true }, buildingName);
             }
          });
          const total = getGreatPersonTotalEffect("JPMorgan", gs, options);
