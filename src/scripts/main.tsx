@@ -125,7 +125,7 @@ export async function loadBundle() {
                  }
                : {},
          ),
-         { chars: BitmapFont.ASCII, resolution: 2 },
+         { chars: BitmapFont.ASCII, resolution: 2, padding: 8 },
       ),
    );
    console.timeEnd("Load Default Font");

@@ -1393,7 +1393,7 @@ export class BuildingDefinitions {
 
    NiagaraFalls: IBuildingDefinition = {
       name: () => t(L.NiagaraFalls),
-      desc: () => t(L.NiagaraFallsDesc),
+      desc: () => t(L.NiagaraFallsDescV2),
       input: {},
       output: {},
       construction: {},

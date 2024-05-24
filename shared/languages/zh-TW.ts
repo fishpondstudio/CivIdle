@@ -607,7 +607,7 @@ export const ZH_TW = {
    NextExplorersIn: "下一個探險家",
    NextMarketUpdateIn: "下次市場更新剩餘時間",
    NiagaraFalls: "尼加拉瀑布(Niagara Falls)",
-   NiagaraFallsDesc: "所有倉庫、市場和商隊都獲得+N儲存倍數。 N = 解鎖年齡數。阿爾伯特愛因斯坦為研究基金提供 +1 生產乘數",
+   NiagaraFallsDescV2: "All warehouses, markets and caravansaries get +N storage multiplier. N = number of unlocked ages. Albert Einstein provides +1 Production Multiplier to Research Fund (not affected by other boosts like Broadway)",
    NielsBohr: "尼爾斯·波耳(Niels Bohr)",
    NielsBohrDescV2: "+%{value} 來自所有工人的科學，如果超過 50% 的工人忙碌且少於 50% 的忙碌工人從事交通運輸工作",
    NileRiver: "尼羅河(Nile River)",

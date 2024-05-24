@@ -978,11 +978,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          addMultiplier("Caravansary", { storage: count }, buildingName);
          const total = getGreatPersonTotalEffect("AlbertEinstein", gs, options);
          if (total > 0) {
-            addMultiplier(
-               "ResearchFund",
-               { output: total },
-               `${buildingName}: ${Config.GreatPerson.AlbertEinstein.name()}`,
-            );
+            addMultiplier("ResearchFund", { output: total }, buildingName);
          }
          break;
       }

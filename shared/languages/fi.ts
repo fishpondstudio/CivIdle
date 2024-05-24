@@ -607,7 +607,7 @@ export const FI = {
    NextExplorersIn: "Next Explorers In",
    NextMarketUpdateIn: "Next Market Update In",
    NiagaraFalls: "Niagara Falls",
-   NiagaraFallsDesc: "All warehouses, markets and caravansaries get +N storage multiplier. N = number of unlocked ages. Albert Einstein provides +1 Production Multiplier to Research Fund",
+   NiagaraFallsDescV2: "All warehouses, markets and caravansaries get +N storage multiplier. N = number of unlocked ages. Albert Einstein provides +1 Production Multiplier to Research Fund (not affected by other boosts like Broadway)",
    NielsBohr: "Niels Bohr",
    NielsBohrDescV2: "+%{value} Science from All Workers if more than 50% of workers are busy and less than 50% of busy workers work in transportation",
    NileRiver: "Nile River",
