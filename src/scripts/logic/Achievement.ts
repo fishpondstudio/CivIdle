@@ -60,6 +60,10 @@ export function checkRebirthAchievements(extraGP: number, gs: GameState): void {
             SteamClient.unlockAchievement("MandateOfHeaven");
             break;
          }
+         case "NewYork": {
+            SteamClient.unlockAchievement("TheBigApple");
+            break;
+         }
       }
    }
 }
