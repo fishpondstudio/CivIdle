@@ -80,7 +80,7 @@ export const FR = {
    Athens: "Athènes",
    AtomicBomb: "Bombe atomique",
    AtomicFacility: "Atomic Facility",
-   AtomicTheory: "Théorie atomique,
+   AtomicTheory: "Théorie atomique",
    Atomium: "Atomium",
    AtomiumDescV2: "Tous les bâtiments qui produisent de la science dans un rayon de 2 cases gagnent +5 Multiplicateur de Production. Génère une quantité de science égale à la production de science dans un rayon de 2 cases. Une fois sa construction achevée, octroie une quantité de science unique équivalente au coût de la technologie débloquée la plus chère",
    Autocracy: "Autocratie",
