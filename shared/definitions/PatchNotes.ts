@@ -9,6 +9,7 @@ export const PatchNotes: PatchNote[] = [
       version: "0.10.1",
       content: [
          ["Bugfix", "Fix a bug where weekly free city shows incorrect information"],
+         ["QoL", "Change the font of tech tree to improve readability when the font size is small"],
          ["QoL", "Update language files for Chinese, Korean and French"],
       ],
    },
