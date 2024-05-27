@@ -1089,7 +1089,7 @@ export const ZH_TW = {
    TraditionHonor: "榮譽(Honor)",
    Train: "火車",
    TranslationPercentage: "    %{language}的翻譯進度目前為%{percentage}。可在GitHub上幫助改進此語言翻譯。",
-   TranslatorCredit: "HarchuN、JiaMuC",
+   TranslatorCredit: "HarchuN、JiaMuC、WangChenan",
    Translators: "翻譯人員",
    TransportAllocatedCapacityTooltip: "建造者容量分配用於運送這種資源",
    TransportationWorkers: "運輸工人(Transportation Workers)",
