@@ -321,7 +321,7 @@ export class TechTreeScene extends Scene {
       }
 
       const result = new BitmapText(text, {
-         fontName: Fonts.Marcellus,
+         fontName: Fonts.Platypi,
          fontSize: size,
          tint: color,
       });

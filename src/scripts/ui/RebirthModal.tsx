@@ -116,7 +116,9 @@ export function RebirthModal(): React.ReactNode {
             <fieldset>
                {hasFlag(user?.attr ?? UserAttributes.None, UserAttributes.DLC1) ? null : (
                   <WarningComponent icon="info" className="text-small mb10">
-                     <RenderHTML html={t(L.FreeThisWeekDescHTML, { city: Config.City[city].name() })} />
+                     <RenderHTML
+                        html={t(L.FreeThisWeekDescHTML, { city: Config.City[getFreeCityThisWeek()].name() })}
+                     />
                   </WarningComponent>
                )}
                <div className="row">

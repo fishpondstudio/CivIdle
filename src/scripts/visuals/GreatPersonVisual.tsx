@@ -53,7 +53,7 @@ export function greatPersonSprite(greatPerson: GreatPerson, context: ISceneConte
       ring.alpha = 0.7;
 
       const typeText = container.addChild(
-         makeText(GreatPersonType[type].charAt(0).toUpperCase(), Fonts.Marcellus, 80, primaryColor),
+         makeText(GreatPersonType[type].charAt(0).toUpperCase(), Fonts.Platypi, 80, primaryColor),
       );
       typeText.anchor.set(0.5, 0.5);
       typeText.angle = -20;
@@ -80,7 +80,7 @@ export function greatPersonSprite(greatPerson: GreatPerson, context: ISceneConte
    ageText.position.set(30, 12);
 
    const ageNumber = container.addChild(
-      makeText(numberToRoman(Config.TechAge[age].idx + 1) ?? "", Fonts.Marcellus, 50, primaryColor),
+      makeText(numberToRoman(Config.TechAge[age].idx + 1) ?? "", Fonts.Platypi, 50, primaryColor),
    );
    ageNumber.anchor.set(0.5, 0.5);
    ageNumber.position.set(439, 40);
@@ -89,7 +89,7 @@ export function greatPersonSprite(greatPerson: GreatPerson, context: ISceneConte
    nameText.position.set(cardFrame.width / 2, 490);
    nameText.anchor.set(0.5, 0.5);
 
-   const timeText = container.addChild(makeText(time, Fonts.Marcellus, 25, 0xffffff));
+   const timeText = container.addChild(makeText(time, Fonts.Platypi, 25, 0xffffff));
    timeText.position.set((container.width - timeText.width) / 2, 560);
 
    return container;

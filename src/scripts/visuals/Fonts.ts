@@ -1,5 +1,5 @@
 export const Fonts = {
    Cabin: "Cabin",
-   Marcellus: "Marcellus",
+   Platypi: "Platypi",
    OldTypefaces: "OldTypefaces",
 } as const;

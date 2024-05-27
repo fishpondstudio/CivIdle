@@ -6,6 +6,13 @@ interface PatchNote {
 
 export const PatchNotes: PatchNote[] = [
    {
+      version: "0.10.1",
+      content: [
+         ["Bugfix", "Fix a bug where weekly free city shows incorrect information"],
+         ["QoL", "Update language files for Chinese, Korean and French"],
+      ],
+   },
+   {
       version: "0.10.0",
       content: [],
       link: "https://store.steampowered.com/news/app/2181940/view/4175478335193911579",

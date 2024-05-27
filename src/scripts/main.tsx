@@ -5,8 +5,8 @@ import { createRoot } from "react-dom/client";
 import { TypedEvent } from "../../shared/utilities/TypedEvent";
 import "../css/Main.css";
 import CabinMedium from "../fonts/CabinMedium.ttf?url";
-import MarcellusRegular from "../fonts/MarcellusRegular.ttf?url";
 import OldTypefaces from "../fonts/OldTypefaces.ttf";
+import Platypi from "../fonts/Platypi-Medium.ttf";
 import TextureBuildingDef from "../images/textures_building.json";
 import TextureBuilding from "../images/textures_building.png";
 import TextureFlagDef from "../images/textures_flag.json";
@@ -68,7 +68,7 @@ const mainBundle = {
 };
 export const fonts = [
    new FontFace(Fonts.Cabin, `url("${CabinMedium}")`),
-   new FontFace(Fonts.Marcellus, `url("${MarcellusRegular}")`),
+   new FontFace(Fonts.Platypi, `url("${Platypi}")`),
    new FontFace(Fonts.OldTypefaces, `url("${OldTypefaces}")`),
 ];
 
