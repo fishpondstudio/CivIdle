@@ -1,5 +1,6 @@
 import type { Building } from "../definitions/BuildingDefinitions";
 import { BuildingSpecial } from "../definitions/BuildingDefinitions";
+import type { IUnlockableMultipliers } from "../definitions/ITechDefinition";
 import { NoPrice, NoStorage, type Deposit, type Resource } from "../definitions/ResourceDefinitions";
 import type { Tradition } from "../definitions/TraditionDefinitions";
 import {
@@ -36,6 +37,8 @@ import { getBuildingsThatProduce, getResourcesValue } from "./ResourceLogic";
 import { getAgeForTech, getBuildingUnlockTech } from "./TechLogic";
 import {
    AllMultiplierTypes,
+   GlobalMultiplierNames,
+   MultiplierTypeDesc,
    NotProducingReason,
    Tick,
    type Multiplier,
@@ -1029,4 +1032,17 @@ export function getBuildingDescription(b: Building): string {
       " => ",
       mapOf(building.output, (res, value) => `${Config.Resource[res].name()} x${value}`).join(" + "),
    ].join("");
+}
+
+export function getMultipliersDescription(m: IUnlockableMultipliers): string {
+   return mapOf(m.globalMultiplier, (key, value) => `+${value} ${GlobalMultiplierNames[key]()}`)
+      .concat(
+         mapOf(m.buildingMultiplier, (building, multipliers) =>
+            mapOf(
+               multipliers,
+               (k, v) => `${Config.Building[building].name()} +${v} ${MultiplierTypeDesc[k]()}`,
+            ),
+         ).flat(),
+      )
+      .join(", ");
 }

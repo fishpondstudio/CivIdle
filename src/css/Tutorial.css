@@ -1,0 +1,8 @@
+.tutorial-advice ol {
+    margin: 0;
+    padding: 0 0 0 1em;
+}
+
+.tutorial-advice ol li {
+    margin: 0.5em 0;
+}

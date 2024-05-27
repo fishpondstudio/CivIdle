@@ -1,6 +1,7 @@
 import type { PartialSet } from "../utilities/TypeDefinitions";
 import { L, t } from "../utilities/i18n";
 import type { Building } from "./BuildingDefinitions";
+import type { IUnlockableMultipliers } from "./ITechDefinition";
 import type { Deposit } from "./ResourceDefinitions";
 import type { Tech } from "./TechDefinitions";
 
@@ -28,6 +29,7 @@ export class CityDefinitions {
          CircusMaximus: "CivilService",
          Colosseum: "Theater",
       },
+      uniqueMultipliers: {},
       naturalWonders: { Alps: true, GrottaAzzurra: true },
       requireGreatPeopleLevel: 0,
       requireSupporterPack: false,
@@ -52,6 +54,7 @@ export class CityDefinitions {
          Headquarter: () => t(L.Acropolis),
       },
       uniqueBuildings: { StatueOfZeus: "Theater", Parthenon: "Democracy" },
+      uniqueMultipliers: {},
       naturalWonders: { Aphrodite: true, Poseidon: true },
       requireGreatPeopleLevel: 5,
       requireSupporterPack: false,
@@ -79,6 +82,7 @@ export class CityDefinitions {
          AbuSimbel: "Housing",
          GreatSphinx: "Arithmetic",
       },
+      uniqueMultipliers: {},
       naturalWonders: { NileRiver: true, MountSinai: true },
       requireGreatPeopleLevel: 10,
       requireSupporterPack: false,
@@ -107,6 +111,7 @@ export class CityDefinitions {
          YellowCraneTower: "Geography",
          PorcelainTower: "Banking",
       },
+      uniqueMultipliers: {},
       naturalWonders: { MountTai: true, YangtzeRiver: true },
       requireGreatPeopleLevel: 15,
       requireSupporterPack: false,
@@ -136,6 +141,13 @@ export class CityDefinitions {
          TheMet: "RapidFire",
          ResearchFund: "UnitedNations",
       },
+      uniqueMultipliers: {
+         Skyscraper: {
+            buildingMultiplier: {
+               ResearchFund: { output: 1 },
+            },
+         },
+      },
       naturalWonders: { Shenandoah: true, NiagaraFalls: true },
       requireGreatPeopleLevel: 20,
       requireSupporterPack: true,
@@ -151,6 +163,7 @@ interface ICityDefinition {
    naturalWonders: PartialSet<Building>;
    buildingNames: Partial<Record<Building, () => string>>;
    uniqueBuildings: Partial<Record<Building, Tech>>;
+   uniqueMultipliers: Partial<Record<Tech, IUnlockableMultipliers>>;
    requireGreatPeopleLevel: number;
    requireSupporterPack: boolean;
 }

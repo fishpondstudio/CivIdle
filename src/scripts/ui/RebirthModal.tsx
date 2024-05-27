@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import type { City } from "../../../shared/definitions/CityDefinitions";
-import { getBuildingDescription } from "../../../shared/logic/BuildingLogic";
+import { getBuildingDescription, getMultipliersDescription } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
 import { getGameOptions } from "../../../shared/logic/GameStateLogic";
 import {
@@ -14,7 +14,15 @@ import {
 import { getCurrentAge } from "../../../shared/logic/TechLogic";
 import { Tick } from "../../../shared/logic/TickLogic";
 import { UserAttributes } from "../../../shared/utilities/Database";
-import { clamp, formatPercent, hasFlag, mapOf, reduceOf, rejectIn } from "../../../shared/utilities/Helper";
+import {
+   clamp,
+   formatPercent,
+   hasFlag,
+   isEmpty,
+   mapOf,
+   reduceOf,
+   rejectIn,
+} from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import { resetToCity, saveGame, useGameState } from "../Global";
 import { checkRebirthAchievements } from "../logic/Achievement";
@@ -146,14 +154,13 @@ export function RebirthModal(): React.ReactNode {
                      ({Config.City[city].size}x{Config.City[city].size})
                   </div>
                </div>
-               <div>
+               <div className="mb5">
                   {mapOf(Config.City[city].deposits, (dep, value) => {
                      return `${Config.Resource[dep].name()}: ${formatPercent(value)}`;
                   }).join(", ")}
                </div>
-               <div className="sep5"></div>
                <div className="text-strong">{t(L.UniqueBuildings)}</div>
-               <div>
+               <div className="mb5">
                   {jsxMapOf(Config.City[city].uniqueBuildings, (building, tech) => {
                      return (
                         <TextWithHelp
@@ -167,9 +174,8 @@ export function RebirthModal(): React.ReactNode {
                      );
                   })}
                </div>
-               <div className="sep5"></div>
                <div className="text-strong">{t(L.NaturalWonders)}</div>
-               <div>
+               <div className="mb5">
                   {jsxMapOf(Config.City[city].naturalWonders, (building, tech) => {
                      const def = Config.Building[building];
                      return (
@@ -183,6 +189,24 @@ export function RebirthModal(): React.ReactNode {
                      );
                   })}
                </div>
+               {isEmpty(Config.City[city].uniqueMultipliers) ? null : (
+                  <>
+                     <div className="text-strong">{t(L.UniqueTechMultipliers)}</div>
+                     <div className="mb5">
+                        {jsxMapOf(Config.City[city].uniqueMultipliers, (tech, multipliers) => {
+                           return (
+                              <TextWithHelp
+                                 className="mr10"
+                                 key={tech}
+                                 content={getMultipliersDescription(multipliers)}
+                              >
+                                 {Config.Tech[tech].name()}
+                              </TextWithHelp>
+                           );
+                        })}
+                     </div>
+                  </>
+               )}
                <div className="separator" />
                <div className="row">
                   <div className=" f1">{t(L.GreatPersonLevelRequired)}</div>

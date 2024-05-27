@@ -751,8 +751,8 @@ export class TechDefinitions {
       unlockBuilding: ["NuclearPowerPlant", "Atomium"],
    };
 
-   Skyscrapper: ITechDefinition = {
-      name: () => t(L.Skyscrapper),
+   Skyscraper: ITechDefinition = {
+      name: () => t(L.Skyscraper),
       column: 21,
       requireTech: ["UnitedNations", "Hydroelectricity"],
       unlockBuilding: ["Condo"],
@@ -782,14 +782,14 @@ export class TechDefinitions {
    Television: ITechDefinition = {
       name: () => t(L.Television),
       column: 22,
-      requireTech: ["Skyscrapper", "NuclearReactor"],
+      requireTech: ["Skyscraper", "NuclearReactor"],
       unlockBuilding: ["TVStation", "CNTower"],
    };
 
    MonetarySystem: ITechDefinition = {
       name: () => t(L.MonetarySystem),
       column: 22,
-      requireTech: ["Skyscrapper"],
+      requireTech: ["Skyscraper"],
       unlockBuilding: ["ForexMarket"],
    };
 

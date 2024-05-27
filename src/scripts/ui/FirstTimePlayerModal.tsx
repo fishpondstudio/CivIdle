@@ -2,6 +2,7 @@ import { useState } from "react";
 import { GameOptionsChanged } from "../../../shared/logic/GameStateLogic";
 import { firstKeyOf } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
+import "../../css/Tutorial.css";
 import install from "../../images/install.png";
 import { ToggleChatWindow } from "../Global";
 import { OnUserChanged, client, useUser } from "../rpc/RPCClient";
@@ -20,7 +21,8 @@ enum SetupStep {
    Tutorial1 = 1,
    Tutorial2 = 2,
    Tutorial3 = 3,
-   Settings = 4,
+   Tutorial4 = 4,
+   Settings = 5,
 }
 
 export function FirstTimePlayerModal(): React.ReactNode {
@@ -90,6 +92,17 @@ export function FirstTimePlayerModal(): React.ReactNode {
                   </div>
                   <div className="f1" style={{ margin: "10px 15px" }}>
                      <RenderHTML html={t(L.Tutorial6)} />
+                  </div>
+               </div>
+            );
+         case SetupStep.Tutorial4:
+            return (
+               <div className="row">
+                  <div style={{ alignSelf: "flex-start" }}>
+                     <img src={install} style={{ width: "48px" }} />
+                  </div>
+                  <div className="f1" style={{ margin: "10px 15px" }}>
+                     <RenderHTML className="tutorial-advice" html={t(L.TutorialAdvices)} />
                   </div>
                </div>
             );

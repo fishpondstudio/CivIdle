@@ -17,6 +17,11 @@ export function migrateSavedGame(save: SavedGame) {
          explored: false,
       });
    });
+   if ("Skyscrapper" in save.current.unlockedTech) {
+      delete save.current.unlockedTech.Skyscrapper;
+      save.current.unlockedTech.Skyscraper = true;
+   }
+
    save.current.tiles.forEach((tile, xy) => {
       if (!grid.isValid(tileToPoint(xy))) {
          save.current.tiles.delete(xy);

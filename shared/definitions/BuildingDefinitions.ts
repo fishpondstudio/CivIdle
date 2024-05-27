@@ -1214,7 +1214,7 @@ export class BuildingDefinitions {
       desc: () => t(L.ManhattanProjectDesc),
       input: {},
       output: {},
-      construction: { Uranium: 500 },
+      construction: { NuclearFuelRod: 500 },
       max: 1,
       special: BuildingSpecial.WorldWonder,
       wikipedia: "Manhattan_Project",

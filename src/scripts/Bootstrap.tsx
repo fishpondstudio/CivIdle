@@ -19,6 +19,7 @@ import {
    forEach,
    isNullOrUndefined,
    rejectIn,
+   safeAdd,
    schedule,
 } from "../../shared/utilities/Helper";
 import type { TypedEvent } from "../../shared/utilities/TypedEvent";
@@ -205,6 +206,33 @@ export function setCityOverride(gameState: GameState) {
          Config.Tech[tech].unlockBuilding = [];
       }
       Config.Tech[tech].unlockBuilding!.push(building);
+   });
+
+   forEach(city.uniqueMultipliers, (tech, multipliers) => {
+      const def = Config.Tech[tech];
+      if (multipliers.globalMultiplier) {
+         if (def.globalMultiplier) {
+            forEach(multipliers.globalMultiplier, (k, v) => {
+               safeAdd(def.globalMultiplier!, k, v);
+            });
+         } else {
+            def.globalMultiplier = structuredClone(multipliers.globalMultiplier);
+         }
+      }
+      if (multipliers.buildingMultiplier) {
+         forEach(multipliers.buildingMultiplier, (building, multipliers) => {
+            if (!def.buildingMultiplier) {
+               def.buildingMultiplier = {};
+            }
+            if (def.buildingMultiplier[building]) {
+               forEach(multipliers, (kk, vv) => {
+                  safeAdd(def.buildingMultiplier![building]!, kk, vv);
+               });
+            } else {
+               def.buildingMultiplier[building] = structuredClone(multipliers);
+            }
+         });
+      }
    });
 }
 
