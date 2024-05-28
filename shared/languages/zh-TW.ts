@@ -673,7 +673,7 @@ export const ZH_TW = {
    Pizza: "披薩",
    Pizzeria: "披薩店",
    Plastics: "塑膠",
-   PlasticsFactory: "塑膠工廠,
+   PlasticsFactory: "塑膠工廠",
    Plato: "柏拉圖",
    PlayerHandle: "玩家資訊",
    PlayerHandleOffline: "你正處於離線狀態",
