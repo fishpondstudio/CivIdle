@@ -1,5 +1,6 @@
 import type { Application, FederatedPointerEvent, IDestroyOptions, IPointData } from "pixi.js";
 import { Container, Rectangle } from "pixi.js";
+import { getGameOptions } from "../../../shared/logic/GameStateLogic";
 import { clamp, lerp, sizeOf } from "../../../shared/utilities/Helper";
 import { Vector2, v2 } from "../../../shared/utilities/Vector2";
 import type { SceneLifecycle } from "./SceneManager";
@@ -183,18 +184,23 @@ export class Camera extends Container implements SceneLifecycle {
 
    private onMouseWheel = (e: WheelEvent) => {
       e.preventDefault();
+      const options = getGameOptions();
       switch (this.wheelMode) {
          case WheelMode.Zoom: {
             this.cursorPos = { x: e.x, y: e.y };
-            this.targetZoom = clamp(this.zoom - e.deltaY * 0.001 * this.zoom, this.minZoom, this.maxZoom);
+            this.targetZoom = clamp(
+               this.zoom - e.deltaY * 0.001 * options.scrollSensitivity * this.zoom,
+               this.minZoom,
+               this.maxZoom,
+            );
             break;
          }
          case WheelMode.HorizontalScroll: {
-            this.targetOrigin = v2(this.pivot).addSelf({ x: e.deltaY * 2, y: 0 });
+            this.targetOrigin = v2(this.pivot).addSelf({ x: e.deltaY * 2 * options.scrollSensitivity, y: 0 });
             break;
          }
          case WheelMode.VerticalScroll: {
-            this.targetOrigin = v2(this.pivot).addSelf({ x: 0, y: e.deltaY * 2 });
+            this.targetOrigin = v2(this.pivot).addSelf({ x: 0, y: e.deltaY * 2 * options.scrollSensitivity });
             break;
          }
       }

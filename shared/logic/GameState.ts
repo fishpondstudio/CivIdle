@@ -132,6 +132,7 @@ export class GameOptions {
    cursor: CursorOption = "OldFashioned";
    version = SAVE_FILE_VERSION;
    showTransportArrow = true;
+   scrollSensitivity = 1;
    buildingColors: Partial<Record<Building, string>> = {};
    resourceColors: Partial<Record<Resource, string>> = {};
    themeColors = { ...DefaultThemeColors };

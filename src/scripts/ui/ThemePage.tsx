@@ -10,7 +10,7 @@ import {
 } from "../../../shared/logic/GameState";
 import { notifyGameOptionsUpdate } from "../../../shared/logic/GameStateLogic";
 import { getBuildingsThatProduce } from "../../../shared/logic/ResourceLogic";
-import { forEach, keysOf, safeParseFloat, safeParseInt } from "../../../shared/utilities/Helper";
+import { clamp, forEach, keysOf, safeParseFloat, safeParseInt } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import { syncFontSizeScale, useGameOptions } from "../Global";
 import { jsxMapOf } from "../utilities/Helper";
@@ -100,6 +100,22 @@ export function ThemePage(): React.ReactNode {
                         );
                      })}
                   </select>
+               </div>
+               <div className="separator" />
+               <div className="row">
+                  <div className="f1 mr20">
+                     <div>{t(L.ScrollSensitivity)}</div>
+                     <RenderHTML className="text-desc text-small" html={t(L.ScrollSensitivityDescHTML)} />
+                  </div>
+                  <input
+                     type="text"
+                     style={{ width: 60, textAlign: "right" }}
+                     value={gameOptions.scrollSensitivity}
+                     onChange={(e) => {
+                        gameOptions.scrollSensitivity = clamp(safeParseFloat(e.target.value, 1), 0.01, 100);
+                        notifyGameOptionsUpdate();
+                     }}
+                  />
                </div>
             </fieldset>
             <fieldset>
