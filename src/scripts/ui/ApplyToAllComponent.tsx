@@ -5,7 +5,7 @@ import type { GameState } from "../../../shared/logic/GameState";
 import { notifyGameOptionsUpdate } from "../../../shared/logic/GameStateLogic";
 import { getGrid } from "../../../shared/logic/IntraTickCache";
 import type { IBuildingData } from "../../../shared/logic/Tile";
-import { pointToTile, sizeOf, tileToPoint, type Tile } from "../../../shared/utilities/Helper";
+import { hasFlag, pointToTile, sizeOf, tileToPoint, type Tile } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import { useGameOptions } from "../Global";
 import { WorldScene } from "../scenes/WorldScene";
@@ -13,19 +13,27 @@ import { Singleton } from "../utilities/Singleton";
 import { playSuccess } from "../visuals/Sound";
 import { showToast } from "./GlobalModal";
 
+export enum ApplyToAllFlag {
+   None = 0,
+   NoDefault = 1 << 0,
+}
+
 export function ApplyToAllComponent<T extends IBuildingData>({
    xy,
    getOptions,
    gameState,
+   flags,
 }: {
    xy: Tile;
    getOptions: (s: T) => Partial<T>;
    gameState: GameState;
+   flags?: ApplyToAllFlag;
 }): React.ReactNode {
    const building = gameState.tiles.get(xy)?.building as T;
    if (!building) {
       return null;
    }
+   flags ??= ApplyToAllFlag.None;
    const def = Config.Building[building.type];
    const options = useGameOptions();
    const property = getOptions(building);
@@ -85,26 +93,28 @@ export function ApplyToAllComponent<T extends IBuildingData>({
             );
          })}
          <div className="f1"></div>
-         <Tippy
-            content={t(L.SetAsDefaultBuilding, {
-               building: def.name(),
-            })}
-         >
-            <button
-               style={{ width: 27, padding: 0 }}
-               onClick={() => {
-                  playSuccess();
-                  const defaults = options.buildingDefaults;
-                  if (!defaults[building.type]) {
-                     defaults[building.type] = {};
-                  }
-                  Object.assign(defaults[building.type]!, getOptions(building));
-                  notifyGameOptionsUpdate();
-               }}
+         {hasFlag(flags, ApplyToAllFlag.NoDefault) ? null : (
+            <Tippy
+               content={t(L.SetAsDefaultBuilding, {
+                  building: def.name(),
+               })}
             >
-               <div className="m-icon small">settings_heart</div>
-            </button>
-         </Tippy>
+               <button
+                  style={{ width: 27, padding: 0 }}
+                  onClick={() => {
+                     playSuccess();
+                     const defaults = options.buildingDefaults;
+                     if (!defaults[building.type]) {
+                        defaults[building.type] = {};
+                     }
+                     Object.assign(defaults[building.type]!, getOptions(building));
+                     notifyGameOptionsUpdate();
+                  }}
+               >
+                  <div className="m-icon small">settings_heart</div>
+               </button>
+            </Tippy>
+         )}
       </div>
    );
 }
