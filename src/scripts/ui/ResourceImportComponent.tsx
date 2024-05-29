@@ -29,7 +29,7 @@ import { L, t } from "../../../shared/utilities/i18n";
 import { WorldScene } from "../scenes/WorldScene";
 import { Singleton } from "../utilities/Singleton";
 import { playClick } from "../visuals/Sound";
-import { ApplyToAllComponent } from "./ApplyToAllComponent";
+import { ApplyToAllComponent, ApplyToAllFlag } from "./ApplyToAllComponent";
 import type { IBuildingComponentProps } from "./BuildingPage";
 import { ChangeResourceImportModal } from "./ChangeResourceImportModal";
 import { showModal } from "./GlobalModal";
@@ -246,6 +246,17 @@ export function ResourceImportComponent({ gameState, xy }: IBuildingComponentPro
                {t(L.RedistributeAmongSelectedCap)}
             </div>
          </div>
+         <div className="sep10" />
+         <ApplyToAllComponent
+            xy={xy}
+            getOptions={() => {
+               return {
+                  resourceImports: structuredClone(building.resourceImports),
+               } as IResourceImportBuildingData;
+            }}
+            gameState={gameState}
+            flags={ApplyToAllFlag.NoDefault}
+         />
          <div className="separator"></div>
          <ul className="tree-view">
             <li>

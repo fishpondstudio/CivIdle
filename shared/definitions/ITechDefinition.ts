@@ -15,11 +15,14 @@ export interface IUpgradeDefinition extends IUnlockable {
    requireResources: PartialTabulate<Resource>;
 }
 
-export interface IUnlockable {
-   name: () => string;
-   unlockBuilding?: Building[];
+export interface IUnlockableMultipliers {
    buildingMultiplier?: Partial<Record<Building, Multiplier>>;
    globalMultiplier?: Partial<Record<keyof GlobalMultipliers, number>>;
+}
+
+export interface IUnlockable extends IUnlockableMultipliers {
+   name: () => string;
+   unlockBuilding?: Building[];
    additionalUpgrades?: () => string[];
    tick?: (gs: GameState) => void;
    onUnlocked?: (gs: GameState) => void;
