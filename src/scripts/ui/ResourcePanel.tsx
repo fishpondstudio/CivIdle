@@ -14,6 +14,7 @@ import { CurrentTickChanged, NotProducingReason, Tick } from "../../../shared/lo
 import {
    Rounding,
    clamp,
+   formatHMS,
    formatNumber,
    formatPercent,
    mapCount,
@@ -306,16 +307,24 @@ function DeficitResources(): React.ReactNode {
             <Tippy
                content={
                   <div>
-                     <div className="text-strong">{t(L.DeficitResources)}</div>
+                     <div className="text-strong text-center">{t(L.DeficitResources)}</div>
                      {Array.from(deficit)
                         .sort(([a], [b]) =>
                            Config.Resource[a].name().localeCompare(Config.Resource[b].name()),
                         )
                         .map(([res, amount]) => {
+                           const runOutIn = formatHMS(
+                              (1000 *
+                                 (Tick.current.resourcesByTile
+                                    .get(res)
+                                    ?.reduce((prev, curr) => prev + curr.amount, 0) ?? 0)) /
+                                 Math.abs(amount),
+                           );
                            return (
                               <div className="row text-small" key={res}>
                                  <div className="f1">{Config.Resource[res].name()}</div>
                                  <div className="ml20">{formatNumber(amount)}</div>
+                                 <div style={{ width: "70px", textAlign: "right" }}>{runOutIn}</div>
                               </div>
                            );
                         })}
