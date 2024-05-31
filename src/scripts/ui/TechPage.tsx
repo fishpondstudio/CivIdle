@@ -6,6 +6,7 @@ import {
    getCurrentAge,
    getScienceAmount,
    getTechUnlockCost,
+   getTotalTechUnlockCost,
    tryDeductScience,
    unlockTech,
 } from "../../../shared/logic/TechLogic";
@@ -24,7 +25,6 @@ import { FormatNumber } from "./HelperComponents";
 import { InDevelopmentPage } from "./InDevelopmentPage";
 import { MenuComponent } from "./MenuComponent";
 import { ProgressBarComponent } from "./ProgressBarComponent";
-import { TechPrerequisiteItemComponent } from "./TechComponent";
 import { UnlockableEffectComponent } from "./UnlockableEffectComponent";
 
 export function TechPage({ id }: { id: Tech }): React.ReactNode {
@@ -38,23 +38,29 @@ export function TechPage({ id }: { id: Tech }): React.ReactNode {
       if (!isTechAvailable() || !canUnlock()) {
          return;
       }
-      if (!tryDeductScience(getTechUnlockCost(id), gs)) {
+      const { totalScience, prerequisites } = getTotalTechUnlockCost(id, gs);
+      if (!tryDeductScience(totalScience, gs)) {
          return;
       }
-      const oldAge = getCurrentAge(gs);
-      unlockTech(id, true, gs);
-      const newAge = getCurrentAge(gs);
-      if (oldAge && newAge && oldAge !== newAge) {
-         forEach(Config.TechAge, (age, def) => {
-            if (def.idx <= Config.TechAge[newAge].idx) {
-               const candidates = rollGreatPeopleThisRun(age, gs.city, getGreatPeopleChoiceCount(gs));
-               if (candidates) {
-                  gs.greatPeopleChoices.push(candidates);
+
+      prerequisites.push(id);
+      prerequisites.forEach((tech) => {
+         const oldAge = getCurrentAge(gs);
+         unlockTech(tech, true, gs);
+         const newAge = getCurrentAge(gs);
+         if (oldAge && newAge && oldAge !== newAge) {
+            forEach(Config.TechAge, (age, def) => {
+               if (def.idx <= Config.TechAge[newAge].idx) {
+                  const candidates = rollGreatPeopleThisRun(age, gs.city, getGreatPeopleChoiceCount(gs));
+                  if (candidates) {
+                     gs.greatPeopleChoices.push(candidates);
+                  }
                }
-            }
-         });
-         checkAgeAchievements(newAge);
-      }
+            });
+            checkAgeAchievements(newAge);
+         }
+      });
+
       if (gs.greatPeopleChoices.length > 0) {
          playAgeUp();
          showModal(<ChooseGreatPersonModal permanent={false} />);
@@ -72,13 +78,13 @@ export function TechPage({ id }: { id: Tech }): React.ReactNode {
       return <InDevelopmentPage />;
    }
 
-   const prerequisitesSatisfied = tech.requireTech.every((t) => gs.unlockedTech[t]);
    const unlockScienceCost = getTechUnlockCost(id);
    const availableScience = getScienceAmount(gs);
    const progress = availableScience / unlockScienceCost;
-   const canUnlock = () => prerequisitesSatisfied && progress >= 1 && !gs.unlockedTech[id];
+   const { prerequisites, totalScience } = getTotalTechUnlockCost(id, gs);
+   const canUnlock = () => availableScience >= totalScience;
 
-   let prerequisiteCount = 0;
+   const prerequisiteCount = 0;
    return (
       <div className="window">
          <div className="title-bar">
@@ -95,30 +101,7 @@ export function TechPage({ id }: { id: Tech }): React.ReactNode {
                <div className="f1">{t(L.BackToCity)}</div>
             </button>
             <fieldset>
-               <legend>{t(L.TechnologyPrerequisite)}</legend>
-               {tech.requireTech?.map((prerequisite) => {
-                  prerequisiteCount++;
-                  return (
-                     <TechPrerequisiteItemComponent
-                        key={prerequisite}
-                        name={
-                           <>
-                              {t(L.UnlockBuilding)} <b>{Config.Tech[prerequisite].name()}</b>
-                           </>
-                        }
-                        unlocked={!!gs.unlockedTech[prerequisite]}
-                        action={() =>
-                           Singleton()
-                              .sceneManager.loadScene(TechTreeScene)
-                              ?.selectNode(prerequisite, "animate", true)
-                        }
-                     />
-                  );
-               })}
-               {prerequisiteCount === 0 ? <div>{t(L.TechnologyNoPrerequisite)}</div> : null}
-            </fieldset>
-            <fieldset>
-               <legend>{t(L.Progress)}</legend>
+               <legend>{t(L.Science)}</legend>
                {gs.unlockedTech[id] ? (
                   <div className="row">
                      <div className="m-icon small mr5 text-green">check_circle</div>
@@ -129,21 +112,39 @@ export function TechPage({ id }: { id: Tech }): React.ReactNode {
                   </div>
                ) : (
                   <>
-                     <div className="row mv5">
-                        {availableScience >= unlockScienceCost ? (
-                           <div className="m-icon small text-green mr5">check_circle</div>
-                        ) : (
-                           <div className="m-icon small text-red mr5">cancel</div>
-                        )}
-                        <div className="mr5">{Config.Resource.Science.name()}: </div>
-                        <div className="f1" />
-                        <div className="ml5">
-                           <FormatNumber value={availableScience} /> /{" "}
-                           <strong>
-                              <FormatNumber value={unlockScienceCost} />
-                           </strong>
-                        </div>
-                     </div>
+                     <ul className="tree-view">
+                        <li className="row text-strong">
+                           <div className="f1">{tech.name()}</div>
+                           <div className="ml20">
+                              <FormatNumber value={getTechUnlockCost(id)} />
+                           </div>
+                        </li>
+                        <ul>
+                           {prerequisites.map((tech) => {
+                              return (
+                                 <li key={tech} className="row text-small">
+                                    <div className="f1">{Config.Tech[tech].name()}</div>
+                                    <div>
+                                       <FormatNumber value={getTechUnlockCost(tech)} />
+                                    </div>
+                                 </li>
+                              );
+                           })}
+                        </ul>
+                        <li className="row text-strong">
+                           <div className="f1">{t(L.TotalScienceRequired)}</div>
+                           {availableScience >= totalScience ? (
+                              <div className="m-icon small ml20 mr5 text-green">check_circle</div>
+                           ) : (
+                              <div className="m-icon small ml20 mr5 text-red">cancel</div>
+                           )}
+                           <div>
+                              <FormatNumber value={availableScience} />
+                              {" / "}
+                              <FormatNumber value={totalScience} />
+                           </div>
+                        </li>
+                     </ul>
                      <div className="sep5" />
                      <div className="row">
                         <div className="f1">

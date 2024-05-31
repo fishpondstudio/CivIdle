@@ -12,7 +12,6 @@
       "electron": "cd electron && npm run start",
       "optimize": "node ./build/OptimizePNG.js",
       "preview": "vite preview",
-      "test": "vitest",
       "font": "node ./build/GenerateBitmapFont.js",
       "release": "node ./build/ReleaseElectron.js",
       "translate": "node ./build/Translate.js",

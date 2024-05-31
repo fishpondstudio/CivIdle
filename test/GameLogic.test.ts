@@ -22,7 +22,7 @@ import {
    getAvailableStorage,
    getResourcesValue,
 } from "../shared/logic/ResourceLogic";
-import { isPrerequisiteOf } from "../shared/logic/TechLogic";
+import { getAllPrerequisites, isPrerequisiteOf } from "../shared/logic/TechLogic";
 import { makeBuilding } from "../shared/logic/Tile";
 import { fossilDeltaApply, fossilDeltaCreate } from "../shared/thirdparty/FossilDelta";
 import { pointToTile } from "../shared/utilities/Helper";
@@ -287,6 +287,16 @@ test("isPrerequisiteOf", () => {
    assert.equal(true, isPrerequisiteOf("Electricity", "Rocketry"));
    assert.equal(false, isPrerequisiteOf("Enrichment", "Rocketry"));
    assert.equal(false, isPrerequisiteOf("GasPipeline", "Rocketry"));
+});
+
+test("getAllPrerequisites", () => {
+   const prerequisites = getAllPrerequisites("Housing");
+   assert.equal(5, prerequisites.size);
+   assert.equal(true, prerequisites.has("Counting"));
+   assert.equal(true, prerequisites.has("Masonry"));
+   assert.equal(true, prerequisites.has("Fire"));
+   assert.equal(true, prerequisites.has("StoneTools"));
+   assert.equal(true, prerequisites.has("Logging"));
 });
 
 test("getTotalGreatPeopleUpgradeCost", () => {

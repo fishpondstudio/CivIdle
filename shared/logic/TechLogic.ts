@@ -28,6 +28,18 @@ export function getTechUnlockCost(tech: Tech): number {
    return Math.pow(5, ageIdx) * Math.pow(1.5, Config.Tech[tech].column) * 5000;
 }
 
+export function getTotalTechUnlockCost(tech: Tech, gs: GameState) {
+   const prerequisites: Tech[] = [];
+   let totalScience = getTechUnlockCost(tech);
+   getAllPrerequisites(tech).forEach((tech) => {
+      if (!gs.unlockedTech[tech]) {
+         prerequisites.push(tech);
+         totalScience += getTechUnlockCost(tech);
+      }
+   });
+   return { prerequisites, totalScience };
+}
+
 export function getScienceAmount(gs: GameState): number {
    return Tick.current.specialBuildings.get("Headquarter")?.building.resources.Science ?? 0;
 }
@@ -176,7 +188,11 @@ export function unlockableTechs(gs: GameState): Tech[] {
 }
 
 export function isPrerequisiteOf(prerequisite: Tech, tech: Tech): boolean {
-   const result = new Set();
+   return getAllPrerequisites(tech).has(prerequisite);
+}
+
+export function getAllPrerequisites(tech: Tech): Set<Tech> {
+   const result = new Set<Tech>();
    let dep: Tech[] = Config.Tech[tech].requireTech.slice(0);
    while (dep.length > 0) {
       dep = dep.flatMap((d) => {
@@ -184,5 +200,5 @@ export function isPrerequisiteOf(prerequisite: Tech, tech: Tech): boolean {
          return Config.Tech[d].requireTech.slice(0);
       });
    }
-   return result.has(prerequisite);
+   return result;
 }

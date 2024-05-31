@@ -1209,5 +1209,6 @@ export const EN = {
    TutorialAdvices: "We have asked experienced players for their advice to first time players. Here are some very useful insights before you dive into the game.<ol><li><b>Don't upgrade all your buildings at the same time</b>: buildings being upgraded no longer produce</li><li><b>Pay attention to your happiness</b>: negative happiness reduces available workers and when happiness reaches -50, all production will halt</li><li><b>Don't over expand</b>: buildings require happiness to run. Make sure you have enough happiness before expanding</li><li><b>Prioritize houses, apartments and condos</b>: setting them to the highest priority can avoid fluctuating workers</li><li><b>You can rebirth any time in your home building</b>: it's okay to start over if you mess up your first map</li></ol>",
    UniqueTechMultipliers: "Unique Tech Multipliers",
    ScrollSensitivity: "Scroll Sensitivity",
-   ScrollSensitivityDescHTML: "Adjust sensitivity when scrolling mousewheel. <b>Must be between 0.01 to 100. Default is 1</b>"
+   ScrollSensitivityDescHTML: "Adjust sensitivity when scrolling mousewheel. <b>Must be between 0.01 to 100. Default is 1</b>",
+   TotalScienceRequired: "Total Science Required"
 };
