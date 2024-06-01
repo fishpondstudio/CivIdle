@@ -43,6 +43,7 @@ interface ITickData {
    buildingValues: Map<Building, number>;
    buildingValueByTile: Map<Tile, number>;
    resourceValueByTile: Map<Tile, number>;
+   tick: number;
 }
 
 export function EmptyTickData(): ITickData {
@@ -72,6 +73,7 @@ export function EmptyTickData(): ITickData {
       buildingValues: new Map(),
       buildingValueByTile: new Map(),
       resourceValueByTile: new Map(),
+      tick: 0,
    };
 }
 

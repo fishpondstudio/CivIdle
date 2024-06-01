@@ -56,12 +56,14 @@ export function tickEveryFrame(gs: GameState, dt: number) {
 const heartbeatFreq = import.meta.env.DEV ? 10 : 60;
 const saveFreq = isSteam() ? 60 : 10;
 
+let currentSessionTick = 0;
 export function tickEverySecond(gs: GameState, offline: boolean) {
    // We should always tick when offline
    if (!offline && !shouldTick()) {
       return;
    }
    timeSinceLastTick = 0;
+   Tick.next.tick = ++currentSessionTick;
    Tick.current = freezeTickData(Tick.next);
    Tick.next = EmptyTickData();
    clearIntraTickCache();

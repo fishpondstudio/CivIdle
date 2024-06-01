@@ -1,12 +1,18 @@
 import { clamp, isEmpty, mFilterOf, mReduceOf, reduceOf, sizeOf, sum } from "../utilities/Helper";
 import type { PartialTabulate } from "../utilities/TypeDefinitions";
 import { L, t } from "../utilities/i18n";
-import { findSpecialBuilding, isNaturalWonder, isSpecialBuilding, isWorldWonder } from "./BuildingLogic";
+import {
+   findSpecialBuilding,
+   isBuildingWellStocked,
+   isNaturalWonder,
+   isSpecialBuilding,
+   isWorldWonder,
+} from "./BuildingLogic";
 import { Config } from "./Config";
 import type { GameState } from "./GameState";
 import { getTypeBuildings, getXyBuildings } from "./IntraTickCache";
 import { getCurrentAge } from "./TechLogic";
-import { NotProducingReason, Tick } from "./TickLogic";
+import { Tick } from "./TickLogic";
 
 export const HappinessNames = {
    fromUnlockedTech: () => t(L.HappinessFromUnlockedTech),
@@ -64,13 +70,7 @@ export function calculateHappiness(gs: GameState) {
       (prev, _, value) => {
          return isEmpty(
             mFilterOf(value, (xy, tile) => {
-               return (
-                  !isSpecialBuilding(tile.building.type) &&
-                  (!Tick.current.notProducingReasons.has(xy) ||
-                     Tick.current.notProducingReasons.get(xy) === NotProducingReason.StorageFull ||
-                     Tick.current.notProducingReasons.get(xy) === NotProducingReason.NotEnoughWorkers) &&
-                  tile.building.status === "completed"
-               );
+               return isBuildingWellStocked(xy, gs);
             }),
          )
             ? prev

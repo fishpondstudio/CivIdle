@@ -170,12 +170,15 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          break;
       }
       case "HagiaSophia": {
-         if (!Tick.current.notProducingReasons.has(xy)) {
-            Tick.next.globalMultipliers.happiness.push({
-               value: Config.Building.HagiaSophia.input.Faith!,
-               source: buildingName,
-            });
+         let happiness = 5;
+         const currentHappiness = Tick.current.happiness?.value ?? 0;
+         if (Tick.current.tick <= 10 && currentHappiness < 0) {
+            happiness += Math.abs(currentHappiness);
          }
+         Tick.next.globalMultipliers.happiness.push({
+            value: happiness,
+            source: buildingName,
+         });
          break;
       }
       case "Colosseum": {
