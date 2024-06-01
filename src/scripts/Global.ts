@@ -24,7 +24,7 @@ import {
    rollPermanentGreatPeople,
 } from "../../shared/logic/RebirthLogic";
 import { Tick } from "../../shared/logic/TickLogic";
-import { forEach, rejectIn, safeAdd } from "../../shared/utilities/Helper";
+import { clamp, forEach, rejectIn, safeAdd, sizeOf } from "../../shared/utilities/Helper";
 import { TypedEvent } from "../../shared/utilities/TypedEvent";
 import { migrateSavedGame } from "./MigrateSavedGame";
 import { tickEverySecond } from "./logic/ClientUpdate";
@@ -235,8 +235,14 @@ if (import.meta.env.DEV) {
    // @ts-expect-error
    window.rollPermanentGreatPeople = (rollCount: number, age: TechAge) => {
       const gs = getGameState();
-      rollPermanentGreatPeople(rollCount, getGreatPeopleChoiceCount(gs), age, gs.city).forEach((gp) => {
-         getGameOptions().greatPeopleChoices.push(gp);
+      rollPermanentGreatPeople(
+         rollCount,
+         clamp(Math.floor(rollCount / sizeOf(Config.GreatPerson)), 1, Number.POSITIVE_INFINITY),
+         getGreatPeopleChoiceCount(gs),
+         age,
+         gs.city,
+      ).forEach((gp) => {
+         getGameOptions().greatPeopleChoicesV2.push(gp);
       });
    };
    // @ts-expect-error

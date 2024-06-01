@@ -1,3 +1,4 @@
+import type { GreatPerson } from "../../shared/definitions/GreatPersonDefinitions";
 import { Config } from "../../shared/logic/Config";
 import type { SavedGame } from "../../shared/logic/GameState";
 import { getGrid } from "../../shared/logic/IntraTickCache";
@@ -114,4 +115,13 @@ export function migrateSavedGame(save: SavedGame) {
          }
       });
    });
+   if (isNullOrUndefined(save.options.greatPeopleChoicesV2)) {
+      save.options.greatPeopleChoicesV2 = [];
+   }
+   if ("greatPeopleChoices" in save.options) {
+      (save.options.greatPeopleChoices as GreatPerson[][]).forEach((c) => {
+         save.options.greatPeopleChoicesV2.push({ choices: c, amount: 1 });
+      });
+      delete save.options.greatPeopleChoices;
+   }
 }

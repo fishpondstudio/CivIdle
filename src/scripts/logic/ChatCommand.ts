@@ -114,8 +114,9 @@ export async function handleChatCommand(command: string): Promise<void> {
          if (parts[1] === "confirm") {
             const number = await client.doGreatPeopleRecovery();
             getGameOptions().greatPeople = {};
-            getGameOptions().greatPeopleChoices = rollPermanentGreatPeople(
+            getGameOptions().greatPeopleChoicesV2 = rollPermanentGreatPeople(
                number,
+               Math.floor(number / sizeOf(Config.GreatPerson)),
                DEFAULT_GREAT_PEOPLE_CHOICE_COUNT,
                MAX_TECH_AGE,
                getGameState().city,

@@ -268,12 +268,12 @@ function GreatPeopleComponent({
                </div>
             </WarningComponent>
          ) : null}
-         {options.greatPeopleChoices.length > 0 ? (
+         {options.greatPeopleChoicesV2.length > 0 ? (
             <WarningComponent className="mb10 text-small" icon="info">
                <div
                   className="pointer"
                   onClick={() => {
-                     if (options.greatPeopleChoices.length > 0) {
+                     if (options.greatPeopleChoicesV2.length > 0) {
                         playAgeUp();
                         showModal(<ChooseGreatPersonModal permanent={true} />);
                      }

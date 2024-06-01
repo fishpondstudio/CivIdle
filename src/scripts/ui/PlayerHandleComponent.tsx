@@ -150,7 +150,7 @@ function AccountDetails(): React.ReactNode {
       getRebirthGreatPeopleCount() +
          sizeOf(getGameState().greatPeople) +
          getGameState().greatPeopleChoices.length +
-         getGameOptions().greatPeopleChoices.length <=
+         getGameOptions().greatPeopleChoicesV2.length <=
       0;
    return (
       <>
@@ -299,7 +299,7 @@ function AccountDetails(): React.ReactNode {
                                  await client.upgrade();
                                  playLevelUp();
                                  await resetToCity(getGameState().city);
-                                 getGameOptions().greatPeopleChoices = [];
+                                 getGameOptions().greatPeopleChoicesV2 = [];
                                  upgradeAllPermanentGreatPeople(getGameOptions());
                                  forEach(getGameOptions().greatPeople, (k, v) => {
                                     const maxLevel = getTribuneUpgradeMaxLevel(Config.GreatPerson[k].age);

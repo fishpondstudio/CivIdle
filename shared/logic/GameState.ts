@@ -61,6 +61,11 @@ export class GameState {
 
 export type GreatPeopleChoice = GreatPerson[];
 
+export interface GreatPeopleChoiceV2 {
+   choices: GreatPerson[];
+   amount: number;
+}
+
 export class SavedGame {
    current = new GameState();
    options = new GameOptions();
@@ -153,7 +158,8 @@ export class GameOptions {
    defaultBuildingLevel = 1;
    // Should be wiped
    greatPeople: Partial<Record<GreatPerson, { level: number; amount: number }>> = {};
-   greatPeopleChoices: GreatPeopleChoice[] = [];
+   // greatPeopleChoices: GreatPeopleChoice[] = [];
+   greatPeopleChoicesV2: GreatPeopleChoiceV2[] = [];
    language: keyof typeof Languages = "en";
 }
 

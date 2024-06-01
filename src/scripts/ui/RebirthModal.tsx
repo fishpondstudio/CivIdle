@@ -20,8 +20,11 @@ import {
    hasFlag,
    isEmpty,
    mapOf,
+   range,
    reduceOf,
    rejectIn,
+   safeParseInt,
+   sizeOf,
 } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import { resetToCity, saveGame, useGameState } from "../Global";
@@ -38,6 +41,7 @@ import { WarningComponent } from "./WarningComponent";
 export function RebirthModal(): React.ReactNode {
    const trades = useTrades();
    const user = useUser();
+   const [pickPerRoll, setPickPerRoll] = useState(1);
    const [tradeCount, setTradeCount] = useState<number>(
       trades.filter((t) => t.fromId === user?.userId).length,
    );
@@ -58,6 +62,15 @@ export function RebirthModal(): React.ReactNode {
       }
       return true;
    };
+
+   const maxPickPerRoll = clamp(
+      Math.floor(
+         clamp(greatPeopleAtRebirthCount - gs.claimedGreatPeople, 0, Number.POSITIVE_INFINITY) /
+            sizeOf(Config.GreatPerson),
+      ),
+      1,
+      Number.POSITIVE_INFINITY,
+   );
 
    return (
       <div className="window" style={{ width: "500px" }}>
@@ -121,6 +134,23 @@ export function RebirthModal(): React.ReactNode {
                <WarningComponent icon="warning">{t(L.CannotEarnPermanentGreatPeopleDesc)}</WarningComponent>
             )}
             <div className="sep10" />
+            <fieldset>
+               <div className="row">
+                  <div className="f1">{t(L.GreatPeoplePickPerRoll)}</div>
+                  <select
+                     value={pickPerRoll}
+                     onChange={(e) => {
+                        setPickPerRoll(clamp(safeParseInt(e.target.value, 1), 1, maxPickPerRoll));
+                     }}
+                  >
+                     {range(1, maxPickPerRoll + 1).map((i) => (
+                        <option key={i} value={i}>
+                           {i}
+                        </option>
+                     ))}
+                  </select>
+               </div>
+            </fieldset>
             <fieldset>
                {hasFlag(user?.attr ?? UserAttributes.None, UserAttributes.DLC1) ? null : (
                   <WarningComponent icon="info" className="text-small mb10">
@@ -293,11 +323,12 @@ export function RebirthModal(): React.ReactNode {
                      if (!gs.rebirthed && canEarnGreatPeopleFromReborn()) {
                         rollPermanentGreatPeople(
                            greatPeopleCount,
+                           pickPerRoll,
                            getGreatPeopleChoiceCount(gs),
                            getCurrentAge(gs),
                            gs.city,
                         ).forEach((gp) => {
-                           getGameOptions().greatPeopleChoices.push(gp);
+                           getGameOptions().greatPeopleChoicesV2.push(gp);
                         });
                         makeGreatPeopleFromThisRunPermanent();
                         gs.rebirthed = true;

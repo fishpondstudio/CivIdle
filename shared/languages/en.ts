@@ -1210,5 +1210,6 @@ export const EN = {
    UniqueTechMultipliers: "Unique Tech Multipliers",
    ScrollSensitivity: "Scroll Sensitivity",
    ScrollSensitivityDescHTML: "Adjust sensitivity when scrolling mousewheel. <b>Must be between 0.01 to 100. Default is 1</b>",
-   TotalScienceRequired: "Total Science Required"
+   TotalScienceRequired: "Total Science Required",
+   GreatPeoplePickPerRoll: "Great People Pick Per Roll"
 };

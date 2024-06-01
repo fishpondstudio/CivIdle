@@ -138,10 +138,11 @@ export function onBuildingComplete(xy: Tile): void {
          gs.claimedGreatPeople = getRebirthGreatPeopleCount();
          rollPermanentGreatPeople(
             gs.claimedGreatPeople,
+            1,
             getGreatPeopleChoiceCount(gs),
             getCurrentAge(gs),
             gs.city,
-         ).forEach((c) => gs.greatPeopleChoices.push(c));
+         ).forEach((c) => gs.greatPeopleChoices.push(c.choices));
          if (gs.greatPeopleChoices.length > 0) {
             playAgeUp();
             showModal(<ChooseGreatPersonModal permanent={false} />);

@@ -161,7 +161,7 @@ export async function startGame(
       // Do nothing
    } else if (isNewPlayer) {
       showModal(<FirstTimePlayerModal />);
-   } else if (options.greatPeopleChoices.length > 0) {
+   } else if (options.greatPeopleChoicesV2.length > 0) {
       showModal(<ChooseGreatPersonModal permanent={true} />);
    }
 

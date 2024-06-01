@@ -759,3 +759,11 @@ export function logError(e: unknown, logFunc: (message: any) => void = console.e
 export function isScrolledToBottom(ele: HTMLElement): boolean {
    return Math.abs(ele.scrollHeight - ele.scrollTop - ele.clientHeight) < 1;
 }
+
+export function range(startInclusive: number, endExclusive: number): number[] {
+   const result: number[] = [];
+   for (let i = startInclusive; i < endExclusive; i++) {
+      result.push(i);
+   }
+   return result;
+}

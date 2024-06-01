@@ -13,7 +13,7 @@ import {
    shuffle,
 } from "../utilities/Helper";
 import { Config } from "./Config";
-import type { GameOptions, GameState, GreatPeopleChoice } from "./GameState";
+import type { GameOptions, GameState, GreatPeopleChoice, GreatPeopleChoiceV2 } from "./GameState";
 import { getGameOptions, getGameState } from "./GameStateLogic";
 import { Tick } from "./TickLogic";
 
@@ -131,12 +131,13 @@ export function upgradeAllPermanentGreatPeople(options: GameOptions): void {
 }
 
 export function rollPermanentGreatPeople(
-   rollCount: number,
+   totalAmount: number,
+   amountPerRoll: number,
    choiceCount: number,
    currentAge: TechAge,
    city: City,
-): GreatPeopleChoice[] {
-   const result: GreatPeopleChoice[] = [];
+): GreatPeopleChoiceV2[] {
+   const result: GreatPeopleChoiceV2[] = [];
    const currentTechAgeIdx = Config.TechAge[currentAge].idx;
    const pool = keysOf(
       filterOf(
@@ -146,16 +147,19 @@ export function rollPermanentGreatPeople(
             Config.TechAge[v.age].idx <= currentTechAgeIdx + 1,
       ),
    );
+   let amountLeft = totalAmount;
    let candidates = shuffle([...pool]);
-   for (let i = 0; i < rollCount; i++) {
-      const choice: GreatPerson[] = [];
+   while (amountLeft > 0) {
+      const choices: GreatPerson[] = [];
       for (let i = 0; i < choiceCount; i++) {
          if (candidates.length === 0) {
             candidates = shuffle([...pool]);
          }
-         choice.push(candidates.pop()!);
+         choices.push(candidates.pop()!);
       }
-      result.push(choice);
+      const amount = clamp(amountPerRoll, 0, amountLeft);
+      amountLeft -= amount;
+      result.push({ choices, amount });
    }
    return result;
 }

@@ -1,5 +1,4 @@
 import Tippy from "@tippyjs/react";
-import { Fragment } from "react";
 import { GreatPersonType, type GreatPerson } from "../../../shared/definitions/GreatPersonDefinitions";
 import { Config } from "../../../shared/logic/Config";
 import type { GreatPeopleChoice } from "../../../shared/logic/GameState";
@@ -8,6 +7,7 @@ import { addPermanentGreatPerson, getGreatPersonUpgradeCost } from "../../../sha
 import { formatNumber, safeAdd } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import { useGameOptions, useGameState } from "../Global";
+import { Fonts } from "../visuals/Fonts";
 import { GreatPersonImage } from "../visuals/GreatPersonVisual";
 import { playClick, playError } from "../visuals/Sound";
 import { hideModal, showModal } from "./GlobalModal";
@@ -20,29 +20,32 @@ export function ChooseGreatPersonModal({ permanent }: { permanent: boolean }): R
    const options = useGameOptions();
 
    let greatPeopleChoice: GreatPeopleChoice | null = null;
+   let amount = 1;
    let onChosen: ((gp: GreatPerson) => void) | null = null;
    let choicesLeft = 0;
 
-   if (permanent && options.greatPeopleChoices.length > 0) {
-      greatPeopleChoice = options.greatPeopleChoices[0];
-      choicesLeft = options.greatPeopleChoices.length;
+   if (permanent && options.greatPeopleChoicesV2.length > 0) {
+      const choice = options.greatPeopleChoicesV2[0];
+      greatPeopleChoice = choice.choices;
+      amount = choice.amount;
+      choicesLeft = options.greatPeopleChoicesV2.length;
       onChosen = (greatPerson) => {
          if (!greatPeopleChoice) {
             playError();
             return;
          }
-         const idx = options.greatPeopleChoices.indexOf(greatPeopleChoice);
+         const idx = options.greatPeopleChoicesV2.indexOf(choice);
          if (idx === -1) {
             playError();
             return;
          }
 
          playClick();
-         options.greatPeopleChoices.splice(idx, 1);
-         addPermanentGreatPerson(greatPerson, 1);
+         options.greatPeopleChoicesV2.splice(idx, 1);
+         addPermanentGreatPerson(greatPerson, choice.amount);
          notifyGameOptionsUpdate(options);
 
-         if (options.greatPeopleChoices.length <= 0) {
+         if (options.greatPeopleChoicesV2.length <= 0) {
             showModal(<ManagePermanentGreatPersonModal />);
          }
       };
@@ -83,36 +86,56 @@ export function ChooseGreatPersonModal({ permanent }: { permanent: boolean }): R
             <div className="title-bar-text">{t(L.AGreatPersonIsBorn)}</div>
          </div>
          <div className="window-body">
-            <div className="row" style={{ alignItems: "stretch" }}>
+            <div className="row" style={{ alignItems: "stretch", columnGap: 5 }}>
                {greatPeopleChoice.map((greatPerson, index) => {
+                  const p = Config.GreatPerson[greatPerson];
                   return (
-                     // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
-                     <Fragment key={index}>
-                        {index === 0 ? null : <div style={{ width: "5px" }} />}
-                        <GreatPersonCard
-                           greatPerson={greatPerson}
-                           permanent={permanent}
-                           onChosen={onChosen!}
-                        />
-                     </Fragment>
+                     <div
+                        key={index}
+                        className="inset-shallow white p10 f1 text-center pointer"
+                        onClick={() => onChosen(greatPerson)}
+                     >
+                        <GreatPersonImage greatPerson={greatPerson} style={{ width: "100%" }} />
+                        {permanent ? (
+                           <>
+                              <div className="text-orange" style={{ fontSize: 20, fontFamily: Fonts.Cabin }}>
+                                 x{amount}
+                              </div>
+                              <div>{p.desc(p, 1)}</div>
+                           </>
+                        ) : (
+                           <>
+                              <div className="mt10">
+                                 {p.desc(p, Math.round(100 / (1 + (gs.greatPeople[greatPerson] ?? 0))) / 100)}
+                              </div>
+                              {p.type === GreatPersonType.Normal && (gs.greatPeople[greatPerson] ?? 0) > 0 ? (
+                                 <Tippy
+                                    content={t(L.GreatPersonThisRunEffectiveLevel, {
+                                       count: gs.greatPeople[greatPerson] ?? 0,
+                                       person: p.name(),
+                                       effect: 1 + (gs.greatPeople[greatPerson] ?? 0),
+                                    })}
+                                 >
+                                    <div className="m-icon text-orange mt5">release_alert</div>
+                                 </Tippy>
+                              ) : null}
+                           </>
+                        )}
+                     </div>
                   );
                })}
             </div>
             <div className="sep5"></div>
-            <div className="row">
+            <div className="row" style={{ columnGap: 5 }}>
                {greatPeopleChoice.map((greatPerson, index) => {
                   return (
-                     // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
-                     <Fragment key={index}>
-                        {index === 0 ? null : <div style={{ width: "5px" }} />}
-                        <div className="f1">
-                           {permanent ? (
-                              <PermanentGreatPersonLevel greatPerson={greatPerson} />
-                           ) : (
-                              <GreatPersonLevel greatPerson={greatPerson} />
-                           )}
-                        </div>
-                     </Fragment>
+                     <div key={index} className="f1">
+                        {permanent ? (
+                           <PermanentGreatPersonLevel greatPerson={greatPerson} />
+                        ) : (
+                           <GreatPersonLevel greatPerson={greatPerson} />
+                        )}
+                     </div>
                   );
                })}
             </div>
@@ -169,52 +192,6 @@ function PermanentGreatPersonLevel({ greatPerson }: { greatPerson: GreatPerson }
          </div>
          <div className="sep5" />
          <ProgressBarComponent progress={isNormal ? (inventory?.amount ?? 0) / total : 1} />
-      </div>
-   );
-}
-
-function GreatPersonCard({
-   greatPerson,
-   permanent,
-   onChosen,
-}: {
-   greatPerson: GreatPerson;
-   permanent: boolean;
-   onChosen: (chosen: GreatPerson) => void;
-}): React.ReactNode {
-   const p = Config.GreatPerson[greatPerson];
-   const gs = useGameState();
-   return (
-      <div
-         className="inset-shallow white p10 f1 text-center pointer"
-         onClick={() => {
-            onChosen(greatPerson);
-         }}
-      >
-         <GreatPersonImage greatPerson={greatPerson} style={{ width: "100%" }} />
-         {permanent ? (
-            <>
-               <div className="sep5" />
-               <div>{p.desc(p, 1)}</div>
-            </>
-         ) : (
-            <>
-               <div className="mt10">
-                  {p.desc(p, Math.round(100 / (1 + (gs.greatPeople[greatPerson] ?? 0))) / 100)}
-               </div>
-               {p.type === GreatPersonType.Normal && (gs.greatPeople[greatPerson] ?? 0) > 0 ? (
-                  <Tippy
-                     content={t(L.GreatPersonThisRunEffectiveLevel, {
-                        count: gs.greatPeople[greatPerson] ?? 0,
-                        person: p.name(),
-                        effect: 1 + (gs.greatPeople[greatPerson] ?? 0),
-                     })}
-                  >
-                     <div className="m-icon text-orange mt5">release_alert</div>
-                  </Tippy>
-               ) : null}
-            </>
-         )}
       </div>
    );
 }
