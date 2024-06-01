@@ -41,7 +41,6 @@ import { WarningComponent } from "./WarningComponent";
 export function RebirthModal(): React.ReactNode {
    const trades = useTrades();
    const user = useUser();
-   const [pickPerRoll, setPickPerRoll] = useState(1);
    const [tradeCount, setTradeCount] = useState<number>(
       trades.filter((t) => t.fromId === user?.userId).length,
    );
@@ -71,6 +70,7 @@ export function RebirthModal(): React.ReactNode {
       1,
       Number.POSITIVE_INFINITY,
    );
+   const [pickPerRoll, setPickPerRoll] = useState(maxPickPerRoll);
 
    return (
       <div className="window" style={{ width: "500px" }}>

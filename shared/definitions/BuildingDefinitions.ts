@@ -941,7 +941,7 @@ export class BuildingDefinitions {
    };
    HagiaSophia: IBuildingDefinition = {
       name: () => t(L.HagiaSophia),
-      desc: () => t(L.HagiaSophiaDesc),
+      desc: () => t(L.HagiaSophiaDescV2),
       input: {},
       construction: { Faith: 150, Marble: 150, Knight: 150 },
       output: {},

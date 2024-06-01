@@ -431,7 +431,7 @@ export const EN = {
    Gunpowder: "Gunpowder",
    GunpowderMill: "Gunpowder Mill",
    HagiaSophia: "Hagia Sophia",
-   HagiaSophiaDesc: "+5 Happiness. Buildings with 0% Production Capacity are exempt from -1 happiness. During the game bootstrap, provide extra happiness to avoid production halt",
+   HagiaSophiaDescV2: "+5 Happiness. Buildings with 0% Production Capacity are exempt from -1 happiness. During the game bootstrap, provide extra happiness to avoid production halt",
    HallOfSupremeHarmony: "Hall of Supreme Harmony",
    Hammurabi: "Hammurabi",
    HangingGarden: "Hanging Garden",
