@@ -35,7 +35,7 @@ export function TechPage({ id }: { id: Tech }): React.ReactNode {
       return tech.column <= MAX_TECH_COLUMN;
    };
    const unlock = () => {
-      if (!isTechAvailable() || !canUnlock()) {
+      if (!isTechAvailable() || !canUnlock() || gs.unlockedTech[id]) {
          return;
       }
       const { totalScience, prerequisites } = getTotalTechUnlockCost(id, gs);
