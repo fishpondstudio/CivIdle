@@ -80,11 +80,9 @@ export function TechPage({ id }: { id: Tech }): React.ReactNode {
 
    const unlockScienceCost = getTechUnlockCost(id);
    const availableScience = getScienceAmount(gs);
-   const progress = availableScience / unlockScienceCost;
    const { prerequisites, totalScience } = getTotalTechUnlockCost(id, gs);
    const canUnlock = () => availableScience >= totalScience;
 
-   const prerequisiteCount = 0;
    return (
       <div className="window">
          <div className="title-bar">
@@ -148,7 +146,7 @@ export function TechPage({ id }: { id: Tech }): React.ReactNode {
                      <div className="sep5" />
                      <div className="row">
                         <div className="f1">
-                           <ProgressBarComponent progress={progress} />
+                           <ProgressBarComponent progress={availableScience / totalScience} />
                         </div>
                         <div style={{ width: "10px" }} />
                         <button disabled={!canUnlock()} onClick={() => unlock()}>

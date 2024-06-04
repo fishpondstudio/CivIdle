@@ -37,6 +37,7 @@ export function getTotalTechUnlockCost(tech: Tech, gs: GameState) {
          totalScience += getTechUnlockCost(tech);
       }
    });
+   prerequisites.sort((a, b) => Config.Tech[a].column - Config.Tech[b].column);
    return { prerequisites, totalScience };
 }
 
