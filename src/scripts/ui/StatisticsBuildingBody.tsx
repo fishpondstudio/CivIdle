@@ -368,6 +368,7 @@ function BuildingTab({ gameState }: IBuildingComponentProps): React.ReactNode {
                               .localeCompare(Config.Building[b.building.type].name()),
                         )
                         .map(({ building, xy }) => {
+                           // biome-ignore lint/correctness/useJsxKeyInIterable:
                            let icon = <div className="m-icon small text-green">check_circle</div>;
                            const notProducingReason = Tick.current.notProducingReasons.get(xy);
                            if (building.status !== "completed") {

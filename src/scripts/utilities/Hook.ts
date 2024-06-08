@@ -8,12 +8,13 @@ export function makeObservableHook<T>(event: TypedEvent<T>, getter: () => T) {
       function handleEvent(data: T): void {
          setter((old) => old + 1);
       }
+      // biome-ignore lint/correctness/useExhaustiveDependencies(handleEvent):
       useEffect(() => {
          event.on(handleEvent);
          return () => {
             event.off(handleEvent);
          };
-      }, [event, handleEvent]);
+      }, [event]);
       return getter();
    };
 }
@@ -32,12 +33,13 @@ export function refreshOnTypedEvent<T>(event: TypedEvent<T>) {
    function listener() {
       setter((old) => old + 1);
    }
+   // biome-ignore lint/correctness/useExhaustiveDependencies(listener):
    useEffect(() => {
       event.on(listener);
       return () => {
          event.off(listener);
       };
-   }, [event, listener]);
+   }, [event]);
 }
 
 export function useShortcut(shortcut: Shortcut, callback: () => void, deps: DependencyList) {
