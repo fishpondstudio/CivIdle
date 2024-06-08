@@ -369,13 +369,13 @@ export class BuildingDefinitions {
    };
    Mosque: IBuildingDefinition = {
       name: () => t(L.Mosque),
-      input: { Cheese: 1, Marble: 1 },
-      output: { Faith: 3 },
+      input: { Cheese: 1, Opera: 1 },
+      output: { Faith: 4 },
    };
    Pagoda: IBuildingDefinition = {
       name: () => t(L.Pagoda),
-      input: { Painting: 1, Garment: 1 },
-      output: { Faith: 4 },
+      input: { Painting: 1, Furniture: 1 },
+      output: { Faith: 3 },
    };
    // Science is valued at 0.2
    Library: IBuildingDefinition = {
@@ -387,7 +387,7 @@ export class BuildingDefinitions {
    School: IBuildingDefinition = {
       name: () => t(L.School),
       input: { Faith: 1, Poem: 1 },
-      output: { Science: 460 },
+      output: { Science: 400 },
    };
    University: IBuildingDefinition = {
       name: () => t(L.University),
@@ -407,7 +407,7 @@ export class BuildingDefinitions {
    ResearchLab: IBuildingDefinition = {
       name: () => t(L.ResearchLab),
       input: { Culture: 2, Philosophy: 2 },
-      output: { Science: 5480 },
+      output: { Science: 5000 },
    };
    ResearchFund: IBuildingDefinition = {
       name: () => t(L.ResearchFund),
@@ -1398,7 +1398,7 @@ export class BuildingDefinitions {
       input: {},
       output: {},
       max: 1,
-      construction: { Faith: 500 },
+      construction: { Faith: 300 },
       special: BuildingSpecial.WorldWonder,
       wikipedia: "St._Peter%27s_Basilica",
    };
@@ -1412,6 +1412,28 @@ export class BuildingDefinitions {
       construction: { Faith: 300 },
       special: BuildingSpecial.WorldWonder,
       wikipedia: "Prophet%27s_Mosque",
+   };
+
+   GreatDagonPagoda: IBuildingDefinition = {
+      name: () => t(L.GreatDagonPagoda),
+      desc: () => t(L.GreatDagonPagodaDescV2),
+      input: {},
+      output: {},
+      construction: { Faith: 300 },
+      max: 1,
+      special: BuildingSpecial.WorldWonder,
+      wikipedia: "Shwedagon_Pagoda",
+   };
+
+   Pantheon: IBuildingDefinition = {
+      name: () => t(L.Pantheon),
+      desc: () => t(L.PantheonDescV2),
+      input: {},
+      output: {},
+      construction: { Faith: 300 },
+      max: 1,
+      special: BuildingSpecial.WorldWonder,
+      wikipedia: "Pantheon,_Rome",
    };
 
    // ArcDeTriomphe: IBuildingDefinition = {
@@ -1431,27 +1453,6 @@ export class BuildingDefinitions {
    //    input: { Grape: 1, Water: 1 },
    //    output: { Wine: 1 },
    //    construction: { Stone: 1, Marble: 1 },
-   // };
-
-   // Pantheon: IBuildingDefinition = {
-   //    name: () => t(L.Pantheon),
-   //    desc: () => t(L.PantheonDesc),
-   //    input: {},
-   //    output: {},
-   //    construction: { Marble: 100, Sword: 100, Copper: 100 },
-   //    max: 1,
-   //    special: BuildingSpecial.WorldWonder,
-   //    wikipedia: "Pantheon,_Rome",
-   // };
-
-   // GreatDagonPagoda: IBuildingDefinition = {
-   //    name: () => t(L.GreatDagonPagoda),
-   //    desc: () => t(L.GreatDagonPagodaDesc),
-   //    input: {},
-   //    output: {},
-   //    construction: { Brick: 100, Marble: 100, Alcohol: 100 },
-   //    max: 1,
-   //    wikipedia: "Shwedagon_Pagoda",
    // };
 
    // Borobudur: IBuildingDefinition = {

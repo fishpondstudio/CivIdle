@@ -276,7 +276,7 @@ export class UpgradeDefinitions {
    };
 
    Islam5: IUpgradeDefinition = {
-      name: () => t(L.ChristianityLevelX, { level: "IV" }),
+      name: () => t(L.ChristianityLevelX, { level: "V" }),
       requireResources: { Faith: 1 },
       buildingMultiplier: {
          Mosque: { output: 1 },
@@ -296,6 +296,102 @@ export class UpgradeDefinitions {
             }
          }
       },
+      additionalUpgrades: () => [t(L.Islam5UpgradeHTML)],
+   };
+
+   Buddhism1: IUpgradeDefinition = {
+      name: () => t(L.BuddhismLevelX, { level: "I" }),
+      requireResources: {},
+      unlockBuilding: ["Pagoda"],
+      tech: "Religion",
+   };
+
+   Buddhism2: IUpgradeDefinition = {
+      name: () => t(L.BuddhismLevelX, { level: "II" }),
+      requireResources: { Faith: 1 },
+      unlockBuilding: ["GreatDagonPagoda"],
+      buildingMultiplier: {
+         Pagoda: { output: 1 },
+      },
+      tech: "HolyEmpire",
+   };
+
+   Buddhism3: IUpgradeDefinition = {
+      name: () => t(L.BuddhismLevelX, { level: "III" }),
+      requireResources: { Faith: 1 },
+      buildingMultiplier: {
+         Pagoda: { output: 1 },
+         CoinMint: { output: 1 },
+      },
+   };
+
+   Buddhism4: IUpgradeDefinition = {
+      name: () => t(L.BuddhismLevelX, { level: "IV" }),
+      requireResources: { Faith: 1 },
+      buildingMultiplier: {
+         Pagoda: { output: 1 },
+         CoinMint: { output: 1 },
+         GunpowderMill: { output: 1 },
+      },
+   };
+
+   Buddhism5: IUpgradeDefinition = {
+      name: () => t(L.BuddhismLevelX, { level: "V" }),
+      requireResources: { Faith: 1 },
+      buildingMultiplier: {
+         Pagoda: { output: 1 },
+         CoinMint: { output: 1 },
+         GunpowderMill: { output: 1 },
+      },
+      globalMultiplier: { happiness: 10 },
+   };
+
+   Polytheism1: IUpgradeDefinition = {
+      name: () => t(L.PolytheismLevelX, { level: "I" }),
+      requireResources: {},
+      buildingMultiplier: {
+         Shrine: { output: 1 },
+      },
+   };
+
+   Polytheism2: IUpgradeDefinition = {
+      name: () => t(L.PolytheismLevelX, { level: "II" }),
+      requireResources: { Faith: 1 },
+      buildingMultiplier: {
+         Shrine: { output: 1 },
+      },
+      unlockBuilding: ["Pantheon"],
+      tech: "HolyEmpire",
+   };
+
+   Polytheism3: IUpgradeDefinition = {
+      name: () => t(L.PolytheismLevelX, { level: "III" }),
+      requireResources: { Faith: 1 },
+      buildingMultiplier: {
+         Shrine: { output: 1 },
+         School: { output: 1 },
+      },
+   };
+
+   Polytheism4: IUpgradeDefinition = {
+      name: () => t(L.PolytheismLevelX, { level: "IV" }),
+      requireResources: { Faith: 1 },
+      buildingMultiplier: {
+         Shrine: { output: 1 },
+         School: { output: 1 },
+         PrintingHouse: { output: 1 },
+      },
+   };
+
+   Polytheism5: IUpgradeDefinition = {
+      name: () => t(L.PolytheismLevelX, { level: "V" }),
+      requireResources: { Faith: 1 },
+      buildingMultiplier: {
+         Shrine: { output: 1 },
+         School: { output: 1 },
+         PrintingHouse: { output: 1 },
+      },
+      globalMultiplier: { sciencePerBusyWorker: 2 },
    };
 }
 

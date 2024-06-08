@@ -1058,3 +1058,20 @@ export function getMultipliersDescription(m: IUnlockableMultipliers): string {
       )
       .join(", ");
 }
+
+export function generateScienceFromFaith(xy: number, buildingType: Building, gs: GameState) {
+   const hq = Tick.current.specialBuildings.get("Headquarter")?.building.resources;
+   if (hq) {
+      let total = 0;
+      getBuildingsByType(buildingType, gs)?.forEach((tile, xy) => {
+         if (!Tick.current.notProducingReasons.has(xy)) {
+            const output = getBuildingIO(xy, "output", IOCalculation.Capacity | IOCalculation.Multiplier, gs);
+            total += output.Faith ?? 0;
+         }
+      });
+      total *= 10;
+      safeAdd(hq, "Science", total);
+      mapSafeAdd(Tick.next.wonderProductions, "Science", total);
+      Tick.next.scienceProduced.set(xy, total);
+   }
+}

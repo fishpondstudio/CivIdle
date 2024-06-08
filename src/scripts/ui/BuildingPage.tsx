@@ -17,7 +17,6 @@ import { PetraBuildingBody } from "./PetraBuildingBody";
 import { PlayerTradeBuildingBody } from "./PlayerTradeBuildingBody";
 import { ReligionBuildingBody } from "./ReligionBuildingBody";
 import { ScienceProductionWonderBuildingBody } from "./ScienceProductionWonderBuildingBody";
-import { StPetersBasilicaBuildingBody } from "./StPetersBasilicaBuildingBody";
 import { StatisticsBuildingBody } from "./StatisticsBuildingBody";
 import { TheMetBuildingBody } from "./TheMetBuildingBody";
 import { TraditionBuildingBody } from "./TraditionBuildingBody";
@@ -32,8 +31,11 @@ const BuildingBodyOverride: Partial<Record<Building, FunctionComponent<IBuilding
    Warehouse: WarehouseBuildingBody,
    Petra: PetraBuildingBody,
    OxfordUniversity: ScienceProductionWonderBuildingBody,
+   StPetersBasilica: ScienceProductionWonderBuildingBody,
+   ProphetsMosque: ScienceProductionWonderBuildingBody,
+   GreatDagonPagoda: ScienceProductionWonderBuildingBody,
+   Pantheon: ScienceProductionWonderBuildingBody,
    Atomium: ScienceProductionWonderBuildingBody,
-   StPetersBasilica: StPetersBasilicaBuildingBody,
    GrandBazaar: GrandBazaarBuildingBody,
    UnitedNations: UnitedNationsBuildingBody,
    ChoghaZanbil: TraditionBuildingBody,

@@ -1,6 +1,5 @@
 import {
-   ST_PETERS_FAITH_MULTIPLIER,
-   ST_PETERS_STORAGE_MULTIPLIER,
+   generateScienceFromFaith,
    getGreatWallRange,
    getScienceFromWorkers,
    getWorkingBuilding,
@@ -25,12 +24,12 @@ import {
 } from "../../../shared/logic/IntraTickCache";
 import { getVotedBoostId } from "../../../shared/logic/PlayerTradeLogic";
 import { getGreatPersonTotalEffect } from "../../../shared/logic/RebirthLogic";
-import { getBuildingsThatProduce } from "../../../shared/logic/ResourceLogic";
 import { getBuildingUnlockAge, getCurrentAge } from "../../../shared/logic/TechLogic";
-import { NotProducingReason, Tick } from "../../../shared/logic/TickLogic";
+import { Tick } from "../../../shared/logic/TickLogic";
 import type {
    IGreatPeopleBuildingData,
    IPetraBuildingData,
+   IReligionBuildingData,
    ITileData,
    ITraditionBuildingData,
 } from "../../../shared/logic/Tile";
@@ -214,13 +213,6 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          });
          break;
       }
-      case "LuxorTemple": {
-         Tick.next.globalMultipliers.sciencePerBusyWorker.push({
-            value: 1,
-            source: buildingName,
-         });
-         break;
-      }
       case "HangingGarden": {
          Tick.next.globalMultipliers.builderCapacity.push({
             value: 1,
@@ -330,32 +322,6 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
             safeAdd(storage, "Science", science);
             mapSafeAdd(Tick.next.wonderProductions, "Science", science);
             Tick.next.scienceProduced.set(xy, science);
-         }
-         break;
-      }
-      case "StPetersBasilica": {
-         let totalFaith = 0;
-         let totalLevel = 0;
-         getBuildingsThatProduce("Faith").forEach((b) => {
-            addMultiplier(b, { storage: 1 }, buildingName);
-            getBuildingsByType(b, gs)?.forEach((tile, xy) => {
-               if (tile.building.status === "completed") {
-                  totalFaith += tile.building.resources.Faith ?? 0;
-                  totalLevel += tile.building.level;
-               }
-            });
-         });
-         const toProduce = Math.floor(totalFaith * ST_PETERS_FAITH_MULTIPLIER);
-         safeAdd(building.resources, "Faith", toProduce);
-         mapSafeAdd(Tick.next.wonderProductions, "Faith", toProduce);
-         const max = totalLevel * ST_PETERS_STORAGE_MULTIPLIER;
-         if ((building.resources.Faith ?? 0) > max) {
-            building.resources.Faith = max;
-            Tick.next.notProducingReasons.set(xy, NotProducingReason.StorageFull);
-         } else if (toProduce > 0) {
-            Tick.next.notProducingReasons.delete(xy);
-         } else {
-            Tick.next.notProducingReasons.set(xy, NotProducingReason.NotEnoughResources);
          }
          break;
       }
@@ -901,6 +867,26 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          }
          break;
       }
+      case "LuxorTemple": {
+         Tick.next.globalMultipliers.sciencePerBusyWorker.push({
+            value: 1,
+            source: buildingName,
+         });
+         const cz = building as IReligionBuildingData;
+         if (cz.religion) {
+            const religion = Config.Religion[cz.religion].content;
+            for (let i = 0; i < cz.level; i++) {
+               const trad = religion[i];
+               const def = Config.Upgrade[trad];
+               if (!gs.unlockedUpgrades[trad]) {
+                  gs.unlockedUpgrades[trad] = true;
+                  def.onUnlocked?.(gs);
+               }
+               tickUnlockable(def, t(L.SourceReligion, { religion: def.name() }), gs);
+            }
+         }
+         break;
+      }
       case "Broadway": {
          const broadway = building as IGreatPeopleBuildingData;
          broadway.greatPeople.forEach((gp) => {
@@ -984,6 +970,39 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          if (total > 0) {
             addMultiplier("ResearchFund", { output: total }, buildingName);
          }
+         break;
+      }
+      case "StPetersBasilica": {
+         addMultiplier("Church", { storage: 5 }, buildingName);
+         generateScienceFromFaith(xy, "Church", gs);
+         break;
+      }
+      case "ProphetsMosque": {
+         Config.GreatPerson.HarunAlRashid.tick(
+            Config.GreatPerson.HarunAlRashid,
+            getGreatPersonTotalEffect("HarunAlRashid", gs, options),
+            `${buildingName}: ${Config.GreatPerson.HarunAlRashid.name()}`,
+         );
+         generateScienceFromFaith(xy, "Mosque", gs);
+         break;
+      }
+      case "GreatDagonPagoda": {
+         getBuildingsByType("Pagoda", gs)?.forEach((tile, xy) => {
+            Tick.next.happinessExemptions.add(xy);
+         });
+         generateScienceFromFaith(xy, "Pagoda", gs);
+         break;
+      }
+      case "Pantheon": {
+         for (const point of grid.getRange(tileToPoint(xy), 2)) {
+            const tileXy = pointToTile(point);
+            mapSafePush(Tick.next.tileMultipliers, tileXy, {
+               worker: 1,
+               storage: 1,
+               source: buildingName,
+            });
+         }
+         generateScienceFromFaith(xy, "Shrine", gs);
          break;
       }
       // case "ArcDeTriomphe": {

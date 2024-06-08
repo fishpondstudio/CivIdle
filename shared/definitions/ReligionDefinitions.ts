@@ -8,15 +8,15 @@ export class ReligionDefinitions {
    };
    Islam: IUpgradeGroup = {
       name: () => t(L.ReligionIslam),
-      content: ["Islam1"],
+      content: ["Islam1", "Islam2", "Islam3", "Islam4", "Islam5"],
    };
    Buddhism: IUpgradeGroup = {
       name: () => t(L.ReligionBuddhism),
-      content: ["Expansion1", "Expansion2", "Expansion3", "Expansion4"],
+      content: ["Buddhism1", "Buddhism2", "Buddhism3", "Buddhism4", "Buddhism5"],
    };
    Polytheism: IUpgradeGroup = {
       name: () => t(L.ReligionPolytheism),
-      content: ["Honor1", "Honor2", "Honor3", "Honor4"],
+      content: ["Polytheism1", "Polytheism2", "Polytheism3", "Polytheism4", "Polytheism5"],
    };
 }
 export type Religion = keyof ReligionDefinitions;
