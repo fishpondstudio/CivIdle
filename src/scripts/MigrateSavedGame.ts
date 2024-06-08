@@ -97,6 +97,10 @@ export function migrateSavedGame(save: SavedGame) {
          save.options.chatChannels.add("en");
       }
    }
+   // @ts-expect-error
+   delete save.options.buildingColors.Cathedral;
+   // @ts-expect-error
+   delete save.options.buildingDefaults.Cathedral;
    forEach(save.options.greatPeople, (k, v) => {
       if (!Config.GreatPerson[k]) {
          delete save.options.greatPeople[k];
