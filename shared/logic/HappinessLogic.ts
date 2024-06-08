@@ -50,7 +50,8 @@ export function calculateHappiness(gs: GameState) {
                fromHighestTierBuilding = tier;
             }
          }
-         if (building.capacity <= 0 && findSpecialBuilding("HagiaSophia", gs)) {
+         const hs = findSpecialBuilding("HagiaSophia", gs);
+         if (building.capacity <= 0 && hs && hs.building.status === "completed") {
             // Do nothing
          } else if (Tick.current.happinessExemptions.has(xy)) {
             // Do nothing

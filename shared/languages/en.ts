@@ -1078,7 +1078,7 @@ export const EN = {
    TotalWorkers: "Total Workers",
    TraditionCommerce: "Commerce",
    TraditionCultivation: "Cultivation",
-   TraditionDescHTML: "Choose from <b>Cultivation, Commerce, Expansion and Honor</b> as your empire tradition. You <b>cannot switch tradition</b> after it is chosen. You can unlock more boost within each tradition",
+   TraditionDescHTML: "Choose from <b>Cultivation, Commerce, Expansion or Honor</b> as your empire tradition. You <b>cannot switch tradition</b> after it is chosen. You can unlock more boost within each tradition",
    TraditionExpansion: "Expansion",
    TraditionHonor: "Honor",
    Train: "Train",
@@ -1226,4 +1226,5 @@ export const EN = {
    Pantheon: "Pantheon",
    PantheonDescV2: "All buildings within 2 tile range get +1 Worker Capaicity and Storage Multiplier. Generate science based on faith production of all shrines",
    SourceReligion: "Religion: %{religion}",
+   ReligionDescHTML: "Choose from <b>Christianity, Islam, Buddhism or Polytheism</b> as your empire tradition. You <b>cannot switch religion</b> after it is chosen. You can unlock more boost within each religion",
 };
