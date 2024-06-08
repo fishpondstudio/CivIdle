@@ -1064,7 +1064,7 @@ export function generateScienceFromFaith(xy: number, buildingType: Building, gs:
    if (hq) {
       let total = 0;
       getBuildingsByType(buildingType, gs)?.forEach((tile, xy) => {
-         if (!Tick.current.notProducingReasons.has(xy)) {
+         if (tile.building.status === "completed" && !Tick.current.notProducingReasons.has(xy)) {
             const output = getBuildingIO(xy, "output", IOCalculation.Capacity | IOCalculation.Multiplier, gs);
             total += output.Faith ?? 0;
          }
