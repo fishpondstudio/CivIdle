@@ -176,8 +176,8 @@ export function getWorkersFor(xy: Tile, gs: GameState): IWorkerRequirement {
       forEach(getBuildingIO(xy, "output", IOCalculation.MultiplierStableOnly, gs), (k, v) => {
          if (!NoPrice[k]) result.rawOutput += v;
       });
-      result.multiplier = totalMultiplierFor(xy, "worker", 1, false, gs);
    }
+   result.multiplier = totalMultiplierFor(xy, "worker", 1, false, gs);
    result.output = Math.ceil(result.rawOutput / result.multiplier);
    return result;
 }
