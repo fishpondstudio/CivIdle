@@ -360,7 +360,7 @@ export class TechDefinitions {
       name: () => t(L.Theocracy),
       column: 9,
       requireTech: ["Autocracy", "Religion"],
-      unlockBuilding: ["Church", "Mosque", "MogaoCaves"],
+      unlockBuilding: ["MogaoCaves"],
    };
 
    Navigation: ITechDefinition = {
@@ -381,7 +381,7 @@ export class TechDefinitions {
       name: () => t(L.HolyEmpire),
       column: 10,
       requireTech: ["Feudalism", "Theocracy"],
-      unlockBuilding: ["Cathedral", "HagiaSophia"],
+      unlockBuilding: ["HagiaSophia"],
    };
 
    Education: ITechDefinition = {
@@ -453,7 +453,7 @@ export class TechDefinitions {
       name: () => t(L.Enlightenment),
       column: 12,
       requireTech: ["University", "Chemistry"],
-      unlockBuilding: ["Museum", "StPetersBasilica"],
+      unlockBuilding: ["Museum"],
    };
 
    Firearm: ITechDefinition = {

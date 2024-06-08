@@ -1,5 +1,6 @@
 import type { Building } from "../definitions/BuildingDefinitions";
 import type { GreatPerson } from "../definitions/GreatPersonDefinitions";
+import type { Religion } from "../definitions/ReligionDefinitions";
 import type { Deposit, Resource } from "../definitions/ResourceDefinitions";
 import type { Tradition } from "../definitions/TraditionDefinitions";
 import { clamp, isNullOrUndefined, type Tile } from "../utilities/Helper";
@@ -123,6 +124,10 @@ export interface ITraditionBuildingData extends IBuildingData {
    tradition: Tradition | null;
 }
 
+export interface IReligionBuildingData extends IBuildingData {
+   religion: Religion | null;
+}
+
 export interface IGreatPeopleBuildingData extends IBuildingData {
    greatPeople: Set<GreatPerson>;
 }
@@ -211,6 +216,13 @@ export function makeBuilding(data: Pick<IBuildingData, "type"> & Partial<IBuildi
          const tradition = building as ITraditionBuildingData;
          if (!tradition.tradition) {
             tradition.tradition = null;
+         }
+         break;
+      }
+      case "LuxorTemple": {
+         const religion = building as IReligionBuildingData;
+         if (!religion.religion) {
+            religion.religion = null;
          }
          break;
       }

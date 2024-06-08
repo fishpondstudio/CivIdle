@@ -262,6 +262,11 @@ export function unlockedBuildings(gs: GameState): PartialSet<Building> {
          _cache.unlockedBuildings![r] = true;
       });
    });
+   forEach(gs.unlockedUpgrades, (upgrade) => {
+      Config.Upgrade[upgrade].unlockBuilding?.forEach((r) => {
+         _cache.unlockedBuildings![r] = true;
+      });
+   });
    return _cache.unlockedBuildings;
 }
 

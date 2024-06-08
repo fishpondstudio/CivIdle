@@ -13,6 +13,7 @@ export interface ITechDefinition extends IUnlockable {
 
 export interface IUpgradeDefinition extends IUnlockable {
    requireResources: PartialTabulate<Resource>;
+   tech?: Tech;
 }
 
 export interface IUnlockableMultipliers {

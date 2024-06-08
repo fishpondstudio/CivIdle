@@ -30,6 +30,11 @@ export function migrateSavedGame(save: SavedGame) {
       }
       if (tile.building) {
          // @ts-expect-error
+         if (tile.building.type === "Cathedral") {
+            delete tile.building;
+            return;
+         }
+         // @ts-expect-error
          if (tile.building.status === "paused") {
             tile.building.status = "building";
          }

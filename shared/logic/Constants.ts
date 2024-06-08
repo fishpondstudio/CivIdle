@@ -4,6 +4,7 @@ import type { City } from "../definitions/CityDefinitions";
 import type { Deposit, Resource } from "../definitions/ResourceDefinitions";
 import { IsDeposit, NoPrice } from "../definitions/ResourceDefinitions";
 import type { Tech, TechAge } from "../definitions/TechDefinitions";
+import type { Upgrade } from "../definitions/UpgradeDefinitions";
 import {
    HOUR,
    forEach,
@@ -187,6 +188,20 @@ export function calculateTierAndPrice(log?: (val: string) => void) {
          Config.BuildingTech[building] = tech;
          Config.BuildingTechAge[building] = getAgeForTech(tech)!;
       });
+   });
+
+   forEach(Config.Upgrade, (upgrade, def) => {
+      def.unlockBuilding?.forEach((building) => {
+         if (def.tech) {
+            Config.BuildingTech[building] = def.tech;
+            Config.BuildingTechAge[building] = getAgeForTech(def.tech)!;
+         } else {
+            console.error(`${upgrade} contains unlockBuilding but does not contain tech!`);
+         }
+      });
+      if (def.tech && !def.unlockBuilding) {
+         console.error(`${upgrade} does not contain unlockBuilding but contains tech!`);
+      }
    });
 
    const resourceTierDependency: Partial<Record<Resource, Resource>> = {};
@@ -482,6 +497,14 @@ function getBuildingUnlockTechSlow(building: Building): Tech | null {
       const def = Config.City[city];
       if (def.uniqueBuildings[building]) {
          return def.uniqueBuildings[building]!;
+      }
+   }
+
+   let upgrade: Upgrade;
+   for (upgrade in Config.Upgrade) {
+      const def = Config.Upgrade[upgrade];
+      if (def.tech && def.unlockBuilding?.includes(building)) {
+         return def.tech;
       }
    }
    return null;

@@ -67,7 +67,7 @@
         "Building_Aphrodite": {
             "frame": {
                 "x": 1222,
-                "y": 707,
+                "y": 606,
                 "w": 80,
                 "h": 99
             }
@@ -270,14 +270,6 @@
                 "y": 1019,
                 "w": 100,
                 "h": 90
-            }
-        },
-        "Building_Cathedral": {
-            "frame": {
-                "x": 1222,
-                "y": 404,
-                "w": 85,
-                "h": 100
             }
         },
         "Building_ChariotWorkshop": {
@@ -747,7 +739,7 @@
         "Building_Hut": {
             "frame": {
                 "x": 1222,
-                "y": 505,
+                "y": 404,
                 "w": 85,
                 "h": 100
             }
@@ -819,7 +811,7 @@
         "Building_LighthouseOfAlexandria": {
             "frame": {
                 "x": 1222,
-                "y": 897,
+                "y": 796,
                 "w": 76,
                 "h": 100
             }
@@ -843,7 +835,7 @@
         "Building_LoggingCamp": {
             "frame": {
                 "x": 1222,
-                "y": 807,
+                "y": 706,
                 "w": 86,
                 "h": 89
             }
@@ -1035,7 +1027,7 @@
         "Building_OilPress": {
             "frame": {
                 "x": 1222,
-                "y": 606,
+                "y": 505,
                 "w": 85,
                 "h": 100
             }

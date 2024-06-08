@@ -15,6 +15,7 @@ import { MarketBuildingBody } from "./MarketBuildingBody";
 import { MenuComponent } from "./MenuComponent";
 import { PetraBuildingBody } from "./PetraBuildingBody";
 import { PlayerTradeBuildingBody } from "./PlayerTradeBuildingBody";
+import { ReligionBuildingBody } from "./ReligionBuildingBody";
 import { ScienceProductionWonderBuildingBody } from "./ScienceProductionWonderBuildingBody";
 import { StPetersBasilicaBuildingBody } from "./StPetersBasilicaBuildingBody";
 import { StatisticsBuildingBody } from "./StatisticsBuildingBody";
@@ -38,6 +39,7 @@ const BuildingBodyOverride: Partial<Record<Building, FunctionComponent<IBuilding
    ChoghaZanbil: TraditionBuildingBody,
    Broadway: BroadwayBuildingBody,
    TheMet: TheMetBuildingBody,
+   LuxorTemple: ReligionBuildingBody,
 };
 
 export function BuildingPage(props: { tile: ITileData }): React.ReactNode {

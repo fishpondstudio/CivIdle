@@ -1,6 +1,7 @@
 import type { Building } from "../definitions/BuildingDefinitions";
 import { BuildingSpecial } from "../definitions/BuildingDefinitions";
 import type { IUnlockableMultipliers } from "../definitions/ITechDefinition";
+import type { Religion } from "../definitions/ReligionDefinitions";
 import { NoPrice, NoStorage, type Deposit, type Resource } from "../definitions/ResourceDefinitions";
 import type { Tradition } from "../definitions/TraditionDefinitions";
 import {
@@ -83,22 +84,23 @@ function forEachMultiplier(
    func: (m: MultiplierWithSource) => void,
    stableOnly: boolean,
    gs: GameState,
-): MultiplierWithSource[] {
-   const result: MultiplierWithSource[] = [];
-   const b = gs.tiles.get(xy)?.building;
+): void {
    Tick.current.tileMultipliers.get(xy)?.forEach((m) => {
       if (stableOnly && m.unstable) return;
       func(m);
    });
+   const b = gs.tiles.get(xy)?.building;
    if (b) {
-      Tick.current.buildingMultipliers.get(b.type)?.forEach((m) => func(m));
+      Tick.current.buildingMultipliers.get(b.type)?.forEach((m) => {
+         if (stableOnly && m.unstable) return;
+         func(m);
+      });
    }
    AllMultiplierTypes.forEach((type) => {
       Tick.current.globalMultipliers[type].forEach((m) =>
          func({ [type]: m.value, source: m.source, unstable: false } as MultiplierWithSource),
       );
    });
-   return result;
 }
 
 export function getMultipliersFor(xy: Tile, gs: GameState): MultiplierWithSource[] {
@@ -414,7 +416,10 @@ export function getScienceFromBuildings() {
 }
 
 export function getBuildingCost(
-   building: Pick<IBuildingData, "type" | "level"> & { tradition?: Tradition | null },
+   building: Pick<IBuildingData, "type" | "level"> & {
+      tradition?: Tradition | null;
+      religion?: Religion | null;
+   },
 ): PartialTabulate<Resource> {
    const type = building.type;
    const level = building.level;
@@ -431,6 +436,13 @@ export function getBuildingCost(
       const multiplier = getWonderCostMultiplier(type);
       if (building.tradition && building.level > 0) {
          const unlockable = Config.Tradition[building.tradition].content[building.level];
+         cost = structuredClone(Config.Upgrade[unlockable].requireResources);
+         forEach(cost, (k, v) => {
+            cost[k] = v * 100 * Math.pow(2, building.level);
+         });
+      }
+      if (building.religion && building.level > 0) {
+         const unlockable = Config.Religion[building.religion].content[building.level];
          cost = structuredClone(Config.Upgrade[unlockable].requireResources);
          forEach(cost, (k, v) => {
             cost[k] = v * 100 * Math.pow(2, building.level);

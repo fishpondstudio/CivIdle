@@ -372,10 +372,10 @@ export class BuildingDefinitions {
       input: { Cheese: 1, Marble: 1 },
       output: { Faith: 3 },
    };
-   Cathedral: IBuildingDefinition = {
-      name: () => t(L.Cathedral),
-      input: { Sword: 1, Armor: 1 },
-      output: { Faith: 6 },
+   Pagoda: IBuildingDefinition = {
+      name: () => t(L.Pagoda),
+      input: { Painting: 1, Garment: 1 },
+      output: { Faith: 4 },
    };
    // Science is valued at 0.2
    Library: IBuildingDefinition = {
@@ -387,7 +387,7 @@ export class BuildingDefinitions {
    School: IBuildingDefinition = {
       name: () => t(L.School),
       input: { Faith: 1, Poem: 1 },
-      output: { Science: 470 },
+      output: { Science: 460 },
    };
    University: IBuildingDefinition = {
       name: () => t(L.University),
@@ -407,7 +407,7 @@ export class BuildingDefinitions {
    ResearchLab: IBuildingDefinition = {
       name: () => t(L.ResearchLab),
       input: { Culture: 2, Philosophy: 2 },
-      output: { Science: 5560 },
+      output: { Science: 5480 },
    };
    ResearchFund: IBuildingDefinition = {
       name: () => t(L.ResearchFund),
@@ -911,7 +911,7 @@ export class BuildingDefinitions {
    };
    LuxorTemple: IBuildingDefinition = {
       name: () => t(L.LuxorTemple),
-      desc: () => t(L.LuxorTempleDesc),
+      desc: () => t(L.LuxorTempleDescV2),
       input: {},
       output: {},
       max: 1,
@@ -989,16 +989,6 @@ export class BuildingDefinitions {
       special: BuildingSpecial.WorldWonder,
       wikipedia: "University_of_Oxford",
    };
-   StPetersBasilica: IBuildingDefinition = {
-      name: () => t(L.StPetersBasilica),
-      desc: () => t(L.StPetersBasilicaDesc),
-      input: {},
-      output: {},
-      max: 1,
-      construction: { Faith: 500 },
-      special: BuildingSpecial.WorldWonder,
-      wikipedia: "St._Peter%27s_Basilica",
-   };
    SaintBasilsCathedral: IBuildingDefinition = {
       name: () => t(L.SaintBasilsCathedral),
       desc: () => t(L.SaintBasilsCathedralDescV2),
@@ -1051,7 +1041,7 @@ export class BuildingDefinitions {
    };
    MogaoCaves: IBuildingDefinition = {
       name: () => t(L.MogaoCaves),
-      desc: () => t(L.MogaoCavesDescV2),
+      desc: () => t(L.MogaoCavesDescV3),
       input: {},
       output: {},
       construction: { Faith: 100, Marble: 100, Painting: 100 },
@@ -1401,6 +1391,29 @@ export class BuildingDefinitions {
       wikipedia: "Niagara_Falls",
       special: BuildingSpecial.NaturalWonder,
    };
+
+   StPetersBasilica: IBuildingDefinition = {
+      name: () => t(L.StPetersBasilica),
+      desc: () => t(L.StPetersBasilicaDescV2),
+      input: {},
+      output: {},
+      max: 1,
+      construction: { Faith: 500 },
+      special: BuildingSpecial.WorldWonder,
+      wikipedia: "St._Peter%27s_Basilica",
+   };
+
+   ProphetsMosque: IBuildingDefinition = {
+      name: () => t(L.ProphetsMosque),
+      desc: () => t(L.ProphetsMosqueDesc),
+      input: {},
+      output: {},
+      max: 1,
+      construction: { Faith: 300 },
+      special: BuildingSpecial.WorldWonder,
+      wikipedia: "Prophet%27s_Mosque",
+   };
+
    // ArcDeTriomphe: IBuildingDefinition = {
    //    name: () => t(L.ArcDeTriomphe),
    //    desc: () => t(L.ArcDeTriompheDesc),

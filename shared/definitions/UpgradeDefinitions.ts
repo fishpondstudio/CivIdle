@@ -6,11 +6,13 @@ import {
    getGreatPersonTotalEffect,
    rollGreatPeopleThisRun,
 } from "../logic/RebirthLogic";
+import { getTechUnlockCost } from "../logic/TechLogic";
 import { RequestChooseGreatPerson } from "../logic/Update";
-import { deepFreeze, pointToTile, tileToPoint } from "../utilities/Helper";
+import { deepFreeze, pointToTile, safeAdd, tileToPoint } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
 import { BuildingDefinitions } from "./BuildingDefinitions";
 import type { IUpgradeDefinition } from "./ITechDefinition";
+import type { Tech } from "./TechDefinitions";
 
 const Buildings = deepFreeze(new BuildingDefinitions());
 
@@ -187,6 +189,115 @@ export class UpgradeDefinitions {
       },
       globalMultiplier: { sciencePerBusyWorker: 1, sciencePerIdleWorker: 1 },
    };
+
+   Christianity1: IUpgradeDefinition = {
+      name: () => t(L.ChristianityLevelX, { level: "I" }),
+      requireResources: {},
+      unlockBuilding: ["Church"],
+      tech: "Religion",
+   };
+
+   Christianity2: IUpgradeDefinition = {
+      name: () => t(L.ChristianityLevelX, { level: "II" }),
+      requireResources: { Faith: 1 },
+      unlockBuilding: ["StPetersBasilica"],
+      buildingMultiplier: {
+         Church: { output: 1 },
+      },
+      tech: "HolyEmpire",
+   };
+
+   Christianity3: IUpgradeDefinition = {
+      name: () => t(L.ChristianityLevelX, { level: "III" }),
+      requireResources: { Faith: 1 },
+      buildingMultiplier: {
+         Church: { output: 1 },
+         KnightCamp: { output: 1 },
+      },
+   };
+
+   Christianity4: IUpgradeDefinition = {
+      name: () => t(L.ChristianityLevelX, { level: "IV" }),
+      requireResources: { Faith: 1 },
+      buildingMultiplier: {
+         Church: { output: 1 },
+         KnightCamp: { output: 1 },
+         Bank: { output: 1 },
+      },
+   };
+
+   Christianity5: IUpgradeDefinition = {
+      name: () => t(L.ChristianityLevelX, { level: "V" }),
+      requireResources: { Faith: 1 },
+      buildingMultiplier: {
+         Church: { output: 1 },
+         KnightCamp: { output: 1 },
+         Bank: { output: 1 },
+      },
+      globalMultiplier: {
+         builderCapacity: 2,
+      },
+   };
+
+   Islam1: IUpgradeDefinition = {
+      name: () => t(L.IslamLevelX, { level: "I" }),
+      requireResources: {},
+      unlockBuilding: ["Mosque"],
+      tech: "Religion",
+   };
+
+   Islam2: IUpgradeDefinition = {
+      name: () => t(L.ChristianityLevelX, { level: "II" }),
+      requireResources: { Faith: 1 },
+      unlockBuilding: ["ProphetsMosque"],
+      buildingMultiplier: {
+         Mosque: { output: 1 },
+      },
+      tech: "HolyEmpire",
+   };
+
+   Islam3: IUpgradeDefinition = {
+      name: () => t(L.ChristianityLevelX, { level: "III" }),
+      requireResources: { Faith: 1 },
+      buildingMultiplier: {
+         Mosque: { output: 1 },
+         CaravelBuilder: { output: 1 },
+      },
+   };
+
+   Islam4: IUpgradeDefinition = {
+      name: () => t(L.ChristianityLevelX, { level: "IV" }),
+      requireResources: { Faith: 1 },
+      buildingMultiplier: {
+         Mosque: { output: 1 },
+         CaravelBuilder: { output: 1 },
+         Museum: { output: 1 },
+      },
+   };
+
+   Islam5: IUpgradeDefinition = {
+      name: () => t(L.ChristianityLevelX, { level: "IV" }),
+      requireResources: { Faith: 1 },
+      buildingMultiplier: {
+         Mosque: { output: 1 },
+         CaravelBuilder: { output: 1 },
+         Museum: { output: 1 },
+      },
+      onUnlocked: (gs) => {
+         const column = Config.TechAge.IndustrialAge.to;
+         let tech: Tech;
+         for (tech in Config.Tech) {
+            if (Config.Tech[tech].column === column) {
+               const hq = findSpecialBuilding("Headquarter", gs);
+               if (hq) {
+                  safeAdd(hq.building.resources, "Science", getTechUnlockCost(tech));
+               }
+               return;
+            }
+         }
+      },
+   };
 }
 
 export type Upgrade = keyof UpgradeDefinitions;
+export type IUpgradeGroup = { name: () => string; content: Upgrade[] };

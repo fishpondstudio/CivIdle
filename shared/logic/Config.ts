@@ -1,6 +1,7 @@
 import { BuildingDefinitions, type Building } from "../definitions/BuildingDefinitions";
 import { CityDefinitions } from "../definitions/CityDefinitions";
 import { GreatPersonDefinitions } from "../definitions/GreatPersonDefinitions";
+import { ReligionDefinitions } from "../definitions/ReligionDefinitions";
 import { ResourceDefinitions, type Resource } from "../definitions/ResourceDefinitions";
 import { TechAgeDefinitions, TechDefinitions, type Tech, type TechAge } from "../definitions/TechDefinitions";
 import { TraditionDefinitions } from "../definitions/TraditionDefinitions";
@@ -27,6 +28,7 @@ export const Config = {
    Tech: new TechDefinitions(),
    TechAge: deepFreeze(new TechAgeDefinitions()),
    Tradition: deepFreeze(new TraditionDefinitions()),
+   Religion: deepFreeze(new ReligionDefinitions()),
    Upgrade: deepFreeze(new UpgradeDefinitions()),
    BuildingTier,
    BuildingTech,

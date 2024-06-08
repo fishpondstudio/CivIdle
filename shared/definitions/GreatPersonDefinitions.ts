@@ -364,10 +364,10 @@ export class GreatPersonDefinitions {
       name: () => t(L.Xuanzang),
       boost: {
          multipliers: ["output"],
-         buildings: ["Library"],
+         buildings: ["Library", "Pagoda"],
       },
       time: "602 ~ 664 AD",
-      value: (level) => 2 * level,
+      value: (level) => 1 * level,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "MiddleAge",
    });
@@ -464,7 +464,7 @@ export class GreatPersonDefinitions {
       name: () => t(L.MartinLuther),
       boost: {
          multipliers: ["output", "storage"],
-         buildings: ["Church", "Cathedral"],
+         buildings: ["Church", "School"],
       },
       time: "1483 ~ 1546 AD",
       value: (level) => level,

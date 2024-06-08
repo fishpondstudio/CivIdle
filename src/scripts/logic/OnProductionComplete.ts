@@ -490,7 +490,8 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
             workersAfterHappiness === 0 ? 0 : Math.floor((10 * workersBusy) / workersAfterHappiness);
          for (const neighbor of grid.getNeighbors(tileToPoint(xy))) {
             const neighborXy = pointToTile(neighbor);
-            if (getWorkingBuilding(neighborXy, gs)?.type === "Shrine") {
+            const type = getWorkingBuilding(neighborXy, gs)?.type;
+            if (type && Config.Building[type].output.Faith) {
                Tick.next.happinessExemptions.add(neighborXy);
             }
          }
