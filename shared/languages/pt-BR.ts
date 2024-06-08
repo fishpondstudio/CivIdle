@@ -826,7 +826,7 @@ export const PT_BR = {
    Religion: "Religião",
    ReligionBuddhism: "Buddhism",
    ReligionChristianity: "Christianity",
-   ReligionDescHTML: "Choose from <b>Christianity, Islam, Buddhism or Polytheism</b> as your empire tradition. You <b>cannot switch religion</b> after it is chosen. You can unlock more boost within each religion",
+   ReligionDescHTML: "Choose from <b>Christianity, Islam, Buddhism or Polytheism</b> as your empire religion. You <b>cannot switch religion</b> after it is chosen. You can unlock more boost within each religion",
    ReligionIslam: "Islam",
    ReligionPolytheism: "Polytheism",
    Renaissance: "Renascença",
