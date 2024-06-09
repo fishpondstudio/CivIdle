@@ -276,7 +276,7 @@ export class GreatPersonDefinitions {
 
    Plato: IGreatPersonDefinition = {
       name: () => t(L.Plato),
-      desc: (self, level) => t(L.WildCardGreatPersonDesc),
+      desc: (self, level) => t(L.WildCardGreatPersonDescV2),
       time: "427 ~ 348 BC",
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
@@ -287,7 +287,7 @@ export class GreatPersonDefinitions {
 
    AshokaTheGreat: IGreatPersonDefinition = {
       name: () => t(L.AshokaTheGreat),
-      desc: (self, level) => t(L.PromotionGreatPersonDesc),
+      desc: (self, level) => t(L.PromotionGreatPersonDescV2),
       time: "304 ~ 232 BC",
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
@@ -401,7 +401,7 @@ export class GreatPersonDefinitions {
 
    Saladin: IGreatPersonDefinition = {
       name: () => t(L.Saladin),
-      desc: (self, level) => t(L.WildCardGreatPersonDesc),
+      desc: (self, level) => t(L.WildCardGreatPersonDescV2),
       time: "1137 ~ 1193 AD",
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
@@ -412,7 +412,7 @@ export class GreatPersonDefinitions {
 
    MarcoPolo: IGreatPersonDefinition = {
       name: () => t(L.MarcoPolo),
-      desc: (self, level) => t(L.PromotionGreatPersonDesc),
+      desc: (self, level) => t(L.PromotionGreatPersonDescV2),
       time: "1254 ~ 1324 AD",
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
@@ -547,7 +547,7 @@ export class GreatPersonDefinitions {
 
    Michelangelo: IGreatPersonDefinition = {
       name: () => t(L.Michelangelo),
-      desc: (self, level) => t(L.WildCardGreatPersonDesc),
+      desc: (self, level) => t(L.WildCardGreatPersonDescV2),
       time: "1475 ~ 1564 AD",
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
@@ -558,7 +558,7 @@ export class GreatPersonDefinitions {
 
    JohannesGutenberg: IGreatPersonDefinition = {
       name: () => t(L.JohannesGutenberg),
-      desc: (self, level) => t(L.PromotionGreatPersonDesc),
+      desc: (self, level) => t(L.PromotionGreatPersonDescV2),
       time: "1393 ~ 1406 AD",
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
@@ -709,7 +709,7 @@ export class GreatPersonDefinitions {
 
    ThomasEdison: IGreatPersonDefinition = {
       name: () => t(L.ThomasEdison),
-      desc: (self, level) => t(L.WildCardGreatPersonDesc),
+      desc: (self, level) => t(L.WildCardGreatPersonDescV2),
       time: "1847 ~ 1931 AD",
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
@@ -720,7 +720,7 @@ export class GreatPersonDefinitions {
 
    AdamSmith: IGreatPersonDefinition = {
       name: () => t(L.AdamSmith),
-      desc: (self, level) => t(L.PromotionGreatPersonDesc),
+      desc: (self, level) => t(L.PromotionGreatPersonDescV2),
       time: "1723 ~ 1790 AD",
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
@@ -891,7 +891,7 @@ export class GreatPersonDefinitions {
 
    MahatmaGandhi: IGreatPersonDefinition = {
       name: () => t(L.MahatmaGandhi),
-      desc: (self, level) => t(L.WildCardGreatPersonDesc),
+      desc: (self, level) => t(L.WildCardGreatPersonDescV2),
       time: "1869 ~ 1948 AD",
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
@@ -902,7 +902,7 @@ export class GreatPersonDefinitions {
 
    PabloPicasso: IGreatPersonDefinition = {
       name: () => t(L.PabloPicasso),
-      desc: (self, level) => t(L.PromotionGreatPersonDesc),
+      desc: (self, level) => t(L.PromotionGreatPersonDescV2),
       time: "1881 ~ 1973 AD",
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
@@ -1074,7 +1074,7 @@ export class GreatPersonDefinitions {
 
    ElvisPresley: IGreatPersonDefinition = {
       name: () => t(L.ElvisPresley),
-      desc: (self, level) => t(L.WildCardGreatPersonDesc),
+      desc: (self, level) => t(L.WildCardGreatPersonDescV2),
       time: "1935 ~ 1977 AD",
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
