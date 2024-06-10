@@ -16,7 +16,7 @@ export class GreatPersonDefinitions {
    Hammurabi: IGreatPersonDefinition = boostOf({
       name: () => t(L.Hammurabi),
       boost: {
-         multipliers: ["output"],
+         multipliers: ["output", "storage"],
          buildings: ["House", "Hut"],
       },
       value: (level) => level,
@@ -363,7 +363,7 @@ export class GreatPersonDefinitions {
    Xuanzang: IGreatPersonDefinition = boostOf({
       name: () => t(L.Xuanzang),
       boost: {
-         multipliers: ["output"],
+         multipliers: ["output", "storage"],
          buildings: ["Library", "Pagoda"],
       },
       time: "602 ~ 664 AD",
@@ -487,7 +487,7 @@ export class GreatPersonDefinitions {
    ReneDescartes: IGreatPersonDefinition = boostOf({
       name: () => t(L.ReneDescartes),
       boost: {
-         multipliers: ["output"],
+         multipliers: ["output", "storage"],
          buildings: ["School"],
       },
       time: "1596 ~ 1650 AD",
@@ -830,7 +830,7 @@ export class GreatPersonDefinitions {
    AlbertEinstein: IGreatPersonDefinition = boostOf({
       name: () => t(L.AlbertEinstein),
       boost: {
-         multipliers: ["output"],
+         multipliers: ["output", "storage"],
          buildings: ["ResearchLab"],
       },
       time: "1879 ~ 1955 AD",
@@ -868,7 +868,7 @@ export class GreatPersonDefinitions {
    AmeliaEarhart: IGreatPersonDefinition = boostOf({
       name: () => t(L.AmeliaEarhart),
       boost: {
-         multipliers: ["output"],
+         multipliers: ["output", "storage"],
          buildings: ["BiplaneFactory", "GasPowerPlant"],
       },
       time: "1897 ~ 1937 AD",
@@ -880,7 +880,7 @@ export class GreatPersonDefinitions {
    HenryFord: IGreatPersonDefinition = boostOf({
       name: () => t(L.HenryFord),
       boost: {
-         multipliers: ["output"],
+         multipliers: ["output", "storage"],
          buildings: ["CarFactory", "PlasticsFactory"],
       },
       time: "1863 ~ 1947 AD",
@@ -955,7 +955,7 @@ export class GreatPersonDefinitions {
    JRobertOppenheimer: IGreatPersonDefinition = boostOf({
       name: () => t(L.JRobertOppenheimer),
       boost: {
-         multipliers: ["output"],
+         multipliers: ["output", "storage"],
          buildings: ["UraniumEnrichmentPlant", "AtomicFacility"],
       },
       time: "1904 ~ 1967 AD",
@@ -967,7 +967,7 @@ export class GreatPersonDefinitions {
    WaltDisney: IGreatPersonDefinition = boostOf({
       name: () => t(L.WaltDisney),
       boost: {
-         multipliers: ["output"],
+         multipliers: ["output", "storage"],
          buildings: ["MovieStudio", "RadioStation"],
       },
       time: "1901 ~ 1966 AD",
@@ -979,7 +979,7 @@ export class GreatPersonDefinitions {
    WernherVonBraun: IGreatPersonDefinition = boostOf({
       name: () => t(L.WernherVonBraun),
       boost: {
-         multipliers: ["output"],
+         multipliers: ["output", "storage"],
          buildings: ["RocketFactory", "ArtilleryFactory"],
       },
       time: "1912 ~ 1977 AD",
@@ -991,7 +991,7 @@ export class GreatPersonDefinitions {
    ChesterWNimitz: IGreatPersonDefinition = boostOf({
       name: () => t(L.ChesterWNimitz),
       boost: {
-         multipliers: ["output"],
+         multipliers: ["output", "storage"],
          buildings: ["BattleshipBuilder", "HydroDam"],
       },
       time: "1885 ~ 1966 AD",
@@ -1003,7 +1003,7 @@ export class GreatPersonDefinitions {
    FrankWhittle: IGreatPersonDefinition = boostOf({
       name: () => t(L.FrankWhittle),
       boost: {
-         multipliers: ["output"],
+         multipliers: ["output", "storage"],
          buildings: ["AirplaneFactory", "FighterJetPlant"],
       },
       time: "1907 ~ 1996 AD",
@@ -1015,7 +1015,7 @@ export class GreatPersonDefinitions {
    EnricoFermi: IGreatPersonDefinition = boostOf({
       name: () => t(L.EnricoFermi),
       boost: {
-         multipliers: ["output"],
+         multipliers: ["output", "storage"],
          buildings: ["NuclearPowerPlant", "SubmarineYard"],
       },
       time: "1901 ~ 1954 AD",
@@ -1027,7 +1027,7 @@ export class GreatPersonDefinitions {
    PhiloFarnsworth: IGreatPersonDefinition = boostOf({
       name: () => t(L.PhiloFarnsworth),
       boost: {
-         multipliers: ["output"],
+         multipliers: ["output", "storage"],
          buildings: ["TVStation", "NuclearMissileSilo"],
       },
       time: "1906 ~ 1971 AD",
@@ -1039,7 +1039,7 @@ export class GreatPersonDefinitions {
    SergeiKorolev: IGreatPersonDefinition = boostOf({
       name: () => t(L.SergeiKorolev),
       boost: {
-         multipliers: ["output"],
+         multipliers: ["output", "storage"],
          buildings: ["SatelliteFactory", "SpacecraftFactory"],
       },
       time: "1907 ~ 1966 AD",
@@ -1051,7 +1051,7 @@ export class GreatPersonDefinitions {
    GeorgeCMarshall: IGreatPersonDefinition = boostOf({
       name: () => t(L.GeorgeCMarshall),
       boost: {
-         multipliers: ["output"],
+         multipliers: ["output", "storage"],
          buildings: ["Embassy", "ForexMarket"],
       },
       time: "1880 ~ 1959 AD",
@@ -1063,7 +1063,7 @@ export class GreatPersonDefinitions {
    RobertNoyce: IGreatPersonDefinition = boostOf({
       name: () => t(L.RobertNoyce),
       boost: {
-         multipliers: ["output"],
+         multipliers: ["output", "storage"],
          buildings: ["SemiconductorFab", "SiliconSmelter"],
       },
       time: "1927 ~ 1990 AD",
