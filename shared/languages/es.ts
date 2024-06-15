@@ -971,7 +971,7 @@ export const ES = {
    Sports: "Deportes",
    Stable: "Establo",
    Stadium: "Estadio",
-   Stateship: "Stateship",
+   Stateship: "Estado",
    StatisticsBuildings: "Construcciones",
    StatisticsBuildingsFilters: "Filters",
    StatisticsBuildingsSearchText: "Type a building name to search",
