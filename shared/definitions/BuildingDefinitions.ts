@@ -1436,6 +1436,61 @@ export class BuildingDefinitions {
       wikipedia: "Pantheon,_Rome",
    };
 
+   WallOfBabylon: IBuildingDefinition = {
+      name: () => t(L.WallOfBabylon),
+      desc: () => t(L.WallOfBabylonDesc),
+      input: {},
+      output: {},
+      construction: { Brick: 100, Lumber: 100, Sand: 100 },
+      max: 1,
+      special: BuildingSpecial.WorldWonder,
+      wikipedia: "Ishtar_Gate",
+   };
+
+   TowerOfBabel: IBuildingDefinition = {
+      name: () => t(L.TowerOfBabel),
+      desc: () => t(L.TowerOfBabelDesc),
+      input: {},
+      output: {},
+      construction: { Brick: 100, Lumber: 100, Sand: 100 },
+      max: 1,
+      special: BuildingSpecial.WorldWonder,
+      wikipedia: "Tower_of_Babel",
+   };
+
+   ZigguratOfUr: IBuildingDefinition = {
+      name: () => t(L.ZigguratOfUr),
+      desc: () => t(L.ZigguratOfUrDesc),
+      input: {},
+      output: {},
+      construction: { Brick: 100, Lumber: 100, Sand: 100 },
+      max: 1,
+      special: BuildingSpecial.WorldWonder,
+      wikipedia: "Tower_of_Babel",
+   };
+
+   EuphratesRiver: IBuildingDefinition = {
+      name: () => t(L.EuphratesRiver),
+      desc: () => t(L.EuphratesRiverDesc),
+      input: {},
+      output: {},
+      construction: {},
+      max: 0,
+      special: BuildingSpecial.NaturalWonder,
+      wikipedia: "Euphrates",
+   };
+
+   ZagrosMountains: IBuildingDefinition = {
+      name: () => t(L.ZagrosMountains),
+      desc: () => t(L.ZagrosMountainsDesc),
+      input: {},
+      output: {},
+      construction: {},
+      max: 0,
+      special: BuildingSpecial.NaturalWonder,
+      wikipedia: "Zagros_Mountains",
+   };
+
    // ArcDeTriomphe: IBuildingDefinition = {
    //    name: () => t(L.ArcDeTriomphe),
    //    desc: () => t(L.ArcDeTriompheDesc),

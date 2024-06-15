@@ -5,6 +5,7 @@ import { jsxMapOf } from "../utilities/Helper";
 import { BuildingColorComponent } from "./BuildingColorComponent";
 import { BuildingDescriptionComponent } from "./BuildingDescriptionComponent";
 import type { IBuildingComponentProps } from "./BuildingPage";
+import { BuildingValueComponent } from "./BuildingValueComponent";
 import { BuildingWikipediaComponent } from "./BuildingWikipediaComponent";
 import { RenderHTML } from "./RenderHTMLComponent";
 import { UpgradeGroupComponent } from "./UpgradeGroupComponent";
@@ -42,6 +43,7 @@ export function ReligionBuildingBody({ gameState, xy }: IBuildingComponentProps)
             );
          })}
          <BuildingDescriptionComponent gameState={gameState} xy={xy} />
+         <BuildingValueComponent gameState={gameState} xy={xy} />
          <BuildingWikipediaComponent gameState={gameState} xy={xy} />
          <BuildingColorComponent gameState={gameState} xy={xy} />
       </div>

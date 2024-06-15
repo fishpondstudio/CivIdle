@@ -8,6 +8,7 @@ import { L, t } from "../../../shared/utilities/i18n";
 import { playError } from "../visuals/Sound";
 import { BuildingColorComponent } from "./BuildingColorComponent";
 import type { IBuildingComponentProps } from "./BuildingPage";
+import { BuildingValueComponent } from "./BuildingValueComponent";
 import { BuildingWikipediaComponent } from "./BuildingWikipediaComponent";
 import { FormatNumber } from "./HelperComponents";
 import { ProgressBarComponent } from "./ProgressBarComponent";
@@ -125,6 +126,7 @@ export function PetraBuildingBody({ gameState, xy }: IBuildingComponentProps): R
                html={t(L.BuildingNoMultiplier, { building: Config.Building[building.type].name() })}
             />
          </WarningComponent>
+         <BuildingValueComponent gameState={gameState} xy={xy} />
          <BuildingWikipediaComponent gameState={gameState} xy={xy} />
          <BuildingColorComponent gameState={gameState} xy={xy} />
       </div>

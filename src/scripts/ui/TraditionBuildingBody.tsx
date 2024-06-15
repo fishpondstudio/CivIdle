@@ -4,6 +4,7 @@ import { L, t } from "../../../shared/utilities/i18n";
 import { jsxMapOf } from "../utilities/Helper";
 import { BuildingColorComponent } from "./BuildingColorComponent";
 import type { IBuildingComponentProps } from "./BuildingPage";
+import { BuildingValueComponent } from "./BuildingValueComponent";
 import { BuildingWikipediaComponent } from "./BuildingWikipediaComponent";
 import { RenderHTML } from "./RenderHTMLComponent";
 import { UpgradeGroupComponent } from "./UpgradeGroupComponent";
@@ -40,6 +41,7 @@ export function TraditionBuildingBody({ gameState, xy }: IBuildingComponentProps
                </fieldset>
             );
          })}
+         <BuildingValueComponent gameState={gameState} xy={xy} />
          <BuildingWikipediaComponent gameState={gameState} xy={xy} />
          <BuildingColorComponent gameState={gameState} xy={xy} />
       </div>

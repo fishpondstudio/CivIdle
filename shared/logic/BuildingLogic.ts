@@ -79,7 +79,7 @@ export function totalMultiplierFor(
    return result;
 }
 
-function forEachMultiplier(
+export function forEachMultiplier(
    xy: Tile,
    func: (m: MultiplierWithSource) => void,
    stableOnly: boolean,
@@ -97,9 +97,10 @@ function forEachMultiplier(
       });
    }
    AllMultiplierTypes.forEach((type) => {
-      Tick.current.globalMultipliers[type].forEach((m) =>
-         func({ [type]: m.value, source: m.source, unstable: false } as MultiplierWithSource),
-      );
+      Tick.current.globalMultipliers[type].forEach((m) => {
+         if (stableOnly && m.unstable) return;
+         func({ [type]: m.value, source: m.source, unstable: m.unstable } as MultiplierWithSource);
+      });
    });
 }
 

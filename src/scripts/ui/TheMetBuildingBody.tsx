@@ -4,6 +4,7 @@ import { L, t } from "../../../shared/utilities/i18n";
 import { BuildingColorComponent } from "./BuildingColorComponent";
 import { BuildingDescriptionComponent } from "./BuildingDescriptionComponent";
 import type { IBuildingComponentProps } from "./BuildingPage";
+import { BuildingValueComponent } from "./BuildingValueComponent";
 import { BuildingWikipediaComponent } from "./BuildingWikipediaComponent";
 import { FormatNumber } from "./HelperComponents";
 import { ProgressBarComponent } from "./ProgressBarComponent";
@@ -36,6 +37,7 @@ export function TheMetBuildingBody({ gameState, xy }: IBuildingComponentProps): 
                <FormatNumber value={building.resources.Teleport ?? 0} />/{MAX_TELEPORT}
             </div>
          </fieldset>
+         <BuildingValueComponent gameState={gameState} xy={xy} />
          <BuildingWikipediaComponent gameState={gameState} xy={xy} />
          <BuildingColorComponent gameState={gameState} xy={xy} />
       </div>

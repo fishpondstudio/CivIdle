@@ -154,6 +154,7 @@ export const MultiplierTypeDesc: Record<MultiplierType, () => string> = {
 export interface IValueWithSource {
    value: number;
    source: string;
+   unstable?: boolean;
 }
 
 export const CurrentTickChanged = new TypedEvent<ITickData>();

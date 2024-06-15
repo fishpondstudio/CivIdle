@@ -9,6 +9,7 @@ import { playBubble, playError } from "../visuals/Sound";
 import { BuildingColorComponent } from "./BuildingColorComponent";
 import { BuildingDescriptionComponent } from "./BuildingDescriptionComponent";
 import type { IBuildingComponentProps } from "./BuildingPage";
+import { BuildingValueComponent } from "./BuildingValueComponent";
 import { BuildingWikipediaComponent } from "./BuildingWikipediaComponent";
 import { showToast } from "./GlobalModal";
 import { RenderHTML } from "./RenderHTMLComponent";
@@ -79,6 +80,7 @@ export function UnitedNationsBuildingBody({ gameState, xy }: IBuildingComponentP
                </fieldset>
             </>
          )}
+         <BuildingValueComponent gameState={gameState} xy={xy} />
          <BuildingWikipediaComponent gameState={gameState} xy={xy} />
          <BuildingColorComponent gameState={gameState} xy={xy} />
       </div>

@@ -1,11 +1,16 @@
 import { isNaturalWonder, isSpecialBuilding } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
 import { getGameState } from "../../../shared/logic/GameStateLogic";
-import { getXyBuildings } from "../../../shared/logic/IntraTickCache";
+import { getGrid, getXyBuildings } from "../../../shared/logic/IntraTickCache";
 import { getGreatPeopleChoiceCount, rollGreatPeopleThisRun } from "../../../shared/logic/RebirthLogic";
-import { getCurrentAge, getMostAdvancedTech, getTechUnlockCost } from "../../../shared/logic/TechLogic";
+import {
+   addDeposit,
+   getCurrentAge,
+   getMostAdvancedTech,
+   getTechUnlockCost,
+} from "../../../shared/logic/TechLogic";
 import { Tick } from "../../../shared/logic/TickLogic";
-import { safeAdd, type Tile } from "../../../shared/utilities/Helper";
+import { isEmpty, pointToTile, safeAdd, tileToPoint, type Tile } from "../../../shared/utilities/Helper";
 import { ChooseGreatPersonModal } from "../ui/ChooseGreatPersonModal";
 import { showModal } from "../ui/GlobalModal";
 import { playAgeUp } from "../visuals/Sound";
@@ -44,6 +49,16 @@ export function onTileExplored(xy: Tile): void {
             const hq = Tick.current.specialBuildings.get("Headquarter")?.building.resources;
             if (tech && hq) {
                safeAdd(hq, "Science", getTechUnlockCost(tech));
+            }
+            break;
+         }
+         case "EuphratesRiver": {
+            for (const point of getGrid(gs).getNeighbors(tileToPoint(xy))) {
+               const tileXy = pointToTile(point);
+               const tile = gs.tiles.get(tileXy);
+               if (tile && isEmpty(tile?.deposit)) {
+                  addDeposit(tileXy, "Water", true, gs);
+               }
             }
             break;
          }

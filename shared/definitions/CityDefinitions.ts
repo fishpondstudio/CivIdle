@@ -152,6 +152,41 @@ export class CityDefinitions {
       requireGreatPeopleLevel: 20,
       requireSupporterPack: true,
    };
+   Babylon: ICityDefinition = {
+      name: () => t(L.Babylon),
+      deposits: {
+         Water: 0.01,
+         Copper: 0.025,
+         Iron: 0.03,
+         Wood: 0.025,
+         Stone: 0.03,
+         Gold: 0.01,
+         Coal: 0.025,
+         Oil: 0.03,
+         Aluminum: 0.025,
+         NaturalGas: 0.025,
+         Uranium: 0.01,
+      },
+      size: 35,
+      buildingNames: {
+         Headquarter: () => t(L.Babylon),
+      },
+      uniqueBuildings: {
+         WallOfBabylon: "LandTrade",
+         TowerOfBabel: "Religion",
+         ZigguratOfUr: "Theater",
+      },
+      uniqueMultipliers: {
+         Skyscraper: {
+            buildingMultiplier: {
+               ResearchFund: { output: 1 },
+            },
+         },
+      },
+      naturalWonders: { EuphratesRiver: true, ZagrosMountains: true },
+      requireGreatPeopleLevel: 30,
+      requireSupporterPack: true,
+   };
 }
 
 export type City = keyof CityDefinitions;

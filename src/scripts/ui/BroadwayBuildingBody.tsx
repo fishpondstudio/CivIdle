@@ -10,6 +10,7 @@ import { playClick } from "../visuals/Sound";
 import { BuildingColorComponent } from "./BuildingColorComponent";
 import { BuildingDescriptionComponent } from "./BuildingDescriptionComponent";
 import type { IBuildingComponentProps } from "./BuildingPage";
+import { BuildingValueComponent } from "./BuildingValueComponent";
 import { BuildingWikipediaComponent } from "./BuildingWikipediaComponent";
 
 export function BroadwayBuildingBody({ gameState, xy }: IBuildingComponentProps): React.ReactNode {
@@ -72,6 +73,7 @@ export function BroadwayBuildingBody({ gameState, xy }: IBuildingComponentProps)
                </tbody>
             </table>
          </div>
+         <BuildingValueComponent gameState={gameState} xy={xy} />
          <BuildingWikipediaComponent gameState={gameState} xy={xy} />
          <BuildingColorComponent gameState={gameState} xy={xy} />
       </div>

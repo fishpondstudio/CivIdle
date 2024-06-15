@@ -7,6 +7,7 @@ import { BuildingProductionPriorityComponent } from "./BuildingProductionPriorit
 import { BuildingSellComponent } from "./BuildingSellComponent";
 import { BuildingStorageComponent } from "./BuildingStorageComponent";
 import { BuildingUpgradeComponent } from "./BuildingUpgradeComponent";
+import { BuildingValueComponent } from "./BuildingValueComponent";
 import { BuildingWorkerComponent } from "./BuildingWorkerComponent";
 import { PendingTradesComponent } from "./PendingTradesComponent";
 import { PlayerTradeComponent } from "./PlayerTradeComponent";
@@ -53,6 +54,7 @@ export function PlayerTradeBuildingBody({ gameState, xy }: IBuildingComponentPro
          <BuildingWorkerComponent gameState={gameState} xy={xy} />
          <BuildingProductionPriorityComponent gameState={gameState} xy={xy} />
          <BuildingInputModeComponent gameState={gameState} xy={xy} />
+         <BuildingValueComponent gameState={gameState} xy={xy} />
          <BuildingColorComponent gameState={gameState} xy={xy} />
          <BuildingSellComponent gameState={gameState} xy={xy} />
       </div>

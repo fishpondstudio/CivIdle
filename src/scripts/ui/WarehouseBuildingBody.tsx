@@ -14,6 +14,7 @@ import { BuildingProductionPriorityComponent } from "./BuildingProductionPriorit
 import { BuildingSellComponent } from "./BuildingSellComponent";
 import { BuildingStorageComponent } from "./BuildingStorageComponent";
 import { BuildingUpgradeComponent } from "./BuildingUpgradeComponent";
+import { BuildingValueComponent } from "./BuildingValueComponent";
 import { BuildingWorkerComponent } from "./BuildingWorkerComponent";
 import { ResourceImportComponent } from "./ResourceImportComponent";
 import { WarningComponent } from "./WarningComponent";
@@ -95,6 +96,7 @@ export function WarehouseBuildingBody({ gameState, xy }: IBuildingComponentProps
          <BuildingWorkerComponent gameState={gameState} xy={xy} />
          <BuildingProductionPriorityComponent gameState={gameState} xy={xy} />
          <BuildingInputModeComponent gameState={gameState} xy={xy} />
+         <BuildingValueComponent gameState={gameState} xy={xy} />
          <BuildingColorComponent gameState={gameState} xy={xy} />
          <BuildingSellComponent gameState={gameState} xy={xy} />
       </div>

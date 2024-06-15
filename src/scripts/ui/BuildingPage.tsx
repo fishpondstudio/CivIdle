@@ -8,6 +8,7 @@ import { useGameState } from "../Global";
 import { Singleton } from "../utilities/Singleton";
 import { BroadwayBuildingBody } from "./BroadwayBuildingBody";
 import { DefaultBuildingBody } from "./DefaultBuildingBody";
+import { EuphratesRiverBuildingBody } from "./EuphratesRiverBuildingBody";
 import { GrandBazaarBuildingBody } from "./GrandBazaarBuildingBody";
 import { HeadquarterBuildingBody } from "./HeadquarterBuildingBody";
 import { LoadingPage, LoadingPageStage } from "./LoadingPage";
@@ -42,6 +43,7 @@ const BuildingBodyOverride: Partial<Record<Building, FunctionComponent<IBuilding
    Broadway: BroadwayBuildingBody,
    TheMet: TheMetBuildingBody,
    LuxorTemple: ReligionBuildingBody,
+   EuphratesRiver: EuphratesRiverBuildingBody,
 };
 
 export function BuildingPage(props: { tile: ITileData }): React.ReactNode {

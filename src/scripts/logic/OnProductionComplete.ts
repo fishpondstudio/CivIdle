@@ -1,4 +1,7 @@
+import type { Building } from "../../../shared/definitions/BuildingDefinitions";
+import type { TechAge } from "../../../shared/definitions/TechDefinitions";
 import {
+   forEachMultiplier,
    generateScienceFromFaith,
    getGreatWallRange,
    getScienceFromWorkers,
@@ -19,6 +22,7 @@ import { getGameOptions, getGameState } from "../../../shared/logic/GameStateLog
 import {
    getBuildingsByType,
    getGrid,
+   getTransportStat,
    getTypeBuildings,
    getXyBuildings,
 } from "../../../shared/logic/IntraTickCache";
@@ -214,17 +218,26 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          break;
       }
       case "HangingGarden": {
+         let multiplier = 1;
+         for (const point of getGrid(gs).getNeighbors(tileToPoint(xy))) {
+            const neighbor = gs.tiles.get(pointToTile(point));
+            if (neighbor?.explored && neighbor?.building?.type === "EuphratesRiver") {
+               multiplier =
+                  Config.TechAge[getCurrentAge(gs)].idx -
+                  Config.TechAge[getBuildingUnlockAge("HangingGarden")].idx;
+            }
+         }
          Tick.next.globalMultipliers.builderCapacity.push({
-            value: 1,
+            value: multiplier,
             source: buildingName,
          });
          for (const neighbor of grid.getNeighbors(tileToPoint(xy))) {
             const building = gs.tiles.get(pointToTile(neighbor))?.building;
             if (building && building.type === "Aqueduct") {
                mapSafePush(Tick.next.tileMultipliers, pointToTile(neighbor), {
-                  worker: 1,
-                  storage: 1,
-                  output: 1,
+                  worker: multiplier,
+                  storage: multiplier,
+                  output: multiplier,
                   source: buildingName,
                });
             }
@@ -1003,6 +1016,106 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
             });
          }
          generateScienceFromFaith(xy, "Shrine", gs);
+         break;
+      }
+      case "ZigguratOfUr": {
+         const happiness = Tick.current.happiness?.value ?? 0;
+         if (happiness > 0) {
+            Tick.next.globalMultipliers.output.push({
+               value: Math.floor(happiness / 10),
+               source: buildingName,
+               unstable: true,
+            });
+         }
+         break;
+      }
+      case "TowerOfBabel": {
+         const buildings = new Set<Building>();
+         for (const point of grid.getRange(tileToPoint(xy), 1)) {
+            const tileXy = pointToTile(point);
+            const building = getWorkingBuilding(tileXy, gs);
+            if (building && !Tick.current.notProducingReasons.has(tileXy)) {
+               buildings.add(building.type);
+            }
+         }
+         buildings.forEach((b) => {
+            addMultiplier(b, { output: 2, unstable: true }, buildingName);
+         });
+         break;
+      }
+      case "WallOfBabylon": {
+         const currentAge = Config.TechAge[getCurrentAge(gs)];
+         let previousAge: TechAge | null = null;
+         forEach(Config.TechAge, (age, def) => {
+            if (def.idx === currentAge.idx - 1) {
+               previousAge = age;
+               return true;
+            }
+         });
+         const buildings = new Set<Building>();
+         if (previousAge) {
+            const age = Config.TechAge[previousAge as TechAge];
+            forEach(Config.Tech, (tech, def) => {
+               if (def.column >= age.from && def.column <= age.to) {
+                  def.unlockBuilding?.forEach((b) => buildings.add(b));
+               }
+            });
+         }
+         buildings.forEach((b) => {
+            getTypeBuildings(gs)
+               .get(b)
+               ?.forEach((tile, xy) => {
+                  Tick.current.happinessExemptions.add(xy);
+               });
+         });
+         break;
+      }
+      case "ZagrosMountains": {
+         for (const point of grid.getRange(tileToPoint(xy), 1)) {
+            const tileXy = pointToTile(point);
+            let multiplier = 0;
+            forEachMultiplier(
+               tileXy,
+               (m) => {
+                  if (m.output && m.source !== buildingName) {
+                     multiplier += m.output;
+                  }
+               },
+               false,
+               gs,
+            );
+            if (multiplier < 5) {
+               mapSafePush(Tick.current.tileMultipliers, tileXy, {
+                  output: 2,
+                  unstable: true,
+                  source: buildingName,
+               });
+            }
+         }
+         const total = getGreatPersonTotalEffect("NebuchadnezzarII", gs, options);
+         if (total > 0) {
+            Config.GreatPerson.NebuchadnezzarII.tick(
+               Config.GreatPerson.NebuchadnezzarII,
+               total,
+               `${buildingName}: ${Config.GreatPerson.NebuchadnezzarII.name()}`,
+            );
+         }
+         break;
+      }
+      case "EuphratesRiver": {
+         const stat = getTransportStat(gs);
+         const productionWorkers = (Tick.current.workersUsed.get("Worker") ?? 0) - stat.totalFuel;
+         const totalWorkers =
+            (Tick.current.workersAvailable.get("Worker") ?? 0) *
+            (Tick.current.happiness?.workerPercentage ?? 0);
+         const multiplier = Math.floor((productionWorkers * 10) / totalWorkers);
+         if (Number.isFinite(multiplier) && multiplier > 0) {
+            Tick.next.globalMultipliers.output.push({
+               value: multiplier,
+               source: buildingName,
+               unstable: true,
+            });
+         }
          break;
       }
       // case "ArcDeTriomphe": {

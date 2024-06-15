@@ -28,6 +28,7 @@ import { BuildingSellComponent } from "./BuildingSellComponent";
 import { BuildingStockpileComponent } from "./BuildingStockpileComponent";
 import { BuildingStorageComponent } from "./BuildingStorageComponent";
 import { BuildingUpgradeComponent } from "./BuildingUpgradeComponent";
+import { BuildingValueComponent } from "./BuildingValueComponent";
 import { BuildingWorkerComponent } from "./BuildingWorkerComponent";
 import { FormatNumber } from "./HelperComponents";
 import { TableView } from "./TableView";
@@ -195,6 +196,7 @@ export function MarketBuildingBody({ gameState, xy }: IBuildingComponentProps): 
                gameState={gameState}
             />
          </fieldset>
+         <BuildingValueComponent gameState={gameState} xy={xy} />
          <BuildingColorComponent gameState={gameState} xy={xy} />
          <BuildingSellComponent gameState={gameState} xy={xy} />
       </div>

@@ -1225,4 +1225,16 @@ export const EN = {
    ZenobiaDesc: "+%{value}h Petra Warp Storage",
    ZhengHe: "Zheng He",
    Zoroaster: "Zoroaster",
+   Babylon: "Babylon",
+   WallOfBabylon: "Wall of Babylon",
+   WallOfBabylonDesc: "All buildings unlocked in the previous age are exempt from -1 Happiness",
+   TowerOfBabel: "Tower of Babel",
+   TowerOfBabelDesc: "Provides +2 Production Multiplier to all buildings that has at least one working building located adjacent to the wonder",
+   ZigguratOfUr: "Ziggurat of Ur",
+   ZigguratOfUrDesc: "Every 10 happiness (capped) provides +1 Production Multiplier to all buildings",
+   EuphratesRiver: "Euphrates River",
+   EuphratesRiverDesc: "Every 10% of busy workers that in production (not transporting) provides +1 Production Multiplier to all buildings. When the Hanging Garden is built next to it, the Hanging Garden gets +1 effect for each age after the Hanging Garden is unlocked. When discovered, spawn water on all adjacent tiles that do not have deposits",
+   ZagrosMountains: "Zagros Mountains",
+   ZagrosMountainsDesc: "All adjacent buildings that have less than 5 Production Multiplier get +2 Production Multiplier. Double the effect of Nebuchadnezzar II (Great Person)",
+   PercentageOfProductionWorkers: "Percentage of Production Workers"
 };

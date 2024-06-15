@@ -23,6 +23,7 @@ import { playClick } from "../visuals/Sound";
 import { BuildingColorComponent } from "./BuildingColorComponent";
 import { BuildingDescriptionComponent } from "./BuildingDescriptionComponent";
 import type { IBuildingComponentProps } from "./BuildingPage";
+import { BuildingValueComponent } from "./BuildingValueComponent";
 import { BuildingWikipediaComponent } from "./BuildingWikipediaComponent";
 import { FormatNumber } from "./HelperComponents";
 import { RenderHTML } from "./RenderHTMLComponent";
@@ -418,9 +419,9 @@ export function GrandBazaarBuildingBody({ gameState, xy }: IBuildingComponentPro
             </menu>
             {content}
          </div>
-
          <div className="sep10"></div>
          <BuildingWikipediaComponent gameState={gameState} xy={xy} />
+         <BuildingValueComponent gameState={gameState} xy={xy} />
          <BuildingColorComponent gameState={gameState} xy={xy} />
       </div>
    );
