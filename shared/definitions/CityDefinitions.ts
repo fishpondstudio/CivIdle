@@ -176,13 +176,7 @@ export class CityDefinitions {
          TowerOfBabel: "Religion",
          ZigguratOfUr: "Theater",
       },
-      uniqueMultipliers: {
-         Skyscraper: {
-            buildingMultiplier: {
-               ResearchFund: { output: 1 },
-            },
-         },
-      },
+      uniqueMultipliers: {},
       naturalWonders: { EuphratesRiver: true, ZagrosMountains: true },
       requireGreatPeopleLevel: 30,
       requireSupporterPack: true,
