@@ -1111,7 +1111,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          const multiplier = Math.floor((productionWorkers * 10) / totalWorkers);
          if (Number.isFinite(multiplier) && multiplier > 0) {
             Tick.next.globalMultipliers.output.push({
-               value: multiplier,
+               value: clamp(multiplier, 1, 10),
                source: buildingName,
                unstable: true,
             });
