@@ -269,7 +269,7 @@ export function ResourceImportComponent({ gameState, xy }: IBuildingComponentPro
                   </summary>
                   <ul>
                      <li className="row">
-                        <div className="f1">Base Capacity</div>
+                        <div className="f1">{t(L.BaseCapacity)}</div>
                         <div className="text-strong">
                            <FormatNumber value={baseCapacity} />
                         </div>

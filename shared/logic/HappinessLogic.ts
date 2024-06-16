@@ -66,6 +66,11 @@ export function calculateHappiness(gs: GameState) {
          ++fromWonders;
       }
    });
+
+   if (Tick.current.specialBuildings.has("ZigguratOfUr")) {
+      fromWonders = 0;
+   }
+
    const fromBuildingTypes = mReduceOf(
       buildingsByType,
       (prev, _, value) => {

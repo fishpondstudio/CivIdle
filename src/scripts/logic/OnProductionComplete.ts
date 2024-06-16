@@ -1,5 +1,4 @@
 import type { Building } from "../../../shared/definitions/BuildingDefinitions";
-import type { TechAge } from "../../../shared/definitions/TechDefinitions";
 import {
    forEachMultiplier,
    generateScienceFromFaith,
@@ -1020,9 +1019,10 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
       }
       case "ZigguratOfUr": {
          const happiness = Tick.current.happiness?.value ?? 0;
+         const age = getCurrentAge(gs);
          if (happiness > 0) {
             Tick.next.globalMultipliers.output.push({
-               value: Math.floor(happiness / 10),
+               value: clamp(Math.floor(happiness / 10), 1, Math.floor((Config.TechAge[age].idx + 1) / 2)),
                source: buildingName,
                unstable: true,
             });
@@ -1044,29 +1044,10 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          break;
       }
       case "WallOfBabylon": {
-         const currentAge = Config.TechAge[getCurrentAge(gs)];
-         let previousAge: TechAge | null = null;
-         forEach(Config.TechAge, (age, def) => {
-            if (def.idx === currentAge.idx - 1) {
-               previousAge = age;
-               return true;
-            }
-         });
-         const buildings = new Set<Building>();
-         if (previousAge) {
-            const age = Config.TechAge[previousAge as TechAge];
-            forEach(Config.Tech, (tech, def) => {
-               if (def.column >= age.from && def.column <= age.to) {
-                  def.unlockBuilding?.forEach((b) => buildings.add(b));
-               }
-            });
-         }
-         buildings.forEach((b) => {
-            getTypeBuildings(gs)
-               .get(b)
-               ?.forEach((tile, xy) => {
-                  Tick.current.happinessExemptions.add(xy);
-               });
+         const age = getCurrentAge(gs);
+         Tick.next.globalMultipliers.storage.push({
+            value: Math.floor((Config.TechAge[age].idx + 1) / 3),
+            source: buildingName,
          });
          break;
       }
@@ -1109,9 +1090,10 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
             (Tick.current.workersAvailable.get("Worker") ?? 0) *
             (Tick.current.happiness?.workerPercentage ?? 0);
          const multiplier = Math.floor((productionWorkers * 10) / totalWorkers);
+         const age = getCurrentAge(gs);
          if (Number.isFinite(multiplier) && multiplier > 0) {
             Tick.next.globalMultipliers.output.push({
-               value: clamp(multiplier, 1, 10),
+               value: clamp(multiplier, 1, Math.floor((Config.TechAge[age].idx + 1) / 2)),
                source: buildingName,
                unstable: true,
             });
