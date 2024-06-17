@@ -1227,7 +1227,7 @@ export const ZH_CN = {
    Zoroaster: "琐罗亚斯德",
    Babylon: "巴比伦",
    WallOfBabylon: "巴比伦城墙",
-   WallOfBabylonDesc: "所有建筑获得 +N 生产乘数， N 为已解锁时代数的三分之一",
+   WallOfBabylonDesc: "所有建筑获得 +N 存储乘数， N 为已解锁时代数的三分之一",
    TowerOfBabel: "巴别塔",
    TowerOfBabelDesc: "可为所有建筑提供 +2 生产乘数，需满足同类型建筑中至少有一座运转中建筑与奇观相邻",
    ZigguratOfUr: "乌尔大塔庙",
