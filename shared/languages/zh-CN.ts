@@ -1114,7 +1114,7 @@ export const ZH_CN = {
    TribuneUpgradeDescGreatPeopleWarning: "你此轮拥有伟人。你应该<b>先重生</b>。升至财务官级别，将重置你的当前轮。",
    TribuneUpgradeDescGreatPeopleWarningTitle: "请先重生",
    TribuneUpgradeDescV3:
-      "如果您不打算参与<b>可选</b>在线功能，可以以保民官的身份游玩完整游戏。要获得在线功能的无限制访问，需升至财务官。<b>这是一种反机器人措施，以供玩家们免费游玩。</b>但是，<b>升级到财务官时</b>你可以获得永恒伟人的伴随：<ul><li>青铜、铁器和古典时代<b>3</b> 最高等级</li><li>中世纪、文艺复兴和工业时代 <b>2</b> 最高等级</li><li>世界大战、冷战和信息时代 <b>1</b> 最高等级</li></ul>超过对应等级的部分无法结转。",
+      "如果不打算参与<b>可选</b>在线功能，可以以保民官的身份游玩完整游戏。要获得在线功能的无限制访问，需升至财务官。<b>这是一种反机器人措施，以供玩家们免费游玩。</b>但是，<b>升级到财务官时</b>你可以获得永恒伟人的伴随：<ul><li>青铜、铁器和古典时代<b>3</b> 最高等级</li><li>中世纪、文艺复兴和工业时代 <b>2</b> 最高等级</li><li>世界大战、冷战和信息时代 <b>1</b> 最高等级</li></ul>超过对应等级的部分无法结转。",
    TurnOnTimeWarpDesc: "每秒消耗 %{speed} 扭曲时间，同时加速你的帝国，使其以 %{speed} 倍速度运行。",
    Tutorial: "教程",
    Tutorial1:
@@ -1227,13 +1227,13 @@ export const ZH_CN = {
    Zoroaster: "琐罗亚斯德",
    Babylon: "巴比伦",
    WallOfBabylon: "巴比伦城墙",
-   WallOfBabylonDesc: "所有上一时代的解锁建筑，免去 -1 幸福感",
+   WallOfBabylonDesc: "所有建筑获得 +N 存储乘数， N 为已解锁时代数的三分之一",
    TowerOfBabel: "巴别塔",
    TowerOfBabelDesc: "可为所有建筑提供 +2 生产乘数，需满足同类型建筑中至少有一座运转中建筑与奇观相邻",
    ZigguratOfUr: "乌尔大塔庙",
-   ZigguratOfUrDesc: "每有 10 幸福感（生效值），为所有建筑提供 +1 生产乘数",
+   ZigguratOfUrDesc: "每有 10 幸福感（生效值），为所有建筑提供 +1 生产乘数（最大值为已解锁时代数的二分之一）。奇观（包括自然奇观）不再提供 +1 幸福感",
    EuphratesRiver: "幼发拉底河",
-   EuphratesRiverDesc: "从事生产（非运输）的忙碌劳动者占比每有 10% ，为所有建筑提供 +1 生产乘数。当空中花园在其旁建成，于空中花园解锁后的每个时代，使空中花园获得 +1 效果。当被发现时，所有无沉积资源的相邻地块，将生成水",
+   EuphratesRiverDesc: "从事生产（非运输）的忙碌劳动者占比每有 10% ，为所有建筑提供 +1 生产乘数（最大值为已解锁时代数的二分之一）。当空中花园在其旁建成，于空中花园解锁后的每个时代，使空中花园获得 +1 效果。当被发现时，所有无沉积资源的相邻地块，将生成水资源",
    ZagrosMountains: "扎格罗斯山脉",
    ZagrosMountainsDesc: "所有低于 5 生产乘数的相邻建筑，获得 +2 生产乘数。尼布甲尼撒二世（伟人）效果翻倍",
    PercentageOfProductionWorkers: "生产作业劳动者所占百分比"
