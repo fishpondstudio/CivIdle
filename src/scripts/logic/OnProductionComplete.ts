@@ -1066,7 +1066,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
                gs,
             );
             if (multiplier < 5) {
-               mapSafePush(Tick.current.tileMultipliers, tileXy, {
+               mapSafePush(Tick.next.tileMultipliers, tileXy, {
                   output: 2,
                   unstable: true,
                   source: buildingName,
