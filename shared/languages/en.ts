@@ -1239,5 +1239,6 @@ export const EN = {
    ZagrosMountainsDesc: "All adjacent buildings that have less than 5 Production Multiplier get +2 Production Multiplier. Double the effect of Nebuchadnezzar II (Great Person)",
    PercentageOfProductionWorkers: "Percentage of Production Workers",
    ToggleWonderEffect: "Toggle Wonder Effect",
-   DynamicMultiplierTooltip: "This multiplier is dynamic - it will not affect workers and storage"
+   DynamicMultiplierTooltip: "This multiplier is dynamic - it will not affect workers and storage",
+   SupporterThankYou: "CivIdle is kept afloat thanks to the generousity of the following supporter pack owners"
 };

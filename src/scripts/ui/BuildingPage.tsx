@@ -10,6 +10,7 @@ import { BroadwayBuildingBody } from "./BroadwayBuildingBody";
 import { DefaultBuildingBody } from "./DefaultBuildingBody";
 import { EuphratesRiverBuildingBody } from "./EuphratesRiverBuildingBody";
 import { GrandBazaarBuildingBody } from "./GrandBazaarBuildingBody";
+import { HagiaSophiaBuildingBody } from "./HagiaSophiaBuildingBody";
 import { HeadquarterBuildingBody } from "./HeadquarterBuildingBody";
 import { LoadingPage, LoadingPageStage } from "./LoadingPage";
 import { MarketBuildingBody } from "./MarketBuildingBody";
@@ -46,6 +47,7 @@ const BuildingBodyOverride: Partial<Record<Building, FunctionComponent<IBuilding
    LuxorTemple: ReligionBuildingBody,
    EuphratesRiver: EuphratesRiverBuildingBody,
    ZigguratOfUr: ToggleWonderBuildingBody,
+   HagiaSophia: HagiaSophiaBuildingBody,
 };
 
 export function BuildingPage(props: { tile: ITileData }): React.ReactNode {
