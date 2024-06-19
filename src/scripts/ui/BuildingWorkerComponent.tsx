@@ -155,7 +155,7 @@ export function BuildingWorkerComponent({ gameState, xy }: IBuildingComponentPro
                            <li className="row">
                               <div className="f1">{t(L.WorkersRequiredBeforeMultiplier)}</div>
                               <div>
-                                 <TextWithHelp content={t(L.RequiredWorkersTooltip)}>
+                                 <TextWithHelp content={t(L.RequiredWorkersTooltipV2)}>
                                     <FormatNumber value={workersRequired.rawOutput} />
                                  </TextWithHelp>
                               </div>

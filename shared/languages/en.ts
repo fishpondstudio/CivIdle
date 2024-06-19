@@ -832,7 +832,7 @@ export const EN = {
    RenaissanceAge: "Renaissance",
    ReneDescartes: "René Descartes",
    RequiredDeposit: "Required Deposit",
-   RequiredWorkersTooltip: "Required number of workers for production is equal to the sum of all resources consumed and produced after multipliers (except electrification)",
+   RequiredWorkersTooltipV2: "Required number of workers for production is equal to the sum of all resources consumed and produced after multipliers (excluding dynamic multipliers)",
    RequirePower: "Require Power",
    RequirePowerDesc: "This building needs to be built on a tile with power and can extend the power to its adjacent tiles",
    Research: "Research",
@@ -1238,5 +1238,6 @@ export const EN = {
    ZagrosMountains: "Zagros Mountains",
    ZagrosMountainsDesc: "All adjacent buildings that have less than 5 Production Multiplier get +2 Production Multiplier. Double the effect of Nebuchadnezzar II (Great Person)",
    PercentageOfProductionWorkers: "Percentage of Production Workers",
-   ToggleWonderEffect: "Toggle Wonder Effect"
+   ToggleWonderEffect: "Toggle Wonder Effect",
+   DynamicMultiplierTooltip: "This multiplier is dynamic - it will not affect workers and storage"
 };

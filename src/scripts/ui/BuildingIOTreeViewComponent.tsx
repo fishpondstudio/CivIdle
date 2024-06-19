@@ -1,3 +1,4 @@
+import Tippy from "@tippyjs/react";
 import classNames from "classnames";
 import { IOCalculation, getMultipliersFor, totalMultiplierFor } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
@@ -72,8 +73,13 @@ export function BuildingIOTreeViewComponent({
                               return (
                                  // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
                                  <li key={idx} className="row">
-                                    <div className="f1">{m.source}</div>
-                                    <div>{m[type]}</div>
+                                    <div>{m.source}</div>
+                                    {m.unstable ? (
+                                       <Tippy content={t(L.DynamicMultiplierTooltip)}>
+                                          <div className="m-icon small ml5 text-desc">whatshot</div>
+                                       </Tippy>
+                                    ) : null}
+                                    <div className="f1 text-right">{m[type]}</div>
                                  </li>
                               );
                            })}
