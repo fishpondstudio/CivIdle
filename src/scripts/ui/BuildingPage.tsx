@@ -20,6 +20,7 @@ import { ReligionBuildingBody } from "./ReligionBuildingBody";
 import { ScienceProductionWonderBuildingBody } from "./ScienceProductionWonderBuildingBody";
 import { StatisticsBuildingBody } from "./StatisticsBuildingBody";
 import { TheMetBuildingBody } from "./TheMetBuildingBody";
+import { ToggleWonderBuildingBody } from "./ToggleableWonderBuildingBody";
 import { TraditionBuildingBody } from "./TraditionBuildingBody";
 import { UnitedNationsBuildingBody } from "./UnitedNationsBuildingBody";
 import { WarehouseBuildingBody } from "./WarehouseBuildingBody";
@@ -44,6 +45,7 @@ const BuildingBodyOverride: Partial<Record<Building, FunctionComponent<IBuilding
    TheMet: TheMetBuildingBody,
    LuxorTemple: ReligionBuildingBody,
    EuphratesRiver: EuphratesRiverBuildingBody,
+   ZigguratOfUr: ToggleWonderBuildingBody,
 };
 
 export function BuildingPage(props: { tile: ITileData }): React.ReactNode {

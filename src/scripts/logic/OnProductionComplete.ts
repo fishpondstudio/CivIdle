@@ -749,7 +749,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          if (amount > 0) {
             addMultiplier(
                "AtomicFacility",
-               { storage: amount, output: clamp(amount, 1, 5) },
+               { storage: clamp(amount, 1, 5), output: clamp(amount, 1, 5) },
                Config.GreatPerson.MahatmaGandhi.name(),
             );
          }
@@ -1046,7 +1046,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
       case "WallOfBabylon": {
          const age = getCurrentAge(gs);
          Tick.next.globalMultipliers.storage.push({
-            value: Math.floor((Config.TechAge[age].idx + 1) / 3),
+            value: Math.floor((Config.TechAge[age].idx + 1) / 2),
             source: buildingName,
          });
          break;

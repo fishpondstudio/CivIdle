@@ -67,7 +67,8 @@ export function calculateHappiness(gs: GameState) {
       }
    });
 
-   if (Tick.current.specialBuildings.has("ZigguratOfUr")) {
+   const zou = Tick.current.specialBuildings.get("ZigguratOfUr");
+   if (zou && zou.building.capacity > 0) {
       fromWonders = 0;
    }
 
