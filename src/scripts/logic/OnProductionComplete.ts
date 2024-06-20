@@ -1092,10 +1092,15 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          const multiplier = Math.floor((productionWorkers * 10) / totalWorkers);
          const age = getCurrentAge(gs);
          if (Number.isFinite(multiplier) && multiplier > 0) {
-            Tick.next.globalMultipliers.output.push({
-               value: clamp(multiplier, 1, Math.floor((Config.TechAge[age].idx + 1) / 2)),
-               source: buildingName,
-               unstable: true,
+            const cappedMultiplier = clamp(multiplier, 1, Math.floor((Config.TechAge[age].idx + 1) / 2));
+            gs.tiles.forEach((tile, xy) => {
+               if (tile.building && !Config.Building[tile.building.type].output.Worker) {
+                  mapSafePush(Tick.next.tileMultipliers, xy, {
+                     output: cappedMultiplier,
+                     source: buildingName,
+                     unstable: true,
+                  });
+               }
             });
          }
          break;

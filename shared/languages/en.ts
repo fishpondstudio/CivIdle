@@ -1234,7 +1234,7 @@ export const EN = {
    ZigguratOfUr: "Ziggurat of Ur",
    ZigguratOfUrDesc: "Every 10 happiness (capped) provides +1 Production Multiplier to all buildings (max = number of unlocked ages / 2). Wonders (incl. Natural) no longer provide +1 Happiness. The effect can be turned off",
    EuphratesRiver: "Euphrates River",
-   EuphratesRiverDesc: "Every 10% of busy workers that in production (not transporting) provides +1 Production Multiplier to all buildings (max = number of unlocked ages / 2). When the Hanging Garden is built next to it, the Hanging Garden gets +1 effect for each age after the Hanging Garden is unlocked. When discovered, spawn water on all adjacent tiles that do not have deposits",
+   EuphratesRiverDesc: "Every 10% of busy workers that in production (not transporting) provides +1 Production Multiplier to all buildings that do not produce workers (max = number of unlocked ages / 2). When the Hanging Garden is built next to it, the Hanging Garden gets +1 effect for each age after the Hanging Garden is unlocked. When discovered, spawn water on all adjacent tiles that do not have deposits",
    ZagrosMountains: "Zagros Mountains",
    ZagrosMountainsDesc: "All adjacent buildings that have less than 5 Production Multiplier get +2 Production Multiplier. Double the effect of Nebuchadnezzar II (Great Person)",
    PercentageOfProductionWorkers: "Percentage of Production Workers",
