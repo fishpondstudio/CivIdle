@@ -1466,7 +1466,7 @@ export class BuildingDefinitions {
       construction: { Brick: 100, Lumber: 100, Sand: 100 },
       max: 1,
       special: BuildingSpecial.WorldWonder,
-      wikipedia: "Tower_of_Babel",
+      wikipedia: "Ziggurat_of_Ur",
    };
 
    EuphratesRiver: IBuildingDefinition = {
