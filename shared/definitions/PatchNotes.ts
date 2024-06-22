@@ -6,6 +6,15 @@ interface PatchNote {
 
 export const PatchNotes: PatchNote[] = [
    {
+      version: "0.12.1",
+      content: [
+         [
+            "Content",
+            "Add Steam achievement - Lion of Babylon: Rebirth with at least 1 Extra Great Person in Babylon (Reach 64M Empire Value when rebirth)",
+         ],
+      ],
+   },
+   {
       version: "0.12.0",
       content: [],
       link: "https://store.steampowered.com/news/app/2181940/view/4179984470689067680",

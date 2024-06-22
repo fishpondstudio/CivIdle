@@ -64,6 +64,10 @@ export function checkRebirthAchievements(extraGP: number, gs: GameState): void {
             SteamClient.unlockAchievement("TheBigApple");
             break;
          }
+         case "Babylon": {
+            SteamClient.unlockAchievement("LionOfBabylon");
+            break;
+         }
       }
    }
 }
