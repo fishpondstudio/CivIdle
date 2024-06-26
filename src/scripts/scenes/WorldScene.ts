@@ -231,7 +231,9 @@ export class WorldScene extends Scene {
    }
 
    override onGameStateChanged(gameState: GameState): void {
-      this._tiles.forEach((visual, xy) => visual.onTileDataChanged(gameState.tiles.get(xy)!));
+      gameState.tiles.forEach((tile, xy) => {
+         this._tiles.get(xy)?.onTileDataChanged(tile);
+      });
       this.drawTransportation(gameState);
    }
 
