@@ -1106,7 +1106,7 @@ export const EN = {
    TotalTimeThisRun: "Total Time This Run",
    TotalWorkers: "Total Workers",
    TowerOfBabel: "Tower of Babel",
-   TowerOfBabelDesc: "Provides +2 Production Multiplier to all buildings that has at least one working building located adjacent to the wonder",
+   TowerOfBabelDesc: "Provides +2 Production Multiplier to all buildings that have at least one working building located adjacent to the Tower of Babel",
    TraditionCommerce: "Commerce",
    TraditionCultivation: "Cultivation",
    TraditionDescHTML: "Choose from <b>Cultivation, Commerce, Expansion or Honor</b> as your empire tradition. You <b>cannot switch tradition</b> after it is chosen. You can unlock more boost within each tradition",
