@@ -24,7 +24,6 @@ import {
    reduceOf,
    rejectIn,
    safeParseInt,
-   sizeOf,
 } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import { resetToCity, saveGame, useGameState } from "../Global";
@@ -63,10 +62,7 @@ export function RebirthModal(): React.ReactNode {
    };
 
    const maxPickPerRoll = clamp(
-      Math.floor(
-         clamp(greatPeopleAtRebirthCount - gs.claimedGreatPeople, 0, Number.POSITIVE_INFINITY) /
-            sizeOf(Config.GreatPerson),
-      ),
+      Math.floor(clamp(greatPeopleAtRebirthCount - gs.claimedGreatPeople, 0, Number.POSITIVE_INFINITY) / 50),
       1,
       Number.POSITIVE_INFINITY,
    );

@@ -330,6 +330,12 @@ export class BuildingDefinitions {
       output: { NuclearMissile: 1 },
       power: true,
    };
+   Peacekeeper: IBuildingDefinition = {
+      name: () => t(L.Peacekeeper),
+      input: { NuclearMissile: 4, Diplomacy: 1, Radio: 1 },
+      output: { Peace: 1 },
+      power: true,
+   };
    // #endregion /////////////////////////////////////////////////////////////////////////////////////////////
 
    // #region Culture ////////////////////////////////////////////////////////////////////////////////////////
@@ -455,6 +461,42 @@ export class BuildingDefinitions {
       name: () => t(L.TVStation),
       input: { Radio: 2, Movie: 10 },
       output: { TV: 1 },
+      power: true,
+   };
+   InternetServiceProvider: IBuildingDefinition = {
+      name: () => t(L.InternetServiceProvider),
+      input: { Computer: 1, OpticalFiber: 5 },
+      output: { Internet: 1 },
+      power: true,
+   };
+   SoftwareCompany: IBuildingDefinition = {
+      name: () => t(L.SoftwareCompany),
+      input: { Computer: 1, Philosophy: 10 },
+      output: { Software: 1 },
+      power: true,
+   };
+   SupercomputerLab: IBuildingDefinition = {
+      name: () => t(L.SupercomputerLab),
+      input: { Software: 1, Computer: 5 },
+      output: { Supercomputer: 1 },
+      power: true,
+   };
+   CivGPT: IBuildingDefinition = {
+      name: () => t(L.CivGPT),
+      input: { Internet: 1, Supercomputer: 2, Radio: 1 },
+      output: { CivGPT: 1 },
+      power: true,
+   };
+   CivTok: IBuildingDefinition = {
+      name: () => t(L.CivTok),
+      input: { Internet: 1, Politics: 1 },
+      output: { CivTok: 1 },
+      power: true,
+   };
+   CivOasis: IBuildingDefinition = {
+      name: () => t(L.CivOasis),
+      input: { CivTok: 1, Supercomputer: 1, Diplomacy: 2 },
+      output: { CivOasis: 1 },
       power: true,
    };
    // #endregion /////////////////////////////////////////////////////////////////////////////////////////////
@@ -615,10 +657,28 @@ export class BuildingDefinitions {
       input: { Engine: 1, Steel: 10 },
       output: { Train: 1 },
    };
+   MaglevFactory: IBuildingDefinition = {
+      name: () => t(L.MaglevFactory),
+      input: { Train: 15, Airplane: 15, Car: 15 },
+      output: { Maglev: 1 },
+      power: true,
+   };
    CarFactory: IBuildingDefinition = {
       name: () => t(L.CarFactory),
       input: { Engine: 1, Steel: 1, Furniture: 1, Cable: 1, Plastics: 1, Petrol: 5 },
       output: { Car: 1 },
+      power: true,
+   };
+   RobocarFactory: IBuildingDefinition = {
+      name: () => t(L.RobocarFactory),
+      input: { Car: 5, Supercomputer: 2, Satellite: 1 },
+      output: { Robocar: 1 },
+      power: true,
+   };
+   SpaceCenter: IBuildingDefinition = {
+      name: () => t(L.SpaceCenter),
+      input: { Maglev: 1, Radio: 1, Supercomputer: 1 },
+      output: { PlanetaryRover: 2 },
       power: true,
    };
    OilRefinery: IBuildingDefinition = {
@@ -692,6 +752,21 @@ export class BuildingDefinitions {
       input: { Banknote: 2, Bond: 2 },
       output: { Forex: 1 },
    };
+   MutualFund: IBuildingDefinition = {
+      name: () => t(L.MutualFund),
+      input: { Forex: 1, Stock: 1 },
+      output: { MutualFund: 1 },
+   };
+   HedgeFund: IBuildingDefinition = {
+      name: () => t(L.HedgeFund),
+      input: { MutualFund: 2 },
+      output: { HedgeFund: 1 },
+   };
+   BitcoinMiner: IBuildingDefinition = {
+      name: () => t(L.BitcoinMiner),
+      input: { HedgeFund: 2, CivTok: 1 },
+      output: { Bitcoin: 1 },
+   };
    Caravansary: IBuildingDefinition = {
       name: () => t(L.Caravansary),
       desc: () => t(L.CaravansaryDesc),
@@ -712,6 +787,13 @@ export class BuildingDefinitions {
       output: {},
       desc: () => t(L.WarehouseDesc),
       construction: { Lumber: 1, Brick: 1, Horse: 1 },
+   };
+   CloneFactory: IBuildingDefinition = {
+      name: () => t(L.CloneFactory),
+      input: {},
+      output: {},
+      desc: () => t(L.CloneFactoryDesc),
+      construction: { Concrete: 10 },
    };
    // #endregion /////////////////////////////////////////////////////////////////////////////////////////////
 

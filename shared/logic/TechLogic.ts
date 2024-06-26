@@ -194,11 +194,12 @@ export function isPrerequisiteOf(prerequisite: Tech, tech: Tech): boolean {
 
 export function getAllPrerequisites(tech: Tech): Set<Tech> {
    const result = new Set<Tech>();
-   let dep: Tech[] = Config.Tech[tech].requireTech.slice(0);
+   let dep: Tech[] = Config.Tech[tech].requireTech;
    while (dep.length > 0) {
       dep = dep.flatMap((d) => {
+         if (result.has(d)) return [];
          result.add(d);
-         return Config.Tech[d].requireTech.slice(0);
+         return Config.Tech[d].requireTech;
       });
    }
    return result;

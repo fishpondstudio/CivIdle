@@ -29,6 +29,7 @@ export function BroadwayBuildingBody({ gameState, xy }: IBuildingComponentProps)
                      .map((k) => {
                         const def = Config.GreatPerson[k];
                         if (def.type !== GreatPersonType.Normal) return null;
+                        if (k === "Zenobia") return null;
                         const effect = getGreatPersonTotalEffect(k, gameState);
                         if (effect <= 0) return null;
                         const active = building.greatPeople.has(k);
