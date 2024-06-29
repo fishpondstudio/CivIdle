@@ -795,6 +795,13 @@ export class BuildingDefinitions {
    //    desc: () => t(L.CloneFactoryDesc),
    //    construction: { Concrete: 10 },
    // };
+   // CloneLab: IBuildingDefinition = {
+   //    name: () => t(L.CloneLab),
+   //    input: {},
+   //    output: {},
+   //    desc: () => t(L.CloneLabDesc),
+   //    construction: { Concrete: 10 },
+   // };
    // #endregion /////////////////////////////////////////////////////////////////////////////////////////////
 
    // #region Functional Wonders /////////////////////////////////////////////////////////////////////////////

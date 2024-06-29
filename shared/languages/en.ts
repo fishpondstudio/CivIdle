@@ -1252,6 +1252,8 @@ export const EN = {
    MutualFund: "Mutual Fund",
    CloneFactory: "Clone Factory",
    CloneFactoryDesc: "Clone any resources",
+   CloneLab: "Clone Lab",
+   CloneLabDesc: "Convert any resources into Science",
    SupercomputerLab: "Supercomputer Lab",
    CivTok: "CivTok",
    FinancialArbitrage: "Financial Arbitrage",
