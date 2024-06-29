@@ -372,6 +372,7 @@ export class WorldScene extends Scene {
             case "GreatSphinx":
             case "Hollywood":
             case "SagradaFamilia":
+            case "Pantheon":
             case "CristoRedentor":
             case "Atomium":
             case "TheMet":
