@@ -77,28 +77,27 @@ export function ChatPanel(): React.ReactNode {
                <LatestMessage messages={messages} />
             </div>
          </div>
-
-         {showChatWindow
-            ? Array.from(options.chatChannels).map((channel, i) => (
-                 <ChatWindow
-                    style={{ left: 350 * i }}
-                    key={channel}
-                    channel={channel}
-                    show={showChatWindow}
-                    onClose={() =>
-                       startTransition(() => {
-                          if (options.chatChannels.size <= 1) {
-                             setShowChatWindow(false);
-                          } else {
-                             options.chatChannels.delete(channel);
-                             notifyGameOptionsUpdate(options);
-                          }
-                       })
-                    }
-                    onMinimize={() => startTransition(() => setShowChatWindow(false))}
-                 />
-              ))
-            : null}
+         <div style={{ contentVisibility: showChatWindow ? "visible" : "hidden" }}>
+            {Array.from(options.chatChannels).map((channel, i) => (
+               <ChatWindow
+                  style={{ left: 350 * i }}
+                  key={channel}
+                  channel={channel}
+                  show={showChatWindow}
+                  onClose={() =>
+                     startTransition(() => {
+                        if (options.chatChannels.size <= 1) {
+                           setShowChatWindow(false);
+                        } else {
+                           options.chatChannels.delete(channel);
+                           notifyGameOptionsUpdate(options);
+                        }
+                     })
+                  }
+                  onMinimize={() => startTransition(() => setShowChatWindow(false))}
+               />
+            ))}
+         </div>
       </div>
    );
 }
