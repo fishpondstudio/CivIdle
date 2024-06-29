@@ -1265,5 +1265,14 @@ export const EN = {
    SpaceCenter: "Space Center",
    PlanetaryRover: "Planetary Rover",
    Peacekeeper: "Peacekeeper",
-   Peace: "Peace"
+   Peace: "Peace",
+   TimBernersLee: "Tim Berners-Lee",
+   GordonMoore: "GordonMoore",
+   DennisRitchie: "Dennis Ritchie",
+   HymanGRickover: "Hyman G. Rickover",
+   HarryMarkowitz: "Harry Markowitz",
+   JohnCarmack: "John Carmack",
+   SatoshiNakamoto: "Satoshi Nakamoto",
+   CarlSagan: "Carl Sagan",
+   JohnMcCarthy: "John McCarthy",
 };
