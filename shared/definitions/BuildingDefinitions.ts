@@ -788,13 +788,13 @@ export class BuildingDefinitions {
       desc: () => t(L.WarehouseDesc),
       construction: { Lumber: 1, Brick: 1, Horse: 1 },
    };
-   CloneFactory: IBuildingDefinition = {
-      name: () => t(L.CloneFactory),
-      input: {},
-      output: {},
-      desc: () => t(L.CloneFactoryDesc),
-      construction: { Concrete: 10 },
-   };
+   // CloneFactory: IBuildingDefinition = {
+   //    name: () => t(L.CloneFactory),
+   //    input: {},
+   //    output: {},
+   //    desc: () => t(L.CloneFactoryDesc),
+   //    construction: { Concrete: 10 },
+   // };
    // #endregion /////////////////////////////////////////////////////////////////////////////////////////////
 
    // #region Functional Wonders /////////////////////////////////////////////////////////////////////////////

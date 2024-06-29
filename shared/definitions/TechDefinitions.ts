@@ -850,7 +850,7 @@ export class TechDefinitions {
       name: () => t(L.Genetics),
       column: 25,
       requireTech: ["Nanotechnology", "Software"],
-      unlockBuilding: ["CloneFactory"],
+      // unlockBuilding: ["CloneFactory"],
    };
    CloudComputing: ITechDefinition = {
       name: () => t(L.CloudComputing),
