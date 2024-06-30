@@ -420,6 +420,12 @@ export class BuildingDefinitions {
       input: { Banknote: 1, Bond: 1 },
       output: { Science: 25940 },
    };
+   ComputerLab: IBuildingDefinition = {
+      name: () => t(L.ComputerLab),
+      input: { Computer: 1 },
+      output: { Science: 79930 },
+      power: true,
+   };
    Museum: IBuildingDefinition = {
       name: () => t(L.Museum),
       input: { Music: 2, Painting: 2 },
@@ -766,6 +772,7 @@ export class BuildingDefinitions {
       name: () => t(L.BitcoinMiner),
       input: { HedgeFund: 2, CivTok: 1 },
       output: { Bitcoin: 1 },
+      power: true,
    };
    Caravansary: IBuildingDefinition = {
       name: () => t(L.Caravansary),
@@ -788,20 +795,22 @@ export class BuildingDefinitions {
       desc: () => t(L.WarehouseDesc),
       construction: { Lumber: 1, Brick: 1, Horse: 1 },
    };
-   // CloneFactory: IBuildingDefinition = {
-   //    name: () => t(L.CloneFactory),
-   //    input: {},
-   //    output: {},
-   //    desc: () => t(L.CloneFactoryDesc),
-   //    construction: { Concrete: 10 },
-   // };
-   // CloneLab: IBuildingDefinition = {
-   //    name: () => t(L.CloneLab),
-   //    input: {},
-   //    output: {},
-   //    desc: () => t(L.CloneLabDesc),
-   //    construction: { Concrete: 10 },
-   // };
+   CloneFactory: IBuildingDefinition = {
+      name: () => t(L.CloneFactory),
+      input: {},
+      output: {},
+      desc: () => t(L.CloneFactoryDesc),
+      construction: { Software: 1, Tank: 1 },
+      power: true,
+   };
+   CloneLab: IBuildingDefinition = {
+      name: () => t(L.CloneLab),
+      input: {},
+      output: {},
+      desc: () => t(L.CloneLabDesc),
+      construction: { Rocket: 1, Computer: 1 },
+      power: true,
+   };
    // #endregion /////////////////////////////////////////////////////////////////////////////////////////////
 
    // #region Functional Wonders /////////////////////////////////////////////////////////////////////////////

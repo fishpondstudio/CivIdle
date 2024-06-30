@@ -811,7 +811,7 @@ export class TechDefinitions {
       name: () => t(L.Computer),
       column: 23,
       requireTech: ["Semiconductor", "Television"],
-      unlockBuilding: ["ComputerFactory"],
+      unlockBuilding: ["ComputerFactory", "ComputerLab"],
    };
 
    Globalization: ITechDefinition = {
@@ -850,7 +850,7 @@ export class TechDefinitions {
       name: () => t(L.Genetics),
       column: 25,
       requireTech: ["Nanotechnology", "Software"],
-      // unlockBuilding: ["CloneFactory"],
+      unlockBuilding: ["CloneFactory", "CloneLab"],
    };
    CloudComputing: ITechDefinition = {
       name: () => t(L.CloudComputing),

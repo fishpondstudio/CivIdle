@@ -1277,4 +1277,7 @@ export const EN = {
    SatoshiNakamoto: "Satoshi Nakamoto",
    CarlSagan: "Carl Sagan",
    JohnMcCarthy: "John McCarthy",
+   ComputerLab: "Computer Lab",
+   InputResourceForCloning: "Input Resource For Cloning",
+   ResourceCloneTooltip: "The production multiplier only applies to the cloned resource (i.e. the extra copy)"
 };

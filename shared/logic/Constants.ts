@@ -274,9 +274,14 @@ export function calculateTierAndPrice(log?: (val: string) => void) {
                const price = Math.round(
                   (multiplier * inputResourcesValue - notPricedResourceValue) / allOutputAmount,
                );
+               if (!Number.isFinite(price)) {
+                  return;
+               }
                if (!Config.ResourcePrice[res]) {
                   Config.ResourcePrice[res] = price;
-               } else if (price > Config.ResourcePrice[res]!) {
+                  return;
+               }
+               if (price > Config.ResourcePrice[res]!) {
                   log?.(
                      `Price of ${res} changed from ${Config.ResourcePrice[res]!} to ${price} by ${building}`,
                   );

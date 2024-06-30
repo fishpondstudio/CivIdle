@@ -1212,7 +1212,7 @@ export class GreatPersonDefinitions {
       name: () => t(L.JohnCarmack),
       boost: {
          multipliers: ["output", "storage"],
-         buildings: [/**"CloneFactory",*/ "CivOasis"],
+         buildings: ["ComputerLab", "CivOasis"],
       },
       time: "1970 ~ ",
       value: (level) => level,
