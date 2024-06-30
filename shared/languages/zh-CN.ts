@@ -479,7 +479,6 @@ export const ZH_CN = {
    Imperialism: "帝国主义",
    IndustrialAge: "工业时代",
    InformationAge: "信息时代",
-   Internet: "互联网",
    InverseSelection: "反选",
    Iron: "铁",
    IronAge: "铁器时代",
