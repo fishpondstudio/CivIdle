@@ -298,6 +298,9 @@ export function calculateTierAndPrice(log?: (val: string) => void) {
       }
    });
 
+   Config.BuildingTier.CloneFactory = 8;
+   Config.BuildingTier.CloneLab = 8;
+
    let resourceHash = 0;
    forEach(Config.Resource, (r) => {
       Config.ResourceHash[r] = resourceHash++;
