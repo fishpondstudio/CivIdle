@@ -25,19 +25,19 @@ import { getGameOptions, notifyGameOptionsUpdate } from "./GameStateLogic";
 import type { IShortcutConfig, Shortcut } from "./Shortcut";
 import { PRIORITY_MIN, type IBuildingData, type ITileData } from "./Tile";
 
-export interface ITransportationData {
+export interface ITransportationDataV2 {
    id: number;
    fromXy: Tile;
-   toXy: Tile;
-   ticksRequired: number;
-   ticksSpent: number;
    fromPosition: IPointData;
+   toXy: Tile;
    toPosition: IPointData;
+   ticksSpent: number;
+   ticksRequired: number;
    resource: Resource;
    amount: number;
    fuel: Resource;
-   fuelAmount: number;
-   currentFuelAmount: number;
+   fuelPerTick: number;
+   fuelCurrentTick: number;
    hasEnoughFuel: boolean;
 }
 
@@ -47,7 +47,7 @@ export class GameState {
    unlockedTech: PartialSet<Tech> = {};
    unlockedUpgrades: PartialSet<Upgrade> = {};
    tiles: Map<Tile, ITileData> = new Map();
-   transportation: Map<Tile, ITransportationData[]> = new Map();
+   transportationV2: ITransportationDataV2[] = [];
    tick = 0;
    greatPeople: PartialTabulate<GreatPerson> = {};
    greatPeopleChoices: GreatPeopleChoice[] = [];

@@ -20,11 +20,13 @@ export function getResourceAmount(res: Resource, gs: GameState): number {
 }
 
 export function getAmountInTransit(xy: Tile, res: Resource, gs: GameState) {
-   return (
-      gs.transportation.get(xy)?.reduce((prev, curr) => {
-         return prev + (curr.resource === res ? curr.amount : 0);
-      }, 0) ?? 0
-   );
+   let result = 0;
+   gs.transportationV2.forEach((t) => {
+      if (t.toXy === xy && t.resource === res) {
+         result += t.amount;
+      }
+   });
+   return result;
 }
 
 export function getResourcesValue(resources: PartialTabulate<Resource>): number {

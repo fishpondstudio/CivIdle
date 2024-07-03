@@ -1,6 +1,7 @@
 import type { Building } from "../definitions/BuildingDefinitions";
 import type { IUnlockable } from "../definitions/ITechDefinition";
 import { NoPrice, NoStorage, type Resource } from "../definitions/ResourceDefinitions";
+import type { Grid } from "../utilities/Grid";
 import {
    HOUR,
    clamp,
@@ -64,11 +65,12 @@ import {
 import { Config } from "./Config";
 import { MANAGED_IMPORT_RANGE } from "./Constants";
 import { GameFeature, hasFeature } from "./FeatureLogic";
-import type { GameState, ITransportationData } from "./GameState";
+import type { GameState, ITransportationDataV2 } from "./GameState";
 import { getGameState } from "./GameStateLogic";
 import {
    getBuildingIO,
    getBuildingsByType,
+   getFuelByTarget,
    getGrid,
    getStorageFullBuildings,
    getXyBuildings,
@@ -112,57 +114,57 @@ export function tickUnlockable(td: IUnlockable, source: string, gs: GameState): 
 
 export function tickTransports(gs: GameState): void {
    const mahTile = Tick.current.specialBuildings.get("MausoleumAtHalicarnassus");
-   const mahPos = mahTile ? getGrid(gs).xyToPosition(mahTile.tile) : null;
-   gs.transportation.forEach((queue) => {
-      filterInPlace(queue, (transport) => {
-         tickTransportation(transport, mahPos);
-         // Has arrived!
-         if (transport.ticksSpent >= transport.ticksRequired) {
-            const building = gs.tiles.get(transport.toXy)?.building;
-            if (building) {
-               safeAdd(building.resources, transport.resource, transport.amount);
-            }
-            return false;
+   const grid = getGrid(gs);
+   const mahPos = mahTile ? grid.xyToPosition(mahTile.tile) : null;
+   filterInPlace(gs.transportationV2, (transport) => {
+      // Has arrived!
+      if (tickTransportation(transport, grid, mahPos)) {
+         const building = gs.tiles.get(transport.toXy)?.building;
+         if (building) {
+            safeAdd(building.resources, transport.resource, transport.amount);
          }
+         return false;
+      }
 
-         const ev = calculateEmpireValue(transport.resource, transport.amount);
-         mapSafeAdd(Tick.next.resourceValues, transport.resource, ev);
-         Tick.next.totalValue += ev;
-         return true;
-      });
+      const ev = calculateEmpireValue(transport.resource, transport.amount);
+      mapSafeAdd(Tick.next.resourceValues, transport.resource, ev);
+      Tick.next.totalValue += ev;
+      return true;
    });
 }
 
 const _positionCache: IPointData = { x: 0, y: 0 };
 
-function tickTransportation(transport: ITransportationData, mah: IPointData | null): void {
+function tickTransportation(transport: ITransportationDataV2, grid: Grid, mah: IPointData | null): boolean {
+   const fromPosition = grid.xyToPosition(transport.fromXy);
+   const toPosition = grid.xyToPosition(transport.toXy);
+   const totalTick = grid.distanceTile(transport.fromXy, transport.toXy);
+
    // TODO: This needs to be double checked when fuel is implemented!
    if (isTransportable(transport.fuel)) {
       transport.ticksSpent++;
       transport.hasEnoughFuel = true;
-      return;
+      return transport.ticksSpent >= totalTick;
    }
 
-   transport.currentFuelAmount = transport.fuelAmount;
+   transport.fuelCurrentTick = transport.fuelPerTick;
    if (mah) {
-      Vector2.lerp(
-         transport.fromPosition,
-         transport.toPosition,
-         transport.ticksSpent / transport.ticksRequired,
-         _positionCache,
-      );
+      Vector2.lerp(fromPosition, toPosition, transport.ticksSpent / totalTick, _positionCache);
       if (v2(_positionCache).subtractSelf(mah).lengthSqr() <= 200 * 200) {
-         transport.currentFuelAmount = 0;
+         transport.fuelCurrentTick = 0;
       }
    }
 
-   if (getAvailableWorkers(transport.fuel) >= transport.currentFuelAmount) {
-      useWorkers(transport.fuel, transport.currentFuelAmount, null);
+   if (getAvailableWorkers(transport.fuel) >= transport.fuelCurrentTick) {
+      useWorkers(transport.fuel, transport.fuelCurrentTick, null);
+      mapSafeAdd(getFuelByTarget(), transport.toXy, transport.fuelCurrentTick);
       transport.ticksSpent++;
       transport.hasEnoughFuel = true;
    } else {
       transport.hasEnoughFuel = false;
    }
+
+   return transport.ticksSpent >= totalTick;
 }
 
 // This needs to be called after tickTiles

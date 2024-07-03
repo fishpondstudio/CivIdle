@@ -18,6 +18,7 @@ import { Config } from "../../../shared/logic/Config";
 import { EXPLORER_SECONDS, MAX_EXPLORER } from "../../../shared/logic/Constants";
 import {
    getBuildingIO,
+   getFuelByTarget,
    getResourceIO,
    getTransportStat,
    unlockedResources,
@@ -412,13 +413,7 @@ function BuildingTab({ gameState }: IBuildingComponentProps): React.ReactNode {
                                     </div>
                                  </td>
                                  <td className="right">
-                                    <FormatNumber
-                                       value={
-                                          gameState.transportation
-                                             .get(xy)
-                                             ?.reduce((prev, curr) => prev + curr.currentFuelAmount, 0) ?? 0
-                                       }
-                                    />
+                                    <FormatNumber value={getFuelByTarget().get(xy) ?? 0} />
                                  </td>
                                  <td
                                     className={classNames({

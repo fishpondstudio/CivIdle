@@ -79,6 +79,39 @@ export function migrateSavedGame(save: SavedGame) {
          });
       }
    });
+
+   if (!save.current.transportationV2) {
+      save.current.transportationV2 = [];
+   }
+
+   // @ts-expect-error
+   if (save.current.transportation) {
+      // @ts-expect-error
+      save.current.transportation.forEach((ts) => {
+         // @ts-expect-error
+         ts.forEach((t) => {
+            save.current.transportationV2.push({
+               fromXy: t.fromXy,
+               fromPosition: t.fromPosition,
+               toXy: t.toXy,
+               toPosition: t.toPosition,
+               id: t.id,
+               ticksSpent: t.ticksSpent,
+               ticksRequired: t.ticksRequired,
+               resource: t.resource,
+               amount: t.amount,
+               fuel: t.fuel,
+               fuelPerTick: t.fuelAmount,
+               fuelCurrentTick: t.currentFuelAmount,
+               hasEnoughFuel: t.hasEnoughFuel,
+            });
+         });
+      });
+
+      // @ts-expect-error
+      delete save.current.transportation;
+   }
+
    if (isNullOrUndefined(save.options.defaultProductionPriority)) {
       // @ts-expect-error
       save.options.defaultProductionPriority = getProductionPriority(save.options.defaultPriority);

@@ -400,7 +400,10 @@ export class WorldScene extends Scene {
       }
       this._transportLines.clear();
       const lines: Record<string, true> = {};
-      gs.transportation.get(xy)?.forEach((t) => {
+      gs.transportationV2.forEach((t) => {
+         if (t.fromXy !== xy && t.toXy !== xy) {
+            return;
+         }
          const fromGrid = tileToPoint(t.fromXy);
          const toGrid = tileToPoint(t.toXy);
          const key = [t.resource, (fromGrid.y - toGrid.y) / (fromGrid.x - toGrid.x)].join(",");
@@ -469,44 +472,42 @@ export class WorldScene extends Scene {
       }
       const worldRect = this.viewport.visibleWorldRect();
       this._ticked.clear();
-      gs.transportation.forEach((transports) => {
-         transports.forEach((t) => {
-            Vector2.lerp(
-               t.fromPosition,
-               t.toPosition,
-               (t.ticksSpent + timeSinceLastTick) / t.ticksRequired,
-               this._pos,
-            );
+      gs.transportationV2.forEach((t) => {
+         Vector2.lerp(
+            t.fromPosition,
+            t.toPosition,
+            (t.ticksSpent + timeSinceLastTick) / t.ticksRequired,
+            this._pos,
+         );
 
-            this._rect.x = this._pos.x;
-            this._rect.y = this._pos.y;
-            if (!worldRect.intersects(this._rect)) {
-               return;
-            }
+         this._rect.x = this._pos.x;
+         this._rect.y = this._pos.y;
+         if (!worldRect.intersects(this._rect)) {
+            return;
+         }
 
-            let visual = this._transport.get(t.id);
-            if (!visual) {
-               visual = this._transportPool.allocate();
-               visual.position = t.fromPosition;
-               visual.tint = getColorCached(options.resourceColors[t.resource] ?? "#ffffff");
-               lookAt(visual, t.toPosition);
-               this._transport.set(t.id, visual);
-            }
+         let visual = this._transport.get(t.id);
+         if (!visual) {
+            visual = this._transportPool.allocate();
+            visual.position = t.fromPosition;
+            visual.tint = getColorCached(options.resourceColors[t.resource] ?? "#ffffff");
+            lookAt(visual, t.toPosition);
+            this._transport.set(t.id, visual);
+         }
 
-            if (t.hasEnoughFuel) {
-               const visual = this._transport.get(t.id);
-               visual!.position = this._pos;
-               // This is the last tick
-               if (t.ticksSpent >= t.ticksRequired - 1) {
-                  visual!.alpha = lerp(
-                     options.themeColors.TransportIndicatorAlpha,
-                     0,
-                     clamp(timeSinceLastTick - 0.5, 0, 0.5) * 2,
-                  );
-               }
+         if (t.hasEnoughFuel) {
+            const visual = this._transport.get(t.id);
+            visual!.position = this._pos;
+            // This is the last tick
+            if (t.ticksSpent >= t.ticksRequired - 1) {
+               visual!.alpha = lerp(
+                  options.themeColors.TransportIndicatorAlpha,
+                  0,
+                  clamp(timeSinceLastTick - 0.5, 0, 0.5) * 2,
+               );
             }
-            this._ticked.add(t.id);
-         });
+         }
+         this._ticked.add(t.id);
       });
 
       for (const [id, sprite] of this._transport) {

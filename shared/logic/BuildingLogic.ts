@@ -14,7 +14,6 @@ import {
    mReduceOf,
    mapOf,
    mapSafeAdd,
-   mapSafePush,
    pointToTile,
    reduceOf,
    safeAdd,
@@ -351,29 +350,28 @@ export function addTransportation(
    resource: Resource,
    amount: number,
    fuelResource: Resource,
-   fuelAmount: number,
+   fuelPerTick: number,
    fromXy: Tile,
    toXy: Tile,
    gs: GameState,
 ): void {
-   const fromGrid = tileToPoint(fromXy);
-   const fromPosition = getGrid(gs).gridToPosition(fromGrid);
-   const toGrid = tileToPoint(toXy);
-   const toPosition = getGrid(gs).gridToPosition(toGrid);
-   useWorkers(fuelResource, fuelAmount, null);
-   mapSafePush(gs.transportation, toXy, {
+   const grid = getGrid(gs);
+   const fromPosition = grid.xyToPosition(fromXy);
+   const toPosition = grid.xyToPosition(toXy);
+   useWorkers(fuelResource, fuelPerTick, null);
+   gs.transportationV2.push({
       id: ++gs.transportId,
       fromXy,
-      toXy,
       fromPosition,
+      toXy,
       toPosition,
-      ticksRequired: getGrid(gs).distance(fromGrid.x, fromGrid.y, toGrid.x, toGrid.y),
       ticksSpent: 0,
+      ticksRequired: grid.distanceTile(fromXy, toXy),
       resource,
       amount,
       fuel: "Worker",
-      fuelAmount,
-      currentFuelAmount: fuelAmount,
+      fuelPerTick,
+      fuelCurrentTick: fuelPerTick,
       hasEnoughFuel: true,
    });
 }

@@ -37,6 +37,7 @@ class IntraTickCache {
    >();
    storageFullBuildings: Tile[] | undefined;
    resourceIO: IResourceIO | undefined;
+   fuelByTarget: Map<Tile, number> = new Map();
 }
 
 export interface IResourceIO {
@@ -50,6 +51,10 @@ let _cache = new IntraTickCache();
 
 export function clearIntraTickCache(): void {
    _cache = new IntraTickCache();
+}
+
+export function getFuelByTarget(): Map<Tile, number> {
+   return _cache.fuelByTarget;
 }
 
 export function getBuildingIO(
@@ -189,14 +194,12 @@ export function getTransportStat(gs: GameState): ITransportStat {
    let totalFuel = 0;
    let totalTransports = 0;
    let stalled = 0;
-   gs.transportation.forEach((target) => {
-      target.forEach((t) => {
-         totalFuel += t.currentFuelAmount;
-         ++totalTransports;
-         if (!t.hasEnoughFuel) {
-            ++stalled;
-         }
-      });
+   gs.transportationV2.forEach((t) => {
+      totalFuel += t.fuelCurrentTick;
+      ++totalTransports;
+      if (!t.hasEnoughFuel) {
+         ++stalled;
+      }
    });
    const result: ITransportStat = { totalFuel, totalTransports, stalled };
    _cache.transportStat = result;
