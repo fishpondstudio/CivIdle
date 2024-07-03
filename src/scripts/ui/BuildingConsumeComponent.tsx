@@ -8,6 +8,7 @@ import type { ICloneBuildingData } from "../../../shared/logic/Tile";
 import { isEmpty, keysOf } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import { playClick } from "../visuals/Sound";
+import { ApplyToAllComponent } from "./ApplyToAllComponent";
 import { BuildingIOTreeViewComponent } from "./BuildingIOTreeViewComponent";
 import type { IBuildingComponentProps } from "./BuildingPage";
 
@@ -50,6 +51,14 @@ function ChooseResource({ gameState, xy }: IBuildingComponentProps): React.React
                   </option>
                ))}
             </select>
+            <div className="sep10" />
+            <ApplyToAllComponent
+               xy={xy}
+               getOptions={() => {
+                  return { inputResource: c.inputResource } as ICloneBuildingData;
+               }}
+               gameState={gameState}
+            />
             <div className="separator" />
          </>
       );
