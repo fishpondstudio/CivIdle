@@ -229,12 +229,17 @@ function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
    if (building.status === "building" || building.status === "upgrading") {
       const cost = getBuildingCost(building);
       const { total } = getBuilderCapacity(building, xy, gs);
-      building.suspendedInput.forEach((_, res) => {
+      let manualSuspendedCount = 0;
+      building.suspendedInput.forEach((s, res) => {
+         if (s === SuspendedInput.ManualSuspended) {
+            manualSuspendedCount++;
+         }
          if (!cost[res]) {
             building.suspendedInput.delete(res);
          }
       });
-      const enabledResourceCount = sizeOf(cost) - building.suspendedInput.size;
+
+      const enabledResourceCount = sizeOf(cost) - manualSuspendedCount;
       const builderCapacityPerResource = enabledResourceCount > 0 ? total / enabledResourceCount : 0;
 
       // Construction / Upgrade is paused!
