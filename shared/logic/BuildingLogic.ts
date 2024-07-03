@@ -812,6 +812,9 @@ export function canBeElectrified(b: Building): boolean {
    if (isSpecialBuilding(b)) {
       return false;
    }
+   if (b === "CloneFactory") {
+      return true;
+   }
    const output = Config.Building[b].output;
    if (sizeOf(output) <= 0) {
       return false;
