@@ -317,11 +317,6 @@ fieldset .separator {
    align-items: center;
 }
 
-.column {
-   display: flex;
-   flex-direction: column;
-}
-
 .col {
    display: flex;
    flex-direction: column;
@@ -339,6 +334,7 @@ fieldset .separator {
    justify-content: flex-end;
 }
 
+.f1,
 .row .f1,
 .col .f1 {
    flex: 1;
