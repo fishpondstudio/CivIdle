@@ -1600,6 +1600,50 @@ export class BuildingDefinitions {
       wikipedia: "International_Space_Station",
    };
 
+   MarinaBaySands: IBuildingDefinition = {
+      name: () => t(L.MarinaBaySands),
+      desc: () => t(L.MarinaBaySandsDesc),
+      input: {},
+      output: {},
+      construction: { Spacecraft: 100, AircraftCarrier: 100, NuclearSubmarine: 100 },
+      max: 1,
+      special: BuildingSpecial.WorldWonder,
+      wikipedia: "Marina_Bay_Sands",
+   };
+
+   PalmJumeirah: IBuildingDefinition = {
+      name: () => t(L.PalmJumeirah),
+      desc: () => t(L.PalmJumeirahDesc),
+      input: {},
+      output: {},
+      construction: { Spacecraft: 100, AircraftCarrier: 100, NuclearSubmarine: 100 },
+      max: 1,
+      special: BuildingSpecial.WorldWonder,
+      wikipedia: "Palm_Jumeirah",
+   };
+
+   AldersonDisk: IBuildingDefinition = {
+      name: () => t(L.AldersonDisk),
+      desc: () => t(L.AldersonDiskDesc),
+      input: {},
+      output: {},
+      construction: { Spacecraft: 100, AircraftCarrier: 100, NuclearSubmarine: 100 },
+      max: 1,
+      special: BuildingSpecial.WorldWonder,
+      wikipedia: "Alderson_disk",
+   };
+
+   DysonSphere: IBuildingDefinition = {
+      name: () => t(L.DysonSphere),
+      desc: () => t(L.DysonSphereDesc),
+      input: {},
+      output: {},
+      construction: { Spacecraft: 100, AircraftCarrier: 100, NuclearSubmarine: 100 },
+      max: 1,
+      special: BuildingSpecial.WorldWonder,
+      wikipedia: "Alderson_disk",
+   };
+
    // ArcDeTriomphe: IBuildingDefinition = {
    //    name: () => t(L.ArcDeTriomphe),
    //    desc: () => t(L.ArcDeTriompheDesc),

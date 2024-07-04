@@ -50,6 +50,10 @@ const BuildingBodyOverride: Partial<Record<Building, FunctionComponent<IBuilding
    ZigguratOfUr: ToggleWonderBuildingBody,
    HagiaSophia: HagiaSophiaBuildingBody,
    InternationalSpaceStation: UpgradableWonderBuildingBody,
+   MarinaBaySands: UpgradableWonderBuildingBody,
+   PalmJumeirah: UpgradableWonderBuildingBody,
+   AldersonDisk: UpgradableWonderBuildingBody,
+   DysonSphere: UpgradableWonderBuildingBody,
 };
 
 export function BuildingPage(props: { tile: ITileData }): React.ReactNode {

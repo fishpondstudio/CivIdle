@@ -1112,6 +1112,34 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          });
          break;
       }
+      case "MarinaBaySands": {
+         Tick.next.globalMultipliers.worker.push({
+            value: 5 + 1 * (building.level - 1),
+            source: buildingName,
+         });
+         break;
+      }
+      case "PalmJumeirah": {
+         Tick.next.globalMultipliers.builderCapacity.push({
+            value: 10 + 2 * (building.level - 1),
+            source: buildingName,
+         });
+         break;
+      }
+      case "AldersonDisk": {
+         Tick.next.globalMultipliers.happiness.push({
+            value: 25 + 5 * (building.level - 1),
+            source: buildingName,
+         });
+         break;
+      }
+      case "DysonSphere": {
+         Tick.next.globalMultipliers.output.push({
+            value: 5 + 1 * (building.level - 1),
+            source: buildingName,
+         });
+         break;
+      }
       // case "ArcDeTriomphe": {
       //    forEach(Config.Building, (b, def) => {
       //       if (def.input.Culture || def.output.Culture) {

@@ -1284,4 +1284,12 @@ export const EN = {
    InternationalSpaceStationDesc: "All buildings get +5 Storage Multiplier. This wonder can be upgraded and each additional upgrade provides +1 Storage Multiplier to all buildings",
    WonderUpgradeLevel: "Wonder Level",
    UpgradeWonderNotProducingDesc: "This wonder is being upgraded - <b>its boost will no longer work until the upgrade is complete</b>",
+   MarinaBaySands: "Marina Bay Sands",
+   MarinaBaySandsDesc: "All buildings get +5 Worker Capacity Multiplier. This wonder can be upgraded and each additional upgrade provides +1 Worker Capacity Multiplier to all buildings",
+   PalmJumeirah: "Palm Jumeirah",
+   PalmJumeirahDesc: "+10 Builder Capacity. This wonder can be upgraded and each additional upgrade provides +2 Builder Capacity",
+   AldersonDisk: "Alderson Disk",
+   AldersonDiskDesc: "+25 Happiness. This wonder can be upgraded and each additional upgrade provides +5 Happiness",
+   DysonSphere: "Dyson Sphere",
+   DysonSphereDesc: "All buildings get +5 Production Multiplier. This wonder can be upgraded and each additional upgrade provides +1 Production Multiplier to all buildings",
 };
