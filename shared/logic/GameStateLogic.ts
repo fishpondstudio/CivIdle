@@ -36,6 +36,10 @@ export function deserializeSave(bytes: Uint8Array): SavedGame {
    checksum.expected = expected;
    saveGame.options.checksum = null;
    checksum.actual = wyhash(serializeSaveLite(saveGame), BigInt(0)).toString(16);
+   // TODO: Remove this when everyone is migrated!
+   if ("transportation" in saveGame.current) {
+      checksum.actual = checksum.expected;
+   }
    return saveGame;
 }
 export function notifyGameStateUpdate(gameState?: GameState): void {
