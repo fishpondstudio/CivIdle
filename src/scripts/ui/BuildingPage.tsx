@@ -24,6 +24,7 @@ import { TheMetBuildingBody } from "./TheMetBuildingBody";
 import { ToggleWonderBuildingBody } from "./ToggleableWonderBuildingBody";
 import { TraditionBuildingBody } from "./TraditionBuildingBody";
 import { UnitedNationsBuildingBody } from "./UnitedNationsBuildingBody";
+import { UpgradableWonderBuildingBody } from "./UpgradableWonderBuildingBody";
 import { WarehouseBuildingBody } from "./WarehouseBuildingBody";
 
 const BuildingBodyOverride: Partial<Record<Building, FunctionComponent<IBuildingComponentProps>>> = {
@@ -48,6 +49,7 @@ const BuildingBodyOverride: Partial<Record<Building, FunctionComponent<IBuilding
    EuphratesRiver: EuphratesRiverBuildingBody,
    ZigguratOfUr: ToggleWonderBuildingBody,
    HagiaSophia: HagiaSophiaBuildingBody,
+   InternationalSpaceStation: UpgradableWonderBuildingBody,
 };
 
 export function BuildingPage(props: { tile: ITileData }): React.ReactNode {

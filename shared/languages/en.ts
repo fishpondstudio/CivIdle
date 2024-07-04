@@ -1279,5 +1279,9 @@ export const EN = {
    JohnMcCarthy: "John McCarthy",
    ComputerLab: "Computer Lab",
    InputResourceForCloning: "Input Resource For Cloning",
-   ResourceCloneTooltip: "The production multiplier only applies to the cloned resource (i.e. the extra copy)"
+   ResourceCloneTooltip: "The production multiplier only applies to the cloned resource (i.e. the extra copy)",
+   InternationalSpaceStation: "International Space Station",
+   InternationalSpaceStationDesc: "All buildings get +5 Storage Multiplier. This wonder can be upgraded and each additional upgrade provides +1 Storage Multiplier to all buildings",
+   WonderUpgradeLevel: "Wonder Level",
+   UpgradeWonderNotProducingDesc: "This wonder is being upgraded - <b>its boost will no longer work until the upgrade is complete</b>",
 };

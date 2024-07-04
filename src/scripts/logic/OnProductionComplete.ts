@@ -1105,6 +1105,13 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          }
          break;
       }
+      case "InternationalSpaceStation": {
+         Tick.next.globalMultipliers.storage.push({
+            value: 5 + (building.level - 1),
+            source: buildingName,
+         });
+         break;
+      }
       // case "ArcDeTriomphe": {
       //    forEach(Config.Building, (b, def) => {
       //       if (def.input.Culture || def.output.Culture) {

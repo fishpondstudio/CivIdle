@@ -437,19 +437,19 @@ export function getBuildingCost(
          const unlockable = Config.Tradition[building.tradition].content[building.level];
          cost = structuredClone(Config.Upgrade[unlockable].requireResources);
          forEach(cost, (k, v) => {
-            cost[k] = v * 100 * Math.pow(2, building.level);
+            cost[k] = v * 100 * multiplier * Math.pow(2, building.level);
          });
       }
       if (building.religion && building.level > 0) {
          const unlockable = Config.Religion[building.religion].content[building.level];
          cost = structuredClone(Config.Upgrade[unlockable].requireResources);
          forEach(cost, (k, v) => {
-            cost[k] = v * 100 * Math.pow(2, building.level);
+            cost[k] = v * 100 * multiplier * Math.pow(2, building.level);
          });
       }
       keysOf(cost).forEach((res) => {
          const price = Config.ResourcePrice[res] ?? 1;
-         cost[res] = (multiplier * cost[res]!) / price;
+         cost[res] = (Math.pow(1.5, building.level) * multiplier * cost[res]!) / price;
       });
    } else {
       const multiplier = 10;
@@ -605,6 +605,9 @@ export function getBuildingPercentage(xy: Tile, gs: GameState): BuildingPercenta
 }
 
 export function getBuildingLevelLabel(b: IBuildingData): string {
+   if (b.type === "InternationalSpaceStation") {
+      return String(b.level);
+   }
    if (Config.Building[b.type].special === BuildingSpecial.HQ || isWorldOrNaturalWonder(b.type)) {
       return "";
    }

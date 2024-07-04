@@ -825,7 +825,7 @@ export class TechDefinitions {
       name: () => t(L.Nanotechnology),
       column: 24,
       requireTech: ["MutualAssuredDestruction", "SpaceProgram"],
-      unlockBuilding: ["MaglevFactory"],
+      unlockBuilding: ["MaglevFactory", "InternationalSpaceStation"],
    };
    Software: ITechDefinition = {
       name: () => t(L.Software),

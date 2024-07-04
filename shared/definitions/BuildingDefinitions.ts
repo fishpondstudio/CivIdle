@@ -1589,6 +1589,17 @@ export class BuildingDefinitions {
       wikipedia: "Zagros_Mountains",
    };
 
+   InternationalSpaceStation: IBuildingDefinition = {
+      name: () => t(L.InternationalSpaceStation),
+      desc: () => t(L.InternationalSpaceStationDesc),
+      input: {},
+      output: {},
+      construction: { Spacecraft: 100, AircraftCarrier: 100, NuclearSubmarine: 100 },
+      max: 1,
+      special: BuildingSpecial.WorldWonder,
+      wikipedia: "International_Space_Station",
+   };
+
    // ArcDeTriomphe: IBuildingDefinition = {
    //    name: () => t(L.ArcDeTriomphe),
    //    desc: () => t(L.ArcDeTriompheDesc),

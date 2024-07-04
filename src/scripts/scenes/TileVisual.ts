@@ -2,11 +2,7 @@ import type { SmoothGraphics } from "@pixi/graphics-smooth";
 import type { IDestroyOptions, IPointData } from "pixi.js";
 import { BitmapText, Container, Rectangle, Sprite } from "pixi.js";
 import type { Resource } from "../../../shared/definitions/ResourceDefinitions";
-import {
-   getBuildingLevelLabel,
-   getBuildingPercentage,
-   isWorldOrNaturalWonder,
-} from "../../../shared/logic/BuildingLogic";
+import { getBuildingLevelLabel, getBuildingPercentage } from "../../../shared/logic/BuildingLogic";
 import type { GameOptions, GameState } from "../../../shared/logic/GameState";
 import { getGameOptions, getGameState } from "../../../shared/logic/GameStateLogic";
 import { getGrid } from "../../../shared/logic/IntraTickCache";
@@ -305,9 +301,12 @@ export class TileVisual extends Container {
             this._upgrade.visible = true;
             this.toggleUpgradeTween(true);
             this._spinner.visible = false;
-            if (!isWorldOrNaturalWonder(this._tile.building.type)) {
+            const level = getBuildingLevelLabel(this._tile.building);
+            if (level.length > 0) {
                this._level.visible = true;
-               this._level.text = getBuildingLevelLabel(this._tile.building);
+               this._level.text = level;
+            } else {
+               this._level.visible = false;
             }
             this.showTimeLeft(tileData, gameState);
             return;
@@ -346,9 +345,12 @@ export class TileVisual extends Container {
                }
             }
 
-            if (!isWorldOrNaturalWonder(this._tile.building.type)) {
+            const level = getBuildingLevelLabel(this._tile.building);
+            if (level.length > 0) {
                this._level.visible = true;
                this._level.text = getBuildingLevelLabel(this._tile.building);
+            } else {
+               this._level.visible = false;
             }
 
             const reason = Tick.current.notProducingReasons.get(tileData.tile);
