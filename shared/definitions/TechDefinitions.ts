@@ -862,7 +862,7 @@ export class TechDefinitions {
       name: () => t(L.SocialNetwork),
       column: 25,
       requireTech: ["WorldWideWeb"],
-      unlockBuilding: ["CivTok"],
+      unlockBuilding: ["CivTok", "MarinaBaySands"],
    };
    FinancialArbitrage: ITechDefinition = {
       name: () => t(L.FinancialArbitrage),
@@ -893,12 +893,13 @@ export class TechDefinitions {
       name: () => t(L.Blockchain),
       column: 26,
       requireTech: ["FinancialArbitrage", "SocialNetwork"],
-      unlockBuilding: ["BitcoinMiner"],
+      unlockBuilding: ["BitcoinMiner", "PalmJumeirah"],
    };
    Future: ITechDefinition = {
       name: () => t(L.Future),
       column: 27,
       requireTech: ["Blockchain", "VirtualReality", "Robotics", "ArtificialIntelligence"],
+      unlockBuilding: ["AldersonDisk", "DysonSphere"],
    };
 }
 
