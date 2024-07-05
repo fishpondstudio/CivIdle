@@ -437,14 +437,14 @@ export function getBuildingCost(
          const unlockable = Config.Tradition[building.tradition].content[building.level];
          cost = structuredClone(Config.Upgrade[unlockable].requireResources);
          forEach(cost, (k, v) => {
-            cost[k] = v * 100 * multiplier * Math.pow(2, building.level);
+            cost[k] = v * 100 * Math.pow(2, building.level);
          });
       }
       if (building.religion && building.level > 0) {
          const unlockable = Config.Religion[building.religion].content[building.level];
          cost = structuredClone(Config.Upgrade[unlockable].requireResources);
          forEach(cost, (k, v) => {
-            cost[k] = v * 100 * multiplier * Math.pow(2, building.level);
+            cost[k] = v * 100 * Math.pow(2, building.level);
          });
       }
       keysOf(cost).forEach((res) => {

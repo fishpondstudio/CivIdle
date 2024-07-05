@@ -1269,7 +1269,7 @@ export const EN = {
    Peacekeeper: "Peacekeeper",
    Peace: "Peace",
    TimBernersLee: "Tim Berners-Lee",
-   GordonMoore: "GordonMoore",
+   GordonMoore: "Gordon Moore",
    DennisRitchie: "Dennis Ritchie",
    HymanGRickover: "Hyman G. Rickover",
    HarryMarkowitz: "Harry Markowitz",
