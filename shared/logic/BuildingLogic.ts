@@ -605,7 +605,14 @@ export function getBuildingPercentage(xy: Tile, gs: GameState): BuildingPercenta
 }
 
 export function getBuildingLevelLabel(b: IBuildingData): string {
-   if (b.type === "InternationalSpaceStation") {
+   if (
+      b.type === "InternationalSpaceStation" ||
+      b.type === "MarinaBaySands" ||
+      b.type === "PalmJumeirah" ||
+      b.type === "AldersonDisk" ||
+      b.type === "DysonSphere" ||
+      b.type === "MatrioshkaBrain"
+   ) {
       return String(b.level);
    }
    if (Config.Building[b.type].special === BuildingSpecial.HQ || isWorldOrNaturalWonder(b.type)) {
