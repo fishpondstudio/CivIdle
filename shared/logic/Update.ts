@@ -383,6 +383,7 @@ function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
       Tick.next.totalValue += rev;
       mapSafeAdd(Tick.next.resourceValueByTile, xy, rev);
       mapSafeAdd(Tick.next.resourceValues, res, rev);
+      mapSafeAdd(Tick.next.resourceAmount, res, amount);
 
       mapSafePush(Tick.next.resourcesByTile, res, {
          tile: xy,
