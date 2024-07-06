@@ -37,6 +37,10 @@ export function checkAgeAchievements(currentAge: TechAge): void {
          SteamClient.unlockAchievement("ColdWar");
          break;
       }
+      case "InformationAge": {
+         SteamClient.unlockAchievement("Information");
+         break;
+      }
    }
 }
 
