@@ -1292,4 +1292,6 @@ export const EN = {
    AldersonDiskDesc: "+25 Happiness. This wonder can be upgraded and each additional upgrade provides +5 Happiness",
    DysonSphere: "Dyson Sphere",
    DysonSphereDesc: "All buildings get +5 Production Multiplier. This wonder can be upgraded and each additional upgrade provides +1 Production Multiplier to all buildings",
+   MatrioshkaBrain: "Matrioshka Brain",
+   MatrioshkaBrainDesc: "Allow Science to be counted when calculating empire value (5 Science = 1 Empire Value). +5 Science Per Busy and Idle Worker. This wonder can be upgraded and each additional upgrade provides +1 Science Per Busy and Idle Worker",
 };

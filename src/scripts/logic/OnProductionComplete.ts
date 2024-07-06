@@ -15,6 +15,7 @@ import {
    EXPLORER_SECONDS,
    MAX_EXPLORER,
    MAX_TELEPORT,
+   SCIENCE_VALUE,
    TELEPORT_SECONDS,
 } from "../../../shared/logic/Constants";
 import { getGameOptions, getGameState } from "../../../shared/logic/GameStateLogic";
@@ -1138,6 +1139,24 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
             value: 5 + 1 * (building.level - 1),
             source: buildingName,
          });
+         break;
+      }
+      case "MatrioshkaBrain": {
+         Tick.next.globalMultipliers.sciencePerBusyWorker.push({
+            value: 5 + 1 * (building.level - 1),
+            source: buildingName,
+         });
+         Tick.next.globalMultipliers.sciencePerIdleWorker.push({
+            value: 5 + 1 * (building.level - 1),
+            source: buildingName,
+         });
+         const hq = Tick.current.specialBuildings.get("Headquarter");
+         if (hq) {
+            const scienceValue = (hq.building.resources?.Science ?? 0) * SCIENCE_VALUE;
+            Tick.next.totalValue += scienceValue;
+            mapSafeAdd(Tick.next.resourceValueByTile, xy, scienceValue);
+            mapSafeAdd(Tick.next.resourceValues, "Science", scienceValue);
+         }
          break;
       }
       // case "ArcDeTriomphe": {

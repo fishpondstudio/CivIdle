@@ -1644,6 +1644,17 @@ export class BuildingDefinitions {
       wikipedia: "Dyson_sphere",
    };
 
+   MatrioshkaBrain: IBuildingDefinition = {
+      name: () => t(L.MatrioshkaBrain),
+      desc: () => t(L.MatrioshkaBrainDesc),
+      input: {},
+      output: {},
+      construction: { CivOasis: 100, Peace: 100, CivGPT: 100 },
+      max: 1,
+      special: BuildingSpecial.WorldWonder,
+      wikipedia: "Matrioshka_brain",
+   };
+
    // ArcDeTriomphe: IBuildingDefinition = {
    //    name: () => t(L.ArcDeTriomphe),
    //    desc: () => t(L.ArcDeTriompheDesc),
