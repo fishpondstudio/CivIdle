@@ -1,6 +1,7 @@
 import type { Building } from "../definitions/BuildingDefinitions";
 import type { IUnlockable } from "../definitions/ITechDefinition";
 import { NoPrice, NoStorage, type Resource } from "../definitions/ResourceDefinitions";
+import type { Tech } from "../definitions/TechDefinitions";
 import type { Grid } from "../utilities/Grid";
 import {
    HOUR,
@@ -95,6 +96,7 @@ import {
 
 export const OnPriceUpdated = new TypedEvent<GameState>();
 export const OnBuildingComplete = new TypedEvent<Tile>();
+export const OnTechUnlocked = new TypedEvent<Tech>();
 export const OnBuildingProductionComplete = new TypedEvent<{ xy: Tile; offline: boolean }>();
 export const RequestFloater = new TypedEvent<{ xy: Tile; amount: number }>();
 export const RequestChooseGreatPerson = new TypedEvent<{ permanent: boolean }>();

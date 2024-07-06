@@ -1,6 +1,17 @@
 import type { TechAge } from "../../../shared/definitions/TechDefinitions";
 import type { GameState } from "../../../shared/logic/GameState";
+import { OnTechUnlocked } from "../../../shared/logic/Update";
 import { SteamClient, isSteam } from "../rpc/SteamClient";
+
+OnTechUnlocked.on((tech) => {
+   if (!isSteam()) return;
+   switch (tech) {
+      case "Future": {
+         SteamClient.unlockAchievement("Bronze");
+         break;
+      }
+   }
+});
 
 export function checkAgeAchievements(currentAge: TechAge): void {
    if (!isSteam()) return;

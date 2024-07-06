@@ -17,6 +17,7 @@ import type { GameState } from "./GameState";
 import { RequestPathFinderGridUpdate, SEA_TILE_COSTS } from "./PlayerTradeLogic";
 import { Tick } from "./TickLogic";
 import { getDepositTileCount } from "./Tile";
+import { OnTechUnlocked } from "./Update";
 
 export function getTechUnlockCost(tech: Tech): number {
    const a = getAgeForTech(tech);
@@ -161,6 +162,7 @@ export function unlockTech(tech: Tech, dispatchEvent: boolean, gs: GameState): v
    if (tech in SEA_TILE_COSTS) {
       RequestPathFinderGridUpdate.emit();
    }
+   OnTechUnlocked.emit(tech);
 }
 
 export const RequestResetTile = new TypedEvent<Tile>();
