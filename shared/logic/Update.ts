@@ -233,58 +233,44 @@ function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
    if (building.status === "building" || building.status === "upgrading") {
       const cost = getBuildingCost(building);
       const { total } = getBuilderCapacity(building, xy, gs);
-      let manualSuspendedCount = 0;
-      building.suspendedInput.forEach((s, res) => {
-         if (s === SuspendedInput.ManualSuspended) {
-            manualSuspendedCount++;
-         }
-         if (!cost[res]) {
-            building.suspendedInput.delete(res);
-         }
-      });
 
-      const enabledResourceCount = sizeOf(cost) - manualSuspendedCount;
-      const builderCapacityPerResource = enabledResourceCount > 0 ? total / enabledResourceCount : 0;
-
-      // Construction / Upgrade is paused!
-      if (builderCapacityPerResource <= 0) {
-         return;
-      }
-
+      const toTransport = new Map<Resource, number>();
       let completed = true;
-
       forEach(cost, (res, amount) => {
          const amountArrived = building.resources[res] ?? 0;
          // Already full
          if (amountArrived >= amount) {
             building.suspendedInput.set(res, SuspendedInput.AutoSuspended);
-            // continue;
-            return false;
+            return;
          }
+         completed = false;
          // Will be full
          const amountLeft = amount - getAmountInTransit(xy, res, gs) - amountArrived;
          if (amountLeft <= 0) {
-            completed = false;
-            // continue;
-            return false;
+            return;
          }
-         completed = false;
          if (building.suspendedInput.get(res) === SuspendedInput.ManualSuspended) {
-            return false;
+            return;
          }
-
          building.suspendedInput.delete(res);
-         // Each transportation costs 1 worker, and deliver Total (=Builder Capacity x Multiplier) resources
-         transportResource(
-            res,
-            clamp(amountLeft, 0, builderCapacityPerResource),
-            builderCapacityPerResource,
-            xy,
-            gs,
-            getInputMode(building, gs),
-            defaultTransportFilter(building, gs),
-         );
+         toTransport.set(res, amount);
       });
+
+      if (toTransport.size > 0) {
+         const builderCapacityPerResource = total / toTransport.size;
+         toTransport.forEach((amount, res) => {
+            // Each transportation costs 1 worker, and deliver Total (=Builder Capacity x Multiplier) resources
+            transportResource(
+               res,
+               clamp(amount, 0, builderCapacityPerResource),
+               builderCapacityPerResource,
+               xy,
+               gs,
+               getInputMode(building, gs),
+               defaultTransportFilter(building, gs),
+            );
+         });
+      }
 
       if (completed) {
          building.level++;
@@ -300,6 +286,7 @@ function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
             building.status = "completed";
          }
       }
+
       forEach(building.resources, (res, amount) => {
          if (!Number.isFinite(amount) || amount <= 0) {
             return;
