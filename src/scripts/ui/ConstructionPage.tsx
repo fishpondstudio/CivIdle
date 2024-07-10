@@ -64,7 +64,13 @@ export function ConstructionPage({ tile }: { tile: ITileData }): React.ReactNode
             <BuildingConstructionProgressComponent xy={tile.tile} gameState={gs} />
             {building.level > 0 ? (
                <WarningComponent className="mb10 text-small" icon="warning">
-                  <RenderHTML html={t(L.UpgradeBuildingNotProducingDescV2)} />
+                  <RenderHTML
+                     html={
+                        isWorldWonder(building.type)
+                           ? t(L.UpgradeWonderNotProducingDesc)
+                           : t(L.UpgradeBuildingNotProducingDescV2)
+                     }
+                  />
                </WarningComponent>
             ) : null}
             {isSpecialBuilding(building.type) ? null : (

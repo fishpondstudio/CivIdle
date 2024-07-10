@@ -11,10 +11,17 @@ import {
    totalMultiplierFor,
 } from "./BuildingLogic";
 import { Config } from "./Config";
+import { SCIENCE_VALUE } from "./Constants";
 import type { GameState } from "./GameState";
 import { TILE_SIZE } from "./GameStateLogic";
 import { NotProducingReason, Tick } from "./TickLogic";
-import type { IBuildingData, IMarketBuildingData, IResourceImportBuildingData, ITileData } from "./Tile";
+import type {
+   IBuildingData,
+   ICloneBuildingData,
+   IMarketBuildingData,
+   IResourceImportBuildingData,
+   ITileData,
+} from "./Tile";
 
 class IntraTickCache {
    revealedDeposits: PartialSet<Deposit> | undefined;
@@ -30,6 +37,7 @@ class IntraTickCache {
    >();
    storageFullBuildings: Tile[] | undefined;
    resourceIO: IResourceIO | undefined;
+   fuelByTarget: Map<Tile, number> = new Map();
 }
 
 export interface IResourceIO {
@@ -43,6 +51,10 @@ let _cache = new IntraTickCache();
 
 export function clearIntraTickCache(): void {
    _cache = new IntraTickCache();
+}
+
+export function getFuelByTarget(): Map<Tile, number> {
+   return _cache.fuelByTarget;
 }
 
 export function getBuildingIO(
@@ -102,18 +114,37 @@ export function getBuildingIO(
          // Resource imports is not affected by multipliers
          return result;
       }
+      if ("inputResource" in b) {
+         const s = b as ICloneBuildingData;
+         if (type === "input") {
+            resources[s.inputResource] = 1;
+         }
+         if (type === "output") {
+            switch (b.type) {
+               case "CloneFactory":
+                  resources[s.inputResource] = 2;
+                  break;
+               case "CloneLab":
+                  resources.Science = ((Config.ResourcePrice[s.inputResource] ?? 0) * 2) / SCIENCE_VALUE;
+                  break;
+            }
+         }
+      }
       // Apply multipliers
       forEach(resources, (k, v) => {
          let value = v * b.level;
          if (options & IOCalculation.Capacity) {
             value *= b.capacity;
          }
-         if (options & IOCalculation.Multiplier) {
-            // For market, we always apply production multiplier, regardless of type!
-            value *= totalMultiplierFor(xy, b.type === "Market" ? "output" : type, 1, false, gs);
-         } else if (options & IOCalculation.MultiplierStableOnly) {
-            // For market, we always apply production multiplier, regardless of type!
-            value *= totalMultiplierFor(xy, b.type === "Market" ? "output" : type, 1, true, gs);
+         if (options & IOCalculation.Multiplier || options & IOCalculation.MultiplierStableOnly) {
+            const stableOnly = !!(options & IOCalculation.MultiplierStableOnly);
+            if (b.type === "Market") {
+               value *= totalMultiplierFor(xy, "output", 1, stableOnly, gs);
+            } else if (type === "output" && (b.type === "CloneFactory" || b.type === "CloneLab")) {
+               value = value * 0.5 + value * 0.5 * totalMultiplierFor(xy, "output", 1, stableOnly, gs);
+            } else {
+               value *= totalMultiplierFor(xy, type, 1, stableOnly, gs);
+            }
          }
          safeAdd(result, k, value);
       });
@@ -163,14 +194,12 @@ export function getTransportStat(gs: GameState): ITransportStat {
    let totalFuel = 0;
    let totalTransports = 0;
    let stalled = 0;
-   gs.transportation.forEach((target) => {
-      target.forEach((t) => {
-         totalFuel += t.currentFuelAmount;
-         ++totalTransports;
-         if (!t.hasEnoughFuel) {
-            ++stalled;
-         }
-      });
+   gs.transportationV2.forEach((t) => {
+      totalFuel += t.fuelCurrentTick;
+      ++totalTransports;
+      if (!t.hasEnoughFuel) {
+         ++stalled;
+      }
    });
    const result: ITransportStat = { totalFuel, totalTransports, stalled };
    _cache.transportStat = result;

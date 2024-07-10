@@ -10,6 +10,7 @@ import { BroadwayBuildingBody } from "./BroadwayBuildingBody";
 import { DefaultBuildingBody } from "./DefaultBuildingBody";
 import { EuphratesRiverBuildingBody } from "./EuphratesRiverBuildingBody";
 import { GrandBazaarBuildingBody } from "./GrandBazaarBuildingBody";
+import { HagiaSophiaBuildingBody } from "./HagiaSophiaBuildingBody";
 import { HeadquarterBuildingBody } from "./HeadquarterBuildingBody";
 import { LoadingPage, LoadingPageStage } from "./LoadingPage";
 import { MarketBuildingBody } from "./MarketBuildingBody";
@@ -20,8 +21,10 @@ import { ReligionBuildingBody } from "./ReligionBuildingBody";
 import { ScienceProductionWonderBuildingBody } from "./ScienceProductionWonderBuildingBody";
 import { StatisticsBuildingBody } from "./StatisticsBuildingBody";
 import { TheMetBuildingBody } from "./TheMetBuildingBody";
+import { ToggleWonderBuildingBody } from "./ToggleableWonderBuildingBody";
 import { TraditionBuildingBody } from "./TraditionBuildingBody";
 import { UnitedNationsBuildingBody } from "./UnitedNationsBuildingBody";
+import { UpgradableWonderBuildingBody } from "./UpgradableWonderBuildingBody";
 import { WarehouseBuildingBody } from "./WarehouseBuildingBody";
 
 const BuildingBodyOverride: Partial<Record<Building, FunctionComponent<IBuildingComponentProps>>> = {
@@ -44,6 +47,14 @@ const BuildingBodyOverride: Partial<Record<Building, FunctionComponent<IBuilding
    TheMet: TheMetBuildingBody,
    LuxorTemple: ReligionBuildingBody,
    EuphratesRiver: EuphratesRiverBuildingBody,
+   ZigguratOfUr: ToggleWonderBuildingBody,
+   HagiaSophia: HagiaSophiaBuildingBody,
+   InternationalSpaceStation: UpgradableWonderBuildingBody,
+   MarinaBaySands: UpgradableWonderBuildingBody,
+   PalmJumeirah: UpgradableWonderBuildingBody,
+   AldersonDisk: UpgradableWonderBuildingBody,
+   DysonSphere: UpgradableWonderBuildingBody,
+   MatrioshkaBrain: UpgradableWonderBuildingBody,
 };
 
 export function BuildingPage(props: { tile: ITileData }): React.ReactNode {

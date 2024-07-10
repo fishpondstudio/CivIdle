@@ -247,7 +247,7 @@ export class UpgradeDefinitions {
    };
 
    Islam2: IUpgradeDefinition = {
-      name: () => t(L.ChristianityLevelX, { level: "II" }),
+      name: () => t(L.IslamLevelX, { level: "II" }),
       requireResources: { Faith: 1 },
       unlockBuilding: ["ProphetsMosque"],
       buildingMultiplier: {
@@ -257,7 +257,7 @@ export class UpgradeDefinitions {
    };
 
    Islam3: IUpgradeDefinition = {
-      name: () => t(L.ChristianityLevelX, { level: "III" }),
+      name: () => t(L.IslamLevelX, { level: "III" }),
       requireResources: { Faith: 1 },
       buildingMultiplier: {
          Mosque: { output: 1 },
@@ -266,7 +266,7 @@ export class UpgradeDefinitions {
    };
 
    Islam4: IUpgradeDefinition = {
-      name: () => t(L.ChristianityLevelX, { level: "IV" }),
+      name: () => t(L.IslamLevelX, { level: "IV" }),
       requireResources: { Faith: 1 },
       buildingMultiplier: {
          Mosque: { output: 1 },
@@ -276,7 +276,7 @@ export class UpgradeDefinitions {
    };
 
    Islam5: IUpgradeDefinition = {
-      name: () => t(L.ChristianityLevelX, { level: "V" }),
+      name: () => t(L.IslamLevelX, { level: "V" }),
       requireResources: { Faith: 1 },
       buildingMultiplier: {
          Mosque: { output: 1 },

@@ -274,9 +274,14 @@ export function calculateTierAndPrice(log?: (val: string) => void) {
                const price = Math.round(
                   (multiplier * inputResourcesValue - notPricedResourceValue) / allOutputAmount,
                );
+               if (!Number.isFinite(price)) {
+                  return;
+               }
                if (!Config.ResourcePrice[res]) {
                   Config.ResourcePrice[res] = price;
-               } else if (price > Config.ResourcePrice[res]!) {
+                  return;
+               }
+               if (price > Config.ResourcePrice[res]!) {
                   log?.(
                      `Price of ${res} changed from ${Config.ResourcePrice[res]!} to ${price} by ${building}`,
                   );
@@ -292,6 +297,9 @@ export function calculateTierAndPrice(log?: (val: string) => void) {
          Config.BuildingTier[building] = 0;
       }
    });
+
+   Config.BuildingTier.CloneFactory = 8;
+   Config.BuildingTier.CloneLab = 8;
 
    let resourceHash = 0;
    forEach(Config.Resource, (r) => {

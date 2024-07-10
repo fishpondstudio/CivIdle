@@ -330,6 +330,12 @@ export class BuildingDefinitions {
       output: { NuclearMissile: 1 },
       power: true,
    };
+   Peacekeeper: IBuildingDefinition = {
+      name: () => t(L.Peacekeeper),
+      input: { NuclearMissile: 4, Diplomacy: 1, Radio: 1 },
+      output: { Peace: 1 },
+      power: true,
+   };
    // #endregion /////////////////////////////////////////////////////////////////////////////////////////////
 
    // #region Culture ////////////////////////////////////////////////////////////////////////////////////////
@@ -414,6 +420,12 @@ export class BuildingDefinitions {
       input: { Banknote: 1, Bond: 1 },
       output: { Science: 25940 },
    };
+   ComputerLab: IBuildingDefinition = {
+      name: () => t(L.ComputerLab),
+      input: { Computer: 1 },
+      output: { Science: 79930 },
+      power: true,
+   };
    Museum: IBuildingDefinition = {
       name: () => t(L.Museum),
       input: { Music: 2, Painting: 2 },
@@ -455,6 +467,42 @@ export class BuildingDefinitions {
       name: () => t(L.TVStation),
       input: { Radio: 2, Movie: 10 },
       output: { TV: 1 },
+      power: true,
+   };
+   InternetServiceProvider: IBuildingDefinition = {
+      name: () => t(L.InternetServiceProvider),
+      input: { Computer: 1, OpticalFiber: 5 },
+      output: { Internet: 1 },
+      power: true,
+   };
+   SoftwareCompany: IBuildingDefinition = {
+      name: () => t(L.SoftwareCompany),
+      input: { Computer: 1, Philosophy: 10 },
+      output: { Software: 1 },
+      power: true,
+   };
+   SupercomputerLab: IBuildingDefinition = {
+      name: () => t(L.SupercomputerLab),
+      input: { Software: 1, Computer: 5 },
+      output: { Supercomputer: 1 },
+      power: true,
+   };
+   CivGPT: IBuildingDefinition = {
+      name: () => t(L.CivGPT),
+      input: { Internet: 1, Supercomputer: 2, Radio: 1 },
+      output: { CivGPT: 1 },
+      power: true,
+   };
+   CivTok: IBuildingDefinition = {
+      name: () => t(L.CivTok),
+      input: { Internet: 1, Politics: 1 },
+      output: { CivTok: 1 },
+      power: true,
+   };
+   CivOasis: IBuildingDefinition = {
+      name: () => t(L.CivOasis),
+      input: { CivTok: 1, Supercomputer: 1, Diplomacy: 2 },
+      output: { CivOasis: 1 },
       power: true,
    };
    // #endregion /////////////////////////////////////////////////////////////////////////////////////////////
@@ -615,10 +663,28 @@ export class BuildingDefinitions {
       input: { Engine: 1, Steel: 10 },
       output: { Train: 1 },
    };
+   MaglevFactory: IBuildingDefinition = {
+      name: () => t(L.MaglevFactory),
+      input: { Train: 15, Airplane: 15, Car: 15 },
+      output: { Maglev: 1 },
+      power: true,
+   };
    CarFactory: IBuildingDefinition = {
       name: () => t(L.CarFactory),
       input: { Engine: 1, Steel: 1, Furniture: 1, Cable: 1, Plastics: 1, Petrol: 5 },
       output: { Car: 1 },
+      power: true,
+   };
+   RobocarFactory: IBuildingDefinition = {
+      name: () => t(L.RobocarFactory),
+      input: { Car: 5, Supercomputer: 2, Satellite: 1 },
+      output: { Robocar: 1 },
+      power: true,
+   };
+   SpaceCenter: IBuildingDefinition = {
+      name: () => t(L.SpaceCenter),
+      input: { Maglev: 1, Radio: 1, Supercomputer: 1 },
+      output: { PlanetaryRover: 2 },
       power: true,
    };
    OilRefinery: IBuildingDefinition = {
@@ -692,6 +758,22 @@ export class BuildingDefinitions {
       input: { Banknote: 2, Bond: 2 },
       output: { Forex: 1 },
    };
+   MutualFund: IBuildingDefinition = {
+      name: () => t(L.MutualFund),
+      input: { Forex: 1, Stock: 1 },
+      output: { MutualFund: 1 },
+   };
+   HedgeFund: IBuildingDefinition = {
+      name: () => t(L.HedgeFund),
+      input: { MutualFund: 2 },
+      output: { HedgeFund: 1 },
+   };
+   BitcoinMiner: IBuildingDefinition = {
+      name: () => t(L.BitcoinMiner),
+      input: { HedgeFund: 2, CivTok: 1 },
+      output: { Bitcoin: 1 },
+      power: true,
+   };
    Caravansary: IBuildingDefinition = {
       name: () => t(L.Caravansary),
       desc: () => t(L.CaravansaryDesc),
@@ -712,6 +794,22 @@ export class BuildingDefinitions {
       output: {},
       desc: () => t(L.WarehouseDesc),
       construction: { Lumber: 1, Brick: 1, Horse: 1 },
+   };
+   CloneFactory: IBuildingDefinition = {
+      name: () => t(L.CloneFactory),
+      input: {},
+      output: {},
+      desc: () => t(L.CloneFactoryDesc),
+      construction: { Software: 1, Tank: 1 },
+      power: true,
+   };
+   CloneLab: IBuildingDefinition = {
+      name: () => t(L.CloneLab),
+      input: {},
+      output: {},
+      desc: () => t(L.CloneLabDesc),
+      construction: { Rocket: 1, Computer: 1 },
+      power: true,
    };
    // #endregion /////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -1466,7 +1564,7 @@ export class BuildingDefinitions {
       construction: { Brick: 100, Lumber: 100, Sand: 100 },
       max: 1,
       special: BuildingSpecial.WorldWonder,
-      wikipedia: "Tower_of_Babel",
+      wikipedia: "Ziggurat_of_Ur",
    };
 
    EuphratesRiver: IBuildingDefinition = {
@@ -1489,6 +1587,72 @@ export class BuildingDefinitions {
       max: 0,
       special: BuildingSpecial.NaturalWonder,
       wikipedia: "Zagros_Mountains",
+   };
+
+   InternationalSpaceStation: IBuildingDefinition = {
+      name: () => t(L.InternationalSpaceStation),
+      desc: () => t(L.InternationalSpaceStationDesc),
+      input: {},
+      output: {},
+      construction: { Spacecraft: 100, AircraftCarrier: 100, NuclearSubmarine: 100 },
+      max: 1,
+      special: BuildingSpecial.WorldWonder,
+      wikipedia: "International_Space_Station",
+   };
+
+   MarinaBaySands: IBuildingDefinition = {
+      name: () => t(L.MarinaBaySands),
+      desc: () => t(L.MarinaBaySandsDesc),
+      input: {},
+      output: {},
+      construction: { TV: 100, CivTok: 100, MutualFund: 100 },
+      max: 1,
+      special: BuildingSpecial.WorldWonder,
+      wikipedia: "Marina_Bay_Sands",
+   };
+
+   PalmJumeirah: IBuildingDefinition = {
+      name: () => t(L.PalmJumeirah),
+      desc: () => t(L.PalmJumeirahDesc),
+      input: {},
+      output: {},
+      construction: { HedgeFund: 100, Bitcoin: 100, Supercomputer: 100 },
+      max: 1,
+      special: BuildingSpecial.WorldWonder,
+      wikipedia: "Palm_Jumeirah",
+   };
+
+   AldersonDisk: IBuildingDefinition = {
+      name: () => t(L.AldersonDisk),
+      desc: () => t(L.AldersonDiskDesc),
+      input: {},
+      output: {},
+      construction: { CivOasis: 100, Robocar: 100, Bitcoin: 100 },
+      max: 1,
+      special: BuildingSpecial.WorldWonder,
+      wikipedia: "Alderson_disk",
+   };
+
+   DysonSphere: IBuildingDefinition = {
+      name: () => t(L.DysonSphere),
+      desc: () => t(L.DysonSphereDesc),
+      input: {},
+      output: {},
+      construction: { CivGPT: 100, Peace: 100, PlanetaryRover: 100 },
+      max: 1,
+      special: BuildingSpecial.WorldWonder,
+      wikipedia: "Dyson_sphere",
+   };
+
+   MatrioshkaBrain: IBuildingDefinition = {
+      name: () => t(L.MatrioshkaBrain),
+      desc: () => t(L.MatrioshkaBrainDesc),
+      input: {},
+      output: {},
+      construction: { CivOasis: 100, Peace: 100, CivGPT: 100 },
+      max: 1,
+      special: BuildingSpecial.WorldWonder,
+      wikipedia: "Matrioshka_brain",
    };
 
    // ArcDeTriomphe: IBuildingDefinition = {

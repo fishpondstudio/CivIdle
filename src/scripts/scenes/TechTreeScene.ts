@@ -183,19 +183,20 @@ export class TechTreeScene extends Scene {
       while (targets.length > 0) {
          const newTo: Tech[] = [];
          targets.forEach((to) => {
-            if (!drawnBoxes.has(to) && (!this.context.gameState.unlockedTech[to] || to === tech)) {
-               const def = Config.Tech[to];
-               this.drawBox(
-                  this._selectedGraphics!,
-                  this._boxPositions[to]!,
-                  def.name(),
-                  this.getTechDescription(def),
-                  highlightColor,
-                  10,
-                  this._selectedContainer,
-               );
-               drawnBoxes.add(to);
+            if (drawnBoxes.has(to) || this.context.gameState.unlockedTech[to]) {
+               return;
             }
+            const def = Config.Tech[to];
+            this.drawBox(
+               this._selectedGraphics!,
+               this._boxPositions[to]!,
+               def.name(),
+               this.getTechDescription(def),
+               highlightColor,
+               10,
+               this._selectedContainer,
+            );
+            drawnBoxes.add(to);
             Config.Tech[to].requireTech.forEach((from) => {
                if (!this.context.gameState.unlockedTech[to]) {
                   newTo.push(from);

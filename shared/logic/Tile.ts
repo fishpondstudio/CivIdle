@@ -88,6 +88,10 @@ export interface IResourceImport {
    inputMode?: BuildingInputMode;
 }
 
+export interface ICloneBuildingData extends IBuildingData {
+   inputResource: Resource;
+}
+
 export enum ResourceImportOptions {
    None = 0,
    ExportBelowCap = 1 << 0,
@@ -230,6 +234,14 @@ export function makeBuilding(data: Pick<IBuildingData, "type"> & Partial<IBuildi
          const tradition = building as IGreatPeopleBuildingData;
          if (!tradition.greatPeople) {
             tradition.greatPeople = new Set();
+         }
+         break;
+      }
+      case "CloneFactory":
+      case "CloneLab": {
+         const s = building as ICloneBuildingData;
+         if (!s.inputResource) {
+            s.inputResource = "Computer";
          }
          break;
       }

@@ -15,6 +15,7 @@ import {
    EXPLORER_SECONDS,
    MAX_EXPLORER,
    MAX_TELEPORT,
+   SCIENCE_VALUE,
    TELEPORT_SECONDS,
 } from "../../../shared/logic/Constants";
 import { getGameOptions, getGameState } from "../../../shared/logic/GameStateLogic";
@@ -749,7 +750,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          if (amount > 0) {
             addMultiplier(
                "AtomicFacility",
-               { storage: amount, output: clamp(amount, 1, 5) },
+               { storage: clamp(amount, 1, 5), output: clamp(amount, 1, 5) },
                Config.GreatPerson.MahatmaGandhi.name(),
             );
          }
@@ -1046,7 +1047,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
       case "WallOfBabylon": {
          const age = getCurrentAge(gs);
          Tick.next.globalMultipliers.storage.push({
-            value: Math.floor((Config.TechAge[age].idx + 1) / 3),
+            value: Math.floor((Config.TechAge[age].idx + 1) / 2),
             source: buildingName,
          });
          break;
@@ -1066,7 +1067,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
                gs,
             );
             if (multiplier < 5) {
-               mapSafePush(Tick.current.tileMultipliers, tileXy, {
+               mapSafePush(Tick.next.tileMultipliers, tileXy, {
                   output: 2,
                   unstable: true,
                   source: buildingName,
@@ -1092,11 +1093,69 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          const multiplier = Math.floor((productionWorkers * 10) / totalWorkers);
          const age = getCurrentAge(gs);
          if (Number.isFinite(multiplier) && multiplier > 0) {
-            Tick.next.globalMultipliers.output.push({
-               value: clamp(multiplier, 1, Math.floor((Config.TechAge[age].idx + 1) / 2)),
-               source: buildingName,
-               unstable: true,
+            const cappedMultiplier = clamp(multiplier, 1, Math.floor((Config.TechAge[age].idx + 1) / 2));
+            gs.tiles.forEach((tile, xy) => {
+               if (tile.building && !Config.Building[tile.building.type].output.Worker) {
+                  mapSafePush(Tick.next.tileMultipliers, xy, {
+                     output: cappedMultiplier,
+                     source: buildingName,
+                     unstable: true,
+                  });
+               }
             });
+         }
+         break;
+      }
+      case "InternationalSpaceStation": {
+         Tick.next.globalMultipliers.storage.push({
+            value: 5 + (building.level - 1),
+            source: buildingName,
+         });
+         break;
+      }
+      case "MarinaBaySands": {
+         Tick.next.globalMultipliers.worker.push({
+            value: 5 + 1 * (building.level - 1),
+            source: buildingName,
+         });
+         break;
+      }
+      case "PalmJumeirah": {
+         Tick.next.globalMultipliers.builderCapacity.push({
+            value: 10 + 2 * (building.level - 1),
+            source: buildingName,
+         });
+         break;
+      }
+      case "AldersonDisk": {
+         Tick.next.globalMultipliers.happiness.push({
+            value: 25 + 5 * (building.level - 1),
+            source: buildingName,
+         });
+         break;
+      }
+      case "DysonSphere": {
+         Tick.next.globalMultipliers.output.push({
+            value: 5 + 1 * (building.level - 1),
+            source: buildingName,
+         });
+         break;
+      }
+      case "MatrioshkaBrain": {
+         Tick.next.globalMultipliers.sciencePerBusyWorker.push({
+            value: 5 + 1 * (building.level - 1),
+            source: buildingName,
+         });
+         Tick.next.globalMultipliers.sciencePerIdleWorker.push({
+            value: 5 + 1 * (building.level - 1),
+            source: buildingName,
+         });
+         const hq = Tick.current.specialBuildings.get("Headquarter");
+         if (hq) {
+            const scienceValue = (hq.building.resources?.Science ?? 0) * SCIENCE_VALUE;
+            Tick.next.totalValue += scienceValue;
+            mapSafeAdd(Tick.next.resourceValueByTile, xy, scienceValue);
+            mapSafeAdd(Tick.next.resourceValues, "Science", scienceValue);
          }
          break;
       }

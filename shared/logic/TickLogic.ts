@@ -39,6 +39,7 @@ interface ITickData {
    powerBuildings: Set<Tile>;
    happinessExemptions: Set<Tile>;
    totalValue: number;
+   resourceAmount: Map<Resource, number>;
    resourceValues: Map<Resource, number>;
    buildingValues: Map<Building, number>;
    buildingValueByTile: Map<Tile, number>;
@@ -69,6 +70,7 @@ export function EmptyTickData(): ITickData {
       powerBuildings: new Set(),
       happinessExemptions: new Set(),
       totalValue: 0,
+      resourceAmount: new Map(),
       resourceValues: new Map(),
       buildingValues: new Map(),
       buildingValueByTile: new Map(),

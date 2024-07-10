@@ -7,7 +7,10 @@ import { Config } from "../../../shared/logic/Config";
 import { GameFeature, hasFeature } from "../../../shared/logic/FeatureLogic";
 import { getHappinessIcon } from "../../../shared/logic/HappinessLogic";
 import { getResourceIO } from "../../../shared/logic/IntraTickCache";
-import { getProgressTowardsNextGreatPerson } from "../../../shared/logic/RebirthLogic";
+import {
+   getProgressTowardsNextGreatPerson,
+   getRebirthGreatPeopleCount,
+} from "../../../shared/logic/RebirthLogic";
 import { getResourceAmount } from "../../../shared/logic/ResourceLogic";
 import { getScienceAmount } from "../../../shared/logic/TechLogic";
 import { CurrentTickChanged, NotProducingReason, Tick } from "../../../shared/logic/TickLogic";
@@ -266,8 +269,14 @@ export function ResourcePanel(): React.ReactNode {
                {mathSign(delta)}
                <FormatNumber value={Math.abs(delta)} />
             </div>
+            <Tippy content={t(L.ExtraGreatPeopleAtReborn)}>
+               <div className="row ml5">
+                  <div className="m-icon small">person_celebrate</div>
+                  <div className="text-desc">{getRebirthGreatPeopleCount()}</div>
+               </div>
+            </Tippy>
             <Tippy content={t(L.ProgressTowardsNextGreatPerson)}>
-               <div className="text-desc text-right" style={{ width: "4rem", fontWeight: "normal" }}>
+               <div className="text-desc ml10" style={{ fontWeight: "normal" }}>
                   {formatPercent(clamp(getProgressTowardsNextGreatPerson(), 0, 1), 0, Rounding.Floor)}
                </div>
             </Tippy>

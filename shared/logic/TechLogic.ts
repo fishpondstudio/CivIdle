@@ -17,6 +17,7 @@ import type { GameState } from "./GameState";
 import { RequestPathFinderGridUpdate, SEA_TILE_COSTS } from "./PlayerTradeLogic";
 import { Tick } from "./TickLogic";
 import { getDepositTileCount } from "./Tile";
+import { OnTechUnlocked } from "./Update";
 
 export function getTechUnlockCost(tech: Tech): number {
    const a = getAgeForTech(tech);
@@ -161,6 +162,7 @@ export function unlockTech(tech: Tech, dispatchEvent: boolean, gs: GameState): v
    if (tech in SEA_TILE_COSTS) {
       RequestPathFinderGridUpdate.emit();
    }
+   OnTechUnlocked.emit(tech);
 }
 
 export const RequestResetTile = new TypedEvent<Tile>();
@@ -194,11 +196,12 @@ export function isPrerequisiteOf(prerequisite: Tech, tech: Tech): boolean {
 
 export function getAllPrerequisites(tech: Tech): Set<Tech> {
    const result = new Set<Tech>();
-   let dep: Tech[] = Config.Tech[tech].requireTech.slice(0);
+   let dep: Tech[] = Config.Tech[tech].requireTech;
    while (dep.length > 0) {
       dep = dep.flatMap((d) => {
+         if (result.has(d)) return [];
          result.add(d);
-         return Config.Tech[d].requireTech.slice(0);
+         return Config.Tech[d].requireTech;
       });
    }
    return result;

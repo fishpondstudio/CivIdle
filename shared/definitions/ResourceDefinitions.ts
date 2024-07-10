@@ -107,6 +107,19 @@ export class ResourceDefinitions {
    Submarine: IResourceDefinition = { name: () => t(L.Submarine) };
    NuclearSubmarine: IResourceDefinition = { name: () => t(L.NuclearSubmarine) };
    Teleport: IResourceDefinition = { name: () => t(L.NuclearSubmarine) };
+   Maglev: IResourceDefinition = { name: () => t(L.Maglev) };
+   Internet: IResourceDefinition = { name: () => t(L.Internet) };
+   Software: IResourceDefinition = { name: () => t(L.Software) };
+   MutualFund: IResourceDefinition = { name: () => t(L.MutualFund) };
+   HedgeFund: IResourceDefinition = { name: () => t(L.HedgeFund) };
+   Supercomputer: IResourceDefinition = { name: () => t(L.Supercomputer) };
+   CivTok: IResourceDefinition = { name: () => t(L.CivTok) };
+   CivOasis: IResourceDefinition = { name: () => t(L.CivOasis) };
+   Bitcoin: IResourceDefinition = { name: () => t(L.Bitcoin) };
+   CivGPT: IResourceDefinition = { name: () => t(L.CivGPT) };
+   Robocar: IResourceDefinition = { name: () => t(L.Robocar) };
+   PlanetaryRover: IResourceDefinition = { name: () => t(L.PlanetaryRover) };
+   Peace: IResourceDefinition = { name: () => t(L.Peace) };
 }
 
 export type Resource = keyof ResourceDefinitions;

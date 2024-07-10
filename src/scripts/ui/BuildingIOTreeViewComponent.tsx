@@ -1,3 +1,4 @@
+import Tippy from "@tippyjs/react";
 import classNames from "classnames";
 import { IOCalculation, getMultipliersFor, totalMultiplierFor } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
@@ -10,6 +11,7 @@ import { L, t } from "../../../shared/utilities/i18n";
 import warning from "../../images/warning.png";
 import { jsxMapOf } from "../utilities/Helper";
 import { FormatNumber } from "./HelperComponents";
+import { TextWithHelp } from "./TextWithHelpComponent";
 
 export function BuildingIOTreeViewComponent({
    gameState,
@@ -22,6 +24,9 @@ export function BuildingIOTreeViewComponent({
 }): React.ReactNode {
    const data = getBuildingIO(xy, type, IOCalculation.Multiplier | IOCalculation.Capacity, gameState);
    const totalMultiplier = totalMultiplierFor(xy, type, 1, false, gameState);
+   const buildingType = gameState.tiles.get(xy)?.building?.type;
+   const isCloneOutput =
+      type === "output" && (buildingType === "CloneFactory" || buildingType === "CloneLab");
    return (
       <ul className="tree-view">
          {jsxMapOf(data, (k, v) => {
@@ -43,12 +48,24 @@ export function BuildingIOTreeViewComponent({
                         </div>
                      </summary>
                      <ul>
+                        {isCloneOutput ? (
+                           <li className="row text-strong">
+                              <TextWithHelp content={t(L.ResourceCloneTooltip)}>
+                                 <div>{t(L.InputResourceForCloning)}</div>
+                              </TextWithHelp>
+                              <div className="f1 text-right">
+                                 <FormatNumber value={v / (1 + totalMultiplier)} />
+                              </div>
+                           </li>
+                        ) : null}
                         <li className="row">
                            <div className="f1">
                               {type === "input" ? t(L.BaseConsumption) : t(L.BaseProduction)}
                            </div>
                            <div className="text-strong">
-                              <FormatNumber value={v / totalMultiplier} />
+                              <FormatNumber
+                                 value={isCloneOutput ? v / (1 + totalMultiplier) : v / totalMultiplier}
+                              />
                            </div>
                         </li>
                         <li className="row">
@@ -72,8 +89,13 @@ export function BuildingIOTreeViewComponent({
                               return (
                                  // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
                                  <li key={idx} className="row">
-                                    <div className="f1">{m.source}</div>
-                                    <div>{m[type]}</div>
+                                    <div>{m.source}</div>
+                                    {m.unstable ? (
+                                       <Tippy content={t(L.DynamicMultiplierTooltip)}>
+                                          <div className="m-icon small ml5 text-desc">whatshot</div>
+                                       </Tippy>
+                                    ) : null}
+                                    <div className="f1 text-right">{m[type]}</div>
                                  </li>
                               );
                            })}

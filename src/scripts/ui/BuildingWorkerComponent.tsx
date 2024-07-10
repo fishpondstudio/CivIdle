@@ -10,7 +10,7 @@ import {
    shouldAlwaysShowBuildingOptions,
 } from "../../../shared/logic/BuildingLogic";
 import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
-import { getBuildingIO } from "../../../shared/logic/IntraTickCache";
+import { getBuildingIO, getFuelByTarget } from "../../../shared/logic/IntraTickCache";
 import { NotProducingReason, Tick } from "../../../shared/logic/TickLogic";
 import { formatNumber, formatPercent, isEmpty } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
@@ -54,14 +54,11 @@ export function BuildingWorkerComponent({ gameState, xy }: IBuildingComponentPro
                      <details>
                         <summary className="row">
                            <div className="f1">{t(L.WorkersRequiredInput)}</div>
-                           <div className="text-strong">
-                              {gameState.transportation
-                                 .get(xy)
-                                 ?.reduce((prev, curr) => prev + curr.currentFuelAmount, 0) ?? 0}
-                           </div>
+                           <div className="text-strong">{getFuelByTarget().get(xy) ?? 0}</div>
                         </summary>
                         <ul>
-                           {gameState.transportation.get(xy)?.map((v) => {
+                           {gameState.transportationV2.map((v) => {
+                              if (v.toXy !== xy) return null;
                               return (
                                  <li className="row" key={v.id}>
                                     <div className="f1">
@@ -73,7 +70,7 @@ export function BuildingWorkerComponent({ gameState, xy }: IBuildingComponentPro
                                        })}{" "}
                                        ({v.ticksSpent}/{v.ticksRequired})
                                     </div>
-                                    <div>{v.currentFuelAmount}</div>
+                                    <div>{v.fuelCurrentTick}</div>
                                  </li>
                               );
                            })}
@@ -155,7 +152,7 @@ export function BuildingWorkerComponent({ gameState, xy }: IBuildingComponentPro
                            <li className="row">
                               <div className="f1">{t(L.WorkersRequiredBeforeMultiplier)}</div>
                               <div>
-                                 <TextWithHelp content={t(L.RequiredWorkersTooltip)}>
+                                 <TextWithHelp content={t(L.RequiredWorkersTooltipV2)}>
                                     <FormatNumber value={workersRequired.rawOutput} />
                                  </TextWithHelp>
                               </div>
