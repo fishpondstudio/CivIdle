@@ -742,15 +742,21 @@ export function transportResource(
          workerCapacity +
          Tick.current.globalMultipliers.transportCapacity.reduce((prev, curr) => prev + curr.value, 0);
 
+      const fromBuildingType = gs.tiles.get(from.tile)?.building?.type;
+      const toBuildingType = gs.tiles.get(targetXy)?.building?.type;
+
       if (
          hasFeature(GameFeature.WarehouseUpgrade, gs) &&
-         (gs.tiles.get(from.tile)?.building?.type === "Warehouse" ||
-            gs.tiles.get(targetXy)?.building?.type === "Warehouse")
+         (fromBuildingType === "Warehouse" || toBuildingType === "Warehouse")
       ) {
          const distance = getGrid(gs).distance(point.x, point.y, targetPoint.x, targetPoint.y);
          if (distance <= 1) {
             transportCapacity = Number.POSITIVE_INFINITY;
          }
+      }
+
+      if (toBuildingType && Config.Building[toBuildingType].output.Worker) {
+         transportCapacity = Number.POSITIVE_INFINITY;
       }
 
       if (availableAmount >= amountLeft) {
