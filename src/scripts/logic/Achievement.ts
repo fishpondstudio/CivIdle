@@ -7,7 +7,7 @@ OnTechUnlocked.on((tech) => {
    if (!isSteam()) return;
    switch (tech) {
       case "Future": {
-         SteamClient.unlockAchievement("Bronze");
+         SteamClient.unlockAchievement("Future");
          break;
       }
    }

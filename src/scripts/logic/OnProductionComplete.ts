@@ -1157,6 +1157,13 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
             mapSafeAdd(Tick.next.resourceValueByTile, xy, scienceValue);
             mapSafeAdd(Tick.next.resourceValues, "Science", scienceValue);
          }
+         if (building.level > 1) {
+            forEach(Config.Building, (b, def) => {
+               if (def.output.Science) {
+                  addMultiplier(b, { output: building.level - 1 }, buildingName);
+               }
+            });
+         }
          break;
       }
       // case "ArcDeTriomphe": {

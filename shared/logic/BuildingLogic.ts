@@ -693,7 +693,7 @@ export function getBuilderCapacity(
    let baseCapacity = clamp(building.level, 1, Number.POSITIVE_INFINITY);
 
    if (isWorldWonder(building.type)) {
-      baseCapacity = getWonderBaseBuilderCapacity(building.type);
+      baseCapacity *= getWonderBaseBuilderCapacity(building.type);
    }
 
    return { multiplier: builder, base: baseCapacity, total: builder * baseCapacity };
