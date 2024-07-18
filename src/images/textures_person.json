@@ -642,8 +642,8 @@
         },
         "Person_RichardFeynman": {
             "frame": {
-                "x": 3159,
-                "y": 3159,
+                "x": 3510,
+                "y": 351,
                 "w": 349,
                 "h": 349
             }
@@ -720,7 +720,7 @@
                 "h": 350
             }
         },
-        "Person_TangOfShang": {
+        "Person_StephenHawking": {
             "frame": {
                 "x": 3159,
                 "y": 2808,
@@ -728,7 +728,7 @@
                 "h": 350
             }
         },
-        "Person_ThomasEdison": {
+        "Person_TangOfShang": {
             "frame": {
                 "x": 0,
                 "y": 3159,
@@ -736,9 +736,17 @@
                 "h": 350
             }
         },
-        "Person_TimBernersLee": {
+        "Person_ThomasEdison": {
             "frame": {
                 "x": 351,
+                "y": 3159,
+                "w": 350,
+                "h": 350
+            }
+        },
+        "Person_TimBernersLee": {
+            "frame": {
+                "x": 702,
                 "y": 3159,
                 "w": 350,
                 "h": 350
@@ -747,20 +755,12 @@
         "Person_WaltDisney": {
             "frame": {
                 "x": 3510,
-                "y": 0,
+                "y": 701,
                 "w": 349,
                 "h": 349
             }
         },
         "Person_WernherVonBraun": {
-            "frame": {
-                "x": 702,
-                "y": 3159,
-                "w": 350,
-                "h": 350
-            }
-        },
-        "Person_WilliamShakespeare": {
             "frame": {
                 "x": 1053,
                 "y": 3159,
@@ -768,7 +768,7 @@
                 "h": 350
             }
         },
-        "Person_WuZetian": {
+        "Person_WilliamShakespeare": {
             "frame": {
                 "x": 1404,
                 "y": 3159,
@@ -776,7 +776,7 @@
                 "h": 350
             }
         },
-        "Person_Xuanzang": {
+        "Person_WuZetian": {
             "frame": {
                 "x": 1755,
                 "y": 3159,
@@ -784,7 +784,7 @@
                 "h": 350
             }
         },
-        "Person_Zenobia": {
+        "Person_Xuanzang": {
             "frame": {
                 "x": 2106,
                 "y": 3159,
@@ -792,7 +792,7 @@
                 "h": 350
             }
         },
-        "Person_ZhengHe": {
+        "Person_YuriGagarin": {
             "frame": {
                 "x": 2457,
                 "y": 3159,
@@ -800,10 +800,26 @@
                 "h": 350
             }
         },
-        "Person_Zoroaster": {
+        "Person_Zenobia": {
             "frame": {
                 "x": 2808,
                 "y": 3159,
+                "w": 350,
+                "h": 350
+            }
+        },
+        "Person_ZhengHe": {
+            "frame": {
+                "x": 3159,
+                "y": 3159,
+                "w": 350,
+                "h": 350
+            }
+        },
+        "Person_Zoroaster": {
+            "frame": {
+                "x": 3510,
+                "y": 0,
                 "w": 350,
                 "h": 350
             }
@@ -815,7 +831,7 @@
         "image": "./src/images/textures_person.png",
         "scale": 1,
         "size": {
-            "w": 3859,
+            "w": 3860,
             "h": 3509
         }
     }

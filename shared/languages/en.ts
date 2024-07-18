@@ -1294,4 +1294,10 @@ export const EN = {
    ZigguratOfUr: "Ziggurat of Ur",
    ZigguratOfUrDesc: "Every 10 happiness (capped) provides +1 Production Multiplier to all buildings (max = number of unlocked ages / 2). Wonders (incl. Natural) no longer provide +1 Happiness. The effect can be turned off",
    Zoroaster: "Zoroaster",
+   YuriGagarin: "Yuri Gagarin",
+   StephenHawking: "Stephen Hawking",
+   ExplorerRangeUpgradeDesc: "Increase the explorer's range to %{range}",
+   LargeHadronCollider: "Large Hadron Collider",
+   LargeHadronColliderDesc: "All buildings unlocked in Information Age get +2 Production, Worker Capacity and Storage Multiplier. This wonder can be upgraded and each additional upgrade provides +1 Production, Worker Capacity and Storage Multiplier to buildings unlocked in Information Age. Clone Lab and Clone Factory get half the effect",
+   CloneFactoryInputDescHTML: "Clone Factory can only clone <b>%{res}</b> directly transported from <b>%{buildings}</b>"
 };

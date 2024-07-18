@@ -88,6 +88,7 @@ import {
    SuspendedInput,
    WarehouseOptions,
    type IBuildingData,
+   type ICloneBuildingData,
    type IMarketBuildingData,
    type IResourceImportBuildingData,
    type ITileData,
@@ -124,6 +125,10 @@ export function tickTransports(gs: GameState): void {
          const building = gs.tiles.get(transport.toXy)?.building;
          if (building) {
             safeAdd(building.resources, transport.resource, transport.amount);
+            if (building.type === "CloneFactory") {
+               const clone = building as ICloneBuildingData;
+               clone.transportedAmount += transport.amount;
+            }
          }
          return false;
       }
@@ -267,7 +272,7 @@ function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
                xy,
                gs,
                getInputMode(building, gs),
-               defaultTransportFilter(building, gs),
+               defaultTransportFilter(building, res, gs),
             );
          });
       }
@@ -429,7 +434,14 @@ function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
          maxAmount = ri.resourceImports[res]?.cap ?? 0;
       }
 
-      if ((building.resources[res] ?? 0) + getAmountInTransit(xy, res, gs) > maxAmount) {
+      let availableAmount = building.resources[res] ?? 0;
+
+      if (building.type === "CloneFactory") {
+         const clone = building as ICloneBuildingData;
+         availableAmount = Math.min(availableAmount, clone.transportedAmount);
+      }
+
+      if (availableAmount + getAmountInTransit(xy, res, gs) > maxAmount) {
          return;
       }
 
@@ -450,7 +462,7 @@ function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
          xy,
          gs,
          inputMode,
-         defaultTransportFilter(building, gs),
+         defaultTransportFilter(building, res, gs),
       );
       hasTransported = true;
    });
@@ -502,6 +514,20 @@ function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
          }
       }
       return;
+   }
+
+   if (building.type === "CloneFactory") {
+      const clone = building as ICloneBuildingData;
+      const requiredAmount = input[clone.inputResource] ?? 0;
+      const transportedAmount = Math.min(
+         clone.transportedAmount,
+         building.resources[clone.inputResource] ?? 0,
+      );
+      if (transportedAmount < requiredAmount) {
+         Tick.next.notProducingReasons.set(xy, NotProducingReason.NotEnoughResources);
+         return;
+      }
+      clone.transportedAmount -= requiredAmount;
    }
 
    ////////// Power
@@ -679,8 +705,17 @@ function tickWarehouseAutopilot(warehouse: IWarehouseBuildingData, xy: Tile, gs:
 
 type TransportFilterFunc = (source: IBuildingResource, dest: Tile) => boolean;
 
-function defaultTransportFilter(building: IBuildingData, gs: GameState): TransportFilterFunc {
+function defaultTransportFilter(building: IBuildingData, res: Resource, gs: GameState): TransportFilterFunc {
    return (source: IBuildingResource, dest: Tile) => {
+      if (building.type === "CloneFactory") {
+         const type = gs.tiles.get(source.tile)?.building?.type;
+         if (!type) {
+            return false;
+         }
+         if (!Config.Building[type].output[res]) {
+            return false;
+         }
+      }
       const grid = getGrid(getGameState());
       const maxDistance = getMaxInputDistance(building, gs);
       if (maxDistance === Number.POSITIVE_INFINITY) {

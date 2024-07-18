@@ -1166,6 +1166,19 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          }
          break;
       }
+      case "LargeHadronCollider": {
+         let multiplier = 2 + building.level - 1;
+         forEach(Config.Building, (b, def) => {
+            if (Config.BuildingTechAge[b] !== "InformationAge") {
+               return;
+            }
+            if (b === "CloneFactory" || b === "CloneLab") {
+               multiplier = multiplier / 2;
+            }
+            addMultiplier(b, { output: multiplier, worker: multiplier, storage: multiplier }, buildingName);
+         });
+         break;
+      }
       // case "ArcDeTriomphe": {
       //    forEach(Config.Building, (b, def) => {
       //       if (def.input.Culture || def.output.Culture) {

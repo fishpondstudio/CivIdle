@@ -1072,17 +1072,6 @@ export class GreatPersonDefinitions {
       age: "ColdWarAge",
    });
 
-   ElvisPresley: IGreatPersonDefinition = {
-      name: () => t(L.ElvisPresley),
-      desc: (self, level) => t(L.WildCardGreatPersonDescV2),
-      time: "1935 ~ 1977 AD",
-      value: (level) => level,
-      maxLevel: Number.POSITIVE_INFINITY,
-      age: "ColdWarAge",
-      tick: (self, level, source) => {},
-      type: GreatPersonType.Wildcard,
-   };
-
    JamesWatson: IGreatPersonDefinition = {
       name: () => t(L.JamesWatson),
       desc: (self, level) => t(L.JamesWatsonDesc, { value: self.value(level) }),
@@ -1147,6 +1136,30 @@ export class GreatPersonDefinitions {
       },
       type: GreatPersonType.Normal,
    };
+
+   ElvisPresley: IGreatPersonDefinition = {
+      name: () => t(L.ElvisPresley),
+      desc: (self, level) => t(L.WildCardGreatPersonDescV2),
+      time: "1935 ~ 1977 AD",
+      value: (level) => level,
+      maxLevel: Number.POSITIVE_INFINITY,
+      age: "ColdWarAge",
+      tick: (self, level, source) => {},
+      type: GreatPersonType.Wildcard,
+   };
+
+   YuriGagarin: IGreatPersonDefinition = {
+      name: () => t(L.YuriGagarin),
+      desc: (self, level) => t(L.PromotionGreatPersonDescV2),
+      time: "1934 ~ 1968 AD",
+      value: (level) => level,
+      maxLevel: Number.POSITIVE_INFINITY,
+      age: "ColdWarAge",
+      tick: (self, level, source) => {},
+      type: GreatPersonType.Promotion,
+   };
+
+   // Information ////////////////////////////////////////////////////////////////////////////////////////////
 
    TimBernersLee: IGreatPersonDefinition = boostOf({
       name: () => t(L.TimBernersLee),
@@ -1255,6 +1268,17 @@ export class GreatPersonDefinitions {
       maxLevel: Number.POSITIVE_INFINITY,
       age: "InformationAge",
    });
+
+   StephenHawking: IGreatPersonDefinition = {
+      name: () => t(L.StephenHawking),
+      desc: (self, level) => t(L.WildCardGreatPersonDescV2),
+      time: "1942 ~ 2018 AD",
+      value: (level) => level,
+      maxLevel: Number.POSITIVE_INFINITY,
+      age: "InformationAge",
+      tick: (self, level, source) => {},
+      type: GreatPersonType.Wildcard,
+   };
 }
 
 export type GreatPerson = keyof GreatPersonDefinitions;

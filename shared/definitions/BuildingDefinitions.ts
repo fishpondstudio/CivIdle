@@ -800,7 +800,7 @@ export class BuildingDefinitions {
       input: {},
       output: {},
       desc: () => t(L.CloneFactoryDesc),
-      construction: { Software: 1, Tank: 1 },
+      construction: { Software: 5, Tank: 5 },
       power: true,
    };
    CloneLab: IBuildingDefinition = {
@@ -808,7 +808,7 @@ export class BuildingDefinitions {
       input: {},
       output: {},
       desc: () => t(L.CloneLabDesc),
-      construction: { Rocket: 1, Computer: 1 },
+      construction: { Rocket: 5, Computer: 5 },
       power: true,
    };
    // #endregion /////////////////////////////////////////////////////////////////////////////////////////////
@@ -1653,6 +1653,17 @@ export class BuildingDefinitions {
       max: 1,
       special: BuildingSpecial.WorldWonder,
       wikipedia: "Matrioshka_brain",
+   };
+
+   LargeHadronCollider: IBuildingDefinition = {
+      name: () => t(L.LargeHadronCollider),
+      desc: () => t(L.LargeHadronColliderDesc),
+      input: {},
+      output: {},
+      construction: { Supercomputer: 100, CivTok: 100, HedgeFund: 100 },
+      max: 1,
+      special: BuildingSpecial.WorldWonder,
+      wikipedia: "Large_Hadron_Collider",
    };
 
    // ArcDeTriomphe: IBuildingDefinition = {

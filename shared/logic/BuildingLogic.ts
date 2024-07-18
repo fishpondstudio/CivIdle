@@ -611,7 +611,8 @@ export function getBuildingLevelLabel(b: IBuildingData): string {
       b.type === "PalmJumeirah" ||
       b.type === "AldersonDisk" ||
       b.type === "DysonSphere" ||
-      b.type === "MatrioshkaBrain"
+      b.type === "MatrioshkaBrain" ||
+      b.type === "LargeHadronCollider"
    ) {
       return String(b.level);
    }
@@ -1086,4 +1087,17 @@ export function generateScienceFromFaith(xy: number, buildingType: Building, gs:
       mapSafeAdd(Tick.next.wonderProductions, "Science", total);
       Tick.next.scienceProduced.set(xy, total);
    }
+}
+
+export function getExplorerRange(gs: GameState): number {
+   if (gs.unlockedTech.Aviation) {
+      return 4;
+   }
+   if (gs.unlockedTech.SteamEngine) {
+      return 3;
+   }
+   if (gs.unlockedTech.Geography) {
+      return 2;
+   }
+   return 1;
 }

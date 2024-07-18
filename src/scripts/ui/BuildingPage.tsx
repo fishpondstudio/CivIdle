@@ -55,6 +55,7 @@ const BuildingBodyOverride: Partial<Record<Building, FunctionComponent<IBuilding
    AldersonDisk: UpgradableWonderBuildingBody,
    DysonSphere: UpgradableWonderBuildingBody,
    MatrioshkaBrain: UpgradableWonderBuildingBody,
+   LargeHadronCollider: UpgradableWonderBuildingBody,
 };
 
 export function BuildingPage(props: { tile: ITileData }): React.ReactNode {

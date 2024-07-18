@@ -90,6 +90,7 @@ export interface IResourceImport {
 
 export interface ICloneBuildingData extends IBuildingData {
    inputResource: Resource;
+   transportedAmount: number;
 }
 
 export enum ResourceImportOptions {
@@ -242,6 +243,9 @@ export function makeBuilding(data: Pick<IBuildingData, "type"> & Partial<IBuildi
          const s = building as ICloneBuildingData;
          if (!s.inputResource) {
             s.inputResource = "Computer";
+         }
+         if (!s.transportedAmount) {
+            s.transportedAmount = 0;
          }
          break;
       }

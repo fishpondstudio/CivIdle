@@ -165,10 +165,16 @@ export class TechTreeScene extends Scene {
          destroyAllChildren(this._selectedContainer);
       }
       this._selectedGraphics?.clear();
-      const tech = tech_ ?? unlockableTechs(this.context.gameState)[0];
+      let tech = tech_;
+
       if (!tech) {
-         return;
+         tech = unlockableTechs(this.context.gameState)[0];
       }
+
+      if (!tech) {
+         tech = "Future";
+      }
+
       const highlightColor = Color.shared
          .setValue(getGameOptions().themeColors.ResearchHighlightColor)
          .toNumber();
@@ -183,9 +189,14 @@ export class TechTreeScene extends Scene {
       while (targets.length > 0) {
          const newTo: Tech[] = [];
          targets.forEach((to) => {
-            if (drawnBoxes.has(to) || this.context.gameState.unlockedTech[to]) {
+            if (drawnBoxes.has(to)) {
                return;
             }
+
+            if (this.context.gameState.unlockedTech[to] && to !== tech) {
+               return;
+            }
+
             const def = Config.Tech[to];
             this.drawBox(
                this._selectedGraphics!,

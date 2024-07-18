@@ -1,4 +1,4 @@
-import { exploreTile } from "../../../shared/logic/BuildingLogic";
+import { exploreTile, getExplorerRange } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
 import { getGrid } from "../../../shared/logic/IntraTickCache";
 import { Tick } from "../../../shared/logic/TickLogic";
@@ -40,7 +40,7 @@ export function UnexploredTile({ xy, gameState }: IBuildingComponentProps): Reac
       exploreTile(xy, gameState);
       Singleton().sceneManager.enqueue(WorldScene, (s) => s.revealTile(xy));
       getGrid(gameState)
-         .getNeighbors(tileToPoint(xy))
+         .getRange(tileToPoint(xy), getExplorerRange(gameState))
          .forEach((neighbor) => {
             const neighborXy = pointToTile(neighbor);
             exploreTile(neighborXy, gameState);
