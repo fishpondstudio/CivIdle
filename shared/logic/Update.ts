@@ -707,7 +707,7 @@ type TransportFilterFunc = (source: IBuildingResource, dest: Tile) => boolean;
 
 function defaultTransportFilter(building: IBuildingData, res: Resource, gs: GameState): TransportFilterFunc {
    return (source: IBuildingResource, dest: Tile) => {
-      if (building.type === "CloneFactory") {
+      if (building.type === "CloneFactory" && building.status === "completed") {
          const type = gs.tiles.get(source.tile)?.building?.type;
          if (!type) {
             return false;
