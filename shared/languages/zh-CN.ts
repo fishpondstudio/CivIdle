@@ -601,7 +601,7 @@ export const ZH_CN = {
    MartinLuther: "马丁·路德",
    Masonry: "砖石",
    MatrioshkaBrain: "套脑",
-   MatrioshkaBrainDesc: "计算帝国价值时，允许科学纳入计算（ 5 科学= 1 帝国价值）。 +5 劳动者科学产出。该奇观可被升级，并且每一次额外升级，提供 +1 劳动者科学产出",
+   MatrioshkaBrainDescV2: "计算帝国价值时，允许科学纳入计算（ 5 科学= 1 帝国价值）。 +5 劳动者科学产出。该奇观可被升级，并且每一次额外升级，提供 +1 劳动者科学产出，所有产出科学的建筑 +1 生产乘数",
    MausoleumAtHalicarnassus: "摩索拉斯陵墓",
    MausoleumAtHalicarnassusDesc: "周围 2 地块范围内免费运输",
    MaxExplorers: "最大探险家数量",
@@ -1294,4 +1294,10 @@ export const ZH_CN = {
    ZigguratOfUr: "乌尔大塔庙",
    ZigguratOfUrDesc: "每有 10 幸福感（生效值），为所有建筑提供 +1 生产乘数（最大值为已解锁时代数/2）。奇观（包括自然奇观）不再提供 +1 幸福感。效果可关闭。",
    Zoroaster: "琐罗亚斯德",
+   YuriGagarin: "尤里·加加林",
+   StephenHawking: "史蒂芬·霍金",
+   ExplorerRangeUpgradeDesc: "增加探险家的探索范围至周围 %{range} 地块",
+   LargeHadronCollider: "大型强子对撞机",
+   LargeHadronColliderDesc: "所有信息时代的解锁建筑，获得 +2 生产、劳动者能力以及存储乘数。该奇观可被升级，并且每一次额外升级，为所有信息时代的解锁建筑提供 +1 生产、劳动者能力以及存储乘数。克隆实验室与克隆工厂获得效果减半",
+   CloneFactoryInputDescHTML: "克隆工厂进行 <b>%{res}</b> 的克隆，只能从其非克隆产出建筑 <b>%{buildings}</b> 中直接运送母本"
 };
