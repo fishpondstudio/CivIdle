@@ -1214,7 +1214,6 @@ export const EN = {
    UpgradeBuilding: "Upgrade",
    UpgradeBuildingNotProducingDescV2: "This building is being upgraded - <b>production will halt until upgrade is complete</b>",
    UpgradeTo: "Upgrade To Level %{level}",
-   UpgradeWonderNotProducingDesc: "This wonder is being upgraded - <b>its boost will no longer work until the upgrade is complete</b>",
    Uranium: "Uranium",
    UraniumEnrichmentPlant: "Uranium Enrichment Plant",
    UraniumMine: "Uranium Mine",
@@ -1298,6 +1297,6 @@ export const EN = {
    StephenHawking: "Stephen Hawking",
    ExplorerRangeUpgradeDesc: "Increase the explorer's range to %{range}",
    LargeHadronCollider: "Large Hadron Collider",
-   LargeHadronColliderDesc: "All buildings unlocked in Information Age get +2 Production, Worker Capacity and Storage Multiplier. This wonder can be upgraded and each additional upgrade provides +1 Production, Worker Capacity and Storage Multiplier to buildings unlocked in Information Age. Clone Lab and Clone Factory get half the effect",
+   LargeHadronColliderDescV2: "All Information Age great people get +2 level for this run. This wonder can be upgraded and each additional upgrade provides +1 level to all Information Age great people for this run",
    CloneFactoryInputDescHTML: "Clone Factory can only clone <b>%{res}</b> directly transported from <b>%{buildings}</b>"
 };

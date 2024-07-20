@@ -60,6 +60,7 @@ import {
    isNaturalWonder,
    isSpecialBuilding,
    isTransportable,
+   isWorldWonder,
    totalMultiplierFor,
    useWorkers,
 } from "./BuildingLogic";
@@ -302,6 +303,11 @@ function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
          mapSafeAdd(Tick.next.resourceValueByTile, xy, rev);
          mapSafeAdd(Tick.next.resourceValues, res, rev);
       });
+
+      if (building.status === "upgrading" && isWorldWonder(building.type)) {
+         OnBuildingProductionComplete.emit({ xy, offline });
+      }
+
       return;
    }
 

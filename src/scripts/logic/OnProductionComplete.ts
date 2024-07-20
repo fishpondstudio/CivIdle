@@ -1167,15 +1167,9 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          break;
       }
       case "LargeHadronCollider": {
-         forEach(Config.Building, (b, def) => {
-            if (Config.BuildingTechAge[b] !== "InformationAge") {
-               return;
-            }
-            let multiplier = 2 + building.level - 1;
-            if (b === "CloneFactory" || b === "CloneLab") {
-               multiplier /= 2;
-            }
-            addMultiplier(b, { output: multiplier, worker: multiplier, storage: multiplier }, buildingName);
+         const level = 2 + building.level - 1;
+         forEach(Config.GreatPerson, (p, def) => {
+            def.tick(def, level, `${buildingName}: ${def.name()}`);
          });
          break;
       }
