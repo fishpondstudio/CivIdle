@@ -1169,7 +1169,9 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
       case "LargeHadronCollider": {
          const level = 2 + building.level - 1;
          forEach(Config.GreatPerson, (p, def) => {
-            def.tick(def, level, `${buildingName}: ${def.name()}`);
+            if (def.age === "InformationAge") {
+               def.tick(def, level, `${buildingName}: ${def.name()}`);
+            }
          });
          break;
       }
