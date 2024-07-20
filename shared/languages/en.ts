@@ -1298,5 +1298,13 @@ export const EN = {
    ExplorerRangeUpgradeDesc: "Increase the explorer's range to %{range}",
    LargeHadronCollider: "Large Hadron Collider",
    LargeHadronColliderDescV2: "All Information Age great people get +2 level for this run. This wonder can be upgraded and each additional upgrade provides +1 level to all Information Age great people for this run",
-   CloneFactoryInputDescHTML: "Clone Factory can only clone <b>%{res}</b> directly transported from <b>%{buildings}</b>"
+   CloneFactoryInputDescHTML: "Clone Factory can only clone <b>%{res}</b> directly transported from <b>%{buildings}</b>",
+   ZahaHadid: "Zaha Hadid",
+   ZahaHadidDesc: "+%{value} Builder Capacity Multiplier",
+   PeterHiggs: "Peter Higgs",
+   PeterHiggsDesc: "+%{value} Science From Busy Workers",
+   GabrielGarciaMarquez: "Gabriel García Márquez",
+   GabrielGarciaMarquezDesc: "+%{value} Happiness",
+   MaryamMirzakhani: "Maryam Mirzakhani",
+   MaryamMirzakhaniDesc: "+%{value} Science From Idle Workers",
 };
