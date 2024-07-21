@@ -57,6 +57,14 @@ export function TechPage({ id }: { id: Tech }): React.ReactNode {
                   }
                }
             });
+            if (gs.unlockedUpgrades.Communism5) {
+               for (let i = 0; i < 2; i++) {
+                  const candidates = rollGreatPeopleThisRun(newAge, gs.city, getGreatPeopleChoiceCount(gs));
+                  if (candidates) {
+                     gs.greatPeopleChoices.push(candidates);
+                  }
+               }
+            }
             checkAgeAchievements(newAge);
          }
       });

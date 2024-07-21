@@ -32,6 +32,7 @@ import { getBuildingUnlockAge, getCurrentAge } from "../../../shared/logic/TechL
 import { Tick } from "../../../shared/logic/TickLogic";
 import type {
    IGreatPeopleBuildingData,
+   IIdeologyBuildingData,
    IPetraBuildingData,
    IReligionBuildingData,
    ITileData,
@@ -885,17 +886,37 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
             value: 1,
             source: buildingName,
          });
-         const cz = building as IReligionBuildingData;
-         if (cz.religion) {
-            const religion = Config.Religion[cz.religion].content;
-            for (let i = 0; i < cz.level; i++) {
-               const trad = religion[i];
-               const def = Config.Upgrade[trad];
-               if (!gs.unlockedUpgrades[trad]) {
-                  gs.unlockedUpgrades[trad] = true;
+         const lt = building as IReligionBuildingData;
+         if (lt.religion) {
+            const religion = Config.Religion[lt.religion].content;
+            for (let i = 0; i < lt.level; i++) {
+               const rel = religion[i];
+               const def = Config.Upgrade[rel];
+               if (!gs.unlockedUpgrades[rel]) {
+                  gs.unlockedUpgrades[rel] = true;
                   def.onUnlocked?.(gs);
                }
                tickUnlockable(def, t(L.SourceReligion, { religion: def.name() }), gs);
+            }
+         }
+         break;
+      }
+      case "BigBen": {
+         Tick.next.globalMultipliers.sciencePerBusyWorker.push({
+            value: 2,
+            source: buildingName,
+         });
+         const bb = building as IIdeologyBuildingData;
+         if (bb.ideology) {
+            const ideology = Config.Ideology[bb.ideology].content;
+            for (let i = 0; i < bb.level; i++) {
+               const ideo = ideology[i];
+               const def = Config.Upgrade[ideo];
+               if (!gs.unlockedUpgrades[ideo]) {
+                  gs.unlockedUpgrades[ideo] = true;
+                  def.onUnlocked?.(gs);
+               }
+               tickUnlockable(def, t(L.SourceIdeology, { ideology: def.name() }), gs);
             }
          }
          break;

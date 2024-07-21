@@ -27,6 +27,7 @@ export function BuildingElectricityComponent({ gameState, xy }: IBuildingCompone
    }
    const status = getElectrificationStatus(xy, gameState);
    const hasPower = Tick.current.powerGrid.has(xy);
+   const multiplier = gameState.unlockedUpgrades.Liberalism5 ? 2 : 1;
    return (
       <fieldset>
          <legend>{t(L.Electrification)}</legend>
@@ -84,14 +85,16 @@ export function BuildingElectricityComponent({ gameState, xy }: IBuildingCompone
                <div className="text-red text-strong">
                   +
                   <FormatNumber
-                     value={building.electrification * getElectrificationEfficiency(building.type)}
+                     value={
+                        multiplier * building.electrification * getElectrificationEfficiency(building.type)
+                     }
                   />
                </div>
             </li>
             <li className="row">
                <div className="f1">{t(L.ProductionMultiplier)}</div>
                <div className="text-green text-strong">
-                  +<FormatNumber value={building.electrification} />
+                  +<FormatNumber value={multiplier * building.electrification} />
                </div>
             </li>
          </ul>

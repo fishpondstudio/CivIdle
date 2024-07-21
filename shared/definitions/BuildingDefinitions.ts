@@ -1666,6 +1666,17 @@ export class BuildingDefinitions {
       wikipedia: "Large_Hadron_Collider",
    };
 
+   BigBen: IBuildingDefinition = {
+      name: () => t(L.BigBen),
+      desc: () => t(L.BigBenDesc),
+      input: {},
+      output: {},
+      max: 1,
+      special: BuildingSpecial.WorldWonder,
+      construction: { Politics: 300 },
+      wikipedia: "Big_Ben",
+   };
+
    // ArcDeTriomphe: IBuildingDefinition = {
    //    name: () => t(L.ArcDeTriomphe),
    //    desc: () => t(L.ArcDeTriompheDesc),

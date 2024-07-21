@@ -599,14 +599,17 @@ function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
       canBeElectrified(building.type) &&
       building.electrification > 0
    ) {
-      building.electrification = clamp(building.electrification, 0, building.level);
+      let electrification = clamp(building.electrification, 0, building.level);
+      if (gs.unlockedUpgrades.Liberalism5) {
+         electrification *= 2;
+      }
       const requiredPower = getPowerRequired(building);
       if (getAvailableWorkers("Power") >= requiredPower) {
          useWorkers("Power", requiredPower, xy);
          mapSafePush(Tick.next.tileMultipliers, xy, {
             source: t(L.Electrification),
-            input: building.electrification * getElectrificationEfficiency(building.type),
-            output: building.electrification,
+            input: electrification * getElectrificationEfficiency(building.type),
+            output: electrification,
             unstable: true,
          });
          Tick.next.electrified.add(xy);
@@ -786,13 +789,14 @@ export function transportResource(
       const fromBuildingType = gs.tiles.get(from.tile)?.building?.type;
       const toBuildingType = gs.tiles.get(targetXy)?.building?.type;
 
-      if (
-         hasFeature(GameFeature.WarehouseUpgrade, gs) &&
-         (fromBuildingType === "Warehouse" || toBuildingType === "Warehouse")
-      ) {
-         const distance = getGrid(gs).distance(point.x, point.y, targetPoint.x, targetPoint.y);
-         if (distance <= 1) {
+      if (fromBuildingType === "Warehouse" || toBuildingType === "Warehouse") {
+         if (gs.unlockedUpgrades.Liberalism3) {
             transportCapacity = Number.POSITIVE_INFINITY;
+         } else if (hasFeature(GameFeature.WarehouseUpgrade, gs)) {
+            const distance = getGrid(gs).distance(point.x, point.y, targetPoint.x, targetPoint.y);
+            if (distance <= 1) {
+               transportCapacity = Number.POSITIVE_INFINITY;
+            }
          }
       }
 

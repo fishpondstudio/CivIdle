@@ -531,7 +531,7 @@ export class TechDefinitions {
          School: { output: 1 },
          University: { output: 1 },
       },
-      unlockBuilding: ["Parliament"],
+      unlockBuilding: ["Parliament", "BigBen"],
       additionalUpgrades: () => [t(L.SeaTradeUpgrade, { tariff: formatPercent(SEA_TILE_COST_3) })],
    };
 

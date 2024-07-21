@@ -12,6 +12,7 @@ import { EuphratesRiverBuildingBody } from "./EuphratesRiverBuildingBody";
 import { GrandBazaarBuildingBody } from "./GrandBazaarBuildingBody";
 import { HagiaSophiaBuildingBody } from "./HagiaSophiaBuildingBody";
 import { HeadquarterBuildingBody } from "./HeadquarterBuildingBody";
+import { IdeologyBuildingBody } from "./IdeologyBuildingBody";
 import { LoadingPage, LoadingPageStage } from "./LoadingPage";
 import { MarketBuildingBody } from "./MarketBuildingBody";
 import { MenuComponent } from "./MenuComponent";
@@ -46,6 +47,7 @@ const BuildingBodyOverride: Partial<Record<Building, FunctionComponent<IBuilding
    Broadway: BroadwayBuildingBody,
    TheMet: TheMetBuildingBody,
    LuxorTemple: ReligionBuildingBody,
+   BigBen: IdeologyBuildingBody,
    EuphratesRiver: EuphratesRiverBuildingBody,
    ZigguratOfUr: ToggleWonderBuildingBody,
    HagiaSophia: HagiaSophiaBuildingBody,

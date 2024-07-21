@@ -1,5 +1,6 @@
 import type { Building } from "../definitions/BuildingDefinitions";
 import type { GreatPerson } from "../definitions/GreatPersonDefinitions";
+import type { Ideology } from "../definitions/IdeologyDefinitions";
 import type { Religion } from "../definitions/ReligionDefinitions";
 import type { Deposit, Resource } from "../definitions/ResourceDefinitions";
 import type { Tradition } from "../definitions/TraditionDefinitions";
@@ -133,6 +134,10 @@ export interface IReligionBuildingData extends IBuildingData {
    religion: Religion | null;
 }
 
+export interface IIdeologyBuildingData extends IBuildingData {
+   ideology: Ideology | null;
+}
+
 export interface IGreatPeopleBuildingData extends IBuildingData {
    greatPeople: Set<GreatPerson>;
 }
@@ -228,6 +233,13 @@ export function makeBuilding(data: Pick<IBuildingData, "type"> & Partial<IBuildi
          const religion = building as IReligionBuildingData;
          if (!religion.religion) {
             religion.religion = null;
+         }
+         break;
+      }
+      case "BigBen": {
+         const religion = building as IIdeologyBuildingData;
+         if (!religion.ideology) {
+            religion.ideology = null;
          }
          break;
       }
