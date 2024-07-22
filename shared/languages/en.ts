@@ -1326,7 +1326,7 @@ export const EN = {
    SocialismLevel4DescHTML: "Generate one-time science equivalent to the cost of the most expensive <b>World Wars Age</b> technology",
    SocialismLevel5DescHTML: "Generate one-time science equivalent to the cost of the most expensive <b>Cold War Age</b> technology",
    PoultryFarm: "Poultry Farm",
-   DiaryFarm: "Diary Farm",
+   DairyFarm: "Dairy Farm",
    PoetrySchool: "Poetry School",
    Homer: "Homer",
 };

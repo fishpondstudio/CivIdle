@@ -35,6 +35,10 @@ export function migrateSavedGame(save: SavedGame) {
             return;
          }
          // @ts-expect-error
+         if (tile.building.type === "DiaryFarm") {
+            tile.building.type === "DairyFarm";
+         }
+         // @ts-expect-error
          if (tile.building.status === "paused") {
             tile.building.status = "building";
          }

@@ -130,7 +130,7 @@ export class TechDefinitions {
    Herding: ITechDefinition = {
       name: () => t(L.Herding),
       column: 2,
-      unlockBuilding: ["PoultryFarm", "DiaryFarm"],
+      unlockBuilding: ["PoultryFarm", "DairyFarm"],
       requireTech: ["Counting", "Farming"],
       additionalUpgrades: () => [t(L.TechProductionPriority)],
    };

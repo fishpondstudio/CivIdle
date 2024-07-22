@@ -559,8 +559,8 @@ export class BuildingDefinitions {
       output: { Meat: 2 },
       construction: { Lumber: 1 },
    };
-   DiaryFarm: IBuildingDefinition = {
-      name: () => t(L.DiaryFarm),
+   DairyFarm: IBuildingDefinition = {
+      name: () => t(L.DairyFarm),
       input: { Wheat: 2 },
       output: { Milk: 2 },
       construction: { Brick: 1 },
