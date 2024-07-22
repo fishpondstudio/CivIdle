@@ -1325,4 +1325,8 @@ export const EN = {
    CommunismLevel5DescHTML: "A great person of <b>Cold War Age</b> is born. When entering a new age, get <b>2 additional</b> great people of that age",
    SocialismLevel4DescHTML: "Generate one-time science equivalent to the cost of the most expensive <b>World Wars Age</b> technology",
    SocialismLevel5DescHTML: "Generate one-time science equivalent to the cost of the most expensive <b>Cold War Age</b> technology",
+   PoultryFarm: "Poultry Farm",
+   DiaryFarm: "Diary Farm",
+   PoetrySchool: "Poetry School",
+   Homer: "Homer",
 };

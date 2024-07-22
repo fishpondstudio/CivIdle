@@ -345,6 +345,12 @@ export class BuildingDefinitions {
       output: { Poem: 1 },
       construction: { Brick: 2 },
    };
+   PoetrySchool: IBuildingDefinition = {
+      name: () => t(L.PoetrySchool),
+      input: { Paper: 2, Alcohol: 1 },
+      output: { Poem: 2 },
+      construction: { Brick: 1, Lumber: 1 },
+   };
    PaintersGuild: IBuildingDefinition = {
       name: () => t(L.PaintersGuild),
       input: { Paper: 2 },
@@ -547,6 +553,24 @@ export class BuildingDefinitions {
       output: { Meat: 1, Milk: 1 },
       construction: { Lumber: 1 },
    };
+   PoultryFarm: IBuildingDefinition = {
+      name: () => t(L.PoultryFarm),
+      input: { Wheat: 2 },
+      output: { Meat: 2 },
+      construction: { Lumber: 1 },
+   };
+   DiaryFarm: IBuildingDefinition = {
+      name: () => t(L.DiaryFarm),
+      input: { Wheat: 2 },
+      output: { Milk: 2 },
+      construction: { Brick: 1 },
+   };
+   // LivestockFarm: IBuildingDefinition = {
+   //    name: () => t(L.LivestockFarm),
+   //    input: { Wheat: 2 },
+   //    output: { Meat: 1, Milk: 1 },
+   //    construction: { Lumber: 1 },
+   // };
    Stable: IBuildingDefinition = {
       name: () => t(L.Stable),
       input: { Wheat: 2 },

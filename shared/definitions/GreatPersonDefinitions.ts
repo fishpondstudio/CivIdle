@@ -105,7 +105,7 @@ export class GreatPersonDefinitions {
       name: () => t(L.Dido),
       boost: {
          multipliers: ["output", "storage"],
-         buildings: ["LivestockFarm", "Stable"],
+         buildings: ["DiaryFarm", "PoultryFarm"],
       },
       time: "c. 800s BC",
       value: (level) => level,
@@ -225,6 +225,18 @@ export class GreatPersonDefinitions {
       },
       type: GreatPersonType.Normal,
    };
+
+   Homer: IGreatPersonDefinition = boostOf({
+      name: () => t(L.Homer),
+      boost: {
+         multipliers: ["output", "storage"],
+         buildings: ["Stable", "PoetrySchool"],
+      },
+      time: "c. 800 BC",
+      value: (level) => level,
+      maxLevel: Number.POSITIVE_INFINITY,
+      age: "ClassicalAge",
+   });
 
    Archimedes: IGreatPersonDefinition = boostOf({
       name: () => t(L.Archimedes),
