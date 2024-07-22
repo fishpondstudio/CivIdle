@@ -7,6 +7,7 @@ import {
    rollGreatPeopleThisRun,
 } from "../logic/RebirthLogic";
 import { getTechUnlockCost } from "../logic/TechLogic";
+import { Tick } from "../logic/TickLogic";
 import { RequestChooseGreatPerson, addMultiplier } from "../logic/Update";
 import { deepFreeze, forEach, pointToTile, safeAdd, tileToPoint } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
@@ -547,6 +548,10 @@ export class UpgradeDefinitions {
                science = Math.max(getTechUnlockCost(tech), science);
             }
          });
+         const hq = Tick.current.specialBuildings.get("Headquarter")?.building.resources;
+         if (hq) {
+            safeAdd(hq, "Science", science);
+         }
       },
       additionalUpgrades: () => [t(L.SocialismLevel4DescHTML)],
    };
@@ -566,6 +571,10 @@ export class UpgradeDefinitions {
                science = Math.max(getTechUnlockCost(tech), science);
             }
          });
+         const hq = Tick.current.specialBuildings.get("Headquarter")?.building.resources;
+         if (hq) {
+            safeAdd(hq, "Science", science);
+         }
       },
       additionalUpgrades: () => [t(L.SocialismLevel5DescHTML)],
    };
@@ -629,9 +638,9 @@ export class UpgradeDefinitions {
       name: () => t(L.CommunismLevelX, { level: "V" }),
       requireResources: { Politics: 1 },
       buildingMultiplier: {
-         PublishingHouse: { output: 1 },
-         MagazinePublisher: { output: 1 },
-         ResearchLab: { output: 1 },
+         GatlingGunFactory: { output: 1 },
+         IroncladBuilder: { output: 1 },
+         BiplaneFactory: { output: 1 },
       },
       onUnlocked: (gs) => {
          const candidates = rollGreatPeopleThisRun("ColdWarAge", gs.city, getGreatPeopleChoiceCount(gs));

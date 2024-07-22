@@ -1312,7 +1312,7 @@ export const EN = {
    BigBen: "Big Ben",
    BigBenDesc: "+2 Science From Busy Workers. Choose an empire ideology, unlock more boost with each choice",
    SourceIdeology: "Ideology: %{ideology}",
-   IdeologyDescHTML: "Choose from <b>Christianity, Islam, Buddhism or Polytheism</b> as your empire religion. You <b>cannot switch religion</b> after it is chosen. You can unlock more boost within each religion",
+   IdeologyDescHTML: "Choose from <b>Liberalism, Conservatism, Socialism or Communism</b> as your empire ideology. You <b>cannot switch ideology</b> after it is chosen. You can unlock more boost within each ideology",
    Conservatism: "Conservatism",
    ConservatismLevelX: "Conservatism Level %{level}",
    Socialism: "Socialism",
