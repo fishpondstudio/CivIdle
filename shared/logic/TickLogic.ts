@@ -9,12 +9,12 @@ import { Config } from "./Config";
 import type { GameState } from "./GameState";
 import type { calculateHappiness } from "./HappinessLogic";
 import type { IBuildingData, ITileData } from "./Tile";
+import type { TileAndRes } from "./Update";
 
 export interface IBuildingResource {
    tile: Tile;
    amount: number;
-   totalStorage: number;
-   usedStorage: number;
+   usedStoragePercentage: number;
 }
 
 interface ITickData {
@@ -44,6 +44,7 @@ interface ITickData {
    buildingValues: Map<Building, number>;
    buildingValueByTile: Map<Tile, number>;
    resourceValueByTile: Map<Tile, number>;
+   amountInTransit: Map<TileAndRes, number>;
    tick: number;
 }
 
@@ -75,6 +76,7 @@ export function EmptyTickData(): ITickData {
       buildingValues: new Map(),
       buildingValueByTile: new Map(),
       resourceValueByTile: new Map(),
+      amountInTransit: new Map(),
       tick: 0,
    };
 }

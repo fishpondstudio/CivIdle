@@ -782,15 +782,20 @@ export function getAvailableResource(sourceXy: Tile, destXy: Tile, res: Resource
       return building.resources[res] ?? 0;
    }
 
-   const input = getBuildingIO(sourceXy, "input", IOCalculation.Capacity | IOCalculation.Multiplier, gs);
-   if (input[res]) {
-      return clamp(
-         building.resources[res]! -
-            (getStockpileMax(building) + getStockpileCapacity(building)) * input[res]!,
-         0,
-         Number.POSITIVE_INFINITY,
-      );
+   // const input = getBuildingIO(sourceXy, "input", IOCalculation.Capacity | IOCalculation.Multiplier, gs);
+   // if (input[res]) {
+   //    return clamp(
+   //       building.resources[res]! -
+   //          (getStockpileMax(building) + getStockpileCapacity(building)) * input[res]!,
+   //       0,
+   //       Number.POSITIVE_INFINITY,
+   //    );
+   // }
+
+   if (Config.Building[building.type].input[res]) {
+      return 0;
    }
+
    return building.resources[res]!;
 }
 

@@ -6,19 +6,14 @@ import { getStorageFor } from "./BuildingLogic";
 import { Config } from "./Config";
 import type { GameState } from "./GameState";
 import { Tick } from "./TickLogic";
+import { hashTileAndRes } from "./Update";
 
 export function getResourceAmount(res: Resource): number {
    return Tick.current.resourceAmount.get(res) ?? 0;
 }
 
-export function getAmountInTransit(xy: Tile, res: Resource, gs: GameState) {
-   let result = 0;
-   gs.transportationV2.forEach((t) => {
-      if (t.toXy === xy && t.resource === res) {
-         result += t.amount;
-      }
-   });
-   return result;
+export function getAmountInTransit(xy: Tile, res: Resource) {
+   return Tick.current.amountInTransit.get(hashTileAndRes(xy, res)) ?? 0;
 }
 
 export function getResourcesValue(resources: PartialTabulate<Resource>): number {

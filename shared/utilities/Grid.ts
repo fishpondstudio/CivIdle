@@ -72,7 +72,8 @@ export class Grid {
    }
 
    public xyToPosition(xy: Tile): Point {
-      return this.layout.hexToPixel(this.gridToHex(tileToPoint(xy)));
+      this.gridToHex(tileToPoint(xy), Grid._hex1);
+      return this.layout.hexToPixel(Grid._hex1);
    }
 
    public getNeighbors(grid: Point): Point[] {
