@@ -39,16 +39,18 @@ function ChooseResource({ gameState, xy }: IBuildingComponentProps): React.React
          .sort((a, b) => Config.Resource[a].name().localeCompare(Config.Resource[b].name()));
       return (
          <>
-            <WarningComponent icon="info" className="mb10 text-small">
-               <RenderHTML
-                  html={t(L.CloneFactoryInputDescHTML, {
-                     res: Config.Resource[c.inputResource].name(),
-                     buildings: getBuildingsThatProduce(c.inputResource)
-                        .map((b) => Config.Building[b].name())
-                        .join(", "),
-                  })}
-               />
-            </WarningComponent>
+            {building.type === "CloneFactory" ? (
+               <WarningComponent icon="info" className="mb10 text-small">
+                  <RenderHTML
+                     html={t(L.CloneFactoryInputDescHTML, {
+                        res: Config.Resource[c.inputResource].name(),
+                        buildings: getBuildingsThatProduce(c.inputResource)
+                           .map((b) => Config.Building[b].name())
+                           .join(", "),
+                     })}
+                  />
+               </WarningComponent>
+            ) : null}
             <select
                className="w100"
                value={c.inputResource}
