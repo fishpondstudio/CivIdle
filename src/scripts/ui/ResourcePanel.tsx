@@ -211,7 +211,7 @@ export function ResourcePanel(): React.ReactNode {
             <div className={classNames({ "m-icon": true })}>science</div>
             <Tippy content={t(L.Science)} placement="bottom">
                <div style={{ width: "6rem" }}>
-                  <FormatNumber value={getResourceAmount("Science", gs)} />
+                  <FormatNumber value={getResourceAmount("Science")} />
                </div>
             </Tippy>
             <div
@@ -322,13 +322,7 @@ function DeficitResources(): React.ReactNode {
                            Config.Resource[a].name().localeCompare(Config.Resource[b].name()),
                         )
                         .map(([res, amount]) => {
-                           const runOutIn = formatHMS(
-                              (1000 *
-                                 (Tick.current.resourcesByTile
-                                    .get(res)
-                                    ?.reduce((prev, curr) => prev + curr.amount, 0) ?? 0)) /
-                                 Math.abs(amount),
-                           );
+                           const runOutIn = formatHMS((1000 * getResourceAmount(res)) / Math.abs(amount));
                            return (
                               <div className="row text-small" key={res}>
                                  <div className="f1">{Config.Resource[res].name()}</div>

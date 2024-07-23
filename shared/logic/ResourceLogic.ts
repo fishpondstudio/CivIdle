@@ -7,16 +7,8 @@ import { Config } from "./Config";
 import type { GameState } from "./GameState";
 import { Tick } from "./TickLogic";
 
-export function getResourceAmount(res: Resource, gs: GameState): number {
-   return (
-      Tick.current.resourcesByTile.get(res)?.reduce((prev, curr) => {
-         const amount = gs.tiles.get(curr.tile)?.building?.resources[res];
-         if (amount && Number.isFinite(amount)) {
-            return prev + amount;
-         }
-         return prev;
-      }, 0) ?? 0
-   );
+export function getResourceAmount(res: Resource): number {
+   return Tick.current.resourceAmount.get(res) ?? 0;
 }
 
 export function getAmountInTransit(xy: Tile, res: Resource, gs: GameState) {
