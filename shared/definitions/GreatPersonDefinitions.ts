@@ -232,7 +232,7 @@ export class GreatPersonDefinitions {
          multipliers: ["output", "storage"],
          buildings: ["Stable", "PoetrySchool"],
       },
-      time: "c. 800 BC",
+      time: "c. 800s BC",
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "ClassicalAge",

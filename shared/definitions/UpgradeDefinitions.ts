@@ -7,7 +7,6 @@ import {
    rollGreatPeopleThisRun,
 } from "../logic/RebirthLogic";
 import { getTechUnlockCost } from "../logic/TechLogic";
-import { Tick } from "../logic/TickLogic";
 import { RequestChooseGreatPerson, addMultiplier } from "../logic/Update";
 import { deepFreeze, forEach, pointToTile, safeAdd, tileToPoint } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
@@ -548,9 +547,9 @@ export class UpgradeDefinitions {
                science = Math.max(getTechUnlockCost(tech), science);
             }
          });
-         const hq = Tick.current.specialBuildings.get("Headquarter")?.building.resources;
+         const hq = findSpecialBuilding("Headquarter", gs);
          if (hq) {
-            safeAdd(hq, "Science", science);
+            safeAdd(hq.building.resources, "Science", science);
          }
       },
       additionalUpgrades: () => [t(L.SocialismLevel4DescHTML)],
@@ -571,9 +570,9 @@ export class UpgradeDefinitions {
                science = Math.max(getTechUnlockCost(tech), science);
             }
          });
-         const hq = Tick.current.specialBuildings.get("Headquarter")?.building.resources;
+         const hq = findSpecialBuilding("Headquarter", gs);
          if (hq) {
-            safeAdd(hq, "Science", science);
+            safeAdd(hq.building.resources, "Science", science);
          }
       },
       additionalUpgrades: () => [t(L.SocialismLevel5DescHTML)],
