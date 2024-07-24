@@ -9,10 +9,10 @@ import {
    type CursorOption,
 } from "../../../shared/logic/GameState";
 import { notifyGameOptionsUpdate } from "../../../shared/logic/GameStateLogic";
-import { getBuildingsThatProduce } from "../../../shared/logic/ResourceLogic";
-import { clamp, forEach, keysOf, safeParseFloat, safeParseInt } from "../../../shared/utilities/Helper";
+import { clamp, keysOf, safeParseFloat, safeParseInt } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import { syncFontSizeScale, useGameOptions } from "../Global";
+import { copyBuildingColorToResource, randomizeBuildingAndResourceColor } from "../logic/ThemeColor";
 import { jsxMapOf } from "../utilities/Helper";
 import { playClick } from "../visuals/Sound";
 import { ChangeModernUIComponent } from "./ChangeModernUIComponent";
@@ -172,6 +172,15 @@ export function ThemePage(): React.ReactNode {
 
             <fieldset>
                <legend>{t(L.BuildingColor)}</legend>
+               <button
+                  onClick={() => {
+                     randomizeBuildingAndResourceColor(gameOptions);
+                     notifyGameOptionsUpdate();
+                  }}
+                  className="w100 text-strong"
+               >
+                  {t(L.RandomColorScheme)}
+               </button>
                <div
                   className="mv5 text-link pointer text-strong"
                   onClick={() => {
@@ -205,15 +214,7 @@ export function ThemePage(): React.ReactNode {
                <Tippy content={t(L.BuildingColorMatchBuildingTooltip)}>
                   <button
                      onClick={() => {
-                        forEach(Config.Resource, (res) => {
-                           const buildings = getBuildingsThatProduce(res);
-                           for (const building of buildings) {
-                              if (gameOptions.buildingColors[building]) {
-                                 gameOptions.resourceColors[res] = gameOptions.buildingColors[building];
-                                 return;
-                              }
-                           }
-                        });
+                        copyBuildingColorToResource(gameOptions);
                         notifyGameOptionsUpdate();
                      }}
                      className="w100 text-strong"

@@ -3,12 +3,7 @@ import classNames from "classnames";
 import { useState } from "react";
 import { TableVirtuoso } from "react-virtuoso";
 import type { IBuildingDefinition } from "../../../shared/definitions/BuildingDefinitions";
-import {
-   NoPrice,
-   NoStorage,
-   type Resource,
-   type ResourceDefinitions,
-} from "../../../shared/definitions/ResourceDefinitions";
+import { NoPrice, NoStorage, type Resource } from "../../../shared/definitions/ResourceDefinitions";
 import {
    IOCalculation,
    getElectrificationStatus,
@@ -444,20 +439,9 @@ function ResourcesTab({ gameState }: IBuildingComponentProps): React.ReactNode {
    const [search, setSearch] = useState<string>("");
    const [showTheoreticalValue, setShowTheoreticalValue] = useState(true);
    const unlockedResourcesList: PartialSet<Resource> = unlockedResources(gameState);
-   const resourceAmounts: Partial<Record<keyof ResourceDefinitions, number>> = {};
    const io = getResourceIO(gameState);
    const inputs = showTheoreticalValue ? io.theoreticalInput : io.actualInput;
    const outputs = showTheoreticalValue ? io.theoreticalOutput : io.actualOutput;
-
-   keysOf(unlockedResourcesList).map((res) => {
-      resourceAmounts[res] =
-         Tick.current.resourcesByTile
-            .get(res)
-            ?.reduce(
-               (prev, curr) => prev + (gameState.tiles.get(curr.tile)?.building?.resources?.[res] ?? 0),
-               0,
-            ) ?? 0;
-   });
 
    const highlightResourcesUsed = (
       res: Resource,
@@ -552,7 +536,9 @@ function ResourcesTab({ gameState }: IBuildingComponentProps): React.ReactNode {
             compareFunc={(a, b, i) => {
                switch (i) {
                   case 1:
-                     return (resourceAmounts[a] ?? 0) - (resourceAmounts[b] ?? 0);
+                     return (
+                        (Tick.current.resourceAmount.get(a) ?? 0) - (Tick.current.resourceAmount.get(b) ?? 0)
+                     );
                   case 2:
                      return (
                         (outputs.get(a) ?? 0) -
@@ -563,9 +549,13 @@ function ResourcesTab({ gameState }: IBuildingComponentProps): React.ReactNode {
                      const deficitA = (outputs.get(a) ?? 0) - (inputs.get(a) ?? 0);
                      const deficitB = (outputs.get(b) ?? 0) - (inputs.get(b) ?? 0);
                      const timeLeftA =
-                        deficitA < 0 ? (resourceAmounts[a] ?? 0) / deficitA : Number.NEGATIVE_INFINITY;
+                        deficitA < 0
+                           ? (Tick.current.resourceAmount.get(a) ?? 0) / deficitA
+                           : Number.NEGATIVE_INFINITY;
                      const timeLeftB =
-                        deficitB < 0 ? (resourceAmounts[b] ?? 0) / deficitB : Number.NEGATIVE_INFINITY;
+                        deficitB < 0
+                           ? (Tick.current.resourceAmount.get(b) ?? 0) / deficitB
+                           : Number.NEGATIVE_INFINITY;
                      return timeLeftA !== timeLeftB
                         ? timeLeftB - timeLeftA
                         : Config.Resource[a].name().localeCompare(Config.Resource[b].name());
@@ -583,7 +573,7 @@ function ResourcesTab({ gameState }: IBuildingComponentProps): React.ReactNode {
                const output = outputs.get(res) ?? 0;
                const input = inputs.get(res) ?? 0;
                const deficit = output - input;
-               const amount = resourceAmounts[res] ?? 0;
+               const amount = Tick.current.resourceAmount.get(res) ?? 0;
                const timeLeft =
                   deficit < 0 ? Math.abs((1000 * amount ?? 0) / deficit) : Number.POSITIVE_INFINITY;
 

@@ -31,7 +31,13 @@ import { MANAGED_IMPORT_RANGE } from "./Constants";
 import { GameFeature, hasFeature } from "./FeatureLogic";
 import type { GameOptions, GameState } from "./GameState";
 import { getGameState } from "./GameStateLogic";
-import { getBuildingIO, getBuildingsByType, getGrid, getXyBuildings } from "./IntraTickCache";
+import {
+   getBuildingIO,
+   getBuildingsByType,
+   getGlobalMultipliers,
+   getGrid,
+   getXyBuildings,
+} from "./IntraTickCache";
 import { getGreatPersonTotalEffect, getUpgradeCostFib } from "./RebirthLogic";
 import { getBuildingsThatProduce, getResourcesValue } from "./ResourceLogic";
 import { getAgeForTech, getBuildingUnlockTech } from "./TechLogic";
@@ -96,9 +102,9 @@ export function forEachMultiplier(
       });
    }
    AllMultiplierTypes.forEach((type) => {
-      Tick.current.globalMultipliers[type].forEach((m) => {
+      getGlobalMultipliers(type).forEach((m) => {
          if (stableOnly && m.unstable) return;
-         func({ [type]: m.value, source: m.source, unstable: m.unstable } as MultiplierWithSource);
+         func(m);
       });
    });
 }

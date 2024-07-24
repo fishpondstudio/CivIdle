@@ -17,13 +17,14 @@ import {
    OnPriceUpdated,
    RequestChooseGreatPerson,
    RequestFloater,
+   getSortedTiles,
    tickPower,
    tickPrice,
-   tickTiles,
+   tickTile,
    tickTransports,
    tickUnlockable,
 } from "../../../shared/logic/Update";
-import { forEach, safeAdd } from "../../../shared/utilities/Helper";
+import { clamp, forEach, safeAdd, type Tile } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import { saveGame } from "../Global";
 import { isSteam } from "../rpc/SteamClient";
@@ -42,6 +43,7 @@ export function shouldTick(): boolean {
 }
 
 let timeSinceLastTick = 0;
+
 export function tickEveryFrame(gs: GameState, dt: number) {
    timeSinceLastTick = Math.min(timeSinceLastTick + dt, 1);
    const worldScene = Singleton().sceneManager.getCurrent(WorldScene);
@@ -51,10 +53,18 @@ export function tickEveryFrame(gs: GameState, dt: number) {
       }
       worldScene.updateTransportVisual(gs, timeSinceLastTick);
    }
+
+   const targetProgress = Math.ceil(timeSinceLastTick * tickTileQueueSize * Singleton().ticker.speedUp);
+   const currentProgress = tickTileQueueSize - tickTileQueue.length;
+   const toProcess = clamp(targetProgress - currentProgress, 0, tickTileQueue.length);
+   tickTileQueue.splice(0, toProcess).forEach((tile) => tickTile(tile, gs, false));
 }
 
 const heartbeatFreq = import.meta.env.DEV ? 10 : 60;
 const saveFreq = isSteam() ? 60 : 10;
+
+let tickTileQueue: Tile[] = [];
+let tickTileQueueSize = 0;
 
 let currentSessionTick = 0;
 export function tickEverySecond(gs: GameState, offline: boolean) {
@@ -63,6 +73,12 @@ export function tickEverySecond(gs: GameState, offline: boolean) {
       return;
    }
    timeSinceLastTick = 0;
+
+   if (!offline) {
+      tickTileQueue.forEach((tile) => tickTile(tile, gs, false));
+      postTickTiles(gs, false);
+   }
+
    Tick.next.tick = ++currentSessionTick;
    Tick.current = freezeTickData(Tick.next);
    Tick.next = EmptyTickData();
@@ -89,7 +105,21 @@ export function tickEverySecond(gs: GameState, offline: boolean) {
 
    tickPrice(gs);
    tickTransports(gs);
-   tickTiles(gs, offline);
+
+   const tiles = getSortedTiles(gs);
+
+   if (offline) {
+      tiles.forEach(function forEachTickTile([tile, _building]) {
+         tickTile(tile, gs, offline);
+      });
+      postTickTiles(gs, offline);
+   } else {
+      tickTileQueue = tiles.map(([tile, _building]) => tile);
+      tickTileQueueSize = tickTileQueue.length;
+   }
+}
+
+function postTickTiles(gs: GameState, offline: boolean) {
    tickPower(gs);
 
    Tick.next.happiness = calculateHappiness(gs);

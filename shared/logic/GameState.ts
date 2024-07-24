@@ -146,6 +146,7 @@ export class GameOptions {
    chatHideLatestMessage = false;
    chatChannels: Set<ChatChannel> = new Set(["en"]);
    useMirrorServer = false;
+   enableTransportSourceCache = false;
    resourceBarShowUncappedHappiness = false;
    resourceBarExcludeTurnedOffOrNoActiveTransport = false;
    resourceBarExcludeStorageFull = false;

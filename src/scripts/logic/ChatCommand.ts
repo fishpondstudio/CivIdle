@@ -1,6 +1,4 @@
-import randomColor from "randomcolor";
 import { MAX_TECH_AGE } from "../../../shared/definitions/TechDefinitions";
-import { isSpecialBuilding } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
 import { getGameOptions, getGameState, savedGame } from "../../../shared/logic/GameStateLogic";
 import {
@@ -19,11 +17,9 @@ import {
    SECOND,
    clamp,
    firstKeyOf,
-   forEach,
    formatHM,
    formatNumber,
    hasFlag,
-   reduceOf,
    safeParseInt,
    sizeOf,
    uuid4,
@@ -40,6 +36,7 @@ import { PlayerMapScene } from "../scenes/PlayerMapScene";
 import { WorldScene } from "../scenes/WorldScene";
 import { Singleton } from "../utilities/Singleton";
 import { tickEverySecond } from "./ClientUpdate";
+import { randomizeBuildingAndResourceColor } from "./ThemeColor";
 
 function requireOfflineRun(): void {
    if (canEarnGreatPeopleFromReborn()) {
@@ -138,22 +135,7 @@ export async function handleChatCommand(command: string): Promise<void> {
          break;
       }
       case "randomcolor": {
-         const colors = randomColor({
-            luminosity: "light",
-            count:
-               reduceOf(Config.Building, (prev, k) => prev + (isSpecialBuilding(k) ? 0 : 1), 0) +
-               sizeOf(Config.Resource),
-         });
-         forEach(Config.Building, (k, v) => {
-            if (!isSpecialBuilding(k)) {
-               getGameOptions().buildingColors[k] = colors.pop();
-            } else {
-               delete getGameOptions().buildingColors[k];
-            }
-         });
-         forEach(Config.Resource, (k, v) => {
-            getGameOptions().resourceColors[k] = colors.pop();
-         });
+         randomizeBuildingAndResourceColor(getGameOptions());
          addSystemMessage("Assign random colors to buildings and resources");
          break;
       }
