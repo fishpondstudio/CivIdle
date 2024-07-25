@@ -5,6 +5,7 @@ import { GameFeature, hasFeature } from "../../../shared/logic/FeatureLogic";
 import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
 import { getBuildingIO } from "../../../shared/logic/IntraTickCache";
 import { BuildingInputModeNames, BuildingInputModeTooltips } from "../../../shared/logic/Tile";
+import { clearTransportSourceCache } from "../../../shared/logic/Update";
 import { clamp, isEmpty, safeParseInt } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import { jsxMMapOf } from "../utilities/Helper";
@@ -70,6 +71,7 @@ export function BuildingInputModeComponent({ gameState, xy }: IBuildingComponent
                   } else {
                      building.maxInputDistance = Number.POSITIVE_INFINITY;
                   }
+                  clearTransportSourceCache();
                   notifyGameStateUpdate();
                }}
             >

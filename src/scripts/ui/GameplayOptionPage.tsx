@@ -310,6 +310,29 @@ export function GameplayOptionPage(): React.ReactNode {
                   </div>
                </div>
             </fieldset>
+            <fieldset>
+               <legend>{t(L.Performance)}</legend>
+               <div className="row">
+                  <div className="f1">
+                     <div>{t(L.CacheTransportPlan)}</div>
+                     <RenderHTML className="text-desc text-small" html={t(L.CacheTransportPlanDescHTML)} />
+                  </div>
+                  <div
+                     onClick={() => {
+                        playClick();
+                        options.enableTransportSourceCache = !options.enableTransportSourceCache;
+                        notifyGameOptionsUpdate(options);
+                     }}
+                     className="ml10 pointer"
+                  >
+                     {options.enableTransportSourceCache ? (
+                        <div className="m-icon text-green">toggle_on</div>
+                     ) : (
+                        <div className="m-icon text-grey">toggle_off</div>
+                     )}
+                  </div>
+               </div>
+            </fieldset>
          </div>
       </div>
    );

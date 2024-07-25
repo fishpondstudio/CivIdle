@@ -14,7 +14,7 @@ import { Config } from "./Config";
 import { SCIENCE_VALUE } from "./Constants";
 import type { GameState } from "./GameState";
 import { TILE_SIZE } from "./GameStateLogic";
-import { NotProducingReason, Tick } from "./TickLogic";
+import { NotProducingReason, Tick, type MultiplierType, type MultiplierWithSource } from "./TickLogic";
 import type {
    IBuildingData,
    ICloneBuildingData,
@@ -38,6 +38,7 @@ class IntraTickCache {
    storageFullBuildings: Tile[] | undefined;
    resourceIO: IResourceIO | undefined;
    fuelByTarget: Map<Tile, number> = new Map();
+   globalMultipliers: Map<MultiplierType, MultiplierWithSource[]> = new Map();
 }
 
 export interface IResourceIO {
@@ -320,4 +321,17 @@ export function getGrid(gs: GameState): Grid {
       grid = new Grid(size, size, TILE_SIZE);
    }
    return grid;
+}
+
+export function getGlobalMultipliers(type: MultiplierType): MultiplierWithSource[] {
+   const cached = _cache.globalMultipliers.get(type);
+   if (cached) {
+      return cached;
+   }
+   const result: MultiplierWithSource[] = [];
+   Tick.current.globalMultipliers[type].forEach((m) => {
+      result.push({ source: m.source, [type]: m.value, unstable: m.unstable } as MultiplierWithSource);
+   });
+   _cache.globalMultipliers.set(type, result);
+   return result;
 }

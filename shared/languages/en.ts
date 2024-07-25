@@ -1329,4 +1329,8 @@ export const EN = {
    DairyFarm: "Dairy Farm",
    PoetrySchool: "Poetry School",
    Homer: "Homer",
+   RandomColorScheme: "Random Color Scheme",
+   Performance: "Performance",
+   CacheTransportPlan: "Cache Transport Plan",
+   CacheTransportPlanDescHTML: "Every cycle, each building calcualtes the best tranport plan based on its settings - this process requires high CPU power. Enabling this will attempt to cache the result of the transport plan if it is still valid and therefore reduce CPU usage and framerate drop. <b>Experimental Feature</b>",
 };

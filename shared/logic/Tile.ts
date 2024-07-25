@@ -9,6 +9,7 @@ import type { PartialSet, PartialTabulate } from "../utilities/TypeDefinitions";
 import { L, t } from "../utilities/i18n";
 import { Config } from "./Config";
 import type { GameState } from "./GameState";
+import { clearTransportSourceCache } from "./Update";
 
 export interface ITileData {
    tile: Tile;
@@ -65,8 +66,6 @@ export interface IBuildingData {
    options: BuildingOptions;
 
    suspendedInput: Map<Resource, SuspendedInput>;
-
-   // disabledInput: Set<Resource>;
 
    inputMode: BuildingInputMode;
    maxInputDistance: number;
@@ -271,6 +270,7 @@ export function makeBuilding(data: Pick<IBuildingData, "type"> & Partial<IBuildi
    building.stockpileMax = clamp(building.stockpileMax, STOCKPILE_MAX_MIN, STOCKPILE_MAX_MAX);
    building.productionPriority = clamp(building.productionPriority, PRIORITY_MIN, PRIORITY_MAX);
    building.constructionPriority = clamp(building.constructionPriority, PRIORITY_MIN, PRIORITY_MAX);
+   clearTransportSourceCache();
    return building;
 }
 
