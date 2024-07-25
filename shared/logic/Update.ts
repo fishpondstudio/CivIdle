@@ -216,8 +216,14 @@ export function getSortedTiles(gs: GameState): [Tile, IBuildingData][] {
 }
 
 export function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
-   const tile = gs.tiles.get(xy)!;
-   const building = tile.building!;
+   const tile = gs.tiles.get(xy);
+   if (!tile) {
+      return;
+   }
+   const building = tile.building;
+   if (!building) {
+      return;
+   }
    const transportSourceCache = offline || getGameOptions().enableTransportSourceCache;
    if (isNaturalWonder(building.type) && !tile.explored) {
       return;
