@@ -440,7 +440,7 @@ export const RU = {
    GreatPeopleName: "Имя",
    GreatPeoplePermanentColumn: "Постоянные",
    GreatPeoplePermanentShort: "Постоянные",
-   GreatPeoplePickPerRoll: "Взять Великого Человека за ролл", 
+   GreatPeoplePickPerRoll: "Взять Великого Человека за выбор", 
    GreatPeopleThisRun: "Великие Люди из этого Пробега",
    GreatPeopleThisRunColumn: "Этот Пробег",
    GreatPeopleThisRunShort: "Этот Пробег",
@@ -1329,4 +1329,8 @@ export const RU = {
    DairyFarm: "Молочная ферма",
    PoetrySchool: "Школа поэзии",
    Homer: "Гомер",
+   RandomColorScheme: "Случайная цветовая схема",
+   Performance: "Производительность",
+   CacheTransportPlan: "Кэширование транспортного плана",
+   CacheTransportPlanDescHTML: "Кэширование транспортного плана: каждый цикл каждое здание вычисляет наилучший транспортный план на основе своих настроек — этот процесс требует высокой мощности ЦП. Включение этого параметра попытается кэшировать результат транспортного плана, если он все еще действителен, и, следовательно, уменьшит использование ЦП и падение частоты кадров. <b>Экспериментальная функция</b>",
 };
