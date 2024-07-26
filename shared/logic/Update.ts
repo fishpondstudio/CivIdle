@@ -768,7 +768,10 @@ export function transportResource(
          .get(res)
          ?.filter((source) => {
             const sourceBuilding = gs.tiles.get(source.tile)?.building;
-            if (!sourceBuilding || sourceBuilding.status !== "completed") {
+            // This code used to check sourceBuilding.status !== "completed" here but it is wrong.
+            // We should include all buildings in the cache and filter them out later - we do not
+            // want to manage cache update when building status has changed
+            if (!sourceBuilding) {
                return false;
             }
             if (targetBuilding?.type === "CloneFactory" && targetBuilding?.status === "completed") {
@@ -806,7 +809,7 @@ export function transportResource(
    for (let i = 0; i < sources.length; i++) {
       const from = sources[i];
       const sourceBuilding = gs.tiles.get(from)?.building;
-      if (!sourceBuilding) {
+      if (!sourceBuilding || sourceBuilding.status !== "completed") {
          continue;
       }
       if (from === targetXy) {
