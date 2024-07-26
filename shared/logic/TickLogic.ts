@@ -8,12 +8,18 @@ import { getBuildingValue } from "./BuildingLogic";
 import { Config } from "./Config";
 import type { GameState } from "./GameState";
 import type { calculateHappiness } from "./HappinessLogic";
-import type { IBuildingData, ITileData } from "./Tile";
+import type { IBuildingData, IResourceImportBuildingData, ITileData } from "./Tile";
 import type { TileAndRes } from "./Update";
 
-export interface IBuildingResource {
+export interface IBuildingIndex {
    tile: Tile;
    amount: number;
+   usedStoragePercentage: number;
+}
+
+export interface IResourceImportBuildingIndex {
+   tile: Tile;
+   building: IResourceImportBuildingData;
    usedStoragePercentage: number;
 }
 
@@ -26,10 +32,11 @@ interface ITickData {
    workersUsed: Map<Resource, number>;
    workersAssignment: Map<Tile, number>;
    electrified: Set<Tile>;
-   resourcesByTile: Map<Resource, IBuildingResource[]>;
+   resourcesByTile: Map<Resource, IBuildingIndex[]>;
    storagePercentages: Map<Tile, number>;
    wonderProductions: Map<Resource, number>;
    playerTradeBuildings: Map<Tile, IBuildingData>;
+   resourceImportBuildings: Map<Tile, IResourceImportBuildingIndex>;
    globalMultipliers: GlobalMultipliers;
    notProducingReasons: Map<Tile, NotProducingReason>;
    specialBuildings: Map<Building, Required<ITileData>>;
@@ -63,6 +70,7 @@ export function EmptyTickData(): ITickData {
       globalMultipliers: new GlobalMultipliers(),
       notProducingReasons: new Map(),
       playerTradeBuildings: new Map(),
+      resourceImportBuildings: new Map(),
       wonderProductions: new Map(),
       specialBuildings: new Map(),
       scienceProduced: new Map(),

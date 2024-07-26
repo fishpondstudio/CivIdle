@@ -224,10 +224,11 @@ export function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
    if (!building) {
       return;
    }
-   const transportSourceCache = offline || getGameOptions().enableTransportSourceCache;
    if (isNaturalWonder(building.type) && !tile.explored) {
       return;
    }
+
+   const transportSourceCache = offline || getGameOptions().enableTransportSourceCache;
 
    if (building.desiredLevel > building.level) {
       building.status = building.level > 0 ? "upgrading" : "building";
@@ -252,6 +253,8 @@ export function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
    // This is for cache purpose. We will filter them out when actually transporting resources
    const { total, used } = getStorageFor(xy, gs);
 
+   const isResourceImportBuilding = "resourceImports" in building;
+
    forEach(building.resources, (res, amount) => {
       if (!Number.isFinite(amount) || amount <= 0) {
          return;
@@ -263,12 +266,24 @@ export function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
       mapSafeAdd(Tick.next.resourceValues, res, rev);
       mapSafeAdd(Tick.next.resourceAmount, res, amount);
 
-      mapSafePush(Tick.next.resourcesByTile, res, {
+      // We do not add Warehouse/Caravansary in `resourcesByTile`, because we need to consider as transport
+      // sources anyway!
+      if (!isResourceImportBuilding) {
+         mapSafePush(Tick.next.resourcesByTile, res, {
+            tile: xy,
+            amount,
+            usedStoragePercentage: used / total,
+         });
+      }
+   });
+
+   if (isResourceImportBuilding) {
+      Tick.next.resourceImportBuildings.set(xy, {
+         building: building as IResourceImportBuildingData,
          tile: xy,
-         amount,
          usedStoragePercentage: used / total,
       });
-   });
+   }
 
    if (building.status === "building" || building.status === "upgrading") {
       const cost = getBuildingCost(building);
@@ -764,35 +779,32 @@ export function transportResource(
    }
 
    if (!sources) {
-      sources = Tick.current.resourcesByTile
-         .get(res)
-         ?.filter((source) => {
-            const sourceBuilding = gs.tiles.get(source.tile)?.building;
-            if (!sourceBuilding || sourceBuilding.status !== "completed") {
-               return false;
-            }
-            if (targetBuilding?.type === "CloneFactory" && targetBuilding?.status === "completed") {
-               if (!Config.Building[sourceBuilding.type].output[res]) {
-                  return false;
+      const candidates = Tick.current.resourcesByTile.get(res)?.slice();
+      if (candidates != null) {
+         // We need to add all Warehouse/Caravansary here, because it is excluded from `resourcesByTile`
+         Tick.current.resourceImportBuildings.forEach((b, xy) => {
+            candidates.push({
+               tile: xy,
+               amount: b.building.resources[res] ?? 0,
+               usedStoragePercentage: b.usedStoragePercentage,
+            });
+         });
+
+         sources = candidates
+            .sort((point1, point2) => {
+               switch (mode) {
+                  case BuildingInputMode.Distance:
+                     return (
+                        grid.distanceTile(point1.tile, targetXy) - grid.distanceTile(point2.tile, targetXy)
+                     );
+                  case BuildingInputMode.Amount:
+                     return point2.amount - point1.amount;
+                  case BuildingInputMode.StoragePercentage:
+                     return point2.usedStoragePercentage - point1.usedStoragePercentage;
                }
-            }
-            const maxDistance = getMaxInputDistance(targetBuilding, gs);
-            if (maxDistance === Number.POSITIVE_INFINITY) {
-               return true;
-            }
-            return grid.distanceTile(source.tile, targetXy) <= maxDistance;
-         })
-         .sort((point1, point2) => {
-            switch (mode) {
-               case BuildingInputMode.Distance:
-                  return grid.distanceTile(point1.tile, targetXy) - grid.distanceTile(point2.tile, targetXy);
-               case BuildingInputMode.Amount:
-                  return point2.amount - point1.amount;
-               case BuildingInputMode.StoragePercentage:
-                  return point2.usedStoragePercentage - point1.usedStoragePercentage;
-            }
-         })
-         .map((s) => s.tile);
+            })
+            .map((s) => s.tile);
+      }
 
       if (transportSourceCache && cacheKey && sources) {
          _transportSourceCache.set(cacheKey, sources);
@@ -806,10 +818,20 @@ export function transportResource(
    for (let i = 0; i < sources.length; i++) {
       const from = sources[i];
       const sourceBuilding = gs.tiles.get(from)?.building;
-      if (!sourceBuilding) {
+      // Do all the filtering logic here (after cache), so that cache always have the most complete list)
+      if (!sourceBuilding || sourceBuilding.status !== "completed" || from === targetXy) {
          continue;
       }
-      if (from === targetXy) {
+      if (
+         targetBuilding?.type === "CloneFactory" &&
+         targetBuilding?.status === "completed" &&
+         !Config.Building[sourceBuilding.type].output[res]
+      ) {
+         continue;
+      }
+
+      const maxDistance = getMaxInputDistance(targetBuilding, gs);
+      if (maxDistance !== Number.POSITIVE_INFINITY && grid.distanceTile(from, targetXy) > maxDistance) {
          continue;
       }
 
