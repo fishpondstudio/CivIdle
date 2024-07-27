@@ -14,6 +14,7 @@ import {
    STOCKPILE_MAX_MAX,
    STOCKPILE_MAX_MIN,
 } from "../../../shared/logic/Tile";
+import { clearTransportSourceCache } from "../../../shared/logic/Update";
 import { clamp, formatPercent, keysOf, safeParseInt, sizeOf } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import { useGameOptions, useGameState } from "../Global";
@@ -314,8 +315,8 @@ export function GameplayOptionPage(): React.ReactNode {
                <legend>{t(L.Performance)}</legend>
                <div className="row">
                   <div className="f1">
-                     <div>{t(L.CacheTransportPlan)}</div>
-                     <RenderHTML className="text-desc text-small" html={t(L.CacheTransportPlanDescHTML)} />
+                     <div>{t(L.TransportPlanCache)}</div>
+                     <RenderHTML className="text-desc text-small" html={t(L.TransportPlanCacheDescHTML)} />
                   </div>
                   <div
                      onClick={() => {
@@ -332,6 +333,15 @@ export function GameplayOptionPage(): React.ReactNode {
                      )}
                   </div>
                </div>
+               <button
+                  className="jcc w100 mt10"
+                  onClick={() => {
+                     playClick();
+                     clearTransportSourceCache();
+                  }}
+               >
+                  {t(L.ClearTransportPlanCache)}
+               </button>
             </fieldset>
          </div>
       </div>

@@ -572,6 +572,7 @@ ul.tree-view>li:first-child {
 
 button {
    min-width: unset;
+   display: block;
 }
 
 .production-warning {

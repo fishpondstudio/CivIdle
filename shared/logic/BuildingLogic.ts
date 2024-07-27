@@ -763,7 +763,8 @@ export function getAvailableResource(sourceXy: Tile, destXy: Tile, res: Resource
       return 0;
    }
 
-   if (!building.resources[res]) {
+   const amountInStorage = building.resources[res];
+   if (!amountInStorage) {
       return 0;
    }
 
@@ -778,31 +779,21 @@ export function getAvailableResource(sourceXy: Tile, destXy: Tile, res: Resource
       }
       const resourceImport = ri.resourceImports[res];
       if (resourceImport && !hasFlag(ri.resourceImportOptions, ResourceImportOptions.ExportBelowCap)) {
-         return clamp(
-            (building.resources[res] ?? 0) - (resourceImport.cap ?? 0),
-            0,
-            Number.POSITIVE_INFINITY,
-         );
+         return clamp(amountInStorage - (resourceImport.cap ?? 0), 0, Number.POSITIVE_INFINITY);
       }
 
-      return building.resources[res] ?? 0;
+      return amountInStorage;
    }
 
-   // const input = getBuildingIO(sourceXy, "input", IOCalculation.Capacity | IOCalculation.Multiplier, gs);
-   // if (input[res]) {
-   //    return clamp(
-   //       building.resources[res]! -
-   //          (getStockpileMax(building) + getStockpileCapacity(building)) * input[res]!,
-   //       0,
-   //       Number.POSITIVE_INFINITY,
-   //    );
-   // }
-
-   if (Config.Building[building.type].input[res]) {
-      return 0;
+   const input = getBuildingIO(sourceXy, "input", IOCalculation.Capacity | IOCalculation.Multiplier, gs);
+   const inputAmount = input[res];
+   if (inputAmount) {
+      // We reserve stockpile max + 1 cycle of capacity so that production does not flicker
+      const reservedAmount = (getStockpileMax(building) + getStockpileCapacity(building)) * inputAmount;
+      return clamp(amountInStorage - reservedAmount, 0, Number.POSITIVE_INFINITY);
    }
 
-   return building.resources[res]!;
+   return amountInStorage;
 }
 
 export function exploreTile(xy: Tile, gs: GameState): void {

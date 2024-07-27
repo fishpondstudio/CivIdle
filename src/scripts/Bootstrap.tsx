@@ -34,6 +34,7 @@ import { connectWebSocket, convertOfflineTimeToWarp } from "./rpc/RPCClient";
 import { PlayerMapScene } from "./scenes/PlayerMapScene";
 import { TechTreeScene } from "./scenes/TechTreeScene";
 import { WorldScene } from "./scenes/WorldScene";
+import { AdvisorModal } from "./ui/AdvisorModal";
 import { ChooseGreatPersonModal } from "./ui/ChooseGreatPersonModal";
 import { ErrorPage } from "./ui/ErrorPage";
 import { FirstTimePlayerModal } from "./ui/FirstTimePlayerModal";
@@ -164,6 +165,8 @@ export async function startGame(
    } else if (options.greatPeopleChoicesV2.length > 0) {
       showModal(<ChooseGreatPersonModal permanent={true} />);
    }
+
+   showModal(<AdvisorModal />);
 
    Singleton().heartbeat.init();
 

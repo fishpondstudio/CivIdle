@@ -1331,6 +1331,7 @@ export const EN = {
    Homer: "Homer",
    RandomColorScheme: "Random Color Scheme",
    Performance: "Performance",
-   CacheTransportPlan: "Cache Transport Plan",
-   CacheTransportPlanDescHTML: "Transport Plan Cache: Every cycle, each building calculates the best transport plan based on its settings - this process requires high CPU power. Enabling this will attempt to cache the result of the transport plan if it is still valid and therefore reduce CPU usage and frame rate drop. <b>Experimental Feature</b>",
+   TransportPlanCache: "Transport Plan Cache",
+   TransportPlanCacheDescHTML: "Every cycle, each building calculates the best transport plan based on its settings - this process requires high CPU power. Enabling this will attempt to cache the result of the transport plan if it is still valid and therefore reduce CPU usage and frame rate drop. <b>Experimental Feature</b>",
+   ClearTransportPlanCache: "Clear Transport Plan Cache"
 };
