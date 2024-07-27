@@ -74,7 +74,7 @@ function ChooseResource({ gameState, xy }: IBuildingComponentProps): React.React
             <ApplyToAllComponent
                xy={xy}
                getOptions={() => {
-                  return { inputResource: c.inputResource } as ICloneBuildingData;
+                  return { inputResource: c.inputResource, transportedAmount: 0 } as ICloneBuildingData;
                }}
                gameState={gameState}
             />

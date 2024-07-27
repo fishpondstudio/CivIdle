@@ -760,8 +760,7 @@ export function transportResource(
    }
    // This cache needs to be cleared when:
    // 1) Building has changed (add, remove and move)
-   // 2) Building's max input distance has changed (we only need to expire its own cache but currently it
-   //    is clearing everything for simplicity)
+   // 2) [THIS IS NO LONGER TRUE] ~Building's max input distance has changed~
    // Also, we can only cache Distance Input Mode. We cannot cache Warehouse (due to Managed Mode)
    const cacheKey =
       transportSourceCache && mode === BuildingInputMode.Distance && !("resourceImports" in targetBuilding)
@@ -817,6 +816,7 @@ export function transportResource(
    for (let i = 0; i < sources.length; i++) {
       const from = sources[i];
       const sourceBuilding = gs.tiles.get(from)?.building;
+
       // Do all the filtering logic here (after cache), so that cache always have the most complete list)
       if (!sourceBuilding || sourceBuilding.status !== "completed" || from === targetXy) {
          continue;
