@@ -521,7 +521,7 @@ export const RU = {
    IsambardKingdomBrunel: "Изамбард Кингдом Брюнель",
    IsidoreOfMiletus: "Исидор Милетский",
    IsidoreOfMiletusDesc: "+%{value} к Множителю Мощности Стоительства",
-   Islam5UpgradeHTML: "При разблокировке единоразово дает науку в количестве самой дорогой <b>Индустриальной</b> технологии",
+   Islam5UpgradeHTML: "При разблокировке единоразово дает науку в количестве самой дорогой технологии <b>Промышленной эпохи</b> ",
    IslamLevelX: "Ислам %{level}",
    ItsukushimaShrine: "Святилище Ицукусима",
    ItsukushimaShrineDesc: "Храм Ицукусима",
