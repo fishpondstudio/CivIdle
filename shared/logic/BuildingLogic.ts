@@ -243,6 +243,10 @@ export function getStorageFor(xy: Tile, gs: GameState): IStorageResult {
          const HOUR = 60 * 60;
          base = 3 * HOUR + getPetraBaseStorage(building);
          base += HOUR * Config.GreatPerson.Zenobia.value(getGreatPersonTotalEffect("Zenobia"));
+         const fuji = Tick.current.specialBuildings.get("MountFuji");
+         if (fuji && getGrid(gs).distanceTile(fuji.tile, xy) <= 1) {
+            base += HOUR * 8;
+         }
          multiplier = 1;
          break;
       }

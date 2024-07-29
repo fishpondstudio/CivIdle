@@ -62,6 +62,8 @@ import { Singleton } from "../utilities/Singleton";
 
 let votedBoost: IGetVotedBoostResponse | null = null;
 let lastVotedBoostUpdatedAt = 0;
+let lastFujiGeneratedAt = Date.now();
+let fujiTick = 0;
 
 export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boolean }): void {
    const gs = getGameState();
@@ -1216,6 +1218,50 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
             if (def.age === currentAge) {
                def.tick(def, 1, `${buildingName}: ${def.name()}`, GreatPersonTickFlag.Unstable);
             }
+         });
+         break;
+      }
+      case "MountFuji": {
+         const interval = Math.min(fujiTick, (Date.now() - lastFujiGeneratedAt) / 1000);
+         if (interval >= 60) {
+            fujiTick = 0;
+            lastFujiGeneratedAt = Date.now();
+            const petra = Tick.current.specialBuildings.get("Petra");
+            if (petra) {
+               safeAdd(petra.building.resources, "Warp", 30);
+            }
+         } else {
+            fujiTick++;
+         }
+         break;
+      }
+      case "GoldenPavilion": {
+         grid.getRange(tileToPoint(xy), 3).forEach((point) => {
+            const tile = pointToTile(point);
+            const building = gs.tiles.get(tile)?.building;
+            if (!building) {
+               return;
+            }
+            const input = Config.Building[building.type].input;
+            let multiplier = 0;
+            grid.getNeighbors(point).forEach((p) => {
+               const type = gs.tiles.get(pointToTile(p))?.building?.type;
+               if (!type) {
+                  return;
+               }
+               forEach(Config.Building[type].output, (res) => {
+                  if (input[res]) {
+                     ++multiplier;
+                     // break
+                     return true;
+                  }
+               });
+            });
+            mapSafePush(Tick.next.tileMultipliers, tile, {
+               output: multiplier,
+               unstable: true,
+               source: buildingName,
+            });
          });
          break;
       }

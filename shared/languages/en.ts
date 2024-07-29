@@ -1341,7 +1341,7 @@ export const EN = {
    MountFuji: "Mount Fuji",
    MountFujiDesc: "When Petra is built next to it, Petra gets +8h Warp storage. When the game is running, generate 30 warp every minute in Petra (not accelerated by Petra itself, not generating when the game is offline)",
    GoldenPavilion: "Golden Pavilion",
-   GoldenPavilionDesc: "All buildings within 3 tile range get +1 Production Multiplier for each adjacent building that produces any of its consumed resources",
+   GoldenPavilionDesc: "All buildings within 3 tile range get +1 Production Multiplier for each adjacent building that produces any of its consumed resources (excluding Clone Lab and Clone Factory)",
    OsakaCastle: "Osaka Castle",
    OsakaCastleDesc: "Provide power to all tiles within 2 tile range. Allow electrification of science producing buildings (including Clone Lab)",
 };

@@ -381,6 +381,10 @@ export class WorldScene extends Scene {
                this.highlightRange(grid, 2);
                break;
             }
+            case "GoldenPavilion": {
+               this.highlightRange(grid, 3);
+               break;
+            }
             case "YellowCraneTower": {
                this.highlightRange(grid, getYellowCraneTowerRange(xy, gs));
                break;
