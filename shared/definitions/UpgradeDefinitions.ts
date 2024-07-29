@@ -6,11 +6,12 @@ import {
    getGreatPersonTotalEffect,
    rollGreatPeopleThisRun,
 } from "../logic/RebirthLogic";
-import { getTechUnlockCost } from "../logic/TechLogic";
+import { getTechUnlockCost, getTechUnlockCostInAge } from "../logic/TechLogic";
 import { RequestChooseGreatPerson, addMultiplier } from "../logic/Update";
 import { deepFreeze, forEach, pointToTile, safeAdd, tileToPoint } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
 import { BuildingDefinitions } from "./BuildingDefinitions";
+import { GreatPersonTickFlag } from "./GreatPersonDefinitions";
 import type { IUpgradeDefinition } from "./ITechDefinition";
 import type { Tech } from "./TechDefinitions";
 
@@ -149,7 +150,7 @@ export class UpgradeDefinitions {
          const total = getGreatPersonTotalEffect("ZhengHe", gs);
          if (total > 0) {
             const def = Config.GreatPerson.ZhengHe;
-            def.tick(def, total, t(L.ExpansionLevelX, { level: "IV" }));
+            def.tick(def, total, t(L.ExpansionLevelX, { level: "IV" }), GreatPersonTickFlag.None);
          }
       },
    };
@@ -538,15 +539,7 @@ export class UpgradeDefinitions {
          ResearchLab: { output: 1 },
       },
       onUnlocked: (gs) => {
-         let science = 0;
-         forEach(Config.Tech, (tech, def) => {
-            if (
-               def.column >= Config.TechAge.WorldWarAge.from &&
-               def.column <= Config.TechAge.WorldWarAge.to
-            ) {
-               science = Math.max(getTechUnlockCost(tech), science);
-            }
-         });
+         const [_, science] = getTechUnlockCostInAge("WorldWarAge");
          const hq = findSpecialBuilding("Headquarter", gs);
          if (hq) {
             safeAdd(hq.building.resources, "Science", science);
@@ -564,12 +557,7 @@ export class UpgradeDefinitions {
          ResearchLab: { output: 1 },
       },
       onUnlocked: (gs) => {
-         let science = 0;
-         forEach(Config.Tech, (tech, def) => {
-            if (def.column >= Config.TechAge.ColdWarAge.from && def.column <= Config.TechAge.ColdWarAge.to) {
-               science = Math.max(getTechUnlockCost(tech), science);
-            }
-         });
+         const [_, science] = getTechUnlockCostInAge("ColdWarAge");
          const hq = findSpecialBuilding("Headquarter", gs);
          if (hq) {
             safeAdd(hq.building.resources, "Science", science);

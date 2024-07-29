@@ -3,6 +3,7 @@ import { Config } from "../../../shared/logic/Config";
 import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
 import { getGreatPeopleChoiceCount, rollGreatPeopleThisRun } from "../../../shared/logic/RebirthLogic";
 import {
+   checkItsukushimaShrine,
    getCurrentAge,
    getScienceAmount,
    getTechUnlockCost,
@@ -67,6 +68,8 @@ export function TechPage({ id }: { id: Tech }): React.ReactNode {
             }
             checkAgeAchievements(newAge);
          }
+
+         checkItsukushimaShrine(tech, gs);
       });
 
       if (gs.greatPeopleChoices.length > 0) {

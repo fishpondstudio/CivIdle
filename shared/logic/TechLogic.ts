@@ -7,6 +7,7 @@ import {
    forEach,
    isEmpty,
    isNullOrUndefined,
+   safeAdd,
    shuffle,
    sizeOf,
    type Tile,
@@ -117,6 +118,28 @@ export function getAgeForTech(tech: Tech): TechAge {
    throw new Error(`Cannot find age for tech: ${tech}`);
 }
 
+export function getNextAge(age: TechAge): TechAge | null {
+   const idx = Config.TechAge[age].idx + 1;
+   for (age in Config.TechAge) {
+      if (Config.TechAge[age].idx === idx) {
+         return age;
+      }
+   }
+   return null;
+}
+
+export function isAllTechUnlocked(age: TechAge, gs: GameState): boolean {
+   const from = Config.TechAge[age].from;
+   const to = Config.TechAge[age].to;
+   let tech: Tech;
+   for (tech in Config.Tech) {
+      if (Config.Tech[tech].column >= from && Config.Tech[tech].column <= to && !gs.unlockedTech[tech]) {
+         return false;
+      }
+   }
+   return true;
+}
+
 export function unlockTech(tech: Tech, dispatchEvent: boolean, gs: GameState): void {
    if (gs.unlockedTech[tech]) {
       return;
@@ -205,4 +228,35 @@ export function getAllPrerequisites(tech: Tech): Set<Tech> {
       });
    }
    return result;
+}
+
+export function getTechUnlockCostInAge(age: TechAge): [number, number] {
+   let min = Number.POSITIVE_INFINITY;
+   let max = 0;
+   forEach(Config.Tech, (tech, def) => {
+      if (def.column >= Config.TechAge[age].from && def.column <= Config.TechAge[age].to) {
+         max = Math.max(getTechUnlockCost(tech), max);
+         min = Math.max(getTechUnlockCost(tech), min);
+      }
+   });
+   return [min, max];
+}
+
+export function checkItsukushimaShrine(tech: Tech, gs: GameState): void {
+   if (!Tick.current.specialBuildings.has("ItsukushimaShrine")) {
+      return;
+   }
+   const age = getAgeForTech(tech);
+   if (!isAllTechUnlocked(age, gs)) {
+      return;
+   }
+   const nextAge = getNextAge(age);
+   if (!nextAge) {
+      return;
+   }
+   const [science, _] = getTechUnlockCostInAge(nextAge);
+   const hq = Tick.current.specialBuildings.get("Headquarter");
+   if (hq) {
+      safeAdd(hq.building.resources, "Science", science);
+   }
 }

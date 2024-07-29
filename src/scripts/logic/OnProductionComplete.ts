@@ -1,4 +1,5 @@
 import type { Building } from "../../../shared/definitions/BuildingDefinitions";
+import { GreatPersonTickFlag } from "../../../shared/definitions/GreatPersonDefinitions";
 import {
    forEachMultiplier,
    generateScienceFromFaith,
@@ -561,6 +562,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
                Config.GreatPerson.Hatshepsut,
                total,
                `${buildingName}: ${Config.GreatPerson.Hatshepsut.name()}`,
+               GreatPersonTickFlag.None,
             );
          }
          break;
@@ -717,6 +719,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
                Config.GreatPerson.Confucius,
                total,
                `${buildingName}: ${Config.GreatPerson.Confucius.name()}`,
+               GreatPersonTickFlag.None,
             );
          }
          break;
@@ -789,6 +792,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
                Config.GreatPerson.ZhengHe,
                total,
                `${buildingName}: ${Config.GreatPerson.ZhengHe.name()}`,
+               GreatPersonTickFlag.None,
             );
          }
          break;
@@ -927,7 +931,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
             const def = Config.GreatPerson[gp];
             const total = getGreatPersonTotalEffect(gp, gs, options);
             if (total > 0) {
-               def.tick(def, total, `${buildingName}: ${def.name()}`);
+               def.tick(def, total, `${buildingName}: ${def.name()}`, GreatPersonTickFlag.Unstable);
             }
          });
          break;
@@ -973,6 +977,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
                Config.GreatPerson.JohnDRockefeller,
                total,
                `${buildingName}: ${Config.GreatPerson.JohnDRockefeller.name()}`,
+               GreatPersonTickFlag.None,
             );
          }
          break;
@@ -990,6 +995,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
                Config.GreatPerson.JPMorgan,
                total,
                `${buildingName}: ${Config.GreatPerson.JPMorgan.name()}`,
+               GreatPersonTickFlag.None,
             );
          }
          break;
@@ -1016,6 +1022,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
             Config.GreatPerson.HarunAlRashid,
             getGreatPersonTotalEffect("HarunAlRashid", gs, options),
             `${buildingName}: ${Config.GreatPerson.HarunAlRashid.name()}`,
+            GreatPersonTickFlag.None,
          );
          generateScienceFromFaith(xy, "Mosque", gs);
          break;
@@ -1101,6 +1108,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
                Config.GreatPerson.NebuchadnezzarII,
                total,
                `${buildingName}: ${Config.GreatPerson.NebuchadnezzarII.name()}`,
+               GreatPersonTickFlag.None,
             );
          }
          break;
@@ -1191,7 +1199,22 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          const level = 2 + building.level - 1;
          forEach(Config.GreatPerson, (p, def) => {
             if (def.age === "InformationAge") {
-               def.tick(def, level, `${buildingName}: ${def.name()}`);
+               def.tick(def, level, `${buildingName}: ${def.name()}`, GreatPersonTickFlag.None);
+            }
+         });
+         break;
+      }
+      case "OsakaCastle": {
+         for (const point of grid.getRange(tileToPoint(xy), 2)) {
+            Tick.next.powerPlants.add(pointToTile(point));
+         }
+         break;
+      }
+      case "Kanagawa": {
+         const currentAge = getCurrentAge(gs);
+         forEach(Config.GreatPerson, (p, def) => {
+            if (def.age === currentAge) {
+               def.tick(def, 1, `${buildingName}: ${def.name()}`, GreatPersonTickFlag.Unstable);
             }
          });
          break;

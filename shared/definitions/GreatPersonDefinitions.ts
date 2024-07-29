@@ -2,9 +2,10 @@ import { getScienceFromWorkers } from "../logic/BuildingLogic";
 import { Config } from "../logic/Config";
 import { getGameState } from "../logic/GameStateLogic";
 import { getTransportStat } from "../logic/IntraTickCache";
-import type { Multiplier, MultiplierType } from "../logic/TickLogic";
+import type { MultiplierType, MultiplierWithStability } from "../logic/TickLogic";
 import { MultiplierTypeDesc, Tick } from "../logic/TickLogic";
 import { addMultiplier } from "../logic/Update";
+import { hasFlag } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
 import type { Building } from "./BuildingDefinitions";
 import type { City } from "./CityDefinitions";
@@ -1368,7 +1369,7 @@ export interface IGreatPersonDefinition {
    age: TechAge;
    boost?: IGreatPersonBoost;
    city?: City;
-   tick: (self: IGreatPersonDefinition, level: number, source: string) => void;
+   tick: (self: IGreatPersonDefinition, level: number, source: string, flag: GreatPersonTickFlag) => void;
 }
 
 function greatPersonBoostDesc(self: IGreatPersonDefinition, level: number) {
@@ -1382,18 +1383,31 @@ function greatPersonBoostDesc(self: IGreatPersonDefinition, level: number) {
    });
 }
 
-function tickGreatPersonBoost(self: IGreatPersonDefinition, level: number, source: string) {
+function tickGreatPersonBoost(
+   self: IGreatPersonDefinition,
+   level: number,
+   source: string,
+   flag: GreatPersonTickFlag,
+) {
    const boost = self.boost;
    if (!boost) {
       throw new Error("`tickGreatPersonBoost` requires `boost` to be defined");
    }
    boost.buildings.forEach((b) => {
-      const multiplier: Partial<Multiplier> = {};
+      const multiplier: Partial<MultiplierWithStability> = {};
       boost.multipliers.forEach((m) => {
          multiplier[m] = self.value(level);
       });
-      addMultiplier(b, multiplier as Multiplier, source);
+      if (hasFlag(flag, GreatPersonTickFlag.Unstable)) {
+         multiplier.unstable = true;
+      }
+      addMultiplier(b, multiplier as MultiplierWithStability, source);
    });
+}
+
+export enum GreatPersonTickFlag {
+   None = 0,
+   Unstable = 1 << 0,
 }
 
 function boostOf(
@@ -1410,7 +1424,7 @@ function boostOf(
       age: def.age,
       city: def.city,
       type: GreatPersonType.Normal,
-      tick: (self, level, source) => tickGreatPersonBoost(self, level, source),
+      tick: (self, level, source, flag) => tickGreatPersonBoost(self, level, source, flag),
    };
 }
 

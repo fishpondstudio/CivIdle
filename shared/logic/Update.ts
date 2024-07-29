@@ -81,7 +81,7 @@ import {
 } from "./IntraTickCache";
 import { calculateEmpireValue } from "./RebirthLogic";
 import { getAmountInTransit } from "./ResourceLogic";
-import type { Multiplier } from "./TickLogic";
+import type { MultiplierWithStability } from "./TickLogic";
 import { NotProducingReason, Tick } from "./TickLogic";
 import {
    BuildingInputMode,
@@ -898,7 +898,7 @@ export function transportResource(
    return amountLeft;
 }
 
-export function addMultiplier(k: Building, multiplier: Multiplier & { unstable?: boolean }, source: string) {
+export function addMultiplier(k: Building, multiplier: MultiplierWithStability, source: string) {
    let m = Tick.next.buildingMultipliers.get(k);
    if (m == null) {
       m = [];

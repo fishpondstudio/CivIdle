@@ -826,12 +826,18 @@ export function canBeElectrified(b: Building): boolean {
    if (b === "CloneFactory") {
       return true;
    }
+   if (b === "CloneLab" && Tick.current.specialBuildings.has("OsakaCastle")) {
+      return true;
+   }
    const output = Config.Building[b].output;
    if (sizeOf(output) <= 0) {
       return false;
    }
    let res: Resource;
    for (res in output) {
+      if (res === "Science" && Tick.current.specialBuildings.has("OsakaCastle")) {
+         continue;
+      }
       if (NoStorage[res]) {
          return false;
       }

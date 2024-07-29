@@ -181,6 +181,35 @@ export class CityDefinitions {
       requireGreatPeopleLevel: 30,
       requireSupporterPack: true,
    };
+   Kyoto: ICityDefinition = {
+      name: () => t(L.Kyoto),
+      deposits: {
+         Water: 0.025,
+         Copper: 0.025,
+         Iron: 0.025,
+         Wood: 0.025,
+         Stone: 0.025,
+         Gold: 0.025,
+         Coal: 0.025,
+         Oil: 0.025,
+         Aluminum: 0.025,
+         NaturalGas: 0.025,
+         Uranium: 0.025,
+      },
+      size: 35,
+      buildingNames: {
+         Headquarter: () => t(L.ImperialPalace),
+      },
+      uniqueBuildings: {
+         ItsukushimaShrine: "Religion",
+         GoldenPavilion: "Theocracy",
+         OsakaCastle: "Electricity",
+      },
+      uniqueMultipliers: {},
+      naturalWonders: { Kanagawa: true, MountFuji: true },
+      requireGreatPeopleLevel: 40,
+      requireSupporterPack: true,
+   };
 }
 
 export type City = keyof CityDefinitions;

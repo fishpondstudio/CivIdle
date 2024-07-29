@@ -1,3 +1,4 @@
+import { GreatPersonTickFlag } from "../../../shared/definitions/GreatPersonDefinitions";
 import { OnTileExplored, getScienceFromWorkers } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
 import type { GameState } from "../../../shared/logic/GameState";
@@ -95,12 +96,18 @@ export function tickEverySecond(gs: GameState, offline: boolean) {
          greatPerson,
          getGreatPersonThisRunLevel(level),
          t(L.SourceGreatPerson, { person: greatPerson.name() }),
+         GreatPersonTickFlag.None,
       );
    });
 
    forEach(getGameOptions().greatPeople, (person, v) => {
       const greatPerson = Config.GreatPerson[person];
-      greatPerson.tick(greatPerson, v.level, t(L.SourceGreatPersonPermanent, { person: greatPerson.name() }));
+      greatPerson.tick(
+         greatPerson,
+         v.level,
+         t(L.SourceGreatPersonPermanent, { person: greatPerson.name() }),
+         GreatPersonTickFlag.None,
+      );
    });
 
    tickPrice(gs);

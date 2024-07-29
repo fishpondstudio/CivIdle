@@ -53,6 +53,9 @@ export function RebirthModal(): React.ReactNode {
    const greatPeopleAtRebirthCount = getRebirthGreatPeopleCount();
 
    const hasSupporterPack = () => {
+      if (import.meta.env.DEV) {
+         return true;
+      }
       if (Config.City[city].requireSupporterPack) {
          return (
             hasFlag(user?.attr ?? UserAttributes.None, UserAttributes.DLC1) || getFreeCityThisWeek() === city

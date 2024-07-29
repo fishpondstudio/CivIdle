@@ -1701,6 +1701,61 @@ export class BuildingDefinitions {
       wikipedia: "Big_Ben",
    };
 
+   ItsukushimaShrine: IBuildingDefinition = {
+      name: () => t(L.ItsukushimaShrine),
+      desc: () => t(L.ItsukushimaShrineDescV2),
+      input: {},
+      output: {},
+      construction: { Faith: 100, Opera: 100, SiegeRam: 100 },
+      max: 1,
+      special: BuildingSpecial.WorldWonder,
+      wikipedia: "Itsukushima_Shrine",
+   };
+
+   GoldenPavilion: IBuildingDefinition = {
+      name: () => t(L.GoldenPavilion),
+      desc: () => t(L.GoldenPavilionDesc),
+      input: {},
+      output: {},
+      construction: {},
+      max: 1,
+      special: BuildingSpecial.WorldWonder,
+      wikipedia: "Mount_Fuji",
+   };
+
+   OsakaCastle: IBuildingDefinition = {
+      name: () => t(L.OsakaCastle),
+      desc: () => t(L.OsakaCastleDesc),
+      input: {},
+      output: {},
+      construction: {},
+      max: 1,
+      special: BuildingSpecial.WorldWonder,
+      wikipedia: "Osaka_Castle",
+   };
+
+   Kanagawa: IBuildingDefinition = {
+      name: () => t(L.Kanagawa),
+      desc: () => t(L.KanagawaDesc),
+      input: {},
+      output: {},
+      construction: {},
+      max: 0,
+      special: BuildingSpecial.NaturalWonder,
+      wikipedia: "The_Great_Wave_off_Kanagawa",
+   };
+
+   MountFuji: IBuildingDefinition = {
+      name: () => t(L.MountFuji),
+      desc: () => t(L.MountFujiDesc),
+      input: {},
+      output: {},
+      construction: {},
+      max: 0,
+      special: BuildingSpecial.NaturalWonder,
+      wikipedia: "Mount_Fuji",
+   };
+
    // ArcDeTriomphe: IBuildingDefinition = {
    //    name: () => t(L.ArcDeTriomphe),
    //    desc: () => t(L.ArcDeTriompheDesc),
@@ -1729,15 +1784,6 @@ export class BuildingDefinitions {
    //    wikipedia: "Borobudur",
    // };
 
-   // ItsukushimaShrine: IBuildingDefinition = {
-   //    name: () => t(L.ItsukushimaShrine),
-   //    desc: () => t(L.ItsukushimaShrineDesc),
-   //    input: {},
-   //    output: {},
-   //    max: 1,
-   //    wikipedia: "Itsukushima_Shrine",
-   // };
-
    // Moai: IBuildingDefinition = {
    //    name: () => t(L.Moai),
    //    desc: () => t(L.MoaiDesc),
@@ -1754,15 +1800,6 @@ export class BuildingDefinitions {
    //    output: {},
    //    max: 1,
    //    wikipedia: "Bran_Castle",
-   // };
-
-   // ChoghaZanbil: IBuildingDefinition = {
-   //    name: () => t(L.ChoghaZanbil),
-   //    desc: () => t(L.ChoghaZanbilDesc),
-   //    input: {},
-   //    output: {},
-   //    max: 1,
-   //    wikipedia: "Chogha_Zanbil",
    // };
 
    // SydneyOperaHouse: IBuildingDefinition = {

@@ -151,6 +151,7 @@ interface IMultiplier {
 }
 
 export type Multiplier = RequireAtLeastOne<IMultiplier>;
+export type MultiplierWithStability = Multiplier & { unstable?: boolean };
 export type MultiplierWithSource = Multiplier & { source: string; unstable?: boolean };
 
 export const AllMultiplierTypes = ["input", "output", "worker", "storage"] satisfies (keyof IMultiplier)[];
