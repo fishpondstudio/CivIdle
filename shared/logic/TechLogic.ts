@@ -238,7 +238,6 @@ export function getTechUnlockCostInAge(age: TechAge): [number, number] {
    forEach(Config.Tech, (tech, def) => {
       if (def.column >= from && def.column <= to) {
          const cost = getTechUnlockCost(tech);
-         console.log(cost);
          max = Math.max(cost, max);
          min = Math.min(cost, min);
       }
@@ -261,6 +260,7 @@ export function checkItsukushimaShrine(tech: Tech, gs: GameState): void {
    const [science, _] = getTechUnlockCostInAge(nextAge);
    const hq = Tick.current.specialBuildings.get("Headquarter");
    if (hq) {
+      // console.log(`ItsukushimaShrine: +${science} Science`);
       safeAdd(hq.building.resources, "Science", science);
    }
 }
