@@ -1720,7 +1720,7 @@ export class BuildingDefinitions {
       construction: {},
       max: 1,
       special: BuildingSpecial.WorldWonder,
-      wikipedia: "Mount_Fuji",
+      wikipedia: "Kinkaku-ji",
    };
 
    OsakaCastle: IBuildingDefinition = {
