@@ -26,12 +26,13 @@ import {
 import {
    getAllPrerequisites,
    getNextAge,
+   getTechUnlockCostInAge,
    isAllTechUnlocked,
    isPrerequisiteOf,
 } from "../shared/logic/TechLogic";
 import { makeBuilding } from "../shared/logic/Tile";
 import { fossilDeltaApply, fossilDeltaCreate } from "../shared/thirdparty/FossilDelta";
-import { pointToTile } from "../shared/utilities/Helper";
+import { forEach, pointToTile } from "../shared/utilities/Helper";
 
 test("getBuildingCost", (t) => {
    assert.equal(10, getBuildingCost({ type: "CoalMine", level: 0 }).Brick);
@@ -329,4 +330,13 @@ test("isAllTechUnlocked", () => {
 test("getNextAge", () => {
    assert.equal("InformationAge" as TechAge, getNextAge("ColdWarAge"));
    assert.equal(null, getNextAge("InformationAge"));
+});
+
+test("getTechUnlockCostInAge", () => {
+   forEach(Config.TechAge, (age, def) => {
+      const [min, max] = getTechUnlockCostInAge(age);
+      assert.isTrue(Number.isFinite(min), age);
+      assert.isTrue(Number.isFinite(max), age);
+      assert.isTrue(max > min, age);
+   });
 });

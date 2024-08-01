@@ -233,10 +233,14 @@ export function getAllPrerequisites(tech: Tech): Set<Tech> {
 export function getTechUnlockCostInAge(age: TechAge): [number, number] {
    let min = Number.POSITIVE_INFINITY;
    let max = 0;
+   const from = Config.TechAge[age].from;
+   const to = Config.TechAge[age].to;
    forEach(Config.Tech, (tech, def) => {
-      if (def.column >= Config.TechAge[age].from && def.column <= Config.TechAge[age].to) {
-         max = Math.max(getTechUnlockCost(tech), max);
-         min = Math.max(getTechUnlockCost(tech), min);
+      if (def.column >= from && def.column <= to) {
+         const cost = getTechUnlockCost(tech);
+         console.log(cost);
+         max = Math.max(cost, max);
+         min = Math.min(cost, min);
       }
    });
    return [min, max];
