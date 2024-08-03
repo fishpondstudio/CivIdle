@@ -162,6 +162,7 @@ export class GameOptions {
    // greatPeopleChoices: GreatPeopleChoice[] = [];
    greatPeopleChoicesV2: GreatPeopleChoiceV2[] = [];
    language: keyof typeof Languages = "en";
+   disabledTutorials = new Set<string>();
 }
 
 export const Languages: Record<string, Record<string, string>> = {
