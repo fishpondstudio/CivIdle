@@ -1245,11 +1245,11 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
             const input = Config.Building[building.type].input;
             let multiplier = 0;
             grid.getNeighbors(point).forEach((p) => {
-               const type = gs.tiles.get(pointToTile(p))?.building?.type;
-               if (!type) {
+               const building = gs.tiles.get(pointToTile(p))?.building;
+               if (!building || building.capacity <= 0) {
                   return;
                }
-               forEach(Config.Building[type].output, (res) => {
+               forEach(Config.Building[building.type].output, (res) => {
                   if (input[res]) {
                      ++multiplier;
                      // break

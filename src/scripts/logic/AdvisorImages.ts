@@ -1,7 +1,10 @@
 import type { Advisor } from "../../../shared/definitions/AdvisorDefinitions";
+import Electricity from "../../images/Tutorial/Electricity.png";
+import GreatPeople from "../../images/Tutorial/GreatPeople.png";
 import Happiness from "../../images/Tutorial/Happiness.png";
 import Science from "../../images/Tutorial/Science.png";
 import Storage from "../../images/Tutorial/Storage.png";
+import Tradition from "../../images/Tutorial/Tradition.png";
 import Wonder from "../../images/Tutorial/Wonder.png";
 import Worker from "../../images/Tutorial/Worker.png";
 
@@ -11,4 +14,7 @@ export const AdvisorImages: Record<Advisor, string> = {
    Science,
    Worker,
    Storage,
+   Tradition,
+   GreatPeople,
+   Electricity,
 };

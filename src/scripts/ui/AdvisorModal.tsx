@@ -22,7 +22,7 @@ export function AdvisorModal({ advisor }: { advisor: Advisor }): React.ReactNode
                <img src={AdvisorImages[advisor]} style={{ display: "block", height: 450 - 2 }} />
             </div>
             <div className="ml15" style={{ height: 450, display: "flex", flexDirection: "column" }}>
-               <div className="text-large mb5">{def.title}</div>
+               <div className="text-large mb10">{def.title}</div>
                <RenderHTML html={def.content} />
                <div className="f1"></div>
                <div className="row">

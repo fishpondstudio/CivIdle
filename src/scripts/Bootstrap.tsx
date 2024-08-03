@@ -34,7 +34,6 @@ import { connectWebSocket, convertOfflineTimeToWarp } from "./rpc/RPCClient";
 import { PlayerMapScene } from "./scenes/PlayerMapScene";
 import { TechTreeScene } from "./scenes/TechTreeScene";
 import { WorldScene } from "./scenes/WorldScene";
-import { AdvisorModal } from "./ui/AdvisorModal";
 import { ChooseGreatPersonModal } from "./ui/ChooseGreatPersonModal";
 import { ErrorPage } from "./ui/ErrorPage";
 import { FirstTimePlayerModal } from "./ui/FirstTimePlayerModal";
@@ -166,16 +165,13 @@ export async function startGame(
       showModal(<ChooseGreatPersonModal permanent={true} />);
    }
 
-   if (import.meta.env.DEV) {
-      showModal(<AdvisorModal advisor="Worker" />);
-   }
-
    Singleton().heartbeat.init();
 
    // We tick first before loading scene, making sure city-specific overrides are applied!
    tickEverySecond(gameState, false);
 
    if (import.meta.env.DEV) {
+      // showModal(<AdvisorModal advisor="Happiness" />);
       // createRoot(document.getElementById("debug-ui")!).render(<DebugPage />);
    }
 

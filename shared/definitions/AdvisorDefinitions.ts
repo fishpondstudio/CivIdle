@@ -31,8 +31,12 @@ export const Advisors = {
       content: t(L.AdvisorTraditionContent),
    },
    Electricity: {
-      title: t(L.AdvisorTraditionTitle),
-      content: t(L.AdvisorTraditionContent),
+      title: t(L.AdvisorElectricityTitle),
+      content: t(L.AdvisorElectricityContent),
+   },
+   GreatPeople: {
+      title: t(L.AdvisorGreatPeopleTitle),
+      content: t(L.AdvisorGreatPeopleContent),
    },
 } satisfies Record<string, IAdvisor>;
 
