@@ -26,6 +26,14 @@ export const Advisors = {
       title: t(L.AdvisorStorageTitle),
       content: t(L.AdvisorStorageContent),
    },
+   Tradition: {
+      title: t(L.AdvisorTraditionTitle),
+      content: t(L.AdvisorTraditionContent),
+   },
+   Electricity: {
+      title: t(L.AdvisorTraditionTitle),
+      content: t(L.AdvisorTraditionContent),
+   },
 } satisfies Record<string, IAdvisor>;
 
 export type Advisor = keyof typeof Advisors;
