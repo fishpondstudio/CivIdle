@@ -383,7 +383,7 @@ export const EN = {
    EstimatedTimeLeft: "Estimated Time Left",
    EuphratesRiver: "Euphrates River",
    EuphratesRiverDesc:
-      "Every 10% of busy workers that in production (not transporting) provides +1 Production Multiplier to all buildings that do not produce workers (max = number of unlocked ages / 2). When the Hanging Garden is built next to it, the Hanging Garden gets +1 effect for each age after the Hanging Garden is unlocked. When discovered, spawn water on all adjacent tiles that do not have deposits",
+      "Every 10% of busy workers that in production (not transporting) provides +1 Production Multiplier to all buildings that do not produce workers and are unlocked in previous ages (max = number of unlocked ages / 2). When the Hanging Garden is built next to it, the Hanging Garden gets +1 effect for each age after the Hanging Garden is unlocked. When discovered, spawn water on all adjacent tiles that do not have deposits",
    ExpansionLevelX: "Expansion %{level}",
    Exploration: "Exploration",
    Explorer: "Explorer",
@@ -1071,8 +1071,8 @@ export const EN = {
    SiliconSmelter: "Silicon Smelter",
    Skyscraper: "Skyscraper",
    Socialism: "Socialism",
-   SocialismLevel4DescHTML: "Generate one-time science equivalent to the cost of the most expensive <b>World Wars Age</b> technology",
-   SocialismLevel5DescHTML: "Generate one-time science equivalent to the cost of the most expensive <b>Cold War Age</b> technology",
+   SocialismLevel4DescHTMLV2: "Generate one-time science equivalent to the cost of the cheapest <b>World Wars Age</b> technology",
+   SocialismLevel5DescHTMLV2: "Generate one-time science equivalent to the cost of the cheapest <b>Cold War Age</b> technology",
    SocialismLevelX: "Socialism Level %{level}",
    SocialNetwork: "Social Network",
    Socrates: "Socrates",
@@ -1369,6 +1369,6 @@ export const EN = {
    ZenobiaDesc: "+%{value}h Petra Warp Storage",
    ZhengHe: "Zheng He",
    ZigguratOfUr: "Ziggurat of Ur",
-   ZigguratOfUrDesc: "Every 10 happiness (capped) provides +1 Production Multiplier to all buildings (max = number of unlocked ages / 2). Wonders (incl. Natural) no longer provide +1 Happiness. The effect can be turned off",
+   ZigguratOfUrDescV2: "Every 10 happiness (capped) provides +1 Production Multiplier to all buildings that do not produce workers and are unlocked in previous ages (max = number of unlocked ages / 2). Wonders (incl. Natural) no longer provide +1 Happiness. The effect can be turned off",
    Zoroaster: "Zoroaster",
 };

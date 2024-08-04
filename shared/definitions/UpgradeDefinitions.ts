@@ -539,13 +539,13 @@ export class UpgradeDefinitions {
          ResearchLab: { output: 1 },
       },
       onUnlocked: (gs) => {
-         const [_, science] = getTechUnlockCostInAge("WorldWarAge");
+         const [science, _] = getTechUnlockCostInAge("WorldWarAge");
          const hq = findSpecialBuilding("Headquarter", gs);
          if (hq) {
             safeAdd(hq.building.resources, "Science", science);
          }
       },
-      additionalUpgrades: () => [t(L.SocialismLevel4DescHTML)],
+      additionalUpgrades: () => [t(L.SocialismLevel4DescHTMLV2)],
    };
 
    Socialism5: IUpgradeDefinition = {
@@ -557,13 +557,13 @@ export class UpgradeDefinitions {
          ResearchLab: { output: 1 },
       },
       onUnlocked: (gs) => {
-         const [_, science] = getTechUnlockCostInAge("ColdWarAge");
+         const [science, _] = getTechUnlockCostInAge("ColdWarAge");
          const hq = findSpecialBuilding("Headquarter", gs);
          if (hq) {
             safeAdd(hq.building.resources, "Science", science);
          }
       },
-      additionalUpgrades: () => [t(L.SocialismLevel5DescHTML)],
+      additionalUpgrades: () => [t(L.SocialismLevel5DescHTMLV2)],
    };
 
    Communism1: IUpgradeDefinition = {

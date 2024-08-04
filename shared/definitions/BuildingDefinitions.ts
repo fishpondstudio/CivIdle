@@ -1582,7 +1582,7 @@ export class BuildingDefinitions {
 
    ZigguratOfUr: IBuildingDefinition = {
       name: () => t(L.ZigguratOfUr),
-      desc: () => t(L.ZigguratOfUrDesc),
+      desc: () => t(L.ZigguratOfUrDescV2),
       input: {},
       output: {},
       construction: { Brick: 100, Lumber: 100, Sand: 100 },
