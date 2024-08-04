@@ -7,22 +7,30 @@ import { RenderHTML } from "./RenderHTMLComponent";
 const showModalEvent = new TypedEvent<ReactNode>();
 const hideModalEvent = new TypedEvent<void>();
 
-export function showModal(modal: ReactNode) {
+export function showModal(modal: ReactNode): void {
    showModalEvent.emit(modal);
 }
 
-export function hideModal() {
+export function hideModal(): void {
    hideModalEvent.emit();
 }
+
+export function hasOpenModal(): boolean {
+   return _hasOpenModal;
+}
+
+let _hasOpenModal = false;
 
 export function GlobalModal(): React.ReactNode {
    const [content, setContent] = useState<ReactNode>(null);
 
    useTypedEvent(showModalEvent, (e) => {
+      _hasOpenModal = true;
       setContent(e);
    });
 
    useTypedEvent(hideModalEvent, () => {
+      _hasOpenModal = false;
       setContent(null);
    });
 

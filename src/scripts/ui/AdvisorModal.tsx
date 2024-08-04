@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Advisors, type Advisor } from "../../../shared/definitions/AdvisorDefinitions";
 import { getGameOptions, notifyGameOptionsUpdate } from "../../../shared/logic/GameStateLogic";
 import { forEach } from "../../../shared/utilities/Helper";
@@ -8,6 +9,11 @@ import { hideModal } from "./GlobalModal";
 import { RenderHTML } from "./RenderHTMLComponent";
 
 export function AdvisorModal({ advisor }: { advisor: Advisor }): React.ReactNode {
+   useEffect(() => {
+      getGameOptions().disabledTutorials.add(advisor);
+      notifyGameOptionsUpdate();
+   }, [advisor]);
+
    const def = Advisors[advisor];
    return (
       <div className="window" style={{ width: 800 }}>
@@ -36,7 +42,7 @@ export function AdvisorModal({ advisor }: { advisor: Advisor }): React.ReactNode
                         });
                      }}
                   >
-                     {t(L.AdvisorSkpAllTutorials)}
+                     {t(L.AdvisorSkipAllTutorials)}
                   </div>
                   <div className="f1"></div>
                   <button
@@ -44,8 +50,6 @@ export function AdvisorModal({ advisor }: { advisor: Advisor }): React.ReactNode
                      onClick={() => {
                         playClick();
                         hideModal();
-                        getGameOptions().disabledTutorials.add(advisor);
-                        notifyGameOptionsUpdate();
                      }}
                   >
                      {t(L.AdvisorOkay)}

@@ -1,3 +1,4 @@
+import { Advisors } from "../../../shared/definitions/AdvisorDefinitions";
 import { GreatPersonTickFlag } from "../../../shared/definitions/GreatPersonDefinitions";
 import { OnTileExplored, getScienceFromWorkers } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
@@ -30,8 +31,9 @@ import { L, t } from "../../../shared/utilities/i18n";
 import { saveGame } from "../Global";
 import { isSteam } from "../rpc/SteamClient";
 import { WorldScene } from "../scenes/WorldScene";
+import { AdvisorModal } from "../ui/AdvisorModal";
 import { ChooseGreatPersonModal } from "../ui/ChooseGreatPersonModal";
-import { showModal, showToast } from "../ui/GlobalModal";
+import { hasOpenModal, showModal, showToast } from "../ui/GlobalModal";
 import { makeObservableHook } from "../utilities/Hook";
 import { Singleton } from "../utilities/Singleton";
 import { playAgeUp, playDing } from "../visuals/Sound";
@@ -123,7 +125,26 @@ export function tickEverySecond(gs: GameState, offline: boolean) {
    } else {
       tickTileQueue = tiles.map(([tile, _building]) => tile);
       tickTileQueueSize = tickTileQueue.length;
+      checkForAdvisors(gs);
    }
+}
+
+function checkForAdvisors(gs: GameState) {
+   if (gs.tick % 10 !== 0) {
+      return;
+   }
+   if (hasOpenModal()) {
+      return;
+   }
+   const options = getGameOptions();
+
+   forEach(Advisors, (k, v) => {
+      if (!options.disabledTutorials.has(k) && v.condition(gs)) {
+         showModal(<AdvisorModal advisor={k} />);
+         // break
+         return true;
+      }
+   });
 }
 
 function postTickTiles(gs: GameState, offline: boolean) {

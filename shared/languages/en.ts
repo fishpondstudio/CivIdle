@@ -1344,7 +1344,7 @@ export const EN = {
    GoldenPavilionDesc: "All buildings within 3 tile range get +1 Production Multiplier for each adjacent building that produces any of its consumed resources (excluding Clone Lab and Clone Factory and the building cannot be turned off)",
    OsakaCastle: "Osaka Castle",
    OsakaCastleDesc: "Provide power to all tiles within 2 tile range. Allow electrification of science producing buildings (including Clone Lab)",
-   AdvisorSkpAllTutorials: "Skip All Tutorials",
+   AdvisorSkipAllTutorials: "Skip All Tutorials",
    AdvisorOkay: "Got it, thanks!",
    AdvisorHappinessTitle: "Keep Your People Happy",
    AdvisorHappinessContent: "Happiness is the core mechanic in CivIdle that limits expansion. You gain happiness by unlocking new technology, advancing to new ages, building wonders, from Great People who provide it, and a few other ways you can discover as you learn. <b>Each new building costs 1 happiness</b>. For each point above/below 0 happiness, you get a 2% bonus or penalty to your total workers (Capping at -50 and +50 Happiness). You can see a detailed breakdown of your happiness in your <b>Home Building's Happiness section</b>.",
