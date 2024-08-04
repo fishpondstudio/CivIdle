@@ -1,5 +1,5 @@
 import Tippy from "@tippyjs/react";
-import { getWarehouseIdleCapacity } from "../../../shared/logic/BuildingLogic";
+import { getResourceImportIdleCapacity } from "../../../shared/logic/BuildingLogic";
 import { GameFeature, hasFeature } from "../../../shared/logic/FeatureLogic";
 import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
 import type { IWarehouseBuildingData } from "../../../shared/logic/Tile";
@@ -24,7 +24,7 @@ export function WarehouseBuildingBody({ gameState, xy }: IBuildingComponentProps
    if (!warehouse) {
       return null;
    }
-   const idleCapacity = getWarehouseIdleCapacity(xy, gameState);
+   const idleCapacity = getResourceImportIdleCapacity(xy, gameState);
    return (
       <div className="window-body">
          <BuildingUpgradeComponent gameState={gameState} xy={xy} key={xy} />

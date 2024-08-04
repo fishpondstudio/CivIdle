@@ -5,6 +5,7 @@ import { NoPrice, NoStorage, type Resource } from "../../../shared/definitions/R
 import {
    getMultipliersFor,
    getResourceImportCapacity,
+   getResourceImportIdleCapacity,
    getStorageFor,
    totalMultiplierFor,
 } from "../../../shared/logic/BuildingLogic";
@@ -34,7 +35,9 @@ import type { IBuildingComponentProps } from "./BuildingPage";
 import { ChangeResourceImportModal } from "./ChangeResourceImportModal";
 import { showModal } from "./GlobalModal";
 import { FormatNumber } from "./HelperComponents";
+import { RenderHTML } from "./RenderHTMLComponent";
 import { TableView } from "./TableView";
+import { WarningComponent } from "./WarningComponent";
 
 const resourceImportSortingState = { column: 1, asc: true };
 
@@ -55,10 +58,16 @@ export function ResourceImportComponent({ gameState, xy }: IBuildingComponentPro
    const baseCapacity = getResourceImportCapacity(building, 1);
    const capacityMultiplier = totalMultiplierFor(xy, "output", 1, false, gameState);
    const resources = keysOf(unlockedResources(gameState)).filter((r) => !NoStorage[r] && !NoPrice[r]);
+   const idleCapacity = getResourceImportIdleCapacity(xy, gameState);
 
    return (
       <fieldset>
          <legend>{t(L.ResourceImport)}</legend>
+         {idleCapacity < 0 ? (
+            <WarningComponent className="text-small mb10" icon="warning">
+               <RenderHTML html={t(L.ResourceImportPartialWarningHTML)} />
+            </WarningComponent>
+         ) : null}
          <TableView
             header={[
                { name: "", sortable: false },

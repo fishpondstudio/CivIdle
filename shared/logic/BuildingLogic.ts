@@ -62,7 +62,6 @@ import {
    type IMarketBuildingData,
    type IResourceImportBuildingData,
    type ITileData,
-   type IWarehouseBuildingData,
 } from "./Tile";
 
 export function totalMultiplierFor(
@@ -677,10 +676,12 @@ export function getResourceImportCapacity(building: IHaveTypeAndLevel, multiplie
    return multiplier * building.level * 10;
 }
 
-export function getWarehouseIdleCapacity(xy: Tile, gs: GameState): number {
+export function getResourceImportIdleCapacity(xy: Tile, gs: GameState): number {
    const building = gs.tiles.get(xy)?.building;
-   if (building?.type !== "Warehouse") return 0;
-   const warehouse = building as IWarehouseBuildingData;
+   if (!building || !("resourceImports" in building)) {
+      return 0;
+   }
+   const warehouse = building as IResourceImportBuildingData;
    return (
       getResourceImportCapacity(warehouse, totalMultiplierFor(xy, "output", 1, false, gs)) -
       reduceOf(

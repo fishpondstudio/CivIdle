@@ -1,7 +1,7 @@
 import type { Building, IBuildingDefinition } from "../definitions/BuildingDefinitions";
 import type { Deposit, Resource } from "../definitions/ResourceDefinitions";
 import { Grid } from "../utilities/Grid";
-import { clamp, forEach, mapSafeAdd, safeAdd, tileToHash, type Tile } from "../utilities/Helper";
+import { forEach, mapSafeAdd, reduceOf, safeAdd, tileToHash, type Tile } from "../utilities/Helper";
 import type { PartialSet, PartialTabulate } from "../utilities/TypeDefinitions";
 import {
    IOCalculation,
@@ -99,18 +99,15 @@ export function getBuildingIO(
       }
       if ("resourceImports" in b && type === "input") {
          const totalCapacity = getResourceImportCapacity(b, totalMultiplierFor(xy, "output", 1, false, gs));
-         let used = 0;
+         const rib = b as IResourceImportBuildingData;
+         const totalSetCapacity = reduceOf(rib.resourceImports, (prev, k, v) => prev + v.perCycle, 0);
+         const scaleFactor = totalCapacity / totalSetCapacity;
          forEach((b as IResourceImportBuildingData).resourceImports, (k, v) => {
-            if (Tick.current.totalValue > 0 && used + v.perCycle > totalCapacity) {
-               // Somehow a player manages to assign more capacity than allowed. We correct this case here.
-               // But we only want to correct this when Tick is fully initialized. Currently it's done by
-               // checking Tick.current.totalValue, but we should revisit this later
-               v.perCycle = clamp(totalCapacity - used, 0, v.perCycle);
-            } else {
-               used += v.perCycle;
-               result[k] = v.perCycle;
-            }
+            // This means the total capacity < total set capacity. It happens when the multiplier reduces.
+            // In this case, we scale down all values equally
+            result[k] = v.perCycle * scaleFactor;
          });
+
          _cache.buildingIO.set(key, Object.freeze(result));
          // Resource imports is not affected by multipliers
          return result;

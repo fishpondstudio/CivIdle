@@ -1,6 +1,6 @@
 import { getPetraBaseStorage, getStorageFor } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
-import { MAX_OFFLINE_PRODUCTION_SEC } from "../../../shared/logic/Constants";
+import { MAX_OFFLINE_PRODUCTION_SEC, MAX_PETRA_SPEED_UP } from "../../../shared/logic/Constants";
 import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
 import type { IPetraBuildingData } from "../../../shared/logic/Tile";
 import { clamp, formatHM, formatPercent } from "../../../shared/utilities/Helper";
@@ -103,11 +103,11 @@ export function PetraBuildingBody({ gameState, xy }: IBuildingComponentProps): R
             <input
                type="range"
                min={1}
-               max={8}
+               max={MAX_PETRA_SPEED_UP}
                step="1"
                value={building.speedUp}
                onChange={(e) => {
-                  building.speedUp = clamp(Number.parseInt(e.target.value, 10), 1, 8);
+                  building.speedUp = clamp(Number.parseInt(e.target.value, 10), 1, MAX_PETRA_SPEED_UP);
                   notifyGameStateUpdate();
                }}
             />

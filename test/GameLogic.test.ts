@@ -25,6 +25,8 @@ import {
 } from "../shared/logic/ResourceLogic";
 import {
    getAllPrerequisites,
+   getBuildingUnlockAge,
+   getBuildingsUnlockedBefore,
    getNextAge,
    getTechUnlockCostInAge,
    isAllTechUnlocked,
@@ -338,5 +340,13 @@ test("getTechUnlockCostInAge", () => {
       assert.isTrue(Number.isFinite(min), age);
       assert.isTrue(Number.isFinite(max), age);
       assert.isTrue(max > min, age);
+   });
+});
+
+test("getBuildingsUnlockedBefore", () => {
+   forEach(Config.TechAge, (age, def) => {
+      getBuildingsUnlockedBefore(age).forEach((b) => {
+         assert.isTrue(Config.TechAge[getBuildingUnlockAge(b)].idx < Config.TechAge[age].idx, b);
+      });
    });
 });

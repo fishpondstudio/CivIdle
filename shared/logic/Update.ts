@@ -49,11 +49,11 @@ import {
    getMaxInputDistance,
    getPowerRequired,
    getResourceImportCapacity,
+   getResourceImportIdleCapacity,
    getStockpileCapacity,
    getStockpileMax,
    getStorageFor,
    getStorageRequired,
-   getWarehouseIdleCapacity,
    getWorkersFor,
    getWorkingBuilding,
    hasEnoughResources,
@@ -654,7 +654,10 @@ function tickWarehouseAutopilot(
    transportSourceCache: boolean,
    gs: GameState,
 ): void {
-   let capacity = getWarehouseIdleCapacity(xy, gs);
+   let capacity = getResourceImportIdleCapacity(xy, gs);
+   if (capacity <= 0) {
+      return;
+   }
    const workerCapacity = totalMultiplierFor(xy, "worker", 1, false, gs);
    const transportCapacity =
       workerCapacity +

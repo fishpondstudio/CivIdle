@@ -264,3 +264,14 @@ export function checkItsukushimaShrine(tech: Tech, gs: GameState): void {
       safeAdd(hq.building.resources, "Science", science);
    }
 }
+
+export function getBuildingsUnlockedBefore(age: TechAge): Building[] {
+   const result: Building[] = [];
+   const idx = Config.TechAge[age].idx;
+   forEach(Config.BuildingTechAge, (building, a) => {
+      if (Config.TechAge[a].idx < idx) {
+         result.push(building);
+      }
+   });
+   return result;
+}

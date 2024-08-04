@@ -15,6 +15,7 @@ import { Config } from "../../../shared/logic/Config";
 import {
    EXPLORER_SECONDS,
    MAX_EXPLORER,
+   MAX_PETRA_SPEED_UP,
    MAX_TELEPORT,
    SCIENCE_VALUE,
    TELEPORT_SECONDS,
@@ -29,7 +30,11 @@ import {
 } from "../../../shared/logic/IntraTickCache";
 import { getVotedBoostId } from "../../../shared/logic/PlayerTradeLogic";
 import { getGreatPersonTotalEffect } from "../../../shared/logic/RebirthLogic";
-import { getBuildingUnlockAge, getCurrentAge } from "../../../shared/logic/TechLogic";
+import {
+   getBuildingUnlockAge,
+   getBuildingsUnlockedBefore,
+   getCurrentAge,
+} from "../../../shared/logic/TechLogic";
 import { Tick } from "../../../shared/logic/TickLogic";
 import type {
    IGreatPeopleBuildingData,
@@ -311,13 +316,15 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
             break;
          }
          const petra = building as IPetraBuildingData;
+         petra.speedUp = clamp(petra.speedUp, 1, MAX_PETRA_SPEED_UP);
+
          if (petra.speedUp > 1 && (petra.resources.Warp ?? 0) > 0) {
             --petra.resources.Warp!;
-            Singleton().ticker.speedUp = petra.speedUp;
          } else {
             petra.speedUp = 1;
-            Singleton().ticker.speedUp = 1;
          }
+         Singleton().ticker.speedUp = petra.speedUp;
+
          for (const res of keysOf(petra.resources)) {
             if (res !== "Warp") {
                delete petra.resources[res];
@@ -1052,10 +1059,15 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          const happiness = Tick.current.happiness?.value ?? 0;
          const age = getCurrentAge(gs);
          if (happiness > 0) {
-            Tick.next.globalMultipliers.output.push({
-               value: clamp(Math.floor(happiness / 10), 1, Math.floor((Config.TechAge[age].idx + 1) / 2)),
-               source: buildingName,
-               unstable: true,
+            const multiplier = clamp(
+               Math.floor(happiness / 10),
+               1,
+               Math.floor((Config.TechAge[age].idx + 1) / 2),
+            );
+            getBuildingsUnlockedBefore(getCurrentAge(gs)).forEach((b) => {
+               if (!Config.Building[b].output.Worker) {
+                  addMultiplier(b, { output: multiplier, unstable: true }, buildingName);
+               }
             });
          }
          break;
@@ -1125,13 +1137,9 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          const age = getCurrentAge(gs);
          if (Number.isFinite(multiplier) && multiplier > 0) {
             const cappedMultiplier = clamp(multiplier, 1, Math.floor((Config.TechAge[age].idx + 1) / 2));
-            gs.tiles.forEach((tile, xy) => {
-               if (tile.building && !Config.Building[tile.building.type].output.Worker) {
-                  mapSafePush(Tick.next.tileMultipliers, xy, {
-                     output: cappedMultiplier,
-                     source: buildingName,
-                     unstable: true,
-                  });
+            getBuildingsUnlockedBefore(getCurrentAge(gs)).forEach((b) => {
+               if (!Config.Building[b].output.Worker) {
+                  addMultiplier(b, { output: cappedMultiplier, unstable: true }, buildingName);
                }
             });
          }
