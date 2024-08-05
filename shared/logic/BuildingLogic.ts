@@ -415,7 +415,7 @@ export function getScienceFromWorkers(gs: GameState) {
 
 export function getScienceFromBuildings() {
    return mReduceOf(
-      Tick.next.scienceProduced,
+      Tick.current.scienceProduced,
       (prev, _, value) => {
          return prev + value;
       },
