@@ -775,7 +775,6 @@ export function getAvailableResource(sourceXy: Tile, destXy: Tile, res: Resource
 
    if ("resourceImports" in building) {
       const ri = building as IResourceImportBuildingData;
-
       if (
          building.type === getXyBuildings(gs).get(destXy)?.type &&
          !hasFlag(ri.resourceImportOptions, ResourceImportOptions.ExportToSameType)

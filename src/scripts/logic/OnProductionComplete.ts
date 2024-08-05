@@ -1215,7 +1215,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          break;
       }
       case "OsakaCastle": {
-         for (const point of grid.getRange(tileToPoint(xy), 2)) {
+         for (const point of grid.getRange(tileToPoint(xy), 1)) {
             Tick.next.powerPlants.add(pointToTile(point));
          }
          break;

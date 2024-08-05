@@ -264,7 +264,12 @@ export function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
       Tick.next.totalValue += rev;
       mapSafeAdd(Tick.next.resourceValueByTile, xy, rev);
       mapSafeAdd(Tick.next.resourceValues, res, rev);
-      mapSafeAdd(Tick.next.resourceAmount, res, amount);
+
+      // Resource in buildings that are not completed are not tabulated because technically it is not
+      // usable by other buildings. This is an old behavior that is apparently desired
+      if (building.status !== "completed") {
+         mapSafeAdd(Tick.next.resourceAmount, res, amount);
+      }
 
       // We do not add Warehouse/Caravansary in `resourcesByTile`, because we need to consider as transport
       // sources anyway!
