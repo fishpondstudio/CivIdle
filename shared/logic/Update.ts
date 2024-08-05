@@ -267,7 +267,7 @@ export function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
 
       // Resource in buildings that are not completed are not tabulated because technically it is not
       // usable by other buildings. This is an old behavior that is apparently desired
-      if (building.status !== "completed") {
+      if (building.status === "completed") {
          mapSafeAdd(Tick.next.resourceAmount, res, amount);
       }
 
