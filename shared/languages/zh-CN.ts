@@ -382,7 +382,8 @@ export const ZH_CN = {
    EnricoFermi: "恩里科·费米",
    EstimatedTimeLeft: "预计剩余时间",
    EuphratesRiver: "幼发拉底河",
-   EuphratesRiverDesc: "从事生产（非运输）的忙碌劳动者占比每有 10% ，为所有建筑提供 +1 生产乘数（最大值为已解锁时代数/2）。当空中花园在其旁建成，于空中花园解锁后的每个时代，使空中花园获得 +1 效果。当被发现时，所有无沉积资源的相邻地块，将生成水资源",
+   EuphratesRiverDesc:
+      "从事生产（非运输）的忙碌劳动者占比每有 10% ，为所有建筑提供 +1 生产乘数（最大值为已解锁时代数/2）。当空中花园在其旁建成，于空中花园解锁后的每个时代，使空中花园获得 +1 效果。当被发现时，所有无沉积资源的相邻地块，将生成水资源",
    ExpansionLevelX: "扩张 %{level}",
    Exploration: "勘探",
    Explorer: "探险家",
@@ -1244,7 +1245,8 @@ export const ZH_CN = {
    TransportCapacityMultiplier: "运输能力乘数",
    TransportManualControlTooltip: "运输此资源以建造/升级",
    TransportPlanCache: "运输方案缓存",
-   TransportPlanCacheDescHTML: "每个周期，每座建筑基于其设定计算最佳运输方案——此进程对 CPU 能力需求较高。开启此项，将尝试缓存运输方案，如果已缓存的运输方案仍然有效，则可达到降低 CPU 使用率与降低帧率的效果。<b>【实验性功能】</b>",
+   TransportPlanCacheDescHTML:
+      "每个周期，每座建筑基于其设定计算最佳运输方案——此进程对 CPU 能力需求较高。开启此项，将尝试缓存运输方案，如果已缓存的运输方案仍然有效，则可达到降低 CPU 使用率与降低帧率的效果。<b>【实验性功能】</b>",
    TribuneUpgradeDescGreatPeopleWarning: "你此轮拥有伟人。你应该<b>先重生</b>。升至财务官级别，将重置你的当前轮。",
    TribuneUpgradeDescGreatPeopleWarningTitle: "请先重生",
    TribuneUpgradeDescV3:
@@ -1369,4 +1371,5 @@ export const ZH_CN = {
    ZigguratOfUr: "乌尔大塔庙",
    ZigguratOfUrDesc: "每有 10 幸福感（生效值），为所有建筑提供 +1 生产乘数（最大值为已解锁时代数/2）。奇观（包括自然奇观）不再提供 +1 幸福感。效果可关闭。",
    Zoroaster: "琐罗亚斯德",
+   ResourceImportPartialWarningHTML: "The total resource transport capacity has exceeds the maximum capacity: <b>each resource transport will only transport partially per cycle</b>"
 };
