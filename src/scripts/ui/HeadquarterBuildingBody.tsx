@@ -440,7 +440,7 @@ function RebornComponent({ gameState }: { gameState: GameState }): ReactNode {
             </li>
             <ul>
                <li className="row text-small">
-                  <div className="f1">{t(L.TotalTimeThisRun)}</div>
+                  <div className="f1">{t(L.TotalGameTimeThisRun)}</div>
                   <div>{formatHMS(gameState.tick * SECOND)}</div>
                </li>
                <li className="row text-small">
@@ -449,6 +449,24 @@ function RebornComponent({ gameState }: { gameState: GameState }): ReactNode {
                </li>
                <li className="row text-small">
                   <div className="f1">{t(L.TotalEmpireValuePerCyclePerGreatPeopleLevel)}</div>
+                  <FormatNumber
+                     value={Tick.current.totalValue / gameState.tick / getPermanentGreatPeopleLevel()}
+                  />
+               </li>
+               <li className="row text-small">
+                  <div className="f1">
+                     <TextWithHelp content={t(L.TotalWallTimeThisRunTooltip)}>
+                        {t(L.TotalWallTimeThisRun)}
+                     </TextWithHelp>
+                  </div>
+                  <div>{formatHMS(gameState.seconds * SECOND)}</div>
+               </li>
+               <li className="row text-small">
+                  <div className="f1">{t(L.TotalEmpireValuePerWallSecond)}</div>
+                  <FormatNumber value={Tick.current.totalValue / gameState.tick} />
+               </li>
+               <li className="row text-small">
+                  <div className="f1">{t(L.TotalEmpireValuePerWallSecondPerGreatPeopleLevel)}</div>
                   <FormatNumber
                      value={Tick.current.totalValue / gameState.tick / getPermanentGreatPeopleLevel()}
                   />
