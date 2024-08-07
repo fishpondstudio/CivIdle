@@ -308,7 +308,7 @@ export const ES = {
    ContentInDevelopment: "Contenido en desarrollo",
    ContentInDevelopmentDesc: "Este contenido está en desarrollo, estará disponible en una futura actualización del juego. ¡Estate pendiente!",
    Copper: "Cobre",
-   CopperMiningCamp: "Mina de hierro",
+   CopperMiningCamp: "Mina de cobre",
    CosimoDeMedici: "Cosme de Médici",
    Cotton: "Algodón",
    CottonMill: "Telar",
