@@ -101,11 +101,13 @@ export function getBuildingIO(
          const totalCapacity = getResourceImportCapacity(b, totalMultiplierFor(xy, "output", 1, false, gs));
          const rib = b as IResourceImportBuildingData;
          const totalSetCapacity = reduceOf(rib.resourceImports, (prev, k, v) => prev + v.perCycle, 0);
-         const scaleFactor = totalCapacity / totalSetCapacity;
-         forEach((b as IResourceImportBuildingData).resourceImports, (k, v) => {
+         const scaleFactor = totalSetCapacity > 0 ? totalCapacity / totalSetCapacity : 0;
+         forEach(rib.resourceImports, (k, v) => {
             // This means the total capacity < total set capacity. It happens when the multiplier reduces.
             // In this case, we scale down all values equally
-            result[k] = v.perCycle * scaleFactor;
+            if (v.perCycle > 0) {
+               result[k] = v.perCycle * scaleFactor;
+            }
          });
 
          _cache.buildingIO.set(key, Object.freeze(result));
