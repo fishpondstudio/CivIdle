@@ -83,6 +83,10 @@ export function checkRebirthAchievements(extraGP: number, gs: GameState): void {
             SteamClient.unlockAchievement("LionOfBabylon");
             break;
          }
+         case "Kyoto": {
+            SteamClient.unlockAchievement("Heian-kyo");
+            break;
+         }
       }
    }
 }
