@@ -382,8 +382,7 @@ export const ZH_CN = {
    EnricoFermi: "恩里科·费米",
    EstimatedTimeLeft: "预计剩余时间",
    EuphratesRiver: "幼发拉底河",
-   EuphratesRiverDesc:
-      "从事生产（非运输）的忙碌劳动者占比每有 10% ，为所有不生产劳动者且为之前时代的解锁建筑，提供 +1 生产乘数（最大值为已解锁时代数/2）。当空中花园在其旁建成，于空中花园解锁后的每个时代，使空中花园获得 +1 效果。当被发现时，所有无沉积资源的相邻地块，将生成水资源",
+   EuphratesRiverDesc: "从事生产（非运输）的忙碌劳动者占比每有 10% ，为所有不生产劳动者且为之前时代的解锁建筑，提供 +1 生产乘数（最大值为已解锁时代数/2）。当空中花园在其旁建成，于空中花园解锁后的每个时代，使空中花园获得 +1 效果。当被发现时，所有无沉积资源的相邻地块，将生成水资源",
    ExpansionLevelX: "扩张 %{level}",
    Exploration: "勘探",
    Explorer: "探险家",
@@ -411,8 +410,13 @@ export const ZH_CN = {
    FinancialLeverage: "财务杠杆",
    Fire: "火",
    Firearm: "火器",
-   FirstTimeGuideFinish: "完成",
    FirstTimeGuideNext: "下一步",
+   FirstTimeTutorialWelcome: "Welcome to CivIdle",
+   FirstTimeTutorialWelcome1HTML:
+      "Welcome to CivIdle. In this game, you will run your own empire: <b>manage productions, unlock technologies, trade resources with other players, create great people and build world wonders</b>.<br><br>Drag your mouse to move around. Use the scroll wheel to zoom in or out. Click an empty tile to build new buildings, click a building to inspect it.<br><br>Certain buildings like Stone Quarry and Logging Camp need to be built on top of the resource tile. I recommend placing a Hut, which provides worker, next to the fog - the building will take some time to build. After the completion, it will reveal the fog nearby.",
+   FirstTimeTutorialWelcome2HTML:
+      "Buildings can be upgraded - it costs resources and takes time. When a buildings is being upgraded, <b>it will no longer produce</b>. This includes buildings that provide workers, <b>so never upgrade all your buildings at the same time!</b><br><br>As your empire grows, you will get more science and unlock new technologies. I will tell you more about it when we get there but you can go to View -> Research to take a quick look<br><br>",
+   FirstTimeTutorialWelcome3HTML: "Now you know all the basics of the game, you can start building your empire. But before I let you go, you should <b>choose yourself a player handle</b> and say hi in the in-game chat. We have an amazingly helpful community: if you get lost, don't be afraid to ask!",
    Fish: "鱼",
    FishPond: "鱼塘",
    FlorenceNightingale: "弗洛伦斯·南丁格尔",
@@ -678,7 +682,7 @@ export const ZH_CN = {
    Mosque: "清真寺",
    MotionPicture: "电影",
    MountFuji: "富士山",
-   MountFujiDesc: "当佩特拉在其旁建成，佩特拉获得 +8 小时扭曲时间存储。当游戏运行时，在佩特拉中每分钟生成 30 扭曲时间（不被佩特拉自身加速，游戏离线时不生成）",
+   MountFujiDescV2: "When Petra is built next to it, Petra gets +8h Warp storage. When the game is running, generate 20 warp every minute in Petra (not accelerated by Petra itself, not generating when the game is offline)",
    MountSinai: "西奈山",
    MountSinaiDesc: "当此奇观被发现时，诞生一个当今时代的伟人。所有产出信仰的建筑，获得 +5 存储乘数",
    MountTai: "泰山",
@@ -970,6 +974,7 @@ export const ZH_CN = {
    ResourceImportImportCapV2Tooltip: "当达到限额时，此建筑将停止运输该资源",
    ResourceImportImportPerCycleV2: "运速",
    ResourceImportImportPerCycleV2ToolTip: "每个周期运输的资源量",
+   ResourceImportPartialWarningHTML: "资源运输需求总运速已超最大运速：<b>每项资源运输每周期将只运输部分</b>",
    ResourceImportResource: "资源",
    ResourceImportSettings: "运送资源：%{res}",
    ResourceImportStorage: "现存量",
@@ -1071,8 +1076,8 @@ export const ZH_CN = {
    SiliconSmelter: "硅冶炼厂",
    Skyscraper: "摩天大楼",
    Socialism: "社会主义",
-   SocialismLevel4DescHTML: "生成一批科学，生成量等同于<b>世界大战时期</b>最昂贵科技所需",
-   SocialismLevel5DescHTML: "生成一批科学，生成量等同于<b>冷战时期</b>最昂贵科技所需",
+   SocialismLevel4DescHTMLV2: "Generate one-time science equivalent to the cost of the cheapest <b>World Wars Age</b> technology",
+   SocialismLevel5DescHTMLV2: "Generate one-time science equivalent to the cost of the cheapest <b>Cold War Age</b> technology",
    SocialismLevelX: "社会主义 等级 %{level}",
    SocialNetwork: "社交网络",
    Socrates: "苏格拉底",
@@ -1224,9 +1229,13 @@ export const ZH_CN = {
    TotalEmpireValue: "帝国总价值",
    TotalEmpireValuePerCycle: "每周期帝国价值",
    TotalEmpireValuePerCyclePerGreatPeopleLevel: "每级永恒伟人的每周期帝国价值",
+   TotalEmpireValuePerWallSecond: "Total Empire Value Wall Second",
+   TotalEmpireValuePerWallSecondPerGreatPeopleLevel: "Total Empire Value Per Wall Second Per Great People Level",
+   TotalGameTimeThisRun: "Total Game Time This Run",
    TotalScienceRequired: "所需科学总量",
    TotalStorage: "总存储空间",
-   TotalTimeThisRun: "帝国存续时长",
+   TotalWallTimeThisRun: "Total Wall Time This Run",
+   TotalWallTimeThisRunTooltip: "Wall time (aka. elapsed real time) measures the actual time taken for this run. The differs from the game time in that Time Warp in Petra and Offline Production does not affect wall time but it does affect game time",
    TotalWorkers: "劳动者总数",
    TowerOfBabel: "巴别塔",
    TowerOfBabelDesc: "可为所有建筑提供 +2 生产乘数，需满足同类型建筑中至少有一座运转中建筑与奇观相邻",
@@ -1245,26 +1254,13 @@ export const ZH_CN = {
    TransportCapacityMultiplier: "运输能力乘数",
    TransportManualControlTooltip: "运输此资源以建造/升级",
    TransportPlanCache: "运输方案缓存",
-   TransportPlanCacheDescHTML:
-      "每个周期，每座建筑基于其设定计算最佳运输方案——此进程对 CPU 能力需求较高。开启此项，将尝试缓存运输方案，如果已缓存的运输方案仍然有效，则可达到减少 CPU 使用率与帧率下降的效果。<b>【实验性功能】</b>",
+   TransportPlanCacheDescHTML: "每个周期，每座建筑基于其设定计算最佳运输方案——此进程对 CPU 能力需求较高。开启此项，将尝试缓存运输方案，如果已缓存的运输方案仍然有效，则可达到减少 CPU 使用率与帧率下降的效果。<b>【实验性功能】</b>",
    TribuneUpgradeDescGreatPeopleWarning: "你此轮拥有伟人。你应该<b>先重生</b>。升至财务官级别，将重置你的当前轮。",
    TribuneUpgradeDescGreatPeopleWarningTitle: "请先重生",
    TribuneUpgradeDescV3:
       "如果不打算参与<b>可选</b>在线功能，可以以保民官的身份游玩完整游戏。要获得在线功能的无限制访问，需升至财务官。<b>这是一种反机器人措施，以供玩家们免费游玩。</b>但是，<b>升级到财务官时</b>你可以获得永恒伟人的伴随：<ul><li>青铜、铁器和古典时代<b>3</b> 最高等级</li><li>中世纪、文艺复兴和工业时代 <b>2</b> 最高等级</li><li>世界大战、冷战和信息时代 <b>1</b> 最高等级</li></ul>超过对应等级的部分无法结转。",
    TurnOnTimeWarpDesc: "每秒消耗 %{speed} 扭曲时间，同时加速你的帝国，使其以 %{speed} 倍速度运行。",
    Tutorial: "教程",
-   Tutorial1:
-      "欢迎使用 CivIdle 安装程序。（简中译者：若翻译存疑，请参照英文版。若欲修改、更新翻译，从效率出发，请优先与译者们联系。若无法联系或有其他非本地化问题，可在Discord上反馈。）<br><br>在游戏中，你将运营你自己的帝国城市：管理生产、解锁科技、与其他玩家开展资源贸易、获得伟人相助以及修建世界奇观等。<br><br>按住并拖动鼠标移动，使用滚轮放大或缩小。单击空地块以建造新建筑，单击一座建筑以查看详情。<br><br>",
-   Tutorial2: "我从未玩过类似游戏，并且我愿意通读一篇简短教程。",
-   Tutorial3: "我玩过 Industry Idle 并且我知道正确游玩方式，请跳过基础教程。（简中译者：前作玩家初次接触此游戏，可速读了解基础框架。）",
-   Tutorial4:
-      "建筑是你帝国的基本组成，请将它们放在城市地图的已探索地块上。某些建筑（比如采石场和引水渠）可获取沉积资源，要正常运行，首先就需要将它们建造在含相应沉积资源的地块上。一座建筑可以驱散其周围（目前基准半径为2格）地块的迷雾。<br><br>建筑往往消耗资源并产生新的资源。它们会<b>自动地</b>运送所需资源。所产出的资源将被存储在产出建筑中，可被运送至其它需要这些资源的建筑。然而，一座建筑本身的存储空间是有限的。<br><br>建筑需要<b>劳动者</b>来进行运输与生产，这意味着你需要建造提供他们居住所需的建筑（比如<b>小棚屋</b>）来增加劳动者数量。你可以升级一座建筑，以此来增加它的生产能力与存储空间。",
-   Tutorial5:
-      "<b>科学</b>被用来在科技树中解锁科技。解锁一项科技，可能解锁新的建筑、奇观以及增强。<br><br><b>忙碌劳动者</b>可产出少量科学。随着发展，你将解锁一些能产出科学的建筑（比如图书馆与学校）。<br><br>劳动者总数受到<b>幸福感</b>的影响。默认每座建筑将会消耗 1 幸福感。你也可以从科技、奇观以及伟人等方面获得幸福感。确保你麾下的劳动者们具有适当的幸福感，否则你帝国的生产将陷入停滞。<br><br><b>奇观</b>是独一无二的建筑，每种你只能建造一座，并且它们一旦建成将不能被移除。奇观可以提供显著增强或者解锁新的机制。",
-   Tutorial6:
-      "当你进入一个新时代，新的<b>伟人</b>将会诞生。默认你能从三位候选人中选出一位来辅佐你的帝国。<br><br>伟人提供加成并且能加入你的永恒收集中。一旦你重生，你会收集到此轮所有你选中的伟人，成为永恒伟人的他们将辅佐你建设今后的每个帝国。<br><br><b>永恒</b>伟人能通过每轮收集对应伟人进行升级。他们将帮助你的帝国达到新的高度。以上是你所需要了解的基础部分。<br><br>如果你有疑问，获取帮助的最好途径就是求助于<b>聊天</b>。我们有一个友好的社区，随时准备提供帮助。",
-   TutorialAdvices:
-      "我们询问了一些有经验的玩家，他们对于初次游玩的玩家给出了一些建议。在深入游戏前，这有些非常有用的见解：<ol><li><b>不要同时升级你的所有建筑</b>：建筑在升级时不会进行生产。</li><li><b>关注幸福感</b>：负值的幸福感会减少你的劳动者总数，一旦跌至 -50 ，则所有生产将完全停滞。</li><li><b>不要过度扩张</b>：建筑的运转需要幸福感的支持。在扩张前，请确保你拥有足够的幸福感。</li><li><b>优先房屋、公寓以及住宅楼</b>：将它们的优先级设定至最高，可以避免劳动者总数的波动。</li><li><b>你可以随时在你的总部建筑中重生</b>：尤其是你的第一张图，如果你玩砸了，可以重启再试。</li></ol>",
    TutorialPlayerFlag: "选择你的玩家旗帜",
    TutorialPlayerHandle: "输入你的玩家昵称（请避免使用不友好昵称）",
    TV: "电视",
@@ -1371,5 +1367,4 @@ export const ZH_CN = {
    ZigguratOfUr: "乌尔大塔庙",
    ZigguratOfUrDescV2: "每有 10 幸福感（生效值），为所有不生产劳动者且为之前时代的解锁建筑，提供 +1 生产乘数（最大值为已解锁时代数/2）。奇观（包括自然奇观）不再提供 +1 幸福感。效果可关闭。",
    Zoroaster: "琐罗亚斯德",
-   ResourceImportPartialWarningHTML: "资源运输需求总运速已超最大运速：<b>每项资源运输每周期将只运输部分</b>"
 };
