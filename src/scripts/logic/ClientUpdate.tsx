@@ -166,8 +166,6 @@ function postTickTiles(gs: GameState, offline: boolean) {
       ++gs.seconds;
    }
 
-   console.log(gs.tick, gs.seconds);
-
    if (!offline) {
       const speed = Singleton().ticker.speedUp;
       if (gs.tick % speed === 0) {

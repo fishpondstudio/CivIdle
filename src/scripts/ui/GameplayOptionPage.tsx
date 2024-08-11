@@ -221,49 +221,6 @@ export function GameplayOptionPage(): React.ReactNode {
                   })}
                </select>
             </fieldset>
-            {sizeOf(options.buildingDefaults) > 0 ? (
-               <fieldset>
-                  <legend>{t(L.BuildingDefaults)}</legend>
-                  <div className="table-view">
-                     <table>
-                        <tbody>
-                           {keysOf(options.buildingDefaults)
-                              .sort((a, b) =>
-                                 Config.Building[a].name().localeCompare(Config.Building[b].name()),
-                              )
-                              .map((building) => {
-                                 const value = options.buildingDefaults[building];
-                                 return (
-                                    <tr key={building}>
-                                       <td>{Config.Building[building].name()}</td>
-                                       <td>
-                                          <TextWithHelp
-                                             content={t(L.BuildingDefaultsCount, { count: sizeOf(value) })}
-                                          >
-                                             {sizeOf(value)}
-                                          </TextWithHelp>
-                                       </td>
-                                       <td style={{ width: 0 }}>
-                                          <Tippy content={t(L.BuildingDefaultsRemove)}>
-                                             <div
-                                                className="text-red m-icon small"
-                                                onClick={() => {
-                                                   delete options.buildingDefaults[building];
-                                                   notifyGameOptionsUpdate();
-                                                }}
-                                             >
-                                                delete
-                                             </div>
-                                          </Tippy>
-                                       </td>
-                                    </tr>
-                                 );
-                              })}
-                        </tbody>
-                     </table>
-                  </div>
-               </fieldset>
-            ) : null}
             <fieldset>
                <legend>{t(L.Sound)}</legend>
                <ChangeSoundComponent />
@@ -343,6 +300,49 @@ export function GameplayOptionPage(): React.ReactNode {
                   {t(L.ClearTransportPlanCache)}
                </button>
             </fieldset>
+            {sizeOf(options.buildingDefaults) > 0 ? (
+               <fieldset>
+                  <legend>{t(L.BuildingDefaults)}</legend>
+                  <div className="table-view">
+                     <table>
+                        <tbody>
+                           {keysOf(options.buildingDefaults)
+                              .sort((a, b) =>
+                                 Config.Building[a].name().localeCompare(Config.Building[b].name()),
+                              )
+                              .map((building) => {
+                                 const value = options.buildingDefaults[building];
+                                 return (
+                                    <tr key={building}>
+                                       <td>{Config.Building[building].name()}</td>
+                                       <td>
+                                          <TextWithHelp
+                                             content={t(L.BuildingDefaultsCount, { count: sizeOf(value) })}
+                                          >
+                                             {sizeOf(value)}
+                                          </TextWithHelp>
+                                       </td>
+                                       <td style={{ width: 0 }}>
+                                          <Tippy content={t(L.BuildingDefaultsRemove)}>
+                                             <div
+                                                className="text-red m-icon small"
+                                                onClick={() => {
+                                                   delete options.buildingDefaults[building];
+                                                   notifyGameOptionsUpdate();
+                                                }}
+                                             >
+                                                delete
+                                             </div>
+                                          </Tippy>
+                                       </td>
+                                    </tr>
+                                 );
+                              })}
+                        </tbody>
+                     </table>
+                  </div>
+               </fieldset>
+            ) : null}
          </div>
       </div>
    );

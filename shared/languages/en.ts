@@ -678,7 +678,7 @@ export const EN = {
    Mosque: "Mosque",
    MotionPicture: "Motion Picture",
    MountFuji: "Mount Fuji",
-   MountFujiDesc: "When Petra is built next to it, Petra gets +8h Warp storage. When the game is running, generate 30 warp every minute in Petra (not accelerated by Petra itself, not generating when the game is offline)",
+   MountFujiDescV2: "When Petra is built next to it, Petra gets +8h Warp storage. When the game is running, generate 20 warp every minute in Petra (not accelerated by Petra itself, not generating when the game is offline)",
    MountSinai: "Mount Sinai",
    MountSinaiDesc: "When discovered, a great person of the current age is born. All buildings that produce faith get +5 Storage Multiplier",
    MountTai: "Mount Tai",
@@ -1375,5 +1375,9 @@ export const EN = {
    ZigguratOfUr: "Ziggurat of Ur",
    ZigguratOfUrDescV2: "Every 10 happiness (capped) provides +1 Production Multiplier to all buildings that do not produce workers and are unlocked in previous ages (max = number of unlocked ages / 2). Wonders (incl. Natural) no longer provide +1 Happiness. The effect can be turned off",
    Zoroaster: "Zoroaster",
-   ResourceImportPartialWarningHTML: "The total resource transport capacity has exceeds the maximum capacity: <b>each resource transport will only transport partially per cycle</b>"
+   ResourceImportPartialWarningHTML: "The total resource transport capacity has exceeds the maximum capacity: <b>each resource transport will only transport partially per cycle</b>",
+   FirstTimeTutorialWelcome: "Welcome to CivIdle",
+   FirstTimeTutorialWelcome1HTML: "Welcome to CivIdle. In this game, you will run your own empire: <b>manage productions, unlock technologies, trade resources with other players, create great people and build world wonders</b>.<br><br>Drag your mouse to move around. Use the scroll wheel to zoom in or out. Click an empty tile to build new buildings, click a building to inspect it.<br><br>Certain buildings like Stone Quarry and Logging Camp need to be built on top of the resource tile. I recommend placing a Hut, which provides worker, next to the fog - the building will take some time to build. After the completion, it will reveal the fog nearby.",
+   FirstTimeTutorialWelcome2HTML: "Buildings can be upgraded - it costs resources and takes time. When a buildings is being upgraded, <b>it will no longer produce</b>. This includes buildings that provide workers, <b>so never upgrade all your buildings at the same time!</b><br><br>As your empire grows, you will get more science and unlock new technologies. I will tell you more about it when we get there but you can go to View -> Research to take a quick look<br><br>",
+   FirstTimeTutorialWelcome3HTML: "Now you know all the basics of the game, you can start building your empire. But before I let you go, you should <b>choose yourself a player handle</b> and say hi in the in-game chat. We have an amazingly helpful community: if you get lost, don't be afraid to ask!",
 };

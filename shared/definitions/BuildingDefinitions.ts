@@ -1747,7 +1747,7 @@ export class BuildingDefinitions {
 
    MountFuji: IBuildingDefinition = {
       name: () => t(L.MountFuji),
-      desc: () => t(L.MountFujiDesc),
+      desc: () => t(L.MountFujiDescV2),
       input: {},
       output: {},
       construction: {},

@@ -15,12 +15,12 @@ import { openUrl } from "../utilities/Platform";
 import { Singleton } from "../utilities/Singleton";
 import { playError } from "../visuals/Sound";
 import { AboutModal } from "./AboutModal";
-import { FirstTimePlayerModal } from "./FirstTimePlayerModal";
 import { GameplayOptionPage } from "./GameplayOptionPage";
 import { showModal, showToast } from "./GlobalModal";
 import { PatchNotesPage } from "./PatchNotesPage";
 import { ShortcutPage } from "./ShortcutPage";
 import { ThemePage } from "./ThemePage";
+import { TutorialPage } from "./TutorialPage";
 
 type MenuItemOptions = "view" | "options" | "help" | null;
 
@@ -219,7 +219,7 @@ export function MenuComponent(): React.ReactNode {
                   <div
                      className="menu-popover-item"
                      onPointerDown={() => {
-                        showModal(<FirstTimePlayerModal />);
+                        Singleton().routeTo(TutorialPage, {});
                      }}
                   >
                      <MenuItem check={false}>{t(L.Tutorial)}</MenuItem>
