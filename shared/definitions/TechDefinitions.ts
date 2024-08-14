@@ -100,7 +100,7 @@ export class TechDefinitions {
       name: () => t(L.Counting),
       column: 1,
       requireTech: ["Logging", "StoneTools"],
-      unlockBuilding: ["LumberMill"],
+      unlockBuilding: ["LumberMill", "Statistics"],
    };
 
    Farming: ITechDefinition = {
@@ -154,7 +154,7 @@ export class TechDefinitions {
       name: () => t(L.Stateship),
       column: 3,
       requireTech: ["Housing"],
-      unlockBuilding: ["FlourMill", "CottonPlantation"],
+      unlockBuilding: ["FlourMill"],
    };
 
    Market: ITechDefinition = {
@@ -168,7 +168,7 @@ export class TechDefinitions {
       name: () => t(L.Arithmetic),
       column: 3,
       requireTech: ["Herding", "HorsebackRiding"],
-      unlockBuilding: ["Statistics"],
+      unlockBuilding: ["CottonPlantation"],
    };
 
    Writing: ITechDefinition = {

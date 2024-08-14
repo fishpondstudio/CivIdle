@@ -583,7 +583,14 @@ function ResourcesTab({ gameState }: IBuildingComponentProps): React.ReactNode {
 
                return (
                   <tr key={res}>
-                     <td>{r.name()}</td>
+                     <td>
+                        <div>{r.name()}</div>
+                        <Tippy content={t(L.EmpireValue)}>
+                           <span className="text-desc text-small">
+                              <FormatNumber value={Config.ResourcePrice[res]} />
+                           </span>
+                        </Tippy>
+                     </td>
                      <td className="right">
                         <FormatNumber value={amount} />
                      </td>
