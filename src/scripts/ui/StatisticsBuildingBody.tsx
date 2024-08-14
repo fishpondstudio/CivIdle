@@ -2,7 +2,7 @@ import Tippy from "@tippyjs/react";
 import classNames from "classnames";
 import { useState } from "react";
 import { TableVirtuoso } from "react-virtuoso";
-import type { IBuildingDefinition } from "../../../shared/definitions/BuildingDefinitions";
+import { BuildingSpecial, type IBuildingDefinition } from "../../../shared/definitions/BuildingDefinitions";
 import { NoPrice, NoStorage, type Resource } from "../../../shared/definitions/ResourceDefinitions";
 import {
    IOCalculation,
@@ -327,6 +327,10 @@ function BuildingTab({ gameState }: IBuildingComponentProps): React.ReactNode {
             <TableVirtuoso
                data={Array.from(getXyBuildings(gameState))
                   .filter(([_, b]) => {
+                     // We should not show natural wonders in Stat Office. World wonder is fine
+                     if (Config.Building[b.type].special === BuildingSpecial.NaturalWonder) {
+                        return false;
+                     }
                      let filter = (buildingFilter & 0x0fffffff) === 0;
                      for (let i = 0; i < 12; i++) {
                         if (hasFlag(buildingFilter, 1 << i)) {
