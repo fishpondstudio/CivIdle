@@ -1230,7 +1230,7 @@ export const EN = {
    TotalEmpireValue: "Total Empire Value",
    TotalEmpireValuePerCycle: "Total Empire Value Per Cycle",
    TotalEmpireValuePerCyclePerGreatPeopleLevel: "Total Empire Value Per Cycle Per Great People Level",
-   TotalEmpireValuePerWallSecond: "Total Empire Value Wall Second",
+   TotalEmpireValuePerWallSecond: "Total Empire Value Per Wall Second",
    TotalEmpireValuePerWallSecondPerGreatPeopleLevel: "Total Empire Value Per Wall Second Per Great People Level",
    TotalGameTimeThisRun: "Total Game Time This Run",
    TotalScienceRequired: "Total Science Required",
