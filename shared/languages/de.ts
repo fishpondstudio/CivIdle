@@ -111,7 +111,7 @@ export const DE = {
    AtomicTheory: "Atomwissenschaft",
    Atomium: "Atomium",
    AtomiumDescV2:
-      "Alle Gebäude, die im Umkreis von 2 Kacheln Wissenschaft produzieren, erhalten einen Produktionsmultiplikator von +5. Erzeugt Wissenschaft, die der Wissenschaftsproduktion im Umkreis von 2 Kacheln entspricht. Bei Fertigstellung wird einmalig Wissenschaft in Höhe der Kosten der teuersten freigeschalteten Technologie erzeugt.",
+      "Alle Gebäude, die im Umkreis von 2 Kacheln Wissenschaft produzieren (außer Klon-Forschung), erhalten einen Produktionsmultiplikator von +5. Erzeugt Wissenschaft, die der Wissenschaftsproduktion im Umkreis von 2 Kacheln entspricht. Bei Fertigstellung wird einmalig Wissenschaft in Höhe der Kosten der teuersten freigeschalteten Technologie erzeugt.",
    Autocracy: "Autokratie",
    Aviation: "Luftfahrt",
    Babylon: "Babylon",
