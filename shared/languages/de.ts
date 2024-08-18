@@ -412,8 +412,13 @@ export const DE = {
    FinancialLeverage: "Finanzielle Hebelwirkung",
    Fire: "Feuer",
    Firearm: "Schusswaffe",
-   FirstTimeGuideFinish: "Fertigstellen",
    FirstTimeGuideNext: "Weiter",
+   FirstTimeTutorialWelcome: "Welcome to CivIdle",
+   FirstTimeTutorialWelcome1HTML:
+      "Welcome to CivIdle. In this game, you will run your own empire: <b>manage productions, unlock technologies, trade resources with other players, create great people and build world wonders</b>.<br><br>Drag your mouse to move around. Use the scroll wheel to zoom in or out. Click an empty tile to build new buildings, click a building to inspect it.<br><br>Certain buildings like Stone Quarry and Logging Camp need to be built on top of the resource tile. I recommend placing a Hut, which provides worker, next to the fog - the building will take some time to build. After the completion, it will reveal the fog nearby.",
+   FirstTimeTutorialWelcome2HTML:
+      "Buildings can be upgraded - it costs resources and takes time. When a buildings is being upgraded, <b>it will no longer produce</b>. This includes buildings that provide workers, <b>so never upgrade all your buildings at the same time!</b><br><br>As your empire grows, you will get more science and unlock new technologies. I will tell you more about it when we get there but you can go to View -> Research to take a quick look<br><br>",
+   FirstTimeTutorialWelcome3HTML: "Now you know all the basics of the game, you can start building your empire. But before I let you go, you should <b>choose yourself a player handle</b> and say hi in the in-game chat. We have an amazingly helpful community: if you get lost, don't be afraid to ask!",
    Fish: "Fisch",
    FishPond: "Angelteich",
    FlorenceNightingale: "Florence Nightingale",
@@ -679,7 +684,7 @@ export const DE = {
    Mosque: "Moschee",
    MotionPicture: "Spielfilm",
    MountFuji: "Mount Fuji",
-   MountFujiDesc: "When Petra is built next to it, Petra gets +8h Warp storage. When the game is running, generate 30 warp every minute in Petra (not accelerated by Petra itself, not generating when the game is offline)",
+   MountFujiDescV2: "When Petra is built next to it, Petra gets +8h Warp storage. When the game is running, generate 20 warp every minute in Petra (not accelerated by Petra itself, not generating when the game is offline)",
    MountSinai: "Mount Sinai",
    MountSinaiDesc: "Bei der Entdeckung erhältst Du eine herausragende Persönlichkeit des aktuellen Zeitalters. Alle Gebäude, die Glauben generieren, bekommen einen Multiplier von +5 auf die Lagergröße",
    MountTai: "Mount Tai",
@@ -972,6 +977,7 @@ export const DE = {
    ResourceImportImportCapV2Tooltip: "Dieses Gebäude beendet den Transport dieser Ressource, wenn die max. Menge erreicht ist",
    ResourceImportImportPerCycleV2: "Pro Zyklus",
    ResourceImportImportPerCycleV2ToolTip: "Die Menge dieser Ressource, die pro Zyklus transportiert wird",
+   ResourceImportPartialWarningHTML: "The total resource transport capacity has exceeds the maximum capacity: <b>each resource transport will only transport partially per cycle</b>",
    ResourceImportResource: "Ressource",
    ResourceImportSettings: "Ressourcen-Transport",
    ResourceImportStorage: "Lagerung",
@@ -1227,9 +1233,13 @@ export const DE = {
    TotalEmpireValue: "Gesamtwert des Imperiums",
    TotalEmpireValuePerCycle: "Gesamtwert des Imperiums pro Zyklus",
    TotalEmpireValuePerCyclePerGreatPeopleLevel: "Gesamtwert des Imperiums pro Zyklus und Stufe der großartigen Persönlichkeiten",
+   TotalEmpireValuePerWallSecond: "Total Empire Value Wall Second",
+   TotalEmpireValuePerWallSecondPerGreatPeopleLevel: "Total Empire Value Per Wall Second Per Great People Level",
+   TotalGameTimeThisRun: "Total Game Time This Run",
    TotalScienceRequired: "Wissenschaft insgesamt erforderlich",
    TotalStorage: "Gesamter Speicherplatz",
-   TotalTimeThisRun: "Gesamtzeit dieses Durchgangs.",
+   TotalWallTimeThisRun: "Total Wall Time This Run",
+   TotalWallTimeThisRunTooltip: "Wall time (aka. elapsed real time) measures the actual time taken for this run. The differs from the game time in that Time Warp in Petra and Offline Production does not affect wall time but it does affect game time",
    TotalWorkers: "Arbeitskräfte",
    TowerOfBabel: "Turm von Babel",
    TowerOfBabelDesc: "Bietet einen Produktionsmultiplikator von +2 für alle Gebäude, die mindestens ein funktionierendes Gebäude in der Nähe des Wunders haben.",
@@ -1256,18 +1266,6 @@ export const DE = {
       "Du kannst das ganze Spiel als Tribun spielen, wenn du nicht planst die <b>optionalen</b> online Leistungsmerkmale zu nutzen. Um den unbeschränkten Zugang zu ihnen zu erhalten, musst du in den Rang Quaestor austeigen. <b>Dies ist eine anti-bot Maßnahme, um das Spiel für alle kostenlos zu halten.</b> Du kannst aber <b>beim Aufstieg zu Quaestor</b>  herausragende Personen übernehmen: <ul><li>Bis zur Stufe <b>3</b> für Bronze-, Eisenzeit und Klassik</li><li>bis zur Stufe <b>2</b> für Mittelalter, Renaissance und Industriezeitalter</li><li>bis zur Stufe <b>1</b> for Weltkriege, Kalter Krieg und Informationszeitalter</li></ul>Teilweiser Fortschritt oberhalb dieser Stufen kann nicht übertragen werden.",
    TurnOnTimeWarpDesc: "Kostet %{speed} Warps für jede Sekunde und beschleunige dein Imperium, um mit %{speed}x Geschwindigkeit zu laufen.",
    Tutorial: "Tutorial",
-   Tutorial1:
-      "Verwalte Produktionen, schalte Technologien frei, tausche Ressourcen mit anderen Spielern, erschaffe großartige Menschen und baue Weltwunder.<br><br>Ziehe deine Maus, um dich zu bewegen. Verwende das Scrollrad, um die Ansicht zu vergrößern oder zu verkleinern. Klicke auf ein leeres Gebiet, um neue Gebäude zu bauen. Klicke auf ein Gebäude, um es zu inspizieren.<br><br>",
-   Tutorial2: "Ich habe noch keine ähnlichen Spiele gespielt und würde gerne ein kurzes Tutorial durchgehen",
-   Tutorial3: "Ich habe Industry Idle gespielt und kenne die Steuerung, bitte überspring das grundlegende Tutorial",
-   Tutorial4:
-      "Gebäude sind der Grundbaustein deines Imperiums - platziere sie auf den erkundeten Kartenkacheln. Bestimmte Gebäude wie Steinbrüche und Aquädukte, die Ressourcen fördern, können nur auf Gebieten errichtet werden, die die entsprechende Ressource enthalten. Wenn sich innerhalb von zwei Feldern um ein neues Gebäude verdeckte Felder befinden, werden sie nach Abschluss des Baus aufgedeckt.<br><br>Gebäude verbrauchen Ressourcen und produzieren neue. Die benötigten Ressourcen werden <b>automatisch</b> transportiert. Die produzierten Ressourcen werden in den Gebäuden gelagert und werden in andere Gebäude transportiert, wenn diese sie benötigen. Der Lagerraum eines Gebäudes ist jedoch begrenzt.<br><br>Gebäude benötigen <b>Arbeitskräfte</b> für Transport und Produktion. Wenn du mehr Arbeitskräfte benötigst, kannst du Wohngebäude wie <b>Hütten</b> bauen. Aber vorsicht: Jeder Bau benötigt zusätzliche Arbeitskräfte. Wenn vor Beginn eines Bauauftrages schon alle Arbeitskräfte beschäftigt sind, dann werden die Bauarbeiter aus der Produktion abgezogen. Du kannst ein Gebäude ausbauen, um seine Produktion und Lagerung zu erhöhen. Jede zusätzliche Stufe kostet mehr und der Ausbau dauert länger als diejenige davor.",
-   Tutorial5:
-      "<b>Forschung</b> wird verwendet, um Technologien im Technologiebaum freizuschalten. Eine Technologie stellt dir neue Gebäude und Wunder zur Verfügung.<br><br><b>Arbeitskräfte mit einer Beschäftigung</b> generieren eine kleine Menge an Forschung. Später schaltest du Gebäude wie Bibliotheken und Schulen frei, die Forschung produzieren.<br><br>Die Anzahl der verfügbaren Arbeitskräfte wird von <b>Zufriedenheit</b> beeinflusst. Jedes Gebäude kostet einen Punkt Zufriedenheit. Mit jeder erforschten Technologie, jedem Wunder und jeder herausragenden Persönlichkeit steigerst du die Zufriedenheit. Sorge dafür, dass deine Arbeitskräfte zufrieden sind, sonst kommt die Produktion deines Imperiums zum Erliegen.<br><br><b>Wunder</b> sind einzigartige Gebäude - du kannst nur eines bauen und sie können nicht entfernt werden, wenn sie einmal gebaut sind. Wunder können einen deutlichen Schub geben oder neue Mechanismen freischalten.",
-   Tutorial6:
-      "Wenn du in ein neues Zeitalter eintrittst, wird eine neue <b>herausragende Persönlichkeit</b> geboren. Du kannst einen von drei Kandidaten auswählen.<br><br>Herausragende Persönlichkeiten sorgen für Beschleunigungen. Wenn du wiedergeboren wirst, erhältst du alle herausragenden Personen, die du im vorigen Durchgang ausgewählt hast, plus einige, die du bei früheren Wiedergeburten ausgewählt hast. Diese werden als permanente herausragende Persönlichkeiten bezeichnet.<br><br><b>Permanente</b> herausragende Persönlichkeiten können verbessert werden, indem du herausragende Persönlichkeiten aus jedem Durchgang sammelst. Sie werden deinem Imperium helfen, neue Höhen zu erreichen. Das sind alle Grundlagen, die du wissen musst.<br><br>Stelle alle weiteren Fragen einfach im <b>Chat</b>. - Wir haben eine freundliche Community, die immer bereit ist zu helfen.",
-   TutorialAdvices:
-      "Wir haben erfahrene Spieler nach ihren Ratschlägen für Erstspieler gefragt. Hier finden Sie einige sehr nützliche Informationen, bevor du dich in das Spiel stürzt. <ol><li><b>Upgrade nicht alle Gebäude gleichzeitig</b>: Gebäude, die modernisiert werden, produzieren nicht mehr</li><li><b>Achte auf deine Zufriedenheit</b>: negatives Zufriedenheit verringert die Zahl der verfügbaren Arbeitskräfte, und wenn die Zufriedenheit -50 erreicht wird die gesamte Produktion eingestellt</li><li><b>Nicht übermäßig expandieren</b>: Gebäude benötigen Zufriedenheit, um zu funktionieren. Stelle sicher, dass du genug Zufriedenheit hast, bevor du expandierst</li><li><b>Häuser, Wohnungen und Eigentumswohnungen vorrangig behandeln</b>: Die Einstellung auf die höchste Priorität kann die Fluktuation der Arbeitnehmer vermeiden.</li><li><b>Du kannst jederzeit in deinem Hauptgebäude wiedergeboren werden</b>: Es ist in Ordnung, von vorne anzufangen, wenn du deine erste Karte verpfuschst.</li></ol>",
    TutorialPlayerFlag: "Wähle deine Spielerflagge",
    TutorialPlayerHandle: "Wähle deinen Spieler-Namen",
    TV: "Fernseher",
@@ -1373,6 +1371,6 @@ export const DE = {
    ZenobiaDesc: "+%{value}h Petra Warp Speicher",
    ZhengHe: "Zheng He",
    ZigguratOfUr: "Ziggurat of Ur",
-   ZigguratOfUrDesc: "Alle 10 Zufriedenheiten (gedeckelt) bringen +1 Produktionsmultiplikator für alle Gebäude (max = Anzahl der freigeschalteten Zeitalter / 2). Wunder (inkl. Natürliche) bieten nicht mehr +1 Glück. Der Effekt kann abgeschaltet werden",
+   ZigguratOfUrDescV2: "Every 10 happiness (capped) provides +1 Production Multiplier to all buildings that do not produce workers and are unlocked in previous ages (max = number of unlocked ages / 2). Wonders (incl. Natural) no longer provide +1 Happiness. The effect can be turned off",
    Zoroaster: "Zoroaster",
 };

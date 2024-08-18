@@ -1097,7 +1097,8 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
       case "ZagrosMountains": {
          for (const point of grid.getRange(tileToPoint(xy), 1)) {
             const tileXy = pointToTile(point);
-            let multiplier = 0;
+            // Include base multiplier (1)
+            let multiplier = 1;
             forEachMultiplier(
                tileXy,
                (m) => {
@@ -1236,7 +1237,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
             lastFujiGeneratedAt = Date.now();
             const petra = Tick.current.specialBuildings.get("Petra");
             if (petra) {
-               safeAdd(petra.building.resources, "Warp", 30);
+               safeAdd(petra.building.resources, "Warp", 20);
             }
          } else {
             fujiTick++;

@@ -64,7 +64,8 @@ export function AboutModal(): React.ReactNode {
                   </div>
                </div>
             </div>
-            <div className="text-right" style={{ margin: "20px 0 0 0" }}>
+            <div className="mt20 row">
+               <div className="f1" />
                <button
                   style={{ padding: "0 30px" }}
                   onClick={() => {

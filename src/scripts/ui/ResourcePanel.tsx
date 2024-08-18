@@ -211,7 +211,7 @@ export function ResourcePanel(): React.ReactNode {
             <div className={classNames({ "m-icon": true })}>science</div>
             <Tippy content={t(L.Science)} placement="bottom">
                <div style={{ width: "6rem" }}>
-                  <FormatNumber value={getResourceAmount("Science")} />
+                  <FormatNumber value={scienceAmount[0]} />
                </div>
             </Tippy>
             <div

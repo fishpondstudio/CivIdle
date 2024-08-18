@@ -851,7 +851,7 @@ export class BuildingDefinitions {
       desc: () => t(L.StatisticsOfficeDesc),
       input: {},
       output: {},
-      construction: { Brick: 100, Wood: 100, Lumber: 100 },
+      construction: { Stone: 150, Wood: 150 },
       max: 1,
       special: BuildingSpecial.WorldWonder,
    };
@@ -1747,7 +1747,7 @@ export class BuildingDefinitions {
 
    MountFuji: IBuildingDefinition = {
       name: () => t(L.MountFuji),
-      desc: () => t(L.MountFujiDesc),
+      desc: () => t(L.MountFujiDescV2),
       input: {},
       output: {},
       construction: {},

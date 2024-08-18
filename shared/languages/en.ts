@@ -411,8 +411,13 @@ export const EN = {
    FinancialLeverage: "Financial Leverage",
    Fire: "Fire",
    Firearm: "Firearm",
-   FirstTimeGuideFinish: "Finish",
    FirstTimeGuideNext: "Next",
+   FirstTimeTutorialWelcome: "Welcome to CivIdle",
+   FirstTimeTutorialWelcome1HTML:
+      "Welcome to CivIdle. In this game, you will run your own empire: <b>manage productions, unlock technologies, trade resources with other players, create great people and build world wonders</b>.<br><br>Drag your mouse to move around. Use the scroll wheel to zoom in or out. Click an empty tile to build new buildings, click a building to inspect it.<br><br>Certain buildings like Stone Quarry and Logging Camp need to be built on top of the resource tile. I recommend placing a Hut, which provides worker, next to the fog - the building will take some time to build. After the completion, it will reveal the fog nearby.",
+   FirstTimeTutorialWelcome2HTML:
+      "Buildings can be upgraded - it costs resources and takes time. When a buildings is being upgraded, <b>it will no longer produce</b>. This includes buildings that provide workers, <b>so never upgrade all your buildings at the same time!</b><br><br>As your empire grows, you will get more science and unlock new technologies. I will tell you more about it when we get there but you can go to View -> Research to take a quick look<br><br>",
+   FirstTimeTutorialWelcome3HTML: "Now you know all the basics of the game, you can start building your empire. But before I let you go, you should <b>choose yourself a player handle</b> and say hi in the in-game chat. We have an amazingly helpful community: if you get lost, don't be afraid to ask!",
    Fish: "Fish",
    FishPond: "Fish Pond",
    FlorenceNightingale: "Florence Nightingale",
@@ -678,7 +683,7 @@ export const EN = {
    Mosque: "Mosque",
    MotionPicture: "Motion Picture",
    MountFuji: "Mount Fuji",
-   MountFujiDesc: "When Petra is built next to it, Petra gets +8h Warp storage. When the game is running, generate 30 warp every minute in Petra (not accelerated by Petra itself, not generating when the game is offline)",
+   MountFujiDescV2: "When Petra is built next to it, Petra gets +8h Warp storage. When the game is running, generate 20 warp every minute in Petra (not accelerated by Petra itself, not generating when the game is offline)",
    MountSinai: "Mount Sinai",
    MountSinaiDesc: "When discovered, a great person of the current age is born. All buildings that produce faith get +5 Storage Multiplier",
    MountTai: "Mount Tai",
@@ -970,6 +975,7 @@ export const EN = {
    ResourceImportImportCapV2Tooltip: "This building will stop transporting this resource when the max amount is reached",
    ResourceImportImportPerCycleV2: "Per Cycle",
    ResourceImportImportPerCycleV2ToolTip: "The amount of this resource that is transported per cycle",
+   ResourceImportPartialWarningHTML: "The total resource transport capacity has exceeds the maximum capacity: <b>each resource transport will only transport partially per cycle</b>",
    ResourceImportResource: "Resource",
    ResourceImportSettings: "Resource Transport: %{res}",
    ResourceImportStorage: "Storage",
@@ -1224,9 +1230,13 @@ export const EN = {
    TotalEmpireValue: "Total Empire Value",
    TotalEmpireValuePerCycle: "Total Empire Value Per Cycle",
    TotalEmpireValuePerCyclePerGreatPeopleLevel: "Total Empire Value Per Cycle Per Great People Level",
+   TotalEmpireValuePerWallSecond: "Total Empire Value Per Real Second",
+   TotalEmpireValuePerWallSecondPerGreatPeopleLevel: "Total Empire Value Per Real Second Per Great People Level",
+   TotalGameTimeThisRun: "Total Game Time This Run",
    TotalScienceRequired: "Total Science Required",
    TotalStorage: "Total Storage",
-   TotalTimeThisRun: "Total Time This Run",
+   TotalWallTimeThisRun: "Total Real Time This Run",
+   TotalWallTimeThisRunTooltip: "Real time (aka. wall time) measures the actual time taken for this run. The differs from the game time in that Time Warp in Petra and Offline Production does not affect real time but it does affect game time",
    TotalWorkers: "Total Workers",
    TowerOfBabel: "Tower of Babel",
    TowerOfBabelDesc: "Provides +2 Production Multiplier to all buildings that have at least one working building located adjacent to the Tower of Babel",
@@ -1253,18 +1263,6 @@ export const EN = {
       "You can play the full game as Tribune if you do not plan to participate in the <b>optional</b> online features. To acquire unrestricted access to the online features, you will need to upgrade to Quaestor. <b>This is an anti-bot measure to keep the game free for everyone.</b> However, <b>when upgrading to Quaestor</b> you can carry over great people: <ul><li>Up to Level <b>3</b> for Bronze, Iron and Classical Age</li><li>Up to Level <b>2</b> for Middle Age, Renaissance and Industrial Age</li><li>Up to Level <b>1</b> for World Wars, Cold War and Information Age</li></ul>Partial progress above the level cannot be carried over.",
    TurnOnTimeWarpDesc: "Cost %{speed} warps for every second and accelerate your empire to run at %{speed}x speed.",
    Tutorial: "Tutorial",
-   Tutorial1:
-      "Welcome to CivIdle Setup.<br><br>In this game, you will run your own empire: manage productions, unlock technologies, trade resources with other players, create great people and build world wonders.<br><br>Drag your mouse to move around. Use the scroll wheel to zoom in or out. Click an empty tile to build new buildings, click a building to inspect it.<br><br>",
-   Tutorial2: "I haven't played similar games and I'd like to go through a quick tutorial",
-   Tutorial3: "I have played Industry Idle and I know the drill, please skip the basic tutorial",
-   Tutorial4:
-      "Buildings are the basic building block of your empire - place them on the explored map tiles. Certain buildings like Stone Quarries and Aqueducts that extract deposits need to be placed on a deposit tile. A building will lift the fog of its surrounding tiles.<br><br>Buildings consume resources and produce new ones. They will <b>automatically</b> transport required resources. The produced resources will be stored in the buildings which can be transported into other buildings that need these resources. However, a building's storage space is limited.<br><br>Buildings need <b>workers</b> for transportation and production - you need to build residential buildings like <b>huts</b> to increase the worker population. You can upgrade a building to increase its production and storage.",
-   Tutorial5:
-      "<b>Science</b> is used to unlock technologies in the tech tree. A technology unlocks new buildings, wonders and boosts.<br><br><b>Busy workers</b> generate a small amount of science. Later on, you will unlock buildings like libraries and schools that produce science.<br><br>The amount of workers available is affected by <b>happiness</b>. Each building placed will cost 1 happiness. You gain happiness from technologies, wonders and great people. Make sure your workers are happy, otherwise your empire's production will halt.<br><br><b>Wonders</b> are a one of a kind building - you can only build one of each and they cannot be removed once built. There are also Natural Wonders that can be found by exploring the map. Wonders can provide significant boosts or unlock new mechanisms.",
-   Tutorial6:
-      "When you enter a new age, a new <b>great person</b> will be born. You can choose one out of three candidates.<br><br>Great people provide boosts and will be added to your permanent collection. When you rebirth, you collect all the great people you've chosen this run, plus extra great people based on your <b>total empire value</b>, these permanent great people will remain with you.<br><br><b>Permanent</b> great people can be upgraded by collecting great people from each run. They will help your empire achieve new heights. That's all the basics you need to know.<br><br>If you have questions, the best way to get help is by asking the <b>chat</b> - we have a friendly community that is always ready to help.",
-   TutorialAdvices:
-      "We have asked experienced players for their advice to first time players. Here are some very useful insights before you dive into the game.<ol><li><b>Don't upgrade all your buildings at the same time</b>: buildings being upgraded no longer produce</li><li><b>Pay attention to your happiness</b>: negative happiness reduces available workers and when happiness reaches -50, all production will halt</li><li><b>Don't over expand</b>: buildings require happiness to run. Make sure you have enough happiness before expanding</li><li><b>Prioritize houses, apartments and condos</b>: setting them to the highest priority can avoid fluctuating workers</li><li><b>You can rebirth any time in your home building</b>: it's okay to start over if you mess up your first map</li></ol>",
    TutorialPlayerFlag: "Choose your player flag",
    TutorialPlayerHandle: "Choose your player handle",
    TV: "TV",
@@ -1371,5 +1369,4 @@ export const EN = {
    ZigguratOfUr: "Ziggurat of Ur",
    ZigguratOfUrDescV2: "Every 10 happiness (capped) provides +1 Production Multiplier to all buildings that do not produce workers and are unlocked in previous ages (max = number of unlocked ages / 2). Wonders (incl. Natural) no longer provide +1 Happiness. The effect can be turned off",
    Zoroaster: "Zoroaster",
-   ResourceImportPartialWarningHTML: "The total resource transport capacity has exceeds the maximum capacity: <b>each resource transport will only transport partially per cycle</b>"
 };

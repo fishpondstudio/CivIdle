@@ -147,6 +147,8 @@ function checkForAdvisors(gs: GameState) {
    });
 }
 
+let lastTickTime = Date.now();
+
 function postTickTiles(gs: GameState, offline: boolean) {
    tickPower(gs);
 
@@ -158,6 +160,11 @@ function postTickTiles(gs: GameState, offline: boolean) {
    }
 
    ++gs.tick;
+
+   while (Date.now() - lastTickTime > 1000) {
+      lastTickTime += 1000;
+      ++gs.seconds;
+   }
 
    if (!offline) {
       const speed = Singleton().ticker.speedUp;

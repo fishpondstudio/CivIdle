@@ -23,14 +23,9 @@ export function AdvisorModal({ advisor }: { advisor: Advisor }): React.ReactNode
                <button onClick={hideModal} aria-label="Close"></button>
             </div>
          </div>
-         <div className="window-body row" style={{ alignItems: "flex-start" }}>
-            <div className="inset-shallow white">
-               <img src={AdvisorImages[advisor]} style={{ display: "block", height: 450 - 2 }} />
-            </div>
-            <div className="ml15" style={{ height: 450, display: "flex", flexDirection: "column" }}>
-               <div className="text-large mb10">{def.title}</div>
-               <RenderHTML html={def.content} />
-               <div className="f1"></div>
+         <AdvisorContentComponent
+            advisor={advisor}
+            action={
                <div className="row">
                   <div
                      className="text-desc text-small"
@@ -55,7 +50,27 @@ export function AdvisorModal({ advisor }: { advisor: Advisor }): React.ReactNode
                      {t(L.AdvisorOkay)}
                   </button>
                </div>
-            </div>
+            }
+         />
+      </div>
+   );
+}
+
+export function AdvisorContentComponent({
+   advisor,
+   action,
+}: { advisor: Advisor; action?: React.ReactNode }): React.ReactNode {
+   const def = Advisors[advisor];
+   return (
+      <div className="window-body row" style={{ alignItems: "flex-start" }}>
+         <div className="inset-shallow white">
+            <img src={AdvisorImages[advisor]} style={{ display: "block", height: 450 - 2 }} />
+         </div>
+         <div className="ml15" style={{ height: 450, display: "flex", flexDirection: "column" }}>
+            <div className="text-large mb10">{def.title}</div>
+            <RenderHTML html={def.content} />
+            <div className="f1"></div>
+            {action}
          </div>
       </div>
    );

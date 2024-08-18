@@ -1,7 +1,7 @@
 import type { Building, IBuildingDefinition } from "../definitions/BuildingDefinitions";
 import type { Deposit, Resource } from "../definitions/ResourceDefinitions";
 import { Grid } from "../utilities/Grid";
-import { forEach, mapSafeAdd, reduceOf, safeAdd, tileToHash, type Tile } from "../utilities/Helper";
+import { clamp, forEach, mapSafeAdd, reduceOf, safeAdd, tileToHash, type Tile } from "../utilities/Helper";
 import type { PartialSet, PartialTabulate } from "../utilities/TypeDefinitions";
 import {
    IOCalculation,
@@ -101,11 +101,13 @@ export function getBuildingIO(
          const totalCapacity = getResourceImportCapacity(b, totalMultiplierFor(xy, "output", 1, false, gs));
          const rib = b as IResourceImportBuildingData;
          const totalSetCapacity = reduceOf(rib.resourceImports, (prev, k, v) => prev + v.perCycle, 0);
-         const scaleFactor = totalCapacity / totalSetCapacity;
-         forEach((b as IResourceImportBuildingData).resourceImports, (k, v) => {
+         const scaleFactor = clamp(totalSetCapacity > 0 ? totalCapacity / totalSetCapacity : 0, 0, 1);
+         forEach(rib.resourceImports, (k, v) => {
             // This means the total capacity < total set capacity. It happens when the multiplier reduces.
             // In this case, we scale down all values equally
-            result[k] = v.perCycle * scaleFactor;
+            if (v.perCycle > 0) {
+               result[k] = v.perCycle * scaleFactor;
+            }
          });
 
          _cache.buildingIO.set(key, Object.freeze(result));

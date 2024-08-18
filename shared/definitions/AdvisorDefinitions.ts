@@ -70,6 +70,21 @@ export const Advisors = deepFreeze({
       content: t(L.AdvisorGreatPeopleContent),
       condition: (gs) => getCurrentAge(gs) === "BronzeAge",
    },
+   Welcome1: {
+      title: t(L.FirstTimeTutorialWelcome),
+      content: t(L.FirstTimeTutorialWelcome1HTML),
+      condition: (gs) => false,
+   },
+   Welcome2: {
+      title: t(L.FirstTimeTutorialWelcome),
+      content: t(L.FirstTimeTutorialWelcome2HTML),
+      condition: (gs) => false,
+   },
+   Welcome3: {
+      title: t(L.FirstTimeTutorialWelcome),
+      content: t(L.FirstTimeTutorialWelcome3HTML),
+      condition: (gs) => false,
+   },
 }) satisfies Record<string, IAdvisor>;
 
 export type Advisor = keyof typeof Advisors;

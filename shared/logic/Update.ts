@@ -267,7 +267,7 @@ export function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
 
       // Resource in buildings that are not completed are not tabulated because technically it is not
       // usable by other buildings. This is an old behavior that is apparently desired
-      if (building.status !== "completed") {
+      if (building.status === "completed") {
          mapSafeAdd(Tick.next.resourceAmount, res, amount);
       }
 
@@ -786,31 +786,27 @@ export function transportResource(
    }
 
    if (!sources) {
-      const candidates = Tick.current.resourcesByTile.get(res)?.slice();
-      if (candidates != null) {
-         // We need to add all Warehouse/Caravansary here, because it is excluded from `resourcesByTile`
-         Tick.current.resourceImportBuildings.forEach((b, xy) => {
-            candidates.push({
-               tile: xy,
-               amount: b.building.resources[res] ?? 0,
-               usedStoragePercentage: b.usedStoragePercentage,
-            });
+      const candidates = Tick.current.resourcesByTile.get(res)?.slice() ?? [];
+      // We need to add all Warehouse/Caravansary here, because it is excluded from `resourcesByTile`
+      Tick.current.resourceImportBuildings.forEach((b, xy) => {
+         candidates.push({
+            tile: xy,
+            amount: b.building.resources[res] ?? 0,
+            usedStoragePercentage: b.usedStoragePercentage,
          });
-         sources = candidates
-            .sort((point1, point2) => {
-               switch (mode) {
-                  case BuildingInputMode.Distance:
-                     return (
-                        grid.distanceTile(point1.tile, targetXy) - grid.distanceTile(point2.tile, targetXy)
-                     );
-                  case BuildingInputMode.Amount:
-                     return point2.amount - point1.amount;
-                  case BuildingInputMode.StoragePercentage:
-                     return point2.usedStoragePercentage - point1.usedStoragePercentage;
-               }
-            })
-            .map((s) => s.tile);
-      }
+      });
+      sources = candidates
+         .sort((point1, point2) => {
+            switch (mode) {
+               case BuildingInputMode.Distance:
+                  return grid.distanceTile(point1.tile, targetXy) - grid.distanceTile(point2.tile, targetXy);
+               case BuildingInputMode.Amount:
+                  return point2.amount - point1.amount;
+               case BuildingInputMode.StoragePercentage:
+                  return point2.usedStoragePercentage - point1.usedStoragePercentage;
+            }
+         })
+         .map((s) => s.tile);
 
       if (transportSourceCache && cacheKey && sources) {
          _transportSourceCache.set(cacheKey, sources);

@@ -50,6 +50,7 @@ export class GameState {
    tiles: Map<Tile, ITileData> = new Map();
    transportationV2: ITransportationDataV2[] = [];
    tick = 0;
+   seconds = 0;
    greatPeople: PartialTabulate<GreatPerson> = {};
    greatPeopleChoices: GreatPeopleChoice[] = [];
    transportId = 0;

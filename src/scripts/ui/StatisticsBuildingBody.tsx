@@ -2,7 +2,7 @@ import Tippy from "@tippyjs/react";
 import classNames from "classnames";
 import { useState } from "react";
 import { TableVirtuoso } from "react-virtuoso";
-import type { IBuildingDefinition } from "../../../shared/definitions/BuildingDefinitions";
+import { BuildingSpecial, type IBuildingDefinition } from "../../../shared/definitions/BuildingDefinitions";
 import { NoPrice, NoStorage, type Resource } from "../../../shared/definitions/ResourceDefinitions";
 import {
    IOCalculation,
@@ -327,6 +327,10 @@ function BuildingTab({ gameState }: IBuildingComponentProps): React.ReactNode {
             <TableVirtuoso
                data={Array.from(getXyBuildings(gameState))
                   .filter(([_, b]) => {
+                     // We should not show natural wonders in Stat Office. World wonder is fine
+                     if (Config.Building[b.type].special === BuildingSpecial.NaturalWonder) {
+                        return false;
+                     }
                      let filter = (buildingFilter & 0x0fffffff) === 0;
                      for (let i = 0; i < 12; i++) {
                         if (hasFlag(buildingFilter, 1 << i)) {
@@ -579,7 +583,14 @@ function ResourcesTab({ gameState }: IBuildingComponentProps): React.ReactNode {
 
                return (
                   <tr key={res}>
-                     <td>{r.name()}</td>
+                     <td>
+                        <div>{r.name()}</div>
+                        <Tippy content={t(L.EmpireValue)}>
+                           <span className="text-desc text-small">
+                              <FormatNumber value={Config.ResourcePrice[res]} />
+                           </span>
+                        </Tippy>
+                     </td>
                      <td className="right">
                         <FormatNumber value={amount} />
                      </td>

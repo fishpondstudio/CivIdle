@@ -2,6 +2,7 @@ import Tippy from "@tippyjs/react";
 import { useState } from "react";
 import { isSpecialBuilding } from "../../../shared/logic/BuildingLogic";
 import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
+import { clearIntraTickCache } from "../../../shared/logic/IntraTickCache";
 import { RequestResetTile } from "../../../shared/logic/TechLogic";
 import { Tick } from "../../../shared/logic/TickLogic";
 import { clearTransportSourceCache } from "../../../shared/logic/Update";
@@ -61,6 +62,7 @@ export function BuildingSellComponent({ gameState, xy }: IBuildingComponentProps
                      RequestResetTile.emit(newTile.tile);
                      notifyGameStateUpdate();
                      clearTransportSourceCache();
+                     clearIntraTickCache();
                      Singleton().sceneManager.getCurrent(WorldScene)?.selectGrid(point);
                   } else {
                      showToast(L.MoveBuildingFail);
