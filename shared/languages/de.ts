@@ -556,7 +556,7 @@ export const DE = {
    InformationAge: "Informationszeitalter",
    InputResourceForCloning: "Input Resource For Cloning",
    InternationalSpaceStation: "Internationale Raumstation",
-   InternationalSpaceStationDesc: "All buildings get +5 Storage Multiplier. This wonder can be upgraded and each additional upgrade provides +1 Storage Multiplier to all buildings",
+   InternationalSpaceStationDesc: "Bei allen Gebäuden steigt der Multiplikator für Lagerkapazität um 5. Dieses Wunder kann ausgebaut werden. Mit jeder zusätzlichen Stufe steigt der Multiplikator für Lagerkapazität um 1.",
    Internet: "Internet",
    InternetServiceProvider: "Internet Service Provider",
    InverseSelection: "Umgekehrt",
