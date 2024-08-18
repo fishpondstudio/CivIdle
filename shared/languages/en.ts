@@ -110,7 +110,7 @@ export const EN = {
    AtomicFacility: "Atomic Facility",
    AtomicTheory: "Atomic Theory",
    Atomium: "Atomium",
-   AtomiumDescV2: "All buildings that produce science within 2 tile range get +5 Production Multiplier. Generate science that is equal to the science production within 2 tile range. When completed, generate one-time science equivalent to the cost of the most expensive unlocked technology",
+   AtomiumDescV2: "All buildings that produce science (except Clone Labs) within 2 tile range get +5 Production Multiplier. Generate science that is equal to the science production within 2 tile range. When completed, generate one-time science equivalent to the cost of the most expensive unlocked technology",
    Autocracy: "Autocracy",
    Aviation: "Aviation",
    Babylon: "Babylon",
