@@ -35,6 +35,7 @@ import {
 } from "../../../shared/utilities/Helper";
 import type { PartialSet } from "../../../shared/utilities/TypeDefinitions";
 import { L, t } from "../../../shared/utilities/i18n";
+import { TimeSeries } from "../logic/TimeSeries";
 import { LookAtMode, WorldScene } from "../scenes/WorldScene";
 import { Singleton } from "../utilities/Singleton";
 import { playClick } from "../visuals/Sound";
@@ -42,6 +43,7 @@ import { BuildingColorComponent } from "./BuildingColorComponent";
 import type { IBuildingComponentProps } from "./BuildingPage";
 import { BuildingFilter, Filter } from "./FilterComponent";
 import { FormatNumber } from "./HelperComponents";
+import { PlotComponent } from "./PlotComponent";
 import { TableView } from "./TableView";
 import { WorkerScienceComponent } from "./WorkerScienceComponent";
 
@@ -103,7 +105,6 @@ function EmpireTab({ gameState, xy }: IBuildingComponentProps): React.ReactNode 
    const { scienceFromWorkers } = getScienceFromWorkers(gameState);
    const scienceAmount = getScienceAmount(gameState);
    const sciencePerTick = scienceFromWorkers + totalBuildingScience;
-
    const transportStat = getTransportStat(gameState);
    return (
       <article role="tabpanel" className="f1 col" style={{ padding: "8px", overflow: "auto" }}>
@@ -172,6 +173,12 @@ function EmpireTab({ gameState, xy }: IBuildingComponentProps): React.ReactNode 
                   </details>
                </li>
             </ul>
+            <div className="sep10" />
+            <PlotComponent
+               title={t(L.EmpireValue)}
+               data={[TimeSeries.tick, TimeSeries.empireValue]}
+               series={{ stroke: "#fdcb6e", fill: "#ffeaa7" }}
+            />
          </fieldset>
          <fieldset>
             <legend>{t(L.Science)}</legend>
@@ -229,6 +236,12 @@ function EmpireTab({ gameState, xy }: IBuildingComponentProps): React.ReactNode 
                   </details>
                </li>
             </ul>
+            <div className="sep10" />
+            <PlotComponent
+               title={t(L.Science)}
+               data={[TimeSeries.tick, TimeSeries.science]}
+               series={{ stroke: "#0984e3", fill: "#74b9ff" }}
+            />
          </fieldset>
          <fieldset>
             <legend>{t(L.StatisticsTransportation)}</legend>

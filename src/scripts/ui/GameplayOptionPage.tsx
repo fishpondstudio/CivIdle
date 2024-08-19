@@ -247,49 +247,29 @@ export function GameplayOptionPage(): React.ReactNode {
             </fieldset>
             <fieldset>
                <legend>{t(L.Server)}</legend>
-               <div className="row">
-                  <div className="f1">
-                     <div>{t(L.UseMirrorServer)}</div>
-                     <RenderHTML className="text-desc text-small" html={t(L.UseMirrorServerDescHTML)} />
-                  </div>
-                  <div
-                     onClick={() => {
-                        playClick();
-                        options.useMirrorServer = !options.useMirrorServer;
-                        notifyGameOptionsUpdate(options);
-                     }}
-                     className="ml10 pointer"
-                  >
-                     {options.useMirrorServer ? (
-                        <div className="m-icon text-green">toggle_on</div>
-                     ) : (
-                        <div className="m-icon text-grey">toggle_off</div>
-                     )}
-                  </div>
-               </div>
+               <ToggleComponent
+                  title={t(L.UseMirrorServer)}
+                  contentHTML={t(L.UseMirrorServerDescHTML)}
+                  value={options.useMirrorServer}
+                  onValueChange={(value) => {
+                     playClick();
+                     options.useMirrorServer = value;
+                     notifyGameOptionsUpdate(options);
+                  }}
+               />
             </fieldset>
             <fieldset>
                <legend>{t(L.Performance)}</legend>
-               <div className="row">
-                  <div className="f1">
-                     <div>{t(L.TransportPlanCache)}</div>
-                     <RenderHTML className="text-desc text-small" html={t(L.TransportPlanCacheDescHTML)} />
-                  </div>
-                  <div
-                     onClick={() => {
-                        playClick();
-                        options.enableTransportSourceCache = !options.enableTransportSourceCache;
-                        notifyGameOptionsUpdate(options);
-                     }}
-                     className="ml10 pointer"
-                  >
-                     {options.enableTransportSourceCache ? (
-                        <div className="m-icon text-green">toggle_on</div>
-                     ) : (
-                        <div className="m-icon text-grey">toggle_off</div>
-                     )}
-                  </div>
-               </div>
+               <ToggleComponent
+                  title={t(L.TransportPlanCache)}
+                  contentHTML={t(L.TransportPlanCacheDescHTML)}
+                  value={options.enableTransportSourceCache}
+                  onValueChange={(value) => {
+                     playClick();
+                     options.enableTransportSourceCache = value;
+                     notifyGameOptionsUpdate(options);
+                  }}
+               />
                <button
                   className="jcc w100 mt10"
                   onClick={() => {
@@ -299,6 +279,17 @@ export function GameplayOptionPage(): React.ReactNode {
                >
                   {t(L.ClearTransportPlanCache)}
                </button>
+               <div className="separator" />
+               <ToggleComponent
+                  title={t(L.ShowTransportArrow)}
+                  contentHTML={t(L.ShowTransportArrowDescHTML)}
+                  value={options.showTransportArrow}
+                  onValueChange={(value) => {
+                     playClick();
+                     options.showTransportArrow = value;
+                     notifyGameOptionsUpdate(options);
+                  }}
+               />
             </fieldset>
             {sizeOf(options.buildingDefaults) > 0 ? (
                <fieldset>
@@ -343,6 +334,40 @@ export function GameplayOptionPage(): React.ReactNode {
                   </div>
                </fieldset>
             ) : null}
+         </div>
+      </div>
+   );
+}
+
+function ToggleComponent({
+   title,
+   contentHTML,
+   value,
+   onValueChange,
+}: {
+   title: string;
+   contentHTML: string;
+   value: boolean;
+   onValueChange: (newValue: boolean) => void;
+}): React.ReactNode {
+   return (
+      <div className="row">
+         <div className="f1">
+            <div>{title}</div>
+            <RenderHTML className="text-desc text-small" html={contentHTML} />
+         </div>
+         <div
+            onClick={() => {
+               playClick();
+               onValueChange(!value);
+            }}
+            className="ml10 pointer"
+         >
+            {value ? (
+               <div className="m-icon text-green">toggle_on</div>
+            ) : (
+               <div className="m-icon text-grey">toggle_off</div>
+            )}
          </div>
       </div>
    );
