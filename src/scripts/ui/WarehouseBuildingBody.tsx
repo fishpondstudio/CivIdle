@@ -65,6 +65,20 @@ export function WarehouseBuildingBody({ gameState, xy }: IBuildingComponentProps
                         )}
                      </div>
                   </div>
+                  <ApplyToAllComponent
+                     xy={xy}
+                     getOptions={(s) =>
+                        ({
+                           warehouseOptions: copyFlag(
+                              warehouse.warehouseOptions,
+                              (s as IWarehouseBuildingData).warehouseOptions,
+                              WarehouseOptions.Autopilot,
+                           ),
+                        }) as IWarehouseBuildingData
+                     }
+                     gameState={gameState}
+                  />
+                  <div className="separator"></div>
                   <div className="row">
                      <div>{t(L.WarehouseAutopilotSettingsRespectCapSetting)}</div>
                      <Tippy content={t(L.WarehouseAutopilotSettingsRespectCapSettingTooltip)}>
@@ -89,6 +103,19 @@ export function WarehouseBuildingBody({ gameState, xy }: IBuildingComponentProps
                         )}
                      </div>
                   </div>
+                  <ApplyToAllComponent
+                     xy={xy}
+                     getOptions={(s) =>
+                        ({
+                           warehouseOptions: copyFlag(
+                              warehouse.warehouseOptions,
+                              (s as IWarehouseBuildingData).warehouseOptions,
+                              WarehouseOptions.AutopilotRespectCap,
+                           ),
+                        }) as IWarehouseBuildingData
+                     }
+                     gameState={gameState}
+                  />
                </fieldset>
             </>
          ) : null}
