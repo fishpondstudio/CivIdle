@@ -1370,5 +1370,7 @@ export const EN = {
    ZigguratOfUrDescV2: "Every 10 happiness (capped) provides +1 Production Multiplier to all buildings that do not produce workers and are unlocked in previous ages (max = number of unlocked ages / 2). Wonders (incl. Natural) no longer provide +1 Happiness. The effect can be turned off",
    Zoroaster: "Zoroaster",
    ShowTransportArrow: "Show Transport Arrow",
-   ShowTransportArrowDescHTML: "Turning this off will hide transport arrows. It might <i>slightly</i> improve performance on low end devices. Performance improvement takes effect <b>after restarting your game</b>"
+   ShowTransportArrowDescHTML: "Turning this off will hide transport arrows. It might <i>slightly</i> improve performance on low end devices. Performance improvement takes effect <b>after restarting your game</b>",
+   EmpireValueIncrease: "Empire Value Increase",
+   EmpireValueByHour: "Empire Value By Hour",
 };

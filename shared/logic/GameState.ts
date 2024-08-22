@@ -42,6 +42,15 @@ export interface ITransportationDataV2 {
    hasEnoughFuel: boolean;
 }
 
+export interface IValueTracker {
+   accumulated: number;
+   history: number[];
+}
+
+export enum ValueToTrack {
+   EmpireValue = 0,
+}
+
 export class GameState {
    id = uuid4();
    city: City = "Rome";
@@ -59,6 +68,7 @@ export class GameState {
    rebirthed = false;
    favoriteTiles: Set<Tile> = new Set();
    claimedGreatPeople = 0;
+   valueTrackers = new Map<ValueToTrack, IValueTracker>();
 }
 
 export type GreatPeopleChoice = GreatPerson[];
@@ -202,4 +212,18 @@ export function syncLanguage(l: Record<string, string>): void {
 
 export function getTranslatedPercentage(): number {
    return translatePercentage;
+}
+
+const hours: number[] = [];
+export function getTimeSeriesHour(gs: GameState): number[] {
+   const hour = Math.floor(gs.tick / 3600);
+   if (hours.length === hour) {
+      return hours;
+   }
+
+   hours.length = 0;
+   for (let i = 0; i < hour; i++) {
+      hours.push(i);
+   }
+   return hours;
 }

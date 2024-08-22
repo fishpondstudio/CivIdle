@@ -12,6 +12,7 @@ import {
 } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
 import { EXPLORER_SECONDS, MAX_EXPLORER } from "../../../shared/logic/Constants";
+import { ValueToTrack, getTimeSeriesHour } from "../../../shared/logic/GameState";
 import {
    getBuildingIO,
    getFuelByTarget,
@@ -175,8 +176,17 @@ function EmpireTab({ gameState, xy }: IBuildingComponentProps): React.ReactNode 
             </ul>
             <div className="sep10" />
             <PlotComponent
-               title={t(L.EmpireValue)}
-               data={[TimeSeries.tick, TimeSeries.empireValue]}
+               title={t(L.EmpireValueIncrease)}
+               data={[TimeSeries.deltaTick, TimeSeries.empireValueDelta]}
+               series={{ stroke: "#fdcb6e", fill: "#ffeaa7" }}
+            />
+            <div className="sep10" />
+            <PlotComponent
+               title={t(L.EmpireValueByHour)}
+               data={[
+                  getTimeSeriesHour(gameState),
+                  gameState.valueTrackers.get(ValueToTrack.EmpireValue)?.history ?? [],
+               ]}
                series={{ stroke: "#fdcb6e", fill: "#ffeaa7" }}
             />
          </fieldset>
@@ -238,8 +248,8 @@ function EmpireTab({ gameState, xy }: IBuildingComponentProps): React.ReactNode 
             </ul>
             <div className="sep10" />
             <PlotComponent
-               title={t(L.Science)}
-               data={[TimeSeries.tick, TimeSeries.science]}
+               title={t(L.StatisticsScienceProduction)}
+               data={[TimeSeries.deltaTick, TimeSeries.scienceDelta]}
                series={{ stroke: "#0984e3", fill: "#74b9ff" }}
             />
          </fieldset>
