@@ -465,7 +465,7 @@ export const DE = {
    GoBack: "Gehe zurück",
    Gold: "Gold",
    GoldenGateBridge: "Golden Gate Brücke",
-   GoldenGateBridgeDesc: "Alle Kraftwerke erhalten +1 Produktionsmultiplikator. Gewährt Stromversorgung im Umkreis von 2 Kacheln.",
+   GoldenGateBridgeDesc: "Alle Kraftwerke erhalten +1 Produktionsmultiplikator. Gewährt Stromversorgung im Umkreis von 2 Kacheln um die Golden Gate Brücke.",
    GoldenPavilion: "Golden Pavilion",
    GoldenPavilionDesc: "All buildings within 3 tile range get +1 Production Multiplier for each adjacent building that produces any of its consumed resources (excluding Clone Lab and Clone Factory and the building cannot be turned off)",
    GoldMiningCamp: "Goldschürfer",
