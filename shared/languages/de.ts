@@ -1009,7 +1009,7 @@ export const DE = {
    SagradaFamilia: "Sagrada Família",
    SagradaFamiliaDesc: "Alle Gebäude innerhalb von 2 Kacheln Reichweite erhalten +N Produktions-, Arbeitskapazitäts- und Lagermultiplikatoren. N = Max Tier-Differenz zwischen den benachbarten Gebäuden (1 Kachel Reichweite) der Sagrada Familia.",
    SaintBasilsCathedral: "Basilius-Kathedrale",
-   SaintBasilsCathedralDescV2: "Ermöglicht es, Gebäude zum Abbau von Ressourcen in Gebieten zu errichten, die an die Lagerstelle der Ressource angrenzen. Bei allen Gebäuden auf Tier I erhöht sich der Multiplikator für Produktion, Arbeitskräfte und Lagervolumen um 1.",
+   SaintBasilsCathedralDescV2: "Ermöglicht es, Gebäude zum Abbau von Ressourcen in Gebieten zu errichten, die an die Lagerstelle der Ressource angrenzen. Bei allen benachbarten Gebäuden auf Tier I erhöht sich der Multiplikator für Produktion, Arbeitskräfte und Lagervolumen um 1.",
    Saladin: "Saladin",
    Sand: "Sand",
    Sandpit: "Sandgrube",
