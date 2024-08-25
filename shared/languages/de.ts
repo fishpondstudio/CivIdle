@@ -260,7 +260,7 @@ export const DE = {
    Cloth: "Stoffe",
    CloudComputing: "Cloud Computing",
    CNTower: "CN Tower",
-   CNTowerDesc: "Alle Filmstudios, Radiostationen und Fernsehsender sind von -1 Zufriedenheit ausgenommen. Alle Gebäude, die in den Weltkriegen und im Kalten Krieg freigeschaltet werden, erhalten +N Produktions-, Arbeitskraft- und Lagermultiplikator. N = Differenz zwischen der Stufe und dem Alter des Gebäudes",
+   CNTowerDesc: "Alle Filmstudios, Radiostationen und Fernsehsender sind von -1 Zufriedenheit ausgenommen. Alle Gebäude, die in den Weltkriegen und im Kalten Krieg freigeschaltet werden, erhalten +N Produktions-, Arbeitskraft- und Lagermultiplikator. N = Differenz zwischen der Stufe und dem Zeitalter des Gebäudes.",
    Coal: "Kohle",
    CoalMine: "Kohlebergwerk",
    CoalPowerPlant: "Kohlekraftwerk",
