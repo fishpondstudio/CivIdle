@@ -222,6 +222,19 @@ export function GameplayOptionPage(): React.ReactNode {
                </select>
             </fieldset>
             <fieldset>
+               <legend>{t(L.PorcelainTower)}</legend>
+               <ToggleComponent
+                  title={t(L.PorcelainTowerMaxPickPerRoll)}
+                  contentHTML={t(L.PorcelainTowerMaxPickPerRollDescHTML)}
+                  value={options.porcelainTowerMaxPickPerRoll}
+                  onValueChange={(value) => {
+                     playClick();
+                     options.porcelainTowerMaxPickPerRoll = value;
+                     notifyGameOptionsUpdate(options);
+                  }}
+               />
+            </fieldset>
+            <fieldset>
                <legend>{t(L.Sound)}</legend>
                <ChangeSoundComponent />
             </fieldset>

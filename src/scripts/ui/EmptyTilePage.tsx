@@ -1,5 +1,7 @@
+import Tippy from "@tippyjs/react";
 import { useState } from "react";
 import type { Building, IBuildingDefinition } from "../../../shared/definitions/BuildingDefinitions";
+import type { Resource } from "../../../shared/definitions/ResourceDefinitions";
 import {
    applyBuildingDefaults,
    checkBuildingMax,
@@ -9,6 +11,7 @@ import {
 import { Config } from "../../../shared/logic/Config";
 import { getGameOptions, notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
 import { getTypeBuildings, unlockedBuildings } from "../../../shared/logic/IntraTickCache";
+import { Tick } from "../../../shared/logic/TickLogic";
 import type { ITileData } from "../../../shared/logic/Tile";
 import { makeBuilding } from "../../../shared/logic/Tile";
 import {
@@ -262,22 +265,22 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
                                  <div className="m-icon small text-orange ml5">replay</div>
                               ) : null}
                            </div>
-                           {building.construction ? (
-                              <div>
-                                 <div className="row text-small text-desc">
-                                    {isEmpty(buildCost) ? null : (
-                                       <div className="m-icon small mr2 fs">build</div>
-                                    )}
-                                    <div>
-                                       {jsxMapOf(buildCost, (res, amount) => (
-                                          <span key={res} className="mr5">
-                                             {Config.Resource[res].name()} x{formatNumber(amount)}
-                                          </span>
-                                       ))}
-                                    </div>
+                           <div>
+                              <div className="row text-small text-desc">
+                                 {isEmpty(buildCost) ? null : (
+                                    <div className="m-icon small mr2 fs">build</div>
+                                 )}
+                                 <div>
+                                    {jsxMapOf(buildCost, (res, amount) => (
+                                       <ResourceAmountComponent
+                                          className="mr5"
+                                          resource={res}
+                                          amount={amount}
+                                       />
+                                    ))}
                                  </div>
                               </div>
-                           ) : null}
+                           </div>
                            <div>
                               <div className="row text-small text-desc">
                                  {isEmpty(building.input) ? null : (
@@ -322,5 +325,29 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
             />
          </div>
       </div>
+   );
+}
+
+function ResourceAmountComponent({
+   className,
+   resource,
+   amount,
+}: { resource: Resource; amount: number; className?: string }): React.ReactNode {
+   let className_ = className ?? "";
+   let tooltip = "";
+   const diff = (Tick.current.resourceAmount.get(resource) ?? 0) - amount;
+   if (diff < 0) {
+      className_ += " text-red";
+      tooltip = t(L.ResourceNeeded, {
+         resource: Config.Resource[resource].name(),
+         amount: formatNumber(Math.abs(diff)),
+      });
+   }
+   return (
+      <Tippy content={tooltip} disabled={!tooltip}>
+         <span className={className_}>
+            {Config.Resource[resource].name()} x{formatNumber(amount)}
+         </span>
+      </Tippy>
    );
 }

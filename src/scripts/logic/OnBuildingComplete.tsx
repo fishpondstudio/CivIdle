@@ -27,6 +27,7 @@ import { Tick } from "../../../shared/logic/TickLogic";
 import { makeBuilding } from "../../../shared/logic/Tile";
 import { OnBuildingComplete } from "../../../shared/logic/Update";
 import {
+   clamp,
    filterOf,
    firstKeyOf,
    isEmpty,
@@ -136,13 +137,14 @@ export function onBuildingComplete(xy: Tile): void {
             return;
          }
          gs.claimedGreatPeople = getRebirthGreatPeopleCount();
-         rollPermanentGreatPeople(
-            gs.claimedGreatPeople,
-            1,
-            getGreatPeopleChoiceCount(gs),
-            getCurrentAge(gs),
-            gs.city,
-         ).forEach((c) => gs.greatPeopleChoices.push(c.choices));
+         let pickPerRoll = 1;
+         const count = getGreatPeopleChoiceCount(gs);
+         if (getGameOptions().porcelainTowerMaxPickPerRoll) {
+            pickPerRoll = clamp(Math.floor(count / 50), 1, Number.POSITIVE_INFINITY);
+         }
+         rollPermanentGreatPeople(gs.claimedGreatPeople, 1, count, getCurrentAge(gs), gs.city).forEach((c) =>
+            gs.greatPeopleChoices.push(c.choices),
+         );
          if (gs.greatPeopleChoices.length > 0) {
             playAgeUp();
             showModal(<ChooseGreatPersonModal permanent={false} />);

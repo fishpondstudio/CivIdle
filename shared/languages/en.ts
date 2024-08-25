@@ -1373,4 +1373,8 @@ export const EN = {
    ShowTransportArrowDescHTML: "Turning this off will hide transport arrows. It might <i>slightly</i> improve performance on low end devices. Performance improvement takes effect <b>after restarting your game</b>",
    EmpireValueIncrease: "Empire Value Increase",
    EmpireValueByHour: "Empire Value By Hour",
+   PorcelainTowerMaxPickPerRoll: "Prefer Max Pick Per Roll",   
+   PorcelainTowerMaxPickPerRollDescHTML: "When choosing great people after Porcelain Tower completed, prefer max pick per roll for the available amount",
+   ResourceNeeded: "Extra %{resource} x%{amount} Needed"
+
 };

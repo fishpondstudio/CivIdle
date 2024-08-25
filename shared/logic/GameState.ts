@@ -169,6 +169,7 @@ export class GameOptions {
    defaultStockpileCapacity = 1;
    defaultStockpileMax = 5;
    defaultBuildingLevel = 1;
+   porcelainTowerMaxPickPerRoll = false;
    // Should be wiped
    greatPeople: Partial<Record<GreatPerson, { level: number; amount: number }>> = {};
    // greatPeopleChoices: GreatPeopleChoice[] = [];
