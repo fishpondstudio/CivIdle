@@ -201,7 +201,7 @@ export function ResourcePanel(): React.ReactNode {
                      bolt
                   </div>
                   <Tippy placement="bottom" content={`${t(L.PowerUsed)}/${t(L.PowerAvailable)}`}>
-                     <div style={{ width: "14rem" }}>
+                     <div style={{ width: "15rem" }}>
                         <FormatNumber value={tick.workersUsed.get("Power") ?? 0} />W{" / "}
                         <FormatNumber value={tick.workersAvailable.get("Power") ?? 0} />W
                      </div>
@@ -321,9 +321,9 @@ function DeficitResources(): React.ReactNode {
                   <div>
                      <div className="text-strong text-center">{t(L.DeficitResources)}</div>
                      {Array.from(deficit)
-                        .sort(([a], [b]) =>
-                           Config.Resource[a].name().localeCompare(Config.Resource[b].name()),
-                        )
+                        .sort(([a, amountA], [b, amountB]) => {
+                           return getResourceAmount(b) / amountB - getResourceAmount(a) / amountA;
+                        })
                         .map(([res, amount]) => {
                            const runOutIn = formatHMS((1000 * getResourceAmount(res)) / Math.abs(amount));
                            return (

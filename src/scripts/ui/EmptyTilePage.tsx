@@ -1,7 +1,5 @@
-import Tippy from "@tippyjs/react";
 import { useState } from "react";
 import type { Building, IBuildingDefinition } from "../../../shared/definitions/BuildingDefinitions";
-import type { Resource } from "../../../shared/definitions/ResourceDefinitions";
 import {
    applyBuildingDefaults,
    checkBuildingMax,
@@ -11,7 +9,6 @@ import {
 import { Config } from "../../../shared/logic/Config";
 import { getGameOptions, notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
 import { getTypeBuildings, unlockedBuildings } from "../../../shared/logic/IntraTickCache";
-import { Tick } from "../../../shared/logic/TickLogic";
 import type { ITileData } from "../../../shared/logic/Tile";
 import { makeBuilding } from "../../../shared/logic/Tile";
 import {
@@ -36,6 +33,7 @@ import { Singleton } from "../utilities/Singleton";
 import { playError } from "../visuals/Sound";
 import { BuildingFilter, Filter } from "./FilterComponent";
 import { MenuComponent } from "./MenuComponent";
+import { ResourceAmountComponent } from "./ResourceAmountComponent";
 import { TableView } from "./TableView";
 import { TextWithHelp } from "./TextWithHelpComponent";
 
@@ -276,6 +274,7 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
                                           className="mr5"
                                           resource={res}
                                           amount={amount}
+                                          showLabel={true}
                                        />
                                     ))}
                                  </div>
@@ -325,29 +324,5 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
             />
          </div>
       </div>
-   );
-}
-
-function ResourceAmountComponent({
-   className,
-   resource,
-   amount,
-}: { resource: Resource; amount: number; className?: string }): React.ReactNode {
-   let className_ = className ?? "";
-   let tooltip = "";
-   const diff = (Tick.current.resourceAmount.get(resource) ?? 0) - amount;
-   if (diff < 0) {
-      className_ += " text-red";
-      tooltip = t(L.ResourceNeeded, {
-         resource: Config.Resource[resource].name(),
-         amount: formatNumber(Math.abs(diff)),
-      });
-   }
-   return (
-      <Tippy content={tooltip} disabled={!tooltip}>
-         <span className={className_}>
-            {Config.Resource[resource].name()} x{formatNumber(amount)}
-         </span>
-      </Tippy>
    );
 }
