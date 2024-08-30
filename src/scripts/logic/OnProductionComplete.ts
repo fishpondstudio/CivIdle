@@ -707,7 +707,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
             switch (current.type) {
                case VotedBoostType.Multipliers: {
                   current.buildings.forEach((b) => {
-                     addMultiplier(b, { output: 5, worker: 5, storage: 5 }, buildingName);
+                     addMultiplier(b, { output: 5, worker: 5 }, buildingName);
                   });
                   break;
                }
