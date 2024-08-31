@@ -5,6 +5,7 @@ import {
    generateScienceFromFaith,
    getGreatWallRange,
    getScienceFromWorkers,
+   getStorageFor,
    getWorkingBuilding,
    getYellowCraneTowerRange,
    isBuildingWellStocked,
@@ -1237,7 +1238,10 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
             lastFujiGeneratedAt = Date.now();
             const petra = Tick.current.specialBuildings.get("Petra");
             if (petra) {
-               safeAdd(petra.building.resources, "Warp", 20);
+               const { total, used } = getStorageFor(petra.tile, gs);
+               if (total - used >= 20) {
+                  safeAdd(petra.building.resources, "Warp", 20);
+               }
             }
          } else {
             fujiTick++;
