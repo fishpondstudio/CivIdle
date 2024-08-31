@@ -87,7 +87,9 @@ export function FillPlayerTradeModal({ tradeId, xy }: { tradeId: string; xy?: Ti
       let amountLeft = trade.buyAmount;
       for (const xy of allTradeBuildings.keys()) {
          const amount = getMaxFill(xy);
-         if (amountLeft > amount) {
+         if (amount <= 0) {
+            // Do nothing
+         } else if (amountLeft > amount) {
             result.set(xy, amount);
             amountLeft -= amount;
          } else {
@@ -443,7 +445,14 @@ export function FillPlayerTradeModal({ tradeId, xy }: { tradeId: string; xy?: Ti
                <div className="f1"></div>
                <button
                   onClick={() => {
-                     doFill(calculateMaxFill());
+                     const fills = calculateMaxFill();
+                     if (fills.size > 0) {
+                        doFill(fills);
+                     } else {
+                        playError();
+                        showToast(t(L.PlayerTradeNoFillBecauseOfResources));
+                        hideModal();
+                     }
                   }}
                >
                   {t(L.PlayerTradeFillAmountMaxV2)}

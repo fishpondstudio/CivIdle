@@ -1376,4 +1376,5 @@ export const EN = {
    PorcelainTowerMaxPickPerRoll: "Prefer Max Pick Per Roll",   
    PorcelainTowerMaxPickPerRollDescHTML: "When choosing great people after Porcelain Tower completed, prefer max pick per roll for the available amount",
    ResourceNeeded: "Extra %{resource} x%{amount} Needed",
+   PlayerTradeNoFillBecauseOfResources: "No trade has been filled due to insufficient resources"
 };
