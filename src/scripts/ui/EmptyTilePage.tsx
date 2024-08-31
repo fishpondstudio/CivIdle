@@ -33,6 +33,7 @@ import { Singleton } from "../utilities/Singleton";
 import { playError } from "../visuals/Sound";
 import { BuildingFilter, Filter } from "./FilterComponent";
 import { MenuComponent } from "./MenuComponent";
+import { ResourceAmountComponent } from "./ResourceAmountComponent";
 import { TableView } from "./TableView";
 import { TextWithHelp } from "./TextWithHelpComponent";
 
@@ -262,22 +263,23 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
                                  <div className="m-icon small text-orange ml5">replay</div>
                               ) : null}
                            </div>
-                           {building.construction ? (
-                              <div>
-                                 <div className="row text-small text-desc">
-                                    {isEmpty(buildCost) ? null : (
-                                       <div className="m-icon small mr2 fs">build</div>
-                                    )}
-                                    <div>
-                                       {jsxMapOf(buildCost, (res, amount) => (
-                                          <span key={res} className="mr5">
-                                             {Config.Resource[res].name()} x{formatNumber(amount)}
-                                          </span>
-                                       ))}
-                                    </div>
+                           <div>
+                              <div className="row text-small text-desc">
+                                 {isEmpty(buildCost) ? null : (
+                                    <div className="m-icon small mr2 fs">build</div>
+                                 )}
+                                 <div>
+                                    {jsxMapOf(buildCost, (res, amount) => (
+                                       <ResourceAmountComponent
+                                          className="mr5"
+                                          resource={res}
+                                          amount={amount}
+                                          showLabel={true}
+                                       />
+                                    ))}
                                  </div>
                               </div>
-                           ) : null}
+                           </div>
                            <div>
                               <div className="row text-small text-desc">
                                  {isEmpty(building.input) ? null : (

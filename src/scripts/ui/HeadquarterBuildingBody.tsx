@@ -22,6 +22,7 @@ import {
    filterOf,
    formatHMS,
    formatPercent,
+   getHMS,
    keysOf,
    mReduceOf,
    numberToRoman,
@@ -442,7 +443,11 @@ function RebornComponent({ gameState }: { gameState: GameState }): ReactNode {
             <ul>
                <li className="row text-small">
                   <div className="f1">{t(L.TotalGameTimeThisRun)}</div>
-                  <div>{formatHMS(gameState.tick * SECOND)}</div>
+                  <div>
+                     <TextWithHelp content={getHMS(gameState.tick * SECOND).join(":")}>
+                        {formatHMS(gameState.tick * SECOND)}
+                     </TextWithHelp>
+                  </div>
                </li>
                <li className="row text-small">
                   <div className="f1">{t(L.TotalEmpireValuePerCycle)}</div>
@@ -462,7 +467,11 @@ function RebornComponent({ gameState }: { gameState: GameState }): ReactNode {
                         {t(L.TotalWallTimeThisRun)}
                      </TextWithHelp>
                   </div>
-                  <div>{formatHMS(gameState.seconds * SECOND)}</div>
+                  <div>
+                     <TextWithHelp content={getHMS(gameState.seconds * SECOND).join(":")}>
+                        {formatHMS(gameState.seconds * SECOND)}
+                     </TextWithHelp>
+                  </div>
                </li>
                <li className="row text-small">
                   <div className="f1">{t(L.TotalEmpireValuePerWallSecond)}</div>

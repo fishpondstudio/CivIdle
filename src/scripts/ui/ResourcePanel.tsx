@@ -12,8 +12,7 @@ import {
    getRebirthGreatPeopleCount,
 } from "../../../shared/logic/RebirthLogic";
 import { getResourceAmount } from "../../../shared/logic/ResourceLogic";
-import { getScienceAmount } from "../../../shared/logic/TechLogic";
-import { CurrentTickChanged, NotProducingReason, Tick } from "../../../shared/logic/TickLogic";
+import { NotProducingReason, Tick } from "../../../shared/logic/TickLogic";
 import {
    Rounding,
    clamp,
@@ -28,9 +27,9 @@ import {
 import { L, t } from "../../../shared/utilities/i18n";
 import { useGameOptions, useGameState } from "../Global";
 import { useCurrentTick } from "../logic/ClientUpdate";
+import { TimeSeries } from "../logic/TimeSeries";
 import { TechTreeScene } from "../scenes/TechTreeScene";
 import { LookAtMode, WorldScene } from "../scenes/WorldScene";
-import { useTypedEvent } from "../utilities/Hook";
 import { Singleton } from "../utilities/Singleton";
 import { playClick, playError } from "../visuals/Sound";
 import { showToast } from "./GlobalModal";
@@ -41,12 +40,6 @@ export function ResourcePanel(): React.ReactNode {
    const tick = useCurrentTick();
    const gs = useGameState();
    const options = useGameOptions();
-   const [empireValues, setEmpireValues] = useState<[number, number]>([tick.totalValue, tick.totalValue]);
-   const [scienceAmount, setScienceAmount] = useState<[number, number]>([0, 0]);
-   useTypedEvent(CurrentTickChanged, (current) => {
-      setEmpireValues([current.totalValue, empireValues[0]]);
-      setScienceAmount([getScienceAmount(gs), scienceAmount[0]]);
-   });
    const { workersAfterHappiness, workersBusy } = getScienceFromWorkers(gs);
    const highlightNotProducingReasons = () => {
       const buildingTiles: Tile[] = Array.from(tick.notProducingReasons.entries())
@@ -65,8 +58,18 @@ export function ResourcePanel(): React.ReactNode {
          .map(([xy]) => xy);
       Singleton().sceneManager.getCurrent(WorldScene)?.drawSelection(null, buildingTiles);
    };
-   const delta = empireValues[0] - empireValues[1];
-   const scienceProduction = scienceAmount[0] - scienceAmount[1];
+
+   let evDelta = 0;
+   let scienceDelta = 0;
+   if (TimeSeries.science.length > 1) {
+      evDelta =
+         TimeSeries.empireValue[TimeSeries.empireValue.length - 1] -
+         TimeSeries.empireValue[TimeSeries.empireValue.length - 2];
+      scienceDelta =
+         TimeSeries.science[TimeSeries.science.length - 1] -
+         TimeSeries.science[TimeSeries.science.length - 2];
+   }
+
    const [favoriteActive, setFavoriteActive] = useState(false);
    useEffect(() => {
       function onPointerDown(e: PointerEvent) {
@@ -198,7 +201,7 @@ export function ResourcePanel(): React.ReactNode {
                      bolt
                   </div>
                   <Tippy placement="bottom" content={`${t(L.PowerUsed)}/${t(L.PowerAvailable)}`}>
-                     <div style={{ width: "14rem" }}>
+                     <div style={{ width: "15rem" }}>
                         <FormatNumber value={tick.workersUsed.get("Power") ?? 0} />W{" / "}
                         <FormatNumber value={tick.workersAvailable.get("Power") ?? 0} />W
                      </div>
@@ -211,18 +214,18 @@ export function ResourcePanel(): React.ReactNode {
             <div className={classNames({ "m-icon": true })}>science</div>
             <Tippy content={t(L.Science)} placement="bottom">
                <div style={{ width: "6rem" }}>
-                  <FormatNumber value={scienceAmount[0]} />
+                  <FormatNumber value={TimeSeries.science[TimeSeries.science.length - 1]} />
                </div>
             </Tippy>
             <div
                className={classNames({
-                  "text-red": scienceProduction < 0,
-                  "text-green": scienceProduction > 0,
+                  "text-red": scienceDelta < 0,
+                  "text-green": scienceDelta > 0,
                })}
                style={{ width: "6rem", fontWeight: "normal", textAlign: "left" }}
             >
-               {mathSign(scienceProduction)}
-               <FormatNumber value={Math.abs(scienceProduction)} />
+               {mathSign(scienceDelta)}
+               <FormatNumber value={Math.abs(scienceDelta)} />
             </div>
          </div>
          <div className="separator-vertical" />
@@ -263,11 +266,11 @@ export function ResourcePanel(): React.ReactNode {
                </div>
             </Tippy>
             <div
-               className={classNames({ "text-red": delta < 0, "text-green": delta > 0 })}
+               className={classNames({ "text-red": evDelta < 0, "text-green": evDelta > 0 })}
                style={{ width: "6rem", fontWeight: "normal", textAlign: "left" }}
             >
-               {mathSign(delta)}
-               <FormatNumber value={Math.abs(delta)} />
+               {mathSign(evDelta)}
+               <FormatNumber value={Math.abs(evDelta)} />
             </div>
             <Tippy content={t(L.ExtraGreatPeopleAtReborn)}>
                <div className="row ml5">
@@ -318,9 +321,9 @@ function DeficitResources(): React.ReactNode {
                   <div>
                      <div className="text-strong text-center">{t(L.DeficitResources)}</div>
                      {Array.from(deficit)
-                        .sort(([a], [b]) =>
-                           Config.Resource[a].name().localeCompare(Config.Resource[b].name()),
-                        )
+                        .sort(([a, amountA], [b, amountB]) => {
+                           return getResourceAmount(b) / amountB - getResourceAmount(a) / amountA;
+                        })
                         .map(([res, amount]) => {
                            const runOutIn = formatHMS((1000 * getResourceAmount(res)) / Math.abs(amount));
                            return (

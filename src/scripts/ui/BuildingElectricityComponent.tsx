@@ -22,102 +22,107 @@ export function BuildingElectricityComponent({ gameState, xy }: IBuildingCompone
    if (!hasFeature(GameFeature.Electricity, gameState) || !building) {
       return null;
    }
-   if (!canBeElectrified(building.type)) {
-      return null;
-   }
-   const status = getElectrificationStatus(xy, gameState);
    const hasPower = Tick.current.powerGrid.has(xy);
-   const multiplier = gameState.unlockedUpgrades.Liberalism5 ? 2 : 1;
+
+   let electrification: React.ReactNode = null;
+   if (canBeElectrified(building.type)) {
+      const status = getElectrificationStatus(xy, gameState);
+      const multiplier = gameState.unlockedUpgrades.Liberalism5 ? 2 : 1;
+      electrification = (
+         <>
+            <div className="separator"></div>
+            <div className="row">
+               {t(L.ElectrificationStatusV2)}
+               <Tippy content={t(L.ElectrificationStatusDesc)}>
+                  <div className="m-icon small ml5 text-desc help-cursor">help</div>
+               </Tippy>
+               <div className="f1"></div>
+               {status === "Active" ? <div className="m-icon small text-green">bolt</div> : null}
+               <div
+                  className={classNames({
+                     "text-strong": true,
+                     "text-green": status === "Active",
+                     "text-desc": status !== "Active",
+                  })}
+               >
+                  {ElectrificationStatus[status]()}
+               </div>
+            </div>
+            <div className="sep5" />
+            <ul className="tree-view">
+               <li className="row">
+                  <div className="f1">{t(L.ElectrificationPowerRequired)}</div>
+                  <div className="text-strong">
+                     <FormatNumber value={getPowerRequired(building)} binary={true} />W
+                  </div>
+               </li>
+               <li className="row">
+                  <div className="f1">{t(L.ConsumptionMultiplier)}</div>
+                  <div className="text-red text-strong">
+                     +
+                     <FormatNumber
+                        value={
+                           multiplier * building.electrification * getElectrificationEfficiency(building.type)
+                        }
+                     />
+                  </div>
+               </li>
+               <li className="row">
+                  <div className="f1">{t(L.ProductionMultiplier)}</div>
+                  <div className="text-green text-strong">
+                     +<FormatNumber value={multiplier * building.electrification} />
+                  </div>
+               </li>
+            </ul>
+            <div className="sep10"></div>
+            <input
+               id="building-capacity"
+               type="range"
+               min="0"
+               max={building.level}
+               step="1"
+               value={building.electrification}
+               onChange={(e) => {
+                  building.electrification = Number.parseFloat(e.target.value);
+                  notifyGameStateUpdate();
+               }}
+               className="mh0"
+            />
+            <div className="sep15" />
+            <ApplyToAllComponent
+               xy={xy}
+               getOptions={() => ({ electrification: building.electrification })}
+               gameState={gameState}
+            />
+         </>
+      );
+   }
+
    return (
       <fieldset>
-         <legend>{t(L.Electrification)}</legend>
+         <legend>{t(L.Power)}</legend>
          {Config.Building[building.type].power ? (
-            <>
-               <div className="row">
-                  {hasPower ? null : <img src={warning} style={{ margin: "0 2px 0 0" }} />}
-                  {t(L.RequirePower)}
-                  <Tippy content={t(L.RequirePowerDesc)}>
-                     <div className="m-icon small ml5 text-desc help-cursor">help</div>
-                  </Tippy>
-                  <div className="f1"></div>
-                  <div className="ml10">
-                     {hasPower ? (
-                        <div className="m-icon text-green" style={{ fontSize: "2rem", margin: "-5px 0" }}>
-                           power
-                        </div>
-                     ) : (
-                        <div className="m-icon text-red" style={{ fontSize: "2rem", margin: "-5px 0" }}>
-                           power_off
-                        </div>
-                     )}
-                  </div>
+            <div className="row">
+               {hasPower ? null : <img src={warning} style={{ margin: "0 2px 0 0" }} />}
+               {t(L.RequirePower)}
+               <Tippy content={t(L.RequirePowerDesc)}>
+                  <div className="m-icon small ml5 text-desc help-cursor">help</div>
+               </Tippy>
+               <div className="f1"></div>
+               <div className="ml10">
+                  {hasPower ? (
+                     <div className="m-icon text-green" style={{ fontSize: "2rem", margin: "-5px 0" }}>
+                        power
+                     </div>
+                  ) : (
+                     <div className="m-icon text-red" style={{ fontSize: "2rem", margin: "-5px 0" }}>
+                        power_off
+                     </div>
+                  )}
                </div>
-               <div className="separator"></div>
-            </>
-         ) : null}
-         <div className="row">
-            {t(L.ElectrificationStatusV2)}
-            <Tippy content={t(L.ElectrificationStatusDesc)}>
-               <div className="m-icon small ml5 text-desc help-cursor">help</div>
-            </Tippy>
-            <div className="f1"></div>
-            {status === "Active" ? <div className="m-icon small text-green">bolt</div> : null}
-            <div
-               className={classNames({
-                  "text-strong": true,
-                  "text-green": status === "Active",
-                  "text-desc": status !== "Active",
-               })}
-            >
-               {ElectrificationStatus[status]()}
             </div>
-         </div>
-         <div className="sep5" />
-         <ul className="tree-view">
-            <li className="row">
-               <div className="f1">{t(L.ElectrificationPowerRequired)}</div>
-               <div className="text-strong">
-                  <FormatNumber value={getPowerRequired(building)} binary={true} />W
-               </div>
-            </li>
-            <li className="row">
-               <div className="f1">{t(L.ConsumptionMultiplier)}</div>
-               <div className="text-red text-strong">
-                  +
-                  <FormatNumber
-                     value={
-                        multiplier * building.electrification * getElectrificationEfficiency(building.type)
-                     }
-                  />
-               </div>
-            </li>
-            <li className="row">
-               <div className="f1">{t(L.ProductionMultiplier)}</div>
-               <div className="text-green text-strong">
-                  +<FormatNumber value={multiplier * building.electrification} />
-               </div>
-            </li>
-         </ul>
-         <div className="sep10"></div>
-         <input
-            id="building-capacity"
-            type="range"
-            min="0"
-            max={building.level}
-            step="1"
-            value={building.electrification}
-            onChange={(e) => {
-               building.electrification = Number.parseFloat(e.target.value);
-               notifyGameStateUpdate();
-            }}
-            className="mh0"
-         />
-         <div className="sep15" />
-         <ApplyToAllComponent
-            xy={xy}
-            getOptions={() => ({ electrification: building.electrification })}
-            gameState={gameState}
-         />
+         ) : null}
+         {electrification}
       </fieldset>
    );
 }

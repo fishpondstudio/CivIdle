@@ -9,7 +9,7 @@ import { getBuildingsByType } from "../../../shared/logic/IntraTickCache";
 import type { IMarketBuildingData } from "../../../shared/logic/Tile";
 import { convertPriceIdToTime } from "../../../shared/logic/Update";
 import {
-   CURRENCY_EPSILON,
+   CURRENCY_PERCENT_EPSILON,
    forEach,
    formatHMS,
    formatPercent,
@@ -202,7 +202,7 @@ function TradesTab({
                               })}
                               noStyle
                            >
-                              {mathSign(tradeValue, CURRENCY_EPSILON)}
+                              {mathSign(tradeValue, CURRENCY_PERCENT_EPSILON)}
                               {formatPercent(Math.abs(tradeValue), 0)}
                            </TextWithHelp>
                         </td>
@@ -299,7 +299,7 @@ function ActiveTradesTab({
                            })}
                            noStyle
                         >
-                           {mathSign(tradeValue, CURRENCY_EPSILON)}
+                           {mathSign(tradeValue, CURRENCY_PERCENT_EPSILON)}
                            {formatPercent(Math.abs(tradeValue), 0)}
                         </TextWithHelp>
                      </td>

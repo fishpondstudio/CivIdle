@@ -12,6 +12,7 @@ import {
 } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
 import { EXPLORER_SECONDS, MAX_EXPLORER } from "../../../shared/logic/Constants";
+import { ValueToTrack, getTimeSeriesHour } from "../../../shared/logic/GameState";
 import {
    getBuildingIO,
    getFuelByTarget,
@@ -35,6 +36,7 @@ import {
 } from "../../../shared/utilities/Helper";
 import type { PartialSet } from "../../../shared/utilities/TypeDefinitions";
 import { L, t } from "../../../shared/utilities/i18n";
+import { TimeSeries } from "../logic/TimeSeries";
 import { LookAtMode, WorldScene } from "../scenes/WorldScene";
 import { Singleton } from "../utilities/Singleton";
 import { playClick } from "../visuals/Sound";
@@ -42,6 +44,7 @@ import { BuildingColorComponent } from "./BuildingColorComponent";
 import type { IBuildingComponentProps } from "./BuildingPage";
 import { BuildingFilter, Filter } from "./FilterComponent";
 import { FormatNumber } from "./HelperComponents";
+import { PlotComponent } from "./PlotComponent";
 import { TableView } from "./TableView";
 import { WorkerScienceComponent } from "./WorkerScienceComponent";
 
@@ -103,7 +106,6 @@ function EmpireTab({ gameState, xy }: IBuildingComponentProps): React.ReactNode 
    const { scienceFromWorkers } = getScienceFromWorkers(gameState);
    const scienceAmount = getScienceAmount(gameState);
    const sciencePerTick = scienceFromWorkers + totalBuildingScience;
-
    const transportStat = getTransportStat(gameState);
    return (
       <article role="tabpanel" className="f1 col" style={{ padding: "8px", overflow: "auto" }}>
@@ -132,7 +134,9 @@ function EmpireTab({ gameState, xy }: IBuildingComponentProps): React.ReactNode 
                                  (Tick.current.resourceValues.get(a) ?? 0),
                            )
                            .map((res) => {
-                              if (NoPrice[res] || NoStorage[res]) {
+                              const force =
+                                 res === "Science" && Tick.current.specialBuildings.has("MatrioshkaBrain");
+                              if (!force && (NoPrice[res] || NoStorage[res])) {
                                  return null;
                               }
                               return (
@@ -172,6 +176,21 @@ function EmpireTab({ gameState, xy }: IBuildingComponentProps): React.ReactNode 
                   </details>
                </li>
             </ul>
+            <div className="sep10" />
+            <PlotComponent
+               title={t(L.EmpireValueIncrease)}
+               data={[TimeSeries.deltaTick, TimeSeries.empireValueDelta]}
+               series={{ stroke: "#fdcb6e", fill: "#ffeaa7" }}
+            />
+            <div className="sep10" />
+            <PlotComponent
+               title={t(L.EmpireValueByHour)}
+               data={[
+                  getTimeSeriesHour(gameState),
+                  gameState.valueTrackers.get(ValueToTrack.EmpireValue)?.history ?? [],
+               ]}
+               series={{ stroke: "#fdcb6e", fill: "#ffeaa7" }}
+            />
          </fieldset>
          <fieldset>
             <legend>{t(L.Science)}</legend>
@@ -229,6 +248,12 @@ function EmpireTab({ gameState, xy }: IBuildingComponentProps): React.ReactNode 
                   </details>
                </li>
             </ul>
+            <div className="sep10" />
+            <PlotComponent
+               title={t(L.StatisticsScienceProduction)}
+               data={[TimeSeries.deltaTick, TimeSeries.scienceDelta]}
+               series={{ stroke: "#0984e3", fill: "#74b9ff" }}
+            />
          </fieldset>
          <fieldset>
             <legend>{t(L.StatisticsTransportation)}</legend>

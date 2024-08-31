@@ -2,7 +2,7 @@ import { Advisors } from "../../../shared/definitions/AdvisorDefinitions";
 import { GreatPersonTickFlag } from "../../../shared/definitions/GreatPersonDefinitions";
 import { OnTileExplored, getScienceFromWorkers } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
-import type { GameState } from "../../../shared/logic/GameState";
+import { ValueToTrack, type GameState } from "../../../shared/logic/GameState";
 import {
    getGameOptions,
    notifyGameStateUpdate,
@@ -40,6 +40,7 @@ import { playAgeUp, playDing } from "../visuals/Sound";
 import { onBuildingComplete } from "./OnBuildingComplete";
 import { onProductionComplete } from "./OnProductionComplete";
 import { onTileExplored } from "./OnTileExplored";
+import { TimeSeries } from "./TimeSeries";
 
 export function shouldTick(): boolean {
    return isSteam() || document.visibilityState === "visible";
@@ -159,6 +160,19 @@ function postTickTiles(gs: GameState, offline: boolean) {
       safeAdd(hq, "Science", scienceFromWorkers);
    }
 
+   let tracker = gs.valueTrackers.get(ValueToTrack.EmpireValue);
+   if (!tracker) {
+      tracker = { accumulated: 0, history: [] };
+      gs.valueTrackers.set(ValueToTrack.EmpireValue, tracker);
+   }
+   // Here we use Tick.next, make sure this is the last code before we increase the tick
+   tracker.accumulated += Tick.next.totalValue;
+   if (gs.tick % 3600 === 0) {
+      tracker.history.push(tracker.accumulated);
+      tracker.accumulated = 0;
+   }
+   gs.valueTrackers.set(ValueToTrack.EmpireValue, tracker);
+
    ++gs.tick;
 
    while (Date.now() - lastTickTime > 1000) {
@@ -179,6 +193,10 @@ function postTickTiles(gs: GameState, offline: boolean) {
       if (gs.tick % (heartbeatFreq * speed) === 0) {
          Singleton().heartbeat.update(serializeSaveLite());
       }
+   }
+
+   if (Tick.current.totalValue > 0 && Tick.current.tick > 10) {
+      TimeSeries.add(gs.tick, Tick.current.totalValue, hq?.Science ?? 0);
    }
 }
 

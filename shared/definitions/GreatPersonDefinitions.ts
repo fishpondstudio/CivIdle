@@ -106,7 +106,7 @@ export class GreatPersonDefinitions {
       name: () => t(L.Dido),
       boost: {
          multipliers: ["output", "storage"],
-         buildings: ["DairyFarm", "PoultryFarm", "LivestockFarm"],
+         buildings: ["DairyFarm", "PoultryFarm"],
       },
       time: "c. 800s BC",
       value: (level) => level,
@@ -237,6 +237,32 @@ export class GreatPersonDefinitions {
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "ClassicalAge",
+   });
+
+   Aristotle: IGreatPersonDefinition = boostOf({
+      name: () => t(L.Aristotle),
+      boost: {
+         multipliers: ["output", "storage"],
+         buildings: ["Library"],
+      },
+      time: "384 ~ 322 BC",
+      value: (level) => level * 2,
+      maxLevel: Number.POSITIVE_INFINITY,
+      age: "ClassicalAge",
+      city: "Athens",
+   });
+
+   JuliusCaesar: IGreatPersonDefinition = boostOf({
+      name: () => t(L.JuliusCaesar),
+      boost: {
+         multipliers: ["output", "storage"],
+         buildings: ["GoldMiningCamp"],
+      },
+      time: "100 ~ 44 BC",
+      value: (level) => level * 2,
+      maxLevel: Number.POSITIVE_INFINITY,
+      age: "ClassicalAge",
+      city: "Rome",
    });
 
    Archimedes: IGreatPersonDefinition = boostOf({

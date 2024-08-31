@@ -82,6 +82,87 @@ export function FillPlayerTradeModal({ tradeId, xy }: { tradeId: string; xy?: Ti
       return true;
    };
 
+   const calculateMaxFill = () => {
+      const result = new Map<Tile, number>();
+      let amountLeft = trade.buyAmount;
+      for (const xy of allTradeBuildings.keys()) {
+         const amount = getMaxFill(xy);
+         if (amount <= 0) {
+            // Do nothing
+         } else if (amountLeft > amount) {
+            result.set(xy, amount);
+            amountLeft -= amount;
+         } else {
+            result.set(xy, amountLeft);
+            amountLeft = 0;
+            break;
+         }
+      }
+      return result;
+   };
+
+   const doFill = async (fills: Map<Tile, number>) => {
+      if (!fillsAreValid(fills) || !hasValidPath()) {
+         showToast(t(L.OperationNotAllowedError));
+         playError();
+         return;
+      }
+      let total = 0;
+      let success = 0;
+      let fillAmount = 0;
+      let receivedAmount = 0;
+      const errors: string[] = [];
+      for (const [tile, amount] of fills) {
+         if (amount <= 0) continue;
+         // We reserve the amount first, otherwise resource might go negative if a player
+         // clicks really fast
+         ++total;
+         const r = deductResourceFrom(trade.buyResource, amount, [tile], gs);
+         try {
+            const result = await client.fillTrade({
+               id: trade.id,
+               amount: r.amount,
+               path: tiles,
+               seaTileCost: getSeaTileCost(gs),
+            });
+            forEach(result, (res, amount) => {
+               if (amount > 0) {
+                  receivedAmount += amount;
+               }
+               if (amount < 0) {
+                  fillAmount += Math.abs(amount);
+               }
+               safeAdd(allTradeBuildings.get(tile)!.resources, res, amount);
+            });
+            ++success;
+         } catch (error) {
+            errors.push(String(error));
+         } finally {
+            // If the trade fails, we should refund the resource. If the trade success, the result
+            // from the server contains the correct amount to deduct, we *also* refund the resource
+            r.rollback();
+         }
+      }
+      if (success > 0) {
+         playKaching();
+         errors.unshift(
+            t(L.PlayerTradeFillSuccessV2, {
+               success,
+               total,
+               fillAmount: formatNumber(fillAmount),
+               fillResource: Config.Resource[trade.buyResource].name(),
+               receivedAmount: formatNumber(receivedAmount),
+               receivedResource: Config.Resource[trade.sellResource].name(),
+            }),
+         );
+         showToast(errors.join("<br />"));
+         hideModal();
+      } else {
+         playError();
+         showToast(errors.join("<br />"));
+      }
+   };
+
    const getStorageRequired = (amount: number) => {
       return clamp((trade.sellAmount * amount) / trade.buyAmount - amount, 0, Number.POSITIVE_INFINITY);
    };
@@ -250,27 +331,7 @@ export function FillPlayerTradeModal({ tradeId, xy }: { tradeId: string; xy?: Ti
                >
                   {t(L.PlayerTradeClearAll)}
                </div>
-               <div
-                  className="text-strong text-link"
-                  onClick={() => {
-                     setFills(() => {
-                        let amountLeft = trade.buyAmount;
-                        const result = new Map<Tile, number>();
-                        for (const xy of allTradeBuildings.keys()) {
-                           const amount = getMaxFill(xy);
-                           if (amountLeft > amount) {
-                              result.set(xy, amount);
-                              amountLeft -= amount;
-                           } else {
-                              result.set(xy, amountLeft);
-                              amountLeft = 0;
-                              break;
-                           }
-                        }
-                        return result;
-                     });
-                  }}
-               >
+               <div className="text-strong text-link" onClick={() => setFills(calculateMaxFill)}>
                   {t(L.PlayerTradeMaxAll)}
                </div>
             </div>
@@ -380,76 +441,26 @@ export function FillPlayerTradeModal({ tradeId, xy }: { tradeId: string; xy?: Ti
             </ul>
             <div className="sep15"></div>
             <div className="row">
+               <button onClick={hideModal}>{t(L.ChangePlayerHandleCancel)}</button>
                <div className="f1"></div>
                <button
-                  className="text-strong"
-                  disabled={!fillsAreValid(fills)}
-                  onClick={async () => {
-                     if (!fillsAreValid(fills) || !hasValidPath()) {
-                        showToast(t(L.OperationNotAllowedError));
-                        playError();
-                        return;
-                     }
-                     let total = 0;
-                     let success = 0;
-                     let fillAmount = 0;
-                     let receivedAmount = 0;
-                     const errors: string[] = [];
-                     for (const [tile, amount] of fills) {
-                        if (amount <= 0) continue;
-                        // We reserve the amount first, otherwise resource might go negative if a player
-                        // clicks really fast
-                        ++total;
-                        const r = deductResourceFrom(trade.buyResource, amount, [tile], gs);
-                        try {
-                           const result = await client.fillTrade({
-                              id: trade.id,
-                              amount: r.amount,
-                              path: tiles,
-                              seaTileCost: getSeaTileCost(gs),
-                           });
-                           forEach(result, (res, amount) => {
-                              if (amount > 0) {
-                                 receivedAmount += amount;
-                              }
-                              if (amount < 0) {
-                                 fillAmount += Math.abs(amount);
-                              }
-                              safeAdd(allTradeBuildings.get(tile)!.resources, res, amount);
-                           });
-                           ++success;
-                        } catch (error) {
-                           errors.push(String(error));
-                        } finally {
-                           // If the trade fails, we should refund the resource. If the trade success, the result
-                           // from the server contains the correct amount to deduct, we *also* refund the resource
-                           r.rollback();
-                        }
-                     }
-                     if (success > 0) {
-                        playKaching();
-                        errors.unshift(
-                           t(L.PlayerTradeFillSuccessV2, {
-                              success,
-                              total,
-                              fillAmount: formatNumber(fillAmount),
-                              fillResource: Config.Resource[trade.buyResource].name(),
-                              receivedAmount: formatNumber(receivedAmount),
-                              receivedResource: Config.Resource[trade.sellResource].name(),
-                           }),
-                        );
-                        showToast(errors.join("<br />"));
-                        hideModal();
+                  onClick={() => {
+                     const fills = calculateMaxFill();
+                     if (fills.size > 0) {
+                        doFill(fills);
                      } else {
                         playError();
-                        showToast(errors.join("<br />"));
+                        showToast(t(L.PlayerTradeNoFillBecauseOfResources));
+                        hideModal();
                      }
                   }}
                >
-                  {t(L.PlayerTradeFillTradeButton)}
+                  {t(L.PlayerTradeFillAmountMaxV2)}
                </button>
                <div style={{ width: "6px" }}></div>
-               <button onClick={hideModal}>{t(L.ChangePlayerHandleCancel)}</button>
+               <button className="text-strong" disabled={!fillsAreValid(fills)} onClick={() => doFill(fills)}>
+                  {t(L.PlayerTradeFillTradeButton)}
+               </button>
             </div>
          </div>
       </div>

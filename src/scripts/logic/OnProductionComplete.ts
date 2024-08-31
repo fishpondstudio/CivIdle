@@ -5,6 +5,7 @@ import {
    generateScienceFromFaith,
    getGreatWallRange,
    getScienceFromWorkers,
+   getStorageFor,
    getWorkingBuilding,
    getYellowCraneTowerRange,
    isBuildingWellStocked,
@@ -128,6 +129,14 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          });
          break;
       }
+      case "GrottaAzzurra": {
+         forEach(Config.BuildingTier, (building, tier) => {
+            if (tier === 1) {
+               addMultiplier(building, { output: 1, worker: 1, storage: 1 }, buildingName);
+            }
+         });
+         break;
+      }
       case "PyramidOfGiza": {
          forEach(Config.Building, (building, def) => {
             if (def.output.Worker) {
@@ -194,12 +203,14 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          break;
       }
       case "Colosseum": {
+         let happiness = (Config.TechAge[getCurrentAge(gs)].idx + 1) * 2;
          if (!Tick.current.notProducingReasons.has(xy)) {
-            Tick.next.globalMultipliers.happiness.push({
-               value: Config.Building.Colosseum.input.Chariot!,
-               source: buildingName,
-            });
+            happiness += Config.Building.Colosseum.input.Chariot!;
          }
+         Tick.next.globalMultipliers.happiness.push({
+            value: happiness,
+            source: buildingName,
+         });
          getBuildingsByType("ChariotWorkshop", gs)?.forEach((tile, xy) => {
             Tick.next.happinessExemptions.add(xy);
          });
@@ -394,9 +405,17 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          getXyBuildings(gs).forEach((building, xy) => {
             if (building.level >= 20 && building.status !== "completed") {
                mapSafePush(Tick.next.tileMultipliers, xy, {
-                  worker: building.level - 20,
+                  worker: 2 * (building.level - 20),
                   source: buildingName,
                });
+            }
+         });
+         forEach(options.greatPeople, (gp, inv) => {
+            const def = Config.GreatPerson[gp];
+            if (def.age === "ClassicalAge") {
+               if (inv.level > 0) {
+                  def.tick(def, 1, `${buildingName}: ${def.name()}`, GreatPersonTickFlag.Unstable);
+               }
             }
          });
          break;
@@ -405,8 +424,18 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          for (const neighbor of grid.getNeighbors(tileToPoint(xy))) {
             const neighborXy = pointToTile(neighbor);
             const building = getWorkingBuilding(neighborXy, gs);
-            if (building && !isSpecialBuilding(building.type) && building.level < 20) {
-               building.level = 20;
+            if (building && !isSpecialBuilding(building.type)) {
+               if (building.level < 25) {
+                  building.level = 25;
+               }
+               const tier = Config.BuildingTier[building.type] ?? 0;
+               if (tier > 0) {
+                  mapSafePush(Tick.next.tileMultipliers, neighborXy, {
+                     output: tier,
+                     storage: tier,
+                     source: buildingName,
+                  });
+               }
             }
          }
          break;
@@ -707,7 +736,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
             switch (current.type) {
                case VotedBoostType.Multipliers: {
                   current.buildings.forEach((b) => {
-                     addMultiplier(b, { output: 5, worker: 5, storage: 5 }, buildingName);
+                     addMultiplier(b, { output: 5, worker: 5 }, buildingName);
                   });
                   break;
                }
@@ -1237,7 +1266,10 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
             lastFujiGeneratedAt = Date.now();
             const petra = Tick.current.specialBuildings.get("Petra");
             if (petra) {
-               safeAdd(petra.building.resources, "Warp", 20);
+               const { total, used } = getStorageFor(petra.tile, gs);
+               if (total - used >= 20) {
+                  safeAdd(petra.building.resources, "Warp", 20);
+               }
             }
          } else {
             fujiTick++;
