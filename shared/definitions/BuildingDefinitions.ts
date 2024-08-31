@@ -890,7 +890,7 @@ export class BuildingDefinitions {
    };
    Aphrodite: IBuildingDefinition = {
       name: () => t(L.Aphrodite),
-      desc: () => t(L.AphroditeDesc),
+      desc: () => t(L.AphroditeDescV2),
       input: {},
       output: {},
       construction: {},
@@ -900,7 +900,7 @@ export class BuildingDefinitions {
    };
    Poseidon: IBuildingDefinition = {
       name: () => t(L.Poseidon),
-      desc: () => t(L.PoseidonDesc),
+      desc: () => t(L.PoseidonDescV2),
       input: {},
       output: {},
       construction: {},

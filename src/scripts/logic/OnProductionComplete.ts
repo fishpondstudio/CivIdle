@@ -405,9 +405,17 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          getXyBuildings(gs).forEach((building, xy) => {
             if (building.level >= 20 && building.status !== "completed") {
                mapSafePush(Tick.next.tileMultipliers, xy, {
-                  worker: building.level - 20,
+                  worker: 2 * (building.level - 20),
                   source: buildingName,
                });
+            }
+         });
+         forEach(options.greatPeople, (gp, inv) => {
+            const def = Config.GreatPerson[gp];
+            if (def.age === "ClassicalAge") {
+               if (inv.level > 0) {
+                  def.tick(def, 1, `${buildingName}: ${def.name()}`, GreatPersonTickFlag.Unstable);
+               }
             }
          });
          break;
@@ -417,7 +425,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
             const neighborXy = pointToTile(neighbor);
             const building = getWorkingBuilding(neighborXy, gs);
             if (building && !isSpecialBuilding(building.type) && building.level < 20) {
-               building.level = 20;
+               building.level = 25;
             }
          }
          break;
