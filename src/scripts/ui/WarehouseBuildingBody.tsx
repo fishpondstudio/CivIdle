@@ -4,9 +4,10 @@ import { GameFeature, hasFeature } from "../../../shared/logic/FeatureLogic";
 import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
 import type { IWarehouseBuildingData } from "../../../shared/logic/Tile";
 import { WarehouseOptions } from "../../../shared/logic/Tile";
-import { formatNumber, hasFlag, toggleFlag } from "../../../shared/utilities/Helper";
+import { copyFlag, formatNumber, hasFlag, toggleFlag } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import { playClick } from "../visuals/Sound";
+import { ApplyToAllComponent } from "./ApplyToAllComponent";
 import { BuildingColorComponent } from "./BuildingColorComponent";
 import { BuildingInputModeComponent } from "./BuildingInputModeComponent";
 import type { IBuildingComponentProps } from "./BuildingPage";
@@ -65,6 +66,20 @@ export function WarehouseBuildingBody({ gameState, xy }: IBuildingComponentProps
                         )}
                      </div>
                   </div>
+                  <ApplyToAllComponent
+                     xy={xy}
+                     getOptions={(s) =>
+                        ({
+                           warehouseOptions: copyFlag(
+                              warehouse.warehouseOptions,
+                              (s as IWarehouseBuildingData).warehouseOptions,
+                              WarehouseOptions.Autopilot,
+                           ),
+                        }) as IWarehouseBuildingData
+                     }
+                     gameState={gameState}
+                  />
+                  <div className="separator"></div>
                   <div className="row">
                      <div>{t(L.WarehouseAutopilotSettingsRespectCapSetting)}</div>
                      <Tippy content={t(L.WarehouseAutopilotSettingsRespectCapSettingTooltip)}>
@@ -89,6 +104,19 @@ export function WarehouseBuildingBody({ gameState, xy }: IBuildingComponentProps
                         )}
                      </div>
                   </div>
+                  <ApplyToAllComponent
+                     xy={xy}
+                     getOptions={(s) =>
+                        ({
+                           warehouseOptions: copyFlag(
+                              warehouse.warehouseOptions,
+                              (s as IWarehouseBuildingData).warehouseOptions,
+                              WarehouseOptions.AutopilotRespectCap,
+                           ),
+                        }) as IWarehouseBuildingData
+                     }
+                     gameState={gameState}
+                  />
                </fieldset>
             </>
          ) : null}
