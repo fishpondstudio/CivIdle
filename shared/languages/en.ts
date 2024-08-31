@@ -828,7 +828,7 @@ export const EN = {
    PlayerTradeClaimAvailable: "%{count} trade(s) has been filled available for claim",
    PlayerTradeClaimTileFirst: "Claim Your Tile On Trade Map",
    PlayerTradeClaimTileFirstWarning: "You can only trade with other players after you've claimed your tile on the trade map",
-   PlayerTradeClearAll: "Clear All Fills",
+   PlayerTradeClearAll: "Clear All",
    PlayerTradeDisabledBeta: "You can only create player trades once the beta version is released",
    PlayerTradeFill: "Fill",
    PlayerTradeFillAmount: "Fill Amount",
@@ -844,7 +844,7 @@ export const EN = {
    PlayerTradeFrom: "From",
    PlayerTradeIOffer: "I Offer",
    PlayerTradeIWant: "I Want",
-   PlayerTradeMaxAll: "Max All Fills",
+   PlayerTradeMaxAll: "Max All",
    PlayerTradeMaxTradeAmountFilter: "Max Amount",
    PlayerTradeMaxTradeExceeded: "You have exceeded max number of active trades for your account rank",
    PlayerTradeNewTrade: "New Trade",
@@ -1375,6 +1375,5 @@ export const EN = {
    EmpireValueByHour: "Empire Value By Hour",
    PorcelainTowerMaxPickPerRoll: "Prefer Max Pick Per Roll",   
    PorcelainTowerMaxPickPerRollDescHTML: "When choosing great people after Porcelain Tower completed, prefer max pick per roll for the available amount",
-   ResourceNeeded: "Extra %{resource} x%{amount} Needed"
-
+   ResourceNeeded: "Extra %{resource} x%{amount} Needed",
 };

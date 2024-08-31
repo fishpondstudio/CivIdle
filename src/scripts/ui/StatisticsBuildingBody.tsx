@@ -134,7 +134,9 @@ function EmpireTab({ gameState, xy }: IBuildingComponentProps): React.ReactNode 
                                  (Tick.current.resourceValues.get(a) ?? 0),
                            )
                            .map((res) => {
-                              if (NoPrice[res] || NoStorage[res]) {
+                              const force =
+                                 res === "Science" && Tick.current.specialBuildings.has("MatrioshkaBrain");
+                              if (!force && (NoPrice[res] || NoStorage[res])) {
                                  return null;
                               }
                               return (
