@@ -424,8 +424,18 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          for (const neighbor of grid.getNeighbors(tileToPoint(xy))) {
             const neighborXy = pointToTile(neighbor);
             const building = getWorkingBuilding(neighborXy, gs);
-            if (building && !isSpecialBuilding(building.type) && building.level < 20) {
-               building.level = 25;
+            if (building && !isSpecialBuilding(building.type)) {
+               if (building.level < 25) {
+                  building.level = 25;
+               }
+               const tier = Config.BuildingTier[building.type] ?? 0;
+               if (tier > 0) {
+                  mapSafePush(Tick.next.tileMultipliers, neighborXy, {
+                     output: tier,
+                     storage: tier,
+                     source: buildingName,
+                  });
+               }
             }
          }
          break;

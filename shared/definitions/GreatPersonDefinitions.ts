@@ -106,7 +106,7 @@ export class GreatPersonDefinitions {
       name: () => t(L.Dido),
       boost: {
          multipliers: ["output", "storage"],
-         buildings: ["DairyFarm", "PoultryFarm", "LivestockFarm"],
+         buildings: ["DairyFarm", "PoultryFarm"],
       },
       time: "c. 800s BC",
       value: (level) => level,

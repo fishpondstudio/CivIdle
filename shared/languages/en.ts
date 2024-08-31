@@ -869,7 +869,7 @@ export const EN = {
    PorcelainTower: "Porcelain Tower",
    PorcelainTowerDesc: "+5 Happiness. When constructed, all your extra great people at rebirth will become available for this run (they are rolled following the same rule as permanent great people)",
    Poseidon: "Poseidon",
-   PoseidonDescV2: "All adjacent buildings get free upgrades to Level 25",
+   PoseidonDescV2: "All adjacent buildings get free upgrades to Level 25 and +N Production, Worker Capacity and Storage Multiplier. N = Tier of the building",
    PoultryFarm: "Poultry Farm",
    Power: "Power",
    PowerAvailable: "Power Available",
