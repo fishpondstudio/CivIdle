@@ -129,6 +129,14 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          });
          break;
       }
+      case "GrottaAzzurra": {
+         forEach(Config.BuildingTier, (building, tier) => {
+            if (tier === 1) {
+               addMultiplier(building, { output: 1, worker: 1, storage: 1 }, buildingName);
+            }
+         });
+         break;
+      }
       case "PyramidOfGiza": {
          forEach(Config.Building, (building, def) => {
             if (def.output.Worker) {
@@ -195,12 +203,14 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          break;
       }
       case "Colosseum": {
+         let happiness = (Config.TechAge[getCurrentAge(gs)].idx + 1) * 2;
          if (!Tick.current.notProducingReasons.has(xy)) {
-            Tick.next.globalMultipliers.happiness.push({
-               value: Config.Building.Colosseum.input.Chariot!,
-               source: buildingName,
-            });
+            happiness += Config.Building.Colosseum.input.Chariot!;
          }
+         Tick.next.globalMultipliers.happiness.push({
+            value: happiness,
+            source: buildingName,
+         });
          getBuildingsByType("ChariotWorkshop", gs)?.forEach((tile, xy) => {
             Tick.next.happinessExemptions.add(xy);
          });

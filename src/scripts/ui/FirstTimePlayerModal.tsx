@@ -3,7 +3,7 @@ import { GameOptionsChanged } from "../../../shared/logic/GameStateLogic";
 import { L, t } from "../../../shared/utilities/i18n";
 import "../../css/Tutorial.css";
 import { ToggleChatWindow } from "../Global";
-import { useUser } from "../rpc/RPCClient";
+import { OnUserChanged, client, useUser } from "../rpc/RPCClient";
 import { CountryCode, getCountryName, getFlagUrl } from "../utilities/CountryCode";
 import { jsxMapOf } from "../utilities/Helper";
 import { refreshOnTypedEvent } from "../utilities/Hook";
@@ -98,10 +98,9 @@ function FirstTimePlayerSettings(): React.ReactNode {
             <div className="f1">
                <input
                   value={handle}
-                  onChange={(e) => {
+                  onChange={async (e) => {
                      if (user) {
-                        user.handle = e.target.value;
-                        setHandle(user.handle);
+                        setHandle(e.target.value);
                      } else {
                         showToast(t(L.OfflineErrorMessage));
                      }
@@ -137,8 +136,7 @@ function FirstTimePlayerSettings(): React.ReactNode {
                               showToast(t(L.OfflineErrorMessage));
                               return;
                            }
-                           user.flag = c;
-                           setFlag(user.flag);
+                           setFlag(c);
                         }}
                         src={getFlagUrl(c)}
                         className="pointer player-flag-large"
@@ -156,9 +154,24 @@ function FirstTimePlayerSettings(): React.ReactNode {
          <div className="row">
             <div className="f1"></div>
             <button
-               onClick={() => {
-                  playClick();
-                  hideModal();
+               onClick={async () => {
+                  try {
+                     if (user) {
+                        playClick();
+                        await client.changeHandle(handle, flag);
+                        user.handle = handle;
+                        user.flag = flag;
+                        OnUserChanged.emit({ ...user });
+                     } else {
+                        playError();
+                        showToast(t(L.OfflineErrorMessage));
+                     }
+                  } catch (error) {
+                     playError();
+                     showToast(String(error));
+                  } finally {
+                     hideModal();
+                  }
                }}
                style={{ width: 80 }}
             >

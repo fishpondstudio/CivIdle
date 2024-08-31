@@ -880,7 +880,7 @@ export class BuildingDefinitions {
    };
    GrottaAzzurra: IBuildingDefinition = {
       name: () => t(L.GrottaAzzurra),
-      desc: () => t(L.GrottaAzzurraDesc),
+      desc: () => t(L.GrottaAzzurraDescV2),
       input: {},
       output: {},
       construction: {},
@@ -1153,7 +1153,7 @@ export class BuildingDefinitions {
    };
    Colosseum: IBuildingDefinition = {
       name: () => t(L.Colosseum),
-      desc: () => t(L.ColosseumDesc),
+      desc: () => t(L.ColosseumDescV2),
       input: { Chariot: 10 },
       output: {},
       construction: { Brick: 100, Chariot: 100, Alcohol: 100 },
