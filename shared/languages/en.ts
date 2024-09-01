@@ -938,7 +938,7 @@ export const EN = {
    ReadFullPatchNotes: "Read Patch Notes",
    Reborn: "Rebirth",
    RebornCity: "Select A New City",
-   RebornModalDescV2: "You will start a new empire but you can take all the great people <b>from this run</b>, which will become <b>permanent</b> great people. You can also choose extra great people based on your <b>total empire value</b>",
+   RebornModalDescV3: "You will start a new empire but all your great people <b>from this run</b> becomes permanent shards, which can be used to upgrade your <b>permanent great people level</b>. You will also get extra great people shards based on your <b>total empire value</b>",
    RebornOfflineWarning: "You are currently offline. You can only rebirth when you are connected to the server",
    RebornTradeWarning: "You have trades that are active or can be claimed. <b>Rebirth will erase them</b> - you should consider cancelling or claiming first",
    RedistributeAmongSelected: "Redistribute Among Selected",
@@ -1379,4 +1379,8 @@ export const EN = {
    Zoroaster: "Zoroaster",
    Aristotle: "Aristotle",
    JuliusCaesar: "Julius Caesar",
+   ManageAgeWisdom: "Manage Age Wisdom",
+   AgeWisdomAge: "Age",
+   AgeWisdomLevel: "Level",
+   AgeWisdomRequireExtraLevel: "Require %{level} extra level",
 };

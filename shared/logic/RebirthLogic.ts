@@ -233,3 +233,13 @@ export function getFreeCityThisWeek(): City {
    const week = Math.floor(Date.now() / WEEK);
    return candidates[week % candidates.length];
 }
+
+export function getAgeWisdomGreatPeople(age: TechAge): GreatPerson[] {
+   const result: GreatPerson[] = [];
+   forEach(Config.GreatPerson, (gp, def) => {
+      if (def.age === age && def.type === GreatPersonType.Normal && !def.city) {
+         result.push(gp);
+      }
+   });
+   return result;
+}
