@@ -8,7 +8,7 @@ export const PatchNotes: PatchNote[] = [
    {
       version: "0.16.0",
       content: [],
-      link: "https://github.com/fishpondstudio/CivIdle/issues/313",
+      link: "https://store.steampowered.com/news/app/2181940/view/4614588176986892437",
    },
    {
       version: "0.15.0",
