@@ -234,11 +234,25 @@ export function getFreeCityThisWeek(): City {
    return candidates[week % candidates.length];
 }
 
-export function getAgeWisdomGreatPeople(age: TechAge): GreatPerson[] {
+export function getGreatPeopleForWisdom(age: TechAge): GreatPerson[] {
    const result: GreatPerson[] = [];
    forEach(Config.GreatPerson, (gp, def) => {
       if (def.age === age && def.type === GreatPersonType.Normal && !def.city) {
          result.push(gp);
+      }
+   });
+   return result;
+}
+
+export function getMissingGreatPeopleForWisdom(age: TechAge): Map<GreatPerson, number> {
+   const options = getGameOptions();
+   const targetLevel = 1 + (options.ageWisdom[age] ?? 0);
+   const result = new Map<GreatPerson, number>();
+   getGreatPeopleForWisdom(age).forEach((gp) => {
+      const currentLevel = options.greatPeople[gp]?.level ?? 0;
+      const diff = targetLevel - currentLevel;
+      if (diff > 0) {
+         result.set(gp, targetLevel - currentLevel);
       }
    });
    return result;

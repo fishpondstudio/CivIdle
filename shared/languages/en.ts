@@ -385,7 +385,7 @@ export const EN = {
    EstimatedTimeLeft: "Estimated Time Left",
    EuphratesRiver: "Euphrates River",
    EuphratesRiverDesc:
-      "Every 10% of busy workers that in production (not transporting) provides +1 Production Multiplier to all buildings that do not produce workers and are unlocked in previous ages (max = number of unlocked ages / 2). When the Hanging Garden is built next to it, the Hanging Garden gets +1 effect for each age after the Hanging Garden is unlocked. When discovered, spawn water on all adjacent tiles that do not have deposits",
+      "Every 10% of busy workers that are in production (not transporting) provides +1 Production Multiplier to all buildings that do not produce workers and are unlocked in previous ages (max = number of unlocked ages / 2). When the Hanging Garden is built next to it, the Hanging Garden gets +1 effect for each age after the Hanging Garden is unlocked. When discovered, spawn water on all adjacent tiles that do not have deposits",
    ExpansionLevelX: "Expansion %{level}",
    Exploration: "Exploration",
    Explorer: "Explorer",
@@ -1383,5 +1383,6 @@ export const EN = {
    AgeWisdomAge: "Age",
    AgeWisdomLevel: "Level",
    PermanentGreatPeopleUpgradeUndo: "Undo permanent great people upgrade: this will convert upgraded level back to shards - you will get %{amount} shards",
-   AgeWisdomRequireExtraLevel: "Require %{level} extra level",
+   AgeWisdomMissingGreatPeopleLevel: "More Levels Needed",
+   FeatureRequireQuaestorOrAbove: "This feature requires Quaestor rank or above",
 };

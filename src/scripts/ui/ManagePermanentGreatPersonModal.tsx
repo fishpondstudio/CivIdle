@@ -14,7 +14,7 @@ import {
 import { keysOf, numberToRoman } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import { useGameOptions, useGameState } from "../Global";
-import { isOnlineUser } from "../rpc/RPCClient";
+import { isOnlineUser, useUser } from "../rpc/RPCClient";
 import { GreatPersonImage } from "../visuals/GreatPersonVisual";
 import { playAgeUp, playClick, playError, playLevelUp } from "../visuals/Sound";
 import { hideModal } from "./GlobalModal";
@@ -113,6 +113,7 @@ function GreatPersonRow({ greatPerson }: { greatPerson: GreatPerson }): React.Re
 function GreatPersonNormalRow({ greatPerson }: { greatPerson: GreatPerson }): React.ReactNode {
    const options = useGameOptions();
    const gs = useGameState();
+   const user = useUser();
    const thisRun = gs.greatPeople[greatPerson];
    const permanent = options.greatPeople[greatPerson];
    const person = Config.GreatPerson[greatPerson];
@@ -158,25 +159,33 @@ function GreatPersonNormalRow({ greatPerson }: { greatPerson: GreatPerson }): Re
          </td>
          <td>
             {permanent ? (
-               <Tippy
-                  content={t(L.PermanentGreatPeopleUpgradeUndo, {
-                     amount: getTotalGreatPeopleUpgradeCost(greatPerson, permanent.level),
-                  })}
+               <button
+                  style={{ padding: "0 3px" }}
+                  disabled={!isOnlineUser()}
+                  onClick={() => {
+                     if (!isOnlineUser()) {
+                        return;
+                     }
+                     playClick();
+                     permanent.amount += getTotalGreatPeopleUpgradeCost(greatPerson, permanent.level);
+                     permanent.level = 0;
+                     notifyGameOptionsUpdate();
+                  }}
                >
-                  <button
-                     style={{ padding: "0 3px" }}
-                     onClick={() => {
-                        playClick();
-                        permanent.amount += getTotalGreatPeopleUpgradeCost(greatPerson, permanent.level);
-                        permanent.level = 0;
-                        notifyGameOptionsUpdate();
-                     }}
+                  <Tippy
+                     content={
+                        isOnlineUser()
+                           ? t(L.PermanentGreatPeopleUpgradeUndo, {
+                                amount: getTotalGreatPeopleUpgradeCost(greatPerson, permanent.level),
+                             })
+                           : t(L.FeatureRequireQuaestorOrAbove)
+                     }
                   >
                      <div className="m-icon" style={{ fontSize: 20 }}>
                         undo
                      </div>
-                  </button>
-               </Tippy>
+                  </Tippy>
+               </button>
             ) : null}
          </td>
       </>
