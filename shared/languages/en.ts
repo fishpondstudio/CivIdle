@@ -1382,5 +1382,6 @@ export const EN = {
    ManageAgeWisdom: "Manage Age Wisdom",
    AgeWisdomAge: "Age",
    AgeWisdomLevel: "Level",
+   PermanentGreatPeopleUpgradeUndo: "Undo permanent great people upgrade: this will convert upgraded level back to shards - you will get %{amount} shards",
    AgeWisdomRequireExtraLevel: "Require %{level} extra level",
 };

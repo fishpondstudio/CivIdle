@@ -9,9 +9,6 @@ import { useGameOptions, useGameState } from "../Global";
 import { isOnlineUser } from "../rpc/RPCClient";
 import { Singleton } from "../utilities/Singleton";
 import { GreatPersonImage } from "../visuals/GreatPersonVisual";
-import { showModal } from "./GlobalModal";
-import { ManageAgeWisdomModal } from "./ManageAgeWisdomModal";
-import { ManagePermanentGreatPersonModal } from "./ManagePermanentGreatPersonModal";
 import { MenuComponent } from "./MenuComponent";
 import { RenderHTML } from "./RenderHTMLComponent";
 import { TableView } from "./TableView";
@@ -50,17 +47,7 @@ export function GreatPersonPage(): React.ReactNode {
                </div>
                <div className="f1">{t(L.GoBack)}</div>
             </button>
-            <button
-               className="row w100 mb10 text-strong"
-               onClick={() => showModal(<ManagePermanentGreatPersonModal />)}
-            >
-               <div className="m-icon small">open_in_new</div>
-               <div className="f1 text-center">{t(L.ManagePermanentGreatPeople)}</div>
-            </button>
-            <button className="row w100 mb10 text-strong" onClick={() => showModal(<ManageAgeWisdomModal />)}>
-               <div className="m-icon small">open_in_new</div>
-               <div className="f1 text-center">{t(L.ManageAgeWisdom)}</div>
-            </button>
+
             {isOnlineUser() ? null : (
                <WarningComponent className="mb10" icon="info">
                   <RenderHTML className="text-small" html={t(L.TribuneUpgradeDescV3)} />

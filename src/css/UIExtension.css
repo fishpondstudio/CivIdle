@@ -145,6 +145,10 @@ fieldset .separator {
    padding-right: 10px;
 }
 
+.p0 {
+   padding: 0;
+}
+
 .p10 {
    padding: 10px;
 }
