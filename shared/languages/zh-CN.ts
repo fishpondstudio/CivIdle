@@ -384,7 +384,8 @@ export const ZH_CN = {
    EnricoFermi: "恩里科·费米",
    EstimatedTimeLeft: "预计剩余时间",
    EuphratesRiver: "幼发拉底河",
-   EuphratesRiverDesc: "从事生产（非运输）的忙碌劳动者占比每有 10% ，为所有不生产劳动者且为之前时代的解锁建筑，提供 +1 生产乘数（最大值为已解锁时代数/2）。当空中花园在其旁建成，于空中花园解锁后的每个时代，使空中花园获得 +1 效果。当被发现时，所有无沉积资源的相邻地块，将生成水资源",
+   EuphratesRiverDesc:
+      "从事生产（非运输）的忙碌劳动者占比每有 10% ，为所有不生产劳动者且为之前时代的解锁建筑，提供 +1 生产乘数（最大值为已解锁时代数/2）。当空中花园在其旁建成，于空中花园解锁后的每个时代，使空中花园获得 +1 效果。当被发现时，所有无沉积资源的相邻地块，将生成水资源",
    ExpansionLevelX: "扩张 %{level}",
    Exploration: "勘探",
    Explorer: "探险家",
@@ -974,7 +975,7 @@ export const ZH_CN = {
    ResourceExportToSameTypeTooltip: "允许其它同类型建筑从此建筑运送资源",
    ResourceFromBuilding: "%{resource} 来自 %{building}",
    ResourceImport: "资源运送",
-   ResourceImportCapacity: "资源运输能力",
+   ResourceImportCapacity: "资源运输能力（可分配运速）",
    ResourceImportImportCapV2: "限额",
    ResourceImportImportCapV2Tooltip: "当达到限额时，此建筑将停止运输该资源",
    ResourceImportImportPerCycleV2: "运速",
@@ -1262,7 +1263,8 @@ export const ZH_CN = {
    TransportCapacityMultiplier: "运输能力乘数",
    TransportManualControlTooltip: "运输此资源以建造/升级",
    TransportPlanCache: "运输方案缓存",
-   TransportPlanCacheDescHTML: "每个周期，每座建筑基于其设定计算最佳运输方案——此进程对 CPU 能力需求较高。开启此项，将尝试缓存运输方案，如果已缓存的运输方案仍然有效，则可达到减少 CPU 使用率与帧率下降的效果。<b>【实验性功能】</b>",
+   TransportPlanCacheDescHTML:
+      "每个周期，每座建筑基于其设定计算最佳运输方案——此进程对 CPU 能力需求较高。开启此项，将尝试缓存运输方案，如果已缓存的运输方案仍然有效，则可达到减少 CPU 使用率与帧率下降的效果。<b>【实验性功能】</b>",
    TribuneUpgradeDescGreatPeopleWarning: "你此轮拥有伟人。你应该<b>先重生</b>。升至财务官级别，将重置你的当前轮。",
    TribuneUpgradeDescGreatPeopleWarningTitle: "请先重生",
    TribuneUpgradeDescV3:
@@ -1375,4 +1377,6 @@ export const ZH_CN = {
    ZigguratOfUr: "乌尔大塔庙",
    ZigguratOfUrDescV2: "每有 10 幸福感（生效值），为所有不生产劳动者且为之前时代的解锁建筑，提供 +1 生产乘数（最大值为已解锁时代数/2）。奇观（包括自然奇观）不再提供 +1 幸福感。效果可关闭。",
    Zoroaster: "琐罗亚斯德",
+   Aristotle: "亚里士多德",
+   JuliusCaesar: "尤利乌斯·凯撒",
 };
