@@ -18,7 +18,7 @@ export function AdvisorModal({ advisor }: { advisor: Advisor }): React.ReactNode
    return (
       <div className="window" style={{ width: 800 }}>
          <div className="title-bar">
-            <div className="title-bar-text">{def.title}</div>
+            <div className="title-bar-text">{def.title()}</div>
             <div className="title-bar-controls">
                <button onClick={hideModal} aria-label="Close"></button>
             </div>
@@ -67,8 +67,8 @@ export function AdvisorContentComponent({
             <img src={AdvisorImages[advisor]} style={{ display: "block", height: 450 - 2 }} />
          </div>
          <div className="ml15" style={{ height: 450, display: "flex", flexDirection: "column" }}>
-            <div className="text-large mb10">{def.title}</div>
-            <RenderHTML html={def.content} />
+            <div className="text-large mb10">{def.title()}</div>
+            <RenderHTML html={def.content()} />
             <div className="f1"></div>
             {action}
          </div>

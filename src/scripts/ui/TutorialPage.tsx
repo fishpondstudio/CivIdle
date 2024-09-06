@@ -31,7 +31,7 @@ export function TutorialPage(): React.ReactNode {
                return (
                   <div key={advisor} className="inset-shallow white row p10 mb10">
                      <div className="f1" style={{ fontSize: 16 }}>
-                        {def.title}
+                        {def.title()}
                      </div>
                      <div>
                         <div

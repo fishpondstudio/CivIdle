@@ -9,12 +9,14 @@ import {
    getGreatPersonThisRunLevel,
    getGreatPersonUpgradeCost,
    getTotalGreatPeopleUpgradeCost,
+   getWisdomUpgradeCost,
+   isEligibleForWisdom,
    sortGreatPeople,
 } from "../../../shared/logic/RebirthLogic";
 import { keysOf, numberToRoman } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import { useGameOptions, useGameState } from "../Global";
-import { isOnlineUser, useUser } from "../rpc/RPCClient";
+import { isOnlineUser } from "../rpc/RPCClient";
 import { GreatPersonImage } from "../visuals/GreatPersonVisual";
 import { playAgeUp, playClick, playError, playLevelUp } from "../visuals/Sound";
 import { hideModal } from "./GlobalModal";
@@ -51,7 +53,7 @@ export function ManagePermanentGreatPersonModal(): React.ReactNode {
                         <th className="text-center">{t(L.GreatPeoplePermanentColumn)}</th>
                         <th></th>
                         <th className="text-center">{t(L.Upgrade)}</th>
-                        <th></th>
+                        <th colSpan={2}></th>
                      </tr>
                   </thead>
                   <tbody>
@@ -113,11 +115,11 @@ function GreatPersonRow({ greatPerson }: { greatPerson: GreatPerson }): React.Re
 function GreatPersonNormalRow({ greatPerson }: { greatPerson: GreatPerson }): React.ReactNode {
    const options = useGameOptions();
    const gs = useGameState();
-   const user = useUser();
    const thisRun = gs.greatPeople[greatPerson];
    const permanent = options.greatPeople[greatPerson];
    const person = Config.GreatPerson[greatPerson];
    const total = permanent ? getGreatPersonUpgradeCost(greatPerson, permanent.level + 1) : 0;
+   const wisdomShortage = (permanent?.amount ?? 0) - getWisdomUpgradeCost(greatPerson);
    return (
       <>
          <td className="text-center">
@@ -156,6 +158,17 @@ function GreatPersonNormalRow({ greatPerson }: { greatPerson: GreatPerson }): Re
                   <FormatNumber value={total} />
                </div>
             </button>
+         </td>
+         <td>
+            {!isEligibleForWisdom(greatPerson) ? (
+               <Tippy content={t(L.AgeWisdomNotEligible)}>
+                  <div className="m-icon text-desc mr5">do_not_disturb_on</div>
+               </Tippy>
+            ) : wisdomShortage < 0 ? (
+               <Tippy content={t(L.AgeWisdomGreatPeopleShardsNeeded, { amount: -wisdomShortage })}>
+                  <div className="m-icon text-orange mr5">error</div>
+               </Tippy>
+            ) : null}
          </td>
          <td>
             {permanent ? (
@@ -256,6 +269,11 @@ function GreatPersonWildcardRow({ greatPerson }: { greatPerson: GreatPerson }): 
             >
                {t(L.GreatPersonWildCardBirth)}
             </button>
+         </td>
+         <td>
+            <Tippy content={t(L.AgeWisdomNotEligible)}>
+               <div className="m-icon text-desc mr5">do_not_disturb_on</div>
+            </Tippy>
          </td>
          <td></td>
       </>
@@ -360,6 +378,11 @@ function GreatPersonPromotionRow({ greatPerson }: { greatPerson: GreatPerson }):
             >
                {t(L.GreatPersonPromotionPromote)}
             </button>
+         </td>
+         <td>
+            <Tippy content={t(L.AgeWisdomNotEligible)}>
+               <div className="m-icon text-desc mr5">do_not_disturb_on</div>
+            </Tippy>
          </td>
          <td></td>
       </>

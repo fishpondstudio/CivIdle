@@ -234,25 +234,40 @@ export function getFreeCityThisWeek(): City {
    return candidates[week % candidates.length];
 }
 
+export function isEligibleForWisdom(gp: GreatPerson): boolean {
+   const def = Config.GreatPerson[gp];
+   if (def.type === GreatPersonType.Normal && !def.city) {
+      return true;
+   }
+   return false;
+}
+
 export function getGreatPeopleForWisdom(age: TechAge): GreatPerson[] {
    const result: GreatPerson[] = [];
    forEach(Config.GreatPerson, (gp, def) => {
-      if (def.age === age && def.type === GreatPersonType.Normal && !def.city) {
+      if (def.age === age && isEligibleForWisdom(gp)) {
          result.push(gp);
       }
    });
    return result;
 }
 
+export function getWisdomUpgradeCost(gp: GreatPerson): number {
+   const def = Config.GreatPerson[gp];
+   const options = getGameOptions();
+   const targetLevel = 1 + (options.ageWisdom[def.age] ?? 0);
+   return getGreatPersonUpgradeCost(gp, targetLevel);
+}
+
 export function getMissingGreatPeopleForWisdom(age: TechAge): Map<GreatPerson, number> {
    const options = getGameOptions();
-   const targetLevel = 1 + (options.ageWisdom[age] ?? 0);
    const result = new Map<GreatPerson, number>();
    getGreatPeopleForWisdom(age).forEach((gp) => {
-      const currentLevel = options.greatPeople[gp]?.level ?? 0;
-      const diff = targetLevel - currentLevel;
+      const currentShards = options.greatPeople[gp]?.amount ?? 0;
+      const requiredShards = getWisdomUpgradeCost(gp);
+      const diff = requiredShards - currentShards;
       if (diff > 0) {
-         result.set(gp, targetLevel - currentLevel);
+         result.set(gp, diff);
       }
    });
    return result;

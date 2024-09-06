@@ -1383,6 +1383,8 @@ export const EN = {
    AgeWisdomAge: "Age",
    AgeWisdomLevel: "Level",
    PermanentGreatPeopleUpgradeUndo: "Undo permanent great people upgrade: this will convert upgraded level back to shards - you will get %{amount} shards",
-   AgeWisdomMissingGreatPeopleLevel: "More Levels Needed",
+   AgeWisdomNeedMoreGreatPeopleShards: "Need More Great People Shards",
    FeatureRequireQuaestorOrAbove: "This feature requires Quaestor rank or above",
+   AgeWisdomGreatPeopleShardsNeeded: "You need %{amount} more great people shards for the next Age Wisdom upgrade",
+   AgeWisdomNotEligible: "This Great Person is not eligible for Age Wisdom",
 };

@@ -1,18 +1,25 @@
 import Tippy from "@tippyjs/react";
 import { Config } from "../../../shared/logic/Config";
-import { getMissingGreatPeopleForWisdom } from "../../../shared/logic/RebirthLogic";
-import { numberToRoman } from "../../../shared/utilities/Helper";
+import { notifyGameOptionsUpdate } from "../../../shared/logic/GameStateLogic";
+import {
+   getGreatPeopleForWisdom,
+   getMissingGreatPeopleForWisdom,
+   getWisdomUpgradeCost,
+} from "../../../shared/logic/RebirthLogic";
+import { numberToRoman, safeAdd } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import { useGameOptions } from "../Global";
+import { isOnlineUser } from "../rpc/RPCClient";
 import { getColorCached } from "../utilities/CachedColor";
 import { jsxMMapOf, jsxMapOf } from "../utilities/Helper";
 import { Fonts } from "../visuals/Fonts";
+import { playError, playLevelUp } from "../visuals/Sound";
 import { hideModal } from "./GlobalModal";
 
 export function ManageAgeWisdomModal(): React.ReactNode {
    const options = useGameOptions();
    return (
-      <div className="window" style={{ width: "700px" }}>
+      <div className="window" style={{ width: "500px" }}>
          <div className="title-bar">
             <div className="title-bar-text">{t(L.ManageAgeWisdom)}</div>
             <div className="title-bar-controls">
@@ -26,7 +33,6 @@ export function ManageAgeWisdomModal(): React.ReactNode {
                      return null;
                   }
                   const wisdomLevel = options.ageWisdom[age] ?? 0;
-                  const nextWisdomLevel = wisdomLevel + 1;
                   const color = getColorCached(def.color).toHex();
                   const missing = getMissingGreatPeopleForWisdom(age);
                   return (
@@ -49,12 +55,32 @@ export function ManageAgeWisdomModal(): React.ReactNode {
                         </div>
                         <div className="f1"></div>
                         <div className="mr10">{t(L.LevelX, { level: wisdomLevel })}</div>
-                        <button disabled={missing.size > 0}>
+                        <button
+                           disabled={missing.size > 0}
+                           onClick={() => {
+                              const missing = getMissingGreatPeopleForWisdom(age);
+                              if (missing.size > 0) {
+                                 playError();
+                                 return;
+                              }
+                              playLevelUp();
+                              getGreatPeopleForWisdom(age).forEach((gp) => {
+                                 const inv = options.greatPeople[gp];
+                                 if (inv) {
+                                    inv.amount -= getWisdomUpgradeCost(gp);
+                                 }
+                              });
+                              safeAdd(options.ageWisdom, age, 1);
+                              notifyGameOptionsUpdate();
+                           }}
+                        >
                            <Tippy
-                              disabled={missing.size <= 0}
+                              disabled={missing.size <= 0 || !isOnlineUser()}
                               content={
                                  <div>
-                                    <div className="text-strong">{t(L.AgeWisdomMissingGreatPeopleLevel)}</div>
+                                    <div className="text-strong">
+                                       {t(L.AgeWisdomNeedMoreGreatPeopleShards)}
+                                    </div>
                                     {jsxMMapOf(missing, (gp, amount) => {
                                        return (
                                           <div className="row">
