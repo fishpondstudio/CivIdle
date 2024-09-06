@@ -113,6 +113,9 @@ export function getUser(): IUser | null {
 }
 
 export function isOnlineUser(): boolean {
+   if (import.meta.env.DEV) {
+      return true;
+   }
    return (user?.level ?? AccountLevel.Tribune) > AccountLevel.Tribune;
 }
 

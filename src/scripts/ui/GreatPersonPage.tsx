@@ -9,8 +9,6 @@ import { useGameOptions, useGameState } from "../Global";
 import { isOnlineUser } from "../rpc/RPCClient";
 import { Singleton } from "../utilities/Singleton";
 import { GreatPersonImage } from "../visuals/GreatPersonVisual";
-import { showModal } from "./GlobalModal";
-import { ManagePermanentGreatPersonModal } from "./ManagePermanentGreatPersonModal";
 import { MenuComponent } from "./MenuComponent";
 import { RenderHTML } from "./RenderHTMLComponent";
 import { TableView } from "./TableView";
@@ -37,7 +35,7 @@ export function GreatPersonPage(): React.ReactNode {
          <MenuComponent />
          <div className="window-body">
             <button
-               className="w100 row jcc"
+               className="w100 row jcc mb10"
                onClick={() =>
                   Singleton().routeTo(TilePage, {
                      xy: Tick.current.specialBuildings.get("Headquarter")?.tile,
@@ -49,14 +47,7 @@ export function GreatPersonPage(): React.ReactNode {
                </div>
                <div className="f1">{t(L.GoBack)}</div>
             </button>
-            <div className="sep10"></div>
-            <button
-               className="row w100 mb10 text-strong"
-               onClick={() => showModal(<ManagePermanentGreatPersonModal />)}
-            >
-               <div className="m-icon small">open_in_new</div>
-               <div className="f1 text-center">{t(L.ManagePermanentGreatPeople)}</div>
-            </button>
+
             {isOnlineUser() ? null : (
                <WarningComponent className="mb10" icon="info">
                   <RenderHTML className="text-small" html={t(L.TribuneUpgradeDescV3)} />

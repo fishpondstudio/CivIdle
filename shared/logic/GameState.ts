@@ -3,7 +3,7 @@ import type { Building } from "../definitions/BuildingDefinitions";
 import type { City } from "../definitions/CityDefinitions";
 import type { GreatPerson } from "../definitions/GreatPersonDefinitions";
 import type { Resource } from "../definitions/ResourceDefinitions";
-import type { Tech } from "../definitions/TechDefinitions";
+import type { Tech, TechAge } from "../definitions/TechDefinitions";
 import type { Upgrade } from "../definitions/UpgradeDefinitions";
 import { CZ } from "../languages/cz";
 import { DE } from "../languages/de";
@@ -172,7 +172,7 @@ export class GameOptions {
    porcelainTowerMaxPickPerRoll = false;
    // Should be wiped
    greatPeople: Partial<Record<GreatPerson, { level: number; amount: number }>> = {};
-   // greatPeopleChoices: GreatPeopleChoice[] = [];
+   ageWisdom: PartialTabulate<TechAge> = {};
    greatPeopleChoicesV2: GreatPeopleChoiceV2[] = [];
    language: keyof typeof Languages = "en";
    disabledTutorials = new Set<Advisor>();

@@ -72,7 +72,7 @@ export function RebirthModal(): React.ReactNode {
    const [pickPerRoll, setPickPerRoll] = useState(maxPickPerRoll);
 
    return (
-      <div className="window" style={{ width: "500px" }}>
+      <div className="window" style={{ width: "600px" }}>
          <div className="title-bar">
             <div className="title-bar-text">{t(L.Reborn)}</div>
          </div>
@@ -83,7 +83,7 @@ export function RebirthModal(): React.ReactNode {
                </WarningComponent>
             ) : null}
             <WarningComponent icon="info" className="mb10 text-small">
-               <RenderHTML html={t(L.RebornModalDescV2)} />
+               <RenderHTML html={t(L.RebornModalDescV3)} />
             </WarningComponent>
             {canEarnGreatPeopleFromReborn() ? (
                <ul className="tree-view">

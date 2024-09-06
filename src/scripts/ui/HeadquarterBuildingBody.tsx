@@ -40,9 +40,10 @@ import { BuildingProduceComponent } from "./BuildingProduceComponent";
 import { BuildingStorageComponent } from "./BuildingStorageComponent";
 import { ChooseGreatPersonModal } from "./ChooseGreatPersonModal";
 import { showModal } from "./GlobalModal";
-import { GreatPersonPage } from "./GreatPersonPage";
 import { HappinessComponent } from "./HappinessComponent";
 import { FormatNumber } from "./HelperComponents";
+import { ManageAgeWisdomModal } from "./ManageAgeWisdomModal";
+import { ManagePermanentGreatPersonModal } from "./ManagePermanentGreatPersonModal";
 import { PlayerHandleComponent } from "./PlayerHandleComponent";
 import { RebirthModal } from "./RebirthModal";
 import { RenderHTML } from "./RenderHTMLComponent";
@@ -377,9 +378,16 @@ function GreatPeopleComponent({
                </details>
             </li>
          </ul>
-         <button onClick={() => Singleton().routeTo(GreatPersonPage, {})} className="jcc w100 row mt10">
+         <button
+            className="row w100 mt10 text-strong"
+            onClick={() => showModal(<ManagePermanentGreatPersonModal />)}
+         >
             <div className="m-icon small">person_celebrate</div>
-            <div className="f1 text-strong">{t(L.ManageGreatPeople)}</div>
+            <div className="f1 text-center">{t(L.ManageGreatPeople)}</div>
+         </button>
+         <button className="row w100 mt5 text-strong" onClick={() => showModal(<ManageAgeWisdomModal />)}>
+            <div className="m-icon small">emoji_objects</div>
+            <div className="f1 text-center">{t(L.ManageAgeWisdom)}</div>
          </button>
       </fieldset>
    );

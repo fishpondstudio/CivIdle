@@ -5,33 +5,33 @@ import { deepFreeze } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
 
 export interface IAdvisor {
-   title: string;
-   content: string;
+   title: () => string;
+   content: () => string;
    condition: (gs: GameState) => boolean;
 }
 
 export const Advisors = deepFreeze({
    Happiness: {
-      title: t(L.AdvisorHappinessTitle),
-      content: t(L.AdvisorHappinessContent),
+      title: () => t(L.AdvisorHappinessTitle),
+      content: () => t(L.AdvisorHappinessContent),
       condition: (gs) => (Tick.current.happiness?.value ?? Number.POSITIVE_INFINITY) <= 5,
    },
    Wonder: {
-      title: t(L.AdvisorWonderTitle),
-      content: t(L.AdvisorWonderContent),
+      title: () => t(L.AdvisorWonderTitle),
+      content: () => t(L.AdvisorWonderContent),
       condition: (gs) => !!gs.unlockedTech.Masonry,
    },
    Science: {
-      title: t(L.AdvisorScienceTitle),
-      content: t(L.AdvisorScienceContent),
+      title: () => t(L.AdvisorScienceTitle),
+      content: () => t(L.AdvisorScienceContent),
       condition: (gs) => {
          const hq = Tick.current.specialBuildings.get("Headquarter");
          return (hq?.building.resources.Science ?? 0) >= 25_000;
       },
    },
    Worker: {
-      title: t(L.AdvisorWorkerTitle),
-      content: t(L.AdvisorWorkerContent),
+      title: () => t(L.AdvisorWorkerTitle),
+      content: () => t(L.AdvisorWorkerContent),
       condition: (gs) => {
          for (const [k, v] of Tick.current.notProducingReasons) {
             return v === NotProducingReason.NotEnoughWorkers;
@@ -40,8 +40,8 @@ export const Advisors = deepFreeze({
       },
    },
    Storage: {
-      title: t(L.AdvisorStorageTitle),
-      content: t(L.AdvisorStorageContent),
+      title: () => t(L.AdvisorStorageTitle),
+      content: () => t(L.AdvisorStorageContent),
       condition: (gs) => {
          for (const [k, v] of Tick.current.notProducingReasons) {
             return v === NotProducingReason.StorageFull;
@@ -50,8 +50,8 @@ export const Advisors = deepFreeze({
       },
    },
    Tradition: {
-      title: t(L.AdvisorTraditionTitle),
-      content: t(L.AdvisorTraditionContent),
+      title: () => t(L.AdvisorTraditionTitle),
+      content: () => t(L.AdvisorTraditionContent),
       condition: (gs) => {
          return (
             Tick.current.specialBuildings.has("ChoghaZanbil") ||
@@ -61,28 +61,28 @@ export const Advisors = deepFreeze({
       },
    },
    Electricity: {
-      title: t(L.AdvisorElectricityTitle),
-      content: t(L.AdvisorElectricityContent),
+      title: () => t(L.AdvisorElectricityTitle),
+      content: () => t(L.AdvisorElectricityContent),
       condition: (gs) => !!gs.unlockedTech.Electricity,
    },
    GreatPeople: {
-      title: t(L.AdvisorGreatPeopleTitle),
-      content: t(L.AdvisorGreatPeopleContent),
+      title: () => t(L.AdvisorGreatPeopleTitle),
+      content: () => t(L.AdvisorGreatPeopleContent),
       condition: (gs) => getCurrentAge(gs) === "BronzeAge",
    },
    Welcome1: {
-      title: t(L.FirstTimeTutorialWelcome),
-      content: t(L.FirstTimeTutorialWelcome1HTML),
+      title: () => t(L.FirstTimeTutorialWelcome),
+      content: () => t(L.FirstTimeTutorialWelcome1HTML),
       condition: (gs) => false,
    },
    Welcome2: {
-      title: t(L.FirstTimeTutorialWelcome),
-      content: t(L.FirstTimeTutorialWelcome2HTML),
+      title: () => t(L.FirstTimeTutorialWelcome),
+      content: () => t(L.FirstTimeTutorialWelcome2HTML),
       condition: (gs) => false,
    },
    Welcome3: {
-      title: t(L.FirstTimeTutorialWelcome),
-      content: t(L.FirstTimeTutorialWelcome3HTML),
+      title: () => t(L.FirstTimeTutorialWelcome),
+      content: () => t(L.FirstTimeTutorialWelcome3HTML),
       condition: (gs) => false,
    },
 }) satisfies Record<string, IAdvisor>;

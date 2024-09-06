@@ -168,7 +168,7 @@ function postTickTiles(gs: GameState, offline: boolean) {
    // Here we use Tick.next, make sure this is the last code before we increase the tick
    tracker.accumulated += Tick.next.totalValue;
    if (gs.tick % 3600 === 0) {
-      tracker.history.push(tracker.accumulated);
+      tracker.history.push(tracker.accumulated / 3600);
       tracker.accumulated = 0;
    }
    gs.valueTrackers.set(ValueToTrack.EmpireValue, tracker);
