@@ -1390,4 +1390,5 @@ export const EN = {
    AgeWisdomNotEligible: "This Great Person is not eligible for Age Wisdom",
    FilterByAge: "Filter by Age",
    GreatPeopleFilter: "Type name or age to filter great people",
+   AgeWisdomSource: "%{age} Wisdom: %{person}"
 };

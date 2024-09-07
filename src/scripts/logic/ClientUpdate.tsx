@@ -10,7 +10,7 @@ import {
 } from "../../../shared/logic/GameStateLogic";
 import { calculateHappiness } from "../../../shared/logic/HappinessLogic";
 import { clearIntraTickCache, getBuildingsByType } from "../../../shared/logic/IntraTickCache";
-import { getGreatPersonThisRunLevel } from "../../../shared/logic/RebirthLogic";
+import { getGreatPeopleForWisdom, getGreatPersonThisRunLevel } from "../../../shared/logic/RebirthLogic";
 import { RequestResetTile } from "../../../shared/logic/TechLogic";
 import { CurrentTickChanged, EmptyTickData, Tick, freezeTickData } from "../../../shared/logic/TickLogic";
 import {
@@ -111,6 +111,18 @@ export function tickEverySecond(gs: GameState, offline: boolean) {
          t(L.SourceGreatPersonPermanent, { person: greatPerson.name() }),
          GreatPersonTickFlag.None,
       );
+   });
+
+   forEach(getGameOptions().ageWisdom, (age, level) => {
+      getGreatPeopleForWisdom(age).forEach((gp) => {
+         const greatPerson = Config.GreatPerson[gp];
+         greatPerson.tick(
+            greatPerson,
+            level,
+            t(L.AgeWisdomSource, { age: Config.TechAge[age].name(), person: greatPerson.name() }),
+            GreatPersonTickFlag.None,
+         );
+      });
    });
 
    tickPrice(gs);
