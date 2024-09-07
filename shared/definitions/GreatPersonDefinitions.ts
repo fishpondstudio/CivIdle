@@ -302,6 +302,19 @@ export class GreatPersonDefinitions {
       age: "ClassicalAge",
    });
 
+   Cleopatra: IGreatPersonDefinition = boostOf({
+      name: () => t(L.Cleopatra),
+      boost: {
+         multipliers: ["output", "storage"],
+         buildings: ["Shrine"],
+      },
+      city: "Memphis",
+      time: "70 ~ 30 BC",
+      value: (level) => 2 * level,
+      maxLevel: Number.POSITIVE_INFINITY,
+      age: "ClassicalAge",
+   });
+
    Zenobia: IGreatPersonDefinition = {
       name: () => t(L.Zenobia),
       desc: (self, level) => t(L.ZenobiaDesc, { value: self.value(level) }),

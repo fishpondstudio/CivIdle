@@ -1393,4 +1393,5 @@ export const EN = {
    Zoroaster: "Zoroaster",
    GreedyTransport: "Construction/Upgrade Greedy Transport",
    GreedyTransportDescHTML: "This will make buildings keep transporting resources even if it has enough resources for the current upgrade, which can make upgrading multiple levels <b>faster</b> but end up transport <b>more resources than needed</b>",
+   Cleopatra: "Cleopatra",
 };
