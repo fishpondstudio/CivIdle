@@ -84,8 +84,10 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
 
    switch (building.type) {
       case "Headquarter": {
+         const totalGreatPeopleLevels = reduceOf(options.greatPeople, (prev, gp, inv) => prev + inv.level, 0);
+         const totalWisdomLevels = reduceOf(options.ageWisdom, (prev, age, wisdom) => prev + wisdom, 0);
          mapSafePush(Tick.next.tileMultipliers, xy, {
-            output: round(reduceOf(options.greatPeople, (prev, gp, inv) => prev + inv.level, 0) * 0.1, 1),
+            output: round((totalGreatPeopleLevels + totalWisdomLevels) * 0.1, 1),
             source: t(L.PermanentGreatPeople),
          });
          break;
@@ -1044,7 +1046,9 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          addMultiplier("Warehouse", { storage: count }, buildingName);
          addMultiplier("Market", { storage: count }, buildingName);
          addMultiplier("Caravansary", { storage: count }, buildingName);
-         const total = getGreatPersonTotalEffect("AlbertEinstein", gs, options);
+         const total =
+            getGreatPersonTotalEffect("AlbertEinstein", gs, options) +
+            (options.ageWisdom[Config.GreatPerson.AlbertEinstein.age] ?? 0);
          if (total > 0) {
             addMultiplier("ResearchFund", { output: total }, buildingName);
          }
