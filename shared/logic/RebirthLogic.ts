@@ -256,7 +256,7 @@ export function getWisdomUpgradeCost(gp: GreatPerson): number {
    const def = Config.GreatPerson[gp];
    const options = getGameOptions();
    const targetLevel = 1 + (options.ageWisdom[def.age] ?? 0);
-   return getGreatPersonUpgradeCost(gp, targetLevel);
+   return getTotalGreatPeopleUpgradeCost(gp, targetLevel);
 }
 
 export function getMissingGreatPeopleForWisdom(age: TechAge): Map<GreatPerson, number> {
