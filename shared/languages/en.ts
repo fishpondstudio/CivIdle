@@ -1390,5 +1390,6 @@ export const EN = {
    AgeWisdomNotEligible: "This Great Person is not eligible for Age Wisdom",
    FilterByAge: "Filter by Age",
    GreatPeopleFilter: "Type name or age to filter great people",
-   AgeWisdomSource: "%{age} Wisdom: %{person}"
+   AgeWisdomSource: "%{age} Wisdom: %{person}",
+   AgeWisdomDescHTML: "Each level of Age Wisdom provides <b>an equivalent level</b> of eligible Permanent Great People of that age - it can be upgraded with eligible Permanent Great People shards"
 };

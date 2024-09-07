@@ -30,7 +30,7 @@ import { Config } from "./Config";
 import { MANAGED_IMPORT_RANGE } from "./Constants";
 import { GameFeature, hasFeature } from "./FeatureLogic";
 import type { GameOptions, GameState } from "./GameState";
-import { getGameState } from "./GameStateLogic";
+import { getGameOptions, getGameState } from "./GameStateLogic";
 import {
    getBuildingIO,
    getBuildingsByType,
@@ -242,6 +242,9 @@ export function getStorageFor(xy: Tile, gs: GameState): IStorageResult {
          const HOUR = 60 * 60;
          base = 3 * HOUR + getPetraBaseStorage(building);
          base += HOUR * Config.GreatPerson.Zenobia.value(getGreatPersonTotalEffect("Zenobia"));
+         base +=
+            HOUR *
+            Config.GreatPerson.Zenobia.value(getGameOptions().ageWisdom[Config.GreatPerson.Zenobia.age] ?? 0);
          const fuji = findSpecialBuilding("MountFuji", gs);
          if (fuji && getGrid(gs).distanceTile(fuji.tile, xy) <= 1) {
             base += HOUR * 8;

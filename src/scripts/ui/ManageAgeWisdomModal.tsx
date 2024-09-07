@@ -16,6 +16,8 @@ import { Fonts } from "../visuals/Fonts";
 import { playClick, playError, playLevelUp } from "../visuals/Sound";
 import { hideModal, showModal } from "./GlobalModal";
 import { ManagePermanentGreatPersonModal } from "./ManagePermanentGreatPersonModal";
+import { RenderHTML } from "./RenderHTMLComponent";
+import { WarningComponent } from "./WarningComponent";
 
 export function ManageAgeWisdomModal(): React.ReactNode {
    const options = useGameOptions();
@@ -40,6 +42,9 @@ export function ManageAgeWisdomModal(): React.ReactNode {
                </div>
                <div className="f1">{t(L.ManagePermanentGreatPeople)}</div>
             </button>
+            <WarningComponent icon="info" className="text-small mb10">
+               <RenderHTML html={t(L.AgeWisdomDescHTML)} />
+            </WarningComponent>
             <div className="inset-shallow white" style={{ maxHeight: "50vh", overflowY: "auto" }}>
                {jsxMapOf(Config.TechAge, (age, def) => {
                   if (def.idx === 0) {
