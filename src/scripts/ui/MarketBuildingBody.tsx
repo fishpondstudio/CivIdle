@@ -19,7 +19,7 @@ import {
 } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import { playClick } from "../visuals/Sound";
-import { ApplyToAllComponent } from "./ApplyToAllComponent";
+import { ApplyToAllComponent, ApplyToAllFlag } from "./ApplyToAllComponent";
 import { BuildingColorComponent } from "./BuildingColorComponent";
 import { BuildingInputModeComponent } from "./BuildingInputModeComponent";
 import type { IBuildingComponentProps } from "./BuildingPage";
@@ -64,99 +64,111 @@ export function MarketBuildingBody({ gameState, xy }: IBuildingComponentProps): 
                </div>
             </div>
          </fieldset>
-         <TableView
-            header={[
-               { name: t(L.MarketYouPay), sortable: true },
-               { name: t(L.MarketYouGet), sortable: true },
-               { name: "", sortable: true },
-               { name: t(L.Storage), sortable: true },
-               { name: t(L.MarketSell), sortable: false },
-            ]}
-            sortingState={marketSortingState}
-            data={keysOf(market.availableResources)}
-            compareFunc={(a, b, i) => {
-               switch (i) {
-                  case 0:
-                     return Config.Resource[a].name().localeCompare(Config.Resource[b].name());
-                  case 1: {
-                     const aRes = market.availableResources[a]!;
-                     const bRes = market.availableResources[b]!;
-                     return Config.Resource[aRes].name().localeCompare(Config.Resource[bRes].name());
+         <fieldset>
+            <TableView
+               header={[
+                  { name: t(L.MarketYouPay), sortable: true },
+                  { name: t(L.MarketYouGet), sortable: true },
+                  { name: "", sortable: true },
+                  { name: t(L.Storage), sortable: true },
+                  { name: t(L.MarketSell), sortable: false },
+               ]}
+               sortingState={marketSortingState}
+               data={keysOf(market.availableResources)}
+               compareFunc={(a, b, i) => {
+                  switch (i) {
+                     case 0:
+                        return Config.Resource[a].name().localeCompare(Config.Resource[b].name());
+                     case 1: {
+                        const aRes = market.availableResources[a]!;
+                        const bRes = market.availableResources[b]!;
+                        return Config.Resource[aRes].name().localeCompare(Config.Resource[bRes].name());
+                     }
+                     case 2: {
+                        return (tradeValues.get(a) ?? 0) - (tradeValues.get(b) ?? 0);
+                     }
+                     case 3: {
+                        return (building.resources[a] ?? 0) - (building.resources[b] ?? 0);
+                     }
+                     default:
+                        return 0;
                   }
-                  case 2: {
-                     return (tradeValues.get(a) ?? 0) - (tradeValues.get(b) ?? 0);
+               }}
+               renderRow={(sellResource) => {
+                  const r = Config.Resource[sellResource];
+                  if (!r || NoPrice[sellResource] || NoStorage[sellResource]) {
+                     return null;
                   }
-                  case 3: {
-                     return (building.resources[a] ?? 0) - (building.resources[b] ?? 0);
-                  }
-                  default:
-                     return 0;
-               }
-            }}
-            renderRow={(sellResource) => {
-               const r = Config.Resource[sellResource];
-               if (!r || NoPrice[sellResource] || NoStorage[sellResource]) {
-                  return null;
-               }
-               const sellAmount = getMarketSellAmount(sellResource, xy, gameState);
-               const buyResource = market.availableResources[sellResource]!;
-               const buyAmount = getMarketBuyAmount(sellResource, sellAmount, buyResource, xy, gameState);
-               const tradeValue = tradeValues.get(sellResource) ?? 0;
-               return (
-                  <tr key={sellResource}>
-                     <td>
-                        <div>{r.name()}</div>
-                        <div className="text-small text-desc text-strong">
-                           <FormatNumber value={sellAmount} />
-                        </div>
-                     </td>
-                     <td>
-                        <div>{Config.Resource[buyResource].name()}</div>
-                        <div className="text-small text-desc text-strong">
-                           <FormatNumber value={buyAmount} />
-                        </div>
-                     </td>
-                     <td
-                        className={classNames({
-                           "text-green": tradeValue > 0,
-                           "text-red": tradeValue < 0,
-                           "text-right text-small": true,
-                        })}
-                     >
-                        <TextWithHelp
-                           content={t(L.MarketValueDesc, { value: formatPercent(tradeValue, 0) })}
-                           noStyle
+                  const sellAmount = getMarketSellAmount(sellResource, xy, gameState);
+                  const buyResource = market.availableResources[sellResource]!;
+                  const buyAmount = getMarketBuyAmount(sellResource, sellAmount, buyResource, xy, gameState);
+                  const tradeValue = tradeValues.get(sellResource) ?? 0;
+                  return (
+                     <tr key={sellResource}>
+                        <td>
+                           <div>{r.name()}</div>
+                           <div className="text-small text-desc text-strong">
+                              <FormatNumber value={sellAmount} />
+                           </div>
+                        </td>
+                        <td>
+                           <div>{Config.Resource[buyResource].name()}</div>
+                           <div className="text-small text-desc text-strong">
+                              <FormatNumber value={buyAmount} />
+                           </div>
+                        </td>
+                        <td
+                           className={classNames({
+                              "text-green": tradeValue > 0,
+                              "text-red": tradeValue < 0,
+                              "text-right text-small": true,
+                           })}
                         >
-                           {mathSign(tradeValue, CURRENCY_PERCENT_EPSILON)}
-                           {formatPercent(Math.abs(tradeValue), 0)}
-                        </TextWithHelp>
-                     </td>
-                     <td className="right">
-                        <FormatNumber value={building.resources[sellResource] ?? 0} />
-                     </td>
-                     <td
-                        className="pointer"
-                        onClick={() => {
-                           playClick();
-                           if (building.sellResources[sellResource]) {
-                              delete building.sellResources[sellResource];
-                           } else {
-                              building.sellResources[sellResource] = true;
-                           }
-                           notifyGameStateUpdate();
-                        }}
-                     >
-                        {building.sellResources[sellResource] ? (
-                           <div className="m-icon text-green">toggle_on</div>
-                        ) : (
-                           <div className="m-icon text-grey">toggle_off</div>
-                        )}
-                     </td>
-                  </tr>
-               );
-            }}
-         />
-         <div className="sep10" />
+                           <TextWithHelp
+                              content={t(L.MarketValueDesc, { value: formatPercent(tradeValue, 0) })}
+                              noStyle
+                           >
+                              {mathSign(tradeValue, CURRENCY_PERCENT_EPSILON)}
+                              {formatPercent(Math.abs(tradeValue), 0)}
+                           </TextWithHelp>
+                        </td>
+                        <td className="right">
+                           <FormatNumber value={building.resources[sellResource] ?? 0} />
+                        </td>
+                        <td
+                           className="pointer"
+                           onClick={() => {
+                              playClick();
+                              if (building.sellResources[sellResource]) {
+                                 delete building.sellResources[sellResource];
+                              } else {
+                                 building.sellResources[sellResource] = true;
+                              }
+                              notifyGameStateUpdate();
+                           }}
+                        >
+                           {building.sellResources[sellResource] ? (
+                              <div className="m-icon text-green">toggle_on</div>
+                           ) : (
+                              <div className="m-icon text-grey">toggle_off</div>
+                           )}
+                        </td>
+                     </tr>
+                  );
+               }}
+            />
+            <div className="sep10" />
+            <ApplyToAllComponent
+               xy={xy}
+               getOptions={() => {
+                  return {
+                     sellResources: structuredClone(building.sellResources),
+                  } as IMarketBuildingData;
+               }}
+               gameState={gameState}
+               flags={ApplyToAllFlag.NoDefault}
+            />
+         </fieldset>
          <BuildingWorkerComponent gameState={gameState} xy={xy} />
          <BuildingStorageComponent gameState={gameState} xy={xy} />
          <BuildingProductionPriorityComponent gameState={gameState} xy={xy} />

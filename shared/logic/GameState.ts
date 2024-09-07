@@ -170,6 +170,7 @@ export class GameOptions {
    defaultStockpileMax = 5;
    defaultBuildingLevel = 1;
    porcelainTowerMaxPickPerRoll = false;
+   greedyTransport = false;
    // Should be wiped
    greatPeople: Partial<Record<GreatPerson, { level: number; amount: number }>> = {};
    ageWisdom: PartialTabulate<TechAge> = {};

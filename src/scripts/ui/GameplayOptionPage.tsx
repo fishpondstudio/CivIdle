@@ -143,6 +143,17 @@ export function GameplayOptionPage(): React.ReactNode {
                   }}
                />
                <div className="sep10" />
+               <div className="separator" />
+               <ToggleComponent
+                  title={t(L.GreedyTransport)}
+                  contentHTML={t(L.GreedyTransportDescHTML)}
+                  value={options.greedyTransport}
+                  onValueChange={(value) => {
+                     playClick();
+                     options.greedyTransport = value;
+                     notifyGameOptionsUpdate(options);
+                  }}
+               />
             </fieldset>
             <fieldset>
                <legend>{t(L.ResourceBar)}</legend>
