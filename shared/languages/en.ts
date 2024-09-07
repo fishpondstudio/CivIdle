@@ -1267,8 +1267,8 @@ export const EN = {
       "Every cycle, each building calculates the best transport plan based on its settings - this process requires high CPU power. Enabling this will attempt to cache the result of the transport plan if it is still valid and therefore reduce CPU usage and frame rate drop. <b>Experimental Feature</b>",
    TribuneUpgradeDescGreatPeopleWarning: "Your current run has great people. You should <b>rebirth first</b>. Upgrading to Quaestor rank will reset your current run",
    TribuneUpgradeDescGreatPeopleWarningTitle: "Please Rebirth First",
-   TribuneUpgradeDescV3:
-      "You can play the full game as Tribune if you do not plan to participate in the <b>optional</b> online features. To acquire unrestricted access to the online features, you will need to upgrade to Quaestor. <b>This is an anti-bot measure to keep the game free for everyone.</b> However, <b>when upgrading to Quaestor</b> you can carry over great people: <ul><li>Up to Level <b>3</b> for Bronze, Iron and Classical Age</li><li>Up to Level <b>2</b> for Middle Age, Renaissance and Industrial Age</li><li>Up to Level <b>1</b> for World Wars, Cold War and Information Age</li></ul>Partial progress above the level cannot be carried over.",
+   TribuneUpgradeDescV4:
+      "You can play the full game as Tribune if you do not plan to participate in the <b>optional</b> online features. To acquire unrestricted access to the online features, you will need to upgrade to Quaestor. <b>This is an anti-bot measure to keep the game free for everyone.</b> However, <b>when upgrading to Quaestor</b> you can carry over great people: <ul><li>Up to Level <b>3</b> for Bronze, Iron and Classical Age</li><li>Up to Level <b>2</b> for Middle Age, Renaissance and Industrial Age</li><li>Up to Level <b>1</b> for World Wars, Cold War and Information Age</li></ul>Great People Shards above the level and <b>Age Wisdom</b> levels <b>cannot</b> be carried over",
    TurnOnTimeWarpDesc: "Cost %{speed} warps for every second and accelerate your empire to run at %{speed}x speed.",
    Tutorial: "Tutorial",
    TutorialPlayerFlag: "Choose your player flag",

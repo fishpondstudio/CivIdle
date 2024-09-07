@@ -50,7 +50,7 @@ export function GreatPersonPage(): React.ReactNode {
 
             {isOnlineUser() ? null : (
                <WarningComponent className="mb10" icon="info">
-                  <RenderHTML className="text-small" html={t(L.TribuneUpgradeDescV3)} />
+                  <RenderHTML className="text-small" html={t(L.TribuneUpgradeDescV4)} />
                </WarningComponent>
             )}
             <TableView

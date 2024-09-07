@@ -250,7 +250,7 @@ function AccountDetails(): React.ReactNode {
             <>
                <div className="separator" />
                <WarningComponent className="mb10" icon="info">
-                  <RenderHTML className="text-small" html={t(L.TribuneUpgradeDescV3)} />
+                  <RenderHTML className="text-small" html={t(L.TribuneUpgradeDescV4)} />
                </WarningComponent>
                <RenderHTML html={t(L.AccountLevelUpgradeConditionAnyHTML)} />
                <div className="separator" />
@@ -299,15 +299,17 @@ function AccountDetails(): React.ReactNode {
                                  await client.upgrade();
                                  playLevelUp();
                                  await resetToCity(getGameState().city);
-                                 getGameOptions().greatPeopleChoicesV2 = [];
-                                 upgradeAllPermanentGreatPeople(getGameOptions());
-                                 forEach(getGameOptions().greatPeople, (k, v) => {
+                                 const options = getGameOptions();
+                                 options.greatPeopleChoicesV2 = [];
+                                 upgradeAllPermanentGreatPeople(options);
+                                 forEach(options.greatPeople, (k, v) => {
                                     const maxLevel = getTribuneUpgradeMaxLevel(Config.GreatPerson[k].age);
                                     if (v.level >= maxLevel) {
                                        v.level = maxLevel;
                                        v.amount = 0;
                                     }
                                  });
+                                 options.ageWisdom = {};
                                  await saveGame();
                                  window.location.reload();
                               } catch (error) {

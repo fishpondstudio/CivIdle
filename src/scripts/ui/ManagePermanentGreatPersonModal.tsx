@@ -43,7 +43,7 @@ export function ManagePermanentGreatPersonModal(): React.ReactNode {
          <div className="window-body">
             {isOnlineUser() ? null : (
                <WarningComponent className="mb10" icon="info">
-                  <RenderHTML className="text-small" html={t(L.TribuneUpgradeDescV3)} />
+                  <RenderHTML className="text-small" html={t(L.TribuneUpgradeDescV4)} />
                </WarningComponent>
             )}
             <div className="row mb10">
