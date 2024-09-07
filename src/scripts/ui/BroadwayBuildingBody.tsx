@@ -1,10 +1,12 @@
 import classNames from "classnames";
+import { useState } from "react";
 import { GreatPersonType } from "../../../shared/definitions/GreatPersonDefinitions";
 import { Config } from "../../../shared/logic/Config";
 import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
 import { getGreatPersonTotalEffect, sortGreatPeople } from "../../../shared/logic/RebirthLogic";
 import type { IGreatPeopleBuildingData } from "../../../shared/logic/Tile";
-import { keysOf } from "../../../shared/utilities/Helper";
+import { keysOf, round } from "../../../shared/utilities/Helper";
+import { L, t } from "../../../shared/utilities/i18n";
 import { GreatPersonImage } from "../visuals/GreatPersonVisual";
 import { playClick } from "../visuals/Sound";
 import { BuildingColorComponent } from "./BuildingColorComponent";
@@ -13,18 +15,41 @@ import type { IBuildingComponentProps } from "./BuildingPage";
 import { BuildingValueComponent } from "./BuildingValueComponent";
 import { BuildingWikipediaComponent } from "./BuildingWikipediaComponent";
 
+let greatPeopleFilter = "";
+
 export function BroadwayBuildingBody({ gameState, xy }: IBuildingComponentProps): React.ReactNode {
    const building = gameState.tiles.get(xy)?.building as IGreatPeopleBuildingData;
    if (!building) {
       return null;
    }
+   const [filter, setFilter] = useState(greatPeopleFilter);
    return (
       <div className="window-body">
          <BuildingDescriptionComponent gameState={gameState} xy={xy} />
+         <input
+            value={filter}
+            onChange={(e) => {
+               greatPeopleFilter = e.target.value;
+               setFilter(greatPeopleFilter);
+            }}
+            type="text"
+            className="w100 mb10"
+            placeholder={t(L.GreatPeopleFilter)}
+         />
          <div className="table-view mb10">
             <table>
                <tbody>
                   {keysOf(Config.GreatPerson)
+                     .filter((gp) => {
+                        const def = Config.GreatPerson[gp];
+                        if (def.name().toLowerCase().includes(filter.toLowerCase())) {
+                           return true;
+                        }
+                        if (Config.TechAge[def.age].name().toLowerCase().includes(filter.toLowerCase())) {
+                           return true;
+                        }
+                        return false;
+                     })
                      .sort(sortGreatPeople)
                      .map((k) => {
                         const def = Config.GreatPerson[k];
@@ -35,7 +60,7 @@ export function BroadwayBuildingBody({ gameState, xy }: IBuildingComponentProps)
                         const active = building.greatPeople.has(k);
                         return (
                            <tr key={k}>
-                              <td>
+                              <td style={{ width: 0 }}>
                                  <GreatPersonImage
                                     greatPerson={k}
                                     style={{ height: "50px", display: "block" }}
@@ -47,11 +72,12 @@ export function BroadwayBuildingBody({ gameState, xy }: IBuildingComponentProps)
                                        <span className="text-strong">{def.name()}</span>
                                        <span className="text-desc ml5">{Config.TechAge[def.age].name()}</span>
                                     </div>
-                                    <div className="text-small text-desc">{def.desc(def, effect)}</div>
+                                    <div className="text-small text-desc">
+                                       {def.desc(def, round(effect, 2))}
+                                    </div>
                                  </div>
                               </td>
-                              <td></td>
-                              <td>
+                              <td style={{ width: 0 }}>
                                  <div
                                     className={classNames({
                                        "m-icon pointer": true,

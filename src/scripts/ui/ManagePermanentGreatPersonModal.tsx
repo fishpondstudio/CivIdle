@@ -2,6 +2,7 @@ import Tippy from "@tippyjs/react";
 import classNames from "classnames";
 import { useState } from "react";
 import { GreatPersonType, type GreatPerson } from "../../../shared/definitions/GreatPersonDefinitions";
+import type { TechAge } from "../../../shared/definitions/TechDefinitions";
 import { Config } from "../../../shared/logic/Config";
 import { notifyGameOptionsUpdate } from "../../../shared/logic/GameStateLogic";
 import {
@@ -17,15 +18,20 @@ import { keysOf, numberToRoman } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import { useGameOptions, useGameState } from "../Global";
 import { isOnlineUser } from "../rpc/RPCClient";
+import { jsxMapOf } from "../utilities/Helper";
 import { GreatPersonImage } from "../visuals/GreatPersonVisual";
-import { playAgeUp, playClick, playError, playLevelUp } from "../visuals/Sound";
-import { hideModal } from "./GlobalModal";
+import { playAgeUp, playClick, playError, playUpgrade } from "../visuals/Sound";
+import { hideModal, showModal } from "./GlobalModal";
 import { FormatNumber } from "./HelperComponents";
+import { ManageAgeWisdomModal } from "./ManageAgeWisdomModal";
 import { RenderHTML } from "./RenderHTMLComponent";
 import { TextWithHelp } from "./TextWithHelpComponent";
 import { WarningComponent } from "./WarningComponent";
 
+let ageState: TechAge | null = null;
+
 export function ManagePermanentGreatPersonModal(): React.ReactNode {
+   const [age, setAge] = useState<TechAge | null>(ageState);
    return (
       <div className="window" style={{ width: "800px" }}>
          <div className="title-bar">
@@ -40,6 +46,46 @@ export function ManagePermanentGreatPersonModal(): React.ReactNode {
                   <RenderHTML className="text-small" html={t(L.TribuneUpgradeDescV3)} />
                </WarningComponent>
             )}
+            <div className="row mb10">
+               <div className="mr10">{t(L.FilterByAge)}</div>
+               <select
+                  value={age ?? ""}
+                  onChange={(e) => {
+                     if (e.target.value) {
+                        ageState = e.target.value as TechAge;
+                        setAge(ageState);
+                     } else {
+                        ageState = null;
+                        setAge(null);
+                     }
+                  }}
+               >
+                  <option value=""></option>
+                  {jsxMapOf(Config.TechAge, (age, def) => {
+                     if (def.idx <= 0) {
+                        return null;
+                     }
+                     return (
+                        <option key={age} value={age}>
+                           {def.name()}
+                        </option>
+                     );
+                  })}
+               </select>
+               <div className="f1"></div>
+               <button
+                  className="row"
+                  onClick={() => {
+                     playClick();
+                     showModal(<ManageAgeWisdomModal />);
+                  }}
+               >
+                  <div>{t(L.ManageAgeWisdom)}</div>
+                  <div className="m-icon" style={{ margin: "0 -5px 0 5px", fontSize: "18px" }}>
+                     arrow_forward
+                  </div>
+               </button>
+            </div>
             <div
                className={classNames({ "table-view": true, "sticky-header f1": true })}
                style={{ height: "50vh" }}
@@ -58,6 +104,7 @@ export function ManagePermanentGreatPersonModal(): React.ReactNode {
                   </thead>
                   <tbody>
                      {keysOf(Config.GreatPerson)
+                        .filter((gp) => age === null || Config.GreatPerson[gp].age === age)
                         .sort(sortGreatPeople)
                         .map((k) => {
                            const person = Config.GreatPerson[k];
@@ -142,7 +189,7 @@ function GreatPersonNormalRow({ greatPerson }: { greatPerson: GreatPerson }): Re
                      permanent.amount -= total;
                      permanent.level++;
                      notifyGameOptionsUpdate(options);
-                     playLevelUp();
+                     playUpgrade();
                   } else {
                      playError();
                   }
@@ -162,13 +209,17 @@ function GreatPersonNormalRow({ greatPerson }: { greatPerson: GreatPerson }): Re
          <td>
             {!isEligibleForWisdom(greatPerson) ? (
                <Tippy content={t(L.AgeWisdomNotEligible)}>
-                  <div className="m-icon text-desc mr5">do_not_disturb_on</div>
+                  <div className="m-icon text-desc">do_not_disturb_on</div>
                </Tippy>
             ) : wisdomShortage < 0 ? (
                <Tippy content={t(L.AgeWisdomGreatPeopleShardsNeeded, { amount: -wisdomShortage })}>
-                  <div className="m-icon text-orange mr5">error</div>
+                  <div className="m-icon text-orange">error</div>
                </Tippy>
-            ) : null}
+            ) : (
+               <Tippy content={t(L.AgeWisdomGreatPeopleShardsSatisfied, { amount: -wisdomShortage })}>
+                  <div className="m-icon text-green">check_circle</div>
+               </Tippy>
+            )}
          </td>
          <td>
             {permanent ? (
@@ -261,7 +312,7 @@ function GreatPersonWildcardRow({ greatPerson }: { greatPerson: GreatPerson }): 
                   if (permanent && permanent.amount > 0) {
                      --permanent.amount;
                      addPermanentGreatPerson(choice, 1);
-                     playLevelUp();
+                     playUpgrade();
                      notifyGameOptionsUpdate();
                      return;
                   }
@@ -272,7 +323,7 @@ function GreatPersonWildcardRow({ greatPerson }: { greatPerson: GreatPerson }): 
          </td>
          <td>
             <Tippy content={t(L.AgeWisdomNotEligible)}>
-               <div className="m-icon text-desc mr5">do_not_disturb_on</div>
+               <div className="m-icon text-desc">do_not_disturb_on</div>
             </Tippy>
          </td>
          <td></td>
@@ -381,7 +432,7 @@ function GreatPersonPromotionRow({ greatPerson }: { greatPerson: GreatPerson }):
          </td>
          <td>
             <Tippy content={t(L.AgeWisdomNotEligible)}>
-               <div className="m-icon text-desc mr5">do_not_disturb_on</div>
+               <div className="m-icon text-desc">do_not_disturb_on</div>
             </Tippy>
          </td>
          <td></td>

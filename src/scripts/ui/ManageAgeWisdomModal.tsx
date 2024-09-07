@@ -13,8 +13,9 @@ import { isOnlineUser } from "../rpc/RPCClient";
 import { getColorCached } from "../utilities/CachedColor";
 import { jsxMMapOf, jsxMapOf } from "../utilities/Helper";
 import { Fonts } from "../visuals/Fonts";
-import { playError, playLevelUp } from "../visuals/Sound";
-import { hideModal } from "./GlobalModal";
+import { playClick, playError, playLevelUp } from "../visuals/Sound";
+import { hideModal, showModal } from "./GlobalModal";
+import { ManagePermanentGreatPersonModal } from "./ManagePermanentGreatPersonModal";
 
 export function ManageAgeWisdomModal(): React.ReactNode {
    const options = useGameOptions();
@@ -27,6 +28,18 @@ export function ManageAgeWisdomModal(): React.ReactNode {
             </div>
          </div>
          <div className="window-body">
+            <button
+               className="row mb10 w100"
+               onClick={() => {
+                  playClick();
+                  showModal(<ManagePermanentGreatPersonModal />);
+               }}
+            >
+               <div className="m-icon" style={{ margin: "0 5px 0 -5px", fontSize: "18px" }}>
+                  arrow_back
+               </div>
+               <div className="f1">{t(L.ManagePermanentGreatPeople)}</div>
+            </button>
             <div className="inset-shallow white" style={{ maxHeight: "50vh", overflowY: "auto" }}>
                {jsxMapOf(Config.TechAge, (age, def) => {
                   if (def.idx === 0) {

@@ -81,7 +81,7 @@ export const EN = {
    AntiCheatFailure: "Your account rank has been restricted due to <b>failing to pass anti-cheat</b> check. Contact the developer if you want to appeal this",
    Apartment: "Apartment",
    Aphrodite: "Aphrodite",
-   AphroditeDescV2: "+1 Builder Capacity Multiplier for each level when upgrading buildings over Level 20. All unlocked Classical Age permanent great people get +1 level this run",
+   AphroditeDescV2: "+2 Builder Capacity Multiplier for each level when upgrading buildings over Level 20. All unlocked Classical Age permanent great people get +1 level this run",
    ApolloProgram: "Apollo Program",
    ApolloProgramDesc: "All rocket factories get +2 Production, Worker Capacity and Storage Multiplier. Satellite factories, spacecraft factories and nuclear missile silos get +1 Production Multiplier for each adjacent rocket factory",
    ApplyToAll: "Apply To All",
@@ -1386,5 +1386,8 @@ export const EN = {
    AgeWisdomNeedMoreGreatPeopleShards: "Need More Great People Shards",
    FeatureRequireQuaestorOrAbove: "This feature requires Quaestor rank or above",
    AgeWisdomGreatPeopleShardsNeeded: "You need %{amount} more great people shards for the next Age Wisdom upgrade",
+   AgeWisdomGreatPeopleShardsSatisfied: "You have enough great people shards for the next Age Wisdom upgrade",
    AgeWisdomNotEligible: "This Great Person is not eligible for Age Wisdom",
+   FilterByAge: "Filter by Age",
+   GreatPeopleFilter: "Type name or age to filter great people",
 };
