@@ -59,6 +59,7 @@ export const EN = {
    Aeschylus: "Aeschylus",
    Agamemnon: "Agamemnon",
    AgeWisdomDescHTML: "Each level of Age Wisdom provides <b>an equivalent level</b> of eligible Permanent Great People of that age - it can be upgraded with eligible Permanent Great People shards",
+   AgeWisdomUpgradeWarningHTML: "Your current account rank is Tribune. When upgrading to Quaestor, Age Wisdom <b>cannot be carried over</b>",
    AgeWisdomGreatPeopleShardsNeeded: "You need %{amount} more great people shards for the next Age Wisdom upgrade",
    AgeWisdomGreatPeopleShardsSatisfied: "You have enough great people shards for the next Age Wisdom upgrade",
    AgeWisdomNeedMoreGreatPeopleShards: "Need More Great People Shards",

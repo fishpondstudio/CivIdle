@@ -45,6 +45,11 @@ export function ManageAgeWisdomModal(): React.ReactNode {
             <WarningComponent icon="info" className="text-small mb10">
                <RenderHTML html={t(L.AgeWisdomDescHTML)} />
             </WarningComponent>
+            {isOnlineUser() ? null : (
+               <WarningComponent icon="info" className="text-small mb10">
+                  <RenderHTML html={t(L.AgeWisdomUpgradeWarningHTML)} />
+               </WarningComponent>
+            )}
             <div className="inset-shallow white" style={{ maxHeight: "50vh", overflowY: "auto" }}>
                {jsxMapOf(Config.TechAge, (age, def) => {
                   if (def.idx === 0) {
@@ -93,7 +98,7 @@ export function ManageAgeWisdomModal(): React.ReactNode {
                            }}
                         >
                            <Tippy
-                              disabled={missing.size <= 0 || !isOnlineUser()}
+                              disabled={missing.size <= 0}
                               content={
                                  <div>
                                     <div className="text-strong">
