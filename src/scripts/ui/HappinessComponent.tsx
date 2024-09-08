@@ -20,11 +20,11 @@ import { TextWithHelp } from "./TextWithHelpComponent";
 export function HappinessComponent({ open }: { open: boolean }): React.ReactNode {
    const happiness = useCurrentTick().happiness;
    const { workersBeforeHappiness, workersAfterHappiness } = getScienceFromWorkers(useGameState());
+   const gs = useGameState();
+   const festival = Tick.current.specialBuildings.get("Headquarter")?.building?.resources.Festival ?? 0;
    if (!happiness) {
       return null;
    }
-   const gs = useGameState();
-   const festival = Tick.current.specialBuildings.get("Headquarter")?.building?.resources.Festival ?? 0;
    return (
       <fieldset>
          <legend>{t(L.Happiness)}</legend>
