@@ -418,7 +418,7 @@ export const RU = {
    FibonacciDescV2: "+%{idle} Науки от Незанятых Работников. +%{busy} Науки от Занятых Работников. Стоимость постоянного улучшения следует последовательности Фибоначчи",
    FighterJet: "Истребитель",
    FighterJetPlant: "Завод Истребителей",
-   FilterByAge: "Filter by Age",
+   FilterByAge: "Отфильтровать по Эпохе",
    FinancialArbitrage: "Финансовый Арбитраж",
    FinancialLeverage: "Финансовый Рычаг",
    Fire: "Огонь",
