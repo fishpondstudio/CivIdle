@@ -72,7 +72,7 @@ export function RebirthModal(): React.ReactNode {
    const [pickPerRoll, setPickPerRoll] = useState(maxPickPerRoll);
 
    return (
-      <div className="window" style={{ width: "600px" }}>
+      <div className="window" style={{ width: "700px" }}>
          <div className="title-bar">
             <div className="title-bar-text">{t(L.Reborn)}</div>
          </div>
@@ -236,6 +236,8 @@ export function RebirthModal(): React.ReactNode {
                      </div>
                   </>
                )}
+               <div className="text-strong">{t(L.Festival)}</div>
+               <div className="mb5">{Config.City[city].festivalDesc()}</div>
                <div className="separator" />
                <div className="row">
                   <div className=" f1">{t(L.GreatPersonLevelRequired)}</div>
