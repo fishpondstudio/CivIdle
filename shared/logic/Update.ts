@@ -301,26 +301,16 @@ export function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
       forEach(cost, function checkConstructionUpgradeResources(res, amount) {
          const amountArrived = building.resources[res] ?? 0;
          const amountInTransit = getAmountInTransit(xy, res);
-         const maxAmount = maxCost[res] ?? 0;
-         const alwaysTransport =
-            getGameOptions().greedyTransport && amountArrived + amountInTransit < maxAmount;
+         const threshold = getGameOptions().greedyTransport ? maxCost[res] ?? 0 : amount;
+         completed = amountArrived >= amount;
          // Already full
-         if (amountArrived >= amount) {
-            if (alwaysTransport) {
-               toTransport.set(res, amount);
-            } else {
-               building.suspendedInput.set(res, SuspendedInput.AutoSuspended);
-            }
+         if (amountArrived >= threshold) {
+            building.suspendedInput.set(res, SuspendedInput.AutoSuspended);
             return;
          }
-         completed = false;
-
          // Will be full
-         const amountLeft = amount - amountInTransit - amountArrived;
+         const amountLeft = threshold - amountInTransit - amountArrived;
          if (amountLeft <= 0) {
-            if (alwaysTransport) {
-               toTransport.set(res, amount);
-            }
             return;
          }
          if (building.suspendedInput.get(res) === SuspendedInput.ManualSuspended) {
