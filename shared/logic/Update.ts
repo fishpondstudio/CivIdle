@@ -54,6 +54,7 @@ import {
    getStockpileMax,
    getStorageFor,
    getStorageRequired,
+   getTotalBuildingCost,
    getWorkersFor,
    getWorkingBuilding,
    hasEnoughResources,
@@ -292,14 +293,17 @@ export function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
 
    if (building.status === "building" || building.status === "upgrading") {
       const cost = getBuildingCost(building);
+      const maxCost = getTotalBuildingCost(building.type, building.level, building.desiredLevel);
       const { total } = getBuilderCapacity(building, xy, gs);
 
       const toTransport = new Map<Resource, number>();
       let completed = true;
       forEach(cost, function checkConstructionUpgradeResources(res, amount) {
          const amountArrived = building.resources[res] ?? 0;
+         const amountInTransit = getAmountInTransit(xy, res);
+         const maxAmount = maxCost[res] ?? 0;
          const alwaysTransport =
-            getGameOptions().greedyTransport && building.level < building.desiredLevel - 1;
+            getGameOptions().greedyTransport && amountArrived + amountInTransit < maxAmount;
          // Already full
          if (amountArrived >= amount) {
             if (alwaysTransport) {
@@ -310,8 +314,9 @@ export function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
             return;
          }
          completed = false;
+
          // Will be full
-         const amountLeft = amount - getAmountInTransit(xy, res) - amountArrived;
+         const amountLeft = amount - amountInTransit - amountArrived;
          if (amountLeft <= 0) {
             if (alwaysTransport) {
                toTransport.set(res, amount);
