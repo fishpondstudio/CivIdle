@@ -120,7 +120,7 @@ export class ResourceDefinitions {
    Robocar: IResourceDefinition = { name: () => t(L.Robocar) };
    PlanetaryRover: IResourceDefinition = { name: () => t(L.PlanetaryRover) };
    Peace: IResourceDefinition = { name: () => t(L.Peace) };
-   Festival: IResourceDefinition = { name: () => t(L.Peace) };
+   Festival: IResourceDefinition = { name: () => t(L.Festival) };
 }
 
 export type Resource = keyof ResourceDefinitions;
