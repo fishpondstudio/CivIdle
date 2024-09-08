@@ -300,14 +300,21 @@ export function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
          const amountArrived = building.resources[res] ?? 0;
          const alwaysTransport = getGameOptions().greedyTransport && building.level < building.desiredLevel;
          // Already full
-         if (!alwaysTransport && amountArrived >= amount) {
-            building.suspendedInput.set(res, SuspendedInput.AutoSuspended);
+         if (amountArrived >= amount) {
+            if (alwaysTransport) {
+               toTransport.set(res, amount);
+            } else {
+               building.suspendedInput.set(res, SuspendedInput.AutoSuspended);
+            }
             return;
          }
          completed = false;
          // Will be full
          const amountLeft = amount - getAmountInTransit(xy, res) - amountArrived;
-         if (!alwaysTransport && amountLeft <= 0) {
+         if (amountLeft <= 0) {
+            if (alwaysTransport) {
+               toTransport.set(res, amount);
+            }
             return;
          }
          if (building.suspendedInput.get(res) === SuspendedInput.ManualSuspended) {
