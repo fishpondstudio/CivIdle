@@ -418,8 +418,8 @@ export class BuildingDefinitions {
    };
    ResearchLab: IBuildingDefinition = {
       name: () => t(L.ResearchLab),
-      input: { Culture: 2, Philosophy: 2 },
-      output: { Science: 5000 },
+      input: { Culture: 3, Philosophy: 3 },
+      output: { Science: 7500 },
    };
    ResearchFund: IBuildingDefinition = {
       name: () => t(L.ResearchFund),
