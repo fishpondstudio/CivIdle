@@ -102,7 +102,7 @@ export function BuildingElectricityComponent({ gameState, xy }: IBuildingCompone
       <fieldset>
          <legend>{t(L.Power)}</legend>
          {Config.Building[building.type].power ? (
-            <div className="row">
+            <div className="row text-strong">
                {hasPower ? null : <img src={warning} style={{ margin: "0 2px 0 0" }} />}
                {t(L.RequirePower)}
                <Tippy content={t(L.RequirePowerDesc)}>
@@ -121,7 +121,11 @@ export function BuildingElectricityComponent({ gameState, xy }: IBuildingCompone
                   )}
                </div>
             </div>
-         ) : null}
+         ) : (
+            <div>
+               <div>{t(L.NoPowerRequired)}</div>
+            </div>
+         )}
          {electrification}
       </fieldset>
    );
