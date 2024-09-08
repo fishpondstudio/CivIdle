@@ -58,7 +58,7 @@ export const PT_BR = {
    AdvisorWorkerTitle: "Gestão de Trabalhadores",
    Aeschylus: "Ésquilo",
    Agamemnon: "Agamêmnon",
-   AgeWisdomDescHTML: "Cada nível de Sabedoria da era fornece <b>um nível equivalente</b> de Figuras Históricas Permanentes elegíveis daquela era - ele pode ser aprimorado com fragmentos de Figuras Históricas Permanentes elegíveis.",
+   AgeWisdomDescHTML: "Cada nível de Sabedoria da Era fornece <b>um nível equivalente</b> de Figuras Históricas Permanentes elegíveis daquela era - ele pode ser aprimorado com fragmentos de Figuras Históricas Permanentes elegíveis.",
    AgeWisdomGreatPeopleShardsNeeded: "Você precisa de %{amount} mais fragmentos de figuras históricas para a próxima atualização da Sabedoria da Era.",
    AgeWisdomGreatPeopleShardsSatisfied: "Você tem fragmentos de figuras históricas suficiente para a próxima atualização da Sabedoria da Era.",
    AgeWisdomNeedMoreGreatPeopleShards: "Precisa de mais fragmentos de figuaras históricas.",
