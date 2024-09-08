@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import type { Resource } from "../../../shared/definitions/ResourceDefinitions";
 import { getScienceFromWorkers, isSpecialBuilding } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
+import { FESTIVAL_CONVERSION_RATE } from "../../../shared/logic/Constants";
 import { GameFeature, hasFeature } from "../../../shared/logic/FeatureLogic";
 import { getHappinessIcon } from "../../../shared/logic/HappinessLogic";
 import { getResourceIO } from "../../../shared/logic/IntraTickCache";
@@ -168,14 +169,26 @@ export function ResourcePanel(): React.ReactNode {
                      )}
                   </div>
                </Tippy>
-               {gs.festival ? (
-                  <Tippy content={Config.City[gs.city].festivalDesc()}>
-                     <div className="m-icon" style={{ margin: "0 0 0 5px" }}>
-                        celebration
-                     </div>
-                  </Tippy>
-               ) : null}
             </div>
+         ) : null}
+
+         {gs.festival ? (
+            <>
+               <div className="separator-vertical" />
+               <Tippy content={Config.City[gs.city].festivalDesc()}>
+                  <div className="row">
+                     <div className="m-icon text-orange">celebration</div>
+                     <div style={{ width: "5rem" }}>
+                        <FormatNumber
+                           value={Math.floor(
+                              (Tick.current.specialBuildings.get("Headquarter")?.building.resources
+                                 .Festival ?? 0) / FESTIVAL_CONVERSION_RATE,
+                           )}
+                        />
+                     </div>
+                  </div>
+               </Tippy>
+            </>
          ) : null}
          <div className="separator-vertical" />
          <div className="row">

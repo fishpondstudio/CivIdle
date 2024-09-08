@@ -105,6 +105,8 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
                   safeAdd(building.resources, "Festival", happiness);
                }
             }
+         } else {
+            gs.festival = false;
          }
          break;
       }
