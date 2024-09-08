@@ -168,6 +168,13 @@ export function ResourcePanel(): React.ReactNode {
                      )}
                   </div>
                </Tippy>
+               {gs.festival ? (
+                  <Tippy content={Config.City[gs.city].festivalDesc()}>
+                     <div className="m-icon" style={{ margin: "0 0 0 5px" }}>
+                        celebration
+                     </div>
+                  </Tippy>
+               ) : null}
             </div>
          ) : null}
          <div className="separator-vertical" />

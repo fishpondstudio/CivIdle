@@ -1395,4 +1395,15 @@ export const EN = {
    GreedyTransportDescHTML: "This will make buildings keep transporting resources even if it has enough resources for the current upgrade, which can make upgrading multiple levels <b>faster</b> but end up transport <b>more resources than needed</b>",
    Cleopatra: "Cleopatra",
    NoPowerRequired: "This building does not require power",
+   Festival: "Festival",
+   FestivalCycle: "Festival Cycle",
+   StartFestival: "Let the Festival Begin!",
+   FestivalTech: "Unlock festival - positive Happiness (max. 50) is converted into festival points. For every 25 festival points, your empire enters a festival cycle, granting a significant map-specific boost",
+   Saturnalia: "Saturnalia: Alps no longer increases Consumption Multiplier",
+   Panathenaea: "Panathenaea: Poseidon provides +1 Production Multiplier to all buildings",
+   Opet: "Opet: Great Sphinx no longer increases Consumption Multiplier",
+   LunarNewYear: "Lunar New Year: Great Wall provides double the boost to buildings. Porcelain Tower provides +1 level to all great people from this run",
+   Thanksgiving: "Thanksgiving: Wall Street provides double the boost to buildings and applies to Mutual Fund, Hedge Fund and Bitcoin Miner. Research Funds get +5 Production Multiplier",
+   Akitu: "Akitu: Ziggurat Of Ur and Euphrates River apply to buildings unlocked in the current age",
+   AoiMatsuri: "Aoi Matsuri: Mount Fuji generates double the warp"
 };

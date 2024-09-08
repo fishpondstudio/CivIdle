@@ -14,6 +14,8 @@ export function hasFeature(f: GameFeature, gs: GameState): boolean {
          return !!gs.unlockedTech.Housing;
       case GameFeature.WarehouseExtension:
          return !!gs.unlockedTech.Physics;
+      case GameFeature.Festival:
+         return !!gs.unlockedTech.Stateship;
       default:
          return false;
    }
@@ -26,4 +28,5 @@ export enum GameFeature {
    Electricity = 3,
    BuildingInputMode = 4,
    WarehouseExtension = 5,
+   Festival = 6,
 }

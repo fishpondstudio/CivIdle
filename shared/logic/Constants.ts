@@ -51,6 +51,7 @@ export const DISABLE_PLAYER_TRADES = false;
 export const MAX_TELEPORT = 10;
 export const TELEPORT_SECONDS = 60;
 export const MAX_PETRA_SPEED_UP = 16;
+export const FESTIVAL_CONVERSION_RATE = 25;
 
 export const GOLDEN_RATIO = (1 + Math.sqrt(5)) / 2;
 

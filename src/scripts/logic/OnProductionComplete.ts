@@ -15,12 +15,14 @@ import {
 import { Config } from "../../../shared/logic/Config";
 import {
    EXPLORER_SECONDS,
+   FESTIVAL_CONVERSION_RATE,
    MAX_EXPLORER,
    MAX_PETRA_SPEED_UP,
    MAX_TELEPORT,
    SCIENCE_VALUE,
    TELEPORT_SECONDS,
 } from "../../../shared/logic/Constants";
+import { GameFeature, hasFeature } from "../../../shared/logic/FeatureLogic";
 import { getGameOptions, getGameState } from "../../../shared/logic/GameStateLogic";
 import {
    getBuildingsByType,
@@ -90,6 +92,20 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
             output: round((totalGreatPeopleLevels + totalWisdomLevels) * 0.1, 1),
             source: t(L.PermanentGreatPeople),
          });
+         if (hasFeature(GameFeature.Festival, gs)) {
+            if (gs.festival) {
+               if ((building.resources.Festival ?? 0) >= FESTIVAL_CONVERSION_RATE) {
+                  safeAdd(building.resources, "Festival", -FESTIVAL_CONVERSION_RATE);
+               } else {
+                  gs.festival = false;
+               }
+            } else {
+               const happiness = Tick.current.happiness?.value ?? 0;
+               if (happiness > 0) {
+                  safeAdd(building.resources, "Festival", happiness);
+               }
+            }
+         }
          break;
       }
       case "HatshepsutTemple": {
@@ -123,7 +139,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
             const mul = Math.floor(building.level / 10);
             if (mul > 0) {
                mapSafePush(Tick.next.tileMultipliers, xy, {
-                  input: mul,
+                  input: gs.festival ? 0 : mul,
                   output: mul,
                   source: t(L.NaturalWonderName, { name: buildingName }),
                });
@@ -440,6 +456,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
                }
             }
          }
+         Tick.next.globalMultipliers.output.push({ value: 1, source: buildingName });
          break;
       }
       case "StatueOfZeus": {
@@ -638,7 +655,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
                   }
                }
                mapSafePush(Tick.next.tileMultipliers, tileXy, {
-                  input: count,
+                  input: gs.festival ? 0 : count,
                   output: count,
                   source: buildingName,
                });
@@ -804,10 +821,13 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          for (const point of grid.getRange(tileToPoint(xy), getGreatWallRange(xy, gs))) {
             const building = getWorkingBuilding(pointToTile(point), gs);
             if (!building || isSpecialBuilding(building.type)) continue;
-            const count = Math.abs(
+            let count = Math.abs(
                Config.TechAge[getCurrentAge(gs)].idx -
                   Config.TechAge[getBuildingUnlockAge(building.type)].idx,
             );
+            if (gs.festival) {
+               count *= 2;
+            }
             mapSafePush(Tick.next.tileMultipliers, pointToTile(point), {
                output: count,
                storage: count,
@@ -839,6 +859,12 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
       }
       case "PorcelainTower": {
          Tick.next.globalMultipliers.happiness.push({ value: 5, source: buildingName });
+         forEach(gs.greatPeople, (gp, level) => {
+            if (level > 0) {
+               const def = Config.GreatPerson[gp];
+               def.tick(def, 1, `${buildingName}: ${def.name()}`, GreatPersonTickFlag.Unstable);
+            }
+         });
          break;
       }
       case "Atomium": {
@@ -994,23 +1020,44 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          for (const point of grid.getRange(tileToPoint(xy), 2)) {
             const t = pointToTile(point);
             const b = gs.tiles.get(t)?.building;
-            if (
-               b &&
-               b.status === "completed" &&
-               (Config.Building[b.type].output.Coin ||
+            if (b && b.status === "completed") {
+               let isValid = false;
+
+               if (
+                  Config.Building[b.type].output.Coin ||
                   Config.Building[b.type].output.Banknote ||
                   Config.Building[b.type].output.Bond ||
                   Config.Building[b.type].output.Stock ||
-                  Config.Building[b.type].output.Forex)
-            ) {
-               const multiplier = Math.round(srand(gs.id + gs.lastPriceUpdated + t)() * 4 + 1);
-               mapSafePush(Tick.next.tileMultipliers, t, {
-                  unstable: true,
-                  output: multiplier,
-                  source: buildingName,
-               });
+                  Config.Building[b.type].output.Forex
+               ) {
+                  isValid = true;
+               }
+
+               if (
+                  gs.festival &&
+                  (Config.Building[b.type].output.MutualFund ||
+                     Config.Building[b.type].output.HedgeFund ||
+                     Config.Building[b.type].output.Bitcoin)
+               ) {
+                  isValid = true;
+               }
+
+               if (isValid) {
+                  let multiplier = Math.round(srand(gs.id + gs.lastPriceUpdated + t)() * 4 + 1);
+                  if (gs.festival) {
+                     multiplier *= 2;
+                  }
+                  mapSafePush(Tick.next.tileMultipliers, t, {
+                     unstable: true,
+                     output: multiplier,
+                     source: buildingName,
+                  });
+               }
             }
          }
+
+         addMultiplier("ResearchFund", { output: 5 }, buildingName);
+
          const total = getGreatPersonTotalEffect("JohnDRockefeller", gs, options);
          if (total > 0) {
             Config.GreatPerson.JohnDRockefeller.tick(
@@ -1097,8 +1144,11 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
                1,
                Math.floor((Config.TechAge[age].idx + 1) / 2),
             );
-            getBuildingsUnlockedBefore(getCurrentAge(gs)).forEach((b) => {
-               if (!Config.Building[b].output.Worker) {
+            const candidates = gs.festival
+               ? keysOf(Config.BuildingTechAge)
+               : getBuildingsUnlockedBefore(getCurrentAge(gs));
+            candidates.forEach((b) => {
+               if (!isSpecialBuilding(b) && !Config.Building[b].output.Worker) {
                   addMultiplier(b, { output: multiplier, unstable: true }, buildingName);
                }
             });
@@ -1171,8 +1221,11 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          const age = getCurrentAge(gs);
          if (Number.isFinite(multiplier) && multiplier > 0) {
             const cappedMultiplier = clamp(multiplier, 1, Math.floor((Config.TechAge[age].idx + 1) / 2));
-            getBuildingsUnlockedBefore(getCurrentAge(gs)).forEach((b) => {
-               if (!Config.Building[b].output.Worker) {
+            const candidates = gs.festival
+               ? keysOf(Config.BuildingTechAge)
+               : getBuildingsUnlockedBefore(getCurrentAge(gs));
+            candidates.forEach((b) => {
+               if (!isSpecialBuilding(b) && !Config.Building[b].output.Worker) {
                   addMultiplier(b, { output: cappedMultiplier, unstable: true }, buildingName);
                }
             });
@@ -1271,8 +1324,9 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
             const petra = Tick.current.specialBuildings.get("Petra");
             if (petra) {
                const { total, used } = getStorageFor(petra.tile, gs);
-               if (total - used >= 20) {
-                  safeAdd(petra.building.resources, "Warp", 20);
+               const amount = gs.festival ? 40 : 20;
+               if (total - used >= amount) {
+                  safeAdd(petra.building.resources, "Warp", amount);
                }
             }
          } else {

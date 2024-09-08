@@ -33,6 +33,7 @@ export class CityDefinitions {
       naturalWonders: { Alps: true, GrottaAzzurra: true },
       requireGreatPeopleLevel: 0,
       requireSupporterPack: false,
+      festivalDesc: () => t(L.Saturnalia),
    };
    Athens: ICityDefinition = {
       name: () => t(L.Athens),
@@ -58,6 +59,7 @@ export class CityDefinitions {
       naturalWonders: { Aphrodite: true, Poseidon: true },
       requireGreatPeopleLevel: 5,
       requireSupporterPack: false,
+      festivalDesc: () => t(L.Panathenaea),
    };
    Memphis: ICityDefinition = {
       name: () => t(L.Memphis),
@@ -86,6 +88,7 @@ export class CityDefinitions {
       naturalWonders: { NileRiver: true, MountSinai: true },
       requireGreatPeopleLevel: 10,
       requireSupporterPack: false,
+      festivalDesc: () => t(L.Opet),
    };
    Beijing: ICityDefinition = {
       name: () => t(L.Beijing),
@@ -115,6 +118,7 @@ export class CityDefinitions {
       naturalWonders: { MountTai: true, YangtzeRiver: true },
       requireGreatPeopleLevel: 15,
       requireSupporterPack: false,
+      festivalDesc: () => t(L.LunarNewYear),
    };
    NewYork: ICityDefinition = {
       name: () => t(L.NewYork),
@@ -151,6 +155,7 @@ export class CityDefinitions {
       naturalWonders: { Shenandoah: true, NiagaraFalls: true },
       requireGreatPeopleLevel: 20,
       requireSupporterPack: true,
+      festivalDesc: () => t(L.Thanksgiving),
    };
    Babylon: ICityDefinition = {
       name: () => t(L.Babylon),
@@ -180,6 +185,7 @@ export class CityDefinitions {
       naturalWonders: { EuphratesRiver: true, ZagrosMountains: true },
       requireGreatPeopleLevel: 30,
       requireSupporterPack: true,
+      festivalDesc: () => t(L.Akitu),
    };
    Kyoto: ICityDefinition = {
       name: () => t(L.Kyoto),
@@ -209,6 +215,7 @@ export class CityDefinitions {
       naturalWonders: { Kanagawa: true, MountFuji: true },
       requireGreatPeopleLevel: 40,
       requireSupporterPack: true,
+      festivalDesc: () => t(L.AoiMatsuri),
    };
 }
 
@@ -224,4 +231,5 @@ interface ICityDefinition {
    uniqueMultipliers: Partial<Record<Tech, IUnlockableMultipliers>>;
    requireGreatPeopleLevel: number;
    requireSupporterPack: boolean;
+   festivalDesc: () => string;
 }

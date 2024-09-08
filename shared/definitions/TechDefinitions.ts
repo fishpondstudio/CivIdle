@@ -155,6 +155,7 @@ export class TechDefinitions {
       column: 3,
       requireTech: ["Housing"],
       unlockBuilding: ["FlourMill"],
+      additionalUpgrades: () => [t(L.FestivalTech)],
    };
 
    Market: ITechDefinition = {

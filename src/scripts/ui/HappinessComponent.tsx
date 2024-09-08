@@ -1,5 +1,10 @@
+import Tippy from "@tippyjs/react";
 import classNames from "classnames";
 import { getScienceFromWorkers } from "../../../shared/logic/BuildingLogic";
+import { Config } from "../../../shared/logic/Config";
+import { FESTIVAL_CONVERSION_RATE } from "../../../shared/logic/Constants";
+import { GameFeature, hasFeature } from "../../../shared/logic/FeatureLogic";
+import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
 import { HAPPINESS_MULTIPLIER, HappinessNames, getHappinessIcon } from "../../../shared/logic/HappinessLogic";
 import { Tick } from "../../../shared/logic/TickLogic";
 import { formatPercent } from "../../../shared/utilities/Helper";
@@ -7,6 +12,7 @@ import { L, t } from "../../../shared/utilities/i18n";
 import { useGameState } from "../Global";
 import { useCurrentTick } from "../logic/ClientUpdate";
 import { jsxMapOf } from "../utilities/Helper";
+import { playClick } from "../visuals/Sound";
 import { FormatNumber } from "./HelperComponents";
 import { ProgressBarComponent } from "./ProgressBarComponent";
 import { TextWithHelp } from "./TextWithHelpComponent";
@@ -17,6 +23,8 @@ export function HappinessComponent({ open }: { open: boolean }): React.ReactNode
    if (!happiness) {
       return null;
    }
+   const gs = useGameState();
+   const festival = Tick.current.specialBuildings.get("Headquarter")?.building?.resources.Festival ?? 0;
    return (
       <fieldset>
          <legend>{t(L.Happiness)}</legend>
@@ -138,6 +146,46 @@ export function HappinessComponent({ open }: { open: boolean }): React.ReactNode
                </details>
             </li>
          </ul>
+         {hasFeature(GameFeature.Festival, gs) ? (
+            <>
+               <div className="separator" />
+               <div className="row text-strong mb5">
+                  <div className="m-icon mr5">celebration</div>
+                  <Tippy content={Config.City[gs.city].festivalDesc()}>
+                     <div>{t(L.StartFestival)}</div>
+                  </Tippy>
+                  <div className="f1"></div>
+                  <div
+                     onClick={() => {
+                        playClick();
+                        gs.festival = !gs.festival;
+                        notifyGameStateUpdate();
+                     }}
+                     className="ml10 pointer"
+                  >
+                     {gs.festival ? (
+                        <div className="m-icon text-green">toggle_on</div>
+                     ) : (
+                        <div className="m-icon text-grey">toggle_off</div>
+                     )}
+                  </div>
+               </div>
+               <ul className="tree-view">
+                  <li className="row">
+                     <div className="f1">{t(L.Festival)}</div>
+                     <div className="text-strong">
+                        <FormatNumber value={festival} />
+                     </div>
+                  </li>
+                  <li className="row">
+                     <div className="f1">{t(L.FestivalCycle)}</div>
+                     <div className="text-strong">
+                        <FormatNumber value={Math.floor(festival / FESTIVAL_CONVERSION_RATE)} />
+                     </div>
+                  </li>
+               </ul>
+            </>
+         ) : null}
       </fieldset>
    );
 }

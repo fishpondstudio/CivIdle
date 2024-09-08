@@ -66,6 +66,7 @@ export class GameState {
    lastPriceUpdated = 0;
    isOffline = false;
    rebirthed = false;
+   festival = false;
    favoriteTiles: Set<Tile> = new Set();
    claimedGreatPeople = 0;
    valueTrackers = new Map<ValueToTrack, IValueTracker>();
