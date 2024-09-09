@@ -82,7 +82,7 @@ export function BuildingUpgradeComponent({ gameState, xy }: IBuildingComponentPr
       selected.forEach((xy) => {
          const b = gameState.tiles.get(xy)?.building;
          if (!b) return;
-         mapOf(getTotalBuildingCost(b.type, b.level, level), (res, amount) => {
+         mapOf(getTotalBuildingCost(b, b.level, level), (res, amount) => {
             if (res in resCost) {
                resCost[res] = resCost[res]! + amount;
             } else {
