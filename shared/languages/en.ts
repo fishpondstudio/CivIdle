@@ -419,6 +419,7 @@ export const EN = {
    Festival: "Festival",
    FestivalCycle: "Festival Cycle",
    FestivalTech: "Unlock festival - positive Happiness (max. 50) is converted into festival points. For every 25 festival points, your empire enters a festival cycle, granting a significant map-specific boost",
+   FestivalTechTooltip: "Positive Happiness (max. 50) is converted into festival points. For every 25 festival points, your empire enters a festival cycle, granting a significant map-specific boost. The festival on this map is %{desc}",
    Feudalism: "Feudalism",
    Fibonacci: "Fibonacci",
    FibonacciDescV2: "+%{idle} Science from Idle Workers. +%{busy} Science from Busy Workers. Fibonacci's permanent upgrade cost follows Fibonacci sequence",
