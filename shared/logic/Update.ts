@@ -257,7 +257,7 @@ export function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
    const isResourceImportBuilding = "resourceImports" in building;
 
    forEach(building.resources, (res, amount) => {
-      if (!Number.isFinite(amount) || amount <= 0) {
+      if (!Number.isFinite(amount)) {
          return;
       }
 
