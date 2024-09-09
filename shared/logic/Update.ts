@@ -293,9 +293,8 @@ export function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
 
    if (building.status === "building" || building.status === "upgrading") {
       const cost = getBuildingCost(building);
-      const maxCost = getTotalBuildingCost(building.type, building.level, building.desiredLevel);
+      const maxCost = getTotalBuildingCost(building, building.level, building.desiredLevel);
       const { total } = getBuilderCapacity(building, xy, gs);
-
       const toTransport = new Map<Resource, number>();
       let completed = true;
       forEach(cost, function checkConstructionUpgradeResources(res, amount) {

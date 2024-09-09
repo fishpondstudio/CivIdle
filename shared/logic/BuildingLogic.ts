@@ -426,12 +426,12 @@ export function getScienceFromBuildings() {
    );
 }
 
-export function getBuildingCost(
-   building: Pick<IBuildingData, "type" | "level"> & {
-      tradition?: Tradition | null;
-      religion?: Religion | null;
-   },
-): PartialTabulate<Resource> {
+type BuildingCostInput = Pick<IBuildingData, "type" | "level"> & {
+   tradition?: Tradition | null;
+   religion?: Religion | null;
+};
+
+export function getBuildingCost(building: BuildingCostInput): PartialTabulate<Resource> {
    const type = building.type;
    const level = building.level;
    let cost = { ...Config.Building[type].construction };
@@ -472,6 +472,35 @@ export function getBuildingCost(
    return cost;
 }
 
+const totalBuildingCostCache: Map<number, Readonly<PartialTabulate<Resource>>> = new Map();
+
+export function getTotalBuildingCost(
+   building: Omit<BuildingCostInput, "level">,
+   currentLevel: number,
+   desiredLevel: number,
+): PartialTabulate<Resource> {
+   console.assert(currentLevel <= desiredLevel);
+   const hash = (Config.BuildingHash[building.type]! << 22) + (currentLevel << 11) + desiredLevel;
+   const cached = totalBuildingCostCache.get(hash);
+   if (cached) {
+      return cached;
+   }
+   const start: BuildingCostInput = {
+      type: building.type,
+      level: currentLevel,
+      tradition: building.tradition,
+      religion: building.religion,
+   };
+   const result: PartialTabulate<Resource> = {};
+   while (start.level < desiredLevel) {
+      const cost = getBuildingCost(start);
+      forEach(cost, (res, amount) => safeAdd(result, res, amount));
+      ++start.level;
+   }
+   totalBuildingCostCache.set(hash, Object.freeze(result));
+   return result;
+}
+
 export function getWonderCostMultiplier(type: Building): number {
    const tech = getBuildingUnlockTech(type);
    let techIdx = 0;
@@ -510,35 +539,8 @@ export function getWonderBaseBuilderCapacity(type: Building): number {
    return capacity;
 }
 
-const totalBuildingCostCache: Map<number, Readonly<PartialTabulate<Resource>>> = new Map();
-
-export function getTotalBuildingCost(
-   building: Building,
-   currentLevel: number,
-   desiredLevel: number,
-): PartialTabulate<Resource> {
-   console.assert(currentLevel <= desiredLevel);
-   const hash = (Config.BuildingHash[building]! << 22) + (currentLevel << 11) + desiredLevel;
-   const cached = totalBuildingCostCache.get(hash);
-   if (cached) {
-      return cached;
-   }
-   const start: IHaveTypeAndLevel = {
-      type: building,
-      level: currentLevel,
-   };
-   const result: PartialTabulate<Resource> = {};
-   while (start.level < desiredLevel) {
-      const cost = getBuildingCost(start);
-      forEach(cost, (res, amount) => safeAdd(result, res, amount));
-      ++start.level;
-   }
-   totalBuildingCostCache.set(hash, Object.freeze(result));
-   return result;
-}
-
 export function getBuildingValue(building: IBuildingData): number {
-   return getResourcesValue(getTotalBuildingCost(building.type, 0, building.level));
+   return getResourcesValue(getTotalBuildingCost(building, 0, building.level));
 }
 
 export function getCurrentPriority(building: IBuildingData, gs: GameState): number {
