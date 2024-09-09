@@ -302,7 +302,9 @@ export function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
          const amountArrived = building.resources[res] ?? 0;
          const amountInTransit = getAmountInTransit(xy, res);
          const threshold = getGameOptions().greedyTransport ? maxCost[res] ?? 0 : amount;
-         completed = amountArrived >= amount;
+         if (completed && amountArrived < amount) {
+            completed = false;
+         }
          // Already full
          if (amountArrived >= threshold) {
             building.suspendedInput.set(res, SuspendedInput.AutoSuspended);
