@@ -1238,7 +1238,7 @@ export const EN = {
    TempleOfPtah: "Temple of Ptah",
    TerracottaArmy: "Terracotta Army",
    TerracottaArmyDesc: "All Iron Mining Camps get +1 Production, Worker Capacity and Storage Multiplier. Iron Forges get +1 Production Multiplier for each adjacent Iron Mining Camp that is built on top of an Iron deposit",
-   Thanksgiving: "Thanksgiving: Wall Street provides double the boost to buildings and applies to Mutual Fund, Hedge Fund and Bitcoin Miner. Research Funds get +5 Production Multiplier",
+   Thanksgiving: "Thanksgiving: Wall Street provides double the boost to buildings and applies to Mutual Fund, Hedge Fund and Bitcoin Miner, and +5 Production Multiplier to Research Funds",
    Theater: "Theater",
    Theme: "Theme",
    ThemeColor: "Theme Color",
