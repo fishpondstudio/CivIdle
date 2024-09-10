@@ -1,3 +1,4 @@
+import { FESTIVAL_CONVERSION_RATE } from "../logic/Constants";
 import { SEA_TILE_COST_1, SEA_TILE_COST_2, SEA_TILE_COST_3 } from "../logic/PlayerTradeLogic";
 import { formatPercent } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
@@ -155,7 +156,7 @@ export class TechDefinitions {
       column: 3,
       requireTech: ["Housing"],
       unlockBuilding: ["FlourMill"],
-      additionalUpgrades: () => [t(L.FestivalTech)],
+      additionalUpgrades: () => [t(L.FestivalTechV2, { point: FESTIVAL_CONVERSION_RATE })],
    };
 
    Market: ITechDefinition = {
