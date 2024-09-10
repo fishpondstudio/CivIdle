@@ -151,7 +151,12 @@ export function HappinessComponent({ open }: { open: boolean }): React.ReactNode
                <div className="separator" />
                <div className="row text-strong mb5">
                   <div className="m-icon mr5">celebration</div>
-                  <Tippy content={t(L.FestivalTechTooltip, { desc: Config.City[gs.city].festivalDesc() })}>
+                  <Tippy
+                     content={t(L.FestivalTechTooltipV2, {
+                        desc: Config.City[gs.city].festivalDesc(),
+                        point: FESTIVAL_CONVERSION_RATE,
+                     })}
+                  >
                      <div>{t(L.StartFestival)}</div>
                   </Tippy>
                   <div className="f1"></div>
