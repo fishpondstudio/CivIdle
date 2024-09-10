@@ -825,7 +825,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
             if (!building || isSpecialBuilding(building.type)) continue;
             let count = Math.abs(
                Config.TechAge[getCurrentAge(gs)].idx -
-               Config.TechAge[getBuildingUnlockAge(building.type)].idx,
+                  Config.TechAge[getBuildingUnlockAge(building.type)].idx,
             );
             if (gs.festival) {
                count *= 2;
