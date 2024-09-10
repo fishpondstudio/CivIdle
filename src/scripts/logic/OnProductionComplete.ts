@@ -825,7 +825,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
             if (!building || isSpecialBuilding(building.type)) continue;
             let count = Math.abs(
                Config.TechAge[getCurrentAge(gs)].idx -
-                  Config.TechAge[getBuildingUnlockAge(building.type)].idx,
+               Config.TechAge[getBuildingUnlockAge(building.type)].idx,
             );
             if (gs.festival) {
                count *= 2;
@@ -1058,7 +1058,9 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
             }
          }
 
-         addMultiplier("ResearchFund", { output: 5 }, buildingName);
+         if (gs.festival) {
+            addMultiplier("ResearchFund", { output: 5 }, buildingName);
+         }
 
          const total = getGreatPersonTotalEffect("JohnDRockefeller", gs, options);
          if (total > 0) {
