@@ -32,9 +32,10 @@ export function UpgradableWonderBuildingBody({ gameState, xy }: IBuildingCompone
                      <div>
                         <ResourceAmountComponent
                            className="text-strong"
-                           showLabel={false}
                            resource={res}
                            amount={amount}
+                           showLabel={false}
+                           showTooltip={true}
                         />
                      </div>
                   </div>

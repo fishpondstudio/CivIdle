@@ -58,6 +58,7 @@ export const EN = {
    AdvisorWorkerTitle: "Worker Management",
    Aeschylus: "Aeschylus",
    Agamemnon: "Agamemnon",
+   AgeWisdom: "Age Wisdom",
    AgeWisdomDescHTML: "Each level of Age Wisdom provides <b>an equivalent level</b> of eligible Permanent Great People of that age - it can be upgraded with eligible Permanent Great People shards",
    AgeWisdomGreatPeopleShardsNeeded: "You need %{amount} more great people shards for the next Age Wisdom upgrade",
    AgeWisdomGreatPeopleShardsSatisfied: "You have enough great people shards for the next Age Wisdom upgrade",

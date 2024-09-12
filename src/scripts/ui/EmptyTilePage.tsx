@@ -276,6 +276,7 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
                                           resource={res}
                                           amount={amount}
                                           showLabel={true}
+                                          showTooltip={true}
                                        />
                                     ))}
                                  </div>
