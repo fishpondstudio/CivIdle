@@ -271,6 +271,7 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
                                  <div>
                                     {jsxMapOf(buildCost, (res, amount) => (
                                        <ResourceAmountComponent
+                                          key={res}
                                           className="mr5"
                                           resource={res}
                                           amount={amount}
