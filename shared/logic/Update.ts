@@ -231,6 +231,10 @@ export function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
 
    const transportSourceCache = offline || getGameOptions().enableTransportSourceCache;
 
+   if (!transportResource) {
+      clearTransportSourceCache();
+   }
+
    if (building.desiredLevel > building.level) {
       building.status = building.level > 0 ? "upgrading" : "building";
    } else {

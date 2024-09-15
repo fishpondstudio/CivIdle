@@ -43,6 +43,7 @@ import { OfflineProductionModal } from "./ui/OfflineProductionModal";
 import { GameTicker } from "./utilities/GameTicker";
 import { SceneManager } from "./utilities/SceneManager";
 import { Singleton, initializeSingletons, type RouteTo } from "./utilities/Singleton";
+import { populateGreatPersonImageCache } from "./visuals/GreatPersonVisual";
 import { playError } from "./visuals/Sound";
 
 export async function startGame(
@@ -94,13 +95,16 @@ export async function startGame(
    syncSidePanelWidth(app, options);
    syncFontSizeScale(options);
    calculateTierAndPrice(import.meta.env.DEV ? console.log : undefined);
+   const context = { app, assets: resources, textures, gameState };
    initializeSingletons({
-      sceneManager: new SceneManager({ app, assets: resources, textures, gameState }),
+      sceneManager: new SceneManager(context),
       routeTo,
       ticker: new GameTicker(app.ticker, gameState),
       heartbeat: new Heartbeat(serializeSaveLite()),
    });
-
+   if (import.meta.env.PROD) {
+      populateGreatPersonImageCache(context);
+   }
    setCityOverride(gameState);
 
    // ========== Connect to server ==========

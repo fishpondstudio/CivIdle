@@ -2,7 +2,7 @@ import { BitmapText, Container, Sprite, Text } from "pixi.js";
 import { useEffect, useRef } from "react";
 import { GreatPersonType, type GreatPerson } from "../../../shared/definitions/GreatPersonDefinitions";
 import { Config } from "../../../shared/logic/Config";
-import { containsNonASCII, numberToRoman } from "../../../shared/utilities/Helper";
+import { containsNonASCII, forEach, numberToRoman } from "../../../shared/utilities/Helper";
 import { getTexture } from "../logic/VisualLogic";
 import type { ISceneContext } from "../utilities/SceneManager";
 import { Singleton } from "../utilities/Singleton";
@@ -108,6 +108,12 @@ function greatPersonImage(greatPerson: GreatPerson, context: ISceneContext): str
    const dataURL = canvas.toDataURL();
    greatPersonImageCache.set(greatPerson, dataURL);
    return dataURL;
+}
+
+export function populateGreatPersonImageCache(context: ISceneContext) {
+   forEach(Config.GreatPerson, (gp) => {
+      greatPersonImage(gp, context);
+   });
 }
 
 interface GreatPersonImageProps extends React.HTMLAttributes<HTMLElement> {
