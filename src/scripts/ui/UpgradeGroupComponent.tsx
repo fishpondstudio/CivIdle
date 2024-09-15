@@ -10,6 +10,7 @@ import { L, t } from "../../../shared/utilities/i18n";
 import { jsxMapOf } from "../utilities/Helper";
 import { playClick, playError, playUpgrade } from "../visuals/Sound";
 import { RenderHTML } from "./RenderHTMLComponent";
+import { ResourceAmountComponent } from "./ResourceAmountComponent";
 
 export function UpgradeGroupComponent<T>({
    self,
@@ -36,8 +37,16 @@ export function UpgradeGroupComponent<T>({
                         <Tippy
                            disabled={!getSelected()}
                            content={mapOf(getBuildingCost(building), (res, amount) => {
-                              return `${Config.Resource[res].name()} ${formatNumber(amount)}`;
-                           }).join(", ")}
+                              return (
+                                 <ResourceAmountComponent
+                                    key={res}
+                                    resource={res}
+                                    amount={amount}
+                                    showLabel={true}
+                                    showTooltip={false}
+                                 />
+                              );
+                           })}
                         >
                            <div
                               className="text-link text-strong"

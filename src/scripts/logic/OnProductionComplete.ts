@@ -108,6 +108,13 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          } else {
             gs.festival = false;
          }
+         if (Date.now() <= 1728950400000) {
+            forEach(Config.BuildingTechAge, (b, age) => {
+               if (age === "IndustrialAge") {
+                  addMultiplier(b, { output: 1, unstable: true }, t(L.IndustryIdle10));
+               }
+            });
+         }
          break;
       }
       case "HatshepsutTemple": {
@@ -1058,7 +1065,9 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
             }
          }
 
-         addMultiplier("ResearchFund", { output: 5 }, buildingName);
+         if (gs.festival) {
+            addMultiplier("ResearchFund", { output: 5 }, buildingName);
+         }
 
          const total = getGreatPersonTotalEffect("JohnDRockefeller", gs, options);
          if (total > 0) {

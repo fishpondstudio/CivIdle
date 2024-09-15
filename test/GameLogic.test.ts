@@ -43,18 +43,21 @@ test("getBuildingCost", (t) => {
 });
 
 test("getTotalBuildingCost", () => {
-   assert.equal(10 + 15 + 22.5, getTotalBuildingCost("CoalMine", 0, 3).Brick);
-   assert.equal(15, getTotalBuildingCost("CoalMine", 1, 2).Brick);
-   assert.equal(15 + 22.5, getTotalBuildingCost("CoalMine", 1, 3).Brick);
+   assert.equal(10 + 15 + 22.5, getTotalBuildingCost({ type: "CoalMine" }, 0, 3).Brick);
+   assert.equal(15, getTotalBuildingCost({ type: "CoalMine" }, 1, 2).Brick);
+   assert.equal(15 + 22.5, getTotalBuildingCost({ type: "CoalMine" }, 1, 3).Brick);
 });
 
 test("getBuildingValue", () => {
    calculateTierAndPrice();
-   assert.equal(0, getResourcesValue(getTotalBuildingCost("CoalMine", 0, 0)));
+   assert.equal(0, getResourcesValue(getTotalBuildingCost({ type: "CoalMine" }, 0, 0)));
    assert.equal(4, Config.ResourcePrice.Brick);
-   assert.equal(10 + 15 + 22.5, getTotalBuildingCost("CoalMine", 0, 3).Brick);
+   assert.equal(10 + 15 + 22.5, getTotalBuildingCost({ type: "CoalMine" }, 0, 3).Brick);
    // construction: { Iron: 1, Brick: 1, Lumber: 1 }, 8 + 4 + 4
-   assert.equal((8 + 4 + 4) * (10 + 15 + 22.5), getResourcesValue(getTotalBuildingCost("CoalMine", 0, 3)));
+   assert.equal(
+      (8 + 4 + 4) * (10 + 15 + 22.5),
+      getResourcesValue(getTotalBuildingCost({ type: "CoalMine" }, 0, 3)),
+   );
 });
 
 test("TileBitPacking", () => {

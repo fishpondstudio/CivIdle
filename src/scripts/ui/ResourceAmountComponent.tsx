@@ -10,7 +10,14 @@ export function ResourceAmountComponent({
    resource,
    amount,
    showLabel,
-}: { resource: Resource; amount: number; className?: string; showLabel: boolean }): React.ReactNode {
+   showTooltip,
+}: {
+   resource: Resource;
+   amount: number;
+   className?: string;
+   showLabel: boolean;
+   showTooltip: boolean;
+}): React.ReactNode {
    let className_ = className ?? "";
    let tooltip = "";
    const diff = (Tick.current.resourceAmount.get(resource) ?? 0) - amount;
@@ -21,11 +28,19 @@ export function ResourceAmountComponent({
          amount: formatNumber(Math.abs(diff)),
       });
    }
+   const content = (
+      <span className={className_}>
+         {showLabel ? Config.Resource[resource].name() : null} x{formatNumber(amount)}
+      </span>
+   );
+
+   if (!showTooltip) {
+      return content;
+   }
+
    return (
       <Tippy content={tooltip} disabled={!tooltip}>
-         <span className={className_}>
-            {showLabel ? Config.Resource[resource].name() : null} x{formatNumber(amount)}
-         </span>
+         {content}
       </Tippy>
    );
 }

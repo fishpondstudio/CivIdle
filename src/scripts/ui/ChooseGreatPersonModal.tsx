@@ -3,7 +3,12 @@ import { GreatPersonType, type GreatPerson } from "../../../shared/definitions/G
 import { Config } from "../../../shared/logic/Config";
 import type { GreatPeopleChoice } from "../../../shared/logic/GameState";
 import { notifyGameOptionsUpdate, notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
-import { addPermanentGreatPerson, getGreatPersonUpgradeCost } from "../../../shared/logic/RebirthLogic";
+import {
+   addPermanentGreatPerson,
+   getGreatPersonUpgradeCost,
+   getWisdomUpgradeCost,
+   isEligibleForWisdom,
+} from "../../../shared/logic/RebirthLogic";
 import { formatNumber, safeAdd } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import { useGameOptions, useGameState } from "../Global";
@@ -130,11 +135,7 @@ export function ChooseGreatPersonModal({ permanent }: { permanent: boolean }): R
                {greatPeopleChoice.map((greatPerson, index) => {
                   return (
                      <div key={index} className="f1">
-                        {permanent ? (
-                           <PermanentGreatPersonLevel greatPerson={greatPerson} />
-                        ) : (
-                           <GreatPersonLevel greatPerson={greatPerson} />
-                        )}
+                        <GreatPersonLevel greatPerson={greatPerson} permanent={permanent} />
                      </div>
                   );
                })}
@@ -148,14 +149,26 @@ export function ChooseGreatPersonModal({ permanent }: { permanent: boolean }): R
    );
 }
 
-function GreatPersonLevel({ greatPerson }: { greatPerson: GreatPerson }): React.ReactNode {
+function GreatPersonLevel({
+   greatPerson,
+   permanent,
+}: { greatPerson: GreatPerson; permanent: boolean }): React.ReactNode {
    const options = useGameOptions();
    const gs = useGameState();
    const isNormal = Config.GreatPerson[greatPerson].type === GreatPersonType.Normal;
+   const isWisdom = isEligibleForWisdom(greatPerson);
    const inventory = options.greatPeople[greatPerson];
    const total = getGreatPersonUpgradeCost(greatPerson, (inventory?.level ?? 0) + 1);
    return (
       <div className="outset-shallow-2 p8">
+         {!permanent ? (
+            <div className="row text-small">
+               <div className="f1">{t(L.GreatPeopleThisRunShort)}</div>
+               <div className="text-right">
+                  <FormatNumber value={gs.greatPeople[greatPerson] ?? 0} />
+               </div>
+            </div>
+         ) : null}
          <div className="row text-small">
             <div className="f1">
                {t(L.GreatPeoplePermanentShort)}{" "}
@@ -167,31 +180,19 @@ function GreatPersonLevel({ greatPerson }: { greatPerson: GreatPerson }): React.
             </div>
          </div>
          <div className="row text-small">
-            <div className="f1">{t(L.GreatPeopleThisRunShort)}</div>
-            <div className="text-right">
-               <FormatNumber value={gs.greatPeople[greatPerson] ?? 0} />
+            <div className="f1">
+               {t(L.AgeWisdom)}
+               {isWisdom
+                  ? ` (${t(L.LevelX, { level: options.ageWisdom[Config.GreatPerson[greatPerson].age] ?? 0 })})`
+                  : null}
             </div>
+            {isWisdom ? (
+               <div className="text-right">
+                  <FormatNumber value={inventory?.amount ?? 0} />/
+                  {formatNumber(getWisdomUpgradeCost(greatPerson))}
+               </div>
+            ) : null}
          </div>
-      </div>
-   );
-}
-
-function PermanentGreatPersonLevel({ greatPerson }: { greatPerson: GreatPerson }): React.ReactNode {
-   const options = useGameOptions();
-   const inventory = options.greatPeople[greatPerson];
-   const total = getGreatPersonUpgradeCost(greatPerson, (inventory?.level ?? 0) + 1);
-   const isNormal = Config.GreatPerson[greatPerson].type === GreatPersonType.Normal;
-   return (
-      <div className="outset-shallow-2 p8">
-         <div className="row text-small">
-            {isNormal ? <div>{inventory ? t(L.LevelX, { level: inventory.level }) : null}</div> : null}
-            <div className="f1 text-right">
-               <FormatNumber value={inventory?.amount ?? 0} />
-               {isNormal ? `/${formatNumber(total)}` : null}
-            </div>
-         </div>
-         <div className="sep5" />
-         <ProgressBarComponent progress={isNormal ? (inventory?.amount ?? 0) / total : 1} />
       </div>
    );
 }
