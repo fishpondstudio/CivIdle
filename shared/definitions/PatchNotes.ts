@@ -6,6 +6,10 @@ interface PatchNote {
 
 export const PatchNotes: PatchNote[] = [
    {
+      version: "0.17.1",
+      content: [["Bugfix", "Fix a bug where on Rome and Beijing, the festival effect is always on"]],
+   },
+   {
       version: "0.17.0",
       content: [],
       link: "https://store.steampowered.com/news/app/2181940/view/7371918503948242251",

@@ -465,7 +465,9 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
                }
             }
          }
-         Tick.next.globalMultipliers.output.push({ value: 1, source: buildingName });
+         if (gs.festival) {
+            Tick.next.globalMultipliers.output.push({ value: 1, source: buildingName });
+         }
          break;
       }
       case "StatueOfZeus": {
@@ -868,12 +870,14 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
       }
       case "PorcelainTower": {
          Tick.next.globalMultipliers.happiness.push({ value: 5, source: buildingName });
-         forEach(gs.greatPeople, (gp, level) => {
-            if (level > 0) {
-               const def = Config.GreatPerson[gp];
-               def.tick(def, 1, `${buildingName}: ${def.name()}`, GreatPersonTickFlag.Unstable);
-            }
-         });
+         if (gs.festival) {
+            forEach(gs.greatPeople, (gp, level) => {
+               if (level > 0) {
+                  const def = Config.GreatPerson[gp];
+                  def.tick(def, 1, `${buildingName}: ${def.name()}`, GreatPersonTickFlag.Unstable);
+               }
+            });
+         }
          break;
       }
       case "Atomium": {
