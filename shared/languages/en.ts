@@ -1409,4 +1409,7 @@ export const EN = {
    ZigguratOfUrDescV2: "Every 10 happiness (capped) provides +1 Production Multiplier to all buildings that do not produce workers and are unlocked in previous ages (max = number of unlocked ages / 2). Wonders (incl. Natural) no longer provide +1 Happiness. The effect can be turned off",
    Zoroaster: "Zoroaster",
    IndustryIdle10: "Industry Idle 1.0",
+   DemolishAllBuilding: "Demolish All %{building} Within %{tile} Tile",
+   DemolishAllBuildingConfirmTitle: "Demolish %{count} Building(s)?",
+   DemolishAllBuildingConfirmContent: "Are you sure about demolishing %{count} %{name}?"
 };

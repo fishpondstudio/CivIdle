@@ -1,19 +1,18 @@
 import Tippy from "@tippyjs/react";
-import { useState } from "react";
 import { isSpecialBuilding } from "../../../shared/logic/BuildingLogic";
+import { Config } from "../../../shared/logic/Config";
 import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
-import { clearIntraTickCache } from "../../../shared/logic/IntraTickCache";
-import { RequestResetTile } from "../../../shared/logic/TechLogic";
-import { Tick } from "../../../shared/logic/TickLogic";
+import { getGrid } from "../../../shared/logic/IntraTickCache";
 import { clearTransportSourceCache } from "../../../shared/logic/Update";
-import { pointToTile, safeAdd } from "../../../shared/utilities/Helper";
+import { pointToTile, tileToPoint } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import { WorldScene } from "../scenes/WorldScene";
 import { useShortcut } from "../utilities/Hook";
 import { Singleton } from "../utilities/Singleton";
-import { playClick, playError, playSuccess } from "../visuals/Sound";
+import { playSuccess } from "../visuals/Sound";
 import type { IBuildingComponentProps } from "./BuildingPage";
-import { hideToast, showToast } from "./GlobalModal";
+import { ConfirmModal } from "./ConfirmModal";
+import { showModal, showToast } from "./GlobalModal";
 
 export function BuildingSellComponent({ gameState, xy }: IBuildingComponentProps): React.ReactNode {
    const tile = gameState.tiles.get(xy);
@@ -21,64 +20,83 @@ export function BuildingSellComponent({ gameState, xy }: IBuildingComponentProps
    if (!tile || !building || isSpecialBuilding(building.type)) {
       return null;
    }
-   const sellBuilding = () => {
+   const demolishBuilding = () => {
       delete tile!.building;
       Singleton().sceneManager.enqueue(WorldScene, (s) => s.resetTile(tile!.tile));
       clearTransportSourceCache();
       notifyGameStateUpdate();
    };
-   useShortcut("BuildingPageSellBuilding", sellBuilding, [xy]);
-   const [moving, setMoving] = useState(false);
-   const theMet = Tick.current.specialBuildings.get("TheMet");
+   useShortcut("BuildingPageSellBuilding", demolishBuilding, [xy]);
+   const def = Config.Building[building.type];
+
    return (
-      <fieldset>
-         <button className="row w100 jcc" onClick={sellBuilding}>
+      <fieldset className="row">
+         <button className="row jcc f1" onClick={demolishBuilding}>
             <div className="m-icon small">delete</div>
-            <div className="f1">{t(L.DemolishBuilding)}</div>
+            <div>{t(L.DemolishBuilding)}</div>
          </button>
-         {theMet ? (
-            <button
-               className="row w100 jcc mt10"
-               disabled={moving || (theMet.building.resources.Teleport ?? 0) <= 0}
-               onClick={async () => {
-                  playClick();
-                  showToast(t(L.MoveBuildingSelectTileToastHTML), 10000000);
-                  setMoving(true);
-                  const point = await Singleton().sceneManager.getCurrent(WorldScene)?.hijackSelectGrid();
-                  hideToast();
-                  setMoving(false);
-                  if (!point || moving || (theMet.building.resources.Teleport ?? 0) <= 0) {
-                     playError();
-                     return;
-                  }
-                  const xy = pointToTile(point);
-                  const newTile = gameState.tiles.get(xy);
-                  if (newTile && !newTile.building && newTile.explored) {
-                     playSuccess();
-                     newTile.building = building;
-                     safeAdd(theMet.building.resources, "Teleport", -1);
-                     delete tile.building;
-                     RequestResetTile.emit(tile.tile);
-                     RequestResetTile.emit(newTile.tile);
-                     notifyGameStateUpdate();
-                     clearTransportSourceCache();
-                     clearIntraTickCache();
-                     Singleton().sceneManager.getCurrent(WorldScene)?.selectGrid(point);
-                  } else {
-                     showToast(L.MoveBuildingFail);
-                     playError();
-                  }
-               }}
-            >
-               <div className="m-icon small">zoom_out_map</div>
-               <Tippy
-                  content={t(L.MoveBuildingNoTeleport)}
-                  disabled={(theMet.building.resources.Teleport ?? 0) > 0}
-               >
-                  <div className="f1">{moving ? t(L.MoveBuildingSelectTile) : t(L.MoveBuilding)}</div>
+         {[1, 2, 3, 4, 5].map((tile) => {
+            return (
+               <Tippy key={tile} content={t(L.DemolishAllBuilding, { building: def.name(), tile })}>
+                  <button
+                     style={{ width: 27, padding: 0 }}
+                     onMouseEnter={() => {
+                        Singleton()
+                           .sceneManager.getCurrent(WorldScene)
+                           ?.drawSelection(
+                              null,
+                              getGrid(gameState)
+                                 .getRange(tileToPoint(xy), tile)
+                                 .map((p) => pointToTile(p))
+                                 .filter((xy) => gameState.tiles.get(xy)?.building?.type === building.type),
+                           );
+                     }}
+                     onMouseLeave={() => {
+                        Singleton().sceneManager.getCurrent(WorldScene)?.drawSelection(null, []);
+                     }}
+                     onClick={() => {
+                        let count = 0;
+                        getGrid(gameState)
+                           .getRange(tileToPoint(xy), tile)
+                           .map((p) => gameState.tiles.get(pointToTile(p)))
+                           .forEach((tile) => {
+                              if (tile?.building?.type === building.type) {
+                                 ++count;
+                              }
+                           });
+                        showModal(
+                           <ConfirmModal
+                              title={t(L.DemolishAllBuildingConfirmTitle, { count: count })}
+                              onConfirm={() => {
+                                 playSuccess();
+                                 let count = 0;
+                                 getGrid(gameState)
+                                    .getRange(tileToPoint(xy), tile)
+                                    .map((p) => gameState.tiles.get(pointToTile(p)))
+                                    .forEach((tile) => {
+                                       if (tile?.building?.type === building.type) {
+                                          delete tile.building;
+                                          ++count;
+                                          Singleton().sceneManager.enqueue(WorldScene, (s) =>
+                                             s.resetTile(tile.tile),
+                                          );
+                                       }
+                                    });
+                                 clearTransportSourceCache();
+                                 notifyGameStateUpdate();
+                                 showToast(t(L.ApplyToBuildingsToastHTML, { count, building: def.name() }));
+                              }}
+                           >
+                              {t(L.DemolishAllBuildingConfirmContent, { count: count, name: def.name() })}
+                           </ConfirmModal>,
+                        );
+                     }}
+                  >
+                     {tile}
+                  </button>
                </Tippy>
-            </button>
-         ) : null}
+            );
+         })}
       </fieldset>
    );
 }

@@ -56,7 +56,6 @@ export function ApplyToAllComponent<T extends IBuildingData>({
             return (
                <Tippy key={tile} content={t(L.ApplyToBuildingInTile, { building: def.name(), tile })}>
                   <button
-                     className="row jcc"
                      style={{ width: 27, padding: 0 }}
                      onMouseEnter={() => {
                         Singleton()
