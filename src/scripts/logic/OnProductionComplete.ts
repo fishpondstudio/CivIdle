@@ -874,7 +874,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
             forEach(gs.greatPeople, (gp, level) => {
                if (level > 0) {
                   const def = Config.GreatPerson[gp];
-                  def.tick(def, 1, `${buildingName}: ${def.name()}`, GreatPersonTickFlag.Unstable);
+                  def.tick(def, 1, `${t(L.Festival)}: ${def.name()}`, GreatPersonTickFlag.Unstable);
                }
             });
          }
