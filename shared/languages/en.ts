@@ -916,7 +916,7 @@ export const EN = {
    ProduceResource: "Produce: %{resource}",
    ProductionMultiplier: "Production Multiplier",
    ProductionPriority: "Production Priority",
-   ProductionPriorityDescV2: "Higher priority means this building transports before other buildings. Bigger number means higher priority",
+   ProductionPriorityDescV3: "Priority determins the order that buildings transport and produce - a bigger number means a building transports and produces before other buildings. However, a higher priority does not guarantee that the building will transport the resource first. For example, given the following priority order: Coal Power Plan > Coal Mine > Steel Mill, the steel mill will get all the coal produced in the same cycle because it transports and produces immediately after the coal mine",
    ProductionWorkers: "Production Workers",
    Progress: "Progress",
    ProgressTowardsNextGreatPerson: "Progress Towards Next Great Person at Rebirth",

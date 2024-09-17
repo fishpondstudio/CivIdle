@@ -7,7 +7,14 @@ interface PatchNote {
 export const PatchNotes: PatchNote[] = [
    {
       version: "0.17.1",
-      content: [["Bugfix", "Fix a bug where in Athens and Beijing, the festival effect is always on"]],
+      content: [
+         ["Bugfix", "Fix a bug where in Athens and Beijing, the festival effect is always on"],
+         ["QoL", "Clarify the wordings of festival in Beijing"],
+         [
+            "QoL",
+            "Clarify the wordings of production priority: priority determins the order that buildings transport and produce - a bigger number means a building transports and produces before other buildings. However, a higher priority does not guarantee that the building will transport the resource first. For example, given the following priority order: Coal Power Plan > Coal Mine > Steel Mill, the steel mill will get all the coal produced in the same cycle because it transports and produces immediately after the coal mine",
+         ],
+      ],
    },
    {
       version: "0.17.0",
