@@ -5,9 +5,9 @@ import type { GameOptions, GameState } from "../../../shared/logic/GameState";
 import { getTransportStat, getXyBuildings, unlockedBuildings } from "../../../shared/logic/IntraTickCache";
 import {
    getGreatPersonThisRunLevel,
+   getPermanentGreatPeopleCount,
    getPermanentGreatPeopleLevel,
    getRebirthGreatPeopleCount,
-   getTotalGreatPeopleUpgradeCost,
    getValueRequiredForGreatPeople,
 } from "../../../shared/logic/RebirthLogic";
 import {
@@ -338,17 +338,14 @@ function GreatPeopleComponent({
                   <ul>
                      <li className="row text-small">
                         <div className="f1">{t(L.PermanentGreatPeopleAcquired)}</div>
-                        <div className="text-strong">
-                           {reduceOf(
-                              options.greatPeople,
-                              (prev, gp, inv) =>
-                                 prev + getTotalGreatPeopleUpgradeCost(gp, inv.level) + inv.amount,
-                              0,
-                           )}
-                        </div>
+                        <div className="text-strong">{getPermanentGreatPeopleCount()}</div>
                      </li>
                      <li className="row text-small">
-                        <div className="f1">{t(L.PermanentGreatPeopleLevels)}</div>
+                        <div className="f1">
+                           <TextWithHelp content={t(L.EffectiveGreatPeopleLevelDesc)}>
+                              {t(L.EffectiveGreatPeopleLevel)}
+                           </TextWithHelp>
+                        </div>
                         <div className="text-strong">{getPermanentGreatPeopleLevel()}</div>
                      </li>
                      {keysOf(options.greatPeople)

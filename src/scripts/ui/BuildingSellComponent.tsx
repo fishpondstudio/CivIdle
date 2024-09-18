@@ -35,7 +35,7 @@ export function BuildingSellComponent({ gameState, xy }: IBuildingComponentProps
             <div className="m-icon small">delete</div>
             <div>{t(L.DemolishBuilding)}</div>
          </button>
-         {[1, 2, 3, 4, 5].map((tile) => {
+         {[1, 2, 3, 4, 5, Config.City[gameState.city].size * 2].map((tile) => {
             return (
                <Tippy key={tile} content={t(L.DemolishAllBuilding, { building: def.name(), tile })}>
                   <button

@@ -198,13 +198,25 @@ export function getGreatPeopleChoiceCount(gs: GameState): number {
 }
 
 export function getPermanentGreatPeopleLevel(): number {
-   return reduceOf(getGameOptions().greatPeople, (prev, gp, inv) => prev + inv.level, 0);
+   return reduceOf(
+      getGameOptions().greatPeople,
+      (prev, gp, inv) => {
+         return prev + inv.level + (getGameOptions().ageWisdom[Config.GreatPerson[gp].age] ?? 0);
+      },
+      0,
+   );
 }
 
 export function getPermanentGreatPeopleCount(): number {
    return reduceOf(
       getGameOptions().greatPeople,
-      (prev, gp, inv) => prev + getTotalGreatPeopleUpgradeCost(gp, inv.level) + inv.amount,
+      (prev, gp, inv) => {
+         let result = prev + getTotalGreatPeopleUpgradeCost(gp, inv.level) + inv.amount;
+         if (isEligibleForWisdom(gp)) {
+            result += getTotalWisdomUpgradeCost(gp);
+         }
+         return result;
+      },
       0,
    );
 }
@@ -257,6 +269,19 @@ export function getWisdomUpgradeCost(gp: GreatPerson): number {
    const options = getGameOptions();
    const targetLevel = 1 + (options.ageWisdom[def.age] ?? 0);
    return getTotalGreatPeopleUpgradeCost(gp, targetLevel);
+}
+
+export function getTotalWisdomUpgradeCost(gp: GreatPerson): number {
+   const def = Config.GreatPerson[gp];
+   const options = getGameOptions();
+   const currentLevel = options.ageWisdom[def.age] ?? 0;
+   let result = 0;
+   if (currentLevel >= 1) {
+      for (let i = 1; i <= currentLevel; i++) {
+         result += getTotalGreatPeopleUpgradeCost(gp, i);
+      }
+   }
+   return result;
 }
 
 export function getMissingGreatPeopleForWisdom(age: TechAge): Map<GreatPerson, number> {
