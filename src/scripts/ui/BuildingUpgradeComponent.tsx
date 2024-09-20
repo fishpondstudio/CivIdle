@@ -178,22 +178,39 @@ export function BuildingUpgradeComponent({ gameState, xy }: IBuildingComponentPr
                               ?.drawSelection(null, Array.from(result));
                            break;
                         }
-                        case "2":
+                        case "2": {
+                           const result = new Set<Tile>();
+                           gameState.tiles.forEach((tile, xy) => {
+                              if (
+                                 tile?.building?.type === building.type &&
+                                 tile.building.status !== "building" &&
+                                 tile.building.level === building.level
+                              ) {
+                                 result.add(xy);
+                              }
+                           });
+                           setSelected(result);
+                           Singleton()
+                              .sceneManager.getCurrent(WorldScene)
+                              ?.drawSelection(null, Array.from(result));
+                           break;
+                        }
+                        case "3":
                            selectRange(1, true);
                            break;
-                        case "3":
+                        case "4":
                            selectRange(2, true);
                            break;
-                        case "4":
+                        case "5":
                            selectRange(3, true);
                            break;
-                        case "5":
+                        case "6":
                            selectRange(1, false);
                            break;
-                        case "6":
+                        case "7":
                            selectRange(2, false);
                            break;
-                        case "7":
+                        case "8":
                            selectRange(3, false);
                            break;
                      }
@@ -201,12 +218,13 @@ export function BuildingUpgradeComponent({ gameState, xy }: IBuildingComponentPr
                >
                   <option value={0}>{t(L.BatchSelectThisBuilding)}</option>
                   <option value={1}>{t(L.BatchSelectAllSameType)}</option>
-                  <option value={2}>{t(L.BatchSelectSameType1Tile)}</option>
-                  <option value={3}>{t(L.BatchSelectSameType2Tile)}</option>
-                  <option value={4}>{t(L.BatchSelectSameType3Tile)}</option>
-                  <option value={5}>{t(L.BatchSelectAnyType1Tile)}</option>
-                  <option value={6}>{t(L.BatchSelectAnyType2Tile)}</option>
-                  <option value={7}>{t(L.BatchSelectAnyType3Tile)}</option>
+                  <option value={2}>{t(L.BatchSelectSameTypeSameLevel)}</option>
+                  <option value={3}>{t(L.BatchSelectSameType1Tile)}</option>
+                  <option value={4}>{t(L.BatchSelectSameType2Tile)}</option>
+                  <option value={5}>{t(L.BatchSelectSameType3Tile)}</option>
+                  <option value={6}>{t(L.BatchSelectAnyType1Tile)}</option>
+                  <option value={7}>{t(L.BatchSelectAnyType2Tile)}</option>
+                  <option value={8}>{t(L.BatchSelectAnyType3Tile)}</option>
                </select>
             </div>
             <div className="separator" />

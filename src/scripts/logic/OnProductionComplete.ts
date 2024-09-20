@@ -32,7 +32,7 @@ import {
    getXyBuildings,
 } from "../../../shared/logic/IntraTickCache";
 import { getVotedBoostId } from "../../../shared/logic/PlayerTradeLogic";
-import { getGreatPersonTotalEffect } from "../../../shared/logic/RebirthLogic";
+import { getGreatPersonTotalEffect, getPermanentGreatPeopleLevel } from "../../../shared/logic/RebirthLogic";
 import {
    getBuildingUnlockAge,
    getBuildingsUnlockedBefore,
@@ -57,7 +57,6 @@ import {
    mapSafeAdd,
    mapSafePush,
    pointToTile,
-   reduceOf,
    round,
    safeAdd,
    tileToPoint,
@@ -86,10 +85,8 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
 
    switch (building.type) {
       case "Headquarter": {
-         const totalGreatPeopleLevels = reduceOf(options.greatPeople, (prev, gp, inv) => prev + inv.level, 0);
-         const totalWisdomLevels = reduceOf(options.ageWisdom, (prev, age, wisdom) => prev + wisdom, 0);
          mapSafePush(Tick.next.tileMultipliers, xy, {
-            output: round((totalGreatPeopleLevels + totalWisdomLevels) * 0.1, 1),
+            output: round(getPermanentGreatPeopleLevel() * 0.1, 1),
             source: t(L.PermanentGreatPeople),
          });
          if (hasFeature(GameFeature.Festival, gs)) {

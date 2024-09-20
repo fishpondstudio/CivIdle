@@ -142,6 +142,7 @@ export const EN = {
    BatchSelectAnyType1Tile: "Any Type in 1 Tile",
    BatchSelectAnyType2Tile: "Any Type in 2 Tile",
    BatchSelectAnyType3Tile: "Any Type in 3 Tile",
+   BatchSelectSameTypeSameLevel: "Same Type Same Level",
    BatchSelectSameType1Tile: "Same Type in 1 Tile",
    BatchSelectSameType2Tile: "Same Type in 2 Tile",
    BatchSelectSameType3Tile: "Same Type in 3 Tile",
