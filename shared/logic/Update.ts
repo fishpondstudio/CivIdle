@@ -216,6 +216,8 @@ export function getSortedTiles(gs: GameState): [Tile, IBuildingData][] {
    });
 }
 
+const resourceSet = new Set<Resource>();
+
 export function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
    const tile = gs.tiles.get(xy);
    if (!tile) {
@@ -257,11 +259,18 @@ export function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
    // Note that `resourcesByTile` includes buildings that are "building" and "upgrading".
    // This is for cache purpose. We will filter them out when actually transporting resources
    const { total, used } = getStorageFor(xy, gs);
+   const output = getBuildingIO(xy, "output", IOCalculation.Multiplier | IOCalculation.Capacity, gs);
 
    const isResourceImportBuilding = "resourceImports" in building;
 
+   resourceSet.clear();
    forEach(building.resources, (res, amount) => {
       if (!Number.isFinite(amount)) {
+         return;
+      }
+
+      if (amount === 0) {
+         delete building.resources[res];
          return;
       }
 
@@ -279,12 +288,25 @@ export function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
       // We do not add Warehouse/Caravansary in `resourcesByTile`, because we need to consider as transport
       // sources anyway!
       if (!isResourceImportBuilding) {
+         resourceSet.add(res);
          mapSafePush(Tick.next.resourcesByTile, res, {
             tile: xy,
             amount,
-            usedStoragePercentage: used / total,
+            usedStoragePercentage: total === 0 ? 0 : used / total,
          });
       }
+   });
+
+   // Here we add all output resources that are not already tabulated in the storage, for transport cache
+   forEach(output, (res) => {
+      if (resourceSet.has(res)) {
+         return;
+      }
+      mapSafePush(Tick.next.resourcesByTile, res, {
+         tile: xy,
+         amount: 0,
+         usedStoragePercentage: used / total,
+      });
    });
 
    if (isResourceImportBuilding) {
@@ -444,7 +466,6 @@ export function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
    const input = filterTransportable(
       getBuildingIO(xy, "input", IOCalculation.Multiplier | IOCalculation.Capacity, gs),
    );
-   const output = getBuildingIO(xy, "output", IOCalculation.Multiplier | IOCalculation.Capacity, gs);
    const worker = getWorkersFor(xy, gs);
    const inputWorkerCapacity = totalMultiplierFor(xy, "worker", 1, false, gs);
 
@@ -804,18 +825,19 @@ export function transportResource(
             usedStoragePercentage: b.usedStoragePercentage,
          });
       });
-      sources = candidates
-         .sort((point1, point2) => {
-            switch (mode) {
-               case BuildingInputMode.Distance:
-                  return grid.distanceTile(point1.tile, targetXy) - grid.distanceTile(point2.tile, targetXy);
-               case BuildingInputMode.Amount:
-                  return point2.amount - point1.amount;
-               case BuildingInputMode.StoragePercentage:
-                  return point2.usedStoragePercentage - point1.usedStoragePercentage;
-            }
-         })
-         .map((s) => s.tile);
+
+      candidates.sort((point1, point2) => {
+         switch (mode) {
+            case BuildingInputMode.Distance:
+               return grid.distanceTile(point1.tile, targetXy) - grid.distanceTile(point2.tile, targetXy);
+            case BuildingInputMode.Amount:
+               return point2.amount - point1.amount;
+            case BuildingInputMode.StoragePercentage:
+               return point2.usedStoragePercentage - point1.usedStoragePercentage;
+         }
+      });
+
+      sources = candidates.map((s) => s.tile);
 
       if (transportSourceCache && cacheKey && sources) {
          _transportSourceCache.set(cacheKey, sources);
