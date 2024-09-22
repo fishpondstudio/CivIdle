@@ -292,7 +292,7 @@ export function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
          mapSafePush(Tick.next.resourcesByTile, res, {
             tile: xy,
             amount,
-            usedStoragePercentage: total === 0 ? 0 : used / total,
+            usedStoragePercentage: total === 0 ? 1 : used / total,
          });
       }
    });
