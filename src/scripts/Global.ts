@@ -77,17 +77,18 @@ export function syncUITheme(gameOptions: GameOptions): void {
 
 export function syncSidePanelWidth(app: Application, options: GameOptions): void {
    if (options.sidePanelWidth !== 400) {
-      document.documentElement.style.setProperty("--game-ui-width", `${options.sidePanelWidth}px`);
+      document.documentElement.style.setProperty("--game-ui-width", `${options.sidePanelWidth / 10}rem`);
       app.resize();
    }
 }
 
-export function syncFontSizeScale(options: GameOptions): void {
+export function syncFontSizeScale(app: Application, options: GameOptions): void {
    if (!options.useModernUI) {
       document.documentElement.style.setProperty("--base-font-size", "62.5%");
       return;
    }
    document.documentElement.style.setProperty("--base-font-size", `${options.fontSizeScale * 62.5}%`);
+   app.resize();
 }
 
 const SAVE_KEY = "CivIdle";

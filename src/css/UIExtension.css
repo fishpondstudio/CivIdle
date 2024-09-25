@@ -34,7 +34,7 @@ code {
 .menu-button .menu-popover {
    position: absolute;
    z-index: 1;
-   top: 20px;
+   top: 2rem;
    left: 0;
    display: none;
 }

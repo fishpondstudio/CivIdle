@@ -52,8 +52,9 @@ export const MAX_TELEPORT = 10;
 export const TELEPORT_SECONDS = 60;
 export const MAX_PETRA_SPEED_UP = 16;
 export const FESTIVAL_CONVERSION_RATE = 100;
-
 export const GOLDEN_RATIO = (1 + Math.sqrt(5)) / 2;
+export const GOOGLE_PLAY_GAMES_CLIENT_ID =
+   "242227196074-u9201vdqd82p0o0hvfg2metk3gl5ocro.apps.googleusercontent.com";
 
 interface IRecipe {
    building: Building;

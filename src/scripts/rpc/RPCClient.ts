@@ -1,7 +1,10 @@
+import { Capacitor } from "@capacitor/core";
 import { decode, encode } from "@msgpack/msgpack";
+import { CapacitorGameConnect as CapacitorGameConnect_ } from "@openforge/capacitor-game-connect";
 import type { ServerImpl } from "../../../server/src/Server";
 import { addPetraOfflineTime } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
+import { GOOGLE_PLAY_GAMES_CLIENT_ID } from "../../../shared/logic/Constants";
 import { checksum, getGameOptions, getGameState } from "../../../shared/logic/GameStateLogic";
 import { RpcError, removeTrailingUndefs, rpcClient } from "../../../shared/thirdparty/TRPCClient";
 import type {
@@ -42,6 +45,13 @@ export const OnTradeChanged = new TypedEvent<IClientTrade[]>();
 export const OnPlayerMapChanged = new TypedEvent<Map<string, IClientMapEntry>>();
 export const OnPlayerMapMessage = new TypedEvent<IMapMessage>();
 export const OnNewPendingClaims = new TypedEvent<void>();
+
+interface CapacitorGameConnectPluginExt {
+   requestServerSideAccess: (opt: { clientId: string }) => Promise<{ serverAuthToken: string }>;
+}
+
+const CapacitorGameConnect = CapacitorGameConnect_ as typeof CapacitorGameConnect_ &
+   CapacitorGameConnectPluginExt;
 
 export interface IClientChat extends IChat {
    id: number;
@@ -86,7 +96,7 @@ export const client = rpcClient<ServerImpl>({
 function getServerAddress(): string {
    if (import.meta.env.DEV) {
       const url = new URLSearchParams(window.location.search);
-      return url.get("server") ?? "ws://localhost:8000";
+      return url.get("server") ?? "ws://192.168.3.12:8000";
    }
    if (getGameOptions().useMirrorServer) {
       return "wss://api.cividle.com";
@@ -154,6 +164,7 @@ let steamTicket: string | null = null;
 let steamTicketTime = 0;
 
 export async function connectWebSocket(): Promise<number> {
+   const platform = Capacitor.getPlatform();
    if (isSteam()) {
       if (!steamTicket || Date.now() - steamTicketTime > 30 * SECOND) {
          steamTicket = await SteamClient.getAuthSessionTicket();
@@ -172,6 +183,22 @@ export async function connectWebSocket(): Promise<number> {
          `version=${getVersion()}`,
          `build=${getBuildNumber()}`,
          `gameId=${getGameState().id}`,
+         `checksum=${checksum.expected}${checksum.actual}`,
+      ];
+      ws = new WebSocket(`${getServerAddress()}/?${params.join("&")}`);
+   } else if (platform === "android") {
+      const player = await CapacitorGameConnect.signIn();
+      const token = await CapacitorGameConnect.requestServerSideAccess({
+         clientId: GOOGLE_PLAY_GAMES_CLIENT_ID,
+      });
+      const params = [
+         `ticket=${token.serverAuthToken}`,
+         "platform=android",
+         `version=${getVersion()}`,
+         `build=${getBuildNumber()}`,
+         `userId=${getGameOptions().userId}`,
+         `gameId=${getGameState().id}`,
+         `androidPlayerId=${player.player_id}`,
          `checksum=${checksum.expected}${checksum.actual}`,
       ];
       ws = new WebSocket(`${getServerAddress()}/?${params.join("&")}`);

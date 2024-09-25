@@ -1,3 +1,4 @@
+import { Capacitor } from "@capacitor/core";
 import type { Application, Texture } from "pixi.js";
 import type { City } from "../../shared/definitions/CityDefinitions";
 import { IsDeposit } from "../../shared/definitions/ResourceDefinitions";
@@ -93,7 +94,7 @@ export async function startGame(
    syncLanguage(Languages[options.language]);
    syncUITheme(options);
    syncSidePanelWidth(app, options);
-   syncFontSizeScale(options);
+   syncFontSizeScale(app, options);
    calculateTierAndPrice(import.meta.env.DEV ? console.log : undefined);
    const context = { app, assets: resources, textures, gameState };
    initializeSingletons({
@@ -109,7 +110,7 @@ export async function startGame(
 
    // ========== Connect to server ==========
    routeTo(LoadingPage, { stage: LoadingPageStage.SteamSignIn });
-   const TIMEOUT = import.meta.env.DEV ? 1 : 15;
+   const TIMEOUT = import.meta.env.DEV || Capacitor.getPlatform() === "android" ? 1 : 15;
    let hasOfflineProductionModal = false;
    let offlineProduction = true;
 

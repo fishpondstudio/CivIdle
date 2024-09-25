@@ -5,7 +5,7 @@
 @import "ResourcePanel.css";
 
 :root {
-   --game-ui-width: 400px;
+   --game-ui-width: 45rem;
    --base-font-size: 62.5%;
 }
 

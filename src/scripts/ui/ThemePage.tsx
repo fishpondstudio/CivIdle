@@ -14,6 +14,7 @@ import { L, t } from "../../../shared/utilities/i18n";
 import { syncFontSizeScale, useGameOptions } from "../Global";
 import { copyBuildingColorToResource, randomizeBuildingAndResourceColor } from "../logic/ThemeColor";
 import { jsxMapOf } from "../utilities/Helper";
+import { Singleton } from "../utilities/Singleton";
 import { playClick } from "../visuals/Sound";
 import { ChangeModernUIComponent } from "./ChangeModernUIComponent";
 import { ColorPicker } from "./ColorPicker";
@@ -44,10 +45,13 @@ export function ThemePage(): React.ReactNode {
                            value={gameOptions.fontSizeScale}
                            onChange={(e) => {
                               gameOptions.fontSizeScale = safeParseFloat(e.target.value, 1);
-                              syncFontSizeScale(gameOptions);
+                              syncFontSizeScale(Singleton().sceneManager.getContext().app, gameOptions);
                               notifyGameOptionsUpdate(gameOptions);
                            }}
                         >
+                           <option value={0.6}>0.6x</option>
+                           <option value={0.7}>0.7x</option>
+                           <option value={0.8}>0.8x</option>
                            <option value={0.9}>0.9x</option>
                            <option value={1}>1x</option>
                            <option value={1.1}>1.1x</option>
