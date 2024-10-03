@@ -431,7 +431,7 @@ export const ZH_TW = {
    FirstTimeGuideNext: "下一步",
    FirstTimeTutorialWelcome: "Welcome to CivIdle",
    FirstTimeTutorialWelcome1HTML:
-      "Welcome to CivIdle. In this game, you will run your own empire: <b>manage productions, unlock technologies, trade resources with other players, create great people and build world wonders</b>.<br><br>Drag your mouse to move around. Use the scroll wheel to zoom in or out. Click an empty tile to build new buildings, click a building to inspect it.<br><br>Certain buildings like Stone Quarry and Logging Camp need to be built on top of the resource tile. I recommend placing a Hut, which provides worker, next to the fog - the building will take some time to build. After the completion, it will reveal the fog nearby.",
+      "（暫未翻譯。考慮到簡繁語言環境有差異，未直接搬運簡中翻譯，若有需要可切至簡中查看。）Welcome to CivIdle. In this game, you will run your own empire: <b>manage productions, unlock technologies, trade resources with other players, create great people and build world wonders</b>.<br><br>Drag your mouse to move around. Use the scroll wheel to zoom in or out. Click an empty tile to build new buildings, click a building to inspect it.<br><br>Certain buildings like Stone Quarry and Logging Camp need to be built on top of the resource tile. I recommend placing a Hut, which provides worker, next to the fog - the building will take some time to build. After the completion, it will reveal the fog nearby.",
    FirstTimeTutorialWelcome2HTML:
       "Buildings can be upgraded - it costs resources and takes time. When a buildings is being upgraded, <b>it will no longer produce</b>. This includes buildings that provide workers, <b>so never upgrade all your buildings at the same time!</b><br><br>As your empire grows, you will get more science and unlock new technologies. I will tell you more about it when we get there but you can go to View -> Research to take a quick look<br><br>",
    FirstTimeTutorialWelcome3HTML: "Now you know all the basics of the game, you can start building your empire. But before I let you go, you should <b>choose yourself a player handle</b> and say hi in the in-game chat. We have an amazingly helpful community: if you get lost, don't be afraid to ask!",
@@ -1282,7 +1282,7 @@ export const ZH_TW = {
    TraditionExpansion: "擴張",
    TraditionHonor: "榮譽",
    Train: "火車",
-   TranslationPercentage: "%{language}的翻譯進度目前為%{percentage}。可在GitHub上幫助改進此語言翻譯。",
+   TranslationPercentage: "%{language}的翻譯進度目前為%{percentage}。可在GitHub上幫助改進此語言翻譯。（可參考簡中相關建議。）",
    TranslatorCredit: "HarchuN、JiaMuC(沐)、WangChenan",
    Translators: "翻譯人員",
    TransportAllocatedCapacityTooltip: "建造者容量分配用於運送這種資源",
@@ -1300,7 +1300,7 @@ export const ZH_TW = {
    TurnOnTimeWarpDesc: "每秒消耗 %{speed} 扭曲時間，同時加速你的帝國，使其以 %{speed} 倍速度運行。",
    Tutorial: "新手教學",
    TutorialPlayerFlag: "選擇你的玩家旗幟",
-   TutorialPlayerHandle: "輸入你的玩家名稱",
+   TutorialPlayerHandle: "輸入你的玩家名稱（請勿使用不友善名稱）",
    TV: "電視",
    TVStation: "電視台",
    UnclaimedGreatPersonPermanent: "你有未領取的<b>永恆偉人</b>，點擊這裡以領取。",
