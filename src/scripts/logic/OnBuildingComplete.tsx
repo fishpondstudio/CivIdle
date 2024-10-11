@@ -142,7 +142,7 @@ export function onBuildingComplete(xy: Tile): void {
          if (getGameOptions().porcelainTowerMaxPickPerRoll) {
             pickPerRoll = clamp(Math.floor(count / 50), 1, Number.POSITIVE_INFINITY);
          }
-         rollPermanentGreatPeople(gs.claimedGreatPeople, 1, count, getCurrentAge(gs), gs.city).forEach((c) =>
+         rollPermanentGreatPeople(gs.claimedGreatPeople, pickPerRoll, count, getCurrentAge(gs), gs.city).forEach((c) =>
             gs.greatPeopleChoices.push(c.choices),
          );
          if (gs.greatPeopleChoices.length > 0) {
