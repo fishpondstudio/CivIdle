@@ -1,18 +1,18 @@
 import Tippy from "@tippyjs/react";
 import { Config } from "../../../shared/logic/Config";
 import {
-    type CursorOption,
-    CursorOptions,
-    exportThemeColor,
-    exportThemeBuildingColors,
-    exportThemeResourceColors,
-    importThemeColor,
-    importThemeBuildingColors,
-    importThemeResourceColors,
-    resetThemeColor,
-    resetThemeBuildingColors,
-    resetThemeResourceColors,
-    ThemeColorNames,
+   type CursorOption,
+   CursorOptions,
+   exportThemeColor,
+   exportThemeBuildingColors,
+   exportThemeResourceColors,
+   importThemeColor,
+   importThemeBuildingColors,
+   importThemeResourceColors,
+   resetThemeColor,
+   resetThemeBuildingColors,
+   resetThemeResourceColors,
+   ThemeColorNames,
 } from "../../../shared/logic/GameState";
 import { notifyGameOptionsUpdate } from "../../../shared/logic/GameStateLogic";
 import { clamp, keysOf, safeParseFloat, safeParseInt } from "../../../shared/utilities/Helper";
