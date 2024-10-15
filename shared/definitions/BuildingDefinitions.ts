@@ -1841,3 +1841,4 @@ export class BuildingDefinitions {
    // };
 }
 export type Building = keyof BuildingDefinitions;
+export const BuildingNameList = Object.keys(new BuildingDefinitions()) as string[];

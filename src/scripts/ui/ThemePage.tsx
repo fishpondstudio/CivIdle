@@ -1,12 +1,18 @@
 import Tippy from "@tippyjs/react";
 import { Config } from "../../../shared/logic/Config";
 import {
-   CursorOptions,
-   ThemeColorNames,
-   resetThemeBuildingColors,
-   resetThemeColor,
-   resetThemeResourceColors,
-   type CursorOption,
+    type CursorOption,
+    CursorOptions,
+    exportThemeColor,
+    exportThemeBuildingColors,
+    exportThemeResourceColors,
+    importThemeColor,
+    importThemeBuildingColors,
+    importThemeResourceColors,
+    resetThemeColor,
+    resetThemeBuildingColors,
+    resetThemeResourceColors,
+    ThemeColorNames,
 } from "../../../shared/logic/GameState";
 import { notifyGameOptionsUpdate } from "../../../shared/logic/GameStateLogic";
 import { clamp, keysOf, safeParseFloat, safeParseInt } from "../../../shared/utilities/Helper";
@@ -20,9 +26,23 @@ import { ChangeModernUIComponent } from "./ChangeModernUIComponent";
 import { ColorPicker } from "./ColorPicker";
 import { MenuComponent } from "./MenuComponent";
 import { RenderHTML } from "./RenderHTMLComponent";
+import { useState } from "react";
 
 export function ThemePage(): React.ReactNode {
    const gameOptions = useGameOptions();
+   const [exportThemeColorState, setExportThemeColorState] = useState({
+       display: "none",
+       value: "",
+   });
+   const [exportThemeBuildingColorState, setExportThemeBuildingColorState] = useState({
+       display: "none",
+       value: "",
+   });
+   const [exportThemeResourceColorState, setExportThemeResourceColorState] = useState({
+         display: "none",
+         value: "",
+    });
+
    return (
       <div className="window">
          <div className="title-bar">
@@ -122,17 +142,71 @@ export function ThemePage(): React.ReactNode {
                   />
                </div>
             </fieldset>
+
             <fieldset>
                <legend>{t(L.ThemeColor)}</legend>
-               <div
-                  className="mv5 text-link pointer text-strong"
-                  onClick={() => {
-                     playClick();
-                     resetThemeColor();
-                  }}
-               >
-                  {t(L.ThemeColorReset)}
+               <div className="row">
+                  <div
+                     className="mv5 text-link pointer text-strong"
+                     onClick={() => {
+                        playClick();
+                        resetThemeColor();
+                     }}
+                  >
+                     {t(L.Reset)}
+                  </div>
+                  &nbsp;-&nbsp;
+                  <div
+                     className="mv5 text-link pointer text-strong"
+                     onClick={() => {
+                        playClick();
+                        setExportThemeColorState({
+                           display: "export",
+                           value: exportThemeColor(),
+                        });
+                     }}
+                  >
+                     {t(L.Export)}
+                  </div>
+                  &nbsp;-&nbsp;
+                  <div
+                     className="mv5 text-link pointer text-strong"
+                     onClick={() => {
+                        playClick();
+                        setExportThemeColorState({
+                           display: "import",
+                           value: "",
+                        });
+                     }}
+                  >
+                     {t(L.Import)}
+                  </div>
                </div>
+               {exportThemeColorState.display === 'export' && (
+                  <div>
+                     <textarea rows={4} className="w100" value={exportThemeColorState.value} readOnly="readonly"/>
+                  </div>
+               )}
+
+               {exportThemeColorState.display === 'import' && (
+                   <div>
+                      <textarea rows={4} className="w100" value={exportThemeColorState.value} onChange={(e) => setExportThemeColorState({
+                          display: "import",
+                          value: e.target.value,
+                      })}/>
+                         <button
+                           onClick={() => {
+                                importThemeColor(exportThemeColorState.value);
+                                setExportThemeColorState({
+                                    display: "none",
+                                    value: "",
+                                });
+                                notifyGameOptionsUpdate();
+                           }}
+                           className="w100 text-strong"
+                         >{t(L.Import)}</button>
+                   </div>
+               )}
                {keysOf(gameOptions.themeColors).map((k) => {
                   if (typeof gameOptions.themeColors[k] === "string") {
                      return (
@@ -185,15 +259,68 @@ export function ThemePage(): React.ReactNode {
                >
                   {t(L.RandomColorScheme)}
                </button>
-               <div
-                  className="mv5 text-link pointer text-strong"
-                  onClick={() => {
-                     playClick();
-                     resetThemeBuildingColors();
-                  }}
-               >
-                  {t(L.ThemeColorResetBuildingColors)}
+               <div className="row">
+                  <div
+                     className="mv5 text-link pointer text-strong"
+                     onClick={() => {
+                        playClick();
+                        resetThemeBuildingColors();
+                     }}
+                  >
+                     {t(L.Reset)}
+                  </div>
+                  &nbsp;-&nbsp;
+                  <div
+                     className="mv5 text-link pointer text-strong"
+                     onClick={() => {
+                        playClick();
+                        setExportThemeBuildingColorState({
+                           display: "export",
+                           value: exportThemeBuildingColors(),
+                        });
+                     }}
+                  >
+                     {t(L.Export)}
+                  </div>
+                  &nbsp;-&nbsp;
+                  <div
+                     className="mv5 text-link pointer text-strong"
+                     onClick={() => {
+                        playClick();
+                        setExportThemeBuildingColorState({
+                           display: "import",
+                           value: "",
+                        });
+                     }}
+                  >
+                     {t(L.Import)}
+                  </div>
                </div>
+               {exportThemeBuildingColorState.display === 'export' && (
+                  <div>
+                     <textarea rows={4} className="w100" value={exportThemeBuildingColorState.value} readOnly="readonly"/>
+                  </div>
+               )}
+
+               {exportThemeBuildingColorState.display === 'import' && (
+                  <div>
+                      <textarea rows={4} className="w100" value={exportThemeBuildingColorState.value} onChange={(e) => setExportThemeBuildingColorState({
+                         display: "import",
+                         value: e.target.value,
+                      })}/>
+                     <button
+                        onClick={() => {
+                           importThemeBuildingColors(exportThemeBuildingColorState.value);
+                           setExportThemeBuildingColorState({
+                              display: "none",
+                              value: "",
+                           });
+                           notifyGameOptionsUpdate();
+                        }}
+                        className="w100 text-strong"
+                     >{t(L.Import)}</button>
+                  </div>
+               )}
                {keysOf(gameOptions.buildingColors)
                   .sort((a, b) => Config.Building[a].name().localeCompare(Config.Building[b].name()))
                   .map((b) => {
@@ -226,15 +353,68 @@ export function ThemePage(): React.ReactNode {
                      {t(L.BuildingColorMatchBuilding)}
                   </button>
                </Tippy>
-               <div
-                  className="mv5 text-link pointer text-strong"
-                  onClick={() => {
-                     playClick();
-                     resetThemeResourceColors();
-                  }}
-               >
-                  {t(L.ThemeColorResetResourceColors)}
+               <div className="row">
+                  <div
+                     className="mv5 text-link pointer text-strong"
+                     onClick={() => {
+                        playClick();
+                        resetThemeResourceColors();
+                     }}
+                  >
+                     {t(L.Reset)}
+                  </div>
+                  &nbsp;-&nbsp;
+                  <div
+                     className="mv5 text-link pointer text-strong"
+                     onClick={() => {
+                        playClick();
+                        setExportThemeResourceColorState({
+                           display: "export",
+                           value: exportThemeResourceColors(),
+                        });
+                     }}
+                  >
+                     {t(L.Export)}
+                  </div>
+                  &nbsp;-&nbsp;
+                  <div
+                     className="mv5 text-link pointer text-strong"
+                     onClick={() => {
+                        playClick();
+                        setExportThemeResourceColorState({
+                           display: "import",
+                           value: "",
+                        });
+                     }}
+                  >
+                     {t(L.Import)}
+                  </div>
                </div>
+               {exportThemeResourceColorState.display === 'export' && (
+                  <div>
+                     <textarea rows={4} className="w100" value={exportThemeResourceColorState.value} readOnly="readonly"/>
+                  </div>
+               )}
+
+               {exportThemeResourceColorState.display === 'import' && (
+                  <div>
+                      <textarea rows={4} className="w100" value={exportThemeResourceColorState.value} onChange={(e) => setExportThemeResourceColorState({
+                         display: "import",
+                         value: e.target.value,
+                      })}/>
+                     <button
+                        onClick={() => {
+                           importThemeResourceColors(exportThemeResourceColorState.value);
+                           setExportThemeResourceColorState({
+                              display: "none",
+                              value: "",
+                           });
+                           notifyGameOptionsUpdate();
+                        }}
+                        className="w100 text-strong"
+                     >{t(L.Import)}</button>
+                  </div>
+               )}
                {keysOf(gameOptions.resourceColors)
                   .sort((a, b) => Config.Resource[a].name().localeCompare(Config.Resource[b].name()))
                   .map((b) => {

@@ -5,6 +5,8 @@ import type { GreatPerson } from "../definitions/GreatPersonDefinitions";
 import type { Resource } from "../definitions/ResourceDefinitions";
 import type { Tech, TechAge } from "../definitions/TechDefinitions";
 import type { Upgrade } from "../definitions/UpgradeDefinitions";
+import { BuildingNameList } from "../definitions/BuildingDefinitions";
+import { RessourceNameList } from "../definitions/ResourceDefinitions";
 import { CZ } from "../languages/cz";
 import { DE } from "../languages/de";
 import { EN } from "../languages/en";
@@ -102,13 +104,89 @@ export function resetThemeColor() {
    notifyGameOptionsUpdate();
 }
 
+export function exportThemeColor(): string {
+   return JSON.stringify(getGameOptions().themeColors);
+}
+
+export function importThemeColor(theme: string) {
+   const themeImport = {};
+   try {
+      JSON.parse(theme);
+   } catch (e) {
+      return;
+   }
+
+   let cleanedTheme = {};
+   const colorKeys = ["WorldBackground", "GridColor", "SelectedGridColor",
+      "ResearchBackground", "ResearchLockedColor", "ResearchUnlockedColor", "ResearchHighlightColor"];
+   const floatKeys = ["GridAlpha", "InactiveBuildingAlpha", "TransportIndicatorAlpha"];
+
+   for (let key in DefaultThemeColors) {
+       if (themeImport[key] !== undefined) {
+         const value = themeImport[key];
+         if (colorKeys.includes(key) && typeof value === "string" && /^#[0-9A-F]{6}$/i.test(value)) {
+            cleanedTheme[key] = value;
+         } else if (floatKeys.includes(key) && typeof value === "number" && value >= 0 && value <= 1) {
+            cleanedTheme[key] = value;
+         }
+       }
+   }
+
+   getGameOptions().themeColors = cleanedTheme;
+   notifyGameOptionsUpdate();
+}
+
 export function resetThemeBuildingColors() {
    getGameOptions().buildingColors = {};
    notifyGameOptionsUpdate();
 }
 
+export function exportThemeBuildingColors(): string {
+    return JSON.stringify(getGameOptions().buildingColors);
+}
+
+export function importThemeBuildingColors(theme: string) {
+   const themeImport = {};
+   try {
+      JSON.parse(theme)
+   } catch (e) {
+      return;
+   }
+
+   for (let key in themeImport) {
+      const color = themeImport[key];
+      if (typeof color !== "string" || !BuildingNameList.includes(key) || !/^#[0-9A-F]{6}$/i.test(color)) {
+         continue;
+      }
+      getGameOptions().buildingColors[key] = themeImport[key];
+   }
+   notifyGameOptionsUpdate();
+}
+
 export function resetThemeResourceColors() {
    getGameOptions().resourceColors = {};
+   notifyGameOptionsUpdate();
+}
+
+export function exportThemeResourceColors(): string {
+    return JSON.stringify(getGameOptions().resourceColors);
+}
+
+export function importThemeResourceColors(theme: string) {
+   const themeImport = {};
+   try {
+      JSON.parse(theme);
+   } catch (e) {
+      return;
+   }
+
+   for (let key in themeImport) {
+      const color = themeImport[key];
+      if (typeof color !== "string" || !RessourceNameList.includes(key) || !/^#[0-9A-F]{6}$/i.test(color)) {
+         continue;
+      }
+      getGameOptions().resourceColors[key] = themeImport[key];
+   }
    notifyGameOptionsUpdate();
 }
 
