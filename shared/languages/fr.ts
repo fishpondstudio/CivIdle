@@ -668,7 +668,7 @@ export const FR = {
    ManageWonders: "Gérer les Merveilles",
    Manhattan: "Manhattan",
    ManhattanProject: "Projet Manhattan",
-   ManhattanProjectDesc: "Projet Manhattan",
+   ManhattanProjectDesc: "All uranium mines get +2 Production, Worker Capacity and Storage Multiplier. Uranium enrichment plants and atomic facilities get +1 Production Multiplier for each adjacent uranium mine that is built on top of a uranium deposit",
    Marble: "Marbre",
    Marbleworks: "Marbrerie",
    MarcoPolo: "Marco Polo",
