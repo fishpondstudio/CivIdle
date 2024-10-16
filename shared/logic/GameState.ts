@@ -116,10 +116,21 @@ export function importThemeColor(theme: string) {
       return;
    }
 
-   let cleanedTheme = {};
-   const colorKeys = ["WorldBackground", "GridColor", "SelectedGridColor",
-      "ResearchBackground", "ResearchLockedColor", "ResearchUnlockedColor", "ResearchHighlightColor"];
-   const floatKeys = ["GridAlpha", "InactiveBuildingAlpha", "TransportIndicatorAlpha"];
+   const cleanedTheme = {};
+   const colorKeys = [
+      "WorldBackground",
+      "GridColor",
+      "SelectedGridColor",
+      "ResearchBackground",
+      "ResearchLockedColor",
+      "ResearchUnlockedColor",
+      "ResearchHighlightColor",
+   ];
+   const floatKeys = [
+      "GridAlpha",
+      "InactiveBuildingAlpha",
+      "TransportIndicatorAlpha",
+   ];
 
    for (let key in DefaultThemeColors) {
        if (themeImport[key] !== undefined) {
