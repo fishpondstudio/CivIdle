@@ -124,6 +124,7 @@ export class ResourceDefinitions {
 }
 
 export type Resource = keyof ResourceDefinitions;
+export const RessourceNameList = Object.keys(new ResourceDefinitions()) as string[];
 
 export const NoPrice: PartialSet<Resource> = {
    Worker: true,
