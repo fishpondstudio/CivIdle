@@ -16,7 +16,8 @@
       "release": "node ./build/ReleaseElectron.js",
       "translate": "node ./build/Translate.js",
       "achievement": "node ./build/Achievement.js",
-      "ci": "biome ci ./src/scripts/ ./shared/ ./server/ --diagnostic-level=error --config-path=./"
+      "ci": "biome ci ./src/scripts/ ./shared/ ./server/ --diagnostic-level=error --config-path=./",
+      "lint": "biome format ./src/scripts/ ./shared/ ./server/ --diagnostic-level=error --config-path=./"
    },
    "dependencies": {
       "@capacitor/android": "^5.6.0",

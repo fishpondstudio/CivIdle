@@ -41,7 +41,7 @@ export function ThemePage(): React.ReactNode {
    const [exportThemeResourceColorState, setExportThemeResourceColorState] = useState({
       display: "none",
       value: "",
-    });
+   });
 
    return (
       <div className="window">
@@ -182,7 +182,7 @@ export function ThemePage(): React.ReactNode {
                      {t(L.Import)}
                   </div>
                </div>
-               {exportThemeColorState.display === 'export' && (
+               {exportThemeColorState.display === "export" && (
                   <div>
                      <textarea
                         rows={4}
@@ -193,31 +193,33 @@ export function ThemePage(): React.ReactNode {
                   </div>
                )}
 
-               {exportThemeColorState.display === 'import' && (
-                   <div>
-                      <textarea
-                         rows={4}
-                         className="w100"
-                         value={exportThemeColorState.value}
-                         onChange={(e) =>
-                            setExportThemeColorState({
+               {exportThemeColorState.display === "import" && (
+                  <div>
+                     <textarea
+                        rows={4}
+                        className="w100"
+                        value={exportThemeColorState.value}
+                        onChange={(e) =>
+                           setExportThemeColorState({
                               display: "import",
                               value: e.target.value,
-                            })
-                           }
-                      />
-                      <button
-                         onClick={() => {
-                            importThemeColor(exportThemeColorState.value);
-                            setExportThemeColorState({
-                               display: "none",
-                               value: "",
-                            });
-                            notifyGameOptionsUpdate();
-                         }}
-                         className="w100 text-strong"
-                      >{t(L.Import)}</button>
-                   </div>
+                           })
+                        }
+                     />
+                     <button
+                        onClick={() => {
+                           importThemeColor(exportThemeColorState.value);
+                           setExportThemeColorState({
+                              display: "none",
+                              value: "",
+                           });
+                           notifyGameOptionsUpdate();
+                        }}
+                        className="w100 text-strong"
+                     >
+                        {t(L.Import)}
+                     </button>
+                  </div>
                )}
                {keysOf(gameOptions.themeColors).map((k) => {
                   if (typeof gameOptions.themeColors[k] === "string") {
@@ -308,7 +310,7 @@ export function ThemePage(): React.ReactNode {
                      {t(L.Import)}
                   </div>
                </div>
-               {exportThemeBuildingColorState.display === 'export' && (
+               {exportThemeBuildingColorState.display === "export" && (
                   <div>
                      <textarea
                         rows={4}
@@ -319,16 +321,18 @@ export function ThemePage(): React.ReactNode {
                   </div>
                )}
 
-               {exportThemeBuildingColorState.display === 'import' && (
+               {exportThemeBuildingColorState.display === "import" && (
                   <div>
                      <textarea
                         rows={4}
                         className="w100"
                         value={exportThemeBuildingColorState.value}
-                        onChange={(e) => setExportThemeBuildingColorState({
-                          display: "import",
-                          value: e.target.value,
-                        })}
+                        onChange={(e) =>
+                           setExportThemeBuildingColorState({
+                              display: "import",
+                              value: e.target.value,
+                           })
+                        }
                      />
                      <button
                         onClick={() => {
@@ -340,7 +344,9 @@ export function ThemePage(): React.ReactNode {
                            notifyGameOptionsUpdate();
                         }}
                         className="w100 text-strong"
-                     >{t(L.Import)}</button>
+                     >
+                        {t(L.Import)}
+                     </button>
                   </div>
                )}
                {keysOf(gameOptions.buildingColors)
@@ -412,7 +418,7 @@ export function ThemePage(): React.ReactNode {
                      {t(L.Import)}
                   </div>
                </div>
-               {exportThemeResourceColorState.display === 'export' && (
+               {exportThemeResourceColorState.display === "export" && (
                   <div>
                      <textarea
                         rows={4}
@@ -423,16 +429,18 @@ export function ThemePage(): React.ReactNode {
                   </div>
                )}
 
-               {exportThemeResourceColorState.display === 'import' && (
+               {exportThemeResourceColorState.display === "import" && (
                   <div>
                      <textarea
                         rows={4}
                         className="w100"
                         value={exportThemeResourceColorState.value}
-                        onChange={(e) => setExportThemeResourceColorState({
-                           display: "import",
-                           value: e.target.value,
-                        })}
+                        onChange={(e) =>
+                           setExportThemeResourceColorState({
+                              display: "import",
+                              value: e.target.value,
+                           })
+                        }
                      />
                      <button
                         onClick={() => {
@@ -444,7 +452,9 @@ export function ThemePage(): React.ReactNode {
                            notifyGameOptionsUpdate();
                         }}
                         className="w100 text-strong"
-                     >{t(L.Import)}</button>
+                     >
+                        {t(L.Import)}
+                     </button>
                   </div>
                )}
                {keysOf(gameOptions.resourceColors)

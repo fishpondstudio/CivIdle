@@ -126,21 +126,17 @@ export function importThemeColor(theme: string) {
       "ResearchUnlockedColor",
       "ResearchHighlightColor",
    ];
-   const floatKeys = [
-      "GridAlpha",
-      "InactiveBuildingAlpha",
-      "TransportIndicatorAlpha",
-   ];
+   const floatKeys = ["GridAlpha", "InactiveBuildingAlpha", "TransportIndicatorAlpha"];
 
-   for (let key in DefaultThemeColors) {
-       if (themeImport[key] !== undefined) {
+   for (const key in DefaultThemeColors) {
+      if (themeImport[key] !== undefined) {
          const value = themeImport[key];
          if (colorKeys.includes(key) && typeof value === "string" && /^#[0-9A-F]{6}$/i.test(value)) {
             cleanedTheme[key] = value;
          } else if (floatKeys.includes(key) && typeof value === "number" && value >= 0 && value <= 1) {
             cleanedTheme[key] = value;
          }
-       }
+      }
    }
 
    getGameOptions().themeColors = cleanedTheme;
@@ -153,18 +149,18 @@ export function resetThemeBuildingColors() {
 }
 
 export function exportThemeBuildingColors(): string {
-    return JSON.stringify(getGameOptions().buildingColors);
+   return JSON.stringify(getGameOptions().buildingColors);
 }
 
 export function importThemeBuildingColors(theme: string) {
    const themeImport = {};
    try {
-      JSON.parse(theme)
+      JSON.parse(theme);
    } catch (e) {
       return;
    }
 
-   for (let key in themeImport) {
+   for (const key in themeImport) {
       const color = themeImport[key];
       if (typeof color !== "string" || !BuildingNameList.includes(key) || !/^#[0-9A-F]{6}$/i.test(color)) {
          continue;
@@ -180,7 +176,7 @@ export function resetThemeResourceColors() {
 }
 
 export function exportThemeResourceColors(): string {
-    return JSON.stringify(getGameOptions().resourceColors);
+   return JSON.stringify(getGameOptions().resourceColors);
 }
 
 export function importThemeResourceColors(theme: string) {
@@ -191,7 +187,7 @@ export function importThemeResourceColors(theme: string) {
       return;
    }
 
-   for (let key in themeImport) {
+   for (const key in themeImport) {
       const color = themeImport[key];
       if (typeof color !== "string" || !RessourceNameList.includes(key) || !/^#[0-9A-F]{6}$/i.test(color)) {
          continue;
@@ -307,6 +303,7 @@ export function getTranslatedPercentage(): number {
 }
 
 const hours: number[] = [];
+
 export function getTimeSeriesHour(gs: GameState): number[] {
    const hour = Math.floor(gs.tick / 3600);
    if (hours.length === hour) {
