@@ -326,7 +326,7 @@ export function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
       forEach(cost, function checkConstructionUpgradeResources(res, amount) {
          const amountArrived = building.resources[res] ?? 0;
          const amountInTransit = getAmountInTransit(xy, res);
-         const threshold = getGameOptions().greedyTransport ? maxCost[res] ?? 0 : amount;
+         const threshold = getGameOptions().greedyTransport ? (maxCost[res] ?? 0) : amount;
          if (completed && amountArrived < amount) {
             completed = false;
          }

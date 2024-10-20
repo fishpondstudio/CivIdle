@@ -341,7 +341,7 @@ export function calculateTierAndPrice(log?: (val: string) => void) {
             reduceOf(
                def.output,
                (prev, res, amount) =>
-                  prev + (res === "Science" ? SCIENCE_VALUE : Config.ResourcePrice[res] ?? 0) * amount,
+                  prev + (res === "Science" ? SCIENCE_VALUE : (Config.ResourcePrice[res] ?? 0)) * amount,
                0,
             ),
          );
