@@ -71,7 +71,7 @@ export function BuildingConstructionProgressComponent({
                               }}
                            >
                               <Tippy content={t(L.TransportManualControlTooltip)}>
-                                 {building.suspendedInput.has(res) ?? false ? (
+                                 {(building.suspendedInput.has(res) ?? false) ? (
                                     <div className="m-icon text-red">toggle_off</div>
                                  ) : (
                                     <div className="m-icon text-green">toggle_on</div>
