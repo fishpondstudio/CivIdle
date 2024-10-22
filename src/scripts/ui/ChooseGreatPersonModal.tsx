@@ -18,7 +18,6 @@ import { playClick, playError } from "../visuals/Sound";
 import { hideModal, showModal } from "./GlobalModal";
 import { FormatNumber } from "./HelperComponents";
 import { ManagePermanentGreatPersonModal } from "./ManagePermanentGreatPersonModal";
-import { ProgressBarComponent } from "./ProgressBarComponent";
 
 export function ChooseGreatPersonModal({ permanent }: { permanent: boolean }): React.ReactNode {
    const gs = useGameState();
@@ -56,26 +55,28 @@ export function ChooseGreatPersonModal({ permanent }: { permanent: boolean }): R
       };
    }
 
-   if (!permanent && gs.greatPeopleChoices.length > 0) {
-      greatPeopleChoice = gs.greatPeopleChoices[0];
-      choicesLeft = gs.greatPeopleChoices.length;
+   if (!permanent && gs.greatPeopleChoicesV2.length > 0) {
+      const choice = gs.greatPeopleChoicesV2[0];
+      greatPeopleChoice = choice.choices;
+      amount = choice.amount;
+      choicesLeft = gs.greatPeopleChoicesV2.length;
       onChosen = (greatPerson) => {
          if (!greatPeopleChoice) {
             playError();
             return;
          }
-         const idx = gs.greatPeopleChoices.indexOf(greatPeopleChoice);
+         const idx = gs.greatPeopleChoicesV2.indexOf(choice);
          if (idx === -1) {
             playError();
             return;
          }
 
          playClick();
-         gs.greatPeopleChoices.splice(idx, 1);
-         safeAdd(gs.greatPeople, greatPerson, 1);
+         gs.greatPeopleChoicesV2.splice(idx, 1);
+         safeAdd(gs.greatPeople, greatPerson, choice.amount);
          notifyGameStateUpdate();
 
-         if (gs.greatPeopleChoices.length <= 0) {
+         if (gs.greatPeopleChoicesV2.length <= 0) {
             hideModal();
          }
       };
@@ -101,31 +102,25 @@ export function ChooseGreatPersonModal({ permanent }: { permanent: boolean }): R
                         onClick={() => onChosen(greatPerson)}
                      >
                         <GreatPersonImage greatPerson={greatPerson} style={{ width: "100%" }} />
-                        {permanent ? (
-                           <>
-                              <div className="text-orange" style={{ fontSize: 20, fontFamily: Fonts.Cabin }}>
-                                 x{amount}
-                              </div>
-                              <div>{p.desc(p, 1)}</div>
-                           </>
-                        ) : (
-                           <>
-                              <div className="mt10">
-                                 {p.desc(p, Math.round(100 / (1 + (gs.greatPeople[greatPerson] ?? 0))) / 100)}
-                              </div>
-                              {p.type === GreatPersonType.Normal && (gs.greatPeople[greatPerson] ?? 0) > 0 ? (
-                                 <Tippy
-                                    content={t(L.GreatPersonThisRunEffectiveLevel, {
-                                       count: gs.greatPeople[greatPerson] ?? 0,
-                                       person: p.name(),
-                                       effect: 1 + (gs.greatPeople[greatPerson] ?? 0),
-                                    })}
-                                 >
-                                    <div className="m-icon text-orange mt5">release_alert</div>
-                                 </Tippy>
-                              ) : null}
-                           </>
-                        )}
+                        {amount > 1 ? (
+                           <div className="text-orange" style={{ fontSize: 20, fontFamily: Fonts.Cabin }}>
+                              x{amount}
+                           </div>
+                        ) : null}
+                        <div>{p.desc(p, 1)}</div>
+                        {!permanent &&
+                        p.type === GreatPersonType.Normal &&
+                        (gs.greatPeople[greatPerson] ?? 0) > 0 ? (
+                           <Tippy
+                              content={t(L.GreatPersonThisRunEffectiveLevel, {
+                                 count: gs.greatPeople[greatPerson] ?? 0,
+                                 person: p.name(),
+                                 effect: 1 + (gs.greatPeople[greatPerson] ?? 0),
+                              })}
+                           >
+                              <div className="m-icon text-orange mt5">release_alert</div>
+                           </Tippy>
+                        ) : null}
                      </div>
                   );
                })}

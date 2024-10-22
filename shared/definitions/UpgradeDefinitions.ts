@@ -55,7 +55,7 @@ export class UpgradeDefinitions {
       onUnlocked: (gs) => {
          const candidates = rollGreatPeopleThisRun("RenaissanceAge", gs.city, getGreatPeopleChoiceCount(gs));
          if (candidates) {
-            gs.greatPeopleChoices.push(candidates);
+            gs.greatPeopleChoicesV2.push(candidates);
          }
          RequestChooseGreatPerson.emit({ permanent: false });
       },
@@ -611,11 +611,11 @@ export class UpgradeDefinitions {
       onUnlocked: (gs) => {
          const candidates1 = rollGreatPeopleThisRun("IndustrialAge", gs.city, getGreatPeopleChoiceCount(gs));
          if (candidates1) {
-            gs.greatPeopleChoices.push(candidates1);
+            gs.greatPeopleChoicesV2.push(candidates1);
          }
          const candidates2 = rollGreatPeopleThisRun("WorldWarAge", gs.city, getGreatPeopleChoiceCount(gs));
          if (candidates2) {
-            gs.greatPeopleChoices.push(candidates2);
+            gs.greatPeopleChoicesV2.push(candidates2);
          }
       },
       additionalUpgrades: () => [t(L.CommunismLevel4DescHTML)],
@@ -632,7 +632,7 @@ export class UpgradeDefinitions {
       onUnlocked: (gs) => {
          const candidates = rollGreatPeopleThisRun("ColdWarAge", gs.city, getGreatPeopleChoiceCount(gs));
          if (candidates) {
-            gs.greatPeopleChoices.push(candidates);
+            gs.greatPeopleChoicesV2.push(candidates);
          }
       },
       additionalUpgrades: () => [t(L.CommunismLevel5DescHTML)],

@@ -36,9 +36,9 @@ export function onTileExplored(xy: Tile): void {
             if (!age) return;
             const candidates = rollGreatPeopleThisRun(age, gs.city, getGreatPeopleChoiceCount(gs));
             if (candidates) {
-               gs.greatPeopleChoices.push(candidates);
+               gs.greatPeopleChoicesV2.push(candidates);
             }
-            if (gs.greatPeopleChoices.length > 0) {
+            if (gs.greatPeopleChoicesV2.length > 0) {
                playAgeUp();
                showModal(<ChooseGreatPersonModal permanent={false} />);
             }

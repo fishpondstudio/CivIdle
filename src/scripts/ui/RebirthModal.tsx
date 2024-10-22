@@ -154,12 +154,14 @@ export function RebirthModal(): React.ReactNode {
                {hasFlag(user?.attr ?? UserAttributes.None, UserAttributes.DLC1) ? null : (
                   <WarningComponent icon="info" className="text-small mb10">
                      <RenderHTML
-                        html={t(L.FreeThisWeekDescHTML, { city: Config.City[getFreeCityThisWeek()].name() })}
+                        html={t(L.FreeThisWeekDescHTMLV2, {
+                           city: Config.City[getFreeCityThisWeek()].name(),
+                        })}
                      />
                   </WarningComponent>
                )}
                <div className="row">
-                  <div className="f1">{t(L.RebornCity)}</div>
+                  <div className="f1">{t(L.SelectCivilization)}</div>
                   <select
                      value={city}
                      onChange={(e) => {
@@ -248,7 +250,7 @@ export function RebirthModal(): React.ReactNode {
                   )}
                   <div className="text-strong">
                      <TextWithHelp
-                        content={t(L.GreatPersonLevelRequiredDesc, {
+                        content={t(L.GreatPersonLevelRequiredDescV2, {
                            city: Config.City[city].name(),
                            required: Config.City[city].requireGreatPeopleLevel,
                            current: permanentGreatPeopleLevel,

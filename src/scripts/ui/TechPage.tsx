@@ -54,7 +54,7 @@ export function TechPage({ id }: { id: Tech }): React.ReactNode {
                if (def.idx <= Config.TechAge[newAge].idx) {
                   const candidates = rollGreatPeopleThisRun(age, gs.city, getGreatPeopleChoiceCount(gs));
                   if (candidates) {
-                     gs.greatPeopleChoices.push(candidates);
+                     gs.greatPeopleChoicesV2.push(candidates);
                   }
                }
             });
@@ -62,7 +62,7 @@ export function TechPage({ id }: { id: Tech }): React.ReactNode {
                for (let i = 0; i < 2; i++) {
                   const candidates = rollGreatPeopleThisRun(newAge, gs.city, getGreatPeopleChoiceCount(gs));
                   if (candidates) {
-                     gs.greatPeopleChoices.push(candidates);
+                     gs.greatPeopleChoicesV2.push(candidates);
                   }
                }
             }
@@ -72,7 +72,7 @@ export function TechPage({ id }: { id: Tech }): React.ReactNode {
          checkItsukushimaShrine(tech, gs);
       });
 
-      if (gs.greatPeopleChoices.length > 0) {
+      if (gs.greatPeopleChoicesV2.length > 0) {
          playAgeUp();
          showModal(<ChooseGreatPersonModal permanent={false} />);
       } else {

@@ -255,7 +255,7 @@ if (import.meta.env.DEV) {
       const gs = getGameState();
       const candidates = rollGreatPeopleThisRun(age, getGameState().city, candidate);
       if (candidates) {
-         gs.greatPeopleChoices.push(candidates);
+         gs.greatPeopleChoicesV2.push(candidates);
       }
       notifyGameStateUpdate(gs);
    };

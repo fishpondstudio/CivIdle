@@ -168,7 +168,7 @@ export function rollGreatPeopleThisRun(
    age: TechAge,
    city: City,
    choiceCount: number,
-): GreatPeopleChoice | null {
+): GreatPeopleChoiceV2 | null {
    const choices: GreatPeopleChoice = [];
    const pool = shuffle(
       keysOf(
@@ -184,7 +184,7 @@ export function rollGreatPeopleThisRun(
    for (let i = 0; i < choiceCount; i++) {
       choices.push(pool[i]);
    }
-   return choices;
+   return { choices, amount: 1 };
 }
 
 export const DEFAULT_GREAT_PEOPLE_CHOICE_COUNT = 3;

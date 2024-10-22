@@ -67,15 +67,15 @@ export function onBuildingComplete(xy: Tile): void {
       case "Parthenon": {
          const candidates1 = rollGreatPeopleThisRun("ClassicalAge", gs.city, 4);
          if (candidates1) {
-            gs.greatPeopleChoices.push(candidates1);
+            gs.greatPeopleChoicesV2.push(candidates1);
          }
 
          const candidates2 = rollGreatPeopleThisRun("ClassicalAge", gs.city, 4);
          if (candidates2) {
-            gs.greatPeopleChoices.push(candidates2);
+            gs.greatPeopleChoicesV2.push(candidates2);
          }
 
-         if (gs.greatPeopleChoices.length > 0) {
+         if (gs.greatPeopleChoicesV2.length > 0) {
             playAgeUp();
             showModal(<ChooseGreatPersonModal permanent={false} />);
          }
@@ -84,15 +84,15 @@ export function onBuildingComplete(xy: Tile): void {
       case "TajMahal": {
          const candidates1 = rollGreatPeopleThisRun("ClassicalAge", gs.city, getGreatPeopleChoiceCount(gs));
          if (candidates1) {
-            gs.greatPeopleChoices.push(candidates1);
+            gs.greatPeopleChoicesV2.push(candidates1);
          }
 
          const candidates2 = rollGreatPeopleThisRun("MiddleAge", gs.city, getGreatPeopleChoiceCount(gs));
          if (candidates2) {
-            gs.greatPeopleChoices.push(candidates2);
+            gs.greatPeopleChoicesV2.push(candidates2);
          }
 
-         if (gs.greatPeopleChoices.length > 0) {
+         if (gs.greatPeopleChoicesV2.length > 0) {
             playAgeUp();
             showModal(<ChooseGreatPersonModal permanent={false} />);
          }
@@ -138,18 +138,18 @@ export function onBuildingComplete(xy: Tile): void {
          }
          gs.claimedGreatPeople = getRebirthGreatPeopleCount();
          let pickPerRoll = 1;
-         const count = getGreatPeopleChoiceCount(gs);
+         const choiceCount = getGreatPeopleChoiceCount(gs);
          if (getGameOptions().porcelainTowerMaxPickPerRoll) {
-            pickPerRoll = clamp(Math.floor(count / 50), 1, Number.POSITIVE_INFINITY);
+            pickPerRoll = clamp(Math.floor(gs.claimedGreatPeople / 50), 1, Number.POSITIVE_INFINITY);
          }
          rollPermanentGreatPeople(
             gs.claimedGreatPeople,
             pickPerRoll,
-            count,
+            choiceCount,
             getCurrentAge(gs),
             gs.city,
-         ).forEach((c) => gs.greatPeopleChoices.push(c.choices));
-         if (gs.greatPeopleChoices.length > 0) {
+         ).forEach((c) => gs.greatPeopleChoicesV2.push(c));
+         if (gs.greatPeopleChoicesV2.length > 0) {
             playAgeUp();
             showModal(<ChooseGreatPersonModal permanent={false} />);
          }
@@ -209,7 +209,7 @@ export function onBuildingComplete(xy: Tile): void {
          const age = getCurrentAge(gs);
          const candidates1 = rollGreatPeopleThisRun(age, gs.city, getGreatPeopleChoiceCount(gs));
          if (candidates1) {
-            gs.greatPeopleChoices.push(candidates1);
+            gs.greatPeopleChoicesV2.push(candidates1);
          }
 
          const previousAge = firstKeyOf(
@@ -219,11 +219,11 @@ export function onBuildingComplete(xy: Tile): void {
          if (previousAge) {
             const candidates2 = rollGreatPeopleThisRun(previousAge, gs.city, getGreatPeopleChoiceCount(gs));
             if (candidates2) {
-               gs.greatPeopleChoices.push(candidates2);
+               gs.greatPeopleChoicesV2.push(candidates2);
             }
          }
 
-         if (gs.greatPeopleChoices.length > 0) {
+         if (gs.greatPeopleChoicesV2.length > 0) {
             playAgeUp();
             showModal(<ChooseGreatPersonModal permanent={false} />);
          }
