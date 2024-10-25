@@ -902,7 +902,7 @@ export const ES = {
    PorcelainTowerMaxPickPerRollDescHTML: "When choosing great people after Porcelain Tower completed, prefer max pick per roll for the available amount",
    Poseidon: "Poseidón",
    PoseidonDescV2: "All adjacent buildings get free upgrades to Level 25 and +N Production, Worker Capacity and Storage Multiplier. N = Tier of the building",
-   PoultryFarm: "Poultry Farm",
+   PoultryFarm: "Granja Avícola",
    Power: "Energía",
    PowerAvailable: "Energía disponible",
    PowerUsed: "Energía usada",
