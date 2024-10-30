@@ -1413,5 +1413,7 @@ export const EN = {
    IndustryIdle10: "Industry Idle 1.0",
    DemolishAllBuilding: "Demolish All %{building} Within %{tile} Tile",
    DemolishAllBuildingConfirmTitle: "Demolish %{count} Building(s)?",
-   DemolishAllBuildingConfirmContent: "Are you sure about demolishing %{count} %{name}?"
+   DemolishAllBuildingConfirmContent: "Are you sure about demolishing %{count} %{name}?",
+   German: "German",
+   Reichstag: "Reichstag"
 };

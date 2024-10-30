@@ -217,6 +217,36 @@ export class CityDefinitions {
       requireSupporterPack: true,
       festivalDesc: () => t(L.AoiMatsuri),
    };
+   German: ICityDefinition = {
+      name: () => t(L.German),
+      deposits: {
+         Water: 0.025,
+         Copper: 0.025,
+         Iron: 0.025,
+         Wood: 0.03,
+         Stone: 0.02,
+         Gold: 0.025,
+         Coal: 0.035,
+         Oil: 0.025,
+         Aluminum: 0.03,
+         NaturalGas: 0.02,
+         Uranium: 0.015,
+      },
+      size: 40,
+      buildingNames: {
+         Headquarter: () => t(L.Reichstag),
+      },
+      uniqueBuildings: {
+         ItsukushimaShrine: "Religion",
+         GoldenPavilion: "Theocracy",
+         OsakaCastle: "Electricity",
+      },
+      uniqueMultipliers: {},
+      naturalWonders: { Kanagawa: true, MountFuji: true },
+      requireGreatPeopleLevel: 40,
+      requireSupporterPack: true,
+      festivalDesc: () => t(L.AoiMatsuri),
+   };
 }
 
 export type City = keyof CityDefinitions;
