@@ -1380,13 +1380,43 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
       case "RhineGorge": {
          let count = 0;
          for (const point of grid.getRange(tileToPoint(xy), 2)) {
-            const xy = pointToTile(point);
-            const building = gs.tiles.get(xy)?.building;
+            const targetXy = pointToTile(point);
+            if (targetXy === xy) {
+               continue;
+            }
+            const building = gs.tiles.get(targetXy)?.building;
             if (building?.status === "completed" && isWorldOrNaturalWonder(building.type)) {
                ++count;
             }
          }
          Tick.next.globalMultipliers.happiness.push({ value: count * 2, source: buildingName });
+         break;
+      }
+      case "Elbphilharmonie": {
+         for (const point of grid.getRange(tileToPoint(xy), 3)) {
+            const xy = pointToTile(point);
+            const building = getWorkingBuilding(xy, gs);
+            if (!building) {
+               continue;
+            }
+            let count = 0;
+            for (const point2 of grid.getNeighbors(point)) {
+               const building2 = getWorkingBuilding(pointToTile(point2), gs);
+               if (!building2) {
+                  continue;
+               }
+               if (
+                  !isSpecialBuilding(building2.type) &&
+                  Config.BuildingTier[building.type] !== Config.BuildingTier[building2.type]
+               ) {
+                  ++count;
+               }
+            }
+            mapSafePush(Tick.next.tileMultipliers, xy, {
+               output: count,
+               source: buildingName,
+            });
+         }
          break;
       }
       // case "ArcDeTriomphe": {
