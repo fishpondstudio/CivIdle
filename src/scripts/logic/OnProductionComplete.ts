@@ -10,6 +10,7 @@ import {
    getYellowCraneTowerRange,
    isBuildingWellStocked,
    isSpecialBuilding,
+   isWorldOrNaturalWonder,
    isWorldWonder,
 } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
@@ -1374,6 +1375,18 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
                source: buildingName,
             });
          });
+         break;
+      }
+      case "RhineGorge": {
+         let count = 0;
+         for (const point of grid.getRange(tileToPoint(xy), 2)) {
+            const xy = pointToTile(point);
+            const building = gs.tiles.get(xy)?.building;
+            if (building?.status === "completed" && isWorldOrNaturalWonder(building.type)) {
+               ++count;
+            }
+         }
+         Tick.next.globalMultipliers.happiness.push({ value: count * 2, source: buildingName });
          break;
       }
       // case "ArcDeTriomphe": {
