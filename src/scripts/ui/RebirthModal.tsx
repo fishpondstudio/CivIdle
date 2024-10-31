@@ -310,7 +310,7 @@ export function RebirthModal(): React.ReactNode {
                         await Promise.race([client.rebirth(), rejectIn(10)]);
                      } catch (error) {
                         console.error(error);
-                        if (isOnlineUser()) {
+                        if (!import.meta.env.DEV && isOnlineUser()) {
                            playError();
                            showToast(t(L.RebornOfflineWarning));
                            return;

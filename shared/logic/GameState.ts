@@ -164,7 +164,7 @@ export class GameOptions {
    resourceBarShowUncappedHappiness = false;
    resourceBarExcludeTurnedOffOrNoActiveTransport = false;
    resourceBarExcludeStorageFull = false;
-   extraTileInfoType: ExtraTileInfoType = "EmpireValue";
+   extraTileInfoType: ExtraTileInfoType = "StoragePercentage";
    buildingDefaults: Partial<Record<Building, Partial<IBuildingData>>> = {};
    defaultProductionPriority = PRIORITY_MIN;
    defaultConstructionPriority = PRIORITY_MIN;

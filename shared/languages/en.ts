@@ -1415,5 +1415,16 @@ export const EN = {
    DemolishAllBuildingConfirmTitle: "Demolish %{count} Building(s)?",
    DemolishAllBuildingConfirmContent: "Are you sure about demolishing %{count} %{name}?",
    German: "German",
-   Reichstag: "Reichstag"
+   Reichstag: "Reichstag",
+   CologneCathedral: "Cologne Cathedral",
+   CologneCathedralDesc: "When constructed, generate one-time science equivalent to the cost of the most expensive Industrial Age technology. All buildings that produce science (excluding Clone Lab) get +1 Production Multiplier. This wonder can be upgraded and each additional upgrade provides +1 Production Multiplier to all buildings that produce science (excluding Clone Lab)",
+   Elbphilharmonie: "Elbphilharmonie",
+   ElbphilharmonieDesc: "All buildings within 3 tile range get +1 Production Multiplier for each adjacent building that has different tier and age",
+   Zugspitze: "Zugspitze",
+   ZugspitzeDesc: "For each unlocked age, get one point that can be used to provide one extra level to your chosen Great Person this run",
+   RhineGorge: "Rhine Gorge",
+   RhineGorgeDesc: "+2 Happiness for each wonder within 2 tile range",
+   BlackForest: "+2 Happiness for each wonder within 2 tile range",
+   BlackForestDesc: "When discovered, reveals all wood tiles on the map. Spawn wood on adjacent tiles. All buildings that consume Wood or Lumber get +5 Production Multiplier",
+   Oktoberfest: "Oktoberfest: Double the effect of Zugspitze",
 };

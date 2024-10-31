@@ -237,15 +237,14 @@ export class CityDefinitions {
          Headquarter: () => t(L.Reichstag),
       },
       uniqueBuildings: {
-         ItsukushimaShrine: "Religion",
-         GoldenPavilion: "Theocracy",
-         OsakaCastle: "Electricity",
+         CologneCathedral: "HolyEmpire",
+         Elbphilharmonie: "Skyscraper",
       },
       uniqueMultipliers: {},
-      naturalWonders: { Kanagawa: true, MountFuji: true },
-      requireGreatPeopleLevel: 40,
+      naturalWonders: { Zugspitze: true, RhineGorge: true, BlackForest: true },
+      requireGreatPeopleLevel: 50,
       requireSupporterPack: true,
-      festivalDesc: () => t(L.AoiMatsuri),
+      festivalDesc: () => t(L.Oktoberfest),
    };
 }
 
