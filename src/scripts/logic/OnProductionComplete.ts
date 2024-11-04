@@ -1419,6 +1419,14 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          }
          break;
       }
+      case "CologneCathedral": {
+         forEach(Config.Building, (b, def) => {
+            if (!isSpecialBuilding(b) && def.output.Science) {
+               addMultiplier(b, { output: building.level }, buildingName);
+            }
+         });
+         break;
+      }
       // case "ArcDeTriomphe": {
       //    forEach(Config.Building, (b, def) => {
       //       if (def.input.Culture || def.output.Culture) {

@@ -1417,7 +1417,7 @@ export const EN = {
    German: "German",
    Reichstag: "Reichstag",
    CologneCathedral: "Cologne Cathedral",
-   CologneCathedralDesc: "When constructed, generate one-time science equivalent to the cost of the most expensive Industrial Age technology. All buildings that produce science (excluding Clone Lab) get +1 Production Multiplier. This wonder can be upgraded and each additional upgrade provides +1 Production Multiplier to all buildings that produce science (excluding Clone Lab)",
+   CologneCathedralDesc: "When constructed, generate one-time science equivalent to the cost of the most expensive technology in the current age. All buildings that produce science (excluding Clone Lab) get +1 Production Multiplier. This wonder can be upgraded and each additional upgrade provides +1 Production Multiplier to all buildings that produce science (excluding Clone Lab)",
    Elbphilharmonie: "Elbphilharmonie",
    ElbphilharmonieDesc: "All buildings within 3 tile range get +1 Production Multiplier for each adjacent working building that has different tier",
    Zugspitze: "Zugspitze",

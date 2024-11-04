@@ -21,6 +21,7 @@ import {
    getCurrentAge,
    getMostAdvancedTech,
    getTechUnlockCost,
+   getTechUnlockCostInAge,
 } from "../../../shared/logic/TechLogic";
 import { ensureTileFogOfWar } from "../../../shared/logic/TerrainLogic";
 import { Tick } from "../../../shared/logic/TickLogic";
@@ -104,6 +105,15 @@ export function onBuildingComplete(xy: Tile): void {
          const hq = Tick.current.specialBuildings.get("Headquarter")?.building.resources;
          if (tech && hq) {
             safeAdd(hq, "Science", getTechUnlockCost(tech));
+         }
+         break;
+      }
+      case "CologneCathedral": {
+         const age = getCurrentAge(gs);
+         const [_, max] = getTechUnlockCostInAge(age);
+         const hq = Tick.current.specialBuildings.get("Headquarter")?.building.resources;
+         if (hq) {
+            safeAdd(hq, "Science", max);
          }
          break;
       }
