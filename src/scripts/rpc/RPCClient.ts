@@ -77,10 +77,10 @@ let ws: WebSocket | null = null;
 export const client = rpcClient<ServerImpl>({
    request: (method: string, params: any[]) => {
       return new Promise((resolve, reject) => {
-         const id = ++requestId;
-         if (!ws) {
+         if (!ws || ws.readyState !== WebSocket.OPEN) {
             return reject("WebSocket is not ready yet");
          }
+         const id = ++requestId;
          const request = {
             jsonrpc: "2.0",
             id: id,
