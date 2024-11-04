@@ -1,5 +1,5 @@
 import type { Building } from "../../../shared/definitions/BuildingDefinitions";
-import { GreatPersonTickFlag } from "../../../shared/definitions/GreatPersonDefinitions";
+import { GreatPersonTickFlag, type GreatPerson } from "../../../shared/definitions/GreatPersonDefinitions";
 import {
    forEachMultiplier,
    generateScienceFromFaith,
@@ -47,6 +47,7 @@ import type {
    IReligionBuildingData,
    ITileData,
    ITraditionBuildingData,
+   IZugspitzeBuildingData,
 } from "../../../shared/logic/Tile";
 import { addMultiplier, tickUnlockable } from "../../../shared/logic/Update";
 import { VotedBoostType, type IGetVotedBoostResponse } from "../../../shared/utilities/Database";
@@ -1424,6 +1425,26 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
             if (!isSpecialBuilding(b) && def.output.Science) {
                addMultiplier(b, { output: building.level }, buildingName);
             }
+         });
+         break;
+      }
+      case "Zugspitze": {
+         const zug = building as IZugspitzeBuildingData;
+         const gps = new Map<GreatPerson, number>();
+         const currentAge = getCurrentAge(gs);
+         zug.greatPeople.forEach((gp, age) => {
+            if (Config.TechAge[age].idx <= Config.TechAge[currentAge].idx) {
+               mapSafeAdd<GreatPerson>(gps, gp, 1);
+            }
+         });
+         gps.forEach((level, gp) => {
+            const def = Config.GreatPerson[gp];
+            def.tick(
+               def,
+               gs.festival ? level * 2 : level,
+               `${buildingName}: ${def.name()}`,
+               GreatPersonTickFlag.Unstable,
+            );
          });
          break;
       }
