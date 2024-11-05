@@ -27,6 +27,9 @@ export function ZugspitzeBuildingBody({ gameState, xy }: IBuildingComponentProps
                return null;
             }
             const selectedGreatPerson = building.greatPeople.get(age);
+            if (!selectedGreatPerson) {
+               return null;
+            }
             const gpDef = Config.GreatPerson[selectedGreatPerson];
             return (
                <fieldset>
