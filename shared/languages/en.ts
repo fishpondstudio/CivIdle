@@ -398,7 +398,7 @@ export const EN = {
    EstimatedTimeLeft: "Estimated Time Left",
    EuphratesRiver: "Euphrates River",
    EuphratesRiverDesc:
-      "Every 10% of busy workers that are in production (not transporting) provides +1 Production Multiplier to all buildings that do not produce workers and are unlocked in previous ages (max = number of unlocked ages / 2). When the Hanging Garden is built next to it, the Hanging Garden gets +1 effect for each age after the Hanging Garden is unlocked. When discovered, spawn water on all adjacent tiles that do not have deposits",
+      "When discovered, reveals all wood tiles on the map, spawn water on all adjacent tiles that do not have deposits. All buildings that consume Wood or Lumber get +5 Production Multiplier",
    ExpansionLevelX: "Expansion %{level}",
    Exploration: "Exploration",
    Explorer: "Explorer",

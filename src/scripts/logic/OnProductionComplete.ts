@@ -1427,6 +1427,14 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          });
          break;
       }
+      case "BlackForest": {
+         forEach(Config.Building, (b, def) => {
+            if (!isSpecialBuilding(b) && (def.input.Wood || def.input.Lumber)) {
+               addMultiplier(b, { output: 5 }, buildingName);
+            }
+         });
+         break;
+      }
       // case "ArcDeTriomphe": {
       //    forEach(Config.Building, (b, def) => {
       //       if (def.input.Culture || def.output.Culture) {
