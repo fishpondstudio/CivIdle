@@ -1427,4 +1427,8 @@ export const EN = {
    BlackForest: "Black Forest",
    BlackForestDesc: "When discovered, reveals all wood tiles on the map. Spawn wood on adjacent tiles. All buildings that consume Wood or Lumber get +5 Production Multiplier",
    Oktoberfest: "Oktoberfest: Double the effect of Zugspitze",
+   OttoVonBismarck: "Otto von Bismarck",
+   GeorgeWashington: "George Washington",
+   Samsuiluna: "Samsu-iluna",
+   OdaNobunaga: "Oda Nobunaga",
 };

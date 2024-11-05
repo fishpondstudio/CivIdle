@@ -238,11 +238,24 @@ export function RebirthModal(): React.ReactNode {
                      </div>
                   </>
                )}
+               <div className="text-strong">{t(L.GreatPeople)}</div>
+               <div className="mb5">
+                  {jsxMapOf(Config.GreatPerson, (person, def) => {
+                     if (def.city === city) {
+                        return (
+                           <TextWithHelp className="mr10" key={person} content={def.desc(def, 1)}>
+                              {def.name()}
+                           </TextWithHelp>
+                        );
+                     }
+                     return null;
+                  })}
+               </div>
                <div className="text-strong">{t(L.Festival)}</div>
                <div className="mb5">{Config.City[city].festivalDesc()}</div>
                <div className="separator" />
                <div className="row">
-                  <div className=" f1">{t(L.GreatPersonLevelRequired)}</div>
+                  <div className="f1">{t(L.GreatPersonLevelRequired)}</div>
                   {permanentGreatPeopleLevel >= Config.City[city].requireGreatPeopleLevel ? (
                      <div className="m-icon small mr5 text-green">check_circle</div>
                   ) : (
