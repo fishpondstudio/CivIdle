@@ -27,10 +27,6 @@ export function ZugspitzeBuildingBody({ gameState, xy }: IBuildingComponentProps
                return null;
             }
             const selectedGreatPerson = building.greatPeople.get(age);
-            if (!selectedGreatPerson) {
-               return null;
-            }
-            const gpDef = Config.GreatPerson[selectedGreatPerson];
             return (
                <fieldset>
                   <div
@@ -64,7 +60,10 @@ export function ZugspitzeBuildingBody({ gameState, xy }: IBuildingComponentProps
                   </div>
                   {selectedGreatPerson ? (
                      <div className="mt5 text-desc text-small">
-                        {gpDef.desc(gpDef, gameState.festival ? 2 : 1)}
+                        {Config.GreatPerson[selectedGreatPerson].desc(
+                           Config.GreatPerson[selectedGreatPerson],
+                           gameState.festival ? 2 : 1,
+                        )}
                      </div>
                   ) : null}
                   <div className="t"></div>
