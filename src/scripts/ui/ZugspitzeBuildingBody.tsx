@@ -51,11 +51,16 @@ export function ZugspitzeBuildingBody({ gameState, xy }: IBuildingComponentProps
                         }}
                      >
                         <option value=""></option>
-                        {jsxMapOf(gameState.greatPeople, (gp) => (
-                           <option key={gp} value={gp}>
-                              {Config.GreatPerson[gp].name()}
-                           </option>
-                        ))}
+                        {jsxMapOf(gameState.greatPeople, (gp) => {
+                           if (gp === "Zenobia") {
+                              return null;
+                           }
+                           return (
+                              <option key={gp} value={gp}>
+                                 {Config.GreatPerson[gp].name()}
+                              </option>
+                           );
+                        })}
                      </select>
                   </div>
                   {selectedGreatPerson ? (

@@ -1421,7 +1421,7 @@ export const EN = {
    Elbphilharmonie: "Elbphilharmonie",
    ElbphilharmonieDesc: "All buildings within 3 tile range get +1 Production Multiplier for each adjacent working building that has different tier",
    Zugspitze: "Zugspitze",
-   ZugspitzeDesc: "For each unlocked age, get one point that can be used to provide one extra level to your chosen Great Person this run",
+   ZugspitzeDesc: "For each unlocked age, get one point that can be used to provide one extra level to any Great Person that is born from this run",
    RhineGorge: "Rhine Gorge",
    RhineGorgeDesc: "+2 Happiness for each wonder within 2 tile range",
    BlackForest: "Black Forest",
