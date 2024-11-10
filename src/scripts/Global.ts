@@ -76,10 +76,8 @@ export function syncUITheme(gameOptions: GameOptions): void {
 }
 
 export function syncSidePanelWidth(app: Application, options: GameOptions): void {
-   if (options.sidePanelWidth !== 400) {
-      document.documentElement.style.setProperty("--game-ui-width", `${options.sidePanelWidth / 10}rem`);
-      app.resize();
-   }
+   document.documentElement.style.setProperty("--game-ui-width", `${options.sidePanelWidth / 10}rem`);
+   app.resize();
 }
 
 export function syncFontSizeScale(app: Application, options: GameOptions): void {
