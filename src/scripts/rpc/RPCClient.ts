@@ -198,7 +198,6 @@ export async function connectWebSocket(): Promise<number> {
          `build=${getBuildNumber()}`,
          `userId=${getGameOptions().userId}`,
          `gameId=${getGameState().id}`,
-         `androidPlayerId=${player.player_id}`,
          `checksum=${checksum.expected}${checksum.actual}`,
       ];
       ws = new WebSocket(`${getServerAddress()}/?${params.join("&")}`);

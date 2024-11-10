@@ -76,7 +76,7 @@ export function FirstTimePlayerModal(): React.ReactNode {
    }
 
    return (
-      <div className="window" style={{ width: "800px" }}>
+      <div className="window" style={{ width: 800, maxWidth: "80vw" }}>
          <div className="title-bar">
             <div className="title-bar-text">{t(L.FirstTimeTutorialWelcome)}</div>
          </div>
@@ -91,7 +91,7 @@ function FirstTimePlayerSettings(): React.ReactNode {
    const [flag, setFlag] = useState(user?.flag ?? CountryCode.EARTH);
    const countryName = getCountryName(flag);
    return (
-      <div>
+      <div style={{ overflowY: "auto", marginTop: 10 }}>
          <div className="text-strong">{t(L.TutorialPlayerHandle)}</div>
          <div className="sep5" />
          <div className="row">
