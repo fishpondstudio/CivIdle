@@ -59,7 +59,8 @@ export function AdvisorModal({ advisor }: { advisor: Advisor }): React.ReactNode
 export function AdvisorContentComponent({
    advisor,
    action,
-}: { advisor: Advisor; action?: React.ReactNode }): React.ReactNode {
+   content,
+}: { advisor: Advisor; content?: React.ReactNode; action?: React.ReactNode }): React.ReactNode {
    const def = Advisors[advisor];
    return (
       <div className="window-body row" style={{ alignItems: "flex-start" }}>
@@ -71,11 +72,18 @@ export function AdvisorContentComponent({
          </div>
          <div
             className="ml15"
-            style={{ height: 450, maxHeight: "70vh", display: "flex", flexDirection: "column" }}
+            style={{
+               height: 450,
+               maxHeight: "70vh",
+               display: "flex",
+               flexDirection: "column",
+            }}
          >
             <div className="text-large mb10">{def.title()}</div>
-            <RenderHTML html={def.content()} />
-            <div className="f1"></div>
+            <div className="mb10 f1" style={{ overflowY: "auto" }}>
+               <RenderHTML html={def.content()} />
+               {content}
+            </div>
             {action}
          </div>
       </div>
