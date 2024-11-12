@@ -76,7 +76,7 @@ export function RebirthModal(): React.ReactNode {
          <div className="title-bar">
             <div className="title-bar-text">{t(L.Reborn)}</div>
          </div>
-         <div className="window-body">
+         <div className="window-body" style={{ maxHeight: "80vh", overflowY: "auto" }}>
             {tradeCount > 0 ? (
                <WarningComponent icon="warning" className="mb10 text-small">
                   <RenderHTML html={t(L.RebornTradeWarning)} />
