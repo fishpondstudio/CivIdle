@@ -160,16 +160,31 @@ export async function handleChatCommand(command: string): Promise<void> {
             throw new Error("Invalid command format");
          }
          const query = parts[1].toLowerCase();
-         let hasFound = false;
+         const matches = [];
+
          for (const [xy, tile] of getPlayerMap()) {
-            if (tile.handle.toLowerCase() === query) {
-               addSystemMessage(`Found player ${parts[1]}, will pan camera to the tile`);
-               Singleton().sceneManager.getCurrent(PlayerMapScene)?.lookAt(xy);
-               hasFound = true;
-               break;
+            if (tile.handle.toLowerCase().includes(query)) {
+               matches.push({ xy, handle: tile.handle });
             }
          }
-         if (!hasFound) {
+
+         if (matches.length === 1) {
+            const match = matches[0];
+            addSystemMessage(`Found player ${match.handle}, panning camera to the tile`);
+            Singleton().sceneManager.getCurrent(PlayerMapScene)?.lookAt(match.xy);
+         } else if (matches.length > 1) {
+            const maxDisplay = 3;
+            const displayedMatches = matches.slice(0, maxDisplay).map((match) => match.handle).join(", ");
+            const additionalCount = matches.length - maxDisplay;
+
+            let message = `Multiple players found: ${displayedMatches}`;
+            if (additionalCount > 0) {
+               message += `, and ${additionalCount} more. Please specify further.`;
+            } else {
+               message += `. Please specify further.`;
+            }
+            addSystemMessage(message);
+         } else {
             addSystemMessage(`Failed to find player ${parts[1]}`);
          }
          break;
