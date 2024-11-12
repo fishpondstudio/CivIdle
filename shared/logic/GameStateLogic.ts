@@ -12,11 +12,11 @@ export function getGameState(): GameState {
 export function getGameOptions(): GameOptions {
    return savedGame.options;
 }
-export function serializeSave(save: SavedGame = savedGame): Uint8Array {
+export function serializeSave(save: SavedGame = savedGame): string {
    save.options.checksum = null;
    const checksum = wyhash(serializeSaveLite(save), BigInt(0)).toString(16);
    save.options.checksum = checksum;
-   return new TextEncoder().encode(JSON.stringify(save, replacer));
+   return JSON.stringify(save, replacer);
 }
 export function serializeSaveLite(gs: SavedGame = savedGame): Uint8Array {
    const transportation = gs.current.transportationV2;
@@ -27,8 +27,8 @@ export function serializeSaveLite(gs: SavedGame = savedGame): Uint8Array {
    return result;
 }
 export const checksum = { expected: "", actual: "" };
-export function deserializeSave(bytes: Uint8Array): SavedGame {
-   const saveGame = JSON.parse(new TextDecoder().decode(bytes), reviver) as SavedGame;
+export function deserializeSave(str: string): SavedGame {
+   const saveGame = JSON.parse(str, reviver) as SavedGame;
    const expected = saveGame.options.checksum;
    if (!expected) {
       return saveGame;
