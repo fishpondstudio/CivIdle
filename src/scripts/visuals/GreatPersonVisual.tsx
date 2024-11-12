@@ -2,7 +2,7 @@ import { BitmapText, Container, Sprite, Text } from "pixi.js";
 import { useEffect, useRef } from "react";
 import { GreatPersonType, type GreatPerson } from "../../../shared/definitions/GreatPersonDefinitions";
 import { Config } from "../../../shared/logic/Config";
-import { containsNonASCII, forEach, numberToRoman } from "../../../shared/utilities/Helper";
+import { containsNonASCII, mapOf, numberToRoman } from "../../../shared/utilities/Helper";
 import { getTexture } from "../logic/VisualLogic";
 import type { ISceneContext } from "../utilities/SceneManager";
 import { Singleton } from "../utilities/Singleton";
@@ -95,9 +95,9 @@ export function greatPersonSprite(greatPerson: GreatPerson, context: ISceneConte
    return container;
 }
 
-const greatPersonImageCache: Map<GreatPerson, string> = new Map();
+const greatPersonImageCache: Map<GreatPerson, Blob> = new Map();
 
-function greatPersonImage(greatPerson: GreatPerson, context: ISceneContext): string {
+async function greatPersonImage(greatPerson: GreatPerson, context: ISceneContext): Promise<Blob> {
    const cache = greatPersonImageCache.get(greatPerson);
    if (cache) {
       return cache;
@@ -105,15 +105,37 @@ function greatPersonImage(greatPerson: GreatPerson, context: ISceneContext): str
    const canvas = context.app.renderer.extract.canvas(
       greatPersonSprite(greatPerson, context),
    ) as HTMLCanvasElement;
-   const dataURL = canvas.toDataURL();
-   greatPersonImageCache.set(greatPerson, dataURL);
-   return dataURL;
+
+   let resolve: (b: Blob) => void;
+   let reject: (reason?: any) => void;
+
+   const result = new Promise<Blob>((resolve_, reject_) => {
+      resolve = resolve_;
+      reject = reject_;
+   });
+
+   canvas.toBlob(
+      (blob) => {
+         if (blob) {
+            greatPersonImageCache.set(greatPerson, blob);
+            resolve(blob);
+         } else {
+            reject(`Failed to generate image for ${greatPerson}`);
+         }
+      },
+      "image/jpeg",
+      0.8,
+   );
+
+   return result;
 }
 
-export function populateGreatPersonImageCache(context: ISceneContext) {
-   forEach(Config.GreatPerson, (gp) => {
-      greatPersonImage(gp, context);
-   });
+export async function populateGreatPersonImageCache(context: ISceneContext) {
+   Promise.all(
+      mapOf(Config.GreatPerson, (gp) => {
+         return greatPersonImage(gp, context);
+      }),
+   );
 }
 
 interface GreatPersonImageProps extends React.HTMLAttributes<HTMLElement> {
@@ -124,9 +146,11 @@ export function GreatPersonImage({ greatPerson, ...htmlProps }: GreatPersonImage
    const imgRef = useRef<HTMLImageElement>(null);
    useEffect(() => {
       setTimeout(() => {
-         if (imgRef.current) {
-            imgRef.current.src = greatPersonImage(greatPerson, Singleton().sceneManager.getContext());
-         }
+         greatPersonImage(greatPerson, Singleton().sceneManager.getContext()).then((blob) => {
+            if (imgRef.current) {
+               imgRef.current.src = URL.createObjectURL(blob);
+            }
+         });
       }, 0);
    }, [greatPerson]);
    return <img ref={imgRef} {...htmlProps} />;
