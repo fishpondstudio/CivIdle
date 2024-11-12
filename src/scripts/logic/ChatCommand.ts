@@ -174,14 +174,17 @@ export async function handleChatCommand(command: string): Promise<void> {
             Singleton().sceneManager.getCurrent(PlayerMapScene)?.lookAt(match.xy);
          } else if (matches.length > 1) {
             const maxDisplay = 3;
-            const displayedMatches = matches.slice(0, maxDisplay).map((match) => match.handle).join(", ");
+            const displayedMatches = matches
+               .slice(0, maxDisplay)
+               .map((match) => match.handle)
+               .join(", ");
             const additionalCount = matches.length - maxDisplay;
 
             let message = `Multiple players found: ${displayedMatches}`;
             if (additionalCount > 0) {
                message += `, and ${additionalCount} more. Please specify further.`;
             } else {
-               message += `. Please specify further.`;
+               message += ". Please specify further.";
             }
             addSystemMessage(message);
          } else {
