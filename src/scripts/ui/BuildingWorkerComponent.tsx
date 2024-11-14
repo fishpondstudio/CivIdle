@@ -2,6 +2,7 @@ import classNames from "classnames";
 import {
    IOCalculation,
    applyToAllBuildings,
+   applyToAllFullBuildings,
    getBuildingName,
    getMultipliersFor,
    getResourceName,
@@ -42,8 +43,14 @@ export function BuildingWorkerComponent({ gameState, xy }: IBuildingComponentPro
       applyToAllBuildings(building.type, () => ({ capacity: building.capacity }), gameState);
       notifyGameStateUpdate();
    };
+   const toggleBuildingSetAllFullSimilar = () => {
+      building.capacity = building.capacity > 0 ? 0 : 1;
+      applyToAllFullBuildings(building.type, () => ({ capacity: building.capacity }), gameState);
+      notifyGameStateUpdate();
+   };
    useShortcut("BuildingPageToggleBuilding", toggleBuilding, [xy]);
    useShortcut("BuildingPageToggleBuildingSetAllSimilar", toggleBuildingSetAllSimilar, [xy]);
+   useShortcut("BuildingPageToggleBuildingSetAllFullSimilar", toggleBuildingSetAllFullSimilar, [xy]);
    return (
       <fieldset>
          <legend>{t(L.Workers)}</legend>

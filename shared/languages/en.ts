@@ -1081,6 +1081,7 @@ export const EN = {
    ShortcutBuildingPageSellBuildingV2: "Demolish Building",
    ShortcutBuildingPageToggleBuilding: "Toggle Production",
    ShortcutBuildingPageToggleBuildingSetAllSimilar: "Toggle Production And Apply To All",
+   ShortcutBuildingPageToggleBuildingSetAllFullSimilar: "Toggle Production And Apply To All Full",
    ShortcutBuildingPageUpgrade1: "Upgrade Button 1 (+1)",
    ShortcutBuildingPageUpgrade2: "Upgrade Button 2 (+5)",
    ShortcutBuildingPageUpgrade3: "Upgrade Button 3 (+10)",

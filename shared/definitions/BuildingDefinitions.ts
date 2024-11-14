@@ -29,7 +29,7 @@ export class BuildingDefinitions {
    Hut: IBuildingDefinition = {
       name: () => t(L.Hut),
       input: {},
-      output: { Worker: 1 },
+      output: { Worker: 1, Wood: 10 },
       construction: { Wood: 1 },
    };
    House: IBuildingDefinition = {

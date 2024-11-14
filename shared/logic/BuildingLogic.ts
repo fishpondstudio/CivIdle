@@ -730,6 +730,22 @@ export function applyToAllBuildings<T extends IBuildingData>(
    return count;
 }
 
+export function applyToAllFullBuildings<T extends IBuildingData>(
+   building: Building,
+   getOptions: (b: T) => Partial<T>,
+   gs: GameState,
+): number {
+   let count = 0;
+   getBuildingsByType(building, gs)?.forEach((tile, xy) => {
+      const { total, used } = getStorageFor(xy, gs);
+      if (used >= total) {
+         Object.assign(tile.building, getOptions(tile.building as T));
+         ++count;
+      }
+   });
+   return count;
+}
+
 export function getMarketBaseSellAmount(sellResource: Resource, buyResource: Resource): number {
    return (
       Math.sqrt((Config.ResourcePrice[sellResource] ?? 0) * (Config.ResourcePrice[buyResource] ?? 0)) /
