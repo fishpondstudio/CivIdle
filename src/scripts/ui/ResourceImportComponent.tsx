@@ -180,6 +180,10 @@ export function ResourceImportComponent({ gameState, xy }: IBuildingComponentPro
             <div className="text-link" onClick={() => setSelected(new Set())}>
                {t(L.ClearSelection)}
             </div>
+         </div>
+         <div className="sep5"></div>
+         <div className="row text-small">
+            <div className="f1"></div>
             <div
                className="text-link"
                onClick={() => {
