@@ -9,7 +9,7 @@ export const ShortcutScopes = {
    EmptyTilePage: () => t(L.ShortcutScopeEmptyTilePage),
    ConstructionPage: () => t(L.ShortcutScopeConstructionPage),
    UnexploredPage: () => t(L.ShortcutScopeUnexploredPage),
-   GlobalCityPage: () => t(L.ShortcutScopeGlobalGlobalCityPage),
+   GlobalCityPage: () => t(L.ShortcutScopeGlobalCityPage),
    PlayerMapPage: () => t(L.ShortcutScopePlayerMapPage),
 } as const;
 
