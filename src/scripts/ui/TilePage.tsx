@@ -17,18 +17,18 @@ export function TilePage(props: { xy: Tile | undefined }): React.ReactNode {
    }
    const tile = gameState.tiles.get(xy);
    useShortcut(
-   "TogglePetraWarp",
-   () => {
-      const petra = findSpecialBuilding("Petra", gameState);
-      if (petra) {
-         const petraBuilding = petra.building as IPetraBuildingData;
-         if (petraBuilding.speedUp !== 1) {
-            petraBuilding.lastUsedSpeedUp = petraBuilding.speedUp;
+      "TogglePetraWarp",
+      () => {
+         const petra = findSpecialBuilding("Petra", gameState);
+         if (petra) {
+            const petraBuilding = petra.building as IPetraBuildingData;
+            if (petraBuilding.speedUp !== 1) {
+               petraBuilding.lastUsedSpeedUp = petraBuilding.speedUp;
+            }
+            togglePetraTimeWarp(petraBuilding)
          }
-         togglePetraTimeWarp(petraBuilding)
-      }
-   },
-   [],
+      },
+      [],
    );
    if (!tile?.explored) {
       return <UnexploredTile xy={xy} gameState={gameState} />;
