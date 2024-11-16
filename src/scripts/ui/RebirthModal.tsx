@@ -76,7 +76,7 @@ export function RebirthModal(): React.ReactNode {
          <div className="title-bar">
             <div className="title-bar-text">{t(L.Reborn)}</div>
          </div>
-         <div className="window-body">
+         <div className="window-body" style={{ maxHeight: "80vh", overflowY: "auto" }}>
             {tradeCount > 0 ? (
                <WarningComponent icon="warning" className="mb10 text-small">
                   <RenderHTML html={t(L.RebornTradeWarning)} />
@@ -154,12 +154,14 @@ export function RebirthModal(): React.ReactNode {
                {hasFlag(user?.attr ?? UserAttributes.None, UserAttributes.DLC1) ? null : (
                   <WarningComponent icon="info" className="text-small mb10">
                      <RenderHTML
-                        html={t(L.FreeThisWeekDescHTML, { city: Config.City[getFreeCityThisWeek()].name() })}
+                        html={t(L.FreeThisWeekDescHTMLV2, {
+                           city: Config.City[getFreeCityThisWeek()].name(),
+                        })}
                      />
                   </WarningComponent>
                )}
                <div className="row">
-                  <div className="f1">{t(L.RebornCity)}</div>
+                  <div className="f1">{t(L.SelectCivilization)}</div>
                   <select
                      value={city}
                      onChange={(e) => {
@@ -236,11 +238,24 @@ export function RebirthModal(): React.ReactNode {
                      </div>
                   </>
                )}
+               <div className="text-strong">{t(L.GreatPeople)}</div>
+               <div className="mb5">
+                  {jsxMapOf(Config.GreatPerson, (person, def) => {
+                     if (def.city === city) {
+                        return (
+                           <TextWithHelp className="mr10" key={person} content={def.desc(def, 1)}>
+                              {def.name()}
+                           </TextWithHelp>
+                        );
+                     }
+                     return null;
+                  })}
+               </div>
                <div className="text-strong">{t(L.Festival)}</div>
                <div className="mb5">{Config.City[city].festivalDesc()}</div>
                <div className="separator" />
                <div className="row">
-                  <div className=" f1">{t(L.GreatPersonLevelRequired)}</div>
+                  <div className="f1">{t(L.GreatPersonLevelRequired)}</div>
                   {permanentGreatPeopleLevel >= Config.City[city].requireGreatPeopleLevel ? (
                      <div className="m-icon small mr5 text-green">check_circle</div>
                   ) : (
@@ -248,7 +263,7 @@ export function RebirthModal(): React.ReactNode {
                   )}
                   <div className="text-strong">
                      <TextWithHelp
-                        content={t(L.GreatPersonLevelRequiredDesc, {
+                        content={t(L.GreatPersonLevelRequiredDescV2, {
                            city: Config.City[city].name(),
                            required: Config.City[city].requireGreatPeopleLevel,
                            current: permanentGreatPeopleLevel,
@@ -308,7 +323,7 @@ export function RebirthModal(): React.ReactNode {
                         await Promise.race([client.rebirth(), rejectIn(10)]);
                      } catch (error) {
                         console.error(error);
-                        if (isOnlineUser()) {
+                        if (!import.meta.env.DEV && isOnlineUser()) {
                            playError();
                            showToast(t(L.RebornOfflineWarning));
                            return;

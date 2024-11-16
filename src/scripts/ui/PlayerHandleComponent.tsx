@@ -149,7 +149,7 @@ function AccountDetails(): React.ReactNode {
    const noPendingGreatPerson = () =>
       getRebirthGreatPeopleCount() +
          sizeOf(getGameState().greatPeople) +
-         getGameState().greatPeopleChoices.length +
+         getGameState().greatPeopleChoicesV2.length +
          getGameOptions().greatPeopleChoicesV2.length <=
       0;
    return (

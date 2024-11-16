@@ -125,7 +125,7 @@ export function ManagePermanentGreatPersonModal(): React.ReactNode {
                                        <div className="row text-orange text-small">
                                           <div className="m-icon small mr2">map</div>
                                           <Tippy
-                                             content={t(L.GreatPersonOnlyIn, {
+                                             content={t(L.OnlyAvailableWhenPlaying, {
                                                 city: Config.City[person.city].name(),
                                              })}
                                           >

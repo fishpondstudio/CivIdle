@@ -1,4 +1,4 @@
-import { isNaturalWonder, isSpecialBuilding } from "../../../shared/logic/BuildingLogic";
+import { exploreTile, isNaturalWonder, isSpecialBuilding } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
 import { getGameState } from "../../../shared/logic/GameStateLogic";
 import { getGrid, getXyBuildings } from "../../../shared/logic/IntraTickCache";
@@ -11,8 +11,10 @@ import {
 } from "../../../shared/logic/TechLogic";
 import { Tick } from "../../../shared/logic/TickLogic";
 import { isEmpty, pointToTile, safeAdd, tileToPoint, type Tile } from "../../../shared/utilities/Helper";
+import { WorldScene } from "../scenes/WorldScene";
 import { ChooseGreatPersonModal } from "../ui/ChooseGreatPersonModal";
 import { showModal } from "../ui/GlobalModal";
+import { Singleton } from "../utilities/Singleton";
 import { playAgeUp } from "../visuals/Sound";
 
 export function onTileExplored(xy: Tile): void {
@@ -36,9 +38,9 @@ export function onTileExplored(xy: Tile): void {
             if (!age) return;
             const candidates = rollGreatPeopleThisRun(age, gs.city, getGreatPeopleChoiceCount(gs));
             if (candidates) {
-               gs.greatPeopleChoices.push(candidates);
+               gs.greatPeopleChoicesV2.push(candidates);
             }
-            if (gs.greatPeopleChoices.length > 0) {
+            if (gs.greatPeopleChoicesV2.length > 0) {
                playAgeUp();
                showModal(<ChooseGreatPersonModal permanent={false} />);
             }
@@ -60,6 +62,22 @@ export function onTileExplored(xy: Tile): void {
                   addDeposit(tileXy, "Water", true, gs);
                }
             }
+            break;
+         }
+         case "BlackForest": {
+            for (const point of getGrid(gs).getNeighbors(tileToPoint(xy))) {
+               const tileXy = pointToTile(point);
+               const tile = gs.tiles.get(tileXy);
+               if (tile && isEmpty(tile?.deposit)) {
+                  addDeposit(tileXy, "Wood", true, gs);
+               }
+            }
+            gs.tiles.forEach((tile, xy) => {
+               if (tile.deposit.Wood) {
+                  exploreTile(xy, gs);
+                  Singleton().sceneManager.enqueue(WorldScene, (s) => s.revealTile(xy));
+               }
+            });
             break;
          }
       }

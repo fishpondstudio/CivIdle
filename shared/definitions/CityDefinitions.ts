@@ -7,7 +7,7 @@ import type { Tech } from "./TechDefinitions";
 
 export class CityDefinitions {
    Rome: ICityDefinition = {
-      name: () => t(L.Rome),
+      name: () => t(L.Roman),
       deposits: {
          Water: 0.02,
          Copper: 0.02,
@@ -36,7 +36,7 @@ export class CityDefinitions {
       festivalDesc: () => t(L.Saturnalia),
    };
    Athens: ICityDefinition = {
-      name: () => t(L.Athens),
+      name: () => t(L.Greek),
       deposits: {
          Water: 0.01,
          Copper: 0.03,
@@ -62,7 +62,7 @@ export class CityDefinitions {
       festivalDesc: () => t(L.Panathenaea),
    };
    Memphis: ICityDefinition = {
-      name: () => t(L.Memphis),
+      name: () => t(L.Egyptian),
       deposits: {
          Water: 0.01,
          Copper: 0.01,
@@ -91,7 +91,7 @@ export class CityDefinitions {
       festivalDesc: () => t(L.Opet),
    };
    Beijing: ICityDefinition = {
-      name: () => t(L.Beijing),
+      name: () => t(L.Chinese),
       deposits: {
          Water: 0.01,
          Copper: 0.02,
@@ -121,7 +121,7 @@ export class CityDefinitions {
       festivalDesc: () => t(L.LunarNewYear),
    };
    NewYork: ICityDefinition = {
-      name: () => t(L.NewYork),
+      name: () => t(L.American),
       deposits: {
          Water: 0.03,
          Copper: 0.03,
@@ -158,7 +158,7 @@ export class CityDefinitions {
       festivalDesc: () => t(L.Thanksgiving),
    };
    Babylon: ICityDefinition = {
-      name: () => t(L.Babylon),
+      name: () => t(L.Babylonian),
       deposits: {
          Water: 0.01,
          Copper: 0.025,
@@ -174,7 +174,7 @@ export class CityDefinitions {
       },
       size: 35,
       buildingNames: {
-         Headquarter: () => t(L.Babylon),
+         Headquarter: () => t(L.Babylonian),
       },
       uniqueBuildings: {
          WallOfBabylon: "LandTrade",
@@ -188,7 +188,7 @@ export class CityDefinitions {
       festivalDesc: () => t(L.Akitu),
    };
    Kyoto: ICityDefinition = {
-      name: () => t(L.Kyoto),
+      name: () => t(L.Japanese),
       deposits: {
          Water: 0.03,
          Copper: 0.025,
@@ -216,6 +216,35 @@ export class CityDefinitions {
       requireGreatPeopleLevel: 40,
       requireSupporterPack: true,
       festivalDesc: () => t(L.AoiMatsuri),
+   };
+   German: ICityDefinition = {
+      name: () => t(L.German),
+      deposits: {
+         Water: 0.025,
+         Copper: 0.025,
+         Iron: 0.025,
+         Wood: 0.01,
+         Stone: 0.03,
+         Gold: 0.025,
+         Coal: 0.035,
+         Oil: 0.025,
+         Aluminum: 0.03,
+         NaturalGas: 0.02,
+         Uranium: 0.015,
+      },
+      size: 40,
+      buildingNames: {
+         Headquarter: () => t(L.Reichstag),
+      },
+      uniqueBuildings: {
+         CologneCathedral: "HolyEmpire",
+         Elbphilharmonie: "Skyscraper",
+      },
+      uniqueMultipliers: {},
+      naturalWonders: { Zugspitze: true, RhineGorge: true, BlackForest: true },
+      requireGreatPeopleLevel: 50,
+      requireSupporterPack: true,
+      festivalDesc: () => t(L.Oktoberfest),
    };
 }
 

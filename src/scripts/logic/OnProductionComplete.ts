@@ -1,5 +1,5 @@
 import type { Building } from "../../../shared/definitions/BuildingDefinitions";
-import { GreatPersonTickFlag } from "../../../shared/definitions/GreatPersonDefinitions";
+import { GreatPersonTickFlag, type GreatPerson } from "../../../shared/definitions/GreatPersonDefinitions";
 import {
    forEachMultiplier,
    generateScienceFromFaith,
@@ -10,6 +10,7 @@ import {
    getYellowCraneTowerRange,
    isBuildingWellStocked,
    isSpecialBuilding,
+   isWorldOrNaturalWonder,
    isWorldWonder,
 } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
@@ -46,6 +47,7 @@ import type {
    IReligionBuildingData,
    ITileData,
    ITraditionBuildingData,
+   IZugspitzeBuildingData,
 } from "../../../shared/logic/Tile";
 import { addMultiplier, tickUnlockable } from "../../../shared/logic/Update";
 import { VotedBoostType, type IGetVotedBoostResponse } from "../../../shared/utilities/Database";
@@ -1373,6 +1375,84 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
                unstable: true,
                source: buildingName,
             });
+         });
+         break;
+      }
+      case "RhineGorge": {
+         let count = 0;
+         for (const point of grid.getRange(tileToPoint(xy), 2)) {
+            const targetXy = pointToTile(point);
+            if (targetXy === xy) {
+               continue;
+            }
+            const building = gs.tiles.get(targetXy)?.building;
+            if (building?.status === "completed" && isWorldOrNaturalWonder(building.type)) {
+               ++count;
+            }
+         }
+         Tick.next.globalMultipliers.happiness.push({ value: count * 2, source: buildingName });
+         break;
+      }
+      case "Elbphilharmonie": {
+         for (const point of grid.getRange(tileToPoint(xy), 3)) {
+            const xy = pointToTile(point);
+            const building = getWorkingBuilding(xy, gs);
+            if (!building) {
+               continue;
+            }
+            let count = 0;
+            for (const point2 of grid.getNeighbors(point)) {
+               const building2 = getWorkingBuilding(pointToTile(point2), gs);
+               if (!building2) {
+                  continue;
+               }
+               if (
+                  !isSpecialBuilding(building2.type) &&
+                  Config.BuildingTier[building.type] !== Config.BuildingTier[building2.type]
+               ) {
+                  ++count;
+               }
+            }
+            mapSafePush(Tick.next.tileMultipliers, xy, {
+               output: count,
+               source: buildingName,
+            });
+         }
+         break;
+      }
+      case "CologneCathedral": {
+         forEach(Config.Building, (b, def) => {
+            if (!isSpecialBuilding(b) && def.output.Science) {
+               addMultiplier(b, { output: building.level }, buildingName);
+            }
+         });
+         break;
+      }
+      case "BlackForest": {
+         forEach(Config.Building, (b, def) => {
+            if (!isSpecialBuilding(b) && (def.input.Wood || def.input.Lumber)) {
+               addMultiplier(b, { output: 5 }, buildingName);
+            }
+         });
+         break;
+      }
+      case "Zugspitze": {
+         const zug = building as IZugspitzeBuildingData;
+         const gps = new Map<GreatPerson, number>();
+         const currentAge = getCurrentAge(gs);
+         zug.greatPeople.forEach((gp, age) => {
+            if (Config.TechAge[age].idx <= Config.TechAge[currentAge].idx) {
+               mapSafeAdd<GreatPerson>(gps, gp, 1);
+            }
+         });
+         gps.forEach((level, gp) => {
+            const def = Config.GreatPerson[gp];
+            def.tick(
+               def,
+               gs.festival ? level * 2 : level,
+               `${buildingName}: ${def.name()}`,
+               GreatPersonTickFlag.Unstable,
+            );
          });
          break;
       }

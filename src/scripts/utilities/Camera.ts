@@ -21,10 +21,11 @@ export class Camera extends Container implements SceneLifecycle {
       this.on("pointerleave", this.onPointerOut);
    }
 
-   private pressedPointers: Map<number, { x: number; y: number; moved: boolean }> = new Map();
+   private pressedPointers: Map<number, { x: number; y: number; dx: number; dy: number; moved: boolean }> =
+      new Map();
 
    private onPointerDown(e: FederatedPointerEvent) {
-      this.pressedPointers.set(e.pointerId, { x: e.x, y: e.y, moved: false });
+      this.pressedPointers.set(e.pointerId, { x: e.x, y: e.y, dx: 0, dy: 0, moved: false });
    }
 
    private onPointerOut(e: FederatedPointerEvent) {
@@ -44,41 +45,45 @@ export class Camera extends Container implements SceneLifecycle {
       if (!active) {
          return;
       }
+      const lengthSqr = (active.x - e.x) ** 2 + (active.y - e.y) ** 2;
+      // If we are already moving, we skip dead zone check.
+      if (active.moved || lengthSqr > DEAD_ZONE_SQR) {
+         active.moved = true;
+      }
+
       const pressedPointerCount = sizeOf(this.pressedPointers);
       if (pressedPointerCount === 1) {
-         const lengthSqr = (active.x - e.x) ** 2 + (active.y - e.y) ** 2;
-         // If we are already moving, we skip dead zone check.
-         if (active.moved || lengthSqr > DEAD_ZONE_SQR) {
+         if (active.moved) {
             this.targetOrigin = null;
             this.moveOrigin({
                x: this.pivot.x + (active.x - e.x) / this.zoom,
                y: this.pivot.y + (active.y - e.y) / this.zoom,
             });
-            active.moved = true;
+         }
+      } else if (pressedPointerCount >= 2) {
+         const touches = Array.from(this.pressedPointers.entries());
+         const touch1 = touches[0][1];
+         const touch2 = touches[1][1];
+
+         const x = touch1.x - touch2.x;
+         const y = touch1.y - touch2.y;
+
+         const dx = touch1.dx - touch2.dx;
+         const dy = touch1.dy - touch2.dy;
+
+         if (Math.abs(x) > Math.abs(y)) {
+            this.zoom = ((x + dx) / x) * this.zoom;
+         } else {
+            this.zoom = ((y + dy) / y) * this.zoom;
          }
       }
+
       if (active.moved) {
+         active.dx = e.x - active.x;
+         active.dy = e.y - active.y;
          active.x = e.x;
          active.y = e.y;
       }
-      // const touches = e.getTouches();
-      // if (touches.length >= 2) {
-      //     const touch1 = touches[0];
-      //     const touch2 = touches[1];
-      //     const distance = touch1.getLocation().sub(touch2.getLocation());
-      //     const delta = touch1.getDelta().sub(touch2.getDelta());
-      //     let scale = 1;
-      //     if (Math.abs(distance.x) > Math.abs(distance.y)) {
-      //         scale = ((distance.x + delta.x) / distance.x) * this.cameraZoom;
-      //     } else {
-      //         scale = ((distance.y + delta.y) / distance.y) * this.cameraZoom;
-      //     }
-      //     this.cameraZoom = scale;
-      // } else {
-      //     this.cameraPosition = this.cameraPosition
-      //         .sub(cc.v3(e.getDelta()).divSelf(this.cameraZoom))
-      //         .clampf(this.minCameraPosition(), this.maxCameraPosition());
-      // }
    }
 
    public screenToWorld(pos: IPointData): IPointData {

@@ -4,5 +4,5 @@
     <string name="title_activity_main">CivIdle</string>
     <string name="package_name">com.cividle</string>
     <string name="custom_url_scheme">com.cividle</string>
-    <string name="game_services_project_id">242227196074</string>
+    <string translatable="false" name="game_services_project_id">242227196074</string>
 </resources>

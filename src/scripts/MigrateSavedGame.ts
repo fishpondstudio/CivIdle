@@ -170,4 +170,10 @@ export function migrateSavedGame(save: SavedGame) {
       });
       delete save.options.greatPeopleChoices;
    }
+   if ("greatPeopleChoices" in save.current) {
+      (save.current.greatPeopleChoices as GreatPerson[][]).forEach((c) => {
+         save.current.greatPeopleChoicesV2.push({ choices: c, amount: 1 });
+      });
+      delete save.current.greatPeopleChoices;
+   }
 }

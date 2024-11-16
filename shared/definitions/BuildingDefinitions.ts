@@ -1756,6 +1756,61 @@ export class BuildingDefinitions {
       wikipedia: "Mount_Fuji",
    };
 
+   CologneCathedral: IBuildingDefinition = {
+      name: () => t(L.CologneCathedral),
+      desc: () => t(L.CologneCathedralDesc),
+      input: {},
+      output: {},
+      construction: { Faith: 100, Knight: 100, Caravel: 100 },
+      max: 1,
+      special: BuildingSpecial.WorldWonder,
+      wikipedia: "Cologne_Cathedral",
+   };
+
+   Elbphilharmonie: IBuildingDefinition = {
+      name: () => t(L.Elbphilharmonie),
+      desc: () => t(L.ElbphilharmonieDesc),
+      input: {},
+      output: {},
+      construction: { Radio: 100, Diplomacy: 100, Rocket: 100 },
+      max: 1,
+      special: BuildingSpecial.WorldWonder,
+      wikipedia: "Elbphilharmonie",
+   };
+
+   Zugspitze: IBuildingDefinition = {
+      name: () => t(L.Zugspitze),
+      desc: () => t(L.ZugspitzeDesc),
+      input: {},
+      output: {},
+      construction: {},
+      max: 0,
+      special: BuildingSpecial.NaturalWonder,
+      wikipedia: "Zugspitze",
+   };
+
+   RhineGorge: IBuildingDefinition = {
+      name: () => t(L.RhineGorge),
+      desc: () => t(L.RhineGorgeDesc),
+      input: {},
+      output: {},
+      construction: {},
+      max: 0,
+      special: BuildingSpecial.NaturalWonder,
+      wikipedia: "Rhine_Gorge",
+   };
+
+   BlackForest: IBuildingDefinition = {
+      name: () => t(L.BlackForest),
+      desc: () => t(L.BlackForestDesc),
+      input: {},
+      output: {},
+      construction: {},
+      max: 0,
+      special: BuildingSpecial.NaturalWonder,
+      wikipedia: "Black_Forest",
+   };
+
    // ArcDeTriomphe: IBuildingDefinition = {
    //    name: () => t(L.ArcDeTriomphe),
    //    desc: () => t(L.ArcDeTriompheDesc),

@@ -60,6 +60,7 @@ export function ManageAgeWisdomModal(): React.ReactNode {
                   const missing = getMissingGreatPeopleForWisdom(age);
                   return (
                      <div
+                        key={age}
                         className="row"
                         style={{
                            fontFamily: Fonts.OldTypefaces,

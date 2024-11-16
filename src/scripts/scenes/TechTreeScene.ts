@@ -57,6 +57,7 @@ export class TechTreeScene extends Scene {
 
       this.viewport.setWorldSize(width, PAGE_HEIGHT);
       this.viewport.zoom = Math.max(app.screen.width / width, app.screen.height / (PAGE_HEIGHT * 1.05));
+      this.viewport.setZoomRange(this.viewport.zoom * 0.5, this.viewport.zoom * 1.5);
       this.viewport.wheelMode = WheelMode.HorizontalScroll;
    }
 

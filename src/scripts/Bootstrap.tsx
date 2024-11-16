@@ -1,4 +1,3 @@
-import { Capacitor } from "@capacitor/core";
 import type { Application, Texture } from "pixi.js";
 import type { City } from "../../shared/definitions/CityDefinitions";
 import { IsDeposit } from "../../shared/definitions/ResourceDefinitions";
@@ -32,6 +31,7 @@ import { getFullVersion } from "./logic/Version";
 import { getBuildingTexture, getTileTexture } from "./logic/VisualLogic";
 import type { MainBundleAssets } from "./main";
 import { connectWebSocket, convertOfflineTimeToWarp } from "./rpc/RPCClient";
+import { isSteam } from "./rpc/SteamClient";
 import { PlayerMapScene } from "./scenes/PlayerMapScene";
 import { TechTreeScene } from "./scenes/TechTreeScene";
 import { WorldScene } from "./scenes/WorldScene";
@@ -103,14 +103,16 @@ export async function startGame(
       ticker: new GameTicker(app.ticker, gameState),
       heartbeat: new Heartbeat(serializeSaveLite()),
    });
-   if (import.meta.env.PROD) {
-      populateGreatPersonImageCache(context);
+   if (import.meta.env.PROD && isSteam()) {
+      console.time("Populate Great Person Image Cache");
+      await populateGreatPersonImageCache(context);
+      console.timeEnd("Populate Great Person Image Cache");
    }
    setCityOverride(gameState);
 
    // ========== Connect to server ==========
    routeTo(LoadingPage, { stage: LoadingPageStage.SteamSignIn });
-   const TIMEOUT = import.meta.env.DEV || Capacitor.getPlatform() === "android" ? 1 : 15;
+   const TIMEOUT = import.meta.env.DEV ? 1 : 15;
    let hasOfflineProductionModal = false;
    let offlineProduction = true;
 

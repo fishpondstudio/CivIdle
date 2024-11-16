@@ -16,7 +16,7 @@ export function AdvisorModal({ advisor }: { advisor: Advisor }): React.ReactNode
 
    const def = Advisors[advisor];
    return (
-      <div className="window" style={{ width: 800 }}>
+      <div className="window" style={{ width: 800, maxWidth: "80vw" }}>
          <div className="title-bar">
             <div className="title-bar-text">{def.title()}</div>
             <div className="title-bar-controls">
@@ -59,17 +59,31 @@ export function AdvisorModal({ advisor }: { advisor: Advisor }): React.ReactNode
 export function AdvisorContentComponent({
    advisor,
    action,
-}: { advisor: Advisor; action?: React.ReactNode }): React.ReactNode {
+   content,
+}: { advisor: Advisor; content?: React.ReactNode; action?: React.ReactNode }): React.ReactNode {
    const def = Advisors[advisor];
    return (
       <div className="window-body row" style={{ alignItems: "flex-start" }}>
          <div className="inset-shallow white">
-            <img src={AdvisorImages[advisor]} style={{ display: "block", height: 450 - 2 }} />
+            <img
+               src={AdvisorImages[advisor]}
+               style={{ display: "block", height: 450 - 2, maxHeight: "70vh" }}
+            />
          </div>
-         <div className="ml15" style={{ height: 450, display: "flex", flexDirection: "column" }}>
+         <div
+            className="ml15"
+            style={{
+               height: 450,
+               maxHeight: "70vh",
+               display: "flex",
+               flexDirection: "column",
+            }}
+         >
             <div className="text-large mb10">{def.title()}</div>
-            <RenderHTML html={def.content()} />
-            <div className="f1"></div>
+            <div className="mb10 f1" style={{ overflowY: "auto" }}>
+               <RenderHTML html={def.content()} />
+               {content}
+            </div>
             {action}
          </div>
       </div>

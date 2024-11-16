@@ -1,6 +1,6 @@
-import { Capacitor } from "@capacitor/core";
+import { Capacitor, registerPlugin } from "@capacitor/core";
 import { decode, encode } from "@msgpack/msgpack";
-import { CapacitorGameConnect as CapacitorGameConnect_ } from "@openforge/capacitor-game-connect";
+import { CapacitorGameConnect } from "@openforge/capacitor-game-connect";
 import type { ServerImpl } from "../../../server/src/Server";
 import { addPetraOfflineTime } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
@@ -46,12 +46,11 @@ export const OnPlayerMapChanged = new TypedEvent<Map<string, IClientMapEntry>>()
 export const OnPlayerMapMessage = new TypedEvent<IMapMessage>();
 export const OnNewPendingClaims = new TypedEvent<void>();
 
-interface CapacitorGameConnectPluginExt {
+export interface PlayGamesPlugin {
    requestServerSideAccess: (opt: { clientId: string }) => Promise<{ serverAuthToken: string }>;
 }
 
-const CapacitorGameConnect = CapacitorGameConnect_ as typeof CapacitorGameConnect_ &
-   CapacitorGameConnectPluginExt;
+const PlayGames = registerPlugin<PlayGamesPlugin>("PlayGames");
 
 export interface IClientChat extends IChat {
    id: number;
@@ -77,10 +76,10 @@ let ws: WebSocket | null = null;
 export const client = rpcClient<ServerImpl>({
    request: (method: string, params: any[]) => {
       return new Promise((resolve, reject) => {
-         const id = ++requestId;
-         if (!ws) {
+         if (!ws || ws.readyState !== WebSocket.OPEN) {
             return reject("WebSocket is not ready yet");
          }
+         const id = ++requestId;
          const request = {
             jsonrpc: "2.0",
             id: id,
@@ -188,7 +187,7 @@ export async function connectWebSocket(): Promise<number> {
       ws = new WebSocket(`${getServerAddress()}/?${params.join("&")}`);
    } else if (platform === "android") {
       const player = await CapacitorGameConnect.signIn();
-      const token = await CapacitorGameConnect.requestServerSideAccess({
+      const token = await PlayGames.requestServerSideAccess({
          clientId: GOOGLE_PLAY_GAMES_CLIENT_ID,
       });
       const params = [
@@ -196,9 +195,8 @@ export async function connectWebSocket(): Promise<number> {
          "platform=android",
          `version=${getVersion()}`,
          `build=${getBuildNumber()}`,
-         `userId=${getGameOptions().userId}`,
+         `userId=${getGameOptions().userId ?? ""}`,
          `gameId=${getGameState().id}`,
-         `androidPlayerId=${player.player_id}`,
          `checksum=${checksum.expected}${checksum.actual}`,
       ];
       ws = new WebSocket(`${getServerAddress()}/?${params.join("&")}`);
@@ -262,7 +260,10 @@ export async function connectWebSocket(): Promise<number> {
             const w = message as IWelcomeMessage;
             user = w.user;
             const options = getGameOptions();
-            options.token = w.user.token;
+            options.token = user.token;
+            if (!options.userId) {
+               options.userId = user.userId;
+            }
             saveGame().catch(console.error);
             OnUserChanged.emit({ ...user });
             const tick = getGameState().tick;

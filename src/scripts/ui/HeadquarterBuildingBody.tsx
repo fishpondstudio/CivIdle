@@ -255,12 +255,12 @@ function GreatPeopleComponent({
    return (
       <fieldset>
          <legend>{t(L.GreatPeople)}</legend>
-         {gameState.greatPeopleChoices.length > 0 ? (
+         {gameState.greatPeopleChoicesV2.length > 0 ? (
             <WarningComponent className="mb10 text-small" icon="info">
                <div
                   className="pointer"
                   onClick={() => {
-                     if (gameState.greatPeopleChoices.length > 0) {
+                     if (gameState.greatPeopleChoicesV2.length > 0) {
                         playAgeUp();
                         showModal(<ChooseGreatPersonModal permanent={false} />);
                      }

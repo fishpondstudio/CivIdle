@@ -3,6 +3,7 @@ import type { GreatPerson } from "../definitions/GreatPersonDefinitions";
 import type { Ideology } from "../definitions/IdeologyDefinitions";
 import type { Religion } from "../definitions/ReligionDefinitions";
 import type { Deposit, Resource } from "../definitions/ResourceDefinitions";
+import type { TechAge } from "../definitions/TechDefinitions";
 import type { Tradition } from "../definitions/TraditionDefinitions";
 import { clamp, isNullOrUndefined, type Tile } from "../utilities/Helper";
 import type { PartialSet, PartialTabulate } from "../utilities/TypeDefinitions";
@@ -141,6 +142,10 @@ export interface IGreatPeopleBuildingData extends IBuildingData {
    greatPeople: Set<GreatPerson>;
 }
 
+export interface IZugspitzeBuildingData extends IBuildingData {
+   greatPeople: Map<TechAge, GreatPerson>;
+}
+
 export type IHaveTypeAndLevel = Pick<IBuildingData, "type" | "level">;
 
 export const STOCKPILE_CAPACITY_MIN = 0;
@@ -246,6 +251,13 @@ export function makeBuilding(data: Pick<IBuildingData, "type"> & Partial<IBuildi
          const tradition = building as IGreatPeopleBuildingData;
          if (!tradition.greatPeople) {
             tradition.greatPeople = new Set();
+         }
+         break;
+      }
+      case "Zugspitze": {
+         const zug = building as IZugspitzeBuildingData;
+         if (!zug.greatPeople) {
+            zug.greatPeople = new Map();
          }
          break;
       }

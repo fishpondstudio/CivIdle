@@ -1,12 +1,13 @@
 import { useState } from "react";
 import { GameOptionsChanged } from "../../../shared/logic/GameStateLogic";
+import { TypedEvent } from "../../../shared/utilities/TypedEvent";
 import { L, t } from "../../../shared/utilities/i18n";
 import "../../css/Tutorial.css";
 import { ToggleChatWindow } from "../Global";
 import { OnUserChanged, client, useUser } from "../rpc/RPCClient";
 import { CountryCode, getCountryName, getFlagUrl } from "../utilities/CountryCode";
 import { jsxMapOf } from "../utilities/Helper";
-import { refreshOnTypedEvent } from "../utilities/Hook";
+import { refreshOnTypedEvent, useTypedEvent } from "../utilities/Hook";
 import { playClick, playError } from "../visuals/Sound";
 import { AdvisorContentComponent } from "./AdvisorModal";
 import { ChangeModernUIComponent } from "./ChangeModernUIComponent";
@@ -70,13 +71,27 @@ export function FirstTimePlayerModal(): React.ReactNode {
       }
       case SetupStep.Step3: {
          ToggleChatWindow.emit(true);
-         content = <AdvisorContentComponent advisor="Welcome3" action={<FirstTimePlayerSettings />} />;
+         const submitEvent = new TypedEvent<void>();
+         content = (
+            <AdvisorContentComponent
+               advisor="Welcome3"
+               content={<FirstTimePlayerSettings submitEvent={submitEvent} />}
+               action={
+                  <div className="row">
+                     <div className="f1"></div>
+                     <button onClick={() => submitEvent.emit()} style={{ width: 80 }}>
+                        {t(L.Ok)}
+                     </button>
+                  </div>
+               }
+            />
+         );
          break;
       }
    }
 
    return (
-      <div className="window" style={{ width: "800px" }}>
+      <div className="window" style={{ width: 800, maxWidth: "80vw" }}>
          <div className="title-bar">
             <div className="title-bar-text">{t(L.FirstTimeTutorialWelcome)}</div>
          </div>
@@ -85,15 +100,33 @@ export function FirstTimePlayerModal(): React.ReactNode {
    );
 }
 
-function FirstTimePlayerSettings(): React.ReactNode {
+function FirstTimePlayerSettings({ submitEvent }: { submitEvent: TypedEvent<void> }): React.ReactNode {
    const user = useUser();
    const [handle, setHandle] = useState(user?.handle ?? "");
    const [flag, setFlag] = useState(user?.flag ?? CountryCode.EARTH);
    const countryName = getCountryName(flag);
+   useTypedEvent(submitEvent, async () => {
+      try {
+         if (user) {
+            playClick();
+            await client.changeHandle(handle, flag);
+            user.handle = handle;
+            user.flag = flag;
+            OnUserChanged.emit({ ...user });
+         } else {
+            playError();
+            showToast(t(L.OfflineErrorMessage));
+         }
+      } catch (error) {
+         playError();
+         showToast(String(error));
+      } finally {
+         hideModal();
+      }
+   });
    return (
-      <div>
+      <div className="mt10">
          <div className="text-strong">{t(L.TutorialPlayerHandle)}</div>
-         <div className="sep5" />
          <div className="row">
             <div className="f1">
                <input
@@ -150,34 +183,6 @@ function FirstTimePlayerSettings(): React.ReactNode {
          <div className="sep15" />
          <ChangeModernUIComponent />
          <ChangeSoundComponent />
-         <div className="sep20" />
-         <div className="row">
-            <div className="f1"></div>
-            <button
-               onClick={async () => {
-                  try {
-                     if (user) {
-                        playClick();
-                        await client.changeHandle(handle, flag);
-                        user.handle = handle;
-                        user.flag = flag;
-                        OnUserChanged.emit({ ...user });
-                     } else {
-                        playError();
-                        showToast(t(L.OfflineErrorMessage));
-                     }
-                  } catch (error) {
-                     playError();
-                     showToast(String(error));
-                  } finally {
-                     hideModal();
-                  }
-               }}
-               style={{ width: 80 }}
-            >
-               {t(L.Ok)}
-            </button>
-         </div>
       </div>
    );
 }

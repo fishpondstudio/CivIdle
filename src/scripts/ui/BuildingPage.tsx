@@ -1,3 +1,4 @@
+import type React from "react";
 import type { FunctionComponent } from "react";
 import type { Building } from "../../../shared/definitions/BuildingDefinitions";
 import { Config } from "../../../shared/logic/Config";
@@ -27,6 +28,7 @@ import { TraditionBuildingBody } from "./TraditionBuildingBody";
 import { UnitedNationsBuildingBody } from "./UnitedNationsBuildingBody";
 import { UpgradableWonderBuildingBody } from "./UpgradableWonderBuildingBody";
 import { WarehouseBuildingBody } from "./WarehouseBuildingBody";
+import { ZugspitzeBuildingBody } from "./ZugspitzeBuildingBody";
 
 const BuildingBodyOverride: Partial<Record<Building, FunctionComponent<IBuildingComponentProps>>> = {
    Headquarter: HeadquarterBuildingBody,
@@ -58,6 +60,8 @@ const BuildingBodyOverride: Partial<Record<Building, FunctionComponent<IBuilding
    DysonSphere: UpgradableWonderBuildingBody,
    MatrioshkaBrain: UpgradableWonderBuildingBody,
    LargeHadronCollider: UpgradableWonderBuildingBody,
+   CologneCathedral: UpgradableWonderBuildingBody,
+   Zugspitze: ZugspitzeBuildingBody,
 };
 
 export function BuildingPage(props: { tile: ITileData }): React.ReactNode {

@@ -8,7 +8,7 @@
 .loading-page,
 .error-page {
    font-family: "UniVGA16", monospace;
-   font-size: 32px;
+   font-size: 3rem;
    background: #000;
    position: fixed;
    top: 0;
@@ -21,10 +21,10 @@
 }
 
 .energy-star {
-   width: 300px;
+   width: 30rem;
    position: fixed;
-   top: 50px;
-   right: 50px;
+   top: 2.5rem;
+   right: 2.5rem;
 }
 
 .error-page {
@@ -46,7 +46,7 @@
 }
 
 .loading-page>.row {
-   width: 800px;
+   width: 65rem;
 }
 
 .loading-page .report-issue {

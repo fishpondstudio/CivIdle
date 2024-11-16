@@ -261,15 +261,15 @@ test("addResourceTo", async () => {
 test("fossilDelta", async () => {
    const s = new SavedGame();
    s.current.tick = 1;
-   const source = serializeSave(s);
+   const source = new TextEncoder().encode(serializeSave(s));
    s.current.tick = 10000;
-   const dest = serializeSave(s);
+   const dest = new TextEncoder().encode(serializeSave(s));
    const patch = fossilDeltaCreate(source, dest);
    assert.ok(patch.length < source.length, `patch ${patch.length} is smaller than source ${source.length}`);
    assert.ok(patch.length < dest.length, `patch ${patch.length} is smaller than dest ${dest.length}`);
    const newDest = fossilDeltaApply(source, patch, { verifyChecksum: true });
    assert.equal(dest.length, newDest.length);
-   const newGameState = deserializeSave(newDest);
+   const newGameState = deserializeSave(new TextDecoder().decode(newDest));
    assert.equal(s.current.tick, newGameState.current.tick);
 });
 
