@@ -25,7 +25,7 @@ export function TilePage(props: { xy: Tile | undefined }): React.ReactNode {
             if (petraBuilding.speedUp !== 1) {
                petraBuilding.lastUsedSpeedUp = petraBuilding.speedUp;
             }
-            togglePetraTimeWarp(petraBuilding)
+            togglePetraTimeWarp(petraBuilding);
          }
       },
       [],
