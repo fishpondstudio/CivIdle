@@ -215,7 +215,7 @@ export function setTimedOverride(gs: GameState): void {
    const nowDate = new Date(now);
 
    forEach(TimedBuildingUnlock, (building, def) => {
-      if (def.condition(nowDate)) {
+      if (def.condition(nowDate) || import.meta.env.DEV) {
          safePush(Config.Tech[def.tech], "unlockBuilding", building);
       }
    });

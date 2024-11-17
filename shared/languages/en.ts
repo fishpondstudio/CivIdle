@@ -1432,5 +1432,5 @@ export const EN = {
    Samsuiluna: "Samsu-iluna",
    OdaNobunaga: "Oda Nobunaga",
    SantaClausVillage: "Santa Claus Village",
-   SantaClausVillageDesc: "When completed, a great person of the current age is born. This wonder can be upgraded and each additional upgrade provides an extra great person. When choosing great people from this wonder, 4 choices are provided. This wonder can only be constructed in December.",
+   SantaClausVillageDesc: "When completed, a great person of the current age is born. This wonder can be upgraded and each additional upgrade provides an extra great person. When choosing great people from this wonder, 4 choices are provided. This wonder can only be constructed in December",
 };

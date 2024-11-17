@@ -62,6 +62,7 @@ const BuildingBodyOverride: Partial<Record<Building, FunctionComponent<IBuilding
    LargeHadronCollider: UpgradableWonderBuildingBody,
    CologneCathedral: UpgradableWonderBuildingBody,
    Zugspitze: ZugspitzeBuildingBody,
+   SantaClausVillage: UpgradableWonderBuildingBody,
 };
 
 export function BuildingPage(props: { tile: ITileData }): React.ReactNode {

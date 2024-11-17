@@ -100,6 +100,7 @@ import {
 
 export const OnPriceUpdated = new TypedEvent<GameState>();
 export const OnBuildingComplete = new TypedEvent<Tile>();
+export const OnBuildingOrUpgradeComplete = new TypedEvent<Tile>();
 export const OnTechUnlocked = new TypedEvent<Tech>();
 export const OnBuildingProductionComplete = new TypedEvent<{ xy: Tile; offline: boolean }>();
 export const RequestFloater = new TypedEvent<{ xy: Tile; amount: number }>();
@@ -373,6 +374,7 @@ export function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
             building.status = building.desiredLevel > building.level ? "upgrading" : "completed";
             OnBuildingComplete.emit(xy);
          }
+         OnBuildingOrUpgradeComplete.emit(xy);
          if (building.status === "upgrading" && building.level >= building.desiredLevel) {
             building.status = "completed";
          }

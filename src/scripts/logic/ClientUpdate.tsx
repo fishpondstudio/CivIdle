@@ -15,6 +15,7 @@ import { RequestResetTile } from "../../../shared/logic/TechLogic";
 import { CurrentTickChanged, EmptyTickData, Tick, freezeTickData } from "../../../shared/logic/TickLogic";
 import {
    OnBuildingComplete,
+   OnBuildingOrUpgradeComplete,
    OnBuildingProductionComplete,
    OnPriceUpdated,
    RequestChooseGreatPerson,
@@ -38,6 +39,7 @@ import { makeObservableHook } from "../utilities/Hook";
 import { Singleton } from "../utilities/Singleton";
 import { playAgeUp, playDing } from "../visuals/Sound";
 import { onBuildingComplete } from "./OnBuildingComplete";
+import { onBuildingOrUpgradeComplete } from "./OnBuildingOrUpgradeComplete";
 import { onProductionComplete } from "./OnProductionComplete";
 import { onTileExplored } from "./OnTileExplored";
 import { TimeSeries } from "./TimeSeries";
@@ -223,6 +225,7 @@ RequestResetTile.on((xy) => {
 });
 OnTileExplored.on(onTileExplored);
 OnBuildingComplete.on(onBuildingComplete);
+OnBuildingOrUpgradeComplete.on(onBuildingOrUpgradeComplete);
 OnBuildingProductionComplete.on(onProductionComplete);
 OnPriceUpdated.on((gs) => {
    const count = getBuildingsByType("Market", gs)?.size ?? 0;
