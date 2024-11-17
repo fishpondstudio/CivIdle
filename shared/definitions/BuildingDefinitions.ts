@@ -1811,6 +1811,17 @@ export class BuildingDefinitions {
       wikipedia: "Black_Forest",
    };
 
+   SantaClausVillage: IBuildingDefinition = {
+      name: () => t(L.SantaClausVillage),
+      desc: () => t(L.SantaClausVillageDesc),
+      input: {},
+      output: {},
+      construction: { Faith: 500 },
+      max: 1,
+      special: BuildingSpecial.WorldWonder,
+      wikipedia: "Santa_Claus_Village",
+   };
+
    // ArcDeTriomphe: IBuildingDefinition = {
    //    name: () => t(L.ArcDeTriomphe),
    //    desc: () => t(L.ArcDeTriompheDesc),

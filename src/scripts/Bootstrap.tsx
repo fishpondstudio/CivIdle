@@ -1,6 +1,7 @@
 import type { Application, Texture } from "pixi.js";
 import type { City } from "../../shared/definitions/CityDefinitions";
 import { IsDeposit } from "../../shared/definitions/ResourceDefinitions";
+import { TimedBuildingUnlock } from "../../shared/definitions/TimedBuildingUnlock";
 import { addPetraOfflineTime, findSpecialBuilding } from "../../shared/logic/BuildingLogic";
 import { Config } from "../../shared/logic/Config";
 import { MAX_OFFLINE_PRODUCTION_SEC, calculateTierAndPrice } from "../../shared/logic/Constants";
@@ -20,8 +21,10 @@ import {
    isNullOrUndefined,
    rejectIn,
    safeAdd,
+   safePush,
    schedule,
 } from "../../shared/utilities/Helper";
+import { getServerNow } from "../../shared/utilities/ServerNow";
 import type { TypedEvent } from "../../shared/utilities/TypedEvent";
 import { isGameDataCompatible, loadGame, syncFontSizeScale, syncSidePanelWidth, syncUITheme } from "./Global";
 import type { RouteChangeEvent } from "./Route";
@@ -164,6 +167,8 @@ export async function startGame(
       showToast(String(error));
    }
 
+   setTimedOverride(gameState);
+
    if (hasOfflineProductionModal) {
       // Do nothing
    } else if (isNewPlayer) {
@@ -201,8 +206,23 @@ export async function startGame(
    Singleton().ticker.start();
 }
 
+// This method is called after server time is synced!
+export function setTimedOverride(gs: GameState): void {
+   const now = getServerNow();
+   if (now === null) {
+      return;
+   }
+   const nowDate = new Date(now);
+
+   forEach(TimedBuildingUnlock, (building, def) => {
+      if (def.condition(nowDate)) {
+         safePush(Config.Tech[def.tech], "unlockBuilding", building);
+      }
+   });
+}
+
 // This method is called early during bootstrap!
-export function setCityOverride(gameState: GameState) {
+export function setCityOverride(gameState: GameState): void {
    const city = Config.City[gameState.city];
    forEach(city.buildingNames, (b, name) => {
       Config.Building[b].name = name;

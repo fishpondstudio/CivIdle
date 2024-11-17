@@ -114,18 +114,14 @@ async function greatPersonImage(greatPerson: GreatPerson, context: ISceneContext
       reject = reject_;
    });
 
-   canvas.toBlob(
-      (blob) => {
-         if (blob) {
-            greatPersonImageCache.set(greatPerson, blob);
-            resolve(blob);
-         } else {
-            reject(`Failed to generate image for ${greatPerson}`);
-         }
-      },
-      "image/jpeg",
-      0.8,
-   );
+   canvas.toBlob((blob) => {
+      if (blob) {
+         greatPersonImageCache.set(greatPerson, blob);
+         resolve(blob);
+      } else {
+         reject(`Failed to generate image for ${greatPerson}`);
+      }
+   }, "image/png");
 
    return result;
 }

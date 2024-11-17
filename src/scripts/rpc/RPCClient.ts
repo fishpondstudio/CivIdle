@@ -28,6 +28,7 @@ import {
 } from "../../../shared/utilities/Database";
 import { vacuumChat } from "../../../shared/utilities/DatabaseShared";
 import { SECOND, clamp, forEach, hasFlag, uuid4 } from "../../../shared/utilities/Helper";
+import { setServerNow } from "../../../shared/utilities/ServerNow";
 import { TypedEvent } from "../../../shared/utilities/TypedEvent";
 import { L, t } from "../../../shared/utilities/i18n";
 import { saveGame } from "../Global";
@@ -279,6 +280,7 @@ export async function connectWebSocket(): Promise<number> {
                "User:",
                JSON.stringify(w),
             );
+            setServerNow(w.now);
             resolve?.(Math.min(w.offlineTime, offlineTicks));
             break;
          }

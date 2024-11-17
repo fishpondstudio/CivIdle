@@ -4,6 +4,7 @@ import type { City } from "../definitions/CityDefinitions";
 import type { Deposit, Resource } from "../definitions/ResourceDefinitions";
 import { IsDeposit, NoPrice } from "../definitions/ResourceDefinitions";
 import type { Tech, TechAge } from "../definitions/TechDefinitions";
+import { TimedBuildingUnlock } from "../definitions/TimedBuildingUnlock";
 import type { Upgrade } from "../definitions/UpgradeDefinitions";
 import {
    HOUR,
@@ -205,6 +206,10 @@ export function calculateTierAndPrice(log?: (val: string) => void) {
       if (def.tech && !def.unlockBuilding) {
          console.error(`${upgrade} does not contain unlockBuilding but contains tech!`);
       }
+   });
+
+   forEach(TimedBuildingUnlock, (building, def) => {
+      Config.BuildingTech[building] = def.tech;
    });
 
    const resourceTierDependency: Partial<Record<Resource, Resource>> = {};
@@ -524,6 +529,12 @@ function getBuildingUnlockTechSlow(building: Building): Tech | null {
          return def.tech;
       }
    }
+
+   const timedUnlock = TimedBuildingUnlock[building];
+   if (timedUnlock) {
+      return timedUnlock.tech;
+   }
+
    return null;
 }
 

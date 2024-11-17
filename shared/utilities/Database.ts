@@ -49,6 +49,7 @@ export interface IWelcomeMessage extends IMessage {
    user: IUser;
    offlineTime: number;
    lastGameTick: number;
+   now: number;
 }
 
 export interface ITrade extends IAddTradeRequest {

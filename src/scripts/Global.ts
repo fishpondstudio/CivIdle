@@ -41,7 +41,7 @@ import { client } from "./rpc/RPCClient";
 import { SteamClient, isSteam } from "./rpc/SteamClient";
 import { WorldScene } from "./scenes/WorldScene";
 import { showToast } from "./ui/GlobalModal";
-import { idbDel, idbGet } from "./utilities/BrowserStorage";
+import { idbDel, idbGet, idbSet } from "./utilities/BrowserStorage";
 import { makeObservableHook } from "./utilities/Hook";
 import { isAndroid, isIOS } from "./utilities/Platforms";
 import { Singleton } from "./utilities/Singleton";
@@ -139,6 +139,8 @@ export async function doSaveGame(task: ISaveGameTask): Promise<void> {
          await SteamClient.fileWriteBytes(SAVE_KEY, compressed);
       } else if (isAndroid() || isIOS()) {
          await Preferences.set({ key: SAVE_KEY, value: bytesToBase64(compressed) });
+      } else {
+         await idbSet(SAVE_KEY, compressed);
       }
       task.resolve();
    } catch (error) {
