@@ -262,7 +262,7 @@ export const FR = {
    ClearSelection: "Supprimer",
    ClearTransportPlanCache: "Clear Transport Plan Cache",
    Cleopatra: "Cleopatra",
-   CloneFactory: Usine de Clonage",
+   CloneFactory: "Usine de Clonage",
    CloneFactoryDesc: " Cloner toutes les ressources",
    CloneFactoryInputDescHTML: "L'usine de clonage ne peut cloner que <b>%{res}</b> directement transportée depuis <b>%{buildings}</b>.",
    CloneLab: "Laboratoire de Clonage",
