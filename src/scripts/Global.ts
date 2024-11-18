@@ -302,6 +302,13 @@ if (import.meta.env.DEV) {
    };
 
    // @ts-expect-error
+   window.revealTile = (xy: Tile) => {
+      const gs = getGameState();
+      exploreTile(xy, gs);
+      Singleton().sceneManager.enqueue(WorldScene, (s) => s.revealTile(xy));
+   };
+
+   // @ts-expect-error
    window.heartbeat = () => {
       Singleton().heartbeat.update(serializeSaveLite());
    };

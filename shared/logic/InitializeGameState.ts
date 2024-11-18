@@ -1,4 +1,5 @@
 import { forEach, isEmpty, keysOf, pointToTile, shuffle, tileToPoint } from "../utilities/Helper";
+import { getServerNow } from "../utilities/ServerNow";
 import { applyBuildingDefaults } from "./BuildingLogic";
 import { Config } from "./Config";
 import type { GameOptions, GameState } from "./GameState";
@@ -91,6 +92,12 @@ export function initializeGameState(gameState: GameState, options: GameOptions) 
    });
 
    const naturalWonders = keysOf(Config.City[gameState.city].naturalWonders);
+
+   const now = getServerNow();
+   if (now && new Date(now).getMonth() >= 10) {
+      naturalWonders.push("Lapland");
+   }
+
    const xys = shuffle(Array.from(gameState.tiles.keys()));
    for (let i = 0; i < xys.length; i++) {
       const xy = xys[i];

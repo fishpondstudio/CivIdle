@@ -1822,6 +1822,17 @@ export class BuildingDefinitions {
       wikipedia: "Santa_Claus_Village",
    };
 
+   Lapland: IBuildingDefinition = {
+      name: () => t(L.Lapland),
+      desc: () => t(L.LaplandDesc),
+      input: {},
+      output: {},
+      construction: {},
+      max: 0,
+      special: BuildingSpecial.NaturalWonder,
+      wikipedia: "Lapland_(Finland)",
+   };
+
    // ArcDeTriomphe: IBuildingDefinition = {
    //    name: () => t(L.ArcDeTriomphe),
    //    desc: () => t(L.ArcDeTriompheDesc),

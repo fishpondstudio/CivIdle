@@ -80,6 +80,15 @@ export function onTileExplored(xy: Tile): void {
             });
             break;
          }
+         case "Lapland": {
+            gs.tiles.forEach((tile, xy) => {
+               if (!tile.explored) {
+                  exploreTile(xy, gs);
+                  Singleton().sceneManager.enqueue(WorldScene, (s) => s.revealTile(xy));
+               }
+            });
+            break;
+         }
       }
    }
 }

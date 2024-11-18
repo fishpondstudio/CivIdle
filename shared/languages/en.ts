@@ -410,7 +410,7 @@ export const EN = {
    EnricoFermi: "Enrico Fermi",
    EstimatedTimeLeft: "Estimated Time Left",
    EuphratesRiver: "Euphrates River",
-   EuphratesRiverDesc: "When discovered, reveals all wood tiles on the map, spawn water on all adjacent tiles that do not have deposits. All buildings that consume Wood or Lumber get +5 Production Multiplier",
+   EuphratesRiverDesc: "Every 10% of busy workers that in production (not transporting) provides +1 Production Multiplier to all buildings that do not produce workers (max = number of unlocked ages / 2). When the Hanging Garden is built next to it, the Hanging Garden gets +1 effect for each age after the Hanging Garden is unlocked. When discovered, spawn water on all adjacent tiles that do not have deposits",
    ExpansionLevelX: "Expansion %{level}",
    Exploration: "Exploration",
    Explorer: "Explorer",
@@ -1434,4 +1434,6 @@ export const EN = {
    Zoroaster: "Zoroaster",
    Zugspitze: "Zugspitze",
    ZugspitzeDesc: "For each unlocked age, get one point that can be used to provide one extra level to any Great Person that is born from this run",
+   Lapland: "Lapland",
+   LaplandDesc: "When discovered, reveal the whole map. All buildings within 2-tile range get +5 Production Multiplier. This natural wonder can only be discovered in December"
 };
