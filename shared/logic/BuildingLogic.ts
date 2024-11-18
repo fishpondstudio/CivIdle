@@ -627,7 +627,8 @@ export function getBuildingLevelLabel(b: IBuildingData): string {
       b.type === "DysonSphere" ||
       b.type === "MatrioshkaBrain" ||
       b.type === "LargeHadronCollider" ||
-      b.type === "CologneCathedral"
+      b.type === "CologneCathedral" ||
+      b.type === "SantaClausVillage"
    ) {
       return String(b.level);
    }
