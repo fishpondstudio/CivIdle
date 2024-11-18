@@ -1493,13 +1493,13 @@ export class BuildingDefinitions {
    };
 
    Shenandoah: IBuildingDefinition = {
-      name: () => t(L.Shenandoah),
-      desc: () => t(L.ShenandoahDescV2),
+      name: () => t(L.GrandCanyon),
+      desc: () => t(L.GrandCanyonDesc),
       input: {},
       output: {},
       construction: {},
       max: 0,
-      wikipedia: "Shenandoah_Valley",
+      wikipedia: "Grand_Canyon",
       special: BuildingSpecial.NaturalWonder,
    };
 

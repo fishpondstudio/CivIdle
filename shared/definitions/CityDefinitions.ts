@@ -137,7 +137,7 @@ export class CityDefinitions {
       },
       size: 30,
       buildingNames: {
-         Headquarter: () => t(L.Manhattan),
+         Headquarter: () => t(L.TheWhiteHouse),
       },
       uniqueBuildings: {
          Broadway: "Railway",
