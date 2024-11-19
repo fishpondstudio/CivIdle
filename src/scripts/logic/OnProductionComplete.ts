@@ -1457,9 +1457,10 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          break;
       }
       case "Lapland": {
+         const multiplier = Config.TechAge[getCurrentAge(gs)].idx + 1;
          for (const neighbor of grid.getRange(tileToPoint(xy), 2)) {
             mapSafePush(Tick.next.tileMultipliers, pointToTile(neighbor), {
-               output: 5,
+               output: multiplier,
                source: buildingName,
             });
          }

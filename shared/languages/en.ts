@@ -644,7 +644,7 @@ export const EN = {
    LandTrade: "Land Trade",
    Language: "Language",
    Lapland: "Lapland",
-   LaplandDesc: "When discovered, reveal the whole map. All buildings within 2-tile range get +5 Production Multiplier. This natural wonder can only be discovered in December",
+   LaplandDesc: "When discovered, reveal the whole map. All buildings within 2-tile range get +N Production Multiplier, N = number of unlocked ages. This natural wonder can only be discovered in December",
    LargeHadronCollider: "Large Hadron Collider",
    LargeHadronColliderDescV2: "All Information Age great people get +2 level for this run. This wonder can be upgraded and each additional upgrade provides +1 level to all Information Age great people for this run",
    Law: "Law",
