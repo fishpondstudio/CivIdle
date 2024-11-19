@@ -88,7 +88,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
    switch (building.type) {
       case "Headquarter": {
          mapSafePush(Tick.next.tileMultipliers, xy, {
-            output: round(getPermanentGreatPeopleLevel() * 0.1, 1),
+            output: round(getPermanentGreatPeopleLevel(getGameOptions()) * 0.1, 1),
             source: t(L.PermanentGreatPeople),
          });
          if (hasFeature(GameFeature.Festival, gs)) {

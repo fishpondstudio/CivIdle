@@ -197,11 +197,11 @@ export function getGreatPeopleChoiceCount(gs: GameState): number {
    return DEFAULT_GREAT_PEOPLE_CHOICE_COUNT;
 }
 
-export function getPermanentGreatPeopleLevel(): number {
+export function getPermanentGreatPeopleLevel(options: GameOptions): number {
    return reduceOf(
-      getGameOptions().greatPeople,
+      options.greatPeople,
       (prev, gp, inv) => {
-         return prev + inv.level + (getGameOptions().ageWisdom[Config.GreatPerson[gp].age] ?? 0);
+         return prev + inv.level + (options.ageWisdom[Config.GreatPerson[gp].age] ?? 0);
       },
       0,
    );

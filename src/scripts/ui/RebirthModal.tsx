@@ -49,7 +49,7 @@ export function RebirthModal(): React.ReactNode {
 
    const gs = useGameState();
    const [city, setCity] = useState<City>(gs.city);
-   const permanentGreatPeopleLevel = getPermanentGreatPeopleLevel();
+   const permanentGreatPeopleLevel = getPermanentGreatPeopleLevel(getGameOptions());
    const greatPeopleAtRebirthCount = getRebirthGreatPeopleCount();
 
    const hasSupporterPack = () => {
@@ -312,7 +312,8 @@ export function RebirthModal(): React.ReactNode {
                   className="text-strong"
                   onClick={async () => {
                      if (
-                        getPermanentGreatPeopleLevel() < Config.City[city].requireGreatPeopleLevel ||
+                        getPermanentGreatPeopleLevel(getGameOptions()) <
+                           Config.City[city].requireGreatPeopleLevel ||
                         !hasSupporterPack()
                      ) {
                         playError();

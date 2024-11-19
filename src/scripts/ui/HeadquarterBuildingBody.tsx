@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 import { getScienceFromWorkers, isWorldWonder } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
 import type { GameOptions, GameState } from "../../../shared/logic/GameState";
+import { getGameOptions } from "../../../shared/logic/GameStateLogic";
 import { getTransportStat, getXyBuildings, unlockedBuildings } from "../../../shared/logic/IntraTickCache";
 import {
    getGreatPersonThisRunLevel,
@@ -346,7 +347,7 @@ function GreatPeopleComponent({
                               {t(L.EffectiveGreatPeopleLevel)}
                            </TextWithHelp>
                         </div>
-                        <div className="text-strong">{getPermanentGreatPeopleLevel()}</div>
+                        <div className="text-strong">{getPermanentGreatPeopleLevel(options)}</div>
                      </li>
                      {keysOf(options.greatPeople)
                         .sort(
@@ -422,7 +423,7 @@ function WonderComponent({ gameState }: { gameState: GameState }): React.ReactNo
 
 function RebornComponent({ gameState }: { gameState: GameState }): ReactNode {
    const extraGreatPeople = getRebirthGreatPeopleCount();
-   const totalPGPLevel = getPermanentGreatPeopleLevel();
+   const totalPGPLevel = getPermanentGreatPeopleLevel(getGameOptions());
    return (
       <fieldset>
          <legend>{t(L.Reborn)}</legend>
