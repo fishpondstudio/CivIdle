@@ -1282,8 +1282,8 @@ export const EN = {
    ThemeResearchLockedColor: "Research Locked Color",
    ThemeResearchUnlockedColor: "Research Unlocked Color",
    ThemeSelectedGridColor: "Selected Grid Color",
-   TheMet: "The Met",
-   TheMetDesc: "After constructed, generate teleports that can be used to move buildings. All buildings within 2 tile range get +1 Production, Worker Capacity and Storage Multiplier",
+   ThePentagon: "The Pentagon",
+   ThePentagonDesc: "After constructed, generate teleports that can be used to move buildings. All buildings within 2 tile range get +1 Production, Worker Capacity and Storage Multiplier",
    ThemeTransportIndicatorAlpha: "Transport Indicator Alpha",
    Theocracy: "Theocracy",
    TheWhiteHouse: "The White House",
@@ -1438,4 +1438,6 @@ export const EN = {
    Zoroaster: "Zoroaster",
    Zugspitze: "Zugspitze",
    ZugspitzeDesc: "For each unlocked age, get one point that can be used to provide one extra level to any Great Person that is born from this run",
+   RockefellerCenterChristmasTree: "Rockefeller Center Christmas Tree",
+   RockefellerCenterChristmasTreeDesc: "+3 Happiness for each unlocked age. This natural wonder can only be discovered in December",
 };

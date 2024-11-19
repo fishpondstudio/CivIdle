@@ -1472,14 +1472,14 @@ export class BuildingDefinitions {
       wikipedia: "Broadway_theatre",
    };
    TheMet: IBuildingDefinition = {
-      name: () => t(L.TheMet),
-      desc: () => t(L.TheMetDesc),
+      name: () => t(L.ThePentagon),
+      desc: () => t(L.ThePentagonDesc),
       input: {},
       output: {},
       construction: { Book: 100, Law: 100, Rifle: 100 },
       max: 1,
       special: BuildingSpecial.WorldWonder,
-      wikipedia: "Metropolitan_Museum_of_Art",
+      wikipedia: "The_Pentagon",
    };
    WallStreet: IBuildingDefinition = {
       name: () => t(L.WallStreet),
@@ -1831,6 +1831,17 @@ export class BuildingDefinitions {
       max: 0,
       special: BuildingSpecial.NaturalWonder,
       wikipedia: "Lapland_(Finland)",
+   };
+
+   RockefellerCenterChristmasTree: IBuildingDefinition = {
+      name: () => t(L.RockefellerCenterChristmasTree),
+      desc: () => t(L.RockefellerCenterChristmasTreeDesc),
+      input: {},
+      output: {},
+      construction: {},
+      max: 0,
+      special: BuildingSpecial.NaturalWonder,
+      wikipedia: "Rockefeller_Center_Christmas_Tree",
    };
 
    // ArcDeTriomphe: IBuildingDefinition = {

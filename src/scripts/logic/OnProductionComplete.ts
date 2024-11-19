@@ -1466,6 +1466,11 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          }
          break;
       }
+      case "RockefellerCenterChristmasTree": {
+         const multiplier = Config.TechAge[getCurrentAge(gs)].idx + 1;
+         Tick.next.globalMultipliers.happiness.push({ value: multiplier * 3, source: buildingName });
+         break;
+      }
       // case "ArcDeTriomphe": {
       //    forEach(Config.Building, (b, def) => {
       //       if (def.input.Culture || def.output.Culture) {

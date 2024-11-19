@@ -96,6 +96,7 @@ export function initializeGameState(gameState: GameState, options: GameOptions) 
    const now = getServerNow();
    if (now && new Date(now).getMonth() >= 10) {
       naturalWonders.push("Lapland");
+      naturalWonders.push("RockefellerCenterChristmasTree");
    }
 
    const xys = shuffle(Array.from(gameState.tiles.keys()));
