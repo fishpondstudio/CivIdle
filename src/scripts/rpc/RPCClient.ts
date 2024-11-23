@@ -1,6 +1,5 @@
 import { Capacitor, registerPlugin } from "@capacitor/core";
 import { decode, encode } from "@msgpack/msgpack";
-import { CapacitorGameConnect } from "@openforge/capacitor-game-connect";
 import type { ServerImpl } from "../../../server/src/Server";
 import { addPetraOfflineTime } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
@@ -187,7 +186,6 @@ export async function connectWebSocket(): Promise<number> {
       ];
       ws = new WebSocket(`${getServerAddress()}/?${params.join("&")}`);
    } else if (platform === "android") {
-      const player = await CapacitorGameConnect.signIn();
       const token = await PlayGames.requestServerSideAccess({
          clientId: GOOGLE_PLAY_GAMES_CLIENT_ID,
       });

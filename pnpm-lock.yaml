@@ -15,14 +15,11 @@ dependencies:
     specifier: ^5.6.0
     version: 5.6.0(@capacitor/core@5.6.0)
   '@capacitor/preferences':
-    specifier: ^6.0.2
-    version: 6.0.2(@capacitor/core@5.6.0)
+    specifier: ^5.0.0
+    version: 5.0.8(@capacitor/core@5.6.0)
   '@msgpack/msgpack':
     specifier: ^3.0.0-beta2
     version: 3.0.0-beta2
-  '@openforge/capacitor-game-connect':
-    specifier: ^5.0.2
-    version: 5.0.2(@capacitor/core@5.6.0)
   '@pixi/filter-outline':
     specifier: ^5.2.0
     version: 5.2.0(@pixi/core@7.4.2)
@@ -359,10 +356,10 @@ packages:
       '@capacitor/core': 5.6.0
     dev: false
 
-  /@capacitor/preferences@6.0.2(@capacitor/core@5.6.0):
-    resolution: {integrity: sha512-ccD4/9ybnipJncLeCWlRPNQS2jv3nn8ivVLKzdVIWkiUHLo/hvuSSP7awVzvBwDNtAhNxIipjjWH6TyzZgLCcg==}
+  /@capacitor/preferences@5.0.8(@capacitor/core@5.6.0):
+    resolution: {integrity: sha512-zzz8JC2NuZ+xdBP2Cfhu4uyRUMAFoxMl7l8w5ahQPzckyt7Fk/pWATXj6IcTm7DzbsKc8ryXSsYTkv9ZL3Pfmw==}
     peerDependencies:
-      '@capacitor/core': ^6.0.0
+      '@capacitor/core': ^5.0.0
     dependencies:
       '@capacitor/core': 5.6.0
     dev: false
@@ -755,14 +752,6 @@ packages:
       '@nodelib/fs.scandir': 2.1.5
       fastq: 1.16.0
     dev: true
-
-  /@openforge/capacitor-game-connect@5.0.2(@capacitor/core@5.6.0):
-    resolution: {integrity: sha512-QtbNnbr/orMloQCAzIfEZ60xmyANWCTaIDtlHfW2ITQHU/y4UqxgUXUFfF+4L3Tc7qlgp8a4k3JGFe5GZNav1A==}
-    peerDependencies:
-      '@capacitor/core': ^5.0.0
-    dependencies:
-      '@capacitor/core': 5.6.0
-    dev: false
 
   /@pixi/accessibility@7.4.2(@pixi/core@7.4.2)(@pixi/display@7.4.2)(@pixi/events@7.4.2):
     resolution: {integrity: sha512-R6VEolm8uyy1FB1F2qaLKxVbzXAFTZCF2ka8fl9lsz7We6ZfO4QpXv9ur7DvzratjCQUQVCKo0/V7xL5q1EV/g==}
