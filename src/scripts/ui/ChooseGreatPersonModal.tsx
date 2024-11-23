@@ -107,7 +107,14 @@ export function ChooseGreatPersonModal({ permanent }: { permanent: boolean }): R
                               x{amount}
                            </div>
                         ) : null}
-                        <div>{p.desc(p, 1)}</div>
+                        <div>
+                           {p.desc(
+                              p,
+                              permanent
+                                 ? 1
+                                 : Math.round(100 / (1 + (gs.greatPeople[greatPerson] ?? 0))) / 100,
+                           )}
+                        </div>
                         {!permanent &&
                         p.type === GreatPersonType.Normal &&
                         (gs.greatPeople[greatPerson] ?? 0) > 0 ? (
