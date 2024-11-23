@@ -305,6 +305,22 @@ export const ChatMaxChars: Record<AccountLevel, number> = {
    [AccountLevel.Consul]: 800,
 };
 
+export const AccountLevelPlayTime: Record<AccountLevel, number> = {
+   [AccountLevel.Tribune]: 0,
+   [AccountLevel.Quaestor]: 48 * HOUR,
+   [AccountLevel.Aedile]: 200 * HOUR,
+   [AccountLevel.Praetor]: 500 * HOUR,
+   [AccountLevel.Consul]: 1000 * HOUR,
+};
+
+export const AccountLevelGreatPeopleLevel: Record<AccountLevel, number> = {
+   [AccountLevel.Tribune]: 0,
+   [AccountLevel.Quaestor]: 0,
+   [AccountLevel.Aedile]: 200,
+   [AccountLevel.Praetor]: 500,
+   [AccountLevel.Consul]: 1000,
+};
+
 export enum ServerWSErrorCode {
    Ok = 0,
    BadRequest = 3000,

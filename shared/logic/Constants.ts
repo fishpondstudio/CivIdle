@@ -7,7 +7,6 @@ import type { Tech, TechAge } from "../definitions/TechDefinitions";
 import { TimedBuildingUnlock } from "../definitions/TimedBuildingUnlock";
 import type { Upgrade } from "../definitions/UpgradeDefinitions";
 import {
-   HOUR,
    forEach,
    formatHMS,
    formatNumber,
@@ -36,7 +35,6 @@ export const SAVE_KEY = "CivIdle";
 export const MAX_OFFLINE_PRODUCTION_SEC = 60 * 60 * 4;
 export const SCIENCE_VALUE = 0.2;
 export const TRADE_CANCEL_REFUND_PERCENT = 0.9;
-export const TRIBUNE_UPGRADE_PLAYTIME = 48 * HOUR;
 export const MAX_CHAT_PER_CHANNEL = 200;
 export const DISCORD_URL = "https://discord.com/invite/m5JWZtEKMZ";
 export const BACKUP_RECOVERY_URL =

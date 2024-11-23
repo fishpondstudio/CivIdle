@@ -2,7 +2,7 @@ import Tippy from "@tippyjs/react";
 import classNames from "classnames";
 import { useEffect, useState } from "react";
 import { Config } from "../../../shared/logic/Config";
-import { TRIBUNE_TRADE_VALUE_PER_MINUTE, TRIBUNE_UPGRADE_PLAYTIME } from "../../../shared/logic/Constants";
+import { TRIBUNE_TRADE_VALUE_PER_MINUTE } from "../../../shared/logic/Constants";
 import { getGameOptions, getGameState } from "../../../shared/logic/GameStateLogic";
 import {
    getRebirthGreatPeopleCount,
@@ -11,6 +11,7 @@ import {
 } from "../../../shared/logic/RebirthLogic";
 import {
    AccountLevel,
+   AccountLevelPlayTime,
    TradeTileReservationDays,
    UserAttributes,
    UserColorsMapping,
@@ -21,11 +22,13 @@ import { L, t } from "../../../shared/utilities/i18n";
 import Supporter from "../../images/Supporter.png";
 import { resetToCity, saveGame } from "../Global";
 import { AccountLevelImages, AccountLevelNames } from "../logic/AccountLevel";
+import { useEligibleAccountRank } from "../logic/ClientUpdate";
 import { OnUserChanged, client, useUser } from "../rpc/RPCClient";
 import { getCountryName, getFlagUrl } from "../utilities/CountryCode";
 import { jsxMMapOf } from "../utilities/Helper";
 import { openUrl } from "../utilities/Platform";
 import { playClick, playError, playLevelUp } from "../visuals/Sound";
+import { AccountRankUpModal } from "./AccountRankUpModal";
 import { AlertModal } from "./AlertModal";
 import { ChangePlayerHandleModal } from "./ChangePlayerHandleModal";
 import { ConfirmModal } from "./ConfirmModal";
@@ -37,6 +40,7 @@ import { WarningComponent } from "./WarningComponent";
 
 export function PlayerHandleComponent() {
    const user = useUser();
+   const eligibleRank = useEligibleAccountRank();
    const [showDetails, setShowDetails] = useState(false);
    const accountLevel = user?.level ?? AccountLevel.Tribune;
    return (
@@ -57,6 +61,19 @@ export function PlayerHandleComponent() {
             <div className="text-strong">{t(L.PlayerHandleOffline)}</div>
          ) : (
             <>
+               {eligibleRank > user.level ? (
+                  <WarningComponent
+                     icon="info"
+                     className="mb10 text-small text-strong"
+                     onClick={() => {
+                        playClick();
+                        showModal(<AccountRankUpModal rank={eligibleRank} user={user} />);
+                     }}
+                  >
+                     {t(L.AccountRankUpTip)}
+                  </WarningComponent>
+               ) : null}
+
                <div className="row">
                   <div style={{ color: UserColorsMapping.get(user.color) }} className="text-strong">
                      {user.handle}
@@ -144,7 +161,7 @@ function AccountDetails(): React.ReactNode {
          }
       })();
    }, [user]);
-   const cond1 = playTime * 1000 > TRIBUNE_UPGRADE_PLAYTIME;
+   const cond1 = playTime * 1000 > AccountLevelPlayTime[AccountLevel.Quaestor];
    const cond2 = hasFlag(user?.attr ?? 0, UserAttributes.DLC1);
    const noPendingGreatPerson = () =>
       getRebirthGreatPeopleCount() +
@@ -257,7 +274,7 @@ function AccountDetails(): React.ReactNode {
                <div className="row text-small">
                   <div className="f1">
                      {t(L.AccountLevelPlayTime, {
-                        requiredTime: formatHM(TRIBUNE_UPGRADE_PLAYTIME),
+                        requiredTime: formatHM(AccountLevelPlayTime[AccountLevel.Quaestor]),
                         actualTime: formatHM(playTime * 1000),
                      })}
                   </div>

@@ -2,6 +2,7 @@ import type { Building } from "../definitions/BuildingDefinitions";
 import type { IUnlockable } from "../definitions/ITechDefinition";
 import { NoPrice, NoStorage, type Resource } from "../definitions/ResourceDefinitions";
 import type { Tech } from "../definitions/TechDefinitions";
+import type { AccountLevel } from "../utilities/Database";
 import type { Grid } from "../utilities/Grid";
 import {
    HOUR,
@@ -105,6 +106,7 @@ export const OnTechUnlocked = new TypedEvent<Tech>();
 export const OnBuildingProductionComplete = new TypedEvent<{ xy: Tile; offline: boolean }>();
 export const RequestFloater = new TypedEvent<{ xy: Tile; amount: number }>();
 export const RequestChooseGreatPerson = new TypedEvent<{ permanent: boolean }>();
+export const OnEligibleAccountRankUpdated = new TypedEvent<AccountLevel>();
 
 export function tickUnlockable(td: IUnlockable, source: string, gs: GameState): void {
    td.unlockBuilding?.forEach((b) => {

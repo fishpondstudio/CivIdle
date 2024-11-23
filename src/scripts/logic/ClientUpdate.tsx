@@ -17,6 +17,7 @@ import {
    OnBuildingComplete,
    OnBuildingOrUpgradeComplete,
    OnBuildingProductionComplete,
+   OnEligibleAccountRankUpdated,
    OnPriceUpdated,
    RequestChooseGreatPerson,
    RequestFloater,
@@ -27,17 +28,20 @@ import {
    tickTransports,
    tickUnlockable,
 } from "../../../shared/logic/Update";
+import { AccountLevel } from "../../../shared/utilities/Database";
 import { clamp, forEach, safeAdd, type Tile } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import { saveGame } from "../Global";
+import { client, getUser } from "../rpc/RPCClient";
 import { isSteam } from "../rpc/SteamClient";
 import { WorldScene } from "../scenes/WorldScene";
+import { AccountRankUpModal } from "../ui/AccountRankUpModal";
 import { AdvisorModal } from "../ui/AdvisorModal";
 import { ChooseGreatPersonModal } from "../ui/ChooseGreatPersonModal";
 import { hasOpenModal, showModal, showToast } from "../ui/GlobalModal";
 import { makeObservableHook } from "../utilities/Hook";
 import { Singleton } from "../utilities/Singleton";
-import { playAgeUp, playDing } from "../visuals/Sound";
+import { playAgeUp, playDing, playLevelUp } from "../visuals/Sound";
 import { onBuildingComplete } from "./OnBuildingComplete";
 import { onBuildingOrUpgradeComplete } from "./OnBuildingOrUpgradeComplete";
 import { onProductionComplete } from "./OnProductionComplete";
@@ -163,6 +167,8 @@ function checkForAdvisors(gs: GameState) {
 }
 
 let lastTickTime = Date.now();
+let hasShownAccountRankUpModal = false;
+let eligibleRank = AccountLevel.Tribune;
 
 function postTickTiles(gs: GameState, offline: boolean) {
    tickPower(gs);
@@ -206,6 +212,18 @@ function postTickTiles(gs: GameState, offline: boolean) {
       }
       if (gs.tick % (heartbeatFreq * speed) === 0) {
          Singleton().heartbeat.update(serializeSaveLite());
+         client.queryRankUp().then((newRank) => {
+            const user = getUser();
+            if (user && newRank > user.level) {
+               eligibleRank = newRank;
+               OnEligibleAccountRankUpdated.emit(eligibleRank);
+               if (!hasShownAccountRankUpModal && !hasOpenModal()) {
+                  hasShownAccountRankUpModal = true;
+                  playLevelUp();
+                  showModal(<AccountRankUpModal rank={eligibleRank} user={user} />);
+               }
+            }
+         });
       }
    }
 
@@ -240,3 +258,4 @@ RequestChooseGreatPerson.on(({ permanent }) => {
 });
 
 export const useCurrentTick = makeObservableHook(CurrentTickChanged, () => Tick.current);
+export const useEligibleAccountRank = makeObservableHook(OnEligibleAccountRankUpdated, () => eligibleRank);

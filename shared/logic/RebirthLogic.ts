@@ -3,6 +3,12 @@ import { GreatPersonType, type GreatPerson } from "../definitions/GreatPersonDef
 import { NoPrice, type Resource } from "../definitions/ResourceDefinitions";
 import type { TechAge } from "../definitions/TechDefinitions";
 import {
+   AccountLevel,
+   AccountLevelGreatPeopleLevel,
+   AccountLevelPlayTime,
+   type IUser,
+} from "../utilities/Database";
+import {
    WEEK,
    clamp,
    filterOf,
@@ -296,4 +302,26 @@ export function getMissingGreatPeopleForWisdom(age: TechAge): Map<GreatPerson, n
       }
    });
    return result;
+}
+
+export function getEligibleRank(user: IUser): AccountLevel {
+   if (user.level <= AccountLevel.Tribune) {
+      return AccountLevel.Tribune;
+   }
+   let level = user.level;
+   let greatPeopleLevel = 0;
+   if (user.empireValues.length > 0) {
+      greatPeopleLevel = user.empireValues[user.empireValues.length - 1].totalGreatPeopleLevel ?? 0;
+   }
+   forEach(AccountLevel, (k, v) => {
+      if (
+         user.totalPlayTime * 1000 >= AccountLevelPlayTime[v] &&
+         greatPeopleLevel >= AccountLevelGreatPeopleLevel[v]
+      ) {
+         if (v > level) {
+            level = v;
+         }
+      }
+   });
+   return level;
 }

@@ -1440,4 +1440,7 @@ export const EN = {
    ZugspitzeDesc: "For each unlocked age, get one point that can be used to provide one extra level to any Great Person that is born from this run",
    RockefellerCenterChristmasTree: "Rockefeller Center Christmas Tree",
    RockefellerCenterChristmasTreeDesc: "+3 Happiness for each unlocked age. This natural wonder can only be discovered in December",
+   AccountRankUp: "Upgrade Account Rank",
+   AccountRankUpDesc: "All your progress will be carried over to your new rank",
+   AccountRankUpTip: "Congratulations, your account is eligible for a higher rank - click here to upgrade!"
 };

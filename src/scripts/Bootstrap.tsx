@@ -183,7 +183,7 @@ export async function startGame(
    tickEverySecond(gameState, false);
 
    if (import.meta.env.DEV) {
-      // showModal(<AdvisorModal advisor="Happiness" />);
+      // showModal(<AccountRankUpModal rank={AccountLevel.Praetor} />);
       // createRoot(document.getElementById("debug-ui")!).render(<DebugPage />);
    }
 

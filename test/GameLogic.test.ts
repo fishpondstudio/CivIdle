@@ -12,6 +12,7 @@ import { GameOptions, GameState, SavedGame } from "../shared/logic/GameState";
 import { deserializeSave, serializeSave } from "../shared/logic/GameStateLogic";
 import { initializeGameState } from "../shared/logic/InitializeGameState";
 import {
+   getEligibleRank,
    getGreatPersonThisRunLevel,
    getTotalGreatPeopleUpgradeCost,
    getUpgradeCostFib,
@@ -34,7 +35,8 @@ import {
 } from "../shared/logic/TechLogic";
 import { makeBuilding } from "../shared/logic/Tile";
 import { fossilDeltaApply, fossilDeltaCreate } from "../shared/thirdparty/FossilDelta";
-import { forEach, pointToTile } from "../shared/utilities/Helper";
+import { AccountLevel, UserAttributes, UserColors, type IUser } from "../shared/utilities/Database";
+import { HOUR, SECOND, forEach, pointToTile } from "../shared/utilities/Helper";
 
 test("getBuildingCost", (t) => {
    assert.equal(10, getBuildingCost({ type: "CoalMine", level: 0 }).Brick);
@@ -352,4 +354,54 @@ test("getBuildingsUnlockedBefore", () => {
          assert.isTrue(Config.TechAge[getBuildingUnlockAge(b)].idx < Config.TechAge[age].idx, b);
       });
    });
+});
+
+test("getEligibleRank", () => {
+   const user: IUser = {
+      userId: "userId",
+      ip: "ip",
+      handle: "handle",
+      token: null,
+      lastDisconnectAt: 0,
+      lastGameTick: 0,
+      totalPlayTime: 0,
+      flag: "EARTH",
+      color: UserColors.Default,
+      lastHeartbeatAt: Date.now(),
+      level: AccountLevel.Tribune,
+      empireValues: [],
+      tradeValues: [],
+      attr: UserAttributes.None,
+   };
+   assert.equal(getEligibleRank(user), AccountLevel.Tribune);
+
+   user.totalPlayTime = (200 * HOUR) / SECOND;
+   user.empireValues = [{ value: 0, time: 0, tick: 0, totalGreatPeopleLevel: 200 }];
+   assert.equal(getEligibleRank(user), AccountLevel.Tribune, "need at least Quaestor");
+
+   user.level = AccountLevel.Quaestor;
+   user.totalPlayTime = (200 * HOUR) / SECOND;
+   user.empireValues = [{ value: 0, time: 0, tick: 0, totalGreatPeopleLevel: 200 }];
+   assert.equal(getEligibleRank(user), AccountLevel.Aedile);
+
+   user.totalPlayTime = (600 * HOUR) / SECOND;
+   user.empireValues = [{ value: 0, time: 0, tick: 0, totalGreatPeopleLevel: 200 }];
+   assert.equal(getEligibleRank(user), AccountLevel.Aedile);
+
+   user.totalPlayTime = (200 * HOUR) / SECOND;
+   user.empireValues = [{ value: 0, time: 0, tick: 0, totalGreatPeopleLevel: 600 }];
+   assert.equal(getEligibleRank(user), AccountLevel.Aedile);
+
+   user.totalPlayTime = (200 * HOUR) / SECOND;
+   user.empireValues = [{ value: 0, time: 0, tick: 0, totalGreatPeopleLevel: 600 }];
+   assert.equal(getEligibleRank(user), AccountLevel.Aedile);
+
+   user.totalPlayTime = (500 * HOUR) / SECOND;
+   user.empireValues = [{ value: 0, time: 0, tick: 0, totalGreatPeopleLevel: 500 }];
+   assert.equal(getEligibleRank(user), AccountLevel.Praetor);
+
+   user.level = AccountLevel.Praetor;
+   user.totalPlayTime = (200 * HOUR) / SECOND;
+   user.empireValues = [{ value: 0, time: 0, tick: 0, totalGreatPeopleLevel: 200 }];
+   assert.equal(getEligibleRank(user), AccountLevel.Praetor);
 });
