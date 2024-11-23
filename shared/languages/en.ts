@@ -21,6 +21,8 @@ export const EN = {
    AccountTradeTileReservationTime: "Trade Tile Reservation",
    AccountTradeTileReservationTimeDesc: "This is the time your player trade tile will be reserved for you since you were last online. After the reservation period has ended, your tile will become available for other players",
    AccountTradeValuePerMinute: "Trade Value Per Minute",
+   AccountPlayTimeRequirement: "Required Play Time",
+   AccountGreatPeopleLevelRequirement: "Required Great People Level",
    AccountTypeShowDetails: "Show Account Details",
    AccountUpgradeButton: "Upgrade To Quaestor Rank",
    AccountUpgradeConfirm: "Account Upgrade",

@@ -11,13 +11,14 @@ import {
 } from "../../../shared/logic/RebirthLogic";
 import {
    AccountLevel,
+   AccountLevelGreatPeopleLevel,
    AccountLevelPlayTime,
    TradeTileReservationDays,
    UserAttributes,
    UserColorsMapping,
    type UserColors,
 } from "../../../shared/utilities/Database";
-import { forEach, formatHM, hasFlag, safeParseInt, sizeOf } from "../../../shared/utilities/Helper";
+import { HOUR, forEach, formatHM, hasFlag, safeParseInt, sizeOf } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import Supporter from "../../images/Supporter.png";
 import { resetToCity, saveGame } from "../Global";
@@ -258,6 +259,22 @@ function AccountDetails(): React.ReactNode {
                      <td>{TradeTileReservationDays[AccountLevel.Aedile]}d</td>
                      <td>{TradeTileReservationDays[AccountLevel.Praetor]}d</td>
                      <td>{TradeTileReservationDays[AccountLevel.Consul]}d</td>
+                  </tr>{" "}
+                  <tr>
+                     <td>{t(L.AccountPlayTimeRequirement)}</td>
+                     <td>-</td>
+                     <td>{AccountLevelPlayTime[AccountLevel.Quaestor] / HOUR}h</td>
+                     <td>{AccountLevelPlayTime[AccountLevel.Aedile] / HOUR}h</td>
+                     <td>{AccountLevelPlayTime[AccountLevel.Praetor] / HOUR}h</td>
+                     <td>{AccountLevelPlayTime[AccountLevel.Consul] / HOUR}h</td>
+                  </tr>{" "}
+                  <tr>
+                     <td>{t(L.AccountGreatPeopleLevelRequirement)}</td>
+                     <td>-</td>
+                     <td>{AccountLevelGreatPeopleLevel[AccountLevel.Quaestor]}</td>
+                     <td>{AccountLevelGreatPeopleLevel[AccountLevel.Aedile]}</td>
+                     <td>{AccountLevelGreatPeopleLevel[AccountLevel.Praetor]}</td>
+                     <td>{AccountLevelGreatPeopleLevel[AccountLevel.Consul]}</td>
                   </tr>
                </tbody>
             </table>
