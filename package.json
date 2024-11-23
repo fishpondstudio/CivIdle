@@ -16,6 +16,7 @@
       "release": "node ./build/ReleaseElectron.js",
       "translate": "node ./build/Translate.js",
       "achievement": "node ./build/Achievement.js",
+      "releaseAndroid": "pnpm run build && pnpm run optimize && npx cap sync && cd ./android && gradlew :app:bundleRelease",
       "ci": "biome ci ./src/scripts/ ./shared/ ./server/ --diagnostic-level=error --config-path=./"
    },
    "dependencies": {
