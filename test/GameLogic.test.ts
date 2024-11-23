@@ -35,8 +35,15 @@ import {
 } from "../shared/logic/TechLogic";
 import { makeBuilding } from "../shared/logic/Tile";
 import { fossilDeltaApply, fossilDeltaCreate } from "../shared/thirdparty/FossilDelta";
-import { AccountLevel, UserAttributes, UserColors, type IUser } from "../shared/utilities/Database";
-import { HOUR, SECOND, forEach, pointToTile } from "../shared/utilities/Helper";
+import {
+   AccountLevel,
+   type IAddTradeRequest,
+   UserAttributes,
+   UserColors,
+   type IUser,
+} from "../shared/utilities/Database";
+import { HOUR, SECOND, forEach, pointToTile, round } from "../shared/utilities/Helper";
+import { getBuyAmountRange, getTradePercentage } from "../shared/logic/PlayerTradeLogic";
 
 test("getBuildingCost", (t) => {
    assert.equal(10, getBuildingCost({ type: "CoalMine", level: 0 }).Brick);
@@ -404,4 +411,18 @@ test("getEligibleRank", () => {
    user.totalPlayTime = (200 * HOUR) / SECOND;
    user.empireValues = [{ value: 0, time: 0, tick: 0, totalGreatPeopleLevel: 200 }];
    assert.equal(getEligibleRank(user), AccountLevel.Praetor);
+});
+
+test("getTradePercentage", () => {
+   const trade: IAddTradeRequest = {
+      buyAmount: 0,
+      buyResource: "Car",
+      sellAmount: 1000,
+      sellResource: "Train",
+   };
+   const result = getBuyAmountRange(trade, 0.25);
+   trade.buyAmount = result.min;
+   assert.equal(round(getTradePercentage(trade), 2), 0.25);
+   trade.buyAmount = result.max;
+   assert.equal(round(getTradePercentage(trade), 2), -0.25);
 });

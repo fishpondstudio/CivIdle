@@ -18,19 +18,6 @@ import { Tick } from "./TickLogic";
 
 const WorldMap = _WorldMap as Record<string, boolean>;
 
-export interface IClientAddTradeRequest extends IAddTradeRequest {
-   buyResource: Resource;
-   sellResource: Resource;
-}
-
-export function getBuyAmountRange(trade: IClientAddTradeRequest, user: IUser | null) {
-   const amount =
-      (trade.sellAmount * (Config.ResourcePrice[trade.sellResource] ?? 0)) /
-      (Config.ResourcePrice[trade.buyResource] ?? 0);
-   const range = getUserTradePriceRange(user);
-   return { min: Math.round(amount * (1 - range)), max: Math.round(amount * (1 + range)), amount };
-}
-
 export function getUserTradePriceRange(user: IUser | null): number {
    if (!user) {
       return 0.05;
@@ -64,11 +51,18 @@ export function getMaxActiveTrades(user: IUser): number {
    }
 }
 
+export function getBuyAmountRange(trade: IAddTradeRequest, range: number) {
+   const amount =
+      (trade.sellAmount * (Config.ResourcePrice[trade.sellResource] ?? 0)) /
+      (Config.ResourcePrice[trade.buyResource] ?? 0);
+   return { min: Math.round(amount * (1 - range)), max: Math.round(amount * (1 + range)), amount };
+}
+
 export function getTradePercentage(trade: IAddTradeRequest): number {
    const standardAmount =
-      (trade.buyAmount * Config.ResourcePrice[trade.buyResource]!) /
-      Config.ResourcePrice[trade.sellResource]!;
-   return (trade.sellAmount - standardAmount) / standardAmount;
+      (trade.sellAmount * Config.ResourcePrice[trade.sellResource]!) /
+      Config.ResourcePrice[trade.buyResource]!;
+   return -(trade.buyAmount - standardAmount) / standardAmount;
 }
 
 export function isTileReserved(entry: Pick<IClientMapEntry, "lastSeenAt" | "level">): boolean {

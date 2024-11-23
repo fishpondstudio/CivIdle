@@ -8,7 +8,6 @@ import {
    getBuyAmountRange,
    getMaxActiveTrades,
    getUserTradePriceRange,
-   type IClientAddTradeRequest,
 } from "../../../shared/logic/PlayerTradeLogic";
 import { combineResources, deductResourceFrom } from "../../../shared/logic/ResourceLogic";
 import { Tick } from "../../../shared/logic/TickLogic";
@@ -25,6 +24,7 @@ import { playError, playKaching } from "../visuals/Sound";
 import type { IBuildingComponentProps } from "./BuildingPage";
 import { showToast } from "./GlobalModal";
 import { FormatNumber } from "./HelperComponents";
+import type { IAddTradeRequest } from "../../../shared/utilities/Database";
 
 const INPUT_WIDTH = 100;
 
@@ -39,7 +39,7 @@ export function AddTradeComponent({ gameState, xy }: IBuildingComponentProps): R
       Array.from(Tick.current.playerTradeBuildings.values()).map((m) => m.resources),
    );
    const sellResources = keysOf(availableResources);
-   const [trade, setTrade] = useState<IClientAddTradeRequest>({
+   const [trade, setTrade] = useState<IAddTradeRequest>({
       buyResource: buyResources[0],
       buyAmount: 0,
       sellResource: sellResources[0],
@@ -47,9 +47,9 @@ export function AddTradeComponent({ gameState, xy }: IBuildingComponentProps): R
    });
    const [showTrade, setShowTrade] = useState(false);
    const percentage = getUserTradePriceRange(user);
-   const buyAmountRange = getBuyAmountRange(trade, user);
+   const buyAmountRange = getBuyAmountRange(trade, getUserTradePriceRange(user));
 
-   function isTradeValid(trade: IClientAddTradeRequest): boolean {
+   function isTradeValid(trade: IAddTradeRequest): boolean {
       if (trade.buyResource === trade.sellResource) {
          return false;
       }
