@@ -50,7 +50,12 @@ export interface PlayGamesPlugin {
    requestServerSideAccess: (opt: { clientId: string }) => Promise<{ serverAuthToken: string }>;
 }
 
+export interface GameCenterPlugin {
+   getAuthTicket: () => Promise<{ ticket: string }>;
+}
+
 const PlayGames = registerPlugin<PlayGamesPlugin>("PlayGames");
+const GameCenter = registerPlugin<GameCenterPlugin>("GameCenter");
 
 export interface IClientChat extends IChat {
    id: number;
@@ -95,7 +100,7 @@ export const client = rpcClient<ServerImpl>({
 function getServerAddress(): string {
    if (import.meta.env.DEV) {
       const url = new URLSearchParams(window.location.search);
-      return url.get("server") ?? "ws://localhost:8000";
+      return url.get("server") ?? "ws://192.168.3.13:8000";
    }
    if (getGameOptions().useMirrorServer) {
       return "wss://api.cividle.com";
@@ -192,6 +197,18 @@ export async function connectWebSocket(): Promise<number> {
       const params = [
          `ticket=${token.serverAuthToken}`,
          "platform=android",
+         `version=${getVersion()}`,
+         `build=${getBuildNumber()}`,
+         `userId=${getGameOptions().userId ?? ""}`,
+         `gameId=${getGameState().id}`,
+         `checksum=${checksum.expected}${checksum.actual}`,
+      ];
+      ws = new WebSocket(`${getServerAddress()}/?${params.join("&")}`);
+   } else if (platform === "ios") {
+      const result = await GameCenter.getAuthTicket();
+      const params = [
+         `ticket=${result.ticket}`,
+         "platform=ios",
          `version=${getVersion()}`,
          `build=${getBuildNumber()}`,
          `userId=${getGameOptions().userId ?? ""}`,

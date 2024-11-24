@@ -7,7 +7,7 @@ const config: CapacitorConfig = {
    // loggingBehavior: "production",
    // android: { webContentsDebuggingEnabled: true },
    // server: {
-   //    url: "http://192.168.3.12:3000/",
+   //    url: "http://192.168.3.13:3000/",
    // },
 };
 

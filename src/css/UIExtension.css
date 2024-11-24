@@ -79,6 +79,14 @@ input[type=range] {
    cursor: url("../images/w98normal.png"), default;
 }
 
+input, button, select {
+   color: #000000;
+}
+
+summary::-webkit-details-marker {
+   display: none;
+}
+
 .separator {
    border-top: 1px solid #808080;
    border-bottom: 1px solid #fff;

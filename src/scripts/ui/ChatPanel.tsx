@@ -39,6 +39,7 @@ import { playError } from "../visuals/Sound";
 import { showToast } from "./GlobalModal";
 import { RenderHTML } from "./RenderHTMLComponent";
 import { SelectChatChannelModal } from "./SelectChatChannelModal";
+import { isIOS } from "../utilities/Platforms";
 
 const SetChatInput = new TypedEvent<{ channel: ChatChannel; getContent: (old: string) => string }>();
 
@@ -55,6 +56,11 @@ export function ChatPanel(): React.ReactNode {
    useTypedEvent(ToggleChatWindow, (on) => {
       setShowChatWindow(on);
    });
+
+   const style: React.CSSProperties = { contentVisibility: showChatWindow ? "visible" : "hidden" };
+   if (isIOS()) {
+      style.display = showChatWindow ? "flex" : "none";
+   }
 
    return (
       <div
@@ -77,7 +83,7 @@ export function ChatPanel(): React.ReactNode {
                <LatestMessage messages={messages} />
             </div>
          </div>
-         <div style={{ contentVisibility: showChatWindow ? "visible" : "hidden" }}>
+         <div style={style}>
             {Array.from(options.chatChannels).map((channel, i) => (
                <ChatWindow
                   style={{ left: 350 * i }}
