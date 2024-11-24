@@ -9,6 +9,7 @@ import com.getcapacitor.PluginMethod;
 import com.getcapacitor.annotation.CapacitorPlugin;
 import com.google.android.gms.games.GamesSignInClient;
 import com.google.android.gms.games.PlayGames;
+import com.google.android.gms.games.PlayGamesSdk;
 
 @CapacitorPlugin(name = "PlayGames")
 public class PlayGamesPlugin extends Plugin {
@@ -17,7 +18,7 @@ public class PlayGamesPlugin extends Plugin {
 
     @Override
     public void load() {
-        Log.i(TAG, "load is called");
+        PlayGamesSdk.initialize(getContext());
     }
 
     @PluginMethod
@@ -32,7 +33,7 @@ public class PlayGamesPlugin extends Plugin {
                         ret.put("serverAuthToken", serverAuthToken);
                         call.resolve(ret);
                     } else {
-                        call.reject("Failed to get server auth token");
+                        call.reject("Failed to get server auth token: " + task.getException().getMessage());
                     }
                 });
     }
