@@ -36,10 +36,10 @@ jobs:
       - run: |
           npm run clean
         working-directory: /home/insraq/CivIdle/shared
-      # - run: npm run release
-      #   working-directory: /home/insraq/CivIdle
-      #   env:
-      #     STEAMWORKS_PATH: /home/insraq/steamworks/tools/ContentBuilder/
+      - run: npm run release
+        working-directory: /home/insraq/CivIdle
+        env:
+          STEAMWORKS_PATH: /home/insraq/steamworks/tools/ContentBuilder/
       - run: fastlane deploy
         working-directory: /home/insraq/CivIdle/android
         env:
