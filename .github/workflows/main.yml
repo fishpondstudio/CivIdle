@@ -40,7 +40,7 @@ jobs:
       #   working-directory: /home/insraq/CivIdle
       #   env:
       #     STEAMWORKS_PATH: /home/insraq/steamworks/tools/ContentBuilder/
-      - run: fastlane deploy
+      - run: sudo fastlane deploy
         working-directory: /home/insraq/CivIdle/android
         env:
           ANDROID_HOME: /home/insraq/android-sdk
