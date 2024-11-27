@@ -58,7 +58,8 @@ export function ChatPanel(): React.ReactNode {
    });
 
    const style: React.CSSProperties = { contentVisibility: showChatWindow ? "visible" : "hidden" };
-   if (isIOS()) {
+
+   if (!CSS.supports("content-visibility", "visible") || !CSS.supports("content-visibility", "hidden")) {
       style.display = showChatWindow ? "flex" : "none";
    }
 

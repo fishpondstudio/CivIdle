@@ -1,0 +1,20 @@
+#game-ui .cloud-save-page {
+   background: #4b6584;
+   position: fixed;
+   top: 0;
+   left: 0;
+   right: 0;
+   bottom: 0;
+   z-index: 9999;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+}
+
+#game-ui .cloud-save-page .window {
+   margin: auto;
+   width: 600px;
+   height: auto;
+   max-width: 60vw;
+   max-height: 80vh;
+}

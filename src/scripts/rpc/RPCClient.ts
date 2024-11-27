@@ -36,6 +36,7 @@ import { showToast } from "../ui/GlobalModal";
 import { makeObservableHook } from "../utilities/Hook";
 import { playBubble, playKaching } from "../visuals/Sound";
 import { SteamClient, isSteam } from "./SteamClient";
+import { shouldTick } from "../logic/ClientUpdate";
 
 let user: IUser | null = null;
 
@@ -100,7 +101,7 @@ export const client = rpcClient<ServerImpl>({
 function getServerAddress(): string {
    if (import.meta.env.DEV) {
       const url = new URLSearchParams(window.location.search);
-      return url.get("server") ?? "ws://192.168.3.13:8000";
+      return url.get("server") ?? "ws://localhost:8000";
    }
    if (getGameOptions().useMirrorServer) {
       return "wss://api.cividle.com";
@@ -362,10 +363,10 @@ export async function connectWebSocket(): Promise<number> {
             break;
          case ServerWSErrorCode.InvalidTicket:
             steamTicket = null;
-            retryConnect();
+            reconnectWebSocket();
             break;
          default:
-            retryConnect();
+            reconnectWebSocket();
             break;
       }
    };
@@ -373,7 +374,15 @@ export async function connectWebSocket(): Promise<number> {
    return promise;
 }
 
-function retryConnect() {
+export function disconnectWebSocket() {
+   ws?.close();
+   reconnect = 0;
+}
+
+export function reconnectWebSocket() {
+   if (!shouldTick()) {
+      return;
+   }
    setTimeout(
       () => connectWebSocket().then(convertOfflineTimeToWarp),
       Math.min(Math.pow(2, reconnect++) * SECOND, 16 * SECOND),

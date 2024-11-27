@@ -21,10 +21,11 @@
 }
 
 .energy-star {
-   width: 30rem;
+   max-width: 26rem;
+   width: 26vw;
    position: fixed;
-   top: 2.5rem;
-   right: 2.5rem;
+   top: 2vw;
+   right: 2vw;
 }
 
 .error-page {
@@ -45,14 +46,14 @@
    display: block;
 }
 
-.loading-page>.row {
-   width: 65rem;
+.loading-page > .row {
+   width: 60vw;
 }
 
 .loading-page .report-issue {
    position: absolute;
    bottom: 25px;
-   left: 25px
+   left: 25px;
 }
 
 .loading-page .highlight {

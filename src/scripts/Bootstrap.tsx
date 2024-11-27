@@ -39,6 +39,7 @@ import { PlayerMapScene } from "./scenes/PlayerMapScene";
 import { TechTreeScene } from "./scenes/TechTreeScene";
 import { WorldScene } from "./scenes/WorldScene";
 import { ChooseGreatPersonModal } from "./ui/ChooseGreatPersonModal";
+import { CrossPlatformSavePage } from "./ui/CrossPlatformSavePage";
 import { ErrorPage } from "./ui/ErrorPage";
 import { FirstTimePlayerModal } from "./ui/FirstTimePlayerModal";
 import { showModal, showToast } from "./ui/GlobalModal";
@@ -118,6 +119,11 @@ export async function startGame(
    const TIMEOUT = import.meta.env.DEV ? 1 : 15;
    let hasOfflineProductionModal = false;
    let offlineProduction = true;
+
+   if (import.meta.env.DEV) {
+      routeTo(CrossPlatformSavePage, {});
+      return;
+   }
 
    try {
       const actualOfflineTime = await Promise.race([

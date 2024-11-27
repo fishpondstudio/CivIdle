@@ -1444,5 +1444,7 @@ export const EN = {
    RockefellerCenterChristmasTreeDesc: "+3 Happiness for each unlocked age. This natural wonder can only be discovered in December",
    AccountRankUp: "Upgrade Account Rank",
    AccountRankUpDesc: "All your progress will be carried over to your new rank",
-   AccountRankUpTip: "Congratulations, your account is eligible for a higher rank - click here to upgrade!"
+   AccountRankUpTip: "Congratulations, your account is eligible for a higher rank - click here to upgrade!",
+   CrossPlatformSave:"Cross Platform Save",
+   CrossPlatformAccount:"Platform Account"
 };

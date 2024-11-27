@@ -40,6 +40,7 @@ body.big-old-fashioned-cursor .pointer * {
 body {
    cursor: default;
    user-select: none;
+   -webkit-user-select: none;
    overflow: hidden;
    position: fixed;
    left: 0;

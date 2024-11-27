@@ -1,3 +1,4 @@
+import { App } from "@capacitor/app";
 import { Advisors } from "../../../shared/definitions/AdvisorDefinitions";
 import { GreatPersonTickFlag } from "../../../shared/definitions/GreatPersonDefinitions";
 import { OnTileExplored, getScienceFromWorkers } from "../../../shared/logic/BuildingLogic";
@@ -32,7 +33,7 @@ import { AccountLevel } from "../../../shared/utilities/Database";
 import { clamp, forEach, safeAdd, type Tile } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import { saveGame } from "../Global";
-import { client, getUser } from "../rpc/RPCClient";
+import { client, disconnectWebSocket, getUser, reconnectWebSocket } from "../rpc/RPCClient";
 import { isSteam } from "../rpc/SteamClient";
 import { WorldScene } from "../scenes/WorldScene";
 import { AccountRankUpModal } from "../ui/AccountRankUpModal";
@@ -49,8 +50,19 @@ import { onTileExplored } from "./OnTileExplored";
 import { TimeSeries } from "./TimeSeries";
 
 export function shouldTick(): boolean {
-   return isSteam() || document.visibilityState === "visible";
+   return isSteam() || !document.hidden;
 }
+
+App.addListener("appStateChange", ({ isActive }) => {
+   if (isSteam()) {
+      return;
+   }
+   if (isActive) {
+      reconnectWebSocket();
+   } else {
+      disconnectWebSocket();
+   }
+});
 
 let timeSinceLastTick = 0;
 
