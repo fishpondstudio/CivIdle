@@ -40,8 +40,13 @@ jobs:
         working-directory: /home/insraq/CivIdle
         env:
           STEAMWORKS_PATH: /home/insraq/steamworks/tools/ContentBuilder/
+      - run: fastlane deploy
+        working-directory: /home/insraq/CivIdle/android
+        env:
+          STEAMWORKS_PATH: /home/insraq/steamworks/tools/ContentBuilder/
       - run: |
           git add src/scripts/Version.json
+          git add android/version.properties
           git commit -m "[skip ci] New build" || echo "There's nothing to commit"
           git push
         working-directory: /home/insraq/CivIdle
