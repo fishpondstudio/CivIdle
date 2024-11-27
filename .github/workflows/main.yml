@@ -40,6 +40,8 @@ jobs:
         working-directory: /home/insraq/CivIdle
         env:
           STEAMWORKS_PATH: /home/insraq/steamworks/tools/ContentBuilder/
+      - run: npx cap sync android
+        working-directory: /home/insraq/CivIdle
       - run: fastlane deploy
         working-directory: /home/insraq/CivIdle/android
         env:
