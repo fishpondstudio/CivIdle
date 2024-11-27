@@ -326,4 +326,5 @@ export enum ServerWSErrorCode {
    BadRequest = 3000,
    InvalidTicket = 3001,
    NotAllowed = 3002,
+   Background = 4000,
 }

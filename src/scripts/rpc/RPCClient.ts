@@ -36,7 +36,6 @@ import { showToast } from "../ui/GlobalModal";
 import { makeObservableHook } from "../utilities/Hook";
 import { playBubble, playKaching } from "../visuals/Sound";
 import { SteamClient, isSteam } from "./SteamClient";
-import { shouldTick } from "../logic/ClientUpdate";
 
 let user: IUser | null = null;
 
@@ -360,13 +359,14 @@ export async function connectWebSocket(): Promise<number> {
       switch (ev.code) {
          case ServerWSErrorCode.BadRequest:
          case ServerWSErrorCode.NotAllowed:
+         case ServerWSErrorCode.Background:
             break;
          case ServerWSErrorCode.InvalidTicket:
             steamTicket = null;
-            reconnectWebSocket();
+            retryConnect();
             break;
          default:
-            reconnectWebSocket();
+            retryConnect();
             break;
       }
    };
@@ -375,18 +375,18 @@ export async function connectWebSocket(): Promise<number> {
 }
 
 export function disconnectWebSocket() {
-   ws?.close();
+   ws?.close(ServerWSErrorCode.Background);
    reconnect = 0;
 }
 
 export function reconnectWebSocket() {
-   if (!shouldTick()) {
-      return;
+   if (!ws) {
+      connectWebSocket().then(convertOfflineTimeToWarp);
    }
-   setTimeout(
-      () => connectWebSocket().then(convertOfflineTimeToWarp),
-      Math.min(Math.pow(2, reconnect++) * SECOND, 16 * SECOND),
-   );
+}
+
+function retryConnect() {
+   setTimeout(reconnectWebSocket, Math.min(Math.pow(2, reconnect++) * SECOND, 16 * SECOND));
 }
 
 export function convertOfflineTimeToWarp(offlineTime: number): void {

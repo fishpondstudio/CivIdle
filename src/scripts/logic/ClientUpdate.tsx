@@ -60,6 +60,7 @@ App.addListener("appStateChange", ({ isActive }) => {
    if (isActive) {
       reconnectWebSocket();
    } else {
+      saveGame();
       disconnectWebSocket();
    }
 });
