@@ -1,11 +1,10 @@
 @font-face {
-   font-family: 'Roboto Mono';
+   font-family: "Roboto Mono";
    font-style: normal;
    font-weight: 500;
    font-display: swap;
    src: url(../fonts/RobotoMono.woff2) format("woff2");
 }
-
 
 .modern .code,
 .code,
@@ -60,27 +59,35 @@ input[type="text"] {
    border: 0 none;
 }
 
-input[type=email]:disabled,
-input[type=email]:read-only,
-input[type=number]:disabled,
-input[type=number]:read-only,
-input[type=password]:disabled,
-input[type=password]:read-only,
-input[type=text]:disabled,
-input[type=text]:read-only,
+input[type="email"]:disabled,
+input[type="email"]:read-only,
+input[type="number"]:disabled,
+input[type="number"]:read-only,
+input[type="password"]:disabled,
+input[type="password"]:read-only,
+input[type="text"]:disabled,
+input[type="text"]:read-only,
 textarea:disabled {
    background-color: silver;
    cursor: not-allowed;
 }
 
-input[type=range] {
+input[type="range"] {
    margin: 0;
    height: 16px;
    cursor: url("../images/w98normal.png"), default;
 }
 
-input, button, select {
+input,
+button,
+select {
    color: #000000;
+}
+
+input:disabled,
+button:disabled,
+select:disabled {
+   color: rgba(16, 16, 16, 0.3);
 }
 
 summary::-webkit-details-marker {
@@ -102,7 +109,7 @@ summary::-webkit-details-marker {
    height: 100%;
 }
 
-.separator.has-title>div {
+.separator.has-title > div {
    background: silver;
    position: absolute;
    left: 10px;
@@ -452,17 +459,26 @@ a {
    border-radius: 0;
 }
 
-.meter>.fill {
+.meter > .fill {
    display: block;
    height: 100%;
    background-color: #00289e;
    position: relative;
    overflow: hidden;
-   background-image: linear-gradient(90deg, #00289e 40%, #fff 0, #fff 50%, #00289e 0, #00289e 90%, #fff 0, #fff);
+   background-image: linear-gradient(
+      90deg,
+      #00289e 40%,
+      #fff 0,
+      #fff 50%,
+      #00289e 0,
+      #00289e 90%,
+      #fff 0,
+      #fff
+   );
    background-size: 24px 24px;
 }
 
-ul.tree-view>li:first-child {
+ul.tree-view > li:first-child {
    margin-top: 0;
 }
 
