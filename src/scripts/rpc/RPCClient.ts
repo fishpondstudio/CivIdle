@@ -167,7 +167,7 @@ const rpcRequests: Record<number, { resolve: Function; reject: Function; time: n
 let steamTicket: string | null = null;
 let steamTicketTime = 0;
 
-export async function connectWebSocket(): Promise<number> {
+export async function connectWebSocket(): Promise<IWelcomeMessage> {
    const platform = Capacitor.getPlatform();
    if (isSteam()) {
       if (!steamTicket || Date.now() - steamTicketTime > 30 * SECOND) {
@@ -242,9 +242,9 @@ export async function connectWebSocket(): Promise<number> {
 
    ws.binaryType = "arraybuffer";
 
-   let resolve: ((v: number) => void) | null = null;
+   let resolve: ((v: IWelcomeMessage) => void) | null = null;
 
-   const promise = new Promise<number>((resolve_) => {
+   const promise = new Promise<IWelcomeMessage>((resolve_) => {
       resolve = resolve_;
    });
 
@@ -296,7 +296,8 @@ export async function connectWebSocket(): Promise<number> {
                JSON.stringify(w),
             );
             setServerNow(w.now);
-            resolve?.(Math.min(w.offlineTime, offlineTicks));
+            w.offlineTime = Math.min(w.offlineTime, offlineTicks);
+            resolve?.(w);
             break;
          }
          case MessageType.Trade: {
@@ -389,7 +390,8 @@ function retryConnect() {
    setTimeout(reconnectWebSocket, Math.min(Math.pow(2, reconnect++) * SECOND, 16 * SECOND));
 }
 
-export function convertOfflineTimeToWarp(offlineTime: number): void {
+export function convertOfflineTimeToWarp(w: IWelcomeMessage): void {
+   const { offlineTime } = w;
    console.log("[convertOfflineTimeToWarp] offlineTime:", offlineTime);
    if (offlineTime >= 60) {
       playBubble();

@@ -50,6 +50,7 @@ export interface IWelcomeMessage extends IMessage {
    offlineTime: number;
    lastGameTick: number;
    now: number;
+   saveOwnership: boolean;
 }
 
 export interface ITrade extends IAddTradeRequest {
@@ -192,6 +193,13 @@ export interface IUser {
    ip: string;
    attr: UserAttributes;
    lastGameId?: string;
+   connectionRequest?: IConnectionRequest;
+   saveOwner?: string | null;
+}
+
+export interface IConnectionRequest {
+   createdAt: number;
+   passcode: number;
 }
 
 export interface IMapEntry {
@@ -242,6 +250,7 @@ export interface IVotedBoostOption {
 export const DB: {
    chat: IChat[];
    users: Record<string, IUser>;
+   connectedUsers: Record<string, string>;
    trades: Record<string, ITrade>;
    pendingClaims: Record<string, IPendingClaim[]>;
    map: Record<string, IMapEntry>;
@@ -252,6 +261,7 @@ export const DB: {
 } = {
    chat: [],
    users: {},
+   connectedUsers: {},
    trades: {},
    map: {},
    pendingClaims: {},

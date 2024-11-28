@@ -180,14 +180,14 @@ export function MenuComponent(): React.ReactNode {
                   >
                      <MenuItem check={false}>{t(L.Shortcut)}</MenuItem>
                   </div>
-                  {/*<div
+                  <div
                      className="menu-popover-item"
                      onPointerDown={() => {
                         window.location.search = "?scene=Save";
                      }}
                   >
                      <MenuItem check={false}>{t(L.ManageSave)}</MenuItem>
-                  </div>*/}
+                  </div>
                </div>
             </div>
             <div

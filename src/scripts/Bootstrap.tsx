@@ -14,6 +14,7 @@ import {
 } from "../../shared/logic/GameStateLogic";
 import { initializeGameState } from "../../shared/logic/InitializeGameState";
 import type { IPetraBuildingData } from "../../shared/logic/Tile";
+import type { IWelcomeMessage } from "../../shared/utilities/Database";
 import {
    clamp,
    deepFreeze,
@@ -33,7 +34,7 @@ import { Heartbeat } from "./logic/Heartbeat";
 import { getFullVersion } from "./logic/Version";
 import { getBuildingTexture, getTileTexture } from "./logic/VisualLogic";
 import type { MainBundleAssets } from "./main";
-import { connectWebSocket, convertOfflineTimeToWarp } from "./rpc/RPCClient";
+import { connectWebSocket } from "./rpc/RPCClient";
 import { isSteam } from "./rpc/SteamClient";
 import { PlayerMapScene } from "./scenes/PlayerMapScene";
 import { TechTreeScene } from "./scenes/TechTreeScene";
@@ -118,23 +119,19 @@ export async function startGame(
    routeTo(LoadingPage, { stage: LoadingPageStage.SteamSignIn });
    const TIMEOUT = import.meta.env.DEV ? 1 : 15;
    let hasOfflineProductionModal = false;
-   let offlineProduction = true;
 
    try {
-      const actualOfflineTime = await Promise.race([
-         connectWebSocket().then<number>((time) => {
-            // This means when we reach here, we are already too late to do offline production (due to timeout),
-            // so we convert the time to warp instead!
-            if (!offlineProduction) {
-               convertOfflineTimeToWarp(time);
-               return 0;
-            }
-            return time;
-         }),
-         rejectIn<number>(TIMEOUT, "Connection Timeout"),
+      const welcome = await Promise.race([
+         connectWebSocket(),
+         rejectIn<IWelcomeMessage>(TIMEOUT, "Connection Timeout"),
       ]);
 
-      offlineProduction = false;
+      if (!welcome.saveOwnership) {
+         routeTo(CrossPlatformSavePage, {});
+         return;
+      }
+
+      const actualOfflineTime = welcome.offlineTime;
 
       const petra = findSpecialBuilding("Petra", gameState);
       const maxOfflineTime =
@@ -163,7 +160,6 @@ export async function startGame(
          showModal(<OfflineProductionModal before={before} after={after} time={offlineTime} />);
       }
    } catch (error) {
-      offlineProduction = false;
       playError();
       showToast(String(error));
    }
