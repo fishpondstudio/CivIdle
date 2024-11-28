@@ -39,6 +39,7 @@ import { PlayerMapScene } from "./scenes/PlayerMapScene";
 import { TechTreeScene } from "./scenes/TechTreeScene";
 import { WorldScene } from "./scenes/WorldScene";
 import { ChooseGreatPersonModal } from "./ui/ChooseGreatPersonModal";
+import { CrossPlatformSavePage } from "./ui/CrossPlatformSavePage";
 import { ErrorPage } from "./ui/ErrorPage";
 import { FirstTimePlayerModal } from "./ui/FirstTimePlayerModal";
 import { showModal, showToast } from "./ui/GlobalModal";
@@ -119,11 +120,6 @@ export async function startGame(
    let hasOfflineProductionModal = false;
    let offlineProduction = true;
 
-   // if (import.meta.env.DEV) {
-   //    routeTo(CrossPlatformSavePage, {});
-   //    return;
-   // }
-
    try {
       const actualOfflineTime = await Promise.race([
          connectWebSocket().then<number>((time) => {
@@ -193,7 +189,12 @@ export async function startGame(
    }
 
    const params = new URLSearchParams(location.href.split("?")[1]);
+
    switch (params.get("scene")) {
+      case "Save": {
+         routeTo(CrossPlatformSavePage, {});
+         break;
+      }
       case "Tech": {
          Singleton().sceneManager.loadScene(TechTreeScene);
          break;
@@ -207,6 +208,7 @@ export async function startGame(
          break;
       }
    }
+
    notifyGameStateUpdate();
    Singleton().ticker.start();
 }

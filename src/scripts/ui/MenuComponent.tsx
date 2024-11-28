@@ -118,17 +118,6 @@ export function MenuComponent(): React.ReactNode {
                         {t(L.ResearchMenu)}
                      </MenuItem>
                   </div>
-                  {/* <div
-                     className="menu-popover-item"
-                     onPointerDown={(e) => {
-                        Singleton().sceneManager.loadScene(RomeProvinceScene);
-                        setActive(null);
-                     }}
-                  >
-                     <MenuItem check={Singleton().sceneManager.isCurrent(RomeProvinceScene)}>
-                        {t(L.RomeMapMenu)}
-                     </MenuItem>
-                  </div> */}
                   {sizeOf(Tick.current.playerTradeBuildings) <= 0 ? null : (
                      <div
                         className="menu-popover-item"
@@ -190,6 +179,14 @@ export function MenuComponent(): React.ReactNode {
                      }}
                   >
                      <MenuItem check={false}>{t(L.Shortcut)}</MenuItem>
+                  </div>
+                  <div
+                     className="menu-popover-item"
+                     onPointerDown={() => {
+                        window.location.search = "?scene=Save";
+                     }}
+                  >
+                     <MenuItem check={false}>{t(L.ManageSave)}</MenuItem>
                   </div>
                </div>
             </div>

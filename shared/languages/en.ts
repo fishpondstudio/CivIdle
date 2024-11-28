@@ -1446,5 +1446,6 @@ export const EN = {
    AccountRankUpDesc: "All your progress will be carried over to your new rank",
    AccountRankUpTip: "Congratulations, your account is eligible for a higher rank - click here to upgrade!",
    CrossPlatformSave:"Cross Platform Save",
-   CrossPlatformAccount:"Platform Account"
+   CrossPlatformAccount:"Platform Account",
+   ManageSave:"Manage Save"
 };
