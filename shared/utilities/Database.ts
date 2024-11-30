@@ -195,6 +195,7 @@ export interface IUser {
    lastGameId?: string;
    connectionRequest?: IConnectionRequest;
    saveOwner?: string | null;
+   lastCheckInAt?: number | null;
 }
 
 export interface IConnectionRequest {
@@ -297,6 +298,13 @@ export enum AccountLevel {
    Aedile = 2,
    Praetor = 3,
    Consul = 4,
+}
+
+export enum Platform {
+   None = 0,
+   Steam = 1,
+   iOS = 2,
+   Android = 3,
 }
 
 export const TradeTileReservationDays: Record<AccountLevel, number> = {

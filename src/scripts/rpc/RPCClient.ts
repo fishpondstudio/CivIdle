@@ -102,9 +102,6 @@ function getServerAddress(): string {
       const url = new URLSearchParams(window.location.search);
       return url.get("server") ?? "ws://localhost:8000";
    }
-   if (getGameOptions().useMirrorServer) {
-      return "wss://api.cividle.com";
-   }
    return "wss://de.cividle.com";
 }
 

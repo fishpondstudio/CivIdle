@@ -270,19 +270,6 @@ export function GameplayOptionPage(): React.ReactNode {
                </div>
             </fieldset>
             <fieldset>
-               <legend>{t(L.Server)}</legend>
-               <ToggleComponent
-                  title={t(L.UseMirrorServer)}
-                  contentHTML={t(L.UseMirrorServerDescHTML)}
-                  value={options.useMirrorServer}
-                  onValueChange={(value) => {
-                     playClick();
-                     options.useMirrorServer = value;
-                     notifyGameOptionsUpdate(options);
-                  }}
-               />
-            </fieldset>
-            <fieldset>
                <legend>{t(L.Performance)}</legend>
                <ToggleComponent
                   title={t(L.TransportPlanCache)}
