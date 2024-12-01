@@ -200,7 +200,7 @@ export interface IUser {
 
 export interface IConnectionRequest {
    createdAt: number;
-   passcode: number;
+   passcode: string;
 }
 
 export interface IMapEntry {
@@ -345,4 +345,12 @@ export enum ServerWSErrorCode {
    InvalidTicket = 3001,
    NotAllowed = 3002,
    Background = 4000,
+}
+
+export interface ICrossPlatformResult {
+   currentPlatform: Platform;
+   otherPlatform: Platform;
+   saveOwner: string | null;
+   connected: boolean;
+   lastCheckInAt: number;
 }

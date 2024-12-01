@@ -1447,5 +1447,14 @@ export const EN = {
    AccountRankUpTip: "Congratulations, your account is eligible for a higher rank - click here to upgrade!",
    CrossPlatformSave:"Cross Platform Save",
    CrossPlatformAccount:"Platform Account",
-   ManageSave:"Manage Save"
+   ManageSave:"Manage Save",
+   CurrentPlatform:"Current Platform",
+   OtherPlatform:"Other Platform",
+   PlatformAndroid:"Android",
+   PlatformiOS:"iOS",
+   PlatformSteam:"Steam",
+   PlatformSyncInstructionHTML: "If you want to sync your progress on this device to a new device, click <b>Sync To A New Device</b> and get a one-time passcode. On your new device, click <b>Connect To A Device</b> and type in the one-time passcode",
+   SyncToANewDevice: "Sync To A New Device",
+   ConnectToADevice: "Connect To A Device",
+   PasscodeToastHTML: "<b>%{code}</b> is your passcode and it's valid for 30 minutes"
 };

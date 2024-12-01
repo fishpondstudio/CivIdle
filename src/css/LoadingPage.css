@@ -17,7 +17,7 @@
    bottom: 0;
    color: #808080;
    padding: 25px;
-   z-index: 99999;
+   z-index: 100;
 }
 
 .energy-star {
@@ -46,7 +46,7 @@
    display: block;
 }
 
-.loading-page > .row {
+.loading-page>.row {
    width: 60vw;
 }
 

@@ -1,13 +1,18 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { Platform, type ICrossPlatformResult } from "../../../shared/utilities/Database";
 import { L, t } from "../../../shared/utilities/i18n";
 import "../../css/CrossPlatformSavePage.css";
-import { client } from "../rpc/RPCClient";
+import { client, useUser } from "../rpc/RPCClient";
+import { playSuccess } from "../visuals/Sound";
+import { showToast } from "./GlobalModal";
+import { RenderHTML } from "./RenderHTMLComponent";
 
 export function CrossPlatformSavePage(): React.ReactNode {
+   const [result, setResult] = useState<ICrossPlatformResult>();
+   const user = useUser();
+
    useEffect(() => {
-      client.getCrossPlatformSave().then((result) => {
-         console.log(result);
-      });
+      client.getCrossPlatformSave().then((result) => setResult(result));
    }, []);
 
    return (
@@ -20,24 +25,40 @@ export function CrossPlatformSavePage(): React.ReactNode {
                <fieldset>
                   <legend>{t(L.CrossPlatformAccount)}</legend>
                   <div className="row mb5">
-                     <div className="text-strong f1">Steam</div>
-                     <div className="m-icon small text-green">check_circle</div>
+                     <div className="f1">{t(L.CurrentPlatform)}</div>
+                     <div className="text-strong">{getPlatformName(result?.currentPlatform)}</div>
                   </div>
                   <div className="row">
-                     <div className="text-strong f1">Mobile</div>
-                     <div>Not Connected</div>
+                     <div className="f1">{t(L.OtherPlatform)}</div>
+                     <div className="text-strong">{getPlatformName(result?.otherPlatform)}</div>
                   </div>
-                  <div className="separator"></div>
-                  <div className="text-desc mb10">
-                     If you want to sync your progress on this device to a new device, click "Sync To A New
-                     Device" and get a one-time passcode. On your new device, click "Connect To A Device" and
-                     type in the one-time passcode
-                  </div>
-                  <div className="row">
-                     <button className="f1">Sync To A New Device</button>
-                     <div className="mr10"></div>
-                     <button className="f1">Connect To A Device</button>
-                  </div>
+                  {result?.connected ? null : (
+                     <>
+                        <div className="separator"></div>
+                        <div className="row mb5">
+                           <div className="f1">{t(L.PlayerHandle)}</div>
+                           <div className="text-strong">{user?.handle}</div>
+                        </div>
+                        <RenderHTML
+                           html={t(L.PlatformSyncInstructionHTML)}
+                           className="mb10 text-desc text-small"
+                        />
+                        <div className="row">
+                           <button
+                              className="f1"
+                              onClick={async () => {
+                                 const code = await client.requestPassCode();
+                                 playSuccess();
+                                 showToast(t(L.PasscodeToastHTML, { code }), 10_000);
+                              }}
+                           >
+                              {t(L.SyncToANewDevice)}
+                           </button>
+                           <div className="mr10"></div>
+                           <button className="f1">{t(L.ConnectToADevice)}</button>
+                        </div>
+                     </>
+                  )}
                </fieldset>
                <fieldset>
                   <legend>Cross Platform Save</legend>
@@ -73,4 +94,17 @@ export function CrossPlatformSavePage(): React.ReactNode {
          </div>
       </div>
    );
+}
+
+function getPlatformName(platform: Platform | null | undefined): string {
+   switch (platform) {
+      case Platform.Android:
+         return t(L.PlatformAndroid);
+      case Platform.iOS:
+         return t(L.PlatformiOS);
+      case Platform.Steam:
+         return t(L.PlatformSteam);
+      default:
+         return "";
+   }
 }
