@@ -41,6 +41,10 @@ export const ShortcutActions = {
       scope: "BuildingPage",
       name: () => t(L.ShortcutBuildingPageToggleBuildingSetAllSimilar),
    },
+   BuildingPageToggleBuildingSetAllFullSimilar: {
+      scope: "BuildingPage",
+      name: () => t(L.ShortcutBuildingPageToggleBuildingSetAllFullSimilar),
+   },
    UpgradePageIncreaseLevel: { scope: "ConstructionPage", name: () => t(L.ShortcutUpgradePageIncreaseLevel) },
    UpgradePageDecreaseLevel: { scope: "ConstructionPage", name: () => t(L.ShortcutUpgradePageDecreaseLevel) },
    UpgradePageEndConstruction: {
