@@ -1102,6 +1102,7 @@ export const EN = {
    Server: "Server",
    SetAsDefault: "Set As Default",
    SetAsDefaultBuilding: "Set As Default For All %{building}",
+   SetMaxCapacity: "Set Max Cap",
    Shamanism: "Shamanism",
    Shelter: "Shelter",
    Shortcut: "Shortcut",
