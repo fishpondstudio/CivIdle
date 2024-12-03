@@ -403,6 +403,14 @@ export async function handleChatCommand(command: string): Promise<void> {
          addSystemMessage(`Player ${parts[1]} will receive ${count} great people`);
          break;
       }
+      case "clearconnection": {
+         if (!parts[1]) {
+            throw new Error("Invalid command format");
+         }
+         await client.clearConnection(parts[1]);
+         addSystemMessage("Cross Platform connections have been cleared");
+         break;
+      }
       default: {
          addSystemMessage("Command not found");
          break;

@@ -1456,5 +1456,14 @@ export const EN = {
    PlatformSyncInstructionHTML: "If you want to sync your progress on this device to a new device, click <b>Sync To A New Device</b> and get a one-time passcode. On your new device, click <b>Connect To A Device</b> and type in the one-time passcode",
    SyncToANewDevice: "Sync To A New Device",
    ConnectToADevice: "Connect To A Device",
-   PasscodeToastHTML: "<b>%{code}</b> is your passcode and it's valid for 30 minutes"
+   PasscodeToastHTML: "<b>%{code}</b> is your passcode and it's valid for 30 minutes",
+   Passcode: "Passcode",
+   CrossPlatformConnect: "Connect",
+   CrossPlatformSaveStatus: "Current Status",
+   CrossPlatformSaveStatusCheckedIn: "Checked In",
+   CrossPlatformSaveStatusCheckedOut: "Checked Out on %{platform}",
+   CrossPlatformSaveStatusCheckedOutTooltip: "Your cross platform save has been checked out on another platform, you have to check in on that platform before you can check out on this platform",
+   CrossPlatformSaveLastCheckIn: "Last Check In",
+   CheckOutCloudSave: "Check Out",
+   CheckInCloudSave: "Check In",
 };

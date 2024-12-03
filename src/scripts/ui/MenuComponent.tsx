@@ -12,6 +12,7 @@ import { PlayerMapScene } from "../scenes/PlayerMapScene";
 import { TechTreeScene } from "../scenes/TechTreeScene";
 import { WorldScene } from "../scenes/WorldScene";
 import { openUrl } from "../utilities/Platform";
+import { isAndroid, isIOS } from "../utilities/Platforms";
 import { Singleton } from "../utilities/Singleton";
 import { playError } from "../visuals/Sound";
 import { AboutModal } from "./AboutModal";
@@ -180,14 +181,16 @@ export function MenuComponent(): React.ReactNode {
                   >
                      <MenuItem check={false}>{t(L.Shortcut)}</MenuItem>
                   </div>
-                  <div
-                     className="menu-popover-item"
-                     onPointerDown={() => {
-                        window.location.search = "?scene=Save";
-                     }}
-                  >
-                     <MenuItem check={false}>{t(L.ManageSave)}</MenuItem>
-                  </div>
+                  {isIOS() || isAndroid() || user?.handle === "FishPond" ? (
+                     <div
+                        className="menu-popover-item"
+                        onPointerDown={() => {
+                           window.location.search = "?scene=Save";
+                        }}
+                     >
+                        <MenuItem check={false}>{t(L.ManageSave)}</MenuItem>
+                     </div>
+                  ) : null}
                </div>
             </div>
             <div

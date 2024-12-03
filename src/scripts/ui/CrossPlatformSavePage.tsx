@@ -1,18 +1,23 @@
 import { useEffect, useState } from "react";
+import { getPlatform } from "../../../server/src/DatabaseHelper";
 import { Platform, type ICrossPlatformResult } from "../../../shared/utilities/Database";
 import { L, t } from "../../../shared/utilities/i18n";
 import "../../css/CrossPlatformSavePage.css";
+import { compressSave, writeBytes } from "../Global";
 import { client, useUser } from "../rpc/RPCClient";
-import { playSuccess } from "../visuals/Sound";
-import { showToast } from "./GlobalModal";
+import { playClick, playError, playSuccess } from "../visuals/Sound";
+import { hideModal, showModal, showToast } from "./GlobalModal";
 import { RenderHTML } from "./RenderHTMLComponent";
+import { TextWithHelp } from "./TextWithHelpComponent";
 
 export function CrossPlatformSavePage(): React.ReactNode {
    const [result, setResult] = useState<ICrossPlatformResult>();
    const user = useUser();
 
    useEffect(() => {
-      client.getCrossPlatformSave().then((result) => setResult(result));
+      client.getCrossPlatformSave().then((result) => {
+         setResult(result);
+      });
    }, []);
 
    return (
@@ -47,39 +52,61 @@ export function CrossPlatformSavePage(): React.ReactNode {
                            <button
                               className="f1"
                               onClick={async () => {
-                                 const code = await client.requestPassCode();
-                                 playSuccess();
-                                 showToast(t(L.PasscodeToastHTML, { code }), 10_000);
+                                 try {
+                                    const code = await client.requestPassCode();
+                                    playSuccess();
+                                    showToast(t(L.PasscodeToastHTML, { code }), 10_000);
+                                 } catch (error) {
+                                    playError();
+                                    showToast(String(error));
+                                 }
                               }}
                            >
                               {t(L.SyncToANewDevice)}
                            </button>
                            <div className="mr10"></div>
-                           <button className="f1">{t(L.ConnectToADevice)}</button>
+                           <button
+                              className="f1"
+                              onClick={() => {
+                                 playClick();
+                                 showModal(<ConnectToDeviceModal />);
+                              }}
+                           >
+                              {t(L.ConnectToADevice)}
+                           </button>
                         </div>
                      </>
                   )}
                </fieldset>
                <fieldset>
-                  <legend>Cross Platform Save</legend>
+                  <legend>{t(L.CrossPlatformSave)}</legend>
                   <div className="row mb5">
-                     <div className="text-strong f1">Current Status</div>
-                     <div>Checked In</div>
+                     <div className="f1">{t(L.CrossPlatformSaveStatus)}</div>
+                     <div className="text-strong">
+                        {result?.saveOwner ? (
+                           <TextWithHelp
+                              content={
+                                 result.saveOwner === result.originalUserId
+                                    ? null
+                                    : t(L.CrossPlatformSaveStatusCheckedOutTooltip)
+                              }
+                           >
+                              {t(L.CrossPlatformSaveStatusCheckedOut, {
+                                 platform: getPlatformName(getPlatform(result?.saveOwner)),
+                              })}
+                           </TextWithHelp>
+                        ) : (
+                           t(L.CrossPlatformSaveStatusCheckedIn)
+                        )}
+                     </div>
                   </div>
-                  <div className="row mb10">
-                     <div className="text-strong f1">Last Check In</div>
-                     <div>{new Date().toLocaleString()} on Mobile</div>
-                  </div>
-                  <div className="row">
-                     <button
-                        className="text-strong w100"
-                        onClick={() => {
-                           window.location.search = "";
-                        }}
-                     >
-                        Check Out Cloud Save
-                     </button>
-                     <div className="mr10"></div>
+                  {result && result.lastCheckInAt > 0 ? (
+                     <div className="row mb5">
+                        <div className="text-strong f1">{t(L.CrossPlatformSaveLastCheckIn)}</div>
+                        <div>{new Date(result?.lastCheckInAt).toLocaleString()}</div>
+                     </div>
+                  ) : null}
+                  <div className="row mt10">
                      <button
                         className="w100"
                         onClick={() => {
@@ -88,9 +115,88 @@ export function CrossPlatformSavePage(): React.ReactNode {
                      >
                         Restart Game
                      </button>
+                     <div className="mr10"></div>
+                     {result && result.saveOwner === result.originalUserId ? (
+                        <button
+                           className="text-strong w100"
+                           onClick={async () => {
+                              try {
+                                 await client.checkInSave(await compressSave());
+                                 window.location.search = "";
+                              } catch (error) {
+                                 playError();
+                                 showToast(String(error));
+                              }
+                           }}
+                        >
+                           {t(L.CheckInCloudSave)}
+                        </button>
+                     ) : (
+                        <button
+                           disabled={!result || !!result.saveOwner}
+                           className="text-strong w100"
+                           onClick={async () => {
+                              try {
+                                 const buffer = await client.checkOutSave();
+                                 if (buffer.length > 0) {
+                                    writeBytes(buffer);
+                                 }
+                                 window.location.search = "";
+                              } catch (error) {
+                                 playError();
+                                 showToast(String(error));
+                              }
+                           }}
+                        >
+                           {t(L.CheckOutCloudSave)}
+                        </button>
+                     )}
                   </div>
                </fieldset>
             </div>
+         </div>
+      </div>
+   );
+}
+
+function ConnectToDeviceModal(): React.ReactNode {
+   return (
+      <div className="window">
+         <div className="title-bar">
+            <div className="title-bar-text">{t(L.ConnectToADevice)}</div>
+            <div className="title-bar-controls">
+               <button onClick={hideModal} aria-label="Close"></button>
+            </div>
+         </div>
+         <div className="window-body">
+            <form
+               method="post"
+               onSubmit={async (e) => {
+                  e.preventDefault();
+                  const formData = new FormData(e.target as HTMLFormElement);
+                  try {
+                     await client.verifyPassCode(
+                        String(formData.get("handle") ?? ""),
+                        String(formData.get("passcode") ?? ""),
+                     );
+                     window.location.reload();
+                  } catch (error) {
+                     playError();
+                     showToast(String(error));
+                  }
+               }}
+            >
+               <div>{t(L.PlayerHandle)}</div>
+               <input type="text" name="handle" className="w100 mt5 mb10" />
+               <div>{t(L.Passcode)}</div>
+               <input type="text" name="passcode" className="w100 mt5 mb10" />
+               <div className="row">
+                  <div className="f1"></div>
+                  <button type="submit" className="text-strong">
+                     {t(L.CrossPlatformConnect)}
+                  </button>
+               </div>
+            </form>
          </div>
       </div>
    );

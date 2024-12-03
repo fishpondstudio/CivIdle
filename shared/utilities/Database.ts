@@ -194,8 +194,8 @@ export interface IUser {
    attr: UserAttributes;
    lastGameId?: string;
    connectionRequest?: IConnectionRequest;
-   saveOwner?: string | null;
-   lastCheckInAt?: number | null;
+   saveOwner?: string;
+   lastCheckInAt?: number;
 }
 
 export interface IConnectionRequest {
@@ -350,7 +350,8 @@ export enum ServerWSErrorCode {
 export interface ICrossPlatformResult {
    currentPlatform: Platform;
    otherPlatform: Platform;
-   saveOwner: string | null;
+   saveOwner: string | undefined;
+   originalUserId: string;
    connected: boolean;
    lastCheckInAt: number;
 }
