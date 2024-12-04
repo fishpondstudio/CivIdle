@@ -58,6 +58,7 @@ import {
    PRIORITY_MIN,
    ResourceImportOptions,
    type IBuildingData,
+   type IPetraBuildingData,
    type IHaveTypeAndLevel,
    type IMarketBuildingData,
    type IResourceImportBuildingData,
@@ -210,6 +211,14 @@ interface IStorageResult {
 export function getPetraBaseStorage(petra: IBuildingData): number {
    const HOUR = 60 * 60;
    return HOUR * petra.level;
+}
+
+export function togglePetraTimeWarp(petra: IPetraBuildingData): void {
+   if (petra.speedUp !== 1) {
+      petra.speedUp = 1;
+   } else if (petra.speedUp === 1) {
+      petra.speedUp = petra.lastUsedSpeedUp;
+   }
 }
 
 // 1 hour

@@ -123,6 +123,7 @@ export enum PetraOptions {
 
 export interface IPetraBuildingData extends IBuildingData {
    speedUp: number;
+   lastUsedSpeedUp: number;
    offlineProductionPercent: number;
 }
 
@@ -220,6 +221,9 @@ export function makeBuilding(data: Pick<IBuildingData, "type"> & Partial<IBuildi
          const petra = building as IPetraBuildingData;
          if (isNullOrUndefined(petra.speedUp)) {
             petra.speedUp = 1;
+         }
+         if (isNullOrUndefined(petra.lastUsedSpeedUp)) {
+            petra.lastUsedSpeedUp = 1;
          }
          if (isNullOrUndefined(petra.offlineProductionPercent)) {
             petra.offlineProductionPercent = 1;

@@ -9,6 +9,7 @@ export const ShortcutScopes = {
    EmptyTilePage: () => t(L.ShortcutScopeEmptyTilePage),
    ConstructionPage: () => t(L.ShortcutScopeConstructionPage),
    UnexploredPage: () => t(L.ShortcutScopeUnexploredPage),
+   GlobalCityPage: () => t(L.ShortcutScopeGlobalCityPage),
    PlayerMapPage: () => t(L.ShortcutScopePlayerMapPage),
 } as const;
 
@@ -61,6 +62,10 @@ export const ShortcutActions = {
    PlayerMapPageGoBackToCity: {
       scope: "PlayerMapPage",
       name: () => t(L.PlayerMapPageGoBackToCity),
+   },
+   TogglePetraWarp: {
+      scope: "GlobalCityPage",
+      name: () => t(L.ShortcutTogglePetraWarp),
    },
 } satisfies Record<string, IShortcutNameAndScope>;
 
