@@ -181,7 +181,7 @@ export function MenuComponent(): React.ReactNode {
                   >
                      <MenuItem check={false}>{t(L.Shortcut)}</MenuItem>
                   </div>
-                  {isIOS() || isAndroid() || user?.handle === "FishPond" ? (
+                  {import.meta.env.DEV || isIOS() || isAndroid() || user?.handle === "FishPond" ? (
                      <div
                         className="menu-popover-item"
                         onPointerDown={() => {
