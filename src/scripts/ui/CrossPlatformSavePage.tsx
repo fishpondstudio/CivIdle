@@ -37,7 +37,7 @@ export function CrossPlatformSavePage(): React.ReactNode {
                      <div className="f1">{t(L.OtherPlatform)}</div>
                      <div className="text-strong">{getPlatformName(result?.otherPlatform)}</div>
                   </div>
-                  {result?.connected ? null : (
+                  {result && !result.connected ? (
                      <>
                         <div className="separator"></div>
                         <div className="row mb5">
@@ -76,28 +76,30 @@ export function CrossPlatformSavePage(): React.ReactNode {
                            </button>
                         </div>
                      </>
-                  )}
+                  ) : null}
                </fieldset>
                <fieldset>
                   <legend>{t(L.CrossPlatformSave)}</legend>
                   <div className="row mb5">
                      <div className="f1">{t(L.CrossPlatformSaveStatus)}</div>
                      <div className="text-strong">
-                        {result?.saveOwner ? (
-                           <TextWithHelp
-                              content={
-                                 result.saveOwner === result.originalUserId
-                                    ? null
-                                    : t(L.CrossPlatformSaveStatusCheckedOutTooltip)
-                              }
-                           >
-                              {t(L.CrossPlatformSaveStatusCheckedOut, {
-                                 platform: getPlatformName(getPlatform(result?.saveOwner)),
-                              })}
-                           </TextWithHelp>
-                        ) : (
-                           t(L.CrossPlatformSaveStatusCheckedIn)
-                        )}
+                        {result?.connected ? (
+                           result?.saveOwner ? (
+                              <TextWithHelp
+                                 content={
+                                    result.saveOwner === result.originalUserId
+                                       ? null
+                                       : t(L.CrossPlatformSaveStatusCheckedOutTooltip)
+                                 }
+                              >
+                                 {t(L.CrossPlatformSaveStatusCheckedOut, {
+                                    platform: getPlatformName(getPlatform(result?.saveOwner)),
+                                 })}
+                              </TextWithHelp>
+                           ) : (
+                              t(L.CrossPlatformSaveStatusCheckedIn)
+                           )
+                        ) : null}
                      </div>
                   </div>
                   {result && result.lastCheckInAt > 0 ? (
@@ -110,10 +112,10 @@ export function CrossPlatformSavePage(): React.ReactNode {
                      <button
                         className="w100"
                         onClick={() => {
-                           window.location.search = "";
+                           window.location.reload();
                         }}
                      >
-                        Restart Game
+                        {t(L.CloudSaveRefresh)}
                      </button>
                      <div className="mr10"></div>
                      {result && result.saveOwner === result.originalUserId ? (
@@ -133,7 +135,7 @@ export function CrossPlatformSavePage(): React.ReactNode {
                         </button>
                      ) : (
                         <button
-                           disabled={!result || !!result.saveOwner}
+                           disabled={!result || !!result.saveOwner || !result.connected}
                            className="text-strong w100"
                            onClick={async () => {
                               try {

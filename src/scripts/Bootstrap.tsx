@@ -35,7 +35,6 @@ import { getFullVersion } from "./logic/Version";
 import { getBuildingTexture, getTileTexture } from "./logic/VisualLogic";
 import type { MainBundleAssets } from "./main";
 import { connectWebSocket } from "./rpc/RPCClient";
-import { isSteam } from "./rpc/SteamClient";
 import { PlayerMapScene } from "./scenes/PlayerMapScene";
 import { TechTreeScene } from "./scenes/TechTreeScene";
 import { WorldScene } from "./scenes/WorldScene";
@@ -49,7 +48,6 @@ import { OfflineProductionModal } from "./ui/OfflineProductionModal";
 import { GameTicker } from "./utilities/GameTicker";
 import { SceneManager } from "./utilities/SceneManager";
 import { Singleton, initializeSingletons, type RouteTo } from "./utilities/Singleton";
-import { populateGreatPersonImageCache } from "./visuals/GreatPersonVisual";
 import { playError } from "./visuals/Sound";
 
 export async function startGame(
@@ -108,11 +106,6 @@ export async function startGame(
       ticker: new GameTicker(app.ticker, gameState),
       heartbeat: new Heartbeat(serializeSaveLite()),
    });
-   if (import.meta.env.PROD && isSteam()) {
-      console.time("Populate Great Person Image Cache");
-      await populateGreatPersonImageCache(context);
-      console.timeEnd("Populate Great Person Image Cache");
-   }
    setCityOverride(gameState);
 
    // ========== Connect to server ==========

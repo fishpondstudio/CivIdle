@@ -33,6 +33,7 @@ import { L, t } from "../../../shared/utilities/i18n";
 import { saveGame } from "../Global";
 import { getBuildNumber, getVersion } from "../logic/Version";
 import { showToast } from "../ui/GlobalModal";
+import { idbGet, idbSet } from "../utilities/BrowserStorage";
 import { makeObservableHook } from "../utilities/Hook";
 import { playBubble, playKaching } from "../visuals/Sound";
 import { SteamClient, isSteam } from "./SteamClient";
@@ -156,6 +157,8 @@ export function clearSystemMessages(): void {
    OnChatMessage.emit(chatMessages);
 }
 
+export const CLIENT_ID = "CIVIDLE_CLIENT_ID";
+
 let reconnect = 0;
 let requestId = 0;
 // biome-ignore lint/complexity/noBannedTypes: <explanation>
@@ -217,12 +220,16 @@ export async function connectWebSocket(): Promise<IWelcomeMessage> {
       if (!getGameOptions().userId) {
          getGameOptions().userId = `web:${uuid4()}`;
       }
-      if (!getGameOptions().token) {
-         getGameOptions().token = uuid4();
+
+      let key = await idbGet<string>(CLIENT_ID);
+
+      if (!key) {
+         key = uuid4();
+         await idbSet(CLIENT_ID, key);
       }
-      const token = `${getGameOptions().userId}:${getGameOptions().token}`;
+
       const params = [
-         `ticket=${token}`,
+         `ticket=${key}`,
          "platform=web",
          `version=${getVersion()}`,
          `build=${getBuildNumber()}`,
@@ -273,7 +280,6 @@ export async function connectWebSocket(): Promise<IWelcomeMessage> {
             const w = message as IWelcomeMessage;
             user = w.user;
             const options = getGameOptions();
-            options.token = user.token;
             if (!options.userId) {
                options.userId = user.userId;
             }

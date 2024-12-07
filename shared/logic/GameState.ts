@@ -144,7 +144,6 @@ export type CursorOption = keyof typeof CursorOptions;
 export class GameOptions {
    useModernUI = true;
    userId: string | null = null;
-   token: string | null = null;
    checksum: string | null = null;
    sidePanelWidth = 450;
    fontSizeScale = 1;

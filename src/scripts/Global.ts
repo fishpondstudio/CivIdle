@@ -37,7 +37,7 @@ import {
 import { TypedEvent } from "../../shared/utilities/TypedEvent";
 import { migrateSavedGame } from "./MigrateSavedGame";
 import { tickEverySecond } from "./logic/ClientUpdate";
-import { client } from "./rpc/RPCClient";
+import { CLIENT_ID, client } from "./rpc/RPCClient";
 import { SteamClient, isSteam } from "./rpc/SteamClient";
 import { WorldScene } from "./scenes/WorldScene";
 import { showToast } from "./ui/GlobalModal";
@@ -243,6 +243,7 @@ if (import.meta.env.DEV) {
          return;
       }
       await idbDel(SAVE_KEY);
+      await idbDel(CLIENT_ID);
       window.location.reload();
    };
    // @ts-expect-error

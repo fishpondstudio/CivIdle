@@ -46,7 +46,7 @@ export function idbGet<T>(key: IDBValidKey, store = getDefaultStore()): Promise<
       .then(() => req.result);
 }
 
-export function idbSet(key: IDBValidKey, value: any, store = getDefaultStore()): Promise<void> {
+export function idbSet<T>(key: IDBValidKey, value: T, store = getDefaultStore()): Promise<void> {
    return store._withIDBStore("readwrite", (store) => {
       store.put(value, key);
    });

@@ -1466,4 +1466,5 @@ export const EN = {
    CrossPlatformSaveLastCheckIn: "Last Check In",
    CheckOutCloudSave: "Check Out",
    CheckInCloudSave: "Check In",
+   CloudSaveRefresh: "Refresh",
 };
