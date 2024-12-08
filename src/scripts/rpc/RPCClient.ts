@@ -14,6 +14,7 @@ import type {
    IClientTrade,
    IMapMessage,
    IPendingClaimMessage,
+   IPlatformInfo,
    IRPCMessage,
    ITradeMessage,
    IUser,
@@ -39,8 +40,10 @@ import { playBubble, playKaching } from "../visuals/Sound";
 import { SteamClient, isSteam } from "./SteamClient";
 
 let user: IUser | null = null;
+let platformInfo: IPlatformInfo | null = null;
 
 export const OnUserChanged = new TypedEvent<IUser | null>();
+export const OnPlatformInfoChanged = new TypedEvent<IPlatformInfo | null>();
 export const OnChatMessage = new TypedEvent<LocalChat[]>();
 export const OnTradeChanged = new TypedEvent<IClientTrade[]>();
 export const OnPlayerMapChanged = new TypedEvent<Map<string, IClientMapEntry>>();
@@ -119,9 +122,14 @@ export const usePlayerMap = makeObservableHook(OnPlayerMapChanged, () => playerM
 export const useChatMessages = makeObservableHook(OnChatMessage, () => chatMessages);
 export const useTrades = makeObservableHook(OnTradeChanged, getTrades);
 export const useUser = makeObservableHook(OnUserChanged, getUser);
+export const usePlatformInfo = makeObservableHook(OnPlatformInfoChanged, getPlatformInfo);
 
 export function getUser(): IUser | null {
    return user;
+}
+
+export function getPlatformInfo(): IPlatformInfo | null {
+   return platformInfo;
 }
 
 export function isOnlineUser(): boolean {
@@ -284,7 +292,9 @@ export async function connectWebSocket(): Promise<IWelcomeMessage> {
                options.userId = user.userId;
             }
             saveGame().catch(console.error);
-            OnUserChanged.emit({ ...user });
+            OnUserChanged.emit(user);
+            platformInfo = w.platformInfo;
+            OnPlatformInfoChanged.emit(platformInfo);
             const tick = getGameState().tick;
             const offlineTicks = clamp(w.lastGameTick + w.offlineTime - tick, 0, Number.POSITIVE_INFINITY);
             console.log(

@@ -15,6 +15,7 @@ import {
 import { initializeGameState } from "../../shared/logic/InitializeGameState";
 import type { IPetraBuildingData } from "../../shared/logic/Tile";
 import type { IWelcomeMessage } from "../../shared/utilities/Database";
+import { isSaveOwner } from "../../shared/utilities/DatabaseShared";
 import {
    clamp,
    deepFreeze,
@@ -119,7 +120,7 @@ export async function startGame(
          rejectIn<IWelcomeMessage>(TIMEOUT, "Connection Timeout"),
       ]);
 
-      if (!welcome.saveOwnership) {
+      if (!isSaveOwner(welcome.platformInfo, welcome.user)) {
          routeTo(CrossPlatformSavePage, {});
          return;
       }

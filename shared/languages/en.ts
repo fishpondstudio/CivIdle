@@ -1081,6 +1081,7 @@ export const EN = {
    SatoshiNakamoto: "Satoshi Nakamoto",
    Saturnalia: "Saturnalia: Alps no longer increases Consumption Multiplier",
    SaveAndExit: "Save And Exit",
+   CheckInAndExit: "Check In And Exit",
    School: "School",
    Science: "Science",
    ScienceFromBusyWorkers: "Science From Busy Workers",
@@ -1464,7 +1465,8 @@ export const EN = {
    CrossPlatformSaveStatusCheckedOut: "Checked Out on %{platform}",
    CrossPlatformSaveStatusCheckedOutTooltip: "Your cross platform save has been checked out on another platform, you have to check in on that platform before you can check out on this platform",
    CrossPlatformSaveLastCheckIn: "Last Check In",
-   CheckOutCloudSave: "Check Out",
-   CheckInCloudSave: "Check In",
+   CheckOutCloudSave: "Check Out Save",
+   CheckInCloudSave: "Check In Save",
    CloudSaveRefresh: "Refresh",
+   CloudSaveReturnToGame: "Return To Game",
 };

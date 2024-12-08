@@ -1,25 +1,19 @@
-import { useEffect, useState } from "react";
 import { getPlatform } from "../../../server/src/DatabaseHelper";
-import { Platform, type ICrossPlatformResult } from "../../../shared/utilities/Database";
+import { Platform } from "../../../shared/utilities/Database";
+import { isNullOrUndefined } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import "../../css/CrossPlatformSavePage.css";
 import { compressSave, writeBytes } from "../Global";
-import { client, useUser } from "../rpc/RPCClient";
+import { client, usePlatformInfo, useUser } from "../rpc/RPCClient";
 import { playClick, playError, playSuccess } from "../visuals/Sound";
 import { hideModal, showModal, showToast } from "./GlobalModal";
 import { RenderHTML } from "./RenderHTMLComponent";
 import { TextWithHelp } from "./TextWithHelpComponent";
 
 export function CrossPlatformSavePage(): React.ReactNode {
-   const [result, setResult] = useState<ICrossPlatformResult>();
+   const info = usePlatformInfo();
    const user = useUser();
-
-   useEffect(() => {
-      client.getCrossPlatformSave().then((result) => {
-         setResult(result);
-      });
-   }, []);
-
+   const isConnected = !isNullOrUndefined(info?.connectedUserId);
    return (
       <div className="cloud-save-page">
          <div className="window">
@@ -29,18 +23,18 @@ export function CrossPlatformSavePage(): React.ReactNode {
             <div className="window-body">
                <fieldset>
                   <legend>{t(L.CrossPlatformAccount)}</legend>
-                  <div className="row mb5">
+                  <div className="row mv5">
                      <div className="f1">{t(L.CurrentPlatform)}</div>
-                     <div className="text-strong">{getPlatformName(result?.currentPlatform)}</div>
+                     <div className="text-strong">{getPlatformName(getPlatform(info?.originalUserId))}</div>
                   </div>
-                  <div className="row">
+                  <div className="row mv5">
                      <div className="f1">{t(L.OtherPlatform)}</div>
-                     <div className="text-strong">{getPlatformName(result?.otherPlatform)}</div>
+                     <div className="text-strong">{getPlatformName(getPlatform(info?.connectedUserId))}</div>
                   </div>
-                  {result && !result.connected ? (
+                  {isConnected ? null : (
                      <>
                         <div className="separator"></div>
-                        <div className="row mb5">
+                        <div className="row mv5">
                            <div className="f1">{t(L.PlayerHandle)}</div>
                            <div className="text-strong">{user?.handle}</div>
                         </div>
@@ -76,85 +70,98 @@ export function CrossPlatformSavePage(): React.ReactNode {
                            </button>
                         </div>
                      </>
-                  ) : null}
+                  )}
                </fieldset>
                <fieldset>
                   <legend>{t(L.CrossPlatformSave)}</legend>
-                  <div className="row mb5">
+                  <div className="row mv5">
                      <div className="f1">{t(L.CrossPlatformSaveStatus)}</div>
                      <div className="text-strong">
-                        {result?.connected ? (
-                           result?.saveOwner ? (
+                        {isConnected ? (
+                           user?.saveOwner ? (
                               <TextWithHelp
                                  content={
-                                    result.saveOwner === result.originalUserId
+                                    user.saveOwner === info.originalUserId
                                        ? null
                                        : t(L.CrossPlatformSaveStatusCheckedOutTooltip)
                                  }
+                                 className="text-red"
                               >
                                  {t(L.CrossPlatformSaveStatusCheckedOut, {
-                                    platform: getPlatformName(getPlatform(result?.saveOwner)),
+                                    platform: getPlatformName(getPlatform(user?.saveOwner)),
                                  })}
                               </TextWithHelp>
                            ) : (
-                              t(L.CrossPlatformSaveStatusCheckedIn)
+                              <span className="text-green">{t(L.CrossPlatformSaveStatusCheckedIn)}</span>
                            )
                         ) : null}
                      </div>
                   </div>
-                  {result && result.lastCheckInAt > 0 ? (
-                     <div className="row mb5">
+                  {(user?.lastCheckInAt ?? 0) > 0 ? (
+                     <div className="row mv5">
                         <div className="text-strong f1">{t(L.CrossPlatformSaveLastCheckIn)}</div>
-                        <div>{new Date(result?.lastCheckInAt).toLocaleString()}</div>
+                        <div>{new Date(user?.lastCheckInAt ?? 0).toLocaleString()}</div>
                      </div>
                   ) : null}
-                  <div className="row mt10">
+               </fieldset>
+               <div className="row">
+                  <button
+                     className="f1"
+                     onClick={() => {
+                        window.location.reload();
+                     }}
+                  >
+                     {t(L.CloudSaveRefresh)}
+                  </button>
+                  <div className="mr5"></div>
+                  <button
+                     disabled={isConnected && user?.saveOwner !== info.originalUserId}
+                     style={{ flex: "2" }}
+                     onClick={() => {
+                        window.location.href = "/";
+                     }}
+                  >
+                     {t(L.CloudSaveReturnToGame)}
+                  </button>
+                  <div className="mr5"></div>
+                  {user && info && user.saveOwner === info.originalUserId ? (
                      <button
-                        className="w100"
-                        onClick={() => {
-                           window.location.reload();
+                        className="text-strong"
+                        style={{ flex: "2" }}
+                        onClick={async () => {
+                           try {
+                              await client.checkInSave(await compressSave());
+                              window.location.href = "/";
+                           } catch (error) {
+                              playError();
+                              showToast(String(error));
+                           }
                         }}
                      >
-                        {t(L.CloudSaveRefresh)}
+                        {t(L.CheckInCloudSave)}
                      </button>
-                     <div className="mr10"></div>
-                     {result && result.saveOwner === result.originalUserId ? (
-                        <button
-                           className="text-strong w100"
-                           onClick={async () => {
-                              try {
-                                 await client.checkInSave(await compressSave());
-                                 window.location.search = "";
-                              } catch (error) {
-                                 playError();
-                                 showToast(String(error));
+                  ) : (
+                     <button
+                        disabled={!user || !info || !isNullOrUndefined(user.saveOwner) || !isConnected}
+                        className="text-strong f1"
+                        style={{ flex: "2" }}
+                        onClick={async () => {
+                           try {
+                              const buffer = await client.checkOutSave();
+                              if (buffer.length > 0) {
+                                 writeBytes(buffer);
                               }
-                           }}
-                        >
-                           {t(L.CheckInCloudSave)}
-                        </button>
-                     ) : (
-                        <button
-                           disabled={!result || !!result.saveOwner || !result.connected}
-                           className="text-strong w100"
-                           onClick={async () => {
-                              try {
-                                 const buffer = await client.checkOutSave();
-                                 if (buffer.length > 0) {
-                                    writeBytes(buffer);
-                                 }
-                                 window.location.search = "";
-                              } catch (error) {
-                                 playError();
-                                 showToast(String(error));
-                              }
-                           }}
-                        >
-                           {t(L.CheckOutCloudSave)}
-                        </button>
-                     )}
-                  </div>
-               </fieldset>
+                              window.location.href = "/";
+                           } catch (error) {
+                              playError();
+                              showToast(String(error));
+                           }
+                        }}
+                     >
+                        {t(L.CheckOutCloudSave)}
+                     </button>
+                  )}
+               </div>
             </div>
          </div>
       </div>

@@ -3,10 +3,11 @@ import type { PropsWithChildren } from "react";
 import { useEffect, useRef, useState } from "react";
 import { DISCORD_URL } from "../../../shared/logic/Constants";
 import { Tick } from "../../../shared/logic/TickLogic";
-import { sizeOf } from "../../../shared/utilities/Helper";
+import { isSaveOwner } from "../../../shared/utilities/DatabaseShared";
+import { isNullOrUndefined, sizeOf } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
-import { saveGame } from "../Global";
-import { useUser } from "../rpc/RPCClient";
+import { compressSave, saveGame } from "../Global";
+import { client, usePlatformInfo, useUser } from "../rpc/RPCClient";
 import { SteamClient, isSteam } from "../rpc/SteamClient";
 import { PlayerMapScene } from "../scenes/PlayerMapScene";
 import { TechTreeScene } from "../scenes/TechTreeScene";
@@ -62,6 +63,7 @@ export function MenuComponent(): React.ReactNode {
    const [active, setActive] = useState<MenuItemOptions>(null);
    const buttonRef = useRef(null);
    const user = useUser();
+   const platformInfo = usePlatformInfo();
    useEffect(() => {
       function onPointerDown(e: PointerEvent) {
          setActive(null);
@@ -270,6 +272,26 @@ export function MenuComponent(): React.ReactNode {
                                  playError();
                                  showToast(String(e));
                               });
+                        }}
+                     >
+                        <MenuItem check={false}>{t(L.SaveAndExit)}</MenuItem>
+                     </div>
+                  ) : null}
+                  {isSteam() &&
+                  user &&
+                  !isNullOrUndefined(platformInfo?.connectedUserId) &&
+                  isSaveOwner(platformInfo, user) ? (
+                     <div
+                        className="menu-popover-item"
+                        onPointerDown={async () => {
+                           try {
+                              await saveGame();
+                              await client.checkInSave(await compressSave());
+                              SteamClient.quit();
+                           } catch (error) {
+                              playError();
+                              showToast(String(error));
+                           }
                         }}
                      >
                         <MenuItem check={false}>{t(L.SaveAndExit)}</MenuItem>

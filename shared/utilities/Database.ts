@@ -50,7 +50,7 @@ export interface IWelcomeMessage extends IMessage {
    offlineTime: number;
    lastGameTick: number;
    now: number;
-   saveOwnership: boolean;
+   platformInfo: IPlatformInfo;
 }
 
 export interface ITrade extends IAddTradeRequest {
@@ -347,11 +347,8 @@ export enum ServerWSErrorCode {
    Background = 4000,
 }
 
-export interface ICrossPlatformResult {
-   currentPlatform: Platform;
-   otherPlatform: Platform;
-   saveOwner: string | undefined;
+export interface IPlatformInfo {
+   userId: string;
    originalUserId: string;
-   connected: boolean;
-   lastCheckInAt: number;
+   connectedUserId: string | null;
 }
