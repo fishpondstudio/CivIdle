@@ -631,12 +631,14 @@ export function transportAndConsumeResources(
                const storage = Tick.current.specialBuildings.get("Headquarter")?.building.resources;
                if (storage) {
                   RequestFloater.emit({ xy, amount });
-                  result.push({ xy, resource: res, amount });
-                  // safeAdd(storage, res, amount);
+                  // result.push({ xy, resource: res, amount });
+                  safeAdd(storage, res, amount);
                   Tick.next.scienceProduced.set(xy, amount);
                }
             } else {
-               if (res === "Power") Tick.next.powerPlants.add(xy);
+               if (res === "Power") {
+                  Tick.next.powerPlants.add(xy);
+               }
                mapSafeAdd(Tick.next.workersAvailable, res, amount);
             }
          });
@@ -676,7 +678,9 @@ export function transportAndConsumeResources(
    useWorkers("Worker", worker.output, xy);
    deductResources(building.resources, input);
    forEach(output, (res, v) => {
-      if (res === "Power") Tick.next.powerPlants.add(xy);
+      if (res === "Power") {
+         Tick.next.powerPlants.add(xy);
+      }
       if (isTransportable(res)) {
          result.push({ xy, resource: res, amount: v });
          // safeAdd(building.resources, res, v);
@@ -686,8 +690,8 @@ export function transportAndConsumeResources(
       if (res === "Science") {
          const storage = Tick.current.specialBuildings.get("Headquarter")?.building.resources;
          if (storage) {
-            result.push({ xy, resource: res, amount: v });
-            // safeAdd(storage, res, v);
+            // result.push({ xy, resource: res, amount: v });
+            safeAdd(storage, res, v);
             Tick.next.scienceProduced.set(xy, v);
             RequestFloater.emit({ xy, amount: v });
          }
