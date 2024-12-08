@@ -1469,4 +1469,5 @@ export const EN = {
    CheckInCloudSave: "Check In Save",
    CloudSaveRefresh: "Refresh",
    CloudSaveReturnToGame: "Return To Game",
+   HallOfFame: "Hall Of Fame"
 };

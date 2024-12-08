@@ -19,6 +19,7 @@ import { playError } from "../visuals/Sound";
 import { AboutModal } from "./AboutModal";
 import { GameplayOptionPage } from "./GameplayOptionPage";
 import { showModal, showToast } from "./GlobalModal";
+import { HallOfFameModal } from "./HallOfFameModal";
 import { PatchNotesPage } from "./PatchNotesPage";
 import { ShortcutPage } from "./ShortcutPage";
 import { ThemePage } from "./ThemePage";
@@ -135,6 +136,15 @@ export function MenuComponent(): React.ReactNode {
                         </MenuItem>
                      </div>
                   )}
+                  <div
+                     className="menu-popover-item"
+                     onPointerDown={(e) => {
+                        showModal(<HallOfFameModal />);
+                        setActive(null);
+                     }}
+                  >
+                     <MenuItem check={false}>{t(L.HallOfFame)}</MenuItem>
+                  </div>
                </div>
             </div>
             <div

@@ -26,7 +26,7 @@ export function HagiaSophiaBuildingBody({ gameState, xy }: IBuildingComponentPro
             <div className="text-small text-desc" style={{ textTransform: "uppercase" }}>
                {t(L.SupporterThankYou)}
             </div>
-            <div style={{ fontFamily: Fonts.Platypi, fontSize: 18, margin: "10px 0" }}>
+            <div style={{ fontFamily: Fonts.OldTypefaces, fontSize: 22, margin: "10px 0" }}>
                {supporters.join(", ")}
             </div>
          </fieldset>

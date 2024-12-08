@@ -215,7 +215,9 @@ export function getSortedTiles(gs: GameState): [Tile, IBuildingData][] {
       if (diff !== 0) {
          return diff;
       }
-      return (Config.BuildingTier[buildingA.type] ?? 0) - (Config.BuildingTier[buildingB.type] ?? 0);
+      // Low tiers have higher priority
+      const tier = (Config.BuildingTier[buildingA.type] ?? 0) - (Config.BuildingTier[buildingB.type] ?? 0);
+      return tier;
    });
 }
 
