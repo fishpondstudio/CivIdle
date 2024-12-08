@@ -118,7 +118,7 @@ export function CrossPlatformSavePage(): React.ReactNode {
                      disabled={isConnected && user?.saveOwner !== info.originalUserId}
                      style={{ flex: "2" }}
                      onClick={() => {
-                        window.location.href = "/";
+                        window.location.search = "";
                      }}
                   >
                      {t(L.CloudSaveReturnToGame)}
@@ -131,7 +131,7 @@ export function CrossPlatformSavePage(): React.ReactNode {
                         onClick={async () => {
                            try {
                               await client.checkInSave(await compressSave());
-                              window.location.href = "/";
+                              window.location.search = "";
                            } catch (error) {
                               playError();
                               showToast(String(error));
@@ -151,7 +151,7 @@ export function CrossPlatformSavePage(): React.ReactNode {
                               if (buffer.length > 0) {
                                  writeBytes(buffer);
                               }
-                              window.location.href = "/";
+                              window.location.search = "";
                            } catch (error) {
                               playError();
                               showToast(String(error));
