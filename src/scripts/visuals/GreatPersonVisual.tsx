@@ -3,7 +3,9 @@ import { useEffect, useRef } from "react";
 import { GreatPersonType, type GreatPerson } from "../../../shared/definitions/GreatPersonDefinitions";
 import { Config } from "../../../shared/logic/Config";
 import { containsNonASCII, numberToRoman } from "../../../shared/utilities/Helper";
+import { getBuildNumber } from "../logic/Version";
 import { getTexture } from "../logic/VisualLogic";
+import { idbGet, idbSet, Store } from "../utilities/BrowserStorage";
 import type { ISceneContext } from "../utilities/SceneManager";
 import { Singleton } from "../utilities/Singleton";
 import { Fonts } from "./Fonts";
@@ -95,12 +97,17 @@ export function greatPersonSprite(greatPerson: GreatPerson, context: ISceneConte
    return container;
 }
 
-const greatPersonImageCache: Map<GreatPerson, Blob> = new Map();
+const cacheStore = new Store("cividle-great-person", "keyval");
+
+interface IGreatPersonImage {
+   build: number;
+   image: Blob;
+}
 
 async function greatPersonImage(greatPerson: GreatPerson, context: ISceneContext): Promise<Blob> {
-   const cache = greatPersonImageCache.get(greatPerson);
-   if (cache) {
-      return cache;
+   const cache = await idbGet<IGreatPersonImage>(greatPerson, cacheStore);
+   if (cache?.build === getBuildNumber()) {
+      return cache.image;
    }
    const canvas = context.app.renderer.extract.canvas(
       greatPersonSprite(greatPerson, context),
@@ -116,7 +123,7 @@ async function greatPersonImage(greatPerson: GreatPerson, context: ISceneContext
 
    canvas.toBlob((blob) => {
       if (blob) {
-         greatPersonImageCache.set(greatPerson, blob);
+         idbSet<IGreatPersonImage>(greatPerson, { image: blob, build: getBuildNumber() }, cacheStore);
          resolve(blob);
       } else {
          reject(`Failed to generate image for ${greatPerson}`);
