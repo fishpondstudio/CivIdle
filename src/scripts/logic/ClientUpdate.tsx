@@ -25,9 +25,10 @@ import {
    getSortedTiles,
    tickPower,
    tickPrice,
-   tickTile,
    tickTransports,
    tickUnlockable,
+   transportAndConsumeResources,
+   type IProduceResource,
 } from "../../../shared/logic/Update";
 import { AccountLevel } from "../../../shared/utilities/Database";
 import { clamp, forEach, safeAdd, type Tile } from "../../../shared/utilities/Helper";
@@ -80,7 +81,9 @@ export function tickEveryFrame(gs: GameState, dt: number) {
    const targetProgress = Math.ceil(timeSinceLastTick * tickTileQueueSize * Singleton().ticker.speedUp);
    const currentProgress = tickTileQueueSize - tickTileQueue.length;
    const toProcess = clamp(targetProgress - currentProgress, 0, tickTileQueue.length);
-   tickTileQueue.splice(0, toProcess).forEach((tile) => tickTile(tile, gs, false));
+   tickTileQueue
+      .splice(0, toProcess)
+      .forEach((tile) => transportAndConsumeResources(tile, resourceProduced, gs, false));
 }
 
 const heartbeatFreq = import.meta.env.DEV ? 10 : 60;
@@ -88,6 +91,7 @@ const saveFreq = isSteam() ? 60 : 10;
 
 let tickTileQueue: Tile[] = [];
 let tickTileQueueSize = 0;
+const resourceProduced: IProduceResource[] = [];
 
 let currentSessionTick = 0;
 export function tickEverySecond(gs: GameState, offline: boolean) {
@@ -98,7 +102,7 @@ export function tickEverySecond(gs: GameState, offline: boolean) {
    timeSinceLastTick = 0;
 
    if (!offline) {
-      tickTileQueue.forEach((tile) => tickTile(tile, gs, false));
+      tickTileQueue.forEach((tile) => transportAndConsumeResources(tile, resourceProduced, gs, false));
       postTickTiles(gs, false);
    }
 
@@ -151,7 +155,7 @@ export function tickEverySecond(gs: GameState, offline: boolean) {
 
    if (offline) {
       tiles.forEach(function forEachTickTile([tile, _building]) {
-         tickTile(tile, gs, offline);
+         transportAndConsumeResources(tile, resourceProduced, gs, offline);
       });
       postTickTiles(gs, offline);
    } else {
@@ -184,8 +188,8 @@ let hasShownAccountRankUpModal = false;
 let eligibleRank = AccountLevel.Tribune;
 
 function postTickTiles(gs: GameState, offline: boolean) {
+   produceResources(gs);
    tickPower(gs);
-
    Tick.next.happiness = calculateHappiness(gs);
    const { scienceFromWorkers } = getScienceFromWorkers(gs);
    const hq = Tick.current.specialBuildings.get("Headquarter")?.building.resources;
@@ -272,3 +276,13 @@ RequestChooseGreatPerson.on(({ permanent }) => {
 
 export const useCurrentTick = makeObservableHook(CurrentTickChanged, () => Tick.current);
 export const useEligibleAccountRank = makeObservableHook(OnEligibleAccountRankUpdated, () => eligibleRank);
+
+function produceResources(gs: GameState) {
+   for (const a of resourceProduced) {
+      const storage = gs.tiles.get(a.xy)?.building?.resources;
+      if (storage) {
+         safeAdd(storage, a.resource, a.amount);
+      }
+   }
+   resourceProduced.length = 0;
+}

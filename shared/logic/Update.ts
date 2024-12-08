@@ -221,7 +221,12 @@ export function getSortedTiles(gs: GameState): [Tile, IBuildingData][] {
 
 const resourceSet = new Set<Resource>();
 
-export function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
+export function transportAndConsumeResources(
+   xy: Tile,
+   result: IProduceResource[],
+   gs: GameState,
+   offline: boolean,
+): void {
    const tile = gs.tiles.get(xy);
    if (!tile) {
       return;
@@ -549,7 +554,8 @@ export function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
             return;
          }
          safeAdd(building.resources, sellResource, -sellAmount);
-         safeAdd(building.resources, buyResource, buyAmount);
+         result.push({ xy, resource: buyResource, amount: buyAmount });
+         // safeAdd(building.resources, buyResource, buyAmount);
          totalBought += buyAmount;
       });
       if (totalBought > 0) {
@@ -623,7 +629,8 @@ export function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
                const storage = Tick.current.specialBuildings.get("Headquarter")?.building.resources;
                if (storage) {
                   RequestFloater.emit({ xy, amount });
-                  safeAdd(storage, res, amount);
+                  result.push({ xy, resource: res, amount });
+                  // safeAdd(storage, res, amount);
                   Tick.next.scienceProduced.set(xy, amount);
                }
             } else {
@@ -669,14 +676,16 @@ export function tickTile(xy: Tile, gs: GameState, offline: boolean): void {
    forEach(output, (res, v) => {
       if (res === "Power") Tick.next.powerPlants.add(xy);
       if (isTransportable(res)) {
-         safeAdd(building.resources, res, v);
+         result.push({ xy, resource: res, amount: v });
+         // safeAdd(building.resources, res, v);
          RequestFloater.emit({ xy, amount: v });
          return;
       }
       if (res === "Science") {
          const storage = Tick.current.specialBuildings.get("Headquarter")?.building.resources;
          if (storage) {
-            safeAdd(storage, res, v);
+            result.push({ xy, resource: res, amount: v });
+            // safeAdd(storage, res, v);
             Tick.next.scienceProduced.set(xy, v);
             RequestFloater.emit({ xy, amount: v });
          }
@@ -996,4 +1005,10 @@ export function tickPrice(gs: GameState) {
          }
       }
    });
+}
+
+export interface IProduceResource {
+   xy: Tile;
+   resource: Resource;
+   amount: number;
 }
