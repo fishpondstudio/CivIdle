@@ -73,6 +73,7 @@ export function MenuComponent(): React.ReactNode {
          window.removeEventListener("pointerdown", onPointerDown);
       };
    }, []);
+   const isTester = import.meta.env.DEV || isIOS() || isAndroid() || user?.handle === "FishPond";
    return (
       <>
          <div className="menus">
@@ -183,7 +184,7 @@ export function MenuComponent(): React.ReactNode {
                   >
                      <MenuItem check={false}>{t(L.Shortcut)}</MenuItem>
                   </div>
-                  {import.meta.env.DEV || isIOS() || isAndroid() || user?.handle === "FishPond" ? (
+                  {isTester ? (
                      <div
                         className="menu-popover-item"
                         onPointerDown={() => {
@@ -294,7 +295,7 @@ export function MenuComponent(): React.ReactNode {
                            }
                         }}
                      >
-                        <MenuItem check={false}>{t(L.SaveAndExit)}</MenuItem>
+                        <MenuItem check={false}>{t(L.CheckInAndExit)}</MenuItem>
                      </div>
                   ) : null}
                   <div
