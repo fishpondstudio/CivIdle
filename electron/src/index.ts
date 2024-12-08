@@ -29,6 +29,7 @@ const createWindow = async () => {
          minHeight: 640,
          minWidth: 1136,
          show: false,
+         backgroundColor: "#000000",
       });
 
       try {
