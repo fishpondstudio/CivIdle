@@ -146,7 +146,9 @@ export class GameOptions {
    userId: string | null = null;
    checksum: string | null = null;
    sidePanelWidth = 450;
+   sidePanelWidthMobile = 450;
    fontSizeScale = 1;
+   fontSizeScaleMobile = 1;
    cursor: CursorOption = "OldFashioned";
    version = SAVE_FILE_VERSION;
    showTransportArrow = true;

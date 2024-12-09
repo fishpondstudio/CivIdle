@@ -86,7 +86,8 @@ export function syncUITheme(gameOptions: GameOptions): void {
 }
 
 export function syncSidePanelWidth(app: Application, options: GameOptions): void {
-   document.documentElement.style.setProperty("--game-ui-width", `${options.sidePanelWidth / 10}rem`);
+   const width = isAndroid() || isIOS() ? options.sidePanelWidthMobile : options.sidePanelWidth;
+   document.documentElement.style.setProperty("--game-ui-width", `${width / 10}rem`);
    app.resize();
 }
 
@@ -95,7 +96,8 @@ export function syncFontSizeScale(app: Application, options: GameOptions): void 
       document.documentElement.style.setProperty("--base-font-size", "62.5%");
       return;
    }
-   document.documentElement.style.setProperty("--base-font-size", `${options.fontSizeScale * 62.5}%`);
+   const scale = isAndroid() || isIOS() ? options.fontSizeScaleMobile : options.fontSizeScale;
+   document.documentElement.style.setProperty("--base-font-size", `${scale * 62.5}%`);
    app.resize();
 }
 

@@ -61,6 +61,30 @@ export function ThemePage(): React.ReactNode {
                            <option value={1.5}>1.5x</option>
                         </select>
                      </div>
+                     <div className="inset-shallow row mt10 p5">
+                        <div className="f1">{t(L.MobileOverride)}</div>
+                        <select
+                           className="ml10"
+                           value={gameOptions.fontSizeScaleMobile}
+                           onChange={(e) => {
+                              gameOptions.fontSizeScaleMobile = safeParseFloat(e.target.value, 1);
+                              syncFontSizeScale(Singleton().sceneManager.getContext().app, gameOptions);
+                              notifyGameOptionsUpdate(gameOptions);
+                           }}
+                        >
+                           <option value={0.6}>0.6x</option>
+                           <option value={0.7}>0.7x</option>
+                           <option value={0.8}>0.8x</option>
+                           <option value={0.9}>0.9x</option>
+                           <option value={1}>1x</option>
+                           <option value={1.1}>1.1x</option>
+                           <option value={1.2}>1.2x</option>
+                           <option value={1.3}>1.3x</option>
+                           <option value={1.4}>1.4x</option>
+                           <option value={1.5}>1.5x</option>
+                        </select>
+                     </div>
+                     <div className="separator" />
                   </>
                ) : null}
                <div className="separator" />
@@ -74,6 +98,21 @@ export function ThemePage(): React.ReactNode {
                      value={gameOptions.sidePanelWidth}
                      onChange={(e) => {
                         gameOptions.sidePanelWidth = safeParseInt(e.target.value, 400);
+                        notifyGameOptionsUpdate(gameOptions);
+                     }}
+                  >
+                     <option value={400}>400px</option>
+                     <option value={450}>450px</option>
+                     <option value={500}>500px</option>
+                  </select>
+               </div>
+               <div className="inset-shallow row mt10 p5">
+                  <div className="f1">{t(L.MobileOverride)}</div>
+                  <select
+                     className="ml10"
+                     value={gameOptions.sidePanelWidthMobile}
+                     onChange={(e) => {
+                        gameOptions.sidePanelWidthMobile = safeParseInt(e.target.value, 400);
                         notifyGameOptionsUpdate(gameOptions);
                      }}
                   >

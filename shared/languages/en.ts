@@ -461,6 +461,7 @@ export const EN = {
    Flour: "Flour",
    FlourMill: "Flour Mill",
    FontSizeScale: "Font Size Scale",
+   MobileOverride: "Mobile Override",
    FontSizeScaleDescHTML: "Change the font size scale of the game's UI. <b>Setting the scale greater than 1x might break some UI layouts</b>",
    ForbiddenCity: "Forbidden City",
    ForbiddenCityDesc: "All Paper Makers, Writer's Guilds and Printing Houses get +1 Production, Worker Capacity and Storage Multiplier",
