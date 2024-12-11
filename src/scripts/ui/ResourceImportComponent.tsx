@@ -183,6 +183,29 @@ export function ResourceImportComponent({ gameState, xy }: IBuildingComponentPro
          </div>
          <div className="sep5"></div>
          <div className="row text-small">
+            <div className="f1"></div>
+            <div
+               className="text-link"
+               onClick={() => {
+                  forEach(building.resourceImports, (res, v) => {
+                     v.cap = 0;
+                  });
+                  const amount = storage.total;
+                  selected.forEach((res) => {
+                     if (building.resourceImports[res]) {
+                        building.resourceImports[res]!.cap = amount;
+                     } else {
+                        building.resourceImports[res] = { perCycle: 0, cap: amount };
+                     }
+                  });
+                  notifyGameStateUpdate();
+               }}
+            >
+               {t(L.SetMaxCapacity)}
+            </div>
+         </div>
+         <div className="sep5"></div>
+         <div className="row text-small">
             <div className="text-desc">{t(L.RedistributeAmongSelected)}</div>
             <div className="f1"></div>
             <div
