@@ -1126,6 +1126,8 @@ export const EN = {
    ShortcutScopePlayerMapPage: "Trade Map Page",
    ShortcutScopeTechPage: "Tech Page",
    ShortcutScopeUnexploredPage: "Unexplored Page",
+   ShortcutScopeGlobalCityPage: "City Page",
+   ShortcutTogglePetraWarp: "Toggle Petra Warp",
    ShortcutTechPageGoBackToCity: "Go Back To City",
    ShortcutTechPageUnlockTech: "Unlock Selected Tech",
    ShortcutUpgradePageCancelUpgrade: "Cancel Upgrade",
