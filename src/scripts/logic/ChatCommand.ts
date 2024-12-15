@@ -413,6 +413,21 @@ export async function handleChatCommand(command: string): Promise<void> {
          addSystemMessage("Cross Platform connections have been cleared");
          break;
       }
+      case "cloudsave": {
+         if (!parts[1]) {
+            throw new Error("Invalid command format");
+         }
+         try {
+            const save = await client.queryCloudSave(parts[1]);
+            const newHandle = await window.showSaveFilePicker({ suggestedName: parts[1] });
+            const writableStream = await newHandle.createWritable();
+            await writableStream.write(save);
+            await writableStream.close();
+         } catch (error) {
+            addSystemMessage(String(error));
+         }
+         break;
+      }
       default: {
          addSystemMessage("Command not found");
          break;
