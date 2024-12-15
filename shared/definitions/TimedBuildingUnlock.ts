@@ -7,5 +7,5 @@ interface ITimedBuildingUnlock {
 }
 
 export const TimedBuildingUnlock: Partial<Record<Building, ITimedBuildingUnlock>> = {
-   SantaClausVillage: { tech: "Theocracy", condition: (now) => now.getMonth() >= 10 },
+   SantaClausVillage: { tech: "Theocracy", condition: (now) => now.getMonth() === 11 },
 };

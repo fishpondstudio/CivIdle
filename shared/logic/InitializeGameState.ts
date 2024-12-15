@@ -94,7 +94,7 @@ export function initializeGameState(gameState: GameState, options: GameOptions) 
    const naturalWonders = keysOf(Config.City[gameState.city].naturalWonders);
 
    const now = getServerNow();
-   if (now && new Date(now).getMonth() >= 10) {
+   if (now && new Date(now).getMonth() === 11) {
       naturalWonders.push("Lapland");
       naturalWonders.push("RockefellerCenterChristmasTree");
    }

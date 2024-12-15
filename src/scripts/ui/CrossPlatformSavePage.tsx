@@ -148,9 +148,10 @@ export function CrossPlatformSavePage(): React.ReactNode {
                         onClick={async () => {
                            try {
                               const buffer = await client.checkOutSave();
-                              if (buffer.length > 0) {
-                                 writeBytes(buffer);
+                              if (buffer.length <= 0) {
+                                 throw new Error("Your cloud save is corrupted");
                               }
+                              writeBytes(buffer);
                               window.location.search = "";
                            } catch (error) {
                               playError();

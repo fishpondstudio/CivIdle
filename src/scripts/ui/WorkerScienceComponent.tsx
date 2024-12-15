@@ -29,13 +29,17 @@ export function WorkerScienceComponent({ gameState, xy }: IBuildingComponentProp
                <ul>
                   <li className="row">
                      <div className="f1">{t(L.SciencePerIdleWorker)}</div>
-                     <div>{sciencePerIdleWorker}</div>
+                     <div>
+                        <FormatNumber value={sciencePerIdleWorker} />
+                     </div>
                   </li>
                   <ul className="text-small">
                      {Tick.current.globalMultipliers.sciencePerIdleWorker.map((m) => (
                         <li key={m.source} className="row">
                            <div className="f1">{m.source}</div>
-                           <div>{m.value}</div>
+                           <div>
+                              <FormatNumber value={m.value} />
+                           </div>
                         </li>
                      ))}
                   </ul>
