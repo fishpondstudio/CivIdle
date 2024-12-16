@@ -134,6 +134,10 @@ export function CrossPlatformSavePage(): React.ReactNode {
                         className="text-strong"
                         style={{ flex: "2" }}
                         onClick={async () => {
+                           if (loadingState) {
+                              playError();
+                              return;
+                           }
                            try {
                               playClick();
                               loadingState = true;
@@ -143,7 +147,6 @@ export function CrossPlatformSavePage(): React.ReactNode {
                            } catch (error) {
                               playError();
                               showToast(String(error));
-                           } finally {
                               loadingState = false;
                               setLoading(loadingState);
                            }
@@ -159,6 +162,10 @@ export function CrossPlatformSavePage(): React.ReactNode {
                         className="text-strong f1"
                         style={{ flex: "2" }}
                         onClick={async () => {
+                           if (loadingState) {
+                              playError();
+                              return;
+                           }
                            try {
                               playClick();
                               loadingState = true;
@@ -175,7 +182,6 @@ export function CrossPlatformSavePage(): React.ReactNode {
                            } catch (error) {
                               playError();
                               showToast(String(error));
-                           } finally {
                               loadingState = false;
                               setLoading(loadingState);
                            }
