@@ -3,7 +3,7 @@ import { Platform } from "../../../shared/utilities/Database";
 import { isNullOrUndefined } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import "../../css/CrossPlatformSavePage.css";
-import { compressSave, writeBytes } from "../Global";
+import { compressSave, decompressSave, overwriteSaveGame, saveGame } from "../Global";
 import { client, usePlatformInfo, useUser } from "../rpc/RPCClient";
 import { playClick, playError, playSuccess } from "../visuals/Sound";
 import { hideModal, showModal, showToast } from "./GlobalModal";
@@ -147,11 +147,14 @@ export function CrossPlatformSavePage(): React.ReactNode {
                         style={{ flex: "2" }}
                         onClick={async () => {
                            try {
-                              const buffer = await client.checkOutSave();
+                              const buffer = await client.checkOutSaveStart();
                               if (buffer.length <= 0) {
                                  throw new Error("Your cloud save is corrupted");
                               }
-                              await writeBytes(buffer);
+                              const save = await decompressSave(buffer);
+                              overwriteSaveGame(save);
+                              await saveGame();
+                              await client.checkOutSaveEnd();
                               window.location.search = "";
                            } catch (error) {
                               playError();

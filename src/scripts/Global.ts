@@ -137,7 +137,13 @@ export async function saveGame(): Promise<void> {
 export async function doSaveGame(task: ISaveGameTask): Promise<void> {
    try {
       const compressed = await compressSave(savedGame);
-      await writeBytes(compressed);
+      if (isSteam()) {
+         await SteamClient.fileWriteBytes(SAVE_KEY, compressed);
+      } else if (isAndroid() || isIOS()) {
+         await Preferences.set({ key: SAVE_KEY, value: bytesToBase64(compressed) });
+      } else {
+         await idbSet(SAVE_KEY, compressed);
+      }
       task.resolve();
    } catch (error) {
       task.reject(error);
@@ -149,16 +155,6 @@ export async function doSaveGame(task: ISaveGameTask): Promise<void> {
       if (saveGameQueue.length > 0) {
          doSaveGame(saveGameQueue[0]);
       }
-   }
-}
-
-export async function writeBytes(bytes: Uint8Array): Promise<void> {
-   if (isSteam()) {
-      await SteamClient.fileWriteBytes(SAVE_KEY, bytes);
-   } else if (isAndroid() || isIOS()) {
-      await Preferences.set({ key: SAVE_KEY, value: bytesToBase64(bytes) });
-   } else {
-      await idbSet(SAVE_KEY, bytes);
    }
 }
 
