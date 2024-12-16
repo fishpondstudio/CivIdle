@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { getPlatform } from "../../../server/src/DatabaseHelper";
 import { Platform } from "../../../shared/utilities/Database";
 import { isNullOrUndefined } from "../../../shared/utilities/Helper";
@@ -10,10 +11,13 @@ import { hideModal, showModal, showToast } from "./GlobalModal";
 import { RenderHTML } from "./RenderHTMLComponent";
 import { TextWithHelp } from "./TextWithHelpComponent";
 
+let loadingState = false;
+
 export function CrossPlatformSavePage(): React.ReactNode {
    const info = usePlatformInfo();
    const user = useUser();
    const isConnected = !isNullOrUndefined(info?.connectedUserId);
+   const [loading, setLoading] = useState(loadingState);
    return (
       <div className="cloud-save-page">
          <div className="window">
@@ -126,15 +130,22 @@ export function CrossPlatformSavePage(): React.ReactNode {
                   <div className="mr5"></div>
                   {user && info && user.saveOwner === info.originalUserId ? (
                      <button
+                        disabled={loading}
                         className="text-strong"
                         style={{ flex: "2" }}
                         onClick={async () => {
                            try {
+                              playClick();
+                              loadingState = true;
+                              setLoading(loadingState);
                               await client.checkInSave(await compressSave());
                               window.location.search = "";
                            } catch (error) {
                               playError();
                               showToast(String(error));
+                           } finally {
+                              loadingState = false;
+                              setLoading(loadingState);
                            }
                         }}
                      >
@@ -142,11 +153,16 @@ export function CrossPlatformSavePage(): React.ReactNode {
                      </button>
                   ) : (
                      <button
-                        disabled={!user || !info || !isNullOrUndefined(user.saveOwner) || !isConnected}
+                        disabled={
+                           !user || !info || !isNullOrUndefined(user.saveOwner) || !isConnected || loading
+                        }
                         className="text-strong f1"
                         style={{ flex: "2" }}
                         onClick={async () => {
                            try {
+                              playClick();
+                              loadingState = true;
+                              setLoading(loadingState);
                               const buffer = await client.checkOutSaveStart();
                               if (buffer.length <= 0) {
                                  throw new Error("Your cloud save is corrupted");
@@ -159,6 +175,9 @@ export function CrossPlatformSavePage(): React.ReactNode {
                            } catch (error) {
                               playError();
                               showToast(String(error));
+                           } finally {
+                              loadingState = false;
+                              setLoading(loadingState);
                            }
                         }}
                      >
