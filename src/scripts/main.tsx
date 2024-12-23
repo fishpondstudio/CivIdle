@@ -34,7 +34,7 @@ if (!import.meta.env.DEV) {
       dsn: "https://dc918a4ab59f404688ab61ea803de8c0@bugreport.fishpondstudio.com/1",
       release: `Build.${build}`,
       autoSessionTracking: false,
-      integrations: [Sentry.captureConsoleIntegration()],
+      integrations: [Sentry.captureConsoleIntegration({ levels: ["warn", "error", "assert"] })],
    });
 }
 
