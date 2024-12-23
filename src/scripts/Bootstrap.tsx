@@ -13,7 +13,6 @@ import {
    serializeSaveLite,
 } from "../../shared/logic/GameStateLogic";
 import { initializeGameState } from "../../shared/logic/InitializeGameState";
-import type { IPetraBuildingData } from "../../shared/logic/Tile";
 import type { IWelcomeMessage } from "../../shared/utilities/Database";
 import { isSaveOwner } from "../../shared/utilities/DatabaseShared";
 import {
@@ -46,6 +45,7 @@ import { FirstTimePlayerModal } from "./ui/FirstTimePlayerModal";
 import { showModal, showToast } from "./ui/GlobalModal";
 import { LoadingPage, LoadingPageStage } from "./ui/LoadingPage";
 import { OfflineProductionModal } from "./ui/OfflineProductionModal";
+import { SaveCorruptedPage } from "./ui/SaveCorruptedPage";
 import { GameTicker } from "./utilities/GameTicker";
 import { SceneManager } from "./utilities/SceneManager";
 import { Singleton, initializeSingletons, type RouteTo } from "./utilities/Singleton";
@@ -65,6 +65,11 @@ export async function startGame(
    let isNewPlayer = false;
    const data = await loadGame();
    if (data) {
+      if (!findSpecialBuilding("Headquarter", data.current)) {
+         playError();
+         routeTo(SaveCorruptedPage, {});
+         return;
+      }
       if (!isGameDataCompatible(data)) {
          playError();
          routeTo(ErrorPage, {
@@ -83,7 +88,6 @@ export async function startGame(
    } else {
       isNewPlayer = true;
    }
-
    // ========== Game data is loaded ==========
    routeTo(LoadingPage, { stage: LoadingPageStage.CheckSave });
    const gameState = getGameState();
@@ -127,12 +131,8 @@ export async function startGame(
 
       const actualOfflineTime = welcome.offlineTime;
 
-      const petra = findSpecialBuilding("Petra", gameState);
-      const maxOfflineTime =
-         ((petra?.building as IPetraBuildingData | undefined)?.offlineProductionPercent ?? 1) *
-         MAX_OFFLINE_PRODUCTION_SEC;
+      const maxOfflineTime = (options.offlineProductionPercent ?? 0) * MAX_OFFLINE_PRODUCTION_SEC;
       const offlineTime = clamp(actualOfflineTime, 0, maxOfflineTime);
-
       routeTo(LoadingPage, { stage: LoadingPageStage.OfflineProduction });
       if (actualOfflineTime >= 60) {
          const before = structuredClone(gameState);
@@ -154,6 +154,7 @@ export async function startGame(
          showModal(<OfflineProductionModal before={before} after={after} time={offlineTime} />);
       }
    } catch (error) {
+      console.error(error);
       playError();
       showToast(String(error));
    }

@@ -1,10 +1,11 @@
 import type { GreatPerson } from "../../shared/definitions/GreatPersonDefinitions";
+import { findSpecialBuilding } from "../../shared/logic/BuildingLogic";
 import { Config } from "../../shared/logic/Config";
 import type { SavedGame } from "../../shared/logic/GameState";
 import { getGrid } from "../../shared/logic/IntraTickCache";
 import { ShortcutActions } from "../../shared/logic/Shortcut";
 import { BuildingInputMode, ResourceImportOptions, makeBuilding } from "../../shared/logic/Tile";
-import { forEach, isNullOrUndefined, pointToTile, tileToPoint } from "../../shared/utilities/Helper";
+import { forEach, isNullOrUndefined, pointToTile, safeAdd, tileToPoint } from "../../shared/utilities/Helper";
 import { getConstructionPriority, getProductionPriority } from "./Global";
 
 export function migrateSavedGame(save: SavedGame) {
@@ -41,6 +42,23 @@ export function migrateSavedGame(save: SavedGame) {
          // @ts-expect-error
          if (tile.building.status === "paused") {
             tile.building.status = "building";
+         }
+         if (tile.building.type === "Petra") {
+            if ("speedUp" in tile.building) {
+               save.current.speedUp = tile.building.speedUp as number;
+               delete tile.building.speedUp;
+            }
+            if ("offlineProductionPercent" in tile.building) {
+               save.options.offlineProductionPercent = tile.building.offlineProductionPercent as number;
+               delete tile.building.offlineProductionPercent;
+            }
+            if (Number.isFinite(tile.building.resources.Warp)) {
+               const hq = findSpecialBuilding("Headquarter", save.current);
+               if (hq) {
+                  safeAdd(hq.building.resources, "Warp", tile.building.resources.Warp ?? 0);
+               }
+               delete tile.building.resources.Warp;
+            }
          }
          // @ts-expect-error
          if (tile.building.disabledInput) {

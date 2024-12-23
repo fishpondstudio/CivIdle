@@ -1,11 +1,12 @@
 import Tippy from "@tippyjs/react";
 import { Config } from "../../../shared/logic/Config";
+import { MAX_OFFLINE_PRODUCTION_SEC } from "../../../shared/logic/Constants";
 import {
    ExtraTileInfoTypes,
    getTranslatedPercentage,
    type ExtraTileInfoType,
 } from "../../../shared/logic/GameState";
-import { notifyGameOptionsUpdate } from "../../../shared/logic/GameStateLogic";
+import { notifyGameOptionsUpdate, notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
 import {
    PRIORITY_MAX,
    PRIORITY_MIN,
@@ -15,7 +16,14 @@ import {
    STOCKPILE_MAX_MIN,
 } from "../../../shared/logic/Tile";
 import { clearTransportSourceCache } from "../../../shared/logic/Update";
-import { clamp, formatPercent, keysOf, safeParseInt, sizeOf } from "../../../shared/utilities/Helper";
+import {
+   clamp,
+   formatHM,
+   formatPercent,
+   keysOf,
+   safeParseInt,
+   sizeOf,
+} from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import { useGameOptions, useGameState } from "../Global";
 import { jsxMapOf } from "../utilities/Helper";
@@ -26,6 +34,7 @@ import { LanguageSelect } from "./LanguageSelectComponent";
 import { MenuComponent } from "./MenuComponent";
 import { RenderHTML } from "./RenderHTMLComponent";
 import { TextWithHelp } from "./TextWithHelpComponent";
+import { WarningComponent } from "./WarningComponent";
 
 export function GameplayOptionPage(): React.ReactNode {
    const options = useGameOptions();
@@ -154,6 +163,48 @@ export function GameplayOptionPage(): React.ReactNode {
                      notifyGameOptionsUpdate(options);
                   }}
                />
+            </fieldset>
+            <fieldset>
+               <legend>{t(L.OfflineProduction)}</legend>
+               <WarningComponent icon="info" className="mb10 text-small">
+                  <RenderHTML
+                     html={t(L.OfflineProductionTimeDescHTML, {
+                        time: formatHM(MAX_OFFLINE_PRODUCTION_SEC * 1000),
+                     })}
+                  />
+               </WarningComponent>
+               <input
+                  id="building-capacity"
+                  type="range"
+                  min="0"
+                  max="1"
+                  step="0.01"
+                  value={options.offlineProductionPercent}
+                  onChange={(e) => {
+                     options.offlineProductionPercent = Number.parseFloat(e.target.value);
+                     notifyGameStateUpdate();
+                  }}
+                  className="mh0"
+               />
+               <div className="sep5" />
+               <div className="row">
+                  <div>{t(L.TimeWarp)}</div>
+                  <div className="f1"></div>
+                  <div>{t(L.OfflineProduction)}</div>
+               </div>
+               <div className="separator"></div>
+               <div className="row mt5">
+                  <div className="f1">{t(L.OfflineProductionTime)}</div>
+                  <div className="text-strong">
+                     {formatHM(options.offlineProductionPercent * MAX_OFFLINE_PRODUCTION_SEC * 1000)}
+                  </div>
+               </div>
+               <div className="row mt5">
+                  <div className="f1">{t(L.TimeWarp)}</div>
+                  <div className="text-strong">
+                     {formatHM((1 - options.offlineProductionPercent) * MAX_OFFLINE_PRODUCTION_SEC * 1000)}
+                  </div>
+               </div>
             </fieldset>
             <fieldset>
                <legend>{t(L.ResourceBar)}</legend>

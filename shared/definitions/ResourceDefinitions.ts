@@ -139,6 +139,7 @@ export const NoStorage: PartialSet<Resource> = {
    Worker: true,
    Power: true,
    Science: true,
+   Warp: true,
    Festival: true,
 } as const;
 

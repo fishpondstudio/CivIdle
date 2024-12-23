@@ -121,11 +121,6 @@ export enum PetraOptions {
    TimeWarp = 1 << 0,
 }
 
-export interface IPetraBuildingData extends IBuildingData {
-   speedUp: number;
-   offlineProductionPercent: number;
-}
-
 export interface ITraditionBuildingData extends IBuildingData {
    tradition: Tradition | null;
 }
@@ -213,16 +208,6 @@ export function makeBuilding(data: Pick<IBuildingData, "type"> & Partial<IBuildi
          }
          if (isNullOrUndefined(warehouse.resourceImportOptions)) {
             warehouse.resourceImportOptions = ResourceImportOptions.None;
-         }
-         break;
-      }
-      case "Petra": {
-         const petra = building as IPetraBuildingData;
-         if (isNullOrUndefined(petra.speedUp)) {
-            petra.speedUp = 1;
-         }
-         if (isNullOrUndefined(petra.offlineProductionPercent)) {
-            petra.offlineProductionPercent = 1;
          }
          break;
       }

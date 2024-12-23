@@ -51,6 +51,7 @@ import { RenderHTML } from "./RenderHTMLComponent";
 import { SteamAchievementPage } from "./SteamAchievementPage";
 import { TextWithHelp } from "./TextWithHelpComponent";
 import { WarningComponent } from "./WarningComponent";
+import { WarpSpeedComponent } from "./WarpSpeedComponent";
 import { WonderPage } from "./WonderPage";
 import { WorkerScienceComponent } from "./WorkerScienceComponent";
 
@@ -169,6 +170,7 @@ export function HeadquarterBuildingBody({
                </li>
             </ul>
          </fieldset>
+         <WarpSpeedComponent />
          <fieldset>
             <legend>{techAge != null ? Config.TechAge[techAge].name() : "Unknown Age"}</legend>
             <ul className="tree-view">

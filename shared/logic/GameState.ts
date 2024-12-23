@@ -71,6 +71,7 @@ export class GameState {
    favoriteTiles: Set<Tile> = new Set();
    claimedGreatPeople = 0;
    valueTrackers = new Map<ValueToTrack, IValueTracker>();
+   speedUp = 1;
 }
 
 export type GreatPeopleChoice = GreatPerson[];
@@ -173,6 +174,7 @@ export class GameOptions {
    defaultBuildingLevel = 1;
    porcelainTowerMaxPickPerRoll = false;
    greedyTransport = false;
+   offlineProductionPercent = 0;
    // Should be wiped
    greatPeople: Partial<Record<GreatPerson, { level: number; amount: number }>> = {};
    ageWisdom: PartialTabulate<TechAge> = {};

@@ -103,12 +103,6 @@ export function syncFontSizeScale(app: Application, options: GameOptions): void 
 
 const SAVE_KEY = "CivIdle";
 
-let currentSavePromise: Promise<any> = Promise.resolve();
-
-function cleanUpSavePromise() {
-   currentSavePromise = Promise.resolve();
-}
-
 interface ISaveGameTask {
    resolve: () => void;
    reject: (err: any) => void;
@@ -344,4 +338,7 @@ if (import.meta.env.DEV) {
 
    // @ts-expect-error
    window.Config = Config;
+
+   // @ts-expect-error
+   window.hq = () => Tick.current.specialBuildings.get("Headquarter");
 }

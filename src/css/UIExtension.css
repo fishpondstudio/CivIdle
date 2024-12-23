@@ -109,7 +109,7 @@ summary::-webkit-details-marker {
    height: 100%;
 }
 
-.separator.has-title > div {
+.separator.has-title>div {
    background: silver;
    position: absolute;
    left: 10px;
@@ -459,26 +459,24 @@ a {
    border-radius: 0;
 }
 
-.meter > .fill {
+.meter>.fill {
    display: block;
    height: 100%;
    background-color: #00289e;
    position: relative;
    overflow: hidden;
-   background-image: linear-gradient(
-      90deg,
-      #00289e 40%,
-      #fff 0,
-      #fff 50%,
-      #00289e 0,
-      #00289e 90%,
-      #fff 0,
-      #fff
-   );
+   background-image: linear-gradient(90deg,
+         #00289e 40%,
+         #fff 0,
+         #fff 50%,
+         #00289e 0,
+         #00289e 90%,
+         #fff 0,
+         #fff);
    background-size: 24px 24px;
 }
 
-ul.tree-view > li:first-child {
+ul.tree-view>li:first-child {
    margin-top: 0;
 }
 
@@ -490,7 +488,7 @@ ul.tree-view > li:first-child {
    border-radius: 3px;
    font-family: "Pixelated MS Sans Serif", Arial;
    font-size: 1.1rem;
-   z-index: 2;
+   z-index: 300;
 }
 
 .warning-banner {

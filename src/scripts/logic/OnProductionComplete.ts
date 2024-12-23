@@ -4,8 +4,8 @@ import {
    forEachMultiplier,
    generateScienceFromFaith,
    getGreatWallRange,
+   getMaxWarpStorage,
    getScienceFromWorkers,
-   getStorageFor,
    getWorkingBuilding,
    getYellowCraneTowerRange,
    isBuildingWellStocked,
@@ -18,7 +18,6 @@ import {
    EXPLORER_SECONDS,
    FESTIVAL_CONVERSION_RATE,
    MAX_EXPLORER,
-   MAX_PETRA_SPEED_UP,
    MAX_TELEPORT,
    SCIENCE_VALUE,
    TELEPORT_SECONDS,
@@ -43,7 +42,6 @@ import { Tick } from "../../../shared/logic/TickLogic";
 import type {
    IGreatPeopleBuildingData,
    IIdeologyBuildingData,
-   IPetraBuildingData,
    IReligionBuildingData,
    ITileData,
    ITraditionBuildingData,
@@ -107,12 +105,15 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          } else {
             gs.festival = false;
          }
-         if (Date.now() <= 1728950400000) {
-            forEach(Config.BuildingTechAge, (b, age) => {
-               if (age === "IndustrialAge") {
-                  addMultiplier(b, { output: 1, unstable: true }, t(L.IndustryIdle10));
-               }
-            });
+
+         if (!offline) {
+            gs.speedUp = clamp(gs.speedUp, 1, getMaxWarpStorage(gs));
+            if (gs.speedUp > 1 && (building.resources.Warp ?? 0) > 0) {
+               --building.resources.Warp!;
+            } else {
+               gs.speedUp = 1;
+            }
+            Singleton().ticker.speedUp = gs.speedUp;
          }
          break;
       }
@@ -346,27 +347,6 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          addMultiplier("StoneQuarry", { output: 1, worker: 1, storage: 1 }, buildingName);
          addMultiplier("LoggingCamp", { output: 1, worker: 1, storage: 1 }, buildingName);
          addMultiplier("CopperMiningCamp", { output: 1, worker: 1, storage: 1 }, buildingName);
-         break;
-      }
-      case "Petra": {
-         if (offline) {
-            break;
-         }
-         const petra = building as IPetraBuildingData;
-         petra.speedUp = clamp(petra.speedUp, 1, MAX_PETRA_SPEED_UP);
-
-         if (petra.speedUp > 1 && (petra.resources.Warp ?? 0) > 0) {
-            --petra.resources.Warp!;
-         } else {
-            petra.speedUp = 1;
-         }
-         Singleton().ticker.speedUp = petra.speedUp;
-
-         for (const res of keysOf(petra.resources)) {
-            if (res !== "Warp") {
-               delete petra.resources[res];
-            }
-         }
          break;
       }
       case "OxfordUniversity": {
@@ -1336,10 +1316,11 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
             fujiTick = 0;
             lastFujiGeneratedAt = Date.now();
             const petra = Tick.current.specialBuildings.get("Petra");
-            if (petra) {
-               const { total, used } = getStorageFor(petra.tile, gs);
+            const hq = Tick.current.specialBuildings.get("Headquarter");
+            if (hq && petra) {
+               const total = getMaxWarpStorage(gs);
                const amount = gs.festival ? 40 : 20;
-               if (total - used >= amount) {
+               if (total - (hq.building.resources.Warp ?? 0) >= amount) {
                   safeAdd(petra.building.resources, "Warp", amount);
                }
             }
