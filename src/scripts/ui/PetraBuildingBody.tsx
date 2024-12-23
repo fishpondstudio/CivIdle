@@ -1,6 +1,7 @@
 import { getPetraBaseStorage } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
 import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
+import { Tick } from "../../../shared/logic/TickLogic";
 import { L, t } from "../../../shared/utilities/i18n";
 import { playError } from "../visuals/Sound";
 import { BuildingColorComponent } from "./BuildingColorComponent";
@@ -13,22 +14,26 @@ import { WarningComponent } from "./WarningComponent";
 import { WarpSpeedComponent } from "./WarpSpeedComponent";
 
 export function PetraBuildingBody({ gameState, xy }: IBuildingComponentProps): React.ReactNode {
-   const building = gameState.tiles.get(xy)?.building;
-   if (!building) {
+   const petra = gameState.tiles.get(xy)?.building;
+   if (!petra) {
       return null;
    }
-   const baseStorage = getPetraBaseStorage(building);
+   const hq = Tick.current.specialBuildings.get("Headquarter")?.building;
+   if (!hq) {
+      return null;
+   }
+   const baseStorage = getPetraBaseStorage(petra);
    return (
       <div className="window-body">
          <fieldset>
-            <legend className="text-strong">{t(L.LevelX, { level: building.level })}</legend>
+            <legend className="text-strong">{t(L.LevelX, { level: petra.level })}</legend>
             <button
-               disabled={(building.resources.Warp ?? 0) < baseStorage}
+               disabled={(hq.resources.Warp ?? 0) < baseStorage}
                className="row w100 jcc"
                onClick={() => {
-                  if (building.resources.Warp && building.resources.Warp >= baseStorage) {
-                     building.resources.Warp -= baseStorage;
-                     building.level++;
+                  if (hq.resources.Warp && hq.resources.Warp >= baseStorage) {
+                     hq.resources.Warp -= baseStorage;
+                     petra.level++;
                      notifyGameStateUpdate();
                   } else {
                      playError();
@@ -46,9 +51,7 @@ export function PetraBuildingBody({ gameState, xy }: IBuildingComponentProps): R
          </fieldset>
          <WarpSpeedComponent />
          <WarningComponent icon="info" className="text-small mb10">
-            <RenderHTML
-               html={t(L.BuildingNoMultiplier, { building: Config.Building[building.type].name() })}
-            />
+            <RenderHTML html={t(L.BuildingNoMultiplier, { building: Config.Building[petra.type].name() })} />
          </WarningComponent>
          <BuildingValueComponent gameState={gameState} xy={xy} />
          <BuildingWikipediaComponent gameState={gameState} xy={xy} />

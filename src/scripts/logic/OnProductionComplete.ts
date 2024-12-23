@@ -1321,7 +1321,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
                const total = getMaxWarpStorage(gs);
                const amount = gs.festival ? 40 : 20;
                if (total - (hq.building.resources.Warp ?? 0) >= amount) {
-                  safeAdd(petra.building.resources, "Warp", amount);
+                  safeAdd(hq.building.resources, "Warp", amount);
                }
             }
          } else {
