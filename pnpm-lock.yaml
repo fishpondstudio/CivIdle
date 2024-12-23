@@ -33,8 +33,8 @@ dependencies:
     specifier: ^5.2.0
     version: 5.2.2(@pixi/assets@7.4.2)(@pixi/core@7.4.2)
   '@sentry/browser':
-    specifier: ^7.52.1
-    version: 7.91.0
+    specifier: ^8.47.0
+    version: 8.47.0
   '@tippyjs/react':
     specifier: ^4.2.6
     version: 4.2.6(react-dom@18.2.0)(react@18.2.0)
@@ -1164,64 +1164,50 @@ packages:
       prettier: 2.8.8
     dev: true
 
-  /@sentry-internal/feedback@7.91.0:
-    resolution: {integrity: sha512-SJKTSaz68F5YIwF79EttBm915M2LnacgZMYRnRumyTmMKnebGhYQLwWbZdpaDvOa1U18dgRajDX8Qed/8A3tXw==}
-    engines: {node: '>=12'}
+  /@sentry-internal/browser-utils@8.47.0:
+    resolution: {integrity: sha512-vOXzYzHTKkahTLDzWWIA4EiVCQ+Gk+7xGWUlNcR2ZiEPBqYZVb5MjsUozAcc7syrSUy6WicyFjcomZ3rlCVQhg==}
+    engines: {node: '>=14.18'}
     dependencies:
-      '@sentry/core': 7.91.0
-      '@sentry/types': 7.91.0
-      '@sentry/utils': 7.91.0
+      '@sentry/core': 8.47.0
     dev: false
 
-  /@sentry-internal/tracing@7.91.0:
-    resolution: {integrity: sha512-JH5y6gs6BS0its7WF2DhySu7nkhPDfZcdpAXldxzIlJpqFkuwQKLU5nkYJpiIyZz1NHYYtW5aum2bV2oCOdDRA==}
-    engines: {node: '>=8'}
+  /@sentry-internal/feedback@8.47.0:
+    resolution: {integrity: sha512-IAiIemTQIalxAOYhUENs9bZ8pMNgJnX3uQSuY7v0gknEqClOGpGkG04X/cxCmtJUj1acZ9ShTGDxoh55a+ggAQ==}
+    engines: {node: '>=14.18'}
     dependencies:
-      '@sentry/core': 7.91.0
-      '@sentry/types': 7.91.0
-      '@sentry/utils': 7.91.0
+      '@sentry/core': 8.47.0
     dev: false
 
-  /@sentry/browser@7.91.0:
-    resolution: {integrity: sha512-lJv3x/xekzC/biiyAsVCioq2XnKNOZhI6jY3ZzLJZClYV8eKRi7D3KCsHRvMiCdGak1d/6sVp8F4NYY+YiWy1Q==}
-    engines: {node: '>=8'}
+  /@sentry-internal/replay-canvas@8.47.0:
+    resolution: {integrity: sha512-M4W9UGouEeELbGbP3QsXLDVtGiQSZoWJlKwqMWyqdQgZuLoKw0S33+60t6teLVMhuQZR0UI9VJTF5coiXysnnA==}
+    engines: {node: '>=14.18'}
     dependencies:
-      '@sentry-internal/feedback': 7.91.0
-      '@sentry-internal/tracing': 7.91.0
-      '@sentry/core': 7.91.0
-      '@sentry/replay': 7.91.0
-      '@sentry/types': 7.91.0
-      '@sentry/utils': 7.91.0
+      '@sentry-internal/replay': 8.47.0
+      '@sentry/core': 8.47.0
     dev: false
 
-  /@sentry/core@7.91.0:
-    resolution: {integrity: sha512-tu+gYq4JrTdrR+YSh5IVHF0fJi/Pi9y0HZ5H9HnYy+UMcXIotxf6hIEaC6ZKGeLWkGXffz2gKpQLe/g6vy/lPA==}
-    engines: {node: '>=8'}
+  /@sentry-internal/replay@8.47.0:
+    resolution: {integrity: sha512-G/S40ZBORj0HSMLw/uVC6YDEPN/dqVk901vf4VYfml686DEhJrZesfAfp5SydJumQ0NKZQrdtvny+BWnlI5H1w==}
+    engines: {node: '>=14.18'}
     dependencies:
-      '@sentry/types': 7.91.0
-      '@sentry/utils': 7.91.0
+      '@sentry-internal/browser-utils': 8.47.0
+      '@sentry/core': 8.47.0
     dev: false
 
-  /@sentry/replay@7.91.0:
-    resolution: {integrity: sha512-XwbesnLLNtaVXKtDoyBB96GxJuhGi9zy3a662Ba/McmumCnkXrMQYpQPh08U7MgkTyDRgjDwm7PXDhiKpcb03g==}
-    engines: {node: '>=12'}
+  /@sentry/browser@8.47.0:
+    resolution: {integrity: sha512-K6BzHisykmbFy/wORtGyfsAlw7ShevLALzu3ReZZZ18dVubO1bjSNjkZQU9MJD5Jcb9oLwkq89n3N9XIBfvdRA==}
+    engines: {node: '>=14.18'}
     dependencies:
-      '@sentry-internal/tracing': 7.91.0
-      '@sentry/core': 7.91.0
-      '@sentry/types': 7.91.0
-      '@sentry/utils': 7.91.0
+      '@sentry-internal/browser-utils': 8.47.0
+      '@sentry-internal/feedback': 8.47.0
+      '@sentry-internal/replay': 8.47.0
+      '@sentry-internal/replay-canvas': 8.47.0
+      '@sentry/core': 8.47.0
     dev: false
 
-  /@sentry/types@7.91.0:
-    resolution: {integrity: sha512-bcQnb7J3P3equbCUc+sPuHog2Y47yGD2sCkzmnZBjvBT0Z1B4f36fI/5WjyZhTjLSiOdg3F2otwvikbMjmBDew==}
-    engines: {node: '>=8'}
-    dev: false
-
-  /@sentry/utils@7.91.0:
-    resolution: {integrity: sha512-fvxjrEbk6T6Otu++Ax9ntlQ0sGRiwSC179w68aC3u26Wr30FAIRKqHTCCdc2jyWk7Gd9uWRT/cq+g8NG/8BfSg==}
-    engines: {node: '>=8'}
-    dependencies:
-      '@sentry/types': 7.91.0
+  /@sentry/core@8.47.0:
+    resolution: {integrity: sha512-iSEJZMe3DOcqBFZQAqgA3NB2lCWBc4Gv5x/SCri/TVg96wAlss4VrUunSI2Mp0J4jJ5nJcJ2ChqHSBAU48k3FA==}
+    engines: {node: '>=14.18'}
     dev: false
 
   /@swc/core-darwin-arm64@1.4.11:

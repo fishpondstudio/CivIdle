@@ -34,20 +34,8 @@ if (!import.meta.env.DEV) {
       dsn: "https://dc918a4ab59f404688ab61ea803de8c0@bugreport.fishpondstudio.com/1",
       release: `Build.${build}`,
       autoSessionTracking: false,
+      integrations: [Sentry.captureConsoleIntegration()],
    });
-
-   const consoleWarn = console.warn;
-   const consoleError = console.error;
-
-   console.warn = (...args) => {
-      consoleWarn.apply(this, args);
-      Sentry.captureMessage(args.map((a) => JSON.stringify(a)).join(" "), "warning");
-   };
-
-   console.error = (...args) => {
-      consoleError.apply(this, args);
-      Sentry.captureMessage(args.map((a) => JSON.stringify(a)).join(" "), "error");
-   };
 }
 
 const routeChanged = new TypedEvent<RouteChangeEvent>();

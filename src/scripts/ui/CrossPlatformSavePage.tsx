@@ -181,6 +181,7 @@ export function CrossPlatformSavePage(): React.ReactNode {
                               window.location.search = "";
                            } catch (error) {
                               playError();
+                              console.error(error);
                               showToast(String(error));
                               loadingState = false;
                               setLoading(loadingState);
