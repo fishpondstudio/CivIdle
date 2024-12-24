@@ -245,7 +245,7 @@ export function getStorageFor(xy: Tile, gs: GameState): IStorageResult {
       return NoStorage[k] ? prev : prev + v;
    };
    const building = gs.tiles.get(xy)?.building;
-   const used = reduceOf(building?.resources, accumulate, 0);
+   let used = reduceOf(building?.resources, accumulate, 0);
    let multiplier = totalMultiplierFor(xy, "storage", 1, true, gs);
 
    let base = 0;
@@ -264,7 +264,11 @@ export function getStorageFor(xy: Tile, gs: GameState): IStorageResult {
          break;
       }
       case "Petra": {
-         base = 0;
+         const hq = findSpecialBuilding("Headquarter", gs);
+         if (hq) {
+            base = getMaxWarpStorage(gs);
+            used = hq.building.resources.Warp ?? 0;
+         }
          multiplier = 1;
          break;
       }
@@ -644,7 +648,8 @@ export function getBuildingLevelLabel(b: IBuildingData): string {
       b.type === "MatrioshkaBrain" ||
       b.type === "LargeHadronCollider" ||
       b.type === "CologneCathedral" ||
-      b.type === "SantaClausVillage"
+      b.type === "SantaClausVillage" ||
+      b.type === "Petra"
    ) {
       return String(b.level);
    }
