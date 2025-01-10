@@ -1844,6 +1844,17 @@ export class BuildingDefinitions {
       wikipedia: "Rockefeller_Center_Christmas_Tree",
    };
 
+   YearOfTheSnake: IBuildingDefinition = {
+      name: () => t(L.YearOfTheSnake),
+      desc: () => t(L.YearOfTheSnakeDesc),
+      input: {},
+      output: {},
+      construction: { Opera: 500 },
+      max: 1,
+      special: BuildingSpecial.WorldWonder,
+      wikipedia: "Snake_(zodiac)",
+   };
+
    // ArcDeTriomphe: IBuildingDefinition = {
    //    name: () => t(L.ArcDeTriomphe),
    //    desc: () => t(L.ArcDeTriompheDesc),

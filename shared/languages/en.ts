@@ -1465,4 +1465,6 @@ export const EN = {
    Zoroaster: "Zoroaster",
    Zugspitze: "Zugspitze",
    ZugspitzeDesc: "For each unlocked age, get one point that can be used to provide one extra level to any Great Person that is born from this run",
+   YearOfTheSnake: "Year of the Snake",
+   YearOfTheSnakeDesc: "After completed, when entering a new age, instead of getting one great person of each unlocked age, get the same amount of great people in the current age. All buildings within 2-tile range get +1 Production Multiplier. This wonder can be upgraded and each additional upgrade provides +1 Production Multiplier to buidlings within 2-tile range. This wonder can only be constructed during the lunar new year period (1.20 ~ 2.10)"
 };

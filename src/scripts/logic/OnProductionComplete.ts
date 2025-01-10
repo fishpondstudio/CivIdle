@@ -1452,6 +1452,15 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          Tick.next.globalMultipliers.happiness.push({ value: multiplier * 3, source: buildingName });
          break;
       }
+      case "YearOfTheSnake": {
+         for (const point of grid.getRange(tileToPoint(xy), 2)) {
+            mapSafePush(Tick.next.tileMultipliers, pointToTile(point), {
+               output: building.level,
+               source: buildingName,
+            });
+         }
+         break;
+      }
       // case "ArcDeTriomphe": {
       //    forEach(Config.Building, (b, def) => {
       //       if (def.input.Culture || def.output.Culture) {

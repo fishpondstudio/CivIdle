@@ -11,6 +11,7 @@ import {
    tryDeductScience,
    unlockTech,
 } from "../../../shared/logic/TechLogic";
+import { Tick } from "../../../shared/logic/TickLogic";
 import { forEach } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import { useGameState } from "../Global";
@@ -50,9 +51,14 @@ export function TechPage({ id }: { id: Tech }): React.ReactNode {
          unlockTech(tech, true, gs);
          const newAge = getCurrentAge(gs);
          if (oldAge && newAge && oldAge !== newAge) {
+            const snake = Tick.current.specialBuildings.has("YearOfTheSnake");
             forEach(Config.TechAge, (age, def) => {
                if (def.idx <= Config.TechAge[newAge].idx) {
-                  const candidates = rollGreatPeopleThisRun(age, gs.city, getGreatPeopleChoiceCount(gs));
+                  const candidates = rollGreatPeopleThisRun(
+                     snake ? newAge : age,
+                     gs.city,
+                     getGreatPeopleChoiceCount(gs),
+                  );
                   if (candidates) {
                      gs.greatPeopleChoicesV2.push(candidates);
                   }
