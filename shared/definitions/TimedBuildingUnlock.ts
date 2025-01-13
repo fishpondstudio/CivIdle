@@ -12,7 +12,7 @@ export const TimedBuildingUnlock: Partial<Record<Building, ITimedBuildingUnlock>
       tech: "Theater",
       condition: (now) => {
          return (
-            (now.getMonth() === 0 && now.getDate() >= 10) || (now.getMonth() === 1 && now.getDate() <= 10)
+            (now.getMonth() === 0 && now.getDate() >= 20) || (now.getMonth() === 1 && now.getDate() <= 10)
          );
       },
    },
