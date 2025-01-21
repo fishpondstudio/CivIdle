@@ -1,4 +1,5 @@
 import { MAX_TECH_COLUMN, type Tech } from "../../../shared/definitions/TechDefinitions";
+import { findSpecialBuilding } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
 import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
 import { getGreatPeopleChoiceCount, rollGreatPeopleThisRun } from "../../../shared/logic/RebirthLogic";
@@ -11,7 +12,6 @@ import {
    tryDeductScience,
    unlockTech,
 } from "../../../shared/logic/TechLogic";
-import { Tick } from "../../../shared/logic/TickLogic";
 import { forEach } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import { useGameState } from "../Global";
@@ -51,7 +51,8 @@ export function TechPage({ id }: { id: Tech }): React.ReactNode {
          unlockTech(tech, true, gs);
          const newAge = getCurrentAge(gs);
          if (oldAge && newAge && oldAge !== newAge) {
-            const snake = Tick.current.specialBuildings.has("YearOfTheSnake");
+            const status = findSpecialBuilding("YearOfTheSnake", gs)?.building.status;
+            const snake = status === "completed" || status === "upgrading";
             forEach(Config.TechAge, (age, def) => {
                if (def.idx <= Config.TechAge[newAge].idx) {
                   const candidates = rollGreatPeopleThisRun(
