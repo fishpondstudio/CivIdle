@@ -6,6 +6,10 @@ interface PatchNote {
 
 export const PatchNotes: PatchNote[] = [
    {
+      version: "0.20.1",
+      content: [["Bugfix", "Fix a bug where Year of the Snake is not effective when being upgraded"]],
+   },
+   {
       version: "0.20.0",
       content: [],
       link: "https://store.steampowered.com/news/app/2181940/view/546723866324501220",
