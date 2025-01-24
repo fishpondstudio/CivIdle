@@ -10,6 +10,7 @@ import type { IBuildingComponentProps } from "./BuildingPage";
 import { BuildingValueComponent } from "./BuildingValueComponent";
 import { BuildingWikipediaComponent } from "./BuildingWikipediaComponent";
 import { ResourceAmountComponent } from "./ResourceAmountComponent";
+import { SpaceshipIdleComponent } from "./SpaceshipIdleComponent";
 
 export function UpgradableWonderBuildingBody({ gameState, xy }: IBuildingComponentProps): React.ReactNode {
    const building = gameState.tiles.get(xy)?.building;
@@ -18,6 +19,7 @@ export function UpgradableWonderBuildingBody({ gameState, xy }: IBuildingCompone
    }
    return (
       <div className="window-body">
+         <SpaceshipIdleComponent type={building.type} />
          <BuildingDescriptionComponent gameState={gameState} xy={xy} />
          <fieldset>
             <div className="row">

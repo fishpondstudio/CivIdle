@@ -1252,7 +1252,6 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
             value: 25 + 5 * (building.level - 1),
             source: buildingName,
          });
-         console.log("AldersonDisk", gs.tick);
          break;
       }
       case "DysonSphere": {
