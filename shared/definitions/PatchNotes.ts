@@ -6,6 +6,11 @@ interface PatchNote {
 
 export const PatchNotes: PatchNote[] = [
    {
+      version: "0.21.0",
+      content: [],
+      link: "https://github.com/fishpondstudio/CivIdle/issues/389",
+   },
+   {
       version: "0.20.1",
       content: [["Bugfix", "Fix a bug where Year of the Snake is not effective when being upgraded"]],
    },

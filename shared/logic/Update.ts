@@ -373,6 +373,12 @@ export function transportAndConsumeResources(
          });
       }
 
+      // This has to be here before the `if (completed)` block. Otherwise there will be a one tick flicker
+      // when upgrade completes:
+      if (building.status === "upgrading" && isWorldWonder(building.type)) {
+         OnBuildingProductionComplete.emit({ xy, offline });
+      }
+
       if (completed) {
          building.level++;
          forEach(cost, (res, amount) => {
@@ -387,10 +393,6 @@ export function transportAndConsumeResources(
          if (building.status === "upgrading" && building.level >= building.desiredLevel) {
             building.status = "completed";
          }
-      }
-
-      if (building.status === "upgrading" && isWorldWonder(building.type)) {
-         OnBuildingProductionComplete.emit({ xy, offline });
       }
 
       return;

@@ -27,7 +27,7 @@ export function UpgradableWonderBuildingBody({ gameState, xy }: IBuildingCompone
             <div className="separator" />
             {jsxMapOf(getBuildingCost({ type: building.type, level: building.level }), (res, amount) => {
                return (
-                  <div className="row">
+                  <div key={res} className="row">
                      <div className="f1 text-strong">{Config.Resource[res].name()}</div>
                      <div>
                         <ResourceAmountComponent
