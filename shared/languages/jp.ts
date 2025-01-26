@@ -10,7 +10,7 @@ export const JP = {
    AccountLevel: "Account Rank",
    AccountLevelAedile: "Aedile",
    AccountLevelConsul: "Consul",
-   AccountLevelMod: "Moderator",
+   AccountLevelMod: "モデレーター",
    AccountLevelPlayTime: "Active Online Playtime > %{requiredTime} (Your play time is %{actualTime})",
    AccountLevelPraetor: "Praetor",
    AccountLevelQuaestor: "Quaestor",
