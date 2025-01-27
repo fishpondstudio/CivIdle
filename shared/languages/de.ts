@@ -1457,6 +1457,9 @@ export const DE = {
    Xuanzang: "Xuanzang",
    YangtzeRiver: "Yangtze River",
    YangtzeRiverDesc: "Alle Gebäude, die Wasser verbrauchen, erhalten +1 Produktions-, Arbeitskraft- und Lagermultiplikator. Verdopple den Effekt von Zheng He (Große Person). Jede Stufe der Permanenten Kaiserin Wu Zetian (Große Person) verleiht allen Gebäuden +1 Speicher-Multiplikator.",
+   YearOfTheSnake: "Year of the Snake",
+   YearOfTheSnakeDesc:
+      "After completed, when entering a new age, instead of getting one great person of each unlocked age, get the same amount of great people in the current age. All buildings within 2-tile range get +1 Production Multiplier. This wonder can be upgraded and each additional upgrade provides +1 Production Multiplier to buildings within 2-tile range. This wonder can only be constructed during the lunar new year period (1.20 ~ 2.10)",
    YellowCraneTower: "Yellow Crane Tower",
    YellowCraneTowerDesc: "+1 Wahlmöglichkeit bei der Auswahl großer Leute. Alle Gebäude im Umkreis von 1 Kachel erhalten +1 Produktions-, Arbeitskraft- und Lagermultiplikator. Wenn es neben dem Jangtse-Fluss gebaut wird, erhöht sich die Reichweite auf 2 Kacheln.",
    YuriGagarin: "Yuri Gagarin",

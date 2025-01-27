@@ -1450,6 +1450,9 @@ export const CZ = {
    Xuanzang: "Xuanzang",
    YangtzeRiver: "Řeka Jang-c’-ťiang",
    YangtzeRiverDesc: "Všechny budovy, které spotřebovávají vodu, získají násobitel +1 k produkci, kapacitě pracovníků a skladování. Dvojnásobný účinek Zheng He (Velká osobnost). Každá úroveň stálé císařovny Wu Zetian (Velká osoba) přináší všem budovám násobitel +1 k násobiteli skladování.",
+   YearOfTheSnake: "Year of the Snake",
+   YearOfTheSnakeDesc:
+      "After completed, when entering a new age, instead of getting one great person of each unlocked age, get the same amount of great people in the current age. All buildings within 2-tile range get +1 Production Multiplier. This wonder can be upgraded and each additional upgrade provides +1 Production Multiplier to buildings within 2-tile range. This wonder can only be constructed during the lunar new year period (1.20 ~ 2.10)",
    YellowCraneTower: "Žlutá jeřábová věž",
    YellowCraneTowerDesc: "+1 volba při výběru skvělých lidí. Všechny budovy v dosahu 1 dlaždice získají +1 násobek produkce, kapacity pracovníků a skladů. Při stavbě vedle řeky Jang-c'-ťiang se dosah zvyšuje na 2 dlaždice.",
    YuriGagarin: "Yuri Gagarin",

@@ -1451,6 +1451,9 @@ export const DK = {
    Xuanzang: "Xuanzang",
    YangtzeRiver: "Yangtze-floden",
    YangtzeRiverDesc: "Alle bygninger, der forbruger vand, får +1 Produktion, Arbejdskapacitet og Lager Multiplikator. Fordoble effekten af Zheng He (Stor Person). Hver niveau af Permanent Kejserinde Wu Zetian (Stor Person) giver +1 Lager Multiplikator til alle bygninger",
+   YearOfTheSnake: "Year of the Snake",
+   YearOfTheSnakeDesc:
+      "After completed, when entering a new age, instead of getting one great person of each unlocked age, get the same amount of great people in the current age. All buildings within 2-tile range get +1 Production Multiplier. This wonder can be upgraded and each additional upgrade provides +1 Production Multiplier to buildings within 2-tile range. This wonder can only be constructed during the lunar new year period (1.20 ~ 2.10)",
    YellowCraneTower: "Gul Kran-Tårn",
    YellowCraneTowerDesc: "+1 valg, når du vælger store personer. Alle bygninger inden for 1 områderækkevidde får +1 Produktion, Arbejdskapacitet og Lager Multiplikator. Når det er konstrueret ved siden af Yangtze-floden, øges rækkevidden til 2 områder",
    YuriGagarin: "Yuri Gagarin",

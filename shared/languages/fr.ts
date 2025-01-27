@@ -1460,6 +1460,9 @@ export const FR = {
    YangtzeRiver: "Yangtsé",
    YangtzeRiverDesc:
       "Tous les bâtiments qui consomment de l'eau gagnent +1 Production, Capacité des Ouvriers et Multiplicateur de Stockage. Double l'effet de Zheng He (personnage illustre). Chaque niveau de l'Impératrice Wu Zetian (personnage illustre permanent) confère +1 Multiplicateur de Stockage à tous les bâtiments",
+   YearOfTheSnake: "Year of the Snake",
+   YearOfTheSnakeDesc:
+      "After completed, when entering a new age, instead of getting one great person of each unlocked age, get the same amount of great people in the current age. All buildings within 2-tile range get +1 Production Multiplier. This wonder can be upgraded and each additional upgrade provides +1 Production Multiplier to buildings within 2-tile range. This wonder can only be constructed during the lunar new year period (1.20 ~ 2.10)",
    YellowCraneTower: "Tour de la Grue jaune",
    YellowCraneTowerDesc: "+1 choix lors de la sélection d'un personnage illustre. Tous les bâtiments dans un rayon de 1 case gagnent +1 Production, Capacité des Ouvriers et Multiplicateur de Stockage. Lorsque cette Merveille est bâtie à côté du fleuve Yangtsé, ce rayon s'étend à 2 cases",
    YuriGagarin: "Yuri Gagarin",

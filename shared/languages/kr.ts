@@ -292,8 +292,7 @@ export const KR = {
    CoinMint: "동전 주조소",
    ColdWarAge: "냉전 시대",
    CologneCathedral: "쾰른 대성당",
-   CologneCathedralDesc:
-      "건설 시, 현시대에서 가장 비싼 기술의 해당하는 과학을 즉시 획득합니다. 모든 과학 생성 건물(클론 연구소 제외)은 생산 배수 +1을 얻습니다. 쾰른 대성당은 업그레이드 가능하며 추가 업그레이드를 완료 할때 마다 과학 생산 건물(클론 연구소 제외)은 생산 배수 +1을 추가로 얻습니다.",
+   CologneCathedralDesc: "건설 시, 현시대에서 가장 비싼 기술의 해당하는 과학을 즉시 획득합니다. 모든 과학 생성 건물(클론 연구소 제외)은 생산 배수 +1을 얻습니다. 쾰른 대성당은 업그레이드 가능하며 추가 업그레이드를 완료 할때 마다 과학 생산 건물(클론 연구소 제외)은 생산 배수 +1을 추가로 얻습니다.",
    Colonialism: "식민주의",
    Colosseum: "콜로세움",
    ColosseumDescV2: "전차 공장은 -1 행복도에서 면제됩니다. 전차 10대를 소비하여 행복도 10을 생산합니다. 해제된 각 시대마다 추가로 행복도 2를 제공합니다.",
@@ -1450,6 +1449,9 @@ export const KR = {
    Xuanzang: "현장",
    YangtzeRiver: "양쯔강",
    YangtzeRiverDesc: "물을 소비하는 모든 건물은 생산력, 노동자 능력, 저장소 배수를 +1 얻습니다. 정화(위인)의 효과가 두 배로 증가합니다. 영구적인 측천무후(위인)은 레벨 당 모든 건물에 +1 저장소 배수를 제공합니다.",
+   YearOfTheSnake: "Year of the Snake",
+   YearOfTheSnakeDesc:
+      "After completed, when entering a new age, instead of getting one great person of each unlocked age, get the same amount of great people in the current age. All buildings within 2-tile range get +1 Production Multiplier. This wonder can be upgraded and each additional upgrade provides +1 Production Multiplier to buildings within 2-tile range. This wonder can only be constructed during the lunar new year period (1.20 ~ 2.10)",
    YellowCraneTower: "황학루",
    YellowCraneTowerDesc: "위인을 선택할 때 선택지 +1. 1 타일 범위 내의 모든 건물은 +1 생산, 노동자 능력 및 저장소 배수를 얻습니다. 양쯔강 옆에 건설 시 범위가 2타일로 증가합니다.",
    YuriGagarin: "유리 가가린",

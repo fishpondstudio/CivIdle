@@ -1447,6 +1447,9 @@ export const ZH_TW = {
    Xuanzang: "玄奘",
    YangtzeRiver: "長江",
    YangtzeRiverDesc: "所有消耗水的建築獲得 +1 生產、工人能力和儲存指數。鄭和(偉人)效果加倍。武則天(偉人)每升一級為所有建築提供+1儲存倍數。與黃鶴樓(奇觀)具搭配效果",
+   YearOfTheSnake: "Year of the Snake",
+   YearOfTheSnakeDesc:
+      "After completed, when entering a new age, instead of getting one great person of each unlocked age, get the same amount of great people in the current age. All buildings within 2-tile range get +1 Production Multiplier. This wonder can be upgraded and each additional upgrade provides +1 Production Multiplier to buildings within 2-tile range. This wonder can only be constructed during the lunar new year period (1.20 ~ 2.10)",
    YellowCraneTower: "黃鶴樓",
    YellowCraneTowerDesc: "選擇偉人時 +1 選擇。 1 格範圍內的所有建築能獲得 +1 生產指數、工人容量和儲存指數。若建造在長江旁，範圍增加到 2 格",
    YuriGagarin: "尤里·加加林",

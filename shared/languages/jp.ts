@@ -469,9 +469,10 @@ export const JP = {
    FirstTimeTutorialWelcome: "CivIdleへようこそ",
    FirstTimeTutorialWelcome1HTML:
       "CivIdleへようこそ。このゲームでは、<b>生産の管理、技術の解放、他のプレイヤーとの資源の取引、偉人の輩出、そして世界遺産の建設...</b>あなただけの帝国を築くことができます。<br><br>マウスをドラッグして周囲を見回せます。マウスホイールでズームイン・アウトが可能です。空のタイルをクリックして新しい建物を建設してください。建物をクリックすると詳細を確認できます。<br><br>Stone QuarryやLogging Campのような建物は資源タイルの上に建設する必要があります。最初は労働者を生産するHutを霧の横に置くことをお勧めします。建設には少し時間がかかります。完成したら、近くの霧が晴れるはずです。",
-   FirstTimeTutorialWelcome2HTML://研究ポイント
+   FirstTimeTutorialWelcome2HTML:
       "建物は、資源と時間を費やすことでアップグレードできます。アップグレードしている間は<b>何も生産されません。</b>労働者を生産する建物も対象です。<b>絶対に同時にアップグレードしないでください！</b><br><br>帝国が育ってくると、大量の研究ポイントを手に入れ、新しい技術を解放することができるでしょう。そのような状況になった時、改めてチュートリアルとして説明されますが、「表示」->「研究」で覗いてみることが出来ます。<br><br>",
-   FirstTimeTutorialWelcome3HTML: "帝国を築く準備が出来ました。既にこのゲームの基本は理解できたはずです！帝国を築く前に、<b>あなたのプレイヤー名</b>を決める必要があります。その後、ゲーム内チャットであいさつしてみましょう。とても協力的なコミュニティが、迷ったときに助けてくれます。遠慮せずに尋ねてみましょう！<br>(訳注:このチュートリアルを見返したい時は、「ヘルプ」->「CivIdleへようこそ」を選んでください。また、日本語への翻訳はプレイヤーの一人がボランティアでやっています。まだまだ未完ですが、ゲームのアップデートとともに徐々に反映予定です。)",
+   FirstTimeTutorialWelcome3HTML:
+      "帝国を築く準備が出来ました。既にこのゲームの基本は理解できたはずです！帝国を築く前に、<b>あなたのプレイヤー名</b>を決める必要があります。その後、ゲーム内チャットであいさつしてみましょう。とても協力的なコミュニティが、迷ったときに助けてくれます。遠慮せずに尋ねてみましょう！<br>(訳注:このチュートリアルを見返したい時は、「ヘルプ」->「CivIdleへようこそ」を選んでください。また、日本語への翻訳はプレイヤーの一人がボランティアでやっています。まだまだ未完ですが、ゲームのアップデートとともに徐々に反映予定です。)",
    Fish: "Fish",
    FishPond: "Fish Pond",
    FlorenceNightingale: "Florence Nightingale",
@@ -872,9 +873,9 @@ export const JP = {
    PlanetaryRover: "Planetary Rover",
    Plastics: "Plastics",
    PlasticsFactory: "Plastics Factory",
-   PlatformAndroid: "Android",//No changed, but this is better.
-   PlatformiOS: "iOS",//same
-   PlatformSteam: "Steam",//same
+   PlatformAndroid: "Android",
+   PlatformiOS: "iOS",
+   PlatformSteam: "Steam",
    PlatformSyncInstructionHTML: "If you want to sync your progress on this device to a new device, click <b>Sync To A New Device</b> and get a one-time passcode. On your new device, click <b>Connect To A Device</b> and type in the one-time passcode",
    Plato: "Plato",
    PlayerHandle: "プレイヤー名",
@@ -1450,6 +1451,9 @@ export const JP = {
    Xuanzang: "Xuanzang",
    YangtzeRiver: "Yangtze River",
    YangtzeRiverDesc: "All buildings that consume water get +1 Production, Worker Capacity and Storage Multiplier. Double the effect of Zheng He (Great Person). Each level of Permanent Empress Wu Zetian (Great Person) provides +1 Storage Multiplier to all buildings",
+   YearOfTheSnake: "Year of the Snake",
+   YearOfTheSnakeDesc:
+      "After completed, when entering a new age, instead of getting one great person of each unlocked age, get the same amount of great people in the current age. All buildings within 2-tile range get +1 Production Multiplier. This wonder can be upgraded and each additional upgrade provides +1 Production Multiplier to buildings within 2-tile range. This wonder can only be constructed during the lunar new year period (1.20 ~ 2.10)",
    YellowCraneTower: "Yellow Crane Tower",
    YellowCraneTowerDesc: "+1 choice when choosing great people. All buildings within 1 tile range get +1 Production, Worker Capacity and Storage Multiplier. When constructed next to Yangtze River, the range increases to 2 tile",
    YuriGagarin: "Yuri Gagarin",
@@ -1465,6 +1469,4 @@ export const JP = {
    Zoroaster: "Zoroaster",
    Zugspitze: "Zugspitze",
    ZugspitzeDesc: "For each unlocked age, get one point that can be used to provide one extra level to any Great Person that is born from this run",
-   YearOfTheSnake: "Year of the Snake",
-   YearOfTheSnakeDesc: "After completed, when entering a new age, instead of getting one great person of each unlocked age, get the same amount of great people in the current age. All buildings within 2-tile range get +1 Production Multiplier. This wonder can be upgraded and each additional upgrade provides +1 Production Multiplier to buildings within 2-tile range. This wonder can only be constructed during the lunar new year period (1.20 ~ 2.10)"
 };

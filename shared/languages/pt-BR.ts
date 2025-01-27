@@ -1455,6 +1455,9 @@ export const PT_BR = {
    YangtzeRiver: "Yangtze River",
    YangtzeRiverDesc:
       "Todos os edifícios que consomem água recebem +1 de Produção, Capacidade de Trabalhadores e Multiplicador de Armazenamento. Dobra o efeito de Zheng He (Figura Histórica). Cada nível de Imperatriz Permanente Wu Zetian (Figura Histórica) fornece +1 de Multiplicador de Armazenamento para todos os edifícios.",
+   YearOfTheSnake: "Year of the Snake",
+   YearOfTheSnakeDesc:
+      "After completed, when entering a new age, instead of getting one great person of each unlocked age, get the same amount of great people in the current age. All buildings within 2-tile range get +1 Production Multiplier. This wonder can be upgraded and each additional upgrade provides +1 Production Multiplier to buildings within 2-tile range. This wonder can only be constructed during the lunar new year period (1.20 ~ 2.10)",
    YellowCraneTower: "Torre do Guindaste Amarelo",
    YellowCraneTowerDesc: "+1 escolha ao escolher figura histórica. Todos os edifícios dentro do alcance de 1 bloco recebem +1 Produção, Capacidade de Trabalhadores e Multiplicador de Armazenamento. Quando construído próximo ao Rio Yangtze, o alcance aumenta para 2 blocos.",
    YuriGagarin: "Yuri Gagarin",

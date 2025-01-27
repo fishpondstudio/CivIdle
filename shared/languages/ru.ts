@@ -1451,6 +1451,9 @@ export const RU = {
    Xuanzang: "Сюаньцзан",
    YangtzeRiver: "Река Янцзы",
    YangtzeRiverDesc: "Все здания, потребляющие Воду, получают +1 к Множителям Производства, Производительности Работников и Хранилища. Удваивает эффект Чжэн Хэ (Великий Человек). Каждый уровень Постоянной Императрицы У Цзэтянь (Великий Человек) дает +1 к Множителю Хранилища для всех зданий",
+   YearOfTheSnake: "Year of the Snake",
+   YearOfTheSnakeDesc:
+      "After completed, when entering a new age, instead of getting one great person of each unlocked age, get the same amount of great people in the current age. All buildings within 2-tile range get +1 Production Multiplier. This wonder can be upgraded and each additional upgrade provides +1 Production Multiplier to buildings within 2-tile range. This wonder can only be constructed during the lunar new year period (1.20 ~ 2.10)",
    YellowCraneTower: "Башня Жёлтого журавля",
    YellowCraneTowerDesc: "+1 вариант при выборе Великих Людей. Все здания в радиусе 1 Плитки получают +1 к Множителям Производства, Производительности Работников и Хранилища. Если построена рядом с Рекой Янцзы радиус увеличивается до 2 Плиток.",
    YuriGagarin: "Юрий Гагарин",
