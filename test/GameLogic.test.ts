@@ -436,7 +436,11 @@ test("getTradePercentage", () => {
 });
 
 test("bytesToBase64", () => {
-   const arr = new Uint8Array([7, 6, 5, 4, 3, 4, 5, 7, 8, 9, 0, 8, 8, 7, 6, 6, 5, 5, 4, 4, 3, 3]);
+   const data = [];
+   for (let i = 0; i < 1_000_000; i++) {
+      data.push(Math.floor(Math.random() * 256));
+   }
+   const arr = new Uint8Array(data);
    const rt = base64ToBytes(bytesToBase64(arr));
    rt.forEach((v, i) => {
       assert.equal(v, arr[i]);
