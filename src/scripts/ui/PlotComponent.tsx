@@ -14,10 +14,9 @@ export function PlotComponent({
    // biome-ignore lint/correctness/useExhaustiveDependencies: Perf
    useLayoutEffect(() => {
       if (!element.current) return;
-      const width = element.current?.clientWidth ?? 0;
       plot.current = new uPlot(
          {
-            width,
+            width: 0,
             height: 50,
             pxAlign: false,
             cursor: {
@@ -57,6 +56,7 @@ export function PlotComponent({
       };
    }, []);
    plot.current?.setData(data);
+   plot.current?.setSize({ height: 50, width: element.current?.clientWidth ?? 0 });
    return (
       <div>
          <div className="inset-shallow white" ref={element}></div>

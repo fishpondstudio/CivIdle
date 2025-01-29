@@ -39,7 +39,6 @@ import { L, t } from "../../../shared/utilities/i18n";
 import { TimeSeries } from "../logic/TimeSeries";
 import { LookAtMode, WorldScene } from "../scenes/WorldScene";
 import { Singleton } from "../utilities/Singleton";
-import { playClick } from "../visuals/Sound";
 import { BuildingColorComponent } from "./BuildingColorComponent";
 import type { IBuildingComponentProps } from "./BuildingPage";
 import { BuildingFilter, Filter } from "./FilterComponent";
@@ -85,7 +84,7 @@ export function StatisticsBuildingBody({ gameState, xy }: IBuildingComponentProp
             </button>
          </menu>
          {content}
-         <BuildingColorComponent gameState={gameState} xy={xy} />
+         {currentTab === "empire" ? <BuildingColorComponent gameState={gameState} xy={xy} /> : null}
       </div>
    );
 }
@@ -108,7 +107,7 @@ function EmpireTab({ gameState, xy }: IBuildingComponentProps): React.ReactNode 
    const sciencePerTick = scienceFromWorkers + totalBuildingScience;
    const transportStat = getTransportStat(gameState);
    return (
-      <article role="tabpanel" className="f1 col" style={{ padding: "8px", overflow: "auto" }}>
+      <article role="tabpanel" className="f1 col" style={{ padding: "8px", overflow: "hidden" }}>
          <fieldset>
             <legend>{t(L.TotalEmpireValue)}</legend>
             <ul className="tree-view">
@@ -315,39 +314,37 @@ function BuildingTab({ gameState }: IBuildingComponentProps): React.ReactNode {
    };
    const [search, setSearch] = useState<string>("");
    return (
-      <article role="tabpanel" className="col" style={{ padding: "8px", flex: 1 }}>
-         <fieldset>
-            <legend>{t(L.StatisticsBuildingsFilters)}</legend>
+      <article role="tabpanel" className="col" style={{ margin: 0, padding: 8, flex: 1 }}>
+         <div className="row mb5">
             <input
                type="text"
-               style={{ width: "100%" }}
+               style={{ flex: 1 }}
+               className="mr5"
                placeholder={t(L.StatisticsBuildingsSearchText)}
                onChange={(e) => setSearch(e.target.value)}
             />
-            <div className="row mt10">
-               <Filter
-                  filter={buildingFilter}
-                  current={BuildingFilter.Wonder}
-                  savedFilter={savedBuildingFilter}
-                  onFilterChange={setBuildingFilter}
-               >
-                  <div className="m-icon small">globe</div>
-               </Filter>
-               {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((tier) => {
-                  return (
-                     <Filter
-                        key={tier}
-                        filter={buildingFilter}
-                        current={1 << tier}
-                        savedFilter={savedBuildingFilter}
-                        onFilterChange={setBuildingFilter}
-                     >
-                        {numberToRoman(tier)}
-                     </Filter>
-                  );
-               })}
-            </div>
-         </fieldset>
+            <Filter
+               filter={buildingFilter}
+               current={BuildingFilter.Wonder}
+               savedFilter={savedBuildingFilter}
+               onFilterChange={setBuildingFilter}
+            >
+               <div className="m-icon small">globe</div>
+            </Filter>
+            {[1, 2, 3, 4, 5, 6, 7, 8].map((tier) => {
+               return (
+                  <Filter
+                     key={tier}
+                     filter={buildingFilter}
+                     current={1 << tier}
+                     savedFilter={savedBuildingFilter}
+                     onFilterChange={setBuildingFilter}
+                  >
+                     {numberToRoman(tier)}
+                  </Filter>
+               );
+            })}
+         </div>
          <div className="table-view" style={{ flex: 1 }}>
             <TableVirtuoso
                data={Array.from(getXyBuildings(gameState))
@@ -495,53 +492,42 @@ function ResourcesTab({ gameState }: IBuildingComponentProps): React.ReactNode {
    };
 
    return (
-      <article role="tabpanel" className="f1 col" style={{ padding: "8px", overflow: "auto" }}>
-         <fieldset>
-            <div className="row">
-               <div className="f1">{t(L.ShowTheoreticalValue)}</div>
-               <div
-                  className={classNames({
-                     "text-green": showTheoreticalValue,
-                     "text-grey": !showTheoreticalValue,
-                  })}
-               >
-                  <div
-                     onClick={() => {
-                        playClick();
-                        setShowTheoreticalValue(!showTheoreticalValue);
-                     }}
-                     style={{ margin: "-10px 0" }}
-                     className="pointer m-icon"
-                  >
-                     {showTheoreticalValue ? "toggle_on" : "toggle_off"}
-                  </div>
-               </div>
-            </div>
-         </fieldset>
-         <fieldset>
-            <legend>{t(L.StatisticsResourcesFilters)}</legend>
+      <article role="tabpanel" className="f1 col" style={{ margin: 0, padding: 8, overflow: "auto" }}>
+         <div className="row mb5">
             <input
                type="text"
-               style={{ width: "100%" }}
+               style={{ flex: 1 }}
+               className="mr5"
                placeholder={t(L.StatisticsResourcesSearchText)}
                onChange={(e) => setSearch(e.target.value)}
             />
-            <div className="row mt10">
-               {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((tier) => {
-                  return (
-                     <Filter
-                        key={tier}
-                        filter={resourceTierFilter}
-                        current={1 << tier}
-                        savedFilter={savedResourceTierFilter}
-                        onFilterChange={setResourceTierFilter}
-                     >
-                        {numberToRoman(tier)}
-                     </Filter>
-                  );
-               })}
-            </div>
-         </fieldset>
+            {[1, 2, 3, 4, 5, 6, 7, 8].map((tier) => {
+               return (
+                  <Filter
+                     key={tier}
+                     filter={resourceTierFilter}
+                     current={1 << tier}
+                     savedFilter={savedResourceTierFilter}
+                     onFilterChange={setResourceTierFilter}
+                  >
+                     {numberToRoman(tier)}
+                  </Filter>
+               );
+            })}
+            <Tippy content={showTheoreticalValue ? t(L.TheoreticalData) : t(L.LiveData)}>
+               <button
+                  className={classNames({
+                     active: !showTheoreticalValue,
+                  })}
+                  style={{ width: 27, padding: 0 }}
+                  onClick={() => {
+                     setShowTheoreticalValue(!showTheoreticalValue);
+                  }}
+               >
+                  <div className="m-icon small">live_tv</div>
+               </button>
+            </Tippy>
+         </div>
          <TableView
             classNames="sticky-header f1"
             header={[

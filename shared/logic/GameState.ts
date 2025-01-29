@@ -159,6 +159,7 @@ export class GameOptions {
    themeColors = { ...DefaultThemeColors };
    shortcuts: Partial<Record<Shortcut, IShortcutConfig>> = {};
    soundEffect = true;
+   tradeFilledSound = true;
    chatHideLatestMessage = false;
    chatChannels: Set<ChatChannel> = new Set(["en"]);
    enableTransportSourceCache = false;

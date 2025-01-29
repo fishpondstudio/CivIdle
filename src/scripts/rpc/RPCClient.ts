@@ -347,7 +347,9 @@ export async function connectWebSocket(): Promise<IWelcomeMessage> {
          case MessageType.PendingClaim: {
             const r = message as IPendingClaimMessage;
             if (user && r.claims[user.userId]) {
-               playKaching();
+               if (getGameOptions().tradeFilledSound) {
+                  playKaching();
+               }
                showToast(t(L.PlayerTradeClaimAvailable, { count: r.claims[user.userId] }));
                OnNewPendingClaims.emit();
             }

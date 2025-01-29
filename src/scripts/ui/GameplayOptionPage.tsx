@@ -299,6 +299,28 @@ export function GameplayOptionPage(): React.ReactNode {
             <fieldset>
                <legend>{t(L.Sound)}</legend>
                <ChangeSoundComponent />
+               {options.soundEffect ? (
+                  <>
+                     <div className="separator" />
+                     <div className="row">
+                        <div className="f1">{t(L.TradeFillSound)}</div>
+                        <div
+                           onClick={() => {
+                              options.tradeFilledSound = !options.tradeFilledSound;
+                              playClick();
+                              notifyGameOptionsUpdate(options);
+                           }}
+                           className="ml10 pointer"
+                        >
+                           {options.tradeFilledSound ? (
+                              <div className="m-icon text-green">toggle_on</div>
+                           ) : (
+                              <div className="m-icon text-grey">toggle_off</div>
+                           )}
+                        </div>
+                     </div>
+                  </>
+               ) : null}
             </fieldset>
             <fieldset>
                <legend>{t(L.Chat)}</legend>
