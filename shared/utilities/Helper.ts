@@ -698,8 +698,11 @@ export function base64ToBytes(base64: string): Uint8Array {
 }
 
 export function bytesToBase64(bytes: Uint8Array): string {
-   const binString = String.fromCodePoint(...bytes);
-   return btoa(binString);
+   return btoa(
+      Array.from(bytes)
+         .map((b) => String.fromCodePoint(b))
+         .join(""),
+   );
 }
 
 export function filterInPlace<T>(a: T[], condition: (v: T, i: number, array: T[]) => boolean): T[] {

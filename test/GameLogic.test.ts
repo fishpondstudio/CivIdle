@@ -11,6 +11,7 @@ import { calculateTierAndPrice } from "../shared/logic/Constants";
 import { GameOptions, GameState, SavedGame } from "../shared/logic/GameState";
 import { deserializeSave, serializeSave } from "../shared/logic/GameStateLogic";
 import { initializeGameState } from "../shared/logic/InitializeGameState";
+import { getBuyAmountRange, getTradePercentage } from "../shared/logic/PlayerTradeLogic";
 import {
    getEligibleRank,
    getGreatPersonThisRunLevel,
@@ -37,13 +38,20 @@ import { makeBuilding } from "../shared/logic/Tile";
 import { fossilDeltaApply, fossilDeltaCreate } from "../shared/thirdparty/FossilDelta";
 import {
    AccountLevel,
-   type IAddTradeRequest,
    UserAttributes,
    UserColors,
+   type IAddTradeRequest,
    type IUser,
 } from "../shared/utilities/Database";
-import { HOUR, SECOND, forEach, pointToTile, round } from "../shared/utilities/Helper";
-import { getBuyAmountRange, getTradePercentage } from "../shared/logic/PlayerTradeLogic";
+import {
+   HOUR,
+   SECOND,
+   base64ToBytes,
+   bytesToBase64,
+   forEach,
+   pointToTile,
+   round,
+} from "../shared/utilities/Helper";
 
 test("getBuildingCost", (t) => {
    assert.equal(10, getBuildingCost({ type: "CoalMine", level: 0 }).Brick);
@@ -425,4 +433,12 @@ test("getTradePercentage", () => {
    assert.equal(round(getTradePercentage(trade), 2), 0.25);
    trade.buyAmount = result.max;
    assert.equal(round(getTradePercentage(trade), 2), -0.25);
+});
+
+test("bytesToBase64", () => {
+   const arr = new Uint8Array([7, 6, 5, 4, 3, 4, 5, 7, 8, 9, 0, 8, 8, 7, 6, 6, 5, 5, 4, 4, 3, 3]);
+   const rt = base64ToBytes(bytesToBase64(arr));
+   rt.forEach((v, i) => {
+      assert.equal(v, arr[i]);
+   });
 });
