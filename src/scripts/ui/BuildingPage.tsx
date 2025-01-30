@@ -7,6 +7,7 @@ import type { ITileData } from "../../../shared/logic/Tile";
 import type { Tile } from "../../../shared/utilities/Helper";
 import { useGameState } from "../Global";
 import { Singleton } from "../utilities/Singleton";
+import { BritishMuseumBuildingBody } from "./BritishMuseumBuildingBody";
 import { BroadwayBuildingBody } from "./BroadwayBuildingBody";
 import { DefaultBuildingBody } from "./DefaultBuildingBody";
 import { EuphratesRiverBuildingBody } from "./EuphratesRiverBuildingBody";
@@ -64,6 +65,7 @@ const BuildingBodyOverride: Partial<Record<Building, FunctionComponent<IBuilding
    Zugspitze: ZugspitzeBuildingBody,
    SantaClausVillage: UpgradableWonderBuildingBody,
    YearOfTheSnake: UpgradableWonderBuildingBody,
+   BritishMuseum: BritishMuseumBuildingBody,
 };
 
 export function BuildingPage(props: { tile: ITileData }): React.ReactNode {

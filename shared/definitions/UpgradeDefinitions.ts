@@ -637,6 +637,8 @@ export class UpgradeDefinitions {
       },
       additionalUpgrades: () => [t(L.CommunismLevel5DescHTML)],
    };
+
+   BritishMuseum: IUpgradeDefinition = { name: () => "", requireResources: {} };
 }
 
 export type Upgrade = keyof UpgradeDefinitions;

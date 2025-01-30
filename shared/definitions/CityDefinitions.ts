@@ -246,6 +246,35 @@ export class CityDefinitions {
       requireSupporterPack: true,
       festivalDesc: () => t(L.Oktoberfest),
    };
+
+   English: ICityDefinition = {
+      name: () => t(L.English),
+      deposits: {
+         Water: 0.025,
+         Copper: 0.025,
+         Iron: 0.025,
+         Wood: 0.01,
+         Stone: 0.03,
+         Gold: 0.025,
+         Coal: 0.035,
+         Oil: 0.025,
+         Aluminum: 0.03,
+         NaturalGas: 0.02,
+         Uranium: 0.015,
+      },
+      size: 40,
+      buildingNames: {
+         Headquarter: () => t(L.Reichstag),
+      },
+      uniqueBuildings: {
+         BritishMuseum: "Capitalism",
+      },
+      uniqueMultipliers: {},
+      naturalWonders: {},
+      requireGreatPeopleLevel: 60,
+      requireSupporterPack: true,
+      festivalDesc: () => t(L.Oktoberfest),
+   };
 }
 
 export type City = keyof CityDefinitions;

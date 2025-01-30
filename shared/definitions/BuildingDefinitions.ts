@@ -1855,6 +1855,17 @@ export class BuildingDefinitions {
       wikipedia: "Snake_(zodiac)",
    };
 
+   BritishMuseum: IBuildingDefinition = {
+      name: () => t(L.BritishMuseum),
+      desc: () => t(L.BritishMuseumDesc),
+      input: {},
+      output: {},
+      construction: { Opera: 500 },
+      max: 1,
+      special: BuildingSpecial.WorldWonder,
+      wikipedia: "British_Museum",
+   };
+
    // ArcDeTriomphe: IBuildingDefinition = {
    //    name: () => t(L.ArcDeTriomphe),
    //    desc: () => t(L.ArcDeTriompheDesc),

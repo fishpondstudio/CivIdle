@@ -1142,3 +1142,15 @@ export function getExplorerRange(gs: GameState): number {
    }
    return 1;
 }
+
+export function getUniqueWonders(exclude: Set<Building>): Building[] {
+   const result: Building[] = [];
+   forEach(Config.City, (city, def) => {
+      forEach(def.uniqueBuildings, (building, def) => {
+         if (isWorldWonder(building) && !exclude.has(building)) {
+            result.push(building);
+         }
+      });
+   });
+   return result;
+}

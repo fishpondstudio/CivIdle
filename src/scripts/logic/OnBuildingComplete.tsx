@@ -239,5 +239,9 @@ export function onBuildingComplete(xy: Tile): void {
          }
          break;
       }
+      case "BritishMuseum": {
+         gs.unlockedUpgrades.BritishMuseum = true;
+         break;
+      }
    }
 }

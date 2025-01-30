@@ -171,6 +171,10 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
                      return false;
                   }
 
+                  if (v === "BritishMuseum" && gs.unlockedUpgrades.BritishMuseum) {
+                     return false;
+                  }
+
                   let filter = (buildingFilter & 0x0fffffff) === 0;
 
                   for (let i = 0; i < 12; i++) {
