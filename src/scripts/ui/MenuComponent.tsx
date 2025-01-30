@@ -194,8 +194,14 @@ export function MenuComponent(): React.ReactNode {
                   </div>
                   <div
                      className="menu-popover-item"
-                     onPointerDown={() => {
-                        window.location.search = "?scene=Save";
+                     onPointerDown={async () => {
+                        try {
+                           await saveGame();
+                           window.location.search = "?scene=Save";
+                        } catch (err) {
+                           playError();
+                           showToast(String(err));
+                        }
                      }}
                   >
                      <MenuItem check={false}>{t(L.ManageSave)}</MenuItem>
