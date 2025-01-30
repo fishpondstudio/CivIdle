@@ -436,13 +436,18 @@ test("getTradePercentage", () => {
 });
 
 test("bytesToBase64", () => {
-   const data = [];
-   for (let i = 0; i < 1_000_000; i++) {
-      data.push(Math.floor(Math.random() * 256));
+   const data = new Uint8Array(1_000_000);
+   for (let i = 0; i < data.length; i++) {
+      data[i] = Math.floor(Math.random() * 256);
    }
-   const arr = new Uint8Array(data);
-   const rt = base64ToBytes(bytesToBase64(arr));
+   console.time("Encode");
+   const base64 = bytesToBase64(data);
+   console.timeEnd("Encode");
+
+   console.time("Decode");
+   const rt = base64ToBytes(base64);
+   console.timeEnd("Decode");
    rt.forEach((v, i) => {
-      assert.equal(v, arr[i]);
+      assert.equal(v, data[i]);
    });
 });
