@@ -1479,5 +1479,10 @@ export const EN = {
    TowerBridge: "Tower Bridge",
    TowerBridgeDesc: "After constructed, a great person from unlocked ages is born every 3600 cycles (1h game time)",
    Cycle: "Cycle",
-   ProgressTowardsTheNextGreatPerson: "Progress Towards the Next Great Person"
+   TradeValue: "Trade Value",
+   ProgressTowardsTheNextGreatPerson: "Progress Towards the Next Great Person",
+   Westminster: "Westminster",
+   EastIndiaCompany: "East India Company",
+   EastIndiaCompanyDesc: "This wonder accumulates the total value of your completed player trade transactions. For every 2,000 trade value, all buildings adjacent to caravansaries get a +1 Production Multiplier for 1 cycle. A trade transaction counts when you either fulfill another player's trade request or when your own trade request is fulfilled. Multiple boosts stack by extending the duration",
+   BoostCyclesLeft: "Boost Cycles Left",
 };

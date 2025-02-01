@@ -5,7 +5,15 @@ import { Config } from "../../../shared/logic/Config";
 import { addResourceTo, getAvailableStorage } from "../../../shared/logic/ResourceLogic";
 import { Tick } from "../../../shared/logic/TickLogic";
 import { PendingClaimFlag, type IPendingClaim } from "../../../shared/utilities/Database";
-import { clamp, forEach, formatNumber, hasFlag, mapOf, sizeOf } from "../../../shared/utilities/Helper";
+import {
+   clamp,
+   forEach,
+   formatNumber,
+   hasFlag,
+   mapOf,
+   safeAdd,
+   sizeOf,
+} from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import { OnNewPendingClaims, client } from "../rpc/RPCClient";
 import { useTypedEvent } from "../utilities/Hook";
@@ -61,6 +69,12 @@ export function PendingClaimComponent({ gameState, xy }: IBuildingComponentProps
                   ).join(", "),
                }),
             );
+            const eic = Tick.current.specialBuildings.get("EastIndiaCompany");
+            if (eic) {
+               forEach(resources, (res, amount) => {
+                  safeAdd(eic.building.resources, "TradeValue", amount * (Config.ResourcePrice[res] ?? 0));
+               });
+            }
          } else {
             playError();
             showToast(t(L.PlayerTradeClaimAllFailedMessageV2));

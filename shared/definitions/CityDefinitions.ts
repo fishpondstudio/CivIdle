@@ -264,12 +264,13 @@ export class CityDefinitions {
       },
       size: 40,
       buildingNames: {
-         Headquarter: () => t(L.Reichstag),
+         Headquarter: () => t(L.Westminster),
       },
       uniqueBuildings: {
          BritishMuseum: "Combustion",
          CambridgeUniversity: "Enlightenment",
          TowerBridge: "Electricity",
+         EastIndiaCompany: "PrivateOwnership",
       },
       uniqueMultipliers: {},
       naturalWonders: {},

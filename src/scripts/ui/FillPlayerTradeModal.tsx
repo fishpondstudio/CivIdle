@@ -155,6 +155,14 @@ export function FillPlayerTradeModal({ tradeId, xy }: { tradeId: string; xy?: Ti
                receivedResource: Config.Resource[trade.sellResource].name(),
             }),
          );
+         const eic = Tick.current.specialBuildings.get("EastIndiaCompany");
+         if (eic) {
+            safeAdd(
+               eic.building.resources,
+               "TradeValue",
+               fillAmount * (Config.ResourcePrice[trade.buyResource] ?? 0),
+            );
+         }
          showToast(errors.join("<br />"));
          hideModal();
       } else {

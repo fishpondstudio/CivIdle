@@ -10,6 +10,7 @@ import { Singleton } from "../utilities/Singleton";
 import { BritishMuseumBuildingBody } from "./BritishMuseumBuildingBody";
 import { BroadwayBuildingBody } from "./BroadwayBuildingBody";
 import { DefaultBuildingBody } from "./DefaultBuildingBody";
+import { EastIndiaCompanyBuildingBody } from "./EastIndiaCompanyBuildingBody";
 import { EuphratesRiverBuildingBody } from "./EuphratesRiverBuildingBody";
 import { GrandBazaarBuildingBody } from "./GrandBazaarBuildingBody";
 import { HagiaSophiaBuildingBody } from "./HagiaSophiaBuildingBody";
@@ -68,6 +69,7 @@ const BuildingBodyOverride: Partial<Record<Building, FunctionComponent<IBuilding
    YearOfTheSnake: UpgradableWonderBuildingBody,
    BritishMuseum: BritishMuseumBuildingBody,
    TowerBridge: TowerBridgeBuildingBody,
+   EastIndiaCompany: EastIndiaCompanyBuildingBody,
 };
 
 export function BuildingPage(props: { tile: ITileData }): React.ReactNode {

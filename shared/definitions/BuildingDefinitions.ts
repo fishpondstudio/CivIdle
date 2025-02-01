@@ -1888,6 +1888,17 @@ export class BuildingDefinitions {
       wikipedia: "Tower_Bridge",
    };
 
+   EastIndiaCompany: IBuildingDefinition = {
+      name: () => t(L.EastIndiaCompany),
+      desc: () => t(L.EastIndiaCompanyDesc),
+      input: {},
+      output: {},
+      construction: { Concrete: 150, Steel: 150 },
+      max: 1,
+      special: BuildingSpecial.WorldWonder,
+      wikipedia: "East_India_Company",
+   };
+
    // ArcDeTriomphe: IBuildingDefinition = {
    //    name: () => t(L.ArcDeTriomphe),
    //    desc: () => t(L.ArcDeTriompheDesc),

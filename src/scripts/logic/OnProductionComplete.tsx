@@ -15,12 +15,14 @@ import {
 } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
 import {
+   EAST_INDIA_COMPANY_BOOST_PER_EV,
    EXPLORER_SECONDS,
    FESTIVAL_CONVERSION_RATE,
    MAX_EXPLORER,
    MAX_TELEPORT,
    SCIENCE_VALUE,
    TELEPORT_SECONDS,
+   TOWER_BRIDGE_GP_PER_CYCLE,
 } from "../../../shared/logic/Constants";
 import { GameFeature, hasFeature } from "../../../shared/logic/FeatureLogic";
 import { getGameOptions, getGameState } from "../../../shared/logic/GameStateLogic";
@@ -1491,8 +1493,8 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
       case "TowerBridge": {
          safeAdd(building.resources, "Cycle", 1);
          let hasGreatPeople = false;
-         while ((building.resources.Cycle ?? 0) >= 3600) {
-            safeAdd(building.resources, "Cycle", -3600);
+         while ((building.resources.Cycle ?? 0) >= TOWER_BRIDGE_GP_PER_CYCLE) {
+            safeAdd(building.resources, "Cycle", -TOWER_BRIDGE_GP_PER_CYCLE);
             const candidates1 = rollGreatPeopleThisRun(
                getUnlockedTechAges(gs),
                gs.city,
@@ -1509,9 +1511,25 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          }
          break;
       }
+      case "EastIndiaCompany": {
+         if ((building.resources.TradeValue ?? 0) > EAST_INDIA_COMPANY_BOOST_PER_EV) {
+            safeAdd(building.resources, "TradeValue", -EAST_INDIA_COMPANY_BOOST_PER_EV);
+            getBuildingsByType("Caravansary", gs)?.forEach((tile, xy) => {
+               grid.getNeighbors(tileToPoint(xy)).forEach((p) => {
+                  mapSafePush(Tick.next.tileMultipliers, pointToTile(p), {
+                     output: 1,
+                     source: buildingName,
+                     unstable: true,
+                  });
+               });
+            });
+         }
+         break;
+      }
       // case "ArcDeTriomphe": {
       //    forEach(Config.Building, (b, def) => {
       //       if (def.input.Culture || def.output.Culture) {
+
       //          addMultiplier(b, { output: 1, worker: 1, storage: 1 }, buildingName);
       //       }
       //    });

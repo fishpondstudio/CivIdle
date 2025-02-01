@@ -54,6 +54,8 @@ export const FESTIVAL_CONVERSION_RATE = 100;
 export const GOLDEN_RATIO = (1 + Math.sqrt(5)) / 2;
 export const GOOGLE_PLAY_GAMES_CLIENT_ID =
    "242227196074-u9201vdqd82p0o0hvfg2metk3gl5ocro.apps.googleusercontent.com";
+export const TOWER_BRIDGE_GP_PER_CYCLE = 3600;
+export const EAST_INDIA_COMPANY_BOOST_PER_EV = 2000;
 
 interface IRecipe {
    building: Building;
