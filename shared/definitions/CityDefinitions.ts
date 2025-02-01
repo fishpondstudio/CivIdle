@@ -250,17 +250,17 @@ export class CityDefinitions {
    English: ICityDefinition = {
       name: () => t(L.English),
       deposits: {
-         Water: 0.025,
-         Copper: 0.025,
+         Water: 0.02,
+         Copper: 0.03,
          Iron: 0.025,
-         Wood: 0.01,
+         Wood: 0.03,
          Stone: 0.03,
-         Gold: 0.025,
-         Coal: 0.035,
-         Oil: 0.025,
+         Gold: 0.02,
+         Coal: 0.02,
+         Oil: 0.02,
          Aluminum: 0.03,
-         NaturalGas: 0.02,
-         Uranium: 0.015,
+         NaturalGas: 0.03,
+         Uranium: 0.02,
       },
       size: 40,
       buildingNames: {
@@ -278,7 +278,7 @@ export class CityDefinitions {
       },
       requireGreatPeopleLevel: 60,
       requireSupporterPack: true,
-      festivalDesc: () => t(L.Oktoberfest),
+      festivalDesc: () => t(L.GuyFawkesNight),
    };
 }
 

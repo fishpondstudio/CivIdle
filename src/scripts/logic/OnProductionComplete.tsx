@@ -1491,7 +1491,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          break;
       }
       case "TowerBridge": {
-         safeAdd(building.resources, "Cycle", 1);
+         safeAdd(building.resources, "Cycle", gs.festival ? 1.2 : 1);
          let hasGreatPeople = false;
          while ((building.resources.Cycle ?? 0) >= TOWER_BRIDGE_GP_PER_CYCLE) {
             safeAdd(building.resources, "Cycle", -TOWER_BRIDGE_GP_PER_CYCLE);
@@ -1517,7 +1517,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
             getBuildingsByType("Caravansary", gs)?.forEach((tile, xy) => {
                grid.getNeighbors(tileToPoint(xy)).forEach((p) => {
                   mapSafePush(Tick.next.tileMultipliers, pointToTile(p), {
-                     output: 1,
+                     output: gs.festival ? 2 : 1,
                      source: buildingName,
                      unstable: true,
                   });
