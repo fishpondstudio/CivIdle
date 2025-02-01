@@ -1489,4 +1489,5 @@ export const EN = {
    CerneAbbasGiantDesc: "A great person of the current age is born when a wonder is constructed",
    ThomasGresham: "Thomas Gresham",
    GuyFawkesNight: "Guy Fawkes Night: East India Company provides +2 Production Multiplier to buildings adjacent to caravansaries. Tower Bridge generates great people 20% faster",
+   WishlistSpaceshipIdle: "Wishlist Spaceship Idle",
 };

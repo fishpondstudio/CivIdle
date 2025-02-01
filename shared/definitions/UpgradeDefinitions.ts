@@ -653,8 +653,15 @@ export class UpgradeDefinitions {
       },
       additionalUpgrades: () => [t(L.CommunismLevel5DescHTML)],
    };
-
    BritishMuseum: IUpgradeDefinition = { name: () => "", requireResources: {} };
+   SpaceshipIdle: IUpgradeDefinition = {
+      name: () => "",
+      requireResources: {},
+      tick: (gs) => {
+         addMultiplier("SpaceCenter", { output: 1, storage: 1 }, t(L.WishlistSpaceshipIdle));
+         addMultiplier("SpacecraftFactory", { output: 1, storage: 1 }, t(L.WishlistSpaceshipIdle));
+      },
+   };
 }
 
 export type Upgrade = keyof UpgradeDefinitions;
