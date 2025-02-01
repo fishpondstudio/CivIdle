@@ -273,7 +273,9 @@ export class CityDefinitions {
          EastIndiaCompany: "PrivateOwnership",
       },
       uniqueMultipliers: {},
-      naturalWonders: {},
+      naturalWonders: {
+         CerneAbbasGiant: true,
+      },
       requireGreatPeopleLevel: 60,
       requireSupporterPack: true,
       festivalDesc: () => t(L.Oktoberfest),

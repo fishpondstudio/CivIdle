@@ -1899,6 +1899,17 @@ export class BuildingDefinitions {
       wikipedia: "East_India_Company",
    };
 
+   CerneAbbasGiant: IBuildingDefinition = {
+      name: () => t(L.CerneAbbasGiant),
+      desc: () => t(L.CerneAbbasGiantDesc),
+      input: {},
+      output: {},
+      construction: {},
+      max: 0,
+      special: BuildingSpecial.NaturalWonder,
+      wikipedia: "Cerne_Abbas_Giant",
+   };
+
    // ArcDeTriomphe: IBuildingDefinition = {
    //    name: () => t(L.ArcDeTriomphe),
    //    desc: () => t(L.ArcDeTriompheDesc),

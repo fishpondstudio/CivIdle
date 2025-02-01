@@ -5,8 +5,10 @@ import {
    getBuildingThatExtract,
    getExtraVisionRange,
    isNaturalWonder,
+   isWorldWonder,
 } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
+import type { GameState } from "../../../shared/logic/GameState";
 import { getGameOptions, getGameState } from "../../../shared/logic/GameStateLogic";
 import { getGrid, getXyBuildings } from "../../../shared/logic/IntraTickCache";
 import {
@@ -25,7 +27,7 @@ import {
 } from "../../../shared/logic/TechLogic";
 import { ensureTileFogOfWar } from "../../../shared/logic/TerrainLogic";
 import { Tick } from "../../../shared/logic/TickLogic";
-import { makeBuilding } from "../../../shared/logic/Tile";
+import { makeBuilding, type IBuildingData } from "../../../shared/logic/Tile";
 import { OnBuildingComplete } from "../../../shared/logic/Update";
 import {
    clamp,
@@ -254,6 +256,24 @@ export function onBuildingComplete(xy: Tile): void {
       case "BritishMuseum": {
          gs.unlockedUpgrades.BritishMuseum = true;
          break;
+      }
+   }
+   checkCerneAbbasGiant(building, gs);
+}
+
+function checkCerneAbbasGiant(building: IBuildingData, gs: GameState) {
+   if (Tick.current.specialBuildings.has("CerneAbbasGiant") && isWorldWonder(building.type)) {
+      const candidates = rollGreatPeopleThisRun(
+         new Set([getCurrentAge(gs)]),
+         gs.city,
+         getGreatPeopleChoiceCount(gs),
+      );
+      if (candidates) {
+         gs.greatPeopleChoicesV2.push(candidates);
+      }
+      if (gs.greatPeopleChoicesV2.length > 0) {
+         playAgeUp();
+         showModal(<ChooseGreatPersonModal permanent={false} />);
       }
    }
 }

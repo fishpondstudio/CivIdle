@@ -1485,4 +1485,6 @@ export const EN = {
    EastIndiaCompany: "East India Company",
    EastIndiaCompanyDesc: "This wonder accumulates the total value of your completed player trade transactions. For every 2,000 trade value, all buildings adjacent to caravansaries get a +1 Production Multiplier for 1 cycle. A trade transaction counts when you either fulfill another player's trade request or when your own trade request is fulfilled. Multiple boosts stack by extending the duration",
    BoostCyclesLeft: "Boost Cycles Left",
+   CerneAbbasGiant: "Cerne Abbas Giant",
+   CerneAbbasGiantDesc: "A great person of the current age is born when a wonder is constructed",
 };
