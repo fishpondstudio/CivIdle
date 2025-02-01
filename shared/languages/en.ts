@@ -1487,4 +1487,5 @@ export const EN = {
    BoostCyclesLeft: "Boost Cycles Left",
    CerneAbbasGiant: "Cerne Abbas Giant",
    CerneAbbasGiantDesc: "A great person of the current age is born when a wonder is constructed",
+   ThomasGresham: "Thomas Gresham"
 };

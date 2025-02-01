@@ -722,7 +722,7 @@
         },
         "Person_RichardFeynman": {
             "frame": {
-                "x": 1053,
+                "x": 1404,
                 "y": 3510,
                 "w": 349,
                 "h": 349
@@ -832,7 +832,7 @@
                 "h": 350
             }
         },
-        "Person_TimBernersLee": {
+        "Person_ThomasGresham": {
             "frame": {
                 "x": 3510,
                 "y": 1053,
@@ -840,9 +840,17 @@
                 "h": 350
             }
         },
+        "Person_TimBernersLee": {
+            "frame": {
+                "x": 3510,
+                "y": 1404,
+                "w": 350,
+                "h": 350
+            }
+        },
         "Person_WaltDisney": {
             "frame": {
-                "x": 1403,
+                "x": 1754,
                 "y": 3510,
                 "w": 349,
                 "h": 349
@@ -851,7 +859,7 @@
         "Person_WernherVonBraun": {
             "frame": {
                 "x": 3510,
-                "y": 1404,
+                "y": 1755,
                 "w": 350,
                 "h": 350
             }
@@ -859,7 +867,7 @@
         "Person_WilliamShakespeare": {
             "frame": {
                 "x": 3510,
-                "y": 1755,
+                "y": 2106,
                 "w": 350,
                 "h": 350
             }
@@ -867,7 +875,7 @@
         "Person_WuZetian": {
             "frame": {
                 "x": 3510,
-                "y": 2106,
+                "y": 2457,
                 "w": 350,
                 "h": 350
             }
@@ -875,7 +883,7 @@
         "Person_Xuanzang": {
             "frame": {
                 "x": 3510,
-                "y": 2457,
+                "y": 2808,
                 "w": 350,
                 "h": 350
             }
@@ -883,20 +891,12 @@
         "Person_YuriGagarin": {
             "frame": {
                 "x": 3510,
-                "y": 2808,
-                "w": 350,
-                "h": 350
-            }
-        },
-        "Person_ZahaHadid": {
-            "frame": {
-                "x": 3510,
                 "y": 3159,
                 "w": 350,
                 "h": 350
             }
         },
-        "Person_Zenobia": {
+        "Person_ZahaHadid": {
             "frame": {
                 "x": 0,
                 "y": 3510,
@@ -904,7 +904,7 @@
                 "h": 350
             }
         },
-        "Person_ZhengHe": {
+        "Person_Zenobia": {
             "frame": {
                 "x": 351,
                 "y": 3510,
@@ -912,9 +912,17 @@
                 "h": 350
             }
         },
-        "Person_Zoroaster": {
+        "Person_ZhengHe": {
             "frame": {
                 "x": 702,
+                "y": 3510,
+                "w": 350,
+                "h": 350
+            }
+        },
+        "Person_Zoroaster": {
+            "frame": {
+                "x": 1053,
                 "y": 3510,
                 "w": 350,
                 "h": 350

@@ -645,6 +645,19 @@ export class GreatPersonDefinitions {
       type: GreatPersonType.Promotion,
    };
 
+   ThomasGresham: IGreatPersonDefinition = boostOf({
+      name: () => t(L.ThomasGresham),
+      boost: {
+         multipliers: ["output", "storage"],
+         buildings: ["BondMarket"],
+      },
+      time: "1519 ~ 1579 AD",
+      value: (level) => level * 2,
+      maxLevel: Number.POSITIVE_INFINITY,
+      age: "RenaissanceAge",
+      city: "English",
+   });
+
    // Industrial /////////////////////////////////////////////////////////////////////////////////////////////
 
    JamesWatt: IGreatPersonDefinition = boostOf({
