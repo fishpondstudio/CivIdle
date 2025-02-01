@@ -32,7 +32,11 @@ import {
    getXyBuildings,
 } from "../../../shared/logic/IntraTickCache";
 import { getVotedBoostId } from "../../../shared/logic/PlayerTradeLogic";
-import { getGreatPersonTotalEffect, getPermanentGreatPeopleLevel } from "../../../shared/logic/RebirthLogic";
+import {
+   getGreatPeopleForWisdom,
+   getGreatPersonTotalEffect,
+   getPermanentGreatPeopleLevel,
+} from "../../../shared/logic/RebirthLogic";
 import {
    getBuildingUnlockAge,
    getBuildingsUnlockedBefore,
@@ -1459,6 +1463,23 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
                source: buildingName,
             });
          }
+         break;
+      }
+      case "CambridgeUniversity": {
+         forEach(Config.TechAge, (age, def) => {
+            if (def.idx < Config.TechAge.RenaissanceAge.idx) {
+               return;
+            }
+            getGreatPeopleForWisdom(age).forEach((gp) => {
+               const greatPerson = Config.GreatPerson[gp];
+               greatPerson.tick(
+                  greatPerson,
+                  1,
+                  t(L.CambridgeUniversitySource, { age: Config.TechAge[age].name() }),
+                  GreatPersonTickFlag.None,
+               );
+            });
+         });
          break;
       }
       // case "ArcDeTriomphe": {

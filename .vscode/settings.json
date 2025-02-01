@@ -2,8 +2,5 @@
    "cSpell.words": ["Cooldown", "Gameplay", "hitmap", "Koffi", "lerp", "rebirthed", "unlockable"],
    "task.allowAutomaticTasks": "on",
    "typescript.tsdk": "node_modules\\typescript\\lib",
-   "yaml.schemas": {
-      "https://json.schemastore.org/github-workflow.json": "file:///c%3A/Users/Ruoyu/Projects/CivIdle/.github/workflows/main.yml"
-   },
    "editor.formatOnSave": true
 }

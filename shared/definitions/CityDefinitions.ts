@@ -268,6 +268,7 @@ export class CityDefinitions {
       },
       uniqueBuildings: {
          BritishMuseum: "Capitalism",
+         CambridgeUniversity: "Enlightenment",
       },
       uniqueMultipliers: {},
       naturalWonders: {},

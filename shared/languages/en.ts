@@ -1473,4 +1473,7 @@ export const EN = {
    BritishMuseumTransform: "Transform",
    BritishMuseumDesc: "After constructed, can transform into to a unique wonder from other civilizations",
    English: "English",
+   CambridgeUniversity: "Cambridge University",
+   CambridgeUniversityDesc: "+1 Age Wisdom level for Renaissance and ages after",
+   CambridgeUniversitySource: "Cambridge University (%{age})"
 };

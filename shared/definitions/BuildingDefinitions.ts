@@ -1866,6 +1866,17 @@ export class BuildingDefinitions {
       wikipedia: "British_Museum",
    };
 
+   CambridgeUniversity: IBuildingDefinition = {
+      name: () => t(L.CambridgeUniversity),
+      desc: () => t(L.CambridgeUniversityDesc),
+      input: {},
+      output: {},
+      construction: { Opera: 500 },
+      max: 1,
+      special: BuildingSpecial.WorldWonder,
+      wikipedia: "University_of_Cambridge",
+   };
+
    // ArcDeTriomphe: IBuildingDefinition = {
    //    name: () => t(L.ArcDeTriomphe),
    //    desc: () => t(L.ArcDeTriompheDesc),
