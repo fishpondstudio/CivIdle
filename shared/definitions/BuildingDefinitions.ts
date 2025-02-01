@@ -1893,7 +1893,7 @@ export class BuildingDefinitions {
       desc: () => t(L.EastIndiaCompanyDesc),
       input: {},
       output: {},
-      construction: { Concrete: 150, Steel: 150 },
+      construction: { Bond: 100, Frigate: 100, Gunpowder: 100 },
       max: 1,
       special: BuildingSpecial.WorldWonder,
       wikipedia: "East_India_Company",
