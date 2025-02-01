@@ -270,7 +270,7 @@ if (import.meta.env.DEV) {
    // @ts-expect-error
    window.rollGreatPeople = (age: TechAge, candidate: number) => {
       const gs = getGameState();
-      const candidates = rollGreatPeopleThisRun(age, getGameState().city, candidate);
+      const candidates = rollGreatPeopleThisRun(new Set([age]), getGameState().city, candidate);
       if (candidates) {
          gs.greatPeopleChoicesV2.push(candidates);
       }

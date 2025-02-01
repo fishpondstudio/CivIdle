@@ -56,7 +56,7 @@ export function TechPage({ id }: { id: Tech }): React.ReactNode {
             forEach(Config.TechAge, (age, def) => {
                if (def.idx <= Config.TechAge[newAge].idx) {
                   const candidates = rollGreatPeopleThisRun(
-                     snake ? newAge : age,
+                     new Set([snake ? newAge : age]),
                      gs.city,
                      getGreatPeopleChoiceCount(gs),
                   );
@@ -67,7 +67,11 @@ export function TechPage({ id }: { id: Tech }): React.ReactNode {
             });
             if (gs.unlockedUpgrades.Communism5) {
                for (let i = 0; i < 2; i++) {
-                  const candidates = rollGreatPeopleThisRun(newAge, gs.city, getGreatPeopleChoiceCount(gs));
+                  const candidates = rollGreatPeopleThisRun(
+                     new Set([newAge]),
+                     gs.city,
+                     getGreatPeopleChoiceCount(gs),
+                  );
                   if (candidates) {
                      gs.greatPeopleChoicesV2.push(candidates);
                   }

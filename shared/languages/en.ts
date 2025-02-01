@@ -1475,5 +1475,9 @@ export const EN = {
    English: "English",
    CambridgeUniversity: "Cambridge University",
    CambridgeUniversityDesc: "+1 Age Wisdom level for Renaissance and ages after",
-   CambridgeUniversitySource: "Cambridge University (%{age})"
+   CambridgeUniversitySource: "Cambridge University (%{age})",
+   TowerBridge: "Tower Bridge",
+   TowerBridgeDesc: "After constructed, a great person from unlocked ages is born every 3600 cycles (1h game time)",
+   Cycle: "Cycle",
+   ProgressTowardsTheNextGreatPerson: "Progress Towards the Next Great Person"
 };

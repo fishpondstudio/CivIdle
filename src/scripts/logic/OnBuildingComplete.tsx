@@ -66,12 +66,12 @@ export function onBuildingComplete(xy: Tile): void {
          break;
       }
       case "Parthenon": {
-         const candidates1 = rollGreatPeopleThisRun("ClassicalAge", gs.city, 4);
+         const candidates1 = rollGreatPeopleThisRun(new Set(["ClassicalAge"]), gs.city, 4);
          if (candidates1) {
             gs.greatPeopleChoicesV2.push(candidates1);
          }
 
-         const candidates2 = rollGreatPeopleThisRun("ClassicalAge", gs.city, 4);
+         const candidates2 = rollGreatPeopleThisRun(new Set(["ClassicalAge"]), gs.city, 4);
          if (candidates2) {
             gs.greatPeopleChoicesV2.push(candidates2);
          }
@@ -83,12 +83,20 @@ export function onBuildingComplete(xy: Tile): void {
          break;
       }
       case "TajMahal": {
-         const candidates1 = rollGreatPeopleThisRun("ClassicalAge", gs.city, getGreatPeopleChoiceCount(gs));
+         const candidates1 = rollGreatPeopleThisRun(
+            new Set(["ClassicalAge"]),
+            gs.city,
+            getGreatPeopleChoiceCount(gs),
+         );
          if (candidates1) {
             gs.greatPeopleChoicesV2.push(candidates1);
          }
 
-         const candidates2 = rollGreatPeopleThisRun("MiddleAge", gs.city, getGreatPeopleChoiceCount(gs));
+         const candidates2 = rollGreatPeopleThisRun(
+            new Set(["MiddleAge"]),
+            gs.city,
+            getGreatPeopleChoiceCount(gs),
+         );
          if (candidates2) {
             gs.greatPeopleChoicesV2.push(candidates2);
          }
@@ -217,7 +225,7 @@ export function onBuildingComplete(xy: Tile): void {
       }
       case "Broadway": {
          const age = getCurrentAge(gs);
-         const candidates1 = rollGreatPeopleThisRun(age, gs.city, getGreatPeopleChoiceCount(gs));
+         const candidates1 = rollGreatPeopleThisRun(new Set([age]), gs.city, getGreatPeopleChoiceCount(gs));
          if (candidates1) {
             gs.greatPeopleChoicesV2.push(candidates1);
          }
@@ -227,7 +235,11 @@ export function onBuildingComplete(xy: Tile): void {
          );
 
          if (previousAge) {
-            const candidates2 = rollGreatPeopleThisRun(previousAge, gs.city, getGreatPeopleChoiceCount(gs));
+            const candidates2 = rollGreatPeopleThisRun(
+               new Set([previousAge]),
+               gs.city,
+               getGreatPeopleChoiceCount(gs),
+            );
             if (candidates2) {
                gs.greatPeopleChoicesV2.push(candidates2);
             }

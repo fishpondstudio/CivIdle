@@ -267,8 +267,9 @@ export class CityDefinitions {
          Headquarter: () => t(L.Reichstag),
       },
       uniqueBuildings: {
-         BritishMuseum: "Capitalism",
+         BritishMuseum: "Combustion",
          CambridgeUniversity: "Enlightenment",
+         TowerBridge: "Electricity",
       },
       uniqueMultipliers: {},
       naturalWonders: {},

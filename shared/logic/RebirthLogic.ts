@@ -171,7 +171,7 @@ export function rollPermanentGreatPeople(
 }
 
 export function rollGreatPeopleThisRun(
-   age: TechAge,
+   ages: Set<TechAge>,
    city: City,
    choiceCount: number,
 ): GreatPeopleChoiceV2 | null {
@@ -180,7 +180,7 @@ export function rollGreatPeopleThisRun(
       keysOf(
          filterOf(
             Config.GreatPerson,
-            (_, v) => (isNullOrUndefined(v.city) || v.city === city) && v.age === age,
+            (_, v) => (isNullOrUndefined(v.city) || v.city === city) && ages.has(v.age),
          ),
       ),
    );

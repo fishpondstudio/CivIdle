@@ -33,14 +33,17 @@ import {
 } from "../../../shared/logic/IntraTickCache";
 import { getVotedBoostId } from "../../../shared/logic/PlayerTradeLogic";
 import {
+   getGreatPeopleChoiceCount,
    getGreatPeopleForWisdom,
    getGreatPersonTotalEffect,
    getPermanentGreatPeopleLevel,
+   rollGreatPeopleThisRun,
 } from "../../../shared/logic/RebirthLogic";
 import {
    getBuildingUnlockAge,
    getBuildingsUnlockedBefore,
    getCurrentAge,
+   getUnlockedTechAges,
 } from "../../../shared/logic/TechLogic";
 import { Tick } from "../../../shared/logic/TickLogic";
 import type {
@@ -69,7 +72,10 @@ import {
 import { srand } from "../../../shared/utilities/Random";
 import { L, t } from "../../../shared/utilities/i18n";
 import { client } from "../rpc/RPCClient";
+import { ChooseGreatPersonModal } from "../ui/ChooseGreatPersonModal";
+import { hasOpenModal, showModal } from "../ui/GlobalModal";
 import { Singleton } from "../utilities/Singleton";
+import { playAgeUp } from "../visuals/Sound";
 
 let votedBoost: IGetVotedBoostResponse | null = null;
 let lastVotedBoostUpdatedAt = 0;
@@ -1480,6 +1486,27 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
                );
             });
          });
+         break;
+      }
+      case "TowerBridge": {
+         safeAdd(building.resources, "Cycle", 1);
+         let hasGreatPeople = false;
+         while ((building.resources.Cycle ?? 0) >= 3600) {
+            safeAdd(building.resources, "Cycle", -3600);
+            const candidates1 = rollGreatPeopleThisRun(
+               getUnlockedTechAges(gs),
+               gs.city,
+               getGreatPeopleChoiceCount(gs),
+            );
+            if (candidates1) {
+               gs.greatPeopleChoicesV2.push(candidates1);
+               hasGreatPeople = true;
+            }
+         }
+         if (hasGreatPeople && !hasOpenModal()) {
+            playAgeUp();
+            showModal(<ChooseGreatPersonModal permanent={false} />);
+         }
          break;
       }
       // case "ArcDeTriomphe": {

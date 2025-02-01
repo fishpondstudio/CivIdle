@@ -25,6 +25,7 @@ import { ScienceProductionWonderBuildingBody } from "./ScienceProductionWonderBu
 import { StatisticsBuildingBody } from "./StatisticsBuildingBody";
 import { TheMetBuildingBody } from "./TheMetBuildingBody";
 import { ToggleWonderBuildingBody } from "./ToggleableWonderBuildingBody";
+import { TowerBridgeBuildingBody } from "./TowerBridgeBuildingBody";
 import { TraditionBuildingBody } from "./TraditionBuildingBody";
 import { UnitedNationsBuildingBody } from "./UnitedNationsBuildingBody";
 import { UpgradableWonderBuildingBody } from "./UpgradableWonderBuildingBody";
@@ -66,6 +67,7 @@ const BuildingBodyOverride: Partial<Record<Building, FunctionComponent<IBuilding
    SantaClausVillage: UpgradableWonderBuildingBody,
    YearOfTheSnake: UpgradableWonderBuildingBody,
    BritishMuseum: BritishMuseumBuildingBody,
+   TowerBridge: TowerBridgeBuildingBody,
 };
 
 export function BuildingPage(props: { tile: ITileData }): React.ReactNode {

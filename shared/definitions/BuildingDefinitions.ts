@@ -1860,7 +1860,7 @@ export class BuildingDefinitions {
       desc: () => t(L.BritishMuseumDesc),
       input: {},
       output: {},
-      construction: { Opera: 500 },
+      construction: { Tank: 100, Ironclad: 100, Train: 100 },
       max: 1,
       special: BuildingSpecial.WorldWonder,
       wikipedia: "British_Museum",
@@ -1871,10 +1871,21 @@ export class BuildingDefinitions {
       desc: () => t(L.CambridgeUniversityDesc),
       input: {},
       output: {},
-      construction: { Opera: 500 },
+      construction: { Philosophy: 100, Culture: 100, Faith: 100 },
       max: 1,
       special: BuildingSpecial.WorldWonder,
       wikipedia: "University_of_Cambridge",
+   };
+
+   TowerBridge: IBuildingDefinition = {
+      name: () => t(L.TowerBridge),
+      desc: () => t(L.TowerBridgeDesc),
+      input: {},
+      output: {},
+      construction: { Concrete: 150, Steel: 150 },
+      max: 1,
+      special: BuildingSpecial.WorldWonder,
+      wikipedia: "Tower_Bridge",
    };
 
    // ArcDeTriomphe: IBuildingDefinition = {

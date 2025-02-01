@@ -69,6 +69,20 @@ export function getMostAdvancedTech(gs: GameState): Tech | null {
    return tech;
 }
 
+export function getUnlockedTechAges(gs: GameState): Set<TechAge> {
+   const result = new Set<TechAge>();
+   const currentAge = getCurrentAge(gs);
+   if (!currentAge) {
+      return result;
+   }
+   forEach(Config.TechAge, (age, def) => {
+      if (def.idx <= Config.TechAge[currentAge].idx) {
+         result.add(age);
+      }
+   });
+   return result;
+}
+
 export function getBuildingUnlockTech(building: Building): Tech {
    const tech = Config.BuildingTech[building];
    if (tech) return tech;

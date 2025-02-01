@@ -20,7 +20,7 @@ export class IPCService {
    private counter = 0;
    private lastWriteAt = Date.now();
 
-   public async fileWriteBytes(name: string, content: ArrayBuffer): Promise<void> {
+   public async fileWriteBytes(name: string, content: Uint8Array): Promise<void> {
       if (content.byteLength <= 0) return;
       const buffer = Buffer.from(content);
 

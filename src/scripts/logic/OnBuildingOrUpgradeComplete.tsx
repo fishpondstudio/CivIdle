@@ -15,7 +15,7 @@ export function onBuildingOrUpgradeComplete(xy: Tile): void {
 
    switch (building.type) {
       case "SantaClausVillage": {
-         const candidates1 = rollGreatPeopleThisRun(getCurrentAge(gs), gs.city, 4);
+         const candidates1 = rollGreatPeopleThisRun(new Set([getCurrentAge(gs)]), gs.city, 4);
          if (candidates1) {
             gs.greatPeopleChoicesV2.push(candidates1);
          }
