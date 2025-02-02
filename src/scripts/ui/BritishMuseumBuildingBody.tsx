@@ -20,7 +20,7 @@ import { BuildingValueComponent } from "./BuildingValueComponent";
 import { BuildingWikipediaComponent } from "./BuildingWikipediaComponent";
 
 export function BritishMuseumBuildingBody({ gameState, xy }: IBuildingComponentProps): React.ReactNode {
-   const buildings = getUniqueWonders(new Set<Building>(["BritishMuseum"]));
+   const buildings = getUniqueWonders(gameState.city);
    const [building, setBuilding] = useState(buildings[0]);
    return (
       <div className="window-body">

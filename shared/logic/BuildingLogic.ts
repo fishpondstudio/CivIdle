@@ -1,5 +1,6 @@
 import type { Building } from "../definitions/BuildingDefinitions";
 import { BuildingSpecial } from "../definitions/BuildingDefinitions";
+import type { City } from "../definitions/CityDefinitions";
 import type { IUnlockableMultipliers } from "../definitions/ITechDefinition";
 import type { Religion } from "../definitions/ReligionDefinitions";
 import { NoPrice, NoStorage, type Deposit, type Resource } from "../definitions/ResourceDefinitions";
@@ -1143,14 +1144,16 @@ export function getExplorerRange(gs: GameState): number {
    return 1;
 }
 
-export function getUniqueWonders(exclude: Set<Building>): Building[] {
+export function getUniqueWonders(currentCity: City): Building[] {
    const result: Building[] = [];
    forEach(Config.City, (city, def) => {
+      if (city === currentCity) return;
       forEach(def.uniqueBuildings, (building, def) => {
-         if (isWorldWonder(building) && !exclude.has(building)) {
+         if (isWorldWonder(building)) {
             result.push(building);
          }
       });
    });
+
    return result;
 }
