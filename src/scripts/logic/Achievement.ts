@@ -91,6 +91,10 @@ export function checkRebirthAchievements(extraGP: number, gs: GameState): void {
             SteamClient.unlockAchievement("EisernerKanzler");
             break;
          }
+         case "English": {
+            SteamClient.unlockAchievement("ThreeLions");
+            break;
+         }
       }
    }
 }
