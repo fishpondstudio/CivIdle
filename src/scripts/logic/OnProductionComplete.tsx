@@ -1515,6 +1515,9 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          if ((building.resources.TradeValue ?? 0) > EAST_INDIA_COMPANY_BOOST_PER_EV) {
             safeAdd(building.resources, "TradeValue", -EAST_INDIA_COMPANY_BOOST_PER_EV);
             getBuildingsByType("Caravansary", gs)?.forEach((tile, xy) => {
+               if (tile.building.status !== "completed" || tile.building.capacity <= 0) {
+                  return;
+               }
                grid.getNeighbors(tileToPoint(xy)).forEach((p) => {
                   mapSafePush(Tick.next.tileMultipliers, pointToTile(p), {
                      output: gs.festival ? 2 : 1,
