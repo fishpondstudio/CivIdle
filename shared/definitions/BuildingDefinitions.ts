@@ -1995,3 +1995,18 @@ export class BuildingDefinitions {
    // };
 }
 export type Building = keyof BuildingDefinitions;
+
+export const BuildingShowLevel = new Set<Building>([
+   "InternationalSpaceStation",
+   "MarinaBaySands",
+   "PalmJumeirah",
+   "AldersonDisk",
+   "DysonSphere",
+   "MatrioshkaBrain",
+   "LargeHadronCollider",
+   "CologneCathedral",
+   "SantaClausVillage",
+   "Petra",
+   "YearOfTheSnake",
+   "EastIndiaCompany",
+]);

@@ -1,5 +1,5 @@
 import type { Building } from "../definitions/BuildingDefinitions";
-import { BuildingSpecial } from "../definitions/BuildingDefinitions";
+import { BuildingShowLevel, BuildingSpecial } from "../definitions/BuildingDefinitions";
 import type { City } from "../definitions/CityDefinitions";
 import type { IUnlockableMultipliers } from "../definitions/ITechDefinition";
 import type { Religion } from "../definitions/ReligionDefinitions";
@@ -640,19 +640,7 @@ export function getBuildingPercentage(xy: Tile, gs: GameState): BuildingPercenta
 }
 
 export function getBuildingLevelLabel(b: IBuildingData): string {
-   if (
-      b.type === "InternationalSpaceStation" ||
-      b.type === "MarinaBaySands" ||
-      b.type === "PalmJumeirah" ||
-      b.type === "AldersonDisk" ||
-      b.type === "DysonSphere" ||
-      b.type === "MatrioshkaBrain" ||
-      b.type === "LargeHadronCollider" ||
-      b.type === "CologneCathedral" ||
-      b.type === "SantaClausVillage" ||
-      b.type === "Petra" ||
-      b.type === "YearOfTheSnake"
-   ) {
+   if (BuildingShowLevel.has(b.type)) {
       return String(b.level);
    }
    if (Config.Building[b.type].special === BuildingSpecial.HQ || isWorldOrNaturalWonder(b.type)) {
@@ -1156,4 +1144,8 @@ export function getUniqueWonders(currentCity: City): Building[] {
    });
 
    return result;
+}
+
+export function getEastIndiaCompanyUpgradeCost(level: number): number {
+   return Math.pow(10, level - 2) * 1_000_000_000;
 }

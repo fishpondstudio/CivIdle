@@ -1520,7 +1520,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
                }
                grid.getNeighbors(tileToPoint(xy)).forEach((p) => {
                   mapSafePush(Tick.next.tileMultipliers, pointToTile(p), {
-                     output: gs.festival ? 2 : 1,
+                     output: gs.festival ? 2 * building.level : building.level,
                      source: buildingName,
                      unstable: true,
                   });
