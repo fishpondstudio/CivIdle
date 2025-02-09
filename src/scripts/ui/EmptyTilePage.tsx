@@ -82,15 +82,14 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
          </div>
          <MenuComponent />
          <div className="window-body" style={{ display: "flex", flexDirection: "column" }}>
-            <fieldset>
-               <legend>{t(L.Deposit)}</legend>
-               {jsxMapOf(
-                  tile.deposit,
-                  (k, v) => {
+            {sizeOf(tile.deposit) > 0 ? (
+               <div className="row inset-shallow-2 mb5" style={{ padding: "0 5px" }}>
+                  <div className="f1 text-strong">{t(L.Deposit)}</div>
+                  {jsxMapOf(tile.deposit, (k, v) => {
                      return (
-                        <div
+                        <button
                            key={k}
-                           className="text-strong row mv5"
+                           className="mv5"
                            onClick={() => {
                               const result: Tile[] = [];
                               gs.tiles.forEach((tile, xy) => {
@@ -103,59 +102,50 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
                                  ?.drawSelection(tileToPoint(tile.tile), result);
                            }}
                         >
-                           <div className="f1">{Config.Resource[k].name()}</div>
-                           <div className="m-icon small text-link">search</div>
-                        </div>
+                           {Config.Resource[k].name()}
+                        </button>
                      );
-                  },
-                  () => {
-                     return <div className="text-desc">{t(L.NoDepositDesc)}</div>;
-                  },
-               )}
-            </fieldset>
-            <fieldset>
-               <legend>{t(L.BuildingANew)}</legend>
+                  })}
+               </div>
+            ) : null}
+            <div className="row mb5">
                <input
                   type="text"
-                  style={{ width: "100%" }}
+                  className="f1 mr5"
                   placeholder={t(L.BuildingSearchText)}
                   onChange={(e) => setSearch(e.target.value)}
                />
-               <div className="row mt10">
-                  <Filter
-                     filter={buildingFilter}
-                     current={BuildingFilter.Wonder}
-                     savedFilter={savedFilter}
-                     onFilterChange={setBuildingFilter}
-                  >
-                     <div className="m-icon small">globe</div>
-                  </Filter>
-                  {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((tier) => {
-                     return (
-                        <Filter
-                           key={tier}
-                           filter={buildingFilter}
-                           current={1 << tier}
-                           savedFilter={savedFilter}
-                           onFilterChange={setBuildingFilter}
-                        >
-                           {numberToRoman(tier)}
-                        </Filter>
-                     );
-                  })}
-                  <div className="f1"></div>
-
-                  <Filter
-                     tooltip={t(L.ShowUnbuiltOnly)}
-                     filter={buildingFilter}
-                     current={BuildingFilter.NotBuilt}
-                     savedFilter={savedFilter}
-                     onFilterChange={setBuildingFilter}
-                  >
-                     <div className="m-icon small">lightbulb</div>
-                  </Filter>
-               </div>
-            </fieldset>
+               <Filter
+                  filter={buildingFilter}
+                  current={BuildingFilter.Wonder}
+                  savedFilter={savedFilter}
+                  onFilterChange={setBuildingFilter}
+               >
+                  <div className="m-icon small">globe</div>
+               </Filter>
+               {[1, 2, 3, 4, 5, 6, 7, 8].map((tier) => {
+                  return (
+                     <Filter
+                        key={tier}
+                        filter={buildingFilter}
+                        current={1 << tier}
+                        savedFilter={savedFilter}
+                        onFilterChange={setBuildingFilter}
+                     >
+                        {numberToRoman(tier)}
+                     </Filter>
+                  );
+               })}
+               <Filter
+                  tooltip={t(L.ShowUnbuiltOnly)}
+                  filter={buildingFilter}
+                  current={BuildingFilter.NotBuilt}
+                  savedFilter={savedFilter}
+                  onFilterChange={setBuildingFilter}
+               >
+                  <div className="m-icon small">lightbulb</div>
+               </Filter>
+            </div>
             <TableView
                classNames="sticky-header building-list f1"
                sortingState={savedSorting}
