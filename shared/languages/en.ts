@@ -404,7 +404,7 @@ export const EN = {
    DysonSphereDesc: "All buildings get +5 Production Multiplier. This wonder can be upgraded and each additional upgrade provides +1 Production Multiplier to all buildings",
    EastIndiaCompany: "East India Company",
    EastIndiaCompanyDesc:
-      "This wonder accumulates the total value of your completed player trade transactions. For every 2,000 trade value, all buildings adjacent to caravansaries get a +1 Production Multiplier for 1 cycle. This wonder can be upgraded and each upgrade provides additional +1 Production Multiplier. A trade transaction counts when you either fulfill another player's trade request or when your own trade request is fulfilled. Multiple boosts stack by extending the duration",
+      "This wonder accumulates the total value of your completed player trade transactions. For every 2,000 trade value, all buildings adjacent to caravansaries get a +1 Production Multiplier for 1 cycle. This wonder can be upgraded and each upgrade provides an additional +1 Production Multiplier. A trade transaction counts when you either fulfill another player's trade request or when your own trade request is fulfilled. Multiple boosts stack by extending the duration",
    Education: "Education",
    EffectiveGreatPeopleLevel: "Effective Great People Level",
    EffectiveGreatPeopleLevelDesc: "Effective great people level is the sum of all permanent great people level and age wisdom level. It measures the effect boost provided by great people and age wisdom",
