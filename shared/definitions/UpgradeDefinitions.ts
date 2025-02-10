@@ -655,11 +655,11 @@ export class UpgradeDefinitions {
    };
    BritishMuseum: IUpgradeDefinition = { name: () => "", requireResources: {} };
    SpaceshipIdle: IUpgradeDefinition = {
-      name: () => "",
+      name: () => t(L.WishlistSpaceshipIdle),
       requireResources: {},
-      tick: (gs) => {
-         addMultiplier("SpaceCenter", { output: 1, storage: 1 }, t(L.WishlistSpaceshipIdle));
-         addMultiplier("SpacecraftFactory", { output: 1, storage: 1 }, t(L.WishlistSpaceshipIdle));
+      buildingMultiplier: {
+         SpaceCenter: { output: 1, storage: 1 },
+         SpacecraftFactory: { output: 1, storage: 1 },
       },
    };
 }

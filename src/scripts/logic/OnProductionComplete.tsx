@@ -101,6 +101,9 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
             output: round(getPermanentGreatPeopleLevel(getGameOptions()) * 0.1, 1),
             source: t(L.PermanentGreatPeople),
          });
+         if (gs.unlockedUpgrades.SpaceshipIdle) {
+            tickUnlockable(Config.Upgrade.SpaceshipIdle, t(L.WishlistSpaceshipIdle), gs);
+         }
          if (hasFeature(GameFeature.Festival, gs)) {
             if (gs.festival) {
                if ((building.resources.Festival ?? 0) >= FESTIVAL_CONVERSION_RATE) {
