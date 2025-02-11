@@ -180,7 +180,7 @@ export function ResourcePanel(): React.ReactNode {
          <div className="separator-vertical" />
          <Tippy content={Config.City[gs.city].festivalDesc()}>
             <div
-               className={classNames({ section: true, pointer: true, "text-orange": !gs.festival })}
+               className={classNames({ section: true, pointer: true, "text-orange": gs.festival })}
                onClick={() => {
                   playClick();
                   gs.festival = !gs.festival;
