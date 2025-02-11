@@ -214,7 +214,8 @@ export function getPetraBaseStorage(petra: IBuildingData): number {
 }
 
 export function getMaxWarpSpeed(gs: GameState): number {
-   return findSpecialBuilding("Petra", gs)?.building.status !== "building" ? MAX_PETRA_SPEED_UP : 2;
+   const status = findSpecialBuilding("Petra", gs)?.building.status;
+   return status === "completed" || status === "upgrading" ? MAX_PETRA_SPEED_UP : 2;
 }
 
 export function getMaxWarpStorage(gs: GameState): number {

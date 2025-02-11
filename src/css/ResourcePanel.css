@@ -10,7 +10,7 @@
    font-size: 1.2rem;
 }
 
-#resource-panel .resource-bar > .section {
+#resource-panel .resource-bar>.section {
    text-align: center;
    flex-direction: column;
 }

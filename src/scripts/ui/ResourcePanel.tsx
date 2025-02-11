@@ -10,6 +10,7 @@ import {
 import { Config } from "../../../shared/logic/Config";
 import { FESTIVAL_CONVERSION_RATE } from "../../../shared/logic/Constants";
 import { GameFeature, hasFeature } from "../../../shared/logic/FeatureLogic";
+import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
 import { getHappinessIcon } from "../../../shared/logic/HappinessLogic";
 import { getResourceIO } from "../../../shared/logic/IntraTickCache";
 import {
@@ -41,7 +42,6 @@ import { playClick, playError } from "../visuals/Sound";
 import { showToast } from "./GlobalModal";
 import { FormatNumber } from "./HelperComponents";
 import { TilePage } from "./TilePage";
-import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
 
 export function ResourcePanel(): React.ReactNode {
    const tick = useCurrentTick();
@@ -177,24 +177,27 @@ export function ResourcePanel(): React.ReactNode {
                </Tippy>
             </div>
          ) : null}
-         {gs.festival ? (
-            <>
-               <div className="separator-vertical" />
-               <Tippy content={Config.City[gs.city].festivalDesc()}>
-                  <div className="section">
-                     <div className="m-icon text-orange">celebration</div>
-                     <div style={{ width: "5rem" }}>
-                        <FormatNumber
-                           value={Math.floor(
-                              (Tick.current.specialBuildings.get("Headquarter")?.building.resources
-                                 .Festival ?? 0) / FESTIVAL_CONVERSION_RATE,
-                           )}
-                        />
-                     </div>
-                  </div>
-               </Tippy>
-            </>
-         ) : null}
+         <div className="separator-vertical" />
+         <Tippy content={Config.City[gs.city].festivalDesc()}>
+            <div
+               className={classNames({ section: true, pointer: true, "text-orange": !gs.festival })}
+               onClick={() => {
+                  playClick();
+                  gs.festival = !gs.festival;
+                  notifyGameStateUpdate();
+               }}
+            >
+               <div className={classNames({ "m-icon": true })}>celebration</div>
+               <div style={{ width: "5rem" }}>
+                  <FormatNumber
+                     value={Math.floor(
+                        (Tick.current.specialBuildings.get("Headquarter")?.building.resources.Festival ?? 0) /
+                           FESTIVAL_CONVERSION_RATE,
+                     )}
+                  />
+               </div>
+            </div>
+         </Tippy>
          <div className="separator-vertical" />
          <div className="section">
             <div
@@ -320,6 +323,7 @@ export function ResourcePanel(): React.ReactNode {
                   gs.speedUp = clamp(Number.parseInt(e.target.value, 10), 1, getMaxWarpSpeed(gs));
                   notifyGameStateUpdate();
                }}
+               style={{ paddingRight: "2.5rem" }}
             >
                {range(1, getMaxWarpSpeed(gs) + 1).map((i) => (
                   <option key={i} value={i}>
