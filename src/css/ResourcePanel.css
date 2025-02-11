@@ -1,5 +1,5 @@
 #resource-panel .resource-bar {
-   height: 3rem;
+   height: 4rem;
    position: absolute;
    top: 1rem;
    left: 1rem;
@@ -7,32 +7,33 @@
    align-items: center;
    font-weight: bold;
    color: #333;
+   font-size: 1.2rem;
 }
 
-#resource-panel .resource-bar>.row {
-   margin: 0 10px 0 0;
+#resource-panel .resource-bar > .section {
    text-align: center;
+   flex-direction: column;
 }
 
-#resource-panel .resource-bar .row .m-icon {
-   margin: 0 5px;
+#resource-panel .resource-bar .section .m-icon {
    font-size: 2rem;
+   line-height: 1.6rem;
 }
 
 #resource-panel .resource-bar .menu-button {
    padding: 0;
-   height: 2.6rem;
-   width: 2.6rem;
+   height: 3.6rem;
+   width: 3.6rem;
    text-align: center;
 }
 
 #resource-panel .resource-bar .menu-button .m-icon {
-   line-height: 2.6rem;
-   font-size: 2rem;
+   line-height: 3.6rem;
+   font-size: 2.6rem;
 }
 
 #resource-panel .resource-bar .menu-popover {
-   top: 2.6rem;
+   top: 3.6rem;
    font-weight: normal;
 }
 

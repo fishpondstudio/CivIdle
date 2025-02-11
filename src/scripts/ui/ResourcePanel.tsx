@@ -2,7 +2,11 @@ import Tippy from "@tippyjs/react";
 import classNames from "classnames";
 import { useEffect, useState } from "react";
 import type { Resource } from "../../../shared/definitions/ResourceDefinitions";
-import { getScienceFromWorkers, isSpecialBuilding } from "../../../shared/logic/BuildingLogic";
+import {
+   getMaxWarpSpeed,
+   getScienceFromWorkers,
+   isSpecialBuilding,
+} from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
 import { FESTIVAL_CONVERSION_RATE } from "../../../shared/logic/Constants";
 import { GameFeature, hasFeature } from "../../../shared/logic/FeatureLogic";
@@ -22,6 +26,7 @@ import {
    formatPercent,
    mapCount,
    mathSign,
+   range,
    round,
    type Tile,
 } from "../../../shared/utilities/Helper";
@@ -36,6 +41,7 @@ import { playClick, playError } from "../visuals/Sound";
 import { showToast } from "./GlobalModal";
 import { FormatNumber } from "./HelperComponents";
 import { TilePage } from "./TilePage";
+import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
 
 export function ResourcePanel(): React.ReactNode {
    const tick = useCurrentTick();
@@ -138,7 +144,7 @@ export function ResourcePanel(): React.ReactNode {
          <div className="separator-vertical" />
          {tick.happiness ? (
             <div
-               className="row pointer"
+               className="section pointer"
                onClick={() => {
                   const xy = Tick.current.specialBuildings.get("Headquarter")?.tile;
                   if (xy) {
@@ -160,7 +166,7 @@ export function ResourcePanel(): React.ReactNode {
                   placement="bottom"
                   content={options.resourceBarShowUncappedHappiness ? t(L.HappinessUncapped) : t(L.Happiness)}
                >
-                  <div style={{ width: "5rem" }}>
+                  <div style={{ width: "4rem" }}>
                      {round(
                         options.resourceBarShowUncappedHappiness
                            ? tick.happiness.uncapped
@@ -171,12 +177,11 @@ export function ResourcePanel(): React.ReactNode {
                </Tippy>
             </div>
          ) : null}
-
          {gs.festival ? (
             <>
                <div className="separator-vertical" />
                <Tippy content={Config.City[gs.city].festivalDesc()}>
-                  <div className="row">
+                  <div className="section">
                      <div className="m-icon text-orange">celebration</div>
                      <div style={{ width: "5rem" }}>
                         <FormatNumber
@@ -191,7 +196,7 @@ export function ResourcePanel(): React.ReactNode {
             </>
          ) : null}
          <div className="separator-vertical" />
-         <div className="row">
+         <div className="section">
             <div
                className={classNames({
                   "m-icon": true,
@@ -200,15 +205,15 @@ export function ResourcePanel(): React.ReactNode {
                person
             </div>
             <Tippy content={`${t(L.WorkersBusy)} / ${t(L.TotalWorkers)}`} placement="bottom">
-               <div style={{ width: "12rem" }}>
-                  <FormatNumber value={workersBusy} /> / <FormatNumber value={workersAfterHappiness} />
+               <div style={{ width: "10rem" }}>
+                  <FormatNumber value={workersBusy} />/<FormatNumber value={workersAfterHappiness} />
                </div>
             </Tippy>
          </div>
          <div className="separator-vertical" />
          {hasFeature(GameFeature.Electricity, gs) ? (
             <>
-               <div className="row">
+               <div className="section">
                   <div
                      className={classNames({
                         "m-icon": true,
@@ -221,8 +226,8 @@ export function ResourcePanel(): React.ReactNode {
                      bolt
                   </div>
                   <Tippy placement="bottom" content={`${t(L.PowerUsed)}/${t(L.PowerAvailable)}`}>
-                     <div style={{ width: "15rem" }}>
-                        <FormatNumber value={tick.workersUsed.get("Power") ?? 0} />W{" / "}
+                     <div style={{ width: "12rem" }}>
+                        <FormatNumber value={tick.workersUsed.get("Power") ?? 0} />W{"/"}
                         <FormatNumber value={tick.workersAvailable.get("Power") ?? 0} />W
                      </div>
                   </Tippy>
@@ -230,29 +235,29 @@ export function ResourcePanel(): React.ReactNode {
                <div className="separator-vertical" />
             </>
          ) : null}
-         <div className="row pointer" onClick={() => Singleton().sceneManager.loadScene(TechTreeScene)}>
+         <div className="section pointer" onClick={() => Singleton().sceneManager.loadScene(TechTreeScene)}>
             <div className={classNames({ "m-icon": true })}>science</div>
             <Tippy content={t(L.Science)} placement="bottom">
-               <div style={{ width: "6rem" }}>
+               <div style={{ width: "12rem" }}>
                   <FormatNumber value={TimeSeries.science[TimeSeries.science.length - 1]} />
+                  <span
+                     className={classNames({
+                        "text-red": scienceDelta < 0,
+                        "text-green": scienceDelta > 0,
+                     })}
+                     style={{ fontWeight: "normal", textAlign: "left" }}
+                  >
+                     {mathSign(scienceDelta)}
+                     <FormatNumber value={Math.abs(scienceDelta)} />
+                  </span>
                </div>
             </Tippy>
-            <div
-               className={classNames({
-                  "text-red": scienceDelta < 0,
-                  "text-green": scienceDelta > 0,
-               })}
-               style={{ width: "6rem", fontWeight: "normal", textAlign: "left" }}
-            >
-               {mathSign(scienceDelta)}
-               <FormatNumber value={Math.abs(scienceDelta)} />
-            </div>
          </div>
          <div className="separator-vertical" />
-         <div className="row pointer" onClick={() => highlightNotProducingReasons()}>
+         <div className="section pointer" onClick={() => highlightNotProducingReasons()}>
             <div className={classNames({ "m-icon": true })}>domain_disabled</div>
             <Tippy content={t(L.NotProducingBuildings)} placement="bottom">
-               <div style={{ width: "6rem" }}>
+               <div style={{ width: "5rem" }}>
                   <FormatNumber
                      value={mapCount(tick.notProducingReasons, (v) => {
                         if (options.resourceBarExcludeStorageFull && v === NotProducingReason.StorageFull) {
@@ -272,7 +277,7 @@ export function ResourcePanel(): React.ReactNode {
          </div>
          <div className="separator-vertical" />
          <DeficitResources />
-         <div className="row">
+         <div className="section">
             <div
                className={classNames({
                   "m-icon": true,
@@ -281,28 +286,47 @@ export function ResourcePanel(): React.ReactNode {
                account_balance
             </div>
             <Tippy content={t(L.TotalEmpireValue)} placement="bottom">
-               <div style={{ width: "6rem" }}>
+               <div style={{ width: "12rem" }}>
                   <FormatNumber value={tick.totalValue} />
+                  <span
+                     className={classNames({ "text-red": evDelta < 0, "text-green": evDelta > 0 })}
+                     style={{ fontWeight: "normal", textAlign: "left" }}
+                  >
+                     {mathSign(evDelta)}
+                     <FormatNumber value={Math.abs(evDelta)} />
+                  </span>
                </div>
             </Tippy>
-            <div
-               className={classNames({ "text-red": evDelta < 0, "text-green": evDelta > 0 })}
-               style={{ width: "6rem", fontWeight: "normal", textAlign: "left" }}
-            >
-               {mathSign(evDelta)}
-               <FormatNumber value={Math.abs(evDelta)} />
+         </div>
+         <div className="separator-vertical" />
+         <div className="section">
+            <div className="m-icon small">person_celebrate</div>
+            <div style={{ width: "8rem" }}>
+               <Tippy content={t(L.ExtraGreatPeopleAtReborn)}>
+                  <span>{getRebirthGreatPeopleCount()}</span>
+               </Tippy>
+               <Tippy content={t(L.ProgressTowardsNextGreatPerson)}>
+                  <span className="text-desc" style={{ fontWeight: "normal", marginLeft: 5 }}>
+                     ({formatPercent(clamp(getProgressTowardsNextGreatPerson(), 0, 1), 0, Rounding.Floor)})
+                  </span>
+               </Tippy>
             </div>
-            <Tippy content={t(L.ExtraGreatPeopleAtReborn)}>
-               <div className="row ml5">
-                  <div className="m-icon small">person_celebrate</div>
-                  <div className="text-desc">{getRebirthGreatPeopleCount()}</div>
-               </div>
-            </Tippy>
-            <Tippy content={t(L.ProgressTowardsNextGreatPerson)}>
-               <div className="text-desc ml10" style={{ fontWeight: "normal" }}>
-                  {formatPercent(clamp(getProgressTowardsNextGreatPerson(), 0, 1), 0, Rounding.Floor)}
-               </div>
-            </Tippy>
+         </div>
+         <div className="separator-vertical" />
+         <div className="section" style={{ padding: "0 0.5rem" }}>
+            <select
+               value={gs.speedUp}
+               onChange={(e) => {
+                  gs.speedUp = clamp(Number.parseInt(e.target.value, 10), 1, getMaxWarpSpeed(gs));
+                  notifyGameStateUpdate();
+               }}
+            >
+               {range(1, getMaxWarpSpeed(gs) + 1).map((i) => (
+                  <option key={i} value={i}>
+                     {i}x
+                  </option>
+               ))}
+            </select>
          </div>
       </div>
    );
@@ -327,7 +351,7 @@ function DeficitResources(): React.ReactNode {
    return (
       <>
          <div
-            className="row pointer"
+            className="section pointer"
             onClick={() => {
                const s = Tick.current.specialBuildings.get("Statistics");
                if (s) {
@@ -358,7 +382,7 @@ function DeficitResources(): React.ReactNode {
                }
                placement="bottom"
             >
-               <div style={{ width: "6rem" }}>
+               <div style={{ width: "5rem" }}>
                   <FormatNumber value={deficit.size} />
                </div>
             </Tippy>
