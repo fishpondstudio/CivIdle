@@ -1148,5 +1148,5 @@ export function getUniqueWonders(currentCity: City): Building[] {
 }
 
 export function getEastIndiaCompanyUpgradeCost(level: number): number {
-   return Math.pow(10, level - 2) * 1_000_000_000;
+   return Math.pow(2, level - 2) * 10_000_000_000_000;
 }
