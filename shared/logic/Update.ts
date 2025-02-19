@@ -377,6 +377,9 @@ export function transportAndConsumeResources(
       // when upgrade completes:
       if (building.status === "upgrading" && isWorldWonder(building.type)) {
          OnBuildingProductionComplete.emit({ xy, offline });
+         if(Config.Building[building.type].name() === "Matrioshka Brain"){
+            Tick.next.specialBuildings.set(building.type, tile as Required<ITileData>); //fixes drop from Statistics Office while upgrading
+         }
       }
 
       if (completed) {
