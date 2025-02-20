@@ -116,7 +116,7 @@ export function ResourcePanel(): React.ReactNode {
          return;
       }
       const rect = ref.current.getBoundingClientRect();
-      SteamClient.setSize(rect.width, rect.height);
+      SteamClient.setSize(Math.round(rect.width), Math.round(rect.height));
    };
 
    useTypedEvent(GameStateChanged, updateWindowSize);
@@ -145,7 +145,7 @@ export function ResourcePanel(): React.ReactNode {
                            SteamClient.restore();
                            if (ref.current) {
                               const rect = ref.current.getBoundingClientRect();
-                              SteamClient.setSize(rect.width, rect.height);
+                              SteamClient.setSize(Math.round(rect.width), Math.round(rect.height));
                            }
                         }
                      }}
