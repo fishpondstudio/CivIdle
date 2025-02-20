@@ -6,7 +6,7 @@ import { Tick } from "../../../shared/logic/TickLogic";
 import { isSaveOwner } from "../../../shared/utilities/DatabaseShared";
 import { isNullOrUndefined, sizeOf } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
-import { compressSave, saveGame } from "../Global";
+import { compressSave, saveGame, useFloatingMode } from "../Global";
 import { client, usePlatformInfo, useUser } from "../rpc/RPCClient";
 import { SteamClient, isSteam } from "../rpc/SteamClient";
 import { PlayerMapScene } from "../scenes/PlayerMapScene";
@@ -64,6 +64,7 @@ export function MenuComponent(): React.ReactNode {
    const buttonRef = useRef(null);
    const user = useUser();
    const platformInfo = usePlatformInfo();
+   const isFloating = useFloatingMode();
    useEffect(() => {
       function onPointerDown(e: PointerEvent) {
          setActive(null);

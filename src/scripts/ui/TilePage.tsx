@@ -4,7 +4,7 @@ import { isSingletonReady } from "../utilities/Singleton";
 import { BuildingPage } from "./BuildingPage";
 import { ConstructionPage } from "./ConstructionPage";
 import { EmptyTilePage } from "./EmptyTilePage";
-import { UnexploredTile } from "./UnexploredTile";
+import { UnexploredTilePage } from "./UnexploredTilePage";
 
 export function TilePage(props: { xy: Tile | undefined }): React.ReactNode {
    const gameState = useGameState();
@@ -14,7 +14,7 @@ export function TilePage(props: { xy: Tile | undefined }): React.ReactNode {
    }
    const tile = gameState.tiles.get(xy);
    if (!tile?.explored) {
-      return <UnexploredTile xy={xy} gameState={gameState} />;
+      return <UnexploredTilePage xy={xy} gameState={gameState} />;
    }
    if (!tile.building) {
       return <EmptyTilePage tile={tile} />;

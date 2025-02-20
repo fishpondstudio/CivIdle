@@ -36,6 +36,7 @@ import { MenuComponent } from "./MenuComponent";
 import { ResourceAmountComponent } from "./ResourceAmountComponent";
 import { TableView } from "./TableView";
 import { TextWithHelp } from "./TextWithHelpComponent";
+import { TitleBarComponent } from "./TitleBarComponent";
 
 let lastBuild: Building | null = null;
 let savedFilter = BuildingFilter.None;
@@ -77,9 +78,7 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
    const buildingByType = getTypeBuildings(gs);
    return (
       <div className="window" onPointerDown={() => setSelected(null)}>
-         <div className="title-bar">
-            <div className="title-bar-text">{t(L.Tile)}</div>
-         </div>
+         <TitleBarComponent>{t(L.Tile)}</TitleBarComponent>
          <MenuComponent />
          <div className="window-body" style={{ display: "flex", flexDirection: "column" }}>
             {sizeOf(tile.deposit) > 0 ? (

@@ -8,6 +8,7 @@ import { jsxMapOf } from "../utilities/Helper";
 import { Singleton } from "../utilities/Singleton";
 import { MenuComponent } from "./MenuComponent";
 import { TilePage } from "./TilePage";
+import { TitleBarComponent } from "./TitleBarComponent";
 
 export function SteamAchievementPage(): React.ReactNode {
    const gs = useGameState();
@@ -20,9 +21,7 @@ export function SteamAchievementPage(): React.ReactNode {
 
    return (
       <div className="window">
-         <div className="title-bar">
-            <div className="title-bar-text">{t(L.SteamAchievement)}</div>
-         </div>
+         <TitleBarComponent>{t(L.SteamAchievement)}</TitleBarComponent>
          <MenuComponent />
          <div className="window-body">
             <button

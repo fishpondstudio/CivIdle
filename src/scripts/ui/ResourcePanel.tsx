@@ -1,6 +1,6 @@
 import Tippy from "@tippyjs/react";
 import classNames from "classnames";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { Resource } from "../../../shared/definitions/ResourceDefinitions";
 import {
    getMaxWarpSpeed,
@@ -10,7 +10,7 @@ import {
 import { Config } from "../../../shared/logic/Config";
 import { FESTIVAL_CONVERSION_RATE } from "../../../shared/logic/Constants";
 import { GameFeature, hasFeature } from "../../../shared/logic/FeatureLogic";
-import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
+import { GameStateChanged, notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
 import { getHappinessIcon } from "../../../shared/logic/HappinessLogic";
 import { getResourceIO } from "../../../shared/logic/IntraTickCache";
 import {
@@ -32,11 +32,14 @@ import {
    type Tile,
 } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
-import { useGameOptions, useGameState } from "../Global";
+import { FloatingModeChanged, useFloatingMode, useGameOptions, useGameState } from "../Global";
 import { useCurrentTick } from "../logic/ClientUpdate";
 import { TimeSeries } from "../logic/TimeSeries";
+import { SteamClient, isSteam } from "../rpc/SteamClient";
+import { EmptyScene } from "../scenes/EmptyScene";
 import { TechTreeScene } from "../scenes/TechTreeScene";
 import { LookAtMode, WorldScene } from "../scenes/WorldScene";
+import { useTypedEvent } from "../utilities/Hook";
 import { Singleton } from "../utilities/Singleton";
 import { playClick, playError } from "../visuals/Sound";
 import { showToast } from "./GlobalModal";
@@ -47,6 +50,8 @@ export function ResourcePanel(): React.ReactNode {
    const tick = useCurrentTick();
    const gs = useGameState();
    const options = useGameOptions();
+   const isFloating = useFloatingMode();
+   const ref = useRef<HTMLDivElement>(null);
    const { workersAfterHappiness, workersBusy } = getScienceFromWorkers(gs);
    const highlightNotProducingReasons = () => {
       const buildingTiles: Tile[] = Array.from(tick.notProducingReasons.entries())
@@ -92,55 +97,118 @@ export function ResourcePanel(): React.ReactNode {
          gs.favoriteTiles.delete(tile);
       }
    });
+
+   let styles: React.CSSProperties | undefined;
+   if (isFloating) {
+      styles = {
+         position: "absolute",
+         top: 0,
+         left: 0,
+         zIndex: 301,
+      };
+   }
+
+   const updateWindowSize = () => {
+      if (!isFloating) {
+         return;
+      }
+      if (!ref.current) {
+         return;
+      }
+      const rect = ref.current.getBoundingClientRect();
+      SteamClient.setSize(rect.width, rect.height);
+   };
+
+   useTypedEvent(GameStateChanged, updateWindowSize);
+
    return (
-      <div className="resource-bar window">
-         <div className={classNames({ "menu-button": true, active: favoriteActive })}>
-            <div
-               onPointerDown={(e) => {
-                  if (gs.favoriteTiles.size === 0) {
-                     playError();
-                     showToast(t(L.FavoriteBuildingEmptyToast));
-                     return;
-                  }
-                  e.nativeEvent.stopPropagation();
-                  setFavoriteActive(!favoriteActive);
-               }}
-               className={classNames({ "m-icon fill text-orange": true })}
-            >
-               kid_star
+      <div
+         className={classNames({ "resource-bar window": true, "app-region-drag": isFloating })}
+         style={styles}
+         ref={ref}
+      >
+         {isSteam() ? (
+            <>
+               <div className="menu-button app-region-none">
+                  <div
+                     className="m-icon"
+                     onClick={() => {
+                        if (isFloating) {
+                           FloatingModeChanged.emit(false);
+                           Singleton().sceneManager.loadScene(WorldScene);
+                           SteamClient.exitFloatingMode();
+                           SteamClient.maximize();
+                        } else {
+                           FloatingModeChanged.emit(true);
+                           Singleton().sceneManager.loadScene(EmptyScene);
+                           SteamClient.enterFloatingMode();
+                           SteamClient.restore();
+                           if (ref.current) {
+                              const rect = ref.current.getBoundingClientRect();
+                              SteamClient.setSize(rect.width, rect.height);
+                           }
+                        }
+                     }}
+                  >
+                     {isFloating ? "pip_exit" : "picture_in_picture"}
+                  </div>
+               </div>
+               <div className="separator-vertical" />
+            </>
+         ) : null}
+         {isFloating ? (
+            <div className="menu-button">
+               <div className="m-icon">open_with</div>
             </div>
-            <div className={classNames({ "menu-popover": true, active: favoriteActive })}>
-               {Array.from(gs.favoriteTiles)
-                  .sort((a, b) => {
-                     return Config.Building[gs.tiles.get(a)!.building!.type]
-                        .name()
-                        .localeCompare(Config.Building[gs.tiles.get(b)!.building!.type].name());
-                  })
-                  .map((tile) => {
-                     const building = gs.tiles.get(tile)?.building;
-                     if (!building) return null;
-                     return (
-                        <div
-                           key={tile}
-                           className="menu-popover-item row"
-                           onPointerDown={() => {
-                              playClick();
-                              Singleton()
-                                 .sceneManager.getCurrent(WorldScene)
-                                 ?.lookAtTile(tile, LookAtMode.Select);
-                           }}
-                        >
-                           <div className="f1">{Config.Building[building.type].name()}</div>
-                           {!isSpecialBuilding(building.type) ? (
-                              <span className="ml10 text-small text-desc">
-                                 {t(L.LevelX, { level: building.level })}
-                              </span>
-                           ) : null}
-                        </div>
-                     );
-                  })}
+         ) : (
+            <div className={classNames({ "menu-button": true, active: favoriteActive })}>
+               <div
+                  onPointerDown={(e) => {
+                     if (gs.favoriteTiles.size === 0) {
+                        playError();
+                        showToast(t(L.FavoriteBuildingEmptyToast));
+                        return;
+                     }
+                     e.nativeEvent.stopPropagation();
+                     setFavoriteActive(!favoriteActive);
+                  }}
+                  className={classNames({ "m-icon fill text-orange": true })}
+               >
+                  kid_star
+               </div>
+               <div className={classNames({ "menu-popover": true, active: favoriteActive })}>
+                  {Array.from(gs.favoriteTiles)
+                     .sort((a, b) => {
+                        return Config.Building[gs.tiles.get(a)!.building!.type]
+                           .name()
+                           .localeCompare(Config.Building[gs.tiles.get(b)!.building!.type].name());
+                     })
+                     .map((tile) => {
+                        const building = gs.tiles.get(tile)?.building;
+                        if (!building) return null;
+                        return (
+                           <div
+                              key={tile}
+                              className="menu-popover-item row"
+                              onPointerDown={() => {
+                                 playClick();
+                                 Singleton()
+                                    .sceneManager.getCurrent(WorldScene)
+                                    ?.lookAtTile(tile, LookAtMode.Select);
+                              }}
+                           >
+                              <div className="f1">{Config.Building[building.type].name()}</div>
+                              {!isSpecialBuilding(building.type) ? (
+                                 <span className="ml10 text-small text-desc">
+                                    {t(L.LevelX, { level: building.level })}
+                                 </span>
+                              ) : null}
+                           </div>
+                        );
+                     })}
+               </div>
             </div>
-         </div>
+         )}
          <div className="separator-vertical" />
          {tick.happiness ? (
             <div
@@ -178,9 +246,14 @@ export function ResourcePanel(): React.ReactNode {
             </div>
          ) : null}
          <div className="separator-vertical" />
-         <Tippy content={Config.City[gs.city].festivalDesc()}>
+         <Tippy disabled={isFloating} content={Config.City[gs.city].festivalDesc()}>
             <div
-               className={classNames({ section: true, pointer: true, "text-orange": gs.festival })}
+               className={classNames({
+                  section: true,
+                  pointer: true,
+                  "app-region-none": true,
+                  "text-orange": gs.festival,
+               })}
                onClick={() => {
                   playClick();
                   gs.festival = !gs.festival;
@@ -316,7 +389,7 @@ export function ResourcePanel(): React.ReactNode {
             </div>
          </div>
          <div className="separator-vertical" />
-         <div className="section" style={{ padding: "0 0.5rem" }}>
+         <div className="section app-region-none" style={{ padding: "0 0.5rem" }}>
             <select
                value={gs.speedUp}
                onChange={(e) => {

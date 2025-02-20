@@ -21,7 +21,7 @@ import AccountLevelMod from "../../images/AccountLevelMod.png";
 import Supporter from "../../images/Supporter.png";
 import chatActive from "../../images/chat_active.png";
 import chatInactive from "../../images/chat_inactive.png";
-import { ToggleChatWindow, useGameOptions } from "../Global";
+import { ToggleChatWindow, useFloatingMode, useGameOptions } from "../Global";
 import { AccountLevelImages, AccountLevelNames } from "../logic/AccountLevel";
 import { handleChatCommand } from "../logic/ChatCommand";
 import {
@@ -39,7 +39,6 @@ import { playError } from "../visuals/Sound";
 import { showToast } from "./GlobalModal";
 import { RenderHTML } from "./RenderHTMLComponent";
 import { SelectChatChannelModal } from "./SelectChatChannelModal";
-import { isIOS } from "../utilities/Platforms";
 
 const SetChatInput = new TypedEvent<{ channel: ChatChannel; getContent: (old: string) => string }>();
 
@@ -48,6 +47,7 @@ export function ChatPanel(): React.ReactNode {
    if (options.chatChannels.size === 0) {
       options.chatChannels.add(firstKeyOf(ChatChannels)!);
    }
+   const isFloating = useFloatingMode();
    const messages = useChatMessages().filter((m) => !("channel" in m) || options.chatChannels.has(m.channel));
    const [isPending, startTransition] = useTransition();
    const [showChatWindow, setShowChatWindow] = useState(false);
@@ -61,6 +61,10 @@ export function ChatPanel(): React.ReactNode {
 
    if (!CSS.supports("content-visibility", "visible") || !CSS.supports("content-visibility", "hidden")) {
       style.display = showChatWindow ? "flex" : "none";
+   }
+
+   if (isFloating) {
+      return null;
    }
 
    return (

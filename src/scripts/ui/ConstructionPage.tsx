@@ -19,6 +19,7 @@ import { BuildingInputModeComponent } from "./BuildingInputModeComponent";
 import { MenuComponent } from "./MenuComponent";
 import { RenderHTML } from "./RenderHTMLComponent";
 import { WarningComponent } from "./WarningComponent";
+import { TitleBarComponent } from "./TitleBarComponent";
 
 export function ConstructionPage({ tile }: { tile: ITileData }): React.ReactNode {
    const building = tile.building;
@@ -53,9 +54,7 @@ export function ConstructionPage({ tile }: { tile: ITileData }): React.ReactNode
 
    return (
       <div className="window">
-         <div className="title-bar">
-            <div className="title-bar-text">{definition.name()}</div>
-         </div>
+         <TitleBarComponent>{definition.name()}</TitleBarComponent>
          <MenuComponent />
          <div className="window-body">
             {isWorldWonder(building.type) ? (

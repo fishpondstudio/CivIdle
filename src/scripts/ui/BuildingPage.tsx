@@ -25,6 +25,7 @@ import { ReligionBuildingBody } from "./ReligionBuildingBody";
 import { ScienceProductionWonderBuildingBody } from "./ScienceProductionWonderBuildingBody";
 import { StatisticsBuildingBody } from "./StatisticsBuildingBody";
 import { TheMetBuildingBody } from "./TheMetBuildingBody";
+import { TitleBarComponent } from "./TitleBarComponent";
 import { ToggleWonderBuildingBody } from "./ToggleableWonderBuildingBody";
 import { TowerBridgeBuildingBody } from "./TowerBridgeBuildingBody";
 import { TraditionBuildingBody } from "./TraditionBuildingBody";
@@ -84,9 +85,7 @@ export function BuildingPage(props: { tile: ITileData }): React.ReactNode {
    const Body = BuildingBodyOverride[building.type] ?? DefaultBuildingBody;
    return (
       <div className="window">
-         <div className="title-bar">
-            <div className="title-bar-text">{definition.name()}</div>
-         </div>
+         <TitleBarComponent>{definition.name()}</TitleBarComponent>
          <MenuComponent />
          <Body {...props} gameState={gs} xy={tile.tile} />
       </div>

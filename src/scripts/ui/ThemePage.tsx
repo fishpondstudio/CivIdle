@@ -20,14 +20,13 @@ import { ChangeModernUIComponent } from "./ChangeModernUIComponent";
 import { ColorPicker } from "./ColorPicker";
 import { MenuComponent } from "./MenuComponent";
 import { RenderHTML } from "./RenderHTMLComponent";
+import { TitleBarComponent } from "./TitleBarComponent";
 
 export function ThemePage(): React.ReactNode {
    const gameOptions = useGameOptions();
    return (
       <div className="window">
-         <div className="title-bar">
-            <div className="title-bar-text">{t(L.Theme)}</div>
-         </div>
+         <TitleBarComponent>{t(L.Theme)}</TitleBarComponent>
          <MenuComponent />
          <div className="window-body">
             <fieldset>

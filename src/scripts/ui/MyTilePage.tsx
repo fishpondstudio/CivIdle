@@ -6,15 +6,14 @@ import { client, usePlayerMap } from "../rpc/RPCClient";
 import { showToast } from "./GlobalModal";
 import { MenuComponent } from "./MenuComponent";
 import { PlayerHandleComponent } from "./PlayerHandleComponent";
+import { TitleBarComponent } from "./TitleBarComponent";
 
 export function MyTilePage({ xy }: { xy: string }): React.ReactNode {
    const playerMap = usePlayerMap();
    const [tariffRate, setTariffRate] = useState(playerMap.get(xy)?.tariffRate ?? 0);
    return (
       <div className="window">
-         <div className="title-bar">
-            <div className="title-bar-text">{t(L.PlayerMapYourTile)}</div>
-         </div>
+         <TitleBarComponent>{t(L.PlayerMapYourTile)}</TitleBarComponent>
          <MenuComponent />
          <div className="window-body">
             <PlayerHandleComponent />

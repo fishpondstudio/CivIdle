@@ -5,13 +5,12 @@ import { AdvisorModal } from "./AdvisorModal";
 import { FirstTimePlayerModal } from "./FirstTimePlayerModal";
 import { showModal } from "./GlobalModal";
 import { MenuComponent } from "./MenuComponent";
+import { TitleBarComponent } from "./TitleBarComponent";
 
 export function TutorialPage(): React.ReactNode {
    return (
       <div className="window">
-         <div className="title-bar">
-            <div className="title-bar-text">{t(L.Tutorial)}</div>
-         </div>
+         <TitleBarComponent>{t(L.Tutorial)}</TitleBarComponent>
          <MenuComponent />
          <div className="window-body">
             <div className="inset-shallow white row p10 mb10">

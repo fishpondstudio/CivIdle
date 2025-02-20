@@ -3,14 +3,13 @@ import type { Resource } from "../../../shared/definitions/ResourceDefinitions";
 import { Config } from "../../../shared/logic/Config";
 import { clamp, keysOf, mapOf, safeAdd } from "../../../shared/utilities/Helper";
 import type { PartialTabulate } from "../../../shared/utilities/TypeDefinitions";
+import { TitleBarComponent } from "./TitleBarComponent";
 
 export function DebugPage(): React.ReactNode {
    const [selectedResource, setSelectedResource] = useState<PartialTabulate<Resource>>({});
    return (
       <div className="window">
-         <div className="title-bar">
-            <div className="title-bar-text">Debug</div>
-         </div>
+         <TitleBarComponent>Debug</TitleBarComponent>
          <div className="window-body">
             <div className="table-view">
                <table>

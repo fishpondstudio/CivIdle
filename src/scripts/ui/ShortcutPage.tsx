@@ -6,14 +6,13 @@ import { jsxMapOf } from "../utilities/Helper";
 import { EditShortcutModal } from "./EditShortcutModal";
 import { showModal } from "./GlobalModal";
 import { MenuComponent } from "./MenuComponent";
+import { TitleBarComponent } from "./TitleBarComponent";
 
 export function ShortcutPage(): React.ReactNode {
    const gameOptions = useGameOptions();
    return (
       <div className="window">
-         <div className="title-bar">
-            <div className="title-bar-text">{t(L.Shortcut)}</div>
-         </div>
+         <TitleBarComponent>{t(L.Shortcut)}</TitleBarComponent>
          <MenuComponent />
          <div className="window-body">
             {jsxMapOf(ShortcutScopes, (scope, name) => {

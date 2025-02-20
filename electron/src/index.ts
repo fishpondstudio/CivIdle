@@ -17,6 +17,9 @@ export function getLocalGameSavePath(): string {
    return path.join(app.getPath("appData"), "CivIdleLocal");
 }
 
+export const MIN_WIDTH = 1136;
+export const MIN_HEIGHT = 640;
+
 const createWindow = async () => {
    try {
       const steam = init();
@@ -26,9 +29,12 @@ const createWindow = async () => {
             devTools: !app.isPackaged,
             backgroundThrottling: false,
          },
-         minHeight: 640,
-         minWidth: 1136,
+         minHeight: MIN_HEIGHT,
+         minWidth: MIN_WIDTH,
          show: false,
+         frame: false,
+         roundedCorners: false,
+         thickFrame: false,
          backgroundColor: "#000000",
       });
 
@@ -62,7 +68,7 @@ const createWindow = async () => {
          mainWindow.webContents.send("close");
       });
 
-      const service = new IPCService(steam);
+      const service = new IPCService(steam, mainWindow);
 
       ipcMain.handle("__RPCCall", (e, method: keyof IPCService, args) => {
          // @ts-expect-error

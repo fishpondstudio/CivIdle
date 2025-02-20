@@ -15,6 +15,7 @@ import { TableView } from "./TableView";
 import { TextWithHelp } from "./TextWithHelpComponent";
 import { TilePage } from "./TilePage";
 import { WarningComponent } from "./WarningComponent";
+import { TitleBarComponent } from "./TitleBarComponent";
 
 export function GreatPersonPage(): React.ReactNode {
    const gs = useGameState();
@@ -29,9 +30,7 @@ export function GreatPersonPage(): React.ReactNode {
 
    return (
       <div className="window">
-         <div className="title-bar">
-            <div className="title-bar-text">{t(L.GreatPeople)}</div>
-         </div>
+         <TitleBarComponent>{t(L.GreatPeople)}</TitleBarComponent>
          <MenuComponent />
          <div className="window-body">
             <button

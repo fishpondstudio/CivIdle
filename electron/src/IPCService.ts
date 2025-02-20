@@ -1,16 +1,18 @@
-import { app, shell } from "electron";
+import { app, shell, type BrowserWindow } from "electron";
 import { exists, outputFile, readFile, unlink } from "fs-extra";
 import { rename } from "node:fs/promises";
 import path from "node:path";
-import { getGameSavePath, getLocalGameSavePath, type SteamClient } from ".";
+import { MIN_HEIGHT, MIN_WIDTH, getGameSavePath, getLocalGameSavePath, type SteamClient } from ".";
 
 const BACKUP_FREQ = 1000 * 60 * 10;
 
 export class IPCService {
    private _client: SteamClient;
+   private _mainWindow: BrowserWindow;
 
-   constructor(steam: SteamClient) {
+   constructor(steam: SteamClient, mainWindow: BrowserWindow) {
       this._client = steam;
+      this._mainWindow = mainWindow;
    }
 
    public async fileWrite(name: string, content: string): Promise<void> {
@@ -92,5 +94,37 @@ export class IPCService {
 
    public quit(): void {
       app.exit(0);
+   }
+
+   public minimize(): void {
+      this._mainWindow.minimize();
+   }
+
+   public maximize(): void {
+      this._mainWindow.maximize();
+   }
+
+   public restore(): void {
+      this._mainWindow.restore();
+   }
+
+   public isMaximized(): boolean {
+      return this._mainWindow.isMaximized();
+   }
+
+   public setSize(width: number, height: number): void {
+      this._mainWindow.setMinimumSize(width, height);
+      this._mainWindow.setSize(width, height);
+   }
+
+   public enterFloatingMode(): void {
+      this._mainWindow.setResizable(false);
+      this._mainWindow.setAlwaysOnTop(true);
+   }
+
+   public exitFloatingMode(): void {
+      this._mainWindow.setResizable(true);
+      this._mainWindow.setAlwaysOnTop(false);
+      this._mainWindow.setMinimumSize(MIN_WIDTH, MIN_HEIGHT);
    }
 }

@@ -15,6 +15,7 @@ import { FormatNumber } from "./HelperComponents";
 import { MenuComponent } from "./MenuComponent";
 import { RenderHTML } from "./RenderHTMLComponent";
 import { WarningComponent } from "./WarningComponent";
+import { TitleBarComponent } from "./TitleBarComponent";
 
 export function PlayerTilePage({ xy }: { xy: string }): React.ReactNode {
    const playerMap = usePlayerMap();
@@ -26,9 +27,7 @@ export function PlayerTilePage({ xy }: { xy: string }): React.ReactNode {
    const isReserved = isTileReserved(tile);
    return (
       <div className="window">
-         <div className="title-bar">
-            <div className="title-bar-text">{tile.handle}</div>
-         </div>
+         <TitleBarComponent>{tile.handle}</TitleBarComponent>
          <MenuComponent />
          <div className="window-body">
             {isReserved ? null : (

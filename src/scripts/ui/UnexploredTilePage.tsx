@@ -12,9 +12,10 @@ import { playError, playSuccess } from "../visuals/Sound";
 import type { IBuildingComponentProps } from "./BuildingPage";
 import { MenuComponent } from "./MenuComponent";
 import { RenderHTML } from "./RenderHTMLComponent";
+import { TitleBarComponent } from "./TitleBarComponent";
 import { WarningComponent } from "./WarningComponent";
 
-export function UnexploredTile({ xy, gameState }: IBuildingComponentProps): React.ReactNode {
+export function UnexploredTilePage({ xy, gameState }: IBuildingComponentProps): React.ReactNode {
    const statistics = Tick.current.specialBuildings.get("Statistics");
    let explorers = 0;
    if (statistics) {
@@ -51,9 +52,7 @@ export function UnexploredTile({ xy, gameState }: IBuildingComponentProps): Reac
 
    return (
       <div className="window">
-         <div className="title-bar">
-            <div className="title-bar-text">{t(L.UnexploredTile)}</div>
-         </div>
+         <TitleBarComponent>{t(L.UnexploredTile)}</TitleBarComponent>
          <MenuComponent />
          <div className="window-body">
             <WarningComponent icon="info" className="mb10">

@@ -2,13 +2,12 @@ import { PatchNotes } from "../../../shared/definitions/PatchNotes";
 import { L, t } from "../../../shared/utilities/i18n";
 import { openUrl } from "../utilities/Platform";
 import { MenuComponent } from "./MenuComponent";
+import { TitleBarComponent } from "./TitleBarComponent";
 
 export function PatchNotesPage(): React.ReactNode {
    return (
       <div className="window">
-         <div className="title-bar">
-            <div className="title-bar-text">{t(L.PatchNotes)}</div>
-         </div>
+         <TitleBarComponent>{t(L.PatchNotes)}</TitleBarComponent>
          <MenuComponent />
          <div className="window-body">
             {PatchNotes.map((note) => {

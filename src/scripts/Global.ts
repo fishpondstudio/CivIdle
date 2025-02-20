@@ -201,6 +201,13 @@ export function isGameDataCompatible(gs: SavedGame): boolean {
 export const useGameState = makeObservableHook(GameStateChanged, getGameState);
 export const useGameOptions = makeObservableHook(GameOptionsChanged, getGameOptions);
 
+let floatingMode = false;
+export const FloatingModeChanged = new TypedEvent<boolean>();
+FloatingModeChanged.on((mode) => {
+   floatingMode = mode;
+});
+export const useFloatingMode = makeObservableHook(FloatingModeChanged, () => floatingMode);
+
 export function getProductionPriority(v: number): number {
    return v & 0x0000ff;
 }

@@ -27,6 +27,7 @@ import { FormatNumber } from "./HelperComponents";
 import { InDevelopmentPage } from "./InDevelopmentPage";
 import { MenuComponent } from "./MenuComponent";
 import { ProgressBarComponent } from "./ProgressBarComponent";
+import { TitleBarComponent } from "./TitleBarComponent";
 import { UnlockableEffectComponent } from "./UnlockableEffectComponent";
 
 export function TechPage({ id }: { id: Tech }): React.ReactNode {
@@ -107,11 +108,9 @@ export function TechPage({ id }: { id: Tech }): React.ReactNode {
 
    return (
       <div className="window">
-         <div className="title-bar">
-            <div className="title-bar-text">
-               {t(L.UnlockBuilding)}: {tech.name()}
-            </div>
-         </div>
+         <TitleBarComponent>
+            {t(L.UnlockBuilding)}: {tech.name()}
+         </TitleBarComponent>
          <MenuComponent />
          <div className="window-body">
             <button className="w100 row jcc mb10" onClick={goBackToCity}>

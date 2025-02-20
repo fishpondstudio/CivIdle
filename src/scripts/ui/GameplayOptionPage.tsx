@@ -35,15 +35,14 @@ import { MenuComponent } from "./MenuComponent";
 import { RenderHTML } from "./RenderHTMLComponent";
 import { TextWithHelp } from "./TextWithHelpComponent";
 import { WarningComponent } from "./WarningComponent";
+import { TitleBarComponent } from "./TitleBarComponent";
 
 export function GameplayOptionPage(): React.ReactNode {
    const options = useGameOptions();
    const gs = useGameState();
    return (
       <div className="window">
-         <div className="title-bar">
-            <div className="title-bar-text">{t(L.Gameplay)}</div>
-         </div>
+         <TitleBarComponent>{t(L.Gameplay)}</TitleBarComponent>
          <MenuComponent />
          <div className="window-body">
             <fieldset>

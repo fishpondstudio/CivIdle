@@ -7,9 +7,11 @@ import "../../css/CrossPlatformSavePage.css";
 import { compressSave, decompressSave, overwriteSaveGame, saveGame } from "../Global";
 import { client, usePlatformInfo, useUser } from "../rpc/RPCClient";
 import { playClick, playError, playSuccess } from "../visuals/Sound";
-import { hideModal, showModal, showToast } from "./GlobalModal";
+import { ConnectToDeviceModal } from "./ConnectToDeviceModal";
+import { showModal, showToast } from "./GlobalModal";
 import { RenderHTML } from "./RenderHTMLComponent";
 import { TextWithHelp } from "./TextWithHelpComponent";
+import { TitleBarComponent } from "./TitleBarComponent";
 
 let loadingState = false;
 
@@ -21,9 +23,7 @@ export function CrossPlatformSavePage(): React.ReactNode {
    return (
       <div className="cloud-save-page">
          <div className="window">
-            <div className="title-bar">
-               <div className="title-bar-text">{t(L.CrossPlatformSave)}</div>
-            </div>
+            <TitleBarComponent>{t(L.CrossPlatformSave)}</TitleBarComponent>
             <div className="window-body">
                <fieldset>
                   <legend>{t(L.CrossPlatformAccount)}</legend>
@@ -193,49 +193,6 @@ export function CrossPlatformSavePage(): React.ReactNode {
                   )}
                </div>
             </div>
-         </div>
-      </div>
-   );
-}
-
-function ConnectToDeviceModal(): React.ReactNode {
-   return (
-      <div className="window">
-         <div className="title-bar">
-            <div className="title-bar-text">{t(L.ConnectToADevice)}</div>
-            <div className="title-bar-controls">
-               <button onClick={hideModal} aria-label="Close"></button>
-            </div>
-         </div>
-         <div className="window-body">
-            <form
-               method="post"
-               onSubmit={async (e) => {
-                  e.preventDefault();
-                  const formData = new FormData(e.target as HTMLFormElement);
-                  try {
-                     await client.verifyPassCode(
-                        String(formData.get("handle") ?? ""),
-                        String(formData.get("passcode") ?? ""),
-                     );
-                     window.location.reload();
-                  } catch (error) {
-                     playError();
-                     showToast(String(error));
-                  }
-               }}
-            >
-               <div>{t(L.PlayerHandle)}</div>
-               <input type="text" name="handle" className="w100 mt5 mb10" />
-               <div>{t(L.Passcode)}</div>
-               <input type="text" name="passcode" className="w100 mt5 mb10" />
-               <div className="row">
-                  <div className="f1"></div>
-                  <button type="submit" className="text-strong">
-                     {t(L.CrossPlatformConnect)}
-                  </button>
-               </div>
-            </form>
          </div>
       </div>
    );

@@ -1,13 +1,12 @@
 import { L, t } from "../../../shared/utilities/i18n";
 import { ClaimTileComponent } from "./ClaimTileComponent";
 import { MenuComponent } from "./MenuComponent";
+import { TitleBarComponent } from "./TitleBarComponent";
 
 export function UnclaimedTilePage({ xy }: { xy: string }): React.ReactNode {
    return (
       <div className="window">
-         <div className="title-bar">
-            <div className="title-bar-text">{t(L.PlayerMapUnclaimedTile)}</div>
-         </div>
+         <TitleBarComponent>{t(L.PlayerMapUnclaimedTile)}</TitleBarComponent>
          <MenuComponent />
          <div className="window-body">
             <ClaimTileComponent xy={xy} />

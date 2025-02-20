@@ -3,12 +3,13 @@ import { getGameState } from "../../shared/logic/GameStateLogic";
 import { clearShortcuts } from "../../shared/logic/Shortcut";
 import type { Tile } from "../../shared/utilities/Helper";
 import type { TypedEvent } from "../../shared/utilities/TypedEvent";
+import { useFloatingMode } from "./Global";
 import { LoadingPage } from "./ui/LoadingPage";
 import { TilePage } from "./ui/TilePage";
 import { useTypedEvent } from "./utilities/Hook";
 import { playClick } from "./visuals/Sound";
 
-export function Route({ event }: { event: TypedEvent<RouteChangeEvent> }) {
+export function Route({ event }: { event: TypedEvent<RouteChangeEvent> }): React.ReactNode {
    const [{ component, params }, setRoute] = useState<RouteChangeEvent>({
       component: LoadingPage,
       params: {},
@@ -25,6 +26,11 @@ export function Route({ event }: { event: TypedEvent<RouteChangeEvent> }) {
       clearShortcuts();
       setRoute(e);
    });
+   const isFloating = useFloatingMode();
+   console.log(isFloating);
+   if (isFloating) {
+      return null;
+   }
    return React.createElement(component, params);
 }
 
