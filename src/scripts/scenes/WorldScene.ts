@@ -137,6 +137,15 @@ export class WorldScene extends Scene {
    }
 
    override onEnable(): void {
+      this.restoreViewport();
+      const hq = findSpecialBuilding("Headquarter", getGameState());
+      if (hq) {
+         this.selectGrid(tileToPoint(hq.tile));
+      }
+      super.onEnable();
+   }
+
+   private restoreViewport(): void {
       if (viewportZoom) {
          this.viewport.zoom = viewportZoom;
       }
@@ -144,12 +153,6 @@ export class WorldScene extends Scene {
          viewportCenter = { x: this._width / 2, y: this._height / 2 };
       }
       this.viewport.center = viewportCenter;
-
-      const hq = findSpecialBuilding("Headquarter", getGameState());
-      if (hq) {
-         this.selectGrid(tileToPoint(hq.tile));
-      }
-      super.onEnable();
    }
 
    override onMoved(point: IPointData): void {

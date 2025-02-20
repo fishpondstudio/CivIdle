@@ -44,6 +44,7 @@ import { Singleton } from "../utilities/Singleton";
 import { playClick, playError } from "../visuals/Sound";
 import { showToast } from "./GlobalModal";
 import { FormatNumber } from "./HelperComponents";
+import { LoadingPage, LoadingPageStage } from "./LoadingPage";
 import { TilePage } from "./TilePage";
 
 export function ResourcePanel(): React.ReactNode {
@@ -132,20 +133,23 @@ export function ResourcePanel(): React.ReactNode {
                <div className="menu-button app-region-none">
                   <div
                      className="m-icon"
-                     onClick={() => {
+                     onClick={async () => {
                         if (isFloating) {
                            FloatingModeChanged.emit(false);
-                           Singleton().sceneManager.loadScene(WorldScene);
-                           SteamClient.exitFloatingMode();
-                           SteamClient.maximize();
+                           await SteamClient.exitFloatingMode();
+                           await SteamClient.maximize();
+                           Singleton().routeTo(LoadingPage, { stage: LoadingPageStage.SteamSignIn });
+                           setTimeout(() => {
+                              Singleton().sceneManager.loadScene(WorldScene);
+                           }, 1000);
                         } else {
                            FloatingModeChanged.emit(true);
                            Singleton().sceneManager.loadScene(EmptyScene);
-                           SteamClient.enterFloatingMode();
-                           SteamClient.restore();
+                           await SteamClient.enterFloatingMode();
+                           await SteamClient.restore();
                            if (ref.current) {
                               const rect = ref.current.getBoundingClientRect();
-                              SteamClient.setSize(Math.round(rect.width), Math.round(rect.height));
+                              await SteamClient.setSize(Math.round(rect.width), Math.round(rect.height));
                            }
                         }
                      }}
