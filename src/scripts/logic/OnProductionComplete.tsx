@@ -453,6 +453,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
                if (tier > 0) {
                   mapSafePush(Tick.next.tileMultipliers, neighborXy, {
                      output: tier,
+                     worker: tier,
                      storage: tier,
                      source: buildingName,
                   });
