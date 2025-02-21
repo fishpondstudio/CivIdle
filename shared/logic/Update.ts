@@ -327,6 +327,13 @@ export function transportAndConsumeResources(
       });
    }
 
+   if (
+      (building.status === "completed" || building.status === "upgrading") &&
+      isSpecialBuilding(building.type)
+   ) {
+      Tick.next.specialBuildings.set(building.type, tile as Required<ITileData>);
+   }
+
    if (building.status === "building" || building.status === "upgrading") {
       const cost = getBuildingCost(building);
       const maxCost = getTotalBuildingCost(building, building.level, building.desiredLevel);
@@ -452,10 +459,6 @@ export function transportAndConsumeResources(
             });
          }
       }
-   }
-
-   if (isSpecialBuilding(building.type)) {
-      Tick.next.specialBuildings.set(building.type, tile as Required<ITileData>);
    }
 
    // Tick.current.totalValue > 0 here is to check whether the tick is ready! Otherwise we get a split second
