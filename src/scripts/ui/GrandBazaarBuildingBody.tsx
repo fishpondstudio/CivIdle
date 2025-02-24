@@ -47,6 +47,10 @@ function calculateTradeValue(item: IGrandBazaarMarketData): number {
    );
 }
 
+function getSearchFilterButtonColor(buttonState: boolean){
+   return !buttonState ? '#4A4A4A' : '#B0B0B0'; 
+}
+
 let savedBuyResourceFilter: Resource | null = null;
 let savedSellResourceFilter: Resource | null = null;
 let savedNameResourceFilter = '';
@@ -72,6 +76,17 @@ function TradesTab({
       Config.Resource[a].name().localeCompare(Config.Resource[b].name()),
    );
 
+   function toggleSearchNameFilter(type: "buy" | "sell") {
+      if (type === "buy") {
+         if (!nameSellFilter) setNameSellFilter(true);
+         setNameBuyFilter((prev) => !prev);
+      } else {
+         if (!nameBuyFilter) setNameBuyFilter(true);
+         setNameSellFilter((prev) => !prev);
+      }
+   }
+   
+
    return (
       <>
          <article role="tabpanel" className="f1 column" style={{ padding: "8px", overflow: "auto" }}>
@@ -83,8 +98,8 @@ function TradesTab({
                      setNameResourceFilter(e.target.value);
                   }}></input>
                   <div className="f1">
-                     <input type="button" style={{width: '50%'}} value="Pay" onClick={()=>{setNameSellFilter((prev)=>!prev)}}></input>
-                     <input type="button" style={{width: '50%'}} value="Get"></input>
+                     <input type="button" style={{width: '50%', backgroundColor: getSearchFilterButtonColor(nameBuyFilter)}} value="Pay" onClick={()=>{toggleSearchNameFilter("buy")}}></input>
+                     <input type="button" style={{width: '50%', backgroundColor: getSearchFilterButtonColor(nameSellFilter)}} value="Get" onClick={()=>{toggleSearchNameFilter("sell")}}></input>
                   </div>
                </div>
                <div className="sep10"></div>
@@ -170,10 +185,10 @@ function TradesTab({
                   } else {
                      sellFilter = true;
                   }
-                  if(m.buyResource.toLowerCase().includes(nameResourceFilter)){
+                  if(nameBuyFilter && m.buyResource.toLowerCase().includes(nameResourceFilter)){
                      nameFilter = true;
                   }
-                  if(m.sellResource.toLowerCase().includes(nameResourceFilter)){
+                  if(nameSellFilter && m.sellResource.toLowerCase().includes(nameResourceFilter)){
                      nameFilter = true;
                   }
                   return buyFilter && sellFilter && nameFilter;
