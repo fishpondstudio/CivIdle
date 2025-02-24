@@ -49,6 +49,9 @@ function calculateTradeValue(item: IGrandBazaarMarketData): number {
 
 let savedBuyResourceFilter: Resource | null = null;
 let savedSellResourceFilter: Resource | null = null;
+let savedNameResourceFilter = '';
+let savedNameBuyFilter = true;
+let savedNameSellFilter = true;
 
 function TradesTab({
    allMarketTrades,
@@ -61,6 +64,9 @@ function TradesTab({
 }): React.ReactNode {
    const [buyResourceFilter, setBuyResourceFilter] = useState<Resource | null>(savedBuyResourceFilter);
    const [sellResourceFilter, setSellResourceFilter] = useState<Resource | null>(savedSellResourceFilter);
+   const [nameResourceFilter, setNameResourceFilter] = useState<string>(savedNameResourceFilter);
+   const [nameBuyFilter, setNameBuyFilter] = useState<boolean>(savedNameBuyFilter);
+   const [nameSellFilter, setNameSellFilter] = useState<boolean>(savedNameSellFilter);
 
    const availableResources = Array.from(availableResourcesSet).sort((a, b) =>
       Config.Resource[a].name().localeCompare(Config.Resource[b].name()),
@@ -71,6 +77,17 @@ function TradesTab({
          <article role="tabpanel" className="f1 column" style={{ padding: "8px", overflow: "auto" }}>
             <fieldset>
                <legend>{t(L.GrandBazaarFilters)}</legend>
+               <div className="row">
+                  <div style={{ width: "120px" }}>Search</div>
+                  <input type="text" style={{width: '40%'}} onChange={(e)=>{
+                     setNameResourceFilter(e.target.value);
+                  }}></input>
+                  <div className="f1">
+                     <input type="button" style={{width: '50%'}} value="Pay" onClick={()=>{setNameSellFilter((prev)=>!prev)}}></input>
+                     <input type="button" style={{width: '50%'}} value="Get"></input>
+                  </div>
+               </div>
+               <div className="sep10"></div>
                <div className="row">
                   <div style={{ width: "120px" }}>{t(L.GrandBazaarFilterYouPay)}</div>
                   <select
@@ -137,11 +154,12 @@ function TradesTab({
                ]}
                data={allMarketTrades.filter((m) => {
                   // No filter, we show nothing, should revisit this later
-                  if (buyResourceFilter === null && sellResourceFilter === null) {
+                  if (buyResourceFilter === null && sellResourceFilter === null && nameResourceFilter === '') {
                      return false;
                   }
                   let buyFilter = false;
                   let sellFilter = false;
+                  let nameFilter = false;
                   if (buyResourceFilter != null) {
                      buyFilter = buyResourceFilter === m.buyResource;
                   } else {
@@ -152,7 +170,13 @@ function TradesTab({
                   } else {
                      sellFilter = true;
                   }
-                  return buyFilter && sellFilter;
+                  if(m.buyResource.toLowerCase().includes(nameResourceFilter)){
+                     nameFilter = true;
+                  }
+                  if(m.sellResource.toLowerCase().includes(nameResourceFilter)){
+                     nameFilter = true;
+                  }
+                  return buyFilter && sellFilter && nameFilter;
                })}
                compareFunc={(a, b, i) => {
                   switch (i) {
