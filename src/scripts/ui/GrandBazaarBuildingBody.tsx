@@ -53,9 +53,6 @@ function getSearchFilterButtonColor(buttonState: boolean) {
 
 let savedBuyResourceFilter: Resource | null = null;
 let savedSellResourceFilter: Resource | null = null;
-let savedNameResourceFilter = "";
-let savedNameBuyFilter = true;
-let savedNameSellFilter = true;
 
 function TradesTab({
    allMarketTrades,
@@ -68,9 +65,9 @@ function TradesTab({
 }): React.ReactNode {
    const [buyResourceFilter, setBuyResourceFilter] = useState<Resource | null>(savedBuyResourceFilter);
    const [sellResourceFilter, setSellResourceFilter] = useState<Resource | null>(savedSellResourceFilter);
-   const [nameResourceFilter, setNameResourceFilter] = useState<string>(savedNameResourceFilter);
-   const [nameBuyFilter, setNameBuyFilter] = useState<boolean>(savedNameBuyFilter);
-   const [nameSellFilter, setNameSellFilter] = useState<boolean>(savedNameSellFilter);
+   const [nameResourceFilter, setNameResourceFilter] = useState<string>("");
+   const [nameBuyFilter, setNameBuyFilter] = useState<boolean>(true);
+   const [nameSellFilter, setNameSellFilter] = useState<boolean>(true);
 
    const availableResources = Array.from(availableResourcesSet).sort((a, b) =>
       Config.Resource[a].name().localeCompare(Config.Resource[b].name()),
