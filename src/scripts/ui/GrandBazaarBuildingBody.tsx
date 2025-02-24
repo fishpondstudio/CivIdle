@@ -47,13 +47,13 @@ function calculateTradeValue(item: IGrandBazaarMarketData): number {
    );
 }
 
-function getSearchFilterButtonColor(buttonState: boolean){
-   return !buttonState ? '#4A4A4A' : '#B0B0B0'; 
+function getSearchFilterButtonColor(buttonState: boolean) {
+   return !buttonState ? "#4A4A4A" : "#B0B0B0";
 }
 
 let savedBuyResourceFilter: Resource | null = null;
 let savedSellResourceFilter: Resource | null = null;
-let savedNameResourceFilter = '';
+let savedNameResourceFilter = "";
 let savedNameBuyFilter = true;
 let savedNameSellFilter = true;
 
@@ -85,7 +85,6 @@ function TradesTab({
          setNameSellFilter((prev) => !prev);
       }
    }
-   
 
    return (
       <>
@@ -94,12 +93,30 @@ function TradesTab({
                <legend>{t(L.GrandBazaarFilters)}</legend>
                <div className="row">
                   <div style={{ width: "120px" }}>Search</div>
-                  <input type="text" style={{width: '40%'}} onChange={(e)=>{
-                     setNameResourceFilter(e.target.value);
-                  }}></input>
+                  <input
+                     type="text"
+                     style={{ width: "40%" }}
+                     onChange={(e) => {
+                        setNameResourceFilter(e.target.value);
+                     }}
+                  ></input>
                   <div className="f1">
-                     <input type="button" style={{width: '50%', backgroundColor: getSearchFilterButtonColor(nameBuyFilter)}} value="Pay" onClick={()=>{toggleSearchNameFilter("buy")}}></input>
-                     <input type="button" style={{width: '50%', backgroundColor: getSearchFilterButtonColor(nameSellFilter)}} value="Get" onClick={()=>{toggleSearchNameFilter("sell")}}></input>
+                     <input
+                        type="button"
+                        style={{ width: "50%", backgroundColor: getSearchFilterButtonColor(nameBuyFilter) }}
+                        value="Pay"
+                        onClick={() => {
+                           toggleSearchNameFilter("buy");
+                        }}
+                     ></input>
+                     <input
+                        type="button"
+                        style={{ width: "50%", backgroundColor: getSearchFilterButtonColor(nameSellFilter) }}
+                        value="Get"
+                        onClick={() => {
+                           toggleSearchNameFilter("sell");
+                        }}
+                     ></input>
                   </div>
                </div>
                <div className="sep10"></div>
@@ -169,7 +186,11 @@ function TradesTab({
                ]}
                data={allMarketTrades.filter((m) => {
                   // No filter, we show nothing, should revisit this later
-                  if (buyResourceFilter === null && sellResourceFilter === null && nameResourceFilter === '') {
+                  if (
+                     buyResourceFilter === null &&
+                     sellResourceFilter === null &&
+                     nameResourceFilter === ""
+                  ) {
                      return false;
                   }
                   let buyFilter = false;
@@ -185,10 +206,10 @@ function TradesTab({
                   } else {
                      sellFilter = true;
                   }
-                  if(nameBuyFilter && m.buyResource.toLowerCase().includes(nameResourceFilter)){
+                  if (nameBuyFilter && m.buyResource.toLowerCase().includes(nameResourceFilter)) {
                      nameFilter = true;
                   }
-                  if(nameSellFilter && m.sellResource.toLowerCase().includes(nameResourceFilter)){
+                  if (nameSellFilter && m.sellResource.toLowerCase().includes(nameResourceFilter)) {
                      nameFilter = true;
                   }
                   return buyFilter && sellFilter && nameFilter;
