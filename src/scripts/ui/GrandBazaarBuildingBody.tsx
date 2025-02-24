@@ -170,7 +170,7 @@ function TradesTab({
                   </select>
                </div>
             </fieldset>
-            {buyResourceFilter === null && sellResourceFilter === null ? (
+            {buyResourceFilter === null && sellResourceFilter === null && nameResourceFilter === "" ? (
                <WarningComponent icon="info" className="mb10 text-small">
                   <RenderHTML html={t(L.GrandBazaarFilterWarningHTML)} />
                </WarningComponent>
