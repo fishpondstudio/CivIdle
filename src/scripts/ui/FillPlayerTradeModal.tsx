@@ -112,12 +112,16 @@ export function FillPlayerTradeModal({ tradeId, xy }: { tradeId: string; xy?: Ti
       let fillAmount = 0;
       let receivedAmount = 0;
       const errors: string[] = [];
+      const queue: Array<{ amount: number; rollback: () => void; tile: Tile }> = [];
       for (const [tile, amount] of fills) {
          if (amount <= 0) continue;
          // We reserve the amount first, otherwise resource might go negative if a player
          // clicks really fast
          ++total;
          const r = deductResourceFrom(trade.buyResource, amount, [tile], gs);
+         queue.push({ amount: r.amount, rollback: r.rollback, tile });
+      }
+      for (const r of queue) {
          try {
             const result = await client.fillTrade({
                id: trade.id,
@@ -132,7 +136,7 @@ export function FillPlayerTradeModal({ tradeId, xy }: { tradeId: string; xy?: Ti
                if (amount < 0) {
                   fillAmount += Math.abs(amount);
                }
-               safeAdd(allTradeBuildings.get(tile)!.resources, res, amount);
+               safeAdd(allTradeBuildings.get(r.tile)!.resources, res, amount);
             });
             ++success;
          } catch (error) {
@@ -217,7 +221,7 @@ export function FillPlayerTradeModal({ tradeId, xy }: { tradeId: string; xy?: Ti
          amount = clamp(
             amount,
             0,
-            (availableStorage * trade.buyAmount) / (trade.sellAmount - trade.buyAmount),
+            Math.floor((availableStorage * trade.buyAmount) / (trade.sellAmount - trade.buyAmount)),
          );
       }
       return amount;

@@ -55,7 +55,7 @@ export function shouldTick(): boolean {
 }
 
 App.addListener("appStateChange", ({ isActive }) => {
-   if (isSteam()) {
+   if (isSteam() || import.meta.env.DEV) {
       return;
    }
    if (isActive) {
