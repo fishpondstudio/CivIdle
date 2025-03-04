@@ -156,22 +156,54 @@ export async function handleChatCommand(command: string): Promise<void> {
          break;
       }
       case "find": {
-         if (!parts[1]) {
-            throw new Error("Invalid command format");
-         }
-         const query = parts[1].toLowerCase();
-         let hasFound = false;
-         for (const [xy, tile] of getPlayerMap()) {
-            if (tile.handle.toLowerCase() === query) {
-               addSystemMessage(`Found player ${parts[1]}, will pan camera to the tile`);
-               Singleton().sceneManager.getCurrent(PlayerMapScene)?.lookAt(xy);
-               hasFound = true;
-               break;
+
+         if (!parts[1]) throw new Error("Invalid command format");
+         const queryLc = parts[1].toLowerCase();
+         let hasFoundExact = false;
+         const matches = [];
+    
+         findLoops: {
+            for (const [xy, tile] of getPlayerMap()) {
+               const handleLc = tile.handle.toLowerCase();
+               if (handleLc === queryLc) {
+                  matches.push({ xy, handle: tile.handle });
+                  hasFoundExact = true;
+                  break findLoops;
+               }
+            }
+    
+            for (const [xy, tile] of getPlayerMap()) {
+               const handleLc = tile.handle.toLowerCase();
+               if (handleLc.includes(queryLc)) {
+                  matches.push({ xy, handle: tile.handle });
+               }
             }
          }
-         if (!hasFound) {
+    
+         if (matches.length === 1) {
+            const match = matches[0];
+            const str1 = hasFoundExact ? "exact" : "single";
+            addSystemMessage(`Found ${str1} match ${match.handle}, panning camera to the tile`);
+            Singleton().sceneManager.getCurrent(PlayerMapScene)?.lookAt(match.xy);
+         } else if (matches.length > 1) {
+            const maxDisplay = 8;
+            const displayedMatches = matches
+               .slice(0, maxDisplay)
+               .map((match) => match.handle)
+               .join(", ");
+            const additionalCount = matches.length - maxDisplay;
+    
+            let message = `Multiple players found: ${displayedMatches}`;
+            if (additionalCount > 0) {
+               message += `, and ${additionalCount} more. Please specify further.`;
+            } else {
+               message += ". Please specify further.";
+            }
+            addSystemMessage(message);
+         } else {
             addSystemMessage(`Failed to find player ${parts[1]}`);
          }
+
          break;
       }
       case "changelevel": {
