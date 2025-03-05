@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { getPlatform } from "../../../server/src/DatabaseHelper";
 import { Platform } from "../../../shared/utilities/Database";
+import { getPlatform } from "../../../shared/utilities/DatabaseShared";
 import { isNullOrUndefined } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import "../../css/CrossPlatformSavePage.css";

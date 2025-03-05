@@ -589,8 +589,7 @@ function ResourcesTab({ gameState }: IBuildingComponentProps): React.ReactNode {
                const input = inputs.get(res) ?? 0;
                const deficit = output - input;
                const amount = Tick.current.resourceAmount.get(res) ?? 0;
-               const timeLeft =
-                  deficit < 0 ? Math.abs((1000 * amount ?? 0) / deficit) : Number.POSITIVE_INFINITY;
+               const timeLeft = deficit < 0 ? Math.abs((1000 * amount) / deficit) : Number.POSITIVE_INFINITY;
 
                return (
                   <tr key={res}>
