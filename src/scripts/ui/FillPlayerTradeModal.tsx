@@ -7,7 +7,6 @@ import { deductResourceFrom } from "../../../shared/logic/ResourceLogic";
 import { Tick } from "../../../shared/logic/TickLogic";
 import {
    clamp,
-   forEach,
    formatNumber,
    formatPercent,
    pointToXy,
@@ -107,71 +106,56 @@ export function FillPlayerTradeModal({ tradeId, xy }: { tradeId: string; xy?: Ti
          playError();
          return;
       }
-      let total = 0;
-      let success = 0;
-      let fillAmount = 0;
-      let receivedAmount = 0;
-      const errors: string[] = [];
+      let totalAmount = 0;
       const queue: Array<{ amount: number; rollback: () => void; tile: Tile }> = [];
       for (const [tile, amount] of fills) {
          if (amount <= 0) continue;
          // We reserve the amount first, otherwise resource might go negative if a player
          // clicks really fast
-         ++total;
          const r = deductResourceFrom(trade.buyResource, amount, [tile], gs);
          queue.push({ amount: r.amount, rollback: r.rollback, tile });
+         totalAmount += r.amount;
       }
-      for (const r of queue) {
-         try {
-            const result = await client.fillTrade({
-               id: trade.id,
-               amount: r.amount,
-               path: tiles,
-               seaTileCost: getSeaTileCost(gs),
-            });
-            forEach(result, (res, amount) => {
-               if (amount > 0) {
-                  receivedAmount += amount;
-               }
-               if (amount < 0) {
-                  fillAmount += Math.abs(amount);
-               }
-               safeAdd(allTradeBuildings.get(r.tile)!.resources, res, amount);
-            });
-            ++success;
-         } catch (error) {
-            errors.push(String(error));
-         } finally {
-            // If the trade fails, we should refund the resource. If the trade success, the result
-            // from the server contains the correct amount to deduct, we *also* refund the resource
-            r.rollback();
+      try {
+         const result = await client.fillTrade({
+            id: trade.id,
+            amount: totalAmount,
+            path: tiles,
+            seaTileCost: getSeaTileCost(gs),
+         });
+         const receivedAmount = result[trade.sellResource] ?? 0;
+         for (const r of queue) {
+            const building = allTradeBuildings.get(r.tile);
+            if (building) {
+               safeAdd(building.resources, trade.sellResource, (receivedAmount * r.amount) / totalAmount);
+            }
          }
-      }
-      if (success > 0) {
-         playKaching();
-         errors.unshift(
-            t(L.PlayerTradeFillSuccessV2, {
-               success,
-               total,
-               fillAmount: formatNumber(fillAmount),
-               fillResource: Config.Resource[trade.buyResource].name(),
-               receivedAmount: formatNumber(receivedAmount),
-               receivedResource: Config.Resource[trade.sellResource].name(),
-            }),
-         );
          const eic = Tick.current.specialBuildings.get("EastIndiaCompany");
          if (eic) {
             safeAdd(
                eic.building.resources,
                "TradeValue",
-               fillAmount * (Config.ResourcePrice[trade.buyResource] ?? 0),
+               receivedAmount * (Config.ResourcePrice[trade.sellResource] ?? 0),
             );
          }
-         showToast(errors.join("<br />"));
+         playKaching();
+         showToast(
+            t(L.PlayerTradeFillSuccessV2, {
+               success: queue.length,
+               total: queue.length,
+               fillAmount: formatNumber(totalAmount),
+               fillResource: Config.Resource[trade.buyResource].name(),
+               receivedAmount: formatNumber(receivedAmount),
+               receivedResource: Config.Resource[trade.sellResource].name(),
+            }),
+         );
          hideModal();
-      } else {
+      } catch (error) {
+         for (const r of queue) {
+            r.rollback();
+         }
          playError();
-         showToast(errors.join("<br />"));
+         showToast(String(error));
       }
    };
 
