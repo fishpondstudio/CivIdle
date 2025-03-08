@@ -4,6 +4,7 @@ import { isSpecialBuilding, isWorldWonder } from "../../../shared/logic/Building
 import { Config } from "../../../shared/logic/Config";
 import { GameFeature, hasFeature } from "../../../shared/logic/FeatureLogic";
 import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
+import { getBuildingsByType } from "../../../shared/logic/IntraTickCache";
 import { PRIORITY_MAX, PRIORITY_MIN, type IBuildingData, type ITileData } from "../../../shared/logic/Tile";
 import { safeParseInt } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
@@ -18,9 +19,8 @@ import { BuildingDescriptionComponent } from "./BuildingDescriptionComponent";
 import { BuildingInputModeComponent } from "./BuildingInputModeComponent";
 import { MenuComponent } from "./MenuComponent";
 import { RenderHTML } from "./RenderHTMLComponent";
-import { WarningComponent } from "./WarningComponent";
 import { TitleBarComponent } from "./TitleBarComponent";
-import { getBuildingsByType } from "../../../shared/logic/IntraTickCache";
+import { WarningComponent } from "./WarningComponent";
 
 export function ConstructionPage({ tile }: { tile: ITileData }): React.ReactNode {
    const building = tile.building;
