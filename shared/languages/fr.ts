@@ -404,8 +404,8 @@ export const FR = {
    DysonSphere: "Dyson Sphere",
    DysonSphereDesc: "Tous les bâtiments reçoivent un multiplicateur de production de +5. Cette merveille peut être améliorée, et chaque amélioration supplémentaire donne +1 multiplicateur de production à tous les bâtiments. ",
    EastIndiaCompany: "Compagnie des Indes Orientales",
-   EastIndiaCompanyDesc:
-      "Cette merveille accumule la valeur totale de vos transactions commerciales entre joueurs complétées. Pour chaque 2 000 de valeur commerciale, tous les bâtiments adjacents aux caravansérails reçoivent un +1 en Multiplicateur de Production pendant 1 cycle. Cette merveille peut être améliorée, et chaque amélioration offre un +1 supplémentaire en Multiplicateur de Production. Une transaction commerciale est comptabilisée lorsque vous remplissez la demande de commerce d'un autre joueur ou lorsque votre propre demande de commerce est remplie. Les boosts multiples s'empilent en prolongeant la durée.",
+   EastIndiaCompanyDescV2:
+      "This wonder accumulates the total value of your completed player trade transactions. For every 2,000 trade value, all buildings adjacent to caravansaries get a +0.5 Production Multiplier for 1 cycle. This wonder can be upgraded and each upgrade provides an additional +0.5 Production Multiplier. A trade transaction counts when you either fulfill another player's trade request or when your own trade request is fulfilled. Multiple boosts stack by extending the duration",
    Education: "Éducation",
    EffectiveGreatPeopleLevel: "Niveau effectif des personnages illustres",
    EffectiveGreatPeopleLevelDesc: "Le niveau effectif des personnages illustres est la somme de tous les niveaux de personnages illustres permanents et des niveaux de sagesse des âges. Il mesure l'augmentation des effets fournis par les personnages illustres et la sagesse des âges",
@@ -584,7 +584,7 @@ export const FR = {
    GrottaAzzurraDescV2: "Lorsqu'il est découvert, tous vos bâtiments de niveau I reçoivent +5 niveaux ainsi que +1 en Production, Capacité de Travailleurs et Multiplicateur de Stockage.",
    Gunpowder: "Poudre à canon",
    GunpowderMill: "Poudrerie",
-   GuyFawkesNight: "Nuit de Guy Fawkes : La Compagnie des Indes Orientales offre +2 en Multiplicateur de Production aux bâtiments adjacents aux caravansérails. Le Pont de la Tour génère des personnages illustres 20 % plus rapidement",
+   GuyFawkesNightV2: "Guy Fawkes Night: East India Company provides double the Production Multiplier to buildings adjacent to caravansaries. Tower Bridge generates great people 20% faster",
    HagiaSophia: "Sainte-Sophie",
    HagiaSophiaDescV2: "+5 Bonheur. Les bâtiments avec 0 % de capacité de production sont exemptés du -1 en bonheur. Pendant le démarrage du jeu, fournissez du bonheur supplémentaire pour éviter l'arrêt de la production. ",
    HallOfFame: "Hall of Fame",
