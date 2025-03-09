@@ -82,11 +82,11 @@ export function FillPlayerTradeModal({ tradeId, xy }: { tradeId: string; xy?: Ti
       return true;
    };
 
-   const calculateMaxFill = () => {
+   const calculateMaxFill = (percentage: number) => {
       const result = new Map<Tile, number>();
       let amountLeft = trade.buyAmount;
       for (const xy of allTradeBuildings.keys()) {
-         const amount = getMaxFill(xy);
+         const amount = getMaxFill(xy) * percentage;
          if (amount <= 0) {
             // Do nothing
          } else if (amountLeft > amount) {
@@ -241,7 +241,7 @@ export function FillPlayerTradeModal({ tradeId, xy }: { tradeId: string; xy?: Ti
    };
 
    return (
-      <div className="window" style={{ width: 550 }}>
+      <div className="window" style={{ width: 600, maxWidth: "75vw" }}>
          <div className="title-bar">
             <div className="title-bar-text">{t(L.PlayerTradeFillTradeTitle)}</div>
             <div className="title-bar-controls">
@@ -339,7 +339,7 @@ export function FillPlayerTradeModal({ tradeId, xy }: { tradeId: string; xy?: Ti
                >
                   {t(L.PlayerTradeClearAll)}
                </div>
-               <div className="text-strong text-link" onClick={() => setFills(calculateMaxFill)}>
+               <div className="text-strong text-link" onClick={() => setFills(() => calculateMaxFill(1))}>
                   {t(L.PlayerTradeMaxAll)}
                </div>
             </div>
@@ -453,7 +453,35 @@ export function FillPlayerTradeModal({ tradeId, xy }: { tradeId: string; xy?: Ti
                <div className="f1"></div>
                <button
                   onClick={() => {
-                     const fills = calculateMaxFill();
+                     const fills = calculateMaxFill(0.5);
+                     if (fills.size > 0) {
+                        doFill(fills);
+                     } else {
+                        playError();
+                        showToast(t(L.PlayerTradeNoFillBecauseOfResources));
+                        hideModal();
+                     }
+                  }}
+               >
+                  {t(L.PlayerTradeFill50)}
+               </button>
+               <button
+                  onClick={() => {
+                     const fills = calculateMaxFill(0.95);
+                     if (fills.size > 0) {
+                        doFill(fills);
+                     } else {
+                        playError();
+                        showToast(t(L.PlayerTradeNoFillBecauseOfResources));
+                        hideModal();
+                     }
+                  }}
+               >
+                  {t(L.PlayerTradeFill95)}
+               </button>
+               <button
+                  onClick={() => {
+                     const fills = calculateMaxFill(1);
                      if (fills.size > 0) {
                         doFill(fills);
                      } else {
@@ -465,7 +493,6 @@ export function FillPlayerTradeModal({ tradeId, xy }: { tradeId: string; xy?: Ti
                >
                   {t(L.PlayerTradeFillAmountMaxV2)}
                </button>
-               <div style={{ width: "6px" }}></div>
                <button className="text-strong" disabled={!fillsAreValid(fills)} onClick={() => doFill(fills)}>
                   {t(L.PlayerTradeFillTradeButton)}
                </button>

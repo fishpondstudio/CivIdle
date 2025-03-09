@@ -1890,7 +1890,7 @@ export class BuildingDefinitions {
 
    EastIndiaCompany: IBuildingDefinition = {
       name: () => t(L.EastIndiaCompany),
-      desc: () => t(L.EastIndiaCompanyDesc),
+      desc: () => t(L.EastIndiaCompanyDescV2),
       input: {},
       output: {},
       construction: { Bond: 100, Frigate: 100, Gunpowder: 100 },

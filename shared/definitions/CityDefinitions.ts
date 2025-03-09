@@ -278,7 +278,7 @@ export class CityDefinitions {
       },
       requireGreatPeopleLevel: 60,
       requireSupporterPack: true,
-      festivalDesc: () => t(L.GuyFawkesNight),
+      festivalDesc: () => t(L.GuyFawkesNightV2),
    };
 }
 
