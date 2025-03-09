@@ -2,5 +2,6 @@
    "cSpell.words": ["Cooldown", "Gameplay", "hitmap", "Koffi", "lerp", "rebirthed", "unlockable"],
    "task.allowAutomaticTasks": "on",
    "typescript.tsdk": "node_modules\\typescript\\lib",
-   "editor.formatOnSave": true
+   "editor.formatOnSave": true,
+   "typescript.preferences.preferTypeOnlyAutoImports": false
 }

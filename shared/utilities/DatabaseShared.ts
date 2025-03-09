@@ -1,5 +1,5 @@
 import { MAX_CHAT_PER_CHANNEL } from "../logic/Constants";
-import type { IPlatformInfo, IUser } from "./Database";
+import { Platform, type IPlatformInfo, type IUser } from "./Database";
 import { safeAdd } from "./Helper";
 
 export function vacuumChat<T extends { channel: string } | object>(old: T[]): T[] {
@@ -27,4 +27,20 @@ export function isSaveOwner(info: IPlatformInfo, user: IUser): boolean {
       return true;
    }
    return false;
+}
+
+export function getPlatform(userId: string | null | undefined): Platform {
+   if (!userId) {
+      return Platform.None;
+   }
+   if (userId.startsWith("steam:")) {
+      return Platform.Steam;
+   }
+   if (userId.startsWith("ios:")) {
+      return Platform.iOS;
+   }
+   if (userId.startsWith("android:")) {
+      return Platform.Android;
+   }
+   return Platform.None;
 }
