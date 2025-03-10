@@ -1173,6 +1173,7 @@ export const EN = {
    ShortcutTechPageGoBackToCity: "Go Back To City",
    ShortcutTechPageUnlockTech: "Unlock Selected Tech",
    ShortcutUpgradePageCancelUpgrade: "Cancel Upgrade",
+   ShortcutUpgradePageCancelAllUpgrades: "Cancel All Upgrades",
    ShortcutUpgradePageDecreaseLevel: "Decrease Upgrade Level",
    ShortcutUpgradePageEndConstruction: "End Construction",
    ShortcutUpgradePageIncreaseLevel: "Increase Upgrade Level",

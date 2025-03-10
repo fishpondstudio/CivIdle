@@ -179,7 +179,7 @@ function CancelUpgradeComponent({ building }: { building: IBuildingData }): Reac
          notifyGameStateUpdate();
       }
    };
-   const cancelAllUpgrade = () => {
+   const cancelAllUpgrades = () => {
       getBuildingsByType(building.type, gs)?.forEach((tile, xy) => {
          const b = gs.tiles.get(xy)?.building;
          if (!b) {
@@ -195,6 +195,7 @@ function CancelUpgradeComponent({ building }: { building: IBuildingData }): Reac
    };
 
    useShortcut("UpgradePageCancelUpgrade", cancelUpgrade, [building]);
+   useShortcut("UpgradePageCancelAllUpgrades", cancelAllUpgrades, [building]);
    return (
       <fieldset>
          <WarningComponent icon="info" className="mb10 text-small">
@@ -206,7 +207,7 @@ function CancelUpgradeComponent({ building }: { building: IBuildingData }): Reac
                <div className="f1 text-strong">{t(L.CancelUpgrade)}</div>
             </button>
             <Tippy content={t(L.CancelAllUpgradeDesc, { building: Config.Building[building.type].name() })}>
-               <button className="jcc w100 row" onClick={cancelAllUpgrade}>
+               <button className="jcc w100 row" onClick={cancelAllUpgrades}>
                   <div className="m-icon small">delete</div>
                   <div className="f1 text-strong">{t(L.CancelAllUpgrade)}</div>
                </button>
