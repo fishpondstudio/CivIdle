@@ -4,6 +4,7 @@ import { isSpecialBuilding, isWorldWonder } from "../../../shared/logic/Building
 import { Config } from "../../../shared/logic/Config";
 import { GameFeature, hasFeature } from "../../../shared/logic/FeatureLogic";
 import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
+import { getBuildingsByType } from "../../../shared/logic/IntraTickCache";
 import { PRIORITY_MAX, PRIORITY_MIN, type IBuildingData, type ITileData } from "../../../shared/logic/Tile";
 import { safeParseInt } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
@@ -18,8 +19,8 @@ import { BuildingDescriptionComponent } from "./BuildingDescriptionComponent";
 import { BuildingInputModeComponent } from "./BuildingInputModeComponent";
 import { MenuComponent } from "./MenuComponent";
 import { RenderHTML } from "./RenderHTMLComponent";
-import { WarningComponent } from "./WarningComponent";
 import { TitleBarComponent } from "./TitleBarComponent";
+import { WarningComponent } from "./WarningComponent";
 
 export function ConstructionPage({ tile }: { tile: ITileData }): React.ReactNode {
    const building = tile.building;
@@ -169,6 +170,8 @@ function EndConstructionComponent({ tile }: { tile: ITileData }): React.ReactNod
 }
 
 function CancelUpgradeComponent({ building }: { building: IBuildingData }): React.ReactNode {
+   const gs = useGameState();
+
    const cancelUpgrade = () => {
       if (building.status === "upgrading") {
          building.status = "completed";
@@ -176,16 +179,40 @@ function CancelUpgradeComponent({ building }: { building: IBuildingData }): Reac
          notifyGameStateUpdate();
       }
    };
+   const cancelAllUpgrades = () => {
+      getBuildingsByType(building.type, gs)?.forEach((tile, xy) => {
+         const b = gs.tiles.get(xy)?.building;
+         if (!b) {
+            return;
+         }
+         if (b.status === "upgrading") {
+            b.status = "completed";
+            b.desiredLevel = b.level;
+         }
+      });
+
+      notifyGameStateUpdate();
+   };
+
    useShortcut("UpgradePageCancelUpgrade", cancelUpgrade, [building]);
+   useShortcut("UpgradePageCancelAllUpgrades", cancelAllUpgrades, [building]);
    return (
       <fieldset>
          <WarningComponent icon="info" className="mb10 text-small">
             <RenderHTML html={t(L.CancelUpgradeDesc)} />
          </WarningComponent>
-         <button className="jcc w100 row" onClick={cancelUpgrade}>
-            <div className="m-icon small">delete</div>
-            <div className="f1 text-strong">{t(L.CancelUpgrade)}</div>
-         </button>
+         <div className="row">
+            <button className="jcc w100 row" onClick={cancelUpgrade}>
+               <div className="m-icon small">delete</div>
+               <div className="f1 text-strong">{t(L.CancelUpgrade)}</div>
+            </button>
+            <Tippy content={t(L.CancelAllUpgradeDesc, { building: Config.Building[building.type].name() })}>
+               <button className="jcc w100 row" onClick={cancelAllUpgrades}>
+                  <div className="m-icon small">delete</div>
+                  <div className="f1 text-strong">{t(L.CancelAllUpgrade)}</div>
+               </button>
+            </Tippy>
+         </div>
       </fieldset>
    );
 }

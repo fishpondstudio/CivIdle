@@ -48,6 +48,10 @@ export const ShortcutActions = {
       name: () => t(L.ShortcutUpgradePageEndConstruction),
    },
    UpgradePageCancelUpgrade: { scope: "ConstructionPage", name: () => t(L.ShortcutUpgradePageCancelUpgrade) },
+   UpgradePageCancelAllUpgrades: {
+      scope: "ConstructionPage",
+      name: () => t(L.ShortcutUpgradePageCancelAllUpgrades),
+   },
    TechPageGoBackToCity: { scope: "TechPage", name: () => t(L.ShortcutTechPageGoBackToCity) },
    TechPageUnlockTech: { scope: "TechPage", name: () => t(L.ShortcutTechPageUnlockTech) },
    EmptyTilePageBuildLastBuilding: {
