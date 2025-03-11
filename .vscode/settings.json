@@ -3,5 +3,6 @@
    "task.allowAutomaticTasks": "on",
    "typescript.tsdk": "node_modules\\typescript\\lib",
    "editor.formatOnSave": true,
-   "typescript.preferences.preferTypeOnlyAutoImports": false
+   "typescript.preferences.preferTypeOnlyAutoImports": false,
+   "typescript.tsserver.experimental.enableProjectDiagnostics": false,
 }

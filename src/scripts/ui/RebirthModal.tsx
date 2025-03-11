@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import type { City } from "../../../shared/definitions/CityDefinitions";
 import { getBuildingDescription, getMultipliersDescription } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
+import { RebirthFlags } from "../../../shared/logic/GameState";
 import { getGameOptions } from "../../../shared/logic/GameStateLogic";
 import {
    getFreeCityThisWeek,
@@ -352,6 +353,17 @@ export function RebirthModal(): React.ReactNode {
                      }
 
                      checkRebirthAchievements(greatPeopleCount, gs);
+
+                     getGameOptions().rebirthInfo.push({
+                        greatPeopleAtRebirth: greatPeopleAtRebirthCount,
+                        greatPeopleThisRun: reduceOf(gs.greatPeople, (prev, k, v) => prev + v, 0),
+                        totalEmpireValue: Tick.current.totalValue,
+                        totalTicks: gs.tick,
+                        totalSeconds: gs.seconds,
+                        city,
+                        time: Date.now(),
+                        flags: RebirthFlags.None,
+                     });
 
                      await resetToCity(city);
                      playClick();

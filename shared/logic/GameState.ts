@@ -176,12 +176,28 @@ export class GameOptions {
    porcelainTowerMaxPickPerRoll = false;
    greedyTransport = false;
    offlineProductionPercent = 0;
+   rebirthInfo: RebirthInfo[] = [];
    // Should be wiped
    greatPeople: Partial<Record<GreatPerson, { level: number; amount: number }>> = {};
    ageWisdom: PartialTabulate<TechAge> = {};
    greatPeopleChoicesV2: GreatPeopleChoiceV2[] = [];
    language: keyof typeof Languages = "en";
    disabledTutorials = new Set<Advisor>();
+}
+
+export enum RebirthFlags {
+   None = 0,
+}
+
+export interface RebirthInfo {
+   greatPeopleAtRebirth: number;
+   greatPeopleThisRun: number;
+   totalEmpireValue: number;
+   totalTicks: number;
+   totalSeconds: number;
+   flags: RebirthFlags;
+   city: City;
+   time: number;
 }
 
 export const Languages: Record<string, Record<string, string>> = {

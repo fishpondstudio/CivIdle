@@ -1,12 +1,19 @@
 import { init, type Client } from "@fishpondstudio/steamworks.js";
 import { BrowserWindow, Menu, app, dialog, ipcMain } from "electron";
+import { existsSync, renameSync } from "node:fs";
 import path from "node:path";
 import { IPCService } from "./IPCService";
 
 export type SteamClient = Omit<Client, "init" | "runCallbacks">;
 
 app.commandLine.appendSwitch("enable-logging", "file");
-app.commandLine.appendSwitch("log-file", path.join(getLocalGameSavePath(), "CivIdle.log"));
+
+const logPath = path.join(getLocalGameSavePath(), "CivIdle.log");
+if (existsSync(logPath)) {
+   renameSync(logPath, path.join(getLocalGameSavePath(), "CivIdle-prev.log"));
+}
+
+app.commandLine.appendSwitch("log-file", logPath);
 app.commandLine.appendSwitch("enable-experimental-web-platform-features");
 
 export function getGameSavePath(): string {

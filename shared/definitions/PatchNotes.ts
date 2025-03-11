@@ -6,6 +6,10 @@ interface PatchNote {
 
 export const PatchNotes: PatchNote[] = [
    {
+      version: "0.22.1",
+      content: [["QoL", "Rotate game log files to prevent them from taking too much disk space"]],
+   },
+   {
       version: "0.22.0",
       content: [],
       link: "https://store.steampowered.com/news/app/2181940/view/541099439761130661",
