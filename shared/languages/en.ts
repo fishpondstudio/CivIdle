@@ -214,7 +214,6 @@ export const EN = {
    Cancel: "Cancel",
    CancelUpgrade: "Cancel Upgrade",
    CancelUpgradeDesc: "All the resources that have already been transported will remain in the storage",
-   CancelAllUpgrade: "Cancel all upgrades",
    CancelAllUpgradeDesc: "Cancel all %{building} upgrades",
    Cannon: "Cannon",
    CannonWorkshop: "Cannon Workshop",

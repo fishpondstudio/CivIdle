@@ -207,9 +207,8 @@ function CancelUpgradeComponent({ building }: { building: IBuildingData }): Reac
                <div className="f1 text-strong">{t(L.CancelUpgrade)}</div>
             </button>
             <Tippy content={t(L.CancelAllUpgradeDesc, { building: Config.Building[building.type].name() })}>
-               <button className="jcc w100 row" onClick={cancelAllUpgrades}>
-                  <div className="m-icon small">delete</div>
-                  <div className="f1 text-strong">{t(L.CancelAllUpgrade)}</div>
+               <button onClick={cancelAllUpgrades}>
+                  <div className="m-icon small">delete_forever</div>
                </button>
             </Tippy>
          </div>
