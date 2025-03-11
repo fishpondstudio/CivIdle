@@ -74,6 +74,18 @@ export function PlayerTradeComponent({ gameState, xy }: IBuildingComponentProps)
       );
    }
 
+   const clearFilters = () => {
+      savedResourceWantFilters.clear();
+      setResourceWantFilters(new Set(savedResourceWantFilters));
+      savedResourceOfferFilters.clear();
+      setResourceOfferFilters(new Set(savedResourceOfferFilters));
+      savedPlayerNameFilter = "";
+      setPlayerNameFilter(savedPlayerNameFilter);
+      savedMaxTradeAmountFilter = 0;
+      setTradeAmountFilter(savedMaxTradeAmountFilter);
+      setShowFilters(false);
+   };
+
    const resources = keysOf(unlockedResources(gameState)).filter((r) => !NoStorage[r] && !NoPrice[r]);
    return (
       <article role="tabpanel" style={{ padding: "8px" }}>
@@ -138,8 +150,7 @@ export function PlayerTradeComponent({ gameState, xy }: IBuildingComponentProps)
                      </tbody>
                   </table>
                </div>
-               <div className="separator" />
-               <div className="row">
+               <div className="row mt10">
                   <div style={{ width: 100 }}>{t(L.PlayerTradePlayerNameFilter)}</div>
                   <input
                      type="text"
@@ -168,8 +179,7 @@ export function PlayerTradeComponent({ gameState, xy }: IBuildingComponentProps)
                      onClick={(e) => (e.target as HTMLInputElement)?.select()}
                   />
                </div>
-               <div className="separator" />
-               <div className="row">
+               <div className="row mt10">
                   <button
                      className="f1 text-center text-strong"
                      onClick={() => {
@@ -178,41 +188,50 @@ export function PlayerTradeComponent({ gameState, xy }: IBuildingComponentProps)
                   >
                      {t(L.PlayerTradeFiltersApply)}
                   </button>
-                  <div style={{ width: 10 }} />
-                  <button
-                     className="f1 text-center"
-                     onClick={() => {
-                        savedResourceWantFilters.clear();
-                        setResourceWantFilters(new Set(savedResourceWantFilters));
-                        savedResourceOfferFilters.clear();
-                        setResourceOfferFilters(new Set(savedResourceOfferFilters));
-                        savedPlayerNameFilter = "";
-                        setPlayerNameFilter(savedPlayerNameFilter);
-                        savedMaxTradeAmountFilter = 0;
-                        setTradeAmountFilter(savedMaxTradeAmountFilter);
-                        setShowFilters(false);
-                     }}
-                  >
+                  <button className="f1 text-center" onClick={clearFilters}>
                      {t(L.PlayerTradeFiltersClear)}
                   </button>
                </div>
             </fieldset>
          ) : (
-            <button
-               className="row w100 jcc mb10"
-               onClick={() => {
-                  setShowFilters(true);
-               }}
-            >
-               <div className="m-icon small">filter_list</div>
-               <div className="text-strong f1">
-                  {t(L.PlayerTradeFilters)} (
-                  {resourceWantFilters.size +
-                     resourceOfferFilters.size +
-                     (playerNameFilter.length > 0 ? 1 : 0)}
-                  )
-               </div>
-            </button>
+            <div className="row mb10">
+               <button
+                  className="row f1 jcc"
+                  onClick={() => {
+                     setShowFilters(true);
+                  }}
+               >
+                  <div className="m-icon small">filter_list</div>
+                  <div className="text-strong f1">
+                     {t(L.PlayerTradeFilters)} (
+                     {resourceWantFilters.size +
+                        resourceOfferFilters.size +
+                        (playerNameFilter.length > 0 ? 1 : 0)}
+                     )
+                  </div>
+               </button>
+               <Tippy content={t(L.PlayerTradeFilterWhatIHave)}>
+                  <button
+                     onClick={() => {
+                        clearFilters();
+                        resources.forEach((res) => {
+                           if (hasResourceForPlayerTrade(res)) {
+                              savedResourceWantFilters.add(res);
+                           }
+                        });
+                        setResourceWantFilters(new Set(savedResourceWantFilters));
+                        setResourceOfferFilters(new Set(savedResourceOfferFilters));
+                     }}
+                  >
+                     <div className="m-icon small">database</div>
+                  </button>
+               </Tippy>
+               <Tippy content={t(L.PlayerTradeClearFilter)}>
+                  <button onClick={clearFilters}>
+                     <div className="m-icon small">cancel</div>
+                  </button>
+               </Tippy>
+            </div>
          )}
          <TableView
             header={[

@@ -11,6 +11,7 @@ import {
 } from "../../../shared/logic/PlayerTradeLogic";
 import { combineResources, deductResourceFrom } from "../../../shared/logic/ResourceLogic";
 import { Tick } from "../../../shared/logic/TickLogic";
+import type { IAddTradeRequest } from "../../../shared/utilities/Database";
 import {
    clamp,
    formatPercent,
@@ -24,7 +25,6 @@ import { playError, playKaching } from "../visuals/Sound";
 import type { IBuildingComponentProps } from "./BuildingPage";
 import { showToast } from "./GlobalModal";
 import { FormatNumber } from "./HelperComponents";
-import type { IAddTradeRequest } from "../../../shared/utilities/Database";
 
 const INPUT_WIDTH = 100;
 
@@ -217,7 +217,6 @@ export function AddTradeComponent({ gameState, xy }: IBuildingComponentProps): R
                   <div className="m-icon small">shopping_cart</div>
                   <div className="text-strong">{t(L.PlayerTradePlaceTrade)}</div>
                </button>
-               <div style={{ width: "10px" }}></div>
                <button
                   className="row f1 jcc"
                   onClick={() => {

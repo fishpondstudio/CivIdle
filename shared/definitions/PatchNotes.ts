@@ -7,7 +7,11 @@ interface PatchNote {
 export const PatchNotes: PatchNote[] = [
    {
       version: "0.22.1",
-      content: [["QoL", "Rotate game log files to prevent them from taking too much disk space"]],
+      content: [
+         ["QoL", "Add a player trade filter to show only resources that you have"],
+         ["QoL", "Rotate game log files to prevent them from taking too much disk space"],
+         ["QoL", "Add a button to cancel all upgrades of the same building type (@Vethon)"],
+      ],
    },
    {
       version: "0.22.0",
