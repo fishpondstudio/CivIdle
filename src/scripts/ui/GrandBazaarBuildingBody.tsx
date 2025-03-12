@@ -82,7 +82,7 @@ function TradesTab({
                   <div style={{ width: "120px" }}>{t(L.GrandBazaarSeach)}</div>
                   <input
                      type="text"
-                     className="f1"
+                     className="f1 mr5"
                      value={nameResourceFilter}
                      onChange={(e) => {
                         savedNameResourceFilter = e.target.value;
