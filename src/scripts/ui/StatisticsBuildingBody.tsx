@@ -455,6 +455,7 @@ function BuildingTab({ gameState }: IBuildingComponentProps): React.ReactNode {
 
 const resourceTabSortingState = { column: 0, asc: true };
 let savedResourceTierFilter = BuildingFilter.None;
+let savedResourceSearch = "";
 
 function ResourcesTab({ gameState }: IBuildingComponentProps): React.ReactNode {
    const [resourceTierFilter, _setResourceTierFilter] = useState<BuildingFilter>(savedResourceTierFilter);
@@ -462,7 +463,7 @@ function ResourcesTab({ gameState }: IBuildingComponentProps): React.ReactNode {
       _setResourceTierFilter(newFilter);
       savedResourceTierFilter = newFilter;
    };
-   const [search, setSearch] = useState<string>("");
+   const [search, setSearch] = useState<string>(savedResourceSearch);
    const [showTheoreticalValue, setShowTheoreticalValue] = useState(true);
    const unlockedResourcesList: PartialSet<Resource> = unlockedResources(gameState);
    const io = getResourceIO(gameState);
@@ -498,8 +499,12 @@ function ResourcesTab({ gameState }: IBuildingComponentProps): React.ReactNode {
                type="text"
                style={{ flex: 1 }}
                className="mr5"
+               value={savedResourceSearch}
                placeholder={t(L.StatisticsResourcesSearchText)}
-               onChange={(e) => setSearch(e.target.value)}
+               onChange={(e) => {
+                  savedResourceSearch = e.target.value;
+                  setSearch(savedResourceSearch);
+               }}
             />
             {[1, 2, 3, 4, 5, 6, 7, 8].map((tier) => {
                return (
