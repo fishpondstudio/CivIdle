@@ -27,6 +27,8 @@ export function getLocalGameSavePath(): string {
 export const MIN_WIDTH = 1136;
 export const MIN_HEIGHT = 640;
 
+const disableFloatingMode = process.argv.includes("--disable-floating-mode");
+
 const createWindow = async () => {
    try {
       const steam = init();
@@ -39,9 +41,9 @@ const createWindow = async () => {
          minHeight: MIN_HEIGHT,
          minWidth: MIN_WIDTH,
          show: false,
-         frame: false,
+         frame: !disableFloatingMode,
          roundedCorners: false,
-         thickFrame: false,
+         thickFrame: !disableFloatingMode,
          backgroundColor: "#000000",
       });
 
