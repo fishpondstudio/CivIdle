@@ -41,9 +41,9 @@ const createWindow = async () => {
          minHeight: MIN_HEIGHT,
          minWidth: MIN_WIDTH,
          show: false,
-         frame: !disableFloatingMode,
+         frame: disableFloatingMode,
          roundedCorners: false,
-         thickFrame: !disableFloatingMode,
+         thickFrame: disableFloatingMode,
          backgroundColor: "#000000",
       });
 
