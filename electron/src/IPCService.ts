@@ -114,7 +114,7 @@ export class IPCService {
 
    public setSize(width: number, height: number): void {
       this._mainWindow.setMinimumSize(width, height);
-      this._mainWindow.setSize(width, height);
+      this._mainWindow.setContentSize(width, height);
    }
 
    public enterFloatingMode(): void {
