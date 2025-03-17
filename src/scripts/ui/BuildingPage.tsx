@@ -94,8 +94,8 @@ export function BuildingPage(props: { tile: ITileData }): React.ReactNode {
    const buildingCount = sizeOf(buildingByType.get(building.type));
    let showBuildingCount = true;
    if (
-      isHeadquarter(building.type) &&
-      isWorldOrNaturalWonder(building.type) &&
+      isHeadquarter(building.type) ||
+      isWorldOrNaturalWonder(building.type) ||
       isSpecialBuilding(building.type)
    ) {
       showBuildingCount = false;
