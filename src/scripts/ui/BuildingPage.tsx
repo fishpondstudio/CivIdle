@@ -1,11 +1,7 @@
 import type React from "react";
 import type { FunctionComponent } from "react";
 import type { Building } from "../../../shared/definitions/BuildingDefinitions";
-import {
-   isHeadquarter,
-   isSpecialBuilding,
-   isWorldOrNaturalWonder,
-} from "../../../shared/logic/BuildingLogic";
+import { isSpecialBuilding } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
 import type { GameState } from "../../../shared/logic/GameState";
 import { getTypeBuildings } from "../../../shared/logic/IntraTickCache";
@@ -93,11 +89,7 @@ export function BuildingPage(props: { tile: ITileData }): React.ReactNode {
    const buildingByType = getTypeBuildings(gs);
    const buildingCount = sizeOf(buildingByType.get(building.type));
    let showBuildingCount = true;
-   if (
-      isHeadquarter(building.type) ||
-      isWorldOrNaturalWonder(building.type) ||
-      isSpecialBuilding(building.type)
-   ) {
+   if (isSpecialBuilding(building.type)) {
       showBuildingCount = false;
    }
    return (
