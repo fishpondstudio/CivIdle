@@ -1,10 +1,16 @@
 import type React from "react";
 import type { FunctionComponent } from "react";
 import type { Building } from "../../../shared/definitions/BuildingDefinitions";
+import {
+   isHeadquarter,
+   isSpecialBuilding,
+   isWorldOrNaturalWonder,
+} from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
 import type { GameState } from "../../../shared/logic/GameState";
+import { getTypeBuildings } from "../../../shared/logic/IntraTickCache";
 import type { ITileData } from "../../../shared/logic/Tile";
-import type { Tile } from "../../../shared/utilities/Helper";
+import { sizeOf, type Tile } from "../../../shared/utilities/Helper";
 import { useGameState } from "../Global";
 import { Singleton } from "../utilities/Singleton";
 import { BritishMuseumBuildingBody } from "./BritishMuseumBuildingBody";
@@ -15,6 +21,7 @@ import { EuphratesRiverBuildingBody } from "./EuphratesRiverBuildingBody";
 import { GrandBazaarBuildingBody } from "./GrandBazaarBuildingBody";
 import { HagiaSophiaBuildingBody } from "./HagiaSophiaBuildingBody";
 import { HeadquarterBuildingBody } from "./HeadquarterBuildingBody";
+import { FormatNumber } from "./HelperComponents";
 import { IdeologyBuildingBody } from "./IdeologyBuildingBody";
 import { LoadingPage, LoadingPageStage } from "./LoadingPage";
 import { MarketBuildingBody } from "./MarketBuildingBody";
@@ -83,9 +90,22 @@ export function BuildingPage(props: { tile: ITileData }): React.ReactNode {
    const gs = useGameState();
    const definition = Config.Building[building.type];
    const Body = BuildingBodyOverride[building.type] ?? DefaultBuildingBody;
+   const buildingByType = getTypeBuildings(gs);
+   const buildingCount = sizeOf(buildingByType.get(building.type));
+   let showBuildingCount = true;
+   if (
+      isHeadquarter(building.type) &&
+      isWorldOrNaturalWonder(building.type) &&
+      isSpecialBuilding(building.type)
+   ) {
+      showBuildingCount = false;
+   }
    return (
       <div className="window">
-         <TitleBarComponent>{definition.name()}</TitleBarComponent>
+         <TitleBarComponent>
+            {definition.name()}{" "}
+            {showBuildingCount ? <span>({<FormatNumber value={buildingCount} />})</span> : <></>}
+         </TitleBarComponent>
          <MenuComponent />
          <Body {...props} gameState={gs} xy={tile.tile} />
       </div>
