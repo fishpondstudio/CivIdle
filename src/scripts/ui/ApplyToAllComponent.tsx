@@ -3,7 +3,7 @@ import { applyToAllBuildings } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
 import type { GameState } from "../../../shared/logic/GameState";
 import { notifyGameOptionsUpdate } from "../../../shared/logic/GameStateLogic";
-import { getGrid } from "../../../shared/logic/IntraTickCache";
+import { getGrid, getStorageFullBuildings } from "../../../shared/logic/IntraTickCache";
 import type { IBuildingData } from "../../../shared/logic/Tile";
 import { hasFlag, pointToTile, sizeOf, tileToPoint, type Tile } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
@@ -92,6 +92,28 @@ export function ApplyToAllComponent<T extends IBuildingData>({
             );
          })}
          <div className="f1"></div>
+         <Tippy content={t(L.TurnOffFullBuildings, { building: def.name() })}>
+            <button
+               style={{ width: 27, padding: 0 }}
+               onClick={() => {
+                  playSuccess();
+                  //const count = applyToAllBuildings(building.type, getOptions, gameState);
+                  getStorageFullBuildings()
+                     .filter((xy) => {
+                        return gameState.tiles.get(xy)?.building?.type === building.type;
+                     })
+                     .forEach((xy) => {
+                        const b = gameState.tiles.get(xy)?.building;
+                        if (b === undefined) {
+                           return;
+                        }
+                        b.capacity = 0;
+                     });
+               }}
+            >
+               <div className="m-icon small">power_settings_new</div>
+            </button>
+         </Tippy>
          {hasFlag(flags, ApplyToAllFlag.NoDefault) ? null : (
             <Tippy
                content={t(L.SetAsDefaultBuilding, {
