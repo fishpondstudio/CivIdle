@@ -1,10 +1,13 @@
+import Tippy from "@tippyjs/react";
 import classNames from "classnames";
 import { getMultipliersFor, getStorageFor } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
+import { getStorageFullBuildings } from "../../../shared/logic/IntraTickCache";
 import { NotProducingReason, Tick } from "../../../shared/logic/TickLogic";
 import { formatPercent, keysOf } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import warning from "../../images/warning.png";
+import { playSuccess } from "../visuals/Sound";
 import type { IBuildingComponentProps } from "./BuildingPage";
 import { DeleteResourceModal } from "./DeleteResourceModal";
 import { showModal } from "./GlobalModal";
@@ -17,6 +20,7 @@ export function BuildingStorageComponent({ gameState, xy }: IBuildingComponentPr
    if (building == null || !Number.isFinite(storage.total) || storage.total <= 0) {
       return null;
    }
+   const def = Config.Building[building.type];
    const percentage = storage.used / storage.total;
    const showWarning = Tick.current.notProducingReasons.get(xy) === NotProducingReason.StorageFull;
    return (
@@ -114,6 +118,31 @@ export function BuildingStorageComponent({ gameState, xy }: IBuildingComponentPr
                </details>
             </li>
          </ul>
+         <div className="sep5"></div>
+         <div className="text-small row">
+            <div className="f1"></div>
+            <Tippy content={t(L.TurnOffFullBuildings, { building: def.name() })}>
+               <button
+                  style={{ width: 27, padding: 0 }}
+                  onClick={() => {
+                     playSuccess();
+                     getStorageFullBuildings()
+                        .filter((xy) => {
+                           return gameState.tiles.get(xy)?.building?.type === building.type;
+                        })
+                        .forEach((xy) => {
+                           const b = gameState.tiles.get(xy)?.building;
+                           if (b === undefined) {
+                              return;
+                           }
+                           b.capacity = 0;
+                        });
+                  }}
+               >
+                  <div className="m-icon small">domain_disabled</div>
+               </button>
+            </Tippy>
+         </div>
       </fieldset>
    );
 }
