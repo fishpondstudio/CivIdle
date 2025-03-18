@@ -280,6 +280,40 @@ export class CityDefinitions {
       requireSupporterPack: true,
       festivalDesc: () => t(L.GuyFawkesNightV2),
    };
+
+   French: ICityDefinition = {
+      name: () => t(L.French),
+      deposits: {
+         Water: 0.03,
+         Copper: 0.02,
+         Iron: 0.025,
+         Wood: 0.02,
+         Stone: 0.02,
+         Gold: 0.01,
+         Coal: 0.03,
+         Oil: 0.04,
+         Aluminum: 0.02,
+         NaturalGas: 0.03,
+         Uranium: 0.03,
+      },
+      size: 50,
+      buildingNames: {
+         Headquarter: () => t(L.Westminster),
+      },
+      uniqueBuildings: {
+         BritishMuseum: "Combustion",
+         CambridgeUniversity: "Enlightenment",
+         TowerBridge: "Electricity",
+         EastIndiaCompany: "PrivateOwnership",
+      },
+      uniqueMultipliers: {},
+      naturalWonders: {
+         CerneAbbasGiant: true,
+      },
+      requireGreatPeopleLevel: 60,
+      requireSupporterPack: true,
+      festivalDesc: () => t(L.GuyFawkesNightV2),
+   };
 }
 
 export type City = keyof CityDefinitions;
