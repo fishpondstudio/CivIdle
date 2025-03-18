@@ -1910,16 +1910,28 @@ export class BuildingDefinitions {
       wikipedia: "Cerne_Abbas_Giant",
    };
 
-   // ArcDeTriomphe: IBuildingDefinition = {
-   //    name: () => t(L.ArcDeTriomphe),
-   //    desc: () => t(L.ArcDeTriompheDesc),
-   //    input: {},
-   //    output: {},
-   //    construction: { Culture: 100, Brick: 100, Marble: 100 },
-   //    max: 1,
-   //    special: BuildingSpecial.WorldWonder,
-   //    wikipedia: "Arc_de_Triomphe",
-   // };
+   DuneOfPilat: IBuildingDefinition = {
+      name: () => t(L.DuneOfPilat),
+      desc: () => t(L.DuneOfPilatDesc),
+      input: {},
+      output: {},
+      construction: {},
+      max: 0,
+      special: BuildingSpecial.NaturalWonder,
+      wikipedia: "Dune_of_Pilat",
+   };
+
+   ArcDeTriomphe: IBuildingDefinition = {
+      name: () => t(L.ArcDeTriomphe),
+      desc: () => t(L.ArcDeTriompheDescV2),
+      input: {},
+      output: {},
+      construction: { Train: 100, GatlingGun: 100, Politics: 100 },
+      max: 1,
+      special: BuildingSpecial.WorldWonder,
+      wikipedia: "Arc_de_Triomphe",
+   };
+
    // #endregion /////////////////////////////////////////////////////////////////////////////////////////////
 
    // Winery: IBuildingDefinition = {

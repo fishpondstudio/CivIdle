@@ -106,7 +106,7 @@ export const EN = {
    ApplyToBuildingsToastHTML: "Successfully applied to <b>%{count} %{building}</b>",
    Aqueduct: "Aqueduct",
    ArcDeTriomphe: "Arc de Triomphe",
-   ArcDeTriompheDesc: "Arc de Triomphe",
+   ArcDeTriompheDescV2: "Every 1 happiness (capped) provides +1 builder capacity to all buildings",
    Archimedes: "Archimedes",
    Architecture: "Architecture",
    Aristophanes: "Aristophanes",
@@ -1499,4 +1499,7 @@ export const EN = {
    Zugspitze: "Zugspitze",
    ZugspitzeDesc: "For each unlocked age, get one point that can be used to provide one extra level to any Great Person that is born from this run",
    French: "French",
+   ElyseePalace: "Élysée Palace",
+   DuneOfPilat: "Dune of Pilat",
+   DuneOfPilatDesc: "In each age, double the age wisdom for the previous age",
 };

@@ -32,13 +32,15 @@ export function BritishMuseumBuildingBody({ gameState, xy }: IBuildingComponentP
                   onChange={(e) => setBuilding(e.target.value as Building)}
                   className="f1 mr10"
                >
-                  {buildings.map((building) => {
-                     return (
-                        <option key={building} value={building}>
-                           {Config.Building[building].name()}
-                        </option>
-                     );
-                  })}
+                  {buildings
+                     .filter((b) => b !== "DuneOfPilat")
+                     .map((building) => {
+                        return (
+                           <option key={building} value={building}>
+                              {Config.Building[building].name()}
+                           </option>
+                        );
+                     })}
                </select>
                <button
                   onClick={() => {

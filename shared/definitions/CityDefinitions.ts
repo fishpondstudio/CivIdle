@@ -298,19 +298,16 @@ export class CityDefinitions {
       },
       size: 50,
       buildingNames: {
-         Headquarter: () => t(L.Westminster),
+         Headquarter: () => t(L.ElyseePalace),
       },
       uniqueBuildings: {
-         BritishMuseum: "Combustion",
-         CambridgeUniversity: "Enlightenment",
-         TowerBridge: "Electricity",
-         EastIndiaCompany: "PrivateOwnership",
+         ArcDeTriomphe: "Electricity",
       },
       uniqueMultipliers: {},
       naturalWonders: {
-         CerneAbbasGiant: true,
+         DuneOfPilat: true,
       },
-      requireGreatPeopleLevel: 60,
+      requireGreatPeopleLevel: 70,
       requireSupporterPack: true,
       festivalDesc: () => t(L.GuyFawkesNightV2),
    };

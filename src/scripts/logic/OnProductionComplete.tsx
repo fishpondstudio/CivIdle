@@ -61,6 +61,8 @@ import { VotedBoostType, type IGetVotedBoostResponse } from "../../../shared/uti
 import {
    MINUTE,
    clamp,
+   filterOf,
+   firstKeyOf,
    forEach,
    keysOf,
    mapSafeAdd,
@@ -1533,14 +1535,29 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          }
          break;
       }
-      // case "ArcDeTriomphe": {
-      //    forEach(Config.Building, (b, def) => {
-      //       if (def.input.Culture || def.output.Culture) {
-
-      //          addMultiplier(b, { output: 1, worker: 1, storage: 1 }, buildingName);
-      //       }
-      //    });
-      //    break;
-      // }
+      case "DuneOfPilat": {
+         const age = getCurrentAge(gs);
+         const previousAge = firstKeyOf(
+            filterOf(Config.TechAge, (k, v) => v.idx === Config.TechAge[age].idx - 1),
+         );
+         if (previousAge) {
+            const ageWisdomLevel = options.ageWisdom[previousAge] ?? 0;
+            getGreatPeopleForWisdom(previousAge).forEach((gp) => {
+               const greatPerson = Config.GreatPerson[gp];
+               greatPerson.tick(greatPerson, ageWisdomLevel, t(L.DuneOfPilat), GreatPersonTickFlag.Unstable);
+            });
+         }
+         break;
+      }
+      case "ArcDeTriomphe": {
+         const happiness = Tick.current.happiness?.value ?? 0;
+         if (happiness > 0) {
+            Tick.next.globalMultipliers.builderCapacity.push({
+               value: Math.floor(happiness),
+               source: buildingName,
+            });
+         }
+         break;
+      }
    }
 }
