@@ -6,7 +6,7 @@ import { Config } from "../../../shared/logic/Config";
 import type { GameState } from "../../../shared/logic/GameState";
 import { getTypeBuildings } from "../../../shared/logic/IntraTickCache";
 import type { ITileData } from "../../../shared/logic/Tile";
-import { sizeOf, type Tile } from "../../../shared/utilities/Helper";
+import type { Tile } from "../../../shared/utilities/Helper";
 import { useGameState } from "../Global";
 import { Singleton } from "../utilities/Singleton";
 import { BritishMuseumBuildingBody } from "./BritishMuseumBuildingBody";
@@ -86,17 +86,16 @@ export function BuildingPage(props: { tile: ITileData }): React.ReactNode {
    const gs = useGameState();
    const definition = Config.Building[building.type];
    const Body = BuildingBodyOverride[building.type] ?? DefaultBuildingBody;
-   const buildingByType = getTypeBuildings(gs);
-   const buildingCount = sizeOf(buildingByType.get(building.type));
-   let showBuildingCount = true;
-   if (isSpecialBuilding(building.type)) {
-      showBuildingCount = false;
+   let titleBarContent = null;
+   if (!isSpecialBuilding(building.type)) {
+      const buildingByType = getTypeBuildings(gs);
+      const buildingCount = buildingByType.get(building.type)?.size ?? 0;
+      titleBarContent = <span>({<FormatNumber value={buildingCount} />})</span>;
    }
    return (
       <div className="window">
          <TitleBarComponent>
-            {definition.name()}{" "}
-            {showBuildingCount ? <span>({<FormatNumber value={buildingCount} />})</span> : <></>}
+            {definition.name()} {titleBarContent}
          </TitleBarComponent>
          <MenuComponent />
          <Body {...props} gameState={gs} xy={tile.tile} />
