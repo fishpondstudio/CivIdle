@@ -1502,5 +1502,5 @@ export const EN = {
    ElyseePalace: "Élysée Palace",
    DuneOfPilat: "Dune of Pilat",
    DuneOfPilatDesc: "In each age, double the age wisdom for the previous age",
-   TurnOffFullBuildings: "Shutdown All %{building} With Full Storage"
+   TurnOffFullBuildings: "Turn Off All %{building} With Full Storage"
 };
