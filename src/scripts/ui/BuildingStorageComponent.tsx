@@ -17,7 +17,6 @@ export function BuildingStorageComponent({ gameState, xy }: IBuildingComponentPr
    if (building == null || !Number.isFinite(storage.total) || storage.total <= 0) {
       return null;
    }
-   const def = Config.Building[building.type];
    const percentage = storage.used / storage.total;
    const showWarning = Tick.current.notProducingReasons.get(xy) === NotProducingReason.StorageFull;
    return (
