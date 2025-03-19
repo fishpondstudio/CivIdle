@@ -1559,5 +1559,8 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          }
          break;
       }
+      case "MontSaintMichel": {
+         break;
+      }
    }
 }

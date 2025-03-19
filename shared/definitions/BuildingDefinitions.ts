@@ -1932,6 +1932,17 @@ export class BuildingDefinitions {
       wikipedia: "Arc_de_Triomphe",
    };
 
+   MontSaintMichel: IBuildingDefinition = {
+      name: () => t(L.MontSaintMichel),
+      desc: () => t(L.MontSaintMichelDesc),
+      input: {},
+      output: {},
+      construction: { Faith: 100, Knight: 100, Coin: 100 },
+      max: 1,
+      special: BuildingSpecial.WorldWonder,
+      wikipedia: "Arc_de_Triomphe",
+   };
+
    // #endregion /////////////////////////////////////////////////////////////////////////////////////////////
 
    // Winery: IBuildingDefinition = {

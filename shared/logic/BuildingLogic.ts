@@ -453,6 +453,11 @@ type BuildingCostInput = Pick<IBuildingData, "type" | "level"> & {
    religion?: Religion | null;
 };
 
+/**
+ * Get the cost of a building
+ * @param building. Level = 0 for construction cost. Level = 1 for cost of upgrading to level 1
+ * @returns The cost of the building
+ */
 export function getBuildingCost(building: BuildingCostInput): PartialTabulate<Resource> {
    const type = building.type;
    const level = building.level;
