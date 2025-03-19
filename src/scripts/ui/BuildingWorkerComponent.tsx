@@ -223,14 +223,14 @@ export function BuildingWorkerComponent({ gameState, xy }: IBuildingComponentPro
                   }}
                />
                <div className="sep10" />
-               <ApplyToAllComponent
-                  xy={xy}
-                  getOptions={() => ({ capacity: building.capacity })}
-                  gameState={gameState}
-               />
-               <div className="sep5"></div>
-               <div className="text-small row">
-                  <div className="f1"></div>
+               <div className="row">
+                  <div className="f1">
+                     <ApplyToAllComponent
+                        xy={xy}
+                        getOptions={() => ({ capacity: building.capacity })}
+                        gameState={gameState}
+                     />
+                  </div>
                   <Tippy
                      content={t(L.TurnOffFullBuildings, { building: Config.Building[building.type].name() })}
                   >
@@ -244,10 +244,9 @@ export function BuildingWorkerComponent({ gameState, xy }: IBuildingComponentPro
                               })
                               .forEach((xy) => {
                                  const b = gameState.tiles.get(xy)?.building;
-                                 if (b === undefined) {
-                                    return;
+                                 if (b) {
+                                    b.capacity = 0;
                                  }
-                                 b.capacity = 0;
                               });
                         }}
                      >
