@@ -245,7 +245,7 @@ export function PlayerTradeComponent({ gameState, xy }: IBuildingComponentProps)
             data={trades.filter((trade) => {
                const filterNames = playerNameFilter
                   .toLowerCase()
-                  .split(",")
+                  .split(" ")
                   .map((name) => name.trim())
                   .filter((name) => name.length > 0);
 
