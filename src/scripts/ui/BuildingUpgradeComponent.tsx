@@ -31,6 +31,8 @@ import { playClick, playError, playSuccess } from "../visuals/Sound";
 import type { IBuildingComponentProps } from "./BuildingPage";
 import { hideToast, showToast } from "./GlobalModal";
 
+export type UpgradeState = "all" | "active" | "disabled";
+
 export function BuildingUpgradeComponent({ gameState, xy }: IBuildingComponentProps): React.ReactNode {
    const tile = gameState.tiles.get(xy);
    const building = tile?.building;
@@ -40,6 +42,7 @@ export function BuildingUpgradeComponent({ gameState, xy }: IBuildingComponentPr
    if ((Config.Building[building.type]?.max ?? Number.POSITIVE_INFINITY) <= 1) {
       return null;
    }
+   const [upgradeState, setUpgradeState] = useState<UpgradeState>("all");
    const [selected, setSelected] = useState(new Set([xy]));
    const levels = getUpgradeTargetLevels(building);
    const upgradeTo = (targetLevel: number) => {
@@ -153,6 +156,17 @@ export function BuildingUpgradeComponent({ gameState, xy }: IBuildingComponentPr
                   </div>
                </Tippy>
                <div className="f1"></div>
+               <select
+                  className="condensed mr5"
+                  defaultValue={0}
+                  onChange={(e) => {
+                     setUpgradeState(e.target.value as UpgradeState);
+                  }}
+               >
+                  <option value="all">All</option>
+                  <option value="active">Active</option>
+                  <option value="disabled">Disabled</option>
+               </select>
                <select
                   style={{ margin: "-10px 0" }}
                   className="condensed"
