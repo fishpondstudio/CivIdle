@@ -1504,4 +1504,5 @@ export const EN = {
    DuneOfPilatDesc: "In each age, double the age wisdom for the previous age",
    MontSaintMichel: "Mont Saint-Michel",
    MontSaintMichelDesc: "Generate Culture from Idle Workers. Provide +1 Storage Multiplier to all buildings within 2-tile range. This wonder can be upgraded using the generated Culture and each level provides addtional +1 Storage Multiplier",
+   TurnOffFullBuildings: "Turn Off All %{building} With Full Storage",
 };

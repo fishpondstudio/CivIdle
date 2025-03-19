@@ -1,3 +1,4 @@
+import Tippy from "@tippyjs/react";
 import classNames from "classnames";
 import {
    IOCalculation,
@@ -9,13 +10,19 @@ import {
    isSpecialBuilding,
    shouldAlwaysShowBuildingOptions,
 } from "../../../shared/logic/BuildingLogic";
+import { Config } from "../../../shared/logic/Config";
 import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
-import { getBuildingIO, getFuelByTarget } from "../../../shared/logic/IntraTickCache";
+import {
+   getBuildingIO,
+   getFuelByTarget,
+   getStorageFullBuildings,
+} from "../../../shared/logic/IntraTickCache";
 import { NotProducingReason, Tick } from "../../../shared/logic/TickLogic";
 import { formatNumber, formatPercent, isEmpty } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import warning from "../../images/warning.png";
 import { useShortcut } from "../utilities/Hook";
+import { playSuccess } from "../visuals/Sound";
 import { ApplyToAllComponent } from "./ApplyToAllComponent";
 import type { IBuildingComponentProps } from "./BuildingPage";
 import { FormatNumber } from "./HelperComponents";
@@ -221,6 +228,33 @@ export function BuildingWorkerComponent({ gameState, xy }: IBuildingComponentPro
                   getOptions={() => ({ capacity: building.capacity })}
                   gameState={gameState}
                />
+               <div className="sep5"></div>
+               <div className="text-small row">
+                  <div className="f1"></div>
+                  <Tippy
+                     content={t(L.TurnOffFullBuildings, { building: Config.Building[building.type].name() })}
+                  >
+                     <button
+                        style={{ width: 27, padding: 0 }}
+                        onClick={() => {
+                           playSuccess();
+                           getStorageFullBuildings()
+                              .filter((xy) => {
+                                 return gameState.tiles.get(xy)?.building?.type === building.type;
+                              })
+                              .forEach((xy) => {
+                                 const b = gameState.tiles.get(xy)?.building;
+                                 if (b === undefined) {
+                                    return;
+                                 }
+                                 b.capacity = 0;
+                              });
+                        }}
+                     >
+                        <div className="m-icon small">domain_disabled</div>
+                     </button>
+                  </Tippy>
+               </div>
             </>
          )}
       </fieldset>
