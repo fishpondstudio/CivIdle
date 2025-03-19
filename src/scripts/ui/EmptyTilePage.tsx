@@ -110,10 +110,12 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
             <div className="row mb5">
                <input
                   type="text"
-                  className="f1 mr5"
+                  className="f1"
                   placeholder={t(L.BuildingSearchText)}
                   onChange={(e) => setSearch(e.target.value)}
                />
+            </div>
+            <div className="row mb5">
                <Filter
                   filter={buildingFilter}
                   current={BuildingFilter.Wonder}
@@ -135,6 +137,7 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
                      </Filter>
                   );
                })}
+               <div className="f1"></div>
                <Filter
                   tooltip={t(L.ShowUnbuiltOnly)}
                   filter={buildingFilter}

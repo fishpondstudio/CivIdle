@@ -1937,10 +1937,10 @@ export class BuildingDefinitions {
       desc: () => t(L.MontSaintMichelDesc),
       input: {},
       output: {},
-      construction: { Faith: 100, Knight: 100, Coin: 100 },
+      construction: { Culture: 1000 },
       max: 1,
       special: BuildingSpecial.WorldWonder,
-      wikipedia: "Arc_de_Triomphe",
+      wikipedia: "Mont-Saint-Michel",
    };
 
    // #endregion /////////////////////////////////////////////////////////////////////////////////////////////
@@ -2032,4 +2032,5 @@ export const BuildingShowLevel = new Set<Building>([
    "Petra",
    "YearOfTheSnake",
    "EastIndiaCompany",
+   "MontSaintMichel",
 ]);
