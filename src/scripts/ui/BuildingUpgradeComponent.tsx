@@ -67,7 +67,7 @@ export function BuildingUpgradeComponent({ gameState, xy }: IBuildingComponentPr
    useShortcut("BuildingPageUpgrade4", () => upgradeTo(levels[3]), [xy]);
    useShortcut("BuildingPageUpgrade5", () => upgradeTo(levels[4]), [xy]);
    useEffect(() => {
-      highlightUpgradeableBuildings();
+      highlightUpgradeableBuildings(upgradeRange, upgradeState);
    }, [upgradeState, upgradeRange]);
 
    const age = Config.BuildingTechAge[building.type]!;
@@ -145,7 +145,7 @@ export function BuildingUpgradeComponent({ gameState, xy }: IBuildingComponentPr
       }
    };
 
-   const highlightUpgradeableBuildings = () => {
+   const highlightUpgradeableBuildings = (upgradeRange: string, upgradeState: string) => {
       switch (upgradeRange) {
          case "0": {
             if (stateCondition(building, xy)) {
