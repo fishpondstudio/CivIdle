@@ -27,7 +27,6 @@ export function Route({ event }: { event: TypedEvent<RouteChangeEvent> }): React
       setRoute(e);
    });
    const isFloating = useFloatingMode();
-   console.log(isFloating);
    if (isFloating) {
       return null;
    }

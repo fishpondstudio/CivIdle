@@ -302,6 +302,7 @@ export class CityDefinitions {
       },
       uniqueBuildings: {
          ArcDeTriomphe: "Electricity",
+         MontSaintMichel: "HolyEmpire",
       },
       uniqueMultipliers: {},
       naturalWonders: {

@@ -242,15 +242,21 @@ export function PlayerTradeComponent({ gameState, xy }: IBuildingComponentProps)
                { name: "", sortable: false },
             ]}
             sortingState={playerTradesSortingState}
-            data={trades.filter(
-               (trade) =>
+            data={trades.filter((trade) => {
+               const filterNames = playerNameFilter
+                  .toLowerCase()
+                  .split(" ")
+                  .map((name) => name.trim())
+                  .filter((name) => name.length > 0);
+
+               return (
                   ((resourceWantFilters.size === 0 && resourceOfferFilters.size === 0) ||
                      resourceWantFilters.has(trade.buyResource) ||
                      resourceOfferFilters.has(trade.sellResource)) &&
-                  trade.from.toLowerCase().includes(playerNameFilter.toLowerCase()) &&
-                  (tradeAmountFilter === 0 ||
-                     (tradeAmountFilter > 0 && trade.buyAmount <= tradeAmountFilter)),
-            )}
+                  filterNames.some((name) => trade.from.toLowerCase().includes(name)) &&
+                  (tradeAmountFilter === 0 || (tradeAmountFilter > 0 && trade.buyAmount <= tradeAmountFilter))
+               );
+            })}
             compareFunc={(a, b, col, asc) => {
                if (a.fromId === user?.userId && b.fromId !== user?.userId) {
                   return -asc;

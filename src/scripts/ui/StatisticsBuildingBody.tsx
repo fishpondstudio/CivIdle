@@ -319,10 +319,12 @@ function BuildingTab({ gameState }: IBuildingComponentProps): React.ReactNode {
             <input
                type="text"
                style={{ flex: 1 }}
-               className="mr5"
                placeholder={t(L.StatisticsBuildingsSearchText)}
                onChange={(e) => setSearch(e.target.value)}
             />
+         </div>
+         <div className="row mb5">
+            <div className="f1"></div>
             <Filter
                filter={buildingFilter}
                current={BuildingFilter.Wonder}
@@ -498,7 +500,6 @@ function ResourcesTab({ gameState }: IBuildingComponentProps): React.ReactNode {
             <input
                type="text"
                style={{ flex: 1 }}
-               className="mr5"
                value={savedResourceSearch}
                placeholder={t(L.StatisticsResourcesSearchText)}
                onChange={(e) => {
@@ -506,6 +507,8 @@ function ResourcesTab({ gameState }: IBuildingComponentProps): React.ReactNode {
                   setSearch(savedResourceSearch);
                }}
             />
+         </div>
+         <div className="row mb5">
             {[1, 2, 3, 4, 5, 6, 7, 8].map((tier) => {
                return (
                   <Filter
@@ -519,6 +522,7 @@ function ResourcesTab({ gameState }: IBuildingComponentProps): React.ReactNode {
                   </Filter>
                );
             })}
+            <div className="f1"></div>
             <Tippy content={showTheoreticalValue ? t(L.TheoreticalData) : t(L.LiveData)}>
                <button
                   className={classNames({

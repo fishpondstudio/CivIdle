@@ -1932,6 +1932,17 @@ export class BuildingDefinitions {
       wikipedia: "Arc_de_Triomphe",
    };
 
+   MontSaintMichel: IBuildingDefinition = {
+      name: () => t(L.MontSaintMichel),
+      desc: () => t(L.MontSaintMichelDesc),
+      input: {},
+      output: {},
+      construction: { Culture: 1000 },
+      max: 1,
+      special: BuildingSpecial.WorldWonder,
+      wikipedia: "Mont-Saint-Michel",
+   };
+
    // #endregion /////////////////////////////////////////////////////////////////////////////////////////////
 
    // Winery: IBuildingDefinition = {
@@ -2021,4 +2032,5 @@ export const BuildingShowLevel = new Set<Building>([
    "Petra",
    "YearOfTheSnake",
    "EastIndiaCompany",
+   "MontSaintMichel",
 ]);

@@ -29,6 +29,7 @@ import {
    mathSign,
    range,
    round,
+   tileToPoint,
    type Tile,
 } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
@@ -436,7 +437,7 @@ function DeficitResources(): React.ReactNode {
             onClick={() => {
                const s = Tick.current.specialBuildings.get("Statistics");
                if (s) {
-                  Singleton().sceneManager.getCurrent(WorldScene)?.lookAtTile(s.tile, LookAtMode.Select);
+                  Singleton().sceneManager.getCurrent(WorldScene)?.selectGrid(tileToPoint(s.tile));
                }
             }}
          >

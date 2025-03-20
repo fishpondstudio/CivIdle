@@ -52,6 +52,8 @@ export function BuildingUpgradeComponent({ gameState, xy }: IBuildingComponentPr
             b.status = "upgrading";
          }
       });
+      setSelected(new Set([xy]));
+      Singleton().sceneManager.getCurrent(WorldScene)?.drawSelection(null, Array.from(selected));
       notifyGameStateUpdate();
    };
    useShortcut("BuildingPageUpgrade1", () => upgradeTo(levels[0]), [xy]);

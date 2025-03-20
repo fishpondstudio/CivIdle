@@ -384,6 +384,7 @@ export class WorldScene extends Scene {
             case "RhineGorge":
             case "Lapland":
             case "YearOfTheSnake":
+            case "MontSaintMichel":
             case "GoldenGateBridge": {
                this.highlightRange(grid, 2);
                break;

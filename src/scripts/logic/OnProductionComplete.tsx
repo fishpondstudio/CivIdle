@@ -3,6 +3,7 @@ import { GreatPersonTickFlag, type GreatPerson } from "../../../shared/definitio
 import {
    forEachMultiplier,
    generateScienceFromFaith,
+   getBuildingCost,
    getGreatWallRange,
    getMaxWarpStorage,
    getScienceFromWorkers,
@@ -1554,6 +1555,22 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          if (happiness > 0) {
             Tick.next.globalMultipliers.builderCapacity.push({
                value: Math.floor(happiness),
+               source: buildingName,
+            });
+         }
+         break;
+      }
+      case "MontSaintMichel": {
+         const { workersBusy, workersAfterHappiness } = getScienceFromWorkers(gs);
+         const idleWorkers = workersAfterHappiness - workersBusy;
+         const culture = idleWorkers / (Config.ResourcePrice.Culture ?? 1);
+         const value = getBuildingCost(building);
+         if ((building.resources.Culture ?? 0) < (value.Culture ?? 0)) {
+            safeAdd(building.resources, "Culture", culture);
+         }
+         for (const point of grid.getRange(tileToPoint(xy), 2)) {
+            mapSafePush(Tick.next.tileMultipliers, pointToTile(point), {
+               storage: building.level,
                source: buildingName,
             });
          }
