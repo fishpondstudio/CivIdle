@@ -302,7 +302,7 @@ export class CityDefinitions {
       },
       uniqueBuildings: {
          ArcDeTriomphe: "Electricity",
-         MontSaintMichel: "HolyEmpire",
+         MontSaintMichel: "Revolution",
          Louvre: "Railway",
          CentrePompidou: "Software",
       },
