@@ -263,7 +263,10 @@ export function transportAndConsumeResources(
    const bev = getBuildingValue(building);
    mapSafeAdd(Tick.next.buildingValueByTile, xy, bev);
    mapSafeAdd(Tick.next.buildingValues, building.type, bev);
-   Tick.next.totalValue += bev;
+
+   if (building.type !== "CentrePompidou") {
+      Tick.next.totalValue += bev;
+   }
 
    // Tabulate resources before we early return
    // Note that `resourcesByTile` includes buildings that are "building" and "upgrading".
