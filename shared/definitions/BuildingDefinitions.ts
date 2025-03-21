@@ -1954,6 +1954,17 @@ export class BuildingDefinitions {
       wikipedia: "Louvre",
    };
 
+   CentrePompidou: IBuildingDefinition = {
+      name: () => t(L.CentrePompidou),
+      desc: () => t(L.CentrePompidouDesc),
+      input: {},
+      output: {},
+      construction: { TV: 100, Computer: 100, Forex: 100 },
+      max: 1,
+      special: BuildingSpecial.WorldWonder,
+      wikipedia: "Centre_Pompidou",
+   };
+
    // #endregion /////////////////////////////////////////////////////////////////////////////////////////////
 
    // Winery: IBuildingDefinition = {

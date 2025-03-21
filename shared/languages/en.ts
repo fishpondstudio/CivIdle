@@ -1507,4 +1507,8 @@ export const EN = {
    TurnOffFullBuildings: "Turn Off All %{building} With Full Storage",
    Louvre: "Louvre",
    LouvreDesc: "For every 10 Extra Great People at Rebirth, one great person from all unlocked ages is born",
+   CentrePompidou: "Centre Pompidou",
+   CentrePompidouDesc: "Once constructed, all buildings get +1 Production and +2 Storage Multiplier. The wonder will persist if the current run reaches Information Age and the next run is a different civilization. The wonder gets +1 level at rebirth for each run that reaches Information Age with a unique civilization. Each level provides +1 Production and +2 Storage Multiplier. The value of this wonder is excluded from total empire value and British Museum cannot transform into this wonder",
+   BastilleDay: "Bastille Day: Double the effect of Centre Pompidou and Arc de Triomphe. Double the Culture generation from Mont Saint-Michel",
+   Voltaire: "Voltaire",
 };

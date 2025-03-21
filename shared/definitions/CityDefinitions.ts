@@ -304,6 +304,7 @@ export class CityDefinitions {
          ArcDeTriomphe: "Electricity",
          MontSaintMichel: "HolyEmpire",
          Louvre: "Railway",
+         CentrePompidou: "Software",
       },
       uniqueMultipliers: {},
       naturalWonders: {
@@ -311,7 +312,7 @@ export class CityDefinitions {
       },
       requireGreatPeopleLevel: 70,
       requireSupporterPack: true,
-      festivalDesc: () => t(L.GuyFawkesNightV2),
+      festivalDesc: () => t(L.BastilleDay),
    };
 }
 

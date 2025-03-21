@@ -1,9 +1,14 @@
 import { useEffect, useState } from "react";
 import type { City } from "../../../shared/definitions/CityDefinitions";
-import { getBuildingDescription, getMultipliersDescription } from "../../../shared/logic/BuildingLogic";
+import {
+   getBuildingDescription,
+   getMultipliersDescription,
+   getPompidou,
+   getRandomEmptyTiles,
+} from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
 import { RebirthFlags } from "../../../shared/logic/GameState";
-import { getGameOptions } from "../../../shared/logic/GameStateLogic";
+import { getGameOptions, getGameState } from "../../../shared/logic/GameStateLogic";
 import {
    getFreeCityThisWeek,
    getGreatPeopleChoiceCount,
@@ -365,8 +370,20 @@ export function RebirthModal(): React.ReactNode {
                         flags: RebirthFlags.None,
                      });
 
-                     await resetToCity(city);
                      playClick();
+                     await resetToCity(city);
+
+                     const pompidou = getPompidou(gs);
+                     if (pompidou) {
+                        getRandomEmptyTiles(1, getGameState()).forEach((xy) => {
+                           const tile = getGameState().tiles.get(xy);
+                           if (tile) {
+                              tile.explored = true;
+                              tile.building = pompidou;
+                              pompidou.cities.add(city);
+                           }
+                        });
+                     }
 
                      try {
                         await saveGame();

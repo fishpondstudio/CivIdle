@@ -18,6 +18,7 @@ import {
    pointToTile,
    reduceOf,
    safeAdd,
+   shuffle,
    sizeOf,
    sum,
    tileToPoint,
@@ -41,7 +42,7 @@ import {
 } from "./IntraTickCache";
 import { getGreatPersonTotalEffect, getUpgradeCostFib } from "./RebirthLogic";
 import { getBuildingsThatProduce, getResourcesValue } from "./ResourceLogic";
-import { getAgeForTech, getBuildingUnlockTech } from "./TechLogic";
+import { getAgeForTech, getBuildingUnlockTech, getCurrentAge } from "./TechLogic";
 import {
    AllMultiplierTypes,
    GlobalMultiplierNames,
@@ -55,6 +56,7 @@ import {
    BuildingInputMode,
    DEFAULT_STOCKPILE_CAPACITY,
    DEFAULT_STOCKPILE_MAX,
+   ICentrePompidouBuildingData,
    PRIORITY_MAX,
    PRIORITY_MIN,
    ResourceImportOptions,
@@ -1154,4 +1156,35 @@ export function getUniqueWonders(currentCity: City): Building[] {
 
 export function getEastIndiaCompanyUpgradeCost(level: number): number {
    return Math.pow(2, level - 2) * 10_000_000_000_000;
+}
+
+export function getPompidou(gs: GameState): ICentrePompidouBuildingData | null {
+   const pompidou = findSpecialBuilding("CentrePompidou", gs);
+   if (pompidou && getCurrentAge(gs) === "InformationAge") {
+      return pompidou.building as ICentrePompidouBuildingData;
+   }
+   return null;
+}
+export function getRandomEmptyTiles(count: number, gameState: GameState): Tile[] {
+   const grid = getGrid(gameState);
+   const xys = shuffle(Array.from(gameState.tiles.keys()));
+   const result: Tile[] = [];
+   for (let i = 0; i < xys.length; i++) {
+      const xy = xys[i];
+      const tile = gameState.tiles.get(xy);
+      if (
+         !tile ||
+         tile.building ||
+         !isEmpty(tile.deposit) ||
+         tile.explored ||
+         grid.isEdge(tileToPoint(xy), 2)
+      ) {
+         continue;
+      }
+      result.push(xy);
+      if (result.length >= count) {
+         break;
+      }
+   }
+   return result;
 }

@@ -51,6 +51,7 @@ import {
 } from "../../../shared/logic/TechLogic";
 import { Tick } from "../../../shared/logic/TickLogic";
 import type {
+   ICentrePompidouBuildingData,
    IGreatPeopleBuildingData,
    IIdeologyBuildingData,
    ILouvreBuildingData,
@@ -1556,7 +1557,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          const happiness = Tick.current.happiness?.value ?? 0;
          if (happiness > 0) {
             Tick.next.globalMultipliers.builderCapacity.push({
-               value: Math.floor(happiness),
+               value: Math.floor(happiness) * (gs.festival ? 2 : 1),
                source: buildingName,
             });
          }
@@ -1568,7 +1569,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          const culture = idleWorkers / (Config.ResourcePrice.Culture ?? 1);
          const value = getBuildingCost(building);
          if ((building.resources.Culture ?? 0) < (value.Culture ?? 0)) {
-            safeAdd(building.resources, "Culture", culture);
+            safeAdd(building.resources, "Culture", culture * (gs.festival ? 2 : 1));
          }
          for (const point of grid.getRange(tileToPoint(xy), 2)) {
             mapSafePush(Tick.next.tileMultipliers, pointToTile(point), {
@@ -1596,6 +1597,19 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
                showModal(<ChooseGreatPersonModal permanent={false} />);
             }
          }
+         break;
+      }
+      case "CentrePompidou": {
+         const pompidou = building as ICentrePompidouBuildingData;
+         const multiplier = gs.festival ? 2 : 1;
+         Tick.next.globalMultipliers.output.push({
+            value: multiplier * pompidou.cities.size,
+            source: buildingName,
+         });
+         Tick.next.globalMultipliers.storage.push({
+            value: 2 * multiplier * pompidou.cities.size,
+            source: buildingName,
+         });
          break;
       }
    }

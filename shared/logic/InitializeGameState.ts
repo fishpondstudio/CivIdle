@@ -1,6 +1,6 @@
-import { forEach, isEmpty, keysOf, pointToTile, shuffle, tileToPoint } from "../utilities/Helper";
+import { forEach, keysOf, pointToTile } from "../utilities/Helper";
 import { getServerNow } from "../utilities/ServerNow";
-import { applyBuildingDefaults } from "./BuildingLogic";
+import { applyBuildingDefaults, getRandomEmptyTiles } from "./BuildingLogic";
 import { Config } from "./Config";
 import type { GameOptions, GameState } from "./GameState";
 import { getGrid } from "./IntraTickCache";
@@ -99,21 +99,14 @@ export function initializeGameState(gameState: GameState, options: GameOptions) 
       naturalWonders.push("RockefellerCenterChristmasTree");
    }
 
-   const xys = shuffle(Array.from(gameState.tiles.keys()));
-   for (let i = 0; i < xys.length; i++) {
-      const xy = xys[i];
-      const tile = gameState.tiles.get(xy)!;
-      if (tile.building || !isEmpty(tile.deposit) || tile.explored || grid.isEdge(tileToPoint(xy), 2)) {
-         continue;
+   getRandomEmptyTiles(naturalWonders.length, gameState).forEach((xy, i) => {
+      const tile = gameState.tiles.get(xy);
+      if (tile) {
+         tile.building = makeBuilding({
+            type: naturalWonders[i],
+            level: 1,
+            status: "completed",
+         });
       }
-      if (naturalWonders.length <= 0) {
-         break;
-      }
-      const naturalWonder = naturalWonders.pop()!;
-      tile.building = makeBuilding({
-         type: naturalWonder,
-         level: 1,
-         status: "completed",
-      });
-   }
+   });
 }

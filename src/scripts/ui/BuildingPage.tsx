@@ -11,6 +11,7 @@ import { useGameState } from "../Global";
 import { Singleton } from "../utilities/Singleton";
 import { BritishMuseumBuildingBody } from "./BritishMuseumBuildingBody";
 import { BroadwayBuildingBody } from "./BroadwayBuildingBody";
+import { CentrePompidouBuildingBody } from "./CentrePompidouBuildingBody";
 import { DefaultBuildingBody } from "./DefaultBuildingBody";
 import { EastIndiaCompanyBuildingBody } from "./EastIndiaCompanyBuildingBody";
 import { EuphratesRiverBuildingBody } from "./EuphratesRiverBuildingBody";
@@ -20,6 +21,7 @@ import { HeadquarterBuildingBody } from "./HeadquarterBuildingBody";
 import { FormatNumber } from "./HelperComponents";
 import { IdeologyBuildingBody } from "./IdeologyBuildingBody";
 import { LoadingPage, LoadingPageStage } from "./LoadingPage";
+import { LouvreBuildingBody } from "./LouvreBuildingBody";
 import { MarketBuildingBody } from "./MarketBuildingBody";
 import { MenuComponent } from "./MenuComponent";
 import { MontSaintMichelBuildingBody } from "./MontSaintMichelBuildingBody";
@@ -37,7 +39,6 @@ import { UnitedNationsBuildingBody } from "./UnitedNationsBuildingBody";
 import { UpgradableWonderBuildingBody } from "./UpgradableWonderBuildingBody";
 import { WarehouseBuildingBody } from "./WarehouseBuildingBody";
 import { ZugspitzeBuildingBody } from "./ZugspitzeBuildingBody";
-import { LouvreBuildingBody } from "./LouvreBuildingBody";
 
 const BuildingBodyOverride: Partial<Record<Building, FunctionComponent<IBuildingComponentProps>>> = {
    Headquarter: HeadquarterBuildingBody,
@@ -78,6 +79,7 @@ const BuildingBodyOverride: Partial<Record<Building, FunctionComponent<IBuilding
    EastIndiaCompany: EastIndiaCompanyBuildingBody,
    MontSaintMichel: MontSaintMichelBuildingBody,
    Louvre: LouvreBuildingBody,
+   CentrePompidou: CentrePompidouBuildingBody,
 };
 
 export function BuildingPage(props: { tile: ITileData }): React.ReactNode {

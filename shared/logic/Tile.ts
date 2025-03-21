@@ -1,4 +1,5 @@
 import type { Building } from "../definitions/BuildingDefinitions";
+import type { City } from "../definitions/CityDefinitions";
 import type { GreatPerson } from "../definitions/GreatPersonDefinitions";
 import type { Ideology } from "../definitions/IdeologyDefinitions";
 import type { Religion } from "../definitions/ReligionDefinitions";
@@ -145,6 +146,10 @@ export interface ILouvreBuildingData extends IBuildingData {
    greatPeopleCount: number;
 }
 
+export interface ICentrePompidouBuildingData extends IBuildingData {
+   cities: Set<City>;
+}
+
 export type IHaveTypeAndLevel = Pick<IBuildingData, "type" | "level">;
 
 export const STOCKPILE_CAPACITY_MIN = 0;
@@ -265,6 +270,13 @@ export function makeBuilding(data: Pick<IBuildingData, "type"> & Partial<IBuildi
          const louvre = building as ILouvreBuildingData;
          if (!louvre.greatPeopleCount) {
             louvre.greatPeopleCount = 0;
+         }
+         break;
+      }
+      case "CentrePompidou": {
+         const pompidou = building as ICentrePompidouBuildingData;
+         if (!pompidou.cities) {
+            pompidou.cities = new Set();
          }
          break;
       }
