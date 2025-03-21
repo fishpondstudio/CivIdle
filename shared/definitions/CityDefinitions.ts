@@ -303,6 +303,7 @@ export class CityDefinitions {
       uniqueBuildings: {
          ArcDeTriomphe: "Electricity",
          MontSaintMichel: "HolyEmpire",
+         Louvre: "Railway",
       },
       uniqueMultipliers: {},
       naturalWonders: {

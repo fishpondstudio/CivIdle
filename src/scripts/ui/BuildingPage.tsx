@@ -22,6 +22,7 @@ import { IdeologyBuildingBody } from "./IdeologyBuildingBody";
 import { LoadingPage, LoadingPageStage } from "./LoadingPage";
 import { MarketBuildingBody } from "./MarketBuildingBody";
 import { MenuComponent } from "./MenuComponent";
+import { MontSaintMichelBuildingBody } from "./MontSaintMichelBuildingBody";
 import { PetraBuildingBody } from "./PetraBuildingBody";
 import { PlayerTradeBuildingBody } from "./PlayerTradeBuildingBody";
 import { ReligionBuildingBody } from "./ReligionBuildingBody";
@@ -36,7 +37,7 @@ import { UnitedNationsBuildingBody } from "./UnitedNationsBuildingBody";
 import { UpgradableWonderBuildingBody } from "./UpgradableWonderBuildingBody";
 import { WarehouseBuildingBody } from "./WarehouseBuildingBody";
 import { ZugspitzeBuildingBody } from "./ZugspitzeBuildingBody";
-import { MontSaintMichelBuildingBody } from "./MontSaintMichelBuildingBody";
+import { LouvreBuildingBody } from "./LouvreBuildingBody";
 
 const BuildingBodyOverride: Partial<Record<Building, FunctionComponent<IBuildingComponentProps>>> = {
    Headquarter: HeadquarterBuildingBody,
@@ -76,6 +77,7 @@ const BuildingBodyOverride: Partial<Record<Building, FunctionComponent<IBuilding
    TowerBridge: TowerBridgeBuildingBody,
    EastIndiaCompany: EastIndiaCompanyBuildingBody,
    MontSaintMichel: MontSaintMichelBuildingBody,
+   Louvre: LouvreBuildingBody,
 };
 
 export function BuildingPage(props: { tile: ITileData }): React.ReactNode {

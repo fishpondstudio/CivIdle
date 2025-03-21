@@ -1943,6 +1943,17 @@ export class BuildingDefinitions {
       wikipedia: "Mont-Saint-Michel",
    };
 
+   Louvre: IBuildingDefinition = {
+      name: () => t(L.Louvre),
+      desc: () => t(L.LouvreDesc),
+      input: {},
+      output: {},
+      construction: { Bond: 100, Law: 100, Frigate: 100 },
+      max: 1,
+      special: BuildingSpecial.WorldWonder,
+      wikipedia: "Louvre",
+   };
+
    // #endregion /////////////////////////////////////////////////////////////////////////////////////////////
 
    // Winery: IBuildingDefinition = {

@@ -1505,4 +1505,6 @@ export const EN = {
    MontSaintMichel: "Mont Saint-Michel",
    MontSaintMichelDesc: "Generate Culture from Idle Workers. Provide +1 Storage Multiplier to all buildings within 2-tile range. This wonder can be upgraded using the generated Culture and each level provides addtional +1 Storage Multiplier",
    TurnOffFullBuildings: "Turn Off All %{building} With Full Storage",
+   Louvre: "Louvre",
+   LouvreDesc: "For every 10 Extra Great People at Rebirth, one great person from all unlocked ages is born",
 };

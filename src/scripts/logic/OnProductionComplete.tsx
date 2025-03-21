@@ -40,6 +40,7 @@ import {
    getGreatPeopleForWisdom,
    getGreatPersonTotalEffect,
    getPermanentGreatPeopleLevel,
+   getRebirthGreatPeopleCount,
    rollGreatPeopleThisRun,
 } from "../../../shared/logic/RebirthLogic";
 import {
@@ -52,6 +53,7 @@ import { Tick } from "../../../shared/logic/TickLogic";
 import type {
    IGreatPeopleBuildingData,
    IIdeologyBuildingData,
+   ILouvreBuildingData,
    IReligionBuildingData,
    ITileData,
    ITraditionBuildingData,
@@ -1573,6 +1575,26 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
                storage: building.level,
                source: buildingName,
             });
+         }
+         break;
+      }
+      case "Louvre": {
+         const louvre = building as ILouvreBuildingData;
+         const greatPeopleAtRebirth = getRebirthGreatPeopleCount();
+         while (louvre.greatPeopleCount < Math.floor(greatPeopleAtRebirth / 10)) {
+            ++louvre.greatPeopleCount;
+            const candidates = rollGreatPeopleThisRun(
+               getUnlockedTechAges(gs),
+               gs.city,
+               getGreatPeopleChoiceCount(gs),
+            );
+            if (candidates) {
+               gs.greatPeopleChoicesV2.push(candidates);
+            }
+            if (!hasOpenModal() && gs.greatPeopleChoicesV2.length > 0) {
+               playAgeUp();
+               showModal(<ChooseGreatPersonModal permanent={false} />);
+            }
          }
          break;
       }
