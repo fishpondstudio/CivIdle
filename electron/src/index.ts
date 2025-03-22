@@ -28,6 +28,7 @@ export const MIN_WIDTH = 1136;
 export const MIN_HEIGHT = 640;
 
 const disableFloatingMode = process.argv.includes("--disable-floating-mode");
+const enableDevTools = process.argv.includes("--enable-dev-tools");
 
 const createWindow = async () => {
    try {
@@ -35,7 +36,7 @@ const createWindow = async () => {
       const mainWindow = new BrowserWindow({
          webPreferences: {
             preload: path.join(__dirname, "preload.js"),
-            devTools: !app.isPackaged,
+            devTools: enableDevTools || !app.isPackaged,
             backgroundThrottling: false,
          },
          minHeight: MIN_HEIGHT,
@@ -58,6 +59,9 @@ const createWindow = async () => {
       }
 
       if (app.isPackaged) {
+         if (enableDevTools) {
+            mainWindow.webContents.openDevTools();
+         }
          mainWindow.loadFile(path.join(__dirname, "..", "dist", "index.html"));
       } else {
          mainWindow.loadURL("http://localhost:3000");
