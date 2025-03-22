@@ -1602,12 +1602,13 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
       case "CentrePompidou": {
          const pompidou = building as ICentrePompidouBuildingData;
          const multiplier = gs.festival ? 2 : 1;
+         const cities = pompidou.cities.size + 1;
          Tick.next.globalMultipliers.output.push({
-            value: multiplier * pompidou.cities.size,
+            value: multiplier * cities,
             source: buildingName,
          });
          Tick.next.globalMultipliers.storage.push({
-            value: 2 * multiplier * pompidou.cities.size,
+            value: 2 * multiplier * cities,
             source: buildingName,
          });
          break;
