@@ -1,6 +1,6 @@
 import { SmoothGraphics } from "@pixi/graphics-smooth";
-import type { ColorSource, FederatedPointerEvent, IPointData } from "pixi.js";
-import { BitmapText, Container, LINE_CAP, LINE_JOIN, Sprite } from "pixi.js";
+import type { ColorSource, FederatedPointerEvent, IPointData, Texture } from "pixi.js";
+import { BitmapText, Container, LINE_CAP, LINE_JOIN, ParticleContainer, Sprite } from "pixi.js";
 import WorldMap from "../../../shared/definitions/WorldMap.json";
 import { isTileReserved } from "../../../shared/logic/PlayerTradeLogic";
 import {
@@ -10,10 +10,18 @@ import {
    type IClientMapEntry,
    type IClientTrade,
 } from "../../../shared/utilities/Database";
-import { forEach, formatPercent, mapSafeAdd, xyToPoint } from "../../../shared/utilities/Helper";
+import { forEach, formatPercent, mapSafeAdd, sizeOf, xyToPoint } from "../../../shared/utilities/Helper";
 import type { Disposable } from "../../../shared/utilities/TypedEvent";
 import { getTexture } from "../logic/VisualLogic";
-import { OnPlayerMapMessage, OnTradeChanged, getPlayerMap, getTrades, getUser } from "../rpc/RPCClient";
+import {
+   OnPlayerMapMessage,
+   OnTileBuildingsChanged,
+   OnTradeChanged,
+   TileBuildings,
+   getPlayerMap,
+   getTrades,
+   getUser,
+} from "../rpc/RPCClient";
 import { PlayerMapPage } from "../ui/PlayerMapPage";
 import { AccountLevelImages } from "../ui/TextureSprites";
 import { getColorCached } from "../utilities/CachedColor";
@@ -38,6 +46,8 @@ export class PlayerMapScene extends Scene {
    private _idToTile = new Map<string, string>();
    private _dirtyTiles = new Set<string>();
    private _landTiles: Container;
+   private _buildings: Container;
+   private _playerTiles: Container;
 
    constructor(context: ISceneContext) {
       super(context);
@@ -50,6 +60,9 @@ export class PlayerMapScene extends Scene {
       this.viewport.setZoomRange(minZoom, 1);
 
       this._landTiles = this.viewport.addChild(new Container());
+      this._buildings = this.viewport.addChild(new ParticleContainer(sizeOf(WorldMap)));
+      this._playerTiles = this.viewport.addChild(new Container());
+
       forEach(WorldMap, (xy) => {
          const point = xyToPoint(xy);
          const sprite = this._landTiles.addChild(new Sprite(this.context.textures.Misc_100x100));
@@ -92,33 +105,6 @@ export class PlayerMapScene extends Scene {
             forEach(message.upsert, (xy, entry) => this.addOrReplaceTile(xy, entry));
          }
       });
-
-      // Assets.load<Texture>("/World.png").then((texture) => {
-      //    const sprite = this.viewport.addChild(new Sprite(texture));
-      //    sprite.anchor.set(0.5, 0.5);
-      //    sprite.position.set(this._width / 2, this._height / 2);
-      //    sprite.scale.set(11);
-      //    sprite.alpha = 0.5;
-
-      //    const pixels: Uint8Array = app.renderer.plugins.extract.pixels(sprite);
-      //    const map: Record<string, true> = {};
-      //    for (let x = 0; x <= MaxX; x++) {
-      //       for (let y = 0; y <= MaxY; y++) {
-      //          const pos = new Vector2((x * GridSize + 0.5 * GridSize) / 11, (y * GridSize + 0.5 * GridSize) / 11);
-      //          const ind = Math.round(pos.x) + Math.round(pos.y) * texture.width;
-      //          if (pixels[ind * 4 + 3] > 0) {
-      //             map[`${x},${y + 3}`] = true;
-      //          }
-      //       }
-      //    }
-      //    forEach(map, (xy) => {
-      //       const point = xyToPoint(xy);
-      //       const sprite = this.viewport.addChild(new Sprite(this.context.textures["100x100"]));
-      //       sprite.position.set(point.x * GridSize, point.y * GridSize);
-      //    });
-      //    navigator.clipboard.writeText(JSON.stringify(map));
-      //    sprite.visible = false;
-      // });
    }
 
    override backgroundColor(): ColorSource {
@@ -133,6 +119,9 @@ export class PlayerMapScene extends Scene {
 
       this.onTradeChanged(getTrades());
       this._listeners.push(OnTradeChanged.on(this.onTradeChanged.bind(this)));
+
+      this.onTileBuildingsChanged();
+      this._listeners.push(OnTileBuildingsChanged.on(this.onTileBuildingsChanged.bind(this)));
 
       if (!viewportZoom) {
          const range = this.viewport.getZoomRange();
@@ -157,6 +146,27 @@ export class PlayerMapScene extends Scene {
       this.viewport.center = viewportCenter;
 
       super.onEnable();
+   }
+
+   onTileBuildingsChanged(): void {
+      destroyAllChildren(this._buildings);
+      forEach(WorldMap, (xy) => {
+         const point = xyToPoint(xy);
+         const b = TileBuildings.get(xy);
+         if (b) {
+            const building = this._buildings.addChild(
+               new Sprite(getTexture(`Building_${b}`, this.context.textures)),
+            );
+            building.anchor.set(0.5, 0.5);
+            building.position.set(point.x * GridSize + GridSize / 2, point.y * GridSize + GridSize / 2);
+            building.scale.set(0.75);
+            building.tint = 0xffffff;
+            building.alpha = 0.2;
+         }
+      });
+      getPlayerMap().forEach((entry, xy) => {
+         this.addOrReplaceTile(xy, entry);
+      });
    }
 
    onTradeChanged(trades: IClientTrade[]): void {
@@ -273,8 +283,15 @@ export class PlayerMapScene extends Scene {
    private addOrReplaceTile(xy: string, entry: IClientMapEntry) {
       this._tiles.get(xy)?.destroy({ children: true });
       const count = this._idToTradeCount.get(entry.userId);
-      const container = this._landTiles.addChild(
-         new PlayerTile(xyToPoint(xy), entry, count ?? 0, this.context),
+      const b = TileBuildings.get(xy);
+      const container = this._playerTiles.addChild(
+         new PlayerTile(
+            xyToPoint(xy),
+            entry,
+            count ?? 0,
+            b ? getTexture(`Building_${b}`, this.context.textures) : null,
+            this.context,
+         ),
       );
       this._tiles.set(xy, container);
       this._idToTile.set(entry.userId, xy);
@@ -291,7 +308,13 @@ export class PlayerMapScene extends Scene {
 }
 
 class PlayerTile extends Container {
-   constructor(tile: IPointData, data: IClientMapEntry, trade: number, context: ISceneContext) {
+   constructor(
+      tile: IPointData,
+      data: IClientMapEntry,
+      trade: number,
+      building: Texture | null,
+      context: ISceneContext,
+   ) {
       super();
       const { textures } = context;
       const { x, y } = tile;
@@ -304,6 +327,13 @@ class PlayerTile extends Container {
          const sprite = this.addChild(new Sprite(context.textures.Misc_100x100));
          sprite.position.set(x * GridSize, y * GridSize);
          sprite.tint = getColorCached(color);
+         if (building) {
+            const buildingSprite = this.addChild(new Sprite(building));
+            buildingSprite.anchor.set(0.5, 0.5);
+            buildingSprite.scale.set(0.75);
+            buildingSprite.position.set(x * GridSize + 0.5 * GridSize, y * GridSize + 0.5 * GridSize);
+            buildingSprite.alpha = 0.25;
+         }
       }
 
       const flag = this.addChild(new Sprite(textures[`Flag_${data.flag.toUpperCase()}`]));

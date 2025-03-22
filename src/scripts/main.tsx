@@ -70,6 +70,13 @@ if (canvas) {
       sharedTicker: true,
       autoDensity: true,
       resolution: window.devicePixelRatio,
+      eventMode: "passive",
+      eventFeatures: {
+         globalMove: false,
+         click: true,
+         wheel: false,
+         move: true,
+      },
    });
 
    canvas.appendChild(app.view as any);

@@ -1,5 +1,7 @@
 import React from "react";
+import type { Building } from "../../../shared/definitions/BuildingDefinitions";
 import { AccountLevel } from "../../../shared/utilities/Database";
+import building from "../../images/textures_building.png";
 import flags from "../../images/textures_flag.png";
 import misc from "../../images/textures_misc.png";
 import { Singleton } from "../utilities/Singleton";
@@ -24,6 +26,13 @@ export const AccountLevelComponent = React.forwardRef<
    { level: AccountLevel; scale?: number; style?: React.CSSProperties }
 >((props, ref) => {
    return <TextureSprite {...props} url={misc} name={`Misc_${AccountLevelImages[props.level]}`} ref={ref} />;
+});
+
+export const BuildingSpriteComponent = React.forwardRef<
+   HTMLDivElement,
+   { building: Building; scale?: number; style?: React.CSSProperties }
+>((props, ref) => {
+   return <TextureSprite {...props} url={building} name={`Building_${props.building}`} ref={ref} />;
 });
 
 export const SupporterComponent = React.forwardRef<

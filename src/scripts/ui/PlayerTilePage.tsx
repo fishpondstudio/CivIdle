@@ -16,6 +16,7 @@ import { RenderHTML } from "./RenderHTMLComponent";
 import { AccountLevelComponent, PlayerFlagComponent, SupporterComponent } from "./TextureSprites";
 import { TitleBarComponent } from "./TitleBarComponent";
 import { WarningComponent } from "./WarningComponent";
+import { MapTileBonusComponent } from "./MapTileBonusComponent";
 
 export function PlayerTilePage({ xy }: { xy: string }): React.ReactNode {
    const playerMap = usePlayerMap();
@@ -30,6 +31,7 @@ export function PlayerTilePage({ xy }: { xy: string }): React.ReactNode {
          <TitleBarComponent>{tile.handle}</TitleBarComponent>
          <MenuComponent />
          <div className="window-body">
+            <MapTileBonusComponent xy={xy} />
             {isReserved ? null : (
                <>
                   <WarningComponent icon="info" className="mb10">

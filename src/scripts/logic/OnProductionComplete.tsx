@@ -79,7 +79,8 @@ import {
 } from "../../../shared/utilities/Helper";
 import { srand } from "../../../shared/utilities/Random";
 import { L, t } from "../../../shared/utilities/i18n";
-import { client } from "../rpc/RPCClient";
+import { TileBuildings, client } from "../rpc/RPCClient";
+import { getMyMapXy } from "../scenes/PathFinder";
 import { ChooseGreatPersonModal } from "../ui/ChooseGreatPersonModal";
 import { hasOpenModal, showModal } from "../ui/GlobalModal";
 import { Singleton } from "../utilities/Singleton";
@@ -125,6 +126,14 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
             }
          } else {
             gs.festival = false;
+         }
+
+         const tradeXy = getMyMapXy();
+         if (tradeXy) {
+            const building = TileBuildings.get(tradeXy);
+            if (building) {
+               addMultiplier(building, { output: 5 }, t(L.PlayerMapMapTileBonus));
+            }
          }
 
          if (!offline) {
