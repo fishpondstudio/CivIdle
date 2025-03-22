@@ -21,7 +21,7 @@ import {
 import { L, t } from "../../../shared/utilities/i18n";
 import { AccountLevelNames } from "../logic/AccountLevel";
 import { client, useTrades, useUser } from "../rpc/RPCClient";
-import { getMyMapXy } from "../scenes/PathFinder";
+import { getOwnedTradeTile } from "../scenes/PathFinder";
 import { PlayerMapScene } from "../scenes/PlayerMapScene";
 import { getCountryName } from "../utilities/CountryCode";
 import { Singleton } from "../utilities/Singleton";
@@ -57,7 +57,7 @@ export function PlayerTradeComponent({ gameState, xy }: IBuildingComponentProps)
    const trades = useTrades();
 
    const user = useUser();
-   const myXy = getMyMapXy();
+   const myXy = getOwnedTradeTile();
    if (!myXy) {
       return (
          <article role="tabpanel" style={{ padding: "8px" }}>

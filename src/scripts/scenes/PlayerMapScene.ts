@@ -28,7 +28,7 @@ import { getColorCached } from "../utilities/CachedColor";
 import { Scene, destroyAllChildren, type ISceneContext } from "../utilities/SceneManager";
 import { Singleton } from "../utilities/Singleton";
 import { Fonts } from "../visuals/Fonts";
-import { findPath, getMyMapXy } from "./PathFinder";
+import { findPath, getOwnedTradeTile } from "./PathFinder";
 
 let viewportCenter: IPointData | null = null;
 let viewportZoom: number | null = null;
@@ -128,7 +128,7 @@ export class PlayerMapScene extends Scene {
          viewportZoom = (range[0] + range[1]) * 0.5;
       }
 
-      const xy = getMyMapXy();
+      const xy = getOwnedTradeTile();
       if (xy) {
          const point = xyToPoint(xy);
          this.selectTile(point.x, point.y);
@@ -266,11 +266,13 @@ export class PlayerMapScene extends Scene {
          .lineTo(x, y + GridSize)
          .lineTo(x, y);
 
-      const myXy = getMyMapXy();
+      const myXy = getOwnedTradeTile();
       const map = getPlayerMap();
       const selectedXy = `${tileX},${tileY}`;
 
-      if (myXy && map.has(selectedXy) && selectedXy !== myXy) {
+      const tile = map.get(selectedXy);
+      const user = getUser();
+      if (myXy && tile && user && tile.userId !== user.userId) {
          const path = findPath(xyToPoint(myXy), { x: tileX, y: tileY });
          this.drawPath(path);
       } else {

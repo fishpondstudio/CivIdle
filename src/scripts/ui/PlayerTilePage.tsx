@@ -11,12 +11,12 @@ import { ClaimTileComponent } from "./ClaimTileComponent";
 import { FillPlayerTradeModal } from "./FillPlayerTradeModal";
 import { showModal } from "./GlobalModal";
 import { FormatNumber } from "./HelperComponents";
+import { MapTileBonusComponent } from "./MapTileBonusComponent";
 import { MenuComponent } from "./MenuComponent";
 import { RenderHTML } from "./RenderHTMLComponent";
 import { AccountLevelComponent, PlayerFlagComponent, SupporterComponent } from "./TextureSprites";
 import { TitleBarComponent } from "./TitleBarComponent";
 import { WarningComponent } from "./WarningComponent";
-import { MapTileBonusComponent } from "./MapTileBonusComponent";
 
 export function PlayerTilePage({ xy }: { xy: string }): React.ReactNode {
    const playerMap = usePlayerMap();

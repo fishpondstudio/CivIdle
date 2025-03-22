@@ -7,7 +7,7 @@ import {
    getSeaTileCost,
    wrapX,
 } from "../../../shared/logic/PlayerTradeLogic";
-import { MAP_MAX_X, MAP_MAX_Y } from "../../../shared/utilities/Database";
+import { MAP_MAX_X, MAP_MAX_Y, TileType } from "../../../shared/utilities/Database";
 import { OnPlayerMapChanged, getPlayerMap, getUser } from "../rpc/RPCClient";
 import { dijkstra } from "../utilities/dijkstra";
 
@@ -16,6 +16,7 @@ export const GRID2: number[] = [];
 
 export function buildPathfinderGrid() {
    const seaTileCost = getSeaTileCost(getGameState());
+   const user = getUser();
    for (let y = 0; y < MAP_MAX_Y; y++) {
       for (let x = 0; x < MAP_MAX_X; x++) {
          const xy = `${x},${y}`;
@@ -27,7 +28,11 @@ export function buildPathfinderGrid() {
             continue;
          }
          const map = getPlayerMap();
-         const cost = map.get(xy)?.tariffRate ?? DEFAULT_LAND_TILE_COST;
+         const tile = map.get(xy);
+         let cost = tile?.tariffRate ?? DEFAULT_LAND_TILE_COST;
+         if (tile && user && tile.userId === user.userId) {
+            cost = 0;
+         }
          GRID1[idx1] = cost;
          GRID2[idx2] = cost;
       }
@@ -76,14 +81,27 @@ export function findUserOnMap(userId: string): string | null {
    return null;
 }
 
-export function getMyMapXy() {
+export function getOwnedTradeTile(): string | null {
    const playerMap = getPlayerMap();
    const userId = getUser()?.userId;
    if (!userId) return null;
    for (const [xy, entry] of playerMap) {
-      if (entry.userId === userId) {
+      if (entry.userId === userId && entry.type === TileType.Owned) {
          return xy;
       }
    }
    return null;
+}
+
+export function getOwnedOrOccupiedTiles(): string[] {
+   const playerMap = getPlayerMap();
+   const userId = getUser()?.userId;
+   const result: string[] = [];
+   if (!userId) return result;
+   for (const [xy, entry] of playerMap) {
+      if (entry.userId === userId) {
+         result.push(xy);
+      }
+   }
+   return result;
 }

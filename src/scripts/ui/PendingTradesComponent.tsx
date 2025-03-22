@@ -1,5 +1,5 @@
 import { L, t } from "../../../shared/utilities/i18n";
-import { getMyMapXy } from "../scenes/PathFinder";
+import { getOwnedTradeTile } from "../scenes/PathFinder";
 import { PlayerMapScene } from "../scenes/PlayerMapScene";
 import { Singleton } from "../utilities/Singleton";
 import type { IBuildingComponentProps } from "./BuildingPage";
@@ -11,7 +11,7 @@ export function PendingTradesComponent({ gameState, xy }: IBuildingComponentProp
    if (!building) {
       return null;
    }
-   const myXy = getMyMapXy();
+   const myXy = getOwnedTradeTile();
    if (!myXy) {
       return (
          <article role="tabpanel" style={{ padding: "8px" }}>

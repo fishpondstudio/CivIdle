@@ -24,6 +24,7 @@ import {
    SCIENCE_VALUE,
    TELEPORT_SECONDS,
    TOWER_BRIDGE_GP_PER_CYCLE,
+   TRADE_TILE_BONUS,
 } from "../../../shared/logic/Constants";
 import { GameFeature, hasFeature } from "../../../shared/logic/FeatureLogic";
 import { getGameOptions, getGameState } from "../../../shared/logic/GameStateLogic";
@@ -80,7 +81,7 @@ import {
 import { srand } from "../../../shared/utilities/Random";
 import { L, t } from "../../../shared/utilities/i18n";
 import { TileBuildings, client } from "../rpc/RPCClient";
-import { getMyMapXy } from "../scenes/PathFinder";
+import { getOwnedOrOccupiedTiles } from "../scenes/PathFinder";
 import { ChooseGreatPersonModal } from "../ui/ChooseGreatPersonModal";
 import { hasOpenModal, showModal } from "../ui/GlobalModal";
 import { Singleton } from "../utilities/Singleton";
@@ -128,13 +129,16 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
             gs.festival = false;
          }
 
-         const tradeXy = getMyMapXy();
-         if (tradeXy) {
-            const building = TileBuildings.get(tradeXy);
+         getOwnedOrOccupiedTiles().forEach((xy, i) => {
+            const building = TileBuildings.get(xy);
             if (building) {
-               addMultiplier(building, { output: 5 }, t(L.PlayerMapMapTileBonus));
+               addMultiplier(
+                  building,
+                  { output: TRADE_TILE_BONUS },
+                  `${t(L.PlayerMapMapTileBonus)} (${i + 1})`,
+               );
             }
-         }
+         });
 
          if (!offline) {
             gs.speedUp = clamp(gs.speedUp, 1, getMaxWarpStorage(gs));

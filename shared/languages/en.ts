@@ -1512,4 +1512,7 @@ export const EN = {
    BastilleDay: "Bastille Day: Double the effect of Centre Pompidou and Arc de Triomphe. Double the Culture generation from Mont Saint-Michel",
    Voltaire: "Voltaire",
    PlayerMapMapTileBonus: "Trade Tile Bonus",
+   PlayerMapOccupyThisTile: "Occupy This Tile",
+   PlayerMapOccupyTileCondition1: "This tile is adjacent to your home or occupied tiles",
+   PlayerMapOccupyTileCondition2: "You have not reached the maximum occupied tiles for your rank",
 };

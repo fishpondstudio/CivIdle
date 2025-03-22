@@ -1,6 +1,6 @@
 import WorldMap from "../../../shared/definitions/WorldMap.json";
 import { usePlayerMap } from "../rpc/RPCClient";
-import { getMyMapXy } from "../scenes/PathFinder";
+import { getOwnedTradeTile } from "../scenes/PathFinder";
 import { WorldScene } from "../scenes/WorldScene";
 import { useShortcut } from "../utilities/Hook";
 import { Singleton } from "../utilities/Singleton";
@@ -11,7 +11,7 @@ import { UnclaimedTilePage } from "./UnclaimedTilePage";
 
 export function PlayerMapPage({ xy }: { xy: string }): React.ReactNode {
    const playerMap = usePlayerMap();
-   const myXy = getMyMapXy();
+   const myXy = getOwnedTradeTile();
    useShortcut(
       "PlayerMapPageGoBackToCity",
       () => {
