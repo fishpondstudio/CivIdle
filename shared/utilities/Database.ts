@@ -166,6 +166,11 @@ export enum UserColors {
    Pink = 7,
 }
 
+export enum TileType {
+   Owned = 0,
+   Occupied = 1,
+}
+
 export const UserColorsMapping: Map<UserColors, string | undefined> = new Map([
    [UserColors.Default, undefined],
    [UserColors.Green, "#00b894"],
@@ -207,6 +212,7 @@ export interface IMapEntry {
    userId: string;
    tariffRate: number;
    createdAt: number;
+   type: TileType;
 }
 
 export interface IClientMapEntry extends IMapEntry {
@@ -272,7 +278,7 @@ export const DB: {
    votedBoosts: {},
 };
 
-export const MoveTileCooldown = 4 * HOUR;
+export const MoveTileCooldown = 12 * HOUR;
 // export const MoveTileCooldown = 0;
 
 export const MAP_MAX_X = 200;

@@ -36,6 +36,7 @@ import { MenuComponent } from "./MenuComponent";
 import { ResourceAmountComponent } from "./ResourceAmountComponent";
 import { TableView } from "./TableView";
 import { TextWithHelp } from "./TextWithHelpComponent";
+import { BuildingSpriteComponent } from "./TextureSprites";
 import { TitleBarComponent } from "./TitleBarComponent";
 
 let lastBuild: Building | null = null;
@@ -153,6 +154,7 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
                sortingState={savedSorting}
                header={[
                   { name: t(L.BuildingTier), sortable: true },
+                  { name: "", sortable: false },
                   { name: t(L.BuildingName), sortable: true },
                   { name: "", sortable: false },
                ]}
@@ -241,6 +243,13 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
                                  {numberToRoman(Config.BuildingTier[k] ?? 1)}
                               </div>
                            )}
+                        </td>
+                        <td width={1}>
+                           <BuildingSpriteComponent
+                              building={k}
+                              scale={0.5}
+                              style={{ filter: "invert(0.75)" }}
+                           />
                         </td>
                         <td>
                            <div className="row">

@@ -623,6 +623,19 @@ export class GreatPersonDefinitions {
       age: "RenaissanceAge",
    });
 
+   Voltaire: IGreatPersonDefinition = boostOf({
+      name: () => t(L.Voltaire),
+      boost: {
+         multipliers: ["output", "storage"],
+         buildings: ["Museum"],
+      },
+      time: "1694 ~ 1778 AD",
+      value: (level) => level * 2,
+      maxLevel: Number.POSITIVE_INFINITY,
+      age: "RenaissanceAge",
+      city: "French",
+   });
+
    Michelangelo: IGreatPersonDefinition = {
       name: () => t(L.Michelangelo),
       desc: (self, level) => t(L.WildCardGreatPersonDescV2),

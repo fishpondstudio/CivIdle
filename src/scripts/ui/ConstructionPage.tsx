@@ -62,11 +62,6 @@ export function ConstructionPage({ tile }: { tile: ITileData }): React.ReactNode
                <BuildingDescriptionComponent gameState={gs} xy={tile.tile} />
             ) : null}
             <BuildingConstructionProgressComponent xy={tile.tile} gameState={gs} />
-            {!isWorldWonder(building.type) && building.level > 0 ? (
-               <WarningComponent className="mb10 text-small" icon="warning">
-                  <RenderHTML html={t(L.UpgradeBuildingNotProducingDescV2)} />
-               </WarningComponent>
-            ) : null}
             {isSpecialBuilding(building.type) ? null : (
                <fieldset>
                   <legend>{t(L.Level)}</legend>
@@ -110,6 +105,11 @@ export function ConstructionPage({ tile }: { tile: ITileData }): React.ReactNode
                   </div>
                </fieldset>
             )}
+            {!isWorldWonder(building.type) && building.level > 0 ? (
+               <WarningComponent className="mb10 text-small" icon="warning">
+                  <RenderHTML html={t(L.UpgradeBuildingNotProducingDescV2)} />
+               </WarningComponent>
+            ) : null}
             {hasFeature(GameFeature.BuildingProductionPriority, gs) ? (
                <fieldset>
                   <legend>

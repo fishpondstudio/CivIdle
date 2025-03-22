@@ -142,3 +142,18 @@ export function hasResourceForPlayerTrade(res: Resource): boolean {
    }
    return false;
 }
+
+export function getMaxOccupiedTiles(rank: AccountLevel): number {
+   switch (rank) {
+      case AccountLevel.Quaestor:
+         return 1;
+      case AccountLevel.Aedile:
+         return 2;
+      case AccountLevel.Praetor:
+         return 3;
+      case AccountLevel.Consul:
+         return 4;
+      default:
+         return 0;
+   }
+}

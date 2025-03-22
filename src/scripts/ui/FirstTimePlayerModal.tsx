@@ -1,3 +1,4 @@
+import Tippy from "@tippyjs/react";
 import { useState } from "react";
 import { GameOptionsChanged } from "../../../shared/logic/GameStateLogic";
 import { TypedEvent } from "../../../shared/utilities/TypedEvent";
@@ -5,7 +6,7 @@ import { L, t } from "../../../shared/utilities/i18n";
 import "../../css/Tutorial.css";
 import { ToggleChatWindow } from "../Global";
 import { OnUserChanged, client, useUser } from "../rpc/RPCClient";
-import { CountryCode, getCountryName, getFlagUrl } from "../utilities/CountryCode";
+import { CountryCode, getCountryName } from "../utilities/CountryCode";
 import { jsxMapOf } from "../utilities/Helper";
 import { refreshOnTypedEvent, useTypedEvent } from "../utilities/Hook";
 import { playClick, playError } from "../visuals/Sound";
@@ -13,6 +14,7 @@ import { AdvisorContentComponent } from "./AdvisorModal";
 import { ChangeModernUIComponent } from "./ChangeModernUIComponent";
 import { ChangeSoundComponent } from "./ChangeSoundComponent";
 import { hideModal, showToast } from "./GlobalModal";
+import { PlayerFlagComponent } from "./TextureSprites";
 
 enum SetupStep {
    Step1 = 0,
@@ -143,13 +145,9 @@ function FirstTimePlayerSettings({ submitEvent }: { submitEvent: TypedEvent<void
                />
             </div>
             <div>
-               <img
-                  className="ml5"
-                  src={getFlagUrl(flag)}
-                  style={{ height: "30px", display: "block" }}
-                  title={countryName}
-                  alt={countryName}
-               />
+               <Tippy content={countryName}>
+                  <PlayerFlagComponent name={flag} style={{ marginLeft: 5 }} />
+               </Tippy>
             </div>
          </div>
          <div className="sep5" />
@@ -161,21 +159,21 @@ function FirstTimePlayerSettings({ submitEvent }: { submitEvent: TypedEvent<void
             <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "space-between" }}>
                {jsxMapOf(CountryCode, (c, v) => {
                   return (
-                     <img
-                        key={c}
-                        onClick={async () => {
-                           if (!user) {
-                              playError();
-                              showToast(t(L.OfflineErrorMessage));
-                              return;
-                           }
-                           setFlag(c);
-                        }}
-                        src={getFlagUrl(c)}
-                        className="pointer player-flag-large"
-                        title={v}
-                        alt={v}
-                     />
+                     <Tippy key={c} content={v}>
+                        <div
+                           className="pointer"
+                           onClick={async () => {
+                              if (!user) {
+                                 playError();
+                                 showToast(t(L.OfflineErrorMessage));
+                                 return;
+                              }
+                              setFlag(c);
+                           }}
+                        >
+                           <PlayerFlagComponent name={c} />
+                        </div>
+                     </Tippy>
                   );
                })}
             </div>

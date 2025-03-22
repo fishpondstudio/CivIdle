@@ -104,7 +104,7 @@ export function ChooseGreatPersonModal({ permanent }: { permanent: boolean }): R
                         <GreatPersonImage greatPerson={greatPerson} style={{ width: "100%" }} />
                         {amount > 1 ? (
                            <div className="text-orange" style={{ fontSize: 20, fontFamily: Fonts.Cabin }}>
-                              x{amount}
+                              x{formatNumber(amount)}
                            </div>
                         ) : null}
                         <div>

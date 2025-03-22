@@ -1943,6 +1943,39 @@ export class BuildingDefinitions {
       wikipedia: "Mont-Saint-Michel",
    };
 
+   Louvre: IBuildingDefinition = {
+      name: () => t(L.Louvre),
+      desc: () => t(L.LouvreDesc),
+      input: {},
+      output: {},
+      construction: { Bond: 100, Law: 100, Frigate: 100 },
+      max: 1,
+      special: BuildingSpecial.WorldWonder,
+      wikipedia: "Louvre",
+   };
+
+   CentrePompidou: IBuildingDefinition = {
+      name: () => t(L.CentrePompidou),
+      desc: () => t(L.CentrePompidouDesc),
+      input: {},
+      output: {},
+      construction: { TV: 100, Computer: 100, Forex: 100 },
+      max: 1,
+      special: BuildingSpecial.WorldWonder,
+      wikipedia: "Centre_Pompidou",
+   };
+
+   EasterBunny: IBuildingDefinition = {
+      name: () => t(L.EasterBunny),
+      desc: () => t(L.EasterBunnyDesc),
+      input: {},
+      output: {},
+      construction: { Bond: 100, Book: 100, Culture: 100 },
+      max: 1,
+      special: BuildingSpecial.WorldWonder,
+      wikipedia: "Easter_Bunny",
+   };
+
    // #endregion /////////////////////////////////////////////////////////////////////////////////////////////
 
    // Winery: IBuildingDefinition = {

@@ -7,6 +7,7 @@ import { showToast } from "./GlobalModal";
 import { MenuComponent } from "./MenuComponent";
 import { PlayerHandleComponent } from "./PlayerHandleComponent";
 import { TitleBarComponent } from "./TitleBarComponent";
+import { MapTileBonusComponent } from "./MapTileBonusComponent";
 
 export function MyTilePage({ xy }: { xy: string }): React.ReactNode {
    const playerMap = usePlayerMap();
@@ -16,6 +17,7 @@ export function MyTilePage({ xy }: { xy: string }): React.ReactNode {
          <TitleBarComponent>{t(L.PlayerMapYourTile)}</TitleBarComponent>
          <MenuComponent />
          <div className="window-body">
+            <MapTileBonusComponent xy={xy} />
             <PlayerHandleComponent />
             <fieldset>
                <legend>{t(L.PlayerMapSetYourTariff)}</legend>

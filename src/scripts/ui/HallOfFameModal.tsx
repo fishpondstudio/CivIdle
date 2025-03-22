@@ -2,10 +2,11 @@ import { useEffect, useState } from "react";
 import { AccountLevel } from "../../../shared/utilities/Database";
 import { forEach, shuffle } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
-import { AccountLevelImages, AccountLevelNames } from "../logic/AccountLevel";
+import { AccountLevelNames } from "../logic/AccountLevel";
 import { client } from "../rpc/RPCClient";
 import { Fonts } from "../visuals/Fonts";
 import { hideModal } from "./GlobalModal";
+import { AccountLevelComponent } from "./TextureSprites";
 
 export function HallOfFameModal(): React.ReactNode {
    const [data, setData] = useState<Partial<Record<AccountLevel, string[]>>>();
@@ -31,7 +32,7 @@ export function HallOfFameModal(): React.ReactNode {
                   return (
                      <fieldset key={level}>
                         <legend className="row text-strong">
-                           <img src={AccountLevelImages[level]} style={{ width: 20 }} className="mr5" />
+                           <AccountLevelComponent level={level} scale={0.2} style={{ marginRight: 5 }} />
                            {AccountLevelNames[level]()} ({data?.[level]?.length ?? 0})
                         </legend>
                         <div

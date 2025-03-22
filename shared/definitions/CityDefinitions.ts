@@ -302,7 +302,9 @@ export class CityDefinitions {
       },
       uniqueBuildings: {
          ArcDeTriomphe: "Electricity",
-         MontSaintMichel: "HolyEmpire",
+         MontSaintMichel: "Revolution",
+         Louvre: "Railway",
+         CentrePompidou: "Software",
       },
       uniqueMultipliers: {},
       naturalWonders: {
@@ -310,7 +312,7 @@ export class CityDefinitions {
       },
       requireGreatPeopleLevel: 70,
       requireSupporterPack: true,
-      festivalDesc: () => t(L.GuyFawkesNightV2),
+      festivalDesc: () => t(L.BastilleDay),
    };
 }
 

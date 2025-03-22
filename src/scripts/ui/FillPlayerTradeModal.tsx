@@ -17,8 +17,8 @@ import {
 } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import { useGameState } from "../Global";
-import { client, usePlayerMap, useTrades } from "../rpc/RPCClient";
-import { findPath, findUserOnMap, getMyMapXy } from "../scenes/PathFinder";
+import { client, getUser, usePlayerMap, useTrades } from "../rpc/RPCClient";
+import { findPath, findUserOnMap, getOwnedTradeTile } from "../scenes/PathFinder";
 import { playError, playKaching } from "../visuals/Sound";
 import { hideModal, showToast } from "./GlobalModal";
 import { FormatNumber } from "./HelperComponents";
@@ -30,7 +30,7 @@ export function FillPlayerTradeModal({ tradeId, xy }: { tradeId: string; xy?: Ti
    const gs = useGameState();
    const trades = useTrades();
    const trade = trades.find((t) => t.id === tradeId);
-   const myXy = getMyMapXy();
+   const myXy = getOwnedTradeTile();
    const allTradeBuildings = Tick.current.playerTradeBuildings;
    const [fills, setFills] = useState(new Map<Tile, number>());
 
@@ -53,6 +53,10 @@ export function FillPlayerTradeModal({ tradeId, xy }: { tradeId: string; xy?: Ti
       tiles.reduce((prev, xy, i) => {
          const tile = map.get(xy);
          if (!tile || i === 0 || i === tiles.length - 1) {
+            return prev;
+         }
+         const user = getUser();
+         if (user && tile.userId === user.userId) {
             return prev;
          }
          return prev + tile.tariffRate;
@@ -377,7 +381,13 @@ export function FillPlayerTradeModal({ tradeId, xy }: { tradeId: string; xy?: Ti
                         ) : null}
                         {tiles.map((xy, i) => {
                            const tile = map.get(xy);
-                           if (!tile || i === 0 || i === tiles.length - 1) {
+                           const user = getUser();
+                           if (
+                              !tile ||
+                              i === 0 ||
+                              i === tiles.length - 1 ||
+                              (user && tile.userId === user.userId)
+                           ) {
                               return null;
                            }
                            return (

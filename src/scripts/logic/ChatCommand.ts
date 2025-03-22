@@ -413,6 +413,14 @@ export async function handleChatCommand(command: string): Promise<void> {
          addSystemMessage("Cross Platform connections have been cleared");
          break;
       }
+      case "removetile": {
+         if (!parts[1]) {
+            throw new Error("Invalid command format");
+         }
+         await client.removePlayerFromMap(parts[1]);
+         addSystemMessage("Player has been removed from map");
+         break;
+      }
       case "cloudsave": {
          if (!parts[1]) {
             throw new Error("Invalid command format");

@@ -8,25 +8,65 @@
                 "h": 100
             }
         },
-        "Misc_Bolt": {
+        "Misc_AccountLevel1": {
+            "frame": {
+                "x": 1213,
+                "y": 441,
+                "w": 100,
+                "h": 100
+            }
+        },
+        "Misc_AccountLevel2": {
             "frame": {
                 "x": 1314,
-                "y": 498,
+                "y": 441,
+                "w": 100,
+                "h": 100
+            }
+        },
+        "Misc_AccountLevel3": {
+            "frame": {
+                "x": 773,
+                "y": 601,
+                "w": 100,
+                "h": 100
+            }
+        },
+        "Misc_AccountLevel4": {
+            "frame": {
+                "x": 874,
+                "y": 601,
+                "w": 100,
+                "h": 100
+            }
+        },
+        "Misc_AccountLevel5": {
+            "frame": {
+                "x": 975,
+                "y": 601,
+                "w": 100,
+                "h": 100
+            }
+        },
+        "Misc_Bolt": {
+            "frame": {
+                "x": 1278,
+                "y": 658,
                 "w": 32,
                 "h": 40
             }
         },
         "Misc_Circle_25": {
             "frame": {
-                "x": 1347,
-                "y": 498,
+                "x": 982,
+                "y": 567,
                 "w": 25,
                 "h": 25
             }
         },
         "Misc_Circle_50": {
             "frame": {
-                "x": 773,
+                "x": 1344,
                 "y": 601,
                 "w": 50,
                 "h": 50
@@ -34,8 +74,8 @@
         },
         "Misc_Circle": {
             "frame": {
-                "x": 824,
-                "y": 601,
+                "x": 652,
+                "y": 730,
                 "w": 50,
                 "h": 50
             }
@@ -50,8 +90,8 @@
         },
         "Misc_Construction": {
             "frame": {
-                "x": 1380,
-                "y": 441,
+                "x": 652,
+                "y": 781,
                 "w": 38,
                 "h": 53
             }
@@ -98,32 +138,32 @@
         },
         "Misc_NoPower": {
             "frame": {
-                "x": 875,
-                "y": 601,
+                "x": 703,
+                "y": 730,
                 "w": 50,
                 "h": 50
             }
         },
         "Misc_NotEnoughResources": {
             "frame": {
-                "x": 926,
-                "y": 601,
+                "x": 754,
+                "y": 730,
                 "w": 50,
                 "h": 50
             }
         },
         "Misc_NotEnoughWorkers": {
             "frame": {
-                "x": 977,
-                "y": 601,
+                "x": 805,
+                "y": 730,
                 "w": 50,
                 "h": 50
             }
         },
         "Misc_NotProducingGeneral": {
             "frame": {
-                "x": 1028,
-                "y": 601,
+                "x": 856,
+                "y": 730,
                 "w": 50,
                 "h": 50
             }
@@ -138,40 +178,48 @@
         },
         "Misc_Spinner": {
             "frame": {
-                "x": 1213,
-                "y": 441,
+                "x": 1076,
+                "y": 601,
                 "w": 100,
                 "h": 100
             }
         },
         "Misc_StorageFull": {
             "frame": {
-                "x": 1079,
-                "y": 601,
+                "x": 907,
+                "y": 730,
                 "w": 50,
                 "h": 50
             }
         },
+        "Misc_Supporter": {
+            "frame": {
+                "x": 1177,
+                "y": 601,
+                "w": 100,
+                "h": 100
+            }
+        },
         "Misc_Transport": {
             "frame": {
-                "x": 1314,
-                "y": 441,
+                "x": 1278,
+                "y": 601,
                 "w": 65,
                 "h": 56
             }
         },
         "Misc_TurnedOff": {
             "frame": {
-                "x": 1130,
-                "y": 601,
+                "x": 958,
+                "y": 730,
                 "w": 50,
                 "h": 50
             }
         },
         "Misc_Upgrade": {
             "frame": {
-                "x": 1181,
-                "y": 601,
+                "x": 1009,
+                "y": 730,
                 "w": 40,
                 "h": 46
             }

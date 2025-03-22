@@ -1,6 +1,8 @@
 import { Capacitor, registerPlugin } from "@capacitor/core";
 import { decode, encode } from "@msgpack/msgpack";
 import type { ServerImpl } from "../../../server/src/Server";
+import type { Building } from "../../../shared/definitions/BuildingDefinitions";
+import WorldMap from "../../../shared/definitions/WorldMap.json";
 import { addPetraOfflineTime } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
 import { GOOGLE_PLAY_GAMES_CLIENT_ID } from "../../../shared/logic/Constants";
@@ -165,6 +167,17 @@ export function clearSystemMessages(): void {
    OnChatMessage.emit(chatMessages);
 }
 
+export const TileBuildings: Map<string, Building> = new Map();
+export const OnTileBuildingsChanged = new TypedEvent<void>();
+async function populateTileBuildings() {
+   const shuffledBuildings = await client.getBuildings();
+   let i = 0;
+   forEach(WorldMap, (xy) => {
+      TileBuildings.set(xy, shuffledBuildings[i++ % shuffledBuildings.length]);
+   });
+   OnTileBuildingsChanged.emit();
+}
+
 export const CLIENT_ID = "CIVIDLE_CLIENT_ID";
 
 let reconnect = 0;
@@ -309,6 +322,7 @@ export async function connectWebSocket(): Promise<IWelcomeMessage> {
                JSON.stringify(w),
             );
             setServerNow(w.now);
+            populateTileBuildings();
             w.offlineTime = Math.min(w.offlineTime, offlineTicks);
             resolve?.(w);
             break;

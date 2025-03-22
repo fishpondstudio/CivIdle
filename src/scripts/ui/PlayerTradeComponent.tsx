@@ -19,12 +19,11 @@ import {
    safeParseInt,
 } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
-import Supporter from "../../images/Supporter.png";
-import { AccountLevelImages, AccountLevelNames } from "../logic/AccountLevel";
+import { AccountLevelNames } from "../logic/AccountLevel";
 import { client, useTrades, useUser } from "../rpc/RPCClient";
-import { getMyMapXy } from "../scenes/PathFinder";
+import { getOwnedTradeTile } from "../scenes/PathFinder";
 import { PlayerMapScene } from "../scenes/PlayerMapScene";
-import { getCountryName, getFlagUrl } from "../utilities/CountryCode";
+import { getCountryName } from "../utilities/CountryCode";
 import { Singleton } from "../utilities/Singleton";
 import { playError, playKaching } from "../visuals/Sound";
 import { AddTradeComponent } from "./AddTradeComponent";
@@ -36,6 +35,7 @@ import { showModal, showToast } from "./GlobalModal";
 import { FormatNumber } from "./HelperComponents";
 import { RenderHTML } from "./RenderHTMLComponent";
 import { TableView } from "./TableView";
+import { AccountLevelComponent, PlayerFlagComponent, SupporterComponent } from "./TextureSprites";
 import { WarningComponent } from "./WarningComponent";
 
 const savedResourceWantFilters: Set<Resource> = new Set();
@@ -57,7 +57,7 @@ export function PlayerTradeComponent({ gameState, xy }: IBuildingComponentProps)
    const trades = useTrades();
 
    const user = useUser();
-   const myXy = getMyMapXy();
+   const myXy = getOwnedTradeTile();
    if (!myXy) {
       return (
          <article role="tabpanel" style={{ padding: "8px" }}>
@@ -243,19 +243,25 @@ export function PlayerTradeComponent({ gameState, xy }: IBuildingComponentProps)
             ]}
             sortingState={playerTradesSortingState}
             data={trades.filter((trade) => {
+               const resourceFilter =
+                  (resourceWantFilters.size === 0 && resourceOfferFilters.size === 0) ||
+                  resourceWantFilters.has(trade.buyResource) ||
+                  resourceOfferFilters.has(trade.sellResource);
+
                const filterNames = playerNameFilter
                   .toLowerCase()
                   .split(" ")
                   .map((name) => name.trim())
                   .filter((name) => name.length > 0);
 
-               return (
-                  ((resourceWantFilters.size === 0 && resourceOfferFilters.size === 0) ||
-                     resourceWantFilters.has(trade.buyResource) ||
-                     resourceOfferFilters.has(trade.sellResource)) &&
-                  filterNames.some((name) => trade.from.toLowerCase().includes(name)) &&
-                  (tradeAmountFilter === 0 || (tradeAmountFilter > 0 && trade.buyAmount <= tradeAmountFilter))
-               );
+               const nameFilter =
+                  filterNames.length === 0 ||
+                  filterNames.some((name) => trade.from.toLowerCase().includes(name));
+
+               const amountFilter =
+                  tradeAmountFilter === 0 || (tradeAmountFilter > 0 && trade.buyAmount <= tradeAmountFilter);
+
+               return resourceFilter && nameFilter && amountFilter;
             })}
             compareFunc={(a, b, col, asc) => {
                if (a.fromId === user?.userId && b.fromId !== user?.userId) {
@@ -322,16 +328,16 @@ export function PlayerTradeComponent({ gameState, xy }: IBuildingComponentProps)
                      <td>
                         <div className="row">
                            <Tippy content={getCountryName(trade.fromFlag)}>
-                              <img src={getFlagUrl(trade.fromFlag)} className="player-flag" />
+                              <PlayerFlagComponent name={trade.fromFlag} scale={0.7} />
                            </Tippy>
                            {trade.fromLevel > 0 ? (
                               <Tippy content={AccountLevelNames[trade.fromLevel]()}>
-                                 <img src={AccountLevelImages[trade.fromLevel]} className="player-flag" />
+                                 <AccountLevelComponent level={trade.fromLevel} scale={0.17} />
                               </Tippy>
                            ) : null}
                            {hasFlag(trade.fromAttr, UserAttributes.DLC1) ? (
                               <Tippy content={t(L.AccountSupporter)}>
-                                 <img src={Supporter} className="player-flag" />
+                                 <SupporterComponent scale={0.17} />
                               </Tippy>
                            ) : null}
                         </div>

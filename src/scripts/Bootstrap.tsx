@@ -110,6 +110,7 @@ export async function startGame(
       routeTo,
       ticker: new GameTicker(app.ticker, gameState),
       heartbeat: new Heartbeat(serializeSaveLite()),
+      textures,
    });
    setCityOverride(gameState);
 
@@ -181,16 +182,16 @@ export async function startGame(
 
    const params = new URLSearchParams(location.href.split("?")[1]);
 
-   switch (params.get("scene")) {
-      case "Save": {
+   switch (params.get("scene")?.toLocaleLowerCase()) {
+      case "save": {
          routeTo(CrossPlatformSavePage, {});
          break;
       }
-      case "Tech": {
+      case "tech": {
          Singleton().sceneManager.loadScene(TechTreeScene);
          break;
       }
-      case "Trade": {
+      case "trade": {
          Singleton().sceneManager.loadScene(PlayerMapScene);
          break;
       }

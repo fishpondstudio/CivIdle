@@ -2,11 +2,12 @@ import type { AccountLevel, IUser } from "../../../shared/utilities/Database";
 import { L, t } from "../../../shared/utilities/i18n";
 import RomanMagistrate from "../../images/RomanMagistrate.jpg";
 import { saveGame } from "../Global";
-import { AccountLevelImages, AccountLevelNames } from "../logic/AccountLevel";
+import { AccountLevelNames } from "../logic/AccountLevel";
 import { client } from "../rpc/RPCClient";
 import { Fonts } from "../visuals/Fonts";
 import { playClick, playError } from "../visuals/Sound";
 import { hideModal, showToast } from "./GlobalModal";
+import { AccountLevelComponent } from "./TextureSprites";
 
 export function AccountRankUpModal({ rank, user }: { rank: AccountLevel; user: IUser }): React.ReactNode {
    return (
@@ -22,12 +23,12 @@ export function AccountRankUpModal({ rank, user }: { rank: AccountLevel; user: I
             <div className="sep10"></div>
             <div className="row" style={{ fontFamily: Fonts.OldTypefaces, fontSize: 32 }}>
                <div className="f1"></div>
-               <img src={AccountLevelImages[user.level]} style={{ width: 32, marginRight: 5 }} />
+               <AccountLevelComponent level={user.level} scale={0.32} style={{ marginRight: 5 }} />
                <div>{AccountLevelNames[user.level]()}</div>
                <div style={{ width: 60 }} className="m-icon text-center text-desc">
                   keyboard_double_arrow_right
                </div>
-               <img src={AccountLevelImages[rank]} style={{ width: 32, marginRight: 5 }} />
+               <AccountLevelComponent level={rank} scale={0.32} style={{ marginRight: 5 }} />
                <div>{AccountLevelNames[rank]()}</div>
                <div className="f1"></div>
             </div>

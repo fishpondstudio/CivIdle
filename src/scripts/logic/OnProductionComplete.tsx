@@ -24,6 +24,7 @@ import {
    SCIENCE_VALUE,
    TELEPORT_SECONDS,
    TOWER_BRIDGE_GP_PER_CYCLE,
+   TRADE_TILE_BONUS,
 } from "../../../shared/logic/Constants";
 import { GameFeature, hasFeature } from "../../../shared/logic/FeatureLogic";
 import { getGameOptions, getGameState } from "../../../shared/logic/GameStateLogic";
@@ -40,6 +41,7 @@ import {
    getGreatPeopleForWisdom,
    getGreatPersonTotalEffect,
    getPermanentGreatPeopleLevel,
+   getRebirthGreatPeopleCount,
    rollGreatPeopleThisRun,
 } from "../../../shared/logic/RebirthLogic";
 import {
@@ -50,8 +52,10 @@ import {
 } from "../../../shared/logic/TechLogic";
 import { Tick } from "../../../shared/logic/TickLogic";
 import type {
+   ICentrePompidouBuildingData,
    IGreatPeopleBuildingData,
    IIdeologyBuildingData,
+   ILouvreBuildingData,
    IReligionBuildingData,
    ITileData,
    ITraditionBuildingData,
@@ -76,7 +80,8 @@ import {
 } from "../../../shared/utilities/Helper";
 import { srand } from "../../../shared/utilities/Random";
 import { L, t } from "../../../shared/utilities/i18n";
-import { client } from "../rpc/RPCClient";
+import { TileBuildings, client } from "../rpc/RPCClient";
+import { getOwnedOrOccupiedTiles } from "../scenes/PathFinder";
 import { ChooseGreatPersonModal } from "../ui/ChooseGreatPersonModal";
 import { hasOpenModal, showModal } from "../ui/GlobalModal";
 import { Singleton } from "../utilities/Singleton";
@@ -123,6 +128,17 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          } else {
             gs.festival = false;
          }
+
+         getOwnedOrOccupiedTiles().forEach((xy, i) => {
+            const building = TileBuildings.get(xy);
+            if (building) {
+               addMultiplier(
+                  building,
+                  { output: TRADE_TILE_BONUS },
+                  `${t(L.PlayerMapMapTileBonus)} (${i + 1})`,
+               );
+            }
+         });
 
          if (!offline) {
             gs.speedUp = clamp(gs.speedUp, 1, getMaxWarpStorage(gs));
@@ -1554,7 +1570,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          const happiness = Tick.current.happiness?.value ?? 0;
          if (happiness > 0) {
             Tick.next.globalMultipliers.builderCapacity.push({
-               value: Math.floor(happiness),
+               value: Math.floor(happiness) * (gs.festival ? 2 : 1),
                source: buildingName,
             });
          }
@@ -1566,7 +1582,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          const culture = idleWorkers / (Config.ResourcePrice.Culture ?? 1);
          const value = getBuildingCost(building);
          if ((building.resources.Culture ?? 0) < (value.Culture ?? 0)) {
-            safeAdd(building.resources, "Culture", culture);
+            safeAdd(building.resources, "Culture", culture * (gs.festival ? 2 : 1));
          }
          for (const point of grid.getRange(tileToPoint(xy), 2)) {
             mapSafePush(Tick.next.tileMultipliers, pointToTile(point), {
@@ -1574,6 +1590,40 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
                source: buildingName,
             });
          }
+         break;
+      }
+      case "Louvre": {
+         const louvre = building as ILouvreBuildingData;
+         const greatPeopleAtRebirth = getRebirthGreatPeopleCount();
+         while (louvre.greatPeopleCount < Math.floor(greatPeopleAtRebirth / 10)) {
+            ++louvre.greatPeopleCount;
+            const candidates = rollGreatPeopleThisRun(
+               getUnlockedTechAges(gs),
+               gs.city,
+               getGreatPeopleChoiceCount(gs),
+            );
+            if (candidates) {
+               gs.greatPeopleChoicesV2.push(candidates);
+            }
+            if (!hasOpenModal() && gs.greatPeopleChoicesV2.length > 0) {
+               playAgeUp();
+               showModal(<ChooseGreatPersonModal permanent={false} />);
+            }
+         }
+         break;
+      }
+      case "CentrePompidou": {
+         const pompidou = building as ICentrePompidouBuildingData;
+         const multiplier = gs.festival ? 2 : 1;
+         const cities = pompidou.cities.size + 1;
+         Tick.next.globalMultipliers.output.push({
+            value: multiplier * cities,
+            source: buildingName,
+         });
+         Tick.next.globalMultipliers.storage.push({
+            value: 2 * multiplier * cities,
+            source: buildingName,
+         });
          break;
       }
    }

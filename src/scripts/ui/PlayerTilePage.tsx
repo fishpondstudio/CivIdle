@@ -4,18 +4,19 @@ import { isTileReserved } from "../../../shared/logic/PlayerTradeLogic";
 import { UserAttributes, UserColorsMapping } from "../../../shared/utilities/Database";
 import { formatPercent, hasFlag } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
-import Supporter from "../../images/Supporter.png";
-import { AccountLevelImages, AccountLevelNames } from "../logic/AccountLevel";
+import { AccountLevelNames } from "../logic/AccountLevel";
 import { usePlayerMap, useTrades } from "../rpc/RPCClient";
-import { getCountryName, getFlagUrl } from "../utilities/CountryCode";
+import { getCountryName } from "../utilities/CountryCode";
 import { ClaimTileComponent } from "./ClaimTileComponent";
 import { FillPlayerTradeModal } from "./FillPlayerTradeModal";
 import { showModal } from "./GlobalModal";
 import { FormatNumber } from "./HelperComponents";
+import { MapTileBonusComponent } from "./MapTileBonusComponent";
 import { MenuComponent } from "./MenuComponent";
 import { RenderHTML } from "./RenderHTMLComponent";
-import { WarningComponent } from "./WarningComponent";
+import { AccountLevelComponent, PlayerFlagComponent, SupporterComponent } from "./TextureSprites";
 import { TitleBarComponent } from "./TitleBarComponent";
+import { WarningComponent } from "./WarningComponent";
 
 export function PlayerTilePage({ xy }: { xy: string }): React.ReactNode {
    const playerMap = usePlayerMap();
@@ -30,6 +31,7 @@ export function PlayerTilePage({ xy }: { xy: string }): React.ReactNode {
          <TitleBarComponent>{tile.handle}</TitleBarComponent>
          <MenuComponent />
          <div className="window-body">
+            <MapTileBonusComponent xy={xy} />
             {isReserved ? null : (
                <>
                   <WarningComponent icon="info" className="mb10">
@@ -42,14 +44,14 @@ export function PlayerTilePage({ xy }: { xy: string }): React.ReactNode {
                <legend className="text-strong row">
                   <div style={{ color: UserColorsMapping.get(tile.color) }}>{tile.handle}</div>
                   <Tippy content={getCountryName(tile.flag)}>
-                     <img src={getFlagUrl(tile.flag)} className="player-flag ml5" />
+                     <PlayerFlagComponent name={tile.flag} style={{ marginLeft: 5 }} scale={0.7} />
                   </Tippy>
                   <Tippy content={AccountLevelNames[tile.level]()}>
-                     <img src={AccountLevelImages[tile.level]} className="player-flag ml5" />
+                     <AccountLevelComponent level={tile.level} scale={0.17} style={{ marginLeft: 5 }} />
                   </Tippy>
                   {hasFlag(tile.attr, UserAttributes.DLC1) ? (
                      <Tippy content={t(L.AccountSupporter)}>
-                        <img src={Supporter} className="player-flag ml5" />
+                        <SupporterComponent scale={0.17} style={{ marginLeft: 5 }} />
                      </Tippy>
                   ) : null}
                </legend>
