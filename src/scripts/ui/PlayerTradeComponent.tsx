@@ -250,11 +250,13 @@ export function PlayerTradeComponent({ gameState, xy }: IBuildingComponentProps)
                   .filter((name) => name.length > 0);
 
                return (
-                  ((resourceWantFilters.size === 0 && resourceOfferFilters.size === 0) ||
+                  trade.fromId === user?.userId ||
+                  (((resourceWantFilters.size === 0 && resourceOfferFilters.size === 0) ||
                      resourceWantFilters.has(trade.buyResource) ||
                      resourceOfferFilters.has(trade.sellResource)) &&
-                  filterNames.some((name) => trade.from.toLowerCase().includes(name)) &&
-                  (tradeAmountFilter === 0 || (tradeAmountFilter > 0 && trade.buyAmount <= tradeAmountFilter))
+                     filterNames.some((name) => trade.from.toLowerCase().includes(name)) &&
+                     (tradeAmountFilter === 0 ||
+                        (tradeAmountFilter > 0 && trade.buyAmount <= tradeAmountFilter)))
                );
             })}
             compareFunc={(a, b, col, asc) => {
