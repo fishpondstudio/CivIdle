@@ -187,6 +187,7 @@ export class GameOptions {
 
 export enum RebirthFlags {
    None = 0,
+   EasterBunny = 1 << 0,
 }
 
 export interface RebirthInfo {

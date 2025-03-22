@@ -1965,6 +1965,17 @@ export class BuildingDefinitions {
       wikipedia: "Centre_Pompidou",
    };
 
+   EasterBunny: IBuildingDefinition = {
+      name: () => t(L.EasterBunny),
+      desc: () => t(L.EasterBunnyDesc),
+      input: {},
+      output: {},
+      construction: { Bond: 100, Book: 100, Culture: 100 },
+      max: 1,
+      special: BuildingSpecial.WorldWonder,
+      wikipedia: "Easter_Bunny",
+   };
+
    // #endregion /////////////////////////////////////////////////////////////////////////////////////////////
 
    // Winery: IBuildingDefinition = {

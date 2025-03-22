@@ -1515,4 +1515,6 @@ export const EN = {
    PlayerMapOccupyThisTile: "Occupy This Tile",
    PlayerMapOccupyTileCondition1: "This tile is adjacent to your home or occupied tiles",
    PlayerMapOccupyTileCondition2: "You have not reached the maximum occupied tiles for your rank",
+   EasterBunny: "Easter Bunny",
+   EasterBunnyDesc: "Once constructed, 10% of the extra Great People at Rebirth from this run will carry forward to the next run and are born after building the Easter Bunny in the new run",
 };

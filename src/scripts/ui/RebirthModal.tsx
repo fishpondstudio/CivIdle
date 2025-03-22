@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import type { City } from "../../../shared/definitions/CityDefinitions";
 import {
+   findSpecialBuilding,
    getBuildingDescription,
    getMultipliersDescription,
    getPompidou,
@@ -359,6 +360,11 @@ export function RebirthModal(): React.ReactNode {
 
                      checkRebirthAchievements(greatPeopleCount, gs);
 
+                     let flags = RebirthFlags.None;
+                     if (findSpecialBuilding("EasterBunny", gs)) {
+                        flags |= RebirthFlags.EasterBunny;
+                     }
+
                      getGameOptions().rebirthInfo.push({
                         greatPeopleAtRebirth: greatPeopleAtRebirthCount,
                         greatPeopleThisRun: reduceOf(gs.greatPeople, (prev, k, v) => prev + v, 0),
@@ -367,7 +373,7 @@ export function RebirthModal(): React.ReactNode {
                         totalSeconds: gs.seconds,
                         city,
                         time: Date.now(),
-                        flags: RebirthFlags.None,
+                        flags,
                      });
 
                      playClick();

@@ -8,7 +8,7 @@ import {
    isWorldWonder,
 } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
-import type { GameState } from "../../../shared/logic/GameState";
+import { RebirthFlags, type GameState } from "../../../shared/logic/GameState";
 import { getGameOptions, getGameState } from "../../../shared/logic/GameStateLogic";
 import { getGrid, getXyBuildings } from "../../../shared/logic/IntraTickCache";
 import {
@@ -24,6 +24,7 @@ import {
    getMostAdvancedTech,
    getTechUnlockCost,
    getTechUnlockCostInAge,
+   getUnlockedTechAges,
 } from "../../../shared/logic/TechLogic";
 import { ensureTileFogOfWar } from "../../../shared/logic/TerrainLogic";
 import { Tick } from "../../../shared/logic/TickLogic";
@@ -33,6 +34,7 @@ import {
    clamp,
    filterOf,
    firstKeyOf,
+   hasFlag,
    isEmpty,
    pointToTile,
    safeAdd,
@@ -255,6 +257,28 @@ export function onBuildingComplete(xy: Tile): void {
       }
       case "BritishMuseum": {
          gs.unlockedUpgrades.BritishMuseum = true;
+         break;
+      }
+      case "EasterBunny": {
+         const options = getGameOptions();
+         const lastRebirth = options.rebirthInfo[options.rebirthInfo.length - 1];
+         if (lastRebirth && hasFlag(lastRebirth.flags, RebirthFlags.EasterBunny)) {
+            const count = Math.floor(lastRebirth.greatPeopleAtRebirth / 10);
+            for (let i = 0; i < count; i++) {
+               const candidates = rollGreatPeopleThisRun(
+                  getUnlockedTechAges(gs),
+                  gs.city,
+                  getGreatPeopleChoiceCount(gs),
+               );
+               if (candidates) {
+                  gs.greatPeopleChoicesV2.push(candidates);
+               }
+            }
+            if (gs.greatPeopleChoicesV2.length > 0) {
+               playAgeUp();
+               showModal(<ChooseGreatPersonModal permanent={false} />);
+            }
+         }
          break;
       }
    }
