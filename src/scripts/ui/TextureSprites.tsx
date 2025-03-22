@@ -56,7 +56,7 @@ const TextureSprite = React.forwardRef<
          ref={ref}
          style={{
             ...style,
-            backgroundImage: `url(${url})`,
+            backgroundImage: `url("${url}")`,
             width: texture.frame.width * scale,
             height: texture.frame.height * scale,
             backgroundPosition: `-${texture.frame.x * scale}px -${texture.frame.y * scale}px`,
