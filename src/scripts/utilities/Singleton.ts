@@ -1,5 +1,6 @@
 /////////////////////////////////////////////////////////////////////////////////////////////
 // Attention! Do not complicates the import of this file since it causes HMR to break easily
+import type { Texture } from "pixi.js";
 import type { Heartbeat } from "../logic/Heartbeat";
 import type { GameTicker } from "./GameTicker";
 import type { SceneManager } from "./SceneManager";
@@ -15,6 +16,7 @@ export interface ISingleton {
    routeTo: RouteTo;
    ticker: GameTicker;
    heartbeat: Heartbeat;
+   textures: Record<string, Texture>;
 }
 
 let singletons: ISingleton | null = null;

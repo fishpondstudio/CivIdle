@@ -25,7 +25,7 @@ import { resetToCity, saveGame } from "../Global";
 import { AccountLevelImages, AccountLevelNames } from "../logic/AccountLevel";
 import { useEligibleAccountRank } from "../logic/ClientUpdate";
 import { OnUserChanged, client, useUser } from "../rpc/RPCClient";
-import { getCountryName, getFlagUrl } from "../utilities/CountryCode";
+import { getCountryName } from "../utilities/CountryCode";
 import { jsxMMapOf } from "../utilities/Helper";
 import { openUrl } from "../utilities/Platform";
 import { playClick, playError, playLevelUp } from "../visuals/Sound";
@@ -35,6 +35,7 @@ import { ChangePlayerHandleModal } from "./ChangePlayerHandleModal";
 import { ConfirmModal } from "./ConfirmModal";
 import { showModal, showToast } from "./GlobalModal";
 import { FormatNumber } from "./HelperComponents";
+import { PlayerFlagComponent } from "./PlayerFlagComponent";
 import { RenderHTML } from "./RenderHTMLComponent";
 import { TextWithHelp } from "./TextWithHelpComponent";
 import { WarningComponent } from "./WarningComponent";
@@ -80,7 +81,7 @@ export function PlayerHandleComponent() {
                      {user.handle}
                   </div>
                   <Tippy content={getCountryName(user?.flag)}>
-                     <img className="ml5 player-flag" src={getFlagUrl(user.flag)} />
+                     <PlayerFlagComponent name={user.flag} style={{ marginLeft: 5 }} scale={0.75} />
                   </Tippy>
                   {hasFlag(user.attr, UserAttributes.DLC1) ? (
                      <Tippy content={t(L.AccountSupporter)}>

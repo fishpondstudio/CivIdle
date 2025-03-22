@@ -32,11 +32,12 @@ import {
    type IClientChat,
    type LocalChat,
 } from "../rpc/RPCClient";
-import { getCountryName, getFlagUrl } from "../utilities/CountryCode";
+import { getCountryName } from "../utilities/CountryCode";
 import { useTypedEvent } from "../utilities/Hook";
 import { openUrl } from "../utilities/Platform";
 import { playError } from "../visuals/Sound";
 import { showToast } from "./GlobalModal";
+import { PlayerFlagComponent } from "./PlayerFlagComponent";
 import { RenderHTML } from "./RenderHTMLComponent";
 import { SelectChatChannelModal } from "./SelectChatChannelModal";
 
@@ -295,7 +296,7 @@ function ChatMessage({
                   {chat.name}
                </div>
                <Tippy content={getCountryName(chat.flag)}>
-                  <img src={getFlagUrl(chat.flag)} className="player-flag" />
+                  <PlayerFlagComponent name={chat.flag} scale={0.625} />
                </Tippy>
                {chat.level > 0 ? (
                   <Tippy content={AccountLevelNames[chat.level]()}>
@@ -325,7 +326,9 @@ function ChatMessage({
                   {chat.name}
                </div>
                <Tippy content={getCountryName(chat.flag)}>
-                  <img src={getFlagUrl(chat.flag)} className="player-flag" />
+                  <div>
+                     <PlayerFlagComponent name={chat.flag} scale={0.625} />
+                  </div>
                </Tippy>
                {chat.level > 0 ? (
                   <Tippy content={AccountLevelNames[chat.level]()}>

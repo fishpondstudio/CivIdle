@@ -1,10 +1,12 @@
+import Tippy from "@tippyjs/react";
 import { useState } from "react";
 import { L, t } from "../../../shared/utilities/i18n";
 import { OnUserChanged, client, useUser } from "../rpc/RPCClient";
-import { CountryCode, getCountryName, getFlagUrl } from "../utilities/CountryCode";
+import { CountryCode, getCountryName } from "../utilities/CountryCode";
 import { jsxMapOf } from "../utilities/Helper";
 import { playError } from "../visuals/Sound";
 import { hideModal, showToast } from "./GlobalModal";
+import { PlayerFlagComponent } from "./PlayerFlagComponent";
 
 export function ChangePlayerHandleModal(): React.ReactNode {
    const user = useUser();
@@ -34,15 +36,7 @@ export function ChangePlayerHandleModal(): React.ReactNode {
                      onChange={(e) => setHandle(e.target.value)}
                   />
                </div>
-               <div>
-                  <img
-                     className="ml5"
-                     src={getFlagUrl(flag)}
-                     style={{ height: "30px", display: "block" }}
-                     title={name}
-                     alt={name}
-                  />
-               </div>
+               <PlayerFlagComponent style={{ marginLeft: 5 }} name={flag} />
             </div>
             <div className="sep10"></div>
             <div
@@ -52,16 +46,11 @@ export function ChangePlayerHandleModal(): React.ReactNode {
                <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "space-between" }}>
                   {jsxMapOf(CountryCode, (c, v) => {
                      return (
-                        <img
-                           key={c}
-                           onClick={async () => {
-                              setFlag(c);
-                           }}
-                           src={getFlagUrl(c)}
-                           className="pointer player-flag-large"
-                           title={v}
-                           alt={v}
-                        />
+                        <Tippy key={c} content={v}>
+                           <div onClick={() => setFlag(c)} className="pointer">
+                              <PlayerFlagComponent name={c} scale={1} />
+                           </div>
+                        </Tippy>
                      );
                   })}
                </div>

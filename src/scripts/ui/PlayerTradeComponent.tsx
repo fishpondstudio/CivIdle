@@ -24,7 +24,7 @@ import { AccountLevelImages, AccountLevelNames } from "../logic/AccountLevel";
 import { client, useTrades, useUser } from "../rpc/RPCClient";
 import { getMyMapXy } from "../scenes/PathFinder";
 import { PlayerMapScene } from "../scenes/PlayerMapScene";
-import { getCountryName, getFlagUrl } from "../utilities/CountryCode";
+import { getCountryName } from "../utilities/CountryCode";
 import { Singleton } from "../utilities/Singleton";
 import { playError, playKaching } from "../visuals/Sound";
 import { AddTradeComponent } from "./AddTradeComponent";
@@ -37,6 +37,7 @@ import { FormatNumber } from "./HelperComponents";
 import { RenderHTML } from "./RenderHTMLComponent";
 import { TableView } from "./TableView";
 import { WarningComponent } from "./WarningComponent";
+import { PlayerFlagComponent } from "./PlayerFlagComponent";
 
 const savedResourceWantFilters: Set<Resource> = new Set();
 const savedResourceOfferFilters: Set<Resource> = new Set();
@@ -322,7 +323,7 @@ export function PlayerTradeComponent({ gameState, xy }: IBuildingComponentProps)
                      <td>
                         <div className="row">
                            <Tippy content={getCountryName(trade.fromFlag)}>
-                              <img src={getFlagUrl(trade.fromFlag)} className="player-flag" />
+                              <PlayerFlagComponent name={trade.fromFlag} scale={0.75} />
                            </Tippy>
                            {trade.fromLevel > 0 ? (
                               <Tippy content={AccountLevelNames[trade.fromLevel]()}>

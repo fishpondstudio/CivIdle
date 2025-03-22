@@ -110,6 +110,7 @@ export async function startGame(
       routeTo,
       ticker: new GameTicker(app.ticker, gameState),
       heartbeat: new Heartbeat(serializeSaveLite()),
+      textures,
    });
    setCityOverride(gameState);
 

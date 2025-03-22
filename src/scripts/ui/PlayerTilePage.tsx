@@ -7,15 +7,16 @@ import { L, t } from "../../../shared/utilities/i18n";
 import Supporter from "../../images/Supporter.png";
 import { AccountLevelImages, AccountLevelNames } from "../logic/AccountLevel";
 import { usePlayerMap, useTrades } from "../rpc/RPCClient";
-import { getCountryName, getFlagUrl } from "../utilities/CountryCode";
+import { getCountryName } from "../utilities/CountryCode";
 import { ClaimTileComponent } from "./ClaimTileComponent";
 import { FillPlayerTradeModal } from "./FillPlayerTradeModal";
 import { showModal } from "./GlobalModal";
 import { FormatNumber } from "./HelperComponents";
 import { MenuComponent } from "./MenuComponent";
+import { PlayerFlagComponent } from "./PlayerFlagComponent";
 import { RenderHTML } from "./RenderHTMLComponent";
-import { WarningComponent } from "./WarningComponent";
 import { TitleBarComponent } from "./TitleBarComponent";
+import { WarningComponent } from "./WarningComponent";
 
 export function PlayerTilePage({ xy }: { xy: string }): React.ReactNode {
    const playerMap = usePlayerMap();
@@ -42,7 +43,7 @@ export function PlayerTilePage({ xy }: { xy: string }): React.ReactNode {
                <legend className="text-strong row">
                   <div style={{ color: UserColorsMapping.get(tile.color) }}>{tile.handle}</div>
                   <Tippy content={getCountryName(tile.flag)}>
-                     <img src={getFlagUrl(tile.flag)} className="player-flag ml5" />
+                     <PlayerFlagComponent name={tile.flag} style={{ marginLeft: 5 }} scale={0.75} />
                   </Tippy>
                   <Tippy content={AccountLevelNames[tile.level]()}>
                      <img src={AccountLevelImages[tile.level]} className="player-flag ml5" />
