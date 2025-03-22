@@ -18,11 +18,10 @@ import { censor } from "../../../shared/utilities/ProfanityFilter";
 import { TypedEvent } from "../../../shared/utilities/TypedEvent";
 import { L, t } from "../../../shared/utilities/i18n";
 import AccountLevelMod from "../../images/AccountLevelMod.png";
-import Supporter from "../../images/Supporter.png";
 import chatActive from "../../images/chat_active.png";
 import chatInactive from "../../images/chat_inactive.png";
 import { ToggleChatWindow, useFloatingMode, useGameOptions } from "../Global";
-import { AccountLevelImages, AccountLevelNames } from "../logic/AccountLevel";
+import { AccountLevelNames } from "../logic/AccountLevel";
 import { handleChatCommand } from "../logic/ChatCommand";
 import {
    addSystemMessage,
@@ -37,9 +36,9 @@ import { useTypedEvent } from "../utilities/Hook";
 import { openUrl } from "../utilities/Platform";
 import { playError } from "../visuals/Sound";
 import { showToast } from "./GlobalModal";
-import { PlayerFlagComponent } from "./PlayerFlagComponent";
 import { RenderHTML } from "./RenderHTMLComponent";
 import { SelectChatChannelModal } from "./SelectChatChannelModal";
+import { AccountLevelComponent, PlayerFlagComponent, SupporterComponent } from "./TextureSprites";
 
 const SetChatInput = new TypedEvent<{ channel: ChatChannel; getContent: (old: string) => string }>();
 
@@ -300,12 +299,12 @@ function ChatMessage({
                </Tippy>
                {chat.level > 0 ? (
                   <Tippy content={AccountLevelNames[chat.level]()}>
-                     <img src={AccountLevelImages[chat.level]} className="player-flag" />
+                     <AccountLevelComponent level={chat.level} scale={0.15} />
                   </Tippy>
                ) : null}
                {hasFlag(chat.attr, ChatAttributes.Supporter) ? (
                   <Tippy content={t(L.AccountSupporter)}>
-                     <img src={Supporter} className="player-flag" />
+                     <SupporterComponent scale={0.15} />
                   </Tippy>
                ) : null}
                {hasFlag(chat.attr, ChatAttributes.Mod) ? (
@@ -332,12 +331,12 @@ function ChatMessage({
                </Tippy>
                {chat.level > 0 ? (
                   <Tippy content={AccountLevelNames[chat.level]()}>
-                     <img src={AccountLevelImages[chat.level]} className="player-flag" />
+                     <AccountLevelComponent level={chat.level} scale={0.15} />
                   </Tippy>
                ) : null}
                {hasFlag(chat.attr, ChatAttributes.Supporter) ? (
                   <Tippy content={t(L.AccountSupporter)}>
-                     <img src={Supporter} className="player-flag" />
+                     <SupporterComponent scale={0.15} />
                   </Tippy>
                ) : null}
                {hasFlag(chat.attr, ChatAttributes.Mod) ? (

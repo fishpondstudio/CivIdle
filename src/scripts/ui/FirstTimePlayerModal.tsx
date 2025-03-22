@@ -14,7 +14,7 @@ import { AdvisorContentComponent } from "./AdvisorModal";
 import { ChangeModernUIComponent } from "./ChangeModernUIComponent";
 import { ChangeSoundComponent } from "./ChangeSoundComponent";
 import { hideModal, showToast } from "./GlobalModal";
-import { PlayerFlagComponent } from "./PlayerFlagComponent";
+import { PlayerFlagComponent } from "./TextureSprites";
 
 enum SetupStep {
    Step1 = 0,

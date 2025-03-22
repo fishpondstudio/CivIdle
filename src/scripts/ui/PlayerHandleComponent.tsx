@@ -20,9 +20,8 @@ import {
 } from "../../../shared/utilities/Database";
 import { HOUR, forEach, formatHM, hasFlag, safeParseInt, sizeOf } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
-import Supporter from "../../images/Supporter.png";
 import { resetToCity, saveGame } from "../Global";
-import { AccountLevelImages, AccountLevelNames } from "../logic/AccountLevel";
+import { AccountLevelNames } from "../logic/AccountLevel";
 import { useEligibleAccountRank } from "../logic/ClientUpdate";
 import { OnUserChanged, client, useUser } from "../rpc/RPCClient";
 import { getCountryName } from "../utilities/CountryCode";
@@ -35,9 +34,9 @@ import { ChangePlayerHandleModal } from "./ChangePlayerHandleModal";
 import { ConfirmModal } from "./ConfirmModal";
 import { showModal, showToast } from "./GlobalModal";
 import { FormatNumber } from "./HelperComponents";
-import { PlayerFlagComponent } from "./PlayerFlagComponent";
 import { RenderHTML } from "./RenderHTMLComponent";
 import { TextWithHelp } from "./TextWithHelpComponent";
+import { AccountLevelComponent, PlayerFlagComponent, SupporterComponent } from "./TextureSprites";
 import { WarningComponent } from "./WarningComponent";
 
 export function PlayerHandleComponent() {
@@ -85,7 +84,7 @@ export function PlayerHandleComponent() {
                   </Tippy>
                   {hasFlag(user.attr, UserAttributes.DLC1) ? (
                      <Tippy content={t(L.AccountSupporter)}>
-                        <img className="ml5 player-flag" src={Supporter} />
+                        <SupporterComponent scale={0.18} />
                      </Tippy>
                   ) : null}
                   <div className="f1" />
@@ -104,11 +103,7 @@ export function PlayerHandleComponent() {
                </div>
                <div className="row text-strong mt5">
                   <div className="f1">{t(L.AccountLevel)}</div>
-                  <img
-                     src={AccountLevelImages[accountLevel]}
-                     alt={AccountLevelNames[accountLevel]()}
-                     className="player-level mr5"
-                  />
+                  <AccountLevelComponent level={accountLevel} scale={0.15} style={{ marginRight: 5 }} />
                   <div>{AccountLevelNames[accountLevel]()}</div>
                </div>
                {hasFlag(user.attr, UserAttributes.DLC1) ? (
@@ -181,27 +176,27 @@ function AccountDetails(): React.ReactNode {
                      <th></th>
                      <th>
                         <TextWithHelp content={AccountLevelNames[AccountLevel.Tribune]()} noStyle>
-                           <img className="player-level" src={AccountLevelImages[AccountLevel.Tribune]} />
+                           <AccountLevelComponent level={AccountLevel.Tribune} scale={0.2} />
                         </TextWithHelp>
                      </th>
                      <th>
                         <TextWithHelp content={AccountLevelNames[AccountLevel.Quaestor]()} noStyle>
-                           <img className="player-level" src={AccountLevelImages[AccountLevel.Quaestor]} />
+                           <AccountLevelComponent level={AccountLevel.Quaestor} scale={0.2} />
                         </TextWithHelp>
                      </th>
                      <th>
                         <TextWithHelp content={AccountLevelNames[AccountLevel.Aedile]()} noStyle>
-                           <img className="player-level" src={AccountLevelImages[AccountLevel.Aedile]} />
+                           <AccountLevelComponent level={AccountLevel.Aedile} scale={0.2} />
                         </TextWithHelp>
                      </th>
                      <th>
                         <TextWithHelp content={AccountLevelNames[AccountLevel.Praetor]()} noStyle>
-                           <img className="player-level" src={AccountLevelImages[AccountLevel.Praetor]} />
+                           <AccountLevelComponent level={AccountLevel.Praetor} scale={0.2} />
                         </TextWithHelp>
                      </th>
                      <th>
                         <TextWithHelp content={AccountLevelNames[AccountLevel.Consul]()} noStyle>
-                           <img className="player-level" src={AccountLevelImages[AccountLevel.Consul]} />
+                           <AccountLevelComponent level={AccountLevel.Consul} scale={0.2} />
                         </TextWithHelp>
                      </th>
                   </tr>

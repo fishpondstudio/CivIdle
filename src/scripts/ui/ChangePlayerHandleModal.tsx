@@ -6,7 +6,7 @@ import { CountryCode, getCountryName } from "../utilities/CountryCode";
 import { jsxMapOf } from "../utilities/Helper";
 import { playError } from "../visuals/Sound";
 import { hideModal, showToast } from "./GlobalModal";
-import { PlayerFlagComponent } from "./PlayerFlagComponent";
+import { PlayerFlagComponent } from "./TextureSprites";
 
 export function ChangePlayerHandleModal(): React.ReactNode {
    const user = useUser();

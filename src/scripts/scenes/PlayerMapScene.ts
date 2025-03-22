@@ -15,6 +15,7 @@ import type { Disposable } from "../../../shared/utilities/TypedEvent";
 import { getTexture } from "../logic/VisualLogic";
 import { OnPlayerMapMessage, OnTradeChanged, getPlayerMap, getTrades, getUser } from "../rpc/RPCClient";
 import { PlayerMapPage } from "../ui/PlayerMapPage";
+import { AccountLevelImages } from "../ui/TextureSprites";
 import { getColorCached } from "../utilities/CachedColor";
 import { Scene, destroyAllChildren, type ISceneContext } from "../utilities/SceneManager";
 import { Singleton } from "../utilities/Singleton";
@@ -307,8 +308,14 @@ class PlayerTile extends Container {
 
       const flag = this.addChild(new Sprite(textures[`Flag_${data.flag.toUpperCase()}`]));
       flag.anchor.set(0.5, 0.5);
-      flag.position.set(x * GridSize + 0.5 * GridSize, y * GridSize + 0.5 * GridSize - 24);
+      flag.position.set(x * GridSize + 0.5 * GridSize - 15, y * GridSize + 0.5 * GridSize - 24);
       flag.alpha = isReserved ? 1 : 0.5;
+
+      const level = this.addChild(new Sprite(textures[`Misc_${AccountLevelImages[data.level]}`]));
+      level.anchor.set(0.5, 0.5);
+      level.scale.set(0.25);
+      level.position.set(x * GridSize + 0.5 * GridSize + 15, y * GridSize + 0.5 * GridSize - 24);
+      level.alpha = isReserved ? 1 : 0.5;
 
       if (trade > 0) {
          const bg = this.addChild(new Sprite(getTexture("Misc_Circle_25", textures)));

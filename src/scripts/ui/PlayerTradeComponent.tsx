@@ -19,8 +19,7 @@ import {
    safeParseInt,
 } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
-import Supporter from "../../images/Supporter.png";
-import { AccountLevelImages, AccountLevelNames } from "../logic/AccountLevel";
+import { AccountLevelNames } from "../logic/AccountLevel";
 import { client, useTrades, useUser } from "../rpc/RPCClient";
 import { getMyMapXy } from "../scenes/PathFinder";
 import { PlayerMapScene } from "../scenes/PlayerMapScene";
@@ -34,9 +33,9 @@ import { FillPlayerTradeModal } from "./FillPlayerTradeModal";
 import { FixedLengthText } from "./FixedLengthText";
 import { showModal, showToast } from "./GlobalModal";
 import { FormatNumber } from "./HelperComponents";
-import { PlayerFlagComponent } from "./PlayerFlagComponent";
 import { RenderHTML } from "./RenderHTMLComponent";
 import { TableView } from "./TableView";
+import { AccountLevelComponent, PlayerFlagComponent, SupporterComponent } from "./TextureSprites";
 import { WarningComponent } from "./WarningComponent";
 
 const savedResourceWantFilters: Set<Resource> = new Set();
@@ -333,12 +332,12 @@ export function PlayerTradeComponent({ gameState, xy }: IBuildingComponentProps)
                            </Tippy>
                            {trade.fromLevel > 0 ? (
                               <Tippy content={AccountLevelNames[trade.fromLevel]()}>
-                                 <img src={AccountLevelImages[trade.fromLevel]} className="player-flag" />
+                                 <AccountLevelComponent level={trade.fromLevel} scale={0.17} />
                               </Tippy>
                            ) : null}
                            {hasFlag(trade.fromAttr, UserAttributes.DLC1) ? (
                               <Tippy content={t(L.AccountSupporter)}>
-                                 <img src={Supporter} className="player-flag" />
+                                 <SupporterComponent scale={0.17} />
                               </Tippy>
                            ) : null}
                         </div>
