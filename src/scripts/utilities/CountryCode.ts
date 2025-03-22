@@ -211,13 +211,6 @@ export const CountryCode = {
    ZW: "Zimbabwe",
 };
 
-export function getFlagUrl(flag?: string) {
-   if (!flag) {
-      flag = "EARTH";
-   }
-   return `https://iso-flags.netlify.app/${flag.toLowerCase()}.png`;
-}
-
 export function getCountryName(flag: string | undefined | null): string {
    if (!flag) {
       flag = "EARTH";

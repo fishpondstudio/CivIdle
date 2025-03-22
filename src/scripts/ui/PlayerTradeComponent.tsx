@@ -34,10 +34,10 @@ import { FillPlayerTradeModal } from "./FillPlayerTradeModal";
 import { FixedLengthText } from "./FixedLengthText";
 import { showModal, showToast } from "./GlobalModal";
 import { FormatNumber } from "./HelperComponents";
+import { PlayerFlagComponent } from "./PlayerFlagComponent";
 import { RenderHTML } from "./RenderHTMLComponent";
 import { TableView } from "./TableView";
 import { WarningComponent } from "./WarningComponent";
-import { PlayerFlagComponent } from "./PlayerFlagComponent";
 
 const savedResourceWantFilters: Set<Resource> = new Set();
 const savedResourceOfferFilters: Set<Resource> = new Set();
@@ -329,7 +329,7 @@ export function PlayerTradeComponent({ gameState, xy }: IBuildingComponentProps)
                      <td>
                         <div className="row">
                            <Tippy content={getCountryName(trade.fromFlag)}>
-                              <PlayerFlagComponent name={trade.fromFlag} scale={0.75} />
+                              <PlayerFlagComponent name={trade.fromFlag} scale={0.7} />
                            </Tippy>
                            {trade.fromLevel > 0 ? (
                               <Tippy content={AccountLevelNames[trade.fromLevel]()}>

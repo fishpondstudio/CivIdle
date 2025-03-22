@@ -43,7 +43,7 @@ export function PlayerTilePage({ xy }: { xy: string }): React.ReactNode {
                <legend className="text-strong row">
                   <div style={{ color: UserColorsMapping.get(tile.color) }}>{tile.handle}</div>
                   <Tippy content={getCountryName(tile.flag)}>
-                     <PlayerFlagComponent name={tile.flag} style={{ marginLeft: 5 }} scale={0.75} />
+                     <PlayerFlagComponent name={tile.flag} style={{ marginLeft: 5 }} scale={0.7} />
                   </Tippy>
                   <Tippy content={AccountLevelNames[tile.level]()}>
                      <img src={AccountLevelImages[tile.level]} className="player-flag ml5" />
