@@ -105,6 +105,9 @@ export class PlayerMapScene extends Scene {
             forEach(message.upsert, (xy, entry) => this.addOrReplaceTile(xy, entry));
          }
       });
+
+      this.onTileBuildingsChanged();
+      this._listeners.push(OnTileBuildingsChanged.on(this.onTileBuildingsChanged.bind(this)));
    }
 
    override backgroundColor(): ColorSource {
@@ -119,9 +122,6 @@ export class PlayerMapScene extends Scene {
 
       this.onTradeChanged(getTrades());
       this._listeners.push(OnTradeChanged.on(this.onTradeChanged.bind(this)));
-
-      this.onTileBuildingsChanged();
-      this._listeners.push(OnTileBuildingsChanged.on(this.onTileBuildingsChanged.bind(this)));
 
       if (!viewportZoom) {
          const range = this.viewport.getZoomRange();
