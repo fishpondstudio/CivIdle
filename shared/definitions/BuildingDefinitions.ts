@@ -547,12 +547,6 @@ export class BuildingDefinitions {
       output: { Flour: 1 },
       construction: { Brick: 1 },
    };
-   LivestockFarm: IBuildingDefinition = {
-      name: () => t(L.LivestockFarm),
-      input: { Wheat: 2 },
-      output: { Meat: 1, Milk: 1 },
-      construction: { Lumber: 1 },
-   };
    PoultryFarm: IBuildingDefinition = {
       name: () => t(L.PoultryFarm),
       input: { Wheat: 2 },
@@ -565,12 +559,6 @@ export class BuildingDefinitions {
       output: { Milk: 2 },
       construction: { Brick: 1 },
    };
-   // LivestockFarm: IBuildingDefinition = {
-   //    name: () => t(L.LivestockFarm),
-   //    input: { Wheat: 2 },
-   //    output: { Meat: 1, Milk: 1 },
-   //    construction: { Lumber: 1 },
-   // };
    Stable: IBuildingDefinition = {
       name: () => t(L.Stable),
       input: { Wheat: 2 },
