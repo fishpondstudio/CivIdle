@@ -14,6 +14,7 @@ import { AdvisorContentComponent } from "./AdvisorModal";
 import { ChangeModernUIComponent } from "./ChangeModernUIComponent";
 import { ChangeSoundComponent } from "./ChangeSoundComponent";
 import { hideModal, showToast } from "./GlobalModal";
+import { LanguageSelect } from "./LanguageSelectComponent";
 import { PlayerFlagComponent } from "./TextureSprites";
 
 enum SetupStep {
@@ -43,6 +44,12 @@ export function FirstTimePlayerModal(): React.ReactNode {
                      >
                         {t(L.FirstTimeGuideNext)}
                      </button>
+                  </div>
+               }
+               content={
+                  <div className="row mt10">
+                     <div className="m-icon mr10">translate</div>
+                     <LanguageSelect className="f1" />
                   </div>
                }
             />
