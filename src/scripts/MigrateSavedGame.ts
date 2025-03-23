@@ -106,6 +106,12 @@ export function migrateSavedGame(save: SavedGame) {
       save.current.transportationV2 = [];
    }
 
+   forEach(save.options.buildingDefaults, (building, d) => {
+      if (!Config.Building[building]) {
+         delete save.options.buildingDefaults[building];
+      }
+   });
+
    // @ts-expect-error
    if (save.current.transportation) {
       // @ts-expect-error
