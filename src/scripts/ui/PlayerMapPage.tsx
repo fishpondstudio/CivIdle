@@ -1,6 +1,6 @@
 import WorldMap from "../../../shared/definitions/WorldMap.json";
 import { usePlayerMap } from "../rpc/RPCClient";
-import { getOwnedTradeTile } from "../scenes/PathFinder";
+import { getOwnedOrOccupiedTiles } from "../scenes/PathFinder";
 import { WorldScene } from "../scenes/WorldScene";
 import { useShortcut } from "../utilities/Hook";
 import { Singleton } from "../utilities/Singleton";
@@ -11,7 +11,7 @@ import { UnclaimedTilePage } from "./UnclaimedTilePage";
 
 export function PlayerMapPage({ xy }: { xy: string }): React.ReactNode {
    const playerMap = usePlayerMap();
-   const myXy = getOwnedTradeTile();
+   const tiles = getOwnedOrOccupiedTiles();
    useShortcut(
       "PlayerMapPageGoBackToCity",
       () => {
@@ -19,7 +19,7 @@ export function PlayerMapPage({ xy }: { xy: string }): React.ReactNode {
       },
       [xy],
    );
-   if (myXy === xy) {
+   if (tiles.includes(xy)) {
       return <MyTilePage xy={xy} />;
    }
    if (playerMap.has(xy)) {

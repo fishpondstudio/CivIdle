@@ -1624,6 +1624,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
             value: 2 * multiplier * cities,
             source: buildingName,
          });
+         building.resources = {};
          break;
       }
    }

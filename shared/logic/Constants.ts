@@ -307,7 +307,6 @@ export function calculateTierAndPrice(log?: (val: string) => void) {
       }
    });
 
-   Config.BuildingTechAge.LivestockFarm = "BronzeAge";
    Config.BuildingTier.CloneFactory = 8;
    Config.BuildingTier.CloneLab = 8;
 
@@ -503,11 +502,6 @@ export function calculateTierAndPrice(log?: (val: string) => void) {
 }
 
 function getBuildingUnlockTechSlow(building: Building): Tech | null {
-   // TODO: This is temporary
-   if (building === "LivestockFarm") {
-      return "Herding";
-   }
-
    let key: Tech;
    for (key in Config.Tech) {
       if (Config.Tech[key].unlockBuilding?.includes(building)) {
