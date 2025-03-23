@@ -5,6 +5,7 @@ import { Config } from "../../../shared/logic/Config";
 import { getSeaTileCost, getTotalSeaTileCost } from "../../../shared/logic/PlayerTradeLogic";
 import { deductResourceFrom } from "../../../shared/logic/ResourceLogic";
 import { Tick } from "../../../shared/logic/TickLogic";
+import { MAP_MAX_X } from "../../../shared/utilities/Database";
 import {
    clamp,
    formatNumber,
@@ -18,7 +19,7 @@ import {
 import { L, t } from "../../../shared/utilities/i18n";
 import { useGameState } from "../Global";
 import { client, getUser, usePlayerMap, useTrades } from "../rpc/RPCClient";
-import { findPath, findUserOnMap, getOwnedTradeTile } from "../scenes/PathFinder";
+import { findPath, findUserOwnedTile, getOwnedTradeTile } from "../scenes/PathFinder";
 import { playError, playKaching } from "../visuals/Sound";
 import { hideModal, showToast } from "./GlobalModal";
 import { FormatNumber } from "./HelperComponents";
@@ -38,13 +39,20 @@ export function FillPlayerTradeModal({ tradeId, xy }: { tradeId: string; xy?: Ti
       if (!trade) {
          return;
       }
-      const targetXy = findUserOnMap(trade.fromId);
+      const targetXy = findUserOwnedTile(trade.fromId);
       if (!myXy || !targetXy) {
          return;
       }
-      const path = findPath(xyToPoint(myXy), xyToPoint(targetXy));
+      const freeTiles = new Set<number>();
+      map.forEach((entry, xy) => {
+         if (entry.userId === getUser()?.userId || entry.userId === trade.fromId) {
+            const point = xyToPoint(xy);
+            freeTiles.add(point.y * MAP_MAX_X + point.x);
+         }
+      });
+      const path = findPath(xyToPoint(myXy), xyToPoint(targetXy), freeTiles);
       setTiles(path.map((x) => pointToXy(x)));
-   }, [trade, myXy]);
+   }, [trade, myXy, map]);
 
    const seaTileCost = getTotalSeaTileCost(tiles, getSeaTileCost(gs));
 

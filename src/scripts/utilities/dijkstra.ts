@@ -6,7 +6,13 @@ interface ValueAndPriority<T> {
    priority: number;
 }
 
-export function dijkstra(grid: number[], stride: number, start: IPointData, end: IPointData): IPointData[] {
+export function dijkstra(
+   grid: number[],
+   stride: number,
+   start: IPointData,
+   end: IPointData,
+   freeTiles: Set<number>,
+): IPointData[] {
    const frontier = new PriorityQueue<ValueAndPriority<IPointData>>({
       comparator: (a, b) => a.priority - b.priority,
    });
@@ -25,7 +31,7 @@ export function dijkstra(grid: number[], stride: number, start: IPointData, end:
    function expandFrontier(nextX: number, nextY: number, current: IPointData) {
       const nextXy = hash(nextX, nextY);
       const currentXy = hash(current.x, current.y);
-      const newCost = costSoFar.get(currentXy)! + grid[nextXy];
+      const newCost = costSoFar.get(currentXy)! + (freeTiles.has(nextXy) ? 0 : grid[nextXy]);
       if (newCost >= (costSoFar.get(nextXy) ?? Number.POSITIVE_INFINITY)) {
          return;
       }

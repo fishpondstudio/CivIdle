@@ -273,7 +273,14 @@ export class PlayerMapScene extends Scene {
       const tile = map.get(selectedXy);
       const user = getUser();
       if (myXy && tile && user && tile.userId !== user.userId) {
-         const path = findPath(xyToPoint(myXy), { x: tileX, y: tileY });
+         const freeTiles = new Set<number>();
+         map.forEach((entry, xy) => {
+            if (entry.userId === user.userId || entry.userId === tile.userId) {
+               const point = xyToPoint(xy);
+               freeTiles.add(point.y * MAP_MAX_X + point.x);
+            }
+         });
+         const path = findPath(xyToPoint(myXy), { x: tileX, y: tileY }, freeTiles);
          this.drawPath(path);
       } else {
          this.clearPath();
