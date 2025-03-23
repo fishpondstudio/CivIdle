@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { Building, IBuildingDefinition } from "../../../shared/definitions/BuildingDefinitions";
 import {
    applyBuildingDefaults,
@@ -18,9 +18,11 @@ import {
    isEmpty,
    keysOf,
    numberToRoman,
+   pointToTile,
    setContains,
    sizeOf,
    tileToPoint,
+   type IPointData,
    type Tile,
 } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
@@ -52,9 +54,27 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
       savedFilter = newFilter;
    };
    const [search, setSearch] = useState<string>("");
+   const [selectedTiles, setSelectedTiles] = useState(new Set([tile.tile]));
+   const [buildingMode, setBuildingMode] = useState<string>("0");
    const constructed = getTypeBuildings(gs);
    const build = (k: Building) => {
-      if (!checkBuildingMax(k, gs)) {
+      for (const xy of selectedTiles) {
+         if (!checkBuildingMax(k, gs)) {
+            playError();
+            break;
+         }
+
+         const emptyTile = gs.tiles.get(xy);
+         if (emptyTile && !emptyTile?.building) {
+            emptyTile.building = applyBuildingDefaults(makeBuilding({ type: k }), getGameOptions());
+         }
+      }
+      notifyGameStateUpdate();
+      if (!isSpecialBuilding(k)) {
+         lastBuild = k;
+      }
+
+      /*if (!checkBuildingMax(k, gs)) {
          playError();
          return;
       }
@@ -62,7 +82,7 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
       notifyGameStateUpdate();
       if (!isSpecialBuilding(k)) {
          lastBuild = k;
-      }
+      }*/
    };
    const extractsDeposit = (b: IBuildingDefinition) => {
       return b.deposit && setContains(tile.deposit, b.deposit);
@@ -76,6 +96,72 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
       },
       [],
    );
+   useEffect(() => {
+      highlightBuildableTiles(tile, buildingMode);
+   }, [tile, buildingMode]);
+
+   const highlightBuildableTiles = (tile: ITileData, buildingMode: string) => {
+      const result = new Set<Tile>([tile.tile]);
+
+      let xy = 0;
+      const startPoint: IPointData = tileToPoint(tile.tile);
+      const city = Config.City[gs.city];
+
+      switch (buildingMode) {
+         case "1": {
+            // Vertical North
+            let y = startPoint.y;
+            while (y > 0) {
+               y -= 1;
+               xy = pointToTile({ x: startPoint.x, y: y });
+               if (!gs.tiles.get(xy)?.building) {
+                  result.add(xy);
+               }
+            }
+            break;
+         }
+         case "2": {
+            // Vertical South
+            let y = startPoint.y;
+            while (y < city.size - 1) {
+               y += 1;
+               xy = pointToTile({ x: startPoint.x, y: y });
+               if (!gs.tiles.get(xy)?.building) {
+                  result.add(xy);
+               }
+            }
+            break;
+         }
+         case "3": {
+            // Horizontal East
+            let x = startPoint.x;
+            while (x < city.size - 1) {
+               x += 1;
+               xy = pointToTile({ x: x, y: startPoint.y });
+               if (!gs.tiles.get(xy)?.building) {
+                  result.add(xy);
+               }
+            }
+            break;
+         }
+         case "4": {
+            // Horizontal West
+            let x = startPoint.x;
+            while (x > 0) {
+               x -= 1;
+               xy = pointToTile({ x: x, y: startPoint.y });
+               if (!gs.tiles.get(xy)?.building) {
+                  result.add(xy);
+               }
+            }
+            break;
+         }
+      }
+
+      setSelectedTiles(result);
+      Singleton().sceneManager.getCurrent(WorldScene)?.drawSelection(null, Array.from(result));
+   };
+
    const buildingByType = getTypeBuildings(gs);
    return (
       <div className="window" onPointerDown={() => setSelected(null)}>
@@ -115,6 +201,21 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
                   placeholder={t(L.BuildingSearchText)}
                   onChange={(e) => setSearch(e.target.value)}
                />
+            </div>
+            <div className="row mb5 jce">
+               <span>Building Mode:</span>
+               <select
+                  defaultValue={0}
+                  onChange={(e) => {
+                     setBuildingMode(e.target.value);
+                  }}
+               >
+                  <option value={0}>Single</option>
+                  <option value={1}>Vertical North</option>
+                  <option value={2}>Vertical South</option>
+                  <option value={3}>Horizontal East</option>
+                  <option value={4}>Horizontal West</option>
+               </select>
             </div>
             <div className="row mb5">
                <Filter
