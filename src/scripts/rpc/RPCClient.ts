@@ -29,7 +29,8 @@ import {
    ServerWSErrorCode,
 } from "../../../shared/utilities/Database";
 import { vacuumChat } from "../../../shared/utilities/DatabaseShared";
-import { SECOND, clamp, forEach, hasFlag, uuid4 } from "../../../shared/utilities/Helper";
+import { SECOND, WEEK, clamp, forEach, hasFlag, shuffle, uuid4 } from "../../../shared/utilities/Helper";
+import { srand } from "../../../shared/utilities/Random";
 import { setServerNow } from "../../../shared/utilities/ServerNow";
 import { TypedEvent } from "../../../shared/utilities/TypedEvent";
 import { L, t } from "../../../shared/utilities/i18n";
@@ -169,11 +170,35 @@ export function clearSystemMessages(): void {
 
 export const TileBuildings: Map<string, Building> = new Map();
 export const OnTileBuildingsChanged = new TypedEvent<void>();
+
+const TileBuildingsSeed = "TileBuildingsSeed";
+let weekId = 0;
+let intervalId = 0;
+
+function startTileBuildingTimer() {
+   if (intervalId) {
+      clearInterval(intervalId);
+      intervalId = 0;
+   }
+   populateTileBuildings();
+   intervalId = window.setInterval(populateTileBuildings, 1000);
+}
+
 async function populateTileBuildings() {
-   const shuffledBuildings = await client.getBuildings();
+   const currentWeek = Math.floor(Date.now() / WEEK);
+   if (weekId === currentWeek) {
+      return;
+   }
+   weekId = currentWeek;
+   const buildings = await client.getBuildings();
+   const rand = srand(TileBuildingsSeed);
    let i = 0;
    forEach(WorldMap, (xy) => {
-      TileBuildings.set(xy, shuffledBuildings[i++ % shuffledBuildings.length]);
+      TileBuildings.set(xy, buildings[i++ % buildings.length]);
+      if (i >= buildings.length) {
+         shuffle(buildings, rand);
+         i = 0;
+      }
    });
    OnTileBuildingsChanged.emit();
 }
@@ -322,7 +347,7 @@ export async function connectWebSocket(): Promise<IWelcomeMessage> {
                JSON.stringify(w),
             );
             setServerNow(w.now);
-            populateTileBuildings();
+            startTileBuildingTimer();
             w.offlineTime = Math.min(w.offlineTime, offlineTicks);
             resolve?.(w);
             break;

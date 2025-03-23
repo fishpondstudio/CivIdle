@@ -54,6 +54,12 @@ export function FillPlayerTradeModal({ tradeId, xy }: { tradeId: string; xy?: Ti
       setTiles(path.map((x) => pointToXy(x)));
    }, [trade, myXy, map]);
 
+   if (!trade) {
+      hideModal();
+      playError();
+      return null;
+   }
+
    const seaTileCost = getTotalSeaTileCost(tiles, getSeaTileCost(gs));
 
    const totalTariff =
@@ -64,17 +70,15 @@ export function FillPlayerTradeModal({ tradeId, xy }: { tradeId: string; xy?: Ti
             return prev;
          }
          const user = getUser();
-         if (user && tile.userId === user.userId) {
+         if (!user || tile.userId === user.userId) {
+            return prev;
+         }
+         if (tile.userId === trade.fromId) {
             return prev;
          }
          return prev + tile.tariffRate;
       }, 0);
 
-   if (!trade) {
-      hideModal();
-      playError();
-      return null;
-   }
    if (!myXy) {
       hideModal();
       playError();
@@ -394,7 +398,8 @@ export function FillPlayerTradeModal({ tradeId, xy }: { tradeId: string; xy?: Ti
                               !tile ||
                               i === 0 ||
                               i === tiles.length - 1 ||
-                              (user && tile.userId === user.userId)
+                              (user && tile.userId === user.userId) ||
+                              trade.fromId === tile.userId
                            ) {
                               return null;
                            }

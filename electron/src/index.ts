@@ -28,6 +28,7 @@ export const MIN_WIDTH = 1136;
 export const MIN_HEIGHT = 640;
 
 const disableFloatingMode = process.argv.includes("--disable-floating-mode");
+// const enableDevTools = process.argv.includes("--enable-dev-tools");
 
 const createWindow = async () => {
    try {
