@@ -112,6 +112,18 @@ export function migrateSavedGame(save: SavedGame) {
       }
    });
 
+   forEach(save.options.buildingColors, (building) => {
+      if (!Config.Building[building]) {
+         delete save.options.buildingColors[building];
+      }
+   });
+
+   forEach(save.options.resourceColors, (resource) => {
+      if (!Config.Resource[resource]) {
+         delete save.options.resourceColors[resource];
+      }
+   });
+
    // @ts-expect-error
    if (save.current.transportation) {
       // @ts-expect-error
