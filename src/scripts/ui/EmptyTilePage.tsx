@@ -195,7 +195,7 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
                })}
                compareFunc={(a, b, col) => {
                   switch (col) {
-                     case 1:
+                     case 2:
                         return Config.Building[a]!.name().localeCompare(Config.Building[b]!.name());
                      default: {
                         const diff = (Config.BuildingTier[a] ?? 0) - (Config.BuildingTier[b] ?? 0);
