@@ -106,7 +106,7 @@ export const ZH_TW = {
    ApplyToBuildingsToastHTML: "成功套用到 <b>%{count} %{building}</b>",
    Aqueduct: "水渠",
    ArcDeTriomphe: "凱旋門",
-   ArcDeTriompheDescV2: "每 1 幸福（最多 50）為所有建築物提供 +1 建造者的能力",
+   ArcDeTriompheDescV2: "每 1 幸福（最多 50）為所有建築物提供 +1 建造者能力指數。",
    Archimedes: "阿基米德",
    Architecture: "建築學",
    Aristophanes: "阿里斯托芬",
