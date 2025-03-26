@@ -261,7 +261,9 @@ export function PlayerTradeComponent({ gameState, xy }: IBuildingComponentProps)
                const amountFilter =
                   tradeAmountFilter === 0 || (tradeAmountFilter > 0 && trade.buyAmount <= tradeAmountFilter);
 
-               return resourceFilter && nameFilter && amountFilter;
+               return (
+                  (resourceFilter && nameFilter && amountFilter) || (user && user.userId === trade.fromId)
+               );
             })}
             compareFunc={(a, b, col, asc) => {
                if (a.fromId === user?.userId && b.fromId !== user?.userId) {

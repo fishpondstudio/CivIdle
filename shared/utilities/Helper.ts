@@ -822,3 +822,11 @@ export function range(startInclusive: number, endExclusive: number): number[] {
    }
    return result;
 }
+
+export function reverseMap<T, K>(arr: T[], func: (v: T, idx: number, arr: T[]) => K): K[] {
+   const result: K[] = [];
+   for (let i = arr.length - 1; i >= 0; i--) {
+      result.push(func(arr[i], arr.length - 1 - i, arr));
+   }
+   return result;
+}

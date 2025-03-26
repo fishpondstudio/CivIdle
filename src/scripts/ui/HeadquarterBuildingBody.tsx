@@ -46,6 +46,7 @@ import { FormatNumber } from "./HelperComponents";
 import { ManageAgeWisdomModal } from "./ManageAgeWisdomModal";
 import { ManagePermanentGreatPersonModal } from "./ManagePermanentGreatPersonModal";
 import { PlayerHandleComponent } from "./PlayerHandleComponent";
+import { RebirthHistoryModal } from "./RebirthHistoryModal";
 import { RebirthModal } from "./RebirthModal";
 import { RenderHTML } from "./RenderHTMLComponent";
 import { SteamAchievementPage } from "./SteamAchievementPage";
@@ -528,6 +529,11 @@ function RebornComponent({ gameState }: { gameState: GameState }): ReactNode {
          <button className="row w100 jcc" onClick={() => showModal(<RebirthModal />)}>
             <div className="m-icon small">stroller</div>
             <div className="f1 text-strong">{t(L.Reborn)}</div>
+         </button>{" "}
+         <div className="sep5"></div>
+         <button className="row w100 jcc" onClick={() => showModal(<RebirthHistoryModal />)}>
+            <div className="m-icon small">history</div>
+            <div className="f1 text-strong">{t(L.RebirthHistory)}</div>
          </button>
       </fieldset>
    );

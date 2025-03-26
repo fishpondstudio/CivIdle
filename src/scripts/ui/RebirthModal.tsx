@@ -77,6 +77,8 @@ export function RebirthModal(): React.ReactNode {
       Number.POSITIVE_INFINITY,
    );
    const [pickPerRoll, setPickPerRoll] = useState(maxPickPerRoll);
+   console.log(Tick.current.specialBuildings.get("CentrePompidou"));
+   const showPompidouWarning = Tick.current.specialBuildings.has("CentrePompidou") && gs.city === city;
 
    return (
       <div className="window" style={{ width: "700px" }}>
@@ -167,6 +169,15 @@ export function RebirthModal(): React.ReactNode {
                      />
                   </WarningComponent>
                )}
+               {showPompidouWarning ? (
+                  <WarningComponent icon="info" className="text-small mb10">
+                     <RenderHTML
+                        html={t(L.CentrePompidouWarningHTML, {
+                           civ: Config.City[city].name(),
+                        })}
+                     />
+                  </WarningComponent>
+               ) : null}
                <div className="row">
                   <div className="f1">{t(L.SelectCivilization)}</div>
                   <select

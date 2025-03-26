@@ -1522,4 +1522,8 @@ export const EN = {
    PlayerMapOccupyTileCondition2: "You have not reached the maximum occupied tiles for your rank",
    EasterBunny: "Easter Bunny",
    EasterBunnyDesc: "Once constructed, 10% of the extra Great People at Rebirth from this run will carry forward to the next run and are born after building the Easter Bunny in the new run. This wonder can only be constructed during April",
+   CentrePompidouWarningHTML: "Centre Pompidou will disappear if you rebirth as <b>%{civ}</b>",
+   RebirthHistory: "Rebirth History",
+   RebirthTime: "Rebirth Time",
+   Civilization: "Civilization",
 };
