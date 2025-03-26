@@ -238,7 +238,7 @@ export const ZH_CN = {
    Census: "劳动者统计",
    CentrePompidou: "蓬皮杜文艺中心",
    CentrePompidouDesc: "建造完成后，所有建筑物都将获得 +1 的生产和 +2 存储乘数。如果当前的游玩达到信息时代，下一次游玩是不同的文明，那么这个奇观将持续存在。对于每次以独一无二的文明而达到信息时代的重生，奇观在重生时获得 +1 等级，每个级别提供 +1 生产和 +2 存储乘数。这个奇观的价值不计入帝国的总价值中，大英博物馆无法转变为这个奇观。",
-   CentrePompidouWarningHTML: "蓬皮杜将消失，如果你重生在 <b>%{civ}</b>",
+   CentrePompidouWarningHTML: "蓬皮杜文艺中心将消失，如果你重生在 <b>%{civ}</b>",
    CerneAbbasGiant: "塞那阿巴斯巨人像",
    CerneAbbasGiantDesc: "每建造完成一个奇观时，获得一个当前时代的伟人",
    ChangePlayerHandle: "确认更改",
