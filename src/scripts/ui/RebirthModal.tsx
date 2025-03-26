@@ -382,7 +382,7 @@ export function RebirthModal(): React.ReactNode {
                         totalEmpireValue: Tick.current.totalValue,
                         totalTicks: gs.tick,
                         totalSeconds: gs.seconds,
-                        city,
+                        city: gs.city,
                         time: Date.now(),
                         flags,
                      });
