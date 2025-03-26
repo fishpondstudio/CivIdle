@@ -1,5 +1,5 @@
 import Tippy from "@tippyjs/react";
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import type { Resource } from "../../../shared/definitions/ResourceDefinitions";
 import {
    getTotalBuildingCost,
@@ -10,7 +10,8 @@ import { Config } from "../../../shared/logic/Config";
 import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
 import { clearIntraTickCache, getGrid } from "../../../shared/logic/IntraTickCache";
 import { RequestResetTile } from "../../../shared/logic/TechLogic";
-import { Tick } from "../../../shared/logic/TickLogic";
+import { NotProducingReason, Tick } from "../../../shared/logic/TickLogic";
+import type { IBuildingData } from "../../../shared/logic/Tile";
 import { clearTransportSourceCache } from "../../../shared/logic/Update";
 import {
    formatNumber,
@@ -31,6 +32,8 @@ import { playClick, playError, playSuccess } from "../visuals/Sound";
 import type { IBuildingComponentProps } from "./BuildingPage";
 import { hideToast, showToast } from "./GlobalModal";
 
+//export type UpgradeState = "all" | "active" | "disabled";
+
 export function BuildingUpgradeComponent({ gameState, xy }: IBuildingComponentProps): React.ReactNode {
    const tile = gameState.tiles.get(xy);
    const building = tile?.building;
@@ -40,6 +43,8 @@ export function BuildingUpgradeComponent({ gameState, xy }: IBuildingComponentPr
    if ((Config.Building[building.type]?.max ?? Number.POSITIVE_INFINITY) <= 1) {
       return null;
    }
+   const [upgradeState, setUpgradeState] = useState<string>("0");
+   const [upgradeRange, setUpgradeRange] = useState<string>("0");
    const [selected, setSelected] = useState(new Set([xy]));
    const levels = getUpgradeTargetLevels(building);
    const upgradeTo = (targetLevel: number) => {
@@ -61,6 +66,10 @@ export function BuildingUpgradeComponent({ gameState, xy }: IBuildingComponentPr
    useShortcut("BuildingPageUpgrade3", () => upgradeTo(levels[2]), [xy]);
    useShortcut("BuildingPageUpgrade4", () => upgradeTo(levels[3]), [xy]);
    useShortcut("BuildingPageUpgrade5", () => upgradeTo(levels[4]), [xy]);
+   useEffect(() => {
+      highlightUpgradeableBuildings(upgradeRange, upgradeState);
+   }, [upgradeState, upgradeRange]);
+
    const age = Config.BuildingTechAge[building.type]!;
 
    const [moving, setMoving] = useState(false);
@@ -77,7 +86,8 @@ export function BuildingUpgradeComponent({ gameState, xy }: IBuildingComponentPr
                tile?.building &&
                !isSpecialBuilding(tile.building.type) &&
                tile.building.status !== "building" &&
-               (!sameType || tile.building.type === building.type)
+               (!sameType || tile.building.type === building.type) &&
+               stateCondition(tile.building, xy)
             ) {
                result.add(xy);
             }
@@ -122,6 +132,80 @@ export function BuildingUpgradeComponent({ gameState, xy }: IBuildingComponentPr
       );
    };
 
+   const stateCondition = (b: IBuildingData, xy: Tile) => {
+      switch (upgradeState) {
+         case "0": // All buildings
+            return true;
+         case "1": //  Active buildings
+            return b.capacity > 0;
+         case "2": // Turned off buildings
+            return b.capacity === 0;
+         case "3": // Buildings that have full storage
+            return Tick.current.notProducingReasons.get(xy) === NotProducingReason.StorageFull;
+      }
+   };
+
+   const highlightUpgradeableBuildings = (upgradeRange: string, upgradeState: string) => {
+      switch (upgradeRange) {
+         case "0": {
+            if (stateCondition(building, xy)) {
+               setSelected(new Set([xy]));
+               Singleton().sceneManager.getCurrent(WorldScene)?.drawSelection(null, []);
+            }
+            break;
+         }
+         case "1": {
+            const result = new Set<Tile>();
+            gameState.tiles.forEach((tile, xy) => {
+               if (
+                  tile?.building?.type === building.type &&
+                  tile.building.status !== "building" &&
+                  stateCondition(tile.building, xy)
+               ) {
+                  result.add(xy);
+               }
+            });
+            setSelected(result);
+            Singleton().sceneManager.getCurrent(WorldScene)?.drawSelection(null, Array.from(result));
+            break;
+         }
+         case "2": {
+            const result = new Set<Tile>();
+            gameState.tiles.forEach((tile, xy) => {
+               if (
+                  tile?.building?.type === building.type &&
+                  tile.building.status !== "building" &&
+                  tile.building.level === building.level &&
+                  stateCondition(tile.building, xy)
+               ) {
+                  result.add(xy);
+               }
+            });
+            setSelected(result);
+            Singleton().sceneManager.getCurrent(WorldScene)?.drawSelection(null, Array.from(result));
+            break;
+         }
+         case "3":
+            selectRange(1, true);
+            break;
+         case "4":
+            selectRange(2, true);
+            break;
+         case "5":
+            selectRange(3, true);
+            break;
+         case "6":
+            selectRange(1, false);
+            break;
+         case "7":
+            selectRange(2, false);
+            break;
+         case "8":
+            selectRange(3, false);
+            break;
+      }
+   };
+
    return (
       <>
          <fieldset>
@@ -154,68 +238,23 @@ export function BuildingUpgradeComponent({ gameState, xy }: IBuildingComponentPr
                </Tippy>
                <div className="f1"></div>
                <select
+                  className="condensed mr5"
+                  defaultValue={0}
+                  onChange={(e) => {
+                     setUpgradeState(e.target.value);
+                  }}
+               >
+                  <option value={0}>{t(L.BatchStateSelectAll)}</option>
+                  <option value={1}>{t(L.BatchStateSelectActive)}</option>
+                  <option value={2}>{t(L.BatchStateSelectTurnedOff)}</option>
+                  <option value={3}>{t(L.BatchStateSelectTurnedFullStorage)}</option>
+               </select>
+               <select
                   style={{ margin: "-10px 0" }}
                   className="condensed"
                   defaultValue={0}
                   onChange={(e) => {
-                     switch (e.target.value) {
-                        case "0": {
-                           setSelected(new Set([xy]));
-                           Singleton().sceneManager.getCurrent(WorldScene)?.drawSelection(null, []);
-                           break;
-                        }
-                        case "1": {
-                           const result = new Set<Tile>();
-                           gameState.tiles.forEach((tile, xy) => {
-                              if (
-                                 tile?.building?.type === building.type &&
-                                 tile.building.status !== "building"
-                              ) {
-                                 result.add(xy);
-                              }
-                           });
-                           setSelected(result);
-                           Singleton()
-                              .sceneManager.getCurrent(WorldScene)
-                              ?.drawSelection(null, Array.from(result));
-                           break;
-                        }
-                        case "2": {
-                           const result = new Set<Tile>();
-                           gameState.tiles.forEach((tile, xy) => {
-                              if (
-                                 tile?.building?.type === building.type &&
-                                 tile.building.status !== "building" &&
-                                 tile.building.level === building.level
-                              ) {
-                                 result.add(xy);
-                              }
-                           });
-                           setSelected(result);
-                           Singleton()
-                              .sceneManager.getCurrent(WorldScene)
-                              ?.drawSelection(null, Array.from(result));
-                           break;
-                        }
-                        case "3":
-                           selectRange(1, true);
-                           break;
-                        case "4":
-                           selectRange(2, true);
-                           break;
-                        case "5":
-                           selectRange(3, true);
-                           break;
-                        case "6":
-                           selectRange(1, false);
-                           break;
-                        case "7":
-                           selectRange(2, false);
-                           break;
-                        case "8":
-                           selectRange(3, false);
-                           break;
-                     }
+                     setUpgradeRange(e.target.value);
                   }}
                >
                   <option value={0}>{t(L.BatchSelectThisBuilding)}</option>
