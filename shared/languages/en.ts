@@ -188,6 +188,7 @@ export const EN = {
    BritishMuseumTransform: "Transform",
    Broadway: "Broadway",
    BroadwayDesc: "A great person of the current age and a great person of the previous age are born. Select a great person and double his/her effect",
+   BroadwayCurrentlySelected: "Currently selected",
    BronzeAge: "Bronze Age",
    BronzeTech: "Bronze",
    BuddhismLevelX: "Buddhism %{level}",

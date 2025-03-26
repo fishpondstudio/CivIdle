@@ -26,6 +26,31 @@ export function BroadwayBuildingBody({ gameState, xy }: IBuildingComponentProps)
    return (
       <div className="window-body">
          <BuildingDescriptionComponent gameState={gameState} xy={xy} />
+
+         {building.greatPeople.size === 0 ? null : (
+            <fieldset>
+               <legend>{t(L.BroadwayCurrentlySelected)}</legend>
+               {[...building.greatPeople].map((gp) => {
+                  const def = Config.GreatPerson[gp];
+                  const effect = getGreatPersonTotalEffect(gp, gameState);
+                  if (effect <= 0) return <></>;
+                  if (def.type !== GreatPersonType.Normal) return <></>;
+                  return (
+                     <div key={gp} className="row mb5">
+                        <GreatPersonImage greatPerson={gp} style={{ height: "50px", display: "block" }} />
+                        <div className="ml10">
+                           <div>
+                              <span className="text-strong">{def.name()}</span>
+                              <span className="text-desc ml5">{Config.TechAge[def.age].name()}</span>
+                           </div>
+                           <div className="text-small text-desc">{def.desc(def, round(effect, 2))}</div>
+                        </div>
+                     </div>
+                  );
+               })}
+            </fieldset>
+         )}
+
          <input
             value={filter}
             onChange={(e) => {
@@ -45,6 +70,27 @@ export function BroadwayBuildingBody({ gameState, xy }: IBuildingComponentProps)
                         if (def.name().toLowerCase().includes(filter.toLowerCase())) {
                            return true;
                         }
+
+                        if (
+                           def.boost?.buildings.some((b) => {
+                              const outputResources = keysOf(Config.Building[b].output).some((r) => {
+                                 return Config.Resource[r]
+                                    .name()
+                                    .toLocaleLowerCase()
+                                    .includes(filter.toLowerCase());
+                              });
+
+                              return (
+                                 Config.Building[b]
+                                    .name()
+                                    .toLocaleLowerCase()
+                                    .includes(filter.toLowerCase()) || outputResources
+                              );
+                           })
+                        ) {
+                           return true;
+                        }
+
                         if (Config.TechAge[def.age].name().toLowerCase().includes(filter.toLowerCase())) {
                            return true;
                         }
