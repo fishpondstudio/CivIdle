@@ -723,7 +723,7 @@ export const ZH_CN = {
    LoggingCamp: "伐木场",
    LouisSullivan: "路易斯·沙利文",
    LouisSullivanDesc: "+%{value} 建造者能力乘数",
-   Louvre: "罗浮宫",
+   Louvre: "卢浮宫",
    LouvreDesc: "每积累10个额外伟人，诞生一个此生伟人。",
    Lumber: "木材",
    LumberMill: "锯木场",
