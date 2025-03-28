@@ -723,7 +723,7 @@ export const ZH_TW = {
    LoggingCamp: "伐木場",
    LouisSullivan: "路易斯·蘇利文(Louis Sullivan)",
    LouisSullivanDesc: "+%{value} 建造者能力指數",
-   Louvre: "羅浮宮",
+   Louvre: "盧浮宮",
    LouvreDesc: "每累積 10 位額外的偉人，將從所有已解鎖的時代中誕生一位偉人。",
    Lumber: "木材",
    LumberMill: "鋸木場",
