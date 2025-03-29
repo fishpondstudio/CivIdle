@@ -55,7 +55,7 @@ export function RebirthModal(): React.ReactNode {
    }, []);
 
    const gs = useGameState();
-   const [city, setCity] = useState<City>(gs.city);
+   const [nextCity, setNextCity] = useState<City>(gs.city);
    const permanentGreatPeopleLevel = getPermanentGreatPeopleLevel(getGameOptions());
    const greatPeopleAtRebirthCount = getRebirthGreatPeopleCount();
 
@@ -63,9 +63,10 @@ export function RebirthModal(): React.ReactNode {
       if (import.meta.env.DEV) {
          return true;
       }
-      if (Config.City[city].requireSupporterPack) {
+      if (Config.City[nextCity].requireSupporterPack) {
          return (
-            hasFlag(user?.attr ?? UserAttributes.None, UserAttributes.DLC1) || getFreeCityThisWeek() === city
+            hasFlag(user?.attr ?? UserAttributes.None, UserAttributes.DLC1) ||
+            getFreeCityThisWeek() === nextCity
          );
       }
       return true;
@@ -78,7 +79,9 @@ export function RebirthModal(): React.ReactNode {
    );
    const [pickPerRoll, setPickPerRoll] = useState(maxPickPerRoll);
    console.log(Tick.current.specialBuildings.get("CentrePompidou"));
-   const showPompidouWarning = Tick.current.specialBuildings.has("CentrePompidou") && gs.city === city;
+   const showPompidouWarning =
+      Tick.current.specialBuildings.has("CentrePompidou") &&
+      (getCurrentAge(gs) !== "InformationAge" || gs.city === nextCity);
 
    return (
       <div className="window" style={{ width: "700px" }}>
@@ -173,7 +176,7 @@ export function RebirthModal(): React.ReactNode {
                   <WarningComponent icon="info" className="text-small mb10">
                      <RenderHTML
                         html={t(L.CentrePompidouWarningHTML, {
-                           civ: Config.City[city].name(),
+                           civ: Config.City[nextCity].name(),
                         })}
                      />
                   </WarningComponent>
@@ -181,9 +184,9 @@ export function RebirthModal(): React.ReactNode {
                <div className="row">
                   <div className="f1">{t(L.SelectCivilization)}</div>
                   <select
-                     value={city}
+                     value={nextCity}
                      onChange={(e) => {
-                        setCity(e.target.value as City);
+                        setNextCity(e.target.value as City);
                      }}
                   >
                      {jsxMapOf(Config.City, (city, def) => {
@@ -200,17 +203,17 @@ export function RebirthModal(): React.ReactNode {
                <div className="row">
                   <div className="text-strong">{t(L.Deposit)}</div>
                   <div className="text-desc ml5">
-                     ({Config.City[city].size}x{Config.City[city].size})
+                     ({Config.City[nextCity].size}x{Config.City[nextCity].size})
                   </div>
                </div>
                <div className="mb5">
-                  {mapOf(Config.City[city].deposits, (dep, value) => {
+                  {mapOf(Config.City[nextCity].deposits, (dep, value) => {
                      return `${Config.Resource[dep].name()}: ${formatPercent(value)}`;
                   }).join(", ")}
                </div>
                <div className="text-strong">{t(L.UniqueBuildings)}</div>
                <div className="mb5">
-                  {jsxMapOf(Config.City[city].uniqueBuildings, (building, tech) => {
+                  {jsxMapOf(Config.City[nextCity].uniqueBuildings, (building, tech) => {
                      return (
                         <TextWithHelp
                            className="mr10"
@@ -225,7 +228,7 @@ export function RebirthModal(): React.ReactNode {
                </div>
                <div className="text-strong">{t(L.NaturalWonders)}</div>
                <div className="mb5">
-                  {jsxMapOf(Config.City[city].naturalWonders, (building, tech) => {
+                  {jsxMapOf(Config.City[nextCity].naturalWonders, (building, tech) => {
                      const def = Config.Building[building];
                      return (
                         <TextWithHelp
@@ -238,11 +241,11 @@ export function RebirthModal(): React.ReactNode {
                      );
                   })}
                </div>
-               {isEmpty(Config.City[city].uniqueMultipliers) ? null : (
+               {isEmpty(Config.City[nextCity].uniqueMultipliers) ? null : (
                   <>
                      <div className="text-strong">{t(L.UniqueTechMultipliers)}</div>
                      <div className="mb5">
-                        {jsxMapOf(Config.City[city].uniqueMultipliers, (tech, multipliers) => {
+                        {jsxMapOf(Config.City[nextCity].uniqueMultipliers, (tech, multipliers) => {
                            return (
                               <TextWithHelp
                                  className="mr10"
@@ -259,7 +262,7 @@ export function RebirthModal(): React.ReactNode {
                <div className="text-strong">{t(L.GreatPeople)}</div>
                <div className="mb5">
                   {jsxMapOf(Config.GreatPerson, (person, def) => {
-                     if (def.city === city) {
+                     if (def.city === nextCity) {
                         return (
                            <TextWithHelp className="mr10" key={person} content={def.desc(def, 1)}>
                               {def.name()}
@@ -270,11 +273,11 @@ export function RebirthModal(): React.ReactNode {
                   })}
                </div>
                <div className="text-strong">{t(L.Festival)}</div>
-               <div className="mb5">{Config.City[city].festivalDesc()}</div>
+               <div className="mb5">{Config.City[nextCity].festivalDesc()}</div>
                <div className="separator" />
                <div className="row">
                   <div className="f1">{t(L.GreatPersonLevelRequired)}</div>
-                  {permanentGreatPeopleLevel >= Config.City[city].requireGreatPeopleLevel ? (
+                  {permanentGreatPeopleLevel >= Config.City[nextCity].requireGreatPeopleLevel ? (
                      <div className="m-icon small mr5 text-green">check_circle</div>
                   ) : (
                      <div className="m-icon small mr5 text-red">cancel</div>
@@ -282,16 +285,16 @@ export function RebirthModal(): React.ReactNode {
                   <div className="text-strong">
                      <TextWithHelp
                         content={t(L.GreatPersonLevelRequiredDescV2, {
-                           city: Config.City[city].name(),
-                           required: Config.City[city].requireGreatPeopleLevel,
+                           city: Config.City[nextCity].name(),
+                           required: Config.City[nextCity].requireGreatPeopleLevel,
                            current: permanentGreatPeopleLevel,
                         })}
                      >
-                        {Config.City[city].requireGreatPeopleLevel}
+                        {Config.City[nextCity].requireGreatPeopleLevel}
                      </TextWithHelp>
                   </div>
                </div>
-               {Config.City[city].requireSupporterPack ? (
+               {Config.City[nextCity].requireSupporterPack ? (
                   <>
                      <div className="separator" />
                      <div className="row">
@@ -299,7 +302,7 @@ export function RebirthModal(): React.ReactNode {
                         <div>
                            {hasFlag(user?.attr ?? UserAttributes.None, UserAttributes.DLC1) ? (
                               <div className="m-icon small text-green">check_circle</div>
-                           ) : getFreeCityThisWeek() === city ? (
+                           ) : getFreeCityThisWeek() === nextCity ? (
                               <div className="text-green text-strong">{t(L.FreeThisWeek)}</div>
                            ) : (
                               <div className="m-icon small text-red">cancel</div>
@@ -323,7 +326,7 @@ export function RebirthModal(): React.ReactNode {
                <div style={{ width: "6px" }} />
                <button
                   disabled={
-                     permanentGreatPeopleLevel < Config.City[city].requireGreatPeopleLevel ||
+                     permanentGreatPeopleLevel < Config.City[nextCity].requireGreatPeopleLevel ||
                      !hasSupporterPack()
                   }
                   style={{ padding: "0 15px" }}
@@ -331,7 +334,7 @@ export function RebirthModal(): React.ReactNode {
                   onClick={async () => {
                      if (
                         getPermanentGreatPeopleLevel(getGameOptions()) <
-                           Config.City[city].requireGreatPeopleLevel ||
+                           Config.City[nextCity].requireGreatPeopleLevel ||
                         !hasSupporterPack()
                      ) {
                         playError();
@@ -354,6 +357,7 @@ export function RebirthModal(): React.ReactNode {
                         0,
                         Number.POSITIVE_INFINITY,
                      );
+                     const currentCity = gs.city;
 
                      if (!gs.rebirthed && canEarnGreatPeopleFromReborn()) {
                         rollPermanentGreatPeople(
@@ -382,22 +386,22 @@ export function RebirthModal(): React.ReactNode {
                         totalEmpireValue: Tick.current.totalValue,
                         totalTicks: gs.tick,
                         totalSeconds: gs.seconds,
-                        city: gs.city,
+                        city: currentCity,
                         time: Date.now(),
                         flags,
                      });
 
                      playClick();
-                     await resetToCity(city);
+                     await resetToCity(nextCity);
 
                      const pompidou = getPompidou(gs);
-                     if (pompidou) {
+                     if (currentCity !== nextCity && pompidou) {
                         getRandomEmptyTiles(1, getGameState()).forEach((xy) => {
                            const tile = getGameState().tiles.get(xy);
                            if (tile) {
                               tile.explored = true;
                               tile.building = pompidou;
-                              pompidou.cities.add(city);
+                              pompidou.cities.add(currentCity);
                            }
                         });
                      }
