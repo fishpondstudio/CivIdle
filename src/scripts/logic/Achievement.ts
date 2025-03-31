@@ -1,4 +1,5 @@
 import type { TechAge } from "../../../shared/definitions/TechDefinitions";
+import { isWorldWonder } from "../../../shared/logic/BuildingLogic";
 import type { GameState } from "../../../shared/logic/GameState";
 import { OnTechUnlocked } from "../../../shared/logic/Update";
 import { SteamClient, isSteam } from "../rpc/SteamClient";
@@ -95,6 +96,55 @@ export function checkRebirthAchievements(extraGP: number, gs: GameState): void {
             SteamClient.unlockAchievement("ThreeLions");
             break;
          }
+         case "French": {
+            SteamClient.unlockAchievement("ViveLaFrance");
+            break;
+         }
       }
+   }
+
+   let wonders = 0;
+   let maxLevel = 0;
+   gs.tiles.forEach((tile) => {
+      if (!tile.building) return;
+      if (
+         (tile.building.status === "completed" || tile.building.status === "upgrading") &&
+         isWorldWonder(tile.building.type)
+      ) {
+         ++wonders;
+      }
+      if (tile.building.level > maxLevel) {
+         maxLevel = tile.building.level;
+      }
+   });
+
+   if (maxLevel >= 40) {
+      SteamClient.unlockAchievement("TheGreatUpgrade");
+   }
+
+   if (wonders >= 50) {
+      SteamClient.unlockAchievement("WonderfulEmpire");
+   }
+
+   if (extraGP >= 100) {
+      SteamClient.unlockAchievement("Apprentice");
+   }
+   if (extraGP >= 500) {
+      SteamClient.unlockAchievement("Scholar");
+   }
+   if (extraGP >= 1000) {
+      SteamClient.unlockAchievement("Savant");
+   }
+   if (extraGP >= 1500) {
+      SteamClient.unlockAchievement("Professor");
+   }
+   if (extraGP >= 2000) {
+      SteamClient.unlockAchievement("Luminary");
+   }
+   if (extraGP >= 2500) {
+      SteamClient.unlockAchievement("Sage");
+   }
+   if (extraGP >= 3000) {
+      SteamClient.unlockAchievement("Omniscient");
    }
 }
