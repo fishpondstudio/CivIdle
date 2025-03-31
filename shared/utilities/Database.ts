@@ -164,6 +164,13 @@ export enum UserColors {
    Orange = 5,
    Red = 6,
    Pink = 7,
+   Cyan = 8,
+   DarkBlue = 9,
+   SeaGreen = 10,
+   Chocolate = 11,
+   Flamingo = 12,
+   Cinereous = 13,
+   Glaucous = 14,
 }
 
 export enum TileType {
@@ -180,6 +187,13 @@ export const UserColorsMapping: Map<UserColors, string | undefined> = new Map([
    [UserColors.Orange, "#f0932b"],
    [UserColors.Red, "#d63031"],
    [UserColors.Pink, "#e84393"],
+   [UserColors.Cyan, "#0abde3"],
+   [UserColors.DarkBlue, "#124e89"],
+   [UserColors.SeaGreen, "#2e8b57"],
+   [UserColors.Chocolate, "#7b3f00"],
+   [UserColors.Flamingo, "#ff7777"],
+   [UserColors.Cinereous, "#98817b"],
+   [UserColors.Glaucous, "#6082b6"],
 ]);
 
 export interface IUser {

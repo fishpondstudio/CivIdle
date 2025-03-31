@@ -291,7 +291,7 @@ function ChatMessage({
             <div className="row text-small text-desc">
                <div>{new Date(chat.time ?? 0).toLocaleTimeString()}</div>
                <div className="f1"></div>
-               <div style={{ color: UserColorsMapping.get(chat.color) ?? undefined }} className="text-strong">
+               <div style={{ color: UserColorsMapping.get(chat.color) }} className="text-strong">
                   {chat.name}
                </div>
                <Tippy content={getCountryName(chat.flag)}>
@@ -316,7 +316,7 @@ function ChatMessage({
          ) : (
             <div className="row text-small text-desc">
                <div
-                  style={{ color: UserColorsMapping.get(chat.color) ?? undefined }}
+                  style={{ color: UserColorsMapping.get(chat.color) }}
                   className="pointer"
                   onClick={() =>
                      SetChatInput.emit({ getContent: (old) => `@${chat.name} ${old}`, channel: chat.channel })
