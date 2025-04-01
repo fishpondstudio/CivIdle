@@ -18,6 +18,6 @@ export const TimedBuildingUnlock: Partial<Record<Building, ITimedBuildingUnlock>
    },
    EasterBunny: {
       tech: "PrivateOwnership",
-      condition: (now) => now.getMonth() === 2 || now.getMonth() === 3,
+      condition: (now) => now.getMonth() === 3,
    },
 };
