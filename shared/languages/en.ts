@@ -1526,4 +1526,13 @@ export const EN = {
    Zoroaster: "Zoroaster",
    Zugspitze: "Zugspitze",
    ZugspitzeDesc: "For each unlocked age, get one point that can be used to provide one extra level to any Great Person that is born from this run",
+   TargetBuildingLevel: "Target Building Level",
+   BuildingModeSingle: "Single",
+   BuildingModeVerticalNorth: "Vertical North",
+   BuildingModeVerticalSouth: "Vertical South",
+   BuildingModeHorizontalEast: "Horizontal East",
+   BuildingModeHorizontalWest: "Horizontal West",
+   BuildingModeRadius1: "Radius 1",
+   BuildingModeRadius2: "Radius 2",
+   BuildingModeRadius3: "Radius 3",
 };

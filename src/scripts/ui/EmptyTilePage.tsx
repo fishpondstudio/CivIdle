@@ -8,17 +8,19 @@ import {
 } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
 import { getGameOptions, notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
-import { getTypeBuildings, unlockedBuildings } from "../../../shared/logic/IntraTickCache";
+import { getGrid, getTypeBuildings, unlockedBuildings } from "../../../shared/logic/IntraTickCache";
 import type { ITileData } from "../../../shared/logic/Tile";
 import { makeBuilding } from "../../../shared/logic/Tile";
 import {
    anyOf,
+   clamp,
    formatNumber,
    hasFlag,
    isEmpty,
    keysOf,
    numberToRoman,
    pointToTile,
+   safeParseInt,
    setContains,
    sizeOf,
    tileToPoint,
@@ -27,7 +29,7 @@ import {
 } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import "../../css/EmptyTilePage.css";
-import { useGameState } from "../Global";
+import { useGameOptions, useGameState } from "../Global";
 import { WorldScene } from "../scenes/WorldScene";
 import { jsxMapOf } from "../utilities/Helper";
 import { useShortcut } from "../utilities/Hook";
@@ -47,6 +49,7 @@ const savedSorting = { column: 0, asc: true };
 
 export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
    const gs = useGameState();
+   const options = useGameOptions();
    const [, setSelected] = useState<Building | null>(null);
    const [buildingFilter, _setBuildingFilter] = useState<BuildingFilter>(savedFilter);
    const setBuildingFilter = (newFilter: BuildingFilter) => {
@@ -56,6 +59,7 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
    const [search, setSearch] = useState<string>("");
    const [selectedTiles, setSelectedTiles] = useState(new Set([tile.tile]));
    const [buildingMode, setBuildingMode] = useState<string>("0");
+   const [targetBuildingLevel, setTargetBuildingLevel] = useState<number>(options.defaultBuildingLevel);
    const constructed = getTypeBuildings(gs);
    const build = (k: Building) => {
       for (const xy of selectedTiles) {
@@ -66,23 +70,17 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
 
          const emptyTile = gs.tiles.get(xy);
          if (emptyTile && !emptyTile?.building) {
-            emptyTile.building = applyBuildingDefaults(makeBuilding({ type: k }), getGameOptions());
+            emptyTile.building = applyBuildingDefaults(
+               makeBuilding({ type: k, desiredLevel: targetBuildingLevel }),
+               getGameOptions(),
+            );
+            emptyTile.building.desiredLevel = targetBuildingLevel;
          }
       }
       notifyGameStateUpdate();
       if (!isSpecialBuilding(k)) {
          lastBuild = k;
       }
-
-      /*if (!checkBuildingMax(k, gs)) {
-         playError();
-         return;
-      }
-      tile.building = applyBuildingDefaults(makeBuilding({ type: k }), getGameOptions());
-      notifyGameStateUpdate();
-      if (!isSpecialBuilding(k)) {
-         lastBuild = k;
-      }*/
    };
    const extractsDeposit = (b: IBuildingDefinition) => {
       return b.deposit && setContains(tile.deposit, b.deposit);
@@ -114,7 +112,7 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
             while (y > 0) {
                y -= 1;
                xy = pointToTile({ x: startPoint.x, y: y });
-               if (!gs.tiles.get(xy)?.building) {
+               if (!gs.tiles.get(xy)?.building && gs.tiles.get(xy)?.explored) {
                   result.add(xy);
                }
             }
@@ -126,7 +124,7 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
             while (y < city.size - 1) {
                y += 1;
                xy = pointToTile({ x: startPoint.x, y: y });
-               if (!gs.tiles.get(xy)?.building) {
+               if (!gs.tiles.get(xy)?.building && gs.tiles.get(xy)?.explored) {
                   result.add(xy);
                }
             }
@@ -138,7 +136,7 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
             while (x < city.size - 1) {
                x += 1;
                xy = pointToTile({ x: x, y: startPoint.y });
-               if (!gs.tiles.get(xy)?.building) {
+               if (!gs.tiles.get(xy)?.building && gs.tiles.get(xy)?.explored) {
                   result.add(xy);
                }
             }
@@ -150,10 +148,28 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
             while (x > 0) {
                x -= 1;
                xy = pointToTile({ x: x, y: startPoint.y });
-               if (!gs.tiles.get(xy)?.building) {
+               if (!gs.tiles.get(xy)?.building && gs.tiles.get(xy)?.explored) {
                   result.add(xy);
                }
             }
+            break;
+         }
+         case "5": {
+            const grid = getGrid(gs);
+            const range = grid.getRange(startPoint, 1);
+            range.forEach((n) => result.add(pointToTile(n)));
+            break;
+         }
+         case "6": {
+            const grid = getGrid(gs);
+            const range = grid.getRange(startPoint, 2);
+            range.forEach((n) => result.add(pointToTile(n)));
+            break;
+         }
+         case "7": {
+            const grid = getGrid(gs);
+            const range = grid.getRange(startPoint, 3);
+            range.forEach((n) => result.add(pointToTile(n)));
             break;
          }
       }
@@ -194,6 +210,47 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
                   })}
                </div>
             ) : null}
+
+            <fieldset>
+               <div className="row mb5">
+                  <span>Building Mode:</span>
+                  <select
+                     defaultValue={0}
+                     className="ml5"
+                     onChange={(e) => {
+                        setBuildingMode(e.target.value);
+                     }}
+                  >
+                     <option value={0}>{t(L.BuildingModeSingle)}</option>
+                     <option value={1}>{t(L.BuildingModeVerticalNorth)}</option>
+                     <option value={2}>{t(L.BuildingModeVerticalSouth)}</option>
+                     <option value={3}>{t(L.BuildingModeHorizontalEast)}</option>
+                     <option value={4}>{t(L.BuildingModeHorizontalWest)}</option>
+                     <option value={5}>{t(L.BuildingModeRadius1)}</option>
+                     <option value={6}>{t(L.BuildingModeRadius2)}</option>
+                     <option value={7}>{t(L.BuildingModeRadius3)}</option>
+                  </select>
+               </div>
+               <div className="separator"></div>
+               <div className="col">
+                  <div className="row mb5 f1">
+                     <div className="f1">{t(L.TargetBuildingLevel)}</div>
+                     <div className="text-strong">{targetBuildingLevel}</div>
+                  </div>
+                  <input
+                     type="range"
+                     min={1}
+                     max={50}
+                     step="1"
+                     value={targetBuildingLevel}
+                     onChange={(e) => {
+                        setTargetBuildingLevel(clamp(safeParseInt(e.target.value, 1), 1, 50));
+                     }}
+                  />
+               </div>
+            </fieldset>
+
+            <div className="sep10" />
             <div className="row mb5">
                <input
                   type="text"
@@ -201,21 +258,6 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
                   placeholder={t(L.BuildingSearchText)}
                   onChange={(e) => setSearch(e.target.value)}
                />
-            </div>
-            <div className="row mb5 jce">
-               <span>Building Mode:</span>
-               <select
-                  defaultValue={0}
-                  onChange={(e) => {
-                     setBuildingMode(e.target.value);
-                  }}
-               >
-                  <option value={0}>Single</option>
-                  <option value={1}>Vertical North</option>
-                  <option value={2}>Vertical South</option>
-                  <option value={3}>Horizontal East</option>
-                  <option value={4}>Horizontal West</option>
-               </select>
             </div>
             <div className="row mb5">
                <Filter
