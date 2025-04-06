@@ -101,77 +101,43 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
    const highlightBuildableTiles = (tile: ITileData, buildingMode: string) => {
       const result = new Set<Tile>([tile.tile]);
 
-      let xy = 0;
+      const xy = 0;
       const startPoint: IPointData = tileToPoint(tile.tile);
       const city = Config.City[gs.city];
 
-      switch (buildingMode) {
-         case "1": {
-            // Vertical North
-            let y = startPoint.y;
-            while (y > 0) {
-               y -= 1;
-               xy = pointToTile({ x: startPoint.x, y: y });
-               if (!gs.tiles.get(xy)?.building && gs.tiles.get(xy)?.explored) {
-                  result.add(xy);
-               }
+      const directions: Record<string, { dx: number; dy: number }> = {
+         "1": { dx: 0, dy: -1 }, // Vertical North
+         "2": { dx: 0, dy: 1 }, // Vertical South
+         "3": { dx: -1, dy: 0 }, // Horizontal West
+         "4": { dx: 1, dy: 0 }, // Horizontal East
+      };
+
+      if (directions[buildingMode]) {
+         let x = startPoint.x;
+         let y = startPoint.y;
+
+         const direction = directions[buildingMode];
+
+         while (x >= 0 && x < city.size && y >= 0 && y < city.size) {
+            x += direction.dx;
+            y += direction.dy;
+
+            const xy = pointToTile({ x, y });
+
+            if (!gs.tiles.get(xy)?.building && gs.tiles.get(xy)?.explored) {
+               result.add(xy);
             }
-            break;
          }
-         case "2": {
-            // Vertical South
-            let y = startPoint.y;
-            while (y < city.size - 1) {
-               y += 1;
-               xy = pointToTile({ x: startPoint.x, y: y });
-               if (!gs.tiles.get(xy)?.building && gs.tiles.get(xy)?.explored) {
-                  result.add(xy);
-               }
-            }
-            break;
-         }
-         case "3": {
-            // Horizontal East
-            let x = startPoint.x;
-            while (x < city.size - 1) {
-               x += 1;
-               xy = pointToTile({ x: x, y: startPoint.y });
-               if (!gs.tiles.get(xy)?.building && gs.tiles.get(xy)?.explored) {
-                  result.add(xy);
-               }
-            }
-            break;
-         }
-         case "4": {
-            // Horizontal West
-            let x = startPoint.x;
-            while (x > 0) {
-               x -= 1;
-               xy = pointToTile({ x: x, y: startPoint.y });
-               if (!gs.tiles.get(xy)?.building && gs.tiles.get(xy)?.explored) {
-                  result.add(xy);
-               }
-            }
-            break;
-         }
-         case "5": {
-            const grid = getGrid(gs);
-            const range = grid.getRange(startPoint, 1);
-            range.forEach((n) => result.add(pointToTile(n)));
-            break;
-         }
-         case "6": {
-            const grid = getGrid(gs);
-            const range = grid.getRange(startPoint, 2);
-            range.forEach((n) => result.add(pointToTile(n)));
-            break;
-         }
-         case "7": {
-            const grid = getGrid(gs);
-            const range = grid.getRange(startPoint, 3);
-            range.forEach((n) => result.add(pointToTile(n)));
-            break;
-         }
+      }
+      const radius: Record<string, { radius: number }> = {
+         "5": { radius: 1 },
+         "6": { radius: 2 },
+         "7": { radius: 3 },
+      };
+      if (radius[buildingMode]) {
+         const grid = getGrid(gs);
+         const range = grid.getRange(startPoint, radius[buildingMode].radius);
+         range.forEach((n) => result.add(pointToTile(n)));
       }
 
       setSelectedTiles(result);
