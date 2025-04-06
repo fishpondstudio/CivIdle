@@ -108,8 +108,8 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
       const directions: Record<string, { dx: number; dy: number }> = {
          "1": { dx: 0, dy: -1 }, // Vertical North
          "2": { dx: 0, dy: 1 }, // Vertical South
-         "3": { dx: -1, dy: 0 }, // Horizontal West
-         "4": { dx: 1, dy: 0 }, // Horizontal East
+         "3": { dx: 1, dy: 0 }, // Horizontal Eest
+         "4": { dx: -1, dy: 0 }, // Horizontal Wast
       };
 
       if (directions[buildingMode]) {
