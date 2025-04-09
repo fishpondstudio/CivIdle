@@ -27,6 +27,7 @@ import { build } from "./Version.json";
 import { ChatPanel } from "./ui/ChatPanel";
 import { GlobalModal, GlobalToast } from "./ui/GlobalModal";
 import { ResourcePanel } from "./ui/ResourcePanel";
+import { ResourceWatchWindow } from "./ui/ResourceWatchWindow";
 import { Fonts } from "./visuals/Fonts";
 
 if (!import.meta.env.DEV) {
@@ -42,6 +43,7 @@ const routeChanged = new TypedEvent<RouteChangeEvent>();
 createRoot(document.getElementById("game-ui")!).render(<Route event={routeChanged} />);
 createRoot(document.getElementById("chat-panel")!).render(<ChatPanel />);
 createRoot(document.getElementById("resource-panel")!).render(<ResourcePanel />);
+createRoot(document.getElementById("resource-watch-window")!).render(<ResourceWatchWindow />);
 createRoot(document.getElementById("global-modal")!).render(<GlobalModal />);
 createRoot(document.getElementById("global-toast")!).render(<GlobalToast />);
 

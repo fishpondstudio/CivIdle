@@ -157,3 +157,11 @@ export function getMaxOccupiedTiles(rank: AccountLevel): number {
          return 0;
    }
 }
+
+export function getTradableAmount(res: Resource): number {
+   let amount = 0;
+   for (const [xy, building] of Tick.current.playerTradeBuildings) {
+      amount += building.resources[res] ?? 0;
+   }
+   return amount;
+}

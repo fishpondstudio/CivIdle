@@ -1,0 +1,16 @@
+#resource-watch-window .window {
+   height: 20rem;
+   width: 32rem;
+   position: absolute;
+   top: 6rem;
+   left: 1rem;
+}
+
+#resource-watch-window .resource-watch-bar {
+   height: 15.5rem;
+   width: 100%;
+   display: flex;
+   font-weight: bold;
+   color: #333;
+   font-size: 1.2rem;
+}
