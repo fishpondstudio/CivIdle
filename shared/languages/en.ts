@@ -451,6 +451,11 @@ export const EN = {
    EmpireValueFromResourcesStat: "From Resources",
    EmpireValueIncrease: "Empire Value Increase",
    EmptyTilePageBuildLastBuilding: "Build Last Building",
+   EmptyTilePageBuildingMode1Radius: "Building Mode Radius 1",
+   EmptyTilePageBuildingMode2Radius: "Building Mode Radius 2",
+   EmptyTilePageBuildingMode3Radius: "Building Mode Radius 3",
+   EmptyTilePageBuildingMode4Radius: "Building Mode Radius 4",
+   EmptyTilePageBuildingMode5Radius: "Building Mode Radius 5",
    EndConstruction: "End Construction",
    EndConstructionDescHTML: "When you end construction, all the resources that have already been used <b>will not be returned</b>",
    Engine: "Engine",
@@ -1535,4 +1540,6 @@ export const EN = {
    BuildingModeRadius1: "Radius 1",
    BuildingModeRadius2: "Radius 2",
    BuildingModeRadius3: "Radius 3",
+   BuildingModeRadius4: "Radius 4",
+   BuildingModeRadius5: "Radius 5",
 };

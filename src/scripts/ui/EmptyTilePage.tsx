@@ -30,6 +30,7 @@ import {
 import { L, t } from "../../../shared/utilities/i18n";
 import "../../css/EmptyTilePage.css";
 import { useGameOptions, useGameState } from "../Global";
+import { isSteam } from "../rpc/SteamClient";
 import { WorldScene } from "../scenes/WorldScene";
 import { jsxMapOf } from "../utilities/Helper";
 import { useShortcut } from "../utilities/Hook";
@@ -94,6 +95,43 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
       },
       [],
    );
+   if (isSteam() || import.meta.env.DEV) {
+      useShortcut(
+         "EmptyTilePageBuildingMode1Radius",
+         () => {
+            setBuildingMode("5");
+         },
+         [],
+      );
+      useShortcut(
+         "EmptyTilePageBuildingMode2Radius",
+         () => {
+            setBuildingMode("6");
+         },
+         [],
+      );
+      useShortcut(
+         "EmptyTilePageBuildingMode3Radius",
+         () => {
+            setBuildingMode("7");
+         },
+         [],
+      );
+      useShortcut(
+         "EmptyTilePageBuildingMode4Radius",
+         () => {
+            setBuildingMode("8");
+         },
+         [],
+      );
+      useShortcut(
+         "EmptyTilePageBuildingMode5Radius",
+         () => {
+            setBuildingMode("9");
+         },
+         [],
+      );
+   }
    useEffect(() => {
       highlightBuildableTiles(tile, buildingMode);
    }, [tile, buildingMode]);
@@ -133,11 +171,18 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
          "5": { radius: 1 },
          "6": { radius: 2 },
          "7": { radius: 3 },
+         "8": { radius: 4 },
+         "9": { radius: 5 },
       };
       if (radius[buildingMode]) {
          const grid = getGrid(gs);
          const range = grid.getRange(startPoint, radius[buildingMode].radius);
-         range.forEach((n) => result.add(pointToTile(n)));
+         range.forEach((n) => {
+            const xy = pointToTile(n);
+            if (!gs.tiles.get(xy)?.building && gs.tiles.get(xy)?.explored) {
+               result.add(xy);
+            }
+         });
       }
 
       setSelectedTiles(result);
@@ -177,46 +222,55 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
                </div>
             ) : null}
 
-            <fieldset>
-               <div className="row mb5">
-                  <span>Building Mode:</span>
-                  <select
-                     defaultValue={0}
-                     className="ml5"
-                     onChange={(e) => {
-                        setBuildingMode(e.target.value);
-                     }}
-                  >
-                     <option value={0}>{t(L.BuildingModeSingle)}</option>
-                     <option value={1}>{t(L.BuildingModeVerticalNorth)}</option>
-                     <option value={2}>{t(L.BuildingModeVerticalSouth)}</option>
-                     <option value={3}>{t(L.BuildingModeHorizontalEast)}</option>
-                     <option value={4}>{t(L.BuildingModeHorizontalWest)}</option>
-                     <option value={5}>{t(L.BuildingModeRadius1)}</option>
-                     <option value={6}>{t(L.BuildingModeRadius2)}</option>
-                     <option value={7}>{t(L.BuildingModeRadius3)}</option>
-                  </select>
-               </div>
-               <div className="separator"></div>
-               <div className="col">
-                  <div className="row mb5 f1">
-                     <div className="f1">{t(L.TargetBuildingLevel)}</div>
-                     <div className="text-strong">{targetBuildingLevel}</div>
-                  </div>
-                  <input
-                     type="range"
-                     min={1}
-                     max={50}
-                     step="1"
-                     value={targetBuildingLevel}
-                     onChange={(e) => {
-                        setTargetBuildingLevel(clamp(safeParseInt(e.target.value, 1), 1, 50));
-                     }}
-                  />
-               </div>
-            </fieldset>
+            {isSteam() || import.meta.env.DEV ? (
+               <>
+                  <fieldset>
+                     <div className="row mb5">
+                        <span>Building Mode:</span>
+                        <select
+                           defaultValue={buildingMode}
+                           className="ml5"
+                           value={buildingMode}
+                           onChange={(e) => {
+                              setBuildingMode(e.target.value);
+                           }}
+                        >
+                           <option value={0}>{t(L.BuildingModeSingle)}</option>
+                           <option value={1}>{t(L.BuildingModeVerticalNorth)}</option>
+                           <option value={2}>{t(L.BuildingModeVerticalSouth)}</option>
+                           <option value={3}>{t(L.BuildingModeHorizontalEast)}</option>
+                           <option value={4}>{t(L.BuildingModeHorizontalWest)}</option>
+                           <option value={5}>{t(L.BuildingModeRadius1)}</option>
+                           <option value={6}>{t(L.BuildingModeRadius2)}</option>
+                           <option value={7}>{t(L.BuildingModeRadius3)}</option>
+                           <option value={8}>{t(L.BuildingModeRadius4)}</option>
+                           <option value={9}>{t(L.BuildingModeRadius5)}</option>
+                        </select>
+                     </div>
+                     <div className="separator"></div>
+                     <div className="col">
+                        <div className="row mb5 f1">
+                           <div className="f1">{t(L.TargetBuildingLevel)}</div>
+                           <div className="text-strong">{targetBuildingLevel}</div>
+                        </div>
+                        <input
+                           type="range"
+                           min={1}
+                           max={50}
+                           step="1"
+                           value={targetBuildingLevel}
+                           onChange={(e) => {
+                              setTargetBuildingLevel(clamp(safeParseInt(e.target.value, 1), 1, 50));
+                           }}
+                        />
+                     </div>
+                  </fieldset>
+                  <div className="sep10" />
+               </>
+            ) : (
+               <></>
+            )}
 
-            <div className="sep10" />
             <div className="row mb5">
                <input
                   type="text"
