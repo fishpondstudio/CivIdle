@@ -302,15 +302,30 @@ export function PlayerTradeComponent({ gameState, xy }: IBuildingComponentProps)
                         >
                            {Config.Resource[trade.buyResource].name()}
                         </div>
-                        <div className="text-small text-strong text-desc">
-                           <FormatNumber value={trade.buyAmount} />
-                        </div>
+
+                        <Tippy
+                           content={t(L.MarketBuyAvailableAmount, {
+                              amount: formatNumber(Tick.current.resourceAmount.get(trade.buyResource) ?? 0),
+                           })}
+                        >
+                           <div className="text-small text-strong text-desc">
+                              <FormatNumber value={trade.buyAmount} />
+                           </div>
+                        </Tippy>
                      </td>
                      <td>
                         <div>{Config.Resource[trade.sellResource].name()}</div>
-                        <div className="text-small text-strong text-desc">
-                           <FormatNumber value={trade.sellAmount} />
-                        </div>
+                        <Tippy
+                           content={t(L.MarketSellValue, {
+                              value: formatNumber(
+                                 trade.sellAmount * Config.ResourcePrice[trade.sellResource],
+                              ),
+                           })}
+                        >
+                           <div className="text-small text-strong text-desc">
+                              <FormatNumber value={trade.sellAmount} />
+                           </div>
+                        </Tippy>
                      </td>
                      <td
                         className={classNames({
