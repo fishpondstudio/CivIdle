@@ -85,7 +85,7 @@ export const ZH_CN = {
    AldersonDiskDesc: "+25 幸福感。该奇观可被升级，并且每一次额外升级，提供 +5 幸福感",
    Alloy: "合金",
    Alps: "阿尔卑斯山",
-   AlpsDesc: "建筑每 10 等级，获得 +1 生产能力（ +1 消费乘数， +1 生产乘数）",
+   AlpsDesc: "建筑每 10 等级，获得 +1 乘数（ +1 消费乘数， +1 生产乘数）",
    Aluminum: "铝",
    AluminumSmelter: "铝厂",
    AmeliaEarhart: "阿梅莉亚·埃尔哈特",
