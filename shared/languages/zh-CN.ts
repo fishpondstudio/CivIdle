@@ -1408,7 +1408,7 @@ export const ZH_CN = {
    TribuneUpgradeDescGreatPeopleWarningTitle: "请先重生",
    TribuneUpgradeDescV4:
       "若你无计划体验<b>可选的</b>在线功能，作为保民官，你能游玩完整版游戏（永恒伟人与时代智慧无等级上限）。为获取不受限制的在线功能访问权限（交易限制、贸易地块加成数量与重置永恒伟人功能），你将需要提升至财务官。<b>这是一项反机器人措施，旨在让每个人都可以免费玩游戏。</b>然而，<b>当账号等级升至财务官的这一瞬间</b>，你能继承伟人的等级有一定限制：<ul><li>青铜、铁器以及古典时代最高至等级 <b>3</b> </li><li>中世纪、文艺复兴时期以及工业时代最高至等级 <b>2</b> </li><li>世界大战、冷战以及信息时代最高至等级 <b>1</b> </li></ul>超过等级限制的伟人碎片和<b>时代智慧</b>等级将<b>不能</b>被继承。",
-   TurnOffFullBuildings: "关闭所有 %{building} 满存储",
+   TurnOffFullBuildings: "关闭所有满存储的 %{building} ",
    TurnOnTimeWarpDesc: "每秒消耗 %{speed} 扭曲时间，同时加速你的帝国，使其以 %{speed} 倍速度运行。",
    Tutorial: "教程",
    TutorialPlayerFlag: "选择你的玩家旗帜",
