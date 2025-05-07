@@ -33,7 +33,14 @@ import {
    type Tile,
 } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
-import { FloatingModeChanged, useFloatingMode, useGameOptions, useGameState } from "../Global";
+import {
+   FloatingModeChanged,
+   ResourceWatchVisibleChanged,
+   useFloatingMode,
+   useGameOptions,
+   useGameState,
+   useResourceWatchVisible,
+} from "../Global";
 import { useCurrentTick } from "../logic/ClientUpdate";
 import { TimeSeries } from "../logic/TimeSeries";
 import { SteamClient, isSteam } from "../rpc/SteamClient";
@@ -84,6 +91,7 @@ export function ResourcePanel(): React.ReactNode {
          TimeSeries.science[TimeSeries.science.length - 2];
    }
 
+   const isResourceWatchVisible = useResourceWatchVisible();
    const [favoriteActive, setFavoriteActive] = useState(false);
    useEffect(() => {
       function onPointerDown(e: PointerEvent) {
@@ -213,6 +221,26 @@ export function ResourcePanel(): React.ReactNode {
                      })}
                </div>
             </div>
+         )}
+         {!isFloating ? (
+            <>
+               <div className="separator-vertical" />
+               <Tippy content={t(L.ResourceWatch)} placement="bottom">
+                  <div className={classNames({ "menu-button": true, active: isResourceWatchVisible })}>
+                     <div
+                        onPointerDown={(e) => {
+                           ResourceWatchVisibleChanged.emit(!isResourceWatchVisible);
+                           e.nativeEvent.stopPropagation();
+                        }}
+                        className={classNames({ "m-icon fill": true })}
+                     >
+                        mystery
+                     </div>
+                  </div>
+               </Tippy>
+            </>
+         ) : (
+            <></>
          )}
          <div className="separator-vertical" />
          {tick.happiness ? (

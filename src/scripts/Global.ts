@@ -208,6 +208,16 @@ FloatingModeChanged.on((mode) => {
 });
 export const useFloatingMode = makeObservableHook(FloatingModeChanged, () => floatingMode);
 
+let resourceWatchVisible = false;
+export const ResourceWatchVisibleChanged = new TypedEvent<boolean>();
+ResourceWatchVisibleChanged.on((mode) => {
+   resourceWatchVisible = mode;
+});
+export const useResourceWatchVisible = makeObservableHook(
+   ResourceWatchVisibleChanged,
+   () => resourceWatchVisible,
+);
+
 export function getProductionPriority(v: number): number {
    return v & 0x0000ff;
 }
