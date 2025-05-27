@@ -2,6 +2,8 @@ import { app, shell, type BrowserWindow } from "electron";
 import { exists, outputFile, readFile, unlink } from "fs-extra";
 import { rename } from "node:fs/promises";
 import path from "node:path";
+import { promisify } from "node:util";
+import { deflateRaw } from "node:zlib";
 import { MIN_HEIGHT, MIN_WIDTH, getGameSavePath, getLocalGameSavePath, type SteamClient } from ".";
 
 const BACKUP_FREQ = 1000 * 60 * 10;
@@ -37,6 +39,12 @@ export class IPCService {
          await outputFile(path.join(getLocalGameSavePath(), this.getSteamId(), backup), buffer);
          this.lastWriteAt = Date.now();
       }
+   }
+
+   public async fileWriteCompressed(name: string, content: string): Promise<void> {
+      const compress = promisify(deflateRaw);
+      const compressed = await compress(content);
+      await this.fileWriteBytes(name, compressed);
    }
 
    public async fileRead(name: string): Promise<string> {

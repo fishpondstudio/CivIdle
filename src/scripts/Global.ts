@@ -130,12 +130,14 @@ export async function saveGame(): Promise<void> {
 
 export async function doSaveGame(task: ISaveGameTask): Promise<void> {
    try {
-      const compressed = await compressSave(savedGame);
       if (isSteam()) {
-         await SteamClient.fileWriteBytes(SAVE_KEY, compressed);
+         const serialized = serializeSave(savedGame);
+         await SteamClient.fileWriteCompressed(SAVE_KEY, serialized);
       } else if (isAndroid() || isIOS()) {
+         const compressed = await compressSave(savedGame);
          await Preferences.set({ key: SAVE_KEY, value: bytesToBase64(compressed) });
       } else {
+         const compressed = await compressSave(savedGame);
          await idbSet(SAVE_KEY, compressed);
       }
       task.resolve();
