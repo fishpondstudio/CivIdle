@@ -3,6 +3,7 @@
 @import "UIExtension.css";
 @import "ChatPanel.css";
 @import "ResourcePanel.css";
+@import "ResourceWatchWindow.css";
 
 :root {
    --game-ui-width: 45rem;
