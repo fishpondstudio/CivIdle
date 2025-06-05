@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { Building, IBuildingDefinition } from "../../../shared/definitions/BuildingDefinitions";
 import {
    applyBuildingDefaults,
@@ -8,24 +8,29 @@ import {
 } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
 import { getGameOptions, notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
-import { getTypeBuildings, unlockedBuildings } from "../../../shared/logic/IntraTickCache";
+import { getGrid, getTypeBuildings, unlockedBuildings } from "../../../shared/logic/IntraTickCache";
 import type { ITileData } from "../../../shared/logic/Tile";
 import { makeBuilding } from "../../../shared/logic/Tile";
 import {
    anyOf,
+   clamp,
    formatNumber,
    hasFlag,
    isEmpty,
    keysOf,
    numberToRoman,
+   pointToTile,
+   safeParseInt,
    setContains,
    sizeOf,
    tileToPoint,
+   type IPointData,
    type Tile,
 } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import "../../css/EmptyTilePage.css";
-import { useGameState } from "../Global";
+import { useGameOptions, useGameState } from "../Global";
+import { isSteam } from "../rpc/SteamClient";
 import { WorldScene } from "../scenes/WorldScene";
 import { jsxMapOf } from "../utilities/Helper";
 import { useShortcut } from "../utilities/Hook";
@@ -45,6 +50,7 @@ const savedSorting = { column: 0, asc: true };
 
 export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
    const gs = useGameState();
+   const options = useGameOptions();
    const [, setSelected] = useState<Building | null>(null);
    const [buildingFilter, _setBuildingFilter] = useState<BuildingFilter>(savedFilter);
    const setBuildingFilter = (newFilter: BuildingFilter) => {
@@ -52,13 +58,26 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
       savedFilter = newFilter;
    };
    const [search, setSearch] = useState<string>("");
+   const [selectedTiles, setSelectedTiles] = useState(new Set([tile.tile]));
+   const [buildingMode, setBuildingMode] = useState<string>("0");
+   const [targetBuildingLevel, setTargetBuildingLevel] = useState<number>(options.defaultBuildingLevel);
    const constructed = getTypeBuildings(gs);
    const build = (k: Building) => {
-      if (!checkBuildingMax(k, gs)) {
-         playError();
-         return;
+      for (const xy of selectedTiles) {
+         if (!checkBuildingMax(k, gs)) {
+            playError();
+            break;
+         }
+
+         const emptyTile = gs.tiles.get(xy);
+         if (emptyTile && !emptyTile?.building) {
+            emptyTile.building = applyBuildingDefaults(
+               makeBuilding({ type: k, desiredLevel: targetBuildingLevel }),
+               getGameOptions(),
+            );
+            emptyTile.building.desiredLevel = targetBuildingLevel;
+         }
       }
-      tile.building = applyBuildingDefaults(makeBuilding({ type: k }), getGameOptions());
       notifyGameStateUpdate();
       if (!isSpecialBuilding(k)) {
          lastBuild = k;
@@ -76,6 +95,100 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
       },
       [],
    );
+   if (isSteam() || import.meta.env.DEV) {
+      useShortcut(
+         "EmptyTilePageBuildingMode1Radius",
+         () => {
+            setBuildingMode("5");
+         },
+         [],
+      );
+      useShortcut(
+         "EmptyTilePageBuildingMode2Radius",
+         () => {
+            setBuildingMode("6");
+         },
+         [],
+      );
+      useShortcut(
+         "EmptyTilePageBuildingMode3Radius",
+         () => {
+            setBuildingMode("7");
+         },
+         [],
+      );
+      useShortcut(
+         "EmptyTilePageBuildingMode4Radius",
+         () => {
+            setBuildingMode("8");
+         },
+         [],
+      );
+      useShortcut(
+         "EmptyTilePageBuildingMode5Radius",
+         () => {
+            setBuildingMode("9");
+         },
+         [],
+      );
+   }
+   useEffect(() => {
+      highlightBuildableTiles(tile, buildingMode);
+   }, [tile, buildingMode]);
+
+   const highlightBuildableTiles = (tile: ITileData, buildingMode: string) => {
+      const result = new Set<Tile>([tile.tile]);
+
+      const xy = 0;
+      const startPoint: IPointData = tileToPoint(tile.tile);
+      const city = Config.City[gs.city];
+
+      const directions: Record<string, { dx: number; dy: number }> = {
+         "1": { dx: 0, dy: -1 }, // Vertical North
+         "2": { dx: 0, dy: 1 }, // Vertical South
+         "3": { dx: 1, dy: 0 }, // Horizontal Eest
+         "4": { dx: -1, dy: 0 }, // Horizontal Wast
+      };
+
+      if (directions[buildingMode]) {
+         let x = startPoint.x;
+         let y = startPoint.y;
+
+         const direction = directions[buildingMode];
+
+         while (x >= 0 && x < city.size && y >= 0 && y < city.size) {
+            x += direction.dx;
+            y += direction.dy;
+
+            const xy = pointToTile({ x, y });
+
+            if (!gs.tiles.get(xy)?.building && gs.tiles.get(xy)?.explored) {
+               result.add(xy);
+            }
+         }
+      }
+      const radius: Record<string, { radius: number }> = {
+         "5": { radius: 1 },
+         "6": { radius: 2 },
+         "7": { radius: 3 },
+         "8": { radius: 4 },
+         "9": { radius: 5 },
+      };
+      if (radius[buildingMode]) {
+         const grid = getGrid(gs);
+         const range = grid.getRange(startPoint, radius[buildingMode].radius);
+         range.forEach((n) => {
+            const xy = pointToTile(n);
+            if (!gs.tiles.get(xy)?.building && gs.tiles.get(xy)?.explored) {
+               result.add(xy);
+            }
+         });
+      }
+
+      setSelectedTiles(result);
+      Singleton().sceneManager.getCurrent(WorldScene)?.drawSelection(null, Array.from(result));
+   };
+
    const buildingByType = getTypeBuildings(gs);
    return (
       <div className="window" onPointerDown={() => setSelected(null)}>
@@ -108,6 +221,56 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
                   })}
                </div>
             ) : null}
+
+            {isSteam() || import.meta.env.DEV ? (
+               <>
+                  <fieldset>
+                     <div className="row mb5">
+                        <span>Building Mode:</span>
+                        <select
+                           defaultValue={buildingMode}
+                           className="ml5"
+                           value={buildingMode}
+                           onChange={(e) => {
+                              setBuildingMode(e.target.value);
+                           }}
+                        >
+                           <option value={0}>{t(L.BuildingModeSingle)}</option>
+                           <option value={1}>{t(L.BuildingModeVerticalNorth)}</option>
+                           <option value={2}>{t(L.BuildingModeVerticalSouth)}</option>
+                           <option value={3}>{t(L.BuildingModeHorizontalEast)}</option>
+                           <option value={4}>{t(L.BuildingModeHorizontalWest)}</option>
+                           <option value={5}>{t(L.BuildingModeRadius1)}</option>
+                           <option value={6}>{t(L.BuildingModeRadius2)}</option>
+                           <option value={7}>{t(L.BuildingModeRadius3)}</option>
+                           <option value={8}>{t(L.BuildingModeRadius4)}</option>
+                           <option value={9}>{t(L.BuildingModeRadius5)}</option>
+                        </select>
+                     </div>
+                     <div className="separator"></div>
+                     <div className="col">
+                        <div className="row mb5 f1">
+                           <div className="f1">{t(L.TargetBuildingLevel)}</div>
+                           <div className="text-strong">{targetBuildingLevel}</div>
+                        </div>
+                        <input
+                           type="range"
+                           min={1}
+                           max={50}
+                           step="1"
+                           value={targetBuildingLevel}
+                           onChange={(e) => {
+                              setTargetBuildingLevel(clamp(safeParseInt(e.target.value, 1), 1, 50));
+                           }}
+                        />
+                     </div>
+                  </fieldset>
+                  <div className="sep10" />
+               </>
+            ) : (
+               <></>
+            )}
+
             <div className="row mb5">
                <input
                   type="text"

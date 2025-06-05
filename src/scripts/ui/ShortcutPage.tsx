@@ -2,6 +2,7 @@ import type { IShortcutNameAndScope, Shortcut } from "../../../shared/logic/Shor
 import { ShortcutActions, ShortcutScopes, getShortcutKey } from "../../../shared/logic/Shortcut";
 import { L, t } from "../../../shared/utilities/i18n";
 import { useGameOptions } from "../Global";
+import { isSteam } from "../rpc/SteamClient";
 import { jsxMapOf } from "../utilities/Helper";
 import { EditShortcutModal } from "./EditShortcutModal";
 import { showModal } from "./GlobalModal";
@@ -20,7 +21,11 @@ export function ShortcutPage(): React.ReactNode {
                   <fieldset key={scope}>
                      <legend>{name()}</legend>
                      {jsxMapOf(ShortcutActions as Record<Shortcut, IShortcutNameAndScope>, (key, value) => {
-                        if (value.scope === scope) {
+                        if (
+                           value.scope === scope &&
+                           (value.desktopOnly === undefined ||
+                              (value.desktopOnly === true && (isSteam() || import.meta.env.DEV)))
+                        ) {
                            const shortcut = gameOptions.shortcuts[key];
                            return (
                               <div key={key} className="row mv5">

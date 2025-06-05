@@ -58,6 +58,31 @@ export const ShortcutActions = {
       scope: "EmptyTilePage",
       name: () => t(L.EmptyTilePageBuildLastBuilding),
    },
+   EmptyTilePageBuildingMode1Radius: {
+      scope: "EmptyTilePage",
+      name: () => t(L.EmptyTilePageBuildingMode1Radius),
+      desktopOnly: true,
+   },
+   EmptyTilePageBuildingMode2Radius: {
+      scope: "EmptyTilePage",
+      name: () => t(L.EmptyTilePageBuildingMode2Radius),
+      desktopOnly: true,
+   },
+   EmptyTilePageBuildingMode3Radius: {
+      scope: "EmptyTilePage",
+      name: () => t(L.EmptyTilePageBuildingMode3Radius),
+      desktopOnly: true,
+   },
+   EmptyTilePageBuildingMode4Radius: {
+      scope: "EmptyTilePage",
+      name: () => t(L.EmptyTilePageBuildingMode4Radius),
+      desktopOnly: true,
+   },
+   EmptyTilePageBuildingMode5Radius: {
+      scope: "EmptyTilePage",
+      name: () => t(L.EmptyTilePageBuildingMode5Radius),
+      desktopOnly: true,
+   },
    SendAnExplorer: {
       scope: "UnexploredPage",
       name: () => t(L.SendExplorer),
@@ -71,6 +96,7 @@ export const ShortcutActions = {
 export interface IShortcutNameAndScope {
    scope: ShortcutScope;
    name: () => string;
+   desktopOnly?: boolean;
 }
 
 export type Shortcut = keyof typeof ShortcutActions;
