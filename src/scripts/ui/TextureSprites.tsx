@@ -1,5 +1,6 @@
 import React from "react";
 import type { Building } from "../../../shared/definitions/BuildingDefinitions";
+import type { TileTexture } from "../../../shared/logic/GameState";
 import { AccountLevel } from "../../../shared/utilities/Database";
 import building from "../../images/textures_building.png";
 import flags from "../../images/textures_flag.png";
@@ -33,6 +34,13 @@ export const BuildingSpriteComponent = React.forwardRef<
    { building: Building; scale?: number; style?: React.CSSProperties }
 >((props, ref) => {
    return <TextureSprite {...props} url={building} name={`Building_${props.building}`} ref={ref} />;
+});
+
+export const TileTextureComponent = React.forwardRef<
+   HTMLDivElement,
+   { tileTexture: TileTexture; scale?: number; style?: React.CSSProperties }
+>((props, ref) => {
+   return <TextureSprite {...props} url={misc} name={`Misc_${props.tileTexture}`} ref={ref} />;
 });
 
 export const SupporterComponent = React.forwardRef<

@@ -100,7 +100,7 @@ export async function loadBundle() {
    const result = await Promise.all([Assets.loadBundle(["main"])].concat(fonts.map((f) => f.load())));
    const { main }: { main: MainBundleAssets } = result[0];
 
-   fonts.forEach((f) =>
+   fonts.forEach((f) => {
       BitmapFont.from(
          f.family,
          Object.assign(
@@ -121,8 +121,15 @@ export async function loadBundle() {
                : {},
          ),
          { chars: BitmapFont.ASCII, resolution: 2, padding: 8 },
-      ),
-   );
+      );
+      if (f.family === Fonts.Cabin) {
+         BitmapFont.from(`${f.family}NoShadow`, {
+            fill: "#ffffff",
+            fontSize: 64,
+            fontFamily: f.family,
+         });
+      }
+   });
    console.timeEnd("Load Default Font");
 
    console.time("Load Sprite sheets");

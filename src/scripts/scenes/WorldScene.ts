@@ -1,14 +1,15 @@
 import { SmoothGraphics } from "@pixi/graphics-smooth";
 import {
+   BitmapText,
    Container,
    LINE_CAP,
    LINE_JOIN,
    ParticleContainer,
    Rectangle,
+   Sprite,
    type ColorSource,
    type FederatedPointerEvent,
    type IPointData,
-   type Sprite,
 } from "pixi.js";
 import {
    applyBuildingDefaults,
@@ -19,13 +20,8 @@ import {
 } from "../../../shared/logic/BuildingLogic";
 import { MANAGED_IMPORT_RANGE } from "../../../shared/logic/Constants";
 import { GameFeature, hasFeature } from "../../../shared/logic/FeatureLogic";
-import type { GameOptions, GameState } from "../../../shared/logic/GameState";
-import {
-   TILE_SIZE,
-   getGameOptions,
-   getGameState,
-   notifyGameStateUpdate,
-} from "../../../shared/logic/GameStateLogic";
+import { DarkTileTextures, type GameOptions, type GameState } from "../../../shared/logic/GameState";
+import { getGameOptions, getGameState, notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
 import { getGrid } from "../../../shared/logic/IntraTickCache";
 import {
    ResourceImportOptions,
@@ -42,34 +38,42 @@ import {
    tileToPoint,
    type Tile,
 } from "../../../shared/utilities/Helper";
+import { ObjectPool } from "../../../shared/utilities/ObjectPool";
 import { Vector2, v2 } from "../../../shared/utilities/Vector2";
 import { getTexture } from "../logic/VisualLogic";
 import { TilePage } from "../ui/TilePage";
 import { getColorCached } from "../utilities/CachedColor";
-import { Scene, type ISceneContext } from "../utilities/SceneManager";
+import { Scene, destroyAllChildren, type ISceneContext } from "../utilities/SceneManager";
 import { Singleton } from "../utilities/Singleton";
 import { Actions } from "../utilities/pixi-actions/Actions";
 import { Easing } from "../utilities/pixi-actions/Easing";
 import type { Action } from "../utilities/pixi-actions/actions/Action";
 import { CustomAction } from "../utilities/pixi-actions/actions/CustomAction";
-import { drawSelected } from "../visuals/DrawGrid";
+import { Fonts } from "../visuals/Fonts";
 import { playError } from "../visuals/Sound";
 import { TileVisual } from "./TileVisual";
-import { TooltipPool } from "./TooltipPool";
-import { TransportPool } from "./TransportPool";
 
 let viewportCenter: IPointData | null = null;
 let viewportZoom: number | null = null;
 
 const MARGIN = 200;
+const SELECTOR_ALPHA = 0.4;
+const HIGHLIGHT_ALPHA = 0.2;
 
 export class WorldScene extends Scene {
    private _width!: number;
    private _height!: number;
-   private _selectedGraphics!: SmoothGraphics;
+
+   private _selectorContainer!: Container;
+
+   private _transportContainer!: Container;
+   private _transportPool!: ObjectPool<Sprite>;
+
+   private _tooltipContainer!: Container;
+   public tooltipPool!: ObjectPool<BitmapText>;
+
    private _transportLines!: SmoothGraphics;
-   private _transportPool!: TransportPool;
-   public tooltipPool!: TooltipPool;
+
    private cameraMovement: Action | null = null;
    private readonly _tiles: Map<number, TileVisual> = new Map();
    private readonly _transport: Map<number, Sprite> = new Map();
@@ -91,38 +95,66 @@ export class WorldScene extends Scene {
          ),
          2,
       );
-      // this._bg = this.viewport.addChild(
-      //    new TilingSprite(
-      //       getTexture("Misc_Paper", textures),
-      //       this._width + MARGIN * 2,
-      //       this._height + MARGIN * 2,
-      //    ),
-      // );
-      // this._bg.tint = getColorCached(getGameOptions().themeColors.WorldBackground);
-      // this._bg.position.set((this._width - this._bg.width) / 2, (this._height - this._bg.height) / 2);
-
-      // drawGrid(getGrid(getGameState()), this._graphics);
       getGrid(getGameState()).forEach((grid) => {
          const xy = pointToTile(grid);
          this._tiles.set(xy, this.viewport.addChild(new TileVisual(this, grid)));
       });
-      this.tooltipPool = new TooltipPool(this.viewport.addChild(new Container()));
-      this._transportPool = new TransportPool(
-         getTexture("Misc_Transport", textures),
-         this.viewport.addChild(
-            new ParticleContainer(100_000, {
-               position: true,
-               rotation: true,
-               alpha: true,
-            }),
-         ),
+
+      this._tooltipContainer = this.viewport.addChild(new Container());
+      this._tooltipContainer.name = "TooltipContainer";
+      this.tooltipPool = new ObjectPool<BitmapText>({
+         create: () => {
+            const visual = this._tooltipContainer.addChild(
+               new BitmapText("", {
+                  fontName: Fonts.Cabin,
+                  fontSize: 14,
+                  tint: 0xffffff,
+               }),
+            );
+            visual.anchor.set(0.5, 0.5);
+            return visual;
+         },
+         onAllocate: (t) => {
+            t.visible = true;
+         },
+         onRelease: (t) => {
+            t.visible = false;
+         },
+      });
+
+      this._transportContainer = this.viewport.addChild(
+         new ParticleContainer(100_000, {
+            position: true,
+            rotation: true,
+            alpha: true,
+         }),
       );
-      this._selectedGraphics = this.viewport.addChild(new SmoothGraphics());
+      this._transportContainer.name = "TransportContainer";
+      this._transportPool = new ObjectPool<Sprite>({
+         create: () => {
+            const visual = this._transportContainer.addChild(
+               new Sprite(getTexture("Misc_Transport", textures)),
+            );
+            visual.scale = { x: 0.15, y: 0.15 };
+            visual.anchor.x = 1;
+            visual.anchor.y = 0.5;
+            return visual;
+         },
+         onAllocate: (t) => {
+            t.alpha = getGameOptions().themeColors.TransportIndicatorAlpha;
+         },
+         onRelease: (t) => {
+            t.alpha = 0;
+         },
+      });
+
+      this._selectorContainer = this.viewport.addChild(new Container());
+      this._selectorContainer.name = "SelectorContainer";
       this._transportLines = this.viewport.addChild(new SmoothGraphics());
    }
 
    override backgroundColor(): ColorSource {
-      return getGameOptions().themeColors.WorldBackground;
+      return DarkTileTextures[getGameOptions().tileTexture] ? 0x333333 : 0xffffff;
    }
 
    override onEnable(): void {
@@ -230,7 +262,6 @@ export class WorldScene extends Scene {
    }
 
    override onGameOptionsChanged(gameOptions: GameOptions): void {
-      this._selectedGraphics.tint = getColorCached(gameOptions.themeColors.SelectedGridColor);
       this._tiles.forEach((visual, xy) => visual.updateDepositColor(gameOptions));
    }
 
@@ -260,30 +291,38 @@ export class WorldScene extends Scene {
       }
    }
 
+   private createSelector(): Sprite {
+      const visual = this._selectorContainer.addChild(
+         new Sprite(
+            getTexture(
+               DarkTileTextures[getGameOptions().tileTexture] ? "Misc_DarkSelector" : "Misc_LightSelector",
+               this.context.textures,
+            ),
+         ),
+      );
+      visual.anchor.set(0.5);
+      visual.scale.set(0.5);
+      return visual;
+   }
+
    drawSelection(selected: IPointData | null, highlights: Tile[]) {
-      if (!this._selectedGraphics || isNullOrUndefined(this._selectedXy)) {
+      if (isNullOrUndefined(this._selectedXy)) {
          return;
       }
-      this._selectedGraphics.clear();
-      selected ??= tileToPoint(this._selectedXy);
-      this._selectedGraphics.lineStyle({
-         color: 0xffffff,
-         width: 2,
-         cap: LINE_CAP.ROUND,
-         join: LINE_JOIN.ROUND,
-         alignment: 0.5,
-      });
       const grid = getGrid(getGameState());
-      drawSelected(grid, selected, this._selectedGraphics);
+      selected ??= tileToPoint(this._selectedXy);
 
-      // this._tiles.get(this._selectedXy)?.debugDraw(this._selectedGraphics);
+      destroyAllChildren(this._selectorContainer);
+
+      const selector = this.createSelector();
+      selector.alpha = SELECTOR_ALPHA;
+      selector.position = grid.gridToPosition(selected);
 
       if (highlights.length > 0) {
          highlights.forEach((tile) => {
-            this._selectedGraphics.lineStyle({ width: 0 });
-            this._selectedGraphics.beginFill(0xffffff, 0.2, true);
-            drawSelected(grid, tileToPoint(tile), this._selectedGraphics);
-            this._selectedGraphics.endFill();
+            const selector = this.createSelector();
+            selector.alpha = HIGHLIGHT_ALPHA;
+            selector.position = grid.gridToPosition(tileToPoint(tile));
          });
       } else {
          this.drawBuildingDecors(getGameState());
@@ -313,14 +352,6 @@ export class WorldScene extends Scene {
       const grid = tileToPoint(xy);
       if (building) {
          switch (building.type) {
-            case "MausoleumAtHalicarnassus": {
-               const pos = getGrid(gs).gridToPosition(grid);
-               this._selectedGraphics.lineStyle({ width: 0 });
-               this._selectedGraphics.beginFill(0xffffff, 0.2, true);
-               this._selectedGraphics.drawCircle(pos.x, pos.y, TILE_SIZE * 4);
-               this._selectedGraphics.endFill();
-               break;
-            }
             case "Caravansary": {
                const ri = building as IResourceImportBuildingData;
                if (hasFlag(ri.resourceImportOptions, ResourceImportOptions.ManagedImport)) {
@@ -426,10 +457,9 @@ export class WorldScene extends Scene {
    private highlightRange(grid: IPointData, range: number) {
       const g = getGrid(getGameState());
       g.getRange(grid, range).forEach((neighbor) => {
-         this._selectedGraphics.lineStyle({ width: 0 });
-         this._selectedGraphics.beginFill(0xffffff, 0.2, true);
-         drawSelected(g, neighbor, this._selectedGraphics);
-         this._selectedGraphics.endFill();
+         const selector = this.createSelector();
+         selector.alpha = HIGHLIGHT_ALPHA;
+         selector.position = g.gridToPosition(neighbor);
       });
    }
 

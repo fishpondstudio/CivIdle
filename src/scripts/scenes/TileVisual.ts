@@ -3,7 +3,7 @@ import type { IDestroyOptions, IPointData } from "pixi.js";
 import { BitmapText, Container, Rectangle, Sprite } from "pixi.js";
 import type { Resource } from "../../../shared/definitions/ResourceDefinitions";
 import { getBuildingLevelLabel, getBuildingPercentage } from "../../../shared/logic/BuildingLogic";
-import type { GameOptions, GameState } from "../../../shared/logic/GameState";
+import { DarkTileTextures, type GameOptions, type GameState } from "../../../shared/logic/GameState";
 import { getGameOptions, getGameState } from "../../../shared/logic/GameStateLogic";
 import { getGrid } from "../../../shared/logic/IntraTickCache";
 import { Tick } from "../../../shared/logic/TickLogic";
@@ -47,6 +47,7 @@ export class TileVisual extends Container {
    private readonly _xy: Tile;
    private _floaterValue = 0;
    private _aabb: Rectangle;
+   private _bg: Sprite;
 
    constructor(world: WorldScene, grid: IPointData) {
       super();
@@ -72,10 +73,10 @@ export class TileVisual extends Container {
 
       const { textures } = this._world.context;
 
-      const bg = this.addChild(new Sprite(getTexture("Misc_Tile", textures)));
-      bg.anchor.set(0.5);
-      bg.scale.set(0.5);
-      bg.position.set(0, 0);
+      this._bg = this.addChild(new Sprite(getTexture(`Misc_${getGameOptions().tileTexture}`, textures)));
+      this._bg.anchor.set(0.5);
+      this._bg.scale.set(0.5);
+      this._bg.position.set(0, 0);
 
       this._spinner = this.addChild(new Sprite(getTexture("Misc_Spinner", textures)));
       this._spinner.anchor.set(0.5);
@@ -125,9 +126,9 @@ export class TileVisual extends Container {
 
       this._level = this.addChild(
          new BitmapText("", {
-            fontName: Fonts.Cabin,
+            fontName: this.getTextFont(),
             fontSize: 16,
-            tint: 0xffffff,
+            tint: this.getTextColor(),
          }),
       );
       this._level.anchor.set(0.5, 0.5);
@@ -136,7 +137,7 @@ export class TileVisual extends Container {
       this._level.cullable = true;
 
       this._bottomText = this.addChild(
-         new BitmapText("", { fontName: Fonts.Cabin, fontSize: 12, tint: 0xffffff }),
+         new BitmapText("", { fontName: this.getTextFont(), fontSize: 12, tint: this.getTextColor() }),
       );
       this._bottomText.anchor.set(0.5, 0.5);
       this._bottomText.position.set(0, 35);
@@ -169,6 +170,14 @@ export class TileVisual extends Container {
       return rect.intersects(this._aabb);
    }
 
+   public getTextColor(): number {
+      return DarkTileTextures[getGameOptions().tileTexture] ? 0xffffff : 0x666666;
+   }
+
+   public getTextFont(): string {
+      return DarkTileTextures[getGameOptions().tileTexture] ? Fonts.Cabin : `${Fonts.Cabin}NoShadow`;
+   }
+
    public debugDraw(g: SmoothGraphics): void {
       g.drawRect(this._aabb.x, this._aabb.y, this._aabb.width, this._aabb.height);
    }
@@ -183,6 +192,25 @@ export class TileVisual extends Container {
       this._deposits.forEach((sprite, deposit) => {
          sprite.tint = getColorCached(options.resourceColors[deposit] ?? "#ffffff");
       });
+      const texture = getTexture(`Misc_${options.tileTexture}`, this._world.context.textures);
+      if (this._bg.texture !== texture) {
+         this._bg.texture = texture;
+      }
+      const font = this.getTextFont();
+      const color = this.getTextColor();
+
+      if (this._level.fontName !== font) {
+         this._level.fontName = font;
+      }
+      if (this._level.tint !== color) {
+         this._level.tint = color;
+      }
+      if (this._bottomText.fontName !== font) {
+         this._bottomText.fontName = font;
+      }
+      if (this._bottomText.tint !== color) {
+         this._bottomText.tint = color;
+      }
    }
 
    public reveal(): void {
@@ -202,6 +230,8 @@ export class TileVisual extends Container {
    public flushFloater(speed: number): void {
       if (this._floaterValue <= 0 || !this.isInViewport()) return;
       const t = this._world.tooltipPool.allocate();
+      t.tint = this.getTextColor();
+      t.fontName = this.getTextFont();
       t.text = `+${formatNumber(this._floaterValue)}`;
       this._floaterValue = 0;
       t.position = this.position;

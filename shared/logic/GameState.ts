@@ -87,10 +87,6 @@ export class SavedGame {
 }
 
 const DefaultThemeColors = {
-   WorldBackground: "#1e2328",
-   GridColor: "#ffffff",
-   GridAlpha: 0.1,
-   SelectedGridColor: "#ffff99",
    InactiveBuildingAlpha: 0.5,
    TransportIndicatorAlpha: 0.5,
    ResearchBackground: "#1e2328",
@@ -115,11 +111,7 @@ export function resetThemeResourceColors() {
 }
 
 export const ThemeColorNames: Record<keyof typeof DefaultThemeColors, () => string> = {
-   WorldBackground: () => t(L.ThemeColorWorldBackground),
    ResearchBackground: () => t(L.ThemeColorResearchBackground),
-   GridColor: () => t(L.ThemeColorGridColor),
-   GridAlpha: () => t(L.ThemeColorGridAlpha),
-   SelectedGridColor: () => t(L.ThemeSelectedGridColor),
    InactiveBuildingAlpha: () => t(L.ThemeInactiveBuildingAlpha),
    TransportIndicatorAlpha: () => t(L.ThemeTransportIndicatorAlpha),
    ResearchLockedColor: () => t(L.ThemeResearchLockedColor),
@@ -132,6 +124,33 @@ export const ExtraTileInfoTypes = {
    EmpireValue: () => t(L.ExtraTileInfoTypeEmpireValue),
    StoragePercentage: () => t(L.ExtraTileInfoTypeStoragePercentage),
 } as const;
+
+export const TileTextures = [
+   "Tile1",
+   "Tile2",
+   "Tile3",
+   "Tile4",
+   "Tile5",
+   "Tile6",
+   "Tile7",
+   "Tile8",
+   "Tile9",
+   "Tile10",
+   "Tile11",
+   "Tile12",
+   "Tile13",
+] as const;
+export type TileTexture = (typeof TileTextures)[number];
+export const DarkTileTextures: Partial<Record<TileTexture, true>> = {
+   Tile1: true,
+   Tile2: true,
+   Tile3: true,
+   Tile4: true,
+   Tile5: true,
+   Tile6: true,
+   Tile7: true,
+   Tile8: true,
+};
 
 export const CursorOptions = {
    OldFashioned: () => t(L.CursorOldFashioned),
@@ -157,6 +176,7 @@ export class GameOptions {
    buildingColors: Partial<Record<Building, string>> = {};
    resourceColors: Partial<Record<Resource, string>> = {};
    themeColors = { ...DefaultThemeColors };
+   tileTexture: TileTexture = "Tile1";
    shortcuts: Partial<Record<Shortcut, IShortcutConfig>> = {};
    soundEffect = true;
    tradeFilledSound = true;

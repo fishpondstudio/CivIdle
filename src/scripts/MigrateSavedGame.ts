@@ -1,7 +1,7 @@
 import type { GreatPerson } from "../../shared/definitions/GreatPersonDefinitions";
 import { findSpecialBuilding } from "../../shared/logic/BuildingLogic";
 import { Config } from "../../shared/logic/Config";
-import type { SavedGame } from "../../shared/logic/GameState";
+import { ThemeColorNames, type SavedGame } from "../../shared/logic/GameState";
 import { getGrid } from "../../shared/logic/IntraTickCache";
 import { ShortcutActions } from "../../shared/logic/Shortcut";
 import { BuildingInputMode, ResourceImportOptions, makeBuilding } from "../../shared/logic/Tile";
@@ -121,6 +121,12 @@ export function migrateSavedGame(save: SavedGame) {
    forEach(save.options.resourceColors, (resource) => {
       if (!Config.Resource[resource]) {
          delete save.options.resourceColors[resource];
+      }
+   });
+
+   forEach(save.options.themeColors, (color) => {
+      if (!ThemeColorNames[color]) {
+         delete save.options.themeColors[color];
       }
    });
 

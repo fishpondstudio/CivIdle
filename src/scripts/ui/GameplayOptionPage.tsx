@@ -34,8 +34,9 @@ import { LanguageSelect } from "./LanguageSelectComponent";
 import { MenuComponent } from "./MenuComponent";
 import { RenderHTML } from "./RenderHTMLComponent";
 import { TextWithHelp } from "./TextWithHelpComponent";
-import { WarningComponent } from "./WarningComponent";
 import { TitleBarComponent } from "./TitleBarComponent";
+import { ToggleComponent } from "./ToggleComponent";
+import { WarningComponent } from "./WarningComponent";
 
 export function GameplayOptionPage(): React.ReactNode {
    const options = useGameOptions();
@@ -362,17 +363,6 @@ export function GameplayOptionPage(): React.ReactNode {
                >
                   {t(L.ClearTransportPlanCache)}
                </button>
-               <div className="separator" />
-               <ToggleComponent
-                  title={t(L.ShowTransportArrow)}
-                  contentHTML={t(L.ShowTransportArrowDescHTML)}
-                  value={options.showTransportArrow}
-                  onValueChange={(value) => {
-                     playClick();
-                     options.showTransportArrow = value;
-                     notifyGameOptionsUpdate(options);
-                  }}
-               />
             </fieldset>
             {sizeOf(options.buildingDefaults) > 0 ? (
                <fieldset>
@@ -417,40 +407,6 @@ export function GameplayOptionPage(): React.ReactNode {
                   </div>
                </fieldset>
             ) : null}
-         </div>
-      </div>
-   );
-}
-
-function ToggleComponent({
-   title,
-   contentHTML,
-   value,
-   onValueChange,
-}: {
-   title: string;
-   contentHTML: string;
-   value: boolean;
-   onValueChange: (newValue: boolean) => void;
-}): React.ReactNode {
-   return (
-      <div className="row">
-         <div className="f1">
-            <div>{title}</div>
-            <RenderHTML className="text-desc text-small" html={contentHTML} />
-         </div>
-         <div
-            onClick={() => {
-               playClick();
-               onValueChange(!value);
-            }}
-            className="ml10 pointer"
-         >
-            {value ? (
-               <div className="m-icon text-green">toggle_on</div>
-            ) : (
-               <div className="m-icon text-grey">toggle_off</div>
-            )}
          </div>
       </div>
    );

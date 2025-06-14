@@ -3,6 +3,7 @@ import { Config } from "../../../shared/logic/Config";
 import {
    CursorOptions,
    ThemeColorNames,
+   TileTextures,
    resetThemeBuildingColors,
    resetThemeColor,
    resetThemeResourceColors,
@@ -20,7 +21,9 @@ import { ChangeModernUIComponent } from "./ChangeModernUIComponent";
 import { ColorPicker } from "./ColorPicker";
 import { MenuComponent } from "./MenuComponent";
 import { RenderHTML } from "./RenderHTMLComponent";
+import { TileTextureComponent } from "./TextureSprites";
 import { TitleBarComponent } from "./TitleBarComponent";
+import { ToggleComponent } from "./ToggleComponent";
 
 export function ThemePage(): React.ReactNode {
    const gameOptions = useGameOptions();
@@ -158,6 +161,55 @@ export function ThemePage(): React.ReactNode {
                         notifyGameOptionsUpdate();
                      }}
                   />
+               </div>
+               <div className="separator" />
+               <ToggleComponent
+                  title={t(L.ShowTransportArrow)}
+                  contentHTML={t(L.ShowTransportArrowDescHTML)}
+                  value={gameOptions.showTransportArrow}
+                  onValueChange={(value) => {
+                     playClick();
+                     gameOptions.showTransportArrow = value;
+                     notifyGameOptionsUpdate(gameOptions);
+                  }}
+               />
+            </fieldset>
+            <fieldset>
+               <legend>{t(L.Tile)}</legend>
+               <div style={{ display: "grid", gridTemplateColumns: "repeat(6, 1fr)", gap: 10 }}>
+                  {TileTextures.map((i) => {
+                     return (
+                        <div
+                           className="pointer"
+                           key={i}
+                           style={{
+                              position: "relative",
+                              display: "flex",
+                              justifyContent: "center",
+                              alignItems: "center",
+                           }}
+                           onClick={() => {
+                              gameOptions.tileTexture = i;
+                              notifyGameOptionsUpdate(gameOptions);
+                           }}
+                        >
+                           <TileTextureComponent tileTexture={i} scale={0.25} />
+                           {gameOptions.tileTexture === i ? (
+                              <div
+                                 style={{
+                                    position: "absolute",
+                                    top: "50%",
+                                    left: "50%",
+                                    transform: "translate(-50%, -50%)",
+                                 }}
+                                 className="m-icon text-green"
+                              >
+                                 check_circle
+                              </div>
+                           ) : null}
+                        </div>
+                     );
+                  })}
                </div>
             </fieldset>
             <fieldset>

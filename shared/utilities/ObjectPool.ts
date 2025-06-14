@@ -3,8 +3,7 @@ class AverageProvider {
    private readonly _decayRatio: number;
 
    private _currentIndex: number;
-   // @ts-expect-error
-   private _average: number;
+   private _average = 0;
 
    constructor(windowSize: number, decayRatio: number) {
       this._history = new Array(windowSize);
@@ -58,7 +57,13 @@ export interface IObjectPoolOptions {
    reserve?: number;
 }
 
-export abstract class ObjectPool<T> {
+interface IObjectPoolFuncs<T> {
+   create: () => T;
+   onAllocate?: (obj: T) => void;
+   onRelease?: (obj: T) => void;
+}
+
+export class ObjectPool<T> {
    protected _freeList: T[];
    protected _freeCount: number;
    protected _reserveCount: number;
@@ -74,7 +79,10 @@ export abstract class ObjectPool<T> {
    private readonly _borrowRateAverageProvider: AverageProvider;
    private readonly _marginAverageProvider: AverageProvider;
 
-   constructor(options: IObjectPoolOptions = {}) {
+   constructor(
+      private readonly funcs: IObjectPoolFuncs<T>,
+      options: IObjectPoolOptions = {},
+   ) {
       this._freeList = [];
 
       this._freeCount = 0;
@@ -92,10 +100,6 @@ export abstract class ObjectPool<T> {
       this._marginAverageProvider = new AverageProvider(128, this._decayRatio);
    }
 
-   protected abstract create(): T;
-   protected abstract onAllocate(obj: T): void;
-   protected abstract onRelease(obj: T): void;
-
    protected get capacity(): number {
       return this._freeList.length;
    }
@@ -107,8 +111,8 @@ export abstract class ObjectPool<T> {
    allocate(): T {
       ++this._borrowRate;
       ++this._flowRate;
-      const obj = this._freeCount > 0 ? this._freeList[--this._freeCount] : this.create();
-      this.onAllocate(obj);
+      const obj = this._freeCount > 0 ? this._freeList[--this._freeCount] : this.funcs.create();
+      this.funcs.onAllocate?.(obj);
       return obj;
    }
 
@@ -137,7 +141,7 @@ export abstract class ObjectPool<T> {
 
          for (let i = 0; i < poolFilled; i++) {
             array[filled] = pool[poolSize - 1];
-            this.onAllocate(array[filled]);
+            this.funcs.onAllocate?.(array[filled]);
             ++filled;
             --poolSize;
          }
@@ -147,8 +151,8 @@ export abstract class ObjectPool<T> {
 
       // Construct the rest of the allocation
       while (filled < length) {
-         array[filled] = this.create();
-         this.onAllocate(array[filled]);
+         array[filled] = this.funcs.create();
+         this.funcs.onAllocate?.(array[filled]);
          ++filled;
       }
 
@@ -164,7 +168,7 @@ export abstract class ObjectPool<T> {
       }
 
       this._freeList[this._freeCount] = object;
-      this.onRelease(object);
+      this.funcs.onRelease?.(object);
       ++this._freeCount;
    }
 
@@ -180,7 +184,7 @@ export abstract class ObjectPool<T> {
       // Place objects into pool list
       for (let i = 0, j = array.length; i < j; i++) {
          this._freeList[this._freeCount] = array[i];
-         this.onRelease(array[i]);
+         this.funcs.onRelease?.(array[i]);
          ++this._freeCount;
       }
    }
@@ -192,7 +196,7 @@ export abstract class ObjectPool<T> {
          const diff = this._freeCount - count;
 
          for (let i = 0; i < diff; i++) {
-            this._freeList[this._freeCount] = this.create();
+            this._freeList[this._freeCount] = this.funcs.create();
             ++this._freeCount;
          }
       }
