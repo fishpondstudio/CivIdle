@@ -72,6 +72,11 @@ export class TileVisual extends Container {
 
       const { textures } = this._world.context;
 
+      const bg = this.addChild(new Sprite(getTexture("Misc_Tile", textures)));
+      bg.anchor.set(0.5);
+      bg.scale.set(0.5);
+      bg.position.set(0, 0);
+
       this._spinner = this.addChild(new Sprite(getTexture("Misc_Spinner", textures)));
       this._spinner.anchor.set(0.5);
       this._spinner.visible = false;

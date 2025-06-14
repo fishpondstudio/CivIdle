@@ -5,7 +5,6 @@ import {
    LINE_JOIN,
    ParticleContainer,
    Rectangle,
-   TilingSprite,
    type ColorSource,
    type FederatedPointerEvent,
    type IPointData,
@@ -53,7 +52,7 @@ import { Actions } from "../utilities/pixi-actions/Actions";
 import { Easing } from "../utilities/pixi-actions/Easing";
 import type { Action } from "../utilities/pixi-actions/actions/Action";
 import { CustomAction } from "../utilities/pixi-actions/actions/CustomAction";
-import { drawGrid, drawSelected } from "../visuals/DrawGrid";
+import { drawSelected } from "../visuals/DrawGrid";
 import { playError } from "../visuals/Sound";
 import { TileVisual } from "./TileVisual";
 import { TooltipPool } from "./TooltipPool";
@@ -74,8 +73,6 @@ export class WorldScene extends Scene {
    private cameraMovement: Action | null = null;
    private readonly _tiles: Map<number, TileVisual> = new Map();
    private readonly _transport: Map<number, Sprite> = new Map();
-   private _bg!: TilingSprite;
-   private _graphics!: SmoothGraphics;
    private _selectedXy: Tile | null = null;
    private _hijackSelectGridResolve: ((grid: IPointData) => void) | null = null;
 
@@ -94,25 +91,17 @@ export class WorldScene extends Scene {
          ),
          2,
       );
-      this._bg = this.viewport.addChild(
-         new TilingSprite(
-            getTexture("Misc_Paper", textures),
-            this._width + MARGIN * 2,
-            this._height + MARGIN * 2,
-         ),
-      );
-      this._bg.tint = getColorCached(getGameOptions().themeColors.WorldBackground);
-      this._bg.position.set((this._width - this._bg.width) / 2, (this._height - this._bg.height) / 2);
+      // this._bg = this.viewport.addChild(
+      //    new TilingSprite(
+      //       getTexture("Misc_Paper", textures),
+      //       this._width + MARGIN * 2,
+      //       this._height + MARGIN * 2,
+      //    ),
+      // );
+      // this._bg.tint = getColorCached(getGameOptions().themeColors.WorldBackground);
+      // this._bg.position.set((this._width - this._bg.width) / 2, (this._height - this._bg.height) / 2);
 
-      this._graphics = this.viewport.addChild(new SmoothGraphics()).lineStyle({
-         color: 0xffffff,
-         width: 2,
-         cap: LINE_CAP.ROUND,
-         join: LINE_JOIN.ROUND,
-         alignment: 0.5,
-      });
-      this._graphics.alpha = 0.1;
-      drawGrid(getGrid(getGameState()), this._graphics);
+      // drawGrid(getGrid(getGameState()), this._graphics);
       getGrid(getGameState()).forEach((grid) => {
          const xy = pointToTile(grid);
          this._tiles.set(xy, this.viewport.addChild(new TileVisual(this, grid)));
@@ -241,9 +230,6 @@ export class WorldScene extends Scene {
    }
 
    override onGameOptionsChanged(gameOptions: GameOptions): void {
-      this._bg.tint = getColorCached(gameOptions.themeColors.WorldBackground);
-      this._graphics.tint = getColorCached(gameOptions.themeColors.GridColor);
-      this._graphics.alpha = gameOptions.themeColors.GridAlpha;
       this._selectedGraphics.tint = getColorCached(gameOptions.themeColors.SelectedGridColor);
       this._tiles.forEach((visual, xy) => visual.updateDepositColor(gameOptions));
    }
