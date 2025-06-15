@@ -2,6 +2,7 @@ import Tippy from "@tippyjs/react";
 import { Config } from "../../../shared/logic/Config";
 import {
    CursorOptions,
+   PremiumTileTextures,
    ThemeColorNames,
    TileTextures,
    resetThemeBuildingColors,
@@ -10,15 +11,18 @@ import {
    type CursorOption,
 } from "../../../shared/logic/GameState";
 import { notifyGameOptionsUpdate } from "../../../shared/logic/GameStateLogic";
-import { clamp, keysOf, safeParseFloat, safeParseInt } from "../../../shared/utilities/Helper";
+import { UserAttributes } from "../../../shared/utilities/Database";
+import { clamp, hasFlag, keysOf, safeParseFloat, safeParseInt } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import { syncFontSizeScale, useGameOptions } from "../Global";
 import { copyBuildingColorToResource, randomizeBuildingAndResourceColor } from "../logic/ThemeColor";
+import { getUser } from "../rpc/RPCClient";
 import { jsxMapOf } from "../utilities/Helper";
 import { Singleton } from "../utilities/Singleton";
-import { playClick } from "../visuals/Sound";
+import { playClick, playError } from "../visuals/Sound";
 import { ChangeModernUIComponent } from "./ChangeModernUIComponent";
 import { ColorPicker } from "./ColorPicker";
+import { showToast } from "./GlobalModal";
 import { MenuComponent } from "./MenuComponent";
 import { RenderHTML } from "./RenderHTMLComponent";
 import { TileTextureComponent } from "./TextureSprites";
@@ -189,6 +193,15 @@ export function ThemePage(): React.ReactNode {
                               alignItems: "center",
                            }}
                            onClick={() => {
+                              if (
+                                 PremiumTileTextures[i] &&
+                                 !hasFlag(getUser()?.attr ?? UserAttributes.None, UserAttributes.DLC1)
+                              ) {
+                                 playError();
+                                 showToast(t(L.ThemePremiumTile));
+                                 return;
+                              }
+
                               gameOptions.tileTexture = i;
                               notifyGameOptionsUpdate(gameOptions);
                            }}

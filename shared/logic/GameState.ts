@@ -151,6 +151,18 @@ export const DarkTileTextures: Partial<Record<TileTexture, true>> = {
    Tile7: true,
    Tile8: true,
 };
+export const PremiumTileTextures: Partial<Record<TileTexture, true>> = {
+   Tile3: true,
+   Tile4: true,
+   Tile5: true,
+   Tile6: true,
+   Tile7: true,
+   Tile8: true,
+   Tile10: true,
+   Tile11: true,
+   Tile12: true,
+   Tile13: true,
+};
 
 export const CursorOptions = {
    OldFashioned: () => t(L.CursorOldFashioned),

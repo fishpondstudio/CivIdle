@@ -6,6 +6,7 @@ import WorldMap from "../../../shared/definitions/WorldMap.json";
 import { addPetraOfflineTime } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
 import { GOOGLE_PLAY_GAMES_CLIENT_ID } from "../../../shared/logic/Constants";
+import { PremiumTileTextures } from "../../../shared/logic/GameState";
 import { checksum, getGameOptions, getGameState } from "../../../shared/logic/GameStateLogic";
 import { RpcError, removeTrailingUndefs, rpcClient } from "../../../shared/thirdparty/TRPCClient";
 import type {
@@ -27,6 +28,7 @@ import {
    ChatAttributes,
    MessageType,
    ServerWSErrorCode,
+   UserAttributes,
 } from "../../../shared/utilities/Database";
 import { vacuumChat } from "../../../shared/utilities/DatabaseShared";
 import { SECOND, WEEK, clamp, forEach, hasFlag, shuffle, uuid4 } from "../../../shared/utilities/Helper";
@@ -470,3 +472,13 @@ function handleRpcResponse(response: any) {
    }
    resolve(result);
 }
+
+OnUserChanged.on((user) => {
+   if (!user) {
+      return;
+   }
+   if (PremiumTileTextures[getGameOptions().tileTexture] && !hasFlag(user.attr, UserAttributes.DLC1)) {
+      getGameOptions().tileTexture = "Tile1";
+      return;
+   }
+});

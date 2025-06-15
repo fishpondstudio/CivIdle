@@ -1,4 +1,5 @@
 import { wyhash } from "../thirdparty/wyhash";
+import { safeAdd } from "../utilities/Helper";
 import { TypedEvent } from "../utilities/TypedEvent";
 import { SavedGame, type GameOptions, type GameState } from "./GameState";
 
@@ -13,10 +14,22 @@ export function getGameOptions(): GameOptions {
    return savedGame.options;
 }
 export function serializeSave(save: SavedGame = savedGame): string {
-   save.options.checksum = null;
-   const checksum = wyhash(serializeSaveLite(save), BigInt(0)).toString(16);
-   save.options.checksum = checksum;
-   return JSON.stringify(save, replacer);
+   const transportation = save.current.transportationV2;
+   save.current.transportationV2 = [];
+   // Clone without transportation
+   const cloned = structuredClone(save);
+   save.current.transportationV2 = transportation;
+   // Rewind transportation back to origin
+   transportation.forEach((t) => {
+      const resources = cloned.current.tiles.get(t.fromXy)?.building?.resources;
+      if (resources) {
+         safeAdd(resources, t.resource, t.amount);
+      }
+   });
+   cloned.options.checksum = null;
+   const checksum = wyhash(serializeSaveLite(cloned), BigInt(0)).toString(16);
+   cloned.options.checksum = checksum;
+   return JSON.stringify(cloned, replacer);
 }
 export function serializeSaveLite(gs: SavedGame = savedGame): Uint8Array {
    const transportation = gs.current.transportationV2;
