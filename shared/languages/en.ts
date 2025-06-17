@@ -1529,4 +1529,5 @@ export const EN = {
    ThemeTile: "Tile",
    ThemePremiumTile: "This tile is only available for Supporter Pack owners",
    HighlightBuilding: "Highlight %{building}",
+   TileBonusRefreshIn: "Tile bonus will refresh in <b>%{time}</b>",
 };
