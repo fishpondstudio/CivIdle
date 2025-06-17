@@ -123,11 +123,15 @@ export async function loadBundle() {
          { chars: BitmapFont.ASCII, resolution: 2, padding: 8 },
       );
       if (f.family === Fonts.Cabin) {
-         BitmapFont.from(`${f.family}NoShadow`, {
-            fill: "#ffffff",
-            fontSize: 64,
-            fontFamily: f.family,
-         });
+         BitmapFont.from(
+            `${f.family}NoShadow`,
+            {
+               fill: "#ffffff",
+               fontSize: 64,
+               fontFamily: f.family,
+            },
+            { chars: BitmapFont.ASCII, resolution: 2, padding: 8 },
+         );
       }
    });
    console.timeEnd("Load Default Font");
