@@ -1,4 +1,6 @@
 import type React from "react";
+import { GameStateChanged } from "../../../shared/logic/GameStateLogic";
+import { Tick } from "../../../shared/logic/TickLogic";
 import { cls, sizeOf } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import { PlayerMapScene } from "../scenes/PlayerMapScene";
@@ -8,11 +10,11 @@ import { refreshOnTypedEvent } from "../utilities/Hook";
 import { OnSceneChanged } from "../utilities/SceneManager";
 import { Singleton, isSingletonReady } from "../utilities/Singleton";
 import { playClick } from "../visuals/Sound";
-import { Tick } from "../../../shared/logic/TickLogic";
 
 export function BottomPanel(): React.ReactNode {
    if (!isSingletonReady()) return null;
    refreshOnTypedEvent(OnSceneChanged);
+   refreshOnTypedEvent(GameStateChanged);
    return (
       <div className="row">
          <button

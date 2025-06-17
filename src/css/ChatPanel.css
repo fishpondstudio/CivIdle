@@ -28,6 +28,7 @@
    text-overflow: ellipsis;
    flex: 1;
    width: 320px;
+   padding: 0 5px 0 0;
 }
 
 #chat-panel .chat-message-item {
