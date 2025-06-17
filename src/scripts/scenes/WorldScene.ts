@@ -59,6 +59,7 @@ let viewportZoom: number | null = null;
 const MARGIN = 200;
 const SELECTOR_ALPHA = 0.4;
 const HIGHLIGHT_ALPHA = 0.2;
+const ANIMATION_TIME = 0.2;
 
 export class WorldScene extends Scene {
    private _width!: number;
@@ -315,18 +316,30 @@ export class WorldScene extends Scene {
       destroyAllChildren(this._selectorContainer);
 
       const selector = this.createSelector();
-      selector.alpha = SELECTOR_ALPHA;
       selector.position = grid.gridToPosition(selected);
+      selector.alpha = 0;
+      Actions.to(selector, { alpha: SELECTOR_ALPHA }, ANIMATION_TIME, Easing.InQuad).start();
 
       if (highlights.length > 0) {
          highlights.forEach((tile) => {
             const selector = this.createSelector();
-            selector.alpha = HIGHLIGHT_ALPHA;
+            selector.alpha = 0;
+            Actions.to(selector, { alpha: HIGHLIGHT_ALPHA }, ANIMATION_TIME, Easing.InQuad).start();
             selector.position = grid.gridToPosition(tileToPoint(tile));
          });
       } else {
          this.drawBuildingDecors(getGameState());
       }
+   }
+
+   private highlightRange(grid: IPointData, range: number) {
+      const g = getGrid(getGameState());
+      g.getRange(grid, range).forEach((neighbor) => {
+         const selector = this.createSelector();
+         selector.alpha = 0;
+         Actions.to(selector, { alpha: HIGHLIGHT_ALPHA }, ANIMATION_TIME, Easing.InQuad).start();
+         selector.position = g.gridToPosition(neighbor);
+      });
    }
 
    selectGrid(grid: IPointData): void {
@@ -451,15 +464,6 @@ export class WorldScene extends Scene {
          });
          this._transportLines.moveTo(t.fromPosition.x, t.fromPosition.y);
          this._transportLines.lineTo(t.toPosition.x, t.toPosition.y);
-      });
-   }
-
-   private highlightRange(grid: IPointData, range: number) {
-      const g = getGrid(getGameState());
-      g.getRange(grid, range).forEach((neighbor) => {
-         const selector = this.createSelector();
-         selector.alpha = HIGHLIGHT_ALPHA;
-         selector.position = g.gridToPosition(neighbor);
       });
    }
 
