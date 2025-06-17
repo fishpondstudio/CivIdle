@@ -23,9 +23,9 @@ import {
 import { v2 } from "../../../shared/utilities/Vector2";
 import { getBuildingTexture, getNotProducingTexture, getTexture, getTileTexture } from "../logic/VisualLogic";
 import { getColorCached } from "../utilities/CachedColor";
+import type { Action } from "../utilities/pixi-actions/Action";
 import { Actions } from "../utilities/pixi-actions/Actions";
 import { Easing } from "../utilities/pixi-actions/Easing";
-import type { Action } from "../utilities/pixi-actions/actions/Action";
 import { Fonts } from "../visuals/Fonts";
 import type { WorldScene } from "./WorldScene";
 

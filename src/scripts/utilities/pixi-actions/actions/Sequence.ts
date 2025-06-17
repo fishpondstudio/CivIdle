@@ -1,4 +1,4 @@
-import { Action } from "./Action";
+import { Action } from "../Action";
 
 export default class Sequence extends Action {
    index = 0;

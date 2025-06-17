@@ -1,8 +1,8 @@
 import type { IPoint, IPointData } from "pixi.js";
 import { DisplayObject } from "pixi.js";
+import { Action } from "../Action";
 import type { EasingFunction } from "../Easing";
 import { Easing } from "../Easing";
-import { Action } from "./Action";
 
 export class TargetAction<T extends Record<string, any>> extends Action {
    private readonly interpolation: EasingFunction;

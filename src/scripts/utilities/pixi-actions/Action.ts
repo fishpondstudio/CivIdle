@@ -1,4 +1,4 @@
-import { Actions } from "../Actions";
+import { actions } from "./ActionStorage";
 
 let id = 0;
 
@@ -19,16 +19,16 @@ export abstract class Action {
    }
 
    start() {
-      Actions.start(this);
+      actions.set(this.id, this);
       return this;
    }
 
    isPlaying(): boolean {
-      return Actions.isPlaying(this);
+      return actions.has(this.id);
    }
 
    pause() {
-      Actions.pause(this);
+      actions.delete(this.id);
       return this;
    }
 

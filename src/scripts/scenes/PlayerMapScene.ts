@@ -28,6 +28,8 @@ import { AccountLevelImages } from "../ui/TextureSprites";
 import { getColorCached } from "../utilities/CachedColor";
 import { Scene, destroyAllChildren, type ISceneContext } from "../utilities/SceneManager";
 import { Singleton } from "../utilities/Singleton";
+import { Easing } from "../utilities/pixi-actions/Easing";
+import { CustomAction } from "../utilities/pixi-actions/actions/CustomAction";
 import { Fonts } from "../visuals/Fonts";
 import { findPath, getOwnedTradeTile } from "./PathFinder";
 
@@ -205,9 +207,20 @@ export class PlayerMapScene extends Scene {
 
    lookAt(xy: string): void {
       const point = xyToPoint(xy);
-      const posX = GridSize * point.x;
-      const posY = GridSize * point.y;
-      this.viewport.center = { x: posX + GridSize / 2, y: posY + GridSize / 2 };
+      const x = GridSize * point.x + GridSize / 2;
+      const y = GridSize * point.y + GridSize / 2;
+      new CustomAction(
+         () => this.viewport.center,
+         (v) => {
+            this.viewport.center = v;
+         },
+         (a, b, f) => {
+            return { x: a.x + (b.x - a.x) * f, y: a.y + (b.y - a.y) * f };
+         },
+         { x, y },
+         0.25,
+         Easing.InOutSine,
+      ).start();
       this.selectTile(point.x, point.y);
    }
 
