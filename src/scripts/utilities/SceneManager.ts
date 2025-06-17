@@ -1,13 +1,14 @@
 import type {
-   Container,
-   FederatedPointerEvent,
    Application,
    ColorSource,
+   Container,
+   FederatedPointerEvent,
    IPointData,
    Texture,
 } from "pixi.js";
 import type { GameOptions, GameState } from "../../../shared/logic/GameState";
 import { watchGameOptions, watchGameState } from "../../../shared/logic/GameStateLogic";
+import { TypedEvent } from "../../../shared/utilities/TypedEvent";
 import type { MainBundleAssets } from "../main";
 import { Camera } from "./Camera";
 
@@ -64,6 +65,8 @@ export interface ISceneContext {
    textures: Record<string, Texture>;
    gameState: GameState;
 }
+
+export const OnSceneChanged = new TypedEvent<void>();
 
 export type SceneAction = (s: Scene) => void;
 
@@ -124,6 +127,7 @@ export class SceneManager {
          queuedActions.length = 0;
       }
 
+      OnSceneChanged.emit();
       return this.currentScene as T;
    }
 

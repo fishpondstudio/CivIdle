@@ -7,10 +7,6 @@
    align-items: center;
 }
 
-#chat-panel .chat-bar.last-message {
-   width: 350px;
-}
-
 #chat-panel .chat-content {
    width: 350px;
    height: 60vh;
@@ -31,6 +27,7 @@
    overflow: hidden;
    text-overflow: ellipsis;
    flex: 1;
+   width: 320px;
 }
 
 #chat-panel .chat-message-item {

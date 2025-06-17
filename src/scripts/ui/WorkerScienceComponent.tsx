@@ -34,8 +34,8 @@ export function WorkerScienceComponent({ gameState, xy }: IBuildingComponentProp
                      </div>
                   </li>
                   <ul className="text-small">
-                     {Tick.current.globalMultipliers.sciencePerIdleWorker.map((m) => (
-                        <li key={m.source} className="row">
+                     {Tick.current.globalMultipliers.sciencePerIdleWorker.map((m, i) => (
+                        <li key={i} className="row">
                            <div className="f1">{m.source}</div>
                            <div>
                               <FormatNumber value={m.value} />
@@ -60,8 +60,8 @@ export function WorkerScienceComponent({ gameState, xy }: IBuildingComponentProp
                      <div>{sciencePerBusyWorker}</div>
                   </li>
                   <ul className="text-small">
-                     {Tick.current.globalMultipliers.sciencePerBusyWorker.map((m) => (
-                        <li key={m.source} className="row">
+                     {Tick.current.globalMultipliers.sciencePerBusyWorker.map((m, i) => (
+                        <li key={i} className="row">
                            <div className="f1">{m.source}</div>
                            <div>
                               <FormatNumber value={m.value} />

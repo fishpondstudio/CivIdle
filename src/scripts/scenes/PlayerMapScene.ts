@@ -1,6 +1,7 @@
 import { SmoothGraphics } from "@pixi/graphics-smooth";
 import type { ColorSource, FederatedPointerEvent, IPointData, Texture } from "pixi.js";
 import { BitmapText, Container, LINE_CAP, LINE_JOIN, ParticleContainer, Sprite } from "pixi.js";
+import type { Building } from "../../../shared/definitions/BuildingDefinitions";
 import WorldMap from "../../../shared/definitions/WorldMap.json";
 import { isTileReserved } from "../../../shared/logic/PlayerTradeLogic";
 import {
@@ -231,6 +232,53 @@ export class PlayerMapScene extends Scene {
       return { x: (tile.x + 0.5) * GridSize, y: (tile.y + 0.5) * GridSize };
    }
 
+   public highlightBuilding(building: Building): void {
+      this._selectedGraphics.clear();
+      TileBuildings.forEach((b, xy) => {
+         if (b === building) {
+            this.drawSelectedTile(xyToPoint(xy));
+         }
+      });
+   }
+
+   private getBuildingTiles(building: Building): string[] {
+      const result: string[] = [];
+      TileBuildings.forEach((b, xy) => {
+         if (b === building) {
+            result.push(xy);
+         }
+      });
+      return result;
+   }
+
+   public lookAtPrevious(xy: string): void {
+      const building = TileBuildings.get(xy);
+      if (!building) {
+         return;
+      }
+      const tiles = this.getBuildingTiles(building);
+      const index = tiles.indexOf(xy);
+      if (index === -1) {
+         return;
+      }
+      const previous = tiles[(index + tiles.length - 1) % tiles.length];
+      this.lookAt(previous);
+   }
+
+   public lookAtNext(xy: string): void {
+      const building = TileBuildings.get(xy);
+      if (!building) {
+         return;
+      }
+      const tiles = this.getBuildingTiles(building);
+      const index = tiles.indexOf(xy);
+      if (index === -1) {
+         return;
+      }
+      const next = tiles[(index + 1) % tiles.length];
+      this.lookAt(next);
+   }
+
    public drawPath(path: IPointData[]): void {
       destroyAllChildren(this._path);
       path.forEach((point, idx) => {
@@ -246,25 +294,28 @@ export class PlayerMapScene extends Scene {
       destroyAllChildren(this._path);
    }
 
-   private selectTile(tileX: number, tileY: number) {
-      const x = tileX * GridSize;
-      const y = tileY * GridSize;
-
-      this._selectedGraphics.clear();
+   private drawSelectedTile({ x, y }: IPointData): void {
+      const posX = x * GridSize;
+      const posY = y * GridSize;
       this._selectedGraphics
          .lineStyle({
-            alpha: 0.75,
-            color: 0xffff99,
-            width: 2,
+            alpha: 1,
+            color: 0xffeaa7,
+            width: 4,
             cap: LINE_CAP.ROUND,
             join: LINE_JOIN.ROUND,
             alignment: 0.5,
          })
-         .moveTo(x, y)
-         .lineTo(x + GridSize, y)
-         .lineTo(x + GridSize, y + GridSize)
-         .lineTo(x, y + GridSize)
-         .lineTo(x, y);
+         .moveTo(posX, posY)
+         .lineTo(posX + GridSize, posY)
+         .lineTo(posX + GridSize, posY + GridSize)
+         .lineTo(posX, posY + GridSize)
+         .lineTo(posX, posY);
+   }
+
+   private selectTile(tileX: number, tileY: number) {
+      this._selectedGraphics.clear();
+      this.drawSelectedTile({ x: tileX, y: tileY });
 
       const myXy = getOwnedTradeTile();
       const map = getPlayerMap();

@@ -1,4 +1,4 @@
-import { useEffect, useState, type DependencyList } from "react";
+import { useEffect, useReducer, useState, type DependencyList } from "react";
 import { getShortcuts, type Shortcut } from "../../../shared/logic/Shortcut";
 import type { TypedEvent } from "../../../shared/utilities/TypedEvent";
 
@@ -50,4 +50,11 @@ export function useShortcut(shortcut: Shortcut, callback: () => void, deps: Depe
          shortcuts[shortcut] = undefined;
       };
    }, [shortcut, callback, ...deps]);
+}
+
+const reducer = (value: number) => (value + 1) % 1000000;
+
+export function useForceUpdate(): () => void {
+   const [, update] = useReducer(reducer, 0);
+   return update;
 }

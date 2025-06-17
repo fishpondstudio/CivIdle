@@ -830,3 +830,7 @@ export function reverseMap<T, K>(arr: T[], func: (v: T, idx: number, arr: T[]) =
    }
    return result;
 }
+
+export function cls(...classes: (string | null | undefined)[]): string {
+   return classes.filter(Boolean).join(" ");
+}

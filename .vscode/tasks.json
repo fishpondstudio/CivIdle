@@ -33,5 +33,24 @@
          },
          "problemMatcher": []
       }
+      {
+         "label": "Run Server",
+         "type": "shell",
+         "command": "pnpm run start",
+         "options": {
+            "cwd": "server"
+         },
+         "isBackground": true,
+         "presentation": {
+            "reveal": "never",
+            "echo": false,
+            "focus": false,
+            "panel": "dedicated"
+         },
+         "runOptions": {
+            "runOn": "folderOpen"
+         },
+         "problemMatcher": []
+      }
    ]
 }

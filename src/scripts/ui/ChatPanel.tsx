@@ -13,7 +13,7 @@ import {
    type IChat,
    type IUser,
 } from "../../../shared/utilities/Database";
-import { firstKeyOf, hasFlag } from "../../../shared/utilities/Helper";
+import { cls, firstKeyOf, hasFlag } from "../../../shared/utilities/Helper";
 import { censor } from "../../../shared/utilities/ProfanityFilter";
 import { TypedEvent } from "../../../shared/utilities/TypedEvent";
 import { L, t } from "../../../shared/utilities/i18n";
@@ -35,6 +35,7 @@ import { getCountryName } from "../utilities/CountryCode";
 import { useTypedEvent } from "../utilities/Hook";
 import { openUrl } from "../utilities/Platform";
 import { playError } from "../visuals/Sound";
+import { BottomPanel } from "./BottomPanel";
 import { showToast } from "./GlobalModal";
 import { RenderHTML } from "./RenderHTMLComponent";
 import { SelectChatChannelModal } from "./SelectChatChannelModal";
@@ -68,26 +69,27 @@ export function ChatPanel(): React.ReactNode {
    }
 
    return (
-      <div
-         className={classNames({ "chat-bar window": true, "last-message": !options.chatHideLatestMessage })}
-      >
+      <div className={cls("chat-bar window")}>
          <div
             className="row pointer"
-            style={{ width: "100%", height: "100%", padding: "0 5px" }}
+            style={{ width: "100%", height: "100%" }}
             onClick={() => startTransition(() => setShowChatWindow(!showChatWindow))}
          >
             <img
                style={{
                   width: 16,
                   height: 16,
-                  margin: options.chatHideLatestMessage ? 0 : "0 5px 0 0",
+                  margin: "0 5px",
                }}
                src={user != null ? chatActive : chatInactive}
             />
-            <div className="chat-message pointer">
-               <LatestMessage messages={messages} />
-            </div>
+            {options.chatHideLatestMessage ? null : (
+               <div className="chat-message pointer">
+                  <LatestMessage messages={messages} />
+               </div>
+            )}
          </div>
+         <BottomPanel />
          <div style={style}>
             {Array.from(options.chatChannels).map((channel, i) => (
                <ChatWindow
