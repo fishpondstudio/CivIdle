@@ -65,6 +65,7 @@ export class WorldScene extends Scene {
    private _width!: number;
    private _height!: number;
 
+   private _tileVisualContainer: Container;
    private _selectorContainer!: Container;
 
    private _transportContainer!: Container;
@@ -96,9 +97,13 @@ export class WorldScene extends Scene {
          ),
          2,
       );
+
+      this._tileVisualContainer = this.viewport.addChild(new Container());
+      this._tileVisualContainer.name = "TileVisualContainer";
+
       getGrid(getGameState()).forEach((grid) => {
          const xy = pointToTile(grid);
-         this._tiles.set(xy, this.viewport.addChild(new TileVisual(this, grid)));
+         this._tiles.set(xy, this._tileVisualContainer.addChild(new TileVisual(this, grid)));
       });
 
       this._tooltipContainer = this.viewport.addChild(new Container());
@@ -473,7 +478,7 @@ export class WorldScene extends Scene {
 
    resetTile(xy: Tile): void {
       this._tiles.get(xy)?.destroy({ children: true });
-      this._tiles.set(xy, this.viewport.addChild(new TileVisual(this, tileToPoint(xy))));
+      this._tiles.set(xy, this._tileVisualContainer.addChild(new TileVisual(this, tileToPoint(xy))));
    }
 
    revealTile(xy: Tile): void {
