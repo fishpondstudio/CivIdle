@@ -6,6 +6,7 @@ import {
    getMissingGreatPeopleForWisdom,
    getWisdomUpgradeCost,
 } from "../../../shared/logic/RebirthLogic";
+import { AccountLevel } from "../../../shared/utilities/Database";
 import { numberToRoman, safeAdd } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import { useGameOptions } from "../Global";
@@ -17,6 +18,7 @@ import { playClick, playError, playLevelUp } from "../visuals/Sound";
 import { hideModal, showModal } from "./GlobalModal";
 import { ManagePermanentGreatPersonModal } from "./ManagePermanentGreatPersonModal";
 import { RenderHTML } from "./RenderHTMLComponent";
+import { AccountLevelComponent } from "./TextureSprites";
 import { WarningComponent } from "./WarningComponent";
 
 export function ManageAgeWisdomModal(): React.ReactNode {
@@ -45,84 +47,95 @@ export function ManageAgeWisdomModal(): React.ReactNode {
             <WarningComponent icon="info" className="text-small mb10">
                <RenderHTML html={t(L.AgeWisdomDescHTML)} />
             </WarningComponent>
-            {isOnlineUser() ? null : (
-               <WarningComponent icon="info" className="text-small mb10">
-                  <RenderHTML html={t(L.AgeWisdomUpgradeWarningHTML)} />
-               </WarningComponent>
-            )}
-            <div className="inset-shallow white" style={{ maxHeight: "50vh", overflowY: "auto" }}>
-               {jsxMapOf(Config.TechAge, (age, def) => {
-                  if (def.idx === 0) {
-                     return null;
-                  }
-                  const wisdomLevel = options.ageWisdom[age] ?? 0;
-                  const color = getColorCached(def.color).toHex();
-                  const missing = getMissingGreatPeopleForWisdom(age);
-                  return (
-                     <div
-                        key={age}
-                        className="row"
-                        style={{
-                           fontFamily: Fonts.OldTypefaces,
-                           borderColor: color,
-                           borderWidth: "2px",
-                           borderStyle: "solid",
-                           padding: 10,
-                           margin: 10,
-                           fontSize: 20,
-                           color: color,
-                           borderRadius: 5,
-                        }}
-                     >
-                        <div>
-                           ({numberToRoman(def.idx + 1)}) {def.name()}
-                        </div>
-                        <div className="f1"></div>
-                        <div className="mr10">{t(L.LevelX, { level: wisdomLevel })}</div>
-                        <button
-                           disabled={missing.size > 0}
-                           onClick={() => {
-                              const missing = getMissingGreatPeopleForWisdom(age);
-                              if (missing.size > 0) {
-                                 playError();
-                                 return;
-                              }
-                              playLevelUp();
-                              getGreatPeopleForWisdom(age).forEach((gp) => {
-                                 const inv = options.greatPeople[gp];
-                                 if (inv) {
-                                    inv.amount -= getWisdomUpgradeCost(gp);
-                                 }
-                              });
-                              safeAdd(options.ageWisdom, age, 1);
-                              notifyGameOptionsUpdate();
+            {isOnlineUser() ? (
+               <div className="inset-shallow white" style={{ maxHeight: "50vh", overflowY: "auto" }}>
+                  {jsxMapOf(Config.TechAge, (age, def) => {
+                     if (def.idx === 0) {
+                        return null;
+                     }
+                     const wisdomLevel = options.ageWisdom[age] ?? 0;
+                     const color = getColorCached(def.color).toHex();
+                     const missing = getMissingGreatPeopleForWisdom(age);
+                     return (
+                        <div
+                           key={age}
+                           className="row"
+                           style={{
+                              fontFamily: Fonts.OldTypefaces,
+                              borderColor: color,
+                              borderWidth: "2px",
+                              borderStyle: "solid",
+                              padding: 10,
+                              margin: 10,
+                              fontSize: 20,
+                              color: color,
+                              borderRadius: 5,
                            }}
                         >
-                           <Tippy
-                              disabled={missing.size <= 0}
-                              content={
-                                 <div>
-                                    <div className="text-strong">
-                                       {t(L.AgeWisdomNeedMoreGreatPeopleShards)}
-                                    </div>
-                                    {jsxMMapOf(missing, (gp, amount) => {
-                                       return (
-                                          <div className="row">
-                                             <div className="f1">{Config.GreatPerson[gp].name()}</div>
-                                             <div className="ml20">{amount}</div>
-                                          </div>
-                                       );
-                                    })}
-                                 </div>
-                              }
+                           <div>
+                              ({numberToRoman(def.idx + 1)}) {def.name()}
+                           </div>
+                           <div className="f1"></div>
+                           <div className="mr10">{t(L.LevelX, { level: wisdomLevel })}</div>
+                           <button
+                              disabled={missing.size > 0}
+                              onClick={() => {
+                                 const missing = getMissingGreatPeopleForWisdom(age);
+                                 if (missing.size > 0) {
+                                    playError();
+                                    return;
+                                 }
+                                 playLevelUp();
+                                 getGreatPeopleForWisdom(age).forEach((gp) => {
+                                    const inv = options.greatPeople[gp];
+                                    if (inv) {
+                                       inv.amount -= getWisdomUpgradeCost(gp);
+                                    }
+                                 });
+                                 safeAdd(options.ageWisdom, age, 1);
+                                 notifyGameOptionsUpdate();
+                              }}
                            >
-                              <div>{t(L.Upgrade)}</div>
-                           </Tippy>
-                        </button>
-                     </div>
-                  );
-               })}
-            </div>
+                              <Tippy
+                                 disabled={missing.size <= 0}
+                                 content={
+                                    <div>
+                                       <div className="text-strong">
+                                          {t(L.AgeWisdomNeedMoreGreatPeopleShards)}
+                                       </div>
+                                       {jsxMMapOf(missing, (gp, amount) => {
+                                          return (
+                                             <div className="row">
+                                                <div className="f1">{Config.GreatPerson[gp].name()}</div>
+                                                <div className="ml20">{amount}</div>
+                                             </div>
+                                          );
+                                       })}
+                                    </div>
+                                 }
+                              >
+                                 <div>{t(L.Upgrade)}</div>
+                              </Tippy>
+                           </button>
+                        </div>
+                     );
+                  })}
+               </div>
+            ) : (
+               <div className="inset-shallow white" style={{ padding: "50px 20px" }}>
+                  <div className="row jcc">
+                     <AccountLevelComponent level={AccountLevel.Quaestor} scale={0.5} />
+                     <AccountLevelComponent level={AccountLevel.Aedile} scale={0.5} />
+                     <AccountLevelComponent level={AccountLevel.Praetor} scale={0.5} />
+                     <AccountLevelComponent level={AccountLevel.Consul} scale={0.5} />
+                  </div>
+                  <RenderHTML
+                     html={t(L.AgeWisdomUpgradeWarningHTMLV2)}
+                     className="text-desc mt10 text-center"
+                     style={{ fontSize: 16 }}
+                  />
+               </div>
+            )}
          </div>
       </div>
    );

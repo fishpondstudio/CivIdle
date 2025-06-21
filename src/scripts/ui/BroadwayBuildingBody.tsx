@@ -43,7 +43,7 @@ export function BroadwayBuildingBody({ gameState, xy }: IBuildingComponentProps)
                               <span className="text-strong">{def.name()}</span>
                               <span className="text-desc ml5">{Config.TechAge[def.age].name()}</span>
                            </div>
-                           <div className="text-small text-desc">{def.desc(def, round(effect, 2))}</div>
+                           <div className="text-small text-desc">{def.desc(def, round(effect, 1))}</div>
                         </div>
                      </div>
                   );
@@ -119,7 +119,7 @@ export function BroadwayBuildingBody({ gameState, xy }: IBuildingComponentProps)
                                        <span className="text-desc ml5">{Config.TechAge[def.age].name()}</span>
                                     </div>
                                     <div className="text-small text-desc">
-                                       {def.desc(def, round(effect, 2))}
+                                       {def.desc(def, round(effect, 1))}
                                     </div>
                                  </div>
                               </td>

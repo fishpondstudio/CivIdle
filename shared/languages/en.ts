@@ -69,8 +69,7 @@ export const EN = {
    AgeWisdomGreatPeopleShardsSatisfied: "You have enough great people shards for the next Age Wisdom upgrade",
    AgeWisdomNeedMoreGreatPeopleShards: "Need More Great People Shards",
    AgeWisdomNotEligible: "This Great Person is not eligible for Age Wisdom",
-   AgeWisdomSource: "%{age} Wisdom: %{person}",
-   AgeWisdomUpgradeWarningHTML: "Your current account rank is Tribune. When upgrading to Quaestor, Age Wisdom <b>cannot be carried over</b>",
+   AgeWisdomSource: "%{age} Wisdom: %{person}",   
    AGreatPersonIsBorn: "A Great Person Is Born",
    AircraftCarrier: "Aircraft Carrier",
    AircraftCarrierYard: "Aircraft Carrier Yard",
@@ -1530,4 +1529,5 @@ export const EN = {
    ThemePremiumTile: "This tile is only available for Supporter Pack owners",
    HighlightBuilding: "Highlight %{building}",
    TileBonusRefreshIn: "Tile bonus will refresh in <b>%{time}</b>",
+   AgeWisdomUpgradeWarningHTMLV2: "Age Wisdom is only available for <b>Quaestor</b> rank and above",
 };

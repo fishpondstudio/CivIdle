@@ -1,18 +1,14 @@
-import { useEffect, useReducer, useState, type DependencyList } from "react";
+import { useEffect, useReducer, type DependencyList } from "react";
 import { getShortcuts, type Shortcut } from "../../../shared/logic/Shortcut";
 import type { TypedEvent } from "../../../shared/utilities/TypedEvent";
 
 export function makeObservableHook<T>(event: TypedEvent<T>, getter: () => T) {
    return function observe(): T {
-      const [_, setter] = useState(0);
-      function handleEvent(data: T): void {
-         setter((old) => old + 1);
-      }
-      // biome-ignore lint/correctness/useExhaustiveDependencies(handleEvent):
+      const [_, update] = useReducer(reducer, 0);
       useEffect(() => {
-         event.on(handleEvent);
+         event.on(update);
          return () => {
-            event.off(handleEvent);
+            event.off(update);
          };
       }, [event]);
       return getter();
@@ -28,18 +24,15 @@ export function useTypedEvent<T>(event: TypedEvent<T>, listener: (e: T) => void)
    }, [event, listener]);
 }
 
-export function refreshOnTypedEvent<T>(event: TypedEvent<T>) {
-   const [_, setter] = useState(0);
-   function listener() {
-      setter((old) => old + 1);
-   }
-   // biome-ignore lint/correctness/useExhaustiveDependencies(listener):
+export function refreshOnTypedEvent<T>(event: TypedEvent<T>): number {
+   const [handle, update] = useReducer(reducer, 0);
    useEffect(() => {
-      event.on(listener);
+      event.on(update);
       return () => {
-         event.off(listener);
+         event.off(update);
       };
    }, [event]);
+   return handle;
 }
 
 export function useShortcut(shortcut: Shortcut, callback: () => void, deps: DependencyList) {
