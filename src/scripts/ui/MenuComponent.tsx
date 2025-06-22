@@ -18,8 +18,10 @@ import { playError } from "../visuals/Sound";
 import { AboutModal } from "./AboutModal";
 import { GameplayOptionPage } from "./GameplayOptionPage";
 import { showModal, showToast } from "./GlobalModal";
-import { HallOfFameModal } from "./HallOfFameModal";
+import { ManageAgeWisdomModal } from "./ManageAgeWisdomModal";
+import { ManagePermanentGreatPersonModal } from "./ManagePermanentGreatPersonModal";
 import { PatchNotesPage } from "./PatchNotesPage";
+import { RebirthModal } from "./RebirthModal";
 import { ShortcutPage } from "./ShortcutPage";
 import { ThemePage } from "./ThemePage";
 import { TutorialPage } from "./TutorialPage";
@@ -138,11 +140,29 @@ export function MenuComponent(): React.ReactNode {
                   <div
                      className="menu-popover-item"
                      onPointerDown={(e) => {
-                        showModal(<HallOfFameModal />);
+                        showModal(<RebirthModal />);
                         setActive(null);
                      }}
                   >
-                     <MenuItem check={false}>{t(L.HallOfFame)}</MenuItem>
+                     <MenuItem check={false}>{t(L.Reborn)}</MenuItem>
+                  </div>
+                  <div
+                     className="menu-popover-item"
+                     onPointerDown={(e) => {
+                        showModal(<ManagePermanentGreatPersonModal />);
+                        setActive(null);
+                     }}
+                  >
+                     <MenuItem check={false}>{t(L.GreatPeople)}</MenuItem>
+                  </div>
+                  <div
+                     className="menu-popover-item"
+                     onPointerDown={(e) => {
+                        showModal(<ManageAgeWisdomModal />);
+                        setActive(null);
+                     }}
+                  >
+                     <MenuItem check={false}>{t(L.AgeWisdom)}</MenuItem>
                   </div>
                </div>
             </div>

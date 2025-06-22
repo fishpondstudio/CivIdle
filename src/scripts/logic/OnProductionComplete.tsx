@@ -10,6 +10,7 @@ import {
    getWorkingBuilding,
    getYellowCraneTowerRange,
    isBuildingWellStocked,
+   isFestival,
    isSpecialBuilding,
    isWorldOrNaturalWonder,
    isWorldWonder,
@@ -182,7 +183,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
             const mul = Math.floor(building.level / 10);
             if (mul > 0) {
                mapSafePush(Tick.next.tileMultipliers, xy, {
-                  input: gs.festival ? 0 : mul,
+                  input: isFestival("Alps", gs) ? 0 : mul,
                   output: mul,
                   source: t(L.NaturalWonderName, { name: buildingName }),
                });
@@ -479,7 +480,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
                }
             }
          }
-         if (gs.festival) {
+         if (isFestival("Poseidon", gs)) {
             Tick.next.globalMultipliers.output.push({ value: 1, source: buildingName });
          }
          break;
@@ -680,7 +681,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
                   }
                }
                mapSafePush(Tick.next.tileMultipliers, tileXy, {
-                  input: gs.festival ? 0 : count,
+                  input: isFestival("GreatSphinx", gs) ? 0 : count,
                   output: count,
                   source: buildingName,
                });
@@ -850,7 +851,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
                Config.TechAge[getCurrentAge(gs)].idx -
                   Config.TechAge[getBuildingUnlockAge(building.type)].idx,
             );
-            if (gs.festival) {
+            if (isFestival("GreatWall", gs)) {
                count *= 2;
             }
             mapSafePush(Tick.next.tileMultipliers, pointToTile(point), {
@@ -884,7 +885,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
       }
       case "PorcelainTower": {
          Tick.next.globalMultipliers.happiness.push({ value: 5, source: buildingName });
-         if (gs.festival) {
+         if (isFestival("PorcelainTower", gs)) {
             forEach(gs.greatPeople, (gp, level) => {
                if (level > 0) {
                   const def = Config.GreatPerson[gp];
@@ -1061,7 +1062,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
                }
 
                if (
-                  gs.festival &&
+                  isFestival("WallStreet", gs) &&
                   (Config.Building[b.type].output.MutualFund ||
                      Config.Building[b.type].output.HedgeFund ||
                      Config.Building[b.type].output.Bitcoin)
@@ -1071,7 +1072,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
 
                if (isValid) {
                   let multiplier = Math.round(srand(gs.id + gs.lastPriceUpdated + t)() * 4 + 1);
-                  if (gs.festival) {
+                  if (isFestival("WallStreet", gs)) {
                      multiplier *= 2;
                   }
                   mapSafePush(Tick.next.tileMultipliers, t, {
@@ -1083,7 +1084,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
             }
          }
 
-         if (gs.festival) {
+         if (isFestival("WallStreet", gs)) {
             addMultiplier("ResearchFund", { output: 5 }, buildingName);
          }
 
@@ -1173,7 +1174,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
                1,
                Math.floor((Config.TechAge[age].idx + 1) / 2),
             );
-            const candidates = gs.festival
+            const candidates = isFestival("ZigguratOfUr", gs)
                ? keysOf(Config.BuildingTechAge)
                : getBuildingsUnlockedBefore(getCurrentAge(gs));
             candidates.forEach((b) => {
@@ -1250,7 +1251,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          const age = getCurrentAge(gs);
          if (Number.isFinite(multiplier) && multiplier > 0) {
             const cappedMultiplier = clamp(multiplier, 1, Math.floor((Config.TechAge[age].idx + 1) / 2));
-            const candidates = gs.festival
+            const candidates = isFestival("EuphratesRiver", gs)
                ? keysOf(Config.BuildingTechAge)
                : getBuildingsUnlockedBefore(getCurrentAge(gs));
             candidates.forEach((b) => {
@@ -1354,7 +1355,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
             const hq = Tick.current.specialBuildings.get("Headquarter");
             if (hq && petra) {
                const total = getMaxWarpStorage(gs);
-               const amount = gs.festival ? 40 : 20;
+               const amount = isFestival("MountFuji", gs) ? 40 : 20;
                if (total - (hq.building.resources.Warp ?? 0) >= amount) {
                   safeAdd(hq.building.resources, "Warp", amount);
                }
@@ -1465,7 +1466,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
             const def = Config.GreatPerson[gp];
             def.tick(
                def,
-               gs.festival ? level * 2 : level,
+               isFestival("Zugspitze", gs) ? level * 2 : level,
                `${buildingName}: ${def.name()}`,
                GreatPersonTickFlag.Unstable,
             );
@@ -1514,7 +1515,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          break;
       }
       case "TowerBridge": {
-         safeAdd(building.resources, "Cycle", gs.festival ? 1.2 : 1);
+         safeAdd(building.resources, "Cycle", isFestival("TowerBridge", gs) ? 1.2 : 1);
          let hasGreatPeople = false;
          while ((building.resources.Cycle ?? 0) >= TOWER_BRIDGE_GP_PER_CYCLE) {
             safeAdd(building.resources, "Cycle", -TOWER_BRIDGE_GP_PER_CYCLE);
@@ -1543,7 +1544,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
                }
                grid.getNeighbors(tileToPoint(xy)).forEach((p) => {
                   mapSafePush(Tick.next.tileMultipliers, pointToTile(p), {
-                     output: gs.festival ? building.level : 0.5 * building.level,
+                     output: isFestival("EastIndiaCompany", gs) ? building.level : 0.5 * building.level,
                      source: buildingName,
                      unstable: true,
                   });
@@ -1570,7 +1571,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          const happiness = Tick.current.happiness?.value ?? 0;
          if (happiness > 0) {
             Tick.next.globalMultipliers.builderCapacity.push({
-               value: Math.floor(happiness) * (gs.festival ? 2 : 1),
+               value: Math.floor(happiness) * (isFestival("ArcDeTriomphe", gs) ? 2 : 1),
                source: buildingName,
             });
          }
@@ -1582,7 +1583,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          const culture = idleWorkers / (Config.ResourcePrice.Culture ?? 1);
          const value = getBuildingCost(building);
          if ((building.resources.Culture ?? 0) < (value.Culture ?? 0)) {
-            safeAdd(building.resources, "Culture", culture * (gs.festival ? 2 : 1));
+            safeAdd(building.resources, "Culture", culture * (isFestival("MontSaintMichel", gs) ? 2 : 1));
          }
          for (const point of grid.getRange(tileToPoint(xy), 2)) {
             mapSafePush(Tick.next.tileMultipliers, pointToTile(point), {
@@ -1614,7 +1615,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
       }
       case "CentrePompidou": {
          const pompidou = building as ICentrePompidouBuildingData;
-         const multiplier = gs.festival && gs.city === "French" ? 2 : 1;
+         const multiplier = isFestival("CentrePompidou", gs) ? 2 : 1;
          const cities = pompidou.cities.size + 1;
          Tick.next.globalMultipliers.output.push({
             value: multiplier * cities,
@@ -1625,6 +1626,26 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
             source: buildingName,
          });
          building.resources = {};
+         break;
+      }
+      case "BlueMosque": {
+         const hagiaSophia = Tick.current.specialBuildings.get("HagiaSophia");
+         let multiplier = 1;
+         if (hagiaSophia && grid.distanceTile(hagiaSophia.tile, xy) <= 1) {
+            multiplier += 1;
+         }
+         Tick.current.specialBuildings.forEach((data, building) => {
+            if (isWorldWonder(building)) {
+               grid.getNeighbors(tileToPoint(data.tile)).forEach((p) => {
+                  mapSafePush(Tick.next.tileMultipliers, pointToTile(p), {
+                     output: multiplier,
+                     worker: multiplier,
+                     storage: multiplier,
+                     source: `${Config.Building[building].name()} (${buildingName})`,
+                  });
+               });
+            }
+         });
          break;
       }
    }

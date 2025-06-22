@@ -314,6 +314,37 @@ export class CityDefinitions {
       requireSupporterPack: true,
       festivalDesc: () => t(L.BastilleDay),
    };
+
+   Ottoman: ICityDefinition = {
+      name: () => t(L.Ottoman),
+      deposits: {
+         Water: 0.02,
+         Copper: 0.03,
+         Iron: 0.03,
+         Wood: 0.02,
+         Stone: 0.02,
+         Gold: 0.03,
+         Coal: 0.01,
+         Oil: 0.02,
+         Aluminum: 0.04,
+         NaturalGas: 0.01,
+         Uranium: 0.04,
+      },
+      size: 50,
+      buildingNames: {
+         Headquarter: () => t(L.DolmabahcePalace),
+      },
+      uniqueBuildings: {
+         Penthouse: "FinancialLeverage",
+         BlueMosque: "Exploration",
+         TopkapiPalace: "Revolution",
+      },
+      uniqueMultipliers: {},
+      naturalWonders: {},
+      requireGreatPeopleLevel: 80,
+      requireSupporterPack: true,
+      festivalDesc: () => t(L.BastilleDay),
+   };
 }
 
 export type City = keyof CityDefinitions;

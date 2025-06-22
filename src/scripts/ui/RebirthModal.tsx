@@ -78,7 +78,6 @@ export function RebirthModal(): React.ReactNode {
       Number.POSITIVE_INFINITY,
    );
    const [pickPerRoll, setPickPerRoll] = useState(maxPickPerRoll);
-   console.log(Tick.current.specialBuildings.get("CentrePompidou"));
    const showPompidouWarning =
       Tick.current.specialBuildings.has("CentrePompidou") &&
       (getCurrentAge(gs) !== "InformationAge" || gs.city === nextCity);

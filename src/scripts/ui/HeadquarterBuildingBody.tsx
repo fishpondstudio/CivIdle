@@ -41,6 +41,7 @@ import { BuildingProduceComponent } from "./BuildingProduceComponent";
 import { BuildingStorageComponent } from "./BuildingStorageComponent";
 import { ChooseGreatPersonModal } from "./ChooseGreatPersonModal";
 import { showModal } from "./GlobalModal";
+import { HallOfFameModal } from "./HallOfFameModal";
 import { HappinessComponent } from "./HappinessComponent";
 import { FormatNumber } from "./HelperComponents";
 import { ManageAgeWisdomModal } from "./ManageAgeWisdomModal";
@@ -247,6 +248,10 @@ export function HeadquarterBuildingBody({
             <button onClick={() => Singleton().routeTo(SteamAchievementPage, {})} className="jcc w100 row">
                <div className="m-icon small">emoji_events</div>
                <div className="f1 text-strong">{t(L.SteamAchievementDetails)}</div>
+            </button>
+            <button onClick={() => showModal(<HallOfFameModal />)} className="mt5 jcc w100 row">
+               <div className="m-icon small">workspace_premium</div>
+               <div className="f1 text-strong">{t(L.HallOfFame)}</div>
             </button>
          </fieldset>
          <BuildingColorComponent gameState={gameState} xy={xy} />

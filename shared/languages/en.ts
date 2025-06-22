@@ -1530,4 +1530,11 @@ export const EN = {
    HighlightBuilding: "Highlight %{building}",
    TileBonusRefreshIn: "Tile bonus will refresh in <b>%{time}</b>",
    AgeWisdomUpgradeWarningHTMLV2: "Age Wisdom is only available for <b>Quaestor</b> rank and above",
+   Ottoman: "Ottoman",
+   DolmabahcePalace: "Dolmabahçe Palace",
+   Penthouse: "Penthouse",
+   BlueMosque: "Blue Mosque",
+   BlueMosqueDesc: "All wonders provide +1 Production, Worker Capacity and Storage Multiplier to adjacent buildings. When constructed next to Hagia Sophia, provide extra +1 Production, Worker Capacity and Storage Multiplier",
+   TopkapiPalace: "Topkapi Palace",
+   TopkapiPalaceDesc: "All buildings with 2 tile range get +X Production, Worker Capacity and Storage Multiplier. X = square root of Effective Great People Level",
 };

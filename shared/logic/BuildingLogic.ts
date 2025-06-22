@@ -1188,3 +1188,30 @@ export function getRandomEmptyTiles(count: number, gameState: GameState): Tile[]
    }
    return result;
 }
+
+export function getBuildingCity(building: Building): City | null {
+   let result: City | null = null;
+   forEach(Config.City, (city, def) => {
+      if (def.uniqueBuildings[building]) {
+         result = city;
+         // break
+         return true;
+      }
+      if (def.naturalWonders[building]) {
+         result = city;
+         return true;
+      }
+   });
+   return result;
+}
+
+export function isFestival(building: Building, gs: GameState): boolean {
+   if (!gs.festival) {
+      return false;
+   }
+   const city = getBuildingCity(building);
+   if (!city) {
+      return true;
+   }
+   return city === gs.city;
+}
