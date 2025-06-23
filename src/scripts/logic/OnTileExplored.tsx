@@ -1,6 +1,7 @@
+import { GreatPersonType } from "../../../shared/definitions/GreatPersonDefinitions";
 import { exploreTile, isNaturalWonder, isSpecialBuilding } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
-import { getGameState } from "../../../shared/logic/GameStateLogic";
+import { getGameOptions, getGameState } from "../../../shared/logic/GameStateLogic";
 import { getGrid, getXyBuildings } from "../../../shared/logic/IntraTickCache";
 import { getGreatPeopleChoiceCount, rollGreatPeopleThisRun } from "../../../shared/logic/RebirthLogic";
 import {
@@ -10,12 +11,19 @@ import {
    getTechUnlockCost,
 } from "../../../shared/logic/TechLogic";
 import { Tick } from "../../../shared/logic/TickLogic";
-import { isEmpty, pointToTile, safeAdd, tileToPoint, type Tile } from "../../../shared/utilities/Helper";
+import {
+   forEach,
+   isEmpty,
+   pointToTile,
+   safeAdd,
+   tileToPoint,
+   type Tile,
+} from "../../../shared/utilities/Helper";
 import { WorldScene } from "../scenes/WorldScene";
 import { ChooseGreatPersonModal } from "../ui/ChooseGreatPersonModal";
 import { showModal } from "../ui/GlobalModal";
 import { Singleton } from "../utilities/Singleton";
-import { playAgeUp } from "../visuals/Sound";
+import { playAgeUp, playUpgrade } from "../visuals/Sound";
 
 export function onTileExplored(xy: Tile): void {
    const gs = getGameState();
@@ -87,6 +95,16 @@ export function onTileExplored(xy: Tile): void {
                   Singleton().sceneManager.enqueue(WorldScene, (s) => s.revealTile(xy));
                }
             });
+            break;
+         }
+         case "Pamukkale": {
+            forEach(getGameOptions().greatPeople, (gp, inv) => {
+               if (Config.GreatPerson[gp].type === GreatPersonType.Normal && inv.amount > 0) {
+                  --inv.amount;
+                  safeAdd(gs.greatPeople, gp, 1);
+               }
+            });
+            playUpgrade();
             break;
          }
       }

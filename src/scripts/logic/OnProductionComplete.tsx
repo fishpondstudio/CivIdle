@@ -14,6 +14,7 @@ import {
    isSpecialBuilding,
    isWorldOrNaturalWonder,
    isWorldWonder,
+   totalMultiplierFor,
 } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
 import {
@@ -1646,6 +1647,46 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
                });
             }
          });
+         break;
+      }
+      case "MountArarat": {
+         const level = isFestival("MountArarat", gs)
+            ? Math.floor(Math.sqrt(getPermanentGreatPeopleLevel(options)))
+            : Math.floor(Math.cbrt(getPermanentGreatPeopleLevel(options)));
+         for (const point of grid.getRange(tileToPoint(xy), 2)) {
+            mapSafePush(Tick.next.tileMultipliers, pointToTile(point), {
+               output: level,
+               worker: level,
+               storage: level,
+               source: buildingName,
+            });
+         }
+         break;
+      }
+      case "Cappadocia": {
+         for (const point of grid.getRange(tileToPoint(xy), 3)) {
+            const building = gs.tiles.get(pointToTile(point))?.building;
+            const factor = isFestival("Cappadocia", gs) ? 2 : 1;
+            if (building && !isWorldOrNaturalWonder(building.type) && building.level > 30) {
+               mapSafePush(Tick.next.tileMultipliers, pointToTile(point), {
+                  output: factor * (building.level - 30),
+                  worker: factor * (building.level - 30),
+                  storage: factor * (building.level - 30),
+                  source: buildingName,
+               });
+            }
+         }
+         break;
+      }
+      case "TopkapiPalace": {
+         for (const point of grid.getRange(tileToPoint(xy), 2)) {
+            const tile = pointToTile(point);
+            const pm = totalMultiplierFor(tile, "output", 1, true, gs);
+            mapSafePush(Tick.next.tileMultipliers, pointToTile(point), {
+               storage: pm / 2,
+               source: buildingName,
+            });
+         }
          break;
       }
    }

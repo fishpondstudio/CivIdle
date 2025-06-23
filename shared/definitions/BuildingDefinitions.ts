@@ -1985,10 +1985,43 @@ export class BuildingDefinitions {
       desc: () => t(L.TopkapiPalaceDesc),
       input: {},
       output: {},
-      construction: { Cannon: 100, Lens: 100, Banknote: 100 },
+      construction: { Biplane: 100, Tank: 100, Ironclad: 100 },
       max: 1,
       special: BuildingSpecial.WorldWonder,
       wikipedia: "Topkapı_Palace",
+   };
+
+   Cappadocia: IBuildingDefinition = {
+      name: () => t(L.Cappadocia),
+      desc: () => t(L.CappadociaDesc),
+      input: {},
+      output: {},
+      construction: {},
+      max: 0,
+      special: BuildingSpecial.NaturalWonder,
+      wikipedia: "Cappadocia",
+   };
+
+   Pamukkale: IBuildingDefinition = {
+      name: () => t(L.Pamukkale),
+      desc: () => t(L.PamukkaleDesc),
+      input: {},
+      output: {},
+      construction: {},
+      max: 0,
+      special: BuildingSpecial.NaturalWonder,
+      wikipedia: "Pamukkale",
+   };
+
+   MountArarat: IBuildingDefinition = {
+      name: () => t(L.MountArarat),
+      desc: () => t(L.MountAraratDesc),
+      input: {},
+      output: {},
+      construction: {},
+      max: 0,
+      special: BuildingSpecial.NaturalWonder,
+      wikipedia: "Mount_Ararat",
    };
 
    // #endregion /////////////////////////////////////////////////////////////////////////////////////////////

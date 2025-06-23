@@ -1,10 +1,12 @@
 import React from "react";
 import type { Building } from "../../../shared/definitions/BuildingDefinitions";
+import type { Deposit } from "../../../shared/definitions/ResourceDefinitions";
 import type { TileTexture } from "../../../shared/logic/GameState";
 import { AccountLevel } from "../../../shared/utilities/Database";
 import building from "../../images/textures_building.png";
 import flags from "../../images/textures_flag.png";
 import misc from "../../images/textures_misc.png";
+import tile from "../../images/textures_tile.png";
 import { Singleton } from "../utilities/Singleton";
 
 export const PlayerFlagComponent = React.forwardRef<
@@ -34,6 +36,13 @@ export const BuildingSpriteComponent = React.forwardRef<
    { building: Building; scale?: number; style?: React.CSSProperties }
 >((props, ref) => {
    return <TextureSprite {...props} url={building} name={`Building_${props.building}`} ref={ref} />;
+});
+
+export const DepositTextureComponent = React.forwardRef<
+   HTMLDivElement,
+   { deposit: Deposit; scale?: number; style?: React.CSSProperties }
+>((props, ref) => {
+   return <TextureSprite {...props} url={tile} name={`Tile_${props.deposit}`} ref={ref} />;
 });
 
 export const TileTextureComponent = React.forwardRef<

@@ -420,11 +420,14 @@ export class WorldScene extends Scene {
             case "Lapland":
             case "YearOfTheSnake":
             case "MontSaintMichel":
+            case "MountArarat":
+            case "TopkapiPalace":
             case "GoldenGateBridge": {
                this.highlightRange(grid, 2);
                break;
             }
             case "Elbphilharmonie":
+            case "Cappadocia":
             case "GoldenPavilion": {
                this.highlightRange(grid, 3);
                break;

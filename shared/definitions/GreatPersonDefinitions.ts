@@ -671,6 +671,19 @@ export class GreatPersonDefinitions {
       city: "English",
    });
 
+   SuleimanI: IGreatPersonDefinition = boostOf({
+      name: () => t(L.SuleimanI),
+      boost: {
+         multipliers: ["output", "storage"],
+         buildings: ["Bank"],
+      },
+      time: "1519 ~ 1579 AD",
+      value: (level) => level * 2,
+      maxLevel: Number.POSITIVE_INFINITY,
+      age: "RenaissanceAge",
+      city: "Ottoman",
+   });
+
    // Industrial /////////////////////////////////////////////////////////////////////////////////////////////
 
    JamesWatt: IGreatPersonDefinition = boostOf({

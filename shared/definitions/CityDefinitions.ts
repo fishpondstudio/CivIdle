@@ -337,13 +337,13 @@ export class CityDefinitions {
       uniqueBuildings: {
          Penthouse: "FinancialLeverage",
          BlueMosque: "Exploration",
-         TopkapiPalace: "Revolution",
+         TopkapiPalace: "Aviation",
       },
       uniqueMultipliers: {},
-      naturalWonders: {},
+      naturalWonders: { Cappadocia: true, MountArarat: true, Pamukkale: true },
       requireGreatPeopleLevel: 80,
       requireSupporterPack: true,
-      festivalDesc: () => t(L.BastilleDay),
+      festivalDesc: () => t(L.Culus),
    };
 }
 

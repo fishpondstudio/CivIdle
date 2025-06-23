@@ -874,7 +874,7 @@
         },
         "Building_Headquarter_Babylon": {
             "frame": {
-                "x": 707,
+                "x": 808,
                 "y": 1129,
                 "w": 100,
                 "h": 93
@@ -938,10 +938,10 @@
         },
         "Building_Headquarter_Ottoman": {
             "frame": {
-                "x": 808,
+                "x": 606,
                 "y": 1129,
                 "w": 100,
-                "h": 93
+                "h": 94
             }
         },
         "Building_Headquarter_Rome": {
@@ -1226,7 +1226,7 @@
         },
         "Building_MiningCamp": {
             "frame": {
-                "x": 606,
+                "x": 707,
                 "y": 1129,
                 "w": 100,
                 "h": 94

@@ -37,16 +37,19 @@ import { resetToCity, saveGame, useGameState } from "../Global";
 import { checkRebirthAchievements } from "../logic/Achievement";
 import { canEarnGreatPeopleFromReborn, client, isOnlineUser, useTrades, useUser } from "../rpc/RPCClient";
 import { jsxMapOf } from "../utilities/Helper";
+import { GreatPersonImage } from "../visuals/GreatPersonVisual";
 import { playClick, playError } from "../visuals/Sound";
 import { hideModal, showToast } from "./GlobalModal";
 import { FormatNumber } from "./HelperComponents";
 import { RenderHTML } from "./RenderHTMLComponent";
 import { TextWithHelp } from "./TextWithHelpComponent";
+import { BuildingSpriteComponent, DepositTextureComponent } from "./TextureSprites";
 import { WarningComponent } from "./WarningComponent";
 
 export function RebirthModal(): React.ReactNode {
    const trades = useTrades();
    const user = useUser();
+   const options = getGameOptions();
    const [tradeCount, setTradeCount] = useState<number>(
       trades.filter((t) => t.fromId === user?.userId).length,
    );
@@ -87,15 +90,17 @@ export function RebirthModal(): React.ReactNode {
          <div className="title-bar">
             <div className="title-bar-text">{t(L.Reborn)}</div>
          </div>
-         <div className="window-body" style={{ maxHeight: "80vh", overflowY: "auto" }}>
+         <div className="window-body">
             {tradeCount > 0 ? (
                <WarningComponent icon="warning" className="mb10 text-small">
                   <RenderHTML html={t(L.RebornTradeWarning)} />
                </WarningComponent>
             ) : null}
-            <WarningComponent icon="info" className="mb10 text-small">
-               <RenderHTML html={t(L.RebornModalDescV3)} />
-            </WarningComponent>
+            {options.rebirthInfo.length <= 0 ? (
+               <WarningComponent icon="info" className="mb10 text-small">
+                  <RenderHTML html={t(L.RebornModalDescV3)} />
+               </WarningComponent>
+            ) : null}
             {canEarnGreatPeopleFromReborn() ? (
                <ul className="tree-view">
                   <li className="row">
@@ -133,34 +138,11 @@ export function RebirthModal(): React.ReactNode {
                         </TextWithHelp>
                      </div>
                   </li>
-                  <ul>
-                     <li className="row">
-                        <div className="f1">{t(L.ClaimedGreatPeople)}</div>
-                        <div className="text-strong">{gs.claimedGreatPeople}</div>
-                     </li>
-                  </ul>
                </ul>
             ) : (
                <WarningComponent icon="warning">{t(L.CannotEarnPermanentGreatPeopleDesc)}</WarningComponent>
             )}
             <div className="sep10" />
-            <fieldset>
-               <div className="row">
-                  <div className="f1">{t(L.GreatPeoplePickPerRoll)}</div>
-                  <select
-                     value={pickPerRoll}
-                     onChange={(e) => {
-                        setPickPerRoll(clamp(safeParseInt(e.target.value, 1), 1, maxPickPerRoll));
-                     }}
-                  >
-                     {range(1, maxPickPerRoll + 1).map((i) => (
-                        <option key={i} value={i}>
-                           {i}
-                        </option>
-                     ))}
-                  </select>
-               </div>
-            </fieldset>
             <fieldset>
                {hasFlag(user?.attr ?? UserAttributes.None, UserAttributes.DLC1) ? null : (
                   <WarningComponent icon="info" className="text-small mb10">
@@ -181,98 +163,165 @@ export function RebirthModal(): React.ReactNode {
                   </WarningComponent>
                ) : null}
                <div className="row">
-                  <div className="f1">{t(L.SelectCivilization)}</div>
-                  <select
-                     value={nextCity}
-                     onChange={(e) => {
-                        setNextCity(e.target.value as City);
-                     }}
-                  >
-                     {jsxMapOf(Config.City, (city, def) => {
-                        return (
-                           <option key={city} value={city}>
-                              {def.name()}
-                              {def.requireSupporterPack ? "*" : ""}
+                  <div className="f1 row">
+                     <div className="f1">{t(L.GreatPeoplePickPerRoll)}</div>
+                     <select
+                        value={pickPerRoll}
+                        onChange={(e) => {
+                           setPickPerRoll(clamp(safeParseInt(e.target.value, 1), 1, maxPickPerRoll));
+                        }}
+                     >
+                        {range(1, maxPickPerRoll + 1).map((i) => (
+                           <option key={i} value={i}>
+                              {i}
                            </option>
-                        );
-                     })}
-                  </select>
-               </div>
-               <div className="separator"></div>
-               <div className="row">
-                  <div className="text-strong">{t(L.Deposit)}</div>
-                  <div className="text-desc ml5">
-                     ({Config.City[nextCity].size}x{Config.City[nextCity].size})
+                        ))}
+                     </select>
                   </div>
-               </div>
-               <div className="mb5">
-                  {mapOf(Config.City[nextCity].deposits, (dep, value) => {
-                     return `${Config.Resource[dep].name()}: ${formatPercent(value)}`;
-                  }).join(", ")}
-               </div>
-               <div className="text-strong">{t(L.UniqueBuildings)}</div>
-               <div className="mb5">
-                  {jsxMapOf(Config.City[nextCity].uniqueBuildings, (building, tech) => {
-                     return (
-                        <TextWithHelp
-                           className="mr10"
-                           key={building}
-                           content={getBuildingDescription(building)}
-                        >
-                           {Config.Building[building].name()}{" "}
-                           <span className="text-desc">({Config.Tech[tech].name()})</span>
-                        </TextWithHelp>
-                     );
-                  })}
-               </div>
-               <div className="text-strong">{t(L.NaturalWonders)}</div>
-               <div className="mb5">
-                  {jsxMapOf(Config.City[nextCity].naturalWonders, (building, tech) => {
-                     const def = Config.Building[building];
-                     return (
-                        <TextWithHelp
-                           className="mr10"
-                           key={building}
-                           content={getBuildingDescription(building)}
-                        >
-                           {def.name()}
-                        </TextWithHelp>
-                     );
-                  })}
-               </div>
-               {isEmpty(Config.City[nextCity].uniqueMultipliers) ? null : (
-                  <>
-                     <div className="text-strong">{t(L.UniqueTechMultipliers)}</div>
-                     <div className="mb5">
-                        {jsxMapOf(Config.City[nextCity].uniqueMultipliers, (tech, multipliers) => {
+                  <div className="separator-vertical" style={{ height: 30, margin: "-5px 20px" }} />
+                  <div className="f1 row">
+                     <div className="f1">{t(L.SelectCivilization)}</div>
+                     <select
+                        value={nextCity}
+                        onChange={(e) => {
+                           setNextCity(e.target.value as City);
+                        }}
+                     >
+                        {jsxMapOf(Config.City, (city, def) => {
                            return (
-                              <TextWithHelp
-                                 className="mr10"
-                                 key={tech}
-                                 content={getMultipliersDescription(multipliers)}
-                              >
-                                 {Config.Tech[tech].name()}
-                              </TextWithHelp>
+                              <option key={city} value={city}>
+                                 {def.name()}
+                                 {def.requireSupporterPack ? "*" : ""}
+                              </option>
                            );
                         })}
-                     </div>
-                  </>
-               )}
-               <div className="text-strong">{t(L.GreatPeople)}</div>
-               <div className="mb5">
-                  {jsxMapOf(Config.GreatPerson, (person, def) => {
-                     if (def.city === nextCity) {
-                        return (
-                           <TextWithHelp className="mr10" key={person} content={def.desc(def, 1)}>
-                              {def.name()}
-                           </TextWithHelp>
-                        );
-                     }
-                     return null;
-                  })}
+                     </select>
+                  </div>
                </div>
-               <div className="text-strong">{t(L.Festival)}</div>
-               <div className="mb5">{Config.City[nextCity].festivalDesc()}</div>
+               <div className="separator"></div>
+               <div style={{ maxHeight: "35vh", overflowY: "auto", margin: -10, padding: 10 }}>
+                  <div className="row mb5">
+                     <div className="text-strong">{t(L.Deposit)}</div>
+                     <div className="text-desc ml5">
+                        ({Config.City[nextCity].size}x{Config.City[nextCity].size})
+                     </div>
+                  </div>
+                  <div
+                     className="inset-shallow white p5"
+                     style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "5px 20px" }}
+                  >
+                     {mapOf(Config.City[nextCity].deposits, (dep, value) => {
+                        return (
+                           <div className="row">
+                              <DepositTextureComponent
+                                 deposit={dep}
+                                 scale={0.25}
+                                 style={{ filter: "invert(0.75)", margin: "0 10px 0 0" }}
+                              />
+                              <div className="f1">{Config.Resource[dep].name()}</div>
+                              <div className="text-strong">{formatPercent(value)}</div>
+                           </div>
+                        );
+                     })}
+                  </div>
+                  <div className="text-strong mt5 mb5">{t(L.UniqueBuildings)}</div>
+                  <div className="inset-shallow white">
+                     {jsxMapOf(Config.City[nextCity].uniqueBuildings, (building, tech, i) => {
+                        return (
+                           <div
+                              className="row p5"
+                              style={{ backgroundColor: i % 2 === 0 ? "#efefef" : "#fff" }}
+                           >
+                              <BuildingSpriteComponent
+                                 building={building}
+                                 scale={0.5}
+                                 style={{ filter: "invert(0.75)", margin: "0 10px 0 0" }}
+                              />
+                              <div className="f1">
+                                 <div className="row">
+                                    <div className="text-strong f1">{Config.Building[building].name()}</div>
+                                    <div className="text-desc">{Config.Tech[tech].name()}</div>
+                                 </div>
+                                 <div>{getBuildingDescription(building)}</div>
+                              </div>
+                           </div>
+                        );
+                     })}
+                  </div>
+                  <div className="text-strong mt5 mb5">{t(L.NaturalWonders)}</div>
+                  <div className="inset-shallow white">
+                     {jsxMapOf(Config.City[nextCity].naturalWonders, (building, tech, i) => {
+                        return (
+                           <div
+                              className="row p5"
+                              style={{ backgroundColor: i % 2 === 0 ? "#fff" : "#efefef" }}
+                           >
+                              <BuildingSpriteComponent
+                                 building={building}
+                                 scale={0.5}
+                                 style={{ filter: "invert(0.75)", margin: "0 10px 0 0" }}
+                              />
+                              <div className="f1">
+                                 <div className="text-strong">{Config.Building[building].name()}</div>
+                                 <div>{getBuildingDescription(building)}</div>
+                              </div>
+                           </div>
+                        );
+                     })}
+                  </div>
+                  {isEmpty(Config.City[nextCity].uniqueMultipliers) ? null : (
+                     <>
+                        <div className="text-strong">{t(L.UniqueTechMultipliers)}</div>
+                        <div className="mb5">
+                           {jsxMapOf(Config.City[nextCity].uniqueMultipliers, (tech, multipliers) => {
+                              return (
+                                 <TextWithHelp
+                                    className="mr10"
+                                    key={tech}
+                                    content={getMultipliersDescription(multipliers)}
+                                 >
+                                    {Config.Tech[tech].name()}
+                                 </TextWithHelp>
+                              );
+                           })}
+                        </div>
+                     </>
+                  )}
+                  <div className="text-strong mt5 mb5">{t(L.GreatPeople)}</div>
+                  <div className="inset-shallow white">
+                     {jsxMapOf(Config.GreatPerson, (person, def, i) => {
+                        if (def.city === nextCity) {
+                           return (
+                              <div className="row p5">
+                                 <GreatPersonImage
+                                    greatPerson={person}
+                                    style={{ height: 50, margin: "0 10px 0 0" }}
+                                 />
+                                 <div className="f1">
+                                    <div className="row">
+                                       <div className="f1 text-strong">{def.name()}</div>
+                                       <div className="text-desc">{Config.TechAge[def.age].name()}</div>
+                                    </div>
+                                    <div>{def.desc(def, 1)}</div>
+                                 </div>
+                              </div>
+                           );
+                        }
+                        return null;
+                     })}
+                  </div>
+                  <div className="text-strong mt5 mb5">{t(L.Festival)}</div>
+                  <div className="inset-shallow white">
+                     <div className="row p5">
+                        <BuildingSpriteComponent
+                           building={`Headquarter_${nextCity}` as any}
+                           scale={0.5}
+                           style={{ filter: "invert(0.75)", margin: "0 10px 0 0" }}
+                        />
+                        <div className="f1">{Config.City[nextCity].festivalDesc()}</div>
+                     </div>
+                  </div>
+               </div>
                <div className="separator" />
                <div className="row">
                   <div className="f1">{t(L.GreatPersonLevelRequired)}</div>
