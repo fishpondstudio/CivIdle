@@ -305,6 +305,9 @@ export function unlockedResources(gs: GameState): PartialSet<Resource> {
    }
    _cache.unlockedResources = {};
    forEach(unlockedBuildings(gs), (b) => {
+      if (b === "SwissBank") {
+         _cache.unlockedResources!.Koti = true;
+      }
       forEach(Config.Building[b].output, (res) => {
          _cache.unlockedResources![res] = true;
       });

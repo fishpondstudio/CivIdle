@@ -150,6 +150,10 @@ export interface ICentrePompidouBuildingData extends IBuildingData {
    cities: Set<City>;
 }
 
+export interface ISwissBankBuildingData extends IBuildingData {
+   resource: Resource | null;
+}
+
 export type IHaveTypeAndLevel = Pick<IBuildingData, "type" | "level">;
 
 export const STOCKPILE_CAPACITY_MIN = 0;
@@ -277,6 +281,13 @@ export function makeBuilding(data: Pick<IBuildingData, "type"> & Partial<IBuildi
          const pompidou = building as ICentrePompidouBuildingData;
          if (!pompidou.cities) {
             pompidou.cities = new Set();
+         }
+         break;
+      }
+      case "SwissBank": {
+         const swissBank = building as ISwissBankBuildingData;
+         if (!swissBank.resource) {
+            swissBank.resource = null;
          }
          break;
       }

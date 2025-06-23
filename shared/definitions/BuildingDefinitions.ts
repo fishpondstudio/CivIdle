@@ -2024,6 +2024,17 @@ export class BuildingDefinitions {
       wikipedia: "Mount_Ararat",
    };
 
+   SwissBank: IBuildingDefinition = {
+      name: () => t(L.SwissBank),
+      desc: () => t(L.SwissBankDesc),
+      input: {},
+      output: {},
+      construction: { Forex: 100, Diplomacy: 100, Radio: 100 },
+      max: 1,
+      special: BuildingSpecial.WorldWonder,
+      wikipedia: "UBS",
+   };
+
    // #endregion /////////////////////////////////////////////////////////////////////////////////////////////
 
    // Winery: IBuildingDefinition = {

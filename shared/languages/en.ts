@@ -1528,7 +1528,7 @@ export const EN = {
    ThemeTile: "Tile",
    ThemePremiumTile: "This tile is only available for Supporter Pack owners",
    HighlightBuilding: "Highlight %{building}",
-   TileBonusRefreshIn: "Tile bonus will refresh in <b>%{timeb>",
+   TileBonusRefreshIn: "Tile bonus will refresh in <b>%{time}</b>",
    AgeWisdomUpgradeWarningHTMLV2: "Age Wisdom is only available for <b>Quaestor</b> rank and above",
    Ottoman: "Ottoman",
    DolmabahcePalace: "Dolmabahçe Palace",
@@ -1544,5 +1544,8 @@ export const EN = {
    MountArarat: "Mount Ararat",
    MountAraratDesc: "All buildings within 2 tile range get +X Production, Worker Capacity and Storage Multiplier. X = cubic root of Effective Great People Level",
    SuleimanI: "Suleiman I",
-   Culus: "Cülus: Double the effect of Cappadocia. Mount Ararat's effect becomes based on square root of Effective Great People Level, instead of cubic root"
+   Culus: "Cülus: Double the effect of Cappadocia. Mount Ararat's effect becomes based on square root of Effective Great People Level, instead of cubic root",
+   SwissBank: "Swiss Bank",
+   SwissBankDesc: "Convert a chosen resource from adjacent warehouses to Koti (10 million in Sanskrit) - a tradeable resource that is worth 10M value. At most 1 Koti can be converted per cycle. Swiss Bank can store unlimited amount of Koti",
+   Koti: "Koti"
 };

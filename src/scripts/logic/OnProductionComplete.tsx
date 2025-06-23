@@ -46,6 +46,7 @@ import {
    getRebirthGreatPeopleCount,
    rollGreatPeopleThisRun,
 } from "../../../shared/logic/RebirthLogic";
+import { deductResourceFrom } from "../../../shared/logic/ResourceLogic";
 import {
    getBuildingUnlockAge,
    getBuildingsUnlockedBefore,
@@ -59,6 +60,7 @@ import type {
    IIdeologyBuildingData,
    ILouvreBuildingData,
    IReligionBuildingData,
+   ISwissBankBuildingData,
    ITileData,
    ITraditionBuildingData,
    IZugspitzeBuildingData,
@@ -1686,6 +1688,26 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
                storage: pm / 2,
                source: buildingName,
             });
+         }
+         break;
+      }
+      case "SwissBank": {
+         const swissBank = building as ISwissBankBuildingData;
+         const resource = swissBank.resource;
+         const price = resource ? Config.ResourcePrice[resource] : undefined;
+
+         const warehouses: Tile[] = [];
+         for (const point of grid.getRange(tileToPoint(xy), 1)) {
+            const tile = pointToTile(point);
+            const building = gs.tiles.get(tile)?.building;
+            if (building && building.type === "Warehouse") {
+               warehouses.push(tile);
+            }
+         }
+         if (resource && price) {
+            const { amount, rollback } = deductResourceFrom(resource, 10_000_000 / price, warehouses, gs);
+            safeAdd(building.resources, "Koti", (amount * price) / 10_000_000);
+            rollback();
          }
          break;
       }

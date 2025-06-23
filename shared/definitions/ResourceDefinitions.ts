@@ -123,6 +123,7 @@ export class ResourceDefinitions {
    Festival: IResourceDefinition = { name: () => t(L.Festival) };
    Cycle: IResourceDefinition = { name: () => t(L.Cycle) };
    TradeValue: IResourceDefinition = { name: () => t(L.TradeValue) };
+   Koti: IResourceDefinition = { name: () => t(L.Koti) };
 }
 
 export type Resource = keyof ResourceDefinitions;

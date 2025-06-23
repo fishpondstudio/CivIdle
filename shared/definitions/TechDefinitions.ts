@@ -797,7 +797,7 @@ export class TechDefinitions {
       name: () => t(L.MonetarySystem),
       column: 22,
       requireTech: ["Skyscraper"],
-      unlockBuilding: ["ForexMarket"],
+      unlockBuilding: ["ForexMarket", "SwissBank"],
    };
 
    SpaceProgram: ITechDefinition = {
