@@ -355,7 +355,8 @@ fieldset .separator {
    flex-direction: column;
 }
 
-.jcc {
+.cc {
+   align-items: center;
    justify-content: center;
 }
 
@@ -384,6 +385,16 @@ fieldset .separator {
 .mv5 {
    margin-top: 5px;
    margin-bottom: 5px;
+}
+
+.mh5 {
+   margin-left: 5px;
+   margin-right: 5px;
+}
+
+.mh10 {
+   margin-left: 10px;
+   margin-right: 10px;
 }
 
 .mt5 {

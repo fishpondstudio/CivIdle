@@ -310,8 +310,6 @@ export function calculateTierAndPrice(log?: (val: string) => void) {
    Config.BuildingTier.CloneFactory = 8;
    Config.BuildingTier.CloneLab = 8;
 
-   Config.BuildingTechAge.SwissBank = "ColdWarAge";
-   Config.BuildingTier.SwissBank = 8;
    Config.ResourceTier.Koti = 8;
    Config.ResourcePrice.Koti = 10_000_000;
 

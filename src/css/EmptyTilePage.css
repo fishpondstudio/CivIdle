@@ -8,3 +8,20 @@
 .building-list {
    overflow-y: auto;
 }
+
+#game-ui .building-grid-item {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   justify-content: center;
+   padding: 5px;
+   border-radius: 5px;
+   cursor: pointer;
+   * {
+      cursor: pointer;
+   }
+}
+
+.building-grid-item:hover {
+   background-color: #efefef;
+}

@@ -929,8 +929,9 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
             Tick.next.happinessExemptions.add(xy);
          });
          forEach(Config.BuildingTechAge, (b, age) => {
-            if (age === "WorldWarAge" || age === "ColdWarAge") {
-               const m = Math.abs(Config.TechAge[age].idx + 1 - (Config.BuildingTier[b] ?? 1));
+            const tier = Config.BuildingTier[b] ?? 0;
+            if ((age === "WorldWarAge" || age === "ColdWarAge") && tier > 0) {
+               const m = Math.abs(Config.TechAge[age].idx + 1 - tier);
                addMultiplier(b, { output: m, storage: m, worker: m }, buildingName);
             }
          });
