@@ -397,7 +397,10 @@ const ChatMessageContent = memo(
          message.startsWith("https://gcdnb.pbrd.co/") ||
          message.startsWith("https://i.postimg.cc/");
       const isExtensionWhitelisted =
-         message.endsWith(".jpg") || message.endsWith(".png") || message.endsWith(".jpeg");
+         message.endsWith(".jpg") ||
+         message.endsWith(".png") ||
+         message.endsWith(".jpeg") ||
+         (chat.level >= AccountLevel.Aedile && message.endsWith(".gif"));
       if (isDomainWhitelisted && isExtensionWhitelisted) {
          return (
             <img
