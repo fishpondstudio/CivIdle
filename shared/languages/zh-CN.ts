@@ -902,7 +902,7 @@ export const ZH_CN = {
    Peace: "和平",
    Peacekeeper: "维和组织",
    PercentageOfProductionWorkers: "生产作业劳动者所占百分比",
-   Penthouse: "顶层公寓",
+   Penthouse: "都市",
    Performance: "性能",
    PermanentGreatPeople: "永恒伟人",
    PermanentGreatPeopleAcquired: "获得的永恒伟人",
