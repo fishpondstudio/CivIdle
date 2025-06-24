@@ -1529,7 +1529,7 @@ export const EN = {
    ThemePremiumTile: "This tile is only available for Supporter Pack owners",
    HighlightBuilding: "Highlight %{building}",
    TileBonusRefreshIn: "Tile bonus will refresh in <b>%{time}</b>",
-   AgeWisdomUpgradeWarningHTMLV2: "Age Wisdom is only available for <b>Quaestor</b> rank and above",
+   AgeWisdomUpgradeWarningHTMLV3: "Age Wisdom <b>does not carry over</b> when upgrading from Tribune to Quaestor",
    Ottoman: "Ottoman",
    DolmabahcePalace: "Dolmabahçe Palace",
    Penthouse: "Penthouse",
@@ -1547,5 +1547,6 @@ export const EN = {
    Culus: "Cülus: Double the effect of Cappadocia. Mount Ararat's effect becomes based on square root of Effective Great People Level, instead of cubic root",
    SwissBank: "Swiss Bank",
    SwissBankDesc: "Convert a chosen resource from adjacent warehouses to Koti (10 million in Sanskrit) - a tradeable resource that is worth 10M value. 1 Koti can be converted per cycle, which is affected by Production Multiplier. Swiss Bank can store unlimited amount of Koti",
-   Koti: "Koti"
+   Koti: "Koti",
+   Acknowledge: "Acknowledge",
 };

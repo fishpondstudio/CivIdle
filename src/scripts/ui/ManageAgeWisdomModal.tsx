@@ -1,4 +1,5 @@
 import Tippy from "@tippyjs/react";
+import { useState } from "react";
 import { Config } from "../../../shared/logic/Config";
 import { notifyGameOptionsUpdate } from "../../../shared/logic/GameStateLogic";
 import {
@@ -10,7 +11,6 @@ import { AccountLevel } from "../../../shared/utilities/Database";
 import { numberToRoman, safeAdd } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import { useGameOptions } from "../Global";
-import { isOnlineUser } from "../rpc/RPCClient";
 import { getColorCached } from "../utilities/CachedColor";
 import { jsxMMapOf, jsxMapOf } from "../utilities/Helper";
 import { Fonts } from "../visuals/Fonts";
@@ -23,6 +23,7 @@ import { WarningComponent } from "./WarningComponent";
 
 export function ManageAgeWisdomModal(): React.ReactNode {
    const options = useGameOptions();
+   const [showWarning, setShowWarning] = useState(true);
    return (
       <div className="window" style={{ width: "500px" }}>
          <div className="title-bar">
@@ -47,7 +48,24 @@ export function ManageAgeWisdomModal(): React.ReactNode {
             <WarningComponent icon="info" className="text-small mb10">
                <RenderHTML html={t(L.AgeWisdomDescHTML)} />
             </WarningComponent>
-            {isOnlineUser() ? (
+            {showWarning ? (
+               <div className="inset-shallow white" style={{ padding: "50px 20px" }}>
+                  <div className="row jcc">
+                     <AccountLevelComponent level={AccountLevel.Quaestor} scale={0.5} />
+                     <AccountLevelComponent level={AccountLevel.Aedile} scale={0.5} />
+                     <AccountLevelComponent level={AccountLevel.Praetor} scale={0.5} />
+                     <AccountLevelComponent level={AccountLevel.Consul} scale={0.5} />
+                  </div>
+                  <RenderHTML
+                     html={t(L.AgeWisdomUpgradeWarningHTMLV3)}
+                     className="text-desc mt10 text-center"
+                     style={{ fontSize: 16 }}
+                  />
+                  <div className="row cc mt10">
+                     <button onClick={() => setShowWarning(false)}>{t(L.Acknowledge)}</button>
+                  </div>
+               </div>
+            ) : (
                <div className="inset-shallow white" style={{ maxHeight: "50vh", overflowY: "auto" }}>
                   {jsxMapOf(Config.TechAge, (age, def) => {
                      if (def.idx === 0) {
@@ -120,20 +138,6 @@ export function ManageAgeWisdomModal(): React.ReactNode {
                         </div>
                      );
                   })}
-               </div>
-            ) : (
-               <div className="inset-shallow white" style={{ padding: "50px 20px" }}>
-                  <div className="row jcc">
-                     <AccountLevelComponent level={AccountLevel.Quaestor} scale={0.5} />
-                     <AccountLevelComponent level={AccountLevel.Aedile} scale={0.5} />
-                     <AccountLevelComponent level={AccountLevel.Praetor} scale={0.5} />
-                     <AccountLevelComponent level={AccountLevel.Consul} scale={0.5} />
-                  </div>
-                  <RenderHTML
-                     html={t(L.AgeWisdomUpgradeWarningHTMLV2)}
-                     className="text-desc mt10 text-center"
-                     style={{ fontSize: 16 }}
-                  />
                </div>
             )}
          </div>
