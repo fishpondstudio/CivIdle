@@ -18,7 +18,7 @@ import {
    makeGreatPeopleFromThisRunPermanent,
    rollPermanentGreatPeople,
 } from "../../../shared/logic/RebirthLogic";
-import { getCurrentAge } from "../../../shared/logic/TechLogic";
+import { getAgeForTech, getCurrentAge } from "../../../shared/logic/TechLogic";
 import { Tick } from "../../../shared/logic/TickLogic";
 import { UserAttributes } from "../../../shared/utilities/Database";
 import {
@@ -308,17 +308,19 @@ export function RebirthModal(): React.ReactNode {
                </div>
                {isEmpty(Config.City[nextCity].uniqueMultipliers) ? null : (
                   <>
-                     <div className="text-strong">{t(L.UniqueTechMultipliers)}</div>
-                     <div className="mb5">
-                        {jsxMapOf(Config.City[nextCity].uniqueMultipliers, (tech, multipliers) => {
+                     <div className="text-strong mt5 mb5">{t(L.UniqueTechMultipliers)}</div>
+                     <div className="inset-shallow white">
+                        {jsxMapOf(Config.City[nextCity].uniqueMultipliers, (tech, multipliers, i) => {
                            return (
-                              <TextWithHelp
-                                 className="mr10"
-                                 key={tech}
-                                 content={getMultipliersDescription(multipliers)}
+                              <div
+                                 className="row p5"
+                                 style={{ backgroundColor: i % 2 === 0 ? "#fff" : "#efefef" }}
                               >
-                                 {Config.Tech[tech].name()}
-                              </TextWithHelp>
+                                 <div className="text-strong f1">
+                                    {Config.Tech[tech].name()} ({Config.TechAge[getAgeForTech(tech)].name()})
+                                 </div>
+                                 <div className="text-desc">{getMultipliersDescription(multipliers)}</div>
+                              </div>
                            );
                         })}
                      </div>
