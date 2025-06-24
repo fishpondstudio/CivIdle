@@ -71,7 +71,7 @@ export const ZH_CN = {
    AgeWisdomNeedMoreGreatPeopleShards: "需要更多伟人碎片",
    AgeWisdomNotEligible: "该伟人无时代智慧资质",
    AgeWisdomSource: "%{age}智慧：%{person}",
-   AgeWisdomUpgradeWarningHTMLV3: "当前账号等级为保民官，等级升至财务官将<b>无法继承</b>时代智慧",
+   AgeWisdomUpgradeWarningHTMLV3: "当等级为保民官，等级升至财务官将<b>无法继承</b>时代智慧",
    AGreatPersonIsBorn: "一位伟人诞生了",
    AircraftCarrier: "航空母舰",
    AircraftCarrierYard: "航母船坞",
