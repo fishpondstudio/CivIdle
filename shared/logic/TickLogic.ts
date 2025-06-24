@@ -73,6 +73,7 @@ export function EmptyTickData(): ITickData {
       playerTradeBuildings: new Map(),
       resourceImportBuildings: new Map(),
       wonderProductions: new Map(),
+      wonderConsumptions: new Map(),
       specialBuildings: new Map(),
       scienceProduced: new Map(),
       powerGrid: new Set(),
