@@ -1,7 +1,12 @@
 import type { TechAge } from "../../../shared/definitions/TechDefinitions";
-import { isWorldWonder } from "../../../shared/logic/BuildingLogic";
+import { findSpecialBuilding, isWorldWonder } from "../../../shared/logic/BuildingLogic";
+import { Config } from "../../../shared/logic/Config";
 import type { GameState } from "../../../shared/logic/GameState";
+import { getGameOptions } from "../../../shared/logic/GameStateLogic";
+import { getPermanentGreatPeopleLevel } from "../../../shared/logic/RebirthLogic";
+import type { ICentrePompidouBuildingData } from "../../../shared/logic/Tile";
 import { OnTechUnlocked } from "../../../shared/logic/Update";
+import { sizeOf } from "../../../shared/utilities/Helper";
 import { SteamClient, isSteam } from "../rpc/SteamClient";
 
 OnTechUnlocked.on((tech) => {
@@ -100,21 +105,37 @@ export function checkRebirthAchievements(extraGP: number, gs: GameState): void {
             SteamClient.unlockAchievement("ViveLaFrance");
             break;
          }
+         case "Ottoman": {
+            SteamClient.unlockAchievement("SultanOfSultans");
+            break;
+         }
       }
    }
 
    let wonders = 0;
    let maxLevel = 0;
+   let emptyTiles = 0;
+   let unexploredTiles = 0;
+   let wonderLevels = 0;
+
    gs.tiles.forEach((tile) => {
-      if (!tile.building) return;
-      if (
-         (tile.building.status === "completed" || tile.building.status === "upgrading") &&
-         isWorldWonder(tile.building.type)
-      ) {
-         ++wonders;
+      if (!tile.building) {
+         ++emptyTiles;
       }
-      if (tile.building.level > maxLevel) {
-         maxLevel = tile.building.level;
+      if (!tile.explored) {
+         ++unexploredTiles;
+      }
+      if (tile.building) {
+         if (
+            (tile.building.status === "completed" || tile.building.status === "upgrading") &&
+            isWorldWonder(tile.building.type)
+         ) {
+            wonderLevels += tile.building.level - 1;
+            ++wonders;
+         }
+         if (tile.building.level > maxLevel) {
+            maxLevel = tile.building.level;
+         }
       }
    });
 
@@ -146,5 +167,38 @@ export function checkRebirthAchievements(extraGP: number, gs: GameState): void {
    }
    if (extraGP >= 3000) {
       SteamClient.unlockAchievement("Omniscient");
+   }
+
+   if (emptyTiles <= 0) {
+      SteamClient.unlockAchievement("UrbanPlanner");
+   }
+
+   if (unexploredTiles > 0) {
+      SteamClient.unlockAchievement("Imperfectionist");
+   }
+
+   if (gs.tick >= 60 * 60 * 24) {
+      SteamClient.unlockAchievement("EnduringCivilization");
+   }
+
+   if (getPermanentGreatPeopleLevel(getGameOptions()) >= 100) {
+      SteamClient.unlockAchievement("ThinkTank");
+   }
+
+   const eic = findSpecialBuilding("EastIndiaCompany", gs);
+   if (eic && eic.building.level >= 10) {
+      SteamClient.unlockAchievement("TradeMonopoly");
+   }
+
+   const ppd = findSpecialBuilding("CentrePompidou", gs);
+   if (ppd) {
+      const building = ppd.building as ICentrePompidouBuildingData;
+      if (building.cities.size >= sizeOf(Config.City)) {
+         SteamClient.unlockAchievement("AroundTheWorld");
+      }
+   }
+
+   if (wonderLevels >= 50) {
+      SteamClient.unlockAchievement("CivitasMirabilis");
    }
 }
