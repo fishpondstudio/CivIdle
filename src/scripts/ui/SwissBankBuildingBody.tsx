@@ -1,5 +1,7 @@
+import Tippy from "@tippyjs/react";
 import type React from "react";
 import { NoPrice, NoStorage, type Resource } from "../../../shared/definitions/ResourceDefinitions";
+import { getMultipliersFor, totalMultiplierFor } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
 import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
 import type { ISwissBankBuildingData } from "../../../shared/logic/Tile";
@@ -47,10 +49,38 @@ export function SwissBankBuildingBody({ gameState, xy }: IBuildingComponentProps
                   })}
             </select>
             <div className="separator" />
-            <div className="row">
-               <div className="f1">{t(L.Koti)}</div>
-               <div className="text-strong">{formatNumber(building.resources.Koti ?? 0)}</div>
-            </div>
+            <ul className="tree-view">
+               <li className="row">
+                  <div className="f1">{t(L.Koti)}</div>
+                  <div className="text-strong">{formatNumber(building.resources.Koti ?? 0)}</div>
+               </li>
+               <li className="row">
+                  <div className="f1">{t(L.ProductionMultiplier)}</div>
+                  <div className="text-strong">{totalMultiplierFor(xy, "output", 1, false, gameState)}</div>
+               </li>
+               <ul className="text-small">
+                  <li className="row">
+                     <div className="f1">{t(L.BaseMultiplier)}</div>
+                     <div>1</div>
+                  </li>
+                  {getMultipliersFor(xy, gameState).map((m, idx) => {
+                     if (!m.output) {
+                        return null;
+                     }
+                     return (
+                        <li key={idx} className="row">
+                           <div>{m.source}</div>
+                           {m.unstable ? (
+                              <Tippy content={t(L.DynamicMultiplierTooltip)}>
+                                 <div className="m-icon small ml5 text-desc">whatshot</div>
+                              </Tippy>
+                           ) : null}
+                           <div className="f1 text-right">{m.output}</div>
+                        </li>
+                     );
+                  })}
+               </ul>
+            </ul>
          </fieldset>
          <BuildingDescriptionComponent gameState={gameState} xy={xy} />
          <BuildingValueComponent gameState={gameState} xy={xy} />

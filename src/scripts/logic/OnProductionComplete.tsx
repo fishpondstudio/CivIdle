@@ -1695,6 +1695,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          const swissBank = building as ISwissBankBuildingData;
          const resource = swissBank.resource;
          const price = resource ? Config.ResourcePrice[resource] : undefined;
+         const multiplier = totalMultiplierFor(xy, "output", 1, false, gs);
 
          const warehouses: Tile[] = [];
          for (const point of grid.getRange(tileToPoint(xy), 1)) {
@@ -1705,7 +1706,12 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
             }
          }
          if (resource && price) {
-            const { amount, rollback } = deductResourceFrom(resource, 10_000_000 / price, warehouses, gs);
+            const { amount, rollback } = deductResourceFrom(
+               resource,
+               (10_000_000 * multiplier) / price,
+               warehouses,
+               gs,
+            );
             safeAdd(building.resources, "Koti", (amount * price) / 10_000_000);
             rollback();
          }
