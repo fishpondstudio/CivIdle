@@ -30,7 +30,7 @@ export const ZH_CN = {
    AccountUpgradeButton: "升至财务官等级",
    AccountUpgradeConfirm: "账号升级",
    AccountUpgradeConfirmDescV2: "升级帐户将会<b>重置当前帝国</b>并将保留规则允许内的永恒伟人等级。这个操作<b>不能</b>撤回，请确认是否继续?",
-   Acknowledge: "警告",
+   Acknowledge: "收到",
    Acropolis: "雅典卫城",
    ActorsGuild: "演员协会",
    AdaLovelace: "阿达·洛芙莱斯",
