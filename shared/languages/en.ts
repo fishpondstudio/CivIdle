@@ -1546,6 +1546,6 @@ export const EN = {
    SuleimanI: "Suleiman I",
    Culus: "Cülus: Double the effect of Cappadocia. Mount Ararat's effect becomes based on square root of Effective Great People Level, instead of cubic root",
    SwissBank: "Swiss Bank",
-   SwissBankDesc: "Convert a chosen resource from adjacent warehouses to Koti (10 million in Sanskrit) - a tradeable resource that is worth 10M value. At most 1 Koti can be converted per cycle. Swiss Bank can store unlimited amount of Koti",
+   SwissBankDesc: "Convert a chosen resource from adjacent warehouses to Koti (10 million in Sanskrit) - a tradeable resource that is worth 10M value. 1 Koti can be converted per cycle, which is affected by Production Multiplier. Swiss Bank can store unlimited amount of Koti",
    Koti: "Koti"
 };
