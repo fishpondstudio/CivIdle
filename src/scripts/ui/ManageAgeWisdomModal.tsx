@@ -51,10 +51,11 @@ export function ManageAgeWisdomModal(): React.ReactNode {
             {showWarning ? (
                <div className="inset-shallow white" style={{ padding: "50px 20px" }}>
                   <div className="row jcc">
+                     <AccountLevelComponent level={AccountLevel.Tribune} scale={0.5} />
+                     <div className="mh10 m-icon text-desc" style={{ fontSize: 36 }}>
+                        east
+                     </div>
                      <AccountLevelComponent level={AccountLevel.Quaestor} scale={0.5} />
-                     <AccountLevelComponent level={AccountLevel.Aedile} scale={0.5} />
-                     <AccountLevelComponent level={AccountLevel.Praetor} scale={0.5} />
-                     <AccountLevelComponent level={AccountLevel.Consul} scale={0.5} />
                   </div>
                   <RenderHTML
                      html={t(L.AgeWisdomUpgradeWarningHTMLV3)}
