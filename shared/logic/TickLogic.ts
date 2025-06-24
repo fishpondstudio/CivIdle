@@ -34,6 +34,7 @@ interface ITickData {
    electrified: Set<Tile>;
    resourcesByTile: Map<Resource, IBuildingIndex[]>;
    storagePercentages: Map<Tile, number>;
+   wonderConsumptions: Map<Resource, number>;
    wonderProductions: Map<Resource, number>;
    playerTradeBuildings: Map<Tile, IBuildingData>;
    resourceImportBuildings: Map<Tile, IResourceImportBuildingIndex>;

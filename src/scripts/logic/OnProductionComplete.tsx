@@ -1713,8 +1713,11 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
                warehouses,
                gs,
             );
-            safeAdd(building.resources, "Koti", (amount * price) / 10_000_000);
-            rollback();
+            const kotiAmount = (amount * price) / 10000000;
+            safeAdd(building.resources, resource, kotiAmount);
+
+            mapSafeAdd(Tick.next.wonderConsumptions, "Koti", amount);
+            mapSafeAdd(Tick.next.wonderProductions, "Koti", kotiAmount);
          }
          break;
       }

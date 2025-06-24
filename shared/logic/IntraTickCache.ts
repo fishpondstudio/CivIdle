@@ -261,6 +261,9 @@ export function getResourceIO(gameState: GameState): IResourceIO {
       forEach(output, (res, amount) => mapSafeAdd(result.theoreticalOutput, res, amount));
    });
 
+   Tick.current.wonderConsumptions.forEach((amount, res) => mapSafeAdd(result.theoreticalInput, res, amount));
+   Tick.current.wonderConsumptions.forEach((amount, res) => mapSafeAdd(result.actualInput, res, amount));
+
    Tick.current.wonderProductions.forEach((amount, res) => mapSafeAdd(result.theoreticalOutput, res, amount));
    Tick.current.wonderProductions.forEach((amount, res) => mapSafeAdd(result.actualOutput, res, amount));
 
