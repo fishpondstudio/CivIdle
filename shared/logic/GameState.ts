@@ -127,6 +127,7 @@ export const ExtraTileInfoTypes = {
 
 export const TileTextures = [
    "Tile1",
+   "Tile14",
    "Tile2",
    "Tile3",
    "Tile4",
@@ -134,6 +135,8 @@ export const TileTextures = [
    "Tile6",
    "Tile7",
    "Tile8",
+   "Tile15",
+   "Tile16",
    "Tile9",
    "Tile10",
    "Tile11",
@@ -150,6 +153,9 @@ export const DarkTileTextures: Partial<Record<TileTexture, true>> = {
    Tile6: true,
    Tile7: true,
    Tile8: true,
+   Tile14: true,
+   Tile15: true,
+   Tile16: true,
 };
 export const PremiumTileTextures: Partial<Record<TileTexture, true>> = {
    Tile3: true,
@@ -162,6 +168,8 @@ export const PremiumTileTextures: Partial<Record<TileTexture, true>> = {
    Tile11: true,
    Tile12: true,
    Tile13: true,
+   Tile15: true,
+   Tile16: true,
 };
 
 export const CursorOptions = {

@@ -180,7 +180,7 @@ export function ThemePage(): React.ReactNode {
             </fieldset>
             <fieldset>
                <legend>{t(L.Tile)}</legend>
-               <div style={{ display: "grid", gridTemplateColumns: "repeat(6, 1fr)", gap: 10 }}>
+               <div style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: 10 }}>
                   {TileTextures.map((i) => {
                      return (
                         <div
