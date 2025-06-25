@@ -172,7 +172,7 @@ export const ZH_CN = {
    Blacksmith: "工匠铺",
    Blockchain: "区块链",
    BlueMosque: "蓝色清真寺",
-   BlueMosqueDesc: "该奇观使所有已建造奇观对相邻所有建筑提供 +1 生产、劳动者能力以及存储乘数。当圣索菲亚大教堂建造在旁边时该奇观双倍加成效果",
+   BlueMosqueDesc: "该奇观使所有奇观（自然奇观除外）对相邻的所有建筑提供 +1 生产、劳动者能力以及存储乘数。当圣索菲亚大教堂建造完成在旁边时该奇观双倍作用效果",
    BobHope: "鲍勃·霍普",
    BobHopeDesc: "幸福感 +%{value} ",
    Bond: "债券",
