@@ -86,7 +86,7 @@ export function PlayerTradeComponent({ gameState, xy }: IBuildingComponentProps)
       setShowFilters(false);
    };
 
-   const resources = keysOf(unlockedResources(gameState)).filter((r) => !NoStorage[r] && !NoPrice[r]);
+   const resources = keysOf(unlockedResources(gameState, "Koti")).filter((r) => !NoStorage[r] && !NoPrice[r]);
    return (
       <article role="tabpanel" style={{ padding: "8px" }}>
          <div className="sep5" />

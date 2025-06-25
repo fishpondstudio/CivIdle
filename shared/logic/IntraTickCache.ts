@@ -302,20 +302,25 @@ export function unlockedBuildings(gs: GameState): PartialSet<Building> {
    return _cache.unlockedBuildings;
 }
 
-export function unlockedResources(gs: GameState): PartialSet<Resource> {
+export function unlockedResources(gs: GameState, ...include: Resource[]): PartialSet<Resource> {
    if (_cache.unlockedResources) {
-      return _cache.unlockedResources;
+      const result = { ..._cache.unlockedResources };
+      include.forEach((res) => {
+         result[res] = true;
+      });
+      return result;
    }
    _cache.unlockedResources = {};
    forEach(unlockedBuildings(gs), (b) => {
-      if (b === "SwissBank") {
-         _cache.unlockedResources!.Koti = true;
-      }
       forEach(Config.Building[b].output, (res) => {
          _cache.unlockedResources![res] = true;
       });
    });
-   return _cache.unlockedResources;
+   const result = { ..._cache.unlockedResources };
+   include.forEach((res) => {
+      result[res] = true;
+   });
+   return result;
 }
 
 let grid: Grid | null = null;

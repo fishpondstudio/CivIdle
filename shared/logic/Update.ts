@@ -985,10 +985,7 @@ export function tickPrice(gs: GameState) {
       gs.lastPriceUpdated = priceId;
       OnPriceUpdated.emit(gs);
    }
-   const resources = filterOf(
-      unlockedResources(gs),
-      (res) => !NoPrice[res] && !NoStorage[res] && res !== "Koti",
-   );
+   const resources = filterOf(unlockedResources(gs), (res) => !NoPrice[res] && !NoStorage[res]);
    const grandBazaar = findSpecialBuilding("GrandBazaar", gs);
    const grid = getGrid(gs);
    getBuildingsByType("Market", gs)?.forEach((tile, xy) => {

@@ -467,7 +467,7 @@ function ResourcesTab({ gameState }: IBuildingComponentProps): React.ReactNode {
    };
    const [search, setSearch] = useState<string>(savedResourceSearch);
    const [showTheoreticalValue, setShowTheoreticalValue] = useState(true);
-   const unlockedResourcesList: PartialSet<Resource> = unlockedResources(gameState);
+   const unlockedResourcesList: PartialSet<Resource> = unlockedResources(gameState, "Koti");
    const io = getResourceIO(gameState);
    const inputs = showTheoreticalValue ? io.theoreticalInput : io.actualInput;
    const outputs = showTheoreticalValue ? io.theoreticalOutput : io.actualOutput;

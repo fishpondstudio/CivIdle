@@ -34,7 +34,9 @@ export function AddTradeComponent({ gameState, xy }: IBuildingComponentProps): R
    const enabled =
       !isNullOrUndefined(user) &&
       trades.filter((t) => t.fromId === user.userId).length < getMaxActiveTrades(user);
-   const buyResources = keysOf(unlockedResources(gameState)).filter((r) => !NoStorage[r] && !NoPrice[r]);
+   const buyResources = keysOf(unlockedResources(gameState, "Koti")).filter(
+      (r) => !NoStorage[r] && !NoPrice[r],
+   );
    const availableResources = combineResources(
       Array.from(Tick.current.playerTradeBuildings.values()).map((m) => m.resources),
    );
