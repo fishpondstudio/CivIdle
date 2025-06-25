@@ -1,5 +1,5 @@
 import type { Building, IBuildingDefinition } from "../definitions/BuildingDefinitions";
-import type { Deposit, Resource } from "../definitions/ResourceDefinitions";
+import { NoPrice, NoStorage, type Deposit, type Resource } from "../definitions/ResourceDefinitions";
 import { Grid } from "../utilities/Grid";
 import { clamp, forEach, mapSafeAdd, reduceOf, safeAdd, tileToHash, type Tile } from "../utilities/Helper";
 import type { PartialSet, PartialTabulate } from "../utilities/TypeDefinitions";
@@ -116,6 +116,9 @@ export function getBuildingIO(
       }
       if ("inputResource" in b) {
          const s = b as ICloneBuildingData;
+         if (NoStorage[s.inputResource] || NoPrice[s.inputResource] || s.inputResource === "Koti") {
+            s.inputResource = "Computer";
+         }
          if (type === "input") {
             resources[s.inputResource] = 1;
          }
