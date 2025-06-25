@@ -1714,7 +1714,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
                gs,
             );
             const kotiAmount = (amount * price) / 10_000_000;
-            safeAdd(building.resources, resource, kotiAmount);
+            safeAdd(building.resources, "Koti", kotiAmount);
 
             mapSafeAdd(Tick.next.wonderConsumptions, resource, amount);
             mapSafeAdd(Tick.next.wonderProductions, "Koti", kotiAmount);
