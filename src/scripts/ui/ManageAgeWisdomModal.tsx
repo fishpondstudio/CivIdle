@@ -11,6 +11,7 @@ import { AccountLevel } from "../../../shared/utilities/Database";
 import { numberToRoman, safeAdd } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import { useGameOptions } from "../Global";
+import { isOnlineUser } from "../rpc/RPCClient";
 import { getColorCached } from "../utilities/CachedColor";
 import { jsxMMapOf, jsxMapOf } from "../utilities/Helper";
 import { Fonts } from "../visuals/Fonts";
@@ -23,7 +24,7 @@ import { WarningComponent } from "./WarningComponent";
 
 export function ManageAgeWisdomModal(): React.ReactNode {
    const options = useGameOptions();
-   const [showWarning, setShowWarning] = useState(true);
+   const [showWarning, setShowWarning] = useState(!isOnlineUser());
    return (
       <div className="window" style={{ width: "500px" }}>
          <div className="title-bar">
