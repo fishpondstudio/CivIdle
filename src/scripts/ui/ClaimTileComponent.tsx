@@ -1,14 +1,20 @@
+import Tippy from "@tippyjs/react";
 import { Config } from "../../../shared/logic/Config";
 import { GameStateChanged } from "../../../shared/logic/GameStateLogic";
-import { getMaxOccupiedTiles } from "../../../shared/logic/PlayerTradeLogic";
-import { MoveTileCooldown, UserAttributes } from "../../../shared/utilities/Database";
-import { formatHMS, hasFlag, xyToPoint } from "../../../shared/utilities/Helper";
+import {
+   MaxTilePointTime,
+   TilePointPerHour,
+   getTileFromAccountRank,
+} from "../../../shared/logic/PlayerTradeLogic";
+import { AccountLevel, MoveTileCooldown, UserAttributes } from "../../../shared/utilities/Database";
+import { HOUR, clamp, formatHMS, formatNumber, hasFlag, xyToPoint } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
-import { client, getPlayerMap, usePlayerMap, useUser } from "../rpc/RPCClient";
+import { client, getPlayerMap, getUser, usePlayerMap, useUser } from "../rpc/RPCClient";
 import { getOwnedOrOccupiedTiles, getOwnedTradeTile } from "../scenes/PathFinder";
 import { refreshOnTypedEvent } from "../utilities/Hook";
 import { playError, playSuccess } from "../visuals/Sound";
 import { showToast } from "./GlobalModal";
+import { RenderHTML } from "./RenderHTMLComponent";
 
 export function ClaimTileComponent({ xy }: { xy: string }): React.ReactNode {
    refreshOnTypedEvent(GameStateChanged);
@@ -22,6 +28,9 @@ export function ClaimTileComponent({ xy }: { xy: string }): React.ReactNode {
       const tile = playerMap.get(myXy);
       cooldownLeft += tile!.createdAt - Date.now();
    }
+   const fromRank = getTileFromAccountRank(user?.level ?? AccountLevel.Tribune);
+   const fromOccupying = getTileFromOccupying();
+   const myTiles = getOwnedOrOccupiedTiles();
    return (
       <>
          <fieldset>
@@ -83,20 +92,63 @@ export function ClaimTileComponent({ xy }: { xy: string }): React.ReactNode {
                )}
                <div className="f1">{t(L.PlayerMapOccupyTileCondition1)}</div>
             </div>
-            <div className="row mv5">
-               {user && getOwnedOrOccupiedTiles().length < 1 + getMaxOccupiedTiles(user.level) ? (
-                  <div className="m-icon small mr10 text-green">check_circle</div>
-               ) : (
-                  <div className="m-icon small mr10 text-red">cancel</div>
-               )}
-               <div className="f1">{t(L.PlayerMapOccupyTileCondition2)}</div>
-            </div>
+            <ul className="tree-view">
+               <li>
+                  <li className="row">
+                     <div className="f1 text-strong">{t(L.PlayerMapTileTilePoint)}</div>
+                     <div className="text-strong">{formatNumber(fromRank + fromOccupying)}</div>
+                  </li>
+                  <ul>
+                     <li className="row">
+                        <div className="f1">{t(L.PlayerMapTileFromRank)}</div>
+                        <div>{formatNumber(fromRank)}</div>
+                     </li>
+                     <li className="row">
+                        <div>{t(L.PlayerMapTileFromOccupying)}</div>
+                        <Tippy
+                           content={
+                              <RenderHTML
+                                 html={t(L.PlayerMapTileFromOccupyingTooltipHTML, {
+                                    point: TilePointPerHour,
+                                 })}
+                              />
+                           }
+                        >
+                           <div className="m-icon small ml5 text-desc">info</div>
+                        </Tippy>
+
+                        <div className="f1" />
+                        <div>{formatNumber(fromOccupying)}</div>
+                     </li>
+                  </ul>
+               </li>
+
+               <li className="row">
+                  <div className="text-strong">{t(L.PlayerMapTileUsedTilePoint)}</div>
+                  <Tippy
+                     content={
+                        <RenderHTML
+                           html={t(L.PlayerMapTileUsedTilePointTooltipHTML, { point: TilePointPerHour })}
+                        />
+                     }
+                  >
+                     <div className="m-icon small ml5 text-desc">info</div>
+                  </Tippy>
+
+                  <div className="f1" />
+                  <div className="text-strong">{formatNumber(myTiles.length)}</div>
+               </li>
+               <li className="row">
+                  <div className="f1 text-strong">{t(L.PlayerMapTileAvailableTilePoint)}</div>
+                  <div className="text-strong">{formatNumber(fromRank + fromOccupying - myTiles.length)}</div>
+               </li>
+            </ul>
             <div className="separator" />
             <button
                disabled={
                   !user ||
                   !isAdjacentToOwnedOrOccupiedTile(user.userId, xy) ||
-                  getOwnedOrOccupiedTiles().length >= 1 + getMaxOccupiedTiles(user.level)
+                  myTiles.length + 1 > fromRank + fromOccupying
                }
                className="w100 row jcc"
                onClick={async () => {
@@ -127,4 +179,18 @@ function isAdjacentToOwnedOrOccupiedTile(userId: string, xy: string): boolean {
       }
    }
    return false;
+}
+
+export function getTileFromOccupying(): number {
+   let time = 0;
+   const now = Date.now();
+   const playerMap = getPlayerMap();
+   const userId = getUser()?.userId;
+   if (!userId) return 0;
+   playerMap.forEach((entry, xy) => {
+      if (entry.userId === userId) {
+         time += clamp(now - entry.createdAt, 0, MaxTilePointTime);
+      }
+   });
+   return (time * TilePointPerHour) / HOUR;
 }

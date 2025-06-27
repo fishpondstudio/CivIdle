@@ -143,17 +143,20 @@ export function hasResourceForPlayerTrade(res: Resource): boolean {
    return false;
 }
 
-export function getMaxOccupiedTiles(rank: AccountLevel): number {
+export function getTileFromAccountRank(rank: AccountLevel): number {
    switch (rank) {
       case AccountLevel.Quaestor:
-         return 1;
-      case AccountLevel.Aedile:
          return 2;
-      case AccountLevel.Praetor:
+      case AccountLevel.Aedile:
          return 3;
-      case AccountLevel.Consul:
+      case AccountLevel.Praetor:
          return 4;
+      case AccountLevel.Consul:
+         return 5;
       default:
-         return 0;
+         return 1;
    }
 }
+
+export const TilePointPerHour = 0.005;
+export const MaxTilePointTime = 7 * DAY;

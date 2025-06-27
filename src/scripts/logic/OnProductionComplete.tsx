@@ -53,7 +53,7 @@ import {
    getCurrentAge,
    getUnlockedTechAges,
 } from "../../../shared/logic/TechLogic";
-import { Tick } from "../../../shared/logic/TickLogic";
+import { NotProducingReason, Tick } from "../../../shared/logic/TickLogic";
 import type {
    ICentrePompidouBuildingData,
    IGreatPeopleBuildingData,
@@ -1709,15 +1709,20 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          if (resource && price) {
             const { amount } = deductResourceFrom(
                resource,
-               (10_000_000 * multiplier) / price,
+               (10_000_000 * multiplier * building.level) / price,
                warehouses,
                gs,
             );
-            const kotiAmount = (amount * price) / 10_000_000;
-            safeAdd(building.resources, "Koti", kotiAmount);
-
-            mapSafeAdd(Tick.next.wonderConsumptions, resource, amount);
-            mapSafeAdd(Tick.next.wonderProductions, "Koti", kotiAmount);
+            if (amount > 0) {
+               const kotiAmount = (amount * price) / 10_000_000;
+               safeAdd(building.resources, "Koti", kotiAmount);
+               mapSafeAdd(Tick.next.wonderConsumptions, resource, amount);
+               mapSafeAdd(Tick.next.wonderProductions, "Koti", kotiAmount);
+            } else {
+               Tick.next.notProducingReasons.set(xy, NotProducingReason.NotEnoughResources);
+            }
+         } else {
+            Tick.next.notProducingReasons.set(xy, NotProducingReason.TurnedOff);
          }
          break;
       }

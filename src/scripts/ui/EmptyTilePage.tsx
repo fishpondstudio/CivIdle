@@ -415,6 +415,7 @@ function BuildingInfoComponent({ building }: { building: Building }): React.Reac
          </div>
          {jsxMapOf(buildCost, (res, amount) => (
             <ResourceAmountComponent
+               key={res}
                resource={res}
                amount={amount}
                showLabel={true}
@@ -430,6 +431,7 @@ function BuildingInfoComponent({ building }: { building: Building }): React.Reac
                </div>
                {jsxMapOf(def.input, (res, amount) => (
                   <ResourceAmountComponent
+                     key={res}
                      resource={res}
                      amount={amount}
                      showLabel={true}
@@ -447,6 +449,7 @@ function BuildingInfoComponent({ building }: { building: Building }): React.Reac
                </div>
                {jsxMapOf(def.output, (res, amount) => (
                   <ResourceAmountComponent
+                     key={res}
                      resource={res}
                      amount={amount}
                      showLabel={true}
