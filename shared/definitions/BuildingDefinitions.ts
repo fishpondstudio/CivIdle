@@ -2125,4 +2125,5 @@ export const BuildingShowLevel = new Set<Building>([
    "YearOfTheSnake",
    "EastIndiaCompany",
    "MontSaintMichel",
+   "SwissBank",
 ]);
