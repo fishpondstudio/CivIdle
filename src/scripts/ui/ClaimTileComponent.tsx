@@ -192,10 +192,17 @@ function isAdjacentToOwnedOrOccupiedTile(userId: string, xy: string): boolean {
 
 export function getTileFromOccupying(): number {
    let time = 0;
-   const now = Date.now();
    const playerMap = getPlayerMap();
    const userId = getUser()?.userId;
    if (!userId) return 0;
+
+   let now = Date.now();
+   playerMap.forEach((entry, xy) => {
+      if (entry.userId === userId) {
+         now = Math.min(now, entry.createdAt + 7 * DAY);
+      }
+   });
+
    playerMap.forEach((entry, xy) => {
       if (entry.userId === userId) {
          time += clamp(now - entry.createdAt, 0, MaxTilePointTime);
