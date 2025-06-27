@@ -181,7 +181,7 @@ export function checkRebirthAchievements(extraGP: number, gs: GameState): void {
       SteamClient.unlockAchievement("EnduringCivilization");
    }
 
-   if (getPermanentGreatPeopleLevel(getGameOptions()) >= 100) {
+   if (getPermanentGreatPeopleLevel(getGameOptions()) >= 500) {
       SteamClient.unlockAchievement("ThinkTank");
    }
 
