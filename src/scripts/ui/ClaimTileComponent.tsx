@@ -7,7 +7,15 @@ import {
    getTileFromAccountRank,
 } from "../../../shared/logic/PlayerTradeLogic";
 import { AccountLevel, MoveTileCooldown, UserAttributes } from "../../../shared/utilities/Database";
-import { HOUR, clamp, formatHMS, formatNumber, hasFlag, xyToPoint } from "../../../shared/utilities/Helper";
+import {
+   DAY,
+   HOUR,
+   clamp,
+   formatHMS,
+   formatNumber,
+   hasFlag,
+   xyToPoint,
+} from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import { client, getPlayerMap, getUser, usePlayerMap, useUser } from "../rpc/RPCClient";
 import { getOwnedOrOccupiedTiles, getOwnedTradeTile } from "../scenes/PathFinder";
@@ -110,6 +118,7 @@ export function ClaimTileComponent({ xy }: { xy: string }): React.ReactNode {
                               <RenderHTML
                                  html={t(L.PlayerMapTileFromOccupyingTooltipHTML, {
                                     point: TilePointPerHour,
+                                    max: Math.round(MaxTilePointTime / DAY),
                                  })}
                               />
                            }
