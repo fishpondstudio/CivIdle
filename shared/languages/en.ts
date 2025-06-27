@@ -1554,7 +1554,7 @@ export const EN = {
    PlayerMapTileAvailableTilePoint: "Available Tile Point",
    PlayerMapTileFromRank: "From Account Rank",
    PlayerMapTileFromOccupying: "From Owned/Occupied Tiles",
-   PlayerMapTileFromOccupyingTooltipHTML: "An owned/cccupied tile generates <b>%{point}</b> tile point per hour (up to %{max} days)",
+   PlayerMapTileFromOccupyingTooltipHTML: "An owned/occupied tile generates <b>%{point}</b> tile point per hour (up to %{max} days)",
    PlayerMapTileUsedTilePointTooltipHTML: "You need <b>1 tile point</b> to own/occupy a tile",
    KotiInStorage: "Koti In Storage",
    KotiProduction: "Koti Production",
