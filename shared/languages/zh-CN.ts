@@ -938,7 +938,7 @@ export const ZH_CN = {
    PlayerMapClaimTileCondition3: "已解锁所需科技：%{tech}",
    PlayerMapClaimTileCondition4: "未宣称地块或已过改变宣称之冷却时间",
    PlayerMapClaimTileCooldownLeft: "冷却时间剩余：%{time}",
-   PlayerMapClaimTileNoLongerReserved: "此贸易地块已不再受保留。你可以驱逐 <b>%{name}</b> 并为你自己宣称此地块。",
+   PlayerMapClaimTileNoLongerReserved: "此地块已不再受保留。你可以驱逐 <b>%{name}</b> 并为你自己宣称此地块。",
    PlayerMapEstablishedSince: "宣称时间",
    PlayerMapLastSeenAt: "上次活跃",
    PlayerMapMapTileBonus: "贸易地块加成",
