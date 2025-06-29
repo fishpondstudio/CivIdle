@@ -952,7 +952,7 @@ export const ZH_TW = {
    PlayerMapTariffDesc: "每項經過你佔領地的貿易，都將會向你繳納關稅。如果你增加關稅，將從每項途經貿易中獲取更多，但貿易經過的數量會更少。",
    PlayerMapTileAvailableTilePoint: "可用地塊點數",
    PlayerMapTileFromOccupying: "來自宣稱地塊或佔領地塊",
-   PlayerMapTileFromOccupyingTooltipHTML: "宣稱地塊或佔領地塊每個將每小時生成<b>%{point}</b>地塊點數（從第一個宣稱地塊開始，最多累計生成%{max}天）",
+   PlayerMapTileFromOccupyingTooltipHTML: "宣稱地塊或佔領地塊每個將每小時生成<b>%{point}</b>地塊點數（從第一個宣稱地塊開始，每個地塊最多累計生成%{max}天）",
    PlayerMapTileFromRank: "來自帳號等級",
    PlayerMapTileTilePoint: "地塊點數（重新宣稱將不保留生成的地塊點數）",
    PlayerMapTileUsedTilePoint: "已使用地塊點數",
