@@ -1427,7 +1427,7 @@ export const ZH_CN = {
    TraditionHonor: "荣耀",
    Train: "火车",
    TranslationPercentage: "%{language}的翻译进度目前为%{percentage}。可在GitHub上帮助改进此语言翻译。（简中译者：为确保效率，建议优先与当前译者们联系；初次翻译时，请在翻译人员中，添加自己的游戏昵称。）",
-   TranslatorCredit: "Shallowsing、JLQ1134、NaiKeSiTe",
+   TranslatorCredit: "Shallowsing、JLQ1134、NaiKeSiTe。企鹅群<b>907371958</b>",
    Translators: "翻译人员",
    TransportAllocatedCapacityTooltip: "分配用于运送此资源的建造者能力",
    TransportationWorkers: "运输作业劳动者",
