@@ -778,7 +778,7 @@ export const ZH_TW = {
    MatrioshkaBrain: "俄羅斯娃娃大腦(套腦)(Matrioshka Brain)",
    MatrioshkaBrainDescV2: "允許科學在計算帝國價值時被計入（5 科學 = 1 帝國價值）。每個忙碌和閒置的工人提供 +5 科學。此奇觀可升級，每次升級額外提供 +1 科學和生產倍數",
    MausoleumAtHalicarnassus: "摩索拉斯王陵墓",
-   MausoleumAtHalicarnassusDescV2: "周圍 2 地塊範圍內所有建築,對於 “來自” 與 “前往” 建築的資源調用，免費運輸",
+   MausoleumAtHalicarnassusDescV2: "周圍 2 地塊範圍內所有建築，對於 “來自” 與 “前往” 建築的資源調用，免費運輸",
    MaxExplorers: "最大探險家數量",
    MaxTransportDistance: "最大運輸距離",
    Meat: "肉",
