@@ -779,7 +779,7 @@ export const ZH_CN = {
    MatrioshkaBrain: "套脑",
    MatrioshkaBrainDescV2: "计算帝国价值时，允许科学纳入计算（ 5 科学= 1 帝国价值）。 +5 劳动者科学产出。该奇观可被升级，并且每一次额外升级，提供 +1 劳动者科学产出，所有产出科学的建筑 +1 生产乘数（不包括克隆实验室）",
    MausoleumAtHalicarnassus: "摩索拉斯陵墓",
-   MausoleumAtHalicarnassusDescV2: "周围 2 地块范围内所有建筑,对于<b>来自</b>与<b>前往</b>建筑的资源调用，免费运输",
+   MausoleumAtHalicarnassusDescV2: "周围 2 地块范围内所有建筑,对于 “来自” 与 “前往” 建筑的资源调用，免费运输",
    MaxExplorers: "最大探险家数量",
    MaxTransportDistance: "最大输入距离",
    Meat: "肉",
