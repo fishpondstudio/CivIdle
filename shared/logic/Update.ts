@@ -22,12 +22,10 @@ import {
    sizeOf,
    tileToHash,
    tileToPoint,
-   type IPointData,
    type Tile,
 } from "../utilities/Helper";
 import { srand } from "../utilities/Random";
 import { TypedEvent } from "../utilities/TypedEvent";
-import { Vector2, v2 } from "../utilities/Vector2";
 import { L, t } from "../utilities/i18n";
 import {
    IOCalculation,
@@ -122,12 +120,10 @@ export function tickUnlockable(td: IUnlockable, source: string, gs: GameState): 
 }
 
 export function tickTransports(gs: GameState): void {
-   const mahTile = Tick.current.specialBuildings.get("MausoleumAtHalicarnassus");
    const grid = getGrid(gs);
-   const mahPos = mahTile ? grid.xyToPosition(mahTile.tile) : null;
    filterInPlace(gs.transportationV2, (transport) => {
       // Has arrived!
-      if (tickTransportation(transport, grid, mahPos)) {
+      if (tickTransportation(transport, grid)) {
          const building = gs.tiles.get(transport.toXy)?.building;
          if (building) {
             safeAdd(building.resources, transport.resource, transport.amount);
@@ -151,11 +147,7 @@ export function tickTransports(gs: GameState): void {
    });
 }
 
-const _positionCache: IPointData = { x: 0, y: 0 };
-
-function tickTransportation(transport: ITransportationDataV2, grid: Grid, mah: IPointData | null): boolean {
-   const fromPosition = grid.xyToPosition(transport.fromXy);
-   const toPosition = grid.xyToPosition(transport.toXy);
+function tickTransportation(transport: ITransportationDataV2, grid: Grid): boolean {
    const totalTick = grid.distanceTile(transport.fromXy, transport.toXy);
 
    // TODO: This needs to be double checked when fuel is implemented!
@@ -166,13 +158,6 @@ function tickTransportation(transport: ITransportationDataV2, grid: Grid, mah: I
    }
 
    transport.fuelCurrentTick = transport.fuelPerTick;
-   if (mah) {
-      Vector2.lerp(fromPosition, toPosition, transport.ticksSpent / totalTick, _positionCache);
-      if (v2(_positionCache).subtractSelf(mah).lengthSqr() <= 200 * 200) {
-         transport.fuelCurrentTick = 0;
-      }
-   }
-
    if (getAvailableWorkers(transport.fuel) >= transport.fuelCurrentTick) {
       useWorkers(transport.fuel, transport.fuelCurrentTick, null);
       mapSafeAdd(getFuelByTarget(), transport.toXy, transport.fuelCurrentTick);

@@ -1046,7 +1046,7 @@ export class BuildingDefinitions {
    };
    MausoleumAtHalicarnassus: IBuildingDefinition = {
       name: () => t(L.MausoleumAtHalicarnassus),
-      desc: () => t(L.MausoleumAtHalicarnassusDesc),
+      desc: () => t(L.MausoleumAtHalicarnassusDescV2),
       input: {},
       output: {},
       max: 1,

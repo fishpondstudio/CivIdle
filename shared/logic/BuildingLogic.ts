@@ -392,6 +392,10 @@ export function addTransportation(
    gs: GameState,
 ): void {
    const grid = getGrid(gs);
+   const mah = Tick.current.specialBuildings.get("MausoleumAtHalicarnassus");
+   if (mah && (grid.distanceTile(fromXy, mah.tile) <= 2 || grid.distanceTile(toXy, mah.tile) <= 2)) {
+      fuelPerTick = 0;
+   }
    const fromPosition = grid.xyToPosition(fromXy);
    const toPosition = grid.xyToPosition(toXy);
    useWorkers(fuelResource, fuelPerTick, null);
