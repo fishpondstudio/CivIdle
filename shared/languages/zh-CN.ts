@@ -679,7 +679,7 @@ export const ZH_CN = {
    Islam5UpgradeHTML: "解锁时，生成一批科学，生成量等同于<b>工业时代</b>最昂贵科技所需",
    IslamLevelX: "伊斯兰教 %{level}",
    ItsukushimaShrine: "严岛神社",
-   ItsukushimaShrineDescV2: "当一个时代的所有科技被解锁时，生成一批科学，生成量等同于下一时代最廉价科技所需",
+   ItsukushimaShrineDescV2: "每当一个时代的所有科技被解锁时，生成一批科学，生成量等同于所有科技被解锁时的下一时代最廉价科技所需",
    JamesWatson: "詹姆斯·杜威·沃森",
    JamesWatsonDesc: "忙碌劳动者产出科学 +%{value} ",
    JamesWatt: "詹姆斯·瓦特",
