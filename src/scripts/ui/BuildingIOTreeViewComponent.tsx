@@ -87,7 +87,6 @@ export function BuildingIOTreeViewComponent({
                                  return null;
                               }
                               return (
-                                 // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
                                  <li key={idx} className="row">
                                     <div>{m.source}</div>
                                     {m.unstable ? (
