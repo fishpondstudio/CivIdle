@@ -785,6 +785,8 @@ export const ZH_TW = {
    Metallurgy: "冶煉",
    Michelangelo: "米開朗基羅",
    MiddleAge: "中世紀",
+   MiddleClick: "滑鼠中鍵複製藍圖",
+   MiddleClickDescHTML: "選取你要<b>複製藍圖的建築</b>點擊，別點擊任何地塊！直接<b>按滑鼠中鍵</b>指著想要建設同類建築的地塊",
    MilitaryTactics: "軍事戰略",
    Milk: "牛奶",
    Moai: "復活節島摩艾石像",
