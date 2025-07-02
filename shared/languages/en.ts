@@ -1552,4 +1552,6 @@ export const EN = {
    Zoroaster: "Zoroaster",
    Zugspitze: "Zugspitze",
    ZugspitzeDesc: "For each unlocked age, get one point that can be used to provide one extra level to any Great Person that is born from this run",
+   MiddleClick: "Middle Click Copy",
+   MiddleClickDescHTML: "Select a building and <b>middle click</b> an empty tile to <b>copy</b> the building to that tile",
 };
