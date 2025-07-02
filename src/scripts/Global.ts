@@ -154,6 +154,16 @@ export async function doSaveGame(task: ISaveGameTask): Promise<void> {
    }
 }
 
+export async function hardReset(): Promise<void> {
+   if (isSteam()) {
+      await SteamClient.fileDelete(SAVE_KEY);
+   } else if (isAndroid() || isIOS()) {
+      await Preferences.clear();
+   } else {
+      await idbDel(SAVE_KEY);
+   }
+}
+
 export async function compressSave(gs: SavedGame = savedGame): Promise<Uint8Array> {
    return await compress(new TextEncoder().encode(serializeSave(gs)));
 }

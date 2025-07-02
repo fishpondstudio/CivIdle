@@ -1,6 +1,7 @@
 import { DISCORD_URL } from "../../../shared/logic/Constants";
 import { OnKeydown } from "../../../shared/logic/Shortcut";
-import { isSteam, SteamClient } from "../rpc/SteamClient";
+import { hardReset } from "../Global";
+import { SteamClient, isSteam } from "../rpc/SteamClient";
 import { useTypedEvent } from "../utilities/Hook";
 import { openUrl } from "../utilities/Platform";
 
@@ -21,6 +22,11 @@ export function SaveCorruptedPage(): React.ReactNode {
       if (e.key === "l") {
          if (isSteam()) SteamClient.openLogFolder();
       }
+      if (e.key === "r") {
+         hardReset().then(() => {
+            window.location.reload();
+         });
+      }
    });
    return (
       <div className="error-page">
@@ -29,7 +35,7 @@ export function SaveCorruptedPage(): React.ReactNode {
             Your save file is corrupted. You can try to recover from automatic backups. Open backup folder
             (press [B]), choose the most recent backup (sort by last modified date) and overwrite your save
             file (press [S] to open save folder). If you need help, Press [H] to open detailed instructions or
-            press [D] to open link to Discord server.
+            press [D] to open link to Discord server. If you want to completely reset your save, press [R].
          </div>
       </div>
    );
