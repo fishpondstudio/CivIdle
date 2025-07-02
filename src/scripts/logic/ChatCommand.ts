@@ -54,7 +54,7 @@ export async function handleChatCommand(command: string): Promise<void> {
    const parts = command.split(" ");
    switch (parts[0]) {
       case "timetravel": {
-         requireOfflineRun();
+         requireDevelopment();
          const time = clamp(safeParseInt(parts[1], 30), 0, 60 * 4);
          addSystemMessage(`Time travel ${time} minutes. This could take a while, please be patient...`);
          setTimeout(() => {
@@ -99,6 +99,10 @@ export async function handleChatCommand(command: string): Promise<void> {
       }
       case "clear": {
          clearSystemMessages();
+         break;
+      }
+      case "reload": {
+         saveGame().then(() => window.location.reload());
          break;
       }
       case "playercount": {
