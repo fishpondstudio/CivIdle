@@ -42,7 +42,7 @@ export function PlayerTilePage({ xy }: { xy: string }): React.ReactNode {
             )}
             <fieldset>
                <legend className="text-strong row">
-                  <div style={{ color: UserColorsMapping.get(tile.color) }}>{tile.handle}</div>
+                  <div style={{ color: UserColorsMapping[tile.color] }}>{tile.handle}</div>
                   <Tippy content={getCountryName(tile.flag)}>
                      <PlayerFlagComponent name={tile.flag} style={{ marginLeft: 5 }} scale={0.7} />
                   </Tippy>

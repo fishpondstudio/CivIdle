@@ -7,7 +7,7 @@ import {
    getSeaTileCost,
    wrapX,
 } from "../../../shared/logic/PlayerTradeLogic";
-import { MAP_MAX_X, MAP_MAX_Y, TileType } from "../../../shared/utilities/Database";
+import { MAP_MAX_X, MAP_MAX_Y, TileType, type IClientMapEntry } from "../../../shared/utilities/Database";
 import { OnPlayerMapChanged, getPlayerMap, getUser } from "../rpc/RPCClient";
 import { dijkstra } from "../utilities/dijkstra";
 
@@ -101,4 +101,42 @@ export function getOwnedOrOccupiedTiles(): string[] {
       }
    }
    return result;
+}
+
+export function getNeighboringPlayers(): Map<string, [string, IClientMapEntry][]> {
+   const me = getUser()?.userId;
+   if (!me) return new Map();
+   const tiles = getOwnedOrOccupiedTiles();
+   const users = new Map<string, [string, IClientMapEntry][]>();
+   const playerMap = getPlayerMap();
+   for (const tile of tiles) {
+      const [x, y] = tile.split(",").map(Number);
+      const tile1 = playerMap.get(`${x - 1},${y}`);
+      if (tile1 && !users.has(tile1.userId)) {
+         users.set(tile1.userId, []);
+      }
+      const tile2 = playerMap.get(`${x + 1},${y}`);
+      if (tile2 && !users.has(tile2.userId)) {
+         users.set(tile2.userId, []);
+      }
+      const tile3 = playerMap.get(`${x},${y - 1}`);
+      if (tile3 && !users.has(tile3.userId)) {
+         users.set(tile3.userId, []);
+      }
+      const tile4 = playerMap.get(`${x},${y + 1}`);
+      if (tile4 && !users.has(tile4.userId)) {
+         users.set(tile4.userId, []);
+      }
+   }
+
+   users.delete(me);
+
+   for (const [xy, entry] of playerMap) {
+      const r = users.get(entry.userId);
+      if (r) {
+         r.push([xy, entry]);
+      }
+   }
+
+   return users;
 }

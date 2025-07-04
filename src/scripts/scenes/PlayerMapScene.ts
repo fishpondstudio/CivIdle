@@ -395,7 +395,7 @@ class PlayerTile extends Container {
       const isMyself = data.userId === getUser()?.userId;
       const isReserved = isTileReserved(data);
 
-      const color = UserColorsMapping.get(data.color);
+      const color = UserColorsMapping[data.color];
       if (color) {
          const sprite = this.addChild(new Sprite(context.textures.Misc_100x100));
          sprite.position.set(x * GridSize, y * GridSize);

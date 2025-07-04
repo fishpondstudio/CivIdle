@@ -1,6 +1,7 @@
 import type { Building } from "../definitions/BuildingDefinitions";
 import type { Resource } from "../definitions/ResourceDefinitions";
 import { HOUR } from "./Helper";
+import { L, t } from "./i18n";
 
 export enum ChatAttributes {
    None = 0,
@@ -178,23 +179,41 @@ export enum TileType {
    Occupied = 1,
 }
 
-export const UserColorsMapping: Map<UserColors, string | undefined> = new Map([
-   [UserColors.Default, undefined],
-   [UserColors.Green, "#00b894"],
-   [UserColors.Turquoise, "#00cec9"],
-   [UserColors.Blue, "#0984e3"],
-   [UserColors.Purple, "#6c5ce7"],
-   [UserColors.Orange, "#f0932b"],
-   [UserColors.Red, "#d63031"],
-   [UserColors.Pink, "#e84393"],
-   [UserColors.Cyan, "#0abde3"],
-   [UserColors.DarkBlue, "#124e89"],
-   [UserColors.SeaGreen, "#2e8b57"],
-   [UserColors.Chocolate, "#7b3f00"],
-   [UserColors.Flamingo, "#ff7777"],
-   [UserColors.Cinereous, "#98817b"],
-   [UserColors.Glaucous, "#6082b6"],
-]);
+export const UserColorsMapping = {
+   [UserColors.Default]: undefined,
+   [UserColors.Green]: "#00b894",
+   [UserColors.Turquoise]: "#00cec9",
+   [UserColors.Blue]: "#0984e3",
+   [UserColors.Purple]: "#6c5ce7",
+   [UserColors.Orange]: "#f0932b",
+   [UserColors.Red]: "#d63031",
+   [UserColors.Pink]: "#e84393",
+   [UserColors.Cyan]: "#0abde3",
+   [UserColors.DarkBlue]: "#124e89",
+   [UserColors.SeaGreen]: "#2e8b57",
+   [UserColors.Chocolate]: "#7b3f00",
+   [UserColors.Flamingo]: "#ff7777",
+   [UserColors.Cinereous]: "#98817b",
+   [UserColors.Glaucous]: "#6082b6",
+} as const satisfies Record<UserColors, string | undefined>;
+
+export const UserColorsNames: Record<UserColors, () => string> = {
+   [UserColors.Default]: () => t(L.ColorNone),
+   [UserColors.Green]: () => t(L.ColorGreen),
+   [UserColors.Turquoise]: () => t(L.ColorTurquoise),
+   [UserColors.Blue]: () => t(L.ColorBlue),
+   [UserColors.Purple]: () => t(L.ColorPurple),
+   [UserColors.Orange]: () => t(L.ColorOrange),
+   [UserColors.Red]: () => t(L.ColorRed),
+   [UserColors.Pink]: () => t(L.ColorPink),
+   [UserColors.Cyan]: () => t(L.ColorCyan),
+   [UserColors.DarkBlue]: () => t(L.ColorDarkBlue),
+   [UserColors.SeaGreen]: () => t(L.ColorSeaGreen),
+   [UserColors.Chocolate]: () => t(L.ColorChocolate),
+   [UserColors.Flamingo]: () => t(L.ColorFlamingo),
+   [UserColors.Cinereous]: () => t(L.ColorCinereous),
+   [UserColors.Glaucous]: () => t(L.ColorGlaucous),
+};
 
 export interface IUser {
    userId: string;

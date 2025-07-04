@@ -57,6 +57,8 @@ export const GOOGLE_PLAY_GAMES_CLIENT_ID =
 export const TOWER_BRIDGE_GP_PER_CYCLE = 3600;
 export const EAST_INDIA_COMPANY_BOOST_PER_EV = 2000;
 export const TRADE_TILE_BONUS = 5;
+export const TRADE_TILE_NEIGHBOR_BONUS = 1;
+export const TRADE_TILE_ALLY_BONUS = 2;
 
 interface IRecipe {
    building: Building;

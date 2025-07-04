@@ -84,7 +84,7 @@ import {
 } from "../../../shared/utilities/Helper";
 import { srand } from "../../../shared/utilities/Random";
 import { L, t } from "../../../shared/utilities/i18n";
-import { TileBuildings, client } from "../rpc/RPCClient";
+import { TileBuildings, client, populateTileBuildings } from "../rpc/RPCClient";
 import { getOwnedOrOccupiedTiles } from "../scenes/PathFinder";
 import { ChooseGreatPersonModal } from "../ui/ChooseGreatPersonModal";
 import { hasOpenModal, showModal } from "../ui/GlobalModal";
@@ -132,6 +132,8 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          } else {
             gs.festival = false;
          }
+
+         populateTileBuildings();
 
          getOwnedOrOccupiedTiles().forEach((xy, i) => {
             const building = TileBuildings.get(xy);

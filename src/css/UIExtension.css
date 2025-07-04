@@ -350,6 +350,14 @@ fieldset .separator {
    align-items: center;
 }
 
+.g5 {
+   gap: 5px;
+}
+
+.g10 {
+   gap: 10px;
+}
+
 .col {
    display: flex;
    flex-direction: column;

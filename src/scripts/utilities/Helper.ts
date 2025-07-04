@@ -1,6 +1,6 @@
 import { forEach } from "../../../shared/utilities/Helper";
 
-export function jsxMapOf<K extends string, V>(
+export function jsxMapOf<K extends string | number | symbol, V>(
    obj: Partial<Record<K, V>> | undefined,
    func: (key: K, value: V, index: number) => JSX.Element[] | JSX.Element | null,
    ifEmpty: () => JSX.Element | null = () => null,

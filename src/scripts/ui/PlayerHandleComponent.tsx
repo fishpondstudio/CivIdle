@@ -16,6 +16,7 @@ import {
    TradeTileReservationDays,
    UserAttributes,
    UserColorsMapping,
+   UserColorsNames,
    type UserColors,
 } from "../../../shared/utilities/Database";
 import { HOUR, forEach, formatHM, hasFlag, safeParseInt, sizeOf } from "../../../shared/utilities/Helper";
@@ -25,7 +26,7 @@ import { AccountLevelNames } from "../logic/AccountLevel";
 import { useEligibleAccountRank } from "../logic/ClientUpdate";
 import { OnUserChanged, client, useUser } from "../rpc/RPCClient";
 import { getCountryName } from "../utilities/CountryCode";
-import { jsxMMapOf } from "../utilities/Helper";
+import { jsxMapOf } from "../utilities/Helper";
 import { openUrl } from "../utilities/Platform";
 import { playClick, playError, playLevelUp } from "../visuals/Sound";
 import { AccountRankUpModal } from "./AccountRankUpModal";
@@ -76,7 +77,7 @@ export function PlayerHandleComponent() {
                ) : null}
 
                <div className="row">
-                  <div style={{ color: UserColorsMapping.get(user.color) }} className="text-strong">
+                  <div style={{ color: UserColorsMapping[user.color] }} className="text-strong">
                      {user.handle}
                   </div>
                   <Tippy content={getCountryName(user?.flag)}>
@@ -123,12 +124,12 @@ export function PlayerHandleComponent() {
                            }
                         }}
                         className="condensed code"
-                        style={{ color: UserColorsMapping.get(user.color) }}
+                        style={{ color: UserColorsMapping[user.color] }}
                      >
-                        {jsxMMapOf(UserColorsMapping, (key, color) => {
+                        {jsxMapOf(UserColorsMapping, (key, color) => {
                            return (
                               <option className="code" style={{ color }} value={key} key={key}>
-                                 {color ?? t(L.AccountCustomColorDefault)}
+                                 {UserColorsNames[key]() ?? t(L.AccountCustomColorDefault)}
                               </option>
                            );
                         })}
