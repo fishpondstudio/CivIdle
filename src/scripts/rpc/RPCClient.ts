@@ -40,7 +40,6 @@ import { saveGame } from "../Global";
 import { getBuildNumber, getVersion } from "../logic/Version";
 import { showToast } from "../ui/GlobalModal";
 import { idbGet, idbSet } from "../utilities/BrowserStorage";
-import { CountryCode } from "../utilities/CountryCode";
 import { makeObservableHook } from "../utilities/Hook";
 import { playBubble, playKaching } from "../visuals/Sound";
 import { SteamClient, isSteam } from "./SteamClient";
@@ -480,7 +479,7 @@ export function isAllyWith(tile: IClientMapEntry): boolean {
    if (!user) {
       return false;
    }
-   if (tile.flag === CountryCode.EARTH || user.flag === CountryCode.EARTH) {
+   if (!tile.flag || tile.flag.toUpperCase() === "EARTH" || user.flag === "EARTH") {
       return false;
    }
    return tile.flag === user.flag;
