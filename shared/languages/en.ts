@@ -1575,4 +1575,6 @@ export const EN = {
    ColorCinereous: "Cinereous",
    ColorGlaucous: "Glaucous",
    ColorNone: "None",
+   PlayerMapMapNeighborTileBonus: "Neighbor Trade Tile Bonus",
+   PlayerMapMapAllyTileBonus: "Ally Trade Tile Bonus",
 };

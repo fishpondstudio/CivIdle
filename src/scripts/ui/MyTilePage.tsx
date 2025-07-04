@@ -10,9 +10,16 @@ import { UserAttributes, UserColorsMapping } from "../../../shared/utilities/Dat
 import { formatPercent, hasFlag, safeParseInt } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import { AccountLevelNames } from "../logic/AccountLevel";
-import { OnTileBuildingsChanged, TileBuildings, client, usePlayerMap, useUser } from "../rpc/RPCClient";
+import {
+   OnTileBuildingsChanged,
+   TileBuildings,
+   client,
+   isAllyWith,
+   usePlayerMap,
+   useUser,
+} from "../rpc/RPCClient";
 import { getNeighboringPlayers } from "../scenes/PathFinder";
-import { CountryCode, getCountryName } from "../utilities/CountryCode";
+import { getCountryName } from "../utilities/CountryCode";
 import { jsxMMapOf } from "../utilities/Helper";
 import { refreshOnTypedEvent } from "../utilities/Hook";
 import { showToast } from "./GlobalModal";
@@ -85,7 +92,7 @@ export function MyTilePage({ xy }: { xy: string }): React.ReactNode {
                <ul className="tree-view">
                   {jsxMMapOf(neighbors, (userId, entries) => {
                      const tile = entries[0][1];
-                     const isAlly = tile.flag !== CountryCode.EARTH && tile.flag === user?.flag;
+                     const isAlly = isAllyWith(tile);
                      return (
                         <li key={userId}>
                            <div className="row">

@@ -26,7 +26,9 @@ import {
    SCIENCE_VALUE,
    TELEPORT_SECONDS,
    TOWER_BRIDGE_GP_PER_CYCLE,
+   TRADE_TILE_ALLY_BONUS,
    TRADE_TILE_BONUS,
+   TRADE_TILE_NEIGHBOR_BONUS,
 } from "../../../shared/logic/Constants";
 import { GameFeature, hasFeature } from "../../../shared/logic/FeatureLogic";
 import { getGameOptions, getGameState } from "../../../shared/logic/GameStateLogic";
@@ -84,8 +86,8 @@ import {
 } from "../../../shared/utilities/Helper";
 import { srand } from "../../../shared/utilities/Random";
 import { L, t } from "../../../shared/utilities/i18n";
-import { TileBuildings, client, populateTileBuildings } from "../rpc/RPCClient";
-import { getOwnedOrOccupiedTiles } from "../scenes/PathFinder";
+import { TileBuildings, client, isAllyWith, populateTileBuildings } from "../rpc/RPCClient";
+import { getNeighboringPlayers, getOwnedOrOccupiedTiles } from "../scenes/PathFinder";
 import { ChooseGreatPersonModal } from "../ui/ChooseGreatPersonModal";
 import { hasOpenModal, showModal } from "../ui/GlobalModal";
 import { Singleton } from "../utilities/Singleton";
@@ -144,6 +146,27 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
                   `${t(L.PlayerMapMapTileBonus)} (${i + 1})`,
                );
             }
+         });
+
+         getNeighboringPlayers().forEach((player) => {
+            player.forEach(([xy, tile]) => {
+               const building = TileBuildings.get(xy);
+               if (building) {
+                  if (isAllyWith(tile)) {
+                     addMultiplier(
+                        building,
+                        { output: TRADE_TILE_ALLY_BONUS },
+                        `${t(L.PlayerMapMapAllyTileBonus)} (${tile.handle})`,
+                     );
+                  } else {
+                     addMultiplier(
+                        building,
+                        { output: TRADE_TILE_NEIGHBOR_BONUS },
+                        `${t(L.PlayerMapMapNeighborTileBonus)} (${tile.handle})`,
+                     );
+                  }
+               }
+            });
          });
 
          if (!offline) {
