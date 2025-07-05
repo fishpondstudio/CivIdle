@@ -651,6 +651,7 @@ export const ZH_TW = {
    Herding: "畜牧",
    Herodotus: "希羅多德",
    HighlightBuilding: "高亮 %{building}",
+   HighlightMoreBuildings: "高亮更多貿易地塊加成",
    HimejiCastle: "姬路城",
    HimejiCastleDesc: "所有輕快帆船船塢、大帆船船塢以及護衛艦船塢，獲得 +1 生產乘數、工人能力乘數以及儲存乘數",
    Hollywood: "好萊塢",
