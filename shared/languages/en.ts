@@ -1578,4 +1578,5 @@ export const EN = {
    PlayerMapMapNeighborTileBonus: "Neighbor Trade Tile Bonus",
    PlayerMapMapAllyTileBonus: "Ally Trade Tile Bonus",
    HighlightMoreBuildings: "Highlight More Buildings",
+   PinResourceTab: "Pin Resource Tab",
 };

@@ -13,6 +13,7 @@ import {
 import { Config } from "../../../shared/logic/Config";
 import { EXPLORER_SECONDS, MAX_EXPLORER } from "../../../shared/logic/Constants";
 import { ValueToTrack, getTimeSeriesHour } from "../../../shared/logic/GameState";
+import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
 import {
    getBuildingIO,
    getFuelByTarget,
@@ -25,6 +26,7 @@ import { getScienceAmount } from "../../../shared/logic/TechLogic";
 import { NotProducingReason, Tick } from "../../../shared/logic/TickLogic";
 import type { IBuildingData } from "../../../shared/logic/Tile";
 import {
+   cls,
    forEach,
    formatHMS,
    formatNumber,
@@ -36,6 +38,7 @@ import {
 } from "../../../shared/utilities/Helper";
 import type { PartialSet } from "../../../shared/utilities/TypeDefinitions";
 import { L, t } from "../../../shared/utilities/i18n";
+import { useGameState } from "../Global";
 import { TimeSeries } from "../logic/TimeSeries";
 import { LookAtMode, WorldScene } from "../scenes/WorldScene";
 import { Singleton } from "../utilities/Singleton";
@@ -459,7 +462,7 @@ const resourceTabSortingState = { column: 0, asc: true };
 let savedResourceTierFilter = BuildingFilter.None;
 let savedResourceSearch = "";
 
-function ResourcesTab({ gameState }: IBuildingComponentProps): React.ReactNode {
+export function ResourcesTab({ gameState }: IBuildingComponentProps): React.ReactNode {
    const [resourceTierFilter, _setResourceTierFilter] = useState<BuildingFilter>(savedResourceTierFilter);
    const setResourceTierFilter = (newFilter: BuildingFilter) => {
       _setResourceTierFilter(newFilter);
@@ -471,6 +474,7 @@ function ResourcesTab({ gameState }: IBuildingComponentProps): React.ReactNode {
    const io = getResourceIO(gameState);
    const inputs = showTheoreticalValue ? io.theoreticalInput : io.actualInput;
    const outputs = showTheoreticalValue ? io.theoreticalOutput : io.actualOutput;
+   const gs = useGameState();
 
    const highlightResourcesUsed = (
       res: Resource,
@@ -523,6 +527,18 @@ function ResourcesTab({ gameState }: IBuildingComponentProps): React.ReactNode {
                );
             })}
             <div className="f1"></div>
+            <Tippy content={t(L.PinResourceTab)}>
+               <button
+                  className={cls(gs.pinStatPanel ? "active" : null)}
+                  style={{ width: 27, padding: 0 }}
+                  onClick={() => {
+                     gs.pinStatPanel = !gs.pinStatPanel;
+                     notifyGameStateUpdate(gs);
+                  }}
+               >
+                  <div className="m-icon small">picture_in_picture</div>
+               </button>
+            </Tippy>
             <Tippy content={showTheoreticalValue ? t(L.TheoreticalData) : t(L.LiveData)}>
                <button
                   className={classNames({

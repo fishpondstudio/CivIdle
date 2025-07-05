@@ -2,7 +2,7 @@ import Tippy from "@tippyjs/react";
 import classNames from "classnames";
 import type React from "react";
 import { memo, useCallback, useEffect, useRef, useState, useTransition } from "react";
-import { notifyGameOptionsUpdate } from "../../../shared/logic/GameStateLogic";
+import { notifyGameOptionsUpdate, notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
 import {
    AccountLevel,
    ChatAttributes,
@@ -13,14 +13,14 @@ import {
    type IChat,
    type IUser,
 } from "../../../shared/utilities/Database";
-import { cls, firstKeyOf, hasFlag } from "../../../shared/utilities/Helper";
+import { cls, firstKeyOf, hasFlag, pointToTile } from "../../../shared/utilities/Helper";
 import { censor } from "../../../shared/utilities/ProfanityFilter";
 import { TypedEvent } from "../../../shared/utilities/TypedEvent";
 import { L, t } from "../../../shared/utilities/i18n";
 import AccountLevelMod from "../../images/AccountLevelMod.png";
 import chatActive from "../../images/chat_active.png";
 import chatInactive from "../../images/chat_inactive.png";
-import { ToggleChatWindow, useFloatingMode, useGameOptions } from "../Global";
+import { ToggleChatWindow, useFloatingMode, useGameOptions, useGameState } from "../Global";
 import { AccountLevelNames } from "../logic/AccountLevel";
 import { handleChatCommand } from "../logic/ChatCommand";
 import {
@@ -39,6 +39,7 @@ import { BottomPanel } from "./BottomPanel";
 import { showToast } from "./GlobalModal";
 import { RenderHTML } from "./RenderHTMLComponent";
 import { SelectChatChannelModal } from "./SelectChatChannelModal";
+import { ResourcesTab } from "./StatisticsBuildingBody";
 import { AccountLevelComponent, PlayerFlagComponent, SupporterComponent } from "./TextureSprites";
 
 const SetChatInput = new TypedEvent<{ channel: ChatChannel; getContent: (old: string) => string }>();
@@ -53,12 +54,15 @@ export function ChatPanel(): React.ReactNode {
    const [isPending, startTransition] = useTransition();
    const [showChatWindow, setShowChatWindow] = useState(false);
    const user = useUser();
+   const gs = useGameState();
 
    useTypedEvent(ToggleChatWindow, (on) => {
       setShowChatWindow(on);
    });
 
-   const style: React.CSSProperties = { contentVisibility: showChatWindow ? "visible" : "hidden" };
+   const style: React.CSSProperties = {
+      contentVisibility: showChatWindow ? "visible" : "hidden",
+   };
 
    if (!CSS.supports("content-visibility", "visible") || !CSS.supports("content-visibility", "hidden")) {
       style.display = showChatWindow ? "flex" : "none";
@@ -111,6 +115,26 @@ export function ChatPanel(): React.ReactNode {
                />
             ))}
          </div>
+         {gs.pinStatPanel ? (
+            <div
+               className="window stat-content"
+               style={{ left: showChatWindow ? 350 * options.chatChannels.size : 0 }}
+            >
+               <div className="title-bar">
+                  <div className="title-bar-text">{t(L.StatisticsOffice)}</div>
+                  <div className="title-bar-controls">
+                     <button
+                        aria-label="Close"
+                        onClick={() => {
+                           gs.pinStatPanel = false;
+                           notifyGameStateUpdate(gs);
+                        }}
+                     ></button>
+                  </div>
+               </div>
+               <ResourcesTab gameState={gs} xy={pointToTile({ x: 0, y: 0 })} />
+            </div>
+         ) : null}
       </div>
    );
 }

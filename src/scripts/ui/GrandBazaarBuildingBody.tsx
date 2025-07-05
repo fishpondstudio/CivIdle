@@ -79,7 +79,7 @@ function TradesTab({
             <fieldset>
                <legend>{t(L.GrandBazaarFilters)}</legend>
                <div className="row">
-                  <div style={{ width: "120px" }}>{t(L.GrandBazaarSeach)}</div>
+                  <div style={{ width: "80px" }}>{t(L.GrandBazaarSeach)}</div>
                   <input
                      type="text"
                      className="f1 mr5"
@@ -115,7 +115,7 @@ function TradesTab({
                </div>
                <div className="sep10"></div>
                <div className="row">
-                  <div style={{ width: "120px" }}>{t(L.GrandBazaarFilterYouPay)}</div>
+                  <div style={{ width: "80px" }}>{t(L.GrandBazaarFilterYouPay)}</div>
                   <select
                      className="f1"
                      value={sellResourceFilter ? sellResourceFilter : ""}
@@ -140,7 +140,7 @@ function TradesTab({
                </div>
                <div className="sep10"></div>
                <div className="row">
-                  <div style={{ width: "120px" }}>{t(L.GrandBazaarFilterYouGet)}</div>
+                  <div style={{ width: "80px" }}>{t(L.GrandBazaarFilterYouGet)}</div>
                   <select
                      className="f1"
                      value={buyResourceFilter ? buyResourceFilter : ""}

@@ -1,20 +1,25 @@
 #chat-panel .chat-bar {
-   height: 30px;
+   height: 3rem;
    position: absolute;
-   bottom: 10px;
-   left: 10px;
+   bottom: 1rem;
+   left: 1rem;
    display: flex;
    align-items: center;
 }
 
-#chat-panel .chat-content {
-   width: 350px;
+#chat-panel .chat-content,
+#chat-panel .stat-content {
+   width: 35rem;
    height: 60vh;
    position: absolute;
-   bottom: 30px;
+   bottom: 3rem;
    display: flex;
    flex-direction: column;
-   left: 0px;
+   left: 0;
+}
+
+#chat-panel .stat-content {
+   width: 40rem;
 }
 
 #chat-panel .chat-content .window-content {
