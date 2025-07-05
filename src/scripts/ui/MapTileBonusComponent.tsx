@@ -1,3 +1,4 @@
+import Tippy from "@tippyjs/react";
 import { useState } from "react";
 import type { Building } from "../../../shared/definitions/BuildingDefinitions";
 import { Config } from "../../../shared/logic/Config";
@@ -104,31 +105,34 @@ function HighlightBuildings(): React.ReactNode {
             .sort((a, b) => (Config.BuildingTier[a] ?? 0) - (Config.BuildingTier[b] ?? 0))
             .map((building) => {
                return (
-                  <div
-                     key={building}
-                     className="row jcc"
-                     onClick={() => {
-                        if (highlighted.has(building)) {
-                           highlighted.delete(building);
-                        } else {
-                           highlighted.add(building);
-                        }
-                        setHighlighted(new Set(highlighted));
-                        Singleton().sceneManager.getCurrent(PlayerMapScene)?.highlightBuildings(highlighted);
-                     }}
-                     style={{
-                        backgroundColor: highlighted.has(building) ? "#00289e" : "transparent",
-                     }}
-                  >
-                     <BuildingSpriteComponent
-                        building={building}
-                        height={36}
-                        style={{
-                           filter: highlighted.has(building) ? "invert(0)" : "invert(0.5)",
-                           margin: "5px 0",
+                  <Tippy key={building} content={Config.Building[building].name()}>
+                     <div
+                        className="row jcc"
+                        onClick={() => {
+                           if (highlighted.has(building)) {
+                              highlighted.delete(building);
+                           } else {
+                              highlighted.add(building);
+                           }
+                           setHighlighted(new Set(highlighted));
+                           Singleton()
+                              .sceneManager.getCurrent(PlayerMapScene)
+                              ?.highlightBuildings(highlighted);
                         }}
-                     />
-                  </div>
+                        style={{
+                           backgroundColor: highlighted.has(building) ? "#00289e" : "transparent",
+                        }}
+                     >
+                        <BuildingSpriteComponent
+                           building={building}
+                           height={36}
+                           style={{
+                              filter: highlighted.has(building) ? "invert(0)" : "invert(0.5)",
+                              margin: "5px 0",
+                           }}
+                        />
+                     </div>
+                  </Tippy>
                );
             })}
       </div>
