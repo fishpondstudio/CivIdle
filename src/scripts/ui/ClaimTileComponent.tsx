@@ -102,10 +102,10 @@ export function ClaimTileComponent({ xy }: { xy: string }): React.ReactNode {
             </div>
             <ul className="tree-view">
                <li>
-                  <li className="row">
+                  <div className="row">
                      <div className="f1 text-strong">{t(L.PlayerMapTileTilePoint)}</div>
                      <div className="text-strong">{formatNumber(fromRank + fromOccupying)}</div>
-                  </li>
+                  </div>
                   <ul>
                      <li className="row">
                         <div className="f1">{t(L.PlayerMapTileFromRank)}</div>

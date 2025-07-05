@@ -245,10 +245,10 @@ export class PlayerMapScene extends Scene {
       return { x: (tile.x + 0.5) * GridSize, y: (tile.y + 0.5) * GridSize };
    }
 
-   public highlightBuilding(building: Building): void {
+   public highlightBuildings(buildings: Set<Building>): void {
       this._selectedGraphics.clear();
       TileBuildings.forEach((b, xy) => {
-         if (b === building) {
+         if (buildings.has(b)) {
             this.drawSelectedTile(xyToPoint(xy));
          }
       });

@@ -26,47 +26,54 @@ export const AccountLevelImages: Record<AccountLevel, string> = {
 
 export const AccountLevelComponent = React.forwardRef<
    HTMLDivElement,
-   { level: AccountLevel; scale?: number; style?: React.CSSProperties }
+   { level: AccountLevel; scale?: number; width?: number; height?: number; style?: React.CSSProperties }
 >((props, ref) => {
    return <TextureSprite {...props} url={misc} name={`Misc_${AccountLevelImages[props.level]}`} ref={ref} />;
 });
 
 export const BuildingSpriteComponent = React.forwardRef<
    HTMLDivElement,
-   { building: Building; scale?: number; style?: React.CSSProperties }
+   { building: Building; scale?: number; width?: number; height?: number; style?: React.CSSProperties }
 >((props, ref) => {
    return <TextureSprite {...props} url={building} name={`Building_${props.building}`} ref={ref} />;
 });
 
 export const DepositTextureComponent = React.forwardRef<
    HTMLDivElement,
-   { deposit: Deposit; scale?: number; style?: React.CSSProperties }
+   { deposit: Deposit; scale?: number; width?: number; height?: number; style?: React.CSSProperties }
 >((props, ref) => {
    return <TextureSprite {...props} url={tile} name={`Tile_${props.deposit}`} ref={ref} />;
 });
 
 export const TileTextureComponent = React.forwardRef<
    HTMLDivElement,
-   { tileTexture: TileTexture; scale?: number; style?: React.CSSProperties }
+   { tileTexture: TileTexture; scale?: number; width?: number; height?: number; style?: React.CSSProperties }
 >((props, ref) => {
    return <TextureSprite {...props} url={misc} name={`Misc_${props.tileTexture}`} ref={ref} />;
 });
 
 export const SupporterComponent = React.forwardRef<
    HTMLDivElement,
-   { scale?: number; style?: React.CSSProperties }
+   { scale?: number; width?: number; height?: number; style?: React.CSSProperties }
 >((props, ref) => {
    return <TextureSprite {...props} url={misc} name={"Misc_Supporter"} ref={ref} />;
 });
 
 const TextureSprite = React.forwardRef<
    HTMLDivElement,
-   { name: string; url: string; scale?: number; style?: React.CSSProperties }
+   { name: string; url: string; scale?: number; width?: number; height?: number; style?: React.CSSProperties }
 >((props, ref) => {
-   const { name, scale = 1, style, url } = props;
+   const { name, style, url } = props;
+   let scale = props.scale ?? 1;
    const texture = Singleton().textures[name];
    if (!texture) {
       return null;
+   }
+   if (props.width) {
+      scale = props.width / texture.frame.width;
+   }
+   if (props.height) {
+      scale = props.height / texture.frame.height;
    }
    return (
       <div

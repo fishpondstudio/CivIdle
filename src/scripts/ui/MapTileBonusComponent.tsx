@@ -1,3 +1,5 @@
+import { useState } from "react";
+import type { Building } from "../../../shared/definitions/BuildingDefinitions";
 import { Config } from "../../../shared/logic/Config";
 import { TRADE_TILE_BONUS } from "../../../shared/logic/Constants";
 import { GameStateChanged } from "../../../shared/logic/GameStateLogic";
@@ -16,6 +18,7 @@ import { WarningComponent } from "./WarningComponent";
 export function MapTileBonusComponent({ xy }: { xy: string }): React.ReactNode {
    refreshOnTypedEvent(OnTileBuildingsChanged);
    const building = TileBuildings.get(xy);
+   const [showMore, setShowMore] = useState(false);
    if (!building) {
       return null;
    }
@@ -53,7 +56,9 @@ export function MapTileBonusComponent({ xy }: { xy: string }): React.ReactNode {
                <button
                   className="f1"
                   onClick={() => {
-                     Singleton().sceneManager.getCurrent(PlayerMapScene)?.highlightBuilding(building);
+                     Singleton()
+                        .sceneManager.getCurrent(PlayerMapScene)
+                        ?.highlightBuildings(new Set([building]));
                   }}
                >
                   {t(L.HighlightBuilding, { building: Config.Building[building].name() })}
@@ -67,8 +72,66 @@ export function MapTileBonusComponent({ xy }: { xy: string }): React.ReactNode {
                   <div className="m-icon">arrow_right</div>
                </button>
             </div>
+            <div className="separator" />
+            {showMore ? (
+               <>
+                  <button className="w100 row jcc mb10 p0" onClick={() => setShowMore(false)}>
+                     <div className="f1">{t(L.HighlightMoreBuildings)}</div>
+                     <div className="m-icon">arrow_drop_up</div>
+                  </button>
+                  <HighlightBuildings />
+               </>
+            ) : (
+               <button className="w100 row jcc p0" onClick={() => setShowMore(true)}>
+                  <div className="f1">{t(L.HighlightMoreBuildings)}</div>
+                  <div className="m-icon">arrow_drop_down</div>
+               </button>
+            )}
          </fieldset>
       </>
+   );
+}
+
+function HighlightBuildings(): React.ReactNode {
+   const [highlighted, setHighlighted] = useState<Set<Building>>(new Set());
+   const buildings = new Set(TileBuildings.values());
+   return (
+      <div
+         className="inset-shallow-2 white"
+         style={{ display: "grid", gridTemplateColumns: "repeat(8, 1fr)", gap: 2 }}
+      >
+         {Array.from(buildings)
+            .sort((a, b) => (Config.BuildingTier[a] ?? 0) - (Config.BuildingTier[b] ?? 0))
+            .map((building) => {
+               return (
+                  <div
+                     key={building}
+                     className="row jcc"
+                     onClick={() => {
+                        if (highlighted.has(building)) {
+                           highlighted.delete(building);
+                        } else {
+                           highlighted.add(building);
+                        }
+                        setHighlighted(new Set(highlighted));
+                        Singleton().sceneManager.getCurrent(PlayerMapScene)?.highlightBuildings(highlighted);
+                     }}
+                     style={{
+                        backgroundColor: highlighted.has(building) ? "#00289e" : "transparent",
+                     }}
+                  >
+                     <BuildingSpriteComponent
+                        building={building}
+                        height={36}
+                        style={{
+                           filter: highlighted.has(building) ? "invert(0)" : "invert(0.5)",
+                           margin: "5px 0",
+                        }}
+                     />
+                  </div>
+               );
+            })}
+      </div>
    );
 }
 
