@@ -945,6 +945,7 @@ export const ZH_TW = {
    Philosophy: "哲學",
    Physics: "物理學",
    PierreDeCoubertin: "皮耶·德·古柏坦",
+   PinResourceTab: "懸浮窗",
    Pizza: "披薩",
    Pizzeria: "披薩店",
    PlanetaryRover: "行星漫遊者(Planetary Rover)",
