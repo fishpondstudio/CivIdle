@@ -4,6 +4,7 @@ import { mapSafeAdd } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import { OnPlayerMapChanged, getPlayerMap } from "../rpc/RPCClient";
 import { PlayerMapScene } from "../scenes/PlayerMapScene";
+import { getCountryName } from "../utilities/CountryCode";
 import { refreshOnTypedEvent } from "../utilities/Hook";
 import { OnSceneChanged } from "../utilities/SceneManager";
 import { Singleton, isSingletonReady } from "../utilities/Singleton";
@@ -54,13 +55,15 @@ export function TradeMapPanel(): React.ReactNode {
                .sort((a, b) => b[1] - a[1])
                .slice(0, 20)
                .map(([flag, count], i) => (
-                  <div className="row" key={flag}>
-                     <div style={{ width: 20 }} className="text-strong">
-                        {i + 1}
+                  <Tippy content={getCountryName(flag)} key={flag}>
+                     <div className="row">
+                        <div style={{ width: 20 }} className="text-strong">
+                           {i + 1}
+                        </div>
+                        <PlayerFlagComponent name={flag} scale={0.7} />
+                        <div className="f1 ml10 text-right text-desc">{count}</div>
                      </div>
-                     <PlayerFlagComponent name={flag} scale={0.7} />
-                     <div className="f1 ml10 text-right text-desc">{count}</div>
-                  </div>
+                  </Tippy>
                ))}
          </div>
       </div>
