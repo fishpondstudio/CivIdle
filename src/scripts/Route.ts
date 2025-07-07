@@ -30,7 +30,7 @@ export function Route({ event }: { event: TypedEvent<RouteChangeEvent> }): React
    if (isFloating) {
       return null;
    }
-   return React.createElement(component, params);
+   return React.createElement("div", { id: "game-ui" }, React.createElement(component, params));
 }
 
 export interface RouteChangeEvent {

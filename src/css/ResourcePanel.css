@@ -1,4 +1,4 @@
-#resource-panel .resource-bar {
+#resource-panel {
    height: 4rem;
    position: absolute;
    top: 1rem;
@@ -10,40 +10,40 @@
    font-size: 1.2rem;
 }
 
-#resource-panel .resource-bar > .section {
+#resource-panel > .section {
    text-align: center;
    flex-direction: column;
 }
 
-#resource-panel .resource-bar .section .m-icon {
+#resource-panel .section .m-icon {
    font-size: 2rem;
    line-height: 1.6rem;
 }
 
-#resource-panel .resource-bar .menu-button {
+#resource-panel .menu-button {
    padding: 0;
    height: 3.6rem;
    width: 3.6rem;
    text-align: center;
 }
 
-#resource-panel .resource-bar .menu-button .m-icon {
+#resource-panel .menu-button .m-icon {
    line-height: 3.6rem;
    font-size: 2.6rem;
 }
 
-#resource-panel .resource-bar .menu-popover {
+#resource-panel .menu-popover {
    top: 3.6rem;
    font-weight: normal;
 }
 
-#resource-panel .resource-bar .menu-popover-item {
+#resource-panel .menu-popover-item {
    padding: 3px 20px 3px 6px;
    color: #222;
    text-align: left;
 }
 
-#resource-panel .resource-bar .menu-popover-item:hover,
-#resource-panel .resource-bar .menu-popover-item:hover .text-desc {
+#resource-panel .menu-popover-item:hover,
+#resource-panel .menu-popover-item:hover .text-desc {
    color: #fff;
 }

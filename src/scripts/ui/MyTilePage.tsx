@@ -93,7 +93,6 @@ export function MyTilePage({ xy }: { xy: string }): React.ReactNode {
                   {jsxMMapOf(neighbors, (userId, entries) => {
                      const tile = entries[0][1];
                      const isAlly = isAllyWith(tile);
-                     console.log(tile.flag, user?.flag);
                      return (
                         <li key={userId}>
                            <div className="row">

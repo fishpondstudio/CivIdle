@@ -28,6 +28,7 @@ import { ChatPanel } from "./ui/ChatPanel";
 import { GlobalModal, GlobalToast } from "./ui/GlobalModal";
 import { ResourcePanel } from "./ui/ResourcePanel";
 import { Fonts } from "./visuals/Fonts";
+import { TradeMapPanel } from "./ui/TradeMapPanel";
 
 if (!import.meta.env.DEV) {
    Sentry.init({
@@ -39,11 +40,16 @@ if (!import.meta.env.DEV) {
 }
 
 const routeChanged = new TypedEvent<RouteChangeEvent>();
-createRoot(document.getElementById("game-ui")!).render(<Route event={routeChanged} />);
-createRoot(document.getElementById("chat-panel")!).render(<ChatPanel />);
-createRoot(document.getElementById("resource-panel")!).render(<ResourcePanel />);
-createRoot(document.getElementById("global-modal")!).render(<GlobalModal />);
-createRoot(document.getElementById("global-toast")!).render(<GlobalToast />);
+createRoot(document.getElementById("ui-root")!).render(
+   <>
+      <ChatPanel />
+      <ResourcePanel />
+      <TradeMapPanel />
+      <Route event={routeChanged} />
+      <GlobalModal />
+      <GlobalToast />
+   </>,
+);
 
 const canvas = document.getElementById("game-canvas");
 const mainBundle = {

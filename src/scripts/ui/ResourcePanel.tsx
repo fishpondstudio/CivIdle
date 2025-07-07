@@ -125,7 +125,8 @@ export function ResourcePanel(): React.ReactNode {
 
    return (
       <div
-         className={classNames({ "resource-bar window": true, "app-region-drag": isFloating })}
+         id="resource-panel"
+         className={classNames({ window: true, "app-region-drag": isFloating })}
          style={styles}
          ref={ref}
       >

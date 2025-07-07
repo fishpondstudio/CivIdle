@@ -13,7 +13,7 @@ import {
    type IChat,
    type IUser,
 } from "../../../shared/utilities/Database";
-import { cls, firstKeyOf, hasFlag, pointToTile } from "../../../shared/utilities/Helper";
+import { firstKeyOf, hasFlag, pointToTile } from "../../../shared/utilities/Helper";
 import { censor } from "../../../shared/utilities/ProfanityFilter";
 import { TypedEvent } from "../../../shared/utilities/TypedEvent";
 import { L, t } from "../../../shared/utilities/i18n";
@@ -73,7 +73,7 @@ export function ChatPanel(): React.ReactNode {
    }
 
    return (
-      <div className={cls("chat-bar window")}>
+      <div id="chat-panel" className="window">
          <div
             className="row pointer"
             style={{ width: "100%", height: "100%" }}

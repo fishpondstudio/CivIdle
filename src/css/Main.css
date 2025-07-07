@@ -98,7 +98,7 @@ body {
    overflow-y: auto;
 }
 
-#global-modal .overlay {
+#global-modal.overlay {
    position: absolute;
    left: 0;
    right: 0;
