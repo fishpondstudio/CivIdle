@@ -285,14 +285,15 @@ export function transportAndConsumeResources(
 
       // We do not add Warehouse/Caravansary in `resourcesByTile`, because we need to consider as transport
       // sources anyway!
-      if (!isResourceImportBuilding) {
-         resourceSet.add(res);
-         mapSafePush(Tick.next.resourcesByTile, res, {
-            tile: xy,
-            amount,
-            usedStoragePercentage: total === 0 ? 1 : used / total,
-         });
+      if (isResourceImportBuilding) {
+         return;
       }
+      resourceSet.add(res);
+      mapSafePush(Tick.next.resourcesByTile, res, {
+         tile: xy,
+         amount,
+         usedStoragePercentage: total === 0 ? 1 : used / total,
+      });
    });
 
    // Here we add all output resources that are not already tabulated in the storage, for transport cache
