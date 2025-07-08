@@ -1581,4 +1581,6 @@ export const EN = {
    PinResourceTab: "Pin Resource Tab",
    PlayerMapRanking: "Ranking",
    PlayerMapRankingDesc: "Ranking By Number Of Trade Tiles",
+   ActualConsumptionPerCycle: "Actual Consumption Per Cycle",
+   ActualProductionPerCycle: "Actual Production Per Cycle",
 };

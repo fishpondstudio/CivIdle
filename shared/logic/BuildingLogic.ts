@@ -1126,7 +1126,7 @@ export function generateScienceFromFaith(xy: number, buildingType: Building, gs:
       });
       total *= 10;
       safeAdd(hq, "Science", total);
-      mapSafeAdd(Tick.next.wonderProductions, "Science", total);
+      Tick.next.additionalProductions.push({ xy, res: "Science", amount: total });
       Tick.next.scienceProduced.set(xy, total);
    }
 }

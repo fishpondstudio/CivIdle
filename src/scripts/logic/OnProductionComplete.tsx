@@ -424,7 +424,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          const storage = Tick.current.specialBuildings.get("Headquarter")?.building.resources;
          if (storage) {
             safeAdd(storage, "Science", science);
-            mapSafeAdd(Tick.next.wonderProductions, "Science", science);
+            Tick.next.additionalProductions.push({ xy, res: "Science", amount: science });
             Tick.next.scienceProduced.set(xy, science);
          }
          break;
@@ -938,7 +938,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          const hq = Tick.current.specialBuildings.get("Headquarter")?.building.resources;
          if (hq) {
             safeAdd(hq, "Science", science);
-            mapSafeAdd(Tick.next.wonderProductions, "Science", science);
+            Tick.next.additionalProductions.push({ xy, res: "Science", amount: science });
             Tick.next.scienceProduced.set(xy, science);
          }
          break;
@@ -1741,8 +1741,8 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
             if (amount > 0) {
                const kotiAmount = (amount * price) / 10_000_000;
                safeAdd(building.resources, "Koti", kotiAmount);
-               mapSafeAdd(Tick.next.wonderConsumptions, resource, amount);
-               mapSafeAdd(Tick.next.wonderProductions, "Koti", kotiAmount);
+               Tick.next.additionalConsumptions.push({ xy, res: resource, amount });
+               Tick.next.additionalProductions.push({ xy, res: "Koti", amount: kotiAmount });
             } else {
                Tick.next.notProducingReasons.set(xy, NotProducingReason.NotEnoughResources);
             }

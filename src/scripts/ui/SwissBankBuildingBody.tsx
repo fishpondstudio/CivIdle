@@ -4,6 +4,7 @@ import { NoPrice, NoStorage, type Resource } from "../../../shared/definitions/R
 import { getBuildingCost, getMultipliersFor, totalMultiplierFor } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
 import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
+import { Tick } from "../../../shared/logic/TickLogic";
 import type { ISwissBankBuildingData } from "../../../shared/logic/Tile";
 import { formatNumber, keysOf } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
@@ -95,10 +96,10 @@ export function SwissBankBuildingBody({ gameState, xy }: IBuildingComponentProps
                   <div className="text-strong">{formatNumber(building.resources.Koti ?? 0)}</div>
                </li>
                <li>
-                  <li className="row">
+                  <div className="row">
                      <div className="text-strong f1">{t(L.KotiProduction)}</div>
                      <div className="text-strong">{formatNumber(building.level * multiplier)}</div>
-                  </li>
+                  </div>
                   <ul>
                      <li className="row">
                         <div className="f1">{t(L.BaseProduction)}</div>
@@ -130,6 +131,38 @@ export function SwissBankBuildingBody({ gameState, xy }: IBuildingComponentProps
                            );
                         })}
                      </ul>
+                  </ul>
+               </li>
+               <li>
+                  <div className="text-strong">{t(L.ActualConsumptionPerCycle)}</div>
+                  <ul>
+                     {Tick.current.additionalConsumptions.map(({ xy: xy_, res, amount }) => {
+                        if (xy !== xy_) {
+                           return null;
+                        }
+                        return (
+                           <li key={res} className="row">
+                              <div className="f1">{Config.Resource[res].name()}</div>
+                              <div className="text-strong">{formatNumber(amount)}</div>
+                           </li>
+                        );
+                     })}
+                  </ul>
+               </li>
+               <li>
+                  <div className="text-strong">{t(L.ActualProductionPerCycle)}</div>
+                  <ul>
+                     {Tick.current.additionalProductions.map(({ xy: xy_, res, amount }) => {
+                        if (xy !== xy_) {
+                           return null;
+                        }
+                        return (
+                           <li key={res} className="row">
+                              <div className="f1">{Config.Resource[res].name()}</div>
+                              <div className="text-strong">{formatNumber(amount)}</div>
+                           </li>
+                        );
+                     })}
                   </ul>
                </li>
             </ul>

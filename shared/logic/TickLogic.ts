@@ -34,8 +34,8 @@ interface ITickData {
    electrified: Set<Tile>;
    resourcesByTile: Map<Resource, IBuildingIndex[]>;
    storagePercentages: Map<Tile, number>;
-   wonderConsumptions: Map<Resource, number>;
-   wonderProductions: Map<Resource, number>;
+   additionalProductions: { xy: Tile; res: Resource; amount: number }[];
+   additionalConsumptions: { xy: Tile; res: Resource; amount: number }[];
    playerTradeBuildings: Map<Tile, IBuildingData>;
    resourceImportBuildings: Map<Tile, IResourceImportBuildingIndex>;
    globalMultipliers: GlobalMultipliers;
@@ -72,8 +72,8 @@ export function EmptyTickData(): ITickData {
       notProducingReasons: new Map(),
       playerTradeBuildings: new Map(),
       resourceImportBuildings: new Map(),
-      wonderProductions: new Map(),
-      wonderConsumptions: new Map(),
+      additionalProductions: [],
+      additionalConsumptions: [],
       specialBuildings: new Map(),
       scienceProduced: new Map(),
       powerGrid: new Set(),
