@@ -8,12 +8,15 @@ import { L, t } from "../../../shared/utilities/i18n";
 import { jsxMMapOf, jsxMapOf } from "../utilities/Helper";
 import { hideModal } from "./GlobalModal";
 import { FormatNumber } from "./HelperComponents";
+import { RenderHTML } from "./RenderHTMLComponent";
+import { WarningComponent } from "./WarningComponent";
 
 export function OfflineProductionModal({
    before,
    after,
    time,
-}: { before: GameState; after: GameState; time: number }): React.ReactNode {
+   warpFull,
+}: { before: GameState; after: GameState; time: number; warpFull: boolean }): React.ReactNode {
    return (
       <div className="window" style={{ width: "500px" }}>
          <div className="title-bar">
@@ -23,6 +26,11 @@ export function OfflineProductionModal({
             </div>
          </div>
          <div className="window-body">
+            {warpFull ? (
+               <WarningComponent icon="info">
+                  <RenderHTML html={t(L.WarpStorageFullHTML)} />
+               </WarningComponent>
+            ) : null}
             <div className="row mv5">
                <div className="f1">{t(L.OfflineTime)}</div>
                <div className="text-strong">{formatHM(time * 1000)}</div>

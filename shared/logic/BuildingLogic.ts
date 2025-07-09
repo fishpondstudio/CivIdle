@@ -1047,10 +1047,10 @@ export function findSpecialBuilding(type: Building, gs: GameState): Required<ITi
    return null;
 }
 
-export function addPetraOfflineTime(time: number, gs: GameState): void {
+export function addPetraOfflineTime(time: number, gs: GameState): number {
    const hq = findSpecialBuilding("Headquarter", gs);
    if (!hq) {
-      return;
+      return 0;
    }
    const storage = getMaxWarpStorage(gs);
    if (!hq.building.resources.Warp) {
@@ -1061,6 +1061,7 @@ export function addPetraOfflineTime(time: number, gs: GameState): void {
    hq.building.resources.Warp = clamp(hq.building.resources.Warp, 0, storage);
    const after = hq.building.resources.Warp;
    console.log("[addPetraOfflineTime]: Before:", before, "After:", after);
+   return after - before;
 }
 
 export function getYellowCraneTowerRange(xy: Tile, gs: GameState): number {

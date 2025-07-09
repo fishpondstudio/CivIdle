@@ -1583,4 +1583,6 @@ export const EN = {
    PlayerMapRankingDesc: "Ranking By Number Of Trade Tiles",
    ActualConsumptionPerCycle: "Actual Consumption Per Cycle",
    ActualProductionPerCycle: "Actual Production Per Cycle",
+   WarpStorageFullHTML: "Your warp storage is full. To increase warp storage, build and upgrade <b>Petra (Wonder)</b> or upgrade <b>Zenobia (Great Person)</b>",
+   ReadPatchNotesHTML: "You've updated to <b>%{version}</b> (<b>%{build}</b>), read patch notes on <b>Steam</b>",
 };

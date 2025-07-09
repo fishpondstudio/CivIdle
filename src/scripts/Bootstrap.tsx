@@ -9,6 +9,7 @@ import { Languages, syncLanguage, type GameState } from "../../shared/logic/Game
 import {
    getGameOptions,
    getGameState,
+   notifyGameOptionsUpdate,
    notifyGameStateUpdate,
    serializeSaveLite,
 } from "../../shared/logic/GameStateLogic";
@@ -149,10 +150,17 @@ export async function startGame(
             timeLeft -= batchSize;
          }
          const petraOfflineTime = actualOfflineTime - offlineTime;
-         addPetraOfflineTime(petraOfflineTime, gameState);
+         const warp = addPetraOfflineTime(petraOfflineTime, gameState);
          const after = structuredClone(gameState);
          hasOfflineProductionModal = true;
-         showModal(<OfflineProductionModal before={before} after={after} time={offlineTime} />);
+         showModal(
+            <OfflineProductionModal
+               before={before}
+               after={after}
+               time={offlineTime}
+               warpFull={petraOfflineTime > warp}
+            />,
+         );
       }
    } catch (error) {
       console.error(error);
@@ -202,6 +210,7 @@ export async function startGame(
    }
 
    notifyGameStateUpdate();
+   notifyGameOptionsUpdate();
    Singleton().ticker.start();
 }
 

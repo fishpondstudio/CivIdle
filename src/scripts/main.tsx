@@ -27,8 +27,9 @@ import { build } from "./Version.json";
 import { ChatPanel } from "./ui/ChatPanel";
 import { GlobalModal, GlobalToast } from "./ui/GlobalModal";
 import { ResourcePanel } from "./ui/ResourcePanel";
-import { Fonts } from "./visuals/Fonts";
 import { TradeMapPanel } from "./ui/TradeMapPanel";
+import { Fonts } from "./visuals/Fonts";
+import { PatchNotesPanel } from "./ui/PatchNotesPanel";
 
 if (!import.meta.env.DEV) {
    Sentry.init({
@@ -42,6 +43,7 @@ if (!import.meta.env.DEV) {
 const routeChanged = new TypedEvent<RouteChangeEvent>();
 createRoot(document.getElementById("ui-root")!).render(
    <>
+      <PatchNotesPanel />
       <ChatPanel />
       <ResourcePanel />
       <TradeMapPanel />
