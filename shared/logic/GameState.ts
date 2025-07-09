@@ -224,7 +224,7 @@ export class GameOptions {
    greatPeopleChoicesV2: GreatPeopleChoiceV2[] = [];
    language: keyof typeof Languages = "en";
    disabledTutorials = new Set<Advisor>();
-   clientVersion = "";
+   buildNumber = 0;
 }
 
 export enum RebirthFlags {

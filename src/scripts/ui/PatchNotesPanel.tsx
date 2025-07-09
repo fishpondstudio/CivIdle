@@ -15,7 +15,7 @@ export function PatchNotesPanel(): React.ReactNode {
       return null;
    }
 
-   if (options.clientVersion === patchNote.version) {
+   if (options.buildNumber === getBuildNumber()) {
       return null;
    }
 
@@ -26,7 +26,7 @@ export function PatchNotesPanel(): React.ReactNode {
                <div
                   className="row pointer"
                   onClick={() => {
-                     options.clientVersion = patchNote.version;
+                     options.buildNumber = getBuildNumber();
                      notifyGameOptionsUpdate();
                      openUrl(patchNote.link!);
                   }}
@@ -39,7 +39,7 @@ export function PatchNotesPanel(): React.ReactNode {
                <div
                   className="m-icon ml15 small pointer"
                   onClick={() => {
-                     options.clientVersion = patchNote.version;
+                     options.buildNumber = getBuildNumber();
                      notifyGameOptionsUpdate();
                   }}
                >
