@@ -203,6 +203,11 @@ export async function handleChatCommand(command: string): Promise<void> {
          addSystemMessage(`${parts[1]} is now a mod`);
          break;
       }
+      case "cleartilecd": {
+         await client.clearTileCooldown();
+         addSystemMessage("Trade tile cooldown has been cleared");
+         break;
+      }
       case "tabulate": {
          const resp = await client.tabulateVotedBoost();
          addSystemMessage(JSON.stringify(resp));
