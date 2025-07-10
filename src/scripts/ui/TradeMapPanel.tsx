@@ -1,5 +1,4 @@
 import Tippy from "@tippyjs/react";
-import { getGameOptions } from "../../../shared/logic/GameStateLogic";
 import { mapSafeAdd } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import { OnPlayerMapChanged, getPlayerMap } from "../rpc/RPCClient";
@@ -33,10 +32,7 @@ export function TradeMapPanel(): React.ReactNode {
       return null;
    }
    return (
-      <div
-         style={{ position: "absolute", top: 0, right: getGameOptions().sidePanelWidth }}
-         className="window"
-      >
+      <div style={{ position: "absolute", top: 0, right: "var(--game-ui-width)" }} className="window">
          <Tippy content={t(L.PlayerMapRankingDesc)}>
             <div className="title-bar">
                <div className="title-bar-text">{t(L.PlayerMapRanking)}</div>
