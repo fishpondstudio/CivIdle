@@ -13,6 +13,7 @@ import { Config } from "../../../shared/logic/Config";
 import { MANAGED_IMPORT_RANGE } from "../../../shared/logic/Constants";
 import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
 import { unlockedResources } from "../../../shared/logic/IntraTickCache";
+import { compareResources } from "../../../shared/logic/ResourceLogic";
 import {
    BuildingInputModeNames,
    ResourceImportOptions,
@@ -27,6 +28,7 @@ import {
    toggleFlag,
 } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
+import { useGameOptions } from "../Global";
 import { WorldScene } from "../scenes/WorldScene";
 import { Singleton } from "../utilities/Singleton";
 import { playClick } from "../visuals/Sound";
@@ -43,6 +45,7 @@ const resourceImportSortingState = { column: 1, asc: true };
 
 export function ResourceImportComponent({ gameState, xy }: IBuildingComponentProps): React.ReactNode {
    const building = gameState.tiles.get(xy)?.building as IResourceImportBuildingData;
+   const gameOptions = useGameOptions();
    const [selected, setSelected] = useState(new Set<Resource>());
    // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
    useEffect(() => setSelected(new Set()), [xy]);
@@ -91,7 +94,7 @@ export function ResourceImportComponent({ gameState, xy }: IBuildingComponentPro
                   case 4:
                      return (building.resourceImports[a]?.cap ?? 0) - (building.resourceImports[b]?.cap ?? 0);
                   default:
-                     return Config.Resource[a].name().localeCompare(Config.Resource[b].name());
+                     return compareResources(a, b, gameOptions.resourceSortMethod);
                }
             }}
             renderRow={(res) => {

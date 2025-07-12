@@ -6,7 +6,7 @@ import { Config } from "../../../shared/logic/Config";
 import { TRADE_CANCEL_REFUND_PERCENT } from "../../../shared/logic/Constants";
 import { unlockedResources } from "../../../shared/logic/IntraTickCache";
 import { getTradePercentage, hasResourceForPlayerTrade } from "../../../shared/logic/PlayerTradeLogic";
-import { addResourceTo, getAvailableStorage } from "../../../shared/logic/ResourceLogic";
+import { addResourceTo, getAvailableStorage, compareResources } from "../../../shared/logic/ResourceLogic";
 import { Tick } from "../../../shared/logic/TickLogic";
 import { UserAttributes } from "../../../shared/utilities/Database";
 import {
@@ -19,6 +19,7 @@ import {
    safeParseInt,
 } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
+import { useGameOptions } from "../Global";
 import { AccountLevelNames } from "../logic/AccountLevel";
 import { client, useTrades, useUser } from "../rpc/RPCClient";
 import { getOwnedTradeTile } from "../scenes/PathFinder";
@@ -46,6 +47,7 @@ const playerTradesSortingState = { column: 0, asc: true };
 
 export function PlayerTradeComponent({ gameState, xy }: IBuildingComponentProps): React.ReactNode {
    const building = gameState.tiles.get(xy)?.building;
+   const gameOptions = useGameOptions();
    const [resourceWantFilters, setResourceWantFilters] = useState(savedResourceWantFilters);
    const [resourceOfferFilters, setResourceOfferFilters] = useState(savedResourceOfferFilters);
    const [showFilters, setShowFilters] = useState(false);
@@ -104,9 +106,7 @@ export function PlayerTradeComponent({ gameState, xy }: IBuildingComponentProps)
                         </tr>
                      </thead>
                      <tbody>
-                        {resources
-                           .sort((a, b) => Config.Resource[a].name().localeCompare(Config.Resource[b].name()))
-                           .map((res) => (
+                        {resources.sort((a, b) => compareResources(a, b, gameOptions.resourceSortMethod)).map((res) => (
                               <tr key={res}>
                                  <td>{Config.Resource[res].name()}</td>
                                  <td
@@ -274,13 +274,9 @@ export function PlayerTradeComponent({ gameState, xy }: IBuildingComponentProps)
                }
                switch (col) {
                   case 0:
-                     return Config.Resource[a.buyResource]
-                        .name()
-                        .localeCompare(Config.Resource[b.buyResource].name());
+                     return compareResources(a.buyResource, b.buyResource, gameOptions.resourceSortMethod);
                   case 1:
-                     return Config.Resource[a.sellResource]
-                        .name()
-                        .localeCompare(Config.Resource[b.sellResource].name());
+                     return compareResources(a.sellResource, b.sellResource, gameOptions.resourceSortMethod);
                   case 2:
                      return getTradePercentage(a) - getTradePercentage(b);
                   case 3:

@@ -22,6 +22,7 @@ import {
    getXyBuildings,
    unlockedResources,
 } from "../../../shared/logic/IntraTickCache";
+import { compareResources } from "../../../shared/logic/ResourceLogic";
 import { getScienceAmount } from "../../../shared/logic/TechLogic";
 import { NotProducingReason, Tick } from "../../../shared/logic/TickLogic";
 import type { IBuildingData } from "../../../shared/logic/Tile";
@@ -38,7 +39,7 @@ import {
 } from "../../../shared/utilities/Helper";
 import type { PartialSet } from "../../../shared/utilities/TypeDefinitions";
 import { L, t } from "../../../shared/utilities/i18n";
-import { useGameState } from "../Global";
+import { useGameOptions, useGameState } from "../Global";
 import { TimeSeries } from "../logic/TimeSeries";
 import { LookAtMode, WorldScene } from "../scenes/WorldScene";
 import { Singleton } from "../utilities/Singleton";
@@ -475,7 +476,9 @@ export function ResourcesTab({ gameState }: IBuildingComponentProps): React.Reac
    const inputs = showTheoreticalValue ? io.theoreticalInput : io.actualInput;
    const outputs = showTheoreticalValue ? io.theoreticalOutput : io.actualOutput;
    const gs = useGameState();
-
+   const gameOptions = useGameOptions();
+   const sortMethod = gameOptions.resourceSortMethod;
+   
    const highlightResourcesUsed = (
       res: Resource,
       type: keyof Pick<IBuildingDefinition, "input" | "output">,
@@ -598,10 +601,10 @@ export function ResourcesTab({ gameState }: IBuildingComponentProps): React.Reac
                            : Number.NEGATIVE_INFINITY;
                      return timeLeftA !== timeLeftB
                         ? timeLeftB - timeLeftA
-                        : Config.Resource[a].name().localeCompare(Config.Resource[b].name());
+                        : compareResources(a, b, sortMethod);
                   }
                   default: {
-                     return Config.Resource[a].name().localeCompare(Config.Resource[b].name());
+                       return compareResources(a, b, sortMethod);
                   }
                }
             }}

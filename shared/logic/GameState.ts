@@ -126,6 +126,12 @@ export const ExtraTileInfoTypes = {
    StoragePercentage: () => t(L.ExtraTileInfoTypeStoragePercentage),
 } as const;
 
+export const ResourceSortMethods = {
+   Name: () => t(L.ResourceSortByName),
+   Tier: () => t(L.ResourceSortByTier),
+   Value: () => t(L.ResourceSortByValue),
+} as const;
+
 export const TileTextures = [
    "Tile1",
    "Tile14",
@@ -180,6 +186,9 @@ export const CursorOptions = {
 } as const;
 
 export type ExtraTileInfoType = keyof typeof ExtraTileInfoTypes;
+
+export type ResourceSortMethod = keyof typeof ResourceSortMethods;
+
 export type CursorOption = keyof typeof CursorOptions;
 
 export class GameOptions {
@@ -208,6 +217,7 @@ export class GameOptions {
    resourceBarExcludeTurnedOffOrNoActiveTransport = false;
    resourceBarExcludeStorageFull = false;
    extraTileInfoType: ExtraTileInfoType = "StoragePercentage";
+   resourceSortMethod: ResourceSortMethod = "Name";
    buildingDefaults: Partial<Record<Building, Partial<IBuildingData>>> = {};
    defaultProductionPriority = PRIORITY_MIN;
    defaultConstructionPriority = PRIORITY_MIN;

@@ -3,8 +3,10 @@ import { Config } from "../../../shared/logic/Config";
 import { MAX_OFFLINE_PRODUCTION_SEC } from "../../../shared/logic/Constants";
 import {
    ExtraTileInfoTypes,
+   ResourceSortMethods,
    getTranslatedPercentage,
    type ExtraTileInfoType,
+   type ResourceSortMethod,
 } from "../../../shared/logic/GameState";
 import { notifyGameOptionsUpdate, notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
 import {
@@ -282,6 +284,24 @@ export function GameplayOptionPage(): React.ReactNode {
                      );
                   })}
                </select>
+               <div className="separator" />
+               <div className="row">
+                  <div className="f1">{t(L.ResourceSortMethod)}</div>
+                  <select
+                     value={options.resourceSortMethod}
+                     onChange={(e) => {
+                        options.resourceSortMethod = e.target.value as ResourceSortMethod;
+                        notifyGameOptionsUpdate(options);
+                     }}
+                     className="ml10"
+                  >
+                     {keysOf(ResourceSortMethods).map((method) => (
+                        <option key={method} value={method}>
+                           {ResourceSortMethods[method]()}
+                        </option>
+                     ))}
+                  </select>
+               </div>
             </fieldset>
             <fieldset>
                <legend>{t(L.PorcelainTower)}</legend>

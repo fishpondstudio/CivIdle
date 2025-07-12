@@ -30,6 +30,8 @@ import { RenderHTML } from "./RenderHTMLComponent";
 import { TableView } from "./TableView";
 import { TextWithHelp } from "./TextWithHelpComponent";
 import { WarningComponent } from "./WarningComponent";
+import { compareResources } from "../../../shared/logic/ResourceLogic";
+import { useGameOptions } from "../Global";
 
 interface IGrandBazaarMarketData {
    xy: Tile;
@@ -68,9 +70,10 @@ function TradesTab({
    const [nameResourceFilter, setNameResourceFilter] = useState<string>(savedNameResourceFilter);
    const [nameBuyFilter, setNameBuyFilter] = useState<boolean>(savedNameBuyFilter);
    const [nameSellFilter, setNameSellFilter] = useState<boolean>(savedNameSellFilter);
+   const options = useGameOptions();
 
    const availableResources = Array.from(availableResourcesSet).sort((a, b) =>
-      Config.Resource[a].name().localeCompare(Config.Resource[b].name()),
+      compareResources(a, b, options.resourceSortMethod),
    );
 
    return (
@@ -224,13 +227,9 @@ function TradesTab({
                compareFunc={(a, b, i) => {
                   switch (i) {
                      case 0:
-                        return Config.Resource[a.sellResource]
-                           .name()
-                           .localeCompare(Config.Resource[b.sellResource].name());
+                        return compareResources(a.sellResource, b.sellResource, options.resourceSortMethod);
                      case 1:
-                        return Config.Resource[a.buyResource]
-                           .name()
-                           .localeCompare(Config.Resource[b.buyResource].name());
+                        return compareResources(a.buyResource, b.buyResource, options.resourceSortMethod);
                      case 2:
                         return (calculateTradeValue(a) ?? 0) - (calculateTradeValue(b) ?? 0);
                      default:
@@ -319,6 +318,7 @@ function ActiveTradesTab({
    allMarketTrades,
    gs,
 }: { allMarketTrades: IGrandBazaarMarketData[]; gs: GameState }): React.ReactNode {
+   const options = useGameOptions();
    return (
       <article role="tabpanel" className="f1" style={{ padding: "8px", overflow: "auto" }}>
          <TableView
@@ -401,13 +401,9 @@ function ActiveTradesTab({
             compareFunc={(a, b, i) => {
                switch (i) {
                   case 0:
-                     return Config.Resource[a.sellResource]
-                        .name()
-                        .localeCompare(Config.Resource[b.sellResource].name());
+                     return compareResources(a.sellResource, b.sellResource, options.resourceSortMethod);
                   case 1:
-                     return Config.Resource[a.buyResource]
-                        .name()
-                        .localeCompare(Config.Resource[b.buyResource].name());
+                     return compareResources(a.buyResource, b.buyResource, options.resourceSortMethod);
                   case 2:
                      return (calculateTradeValue(a) ?? 0) - (calculateTradeValue(b) ?? 0);
                   default:

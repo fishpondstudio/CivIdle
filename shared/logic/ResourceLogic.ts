@@ -4,7 +4,7 @@ import { clamp, forEach, reduceOf, safeAdd, type Tile } from "../utilities/Helpe
 import type { PartialTabulate } from "../utilities/TypeDefinitions";
 import { getStorageFor } from "./BuildingLogic";
 import { Config } from "./Config";
-import type { GameState } from "./GameState";
+import type { GameOptions, GameState } from "./GameState";
 import { Tick } from "./TickLogic";
 import { hashTileAndRes } from "./Update";
 
@@ -138,4 +138,27 @@ export function combineResources(resources: PartialTabulate<Resource>[]): Partia
       });
    });
    return result;
+}
+
+export function sortResources(resources: Resource[], sortMethod: GameOptions["resourceSortMethod"]): Resource[] {
+   return [...resources].sort((a, b) => compareResources(a, b, sortMethod));
+}
+
+export function compareResources(a: Resource, b: Resource, option: GameOptions["resourceSortMethod"]): number {
+   switch (option) {
+      case "Name":
+         return Config.Resource[a].name().localeCompare(Config.Resource[b].name());
+      case "Tier": {
+         const tierA = Config.ResourceTier[a] ?? 0;
+         const tierB = Config.ResourceTier[b] ?? 0;
+         return tierA - tierB;
+      }
+      case "Value": {
+         const priceA = Config.ResourcePrice[a] ?? 0;
+         const priceB = Config.ResourcePrice[b] ?? 0;
+         return priceA - priceB;
+      }
+      default:
+         return Config.Resource[a].name().localeCompare(Config.Resource[b].name());
+   }
 }

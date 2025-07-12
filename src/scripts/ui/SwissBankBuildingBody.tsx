@@ -4,10 +4,12 @@ import { NoPrice, NoStorage, type Resource } from "../../../shared/definitions/R
 import { getBuildingCost, getMultipliersFor, totalMultiplierFor } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
 import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
+import { compareResources } from "../../../shared/logic/ResourceLogic";
 import { Tick } from "../../../shared/logic/TickLogic";
 import type { ISwissBankBuildingData } from "../../../shared/logic/Tile";
 import { formatNumber, keysOf } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
+import { useGameOptions } from "../Global";
 import { jsxMapOf } from "../utilities/Helper";
 import { playClick } from "../visuals/Sound";
 import { BuildingColorComponent } from "./BuildingColorComponent";
@@ -20,6 +22,7 @@ import { ResourceAmountComponent } from "./ResourceAmountComponent";
 
 export function SwissBankBuildingBody({ gameState, xy }: IBuildingComponentProps): React.ReactNode {
    const building = gameState.tiles.get(xy)?.building as ISwissBankBuildingData;
+   const gameOptions = useGameOptions();
    if (!building) {
       return null;
    }
@@ -78,7 +81,7 @@ export function SwissBankBuildingBody({ gameState, xy }: IBuildingComponentProps
             >
                <option value=""></option>
                {keysOf(Config.Resource)
-                  .sort((a, b) => Config.Resource[a].name().localeCompare(Config.Resource[b].name()))
+                  .sort((a, b) => compareResources(a, b, gameOptions.resourceSortMethod))
                   .map((res) => {
                      if (NoPrice[res] || NoStorage[res] || res === "Koti") {
                         return null;
