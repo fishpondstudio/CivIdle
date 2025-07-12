@@ -4,10 +4,11 @@ import { IOCalculation } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
 import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
 import { getBuildingIO, unlockedResources } from "../../../shared/logic/IntraTickCache";
-import { getBuildingsThatProduce } from "../../../shared/logic/ResourceLogic";
+import { getBuildingsThatProduce, compareResources } from "../../../shared/logic/ResourceLogic";
 import type { ICloneBuildingData } from "../../../shared/logic/Tile";
 import { isEmpty, keysOf } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
+import { useGameOptions } from "../Global";
 import { playClick } from "../visuals/Sound";
 import { ApplyToAllComponent } from "./ApplyToAllComponent";
 import { BuildingIOTreeViewComponent } from "./BuildingIOTreeViewComponent";
@@ -34,9 +35,10 @@ function ChooseResource({ gameState, xy }: IBuildingComponentProps): React.React
 
    if (building && (building.type === "CloneFactory" || building.type === "CloneLab")) {
       const c = building as ICloneBuildingData;
+      const gameOptions = useGameOptions();
       const resources = keysOf(unlockedResources(gameState))
          .filter((r) => !NoStorage[r] && !NoPrice[r])
-         .sort((a, b) => Config.Resource[a].name().localeCompare(Config.Resource[b].name()));
+         .sort((a, b) => compareResources(a, b, gameOptions.resourceSortMethod));
       return (
          <>
             {building.type === "CloneFactory" ? (

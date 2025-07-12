@@ -9,7 +9,7 @@ import {
    getMaxActiveTrades,
    getUserTradePriceRange,
 } from "../../../shared/logic/PlayerTradeLogic";
-import { combineResources, deductResourceFrom } from "../../../shared/logic/ResourceLogic";
+import { combineResources, deductResourceFrom, compareResources } from "../../../shared/logic/ResourceLogic";
 import { Tick } from "../../../shared/logic/TickLogic";
 import type { IAddTradeRequest } from "../../../shared/utilities/Database";
 import {
@@ -20,6 +20,7 @@ import {
    safeParseInt,
 } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
+import { useGameOptions } from "../Global";
 import { client, useTrades, useUser } from "../rpc/RPCClient";
 import { playError, playKaching } from "../visuals/Sound";
 import type { IBuildingComponentProps } from "./BuildingPage";
@@ -31,6 +32,7 @@ const INPUT_WIDTH = 100;
 export function AddTradeComponent({ gameState, xy }: IBuildingComponentProps): React.ReactNode {
    const user = useUser();
    const trades = useTrades();
+   const gameOptions = useGameOptions();
    const enabled =
       !isNullOrUndefined(user) &&
       trades.filter((t) => t.fromId === user.userId).length < getMaxActiveTrades(user);
@@ -84,7 +86,7 @@ export function AddTradeComponent({ gameState, xy }: IBuildingComponentProps): R
                >
                   {sellResources
                      .sort((a, b) => {
-                        return Config.Resource[a].name().localeCompare(Config.Resource[b].name());
+                        return compareResources(a, b, gameOptions.resourceSortMethod);
                      })
                      .map((res) => (
                         <option key={res} value={res}>
@@ -135,7 +137,7 @@ export function AddTradeComponent({ gameState, xy }: IBuildingComponentProps): R
                >
                   {buyResources
                      .sort((a, b) => {
-                        return Config.Resource[a].name().localeCompare(Config.Resource[b].name());
+                        return compareResources(a, b, gameOptions.resourceSortMethod);
                      })
                      .map((res) => (
                         <option key={res} value={res}>
