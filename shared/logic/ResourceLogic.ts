@@ -140,11 +140,18 @@ export function combineResources(resources: PartialTabulate<Resource>[]): Partia
    return result;
 }
 
-export function sortResources(resources: Resource[], sortMethod: GameOptions["resourceSortMethod"]): Resource[] {
+export function sortResources(
+   resources: Resource[],
+   sortMethod: GameOptions["resourceSortMethod"],
+): Resource[] {
    return [...resources].sort((a, b) => compareResources(a, b, sortMethod));
 }
 
-export function compareResources(a: Resource, b: Resource, option: GameOptions["resourceSortMethod"]): number {
+export function compareResources(
+   a: Resource,
+   b: Resource,
+   option: GameOptions["resourceSortMethod"],
+): number {
    switch (option) {
       case "Name":
          return Config.Resource[a].name().localeCompare(Config.Resource[b].name());

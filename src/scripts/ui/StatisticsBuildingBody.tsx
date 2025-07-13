@@ -478,7 +478,7 @@ export function ResourcesTab({ gameState }: IBuildingComponentProps): React.Reac
    const gs = useGameState();
    const gameOptions = useGameOptions();
    const sortMethod = gameOptions.resourceSortMethod;
-   
+
    const highlightResourcesUsed = (
       res: Resource,
       type: keyof Pick<IBuildingDefinition, "input" | "output">,
@@ -604,7 +604,7 @@ export function ResourcesTab({ gameState }: IBuildingComponentProps): React.Reac
                         : compareResources(a, b, sortMethod);
                   }
                   default: {
-                       return compareResources(a, b, sortMethod);
+                     return compareResources(a, b, sortMethod);
                   }
                }
             }}

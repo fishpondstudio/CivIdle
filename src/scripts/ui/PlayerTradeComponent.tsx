@@ -106,7 +106,9 @@ export function PlayerTradeComponent({ gameState, xy }: IBuildingComponentProps)
                         </tr>
                      </thead>
                      <tbody>
-                        {resources.sort((a, b) => compareResources(a, b, gameOptions.resourceSortMethod)).map((res) => (
+                        {resources
+                           .sort((a, b) => compareResources(a, b, gameOptions.resourceSortMethod))
+                           .map((res) => (
                               <tr key={res}>
                                  <td>{Config.Resource[res].name()}</td>
                                  <td
