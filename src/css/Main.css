@@ -37,6 +37,18 @@ body.big-old-fashioned-cursor .pointer * {
    cursor: url("../images/w98handbig.png"), pointer;
 }
 
+body.hi-vis-old-fashioned-cursor,
+body.hi-vis-old-fashioned-cursor * {
+   cursor: url("../images/w98hivis.png"), default;
+}
+
+body.hi-vis-old-fashioned-cursor .text-link,
+body.hi-vis-old-fashioned-cursor .text-link *,
+body.hi-vis-old-fashioned-cursor .pointer,
+body.hi-vis-fashioned-cursor .pointer * {
+   cursor: url("../images/w98handhivis.png"), pointer;
+}
+
 body {
    cursor: default;
    user-select: none;
