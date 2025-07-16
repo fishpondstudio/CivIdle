@@ -38,6 +38,8 @@
 .modern ul.tree-view {
    font-family: "Inter Tight", sans-serif;
    font-size: 1.4rem;
+   -webkit-font-smoothing: antialiased;
+   -moz-osx-font-smoothing: grayscale;
 }
 
 .modern .tippy-box {
