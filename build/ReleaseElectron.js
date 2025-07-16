@@ -58,7 +58,15 @@ fs.copySync(path.join(rootPath, "dist"), path.join(rootPath, "electron", "dist")
 console.log("========== Build Electron ==========");
 
 cmd("npm run package -- --platform=win32,linux,darwin", path.join(rootPath, "electron"));
-cmd(`rcodesign sign --p12-file local/app-sign.p12 --p12-password-file local/p12-password --entitlements-xml-file local/entitlements.plist --code-signature-flags runtime --for-notarization ./out/cividle-darwin-x64/cividle.app`, path.join(rootPath, "electron"));
+cmd(`rcodesign sign --p12-file local/app-sign.p12 --p12-password-file local/p12-password --entitlements-xml-file local/entitlements.plist`
+   + ` --code-signature-flags runtime`
+   + ` --code-signature-flags "Contents/Frameworks/cividle Helper.app":runtime`
+   + ` --code-signature-flags "Contents/Frameworks/cividle Helper (Renderer).app":runtime`
+   + ` --code-signature-flags "Contents/Frameworks/cividle Helper (GPU).app":runtime`
+   + ` --code-signature-flags "Contents/Frameworks/cividle Helper (Plugin).app":runtime`
+   + ` --code-signature-flags "Contents/Frameworks/Electron Framework.framework/Versions/A/Helpers/chrome_crashpad_handler":runtime`
+   + ` --code-signature-flags "Contents/Frameworks/Squirrel.framework/Versions/A/Resources/ShipIt":runtime`
+   + ` ./out/cividle-darwin-x64/cividle.app`, path.join(rootPath, "electron"));
 cmd(`rcodesign notary-submit --api-key-file local/app-store.json --staple out/cividle-darwin-x64/cividle.app`, path.join(rootPath, "electron"));
 
 console.log("========== Uploading to Steam ==========");
