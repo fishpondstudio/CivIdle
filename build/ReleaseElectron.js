@@ -58,14 +58,21 @@ fs.copySync(path.join(rootPath, "dist"), path.join(rootPath, "electron", "dist")
 console.log("========== Build Electron ==========");
 
 cmd("npm run package -- --platform=win32,linux,darwin", path.join(rootPath, "electron"));
-cmd(`rcodesign sign --p12-file local/app-sign.p12 --p12-password-file local/p12-password --entitlements-xml-file local/entitlements.plist`
+cmd(`rcodesign sign --p12-file local/app-sign.p12 --p12-password-file local/p12-password`
    + ` --code-signature-flags runtime`
+   + ` --entitlements-xml-file local/entitlements.plist`
    + ` --code-signature-flags "Contents/Frameworks/cividle Helper.app":runtime`
+   + ` --entitlements-xml-file "Contents/Frameworks/cividle Helper.app":local/entitlements.plist`
    + ` --code-signature-flags "Contents/Frameworks/cividle Helper (Renderer).app":runtime`
+   + ` --entitlements-xml-file "Contents/Frameworks/cividle Helper (Renderer).app":local/entitlements.plist`
    + ` --code-signature-flags "Contents/Frameworks/cividle Helper (GPU).app":runtime`
+   + ` --entitlements-xml-file "Contents/Frameworks/cividle Helper (GPU).app":local/entitlements.plist`
    + ` --code-signature-flags "Contents/Frameworks/cividle Helper (Plugin).app":runtime`
+   + ` --entitlements-xml-file "Contents/Frameworks/cividle Helper (Plugin).app":local/entitlements.plist`
    + ` --code-signature-flags "Contents/Frameworks/Electron Framework.framework/Versions/A/Helpers/chrome_crashpad_handler":runtime`
+   + ` --entitlements-xml-file "Contents/Frameworks/Electron Framework.framework/Versions/A/Helpers/chrome_crashpad_handler":local/entitlements.plist`
    + ` --code-signature-flags "Contents/Frameworks/Squirrel.framework/Versions/A/Resources/ShipIt":runtime`
+   + ` --entitlements-xml-file "Contents/Frameworks/Squirrel.framework/Versions/A/Resources/ShipIt":local/entitlements.plist`
    + ` ./out/cividle-darwin-x64/cividle.app`, path.join(rootPath, "electron"));
 cmd(`rcodesign notary-submit --api-key-file local/app-store.json --staple out/cividle-darwin-x64/cividle.app`, path.join(rootPath, "electron"));
 
