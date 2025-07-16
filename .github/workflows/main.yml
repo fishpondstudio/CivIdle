@@ -36,10 +36,12 @@ jobs:
       - run: |
           npm run clean
         working-directory: /home/insraq/CivIdle/shared
-      - run: npm run release
+      - run: |
+          . "$HOME/.cargo/env"
+          npm run release
         working-directory: /home/insraq/CivIdle
         env:
-          STEAMWORKS_PATH: /home/insraq/steamworks/tools/ContentBuilder/
+          STEAMWORKS_PATH: /home/insraq/steamworks/tools/ContentBuilder
       - run: npx cap sync android
         working-directory: /home/insraq/CivIdle
       - run: fastlane deploy
