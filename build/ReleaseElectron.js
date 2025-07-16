@@ -52,7 +52,7 @@ fs.copySync(path.join(rootPath, "dist"), path.join(rootPath, "electron", "dist")
 
 console.log("========== Build Electron ==========");
 
-cmd("npm run package -- --platform=win32,linux", path.join(rootPath, "electron"));
+cmd("npm run package -- --platform=win32,linux,darwin", path.join(rootPath, "electron"));
 
 console.log("========== Uploading to Steam ==========");
 
