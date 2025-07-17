@@ -1,0 +1,10 @@
+"lang"
+{
+	"english"
+	{
+		"tokens"
+		{
+			"#default_status"		"%civilization% (%age%)"
+		}
+	}
+}

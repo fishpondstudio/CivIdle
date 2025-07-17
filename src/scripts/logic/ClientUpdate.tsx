@@ -12,7 +12,7 @@ import {
 import { calculateHappiness } from "../../../shared/logic/HappinessLogic";
 import { clearIntraTickCache, getBuildingsByType } from "../../../shared/logic/IntraTickCache";
 import { getGreatPeopleForWisdom, getGreatPersonThisRunLevel } from "../../../shared/logic/RebirthLogic";
-import { RequestResetTile } from "../../../shared/logic/TechLogic";
+import { RequestResetTile, getCurrentAge } from "../../../shared/logic/TechLogic";
 import { CurrentTickChanged, EmptyTickData, Tick, freezeTickData } from "../../../shared/logic/TickLogic";
 import {
    OnBuildingComplete,
@@ -35,7 +35,7 @@ import { clamp, forEach, safeAdd, type Tile } from "../../../shared/utilities/He
 import { L, t } from "../../../shared/utilities/i18n";
 import { saveGame } from "../Global";
 import { client, disconnectWebSocket, getUser, reconnectWebSocket } from "../rpc/RPCClient";
-import { isSteam } from "../rpc/SteamClient";
+import { SteamClient, isSteam } from "../rpc/SteamClient";
 import { WorldScene } from "../scenes/WorldScene";
 import { AccountRankUpModal } from "../ui/AccountRankUpModal";
 import { AdvisorModal } from "../ui/AdvisorModal";
@@ -241,6 +241,9 @@ function postTickTiles(gs: GameState, offline: boolean) {
                }
             }
          });
+         SteamClient.setRichPresence("civilization", Config.City[gs.city].name());
+         SteamClient.setRichPresence("age", Config.TechAge[getCurrentAge(gs)].name());
+         SteamClient.setRichPresence("steam_display", "#default_status");
       }
    }
 

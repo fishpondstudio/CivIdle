@@ -135,4 +135,8 @@ export class IPCService {
       this._mainWindow.setAlwaysOnTop(false);
       this._mainWindow.setMinimumSize(MIN_WIDTH, MIN_HEIGHT);
    }
+
+   public setRichPresence(key: string, value?: string | undefined | null): void {
+      this._client.localplayer.setRichPresence(key, value);
+   }
 }
