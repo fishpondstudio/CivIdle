@@ -22,12 +22,12 @@ export function BottomPanel(): React.ReactNode {
                playClick();
                Singleton().sceneManager.loadScene(WorldScene);
             }}
-            className={cls(Singleton().sceneManager.isCurrent(WorldScene) ? "active" : null)}
+            className={cls(Singleton().sceneManager.isCurrent(WorldScene) ? "active" : null, "nowrap")}
          >
             {t(L.CityViewMap)}
          </button>
          <button
-            className={cls(Singleton().sceneManager.isCurrent(TechTreeScene) ? "active" : null)}
+            className={cls(Singleton().sceneManager.isCurrent(TechTreeScene) ? "active" : null, "nowrap")}
             onClick={() => {
                playClick();
                Singleton().sceneManager.loadScene(TechTreeScene);
@@ -37,7 +37,7 @@ export function BottomPanel(): React.ReactNode {
          </button>
          {sizeOf(Tick.current.playerTradeBuildings) <= 0 ? null : (
             <button
-               className={cls(Singleton().sceneManager.isCurrent(PlayerMapScene) ? "active" : null)}
+               className={cls(Singleton().sceneManager.isCurrent(PlayerMapScene) ? "active" : null, "nowrap")}
                onClick={() => {
                   playClick();
                   Singleton().sceneManager.loadScene(PlayerMapScene);
