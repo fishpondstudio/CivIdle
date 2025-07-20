@@ -154,6 +154,7 @@ export enum UserAttributes {
    Banned = 1 << 6,
    TribuneOnly = 1 << 7,
    DisableRename = 1 << 8,
+   CheckTradeCancel = 1 << 9,
 }
 
 export enum UserColors {
@@ -234,6 +235,7 @@ export interface IUser {
    connectionRequest?: IConnectionRequest;
    saveOwner?: string;
    lastCheckInAt?: number;
+   lastRecoveredAt?: number;
 }
 
 export interface IConnectionRequest {
