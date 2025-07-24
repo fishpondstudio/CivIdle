@@ -388,6 +388,7 @@ export const EN = {
    CurrentPlatform: "Current Platform",
    CursorBigOldFashioned: "3D (Big)",
    CursorOldFashioned: "3D",
+   CursorHiVisOldFashioned: "3D (high visibility)",
    CursorStyle: "Cursor Style",
    CursorStyleDescHTML: "Change the style of the cursor. <b>Require restarting your game to take effect</b>",
    CursorSystem: "System",
