@@ -3,7 +3,6 @@ import classNames from "classnames";
 import {
    ElectrificationStatus,
    canBeElectrified,
-   getElectrificationEfficiency,
    getElectrificationStatus,
    getPowerRequired,
 } from "../../../shared/logic/BuildingLogic";
@@ -27,7 +26,6 @@ export function BuildingElectricityComponent({ gameState, xy }: IBuildingCompone
    let electrification: React.ReactNode = null;
    if (canBeElectrified(building.type)) {
       const status = getElectrificationStatus(xy, gameState);
-      const multiplier = gameState.unlockedUpgrades.Liberalism5 ? 2 : 1;
       electrification = (
          <>
             <div className="separator"></div>
@@ -57,20 +55,16 @@ export function BuildingElectricityComponent({ gameState, xy }: IBuildingCompone
                   </div>
                </li>
                <li className="row">
-                  <div className="f1">{t(L.ConsumptionMultiplier)}</div>
-                  <div className="text-red text-strong">
-                     +
-                     <FormatNumber
-                        value={
-                           multiplier * building.electrification * getElectrificationEfficiency(building.type)
-                        }
-                     />
+                  <div className="f1">{t(L.ElectrificationLevel)}</div>
+                  <div className="text-strong">
+                     <FormatNumber value={building.electrification} />
                   </div>
                </li>
                <li className="row">
-                  <div className="f1">{t(L.ProductionMultiplier)}</div>
+                  <div className="f1">{t(L.BuildingLevelBoost)}</div>
                   <div className="text-green text-strong">
-                     +<FormatNumber value={multiplier * building.electrification} />
+                     +
+                     <FormatNumber value={Tick.current.electrified.get(xy) ?? 0} />
                   </div>
                </li>
             </ul>

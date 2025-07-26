@@ -1,8 +1,12 @@
 import Tippy from "@tippyjs/react";
 import classNames from "classnames";
 import type React from "react";
-import { memo, useCallback, useEffect, useRef, useState, useTransition } from "react";
-import { notifyGameOptionsUpdate, notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
+import { memo, useCallback, useEffect, useMemo, useRef, useState, useTransition } from "react";
+import {
+   getGameOptions,
+   notifyGameOptionsUpdate,
+   notifyGameStateUpdate,
+} from "../../../shared/logic/GameStateLogic";
 import {
    AccountLevel,
    ChatAttributes,
@@ -51,7 +55,6 @@ export function ChatPanel(): React.ReactNode {
    }
    const isFloating = useFloatingMode();
    const messages = useChatMessages().filter((m) => !("channel" in m) || options.chatChannels.has(m.channel));
-   const [isPending, startTransition] = useTransition();
    const [showChatWindow, setShowChatWindow] = useState(false);
    const user = useUser();
    const gs = useGameState();
@@ -59,6 +62,20 @@ export function ChatPanel(): React.ReactNode {
    useTypedEvent(ToggleChatWindow, (on) => {
       setShowChatWindow(on);
    });
+
+   const closeChatWindow = useCallback((channel: ChatChannel) => {
+      const options = getGameOptions();
+      if (options.chatChannels.size <= 1) {
+         setShowChatWindow(false);
+      } else {
+         options.chatChannels.delete(channel);
+         notifyGameOptionsUpdate(options);
+      }
+   }, []);
+
+   const onMinimizeChatWindow = useCallback(() => {
+      setShowChatWindow(false);
+   }, []);
 
    const style: React.CSSProperties = {
       contentVisibility: showChatWindow ? "visible" : "hidden",
@@ -77,7 +94,7 @@ export function ChatPanel(): React.ReactNode {
          <div
             className="row pointer"
             style={{ width: "100%", height: "100%" }}
-            onClick={() => startTransition(() => setShowChatWindow(!showChatWindow))}
+            onClick={() => setShowChatWindow(!showChatWindow)}
          >
             <img
                style={{
@@ -97,21 +114,12 @@ export function ChatPanel(): React.ReactNode {
          <div style={style}>
             {Array.from(options.chatChannels).map((channel, i) => (
                <ChatWindow
-                  style={{ left: 350 * i }}
+                  left={350 * i}
                   key={channel}
                   channel={channel}
                   show={showChatWindow}
-                  onClose={() =>
-                     startTransition(() => {
-                        if (options.chatChannels.size <= 1) {
-                           setShowChatWindow(false);
-                        } else {
-                           options.chatChannels.delete(channel);
-                           notifyGameOptionsUpdate(options);
-                        }
-                     })
-                  }
-                  onMinimize={() => startTransition(() => setShowChatWindow(false))}
+                  onClose={closeChatWindow}
+                  onMinimize={onMinimizeChatWindow}
                />
             ))}
          </div>
@@ -139,17 +147,27 @@ export function ChatPanel(): React.ReactNode {
    );
 }
 
-function ChatWindow({
+const ChatWindow = memo(_ChatWindow, (prev, next) => {
+   return (
+      prev.channel === next.channel &&
+      prev.show === next.show &&
+      prev.onClose === next.onClose &&
+      prev.onMinimize === next.onMinimize &&
+      prev.left === next.left
+   );
+});
+
+function _ChatWindow({
    show,
    channel,
-   style,
+   left,
    onClose,
    onMinimize,
 }: {
    show: boolean;
    channel: ChatChannel;
-   style?: React.CSSProperties;
-   onClose: () => void;
+   left: number;
+   onClose: (channel: ChatChannel) => void;
    onMinimize: () => void;
 }): React.ReactNode {
    const scrollAreaRef = useRef<HTMLDivElement>(null);
@@ -184,12 +202,12 @@ function ChatWindow({
    }, [show]);
 
    return (
-      <div className="chat-content window" style={style}>
+      <div className="chat-content window" style={{ left }}>
          <div className="title-bar">
             <div className="title-bar-text">{ChatChannels[channel]}</div>
             <div className="title-bar-controls">
                <button aria-label="Minimize" onClick={onMinimize}></button>
-               <button aria-label="Close" onClick={onClose}></button>
+               <button aria-label="Close" onClick={() => onClose(channel)}></button>
             </div>
          </div>
          <div

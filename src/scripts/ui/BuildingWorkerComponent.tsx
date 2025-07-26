@@ -1,7 +1,7 @@
 import Tippy from "@tippyjs/react";
 import classNames from "classnames";
 import {
-   IOCalculation,
+   IOFlags,
    applyToAllBuildings,
    getBuildingName,
    getMultipliersFor,
@@ -34,8 +34,8 @@ export function BuildingWorkerComponent({ gameState, xy }: IBuildingComponentPro
    if (building == null) {
       return null;
    }
-   const input = getBuildingIO(xy, "input", IOCalculation.None, gameState);
-   const output = getBuildingIO(xy, "output", IOCalculation.None, gameState);
+   const input = getBuildingIO(xy, "input", IOFlags.None, gameState);
+   const output = getBuildingIO(xy, "output", IOFlags.None, gameState);
    if (isEmpty(input) && isEmpty(output) && !shouldAlwaysShowBuildingOptions(building)) {
       return null;
    }

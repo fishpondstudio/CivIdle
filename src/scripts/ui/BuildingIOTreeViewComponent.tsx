@@ -1,6 +1,11 @@
 import Tippy from "@tippyjs/react";
 import classNames from "classnames";
-import { IOCalculation, getMultipliersFor, totalMultiplierFor } from "../../../shared/logic/BuildingLogic";
+import {
+   IOFlags,
+   getElectrificationBoost,
+   getMultipliersFor,
+   totalMultiplierFor,
+} from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
 import type { GameState } from "../../../shared/logic/GameState";
 import { getBuildingIO } from "../../../shared/logic/IntraTickCache";
@@ -22,9 +27,10 @@ export function BuildingIOTreeViewComponent({
    xy: Tile;
    type: keyof Pick<Multiplier, "input" | "output">;
 }): React.ReactNode {
-   const data = getBuildingIO(xy, type, IOCalculation.Multiplier | IOCalculation.Capacity, gameState);
+   const data = getBuildingIO(xy, type, IOFlags.Multiplier | IOFlags.Capacity, gameState);
    const totalMultiplier = totalMultiplierFor(xy, type, 1, false, gameState);
-   const buildingType = gameState.tiles.get(xy)?.building?.type;
+   const building = gameState.tiles.get(xy)?.building;
+   const buildingType = building?.type;
    const isCloneOutput =
       type === "output" && (buildingType === "CloneFactory" || buildingType === "CloneLab");
    return (
@@ -68,6 +74,18 @@ export function BuildingIOTreeViewComponent({
                               />
                            </div>
                         </li>
+                        {type === "output" && building && getElectrificationBoost(building, gameState) > 0 ? (
+                           <ul>
+                              <li className="row">
+                                 <div className="f1">{t(L.BuildingLevel)}</div>
+                                 <FormatNumber value={building?.level ?? 0} />
+                              </li>
+                              <li className="row">
+                                 <div className="f1">{t(L.ElectrificationLevel)}</div>
+                                 <FormatNumber value={Tick.current.electrified.get(xy) ?? 0} />
+                              </li>
+                           </ul>
+                        ) : null}
                         <li className="row">
                            <div className="f1">
                               {type === "input" ? t(L.ConsumptionMultiplier) : t(L.ProductionMultiplier)}

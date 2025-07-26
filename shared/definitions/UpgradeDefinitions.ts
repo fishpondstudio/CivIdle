@@ -454,7 +454,7 @@ export class UpgradeDefinitions {
          Warehouse: { storage: 1 },
          Caravansary: { storage: 1 },
       },
-      additionalUpgrades: () => [t(L.LiberalismLevel5DescHTML)],
+      additionalUpgrades: () => [t(L.LiberalismLevel5DescHTMLV2)],
    };
 
    Conservatism1: IUpgradeDefinition = {

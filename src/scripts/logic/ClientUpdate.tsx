@@ -241,9 +241,12 @@ function postTickTiles(gs: GameState, offline: boolean) {
                }
             }
          });
-         SteamClient.setRichPresence("civilization", Config.City[gs.city].name());
-         SteamClient.setRichPresence("age", Config.TechAge[getCurrentAge(gs)].name());
-         SteamClient.setRichPresence("steam_display", "#default_status");
+
+         if (isSteam()) {
+            SteamClient.setRichPresence("civilization", Config.City[gs.city].name());
+            SteamClient.setRichPresence("age", Config.TechAge[getCurrentAge(gs)].name());
+            SteamClient.setRichPresence("steam_display", "#default_status");
+         }
       }
    }
 

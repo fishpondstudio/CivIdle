@@ -1,6 +1,6 @@
 import type React from "react";
 import { NoPrice, NoStorage, type Resource } from "../../../shared/definitions/ResourceDefinitions";
-import { IOCalculation } from "../../../shared/logic/BuildingLogic";
+import { IOFlags } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
 import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
 import { getBuildingIO, unlockedResources } from "../../../shared/logic/IntraTickCache";
@@ -16,7 +16,7 @@ import { RenderHTML } from "./RenderHTMLComponent";
 import { WarningComponent } from "./WarningComponent";
 
 export function BuildingConsumeComponent({ gameState, xy }: IBuildingComponentProps): React.ReactNode {
-   const input = getBuildingIO(xy, "input", IOCalculation.Capacity, gameState);
+   const input = getBuildingIO(xy, "input", IOFlags.Capacity, gameState);
    if (isEmpty(input)) {
       return null;
    }

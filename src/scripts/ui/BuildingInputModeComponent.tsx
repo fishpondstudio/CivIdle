@@ -1,6 +1,6 @@
 import Tippy from "@tippyjs/react";
 import classNames from "classnames";
-import { IOCalculation, shouldAlwaysShowBuildingOptions } from "../../../shared/logic/BuildingLogic";
+import { IOFlags, shouldAlwaysShowBuildingOptions } from "../../../shared/logic/BuildingLogic";
 import { GameFeature, hasFeature } from "../../../shared/logic/FeatureLogic";
 import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
 import { getBuildingIO } from "../../../shared/logic/IntraTickCache";
@@ -21,7 +21,7 @@ export function BuildingInputModeComponent({ gameState, xy }: IBuildingComponent
    }
    if (
       building.status === "completed" &&
-      isEmpty(getBuildingIO(xy, "input", IOCalculation.None, gameState)) &&
+      isEmpty(getBuildingIO(xy, "input", IOFlags.None, gameState)) &&
       !shouldAlwaysShowBuildingOptions(building)
    ) {
       return null;

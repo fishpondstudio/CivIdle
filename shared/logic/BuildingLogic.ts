@@ -117,12 +117,14 @@ export function getMultipliersFor(xy: Tile, gs: GameState): MultiplierWithSource
    return result;
 }
 
-export enum IOCalculation {
+export enum IOFlags {
    None = 0,
    Capacity = 1 << 0,
    Multiplier = 1 << 1,
-   MultiplierStableOnly = 1 << 2,
-   TotalUsedBits = 3,
+   StableOnly = 1 << 2,
+   IgnoreElectrification = 1 << 3,
+   TheoreticalElectrification = 1 << 4,
+   TotalUsedBits = 5,
 }
 
 export function hasEnoughResources(a: PartialTabulate<Resource>, b: PartialTabulate<Resource>): boolean {
@@ -141,7 +143,9 @@ export function deductResources(
 ): PartialTabulate<Resource> {
    let res: Resource;
    for (res in b) {
-      if (!a[res] || a[res]! < b[res]!) {
+      if (!a[res]) {
+         a[res] = 0;
+      } else if (a[res]! < b[res]!) {
          console.warn(`Not enough ${res} when trying to deduct`, b, "from", a);
          a[res] = 0;
       } else {
@@ -178,12 +182,28 @@ export function getWorkersFor(xy: Tile, gs: GameState): IWorkerRequirement {
    const b = gs.tiles.get(xy)?.building;
    // Buildings that produce workers do not cost workers
    if (b && !Config.Building[b.type].output.Worker) {
-      forEach(getBuildingIO(xy, "input", IOCalculation.MultiplierStableOnly, gs), (k, v) => {
-         if (!NoPrice[k]) result.rawOutput += v;
-      });
-      forEach(getBuildingIO(xy, "output", IOCalculation.MultiplierStableOnly, gs), (k, v) => {
-         if (!NoPrice[k]) result.rawOutput += v;
-      });
+      forEach(
+         getBuildingIO(
+            xy,
+            "input",
+            IOFlags.Multiplier | IOFlags.StableOnly | IOFlags.IgnoreElectrification,
+            gs,
+         ),
+         (k, v) => {
+            if (!NoPrice[k]) result.rawOutput += v;
+         },
+      );
+      forEach(
+         getBuildingIO(
+            xy,
+            "output",
+            IOFlags.Multiplier | IOFlags.StableOnly | IOFlags.IgnoreElectrification,
+            gs,
+         ),
+         (k, v) => {
+            if (!NoPrice[k]) result.rawOutput += v;
+         },
+      );
    }
    result.multiplier = totalMultiplierFor(xy, "worker", 1, false, gs);
    result.output = Math.ceil(result.rawOutput / result.multiplier);
@@ -291,9 +311,28 @@ export function getStorageFor(xy: Tile, gs: GameState): IStorageResult {
       }
       default: {
          base =
-            60 * reduceOf(getBuildingIO(xy, "input", IOCalculation.MultiplierStableOnly, gs), accumulate, 0) +
+            60 *
+               reduceOf(
+                  getBuildingIO(
+                     xy,
+                     "input",
+                     IOFlags.Multiplier | IOFlags.StableOnly | IOFlags.IgnoreElectrification,
+                     gs,
+                  ),
+                  accumulate,
+                  0,
+               ) +
             STORAGE_TO_PRODUCTION *
-               reduceOf(getBuildingIO(xy, "output", IOCalculation.MultiplierStableOnly, gs), accumulate, 0);
+               reduceOf(
+                  getBuildingIO(
+                     xy,
+                     "output",
+                     IOFlags.Multiplier | IOFlags.StableOnly | IOFlags.IgnoreElectrification,
+                     gs,
+                  ),
+                  accumulate,
+                  0,
+               );
          break;
       }
    }
@@ -651,12 +690,16 @@ export function getBuildingPercentage(xy: Tile, gs: GameState): BuildingPercenta
    return { cost, percent: inStorage / totalCost, secondsLeft: Math.ceil((totalCost - inStorage) / total) };
 }
 
-export function getBuildingLevelLabel(b: IBuildingData): string {
+export function getBuildingLevelLabel(b: IBuildingData, gs: GameState): string {
    if (BuildingShowLevel.has(b.type)) {
       return String(b.level);
    }
    if (Config.Building[b.type].special === BuildingSpecial.HQ || isWorldOrNaturalWonder(b.type)) {
       return "";
+   }
+
+   if (b.electrification > 0) {
+      return `${b.level}+${getElectrificationBoost(b, gs)}`;
    }
    return String(b.level);
 }
@@ -819,7 +862,7 @@ export function getAvailableResource(sourceXy: Tile, destXy: Tile, res: Resource
       return amountInStorage;
    }
 
-   const input = getBuildingIO(sourceXy, "input", IOCalculation.Capacity | IOCalculation.Multiplier, gs);
+   const input = getBuildingIO(sourceXy, "input", IOFlags.Capacity | IOFlags.Multiplier, gs);
    const inputAmount = input[res];
    if (inputAmount) {
       // We reserve stockpile max + 1 cycle of capacity so that production does not flicker
@@ -851,6 +894,21 @@ export function getPowerRequired(building: IBuildingData): number {
       return Math.round(getUpgradeCostFib(building.electrification) * 10);
    }
    return Math.round(Math.pow(2, building.electrification - 1) * 10);
+}
+
+export function getElectrificationBoost(building: IBuildingData, gs: GameState): number {
+   if (!hasFeature(GameFeature.Electricity, gs) || !canBeElectrified(building.type)) {
+      return 0;
+   }
+   building.electrification = clamp(building.electrification, 0, building.level);
+   let result = building.electrification;
+   if (Config.Building[building.type].power) {
+      result += 5;
+   }
+   if (gs.unlockedUpgrades.Liberalism5) {
+      result += 5;
+   }
+   return result;
 }
 
 export function canBeElectrified(b: Building): boolean {
@@ -1026,13 +1084,6 @@ export function isBuildingWellStocked(xy: Tile, gs: GameState): boolean {
    );
 }
 
-export function getElectrificationEfficiency(b: Building) {
-   if (Config.Building[b].power) {
-      return 0.5;
-   }
-   return 1;
-}
-
 export function findSpecialBuilding(type: Building, gs: GameState): Required<ITileData> | null {
    if (!isSpecialBuilding(type)) return null;
 
@@ -1121,7 +1172,7 @@ export function generateScienceFromFaith(xy: number, buildingType: Building, gs:
       let total = 0;
       getBuildingsByType(buildingType, gs)?.forEach((tile, xy) => {
          if (tile.building?.status === "completed" && !Tick.current.notProducingReasons.has(xy)) {
-            const output = getBuildingIO(xy, "output", IOCalculation.Capacity | IOCalculation.Multiplier, gs);
+            const output = getBuildingIO(xy, "output", IOFlags.Capacity | IOFlags.Multiplier, gs);
             total += output.Faith ?? 0;
          }
       });

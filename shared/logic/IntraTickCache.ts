@@ -1,10 +1,20 @@
 import type { Building, IBuildingDefinition } from "../definitions/BuildingDefinitions";
 import { NoPrice, NoStorage, type Deposit, type Resource } from "../definitions/ResourceDefinitions";
 import { Grid } from "../utilities/Grid";
-import { clamp, forEach, mapSafeAdd, reduceOf, safeAdd, tileToHash, type Tile } from "../utilities/Helper";
+import {
+   clamp,
+   forEach,
+   hasFlag,
+   mapSafeAdd,
+   reduceOf,
+   safeAdd,
+   tileToHash,
+   type Tile,
+} from "../utilities/Helper";
 import type { PartialSet, PartialTabulate } from "../utilities/TypeDefinitions";
 import {
-   IOCalculation,
+   IOFlags,
+   getElectrificationBoost,
    getMarketBaseSellAmount,
    getMarketBuyAmount,
    getResourceImportCapacity,
@@ -61,11 +71,10 @@ export function getFuelByTarget(): Map<Tile, number> {
 export function getBuildingIO(
    xy: Tile,
    type: keyof Pick<IBuildingDefinition, "input" | "output">,
-   options: IOCalculation,
+   options: IOFlags,
    gs: GameState,
 ): Readonly<PartialTabulate<Resource>> {
-   const key =
-      (tileToHash(xy) << (IOCalculation.TotalUsedBits + 1)) | (options << 1) | (type === "input" ? 1 : 0);
+   const key = (tileToHash(xy) << (IOFlags.TotalUsedBits + 1)) | (options << 1) | (type === "input" ? 1 : 0);
    const cached = _cache.buildingIO.get(key);
    if (cached) {
       return cached;
@@ -133,14 +142,32 @@ export function getBuildingIO(
             }
          }
       }
+
+      if (
+         hasFlag(options, IOFlags.TheoreticalElectrification) &&
+         hasFlag(options, IOFlags.IgnoreElectrification)
+      ) {
+         console.warn(
+            "`TheoreticalElectrification` and `IgnoreElectrification` are both set. Only one of them should be set!",
+         );
+      }
+
       // Apply multipliers
       forEach(resources, (k, v) => {
-         let value = v * b.level;
-         if (options & IOCalculation.Capacity) {
+         let level: number;
+         if (hasFlag(options, IOFlags.IgnoreElectrification)) {
+            level = b.level;
+         } else if (hasFlag(options, IOFlags.TheoreticalElectrification)) {
+            level = b.level + getElectrificationBoost(b, gs);
+         } else {
+            level = b.level + (Tick.current.electrified.get(xy) ?? 0);
+         }
+         let value = v * level;
+         if (hasFlag(options, IOFlags.Capacity)) {
             value *= b.capacity;
          }
-         if (options & IOCalculation.Multiplier || options & IOCalculation.MultiplierStableOnly) {
-            const stableOnly = !!(options & IOCalculation.MultiplierStableOnly);
+         if (hasFlag(options, IOFlags.Multiplier)) {
+            const stableOnly = hasFlag(options, IOFlags.StableOnly);
             if (b.type === "Market") {
                value *= totalMultiplierFor(xy, "output", 1, stableOnly, gs);
             } else if (type === "output" && (b.type === "CloneFactory" || b.type === "CloneLab")) {
@@ -249,17 +276,24 @@ export function getResourceIO(gameState: GameState): IResourceIO {
       if ("resourceImports" in building) {
          return;
       }
-      const input = getBuildingIO(xy, "input", IOCalculation.Multiplier | IOCalculation.Capacity, gameState);
-      const output = getBuildingIO(
-         xy,
-         "output",
-         IOCalculation.Multiplier | IOCalculation.Capacity,
-         gameState,
-      );
       if (!Tick.current.notProducingReasons.has(xy)) {
+         const input = getBuildingIO(xy, "input", IOFlags.Multiplier | IOFlags.Capacity, gameState);
+         const output = getBuildingIO(xy, "output", IOFlags.Multiplier | IOFlags.Capacity, gameState);
          forEach(input, (res, amount) => mapSafeAdd(result.actualInput, res, amount));
          forEach(output, (res, amount) => mapSafeAdd(result.actualOutput, res, amount));
       }
+      const input = getBuildingIO(
+         xy,
+         "input",
+         IOFlags.Multiplier | IOFlags.Capacity | IOFlags.TheoreticalElectrification,
+         gameState,
+      );
+      const output = getBuildingIO(
+         xy,
+         "output",
+         IOFlags.Multiplier | IOFlags.Capacity | IOFlags.TheoreticalElectrification,
+         gameState,
+      );
       forEach(input, (res, amount) => mapSafeAdd(result.theoreticalInput, res, amount));
       forEach(output, (res, amount) => mapSafeAdd(result.theoreticalOutput, res, amount));
    });

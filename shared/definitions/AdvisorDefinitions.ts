@@ -62,7 +62,7 @@ export const Advisors = deepFreeze({
    },
    Electricity: {
       title: () => t(L.AdvisorElectricityTitle),
-      content: () => t(L.AdvisorElectricityContent),
+      content: () => t(L.AdvisorElectricityContentV2),
       condition: (gs) => !!gs.unlockedTech.Electricity,
    },
    GreatPeople: {

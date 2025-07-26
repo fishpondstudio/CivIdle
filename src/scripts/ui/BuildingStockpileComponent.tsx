@@ -1,5 +1,5 @@
 import Tippy from "@tippyjs/react";
-import { IOCalculation, shouldAlwaysShowBuildingOptions } from "../../../shared/logic/BuildingLogic";
+import { IOFlags, shouldAlwaysShowBuildingOptions } from "../../../shared/logic/BuildingLogic";
 import { GameFeature, hasFeature } from "../../../shared/logic/FeatureLogic";
 import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
 import { getBuildingIO } from "../../../shared/logic/IntraTickCache";
@@ -23,7 +23,7 @@ export function BuildingStockpileComponent({ gameState, xy }: IBuildingComponent
       return null;
    }
    if (
-      isEmpty(getBuildingIO(xy, "input", IOCalculation.None, gameState)) &&
+      isEmpty(getBuildingIO(xy, "input", IOFlags.None, gameState)) &&
       !shouldAlwaysShowBuildingOptions(building)
    ) {
       return null;

@@ -1,4 +1,4 @@
-import { IOCalculation } from "../../../shared/logic/BuildingLogic";
+import { IOFlags } from "../../../shared/logic/BuildingLogic";
 import { getBuildingIO } from "../../../shared/logic/IntraTickCache";
 import { isEmpty } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
@@ -8,7 +8,7 @@ import { RenderHTML } from "./RenderHTMLComponent";
 import { WarningComponent } from "./WarningComponent";
 
 export function BuildingProduceComponent({ gameState, xy }: IBuildingComponentProps): React.ReactNode {
-   const output = getBuildingIO(xy, "output", IOCalculation.Capacity, gameState);
+   const output = getBuildingIO(xy, "output", IOFlags.Capacity, gameState);
    if (isEmpty(output)) {
       return null;
    }

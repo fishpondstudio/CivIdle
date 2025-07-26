@@ -5,7 +5,7 @@ import { TableVirtuoso } from "react-virtuoso";
 import { BuildingSpecial, type IBuildingDefinition } from "../../../shared/definitions/BuildingDefinitions";
 import { NoPrice, NoStorage, type Resource } from "../../../shared/definitions/ResourceDefinitions";
 import {
-   IOCalculation,
+   IOFlags,
    getElectrificationStatus,
    getScienceFromBuildings,
    getScienceFromWorkers,
@@ -483,12 +483,7 @@ export function ResourcesTab({ gameState }: IBuildingComponentProps): React.Reac
       const inputOutputTiles: Tile[] = [];
 
       gameState.tiles.forEach((tile, xy) => {
-         const inputOutput = getBuildingIO(
-            xy,
-            type,
-            IOCalculation.Multiplier | IOCalculation.Capacity,
-            gameState,
-         );
+         const inputOutput = getBuildingIO(xy, type, IOFlags.Multiplier | IOFlags.Capacity, gameState);
          forEach(inputOutput, (r, amount) => {
             if (res === r) {
                inputOutputTiles.push(tile.tile);
