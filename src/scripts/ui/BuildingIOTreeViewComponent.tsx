@@ -74,7 +74,7 @@ export function BuildingIOTreeViewComponent({
                               />
                            </div>
                         </li>
-                        {type === "output" && building && getElectrificationBoost(building, gameState) > 0 ? (
+                        {building && getElectrificationBoost(building, gameState) > 0 ? (
                            <ul>
                               <li className="row">
                                  <div className="f1">{t(L.BuildingLevel)}</div>
