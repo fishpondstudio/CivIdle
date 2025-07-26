@@ -389,10 +389,11 @@ export class TileVisual extends Container {
             }
 
             const reason = Tick.current.notProducingReasons.get(tileData.tile);
+            const electrification = Tick.current.electrified.get(tileData.tile) ?? 0;
             if (reason) {
                this._notProducing.texture = getNotProducingTexture(reason, textures);
                this.fadeInTopLeftIcon();
-            } else if (Tick.current.electrified.has(tileData.tile)) {
+            } else if (electrification > 0) {
                this._notProducing.texture = getTexture("Misc_Bolt", textures);
                this.fadeInTopLeftIcon();
             } else {
