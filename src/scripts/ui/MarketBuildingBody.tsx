@@ -3,6 +3,7 @@ import { NoPrice, NoStorage, type Resource } from "../../../shared/definitions/R
 import { getMarketBuyAmount, getMarketSellAmount } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
 import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
+import { compareResources } from "../../../shared/logic/ResourceLogic";
 import type { IMarketBuildingData } from "../../../shared/logic/Tile";
 import { MarketOptions } from "../../../shared/logic/Tile";
 import { convertPriceIdToTime } from "../../../shared/logic/Update";
@@ -18,6 +19,7 @@ import {
    toggleFlag,
 } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
+import { useGameOptions } from "../Global";
 import { playClick } from "../visuals/Sound";
 import { ApplyToAllComponent, ApplyToAllFlag } from "./ApplyToAllComponent";
 import { BuildingColorComponent } from "./BuildingColorComponent";
@@ -38,6 +40,7 @@ const marketSortingState = { column: 0, asc: true };
 
 export function MarketBuildingBody({ gameState, xy }: IBuildingComponentProps): React.ReactNode {
    const building = gameState.tiles.get(xy)?.building as IMarketBuildingData;
+   const gameOptions = useGameOptions();
    if (building == null || !building.sellResources) {
       return null;
    }
@@ -78,11 +81,11 @@ export function MarketBuildingBody({ gameState, xy }: IBuildingComponentProps): 
                compareFunc={(a, b, i) => {
                   switch (i) {
                      case 0:
-                        return Config.Resource[a].name().localeCompare(Config.Resource[b].name());
+                        return compareResources(a, b, gameOptions.resourceSortMethod);
                      case 1: {
                         const aRes = market.availableResources[a]!;
                         const bRes = market.availableResources[b]!;
-                        return Config.Resource[aRes].name().localeCompare(Config.Resource[bRes].name());
+                        return compareResources(aRes, bRes, gameOptions.resourceSortMethod);
                      }
                      case 2: {
                         return (tradeValues.get(a) ?? 0) - (tradeValues.get(b) ?? 0);

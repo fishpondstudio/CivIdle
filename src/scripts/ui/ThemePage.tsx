@@ -11,6 +11,7 @@ import {
    type CursorOption,
 } from "../../../shared/logic/GameState";
 import { notifyGameOptionsUpdate } from "../../../shared/logic/GameStateLogic";
+import { compareResources } from "../../../shared/logic/ResourceLogic";
 import { UserAttributes } from "../../../shared/utilities/Database";
 import { clamp, hasFlag, keysOf, safeParseFloat, safeParseInt } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
@@ -339,7 +340,7 @@ export function ThemePage(): React.ReactNode {
                   {t(L.ThemeColorResetResourceColors)}
                </div>
                {keysOf(gameOptions.resourceColors)
-                  .sort((a, b) => Config.Resource[a].name().localeCompare(Config.Resource[b].name()))
+                  .sort((a, b) => compareResources(a, b, gameOptions.resourceSortMethod))
                   .map((b) => {
                      return (
                         <div key={b} className="row mv5">
