@@ -375,7 +375,7 @@ export class CityDefinitions {
          GlassFrog: true,
          PygmyMarmoset: true,
       },
-      requireGreatPeopleLevel: 80,
+      requireGreatPeopleLevel: 90,
       requireSupporterPack: true,
       festivalDesc: () => t(L.Carnival),
    };
