@@ -1275,3 +1275,45 @@ export function isFestival(building: Building, gs: GameState): boolean {
    }
    return city === gs.city;
 }
+
+export function getCathedralOfBrasiliaResources(
+   xy: Tile,
+   gs: GameState,
+): { input: Set<Resource>; output: Set<Resource>; unused: number } {
+   const buildings = new Set<Building>();
+   for (const point of getGrid(gs).getRange(tileToPoint(xy), 2)) {
+      const t = pointToTile(point);
+      const building = gs.tiles.get(t)?.building;
+      if (
+         building &&
+         t !== xy &&
+         building.status === "completed" &&
+         !Tick.current.notProducingReasons.has(t)
+      ) {
+         buildings.add(building.type);
+      }
+   }
+
+   const outputResources = new Set<Resource>();
+   const inputResources = new Set<Resource>();
+
+   for (const building of buildings) {
+      const def = Config.Building[building];
+      forEach(def.input, (res) => {
+         inputResources.add(res);
+      });
+      forEach(def.output, (res) => {
+         outputResources.add(res);
+      });
+   }
+
+   let unusedResources = 0;
+
+   for (const resource of outputResources) {
+      if (!inputResources.has(resource)) {
+         unusedResources++;
+      }
+   }
+
+   return { input: inputResources, output: outputResources, unused: unusedResources };
+}

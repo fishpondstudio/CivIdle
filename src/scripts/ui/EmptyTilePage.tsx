@@ -5,6 +5,7 @@ import {
    applyBuildingDefaults,
    checkBuildingMax,
    getBuildingCost,
+   hasRequiredDeposit,
    isSpecialBuilding,
 } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
@@ -176,8 +177,20 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
             compareFunc={(a, b, col) => {
                switch (col) {
                   case 2:
+                     if (extractsDeposit(Config.Building[a]) && !extractsDeposit(Config.Building[b])) {
+                        return -1;
+                     }
+                     if (!extractsDeposit(Config.Building[a]) && extractsDeposit(Config.Building[b])) {
+                        return 1;
+                     }
                      return Config.Building[a]!.name().localeCompare(Config.Building[b]!.name());
                   default: {
+                     if (extractsDeposit(Config.Building[a]) && !extractsDeposit(Config.Building[b])) {
+                        return -1;
+                     }
+                     if (!extractsDeposit(Config.Building[a]) && extractsDeposit(Config.Building[b])) {
+                        return 1;
+                     }
                      const diff = (Config.BuildingTier[a] ?? 0) - (Config.BuildingTier[b] ?? 0);
                      if (diff !== 0) return diff;
                      return Config.Building[a]!.name().localeCompare(Config.Building[b]!.name());
@@ -242,7 +255,9 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
                               )}
                            </div>
                            {extractsDeposit(building) ? (
-                              <div className="m-icon small text-orange ml5">stars</div>
+                              <Tippy content={t(L.BuildingExtractDeposit)}>
+                                 <div className="m-icon small text-orange ml5">stars</div>
+                              </Tippy>
                            ) : null}
                            {k === lastBuild ? (
                               <div className="m-icon small text-orange ml5">replay</div>

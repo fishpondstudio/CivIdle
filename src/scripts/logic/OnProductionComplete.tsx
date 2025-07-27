@@ -1,5 +1,6 @@
 import type { Building } from "../../../shared/definitions/BuildingDefinitions";
 import { GreatPersonTickFlag, type GreatPerson } from "../../../shared/definitions/GreatPersonDefinitions";
+import type { Resource } from "../../../shared/definitions/ResourceDefinitions";
 import {
    forEachMultiplier,
    generateScienceFromFaith,
@@ -1773,6 +1774,117 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
             }
             Tick.next.powerPlants.add(t);
          }
+         break;
+      }
+      case "Capybara":
+      case "GiantOtter": {
+         let emptyTiles = 0;
+         const range = isFestival(building.type, gs) ? 3 : 2;
+         for (const point of grid.getRange(tileToPoint(xy), range)) {
+            const t = pointToTile(point);
+            const building = gs.tiles.get(t)?.building;
+            if (!building) {
+               emptyTiles++;
+            }
+         }
+         for (const point of grid.getRange(tileToPoint(xy), range)) {
+            const t = pointToTile(point);
+            mapSafePush(Tick.next.tileMultipliers, t, {
+               output: emptyTiles,
+               source: buildingName,
+            });
+         }
+         break;
+      }
+      case "Hoatzin":
+      case "RoyalFlycatcher": {
+         let emptyTiles = 0;
+         const range = isFestival(building.type, gs) ? 3 : 2;
+         for (const point of grid.getRange(tileToPoint(xy), range)) {
+            const t = pointToTile(point);
+            const building = gs.tiles.get(t)?.building;
+            if (!building) {
+               emptyTiles++;
+            }
+         }
+         for (const point of grid.getRange(tileToPoint(xy), range)) {
+            const t = pointToTile(point);
+            mapSafePush(Tick.next.levelBoost, t, {
+               value: emptyTiles,
+               source: buildingName,
+            });
+         }
+         break;
+      }
+      case "GlassFrog":
+      case "PygmyMarmoset": {
+         let emptyTiles = 0;
+         for (const point of grid.getRange(tileToPoint(xy), 3)) {
+            const t = pointToTile(point);
+            const building = gs.tiles.get(t)?.building;
+            if (!building) {
+               emptyTiles++;
+            }
+         }
+         for (const point of grid.getRange(tileToPoint(xy), 3)) {
+            const t = pointToTile(point);
+            mapSafePush(Tick.next.tileMultipliers, t, {
+               storage: emptyTiles,
+               source: buildingName,
+            });
+         }
+         break;
+      }
+      case "CathedralOfBrasilia": {
+         const multiplier = isFestival("CathedralOfBrasilia", gs) ? 2 : 1;
+
+         const buildings = new Set<Building>();
+         for (const point of grid.getRange(tileToPoint(xy), 2)) {
+            const t = pointToTile(point);
+            const building = gs.tiles.get(t)?.building;
+            if (
+               building &&
+               t !== xy &&
+               building.status === "completed" &&
+               !Tick.current.notProducingReasons.has(t)
+            ) {
+               buildings.add(building.type);
+            }
+         }
+
+         const outputResources = new Set<Resource>();
+         const inputResources = new Set<Resource>();
+
+         for (const building of buildings) {
+            const def = Config.Building[building];
+            forEach(def.input, (res) => {
+               inputResources.add(res);
+            });
+            forEach(def.output, (res) => {
+               outputResources.add(res);
+            });
+         }
+
+         let unusedResources = 0;
+
+         for (const resource of outputResources) {
+            if (!inputResources.has(resource)) {
+               unusedResources++;
+            }
+         }
+
+         if (buildings.size > 1 && unusedResources <= 1) {
+            buildings.forEach((building) => {
+               addMultiplier(
+                  building,
+                  {
+                     output: multiplier * buildings.size,
+                  },
+                  buildingName,
+               );
+            });
+         }
+
          break;
       }
    }

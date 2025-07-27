@@ -1594,7 +1594,7 @@ export const EN = {
    ItaipuDam: "Itaipu Dam",
    ItaipuDamDesc: "This wonder can be upgraded and each level can be used to either give +1 Production Multiplier or +1 Building Level Boost to buildings within 2 tile range. Provide power to all tiles within 2 tile range",
    CathedralOfBrasilia: "Cathedral of Brasília",
-   CathedralOfBrasiliaDesc: "If every building within 2 tile range forms a production chain, i.e. the resource produced by one building is consumed by another, then each building type in that production chain gets +X Production Multiplier. X = length of that production chain",
+   CathedralOfBrasiliaDesc: "If every working building within 2 tile range forms a production chain, i.e. the resource produced by one building is consumed by another, then each building type in that production chain gets +X Production Multiplier. X = length of that production chain",
    Capybara: "Capybara",
    CapybaraDesc: "All buildings within 2 tile range get +X Production Multiplier. X = number of empty tiles within 2 tile range",
    GiantOtter: "Giant Otter",
@@ -1607,4 +1607,9 @@ export const EN = {
    GlassFrogDesc: "All buildings within 3 tile range get +X Storage Multiplier. X = number of empty tiles within 3 tile range",
    PygmyMarmoset: "Pygmy Marmoset",
    PygmyMarmosetDesc: "All buildings within 3 tile range get +X Storage Multiplier. X = number of empty tiles within 3 tile range",
+   HeitorVillaLobos: "Heitor Villa-Lobos",
+   Carnival: "Capybara, Giant Otter, Hoatzin and Royal Flycatcher's range is increased to 3 tile. Double the production multiplier from Cathedral of Brasília",
+   CathedralOfBrasiliaWarningHTML: "To form production chains, <b>all but one</b> resource produced by a building needs to be consumed by another building",
+   NotOnDeposit: "This building only works on %{deposit} deposit",
+   BuildingExtractDeposit: "This building extracts the deposit on this tile"
 };

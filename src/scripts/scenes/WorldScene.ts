@@ -17,6 +17,7 @@ import {
    findSpecialBuilding,
    getGreatWallRange,
    getYellowCraneTowerRange,
+   isFestival,
 } from "../../../shared/logic/BuildingLogic";
 import { MANAGED_IMPORT_RANGE } from "../../../shared/logic/Constants";
 import { GameFeature, hasFeature } from "../../../shared/logic/FeatureLogic";
@@ -424,6 +425,7 @@ export class WorldScene extends Scene {
             case "TopkapiPalace":
             case "MausoleumAtHalicarnassus":
             case "ItaipuDam":
+            case "CathedralOfBrasilia":
             case "GoldenGateBridge": {
                this.highlightRange(grid, 2);
                break;
@@ -440,6 +442,18 @@ export class WorldScene extends Scene {
             }
             case "GreatWall": {
                this.highlightRange(grid, getGreatWallRange(xy, gs));
+               break;
+            }
+            case "Capybara":
+            case "GiantOtter":
+            case "Hoatzin":
+            case "RoyalFlycatcher": {
+               this.highlightRange(grid, isFestival(building.type, gs) ? 3 : 2);
+               break;
+            }
+            case "GlassFrog":
+            case "PygmyMarmoset": {
+               this.highlightRange(grid, 3);
                break;
             }
          }

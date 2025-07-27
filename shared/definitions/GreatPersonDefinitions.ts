@@ -1093,6 +1093,19 @@ export class GreatPersonDefinitions {
       type: GreatPersonType.Normal,
    };
 
+   HeitorVillaLobos: IGreatPersonDefinition = boostOf({
+      name: () => t(L.HeitorVillaLobos),
+      boost: {
+         multipliers: ["output", "storage"],
+         buildings: ["RadioStation"],
+      },
+      time: "1887 ~ 1959 AD",
+      value: (level) => 2 * level,
+      maxLevel: Number.POSITIVE_INFINITY,
+      age: "WorldWarAge",
+      city: "Brazilian",
+   });
+
    // Cold Wars /////////////////////////////////////////////////////////////////////////////////////////////
 
    JRobertOppenheimer: IGreatPersonDefinition = boostOf({

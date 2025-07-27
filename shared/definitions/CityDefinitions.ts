@@ -377,7 +377,7 @@ export class CityDefinitions {
       },
       requireGreatPeopleLevel: 80,
       requireSupporterPack: true,
-      festivalDesc: () => t(L.Culus),
+      festivalDesc: () => t(L.Carnival),
    };
 }
 
