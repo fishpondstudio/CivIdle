@@ -229,7 +229,7 @@ export const ZH_CN = {
    CableFactory: "电缆厂",
    Calendar: "历法",
    CathedralOfBrasilia: "巴西利亚大教堂",
-   CathedralOfBrasiliaDesc: "如果周围 2 地块范围的每个建筑形成一个完整的生产链（上游各分支也计入在内），即一个建筑生产的资源被另一个建筑消耗，那么该完整生产链中的参入每种建筑同类型都获得 +X 生产乘数。X = 生产链的总长度",
+   CathedralOfBrasiliaDesc: "如果周围 2 地块范围的每个建筑形成一个完整的生产链（上游各分支也计入在内），即一个建筑生产的资源被另一个建筑消耗，那么参入该完整生产链中的每种建筑为所有同类型建筑提供 +X 生产乘数。X = 生产链的总长度（最大值为18）",
    CathedralOfBrasiliaWarningHTML: "为了形成生产链，一个建筑生产的资源除了一种资源外，其他所有资源都需要被另一个建筑消耗",
    CambridgeUniversity: "剑桥大学",
    CambridgeUniversityDesc: "文艺复兴及之后的时代智慧额外获得 +1 等级",
