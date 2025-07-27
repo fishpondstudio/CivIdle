@@ -7,4 +7,6 @@ export const AccountLevelNames: Record<AccountLevel, () => string> = {
    [AccountLevel.Aedile]: () => t(L.AccountLevelAedile),
    [AccountLevel.Praetor]: () => t(L.AccountLevelPraetor),
    [AccountLevel.Consul]: () => t(L.AccountLevelConsul),
+   [AccountLevel.Caesar]: () => t(L.AccountLevelCaesar),
+   [AccountLevel.Augustus]: () => t(L.AccountLevelAugustus),
 };

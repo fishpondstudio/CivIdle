@@ -339,6 +339,8 @@ export enum AccountLevel {
    Aedile = 2,
    Praetor = 3,
    Consul = 4,
+   Caesar = 5,
+   Augustus = 6,
 }
 
 export enum Platform {
@@ -354,6 +356,8 @@ export const TradeTileReservationDays: Record<AccountLevel, number> = {
    [AccountLevel.Aedile]: 14,
    [AccountLevel.Praetor]: 21,
    [AccountLevel.Consul]: 28,
+   [AccountLevel.Caesar]: 28,
+   [AccountLevel.Augustus]: 28,
 };
 
 export const ChatMaxChars: Record<AccountLevel, number> = {
@@ -362,6 +366,8 @@ export const ChatMaxChars: Record<AccountLevel, number> = {
    [AccountLevel.Aedile]: 800,
    [AccountLevel.Praetor]: 800,
    [AccountLevel.Consul]: 800,
+   [AccountLevel.Caesar]: 800,
+   [AccountLevel.Augustus]: 800,
 };
 
 export const AccountLevelPlayTime: Record<AccountLevel, number> = {
@@ -370,6 +376,8 @@ export const AccountLevelPlayTime: Record<AccountLevel, number> = {
    [AccountLevel.Aedile]: 200 * HOUR,
    [AccountLevel.Praetor]: 500 * HOUR,
    [AccountLevel.Consul]: 1000 * HOUR,
+   [AccountLevel.Caesar]: 1500 * HOUR,
+   [AccountLevel.Augustus]: 2000 * HOUR,
 };
 
 export const AccountLevelGreatPeopleLevel: Record<AccountLevel, number> = {
@@ -378,6 +386,8 @@ export const AccountLevelGreatPeopleLevel: Record<AccountLevel, number> = {
    [AccountLevel.Aedile]: 200,
    [AccountLevel.Praetor]: 500,
    [AccountLevel.Consul]: 1000,
+   [AccountLevel.Caesar]: 1500,
+   [AccountLevel.Augustus]: 2000,
 };
 
 export enum ServerWSErrorCode {

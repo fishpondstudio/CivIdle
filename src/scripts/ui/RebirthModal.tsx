@@ -43,7 +43,7 @@ import { hideModal, showToast } from "./GlobalModal";
 import { FormatNumber } from "./HelperComponents";
 import { RenderHTML } from "./RenderHTMLComponent";
 import { TextWithHelp } from "./TextWithHelpComponent";
-import { BuildingSpriteComponent, DepositTextureComponent, SupporterComponent } from "./TextureSprites";
+import { BuildingSpriteComponent, DepositTextureComponent, MiscTextureComponent } from "./TextureSprites";
 import { WarningComponent } from "./WarningComponent";
 
 export function RebirthModal(): React.ReactNode {
@@ -227,7 +227,7 @@ export function RebirthModal(): React.ReactNode {
                            <div className="separator-vertical" style={{ height: 30, margin: "-5px 20px" }} />
                            <div className="row f1">
                               <div className="mr5">{t(L.SupporterPackRequired)}</div>
-                              <SupporterComponent scale={0.2} />
+                              <MiscTextureComponent name="Supporter" scale={0.2} />
                               <div className="f1" />
                               <div>
                                  {hasFlag(user?.attr ?? UserAttributes.None, UserAttributes.DLC1) ? (

@@ -27,7 +27,7 @@ import { MapTileBonusComponent } from "./MapTileBonusComponent";
 import { MenuComponent } from "./MenuComponent";
 import { PlayerHandleComponent } from "./PlayerHandleComponent";
 import { RenderHTML } from "./RenderHTMLComponent";
-import { AccountLevelComponent, PlayerFlagComponent, SupporterComponent } from "./TextureSprites";
+import { AccountLevelComponent, MiscTextureComponent, PlayerFlagComponent } from "./TextureSprites";
 import { TitleBarComponent } from "./TitleBarComponent";
 import { WarningComponent } from "./WarningComponent";
 
@@ -110,7 +110,7 @@ export function MyTilePage({ xy }: { xy: string }): React.ReactNode {
                               </Tippy>
                               {hasFlag(tile.attr, UserAttributes.DLC1) ? (
                                  <Tippy content={t(L.AccountSupporter)}>
-                                    <SupporterComponent scale={0.17} />
+                                    <MiscTextureComponent name="Supporter" scale={0.17} />
                                  </Tippy>
                               ) : null}
                               <div className="f1"></div>

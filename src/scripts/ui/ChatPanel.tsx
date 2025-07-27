@@ -21,7 +21,6 @@ import { firstKeyOf, hasFlag, pointToTile } from "../../../shared/utilities/Help
 import { censor } from "../../../shared/utilities/ProfanityFilter";
 import { TypedEvent } from "../../../shared/utilities/TypedEvent";
 import { L, t } from "../../../shared/utilities/i18n";
-import AccountLevelMod from "../../images/AccountLevelMod.png";
 import chatActive from "../../images/chat_active.png";
 import chatInactive from "../../images/chat_inactive.png";
 import { ToggleChatWindow, useFloatingMode, useGameOptions, useGameState } from "../Global";
@@ -44,7 +43,7 @@ import { showToast } from "./GlobalModal";
 import { RenderHTML } from "./RenderHTMLComponent";
 import { SelectChatChannelModal } from "./SelectChatChannelModal";
 import { ResourcesTab } from "./StatisticsBuildingBody";
-import { AccountLevelComponent, PlayerFlagComponent, SupporterComponent } from "./TextureSprites";
+import { AccountLevelComponent, MiscTextureComponent, PlayerFlagComponent } from "./TextureSprites";
 
 const SetChatInput = new TypedEvent<{ channel: ChatChannel; getContent: (old: string) => string }>();
 
@@ -348,12 +347,12 @@ function ChatMessage({
                ) : null}
                {hasFlag(chat.attr, ChatAttributes.Supporter) ? (
                   <Tippy content={t(L.AccountSupporter)}>
-                     <SupporterComponent scale={0.15} />
+                     <MiscTextureComponent name="Supporter" scale={0.15} />
                   </Tippy>
                ) : null}
                {hasFlag(chat.attr, ChatAttributes.Mod) ? (
                   <Tippy content={t(L.AccountLevelMod)}>
-                     <img src={AccountLevelMod} className="player-flag" />
+                     <MiscTextureComponent name="AccountLevelMod" scale={0.15} />
                   </Tippy>
                ) : null}
             </div>
@@ -380,12 +379,12 @@ function ChatMessage({
                ) : null}
                {hasFlag(chat.attr, ChatAttributes.Supporter) ? (
                   <Tippy content={t(L.AccountSupporter)}>
-                     <SupporterComponent scale={0.15} />
+                     <MiscTextureComponent name="Supporter" scale={0.15} />
                   </Tippy>
                ) : null}
                {hasFlag(chat.attr, ChatAttributes.Mod) ? (
                   <Tippy content={t(L.AccountLevelMod)}>
-                     <img src={AccountLevelMod} className="player-flag" />
+                     <MiscTextureComponent name="AccountLevelMod" scale={0.15} />
                   </Tippy>
                ) : null}
                <div className="f1"></div>

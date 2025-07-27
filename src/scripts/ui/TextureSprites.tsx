@@ -22,6 +22,8 @@ export const AccountLevelImages: Record<AccountLevel, string> = {
    [AccountLevel.Aedile]: "AccountLevel3",
    [AccountLevel.Praetor]: "AccountLevel4",
    [AccountLevel.Consul]: "AccountLevel5",
+   [AccountLevel.Caesar]: "AccountLevel6",
+   [AccountLevel.Augustus]: "AccountLevel7",
 };
 
 export const AccountLevelComponent = React.forwardRef<
@@ -52,11 +54,11 @@ export const TileTextureComponent = React.forwardRef<
    return <TextureSprite {...props} url={misc} name={`Misc_${props.tileTexture}`} ref={ref} />;
 });
 
-export const SupporterComponent = React.forwardRef<
+export const MiscTextureComponent = React.forwardRef<
    HTMLDivElement,
-   { scale?: number; width?: number; height?: number; style?: React.CSSProperties }
+   { name: string; scale?: number; width?: number; height?: number; style?: React.CSSProperties }
 >((props, ref) => {
-   return <TextureSprite {...props} url={misc} name={"Misc_Supporter"} ref={ref} />;
+   return <TextureSprite {...props} url={misc} name={`Misc_${props.name}`} ref={ref} />;
 });
 
 const TextureSprite = React.forwardRef<

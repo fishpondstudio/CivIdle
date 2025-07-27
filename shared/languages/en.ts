@@ -1611,5 +1611,7 @@ export const EN = {
    Carnival: "Carnival: Capybara, Giant Otter, Hoatzin and Royal Flycatcher's range is increased to 3 tile. Double the production multiplier from Cathedral of Brasília",
    CathedralOfBrasiliaWarningHTML: "To form production chains, <b>all but one</b> resource produced by a building needs to be consumed by another building",
    NotOnDeposit: "This building only works on %{deposit} deposit",
-   BuildingExtractDeposit: "This building extracts the deposit on this tile"
+   BuildingExtractDeposit: "This building extracts the deposit on this tile",
+   AccountLevelCaesar: "Caesar",
+   AccountLevelAugustus: "Augustus",
 };

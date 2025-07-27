@@ -37,7 +37,7 @@ import { showModal, showToast } from "./GlobalModal";
 import { FormatNumber } from "./HelperComponents";
 import { RenderHTML } from "./RenderHTMLComponent";
 import { TextWithHelp } from "./TextWithHelpComponent";
-import { AccountLevelComponent, PlayerFlagComponent, SupporterComponent } from "./TextureSprites";
+import { AccountLevelComponent, MiscTextureComponent, PlayerFlagComponent } from "./TextureSprites";
 import { WarningComponent } from "./WarningComponent";
 
 export function PlayerHandleComponent() {
@@ -85,7 +85,7 @@ export function PlayerHandleComponent() {
                   </Tippy>
                   {hasFlag(user.attr, UserAttributes.DLC1) ? (
                      <Tippy content={t(L.AccountSupporter)}>
-                        <SupporterComponent scale={0.18} />
+                        <MiscTextureComponent name="Supporter" scale={0.18} />
                      </Tippy>
                   ) : null}
                   <div className="f1" />
