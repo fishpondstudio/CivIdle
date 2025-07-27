@@ -162,6 +162,9 @@ export function getBuildingIO(
          } else {
             level = b.level + (Tick.current.electrified.get(xy) ?? 0);
          }
+         Tick.current.levelBoost.get(xy)?.forEach((lb) => {
+            level += lb.value;
+         });
          let value = v * level;
          if (hasFlag(options, IOFlags.Capacity)) {
             value *= b.capacity;

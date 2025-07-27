@@ -345,6 +345,40 @@ export class CityDefinitions {
       requireSupporterPack: true,
       festivalDesc: () => t(L.Culus),
    };
+
+   Brazilian: ICityDefinition = {
+      name: () => t(L.Brazilian),
+      deposits: {
+         Water: 0.04,
+         Copper: 0.01,
+         Iron: 0.04,
+         Wood: 0.04,
+         Stone: 0.01,
+         Gold: 0.01,
+         Coal: 0.01,
+         Oil: 0.04,
+         Aluminum: 0.04,
+         NaturalGas: 0.01,
+         Uranium: 0.025,
+      },
+      size: 50,
+      buildingNames: {
+         Headquarter: () => t(L.Brasilia),
+      },
+      uniqueBuildings: { ItaipuDam: "Skyscraper", CathedralOfBrasilia: "Aviation" },
+      uniqueMultipliers: {},
+      naturalWonders: {
+         Capybara: true,
+         GiantOtter: true,
+         Hoatzin: true,
+         RoyalFlycatcher: true,
+         GlassFrog: true,
+         PygmyMarmoset: true,
+      },
+      requireGreatPeopleLevel: 80,
+      requireSupporterPack: true,
+      festivalDesc: () => t(L.Culus),
+   };
 }
 
 export type City = keyof CityDefinitions;

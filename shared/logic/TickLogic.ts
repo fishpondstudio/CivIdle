@@ -32,6 +32,7 @@ interface ITickData {
    workersUsed: Map<Resource, number>;
    workersAssignment: Map<Tile, number>;
    electrified: Map<Tile, number>;
+   levelBoost: Map<Tile, LevelBoost[]>;
    resourcesByTile: Map<Resource, IBuildingIndex[]>;
    storagePercentages: Map<Tile, number>;
    additionalProductions: { xy: Tile; res: Resource; amount: number }[];
@@ -59,6 +60,7 @@ interface ITickData {
 export function EmptyTickData(): ITickData {
    return {
       electrified: new Map(),
+      levelBoost: new Map(),
       buildingMultipliers: new Map(),
       unlockedBuildings: new Set(),
       tileMultipliers: new Map(),
@@ -155,6 +157,7 @@ interface IMultiplier {
 export type Multiplier = RequireAtLeastOne<IMultiplier>;
 export type MultiplierWithStability = Multiplier & { unstable?: boolean };
 export type MultiplierWithSource = Multiplier & { source: string; unstable?: boolean };
+export type LevelBoost = { value: number; source: string };
 
 export const AllMultiplierTypes = ["input", "output", "worker", "storage"] satisfies (keyof IMultiplier)[];
 

@@ -154,6 +154,10 @@ export interface ISwissBankBuildingData extends IBuildingData {
    resource: Resource | null;
 }
 
+export interface IItaipuDamBuildingData extends IBuildingData {
+   productionMultiplier: number;
+}
+
 export type IHaveTypeAndLevel = Pick<IBuildingData, "type" | "level">;
 
 export const STOCKPILE_CAPACITY_MIN = 0;
@@ -288,6 +292,13 @@ export function makeBuilding(data: Pick<IBuildingData, "type"> & Partial<IBuildi
          const swissBank = building as ISwissBankBuildingData;
          if (!swissBank.resource) {
             swissBank.resource = null;
+         }
+         break;
+      }
+      case "ItaipuDam": {
+         const itaipuDam = building as IItaipuDamBuildingData;
+         if (!itaipuDam.productionMultiplier) {
+            itaipuDam.productionMultiplier = 0;
          }
          break;
       }

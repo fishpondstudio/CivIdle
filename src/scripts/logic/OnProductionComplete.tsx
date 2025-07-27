@@ -60,6 +60,7 @@ import type {
    ICentrePompidouBuildingData,
    IGreatPeopleBuildingData,
    IIdeologyBuildingData,
+   IItaipuDamBuildingData,
    ILouvreBuildingData,
    IReligionBuildingData,
    ISwissBankBuildingData,
@@ -1748,6 +1749,29 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
             }
          } else {
             Tick.next.notProducingReasons.set(xy, NotProducingReason.TurnedOff);
+         }
+         break;
+      }
+      case "ItaipuDam": {
+         const itaipuDam = building as IItaipuDamBuildingData;
+         const multiplier = itaipuDam.productionMultiplier;
+         const levelBoost = building.level - multiplier;
+
+         for (const point of grid.getRange(tileToPoint(xy), 2)) {
+            const t = pointToTile(point);
+            if (multiplier > 0) {
+               mapSafePush(Tick.next.tileMultipliers, t, {
+                  output: multiplier,
+                  source: buildingName,
+               });
+            }
+            if (levelBoost > 0) {
+               mapSafePush(Tick.next.levelBoost, t, {
+                  value: levelBoost,
+                  source: buildingName,
+               });
+            }
+            Tick.next.powerPlants.add(t);
          }
          break;
       }

@@ -423,6 +423,7 @@ export class WorldScene extends Scene {
             case "MountArarat":
             case "TopkapiPalace":
             case "MausoleumAtHalicarnassus":
+            case "ItaipuDam":
             case "GoldenGateBridge": {
                this.highlightRange(grid, 2);
                break;

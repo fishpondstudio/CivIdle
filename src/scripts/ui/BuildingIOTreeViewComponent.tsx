@@ -41,6 +41,7 @@ export function BuildingIOTreeViewComponent({
                type === "input" &&
                Tick.current.notProducingReasons.get(xy) === NotProducingReason.NotEnoughResources &&
                resourceInStorage < v;
+            const levelBoost = Tick.current.levelBoost.get(xy) ?? 0;
             return (
                <li key={k}>
                   <details>
@@ -74,18 +75,27 @@ export function BuildingIOTreeViewComponent({
                               />
                            </div>
                         </li>
-                        {building && getElectrificationBoost(building, gameState) > 0 ? (
-                           <ul>
-                              <li className="row">
-                                 <div className="f1">{t(L.BuildingLevel)}</div>
-                                 <FormatNumber value={building?.level ?? 0} />
-                              </li>
+                        <ul className="text-small">
+                           <li className="row">
+                              <div className="f1">{t(L.BuildingLevel)}</div>
+                              <FormatNumber value={building?.level ?? 0} />
+                           </li>
+                           {building && getElectrificationBoost(building, gameState) > 0 ? (
                               <li className="row">
                                  <div className="f1">{t(L.ElectrificationLevel)}</div>
                                  <FormatNumber value={Tick.current.electrified.get(xy) ?? 0} />
                               </li>
-                           </ul>
-                        ) : null}
+                           ) : null}
+                           {levelBoost && levelBoost.length > 0
+                              ? levelBoost.map((lb, idx) => (
+                                   <li key={idx} className="row">
+                                      <div className="f1">{lb.source}</div>
+                                      <FormatNumber value={lb.value} />
+                                   </li>
+                                ))
+                              : null}
+                        </ul>
+
                         <li className="row">
                            <div className="f1">
                               {type === "input" ? t(L.ConsumptionMultiplier) : t(L.ProductionMultiplier)}

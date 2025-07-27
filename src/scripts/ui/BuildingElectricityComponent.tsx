@@ -61,7 +61,7 @@ export function BuildingElectricityComponent({ gameState, xy }: IBuildingCompone
                   </div>
                </li>
                <li className="row">
-                  <div className="f1">{t(L.BuildingLevelBoost)}</div>
+                  <div className="f1">{t(L.BuildingLevelBoostFromElectrification)}</div>
                   <div className="text-green text-strong">
                      +
                      <FormatNumber value={Tick.current.electrified.get(xy) ?? 0} />

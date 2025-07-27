@@ -255,7 +255,7 @@ export function RebirthModal(): React.ReactNode {
                >
                   {mapOf(Config.City[nextCity].deposits, (dep, value) => {
                      return (
-                        <div className="row">
+                        <div key={dep} className="row">
                            <DepositTextureComponent
                               deposit={dep}
                               scale={0.25}
@@ -271,7 +271,11 @@ export function RebirthModal(): React.ReactNode {
                <div className="inset-shallow white">
                   {jsxMapOf(Config.City[nextCity].uniqueBuildings, (building, tech, i) => {
                      return (
-                        <div className="row p5" style={{ backgroundColor: i % 2 === 0 ? "#efefef" : "#fff" }}>
+                        <div
+                           key={building}
+                           className="row p5"
+                           style={{ backgroundColor: i % 2 === 0 ? "#efefef" : "#fff" }}
+                        >
                            <BuildingSpriteComponent
                               building={building}
                               scale={0.5}
@@ -292,7 +296,11 @@ export function RebirthModal(): React.ReactNode {
                <div className="inset-shallow white">
                   {jsxMapOf(Config.City[nextCity].naturalWonders, (building, tech, i) => {
                      return (
-                        <div className="row p5" style={{ backgroundColor: i % 2 === 0 ? "#fff" : "#efefef" }}>
+                        <div
+                           key={building}
+                           className="row p5"
+                           style={{ backgroundColor: i % 2 === 0 ? "#fff" : "#efefef" }}
+                        >
                            <BuildingSpriteComponent
                               building={building}
                               scale={0.5}
@@ -313,6 +321,7 @@ export function RebirthModal(): React.ReactNode {
                         {jsxMapOf(Config.City[nextCity].uniqueMultipliers, (tech, multipliers, i) => {
                            return (
                               <div
+                                 key={tech}
                                  className="row p5"
                                  style={{ backgroundColor: i % 2 === 0 ? "#fff" : "#efefef" }}
                               >
@@ -331,7 +340,7 @@ export function RebirthModal(): React.ReactNode {
                   {jsxMapOf(Config.GreatPerson, (person, def, i) => {
                      if (def.city === nextCity) {
                         return (
-                           <div className="row p5">
+                           <div key={person} className="row p5">
                               <GreatPersonImage
                                  greatPerson={person}
                                  style={{ height: 50, margin: "0 10px 0 0" }}

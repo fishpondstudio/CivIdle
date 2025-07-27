@@ -690,16 +690,23 @@ export function getBuildingPercentage(xy: Tile, gs: GameState): BuildingPercenta
    return { cost, percent: inStorage / totalCost, secondsLeft: Math.ceil((totalCost - inStorage) / total) };
 }
 
-export function getBuildingLevelLabel(b: IBuildingData, gs: GameState): string {
+export function getBuildingLevelLabel(xy: Tile, gs: GameState): string {
+   const b = gs.tiles.get(xy)?.building;
+   if (!b) {
+      return "";
+   }
    if (BuildingShowLevel.has(b.type)) {
       return String(b.level);
    }
    if (Config.Building[b.type].special === BuildingSpecial.HQ || isWorldOrNaturalWonder(b.type)) {
       return "";
    }
-
-   if (b.electrification > 0) {
-      return `${b.level}+${getElectrificationBoost(b, gs)}`;
+   let levelBoost = getElectrificationBoost(b, gs);
+   Tick.current.levelBoost.get(xy)?.forEach((lb) => {
+      levelBoost += lb.value;
+   });
+   if (levelBoost > 0) {
+      return `${b.level}+${levelBoost}`;
    }
    return String(b.level);
 }
@@ -890,10 +897,7 @@ export function getPowerRequired(building: IBuildingData): number {
    if (building.electrification <= 0) {
       return 0;
    }
-   if (Config.Building[building.type].power) {
-      return Math.round(getUpgradeCostFib(building.electrification) * 10);
-   }
-   return Math.round(Math.pow(2, building.electrification - 1) * 10);
+   return Math.round(Math.pow(2, building.electrification - 1) * 100);
 }
 
 export function getElectrificationBoost(building: IBuildingData, gs: GameState): number {

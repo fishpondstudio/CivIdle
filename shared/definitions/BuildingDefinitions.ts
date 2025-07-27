@@ -2035,6 +2035,94 @@ export class BuildingDefinitions {
       wikipedia: "UBS",
    };
 
+   ItaipuDam: IBuildingDefinition = {
+      name: () => t(L.ItaipuDam),
+      desc: () => t(L.ItaipuDamDesc),
+      input: {},
+      output: {},
+      construction: { Diplomacy: 100, Submarine: 100, Concrete: 100 },
+      max: 1,
+      special: BuildingSpecial.WorldWonder,
+      wikipedia: "Itaipu_Dam",
+   };
+
+   CathedralOfBrasilia: IBuildingDefinition = {
+      name: () => t(L.CathedralOfBrasilia),
+      desc: () => t(L.CathedralOfBrasiliaDesc),
+      input: {},
+      output: {},
+      construction: { Biplane: 100, Tank: 100, Ironclad: 100 },
+      max: 1,
+      special: BuildingSpecial.WorldWonder,
+      wikipedia: "Cathedral_of_Brasília",
+   };
+
+   Capybara: IBuildingDefinition = {
+      name: () => t(L.Capybara),
+      desc: () => t(L.CapybaraDesc),
+      input: {},
+      output: {},
+      construction: {},
+      max: 0,
+      special: BuildingSpecial.NaturalWonder,
+      wikipedia: "Capybara",
+   };
+
+   GiantOtter: IBuildingDefinition = {
+      name: () => t(L.GiantOtter),
+      desc: () => t(L.GiantOtterDesc),
+      input: {},
+      output: {},
+      construction: {},
+      max: 0,
+      special: BuildingSpecial.NaturalWonder,
+      wikipedia: "Giant_otter",
+   };
+
+   Hoatzin: IBuildingDefinition = {
+      name: () => t(L.Hoatzin),
+      desc: () => t(L.HoatzinDesc),
+      input: {},
+      output: {},
+      construction: {},
+      max: 0,
+      special: BuildingSpecial.NaturalWonder,
+      wikipedia: "Hoatzin",
+   };
+
+   RoyalFlycatcher: IBuildingDefinition = {
+      name: () => t(L.RoyalFlycatcher),
+      desc: () => t(L.RoyalFlycatcherDesc),
+      input: {},
+      output: {},
+      construction: {},
+      max: 0,
+      special: BuildingSpecial.NaturalWonder,
+      wikipedia: "Royal_flycatcher",
+   };
+
+   GlassFrog: IBuildingDefinition = {
+      name: () => t(L.GlassFrog),
+      desc: () => t(L.GlassFrogDesc),
+      input: {},
+      output: {},
+      construction: {},
+      max: 0,
+      special: BuildingSpecial.NaturalWonder,
+      wikipedia: "Glass_frog",
+   };
+
+   PygmyMarmoset: IBuildingDefinition = {
+      name: () => t(L.PygmyMarmoset),
+      desc: () => t(L.PygmyMarmosetDesc),
+      input: {},
+      output: {},
+      construction: {},
+      max: 0,
+      special: BuildingSpecial.NaturalWonder,
+      wikipedia: "Pygmy_marmoset",
+   };
+
    // #endregion /////////////////////////////////////////////////////////////////////////////////////////////
 
    // Winery: IBuildingDefinition = {
@@ -2126,4 +2214,5 @@ export const BuildingShowLevel = new Set<Building>([
    "EastIndiaCompany",
    "MontSaintMichel",
    "SwissBank",
+   "ItaipuDam",
 ]);
