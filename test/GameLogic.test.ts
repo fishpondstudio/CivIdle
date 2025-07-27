@@ -102,25 +102,25 @@ test("getPowerRequired", () => {
    const building = makeBuilding({ type: "IronMiningCamp" });
    assert.equal(0, getPowerRequired(building));
    building.electrification = 1;
-   assert.equal(10, getPowerRequired(building));
+   assert.equal(100, getPowerRequired(building));
    building.electrification = 2;
-   assert.equal(20, getPowerRequired(building));
+   assert.equal(200, getPowerRequired(building));
    building.electrification = 3;
-   assert.equal(40, getPowerRequired(building));
+   assert.equal(400, getPowerRequired(building));
    building.electrification = 4;
-   assert.equal(80, getPowerRequired(building));
+   assert.equal(800, getPowerRequired(building));
 
    building.type = "CarFactory";
    building.electrification = 0;
    assert.equal(0, getPowerRequired(building));
    building.electrification = 1;
-   assert.equal(10, getPowerRequired(building));
+   assert.equal(100, getPowerRequired(building));
    building.electrification = 2;
-   assert.equal(20, getPowerRequired(building));
+   assert.equal(200, getPowerRequired(building));
    building.electrification = 3;
-   assert.equal(30, getPowerRequired(building));
+   assert.equal(400, getPowerRequired(building));
    building.electrification = 4;
-   assert.equal(50, getPowerRequired(building));
+   assert.equal(800, getPowerRequired(building));
 });
 
 test("deductResourceFrom", async () => {

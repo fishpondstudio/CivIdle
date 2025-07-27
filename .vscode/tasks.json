@@ -2,55 +2,50 @@
    "version": "2.0.0",
    "tasks": [
       {
-         "label": "Watch and compile TypeScript",
-         "type": "shell",
-         "command": "npm run watch",
+         "type": "npm",
+         "script": "watch",
+         "path": ".",
+         "problemMatcher": [
+            "$tsc-watch"
+         ],
+         "label": "Watch and Compile TypeScript",
          "isBackground": true,
-         "presentation": {
-            "reveal": "never",
-            "echo": false,
-            "focus": false,
-            "panel": "dedicated"
-         },
          "runOptions": {
             "runOn": "folderOpen"
-         },
-         "problemMatcher": "$tsc-watch"
+         }
       },
       {
-         "label": "Run Dev Server",
-         "type": "shell",
-         "command": "pnpm run dev",
+         "type": "npm",
+         "script": "dev",
+         "path": ".",
+         "problemMatcher": [],
+         "label": "Run Frontend",
          "isBackground": true,
-         "presentation": {
-            "reveal": "never",
-            "echo": false,
-            "focus": false,
-            "panel": "dedicated"
-         },
          "runOptions": {
             "runOn": "folderOpen"
-         },
-         "problemMatcher": []
-      }
+         }
+      },
       {
-         "label": "Run Server",
-         "type": "shell",
-         "command": "pnpm run start",
-         "options": {
-            "cwd": "server"
-         },
+         "type": "npm",
+         "script": "start",
+         "path": "server",
+         "problemMatcher": [],
+         "label": "Run Backend",
          "isBackground": true,
-         "presentation": {
-            "reveal": "never",
-            "echo": false,
-            "focus": false,
-            "panel": "dedicated"
-         },
          "runOptions": {
             "runOn": "folderOpen"
-         },
-         "problemMatcher": []
+         }
+      },
+      {
+         "type": "npm",
+         "script": "test",
+         "path": "test",
+         "problemMatcher": [],
+         "label": "Run Test",
+         "isBackground": true,
+         "runOptions": {
+            "runOn": "folderOpen"
+         }
       }
    ]
 }
