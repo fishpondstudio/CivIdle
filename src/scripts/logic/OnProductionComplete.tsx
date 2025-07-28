@@ -5,6 +5,7 @@ import {
    forEachMultiplier,
    generateScienceFromFaith,
    getBuildingCost,
+   getCathedralOfBrasiliaResources,
    getGreatWallRange,
    getMaxWarpStorage,
    getScienceFromWorkers,
@@ -83,6 +84,7 @@ import {
    pointToTile,
    round,
    safeAdd,
+   sizeOf,
    tileToPoint,
    type Tile,
 } from "../../../shared/utilities/Helper";
@@ -1838,42 +1840,9 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
       case "CathedralOfBrasilia": {
          const multiplier = isFestival("CathedralOfBrasilia", gs) ? 2 : 1;
 
-         const buildings = new Set<Building>();
-         for (const point of grid.getRange(tileToPoint(xy), 2)) {
-            const t = pointToTile(point);
-            const building = gs.tiles.get(t)?.building;
-            if (
-               building &&
-               t !== xy &&
-               building.status === "completed" &&
-               !Tick.current.notProducingReasons.has(t)
-            ) {
-               buildings.add(building.type);
-            }
-         }
+         const { buildings, unused } = getCathedralOfBrasiliaResources(xy, gs);
 
-         const outputResources = new Set<Resource>();
-         const inputResources = new Set<Resource>();
-
-         for (const building of buildings) {
-            const def = Config.Building[building];
-            forEach(def.input, (res) => {
-               inputResources.add(res);
-            });
-            forEach(def.output, (res) => {
-               outputResources.add(res);
-            });
-         }
-
-         let unusedResources = 0;
-
-         for (const resource of outputResources) {
-            if (!inputResources.has(resource)) {
-               unusedResources++;
-            }
-         }
-
-         if (buildings.size > 1 && unusedResources <= 1) {
+         if (buildings.size > 1 && unused <= 1) {
             buildings.forEach((building) => {
                addMultiplier(
                   building,
