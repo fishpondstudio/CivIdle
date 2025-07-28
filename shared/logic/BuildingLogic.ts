@@ -897,7 +897,7 @@ export function getPowerRequired(building: IBuildingData): number {
    if (building.electrification <= 0) {
       return 0;
    }
-   return Math.round(Math.pow(2, building.electrification - 1) * 100);
+   return Math.round(Math.pow(4, building.electrification));
 }
 
 export function getElectrificationBoost(building: IBuildingData, gs: GameState): number {
@@ -1291,8 +1291,8 @@ export function getCathedralOfBrasiliaResources(
          t !== xy &&
          building.status === "completed" &&
          !Tick.current.notProducingReasons.has(t) &&
-         sizeOf(Config.Building[building.type].input) > 0 &&
-         sizeOf(Config.Building[building.type].output) > 0
+         (sizeOf(Config.Building[building.type].input) > 0 ||
+            sizeOf(Config.Building[building.type].output) > 0)
       ) {
          buildings.add(building.type);
       }
