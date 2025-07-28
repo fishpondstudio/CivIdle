@@ -9,7 +9,7 @@ export const ZH_TW = {
    AccountGreatPeopleLevelRequirement: "需求偉人等級",
    AccountLevel: "帳號等級",
    AccountLevelAedile: "市政官",
-   AccountLevelAugustus: "屋大維",
+   AccountLevelAugustus: "奧斯古都",
    AccountLevelCaesar: "凱撒",
    AccountLevelConsul: "執政官",
    AccountLevelMod: "主持人",
