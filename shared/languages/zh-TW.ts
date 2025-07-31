@@ -19,7 +19,7 @@ export const ZH_TW = {
    AccountLevelSupporterPack: "支持者",
    AccountLevelTribune: "軍官",
    AccountLevelUpgradeConditionAnyHTML: "若要升級您的帳戶，需滿足<b>以下條件之一</b>：",
-   AccountPlayTimeRequirement: "需求遊戲時間（小時）",
+   AccountPlayTimeRequirementV2: "需求遊戲時間（小時）",
    AccountRankUp: "升級帳戶等級",
    AccountRankUpDesc: "您的所有進度將被保留到新的等級",
    AccountRankUpTip: "恭喜，您的帳戶符合更高等級的條件——點選此處升級！",
