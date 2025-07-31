@@ -19,6 +19,7 @@ import {
    shuffle,
 } from "../utilities/Helper";
 import { Config } from "./Config";
+import { DISABLED_TEMPORARILY_DURING_BETA } from "./Constants";
 import type { GameOptions, GameState, GreatPeopleChoice, GreatPeopleChoiceV2 } from "./GameState";
 import { getGameOptions, getGameState } from "./GameStateLogic";
 import { Tick } from "./TickLogic";
@@ -323,5 +324,10 @@ export function getEligibleRank(user: IUser): AccountLevel {
          }
       }
    });
+
+   if (DISABLED_TEMPORARILY_DURING_BETA && level > AccountLevel.Consul) {
+      return AccountLevel.Consul;
+   }
+
    return level;
 }

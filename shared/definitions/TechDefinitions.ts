@@ -548,7 +548,7 @@ export class TechDefinitions {
       name: () => t(L.Railway),
       column: 15,
       requireTech: ["Alloy", "SteamEngine"],
-      unlockBuilding: ["LocomotiveFactory"],
+      unlockBuilding: ["LocomotiveFactory", "RebarPlant"],
       globalMultiplier: {
          transportCapacity: 1,
       },
@@ -583,7 +583,7 @@ export class TechDefinitions {
       name: () => t(L.Electricity),
       column: 16,
       requireTech: ["Railway", "Drilling", "RapidFire"],
-      unlockBuilding: ["CoalPowerPlant"],
+      unlockBuilding: ["CoalPowerPlant", "ReinforcedConcretePlant"],
       additionalUpgrades: () => [t(L.ElectrificationUpgrade)],
    };
 

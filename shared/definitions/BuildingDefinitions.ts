@@ -48,7 +48,7 @@ export class BuildingDefinitions {
       name: () => t(L.Condo),
       input: { Pizza: 3 },
       output: { Worker: 510 },
-      construction: { Concrete: 3, Steel: 1 },
+      construction: { ReinforcedConcrete: 3, Steel: 1 },
    };
    Penthouse: IBuildingDefinition = {
       name: () => t(L.Penthouse),
@@ -128,14 +128,14 @@ export class BuildingDefinitions {
       input: {},
       deposit: { Uranium: true },
       output: { Uranium: 1 },
-      construction: { Concrete: 1, Tool: 1 },
+      construction: { ReinforcedConcrete: 1, Tool: 1 },
    };
 
    UraniumEnrichmentPlant: IBuildingDefinition = {
       name: () => t(L.UraniumEnrichmentPlant),
       input: { Uranium: 10 },
       output: { NuclearFuelRod: 1 },
-      construction: { Concrete: 4, Steel: 5 },
+      construction: { ReinforcedConcrete: 4, Steel: 5 },
       power: true,
    };
 
@@ -182,14 +182,14 @@ export class BuildingDefinitions {
       input: {},
       deposit: { Water: true },
       output: { Water: 1, Power: 2 },
-      construction: { Dynamite: 1, Concrete: 1 },
+      construction: { Dynamite: 1, ReinforcedConcrete: 1 },
    };
 
    NuclearPowerPlant: IBuildingDefinition = {
       name: () => t(L.NuclearPowerPlant),
       input: { NuclearFuelRod: 2 },
       output: { Power: 65 },
-      construction: { Concrete: 16, Steel: 16 },
+      construction: { ReinforcedConcrete: 16, Steel: 16 },
    };
    // #endregion /////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -649,8 +649,18 @@ export class BuildingDefinitions {
    };
    ConcretePlant: IBuildingDefinition = {
       name: () => t(L.ConcretePlant),
-      input: { Brick: 1, Sand: 2, Tool: 1 },
+      input: { Brick: 5, Sand: 5, Tool: 5 },
       output: { Concrete: 1 },
+   };
+   RebarPlant: IBuildingDefinition = {
+      name: () => t(L.RebarPlant),
+      input: { Steel: 5 },
+      output: { Rebar: 1 },
+   };
+   ReinforcedConcretePlant: IBuildingDefinition = {
+      name: () => t(L.ReinforcedConcretePlant),
+      input: { Rebar: 5, Concrete: 5 },
+      output: { ReinforcedConcrete: 1 },
    };
    SteelMill: IBuildingDefinition = {
       name: () => t(L.SteelMill),
@@ -1239,7 +1249,7 @@ export class BuildingDefinitions {
       desc: () => t(L.BrandenburgGateDesc),
       input: {},
       output: {},
-      construction: { Train: 100, Politics: 100, Concrete: 100 },
+      construction: { Train: 100, Politics: 100, ReinforcedConcrete: 100 },
       max: 1,
       special: BuildingSpecial.WorldWonder,
       wikipedia: "Brandenburg_Gate",
@@ -1299,7 +1309,7 @@ export class BuildingDefinitions {
       desc: () => t(L.CristoRedentorDesc),
       input: {},
       output: {},
-      construction: { Concrete: 100, Sports: 100, Politics: 100 },
+      construction: { ReinforcedConcrete: 100, Sports: 100, Politics: 100 },
       max: 1,
       special: BuildingSpecial.WorldWonder,
       wikipedia: "Christ_the_Redeemer_(statue)",
@@ -1875,7 +1885,7 @@ export class BuildingDefinitions {
       desc: () => t(L.TowerBridgeDesc),
       input: {},
       output: {},
-      construction: { Concrete: 150, Steel: 150 },
+      construction: { ReinforcedConcrete: 150, Steel: 150 },
       max: 1,
       special: BuildingSpecial.WorldWonder,
       wikipedia: "Tower_Bridge",
@@ -2040,7 +2050,7 @@ export class BuildingDefinitions {
       desc: () => t(L.ItaipuDamDesc),
       input: {},
       output: {},
-      construction: { Diplomacy: 100, Submarine: 100, Concrete: 100 },
+      construction: { Diplomacy: 100, Submarine: 100, ReinforcedConcrete: 100 },
       max: 1,
       special: BuildingSpecial.WorldWonder,
       wikipedia: "Itaipu_Dam",

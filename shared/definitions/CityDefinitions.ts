@@ -365,7 +365,7 @@ export class CityDefinitions {
       buildingNames: {
          Headquarter: () => t(L.Brasilia),
       },
-      uniqueBuildings: { ItaipuDam: "Skyscraper", CathedralOfBrasilia: "Aviation" },
+      uniqueBuildings: { ItaipuDam: "Hydroelectricity", CathedralOfBrasilia: "Aviation" },
       uniqueMultipliers: {},
       naturalWonders: {
          Capybara: true,

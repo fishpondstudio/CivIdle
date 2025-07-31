@@ -17,7 +17,7 @@ export const EN = {
    AccountLevelSupporterPack: "Owns Supporter Pack",
    AccountLevelTribune: "Tribune",
    AccountLevelUpgradeConditionAnyHTML: "To upgrade your account, you only need to satisfy <b>one of the following</b> criteria:",
-   AccountPlayTimeRequirement: "Required Play Time",
+   AccountPlayTimeRequirementV2: "Required Play Time (Hour)",
    AccountRankUp: "Upgrade Account Rank",
    AccountRankUpDesc: "All your progress will be carried over to your new rank",
    AccountRankUpTip: "Congratulations, your account is eligible for a higher rank - click here to upgrade!",
@@ -1614,4 +1614,9 @@ export const EN = {
    BuildingExtractDeposit: "This building extracts the deposit on this tile",
    AccountLevelCaesar: "Caesar",
    AccountLevelAugustus: "Augustus",
+   Rebar: "Rebar",
+   ReinforcedConcrete: "Reinforced Concrete",
+   RebarPlant: "Rebar Plant",
+   ReinforcedConcretePlant: "Reinforced Concrete Plant",
+   JosephMonier: "Joseph Monier",
 };

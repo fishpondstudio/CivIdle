@@ -30,6 +30,8 @@ export function getUserTradePriceRange(user: IUser | null): number {
       case AccountLevel.Praetor:
          return 0.2;
       case AccountLevel.Consul:
+      case AccountLevel.Caesar:
+      case AccountLevel.Augustus:
          return 0.25;
       default:
          return 0.05;
@@ -45,6 +47,8 @@ export function getMaxActiveTrades(user: IUser): number {
       case AccountLevel.Praetor:
          return 8;
       case AccountLevel.Consul:
+      case AccountLevel.Caesar:
+      case AccountLevel.Augustus:
          return 10;
       default:
          return 2;
@@ -152,6 +156,8 @@ export function getTileFromAccountRank(rank: AccountLevel): number {
       case AccountLevel.Praetor:
          return 4;
       case AccountLevel.Consul:
+      case AccountLevel.Caesar:
+      case AccountLevel.Augustus:
          return 5;
       default:
          return 1;

@@ -170,7 +170,7 @@ function AccountDetails(): React.ReactNode {
    return (
       <>
          <div className="separator" />
-         <div className="table-view">
+         <div className="table-view text-small">
             <table>
                <tbody>
                   <tr>
@@ -200,11 +200,27 @@ function AccountDetails(): React.ReactNode {
                            <AccountLevelComponent level={AccountLevel.Consul} scale={0.2} />
                         </TextWithHelp>
                      </th>
+                     <th>
+                        <TextWithHelp content={AccountLevelNames[AccountLevel.Caesar]()} noStyle>
+                           <AccountLevelComponent level={AccountLevel.Caesar} scale={0.2} />
+                        </TextWithHelp>
+                     </th>
+                     <th>
+                        <TextWithHelp content={AccountLevelNames[AccountLevel.Augustus]()} noStyle>
+                           <AccountLevelComponent level={AccountLevel.Augustus} scale={0.2} />
+                        </TextWithHelp>
+                     </th>
                   </tr>
                   <tr>
                      <td>{t(L.AccountChatBadge)}</td>
                      <td>
                         <div className="m-icon small text-red">cancel</div>
+                     </td>
+                     <td>
+                        <div className="m-icon small text-green">check_circle</div>
+                     </td>
+                     <td>
+                        <div className="m-icon small text-green">check_circle</div>
                      </td>
                      <td>
                         <div className="m-icon small text-green">check_circle</div>
@@ -226,12 +242,16 @@ function AccountDetails(): React.ReactNode {
                      <td>6</td>
                      <td>8</td>
                      <td>10</td>
+                     <td>10</td>
+                     <td>10</td>
                   </tr>
                   <tr>
                      <td>{t(L.AccountTradeValuePerMinute)}</td>
                      <td>
                         <FormatNumber value={TRIBUNE_TRADE_VALUE_PER_MINUTE} />
                      </td>
+                     <td>∞</td>
+                     <td>∞</td>
                      <td>∞</td>
                      <td>∞</td>
                      <td>∞</td>
@@ -243,6 +263,8 @@ function AccountDetails(): React.ReactNode {
                      <td>10%</td>
                      <td>15%</td>
                      <td>20%</td>
+                     <td>25%</td>
+                     <td>25%</td>
                      <td>25%</td>
                   </tr>
                   <tr>
@@ -256,15 +278,19 @@ function AccountDetails(): React.ReactNode {
                      <td>{TradeTileReservationDays[AccountLevel.Aedile]}d</td>
                      <td>{TradeTileReservationDays[AccountLevel.Praetor]}d</td>
                      <td>{TradeTileReservationDays[AccountLevel.Consul]}d</td>
-                  </tr>{" "}
+                     <td>{TradeTileReservationDays[AccountLevel.Caesar]}d</td>
+                     <td>{TradeTileReservationDays[AccountLevel.Augustus]}d</td>
+                  </tr>
                   <tr>
-                     <td>{t(L.AccountPlayTimeRequirement)}</td>
+                     <td>{t(L.AccountPlayTimeRequirementV2)}</td>
                      <td>-</td>
-                     <td>{AccountLevelPlayTime[AccountLevel.Quaestor] / HOUR}h</td>
-                     <td>{AccountLevelPlayTime[AccountLevel.Aedile] / HOUR}h</td>
-                     <td>{AccountLevelPlayTime[AccountLevel.Praetor] / HOUR}h</td>
-                     <td>{AccountLevelPlayTime[AccountLevel.Consul] / HOUR}h</td>
-                  </tr>{" "}
+                     <td>{AccountLevelPlayTime[AccountLevel.Quaestor] / HOUR}</td>
+                     <td>{AccountLevelPlayTime[AccountLevel.Aedile] / HOUR}</td>
+                     <td>{AccountLevelPlayTime[AccountLevel.Praetor] / HOUR}</td>
+                     <td>{AccountLevelPlayTime[AccountLevel.Consul] / HOUR}</td>
+                     <td>{AccountLevelPlayTime[AccountLevel.Caesar] / HOUR}</td>
+                     <td>{AccountLevelPlayTime[AccountLevel.Augustus] / HOUR}</td>
+                  </tr>
                   <tr>
                      <td>{t(L.AccountGreatPeopleLevelRequirement)}</td>
                      <td>-</td>
@@ -272,6 +298,8 @@ function AccountDetails(): React.ReactNode {
                      <td>{AccountLevelGreatPeopleLevel[AccountLevel.Aedile]}</td>
                      <td>{AccountLevelGreatPeopleLevel[AccountLevel.Praetor]}</td>
                      <td>{AccountLevelGreatPeopleLevel[AccountLevel.Consul]}</td>
+                     <td>{AccountLevelGreatPeopleLevel[AccountLevel.Caesar]}</td>
+                     <td>{AccountLevelGreatPeopleLevel[AccountLevel.Augustus]}</td>
                   </tr>
                </tbody>
             </table>

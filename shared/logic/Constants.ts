@@ -59,6 +59,7 @@ export const EAST_INDIA_COMPANY_BOOST_PER_EV = 2000;
 export const TRADE_TILE_BONUS = 5;
 export const TRADE_TILE_NEIGHBOR_BONUS = 1;
 export const TRADE_TILE_ALLY_BONUS = 2;
+export const DISABLED_TEMPORARILY_DURING_BETA = true;
 
 interface IRecipe {
    building: Building;

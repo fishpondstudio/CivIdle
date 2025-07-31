@@ -1019,6 +1019,18 @@ export class GreatPersonDefinitions {
       age: "WorldWarAge",
    });
 
+   JosephMonier: IGreatPersonDefinition = boostOf({
+      name: () => t(L.JosephMonier),
+      boost: {
+         multipliers: ["output", "storage"],
+         buildings: ["RebarPlant", "ReinforcedConcretePlant"],
+      },
+      time: "1823 ~ 1906 AD",
+      value: (level) => level,
+      maxLevel: Number.POSITIVE_INFINITY,
+      age: "WorldWarAge",
+   });
+
    OttoVonBismarck: IGreatPersonDefinition = boostOf({
       name: () => t(L.OttoVonBismarck),
       boost: {

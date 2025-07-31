@@ -124,6 +124,8 @@ export class ResourceDefinitions {
    Cycle: IResourceDefinition = { name: () => t(L.Cycle) };
    TradeValue: IResourceDefinition = { name: () => t(L.TradeValue) };
    Koti: IResourceDefinition = { name: () => t(L.Koti) };
+   Rebar: IResourceDefinition = { name: () => t(L.Rebar) };
+   ReinforcedConcrete: IResourceDefinition = { name: () => t(L.ReinforcedConcrete) };
 }
 
 export type Resource = keyof ResourceDefinitions;

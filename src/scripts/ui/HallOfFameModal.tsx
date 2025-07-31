@@ -28,11 +28,17 @@ export function HallOfFameModal(): React.ReactNode {
          </div>
          <div style={{ overflowY: "auto", height: 600, maxHeight: "80vh" }}>
             <div className="window-body">
-               {[AccountLevel.Consul, AccountLevel.Praetor, AccountLevel.Aedile].map((level) => {
+               {[
+                  AccountLevel.Augustus,
+                  AccountLevel.Caesar,
+                  AccountLevel.Consul,
+                  AccountLevel.Praetor,
+                  AccountLevel.Aedile,
+               ].map((level) => {
                   return (
                      <fieldset key={level}>
-                        <legend className="row text-strong">
-                           <AccountLevelComponent level={level} scale={0.2} style={{ marginRight: 5 }} />
+                        <legend className="row text-strong" style={{ fontSize: 20 }}>
+                           <AccountLevelComponent level={level} scale={0.5} style={{ marginRight: 5 }} />
                            {AccountLevelNames[level]()} ({data?.[level]?.length ?? 0})
                         </legend>
                         <div
