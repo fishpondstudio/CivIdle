@@ -39,24 +39,10 @@ export class PlayerTile extends Container {
 
       this._buildingSprite = this.addChild(new Sprite(building ?? Texture.EMPTY));
       if (building) {
-         if (data.city) {
-            this._buildingSprite.anchor.set(0, 0);
-            this._buildingSprite.scale.set(0.75);
-            this._buildingSprite.position.set(x * GridSize + 0.1 * GridSize, y * GridSize + 0.1 * GridSize);
-         } else {
-            this._buildingSprite.anchor.set(0.5, 0.5);
-            this._buildingSprite.scale.set(0.75);
-            this._buildingSprite.position.set(x * GridSize + 0.5 * GridSize, y * GridSize + 0.5 * GridSize);
-         }
-         this._buildingSprite.alpha = 0.3;
-      }
-
-      if (data.city) {
-         const city = this.addChild(new Sprite(textures[`Building_Headquarter_${data.city}`]));
-         city.anchor.set(1, 1);
-         city.position.set(x * GridSize + 0.95 * GridSize, y * GridSize + 0.95 * GridSize);
-         city.scale.set(0.35);
-         city.alpha = 0.3;
+         this._buildingSprite.anchor.set(0.5, 0.5);
+         this._buildingSprite.scale.set(0.75);
+         this._buildingSprite.position.set(x * GridSize + 0.5 * GridSize, y * GridSize + 0.5 * GridSize);
+         this._buildingSprite.alpha = 0.25;
       }
 
       const flag = this.addChild(new Sprite(textures[`Flag_${data.flag.toUpperCase()}`]));
