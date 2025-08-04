@@ -479,8 +479,8 @@ export function isAllyWith(tile: IClientMapEntry): boolean {
    if (!user) {
       return false;
    }
-   if (!tile.flag || tile.flag.toUpperCase() === "EARTH" || user.flag === "EARTH") {
+   if (!tile.city) {
       return false;
    }
-   return tile.flag === user.flag;
+   return tile.city === getGameState().city;
 }

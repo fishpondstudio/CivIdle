@@ -83,7 +83,7 @@ export function MyTilePage({ xy }: { xy: string }): React.ReactNode {
                <legend>{t(L.Neighbors)}</legend>
                <WarningComponent icon="info" className="mb10 text-small">
                   <RenderHTML
-                     html={t(L.NeighborsDescHTML, {
+                     html={t(L.NeighborsDescHTMLV2, {
                         neighbor: TRADE_TILE_NEIGHBOR_BONUS,
                         ally: TRADE_TILE_ALLY_BONUS,
                      })}
@@ -113,6 +113,9 @@ export function MyTilePage({ xy }: { xy: string }): React.ReactNode {
                                     <MiscTextureComponent name="Supporter" scale={0.17} />
                                  </Tippy>
                               ) : null}
+                              {tile.city ? (
+                                 <div className="ml5 text-desc">{Config.City[tile.city].name()}</div>
+                              ) : null}
                               <div className="f1"></div>
                               {isAlly ? (
                                  <>
@@ -120,7 +123,7 @@ export function MyTilePage({ xy }: { xy: string }): React.ReactNode {
                                     <div className="text-green text-strong">{t(L.Ally)}</div>
                                  </>
                               ) : (
-                                 <Tippy content={t(L.BecomeAllyTooltip)}>
+                                 <Tippy content={t(L.BecomeAllyTooltipV2)}>
                                     <div className="text-desc text-strong">{t(L.Neighbor)}</div>
                                  </Tippy>
                               )}
