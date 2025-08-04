@@ -35,6 +35,7 @@ import {
 import { L, t } from "../../../shared/utilities/i18n";
 import { resetToCity, saveGame, useGameState } from "../Global";
 import { checkRebirthAchievements } from "../logic/Achievement";
+import { clientHeartbeat } from "../logic/Heartbeat";
 import { canEarnGreatPeopleFromReborn, client, isOnlineUser, useTrades, useUser } from "../rpc/RPCClient";
 import { jsxMapOf } from "../utilities/Helper";
 import { GreatPersonImage } from "../visuals/GreatPersonVisual";
@@ -465,7 +466,7 @@ export function RebirthModal(): React.ReactNode {
                      }
 
                      try {
-                        await saveGame();
+                        await Promise.all([saveGame(), clientHeartbeat()]);
                         window.location.reload();
                      } catch (error) {
                         playError();

@@ -1,8 +1,25 @@
 {
-   "cSpell.words": ["Cooldown", "Gameplay", "hitmap", "Koffi", "lerp", "rebirthed", "unlockable"],
+   "cSpell.words": [
+      "Cooldown",
+      "Gameplay",
+      "hitmap",
+      "Koffi",
+      "lerp",
+      "rebirthed",
+      "unlockable"
+   ],
    "task.allowAutomaticTasks": "on",
    "typescript.tsdk": "node_modules\\typescript\\lib",
    "editor.formatOnSave": true,
-   "typescript.preferences.preferTypeOnlyAutoImports": false,
+   "typescript.preferences.preferTypeOnlyAutoImports": true,
    "typescript.tsserver.experimental.enableProjectDiagnostics": false,
+   "editor.codeActionsOnSave": {
+      "source.fixAll.ts": "explicit",
+      "source.fixAll.biome": "explicit",
+      "source.sortImports": "explicit",
+      "source.addMissingImports.ts": "explicit",
+      "source.organizeImports": "never",
+      "source.organizeImports.biome": "explicit",
+      "source.removeUnusedImports": "explicit"
+   },
 }

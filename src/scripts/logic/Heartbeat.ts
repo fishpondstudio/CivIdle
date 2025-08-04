@@ -1,47 +1,22 @@
-import { getGameState } from "../../../shared/logic/GameStateLogic";
-import { fossilDeltaCreate } from "../../../shared/thirdparty/FossilDelta";
-import { wyhash } from "../../../shared/thirdparty/wyhash";
-import { client, isOnlineUser } from "../rpc/RPCClient";
-import { compress } from "../workers/Compress";
+import { getGameOptions, getGameState } from "../../../shared/logic/GameStateLogic";
+import { getPermanentGreatPeopleLevel } from "../../../shared/logic/RebirthLogic";
+import { getCurrentAge } from "../../../shared/logic/TechLogic";
+import { totalEmpireValue } from "../../../shared/logic/TickLogic";
+import { client, getUser } from "../rpc/RPCClient";
 
-export class Heartbeat {
-   constructor(private data: Uint8Array) {}
+export async function clientHeartbeat(): Promise<void> {
+   const user = getUser();
+   const gs = getGameState();
+   const options = getGameOptions();
 
-   public init(): void {
-      if (!this.shouldSendBytes()) {
-         return;
-      }
-      compress(this.data).then((d) => client.fullHeartbeat(d));
-   }
-
-   private shouldSendBytes(): boolean {
-      if (import.meta.env.DEV) {
-         return true;
-      }
-      if (getGameState().isOffline || !isOnlineUser()) {
-         return false;
-      }
-      return true;
-   }
-
-   public update(data: Uint8Array): void {
-      const gs = getGameState();
-      if (!this.shouldSendBytes()) {
-         client.tickV2(gs.id, gs.tick);
-         return;
-      }
-      const patch = fossilDeltaCreate(this.data, data);
-      compress(patch).then((p) => {
-         client
-            .heartbeat(p, wyhash(data, BigInt(0)).toString(16))
-            .then(() => {
-               this.data = data;
-            })
-            .catch((e) => {
-               console.error(e);
-               this.data = data;
-               this.init();
-            });
-      });
-   }
+   client.heartbeatV2({
+      clientTick: gs.tick,
+      clientTime: Date.now(),
+      gameId: gs.id,
+      city: gs.city,
+      techAge: getCurrentAge(gs),
+      userFlags: user?.attr ?? null,
+      empireValue: totalEmpireValue(gs),
+      greatPeopleLevel: getPermanentGreatPeopleLevel(options),
+   });
 }

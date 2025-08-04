@@ -1,17 +1,24 @@
 import { SmoothGraphics } from "@pixi/graphics-smooth";
-import type { ColorSource, FederatedPointerEvent, IPointData, Texture } from "pixi.js";
-import { BitmapText, Container, LINE_CAP, LINE_JOIN, ParticleContainer, Sprite } from "pixi.js";
+import {
+   Container,
+   LINE_CAP,
+   LINE_JOIN,
+   ParticleContainer,
+   Sprite,
+   Texture,
+   type ColorSource,
+   type FederatedPointerEvent,
+   type IPointData,
+} from "pixi.js";
 import type { Building } from "../../../shared/definitions/BuildingDefinitions";
 import WorldMap from "../../../shared/definitions/WorldMap.json";
-import { isTileReserved } from "../../../shared/logic/PlayerTradeLogic";
 import {
    MAP_MAX_X,
    MAP_MAX_Y,
-   UserColorsMapping,
    type IClientMapEntry,
    type IClientTrade,
 } from "../../../shared/utilities/Database";
-import { forEach, formatPercent, mapSafeAdd, sizeOf, xyToPoint } from "../../../shared/utilities/Helper";
+import { forEach, mapSafeAdd, sizeOf, xyToPoint } from "../../../shared/utilities/Helper";
 import type { Disposable } from "../../../shared/utilities/TypedEvent";
 import { getTexture } from "../logic/VisualLogic";
 import {
@@ -24,25 +31,23 @@ import {
    getUser,
 } from "../rpc/RPCClient";
 import { PlayerMapPage } from "../ui/PlayerMapPage";
-import { AccountLevelImages } from "../ui/TextureSprites";
-import { getColorCached } from "../utilities/CachedColor";
 import { Scene, destroyAllChildren, type ISceneContext } from "../utilities/SceneManager";
 import { Singleton } from "../utilities/Singleton";
 import { Easing } from "../utilities/pixi-actions/Easing";
 import { CustomAction } from "../utilities/pixi-actions/actions/CustomAction";
-import { Fonts } from "../visuals/Fonts";
 import { findPath, getOwnedTradeTile } from "./PathFinder";
+import { PlayerTile } from "./PlayerTile";
 
 let viewportCenter: IPointData | null = null;
 let viewportZoom: number | null = null;
 
-const GridSize = 100;
+export const GridSize = 100;
 
 export class PlayerMapScene extends Scene {
    private _width: number;
    private _height: number;
    private _selectedGraphics: SmoothGraphics;
-   private _tiles = new Map<string, Container>();
+   private _tiles = new Map<string, PlayerTile>();
    private _listeners: Disposable[] = [];
    private _path: Container;
    private _idToTradeCount = new Map<string, number>();
@@ -167,8 +172,9 @@ export class PlayerMapScene extends Scene {
             building.alpha = 0.2;
          }
       });
-      getPlayerMap().forEach((entry, xy) => {
-         this.addOrReplaceTile(xy, entry);
+      this._tiles.forEach((tile, xy) => {
+         const b = TileBuildings.get(xy);
+         tile.setBuildingTexture(b ? getTexture(`Building_${b}`, this.context.textures) : Texture.EMPTY);
       });
    }
 
@@ -377,91 +383,5 @@ export class PlayerMapScene extends Scene {
       }
       this._tiles.get(xy)?.destroy({ children: true });
       this._tiles.delete(xy);
-   }
-}
-
-class PlayerTile extends Container {
-   constructor(
-      tile: IPointData,
-      data: IClientMapEntry,
-      trade: number,
-      building: Texture | null,
-      context: ISceneContext,
-   ) {
-      super();
-      const { textures } = context;
-      const { x, y } = tile;
-
-      const isMyself = data.userId === getUser()?.userId;
-      const isReserved = isTileReserved(data);
-
-      const color = UserColorsMapping[data.color];
-      if (color) {
-         const sprite = this.addChild(new Sprite(context.textures.Misc_100x100));
-         sprite.position.set(x * GridSize, y * GridSize);
-         sprite.tint = getColorCached(color);
-         if (building) {
-            const buildingSprite = this.addChild(new Sprite(building));
-            buildingSprite.anchor.set(0.5, 0.5);
-            buildingSprite.scale.set(0.75);
-            buildingSprite.position.set(x * GridSize + 0.5 * GridSize, y * GridSize + 0.5 * GridSize);
-            buildingSprite.alpha = 0.25;
-         }
-      }
-
-      const flag = this.addChild(new Sprite(textures[`Flag_${data.flag.toUpperCase()}`]));
-      flag.anchor.set(0.5, 0.5);
-      flag.position.set(x * GridSize + 0.5 * GridSize - 15, y * GridSize + 0.5 * GridSize - 24);
-      flag.alpha = isReserved ? 1 : 0.5;
-
-      const level = this.addChild(new Sprite(textures[`Misc_${AccountLevelImages[data.level]}`]));
-      level.anchor.set(0.5, 0.5);
-      level.scale.set(0.25);
-      level.position.set(x * GridSize + 0.5 * GridSize + 15, y * GridSize + 0.5 * GridSize - 24);
-      level.alpha = isReserved ? 1 : 0.5;
-
-      if (trade > 0) {
-         const bg = this.addChild(new Sprite(getTexture("Misc_Circle_25", textures)));
-         bg.anchor.set(0.5, 0.5);
-         bg.tint = 0xe74c3c;
-         bg.position.set(x * GridSize + 0.9 * GridSize, y * GridSize + 0.12 * GridSize);
-
-         const tradeCount = this.addChild(
-            new BitmapText(String(trade), {
-               fontName: Fonts.Cabin,
-               fontSize: 20,
-               tint: 0xffffff,
-            }),
-         );
-         tradeCount.anchor.set(0.5, 0.5);
-         tradeCount.position.set(x * GridSize + 0.9 * GridSize, y * GridSize + 0.1 * GridSize);
-      }
-
-      const handle = this.addChild(
-         new BitmapText(data.handle, {
-            fontName: Fonts.Cabin,
-            fontSize: 16,
-            tint: isMyself ? 0xffeaa7 : 0xffffff,
-         }),
-      );
-
-      while (handle.width > GridSize - 10) {
-         handle.fontSize--;
-      }
-
-      handle.anchor.set(0.5, 0.5);
-      handle.position.set(x * GridSize + 0.5 * GridSize, y * GridSize + 0.5 * GridSize);
-      handle.alpha = isReserved ? 1 : 0.5;
-
-      const tariff = this.addChild(
-         new BitmapText(formatPercent(data.tariffRate), {
-            fontName: Fonts.Cabin,
-            fontSize: 20,
-            tint: isMyself ? 0xffeaa7 : 0xffffff,
-         }),
-      );
-      tariff.anchor.set(0.5, 0.5);
-      tariff.position.set(x * GridSize + 0.5 * GridSize, y * GridSize + 0.5 * GridSize + 20);
-      tariff.alpha = isReserved ? 1 : 0.5;
    }
 }

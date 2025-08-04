@@ -40,7 +40,7 @@ import {
    getGrid,
    getXyBuildings,
 } from "./IntraTickCache";
-import { getGreatPersonTotalEffect, getUpgradeCostFib } from "./RebirthLogic";
+import { getGreatPersonTotalEffect } from "./RebirthLogic";
 import { getBuildingsThatProduce, getResourcesValue } from "./ResourceLogic";
 import { getAgeForTech, getBuildingUnlockTech, getCurrentAge } from "./TechLogic";
 import {
@@ -1237,7 +1237,7 @@ export function getRandomEmptyTiles(count: number, gameState: GameState): Tile[]
          tile.building ||
          !isEmpty(tile.deposit) ||
          tile.explored ||
-         grid.isEdge(tileToPoint(xy), 2)
+         grid.isEdge(tileToPoint(xy), 3)
       ) {
          continue;
       }

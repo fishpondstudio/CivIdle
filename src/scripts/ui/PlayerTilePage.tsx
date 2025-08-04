@@ -67,6 +67,16 @@ export function PlayerTilePage({ xy }: { xy: string }): React.ReactNode {
                   <div className="f1">{t(L.PlayerMapLastSeenAt)}</div>
                   <div className="text-strong">{new Date(tile.lastSeenAt).toLocaleDateString()}</div>
                </div>
+               <div className="row mv5">
+                  <div className="f1">{t(L.Civilization)}</div>
+                  <div className="text-strong">{tile.city ? Config.City[tile.city].name() : null}</div>
+               </div>
+               <div className="row mv5">
+                  <div className="f1">{t(L.TechAge)}</div>
+                  <div className="text-strong">
+                     {tile.techAge ? Config.TechAge[tile.techAge].name() : null}
+                  </div>
+               </div>
             </fieldset>
             <fieldset>
                <legend>{t(L.PlayerMapTradesFrom, { name: tile.handle })}</legend>

@@ -1,5 +1,8 @@
 import type { Building } from "../definitions/BuildingDefinitions";
+import type { City } from "../definitions/CityDefinitions";
 import type { Resource } from "../definitions/ResourceDefinitions";
+import type { TechAge } from "../definitions/TechDefinitions";
+import type { IHeartbeatData } from "../logic/GameStateLogic";
 import { HOUR } from "./Helper";
 import { L, t } from "./i18n";
 
@@ -236,6 +239,7 @@ export interface IUser {
    saveOwner?: string;
    lastCheckInAt?: number;
    lastRecoveredAt?: number;
+   heartbeatData?: IHeartbeatData;
 }
 
 export interface IConnectionRequest {
@@ -257,6 +261,8 @@ export interface IClientMapEntry extends IMapEntry {
    level: AccountLevel;
    lastSeenAt: number;
    handle: string;
+   city: City | undefined;
+   techAge: TechAge | undefined;
 }
 
 export interface ISlowModeConfig {

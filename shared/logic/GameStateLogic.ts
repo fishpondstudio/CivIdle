@@ -1,4 +1,7 @@
+import type { City } from "../definitions/CityDefinitions";
+import type { TechAge } from "../definitions/TechDefinitions";
 import { wyhash } from "../thirdparty/wyhash";
+import type { UserAttributes } from "../utilities/Database";
 import { safeAdd } from "../utilities/Helper";
 import { TypedEvent } from "../utilities/TypedEvent";
 import { SavedGame, type GameOptions, type GameState } from "./GameState";
@@ -106,4 +109,14 @@ export function reviver(key: string, value: any): any {
       }
    }
    return value;
+}
+export interface IHeartbeatData {
+   clientTick: number;
+   clientTime: number;
+   gameId: string;
+   empireValue: number;
+   greatPeopleLevel: number;
+   city: City;
+   techAge: TechAge;
+   userFlags: UserAttributes | null;
 }

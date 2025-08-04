@@ -49,6 +49,7 @@ import { onBuildingOrUpgradeComplete } from "./OnBuildingOrUpgradeComplete";
 import { onProductionComplete } from "./OnProductionComplete";
 import { onTileExplored } from "./OnTileExplored";
 import { TimeSeries } from "./TimeSeries";
+import { clientHeartbeat } from "./Heartbeat";
 
 export function shouldTick(): boolean {
    return isSteam() || !document.hidden;
@@ -228,7 +229,7 @@ function postTickTiles(gs: GameState, offline: boolean) {
          saveGame().catch(console.error);
       }
       if (gs.tick % (heartbeatFreq * speed) === 0) {
-         Singleton().heartbeat.update(serializeSaveLite());
+         clientHeartbeat();
          client.queryRankUp().then((newRank) => {
             const user = getUser();
             if (user && newRank > user.level) {
