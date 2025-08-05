@@ -1,7 +1,5 @@
 import { BUILDING_DEFAULT_VISION } from "../definitions/BuildingDefinitions";
-import type { Grid } from "../utilities/Grid";
-import { type IPointData, pointToTile, tileToPoint, type Tile } from "../utilities/Helper";
-import { v2 } from "../utilities/Vector2";
+import { pointToTile, tileToPoint, type Tile } from "../utilities/Helper";
 import { exploreTile, isNaturalWonder } from "./BuildingLogic";
 import { Config } from "./Config";
 import type { GameState } from "./GameState";
@@ -31,31 +29,15 @@ export function ensureTileFogOfWar(xy: Tile, extraVisionRange: number, gameState
    return Array.from(result.values());
 }
 
-export function findNearest(
+export function sortByDistance(
    predicate: (tile: ITileData) => boolean,
-   target: IPointData,
-   grid: Grid,
+   target: Tile,
    gs: GameState,
-): ITileData | null {
-   const position = grid.gridToPosition(target);
-   const targetXp = pointToTile(target);
-   let minDistSqr = Number.POSITIVE_INFINITY;
-   let tile: ITileData | null = null;
-   gs.tiles.forEach((t, xy) => {
-      if (!predicate(t)) {
-         return;
-      }
-      // Do NOT find myself!
-      if (xy === targetXp) {
-         return;
-      }
-      const distSqr = v2(grid.gridToPosition(tileToPoint(xy)))
-         .subtractSelf(position)
-         .lengthSqr();
-      if (distSqr < minDistSqr) {
-         minDistSqr = distSqr;
-         tile = t;
-      }
-   });
-   return tile;
+): ITileData[] {
+   const grid = getGrid(gs);
+   return Array.from(gs.tiles.values())
+      .filter(predicate)
+      .sort((a, b) => {
+         return grid.distanceTile(a.tile, target) - grid.distanceTile(b.tile, target);
+      });
 }

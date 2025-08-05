@@ -5,7 +5,7 @@ import { Config } from "./Config";
 import type { GameOptions, GameState } from "./GameState";
 import { getGrid } from "./IntraTickCache";
 import { unlockTech } from "./TechLogic";
-import { ensureTileFogOfWar, findNearest } from "./TerrainLogic";
+import { ensureTileFogOfWar, sortByDistance } from "./TerrainLogic";
 import { makeBuilding } from "./Tile";
 
 export function initializeGameState(gameState: GameState, options: GameOptions) {
@@ -47,9 +47,9 @@ export function initializeGameState(gameState: GameState, options: GameOptions) 
       }
    });
 
-   const wood = findNearest((tile) => !!tile.deposit.Wood && !tile.building, center, grid, gameState);
-   if (wood) {
-      gameState.tiles.get(wood.tile)!.building = applyBuildingDefaults(
+   const wood = sortByDistance((tile) => !!tile.deposit.Wood && !tile.building, centerXy, gameState);
+   if (wood.length > 0) {
+      wood[0].building = applyBuildingDefaults(
          makeBuilding(
             makeBuilding({
                type: "LoggingCamp",
@@ -60,10 +60,13 @@ export function initializeGameState(gameState: GameState, options: GameOptions) 
          opt,
       );
    }
+   if (wood.length > 1) {
+      wood[1].explored = true;
+   }
 
-   const stone = findNearest((tile) => !!tile.deposit.Stone && !tile.building, center, grid, gameState);
-   if (stone) {
-      gameState.tiles.get(stone.tile)!.building = applyBuildingDefaults(
+   const stone = sortByDistance((tile) => !!tile.deposit.Stone && !tile.building, centerXy, gameState);
+   if (stone.length > 0) {
+      stone[0].building = applyBuildingDefaults(
          makeBuilding({
             type: "StoneQuarry",
             level: 1,
@@ -72,10 +75,13 @@ export function initializeGameState(gameState: GameState, options: GameOptions) 
          opt,
       );
    }
+   if (stone.length > 1) {
+      stone[1].explored = true;
+   }
 
-   const water = findNearest((tile) => !!tile.deposit.Water && !tile.building, center, grid, gameState);
-   if (water) {
-      gameState.tiles.get(water.tile)!.building = applyBuildingDefaults(
+   const water = sortByDistance((tile) => !!tile.deposit.Water && !tile.building, centerXy, gameState);
+   if (water.length > 0) {
+      water[0].building = applyBuildingDefaults(
          makeBuilding({
             type: "Aqueduct",
             level: 1,
@@ -83,6 +89,9 @@ export function initializeGameState(gameState: GameState, options: GameOptions) 
          }),
          opt,
       );
+   }
+   if (water.length > 1) {
+      water[1].explored = true;
    }
 
    gameState.tiles.forEach((tile, xy) => {
