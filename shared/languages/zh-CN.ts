@@ -220,7 +220,7 @@ export const ZH_CN = {
    BuildingExtractDeposit: "该建筑提取此地块上的沉积物",
    BuildingLevel: "建筑等级",
    BuildingLevelBoost: "额外建筑等级",
-   BuildingLevelBoostDesc: "为 %{building}  提升 +%{value} 额外建筑等级",
+   BuildingLevelBoostDesc: "为 %{building} 提升 +%{value} 额外建筑等级",
    BuildingLevelBoostFromElectrification: "来自电气化中的额外建筑等级",
    BuildingMultipliers: "增强",
    BuildingName: "建筑名",
