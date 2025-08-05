@@ -220,7 +220,7 @@ export const ZH_TW = {
    BuildingExtractDeposit: "該建築提取地塊上的沉積物",
    BuildingLevel: "建築等級",
    BuildingLevelBoost: "額外建築等級",
-   BuildingLevelBoostDesc: "為 %{building}  提升 +%{value} 額外建築等級",
+   BuildingLevelBoostDesc: "%{building} +%{value} 額外建築等級",
    BuildingLevelBoostFromElectrification: "來自電氣化中的額外建築等級",
    BuildingMultipliers: "乘數",
    BuildingName: "建築名稱",
