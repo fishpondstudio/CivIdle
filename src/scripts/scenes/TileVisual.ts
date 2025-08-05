@@ -170,6 +170,9 @@ export class TileVisual extends Container {
       return rect.intersects(this._aabb);
    }
 
+   public getSpriteColor(): number {
+      return DarkTileTextures[getGameOptions().tileTexture] ? 0xffffff : 0x666666;
+   }
    public getTextColor(): number {
       return DarkTileTextures[getGameOptions().tileTexture] ? 0xffffff : 0x666666;
    }
@@ -267,9 +270,9 @@ export class TileVisual extends Container {
          this._notProducing.tint = c;
          this._spinner.tint = c;
       } else {
-         this._building.tint = 0xffffff;
-         this._notProducing.tint = 0xffffff;
-         this._spinner.tint = 0xffffff;
+         this._building.tint = this.getSpriteColor();
+         this._notProducing.tint = this.getSpriteColor();
+         this._spinner.tint = this.getSpriteColor();
       }
       if (this._tile.building.status !== "completed") {
          return;
