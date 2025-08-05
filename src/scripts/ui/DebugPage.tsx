@@ -3,10 +3,12 @@ import type { Resource } from "../../../shared/definitions/ResourceDefinitions";
 import { Config } from "../../../shared/logic/Config";
 import { clamp, keysOf, mapOf, safeAdd } from "../../../shared/utilities/Helper";
 import type { PartialTabulate } from "../../../shared/utilities/TypeDefinitions";
+import { useGameOptions } from "../Global";
 import { TitleBarComponent } from "./TitleBarComponent";
 
 export function DebugPage(): React.ReactNode {
    const [selectedResource, setSelectedResource] = useState<PartialTabulate<Resource>>({});
+   const gameOptions = useGameOptions();
    return (
       <div className="window">
          <TitleBarComponent>Debug</TitleBarComponent>
