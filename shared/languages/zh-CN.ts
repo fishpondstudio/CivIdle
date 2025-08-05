@@ -876,7 +876,7 @@ export const ZH_CN = {
    NebuchadnezzarII: "尼布甲尼撒二世",
    Neighbor: "相邻玩家",
    Neighbors: "相邻玩家",
-   NeighborsDescHTMLV2: "对于每个相邻玩家拥有的地块，你得到<b> +%{neighbor} 生产乘数的贸易地块加成</b>，对于每个盟友拥有的地块，你得到<b> +%{ally} 生产乘数的贸易地块加成</b>。要成为相邻玩家的盟友，请游玩与他们相同的文明！",
+   NeighborsDescHTMLV2: "对于每个相邻玩家拥有的地块，你得到<b> +%{neighbor} 生产乘数的贸易地块加成</b>，对于每个盟友拥有的地块，你得到<b> +%{ally} 生产乘数的贸易地块加成</b>。要成为相邻玩家的盟友，请游玩与他们相同的文明",
    Neuschwanstein: "新天鹅堡",
    NeuschwansteinDesc: "建造奇观时，建造者能力乘数 +10 ",
    Newspaper: "报纸",
