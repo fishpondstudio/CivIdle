@@ -173,6 +173,10 @@ export const PremiumTileTextures: Partial<Record<TileTexture, true>> = {
    Tile16: true,
 };
 
+export function getTextColor(): number {
+   return DarkTileTextures[getGameOptions().tileTexture] ? 0xffffff : 0x666666;
+}
+
 export const CursorOptions = {
    OldFashioned: () => t(L.CursorOldFashioned),
    BigOldFashioned: () => t(L.CursorBigOldFashioned),

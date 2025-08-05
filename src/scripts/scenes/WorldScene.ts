@@ -21,7 +21,12 @@ import {
 } from "../../../shared/logic/BuildingLogic";
 import { MANAGED_IMPORT_RANGE } from "../../../shared/logic/Constants";
 import { GameFeature, hasFeature } from "../../../shared/logic/FeatureLogic";
-import { DarkTileTextures, type GameOptions, type GameState } from "../../../shared/logic/GameState";
+import {
+   DarkTileTextures,
+   getTextColor,
+   type GameOptions,
+   type GameState,
+} from "../../../shared/logic/GameState";
 import { getGameOptions, getGameState, notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
 import { getGrid } from "../../../shared/logic/IntraTickCache";
 import {
@@ -115,7 +120,7 @@ export class WorldScene extends Scene {
                new BitmapText("", {
                   fontName: Fonts.Cabin,
                   fontSize: 14,
-                  tint: 0xffffff,
+                  tint: getTextColor(),
                }),
             );
             visual.anchor.set(0.5, 0.5);
@@ -478,8 +483,9 @@ export class WorldScene extends Scene {
             return;
          }
          lines[key] = true;
+         const color = getGameOptions().resourceColors[t.resource];
          this._transportLines.lineStyle({
-            color: getColorCached(getGameOptions().resourceColors[t.resource] ?? "#ffffff"),
+            color: color ? getColorCached(color) : getTextColor(),
             width: 2,
             cap: LINE_CAP.ROUND,
             join: LINE_JOIN.ROUND,
@@ -547,7 +553,8 @@ export class WorldScene extends Scene {
          if (!visual) {
             visual = this._transportPool.allocate();
             visual.position = t.fromPosition;
-            visual.tint = getColorCached(options.resourceColors[t.resource] ?? "#ffffff");
+            const color = options.resourceColors[t.resource];
+            visual.tint = color ? getColorCached(color) : getTextColor();
             lookAt(visual, t.toPosition);
             this._transport.set(t.id, visual);
          }
