@@ -33,6 +33,7 @@ export function BuildingIOTreeViewComponent({
    const buildingType = building?.type;
    const isCloneOutput =
       type === "output" && (buildingType === "CloneFactory" || buildingType === "CloneLab");
+   const levelBoost = Tick.current.levelBoost.get(xy) ?? [];
    return (
       <ul className="tree-view">
          {jsxMapOf(data, (k, v) => {
@@ -41,7 +42,6 @@ export function BuildingIOTreeViewComponent({
                type === "input" &&
                Tick.current.notProducingReasons.get(xy) === NotProducingReason.NotEnoughResources &&
                resourceInStorage < v;
-            const levelBoost = Tick.current.levelBoost.get(xy) ?? 0;
             return (
                <li key={k}>
                   <details>

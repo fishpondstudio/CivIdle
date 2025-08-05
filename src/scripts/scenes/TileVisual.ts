@@ -96,12 +96,14 @@ export class TileVisual extends Container {
       this._construction.position.set(-25, -5);
       this._construction.anchor.set(0, 1);
       this._construction.scale.set(0.5);
+      this._construction.tint = getTextColor();
       this._construction.visible = false;
 
       this._notProducing = this.addChild(new Sprite());
       this._notProducing.position.set(-20, -20);
       this._notProducing.anchor.set(0.5, 0.5);
       this._notProducing.scale.set(0.5);
+      this._notProducing.tint = getTextColor();
       this._notProducing.visible = false;
 
       this._constructionAnimation = Actions.repeat(
@@ -116,6 +118,7 @@ export class TileVisual extends Container {
       this._upgrade.anchor.set(0, 1);
       this._upgrade.scale.set(0.5);
       this._upgrade.alpha = 0;
+      this._upgrade.tint = getTextColor();
       this._upgrade.visible = false;
 
       this._upgradeAnimation = Actions.repeat(
@@ -191,7 +194,7 @@ export class TileVisual extends Container {
 
    public updateDepositColor(options: GameOptions) {
       this._deposits.forEach((sprite, deposit) => {
-         const color = getColorCached(options.resourceColors[deposit] ?? "#ffffff");
+         const color = options.resourceColors[deposit];
          sprite.tint = color ? getColorCached(color) : getTextColor();
       });
       const texture = getTexture(`Misc_${options.tileTexture}`, this._world.context.textures);

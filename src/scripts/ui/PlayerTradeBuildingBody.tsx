@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { L, t } from "../../../shared/utilities/i18n";
+import { AvailableTradingResourcesComponent } from "./AvailableTradingResourcesComponent";
 import { BuildingColorComponent } from "./BuildingColorComponent";
 import { BuildingInputModeComponent } from "./BuildingInputModeComponent";
 import type { IBuildingComponentProps } from "./BuildingPage";
@@ -13,7 +14,7 @@ import { PendingTradesComponent } from "./PendingTradesComponent";
 import { PlayerTradeComponent } from "./PlayerTradeComponent";
 import { ResourceImportComponent } from "./ResourceImportComponent";
 
-type Tab = "trades" | "pending" | "import";
+type Tab = "trades" | "pending" | "import" | "available";
 let savedTab: Tab = "trades";
 
 export function PlayerTradeBuildingBody({ gameState, xy }: IBuildingComponentProps): React.ReactNode {
@@ -33,6 +34,13 @@ export function PlayerTradeBuildingBody({ gameState, xy }: IBuildingComponentPro
             <ResourceImportComponent gameState={gameState} xy={xy} />
          </article>
       );
+   } else if (currentTab === "available") {
+      savedTab = "available";
+      content = (
+         <article role="tabpanel" style={{ padding: "8px" }}>
+            <AvailableTradingResourcesComponent />
+         </article>
+      );
    }
 
    return (
@@ -44,6 +52,9 @@ export function PlayerTradeBuildingBody({ gameState, xy }: IBuildingComponentPro
             </button>
             <button onClick={() => setCurrentTab("pending")} aria-selected={currentTab === "pending"}>
                {t(L.PlayerTradeTabPendingTrades)}
+            </button>{" "}
+            <button onClick={() => setCurrentTab("available")} aria-selected={currentTab === "available"}>
+               {t(L.PlayerTradeTabAvailableTrades)}
             </button>
             <button onClick={() => setCurrentTab("import")} aria-selected={currentTab === "import"}>
                {t(L.PlayerTradeTabImport)}

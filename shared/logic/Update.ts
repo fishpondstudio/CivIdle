@@ -88,11 +88,13 @@ import {
    MarketOptions,
    ResourceImportOptions,
    SuspendedInput,
+   SwissBankFlags,
    WarehouseOptions,
    type IBuildingData,
    type ICloneBuildingData,
    type IMarketBuildingData,
    type IResourceImportBuildingData,
+   type ISwissBankBuildingData,
    type ITileData,
    type IWarehouseBuildingData,
 } from "./Tile";
@@ -858,6 +860,13 @@ export function transportResource(
          !Config.Building[sourceBuilding.type].output[res]
       ) {
          continue;
+      }
+
+      if (sourceBuilding.type === "SwissBank") {
+         const swissBank = sourceBuilding as ISwissBankBuildingData;
+         if (hasFlag(swissBank.flags, SwissBankFlags.NoExport)) {
+            continue;
+         }
       }
 
       const maxDistance = getMaxInputDistance(targetBuilding, gs);

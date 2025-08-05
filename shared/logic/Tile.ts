@@ -102,6 +102,11 @@ export enum ResourceImportOptions {
    ManagedImport = 1 << 2,
 }
 
+export enum SwissBankFlags {
+   None = 0,
+   NoExport = 1 << 0,
+}
+
 export interface IResourceImportBuildingData extends IBuildingData {
    resourceImportOptions: ResourceImportOptions;
    resourceImports: Partial<Record<Resource, IResourceImport>>;
@@ -152,6 +157,7 @@ export interface ICentrePompidouBuildingData extends IBuildingData {
 
 export interface ISwissBankBuildingData extends IBuildingData {
    resource: Resource | null;
+   flags: SwissBankFlags;
 }
 
 export interface IItaipuDamBuildingData extends IBuildingData {
@@ -292,6 +298,9 @@ export function makeBuilding(data: Pick<IBuildingData, "type"> & Partial<IBuildi
          const swissBank = building as ISwissBankBuildingData;
          if (!swissBank.resource) {
             swissBank.resource = null;
+         }
+         if (isNullOrUndefined(swissBank.flags)) {
+            swissBank.flags = SwissBankFlags.None;
          }
          break;
       }

@@ -5,7 +5,7 @@ import { getTransportStat } from "../logic/IntraTickCache";
 import type { MultiplierType, MultiplierWithStability } from "../logic/TickLogic";
 import { MultiplierTypeDesc, Tick } from "../logic/TickLogic";
 import { addMultiplier } from "../logic/Update";
-import { hasFlag } from "../utilities/Helper";
+import { hasFlag, mapSafePush } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
 import type { Building } from "./BuildingDefinitions";
 import type { City } from "./CityDefinitions";
@@ -1239,6 +1239,37 @@ export class GreatPersonDefinitions {
       maxLevel: Number.POSITIVE_INFINITY,
       age: "ColdWarAge",
    });
+
+   FriedrichHayek: IGreatPersonDefinition = boostOf({
+      name: () => t(L.FriedrichHayek),
+      boost: {
+         multipliers: ["output"],
+         buildings: ["SwissBank"],
+      },
+      time: "1899 ~ 1992 AD",
+      value: (level) => level,
+      maxLevel: Number.POSITIVE_INFINITY,
+      age: "ColdWarAge",
+   });
+
+   PaulSamuelson: IGreatPersonDefinition = {
+      name: () => t(L.PaulSamuelson),
+      desc: (self, level) => t(L.BuildingLevelBoostDesc, { value: self.value(level), building: "SwissBank" }),
+      time: "1915 ~ 2009 AD",
+      value: (level) => level,
+      maxLevel: Number.POSITIVE_INFINITY,
+      age: "ColdWarAge",
+      tick: (self, level, source) => {
+         const swissBank = Tick.current.specialBuildings.get("SwissBank");
+         if (swissBank) {
+            mapSafePush(Tick.next.levelBoost, swissBank.tile, {
+               value: self.value(level),
+               source: source,
+            });
+         }
+      },
+      type: GreatPersonType.Normal,
+   };
 
    JamesWatson: IGreatPersonDefinition = {
       name: () => t(L.JamesWatson),

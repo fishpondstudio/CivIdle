@@ -1,21 +1,29 @@
 import Tippy from "@tippyjs/react";
 import type React from "react";
 import { NoPrice, NoStorage, type Resource } from "../../../shared/definitions/ResourceDefinitions";
-import { getBuildingCost, getMultipliersFor, totalMultiplierFor } from "../../../shared/logic/BuildingLogic";
+import {
+   getBuildingCost,
+   getElectrificationBoost,
+   getMultipliersFor,
+   totalMultiplierFor,
+} from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
 import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
+import { combineResources } from "../../../shared/logic/ResourceLogic";
 import { Tick } from "../../../shared/logic/TickLogic";
-import type { ISwissBankBuildingData } from "../../../shared/logic/Tile";
-import { formatNumber, keysOf } from "../../../shared/utilities/Helper";
+import { SwissBankFlags, type ISwissBankBuildingData } from "../../../shared/logic/Tile";
+import { formatNumber, hasFlag, keysOf, toggleFlag } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import { jsxMapOf } from "../utilities/Helper";
 import { playClick } from "../visuals/Sound";
 import { BuildingColorComponent } from "./BuildingColorComponent";
 import { BuildingDescriptionComponent } from "./BuildingDescriptionComponent";
+import { BuildingElectricityComponent } from "./BuildingElectricityComponent";
 import type { IBuildingComponentProps } from "./BuildingPage";
 import { BuildingStorageComponent } from "./BuildingStorageComponent";
 import { BuildingValueComponent } from "./BuildingValueComponent";
 import { BuildingWikipediaComponent } from "./BuildingWikipediaComponent";
+import { FormatNumber } from "./HelperComponents";
 import { ResourceAmountComponent } from "./ResourceAmountComponent";
 
 export function SwissBankBuildingBody({ gameState, xy }: IBuildingComponentProps): React.ReactNode {
@@ -24,6 +32,11 @@ export function SwissBankBuildingBody({ gameState, xy }: IBuildingComponentProps
       return null;
    }
    const multiplier = totalMultiplierFor(xy, "output", 1, false, gameState);
+   const availableResources = combineResources(
+      Array.from(Tick.current.playerTradeBuildings.values()).map((m) => m.resources),
+   );
+   const levelBoost = Tick.current.levelBoost.get(xy) ?? [];
+   const electrification = getElectrificationBoost(building, gameState);
    return (
       <div className="window-body">
          <fieldset>
@@ -85,7 +98,7 @@ export function SwissBankBuildingBody({ gameState, xy }: IBuildingComponentProps
                      }
                      return (
                         <option key={res} value={res}>
-                           {Config.Resource[res].name()}
+                           {Config.Resource[res].name()} ({formatNumber(availableResources[res] ?? 0)})
                         </option>
                      );
                   })}
@@ -132,8 +145,34 @@ export function SwissBankBuildingBody({ gameState, xy }: IBuildingComponentProps
                   <ul>
                      <li className="row">
                         <div className="f1">{t(L.BaseProduction)}</div>
-                        <div>{formatNumber(building.level)}</div>
+                        <div>
+                           {formatNumber(
+                              building.level +
+                                 electrification +
+                                 levelBoost.reduce((acc, lb) => acc + lb.value, 0),
+                           )}
+                        </div>
                      </li>
+                     <ul>
+                        <li className="row">
+                           <div className="f1">{t(L.BuildingLevel)}</div>
+                           <div>{formatNumber(building.level)}</div>
+                        </li>
+                        {electrification > 0 ? (
+                           <li className="row">
+                              <div className="f1">{t(L.ElectrificationLevel)}</div>
+                              <FormatNumber value={Tick.current.electrified.get(xy) ?? 0} />
+                           </li>
+                        ) : null}
+                        {levelBoost && levelBoost.length > 0
+                           ? levelBoost.map((lb, idx) => (
+                                <li key={idx} className="row">
+                                   <div className="f1">{lb.source}</div>
+                                   <FormatNumber value={lb.value} />
+                                </li>
+                             ))
+                           : null}
+                     </ul>
                      <li className="row">
                         <div className="f1">{t(L.ProductionMultiplier)}</div>
                         <div>x{multiplier}</div>
@@ -168,6 +207,30 @@ export function SwissBankBuildingBody({ gameState, xy }: IBuildingComponentProps
                </li>
             </ul>
          </fieldset>
+         <fieldset>
+            <div className="row">
+               <div>{t(L.NoKotiExport)}</div>
+               <Tippy content={t(L.NoKotiExportDesc)}>
+                  <div className="m-icon small ml5 text-desc help-cursor">help</div>
+               </Tippy>
+               <div className="f1"></div>
+               <div
+                  className="pointer ml20"
+                  onClick={() => {
+                     playClick();
+                     building.flags = toggleFlag(building.flags, SwissBankFlags.NoExport);
+                     notifyGameStateUpdate();
+                  }}
+               >
+                  {hasFlag(building.flags, SwissBankFlags.NoExport) ? (
+                     <div className="m-icon text-green">toggle_on</div>
+                  ) : (
+                     <div className="m-icon text-desc">toggle_off</div>
+                  )}
+               </div>
+            </div>
+         </fieldset>
+         <BuildingElectricityComponent gameState={gameState} xy={xy} />
          <BuildingDescriptionComponent gameState={gameState} xy={xy} />
          <BuildingStorageComponent gameState={gameState} xy={xy} />
          <BuildingValueComponent gameState={gameState} xy={xy} />

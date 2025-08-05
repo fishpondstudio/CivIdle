@@ -2036,7 +2036,7 @@ export class BuildingDefinitions {
 
    SwissBank: IBuildingDefinition = {
       name: () => t(L.SwissBank),
-      desc: () => t(L.SwissBankDescV2),
+      desc: () => t(L.SwissBankDescV3),
       input: {},
       output: {},
       construction: { Forex: 100, Diplomacy: 100, Radio: 100 },
