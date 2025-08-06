@@ -753,7 +753,7 @@ export const ZH_CN = {
    Kanagawa: "神奈川",
    KanagawaDesc: "当此奇观被发现后，所有当前时代的伟人（包括未拥有过的），额外获得 +1 等级（芝诺比娅除外）",
    KarlMarx: "卡尔·马克思",
-   KingDavid: "大卫国王",
+   KingDavid: "大卫王",
    Knight: "骑士",
    KnightCamp: "骑士营地",
    Koti: "💵瑞士货币",
