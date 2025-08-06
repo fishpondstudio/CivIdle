@@ -37,6 +37,8 @@ export function SwissBankBuildingBody({ gameState, xy }: IBuildingComponentProps
    );
    const levelBoost = Tick.current.levelBoost.get(xy) ?? [];
    const electrification = getElectrificationBoost(building, gameState);
+   const effectiveLevel =
+      building.level + electrification + levelBoost.reduce((acc, lb) => acc + lb.value, 0);
    return (
       <div className="window-body">
          <fieldset>
@@ -140,18 +142,12 @@ export function SwissBankBuildingBody({ gameState, xy }: IBuildingComponentProps
                <li>
                   <div className="row">
                      <div className="text-strong f1">{t(L.KotiProduction)}</div>
-                     <div className="text-strong">{formatNumber(building.level * multiplier)}</div>
+                     <div className="text-strong">{formatNumber(effectiveLevel * multiplier)}</div>
                   </div>
                   <ul>
                      <li className="row">
                         <div className="f1">{t(L.BaseProduction)}</div>
-                        <div>
-                           {formatNumber(
-                              building.level +
-                                 electrification +
-                                 levelBoost.reduce((acc, lb) => acc + lb.value, 0),
-                           )}
-                        </div>
+                        <div>{formatNumber(effectiveLevel)}</div>
                      </li>
                      <ul>
                         <li className="row">
