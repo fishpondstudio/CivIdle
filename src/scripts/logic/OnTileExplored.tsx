@@ -99,7 +99,11 @@ export function onTileExplored(xy: Tile): void {
          }
          case "Pamukkale": {
             forEach(getGameOptions().greatPeople, (gp, inv) => {
-               if (Config.GreatPerson[gp].type === GreatPersonType.Normal && inv.amount > 0) {
+               if (
+                  (Config.GreatPerson[gp].type === GreatPersonType.Normal ||
+                     Config.GreatPerson[gp].type === GreatPersonType.Adaptive) &&
+                  inv.amount > 0
+               ) {
                   --inv.amount;
                   safeAdd(gs.greatPeople, gp, 1);
                }

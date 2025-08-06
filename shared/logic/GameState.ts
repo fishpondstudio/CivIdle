@@ -74,6 +74,7 @@ export class GameState {
    valueTrackers = new Map<ValueToTrack, IValueTracker>();
    speedUp = 1;
    pinStatPanel = false;
+   adaptiveGreatPeople = new Map<GreatPerson, Building>();
 }
 
 export type GreatPeopleChoice = GreatPerson[];

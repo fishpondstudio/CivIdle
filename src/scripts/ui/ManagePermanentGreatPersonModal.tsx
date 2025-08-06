@@ -1,10 +1,12 @@
 import Tippy from "@tippyjs/react";
 import classNames from "classnames";
 import { useState } from "react";
+import type { Building } from "../../../shared/definitions/BuildingDefinitions";
 import { GreatPersonType, type GreatPerson } from "../../../shared/definitions/GreatPersonDefinitions";
 import type { TechAge } from "../../../shared/definitions/TechDefinitions";
+import { isWorldOrNaturalWonder } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
-import { notifyGameOptionsUpdate } from "../../../shared/logic/GameStateLogic";
+import { notifyGameOptionsUpdate, notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
 import {
    addPermanentGreatPerson,
    getGreatPersonThisRunLevel,
@@ -152,6 +154,8 @@ function GreatPersonRow({ greatPerson }: { greatPerson: GreatPerson }): React.Re
          return <GreatPersonWildcardRow greatPerson={greatPerson} />;
       case GreatPersonType.Promotion:
          return <GreatPersonPromotionRow greatPerson={greatPerson} />;
+      case GreatPersonType.Adaptive:
+         return <GreatPersonAdaptiveRow greatPerson={greatPerson} />;
       case GreatPersonType.Normal:
          return <GreatPersonNormalRow greatPerson={greatPerson} />;
       default:
@@ -428,6 +432,107 @@ function GreatPersonPromotionRow({ greatPerson }: { greatPerson: GreatPerson }):
                }}
             >
                {t(L.GreatPersonPromotionPromote)}
+            </button>
+         </td>
+         <td>
+            <Tippy content={t(L.AgeWisdomNotEligible)}>
+               <div className="m-icon text-desc">do_not_disturb_on</div>
+            </Tippy>
+         </td>
+         <td></td>
+      </>
+   );
+}
+
+function GreatPersonAdaptiveRow({ greatPerson }: { greatPerson: GreatPerson }): React.ReactNode {
+   const options = useGameOptions();
+   const gs = useGameState();
+   const thisRun = gs.greatPeople[greatPerson];
+   const permanent = options.greatPeople[greatPerson];
+   const person = Config.GreatPerson[greatPerson];
+   const total = permanent ? getGreatPersonUpgradeCost(greatPerson, permanent.level + 1) : 0;
+   return (
+      <>
+         <td className="text-center">
+            <TextWithHelp content={person.desc(person, getGreatPersonThisRunLevel(thisRun ?? 0))}>
+               {thisRun}
+            </TextWithHelp>
+         </td>
+         <td className="text-center">
+            {permanent ? (
+               <TextWithHelp content={person.desc(person, permanent.level)}>
+                  {numberToRoman(permanent.level)}
+               </TextWithHelp>
+            ) : null}
+         </td>
+         <td>
+            <div className="row g5">
+               <Tippy
+                  content={
+                     <>
+                        <div>{person.desc(person, permanent?.level ?? 1)}</div>
+                        <div>{t(L.AdaptiveGreatPersonTooltip)}</div>
+                     </>
+                  }
+               >
+                  <div className="m-icon small text-orange">info</div>
+               </Tippy>
+               <select
+                  value={gs.adaptiveGreatPeople.get(greatPerson) ?? ""}
+                  disabled={gs.adaptiveGreatPeople.has(greatPerson)}
+                  className="w100"
+                  onChange={(e) => {
+                     if (gs.adaptiveGreatPeople.has(greatPerson)) {
+                        playError();
+                        return;
+                     }
+                     playClick();
+                     gs.adaptiveGreatPeople.set(greatPerson, e.target.value as Building);
+                     notifyGameStateUpdate(gs);
+                  }}
+               >
+                  <option value=""></option>
+                  {jsxMapOf(Config.BuildingTechAge, (building, age) => {
+                     if (age !== person.age) {
+                        return null;
+                     }
+                     if (isWorldOrNaturalWonder(building)) {
+                        return null;
+                     }
+                     if (Config.Building[building].output.Worker) {
+                        return null;
+                     }
+                     return (
+                        <option key={building} value={building}>
+                           {Config.Building[building].name()}
+                        </option>
+                     );
+                  })}
+               </select>
+            </div>
+         </td>
+         <td>
+            <button
+               onClick={() => {
+                  if (permanent && permanent.amount >= total) {
+                     permanent.amount -= total;
+                     permanent.level++;
+                     notifyGameOptionsUpdate(options);
+                     playUpgrade();
+                  } else {
+                     playError();
+                  }
+               }}
+               className="w100 row text-strong w100"
+               disabled={!permanent || permanent.amount < total}
+            >
+               <div className="m-icon" style={{ margin: "0 5px 0 -5px", fontSize: "18px" }}>
+                  input_circle
+               </div>
+               <div className="f1 text-right">
+                  <FormatNumber value={permanent?.amount ?? 0} />/
+                  <FormatNumber value={total} />
+               </div>
             </button>
          </td>
          <td>

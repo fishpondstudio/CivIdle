@@ -121,7 +121,8 @@ export function addPermanentGreatPerson(gp: GreatPerson, amount: number): void {
       inv.amount += amount;
    } else {
       options.greatPeople[gp] =
-         Config.GreatPerson[gp].type === GreatPersonType.Normal
+         Config.GreatPerson[gp].type === GreatPersonType.Normal ||
+         Config.GreatPerson[gp].type === GreatPersonType.Adaptive
             ? { level: 1, amount: amount - 1 }
             : { level: 0, amount };
    }
@@ -129,7 +130,12 @@ export function addPermanentGreatPerson(gp: GreatPerson, amount: number): void {
 
 export function upgradeAllPermanentGreatPeople(options: GameOptions): void {
    forEach(options.greatPeople, (greatPerson, inventory) => {
-      if (Config.GreatPerson[greatPerson].type !== GreatPersonType.Normal) return;
+      if (
+         Config.GreatPerson[greatPerson].type !== GreatPersonType.Normal &&
+         Config.GreatPerson[greatPerson].type !== GreatPersonType.Adaptive
+      ) {
+         return;
+      }
       while (inventory.amount >= getGreatPersonUpgradeCost(greatPerson, inventory.level + 1)) {
          inventory.amount -= getGreatPersonUpgradeCost(greatPerson, inventory.level + 1);
          ++inventory.level;

@@ -34,7 +34,9 @@ export function BroadwayBuildingBody({ gameState, xy }: IBuildingComponentProps)
                   const def = Config.GreatPerson[gp];
                   const effect = getGreatPersonTotalEffect(gp, gameState);
                   if (effect <= 0) return <></>;
-                  if (def.type !== GreatPersonType.Normal) return <></>;
+                  if (def.type !== GreatPersonType.Normal && def.type !== GreatPersonType.Adaptive) {
+                     return <></>;
+                  }
                   return (
                      <div key={gp} className="row mb5">
                         <GreatPersonImage greatPerson={gp} style={{ height: "50px", display: "block" }} />
@@ -99,7 +101,9 @@ export function BroadwayBuildingBody({ gameState, xy }: IBuildingComponentProps)
                      .sort(sortGreatPeople)
                      .map((k) => {
                         const def = Config.GreatPerson[k];
-                        if (def.type !== GreatPersonType.Normal) return null;
+                        if (def.type !== GreatPersonType.Normal && def.type !== GreatPersonType.Adaptive) {
+                           return null;
+                        }
                         if (k === "Zenobia") return null;
                         const effect = getGreatPersonTotalEffect(k, gameState);
                         if (effect <= 0) return null;

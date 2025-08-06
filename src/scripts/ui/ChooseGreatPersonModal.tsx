@@ -111,7 +111,7 @@ export function ChooseGreatPersonModal({ permanent }: { permanent: boolean }): R
                            {p.desc(p, permanent ? 1 : round(1 / (1 + (gs.greatPeople[greatPerson] ?? 0)), 2))}
                         </div>
                         {!permanent &&
-                        p.type === GreatPersonType.Normal &&
+                        (p.type === GreatPersonType.Normal || p.type === GreatPersonType.Adaptive) &&
                         (gs.greatPeople[greatPerson] ?? 0) > 0 ? (
                            <Tippy
                               content={t(L.GreatPersonThisRunEffectiveLevel, {
@@ -152,7 +152,9 @@ function GreatPersonLevel({
 }: { greatPerson: GreatPerson; permanent: boolean }): React.ReactNode {
    const options = useGameOptions();
    const gs = useGameState();
-   const isNormal = Config.GreatPerson[greatPerson].type === GreatPersonType.Normal;
+   const canUpgrade =
+      Config.GreatPerson[greatPerson].type === GreatPersonType.Normal ||
+      Config.GreatPerson[greatPerson].type === GreatPersonType.Adaptive;
    const isWisdom = isEligibleForWisdom(greatPerson);
    const inventory = options.greatPeople[greatPerson];
    const total = getGreatPersonUpgradeCost(greatPerson, (inventory?.level ?? 0) + 1);
@@ -169,11 +171,11 @@ function GreatPersonLevel({
          <div className="row text-small">
             <div className="f1">
                {t(L.GreatPeoplePermanentShort)}{" "}
-               {isNormal && inventory ? `(${t(L.LevelX, { level: inventory.level })})` : null}
+               {canUpgrade && inventory ? `(${t(L.LevelX, { level: inventory.level })})` : null}
             </div>
             <div className="text-right">
                <FormatNumber value={inventory?.amount ?? 0} />
-               {isNormal ? `/${formatNumber(total)}` : null}
+               {canUpgrade ? `/${formatNumber(total)}` : null}
             </div>
          </div>
          <div className="row text-small">

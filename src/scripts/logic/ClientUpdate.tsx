@@ -4,11 +4,7 @@ import { GreatPersonTickFlag } from "../../../shared/definitions/GreatPersonDefi
 import { OnTileExplored, getScienceFromWorkers } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
 import { ValueToTrack, type GameState } from "../../../shared/logic/GameState";
-import {
-   getGameOptions,
-   notifyGameStateUpdate,
-   serializeSaveLite,
-} from "../../../shared/logic/GameStateLogic";
+import { getGameOptions, notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
 import { calculateHappiness } from "../../../shared/logic/HappinessLogic";
 import { clearIntraTickCache, getBuildingsByType } from "../../../shared/logic/IntraTickCache";
 import { getGreatPeopleForWisdom, getGreatPersonThisRunLevel } from "../../../shared/logic/RebirthLogic";
@@ -44,12 +40,12 @@ import { hasOpenModal, showModal, showToast } from "../ui/GlobalModal";
 import { makeObservableHook } from "../utilities/Hook";
 import { Singleton } from "../utilities/Singleton";
 import { playAgeUp, playDing, playLevelUp } from "../visuals/Sound";
+import { clientHeartbeat } from "./Heartbeat";
 import { onBuildingComplete } from "./OnBuildingComplete";
 import { onBuildingOrUpgradeComplete } from "./OnBuildingOrUpgradeComplete";
 import { onProductionComplete } from "./OnProductionComplete";
 import { onTileExplored } from "./OnTileExplored";
 import { TimeSeries } from "./TimeSeries";
-import { clientHeartbeat } from "./Heartbeat";
 
 export function shouldTick(): boolean {
    return isSteam() || !document.hidden;
@@ -120,7 +116,7 @@ export function tickEverySecond(gs: GameState, offline: boolean) {
    forEach(gs.greatPeople, (person, level) => {
       const greatPerson = Config.GreatPerson[person];
       greatPerson.tick(
-         greatPerson,
+         person,
          getGreatPersonThisRunLevel(level),
          t(L.SourceGreatPerson, { person: greatPerson.name() }),
          GreatPersonTickFlag.None,
@@ -130,7 +126,7 @@ export function tickEverySecond(gs: GameState, offline: boolean) {
    forEach(getGameOptions().greatPeople, (person, v) => {
       const greatPerson = Config.GreatPerson[person];
       greatPerson.tick(
-         greatPerson,
+         person,
          v.level,
          t(L.SourceGreatPersonPermanent, { person: greatPerson.name() }),
          GreatPersonTickFlag.None,
@@ -141,7 +137,7 @@ export function tickEverySecond(gs: GameState, offline: boolean) {
       getGreatPeopleForWisdom(age).forEach((gp) => {
          const greatPerson = Config.GreatPerson[gp];
          greatPerson.tick(
-            greatPerson,
+            gp,
             level,
             t(L.AgeWisdomSource, { age: Config.TechAge[age].name(), person: greatPerson.name() }),
             GreatPersonTickFlag.None,

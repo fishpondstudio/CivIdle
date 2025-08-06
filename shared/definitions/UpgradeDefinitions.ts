@@ -154,7 +154,7 @@ export class UpgradeDefinitions {
          const total = getGreatPersonTotalEffect("ZhengHe", gs);
          if (total > 0) {
             const def = Config.GreatPerson.ZhengHe;
-            def.tick(def, total, t(L.ExpansionLevelX, { level: "IV" }), GreatPersonTickFlag.None);
+            def.tick("ZhengHe", total, t(L.ExpansionLevelX, { level: "IV" }), GreatPersonTickFlag.None);
          }
       },
    };
