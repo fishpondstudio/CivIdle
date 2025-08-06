@@ -39,8 +39,8 @@ export const ZH_CN = {
    ActualProductionPerCycle: "每周期实际产量",
    AdaLovelace: "阿达·洛芙莱斯",
    AdamSmith: "亚当·斯密",
-   AdaptiveGreatPersonDesc: "选择一个伟人相应 %{age} 的建筑 +%{value} 生产乘数,存储乘数",
-   AdaptiveGreatPersonTooltip: "一旦选择了，在本轮游玩不能在更改建筑",
+   AdaptiveGreatPersonDesc: "选择一个与伟人相应 %{age} 的建筑 +%{value} 生产乘数,存储乘数",
+   AdaptiveGreatPersonTooltip: "一旦选择了，在本轮游玩中不能再更改建筑",
    AdjustBuildingCapacity: "生产能力",
    AdvisorElectricityContentV2:
       "产出电能的建筑为你提供了两个新系统。首先，发电厂相邻地块的闪电标识表示“电力”。一些建筑（如世界大战的解锁建筑广播站）在具体的科技与建筑界面中，有“需要电力”的提示。<b>这意味着它们必须建在含闪电标识的地块上，才能正常运转。</b>需要电力且已被提供电力的建筑，也能将电力扩散至其相邻地块，所以只要至少有一座需要电力的建筑与产出电能的建筑相邻，你就可以使需要电力的建筑相互提供电力。<br><br>另一个系统“电气化”可被应用于地图上<b>任何地块的任何建筑</b>，前提是它不产出科学也不生产劳动者。这将使用产出电能的建筑产出的电能，从而增加建筑额外的建筑等级。越高的电气化等级，需求的电能将会越来越多。相较于其它建筑，“需要电力”的建筑可以从电气化中获得额外的 +5 建筑等级。",
