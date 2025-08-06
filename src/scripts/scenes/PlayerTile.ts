@@ -59,14 +59,14 @@ export class PlayerTile extends Container {
       if (trade > 0) {
          const bg = this.addChild(new Sprite(getTexture("Misc_Circle_25", textures)));
          bg.anchor.set(0.5, 0.5);
-         bg.tint = 15158332;
+         bg.tint = 0xe74c3c;
          bg.position.set(x * GridSize + 0.9 * GridSize, y * GridSize + 0.12 * GridSize);
 
          const tradeCount = this.addChild(
             new BitmapText(String(trade), {
                fontName: Fonts.Cabin,
                fontSize: 20,
-               tint: 16777215,
+               tint: 0xffffff,
             }),
          );
          tradeCount.anchor.set(0.5, 0.5);
@@ -77,7 +77,7 @@ export class PlayerTile extends Container {
          new BitmapText(data.handle, {
             fontName: Fonts.Cabin,
             fontSize: 16,
-            tint: isMyself ? 16771751 : 16777215,
+            tint: isMyself ? 0xffb86f : 0xffffff,
          }),
       );
 
@@ -93,7 +93,7 @@ export class PlayerTile extends Container {
          new BitmapText(formatPercent(data.tariffRate), {
             fontName: Fonts.Cabin,
             fontSize: 20,
-            tint: isMyself ? 16771751 : 16777215,
+            tint: isMyself ? 0xffb86f : 0xffffff,
          }),
       );
       tariff.anchor.set(0.5, 0.5);
@@ -109,7 +109,7 @@ export class PlayerTile extends Container {
                   {
                      fontName: Fonts.Cabin,
                      fontSize: 14,
-                     tint: isMyself ? 16771751 : 16777215,
+                     tint: 0xffffff,
                   },
                   {
                      dropShadow: true,
