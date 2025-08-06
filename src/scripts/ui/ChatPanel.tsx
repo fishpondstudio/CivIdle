@@ -1,7 +1,7 @@
 import Tippy from "@tippyjs/react";
 import classNames from "classnames";
 import type React from "react";
-import { memo, useCallback, useEffect, useMemo, useRef, useState, useTransition } from "react";
+import { memo, useCallback, useEffect, useRef, useState } from "react";
 import {
    getGameOptions,
    notifyGameOptionsUpdate,
@@ -34,6 +34,7 @@ import {
    type IClientChat,
    type LocalChat,
 } from "../rpc/RPCClient";
+import { SteamClient, isSteam } from "../rpc/SteamClient";
 import { getCountryName } from "../utilities/CountryCode";
 import { useTypedEvent } from "../utilities/Hook";
 import { openUrl } from "../utilities/Platform";
@@ -243,6 +244,8 @@ function _ChatWindow({
    );
 }
 
+let helloWorldAchievementUnlocked = false;
+
 function ChatInput({
    onChatSend,
    channel,
@@ -257,10 +260,21 @@ function ChatInput({
          addSystemMessage(`$ ${command}`);
          handleChatCommand(command).catch((e) => addSystemMessage(`${command}: ${e}`));
       } else {
-         client.chat(censor(chat), channel).catch((e) => {
-            playError();
-            showToast(String(e));
-         });
+         client
+            .chat(censor(chat), channel)
+            .then(() => {
+               if (!isSteam()) {
+                  return;
+               }
+               if (!helloWorldAchievementUnlocked) {
+                  helloWorldAchievementUnlocked = true;
+                  SteamClient.unlockAchievement("HelloWorld");
+               }
+            })
+            .catch((e) => {
+               playError();
+               showToast(String(e));
+            });
       }
       onChatSend(chat);
       setChat("");

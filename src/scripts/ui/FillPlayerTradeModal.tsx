@@ -146,13 +146,11 @@ export function FillPlayerTradeModal({ tradeId, xy }: { tradeId: string; xy?: Ti
                safeAdd(building.resources, trade.sellResource, (receivedAmount * r.amount) / totalAmount);
             }
          }
+         const tradeValue = receivedAmount * (Config.ResourcePrice[trade.sellResource] ?? 0);
+         gs.tradeValue += tradeValue;
          const eic = Tick.current.specialBuildings.get("EastIndiaCompany");
          if (eic) {
-            safeAdd(
-               eic.building.resources,
-               "TradeValue",
-               receivedAmount * (Config.ResourcePrice[trade.sellResource] ?? 0),
-            );
+            safeAdd(eic.building.resources, "TradeValue", tradeValue);
          }
          playKaching();
          showToast(

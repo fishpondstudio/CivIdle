@@ -23,6 +23,9 @@ export function migrateSavedGame(save: SavedGame) {
       delete save.current.unlockedTech.Skyscrapper;
       save.current.unlockedTech.Skyscraper = true;
    }
+   if (!save.current.tradeValue) {
+      save.current.tradeValue = 0;
+   }
 
    save.current.tiles.forEach((tile, xy) => {
       if (!grid.isValid(tileToPoint(xy))) {

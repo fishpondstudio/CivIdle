@@ -70,11 +70,13 @@ export function PendingClaimComponent({ gameState, xy }: IBuildingComponentProps
                }),
             );
             const eic = Tick.current.specialBuildings.get("EastIndiaCompany");
-            if (eic) {
-               forEach(resources, (res, amount) => {
-                  safeAdd(eic.building.resources, "TradeValue", amount * (Config.ResourcePrice[res] ?? 0));
-               });
-            }
+            forEach(resources, (res, amount) => {
+               const tradeValue = amount * (Config.ResourcePrice[res] ?? 0);
+               if (eic) {
+                  safeAdd(eic.building.resources, "TradeValue", tradeValue);
+               }
+               gameState.tradeValue += tradeValue;
+            });
          } else {
             playError();
             showToast(t(L.PlayerTradeClaimAllFailedMessageV2));

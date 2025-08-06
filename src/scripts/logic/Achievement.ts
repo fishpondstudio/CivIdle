@@ -1,19 +1,29 @@
 import type { TechAge } from "../../../shared/definitions/TechDefinitions";
-import { findSpecialBuilding, isWorldWonder } from "../../../shared/logic/BuildingLogic";
+import {
+   findSpecialBuilding,
+   getScienceFromWorkers,
+   isNaturalWonder,
+   isWorldWonder,
+} from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
 import type { GameState } from "../../../shared/logic/GameState";
-import { getGameOptions } from "../../../shared/logic/GameStateLogic";
+import { getGameOptions, getGameState } from "../../../shared/logic/GameStateLogic";
 import { getPermanentGreatPeopleLevel } from "../../../shared/logic/RebirthLogic";
 import type { ICentrePompidouBuildingData } from "../../../shared/logic/Tile";
 import { OnTechUnlocked } from "../../../shared/logic/Update";
-import { sizeOf } from "../../../shared/utilities/Helper";
+import { HOUR, SECOND, forEach, sizeOf } from "../../../shared/utilities/Helper";
+import { isAllyWith } from "../rpc/RPCClient";
 import { SteamClient, isSteam } from "../rpc/SteamClient";
+import { getNeighboringPlayers } from "../scenes/PathFinder";
 
 OnTechUnlocked.on((tech) => {
    if (!isSteam()) return;
    switch (tech) {
       case "Future": {
          SteamClient.unlockAchievement("Future");
+         if (getGameState().seconds * SECOND <= 24 * HOUR) {
+            SteamClient.unlockAchievement("OneMoreTurn");
+         }
          break;
       }
    }
@@ -32,6 +42,9 @@ export function checkAgeAchievements(currentAge: TechAge): void {
       }
       case "ClassicalAge": {
          SteamClient.unlockAchievement("Classical");
+         if (getGameState().tradeValue > 0) {
+            SteamClient.unlockAchievement("YourTradeIsMostWelcome");
+         }
          break;
       }
       case "MiddleAge": {
@@ -40,10 +53,29 @@ export function checkAgeAchievements(currentAge: TechAge): void {
       }
       case "RenaissanceAge": {
          SteamClient.unlockAchievement("Renaissance");
+         let discoveredNaturalWonders = 0;
+         let builtWonders = 0;
+         getGameState().tiles.forEach((data, tile) => {
+            if (data.building && isNaturalWonder(data.building.type) && data.explored) {
+               ++discoveredNaturalWonders;
+            }
+            if (data.building && isWorldWonder(data.building.type)) {
+               ++builtWonders;
+            }
+         });
+         if (discoveredNaturalWonders === 0) {
+            SteamClient.unlockAchievement("AgeOfNoDiscovery");
+         }
+         if (builtWonders === 0) {
+            SteamClient.unlockAchievement("WonderlessEmpire");
+         }
          break;
       }
       case "IndustrialAge": {
          SteamClient.unlockAchievement("Industrial");
+         if (getGameState().tradeValue <= 0) {
+            SteamClient.unlockAchievement("WeAreNotInterestedInThisTrade");
+         }
          break;
       }
       case "WorldWarAge": {
@@ -109,6 +141,10 @@ export function checkRebirthAchievements(extraGP: number, gs: GameState): void {
             SteamClient.unlockAchievement("SultanOfSultans");
             break;
          }
+         case "Brazilian": {
+            SteamClient.unlockAchievement("SambaKing");
+            break;
+         }
       }
    }
 
@@ -117,6 +153,40 @@ export function checkRebirthAchievements(extraGP: number, gs: GameState): void {
    let emptyTiles = 0;
    let unexploredTiles = 0;
    let wonderLevels = 0;
+
+   const workerStat = getScienceFromWorkers(gs);
+
+   if (workerStat.workersAfterHappiness >= 8_000_000_000) {
+      SteamClient.unlockAchievement("TheWorldIsNotEnough");
+   }
+
+   if (workerStat.workersAfterHappiness - workerStat.workersBusy >= 10_000_000) {
+      SteamClient.unlockAchievement("TheGreatDepression");
+   }
+
+   let minAgeWisdomLevel = Number.POSITIVE_INFINITY;
+
+   const options = getGameOptions();
+   forEach(Config.TechAge, (age) => {
+      if (age === "BronzeAge") {
+         return;
+      }
+      const level = options.ageWisdom[age] ?? 0;
+      if (level < minAgeWisdomLevel) {
+         minAgeWisdomLevel = level;
+      }
+   });
+
+   if (minAgeWisdomLevel >= 1) {
+      SteamClient.unlockAchievement("TheWiseOne");
+   }
+   if (minAgeWisdomLevel >= 5) {
+      SteamClient.unlockAchievement("TheGenius");
+   }
+
+   if (sizeOf(gs.greatPeople) >= 100) {
+      SteamClient.unlockAchievement("GottaCatchEmAll");
+   }
 
    gs.tiles.forEach((tile) => {
       if (!tile.building) {
@@ -200,5 +270,18 @@ export function checkRebirthAchievements(extraGP: number, gs: GameState): void {
 
    if (wonderLevels >= 50) {
       SteamClient.unlockAchievement("CivitasMirabilis");
+   }
+
+   const allies = new Set<string>();
+   getNeighboringPlayers().forEach((player) => {
+      player.forEach(([xy, tile]) => {
+         if (isAllyWith(tile)) {
+            allies.add(tile.userId);
+         }
+      });
+   });
+
+   if (allies.size > 0) {
+      SteamClient.unlockAchievement("DeclareFriendship");
    }
 }
