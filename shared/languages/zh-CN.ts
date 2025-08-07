@@ -39,7 +39,7 @@ export const ZH_CN = {
    ActualProductionPerCycle: "每周期实际产量",
    AdaLovelace: "阿达·洛芙莱斯",
    AdamSmith: "亚当·斯密",
-   AdaptiveGreatPersonDesc: "选择一个与伟人相应 %{age} 的建筑 +%{value} 生产乘数,存储乘数",
+   AdaptiveGreatPersonDesc: "选择一个 %{age} 解锁的建筑（产出劳动者建筑除外）+%{value} 生产乘数,存储乘数（伟人管理中使用）",
    AdaptiveGreatPersonTooltip: "一旦选择了，在本轮游玩中不能再更改建筑",
    AdjustBuildingCapacity: "生产能力",
    AdvisorElectricityContentV2:
