@@ -211,13 +211,14 @@ export function getGreatPeopleChoiceCount(gs: GameState): number {
 }
 
 export function getPermanentGreatPeopleLevel(options: GameOptions): number {
-   return reduceOf(
-      options.greatPeople,
-      (prev, gp, inv) => {
-         return prev + inv.level + (options.ageWisdom[Config.GreatPerson[gp].age] ?? 0);
-      },
-      0,
-   );
+   let level = 0;
+   forEach(options.greatPeople, (gp, inv) => {
+      level += inv.level;
+      if (isEligibleForWisdom(gp)) {
+         level += options.ageWisdom[Config.GreatPerson[gp].age] ?? 0;
+      }
+   });
+   return level;
 }
 
 export function getPermanentGreatPeopleCount(): number {
