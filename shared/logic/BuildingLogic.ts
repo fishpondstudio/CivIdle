@@ -701,10 +701,13 @@ export function getBuildingLevelLabel(xy: Tile, gs: GameState): string {
    ) {
       return "";
    }
-   let levelBoost = getElectrificationBoost(b, gs);
-   Tick.current.levelBoost.get(xy)?.forEach((lb) => {
-      levelBoost += lb.value;
-   });
+   let levelBoost = 0;
+   if (canBeElectrified(b.type)) {
+      levelBoost += getElectrificationBoost(b, gs);
+      Tick.current.levelBoost.get(xy)?.forEach((lb) => {
+         levelBoost += lb.value;
+      });
+   }
    if (levelBoost > 0) {
       return `${b.level}+${levelBoost}`;
    }
