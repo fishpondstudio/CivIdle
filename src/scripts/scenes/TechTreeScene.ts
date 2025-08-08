@@ -1,13 +1,19 @@
 import { SmoothGraphics } from "@pixi/graphics-smooth";
 import type { ColorSource, FederatedPointerEvent } from "pixi.js";
-import { BitmapText, Color, Container, LINE_CAP, LINE_JOIN, Rectangle, Text } from "pixi.js";
+import { BitmapText, Color, Container, LINE_CAP, LINE_JOIN, NineSlicePlane, Rectangle, Text } from "pixi.js";
 import type { ITechDefinition } from "../../../shared/definitions/ITechDefinition";
 import type { Tech } from "../../../shared/definitions/TechDefinitions";
 import { Config } from "../../../shared/logic/Config";
 import type { GameOptions } from "../../../shared/logic/GameState";
 import { getGameOptions } from "../../../shared/logic/GameStateLogic";
-import { isAgeUnlocked, unlockableTechs } from "../../../shared/logic/TechLogic";
-import { containsNonASCII, forEach, numberToRoman, sizeOf } from "../../../shared/utilities/Helper";
+import { getCurrentAge, isAgeUnlocked, unlockableTechs } from "../../../shared/logic/TechLogic";
+import {
+   containsNonASCII,
+   forEach,
+   layoutSpaceBetween,
+   numberToRoman,
+   sizeOf,
+} from "../../../shared/utilities/Helper";
 import { TechPage } from "../ui/TechPage";
 import { getColorCached } from "../utilities/CachedColor";
 import { WheelMode } from "../utilities/Camera";
@@ -23,6 +29,7 @@ const COLUMN_WIDTH = 500;
 const PAGE_HEIGHT = 1000;
 const HEADER_TOTAL_HEIGHT = 160;
 const HEADER_BOX_HEIGHT = 70;
+const FOOTER_SPACE = 60;
 
 const LINE_STYLE = {
    width: 2,
@@ -112,33 +119,38 @@ export class TechTreeScene extends Scene {
       this._selectedGraphics = this.viewport.addChild(new SmoothGraphics());
       this._boxPositions = {};
       forEach(this._layout, (columnIdx, techs) => {
-         const height = (PAGE_HEIGHT - HEADER_TOTAL_HEIGHT) / techs.length;
          techs.forEach((item, rowIdx) => {
             const x = 50 + 500 * columnIdx;
             const y =
-               height * rowIdx +
-               HEADER_TOTAL_HEIGHT +
-               (height / 2 - BOX_HEIGHT / 2 - (HEADER_TOTAL_HEIGHT - HEADER_BOX_HEIGHT) / 2);
+               layoutSpaceBetween(
+                  BOX_HEIGHT,
+                  PAGE_HEIGHT - HEADER_TOTAL_HEIGHT - FOOTER_SPACE,
+                  techs.length,
+                  rowIdx,
+               ) + HEADER_TOTAL_HEIGHT;
             const rect = new Rectangle(x, y, BOX_WIDTH, BOX_HEIGHT);
             this._boxPositions[item] = rect;
             const def = Config.Tech[item];
             this.drawBox(
-               g,
                rect,
                def.name(),
                this.getTechDescription(def),
                this.context.gameState.unlockedTech[item] ? unlockedColor : lockedColor,
+               null,
+               false,
             );
          });
       });
 
+      const currentAge = Config.TechAge[getCurrentAge(this.context.gameState)];
+
       forEach(Config.TechAge, (k, v) => {
          this.drawHeader(
-            g,
             v.from,
             v.to,
             `${numberToRoman(v.idx + 1)}.  ${v.name()}`,
             isAgeUnlocked(k, this.context.gameState) ? unlockedColor : lockedColor,
+            v.idx <= currentAge.idx,
          );
       });
 
@@ -200,13 +212,12 @@ export class TechTreeScene extends Scene {
 
             const def = Config.Tech[to];
             this.drawBox(
-               this._selectedGraphics!,
                this._boxPositions[to]!,
                def.name(),
                this.getTechDescription(def),
                highlightColor,
-               10,
                this._selectedContainer,
+               to === tech,
             );
             drawnBoxes.add(to);
             Config.Tech[to].requireTech.forEach((from) => {
@@ -267,14 +278,13 @@ export class TechTreeScene extends Scene {
    }
 
    private drawHeader(
-      g: SmoothGraphics,
       startColumn: number,
       endColumn: number,
       text: string,
       color: ColorSource,
+      fancy: boolean,
    ): void {
       this.drawBox(
-         g,
          new Rectangle(
             50 + startColumn * COLUMN_WIDTH,
             (HEADER_TOTAL_HEIGHT - HEADER_BOX_HEIGHT) / 2,
@@ -284,23 +294,32 @@ export class TechTreeScene extends Scene {
          text.toUpperCase(),
          null,
          color,
+         null,
+         fancy,
       );
    }
 
    private drawBox(
-      g: SmoothGraphics,
       rect: Rectangle,
       title: string,
       description: string | null,
       color: ColorSource,
-      radius = 10,
       parent_: Container | null = null,
+      fancy = false,
    ): void {
-      const oldColor = g.line.color;
-      const parent = parent_ ?? g.parent;
-      g.lineStyle({ ...g.line, color });
-      g.drawRoundedRect(rect.x, rect.y, rect.width, rect.height, radius);
-      g.lineStyle({ ...g.line, color: oldColor });
+      const parent = parent_ ?? this.viewport;
+
+      const frame = parent.addChild(
+         fancy
+            ? new NineSlicePlane(this.context.textures.Misc_FrameSelected, 55, 55, 55, 55)
+            : new NineSlicePlane(this.context.textures.Misc_Frame, 55, 55, 55, 55),
+      );
+
+      frame.width = rect.width + 30;
+      frame.height = rect.height + 30;
+      frame.x = rect.x - 15;
+      frame.y = rect.y - 15;
+      frame.tint = color;
 
       const bitmapText = parent.addChild(this.drawText(title, color, 28, rect.width - 20));
       bitmapText.anchor.x = 0.5;

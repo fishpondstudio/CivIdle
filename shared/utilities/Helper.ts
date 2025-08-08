@@ -834,3 +834,30 @@ export function reverseMap<T, K>(arr: T[], func: (v: T, idx: number, arr: T[]) =
 export function cls(...classes: (string | null | undefined)[]): string {
    return classes.filter(Boolean).join(" ");
 }
+
+export function layoutSpaceBetween(
+   childSize: number,
+   parentSize: number,
+   total: number,
+   current: number,
+): number {
+   if (total <= 1) {
+      return (parentSize - childSize) / 2;
+   }
+   const totalChildrenWidth = total * childSize;
+   const space = (parentSize - totalChildrenWidth) / (total - 1);
+   return current * (childSize + space);
+}
+
+export function layoutSpaceAround(
+   childSize: number,
+   parentSize: number,
+   total: number,
+   current: number,
+): number {
+   if (total <= 0) {
+      return 0;
+   }
+   const space = (parentSize - total * childSize) / (total + 1);
+   return space * (current + 1) + childSize * current;
+}
