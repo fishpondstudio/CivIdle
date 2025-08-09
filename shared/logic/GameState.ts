@@ -182,6 +182,7 @@ export function getTextColor(): number {
 export const CursorOptions = {
    OldFashioned: () => t(L.CursorOldFashioned),
    BigOldFashioned: () => t(L.CursorBigOldFashioned),
+   HiVisOldFashioned: () => t(L.CursorHiVisOldFashioned),
    System: () => t(L.CursorSystem),
 } as const;
 
