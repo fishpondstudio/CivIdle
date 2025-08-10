@@ -391,33 +391,96 @@ test("getEligibleRank", () => {
    assert.equal(getEligibleRank(user), AccountLevel.Tribune);
 
    user.totalPlayTime = (200 * HOUR) / SECOND;
-   user.empireValues = [{ value: 0, time: 0, tick: 0, totalGreatPeopleLevel: 200 }];
+   user.heartbeatData = {
+      clientTick: 0,
+      clientTime: 0,
+      gameId: "some-uuid",
+      empireValue: 0,
+      greatPeopleLevel: 200,
+      city: "Rome",
+      techAge: "ColdWarAge",
+      userFlags: UserAttributes.None,
+   };
    assert.equal(getEligibleRank(user), AccountLevel.Tribune, "need at least Quaestor");
 
    user.level = AccountLevel.Quaestor;
    user.totalPlayTime = (200 * HOUR) / SECOND;
-   user.empireValues = [{ value: 0, time: 0, tick: 0, totalGreatPeopleLevel: 200 }];
+   user.heartbeatData = {
+      clientTick: 0,
+      clientTime: 0,
+      gameId: "some-uuid",
+      empireValue: 0,
+      greatPeopleLevel: 200,
+      city: "Rome",
+      techAge: "ColdWarAge",
+      userFlags: UserAttributes.None,
+   };
    assert.equal(getEligibleRank(user), AccountLevel.Aedile);
 
    user.totalPlayTime = (600 * HOUR) / SECOND;
-   user.empireValues = [{ value: 0, time: 0, tick: 0, totalGreatPeopleLevel: 200 }];
+   user.heartbeatData = {
+      clientTick: 0,
+      clientTime: 0,
+      gameId: "some-uuid",
+      empireValue: 0,
+      greatPeopleLevel: 200,
+      city: "Rome",
+      techAge: "ColdWarAge",
+      userFlags: UserAttributes.None,
+   };
    assert.equal(getEligibleRank(user), AccountLevel.Aedile);
 
    user.totalPlayTime = (200 * HOUR) / SECOND;
-   user.empireValues = [{ value: 0, time: 0, tick: 0, totalGreatPeopleLevel: 600 }];
+   user.heartbeatData = {
+      clientTick: 0,
+      clientTime: 0,
+      gameId: "some-uuid",
+      empireValue: 0,
+      greatPeopleLevel: 600,
+      city: "Rome",
+      techAge: "ColdWarAge",
+      userFlags: UserAttributes.None,
+   };
    assert.equal(getEligibleRank(user), AccountLevel.Aedile);
 
    user.totalPlayTime = (200 * HOUR) / SECOND;
-   user.empireValues = [{ value: 0, time: 0, tick: 0, totalGreatPeopleLevel: 600 }];
+   user.heartbeatData = {
+      clientTick: 0,
+      clientTime: 0,
+      gameId: "some-uuid",
+      empireValue: 0,
+      greatPeopleLevel: 600,
+      city: "Rome",
+      techAge: "ColdWarAge",
+      userFlags: UserAttributes.None,
+   };
    assert.equal(getEligibleRank(user), AccountLevel.Aedile);
 
    user.totalPlayTime = (500 * HOUR) / SECOND;
-   user.empireValues = [{ value: 0, time: 0, tick: 0, totalGreatPeopleLevel: 500 }];
+   user.heartbeatData = {
+      clientTick: 0,
+      clientTime: 0,
+      gameId: "some-uuid",
+      empireValue: 0,
+      greatPeopleLevel: 500,
+      city: "Rome",
+      techAge: "ColdWarAge",
+      userFlags: UserAttributes.None,
+   };
    assert.equal(getEligibleRank(user), AccountLevel.Praetor);
 
    user.level = AccountLevel.Praetor;
    user.totalPlayTime = (200 * HOUR) / SECOND;
-   user.empireValues = [{ value: 0, time: 0, tick: 0, totalGreatPeopleLevel: 200 }];
+   user.heartbeatData = {
+      clientTick: 0,
+      clientTime: 0,
+      gameId: "some-uuid",
+      empireValue: 0,
+      greatPeopleLevel: 200,
+      city: "Rome",
+      techAge: "ColdWarAge",
+      userFlags: UserAttributes.None,
+   };
    assert.equal(getEligibleRank(user), AccountLevel.Praetor);
 });
 
