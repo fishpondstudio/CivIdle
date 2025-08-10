@@ -612,7 +612,11 @@ export function getWonderBaseBuilderCapacity(type: Building): number {
 }
 
 export function getBuildingValue(building: IBuildingData): number {
-   return getResourcesValue(getTotalBuildingCost(building, 0, building.level));
+   let level = building.level;
+   if (building.type === "Petra") {
+      level = 1;
+   }
+   return getResourcesValue(getTotalBuildingCost(building, 0, level));
 }
 
 export function getCurrentPriority(building: IBuildingData, gs: GameState): number {

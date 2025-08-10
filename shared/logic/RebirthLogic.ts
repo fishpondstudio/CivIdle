@@ -317,10 +317,7 @@ export function getEligibleRank(user: IUser): AccountLevel {
       return AccountLevel.Tribune;
    }
    let level = user.level;
-   let greatPeopleLevel = 0;
-   if (user.empireValues.length > 0) {
-      greatPeopleLevel = user.empireValues[user.empireValues.length - 1].totalGreatPeopleLevel ?? 0;
-   }
+   const greatPeopleLevel = user.heartbeatData?.greatPeopleLevel ?? 0;
    forEach(AccountLevel, (k, v) => {
       if (
          user.totalPlayTime * 1000 >= AccountLevelPlayTime[v] &&
