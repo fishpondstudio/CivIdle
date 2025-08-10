@@ -5,7 +5,6 @@ import {
    applyBuildingDefaults,
    checkBuildingMax,
    getBuildingCost,
-   hasRequiredDeposit,
    isSpecialBuilding,
 } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
@@ -34,7 +33,7 @@ import { WorldScene } from "../scenes/WorldScene";
 import { jsxMapOf } from "../utilities/Helper";
 import { useShortcut } from "../utilities/Hook";
 import { Singleton } from "../utilities/Singleton";
-import { playError } from "../visuals/Sound";
+import { playClick, playError } from "../visuals/Sound";
 import { BuildingFilter, Filter } from "./FilterComponent";
 import { MenuComponent } from "./MenuComponent";
 import { ResourceAmountComponent } from "./ResourceAmountComponent";
@@ -45,14 +44,13 @@ import { TitleBarComponent } from "./TitleBarComponent";
 
 let lastBuild: Building | null = null;
 let savedFilter = BuildingFilter.None;
-let savedGridView = false;
 const savedSorting = { column: 0, asc: true };
 
 export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
    const gs = useGameState();
+   const options = getGameOptions();
    const [, setSelected] = useState<Building | null>(null);
    const [buildingFilter, _setBuildingFilter] = useState<BuildingFilter>(savedFilter);
-   const [gridView, setGridView] = useState(savedGridView);
    const setBuildingFilter = (newFilter: BuildingFilter) => {
       _setBuildingFilter(newFilter);
       savedFilter = newFilter;
@@ -114,7 +112,7 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
    });
 
    let view: React.ReactNode;
-   if (gridView) {
+   if (options.constructionGridView) {
       view = (
          <div className="inset-shallow white" style={{ overflowY: "auto", padding: 5 }}>
             <div
@@ -388,11 +386,12 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
                })}
                <div className="f1"></div>
                <button
-                  className={cls(gridView ? "active" : null)}
+                  className={cls(options.constructionGridView ? "active" : null)}
                   style={{ width: 27, padding: 0 }}
                   onClick={() => {
-                     savedGridView = !savedGridView;
-                     setGridView(savedGridView);
+                     playClick();
+                     options.constructionGridView = !options.constructionGridView;
+                     notifyGameStateUpdate();
                   }}
                >
                   <div className="m-icon small">grid_view</div>

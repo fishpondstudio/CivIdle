@@ -68,7 +68,7 @@ import {
 import { Config } from "./Config";
 import { MANAGED_IMPORT_RANGE } from "./Constants";
 import { GameFeature, hasFeature } from "./FeatureLogic";
-import type { GameState, ITransportationDataV2 } from "./GameState";
+import { Transports, type GameState, type ITransportationDataV2 } from "./GameState";
 import { getGameOptions } from "./GameStateLogic";
 import {
    getBuildingIO,
@@ -123,7 +123,7 @@ export function tickUnlockable(td: IUnlockable, source: string, gs: GameState): 
 
 export function tickTransports(gs: GameState): void {
    const grid = getGrid(gs);
-   filterInPlace(gs.transportationV2, (transport) => {
+   filterInPlace(Transports, (transport) => {
       // Has arrived!
       if (tickTransportation(transport, grid)) {
          const building = gs.tiles.get(transport.toXy)?.building;

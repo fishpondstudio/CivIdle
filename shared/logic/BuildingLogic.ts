@@ -31,7 +31,7 @@ import { L, t } from "../utilities/i18n";
 import { Config } from "./Config";
 import { MANAGED_IMPORT_RANGE, MAX_PETRA_SPEED_UP } from "./Constants";
 import { GameFeature, hasFeature } from "./FeatureLogic";
-import type { GameOptions, GameState } from "./GameState";
+import { Transports, type GameOptions, type GameState } from "./GameState";
 import { getGameOptions, getGameState } from "./GameStateLogic";
 import {
    getBuildingIO,
@@ -438,7 +438,7 @@ export function addTransportation(
    const fromPosition = grid.xyToPosition(fromXy);
    const toPosition = grid.xyToPosition(toXy);
    useWorkers(fuelResource, fuelPerTick, null);
-   gs.transportationV2.push({
+   Transports.push({
       id: ++gs.transportId,
       fromXy,
       fromPosition,

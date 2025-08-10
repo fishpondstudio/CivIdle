@@ -1,9 +1,11 @@
+import { notifyGameOptionsUpdate } from "../../../shared/logic/GameStateLogic";
 import type { IShortcutNameAndScope, Shortcut } from "../../../shared/logic/Shortcut";
 import { ShortcutActions, ShortcutScopes, getShortcutKey } from "../../../shared/logic/Shortcut";
 import { L, t } from "../../../shared/utilities/i18n";
 import MiddleClick from "../../videos/MiddleClick.mkv?url";
 import { useGameOptions } from "../Global";
 import { jsxMapOf } from "../utilities/Helper";
+import { playClick } from "../visuals/Sound";
 import { EditShortcutModal } from "./EditShortcutModal";
 import { showModal } from "./GlobalModal";
 import { MenuComponent } from "./MenuComponent";
@@ -20,6 +22,26 @@ export function ShortcutPage(): React.ReactNode {
             <fieldset>
                <legend>{t(L.MiddleClick)}</legend>
                <RenderHTML html={t(L.MiddleClickDescHTML)} />
+               <div className="separator" />
+               <div className="row">
+                  <div className="f1">
+                     <RenderHTML html={t(L.RemapMiddleClickToRightClickHTML)} />
+                  </div>
+                  <div
+                     onClick={() => {
+                        playClick();
+                        gameOptions.useRightClickCopy = !gameOptions.useRightClickCopy;
+                        notifyGameOptionsUpdate(gameOptions);
+                     }}
+                     className="ml10 pointer"
+                  >
+                     {gameOptions.useRightClickCopy ? (
+                        <div className="m-icon text-green">toggle_on</div>
+                     ) : (
+                        <div className="m-icon text-grey">toggle_off</div>
+                     )}
+                  </div>
+               </div>
                <div className="separator" />
                <div className="inset-shallow">
                   <video src={MiddleClick} autoPlay loop muted style={{ width: "100%", display: "block" }} />

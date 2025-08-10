@@ -23,6 +23,7 @@ import { MANAGED_IMPORT_RANGE } from "../../../shared/logic/Constants";
 import { GameFeature, hasFeature } from "../../../shared/logic/FeatureLogic";
 import {
    DarkTileTextures,
+   Transports,
    getTextColor,
    type GameOptions,
    type GameState,
@@ -213,10 +214,15 @@ export class WorldScene extends Scene {
             break;
          }
          case 1: {
-            this.copyBuilding(grid, gs);
+            if (!getGameOptions().useRightClickCopy) {
+               this.copyBuilding(grid, gs);
+            }
             break;
          }
          case 2: {
+            if (getGameOptions().useRightClickCopy) {
+               this.copyBuilding(grid, gs);
+            }
             break;
          }
       }
@@ -472,7 +478,7 @@ export class WorldScene extends Scene {
       }
       this._transportLines.clear();
       const lines: Record<string, true> = {};
-      gs.transportationV2.forEach((t) => {
+      Transports.forEach((t) => {
          if (t.fromXy !== xy && t.toXy !== xy) {
             return;
          }
@@ -535,7 +541,7 @@ export class WorldScene extends Scene {
       }
       const worldRect = this.viewport.visibleWorldRect();
       this._ticked.clear();
-      gs.transportationV2.forEach((t) => {
+      Transports.forEach((t) => {
          Vector2.lerp(
             t.fromPosition,
             t.toPosition,

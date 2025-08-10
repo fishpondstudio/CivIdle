@@ -51,13 +51,14 @@ export enum ValueToTrack {
    EmpireValue = 0,
 }
 
+export const Transports: ITransportationDataV2[] = [];
+
 export class GameState {
    id = uuid4();
    city: City = "Rome";
    unlockedTech: PartialSet<Tech> = {};
    unlockedUpgrades: PartialSet<Upgrade> = {};
    tiles: Map<Tile, ITileData> = new Map();
-   transportationV2: ITransportationDataV2[] = [];
    tick = 0;
    seconds = 0;
    greatPeople: PartialTabulate<GreatPerson> = {};
@@ -231,6 +232,8 @@ export class GameOptions {
    language: keyof typeof Languages = "en";
    disabledTutorials = new Set<Advisor>();
    buildNumber = 0;
+   constructionGridView = false;
+   useRightClickCopy = false;
 }
 
 export enum RebirthFlags {

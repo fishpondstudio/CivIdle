@@ -22,7 +22,7 @@ import {
 } from "./BuildingLogic";
 import { Config } from "./Config";
 import { SCIENCE_VALUE } from "./Constants";
-import type { GameState } from "./GameState";
+import { Transports, type GameState } from "./GameState";
 import { TILE_SIZE } from "./GameStateLogic";
 import { NotProducingReason, Tick, type MultiplierType, type MultiplierWithSource } from "./TickLogic";
 import type {
@@ -227,7 +227,7 @@ export function getTransportStat(gs: GameState): ITransportStat {
    let totalFuel = 0;
    let totalTransports = 0;
    let stalled = 0;
-   gs.transportationV2.forEach((t) => {
+   Transports.forEach((t) => {
       totalFuel += t.fuelCurrentTick;
       ++totalTransports;
       if (!t.hasEnoughFuel) {

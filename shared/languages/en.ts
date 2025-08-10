@@ -1635,4 +1635,5 @@ export const EN = {
    OskarSchindler: "Oskar Schindler",
    NeilArmstrong: "Neil Armstrong",
    SidMeier: "Sid Meier",
+   RemapMiddleClickToRightClickHTML: "Remap <b>middle click</b> to <b>right click</b>",
 };

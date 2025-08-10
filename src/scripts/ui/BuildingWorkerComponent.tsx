@@ -11,6 +11,7 @@ import {
    shouldAlwaysShowBuildingOptions,
 } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
+import { Transports } from "../../../shared/logic/GameState";
 import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
 import {
    getBuildingIO,
@@ -64,7 +65,7 @@ export function BuildingWorkerComponent({ gameState, xy }: IBuildingComponentPro
                            <div className="text-strong">{getFuelByTarget().get(xy) ?? 0}</div>
                         </summary>
                         <ul>
-                           {gameState.transportationV2.map((v) => {
+                           {Transports.map((v) => {
                               if (v.toXy !== xy) return null;
                               return (
                                  <li className="row" key={v.id}>
