@@ -48,6 +48,9 @@ export function deserializeSave(str: string): SavedGame {
    if ("transportation" in saveGame.current) {
       checksum.actual = checksum.expected;
    }
+   if ("transportationV2" in saveGame.current) {
+      checksum.actual = checksum.expected;
+   }
    return saveGame;
 }
 export function notifyGameStateUpdate(gameState?: GameState): void {
