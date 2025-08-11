@@ -11,7 +11,6 @@ import {
    shouldAlwaysShowBuildingOptions,
 } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
-import { Transports } from "../../../shared/logic/GameState";
 import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
 import {
    getBuildingIO,
@@ -19,6 +18,7 @@ import {
    getStorageFullBuildings,
 } from "../../../shared/logic/IntraTickCache";
 import { NotProducingReason, Tick } from "../../../shared/logic/TickLogic";
+import { Transports } from "../../../shared/logic/Transports";
 import { formatNumber, formatPercent, isEmpty } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import warning from "../../images/warning.png";
