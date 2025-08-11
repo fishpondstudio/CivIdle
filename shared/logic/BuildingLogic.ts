@@ -31,7 +31,7 @@ import { L, t } from "../utilities/i18n";
 import { Config } from "./Config";
 import { MANAGED_IMPORT_RANGE, MAX_PETRA_SPEED_UP } from "./Constants";
 import { GameFeature, hasFeature } from "./FeatureLogic";
-import { Transports, type GameOptions, type GameState } from "./GameState";
+import type { GameOptions, GameState } from "./GameState";
 import { getGameOptions, getGameState } from "./GameStateLogic";
 import {
    getBuildingIO,
@@ -66,6 +66,7 @@ import {
    type IResourceImportBuildingData,
    type ITileData,
 } from "./Tile";
+import { Transports } from "./Transports";
 
 export function totalMultiplierFor(
    xy: Tile,

@@ -4,7 +4,8 @@ import { wyhash } from "../thirdparty/wyhash";
 import type { UserAttributes } from "../utilities/Database";
 import { safeAdd } from "../utilities/Helper";
 import { TypedEvent } from "../utilities/TypedEvent";
-import { SavedGame, Transports, type GameOptions, type GameState } from "./GameState";
+import { SavedGame, type GameOptions, type GameState } from "./GameState";
+import { Transports } from "./Transports";
 
 export const savedGame = new SavedGame();
 export const TILE_SIZE = 64;

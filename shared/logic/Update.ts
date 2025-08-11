@@ -68,7 +68,7 @@ import {
 import { Config } from "./Config";
 import { MANAGED_IMPORT_RANGE } from "./Constants";
 import { GameFeature, hasFeature } from "./FeatureLogic";
-import { Transports, type GameState, type ITransportationDataV2 } from "./GameState";
+import type { GameState } from "./GameState";
 import { getGameOptions } from "./GameStateLogic";
 import {
    getBuildingIO,
@@ -98,6 +98,7 @@ import {
    type ITileData,
    type IWarehouseBuildingData,
 } from "./Tile";
+import { Transports, type ITransportationDataV2 } from "./Transports";
 
 export const OnPriceUpdated = new TypedEvent<GameState>();
 export const OnBuildingComplete = new TypedEvent<Tile>();

@@ -18,29 +18,13 @@ import { TR } from "../languages/tr";
 import { ZH_CN } from "../languages/zh-CN";
 import { ZH_TW } from "../languages/zh-TW";
 import type { ChatChannel } from "../utilities/Database";
-import { forEach, uuid4, type IPointData, type Tile } from "../utilities/Helper";
+import { forEach, uuid4, type Tile } from "../utilities/Helper";
 import type { PartialSet, PartialTabulate } from "../utilities/TypeDefinitions";
 import { L, t } from "../utilities/i18n";
 import { SAVE_FILE_VERSION } from "./Constants";
 import { getGameOptions, notifyGameOptionsUpdate } from "./GameStateLogic";
 import type { IShortcutConfig, Shortcut } from "./Shortcut";
 import { PRIORITY_MIN, type IBuildingData, type ITileData } from "./Tile";
-
-export interface ITransportationDataV2 {
-   id: number;
-   fromXy: Tile;
-   fromPosition: IPointData;
-   toXy: Tile;
-   toPosition: IPointData;
-   ticksSpent: number;
-   ticksRequired: number;
-   resource: Resource;
-   amount: number;
-   fuel: Resource;
-   fuelPerTick: number;
-   fuelCurrentTick: number;
-   hasEnoughFuel: boolean;
-}
 
 export interface IValueTracker {
    accumulated: number;
@@ -50,8 +34,6 @@ export interface IValueTracker {
 export enum ValueToTrack {
    EmpireValue = 0,
 }
-
-export const Transports: ITransportationDataV2[] = [];
 
 export class GameState {
    id = uuid4();

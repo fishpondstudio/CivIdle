@@ -22,7 +22,7 @@ import {
 } from "./BuildingLogic";
 import { Config } from "./Config";
 import { SCIENCE_VALUE } from "./Constants";
-import { Transports, type GameState } from "./GameState";
+import type { GameState } from "./GameState";
 import { TILE_SIZE } from "./GameStateLogic";
 import { NotProducingReason, Tick, type MultiplierType, type MultiplierWithSource } from "./TickLogic";
 import type {
@@ -32,6 +32,7 @@ import type {
    IResourceImportBuildingData,
    ITileData,
 } from "./Tile";
+import { Transports } from "./Transports";
 
 class IntraTickCache {
    revealedDeposits: PartialSet<Deposit> | undefined;
