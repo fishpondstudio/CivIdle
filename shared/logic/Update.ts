@@ -610,8 +610,12 @@ export function transportAndConsumeResources(
    }
 
    ////////// Storage + Partial Production (when storage is full)
+   // 2025.8.12: We skip storage check for Headquarter. This is due to a bug that can cause Headquarter to
+   // have some random resources. The bug has been fixed but some players might still have bad save files.
+   // Bugfix: https://github.com/fishpondstudio/CivIdle/commit/0b1d5623c3756056f2ebee87290ed5728a8996e9#diff-9035467b2d27a7d3e12912f854e205363860aae7c38dfac1695e23fadab17499R43
+   const skipStorageCheck = isEmpty(output) || building.type === "Headquarter";
    const hasEnoughStorage =
-      isEmpty(output) ||
+      skipStorageCheck ||
       used + getStorageRequired(output) + getStorageRequired(input) * getStockpileCapacity(building) <= total;
    if (!hasEnoughStorage) {
       const nonTransportables = filterNonTransportable(output);
