@@ -299,7 +299,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
             happiness += Math.abs(currentHappiness);
          }
          Tick.next.globalMultipliers.happiness.push({
-            value: 1000,
+            value: happiness,
             source: buildingName,
          });
          break;
