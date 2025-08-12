@@ -260,7 +260,7 @@ export const ZH_CN = {
    Carnival: "嘉年华：水豚、水獭、麝雉和皇冠鹟的自然保护区范围增加至周围 3 地块范围。巴西利亚大教堂提供双倍加成效果",
    CathedralOfBrasilia: "巴西利亚大教堂",
    CathedralOfBrasiliaDesc: "如果周围 2 地块范围的每个建筑形成一个完整的生产链（上游各分支也计入在内），即一个建筑生产的资源被另一个建筑消耗，那么参入该完整生产链中的每种建筑为所有同类型建筑提供 +X 生产乘数。X = 生产链的总长度（建筑种类数量，最大值为18）",
-   CathedralOfBrasiliaWarningHTML: "为了形成生产链，一个建筑生产的资源除了一种资源外，其他所有资源都需要被另一个建筑消耗（奇观、仓库、市场、克隆工厂和克隆实验室除外）",
+   CathedralOfBrasiliaWarningHTML: "为了形成生产链，一个建筑生产的资源除了一种资源外，其他所有资源都需要被另一个建筑消耗（奇观、旅馆、仓库、市场、克隆工厂和克隆实验室除外）",
    Census: "劳动者统计",
    CentrePompidou: "蓬皮杜文艺中心",
    CentrePompidouDesc:
