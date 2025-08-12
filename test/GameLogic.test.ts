@@ -99,28 +99,21 @@ test("getGreatPersonThisRunLevel", () => {
 });
 
 test("getPowerRequired", () => {
-   const building = makeBuilding({ type: "IronMiningCamp" });
-   assert.equal(0, getPowerRequired(building));
+   const building = makeBuilding({ type: "IronMiningCamp", level: 2 });
+   const gs = new GameState();
+   gs.unlockedTech.Electricity = true;
+   assert.equal(0, getPowerRequired(building, gs));
    building.electrification = 1;
-   assert.equal(4, getPowerRequired(building));
+   assert.equal(4, getPowerRequired(building, gs));
    building.electrification = 2;
-   assert.equal(16, getPowerRequired(building));
+   assert.equal(16, getPowerRequired(building, gs));
    building.electrification = 3;
-   assert.equal(64, getPowerRequired(building));
-   building.electrification = 4;
-   assert.equal(256, getPowerRequired(building));
-
-   building.type = "CarFactory";
-   building.electrification = 0;
-   assert.equal(0, getPowerRequired(building));
-   building.electrification = 1;
-   assert.equal(4, getPowerRequired(building));
-   building.electrification = 2;
-   assert.equal(16, getPowerRequired(building));
+   assert.equal(16, getPowerRequired(building, gs));
+   building.level = 10;
    building.electrification = 3;
-   assert.equal(64, getPowerRequired(building));
+   assert.equal(64, getPowerRequired(building, gs));
    building.electrification = 4;
-   assert.equal(256, getPowerRequired(building));
+   assert.equal(256, getPowerRequired(building, gs));
 });
 
 test("deductResourceFrom", async () => {
