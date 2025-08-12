@@ -12,9 +12,9 @@ import { Singleton, isSingletonReady } from "../utilities/Singleton";
 import { playClick } from "../visuals/Sound";
 
 export function BottomPanel(): React.ReactNode {
-   if (!isSingletonReady()) return null;
    refreshOnTypedEvent(OnSceneChanged);
    refreshOnTypedEvent(GameStateChanged);
+   if (!isSingletonReady()) return null;
    return (
       <div className="row">
          <button
