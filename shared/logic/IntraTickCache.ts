@@ -14,7 +14,7 @@ import {
 import type { PartialSet, PartialTabulate } from "../utilities/TypeDefinitions";
 import {
    IOFlags,
-   getElectrificationBoost,
+   getElectrificationLevel,
    getMarketBaseSellAmount,
    getMarketBuyAmount,
    getResourceImportCapacity,
@@ -159,7 +159,7 @@ export function getBuildingIO(
          if (hasFlag(options, IOFlags.IgnoreElectrification)) {
             level = b.level;
          } else if (hasFlag(options, IOFlags.TheoreticalElectrification)) {
-            level = b.level + getElectrificationBoost(b, gs);
+            level = b.level + getElectrificationLevel(b, gs);
          } else {
             level = b.level + (Tick.current.electrified.get(xy) ?? 0);
          }

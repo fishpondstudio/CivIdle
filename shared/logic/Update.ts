@@ -41,7 +41,7 @@ import {
    getBuildingCost,
    getBuildingValue,
    getCurrentPriority,
-   getElectrificationBoost,
+   getElectrificationLevel,
    getInputMode,
    getMarketBuyAmount,
    getMarketSellAmount,
@@ -650,11 +650,16 @@ export function transportAndConsumeResources(
 
    ////////// Electrification
    if (hasFeature(GameFeature.Electricity, gs) && canBeElectrified(building.type)) {
-      const electrification = getElectrificationBoost(building, gs);
-      const requiredPower = getPowerRequired(building);
+      const requiredPower = getPowerRequired(building, gs);
       if (getAvailableWorkers("Power") >= requiredPower) {
          useWorkers("Power", requiredPower, xy);
-         Tick.next.electrified.set(xy, electrification);
+         Tick.next.electrified.set(xy, getElectrificationLevel(building, gs));
+      }
+      if (Config.Building[building.type].power) {
+         mapSafePush(Tick.next.levelBoost, xy, { value: 5, source: t(L.PoweredBuilding) });
+      }
+      if (gs.unlockedUpgrades.Liberalism5) {
+         mapSafePush(Tick.next.levelBoost, xy, { value: 5, source: Config.Upgrade.Liberalism5.name() });
       }
    }
 

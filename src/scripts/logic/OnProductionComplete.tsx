@@ -5,7 +5,6 @@ import {
    generateScienceFromFaith,
    getBuildingCost,
    getCathedralOfBrasiliaResources,
-   getElectrificationBoost,
    getGreatWallRange,
    getMaxWarpStorage,
    getScienceFromWorkers,
@@ -300,7 +299,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
             happiness += Math.abs(currentHappiness);
          }
          Tick.next.globalMultipliers.happiness.push({
-            value: happiness,
+            value: 1000,
             source: buildingName,
          });
          break;
@@ -1741,7 +1740,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
                resource,
                (10_000_000 *
                   multiplier *
-                  (building.level + getElectrificationBoost(building, gs) + levelBoost)) /
+                  (building.level + (Tick.current.electrified.get(xy) ?? 0) + levelBoost)) /
                   price,
                Array.from(Tick.current.playerTradeBuildings.keys()),
                gs,

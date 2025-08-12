@@ -8,6 +8,7 @@ import {
 } from "../../../shared/logic/GameState";
 import { notifyGameOptionsUpdate, notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
 import {
+   MAX_ELECTRIFICATION_LEVEL,
    PRIORITY_MAX,
    PRIORITY_MIN,
    STOCKPILE_CAPACITY_MAX,
@@ -148,6 +149,23 @@ export function GameplayOptionPage(): React.ReactNode {
                   value={options.defaultStockpileMax}
                   onChange={(e) => {
                      options.defaultStockpileMax = safeParseInt(e.target.value, 1);
+                     notifyGameOptionsUpdate(options);
+                  }}
+               />
+               <div className="sep10" />
+               <div className="separator" />
+               <div className="row mb5">
+                  <div className="f1">{t(L.DefaultElectrificationLevel)}</div>
+                  <div className="text-strong">{options.defaultElectrificationLevel}</div>
+               </div>
+               <input
+                  type="range"
+                  min={0}
+                  max={MAX_ELECTRIFICATION_LEVEL}
+                  step="1"
+                  value={options.defaultElectrificationLevel}
+                  onChange={(e) => {
+                     options.defaultElectrificationLevel = safeParseInt(e.target.value, 0);
                      notifyGameOptionsUpdate(options);
                   }}
                />

@@ -167,16 +167,18 @@ export interface IItaipuDamBuildingData extends IBuildingData {
 export type IHaveTypeAndLevel = Pick<IBuildingData, "type" | "level">;
 
 export const STOCKPILE_CAPACITY_MIN = 0;
-export const STOCKPILE_CAPACITY_MAX = 10;
+export const STOCKPILE_CAPACITY_MAX = 20;
 
 export const STOCKPILE_MAX_MIN = 0;
-export const STOCKPILE_MAX_MAX = 50;
+export const STOCKPILE_MAX_MAX = 100;
 
 export const PRIORITY_MIN = 1;
 export const PRIORITY_MAX = 10;
 
 export const DEFAULT_STOCKPILE_CAPACITY = 1;
 export const DEFAULT_STOCKPILE_MAX = 5;
+
+export const MAX_ELECTRIFICATION_LEVEL = 50;
 
 export function makeBuilding(data: Pick<IBuildingData, "type"> & Partial<IBuildingData>): IBuildingData {
    const building: IBuildingData = {

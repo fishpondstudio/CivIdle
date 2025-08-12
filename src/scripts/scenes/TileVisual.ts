@@ -269,13 +269,12 @@ export class TileVisual extends Container {
       if (color) {
          const c = getColorCached(color);
          this._building.tint = c;
-         this._notProducing.tint = c;
          this._spinner.tint = c;
       } else {
          this._building.tint = getTextColor();
-         this._notProducing.tint = getTextColor();
          this._spinner.tint = getTextColor();
       }
+      this._notProducing.tint = getTextColor();
       if (this._tile.building.status !== "completed") {
          return;
       }

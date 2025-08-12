@@ -1,12 +1,7 @@
 import Tippy from "@tippyjs/react";
 import type React from "react";
 import { NoPrice, NoStorage, type Resource } from "../../../shared/definitions/ResourceDefinitions";
-import {
-   getBuildingCost,
-   getElectrificationBoost,
-   getMultipliersFor,
-   totalMultiplierFor,
-} from "../../../shared/logic/BuildingLogic";
+import { getBuildingCost, getMultipliersFor, totalMultiplierFor } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
 import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
 import { combineResources } from "../../../shared/logic/ResourceLogic";
@@ -36,7 +31,7 @@ export function SwissBankBuildingBody({ gameState, xy }: IBuildingComponentProps
       Array.from(Tick.current.playerTradeBuildings.values()).map((m) => m.resources),
    );
    const levelBoost = Tick.current.levelBoost.get(xy) ?? [];
-   const electrification = getElectrificationBoost(building, gameState);
+   const electrification = Tick.current.electrified.get(xy) ?? 0;
    const effectiveLevel =
       building.level + electrification + levelBoost.reduce((acc, lb) => acc + lb.value, 0);
    return (

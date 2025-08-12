@@ -202,6 +202,7 @@ export class GameOptions {
    defaultConstructionPriority = PRIORITY_MIN;
    defaultStockpileCapacity = 1;
    defaultStockpileMax = 5;
+   defaultElectrificationLevel = 0;
    defaultBuildingLevel = 1;
    porcelainTowerMaxPickPerRoll = false;
    greedyTransport = false;

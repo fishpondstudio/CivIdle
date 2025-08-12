@@ -1,11 +1,6 @@
 import Tippy from "@tippyjs/react";
 import classNames from "classnames";
-import {
-   IOFlags,
-   getElectrificationBoost,
-   getMultipliersFor,
-   totalMultiplierFor,
-} from "../../../shared/logic/BuildingLogic";
+import { IOFlags, getMultipliersFor, totalMultiplierFor } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
 import type { GameState } from "../../../shared/logic/GameState";
 import { getBuildingIO } from "../../../shared/logic/IntraTickCache";
@@ -42,6 +37,7 @@ export function BuildingIOTreeViewComponent({
                type === "input" &&
                Tick.current.notProducingReasons.get(xy) === NotProducingReason.NotEnoughResources &&
                resourceInStorage < v;
+            const electrificationLevel = Tick.current.electrified.get(xy) ?? 0;
             return (
                <li key={k}>
                   <details>
@@ -80,10 +76,10 @@ export function BuildingIOTreeViewComponent({
                               <div className="f1">{t(L.BuildingLevel)}</div>
                               <FormatNumber value={building?.level ?? 0} />
                            </li>
-                           {building && getElectrificationBoost(building, gameState) > 0 ? (
+                           {building && electrificationLevel > 0 ? (
                               <li className="row">
                                  <div className="f1">{t(L.ElectrificationLevel)}</div>
-                                 <FormatNumber value={Tick.current.electrified.get(xy) ?? 0} />
+                                 <FormatNumber value={electrificationLevel} />
                               </li>
                            ) : null}
                            {levelBoost && levelBoost.length > 0
