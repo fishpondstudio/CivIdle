@@ -1639,4 +1639,7 @@ export const EN = {
    LiberalismLevel5DescHTMLV3: "All buildings that can be electrified get <b>+5 Building Level Boost</b> for free",
    ActualElectrificationLevel: "Actual Level <b>(capped by Building Level)</b>",
    DefaultElectrificationLevel: "Default Electrification Level",
+   ThemeBuildingStatusIconAlpha: "Building Status Icon Alpha",
+   ThemeBuildingStatusIconFollowBuildingColor: "Building Status Icons Follow Building Color",
+   ThemeBuildingStatusIconFollowBuildingColorDescHTML: "Building status icons (on the top left of the building) will follow the color of the building",
 };

@@ -79,6 +79,7 @@ const DefaultThemeColors = {
    ResearchLockedColor: "#666666",
    ResearchUnlockedColor: "#ffffff",
    ResearchHighlightColor: "#ffff99",
+   BuildingStatusIconAlpha: 1,
 };
 
 export function resetThemeColor() {
@@ -103,6 +104,7 @@ export const ThemeColorNames: Record<keyof typeof DefaultThemeColors, () => stri
    ResearchLockedColor: () => t(L.ThemeResearchLockedColor),
    ResearchUnlockedColor: () => t(L.ThemeResearchUnlockedColor),
    ResearchHighlightColor: () => t(L.ThemeResearchHighlightColor),
+   BuildingStatusIconAlpha: () => t(L.ThemeBuildingStatusIconAlpha),
 };
 
 export const ExtraTileInfoTypes = {
@@ -217,6 +219,7 @@ export class GameOptions {
    buildNumber = 0;
    constructionGridView = false;
    useRightClickCopy = false;
+   buildingStatusIconFollowBuildingColor = false;
 }
 
 export enum RebirthFlags {

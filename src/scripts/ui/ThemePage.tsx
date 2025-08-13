@@ -275,6 +275,17 @@ export function ThemePage(): React.ReactNode {
                      );
                   }
                })}
+               <div className="separator" />
+               <ToggleComponent
+                  title={t(L.ThemeBuildingStatusIconFollowBuildingColor)}
+                  contentHTML={t(L.ThemeBuildingStatusIconFollowBuildingColorDescHTML)}
+                  value={gameOptions.buildingStatusIconFollowBuildingColor}
+                  onValueChange={(value) => {
+                     playClick();
+                     gameOptions.buildingStatusIconFollowBuildingColor = value;
+                     notifyGameOptionsUpdate(gameOptions);
+                  }}
+               />
             </fieldset>
 
             <fieldset>

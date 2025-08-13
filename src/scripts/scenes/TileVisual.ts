@@ -100,10 +100,9 @@ export class TileVisual extends Container {
       this._construction.visible = false;
 
       this._notProducing = this.addChild(new Sprite());
-      this._notProducing.position.set(-20, -20);
+      this._notProducing.position.set(-25, -25);
       this._notProducing.anchor.set(0.5, 0.5);
       this._notProducing.scale.set(0.5);
-      this._notProducing.tint = getTextColor();
       this._notProducing.visible = false;
 
       this._constructionAnimation = Actions.repeat(
@@ -274,7 +273,13 @@ export class TileVisual extends Container {
          this._building.tint = getTextColor();
          this._spinner.tint = getTextColor();
       }
-      this._notProducing.tint = getTextColor();
+
+      if (getGameOptions().buildingStatusIconFollowBuildingColor) {
+         this._notProducing.tint = this._building.tint;
+      } else {
+         this._notProducing.tint = getTextColor();
+      }
+
       if (this._tile.building.status !== "completed") {
          return;
       }
@@ -424,7 +429,12 @@ export class TileVisual extends Container {
       if (!this._notProducing.visible) {
          this._notProducing.visible = true;
          this._notProducing.alpha = 0;
-         Actions.to(this._notProducing, { alpha: 1 }, 0.25, Easing.InQuad).start();
+         Actions.to(
+            this._notProducing,
+            { alpha: getGameOptions().themeColors.BuildingStatusIconAlpha },
+            0.25,
+            Easing.InQuad,
+         ).start();
       }
    }
 
