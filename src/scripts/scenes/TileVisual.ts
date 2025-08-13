@@ -11,7 +11,7 @@ import {
 } from "../../../shared/logic/GameState";
 import { getGameOptions, getGameState } from "../../../shared/logic/GameStateLogic";
 import { getGrid } from "../../../shared/logic/IntraTickCache";
-import { Tick } from "../../../shared/logic/TickLogic";
+import { NotProducingReason, Tick } from "../../../shared/logic/TickLogic";
 import type { ITileData } from "../../../shared/logic/Tile";
 import {
    clamp,
@@ -33,6 +33,12 @@ import { Actions } from "../utilities/pixi-actions/Actions";
 import { Easing } from "../utilities/pixi-actions/Easing";
 import { Fonts } from "../visuals/Fonts";
 import type { WorldScene } from "./WorldScene";
+
+function areBetterStatusIconsEnabled(): boolean {
+
+   // todo: add a toggle somewhere
+   return true;
+}
 
 export class TileVisual extends Container {
    private readonly _world: WorldScene;
@@ -65,6 +71,8 @@ export class TileVisual extends Container {
       console.assert(this._tile, `Expect tile ${this._xy} to exist!`);
       const g = getGrid(gs);
       this.position = g.gridToPosition(this._grid);
+      const betterStatusIcons = areBetterStatusIconsEnabled();
+
 
       // We use a very large AABB to avoid flickering when zooming
       this._aabb = new Rectangle(
@@ -131,6 +139,17 @@ export class TileVisual extends Container {
             Actions.to(this._upgrade, { y: -10, alpha: 0 }, 0.5, Easing.InSine),
          ),
       );
+
+
+      if (betterStatusIcons) {
+         const statusIconMoveLeft = 10;
+         const statusIconMoveUp = 10;
+         this._construction.position.set(-25 - statusIconMoveLeft, -5 - statusIconMoveUp);
+         this._construction.tint = 0x00ff88; // green with some blue
+         this._notProducing.position.set(-20 - statusIconMoveLeft / 2, -20 - statusIconMoveUp / 2);
+         this._upgrade.position.set(-25 - statusIconMoveLeft, 10 - statusIconMoveUp * 1.5);
+         this._upgrade.tint = 0x88ff00; // green with some yellow
+      }
 
       this._level = this.addChild(
          new BitmapText("", {
@@ -266,6 +285,7 @@ export class TileVisual extends Container {
       }
 
       const color = getGameOptions().buildingColors[this._tile.building.type];
+      const betterStatusIcons = areBetterStatusIconsEnabled();
       if (color) {
          const c = getColorCached(color);
          this._building.tint = c;
@@ -274,7 +294,11 @@ export class TileVisual extends Container {
          this._building.tint = getTextColor();
          this._spinner.tint = getTextColor();
       }
-      this._notProducing.tint = getTextColor();
+
+      if (!betterStatusIcons) {
+         this._notProducing.tint = getTextColor();
+      }
+
       if (this._tile.building.status !== "completed") {
          return;
       }
@@ -296,6 +320,7 @@ export class TileVisual extends Container {
 
    public onTileDataChanged(tileData: ITileData) {
       const { textures, gameState, app } = this._world.context;
+      const betterStatusIcons = areBetterStatusIconsEnabled();
       if (!this._tile) {
          console.warn(`[TileVisual] Cannot find tile data for ${pointToXy(this._grid)}`);
          return;
@@ -397,9 +422,38 @@ export class TileVisual extends Container {
             if (reason) {
                this._notProducing.texture = getNotProducingTexture(reason, textures);
                this.fadeInTopLeftIcon();
+
+               if (betterStatusIcons) {
+                  switch (reason) {
+                     case NotProducingReason.NoPower:
+                        this._notProducing.tint = 0xffbb00; //red-yellow
+                        break;
+                     case NotProducingReason.NotEnoughWorkers:
+                        this._notProducing.tint = 0xff0000; //red
+                        break;
+                     case NotProducingReason.NotEnoughResources:
+                        this._notProducing.tint = 0xff0000; // red
+                        break;
+                     case NotProducingReason.StorageFull:
+                        this._notProducing.tint = 0xbb4400;
+                        break;
+                     case NotProducingReason.TurnedOff:
+                        this._notProducing.tint = 0x888888; // grey
+                        break;
+                     default:
+                        this._notProducing.tint = 0xff0000; // red
+                        break;
+                  }
+               }
+
             } else if (electrification > 0) {
                this._notProducing.texture = getTexture("Misc_Bolt", textures);
                this.fadeInTopLeftIcon();
+
+               if (betterStatusIcons) {
+                  this._notProducing.tint = 0xffbb00; // red-yellow
+               }
+
             } else {
                this.fadeOutTopLeftIcon();
             }
