@@ -700,11 +700,12 @@ export function getBuildingLevelLabel(xy: Tile, gs: GameState): string {
    if (!b) {
       return "";
    }
-   if (
-      !BuildingShowLevel.has(b.type) &&
-      (Config.Building[b.type].special === BuildingSpecial.HQ || isWorldOrNaturalWonder(b.type))
-   ) {
+   if (Config.Building[b.type].special === BuildingSpecial.HQ) {
       return "";
+   }
+   // We don't show level boost for wonders (as it does not apply to them), except for the Swiss Bank!
+   if (BuildingShowLevel.has(b.type) && b.type !== "SwissBank" && isWorldOrNaturalWonder(b.type)) {
+      return String(b.level);
    }
    let levelBoost = 0;
    levelBoost += Tick.current.electrified.get(xy) ?? 0;
