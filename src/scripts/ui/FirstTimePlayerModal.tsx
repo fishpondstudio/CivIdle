@@ -49,7 +49,7 @@ export function FirstTimePlayerModal(): React.ReactNode {
                content={
                   <div className="row mt10">
                      <div className="m-icon mr10">translate</div>
-                     <LanguageSelect className="f1" />
+                     <LanguageSelect className="f1" setChat />
                   </div>
                }
             />
