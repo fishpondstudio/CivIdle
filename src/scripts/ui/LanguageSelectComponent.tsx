@@ -1,9 +1,12 @@
-import { Languages, syncLanguage } from "../../../shared/logic/GameState";
+import { LanguageToChatChannel, Languages, syncLanguage } from "../../../shared/logic/GameState";
 import { notifyGameOptionsUpdate } from "../../../shared/logic/GameStateLogic";
 import { useGameOptions } from "../Global";
 import { jsxMapOf } from "../utilities/Helper";
 
-export function LanguageSelect({ className }: { className?: string }): React.ReactNode {
+export function LanguageSelect({
+   className,
+   setChat,
+}: { setChat?: boolean; className?: string }): React.ReactNode {
    const options = useGameOptions();
    return (
       <select
@@ -11,11 +14,15 @@ export function LanguageSelect({ className }: { className?: string }): React.Rea
          value={options.language}
          onChange={(e) => {
             options.language = e.target.value as keyof typeof Languages;
+            if (setChat) {
+               options.chatChannels.clear();
+               options.chatChannels.add(LanguageToChatChannel[options.language]);
+            }
             syncLanguage(Languages[options.language]);
             notifyGameOptionsUpdate(options);
          }}
       >
-         {jsxMapOf(Languages, (k, v) => {
+         {jsxMapOf(Languages as Record<string, Record<string, string>>, (k, v) => {
             return (
                <option key={k} value={k}>
                   {v.CurrentLanguage}

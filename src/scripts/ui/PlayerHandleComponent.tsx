@@ -138,19 +138,14 @@ export function PlayerHandleComponent() {
                ) : null}
             </>
          )}
-         {showDetails ? (
-            <AccountDetails />
-         ) : (
-            <div className="row text-link mt5" onClick={() => setShowDetails(true)}>
-               {t(L.AccountTypeShowDetails)}
-            </div>
-         )}
+         <AccountDetails />
       </fieldset>
    );
 }
 
 function AccountDetails(): React.ReactNode {
    const [playTime, setPlayTime] = useState(0);
+   const [showDetails, setShowDetails] = useState(false);
    const user = useUser();
    useEffect(() => {
       (async () => {
@@ -167,6 +162,27 @@ function AccountDetails(): React.ReactNode {
          getGameState().greatPeopleChoicesV2.length +
          getGameOptions().greatPeopleChoicesV2.length <=
       0;
+
+   if (!showDetails) {
+      if (user?.level === AccountLevel.Tribune && (cond1 || cond2)) {
+         return (
+            <div className="text-link text-strong mt5" onClick={() => setShowDetails(true)}>
+               <AccountLevelComponent
+                  level={AccountLevel.Quaestor}
+                  scale={0.17}
+                  style={{ display: "inline-block", verticalAlign: "middle", marginRight: 5 }}
+               />
+               {t(L.AccountTypeShowDetailsTribune)}
+            </div>
+         );
+      }
+      return (
+         <div className="text-link mt5" onClick={() => setShowDetails(true)}>
+            {t(L.AccountTypeShowDetails)}
+         </div>
+      );
+   }
+
    return (
       <>
          <div className="separator" />
@@ -345,7 +361,15 @@ function AccountDetails(): React.ReactNode {
                         playError();
                         showModal(
                            <AlertModal title={t(L.TribuneUpgradeDescGreatPeopleWarningTitle)}>
-                              <RenderHTML html={t(L.TribuneUpgradeDescGreatPeopleWarning)} />
+                              <div className="row">
+                                 <div className="m-icon text-orange mr10" style={{ fontSize: 48 }}>
+                                    warning
+                                 </div>
+                                 <RenderHTML
+                                    className="f1"
+                                    html={t(L.TribuneUpgradeDescGreatPeopleWarning)}
+                                 />
+                              </div>
                            </AlertModal>,
                         );
                         return;
