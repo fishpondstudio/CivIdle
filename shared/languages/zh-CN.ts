@@ -651,7 +651,7 @@ export const ZH_CN = {
    GreedyTransportDescHTML: "这将使建筑持续运送资源，即使它已经具有足够资源进行当前升级。这将使建筑<b>更快地</b>进行多等级升级，但最终运送的资源将会<b>供大于求</b>",
    Greek: "希腊",
    GrottaAzzurra: "卡普里岛蓝洞",
-   GrottaAzzurraDescV2: "当此奇观被发现后，所有当前 I 阶建筑，获得 +5 等级（仅当前建造完成的生效）。所有 I 阶建筑，获得 +1 生产、劳动者能力以及存储乘数",
+   GrottaAzzurraDescV2: "当此奇观被发现后，所有当前 I 阶建筑，获得一次 +5 等级（仅当前建造完成的生效）。所有 I 阶建筑，获得 +1 生产、劳动者能力以及存储乘数",
    Gunpowder: "火药",
    GunpowderMill: "火药厂",
    GuyFawkesNightV2: "盖伊·福克斯之夜：东印度公司提供双倍加成效果。伦敦塔桥获取伟人速度加快 20% ",
