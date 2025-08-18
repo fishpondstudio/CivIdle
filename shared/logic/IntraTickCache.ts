@@ -144,10 +144,7 @@ export function getBuildingIO(
          }
       }
 
-      if (
-         hasFlag(options, IOFlags.TheoreticalElectrification) &&
-         hasFlag(options, IOFlags.IgnoreElectrification)
-      ) {
+      if (hasFlag(options, IOFlags.TheoreticalLevelBoost) && hasFlag(options, IOFlags.IgnoreLevelBoost)) {
          console.warn(
             "`TheoreticalElectrification` and `IgnoreElectrification` are both set. Only one of them should be set!",
          );
@@ -155,17 +152,19 @@ export function getBuildingIO(
 
       // Apply multipliers
       forEach(resources, (k, v) => {
-         let level: number;
-         if (hasFlag(options, IOFlags.IgnoreElectrification)) {
-            level = b.level;
-         } else if (hasFlag(options, IOFlags.TheoreticalElectrification)) {
-            level = b.level + getElectrificationLevel(b, gs);
+         let level = 0;
+         if (hasFlag(options, IOFlags.IgnoreLevelBoost)) {
+            level += b.level;
          } else {
-            level = b.level + (Tick.current.electrified.get(xy) ?? 0);
+            if (hasFlag(options, IOFlags.TheoreticalLevelBoost)) {
+               level += b.level + getElectrificationLevel(b, gs);
+            } else {
+               level += b.level + (Tick.current.electrified.get(xy) ?? 0);
+            }
+            Tick.current.levelBoost.get(xy)?.forEach((lb) => {
+               level += lb.value;
+            });
          }
-         Tick.current.levelBoost.get(xy)?.forEach((lb) => {
-            level += lb.value;
-         });
          let value = v * level;
          if (hasFlag(options, IOFlags.Capacity)) {
             value *= b.capacity;
@@ -289,13 +288,13 @@ export function getResourceIO(gameState: GameState): IResourceIO {
       const input = getBuildingIO(
          xy,
          "input",
-         IOFlags.Multiplier | IOFlags.Capacity | IOFlags.TheoreticalElectrification,
+         IOFlags.Multiplier | IOFlags.Capacity | IOFlags.TheoreticalLevelBoost,
          gameState,
       );
       const output = getBuildingIO(
          xy,
          "output",
-         IOFlags.Multiplier | IOFlags.Capacity | IOFlags.TheoreticalElectrification,
+         IOFlags.Multiplier | IOFlags.Capacity | IOFlags.TheoreticalLevelBoost,
          gameState,
       );
       forEach(input, (res, amount) => mapSafeAdd(result.theoreticalInput, res, amount));

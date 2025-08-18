@@ -123,8 +123,8 @@ export enum IOFlags {
    Capacity = 1 << 0,
    Multiplier = 1 << 1,
    StableOnly = 1 << 2,
-   IgnoreElectrification = 1 << 3,
-   TheoreticalElectrification = 1 << 4,
+   IgnoreLevelBoost = 1 << 3,
+   TheoreticalLevelBoost = 1 << 4,
    TotalUsedBits = 5,
 }
 
@@ -184,23 +184,13 @@ export function getWorkersFor(xy: Tile, gs: GameState): IWorkerRequirement {
    // Buildings that produce workers do not cost workers
    if (b && !Config.Building[b.type].output.Worker) {
       forEach(
-         getBuildingIO(
-            xy,
-            "input",
-            IOFlags.Multiplier | IOFlags.StableOnly | IOFlags.IgnoreElectrification,
-            gs,
-         ),
+         getBuildingIO(xy, "input", IOFlags.Multiplier | IOFlags.StableOnly | IOFlags.IgnoreLevelBoost, gs),
          (k, v) => {
             if (!NoPrice[k]) result.rawOutput += v;
          },
       );
       forEach(
-         getBuildingIO(
-            xy,
-            "output",
-            IOFlags.Multiplier | IOFlags.StableOnly | IOFlags.IgnoreElectrification,
-            gs,
-         ),
+         getBuildingIO(xy, "output", IOFlags.Multiplier | IOFlags.StableOnly | IOFlags.IgnoreLevelBoost, gs),
          (k, v) => {
             if (!NoPrice[k]) result.rawOutput += v;
          },
@@ -317,7 +307,7 @@ export function getStorageFor(xy: Tile, gs: GameState): IStorageResult {
                   getBuildingIO(
                      xy,
                      "input",
-                     IOFlags.Multiplier | IOFlags.StableOnly | IOFlags.IgnoreElectrification,
+                     IOFlags.Multiplier | IOFlags.StableOnly | IOFlags.IgnoreLevelBoost,
                      gs,
                   ),
                   accumulate,
@@ -328,7 +318,7 @@ export function getStorageFor(xy: Tile, gs: GameState): IStorageResult {
                   getBuildingIO(
                      xy,
                      "output",
-                     IOFlags.Multiplier | IOFlags.StableOnly | IOFlags.IgnoreElectrification,
+                     IOFlags.Multiplier | IOFlags.StableOnly | IOFlags.IgnoreLevelBoost,
                      gs,
                   ),
                   accumulate,

@@ -1851,6 +1851,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
                   building,
                   {
                      output: multiplier * buildings.size,
+                     unstable: true,
                   },
                   buildingName,
                );
