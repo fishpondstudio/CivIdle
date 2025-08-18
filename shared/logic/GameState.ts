@@ -160,6 +160,9 @@ export const PremiumTileTextures: Partial<Record<TileTexture, true>> = {
    Tile16: true,
 };
 
+export const SpinnerTextures = ["Spinner1", "Spinner2", "Spinner3", "Spinner4", "Spinner5"] as const;
+export type SpinnerTexture = (typeof SpinnerTextures)[number];
+
 export function getTextColor(): number {
    return DarkTileTextures[getGameOptions().tileTexture] ? 0xffffff : 0x666666;
 }
@@ -189,6 +192,9 @@ export class GameOptions {
    resourceColors: Partial<Record<Resource, string>> = {};
    themeColors = { ...DefaultThemeColors };
    tileTexture: TileTexture = "Tile1";
+   spinnerTexture: SpinnerTexture | null = "Spinner1";
+   spinnerSpeed = 1;
+   showFloaterText = true;
    shortcuts: Partial<Record<Shortcut, IShortcutConfig>> = {};
    soundEffect = true;
    tradeFilledSound = true;

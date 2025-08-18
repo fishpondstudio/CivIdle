@@ -218,7 +218,9 @@ function postTickTiles(gs: GameState, offline: boolean) {
       const speed = Singleton().ticker.speedUp;
       if (gs.tick % speed === 0) {
          CurrentTickChanged.emit(Tick.current);
-         Singleton().sceneManager.getCurrent(WorldScene)?.flushFloater(speed);
+         if (getGameOptions().showFloaterText) {
+            Singleton().sceneManager.getCurrent(WorldScene)?.flushFloater(speed);
+         }
          notifyGameStateUpdate();
       }
       if (gs.tick % (saveFreq * speed) === 0) {

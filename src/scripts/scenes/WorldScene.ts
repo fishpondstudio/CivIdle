@@ -280,7 +280,7 @@ export class WorldScene extends Scene {
    }
 
    override onGameOptionsChanged(gameOptions: GameOptions): void {
-      this._tiles.forEach((visual, xy) => visual.updateDepositColor(gameOptions));
+      this._tiles.forEach((visual, xy) => visual.onGameOptionChanged(gameOptions));
    }
 
    lookAtTile(xy: Tile, lookAtMode: LookAtMode) {

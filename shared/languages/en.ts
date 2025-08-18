@@ -1643,4 +1643,11 @@ export const EN = {
    ThemeBuildingStatusIconAlpha: "Building Status Icon Alpha",
    ThemeBuildingStatusIconFollowBuildingColor: "Building Status Icons Follow Building Color",
    ThemeBuildingStatusIconFollowBuildingColorDescHTML: "Building status icons (on the top left of the building) will follow the color of the building",
+   Spinner: "Spinner",
+   HideSpinner: "Hide Spinner",
+   HideSpinnerDescHTML: "Hide the spinner that indicates the tile is working. <b>This should not affect performance</b>",
+   SpinnerSpeed: "Spinner Speed",
+   SpinnerSpeedDescHTML: "Set the speed for normal buildings. Electrified buildings spin twice as fast. <b>Must be between 0.01 and 100. Default is 1</b>",
+   ShowFloaterText: "Show Tile Floating Text",
+   ShowFloaterTextDescHTML: "Show tile floating text that indicates the production amount. Turning this off might slightly improve performance",
 };

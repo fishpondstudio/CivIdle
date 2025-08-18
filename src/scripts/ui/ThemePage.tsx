@@ -3,6 +3,7 @@ import { Config } from "../../../shared/logic/Config";
 import {
    CursorOptions,
    PremiumTileTextures,
+   SpinnerTextures,
    ThemeColorNames,
    TileTextures,
    resetThemeBuildingColors,
@@ -25,7 +26,7 @@ import { ColorPicker } from "./ColorPicker";
 import { showToast } from "./GlobalModal";
 import { MenuComponent } from "./MenuComponent";
 import { RenderHTML } from "./RenderHTMLComponent";
-import { TileTextureComponent } from "./TextureSprites";
+import { MiscTextureComponent, TileTextureComponent } from "./TextureSprites";
 import { TitleBarComponent } from "./TitleBarComponent";
 import { ToggleComponent } from "./ToggleComponent";
 
@@ -177,6 +178,17 @@ export function ThemePage(): React.ReactNode {
                      notifyGameOptionsUpdate(gameOptions);
                   }}
                />
+               <div className="separator" />
+               <ToggleComponent
+                  title={t(L.ShowFloaterText)}
+                  contentHTML={t(L.ShowFloaterTextDescHTML)}
+                  value={gameOptions.showFloaterText}
+                  onValueChange={(value) => {
+                     playClick();
+                     gameOptions.showFloaterText = value;
+                     notifyGameOptionsUpdate(gameOptions);
+                  }}
+               />
             </fieldset>
             <fieldset>
                <legend>{t(L.Tile)}</legend>
@@ -223,6 +235,66 @@ export function ThemePage(): React.ReactNode {
                         </div>
                      );
                   })}
+               </div>
+            </fieldset>
+            <fieldset>
+               <legend>{t(L.Spinner)}</legend>
+               <div style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: 10 }}>
+                  {SpinnerTextures.map((i) => {
+                     return (
+                        <div
+                           key={i}
+                           style={{ position: "relative" }}
+                           className="row jcc pointer"
+                           onClick={() => {
+                              gameOptions.spinnerTexture = i;
+                              notifyGameOptionsUpdate(gameOptions);
+                           }}
+                        >
+                           <MiscTextureComponent name={i} scale={0.5} style={{ filter: "invert(0.75)" }} />
+                           {gameOptions.spinnerTexture === i ? (
+                              <div
+                                 style={{
+                                    position: "absolute",
+                                    top: "50%",
+                                    left: "50%",
+                                    transform: "translate(-50%, -50%)",
+                                 }}
+                                 className="m-icon text-green"
+                              >
+                                 check_circle
+                              </div>
+                           ) : null}
+                        </div>
+                     );
+                  })}
+               </div>
+               <div className="separator" />
+               <ToggleComponent
+                  title={t(L.HideSpinner)}
+                  contentHTML={t(L.HideSpinnerDescHTML)}
+                  value={gameOptions.spinnerTexture === null}
+                  onValueChange={(value) => {
+                     playClick();
+                     gameOptions.spinnerTexture = value ? null : "Spinner1";
+                     notifyGameOptionsUpdate(gameOptions);
+                  }}
+               />
+               <div className="separator" />
+               <div className="row">
+                  <div className="f1 mr20">
+                     <div>{t(L.SpinnerSpeed)}</div>
+                     <RenderHTML className="text-desc text-small" html={t(L.SpinnerSpeedDescHTML)} />
+                  </div>
+                  <input
+                     type="text"
+                     style={{ width: 60, textAlign: "right" }}
+                     value={gameOptions.spinnerSpeed}
+                     onChange={(e) => {
+                        gameOptions.spinnerSpeed = clamp(safeParseFloat(e.target.value, 1), 0.01, 100);
+                        notifyGameOptionsUpdate();
+                     }}
+                  />
                </div>
             </fieldset>
             <fieldset>

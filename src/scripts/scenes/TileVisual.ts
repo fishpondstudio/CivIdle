@@ -1,6 +1,6 @@
 import type { SmoothGraphics } from "@pixi/graphics-smooth";
 import type { IDestroyOptions, IPointData } from "pixi.js";
-import { BitmapText, Container, Rectangle, Sprite } from "pixi.js";
+import { BitmapText, Container, Rectangle, Sprite, Texture } from "pixi.js";
 import type { Resource } from "../../../shared/definitions/ResourceDefinitions";
 import { getBuildingLevelLabel, getBuildingPercentage } from "../../../shared/logic/BuildingLogic";
 import {
@@ -83,7 +83,8 @@ export class TileVisual extends Container {
       this._bg.scale.set(0.5);
       this._bg.position.set(0, 0);
 
-      this._spinner = this.addChild(new Sprite(getTexture("Misc_Spinner", textures)));
+      const spinnerTexture = textures[`Misc_${getGameOptions().spinnerTexture}`] ?? Texture.EMPTY;
+      this._spinner = this.addChild(new Sprite(spinnerTexture));
       this._spinner.anchor.set(0.5);
       this._spinner.visible = false;
       this._spinner.alpha = 0;
@@ -165,7 +166,7 @@ export class TileVisual extends Container {
             this._deposits.set(deposit, sprite);
          });
          this.updateDepositLayout();
-         this.updateDepositColor(getGameOptions());
+         this.onGameOptionChanged(getGameOptions());
       }
 
       this.update(0);
@@ -191,7 +192,7 @@ export class TileVisual extends Container {
       this._constructionAnimation.stop();
    }
 
-   public updateDepositColor(options: GameOptions) {
+   public onGameOptionChanged(options: GameOptions) {
       this._deposits.forEach((sprite, deposit) => {
          const color = options.resourceColors[deposit];
          sprite.tint = color ? getColorCached(color) : getTextColor();
@@ -214,6 +215,16 @@ export class TileVisual extends Container {
       }
       if (this._bottomText.tint !== color) {
          this._bottomText.tint = color;
+      }
+      const { textures } = this._world.context;
+
+      const spinnerTexture = textures[`Misc_${options.spinnerTexture}`];
+
+      if (spinnerTexture) {
+         this._spinner.texture = spinnerTexture;
+         this._spinner.visible = true;
+      } else {
+         this._spinner.visible = false;
       }
    }
 
@@ -283,7 +294,8 @@ export class TileVisual extends Container {
       if (this._tile.building.status !== "completed") {
          return;
       }
-      this._spinner.angle += Tick.current.electrified.has(this._tile.tile) ? dt * 180 : dt * 90;
+      const speed = Tick.current.electrified.has(this._tile.tile) ? 180 : 90;
+      this._spinner.angle += dt * speed * getGameOptions().spinnerSpeed;
       if (Tick.current.notProducingReasons.has(this._xy)) {
          this._spinner.alpha -= dt;
          this._building.alpha -= dt;
@@ -408,8 +420,6 @@ export class TileVisual extends Container {
             } else {
                this.fadeOutTopLeftIcon();
             }
-
-            this._spinner.visible = true;
          }
       }
    }
