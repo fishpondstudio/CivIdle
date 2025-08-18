@@ -2225,4 +2225,7 @@ export const BuildingShowLevel = new Set<Building>([
    "MontSaintMichel",
    "SwissBank",
    "ItaipuDam",
-]);
+   "ChoghaZanbil",
+   "LuxorTemple",
+   "BigBen",
+] satisfies Building[]);
