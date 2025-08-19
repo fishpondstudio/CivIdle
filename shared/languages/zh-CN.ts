@@ -474,7 +474,7 @@ export const ZH_CN = {
    EiffelTower: "埃菲尔铁塔",
    EiffelTowerDesc: "与该奇观相邻的炼钢厂获得 +N 生产、劳动者能力以及存储乘数。 N 取决于埃菲尔铁塔相邻运转的炼钢厂数量",
    Elbphilharmonie: "易北爱乐厅",
-   ElbphilharmonieDesc: "周围 3 地块范围内的所有建筑，A建筑每相邻不同于A建筑的阶且运转的建筑，则A建筑建筑获得 +1 生产乘数（例：伐木场相邻3个锯木场，伐木场获得+3生产乘数）",
+   ElbphilharmonieDesc: "周围 3 地块范围内的所有建筑，A建筑每相邻不同于A建筑的阶且运转的建筑，则A建筑建筑获得 +1 生产乘数（例：伐木场( I 阶)邻3个锯木场( II 阶)，伐木场获得+3生产乘数）",
    Electricity: "电能",
    Electrification: "电气化",
    ElectrificationLevel: "电气化等级",
