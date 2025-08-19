@@ -2,6 +2,7 @@ import Tippy from "@tippyjs/react";
 import { Config } from "../../../shared/logic/Config";
 import {
    CursorOptions,
+   PremiumSpinnerTextures,
    PremiumTileTextures,
    SpinnerTextures,
    ThemeColorNames,
@@ -247,6 +248,14 @@ export function ThemePage(): React.ReactNode {
                            style={{ position: "relative" }}
                            className="row jcc pointer"
                            onClick={() => {
+                              if (
+                                 PremiumSpinnerTextures[i] &&
+                                 !hasFlag(getUser()?.attr ?? UserAttributes.None, UserAttributes.DLC1)
+                              ) {
+                                 playError();
+                                 showToast(t(L.ThemePremiumSpinner));
+                                 return;
+                              }
                               gameOptions.spinnerTexture = i;
                               notifyGameOptionsUpdate(gameOptions);
                            }}
