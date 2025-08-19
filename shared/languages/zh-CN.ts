@@ -369,7 +369,7 @@ export const ZH_CN = {
    CommerceLevelX: "商业 %{level}",
    Communism: "共产主义",
    CommunismLevel4DescHTML: "诞生一位<b>工业时代</b>伟人与一位<b>世界大战时期</b>伟人",
-   CommunismLevel5DescHTML: "诞生一位<b>冷战时期</b>伟人。进入一个新时代时，诞生<b>2 位额外</b>当代伟人",
+   CommunismLevel5DescHTML: "诞生一位<b>冷战时期</b>伟人。每进入一个新时代时，诞生<b>2 位额外</b>当代伟人",
    CommunismLevelX: "共产主义 等级 %{level}",
    Computer: "计算机",
    ComputerFactory: "计算机工厂",
