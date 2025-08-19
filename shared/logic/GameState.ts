@@ -160,7 +160,15 @@ export const PremiumTileTextures: Partial<Record<TileTexture, true>> = {
    Tile16: true,
 };
 
-export const SpinnerTextures = ["Spinner1", "Spinner2", "Spinner3", "Spinner4", "Spinner5"] as const;
+export const SpinnerTextures = [
+   "Spinner1",
+   "Spinner2",
+   "Spinner3",
+   "Spinner4",
+   "Spinner5",
+   "Spinner6",
+   "Spinner7",
+] as const;
 export type SpinnerTexture = (typeof SpinnerTextures)[number];
 
 export function getTextColor(): number {

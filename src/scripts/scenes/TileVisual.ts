@@ -420,6 +420,7 @@ export class TileVisual extends Container {
             } else {
                this.fadeOutTopLeftIcon();
             }
+            this._spinner.visible = getGameOptions().spinnerTexture !== null;
          }
       }
    }
