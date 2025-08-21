@@ -62,6 +62,9 @@ export function syncUITheme(gameOptions: GameOptions): void {
       case "OldFashioned":
          document.body.classList.add("old-fashioned-cursor");
          break;
+      case "HiVisOldFashioned":
+         document.body.classList.add("hi-vis-old-fashioned-cursor");
+         break;
       case "System":
          break;
       default:
