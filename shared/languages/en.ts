@@ -1652,4 +1652,6 @@ export const EN = {
    ShowFloaterTextDescHTML: "Show tile floating text that indicates the production amount. Turning this off might slightly improve performance",
    ThemeSpinnerAlpha: "Spinner Alpha",
    ThemePremiumSpinner: "This spinner is only available for Supporter Pack owners",
+   UseScientificNotationForLargeNumbers: "Use Scientific Notation For Large Numbers",
+   UseScientificNotationForLargeNumbersDescHTML: "Use scientific notation for numbers that are larger than <b>1 Quadrillion (1Qa / 1e15)</b>",
 };

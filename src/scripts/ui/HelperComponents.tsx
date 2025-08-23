@@ -4,5 +4,5 @@ export function FormatNumber({
    value,
    binary,
 }: { value: number | undefined | null; binary?: boolean }): React.ReactNode {
-   return formatNumber(value, binary ?? false, false);
+   return formatNumber(value, binary ?? false);
 }

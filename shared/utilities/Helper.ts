@@ -61,14 +61,16 @@ function humanFormat(num: number, suffix: string[]): string {
    return `${num.toLocaleString()}E${idx.toString()}`;
 }
 
-export function formatNumber(num: number | undefined | null, binary = false, scientific = false): string {
+export const FormatNumberOptions = { useScientific: true };
+
+export function formatNumber(num: number | undefined | null, binary = false): string {
    if (num === null || num === undefined) {
       return "";
    }
    if (!Number.isFinite(num)) {
       return String(num);
    }
-   if (scientific) {
+   if (Math.abs(num) >= 1e15 && FormatNumberOptions.useScientific) {
       return scientificFormat(num);
    }
    if (binary) {

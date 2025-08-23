@@ -248,6 +248,7 @@ export class GameOptions {
    constructionGridView = false;
    useRightClickCopy = false;
    buildingStatusIconFollowBuildingColor = false;
+   useScientificFormat = false;
 }
 
 export enum RebirthFlags {
