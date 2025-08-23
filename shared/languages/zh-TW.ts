@@ -786,7 +786,7 @@ export const ZH_TW = {
    LinusPauling: "萊納斯·鮑林",
    LinusPaulingDesc: "閒置工人產出科學 +%{value} ",
    Literature: "文學",
-   LiveData: "居住價值",
+   LiveData: "實時數據",
    LocomotiveFactory: "火車頭工廠",
    Logging: "森林",
    LoggingCamp: "伐木場",
