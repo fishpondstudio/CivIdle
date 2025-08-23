@@ -5,7 +5,7 @@ import { getTransportStat } from "../logic/IntraTickCache";
 import type { MultiplierType, MultiplierWithStability } from "../logic/TickLogic";
 import { MultiplierTypeDesc, Tick } from "../logic/TickLogic";
 import { addMultiplier } from "../logic/Update";
-import { hasFlag, mapSafePush } from "../utilities/Helper";
+import { formatNumber, hasFlag, mapSafePush } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
 import type { Building } from "./BuildingDefinitions";
 import type { City } from "./CityDefinitions";
@@ -1469,7 +1469,7 @@ export class GreatPersonDefinitions {
 
    BobHope: IGreatPersonDefinition = {
       name: () => t(L.BobHope),
-      desc: (self, level) => t(L.BobHopeDesc, { value: self.value(level) }),
+      desc: (self, level) => t(L.BobHopeDesc, { value: formatNumber(self.value(level)) }),
       time: "1903 ~ 2003 AD",
       value: (level) => level * 5,
       maxLevel: Number.POSITIVE_INFINITY,
