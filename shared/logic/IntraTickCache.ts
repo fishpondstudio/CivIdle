@@ -282,8 +282,12 @@ export function getResourceIO(gameState: GameState): IResourceIO {
       if (!Tick.current.notProducingReasons.has(xy)) {
          const input = getBuildingIO(xy, "input", IOFlags.Multiplier | IOFlags.Capacity, gameState);
          const output = getBuildingIO(xy, "output", IOFlags.Multiplier | IOFlags.Capacity, gameState);
-         forEach(input, (res, amount) => mapSafeAdd(result.actualInput, res, amount));
-         forEach(output, (res, amount) => mapSafeAdd(result.actualOutput, res, amount));
+         forEach(input, (res, amount) => {
+            mapSafeAdd(result.actualInput, res, amount);
+         });
+         forEach(output, (res, amount) => {
+            mapSafeAdd(result.actualOutput, res, amount);
+         });
       }
       const input = getBuildingIO(
          xy,
@@ -297,8 +301,12 @@ export function getResourceIO(gameState: GameState): IResourceIO {
          IOFlags.Multiplier | IOFlags.Capacity | IOFlags.TheoreticalLevelBoost,
          gameState,
       );
-      forEach(input, (res, amount) => mapSafeAdd(result.theoreticalInput, res, amount));
-      forEach(output, (res, amount) => mapSafeAdd(result.theoreticalOutput, res, amount));
+      forEach(input, (res, amount) => {
+         mapSafeAdd(result.theoreticalInput, res, amount);
+      });
+      forEach(output, (res, amount) => {
+         mapSafeAdd(result.theoreticalOutput, res, amount);
+      });
    });
 
    Tick.current.additionalConsumptions.forEach(({ res, amount }) =>
