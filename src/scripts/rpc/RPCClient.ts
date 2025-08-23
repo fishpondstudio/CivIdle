@@ -29,9 +29,19 @@ import {
    MessageType,
    ServerWSErrorCode,
    UserAttributes,
+   type ChatChannel,
 } from "../../../shared/utilities/Database";
 import { vacuumChat } from "../../../shared/utilities/DatabaseShared";
-import { SECOND, WEEK, clamp, forEach, hasFlag, shuffle, uuid4 } from "../../../shared/utilities/Helper";
+import {
+   SECOND,
+   WEEK,
+   clamp,
+   forEach,
+   hasFlag,
+   mapSafeAdd,
+   shuffle,
+   uuid4,
+} from "../../../shared/utilities/Helper";
 import { srand } from "../../../shared/utilities/Random";
 import { setServerNow } from "../../../shared/utilities/ServerNow";
 import { TypedEvent } from "../../../shared/utilities/TypedEvent";
@@ -158,10 +168,10 @@ export function canEarnGreatPeopleFromReborn(): boolean {
    return true;
 }
 
-let chatId = 0;
+const _chatIds = new Map<ChatChannel | "System", number>();
 
 export function addSystemMessage(message: string): void {
-   chatMessages.push({ id: ++chatId, message });
+   chatMessages.push({ id: mapSafeAdd(_chatIds, "System", 1), message });
    OnChatMessage.emit(chatMessages);
 }
 
@@ -300,7 +310,7 @@ export async function connectWebSocket(): Promise<IWelcomeMessage> {
          case MessageType.Chat: {
             const c = message as IChatMessage;
             if (c.flush) {
-               chatMessages = c.chat.map((c) => ({ ...c, id: ++chatId }));
+               chatMessages = c.chat.map((c) => ({ ...c, id: mapSafeAdd(_chatIds, c.channel, 1) }));
             } else {
                c.chat.forEach((m) => {
                   const mentionsMe =
@@ -310,7 +320,7 @@ export async function connectWebSocket(): Promise<IWelcomeMessage> {
                      playBubble();
                      showToast(`${m.name}: ${m.message}`);
                   }
-                  chatMessages.push({ ...m, id: ++chatId });
+                  chatMessages.push({ ...m, id: mapSafeAdd(_chatIds, m.channel, 1) });
                });
             }
             chatMessages = vacuumChat(chatMessages);

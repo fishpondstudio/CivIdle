@@ -16,6 +16,7 @@ import { initializeGameState } from "../../shared/logic/InitializeGameState";
 import type { IWelcomeMessage } from "../../shared/utilities/Database";
 import { isSaveOwner } from "../../shared/utilities/DatabaseShared";
 import {
+   FormatNumberOptions,
    clamp,
    deepFreeze,
    forEach,
@@ -103,6 +104,7 @@ export async function startGame(
    syncUITheme(options);
    syncSidePanelWidth(app, options);
    syncFontSizeScale(app, options);
+   FormatNumberOptions.useScientific = options.useScientificFormat;
    calculateTierAndPrice(import.meta.env.DEV ? console.log : undefined);
    const context = { app, assets: resources, textures, gameState };
    initializeSingletons({

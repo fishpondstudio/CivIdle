@@ -5,7 +5,7 @@ import { Config } from "../../../shared/logic/Config";
 import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
 import { GlobalMultiplierNames } from "../../../shared/logic/TickLogic";
 import type { IBuildingData } from "../../../shared/logic/Tile";
-import { formatNumber, mapOf, numberToRoman } from "../../../shared/utilities/Helper";
+import { mapOf, numberToRoman } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import { jsxMapOf } from "../utilities/Helper";
 import { playClick, playError, playUpgrade } from "../visuals/Sound";

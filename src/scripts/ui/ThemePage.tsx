@@ -2,6 +2,7 @@ import Tippy from "@tippyjs/react";
 import { Config } from "../../../shared/logic/Config";
 import {
    CursorOptions,
+   PremiumSpinnerTextures,
    PremiumTileTextures,
    SpinnerTextures,
    ThemeColorNames,
@@ -13,7 +14,14 @@ import {
 } from "../../../shared/logic/GameState";
 import { notifyGameOptionsUpdate } from "../../../shared/logic/GameStateLogic";
 import { UserAttributes } from "../../../shared/utilities/Database";
-import { clamp, hasFlag, keysOf, safeParseFloat, safeParseInt } from "../../../shared/utilities/Helper";
+import {
+   FormatNumberOptions,
+   clamp,
+   hasFlag,
+   keysOf,
+   safeParseFloat,
+   safeParseInt,
+} from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import { syncFontSizeScale, useGameOptions } from "../Global";
 import { copyBuildingColorToResource, randomizeBuildingAndResourceColor } from "../logic/ThemeColor";
@@ -189,6 +197,18 @@ export function ThemePage(): React.ReactNode {
                      notifyGameOptionsUpdate(gameOptions);
                   }}
                />
+               <div className="separator" />
+               <ToggleComponent
+                  title={t(L.UseScientificNotationForLargeNumbers)}
+                  contentHTML={t(L.UseScientificNotationForLargeNumbersDescHTML)}
+                  value={gameOptions.useScientificFormat}
+                  onValueChange={(value) => {
+                     playClick();
+                     gameOptions.useScientificFormat = value;
+                     FormatNumberOptions.useScientific = value;
+                     notifyGameOptionsUpdate(gameOptions);
+                  }}
+               />
             </fieldset>
             <fieldset>
                <legend>{t(L.Tile)}</legend>
@@ -247,6 +267,14 @@ export function ThemePage(): React.ReactNode {
                            style={{ position: "relative" }}
                            className="row jcc pointer"
                            onClick={() => {
+                              if (
+                                 PremiumSpinnerTextures[i] &&
+                                 !hasFlag(getUser()?.attr ?? UserAttributes.None, UserAttributes.DLC1)
+                              ) {
+                                 playError();
+                                 showToast(t(L.ThemePremiumSpinner));
+                                 return;
+                              }
                               gameOptions.spinnerTexture = i;
                               notifyGameOptionsUpdate(gameOptions);
                            }}

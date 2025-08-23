@@ -61,14 +61,16 @@ function humanFormat(num: number, suffix: string[]): string {
    return `${num.toLocaleString()}E${idx.toString()}`;
 }
 
-export function formatNumber(num: number | undefined | null, binary = false, scientific = false): string {
+export const FormatNumberOptions = { useScientific: true };
+
+export function formatNumber(num: number | undefined | null, binary = false): string {
    if (num === null || num === undefined) {
       return "";
    }
    if (!Number.isFinite(num)) {
       return String(num);
    }
-   if (scientific) {
+   if (Math.abs(num) >= 1e15 && FormatNumberOptions.useScientific) {
       return scientificFormat(num);
    }
    if (binary) {
@@ -197,13 +199,14 @@ export function safeAdd<T extends string>(obj: Partial<Record<T, number>>, key: 
    obj[key]! += valueToAdd;
 }
 
-export function mapSafeAdd<T>(obj: Map<T, number>, key: T, valueToAdd: number): void {
+export function mapSafeAdd<T>(obj: Map<T, number>, key: T, valueToAdd: number): number {
+   let result = valueToAdd;
    const v = obj.get(key);
    if (v) {
-      obj.set(key, v + valueToAdd);
-   } else {
-      obj.set(key, valueToAdd);
+      result += v;
    }
+   obj.set(key, result);
+   return result;
 }
 
 export function safePush<T extends string, K>(obj: Partial<Record<T, K[]>>, key: T, valueToPush: K): void {

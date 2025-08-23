@@ -1650,4 +1650,8 @@ export const EN = {
    SpinnerSpeedDescHTML: "Set the speed for normal buildings. Electrified buildings spin twice as fast. <b>Must be between 0.01 and 100. Default is 1</b>",
    ShowFloaterText: "Show Tile Floating Text",
    ShowFloaterTextDescHTML: "Show tile floating text that indicates the production amount. Turning this off might slightly improve performance",
+   ThemeSpinnerAlpha: "Spinner Alpha",
+   ThemePremiumSpinner: "This spinner is only available for Supporter Pack owners",
+   UseScientificNotationForLargeNumbers: "Use Scientific Notation For Large Numbers",
+   UseScientificNotationForLargeNumbersDescHTML: "Use scientific notation for numbers that are larger than <b>1 Quadrillion (1Qa / 1e15)</b>",
 };

@@ -303,7 +303,7 @@ export class TileVisual extends Container {
          this._spinner.alpha += dt;
          this._building.alpha += dt;
       }
-      this._spinner.alpha = clamp(this._spinner.alpha, 0, 0.5);
+      this._spinner.alpha = clamp(this._spinner.alpha, 0, getGameOptions().themeColors.SpinnerAlpha);
       this._building.alpha = clamp(
          this._building.alpha,
          getGameOptions().themeColors.InactiveBuildingAlpha,

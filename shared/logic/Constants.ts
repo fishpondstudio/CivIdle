@@ -406,7 +406,7 @@ export function calculateTierAndPrice(log?: (val: string) => void) {
             cost += `${ageDiffIndicator.join("")}${res}: ${formatNumber(amount)}, `;
             value += Config.ResourcePrice[res]! * amount;
          });
-         cost = `${k.padEnd(25)} ${formatNumber(value, false, true).padEnd(15)}${formatHMS(
+         cost = `${k.padEnd(25)} ${formatNumber(value, false).padEnd(15)}${formatHMS(
             (1000 * totalAmount) / baseBuilderCapacity,
             true,
          ).padEnd(10)}${cost}`;

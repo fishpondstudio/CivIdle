@@ -80,6 +80,7 @@ const DefaultThemeColors = {
    ResearchUnlockedColor: "#ffffff",
    ResearchHighlightColor: "#ffff99",
    BuildingStatusIconAlpha: 1,
+   SpinnerAlpha: 0.5,
 };
 
 export function resetThemeColor() {
@@ -105,6 +106,7 @@ export const ThemeColorNames: Record<keyof typeof DefaultThemeColors, () => stri
    ResearchUnlockedColor: () => t(L.ThemeResearchUnlockedColor),
    ResearchHighlightColor: () => t(L.ThemeResearchHighlightColor),
    BuildingStatusIconAlpha: () => t(L.ThemeBuildingStatusIconAlpha),
+   SpinnerAlpha: () => t(L.ThemeSpinnerAlpha),
 };
 
 export const ExtraTileInfoTypes = {
@@ -168,8 +170,20 @@ export const SpinnerTextures = [
    "Spinner5",
    "Spinner6",
    "Spinner7",
+   "Spinner8",
+   "Spinner9",
 ] as const;
 export type SpinnerTexture = (typeof SpinnerTextures)[number];
+
+export const PremiumSpinnerTextures: Partial<Record<SpinnerTexture, true>> = {
+   Spinner3: true,
+   Spinner4: true,
+   Spinner5: true,
+   Spinner6: true,
+   Spinner7: true,
+   Spinner8: true,
+   Spinner9: true,
+};
 
 export function getTextColor(): number {
    return DarkTileTextures[getGameOptions().tileTexture] ? 0xffffff : 0x666666;
@@ -234,6 +248,7 @@ export class GameOptions {
    constructionGridView = false;
    useRightClickCopy = false;
    buildingStatusIconFollowBuildingColor = false;
+   useScientificFormat = false;
 }
 
 export enum RebirthFlags {

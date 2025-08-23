@@ -11,6 +11,7 @@
 
 html {
    font-size: var(--base-font-size);
+   font-variant-numeric: tabular-nums;
 }
 
 body.old-fashioned-cursor,
