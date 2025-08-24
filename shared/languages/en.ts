@@ -1586,7 +1586,7 @@ export const EN = {
    WorkersRequiredAfterMultiplier: "Required Workers",
    WorkersRequiredBeforeMultiplier: "Required Worker Capacity",
    WorkersRequiredForProductionMultiplier: "Production Capacity Per Worker",
-   WorkersRequiredForTransportationMultiplier: "Transportation Capacity Per Worker",
+   WorkersRequiredForTransportationMultiplier: "Transport Capacity Per Worker",
    WorkersRequiredInput: "Transportation",
    WorkersRequiredOutput: "Production",
    WorldWarAge: "World Wars",

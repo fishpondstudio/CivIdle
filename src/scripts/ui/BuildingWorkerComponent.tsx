@@ -90,11 +90,13 @@ export function BuildingWorkerComponent({ gameState, xy }: IBuildingComponentPro
                         <summary className="row">
                            <div className="f1">{t(L.WorkersRequiredForTransportationMultiplier)}</div>
                            <div className="text-strong">
-                              {workersRequired.multiplier +
-                                 Tick.current.globalMultipliers.transportCapacity.reduce(
-                                    (prev, curr) => prev + curr.value,
-                                    0,
-                                 )}
+                              {formatNumber(
+                                 workersRequired.multiplier +
+                                    Tick.current.globalMultipliers.transportCapacity.reduce(
+                                       (prev, curr) => prev + curr.value,
+                                       0,
+                                    ),
+                              )}
                            </div>
                         </summary>
                         <ul>
@@ -116,10 +118,11 @@ export function BuildingWorkerComponent({ gameState, xy }: IBuildingComponentPro
                            <li className="row">
                               <div className="f1">{t(L.TransportCapacityMultiplier)}</div>
                               <div>
-                                 {Tick.current.globalMultipliers.transportCapacity.reduce(
-                                    // biome-ignore lint/correctness/useJsxKeyInIterable: <explanation>
-                                    (prev, curr) => prev + curr.value,
-                                    0,
+                                 {formatNumber(
+                                    Tick.current.globalMultipliers.transportCapacity.reduce(
+                                       (prev, curr) => prev + curr.value,
+                                       0,
+                                    ),
                                  )}
                               </div>
                            </li>
