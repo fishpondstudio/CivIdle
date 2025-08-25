@@ -1389,7 +1389,11 @@ export class GreatPersonDefinitions {
 
    PaulSamuelson: IGreatPersonDefinition = {
       name: () => t(L.PaulSamuelson),
-      desc: (self, level) => t(L.BuildingLevelBoostDesc, { value: self.value(level), building: "SwissBank" }),
+      desc: (self, level) =>
+         t(L.BuildingLevelBoostDesc, {
+            value: self.value(level),
+            building: Config.Building.SwissBank.name(),
+         }),
       time: "1915 ~ 2009 AD",
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
