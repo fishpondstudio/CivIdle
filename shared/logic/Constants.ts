@@ -24,6 +24,7 @@ import {
    getBuildingDescription,
    getWonderBaseBuilderCapacity,
    isSpecialBuilding,
+   isWorldOrNaturalWonder,
    isWorldWonder,
 } from "./BuildingLogic";
 import { Config } from "./Config";
@@ -483,7 +484,9 @@ export function calculateTierAndPrice(log?: (val: string) => void) {
    // log?.("ResourcePrice", sortTabulate(Config.ResourcePrice));
    // log?.("ResourceTech", sortTabulate(Config.ResourceTech));
    log?.(`>>>>>>>>>> ResourcePrice <<<<<<<<<<\n${resourcePrice.join("\n")}`);
-   log?.(`>>>>>>>>>> WonderCost <<<<<<<<<<\n${wonderCost.join("\n")}`);
+   log?.(
+      `>>>>>>>>>> WonderCost (${reduceOf(Config.Building, (prev, b, v) => (isWorldOrNaturalWonder(b) ? prev + 1 : prev), 0)}) <<<<<<<<<<\n${wonderCost.join("\n")}`,
+   );
    log?.(
       `>>>>>>>>>> NotBoostedBuildings <<<<<<<<<<\n${notBoostedBuildings
          .map((a) => `${a.building.padEnd(25)}${a.tech.padEnd(30)}${a.age}`)

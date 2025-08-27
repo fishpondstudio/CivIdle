@@ -104,7 +104,7 @@ export function BuildingWorkerComponent({ gameState, xy }: IBuildingComponentPro
                               <div className="f1">{t(L.BaseMultiplier)}</div>
                               <div>1</div>
                            </li>
-                           {getMultipliersFor(xy, gameState).map((m, i) => {
+                           {getMultipliersFor(xy, false, gameState).map((m, i) => {
                               if (!m.worker) {
                                  return null;
                               }
@@ -188,7 +188,7 @@ export function BuildingWorkerComponent({ gameState, xy }: IBuildingComponentPro
                               <div className="f1">{t(L.BaseMultiplier)}</div>
                               <div>1</div>
                            </li>
-                           {getMultipliersFor(xy, gameState).map((m, idx) => {
+                           {getMultipliersFor(xy, false, gameState).map((m, idx) => {
                               if (!m.worker) {
                                  return null;
                               }

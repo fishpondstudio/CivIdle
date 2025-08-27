@@ -112,9 +112,9 @@ export function forEachMultiplier(
    });
 }
 
-export function getMultipliersFor(xy: Tile, gs: GameState): MultiplierWithSource[] {
+export function getMultipliersFor(xy: Tile, stableOnly: boolean, gs: GameState): MultiplierWithSource[] {
    const result: MultiplierWithSource[] = [];
-   forEachMultiplier(xy, (m) => result.push(m), false, gs);
+   forEachMultiplier(xy, (m) => result.push(m), stableOnly, gs);
    return result;
 }
 

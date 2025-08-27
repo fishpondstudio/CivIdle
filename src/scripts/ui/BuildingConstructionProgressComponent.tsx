@@ -140,7 +140,7 @@ export function BuildingConstructionProgressComponent({
                            </li>
                         );
                      })}
-                     {getMultipliersFor(xy, gameState).map((value, i) => {
+                     {getMultipliersFor(xy, false, gameState).map((value, i) => {
                         if (!value.worker) {
                            return null;
                         }

@@ -1,9 +1,14 @@
 import { Preferences } from "@capacitor/preferences";
-import type { Application } from "pixi.js";
+import { Sprite, type Application } from "pixi.js";
 import type { City } from "../../shared/definitions/CityDefinitions";
 import { NoPrice, NoStorage } from "../../shared/definitions/ResourceDefinitions";
 import type { TechAge } from "../../shared/definitions/TechDefinitions";
-import { exploreTile, findSpecialBuilding, getBuildingCost } from "../../shared/logic/BuildingLogic";
+import {
+   exploreTile,
+   findSpecialBuilding,
+   getBuildingCost,
+   isWorldOrNaturalWonder,
+} from "../../shared/logic/BuildingLogic";
 import { Config } from "../../shared/logic/Config";
 import type { GameOptions, SavedGame } from "../../shared/logic/GameState";
 import { GameState } from "../../shared/logic/GameState";
@@ -25,8 +30,18 @@ import {
 } from "../../shared/logic/RebirthLogic";
 import { Tick } from "../../shared/logic/TickLogic";
 import { Transports } from "../../shared/logic/Transports";
-import { base64ToBytes, bytesToBase64, clamp, forEach, safeAdd, sizeOf } from "../../shared/utilities/Helper";
+import {
+   base64ToBytes,
+   bytesToBase64,
+   clamp,
+   forEach,
+   keysOf,
+   resolveIn,
+   safeAdd,
+   sizeOf,
+} from "../../shared/utilities/Helper";
 import { TypedEvent } from "../../shared/utilities/TypedEvent";
+import { UnicodeText } from "../../shared/utilities/UnicodeText";
 import { migrateSavedGame } from "./MigrateSavedGame";
 import { tickEverySecond } from "./logic/ClientUpdate";
 import { clientHeartbeat } from "./logic/Heartbeat";
@@ -37,6 +52,7 @@ import { idbDel, idbGet, idbSet } from "./utilities/BrowserStorage";
 import { makeObservableHook } from "./utilities/Hook";
 import { isAndroid, isIOS } from "./utilities/Platforms";
 import { Singleton } from "./utilities/Singleton";
+import { Fonts } from "./visuals/Fonts";
 import { compress, decompress } from "./workers/Compress";
 
 export async function resetToCity(city: City): Promise<void> {
@@ -84,6 +100,13 @@ export function syncFontSizeScale(app: Application, options: GameOptions): void 
    const scale = isAndroid() || isIOS() ? options.fontSizeScaleMobile : options.fontSizeScale;
    document.documentElement.style.setProperty("--base-font-size", `${scale * 62.5}%`);
    app.resize();
+}
+
+export function syncFontVariantNumeric(options: GameOptions): void {
+   document.documentElement.style.setProperty(
+      "--font-variant-numeric",
+      options.useMonospaceNumbers ? "tabular-nums" : "normal",
+   );
 }
 
 const SAVE_KEY = "CivIdle";
@@ -346,4 +369,50 @@ if (import.meta.env.DEV) {
 
    // @ts-expect-error
    window.hq = () => findSpecialBuilding("Headquarter", getGameState());
+
+   // @ts-expect-error
+   window.wonders = async () => {
+      for (const building of keysOf(Config.Building)) {
+         if (isWorldOrNaturalWonder(building)) {
+            const context = Singleton().sceneManager.getContext();
+            const container = new Sprite(context.textures.Misc_Tile9);
+            const sprite = container.addChild(new Sprite(context.textures[`Building_${building}`]));
+            sprite.anchor.set(0.5, 0.5);
+            sprite.position.set(0.5 * container.width, 0.425 * container.height);
+            sprite.tint = 0x333333;
+            sprite.scale.set(1.25);
+            const text = container.addChild(
+               new UnicodeText(
+                  Config.Building[building].name(),
+                  {
+                     fontName: `${Fonts.Cabin}NoShadow`,
+                     fontSize: 32,
+                     tint: 0x333333,
+                  },
+                  {
+                     dropShadow: true,
+                     dropShadowAlpha: 0.75,
+                     dropShadowColor: "#000000",
+                     dropShadowAngle: Math.PI / 6,
+                     dropShadowBlur: 0,
+                     dropShadowDistance: 1,
+                  },
+               ),
+            );
+            while (text.width > container.width * 0.8) {
+               --text.size;
+            }
+            text.anchor.set(0.5, 0.5);
+            text.position.set(0.5 * container.width, 0.7 * container.height);
+            const image = await context.app.renderer.extract.image(container);
+            const link = document.createElement("a");
+            link.href = image.src;
+            link.download = `${Config.Building[building].name()}.png`;
+            link.click();
+            link.remove();
+            console.log(`${Config.Building[building].name()}`);
+            await resolveIn(0.5, null);
+         }
+      }
+   };
 }

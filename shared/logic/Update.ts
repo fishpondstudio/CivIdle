@@ -176,7 +176,6 @@ function tickTransportation(transport: ITransportationDataV2, grid: Grid): boole
 // This needs to be called after tickTiles
 export function tickPower(gs: GameState): void {
    const grid = getGrid(gs);
-   console.assert(Tick.next.powerGrid.size === 0);
 
    Tick.next.powerPlants.forEach((tile) => {
       for (const point of grid.getNeighbors(tileToPoint(tile))) {

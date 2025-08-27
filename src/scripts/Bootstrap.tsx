@@ -28,7 +28,14 @@ import {
 } from "../../shared/utilities/Helper";
 import { getServerNow } from "../../shared/utilities/ServerNow";
 import type { TypedEvent } from "../../shared/utilities/TypedEvent";
-import { isGameDataCompatible, loadGame, syncFontSizeScale, syncSidePanelWidth, syncUITheme } from "./Global";
+import {
+   isGameDataCompatible,
+   loadGame,
+   syncFontSizeScale,
+   syncFontVariantNumeric,
+   syncSidePanelWidth,
+   syncUITheme,
+} from "./Global";
 import type { RouteChangeEvent } from "./Route";
 import { tickEverySecond } from "./logic/ClientUpdate";
 import { clientHeartbeat } from "./logic/Heartbeat";
@@ -104,6 +111,7 @@ export async function startGame(
    syncUITheme(options);
    syncSidePanelWidth(app, options);
    syncFontSizeScale(app, options);
+   syncFontVariantNumeric(options);
    FormatNumberOptions.useScientific = options.useScientificFormat;
    calculateTierAndPrice(import.meta.env.DEV ? console.log : undefined);
    const context = { app, assets: resources, textures, gameState };

@@ -23,7 +23,7 @@ import {
    safeParseInt,
 } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
-import { syncFontSizeScale, useGameOptions } from "../Global";
+import { syncFontSizeScale, syncFontVariantNumeric, useGameOptions } from "../Global";
 import { copyBuildingColorToResource, randomizeBuildingAndResourceColor } from "../logic/ThemeColor";
 import { getUser } from "../rpc/RPCClient";
 import { jsxMapOf } from "../utilities/Helper";
@@ -47,6 +47,17 @@ export function ThemePage(): React.ReactNode {
          <div className="window-body">
             <fieldset>
                <ChangeModernUIComponent />
+               <div className="separator" />
+               <ToggleComponent
+                  title={t(L.UseMonospaceNumbers)}
+                  contentHTML={t(L.UseMonospaceNumbersDescHTML)}
+                  value={gameOptions.useMonospaceNumbers}
+                  onValueChange={(value) => {
+                     gameOptions.useMonospaceNumbers = value;
+                     syncFontVariantNumeric(gameOptions);
+                     notifyGameOptionsUpdate(gameOptions);
+                  }}
+               />
                {gameOptions.useModernUI ? (
                   <>
                      <div className="separator" />
@@ -99,7 +110,6 @@ export function ThemePage(): React.ReactNode {
                            <option value={1.5}>1.5x</option>
                         </select>
                      </div>
-                     <div className="separator" />
                   </>
                ) : null}
                <div className="separator" />

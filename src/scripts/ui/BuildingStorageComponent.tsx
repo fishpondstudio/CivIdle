@@ -59,7 +59,7 @@ export function BuildingStorageComponent({ gameState, xy }: IBuildingComponentPr
                         </li>
                         {storage.multiplier === 1
                            ? null
-                           : getMultipliersFor(xy, gameState).map((m, idx) => {
+                           : getMultipliersFor(xy, true, gameState).map((m, idx) => {
                                 if (!m.storage) {
                                    return null;
                                 }

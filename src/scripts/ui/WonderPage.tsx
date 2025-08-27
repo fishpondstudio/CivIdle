@@ -3,12 +3,13 @@ import { isWorldWonder } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
 import { getXyBuildings } from "../../../shared/logic/IntraTickCache";
 import { Tick } from "../../../shared/logic/TickLogic";
-import { keysOf } from "../../../shared/utilities/Helper";
+import { cls, keysOf } from "../../../shared/utilities/Helper";
 import type { PartialSet } from "../../../shared/utilities/TypeDefinitions";
 import { L, t } from "../../../shared/utilities/i18n";
 import { useGameState } from "../Global";
 import { Singleton } from "../utilities/Singleton";
 import { MenuComponent } from "./MenuComponent";
+import { BuildingSpriteComponent } from "./TextureSprites";
 import { TilePage } from "./TilePage";
 import { TitleBarComponent } from "./TitleBarComponent";
 
@@ -44,7 +45,6 @@ export function WonderPage(): React.ReactNode {
                <table>
                   <thead>
                      <tr>
-                        <th></th>
                         <th>{t(L.GreatPeopleName)}</th>
                         <th>{t(L.GreatPeopleEffect)}</th>
                      </tr>
@@ -58,11 +58,19 @@ export function WonderPage(): React.ReactNode {
                            return (
                               <tr key={b}>
                                  <td>
-                                    {builtWonders[b] ? (
-                                       <div className="m-icon small text-green">check_circle</div>
-                                    ) : null}
+                                    <div>
+                                       <BuildingSpriteComponent
+                                          building={b}
+                                          scale={0.5}
+                                          style={{
+                                             filter: builtWonders[b] ? "invert(0.75)" : "invert(0.25)",
+                                          }}
+                                       />
+                                       <div className={cls(builtWonders[b] ? "text-strong" : "text-desc")}>
+                                          {def.name()}
+                                       </div>
+                                    </div>
                                  </td>
-                                 <td>{def.name()}</td>
                                  <td>{def.desc?.()}</td>
                               </tr>
                            );

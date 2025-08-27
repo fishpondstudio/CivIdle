@@ -106,7 +106,7 @@ export function BuildingIOTreeViewComponent({
                               <div className="f1">{t(L.BaseMultiplier)}</div>
                               <div>1</div>
                            </li>
-                           {getMultipliersFor(xy, gameState).map((m, idx) => {
+                           {getMultipliersFor(xy, false, gameState).map((m, idx) => {
                               if (!m[type]) {
                                  return null;
                               }

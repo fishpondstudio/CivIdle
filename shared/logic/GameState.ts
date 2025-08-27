@@ -200,6 +200,7 @@ export type CursorOption = keyof typeof CursorOptions;
 
 export class GameOptions {
    useModernUI = true;
+   useMonospaceNumbers = true;
    userId: string | null = null;
    checksum: string | null = null;
    sidePanelWidth = 450;

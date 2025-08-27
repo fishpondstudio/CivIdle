@@ -1615,7 +1615,7 @@ export const EN = {
    ZigguratOfUrDescV2: "Every 10 happiness (capped) provides +1 Production Multiplier to all buildings that do not produce workers and are unlocked in previous ages (max = number of unlocked ages / 2). Wonders (incl. Natural) no longer provide +1 Happiness. The effect can be turned off",
    Zoroaster: "Zoroaster",
    Zugspitze: "Zugspitze",
-   ZugspitzeDesc: "For each unlocked age, get one point that can be used to provide one extra level to any Great Person that is born from this run",
+   ZugspitzeDesc: "For each unlocked age, get one point that can be used to provide one extra level to any Great Person that is born from this run. (Storage multipliers are not effective due to this multiplier being dynamic)",
    NoKotiExport: "Disable Koti Export",
    NoKotiExportDesc: "Buildings won't be able to import Koti from Swiss Bank - they can still import Koti from other buildings",
    PlayerTradeTabAvailableTrades: "Tradeable",
@@ -1654,4 +1654,6 @@ export const EN = {
    ThemePremiumSpinner: "This spinner is only available for Supporter Pack owners",
    UseScientificNotationForLargeNumbers: "Use Scientific Notation For Large Numbers",
    UseScientificNotationForLargeNumbersDescHTML: "Use scientific notation for numbers that are larger than <b>1 Quadrillion (1Qa / 1e15)</b>",
+   UseMonospaceNumbers: "Use Monospace Numbers",
+   UseMonospaceNumbersDescHTML: "Monospace numbers, i.e. all numbers have the same width, will make numbers aligned in tables and lists",
 };

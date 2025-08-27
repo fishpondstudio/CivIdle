@@ -7,11 +7,12 @@
 :root {
    --game-ui-width: 45rem;
    --base-font-size: 62.5%;
+   --font-variant-numeric: tabular-nums;
 }
 
 html {
    font-size: var(--base-font-size);
-   font-variant-numeric: tabular-nums;
+   font-variant-numeric: var(--font-variant-numeric);
 }
 
 body.old-fashioned-cursor,

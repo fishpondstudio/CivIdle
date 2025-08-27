@@ -751,8 +751,8 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
                addMultiplier(b, { output: 1 }, buildingName);
             }
          });
-         for (const point of grid.getRange(tileToPoint(xy), 2)) {
-            Tick.next.powerGrid.add(pointToTile(point));
+         for (const point of grid.getRange(tileToPoint(xy), 1)) {
+            Tick.next.powerPlants.add(pointToTile(point));
          }
          break;
       }
@@ -1778,6 +1778,10 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
                });
             }
             Tick.next.powerGrid.add(t);
+         }
+
+         for (const point of grid.getRange(tileToPoint(xy), 1)) {
+            Tick.next.powerGrid.add(pointToTile(point));
          }
          break;
       }
