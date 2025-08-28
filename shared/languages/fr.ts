@@ -1240,7 +1240,7 @@ export const FR = {
    SagradaFamilia: "Sagrada Família",
    SagradaFamiliaDesc: "Tous les bâtiments dans un rayon de 2 cases gagnent +N Production, Capacité des Ouvriers et Multiplicateur de Stockage. N = différence maximale de catégorie parmi les bâtiments adjacents (dans un rayon de 1 case) à la Sagrada Família",
    SaintBasilsCathedral: "Cathédrale Saint-Basile",
-   SaintBasilsCathedralDescV2: "Permet aux bâtiment d'extraction de ressources de fonctionner en étant adjacents à une ressource. Tous les bâtiments de catégorie I gagnent +1 Multiplicateur de Production, Multiplicateur de Capacité des Ouvriers et Multiplicateur de Stockage",
+   SaintBasilsCathedralDescV2: "Permet aux bâtiment d'extraction de ressources de fonctionner en étant adjacents à une ressource. Tous les bâtiments adjacents de catégorie I gagnent +1 Multiplicateur de Production, Multiplicateur de Capacité des Ouvriers et Multiplicateur de Stockage",
    Saladin: "Saladin",
    Samsuiluna: "Samsu-iluna",
    Sand: "Sable",
