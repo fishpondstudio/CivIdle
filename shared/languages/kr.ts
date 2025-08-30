@@ -1232,7 +1232,7 @@ export const KR = {
    SagradaFamilia: "사그라다 파밀리아",
    SagradaFamiliaDesc: "2타일 범위 내의 모든 건물은 +N 생산, 작업자 능력 및 저장소 배수를 얻습니다. N = 사그라다 파밀리아에 인접한 건물 간의 최대 등급 차이",
    SaintBasilsCathedral: "성 바실리 대성당",
-   SaintBasilsCathedralDescV2: "자원 추출 건물이 광산 근처에서 작동하도록 허용합니다. 모든 티어 1 건물은 생산량 배수, 노동자 능력, 저장소 배수 +1을 얻습니다.",
+   SaintBasilsCathedralDescV2: "자원 추출 건물이 광산 근처에서 작동하도록 허용합니다. 인접한 모든 티어 1 건물은 생산량 배수, 노동자 능력, 저장소 배수 +1을 얻습니다.",
    Saladin: "살라딘",
    Samsuiluna: "삼수 일루나",
    Sand: "모래",
