@@ -58,6 +58,7 @@ import { GameTicker } from "./utilities/GameTicker";
 import { SceneManager } from "./utilities/SceneManager";
 import { Singleton, initializeSingletons, type RouteTo } from "./utilities/Singleton";
 import { playError } from "./visuals/Sound";
+import { ConquestScene } from "./scenes/ConquestScene";
 
 export async function startGame(
    app: Application,
@@ -207,6 +208,10 @@ export async function startGame(
       }
       case "trade": {
          Singleton().sceneManager.loadScene(PlayerMapScene);
+         break;
+      }
+      case "conquest": {
+         Singleton().sceneManager.loadScene(ConquestScene);
          break;
       }
       default: {
