@@ -72,8 +72,7 @@ export function ConquestPage({ text }: { text?: UnicodeText }): React.ReactNode 
          <div className="window-body">
             <div className="row">
                <input
-                  type="number"
-                  step="1"
+                  type="text"
                   className="f1 w100"
                   value={text?.x ?? 0}
                   onChange={(e) => {
@@ -84,8 +83,7 @@ export function ConquestPage({ text }: { text?: UnicodeText }): React.ReactNode 
                   }}
                />
                <input
-                  type="number"
-                  step="1"
+                  type="text"
                   className="f1 w100"
                   value={text?.y ?? 0}
                   onChange={(e) => {
@@ -96,8 +94,7 @@ export function ConquestPage({ text }: { text?: UnicodeText }): React.ReactNode 
                   }}
                />
                <input
-                  type="number"
-                  step="1"
+                  type="text"
                   className="f1 w100"
                   value={text?.angle ?? 0}
                   onChange={(e) => {
@@ -108,8 +105,7 @@ export function ConquestPage({ text }: { text?: UnicodeText }): React.ReactNode 
                   }}
                />
                <input
-                  type="number"
-                  step="0.1"
+                  type="text"
                   className="f1 w100"
                   value={text?.size ?? 0}
                   onChange={(e) => {
@@ -119,6 +115,14 @@ export function ConquestPage({ text }: { text?: UnicodeText }): React.ReactNode 
                      }
                   }}
                />
+               <button
+                  className="f1"
+                  onClick={() => {
+                     console.log(localStorage.getItem("CountryMapping"));
+                  }}
+               >
+                  Print
+               </button>
             </div>
          </div>
       </div>

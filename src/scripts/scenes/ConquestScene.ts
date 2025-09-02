@@ -4,6 +4,7 @@ import { Container, type ColorSource, type FederatedPointerEvent } from "pixi.js
 import { feature, mesh, neighbors } from "topojson-client";
 import { UnicodeText } from "../../../shared/utilities/UnicodeText";
 import World from "../../images/countries-50m.json";
+import WorldLabel from "../../images/countries-label.json";
 import { ConquestPage } from "../ui/ConquestPage";
 import { calculateArea, calculateBounds, calculateCentroid } from "../utilities/SVGGraphics/SVGPathParser";
 import { Scene, type ISceneContext } from "../utilities/SceneManager";
@@ -84,10 +85,10 @@ export class ConquestScene extends Scene {
          countries,
       );
 
-      const labels: Record<string, { x: number; y: number; angle: number; size: number }> = JSON.parse(
-         localStorage.getItem("CountryMapping") ?? "{}",
-      );
-      // const labels: Record<string, { x: number; y: number; angle: number; size: number }> = WorldLabel;
+      // const labels: Record<string, { x: number; y: number; angle: number; size: number }> = JSON.parse(
+      //    localStorage.getItem("CountryMapping") ?? "{}",
+      // );
+      const labels: Record<string, { x: number; y: number; angle: number; size: number }> = WorldLabel;
       countries.features.forEach((feature: any, index: number) => {
          graphics = this._mapContainer.addChild(new SmoothGraphics());
          graphics.beginFill(0xffffff);
