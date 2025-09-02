@@ -70,6 +70,16 @@ export class UnicodeText extends Container {
       }
    }
 
+   public get text(): string {
+      if (this._text) {
+         return this._text.text;
+      }
+      if (this._bitmapText) {
+         return this._bitmapText.text;
+      }
+      throw new Error("UnicodeText: No Text or BitmapText! This should never happen!");
+   }
+
    public set tint(tint: number) {
       if (this._text) {
          this._text.style.fill = tint;

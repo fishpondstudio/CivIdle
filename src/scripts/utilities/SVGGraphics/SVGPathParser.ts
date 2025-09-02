@@ -8,6 +8,116 @@ interface IGraphics {
    closePath(): IGraphics;
 }
 
+export function calculatePCA(points: [number, number][]): {
+   mean: [number, number];
+   eigenvalues: [number, number];
+   eigenvectors: [[number, number], [number, number]];
+} {
+   if (points.length === 0) {
+      throw new Error("No points provided");
+   }
+
+   // Calculate the mean of x and y
+   let meanX = 0;
+   let meanY = 0;
+   for (const [x, y] of points) {
+      meanX += x;
+      meanY += y;
+   }
+   meanX /= points.length;
+   meanY /= points.length;
+
+   // Center the points
+   const centered = points.map(([x, y]) => [x - meanX, y - meanY]);
+
+   // Compute covariance matrix
+   let covXX = 0;
+   let covXY = 0;
+   let covYY = 0;
+   for (const [x, y] of centered) {
+      covXX += x * x;
+      covXY += x * y;
+      covYY += y * y;
+   }
+   covXX /= points.length;
+   covXY /= points.length;
+   covYY /= points.length;
+
+   // Covariance matrix: [[covXX, covXY], [covXY, covYY]]
+   // Compute eigenvalues
+   const trace = covXX + covYY;
+   const det = covXX * covYY - covXY * covXY;
+   const temp = Math.sqrt((trace * trace) / 4 - det);
+   const eig1 = trace / 2 + temp;
+   const eig2 = trace / 2 - temp;
+
+   // Compute eigenvectors
+   function getEigenvector(eig: number): [number, number] {
+      // (covXX - eig) * v1 + covXY * v2 = 0
+      // covXY * v1 + (covYY - eig) * v2 = 0
+      if (Math.abs(covXY) > 1e-10) {
+         // v = [eig - covYY, covXY]
+         return [eig - covYY, covXY];
+      }
+      // If covXY is 0, the matrix is diagonal
+      return [1, 0];
+   }
+
+   let v1 = getEigenvector(eig1);
+   let v2 = getEigenvector(eig2);
+
+   // Normalize eigenvectors
+   function normalize([x, y]: [number, number]): [number, number] {
+      const len = Math.hypot(x, y);
+      return len === 0 ? [0, 0] : [x / len, y / len];
+   }
+   v1 = normalize(v1);
+   v2 = normalize(v2);
+
+   return {
+      mean: [meanX, meanY] as [number, number],
+      eigenvalues: [eig1, eig2],
+      eigenvectors: [v1, v2], // Each is [x, y]
+   };
+}
+
+export function calculateCentroid(points: [number, number][]): [number, number] {
+   let rx = 0;
+   let ry = 0;
+   for (const [x, y] of points) {
+      rx += x;
+      ry += y;
+   }
+   return [rx / points.length, ry / points.length];
+}
+
+export function calculateArea(points: [number, number][]): number {
+   // Shoelace formula for polygon area
+   let area = 0;
+   const n = points.length;
+   if (n < 3) return 0;
+   for (let i = 0; i < n; i++) {
+      const [x0, y0] = points[i];
+      const [x1, y1] = points[(i + 1) % n];
+      area += x0 * y1 - x1 * y0;
+   }
+   return Math.abs(area) / 2;
+}
+
+export function calculateBounds(points: [number, number][]): [number, number, number, number] {
+   let minX = Number.POSITIVE_INFINITY;
+   let maxX = Number.NEGATIVE_INFINITY;
+   let minY = Number.POSITIVE_INFINITY;
+   let maxY = Number.NEGATIVE_INFINITY;
+   for (const [x, y] of points) {
+      minX = Math.min(minX, x);
+      maxX = Math.max(maxX, x);
+      minY = Math.min(minY, y);
+      maxY = Math.max(maxY, y);
+   }
+   return [minX, minY, maxX, maxY];
+}
+
 export function drawSVGPath(path: string, g: IGraphics): void {
    let lastX = 0;
    let lastY = 0;
