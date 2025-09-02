@@ -1,11 +1,10 @@
 import { SmoothGraphics } from "@pixi/graphics-smooth";
-import { geoNaturalEarth1, geoPath } from "d3-geo";
+import { geoMercator, geoPath } from "d3-geo";
 import { Container, type ColorSource, type FederatedPointerEvent } from "pixi.js";
 import { feature, mesh, neighbors } from "topojson-client";
 import { UnicodeText } from "../../../shared/utilities/UnicodeText";
 import World from "../../images/countries-50m.json";
-import WorldLabel from "../../images/countries-label.json";
-import { CountryPage } from "../ui/CountryPage";
+import { ConquestPage } from "../ui/ConquestPage";
 import { calculateArea, calculateBounds, calculateCentroid } from "../utilities/SVGGraphics/SVGPathParser";
 import { Scene, type ISceneContext } from "../utilities/SceneManager";
 import { Singleton } from "../utilities/Singleton";
@@ -30,21 +29,24 @@ export class ConquestScene extends Scene {
       this.buildWorldMap();
       console.timeEnd("buildWorldMap");
 
+      this._mapContainer.position.set(0, 0);
+
       this.viewport.setWorldSize(this._mapContainer.width, this._mapContainer.height);
       const minZoom = Math.max(
          app.screen.width / this._mapContainer.width,
          app.screen.height / this._mapContainer.height,
       );
+
       this.viewport.zoom = minZoom;
       this.viewport.setZoomRange(minZoom, this.viewport.zoom * 10);
 
-      Singleton().routeTo(CountryPage, {});
+      Singleton().routeTo(ConquestPage, {});
    }
 
    buildWorldMap(): void {
       let graphics: SmoothGraphics;
 
-      const projection = geoNaturalEarth1();
+      const projection = geoMercator();
       const path = geoPath()
          .projection(projection)
          .context({
@@ -73,10 +75,19 @@ export class ConquestScene extends Scene {
          });
 
       const countries = feature(World as any, World.objects.countries as any) as any;
-      // const labels: Record<string, { x: number; y: number; angle: number; size: number }> = JSON.parse(
-      //    localStorage.getItem("CountryMapping") ?? "{}",
-      // );
-      const labels: Record<string, { x: number; y: number; angle: number; size: number }> = WorldLabel;
+
+      projection.fitExtent(
+         [
+            [0, 0],
+            [1000, 1000],
+         ],
+         countries,
+      );
+
+      const labels: Record<string, { x: number; y: number; angle: number; size: number }> = JSON.parse(
+         localStorage.getItem("CountryMapping") ?? "{}",
+      );
+      // const labels: Record<string, { x: number; y: number; angle: number; size: number }> = WorldLabel;
       countries.features.forEach((feature: any, index: number) => {
          graphics = this._mapContainer.addChild(new SmoothGraphics());
          graphics.beginFill(0xffffff);
@@ -94,6 +105,11 @@ export class ConquestScene extends Scene {
                });
             });
             const area = calculateArea(projected);
+            projected.forEach((point: [number, number]) => {
+               if (point[0] < 0 || point[1] < 0) {
+                  console.log(point);
+               }
+            });
             if (area > maxArea) {
                maxArea = area;
                maxPoints = projected;
@@ -110,6 +126,11 @@ export class ConquestScene extends Scene {
                      maxArea = area;
                      maxPoints = projected;
                   }
+                  projected.forEach((point: [number, number]) => {
+                     if (point[0] < 0 || point[1] < 0) {
+                        console.log(point);
+                     }
+                  });
                });
             });
          }
@@ -156,12 +177,12 @@ export class ConquestScene extends Scene {
             label,
             {
                fontName: `${Fonts.Cabin}NoShadow`,
-               fontSize: 10,
+               fontSize: 20,
                tint: 0x666666,
             },
             {
                fontFamily: "serif",
-               fontSize: 10,
+               fontSize: 20,
                fill: 0x666666,
             },
          ),
@@ -196,7 +217,7 @@ export class ConquestScene extends Scene {
          }
          country.tint = 0xffeaa7;
          selectedIndex = index;
-         Singleton().routeTo(CountryPage, { text });
+         Singleton().routeTo(ConquestPage, { text });
       });
 
       if (selectedIndex !== -1) {

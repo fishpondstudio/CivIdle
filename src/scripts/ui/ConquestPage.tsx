@@ -6,7 +6,7 @@ import { useForceUpdate, useTypedEvent } from "../utilities/Hook";
 import { MenuComponent } from "./MenuComponent";
 import { TitleBarComponent } from "./TitleBarComponent";
 
-export function CountryPage({ text }: { text?: UnicodeText }): React.ReactNode {
+export function ConquestPage({ text }: { text?: UnicodeText }): React.ReactNode {
    const forceUpdate = useForceUpdate();
 
    if (text) {
@@ -20,7 +20,6 @@ export function CountryPage({ text }: { text?: UnicodeText }): React.ReactNode {
          };
       });
       localStorage.setItem("CountryMapping", JSON.stringify(result));
-      console.log(JSON.stringify(result));
    }
 
    useTypedEvent(OnKeydown, (e) => {
@@ -55,11 +54,11 @@ export function CountryPage({ text }: { text?: UnicodeText }): React.ReactNode {
                forceUpdate();
                break;
             case "q":
-               text.size -= 0.1;
+               text.size -= e.shiftKey ? 0.1 : 1;
                forceUpdate();
                break;
             case "e":
-               text.size += 0.1;
+               text.size += e.shiftKey ? 0.1 : 1;
                forceUpdate();
                break;
          }

@@ -1,5 +1,11 @@
-import type { Application, FederatedPointerEvent, IDestroyOptions, IPointData } from "pixi.js";
-import { Container, Rectangle } from "pixi.js";
+import {
+   Container,
+   Rectangle,
+   type Application,
+   type FederatedPointerEvent,
+   type IDestroyOptions,
+   type IPointData,
+} from "pixi.js";
 import { getGameOptions } from "../../../shared/logic/GameStateLogic";
 import { clamp, lerp, sizeOf } from "../../../shared/utilities/Helper";
 import { Vector2, v2 } from "../../../shared/utilities/Vector2";
