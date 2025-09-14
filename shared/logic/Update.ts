@@ -99,7 +99,7 @@ import {
    type IWarehouseBuildingData,
 } from "./Tile";
 import { Transports, type ITransportationDataV2 } from "./Transports";
-import { Singleton } from "../../../src/scripts/utilities/Singleton";
+import { Singleton } from "../../src/scripts/utilities/Singleton";
 
 export const OnPriceUpdated = new TypedEvent<GameState>();
 export const OnBuildingComplete = new TypedEvent<Tile>();
