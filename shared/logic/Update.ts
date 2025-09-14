@@ -66,16 +66,10 @@ import {
    useWorkers,
 } from "./BuildingLogic";
 import { Config } from "./Config";
-import {
-   MANAGED_IMPORT_RANGE,
-   DOWNGRADE_REFUND_PERCENT
-} from "./Constants";
+import { MANAGED_IMPORT_RANGE, DOWNGRADE_REFUND_PERCENT } from "./Constants";
 import { GameFeature, hasFeature } from "./FeatureLogic";
 import type { GameState } from "./GameState";
-import { 
-   getGameOptions,
-   notifyGameStateUpdate
-} from "./GameStateLogic";
+import { getGameOptions, notifyGameStateUpdate } from "./GameStateLogic";
 import {
    getBuildingIO,
    getBuildingsByType,
@@ -105,7 +99,6 @@ import {
    type IWarehouseBuildingData,
 } from "./Tile";
 import { Transports, type ITransportationDataV2 } from "./Transports";
-import { clearTransportSourceCache } from "./Update";
 import { Singleton } from "../../../src/scripts/utilities/Singleton";
 
 export const OnPriceUpdated = new TypedEvent<GameState>();
