@@ -331,12 +331,16 @@ export function transportAndConsumeResources(
       const { total } = getBuilderCapacity(building, xy, gs);
       const toTransport = new Map<Resource, number>();
       let completed = true;
+      let maxCompleted = true;
       forEach(cost, function checkConstructionUpgradeResources(res, amount) {
          const amountArrived = building.resources[res] ?? 0;
          const amountInTransit = getAmountInTransit(xy, res);
          const threshold = getGameOptions().greedyTransport ? (maxCost[res] ?? 0) : amount;
          if (completed && amountArrived < amount) {
             completed = false;
+         }
+         if (maxCompleted && amountArrived < maxCost[res]) {
+            maxCompleted = false;
          }
          // Already full
          if (amountArrived >= threshold) {
@@ -352,7 +356,9 @@ export function transportAndConsumeResources(
             return;
          }
          building.suspendedInput.delete(res);
-         toTransport.set(res, amount);
+         // amount: limits transport to the cost for one level
+         // amountLeft: if greedyTransport -> allow to transport whatever is needed for desiredLevel, limited by builderCapacity - this can improve ; it does no harm
+         toTransport.set(res, amountLeft);
       });
 
       if (toTransport.size > 0) {
@@ -377,7 +383,24 @@ export function transportAndConsumeResources(
          OnBuildingProductionComplete.emit({ xy, offline });
       }
 
-      if (completed) {
+      if (maxCompleted) {
+         // QuickPath aka Shortcut ... if all resources already arrived, complete the full upgrade to desired level in this tick
+         // deduct the maxCost instead of the cost for the next level
+         // rest of code identical to regular "completed" code by purpose
+         building.level = building.desiredLevel;
+         forEach(maxCost, (res, amount) => {
+            safeAdd(building.resources, res, -amount);
+         });
+         building.suspendedInput.clear();
+         if (building.status === "building") {
+            building.status = building.desiredLevel > building.level ? "upgrading" : "completed";
+            OnBuildingComplete.emit(xy);
+         }
+         OnBuildingOrUpgradeComplete.emit(xy);
+         if (building.status === "upgrading" && building.level >= building.desiredLevel) {
+            building.status = "completed";
+         }
+      } else if (completed) {
          building.level++;
          forEach(cost, (res, amount) => {
             safeAdd(building.resources, res, -amount);
