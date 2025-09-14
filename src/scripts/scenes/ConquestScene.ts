@@ -12,6 +12,11 @@ import { Singleton } from "../utilities/Singleton";
 import { Fonts } from "../visuals/Fonts";
 
 export const CountryMapping: { index: number; area: SmoothGraphics; text: UnicodeText }[] = [];
+const OceanColor = 0xabd3de;
+const LandColor = 0xf2efe9;
+const SelectedColor = 0xffeaa7;
+const NeighborColor = 0xfff3cc;
+const BorderColor = 0xbfaaba;
 
 export class ConquestScene extends Scene {
    private _mapContainer: Container<SmoothGraphics>;
@@ -94,7 +99,7 @@ export class ConquestScene extends Scene {
          graphics.beginFill(0xffffff);
          path(feature.geometry);
          graphics.endFill();
-         graphics.tint = 0xffffff;
+         graphics.tint = LandColor;
 
          let maxPoints: [number, number][] = [];
          let maxArea = 0;
@@ -164,7 +169,7 @@ export class ConquestScene extends Scene {
 
       graphics = this._countryBorders;
       graphics.lineStyle({
-         color: 0xcccccc,
+         color: BorderColor,
          width: 0.2,
          alignment: 0.5,
       });
@@ -209,14 +214,14 @@ export class ConquestScene extends Scene {
       CountryMapping.forEach(({ index, area, text }) => {
          const country = area;
          if (!country.getBounds().contains(global.x, global.y)) {
-            country.tint = 0xffffff;
+            country.tint = LandColor;
             return;
          }
          if (!country.containsPoint(global)) {
-            country.tint = 0xffffff;
+            country.tint = LandColor;
             return;
          }
-         country.tint = 0xffeaa7;
+         country.tint = SelectedColor;
          selectedIndex = index;
          Singleton().routeTo(ConquestPage, { text });
       });
@@ -225,12 +230,12 @@ export class ConquestScene extends Scene {
          const neighboring = neighbors(World.objects.countries.geometries as any);
          const neighboringCountries = neighboring[selectedIndex];
          neighboringCountries.forEach((neighbor) => {
-            CountryMapping[neighbor].area.tint = 0xfff9e5;
+            CountryMapping[neighbor].area.tint = NeighborColor;
          });
       }
    }
 
    override backgroundColor(): ColorSource {
-      return 0x72d3e6;
+      return OceanColor;
    }
 }
