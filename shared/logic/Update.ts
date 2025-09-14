@@ -66,10 +66,16 @@ import {
    useWorkers,
 } from "./BuildingLogic";
 import { Config } from "./Config";
-import { MANAGED_IMPORT_RANGE } from "./Constants";
+import {
+   MANAGED_IMPORT_RANGE,
+   DOWNGRADE_REFUND_PERCENT
+} from "./Constants";
 import { GameFeature, hasFeature } from "./FeatureLogic";
 import type { GameState } from "./GameState";
-import { getGameOptions } from "./GameStateLogic";
+import { 
+   getGameOptions,
+   notifyGameStateUpdate
+} from "./GameStateLogic";
 import {
    getBuildingIO,
    getBuildingsByType,
@@ -99,6 +105,8 @@ import {
    type IWarehouseBuildingData,
 } from "./Tile";
 import { Transports, type ITransportationDataV2 } from "./Transports";
+import { clearTransportSourceCache } from "./Update";
+import { Singleton } from "../../../src/scripts/utilities/Singleton";
 
 export const OnPriceUpdated = new TypedEvent<GameState>();
 export const OnBuildingComplete = new TypedEvent<Tile>();
@@ -412,6 +420,32 @@ export function transportAndConsumeResources(
          }
          OnBuildingOrUpgradeComplete.emit(xy);
          if (building.status === "upgrading" && building.level >= building.desiredLevel) {
+            building.status = "completed";
+         }
+      }
+
+      return;
+   }
+
+   if (building.status === "downgrading") {
+      if (building.level <= 1) {
+         // downgrading below level 1 -> demolishBuilding
+         // copied from src/scripts/ui/BuildingSellComponent.tsx ; including the required imports
+         delete tile.building;
+         Singleton().sceneManager.enqueue(WorldScene, (s) => s.resetTile(tile!.tile));
+         clearTransportSourceCache();
+         notifyGameStateUpdate();
+      } else {
+         // it is important to reduce the level before calculating the cost
+         building.level--;
+         const cost = getBuildingCost(building);
+         // adapted from "if (completed) {" from "building || upgrading"
+         forEach(cost, (res, amount) => {
+            safeAdd(building.resources, res, +amount * DOWNGRADE_REFUND_PERCENT);
+         });
+         building.suspendedInput.clear();
+         OnBuildingOrUpgradeComplete.emit(xy);
+         if (building.level <= building.desiredLevel) {
             building.status = "completed";
          }
       }
