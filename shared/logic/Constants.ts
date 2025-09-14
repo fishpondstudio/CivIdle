@@ -36,6 +36,7 @@ export const SAVE_KEY = "CivIdle";
 export const MAX_OFFLINE_PRODUCTION_SEC = 60 * 60 * 4;
 export const SCIENCE_VALUE = 0.2;
 export const TRADE_CANCEL_REFUND_PERCENT = 0.9;
+export const DOWNGRADE_REFUND_PERCENT = 0.9;
 export const MAX_CHAT_PER_CHANNEL = 200;
 export const DISCORD_URL = "https://discord.com/invite/m5JWZtEKMZ";
 export const BACKUP_RECOVERY_URL =
