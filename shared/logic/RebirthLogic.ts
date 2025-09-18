@@ -40,7 +40,7 @@ export function getGreatPersonThisRunLevel(amount: number): number {
    for (let i = 1; i <= amount; ++i) {
       result += 1 / i;
    }
-   return Math.round(result * 100) / 100;
+   return result;
 }
 
 export function getGreatPersonTotalEffect(

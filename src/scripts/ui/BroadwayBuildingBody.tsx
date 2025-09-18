@@ -5,7 +5,7 @@ import { Config } from "../../../shared/logic/Config";
 import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
 import { getGreatPersonTotalEffect, sortGreatPeople } from "../../../shared/logic/RebirthLogic";
 import type { IGreatPeopleBuildingData } from "../../../shared/logic/Tile";
-import { keysOf, round } from "../../../shared/utilities/Helper";
+import { keysOf } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import { GreatPersonImage } from "../visuals/GreatPersonVisual";
 import { playClick } from "../visuals/Sound";
@@ -45,7 +45,7 @@ export function BroadwayBuildingBody({ gameState, xy }: IBuildingComponentProps)
                               <span className="text-strong">{def.name()}</span>
                               <span className="text-desc ml5">{Config.TechAge[def.age].name()}</span>
                            </div>
-                           <div className="text-small text-desc">{def.desc(def, round(effect, 1))}</div>
+                           <div className="text-small text-desc">{def.desc(def, effect)}</div>
                         </div>
                      </div>
                   );
@@ -122,9 +122,7 @@ export function BroadwayBuildingBody({ gameState, xy }: IBuildingComponentProps)
                                        <span className="text-strong">{def.name()}</span>
                                        <span className="text-desc ml5">{Config.TechAge[def.age].name()}</span>
                                     </div>
-                                    <div className="text-small text-desc">
-                                       {def.desc(def, round(effect, 1))}
-                                    </div>
+                                    <div className="text-small text-desc">{def.desc(def, effect)}</div>
                                  </div>
                               </td>
                               <td style={{ width: 0 }}>
