@@ -28,7 +28,7 @@ export class GreatPersonDefinitions {
 
    RamessesII: IGreatPersonDefinition = {
       name: () => t(L.RamessesII),
-      desc: (self, level) => t(L.RamessesIIDesc, { value: self.value(level) }),
+      desc: (self, level) => t(L.RamessesIIDesc, { value: formatNumber(self.value(level)) }),
       time: "c. 1300s BC",
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
@@ -44,7 +44,7 @@ export class GreatPersonDefinitions {
 
    TangOfShang: IGreatPersonDefinition = {
       name: () => t(L.TangOfShang),
-      desc: (self, level) => t(L.TangOfShangDesc, { value: self.value(level) }),
+      desc: (self, level) => t(L.TangOfShangDesc, { value: formatNumber(self.value(level)) }),
       time: "c. 1600s BC",
       value: (level) => level * 0.5,
       maxLevel: Number.POSITIVE_INFINITY,
@@ -85,7 +85,10 @@ export class GreatPersonDefinitions {
    Narmer: IGreatPersonDefinition = {
       name: () => t(L.Narmer),
       desc: (self, level) =>
-         t(L.AdaptiveGreatPersonDesc, { value: self.value(level), age: Config.TechAge[self.age].name() }),
+         t(L.AdaptiveGreatPersonDesc, {
+            value: formatNumber(self.value(level)),
+            age: Config.TechAge[self.age].name(),
+         }),
       time: "c. 3100s BC",
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
@@ -160,7 +163,10 @@ export class GreatPersonDefinitions {
    KingDavid: IGreatPersonDefinition = {
       name: () => t(L.KingDavid),
       desc: (self, level) =>
-         t(L.AdaptiveGreatPersonDesc, { value: self.value(level), age: Config.TechAge[self.age].name() }),
+         t(L.AdaptiveGreatPersonDesc, {
+            value: formatNumber(self.value(level)),
+            age: Config.TechAge[self.age].name(),
+         }),
       time: "c. 1000s BC",
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
@@ -233,7 +239,7 @@ export class GreatPersonDefinitions {
 
    Socrates: IGreatPersonDefinition = {
       name: () => t(L.Socrates),
-      desc: (self, level) => t(L.SocratesDesc, { value: self.value(level) }),
+      desc: (self, level) => t(L.SocratesDesc, { value: formatNumber(self.value(level)) }),
       time: "c. 600s BC",
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
@@ -249,7 +255,7 @@ export class GreatPersonDefinitions {
 
    Aristophanes: IGreatPersonDefinition = {
       name: () => t(L.Aristophanes),
-      desc: (self, level) => t(L.AristophanesDesc, { value: self.value(level) }),
+      desc: (self, level) => t(L.AristophanesDesc, { value: formatNumber(self.value(level)) }),
       time: "446 ~ 386 AD",
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
@@ -262,7 +268,7 @@ export class GreatPersonDefinitions {
 
    Confucius: IGreatPersonDefinition = {
       name: () => t(L.Confucius),
-      desc: (self, level) => t(L.ConfuciusDescV2, { value: self.value(level) }),
+      desc: (self, level) => t(L.ConfuciusDescV2, { value: formatNumber(self.value(level)) }),
       time: "c. 600s BC",
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
@@ -363,7 +369,7 @@ export class GreatPersonDefinitions {
 
    Zenobia: IGreatPersonDefinition = {
       name: () => t(L.Zenobia),
-      desc: (self, level) => t(L.ZenobiaDesc, { value: self.value(level) }),
+      desc: (self, level) => t(L.ZenobiaDesc, { value: formatNumber(self.value(level)) }),
       time: "240 ~ 274 AD",
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
@@ -397,7 +403,10 @@ export class GreatPersonDefinitions {
    Laozi: IGreatPersonDefinition = {
       name: () => t(L.Laozi),
       desc: (self, level) =>
-         t(L.AdaptiveGreatPersonDesc, { value: self.value(level), age: Config.TechAge[self.age].name() }),
+         t(L.AdaptiveGreatPersonDesc, {
+            value: formatNumber(self.value(level)),
+            age: Config.TechAge[self.age].name(),
+         }),
       time: "c. 600s BC",
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
@@ -422,7 +431,7 @@ export class GreatPersonDefinitions {
 
    IsidoreOfMiletus: IGreatPersonDefinition = {
       name: () => t(L.IsidoreOfMiletus),
-      desc: (self, level) => t(L.IsidoreOfMiletusDesc, { value: self.value(level) }),
+      desc: (self, level) => t(L.IsidoreOfMiletusDesc, { value: formatNumber(self.value(level)) }),
       time: "c. 500 AD",
       value: (level) => level * 2,
       maxLevel: Number.POSITIVE_INFINITY,
@@ -462,7 +471,7 @@ export class GreatPersonDefinitions {
 
    WuZetian: IGreatPersonDefinition = {
       name: () => t(L.WuZetian),
-      desc: (self, level) => t(L.WuZetianDesc, { value: self.value(level) }),
+      desc: (self, level) => t(L.WuZetianDesc, { value: formatNumber(self.value(level)) }),
       time: "624 ~ 705 AD",
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
@@ -490,7 +499,7 @@ export class GreatPersonDefinitions {
 
    Rurik: IGreatPersonDefinition = {
       name: () => t(L.Rurik),
-      desc: (self, level) => t(L.RurikDesc, { value: self.value(level) }),
+      desc: (self, level) => t(L.RurikDesc, { value: formatNumber(self.value(level)) }),
       time: "624 ~ 705 AD",
       value: (level) => level * 2,
       maxLevel: Number.POSITIVE_INFINITY,
@@ -546,7 +555,10 @@ export class GreatPersonDefinitions {
    GenghisKhan: IGreatPersonDefinition = {
       name: () => t(L.GenghisKhan),
       desc: (self, level) =>
-         t(L.AdaptiveGreatPersonDesc, { value: self.value(level), age: Config.TechAge[self.age].name() }),
+         t(L.AdaptiveGreatPersonDesc, {
+            value: formatNumber(self.value(level)),
+            age: Config.TechAge[self.age].name(),
+         }),
       time: "c. 1162 ~ 1227 AD",
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
@@ -583,7 +595,7 @@ export class GreatPersonDefinitions {
 
    GalileoGalilei: IGreatPersonDefinition = {
       name: () => t(L.GalileoGalilei),
-      desc: (self, level) => t(L.GalileoGalileiDesc, { value: self.value(level) }),
+      desc: (self, level) => t(L.GalileoGalileiDesc, { value: formatNumber(self.value(level)) }),
       time: "1564 ~ 1642 AD",
       value: (level) => level * 1,
       maxLevel: Number.POSITIVE_INFINITY,
@@ -672,7 +684,7 @@ export class GreatPersonDefinitions {
 
    IsaacNewton: IGreatPersonDefinition = {
       name: () => t(L.IsaacNewton),
-      desc: (self, level) => t(L.IsaacNewtonDescV2, { value: self.value(level) }),
+      desc: (self, level) => t(L.IsaacNewtonDescV2, { value: formatNumber(self.value(level)) }),
       time: "1642 ~ 1727 AD",
       value: (level) => level * 2,
       maxLevel: Number.POSITIVE_INFINITY,
@@ -759,7 +771,10 @@ export class GreatPersonDefinitions {
    ChristopherColumbus: IGreatPersonDefinition = {
       name: () => t(L.ChristopherColumbus),
       desc: (self, level) =>
-         t(L.AdaptiveGreatPersonDesc, { value: self.value(level), age: Config.TechAge[self.age].name() }),
+         t(L.AdaptiveGreatPersonDesc, {
+            value: formatNumber(self.value(level)),
+            age: Config.TechAge[self.age].name(),
+         }),
       time: "1451 ~ 1506 AD",
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
@@ -809,7 +824,7 @@ export class GreatPersonDefinitions {
 
    LouisSullivan: IGreatPersonDefinition = {
       name: () => t(L.LouisSullivan),
-      desc: (self, level) => t(L.LouisSullivanDesc, { value: self.value(level) }),
+      desc: (self, level) => t(L.LouisSullivanDesc, { value: formatNumber(self.value(level)) }),
       time: "1856 ~ 1924 AD",
       value: (level) => level * 3,
       maxLevel: Number.POSITIVE_INFINITY,
@@ -861,7 +876,7 @@ export class GreatPersonDefinitions {
 
    CharlesDarwin: IGreatPersonDefinition = {
       name: () => t(L.CharlesDarwin),
-      desc: (self, level) => t(L.CharlesDarwinDesc, { value: self.value(level) }),
+      desc: (self, level) => t(L.CharlesDarwinDesc, { value: formatNumber(self.value(level)) }),
       time: "1809 ~ 1882 AD",
       value: (level) => level * 2,
       maxLevel: Number.POSITIVE_INFINITY,
@@ -898,7 +913,7 @@ export class GreatPersonDefinitions {
 
    FlorenceNightingale: IGreatPersonDefinition = {
       name: () => t(L.FlorenceNightingale),
-      desc: (self, level) => t(L.FlorenceNightingaleDesc, { value: self.value(level) }),
+      desc: (self, level) => t(L.FlorenceNightingaleDesc, { value: formatNumber(self.value(level)) }),
       time: "1820 ~ 1910 AD",
       value: (level) => level * 3,
       maxLevel: Number.POSITIVE_INFINITY,
@@ -961,7 +976,10 @@ export class GreatPersonDefinitions {
    MichaelFaraday: IGreatPersonDefinition = {
       name: () => t(L.MichaelFaraday),
       desc: (self, level) =>
-         t(L.AdaptiveGreatPersonDesc, { value: self.value(level), age: Config.TechAge[self.age].name() }),
+         t(L.AdaptiveGreatPersonDesc, {
+            value: formatNumber(self.value(level)),
+            age: Config.TechAge[self.age].name(),
+         }),
       time: "1791 ~ 1867 AD",
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
@@ -1082,7 +1100,7 @@ export class GreatPersonDefinitions {
 
    AlanTuring: IGreatPersonDefinition = {
       name: () => t(L.AlanTuring),
-      desc: (self, level) => t(L.AlanTuringDesc, { value: self.value(level) }),
+      desc: (self, level) => t(L.AlanTuringDesc, { value: formatNumber(self.value(level)) }),
       time: "1912 ~ 1954 AD",
       value: (level) => level * 2,
       maxLevel: Number.POSITIVE_INFINITY,
@@ -1098,7 +1116,7 @@ export class GreatPersonDefinitions {
 
    NielsBohr: IGreatPersonDefinition = {
       name: () => t(L.NielsBohr),
-      desc: (self, level) => t(L.NielsBohrDescV2, { value: self.value(level) }),
+      desc: (self, level) => t(L.NielsBohrDescV2, { value: formatNumber(self.value(level)) }),
       time: "1885 ~ 1962 AD",
       value: (level) => level * 3,
       maxLevel: Number.POSITIVE_INFINITY,
@@ -1182,7 +1200,7 @@ export class GreatPersonDefinitions {
 
    JohnVonNeumann: IGreatPersonDefinition = {
       name: () => t(L.JohnVonNeumann),
-      desc: (self, level) => t(L.JohnVonNeumannDesc, { value: self.value(level) }),
+      desc: (self, level) => t(L.JohnVonNeumannDesc, { value: formatNumber(self.value(level)) }),
       time: "1903 ~ 1957 AD",
       value: (level) => level * 3,
       maxLevel: Number.POSITIVE_INFINITY,
@@ -1198,7 +1216,7 @@ export class GreatPersonDefinitions {
 
    CharlieChaplin: IGreatPersonDefinition = {
       name: () => t(L.CharlieChaplin),
-      desc: (self, level) => t(L.CharlieChaplinDesc, { value: self.value(level) }),
+      desc: (self, level) => t(L.CharlieChaplinDesc, { value: formatNumber(self.value(level)) }),
       time: "1889 ~ 1977 AD",
       value: (level) => level * 4,
       maxLevel: Number.POSITIVE_INFINITY,
@@ -1214,7 +1232,7 @@ export class GreatPersonDefinitions {
 
    FrankLloydWright: IGreatPersonDefinition = {
       name: () => t(L.FrankLloydWright),
-      desc: (self, level) => t(L.FrankLloydWrightDesc, { value: self.value(level) }),
+      desc: (self, level) => t(L.FrankLloydWrightDesc, { value: formatNumber(self.value(level)) }),
       time: "1867 ~ 1959 AD",
       value: (level) => level * 4,
       maxLevel: Number.POSITIVE_INFINITY,
@@ -1244,7 +1262,10 @@ export class GreatPersonDefinitions {
    OskarSchindler: IGreatPersonDefinition = {
       name: () => t(L.OskarSchindler),
       desc: (self, level) =>
-         t(L.AdaptiveGreatPersonDesc, { value: self.value(level), age: Config.TechAge[self.age].name() }),
+         t(L.AdaptiveGreatPersonDesc, {
+            value: formatNumber(self.value(level)),
+            age: Config.TechAge[self.age].name(),
+         }),
       time: "1908 ~ 1974 AD",
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
@@ -1391,7 +1412,7 @@ export class GreatPersonDefinitions {
       name: () => t(L.PaulSamuelson),
       desc: (self, level) =>
          t(L.BuildingLevelBoostDesc, {
-            value: self.value(level),
+            value: formatNumber(self.value(level)),
             building: Config.Building.SwissBank.name(),
          }),
       time: "1915 ~ 2009 AD",
@@ -1412,7 +1433,7 @@ export class GreatPersonDefinitions {
 
    JamesWatson: IGreatPersonDefinition = {
       name: () => t(L.JamesWatson),
-      desc: (self, level) => t(L.JamesWatsonDesc, { value: self.value(level) }),
+      desc: (self, level) => t(L.JamesWatsonDesc, { value: formatNumber(self.value(level)) }),
       time: "1928 ~ ",
       value: (level) => level * 4,
       maxLevel: Number.POSITIVE_INFINITY,
@@ -1428,7 +1449,7 @@ export class GreatPersonDefinitions {
 
    RichardFeynman: IGreatPersonDefinition = {
       name: () => t(L.RichardFeynman),
-      desc: (self, level) => t(L.RichardFeynmanDesc, { value: self.value(level) }),
+      desc: (self, level) => t(L.RichardFeynmanDesc, { value: formatNumber(self.value(level)) }),
       time: "1918 ~ 1988 AD",
       value: (level) => level * 4,
       maxLevel: Number.POSITIVE_INFINITY,
@@ -1441,7 +1462,7 @@ export class GreatPersonDefinitions {
 
    LinusPauling: IGreatPersonDefinition = {
       name: () => t(L.LinusPauling),
-      desc: (self, level) => t(L.LinusPaulingDesc, { value: self.value(level) }),
+      desc: (self, level) => t(L.LinusPaulingDesc, { value: formatNumber(self.value(level)) }),
       time: "1901 ~ 1994 AD",
       value: (level) => level * 3,
       maxLevel: Number.POSITIVE_INFINITY,
@@ -1457,7 +1478,7 @@ export class GreatPersonDefinitions {
 
    IMPei: IGreatPersonDefinition = {
       name: () => t(L.IMPei),
-      desc: (self, level) => t(L.IMPeiDesc, { value: self.value(level) }),
+      desc: (self, level) => t(L.IMPeiDesc, { value: formatNumber(self.value(level)) }),
       time: "1917 ~ 2019 AD",
       value: (level) => level * 5,
       maxLevel: Number.POSITIVE_INFINITY,
@@ -1512,7 +1533,10 @@ export class GreatPersonDefinitions {
    NeilArmstrong: IGreatPersonDefinition = {
       name: () => t(L.NeilArmstrong),
       desc: (self, level) =>
-         t(L.AdaptiveGreatPersonDesc, { value: self.value(level), age: Config.TechAge[self.age].name() }),
+         t(L.AdaptiveGreatPersonDesc, {
+            value: formatNumber(self.value(level)),
+            age: Config.TechAge[self.age].name(),
+         }),
       time: "1930 ~ 2012 AD",
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
@@ -1644,7 +1668,7 @@ export class GreatPersonDefinitions {
 
    ZahaHadid: IGreatPersonDefinition = {
       name: () => t(L.ZahaHadid),
-      desc: (self, level) => t(L.ZahaHadidDesc, { value: self.value(level) }),
+      desc: (self, level) => t(L.ZahaHadidDesc, { value: formatNumber(self.value(level)) }),
       time: "1950 ~ 2016 AD",
       value: (level) => level * 6,
       maxLevel: Number.POSITIVE_INFINITY,
@@ -1660,7 +1684,7 @@ export class GreatPersonDefinitions {
 
    PeterHiggs: IGreatPersonDefinition = {
       name: () => t(L.PeterHiggs),
-      desc: (self, level) => t(L.PeterHiggsDesc, { value: self.value(level) }),
+      desc: (self, level) => t(L.PeterHiggsDesc, { value: formatNumber(self.value(level)) }),
       time: "1929 ~ 2024 AD",
       value: (level) => level * 5,
       maxLevel: Number.POSITIVE_INFINITY,
@@ -1676,7 +1700,7 @@ export class GreatPersonDefinitions {
 
    GabrielGarciaMarquez: IGreatPersonDefinition = {
       name: () => t(L.GabrielGarciaMarquez),
-      desc: (self, level) => t(L.GabrielGarciaMarquezDesc, { value: self.value(level) }),
+      desc: (self, level) => t(L.GabrielGarciaMarquezDesc, { value: formatNumber(self.value(level)) }),
       time: "1927 ~ 2014 AD",
       value: (level) => level * 6,
       maxLevel: Number.POSITIVE_INFINITY,
@@ -1692,7 +1716,7 @@ export class GreatPersonDefinitions {
 
    MaryamMirzakhani: IGreatPersonDefinition = {
       name: () => t(L.MaryamMirzakhani),
-      desc: (self, level) => t(L.MaryamMirzakhaniDesc, { value: self.value(level) }),
+      desc: (self, level) => t(L.MaryamMirzakhaniDesc, { value: formatNumber(self.value(level)) }),
       time: "1977 ~ 2017 AD",
       value: (level) => level * 4,
       maxLevel: Number.POSITIVE_INFINITY,
@@ -1709,7 +1733,10 @@ export class GreatPersonDefinitions {
    SidMeier: IGreatPersonDefinition = {
       name: () => t(L.SidMeier),
       desc: (self, level) =>
-         t(L.AdaptiveGreatPersonDesc, { value: self.value(level), age: Config.TechAge[self.age].name() }),
+         t(L.AdaptiveGreatPersonDesc, {
+            value: formatNumber(self.value(level)),
+            age: Config.TechAge[self.age].name(),
+         }),
       time: "1954 ~ ",
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
@@ -1751,7 +1778,7 @@ function greatPersonBoostDesc(self: IGreatPersonDefinition, level: number) {
       throw new Error("`greatPersonBoostDesc` requires `boost` to be defined");
    }
    return t(L.BoostDescription, {
-      value: self.value(level),
+      value: formatNumber(self.value(level)),
       multipliers: self.boost.multipliers.map((m) => MultiplierTypeDesc[m]()).join(", "),
       buildings: self.boost.buildings.map((b) => Config.Building[b].name()).join(", "),
    });
