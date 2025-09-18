@@ -94,8 +94,8 @@ test("getGreatPersonThisRunLevel", () => {
    assert.equal(0, getGreatPersonThisRunLevel(0));
    assert.equal(1, getGreatPersonThisRunLevel(1));
    assert.equal(1.5, getGreatPersonThisRunLevel(2));
-   assert.equal(1.83, getGreatPersonThisRunLevel(3));
-   assert.equal(2.08, getGreatPersonThisRunLevel(4));
+   assert.equal(1 + 1 / 2 + 1 / 3, getGreatPersonThisRunLevel(3));
+   assert.equal(1 + 1 / 2 + 1 / 3 + 1 / 4, getGreatPersonThisRunLevel(4));
 });
 
 test("getPowerRequired", () => {

@@ -9,7 +9,7 @@ import {
    getWisdomUpgradeCost,
    isEligibleForWisdom,
 } from "../../../shared/logic/RebirthLogic";
-import { formatNumber, round, safeAdd } from "../../../shared/utilities/Helper";
+import { formatNumber, safeAdd } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import { useGameOptions, useGameState } from "../Global";
 import { Fonts } from "../visuals/Fonts";
@@ -107,9 +107,7 @@ export function ChooseGreatPersonModal({ permanent }: { permanent: boolean }): R
                               x{formatNumber(amount)}
                            </div>
                         ) : null}
-                        <div>
-                           {p.desc(p, permanent ? 1 : round(1 / (1 + (gs.greatPeople[greatPerson] ?? 0)), 2))}
-                        </div>
+                        <div>{p.desc(p, permanent ? 1 : 1 / (1 + (gs.greatPeople[greatPerson] ?? 0)))}</div>
                         {!permanent &&
                         (p.type === GreatPersonType.Normal || p.type === GreatPersonType.Adaptive) &&
                         (gs.greatPeople[greatPerson] ?? 0) > 0 ? (
