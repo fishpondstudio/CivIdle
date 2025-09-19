@@ -237,6 +237,7 @@ export class GameOptions {
    defaultBuildingLevel = 1;
    porcelainTowerMaxPickPerRoll = false;
    greedyTransport = false;
+   enableDowngrading = false;
    offlineProductionPercent = 0;
    rebirthInfo: RebirthInfo[] = [];
    // Should be wiped
