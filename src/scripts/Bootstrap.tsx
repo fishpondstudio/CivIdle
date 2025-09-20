@@ -43,6 +43,7 @@ import { getFullVersion } from "./logic/Version";
 import { getBuildingTexture, getTileTexture } from "./logic/VisualLogic";
 import type { MainBundleAssets } from "./main";
 import { connectWebSocket } from "./rpc/RPCClient";
+import { ConquestScene } from "./scenes/ConquestScene";
 import { PlayerMapScene } from "./scenes/PlayerMapScene";
 import { TechTreeScene } from "./scenes/TechTreeScene";
 import { WorldScene } from "./scenes/WorldScene";
@@ -58,7 +59,6 @@ import { GameTicker } from "./utilities/GameTicker";
 import { SceneManager } from "./utilities/SceneManager";
 import { Singleton, initializeSingletons, type RouteTo } from "./utilities/Singleton";
 import { playError } from "./visuals/Sound";
-import { ConquestScene } from "./scenes/ConquestScene";
 
 export async function startGame(
    app: Application,

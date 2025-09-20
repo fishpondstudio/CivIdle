@@ -43,9 +43,6 @@
          "problemMatcher": [],
          "label": "Run Test",
          "isBackground": true,
-         "runOptions": {
-            "runOn": "folderOpen"
-         }
       }
    ]
 }

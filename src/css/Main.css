@@ -137,8 +137,11 @@ body .tippy-box {
    -webkit-font-smoothing: none;
 }
 
-#patch-notes-panel {
+#top-left-panel {
    position: absolute;
    top: 5.5rem;
    left: 1rem;
+   display: flex;
+   flex-direction: column;
+   gap: 0.5rem;
 }
