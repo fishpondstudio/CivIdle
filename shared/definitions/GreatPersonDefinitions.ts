@@ -512,7 +512,11 @@ export class GreatPersonDefinitions {
 
    Fibonacci: IGreatPersonDefinition = {
       name: () => t(L.Fibonacci),
-      desc: (self, level) => t(L.FibonacciDescV2, { idle: self.value(level) / 2, busy: self.value(level) }),
+      desc: (self, level) =>
+         t(L.FibonacciDescV2, {
+            idle: formatNumber(self.value(level) / 2),
+            busy: formatNumber(self.value(level)),
+         }),
       time: "c. 1170 ~ 1250 AD",
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
@@ -893,7 +897,10 @@ export class GreatPersonDefinitions {
    CarlFriedrichGauss: IGreatPersonDefinition = {
       name: () => t(L.CarlFriedrichGauss),
       desc: (self, level) =>
-         t(L.CarlFriedrichGaussDesc, { idle: 0.5 * self.value(level), busy: 1.5 * self.value(level) }),
+         t(L.CarlFriedrichGaussDesc, {
+            idle: formatNumber(0.5 * self.value(level)),
+            busy: formatNumber(1.5 * self.value(level)),
+         }),
       time: "c. 1777 ~ 1855 AD",
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
