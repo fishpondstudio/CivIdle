@@ -119,16 +119,16 @@ function TodoComponent(): React.ReactNode {
    return (
       <div className="row g5">
          {jsxMapOf(Todo, (id, t) => {
-            if (!t.condition(gs, options)) {
+            if (options.disabledTodos.has(id)) {
                return null;
             }
-            if (options.disabledTodos.has(id)) {
+            if (!t.condition(gs, options)) {
                return null;
             }
             return (
                <Tippy
                   placement="bottom"
-                  key={t.icon}
+                  key={id}
                   content={
                      <>
                         <div className="text-strong">{t.name()}</div>
