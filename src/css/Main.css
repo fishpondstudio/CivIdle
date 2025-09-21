@@ -169,7 +169,4 @@ body .tippy-box {
    display: flex;
    align-items: center;
    justify-content: center;
-   .m-icon {
-      color: #333;
-   }
 }

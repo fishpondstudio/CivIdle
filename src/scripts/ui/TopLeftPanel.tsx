@@ -1,10 +1,13 @@
 import Tippy from "@tippyjs/react";
 import { PatchNotes } from "../../../shared/definitions/PatchNotes";
 import { notifyGameOptionsUpdate } from "../../../shared/logic/GameStateLogic";
+import { cls } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import { useGameOptions, useGameState } from "../Global";
+import { Todo } from "../logic/Todo";
 import { getCurrentTutorial } from "../logic/Tutorial";
 import { getBuildNumber, getVersion } from "../logic/Version";
+import { jsxMapOf } from "../utilities/Helper";
 import { openUrl } from "../utilities/Platform";
 import { playClick } from "../visuals/Sound";
 import { showModal } from "./GlobalModal";
@@ -17,8 +20,8 @@ export function TopLeftPanel(): React.ReactNode {
    return (
       <div id="top-left-panel">
          <PatchNotesLinkComponent />
-         <TodoComponent />
          <TutorialComponent />
+         <TodoComponent />
       </div>
    );
 }
@@ -108,13 +111,44 @@ function TutorialComponent(): React.ReactNode {
 }
 
 function TodoComponent(): React.ReactNode {
+   const gs = useGameState();
+   const options = useGameOptions();
+   if (options.showTutorial) {
+      return null;
+   }
    return (
       <div className="row g5">
-         <div className="todo">
-            <div className="m-icon">tips_and_updates</div>
-         </div>
-         <div className="todo"></div>
-         <div className="todo"></div>
+         {jsxMapOf(Todo, (id, t) => {
+            if (!t.condition(gs, options)) {
+               return null;
+            }
+            if (options.disabledTodos.has(id)) {
+               return null;
+            }
+            return (
+               <Tippy
+                  placement="bottom"
+                  key={t.icon}
+                  content={
+                     <>
+                        <div className="text-strong">{t.name()}</div>
+                        {html(t.desc(gs, options))}
+                     </>
+                  }
+               >
+                  <div
+                     className={cls("todo pointer", t.className)}
+                     key={t.name()}
+                     onClick={() => {
+                        playClick();
+                        t.onClick(gs, options);
+                     }}
+                  >
+                     <div className="m-icon">{t.icon}</div>
+                  </div>
+               </Tippy>
+            );
+         })}
       </div>
    );
 }

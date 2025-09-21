@@ -251,6 +251,7 @@ export class GameOptions {
    buildingStatusIconFollowBuildingColor = false;
    useScientificFormat = false;
    showTutorial = true;
+   disabledTodos = new Set<string>();
 }
 
 export enum RebirthFlags {

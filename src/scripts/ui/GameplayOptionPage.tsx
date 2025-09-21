@@ -27,6 +27,7 @@ import {
 } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import { useGameOptions } from "../Global";
+import { Todo } from "../logic/Todo";
 import { jsxMapOf } from "../utilities/Helper";
 import { openUrl } from "../utilities/Platform";
 import { playClick } from "../visuals/Sound";
@@ -75,6 +76,25 @@ export function GameplayOptionPage(): React.ReactNode {
                      notifyGameOptionsUpdate(options);
                   }}
                />
+               <div className="separator" />
+               {jsxMapOf(Todo, (id, t) => {
+                  return (
+                     <ToggleComponent
+                        title={t.name()}
+                        contentHTML=""
+                        value={!options.disabledTodos.has(id)}
+                        onValueChange={(value) => {
+                           playClick();
+                           if (value) {
+                              options.disabledTodos.delete(id);
+                           } else {
+                              options.disabledTodos.add(id);
+                           }
+                           notifyGameOptionsUpdate(options);
+                        }}
+                     />
+                  );
+               })}
             </fieldset>
             <fieldset>
                <legend>{t(L.GlobalBuildingDefault)}</legend>
