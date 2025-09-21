@@ -125,7 +125,7 @@ export class TechDefinitions {
       unlockBuilding: ["House"],
       requireTech: ["Masonry", "Counting"],
       buildingMultiplier: { Hut: { output: 1 } },
-      additionalUpgrades: () => [t(L.TechResourceTransportPreference)],
+      additionalUpgrades: () => [t(L.TechProductionPriority)],
    };
 
    Herding: ITechDefinition = {
@@ -133,7 +133,7 @@ export class TechDefinitions {
       column: 2,
       unlockBuilding: ["PoultryFarm", "DairyFarm"],
       requireTech: ["Counting", "Farming"],
-      additionalUpgrades: () => [t(L.TechProductionPriority)],
+      additionalUpgrades: () => [t(L.TechResourceTransportPreference)],
    };
 
    HorsebackRiding: ITechDefinition = {

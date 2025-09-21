@@ -1,21 +1,23 @@
+import Tippy from "@tippyjs/react";
 import { PatchNotes } from "../../../shared/definitions/PatchNotes";
 import { notifyGameOptionsUpdate } from "../../../shared/logic/GameStateLogic";
 import { L, t } from "../../../shared/utilities/i18n";
-import { useGameOptions } from "../Global";
+import { useGameOptions, useGameState } from "../Global";
+import { getCurrentTutorial } from "../logic/Tutorial";
 import { getBuildNumber, getVersion } from "../logic/Version";
 import { openUrl } from "../utilities/Platform";
-import { RenderHTML } from "./RenderHTMLComponent";
+import { playClick } from "../visuals/Sound";
+import { showModal } from "./GlobalModal";
+import { highlightElement } from "./HighlightElement";
+import { html } from "./RenderHTMLComponent";
+import { TutorialModal } from "./TutorialModal";
 import { WarningComponent } from "./WarningComponent";
 
 export function TopLeftPanel(): React.ReactNode {
    return (
       <div id="top-left-panel">
          <PatchNotesLinkComponent />
-         <div className="warning-banner row g5" style={{ width: 250 }}>
-            <div className="m-icon small text-orange">school</div>
-            <div className="f1 text-strong">Build 10 Huts</div>
-            <div>1/10</div>
-         </div>
+         <TutorialComponent />
       </div>
    );
 }
@@ -24,7 +26,8 @@ function PatchNotesLinkComponent(): React.ReactNode {
    const options = useGameOptions();
    const patchNote = PatchNotes[0];
 
-   if (!patchNote.link) {
+   const link = patchNote.link;
+   if (!link) {
       return null;
    }
 
@@ -39,12 +42,10 @@ function PatchNotesLinkComponent(): React.ReactNode {
                onClick={() => {
                   options.buildNumber = getBuildNumber();
                   notifyGameOptionsUpdate();
-                  openUrl(patchNote.link!);
+                  openUrl(link);
                }}
             >
-               <RenderHTML
-                  html={t(L.ReadPatchNotesHTML, { version: getVersion(), build: getBuildNumber() })}
-               />
+               {html(t(L.ReadPatchNotesHTML, { version: getVersion(), build: getBuildNumber() }))}
                <div className="m-icon ml5 text-link">link</div>
             </div>
             <div
@@ -58,5 +59,49 @@ function PatchNotesLinkComponent(): React.ReactNode {
             </div>
          </div>
       </WarningComponent>
+   );
+}
+
+let clearHighlightPanel: (() => void) | undefined;
+
+function TutorialComponent(): React.ReactNode {
+   const gs = useGameState();
+   const options = useGameOptions();
+   if (!options.showTutorial) {
+      return null;
+   }
+   const tutorial = getCurrentTutorial(gs);
+   if (!tutorial) {
+      return null;
+   }
+   const [progress, total] = tutorial.progress(gs);
+   return (
+      <Tippy placement="right" content={html(tutorial.desc())}>
+         <div
+            onMouseOver={() => {
+               clearHighlightPanel?.();
+               if (tutorial.selector) {
+                  clearHighlightPanel = highlightElement(tutorial.selector);
+               }
+            }}
+            onMouseOut={() => {
+               clearHighlightPanel?.();
+               clearHighlightPanel = undefined;
+            }}
+            className="warning-banner pointer row g5"
+            style={{ width: 300, padding: 5 }}
+            onClick={() => {
+               playClick();
+               showModal(<TutorialModal />);
+            }}
+         >
+            <div className="m-icon small text-orange">school</div>
+            <div className="f1 text-strong">{tutorial?.name()}</div>
+            {tutorial.video && <div className="m-icon small text-orange">ondemand_video</div>}
+            <div>
+               {progress}/{total}
+            </div>
+         </div>
+      </Tippy>
    );
 }

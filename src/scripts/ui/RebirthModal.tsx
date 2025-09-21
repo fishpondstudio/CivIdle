@@ -450,6 +450,8 @@ export function RebirthModal(): React.ReactNode {
                         flags,
                      });
 
+                     getGameOptions().showTutorial = false;
+
                      playClick();
                      await resetToCity(nextCity);
 

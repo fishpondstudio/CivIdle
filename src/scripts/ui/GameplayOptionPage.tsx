@@ -26,7 +26,7 @@ import {
    sizeOf,
 } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
-import { useGameOptions, useGameState } from "../Global";
+import { useGameOptions } from "../Global";
 import { jsxMapOf } from "../utilities/Helper";
 import { openUrl } from "../utilities/Platform";
 import { playClick } from "../visuals/Sound";
@@ -41,7 +41,6 @@ import { WarningComponent } from "./WarningComponent";
 
 export function GameplayOptionPage(): React.ReactNode {
    const options = useGameOptions();
-   const gs = useGameState();
    return (
       <div className="window">
          <TitleBarComponent>{t(L.Gameplay)}</TitleBarComponent>
@@ -63,6 +62,19 @@ export function GameplayOptionPage(): React.ReactNode {
                      })}
                   </div>
                ) : null}
+            </fieldset>
+            <fieldset>
+               <legend>{t(L.Tutorial)}</legend>
+               <ToggleComponent
+                  title={t(L.ShowTutorial)}
+                  contentHTML=""
+                  value={options.showTutorial}
+                  onValueChange={(value) => {
+                     playClick();
+                     options.showTutorial = value;
+                     notifyGameOptionsUpdate(options);
+                  }}
+               />
             </fieldset>
             <fieldset>
                <legend>{t(L.GlobalBuildingDefault)}</legend>

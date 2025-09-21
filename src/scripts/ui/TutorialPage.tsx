@@ -24,9 +24,6 @@ export function TutorialPage(): React.ReactNode {
                </div>
             </div>
             {jsxMapOf(Advisors, (advisor, def) => {
-               if (advisor === "Welcome1" || advisor === "Welcome2" || advisor === "Welcome3") {
-                  return null;
-               }
                return (
                   <div key={advisor} className="inset-shallow white row p10 mb10">
                      <div className="f1" style={{ fontSize: 16 }}>

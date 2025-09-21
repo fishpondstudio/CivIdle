@@ -101,8 +101,11 @@ export class TechTreeScene extends Scene {
    private getTechDescription(def: ITechDefinition): string {
       const deposits = def.revealDeposit?.map((d) => Config.Resource[d].name()) ?? [];
       const buildings = def.unlockBuilding?.map((b) => Config.Building[b].name()) ?? [];
-      const desc = deposits.concat(buildings.concat()).join(", ") ?? null;
-      return desc;
+      const full = deposits.concat(buildings.concat());
+      if (def.column === Config.Tech.Future.column) {
+         return full.join("\n");
+      }
+      return full.join(", ");
    }
 
    public renderTechTree(cutTo: AnimateType, route: boolean): void {
@@ -121,14 +124,15 @@ export class TechTreeScene extends Scene {
       forEach(this._layout, (columnIdx, techs) => {
          techs.forEach((item, rowIdx) => {
             const x = 50 + 500 * columnIdx;
+            const height = item === "Future" ? 150 : BOX_HEIGHT;
             const y =
                layoutSpaceBetween(
-                  BOX_HEIGHT,
+                  height,
                   PAGE_HEIGHT - HEADER_TOTAL_HEIGHT - FOOTER_SPACE,
                   techs.length,
                   rowIdx,
                ) + HEADER_TOTAL_HEIGHT;
-            const rect = new Rectangle(x, y, BOX_WIDTH, BOX_HEIGHT);
+            const rect = new Rectangle(x, y, BOX_WIDTH, height);
             this._boxPositions[item] = rect;
             const def = Config.Tech[item];
             this.drawBox(
@@ -159,9 +163,9 @@ export class TechTreeScene extends Scene {
             this.drawConnection(
                g,
                this._boxPositions[from]!.x + BOX_WIDTH,
-               this._boxPositions[from]!.y + BOX_HEIGHT / 2,
+               this._boxPositions[from]!.y + this._boxPositions[from]!.height / 2,
                this._boxPositions[to]!.x,
-               this._boxPositions[to]!.y + BOX_HEIGHT / 2,
+               this._boxPositions[to]!.y + this._boxPositions[to]!.height / 2,
                this.context.gameState.unlockedTech[from] || this.context.gameState.unlockedTech[to]
                   ? unlockedColor
                   : lockedColor,
@@ -325,7 +329,15 @@ export class TechTreeScene extends Scene {
       bitmapText.anchor.x = 0.5;
       bitmapText.anchor.y = 0.5;
       bitmapText.x = rect.x + rect.width / 2;
-      bitmapText.y = rect.y + rect.height / (description ? 3 : 2);
+      if (description) {
+         if (description.includes("\n")) {
+            bitmapText.y = rect.y + rect.height / 4;
+         } else {
+            bitmapText.y = rect.y + rect.height / 3;
+         }
+      } else {
+         bitmapText.y = rect.y + rect.height / 2;
+      }
       bitmapText.cullable = true;
 
       if (description) {
@@ -344,6 +356,7 @@ export class TechTreeScene extends Scene {
             fontFamily: "serif",
             fontSize: size,
             fill: getColorCached(color).toHex(),
+            align: "center",
          });
 
          while (result.width > maxWidth) {
@@ -356,6 +369,7 @@ export class TechTreeScene extends Scene {
          fontName: Fonts.Platypi,
          fontSize: size,
          tint: color,
+         align: "center",
       });
 
       while (result.width > maxWidth) {

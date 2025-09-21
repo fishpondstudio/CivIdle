@@ -39,7 +39,7 @@ import {
 import type { RouteChangeEvent } from "./Route";
 import { tickEverySecond } from "./logic/ClientUpdate";
 import { clientHeartbeat } from "./logic/Heartbeat";
-import { getFullVersion } from "./logic/Version";
+import { getBuildNumber, getFullVersion } from "./logic/Version";
 import { getBuildingTexture, getTileTexture } from "./logic/VisualLogic";
 import type { MainBundleAssets } from "./main";
 import { connectWebSocket } from "./rpc/RPCClient";
@@ -96,6 +96,8 @@ export async function startGame(
       }
    } else {
       isNewPlayer = true;
+      // We don't want to show the patch notes link on the first run!
+      getGameOptions().buildNumber = getBuildNumber();
    }
    // ========== Game data is loaded ==========
    routeTo(LoadingPage, { stage: LoadingPageStage.CheckSave });

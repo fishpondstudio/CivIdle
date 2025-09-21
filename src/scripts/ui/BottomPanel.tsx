@@ -27,6 +27,7 @@ export function BottomPanel(): React.ReactNode {
             {t(L.CityViewMap)}
          </button>
          <button
+            id="tutorial-research-button"
             className={cls(Singleton().sceneManager.isCurrent(TechTreeScene) ? "active" : null, "nowrap")}
             onClick={() => {
                playClick();

@@ -1,6 +1,5 @@
 import type { GameState } from "../logic/GameState";
-import { getCurrentAge } from "../logic/TechLogic";
-import { NotProducingReason, Tick } from "../logic/TickLogic";
+import { Tick } from "../logic/TickLogic";
 import { deepFreeze } from "../utilities/Helper";
 import { L, t } from "../utilities/i18n";
 
@@ -11,44 +10,44 @@ export interface IAdvisor {
 }
 
 export const Advisors = deepFreeze({
-   Happiness: {
-      title: () => t(L.AdvisorHappinessTitle),
-      content: () => t(L.AdvisorHappinessContent),
-      condition: (gs) => (Tick.current.happiness?.value ?? Number.POSITIVE_INFINITY) <= 5,
-   },
-   Wonder: {
-      title: () => t(L.AdvisorWonderTitle),
-      content: () => t(L.AdvisorWonderContent),
-      condition: (gs) => !!gs.unlockedTech.Masonry,
-   },
-   Science: {
-      title: () => t(L.AdvisorScienceTitle),
-      content: () => t(L.AdvisorScienceContent),
-      condition: (gs) => {
-         const hq = Tick.current.specialBuildings.get("Headquarter");
-         return (hq?.building.resources.Science ?? 0) >= 25_000;
-      },
-   },
-   Worker: {
-      title: () => t(L.AdvisorWorkerTitle),
-      content: () => t(L.AdvisorWorkerContent),
-      condition: (gs) => {
-         for (const [k, v] of Tick.current.notProducingReasons) {
-            return v === NotProducingReason.NotEnoughWorkers;
-         }
-         return false;
-      },
-   },
-   Storage: {
-      title: () => t(L.AdvisorStorageTitle),
-      content: () => t(L.AdvisorStorageContent),
-      condition: (gs) => {
-         for (const [k, v] of Tick.current.notProducingReasons) {
-            return v === NotProducingReason.StorageFull;
-         }
-         return false;
-      },
-   },
+   // Happiness: {
+   //    title: () => t(L.AdvisorHappinessTitle),
+   //    content: () => t(L.AdvisorHappinessContent),
+   //    condition: (gs) => (Tick.current.happiness?.value ?? Number.POSITIVE_INFINITY) <= 5,
+   // },
+   // Wonder: {
+   //    title: () => t(L.AdvisorWonderTitle),
+   //    content: () => t(L.AdvisorWonderContent),
+   //    condition: (gs) => !!gs.unlockedTech.Masonry,
+   // },
+   // Science: {
+   //    title: () => t(L.AdvisorScienceTitle),
+   //    content: () => t(L.AdvisorScienceContent),
+   //    condition: (gs) => {
+   //       const hq = Tick.current.specialBuildings.get("Headquarter");
+   //       return (hq?.building.resources.Science ?? 0) >= 25_000;
+   //    },
+   // },
+   // Worker: {
+   //    title: () => t(L.AdvisorWorkerTitle),
+   //    content: () => t(L.AdvisorWorkerContent),
+   //    condition: (gs) => {
+   //       for (const [k, v] of Tick.current.notProducingReasons) {
+   //          return v === NotProducingReason.NotEnoughWorkers;
+   //       }
+   //       return false;
+   //    },
+   // },
+   // Storage: {
+   //    title: () => t(L.AdvisorStorageTitle),
+   //    content: () => t(L.AdvisorStorageContent),
+   //    condition: (gs) => {
+   //       for (const [k, v] of Tick.current.notProducingReasons) {
+   //          return v === NotProducingReason.StorageFull;
+   //       }
+   //       return false;
+   //    },
+   // },
    Tradition: {
       title: () => t(L.AdvisorTraditionTitle),
       content: () => t(L.AdvisorTraditionContent),
@@ -65,26 +64,26 @@ export const Advisors = deepFreeze({
       content: () => t(L.AdvisorElectricityContentV2),
       condition: (gs) => !!gs.unlockedTech.Electricity,
    },
-   GreatPeople: {
-      title: () => t(L.AdvisorGreatPeopleTitle),
-      content: () => t(L.AdvisorGreatPeopleContent),
-      condition: (gs) => getCurrentAge(gs) === "BronzeAge",
-   },
-   Welcome1: {
-      title: () => t(L.FirstTimeTutorialWelcome),
-      content: () => t(L.FirstTimeTutorialWelcome1HTML),
-      condition: (gs) => false,
-   },
-   Welcome2: {
-      title: () => t(L.FirstTimeTutorialWelcome),
-      content: () => t(L.FirstTimeTutorialWelcome2HTML),
-      condition: (gs) => false,
-   },
-   Welcome3: {
-      title: () => t(L.FirstTimeTutorialWelcome),
-      content: () => t(L.FirstTimeTutorialWelcome3HTML),
-      condition: (gs) => false,
-   },
+   // GreatPeople: {
+   //    title: () => t(L.AdvisorGreatPeopleTitle),
+   //    content: () => t(L.AdvisorGreatPeopleContent),
+   //    condition: (gs) => getCurrentAge(gs) === "BronzeAge",
+   // },
+   // Welcome1: {
+   //    title: () => t(L.FirstTimeTutorialWelcome),
+   //    content: () => t(L.FirstTimeTutorialWelcome1HTML),
+   //    condition: (gs) => false,
+   // },
+   // Welcome2: {
+   //    title: () => t(L.FirstTimeTutorialWelcome),
+   //    content: () => t(L.FirstTimeTutorialWelcome2HTML),
+   //    condition: (gs) => false,
+   // },
+   // Welcome3: {
+   //    title: () => t(L.FirstTimeTutorialWelcome),
+   //    content: () => t(L.FirstTimeTutorialWelcome3HTML),
+   //    condition: (gs) => false,
+   // },
 }) satisfies Record<string, IAdvisor>;
 
 export type Advisor = keyof typeof Advisors;

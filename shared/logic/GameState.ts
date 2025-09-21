@@ -250,6 +250,7 @@ export class GameOptions {
    useRightClickCopy = false;
    buildingStatusIconFollowBuildingColor = false;
    useScientificFormat = false;
+   showTutorial = true;
 }
 
 export enum RebirthFlags {

@@ -4,107 +4,71 @@ import { GameOptionsChanged } from "../../../shared/logic/GameStateLogic";
 import { TypedEvent } from "../../../shared/utilities/TypedEvent";
 import { L, t } from "../../../shared/utilities/i18n";
 import "../../css/Tutorial.css";
-import { ToggleChatWindow } from "../Global";
+import TitleImage from "../../images/TitleImage.png";
 import { OnUserChanged, client, useUser } from "../rpc/RPCClient";
 import { CountryCode, getCountryName } from "../utilities/CountryCode";
 import { jsxMapOf } from "../utilities/Helper";
 import { refreshOnTypedEvent, useTypedEvent } from "../utilities/Hook";
 import { playClick, playError } from "../visuals/Sound";
-import { AdvisorContentComponent } from "./AdvisorModal";
 import { ChangeModernUIComponent } from "./ChangeModernUIComponent";
 import { ChangeSoundComponent } from "./ChangeSoundComponent";
-import { hideModal, showToast } from "./GlobalModal";
+import { showModal, showToast } from "./GlobalModal";
 import { LanguageSelect } from "./LanguageSelectComponent";
+import { html } from "./RenderHTMLComponent";
 import { PlayerFlagComponent } from "./TextureSprites";
+import { TutorialModal } from "./TutorialModal";
+import { WarningComponent } from "./WarningComponent";
 
-enum SetupStep {
-   Step1 = 0,
-   Step2 = 1,
-   Step3 = 2,
-}
+const SubmitEvent = new TypedEvent<void>();
 
 export function FirstTimePlayerModal(): React.ReactNode {
    refreshOnTypedEvent(GameOptionsChanged);
-   const [step, setStep] = useState(SetupStep.Step1);
-   let content: React.ReactNode = null;
-   switch (step) {
-      case SetupStep.Step1: {
-         content = (
-            <AdvisorContentComponent
-               advisor="Welcome1"
-               action={
-                  <div className="row">
-                     <div className="f1"></div>
-                     <button
-                        className="text-strong"
-                        onClick={() => {
-                           setStep(step + 1);
-                           playClick();
-                        }}
-                     >
-                        {t(L.FirstTimeGuideNext)}
-                     </button>
-                  </div>
-               }
-               content={
-                  <div className="row mt10">
-                     <div className="m-icon mr10">translate</div>
-                     <LanguageSelect className="f1" setChat />
-                  </div>
-               }
-            />
-         );
-         break;
-      }
-      case SetupStep.Step2: {
-         content = (
-            <AdvisorContentComponent
-               advisor="Welcome2"
-               action={
-                  <div className="row">
-                     <div className="f1"></div>
-                     <button
-                        className="text-strong"
-                        onClick={() => {
-                           setStep(step + 1);
-                           playClick();
-                        }}
-                     >
-                        {t(L.FirstTimeGuideNext)}
-                     </button>
-                  </div>
-               }
-            />
-         );
-         break;
-      }
-      case SetupStep.Step3: {
-         ToggleChatWindow.emit(true);
-         const submitEvent = new TypedEvent<void>();
-         content = (
-            <AdvisorContentComponent
-               advisor="Welcome3"
-               content={<FirstTimePlayerSettings submitEvent={submitEvent} />}
-               action={
-                  <div className="row">
-                     <div className="f1"></div>
-                     <button onClick={() => submitEvent.emit()} style={{ width: 80 }}>
-                        {t(L.Ok)}
-                     </button>
-                  </div>
-               }
-            />
-         );
-         break;
-      }
-   }
-
    return (
-      <div className="window" style={{ width: 800, maxWidth: "80vw" }}>
+      <div className="window" style={{ width: "600px", maxWidth: "50vw" }}>
          <div className="title-bar">
             <div className="title-bar-text">{t(L.FirstTimeTutorialWelcome)}</div>
          </div>
-         {content}
+         <div className="window-body">
+            <img src={TitleImage} className="w100" />
+            <div className="row mt10">
+               <div className="m-icon mr10">translate</div>
+               <LanguageSelect className="f1" setChat />
+            </div>
+            <div className="sep10" />
+            <div className="row">
+               <div className="f1" />
+               <button onClick={() => showModal(<FirstTimePlayerSettingsModal />)}>
+                  {t(L.FirstTimeGuideNext)}
+               </button>
+            </div>
+         </div>
+      </div>
+   );
+}
+export function FirstTimePlayerSettingsModal(): React.ReactNode {
+   refreshOnTypedEvent(GameOptionsChanged);
+   return (
+      <div className="window" style={{ width: "600px", maxWidth: "50vw" }}>
+         <div className="title-bar">
+            <div className="title-bar-text">{t(L.FirstTimeTutorialWelcome)}</div>
+         </div>
+         <div className="window-body">
+            <WarningComponent icon="info">{html(t(L.FirstTimeGuideIntroHTML))}</WarningComponent>
+            <div className="sep5" />
+            <FirstTimePlayerSettings submitEvent={SubmitEvent} />
+            <div className="sep10" />
+            <div className="row">
+               <div className="f1" />
+               <button
+                  onClick={() => {
+                     SubmitEvent.emit();
+                     showModal(<TutorialModal />);
+                  }}
+               >
+                  {t(L.FirstTimeGuideNext)}
+               </button>
+            </div>
+         </div>
       </div>
    );
 }
@@ -129,13 +93,12 @@ function FirstTimePlayerSettings({ submitEvent }: { submitEvent: TypedEvent<void
       } catch (error) {
          playError();
          showToast(String(error));
-      } finally {
-         hideModal();
       }
    });
    return (
-      <div className="mt10">
+      <div>
          <div className="text-strong">{t(L.TutorialPlayerHandle)}</div>
+         <div className="sep5" />
          <div className="row">
             <div className="f1">
                <input

@@ -6,3 +6,8 @@ export function RenderHTML({
    /* biome-ignore lint/security/noDangerouslySetInnerHtml: */
    return <div className={className} style={style} dangerouslySetInnerHTML={{ __html: html }}></div>;
 }
+
+export function html(html: string, className?: string, style?: React.CSSProperties): React.ReactNode {
+   /* biome-ignore lint/security/noDangerouslySetInnerHtml: */
+   return <div className={className} style={style} dangerouslySetInnerHTML={{ __html: html }}></div>;
+}

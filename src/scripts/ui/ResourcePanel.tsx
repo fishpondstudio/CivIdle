@@ -218,6 +218,7 @@ export function ResourcePanel(): React.ReactNode {
          <div className="separator-vertical" />
          {tick.happiness ? (
             <div
+               id="tutorial-happiness"
                className="section pointer"
                onClick={() => {
                   const xy = Tick.current.specialBuildings.get("Headquarter")?.tile;
