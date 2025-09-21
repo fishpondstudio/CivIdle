@@ -308,6 +308,11 @@ fieldset .separator {
    font-size: 1.2rem;
 }
 
+.m-icon.inline {
+   display: inline-block;
+   vertical-align: middle;
+}
+
 .mr2 {
    margin-right: 2px;
 }

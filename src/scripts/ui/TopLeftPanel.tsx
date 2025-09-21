@@ -17,6 +17,7 @@ export function TopLeftPanel(): React.ReactNode {
    return (
       <div id="top-left-panel">
          <PatchNotesLinkComponent />
+         <TodoComponent />
          <TutorialComponent />
       </div>
    );
@@ -103,5 +104,17 @@ function TutorialComponent(): React.ReactNode {
             </div>
          </div>
       </Tippy>
+   );
+}
+
+function TodoComponent(): React.ReactNode {
+   return (
+      <div className="row g5">
+         <div className="todo">
+            <div className="m-icon">tips_and_updates</div>
+         </div>
+         <div className="todo"></div>
+         <div className="todo"></div>
+      </div>
    );
 }

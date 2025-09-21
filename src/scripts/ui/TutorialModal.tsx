@@ -1,13 +1,13 @@
 import Tippy from "@tippyjs/react";
 import { useEffect, useRef } from "react";
 import { getGameOptions, notifyGameOptionsUpdate } from "../../../shared/logic/GameStateLogic";
+import { L, t } from "../../../shared/utilities/i18n";
 import Clippy from "../../images/Clippy.svg";
 import { useGameState } from "../Global";
 import { Tutorial, getCurrentTutorial } from "../logic/Tutorial";
 import { hideModal } from "./GlobalModal";
 import { highlightElement } from "./HighlightElement";
 import { html } from "./RenderHTMLComponent";
-import { t, L } from "../../../shared/utilities/i18n";
 
 export let clearHighlightModal: (() => void) | undefined;
 
@@ -46,15 +46,18 @@ export function TutorialModal(): React.ReactNode {
             </div>
          </div>
          <div ref={tutorialRef} className="window-body" style={{ overflowY: "auto", maxHeight: "75vh" }}>
-            <div
-               className="mb5 text-desc pointer"
-               onClick={() => {
-                  getGameOptions().showTutorial = false;
-                  notifyGameOptionsUpdate();
-                  hideModal();
-               }}
-            >
-               {t(L.SkipTutorial)}
+            <div className="row mb5 text-desc">
+               <div className="m-icon small mr5">next_plan</div>
+               <div
+                  className="pointer"
+                  onClick={() => {
+                     getGameOptions().showTutorial = false;
+                     notifyGameOptionsUpdate();
+                     hideModal();
+                  }}
+               >
+                  {t(L.SkipTutorial)}
+               </div>
             </div>
             {Tutorial.map((t) => {
                const [progress, total] = t.progress(gs);
