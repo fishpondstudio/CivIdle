@@ -1,3 +1,4 @@
+import { GreatPersonType } from "../../../shared/definitions/GreatPersonDefinitions";
 import { Config } from "../../../shared/logic/Config";
 import type { GameOptions, GameState } from "../../../shared/logic/GameState";
 import {
@@ -83,6 +84,7 @@ export const _Todos = {
       desc: (gs, options) => {
          const gps = entriesOf(options.greatPeople)
             .flatMap(([gp, inv]) =>
+               Config.GreatPerson[gp].type === GreatPersonType.Normal &&
                inv.amount >= getGreatPersonUpgradeCost(gp, inv.level + 1)
                   ? [Config.GreatPerson[gp].name()]
                   : [],
@@ -92,7 +94,9 @@ export const _Todos = {
       },
       condition: (gs, options) =>
          entriesOf(options.greatPeople).some(
-            ([gp, inv]) => inv.amount >= getGreatPersonUpgradeCost(gp, inv.level + 1),
+            ([gp, inv]) =>
+               Config.GreatPerson[gp].type === GreatPersonType.Normal &&
+               inv.amount >= getGreatPersonUpgradeCost(gp, inv.level + 1),
          ),
       onClick: (gs, options) => {
          showModal(<ManagePermanentGreatPersonModal />);
