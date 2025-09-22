@@ -225,8 +225,6 @@ export class GameOptions {
    chatChannels: Set<ChatChannel> = new Set(["en"]);
    enableTransportSourceCache = false;
    resourceBarShowUncappedHappiness = false;
-   resourceBarExcludeTurnedOffOrNoActiveTransport = false;
-   resourceBarExcludeStorageFull = false;
    extraTileInfoType: ExtraTileInfoType = "StoragePercentage";
    buildingDefaults: Partial<Record<Building, Partial<IBuildingData>>> = {};
    defaultProductionPriority = PRIORITY_MIN;

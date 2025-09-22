@@ -18,19 +18,17 @@ import {
    getRebirthGreatPeopleCount,
 } from "../../../shared/logic/RebirthLogic";
 import { getResourceAmount } from "../../../shared/logic/ResourceLogic";
-import { NotProducingReason, Tick } from "../../../shared/logic/TickLogic";
+import { Tick } from "../../../shared/logic/TickLogic";
 import {
    Rounding,
    clamp,
    formatHMS,
    formatNumber,
    formatPercent,
-   mapCount,
    mathSign,
    range,
    round,
    tileToPoint,
-   type Tile,
 } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import { FloatingModeChanged, useFloatingMode, useGameOptions, useGameState } from "../Global";
@@ -55,23 +53,6 @@ export function ResourcePanel(): React.ReactNode {
    const isFloating = useFloatingMode();
    const ref = useRef<HTMLDivElement>(null);
    const { workersAfterHappiness, workersBusy } = getScienceFromWorkers(gs);
-   const highlightNotProducingReasons = () => {
-      const buildingTiles: Tile[] = Array.from(tick.notProducingReasons.entries())
-         .filter(([_, reason]) => {
-            if (options.resourceBarExcludeStorageFull && reason === NotProducingReason.StorageFull) {
-               return false;
-            }
-            if (
-               options.resourceBarExcludeTurnedOffOrNoActiveTransport &&
-               (reason === NotProducingReason.TurnedOff || reason === NotProducingReason.NoActiveTransports)
-            ) {
-               return false;
-            }
-            return true;
-         })
-         .map(([xy]) => xy);
-      Singleton().sceneManager.getCurrent(WorldScene)?.drawSelection(null, buildingTiles);
-   };
 
    let evDelta = 0;
    let scienceDelta = 0;
@@ -333,28 +314,6 @@ export function ResourcePanel(): React.ReactNode {
                      {mathSign(scienceDelta)}
                      <FormatNumber value={Math.abs(scienceDelta)} />
                   </span>
-               </div>
-            </Tippy>
-         </div>
-         <div className="separator-vertical" />
-         <div className="section pointer" onClick={() => highlightNotProducingReasons()}>
-            <div className={classNames({ "m-icon": true })}>domain_disabled</div>
-            <Tippy content={t(L.NotProducingBuildings)} placement="bottom">
-               <div style={{ width: "5rem" }}>
-                  <FormatNumber
-                     value={mapCount(tick.notProducingReasons, (v) => {
-                        if (options.resourceBarExcludeStorageFull && v === NotProducingReason.StorageFull) {
-                           return false;
-                        }
-                        if (
-                           options.resourceBarExcludeTurnedOffOrNoActiveTransport &&
-                           (v === NotProducingReason.TurnedOff || v === NotProducingReason.NoActiveTransports)
-                        ) {
-                           return false;
-                        }
-                        return true;
-                     })}
-                  />
                </div>
             </Tippy>
          </div>

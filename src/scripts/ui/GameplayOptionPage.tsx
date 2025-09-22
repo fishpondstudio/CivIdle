@@ -275,43 +275,6 @@ export function GameplayOptionPage(): React.ReactNode {
                      )}
                   </div>
                </div>
-               <div className="separator" />
-               <div className="row">
-                  <RenderHTML className="f1" html={t(L.ResourceBarExcludeTurnedOffOrNoActiveTransportHTML)} />
-                  <div
-                     onClick={() => {
-                        playClick();
-                        options.resourceBarExcludeTurnedOffOrNoActiveTransport =
-                           !options.resourceBarExcludeTurnedOffOrNoActiveTransport;
-                        notifyGameOptionsUpdate(options);
-                     }}
-                     className="ml10 pointer"
-                  >
-                     {options.resourceBarExcludeTurnedOffOrNoActiveTransport ? (
-                        <div className="m-icon text-green">toggle_on</div>
-                     ) : (
-                        <div className="m-icon text-grey">toggle_off</div>
-                     )}
-                  </div>
-               </div>
-               <div className="separator" />
-               <div className="row">
-                  <RenderHTML className="f1" html={t(L.ResourceBarExcludeStorageFullHTML)} />
-                  <div
-                     onClick={() => {
-                        playClick();
-                        options.resourceBarExcludeStorageFull = !options.resourceBarExcludeStorageFull;
-                        notifyGameOptionsUpdate(options);
-                     }}
-                     className="ml10 pointer"
-                  >
-                     {options.resourceBarExcludeStorageFull ? (
-                        <div className="m-icon text-green">toggle_on</div>
-                     ) : (
-                        <div className="m-icon text-grey">toggle_off</div>
-                     )}
-                  </div>
-               </div>
             </fieldset>
             <fieldset>
                <legend>{t(L.ExtraTileInfoType)}</legend>

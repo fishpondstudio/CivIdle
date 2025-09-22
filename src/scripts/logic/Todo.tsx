@@ -7,7 +7,7 @@ import {
 } from "../../../shared/logic/RebirthLogic";
 import { getScienceAmount, getTechUnlockCost, unlockableTechs } from "../../../shared/logic/TechLogic";
 import { NotProducingReason, Tick } from "../../../shared/logic/TickLogic";
-import { entriesOf } from "../../../shared/utilities/Helper";
+import { entriesOf, mapCount } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import { TechTreeScene } from "../scenes/TechTreeScene";
 import { LookAtMode, WorldScene } from "../scenes/WorldScene";
@@ -28,7 +28,7 @@ export interface ITodo {
 }
 
 export const _Todos = {
-   T1: {
+   E1: {
       name: () => t(L.HappinessTooLow),
       icon: "sentiment_dissatisfied",
       className: "text-red",
@@ -42,11 +42,17 @@ export const _Todos = {
          }
       },
    },
-   T2: {
+   E2: {
       name: () => t(L.MoreWorkersNeeded),
       icon: "engineering",
       className: "text-red",
-      desc: (gs, options) => t(L.MoreWorkersNeededHTML),
+      desc: (gs, options) =>
+         t(L.MoreWorkersNeededHTML, {
+            count: mapCount(
+               Tick.current.notProducingReasons,
+               (v) => v === NotProducingReason.NotEnoughWorkers,
+            ),
+         }),
       condition: (gs) => {
          for (const [xy, reason] of Tick.current.notProducingReasons) {
             if (reason === NotProducingReason.NotEnoughWorkers) {
@@ -55,9 +61,129 @@ export const _Todos = {
          }
          return false;
       },
-      onClick: (gs, options) => {},
+      onClick: (gs, options) => {
+         Singleton()
+            .sceneManager.getCurrent(WorldScene)
+            ?.drawSelection(
+               null,
+               Array.from(Tick.current.notProducingReasons.entries()).flatMap(([xy, reason]) =>
+                  reason === NotProducingReason.NotEnoughWorkers ? [xy] : [],
+               ),
+            );
+      },
    },
-   T3: {
+   E3: {
+      name: () => t(L.MoreResourceNeeded),
+      icon: "production_quantity_limits",
+      className: "text-red",
+      desc: (gs, options) =>
+         t(L.MoreResourceNeededHTML, {
+            count: mapCount(
+               Tick.current.notProducingReasons,
+               (v) => v === NotProducingReason.NotEnoughResources,
+            ),
+         }),
+      condition: (gs) => {
+         for (const [xy, reason] of Tick.current.notProducingReasons) {
+            if (reason === NotProducingReason.NotEnoughResources) {
+               return true;
+            }
+         }
+         return false;
+      },
+      onClick: (gs, options) => {
+         Singleton()
+            .sceneManager.getCurrent(WorldScene)
+            ?.drawSelection(
+               null,
+               Array.from(Tick.current.notProducingReasons.entries()).flatMap(([xy, reason]) =>
+                  reason === NotProducingReason.NotEnoughResources ? [xy] : [],
+               ),
+            );
+      },
+   },
+   E4: {
+      name: () => t(L.TileNotPowered),
+      icon: "electrical_services",
+      className: "text-red",
+      desc: (gs, options) =>
+         t(L.TileNotPoweredHTML, {
+            count: mapCount(Tick.current.notProducingReasons, (v) => v === NotProducingReason.NoPower),
+         }),
+      condition: (gs) => {
+         for (const [xy, reason] of Tick.current.notProducingReasons) {
+            if (reason === NotProducingReason.NoPower) {
+               return true;
+            }
+         }
+         return false;
+      },
+      onClick: (gs, options) => {
+         Singleton()
+            .sceneManager.getCurrent(WorldScene)
+            ?.drawSelection(
+               null,
+               Array.from(Tick.current.notProducingReasons.entries()).flatMap(([xy, reason]) =>
+                  reason === NotProducingReason.NoPower ? [xy] : [],
+               ),
+            );
+      },
+   },
+   W1: {
+      name: () => t(L.BuildingsStorageFull),
+      icon: "storage",
+      className: "text-orange",
+      desc: (gs, options) =>
+         t(L.BuildingsStorageFullHTML, {
+            count: mapCount(Tick.current.notProducingReasons, (v) => v === NotProducingReason.StorageFull),
+         }),
+      condition: (gs) => {
+         for (const [xy, reason] of Tick.current.notProducingReasons) {
+            if (reason === NotProducingReason.StorageFull) {
+               return true;
+            }
+         }
+         return false;
+      },
+      onClick: (gs, options) => {
+         Singleton()
+            .sceneManager.getCurrent(WorldScene)
+            ?.drawSelection(
+               null,
+               Array.from(Tick.current.notProducingReasons.entries()).flatMap(([xy, reason]) =>
+                  reason === NotProducingReason.StorageFull ? [xy] : [],
+               ),
+            );
+      },
+   },
+   W2: {
+      name: () => t(L.BuildingsTurnedOff),
+      icon: "motion_photos_off",
+      className: "text-orange",
+      desc: (gs, options) =>
+         t(L.BuildingsTurnedOffHTML, {
+            count: mapCount(Tick.current.notProducingReasons, (v) => v === NotProducingReason.TurnedOff),
+         }),
+      condition: (gs) => {
+         for (const [xy, reason] of Tick.current.notProducingReasons) {
+            if (reason === NotProducingReason.TurnedOff) {
+               return true;
+            }
+         }
+         return false;
+      },
+      onClick: (gs, options) => {
+         Singleton()
+            .sceneManager.getCurrent(WorldScene)
+            ?.drawSelection(
+               null,
+               Array.from(Tick.current.notProducingReasons.entries()).flatMap(([xy, reason]) =>
+                  reason === NotProducingReason.TurnedOff ? [xy] : [],
+               ),
+            );
+      },
+   },
+   I1: {
       name: () => t(L.UnlockableTech),
       icon: "tips_and_updates",
       className: "text-green",
@@ -77,7 +203,7 @@ export const _Todos = {
          Singleton().sceneManager.loadScene(TechTreeScene);
       },
    },
-   T4: {
+   I2: {
       name: () => t(L.UpgradeablePermanentGreatPeople),
       icon: "person_celebrate",
       className: "text-green",
@@ -102,7 +228,7 @@ export const _Todos = {
          showModal(<ManagePermanentGreatPersonModal />);
       },
    },
-   T5: {
+   I3: {
       name: () => t(L.UnclaimedGreatPeopleThisRun),
       icon: "person_4",
       className: "text-green",
@@ -116,7 +242,7 @@ export const _Todos = {
          }
       },
    },
-   T6: {
+   I4: {
       name: () => t(L.UnclaimedPermanentGreatPeople),
       icon: "supervisor_account",
       className: "text-green",
@@ -130,7 +256,7 @@ export const _Todos = {
          }
       },
    },
-   T7: {
+   I5: {
       name: () => t(L.UpgradeableAgeWisdom),
       icon: "emoji_objects",
       className: "text-green",
