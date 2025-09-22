@@ -1684,7 +1684,7 @@ export class BuildingDefinitions {
 
    LargeHadronCollider: IBuildingDefinition = {
       name: () => t(L.LargeHadronCollider),
-      desc: () => t(L.LargeHadronColliderDescV2),
+      desc: () => t(L.LargeHadronColliderDescV3),
       input: {},
       output: {},
       construction: { Supercomputer: 100, CivTok: 100, HedgeFund: 100 },

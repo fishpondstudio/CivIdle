@@ -907,6 +907,11 @@ export function transportResource(
          }
       }
 
+      const mah = Tick.current.specialBuildings.get("MausoleumAtHalicarnassus");
+      if (mah && (grid.distanceTile(from, mah.tile) <= 2 || grid.distanceTile(targetXy, mah.tile) <= 2)) {
+         transportCapacity = Number.POSITIVE_INFINITY;
+      }
+
       if (toBuildingType && Config.Building[toBuildingType].output.Worker) {
          transportCapacity = Number.POSITIVE_INFINITY;
       }
