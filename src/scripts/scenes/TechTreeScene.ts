@@ -236,10 +236,10 @@ export class TechTreeScene extends Scene {
                ) {
                   this.drawConnection(
                      this._selectedGraphics!,
-                     this._boxPositions[from]!.x + BOX_WIDTH,
-                     this._boxPositions[from]!.y + BOX_HEIGHT / 2,
+                     this._boxPositions[from]!.x + this._boxPositions[from]!.width,
+                     this._boxPositions[from]!.y + this._boxPositions[from]!.height / 2,
                      this._boxPositions[to]!.x,
-                     this._boxPositions[to]!.y + BOX_HEIGHT / 2,
+                     this._boxPositions[to]!.y + this._boxPositions[to]!.height / 2,
                      highlightColor,
                   );
                   drawnConnections.add(key);
