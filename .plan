@@ -1,8 +1,9 @@
 TODO:
-- Add a modal when discovering Natural Wonders
 
 Patch Notes:
-- Added todos that helps with empire management
+- Add "todos" that helps with empire management
+- Add a popover when a Natural Wonder is discovered
+- Add a popover when a Wonder is constructed
 - A completely new tutorial for first time players!
 - Housing now unlocks Production Priority (previously unlocked by Herding)
 - Herding now unlocks Transport Preference (previously unlocked by Housing)
