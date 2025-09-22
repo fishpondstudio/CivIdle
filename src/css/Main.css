@@ -166,6 +166,7 @@ body .tippy-box {
    background-image: url("../images/Notepad.png");
    width: 40px;
    height: 40px;
+   padding: 5px 4px 3px 0;
    display: flex;
    align-items: center;
    justify-content: center;
