@@ -78,8 +78,12 @@ export function GameplayOptionPage(): React.ReactNode {
                />
                <div className="separator" />
                {jsxMapOf(Todo, (id, t) => {
+                  if (id.startsWith("S")) {
+                     return null;
+                  }
                   return (
                      <ToggleComponent
+                        key={id}
                         title={t.name()}
                         contentHTML=""
                         value={!options.disabledTodos.has(id)}

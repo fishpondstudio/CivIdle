@@ -1,6 +1,9 @@
 import { GreatPersonType } from "../../../shared/definitions/GreatPersonDefinitions";
+import { PatchNotes } from "../../../shared/definitions/PatchNotes";
 import { Config } from "../../../shared/logic/Config";
+import { STEAM_PATCH_NOTES_URL } from "../../../shared/logic/Constants";
 import type { GameOptions, GameState } from "../../../shared/logic/GameState";
+import { notifyGameOptionsUpdate } from "../../../shared/logic/GameStateLogic";
 import { getVotingTime } from "../../../shared/logic/PlayerTradeLogic";
 import {
    getGreatPersonUpgradeCost,
@@ -18,7 +21,9 @@ import { showModal } from "../ui/GlobalModal";
 import { ManageAgeWisdomModal } from "../ui/ManageAgeWisdomModal";
 import { ManagePermanentGreatPersonModal } from "../ui/ManagePermanentGreatPersonModal";
 import { TilePage } from "../ui/TilePage";
+import { openUrl } from "../utilities/Platform";
 import { Singleton } from "../utilities/Singleton";
+import { getBuildNumber, getVersion } from "./Version";
 
 export interface ITodo {
    name: () => string;
@@ -295,6 +300,26 @@ export const _Todos = {
          if (gs.greatPeopleChoicesV2.length > 0) {
             showModal(<ManageAgeWisdomModal />);
          }
+      },
+   },
+   S1: {
+      name: () => t(L.ReadFullPatchNotes),
+      icon: "browser_updated",
+      className: "text-blue",
+      desc: (gs, options) => {
+         return t(L.ReadPatchNotesHTMLV2, { version: getVersion(), build: getBuildNumber() });
+      },
+      condition: (gs, options) => options.buildNumber !== getBuildNumber(),
+      onClick: (gs, options) => {
+         options.buildNumber = getBuildNumber();
+         notifyGameOptionsUpdate();
+         const patchNote = PatchNotes[0];
+         const link = patchNote.link;
+         if (link) {
+            openUrl(link);
+            return;
+         }
+         openUrl(STEAM_PATCH_NOTES_URL);
       },
    },
 } as const satisfies Record<string, ITodo>;

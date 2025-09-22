@@ -1142,7 +1142,6 @@ export const EN = {
    RandomColorScheme: "Random Color Scheme",
    RapidFire: "Rapid Fire",
    ReadFullPatchNotes: "Read Patch Notes",
-   ReadPatchNotesHTML: "You've updated to <b>%{version}</b> (<b>%{build}</b>), read patch notes on <b>Steam</b>",
    Rebar: "Rebar",
    RebarPlant: "Rebar Plant",
    RebirthHistory: "Rebirth History",
@@ -1715,4 +1714,7 @@ export const EN = {
    BuildingsStorageFullHTML: "%{count} buildings are not producing because they have full storage, click to highlight them",
    TradeTileBonusWillRefresh: "Trade Tile Bonus Will Refresh",
    TradeTileBonusWillRefreshHTML: "Trade tile bonus and United Nations will refresh in <b>%{time}</b>",
+   NewPatchUpdated: "New Patch Updated",
+   NewPatchUpdatedHTML: "A new patch has been released, click to read the patch notes",
+   ReadPatchNotesHTMLV2: "You've updated to <b>%{version}</b> (<b>%{build}</b>), click to read patch notes and dismiss this message",
 };
