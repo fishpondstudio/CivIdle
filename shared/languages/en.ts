@@ -1713,4 +1713,6 @@ export const EN = {
    BuildingsTurnedOffHTML: "%{count} buildings are not producing because they are turned off, click to highlight them",
    BuildingsStorageFull: "Buildings Storage Full",
    BuildingsStorageFullHTML: "%{count} buildings are not producing because they have full storage, click to highlight them",
+   TradeTileBonusWillRefresh: "Trade Tile Bonus Will Refresh",
+   TradeTileBonusWillRefreshHTML: "Trade tile bonus and United Nations will refresh in <b>%{time}</b>",
 };

@@ -1,14 +1,16 @@
 import { GreatPersonType } from "../../../shared/definitions/GreatPersonDefinitions";
 import { Config } from "../../../shared/logic/Config";
 import type { GameOptions, GameState } from "../../../shared/logic/GameState";
+import { getVotingTime } from "../../../shared/logic/PlayerTradeLogic";
 import {
    getGreatPersonUpgradeCost,
    getMissingGreatPeopleForWisdom,
 } from "../../../shared/logic/RebirthLogic";
 import { getScienceAmount, getTechUnlockCost, unlockableTechs } from "../../../shared/logic/TechLogic";
 import { NotProducingReason, Tick } from "../../../shared/logic/TickLogic";
-import { entriesOf, mapCount } from "../../../shared/utilities/Helper";
+import { HOUR, entriesOf, formatHMS, mapCount } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
+import { PlayerMapScene } from "../scenes/PlayerMapScene";
 import { TechTreeScene } from "../scenes/TechTreeScene";
 import { LookAtMode, WorldScene } from "../scenes/WorldScene";
 import { ChooseGreatPersonModal } from "../ui/ChooseGreatPersonModal";
@@ -181,6 +183,21 @@ export const _Todos = {
                   reason === NotProducingReason.TurnedOff ? [xy] : [],
                ),
             );
+      },
+   },
+   W3: {
+      name: () => t(L.TradeTileBonusWillRefresh),
+      icon: "access_time",
+      className: "text-orange",
+      desc: (gs, options) =>
+         t(L.TradeTileBonusWillRefreshHTML, {
+            time: formatHMS(getVotingTime()),
+         }),
+      condition: (gs) => {
+         return getVotingTime() <= 8 * HOUR;
+      },
+      onClick: (gs, options) => {
+         Singleton().sceneManager.loadScene(PlayerMapScene);
       },
    },
    I1: {
