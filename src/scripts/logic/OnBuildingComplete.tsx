@@ -44,10 +44,11 @@ import {
    type Tile,
 } from "../../../shared/utilities/Helper";
 import { WorldScene } from "../scenes/WorldScene";
+import { BuildingCompleteModal } from "../ui/BuildingCompleteModal";
 import { ChooseGreatPersonModal } from "../ui/ChooseGreatPersonModal";
 import { showModal } from "../ui/GlobalModal";
 import { Singleton } from "../utilities/Singleton";
-import { playAgeUp } from "../visuals/Sound";
+import { playAgeUp, playChime } from "../visuals/Sound";
 
 export function onBuildingComplete(xy: Tile): void {
    const gs = getGameState();
@@ -58,6 +59,12 @@ export function onBuildingComplete(xy: Tile): void {
    if (!building) {
       return;
    }
+
+   if (isWorldWonder(building.type) && getGameOptions().showWonderPopup) {
+      playChime();
+      showModal(<BuildingCompleteModal building={building.type} />);
+   }
+
    const grid = getGrid(gs);
    switch (building.type) {
       case "HatshepsutTemple": {

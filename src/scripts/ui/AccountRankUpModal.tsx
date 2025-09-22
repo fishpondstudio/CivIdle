@@ -18,7 +18,7 @@ export function AccountRankUpModal({ rank, user }: { rank: AccountLevel; user: I
                <button onClick={hideModal} aria-label="Close"></button>
             </div>
          </div>
-         <img src={RomanMagistrate} className="w100" />
+         <img src={RomanMagistrate} className="w100" style={{ display: "block" }} />
          <div className="window-body">
             <div className="sep10"></div>
             <div className="row" style={{ fontFamily: Fonts.OldTypefaces, fontSize: 32 }}>

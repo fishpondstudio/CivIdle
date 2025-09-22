@@ -30,6 +30,7 @@ import {
 } from "../../shared/logic/RebirthLogic";
 import { Tick } from "../../shared/logic/TickLogic";
 import { Transports } from "../../shared/logic/Transports";
+import { AccountLevel } from "../../shared/utilities/Database";
 import {
    base64ToBytes,
    bytesToBase64,
@@ -45,9 +46,12 @@ import { UnicodeText } from "../../shared/utilities/UnicodeText";
 import { migrateSavedGame } from "./MigrateSavedGame";
 import { tickEverySecond } from "./logic/ClientUpdate";
 import { clientHeartbeat } from "./logic/Heartbeat";
-import { CLIENT_ID } from "./rpc/RPCClient";
+import { CLIENT_ID, getUser } from "./rpc/RPCClient";
 import { SteamClient, isSteam } from "./rpc/SteamClient";
 import { WorldScene } from "./scenes/WorldScene";
+import { AccountRankUpModal } from "./ui/AccountRankUpModal";
+import { BuildingCompleteModal } from "./ui/BuildingCompleteModal";
+import { showModal } from "./ui/GlobalModal";
 import { idbDel, idbGet, idbSet } from "./utilities/BrowserStorage";
 import { makeObservableHook } from "./utilities/Hook";
 import { isAndroid, isIOS } from "./utilities/Platforms";
@@ -312,6 +316,16 @@ if (import.meta.env.DEV) {
             building.resources[res] = amount;
          });
       }
+   };
+
+   // @ts-expect-error
+   window.showComplete = (building: Building) => {
+      showModal(<BuildingCompleteModal building={building} />);
+   };
+
+   // @ts-expect-error
+   window.rankUp = () => {
+      showModal(<AccountRankUpModal rank={AccountLevel.Consul} user={getUser()!} />);
    };
 
    // @ts-expect-error

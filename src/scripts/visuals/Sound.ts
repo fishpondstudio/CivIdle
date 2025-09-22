@@ -3,6 +3,7 @@ import { getGameOptions } from "../../../shared/logic/GameStateLogic";
 import ageup from "../../sounds/ageup.mp3";
 import beep from "../../sounds/beep.mp3";
 import bubble from "../../sounds/bubble.mp3";
+import chime from "../../sounds/chime.mp3";
 import click from "../../sounds/click.mp3";
 import ding from "../../sounds/ding.mp3";
 import error from "../../sounds/error.mp3";
@@ -25,6 +26,7 @@ sound.add("ageup", ageup).singleInstance = true;
 sound.add("ding", ding).singleInstance = true;
 sound.add("success", success).singleInstance = true;
 sound.add("upgrade", upgrade).singleInstance = true;
+sound.add("chime", chime).singleInstance = true;
 
 export function playClick() {
    if (!getGameOptions().soundEffect) {
@@ -94,4 +96,11 @@ export function playSuccess() {
       return;
    }
    sound.play("success");
+}
+
+export function playChime() {
+   if (!getGameOptions().soundEffect) {
+      return;
+   }
+   sound.play("chime");
 }

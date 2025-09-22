@@ -250,6 +250,8 @@ export class GameOptions {
    useScientificFormat = false;
    showTutorial = true;
    disabledTodos = new Set<string>();
+   showWonderPopup = true;
+   showNaturalWonderPopup = true;
 }
 
 export enum RebirthFlags {

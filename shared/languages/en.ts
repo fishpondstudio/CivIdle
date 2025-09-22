@@ -1717,4 +1717,9 @@ export const EN = {
    NewPatchUpdated: "New Patch Updated",
    NewPatchUpdatedHTML: "A new patch has been released, click to read the patch notes",
    ReadPatchNotesHTMLV2: "You've updated to <b>%{version}</b> (<b>%{build}</b>), click to read patch notes and dismiss this message",
+   WonderFullHTML: "Wonder<b>full</b>!",
+   DontShowThisAgain: "Don't Show This Again",
+   NaturallyHTML: "<b>Natural</b>ly",
+   ShowWonderPopup: "Wonder Constructed Popup",
+   ShowNaturalWonderPopup: "Natural Wonder Discovered Popup",
 };

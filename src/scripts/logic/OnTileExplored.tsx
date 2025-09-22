@@ -20,6 +20,7 @@ import {
    type Tile,
 } from "../../../shared/utilities/Helper";
 import { WorldScene } from "../scenes/WorldScene";
+import { BuildingCompleteModal } from "../ui/BuildingCompleteModal";
 import { ChooseGreatPersonModal } from "../ui/ChooseGreatPersonModal";
 import { showModal } from "../ui/GlobalModal";
 import { Singleton } from "../utilities/Singleton";
@@ -29,6 +30,9 @@ export function onTileExplored(xy: Tile): void {
    const gs = getGameState();
    const building = gs.tiles.get(xy)?.building;
    if (isNaturalWonder(building?.type)) {
+      if (building && getGameOptions().showNaturalWonderPopup) {
+         showModal(<BuildingCompleteModal building={building.type} />);
+      }
       switch (building?.type) {
          case "GrottaAzzurra": {
             getXyBuildings(gs).forEach((building) => {

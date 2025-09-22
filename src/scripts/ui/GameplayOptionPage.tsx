@@ -99,6 +99,25 @@ export function GameplayOptionPage(): React.ReactNode {
                      />
                   );
                })}
+               <div className="separator" />
+               <ToggleComponent
+                  title={t(L.ShowWonderPopup)}
+                  contentHTML=""
+                  value={options.showWonderPopup}
+                  onValueChange={(value) => {
+                     options.showWonderPopup = value;
+                     notifyGameOptionsUpdate(options);
+                  }}
+               />
+               <ToggleComponent
+                  title={t(L.ShowNaturalWonderPopup)}
+                  contentHTML=""
+                  value={options.showNaturalWonderPopup}
+                  onValueChange={(value) => {
+                     options.showNaturalWonderPopup = value;
+                     notifyGameOptionsUpdate(options);
+                  }}
+               />
             </fieldset>
             <fieldset>
                <legend>{t(L.GlobalBuildingDefault)}</legend>
