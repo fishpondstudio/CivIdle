@@ -3,7 +3,7 @@ import { useState } from "react";
 import { GreatPersonType } from "../../../shared/definitions/GreatPersonDefinitions";
 import { Config } from "../../../shared/logic/Config";
 import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
-import { getGreatPersonTotalEffect, sortGreatPeople } from "../../../shared/logic/RebirthLogic";
+import { getGreatPersonTotalLevel, sortGreatPeople } from "../../../shared/logic/RebirthLogic";
 import type { IGreatPeopleBuildingData } from "../../../shared/logic/Tile";
 import { keysOf } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
@@ -32,7 +32,7 @@ export function BroadwayBuildingBody({ gameState, xy }: IBuildingComponentProps)
                <legend>{t(L.BroadwayCurrentlySelected)}</legend>
                {[...building.greatPeople].map((gp) => {
                   const def = Config.GreatPerson[gp];
-                  const effect = getGreatPersonTotalEffect(gp, gameState);
+                  const effect = getGreatPersonTotalLevel(gp, gameState);
                   if (effect <= 0) return <></>;
                   if (def.type !== GreatPersonType.Normal && def.type !== GreatPersonType.Adaptive) {
                      return <></>;
@@ -105,7 +105,7 @@ export function BroadwayBuildingBody({ gameState, xy }: IBuildingComponentProps)
                            return null;
                         }
                         if (k === "Zenobia") return null;
-                        const effect = getGreatPersonTotalEffect(k, gameState);
+                        const effect = getGreatPersonTotalLevel(k, gameState);
                         if (effect <= 0) return null;
                         const active = building.greatPeople.has(k);
                         return (

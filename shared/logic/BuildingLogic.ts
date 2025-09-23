@@ -1,6 +1,7 @@
 import type { Building } from "../definitions/BuildingDefinitions";
 import { BuildingShowLevel, BuildingSpecial } from "../definitions/BuildingDefinitions";
 import type { City } from "../definitions/CityDefinitions";
+import type { GreatPerson } from "../definitions/GreatPersonDefinitions";
 import type { IUnlockableMultipliers } from "../definitions/ITechDefinition";
 import type { Religion } from "../definitions/ReligionDefinitions";
 import { NoPrice, NoStorage, type Deposit, type Resource } from "../definitions/ResourceDefinitions";
@@ -32,7 +33,7 @@ import { Config } from "./Config";
 import { MANAGED_IMPORT_RANGE, MAX_PETRA_SPEED_UP } from "./Constants";
 import { GameFeature, hasFeature } from "./FeatureLogic";
 import type { GameOptions, GameState } from "./GameState";
-import { getGameOptions, getGameState } from "./GameStateLogic";
+import { getGameState } from "./GameStateLogic";
 import {
    getBuildingIO,
    getBuildingsByType,
@@ -40,7 +41,7 @@ import {
    getGrid,
    getXyBuildings,
 } from "./IntraTickCache";
-import { getGreatPersonTotalEffect } from "./RebirthLogic";
+import { getGreatPersonTotalLevelWithWisdom } from "./RebirthLogic";
 import { getBuildingsThatProduce, getResourcesValue } from "./ResourceLogic";
 import { getAgeForTech, getBuildingUnlockTech, getCurrentAge } from "./TechLogic";
 import {
@@ -238,11 +239,8 @@ export function getMaxWarpStorage(gs: GameState): number {
    if (petra) {
       // Petra level based warp
       storage += getPetraBaseStorage(petra.building);
-      // Zenobia level based warp
-      storage += HOUR * Config.GreatPerson.Zenobia.value(getGreatPersonTotalEffect("Zenobia"));
-      const wisdomLevel = getGameOptions().ageWisdom[Config.GreatPerson.Zenobia.age] ?? 0;
-      // Age Wisdom level based warp
-      storage += HOUR * Config.GreatPerson.Zenobia.value(wisdomLevel);
+      // Zenobia level based warp (including Age Wisdom)
+      storage += HOUR * Config.GreatPerson.Zenobia.value(getGreatPersonTotalLevelWithWisdom("Zenobia"));
       // Fuji warp
       const fuji = findSpecialBuilding("MountFuji", gs);
       if (fuji && getGrid(gs).distanceTile(fuji.tile, petra.tile) <= 1) {
@@ -695,7 +693,8 @@ export function getBuildingLevelLabel(xy: Tile, gs: GameState): string {
       if (b.type === "SwissBank") {
          // Swiss Bank is a special case, we show the level boost (below)
       } else if (BuildingShowLevel.has(b.type)) {
-         return String(b.level);
+         const [extraLevel] = getWonderExtraLevel(b.type);
+         return extraLevel > 0 ? `${b.level}+${extraLevel}` : String(b.level);
       } else {
          return "";
       }
@@ -1327,4 +1326,26 @@ export function getCathedralOfBrasiliaResources(
    }
 
    return { buildings, input: inputResources, output: outputResources, unused: unusedResources };
+}
+
+export function getWonderExtraLevel(building: Building): [number, GreatPerson | null] {
+   switch (building) {
+      case "InternationalSpaceStation":
+         return [Math.floor(getGreatPersonTotalLevelWithWisdom("WilliamShepherd")), "WilliamShepherd"];
+      case "MarinaBaySands":
+         return [Math.floor(getGreatPersonTotalLevelWithWisdom("LeeKuanYew")), "LeeKuanYew"];
+      case "PalmJumeirah":
+         return [
+            Math.floor(getGreatPersonTotalLevelWithWisdom("EmmanuelleCharpentier")),
+            "EmmanuelleCharpentier",
+         ];
+      case "AldersonDisk":
+         return [Math.floor(getGreatPersonTotalLevelWithWisdom("DanAlderson")), "DanAlderson"];
+      case "DysonSphere":
+         return [Math.floor(getGreatPersonTotalLevelWithWisdom("FreemanDyson")), "FreemanDyson"];
+      case "MatrioshkaBrain":
+         return [Math.floor(getGreatPersonTotalLevelWithWisdom("VeraRubin")), "VeraRubin"];
+      default:
+         return [0, null];
+   }
 }

@@ -1,4 +1,4 @@
-import { getBuildingCost } from "../../../shared/logic/BuildingLogic";
+import { getBuildingCost, getWonderExtraLevel } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
 import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
 import { L, t } from "../../../shared/utilities/i18n";
@@ -9,6 +9,7 @@ import { BuildingDescriptionComponent } from "./BuildingDescriptionComponent";
 import type { IBuildingComponentProps } from "./BuildingPage";
 import { BuildingValueComponent } from "./BuildingValueComponent";
 import { BuildingWikipediaComponent } from "./BuildingWikipediaComponent";
+import { html } from "./RenderHTMLComponent";
 import { ResourceAmountComponent } from "./ResourceAmountComponent";
 import { SpaceshipIdleComponent } from "./SpaceshipIdleComponent";
 
@@ -17,6 +18,7 @@ export function UpgradableWonderBuildingBody({ gameState, xy }: IBuildingCompone
    if (!building) {
       return null;
    }
+   const [extraLevel, greatPerson] = getWonderExtraLevel(building.type);
    return (
       <div className="window-body">
          <SpaceshipIdleComponent gameState={gameState} type={building.type} />
@@ -26,6 +28,14 @@ export function UpgradableWonderBuildingBody({ gameState, xy }: IBuildingCompone
                <div className="f1">{t(L.WonderUpgradeLevel)}</div>
                <div className="text-strong">{building.level}</div>
             </div>
+            {greatPerson && (
+               <div className="row">
+                  <div className="f1">
+                     {html(t(L.LevelFromGreatPerson, { person: Config.GreatPerson[greatPerson].name() }))}
+                  </div>
+                  <div className="text-strong">{extraLevel}</div>
+               </div>
+            )}
             <div className="separator" />
             {jsxMapOf(getBuildingCost({ type: building.type, level: building.level }), (res, amount) => {
                return (

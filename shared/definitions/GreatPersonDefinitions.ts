@@ -1751,6 +1751,96 @@ export class GreatPersonDefinitions {
       tick: tickAdaptiveGreatPerson,
       type: GreatPersonType.Adaptive,
    };
+
+   WilliamShepherd: IGreatPersonDefinition = {
+      name: () => t(L.WilliamShepherd),
+      desc: (self, level) =>
+         t(L.PlusXLevelToXBuilding, {
+            value: formatNumber(self.value(level)),
+            building: Config.Building.InternationalSpaceStation.name(),
+         }),
+      time: "1949 ~ ",
+      value: (level) => level,
+      maxLevel: Number.POSITIVE_INFINITY,
+      age: "InformationAge",
+      tick: (self, level, source) => {},
+      type: GreatPersonType.Normal,
+   };
+
+   LeeKuanYew: IGreatPersonDefinition = {
+      name: () => t(L.LeeKuanYew),
+      desc: (self, level) =>
+         t(L.PlusXLevelToXBuilding, {
+            value: formatNumber(self.value(level)),
+            building: Config.Building.MarinaBaySands.name(),
+         }),
+      time: "1923 ~ 2015 AD",
+      value: (level) => level,
+      maxLevel: Number.POSITIVE_INFINITY,
+      age: "InformationAge",
+      tick: (self, level, source) => {},
+      type: GreatPersonType.Normal,
+   };
+
+   EmmanuelleCharpentier: IGreatPersonDefinition = {
+      name: () => t(L.EmmanuelleCharpentier),
+      desc: (self, level) =>
+         t(L.PlusXLevelToXBuilding, {
+            value: formatNumber(self.value(level)),
+            building: Config.Building.PalmJumeirah.name(),
+         }),
+      time: "1968 ~ ",
+      value: (level) => level,
+      maxLevel: Number.POSITIVE_INFINITY,
+      age: "InformationAge",
+      tick: (self, level, source) => {},
+      type: GreatPersonType.Normal,
+   };
+
+   DanAlderson: IGreatPersonDefinition = {
+      name: () => t(L.DanAlderson),
+      desc: (self, level) =>
+         t(L.PlusXLevelToXBuilding, {
+            value: formatNumber(self.value(level)),
+            building: Config.Building.AldersonDisk.name(),
+         }),
+      time: "1941 ~ 1989 AD",
+      value: (level) => level,
+      maxLevel: Number.POSITIVE_INFINITY,
+      age: "InformationAge",
+      tick: (self, level, source) => {},
+      type: GreatPersonType.Normal,
+   };
+
+   FreemanDyson: IGreatPersonDefinition = {
+      name: () => t(L.FreemanDyson),
+      desc: (self, level) =>
+         t(L.PlusXLevelToXBuilding, {
+            value: formatNumber(self.value(level)),
+            building: Config.Building.DysonSphere.name(),
+         }),
+      time: "1923 ~ 2020 AD",
+      value: (level) => level,
+      maxLevel: Number.POSITIVE_INFINITY,
+      age: "InformationAge",
+      tick: (self, level, source) => {},
+      type: GreatPersonType.Normal,
+   };
+
+   VeraRubin: IGreatPersonDefinition = {
+      name: () => t(L.VeraRubin),
+      desc: (self, level) =>
+         t(L.PlusXLevelToXBuilding, {
+            value: formatNumber(self.value(level)),
+            building: Config.Building.MatrioshkaBrain.name(),
+         }),
+      time: "1923 ~ 2020 AD",
+      value: (level) => level,
+      maxLevel: Number.POSITIVE_INFINITY,
+      age: "InformationAge",
+      tick: (self, level, source) => {},
+      type: GreatPersonType.Normal,
+   };
 }
 
 export type GreatPerson = keyof GreatPersonDefinitions;

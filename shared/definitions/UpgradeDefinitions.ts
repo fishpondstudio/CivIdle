@@ -3,7 +3,7 @@ import { Config } from "../logic/Config";
 import { getGrid } from "../logic/IntraTickCache";
 import {
    getGreatPeopleChoiceCount,
-   getGreatPersonTotalEffect,
+   getGreatPersonTotalLevel,
    rollGreatPeopleThisRun,
 } from "../logic/RebirthLogic";
 import { getTechUnlockCost, getTechUnlockCostInAge } from "../logic/TechLogic";
@@ -151,7 +151,7 @@ export class UpgradeDefinitions {
       },
       additionalUpgrades: () => [t(L.Honor4UpgradeHTML)],
       tick: (gs) => {
-         const total = getGreatPersonTotalEffect("ZhengHe", gs);
+         const total = getGreatPersonTotalLevel("ZhengHe", gs);
          if (total > 0) {
             const def = Config.GreatPerson.ZhengHe;
             def.tick("ZhengHe", total, t(L.ExpansionLevelX, { level: "IV" }), GreatPersonTickFlag.None);

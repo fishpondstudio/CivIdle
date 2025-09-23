@@ -43,12 +43,20 @@ export function getGreatPersonThisRunLevel(amount: number): number {
    return result;
 }
 
-export function getGreatPersonTotalEffect(
+export function getGreatPersonTotalLevel(
    gp: GreatPerson,
    gs: GameState = getGameState(),
    options: GameOptions = getGameOptions(),
 ): number {
    return getGreatPersonThisRunLevel(gs.greatPeople[gp] ?? 0) + (options.greatPeople[gp]?.level ?? 0);
+}
+
+export function getGreatPersonTotalLevelWithWisdom(
+   gp: GreatPerson,
+   gs: GameState = getGameState(),
+   options: GameOptions = getGameOptions(),
+): number {
+   return getGreatPersonTotalLevel(gp, gs, options) + (options.ageWisdom[Config.GreatPerson[gp].age] ?? 0);
 }
 
 export function getProgressTowardsNextGreatPerson(): number {

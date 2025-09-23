@@ -1721,4 +1721,12 @@ export const EN = {
    ZugspitzeDesc: "For each unlocked age, get one point that can be used to provide one extra level to any Great Person that is born from this run. (Storage multipliers are not effective due to this multiplier being dynamic)",
    DefaultWonderConstructionPriority: "Default Wonder Construction Priority",
    DefaultProductionPriorityForBuildingsThatProduceWorkers: "Default Production Priority For Buildings That Produce Workers",
+   WilliamShepherd: "William Shepherd",
+   LeeKuanYew: "Lee Kuan Yew",
+   EmmanuelleCharpentier: "Emmanuelle Charpentier",
+   DanAlderson: "Dan Alderson",
+   FreemanDyson: "Freeman Dyson",
+   VeraRubin: "Vera Rubin",
+   PlusXLevelToXBuilding: "+%{value} Level to %{building}",
+   LevelFromGreatPerson: "Level from <b>%{person}</b> (Great Person)",
 };

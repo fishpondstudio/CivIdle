@@ -8,6 +8,7 @@ import {
    getGreatWallRange,
    getMaxWarpStorage,
    getScienceFromWorkers,
+   getWonderExtraLevel,
    getWorkingBuilding,
    getYellowCraneTowerRange,
    isBuildingWellStocked,
@@ -44,7 +45,7 @@ import { getVotedBoostId } from "../../../shared/logic/PlayerTradeLogic";
 import {
    getGreatPeopleChoiceCount,
    getGreatPeopleForWisdom,
-   getGreatPersonTotalEffect,
+   getGreatPersonTotalLevel,
    getPermanentGreatPeopleLevel,
    getRebirthGreatPeopleCount,
    rollGreatPeopleThisRun,
@@ -679,7 +680,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
                });
             }
          }
-         const total = getGreatPersonTotalEffect("Hatshepsut", gs);
+         const total = getGreatPersonTotalLevel("Hatshepsut", gs);
          if (total > 0) {
             Config.GreatPerson.Hatshepsut.tick(
                "Hatshepsut",
@@ -699,7 +700,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
             }
          }
          Tick.next.globalMultipliers.happiness.push({ value: count, source: buildingName });
-         const total = getGreatPersonTotalEffect("RamessesII", gs);
+         const total = getGreatPersonTotalLevel("RamessesII", gs);
          if (total > 0) {
             Tick.next.globalMultipliers.builderCapacity.push({
                value: Config.GreatPerson.RamessesII.value(total),
@@ -836,7 +837,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
                addMultiplier(b, { output: 1 }, buildingName);
             }
          });
-         const total = getGreatPersonTotalEffect("Confucius", gs);
+         const total = getGreatPersonTotalLevel("Confucius", gs);
          if (total > 0) {
             Config.GreatPerson.Confucius.tick(
                "Confucius",
@@ -912,7 +913,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
                addMultiplier(b, { storage: level }, buildingName);
             }
          });
-         const total = getGreatPersonTotalEffect("ZhengHe", gs);
+         const total = getGreatPersonTotalLevel("ZhengHe", gs);
          if (total > 0) {
             Config.GreatPerson.ZhengHe.tick(
                "ZhengHe",
@@ -1064,7 +1065,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          const broadway = building as IGreatPeopleBuildingData;
          broadway.greatPeople.forEach((gp) => {
             const def = Config.GreatPerson[gp];
-            const total = getGreatPersonTotalEffect(gp, gs, options);
+            const total = getGreatPersonTotalLevel(gp, gs, options);
             if (total > 0) {
                def.tick(gp, total, `${buildingName}: ${def.name()}`, GreatPersonTickFlag.Unstable);
             }
@@ -1129,7 +1130,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
             addMultiplier("ResearchFund", { output: 5 }, buildingName);
          }
 
-         const total = getGreatPersonTotalEffect("JohnDRockefeller", gs, options);
+         const total = getGreatPersonTotalLevel("JohnDRockefeller", gs, options);
          if (total > 0) {
             Config.GreatPerson.JohnDRockefeller.tick(
                "JohnDRockefeller",
@@ -1147,7 +1148,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
                addMultiplier(building, { output: 2, unstable: true }, buildingName);
             }
          });
-         const total = getGreatPersonTotalEffect("JPMorgan", gs, options);
+         const total = getGreatPersonTotalLevel("JPMorgan", gs, options);
          if (total > 0) {
             Config.GreatPerson.JPMorgan.tick(
                "JPMorgan",
@@ -1165,7 +1166,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          addMultiplier("Market", { storage: count }, buildingName);
          addMultiplier("Caravansary", { storage: count }, buildingName);
          const total =
-            getGreatPersonTotalEffect("AlbertEinstein", gs, options) +
+            getGreatPersonTotalLevel("AlbertEinstein", gs, options) +
             (options.ageWisdom[Config.GreatPerson.AlbertEinstein.age] ?? 0);
          if (total > 0) {
             addMultiplier("ResearchFund", { output: total }, buildingName);
@@ -1180,7 +1181,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
       case "ProphetsMosque": {
          Config.GreatPerson.HarunAlRashid.tick(
             "HarunAlRashid",
-            getGreatPersonTotalEffect("HarunAlRashid", gs, options),
+            getGreatPersonTotalLevel("HarunAlRashid", gs, options),
             `${buildingName}: ${Config.GreatPerson.HarunAlRashid.name()}`,
             GreatPersonTickFlag.None,
          );
@@ -1271,7 +1272,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
                });
             }
          }
-         const total = getGreatPersonTotalEffect("NebuchadnezzarII", gs, options);
+         const total = getGreatPersonTotalLevel("NebuchadnezzarII", gs, options);
          if (total > 0) {
             Config.GreatPerson.NebuchadnezzarII.tick(
                "NebuchadnezzarII",
@@ -1304,47 +1305,53 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          break;
       }
       case "InternationalSpaceStation": {
+         const [extraLevel] = getWonderExtraLevel(building.type);
          Tick.next.globalMultipliers.storage.push({
-            value: 5 + (building.level - 1),
+            value: 5 + (building.level - 1) + extraLevel,
             source: buildingName,
          });
          break;
       }
       case "MarinaBaySands": {
+         const [extraLevel] = getWonderExtraLevel(building.type);
          Tick.next.globalMultipliers.worker.push({
-            value: 5 + 1 * (building.level - 1),
+            value: 5 + 1 * (building.level - 1) + extraLevel,
             source: buildingName,
          });
          break;
       }
       case "PalmJumeirah": {
+         const [extraLevel] = getWonderExtraLevel(building.type);
          Tick.next.globalMultipliers.builderCapacity.push({
-            value: 10 + 2 * (building.level - 1),
+            value: 10 + 2 * (building.level - 1) + extraLevel,
             source: buildingName,
          });
          break;
       }
       case "AldersonDisk": {
+         const [extraLevel] = getWonderExtraLevel(building.type);
          Tick.next.globalMultipliers.happiness.push({
-            value: 25 + 5 * (building.level - 1),
+            value: 25 + 5 * (building.level - 1) + extraLevel,
             source: buildingName,
          });
          break;
       }
       case "DysonSphere": {
+         const [extraLevel] = getWonderExtraLevel(building.type);
          Tick.next.globalMultipliers.output.push({
-            value: 5 + 1 * (building.level - 1),
+            value: 5 + 1 * (building.level - 1) + extraLevel,
             source: buildingName,
          });
          break;
       }
       case "MatrioshkaBrain": {
+         const [extraLevel] = getWonderExtraLevel(building.type);
          Tick.next.globalMultipliers.sciencePerBusyWorker.push({
-            value: 5 + 1 * (building.level - 1),
+            value: 5 + (building.level - 1) + extraLevel,
             source: buildingName,
          });
          Tick.next.globalMultipliers.sciencePerIdleWorker.push({
-            value: 5 + 1 * (building.level - 1),
+            value: 5 + (building.level - 1) + extraLevel,
             source: buildingName,
          });
          const hq = Tick.current.specialBuildings.get("Headquarter");
@@ -1354,10 +1361,10 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
             mapSafeAdd(Tick.next.resourceValueByTile, xy, scienceValue);
             mapSafeAdd(Tick.next.resourceValues, "Science", scienceValue);
          }
-         if (building.level > 1) {
+         if (building.level + extraLevel > 1) {
             forEach(Config.Building, (b, def) => {
                if (def.output.Science) {
-                  addMultiplier(b, { output: building.level - 1 }, buildingName);
+                  addMultiplier(b, { output: building.level - 1 + extraLevel }, buildingName);
                }
             });
          }
