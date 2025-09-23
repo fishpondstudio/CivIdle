@@ -41,7 +41,7 @@ import {
    getGrid,
    getXyBuildings,
 } from "./IntraTickCache";
-import { getGreatPersonTotalLevelWithWisdom } from "./RebirthLogic";
+import { getGreatPersonTotalLevel } from "./RebirthLogic";
 import { getBuildingsThatProduce, getResourcesValue } from "./ResourceLogic";
 import { getAgeForTech, getBuildingUnlockTech, getCurrentAge } from "./TechLogic";
 import {
@@ -240,8 +240,8 @@ export function getMaxWarpStorage(gs: GameState): number {
    if (petra) {
       // Petra level based warp
       storage += getPetraBaseStorage(petra.building);
-      // Zenobia level based warp (including Age Wisdom)
-      storage += HOUR * Config.GreatPerson.Zenobia.value(getGreatPersonTotalLevelWithWisdom("Zenobia"));
+      // Zenobia level based warp
+      storage += HOUR * Config.GreatPerson.Zenobia.value(getGreatPersonTotalLevel("Zenobia"));
       // Fuji warp
       const fuji = findSpecialBuilding("MountFuji", gs);
       if (fuji && getGrid(gs).distanceTile(fuji.tile, petra.tile) <= 1) {
@@ -1341,20 +1341,19 @@ export function getCathedralOfBrasiliaResources(
 export function getWonderExtraLevel(building: Building): [number, GreatPerson | null] {
    switch (building) {
       case "InternationalSpaceStation":
-         return [Math.floor(getGreatPersonTotalLevelWithWisdom("WilliamShepherd")), "WilliamShepherd"];
+         return [Math.floor(getGreatPersonTotalLevel("WilliamShepherd")), "WilliamShepherd"];
       case "MarinaBaySands":
-         return [Math.floor(getGreatPersonTotalLevelWithWisdom("LeeKuanYew")), "LeeKuanYew"];
+         return [Math.floor(getGreatPersonTotalLevel("LeeKuanYew")), "LeeKuanYew"];
       case "PalmJumeirah":
-         return [
-            Math.floor(getGreatPersonTotalLevelWithWisdom("EmmanuelleCharpentier")),
-            "EmmanuelleCharpentier",
-         ];
+         return [Math.floor(getGreatPersonTotalLevel("EmmanuelleCharpentier")), "EmmanuelleCharpentier"];
       case "AldersonDisk":
-         return [Math.floor(getGreatPersonTotalLevelWithWisdom("DanAlderson")), "DanAlderson"];
+         return [Math.floor(getGreatPersonTotalLevel("DanAlderson")), "DanAlderson"];
       case "DysonSphere":
-         return [Math.floor(getGreatPersonTotalLevelWithWisdom("FreemanDyson")), "FreemanDyson"];
+         return [Math.floor(getGreatPersonTotalLevel("FreemanDyson")), "FreemanDyson"];
       case "MatrioshkaBrain":
-         return [Math.floor(getGreatPersonTotalLevelWithWisdom("VeraRubin")), "VeraRubin"];
+         return [Math.floor(getGreatPersonTotalLevel("VeraRubin")), "VeraRubin"];
+      case "RedFort":
+         return [Math.floor(getGreatPersonTotalLevel("AkbarTheGreat")), "AkbarTheGreat"];
       default:
          return [0, null];
    }

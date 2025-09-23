@@ -345,7 +345,11 @@ export function RebirthModal(): React.ReactNode {
                   {jsxMapOf(Config.GreatPerson, (person, def, i) => {
                      if (def.city === nextCity) {
                         return (
-                           <div key={person} className="row p5">
+                           <div
+                              key={person}
+                              className="row p5"
+                              style={{ backgroundColor: i % 2 === 0 ? "#fff" : "#efefef" }}
+                           >
                               <GreatPersonImage
                                  greatPerson={person}
                                  style={{ height: 50, margin: "0 10px 0 0" }}

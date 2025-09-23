@@ -51,14 +51,6 @@ export function getGreatPersonTotalLevel(
    return getGreatPersonThisRunLevel(gs.greatPeople[gp] ?? 0) + (options.greatPeople[gp]?.level ?? 0);
 }
 
-export function getGreatPersonTotalLevelWithWisdom(
-   gp: GreatPerson,
-   gs: GameState = getGameState(),
-   options: GameOptions = getGameOptions(),
-): number {
-   return getGreatPersonTotalLevel(gp, gs, options) + (options.ageWisdom[Config.GreatPerson[gp].age] ?? 0);
-}
-
 export function getProgressTowardsNextGreatPerson(): number {
    const greatPeopleCount = getRebirthGreatPeopleCount();
    const previous = getValueRequiredForGreatPeople(greatPeopleCount);
@@ -129,7 +121,8 @@ export function addPermanentGreatPerson(gp: GreatPerson, amount: number): void {
    } else {
       options.greatPeople[gp] =
          Config.GreatPerson[gp].type === GreatPersonType.Normal ||
-         Config.GreatPerson[gp].type === GreatPersonType.Adaptive
+         Config.GreatPerson[gp].type === GreatPersonType.Adaptive ||
+         Config.GreatPerson[gp].type === GreatPersonType.LevelBoost
             ? { level: 1, amount: amount - 1 }
             : { level: 0, amount };
    }
@@ -139,7 +132,8 @@ export function upgradeAllPermanentGreatPeople(options: GameOptions): void {
    forEach(options.greatPeople, (greatPerson, inventory) => {
       if (
          Config.GreatPerson[greatPerson].type !== GreatPersonType.Normal &&
-         Config.GreatPerson[greatPerson].type !== GreatPersonType.Adaptive
+         Config.GreatPerson[greatPerson].type !== GreatPersonType.Adaptive &&
+         Config.GreatPerson[greatPerson].type !== GreatPersonType.LevelBoost
       ) {
          return;
       }

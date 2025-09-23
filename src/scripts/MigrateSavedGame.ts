@@ -1,11 +1,20 @@
 import type { GreatPerson } from "../../shared/definitions/GreatPersonDefinitions";
 import { findSpecialBuilding } from "../../shared/logic/BuildingLogic";
 import { Config } from "../../shared/logic/Config";
-import { ThemeColorNames, type SavedGame } from "../../shared/logic/GameState";
+import { MigrationFlags, ThemeColorNames, type SavedGame } from "../../shared/logic/GameState";
 import { getGrid } from "../../shared/logic/IntraTickCache";
+import { getTotalGreatPeopleUpgradeCost } from "../../shared/logic/RebirthLogic";
 import { ShortcutActions } from "../../shared/logic/Shortcut";
 import { BuildingInputMode, ResourceImportOptions, makeBuilding } from "../../shared/logic/Tile";
-import { forEach, isNullOrUndefined, pointToTile, safeAdd, tileToPoint } from "../../shared/utilities/Helper";
+import {
+   forEach,
+   hasFlag,
+   isNullOrUndefined,
+   pointToTile,
+   safeAdd,
+   setFlag,
+   tileToPoint,
+} from "../../shared/utilities/Helper";
 import { getConstructionPriority, getProductionPriority } from "./Global";
 
 export function migrateSavedGame(save: SavedGame) {
@@ -196,5 +205,21 @@ export function migrateSavedGame(save: SavedGame) {
          save.current.greatPeopleChoicesV2.push({ choices: c, amount: 1 });
       });
       delete save.current.greatPeopleChoices;
+   }
+
+   if (!hasFlag(save.options.migrationFlags, MigrationFlags.ZenobiaMigrated)) {
+      save.options.migrationFlags = setFlag(save.options.migrationFlags, MigrationFlags.ZenobiaMigrated);
+      const classicalAgeWisdom = save.options.ageWisdom.ClassicalAge;
+      if (classicalAgeWisdom && classicalAgeWisdom > 0) {
+         let result = 0;
+         for (let i = 1; i <= classicalAgeWisdom; i++) {
+            result += getTotalGreatPeopleUpgradeCost("Zenobia", i);
+         }
+         if (save.options.greatPeople.Zenobia) {
+            save.options.greatPeople.Zenobia.amount += result;
+         } else {
+            save.options.greatPeople.Zenobia = { amount: result, level: 0 };
+         }
+      }
    }
 }

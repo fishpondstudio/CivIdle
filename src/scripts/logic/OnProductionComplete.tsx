@@ -1872,7 +1872,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          break;
       }
       case "RedFort": {
-         const levelBoost = 5 + (building.level - 1);
+         const levelBoost = 5 + (building.level - 1) + getWonderExtraLevel(building.type)[0];
          for (const point of grid.getRange(tileToPoint(xy), 5)) {
             mapSafePush(Tick.next.levelBoost, pointToTile(point), {
                value: isFestival("RedFort", gs) ? 2 * levelBoost : levelBoost,

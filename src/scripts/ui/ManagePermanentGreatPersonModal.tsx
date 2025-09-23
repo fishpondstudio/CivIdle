@@ -157,6 +157,7 @@ function GreatPersonRow({ greatPerson }: { greatPerson: GreatPerson }): React.Re
       case GreatPersonType.Adaptive:
          return <GreatPersonAdaptiveRow greatPerson={greatPerson} />;
       case GreatPersonType.Normal:
+      case GreatPersonType.LevelBoost:
          return <GreatPersonNormalRow greatPerson={greatPerson} />;
       default:
          return null;

@@ -109,7 +109,9 @@ export function ChooseGreatPersonModal({ permanent }: { permanent: boolean }): R
                         ) : null}
                         <div>{p.desc(p, permanent ? 1 : 1 / (1 + (gs.greatPeople[greatPerson] ?? 0)))}</div>
                         {!permanent &&
-                        (p.type === GreatPersonType.Normal || p.type === GreatPersonType.Adaptive) &&
+                        (p.type === GreatPersonType.Normal ||
+                           p.type === GreatPersonType.Adaptive ||
+                           p.type === GreatPersonType.LevelBoost) &&
                         (gs.greatPeople[greatPerson] ?? 0) > 0 ? (
                            <Tippy
                               content={t(L.GreatPersonThisRunEffectiveLevel, {
@@ -152,7 +154,8 @@ function GreatPersonLevel({
    const gs = useGameState();
    const canUpgrade =
       Config.GreatPerson[greatPerson].type === GreatPersonType.Normal ||
-      Config.GreatPerson[greatPerson].type === GreatPersonType.Adaptive;
+      Config.GreatPerson[greatPerson].type === GreatPersonType.Adaptive ||
+      Config.GreatPerson[greatPerson].type === GreatPersonType.LevelBoost;
    const isWisdom = isEligibleForWisdom(greatPerson);
    const inventory = options.greatPeople[greatPerson];
    const total = getGreatPersonUpgradeCost(greatPerson, (inventory?.level ?? 0) + 1);

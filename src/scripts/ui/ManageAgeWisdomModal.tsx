@@ -125,7 +125,7 @@ export function ManageAgeWisdomModal(): React.ReactNode {
                                        </div>
                                        {jsxMMapOf(missing, (gp, amount) => {
                                           return (
-                                             <div className="row">
+                                             <div key={gp} className="row">
                                                 <div className="f1">{Config.GreatPerson[gp].name()}</div>
                                                 <div className="ml20">{amount}</div>
                                              </div>

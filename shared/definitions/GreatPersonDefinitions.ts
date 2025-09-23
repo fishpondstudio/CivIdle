@@ -375,7 +375,7 @@ export class GreatPersonDefinitions {
       maxLevel: Number.POSITIVE_INFINITY,
       age: "ClassicalAge",
       tick: (self, level, source) => {},
-      type: GreatPersonType.Normal,
+      type: GreatPersonType.LevelBoost,
    };
 
    Plato: IGreatPersonDefinition = {
@@ -958,6 +958,22 @@ export class GreatPersonDefinitions {
       age: "IndustrialAge",
    });
 
+   AkbarTheGreat: IGreatPersonDefinition = {
+      name: () => t(L.AkbarTheGreat),
+      desc: (self, level) =>
+         t(L.PlusXLevelToXBuilding, {
+            value: formatNumber(self.value(level)),
+            building: Config.Building.RedFort.name(),
+         }),
+      time: "1542 ~ 1605 AD",
+      value: (level) => level,
+      maxLevel: Number.POSITIVE_INFINITY,
+      age: "IndustrialAge",
+      tick: (self, level, source) => {},
+      type: GreatPersonType.LevelBoost,
+      city: "Indian",
+   };
+
    ThomasEdison: IGreatPersonDefinition = {
       name: () => t(L.ThomasEdison),
       desc: (self, level) => t(L.WildCardGreatPersonDescV2),
@@ -1264,6 +1280,19 @@ export class GreatPersonDefinitions {
       maxLevel: Number.POSITIVE_INFINITY,
       age: "WorldWarAge",
       city: "Brazilian",
+   });
+
+   RabindranathTagore: IGreatPersonDefinition = boostOf({
+      name: () => t(L.RabindranathTagore),
+      boost: {
+         multipliers: ["output", "storage"],
+         buildings: ["Embassy"],
+      },
+      time: "1861 ~ 1941 AD",
+      value: (level) => 2 * level,
+      maxLevel: Number.POSITIVE_INFINITY,
+      age: "WorldWarAge",
+      city: "Indian",
    });
 
    OskarSchindler: IGreatPersonDefinition = {
@@ -1764,7 +1793,7 @@ export class GreatPersonDefinitions {
       maxLevel: Number.POSITIVE_INFINITY,
       age: "InformationAge",
       tick: (self, level, source) => {},
-      type: GreatPersonType.Normal,
+      type: GreatPersonType.LevelBoost,
    };
 
    LeeKuanYew: IGreatPersonDefinition = {
@@ -1779,7 +1808,7 @@ export class GreatPersonDefinitions {
       maxLevel: Number.POSITIVE_INFINITY,
       age: "InformationAge",
       tick: (self, level, source) => {},
-      type: GreatPersonType.Normal,
+      type: GreatPersonType.LevelBoost,
    };
 
    EmmanuelleCharpentier: IGreatPersonDefinition = {
@@ -1794,7 +1823,7 @@ export class GreatPersonDefinitions {
       maxLevel: Number.POSITIVE_INFINITY,
       age: "InformationAge",
       tick: (self, level, source) => {},
-      type: GreatPersonType.Normal,
+      type: GreatPersonType.LevelBoost,
    };
 
    DanAlderson: IGreatPersonDefinition = {
@@ -1809,7 +1838,7 @@ export class GreatPersonDefinitions {
       maxLevel: Number.POSITIVE_INFINITY,
       age: "InformationAge",
       tick: (self, level, source) => {},
-      type: GreatPersonType.Normal,
+      type: GreatPersonType.LevelBoost,
    };
 
    FreemanDyson: IGreatPersonDefinition = {
@@ -1824,7 +1853,7 @@ export class GreatPersonDefinitions {
       maxLevel: Number.POSITIVE_INFINITY,
       age: "InformationAge",
       tick: (self, level, source) => {},
-      type: GreatPersonType.Normal,
+      type: GreatPersonType.LevelBoost,
    };
 
    VeraRubin: IGreatPersonDefinition = {
@@ -1839,7 +1868,7 @@ export class GreatPersonDefinitions {
       maxLevel: Number.POSITIVE_INFINITY,
       age: "InformationAge",
       tick: (self, level, source) => {},
-      type: GreatPersonType.Normal,
+      type: GreatPersonType.LevelBoost,
    };
 }
 
@@ -1855,6 +1884,7 @@ export enum GreatPersonType {
    Wildcard = 1,
    Promotion = 2,
    Adaptive = 3,
+   LevelBoost = 4,
 }
 
 export interface IGreatPersonDefinition {

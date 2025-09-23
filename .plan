@@ -1,4 +1,4 @@
-TODO:
+Level Boost Great People:
 - William Shepherd: +1 Level to International Space Station
 - Lee Kuan Yew: +1 Level to Marina Bay Sands
 - Emmanuelle Charpentier: +1 Level to Palm Jumeirah
@@ -6,13 +6,19 @@ TODO:
 - Freeman Dyson: +1 Level to Dyson Sphere
 - Vera Rubin: +1 Level to Matrioshka Brain
 
+
+They are not required to upgrade Age Wisdom, and Age Wisdom does not affect them. Zenobia (Classical Age) is now a Level Boost Great People as well, which means Classical Age Wisdom will no longer affect Zenobia - the shards you've spent on upgrade will be refunded
+
+Indian:
+
 - Red Fort: +5 Building Level Boost to all buildings within 4-tile range. This wonder can be upgraded and each additional level provides an extra +1 Building Level Boost
 - Ganges River: Each type of building within 2-tile radius gets +N Production Multiplier, N = level of Age Wisdom for the age in which the building is unlocked
 - Sundarbans: Double the effect of all Age Wisdoms
 - Sanchi Stupa: Transports from or to buildings within 2-tile range are immediate
 - Qutb Minar: When completed, a great person of all ages except the current age is born. This wonder can be upgraded and each additional upgrade provides an extra great person of all ages except the current age. When choosing great people from this wonder, 4 choices are provided
-- Festival: Diwali: Increase the range of Ganges River to 3-tile. Increase the range of Qutb Minar to 3-tile. Double the level boost from Red Fort
-
+- Festival: Diwali: Increase the range of Ganges River to 3-tile. Increase the range of Sanchi Stupa to 3-tile. Double the level boost from Red Fort
+- Rabindranath Tagore: +2 Production Multiplier, Storage Multiplier for Embassy
+- Akbar The Great: +1 Level to Red Fort
 
 Patch Notes:
 - Add "todos" that helps with empire management

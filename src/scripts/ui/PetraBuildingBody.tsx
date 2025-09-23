@@ -5,6 +5,7 @@ import { Tick } from "../../../shared/logic/TickLogic";
 import { L, t } from "../../../shared/utilities/i18n";
 import { playError } from "../visuals/Sound";
 import { BuildingColorComponent } from "./BuildingColorComponent";
+import { BuildingDescriptionComponent } from "./BuildingDescriptionComponent";
 import type { IBuildingComponentProps } from "./BuildingPage";
 import { BuildingValueComponent } from "./BuildingValueComponent";
 import { BuildingWikipediaComponent } from "./BuildingWikipediaComponent";
@@ -25,6 +26,7 @@ export function PetraBuildingBody({ gameState, xy }: IBuildingComponentProps): R
    const baseStorage = getPetraBaseStorage(petra);
    return (
       <div className="window-body">
+         <BuildingDescriptionComponent gameState={gameState} xy={xy} />
          <fieldset>
             <legend className="text-strong">{t(L.LevelX, { level: petra.level })}</legend>
             <button

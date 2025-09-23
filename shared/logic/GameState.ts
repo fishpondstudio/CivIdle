@@ -254,6 +254,12 @@ export class GameOptions {
    disabledTodos = new Set<string>();
    showWonderPopup = true;
    showNaturalWonderPopup = true;
+   migrationFlags = MigrationFlags.None;
+}
+
+export enum MigrationFlags {
+   None = 0,
+   ZenobiaMigrated = 1 << 0,
 }
 
 export enum RebirthFlags {

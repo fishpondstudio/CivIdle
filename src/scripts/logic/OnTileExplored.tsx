@@ -105,7 +105,8 @@ export function onTileExplored(xy: Tile): void {
             forEach(getGameOptions().greatPeople, (gp, inv) => {
                if (
                   (Config.GreatPerson[gp].type === GreatPersonType.Normal ||
-                     Config.GreatPerson[gp].type === GreatPersonType.Adaptive) &&
+                     Config.GreatPerson[gp].type === GreatPersonType.Adaptive ||
+                     Config.GreatPerson[gp].type === GreatPersonType.LevelBoost) &&
                   inv.amount > 0
                ) {
                   --inv.amount;

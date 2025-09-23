@@ -33,9 +33,9 @@ export function BroadwayBuildingBody({ gameState, xy }: IBuildingComponentProps)
                {[...building.greatPeople].map((gp) => {
                   const def = Config.GreatPerson[gp];
                   const effect = getGreatPersonTotalLevel(gp, gameState);
-                  if (effect <= 0) return <></>;
+                  if (effect <= 0) return null;
                   if (def.type !== GreatPersonType.Normal && def.type !== GreatPersonType.Adaptive) {
-                     return <></>;
+                     return null;
                   }
                   return (
                      <div key={gp} className="row mb5">
@@ -104,7 +104,6 @@ export function BroadwayBuildingBody({ gameState, xy }: IBuildingComponentProps)
                         if (def.type !== GreatPersonType.Normal && def.type !== GreatPersonType.Adaptive) {
                            return null;
                         }
-                        if (k === "Zenobia") return null;
                         const effect = getGreatPersonTotalLevel(k, gameState);
                         if (effect <= 0) return null;
                         const active = building.greatPeople.has(k);
