@@ -78,6 +78,7 @@ function TodoComponent(): React.ReactNode {
             if (!t.condition(gs, options)) {
                return null;
             }
+            const value = t.value?.(gs, options);
             return (
                <Tippy
                   placement="bottom"
@@ -98,6 +99,7 @@ function TodoComponent(): React.ReactNode {
                      }}
                   >
                      <div className="m-icon">{t.icon}</div>
+                     {value && <div className="count">{value}</div>}
                   </div>
                </Tippy>
             );

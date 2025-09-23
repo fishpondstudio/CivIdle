@@ -170,4 +170,15 @@ body .tippy-box {
    display: flex;
    align-items: center;
    justify-content: center;
+   position: relative;
+
+   .count {
+      position: absolute;
+      top: 4px;
+      right: 5px;
+      display: block;
+      background: rgba(255, 255, 255, 0.75);
+      font-size: 1.2rem;
+      border-radius: 50%;
+   }
 }

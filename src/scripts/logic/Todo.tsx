@@ -30,6 +30,7 @@ export interface ITodo {
    icon: string;
    className: string;
    desc: (gs: GameState, options: GameOptions) => string;
+   value?: (gs: GameState, options: GameOptions) => number;
    condition: (gs: GameState, options: GameOptions) => boolean;
    onClick: (gs: GameState, options: GameOptions) => void;
 }
@@ -68,6 +69,9 @@ export const _Todos = {
          }
          return false;
       },
+      value: (gs, options) => {
+         return mapCount(Tick.current.notProducingReasons, (v) => v === NotProducingReason.NotEnoughWorkers);
+      },
       onClick: (gs, options) => {
          Singleton()
             .sceneManager.getCurrent(WorldScene)
@@ -98,6 +102,12 @@ export const _Todos = {
          }
          return false;
       },
+      value: (gs, options) => {
+         return mapCount(
+            Tick.current.notProducingReasons,
+            (v) => v === NotProducingReason.NotEnoughResources,
+         );
+      },
       onClick: (gs, options) => {
          Singleton()
             .sceneManager.getCurrent(WorldScene)
@@ -124,6 +134,9 @@ export const _Todos = {
             }
          }
          return false;
+      },
+      value: (gs, options) => {
+         return mapCount(Tick.current.notProducingReasons, (v) => v === NotProducingReason.NoPower);
       },
       onClick: (gs, options) => {
          Singleton()
@@ -152,6 +165,9 @@ export const _Todos = {
          }
          return false;
       },
+      value: (gs, options) => {
+         return mapCount(Tick.current.notProducingReasons, (v) => v === NotProducingReason.StorageFull);
+      },
       onClick: (gs, options) => {
          Singleton()
             .sceneManager.getCurrent(WorldScene)
@@ -178,6 +194,9 @@ export const _Todos = {
             }
          }
          return false;
+      },
+      value: (gs, options) => {
+         return mapCount(Tick.current.notProducingReasons, (v) => v === NotProducingReason.TurnedOff);
       },
       onClick: (gs, options) => {
          Singleton()
