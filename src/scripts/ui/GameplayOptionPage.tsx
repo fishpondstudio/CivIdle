@@ -154,6 +154,23 @@ export function GameplayOptionPage(): React.ReactNode {
                   }}
                />
                <div className="sep10" />
+               <div className="separator"></div>
+               <div className="row mb5">
+                  <div className="f1">{t(L.DefaultProductionPriorityForBuildingsThatProduceWorkers)}</div>
+                  <div className="text-strong">{options.defaultWorkerProductionPriority}</div>
+               </div>
+               <input
+                  type="range"
+                  min={PRIORITY_MIN}
+                  max={PRIORITY_MAX}
+                  step="1"
+                  value={options.defaultWorkerProductionPriority}
+                  onChange={(e) => {
+                     options.defaultWorkerProductionPriority = safeParseInt(e.target.value, PRIORITY_MIN);
+                     notifyGameOptionsUpdate(options);
+                  }}
+               />
+               <div className="sep10" />
                <div className="separator" />
                <div className="row mb5">
                   <div className="f1">{t(L.DefaultConstructionPriority)}</div>
@@ -167,6 +184,23 @@ export function GameplayOptionPage(): React.ReactNode {
                   value={options.defaultConstructionPriority}
                   onChange={(e) => {
                      options.defaultConstructionPriority = safeParseInt(e.target.value, PRIORITY_MIN);
+                     notifyGameOptionsUpdate(options);
+                  }}
+               />
+               <div className="sep10" />
+               <div className="separator" />
+               <div className="row mb5">
+                  <div className="f1">{t(L.DefaultWonderConstructionPriority)}</div>
+                  <div className="text-strong">{options.defaultWonderConstructionPriority}</div>
+               </div>
+               <input
+                  type="range"
+                  min={PRIORITY_MIN}
+                  max={PRIORITY_MAX}
+                  step="1"
+                  value={options.defaultWonderConstructionPriority}
+                  onChange={(e) => {
+                     options.defaultWonderConstructionPriority = safeParseInt(e.target.value, PRIORITY_MIN);
                      notifyGameOptionsUpdate(options);
                   }}
                />

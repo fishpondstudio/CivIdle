@@ -24,7 +24,7 @@ import { L, t } from "../utilities/i18n";
 import { SAVE_FILE_VERSION } from "./Constants";
 import { getGameOptions, notifyGameOptionsUpdate } from "./GameStateLogic";
 import type { IShortcutConfig, Shortcut } from "./Shortcut";
-import { PRIORITY_MIN, type IBuildingData, type ITileData } from "./Tile";
+import type { IBuildingData, ITileData } from "./Tile";
 
 export interface IValueTracker {
    accumulated: number;
@@ -227,10 +227,12 @@ export class GameOptions {
    resourceBarShowUncappedHappiness = false;
    extraTileInfoType: ExtraTileInfoType = "StoragePercentage";
    buildingDefaults: Partial<Record<Building, Partial<IBuildingData>>> = {};
-   defaultProductionPriority = PRIORITY_MIN;
-   defaultConstructionPriority = PRIORITY_MIN;
-   defaultStockpileCapacity = 1;
-   defaultStockpileMax = 5;
+   defaultWorkerProductionPriority = 4;
+   defaultProductionPriority = 3;
+   defaultConstructionPriority = 2;
+   defaultWonderConstructionPriority = 1;
+   defaultStockpileCapacity = 2;
+   defaultStockpileMax = 25;
    defaultElectrificationLevel = 0;
    defaultBuildingLevel = 1;
    porcelainTowerMaxPickPerRoll = false;

@@ -1056,10 +1056,18 @@ export function applyBuildingDefaults(building: IBuildingData, options: GameOpti
       toApply.electrification = options.defaultElectrificationLevel;
    }
    if (isNullOrUndefined(toApply.constructionPriority)) {
-      toApply.constructionPriority = options.defaultConstructionPriority;
+      if (isWorldWonder(building.type)) {
+         toApply.constructionPriority = options.defaultWonderConstructionPriority;
+      } else {
+         toApply.constructionPriority = options.defaultConstructionPriority;
+      }
    }
    if (isNullOrUndefined(toApply.productionPriority)) {
-      toApply.productionPriority = options.defaultProductionPriority;
+      if (!isSpecialBuilding(building.type) && Config.Building[building.type].output.Worker) {
+         toApply.productionPriority = options.defaultWorkerProductionPriority;
+      } else {
+         toApply.productionPriority = options.defaultProductionPriority;
+      }
    }
 
    if (!isSpecialBuilding(building.type)) {

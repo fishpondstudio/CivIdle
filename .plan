@@ -21,3 +21,9 @@ Patch Notes:
 - Housing now unlocks Production Priority (previously unlocked by Herding)
 - Herding now unlocks Transport Preference (previously unlocked by Housing)
 - Construction cost of Statistics Office has been greatly reduced
+- Default Stockpile Input Capacity is now 2 (changed from 1)
+- Default Max Stockpile is now 25 (changed from 5)
+- Default Production Priority is now 3 (changed from 1)
+- Default Construction Priority is now 2 (changed from 1)
+- Add "Default Wonder Construction Priority" and default to 1
+- Add "Default Production Priority For Buildings That Produce Workers" and default to 4 
