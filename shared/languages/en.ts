@@ -1737,7 +1737,7 @@ export const EN = {
    SanchiStupa: "Sanchi Stupa",
    SanchiStupaDesc: "Transports from or to buildings within 2-tile range are immediate",
    QutbMinar: "Qutb Minar",
-   QutbMinarDesc: "When completed, a great person of all ages except the current age is born. This wonder can be upgraded and each additional upgrade provides an extra great person of all ages except the current age. When choosing great people from this wonder, 4 choices are provided",
+   QutbMinarDesc: "When completed, a great person is born - it can come from any age except the current one. This wonder can be upgraded, and each additional upgrade causes another great person to be born, which can come from any age except the current one. When choosing great people from this wonder, 4 choices are provided",
    GangesRiver: "Ganges River",
    GangesRiverDesc: "Each type of building within 2-tile radius gets +N Production Multiplier, N = level of Age Wisdom for the age in which the building is unlocked",
    Sundarbans: "Sundarbans",
