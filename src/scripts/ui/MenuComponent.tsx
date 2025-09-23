@@ -1,7 +1,7 @@
 import classNames from "classnames";
 import type { PropsWithChildren } from "react";
 import { useEffect, useRef, useState } from "react";
-import { DISCORD_URL } from "../../../shared/logic/Constants";
+import { DISCORD_URL, SUPPORTER_PACK_URL } from "../../../shared/logic/Constants";
 import { Tick } from "../../../shared/logic/TickLogic";
 import { isSaveOwner } from "../../../shared/utilities/DatabaseShared";
 import { isNullOrUndefined, sizeOf } from "../../../shared/utilities/Helper";
@@ -14,7 +14,7 @@ import { TechTreeScene } from "../scenes/TechTreeScene";
 import { WorldScene } from "../scenes/WorldScene";
 import { openUrl } from "../utilities/Platform";
 import { Singleton } from "../utilities/Singleton";
-import { playError } from "../visuals/Sound";
+import { playClick, playError } from "../visuals/Sound";
 import { AboutModal } from "./AboutModal";
 import { GameplayOptionPage } from "./GameplayOptionPage";
 import { showModal, showToast } from "./GlobalModal";
@@ -331,6 +331,15 @@ export function MenuComponent(): React.ReactNode {
                         <MenuItem check={false}>{t(L.CheckInAndExit)}</MenuItem>
                      </div>
                   ) : null}
+                  <div
+                     className="menu-popover-item"
+                     onPointerDown={() => {
+                        playClick();
+                        openUrl(SUPPORTER_PACK_URL);
+                     }}
+                  >
+                     <MenuItem check={false}>{t(L.SupporterPack)}</MenuItem>
+                  </div>
                   <div
                      className="menu-popover-item"
                      onPointerDown={() => {

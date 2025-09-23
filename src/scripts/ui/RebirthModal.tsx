@@ -1,3 +1,4 @@
+import Tippy from "@tippyjs/react";
 import { useEffect, useState } from "react";
 import type { City } from "../../../shared/definitions/CityDefinitions";
 import {
@@ -8,6 +9,7 @@ import {
    getRandomEmptyTiles,
 } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
+import { SUPPORTER_PACK_URL } from "../../../shared/logic/Constants";
 import { RebirthFlags } from "../../../shared/logic/GameState";
 import { getGameOptions, getGameState } from "../../../shared/logic/GameStateLogic";
 import {
@@ -38,6 +40,7 @@ import { checkRebirthAchievements } from "../logic/Achievement";
 import { clientHeartbeat } from "../logic/Heartbeat";
 import { canEarnGreatPeopleFromReborn, client, isOnlineUser, useTrades, useUser } from "../rpc/RPCClient";
 import { jsxMapOf } from "../utilities/Helper";
+import { openUrl } from "../utilities/Platform";
 import { GreatPersonImage } from "../visuals/GreatPersonVisual";
 import { playClick, playError } from "../visuals/Sound";
 import { hideModal, showToast } from "./GlobalModal";
@@ -226,20 +229,28 @@ export function RebirthModal(): React.ReactNode {
                      {Config.City[nextCity].requireSupporterPack ? (
                         <>
                            <div className="separator-vertical" style={{ height: 30, margin: "-5px 20px" }} />
-                           <div className="row f1">
-                              <div className="mr5">{t(L.SupporterPackRequired)}</div>
-                              <MiscTextureComponent name="Supporter" scale={0.2} />
-                              <div className="f1" />
-                              <div>
-                                 {hasFlag(user?.attr ?? UserAttributes.None, UserAttributes.DLC1) ? (
-                                    <div className="m-icon small text-green">check_circle</div>
-                                 ) : getFreeCityThisWeek() === nextCity ? (
-                                    <div className="text-green text-strong">{t(L.FreeThisWeek)}</div>
-                                 ) : (
-                                    <div className="m-icon small text-red">cancel</div>
-                                 )}
+                           <Tippy content={t(L.SupporterPackRequiredTooltip)}>
+                              <div
+                                 className="row f1 pointer"
+                                 onClick={() => {
+                                    playClick();
+                                    openUrl(SUPPORTER_PACK_URL);
+                                 }}
+                              >
+                                 <div className="mr5">{t(L.SupporterPackRequired)}</div>
+                                 <MiscTextureComponent name="Supporter" scale={0.2} />
+                                 <div className="f1" />
+                                 <div>
+                                    {hasFlag(user?.attr ?? UserAttributes.None, UserAttributes.DLC1) ? (
+                                       <div className="m-icon small text-green">check_circle</div>
+                                    ) : getFreeCityThisWeek() === nextCity ? (
+                                       <div className="text-green text-strong">{t(L.FreeThisWeek)}</div>
+                                    ) : (
+                                       <div className="m-icon small text-red">cancel</div>
+                                    )}
+                                 </div>
                               </div>
-                           </div>
+                           </Tippy>
                         </>
                      ) : null}
                   </div>

@@ -1,6 +1,5 @@
 TODO:
 - Backport Warp Usage
-- Supporter Pack link
 
 Level Boost Great People:
 
@@ -38,3 +37,4 @@ Patch Notes:
 - Default Construction Priority is now 2 (changed from 1)
 - Add "Default Wonder Construction Priority" and default to 1
 - Add "Default Production Priority For Buildings That Produce Workers" and default to 4 
+- Add a link to Supporter Pack on Steam in Help -> Supporter Pack

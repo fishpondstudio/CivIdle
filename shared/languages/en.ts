@@ -1744,4 +1744,7 @@ export const EN = {
    SundarbansDesc: "Double the effect of all Age Wisdoms",
    RabindranathTagore: "Rabindranath Tagore",
    AkbarTheGreat: "Akbar The Great",
+   SupporterPackReminder: "You have played for <b>%{time}</b>. Consider purchasing the <b>Supporter Pack</b> to help keep the game server running",
+   SupporterPackRequiredTooltip: "This civilization requires Supporter Pack. Click to view the Supporter Pack on Steam",
+   SupporterPack: "Supporter Pack",
 };

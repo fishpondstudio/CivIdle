@@ -2,7 +2,7 @@ import Tippy from "@tippyjs/react";
 import classNames from "classnames";
 import { useEffect, useState } from "react";
 import { Config } from "../../../shared/logic/Config";
-import { TRIBUNE_TRADE_VALUE_PER_MINUTE } from "../../../shared/logic/Constants";
+import { SUPPORTER_PACK_URL, TRIBUNE_TRADE_VALUE_PER_MINUTE } from "../../../shared/logic/Constants";
 import { getGameOptions, getGameState } from "../../../shared/logic/GameStateLogic";
 import {
    getRebirthGreatPeopleCount,
@@ -19,7 +19,15 @@ import {
    UserColorsNames,
    type UserColors,
 } from "../../../shared/utilities/Database";
-import { HOUR, forEach, formatHM, hasFlag, safeParseInt, sizeOf } from "../../../shared/utilities/Helper";
+import {
+   HOUR,
+   SECOND,
+   forEach,
+   formatHM,
+   hasFlag,
+   safeParseInt,
+   sizeOf,
+} from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import { resetToCity, saveGame } from "../Global";
 import { AccountLevelNames } from "../logic/AccountLevel";
@@ -35,16 +43,27 @@ import { ChangePlayerHandleModal } from "./ChangePlayerHandleModal";
 import { ConfirmModal } from "./ConfirmModal";
 import { showModal, showToast } from "./GlobalModal";
 import { FormatNumber } from "./HelperComponents";
-import { RenderHTML } from "./RenderHTMLComponent";
+import { RenderHTML, html } from "./RenderHTMLComponent";
 import { TextWithHelp } from "./TextWithHelpComponent";
 import { AccountLevelComponent, MiscTextureComponent, PlayerFlagComponent } from "./TextureSprites";
 import { WarningComponent } from "./WarningComponent";
 
+let _playTime = 0;
+
 export function PlayerHandleComponent() {
    const user = useUser();
    const eligibleRank = useEligibleAccountRank();
-   const [showDetails, setShowDetails] = useState(false);
    const accountLevel = user?.level ?? AccountLevel.Tribune;
+   const [playTime, setPlayTime] = useState(_playTime);
+   useEffect(() => {
+      if (_playTime > 0) {
+         return;
+      }
+      client.getPlayTime().then((time) => {
+         _playTime = time * SECOND;
+         setPlayTime(_playTime);
+      });
+   }, []);
    return (
       <fieldset>
          <legend>{t(L.PlayerHandle)}</legend>
@@ -63,6 +82,18 @@ export function PlayerHandleComponent() {
             <div className="text-strong">{t(L.PlayerHandleOffline)}</div>
          ) : (
             <>
+               {!hasFlag(user.attr, UserAttributes.DLC1) && playTime >= 100 * HOUR && (
+                  <WarningComponent
+                     icon="info"
+                     className="mb10 text-small"
+                     onClick={() => {
+                        playClick();
+                        openUrl(SUPPORTER_PACK_URL);
+                     }}
+                  >
+                     {html(t(L.SupporterPackReminder, { time: formatHM(playTime) }))}
+                  </WarningComponent>
+               )}
                {eligibleRank > user.level ? (
                   <WarningComponent
                      icon="info"
@@ -107,7 +138,7 @@ export function PlayerHandleComponent() {
                   <AccountLevelComponent level={accountLevel} scale={0.15} style={{ marginRight: 5 }} />
                   <div>{AccountLevelNames[accountLevel]()}</div>
                </div>
-               {hasFlag(user.attr, UserAttributes.DLC1) ? (
+               {hasFlag(user.attr, UserAttributes.DLC1) && (
                   <div className="row text-strong mt5">
                      <div className="f1">{t(L.AccountCustomColor)}</div>
                      <select
@@ -135,7 +166,7 @@ export function PlayerHandleComponent() {
                         })}
                      </select>
                   </div>
-               ) : null}
+               )}
             </>
          )}
          <AccountDetails />

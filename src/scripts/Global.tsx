@@ -30,11 +30,12 @@ import {
 } from "../../shared/logic/RebirthLogic";
 import { Tick } from "../../shared/logic/TickLogic";
 import { Transports } from "../../shared/logic/Transports";
-import { AccountLevel } from "../../shared/utilities/Database";
+import { AccountLevel, UserAttributes } from "../../shared/utilities/Database";
 import {
    base64ToBytes,
    bytesToBase64,
    clamp,
+   clearFlag,
    forEach,
    keysOf,
    resolveIn,
@@ -326,6 +327,14 @@ if (import.meta.env.DEV) {
    // @ts-expect-error
    window.rankUp = () => {
       showModal(<AccountRankUpModal rank={AccountLevel.Consul} user={getUser()!} />);
+   };
+
+   // @ts-expect-error
+   window.removeSupporterPack = () => {
+      const user = getUser();
+      if (user) {
+         user.attr = clearFlag(user.attr, UserAttributes.DLC1);
+      }
    };
 
    // @ts-expect-error
