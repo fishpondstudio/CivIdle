@@ -277,11 +277,13 @@ export function RebirthModal(): React.ReactNode {
                            className="row p5"
                            style={{ backgroundColor: i % 2 === 0 ? "#efefef" : "#fff" }}
                         >
-                           <BuildingSpriteComponent
-                              building={building}
-                              scale={0.5}
-                              style={{ filter: "invert(0.75)", margin: "0 10px 0 0" }}
-                           />
+                           <div className="cc mr10" style={{ width: 50, height: 50 }}>
+                              <BuildingSpriteComponent
+                                 building={building}
+                                 scale={0.5}
+                                 style={{ filter: "invert(0.75)" }}
+                              />
+                           </div>
                            <div className="f1">
                               <div className="row">
                                  <div className="text-strong f1">{Config.Building[building].name()}</div>
@@ -302,11 +304,13 @@ export function RebirthModal(): React.ReactNode {
                            className="row p5"
                            style={{ backgroundColor: i % 2 === 0 ? "#fff" : "#efefef" }}
                         >
-                           <BuildingSpriteComponent
-                              building={building}
-                              scale={0.5}
-                              style={{ filter: "invert(0.75)", margin: "0 10px 0 0" }}
-                           />
+                           <div className="cc mr10" style={{ width: 50, height: 50 }}>
+                              <BuildingSpriteComponent
+                                 building={building}
+                                 scale={0.5}
+                                 style={{ filter: "invert(0.75)" }}
+                              />
+                           </div>
                            <div className="f1">
                               <div className="text-strong">{Config.Building[building].name()}</div>
                               <div>{getBuildingDescription(building)}</div>
@@ -362,11 +366,13 @@ export function RebirthModal(): React.ReactNode {
                <div className="text-strong mt5 mb5">{t(L.Festival)}</div>
                <div className="inset-shallow white">
                   <div className="row p5">
-                     <BuildingSpriteComponent
-                        building={`Headquarter_${nextCity}` as any}
-                        scale={0.5}
-                        style={{ filter: "invert(0.75)", margin: "0 10px 0 0" }}
-                     />
+                     <div className="cc mr10" style={{ width: 50, height: 50 }}>
+                        <BuildingSpriteComponent
+                           building={`Headquarter_${nextCity}` as any}
+                           scale={0.5}
+                           style={{ filter: "invert(0.75)" }}
+                        />
+                     </div>
                      <div className="f1">{Config.City[nextCity].festivalDesc()}</div>
                   </div>
                </div>

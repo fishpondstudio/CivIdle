@@ -67,7 +67,8 @@ import {
    type IResourceImportBuildingData,
    type ITileData,
 } from "./Tile";
-import { Transports } from "./Transports";
+import { Transports, type ITransportationDataV2 } from "./Transports";
+import { completeTransport } from "./Update";
 
 export function totalMultiplierFor(
    xy: Tile,
@@ -417,13 +418,14 @@ export function addTransportation(
    fuelPerTick: number,
    fromXy: Tile,
    toXy: Tile,
+   immediate: boolean,
    gs: GameState,
 ): void {
    const grid = getGrid(gs);
    const fromPosition = grid.xyToPosition(fromXy);
    const toPosition = grid.xyToPosition(toXy);
    useWorkers(fuelResource, fuelPerTick, null);
-   Transports.push({
+   const transport: ITransportationDataV2 = {
       id: ++gs.transportId,
       fromXy,
       fromPosition,
@@ -437,7 +439,15 @@ export function addTransportation(
       fuelPerTick,
       fuelCurrentTick: fuelPerTick,
       hasEnoughFuel: true,
-   });
+   };
+   if (immediate) {
+      const targetBuilding = gs.tiles.get(toXy)?.building;
+      if (targetBuilding) {
+         completeTransport(targetBuilding, resource, amount);
+      }
+   } else {
+      Transports.push(transport);
+   }
 }
 
 export function getScienceFromWorkers(gs: GameState) {

@@ -58,6 +58,7 @@ import {
    getWorkingBuilding,
    hasEnoughResources,
    hasRequiredDeposit,
+   isFestival,
    isNaturalWonder,
    isSpecialBuilding,
    isTransportable,
@@ -126,14 +127,10 @@ export function tickTransports(gs: GameState): void {
    const grid = getGrid(gs);
    filterInPlace(Transports, (transport) => {
       // Has arrived!
-      if (tickTransportation(transport, grid)) {
-         const building = gs.tiles.get(transport.toXy)?.building;
-         if (building) {
-            safeAdd(building.resources, transport.resource, transport.amount);
-            if (building.type === "CloneFactory") {
-               const clone = building as ICloneBuildingData;
-               clone.transportedAmount += transport.amount;
-            }
+      if (tickTransport(transport, grid)) {
+         const targetBuilding = gs.tiles.get(transport.toXy)?.building;
+         if (targetBuilding) {
+            completeTransport(targetBuilding, transport.resource, transport.amount);
          }
          return false;
       }
@@ -150,7 +147,15 @@ export function tickTransports(gs: GameState): void {
    });
 }
 
-function tickTransportation(transport: ITransportationDataV2, grid: Grid): boolean {
+export function completeTransport(targetBuilding: IBuildingData, resource: Resource, amount: number) {
+   safeAdd(targetBuilding.resources, resource, amount);
+   if (targetBuilding.type === "CloneFactory") {
+      const clone = targetBuilding as ICloneBuildingData;
+      clone.transportedAmount += amount;
+   }
+}
+
+function tickTransport(transport: ITransportationDataV2, grid: Grid): boolean {
    const totalTick = grid.distanceTile(transport.fromXy, transport.toXy);
 
    // TODO: This needs to be double checked when fuel is implemented!
@@ -912,6 +917,18 @@ export function transportResource(
          transportCapacity = Number.POSITIVE_INFINITY;
       }
 
+      let immediate = false;
+      const festival = isFestival("SanchiStupa", gs);
+      const range = festival ? 3 : 2;
+      const sanchiStupa = Tick.current.specialBuildings.get("SanchiStupa");
+      if (
+         sanchiStupa &&
+         (grid.distanceTile(from, sanchiStupa.tile) <= range ||
+            grid.distanceTile(targetXy, sanchiStupa.tile) <= range)
+      ) {
+         immediate = true;
+      }
+
       if (toBuildingType && Config.Building[toBuildingType].output.Worker) {
          transportCapacity = Number.POSITIVE_INFINITY;
       }
@@ -921,12 +938,12 @@ export function transportResource(
          const fuelLeft = getAvailableWorkers("Worker");
          if (fuelLeft >= fuelAmount) {
             sourceBuilding.resources[res]! -= amountLeft;
-            addTransportation(res, amountLeft, "Worker", fuelAmount, from, targetXy, gs);
+            addTransportation(res, amountLeft, "Worker", fuelAmount, from, targetXy, immediate, gs);
             amountLeft = 0;
          } else if (fuelLeft > 0) {
             const amountAfterFuel = (amountLeft * fuelLeft) / fuelAmount;
             sourceBuilding.resources[res]! -= amountAfterFuel;
-            addTransportation(res, amountAfterFuel, "Worker", fuelLeft, from, targetXy, gs);
+            addTransportation(res, amountAfterFuel, "Worker", fuelLeft, from, targetXy, immediate, gs);
             amountLeft -= amountAfterFuel;
          }
          // Here we return because either we've got all we need, or we run out of workers (no need to continue)
@@ -937,13 +954,13 @@ export function transportResource(
       const fuelLeft = getAvailableWorkers("Worker");
       if (fuelLeft >= fuelAmount) {
          sourceBuilding.resources[res]! -= amountToTransport;
-         addTransportation(res, amountToTransport, "Worker", fuelAmount, from, targetXy, gs);
+         addTransportation(res, amountToTransport, "Worker", fuelAmount, from, targetXy, immediate, gs);
          amountLeft -= amountToTransport;
          // We continue here because the next source might have what we need
       } else if (fuelLeft > 0) {
          const amountAfterFuel = (amountToTransport * fuelLeft) / fuelAmount;
          sourceBuilding.resources[res]! -= amountAfterFuel;
-         addTransportation(res, amountAfterFuel, "Worker", fuelLeft, from, targetXy, gs);
+         addTransportation(res, amountAfterFuel, "Worker", fuelLeft, from, targetXy, immediate, gs);
          amountLeft -= amountAfterFuel;
          // We return here because we run out of workers (no need to continue)
          return amountLeft;

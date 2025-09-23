@@ -856,14 +856,6 @@
                 "h": 94
             }
         },
-        "Building_GreatStupaAtSanchi": {
-            "frame": {
-                "x": 510,
-                "y": 938,
-                "w": 100,
-                "h": 98
-            }
-        },
         "Building_GreatWall": {
             "frame": {
                 "x": 102,
@@ -1106,7 +1098,7 @@
         },
         "Building_IronForge": {
             "frame": {
-                "x": 612,
+                "x": 510,
                 "y": 938,
                 "w": 100,
                 "h": 98
@@ -1810,7 +1802,7 @@
         },
         "Building_RocketFactory": {
             "frame": {
-                "x": 714,
+                "x": 612,
                 "y": 938,
                 "w": 100,
                 "h": 98
@@ -1838,6 +1830,14 @@
                 "y": 102,
                 "w": 95,
                 "h": 100
+            }
+        },
+        "Building_SanchiStupa": {
+            "frame": {
+                "x": 714,
+                "y": 938,
+                "w": 100,
+                "h": 98
             }
         },
         "Building_Sandpit": {

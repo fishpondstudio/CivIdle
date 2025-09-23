@@ -1871,5 +1871,53 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
 
          break;
       }
+      case "RedFort": {
+         const levelBoost = 5 + (building.level - 1);
+         for (const point of grid.getRange(tileToPoint(xy), 5)) {
+            mapSafePush(Tick.next.levelBoost, pointToTile(point), {
+               value: isFestival("RedFort", gs) ? 2 * levelBoost : levelBoost,
+               source: buildingName,
+            });
+         }
+         break;
+      }
+      case "GangesRiver": {
+         const buildings = new Set<Building>();
+         for (const point of grid.getRange(tileToPoint(xy), isFestival("RedFort", gs) ? 3 : 2)) {
+            const tile = pointToTile(point);
+            const targetBuilding = gs.tiles.get(tile)?.building;
+            if (targetBuilding) {
+               buildings.add(targetBuilding.type);
+            }
+         }
+         buildings.forEach((building) => {
+            const age = Config.BuildingTechAge[building];
+            if (!age) {
+               return;
+            }
+            if (isWorldOrNaturalWonder(building)) {
+               return;
+            }
+            const wisdom = options.ageWisdom[age] ?? 0;
+            if (wisdom > 0) {
+               addMultiplier(building, { output: wisdom }, buildingName);
+            }
+         });
+         break;
+      }
+      case "Sundarbans": {
+         forEach(options.ageWisdom, (age, level) => {
+            getGreatPeopleForWisdom(age).forEach((gp) => {
+               const greatPerson = Config.GreatPerson[gp];
+               greatPerson.tick(
+                  gp,
+                  level,
+                  `${buildingName} (${t(L.AgeWisdomSource, { age: Config.TechAge[age].name(), person: greatPerson.name() })})`,
+                  GreatPersonTickFlag.None,
+               );
+            });
+         });
+         break;
+      }
    }
 }

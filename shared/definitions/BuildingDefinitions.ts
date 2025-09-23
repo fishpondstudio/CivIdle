@@ -2133,6 +2133,61 @@ export class BuildingDefinitions {
       wikipedia: "Pygmy_marmoset",
    };
 
+   RedFort: IBuildingDefinition = {
+      name: () => t(L.RedFort),
+      desc: () => t(L.RedFortDesc),
+      input: {},
+      output: {},
+      construction: { Frigate: 100, Rifle: 100, GatlingGun: 100 },
+      max: 1,
+      special: BuildingSpecial.WorldWonder,
+      wikipedia: "Red_Fort",
+   };
+
+   SanchiStupa: IBuildingDefinition = {
+      name: () => t(L.SanchiStupa),
+      desc: () => t(L.SanchiStupaDesc),
+      input: {},
+      output: {},
+      construction: { Garment: 100, Sword: 100, Furniture: 100 },
+      max: 1,
+      special: BuildingSpecial.WorldWonder,
+      wikipedia: "Sanchi_Stupa",
+   };
+
+   QutbMinar: IBuildingDefinition = {
+      name: () => t(L.QutbMinar),
+      desc: () => t(L.QutbMinarDesc),
+      input: {},
+      output: {},
+      construction: { Banknote: 100, Galleon: 100, Knight: 100 },
+      max: 1,
+      special: BuildingSpecial.WorldWonder,
+      wikipedia: "Qutb_Minar",
+   };
+
+   GangesRiver: IBuildingDefinition = {
+      name: () => t(L.GangesRiver),
+      desc: () => t(L.GangesRiverDesc),
+      input: {},
+      output: {},
+      construction: {},
+      max: 0,
+      special: BuildingSpecial.NaturalWonder,
+      wikipedia: "Ganges",
+   };
+
+   Sundarbans: IBuildingDefinition = {
+      name: () => t(L.Sundarbans),
+      desc: () => t(L.SundarbansDesc),
+      input: {},
+      output: {},
+      construction: {},
+      max: 0,
+      special: BuildingSpecial.NaturalWonder,
+      wikipedia: "Sundarbans",
+   };
+
    // #endregion /////////////////////////////////////////////////////////////////////////////////////////////
 
    // Winery: IBuildingDefinition = {
@@ -2228,4 +2283,5 @@ export const BuildingShowLevel = new Set<Building>([
    "ChoghaZanbil",
    "LuxorTemple",
    "BigBen",
+   "RedFort",
 ] satisfies Building[]);

@@ -379,6 +379,33 @@ export class CityDefinitions {
       requireSupporterPack: true,
       festivalDesc: () => t(L.Carnival),
    };
+
+   Indian: ICityDefinition = {
+      name: () => t(L.Indian),
+      deposits: {
+         Water: 0.03,
+         Copper: 0.02,
+         Iron: 0.03,
+         Wood: 0.02,
+         Stone: 0.025,
+         Gold: 0.025,
+         Coal: 0.04,
+         Oil: 0.01,
+         Aluminum: 0.025,
+         NaturalGas: 0.04,
+         Uranium: 0.01,
+      },
+      size: 40,
+      buildingNames: {
+         Headquarter: () => t(L.RashtrapatiBhavan),
+      },
+      uniqueBuildings: { RedFort: "RapidFire", SanchiStupa: "Physics", QutbMinar: "Banking" },
+      uniqueMultipliers: {},
+      naturalWonders: { GangesRiver: true, Sundarbans: true },
+      requireGreatPeopleLevel: 100,
+      requireSupporterPack: true,
+      festivalDesc: () => t(L.Diwali),
+   };
 }
 
 export type City = keyof CityDefinitions;

@@ -6,11 +6,12 @@ TODO:
 - Freeman Dyson: +1 Level to Dyson Sphere
 - Vera Rubin: +1 Level to Matrioshka Brain
 
-- Red Fort: +5 Building Level Boost to all buildings within 5-tile range. This wonder can be upgraded and each additional level provides an extra +1 Building Level Boost
-- Ganges River: For each type of building within a 2-tile radius, provides +N Building Level Boost, N = level of Age Wisdom for the age in which the building is unlocked
+- Red Fort: +5 Building Level Boost to all buildings within 4-tile range. This wonder can be upgraded and each additional level provides an extra +1 Building Level Boost
+- Ganges River: Each type of building within 2-tile radius gets +N Production Multiplier, N = level of Age Wisdom for the age in which the building is unlocked
 - Sundarbans: Double the effect of all Age Wisdoms
-- Qutb Minar: Transports from or to buildings within 2-tile range are immediate
-- Great Stupa at Sanchi: When completed, a great person of all ages except the current age is born. This wonder can be upgraded and each additional upgrade provides an extra great person of all ages except the current age. When choosing great people from this wonder, 4 choices are provided
+- Sanchi Stupa: Transports from or to buildings within 2-tile range are immediate
+- Qutb Minar: When completed, a great person of all ages except the current age is born. This wonder can be upgraded and each additional upgrade provides an extra great person of all ages except the current age. When choosing great people from this wonder, 4 choices are provided
+- Festival: Diwali: Increase the range of Ganges River to 3-tile. Increase the range of Qutb Minar to 3-tile. Double the level boost from Red Fort
 
 
 Patch Notes:

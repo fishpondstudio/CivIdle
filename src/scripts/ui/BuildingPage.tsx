@@ -11,6 +11,7 @@ import { useGameState } from "../Global";
 import { Singleton } from "../utilities/Singleton";
 import { BritishMuseumBuildingBody } from "./BritishMuseumBuildingBody";
 import { BroadwayBuildingBody } from "./BroadwayBuildingBody";
+import { CathedralOfBrasiliaBuildingBody } from "./CathedralOfBrasiliaBuildingBody";
 import { CentrePompidouBuildingBody } from "./CentrePompidouBuildingBody";
 import { DefaultBuildingBody } from "./DefaultBuildingBody";
 import { EastIndiaCompanyBuildingBody } from "./EastIndiaCompanyBuildingBody";
@@ -20,6 +21,7 @@ import { HagiaSophiaBuildingBody } from "./HagiaSophiaBuildingBody";
 import { HeadquarterBuildingBody } from "./HeadquarterBuildingBody";
 import { FormatNumber } from "./HelperComponents";
 import { IdeologyBuildingBody } from "./IdeologyBuildingBody";
+import { ItaipuDamBuildingBody } from "./ItaipuDamBuildingBody";
 import { LoadingPage, LoadingPageStage } from "./LoadingPage";
 import { LouvreBuildingBody } from "./LouvreBuildingBody";
 import { MarketBuildingBody } from "./MarketBuildingBody";
@@ -30,6 +32,7 @@ import { PlayerTradeBuildingBody } from "./PlayerTradeBuildingBody";
 import { ReligionBuildingBody } from "./ReligionBuildingBody";
 import { ScienceProductionWonderBuildingBody } from "./ScienceProductionWonderBuildingBody";
 import { StatisticsBuildingBody } from "./StatisticsBuildingBody";
+import { SwissBankBuildingBody } from "./SwissBankBuildingBody";
 import { TheMetBuildingBody } from "./TheMetBuildingBody";
 import { TitleBarComponent } from "./TitleBarComponent";
 import { ToggleWonderBuildingBody } from "./ToggleableWonderBuildingBody";
@@ -39,9 +42,6 @@ import { UnitedNationsBuildingBody } from "./UnitedNationsBuildingBody";
 import { UpgradableWonderBuildingBody } from "./UpgradableWonderBuildingBody";
 import { WarehouseBuildingBody } from "./WarehouseBuildingBody";
 import { ZugspitzeBuildingBody } from "./ZugspitzeBuildingBody";
-import { SwissBankBuildingBody } from "./SwissBankBuildingBody";
-import { ItaipuDamBuildingBody } from "./ItaipuDamBuildingBody";
-import { CathedralOfBrasiliaBuildingBody } from "./CathedralOfBrasiliaBuildingBody";
 
 const BuildingBodyOverride: Partial<Record<Building, FunctionComponent<IBuildingComponentProps>>> = {
    Headquarter: HeadquarterBuildingBody,
@@ -86,6 +86,7 @@ const BuildingBodyOverride: Partial<Record<Building, FunctionComponent<IBuilding
    SwissBank: SwissBankBuildingBody,
    ItaipuDam: ItaipuDamBuildingBody,
    CathedralOfBrasilia: CathedralOfBrasiliaBuildingBody,
+   RedFort: UpgradableWonderBuildingBody,
 };
 
 export function BuildingPage(props: { tile: ITileData }): React.ReactNode {
