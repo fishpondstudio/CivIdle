@@ -100,7 +100,7 @@ export class PlayerTile extends Container {
       tariff.position.set(x * GridSize + 0.5 * GridSize, y * GridSize + 0.5 * GridSize + 15);
       tariff.alpha = isReserved ? 1 : 0.5;
 
-      if (data.city) {
+      if (data.city && data.city in Config.City) {
          let texture = _cityCache.get(data.city);
          if (!texture) {
             texture = context.app.renderer.generateTexture(
