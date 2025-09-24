@@ -1532,7 +1532,7 @@ export const ZH_CN = {
    Tile: "地块",
    TileBonusRefreshIn: "贸易地块加成将于 <b>%{time}</b> 后刷新",
    TileNotPowered: "地块未通电力",
-   TileNotPoweredHTML: "%{count} 建筑不生产，因为它们的地块未通电力，点击高亮他们",
+   TileNotPoweredHTML: "%{count} 建筑不生产，因为它们的地块未通电力，点击高亮它们",
    TimBernersLee: "蒂姆·伯纳斯-李",
    TimeWarp: "扭曲时间占比",
    TimeWarpWarning: "以超出计算机处理能力的速度加速，可能会导致数据丢失。使用风险自负！",
