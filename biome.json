@@ -1,15 +1,11 @@
 {
    "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
-   "organizeImports": {
-      "enabled": false
-   },
+   "assist": { "actions": { "source": { "organizeImports": "off" } } },
    "linter": {
       "enabled": true,
       "rules": {
          "recommended": true,
-         "a11y": {
-            "all": false
-         },
+         "a11y": {},
          "performance": {
             "noDelete": "warn"
          },
@@ -34,12 +30,13 @@
       "indentWidth": 3
    },
    "files": {
-      "ignore": [
-         "**/*.js",
-         "**/*.d.ts",
-         "shared/thirdparty/*",
-         "shared/languages/*",
-         "src/scripts/Version.json"
+      "includes": [
+         "**",
+         "!**/*.js",
+         "!**/*.d.ts",
+         "!**/shared/thirdparty/**/*",
+         "!**/shared/languages/**/*",
+         "!**/src/scripts/Version.json"
       ]
    }
 }
