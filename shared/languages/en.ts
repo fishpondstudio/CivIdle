@@ -1747,4 +1747,6 @@ export const EN = {
    SupporterPackReminder: "You have played for <b>%{time}</b>. Consider purchasing the <b>Supporter Pack</b> to help keep the game server running",
    SupporterPackRequiredTooltip: "This civilization requires Supporter Pack. Click to view the Supporter Pack on Steam",
    SupporterPack: "Supporter Pack",
+   NotEnoughPower: "Not Enough Power",
+   NotEnoughPowerHTML: "%{count} buildings are not electrified because they do not have enough power, click to highlight them",
 };

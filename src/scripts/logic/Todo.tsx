@@ -211,6 +211,26 @@ export const _Todos = {
             );
       },
    },
+   W4: {
+      name: () => t(L.NotEnoughPower),
+      icon: "power_off",
+      className: "text-orange",
+      desc: (gs, options) =>
+         t(L.NotEnoughPowerHTML, {
+            count: Tick.current.notEnoughPower.size,
+         }),
+      condition: (gs) => {
+         return Tick.current.notEnoughPower.size > 0;
+      },
+      value: (gs, options) => {
+         return Tick.current.notEnoughPower.size;
+      },
+      onClick: (gs, options) => {
+         Singleton()
+            .sceneManager.getCurrent(WorldScene)
+            ?.drawSelection(null, Array.from(Tick.current.notEnoughPower));
+      },
+   },
    W3: {
       name: () => t(L.TradeTileBonusWillRefresh),
       icon: "access_time",

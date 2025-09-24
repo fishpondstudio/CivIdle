@@ -32,6 +32,7 @@ interface ITickData {
    workersUsed: Map<Resource, number>;
    workersAssignment: Map<Tile, number>;
    electrified: Map<Tile, number>;
+   notEnoughPower: Set<Tile>;
    levelBoost: Map<Tile, LevelBoost[]>;
    resourcesByTile: Map<Resource, IBuildingIndex[]>;
    storagePercentages: Map<Tile, number>;
@@ -60,6 +61,7 @@ interface ITickData {
 export function EmptyTickData(): ITickData {
    return {
       electrified: new Map(),
+      notEnoughPower: new Set(),
       levelBoost: new Map(),
       buildingMultipliers: new Map(),
       unlockedBuildings: new Set(),

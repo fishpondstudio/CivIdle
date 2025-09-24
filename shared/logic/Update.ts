@@ -658,6 +658,8 @@ export function transportAndConsumeResources(
       if (getAvailableWorkers("Power") >= requiredPower) {
          useWorkers("Power", requiredPower, xy);
          Tick.next.electrified.set(xy, getElectrificationLevel(building, gs));
+      } else if (requiredPower > 0) {
+         Tick.next.notEnoughPower.add(xy);
       }
       if (Config.Building[building.type].power) {
          mapSafePush(Tick.next.levelBoost, xy, { value: 5, source: t(L.PoweredBuilding) });
