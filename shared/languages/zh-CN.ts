@@ -1011,7 +1011,7 @@ export const ZH_CN = {
    PeterHiggs: "彼得·希格斯",
    PeterHiggsDesc: "忙碌劳动者产出科学 +%{value}",
    Petra: "佩特拉",
-   PetraDescv2: "解锁更高扭曲倍速，该奇观可以升级，每一级提供1小时的扭曲存储。当你离线时生成扭曲时间，你可以用来加速你的帝国",
+   PetraDescV2: "解锁更高扭曲倍速，该奇观可以升级，每一级提供1小时的扭曲存储。当你离线时生成扭曲时间，你可以用来加速你的帝国",
    PetraOfflineTimeReconciliation: "与服务器脱机时间核准后，获得 %{count} 扭曲时间",
    Petrol: "汽油",
    PhiloFarnsworth: "菲洛·法恩斯沃斯",
