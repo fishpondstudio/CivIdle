@@ -1,7 +1,8 @@
 {
-   "root": false,
    "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
-   "assist": { "actions": { "source": { "organizeImports": "off" } } },
+   "organizeImports": {
+      "enabled": false
+   },
    "linter": {
       "enabled": false
    },
