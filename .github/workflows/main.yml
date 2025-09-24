@@ -1,4 +1,4 @@
-name: Build Win/Linux Steam (Beta)
+name: Build Win/Linux/macOS Steam (Beta)
 on:
   push:
     branches:
