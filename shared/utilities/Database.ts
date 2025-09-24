@@ -358,12 +358,12 @@ export enum Platform {
 
 export const TradeTileReservationDays: Record<AccountLevel, number> = {
    [AccountLevel.Tribune]: 1,
-   [AccountLevel.Quaestor]: 7,
-   [AccountLevel.Aedile]: 14,
-   [AccountLevel.Praetor]: 21,
-   [AccountLevel.Consul]: 28,
-   [AccountLevel.Caesar]: 28,
-   [AccountLevel.Augustus]: 28,
+   [AccountLevel.Quaestor]: 3,
+   [AccountLevel.Aedile]: 5,
+   [AccountLevel.Praetor]: 7,
+   [AccountLevel.Consul]: 9,
+   [AccountLevel.Caesar]: 9,
+   [AccountLevel.Augustus]: 9,
 };
 
 export const ChatMaxChars: Record<AccountLevel, number> = {

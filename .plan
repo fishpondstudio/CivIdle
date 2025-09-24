@@ -1,6 +1,3 @@
-TODO:
-- Backport Warp Usage
-
 Level Boost Great People:
 
 - William Shepherd: +1 Level to International Space Station
@@ -23,14 +20,19 @@ Indian:
 - Rabindranath Tagore: +2 Production Multiplier, Storage Multiplier for Embassy
 - Akbar The Great: +1 Level to Red Fort
 
-Patch Notes:
+Warp Speed Backport:
+Now when running at a higher warp speed, only the extra speed will cost warp.
+e.g.:
+- At 2x speed, it will cost 1/2 warp per game second (1 warp per wall clock second, previously 2 warp per wall clock second)
+- At 3x speed, it will cost 2/3 warp per game second (2 warp per wall clock second, previously 3 warp per wall clock second)
+- At 4x speed, it will cost 3/4 warp per game second (3 warp per wall clock second, previously 4 warp per wall clock second)
+
+Usability Improvements:
+
 - Add "todos" that helps with empire management
 - Add a popover when a Natural Wonder is discovered
 - Add a popover when a Wonder is constructed
 - A completely new tutorial for first time players!
-- Housing now unlocks Production Priority (previously unlocked by Herding)
-- Herding now unlocks Transport Preference (previously unlocked by Housing)
-- Construction cost of Statistics Office has been greatly reduced
 - Default Stockpile Input Capacity is now 2 (changed from 1)
 - Default Max Stockpile is now 25 (changed from 5)
 - Default Production Priority is now 3 (changed from 1)
@@ -38,3 +40,17 @@ Patch Notes:
 - Add "Default Wonder Construction Priority" and default to 1
 - Add "Default Production Priority For Buildings That Produce Workers" and default to 4 
 - Add a link to Supporter Pack on Steam in Help -> Supporter Pack
+
+Balancing for New Players:
+- Housing now unlocks Production Priority (previously unlocked by Herding)
+- Herding now unlocks Transport Preference (previously unlocked by Housing)
+- Construction cost of Statistics Office has been greatly reduced
+
+Trade Tile Reservation Days:
+- Tribune: 1 day (no change)
+- Quaestor: 3 days (from 7 days)
+- Aedile: 5 days (from 14 days)
+- Praetor: 7 days (from 21 days)
+- Consul: 9 days (from 28 days)
+- Caesar: 9 days (from 28 days)
+- Augustus: 9 days (from 28 days)
