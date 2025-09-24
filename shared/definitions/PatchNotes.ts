@@ -6,6 +6,11 @@ interface PatchNote {
 
 export const PatchNotes: PatchNote[] = [
    {
+      version: "0.26.0",
+      content: [],
+      link: "https://store.steampowered.com/news/app/2181940/view/532110628895064218",
+   },
+   {
       version: "0.25.3",
       content: [],
       link: "https://store.steampowered.com/news/app/2181940/view/541114656762102237",
