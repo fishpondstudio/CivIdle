@@ -87,6 +87,7 @@ const BuildingBodyOverride: Partial<Record<Building, FunctionComponent<IBuilding
    ItaipuDam: ItaipuDamBuildingBody,
    CathedralOfBrasilia: CathedralOfBrasiliaBuildingBody,
    RedFort: UpgradableWonderBuildingBody,
+   QutbMinar: UpgradableWonderBuildingBody,
 };
 
 export function BuildingPage(props: { tile: ITileData }): React.ReactNode {
