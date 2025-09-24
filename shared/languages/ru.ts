@@ -465,7 +465,7 @@ export const RU = {
    Drilling: "Бурение",
    DukeOfZhou: "Герцог Чжоу",
    DuneOfPilat: "Дюна Пилата",
-   DuneOfPilatDesc: "В каждой эпохе удваивает мудрость этох для предыдущей эпохи",
+   DuneOfPilatDesc: "В каждой эпохе удваивает мудрость эпох для предыдущей эпохи",
    DynamicMultiplierTooltip: "Динамический множитель - не влияет на Рабочих и Хранилище",
    Dynamite: "Динамит",
    DynamiteWorkshop: "Мастерская Динамита",
