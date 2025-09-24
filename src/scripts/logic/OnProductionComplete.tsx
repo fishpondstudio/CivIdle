@@ -1308,7 +1308,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
       case "InternationalSpaceStation": {
          const [extraLevel] = getWonderExtraLevel(building.type);
          Tick.next.globalMultipliers.storage.push({
-            value: 5 + (building.level - 1) + extraLevel,
+            value: 5 + (building.level - 1 + extraLevel),
             source: buildingName,
          });
          break;
@@ -1316,7 +1316,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
       case "MarinaBaySands": {
          const [extraLevel] = getWonderExtraLevel(building.type);
          Tick.next.globalMultipliers.worker.push({
-            value: 5 + 1 * (building.level - 1) + extraLevel,
+            value: 5 + 1 * (building.level - 1 + extraLevel),
             source: buildingName,
          });
          break;
@@ -1324,7 +1324,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
       case "PalmJumeirah": {
          const [extraLevel] = getWonderExtraLevel(building.type);
          Tick.next.globalMultipliers.builderCapacity.push({
-            value: 10 + 2 * (building.level - 1) + extraLevel,
+            value: 10 + 2 * (building.level - 1 + extraLevel),
             source: buildingName,
          });
          break;
@@ -1332,7 +1332,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
       case "AldersonDisk": {
          const [extraLevel] = getWonderExtraLevel(building.type);
          Tick.next.globalMultipliers.happiness.push({
-            value: 25 + 5 * (building.level - 1) + extraLevel,
+            value: 25 + 5 * (building.level - 1 + extraLevel),
             source: buildingName,
          });
          break;
@@ -1340,7 +1340,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
       case "DysonSphere": {
          const [extraLevel] = getWonderExtraLevel(building.type);
          Tick.next.globalMultipliers.output.push({
-            value: 5 + 1 * (building.level - 1) + extraLevel,
+            value: 5 + 1 * (building.level - 1 + extraLevel),
             source: buildingName,
          });
          break;
@@ -1348,11 +1348,11 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
       case "MatrioshkaBrain": {
          const [extraLevel] = getWonderExtraLevel(building.type);
          Tick.next.globalMultipliers.sciencePerBusyWorker.push({
-            value: 5 + (building.level - 1) + extraLevel,
+            value: 5 + (building.level - 1 + extraLevel),
             source: buildingName,
          });
          Tick.next.globalMultipliers.sciencePerIdleWorker.push({
-            value: 5 + (building.level - 1) + extraLevel,
+            value: 5 + (building.level - 1 + extraLevel),
             source: buildingName,
          });
          const hq = Tick.current.specialBuildings.get("Headquarter");
