@@ -197,6 +197,11 @@ export async function handleChatCommand(command: string): Promise<void> {
          addSystemMessage(JSON.stringify(resp));
          break;
       }
+      case "clearVotedBoost": {
+         await client.clearVotedBoost();
+         addSystemMessage("Voted boosts have been cleared");
+         break;
+      }
       case "queryplayer": {
          if (!parts[1]) {
             throw new Error("Invalid command format");

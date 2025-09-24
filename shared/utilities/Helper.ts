@@ -864,3 +864,15 @@ export function layoutSpaceAround(
    const space = (parentSize - total * childSize) / (total + 1);
    return space * (current + 1) + childSize * current;
 }
+
+export function groupBy<T, K extends string | number | symbol>(arr: T[], func: (v: T) => K): Record<K, T[]> {
+   const result = {} as Record<K, T[]>;
+   for (const v of arr) {
+      const key = func(v);
+      if (!result[key]) {
+         result[key] = [];
+      }
+      result[key].push(v);
+   }
+   return result;
+}
