@@ -13,16 +13,18 @@ import { getScienceAmount, getTechUnlockCost, unlockableTechs } from "../../../s
 import { NotProducingReason, Tick } from "../../../shared/logic/TickLogic";
 import { HOUR, entriesOf, formatHMS, mapCount } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
+import { getOwnedTradeTile } from "../scenes/PathFinder";
 import { PlayerMapScene } from "../scenes/PlayerMapScene";
 import { TechTreeScene } from "../scenes/TechTreeScene";
 import { LookAtMode, WorldScene } from "../scenes/WorldScene";
 import { ChooseGreatPersonModal } from "../ui/ChooseGreatPersonModal";
-import { showModal } from "../ui/GlobalModal";
+import { showModal, showToast } from "../ui/GlobalModal";
 import { ManageAgeWisdomModal } from "../ui/ManageAgeWisdomModal";
 import { ManagePermanentGreatPersonModal } from "../ui/ManagePermanentGreatPersonModal";
 import { TilePage } from "../ui/TilePage";
 import { openUrl } from "../utilities/Platform";
 import { Singleton } from "../utilities/Singleton";
+import { playClick } from "../visuals/Sound";
 import { getBuildNumber, getVersion } from "./Version";
 
 export interface ITodo {
@@ -221,7 +223,12 @@ export const _Todos = {
          return getVotingTime() <= 8 * HOUR;
       },
       onClick: (gs, options) => {
-         Singleton().sceneManager.loadScene(PlayerMapScene);
+         playClick();
+         if (getOwnedTradeTile()) {
+            Singleton().sceneManager.loadScene(PlayerMapScene);
+         } else {
+            showToast(t(L.PlayerTradeClaimTileFirstWarning));
+         }
       },
    },
    I1: {
