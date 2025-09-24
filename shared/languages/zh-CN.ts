@@ -1557,7 +1557,7 @@ export const ZH_CN = {
    TowerOfBabelDesc: "可为与该奇观相邻的建筑所有同类型建筑提供 +2 生产乘数（多次相邻不可叠加），需满足同类型建筑中至少有一座运转中建筑与奇观相邻",
    TradeFillSound: "填充贸易的声音",
    TradeTileBonusWillRefresh: "贸易地块加成和联合国刷新时间",
-   TradeTileBonusWillRefreshHTML: "贸易地块加成和联合国将于 </b> %{time}</b> 后刷新"",
+   TradeTileBonusWillRefreshHTML: "贸易地块加成和联合国将于 </b>%{time}</b> 后刷新"",
    TradeValue: "贸易价值",
    TraditionCommerce: "商业",
    TraditionCultivation: "教化",
