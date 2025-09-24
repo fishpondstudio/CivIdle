@@ -184,8 +184,9 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
 
          if (!offline) {
             gs.speedUp = clamp(gs.speedUp, 1, getMaxWarpStorage(gs));
-            if (gs.speedUp > 1 && (building.resources.Warp ?? 0) > 0) {
-               --building.resources.Warp!;
+            const cost = (gs.speedUp - 1) / gs.speedUp;
+            if (gs.speedUp > 1 && building.resources.Warp && building.resources.Warp >= cost) {
+               building.resources.Warp -= cost;
             } else {
                gs.speedUp = 1;
             }
