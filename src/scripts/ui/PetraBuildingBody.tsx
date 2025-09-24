@@ -1,6 +1,7 @@
 import { getPetraBaseStorage } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
 import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
+import { getGreatPersonTotalLevel } from "../../../shared/logic/RebirthLogic";
 import { Tick } from "../../../shared/logic/TickLogic";
 import { L, t } from "../../../shared/utilities/i18n";
 import { playError } from "../visuals/Sound";
@@ -10,7 +11,7 @@ import type { IBuildingComponentProps } from "./BuildingPage";
 import { BuildingValueComponent } from "./BuildingValueComponent";
 import { BuildingWikipediaComponent } from "./BuildingWikipediaComponent";
 import { FormatNumber } from "./HelperComponents";
-import { RenderHTML } from "./RenderHTMLComponent";
+import { RenderHTML, html } from "./RenderHTMLComponent";
 import { WarningComponent } from "./WarningComponent";
 import { WarpSpeedComponent } from "./WarpSpeedComponent";
 
@@ -24,11 +25,22 @@ export function PetraBuildingBody({ gameState, xy }: IBuildingComponentProps): R
       return null;
    }
    const baseStorage = getPetraBaseStorage(petra);
+   const zenobia = Config.GreatPerson.Zenobia.value(getGreatPersonTotalLevel("Zenobia"));
    return (
       <div className="window-body">
          <BuildingDescriptionComponent gameState={gameState} xy={xy} />
          <fieldset>
-            <legend className="text-strong">{t(L.LevelX, { level: petra.level })}</legend>
+            <div className="row">
+               <div className="f1">{t(L.WonderUpgradeLevel)}</div>
+               <div className="text-strong">{petra.level}</div>
+            </div>
+            <div className="row">
+               <div className="f1">
+                  {html(t(L.LevelFromGreatPerson, { person: Config.GreatPerson.Zenobia.name() }))}
+               </div>
+               <div className="text-strong">{zenobia}</div>
+            </div>
+            <div className="sep5" />
             <button
                disabled={(hq.resources.Warp ?? 0) < baseStorage}
                className="row w100 jcc"
