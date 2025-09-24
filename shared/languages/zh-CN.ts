@@ -933,6 +933,8 @@ export const ZH_CN = {
    NoKotiExport: "禁止对外输出瑞士货币",
    NoKotiExportDesc: "建筑将不能从瑞士银行中运输瑞士货币——他们仍然可以从其他非瑞士银行的建筑中运输瑞士货币",
    NoPowerRequired: "此类建筑无电力需求",
+   NotEnoughPower: "没有足够的电能",
+   NotEnoughPowerHTML: "%{count} 建筑没有电气化，因为它们的没有足够电能，点击高亮他们",
    NothingHere: "此处无可显示项",
    NotOnDeposit: "此建筑只适用于%{deposit}的沉积物",
    NuclearFission: "核裂变",
