@@ -73,7 +73,7 @@ export const ZH_CN = {
    Aeschylus: "埃斯库罗斯",
    Agamemnon: "阿伽门农",
    AgeWisdom: "时代智慧",
-   AgeWisdomDescHTML: "时代智慧给与相同时代且具备资质的永恒伟人提供<b>相同等级</b>加成效果——它可使用具备资质的永恒伟人碎片升级",
+   AgeWisdomDescHTML: "时代智慧可为相同时代且具备资质的永恒伟人赋予<b>相同智慧等级</b>加成效果——它可使用相同时代且具备资质的永恒伟人碎片升级",
    AgeWisdomGreatPeopleShardsNeeded: "你需要额外 %{amount} 块伟人碎片，才能进行下一次时代智慧升级",
    AgeWisdomGreatPeopleShardsSatisfied: "你已拥有足够的伟人碎片用于下一次时代智慧升级",
    AgeWisdomNeedMoreGreatPeopleShards: "需要更多伟人碎片",
