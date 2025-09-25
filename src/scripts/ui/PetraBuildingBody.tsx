@@ -1,7 +1,6 @@
-import { getPetraBaseStorage } from "../../../shared/logic/BuildingLogic";
+import { getPetraBaseStorage, getWonderExtraLevel } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
 import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
-import { getGreatPersonTotalLevel } from "../../../shared/logic/RebirthLogic";
 import { Tick } from "../../../shared/logic/TickLogic";
 import { L, t } from "../../../shared/utilities/i18n";
 import { playError } from "../visuals/Sound";
@@ -25,7 +24,6 @@ export function PetraBuildingBody({ gameState, xy }: IBuildingComponentProps): R
       return null;
    }
    const baseStorage = getPetraBaseStorage(petra);
-   const zenobia = Config.GreatPerson.Zenobia.value(getGreatPersonTotalLevel("Zenobia"));
    return (
       <div className="window-body">
          <BuildingDescriptionComponent gameState={gameState} xy={xy} />
@@ -38,7 +36,7 @@ export function PetraBuildingBody({ gameState, xy }: IBuildingComponentProps): R
                <div className="f1">
                   {html(t(L.LevelFromGreatPerson, { person: Config.GreatPerson.Zenobia.name() }))}
                </div>
-               <div className="text-strong">{zenobia}</div>
+               <div className="text-strong">{getWonderExtraLevel(petra.type)}</div>
             </div>
             <div className="sep5" />
             <button

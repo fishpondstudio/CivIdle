@@ -1011,6 +1011,22 @@ export class GreatPersonDefinitions {
       type: GreatPersonType.Adaptive,
    };
 
+   Beethoven: IGreatPersonDefinition = {
+      name: () => t(L.Beethoven),
+      desc: (self, level) =>
+         t(L.PlusXLevelToXBuilding, {
+            value: formatNumber(self.value(level)),
+            building: Config.Building.CologneCathedral.name(),
+         }),
+      time: "1770 ~ 1827 AD",
+      value: (level) => level,
+      maxLevel: Number.POSITIVE_INFINITY,
+      age: "IndustrialAge",
+      tick: (self, level, source) => {},
+      type: GreatPersonType.LevelBoost,
+      city: "German",
+   };
+
    // World Wars /////////////////////////////////////////////////////////////////////////////////////////////
 
    JohnDRockefeller: IGreatPersonDefinition = boostOf({
@@ -1579,6 +1595,22 @@ export class GreatPersonDefinitions {
       age: "ColdWarAge",
       tick: tickAdaptiveGreatPerson,
       type: GreatPersonType.Adaptive,
+   };
+
+   Pele: IGreatPersonDefinition = {
+      name: () => t(L.Pele),
+      desc: (self, level) =>
+         t(L.PlusXLevelToXBuilding, {
+            value: formatNumber(self.value(level)),
+            building: Config.Building.ItaipuDam.name(),
+         }),
+      time: "1940 ~ 2022 AD",
+      value: (level) => level,
+      maxLevel: Number.POSITIVE_INFINITY,
+      age: "ColdWarAge",
+      tick: (self, level, source) => {},
+      type: GreatPersonType.LevelBoost,
+      city: "Brazilian",
    };
 
    // Information ////////////////////////////////////////////////////////////////////////////////////////////

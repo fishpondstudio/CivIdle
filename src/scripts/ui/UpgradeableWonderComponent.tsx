@@ -1,4 +1,8 @@
-import { getBuildingCost, getWonderExtraLevel } from "../../../shared/logic/BuildingLogic";
+import {
+   getBuildingCost,
+   getWonderExtraLevel,
+   getWonderGreatPerson,
+} from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
 import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
 import { L, t } from "../../../shared/utilities/i18n";
@@ -13,7 +17,8 @@ export function UpgradeableWonderComponent({ gameState, xy }: IBuildingComponent
    if (!building) {
       return null;
    }
-   const [extraLevel, greatPerson] = getWonderExtraLevel(building.type);
+   const extraLevel = getWonderExtraLevel(building.type);
+   const greatPerson = getWonderGreatPerson(building.type);
    return (
       <fieldset>
          <div className="row">

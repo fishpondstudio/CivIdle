@@ -1,4 +1,3 @@
-import { getWonderExtraLevel } from "../../../shared/logic/BuildingLogic";
 import { BuildingColorComponent } from "./BuildingColorComponent";
 import { BuildingDescriptionComponent } from "./BuildingDescriptionComponent";
 import type { IBuildingComponentProps } from "./BuildingPage";
@@ -12,7 +11,6 @@ export function UpgradableWonderBuildingBody({ gameState, xy }: IBuildingCompone
    if (!building) {
       return null;
    }
-   const [extraLevel, greatPerson] = getWonderExtraLevel(building.type);
    return (
       <div className="window-body">
          <SpaceshipIdleComponent gameState={gameState} type={building.type} />

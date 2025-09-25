@@ -1,17 +1,14 @@
-import { getBuildingCost } from "../../../shared/logic/BuildingLogic";
-import { Config } from "../../../shared/logic/Config";
+import { getWonderExtraLevel } from "../../../shared/logic/BuildingLogic";
 import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
 import type { IItaipuDamBuildingData } from "../../../shared/logic/Tile";
 import { L, t } from "../../../shared/utilities/i18n";
-import { jsxMapOf } from "../utilities/Helper";
-import { playClick } from "../visuals/Sound";
 import { BuildingColorComponent } from "./BuildingColorComponent";
 import { BuildingDescriptionComponent } from "./BuildingDescriptionComponent";
 import type { IBuildingComponentProps } from "./BuildingPage";
 import { BuildingValueComponent } from "./BuildingValueComponent";
 import { BuildingWikipediaComponent } from "./BuildingWikipediaComponent";
-import { ResourceAmountComponent } from "./ResourceAmountComponent";
 import { SpaceshipIdleComponent } from "./SpaceshipIdleComponent";
+import { UpgradeableWonderComponent } from "./UpgradeableWonderComponent";
 
 export function ItaipuDamBuildingBody({ gameState, xy }: IBuildingComponentProps): React.ReactNode {
    const building = gameState.tiles.get(xy)?.building;
@@ -39,7 +36,9 @@ export function ItaipuDamBuildingBody({ gameState, xy }: IBuildingComponentProps
                </div>
             </div>
             <div className="row mb10">
-               <div className="text-strong">{building.level - itaipuDam.productionMultiplier}</div>
+               <div className="text-strong">
+                  {building.level + getWonderExtraLevel(building.type) - itaipuDam.productionMultiplier}
+               </div>
                <div className="f1"></div>
                <div className="text-strong">{itaipuDam.productionMultiplier}</div>
             </div>
@@ -47,7 +46,7 @@ export function ItaipuDamBuildingBody({ gameState, xy }: IBuildingComponentProps
                <input
                   type="range"
                   min={0}
-                  max={building.level}
+                  max={building.level + getWonderExtraLevel(building.type)}
                   step={1}
                   value={itaipuDam.productionMultiplier}
                   onChange={(e) => {
@@ -56,42 +55,8 @@ export function ItaipuDamBuildingBody({ gameState, xy }: IBuildingComponentProps
                   }}
                />
             </div>
-            <div className="separator" />
-            <div className="row">
-               <div className="f1">{t(L.WonderUpgradeLevel)}</div>
-               <div className="text-strong">{building.level}</div>
-            </div>
-            <div className="separator" />
-            {jsxMapOf(getBuildingCost({ type: building.type, level: building.level }), (res, amount) => {
-               return (
-                  <div key={res} className="row">
-                     <div className="f1 text-strong">{Config.Resource[res].name()}</div>
-                     <div>
-                        <ResourceAmountComponent
-                           className="text-strong"
-                           resource={res}
-                           amount={amount}
-                           showLabel={false}
-                           showTooltip={true}
-                        />
-                     </div>
-                  </div>
-               );
-            })}
-            <div className="separator" />
-            <button
-               className="jcc w100 row"
-               onClick={() => {
-                  playClick();
-                  building.desiredLevel = building.level + 1;
-                  building.status = "upgrading";
-                  notifyGameStateUpdate();
-               }}
-            >
-               <div className="m-icon small">assistant_navigation</div>
-               <div className="text-strong f1">{t(L.Upgrade)}</div>
-            </button>
          </fieldset>
+         <UpgradeableWonderComponent gameState={gameState} xy={xy} />
          <BuildingValueComponent gameState={gameState} xy={xy} />
          <BuildingWikipediaComponent gameState={gameState} xy={xy} />
          <BuildingColorComponent gameState={gameState} xy={xy} />

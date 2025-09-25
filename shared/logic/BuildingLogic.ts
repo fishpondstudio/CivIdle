@@ -241,7 +241,7 @@ export function getMaxWarpStorage(gs: GameState): number {
       // Petra level based warp
       storage += getPetraBaseStorage(petra.building);
       // Zenobia level based warp
-      storage += HOUR * Config.GreatPerson.Zenobia.value(getGreatPersonTotalLevel("Zenobia"));
+      storage += HOUR * getWonderExtraLevel("Petra");
       // Fuji warp
       const fuji = findSpecialBuilding("MountFuji", gs);
       if (fuji && getGrid(gs).distanceTile(fuji.tile, petra.tile) <= 1) {
@@ -703,7 +703,7 @@ export function getBuildingLevelLabel(xy: Tile, gs: GameState): string {
       if (b.type === "SwissBank") {
          // Swiss Bank is a special case, we show the level boost (below)
       } else if (BuildingShowLevel.has(b.type)) {
-         const [extraLevel] = getWonderExtraLevel(b.type);
+         const extraLevel = getWonderExtraLevel(b.type);
          return extraLevel > 0 ? `${b.level}+${extraLevel}` : String(b.level);
       } else {
          return "";
@@ -1338,23 +1338,26 @@ export function getCathedralOfBrasiliaResources(
    return { buildings, input: inputResources, output: outputResources, unused: unusedResources };
 }
 
-export function getWonderExtraLevel(building: Building): [number, GreatPerson | null] {
-   switch (building) {
-      case "InternationalSpaceStation":
-         return [Math.floor(getGreatPersonTotalLevel("WilliamShepherd")), "WilliamShepherd"];
-      case "MarinaBaySands":
-         return [Math.floor(getGreatPersonTotalLevel("LeeKuanYew")), "LeeKuanYew"];
-      case "PalmJumeirah":
-         return [Math.floor(getGreatPersonTotalLevel("EmmanuelleCharpentier")), "EmmanuelleCharpentier"];
-      case "AldersonDisk":
-         return [Math.floor(getGreatPersonTotalLevel("DanAlderson")), "DanAlderson"];
-      case "DysonSphere":
-         return [Math.floor(getGreatPersonTotalLevel("FreemanDyson")), "FreemanDyson"];
-      case "MatrioshkaBrain":
-         return [Math.floor(getGreatPersonTotalLevel("VeraRubin")), "VeraRubin"];
-      case "RedFort":
-         return [Math.floor(getGreatPersonTotalLevel("AkbarTheGreat")), "AkbarTheGreat"];
-      default:
-         return [0, null];
+const WonderToGreatPerson: Partial<Record<Building, GreatPerson>> = {
+   InternationalSpaceStation: "WilliamShepherd",
+   MarinaBaySands: "LeeKuanYew",
+   PalmJumeirah: "EmmanuelleCharpentier",
+   AldersonDisk: "DanAlderson",
+   DysonSphere: "FreemanDyson",
+   MatrioshkaBrain: "VeraRubin",
+   RedFort: "AkbarTheGreat",
+   Petra: "Zenobia",
+   ItaipuDam: "Pele",
+};
+
+export function getWonderExtraLevel(building: Building): number {
+   const greatPerson = WonderToGreatPerson[building];
+   if (greatPerson) {
+      return Math.floor(getGreatPersonTotalLevel(greatPerson));
    }
+   return 0;
+}
+
+export function getWonderGreatPerson(building: Building): GreatPerson | undefined {
+   return WonderToGreatPerson[building];
 }

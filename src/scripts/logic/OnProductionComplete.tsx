@@ -1306,7 +1306,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          break;
       }
       case "InternationalSpaceStation": {
-         const [extraLevel] = getWonderExtraLevel(building.type);
+         const extraLevel = getWonderExtraLevel(building.type);
          Tick.next.globalMultipliers.storage.push({
             value: 5 + (building.level - 1 + extraLevel),
             source: buildingName,
@@ -1314,7 +1314,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          break;
       }
       case "MarinaBaySands": {
-         const [extraLevel] = getWonderExtraLevel(building.type);
+         const extraLevel = getWonderExtraLevel(building.type);
          Tick.next.globalMultipliers.worker.push({
             value: 5 + 1 * (building.level - 1 + extraLevel),
             source: buildingName,
@@ -1322,7 +1322,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          break;
       }
       case "PalmJumeirah": {
-         const [extraLevel] = getWonderExtraLevel(building.type);
+         const extraLevel = getWonderExtraLevel(building.type);
          Tick.next.globalMultipliers.builderCapacity.push({
             value: 10 + 2 * (building.level - 1 + extraLevel),
             source: buildingName,
@@ -1330,7 +1330,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          break;
       }
       case "AldersonDisk": {
-         const [extraLevel] = getWonderExtraLevel(building.type);
+         const extraLevel = getWonderExtraLevel(building.type);
          Tick.next.globalMultipliers.happiness.push({
             value: 25 + 5 * (building.level - 1 + extraLevel),
             source: buildingName,
@@ -1338,7 +1338,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          break;
       }
       case "DysonSphere": {
-         const [extraLevel] = getWonderExtraLevel(building.type);
+         const extraLevel = getWonderExtraLevel(building.type);
          Tick.next.globalMultipliers.output.push({
             value: 5 + 1 * (building.level - 1 + extraLevel),
             source: buildingName,
@@ -1346,7 +1346,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          break;
       }
       case "MatrioshkaBrain": {
-         const [extraLevel] = getWonderExtraLevel(building.type);
+         const extraLevel = getWonderExtraLevel(building.type);
          Tick.next.globalMultipliers.sciencePerBusyWorker.push({
             value: 5 + (building.level - 1 + extraLevel),
             source: buildingName,
@@ -1489,7 +1489,11 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
       case "CologneCathedral": {
          forEach(Config.Building, (b, def) => {
             if (!isSpecialBuilding(b) && def.output.Science) {
-               addMultiplier(b, { output: building.level }, buildingName);
+               addMultiplier(
+                  b,
+                  { output: building.level + getWonderExtraLevel(building.type) },
+                  buildingName,
+               );
             }
          });
          break;
@@ -1769,7 +1773,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
       case "ItaipuDam": {
          const itaipuDam = building as IItaipuDamBuildingData;
          const multiplier = itaipuDam.productionMultiplier;
-         const levelBoost = building.level - multiplier;
+         const levelBoost = building.level + getWonderExtraLevel(building.type) - multiplier;
 
          for (const point of grid.getRange(tileToPoint(xy), 2)) {
             const t = pointToTile(point);
@@ -1873,7 +1877,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          break;
       }
       case "RedFort": {
-         const levelBoost = 5 + (building.level - 1) + getWonderExtraLevel(building.type)[0];
+         const levelBoost = 5 + (building.level - 1) + getWonderExtraLevel(building.type);
          for (const point of grid.getRange(tileToPoint(xy), 4)) {
             mapSafePush(Tick.next.levelBoost, pointToTile(point), {
                value: isFestival("RedFort", gs) ? 2 * levelBoost : levelBoost,
