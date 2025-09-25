@@ -1,5 +1,9 @@
 TODO:
-- UN rework: Better random + Upgradeable
+
+United Nations Rework:
+- General Assembly votes now are guaranteed to have one building from each age.
+- General Assembly now only boosts Production Multiplier and the multiplier is now dynamic (i.e. does not affect storage)
+- United Nations can now be upgraded, each level provides +1 to General Assembly multipliers
 
 
 Level Boost Great People:

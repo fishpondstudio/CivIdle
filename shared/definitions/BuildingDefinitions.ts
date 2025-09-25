@@ -1316,7 +1316,7 @@ export class BuildingDefinitions {
    };
    UnitedNations: IBuildingDefinition = {
       name: () => t(L.UnitedNations),
-      desc: () => t(L.UnitedNationsDesc),
+      desc: () => t(L.UnitedNationsDescV2),
       input: {},
       output: {},
       construction: { Politics: 100, Law: 100, Diplomacy: 100 },
@@ -2285,4 +2285,5 @@ export const BuildingShowLevel = new Set<Building>([
    "BigBen",
    "RedFort",
    "QutbMinar",
+   "UnitedNations",
 ] satisfies Building[]);
