@@ -595,7 +595,7 @@ export const ZH_TW = {
    GalleonBuilder: "大帆船船塢",
    Gameplay: "遊戲設定",
    GangesRiver: "恒河",
-   GangesRiverDesc: "周圍 2 地塊範圍內的每種建築獲得 +N 額外建築等級，N 為解鎖該建築時代的時代智慧等級",
+   GangesRiverDesc: "周圍 2 地塊範圍內的每種建築獲得 +N 生產乘數，N 為解鎖該建築時代的時代智慧等級",
    Garment: "服裝",
    GarmentWorkshop: "製衣廠",
    GasPipeline: "天然氣管道",
