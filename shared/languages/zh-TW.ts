@@ -836,6 +836,7 @@ export const ZH_TW = {
    Manhattan: "曼哈頓",
    ManhattanProject: "曼哈頓計畫",
    ManhattanProjectDesc: "所有鈾礦生產、工人和儲存能力乘數 +2 。與鈾礦相鄰的鈾濃縮場與原子能設施的生產乘數 +1 ",
+   ManualAndGuide: "手册和指南",
    Marble: "石雕",
    Marbleworks: "石雕鋪",
    MarcoPolo: "馬可·波羅",
