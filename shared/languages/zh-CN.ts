@@ -596,7 +596,7 @@ export const ZH_CN = {
    GalleonBuilder: "大帆船船坞",
    Gameplay: "游戏设置",
    GangesRiver: "恒河",
-   GangesRiverDesc: "周围 2 地块范围内的所有建筑，提供 +N 额外建筑等级，N 为解锁该建筑时代的时代智慧等级",
+   GangesRiverDesc: "周围 2 地块范围内的每种建筑获得 +N 额外建筑等级，N 为解锁该建筑时代的时代智慧等级",
    Garment: "服装",
    GarmentWorkshop: "制衣工坊",
    GasPipeline: "天然气管道",
