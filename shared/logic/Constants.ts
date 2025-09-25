@@ -40,9 +40,11 @@ export const MAX_CHAT_PER_CHANNEL = 200;
 export const DISCORD_URL = "https://discord.com/invite/m5JWZtEKMZ";
 export const BACKUP_RECOVERY_URL =
    "https://steamcommunity.com/app/2181940/discussions/0/7260435610010445264/";
+export const ANTICHEAT_FAQ_URL = "https://steamcommunity.com/app/2181940/discussions/0/6629936675071563255/";
 export const TRIBUNE_TRADE_VALUE_PER_MINUTE = 10000;
 export const STEAM_PATCH_NOTES_URL = "https://store.steampowered.com/news/app/2181940";
 export const SUPPORTER_PACK_URL = "https://store.steampowered.com/app/2788080/";
+export const STEAM_GUIDE_URL = "https://steamcommunity.com/sharedfiles/filedetails/?id=3196523559";
 export const MAX_TARIFF_RATE = 0.1;
 export const OXFORD_SCIENCE_PER_UPGRADE = 5;
 export const MARKET_DEFAULT_TRADE_COUNT = 5;

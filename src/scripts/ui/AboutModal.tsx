@@ -10,7 +10,7 @@ import { hideModal } from "./GlobalModal";
 
 export function AboutModal(): React.ReactNode {
    return (
-      <div className="window">
+      <div className="window" style={{ width: "400px", maxWidth: "40vw" }}>
          <div className="title-bar">
             <div className="title-bar-text">{t(L.About)}</div>
          </div>
