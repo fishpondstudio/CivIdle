@@ -332,13 +332,9 @@ export function transportAndConsumeResources(
 
    if (building.status === "building" || building.status === "upgrading") {
       const cost = getBuildingCost(building);
-      const maxCost = getTotalBuildingCost(
-         building,
-         building.level,
-         isWorldWonder(building.type)
-            ? Math.min(building.desiredLevel, building.level + 1)
-            : building.desiredLevel,
-      );
+      const maxCost = isWorldWonder(building.type)
+         ? cost
+         : getTotalBuildingCost(building, building.level, building.desiredLevel);
       const { total } = getBuilderCapacity(building, xy, gs);
       const toTransport = new Map<Resource, number>();
       let completed = true;
