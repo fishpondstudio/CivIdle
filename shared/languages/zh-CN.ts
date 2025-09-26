@@ -431,7 +431,7 @@ export const ZH_CN = {
    Culus: "登基大典：卡帕多西亚的效果加倍。亚拉拉特山的效果将基于生效永恒伟人等级的平方根，而不是立方根。",
    CurrentLanguage: "简体中文",
    CurrentPlatform: "当前平台",
-   CursorBigOldFashioned: "老式光标 （大）",
+   CursorBigOldFashioned: "老式光标（大）",
    CursorOldFashioned: "老式光标",
    CursorStyle: "光标类型",
    CursorStyleDescHTML: "改变光标类型。<b>需重启游戏以生效</b>",
