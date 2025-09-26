@@ -1,5 +1,6 @@
 import Tippy from "@tippyjs/react";
 import classNames from "classnames";
+import { UpgradableWorldWonders } from "../../../shared/definitions/BuildingDefinitions";
 import { isSpecialBuilding, isWorldWonder } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
 import { GameFeature, hasFeature } from "../../../shared/logic/FeatureLogic";
@@ -33,7 +34,7 @@ export function ConstructionPage({ tile }: { tile: ITileData }): React.ReactNode
    const canDecreaseDesiredLevel = () => building.desiredLevel > building.level + 1;
 
    const increaseDesiredLevel = () => {
-      if (isSpecialBuilding(building.type)) {
+      if (isSpecialBuilding(building.type) && !UpgradableWorldWonders.has(building.type)) {
          return;
       }
       playClick();
@@ -41,7 +42,7 @@ export function ConstructionPage({ tile }: { tile: ITileData }): React.ReactNode
       notifyGameStateUpdate();
    };
    const decreaseDesiredLevel = () => {
-      if (isSpecialBuilding(building.type)) {
+      if (isSpecialBuilding(building.type) && !UpgradableWorldWonders.has(building.type)) {
          return;
       }
       if (canDecreaseDesiredLevel()) {
@@ -62,7 +63,7 @@ export function ConstructionPage({ tile }: { tile: ITileData }): React.ReactNode
                <BuildingDescriptionComponent gameState={gs} xy={tile.tile} />
             ) : null}
             <BuildingConstructionProgressComponent xy={tile.tile} gameState={gs} />
-            {isSpecialBuilding(building.type) ? null : (
+            {!isSpecialBuilding(building.type) || UpgradableWorldWonders.has(building.type) ? (
                <fieldset>
                   <legend>{t(L.Level)}</legend>
                   <div className="row text-strong">
@@ -74,12 +75,10 @@ export function ConstructionPage({ tile }: { tile: ITileData }): React.ReactNode
                         className="f1 row jce"
                         onWheel={(e) => {
                            if (e.deltaY < 0) {
-                              building.desiredLevel++;
-                              notifyGameStateUpdate();
+                              increaseDesiredLevel();
                            }
                            if (e.deltaY > 0 && canDecreaseDesiredLevel()) {
-                              building.desiredLevel--;
-                              notifyGameStateUpdate();
+                              decreaseDesiredLevel();
                            }
                         }}
                      >
@@ -104,7 +103,7 @@ export function ConstructionPage({ tile }: { tile: ITileData }): React.ReactNode
                      </div>
                   </div>
                </fieldset>
-            )}
+            ) : null}
             {!isWorldWonder(building.type) && building.level > 0 ? (
                <WarningComponent className="mb10 text-small" icon="warning">
                   <RenderHTML html={t(L.UpgradeBuildingNotProducingDescV2)} />
