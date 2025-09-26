@@ -1,3 +1,4 @@
+import Tippy from "@tippyjs/react";
 import { getMaxWarpSpeed, getMaxWarpStorage } from "../../../shared/logic/BuildingLogic";
 import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
 import { Tick } from "../../../shared/logic/TickLogic";
@@ -46,8 +47,13 @@ export function WarpSpeedComponent(): React.ReactNode {
             <div className="f1 text-center text-desc">
                {formatPercent((hq.building.resources.Warp ?? 0) / total)}
             </div>
+
             <div className="f1 text-right text-strong">
-               <FormatNumber value={hq.building.resources.Warp ?? 0} /> / <FormatNumber value={total} />
+               <Tippy content={`${Math.floor(hq.building.resources.Warp ?? 0)} / ${Math.floor(total)}`}>
+                  <span>
+                     <FormatNumber value={hq.building.resources.Warp ?? 0} /> / <FormatNumber value={total} />
+                  </span>
+               </Tippy>
             </div>
          </div>
       </fieldset>
