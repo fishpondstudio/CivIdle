@@ -146,6 +146,12 @@ body .tippy-box {
    gap: 0.5rem;
 }
 
+#top-left-panel.is-floating {
+   top: 4.5rem;
+   left: 0.5rem;
+   z-index: 301;
+}
+
 @keyframes breathing {
    0% {
       opacity: 0.25;

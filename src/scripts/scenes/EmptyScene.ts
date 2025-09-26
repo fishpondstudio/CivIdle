@@ -3,6 +3,6 @@ import { Scene } from "../utilities/SceneManager";
 
 export class EmptyScene extends Scene {
    override backgroundColor(): ColorSource {
-      return 0xffffff;
+      return 0x000000;
    }
 }

@@ -10,6 +10,12 @@
    font-size: 1.2rem;
 }
 
+#resource-panel.is-floating {
+   top: 0;
+   left: 0;
+   z-index: 301;
+}
+
 #resource-panel > .section {
    text-align: center;
    flex-direction: column;

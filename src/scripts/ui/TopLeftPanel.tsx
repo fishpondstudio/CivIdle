@@ -1,6 +1,6 @@
 import Tippy from "@tippyjs/react";
 import { cls } from "../../../shared/utilities/Helper";
-import { useGameOptions, useGameState } from "../Global";
+import { useFloatingMode, useGameOptions, useGameState } from "../Global";
 import { Todo } from "../logic/Todo";
 import { getCurrentTutorial } from "../logic/Tutorial";
 import { jsxMapOf } from "../utilities/Helper";
@@ -11,8 +11,9 @@ import { html } from "./RenderHTMLComponent";
 import { TutorialModal } from "./TutorialModal";
 
 export function TopLeftPanel(): React.ReactNode {
+   const isFloating = useFloatingMode();
    return (
-      <div id="top-left-panel">
+      <div id="top-left-panel" className={cls(isFloating ? "is-floating" : null)}>
          <TutorialComponent />
          <TodoComponent />
       </div>
@@ -66,6 +67,7 @@ function TutorialComponent(): React.ReactNode {
 function TodoComponent(): React.ReactNode {
    const gs = useGameState();
    const options = useGameOptions();
+   const isFloating = useFloatingMode();
    if (options.showTutorial) {
       return null;
    }
@@ -94,6 +96,9 @@ function TodoComponent(): React.ReactNode {
                      className={cls("todo pointer", t.className)}
                      key={t.name()}
                      onClick={() => {
+                        if (isFloating) {
+                           return;
+                        }
                         playClick();
                         t.onClick(gs, options);
                      }}

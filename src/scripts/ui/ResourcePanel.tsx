@@ -81,16 +81,6 @@ export function ResourcePanel(): React.ReactNode {
       }
    });
 
-   let styles: React.CSSProperties | undefined;
-   if (isFloating) {
-      styles = {
-         position: "absolute",
-         top: 0,
-         left: 0,
-         zIndex: 301,
-      };
-   }
-
    const updateWindowSize = () => {
       if (!isFloating) {
          return;
@@ -99,7 +89,7 @@ export function ResourcePanel(): React.ReactNode {
          return;
       }
       const rect = ref.current.getBoundingClientRect();
-      SteamClient.setSize(Math.round(rect.width), Math.round(rect.height));
+      SteamClient.setSize(Math.round(rect.width), Math.round(rect.height + 50));
    };
 
    useTypedEvent(GameStateChanged, updateWindowSize);
@@ -107,8 +97,7 @@ export function ResourcePanel(): React.ReactNode {
    return (
       <div
          id="resource-panel"
-         className={classNames({ window: true, "app-region-drag": isFloating })}
-         style={styles}
+         className={classNames({ window: true, "app-region-drag": isFloating, "is-floating": isFloating })}
          ref={ref}
       >
          {isSteam() ? (
@@ -132,7 +121,7 @@ export function ResourcePanel(): React.ReactNode {
                            await SteamClient.restore();
                            if (ref.current) {
                               const rect = ref.current.getBoundingClientRect();
-                              await SteamClient.setSize(Math.round(rect.width), Math.round(rect.height));
+                              await SteamClient.setSize(Math.round(rect.width), Math.round(rect.height + 50));
                            }
                         }
                      }}
