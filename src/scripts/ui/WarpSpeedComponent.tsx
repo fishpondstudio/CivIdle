@@ -35,7 +35,7 @@ export function WarpSpeedComponent(): React.ReactNode {
          <div className="text-center text-strong"></div>
          {gs.speedUp > 1 ? (
             <div className="text-small text-des mt5">
-               {t(L.TurnOnTimeWarpDesc, { speed: gs.speedUp - 1 })}
+               {t(L.TurnOnTimeWarpDescV2, { speed: gs.speedUp, cost: gs.speedUp - 1 })}
             </div>
          ) : null}
          {gs.speedUp > 2 ? (

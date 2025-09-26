@@ -1585,7 +1585,7 @@ export const EN = {
    TribuneUpgradeDescV4:
       "You can play the full game as Tribune if you do not plan to participate in the <b>optional</b> online features. To acquire unrestricted access to the online features, you will need to upgrade to Quaestor. <b>This is an anti-bot measure to keep the game free for everyone.</b> However, <b>when upgrading to Quaestor</b> you can carry over great people: <ul><li>Up to Level <b>3</b> for Bronze, Iron and Classical Age</li><li>Up to Level <b>2</b> for Middle Age, Renaissance and Industrial Age</li><li>Up to Level <b>1</b> for World Wars, Cold War and Information Age</li></ul>Great People Shards above the level and <b>Age Wisdom</b> levels <b>cannot</b> be carried over",
    TurnOffFullBuildings: "Turn Off All %{building} With Full Storage",
-   TurnOnTimeWarpDesc: "Cost %{speed} warps for every second and accelerate your empire to run at %{speed}x speed.",
+   TurnOnTimeWarpDescV2: "Cost %{cost} warps for every second and accelerate your empire to run at %{speed}x speed.",
    Tutorial: "Tutorial",
    TutorialBuildAqueductHTML: "Houses consume Water. However your aqueducts currently do not produce enough water. Build more or upgrade your aqueducts to meet the demand.",
    TutorialBuildCaravansaryHTML: "Caravansary allows you to trade resources with global players. Make sure you have the required resources to build it.",
