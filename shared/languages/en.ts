@@ -1753,4 +1753,5 @@ export const EN = {
    ManualAndGuide: "Manual & Guide",
    Pele: "Pelé",
    Beethoven: "Ludwig van Beethoven",
+   Capacity: "Capacity",
 };

@@ -52,7 +52,9 @@ export function BuildingConstructionProgressComponent({
                      <th style={{ width: 0 }}></th>
                      <th>{t(L.ConstructionResource)}</th>
                      <th className="text-right">
-                        <TextWithHelp content={t(L.TransportAllocatedCapacityTooltip)}>Capacity</TextWithHelp>
+                        <TextWithHelp content={t(L.TransportAllocatedCapacityTooltip)}>
+                           {t(L.Capacity)}
+                        </TextWithHelp>
                      </th>
                      <th className="text-right">{t(L.ConstructionDelivered)}</th>
                   </tr>
