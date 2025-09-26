@@ -336,7 +336,7 @@ export function transportAndConsumeResources(
          ? cost
          : getTotalBuildingCost(building, building.level, building.desiredLevel);
       const { total } = getBuilderCapacity(building, xy, gs);
-      const toTransport = new Map<Resource, number>();
+      const remainingAmount = new Map<Resource, number>();
       let completed = true;
       forEach(cost, function checkConstructionUpgradeResources(res, amount) {
          const amountArrived = building.resources[res] ?? 0;
@@ -359,12 +359,12 @@ export function transportAndConsumeResources(
             return;
          }
          building.suspendedInput.delete(res);
-         toTransport.set(res, amount);
+         remainingAmount.set(res, amountLeft);
       });
 
-      if (toTransport.size > 0) {
-         const builderCapacityPerResource = total / toTransport.size;
-         toTransport.forEach(function transportConstructionUpgradeResources(amount, res) {
+      if (remainingAmount.size > 0) {
+         const builderCapacityPerResource = total / remainingAmount.size;
+         remainingAmount.forEach(function transportConstructionUpgradeResources(amount, res) {
             // Each transportation costs 1 worker, and deliver Total (=Builder Capacity x Multiplier) resources
             transportResource(
                res,
