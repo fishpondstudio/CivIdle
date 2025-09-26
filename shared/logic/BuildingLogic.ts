@@ -1361,3 +1361,25 @@ export function getWonderExtraLevel(building: Building): number {
 export function getWonderGreatPerson(building: Building): GreatPerson | undefined {
    return WonderToGreatPerson[building];
 }
+
+const UpgradableWorldWonders = new Set<Building>([
+   "InternationalSpaceStation",
+   "MarinaBaySands",
+   "PalmJumeirah",
+   "AldersonDisk",
+   "DysonSphere",
+   "MatrioshkaBrain",
+   "LargeHadronCollider",
+   "CologneCathedral",
+   "SantaClausVillage",
+   "YearOfTheSnake",
+   "SwissBank",
+   "ItaipuDam",
+   "UnitedNations",
+   "RedFort",
+   "QutbMinar",
+] satisfies Building[]);
+
+export function isBuildingUpgradable(building: Building): boolean {
+   return !isSpecialBuilding(building) || UpgradableWorldWonders.has(building);
+}

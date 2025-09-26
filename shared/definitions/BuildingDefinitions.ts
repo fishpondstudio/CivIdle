@@ -2287,21 +2287,3 @@ export const BuildingShowLevel = new Set<Building>([
    "QutbMinar",
    "UnitedNations",
 ] satisfies Building[]);
-
-export const UpgradableWorldWonders = new Set<Building>([
-   "InternationalSpaceStation",
-   "MarinaBaySands",
-   "PalmJumeirah",
-   "AldersonDisk",
-   "DysonSphere",
-   "MatrioshkaBrain",
-   "LargeHadronCollider",
-   "CologneCathedral",
-   "SantaClausVillage",
-   "YearOfTheSnake",
-   "SwissBank",
-   "ItaipuDam",
-   "UnitedNations",
-   "RedFort",
-   "QutbMinar",
-] satisfies Building[]);

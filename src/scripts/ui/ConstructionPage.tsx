@@ -1,7 +1,6 @@
 import Tippy from "@tippyjs/react";
 import classNames from "classnames";
-import { UpgradableWorldWonders } from "../../../shared/definitions/BuildingDefinitions";
-import { isSpecialBuilding, isWorldWonder } from "../../../shared/logic/BuildingLogic";
+import { isBuildingUpgradable, isWorldWonder } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
 import { GameFeature, hasFeature } from "../../../shared/logic/FeatureLogic";
 import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
@@ -34,7 +33,7 @@ export function ConstructionPage({ tile }: { tile: ITileData }): React.ReactNode
    const canDecreaseDesiredLevel = () => building.desiredLevel > building.level + 1;
 
    const increaseDesiredLevel = () => {
-      if (isSpecialBuilding(building.type) && !UpgradableWorldWonders.has(building.type)) {
+      if (!isBuildingUpgradable(building.type)) {
          return;
       }
       playClick();
@@ -42,7 +41,7 @@ export function ConstructionPage({ tile }: { tile: ITileData }): React.ReactNode
       notifyGameStateUpdate();
    };
    const decreaseDesiredLevel = () => {
-      if (isSpecialBuilding(building.type) && !UpgradableWorldWonders.has(building.type)) {
+      if (!isBuildingUpgradable(building.type)) {
          return;
       }
       if (canDecreaseDesiredLevel()) {
@@ -63,7 +62,7 @@ export function ConstructionPage({ tile }: { tile: ITileData }): React.ReactNode
                <BuildingDescriptionComponent gameState={gs} xy={tile.tile} />
             ) : null}
             <BuildingConstructionProgressComponent xy={tile.tile} gameState={gs} />
-            {!isSpecialBuilding(building.type) || UpgradableWorldWonders.has(building.type) ? (
+            {isBuildingUpgradable(building.type) ? (
                <fieldset>
                   <legend>{t(L.Level)}</legend>
                   <div className="row text-strong">
