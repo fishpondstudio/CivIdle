@@ -1584,7 +1584,7 @@ export const ZH_TW = {
    TribuneUpgradeDescV4:
       "如果您不打算參與<b>可選的</b>在線功能，可以作為軍官完整遊玩遊戲。若要獲得對在線功能的不受限制的訪問，需升級到財務官。<b>這是一種反機器人措施，旨在讓所有人免費遊玩遊戲。</b>然而，<b>升級到財務官時</b>，您可以保留偉人等級：<ul><li>青銅、鐵器和古典時代最高<b>3</b>級</li><li>中世紀、文藝復興和工業時代最高<b>2</b>級</li><li>世界大戰、冷戰和資訊時代最高<b>1</b>級</li></ul>超過等級的偉人碎片和<b>時代智慧</b>等級<b>無法</b>被保留",
    TurnOffFullBuildings: "關閉所有 %{building} 儲存已滿的建築",
-   TurnOnTimeWarpDesc: "每秒消耗 %{speed} 扭曲時間，同時加速你的帝國，使其以 %{speed} 倍速度運行。",
+   TurnOnTimeWarpDescV2: "每秒消耗 %{cost} 扭曲時間，同時加速你的帝國，使其以 %{speed} 倍速度運行。",
    Tutorial: "新手教學",
    TutorialBuildAqueductHTML: "房子要用水。然而，你的水渠目前不能產生足夠的水。建造更多或升級你的水渠以滿足需求。",
    TutorialBuildCaravansaryHTML: "商隊旅館允許你與全球玩家交易資源。確保您擁有建造它所需的資源。",
