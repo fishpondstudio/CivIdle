@@ -338,7 +338,7 @@ export function transportAndConsumeResources(
       const { total } = getBuilderCapacity(building, xy, gs);
       const remainingAmount = new Map<Resource, number>();
       let completed = true;
-      let maxComeplete = true;
+      let maxCompleted = true;
       forEach(cost, function checkConstructionUpgradeResources(res, amount) {
          const amountArrived = building.resources[res] ?? 0;
          const amountInTransit = getAmountInTransit(xy, res);
