@@ -215,7 +215,6 @@ export function BuildingWorkerComponent({ gameState, xy }: IBuildingComponentPro
                   </div>
                </div>
                <input
-                  id="building-capacity"
                   type="range"
                   min="0"
                   max="1"

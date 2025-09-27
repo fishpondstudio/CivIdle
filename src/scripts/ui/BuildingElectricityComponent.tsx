@@ -81,7 +81,6 @@ export function BuildingElectricityComponent({ gameState, xy }: IBuildingCompone
             </ul>
             <div className="sep10"></div>
             <input
-               id="building-capacity"
                type="range"
                min="0"
                max={MAX_ELECTRIFICATION_LEVEL}

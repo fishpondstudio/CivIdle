@@ -6,7 +6,7 @@ import {
    getTranslatedPercentage,
    type ExtraTileInfoType,
 } from "../../../shared/logic/GameState";
-import { notifyGameOptionsUpdate, notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
+import { notifyGameOptionsUpdate } from "../../../shared/logic/GameStateLogic";
 import {
    MAX_ELECTRIFICATION_LEVEL,
    PRIORITY_MAX,
@@ -281,7 +281,6 @@ export function GameplayOptionPage(): React.ReactNode {
                   />
                </WarningComponent>
                <input
-                  id="building-capacity"
                   type="range"
                   min="0"
                   max="1"
@@ -289,7 +288,7 @@ export function GameplayOptionPage(): React.ReactNode {
                   value={options.offlineProductionPercent}
                   onChange={(e) => {
                      options.offlineProductionPercent = Number.parseFloat(e.target.value);
-                     notifyGameStateUpdate();
+                     notifyGameOptionsUpdate(options);
                   }}
                   className="mh0"
                />
