@@ -502,7 +502,7 @@ export function transportAndConsumeResources(
       let maxAmount =
          getStockpileMax(building) !== Number.POSITIVE_INFINITY
             ? getStockpileMax(building) * rawAmount
-            : Math.round(rawAmount / totalInputAmount * total);
+            : Math.round((rawAmount / totalInputAmount) * total);
       if ("resourceImports" in building) {
          const ri = building as IResourceImportBuildingData;
          amount = rawAmount;
