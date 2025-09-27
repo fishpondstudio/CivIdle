@@ -501,7 +501,7 @@ export function transportAndConsumeResources(
       // Lydia: if getStockpileMax = Unlimited then adjust the limit per resource to the relative importance of the resources -- e.g. LocomotiveFactory takes 1 engine and 10 steel -> totalInputAmount = 11
       let maxAmount =
          getStockpileMax(building) !== Number.POSITIVE_INFINITY
-            ? (getStockpileMax(building) * rawAmount)
+            ? getStockpileMax(building) * rawAmount
             : Math.round(rawAmount / totalInputAmount * total);
       if ("resourceImports" in building) {
          const ri = building as IResourceImportBuildingData;
