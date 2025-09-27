@@ -43,6 +43,10 @@ export function BuildingUpgradeComponent({ gameState, xy }: IBuildingComponentPr
    if ((Config.Building[building.type]?.max ?? Number.POSITIVE_INFINITY) <= 1) {
       return null;
    }
+   const age = Config.BuildingTechAge[building.type]!;
+   if (!Config.TechAge[age]) {
+      return null;
+   }
    const [upgradeState, setUpgradeState] = useState<string>("0");
    const [upgradeRange, setUpgradeRange] = useState<string>("0");
    const [selected, setSelected] = useState(new Set([xy]));
@@ -69,8 +73,6 @@ export function BuildingUpgradeComponent({ gameState, xy }: IBuildingComponentPr
    useEffect(() => {
       highlightUpgradeableBuildings(upgradeRange, upgradeState);
    }, [upgradeState, upgradeRange]);
-
-   const age = Config.BuildingTechAge[building.type]!;
 
    const [moving, setMoving] = useState(false);
    const theMet = Tick.current.specialBuildings.get("TheMet");
