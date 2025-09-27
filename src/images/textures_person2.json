@@ -332,7 +332,7 @@
     "meta": {
         "app": "spritesheet-templates",
         "version": "10.5.2",
-        "image": "./src/images/textures_person2.png",
+        "image": "./src/images/textures_person2.jpg",
         "scale": 1,
         "size": {
             "w": 2462,
