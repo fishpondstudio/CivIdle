@@ -484,6 +484,10 @@ export function transportAndConsumeResources(
    //////////////////////////////////////////////////
 
    let hasTransported = false;
+   let totalInputAmount = 0;
+   forEach(input, (res, amount) => {
+      totalInputAmount += amount;
+   });
 
    forEach(input, function forEachTransportResources(res, rawAmount) {
       let amount = rawAmount * getStockpileCapacity(building);
@@ -494,7 +498,8 @@ export function transportAndConsumeResources(
          return;
       }
 
-      let maxAmount = getStockpileMax(building) * rawAmount;
+      // Lydia: if getStockpileMax = Unlimited then adjust the limit per resource to the relative importance of the resources -- e.g. LocomotiveFactory takes 1 engine and 10 steel -> totalInputAmount = 11
+      let maxAmount = getStockpileMax(building) !== Number.POSITIVE_INFINITY ? (getStockpileMax(building) * rawAmount) : Math.round(rawAmount / totalInputAmount * total);
       if ("resourceImports" in building) {
          const ri = building as IResourceImportBuildingData;
          amount = rawAmount;
