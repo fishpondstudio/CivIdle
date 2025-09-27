@@ -13,10 +13,10 @@ import TextureFlagDef from "../images/textures_flag.json";
 import TextureFlag from "../images/textures_flag.png";
 import TextureMiscDef from "../images/textures_misc.json";
 import TextureMisc from "../images/textures_misc.png";
-import TexturePersonDef from "../images/textures_person.json";
-import TexturePerson from "../images/textures_person.png";
-import TextureRomeDef from "../images/textures_rome.json";
-import TextureRome from "../images/textures_rome.png";
+import TexturePerson1Def from "../images/textures_person1.json";
+import TexturePerson1 from "../images/textures_person1.png";
+import TexturePerson2Def from "../images/textures_person2.json";
+import TexturePerson2 from "../images/textures_person2.png";
 import TextureTileDef from "../images/textures_tile.json";
 import TextureTile from "../images/textures_tile.png";
 import { startGame } from "./Bootstrap";
@@ -56,8 +56,8 @@ createRoot(document.getElementById("ui-root")!).render(
 const canvas = document.getElementById("game-canvas");
 const mainBundle = {
    TextureBuilding,
-   TexturePerson,
-   TextureRome,
+   TexturePerson1,
+   TexturePerson2,
    TextureTile,
    TextureMisc,
    TextureFlag,
@@ -148,8 +148,8 @@ export async function loadBundle() {
    const textures: Record<string, Texture> = {};
    const altas = await Promise.all([
       new Spritesheet(main.TextureBuilding, TextureBuildingDef as any).parse(),
-      new Spritesheet(main.TexturePerson, TexturePersonDef as any).parse(),
-      new Spritesheet(main.TextureRome, TextureRomeDef as any).parse(),
+      new Spritesheet(main.TexturePerson1, TexturePerson1Def as any).parse(),
+      new Spritesheet(main.TexturePerson2, TexturePerson2Def as any).parse(),
       new Spritesheet(main.TextureTile, TextureTileDef as any).parse(),
       new Spritesheet(main.TextureMisc, TextureMiscDef as any).parse(),
       new Spritesheet(main.TextureFlag, TextureFlagDef as any).parse(),

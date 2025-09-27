@@ -10,7 +10,8 @@ export default defineConfig(({ command }) => {
       plugins: [
          react(),
          buildAtlas("rome", command === "serve"),
-         buildAtlas("person", command === "serve"),
+         buildAtlas("person1", command === "serve", "Person"),
+         buildAtlas("person2", command === "serve", "Person"),
          buildAtlas("building", command === "serve"),
          buildAtlas("tile", command === "serve"),
          buildAtlas("flag", command === "serve"),
@@ -34,7 +35,7 @@ export default defineConfig(({ command }) => {
    };
 });
 
-function buildAtlas(folder: string, watch: boolean) {
+function buildAtlas(folder: string, watch: boolean, nameOverride?: string) {
    return Spritesmith({
       watch: watch,
       src: {
@@ -43,7 +44,8 @@ function buildAtlas(folder: string, watch: boolean) {
       },
       apiOptions: {
          generateSpriteName: (filePath: string) => {
-            return `${folder.charAt(0).toUpperCase()}${folder.slice(1)}_${path.basename(filePath, ".png")}`;
+            const name = nameOverride ?? `${folder.charAt(0).toUpperCase()}${folder.slice(1)}`;
+            return `${name}_${path.basename(filePath, ".png")}`;
          },
       },
       target: {
