@@ -338,12 +338,16 @@ export function transportAndConsumeResources(
       const { total } = getBuilderCapacity(building, xy, gs);
       const remainingAmount = new Map<Resource, number>();
       let completed = true;
+      let maxComeplete = true;
       forEach(cost, function checkConstructionUpgradeResources(res, amount) {
          const amountArrived = building.resources[res] ?? 0;
          const amountInTransit = getAmountInTransit(xy, res);
          const threshold = getGameOptions().greedyTransport ? (maxCost[res] ?? 0) : amount;
          if (completed && amountArrived < amount) {
             completed = false;
+         }
+         if (maxCompleted && amountArrived < maxCost[res]) {
+            maxCompleted = false;
          }
          // Already full
          if (amountArrived >= threshold) {
@@ -384,7 +388,22 @@ export function transportAndConsumeResources(
          OnBuildingProductionComplete.emit({ xy, offline });
       }
 
-      if (completed) {
+      if (maxCompleted && !isSpecialBuilding(building.type)) {
+         // does not fit for wonders (= SpecialBuildings) which need the OnBuildingOrUpgradeComplete fired for each single level
+         building.building.desiredLevel;
+         forEach(maxCost, (res, amount) => {
+            safeAdd(building.resources, res, -amount);
+         });
+         building.suspendedInput.clear();
+         if (building.status === "building") {
+            building.status = building.desiredLevel > building.level ? "upgrading" : "completed";
+            OnBuildingComplete.emit(xy);
+         }
+         OnBuildingOrUpgradeComplete.emit(xy);
+         if (building.status === "upgrading" && building.level >= building.desiredLevel) {
+            building.status = "completed";
+         }
+      } else if (completed) {
          building.level++;
          forEach(cost, (res, amount) => {
             safeAdd(building.resources, res, -amount);
