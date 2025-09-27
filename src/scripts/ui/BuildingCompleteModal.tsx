@@ -24,7 +24,13 @@ export function BuildingCompleteModal({ building }: { building: Building }): Rea
                <button onClick={hideModal} aria-label="Close"></button>
             </div>
          </div>
-         <Tippy content="The Grand Canyon of the Yellowstone, Thomas Moran, 1872">
+         <Tippy
+            content={
+               isNatural
+                  ? "The Grand Canyon of the Yellowstone, Thomas Moran, 1872"
+                  : "Octo Mundi Miracula, Maarten van Heemskerck & Philip Galle, 1572"
+            }
+         >
             <img
                src={isNatural ? NaturalWonders : WorldWonders}
                className="w100"
