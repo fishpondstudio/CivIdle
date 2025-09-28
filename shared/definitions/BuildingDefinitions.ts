@@ -604,6 +604,11 @@ export class BuildingDefinitions {
       input: { Oil: 2 },
       output: { Plastics: 1 },
    };
+   GasPlasticsPlant: IBuildingDefinition = {
+      name: () => t(L.GasPlasticsPlant),
+      input: { NaturalGas: 2 },
+      output: { Plastics: 1 },
+   };
    // #endregion /////////////////////////////////////////////////////////////////////////////////////////////
 
    // #region Heavy Industry /////////////////////////////////////////////////////////////////////////////////

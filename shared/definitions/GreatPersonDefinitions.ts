@@ -1182,7 +1182,7 @@ export class GreatPersonDefinitions {
       name: () => t(L.HenryFord),
       boost: {
          multipliers: ["output", "storage"],
-         buildings: ["CarFactory", "PlasticsFactory"],
+         buildings: ["CarFactory", "PlasticsFactory", "GasPlasticsPlant"],
       },
       time: "1863 ~ 1947 AD",
       value: (level) => level,
