@@ -32,7 +32,7 @@ OnTechUnlocked.on((tech) => {
          if (!hasFlag(gs.flags, GameStateFlags.HasDemolishedBuilding)) {
             SteamClient.unlockAchievement("Preservationist");
          }
-         if ((Tick.current.workersAvailable.get("Power") ?? 0) >= 1_000_000_000) {
+         if ((Tick.current.workersAvailable.get("Power") ?? 0) >= 1_000_000) {
             SteamClient.unlockAchievement("PowerfulEmpire");
          }
          break;
