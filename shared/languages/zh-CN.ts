@@ -277,7 +277,7 @@ export const ZH_CN = {
    CentrePompidouWarningHTML: "蓬皮杜文艺中心将消失，如果你重生在 <b>%{civ}</b>",
    CerneAbbasGiant: "塞那阿巴斯巨人像",
    CerneAbbasGiantDesc: "当此奇观被发现后，每建造完成一个奇观时诞生一个当前时代的伟人",
-   ChangePlayerHandle: "确认更改",
+   ChangePlayerHandle: "更改",
    ChangePlayerHandleCancel: "取消",
    ChangePlayerHandledDesc: "你的玩家昵称只能包含 5 ~ 16 个字母与数字，并且要求独一无二",
    Chariot: "战车",
