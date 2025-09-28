@@ -2168,7 +2168,7 @@ export class BuildingDefinitions {
 
    GangesRiver: IBuildingDefinition = {
       name: () => t(L.GangesRiver),
-      desc: () => t(L.GangesRiverDesc),
+      desc: () => t(L.GangesRiverDescV2),
       input: {},
       output: {},
       construction: {},
@@ -2179,7 +2179,7 @@ export class BuildingDefinitions {
 
    Sundarbans: IBuildingDefinition = {
       name: () => t(L.Sundarbans),
-      desc: () => t(L.SundarbansDesc),
+      desc: () => t(L.SundarbansDescV2),
       input: {},
       output: {},
       construction: {},

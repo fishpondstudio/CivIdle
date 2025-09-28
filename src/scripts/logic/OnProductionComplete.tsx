@@ -1903,6 +1903,9 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
             if (isWorldOrNaturalWonder(building)) {
                return;
             }
+            if (Config.Building[building].output.Worker) {
+               return;
+            }
             const wisdom = options.ageWisdom[age] ?? 0;
             if (wisdom > 0) {
                addMultiplier(building, { output: wisdom }, buildingName);
@@ -1916,7 +1919,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
                const greatPerson = Config.GreatPerson[gp];
                greatPerson.tick(
                   gp,
-                  level,
+                  level * 0.5,
                   `${buildingName} (${t(L.AgeWisdomSource, { age: Config.TechAge[age].name(), person: greatPerson.name() })})`,
                   GreatPersonTickFlag.None,
                );
