@@ -1122,7 +1122,7 @@ export const ZH_CN = {
    PlayerTradeYouGetGross: "所得（税前）：%{res}",
    PlayerTradeYouGetNet: "所得（税后）：%{res}",
    PlayerTradeYouPay: "支付：%{res}",
-   PlusXLevelToXBuilding: "%{building} +%{value} 额外等级",
+   PlusXLevelToXBuilding: "%{building}（奇观） +%{value} 额外等级",
    Poem: "诗词",
    PoetrySchool: "诗派",
    Politics: "政治",
