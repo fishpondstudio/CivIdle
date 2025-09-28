@@ -6,6 +6,7 @@ import type { IGetVotedBoostResponse } from "../../../shared/utilities/Database"
 import { formatHMS, isNullOrUndefined } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import { client } from "../rpc/RPCClient";
+import { SteamClient, isSteam } from "../rpc/SteamClient";
 import { playError, playUpgrade } from "../visuals/Sound";
 import { BuildingColorComponent } from "./BuildingColorComponent";
 import { BuildingDescriptionComponent } from "./BuildingDescriptionComponent";
@@ -94,6 +95,9 @@ export function UnitedNationsBuildingBody({ gameState, xy }: IBuildingComponentP
                                     onClick={async () => {
                                        try {
                                           setResponse(await client.voteBoosts(idx));
+                                          if (isSteam()) {
+                                             SteamClient.unlockAchievement("WorldsDelegate");
+                                          }
                                           playUpgrade();
                                        } catch (error) {
                                           playError();

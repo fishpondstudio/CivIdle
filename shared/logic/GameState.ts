@@ -35,6 +35,11 @@ export enum ValueToTrack {
    EmpireValue = 0,
 }
 
+export enum GameStateFlags {
+   None = 0,
+   HasDemolishedBuilding = 1 << 0,
+}
+
 export class GameState {
    id = uuid4();
    city: City = "Rome";
@@ -58,6 +63,7 @@ export class GameState {
    speedUp = 1;
    pinStatPanel = false;
    adaptiveGreatPeople = new Map<GreatPerson, Building>();
+   flags = GameStateFlags.None;
 }
 
 export type GreatPeopleChoice = GreatPerson[];

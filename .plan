@@ -1,64 +1,35 @@
-TODO:
+KeeperOfDharma
+Keeper of Dharma
+Rebirth with at least 1 Extra Great Person when playing Indian (Reach 64M Empire Value when rebirth)
 
-United Nations Rework:
-- General Assembly votes now are guaranteed to have one building from each age.
-- General Assembly now only boosts Production Multiplier and the multiplier is now dynamic (i.e. does not affect storage)
-- United Nations can now be upgraded, each level provides +1 to General Assembly multipliers
+Swiss Banker
+SwissBanker
+Rebirth with 1M Koti in Swiss Bank
 
+Isolationist
+Isolationist
+Rebirth with 1Qa Empire Value without player trades
 
-Level Boost Great People:
+The Alliance
+TheAlliance
+Rebirth with at least one ally on the trade map
 
-- William Shepherd: +1 Level to International Space Station
-- Lee Kuan Yew: +1 Level to Marina Bay Sands
-- Emmanuelle Charpentier: +1 Level to Palm Jumeirah
-- Dan Alderson: +1 Level to Alderson Disk
-- Freeman Dyson: +1 Level to Dyson Sphere
-- Vera Rubin: +1 Level to Matrioshka Brain
+Grandfather Paradox
+GrandfatherParadox
+Reach future without using higher Warp Speed
 
-They are not required to upgrade Age Wisdom, and Age Wisdom does not affect them. Zenobia (Classical Age) is now a Level Boost Great People as well, which means Classical Age Wisdom will no longer affect Zenobia - the shards you've spent on the upgrade will be refunded
+Preservationist
+Preservationist
+Reach future without demolishing a single building
 
-Indian:
+Powerful Empire
+PowerfulEmpire
+Reach future with 1GW power
 
-- Red Fort: +5 Building Level Boost to all buildings within 4-tile range. This wonder can be upgraded and each additional level provides an extra +1 Building Level Boost
-- Ganges River: Each type of building within 2-tile radius gets +N Production Multiplier, N = level of Age Wisdom for the age in which the building is unlocked
-- Sundarbans: Double the effect of all Age Wisdoms
-- Sanchi Stupa: Transports from or to buildings within 2-tile range are immediate
-- Qutb Minar: When completed, a great person is born - it can come from any age except the current one. This wonder can be upgraded, and each additional upgrade causes another great person to be born, which can come from any age except the current one. When choosing great people from this wonder, 4 choices are provided
-- Festival: Diwali: Increase the range of Ganges River to 3-tile. Increase the range of Sanchi Stupa to 3-tile. Double the level boost from Red Fort
-- Rabindranath Tagore: +2 Production Multiplier, Storage Multiplier for Embassy
-- Akbar The Great: +1 Level to Red Fort
+World’s Delegate
+WorldsDelegate
+Vote in at least one United Nations General Assembly
 
-Warp Speed Backport:
-Now when running at a higher warp speed, only the extra speed will cost warp.
-e.g.:
-- At 2x speed, it will cost 1/2 warp per game second (1 warp per wall clock second, previously 2 warp per wall clock second)
-- At 3x speed, it will cost 2/3 warp per game second (2 warp per wall clock second, previously 3 warp per wall clock second)
-- At 4x speed, it will cost 3/4 warp per game second (3 warp per wall clock second, previously 4 warp per wall clock second)
-
-Usability Improvements:
-
-- Add "todos" that helps with empire management
-- Add a popover when a Natural Wonder is discovered
-- Add a popover when a Wonder is constructed
-- A completely new tutorial for first time players!
-- Default Stockpile Input Capacity is now 2 (changed from 1)
-- Default Max Stockpile is now 25 (changed from 5)
-- Default Production Priority is now 3 (changed from 1)
-- Default Construction Priority is now 2 (changed from 1)
-- Add "Default Wonder Construction Priority" and default to 1
-- Add "Default Production Priority For Buildings That Produce Workers" and default to 4 
-- Add a link to Supporter Pack on Steam in Help -> Supporter Pack
-
-Balancing for New Players:
-- Housing now unlocks Production Priority (previously unlocked by Herding)
-- Herding now unlocks Transport Preference (previously unlocked by Housing)
-- Construction cost of Statistics Office has been greatly reduced
-
-Trade Tile Reservation Days:
-- Tribune: 1 day (no change)
-- Quaestor: 3 days (from 7 days)
-- Aedile: 5 days (from 14 days)
-- Praetor: 7 days (from 21 days)
-- Consul: 9 days (from 28 days)
-- Caesar: 9 days (from 28 days)
-- Augustus: 9 days (from 28 days)
+Patch Notes Reader
+PatchNotesReader
+Read the patch notes by clicking "Read Patch Notes" todo tab on the top left
