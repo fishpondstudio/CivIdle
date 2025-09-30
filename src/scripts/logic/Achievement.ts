@@ -13,9 +13,7 @@ import { Tick } from "../../../shared/logic/TickLogic";
 import type { ICentrePompidouBuildingData } from "../../../shared/logic/Tile";
 import { OnTechUnlocked } from "../../../shared/logic/Update";
 import { HOUR, SECOND, forEach, hasFlag, sizeOf } from "../../../shared/utilities/Helper";
-import { isAllyWith } from "../rpc/RPCClient";
 import { SteamClient, isSteam } from "../rpc/SteamClient";
-import { getNeighboringPlayers } from "../scenes/PathFinder";
 
 OnTechUnlocked.on((tech) => {
    if (!isSteam()) return;
@@ -26,13 +24,13 @@ OnTechUnlocked.on((tech) => {
          if (gs.seconds * SECOND <= 24 * HOUR) {
             SteamClient.unlockAchievement("OneMoreTurn");
          }
-         if (gs.seconds === gs.tick) {
+         if (!hasFlag(gs.flags, GameStateFlags.HasUsedTimeWarp)) {
             SteamClient.unlockAchievement("GrandfatherParadox");
          }
          if (!hasFlag(gs.flags, GameStateFlags.HasDemolishedBuilding)) {
             SteamClient.unlockAchievement("Preservationist");
          }
-         if ((Tick.current.workersAvailable.get("Power") ?? 0) >= 1_000_000_000) {
+         if ((Tick.current.workersAvailable.get("Power") ?? 0) >= 1_000_000) {
             SteamClient.unlockAchievement("PowerfulEmpire");
          }
          break;
@@ -300,16 +298,7 @@ export function checkRebirthAchievements(extraGP: number, gs: GameState): void {
       SteamClient.unlockAchievement("Isolationist");
    }
 
-   let hasAlly = false;
-   getNeighboringPlayers().forEach((player) => {
-      player.forEach(([xy, tile]) => {
-         if (isAllyWith(tile)) {
-            hasAlly = true;
-         }
-      });
-   });
-
-   if (hasAlly) {
+   if (hasFlag(gs.flags, GameStateFlags.HasFourAllies)) {
       SteamClient.unlockAchievement("TheAlliance");
    }
 }

@@ -33,6 +33,7 @@ import {
    TRADE_TILE_NEIGHBOR_BONUS,
 } from "../../../shared/logic/Constants";
 import { GameFeature, hasFeature } from "../../../shared/logic/FeatureLogic";
+import { GameStateFlags } from "../../../shared/logic/GameState";
 import { getGameOptions, getGameState } from "../../../shared/logic/GameStateLogic";
 import {
    getBuildingsByType,
@@ -75,6 +76,7 @@ import { VotedBoostType, type IGetVotedBoostResponse } from "../../../shared/uti
 import {
    MINUTE,
    clamp,
+   clearFlag,
    filterOf,
    firstKeyOf,
    forEach,
@@ -84,6 +86,7 @@ import {
    pointToTile,
    round,
    safeAdd,
+   setFlag,
    tileToPoint,
    type Tile,
 } from "../../../shared/utilities/Helper";
@@ -153,14 +156,15 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
             }
          });
 
-         let hasAlly = false;
+         let allyCount = 0;
 
          getNeighboringPlayers().forEach((player) => {
+            let isAlly = false;
             player.forEach(([xy, tile]) => {
                const building = TileBuildings.get(xy);
                if (building) {
                   if (isAllyWith(tile)) {
-                     hasAlly = true;
+                     isAlly = true;
                      addMultiplier(
                         building,
                         { output: TRADE_TILE_ALLY_BONUS },
@@ -175,11 +179,20 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
                   }
                }
             });
+            if (isAlly) {
+               ++allyCount;
+            }
          });
 
-         if (isSteam() && hasAlly && !declareFriendshipAchievementUnlocked) {
+         if (isSteam() && allyCount > 0 && !declareFriendshipAchievementUnlocked) {
             SteamClient.unlockAchievement("DeclareFriendship");
             declareFriendshipAchievementUnlocked = true;
+         }
+
+         if (allyCount >= 4) {
+            gs.flags = setFlag(gs.flags, GameStateFlags.HasFourAllies);
+         } else {
+            gs.flags = clearFlag(gs.flags, GameStateFlags.HasFourAllies);
          }
 
          if (!offline) {
@@ -187,6 +200,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
             const cost = (gs.speedUp - 1) / gs.speedUp;
             if (gs.speedUp > 1 && building.resources.Warp && building.resources.Warp >= cost) {
                building.resources.Warp -= cost;
+               gs.flags = setFlag(gs.flags, GameStateFlags.HasUsedTimeWarp);
             } else {
                gs.speedUp = 1;
             }
@@ -1904,6 +1918,9 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
                return;
             }
             if (Config.Building[building].output.Worker) {
+               return;
+            }
+            if (building === "CloneLab") {
                return;
             }
             const wisdom = options.ageWisdom[age] ?? 0;

@@ -51,7 +51,7 @@ export function SwissBankBuildingBody({ gameState, xy }: IBuildingComponentProps
                }}
             >
                <option value=""></option>
-               {keysOf(Config.Resource)
+               {keysOf(availableResources)
                   .sort((a, b) => Config.Resource[a].name().localeCompare(Config.Resource[b].name()))
                   .map((res) => {
                      if (NoPrice[res] || NoStorage[res] || res === "Koti") {
