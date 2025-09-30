@@ -314,6 +314,21 @@ export const LanguageToChatChannel: Record<keyof typeof Languages, ChatChannel> 
    zh_TW: "zh",
 } as const;
 
+export const LanguageToSteamLanguage: Record<keyof typeof Languages, string> = {
+   en: "english",
+   es: "spanish",
+   cz: "czech",
+   fr: "french",
+   de: "german",
+   kr: "koreana",
+   nl: "dutch",
+   pt_BR: "brazilian",
+   ru: "russian",
+   tr: "turkish",
+   zh_CN: "schinese",
+   zh_TW: "tchinese",
+} as const;
+
 let translatePercentage = 1;
 
 export function syncLanguage(l: Record<string, string>): void {

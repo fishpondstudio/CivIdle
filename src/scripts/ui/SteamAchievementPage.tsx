@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
+import { LanguageToSteamLanguage } from "../../../shared/logic/GameState";
 import { Tick } from "../../../shared/logic/TickLogic";
 import type { Achievement } from "../../../shared/utilities/SteamAchievement";
 import { L, t } from "../../../shared/utilities/i18n";
-import { useGameState } from "../Global";
+import { useGameOptions } from "../Global";
 import { client } from "../rpc/RPCClient";
 import { jsxMapOf } from "../utilities/Helper";
 import { Singleton } from "../utilities/Singleton";
@@ -11,13 +12,13 @@ import { TilePage } from "./TilePage";
 import { TitleBarComponent } from "./TitleBarComponent";
 
 export function SteamAchievementPage(): React.ReactNode {
-   const gs = useGameState();
+   const options = useGameOptions();
    const [allAchievements, setAllAchievements] = useState<Record<string, Achievement>>({});
    const [achieved, setAchieved] = useState<Set<string>>(new Set());
    useEffect(() => {
-      client.getAllAchievements().then((r) => setAllAchievements(r));
+      client.getAllAchievements(LanguageToSteamLanguage[options.language]).then((r) => setAllAchievements(r));
       client.getAchievedAchievements().then((s) => setAchieved(new Set(s)));
-   }, []);
+   }, [options.language]);
 
    return (
       <div className="window">
