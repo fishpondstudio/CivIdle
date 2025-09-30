@@ -27,7 +27,9 @@ module.exports = {
    ],
    hooks: {
       generateAssets: () => {
-         fs.copySync("../dist", "./dist");
+         if (fs.existsSync("../dist")) {
+            fs.copySync("../dist", "./dist");
+         }
       },
    },
 };
