@@ -1920,6 +1920,9 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
             if (Config.Building[building].output.Worker) {
                return;
             }
+            if (building === "CloneLab") {
+               return;
+            }
             const wisdom = options.ageWisdom[age] ?? 0;
             if (wisdom > 0) {
                addMultiplier(building, { output: wisdom }, buildingName);
