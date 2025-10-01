@@ -597,7 +597,7 @@ export const EN = {
    GalleonBuilder: "Galleon Builder",
    Gameplay: "Gameplay",
    GangesRiver: "Ganges River",
-   GangesRiverDescV2: "Each type of building (except buildings that produce workers) within 2-tile radius gets +N Production Multiplier, N = level of Age Wisdom for the age in which the building is unlocked",
+   GangesRiverDescV2: "Each type of building (except Clone Lab and buildings that produce workers) within 2-tile radius gets +N Production Multiplier, N = level of Age Wisdom for the age in which the building is unlocked",
    Garment: "Garment",
    GarmentWorkshop: "Garment Workshop",
    GasPipeline: "Gas Pipeline",
