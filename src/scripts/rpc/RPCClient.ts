@@ -80,12 +80,7 @@ export interface IClientChat extends IChat {
    id: number;
 }
 
-interface ISystemMessage {
-   id: number;
-   message: string;
-}
-
-export type LocalChat = IClientChat | ISystemMessage;
+export type LocalChat = IClientChat;
 
 let chatMessages: LocalChat[] = [];
 const trades: Map<string, IClientTrade> = new Map();
@@ -171,8 +166,7 @@ export function canEarnGreatPeopleFromReborn(): boolean {
 const _chatIds = new Map<ChatChannel | "System", number>();
 
 export function addSystemMessage(message: string): void {
-   chatMessages.push({ id: mapSafeAdd(_chatIds, "System", 1), message });
-   OnChatMessage.emit(chatMessages);
+   showToast(message, Number.POSITIVE_INFINITY, "command");
 }
 
 export function clearSystemMessages(): void {

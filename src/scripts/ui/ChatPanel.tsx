@@ -41,7 +41,6 @@ import { openUrl } from "../utilities/Platform";
 import { playError } from "../visuals/Sound";
 import { BottomPanel } from "./BottomPanel";
 import { showToast } from "./GlobalModal";
-import { RenderHTML } from "./RenderHTMLComponent";
 import { SelectChatChannelModal } from "./SelectChatChannelModal";
 import { ResourcesTab } from "./StatisticsBuildingBody";
 import { AccountLevelComponent, MiscTextureComponent, PlayerFlagComponent } from "./TextureSprites";
@@ -221,13 +220,6 @@ function _ChatWindow({
             className="window-content inset-shallow"
          >
             {messages.map((c) => {
-               if (!("channel" in c)) {
-                  return (
-                     <div className="chat-command-item" key={c.id}>
-                        <RenderHTML html={c.message} />
-                     </div>
-                  );
-               }
                return <ChatMessage key={c.id} user={user} chat={c} onImageLoaded={onImageLoaded} />;
             })}
             {user !== null ? null : (
