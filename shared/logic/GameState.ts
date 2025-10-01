@@ -262,6 +262,7 @@ export class GameOptions {
    disabledTodos = new Set<string>();
    showWonderPopup = true;
    showNaturalWonderPopup = true;
+   lastClientTickAt = 0;
    migrationFlags = MigrationFlags.None;
 }
 
