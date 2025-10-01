@@ -189,10 +189,10 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
             declareFriendshipAchievementUnlocked = true;
          }
 
-         if (allyCount >= 4) {
-            gs.flags = setFlag(gs.flags, GameStateFlags.HasFourAllies);
+         if (allyCount >= 3) {
+            gs.flags = setFlag(gs.flags, GameStateFlags.HasThreeAllies);
          } else {
-            gs.flags = clearFlag(gs.flags, GameStateFlags.HasFourAllies);
+            gs.flags = clearFlag(gs.flags, GameStateFlags.HasThreeAllies);
          }
 
          if (!offline) {

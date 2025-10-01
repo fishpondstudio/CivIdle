@@ -298,7 +298,7 @@ export function checkRebirthAchievements(extraGP: number, gs: GameState): void {
       SteamClient.unlockAchievement("Isolationist");
    }
 
-   if (hasFlag(gs.flags, GameStateFlags.HasFourAllies)) {
+   if (hasFlag(gs.flags, GameStateFlags.HasThreeAllies)) {
       SteamClient.unlockAchievement("TheAlliance");
    }
 }
