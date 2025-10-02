@@ -1211,7 +1211,7 @@ export const ZH_TW = {
    RebornOfflineWarning: "離線中。你只能在連接上伺服器時重生。",
    RebornTradeWarning: "你有發起或可領取的貿易訂單。<b>重生將刪除所有訂單。</b>考慮先取消與領取訂單。",
    RedFort: "紅堡",
-   RedFortDesc: "周圍 4 地塊範圍內的所有建築獲得 +1 額外建築等級。該奇觀可被升級，並且每一次額外升級為周圍 4 地塊範圍內的所有建築提供 +1 額外建築等級",
+   RedFortDesc: "周圍 3 地塊範圍內的所有建築獲得 +1 額外建築等級。該奇觀可被升級，並且每一次額外升級為周圍 3 地塊範圍內的所有建築提供 +1 額外建築等級",
    RedistributeAmongSelected: "在選取當中重新分配",
    RedistributeAmongSelectedCap: "限額",
    RedistributeAmongSelectedImport: "運送速度",
