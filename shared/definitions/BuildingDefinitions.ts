@@ -434,7 +434,7 @@ export class BuildingDefinitions {
    ComputerLab: IBuildingDefinition = {
       name: () => t(L.ComputerLab),
       input: { Computer: 1 },
-      output: { Science: 79930 },
+      output: { Science: 80625 },
       power: true,
    };
    Museum: IBuildingDefinition = {
