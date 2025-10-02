@@ -1891,10 +1891,10 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          break;
       }
       case "RedFort": {
-         const levelBoost = 5 + (building.level - 1) + getWonderExtraLevel(building.type);
-         for (const point of grid.getRange(tileToPoint(xy), 4)) {
+         const levelBoost = building.level + getWonderExtraLevel(building.type);
+         for (const point of grid.getRange(tileToPoint(xy), isFestival("RedFort", gs) ? 5 : 3)) {
             mapSafePush(Tick.next.levelBoost, pointToTile(point), {
-               value: isFestival("RedFort", gs) ? 2 * levelBoost : levelBoost,
+               value: levelBoost,
                source: buildingName,
             });
          }
@@ -1902,7 +1902,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
       }
       case "GangesRiver": {
          const buildings = new Set<Building>();
-         for (const point of grid.getRange(tileToPoint(xy), isFestival("RedFort", gs) ? 3 : 2)) {
+         for (const point of grid.getRange(tileToPoint(xy), isFestival("GangesRiver", gs) ? 2 : 1)) {
             const tile = pointToTile(point);
             const targetBuilding = gs.tiles.get(tile)?.building;
             if (targetBuilding) {
@@ -1918,9 +1918,6 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
                return;
             }
             if (Config.Building[building].output.Worker) {
-               return;
-            }
-            if (building === "CloneLab") {
                return;
             }
             const wisdom = options.ageWisdom[age] ?? 0;

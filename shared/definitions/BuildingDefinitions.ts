@@ -2162,10 +2162,10 @@ export class BuildingDefinitions {
 
    QutbMinar: IBuildingDefinition = {
       name: () => t(L.QutbMinar),
-      desc: () => t(L.QutbMinarDesc),
+      desc: () => t(L.QutbMinarDescV2),
       input: {},
       output: {},
-      construction: { Banknote: 100, Galleon: 100, Knight: 100 },
+      construction: { Banknote: 200, Galleon: 200, Knight: 200 },
       max: 1,
       special: BuildingSpecial.WorldWonder,
       wikipedia: "Qutb_Minar",
@@ -2173,7 +2173,7 @@ export class BuildingDefinitions {
 
    GangesRiver: IBuildingDefinition = {
       name: () => t(L.GangesRiver),
-      desc: () => t(L.GangesRiverDescV2),
+      desc: () => t(L.GangesRiverDescV3),
       input: {},
       output: {},
       construction: {},
