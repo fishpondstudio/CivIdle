@@ -1218,7 +1218,7 @@ export const ES = {
    RebornOfflineWarning: "Actualmente estás sin conexión. Sólo puedes renacer cuando tienes conexión con el servidor",
    RebornTradeWarning: "Tienes comercios activos o que pueden ser reclamados. <b>Renacer los eliminará</b> - deberías considerar cancelarlos o reclamarlos antes",
    RedFort: "Red Fort",
-   RedFortDesc: "+5 Building Level Boost to all buildings within 4-tile range. This wonder can be upgraded and each additional level provides an extra +1 Building Level Boost",
+   RedFortDesc: "+1 Building Level Boost to all buildings within 3-tile range. This wonder can be upgraded and each additional level provides an extra +1 Building Level Boost",
    RedistributeAmongSelected: "Redistribuir entre los seleccionados",
    RedistributeAmongSelectedCap: "Límite",
    RedistributeAmongSelectedImport: "Importar",

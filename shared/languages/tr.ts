@@ -1214,7 +1214,7 @@ export const TR = {
    RebornOfflineWarning: "Şu anda çevrimdışı durumdasınız. Sadece sunucuya bağlı olduğunuzda yeniden doğabilirsiniz",
    RebornTradeWarning: "Aktif veya alınmayı bekleyen takaslarınız var. <b>Rebirth bunları silecek.</b> - iptal edip takaslarınızı almayı düşünebilirsizin",
    RedFort: "Red Fort",
-   RedFortDesc: "+5 Building Level Boost to all buildings within 4-tile range. This wonder can be upgraded and each additional level provides an extra +1 Building Level Boost",
+   RedFortDesc: "+1 Building Level Boost to all buildings within 3-tile range. This wonder can be upgraded and each additional level provides an extra +1 Building Level Boost",
    RedistributeAmongSelected: "Seçilenler Arasında Yeniden Dağıtın",
    RedistributeAmongSelectedCap: "Cap",
    RedistributeAmongSelectedImport: "Import",

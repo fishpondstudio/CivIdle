@@ -1215,7 +1215,7 @@ export const JP = {
    RebornOfflineWarning: "You are currently offline. You can only rebirth when you are connected to the server",
    RebornTradeWarning: "You have trades that are active or can be claimed. <b>Rebirth will erase them</b> - you should consider cancelling or claiming first",
    RedFort: "Red Fort",
-   RedFortDesc: "+5 Building Level Boost to all buildings within 4-tile range. This wonder can be upgraded and each additional level provides an extra +1 Building Level Boost",
+   RedFortDesc: "+1 Building Level Boost to all buildings within 3-tile range. This wonder can be upgraded and each additional level provides an extra +1 Building Level Boost",
    RedistributeAmongSelected: "Redistribute Among Selected",
    RedistributeAmongSelectedCap: "Cap",
    RedistributeAmongSelectedImport: "Import",

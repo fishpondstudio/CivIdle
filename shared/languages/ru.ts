@@ -1217,7 +1217,7 @@ export const RU = {
    RebornOfflineWarning: "Сейчас вы оффлайн. Вы можете перерождаться только когда подключены к серверу",
    RebornTradeWarning: "У вас есть активные или завершенные, но не полученные Сделки. <b>Перерождение безвозвратно удалит их</b> - вам сначала следует рассмотреть возможность их отмены или обналичивания",
    RedFort: "Лал-Кила",
-   RedFortDesc: "+5 к повышению уровня всех зданий в радиусе 4 клеток. Это чудо можно улучшать, и каждый дополнительный уровень даёт +1 к повышению уровня здания",
+   RedFortDesc: "+1 Building Level Boost to all buildings within 3-tile range. This wonder can be upgraded and each additional level provides an extra +1 Building Level Boost",
    RedistributeAmongSelected: "Распределить между выбранными",
    RedistributeAmongSelectedCap: "Предел",
    RedistributeAmongSelectedImport: "Импорт",

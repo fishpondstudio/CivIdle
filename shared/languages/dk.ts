@@ -1215,7 +1215,7 @@ export const DK = {
    RebornOfflineWarning: "Du er i øjeblikket offline. Du kan kun genfødes, når du er tilsluttet serveren",
    RebornTradeWarning: "Du har handler, der er aktive eller kan kræves. <b>Genfødsel vil slette dem</b> - du bør overveje at annullere eller kræve dem først",
    RedFort: "Red Fort",
-   RedFortDesc: "+5 Building Level Boost to all buildings within 4-tile range. This wonder can be upgraded and each additional level provides an extra +1 Building Level Boost",
+   RedFortDesc: "+1 Building Level Boost to all buildings within 3-tile range. This wonder can be upgraded and each additional level provides an extra +1 Building Level Boost",
    RedistributeAmongSelected: "Omdeling Blandt Valgte",
    RedistributeAmongSelectedCap: "Begrænsning",
    RedistributeAmongSelectedImport: "Import",

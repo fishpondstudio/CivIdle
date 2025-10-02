@@ -1213,7 +1213,7 @@ export const KR = {
    RebornOfflineWarning: "현재 오프라인상태입니다, 환생은 서버에 연결 되었을때만 할수있습니다.",
    RebornTradeWarning: "활성상태이거나 수취할수있는 거래가 있습니다. <b>환생시 그것들은 사라집니다.</b> - 먼저 취소하거나 수취하는것을 고려해보십시오",
    RedFort: "Red Fort",
-   RedFortDesc: "+5 Building Level Boost to all buildings within 4-tile range. This wonder can be upgraded and each additional level provides an extra +1 Building Level Boost",
+   RedFortDesc: "+1 Building Level Boost to all buildings within 3-tile range. This wonder can be upgraded and each additional level provides an extra +1 Building Level Boost",
    RedistributeAmongSelected: "선택한 항목간 재설정",
    RedistributeAmongSelectedCap: "상한",
    RedistributeAmongSelectedImport: "수입량",
