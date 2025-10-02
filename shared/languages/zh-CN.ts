@@ -1212,7 +1212,7 @@ export const ZH_CN = {
    RebornOfflineWarning: "你已离线。你只能在连接上服务器时重生。",
    RebornTradeWarning: "你还有发出或可认领的贸易订单。<b>重生将抹去与你相关的所有订单。</b>你应该首先考虑取消及认领订单。",
    RedFort: "红堡",
-   RedFortDesc: "周围 4 地块范围内的所有建筑获得 +1 额外建筑等级。该奇观可被升级，并且每一次额外升级为周围 4 地块范围内的所有建筑提供 +1 额外建筑等级",
+   RedFortDesc: "周围 3 地块范围内的所有建筑获得 +1 额外建筑等级。该奇观可被升级，并且每一次额外升级为周围 3 地块范围内的所有建筑提供 +1 额外建筑等级",
    RedistributeAmongSelected: "在选定对象中重新分配",
    RedistributeAmongSelectedCap: "限额",
    RedistributeAmongSelectedImport: "运输量",
