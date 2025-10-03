@@ -412,8 +412,9 @@ export function transportAndConsumeResources(
 
    if (building.type === "Caravansary") {
       Tick.next.playerTradeBuildings.set(xy, building);
+      const range = Config.Building[building.type].range
       if (hasFeature(GameFeature.WarehouseExtension, gs)) {
-         for (const point of getGrid(gs).getNeighbors(tileToPoint(xy))) {
+         for (const point of getGrid(gs).getRange(tileToPoint(xy), range)) {
             const nxy = pointToTile(point);
             const b = gs.tiles.get(nxy)?.building;
             if (b?.type === "Warehouse" && b.status === "completed") {
@@ -911,7 +912,7 @@ export function transportResource(
          } else if (hasFeature(GameFeature.WarehouseUpgrade, gs)) {
             const point = tileToPoint(from);
             const distance = getGrid(gs).distance(point.x, point.y, targetPoint.x, targetPoint.y);
-            if (distance <= 1) {
+            if (distance <= Config.Building[building.type].range) {
                transportCapacity = Number.POSITIVE_INFINITY;
             }
          }
@@ -923,9 +924,9 @@ export function transportResource(
       }
 
       let immediate = false;
-      const festival = isFestival("SanchiStupa", gs);
-      const range = festival ? 3 : 2;
-      const sanchiStupa = Tick.current.specialBuildings.get("SanchiStupa");
+      const bType = "SanchiStupa";
+      const range = Config.Building[bType].range + isFestival(bType, gs) ? Config.Building[bType].festivalBonus : 0;
+      const sanchiStupa = Tick.current.specialBuildings.get(bType);
       if (
          sanchiStupa &&
          (grid.distanceTile(from, sanchiStupa.tile) <= range ||
