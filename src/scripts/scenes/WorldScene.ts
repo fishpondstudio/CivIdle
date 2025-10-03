@@ -470,7 +470,12 @@ export class WorldScene extends Scene {
             case "RedFort":
             case "SanchiStupa":
             case "GangesRiver": {
-               this.highlightRange(grid, Config.Building[building.type].range + isFestival(building.type, gs) ? Config.Building[building.type].festivalBonus : 0);
+               this.highlightRange(
+                  grid,
+                  Config.Building[building.type].range + isFestival(building.type, gs)
+                     ? Config.Building[building.type].festivalBonus
+                     : 0
+               );
                break;
             }
          }
