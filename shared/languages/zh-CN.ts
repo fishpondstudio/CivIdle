@@ -27,7 +27,7 @@ export const ZH_CN = {
    AccountTradePriceRange: "贸易价格范围",
    AccountTradeTileReservationTime: "贸易地块留存时间",
    AccountTradeTileReservationTimeDesc: "你的玩家贸易地块保留的时间从你上次在线之后开始计时。在保留期间结束后，其他玩家可以获取你的宣称地块。",
-   AccountTradeValuePerMinute: "每分钟贸易值",
+   AccountTradeValuePerMinute: "每分钟贸易价值",
    AccountTypeShowDetails: "展示账号细节",
    AccountTypeShowDetailsTribune: "有资格任职财务官一职，请按此查阅详情",
    AccountUpgradeButton: "升至财务官等级",
@@ -1585,7 +1585,7 @@ export const ZH_CN = {
    TribuneUpgradeDescGreatPeopleWarning: "你本轮游玩拥有伟人。你应该<b>先重生</b>。升至财务官级别，将重置你的本轮游玩。",
    TribuneUpgradeDescGreatPeopleWarningTitle: "请先重生",
    TribuneUpgradeDescV4:
-      "若你无计划体验<b>可选的</b>在线内容，作为保民官，你能游玩完整版游戏。为在线内容不受限制（交易限制、贸易地块加成数量与重置永恒伟人功能），你将需要提升至财务官。但是，<b>当账号等级从保民官升至财务官的时</b>，你能保留每个永恒伟人的最高等级规定如下：<ul><li>青铜至最多可保留到等级 <b>3</b> </li><li>中世纪至工业时代最多可保留到等级 <b>2</b> </li><li>世界大战至信息时代最多可保留到等级 <b>1</b> </li></ul>超过等级的超出那部分伟人碎片和<b>时代智慧</b>等级都将<b>不能保留</b>。<b>所有的账号等级都没有限制伟人和时代智慧的等级上限。这是一项反机器人措施，旨在让每个人都可以免费玩游戏。</b>",
+      "若你无计划体验<b>可选的</b>在线内容，作为保民官，你能游玩完整版游戏。为在线内容不受限制（每分钟最大交易价值限制为 10K、贸易地块加成数量与重置永恒伟人功能），你将需要提升至财务官。但是，<b>当账号等级从保民官升至财务官的时</b>需进行继承流程，你能保留每个永恒伟人的最高等级规定如下：<ul><li>青铜至古典时代最多可保留到等级 <b>3</b> </li><li>中世纪至工业时代最多可保留到等级 <b>2</b> </li><li>世界大战至信息时代最多可保留到等级 <b>1</b> </li></ul>超过等级的超出那部分伟人碎片和<b>时代智慧</b>等级都将<b>不能保留</b>。<b>所有的账号等级都没有限制伟人和时代智慧的等级上限。这是一项反机器人措施，旨在让每个人都可以免费玩游戏。</b>",
    TurnOffFullBuildings: "关闭所有满存储的 %{building} ",
    TurnOnTimeWarpDescV2: "每秒消耗 %{cost} 扭曲时间，同时加速你的帝国，使其以 %{speed} 倍速度运行。",
    Tutorial: "教程",
