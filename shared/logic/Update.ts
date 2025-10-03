@@ -412,7 +412,7 @@ export function transportAndConsumeResources(
 
    if (building.type === "Caravansary") {
       Tick.next.playerTradeBuildings.set(xy, building);
-      const range = Config.Building[building.type].range
+      const range = Config.Building[building.type].range;
       if (hasFeature(GameFeature.WarehouseExtension, gs)) {
          for (const point of getGrid(gs).getRange(tileToPoint(xy), range)) {
             const nxy = pointToTile(point);
@@ -925,7 +925,8 @@ export function transportResource(
 
       let immediate = false;
       const bType = "SanchiStupa";
-      const range = Config.Building[bType].range + isFestival(bType, gs) ? Config.Building[bType].festivalBonus : 0;
+      const range = 
+         Config.Building[bType].range + isFestival(bType, gs) ? Config.Building[bType].festivalBonus : 0;
       const sanchiStupa = Tick.current.specialBuildings.get(bType);
       if (
          sanchiStupa &&
