@@ -27,7 +27,7 @@ export const ZH_CN = {
    AccountTradePriceRange: "贸易价格范围",
    AccountTradeTileReservationTime: "贸易地块留存时间",
    AccountTradeTileReservationTimeDesc: "你的玩家贸易地块保留的时间从你上次在线之后开始计时。在保留期间结束后，其他玩家可以获取你的宣称地块。",
-   AccountTradeValuePerMinute: "每分钟贸易价值",
+   AccountTradeValuePerMinute: "每分钟最大贸易价值",
    AccountTypeShowDetails: "展示账号细节",
    AccountTypeShowDetailsTribune: "有资格任职财务官一职，请按此查阅详情",
    AccountUpgradeButton: "升至财务官等级",
