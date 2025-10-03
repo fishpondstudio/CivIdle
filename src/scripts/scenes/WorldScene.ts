@@ -392,11 +392,11 @@ export class WorldScene extends Scene {
             case "Warehouse": {
                const ri = building as IResourceImportBuildingData;
                if (hasFlag(ri.resourceImportOptions, ResourceImportOptions.ManagedImport)) {
-                  this.highlightRange(grid, 2);
+                  this.highlightRange(grid, MANAGED_IMPORT_RANGE);
                   break;
                }
                if (hasFeature(GameFeature.WarehouseUpgrade, gs)) {
-                  this.highlightRange(grid, 1);
+                  this.highlightRange(grid, Config.Building[building.type].range);
                }
                break;
             }
@@ -467,16 +467,10 @@ export class WorldScene extends Scene {
                this.highlightRange(grid, 3);
                break;
             }
-            case "RedFort": {
-               this.highlightRange(grid, isFestival(building.type, gs) ? 5 : 3);
-               break;
-            }
-            case "SanchiStupa": {
-               this.highlightRange(grid, isFestival(building.type, gs) ? 3 : 2);
-               break;
-            }
+            case "RedFort":
+            case "SanchiStupa":
             case "GangesRiver": {
-               this.highlightRange(grid, isFestival(building.type, gs) ? 2 : 1);
+               this.highlightRange(grid, Config.Building[building.type].range + isFestival(building.type, gs) ? Config.Building[building.type].festivalBonus : 0);
                break;
             }
          }
