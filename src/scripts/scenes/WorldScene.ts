@@ -474,7 +474,7 @@ export class WorldScene extends Scene {
                   grid,
                   Config.Building[building.type].range + isFestival(building.type, gs)
                      ? Config.Building[building.type].festivalBonus
-                     : 0
+                     : 0,
                );
                break;
             }
