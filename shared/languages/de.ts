@@ -1664,7 +1664,7 @@ export const DE = {
    UpgradeablePermanentGreatPeopleHTML: "The following permanent great people can be upgraded: <b>%{gps}</b>",
    UpgradeBuilding: "Gebäude verbessern",
    UpgradeBuildingNotProducingDescV2: "Dieses Gebäude wird verbessert - <b>Produktion ist angehalten bis zum Abschluss</b>",
-   UpgradeTo: "Upgrade auf Stufe %{level}",
+   UpgradeTo: "Verbesserung auf Stufe %{level}",
    Uranium: "Uran",
    UraniumEnrichmentPlant: "Urananreicherung",
    UraniumMine: "Uranmine",
