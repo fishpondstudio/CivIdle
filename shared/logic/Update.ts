@@ -925,7 +925,7 @@ export function transportResource(
 
       let immediate = false;
       const bType = "SanchiStupa";
-      const range = 
+      const range =
          Config.Building[bType].range + isFestival(bType, gs) ? Config.Building[bType].festivalBonus : 0;
       const sanchiStupa = Tick.current.specialBuildings.get(bType);
       if (
