@@ -428,7 +428,7 @@ export function transportAndConsumeResources(
       const ri = building as IResourceImportBuildingData;
       if (hasFlag(ri.resourceImportOptions, ResourceImportOptions.ManagedImport)) {
          const storage = getStorageFor(xy, gs);
-         const totalCapacity = getResourceImportCapacity(ri, totalMultiplierFor(xy, "output", 1, false, gs));
+         const totalCapacity = getResourceImportCapacity(ri, (Config.Building[building.type]?.importCapacity > 0 ? Config.Building[building.type].importCapacity : 1) * totalMultiplierFor(xy, "output", 1, false, gs));
 
          const result = new Map<Resource, number>();
          let total = 0;
