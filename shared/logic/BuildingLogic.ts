@@ -266,15 +266,15 @@ export function getStorageFor(xy: Tile, gs: GameState): IStorageResult {
 
    switch (building?.type) {
       case "Market": {
-         base = building.level * STORAGE_TO_PRODUCTION * 10;
+         base = getResourceImportCapacity(building, Config.Building[building.type].storageCapacity) * STORAGE_TO_PRODUCTION;
          break;
       }
       case "Caravansary": {
-         base = getResourceImportCapacity(building, 1) * STORAGE_TO_PRODUCTION;
+         base = getResourceImportCapacity(building, Config.Building[building.type].storageCapacity) * STORAGE_TO_PRODUCTION;
          break;
       }
       case "Warehouse": {
-         base = getResourceImportCapacity(building, 1) * STORAGE_TO_PRODUCTION * 10;
+         base = getResourceImportCapacity(building, Config.Building[building.type].storageCapacity) * STORAGE_TO_PRODUCTION;
          break;
       }
       case "Petra": {
@@ -772,7 +772,11 @@ export function getResourceImportIdleCapacity(xy: Tile, gs: GameState): number {
    }
    const warehouse = building as IResourceImportBuildingData;
    return (
-      getResourceImportCapacity(warehouse, totalMultiplierFor(xy, "output", 1, false, gs)) -
+      getResourceImportCapacity(
+         warehouse,
+         (Config.Building[building.type]?.importCapacity > 0 ? Config.Building[building.type].importCapacity : 1) *
+            totalMultiplierFor(xy, "output", 1, false, gs),
+      ) -
       reduceOf(
          warehouse.resourceImports,
          (prev, k, v) => {
