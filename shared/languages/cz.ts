@@ -1214,7 +1214,7 @@ export const CZ = {
    RebornOfflineWarning: "V současné době jste offline. Znovuzrození můžete provést pouze tehdy, když jste připojeni k serveru",
    RebornTradeWarning: "Máte obchody, které jsou aktivní nebo o které lze požádat. <b>Znovuzrození je vymaže</b> - měli byste nejprve zvážit jejich zrušení nebo reklamaci.",
    RedFort: "Red Fort",
-   RedFortDesc: "+5 Building Level Boost to all buildings within 4-tile range. This wonder can be upgraded and each additional level provides an extra +1 Building Level Boost",
+   RedFortDesc: "+1 Building Level Boost to all buildings within 3-tile range. This wonder can be upgraded and each additional level provides an extra +1 Building Level Boost",
    RedistributeAmongSelected: "Přerozdělit mezi vybrané",
    RedistributeAmongSelectedCap: "Cap",
    RedistributeAmongSelectedImport: "Import",

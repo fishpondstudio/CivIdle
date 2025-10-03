@@ -125,7 +125,7 @@ export function ChatPanel(): React.ReactNode {
          {gs.pinStatPanel ? (
             <div
                className="window stat-content"
-               style={{ left: showChatWindow ? 350 * options.chatChannels.size : 0 }}
+               style={{ left: showChatWindow ? `${35 * options.chatChannels.size}rem` : 0 }}
             >
                <div className="title-bar">
                   <div className="title-bar-text">{t(L.StatisticsOffice)}</div>
@@ -201,7 +201,7 @@ function _ChatWindow({
    }, [show]);
 
    return (
-      <div className="chat-content window" style={{ left }}>
+      <div className="chat-content window" style={{ left: `${left / 10}rem` }}>
          <div className="title-bar">
             <div className="title-bar-text">{ChatChannels[channel]}</div>
             <div className="title-bar-controls">

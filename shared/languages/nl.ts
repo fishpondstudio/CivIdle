@@ -1214,7 +1214,7 @@ export const NL = {
    RebornOfflineWarning: "Je bent momenteel offline. Je kunt alleen herboren als je verbonden bent met de server",
    RebornTradeWarning: "Je hebt actieve handel of handel die geclaimd kan worden. <b>Herboren zal deze verwijderen</b> - overweeg om eerst te annuleren of te claimen",
    RedFort: "Red Fort",
-   RedFortDesc: "+5 Building Level Boost to all buildings within 4-tile range. This wonder can be upgraded and each additional level provides an extra +1 Building Level Boost",
+   RedFortDesc: "+1 Building Level Boost to all buildings within 3-tile range. This wonder can be upgraded and each additional level provides an extra +1 Building Level Boost",
    RedistributeAmongSelected: "Herdistibueren Onder Geselecteerden",
    RedistributeAmongSelectedCap: "Cap",
    RedistributeAmongSelectedImport: "Importeren",

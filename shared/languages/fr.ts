@@ -1223,7 +1223,7 @@ export const FR = {
    RebornOfflineWarning: "Vous êtes actuellement hors ligne. La réincarnation n'est possible que lorsque vous êtes connecté au serveur",
    RebornTradeWarning: "Vous avez des échanges actifs ou qui peuvent être récupérés. <b>La réincarnation les effacera</b> - vous devez d'abord les annuler ou les récupérer",
    RedFort: "Red Fort",
-   RedFortDesc: "+5 points de niveau de construction pour tous les bâtiments situés dans un rayon de 4 cases. Cette merveille peut être améliorée et chaque niveau supplémentaire confère +1 point de niveau de construction supplémentaire.",
+   RedFortDesc: "+1 Building Level Boost to all buildings within 3-tile range. This wonder can be upgraded and each additional level provides an extra +1 Building Level Boost",
    RedistributeAmongSelected: "Redistribuer parmi la sélection",
    RedistributeAmongSelectedCap: "Plafond",
    RedistributeAmongSelectedImport: "Importer",
