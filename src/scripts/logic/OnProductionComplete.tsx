@@ -1892,7 +1892,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
       }
       case "RedFort": {
          const levelBoost = building.level + getWonderExtraLevel(building.type);
-         for (const point of grid.getRange(tileToPoint(xy), isFestival("RedFort", gs) ? 5 : 3)) {
+         for (const point of grid.getRange(tileToPoint(xy), Config.Building[building.type].range + isFestival(building.type, gs) ? Config.Building[building.type].festivalBonus : 0)) {
             mapSafePush(Tick.next.levelBoost, pointToTile(point), {
                value: levelBoost,
                source: buildingName,
@@ -1902,7 +1902,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
       }
       case "GangesRiver": {
          const buildings = new Set<Building>();
-         for (const point of grid.getRange(tileToPoint(xy), isFestival("GangesRiver", gs) ? 2 : 1)) {
+         for (const point of grid.getRange(tileToPoint(xy), Config.Building[building.type].range + isFestival(building.type, gs) ? Config.Building[building.type].festivalBonus : 0)) {
             const tile = pointToTile(point);
             const targetBuilding = gs.tiles.get(tile)?.building;
             if (targetBuilding) {
