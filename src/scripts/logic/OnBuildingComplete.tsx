@@ -46,7 +46,7 @@ import {
 import { WorldScene } from "../scenes/WorldScene";
 import { BuildingCompleteModal } from "../ui/BuildingCompleteModal";
 import { ChooseGreatPersonModal } from "../ui/ChooseGreatPersonModal";
-import { showModal } from "../ui/GlobalModal";
+import { hasOpenModal, showModal } from "../ui/GlobalModal";
 import { Singleton } from "../utilities/Singleton";
 import { playAgeUp, playChime } from "../visuals/Sound";
 
@@ -58,11 +58,6 @@ export function onBuildingComplete(xy: Tile): void {
    const building = gs.tiles.get(xy)?.building;
    if (!building) {
       return;
-   }
-
-   if (isWorldWonder(building.type) && getGameOptions().showWonderPopup) {
-      playChime();
-      showModal(<BuildingCompleteModal building={building.type} />);
    }
 
    const grid = getGrid(gs);
@@ -290,6 +285,10 @@ export function onBuildingComplete(xy: Tile): void {
       }
    }
    checkCerneAbbasGiant(building, gs);
+   if (isWorldWonder(building.type) && getGameOptions().showWonderPopup && !hasOpenModal()) {
+      playChime();
+      showModal(<BuildingCompleteModal building={building.type} />);
+   }
 }
 
 function checkCerneAbbasGiant(building: IBuildingData, gs: GameState) {

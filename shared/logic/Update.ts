@@ -390,11 +390,17 @@ export function transportAndConsumeResources(
             safeAdd(building.resources, res, -amount);
          });
          building.suspendedInput.clear();
+         let buildingComplete = false;
          if (building.status === "building") {
             building.status = building.desiredLevel > building.level ? "upgrading" : "completed";
-            OnBuildingComplete.emit(xy);
+            buildingComplete = true;
          }
          OnBuildingOrUpgradeComplete.emit(xy);
+         // `OnBuildingComplete` should fire after `OnBuildingOrUpgradeComplete` because Wonder Complete Modal
+         // is shown in `OnBuildingComplete`, which should not show if there are other modals open
+         if (buildingComplete) {
+            OnBuildingComplete.emit(xy);
+         }
          if (building.status === "upgrading" && building.level >= building.desiredLevel) {
             building.status = "completed";
          }
