@@ -9,7 +9,7 @@ import { Config } from "../../../shared/logic/Config";
 import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
 import { Tick } from "../../../shared/logic/TickLogic";
 import { SuspendedInput } from "../../../shared/logic/Tile";
-import { formatHMS, formatPercent, sizeOf } from "../../../shared/utilities/Helper";
+import { formatHMS, formatNumber, formatPercent, sizeOf } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import { jsxMapOf } from "../utilities/Helper";
 import type { IBuildingComponentProps } from "./BuildingPage";
@@ -138,7 +138,7 @@ export function BuildingConstructionProgressComponent({
                         return (
                            <li key={i} className="text-small row">
                               <div className="f1">{value.source}</div>
-                              <div>{value.value}</div>
+                              <div>{formatNumber(value.value)}</div>
                            </li>
                         );
                      })}
@@ -149,7 +149,7 @@ export function BuildingConstructionProgressComponent({
                         return (
                            <li key={i} className="text-small row">
                               <div className="f1">{value.source}</div>
-                              <div>{value.worker}</div>
+                              <div>{formatNumber(value.worker)}</div>
                            </li>
                         );
                      })}
