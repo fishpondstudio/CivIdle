@@ -15,8 +15,6 @@ if (existsSync(logPath)) {
 
 app.commandLine.appendSwitch("log-file", logPath);
 app.commandLine.appendSwitch("enable-experimental-web-platform-features");
-app.commandLine.appendSwitch("in-process-gpu");
-app.commandLine.appendSwitch("disable-direct-composition");
 
 export function getGameSavePath(): string {
    return path.join(app.getPath("appData"), "CivIdleSaves");
