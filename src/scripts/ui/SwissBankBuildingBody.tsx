@@ -55,6 +55,19 @@ export function SwissBankBuildingBody({ gameState, xy }: IBuildingComponentProps
             </div>
             {show && (
                <div className="mt5">
+                  <button
+                     className={cls("row g5 w100 pointer", !building.resource ? "text-strong" : "")}
+                     onClick={() => {
+                        building.resource = null;
+                        setShow(false);
+                        notifyGameStateUpdate();
+                     }}
+                  >
+                     <div className="m-icon small">
+                        {building.resource === null ? "check_box" : "check_box_outline_blank"}
+                     </div>
+                     <div className="f1" />
+                  </button>
                   {keysOf(availableResources)
                      .sort((a, b) => Config.Resource[a].name().localeCompare(Config.Resource[b].name()))
                      .map((res) => {
