@@ -1359,6 +1359,7 @@ const WonderToGreatPerson: Partial<Record<Building, GreatPerson>> = {
    RedFort: "AkbarTheGreat",
    Petra: "Zenobia",
    ItaipuDam: "Pele",
+   CologneCathedral: "Beethoven",
 };
 
 export function getWonderExtraLevel(building: Building): number {

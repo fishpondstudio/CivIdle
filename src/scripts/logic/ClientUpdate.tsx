@@ -157,7 +157,7 @@ export function tickEverySecond(gs: GameState, offline: boolean) {
       tiles.forEach(function forEachTickTile([tile, _building]) {
          transportAndConsumeResources(tile, resourceProduced, gs, offline);
       });
-      postTickTiles(gs, offline);
+      postTickTiles(gs, true);
    } else {
       tickTileQueue = tiles.map(([tile, _building]) => tile);
       tickTileQueueSize = tickTileQueue.length;

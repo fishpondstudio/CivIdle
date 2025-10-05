@@ -362,9 +362,13 @@ export async function handleChatCommand(command: string): Promise<void> {
       }
       case "mutelist": {
          const mutedPlayers = await client.getMutedPlayers();
-         mutedPlayers.forEach((m) => {
-            addSystemMessage(`${m.handle} muted until ${new Date(m.time).toLocaleString()}`);
-         });
+         addSystemMessage(
+            `<code>${mutedPlayers
+               .map((m) => {
+                  return `${m.handle} muted until ${new Date(m.time).toLocaleString()}`;
+               })
+               .join("\n")}</code>`,
+         );
          break;
       }
       case "removetrade": {
@@ -377,11 +381,15 @@ export async function handleChatCommand(command: string): Promise<void> {
       }
       case "slowlist": {
          const mutedPlayers = await client.getSlowedPlayer();
-         mutedPlayers.forEach((m) => {
-            const t = new Date(m.time).toLocaleString();
-            const i = Math.ceil(m.interval / SECOND);
-            addSystemMessage(`${m.handle} slowed for ${i}s until ${t}`);
-         });
+         addSystemMessage(
+            `<code>${mutedPlayers
+               .map((m) => {
+                  const t = new Date(m.time).toLocaleString();
+                  const i = Math.ceil(m.interval / SECOND);
+                  return `${m.handle} slowed for ${i}s until ${t}`;
+               })
+               .join("\n")}</code>`,
+         );
          break;
       }
       case "rename": {

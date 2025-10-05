@@ -300,6 +300,7 @@ export async function connectWebSocket(): Promise<IWelcomeMessage> {
    ws.onmessage = (e) => {
       const message = decode(e.data as ArrayBuffer) as AllMessageTypes;
       const type = message.type as MessageType;
+      const options = getGameOptions();
       switch (type) {
          case MessageType.Chat: {
             const c = message as IChatMessage;
@@ -309,7 +310,8 @@ export async function connectWebSocket(): Promise<IWelcomeMessage> {
                c.chat.forEach((m) => {
                   const mentionsMe =
                      user && m.message.toLowerCase().includes(` @${user.handle.toLowerCase()}`);
-                  const isAnnounce = hasFlag(m.attr, ChatAttributes.Announce);
+                  const isAnnounce =
+                     hasFlag(m.attr, ChatAttributes.Announce) && options.chatChannels.has(m.channel);
                   if (mentionsMe || isAnnounce) {
                      playBubble();
                      showToast(`${m.name}: ${m.message}`);
@@ -324,7 +326,6 @@ export async function connectWebSocket(): Promise<IWelcomeMessage> {
          case MessageType.Welcome: {
             const w = message as IWelcomeMessage;
             user = w.user;
-            const options = getGameOptions();
             if (!options.userId) {
                options.userId = user.userId;
             }
