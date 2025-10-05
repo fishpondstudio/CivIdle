@@ -167,6 +167,7 @@ const _chatIds = new Map<ChatChannel | "System", number>();
 
 export function addSystemMessage(message: string): void {
    showToast(message, Number.POSITIVE_INFINITY, "command");
+   console.log(message);
 }
 
 export function clearSystemMessages(): void {

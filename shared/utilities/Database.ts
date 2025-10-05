@@ -158,6 +158,7 @@ export enum UserAttributes {
    TribuneOnly = 1 << 7,
    DisableRename = 1 << 8,
    CheckTradeCancel = 1 << 9,
+   Suspicious = 1 << 10,
 }
 
 export enum UserColors {
