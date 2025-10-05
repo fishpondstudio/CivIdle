@@ -6,21 +6,32 @@ import {
    isWorldWonder,
 } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
-import type { GameState } from "../../../shared/logic/GameState";
+import { GameStateFlags, type GameState } from "../../../shared/logic/GameState";
 import { getGameOptions, getGameState } from "../../../shared/logic/GameStateLogic";
 import { getPermanentGreatPeopleLevel } from "../../../shared/logic/RebirthLogic";
+import { Tick } from "../../../shared/logic/TickLogic";
 import type { ICentrePompidouBuildingData } from "../../../shared/logic/Tile";
 import { OnTechUnlocked } from "../../../shared/logic/Update";
-import { HOUR, SECOND, forEach, sizeOf } from "../../../shared/utilities/Helper";
+import { HOUR, SECOND, forEach, hasFlag, sizeOf } from "../../../shared/utilities/Helper";
 import { SteamClient, isSteam } from "../rpc/SteamClient";
 
 OnTechUnlocked.on((tech) => {
    if (!isSteam()) return;
    switch (tech) {
       case "Future": {
+         const gs = getGameState();
          SteamClient.unlockAchievement("Future");
-         if (getGameState().seconds * SECOND <= 24 * HOUR) {
+         if (gs.seconds * SECOND <= 24 * HOUR) {
             SteamClient.unlockAchievement("OneMoreTurn");
+         }
+         if (!hasFlag(gs.flags, GameStateFlags.HasUsedTimeWarp)) {
+            SteamClient.unlockAchievement("GrandfatherParadox");
+         }
+         if (!hasFlag(gs.flags, GameStateFlags.HasDemolishedBuilding)) {
+            SteamClient.unlockAchievement("Preservationist");
+         }
+         if ((Tick.current.workersAvailable.get("Power") ?? 0) >= 1_000_000) {
+            SteamClient.unlockAchievement("PowerfulEmpire");
          }
          break;
       }
@@ -145,6 +156,10 @@ export function checkRebirthAchievements(extraGP: number, gs: GameState): void {
          }
          case "Brazilian": {
             SteamClient.unlockAchievement("SambaKing");
+            break;
+         }
+         case "Indian": {
+            SteamClient.unlockAchievement("KeeperOfDharma");
             break;
          }
       }
@@ -272,5 +287,18 @@ export function checkRebirthAchievements(extraGP: number, gs: GameState): void {
 
    if (wonderLevels >= 50) {
       SteamClient.unlockAchievement("CivitasMirabilis");
+   }
+
+   const swissBank = findSpecialBuilding("SwissBank", gs);
+   if ((swissBank?.building.resources.Koti ?? 0) >= 1_000_000) {
+      SteamClient.unlockAchievement("SwissBanker");
+   }
+
+   if (Tick.current.totalValue >= 1_000_000_000_000 && gs.tradeValue <= 0) {
+      SteamClient.unlockAchievement("Isolationist");
+   }
+
+   if (hasFlag(gs.flags, GameStateFlags.HasThreeAllies)) {
+      SteamClient.unlockAchievement("TheAlliance");
    }
 }

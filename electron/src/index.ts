@@ -1,4 +1,4 @@
-import { init, type Client } from "@fishpondstudio/steamworks.js";
+import { init, shutdown, type Client } from "@fishpondstudio/steamworks.js";
 import { BrowserWindow, Menu, app, dialog, ipcMain } from "electron";
 import { existsSync, renameSync } from "node:fs";
 import path from "node:path";
@@ -105,5 +105,6 @@ app.on("window-all-closed", () => {
 });
 
 function quit() {
+   shutdown();
    app.quit();
 }

@@ -80,12 +80,7 @@ export interface IClientChat extends IChat {
    id: number;
 }
 
-interface ISystemMessage {
-   id: number;
-   message: string;
-}
-
-export type LocalChat = IClientChat | ISystemMessage;
+export type LocalChat = IClientChat;
 
 let chatMessages: LocalChat[] = [];
 const trades: Map<string, IClientTrade> = new Map();
@@ -171,8 +166,7 @@ export function canEarnGreatPeopleFromReborn(): boolean {
 const _chatIds = new Map<ChatChannel | "System", number>();
 
 export function addSystemMessage(message: string): void {
-   chatMessages.push({ id: mapSafeAdd(_chatIds, "System", 1), message });
-   OnChatMessage.emit(chatMessages);
+   showToast(message, Number.POSITIVE_INFINITY, "command");
 }
 
 export function clearSystemMessages(): void {
@@ -306,6 +300,7 @@ export async function connectWebSocket(): Promise<IWelcomeMessage> {
    ws.onmessage = (e) => {
       const message = decode(e.data as ArrayBuffer) as AllMessageTypes;
       const type = message.type as MessageType;
+      const options = getGameOptions();
       switch (type) {
          case MessageType.Chat: {
             const c = message as IChatMessage;
@@ -315,7 +310,8 @@ export async function connectWebSocket(): Promise<IWelcomeMessage> {
                c.chat.forEach((m) => {
                   const mentionsMe =
                      user && m.message.toLowerCase().includes(` @${user.handle.toLowerCase()}`);
-                  const isAnnounce = hasFlag(m.attr, ChatAttributes.Announce);
+                  const isAnnounce =
+                     hasFlag(m.attr, ChatAttributes.Announce) && options.chatChannels.has(m.channel);
                   if (mentionsMe || isAnnounce) {
                      playBubble();
                      showToast(`${m.name}: ${m.message}`);
@@ -330,7 +326,6 @@ export async function connectWebSocket(): Promise<IWelcomeMessage> {
          case MessageType.Welcome: {
             const w = message as IWelcomeMessage;
             user = w.user;
-            const options = getGameOptions();
             if (!options.userId) {
                options.userId = user.userId;
             }
@@ -340,19 +335,22 @@ export async function connectWebSocket(): Promise<IWelcomeMessage> {
             OnPlatformInfoChanged.emit(platformInfo);
             const tick = getGameState().tick;
             const offlineTicks = clamp(w.lastGameTick + w.offlineTime - tick, 0, Number.POSITIVE_INFINITY);
+            const clientOfflineTicks = Date.now() - options.lastClientTickAt;
             console.log(
                "[WelcomeMessage]",
                "CurrentTick:",
                tick,
                "OfflineTicks:",
                offlineTicks,
+               "ClientOfflineTicks:",
+               clientOfflineTicks,
                "OfflineTime:",
                w.offlineTime,
                "User:",
                JSON.stringify(w),
             );
             setServerNow(w.now);
-            w.offlineTime = Math.min(w.offlineTime, offlineTicks);
+            w.offlineTime = Math.min(w.offlineTime, offlineTicks, clientOfflineTicks);
             resolve?.(w);
             break;
          }

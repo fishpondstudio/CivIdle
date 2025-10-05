@@ -5,7 +5,9 @@ import { getVotingTime } from "../../../shared/logic/PlayerTradeLogic";
 import type { IGetVotedBoostResponse } from "../../../shared/utilities/Database";
 import { formatHMS, isNullOrUndefined } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
+import { useGameOptions } from "../Global";
 import { client } from "../rpc/RPCClient";
+import { SteamClient, isSteam } from "../rpc/SteamClient";
 import { playError, playUpgrade } from "../visuals/Sound";
 import { BuildingColorComponent } from "./BuildingColorComponent";
 import { BuildingDescriptionComponent } from "./BuildingDescriptionComponent";
@@ -20,6 +22,7 @@ import { UpgradeableWonderComponent } from "./UpgradeableWonderComponent";
 export function UnitedNationsBuildingBody({ gameState, xy }: IBuildingComponentProps): React.ReactNode {
    const building = gameState.tiles.get(xy)?.building;
    const [response, setResponse] = useState<IGetVotedBoostResponse | null>(null);
+   const options = useGameOptions();
    if (!building) {
       return null;
    }
@@ -49,7 +52,7 @@ export function UnitedNationsBuildingBody({ gameState, xy }: IBuildingComponentP
                            <Tippy key={building} content={Config.Building[building].name()}>
                               <BuildingSpriteComponent
                                  building={building}
-                                 scale={0.25}
+                                 scale={(0.25 * options.sidePanelWidth) / 450}
                                  style={{ filter: "invert(0.75)" }}
                               />
                            </Tippy>
@@ -62,38 +65,18 @@ export function UnitedNationsBuildingBody({ gameState, xy }: IBuildingComponentP
                   {response.next.options.map((op, idx) => {
                      return (
                         <Fragment key={idx}>
-                           <div className="row">
-                              <div className="f1">
-                                 <RenderHTML
-                                    html={t(L.UNGeneralAssemblyMultipliersV2, {
-                                       count: 5,
-                                       buildings: op.buildings
-                                          .map((b) => Config.Building[b].name())
-                                          .join(", "),
-                                    })}
-                                 />
-                                 <div className="row g10 mt5">
-                                    {op.buildings.map((building) => {
-                                       return (
-                                          <Tippy key={building} content={Config.Building[building].name()}>
-                                             <BuildingSpriteComponent
-                                                building={building}
-                                                scale={0.25}
-                                                style={{ filter: "invert(0.75)" }}
-                                             />
-                                          </Tippy>
-                                       );
-                                    })}
-                                 </div>
-                              </div>
+                           <div className="row g10">
                               {response.next.voted === idx ? (
-                                 <div className="m-icon ml20 text-green">check_box</div>
+                                 <div className="m-icon text-green">check_box</div>
                               ) : (
                                  <div
-                                    className="m-icon ml20 text-desc pointer"
+                                    className="m-icon text-desc pointer"
                                     onClick={async () => {
                                        try {
                                           setResponse(await client.voteBoosts(idx));
+                                          if (isSteam()) {
+                                             SteamClient.unlockAchievement("WorldsDelegate");
+                                          }
                                           playUpgrade();
                                        } catch (error) {
                                           playError();
@@ -104,6 +87,29 @@ export function UnitedNationsBuildingBody({ gameState, xy }: IBuildingComponentP
                                     check_box_outline_blank
                                  </div>
                               )}
+                              <div className="f1">
+                                 <RenderHTML
+                                    html={t(L.UNGeneralAssemblyMultipliersV2, {
+                                       count: 5,
+                                       buildings: op.buildings
+                                          .map((b) => Config.Building[b].name())
+                                          .join(", "),
+                                    })}
+                                 />
+                                 <div className="row g10 mt5" style={{ overflow: "auto", width: "100%" }}>
+                                    {op.buildings.map((building) => {
+                                       return (
+                                          <Tippy key={building} content={Config.Building[building].name()}>
+                                             <BuildingSpriteComponent
+                                                building={building}
+                                                scale={(0.25 * options.sidePanelWidth) / 450}
+                                                style={{ filter: "invert(0.75)" }}
+                                             />
+                                          </Tippy>
+                                       );
+                                    })}
+                                 </div>
+                              </div>
                            </div>
                            <div className="separator"></div>
                         </Fragment>

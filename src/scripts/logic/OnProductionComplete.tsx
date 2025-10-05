@@ -33,6 +33,7 @@ import {
    TRADE_TILE_NEIGHBOR_BONUS,
 } from "../../../shared/logic/Constants";
 import { GameFeature, hasFeature } from "../../../shared/logic/FeatureLogic";
+import { GameStateFlags } from "../../../shared/logic/GameState";
 import { getGameOptions, getGameState } from "../../../shared/logic/GameStateLogic";
 import {
    getBuildingsByType,
@@ -75,6 +76,7 @@ import { VotedBoostType, type IGetVotedBoostResponse } from "../../../shared/uti
 import {
    MINUTE,
    clamp,
+   clearFlag,
    filterOf,
    firstKeyOf,
    forEach,
@@ -84,6 +86,7 @@ import {
    pointToTile,
    round,
    safeAdd,
+   setFlag,
    tileToPoint,
    type Tile,
 } from "../../../shared/utilities/Helper";
@@ -153,14 +156,15 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
             }
          });
 
-         let hasAlly = false;
+         let allyCount = 0;
 
          getNeighboringPlayers().forEach((player) => {
+            let isAlly = false;
             player.forEach(([xy, tile]) => {
                const building = TileBuildings.get(xy);
                if (building) {
                   if (isAllyWith(tile)) {
-                     hasAlly = true;
+                     isAlly = true;
                      addMultiplier(
                         building,
                         { output: TRADE_TILE_ALLY_BONUS },
@@ -175,11 +179,20 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
                   }
                }
             });
+            if (isAlly) {
+               ++allyCount;
+            }
          });
 
-         if (isSteam() && hasAlly && !declareFriendshipAchievementUnlocked) {
+         if (isSteam() && allyCount > 0 && !declareFriendshipAchievementUnlocked) {
             SteamClient.unlockAchievement("DeclareFriendship");
             declareFriendshipAchievementUnlocked = true;
+         }
+
+         if (allyCount >= 3) {
+            gs.flags = setFlag(gs.flags, GameStateFlags.HasThreeAllies);
+         } else {
+            gs.flags = clearFlag(gs.flags, GameStateFlags.HasThreeAllies);
          }
 
          if (!offline) {
@@ -187,6 +200,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
             const cost = (gs.speedUp - 1) / gs.speedUp;
             if (gs.speedUp > 1 && building.resources.Warp && building.resources.Warp >= cost) {
                building.resources.Warp -= cost;
+               gs.flags = setFlag(gs.flags, GameStateFlags.HasUsedTimeWarp);
             } else {
                gs.speedUp = 1;
             }
@@ -1877,10 +1891,10 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          break;
       }
       case "RedFort": {
-         const levelBoost = 5 + (building.level - 1) + getWonderExtraLevel(building.type);
-         for (const point of grid.getRange(tileToPoint(xy), 4)) {
+         const levelBoost = building.level + getWonderExtraLevel(building.type);
+         for (const point of grid.getRange(tileToPoint(xy), isFestival("RedFort", gs) ? 5 : 3)) {
             mapSafePush(Tick.next.levelBoost, pointToTile(point), {
-               value: isFestival("RedFort", gs) ? 2 * levelBoost : levelBoost,
+               value: levelBoost,
                source: buildingName,
             });
          }
@@ -1888,7 +1902,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
       }
       case "GangesRiver": {
          const buildings = new Set<Building>();
-         for (const point of grid.getRange(tileToPoint(xy), isFestival("RedFort", gs) ? 3 : 2)) {
+         for (const point of grid.getRange(tileToPoint(xy), isFestival("GangesRiver", gs) ? 2 : 1)) {
             const tile = pointToTile(point);
             const targetBuilding = gs.tiles.get(tile)?.building;
             if (targetBuilding) {
@@ -1901,6 +1915,9 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
                return;
             }
             if (isWorldOrNaturalWonder(building)) {
+               return;
+            }
+            if (Config.Building[building].output.Worker) {
                return;
             }
             const wisdom = options.ageWisdom[age] ?? 0;
@@ -1916,7 +1933,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
                const greatPerson = Config.GreatPerson[gp];
                greatPerson.tick(
                   gp,
-                  level,
+                  level * 0.5,
                   `${buildingName} (${t(L.AgeWisdomSource, { age: Config.TechAge[age].name(), person: greatPerson.name() })})`,
                   GreatPersonTickFlag.None,
                );

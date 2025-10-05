@@ -13,6 +13,7 @@ import { getScienceAmount, getTechUnlockCost, unlockableTechs } from "../../../s
 import { NotProducingReason, Tick } from "../../../shared/logic/TickLogic";
 import { HOUR, entriesOf, formatHMS, mapCount } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
+import { isSteam, SteamClient } from "../rpc/SteamClient";
 import { getOwnedTradeTile } from "../scenes/PathFinder";
 import { PlayerMapScene } from "../scenes/PlayerMapScene";
 import { TechTreeScene } from "../scenes/TechTreeScene";
@@ -359,6 +360,9 @@ export const _Todos = {
       onClick: (gs, options) => {
          options.buildNumber = getBuildNumber();
          notifyGameOptionsUpdate();
+         if (isSteam()) {
+            SteamClient.unlockAchievement("PatchNotesReader");
+         }
          const patchNote = PatchNotes[0];
          const link = patchNote.link;
          if (link) {

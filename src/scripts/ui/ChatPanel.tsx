@@ -41,7 +41,6 @@ import { openUrl } from "../utilities/Platform";
 import { playError } from "../visuals/Sound";
 import { BottomPanel } from "./BottomPanel";
 import { showToast } from "./GlobalModal";
-import { RenderHTML } from "./RenderHTMLComponent";
 import { SelectChatChannelModal } from "./SelectChatChannelModal";
 import { ResourcesTab } from "./StatisticsBuildingBody";
 import { AccountLevelComponent, MiscTextureComponent, PlayerFlagComponent } from "./TextureSprites";
@@ -126,7 +125,7 @@ export function ChatPanel(): React.ReactNode {
          {gs.pinStatPanel ? (
             <div
                className="window stat-content"
-               style={{ left: showChatWindow ? 350 * options.chatChannels.size : 0 }}
+               style={{ left: showChatWindow ? `${35 * options.chatChannels.size}rem` : 0 }}
             >
                <div className="title-bar">
                   <div className="title-bar-text">{t(L.StatisticsOffice)}</div>
@@ -202,7 +201,7 @@ function _ChatWindow({
    }, [show]);
 
    return (
-      <div className="chat-content window" style={{ left }}>
+      <div className="chat-content window" style={{ left: `${left / 10}rem` }}>
          <div className="title-bar">
             <div className="title-bar-text">{ChatChannels[channel]}</div>
             <div className="title-bar-controls">
@@ -221,13 +220,6 @@ function _ChatWindow({
             className="window-content inset-shallow"
          >
             {messages.map((c) => {
-               if (!("channel" in c)) {
-                  return (
-                     <div className="chat-command-item" key={c.id}>
-                        <RenderHTML html={c.message} />
-                     </div>
-                  );
-               }
                return <ChatMessage key={c.id} user={user} chat={c} onImageLoaded={onImageLoaded} />;
             })}
             {user !== null ? null : (

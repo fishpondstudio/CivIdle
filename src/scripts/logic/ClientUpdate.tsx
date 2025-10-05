@@ -123,7 +123,10 @@ export function tickEverySecond(gs: GameState, offline: boolean) {
       );
    });
 
-   forEach(getGameOptions().greatPeople, (person, v) => {
+   const options = getGameOptions();
+   options.lastClientTickAt = Date.now();
+
+   forEach(options.greatPeople, (person, v) => {
       const greatPerson = Config.GreatPerson[person];
       greatPerson.tick(
          person,
@@ -133,7 +136,7 @@ export function tickEverySecond(gs: GameState, offline: boolean) {
       );
    });
 
-   forEach(getGameOptions().ageWisdom, (age, level) => {
+   forEach(options.ageWisdom, (age, level) => {
       getGreatPeopleForWisdom(age).forEach((gp) => {
          const greatPerson = Config.GreatPerson[gp];
          greatPerson.tick(
@@ -154,7 +157,7 @@ export function tickEverySecond(gs: GameState, offline: boolean) {
       tiles.forEach(function forEachTickTile([tile, _building]) {
          transportAndConsumeResources(tile, resourceProduced, gs, offline);
       });
-      postTickTiles(gs, offline);
+      postTickTiles(gs, true);
    } else {
       tickTileQueue = tiles.map(([tile, _building]) => tile);
       tickTileQueueSize = tickTileQueue.length;

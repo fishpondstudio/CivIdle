@@ -664,7 +664,7 @@ export class TechDefinitions {
       column: 18,
       requireTech: ["Refinery", "GasPipeline", "Urbanization"],
       revealDeposit: ["Uranium"],
-      unlockBuilding: ["UraniumMine"],
+      unlockBuilding: ["UraniumMine", "GasPlasticsPlant"],
       buildingMultiplier: {
          Library: { output: 1 },
          School: { output: 1 },

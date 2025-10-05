@@ -6,7 +6,7 @@ import {
    getTranslatedPercentage,
    type ExtraTileInfoType,
 } from "../../../shared/logic/GameState";
-import { notifyGameOptionsUpdate, notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
+import { notifyGameOptionsUpdate } from "../../../shared/logic/GameStateLogic";
 import {
    MAX_ELECTRIFICATION_LEVEL,
    PRIORITY_MAX,
@@ -63,61 +63,6 @@ export function GameplayOptionPage(): React.ReactNode {
                      })}
                   </div>
                ) : null}
-            </fieldset>
-            <fieldset>
-               <legend>{t(L.Tutorial)}</legend>
-               <ToggleComponent
-                  title={t(L.ShowTutorial)}
-                  contentHTML=""
-                  value={options.showTutorial}
-                  onValueChange={(value) => {
-                     playClick();
-                     options.showTutorial = value;
-                     notifyGameOptionsUpdate(options);
-                  }}
-               />
-               <div className="separator" />
-               {jsxMapOf(Todo, (id, t) => {
-                  if (id.startsWith("S")) {
-                     return null;
-                  }
-                  return (
-                     <ToggleComponent
-                        key={id}
-                        title={t.name()}
-                        contentHTML=""
-                        value={!options.disabledTodos.has(id)}
-                        onValueChange={(value) => {
-                           playClick();
-                           if (value) {
-                              options.disabledTodos.delete(id);
-                           } else {
-                              options.disabledTodos.add(id);
-                           }
-                           notifyGameOptionsUpdate(options);
-                        }}
-                     />
-                  );
-               })}
-               <div className="separator" />
-               <ToggleComponent
-                  title={t(L.ShowWonderPopup)}
-                  contentHTML=""
-                  value={options.showWonderPopup}
-                  onValueChange={(value) => {
-                     options.showWonderPopup = value;
-                     notifyGameOptionsUpdate(options);
-                  }}
-               />
-               <ToggleComponent
-                  title={t(L.ShowNaturalWonderPopup)}
-                  contentHTML=""
-                  value={options.showNaturalWonderPopup}
-                  onValueChange={(value) => {
-                     options.showNaturalWonderPopup = value;
-                     notifyGameOptionsUpdate(options);
-                  }}
-               />
             </fieldset>
             <fieldset>
                <legend>{t(L.GlobalBuildingDefault)}</legend>
@@ -272,6 +217,61 @@ export function GameplayOptionPage(): React.ReactNode {
                />
             </fieldset>
             <fieldset>
+               <legend>{t(L.Tutorial)}</legend>
+               <ToggleComponent
+                  title={t(L.ShowTutorial)}
+                  contentHTML=""
+                  value={options.showTutorial}
+                  onValueChange={(value) => {
+                     playClick();
+                     options.showTutorial = value;
+                     notifyGameOptionsUpdate(options);
+                  }}
+               />
+               <div className="separator" />
+               {jsxMapOf(Todo, (id, t) => {
+                  if (id.startsWith("S")) {
+                     return null;
+                  }
+                  return (
+                     <ToggleComponent
+                        key={id}
+                        title={t.name()}
+                        contentHTML=""
+                        value={!options.disabledTodos.has(id)}
+                        onValueChange={(value) => {
+                           playClick();
+                           if (value) {
+                              options.disabledTodos.delete(id);
+                           } else {
+                              options.disabledTodos.add(id);
+                           }
+                           notifyGameOptionsUpdate(options);
+                        }}
+                     />
+                  );
+               })}
+               <div className="separator" />
+               <ToggleComponent
+                  title={t(L.ShowWonderPopup)}
+                  contentHTML=""
+                  value={options.showWonderPopup}
+                  onValueChange={(value) => {
+                     options.showWonderPopup = value;
+                     notifyGameOptionsUpdate(options);
+                  }}
+               />
+               <ToggleComponent
+                  title={t(L.ShowNaturalWonderPopup)}
+                  contentHTML=""
+                  value={options.showNaturalWonderPopup}
+                  onValueChange={(value) => {
+                     options.showNaturalWonderPopup = value;
+                     notifyGameOptionsUpdate(options);
+                  }}
+               />
+            </fieldset>
+            <fieldset>
                <legend>{t(L.OfflineProduction)}</legend>
                <WarningComponent icon="info" className="mb10 text-small">
                   <RenderHTML
@@ -281,7 +281,6 @@ export function GameplayOptionPage(): React.ReactNode {
                   />
                </WarningComponent>
                <input
-                  id="building-capacity"
                   type="range"
                   min="0"
                   max="1"
@@ -289,7 +288,7 @@ export function GameplayOptionPage(): React.ReactNode {
                   value={options.offlineProductionPercent}
                   onChange={(e) => {
                      options.offlineProductionPercent = Number.parseFloat(e.target.value);
-                     notifyGameStateUpdate();
+                     notifyGameOptionsUpdate(options);
                   }}
                   className="mh0"
                />

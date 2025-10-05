@@ -434,7 +434,7 @@ export class BuildingDefinitions {
    ComputerLab: IBuildingDefinition = {
       name: () => t(L.ComputerLab),
       input: { Computer: 1 },
-      output: { Science: 79930 },
+      output: { Science: 80625 },
       power: true,
    };
    Museum: IBuildingDefinition = {
@@ -602,6 +602,11 @@ export class BuildingDefinitions {
    PlasticsFactory: IBuildingDefinition = {
       name: () => t(L.PlasticsFactory),
       input: { Oil: 2 },
+      output: { Plastics: 1 },
+   };
+   GasPlasticsPlant: IBuildingDefinition = {
+      name: () => t(L.GasPlasticsPlant),
+      input: { NaturalGas: 2 },
       output: { Plastics: 1 },
    };
    // #endregion /////////////////////////////////////////////////////////////////////////////////////////////
@@ -2157,10 +2162,10 @@ export class BuildingDefinitions {
 
    QutbMinar: IBuildingDefinition = {
       name: () => t(L.QutbMinar),
-      desc: () => t(L.QutbMinarDesc),
+      desc: () => t(L.QutbMinarDescV2),
       input: {},
       output: {},
-      construction: { Banknote: 100, Galleon: 100, Knight: 100 },
+      construction: { Banknote: 200, Galleon: 200, Knight: 200 },
       max: 1,
       special: BuildingSpecial.WorldWonder,
       wikipedia: "Qutb_Minar",
@@ -2168,7 +2173,7 @@ export class BuildingDefinitions {
 
    GangesRiver: IBuildingDefinition = {
       name: () => t(L.GangesRiver),
-      desc: () => t(L.GangesRiverDesc),
+      desc: () => t(L.GangesRiverDescV3),
       input: {},
       output: {},
       construction: {},
@@ -2179,7 +2184,7 @@ export class BuildingDefinitions {
 
    Sundarbans: IBuildingDefinition = {
       name: () => t(L.Sundarbans),
-      desc: () => t(L.SundarbansDesc),
+      desc: () => t(L.SundarbansDescV2),
       input: {},
       output: {},
       construction: {},

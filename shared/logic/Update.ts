@@ -506,18 +506,19 @@ export function transportAndConsumeResources(
 
    forEach(input, function forEachTransportResources(res, rawAmount) {
       let amount = rawAmount * getStockpileCapacity(building);
+      let maxAmount = getStockpileMax(building) * rawAmount;
+
+      if ("resourceImports" in building) {
+         const ri = building as IResourceImportBuildingData;
+         amount = rawAmount;
+         maxAmount = ri.resourceImports[res]?.cap ?? 0;
+      }
+
       if (amount <= 0) {
          return;
       }
       if (used + (isTransportable(res) ? amount : 0) > total) {
          return;
-      }
-
-      let maxAmount = getStockpileMax(building) * rawAmount;
-      if ("resourceImports" in building) {
-         const ri = building as IResourceImportBuildingData;
-         amount = rawAmount;
-         maxAmount = ri.resourceImports[res]?.cap ?? 0;
       }
 
       let availableAmount = building.resources[res] ?? 0;

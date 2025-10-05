@@ -1,5 +1,5 @@
 import type React from "react";
-import type { GreatPerson } from "../../../shared/definitions/GreatPersonDefinitions";
+import { GreatPersonType, type GreatPerson } from "../../../shared/definitions/GreatPersonDefinitions";
 import { Config } from "../../../shared/logic/Config";
 import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
 import { getCurrentAge } from "../../../shared/logic/TechLogic";
@@ -52,7 +52,12 @@ export function ZugspitzeBuildingBody({ gameState, xy }: IBuildingComponentProps
                      >
                         <option value=""></option>
                         {jsxMapOf(gameState.greatPeople, (gp) => {
-                           if (gp === "Zenobia") {
+                           const type = Config.GreatPerson[gp].type;
+                           if (
+                              type === GreatPersonType.LevelBoost ||
+                              type === GreatPersonType.Promotion ||
+                              type === GreatPersonType.Wildcard
+                           ) {
                               return null;
                            }
                            return (

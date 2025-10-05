@@ -404,7 +404,7 @@ export class CityDefinitions {
       naturalWonders: { GangesRiver: true, Sundarbans: true },
       requireGreatPeopleLevel: 100,
       requireSupporterPack: true,
-      festivalDesc: () => t(L.Diwali),
+      festivalDesc: () => t(L.DiwaliV2),
    };
 }
 

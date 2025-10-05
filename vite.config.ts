@@ -9,7 +9,6 @@ export default defineConfig(({ command }) => {
       base: "",
       plugins: [
          react(),
-         buildAtlas("rome", command === "serve"),
          buildAtlas("person1", command === "serve", "Person", "jpg"),
          buildAtlas("person2", command === "serve", "Person", "jpg"),
          buildAtlas("building", command === "serve"),

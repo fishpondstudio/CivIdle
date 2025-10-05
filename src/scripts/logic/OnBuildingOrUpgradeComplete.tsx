@@ -29,7 +29,7 @@ export function onBuildingOrUpgradeComplete(xy: Tile): void {
       case "QutbMinar": {
          const ages = new Set(keysOf(Config.TechAge));
          ages.delete(getCurrentAge(gs));
-         const candidates1 = rollGreatPeopleThisRun(ages, gs.city, 4);
+         const candidates1 = rollGreatPeopleThisRun(ages, gs.city, 2);
          if (candidates1) {
             gs.greatPeopleChoicesV2.push(candidates1);
          }

@@ -129,6 +129,23 @@ body {
    position: absolute;
    top: 50px;
    z-index: 201;
+   display: flex;
+   flex-direction: row;
+   align-items: flex-start;
+   gap: 1rem;
+}
+
+#global-toast .toast.command {
+   user-select: text;
+   user-select: contain;
+   cursor: text;
+   overflow-wrap: break-word;
+   font-family: "Roboto Mono", monospace;
+   font-size: 1.3rem;
+}
+
+#global-toast .toast.command code {
+   white-space: pre;
 }
 
 body .tippy-box {

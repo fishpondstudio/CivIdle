@@ -468,12 +468,15 @@ export class WorldScene extends Scene {
                break;
             }
             case "RedFort": {
-               this.highlightRange(grid, 4);
+               this.highlightRange(grid, isFestival(building.type, gs) ? 5 : 3);
                break;
             }
-            case "SanchiStupa":
-            case "GangesRiver": {
+            case "SanchiStupa": {
                this.highlightRange(grid, isFestival(building.type, gs) ? 3 : 2);
+               break;
+            }
+            case "GangesRiver": {
+               this.highlightRange(grid, isFestival(building.type, gs) ? 2 : 1);
                break;
             }
          }

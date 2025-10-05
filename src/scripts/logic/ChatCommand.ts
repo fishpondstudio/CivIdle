@@ -19,6 +19,7 @@ import {
    formatHM,
    formatNumber,
    hasFlag,
+   numberToRoman,
    safeParseInt,
    sizeOf,
    uuid4,
@@ -286,16 +287,17 @@ export async function handleChatCommand(command: string): Promise<void> {
          const result = await client.getGreatPeopleLevelRank(safeParseInt(parts[1], 10));
          const json = JSON.stringify(result);
          navigator.clipboard.writeText(json);
-         addSystemMessage(json);
          addSystemMessage(
             `<code>${result
                .map((user) => {
-                  const ev = user.empireValues[user.empireValues.length - 1];
-                  const gp = ev.totalGreatPeopleLevel ?? 0;
+                  const gp = user.heartbeatData?.greatPeopleLevel ?? 0;
                   return [
                      user.handle.padEnd(16),
-                     formatNumber(gp / (user.totalPlayTime / 3600)).padStart(8),
-                     gp.toString().padStart(8),
+                     (hasFlag(user.attr, UserAttributes.DLC1) ? "*" : " ").padEnd(2),
+                     (numberToRoman(user.level + 1) ?? "").padEnd(6),
+                     formatNumber(gp / (user.totalPlayTime / 3600)).padStart(10),
+                     gp.toString().padStart(10),
+                     `${Math.floor(user.totalPlayTime / 3600)}h`.padStart(10),
                   ].join("");
                })
                .join("\n")}<code>`,
@@ -309,16 +311,20 @@ export async function handleChatCommand(command: string): Promise<void> {
          const result = await client.getEmpireValueRank(safeParseInt(parts[1], 10));
          const json = JSON.stringify(result);
          navigator.clipboard.writeText(json);
-         addSystemMessage(json);
          addSystemMessage(
             `<code>${result
                .map((user) => {
-                  const ev = user.empireValues[user.empireValues.length - 1];
+                  const ev = user.heartbeatData?.empireValue ?? 0;
                   return [
                      user.handle.padEnd(16),
-                     formatNumber(ev.value).padStart(8),
-                     formatNumber(ev.value / ev.tick).padStart(8),
-                     formatNumber(ev.value / ev.tick / (ev.totalGreatPeopleLevel ?? 1)).padStart(8),
+                     (hasFlag(user.attr, UserAttributes.DLC1) ? "*" : " ").padEnd(2),
+                     (numberToRoman(user.level + 1) ?? "").padEnd(6),
+                     formatNumber(ev).padStart(10),
+                     formatNumber(ev / user.heartbeatData!.clientTick).padStart(10),
+                     formatNumber(
+                        ev / user.heartbeatData!.clientTick / (user.heartbeatData?.greatPeopleLevel ?? 1),
+                     ).padStart(10),
+                     `${Math.floor(user.totalPlayTime / 3600)}h`.padStart(10),
                   ].join("");
                })
                .join("\n")}<code>`,
@@ -356,9 +362,13 @@ export async function handleChatCommand(command: string): Promise<void> {
       }
       case "mutelist": {
          const mutedPlayers = await client.getMutedPlayers();
-         mutedPlayers.forEach((m) => {
-            addSystemMessage(`${m.handle} muted until ${new Date(m.time).toLocaleString()}`);
-         });
+         addSystemMessage(
+            `<code>${mutedPlayers
+               .map((m) => {
+                  return `${m.handle} muted until ${new Date(m.time).toLocaleString()}`;
+               })
+               .join("\n")}</code>`,
+         );
          break;
       }
       case "removetrade": {
@@ -371,11 +381,15 @@ export async function handleChatCommand(command: string): Promise<void> {
       }
       case "slowlist": {
          const mutedPlayers = await client.getSlowedPlayer();
-         mutedPlayers.forEach((m) => {
-            const t = new Date(m.time).toLocaleString();
-            const i = Math.ceil(m.interval / SECOND);
-            addSystemMessage(`${m.handle} slowed for ${i}s until ${t}`);
-         });
+         addSystemMessage(
+            `<code>${mutedPlayers
+               .map((m) => {
+                  const t = new Date(m.time).toLocaleString();
+                  const i = Math.ceil(m.interval / SECOND);
+                  return `${m.handle} slowed for ${i}s until ${t}`;
+               })
+               .join("\n")}</code>`,
+         );
          break;
       }
       case "rename": {

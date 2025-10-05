@@ -35,6 +35,13 @@ export enum ValueToTrack {
    EmpireValue = 0,
 }
 
+export enum GameStateFlags {
+   None = 0,
+   HasDemolishedBuilding = 1 << 0,
+   HasUsedTimeWarp = 1 << 1,
+   HasThreeAllies = 1 << 2,
+}
+
 export class GameState {
    id = uuid4();
    city: City = "Rome";
@@ -58,6 +65,7 @@ export class GameState {
    speedUp = 1;
    pinStatPanel = false;
    adaptiveGreatPeople = new Map<GreatPerson, Building>();
+   flags = GameStateFlags.None;
 }
 
 export type GreatPeopleChoice = GreatPerson[];
@@ -254,6 +262,7 @@ export class GameOptions {
    disabledTodos = new Set<string>();
    showWonderPopup = true;
    showNaturalWonderPopup = true;
+   lastClientTickAt = 0;
    migrationFlags = MigrationFlags.None;
 }
 
@@ -306,6 +315,21 @@ export const LanguageToChatChannel: Record<keyof typeof Languages, ChatChannel> 
    tr: "en",
    zh_CN: "zh",
    zh_TW: "zh",
+} as const;
+
+export const LanguageToSteamLanguage: Record<keyof typeof Languages, string> = {
+   en: "english",
+   es: "spanish",
+   cz: "czech",
+   fr: "french",
+   de: "german",
+   kr: "koreana",
+   nl: "dutch",
+   pt_BR: "brazilian",
+   ru: "russian",
+   tr: "turkish",
+   zh_CN: "schinese",
+   zh_TW: "tchinese",
 } as const;
 
 let translatePercentage = 1;

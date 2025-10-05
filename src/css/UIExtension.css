@@ -523,7 +523,7 @@ ul.tree-view > li:first-child {
 
 .toast {
    background: #ffc;
-   padding: 5px 10px;
+   padding: 5px;
    border: 1px solid grey;
    color: #333;
    border-radius: 3px;

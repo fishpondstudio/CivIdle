@@ -65,23 +65,6 @@
    font-weight: bold;
 }
 
-#chat-panel .chat-command-item {
-   padding: 6px 8px;
-   user-select: text;
-   user-select: contain;
-   cursor: text;
-   overflow-wrap: break-word;
-   background-color: #333;
-   color: #fff;
-   font-family: "Roboto Mono", monospace;
-   font-weight: 500;
-   font-size: 1.3rem;
-}
-
-#chat-panel .chat-command-item code {
-   white-space: pre;
-}
-
 #chat-panel .language-switch {
    background: #00289e;
    color: #fff;

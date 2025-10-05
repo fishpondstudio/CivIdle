@@ -1,13 +1,14 @@
 import Tippy from "@tippyjs/react";
 import type React from "react";
-import { NoPrice, NoStorage, type Resource } from "../../../shared/definitions/ResourceDefinitions";
+import { useState } from "react";
+import { NoPrice, NoStorage } from "../../../shared/definitions/ResourceDefinitions";
 import { getMultipliersFor, totalMultiplierFor } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
 import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
 import { combineResources } from "../../../shared/logic/ResourceLogic";
 import { Tick } from "../../../shared/logic/TickLogic";
 import { SwissBankFlags, type ISwissBankBuildingData } from "../../../shared/logic/Tile";
-import { formatNumber, hasFlag, keysOf, toggleFlag } from "../../../shared/utilities/Helper";
+import { cls, formatNumber, hasFlag, keysOf, toggleFlag } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import { playClick } from "../visuals/Sound";
 import { BuildingColorComponent } from "./BuildingColorComponent";
@@ -22,6 +23,7 @@ import { UpgradeableWonderComponent } from "./UpgradeableWonderComponent";
 
 export function SwissBankBuildingBody({ gameState, xy }: IBuildingComponentProps): React.ReactNode {
    const building = gameState.tiles.get(xy)?.building as ISwissBankBuildingData;
+   const [show, setShow] = useState(false);
    if (!building) {
       return null;
    }
@@ -29,6 +31,9 @@ export function SwissBankBuildingBody({ gameState, xy }: IBuildingComponentProps
    const availableResources = combineResources(
       Array.from(Tick.current.playerTradeBuildings.values()).map((m) => m.resources),
    );
+   if (building.resource && !availableResources[building.resource]) {
+      availableResources[building.resource] = 0;
+   }
    const levelBoost = Tick.current.levelBoost.get(xy) ?? [];
    const electrification = Tick.current.electrified.get(xy) ?? 0;
    const effectiveLevel =
@@ -37,33 +42,62 @@ export function SwissBankBuildingBody({ gameState, xy }: IBuildingComponentProps
       <div className="window-body">
          <UpgradeableWonderComponent gameState={gameState} xy={xy} />
          <fieldset>
-            <select
-               className="w100"
-               value={building.resource ?? ""}
-               onChange={(e) => {
-                  const val = e.target.value;
-                  if (!val || val in NoPrice || val in NoStorage || val === "Koti") {
-                     building.resource = null;
-                  } else {
-                     building.resource = val as Resource;
-                  }
-                  notifyGameStateUpdate();
-               }}
-            >
-               <option value=""></option>
-               {keysOf(Config.Resource)
-                  .sort((a, b) => Config.Resource[a].name().localeCompare(Config.Resource[b].name()))
-                  .map((res) => {
-                     if (NoPrice[res] || NoStorage[res] || res === "Koti") {
-                        return null;
-                     }
-                     return (
-                        <option key={res} value={res}>
-                           {Config.Resource[res].name()} ({formatNumber(availableResources[res] ?? 0)})
-                        </option>
-                     );
-                  })}
-            </select>
+            <div className="inset-deep white pointer" onClick={() => setShow(!show)}>
+               <div className="row">
+                  <div className="f1" style={{ marginLeft: 5 }}>
+                     {building.resource && Config.Resource[building.resource].name()}
+                  </div>
+                  <div className="text-desc">
+                     {building.resource && formatNumber(availableResources[building.resource] ?? 0)}
+                  </div>
+                  <div className="m-icon">arrow_drop_down</div>
+               </div>
+            </div>
+            {show && (
+               <div className="mt5">
+                  <button
+                     className={cls("row g5 w100 pointer", !building.resource ? "text-strong" : "")}
+                     onClick={() => {
+                        building.resource = null;
+                        setShow(false);
+                        notifyGameStateUpdate();
+                     }}
+                  >
+                     <div className="m-icon small">
+                        {building.resource === null ? "check_box" : "check_box_outline_blank"}
+                     </div>
+                     <div className="f1" />
+                  </button>
+                  {keysOf(availableResources)
+                     .sort((a, b) => Config.Resource[a].name().localeCompare(Config.Resource[b].name()))
+                     .map((res) => {
+                        if (NoPrice[res] || NoStorage[res] || res === "Koti") {
+                           return null;
+                        }
+                        return (
+                           <button
+                              key={res}
+                              className={cls(
+                                 "row g5 w100 pointer",
+                                 building.resource === res ? "text-strong" : "",
+                              )}
+                              onClick={() => {
+                                 building.resource = res;
+                                 setShow(false);
+                                 notifyGameStateUpdate();
+                              }}
+                           >
+                              <div className="m-icon small">
+                                 {building.resource === res ? "check_box" : "check_box_outline_blank"}
+                              </div>
+                              <div>{Config.Resource[res].name()}</div>
+                              <div className="f1" />
+                              <div className="text-desc">{formatNumber(availableResources[res] ?? 0)}</div>
+                           </button>
+                        );
+                     })}
+               </div>
+            )}
             <div className="separator" />
             <ul className="tree-view">
                <li>
