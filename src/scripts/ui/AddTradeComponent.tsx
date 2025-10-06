@@ -85,8 +85,7 @@ export function AddTradeFormComponent({
    }
 
    return (
-      <fieldset>
-         <legend>{t(L.PlayerTradeNewTrade)}</legend>
+      <>
          <div className="text-strong mb5">{t(L.PlayerTradeIOffer)}</div>
          <div className="row">
             <select
@@ -137,7 +136,7 @@ export function AddTradeFormComponent({
                );
             })}
          </div>
-         <div className="separator" />
+         <div className="separator" style={{ margin: "8px -8px" }} />
          <div className="text-strong mb5">{t(L.PlayerTradeIWant)}</div>
          <div className="row">
             <select
@@ -197,6 +196,14 @@ export function AddTradeFormComponent({
          <div className="row">
             <button
                className="row f1 jcc"
+               onClick={() => {
+                  onCancel();
+               }}
+            >
+               {t(L.PlayerTradeAddTradeCancel)}
+            </button>
+            <button
+               className="row f1 jcc"
                disabled={!isTradeValid(trade) || !enabled}
                onClick={async () => {
                   if (
@@ -236,16 +243,8 @@ export function AddTradeFormComponent({
                <div className="m-icon small">shopping_cart</div>
                <div className="text-strong">{t(L.PlayerTradePlaceTrade)}</div>
             </button>
-            <button
-               className="row f1 jcc"
-               onClick={() => {
-                  onCancel();
-               }}
-            >
-               {t(L.PlayerTradeAddTradeCancel)}
-            </button>
          </div>
-      </fieldset>
+      </>
    );
 }
 
