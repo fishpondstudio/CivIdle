@@ -25,11 +25,8 @@ import { L, t } from "../../../shared/utilities/i18n";
 import { useGameState } from "../Global";
 import { AccountLevelNames } from "../logic/AccountLevel";
 import { client, useTrades, useUser } from "../rpc/RPCClient";
-import { getOwnedTradeTile } from "../scenes/PathFinder";
-import { PlayerMapScene } from "../scenes/PlayerMapScene";
 import { getCountryName } from "../utilities/CountryCode";
 import { useForceUpdate } from "../utilities/Hook";
-import { Singleton } from "../utilities/Singleton";
 import { playError, playKaching } from "../visuals/Sound";
 import { AddTradeButtonComponent, AddTradeFormComponent } from "./AddTradeComponent";
 import { ConfirmModal } from "./ConfirmModal";
@@ -39,13 +36,12 @@ import { showToast } from "./GlobalModal";
 import { FormatNumber } from "./HelperComponents";
 import { RenderHTML } from "./RenderHTMLComponent";
 import { AccountLevelComponent, MiscTextureComponent, PlayerFlagComponent } from "./TextureSprites";
-import { WarningComponent } from "./WarningComponent";
 
 const savedResourceWantFilters: Set<Resource> = new Set();
 const savedResourceOfferFilters: Set<Resource> = new Set();
 let savedPlayerNameFilter = "";
 let savedMaxTradeAmountFilter = 0;
-const playerTradesSortingState: { column: keyof IClientTrade; asc: boolean } = {
+const playerTradesSortingState: { column: keyof IClientTrade | "difference"; asc: boolean } = {
    column: "buyResource",
    asc: true,
 };
@@ -72,20 +68,7 @@ export function PlayerTradeNewComponent({
    const [tradeAmountFilter, setTradeAmountFilter] = useState<number>(savedMaxTradeAmountFilter);
    const trades = useTrades();
    const user = useUser();
-   const myXy = getOwnedTradeTile();
-   if (!myXy) {
-      return (
-         <WarningComponent icon="info" className="m10">
-            <div>{t(L.PlayerTradeClaimTileFirstWarning)}</div>
-            <div
-               className="text-strong text-link row"
-               onClick={() => Singleton().sceneManager.loadScene(PlayerMapScene)}
-            >
-               {t(L.PlayerTradeClaimTileFirst)}
-            </div>
-         </WarningComponent>
-      );
-   }
+   const forceUpdate = useForceUpdate();
 
    const clearFilters = () => {
       clearSavedFilters();
@@ -149,35 +132,79 @@ export function PlayerTradeNewComponent({
          <div className="table-view">
             <TableVirtuoso
                style={{ height: "70vh" }}
-               data={trades.filter((trade) => {
-                  const resourceFilter =
-                     (resourceWantFilters.size === 0 && resourceOfferFilters.size === 0) ||
-                     resourceWantFilters.has(trade.buyResource) ||
-                     resourceOfferFilters.has(trade.sellResource);
+               data={trades
+                  .filter((trade) => {
+                     const resourceFilter =
+                        (resourceWantFilters.size === 0 && resourceOfferFilters.size === 0) ||
+                        resourceWantFilters.has(trade.buyResource) ||
+                        resourceOfferFilters.has(trade.sellResource);
 
-                  const filterNames = playerNameFilter
-                     .toLowerCase()
-                     .split(" ")
-                     .map((name) => name.trim())
-                     .filter((name) => name.length > 0);
+                     const filterNames = playerNameFilter
+                        .toLowerCase()
+                        .split(" ")
+                        .map((name) => name.trim())
+                        .filter((name) => name.length > 0);
 
-                  const nameFilter =
-                     filterNames.length === 0 ||
-                     filterNames.some((name) => trade.from.toLowerCase().includes(name));
+                     const nameFilter =
+                        filterNames.length === 0 ||
+                        filterNames.some((name) => trade.from.toLowerCase().includes(name));
 
-                  const amountFilter =
-                     tradeAmountFilter === 0 ||
-                     (tradeAmountFilter > 0 && trade.buyAmount <= tradeAmountFilter);
+                     const amountFilter =
+                        tradeAmountFilter === 0 ||
+                        (tradeAmountFilter > 0 && trade.buyAmount <= tradeAmountFilter);
 
-                  return (
-                     (resourceFilter && nameFilter && amountFilter) || (user && user.userId === trade.fromId)
-                  );
-               })}
+                     return (
+                        (resourceFilter && nameFilter && amountFilter) ||
+                        (user && user.userId === trade.fromId)
+                     );
+                  })
+                  .sort((a, b) => {
+                     const asc = playerTradesSortingState.asc ? 1 : -1;
+                     if (a.fromId === user?.userId && b.fromId !== user?.userId) {
+                        return -asc;
+                     }
+                     if (a.fromId !== user?.userId && b.fromId === user?.userId) {
+                        return asc;
+                     }
+                     let result = asc;
+                     switch (playerTradesSortingState.column) {
+                        case "buyResource":
+                           result *= Config.Resource[a.buyResource]
+                              .name()
+                              .localeCompare(Config.Resource[b.buyResource].name());
+                           break;
+                        case "buyAmount":
+                           result *= a.buyAmount - b.buyAmount;
+                           break;
+                        case "sellResource":
+                           result *= Config.Resource[a.sellResource]
+                              .name()
+                              .localeCompare(Config.Resource[b.sellResource].name());
+                           break;
+                        case "sellAmount":
+                           result *= a.sellAmount - b.sellAmount;
+                           break;
+                        case "difference":
+                           result *= getTradePercentage(a) - getTradePercentage(b);
+                           break;
+                        case "from":
+                           result *= a.from.localeCompare(b.from);
+                           break;
+                     }
+                     return result;
+                  })}
                fixedHeaderContent={() => {
                   return (
                      <tr>
-                        <th>
-                           <div className="row">
+                        <th
+                           className="pointer"
+                           onClick={() => {
+                              playerTradesSortingState.column = "buyResource";
+                              playerTradesSortingState.asc = !playerTradesSortingState.asc;
+                              forceUpdate();
+                           }}
+                        >
+                           <div className="row pointer">
                               {t(L.PlayerTradeWant)}
                               {playerTradesSortingState.column === "buyResource" ? (
                                  <div className="m-icon small">
@@ -186,14 +213,28 @@ export function PlayerTradeNewComponent({
                               ) : null}
                            </div>
                         </th>
-                        <th>
+                        <th
+                           className="pointer"
+                           onClick={() => {
+                              playerTradesSortingState.column = "buyAmount";
+                              playerTradesSortingState.asc = !playerTradesSortingState.asc;
+                              forceUpdate();
+                           }}
+                        >
                            {playerTradesSortingState.column === "buyAmount" ? (
                               <div className="m-icon small">
                                  {playerTradesSortingState.asc ? "arrow_upward" : "arrow_downward"}
                               </div>
                            ) : null}
                         </th>
-                        <th>
+                        <th
+                           className="pointer"
+                           onClick={() => {
+                              playerTradesSortingState.column = "sellResource";
+                              playerTradesSortingState.asc = !playerTradesSortingState.asc;
+                              forceUpdate();
+                           }}
+                        >
                            <div className="row">
                               {t(L.PlayerTradeOffer)}
                               {playerTradesSortingState.column === "sellResource" ? (
@@ -203,16 +244,43 @@ export function PlayerTradeNewComponent({
                               ) : null}
                            </div>
                         </th>
-                        <th>
+                        <th
+                           className="pointer"
+                           onClick={() => {
+                              playerTradesSortingState.column = "sellAmount";
+                              playerTradesSortingState.asc = !playerTradesSortingState.asc;
+                              forceUpdate();
+                           }}
+                        >
                            {playerTradesSortingState.column === "sellAmount" ? (
                               <div className="m-icon small">
                                  {playerTradesSortingState.asc ? "arrow_upward" : "arrow_downward"}
                               </div>
                            ) : null}
                         </th>
-                        <th></th>
+                        <th
+                           className="pointer"
+                           onClick={() => {
+                              playerTradesSortingState.column = "difference";
+                              playerTradesSortingState.asc = !playerTradesSortingState.asc;
+                              forceUpdate();
+                           }}
+                        >
+                           {playerTradesSortingState.column === "difference" ? (
+                              <div className="m-icon small">
+                                 {playerTradesSortingState.asc ? "arrow_upward" : "arrow_downward"}
+                              </div>
+                           ) : null}
+                        </th>
                         <th>{t(L.PlayerTradeFrom)}</th>
-                        <th>
+                        <th
+                           className="pointer"
+                           onClick={() => {
+                              playerTradesSortingState.column = "from";
+                              playerTradesSortingState.asc = !playerTradesSortingState.asc;
+                              forceUpdate();
+                           }}
+                        >
                            {playerTradesSortingState.column === "from" ? (
                               <div className="m-icon small">
                                  {playerTradesSortingState.asc ? "arrow_upward" : "arrow_downward"}
@@ -400,7 +468,7 @@ function PlayerTradeFilterModal({
 }: { hideModal: () => void; resources: Resource[]; applyFilters: () => void }): React.ReactNode {
    const forceUpdate = useForceUpdate();
    return (
-      <div className="window" style={{ width: 500, maxWidth: "50vw" }}>
+      <div className="window" style={{ width: 350, maxWidth: "50vw" }}>
          <div className="title-bar">
             <div className="title-bar-text">{t(L.PlayerTradeFilters)}</div>
             <div className="title-bar-controls">

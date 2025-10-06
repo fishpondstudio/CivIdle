@@ -9,6 +9,7 @@ import { L, t } from "../../../shared/utilities/i18n";
 import { compressSave, saveGame, useFloatingMode } from "../Global";
 import { client, usePlatformInfo, useUser } from "../rpc/RPCClient";
 import { SteamClient, isSteam } from "../rpc/SteamClient";
+import { getOwnedTradeTile } from "../scenes/PathFinder";
 import { PlayerMapScene } from "../scenes/PlayerMapScene";
 import { TechTreeScene } from "../scenes/TechTreeScene";
 import { WorldScene } from "../scenes/WorldScene";
@@ -22,6 +23,7 @@ import { ManageAgeWisdomModal } from "./ManageAgeWisdomModal";
 import { ManagePermanentGreatPersonModal } from "./ManagePermanentGreatPersonModal";
 import { ManualAndGuidePage } from "./ManualAndGuidePage";
 import { PatchNotesPage } from "./PatchNotesPage";
+import { PlayerTradeModal } from "./PlayerTradeModal";
 import { RebirthModal } from "./RebirthModal";
 import { ShortcutPage } from "./ShortcutPage";
 import { ThemePage } from "./ThemePage";
@@ -133,10 +135,23 @@ export function MenuComponent(): React.ReactNode {
                         }}
                      >
                         <MenuItem check={Singleton().sceneManager.isCurrent(PlayerMapScene)}>
-                           {t(L.PlayerMapMenu)}
+                           {t(L.PlayerMapMenuV2)}
                         </MenuItem>
                      </div>
                   )}
+                  {getOwnedTradeTile() ? (
+                     <div
+                        className="menu-popover-item"
+                        onPointerDown={(e) => {
+                           showModal(<PlayerTradeModal />);
+                           setActive(null);
+                        }}
+                     >
+                        <MenuItem check={Singleton().sceneManager.isCurrent(PlayerMapScene)}>
+                           {t(L.PlayerTradeMenu)}
+                        </MenuItem>
+                     </div>
+                  ) : null}
                   <div
                      className="menu-popover-item"
                      onPointerDown={(e) => {

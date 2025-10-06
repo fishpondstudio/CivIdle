@@ -44,7 +44,7 @@ export function BottomPanel(): React.ReactNode {
                   Singleton().sceneManager.loadScene(PlayerMapScene);
                }}
             >
-               {t(L.PlayerMapMenu)}
+               {t(L.PlayerMapMenuV2)}
             </button>
          )}
       </div>
