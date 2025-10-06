@@ -165,11 +165,14 @@ export function rollPermanentGreatPeople(
    let candidates = shuffle([...pool]);
    while (amountLeft > 0) {
       const choices: GreatPerson[] = [];
-      for (let i = 0; i < choiceCount; i++) {
+      while (choices.length < choiceCount) {
          if (candidates.length === 0) {
             candidates = shuffle([...pool]);
          }
-         choices.push(candidates.pop()!);
+         const candidate = candidates.pop();
+         if (candidate) {
+            choices.push(candidate);
+         }
       }
       const amount = clamp(amountPerRoll, 0, amountLeft);
       amountLeft -= amount;
