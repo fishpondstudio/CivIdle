@@ -25,7 +25,7 @@ import { hideModal, showToast } from "./GlobalModal";
 import { FormatNumber } from "./HelperComponents";
 import { WarningComponent } from "./WarningComponent";
 
-export function FillPlayerTradeModal({ tradeId, xy }: { tradeId: string; xy?: Tile }): React.ReactNode {
+export function FillPlayerTradeModal({ tradeId }: { tradeId: string }): React.ReactNode {
    const [tiles, setTiles] = useState<string[]>([]);
    const map = usePlayerMap();
    const gs = useGameState();

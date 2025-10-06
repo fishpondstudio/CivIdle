@@ -3,6 +3,7 @@ import { useState } from "react";
 import { NoPrice, NoStorage, type Resource } from "../../../shared/definitions/ResourceDefinitions";
 import { Config } from "../../../shared/logic/Config";
 import { DISABLE_PLAYER_TRADES } from "../../../shared/logic/Constants";
+import type { GameState } from "../../../shared/logic/GameState";
 import { unlockedResources } from "../../../shared/logic/IntraTickCache";
 import {
    getBuyAmountRange,
@@ -22,13 +23,12 @@ import {
 import { L, t } from "../../../shared/utilities/i18n";
 import { client, useTrades, useUser } from "../rpc/RPCClient";
 import { playError, playKaching } from "../visuals/Sound";
-import type { IBuildingComponentProps } from "./BuildingPage";
 import { showToast } from "./GlobalModal";
 import { FormatNumber } from "./HelperComponents";
 
 const INPUT_WIDTH = 100;
 
-export function AddTradeComponent({ gameState, xy }: IBuildingComponentProps): React.ReactNode {
+export function AddTradeComponent({ gameState }: { gameState: GameState }): React.ReactNode {
    const user = useUser();
    const trades = useTrades();
    const enabled =

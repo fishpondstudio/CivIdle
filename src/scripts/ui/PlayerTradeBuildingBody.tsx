@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { L, t } from "../../../shared/utilities/i18n";
+import { useGameState } from "../Global";
 import { AvailableTradingResourcesComponent } from "./AvailableTradingResourcesComponent";
 import { BuildingColorComponent } from "./BuildingColorComponent";
 import { BuildingInputModeComponent } from "./BuildingInputModeComponent";
@@ -10,8 +11,9 @@ import { BuildingStorageComponent } from "./BuildingStorageComponent";
 import { BuildingUpgradeComponent } from "./BuildingUpgradeComponent";
 import { BuildingValueComponent } from "./BuildingValueComponent";
 import { BuildingWorkerComponent } from "./BuildingWorkerComponent";
+import { hideModal, showModal } from "./GlobalModal";
 import { PendingTradesComponent } from "./PendingTradesComponent";
-import { PlayerTradeComponent } from "./PlayerTradeComponent";
+import { PlayerTradeNewComponent } from "./PlayerTradeNewComponent";
 import { ResourceImportComponent } from "./ResourceImportComponent";
 
 type Tab = "trades" | "pending" | "import" | "available";
@@ -23,7 +25,25 @@ export function PlayerTradeBuildingBody({ gameState, xy }: IBuildingComponentPro
 
    if (currentTab === "trades") {
       savedTab = "trades";
-      content = <PlayerTradeComponent gameState={gameState} xy={xy} />;
+      content = (
+         <article role="tabpanel" style={{ padding: "8px" }}>
+            <button
+               className="w100 mb10"
+               onClick={() => {
+                  showModal(<PlayerTradeModal />);
+               }}
+            >
+               Open Player Trades
+            </button>
+            <BuildingStorageComponent gameState={gameState} xy={xy} />
+            <BuildingWorkerComponent gameState={gameState} xy={xy} />
+            <BuildingProductionPriorityComponent gameState={gameState} xy={xy} />
+            <BuildingInputModeComponent gameState={gameState} xy={xy} />
+            <BuildingValueComponent gameState={gameState} xy={xy} />
+            <BuildingColorComponent gameState={gameState} xy={xy} />
+            <BuildingSellComponent gameState={gameState} xy={xy} />
+         </article>
+      );
    } else if (currentTab === "pending") {
       savedTab = "pending";
       content = <PendingTradesComponent gameState={gameState} xy={xy} />;
@@ -61,13 +81,23 @@ export function PlayerTradeBuildingBody({ gameState, xy }: IBuildingComponentPro
             </button>
          </menu>
          {content}
-         <BuildingStorageComponent gameState={gameState} xy={xy} />
-         <BuildingWorkerComponent gameState={gameState} xy={xy} />
-         <BuildingProductionPriorityComponent gameState={gameState} xy={xy} />
-         <BuildingInputModeComponent gameState={gameState} xy={xy} />
-         <BuildingValueComponent gameState={gameState} xy={xy} />
-         <BuildingColorComponent gameState={gameState} xy={xy} />
-         <BuildingSellComponent gameState={gameState} xy={xy} />
+      </div>
+   );
+}
+
+function PlayerTradeModal(): React.ReactNode {
+   const gameState = useGameState();
+   return (
+      <div className="window" style={{ width: "700px" }}>
+         <div className="title-bar">
+            <div className="title-bar-text">{t(L.PlayerTrade)}</div>
+            <div className="title-bar-controls">
+               <button onClick={hideModal} aria-label="Close"></button>
+            </div>
+         </div>
+         <div className="window-body">
+            <PlayerTradeNewComponent gameState={gameState} />
+         </div>
       </div>
    );
 }

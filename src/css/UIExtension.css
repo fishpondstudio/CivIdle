@@ -597,12 +597,22 @@ ul.tree-view > li:first-child {
    background: #efefef;
 }
 
+.table-view td.white {
+   background: #fff;
+}
+
+.table-view td.grey {
+   background: #efefef;
+}
+
 .table-view tr.blue {
    background: rgb(188, 235, 255);
 }
 
 .table-view tr:hover,
-.table-view tr.blue:hover {
+.table-view tr.blue:hover,
+.table-view tr:hover td.white,
+.table-view tr:hover td.grey {
    background: #ffc;
 }
 

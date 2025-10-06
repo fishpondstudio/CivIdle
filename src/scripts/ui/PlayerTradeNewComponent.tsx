@@ -1,6 +1,7 @@
 import Tippy from "@tippyjs/react";
 import classNames from "classnames";
 import { useState } from "react";
+import { TableVirtuoso } from "react-virtuoso";
 import { NoPrice, NoStorage, type Resource } from "../../../shared/definitions/ResourceDefinitions";
 import { Config } from "../../../shared/logic/Config";
 import { TRADE_CANCEL_REFUND_PERCENT } from "../../../shared/logic/Constants";
@@ -9,9 +10,10 @@ import { unlockedResources } from "../../../shared/logic/IntraTickCache";
 import { getTradePercentage, hasResourceForPlayerTrade } from "../../../shared/logic/PlayerTradeLogic";
 import { addResourceTo, getAvailableStorage } from "../../../shared/logic/ResourceLogic";
 import { Tick } from "../../../shared/logic/TickLogic";
-import { UserAttributes } from "../../../shared/utilities/Database";
+import { UserAttributes, type IClientTrade } from "../../../shared/utilities/Database";
 import {
    CURRENCY_PERCENT_EPSILON,
+   cls,
    formatNumber,
    formatPercent,
    hasFlag,
@@ -20,6 +22,7 @@ import {
    safeParseInt,
 } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
+import { useGameState } from "../Global";
 import { AccountLevelNames } from "../logic/AccountLevel";
 import { client, useTrades, useUser } from "../rpc/RPCClient";
 import { getOwnedTradeTile } from "../scenes/PathFinder";
@@ -34,7 +37,6 @@ import { FixedLengthText } from "./FixedLengthText";
 import { showModal, showToast } from "./GlobalModal";
 import { FormatNumber } from "./HelperComponents";
 import { RenderHTML } from "./RenderHTMLComponent";
-import { TableView } from "./TableView";
 import { AccountLevelComponent, MiscTextureComponent, PlayerFlagComponent } from "./TextureSprites";
 import { WarningComponent } from "./WarningComponent";
 
@@ -44,7 +46,7 @@ let savedPlayerNameFilter = "";
 let savedMaxTradeAmountFilter = 0;
 const playerTradesSortingState = { column: 0, asc: true };
 
-export function PlayerTradeComponent({ gameState }: { gameState: GameState }): React.ReactNode {
+export function PlayerTradeNewComponent({ gameState }: { gameState: GameState }): React.ReactNode {
    const [resourceWantFilters, setResourceWantFilters] = useState(savedResourceWantFilters);
    const [resourceOfferFilters, setResourceOfferFilters] = useState(savedResourceOfferFilters);
    const [showFilters, setShowFilters] = useState(false);
@@ -226,189 +228,172 @@ export function PlayerTradeComponent({ gameState }: { gameState: GameState }): R
                </Tippy>
             </div>
          )}
-         <TableView
-            header={[
-               { name: t(L.PlayerTradeWant), sortable: true },
-               { name: t(L.PlayerTradeOffer), sortable: true },
-               { name: "", sortable: true },
-               { name: t(L.PlayerTradeFrom), sortable: true },
-               { name: "", sortable: false },
-            ]}
-            sortingState={playerTradesSortingState}
-            data={trades.filter((trade) => {
-               const resourceFilter =
-                  (resourceWantFilters.size === 0 && resourceOfferFilters.size === 0) ||
-                  resourceWantFilters.has(trade.buyResource) ||
-                  resourceOfferFilters.has(trade.sellResource);
+         <div className="table-view">
+            <TableVirtuoso
+               style={{ height: "70vh" }}
+               data={trades.filter((trade) => {
+                  const resourceFilter =
+                     (resourceWantFilters.size === 0 && resourceOfferFilters.size === 0) ||
+                     resourceWantFilters.has(trade.buyResource) ||
+                     resourceOfferFilters.has(trade.sellResource);
 
-               const filterNames = playerNameFilter
-                  .toLowerCase()
-                  .split(" ")
-                  .map((name) => name.trim())
-                  .filter((name) => name.length > 0);
+                  const filterNames = playerNameFilter
+                     .toLowerCase()
+                     .split(" ")
+                     .map((name) => name.trim())
+                     .filter((name) => name.length > 0);
 
-               const nameFilter =
-                  filterNames.length === 0 ||
-                  filterNames.some((name) => trade.from.toLowerCase().includes(name));
+                  const nameFilter =
+                     filterNames.length === 0 ||
+                     filterNames.some((name) => trade.from.toLowerCase().includes(name));
 
-               const amountFilter =
-                  tradeAmountFilter === 0 || (tradeAmountFilter > 0 && trade.buyAmount <= tradeAmountFilter);
+                  const amountFilter =
+                     tradeAmountFilter === 0 ||
+                     (tradeAmountFilter > 0 && trade.buyAmount <= tradeAmountFilter);
 
-               return (
-                  (resourceFilter && nameFilter && amountFilter) || (user && user.userId === trade.fromId)
-               );
+                  return (
+                     (resourceFilter && nameFilter && amountFilter) || (user && user.userId === trade.fromId)
+                  );
+               })}
+               fixedHeaderContent={() => {
+                  return (
+                     <tr>
+                        <th colSpan={2}>{t(L.PlayerTradeWant)}</th>
+                        <th colSpan={2}>{t(L.PlayerTradeOffer)}</th>
+                        <th></th>
+                        <th>{t(L.PlayerTradeFrom)}</th>
+                        <th></th>
+                     </tr>
+                  );
+               }}
+               itemContent={(index, trade) => {
+                  return <PlayerTradeTableRow index={index} trade={trade} />;
+               }}
+            />
+         </div>
+      </>
+   );
+}
+
+function PlayerTradeTableRow({ trade, index }: { trade: IClientTrade; index: number }): React.ReactNode {
+   const user = useUser();
+   const gameState = useGameState();
+   const disableFill = user === null || trade.fromId === user.userId;
+   const percentage = getTradePercentage(trade);
+   const hasResource = hasResourceForPlayerTrade(trade.buyResource);
+   const evenodd = index % 2 === 0 ? "white" : "grey";
+   return (
+      <>
+         <td className={cls(hasResource ? "text-strong" : null, evenodd)}>
+            {Config.Resource[trade.buyResource].name()}
+         </td>
+         <td className={cls("text-right", hasResource ? "text-strong" : null, evenodd)}>
+            <FormatNumber value={trade.buyAmount} />
+         </td>
+         <td className={evenodd}>{Config.Resource[trade.sellResource].name()}</td>
+         <td className={cls("text-right", evenodd)}>
+            <FormatNumber value={trade.sellAmount} />
+         </td>
+         <td
+            className={classNames({
+               [evenodd]: true,
+               "text-right": true,
+               "text-red": percentage <= -CURRENCY_PERCENT_EPSILON,
+               "text-green": percentage >= CURRENCY_PERCENT_EPSILON,
+               "text-desc": Math.abs(percentage) < CURRENCY_PERCENT_EPSILON,
             })}
-            compareFunc={(a, b, col, asc) => {
-               if (a.fromId === user?.userId && b.fromId !== user?.userId) {
-                  return -asc;
-               }
-               if (a.fromId !== user?.userId && b.fromId === user?.userId) {
-                  return asc;
-               }
-               switch (col) {
-                  case 0:
-                     return Config.Resource[a.buyResource]
-                        .name()
-                        .localeCompare(Config.Resource[b.buyResource].name());
-                  case 1:
-                     return Config.Resource[a.sellResource]
-                        .name()
-                        .localeCompare(Config.Resource[b.sellResource].name());
-                  case 2:
-                     return getTradePercentage(a) - getTradePercentage(b);
-                  case 3:
-                     return a.from.localeCompare(b.from);
-                  default:
-                     return 0;
-               }
-            }}
-            renderRow={(trade) => {
-               const disableFill = user === null || trade.fromId === user.userId;
-               const percentage = getTradePercentage(trade);
-               return (
-                  <tr key={trade.id} className={classNames({ blue: trade.fromId === user?.userId })}>
-                     <td>
-                        <div
-                           className={classNames({
-                              "text-strong": hasResourceForPlayerTrade(trade.buyResource),
-                           })}
-                        >
-                           {Config.Resource[trade.buyResource].name()}
-                        </div>
-                        <div className="text-small text-strong text-desc">
-                           <FormatNumber value={trade.buyAmount} />
-                        </div>
-                     </td>
-                     <td>
-                        <div>{Config.Resource[trade.sellResource].name()}</div>
-                        <div className="text-small text-strong text-desc">
-                           <FormatNumber value={trade.sellAmount} />
-                        </div>
-                     </td>
-                     <td
-                        className={classNames({
-                           "text-small text-right": true,
-                           "text-red": percentage <= -CURRENCY_PERCENT_EPSILON,
-                           "text-green": percentage >= CURRENCY_PERCENT_EPSILON,
-                           "text-desc": Math.abs(percentage) < CURRENCY_PERCENT_EPSILON,
-                        })}
-                     >
-                        <Tippy content={t(L.MarketValueDesc, { value: formatPercent(percentage, 0) })}>
-                           <div>
-                              {mathSign(percentage, CURRENCY_PERCENT_EPSILON)}
-                              {formatPercent(Math.abs(percentage), 0)}
-                           </div>
-                        </Tippy>
-                     </td>
-                     <td>
-                        <div className="row">
-                           <Tippy content={getCountryName(trade.fromFlag)}>
-                              <PlayerFlagComponent name={trade.fromFlag} scale={0.7} />
-                           </Tippy>
-                           {trade.fromLevel > 0 ? (
-                              <Tippy content={AccountLevelNames[trade.fromLevel]()}>
-                                 <AccountLevelComponent level={trade.fromLevel} scale={0.17} />
-                              </Tippy>
-                           ) : null}
-                           {hasFlag(trade.fromAttr, UserAttributes.DLC1) ? (
-                              <Tippy content={t(L.AccountSupporter)}>
-                                 <MiscTextureComponent name="Supporter" scale={0.17} />
-                              </Tippy>
-                           ) : null}
-                        </div>
-                        <div className="text-small">
-                           <FixedLengthText text={trade.from} length={10} />
-                        </div>
-                     </td>
-                     <td>
-                        {trade.fromId === user?.userId ? (
-                           <div
-                              className="m-icon small text-link"
-                              onClick={() => {
-                                 const availableStorage = getAvailableStorage(
+         >
+            <Tippy content={t(L.MarketValueDesc, { value: formatPercent(percentage, 0) })}>
+               <div>
+                  {mathSign(percentage, CURRENCY_PERCENT_EPSILON)}
+                  {formatPercent(Math.abs(percentage), 0)}
+               </div>
+            </Tippy>
+         </td>
+         <td className={evenodd}>
+            <div className="row">
+               <Tippy content={getCountryName(trade.fromFlag)}>
+                  <PlayerFlagComponent name={trade.fromFlag} scale={0.7} />
+               </Tippy>
+               {trade.fromLevel > 0 ? (
+                  <Tippy content={AccountLevelNames[trade.fromLevel]()}>
+                     <AccountLevelComponent level={trade.fromLevel} scale={0.17} />
+                  </Tippy>
+               ) : null}
+               {hasFlag(trade.fromAttr, UserAttributes.DLC1) ? (
+                  <Tippy content={t(L.AccountSupporter)}>
+                     <MiscTextureComponent name="Supporter" scale={0.17} />
+                  </Tippy>
+               ) : null}
+               <div className="ml5">
+                  <FixedLengthText text={trade.from} length={16} />
+               </div>
+            </div>
+         </td>
+         <td className={evenodd}>
+            {trade.fromId === user?.userId ? (
+               <div
+                  className="m-icon small text-link"
+                  onClick={() => {
+                     const availableStorage = getAvailableStorage(
+                        Array.from(Tick.current.playerTradeBuildings.keys()),
+                        gameState,
+                     );
+                     let storageOverflow = trade.sellAmount * TRADE_CANCEL_REFUND_PERCENT - availableStorage;
+                     if (storageOverflow <= 0) {
+                        storageOverflow = 0;
+                     }
+                     showModal(
+                        <ConfirmModal
+                           title={t(L.PlayerTradeCancelTrade)}
+                           onConfirm={async () => {
+                              try {
+                                 const cancelledTrade = await client.cancelTrade(trade.id);
+                                 addResourceTo(
+                                    cancelledTrade.sellResource,
+                                    cancelledTrade.sellAmount * TRADE_CANCEL_REFUND_PERCENT,
                                     Array.from(Tick.current.playerTradeBuildings.keys()),
                                     gameState,
                                  );
-                                 let storageOverflow =
-                                    trade.sellAmount * TRADE_CANCEL_REFUND_PERCENT - availableStorage;
-                                 if (storageOverflow <= 0) {
-                                    storageOverflow = 0;
-                                 }
-                                 showModal(
-                                    <ConfirmModal
-                                       title={t(L.PlayerTradeCancelTrade)}
-                                       onConfirm={async () => {
-                                          try {
-                                             const cancelledTrade = await client.cancelTrade(trade.id);
-                                             addResourceTo(
-                                                cancelledTrade.sellResource,
-                                                cancelledTrade.sellAmount * TRADE_CANCEL_REFUND_PERCENT,
-                                                Array.from(Tick.current.playerTradeBuildings.keys()),
-                                                gameState,
-                                             );
-                                             playKaching();
-                                          } catch (error) {
-                                             showToast(String(error));
-                                             playError();
-                                          }
-                                       }}
-                                    >
-                                       <RenderHTML
-                                          html={t(L.PlayerTradeCancelDescHTML, {
-                                             percent: formatPercent(1 - TRADE_CANCEL_REFUND_PERCENT),
-                                             res: `${formatNumber(
-                                                trade.sellAmount * TRADE_CANCEL_REFUND_PERCENT,
-                                             )} ${Config.Resource[trade.sellResource].name()}`,
-                                             discard: formatNumber(storageOverflow),
-                                          })}
-                                       />
-                                    </ConfirmModal>,
-                                 );
-                              }}
-                           >
-                              delete
-                           </div>
-                        ) : (
-                           <div
-                              className={classNames({
-                                 "text-link": !disableFill,
-                                 "text-strong": true,
-                                 "text-desc": disableFill,
+                                 playKaching();
+                              } catch (error) {
+                                 showToast(String(error));
+                                 playError();
+                              }
+                           }}
+                        >
+                           <RenderHTML
+                              html={t(L.PlayerTradeCancelDescHTML, {
+                                 percent: formatPercent(1 - TRADE_CANCEL_REFUND_PERCENT),
+                                 res: `${formatNumber(
+                                    trade.sellAmount * TRADE_CANCEL_REFUND_PERCENT,
+                                 )} ${Config.Resource[trade.sellResource].name()}`,
+                                 discard: formatNumber(storageOverflow),
                               })}
-                              onClick={() => {
-                                 if (!disableFill) {
-                                    showModal(<FillPlayerTradeModal tradeId={trade.id} />);
-                                 }
-                              }}
-                           >
-                              {t(L.PlayerTradeFill)}
-                           </div>
-                        )}
-                     </td>
-                  </tr>
-               );
-            }}
-         />
+                           />
+                        </ConfirmModal>,
+                     );
+                  }}
+               >
+                  delete
+               </div>
+            ) : (
+               <div
+                  className={classNames({
+                     "text-link": !disableFill,
+                     "text-strong": true,
+                     "text-desc": disableFill,
+                  })}
+                  onClick={() => {
+                     if (!disableFill) {
+                        showModal(<FillPlayerTradeModal tradeId={trade.id} />);
+                     }
+                  }}
+               >
+                  {t(L.PlayerTradeFill)}
+               </div>
+            )}
+         </td>
       </>
    );
 }

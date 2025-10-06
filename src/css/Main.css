@@ -127,7 +127,7 @@ body {
 #global-toast .toast {
    max-width: 50vw;
    position: absolute;
-   top: 50px;
+   top: 5.5rem;
    z-index: 201;
    display: flex;
    flex-direction: row;
