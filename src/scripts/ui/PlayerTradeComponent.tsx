@@ -31,7 +31,7 @@ import { AddTradeComponent } from "./AddTradeComponent";
 import { ConfirmModal } from "./ConfirmModal";
 import { FillPlayerTradeModal } from "./FillPlayerTradeModal";
 import { FixedLengthText } from "./FixedLengthText";
-import { showModal, showToast } from "./GlobalModal";
+import { hideModal, showModal, showToast } from "./GlobalModal";
 import { FormatNumber } from "./HelperComponents";
 import { RenderHTML } from "./RenderHTMLComponent";
 import { TableView } from "./TableView";
@@ -397,7 +397,9 @@ export function PlayerTradeComponent({ gameState }: { gameState: GameState }): R
                               })}
                               onClick={() => {
                                  if (!disableFill) {
-                                    showModal(<FillPlayerTradeModal tradeId={trade.id} />);
+                                    showModal(
+                                       <FillPlayerTradeModal hideModal={hideModal} tradeId={trade.id} />,
+                                    );
                                  }
                               }}
                            >

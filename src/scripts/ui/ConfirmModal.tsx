@@ -6,7 +6,12 @@ export function ConfirmModal({
    title,
    children,
    onConfirm,
-}: React.PropsWithChildren & { title: string; onConfirm: () => void }): React.ReactNode {
+   hideModalFunc = hideModal,
+}: React.PropsWithChildren & {
+   title: string;
+   onConfirm: () => void;
+   hideModalFunc?: () => void;
+}): React.ReactNode {
    return (
       <div className="window">
          <div className="title-bar">
@@ -20,7 +25,7 @@ export function ConfirmModal({
                   onClick={() => {
                      playClick();
                      onConfirm();
-                     hideModal();
+                     hideModalFunc();
                   }}
                >
                   {t(L.ConfirmYes)}
@@ -30,7 +35,7 @@ export function ConfirmModal({
                   style={{ width: "80px" }}
                   onClick={() => {
                      playClick();
-                     hideModal();
+                     hideModalFunc();
                   }}
                >
                   {t(L.ConfirmNo)}

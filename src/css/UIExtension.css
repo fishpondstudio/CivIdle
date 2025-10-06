@@ -431,6 +431,14 @@ fieldset .separator {
    margin-bottom: 10px;
 }
 
+.m10 {
+   margin: 10px;
+}
+
+.m5 {
+   margin: 5px;
+}
+
 .mb15 {
    margin-bottom: 15px;
 }
@@ -597,15 +605,18 @@ ul.tree-view > li:first-child {
    background: #efefef;
 }
 
+.table-view tr.white,
 .table-view td.white {
    background: #fff;
 }
 
+.table-view tr.grey,
 .table-view td.grey {
    background: #efefef;
 }
 
-.table-view tr.blue {
+.table-view tr.blue,
+.table-view td.blue {
    background: rgb(188, 235, 255);
 }
 
