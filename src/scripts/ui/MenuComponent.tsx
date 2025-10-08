@@ -139,7 +139,7 @@ export function MenuComponent(): React.ReactNode {
                         </MenuItem>
                      </div>
                   )}
-                  {getOwnedTradeTile() ? (
+                  {getOwnedTradeTile() && Tick.current.playerTradeBuildings.size > 0 ? (
                      <div
                         className="menu-popover-item"
                         onPointerDown={(e) => {
