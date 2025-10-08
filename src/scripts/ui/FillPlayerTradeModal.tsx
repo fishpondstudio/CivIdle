@@ -21,11 +21,14 @@ import { useGameState } from "../Global";
 import { client, getUser, usePlayerMap, useTrades } from "../rpc/RPCClient";
 import { findPath, findUserOwnedTile, getOwnedTradeTile } from "../scenes/PathFinder";
 import { playError, playKaching } from "../visuals/Sound";
-import { hideModal, showToast } from "./GlobalModal";
+import { showToast } from "./GlobalModal";
 import { FormatNumber } from "./HelperComponents";
 import { WarningComponent } from "./WarningComponent";
 
-export function FillPlayerTradeModal({ tradeId, xy }: { tradeId: string; xy?: Tile }): React.ReactNode {
+export function FillPlayerTradeModal({
+   tradeId,
+   hideModal,
+}: { tradeId: string; hideModal: () => void }): React.ReactNode {
    const [tiles, setTiles] = useState<string[]>([]);
    const map = usePlayerMap();
    const gs = useGameState();
@@ -50,8 +53,10 @@ export function FillPlayerTradeModal({ tradeId, xy }: { tradeId: string; xy?: Ti
             freeTiles.add(point.y * MAP_MAX_X + point.x);
          }
       });
-      const path = findPath(xyToPoint(myXy), xyToPoint(targetXy), freeTiles);
-      setTiles(path.map((x) => pointToXy(x)));
+      requestAnimationFrame(() => {
+         const path = findPath(xyToPoint(myXy), xyToPoint(targetXy), freeTiles);
+         setTiles(path.map((x) => pointToXy(x)));
+      });
    }, [trade, myXy, map]);
 
    if (!trade) {

@@ -9,7 +9,7 @@ import { usePlayerMap, useTrades } from "../rpc/RPCClient";
 import { getCountryName } from "../utilities/CountryCode";
 import { ClaimTileComponent } from "./ClaimTileComponent";
 import { FillPlayerTradeModal } from "./FillPlayerTradeModal";
-import { showModal } from "./GlobalModal";
+import { hideModal, showModal } from "./GlobalModal";
 import { FormatNumber } from "./HelperComponents";
 import { MapTileBonusComponent } from "./MapTileBonusComponent";
 import { MenuComponent } from "./MenuComponent";
@@ -105,7 +105,12 @@ export function PlayerTilePage({ xy }: { xy: string }): React.ReactNode {
                                        <div
                                           className="text-strong text-blue pointer"
                                           onClick={() => {
-                                             showModal(<FillPlayerTradeModal tradeId={trade.id} />);
+                                             showModal(
+                                                <FillPlayerTradeModal
+                                                   hideModal={hideModal}
+                                                   tradeId={trade.id}
+                                                />,
+                                             );
                                           }}
                                        >
                                           {t(L.PlayerTradeFill)}

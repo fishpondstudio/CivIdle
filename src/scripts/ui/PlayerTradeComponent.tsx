@@ -4,6 +4,7 @@ import { useState } from "react";
 import { NoPrice, NoStorage, type Resource } from "../../../shared/definitions/ResourceDefinitions";
 import { Config } from "../../../shared/logic/Config";
 import { TRADE_CANCEL_REFUND_PERCENT } from "../../../shared/logic/Constants";
+import type { GameState } from "../../../shared/logic/GameState";
 import { unlockedResources } from "../../../shared/logic/IntraTickCache";
 import { getTradePercentage, hasResourceForPlayerTrade } from "../../../shared/logic/PlayerTradeLogic";
 import { addResourceTo, getAvailableStorage } from "../../../shared/logic/ResourceLogic";
@@ -27,11 +28,10 @@ import { getCountryName } from "../utilities/CountryCode";
 import { Singleton } from "../utilities/Singleton";
 import { playError, playKaching } from "../visuals/Sound";
 import { AddTradeComponent } from "./AddTradeComponent";
-import type { IBuildingComponentProps } from "./BuildingPage";
 import { ConfirmModal } from "./ConfirmModal";
 import { FillPlayerTradeModal } from "./FillPlayerTradeModal";
 import { FixedLengthText } from "./FixedLengthText";
-import { showModal, showToast } from "./GlobalModal";
+import { hideModal, showModal, showToast } from "./GlobalModal";
 import { FormatNumber } from "./HelperComponents";
 import { RenderHTML } from "./RenderHTMLComponent";
 import { TableView } from "./TableView";
@@ -44,33 +44,26 @@ let savedPlayerNameFilter = "";
 let savedMaxTradeAmountFilter = 0;
 const playerTradesSortingState = { column: 0, asc: true };
 
-export function PlayerTradeComponent({ gameState, xy }: IBuildingComponentProps): React.ReactNode {
-   const building = gameState.tiles.get(xy)?.building;
+export function PlayerTradeComponent({ gameState }: { gameState: GameState }): React.ReactNode {
    const [resourceWantFilters, setResourceWantFilters] = useState(savedResourceWantFilters);
    const [resourceOfferFilters, setResourceOfferFilters] = useState(savedResourceOfferFilters);
    const [showFilters, setShowFilters] = useState(false);
    const [playerNameFilter, setPlayerNameFilter] = useState<string>(savedPlayerNameFilter);
    const [tradeAmountFilter, setTradeAmountFilter] = useState<number>(savedMaxTradeAmountFilter);
-   if (!building) {
-      return null;
-   }
    const trades = useTrades();
-
    const user = useUser();
    const myXy = getOwnedTradeTile();
    if (!myXy) {
       return (
-         <article role="tabpanel" style={{ padding: "8px" }}>
-            <WarningComponent icon="info">
-               <div>{t(L.PlayerTradeClaimTileFirstWarning)}</div>
-               <div
-                  className="text-strong text-link row"
-                  onClick={() => Singleton().sceneManager.loadScene(PlayerMapScene)}
-               >
-                  {t(L.PlayerTradeClaimTileFirst)}
-               </div>
-            </WarningComponent>
-         </article>
+         <WarningComponent icon="info">
+            <div>{t(L.PlayerTradeClaimTileFirstWarning)}</div>
+            <div
+               className="text-strong text-link row"
+               onClick={() => Singleton().sceneManager.loadScene(PlayerMapScene)}
+            >
+               {t(L.PlayerTradeClaimTileFirst)}
+            </div>
+         </WarningComponent>
       );
    }
 
@@ -88,9 +81,9 @@ export function PlayerTradeComponent({ gameState, xy }: IBuildingComponentProps)
 
    const resources = keysOf(unlockedResources(gameState, "Koti")).filter((r) => !NoStorage[r] && !NoPrice[r]);
    return (
-      <article role="tabpanel" style={{ padding: "8px" }}>
+      <>
          <div className="sep5" />
-         <AddTradeComponent gameState={gameState} xy={xy} />
+         <AddTradeComponent gameState={gameState} />
          {showFilters ? (
             <fieldset>
                <legend>{t(L.PlayerTradeFilters)}</legend>
@@ -404,7 +397,9 @@ export function PlayerTradeComponent({ gameState, xy }: IBuildingComponentProps)
                               })}
                               onClick={() => {
                                  if (!disableFill) {
-                                    showModal(<FillPlayerTradeModal tradeId={trade.id} xy={xy} />);
+                                    showModal(
+                                       <FillPlayerTradeModal hideModal={hideModal} tradeId={trade.id} />,
+                                    );
                                  }
                               }}
                            >
@@ -416,6 +411,6 @@ export function PlayerTradeComponent({ gameState, xy }: IBuildingComponentProps)
                );
             }}
          />
-      </article>
+      </>
    );
 }

@@ -1050,7 +1050,8 @@ export const EN = {
    PlayerMapMapAllyTileBonus: "Ally Trade Tile Bonus",
    PlayerMapMapNeighborTileBonus: "Neighbor Trade Tile Bonus",
    PlayerMapMapTileBonus: "Trade Tile Bonus",
-   PlayerMapMenu: "Trade",
+   PlayerMapMenuV2: "Trade Map",
+   PlayerMapMenuShort: "Trade",
    PlayerMapOccupyThisTile: "Occupy This Tile",
    PlayerMapOccupyTileCondition1: "This tile is adjacent to your home or occupied tiles",
    PlayerMapPageGoBackToCity: "Go Back To City",
@@ -1755,4 +1756,7 @@ export const EN = {
    Zoroaster: "Zoroaster",
    Zugspitze: "Zugspitze",
    ZugspitzeDesc: "For each unlocked age, get one point that can be used to provide one extra level to any Great Person that is born from this run. (Storage multipliers are not effective due to this multiplier being dynamic)",
+   OpenPlayerTrades: "Open Player Trades",
+   PlayerTradeMenu: "Player Trade",
+   PlayerTradeFlagFilter: "Player Flag",
 };
