@@ -4,6 +4,7 @@ import { NoPrice, NoStorage, type Resource } from "../../../shared/definitions/R
 import { Config } from "../../../shared/logic/Config";
 import { DISABLE_PLAYER_TRADES } from "../../../shared/logic/Constants";
 import type { GameState } from "../../../shared/logic/GameState";
+import { notifyGameOptionsUpdate } from "../../../shared/logic/GameStateLogic";
 import { unlockedResources } from "../../../shared/logic/IntraTickCache";
 import {
    getBuyAmountRange,
@@ -21,8 +22,9 @@ import {
    safeParseInt,
 } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
+import { useGameOptions } from "../Global";
 import { client, useTrades, useUser } from "../rpc/RPCClient";
-import { playError, playKaching } from "../visuals/Sound";
+import { playClick, playError, playKaching } from "../visuals/Sound";
 import { showToast } from "./GlobalModal";
 import { FormatNumber } from "./HelperComponents";
 
@@ -33,7 +35,7 @@ export function AddTradeComponent({ gameState }: { gameState: GameState }): Reac
    if (showTrade) {
       return (
          <AddTradeFormComponent
-            onSuccess={() => {}}
+            hideModal={() => {}}
             onCancel={() => setShowTrade(false)}
             gameState={gameState}
          />
@@ -45,10 +47,11 @@ export function AddTradeComponent({ gameState }: { gameState: GameState }): Reac
 export function AddTradeFormComponent({
    gameState,
    onCancel,
-   onSuccess,
-}: { gameState: GameState; onCancel: () => void; onSuccess: () => void }): React.ReactNode {
+   hideModal,
+}: { gameState: GameState; onCancel: () => void; hideModal: () => void }): React.ReactNode {
    const user = useUser();
    const trades = useTrades();
+   const options = useGameOptions();
    const enabled =
       !isNullOrUndefined(user) &&
       trades.filter((t) => t.fromId === user.userId).length < getMaxActiveTrades(user);
@@ -193,6 +196,24 @@ export function AddTradeFormComponent({
             })}
          </div>
          <div className="sep10" />
+         <div className="inset-shallow row" style={{ padding: "2px 8px" }}>
+            <div className="f1">{t(L.KeepTheWindowOpenAfterPlacingTrade)}</div>
+            <div
+               className="pointer"
+               onClick={() => {
+                  playClick();
+                  options.keepNewTradeWindowOpen = !options.keepNewTradeWindowOpen;
+                  notifyGameOptionsUpdate(options);
+               }}
+            >
+               {options.keepNewTradeWindowOpen ? (
+                  <div className="m-icon text-green">toggle_on</div>
+               ) : (
+                  <div className="m-icon text-grey">toggle_off</div>
+               )}
+            </div>
+         </div>
+         <div className="sep10" />
          <div className="row">
             <button
                className="row f1 jcc"
@@ -232,7 +253,9 @@ export function AddTradeFormComponent({
                      await client.addTrade(trade);
                      playKaching();
                      showToast(t(L.PlayerTradeAddSuccess));
-                     onSuccess();
+                     if (!options.keepNewTradeWindowOpen) {
+                        hideModal();
+                     }
                   } catch (error) {
                      transaction.rollback();
                      playError();

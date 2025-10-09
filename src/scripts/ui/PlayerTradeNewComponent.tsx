@@ -487,7 +487,7 @@ function AddTradeModal({ hideModal }: { hideModal: () => void }): React.ReactNod
             </div>
          </div>
          <div className="window-body">
-            <AddTradeFormComponent onCancel={hideModal} onSuccess={hideModal} gameState={gameState} />
+            <AddTradeFormComponent onCancel={hideModal} hideModal={hideModal} gameState={gameState} />
          </div>
       </div>
    );
