@@ -33,12 +33,30 @@ export function AvailableTradingResourcesComponent(): React.ReactNode {
    );
    return (
       <TableView
+         style={{ maxHeight: "50vh", overflowY: "auto" }}
          header={[
             { name: t(L.ResourceImportResource), sortable: true },
             { name: t(L.ResourceAmount), sortable: true },
          ]}
          sortingState={availableTradingResourcesSortingState}
-         data={keysOf(availableResources)}
+         data={keysOf(availableResources).concat(
+            keysOf(availableResources)
+               .concat(keysOf(availableResources))
+               .concat(keysOf(availableResources))
+               .concat(keysOf(availableResources))
+               .concat(keysOf(availableResources))
+               .concat(keysOf(availableResources))
+               .concat(keysOf(availableResources))
+               .concat(keysOf(availableResources))
+               .concat(keysOf(availableResources))
+               .concat(keysOf(availableResources))
+               .concat(keysOf(availableResources))
+               .concat(keysOf(availableResources))
+               .concat(keysOf(availableResources))
+               .concat(keysOf(availableResources))
+               .concat(keysOf(availableResources))
+               .concat(keysOf(availableResources)),
+         )}
          compareFunc={(a, b, col) => {
             switch (col) {
                case 1:

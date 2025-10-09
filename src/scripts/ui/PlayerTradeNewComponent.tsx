@@ -31,11 +31,13 @@ import { getCountryName } from "../utilities/CountryCode";
 import { useForceUpdate } from "../utilities/Hook";
 import { playError, playKaching } from "../visuals/Sound";
 import { AddTradeButtonComponent, AddTradeFormComponent } from "./AddTradeComponent";
+import { AvailableTradingResourcesModal } from "./AvailableTradingResourcesModal";
 import { ConfirmModal } from "./ConfirmModal";
 import { FillPlayerTradeModal } from "./FillPlayerTradeModal";
 import { FixedLengthText } from "./FixedLengthText";
 import { showToast } from "./GlobalModal";
 import { FormatNumber } from "./HelperComponents";
+import { PendingClaimModal } from "./PendingClaimModal";
 import { RenderHTML } from "./RenderHTMLComponent";
 import { AccountLevelComponent, MiscTextureComponent, PlayerFlagComponent } from "./TextureSprites";
 
@@ -97,6 +99,18 @@ export function PlayerTradeNewComponent({
       <>
          <div className="row m5">
             <AddTradeButtonComponent onClick={() => showModal(<AddTradeModal hideModal={hideModal} />)} />
+            <button
+               className="text-strong"
+               onClick={() => showModal(<PendingClaimModal hideModal={hideModal} />)}
+            >
+               {t(L.PlayerTradeTabPendingTrades)}
+            </button>
+            <button
+               className="text-strong"
+               onClick={() => showModal(<AvailableTradingResourcesModal hideModal={hideModal} />)}
+            >
+               {t(L.PlayerTradeTabAvailableTrades)}
+            </button>
             <button
                className="row jcc"
                onClick={() => {

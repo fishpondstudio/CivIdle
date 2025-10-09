@@ -9,6 +9,7 @@ export interface ITableHeader {
 }
 
 export function TableView<T>({
+   style,
    classNames,
    header,
    data,
@@ -16,6 +17,7 @@ export function TableView<T>({
    renderRow,
    sortingState,
 }: {
+   style?: React.CSSProperties;
    classNames?: string;
    header: ITableHeader[];
    data: T[];
@@ -29,7 +31,7 @@ export function TableView<T>({
    }
    const [asc, setAsc] = useState(sortingState?.asc ?? true);
    return (
-      <div className={`table-view ${classNames ?? ""}`}>
+      <div className={`table-view ${classNames ?? ""}`} style={style}>
          <table>
             <thead>
                <tr>

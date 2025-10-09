@@ -1,5 +1,6 @@
 import Tippy from "@tippyjs/react";
 import { useEffect, useState } from "react";
+import { TableVirtuoso } from "react-virtuoso";
 import type { Resource } from "../../../shared/definitions/ResourceDefinitions";
 import { Config } from "../../../shared/logic/Config";
 import type { GameState } from "../../../shared/logic/GameState";
@@ -36,7 +37,12 @@ export function PendingClaimComponent({ gameState }: { gameState: GameState }) {
    });
 
    if (pendingClaims.length === 0) {
-      return <div className="text-desc">{t(L.NothingHere)}</div>;
+      return (
+         <div className="row cc g5 text-desc mv10">
+            <div className="m-icon">info</div>
+            <div style={{ fontSize: "2rem" }}>{t(L.NothingHere)}</div>
+         </div>
+      );
    }
 
    const claimTrades = async (trades: IPendingClaim[]) => {
@@ -90,55 +96,56 @@ export function PendingClaimComponent({ gameState }: { gameState: GameState }) {
    return (
       <>
          <button
-            className="w100 jcc row mb10 mt5"
+            className="w100 jcc row mb10"
             onClick={() => claimTrades(pendingClaims.slice(0).sort((a, b) => a.amount - b.amount))}
          >
             <div className="m-icon small">local_shipping</div>
             <div className="f1 text-strong">{t(L.PlayerTradeClaimAll)}</div>
          </button>
          <div className="table-view">
-            <table>
-               <tbody>
-                  <tr>
-                     <th style={{ width: "30px" }}></th>
-                     <th>{t(L.PlayerTradeResource)}</th>
-                     <th>{t(L.PlayerTradeFillBy)}</th>
-                     <th className="text-right">{t(L.PlayerTradeAmount)}</th>
-                     <th></th>
-                  </tr>
-                  {pendingClaims.map((trade) => {
-                     return (
-                        <tr key={trade.id}>
-                           <td>
-                              {hasFlag(trade.flag, PendingClaimFlag.Tariff) ? (
-                                 <Tippy content={t(L.PlayerTradeTariffTooltip)}>
-                                    <div className="m-icon small text-center text-orange">
-                                       currency_exchange
-                                    </div>
-                                 </Tippy>
-                              ) : null}
-                           </td>
-                           <td>{Config.Resource[trade.resource as Resource].name()}</td>
-                           <td>
-                              <FixedLengthText text={trade.fillBy} length={10} />
-                           </td>
-                           <td className="text-right">
-                              <Tippy content={trade.amount}>
-                                 <FormatNumber value={trade.amount} />
+            <TableVirtuoso
+               style={{ height: "50vh" }}
+               data={pendingClaims}
+               fixedHeaderContent={() => {
+                  return (
+                     <tr>
+                        <th style={{ width: "30px" }}></th>
+                        <th>{t(L.PlayerTradeResource)}</th>
+                        <th>{t(L.PlayerTradeFillBy)}</th>
+                        <th className="text-right">{t(L.PlayerTradeAmount)}</th>
+                        <th></th>
+                     </tr>
+                  );
+               }}
+               itemContent={(idx, trade) => {
+                  return (
+                     <>
+                        <td>
+                           {hasFlag(trade.flag, PendingClaimFlag.Tariff) ? (
+                              <Tippy content={t(L.PlayerTradeTariffTooltip)}>
+                                 <div className="m-icon small text-center text-orange">currency_exchange</div>
                               </Tippy>
-                           </td>
-                           <td className="text-right">
-                              <div className="text-link text-strong" onClick={() => claimTrades([trade])}>
-                                 {t(L.PlayerTradeClaim)}
-                              </div>
-                           </td>
-                        </tr>
-                     );
-                  })}
-               </tbody>
-            </table>
+                           ) : null}
+                        </td>
+                        <td>{Config.Resource[trade.resource as Resource].name()}</td>
+                        <td>
+                           <FixedLengthText text={trade.fillBy} length={10} />
+                        </td>
+                        <td className="text-right">
+                           <Tippy content={trade.amount}>
+                              <FormatNumber value={trade.amount} />
+                           </Tippy>
+                        </td>
+                        <td className="text-right">
+                           <div className="text-link text-strong" onClick={() => claimTrades([trade])}>
+                              {t(L.PlayerTradeClaim)}
+                           </div>
+                        </td>
+                     </>
+                  );
+               }}
+            />
          </div>
-         <div className="sep10" />
       </>
    );
 }
