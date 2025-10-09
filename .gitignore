@@ -11,7 +11,8 @@ node_modules
 dist
 dist-ssr
 *.local
-/temp
+temp/
+out/
 
 
 # Editor directories and files
