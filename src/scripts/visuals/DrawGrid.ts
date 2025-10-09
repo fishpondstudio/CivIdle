@@ -1,7 +1,7 @@
 import type { SmoothGraphics } from "@pixi/graphics-smooth";
 import { Polygon } from "pixi.js";
 import type { Grid } from "../../../shared/utilities/Grid";
-import type { Point } from "../../../shared/utilities/Hex";
+import type { IPoint } from "../../../shared/utilities/Hex";
 
 export function drawGrid(self: Grid, graphics: SmoothGraphics): void {
    self.forEach((hex) => {
@@ -9,10 +9,10 @@ export function drawGrid(self: Grid, graphics: SmoothGraphics): void {
    });
 }
 
-export function drawSelected(self: Grid, grid: Point, graphics: SmoothGraphics): void {
+export function drawSelected(self: Grid, grid: IPoint, graphics: SmoothGraphics): void {
    drawCorners(self.layout.polygonCorners(self.gridToHex(grid)), graphics);
 }
 
-export function drawCorners(corners: Point[], graphics: SmoothGraphics) {
+export function drawCorners(corners: IPoint[], graphics: SmoothGraphics) {
    graphics.drawPolygon(new Polygon(corners));
 }

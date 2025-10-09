@@ -8,7 +8,7 @@ import {
 } from "pixi.js";
 import { getGameOptions } from "../../../shared/logic/GameStateLogic";
 import { clamp, lerp, sizeOf } from "../../../shared/utilities/Helper";
-import { Vector2, v2 } from "../../../shared/utilities/Vector2";
+import { lerpVector2, v2 } from "../../../shared/utilities/Vector2";
 import type { SceneLifecycle } from "./SceneManager";
 
 const DEAD_ZONE_SQR = 25;
@@ -181,7 +181,7 @@ export class Camera extends Container implements SceneLifecycle {
          }
       }
       if (this.targetOrigin) {
-         const target = Vector2.lerp(
+         const target = lerpVector2(
             this.pivot,
             this.targetOrigin,
             Math.min(0.01 * this.app.ticker.deltaMS, 1 / 3),

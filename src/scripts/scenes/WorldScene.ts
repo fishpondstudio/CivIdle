@@ -46,7 +46,7 @@ import {
    type Tile,
 } from "../../../shared/utilities/Helper";
 import { ObjectPool } from "../../../shared/utilities/ObjectPool";
-import { Vector2, v2 } from "../../../shared/utilities/Vector2";
+import { lerpVector2, v2 } from "../../../shared/utilities/Vector2";
 import { getTexture } from "../logic/VisualLogic";
 import { TilePage } from "../ui/TilePage";
 import { getColorCached } from "../utilities/CachedColor";
@@ -554,7 +554,7 @@ export class WorldScene extends Scene {
       const worldRect = this.viewport.visibleWorldRect();
       this._ticked.clear();
       Transports.forEach((t) => {
-         Vector2.lerp(
+         lerpVector2(
             t.fromPosition,
             t.toPosition,
             (t.ticksSpent + timeSinceLastTick) / t.ticksRequired,

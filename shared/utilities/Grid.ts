@@ -1,8 +1,8 @@
 import { tileToPoint, type Tile } from "./Helper";
-import { Hex, Layout, OffsetCoord, Point } from "./Hex";
+import { Hex, Layout, OffsetCoord, Point, type IHex, type ILayout, type IPoint } from "./Hex";
 
 export class Grid {
-   layout: Layout;
+   layout: ILayout;
    maxX: number;
    maxY: number;
    size: number;
@@ -14,14 +14,14 @@ export class Grid {
       this.size = size;
    }
 
-   public center(): Point {
+   public center(): IPoint {
       return {
          x: Math.floor(this.maxX / 2),
          y: Math.floor(this.maxY / 2),
       };
    }
 
-   public forEach(cb: (grid: Point) => void) {
+   public forEach(cb: (grid: IPoint) => void) {
       for (let x = 0; x < this.maxX; x++) {
          for (let y = 0; y < this.maxY; y++) {
             cb({ x, y });
@@ -40,18 +40,18 @@ export class Grid {
    //    graphics.addChild(font).position.set(pos.x - font.width / 2, pos.y - font.height / 2);
    // }
 
-   public maxPosition(): Point {
+   public maxPosition(): IPoint {
       const point = this.gridToPosition(new Point(this.maxX - 1, this.maxY - 1));
       // This is to give an extra padding on the right
       return point;
    }
 
-   public positionToGrid(position: Point): Point {
+   public positionToGrid(position: IPoint): IPoint {
       const o = OffsetCoord.roffsetFromCube(OffsetCoord.ODD, this.layout.pixelToHex(position).round());
       return { x: o.col, y: o.row };
    }
 
-   public isEdge(grid: Point, edgeSize: number) {
+   public isEdge(grid: IPoint, edgeSize: number) {
       if (
          grid.x < edgeSize ||
          grid.y < edgeSize ||
@@ -63,21 +63,21 @@ export class Grid {
       return false;
    }
 
-   public isValid(g: Point): boolean {
+   public isValid(g: IPoint): boolean {
       return g.x >= 0 && g.x < this.maxX && g.y >= 0 && g.y < this.maxY;
    }
 
-   public gridToPosition(grid: Point): Point {
+   public gridToPosition(grid: IPoint): IPoint {
       return this.layout.hexToPixel(this.gridToHex(grid));
    }
 
-   public xyToPosition(xy: Tile): Point {
+   public xyToPosition(xy: Tile): IPoint {
       this.gridToHex(tileToPoint(xy), Grid._hex1);
       return this.layout.hexToPixel(Grid._hex1);
    }
 
-   public getNeighbors(grid: Point): Point[] {
-      const result: Point[] = [];
+   public getNeighbors(grid: IPoint): IPoint[] {
+      const result: IPoint[] = [];
       for (let i = 0; i < 6; i++) {
          this.gridToHex(grid, Grid._hex1);
          Grid._hex1.neighbor(i, Grid._hex1);
@@ -89,11 +89,11 @@ export class Grid {
       return result;
    }
 
-   public getRange(grid: Point, distance: number): Point[] {
-      const result: Point[] = [];
+   public getRange(grid: IPoint, distance: number): IPoint[] {
+      const result: IPoint[] = [];
       this.gridToHex(grid).forEachInRange(
          distance,
-         (h) => {
+         (h: IHex) => {
             const g = this.hexToGrid(h);
             if (this.isValid(g)) {
                result.push(g);
@@ -143,18 +143,18 @@ export class Grid {
       return distance;
    }
 
-   public gridToHex(grid: Point, result?: Hex): Hex {
+   public gridToHex(grid: IPoint, result?: IHex): IHex {
       Grid._oc1.col = grid.x;
       Grid._oc1.row = grid.y;
       return OffsetCoord.roffsetToCube(OffsetCoord.ODD, Grid._oc1, result);
    }
 
-   public hexToGrid(hex: Hex): Point {
+   public hexToGrid(hex: IHex): IPoint {
       OffsetCoord.roffsetFromCube(OffsetCoord.ODD, hex, Grid._oc1);
       return { x: Grid._oc1.col, y: Grid._oc1.row };
    }
 
-   public hexToPosition(hex: Hex): Point {
+   public hexToPosition(hex: IHex): IPoint {
       return this.layout.hexToPixel(hex);
    }
 }
