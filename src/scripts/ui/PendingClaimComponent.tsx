@@ -2,6 +2,7 @@ import Tippy from "@tippyjs/react";
 import { useEffect, useState } from "react";
 import type { Resource } from "../../../shared/definitions/ResourceDefinitions";
 import { Config } from "../../../shared/logic/Config";
+import type { GameState } from "../../../shared/logic/GameState";
 import { addResourceTo, getAvailableStorage } from "../../../shared/logic/ResourceLogic";
 import { Tick } from "../../../shared/logic/TickLogic";
 import { PendingClaimFlag, type IPendingClaim } from "../../../shared/utilities/Database";
@@ -18,12 +19,11 @@ import { L, t } from "../../../shared/utilities/i18n";
 import { OnNewPendingClaims, client } from "../rpc/RPCClient";
 import { useTypedEvent } from "../utilities/Hook";
 import { playError, playKaching } from "../visuals/Sound";
-import type { IBuildingComponentProps } from "./BuildingPage";
 import { FixedLengthText } from "./FixedLengthText";
 import { showToast } from "./GlobalModal";
 import { FormatNumber } from "./HelperComponents";
 
-export function PendingClaimComponent({ gameState, xy }: IBuildingComponentProps) {
+export function PendingClaimComponent({ gameState }: { gameState: GameState }) {
    const [_pendingClaims, setPendingClaims] = useState<IPendingClaim[]>([]);
    const pendingClaims = _pendingClaims.filter((trade) => trade.resource in Config.Resource);
 

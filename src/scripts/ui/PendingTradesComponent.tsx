@@ -30,7 +30,7 @@ export function PendingTradesComponent({ gameState, xy }: IBuildingComponentProp
 
    return (
       <article role="tabpanel" style={{ padding: "8px" }}>
-         <PendingClaimComponent gameState={gameState} xy={xy} />
+         <PendingClaimComponent gameState={gameState} />
       </article>
    );
 }
