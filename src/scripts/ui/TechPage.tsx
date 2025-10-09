@@ -12,10 +12,11 @@ import {
    tryDeductScience,
    unlockTech,
 } from "../../../shared/logic/TechLogic";
-import { forEach } from "../../../shared/utilities/Helper";
+import { forEach, formatHMS, SECOND } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import { useGameState } from "../Global";
 import { checkAgeAchievements } from "../logic/Achievement";
+import { TimeSeries } from "../logic/TimeSeries";
 import { TechTreeScene } from "../scenes/TechTreeScene";
 import { WorldScene } from "../scenes/WorldScene";
 import { useShortcut } from "../utilities/Hook";
@@ -105,6 +106,12 @@ export function TechPage({ id }: { id: Tech }): React.ReactNode {
    const availableScience = getScienceAmount(gs);
    const { prerequisites, totalScience } = getTotalTechUnlockCost(id, gs);
    const canUnlock = () => availableScience >= totalScience;
+   let scienceDelta = 0;
+   if (TimeSeries.science.length > 1) {
+      scienceDelta =
+         TimeSeries.science[TimeSeries.science.length - 1] -
+         TimeSeries.science[TimeSeries.science.length - 2];
+   }
 
    return (
       <div className="window">
@@ -163,6 +170,16 @@ export function TechPage({ id }: { id: Tech }): React.ReactNode {
                               <FormatNumber value={totalScience} />
                            </div>
                         </li>
+                        <ul>
+                           <li className="row text-small">
+                              <div className="f1">{t(L.EstimatedTimeLeft)}</div>
+                              {availableScience < totalScience && scienceDelta > 0 ? (
+                                 <div>
+                                    {formatHMS(((totalScience - availableScience) * SECOND) / scienceDelta)}
+                                 </div>
+                              ) : null}
+                           </li>
+                        </ul>
                      </ul>
                      <div className="sep5" />
                      <div className="row">

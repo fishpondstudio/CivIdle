@@ -32,6 +32,7 @@ import {
 } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import { useGameOptions } from "../Global";
+import { TimeSeries } from "../logic/TimeSeries";
 import { TechTreeScene } from "../scenes/TechTreeScene";
 import { Singleton } from "../utilities/Singleton";
 import { playAgeUp } from "../visuals/Sound";
@@ -77,6 +78,12 @@ export function HeadquarterBuildingBody({
    const techAge = getCurrentAge(gameState);
    const options = useGameOptions();
    const transportStat = getTransportStat(gameState);
+   let scienceDelta = 0;
+   if (TimeSeries.science.length > 1) {
+      scienceDelta =
+         TimeSeries.science[TimeSeries.science.length - 1] -
+         TimeSeries.science[TimeSeries.science.length - 2];
+   }
    return (
       <div className="window-body">
          <PlayerHandleComponent />
@@ -202,6 +209,7 @@ export function HeadquarterBuildingBody({
                         <th>{t(L.Name)}</th>
                         <th className="right">{t(L.Science)}</th>
                         <th className="right">{t(L.UnlockTechProgress)}</th>
+                        <th className="right">{t(L.EstimatedTimeLeftShort)}</th>
                         <th />
                      </tr>
                   </thead>
@@ -220,6 +228,11 @@ export function HeadquarterBuildingBody({
                                  ) : (
                                     <div className="m-icon text-green small">check_circle</div>
                                  )}
+                              </td>
+                              <td className="right">
+                                 {scienceAmount < unlockCost && scienceDelta > 0
+                                    ? formatHMS(((unlockCost - scienceAmount) * SECOND) / scienceDelta)
+                                    : null}
                               </td>
                               <td className="right" style={{ width: "50px" }}>
                                  <span

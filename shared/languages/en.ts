@@ -1760,4 +1760,5 @@ export const EN = {
    PlayerTradeMenu: "Player Trade",
    PlayerTradeFlagFilter: "Player Flag",
    KeepTheWindowOpenAfterPlacingTrade: "Keep the window open after placing trade",
+   EstimatedTimeLeftShort: "Est. Time Left",
 };
