@@ -97,7 +97,7 @@ export function PlayerTradeNewComponent({
    const resources = keysOf(unlockedResources(gameState, "Koti")).filter((r) => !NoStorage[r] && !NoPrice[r]);
    return (
       <>
-         <div className="row m5">
+         <div className="row" style={{ margin: "2px 1px" }}>
             <AddTradeButtonComponent onClick={() => showModal(<AddTradeModal hideModal={hideModal} />)} />
             <button
                className="text-strong"
@@ -111,6 +111,7 @@ export function PlayerTradeNewComponent({
             >
                {t(L.PlayerTradeTabAvailableTrades)}
             </button>
+            <div className="w10"></div>
             <button
                className="row jcc"
                onClick={() => {

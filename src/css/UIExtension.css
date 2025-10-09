@@ -396,6 +396,14 @@ fieldset .separator {
    width: 100%;
 }
 
+.w10 {
+   width: 10px;
+}
+
+.w5 {
+   width: 5px;
+}
+
 .mv5 {
    margin-top: 5px;
    margin-bottom: 5px;
