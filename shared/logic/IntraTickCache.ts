@@ -1,6 +1,6 @@
 import type { Building, IBuildingDefinition } from "../definitions/BuildingDefinitions";
 import { NoPrice, NoStorage, type Deposit, type Resource } from "../definitions/ResourceDefinitions";
-import { Grid } from "../utilities/Grid";
+import { Grid, type IGrid } from "../utilities/Grid";
 import {
    clamp,
    forEach,
@@ -379,9 +379,9 @@ export function unlockedResources(gs: GameState, ...include: Resource[]): Partia
    return result;
 }
 
-let grid: Grid | null = null;
+let grid: IGrid | null = null;
 
-export function getGrid(gs: GameState): Grid {
+export function getGrid(gs: GameState): IGrid {
    const size = Config.City[gs.city].size;
    if (grid === null || grid.maxX !== size || grid.maxY !== size || grid.size !== TILE_SIZE) {
       grid = new Grid(size, size, TILE_SIZE);

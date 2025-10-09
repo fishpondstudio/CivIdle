@@ -3,7 +3,7 @@ import type { IUnlockable } from "../definitions/ITechDefinition";
 import { NoPrice, NoStorage, type Resource } from "../definitions/ResourceDefinitions";
 import type { Tech } from "../definitions/TechDefinitions";
 import type { AccountLevel } from "../utilities/Database";
-import type { Grid } from "../utilities/Grid";
+import type { IGrid } from "../utilities/Grid";
 import {
    HOUR,
    clamp,
@@ -155,7 +155,7 @@ export function completeTransport(targetBuilding: IBuildingData, resource: Resou
    }
 }
 
-function tickTransport(transport: ITransportationDataV2, grid: Grid): boolean {
+function tickTransport(transport: ITransportationDataV2, grid: IGrid): boolean {
    const totalTick = grid.distanceTile(transport.fromXy, transport.toXy);
 
    // TODO: This needs to be double checked when fuel is implemented!
