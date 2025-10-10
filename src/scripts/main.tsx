@@ -33,7 +33,7 @@ import { Fonts } from "./visuals/Fonts";
 
 if (!import.meta.env.DEV) {
    Sentry.init({
-      dsn: "https://e875739e3b4f45a7ab67da5837cc5ea9@bugreport.fishpondstudio.com/1",
+      dsn: "https://c5c32c886ead4f8cb90c538332666087@bugreport.fishpondstudio.com/1",
       release: `Build.${build}`,
       autoSessionTracking: false,
       integrations: [Sentry.captureConsoleIntegration({ levels: ["warn", "error", "assert"] })],
