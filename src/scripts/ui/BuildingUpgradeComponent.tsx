@@ -280,7 +280,7 @@ export function BuildingUpgradeComponent({ gameState, xy }: IBuildingComponentPr
             </div>
             {theMet ? (
                <button
-                  className="row w100 jcc mt10"
+                  className="row w100 jcc mt5"
                   disabled={moving || (theMet.building.resources.Teleport ?? 0) <= 0}
                   onClick={async () => {
                      playClick();

@@ -2,6 +2,8 @@ import { L, t } from "../../../shared/utilities/i18n";
 import { getOwnedTradeTile } from "../scenes/PathFinder";
 import { PlayerMapScene } from "../scenes/PlayerMapScene";
 import { Singleton } from "../utilities/Singleton";
+import { AddTradeButtonComponent } from "./AddTradeComponent";
+import { AddTradeModal } from "./AddTradeModal";
 import { BuildingColorComponent } from "./BuildingColorComponent";
 import { BuildingInputModeComponent } from "./BuildingInputModeComponent";
 import type { IBuildingComponentProps } from "./BuildingPage";
@@ -11,7 +13,8 @@ import { BuildingStorageComponent } from "./BuildingStorageComponent";
 import { BuildingUpgradeComponent } from "./BuildingUpgradeComponent";
 import { BuildingValueComponent } from "./BuildingValueComponent";
 import { BuildingWorkerComponent } from "./BuildingWorkerComponent";
-import { showModal } from "./GlobalModal";
+import { hideModal, showModal } from "./GlobalModal";
+import { PendingClaimModal } from "./PendingClaimModal";
 import { PlayerTradeModal } from "./PlayerTradeModal";
 import { ResourceImportComponent } from "./ResourceImportComponent";
 import { WarningComponent } from "./WarningComponent";
@@ -21,15 +24,27 @@ export function PlayerTradeBuildingBody({ gameState, xy }: IBuildingComponentPro
    let tradeButton: React.ReactNode = null;
    if (myXy) {
       tradeButton = (
-         <button
-            className="w100 mb10 row text-strong"
-            onClick={() => {
-               showModal(<PlayerTradeModal />);
-            }}
-         >
-            <div className="m-icon small">open_in_new</div>
-            <div className="f1">{t(L.OpenPlayerTrades)}</div>
-         </button>
+         <>
+            <button
+               className="w100 row text-strong mb5"
+               onClick={() => {
+                  showModal(<PlayerTradeModal />);
+               }}
+            >
+               <div className="m-icon small">open_in_new</div>
+               <div className="f1">{t(L.OpenPlayerTrades)}</div>
+            </button>
+            <div className="row mb10">
+               <AddTradeButtonComponent onClick={() => showModal(<AddTradeModal hideModal={hideModal} />)} />
+
+               <button
+                  className="f1 text-strong"
+                  onClick={() => showModal(<PendingClaimModal hideModal={hideModal} />)}
+               >
+                  {t(L.PlayerTradeTabPendingTrades)}
+               </button>
+            </div>
+         </>
       );
    } else {
       tradeButton = (

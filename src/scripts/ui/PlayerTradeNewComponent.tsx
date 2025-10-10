@@ -30,7 +30,8 @@ import { client, useTrades, useUser } from "../rpc/RPCClient";
 import { getCountryName } from "../utilities/CountryCode";
 import { useForceUpdate } from "../utilities/Hook";
 import { playError, playKaching } from "../visuals/Sound";
-import { AddTradeButtonComponent, AddTradeFormComponent } from "./AddTradeComponent";
+import { AddTradeButtonComponent } from "./AddTradeComponent";
+import { AddTradeModal } from "./AddTradeModal";
 import { AvailableTradingResourcesModal } from "./AvailableTradingResourcesModal";
 import { ConfirmModal } from "./ConfirmModal";
 import { FillPlayerTradeModal } from "./FillPlayerTradeModal";
@@ -473,23 +474,6 @@ function PlayerTradeTableRow({
             )}
          </td>
       </>
-   );
-}
-
-function AddTradeModal({ hideModal }: { hideModal: () => void }): React.ReactNode {
-   const gameState = useGameState();
-   return (
-      <div className="window" style={{ width: 400, maxWidth: "50vw" }}>
-         <div className="title-bar">
-            <div className="title-bar-text">{t(L.PlayerTradeNewTrade)}</div>
-            <div className="title-bar-controls">
-               <button onClick={hideModal} aria-label="Close"></button>
-            </div>
-         </div>
-         <div className="window-body">
-            <AddTradeFormComponent onCancel={hideModal} hideModal={hideModal} gameState={gameState} />
-         </div>
-      </div>
    );
 }
 
