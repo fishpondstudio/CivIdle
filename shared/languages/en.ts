@@ -1761,4 +1761,6 @@ export const EN = {
    PlayerTradeFlagFilter: "Player Flag",
    KeepTheWindowOpenAfterPlacingTrade: "Keep the window open after placing trade",
    EstimatedTimeLeftShort: "Est. Time Left",
+   MaxOfflineProductionTimeDesc: "Max Offline Production Time is %{time}. The rest are converted to Time Warp",
+   TotalOfflineTime: "Total Offline Time",
 };

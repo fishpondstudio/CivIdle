@@ -53,6 +53,7 @@ import { WorldScene } from "./scenes/WorldScene";
 import { AccountRankUpModal } from "./ui/AccountRankUpModal";
 import { BuildingCompleteModal } from "./ui/BuildingCompleteModal";
 import { showModal } from "./ui/GlobalModal";
+import { OfflineProductionModal } from "./ui/OfflineProductionModal";
 import { idbDel, idbGet, idbSet } from "./utilities/BrowserStorage";
 import { makeObservableHook } from "./utilities/Hook";
 import { isAndroid, isIOS } from "./utilities/Platforms";
@@ -327,6 +328,20 @@ if (import.meta.env.DEV) {
    // @ts-expect-error
    window.rankUp = () => {
       showModal(<AccountRankUpModal rank={AccountLevel.Consul} user={getUser()!} />);
+   };
+
+   // @ts-expect-error
+   window.offline = () => {
+      const gs = getGameState();
+      showModal(
+         <OfflineProductionModal
+            before={gs}
+            after={gs}
+            totalOfflineTime={500}
+            offlineProductionTime={100}
+            warpFull={true}
+         />,
+      );
    };
 
    // @ts-expect-error

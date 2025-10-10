@@ -1,11 +1,13 @@
 import classNames from "classnames";
 import type { Resource } from "../../../shared/definitions/ResourceDefinitions";
 import { Config } from "../../../shared/logic/Config";
+import { MAX_OFFLINE_PRODUCTION_SEC } from "../../../shared/logic/Constants";
 import type { GameState } from "../../../shared/logic/GameState";
-import { forEach, formatHM, isEmpty } from "../../../shared/utilities/Helper";
+import { forEach, formatHM, formatHMS, isEmpty, SECOND } from "../../../shared/utilities/Helper";
 import type { PartialTabulate } from "../../../shared/utilities/TypeDefinitions";
 import { L, t } from "../../../shared/utilities/i18n";
-import { jsxMMapOf, jsxMapOf } from "../utilities/Helper";
+import { useGameOptions } from "../Global";
+import { jsxMapOf, jsxMMapOf } from "../utilities/Helper";
 import { hideModal } from "./GlobalModal";
 import { FormatNumber } from "./HelperComponents";
 import { RenderHTML } from "./RenderHTMLComponent";
@@ -14,9 +16,17 @@ import { WarningComponent } from "./WarningComponent";
 export function OfflineProductionModal({
    before,
    after,
-   time,
+   offlineProductionTime,
+   totalOfflineTime,
    warpFull,
-}: { before: GameState; after: GameState; time: number; warpFull: boolean }): React.ReactNode {
+}: {
+   before: GameState;
+   after: GameState;
+   offlineProductionTime: number;
+   totalOfflineTime: number;
+   warpFull: boolean;
+}): React.ReactNode {
+   const options = useGameOptions();
    return (
       <div className="window" style={{ width: "500px" }}>
          <div className="title-bar">
@@ -27,14 +37,30 @@ export function OfflineProductionModal({
          </div>
          <div className="window-body">
             {warpFull ? (
-               <WarningComponent icon="info">
+               <WarningComponent icon="info" className="mb10">
                   <RenderHTML html={t(L.WarpStorageFullHTML)} />
                </WarningComponent>
             ) : null}
-            <div className="row mv5">
-               <div className="f1">{t(L.OfflineProductionTime)}</div>
-               <div className="text-strong">{formatHM(time * 1000)}</div>
-            </div>
+            <ul className="tree-view">
+               <li className="row">
+                  <div className="f1">{t(L.TotalOfflineTime)}</div>
+                  <div className="text-strong">{formatHMS(totalOfflineTime * SECOND)}</div>
+               </li>
+               <li className="row">
+                  <div className="f1">
+                     {t(L.OfflineProductionTime)}{" "}
+                     <div className="text-small text-desc">
+                        {t(L.MaxOfflineProductionTimeDesc, {
+                           time: formatHM(
+                              (options.offlineProductionPercent ?? 0) * MAX_OFFLINE_PRODUCTION_SEC,
+                           ),
+                        })}
+                     </div>
+                  </div>
+                  <div className="text-strong">{formatHMS(offlineProductionTime * SECOND)}</div>
+               </li>
+            </ul>
+            <div className="sep10"></div>
             <div className="table-view" style={{ maxHeight: "40vh", overflowY: "auto" }}>
                <table>
                   <tbody>

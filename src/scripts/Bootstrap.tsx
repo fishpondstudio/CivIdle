@@ -168,7 +168,8 @@ export async function startGame(
             <OfflineProductionModal
                before={before}
                after={after}
-               time={offlineProductionTime}
+               totalOfflineTime={actualOfflineTime}
+               offlineProductionTime={offlineProductionTime}
                warpFull={petraOfflineTime > warp}
             />,
          );
