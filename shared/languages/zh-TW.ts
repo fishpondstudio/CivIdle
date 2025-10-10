@@ -1570,6 +1570,8 @@ export const ZH_TW = {
    TowerOfBabel: "巴別塔(Tower of Babel)",
    TowerOfBabelDesc: "為所有至少有一座工作建築毗鄰奇蹟的建築提供 +2 生產乘數",
    TradeFillSound: "交易填充音效",
+   TradeSCanBeClaimed: "已完成訂單可領取",
+   TradesCanBeClaimedHTML: "共 %{count} 筆已完成訂單可領取——確保您有足夠的空間來領取它們。點擊查看詳情",
    TradeTileBonusWillRefresh: "貿易地塊加成和聯合國刷新時間提示",
    TradeTileBonusWillRefreshHTML: "貿易地塊加成和聯合國將於 <b>%{time}</b> 後刷新",
    TradeValue: "貿易價值",
