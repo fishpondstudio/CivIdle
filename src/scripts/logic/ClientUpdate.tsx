@@ -123,8 +123,9 @@ export function tickEverySecond(gs: GameState, offline: boolean) {
       );
    });
 
+   gs.lastClientTickAt = Date.now();
+
    const options = getGameOptions();
-   options.lastClientTickAt = Date.now();
 
    forEach(options.greatPeople, (person, v) => {
       const greatPerson = Config.GreatPerson[person];

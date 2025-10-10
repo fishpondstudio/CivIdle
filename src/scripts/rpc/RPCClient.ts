@@ -336,22 +336,25 @@ export async function connectWebSocket(): Promise<IWelcomeMessage> {
             OnPlatformInfoChanged.emit(platformInfo);
             const tick = getGameState().tick;
             const offlineTicks = clamp(w.lastGameTick + w.offlineTime - tick, 0, Number.POSITIVE_INFINITY);
-            const clientOfflineTicks = Date.now() - options.lastClientTickAt;
+            const gs = getGameState();
+            gs.clientOfflineSec += (Date.now() - gs.lastClientTickAt) / SECOND;
+            gs.lastClientTickAt = Date.now();
             console.log(
                "[WelcomeMessage]",
                "CurrentTick:",
                tick,
                "OfflineTicks:",
                offlineTicks,
-               "ClientOfflineTicks:",
-               clientOfflineTicks,
+               "ClientOfflineSec:",
+               gs.clientOfflineSec,
                "OfflineTime:",
                w.offlineTime,
                "User:",
                JSON.stringify(w),
             );
             setServerNow(w.now);
-            w.offlineTime = Math.min(w.offlineTime, offlineTicks, clientOfflineTicks);
+            w.offlineTime = Math.min(w.offlineTime, offlineTicks, gs.clientOfflineSec);
+            gs.clientOfflineSec -= w.offlineTime;
             resolve?.(w);
             break;
          }
