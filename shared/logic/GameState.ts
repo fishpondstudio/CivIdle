@@ -66,7 +66,7 @@ export class GameState {
    pinStatPanel = false;
    adaptiveGreatPeople = new Map<GreatPerson, Building>();
    flags = GameStateFlags.None;
-   lastClientTickAt = Date.now();
+   lastClientTickAt = 0;
    clientOfflineSec = 0;
 }
 
