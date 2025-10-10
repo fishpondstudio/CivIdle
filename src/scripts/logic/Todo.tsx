@@ -358,6 +358,9 @@ export const _Todos = {
       desc: (gs, options) => {
          return t(L.TradesCanBeClaimedHTML, { count: PendingClaims.length });
       },
+      value: (gs, options) => {
+         return PendingClaims.length;
+      },
       condition: (gs, options) => {
          return PendingClaims.length > 0;
       },
