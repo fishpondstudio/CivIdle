@@ -865,7 +865,7 @@ export const ZH_TW = {
    MausoleumAtHalicarnassus: "摩索拉斯王陵墓",
    MausoleumAtHalicarnassusDescV2: "周圍 2 地塊範圍內所有建築，對於範圍內建築 “輸出” 與 “輸入” 的資源調用，免費運輸",
    MaxExplorers: "最大探險家數量",
-   MaxOfflineProductionTimeDesc: "最大離線生產時間為 %{Time} 。把<b>超出最大離線生產時間的離線時間</b>全部轉化為扭曲時間（ 1 秒= 1 扭曲時間）",
+   MaxOfflineProductionTimeDesc: "最大離線生產時間為 %{time} 。把超出最大離線生產時間的離線時間全部轉化為扭曲時間（ 1 秒= 1 扭曲時間）",
    MaxTransportDistance: "最大運輸距離",
    Meat: "肉",
    Metallurgy: "冶煉",
