@@ -11,7 +11,7 @@ import {
 } from "../../../shared/logic/RebirthLogic";
 import { getScienceAmount, getTechUnlockCost, unlockableTechs } from "../../../shared/logic/TechLogic";
 import { NotProducingReason, Tick } from "../../../shared/logic/TickLogic";
-import { HOUR, entriesOf, formatHMS, mapCount } from "../../../shared/utilities/Helper";
+import { entriesOf, formatHMS, HOUR, mapCount } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import { isSteam, SteamClient } from "../rpc/SteamClient";
 import { getOwnedTradeTile } from "../scenes/PathFinder";
@@ -19,13 +19,15 @@ import { PlayerMapScene } from "../scenes/PlayerMapScene";
 import { TechTreeScene } from "../scenes/TechTreeScene";
 import { LookAtMode, WorldScene } from "../scenes/WorldScene";
 import { ChooseGreatPersonModal } from "../ui/ChooseGreatPersonModal";
-import { showModal, showToast } from "../ui/GlobalModal";
+import { hideModal, showModal, showToast } from "../ui/GlobalModal";
 import { ManageAgeWisdomModal } from "../ui/ManageAgeWisdomModal";
 import { ManagePermanentGreatPersonModal } from "../ui/ManagePermanentGreatPersonModal";
+import { PendingClaimModal } from "../ui/PendingClaimModal";
 import { TilePage } from "../ui/TilePage";
 import { openUrl } from "../utilities/Platform";
 import { Singleton } from "../utilities/Singleton";
 import { playClick } from "../visuals/Sound";
+import { PendingClaims } from "./PendingClaim";
 import { getBuildNumber, getVersion } from "./Version";
 
 export interface ITodo {
@@ -347,6 +349,20 @@ export const _Todos = {
          if (gs.greatPeopleChoicesV2.length > 0) {
             showModal(<ManageAgeWisdomModal />);
          }
+      },
+   },
+   I6: {
+      name: () => t(L.TradeSCanBeClaimed),
+      icon: "currency_exchange",
+      className: "text-green",
+      desc: (gs, options) => {
+         return t(L.TradesCanBeClaimedHTML, { count: PendingClaims.length });
+      },
+      condition: (gs, options) => {
+         return PendingClaims.length > 0;
+      },
+      onClick: (gs, options) => {
+         showModal(<PendingClaimModal hideModal={hideModal} />);
       },
    },
    S1: {

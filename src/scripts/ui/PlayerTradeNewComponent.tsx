@@ -41,6 +41,7 @@ import { FormatNumber } from "./HelperComponents";
 import { PendingClaimModal } from "./PendingClaimModal";
 import { RenderHTML } from "./RenderHTMLComponent";
 import { AccountLevelComponent, MiscTextureComponent, PlayerFlagComponent } from "./TextureSprites";
+import { PendingClaims } from "../logic/PendingClaim";
 
 const savedResourceWantFilters: Set<Resource> = new Set();
 const savedResourceOfferFilters: Set<Resource> = new Set();
@@ -104,7 +105,7 @@ export function PlayerTradeNewComponent({
                className="text-strong"
                onClick={() => showModal(<PendingClaimModal hideModal={hideModal} />)}
             >
-               {t(L.PlayerTradeTabPendingTrades)}
+               {t(L.PlayerTradeTabPendingTrades)} ({PendingClaims.length})
             </button>
             <button
                className="text-strong"

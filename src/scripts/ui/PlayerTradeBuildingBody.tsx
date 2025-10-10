@@ -1,4 +1,5 @@
 import { L, t } from "../../../shared/utilities/i18n";
+import { PendingClaims } from "../logic/PendingClaim";
 import { getOwnedTradeTile } from "../scenes/PathFinder";
 import { PlayerMapScene } from "../scenes/PlayerMapScene";
 import { Singleton } from "../utilities/Singleton";
@@ -36,12 +37,11 @@ export function PlayerTradeBuildingBody({ gameState, xy }: IBuildingComponentPro
             </button>
             <div className="row mb10">
                <AddTradeButtonComponent onClick={() => showModal(<AddTradeModal hideModal={hideModal} />)} />
-
                <button
                   className="f1 text-strong"
                   onClick={() => showModal(<PendingClaimModal hideModal={hideModal} />)}
                >
-                  {t(L.PlayerTradeTabPendingTrades)}
+                  {t(L.PlayerTradeTabPendingTrades)} ({PendingClaims.length})
                </button>
             </div>
          </>

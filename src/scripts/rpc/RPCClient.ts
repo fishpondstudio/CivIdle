@@ -47,6 +47,7 @@ import { setServerNow } from "../../../shared/utilities/ServerNow";
 import { TypedEvent } from "../../../shared/utilities/TypedEvent";
 import { L, t } from "../../../shared/utilities/i18n";
 import { saveGame } from "../Global";
+import { RequestPendingClaimUpdate } from "../logic/PendingClaim";
 import { getBuildNumber, getVersion } from "../logic/Version";
 import { showToast } from "../ui/GlobalModal";
 import { idbGet, idbSet } from "../utilities/BrowserStorage";
@@ -63,7 +64,6 @@ export const OnChatMessage = new TypedEvent<LocalChat[]>();
 export const OnTradeChanged = new TypedEvent<IClientTrade[]>();
 export const OnPlayerMapChanged = new TypedEvent<Map<string, IClientMapEntry>>();
 export const OnPlayerMapMessage = new TypedEvent<IMapMessage>();
-export const OnNewPendingClaims = new TypedEvent<void>();
 
 export interface PlayGamesPlugin {
    requestServerSideAccess: (opt: { clientId: string }) => Promise<{ serverAuthToken: string }>;
@@ -356,6 +356,7 @@ export async function connectWebSocket(): Promise<IWelcomeMessage> {
             w.offlineTime = Math.min(w.offlineTime, offlineTicks, gs.clientOfflineSec);
             gs.clientOfflineSec -= w.offlineTime;
             resolve?.(w);
+            RequestPendingClaimUpdate.emit();
             break;
          }
          case MessageType.Trade: {
@@ -391,12 +392,13 @@ export async function connectWebSocket(): Promise<IWelcomeMessage> {
          }
          case MessageType.PendingClaim: {
             const r = message as IPendingClaimMessage;
+            console.log(r, user);
             if (user && r.claims[user.userId]) {
                if (getGameOptions().tradeFilledSound) {
                   playKaching();
                }
                showToast(t(L.PlayerTradeClaimAvailable, { count: r.claims[user.userId] }));
-               OnNewPendingClaims.emit();
+               RequestPendingClaimUpdate.emit();
             }
             break;
          }

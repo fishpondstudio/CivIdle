@@ -1,3 +1,4 @@
+import type { Resource } from "../../../shared/definitions/ResourceDefinitions";
 import { MAX_TECH_AGE } from "../../../shared/definitions/TechDefinitions";
 import { Config } from "../../../shared/logic/Config";
 import { getGameOptions, getGameState, savedGame } from "../../../shared/logic/GameStateLogic";
@@ -431,6 +432,17 @@ export async function handleChatCommand(command: string): Promise<void> {
          }
          await client.removePlayerFromMap(parts[1]);
          addSystemMessage("Player has been removed from map");
+         break;
+      }
+      case "addclaim": {
+         if (!parts[1] || !parts[2] || !parts[3]) {
+            throw new Error("Invalid command format");
+         }
+         if (!(parts[2] in Config.Resource)) {
+            throw new Error("Invalid resource");
+         }
+         await client.addPendingClaim(parts[1], parts[2] as Resource, safeParseInt(parts[3], 10));
+         addSystemMessage("Pending claim has been added");
          break;
       }
       case "cloudsave": {

@@ -1763,4 +1763,6 @@ export const EN = {
    EstimatedTimeLeftShort: "Est. Time Left",
    MaxOfflineProductionTimeDesc: "Max Offline Production Time is %{time}. The rest are converted to Time Warp",
    TotalOfflineTime: "Total Offline Time",
+   TradeSCanBeClaimed: "Trade(s) Can Be Claimed",
+   TradesCanBeClaimedHTML: "You have %{count} trade(s) that can be claimed - make sure your have enough storage to claim them. Click to see details",
 };
