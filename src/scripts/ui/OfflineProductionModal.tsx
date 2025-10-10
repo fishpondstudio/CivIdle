@@ -32,7 +32,7 @@ export function OfflineProductionModal({
                </WarningComponent>
             ) : null}
             <div className="row mv5">
-               <div className="f1">{t(L.OfflineTime)}</div>
+               <div className="f1">{t(L.OfflineProductionTime)}</div>
                <div className="text-strong">{formatHM(time * 1000)}</div>
             </div>
             <div className="table-view" style={{ maxHeight: "40vh", overflowY: "auto" }}>

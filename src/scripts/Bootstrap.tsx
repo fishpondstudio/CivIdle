@@ -145,11 +145,11 @@ export async function startGame(
       const actualOfflineTime = welcome.offlineTime;
 
       const maxOfflineTime = (options.offlineProductionPercent ?? 0) * MAX_OFFLINE_PRODUCTION_SEC;
-      const offlineTime = clamp(actualOfflineTime, 0, maxOfflineTime);
+      const offlineProductionTime = clamp(actualOfflineTime, 0, maxOfflineTime);
       routeTo(LoadingPage, { stage: LoadingPageStage.OfflineProduction });
       if (actualOfflineTime >= 60) {
          const before = structuredClone(gameState);
-         let timeLeft = offlineTime;
+         let timeLeft = offlineProductionTime;
          while (timeLeft > 0) {
             const batchSize = Math.min(timeLeft, MAX_OFFLINE_PRODUCTION_SEC / 100);
             await schedule(() => {
@@ -157,10 +157,10 @@ export async function startGame(
                   tickEverySecond(gameState, true);
                }
             });
-            await showOfflineProductionProgress(1 - timeLeft / offlineTime, routeTo);
+            await showOfflineProductionProgress(1 - timeLeft / offlineProductionTime, routeTo);
             timeLeft -= batchSize;
          }
-         const petraOfflineTime = actualOfflineTime - offlineTime;
+         const petraOfflineTime = actualOfflineTime - offlineProductionTime;
          const warp = addPetraOfflineTime(petraOfflineTime, gameState);
          const after = structuredClone(gameState);
          hasOfflineProductionModal = true;
@@ -168,7 +168,7 @@ export async function startGame(
             <OfflineProductionModal
                before={before}
                after={after}
-               time={offlineTime}
+               time={offlineProductionTime}
                warpFull={petraOfflineTime > warp}
             />,
          );
