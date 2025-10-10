@@ -1548,7 +1548,7 @@ export const ZH_TW = {
    TileNotPoweredHTML: "%{count} 建築不生產，因為它們的地塊未通電力，點擊高亮它們",
    TimBernersLee: "提姆·柏內茲-李(Tim Berners-Lee)",
    TimeWarp: "扭曲時間占比",
-   TimeWarpWarning: "以超出電腦處理能力的速度加速，可能會導致數據丟失。<b>使用風險自負！</b>",
+   TimeWarpWarning: "以超出電腦處理能力的速度加速，可能會導致數據丟失。使用風險自負！",
    ToggleWonderEffect: "切換奇蹟效果(Toggle Wonder Effect)",
    Tool: "工具",
    TopkapiPalace: "托普卡帕宮",
