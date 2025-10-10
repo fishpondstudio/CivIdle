@@ -39,24 +39,7 @@ export function AvailableTradingResourcesComponent(): React.ReactNode {
             { name: t(L.ResourceAmount), sortable: true },
          ]}
          sortingState={availableTradingResourcesSortingState}
-         data={keysOf(availableResources).concat(
-            keysOf(availableResources)
-               .concat(keysOf(availableResources))
-               .concat(keysOf(availableResources))
-               .concat(keysOf(availableResources))
-               .concat(keysOf(availableResources))
-               .concat(keysOf(availableResources))
-               .concat(keysOf(availableResources))
-               .concat(keysOf(availableResources))
-               .concat(keysOf(availableResources))
-               .concat(keysOf(availableResources))
-               .concat(keysOf(availableResources))
-               .concat(keysOf(availableResources))
-               .concat(keysOf(availableResources))
-               .concat(keysOf(availableResources))
-               .concat(keysOf(availableResources))
-               .concat(keysOf(availableResources)),
-         )}
+         data={keysOf(availableResources)}
          compareFunc={(a, b, col) => {
             switch (col) {
                case 1:
