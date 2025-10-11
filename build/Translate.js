@@ -50,14 +50,16 @@ readdirSync("./shared/languages").forEach((fileName) => {
       .replace(`export const ${variableName} =`, "")
       .replace("};", "}");
    const language = eval(`(${file})`);
-   const result = {};
+   const translated = {};
+   const untranslated = {};
    Object.keys(en).forEach((k) => {
-      if (language[k]) {
-         result[k] = language[k];
+      if (language[k] && language[k] !== en[k]) {
+         translated[k] = language[k];
       } else {
-         result[k] = en[k];
+         untranslated[k] = en[k];
       }
    });
+   const result = Object.assign(translated, untranslated);
    writeFileSync(filePath, `export const ${variableName} = ${JSON.stringify(result)};`);
 });
 
