@@ -1313,7 +1313,7 @@ export const ZH_CN = {
    Satellite: "卫星",
    SatelliteFactory: "卫星工厂",
    SatoshiNakamoto: "中本聪",
-   Saturnaliav2: "农神节：阿尔卑斯山额外为所有建筑每 10 等级，提供 +1 额外建筑等级",
+   SaturnaliaV2: "农神节：阿尔卑斯山额外为所有建筑每 10 等级，提供 +1 额外建筑等级",
    SaveAndExit: "保存并退出",
    School: "学校",
    Science: "科学",
