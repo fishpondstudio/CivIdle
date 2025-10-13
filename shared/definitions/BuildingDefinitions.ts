@@ -878,7 +878,7 @@ export class BuildingDefinitions {
    // #region Natural Wonders ////////////////////////////////////////////////////////////////////////////////
    Alps: IBuildingDefinition = {
       name: () => t(L.Alps),
-      desc: () => t(L.AlpsDesc),
+      desc: () => t(L.AlpsDescV2),
       input: {},
       output: {},
       construction: {},
@@ -1281,7 +1281,7 @@ export class BuildingDefinitions {
    };
    GreatSphinx: IBuildingDefinition = {
       name: () => t(L.GreatSphinx),
-      desc: () => t(L.GreatSphinxDesc),
+      desc: () => t(L.GreatSphinxDescV2),
       input: {},
       output: {},
       max: 1,

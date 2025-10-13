@@ -33,7 +33,7 @@ export class CityDefinitions {
       naturalWonders: { Alps: true, GrottaAzzurra: true },
       requireGreatPeopleLevel: 0,
       requireSupporterPack: false,
-      festivalDesc: () => t(L.Saturnalia),
+      festivalDesc: () => t(L.SaturnaliaV2),
    };
    Athens: ICityDefinition = {
       name: () => t(L.Greek),
@@ -88,7 +88,7 @@ export class CityDefinitions {
       naturalWonders: { NileRiver: true, MountSinai: true },
       requireGreatPeopleLevel: 10,
       requireSupporterPack: false,
-      festivalDesc: () => t(L.Opet),
+      festivalDesc: () => t(L.OpetV2),
    };
    Beijing: ICityDefinition = {
       name: () => t(L.Chinese),
