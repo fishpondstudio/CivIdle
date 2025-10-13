@@ -96,7 +96,7 @@ export const ZH_TW = {
    Alloy: "合金",
    Ally: "盟友",
    Alps: "阿爾卑斯山",
-   AlpsDescv2: "建築每 10 級，獲得 +1 生產乘數",
+   AlpsDescV2: "建築每 10 級，獲得 +1 生產乘數",
    Aluminum: "鋁",
    AluminumSmelter: "鋁廠",
    AmeliaEarhart: "愛蜜莉亞·艾爾哈特",
