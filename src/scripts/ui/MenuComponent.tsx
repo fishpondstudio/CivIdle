@@ -374,8 +374,8 @@ export function MenuComponent(): React.ReactNode {
                   src={SpiderWeb}
                   style={{
                      position: "absolute",
-                     top: -23,
-                     right: 10,
+                     top: -25,
+                     right: 50,
                      zIndex: 1,
                      pointerEvents: "none",
                      width: 80,

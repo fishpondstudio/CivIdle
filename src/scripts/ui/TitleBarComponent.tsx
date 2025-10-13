@@ -16,7 +16,7 @@ export function TitleBarComponent({ children }: React.PropsWithChildren): React.
    return (
       <div className={classNames({ "title-bar": true, "app-region-drag": isSteam() })}>
          <div className="title-bar-text">{children}</div>
-         {isSteam() ? (
+         {isSteam() || import.meta.env.DEV ? (
             <div className="title-bar-controls app-region-none">
                <button
                   aria-label="Minimize"
