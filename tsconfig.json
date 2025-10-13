@@ -2,12 +2,7 @@
    "compilerOptions": {
       "target": "ESNext",
       "useDefineForClassFields": false,
-      "lib": [
-         "DOM",
-         "DOM.Iterable",
-         "ESNext",
-         "WebWorker"
-      ],
+      "lib": ["DOM", "DOM.Iterable", "ESNext", "WebWorker"],
       "allowJs": false,
       "skipLibCheck": true,
       "esModuleInterop": false,
@@ -23,13 +18,8 @@
       "noImplicitOverride": true,
       "verbatimModuleSyntax": true
    },
-   "include": [
-      "src"
-   ],
-   "exclude": [
-      "**/node_modules",
-      "**/.*/"
-   ],
+   "include": ["src", "shared/logic/LogicResult.ts"],
+   "exclude": ["**/node_modules", "**/.*/"],
    "references": [
       {
          "path": "./tsconfig.node.json"

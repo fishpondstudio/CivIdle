@@ -195,7 +195,6 @@ export const EN = {
    Borobudur: "Borobudur",
    BorobudurDesc: "Borobudur",
    BranCastle: "Bran Castle",
-   BranCastleDesc: "Bran Castle",
    BrandenburgGate: "Brandenburg Gate",
    BrandenburgGateDesc: "All coal mines and oil wells get +1 Production, Worker Capacity and Storage Multiplier. Oil refineries get +1 Production, Worker Capacity and Storage Multiplier for each adjacent oil tile",
    Brasilia: "Brasília",
@@ -1762,4 +1761,9 @@ export const EN = {
    Zoroaster: "Zoroaster",
    Zugspitze: "Zugspitze",
    ZugspitzeDesc: "For each unlocked age, get one point that can be used to provide one extra level to any Great Person that is born from this run. (Storage multipliers are not effective due to this multiplier being dynamic)",
+   IntrinsticRatio: "Intrinstic Ratio",
+   ProducedWorkers: "Produced Workers",
+   EmployedVampires: "Employed Vampires",
+   RequiredTotalWorkers: "Required Total Workers",
+   BranCastleDescV2: "Produce X workers. X = workers produced within 2 tile rage. If there are enough workers, will also employ X workers as vampires. Vampires don't produce or transport resources but are counted as busy workers. Bran Castle's level is determined by total workers and each level provides +1 Science Per Idle Worker and +2 Science Per Busy Worker. This wonder can only be constructed during Halloween (10.15 ~ 11.15)",
 };

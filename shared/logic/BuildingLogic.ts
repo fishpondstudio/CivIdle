@@ -41,6 +41,7 @@ import {
    getGrid,
    getXyBuildings,
 } from "./IntraTickCache";
+import { LogicResult } from "./LogicResult";
 import { getGreatPersonTotalLevel } from "./RebirthLogic";
 import { getBuildingsThatProduce, getResourcesValue } from "./ResourceLogic";
 import { getAgeForTech, getBuildingUnlockTech, getCurrentAge } from "./TechLogic";
@@ -702,6 +703,8 @@ export function getBuildingLevelLabel(xy: Tile, gs: GameState): string {
    if (isWorldOrNaturalWonder(b.type)) {
       if (b.type === "SwissBank") {
          // Swiss Bank is a special case, we show the level boost (below)
+      } else if (b.type === "BranCastle") {
+         return String(LogicResult.branCastleLevel);
       } else if (BuildingShowLevel.has(b.type)) {
          const extraLevel = getWonderExtraLevel(b.type);
          return extraLevel > 0 ? `${b.level}+${extraLevel}` : String(b.level);
@@ -1383,4 +1386,8 @@ const UpgradableWorldWonders = new Set<Building>([
 
 export function isBuildingUpgradable(building: Building): boolean {
    return !isSpecialBuilding(building) || UpgradableWorldWonders.has(building);
+}
+
+export function getBranCastleRequiredWorkers(level: number): number {
+   return 1000 * 2 ** level;
 }

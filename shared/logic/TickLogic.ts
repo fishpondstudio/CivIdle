@@ -150,7 +150,6 @@ export const Tick = {
 };
 
 interface IMultiplier {
-   input: number;
    output: number;
    worker: number;
    storage: number;
@@ -161,14 +160,13 @@ export type MultiplierWithStability = Multiplier & { unstable?: boolean };
 export type MultiplierWithSource = Multiplier & { source: string; unstable?: boolean };
 export type LevelBoost = { value: number; source: string };
 
-export const AllMultiplierTypes = ["input", "output", "worker", "storage"] satisfies (keyof IMultiplier)[];
+export const AllMultiplierTypes = ["output", "worker", "storage"] satisfies (keyof IMultiplier)[];
 
 export type MultiplierType = keyof IMultiplier;
 export const MultiplierTypeDesc: Record<MultiplierType, () => string> = {
    output: () => t(L.ProductionMultiplier),
    worker: () => t(L.WorkerMultiplier),
    storage: () => t(L.StorageMultiplier),
-   input: () => t(L.ConsumptionMultiplier),
 };
 
 export interface IValueWithSource {

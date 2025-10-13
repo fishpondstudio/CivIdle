@@ -109,11 +109,6 @@ export function UpgradeGroupComponent<T>({
                                     }}
                                  >
                                     <div className="f1 text-strong">{Config.Building[bld].name()}</div>
-                                    {mul.input ? (
-                                       <div className="ml20 text-small">
-                                          +{mul.input} {t(L.ConsumptionMultiplier)}
-                                       </div>
-                                    ) : null}
                                     {mul.output ? (
                                        <div className="ml20 text-small">
                                           +{mul.output} {t(L.ProductionMultiplier)}

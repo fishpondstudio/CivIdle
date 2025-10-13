@@ -437,6 +437,7 @@ export class WorldScene extends Scene {
             case "MausoleumAtHalicarnassus":
             case "ItaipuDam":
             case "CathedralOfBrasilia":
+            case "BranCastle":
             case "GoldenGateBridge": {
                this.highlightRange(grid, 2);
                break;

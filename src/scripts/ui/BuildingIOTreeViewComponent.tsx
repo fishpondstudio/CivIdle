@@ -4,9 +4,8 @@ import { IOFlags, getMultipliersFor, totalMultiplierFor } from "../../../shared/
 import { Config } from "../../../shared/logic/Config";
 import type { GameState } from "../../../shared/logic/GameState";
 import { getBuildingIO } from "../../../shared/logic/IntraTickCache";
-import type { Multiplier } from "../../../shared/logic/TickLogic";
 import { NotProducingReason, Tick } from "../../../shared/logic/TickLogic";
-import type { Tile } from "../../../shared/utilities/Helper";
+import { formatNumber, type Tile } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import warning from "../../images/warning.png";
 import { jsxMapOf } from "../utilities/Helper";
@@ -20,10 +19,10 @@ export function BuildingIOTreeViewComponent({
 }: {
    gameState: GameState;
    xy: Tile;
-   type: keyof Pick<Multiplier, "input" | "output">;
+   type: "input" | "output";
 }): React.ReactNode {
    const data = getBuildingIO(xy, type, IOFlags.Multiplier | IOFlags.Capacity, gameState);
-   const totalMultiplier = totalMultiplierFor(xy, type, 1, false, gameState);
+   const totalMultiplier = type === "input" ? 1 : totalMultiplierFor(xy, type, 1, false, gameState);
    const building = gameState.tiles.get(xy)?.building;
    const buildingType = building?.type;
    const isCloneOutput =
@@ -38,6 +37,7 @@ export function BuildingIOTreeViewComponent({
                Tick.current.notProducingReasons.get(xy) === NotProducingReason.NotEnoughResources &&
                resourceInStorage < v;
             const electrificationLevel = Tick.current.electrified.get(xy) ?? 0;
+            const baseValue = buildingType ? (Config.Building[buildingType][type][k] ?? 0) : 0;
             return (
                <li key={k}>
                   <details>
@@ -51,6 +51,10 @@ export function BuildingIOTreeViewComponent({
                         </div>
                      </summary>
                      <ul>
+                        <li className="row">
+                           <div className="f1">{t(L.IntrinsticRatio)}</div>
+                           <div className="text-strong">x{formatNumber(baseValue)}</div>
+                        </li>
                         {isCloneOutput ? (
                            <li className="row text-strong">
                               <TextWithHelp content={t(L.ResourceCloneTooltip)}>
@@ -67,7 +71,11 @@ export function BuildingIOTreeViewComponent({
                            </div>
                            <div className="text-strong">
                               <FormatNumber
-                                 value={isCloneOutput ? v / (1 + totalMultiplier) : v / totalMultiplier}
+                                 value={
+                                    isCloneOutput
+                                       ? v / (1 + totalMultiplier)
+                                       : v / totalMultiplier / baseValue
+                                 }
                               />
                            </div>
                         </li>
@@ -91,38 +99,39 @@ export function BuildingIOTreeViewComponent({
                                 ))
                               : null}
                         </ul>
-
-                        <li className="row">
-                           <div className="f1">
-                              {type === "input" ? t(L.ConsumptionMultiplier) : t(L.ProductionMultiplier)}
-                           </div>
-                           <div className="text-strong">
-                              x
-                              <FormatNumber value={totalMultiplier} />
-                           </div>
-                        </li>
-                        <ul className="text-small">
-                           <li className="row">
-                              <div className="f1">{t(L.BaseMultiplier)}</div>
-                              <div>1</div>
-                           </li>
-                           {getMultipliersFor(xy, false, gameState).map((m, idx) => {
-                              if (!m[type]) {
-                                 return null;
-                              }
-                              return (
-                                 <li key={idx} className="row">
-                                    <div>{m.source}</div>
-                                    {m.unstable ? (
-                                       <Tippy content={t(L.DynamicMultiplierTooltip)}>
-                                          <div className="m-icon small ml5 text-desc">whatshot</div>
-                                       </Tippy>
-                                    ) : null}
-                                    <div className="f1 text-right">{m[type]}</div>
+                        {type === "output" ? (
+                           <>
+                              <li className="row">
+                                 <div className="f1">{t(L.ProductionMultiplier)}</div>
+                                 <div className="text-strong">
+                                    x
+                                    <FormatNumber value={totalMultiplier} />
+                                 </div>
+                              </li>
+                              <ul className="text-small">
+                                 <li className="row">
+                                    <div className="f1">{t(L.BaseMultiplier)}</div>
+                                    <div>1</div>
                                  </li>
-                              );
-                           })}
-                        </ul>
+                                 {getMultipliersFor(xy, false, gameState).map((m, idx) => {
+                                    if (!m[type]) {
+                                       return null;
+                                    }
+                                    return (
+                                       <li key={idx} className="row">
+                                          <div>{m.source}</div>
+                                          {m.unstable ? (
+                                             <Tippy content={t(L.DynamicMultiplierTooltip)}>
+                                                <div className="m-icon small ml5 text-desc">whatshot</div>
+                                             </Tippy>
+                                          ) : null}
+                                          <div className="f1 text-right">{m[type]}</div>
+                                       </li>
+                                    );
+                                 })}
+                              </ul>
+                           </>
+                        ) : null}
                      </ul>
                   </details>
                </li>

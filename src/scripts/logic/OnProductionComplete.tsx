@@ -1,8 +1,12 @@
 import type { Building } from "../../../shared/definitions/BuildingDefinitions";
 import { GreatPersonTickFlag, type GreatPerson } from "../../../shared/definitions/GreatPersonDefinitions";
 import {
+   IOFlags,
+   addWorkers,
    forEachMultiplier,
    generateScienceFromFaith,
+   getAvailableWorkers,
+   getBranCastleRequiredWorkers,
    getBuildingCost,
    getCathedralOfBrasiliaResources,
    getGreatWallRange,
@@ -17,6 +21,7 @@ import {
    isWorldOrNaturalWonder,
    isWorldWonder,
    totalMultiplierFor,
+   useWorkers,
 } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
 import {
@@ -36,12 +41,14 @@ import { GameFeature, hasFeature } from "../../../shared/logic/FeatureLogic";
 import { GameStateFlags } from "../../../shared/logic/GameState";
 import { getGameOptions, getGameState } from "../../../shared/logic/GameStateLogic";
 import {
+   getBuildingIO,
    getBuildingsByType,
    getGrid,
    getTransportStat,
    getTypeBuildings,
    getXyBuildings,
 } from "../../../shared/logic/IntraTickCache";
+import { LogicResult } from "../../../shared/logic/LogicResult";
 import { getVotedBoostId } from "../../../shared/logic/PlayerTradeLogic";
 import {
    getGreatPeopleChoiceCount,
@@ -239,10 +246,15 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
             const mul = Math.floor(building.level / 10);
             if (mul > 0) {
                mapSafePush(Tick.next.tileMultipliers, xy, {
-                  input: isFestival("Alps", gs) ? 0 : mul,
                   output: mul,
                   source: t(L.NaturalWonderName, { name: buildingName }),
                });
+               if (isFestival("Alps", gs)) {
+                  mapSafePush(Tick.next.levelBoost, xy, {
+                     value: mul,
+                     source: t(L.NaturalWonderName, { name: buildingName }),
+                  });
+               }
             }
          });
          break;
@@ -737,10 +749,15 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
                   }
                }
                mapSafePush(Tick.next.tileMultipliers, tileXy, {
-                  input: isFestival("GreatSphinx", gs) ? 0 : count,
                   output: count,
                   source: buildingName,
                });
+               if (isFestival("GreatSphinx", gs)) {
+                  mapSafePush(Tick.next.levelBoost, tileXy, {
+                     value: count,
+                     source: t(L.NaturalWonderName, { name: buildingName }),
+                  });
+               }
             }
          }
          break;
@@ -1938,6 +1955,40 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
                   GreatPersonTickFlag.None,
                );
             });
+         });
+         break;
+      }
+      case "BranCastle": {
+         let workers = 0;
+         for (const point of grid.getRange(tileToPoint(xy), 2)) {
+            const targetXy = pointToTile(point);
+            if (!Tick.current.notProducingReasons.has(targetXy)) {
+               const output = getBuildingIO(targetXy, "output", IOFlags.Multiplier | IOFlags.Capacity, gs);
+               if (output.Worker) {
+                  workers += output.Worker;
+               }
+            }
+         }
+         LogicResult.branCastleGeneratedWorkers = workers;
+         addWorkers("Worker", workers);
+         if (getAvailableWorkers("Worker") >= workers) {
+            useWorkers("Worker", workers, xy);
+            LogicResult.branCastleEmployedWorkers = workers;
+         }
+         const { workersAfterHappiness } = getScienceFromWorkers(gs);
+         let level = 0;
+         while (getBranCastleRequiredWorkers(level) < workersAfterHappiness) {
+            level++;
+         }
+         level = clamp(level - 1, 0, Number.POSITIVE_INFINITY);
+         LogicResult.branCastleLevel = level;
+         Tick.next.globalMultipliers.sciencePerIdleWorker.push({
+            value: level,
+            source: buildingName,
+         });
+         Tick.next.globalMultipliers.sciencePerBusyWorker.push({
+            value: 2 * level,
+            source: buildingName,
          });
          break;
       }

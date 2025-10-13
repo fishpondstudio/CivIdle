@@ -97,12 +97,6 @@ export function UnlockableEffectComponent({
                   <legend>
                      <b>{t(L.BuildingMultipliers)}</b> {Config.Building[k].name()}
                   </legend>
-                  {v.input ? (
-                     <div className="row mv5">
-                        <div className="f1">{t(L.ConsumptionMultiplier)}</div>
-                        <div className="text-strong">+{v.input}</div>
-                     </div>
-                  ) : null}
                   {v.output ? (
                      <div className="row mv5">
                         <div className="f1">{t(L.ProductionMultiplier)}</div>

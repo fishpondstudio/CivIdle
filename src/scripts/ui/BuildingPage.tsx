@@ -9,6 +9,7 @@ import type { ITileData } from "../../../shared/logic/Tile";
 import type { Tile } from "../../../shared/utilities/Helper";
 import { useGameState } from "../Global";
 import { Singleton } from "../utilities/Singleton";
+import { BranCastleBuildingBody } from "./BranCastleBuildingBody";
 import { BritishMuseumBuildingBody } from "./BritishMuseumBuildingBody";
 import { BroadwayBuildingBody } from "./BroadwayBuildingBody";
 import { CathedralOfBrasiliaBuildingBody } from "./CathedralOfBrasiliaBuildingBody";
@@ -88,6 +89,7 @@ const BuildingBodyOverride: Partial<Record<Building, FunctionComponent<IBuilding
    CathedralOfBrasilia: CathedralOfBrasiliaBuildingBody,
    RedFort: UpgradableWonderBuildingBody,
    QutbMinar: UpgradableWonderBuildingBody,
+   BranCastle: BranCastleBuildingBody,
 };
 
 export function BuildingPage(props: { tile: ITileData }): React.ReactNode {

@@ -175,7 +175,7 @@ export function getBuildingIO(
                value *= totalMultiplierFor(xy, "output", 1, stableOnly, gs);
             } else if (type === "output" && (b.type === "CloneFactory" || b.type === "CloneLab")) {
                value = value * 0.5 + value * 0.5 * totalMultiplierFor(xy, "output", 1, stableOnly, gs);
-            } else {
+            } else if (type === "output") {
                value *= totalMultiplierFor(xy, type, 1, stableOnly, gs);
             }
          }

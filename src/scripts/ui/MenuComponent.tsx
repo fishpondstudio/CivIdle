@@ -1,11 +1,14 @@
 import classNames from "classnames";
 import type { PropsWithChildren } from "react";
 import { useEffect, useRef, useState } from "react";
+import { isHalloween } from "../../../shared/definitions/TimedBuildingUnlock";
 import { DISCORD_URL, SUPPORTER_PACK_URL } from "../../../shared/logic/Constants";
 import { Tick } from "../../../shared/logic/TickLogic";
 import { isSaveOwner } from "../../../shared/utilities/DatabaseShared";
 import { isNullOrUndefined, sizeOf } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
+import Bat from "../../images/Bat.svg";
+import SpiderWeb from "../../images/SpiderWeb.svg";
 import { compressSave, saveGame, useFloatingMode } from "../Global";
 import { client, usePlatformInfo, useUser } from "../rpc/RPCClient";
 import { SteamClient, isSteam } from "../rpc/SteamClient";
@@ -78,6 +81,7 @@ export function MenuComponent(): React.ReactNode {
          window.removeEventListener("pointerdown", onPointerDown);
       };
    }, []);
+   const now = new Date();
    return (
       <>
          <div className="menus">
@@ -365,6 +369,31 @@ export function MenuComponent(): React.ReactNode {
                   </div>
                </div>
             </div>
+            {isHalloween(now) ? (
+               <img
+                  src={SpiderWeb}
+                  style={{
+                     position: "absolute",
+                     top: -23,
+                     right: 10,
+                     zIndex: 1,
+                     pointerEvents: "none",
+                     width: 80,
+                  }}
+               />
+            ) : null}
+            {isHalloween(now) ? (
+               <img
+                  src={Bat}
+                  style={{
+                     position: "absolute",
+                     top: -20,
+                     right: 200,
+                     zIndex: 1,
+                     pointerEvents: "none",
+                  }}
+               />
+            ) : null}
          </div>
          <div className="separator"></div>
       </>
