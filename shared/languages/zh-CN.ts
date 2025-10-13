@@ -152,7 +152,7 @@ export const ZH_CN = {
    BaseCapacity: "基础能力（运输量）",
    BaseConsumption: "基础消耗",
    BaseMultiplier: "基础乘数",
-   BaseProduction: "基础产出",
+   BaseProduction: "建筑总等级",
    BastilleDay: "国庆日：蓬皮杜文艺中心和凯旋门提供双倍加成效果。圣米歇尔山产出两倍文化。",
    BatchModeTooltip: "目前已选中 %{count} 建筑。将升级所有选中建筑",
    BatchSelectAllSameType: "所有相同类型",
