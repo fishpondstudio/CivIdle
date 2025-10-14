@@ -60,6 +60,7 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
    const [buildCount, setBuildCount] = useState<number>(1);
    const [search, setSearch] = useState<string>("");
    const constructed = getTypeBuildings(gs);
+   const [buildRange, setBuildRange] = useState<number>(0);
    const build = useCallback(
       (k: Building) => {
          if (!checkBuildingMax(k, gs)) {
@@ -68,9 +69,9 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
          }
 
          tile.building = applyBuildingDefaults(makeBuilding({ type: k }), getGameOptions());
-         if (!isSpecialBuilding(k) && options.buildRange > 0) {
+         if (!isSpecialBuilding(k) && buildRange > 0) {
             getGrid(gs)
-               .getRange(tileToPoint(tile.tile), options.buildRange)
+               .getRange(tileToPoint(tile.tile), buildRange)
                .forEach((p) => {
                   const xy = pointToTile(p);
                   const tileData = gs.tiles.get(xy);
@@ -85,12 +86,12 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
          notifyGameStateUpdate();
          playClick();
       },
-      [gs, options.buildRange, tile],
+      [gs, buildRange, tile],
    );
 
    const onMouseOver = useCallback(
       (building: Building) => {
-         if (options.buildRange <= 0) {
+         if (buildRange <= 0) {
             return;
          }
          if (isSpecialBuilding(building)) {
@@ -98,7 +99,7 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
          }
          const result: Tile[] = [];
          getGrid(gs)
-            .getRange(tileToPoint(tile.tile), options.buildRange)
+            .getRange(tileToPoint(tile.tile), buildRange)
             .forEach((p) => {
                const xy = pointToTile(p);
                if (!gs.tiles.get(xy)?.building) {
@@ -108,12 +109,12 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
          setBuildCount(result.length);
          Singleton().sceneManager.getCurrent(WorldScene)?.drawSelection(tileToPoint(tile.tile), result);
       },
-      [gs, options.buildRange, tile],
+      [gs, buildRange, tile],
    );
 
    const onMouseLeave = useCallback(
       (building: Building) => {
-         if (options.buildRange <= 0) {
+         if (buildRange <= 0) {
             return;
          }
          if (isSpecialBuilding(building)) {
@@ -122,7 +123,7 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
          setBuildCount(1);
          Singleton().sceneManager.getCurrent(WorldScene)?.drawSelection(tileToPoint(tile.tile), []);
       },
-      [options.buildRange, tile],
+      [buildRange, tile],
    );
 
    const extractsDeposit = (b: IBuildingDefinition) => {
@@ -188,7 +189,7 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
                            key={b}
                            content={
                               <>
-                                 {options.buildRange > 0 ? (
+                                 {buildRange > 0 ? (
                                     <div className="text-strong">
                                        {t(L.XBuildingsWillBeBuilt, { count: buildCount })}
                                     </div>
@@ -465,16 +466,16 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
                <div className="f1"></div>
                <Tippy
                   content={
-                     options.buildRange === 0
+                     buildRange === 0
                         ? t(L.BuildWithin0TileRange)
-                        : t(L.BuildWithinXTileRange, { range: options.buildRange })
+                        : t(L.BuildWithinXTileRange, { range: buildRange })
                   }
                >
                   <select
-                     value={options.buildRange}
+                     value={buildRange}
                      onChange={(e) => {
                         playClick();
-                        options.buildRange = Number.parseInt(e.target.value);
+                        setBuildRange(Number.parseInt(e.target.value));
                         notifyGameStateUpdate();
                      }}
                   >
