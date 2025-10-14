@@ -265,6 +265,7 @@ export class GameOptions {
    showNaturalWonderPopup = true;
    keepNewTradeWindowOpen = false;
    supporterPackPurchased = false;
+   buildRange = 0;
    migrationFlags = MigrationFlags.None;
 }
 

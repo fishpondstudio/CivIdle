@@ -9,7 +9,7 @@ import {
 } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
 import { getGameOptions, notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
-import { getTypeBuildings, unlockedBuildings } from "../../../shared/logic/IntraTickCache";
+import { getGrid, getTypeBuildings, unlockedBuildings } from "../../../shared/logic/IntraTickCache";
 import { getBuildingUnlockTech } from "../../../shared/logic/TechLogic";
 import type { ITileData } from "../../../shared/logic/Tile";
 import { makeBuilding } from "../../../shared/logic/Tile";
@@ -21,6 +21,8 @@ import {
    isEmpty,
    keysOf,
    numberToRoman,
+   pointToTile,
+   range,
    setContains,
    sizeOf,
    tileToPoint,
@@ -55,6 +57,7 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
       _setBuildingFilter(newFilter);
       savedFilter = newFilter;
    };
+   const [buildCount, setBuildCount] = useState<number>(1);
    const [search, setSearch] = useState<string>("");
    const constructed = getTypeBuildings(gs);
    const build = (k: Building) => {
@@ -62,11 +65,24 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
          playError();
          return;
       }
+
       tile.building = applyBuildingDefaults(makeBuilding({ type: k }), getGameOptions());
-      notifyGameStateUpdate();
+      if (!isSpecialBuilding(k) && options.buildRange > 0) {
+         getGrid(gs)
+            .getRange(tileToPoint(tile.tile), options.buildRange)
+            .forEach((p) => {
+               const xy = pointToTile(p);
+               const tileData = gs.tiles.get(xy);
+               if (tileData && !tileData.building) {
+                  tileData.building = applyBuildingDefaults(makeBuilding({ type: k }), getGameOptions());
+               }
+            });
+      }
       if (!isSpecialBuilding(k)) {
          lastBuild = k;
       }
+      notifyGameStateUpdate();
+      playClick();
    };
    const extractsDeposit = (b: IBuildingDefinition) => {
       return b.deposit && setContains(tile.deposit, b.deposit);
@@ -312,9 +328,47 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
                         </div>
                      </td>
                      <td style={{ width: 0 }}>
-                        <div className="text-link text-strong" onClick={() => build(k)}>
-                           {t(L.Build)}
-                        </div>
+                        <Tippy content={t(L.XBuildingsWillBeBuilt, { count: buildCount })}>
+                           <div
+                              className="text-link text-strong"
+                              onClick={() => build(k)}
+                              onMouseOver={() => {
+                                 if (options.buildRange <= 0) {
+                                    return;
+                                 }
+                                 if (isSpecialBuilding(k)) {
+                                    return;
+                                 }
+                                 const result: Tile[] = [];
+                                 getGrid(gs)
+                                    .getRange(tileToPoint(tile.tile), options.buildRange)
+                                    .forEach((p) => {
+                                       const xy = pointToTile(p);
+                                       if (!gs.tiles.get(xy)?.building) {
+                                          result.push(xy);
+                                       }
+                                    });
+                                 setBuildCount(result.length);
+                                 Singleton()
+                                    .sceneManager.getCurrent(WorldScene)
+                                    ?.drawSelection(tileToPoint(tile.tile), result);
+                              }}
+                              onMouseLeave={() => {
+                                 if (options.buildRange <= 0) {
+                                    return;
+                                 }
+                                 if (isSpecialBuilding(k)) {
+                                    return;
+                                 }
+                                 setBuildCount(1);
+                                 Singleton()
+                                    .sceneManager.getCurrent(WorldScene)
+                                    ?.drawSelection(tileToPoint(tile.tile), []);
+                              }}
+                           >
+                              {t(L.Build)}
+                           </div>
+                        </Tippy>
                      </td>
                   </tr>
                );
@@ -385,6 +439,30 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
                   );
                })}
                <div className="f1"></div>
+               <Tippy
+                  content={
+                     options.buildRange === 0
+                        ? t(L.BuildWithin0TileRange)
+                        : t(L.BuildWithinXTileRange, { range: options.buildRange })
+                  }
+               >
+                  <select
+                     value={options.buildRange}
+                     onChange={(e) => {
+                        playClick();
+                        options.buildRange = Number.parseInt(e.target.value);
+                        notifyGameStateUpdate();
+                     }}
+                  >
+                     <option value={0}></option>
+                     {range(1, 10).map((v) => (
+                        <option key={v} value={v}>
+                           {v}
+                        </option>
+                     ))}
+                  </select>
+               </Tippy>
+               <div style={{ width: 5 }}></div>
                <button
                   className={cls(options.constructionGridView ? "active" : null)}
                   style={{ width: 27, padding: 0 }}
