@@ -1,5 +1,5 @@
 import Tippy from "@tippyjs/react";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import type { Building, IBuildingDefinition } from "../../../shared/definitions/BuildingDefinitions";
 import {
    applyBuildingDefaults,
@@ -60,30 +60,71 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
    const [buildCount, setBuildCount] = useState<number>(1);
    const [search, setSearch] = useState<string>("");
    const constructed = getTypeBuildings(gs);
-   const build = (k: Building) => {
-      if (!checkBuildingMax(k, gs)) {
-         playError();
-         return;
-      }
+   const build = useCallback(
+      (k: Building) => {
+         if (!checkBuildingMax(k, gs)) {
+            playError();
+            return;
+         }
 
-      tile.building = applyBuildingDefaults(makeBuilding({ type: k }), getGameOptions());
-      if (!isSpecialBuilding(k) && options.buildRange > 0) {
+         tile.building = applyBuildingDefaults(makeBuilding({ type: k }), getGameOptions());
+         if (!isSpecialBuilding(k) && options.buildRange > 0) {
+            getGrid(gs)
+               .getRange(tileToPoint(tile.tile), options.buildRange)
+               .forEach((p) => {
+                  const xy = pointToTile(p);
+                  const tileData = gs.tiles.get(xy);
+                  if (tileData && !tileData.building) {
+                     tileData.building = applyBuildingDefaults(makeBuilding({ type: k }), getGameOptions());
+                  }
+               });
+         }
+         if (!isSpecialBuilding(k)) {
+            lastBuild = k;
+         }
+         notifyGameStateUpdate();
+         playClick();
+      },
+      [gs, options.buildRange, tile],
+   );
+
+   const onMouseOver = useCallback(
+      (building: Building) => {
+         if (options.buildRange <= 0) {
+            return;
+         }
+         if (isSpecialBuilding(building)) {
+            return;
+         }
+         const result: Tile[] = [];
          getGrid(gs)
             .getRange(tileToPoint(tile.tile), options.buildRange)
             .forEach((p) => {
                const xy = pointToTile(p);
-               const tileData = gs.tiles.get(xy);
-               if (tileData && !tileData.building) {
-                  tileData.building = applyBuildingDefaults(makeBuilding({ type: k }), getGameOptions());
+               if (!gs.tiles.get(xy)?.building) {
+                  result.push(xy);
                }
             });
-      }
-      if (!isSpecialBuilding(k)) {
-         lastBuild = k;
-      }
-      notifyGameStateUpdate();
-      playClick();
-   };
+         setBuildCount(result.length);
+         Singleton().sceneManager.getCurrent(WorldScene)?.drawSelection(tileToPoint(tile.tile), result);
+      },
+      [gs, options.buildRange, tile],
+   );
+
+   const onMouseLeave = useCallback(
+      (building: Building) => {
+         if (options.buildRange <= 0) {
+            return;
+         }
+         if (isSpecialBuilding(building)) {
+            return;
+         }
+         setBuildCount(1);
+         Singleton().sceneManager.getCurrent(WorldScene)?.drawSelection(tileToPoint(tile.tile), []);
+      },
+      [options.buildRange, tile],
+   );
+
    const extractsDeposit = (b: IBuildingDefinition) => {
       return b.deposit && setContains(tile.deposit, b.deposit);
    };
@@ -143,12 +184,26 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
                   })
                   .map((b) => {
                      return (
-                        <Tippy key={b} content={<BuildingInfoComponent building={b} />}>
+                        <Tippy
+                           key={b}
+                           content={
+                              <>
+                                 {options.buildRange > 0 ? (
+                                    <div className="text-strong">
+                                       {t(L.XBuildingsWillBeBuilt, { count: buildCount })}
+                                    </div>
+                                 ) : null}
+                                 <BuildingInfoComponent building={b} />
+                              </>
+                           }
+                        >
                            <div
                               className="building-grid-item"
                               onClick={() => {
                                  build(b);
                               }}
+                              onMouseOver={() => onMouseOver(b)}
+                              onMouseLeave={() => onMouseLeave(b)}
                            >
                               <div style={{ width: 50, height: 50 }} className="row cc">
                                  <BuildingSpriteComponent
@@ -332,39 +387,8 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
                            <div
                               className="text-link text-strong"
                               onClick={() => build(k)}
-                              onMouseOver={() => {
-                                 if (options.buildRange <= 0) {
-                                    return;
-                                 }
-                                 if (isSpecialBuilding(k)) {
-                                    return;
-                                 }
-                                 const result: Tile[] = [];
-                                 getGrid(gs)
-                                    .getRange(tileToPoint(tile.tile), options.buildRange)
-                                    .forEach((p) => {
-                                       const xy = pointToTile(p);
-                                       if (!gs.tiles.get(xy)?.building) {
-                                          result.push(xy);
-                                       }
-                                    });
-                                 setBuildCount(result.length);
-                                 Singleton()
-                                    .sceneManager.getCurrent(WorldScene)
-                                    ?.drawSelection(tileToPoint(tile.tile), result);
-                              }}
-                              onMouseLeave={() => {
-                                 if (options.buildRange <= 0) {
-                                    return;
-                                 }
-                                 if (isSpecialBuilding(k)) {
-                                    return;
-                                 }
-                                 setBuildCount(1);
-                                 Singleton()
-                                    .sceneManager.getCurrent(WorldScene)
-                                    ?.drawSelection(tileToPoint(tile.tile), []);
-                              }}
+                              onMouseOver={() => onMouseOver(k)}
+                              onMouseLeave={() => onMouseLeave(k)}
                            >
                               {t(L.Build)}
                            </div>
