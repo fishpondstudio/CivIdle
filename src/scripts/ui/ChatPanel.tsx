@@ -405,7 +405,15 @@ function ChatMessage({
                ) : null}
                <div className="f1"></div>
                <Tippy content={t(L.ShowTradesFrom, { name: chat.name })}>
-                  <div className="m-icon show-trade">currency_exchange</div>
+                  <div
+                     className="m-icon show-trade"
+                     onClick={() => {
+                        filterPlayerName(chat.name);
+                        showModal(<PlayerTradeModal />);
+                     }}
+                  >
+                     currency_exchange
+                  </div>
                </Tippy>
                <div>{new Date(chat.time ?? 0).toLocaleTimeString()}</div>
             </div>
