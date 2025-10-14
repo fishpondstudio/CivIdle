@@ -297,7 +297,7 @@ export function AddTradeButtonComponent({ onClick }: { onClick: () => void }): R
       >
          <div className="m-icon small">add_circle</div>
          <Tippy content={disabledReason} disabled={!disabledReason}>
-            <div className="text-strong f1">{t(L.PlayerTradeNewTrade)}</div>
+            <div className="f1">{t(L.PlayerTradeNewTrade)}</div>
          </Tippy>
       </button>
    );

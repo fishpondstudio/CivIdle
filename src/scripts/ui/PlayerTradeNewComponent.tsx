@@ -2,11 +2,9 @@ import Tippy from "@tippyjs/react";
 import classNames from "classnames";
 import { useCallback, useState } from "react";
 import { TableVirtuoso } from "react-virtuoso";
-import { NoPrice, NoStorage, type Resource } from "../../../shared/definitions/ResourceDefinitions";
+import type { Resource } from "../../../shared/definitions/ResourceDefinitions";
 import { Config } from "../../../shared/logic/Config";
 import { TRADE_CANCEL_REFUND_PERCENT } from "../../../shared/logic/Constants";
-import type { GameState } from "../../../shared/logic/GameState";
-import { unlockedResources } from "../../../shared/logic/IntraTickCache";
 import { getTradePercentage, hasResourceForPlayerTrade } from "../../../shared/logic/PlayerTradeLogic";
 import { addResourceTo, getAvailableStorage } from "../../../shared/logic/ResourceLogic";
 import { Tick } from "../../../shared/logic/TickLogic";
@@ -17,7 +15,6 @@ import {
    formatNumber,
    formatPercent,
    hasFlag,
-   keysOf,
    mapOf,
    mathSign,
    numberToRoman,
@@ -26,6 +23,7 @@ import {
 import { L, t } from "../../../shared/utilities/i18n";
 import { useGameState } from "../Global";
 import { AccountLevelNames } from "../logic/AccountLevel";
+import { PendingClaims } from "../logic/PendingClaim";
 import { client, useTrades, useUser } from "../rpc/RPCClient";
 import { getCountryName } from "../utilities/CountryCode";
 import { useForceUpdate } from "../utilities/Hook";
@@ -41,7 +39,6 @@ import { FormatNumber } from "./HelperComponents";
 import { PendingClaimModal } from "./PendingClaimModal";
 import { RenderHTML } from "./RenderHTMLComponent";
 import { AccountLevelComponent, MiscTextureComponent, PlayerFlagComponent } from "./TextureSprites";
-import { PendingClaims } from "../logic/PendingClaim";
 
 const savedResourceWantFilters: Set<Resource> = new Set();
 const savedResourceOfferFilters: Set<Resource> = new Set();
@@ -54,6 +51,11 @@ const playerTradesSortingState: { column: keyof IClientTrade | "difference"; asc
    asc: true,
 };
 
+export function filterPlayerName(playerName: string): void {
+   clearSavedFilters();
+   savedPlayerNameFilter = playerName;
+}
+
 function clearSavedFilters() {
    savedResourceWantFilters.clear();
    savedResourceOfferFilters.clear();
@@ -64,11 +66,9 @@ function clearSavedFilters() {
 }
 
 export function PlayerTradeNewComponent({
-   gameState,
    showModal,
    hideModal,
 }: {
-   gameState: GameState;
    showModal: (modal: React.ReactNode) => void;
    hideModal: () => void;
 }): React.ReactNode {
@@ -96,26 +96,34 @@ export function PlayerTradeNewComponent({
       setTradeAmountFilter(savedMaxTradeAmountFilter);
    }, []);
 
-   const resources = keysOf(unlockedResources(gameState, "Koti")).filter((r) => !NoStorage[r] && !NoPrice[r]);
+   const resourceSet = new Set<Resource>();
+   trades.forEach((t) => {
+      resourceSet.add(t.buyResource);
+      resourceSet.add(t.sellResource);
+   });
+   const resources = Array.from(resourceSet);
+   const filterCount =
+      resourceWantFilters.size +
+      resourceOfferFilters.size +
+      (playerNameFilter.length > 0 ? 1 : 0) +
+      accountRankFilters.size +
+      playerFlagFilters.size;
    return (
       <>
          <div className="row" style={{ margin: "2px 1px" }}>
             <AddTradeButtonComponent onClick={() => showModal(<AddTradeModal hideModal={hideModal} />)} />
             <button
-               className="text-strong"
+               className={cls(PendingClaims.length > 0 ? "text-strong" : null)}
                onClick={() => showModal(<PendingClaimModal hideModal={hideModal} />)}
             >
                {t(L.PlayerTradeTabPendingTrades)} ({PendingClaims.length})
             </button>
-            <button
-               className="text-strong"
-               onClick={() => showModal(<AvailableTradingResourcesModal hideModal={hideModal} />)}
-            >
+            <button onClick={() => showModal(<AvailableTradingResourcesModal hideModal={hideModal} />)}>
                {t(L.PlayerTradeTabAvailableTrades)}
             </button>
             <div className="w10"></div>
             <button
-               className="row jcc"
+               className={cls("row jcc", filterCount > 0 ? "text-strong text-blue" : null)}
                onClick={() => {
                   showModal(
                      <PlayerTradeFilterModal
@@ -127,14 +135,8 @@ export function PlayerTradeNewComponent({
                }}
             >
                <div className="m-icon small">filter_list</div>
-               <div className="text-strong f1">
-                  {t(L.PlayerTradeFilters)} (
-                  {resourceWantFilters.size +
-                     resourceOfferFilters.size +
-                     (playerNameFilter.length > 0 ? 1 : 0) +
-                     accountRankFilters.size +
-                     playerFlagFilters.size}
-                  )
+               <div className="f1">
+                  {t(L.PlayerTradeFilters)} ({filterCount})
                </div>
             </button>
             <Tippy content={t(L.PlayerTradeFilterWhatIHave)}>

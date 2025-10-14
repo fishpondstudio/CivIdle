@@ -1769,4 +1769,5 @@ export const EN = {
    BuildWithinXTileRange: "Build on empty tiles within %{range}-tile range",
    BuildWithin0TileRange: "Build on selected tile",
    XBuildingsWillBeBuilt: "%{count} building(s) will be built",
+   ShowTradesFrom: "Show Trades From %{name}",
 };

@@ -40,6 +40,17 @@
    padding: 6px 8px;
 }
 
+#chat-panel .chat-message-item .show-trade {
+   font-size: 15px;
+   margin-right: 2px;
+   cursor: pointer;
+   content-visibility: hidden;
+}
+
+#chat-panel .chat-message-item:hover .show-trade {
+   content-visibility: visible;
+}
+
 #chat-panel .chat-message-content {
    user-select: text;
    user-select: contain;

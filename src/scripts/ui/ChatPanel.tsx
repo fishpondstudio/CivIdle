@@ -40,7 +40,9 @@ import { useTypedEvent } from "../utilities/Hook";
 import { openUrl } from "../utilities/Platform";
 import { playError } from "../visuals/Sound";
 import { BottomPanel } from "./BottomPanel";
-import { showToast } from "./GlobalModal";
+import { showModal, showToast } from "./GlobalModal";
+import { PlayerTradeModal } from "./PlayerTradeModal";
+import { filterPlayerName } from "./PlayerTradeNewComponent";
 import { SelectChatChannelModal } from "./SelectChatChannelModal";
 import { ResourcesTab } from "./StatisticsBuildingBody";
 import { AccountLevelComponent, MiscTextureComponent, PlayerFlagComponent } from "./TextureSprites";
@@ -367,9 +369,17 @@ function ChatMessage({
                <div
                   style={{ color: UserColorsMapping[chat.color] }}
                   className="pointer"
-                  onClick={() =>
-                     SetChatInput.emit({ getContent: (old) => `@${chat.name} ${old}`, channel: chat.channel })
-                  }
+                  onClick={(e) => {
+                     if (e.ctrlKey) {
+                        filterPlayerName(chat.name);
+                        showModal(<PlayerTradeModal />);
+                        return;
+                     }
+                     SetChatInput.emit({
+                        getContent: (old) => `@${chat.name} ${old}`,
+                        channel: chat.channel,
+                     });
+                  }}
                >
                   {chat.name}
                </div>
@@ -394,6 +404,9 @@ function ChatMessage({
                   </Tippy>
                ) : null}
                <div className="f1"></div>
+               <Tippy content={t(L.ShowTradesFrom, { name: chat.name })}>
+                  <div className="m-icon show-trade">currency_exchange</div>
+               </Tippy>
                <div>{new Date(chat.time ?? 0).toLocaleTimeString()}</div>
             </div>
          )}
