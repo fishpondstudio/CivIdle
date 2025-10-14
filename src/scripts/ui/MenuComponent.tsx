@@ -299,8 +299,8 @@ export function MenuComponent(): React.ReactNode {
                      className="menu-popover-item"
                      onPointerDown={() => {
                         const userId = user?.userId ?? "Unknown Id";
-                        const tag = `(CivIdle/${userId}/${user?.handle ?? "Unknown Handle"})`;
-                        const subject = `Your Subject Here ${tag}`;
+                        const tag = `(${user?.handle ?? "Unknown Handle"}/${userId})`;
+                        const subject = `CivIdle In-Game Message ${tag}`;
                         const body = [
                            "Please provide as much details as possible (step-by-step reproductions, screenshots, screen recording, etc)\n",
                            "----- Keep the following tag for identification -----",
