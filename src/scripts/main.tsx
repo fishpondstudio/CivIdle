@@ -1,4 +1,5 @@
 import * as Sentry from "@sentry/browser";
+import { GameAnalytics } from "gameanalytics";
 import type { Texture } from "pixi.js";
 import { Application, Assets, BitmapFont, Spritesheet } from "pixi.js";
 import { createRoot } from "react-dom/client";
@@ -38,6 +39,7 @@ if (!import.meta.env.DEV) {
       autoSessionTracking: false,
       integrations: [Sentry.captureConsoleIntegration({ levels: ["warn", "error", "assert"] })],
    });
+   GameAnalytics.initialize("4ab316de0a0fae55eafb978c328d3a3f", "4aa92321e7f5eacfedcf68cdd1522e2e525f2ae4");
 }
 
 const routeChanged = new TypedEvent<RouteChangeEvent>();

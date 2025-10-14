@@ -47,6 +47,9 @@ dependencies:
   fflate:
     specifier: ^0.8.2
     version: 0.8.2
+  gameanalytics:
+    specifier: ^4.4.7
+    version: 4.4.7
   install:
     specifier: ^0.13.0
     version: 0.13.0
@@ -3100,6 +3103,10 @@ packages:
 
   /function-bind@1.1.2:
     resolution: {integrity: sha512-7XHNxH7qX9xG5mIwxkhumTox/MIRNcOgDrxWsMt2pAr23WHp6MrRlN7FBSFpCpr+oVO0F744iUgR82nJMfG2SA==}
+
+  /gameanalytics@4.4.7:
+    resolution: {integrity: sha512-yXC6+j/OtkjRtrA1J2E3kVUDR8bdUm25QUzee1JPSTMOajbFV5zMg4+3kFJxhTvDVpj6qkO9QvHBrQCMNWLPVQ==}
+    dev: false
 
   /gaze@1.1.3:
     resolution: {integrity: sha512-BRdNm8hbWzFzWHERTrejLqwHDfS4GibPoq5wjTPIoJHoBtKGPg3xAFfxmM+9ztbXelxcf2hwQcaz1PtmFeue8g==}

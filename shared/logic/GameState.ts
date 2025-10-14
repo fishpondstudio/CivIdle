@@ -249,7 +249,6 @@ export class GameOptions {
    greedyTransport = false;
    offlineProductionPercent = 0;
    rebirthInfo: RebirthInfo[] = [];
-   // Should be wiped
    greatPeople: Partial<Record<GreatPerson, { level: number; amount: number }>> = {};
    ageWisdom: PartialTabulate<TechAge> = {};
    greatPeopleChoicesV2: GreatPeopleChoiceV2[] = [];
@@ -265,6 +264,7 @@ export class GameOptions {
    showWonderPopup = true;
    showNaturalWonderPopup = true;
    keepNewTradeWindowOpen = false;
+   supporterPackPurchased = false;
    migrationFlags = MigrationFlags.None;
 }
 

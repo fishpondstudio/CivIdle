@@ -1,5 +1,6 @@
 import { Capacitor, registerPlugin } from "@capacitor/core";
 import { decode, encode } from "@msgpack/msgpack";
+import { GameAnalytics } from "gameanalytics";
 import type { ServerImpl } from "../../../server/src/Server";
 import type { Building } from "../../../shared/definitions/BuildingDefinitions";
 import WorldMap from "../../../shared/definitions/WorldMap.json";
@@ -52,6 +53,7 @@ import { getBuildNumber, getVersion } from "../logic/Version";
 import { showToast } from "../ui/GlobalModal";
 import { idbGet, idbSet } from "../utilities/BrowserStorage";
 import { makeObservableHook } from "../utilities/Hook";
+import { isAndroid, isIOS } from "../utilities/Platforms";
 import { playBubble, playKaching } from "../visuals/Sound";
 import { SteamClient, isSteam } from "./SteamClient";
 
@@ -329,6 +331,22 @@ export async function connectWebSocket(): Promise<IWelcomeMessage> {
             user = w.user;
             if (!options.userId) {
                options.userId = user.userId;
+            }
+            if (
+               !import.meta.env.DEV &&
+               hasFlag(user.attr, UserAttributes.DLC1) &&
+               !options.supporterPackPurchased
+            ) {
+               options.supporterPackPurchased = true;
+               let platform = "Unknown";
+               if (isSteam()) {
+                  platform = "Steam";
+               } else if (isIOS()) {
+                  platform = "iOS";
+               } else if (isAndroid()) {
+                  platform = "Android";
+               }
+               GameAnalytics.addBusinessEvent("USD", "499", "DLC", "SupporterPack", platform);
             }
             saveGame().catch(console.error);
             OnUserChanged.emit(user);
