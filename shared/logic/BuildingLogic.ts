@@ -42,7 +42,7 @@ import {
    getXyBuildings,
 } from "./IntraTickCache";
 import { LogicResult } from "./LogicResult";
-import { getGreatPersonTotalLevel } from "./RebirthLogic";
+import { getGreatPersonTotalLevel, getUpgradeCostFib } from "./RebirthLogic";
 import { getBuildingsThatProduce, getResourcesValue } from "./ResourceLogic";
 import { getAgeForTech, getBuildingUnlockTech, getCurrentAge } from "./TechLogic";
 import {
@@ -1389,5 +1389,5 @@ export function isBuildingUpgradable(building: Building): boolean {
 }
 
 export function getBranCastleRequiredWorkers(level: number): number {
-   return 1000 * 2 ** level;
+   return getUpgradeCostFib(level);
 }

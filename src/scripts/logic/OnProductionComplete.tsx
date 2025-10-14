@@ -1960,7 +1960,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
       }
       case "BranCastle": {
          let workers = 0;
-         for (const point of grid.getRange(tileToPoint(xy), 2)) {
+         for (const point of grid.getRange(tileToPoint(xy), 3)) {
             const targetXy = pointToTile(point);
             if (!Tick.current.notProducingReasons.has(targetXy)) {
                const output = getBuildingIO(targetXy, "output", IOFlags.Multiplier | IOFlags.Capacity, gs);

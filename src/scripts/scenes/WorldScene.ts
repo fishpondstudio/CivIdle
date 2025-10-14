@@ -437,13 +437,13 @@ export class WorldScene extends Scene {
             case "MausoleumAtHalicarnassus":
             case "ItaipuDam":
             case "CathedralOfBrasilia":
-            case "BranCastle":
             case "GoldenGateBridge": {
                this.highlightRange(grid, 2);
                break;
             }
             case "Elbphilharmonie":
             case "Cappadocia":
+            case "BranCastle":
             case "GoldenPavilion": {
                this.highlightRange(grid, 3);
                break;

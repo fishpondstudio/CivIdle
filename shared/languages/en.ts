@@ -1765,7 +1765,7 @@ export const EN = {
    ProducedWorkers: "Produced Workers",
    EmployedVampires: "Employed Vampires",
    RequiredTotalWorkers: "Required Total Workers",
-   BranCastleDescV2: "Produce X workers. X = workers produced within 2 tile range. If there are enough workers, will also employ X workers as vampires. Vampires don't produce or transport resources but are counted as busy workers. Bran Castle's level is determined by total workers and each level provides +1 Science Per Idle Worker and +2 Science Per Busy Worker. This wonder can only be constructed during Halloween (10.15 ~ 11.15)",
+   BranCastleDescV2: "Produce X workers. X = workers produced within 3 tile range. If there are enough workers, will also employ X workers as vampires. Vampires don't produce or transport resources but are counted as busy workers. Bran Castle's level is determined by total workers and each level provides +1 Science Per Idle Worker and +2 Science Per Busy Worker. This wonder can only be constructed during Halloween (10.15 ~ 11.15)",
    BuildWithinXTileRange: "Build on empty tiles within %{range}-tile range",
    BuildWithin0TileRange: "Build on selected tile",
    XBuildingsWillBeBuilt: "%{count} building(s) will be built",
