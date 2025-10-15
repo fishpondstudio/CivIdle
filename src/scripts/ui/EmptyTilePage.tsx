@@ -75,7 +75,7 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
                .forEach((p) => {
                   const xy = pointToTile(p);
                   const tileData = gs.tiles.get(xy);
-                  if (tileData && !tileData.building) {
+                  if (tileData?.explored && !tileData.building) {
                      tileData.building = applyBuildingDefaults(makeBuilding({ type: k }), getGameOptions());
                   }
                });
@@ -102,7 +102,8 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
             .getRange(tileToPoint(tile.tile), buildRange)
             .forEach((p) => {
                const xy = pointToTile(p);
-               if (!gs.tiles.get(xy)?.building) {
+               const tileData = gs.tiles.get(xy);
+               if (tileData?.explored && !tileData.building) {
                   result.push(xy);
                }
             });

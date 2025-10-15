@@ -294,21 +294,27 @@ export class TileVisual extends Container {
       if (this._tile.building.status !== "completed") {
          return;
       }
-      const speed = Tick.current.electrified.has(this._tile.tile) ? 180 : 90;
-      this._spinner.angle += dt * speed * getGameOptions().spinnerSpeed;
-      if (Tick.current.notProducingReasons.has(this._xy)) {
-         this._spinner.alpha -= dt;
-         this._building.alpha -= dt;
+
+      if (!this._tile.explored) {
+         this._spinner.alpha = 0;
+         this._building.alpha = 0;
       } else {
-         this._spinner.alpha += dt;
-         this._building.alpha += dt;
+         const speed = Tick.current.electrified.has(this._tile.tile) ? 180 : 90;
+         this._spinner.angle += dt * speed * getGameOptions().spinnerSpeed;
+         if (Tick.current.notProducingReasons.has(this._xy)) {
+            this._spinner.alpha -= dt;
+            this._building.alpha -= dt;
+         } else {
+            this._spinner.alpha += dt;
+            this._building.alpha += dt;
+         }
+         this._spinner.alpha = clamp(this._spinner.alpha, 0, getGameOptions().themeColors.SpinnerAlpha);
+         this._building.alpha = clamp(
+            this._building.alpha,
+            getGameOptions().themeColors.InactiveBuildingAlpha,
+            1,
+         );
       }
-      this._spinner.alpha = clamp(this._spinner.alpha, 0, getGameOptions().themeColors.SpinnerAlpha);
-      this._building.alpha = clamp(
-         this._building.alpha,
-         getGameOptions().themeColors.InactiveBuildingAlpha,
-         1,
-      );
    }
 
    public onTileDataChanged(tileData: ITileData) {
