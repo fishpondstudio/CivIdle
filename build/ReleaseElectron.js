@@ -60,61 +60,61 @@ if (build > 0) {
    cmd(`scp v1.json ubuntu@de.fishpondstudio.com:/opt/cividle-ota/`, path.join(rootPath, "out"));
 }
 
-// console.log("========== Copy to Electron ==========");
+console.log("========== Copy to Electron ==========");
 
-// fs.copySync(path.join(rootPath, "dist"), path.join(rootPath, "electron", "dist"));
+fs.copySync(path.join(rootPath, "dist"), path.join(rootPath, "electron", "dist"));
 
-// console.log("========== Build Electron ==========");
+console.log("========== Build Electron ==========");
 
-// cmd("npm run package -- --platform=win32,linux,darwin", path.join(rootPath, "electron"));
-// cmd(`rcodesign sign --p12-file local/app-sign.p12 --p12-password-file local/p12-password`
-//    + ` --code-signature-flags runtime`
-//    + ` --entitlements-xml-file local/entitlements.plist`
-//    + ` --code-signature-flags "Contents/Frameworks/cividle Helper.app":runtime`
-//    + ` --entitlements-xml-file "Contents/Frameworks/cividle Helper.app":local/entitlements.plist`
-//    + ` --code-signature-flags "Contents/Frameworks/cividle Helper (Renderer).app":runtime`
-//    + ` --entitlements-xml-file "Contents/Frameworks/cividle Helper (Renderer).app":local/entitlements.plist`
-//    + ` --code-signature-flags "Contents/Frameworks/cividle Helper (GPU).app":runtime`
-//    + ` --entitlements-xml-file "Contents/Frameworks/cividle Helper (GPU).app":local/entitlements.plist`
-//    + ` --code-signature-flags "Contents/Frameworks/cividle Helper (Plugin).app":runtime`
-//    + ` --entitlements-xml-file "Contents/Frameworks/cividle Helper (Plugin).app":local/entitlements.plist`
-//    + ` --code-signature-flags "Contents/Frameworks/Electron Framework.framework/Versions/A/Helpers/chrome_crashpad_handler":runtime`
-//    + ` --entitlements-xml-file "Contents/Frameworks/Electron Framework.framework/Versions/A/Helpers/chrome_crashpad_handler":local/entitlements.plist`
-//    + ` --code-signature-flags "Contents/Frameworks/Squirrel.framework/Versions/A/Resources/ShipIt":runtime`
-//    + ` --entitlements-xml-file "Contents/Frameworks/Squirrel.framework/Versions/A/Resources/ShipIt":local/entitlements.plist`
-//    + ` ./out/cividle-darwin-x64/cividle.app`, path.join(rootPath, "electron"));
-// cmd(`rcodesign notary-submit --api-key-file local/app-store.json --staple out/cividle-darwin-x64/cividle.app`, path.join(rootPath, "electron"));
+cmd("npm run package -- --platform=win32,linux,darwin", path.join(rootPath, "electron"));
+cmd(`rcodesign sign --p12-file local/app-sign.p12 --p12-password-file local/p12-password`
+   + ` --code-signature-flags runtime`
+   + ` --entitlements-xml-file local/entitlements.plist`
+   + ` --code-signature-flags "Contents/Frameworks/cividle Helper.app":runtime`
+   + ` --entitlements-xml-file "Contents/Frameworks/cividle Helper.app":local/entitlements.plist`
+   + ` --code-signature-flags "Contents/Frameworks/cividle Helper (Renderer).app":runtime`
+   + ` --entitlements-xml-file "Contents/Frameworks/cividle Helper (Renderer).app":local/entitlements.plist`
+   + ` --code-signature-flags "Contents/Frameworks/cividle Helper (GPU).app":runtime`
+   + ` --entitlements-xml-file "Contents/Frameworks/cividle Helper (GPU).app":local/entitlements.plist`
+   + ` --code-signature-flags "Contents/Frameworks/cividle Helper (Plugin).app":runtime`
+   + ` --entitlements-xml-file "Contents/Frameworks/cividle Helper (Plugin).app":local/entitlements.plist`
+   + ` --code-signature-flags "Contents/Frameworks/Electron Framework.framework/Versions/A/Helpers/chrome_crashpad_handler":runtime`
+   + ` --entitlements-xml-file "Contents/Frameworks/Electron Framework.framework/Versions/A/Helpers/chrome_crashpad_handler":local/entitlements.plist`
+   + ` --code-signature-flags "Contents/Frameworks/Squirrel.framework/Versions/A/Resources/ShipIt":runtime`
+   + ` --entitlements-xml-file "Contents/Frameworks/Squirrel.framework/Versions/A/Resources/ShipIt":local/entitlements.plist`
+   + ` ./out/cividle-darwin-x64/cividle.app`, path.join(rootPath, "electron"));
+cmd(`rcodesign notary-submit --api-key-file local/app-store.json --staple out/cividle-darwin-x64/cividle.app`, path.join(rootPath, "electron"));
 
-// console.log("========== Uploading to Steam ==========");
+console.log("========== Uploading to Steam ==========");
 
-// if (!process.env.STEAMWORKS_PATH) {
-//    console.error("STEAMWORKS_PATH is not defined");
-//    process.exit();
-// }
+if (!process.env.STEAMWORKS_PATH) {
+   console.error("STEAMWORKS_PATH is not defined");
+   process.exit();
+}
 
-// fs.removeSync(path.join(process.env.STEAMWORKS_PATH, "cividle-win32-x64"));
-// fs.removeSync(path.join(process.env.STEAMWORKS_PATH, "cividle-linux-x64"));
-// fs.removeSync(path.join(process.env.STEAMWORKS_PATH, "cividle-darwin-x64"));
+fs.removeSync(path.join(process.env.STEAMWORKS_PATH, "cividle-win32-x64"));
+fs.removeSync(path.join(process.env.STEAMWORKS_PATH, "cividle-linux-x64"));
+fs.removeSync(path.join(process.env.STEAMWORKS_PATH, "cividle-darwin-x64"));
 
-// fs.copySync(
-//    path.join(rootPath, "electron", "out", "cividle-win32-x64"),
-//    path.join(process.env.STEAMWORKS_PATH, "cividle-win32-x64"),
-// );
+fs.copySync(
+   path.join(rootPath, "electron", "out", "cividle-win32-x64"),
+   path.join(process.env.STEAMWORKS_PATH, "cividle-win32-x64"),
+);
 
-// fs.copySync(
-//    path.join(rootPath, "electron", "out", "cividle-linux-x64"),
-//    path.join(process.env.STEAMWORKS_PATH, "cividle-linux-x64"),
-// );
+fs.copySync(
+   path.join(rootPath, "electron", "out", "cividle-linux-x64"),
+   path.join(process.env.STEAMWORKS_PATH, "cividle-linux-x64"),
+);
 
-// fs.copySync(
-//    path.join(rootPath, "electron", "out", "cividle-darwin-x64"),
-//    path.join(process.env.STEAMWORKS_PATH, "cividle-darwin-x64"),
-// );
+fs.copySync(
+   path.join(rootPath, "electron", "out", "cividle-darwin-x64"),
+   path.join(process.env.STEAMWORKS_PATH, "cividle-darwin-x64"),
+);
 
-// cmd(
-//    `${path.join(process.env.STEAMWORKS_PATH, "builder_linux", "steamcmd.sh")} +runscript ../cividle.txt`,
-//    process.env.STEAMWORKS_PATH,
-// );
+cmd(
+   `${path.join(process.env.STEAMWORKS_PATH, "builder_linux", "steamcmd.sh")} +runscript ../cividle.txt`,
+   process.env.STEAMWORKS_PATH,
+);
 
 function cmd(command, cwd = null) {
    console.log(`>> Command: ${command} (CWD: ${cwd})`);

@@ -5,9 +5,14 @@ const config: CapacitorConfig = {
    appName: "CivIdle",
    webDir: "dist",
    loggingBehavior: "production",
-   android: { webContentsDebuggingEnabled: true },
-   server: {
-      url: "http://192.168.3.12:3000/",
+   // android: { webContentsDebuggingEnabled: true },
+   // server: {
+   //    url: "http://192.168.3.12:3000/",
+   // },
+   plugins: {
+      LiveUpdate: {
+         readyTimeout: 30_000,
+      },
    },
 };
 
