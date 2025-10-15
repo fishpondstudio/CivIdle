@@ -13,6 +13,8 @@ import { getScienceAmount, getTechUnlockCost, unlockableTechs } from "../../../s
 import { NotProducingReason, Tick } from "../../../shared/logic/TickLogic";
 import { entriesOf, formatHMS, HOUR, mapCount } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
+import { saveGame } from "../Global";
+import { isConnected } from "../rpc/RPCClient";
 import { isSteam, SteamClient } from "../rpc/SteamClient";
 import { getOwnedTradeTile } from "../scenes/PathFinder";
 import { PlayerMapScene } from "../scenes/PlayerMapScene";
@@ -152,6 +154,16 @@ export const _Todos = {
                   reason === NotProducingReason.NoPower ? [xy] : [],
                ),
             );
+      },
+   },
+   E5: {
+      name: () => t(L.YouAreOffline),
+      icon: "wifi_off",
+      className: "text-red",
+      desc: (gs, options) => t(L.YouAreOfflineHTML),
+      condition: (gs) => !isConnected(),
+      onClick: (gs, options) => {
+         saveGame().then(() => window.location.reload());
       },
    },
    W1: {

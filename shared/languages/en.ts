@@ -1770,4 +1770,6 @@ export const EN = {
    BuildWithin0TileRange: "Build on selected tile",
    XBuildingsWillBeBuilt: "%{count} building(s) will be built",
    ShowTradesFrom: "Show Trades From %{name}",
+   YouAreOffline: "You Are Offline",
+   YouAreOfflineHTML: "You are currently not connected to the server. Check your internet connect and click to reload the game. You might need to restart Steam if reloading doesn't work",
 };
