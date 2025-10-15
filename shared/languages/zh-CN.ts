@@ -1124,7 +1124,7 @@ export const ZH_CN = {
    PlayerTradeResource: "资源",
    PlayerTradeStorageRequired: "所需存储空间",
    PlayerTradeTabAvailableTrades: "可与玩家交易的资源",
-   PlayerTradeTabPendingTrades: "待处理",
+   PlayerTradeTabPendingTrades: "待认领",
    PlayerTradeTariffTooltip: "收集自贸易关税",
    PlayerTradeWant: "求购",
    PlayerTradeYouGetGross: "所得（税前）：%{res}",
