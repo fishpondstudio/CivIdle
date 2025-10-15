@@ -1369,6 +1369,7 @@ export const ZH_CN = {
    ShowFloaterText: "显示实时建筑产量指示",
    ShowFloaterTextDescHTML: "关闭将隐藏实时建筑产量指示。将其关闭可能会略微提高性能。",
    ShowNaturalWonderPopup: "发现自然奇观弹出",
+   ShowTradesFrom: "显示 %{name} 的贸易",
    ShowTransportArrow: "显示运送指示",
    ShowTransportArrowDescHTML: "关闭将隐藏运送指示。它也许能 <i>轻微地</i> 改善在低端设备上的性能表现。此项性能表现改善，需<b>重启你的游戏</b>以起效。",
    ShowTutorial: "显示教程",
