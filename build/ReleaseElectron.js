@@ -54,6 +54,7 @@ if (build > 0) {
 
    cmd("zip -r ota.zip .", path.join(rootPath, "dist"));
    fs.ensureDirSync(path.join(rootPath, "out"));
+   fs.removeSync(path.join(rootPath, "out", `ota-${build}.zip`));
    fs.moveSync(path.join(rootPath, "dist", "ota.zip"), path.join(rootPath, "out", `ota-${build}.zip`));
    fs.writeJsonSync(path.join(rootPath, "out", "v1.json"), { build: build });
    cmd(`scp ota-${build}.zip ubuntu@de.fishpondstudio.com:/opt/cividle-ota/`, path.join(rootPath, "out"));
