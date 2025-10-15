@@ -44,12 +44,12 @@ jobs:
           STEAMWORKS_PATH: /home/insraq/steamworks/tools/ContentBuilder
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-      - run: npx cap sync android
-        working-directory: /home/insraq/CivIdle
-      - run: fastlane deploy
-        working-directory: /home/insraq/CivIdle/android
-        env:
-          ANDROID_HOME: /home/insraq/android-sdk
+      # - run: npx cap sync android
+      #   working-directory: /home/insraq/CivIdle
+      # - run: fastlane deploy
+      #   working-directory: /home/insraq/CivIdle/android
+      #   env:
+      #     ANDROID_HOME: /home/insraq/android-sdk
       - run: |
           git add src/scripts/Version.json
           git add android/version.properties

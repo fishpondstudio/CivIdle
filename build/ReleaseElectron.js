@@ -50,7 +50,7 @@ if (build > 0) {
    console.log(`rimraf ${sourceMaps}`)
    rimrafSync(sourceMaps, { glob: true });
 
-   console.log("========== Upload to Cloudflare ==========");
+   console.log("========== Upload to Web Server ==========");
 
    cmd("zip -r ota.zip .", path.join(rootPath, "dist"));
    fs.ensureDirSync(path.join(rootPath, "out"));
