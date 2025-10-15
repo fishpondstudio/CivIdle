@@ -534,8 +534,12 @@ export function transportAndConsumeResources(
    });
 
    // If a building is a resourceImport type but has not transported, we consider it not working
-   if ("resourceImports" in building && !hasTransported) {
-      Tick.next.notProducingReasons.set(xy, NotProducingReason.NoActiveTransports);
+   if ("resourceImports" in building) {
+      if (used >= total) {
+         Tick.next.notProducingReasons.set(xy, NotProducingReason.StorageFull);
+      } else if (!hasTransported) {
+         Tick.next.notProducingReasons.set(xy, NotProducingReason.NoActiveTransports);
+      }
    }
 
    //////////////////////////////////////////////////
