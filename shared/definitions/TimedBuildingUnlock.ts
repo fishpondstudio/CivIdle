@@ -27,5 +27,5 @@ export const TimedBuildingUnlock: Partial<Record<Building, ITimedBuildingUnlock>
 };
 
 export function isHalloween(now: Date): boolean {
-   return (now.getMonth() === 9 && now.getDate() >= 10) || (now.getMonth() === 10 && now.getDate() <= 15);
+   return (now.getMonth() === 9 && now.getDate() >= 15) || (now.getMonth() === 10 && now.getDate() <= 15);
 }

@@ -20,6 +20,9 @@ dependencies:
   '@capacitor/preferences':
     specifier: ^5.0.0
     version: 5.0.8(@capacitor/core@5.6.0)
+  '@capawesome/capacitor-live-update':
+    specifier: ^6.8.0
+    version: 6.8.0(@capacitor/core@5.6.0)
   '@msgpack/msgpack':
     specifier: ^3.0.0-beta2
     version: 3.0.0-beta2
@@ -392,6 +395,14 @@ packages:
     resolution: {integrity: sha512-zzz8JC2NuZ+xdBP2Cfhu4uyRUMAFoxMl7l8w5ahQPzckyt7Fk/pWATXj6IcTm7DzbsKc8ryXSsYTkv9ZL3Pfmw==}
     peerDependencies:
       '@capacitor/core': ^5.0.0
+    dependencies:
+      '@capacitor/core': 5.6.0
+    dev: false
+
+  /@capawesome/capacitor-live-update@6.8.0(@capacitor/core@5.6.0):
+    resolution: {integrity: sha512-iOg5g0x03v+rkq2P5ZkMd1/6SpZ9rQfQ7LWV7CwiFHT3q9J90DSXeW5LJSKTm+s3JIVOscv5qkVln8RHRGLBfQ==}
+    peerDependencies:
+      '@capacitor/core': ^6.0.0
     dependencies:
       '@capacitor/core': 5.6.0
     dev: false

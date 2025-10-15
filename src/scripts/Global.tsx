@@ -47,7 +47,7 @@ import { UnicodeText } from "../../shared/utilities/UnicodeText";
 import { migrateSavedGame } from "./MigrateSavedGame";
 import { tickEverySecond } from "./logic/ClientUpdate";
 import { clientHeartbeat } from "./logic/Heartbeat";
-import { CLIENT_ID, getUser } from "./rpc/RPCClient";
+import { getUser } from "./rpc/RPCClient";
 import { SteamClient, isSteam } from "./rpc/SteamClient";
 import { WorldScene } from "./scenes/WorldScene";
 import { AccountRankUpModal } from "./ui/AccountRankUpModal";
@@ -262,14 +262,10 @@ if (import.meta.env.DEV) {
    // @ts-expect-error
    window.savedGame = savedGame;
    // @ts-expect-error
-   window.clearGame = async () => {
-      if (isSteam()) {
-         await SteamClient.fileDelete(SAVE_KEY);
-         return;
-      }
-      await idbDel(SAVE_KEY);
-      await idbDel(CLIENT_ID);
-      window.location.reload();
+   window.reset = async () => {
+      hardReset().then(() => {
+         window.location.reload();
+      });
    };
    // @ts-expect-error
    window.clearAllResources = () => {

@@ -22,6 +22,7 @@ import TextureTileDef from "../images/textures_tile.json";
 import TextureTile from "../images/textures_tile.png";
 import { startGame } from "./Bootstrap";
 import { BG_COLOR } from "./Colors";
+import { initLiveUpdate } from "./LiveUpdate";
 import type { RouteChangeEvent } from "./Route";
 import { Route } from "./Route";
 import { build } from "./Version.json";
@@ -30,6 +31,7 @@ import { GlobalModal, GlobalToast } from "./ui/GlobalModal";
 import { ResourcePanel } from "./ui/ResourcePanel";
 import { TopLeftPanel } from "./ui/TopLeftPanel";
 import { TradeMapPanel } from "./ui/TradeMapPanel";
+import { isAndroid, isIOS } from "./utilities/Platforms";
 import { Fonts } from "./visuals/Fonts";
 
 if (!import.meta.env.DEV) {
@@ -40,6 +42,10 @@ if (!import.meta.env.DEV) {
       integrations: [Sentry.captureConsoleIntegration({ levels: ["warn", "error", "assert"] })],
    });
    GameAnalytics.initialize("4ab316de0a0fae55eafb978c328d3a3f", "4aa92321e7f5eacfedcf68cdd1522e2e525f2ae4");
+}
+
+if (isIOS() || isAndroid()) {
+   initLiveUpdate().catch(console.error);
 }
 
 const routeChanged = new TypedEvent<RouteChangeEvent>();

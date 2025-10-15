@@ -52,7 +52,7 @@ export function FirstTimePlayerSettingsModal(): React.ReactNode {
          <div className="title-bar">
             <div className="title-bar-text">{t(L.FirstTimeTutorialWelcome)}</div>
          </div>
-         <div className="window-body">
+         <div className="window-body" style={{ maxHeight: "80vh", overflowY: "auto" }}>
             <WarningComponent icon="info">{html(t(L.FirstTimeGuideIntroHTML))}</WarningComponent>
             <div className="sep5" />
             <FirstTimePlayerSettings submitEvent={SubmitEvent} />
