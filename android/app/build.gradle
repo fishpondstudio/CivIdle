@@ -13,14 +13,14 @@ android {
     def name = "1.0";
     def code = 1;
 
-//    if (versionPropsFile.canRead()) {
-//        def versionProps = new Properties()
-//        versionProps.load(new FileInputStream(versionPropsFile))
-//        name = versionProps['VERSION_NAME']
-//        code = versionProps['VERSION_CODE'].toInteger() + 1
-//        versionProps['VERSION_CODE'] = code.toString()
-//        versionProps.store(versionPropsFile.newWriter(), null)
-//    }
+    if (versionPropsFile.canRead()) {
+        def versionProps = new Properties()
+        versionProps.load(new FileInputStream(versionPropsFile))
+        name = versionProps['VERSION_NAME']
+        code = versionProps['VERSION_CODE'].toInteger() + 1
+        versionProps['VERSION_CODE'] = code.toString()
+        versionProps.store(versionPropsFile.newWriter(), null)
+    }
 
     defaultConfig {
         applicationId "com.cividle"
