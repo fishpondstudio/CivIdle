@@ -34,16 +34,19 @@ import { L, t } from "../../../shared/utilities/i18n";
 import { FloatingModeChanged, useFloatingMode, useGameOptions, useGameState } from "../Global";
 import { useCurrentTick } from "../logic/ClientUpdate";
 import { TimeSeries } from "../logic/TimeSeries";
+import { getTradeCount } from "../rpc/RPCClient";
 import { SteamClient, isSteam } from "../rpc/SteamClient";
 import { EmptyScene } from "../scenes/EmptyScene";
+import { getOwnedTradeTile } from "../scenes/PathFinder";
 import { TechTreeScene } from "../scenes/TechTreeScene";
 import { LookAtMode, WorldScene } from "../scenes/WorldScene";
 import { useTypedEvent } from "../utilities/Hook";
 import { Singleton } from "../utilities/Singleton";
 import { playClick, playError } from "../visuals/Sound";
-import { showToast } from "./GlobalModal";
+import { showModal, showToast } from "./GlobalModal";
 import { FormatNumber } from "./HelperComponents";
 import { LoadingPage, LoadingPageStage } from "./LoadingPage";
+import { PlayerTradeModal } from "./PlayerTradeModal";
 import { TilePage } from "./TilePage";
 
 export function ResourcePanel(): React.ReactNode {
@@ -344,6 +347,25 @@ export function ResourcePanel(): React.ReactNode {
             </div>
          </div>
          <div className="separator-vertical" />
+         {getOwnedTradeTile() && Tick.current.playerTradeBuildings.size > 0 ? (
+            <>
+               <Tippy content={t(L.PlayerTrade)}>
+                  <div
+                     className="section pointer"
+                     onPointerDown={(e) => {
+                        playClick();
+                        showModal(<PlayerTradeModal />);
+                     }}
+                  >
+                     <div className="m-icon small">currency_exchange</div>
+                     <div style={{ width: "5.5rem" }}>
+                        <span>{formatNumber(getTradeCount())}</span>
+                     </div>
+                  </div>
+               </Tippy>
+               <div className="separator-vertical" />
+            </>
+         ) : null}
          <div className="section app-region-none" style={{ padding: "0 0.5rem" }}>
             <Tippy content={t(L.WarpSpeed)}>
                <select

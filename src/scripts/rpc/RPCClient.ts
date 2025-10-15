@@ -130,6 +130,10 @@ export function getTrades(): IClientTrade[] {
    });
 }
 
+export function getTradeCount(): number {
+   return trades.size;
+}
+
 export const usePlayerMap = makeObservableHook(OnPlayerMapChanged, () => playerMap);
 export const useChatMessages = makeObservableHook(OnChatMessage, () => chatMessages);
 export const useTrades = makeObservableHook(OnTradeChanged, getTrades);
