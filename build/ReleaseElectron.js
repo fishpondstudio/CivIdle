@@ -52,7 +52,7 @@ if (build > 0) {
 
    console.log("========== Upload to Cloudflare ==========");
 
-   cmd("zip -r dist.zip .", path.join(rootPath, "dist"));
+   cmd("zip -r ota.zip .", path.join(rootPath, "dist"));
    fs.ensureDirSync(path.join(rootPath, "out", "zip"));
    fs.emptyDirSync(path.join(rootPath, "out", "zip"));
    fs.moveSync(path.join(rootPath, "dist", "ota.zip"), path.join(rootPath, "out", "zip", `ota-${build}.zip`));
