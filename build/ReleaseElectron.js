@@ -53,11 +53,11 @@ if (build > 0) {
    console.log("========== Upload to Cloudflare ==========");
 
    cmd("zip -r ota.zip .", path.join(rootPath, "dist"));
-   fs.ensureDirSync(path.join(rootPath, "out", "zip"));
-   fs.emptyDirSync(path.join(rootPath, "out", "zip"));
-   fs.moveSync(path.join(rootPath, "dist", "ota.zip"), path.join(rootPath, "out", "zip", `ota-${build}.zip`));
-   fs.writeJsonSync(path.join(rootPath, "out", "zip", "v1.json"), { build: build });
-   cmd("npx wrangler pages deploy ./zip --project-name cividle-ota", path.join(rootPath, "out"));
+   fs.ensureDirSync(path.join(rootPath, "out"));
+   fs.moveSync(path.join(rootPath, "dist", "ota.zip"), path.join(rootPath, "out", `ota-${build}.zip`));
+   fs.writeJsonSync(path.join(rootPath, "out", "v1.json"), { build: build });
+   cmd(`scp ota-${build}.zip ubuntu@de.fishpondstudio.com:/opt/cividle-ota/`, path.join(rootPath, "out"));
+   cmd(`scp v1.json ubuntu@de.fishpondstudio.com:/opt/cividle-ota/`, path.join(rootPath, "out"));
 }
 
 // console.log("========== Copy to Electron ==========");
