@@ -1368,6 +1368,7 @@ export const ZH_TW = {
    ShowFloaterText: "顯示即時建築產量指示",
    ShowFloaterTextDescHTML: "關閉將隱藏即時建築產量指示。將其關閉可能會略微提高性能。",
    ShowNaturalWonderPopup: "發現自然奇觀彈出",
+   ShowTradesFrom: "顯示 %{name} 的貿易",
    ShowTransportArrow: "顯示運輸箭頭",
    ShowTransportArrowDescHTML: "關閉此選項將隱藏運輸箭頭。這可能會<i>稍微</i>改善低端設備上的效能。效能改善會在<b>重新啟動遊戲後</b>生效",
    ShowTutorial: "顯示新手教學",
