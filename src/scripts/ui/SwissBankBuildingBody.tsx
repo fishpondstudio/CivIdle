@@ -164,7 +164,7 @@ export function SwissBankBuildingBody({ gameState, xy }: IBuildingComponentProps
                      </ul>
                      <li className="row">
                         <div className="f1">{t(L.ProductionMultiplier)}</div>
-                        <div>x{multiplier}</div>
+                        <div>x{formatNumber(multiplier)}</div>
                      </li>
                      <ul className="text-small">
                         <li className="row">
@@ -183,7 +183,7 @@ export function SwissBankBuildingBody({ gameState, xy }: IBuildingComponentProps
                                        <div className="m-icon small ml5 text-desc">whatshot</div>
                                     </Tippy>
                                  ) : null}
-                                 <div className="f1 text-right">{m.output}</div>
+                                 <div className="f1 text-right">{formatNumber(m.output)}</div>
                               </li>
                            );
                         })}
