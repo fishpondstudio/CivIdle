@@ -145,7 +145,9 @@ export function HeadquarterBuildingBody({
                            return (
                               <li key={value.source} className="row">
                                  <div className="f1">{value.source}</div>
-                                 <div>{value.value}</div>
+                                 <div>
+                                    <FormatNumber value={value.value} />
+                                 </div>
                               </li>
                            );
                         })}
@@ -170,7 +172,9 @@ export function HeadquarterBuildingBody({
                            return (
                               <li key={value.source} className="row">
                                  <div className="f1">{value.source}</div>
-                                 <div>{value.value}</div>
+                                 <div>
+                                    <FormatNumber value={value.value} />
+                                 </div>
                               </li>
                            );
                         })}

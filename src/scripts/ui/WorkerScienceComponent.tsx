@@ -57,7 +57,9 @@ export function WorkerScienceComponent({ gameState, xy }: IBuildingComponentProp
                <ul>
                   <li className="row">
                      <div className="f1">{t(L.SciencePerBusyWorker)}</div>
-                     <div>{sciencePerBusyWorker}</div>
+                     <div>
+                        <FormatNumber value={sciencePerBusyWorker} />
+                     </div>
                   </li>
                   <ul className="text-small">
                      {Tick.current.globalMultipliers.sciencePerBusyWorker.map((m, i) => (
