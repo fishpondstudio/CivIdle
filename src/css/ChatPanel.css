@@ -2,7 +2,7 @@
    height: 3rem;
    position: absolute;
    bottom: 1rem;
-   left: 1rem;
+   left: calc(1rem + env(safe-area-inset-left, 0));
    display: flex;
    align-items: center;
 }
