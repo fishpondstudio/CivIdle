@@ -9,7 +9,6 @@ import ding from "../../sounds/ding.mp3";
 import error from "../../sounds/error.mp3";
 import kaching from "../../sounds/kaching.mp3";
 import levelup from "../../sounds/levelup.mp3";
-import music from "../../sounds/music/pilgrimage-ancient-mediaeval-harp.mp3";
 import success from "../../sounds/success.mp3";
 import upgrade from "../../sounds/upgrade.mp3";
 
@@ -21,7 +20,6 @@ sound.add("error", error).singleInstance = true;
 sound.add("kaching", kaching).singleInstance = true;
 sound.add("levelup", levelup).singleInstance = true;
 sound.add("bubble", bubble).singleInstance = true;
-sound.add("music", music).singleInstance = true;
 sound.add("ageup", ageup).singleInstance = true;
 sound.add("ding", ding).singleInstance = true;
 sound.add("success", success).singleInstance = true;

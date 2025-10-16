@@ -11,7 +11,7 @@
       "build": "pnpm run compile && vite build",
       "server": "cd server && npm run start",
       "electron": "cd electron && npm run start",
-      "optimize": "node ./build/OptimizePNG.js",
+      "optimize": "node ./build/OptimizeImage.mjs",
       "preview": "vite preview",
       "font": "node ./build/GenerateBitmapFont.js",
       "release": "node ./build/ReleaseElectron.js",
@@ -75,6 +75,7 @@
       "madge": "^6.1.0",
       "node-7z": "^3.0.0",
       "rimraf": "^5.0.7",
+      "sharp": "^0.34.4",
       "typescript": "5.5.4",
       "vite": "^4.5.14",
       "vite-plugin-spritesmith": "github:fishpondstudio/vite-plugin-spritesmith"
