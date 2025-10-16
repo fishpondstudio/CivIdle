@@ -125,7 +125,9 @@ export function BuildingIOTreeViewComponent({
                                                 <div className="m-icon small ml5 text-desc">whatshot</div>
                                              </Tippy>
                                           ) : null}
-                                          <div className="f1 text-right">{m[type]}</div>
+                                          <div className="f1 text-right">
+                                             <FormatNumber value={m[type]} />
+                                          </div>
                                        </li>
                                     );
                                  })}
