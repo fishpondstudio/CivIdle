@@ -67,7 +67,9 @@ export function BuildingStorageComponent({ gameState, xy }: IBuildingComponentPr
                                    // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
                                    <li key={idx} className="row">
                                       <div className="f1">{m.source}</div>
-                                      <div>{m.storage}</div>
+                                      <div>
+                                         <FormatNumber value={m.storage} />
+                                      </div>
                                    </li>
                                 );
                              })}
