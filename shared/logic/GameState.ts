@@ -214,9 +214,9 @@ export class GameOptions {
    userId: string | null = null;
    checksum: string | null = null;
    sidePanelWidth = 450;
-   sidePanelWidthMobile = 450;
+   sidePanelWidthMobile = 400;
    fontSizeScale = 1;
-   fontSizeScaleMobile = 1;
+   fontSizeScaleMobile = 0.9;
    cursor: CursorOption = "OldFashioned";
    version = SAVE_FILE_VERSION;
    showTransportArrow = true;

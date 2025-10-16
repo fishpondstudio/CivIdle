@@ -2,7 +2,13 @@ import Capacitor
 import GameKit
 
 @objc(GameCenterPlugin)
-public class GameCenterPlugin: CAPPlugin {
+public class GameCenterPlugin: CAPPlugin, CAPBridgedPlugin {
+
+    public let identifier = "GameCenterPlugin"
+    public let jsName = "GameCenter"
+    public let pluginMethods: [CAPPluginMethod] = [
+        CAPPluginMethod(name: "getAuthTicket", returnType: CAPPluginReturnPromise)
+    ]
     
     var authTicket = ""
     
