@@ -44,11 +44,11 @@
    font-size: 15px;
    margin-right: 2px;
    cursor: pointer;
-   content-visibility: hidden;
+   display: none;
 }
 
 #chat-panel .chat-message-item:hover .show-trade {
-   content-visibility: visible;
+   display: block;
 }
 
 #chat-panel .chat-message-content {
