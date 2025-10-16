@@ -9,6 +9,7 @@ const config: CapacitorConfig = {
    // server: {
    //    url: "http://192.168.3.12:3000/",
    // },
+   backgroundColor: "#000000",
    plugins: {
       LiveUpdate: {
          readyTimeout: 30_000,
