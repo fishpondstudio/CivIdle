@@ -52,7 +52,7 @@ export function BuildingIOTreeViewComponent({
                      </summary>
                      <ul>
                         <li className="row">
-                           <div className="f1">{t(L.IntrinsticRatio)}</div>
+                           <div className="f1">{t(L.IntrinsicRatio)}</div>
                            <div className="text-strong">x{formatNumber(baseValue)}</div>
                         </li>
                         {isCloneOutput ? (

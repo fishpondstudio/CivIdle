@@ -1761,7 +1761,7 @@ export const EN = {
    Zoroaster: "Zoroaster",
    Zugspitze: "Zugspitze",
    ZugspitzeDesc: "For each unlocked age, get one point that can be used to provide one extra level to any Great Person that is born from this run. (Storage multipliers are not effective due to this multiplier being dynamic)",
-   IntrinsticRatio: "Intrinstic Ratio",
+   IntrinsicRatio: "Intrinsic Ratio",
    ProducedWorkers: "Produced Workers",
    EmployedVampires: "Employed Vampires",
    RequiredTotalWorkers: "Required Total Workers",
