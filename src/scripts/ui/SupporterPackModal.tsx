@@ -1,5 +1,5 @@
 import Tippy from "@tippyjs/react";
-import GameAnalytics from "gameanalytics";
+import { GameAnalytics } from "gameanalytics";
 import { useEffect } from "react";
 import { getGameOptions } from "../../../shared/logic/GameStateLogic";
 import { L, t } from "../../../shared/utilities/i18n";
