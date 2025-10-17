@@ -744,7 +744,7 @@ export const ZH_CN = {
    InternationalSpaceStationDesc: "所有建筑获得 +5 存储乘数。该奇观可被升级，并且每一次额外升级，为所有建筑提供 +1 存储乘数",
    Internet: "互联网",
    InternetServiceProvider: "互联网服务供应商",
-   IntrinsticRatio: "每级基础值",
+   IntrinsicRatio: "每级基础值",
    InverseSelection: "反选",
    Iron: "铁",
    IronAge: "铁器时代",
