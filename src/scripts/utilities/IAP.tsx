@@ -17,9 +17,15 @@ export function initIAP() {
    }
 
    CdvPurchase.store.register({
-      id: "dlc1",
+      id: "cividle_dlc1",
       type: CdvPurchase.ProductType.NON_CONSUMABLE,
       platform: CdvPurchase.Platform.GOOGLE_PLAY,
+   });
+
+   CdvPurchase.store.register({
+      id: "cividle_dlc1",
+      type: CdvPurchase.ProductType.NON_CONSUMABLE,
+      platform: CdvPurchase.Platform.APPLE_APPSTORE,
    });
 
    CdvPurchase.store.error((error) => {
@@ -33,7 +39,7 @@ export function initIAP() {
          transaction.finish();
       })
       .finished((_transaction) => {
-         const product = CdvPurchase.store.get("dlc1");
+         const product = CdvPurchase.store.get("cividle_dlc1");
          if (product) {
             verifyProduct(product);
          }
@@ -44,7 +50,7 @@ export function initIAP() {
 }
 
 function verifyProduct(product: CdvPurchase.Product): void {
-   if (product.id === "dlc1") {
+   if (product.id === "cividle_dlc1") {
       _product = product;
       const receipt = CdvPurchase.store.findInLocalReceipts(product);
       if (receipt && receipt.state === CdvPurchase.TransactionState.FINISHED) {
@@ -60,7 +66,7 @@ function verifyProduct(product: CdvPurchase.Product): void {
 }
 
 export async function purchaseSupporterPack() {
-   const product = CdvPurchase.store.get("dlc1");
+   const product = CdvPurchase.store.get("cividle_dlc1");
    if (product) {
       console.log(product.owned);
       try {
