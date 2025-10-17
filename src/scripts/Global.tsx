@@ -54,6 +54,7 @@ import { AccountRankUpModal } from "./ui/AccountRankUpModal";
 import { BuildingCompleteModal } from "./ui/BuildingCompleteModal";
 import { showModal } from "./ui/GlobalModal";
 import { OfflineProductionModal } from "./ui/OfflineProductionModal";
+import { SupporterPackModal } from "./ui/SupporterPackModal";
 import { idbDel, idbGet, idbSet } from "./utilities/BrowserStorage";
 import { makeObservableHook } from "./utilities/Hook";
 import { isAndroid, isIOS } from "./utilities/Platforms";
@@ -319,6 +320,11 @@ if (import.meta.env.DEV) {
    // @ts-expect-error
    window.showComplete = (building: Building) => {
       showModal(<BuildingCompleteModal building={building} />);
+   };
+
+   // @ts-expect-error
+   window.showSupporterPack = () => {
+      showModal(<SupporterPackModal />);
    };
 
    // @ts-expect-error

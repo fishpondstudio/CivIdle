@@ -44,6 +44,9 @@ dependencies:
   classnames:
     specifier: ^2.3.1
     version: 2.3.2
+  cordova-plugin-purchase:
+    specifier: ^13.12.1
+    version: 13.12.1
   d3-geo:
     specifier: ^3.1.1
     version: 3.1.1
@@ -2701,6 +2704,10 @@ packages:
       split2: 3.2.2
       through2: 4.0.2
     dev: true
+
+  /cordova-plugin-purchase@13.12.1:
+    resolution: {integrity: sha512-IRYOLqv8iEn/i+JnTXZI6yITphiwO8Bn6qm0f6+5t0the9Wb/jYdk7Q6rB7l3AO21Is5AcBLptQAwLTY3tY1Rg==}
+    dev: false
 
   /core-util-is@1.0.2:
     resolution: {integrity: sha512-3lqz5YjWTYnW6dlDa5TLaTCcShfar1e40rmcJVwCBJC6mWlFuj0eCHIElmG1g5kyuJ/GD+8Wn4FFCcz4gJPfaQ==}

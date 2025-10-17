@@ -43,6 +43,7 @@ import { ChangePlayerHandleModal } from "./ChangePlayerHandleModal";
 import { ConfirmModal } from "./ConfirmModal";
 import { showModal, showToast } from "./GlobalModal";
 import { FormatNumber } from "./HelperComponents";
+import { MobileSupporterPackComponent } from "./MobileSupporterPackComponent";
 import { RenderHTML, html } from "./RenderHTMLComponent";
 import { TextWithHelp } from "./TextWithHelpComponent";
 import { AccountLevelComponent, MiscTextureComponent, PlayerFlagComponent } from "./TextureSprites";
@@ -170,6 +171,7 @@ export function PlayerHandleComponent() {
             </>
          )}
          <AccountDetails />
+         <MobileSupporterPackComponent />
       </fieldset>
    );
 }

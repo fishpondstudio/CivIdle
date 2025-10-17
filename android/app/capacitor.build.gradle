@@ -12,7 +12,7 @@ dependencies {
     implementation project(':capacitor-app')
     implementation project(':capacitor-preferences')
     implementation project(':capawesome-capacitor-live-update')
-
+    implementation "com.android.billingclient:billing:7.1.1"
 }
 
 

@@ -14,6 +14,7 @@ def capacitor_pods
   pod 'CapacitorApp', :path => '../../node_modules/.pnpm/@capacitor+app@6.0.2_@capacitor+core@6.2.1/node_modules/@capacitor/app'
   pod 'CapacitorPreferences', :path => '../../node_modules/.pnpm/@capacitor+preferences@6.0.3_@capacitor+core@6.2.1/node_modules/@capacitor/preferences'
   pod 'CapawesomeCapacitorLiveUpdate', :path => '../../node_modules/.pnpm/@capawesome+capacitor-live-update@6.8.0_@capacitor+core@6.2.1/node_modules/@capawesome/capacitor-live-update'
+  pod 'CordovaPlugins', :path => '../capacitor-cordova-ios-plugins'
 end
 
 target 'App' do

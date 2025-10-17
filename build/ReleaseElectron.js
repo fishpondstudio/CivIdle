@@ -52,13 +52,13 @@ if (build > 0) {
 
    console.log("========== Upload to Web Server ==========");
 
-   cmd("zip -r ota.zip .", path.join(rootPath, "dist"));
+   cmd("zip -r cividle.zip .", path.join(rootPath, "dist"));
    fs.ensureDirSync(path.join(rootPath, "out"));
-   fs.removeSync(path.join(rootPath, "out", `ota-${build}.zip`));
-   fs.moveSync(path.join(rootPath, "dist", "ota.zip"), path.join(rootPath, "out", `ota-${build}.zip`));
-   fs.writeJsonSync(path.join(rootPath, "out", "v1.json"), { build: build });
-   cmd(`scp ota-${build}.zip ubuntu@de.fishpondstudio.com:/opt/cividle-ota/`, path.join(rootPath, "out"));
-   cmd(`scp v1.json ubuntu@de.fishpondstudio.com:/opt/cividle-ota/`, path.join(rootPath, "out"));
+   fs.removeSync(path.join(rootPath, "out", `cividle-${build}.zip`));
+   fs.moveSync(path.join(rootPath, "dist", "cividle.zip"), path.join(rootPath, "out", `cividle-${build}.zip`));
+   fs.writeJsonSync(path.join(rootPath, "out", "cividle-v1.json"), { build: build });
+   cmd(`scp cividle-${build}.zip ubuntu@de.fishpondstudio.com:/opt/ota/`, path.join(rootPath, "out"));
+   cmd(`scp cividle-v1.json ubuntu@de.fishpondstudio.com:/opt/ota/`, path.join(rootPath, "out"));
 }
 
 console.log("========== Copy to Electron ==========");

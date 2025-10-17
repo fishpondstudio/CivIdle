@@ -1772,4 +1772,8 @@ export const EN = {
    ShowTradesFrom: "Show Trades From %{name}",
    YouAreOffline: "You Are Offline",
    YouAreOfflineHTML: "You are currently not connected to the server. Check your internet connect and click to reload the game. You might need to restart Steam if reloading doesn't work",
+   BuySupporterPack: "Buy Supporter Pack",
+   RestorePurchases: "Restore Purchases",
+   EmpireMustGrow: "Empire Must Grow!",
+   ThankYouForSupporting: "Thank you for supporting the developement of CivIdle and keeping the server running",
 };

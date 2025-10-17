@@ -59,6 +59,7 @@ import { GameTicker } from "./utilities/GameTicker";
 import { SceneManager } from "./utilities/SceneManager";
 import { Singleton, initializeSingletons, type RouteTo } from "./utilities/Singleton";
 import { playError } from "./visuals/Sound";
+import { initIAP } from "./utilities/IAP";
 
 export async function startGame(
    app: Application,
@@ -227,6 +228,7 @@ export async function startGame(
    notifyGameOptionsUpdate();
    Singleton().ticker.start();
    clientHeartbeat();
+   initIAP();
 }
 
 // This method is called after server time is synced!

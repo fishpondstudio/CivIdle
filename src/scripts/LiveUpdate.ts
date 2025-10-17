@@ -3,7 +3,7 @@ import { getBuildNumber } from "./logic/Version";
 
 export async function initLiveUpdate(): Promise<void> {
    await LiveUpdate.ready();
-   const response = await fetch("https://cividle.fishpondstudio.com/v1.json");
+   const response = await fetch("https://ota.fishpondstudio.com/cividle-v1.json");
    const json = await response.json();
    if (getBuildNumber() >= json.build) {
       console.log("Current app is shipped with latest build:", json.build);
@@ -23,7 +23,7 @@ export async function initLiveUpdate(): Promise<void> {
    } else {
       console.log("Will download the latest bundle:", build);
       await LiveUpdate.downloadBundle({
-         url: `https://cividle.fishpondstudio.com/ota-${build}.zip`,
+         url: `https://ota.fishpondstudio.com/cividle-${build}.zip`,
          bundleId: build,
       });
       await LiveUpdate.setNextBundle({ bundleId: build });
