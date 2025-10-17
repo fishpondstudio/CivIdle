@@ -67,6 +67,7 @@ export function addResourceTo(
    tiles: Tile[],
    gs: GameState,
 ): { amount: number; rollback: () => void } {
+   amount = Number.isFinite(amount) ? amount : 0;
    const rollbacks: (() => void)[] = [];
    let amountLeft = amount;
 
