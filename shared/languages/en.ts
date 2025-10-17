@@ -1775,5 +1775,5 @@ export const EN = {
    BuySupporterPack: "Buy Supporter Pack",
    RestorePurchases: "Restore Purchases",
    EmpireMustGrow: "Empire Must Grow!",
-   ThankYouForSupporting: "Thank you for supporting the developement of CivIdle and keeping the server running",
+   ThankYouForSupporting: "Thank you for supporting the development of CivIdle and keeping the server running",
 };
