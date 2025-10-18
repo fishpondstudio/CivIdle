@@ -1434,7 +1434,7 @@ export const ZH_TW = {
    StatisticsScienceFromWorkers: "工人產出科學",
    StatisticsScienceProduction: "產出科學",
    StatisticsStalledTransportation: "運輸停滯",
-   StatisticsTotalTransportation: "運輸單位數量",
+   StatisticsTotalTransportation: "運輸單位數量（箭頭）",
    StatisticsTransportation: "運輸",
    StatisticsTransportationPercentage: "運輸工人所占百分比",
    StatueOfLiberty: "自由女神像",
