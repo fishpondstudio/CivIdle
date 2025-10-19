@@ -22,7 +22,7 @@ export function SupporterPackModal(): React.ReactNode {
          platform = "Android";
       }
       if (!import.meta.env.DEV) {
-         GameAnalytics.addBusinessEvent("USD", "499", "DLC", "SupporterPack", platform);
+         GameAnalytics.addBusinessEvent("USD", 499, "DLC", "SupporterPack", platform);
       }
    }, []);
    return (
