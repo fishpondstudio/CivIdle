@@ -1,14 +1,13 @@
 import Tippy from "@tippyjs/react";
 import type React from "react";
-import { useState } from "react";
-import { NoPrice, NoStorage } from "../../../shared/definitions/ResourceDefinitions";
+import { NoPrice, NoStorage, type Resource } from "../../../shared/definitions/ResourceDefinitions";
 import { getMultipliersFor, totalMultiplierFor } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
 import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
 import { combineResources } from "../../../shared/logic/ResourceLogic";
 import { Tick } from "../../../shared/logic/TickLogic";
 import { SwissBankFlags, type ISwissBankBuildingData } from "../../../shared/logic/Tile";
-import { cls, formatNumber, hasFlag, keysOf, toggleFlag } from "../../../shared/utilities/Helper";
+import { formatNumber, hasFlag, keysOf, toggleFlag } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import { playClick } from "../visuals/Sound";
 import { BuildingColorComponent } from "./BuildingColorComponent";
@@ -19,11 +18,11 @@ import { BuildingStorageComponent } from "./BuildingStorageComponent";
 import { BuildingValueComponent } from "./BuildingValueComponent";
 import { BuildingWikipediaComponent } from "./BuildingWikipediaComponent";
 import { FormatNumber } from "./HelperComponents";
+import { SelectComp, type ISelectItem } from "./SelectComp";
 import { UpgradeableWonderComponent } from "./UpgradeableWonderComponent";
 
 export function SwissBankBuildingBody({ gameState, xy }: IBuildingComponentProps): React.ReactNode {
    const building = gameState.tiles.get(xy)?.building as ISwissBankBuildingData;
-   const [show, setShow] = useState(false);
    if (!building) {
       return null;
    }
@@ -38,66 +37,37 @@ export function SwissBankBuildingBody({ gameState, xy }: IBuildingComponentProps
    const electrification = Tick.current.electrified.get(xy) ?? 0;
    const effectiveLevel =
       building.level + electrification + levelBoost.reduce((acc, lb) => acc + lb.value, 0);
+   const selectData: (ISelectItem<Resource | null> | null)[] = keysOf(availableResources)
+      .sort((a, b) => Config.Resource[a].name().localeCompare(Config.Resource[b].name()))
+      .map((res) => {
+         if (NoPrice[res] || NoStorage[res] || res === "Koti") {
+            return null;
+         }
+         return {
+            label: (
+               <div className="f1 row g5">
+                  <div />
+                  <div className="f1">{Config.Resource[res].name()}</div>
+                  <div className="text-desc">{formatNumber(availableResources[res] ?? 0)}</div>
+                  <div />
+               </div>
+            ),
+            value: res,
+         };
+      });
+   selectData.unshift({ label: " ", value: null });
    return (
       <div className="window-body">
          <UpgradeableWonderComponent gameState={gameState} xy={xy} />
          <fieldset>
-            <div className="inset-deep white pointer" onClick={() => setShow(!show)}>
-               <div className="row">
-                  <div className="f1" style={{ marginLeft: 5 }}>
-                     {building.resource && Config.Resource[building.resource].name()}
-                  </div>
-                  <div className="text-desc">
-                     {building.resource && formatNumber(availableResources[building.resource] ?? 0)}
-                  </div>
-                  <div className="m-icon">arrow_drop_down</div>
-               </div>
-            </div>
-            {show && (
-               <div className="mt5">
-                  <button
-                     className={cls("row g5 w100 pointer", !building.resource ? "text-strong" : "")}
-                     onClick={() => {
-                        building.resource = null;
-                        setShow(false);
-                        notifyGameStateUpdate();
-                     }}
-                  >
-                     <div className="m-icon small">
-                        {building.resource === null ? "check_box" : "check_box_outline_blank"}
-                     </div>
-                     <div className="f1" />
-                  </button>
-                  {keysOf(availableResources)
-                     .sort((a, b) => Config.Resource[a].name().localeCompare(Config.Resource[b].name()))
-                     .map((res) => {
-                        if (NoPrice[res] || NoStorage[res] || res === "Koti") {
-                           return null;
-                        }
-                        return (
-                           <button
-                              key={res}
-                              className={cls(
-                                 "row g5 w100 pointer",
-                                 building.resource === res ? "text-strong" : "",
-                              )}
-                              onClick={() => {
-                                 building.resource = res;
-                                 setShow(false);
-                                 notifyGameStateUpdate();
-                              }}
-                           >
-                              <div className="m-icon small">
-                                 {building.resource === res ? "check_box" : "check_box_outline_blank"}
-                              </div>
-                              <div>{Config.Resource[res].name()}</div>
-                              <div className="f1" />
-                              <div className="text-desc">{formatNumber(availableResources[res] ?? 0)}</div>
-                           </button>
-                        );
-                     })}
-               </div>
-            )}
+            <SelectComp
+               data={selectData}
+               value={building.resource}
+               onChange={(value) => {
+                  building.resource = value;
+                  notifyGameStateUpdate();
+               }}
+            />
             <div className="separator" />
             <ul className="tree-view">
                <li>

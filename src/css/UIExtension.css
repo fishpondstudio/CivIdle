@@ -726,3 +726,18 @@ button {
 .app-region-none {
    app-region: none;
 }
+
+.select-comp-item,
+.select-comp-value {
+   height: 24px;
+   display: flex;
+   align-items: center;
+}
+
+.select-comp-item:hover {
+   background: #ccc;
+}
+
+.select-comp-item.selected {
+   font-weight: bold;
+}
