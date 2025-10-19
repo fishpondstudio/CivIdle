@@ -11,6 +11,6 @@ class ViewController: CAPBridgeViewController {
     }
 
     override var preferredScreenEdgesDeferringSystemGestures: UIRectEdge {
-        return [.all]
+        return .all
     }
 }
