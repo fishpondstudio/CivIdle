@@ -3,8 +3,9 @@ import classNames from "classnames";
 import { IOFlags, getMultipliersFor, totalMultiplierFor } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
 import type { GameState } from "../../../shared/logic/GameState";
-import { getBuildingIO } from "../../../shared/logic/IntraTickCache";
+import { getBuildingIO, getCloneLabScienceOutput } from "../../../shared/logic/IntraTickCache";
 import { NotProducingReason, Tick } from "../../../shared/logic/TickLogic";
+import type { ICloneBuildingData } from "../../../shared/logic/Tile";
 import { formatNumber, type Tile } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import warning from "../../images/warning.png";
@@ -37,7 +38,14 @@ export function BuildingIOTreeViewComponent({
                Tick.current.notProducingReasons.get(xy) === NotProducingReason.NotEnoughResources &&
                resourceInStorage < v;
             const electrificationLevel = Tick.current.electrified.get(xy) ?? 0;
-            const baseValue = buildingType ? (Config.Building[buildingType][type][k] ?? 0) : 0;
+            let baseValue = buildingType ? (Config.Building[buildingType][type][k] ?? 0) : 0;
+            if (buildingType === "CloneFactory") {
+               baseValue = type === "input" ? 1 : 2;
+            }
+            if (building && "inputResource" in building && buildingType === "CloneLab") {
+               const clone = building as ICloneBuildingData;
+               baseValue = type === "input" ? 1 : getCloneLabScienceOutput(clone);
+            }
             return (
                <li key={k}>
                   <details>
@@ -51,10 +59,6 @@ export function BuildingIOTreeViewComponent({
                         </div>
                      </summary>
                      <ul>
-                        <li className="row">
-                           <div className="f1">{t(L.IntrinsicRatio)}</div>
-                           <div className="text-strong">x{formatNumber(baseValue)}</div>
-                        </li>
                         {isCloneOutput ? (
                            <li className="row text-strong">
                               <TextWithHelp content={t(L.ResourceCloneTooltip)}>
@@ -66,15 +70,17 @@ export function BuildingIOTreeViewComponent({
                            </li>
                         ) : null}
                         <li className="row">
+                           <div className="f1">{t(L.IntrinsicRatio)}</div>
+                           <div className="text-strong">x{formatNumber(baseValue)}</div>
+                        </li>
+                        <li className="row">
                            <div className="f1">
                               {type === "input" ? t(L.BaseConsumption) : t(L.BaseProduction)}
                            </div>
                            <div className="text-strong">
                               <FormatNumber
                                  value={
-                                    isCloneOutput
-                                       ? v / (1 + totalMultiplier)
-                                       : v / totalMultiplier / baseValue
+                                    v / (isCloneOutput ? 1 + totalMultiplier : totalMultiplier) / baseValue
                                  }
                               />
                            </div>

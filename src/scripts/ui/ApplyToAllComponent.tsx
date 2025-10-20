@@ -5,7 +5,7 @@ import type { GameState } from "../../../shared/logic/GameState";
 import { notifyGameOptionsUpdate } from "../../../shared/logic/GameStateLogic";
 import { getGrid } from "../../../shared/logic/IntraTickCache";
 import type { IBuildingData } from "../../../shared/logic/Tile";
-import { hasFlag, pointToTile, sizeOf, tileToPoint, type Tile } from "../../../shared/utilities/Helper";
+import { hasFlag, pointToTile, tileToPoint, type Tile } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import { useGameOptions } from "../Global";
 import { WorldScene } from "../scenes/WorldScene";
@@ -37,7 +37,6 @@ export function ApplyToAllComponent<T extends IBuildingData>({
    const def = Config.Building[building.type];
    const options = useGameOptions();
    const property = getOptions(building);
-   console.assert(sizeOf(property) === 1);
    return (
       <div className="text-small row">
          <Tippy content={t(L.ApplyToAllBuilding, { building: def.name() })}>
