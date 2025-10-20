@@ -138,7 +138,7 @@ export function getBuildingIO(
                   resources[s.inputResource] = 2;
                   break;
                case "CloneLab":
-                  resources.Science = ((Config.ResourcePrice[s.inputResource] ?? 0) * 2) / SCIENCE_VALUE;
+                  resources.Science = getCloneLabScienceOutput(s);
                   break;
             }
          }
@@ -400,4 +400,8 @@ export function getGlobalMultipliers(type: MultiplierType): MultiplierWithSource
    });
    _cache.globalMultipliers.set(type, result);
    return result;
+}
+
+export function getCloneLabScienceOutput(cloneLab: ICloneBuildingData): number {
+   return ((Config.ResourcePrice[cloneLab.inputResource] ?? 0) * 2) / SCIENCE_VALUE;
 }
