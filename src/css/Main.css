@@ -140,7 +140,7 @@ body {
    user-select: text;
    user-select: contain;
    cursor: text;
-   overflow-wrap: break-word;
+   overflow-wrap: break-all;
    font-family: "Roboto Mono", monospace;
    font-size: 1.3rem;
 }
