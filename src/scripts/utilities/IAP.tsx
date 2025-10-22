@@ -1,6 +1,7 @@
 import "cordova-plugin-purchase";
+import { getGameOptions } from "../../../shared/logic/GameStateLogic";
 import { UserAttributes } from "../../../shared/utilities/Database";
-import { setFlag } from "../../../shared/utilities/Helper";
+import { clearFlag, setFlag } from "../../../shared/utilities/Helper";
 import { client, getUser } from "../rpc/RPCClient";
 import { showModal, showToast } from "../ui/GlobalModal";
 import { SupporterPackModal } from "../ui/SupporterPackModal";
@@ -11,19 +12,21 @@ export function getProduct() {
    return _product;
 }
 
+const ProductId = "cividle_dlc1";
+
 export function initIAP() {
    if (!CdvPurchase || !CdvPurchase.store) {
       return;
    }
 
    CdvPurchase.store.register({
-      id: "cividle_dlc1",
+      id: ProductId,
       type: CdvPurchase.ProductType.NON_CONSUMABLE,
       platform: CdvPurchase.Platform.GOOGLE_PLAY,
    });
 
    CdvPurchase.store.register({
-      id: "cividle_dlc1",
+      id: ProductId,
       type: CdvPurchase.ProductType.NON_CONSUMABLE,
       platform: CdvPurchase.Platform.APPLE_APPSTORE,
    });
@@ -34,39 +37,51 @@ export function initIAP() {
 
    CdvPurchase.store
       .when()
-      .productUpdated(verifyProduct)
+      .productUpdated((product) => {
+         if (product.id === ProductId) {
+            _product = product;
+         }
+      })
       .approved((transaction) => {
+         _product = CdvPurchase.store.get(ProductId);
+         setPurchased(true);
+         client.verifyReceipt(transaction.transactionId);
+         showPurchaseModal();
          transaction.finish();
       })
-      .finished((_transaction) => {
-         const product = CdvPurchase.store.get("cividle_dlc1");
-         if (product) {
-            verifyProduct(product);
+      .receiptUpdated((receipt) => {
+         _product = CdvPurchase.store.get(ProductId);
+         if (CdvPurchase.store.owned(ProductId)) {
+            setPurchased(true);
+            for (const t of receipt.transactions) {
+               client.verifyReceipt(t.transactionId);
+            }
+         } else {
+            setPurchased(false);
+            client.verifyReceipt();
          }
-         showModal(<SupporterPackModal />);
       });
 
    CdvPurchase.store.initialize();
 }
 
-function verifyProduct(product: CdvPurchase.Product): void {
-   if (product.id === "cividle_dlc1") {
-      _product = product;
-      const receipt = CdvPurchase.store.findInLocalReceipts(product);
-      if (receipt && receipt.state === CdvPurchase.TransactionState.FINISHED) {
-         client.verifyReceipt(receipt.transactionId);
-         const user = getUser();
-         if (user) {
-            user.attr = setFlag(user.attr, UserAttributes.DLC1);
-         }
-      } else {
-         client.verifyReceipt();
-      }
+function setPurchased(purchased: boolean): void {
+   getGameOptions().supporterPackPurchased = purchased;
+   const user = getUser();
+   if (user) {
+      user.attr = purchased
+         ? setFlag(user.attr, UserAttributes.DLC1)
+         : clearFlag(user.attr, UserAttributes.DLC1);
    }
 }
 
+function showPurchaseModal(): void {
+   if (getGameOptions().supporterPackPurchased) return;
+   showModal(<SupporterPackModal />);
+}
+
 export async function purchaseSupporterPack() {
-   const product = CdvPurchase.store.get("cividle_dlc1");
+   const product = CdvPurchase.store.get(ProductId);
    if (product) {
       console.log(product.owned);
       try {
