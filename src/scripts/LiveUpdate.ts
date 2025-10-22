@@ -3,7 +3,7 @@ import { getBuildNumber } from "./logic/Version";
 
 export async function initLiveUpdate(): Promise<void> {
    await LiveUpdate.ready();
-   const response = await fetch("https://ota.fishpondstudio.com/cividle-v1.json");
+   const response = await fetch(`https://ota.fishpondstudio.com/cividle-v1.json?t=${Date.now()}`);
    const json = await response.json();
    if (getBuildNumber() >= json.build) {
       console.log("Current app is shipped with latest build:", json.build);
