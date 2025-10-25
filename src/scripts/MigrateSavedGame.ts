@@ -1,7 +1,7 @@
 import type { GreatPerson } from "../../shared/definitions/GreatPersonDefinitions";
 import { findSpecialBuilding } from "../../shared/logic/BuildingLogic";
 import { Config } from "../../shared/logic/Config";
-import { MigrationFlags, ThemeColorNames, type SavedGame } from "../../shared/logic/GameState";
+import { MigrationFlags, RankUpFlags, ThemeColorNames, type SavedGame } from "../../shared/logic/GameState";
 import { getGrid } from "../../shared/logic/IntraTickCache";
 import { getTotalGreatPeopleUpgradeCost } from "../../shared/logic/RebirthLogic";
 import { ShortcutActions } from "../../shared/logic/Shortcut";
@@ -221,5 +221,9 @@ export function migrateSavedGame(save: SavedGame) {
             save.options.greatPeople.Zenobia = { amount: result, level: 0 };
          }
       }
+   }
+
+   if (isNullOrUndefined(save.options.rankUpFlags)) {
+      save.options.rankUpFlags = RankUpFlags.Unset;
    }
 }

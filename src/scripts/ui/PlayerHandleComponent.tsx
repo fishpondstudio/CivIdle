@@ -48,6 +48,7 @@ import { RenderHTML, html } from "./RenderHTMLComponent";
 import { TextWithHelp } from "./TextWithHelpComponent";
 import { AccountLevelComponent, MiscTextureComponent, PlayerFlagComponent } from "./TextureSprites";
 import { WarningComponent } from "./WarningComponent";
+import { RankUpFlags } from "../../../shared/logic/GameState";
 
 let _playTime = 0;
 
@@ -426,6 +427,7 @@ function AccountDetails(): React.ReactNode {
                                     }
                                  });
                                  options.ageWisdom = {};
+                                 options.rankUpFlags = RankUpFlags.Upgraded;
                                  await saveGame();
                                  window.location.reload();
                               } catch (error) {

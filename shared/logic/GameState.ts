@@ -262,10 +262,17 @@ export class GameOptions {
    showTutorial = true;
    disabledTodos = new Set<string>();
    showWonderPopup = true;
+   rankUpFlags = RankUpFlags.NotUpgraded;
    showNaturalWonderPopup = true;
    keepNewTradeWindowOpen = false;
    supporterPackPurchased = false;
    migrationFlags = MigrationFlags.None;
+}
+
+export enum RankUpFlags {
+   Unset = 0,
+   NotUpgraded = 1 << 0,
+   Upgraded = 1 << 1,
 }
 
 export enum MigrationFlags {
