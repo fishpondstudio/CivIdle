@@ -7,9 +7,10 @@ import {
    getSeaTileCost,
    wrapX,
 } from "../../../shared/logic/PlayerTradeLogic";
+import { RpcError, removeTrailingUndefs, rpcClient } from "../../../shared/thirdparty/TRPCClient";
 import { MAP_MAX_X, MAP_MAX_Y, TileType, type IClientMapEntry } from "../../../shared/utilities/Database";
 import { OnPlayerMapChanged, getPlayerMap, getUser } from "../rpc/RPCClient";
-import { dijkstra } from "../utilities/dijkstra";
+import type { PathFinderWorker } from "./PathFinderWorker";
 
 export const GRID1: number[] = [];
 export const GRID2: number[] = [];
@@ -51,10 +52,53 @@ function getTotalCost(path: IPointData[], grid: number[]): number {
    }, 0);
 }
 
-export function findPath(start: IPointData, end: IPointData, freeTiles: Set<number>): IPointData[] {
-   const result1 = dijkstra(GRID1, MAP_MAX_X, start, end, freeTiles);
+const pathFinderWorker = new Worker(new URL("./PathFinderWorker.ts", import.meta.url), { type: "module" });
+
+let requestId = 0;
+const rpcRequests: Record<number, { resolve: (v: any) => void; reject: (e: any) => void; time: number }> = {};
+
+export const worker = rpcClient<PathFinderWorker>({
+   request: (method: string, params: any[]) => {
+      return new Promise((resolve, reject) => {
+         const id = ++requestId;
+         const request = {
+            jsonrpc: "2.0",
+            id: id,
+            method,
+            params: removeTrailingUndefs(params),
+         };
+         pathFinderWorker.postMessage(request);
+         rpcRequests[id] = { resolve, reject, time: Date.now() };
+      });
+   },
+});
+
+pathFinderWorker.onmessage = (event) => {
+   const response = event.data;
+   if (!response || !response.id) {
+      throw new Error(`Invalid RPC Response received: ${response}`);
+   }
+   if (!rpcRequests[response.id]) {
+      throw new Error(`RPC Request ${response.id} is already handled`);
+   }
+   const { resolve, reject } = rpcRequests[response.id];
+   delete rpcRequests[response.id];
+   const { result, error } = response;
+   if (error) {
+      const { code, message, data } = error;
+      reject(new RpcError(message, code, data));
+   }
+   resolve(result);
+};
+
+export async function findPathAsync(
+   start: IPointData,
+   end: IPointData,
+   freeTiles: Set<number>,
+): Promise<IPointData[]> {
+   const result1 = await worker.dijkstra(GRID1, MAP_MAX_X, start, end, freeTiles);
    const cost1 = getTotalCost(result1, GRID1);
-   const result2 = dijkstra(
+   const result2 = await worker.dijkstra(
       GRID2,
       MAP_MAX_X,
       { x: wrapX(start.x), y: start.y },
@@ -67,6 +111,23 @@ export function findPath(start: IPointData, end: IPointData, freeTiles: Set<numb
    }
    return result1;
 }
+
+// export function findPath(start: IPointData, end: IPointData, freeTiles: Set<number>): IPointData[] {
+//    const result1 = dijkstra(GRID1, MAP_MAX_X, start, end, freeTiles);
+//    const cost1 = getTotalCost(result1, GRID1);
+//    const result2 = dijkstra(
+//       GRID2,
+//       MAP_MAX_X,
+//       { x: wrapX(start.x), y: start.y },
+//       { x: wrapX(end.x), y: end.y },
+//       freeTiles,
+//    );
+//    const cost2 = getTotalCost(result2, GRID2);
+//    if (cost2 < cost1) {
+//       return result2.map((p) => ({ x: wrapX(p.x), y: p.y }));
+//    }
+//    return result1;
+// }
 
 export function findUserOwnedTile(userId: string): string | null {
    const map = getPlayerMap();

@@ -183,6 +183,20 @@ body .tippy-box {
    animation: breathing 1s infinite;
 }
 
+@keyframes spinning {
+   0% {
+      transform: rotate(0deg);
+   }
+   100% {
+      transform: rotate(360deg);
+   }
+}
+
+.spinning {
+   animation: spinning 1s infinite linear;
+   transform-origin: center;
+}
+
 .todo {
    background-image: url("../images/Notepad.png");
    width: 40px;

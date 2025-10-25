@@ -35,7 +35,7 @@ import { Scene, destroyAllChildren, type ISceneContext } from "../utilities/Scen
 import { Singleton } from "../utilities/Singleton";
 import { Easing } from "../utilities/pixi-actions/Easing";
 import { CustomAction } from "../utilities/pixi-actions/actions/CustomAction";
-import { findPath, getOwnedTradeTile } from "./PathFinder";
+import { findPathAsync, getOwnedTradeTile } from "./PathFinder";
 import { PlayerTile } from "./PlayerTile";
 
 let viewportCenter: IPointData | null = null;
@@ -350,8 +350,9 @@ export class PlayerMapScene extends Scene {
                freeTiles.add(point.y * MAP_MAX_X + point.x);
             }
          });
-         const path = findPath(xyToPoint(myXy), { x: tileX, y: tileY }, freeTiles);
-         this.drawPath(path);
+         findPathAsync(xyToPoint(myXy), { x: tileX, y: tileY }, freeTiles).then((path) =>
+            this.drawPath(path),
+         );
       } else {
          this.clearPath();
       }
