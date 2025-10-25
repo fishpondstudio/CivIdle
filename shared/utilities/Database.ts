@@ -159,6 +159,7 @@ export enum UserAttributes {
    DisableRename = 1 << 8,
    CheckTradeCancel = 1 << 9,
    Suspicious = 1 << 10,
+   Desynced = 1 << 11,
 }
 
 export enum UserColors {
@@ -307,6 +308,7 @@ export const DB: {
    slowList: Record<string, ISlowModeConfig>;
    greatPeopleRecovery: Record<string, number>;
    votedBoosts: Record<number, IVotedBoost>;
+   buildHash: Record<string, string>;
 } = {
    chat: [],
    users: {},
@@ -318,6 +320,7 @@ export const DB: {
    slowList: {},
    greatPeopleRecovery: {},
    votedBoosts: {},
+   buildHash: {},
 };
 
 export const MoveTileCooldown = 12 * HOUR;

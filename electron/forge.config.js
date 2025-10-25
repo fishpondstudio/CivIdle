@@ -13,6 +13,7 @@ module.exports = {
          /package-lock\.json/,
          /tsconfig\.json/,
          /clean\.js/,
+         /minify\.mjs/,
       ],
       asar: {
          unpack: "*.{node,dll,dylib,so,lib}",

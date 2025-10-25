@@ -242,6 +242,7 @@ export async function connectWebSocket(): Promise<IWelcomeMessage> {
          `version=${getVersion()}`,
          `build=${getBuildNumber()}`,
          `gameId=${getGameState().id}`,
+         `hash=${await SteamClient.getChecksum()}`,
          `checksum=${checksum.expected}${checksum.actual}`,
       ];
       ws = new WebSocket(`${getServerAddress()}/?${params.join("&")}`);

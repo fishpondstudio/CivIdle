@@ -11,10 +11,12 @@ const BACKUP_FREQ = 1000 * 60 * 10;
 export class IPCService {
    private _client: SteamClient;
    private _mainWindow: BrowserWindow;
+   private _checksum: string;
 
-   constructor(steam: SteamClient, mainWindow: BrowserWindow) {
+   constructor(steam: SteamClient, mainWindow: BrowserWindow, checksum: string) {
       this._client = steam;
       this._mainWindow = mainWindow;
+      this._checksum = checksum;
    }
 
    public async fileWrite(name: string, content: string): Promise<void> {
@@ -70,6 +72,10 @@ export class IPCService {
 
    public getSteamId(): string {
       return this._client.localplayer.getSteamId().steamId64.toString();
+   }
+
+   public getChecksum(): string {
+      return this._checksum;
    }
 
    public async getAuthSessionTicket(): Promise<string> {
