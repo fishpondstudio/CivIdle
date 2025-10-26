@@ -33,7 +33,6 @@ import { Transports } from "../../shared/logic/Transports";
 import { AccountLevel, UserAttributes } from "../../shared/utilities/Database";
 import {
    base64ToBytes,
-   bytesToBase64,
    clamp,
    clearFlag,
    forEach,
@@ -55,7 +54,7 @@ import { BuildingCompleteModal } from "./ui/BuildingCompleteModal";
 import { showModal } from "./ui/GlobalModal";
 import { OfflineProductionModal } from "./ui/OfflineProductionModal";
 import { SupporterPackModal } from "./ui/SupporterPackModal";
-import { idbDel, idbGet, idbSet } from "./utilities/BrowserStorage";
+import { idbClear, idbGet, idbSet } from "./utilities/BrowserStorage";
 import { makeObservableHook } from "./utilities/Hook";
 import { isAndroid, isIOS } from "./utilities/Platforms";
 import { Singleton } from "./utilities/Singleton";
@@ -116,7 +115,8 @@ export function syncFontVariantNumeric(options: GameOptions): void {
    );
 }
 
-const SAVE_KEY = "CivIdle";
+const SaveKey = "CivIdle";
+const SaveKeyNew = "CivIdleNew";
 
 interface ISaveGameTask {
    resolve: () => void;
@@ -147,13 +147,11 @@ export async function doSaveGame(task: ISaveGameTask): Promise<void> {
    try {
       if (isSteam()) {
          const serialized = serializeSave(savedGame);
-         await SteamClient.fileWriteCompressed(SAVE_KEY, serialized);
+         await SteamClient.fileWriteCompressed(SaveKey, serialized);
       } else if (isAndroid() || isIOS()) {
-         const compressed = await compressSave(savedGame);
-         await Preferences.set({ key: SAVE_KEY, value: bytesToBase64(compressed) });
+         await Preferences.set({ key: SaveKeyNew, value: serializeSave(savedGame) });
       } else {
-         const compressed = await compressSave(savedGame);
-         await idbSet(SAVE_KEY, compressed);
+         await idbSet(SaveKeyNew, serializeSave(savedGame));
       }
       task.resolve();
    } catch (error) {
@@ -171,11 +169,11 @@ export async function doSaveGame(task: ISaveGameTask): Promise<void> {
 
 export async function hardReset(): Promise<void> {
    if (isSteam()) {
-      await SteamClient.fileDelete(SAVE_KEY);
+      await SteamClient.fileDelete(SaveKey);
    } else if (isAndroid() || isIOS()) {
       await Preferences.clear();
    } else {
-      await idbDel(SAVE_KEY);
+      await idbClear();
    }
 }
 
@@ -191,21 +189,29 @@ export async function loadGame(): Promise<SavedGame | null> {
    try {
       console.time("Loading Save file");
       if (isSteam()) {
-         const bytes = await SteamClient.fileReadBytes(SAVE_KEY);
+         const bytes = await SteamClient.fileReadBytes(SaveKey);
          return await decompressSave(new Uint8Array(bytes));
       }
       if (isAndroid() || isIOS()) {
-         const string = (await Preferences.get({ key: SAVE_KEY })).value;
-         if (!string) {
-            return null;
+         const string = (await Preferences.get({ key: SaveKeyNew })).value;
+         if (string) {
+            return deserializeSave(string);
          }
-         return await decompressSave(base64ToBytes(string));
+         const oldSaveString = (await Preferences.get({ key: SaveKey })).value;
+         if (oldSaveString) {
+            return await decompressSave(base64ToBytes(oldSaveString));
+         }
+         return null;
       }
-      const compressed = await idbGet<Uint8Array>(SAVE_KEY);
-      if (!compressed) {
-         throw new Error("Save does not exists");
+      const string = await idbGet<string>(SaveKeyNew);
+      if (string) {
+         return deserializeSave(string);
       }
-      return await decompressSave(compressed);
+      const oldSaveBytes = await idbGet<Uint8Array>(SaveKey);
+      if (oldSaveBytes) {
+         return await decompressSave(oldSaveBytes);
+      }
+      return null;
    } catch (e) {
       console.warn("loadGame failed", e);
       return null;
