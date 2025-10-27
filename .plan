@@ -1,5 +1,10 @@
+Todo:
 - Adjust map size
-- Check Level Boost vs Caravan: https://discord.com/channels/631551126377857044/1264496513946615869/1431253589048955031
 - Add send "Cartographer" to explore all maps
 - Swiss Bank in Trade Tiles
 - Warehouse/Caravan Storage Upgrade Wonder
+
+Done:
+- Improve the performance of path finding for player trades
+- Swiss Bank can now move Koti from Tradeable Resources into Swiss Bank (i.e. choose Koti as the input resources for Swiss Bank)
+- Level Boost now affects Warehouse/Caravansary's import capacity

@@ -18,6 +18,7 @@ import {
    getMarketBaseSellAmount,
    getMarketBuyAmount,
    getResourceImportCapacity,
+   totalLevelBoostFor,
    totalMultiplierFor,
 } from "./BuildingLogic";
 import { Config } from "./Config";
@@ -108,7 +109,11 @@ export function getBuildingIO(
          }
       }
       if ("resourceImports" in b && type === "input") {
-         const totalCapacity = getResourceImportCapacity(b, totalMultiplierFor(xy, "output", 1, false, gs));
+         const totalCapacity = getResourceImportCapacity(
+            b,
+            totalLevelBoostFor(xy),
+            totalMultiplierFor(xy, "output", 1, false, gs),
+         );
          const rib = b as IResourceImportBuildingData;
          const totalSetCapacity = reduceOf(rib.resourceImports, (prev, k, v) => prev + v.perCycle, 0);
          const scaleFactor = clamp(totalSetCapacity > 0 ? totalCapacity / totalSetCapacity : 0, 0, 1);

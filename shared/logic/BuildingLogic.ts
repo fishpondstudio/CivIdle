@@ -271,11 +271,11 @@ export function getStorageFor(xy: Tile, gs: GameState): IStorageResult {
          break;
       }
       case "Caravansary": {
-         base = getResourceImportCapacity(building, 1) * STORAGE_TO_PRODUCTION;
+         base = getResourceImportCapacity(building, 0, 1) * STORAGE_TO_PRODUCTION;
          break;
       }
       case "Warehouse": {
-         base = getResourceImportCapacity(building, 1) * STORAGE_TO_PRODUCTION * 10;
+         base = getResourceImportCapacity(building, 0, 1) * STORAGE_TO_PRODUCTION * 10;
          break;
       }
       case "Petra": {
@@ -764,8 +764,12 @@ export function isWorldOrNaturalWonder(building?: Building): boolean {
    return isNaturalWonder(building) || isWorldWonder(building);
 }
 
-export function getResourceImportCapacity(building: IHaveTypeAndLevel, multiplier: number): number {
-   return multiplier * building.level * 10;
+export function getResourceImportCapacity(
+   building: IHaveTypeAndLevel,
+   levelBoost: number,
+   multiplier: number,
+): number {
+   return multiplier * (building.level + levelBoost) * 10;
 }
 
 export function getResourceImportIdleCapacity(xy: Tile, gs: GameState): number {
@@ -775,7 +779,11 @@ export function getResourceImportIdleCapacity(xy: Tile, gs: GameState): number {
    }
    const warehouse = building as IResourceImportBuildingData;
    return (
-      getResourceImportCapacity(warehouse, totalMultiplierFor(xy, "output", 1, false, gs)) -
+      getResourceImportCapacity(
+         warehouse,
+         totalLevelBoostFor(xy),
+         totalMultiplierFor(xy, "output", 1, false, gs),
+      ) -
       reduceOf(
          warehouse.resourceImports,
          (prev, k, v) => {
@@ -1297,6 +1305,14 @@ export function isFestival(building: Building, gs: GameState): boolean {
       return true;
    }
    return city === gs.city;
+}
+
+export function totalLevelBoostFor(xy: Tile): number {
+   let result = 0;
+   Tick.current.levelBoost.get(xy)?.forEach((lb) => {
+      result += lb.value;
+   });
+   return result;
 }
 
 export function getCathedralOfBrasiliaResources(
