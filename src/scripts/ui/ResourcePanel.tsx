@@ -14,11 +14,13 @@ import { getHappinessIcon } from "../../../shared/logic/HappinessLogic";
 import {
    getProgressTowardsNextGreatPerson,
    getRebirthGreatPeopleCount,
+   getValueRequiredForGreatPeople,
 } from "../../../shared/logic/RebirthLogic";
 import { Tick } from "../../../shared/logic/TickLogic";
 import {
    Rounding,
    clamp,
+   formatHMS,
    formatNumber,
    formatPercent,
    mathSign,
@@ -61,6 +63,13 @@ export function ResourcePanel(): React.ReactNode {
       scienceDelta =
          TimeSeries.science[TimeSeries.science.length - 1] -
          TimeSeries.science[TimeSeries.science.length - 2];
+   }
+
+   let timeToNextGreatPerson = 0;
+   if (evDelta > 0) {
+      timeToNextGreatPerson =
+         (getValueRequiredForGreatPeople(getRebirthGreatPeopleCount() + 1) - Tick.current.totalValue) /
+         evDelta;
    }
 
    const [favoriteActive, setFavoriteActive] = useState(false);
@@ -329,16 +338,28 @@ export function ResourcePanel(): React.ReactNode {
          <div className="separator-vertical" />
          <div className="section">
             <div className="m-icon small">person_celebrate</div>
-            <div style={{ width: "8rem" }}>
-               <Tippy content={t(L.ExtraGreatPeopleAtReborn)}>
+            <Tippy
+               maxWidth="50vw"
+               content={
+                  <>
+                     <div>
+                        {t(L.ExtraGreatPeopleAtReborn)}: {getRebirthGreatPeopleCount()}
+                     </div>
+                     <div>
+                        {t(L.ProgressTowardsNextGreatPerson)}:{" "}
+                        {formatPercent(clamp(getProgressTowardsNextGreatPerson(), 0, 1), 0, Rounding.Floor)} (
+                        {formatHMS(timeToNextGreatPerson * 1000)})
+                     </div>
+                  </>
+               }
+            >
+               <div style={{ width: "8rem" }}>
                   <span>{getRebirthGreatPeopleCount()}</span>
-               </Tippy>
-               <Tippy content={t(L.ProgressTowardsNextGreatPerson)}>
                   <span className="text-desc" style={{ fontWeight: "normal", marginLeft: 5 }}>
                      ({formatPercent(clamp(getProgressTowardsNextGreatPerson(), 0, 1), 0, Rounding.Floor)})
                   </span>
-               </Tippy>
-            </div>
+               </div>
+            </Tippy>
          </div>
          <div className="separator-vertical" />
          {getOwnedTradeTile() && Tick.current.playerTradeBuildings.size > 0 ? (
