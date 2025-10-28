@@ -5,6 +5,7 @@ Todo:
 - Warehouse/Caravan Storage Upgrade Wonder
 
 Done:
+- Watch Resources in Statistics Office
 - Improve the performance of path finding for player trades
 - Swiss Bank can now move Koti from Tradeable Resources into Swiss Bank (i.e. choose Koti as the input resources for Swiss Bank)
 - Level Boost now affects Warehouse/Caravansary's import capacity

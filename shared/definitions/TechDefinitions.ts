@@ -445,6 +445,7 @@ export class TechDefinitions {
       column: 12,
       requireTech: ["Optics"],
       unlockBuilding: ["CannonWorkshop"],
+      additionalUpgrades: () => [t(L.SendCartographerTechDesc)],
    };
 
    PrintingPress: ITechDefinition = {

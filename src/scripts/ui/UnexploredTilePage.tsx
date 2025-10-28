@@ -1,20 +1,22 @@
 import Tippy from "@tippyjs/react";
 import { exploreTile, getExplorerRange } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
+import type { GameState } from "../../../shared/logic/GameState";
+import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
 import { getGrid } from "../../../shared/logic/IntraTickCache";
+import { getScienceAmount, getTechUnlockCost, tryDeductScience } from "../../../shared/logic/TechLogic";
 import { Tick } from "../../../shared/logic/TickLogic";
-import { pointToTile, safeAdd, tileToPoint } from "../../../shared/utilities/Helper";
+import { formatNumber, pointToTile, safeAdd, tileToPoint } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import Discovery from "../../images/Discovery.jpg";
 import { WorldScene } from "../scenes/WorldScene";
 import { useShortcut } from "../utilities/Hook";
 import { Singleton } from "../utilities/Singleton";
-import { playError, playSuccess } from "../visuals/Sound";
+import { playAgeUp, playError, playSuccess } from "../visuals/Sound";
 import type { IBuildingComponentProps } from "./BuildingPage";
 import { MenuComponent } from "./MenuComponent";
-import { RenderHTML } from "./RenderHTMLComponent";
+import { html } from "./RenderHTMLComponent";
 import { TitleBarComponent } from "./TitleBarComponent";
-import { WarningComponent } from "./WarningComponent";
 
 export function UnexploredTilePage({ xy, gameState }: IBuildingComponentProps): React.ReactNode {
    const statistics = Tick.current.specialBuildings.get("Statistics");
@@ -51,24 +53,62 @@ export function UnexploredTilePage({ xy, gameState }: IBuildingComponentProps): 
    };
    useShortcut("SendAnExplorer", explore, [xy]);
 
+   const cartographerCost = getTechUnlockCost("Exploration");
    return (
       <div className="window">
          <TitleBarComponent>{t(L.UnexploredTile)}</TitleBarComponent>
          <MenuComponent />
          <div className="window-body">
-            <WarningComponent icon="info" className="mb10">
-               <RenderHTML
-                  className="text-small"
-                  html={t(L.ExploreThisTileHTML, {
+            <fieldset>
+               <legend>{t(L.Explorer)}</legend>
+               {html(
+                  t(L.ExploreThisTileHTML, {
                      name: Config.Building.Statistics.name(),
                      count: explorers,
-                  })}
-               />
-            </WarningComponent>
-            <button className="w100 jcc row mb10" disabled={explorers <= 0} onClick={explore}>
-               <div className="m-icon small">explore</div>
-               <div className="f1 text-strong">{t(L.ExploreThisTile)}</div>
-            </button>
+                  }),
+               )}
+               <div className="sep10" />
+               <button className="w100 jcc row" disabled={explorers <= 0} onClick={explore}>
+                  <div className="m-icon small">explore</div>
+                  <div className="f1 text-strong">{t(L.ExploreThisTile)}</div>
+               </button>
+            </fieldset>
+            <fieldset>
+               <legend>{t(L.Cartographer)}</legend>
+               <div>
+                  {html(
+                     t(L.SendCartographerDescHTML, {
+                        science: formatNumber(cartographerCost),
+                     }),
+                  )}
+               </div>
+               <div className="sep10" />
+               <button
+                  className="w100 jcc row"
+                  disabled={!canSendCartographer(gameState)}
+                  onClick={() => {
+                     if (!canSendCartographer(gameState)) {
+                        playError();
+                        return;
+                     }
+                     if (!tryDeductScience(cartographerCost, gameState)) {
+                        playError();
+                        return;
+                     }
+                     playAgeUp();
+                     gameState.tiles.forEach((tile, xy) => {
+                        if (!tile.explored) {
+                           exploreTile(xy, gameState);
+                           Singleton().sceneManager.enqueue(WorldScene, (s) => s.revealTile(xy));
+                        }
+                     });
+                     notifyGameStateUpdate();
+                  }}
+               >
+                  <div className="m-icon small">explore</div>
+                  <div className="f1 text-strong">{t(L.SendACartographer)}</div>
+               </button>
+            </fieldset>
             <Tippy content="Der Wanderer über dem Nebelmeer (Wanderer above the Sea of Fog), Caspar David Friedrich, 1818">
                <div className="inset-shallow">
                   <img src={Discovery} className="w100" style={{ display: "block" }} />
@@ -76,5 +116,11 @@ export function UnexploredTilePage({ xy, gameState }: IBuildingComponentProps): 
             </Tippy>
          </div>
       </div>
+   );
+}
+
+function canSendCartographer(gameState: GameState) {
+   return (
+      gameState.unlockedTech.Exploration && getScienceAmount(gameState) >= getTechUnlockCost("Exploration")
    );
 }
