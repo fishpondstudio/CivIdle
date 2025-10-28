@@ -178,6 +178,10 @@ export class TechDefinitions {
       column: 3,
       requireTech: ["HorsebackRiding"],
       unlockBuilding: ["PaperMaker"],
+      additionalUpgrades: () => [
+         t(L.SeaTradeUpgrade, { tariff: formatPercent(SEA_TILE_COST_1) }),
+         t(L.ExplorerRangeUpgradeDesc, { range: 2 }),
+      ],
    };
 
    Iron: ITechDefinition = {
@@ -223,6 +227,8 @@ export class TechDefinitions {
       column: 5,
       requireTech: ["RoadAndWheel"],
       unlockBuilding: ["IronForge", "Marbleworks", "ChoghaZanbil"],
+
+      additionalUpgrades: () => [t(L.ExplorerRangeUpgradeDesc, { range: 3 })],
    };
 
    Music: ITechDefinition = {
@@ -313,6 +319,7 @@ export class TechDefinitions {
       column: 8,
       requireTech: ["Politics"],
       unlockBuilding: ["Apartment"],
+      additionalUpgrades: () => [t(L.ExplorerRangeUpgradeDesc, { range: 4 })],
    };
 
    Autocracy: ITechDefinition = {
@@ -337,10 +344,6 @@ export class TechDefinitions {
       buildingMultiplier: {
          Library: { output: 1 },
       },
-      additionalUpgrades: () => [
-         t(L.SeaTradeUpgrade, { tariff: formatPercent(SEA_TILE_COST_1) }),
-         t(L.ExplorerRangeUpgradeDesc, { range: 2 }),
-      ],
    };
 
    Physics: ITechDefinition = {
@@ -460,6 +463,7 @@ export class TechDefinitions {
       column: 12,
       requireTech: ["University", "Chemistry"],
       unlockBuilding: ["Museum"],
+      additionalUpgrades: () => [t(L.XBaseStorageForWarehouseAndCaravansary, { percent: formatPercent(1) })],
    };
 
    Firearm: ITechDefinition = {
@@ -519,7 +523,6 @@ export class TechDefinitions {
       globalMultiplier: {
          storage: 1,
       },
-      additionalUpgrades: () => [t(L.ExplorerRangeUpgradeDesc, { range: 3 })],
    };
 
    Capitalism: ITechDefinition = {
@@ -553,6 +556,7 @@ export class TechDefinitions {
       globalMultiplier: {
          transportCapacity: 1,
       },
+      additionalUpgrades: () => [t(L.XBaseStorageForWarehouseAndCaravansary, { percent: formatPercent(1) })],
    };
 
    Drilling: ITechDefinition = {
@@ -650,7 +654,6 @@ export class TechDefinitions {
       column: 18,
       requireTech: ["Combustion", "Electrolysis"],
       unlockBuilding: ["BiplaneFactory"],
-      additionalUpgrades: () => [t(L.ExplorerRangeUpgradeDesc, { range: 4 })],
    };
 
    Synthetics: ITechDefinition = {
@@ -687,6 +690,7 @@ export class TechDefinitions {
       column: 19,
       requireTech: ["Aviation"],
       unlockBuilding: ["CarFactory", "SagradaFamilia"],
+      additionalUpgrades: () => [t(L.XBaseStorageForWarehouseAndCaravansary, { percent: formatPercent(1) })],
    };
 
    Ballistics: ITechDefinition = {
@@ -827,6 +831,7 @@ export class TechDefinitions {
       column: 23,
       requireTech: ["Television", "MonetarySystem"],
       unlockBuilding: ["OpticalFiberPlant"],
+      additionalUpgrades: () => [t(L.XBaseStorageForWarehouseAndCaravansary, { percent: formatPercent(1) })],
    };
 
    Nanotechnology: ITechDefinition = {
@@ -884,6 +889,7 @@ export class TechDefinitions {
       column: 26,
       requireTech: ["Genetics"],
       unlockBuilding: ["RobocarFactory", "SpaceCenter"],
+      additionalUpgrades: () => [t(L.XBaseStorageForWarehouseAndCaravansary, { percent: formatPercent(1) })],
    };
    ArtificialIntelligence: ITechDefinition = {
       name: () => t(L.ArtificialIntelligence),

@@ -9,3 +9,5 @@ Done:
 - Swiss Bank can now move Koti from Tradeable Resources into Swiss Bank (i.e. choose Koti as the input resources for Swiss Bank)
 - Level Boost now affects Warehouse/Caravansary's import capacity
 - Exploration technology (Renaissance) will unlock cartographer - sending a cartographer cost Science and will explore all tiles on the map
+- Explorer Range upgrade has been moved into earlier techs: 2 Range (Geography -> Writing), 3 Range (Steam Engine -> Construction), 4 Range (Aviation -> Democracy)
+- The following tech will now provide +100% Base Storage for Warehouse and Caravansary: Enlightenment, Railway, Assembly, Globalization, Robotics

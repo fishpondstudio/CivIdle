@@ -1786,4 +1786,5 @@ export const EN = {
    SendACartographer: "Send a Cartographer",
    SendCartographerTechDesc: "Cartographer: Sending a cartographer to an unexplored tile will reveal all tiles on the map",
    Resource: "Resource",
+   XBaseStorageForWarehouseAndCaravansary: "+%{percent} Base Storage for Warehouse and Caravansary",
 };

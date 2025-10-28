@@ -271,11 +271,18 @@ export function getStorageFor(xy: Tile, gs: GameState): IStorageResult {
          break;
       }
       case "Caravansary": {
-         base = getResourceImportCapacity(building, 0, 1) * STORAGE_TO_PRODUCTION;
+         base =
+            getResourceImportCapacity(building, 0, 1) *
+            getResourceImportBuildingBaseStorageMultiplier(gs) *
+            STORAGE_TO_PRODUCTION;
          break;
       }
       case "Warehouse": {
-         base = getResourceImportCapacity(building, 0, 1) * STORAGE_TO_PRODUCTION * 10;
+         base =
+            getResourceImportCapacity(building, 0, 1) *
+            getResourceImportBuildingBaseStorageMultiplier(gs) *
+            STORAGE_TO_PRODUCTION *
+            10;
          break;
       }
       case "Petra": {
@@ -1219,13 +1226,13 @@ export function generateScienceFromFaith(xy: number, buildingType: Building, gs:
 }
 
 export function getExplorerRange(gs: GameState): number {
-   if (gs.unlockedTech.Aviation) {
+   if (gs.unlockedTech.Democracy) {
       return 4;
    }
-   if (gs.unlockedTech.SteamEngine) {
+   if (gs.unlockedTech.Construction) {
       return 3;
    }
-   if (gs.unlockedTech.Geography) {
+   if (gs.unlockedTech.Writing) {
       return 2;
    }
    return 1;
@@ -1410,4 +1417,24 @@ export function isBuildingUpgradable(building: Building): boolean {
 
 export function getBranCastleRequiredWorkers(level: number): number {
    return getUpgradeCostFib(level);
+}
+
+export function getResourceImportBuildingBaseStorageMultiplier(gs: GameState): number {
+   let result = 1;
+   if (gs.unlockedTech.Robotics) {
+      ++result;
+   }
+   if (gs.unlockedTech.Globalization) {
+      ++result;
+   }
+   if (gs.unlockedTech.Assembly) {
+      ++result;
+   }
+   if (gs.unlockedTech.Railway) {
+      ++result;
+   }
+   if (gs.unlockedTech.Enlightenment) {
+      ++result;
+   }
+   return result;
 }
