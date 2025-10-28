@@ -310,7 +310,7 @@ export const _Todos = {
                <table className="date-table" style={{ minWidth: 250 }}>
                   <thead>
                      <tr>
-                        <th className="text-left">{t(L.ResourceAmount)}</th>
+                        <th className="text-left">{t(L.Resource)}</th>
                         <th className="text-right">{t(L.StatisticsResourcesDeficit)}</th>
                         <th className="text-right">{t(L.StatisticsResourcesRunOut)}</th>
                      </tr>
