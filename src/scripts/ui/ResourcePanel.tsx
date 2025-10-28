@@ -57,6 +57,7 @@ export function ResourcePanel(): React.ReactNode {
    const isFloating = useFloatingMode();
    const ref = useRef<HTMLDivElement>(null);
    const { workersAfterHappiness, workersBusy } = getScienceFromWorkers(gs);
+   const currentWarp = Tick.current.specialBuildings.get("Headquarter")?.building.resources.Warp ?? 0;
 
    let evDelta = 0;
    let scienceDelta = 0;
@@ -386,8 +387,23 @@ export function ResourcePanel(): React.ReactNode {
                <div className="separator-vertical" />
             </>
          ) : null}
-         <div className="section app-region-none" style={{ padding: "0 0.5rem" }}>
-            <Tippy content={t(L.WarpSpeed)}>
+         <Tippy
+            content={
+               <>
+                  <div className="row g20">
+                     <div className="f1">{t(L.WarpSpeed)}</div>
+                     <div>{gs.speedUp}x</div>
+                  </div>
+                  {gs.speedUp > 1 ? (
+                     <div className="row g20">
+                        <div className="f1">{t(L.EstimatedTimeLeft)}</div>
+                        <div>{formatHMS((1000 * currentWarp) / (gs.speedUp - 1))}</div>
+                     </div>
+                  ) : null}
+               </>
+            }
+         >
+            <div className="section app-region-none" style={{ padding: "0 0.5rem" }}>
                <select
                   value={gs.speedUp}
                   onChange={(e) => {
@@ -402,8 +418,8 @@ export function ResourcePanel(): React.ReactNode {
                      </option>
                   ))}
                </select>
-            </Tippy>
-         </div>
+            </div>
+         </Tippy>
       </div>
    );
 }
