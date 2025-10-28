@@ -1340,7 +1340,7 @@ export const ZH_TW = {
    Semiconductor: "半導體",
    SemiconductorFab: "半導體製造廠",
    SendACartographer: "派遣一名製圖師",
-   SendCartographerDescHTML: "通過<b>勘探</b>科技（文藝復興）來解鎖製圖師。派遣製圖師需花費 <b>%{science} 科學</b>，並且製圖師將探索地圖上的<b>所有地塊</b>",
+   SendCartographerDescHTML: "通過<b>探索</b>科技（文藝復興）來解鎖製圖師。派遣製圖師需花費 <b>%{science} 科學</b>，並且製圖師將探索地圖上的<b>所有地塊</b>",
    SendCartographerTechDesc: "製圖師：派遣製圖師到一個未探索的地塊時將探索地圖上的所有地塊",
    SendExplorer: "派出探險家",
    SergeiKorolev: "謝爾蓋·科羅廖夫",
