@@ -494,7 +494,7 @@ export const _Todos = {
                <table className="date-table">
                   <thead>
                      <tr>
-                        <th className="text-left"></th>
+                        <th className="text-left">{t(L.Resource)}</th>
                         <th className="text-right">{t(L.Produced)}</th>
                         <th className="text-right">{t(L.Consumed)}</th>
                         <th className="text-right">{t(L.Surplus)}</th>

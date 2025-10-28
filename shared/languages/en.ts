@@ -1785,4 +1785,5 @@ export const EN = {
    SendCartographerDescHTML: "A cartographer will explore <b>all tiles</b> on the map. Sending a cartographer costs <b>%{science} Science</b> and is unlocked by <b>Exploration</b> technology (Renaissance)",
    SendACartographer: "Send a Cartographer",
    SendCartographerTechDesc: "Cartographer: Sending a cartographer to an unexplored tile will reveal all tiles on the map",
+   Resource: "Resource",
 };
