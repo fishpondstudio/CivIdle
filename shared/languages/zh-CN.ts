@@ -454,7 +454,7 @@ export const ZH_CN = {
    DefaultStockpileMax: "默认最大库存",
    DefaultStockpileSettings: "默认库存输入系数",
    DefaultWonderConstructionPriority: "默认奇观建造优先级",
-   DeficitResources: "赤字资源",
+   DeficitResources: "赤字资源提示",
    Democracy: "民主",
    DemolishAllBuilding: "批量拆除 %{building} （周围 %{tile} 地块内）",
    DemolishAllBuildingConfirmContent: "再次确认是否拆除 %{count} 座 %{name}？",
