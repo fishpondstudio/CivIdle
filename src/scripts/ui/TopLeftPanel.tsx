@@ -83,12 +83,13 @@ function TodoComponent(): React.ReactNode {
             const value = t.value?.(gs, options);
             return (
                <Tippy
+                  maxWidth={t.maxWidth}
                   placement="bottom"
                   key={id}
                   content={
                      <>
                         <div className="text-strong">{t.name()}</div>
-                        {html(t.desc(gs, options))}
+                        {t.desc(gs, options)}
                      </>
                   }
                >

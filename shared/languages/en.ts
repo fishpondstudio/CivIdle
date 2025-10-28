@@ -1776,4 +1776,9 @@ export const EN = {
    RestorePurchases: "Restore Purchases",
    EmpireMustGrow: "Empire Must Grow!",
    ThankYouForSupporting: "Thank you for supporting the development of CivIdle and keeping the server running",
+   ToggleWatchForThisResourceWatchedResourcesAreDisplayedInADedicatedTopLeftTab: "Toggle watch for this resource: watched resources are displayed in a dedicated top left tab",
+   WatchedResources: "Watched Resources",
+   Produced: "Produced",
+   Consumed: "Consumed",
+   Surplus: "Surplus",
 };

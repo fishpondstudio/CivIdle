@@ -1567,6 +1567,8 @@ function randomFrom(array: string[]): string {
 }
 
 export function randomName(maxLength: number): string {
-   const name = randomFrom(adjectives) + randomFrom(animals);
+   const firstPart = randomFrom(adjectives.filter((a) => a.length <= maxLength * 0.66));
+   const secondPart = randomFrom(animals.filter((a) => a.length <= maxLength - firstPart.length));
+   const name = firstPart + secondPart;
    return name.substring(0, maxLength);
 }

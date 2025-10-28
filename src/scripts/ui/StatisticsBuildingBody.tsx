@@ -53,12 +53,16 @@ import { WorkerScienceComponent } from "./WorkerScienceComponent";
 type Tab = "resources" | "buildings" | "empire";
 let savedStatisticsTab: Tab = "empire";
 
-export function StatisticsBuildingBody({ gameState, xy }: IBuildingComponentProps): React.ReactNode {
+export function StatisticsBuildingBody({
+   gameState,
+   xy,
+   tab,
+}: IBuildingComponentProps & { tab?: Tab }): React.ReactNode {
    const building = gameState.tiles.get(xy)?.building as IBuildingData;
    if (building == null) {
       return null;
    }
-   const [currentTab, setCurrentTab] = useState<Tab>(savedStatisticsTab);
+   const [currentTab, setCurrentTab] = useState<Tab>(tab ?? savedStatisticsTab);
    let content: React.ReactNode = null;
    let extraClass = "";
    if (currentTab === "resources") {
@@ -555,6 +559,7 @@ export function ResourcesTab({ gameState }: IBuildingComponentProps): React.Reac
                { name: t(L.ResourceAmount), right: true, sortable: true },
                { name: t(L.StatisticsResourcesDeficit), right: true, sortable: true },
                { name: t(L.StatisticsResourcesRunOut), right: true, sortable: true },
+               { name: "", sortable: false },
             ]}
             sortingState={resourceTabSortingState}
             data={keysOf(unlockedResourcesList).filter((v) => {
@@ -647,6 +652,30 @@ export function ResourcesTab({ gameState }: IBuildingComponentProps): React.Reac
                      </td>
                      <td className={classNames({ "text-red": deficit < 0, "text-right text-small": true })}>
                         {formatHMS(timeLeft)}
+                     </td>
+                     <td>
+                        <Tippy
+                           content={t(
+                              L.ToggleWatchForThisResourceWatchedResourcesAreDisplayedInADedicatedTopLeftTab,
+                           )}
+                        >
+                           <div
+                              className={cls(
+                                 "m-icon pointer",
+                                 gameState.watchedResources.has(res) ? "text-green" : "text-desc",
+                              )}
+                              onClick={() => {
+                                 if (gameState.watchedResources.has(res)) {
+                                    gameState.watchedResources.delete(res);
+                                 } else {
+                                    gameState.watchedResources.add(res);
+                                 }
+                                 notifyGameStateUpdate(gameState);
+                              }}
+                           >
+                              {gameState.watchedResources.has(res) ? "toggle_on" : "toggle_off"}
+                           </div>
+                        </Tippy>
                      </td>
                   </tr>
                );

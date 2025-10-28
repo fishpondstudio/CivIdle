@@ -35,9 +35,23 @@ export const AccountLevelComponent = React.forwardRef<
 
 export const BuildingSpriteComponent = React.forwardRef<
    HTMLDivElement,
-   { building: Building; scale?: number; width?: number; height?: number; style?: React.CSSProperties }
+   {
+      building: Building;
+      override?: string;
+      scale?: number;
+      width?: number;
+      height?: number;
+      style?: React.CSSProperties;
+   }
 >((props, ref) => {
-   return <TextureSprite {...props} url={building} name={`Building_${props.building}`} ref={ref} />;
+   return (
+      <TextureSprite
+         {...props}
+         url={building}
+         name={props.override ?? `Building_${props.building}`}
+         ref={ref}
+      />
+   );
 });
 
 export const DepositTextureComponent = React.forwardRef<

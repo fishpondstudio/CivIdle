@@ -1,17 +1,27 @@
 import { GreatPersonType } from "../../../shared/definitions/GreatPersonDefinitions";
 import { PatchNotes } from "../../../shared/definitions/PatchNotes";
+import type { Resource } from "../../../shared/definitions/ResourceDefinitions";
 import { Config } from "../../../shared/logic/Config";
 import { STEAM_PATCH_NOTES_URL } from "../../../shared/logic/Constants";
 import type { GameOptions, GameState } from "../../../shared/logic/GameState";
 import { notifyGameOptionsUpdate } from "../../../shared/logic/GameStateLogic";
+import { getResourceIO } from "../../../shared/logic/IntraTickCache";
 import { getVotingTime } from "../../../shared/logic/PlayerTradeLogic";
 import {
    getGreatPersonUpgradeCost,
    getMissingGreatPeopleForWisdom,
 } from "../../../shared/logic/RebirthLogic";
+import { getResourceAmount } from "../../../shared/logic/ResourceLogic";
 import { getScienceAmount, getTechUnlockCost, unlockableTechs } from "../../../shared/logic/TechLogic";
 import { NotProducingReason, Tick } from "../../../shared/logic/TickLogic";
-import { entriesOf, formatHMS, HOUR, mapCount } from "../../../shared/utilities/Helper";
+import {
+   entriesOf,
+   formatHMS,
+   formatNumber,
+   HOUR,
+   mapCount,
+   tileToPoint,
+} from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import { saveGame } from "../Global";
 import { isConnected } from "../rpc/RPCClient";
@@ -25,6 +35,7 @@ import { hideModal, showModal, showToast } from "../ui/GlobalModal";
 import { ManageAgeWisdomModal } from "../ui/ManageAgeWisdomModal";
 import { ManagePermanentGreatPersonModal } from "../ui/ManagePermanentGreatPersonModal";
 import { PendingClaimModal } from "../ui/PendingClaimModal";
+import { html } from "../ui/RenderHTMLComponent";
 import { TilePage } from "../ui/TilePage";
 import { openUrl } from "../utilities/Platform";
 import { Singleton } from "../utilities/Singleton";
@@ -36,10 +47,11 @@ export interface ITodo {
    name: () => string;
    icon: string;
    className: string;
-   desc: (gs: GameState, options: GameOptions) => string;
+   desc: (gs: GameState, options: GameOptions) => React.ReactNode;
    value?: (gs: GameState, options: GameOptions) => number;
    condition: (gs: GameState, options: GameOptions) => boolean;
    onClick: (gs: GameState, options: GameOptions) => void;
+   maxWidth?: string | number;
 }
 
 export const _Todos = {
@@ -47,7 +59,7 @@ export const _Todos = {
       name: () => t(L.HappinessTooLow),
       icon: "sentiment_dissatisfied",
       className: "text-red",
-      desc: (gs, options) => t(L.HappinessTooLowHTML),
+      desc: (gs, options) => html(t(L.HappinessTooLowHTML)),
       condition: (gs) => (Tick.current.happiness?.value ?? 0) < -25,
       onClick: (gs, options) => {
          const xy = Tick.current.specialBuildings.get("Headquarter")?.tile;
@@ -62,12 +74,14 @@ export const _Todos = {
       icon: "engineering",
       className: "text-red",
       desc: (gs, options) =>
-         t(L.MoreWorkersNeededHTML, {
-            count: mapCount(
-               Tick.current.notProducingReasons,
-               (v) => v === NotProducingReason.NotEnoughWorkers,
-            ),
-         }),
+         html(
+            t(L.MoreWorkersNeededHTML, {
+               count: mapCount(
+                  Tick.current.notProducingReasons,
+                  (v) => v === NotProducingReason.NotEnoughWorkers,
+               ),
+            }),
+         ),
       condition: (gs) => {
          for (const [xy, reason] of Tick.current.notProducingReasons) {
             if (reason === NotProducingReason.NotEnoughWorkers) {
@@ -95,12 +109,14 @@ export const _Todos = {
       icon: "production_quantity_limits",
       className: "text-red",
       desc: (gs, options) =>
-         t(L.MoreResourceNeededHTML, {
-            count: mapCount(
-               Tick.current.notProducingReasons,
-               (v) => v === NotProducingReason.NotEnoughResources,
-            ),
-         }),
+         html(
+            t(L.MoreResourceNeededHTML, {
+               count: mapCount(
+                  Tick.current.notProducingReasons,
+                  (v) => v === NotProducingReason.NotEnoughResources,
+               ),
+            }),
+         ),
       condition: (gs) => {
          for (const [xy, reason] of Tick.current.notProducingReasons) {
             if (reason === NotProducingReason.NotEnoughResources) {
@@ -131,9 +147,11 @@ export const _Todos = {
       icon: "electrical_services",
       className: "text-red",
       desc: (gs, options) =>
-         t(L.TileNotPoweredHTML, {
-            count: mapCount(Tick.current.notProducingReasons, (v) => v === NotProducingReason.NoPower),
-         }),
+         html(
+            t(L.TileNotPoweredHTML, {
+               count: mapCount(Tick.current.notProducingReasons, (v) => v === NotProducingReason.NoPower),
+            }),
+         ),
       condition: (gs) => {
          for (const [xy, reason] of Tick.current.notProducingReasons) {
             if (reason === NotProducingReason.NoPower) {
@@ -160,7 +178,7 @@ export const _Todos = {
       name: () => t(L.YouAreOffline),
       icon: "wifi_off",
       className: "text-red",
-      desc: (gs, options) => t(L.YouAreOfflineHTML),
+      desc: (gs, options) => html(t(L.YouAreOfflineHTML)),
       condition: (gs) => !isConnected(),
       onClick: (gs, options) => {
          saveGame().then(() => window.location.reload());
@@ -171,9 +189,11 @@ export const _Todos = {
       icon: "storage",
       className: "text-orange",
       desc: (gs, options) =>
-         t(L.BuildingsStorageFullHTML, {
-            count: mapCount(Tick.current.notProducingReasons, (v) => v === NotProducingReason.StorageFull),
-         }),
+         html(
+            t(L.BuildingsStorageFullHTML, {
+               count: mapCount(Tick.current.notProducingReasons, (v) => v === NotProducingReason.StorageFull),
+            }),
+         ),
       condition: (gs) => {
          for (const [xy, reason] of Tick.current.notProducingReasons) {
             if (reason === NotProducingReason.StorageFull) {
@@ -201,9 +221,11 @@ export const _Todos = {
       icon: "motion_photos_off",
       className: "text-orange",
       desc: (gs, options) =>
-         t(L.BuildingsTurnedOffHTML, {
-            count: mapCount(Tick.current.notProducingReasons, (v) => v === NotProducingReason.TurnedOff),
-         }),
+         html(
+            t(L.BuildingsTurnedOffHTML, {
+               count: mapCount(Tick.current.notProducingReasons, (v) => v === NotProducingReason.TurnedOff),
+            }),
+         ),
       condition: (gs) => {
          for (const [xy, reason] of Tick.current.notProducingReasons) {
             if (reason === NotProducingReason.TurnedOff) {
@@ -231,9 +253,11 @@ export const _Todos = {
       icon: "power_off",
       className: "text-orange",
       desc: (gs, options) =>
-         t(L.NotEnoughPowerHTML, {
-            count: Tick.current.notEnoughPower.size,
-         }),
+         html(
+            t(L.NotEnoughPowerHTML, {
+               count: Tick.current.notEnoughPower.size,
+            }),
+         ),
       condition: (gs) => {
          return Tick.current.notEnoughPower.size > 0;
       },
@@ -251,9 +275,11 @@ export const _Todos = {
       icon: "access_time",
       className: "text-orange",
       desc: (gs, options) =>
-         t(L.TradeTileBonusWillRefreshHTML, {
-            time: formatHMS(getVotingTime()),
-         }),
+         html(
+            t(L.TradeTileBonusWillRefreshHTML, {
+               time: formatHMS(getVotingTime()),
+            }),
+         ),
       condition: (gs) => {
          return getVotingTime() <= 8 * HOUR;
       },
@@ -266,6 +292,79 @@ export const _Todos = {
          }
       },
    },
+   W5: {
+      name: () => t(L.DeficitResources),
+      icon: "do_not_disturb_on",
+      className: "text-orange",
+      desc: (gs, options) => {
+         const deficit = new Map<Resource, number>();
+         const { theoreticalInput, theoreticalOutput } = getResourceIO(gs);
+         theoreticalInput.forEach((input, res) => {
+            const diff = (theoreticalOutput.get(res) ?? 0) - input;
+            if (diff < 0) {
+               deficit.set(res, diff);
+            }
+         });
+         return (
+            <>
+               <table className="date-table" style={{ minWidth: 250 }}>
+                  <thead>
+                     <tr>
+                        <th className="text-left">{t(L.ResourceAmount)}</th>
+                        <th className="text-right">{t(L.StatisticsResourcesDeficit)}</th>
+                        <th className="text-right">{t(L.StatisticsResourcesRunOut)}</th>
+                     </tr>
+                  </thead>
+                  <tbody>
+                     {Array.from(deficit)
+                        .sort(([a, amountA], [b, amountB]) => {
+                           return getResourceAmount(b) / amountB - getResourceAmount(a) / amountA;
+                        })
+                        .map(([res, amount]) => {
+                           const runOutIn = formatHMS((1000 * getResourceAmount(res)) / Math.abs(amount));
+                           return (
+                              <tr key={res}>
+                                 <td>{Config.Resource[res].name()}</td>
+                                 <td className="text-right">{formatNumber(amount)}</td>
+                                 <td className="text-right">{runOutIn}</td>
+                              </tr>
+                           );
+                        })}
+                  </tbody>
+               </table>
+            </>
+         );
+      },
+      condition: (gs) => {
+         const { theoreticalInput, theoreticalOutput } = getResourceIO(gs);
+         for (const [res, input] of theoreticalInput) {
+            const diff = (theoreticalOutput.get(res) ?? 0) - input;
+            if (diff < 0) {
+               return true;
+            }
+         }
+         return false;
+      },
+      value: (gs, options) => {
+         let deficit = 0;
+         const { theoreticalInput, theoreticalOutput } = getResourceIO(gs);
+         theoreticalInput.forEach((input, res) => {
+            const diff = (theoreticalOutput.get(res) ?? 0) - input;
+            if (diff < 0) {
+               ++deficit;
+            }
+         });
+         return deficit;
+      },
+      onClick: (gs, options) => {
+         const s = Tick.current.specialBuildings.get("Statistics");
+         if (s) {
+            Singleton()
+               .sceneManager.getCurrent(WorldScene)
+               ?.selectGrid(tileToPoint(s.tile), { tab: "resources" });
+         }
+      },
+   },
    I1: {
       name: () => t(L.UnlockableTech),
       icon: "tips_and_updates",
@@ -275,7 +374,7 @@ export const _Todos = {
          const techs = unlockableTechs(gs)
             .flatMap((tech) => (science >= getTechUnlockCost(tech) ? [Config.Tech[tech].name()] : []))
             .join(", ");
-         return t(L.UnlockableTechHTML, { techs });
+         return html(t(L.UnlockableTechHTML, { techs }));
       },
       condition: (gs) => {
          const techs = unlockableTechs(gs);
@@ -299,7 +398,7 @@ export const _Todos = {
                   : [],
             )
             .join(", ");
-         return t(L.UpgradeablePermanentGreatPeopleHTML, { gps });
+         return html(t(L.UpgradeablePermanentGreatPeopleHTML, { gps }));
       },
       condition: (gs, options) =>
          entriesOf(options.greatPeople).some(
@@ -316,7 +415,7 @@ export const _Todos = {
       icon: "person_4",
       className: "text-green",
       desc: (gs, options) => {
-         return t(L.UnclaimedGreatPeopleThisRunHTML, { count: gs.greatPeopleChoicesV2.length });
+         return html(t(L.UnclaimedGreatPeopleThisRunHTML, { count: gs.greatPeopleChoicesV2.length }));
       },
       condition: (gs, options) => gs.greatPeopleChoicesV2.length > 0,
       onClick: (gs, options) => {
@@ -330,7 +429,7 @@ export const _Todos = {
       icon: "supervisor_account",
       className: "text-green",
       desc: (gs, options) => {
-         return t(L.UnclaimedPermanentGreatPeopleHTML, { count: options.greatPeopleChoicesV2.length });
+         return html(t(L.UnclaimedPermanentGreatPeopleHTML, { count: options.greatPeopleChoicesV2.length }));
       },
       condition: (gs, options) => options.greatPeopleChoicesV2.length > 0,
       onClick: (gs, options) => {
@@ -344,7 +443,7 @@ export const _Todos = {
       icon: "emoji_objects",
       className: "text-green",
       desc: (gs, options) => {
-         return t(L.UpgradeableAgeWisdomHTML, { count: gs.greatPeopleChoicesV2.length });
+         return html(t(L.UpgradeableAgeWisdomHTML, { count: gs.greatPeopleChoicesV2.length }));
       },
       condition: (gs, options) => {
          for (const [age] of entriesOf(Config.TechAge)) {
@@ -368,7 +467,7 @@ export const _Todos = {
       icon: "currency_exchange",
       className: "text-green",
       desc: (gs, options) => {
-         return t(L.TradesCanBeClaimedHTML, { count: PendingClaims.length });
+         return html(t(L.TradesCanBeClaimedHTML, { count: PendingClaims.length }));
       },
       value: (gs, options) => {
          return PendingClaims.length;
@@ -380,12 +479,71 @@ export const _Todos = {
          showModal(<PendingClaimModal hideModal={hideModal} />);
       },
    },
+   I7: {
+      name: () => t(L.WatchedResources),
+      icon: "visibility",
+      className: "text-green",
+      maxWidth: "50vw",
+      value: (gs, options) => {
+         return gs.watchedResources.size;
+      },
+      desc: (gs, options) => {
+         const { theoreticalInput, theoreticalOutput } = getResourceIO(gs);
+         return (
+            <>
+               <table className="date-table">
+                  <thead>
+                     <tr>
+                        <th className="text-left">{t(L.ResourceAmount)}</th>
+                        <th className="text-right">{t(L.Produced)}</th>
+                        <th className="text-right">{t(L.Consumed)}</th>
+                        <th className="text-right">{t(L.Surplus)}</th>
+                        <th className="text-right">{t(L.StatisticsResourcesRunOut)}</th>
+                     </tr>
+                  </thead>
+                  <tbody>
+                     {Array.from(gs.watchedResources).map((res) => {
+                        const produced = theoreticalOutput.get(res) ?? 0;
+                        const consumed = theoreticalInput.get(res) ?? 0;
+                        const surplus = produced - consumed;
+                        const runOutIn = formatHMS(
+                           surplus > 0
+                              ? Number.POSITIVE_INFINITY
+                              : (1000 * getResourceAmount(res)) / Math.abs(surplus),
+                        );
+                        return (
+                           <tr key={res}>
+                              <td>{Config.Resource[res].name()}</td>
+                              <td className="text-right">{formatNumber(produced)}</td>
+                              <td className="text-right">{formatNumber(consumed)}</td>
+                              <td className="text-right">{formatNumber(surplus)}</td>
+                              <td className="text-right">{runOutIn}</td>
+                           </tr>
+                        );
+                     })}
+                  </tbody>
+               </table>
+            </>
+         );
+      },
+      condition: (gs, options) => {
+         return gs.watchedResources.size > 0;
+      },
+      onClick: (gs, options) => {
+         const s = Tick.current.specialBuildings.get("Statistics");
+         if (s) {
+            Singleton()
+               .sceneManager.getCurrent(WorldScene)
+               ?.selectGrid(tileToPoint(s.tile), { tab: "resources" });
+         }
+      },
+   },
    S1: {
       name: () => t(L.ReadFullPatchNotes),
       icon: "browser_updated",
       className: "text-blue",
       desc: (gs, options) => {
-         return t(L.ReadPatchNotesHTMLV2, { version: getVersion(), build: getBuildNumber() });
+         return html(t(L.ReadPatchNotesHTMLV2, { version: getVersion(), build: getBuildNumber() }));
       },
       condition: (gs, options) => options.buildNumber !== getBuildNumber(),
       onClick: (gs, options) => {

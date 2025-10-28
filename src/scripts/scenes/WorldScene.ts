@@ -359,14 +359,14 @@ export class WorldScene extends Scene {
       });
    }
 
-   selectGrid(grid: IPointData): void {
+   selectGrid(grid: IPointData, params: Record<string, unknown> = {}): void {
       const gs = getGameState();
       if (!getGrid(gs).isValid(grid)) {
          return;
       }
       const xy = pointToTile(grid);
       this._selectedXy = xy;
-      Singleton().routeTo(TilePage, { xy: xy });
+      Singleton().routeTo(TilePage, { ...params, xy: xy });
       this.drawSelection(grid, []);
       this.drawTransportation(gs);
    }

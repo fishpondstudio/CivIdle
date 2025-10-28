@@ -185,7 +185,10 @@ export function HeadquarterBuildingBody({
          </fieldset>
          <WarpSpeedComponent />
          <fieldset>
-            <legend>{techAge != null ? Config.TechAge[techAge].name() : "Unknown Age"}</legend>
+            <legend>
+               {Config.City[gameState.city].name()} /{" "}
+               {techAge != null ? Config.TechAge[techAge].name() : "Unknown Age"}
+            </legend>
             <ul className="tree-view">
                <li className="row">
                   <div className="f1">{t(L.Science)}</div>

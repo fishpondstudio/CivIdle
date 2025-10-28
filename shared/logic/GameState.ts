@@ -68,6 +68,7 @@ export class GameState {
    flags = GameStateFlags.None;
    lastClientTickAt = 0;
    clientOfflineSec = 0;
+   watchedResources: Set<Resource> = new Set();
 }
 
 export type GreatPeopleChoice = GreatPerson[];
