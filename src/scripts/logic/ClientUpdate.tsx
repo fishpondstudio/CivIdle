@@ -32,6 +32,7 @@ import { L, t } from "../../../shared/utilities/i18n";
 import { saveGame } from "../Global";
 import { client, disconnectWebSocket, getUser, reconnectWebSocket } from "../rpc/RPCClient";
 import { SteamClient, isSteam } from "../rpc/SteamClient";
+import { PlayerMapScene } from "../scenes/PlayerMapScene";
 import { WorldScene } from "../scenes/WorldScene";
 import { AccountRankUpModal } from "../ui/AccountRankUpModal";
 import { AdvisorModal } from "../ui/AdvisorModal";
@@ -73,6 +74,11 @@ export function tickEveryFrame(gs: GameState, dt: number) {
          worldScene.updateTile(xy, dt);
       }
       worldScene.updateTransportVisual(gs, timeSinceLastTick);
+   }
+
+   const playerMapScene = Singleton().sceneManager.getCurrent(PlayerMapScene);
+   if (playerMapScene) {
+      playerMapScene.update(dt);
    }
 
    const targetProgress = Math.ceil(timeSinceLastTick * tickTileQueueSize * Singleton().ticker.speedUp);

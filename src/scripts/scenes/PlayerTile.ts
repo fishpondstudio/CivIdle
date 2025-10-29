@@ -1,4 +1,12 @@
-import { BitmapText, Container, Sprite, Texture, type IPointData, type RenderTexture } from "pixi.js";
+import {
+   BitmapText,
+   Container,
+   Rectangle,
+   Sprite,
+   Texture,
+   type IPointData,
+   type RenderTexture,
+} from "pixi.js";
 import type { City } from "../../../shared/definitions/CityDefinitions";
 import { Config } from "../../../shared/logic/Config";
 import { isTileReserved } from "../../../shared/logic/PlayerTradeLogic";
@@ -17,6 +25,7 @@ const _cityCache = new Map<City, RenderTexture>();
 
 export class PlayerTile extends Container {
    private _buildingSprite: Sprite;
+   public cullingRect: Rectangle;
 
    constructor(
       tile: IPointData,
@@ -31,6 +40,13 @@ export class PlayerTile extends Container {
 
       const isMyself = data.userId === getUser()?.userId;
       const isReserved = isTileReserved(data);
+
+      this.cullingRect = new Rectangle(
+         x * GridSize - GridSize / 2,
+         y * GridSize - GridSize / 2,
+         2 * GridSize,
+         2 * GridSize,
+      );
 
       const color = UserColorsMapping[data.color] ?? 3447003;
       const sprite = this.addChild(new Sprite(context.textures.Misc_100x100));

@@ -235,6 +235,17 @@ export class PlayerMapScene extends Scene {
       viewportZoom = this.viewport.zoom;
    }
 
+   public update(dt: number): void {
+      const rect = this.viewport.visibleWorldRect();
+      this._tiles.forEach((visual, xy) => {
+         if (rect.intersects(visual.cullingRect)) {
+            visual.visible = true;
+         } else {
+            visual.visible = false;
+         }
+      });
+   }
+
    override onDisable(): void {
       this._listeners.forEach((l) => l.dispose());
       super.onDisable();
