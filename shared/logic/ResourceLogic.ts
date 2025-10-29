@@ -31,7 +31,7 @@ export function deductResourceFrom(
    gs: GameState,
 ): { amount: number; rollback: () => void } {
    const rollbacks: (() => void)[] = [];
-   let amountLeft = amount;
+   let amountLeft = clamp(amount, 0, Number.POSITIVE_INFINITY);
 
    for (const tile of tiles) {
       const resources = gs.tiles.get(tile)?.building?.resources;
@@ -69,7 +69,7 @@ export function addResourceTo(
 ): { amount: number; rollback: () => void } {
    amount = Number.isFinite(amount) ? amount : 0;
    const rollbacks: (() => void)[] = [];
-   let amountLeft = amount;
+   let amountLeft = clamp(amount, 0, Number.POSITIVE_INFINITY);
 
    for (const tile of tiles) {
       const resources = gs.tiles.get(tile)?.building?.resources;

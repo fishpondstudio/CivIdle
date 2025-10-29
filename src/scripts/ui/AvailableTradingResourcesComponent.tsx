@@ -5,7 +5,7 @@ import type { GameState } from "../../../shared/logic/GameState";
 import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
 import { combineResources, deductResourceFrom } from "../../../shared/logic/ResourceLogic";
 import { Tick } from "../../../shared/logic/TickLogic";
-import { formatNumber, keysOf, safeParseInt } from "../../../shared/utilities/Helper";
+import { clamp, formatNumber, keysOf, safeParseInt } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import { useGameState } from "../Global";
 import { getOwnedTradeTile } from "../scenes/PathFinder";
@@ -45,7 +45,7 @@ export function AvailableTradingResourcesComponent(): React.ReactNode {
          header={[
             { name: t(L.ResourceImportResource), sortable: true },
             { name: t(L.ResourceAmount), sortable: true },
-            { name: "Destroy Resource", sortable: false },
+            { name: t(L.DestroyResource), sortable: false },
          ]}
          sortingState={availableTradingResourcesSortingState}
          data={keysOf(availableResources)}
@@ -108,9 +108,9 @@ function TableRowComponent({
                <button
                   style={{ width: 25, padding: 0 }}
                   onClick={() => {
-                     const { amount } = deductResourceFrom(
+                     const result = deductResourceFrom(
                         resource,
-                        destroyAmount,
+                        clamp(destroyAmount, 0, amount),
                         Array.from(Tick.current.playerTradeBuildings.keys()),
                         gameState,
                      );
@@ -119,7 +119,7 @@ function TableRowComponent({
                      playClick();
                      showToast(
                         t(L.XResourceHasBeenDestroyed, {
-                           amount: formatNumber(amount),
+                           amount: formatNumber(result.amount),
                            resource: resourceName,
                         }),
                      );
