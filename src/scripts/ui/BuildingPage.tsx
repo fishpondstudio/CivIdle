@@ -90,6 +90,7 @@ const BuildingBodyOverride: Partial<Record<Building, FunctionComponent<IBuilding
    RedFort: UpgradableWonderBuildingBody,
    QutbMinar: UpgradableWonderBuildingBody,
    BranCastle: BranCastleBuildingBody,
+   PortOfSingapore: UpgradableWonderBuildingBody,
 };
 
 export function BuildingPage(props: { tile: ITileData }): React.ReactNode {

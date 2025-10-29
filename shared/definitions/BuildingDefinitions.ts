@@ -2204,6 +2204,17 @@ export class BuildingDefinitions {
       wikipedia: "Bran_Castle",
    };
 
+   PortOfSingapore: IBuildingDefinition = {
+      name: () => t(L.PortOfSingapore),
+      desc: () => t(L.PortOfSingaporeDesc),
+      input: {},
+      output: {},
+      construction: { Forex: 200, Koti: 200 },
+      max: 1,
+      special: BuildingSpecial.WorldWonder,
+      wikipedia: "Port_of_Singapore",
+   };
+
    // #endregion /////////////////////////////////////////////////////////////////////////////////////////////
 
    // Winery: IBuildingDefinition = {
@@ -2302,4 +2313,5 @@ export const BuildingShowLevel = new Set<Building>([
    "RedFort",
    "QutbMinar",
    "UnitedNations",
+   "PortOfSingapore",
 ] satisfies Building[]);

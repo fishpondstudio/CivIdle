@@ -830,7 +830,7 @@ export class TechDefinitions {
       name: () => t(L.Globalization),
       column: 23,
       requireTech: ["Television", "MonetarySystem"],
-      unlockBuilding: ["OpticalFiberPlant"],
+      unlockBuilding: ["OpticalFiberPlant", "PortOfSingapore"],
       additionalUpgrades: () => [t(L.XBaseStorageForWarehouseAndCaravansary, { percent: formatPercent(1) })],
    };
 

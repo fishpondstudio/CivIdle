@@ -114,6 +114,9 @@ export function getAvailableStorage(tiles: Tile[], gs: GameState): number {
 }
 
 export function getBuildingsThatProduce(res: Resource): Building[] {
+   if (res === "Koti") {
+      return ["SwissBank"];
+   }
    const result: Building[] = [];
    forEach(Config.Building, (b, def) => {
       if (def.output[res]) {
