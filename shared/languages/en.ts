@@ -1786,7 +1786,7 @@ export const EN = {
    SendACartographer: "Send a Cartographer",
    SendCartographerTechDesc: "Cartographer: Sending a cartographer to an unexplored tile will reveal all tiles on the map",
    Resource: "Resource",
-   XBaseStorageForWarehouseAndCaravansary: "+%{percent} Base Storage for Warehouse and Caravansary",
+   XBaseStorageForWarehouseAndCaravansary: "+%{percent} Base Storage for Market, Warehouse and Caravansary",
    PortOfSingapore: "Port of Singapore",
-   PortOfSingaporeDesc: "This wonder can be upgraded and each level provides +1 Production (affects Resource Transport Capacity) and Storage Multiplier to all warehouses and caravansaries",
+   PortOfSingaporeDesc: "This wonder can be upgraded and each level provides +1 Production (affects Resource Transport Capacity) and Storage Multiplier to Market, Warehouse and Caravansary",
 };
