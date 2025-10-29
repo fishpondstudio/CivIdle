@@ -1,3 +1,4 @@
+import { Preferences } from "@capacitor/preferences";
 import "cordova-plugin-purchase";
 import { getGameOptions } from "../../../shared/logic/GameStateLogic";
 import { UserAttributes } from "../../../shared/utilities/Database";
@@ -13,6 +14,7 @@ export function getProduct() {
 }
 
 const ProductId = "cividle_dlc1";
+const TransactionId = "CivIdleSupporterPackTransactionId";
 
 export function initIAP() {
    if (!CdvPurchase || !CdvPurchase.store) {
@@ -44,14 +46,21 @@ export function initIAP() {
       })
       .approved((transaction) => {
          _product = CdvPurchase.store.get(ProductId);
-         setPurchased(true);
-         client.verifyReceipt(transaction.transactionId);
-         showPurchaseModal();
-         transaction.finish();
+         if (transaction.products.some((p) => p.id === ProductId)) {
+            transaction.finish();
+            setPurchased(true);
+            showPurchaseModal();
+            client.verifyReceipt(transaction.transactionId);
+            Preferences.set({ key: TransactionId, value: transaction.transactionId });
+         }
       })
-      .receiptUpdated((receipt) => {
+      .receiptUpdated(async (receipt) => {
          _product = CdvPurchase.store.get(ProductId);
-         if (CdvPurchase.store.owned(ProductId)) {
+         const transactionId = (await Preferences.get({ key: TransactionId })).value;
+         if (transactionId) {
+            setPurchased(true);
+            client.verifyReceipt(transactionId);
+         } else if (CdvPurchase.store.owned(ProductId)) {
             setPurchased(true);
             for (const t of receipt.transactions) {
                client.verifyReceipt(t.transactionId);
