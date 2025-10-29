@@ -1,6 +1,7 @@
 import Tippy from "@tippyjs/react";
 import classNames from "classnames";
 import { useEffect, useRef, useState } from "react";
+import type { Resource } from "../../../shared/definitions/ResourceDefinitions";
 import {
    getMaxWarpSpeed,
    getScienceFromWorkers,
@@ -11,11 +12,13 @@ import { FESTIVAL_CONVERSION_RATE } from "../../../shared/logic/Constants";
 import { GameFeature, hasFeature } from "../../../shared/logic/FeatureLogic";
 import { GameStateChanged, notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
 import { getHappinessIcon } from "../../../shared/logic/HappinessLogic";
+import { getResourceIO } from "../../../shared/logic/IntraTickCache";
 import {
    getProgressTowardsNextGreatPerson,
    getRebirthGreatPeopleCount,
    getValueRequiredForGreatPeople,
 } from "../../../shared/logic/RebirthLogic";
+import { getResourceAmount } from "../../../shared/logic/ResourceLogic";
 import { Tick } from "../../../shared/logic/TickLogic";
 import {
    Rounding,
@@ -26,6 +29,7 @@ import {
    mathSign,
    range,
    round,
+   tileToPoint,
 } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import { FloatingModeChanged, useFloatingMode, useGameOptions, useGameState } from "../Global";
@@ -53,6 +57,7 @@ export function ResourcePanel(): React.ReactNode {
    const isFloating = useFloatingMode();
    const ref = useRef<HTMLDivElement>(null);
    const { workersAfterHappiness, workersBusy } = getScienceFromWorkers(gs);
+   const currentWarp = Tick.current.specialBuildings.get("Headquarter")?.building.resources.Warp ?? 0;
 
    let evDelta = 0;
    let scienceDelta = 0;
@@ -314,6 +319,7 @@ export function ResourcePanel(): React.ReactNode {
             </Tippy>
          </div>
          <div className="separator-vertical" />
+         <DeficitResources />
          <div className="section">
             <div
                className={classNames({
@@ -366,14 +372,14 @@ export function ResourcePanel(): React.ReactNode {
             <>
                <Tippy content={t(L.PlayerTrade)}>
                   <div
-                     className="section pointer"
+                     className="section pointer mh10"
                      onPointerDown={(e) => {
                         playClick();
                         showModal(<PlayerTradeModal />);
                      }}
                   >
                      <div className="m-icon small">currency_exchange</div>
-                     <div style={{ width: "5.5rem" }}>
+                     <div>
                         <span>{formatNumber(getTradeCount())}</span>
                      </div>
                   </div>
@@ -381,8 +387,23 @@ export function ResourcePanel(): React.ReactNode {
                <div className="separator-vertical" />
             </>
          ) : null}
-         <div className="section app-region-none" style={{ padding: "0 0.5rem" }}>
-            <Tippy content={t(L.WarpSpeed)}>
+         <Tippy
+            content={
+               <>
+                  <div className="row g20">
+                     <div className="f1">{t(L.WarpSpeed)}</div>
+                     <div>{gs.speedUp}x</div>
+                  </div>
+                  {gs.speedUp > 1 ? (
+                     <div className="row g20">
+                        <div className="f1">{t(L.EstimatedTimeLeft)}</div>
+                        <div>{formatHMS((1000 * currentWarp) / (gs.speedUp - 1))}</div>
+                     </div>
+                  ) : null}
+               </>
+            }
+         >
+            <div className="section app-region-none" style={{ padding: "0 0.5rem" }}>
                <select
                   value={gs.speedUp}
                   onChange={(e) => {
@@ -397,8 +418,74 @@ export function ResourcePanel(): React.ReactNode {
                      </option>
                   ))}
                </select>
-            </Tippy>
-         </div>
+            </div>
+         </Tippy>
       </div>
+   );
+}
+
+function DeficitResources(): React.ReactNode {
+   const gs = useGameState();
+   const deficit = new Map<Resource, number>();
+   const { theoreticalInput, theoreticalOutput } = getResourceIO(gs);
+   theoreticalInput.forEach((input, res) => {
+      const diff = (theoreticalOutput.get(res) ?? 0) - input;
+      if (diff < 0) {
+         deficit.set(res, diff);
+      }
+   });
+   return (
+      <>
+         <Tippy
+            maxWidth="50vw"
+            content={
+               <>
+                  <div>{t(L.DeficitResources)}</div>
+                  <table className="date-table" style={{ minWidth: 250 }}>
+                     <thead>
+                        <tr>
+                           <th className="text-left">{t(L.Resource)}</th>
+                           <th className="text-right">{t(L.StatisticsResourcesDeficit)}</th>
+                           <th className="text-right">{t(L.StatisticsResourcesRunOut)}</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        {Array.from(deficit)
+                           .sort(([a, amountA], [b, amountB]) => {
+                              return getResourceAmount(b) / amountB - getResourceAmount(a) / amountA;
+                           })
+                           .map(([res, amount]) => {
+                              const runOutIn = formatHMS((1000 * getResourceAmount(res)) / Math.abs(amount));
+                              return (
+                                 <tr key={res}>
+                                    <td>{Config.Resource[res].name()}</td>
+                                    <td className="text-right">{formatNumber(amount)}</td>
+                                    <td className="text-right">{runOutIn}</td>
+                                 </tr>
+                              );
+                           })}
+                     </tbody>
+                  </table>
+               </>
+            }
+         >
+            <div
+               className="section pointer mh10"
+               onPointerDown={(e) => {
+                  playClick();
+                  const s = Tick.current.specialBuildings.get("Statistics");
+                  if (s) {
+                     Singleton()
+                        .sceneManager.getCurrent(WorldScene)
+                        ?.selectGrid(tileToPoint(s.tile), { tab: "resources" });
+                  }
+               }}
+            >
+               <div className="m-icon small">do_not_disturb_on</div>
+               <div>{formatNumber(deficit.size)}</div>
+            </div>
+         </Tippy>
+         <div className="separator-vertical" />
+      </>
    );
 }

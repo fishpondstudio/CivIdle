@@ -1,6 +1,5 @@
 import { GreatPersonType } from "../../../shared/definitions/GreatPersonDefinitions";
 import { PatchNotes } from "../../../shared/definitions/PatchNotes";
-import type { Resource } from "../../../shared/definitions/ResourceDefinitions";
 import { Config } from "../../../shared/logic/Config";
 import { STEAM_PATCH_NOTES_URL } from "../../../shared/logic/Constants";
 import type { GameOptions, GameState } from "../../../shared/logic/GameState";
@@ -289,79 +288,6 @@ export const _Todos = {
             Singleton().sceneManager.loadScene(PlayerMapScene);
          } else {
             showToast(t(L.PlayerTradeClaimTileFirstWarning));
-         }
-      },
-   },
-   W5: {
-      name: () => t(L.DeficitResources),
-      icon: "do_not_disturb_on",
-      className: "text-orange",
-      desc: (gs, options) => {
-         const deficit = new Map<Resource, number>();
-         const { theoreticalInput, theoreticalOutput } = getResourceIO(gs);
-         theoreticalInput.forEach((input, res) => {
-            const diff = (theoreticalOutput.get(res) ?? 0) - input;
-            if (diff < 0) {
-               deficit.set(res, diff);
-            }
-         });
-         return (
-            <>
-               <table className="date-table" style={{ minWidth: 250 }}>
-                  <thead>
-                     <tr>
-                        <th className="text-left">{t(L.Resource)}</th>
-                        <th className="text-right">{t(L.StatisticsResourcesDeficit)}</th>
-                        <th className="text-right">{t(L.StatisticsResourcesRunOut)}</th>
-                     </tr>
-                  </thead>
-                  <tbody>
-                     {Array.from(deficit)
-                        .sort(([a, amountA], [b, amountB]) => {
-                           return getResourceAmount(b) / amountB - getResourceAmount(a) / amountA;
-                        })
-                        .map(([res, amount]) => {
-                           const runOutIn = formatHMS((1000 * getResourceAmount(res)) / Math.abs(amount));
-                           return (
-                              <tr key={res}>
-                                 <td>{Config.Resource[res].name()}</td>
-                                 <td className="text-right">{formatNumber(amount)}</td>
-                                 <td className="text-right">{runOutIn}</td>
-                              </tr>
-                           );
-                        })}
-                  </tbody>
-               </table>
-            </>
-         );
-      },
-      condition: (gs) => {
-         const { theoreticalInput, theoreticalOutput } = getResourceIO(gs);
-         for (const [res, input] of theoreticalInput) {
-            const diff = (theoreticalOutput.get(res) ?? 0) - input;
-            if (diff < 0) {
-               return true;
-            }
-         }
-         return false;
-      },
-      value: (gs, options) => {
-         let deficit = 0;
-         const { theoreticalInput, theoreticalOutput } = getResourceIO(gs);
-         theoreticalInput.forEach((input, res) => {
-            const diff = (theoreticalOutput.get(res) ?? 0) - input;
-            if (diff < 0) {
-               ++deficit;
-            }
-         });
-         return deficit;
-      },
-      onClick: (gs, options) => {
-         const s = Tick.current.specialBuildings.get("Statistics");
-         if (s) {
-            Singleton()
-               .sceneManager.getCurrent(WorldScene)
-               ?.selectGrid(tileToPoint(s.tile), { tab: "resources" });
          }
       },
    },

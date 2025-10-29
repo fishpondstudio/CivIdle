@@ -2,12 +2,12 @@ import { autoUpdate, size, useClick, useDismiss, useFloating, useInteractions } 
 import { useState } from "react";
 import { cls } from "../../../shared/utilities/Helper";
 
-export interface ISelectItem<T extends string | null> {
+export interface ISelectItem<T extends string | number | null> {
    label: React.ReactNode;
    value: T;
 }
 
-export function SelectComp<T extends string | null>({
+export function SelectComp<T extends string | number | null>({
    data,
    value,
    onChange,
