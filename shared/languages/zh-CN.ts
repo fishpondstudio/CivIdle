@@ -1762,7 +1762,7 @@ export const ZH_CN = {
    Writing: "写作",
    WuZetian: "女皇武则天",
    WuZetianDesc: "运输能力乘数（减少运输所需劳动者） +%{value}",
-   XBaseStorageForWarehouseAndCaravansary: "所有市场、商队旅馆以及仓库获得 +%{percent} 基础存储能力",
+   XBaseStorageForWarehouseAndCaravansary: "所有市场、商队旅馆以及仓库，获得 +%{percent} 基础存储能力",
    XBuildingsWillBeBuilt: "%{count} 个建筑将被建造",
    Xuanzang: "玄奘",
    YangtzeRiver: "长江",
