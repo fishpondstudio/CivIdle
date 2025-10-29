@@ -1410,6 +1410,7 @@ const UpgradableWorldWonders = new Set<Building>([
    "UnitedNations",
    "RedFort",
    "QutbMinar",
+   "PortOfSingapore",
 ] satisfies Building[]);
 
 export function isBuildingUpgradable(building: Building): boolean {
