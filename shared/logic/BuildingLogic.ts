@@ -267,7 +267,8 @@ export function getStorageFor(xy: Tile, gs: GameState): IStorageResult {
 
    switch (building?.type) {
       case "Market": {
-         base = building.level * STORAGE_TO_PRODUCTION * 10;
+         base =
+            building.level * getResourceImportBuildingBaseStorageMultiplier(gs) * STORAGE_TO_PRODUCTION * 10;
          break;
       }
       case "Caravansary": {
