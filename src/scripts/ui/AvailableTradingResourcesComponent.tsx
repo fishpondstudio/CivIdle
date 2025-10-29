@@ -102,7 +102,7 @@ function TableRowComponent({
                <input
                   type="text"
                   value={destroyAmount}
-                  onChange={(e) => setDestroyAmount(safeParseInt(e.target.value))}
+                  onChange={(e) => setDestroyAmount(clamp(safeParseInt(e.target.value), 0, amount))}
                   style={{ width: 100 }}
                />
                <button
