@@ -1,11 +1,14 @@
 import classNames from "classnames";
 import { getMultipliersFor, getStorageFor } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
+import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
 import { NotProducingReason, Tick } from "../../../shared/logic/TickLogic";
 import { formatPercent, keysOf } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import warning from "../../images/warning.png";
+import { playClick } from "../visuals/Sound";
 import type { IBuildingComponentProps } from "./BuildingPage";
+import { ConfirmModal } from "./ConfirmModal";
 import { DeleteResourceModal } from "./DeleteResourceModal";
 import { showModal } from "./GlobalModal";
 import { FormatNumber } from "./HelperComponents";
@@ -86,6 +89,26 @@ export function BuildingStorageComponent({ gameState, xy }: IBuildingComponentPr
                      </div>
                   </summary>
                   <ul>
+                     <li
+                        className="row"
+                        onClick={() => {
+                           showModal(
+                              <ConfirmModal
+                                 title={t(L.DestroyAllResources)}
+                                 onConfirm={() => {
+                                    playClick();
+                                    building.resources = {};
+                                    notifyGameStateUpdate();
+                                 }}
+                              >
+                                 {t(L.DestroyAllResourcesContent)}
+                              </ConfirmModal>,
+                           );
+                        }}
+                     >
+                        <div className="m-icon text-red small mr5 pointer">delete</div>
+                        <div className="text-strong">{t(L.DestroyAllResources)}</div>
+                     </li>
                      {keysOf(building.resources)
                         .sort((a, b) => {
                            return building.resources[b]! - building.resources[a]!;

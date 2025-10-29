@@ -226,4 +226,8 @@ export function migrateSavedGame(save: SavedGame) {
    if (isNullOrUndefined(save.options.rankUpFlags)) {
       save.options.rankUpFlags = RankUpFlags.Unset;
    }
+
+   if (isNullOrUndefined(save.options.warehouseQuickMode)) {
+      save.options.warehouseQuickMode = false;
+   }
 }
