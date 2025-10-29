@@ -1793,4 +1793,5 @@ export const EN = {
    QuickUiModeTooltip: "When you select or deselect a resource, the per cycle and max amount will be redistributed among the selected resources automatically",
    DestroyAllResources: "Destroy All Resources",
    DestroyAllResourcesContent: "Are you sure you want to destroy all resources in this building? This cannot be undone",
+   XResourceHasBeenDestroyed: "<b>%{amount} %{resource}</b> has been destroyed",
 };

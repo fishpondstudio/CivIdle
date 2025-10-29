@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { L, t } from "../../../shared/utilities/i18n";
 import { hideModal } from "./GlobalModal";
-import { PlayerTradeNewComponent } from "./PlayerTradeNewComponent";
+import { PlayerTradeComponent } from "./PlayerTradeComponent";
 
 export function PlayerTradeModal(): React.ReactNode {
    const [modal, setModal] = useState<React.ReactNode>(null);
@@ -15,7 +15,7 @@ export function PlayerTradeModal(): React.ReactNode {
                </div>
             </div>
             <div className="window-body" style={{ padding: 0 }}>
-               <PlayerTradeNewComponent showModal={setModal} hideModal={setModal.bind(null, null)} />
+               <PlayerTradeComponent showModal={setModal} hideModal={setModal.bind(null, null)} />
             </div>
          </div>
          <div style={{ position: "absolute", zIndex: 3 }}>{modal}</div>

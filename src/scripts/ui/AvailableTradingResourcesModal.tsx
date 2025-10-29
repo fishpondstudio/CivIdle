@@ -3,7 +3,7 @@ import { AvailableTradingResourcesComponent } from "./AvailableTradingResourcesC
 
 export function AvailableTradingResourcesModal({ hideModal }: { hideModal: () => void }): React.ReactNode {
    return (
-      <div className="window" style={{ width: 500 }}>
+      <div className="window" style={{ width: 600 }}>
          <div className="title-bar">
             <div className="title-bar-text">{t(L.PlayerTradeTabAvailableTrades)}</div>
             <div className="title-bar-controls">
