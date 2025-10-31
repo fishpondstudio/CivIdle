@@ -757,19 +757,19 @@ button {
 table.date-table {
    width: 100%;
    border-collapse: collapse;
-   td,
-   th {
-      padding: 0 5px;
-   }
-   td:first-child,
-   th:first-child {
-      padding-left: 0;
-   }
-   td:last-child,
-   th:last-child {
-      padding-right: 0;
-   }
-   tr:nth-child(even) td {
-      background: rgba(255, 255, 255, 0.1);
-   }
+}
+table.date-table td,
+table.date-table th {
+   padding: 0 5px;
+}
+table.date-table td:first-child,
+table.date-table th:first-child {
+   padding-left: 0;
+}
+table.date-table td:last-child,
+table.date-table th:last-child {
+   padding-right: 0;
+}
+table.date-table tr:nth-child(even) td {
+   background: rgba(255, 255, 255, 0.1);
 }
