@@ -2209,7 +2209,7 @@ export class BuildingDefinitions {
       desc: () => t(L.PortOfSingaporeDesc),
       input: {},
       output: {},
-      construction: { Forex: 200, Koti: 200 },
+      construction: { Koti: 500 },
       max: 1,
       special: BuildingSpecial.WorldWonder,
       wikipedia: "Port_of_Singapore",
