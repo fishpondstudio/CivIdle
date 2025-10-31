@@ -1678,7 +1678,7 @@ export class BuildingDefinitions {
 
    MatrioshkaBrain: IBuildingDefinition = {
       name: () => t(L.MatrioshkaBrain),
-      desc: () => t(L.MatrioshkaBrainDescV2),
+      desc: () => t(L.MatrioshkaBrainDescV3),
       input: {},
       output: {},
       construction: { CivOasis: 100, Peace: 100, CivGPT: 100 },

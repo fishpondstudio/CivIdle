@@ -862,7 +862,7 @@ export const EN = {
    MaryamMirzakhaniDesc: "+%{value} Science From Idle Workers",
    Masonry: "Masonry",
    MatrioshkaBrain: "Matrioshka Brain",
-   MatrioshkaBrainDescV2: "Allow Science to be counted when calculating empire value (5 Science = 1 Empire Value). +5 Science Per Busy and Idle Worker. This wonder can be upgraded and each additional upgrade provides +1 Science Per Busy and Idle Worker and +1 Production Multiplier for buildings that produce Science",
+   MatrioshkaBrainDescV3: "Allow Science to be counted when calculating empire value (5 Science = 1 Empire Value). +5 Science Per Busy and Idle Worker. This wonder can be upgraded and each additional upgrade provides +1 Science Per Busy and Idle Worker and +1 Production Multiplier for buildings that produce Science (including Clone Lab)",
    MausoleumAtHalicarnassus: "Mausoleum at Halicarnassus",
    MausoleumAtHalicarnassusDescV2: "Transports from or to buildings within 2-tile range do not cost workers",
    MaxExplorers: "Max Explorers",
