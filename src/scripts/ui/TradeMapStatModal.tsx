@@ -3,25 +3,25 @@ import type { TechAge } from "../../../shared/definitions/TechDefinitions";
 import { Config } from "../../../shared/logic/Config";
 import { mapSafeAdd } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
-import { OnPlayerMapChanged, getPlayerMap } from "../rpc/RPCClient";
+import { getPlayerMap } from "../rpc/RPCClient";
 import { PlayerMapScene } from "../scenes/PlayerMapScene";
 import { getCountryName } from "../utilities/CountryCode";
-import { refreshOnTypedEvent } from "../utilities/Hook";
-import { OnSceneChanged } from "../utilities/SceneManager";
 import { Singleton, isSingletonReady } from "../utilities/Singleton";
 import { hideModal } from "./GlobalModal";
 import { PlayerFlagComponent } from "./TextureSprites";
 
-const flagRanking = new Map<string, number>();
-const cityRanking = new Map<City, number>();
-const techAgeRanking = new Map<TechAge, number>();
-const countedUserIds = new Set<string>();
+export function TradeMapStatModal(): React.ReactNode {
+   if (!isSingletonReady()) {
+      return null;
+   }
+   if (!Singleton().sceneManager.isCurrent(PlayerMapScene)) {
+      return null;
+   }
 
-function updateFlagRanking(): void {
-   flagRanking.clear();
-   cityRanking.clear();
-   techAgeRanking.clear();
-   countedUserIds.clear();
+   const flagRanking = new Map<string, number>();
+   const cityRanking = new Map<City, number>();
+   const techAgeRanking = new Map<TechAge, number>();
+   const countedUserIds = new Set<string>();
 
    const map = getPlayerMap();
    for (const entry of map.values()) {
@@ -42,18 +42,7 @@ function updateFlagRanking(): void {
          mapSafeAdd(techAgeRanking, entry.techAge, 1);
       }
    }
-}
 
-export function TradeMapStatModal(): React.ReactNode {
-   refreshOnTypedEvent(OnSceneChanged);
-   refreshOnTypedEvent(OnPlayerMapChanged);
-   updateFlagRanking();
-   if (!isSingletonReady()) {
-      return null;
-   }
-   if (!Singleton().sceneManager.isCurrent(PlayerMapScene)) {
-      return null;
-   }
    return (
       <div className="window" style={{ width: 700, maxWidth: "80vw" }}>
          <div className="title-bar">
