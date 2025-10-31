@@ -3,6 +3,7 @@ import classNames from "classnames";
 import { useEffect, useState } from "react";
 import { Config } from "../../../shared/logic/Config";
 import { SUPPORTER_PACK_URL, TRIBUNE_TRADE_VALUE_PER_MINUTE } from "../../../shared/logic/Constants";
+import { RankUpFlags } from "../../../shared/logic/GameState";
 import { getGameOptions, getGameState } from "../../../shared/logic/GameStateLogic";
 import {
    getRebirthGreatPeopleCount,
@@ -27,6 +28,7 @@ import {
    hasFlag,
    safeParseInt,
    sizeOf,
+   uuid4,
 } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import { resetToCity, saveGame } from "../Global";
@@ -48,7 +50,6 @@ import { RenderHTML, html } from "./RenderHTMLComponent";
 import { TextWithHelp } from "./TextWithHelpComponent";
 import { AccountLevelComponent, MiscTextureComponent, PlayerFlagComponent } from "./TextureSprites";
 import { WarningComponent } from "./WarningComponent";
-import { RankUpFlags } from "../../../shared/logic/GameState";
 
 let _playTime = 0;
 
@@ -415,7 +416,7 @@ function AccountDetails(): React.ReactNode {
                               try {
                                  await client.upgrade();
                                  playLevelUp();
-                                 await resetToCity(getGameState().city);
+                                 await resetToCity(uuid4(), getGameState().city);
                                  const options = getGameOptions();
                                  options.greatPeopleChoicesV2 = [];
                                  upgradeAllPermanentGreatPeople(options);

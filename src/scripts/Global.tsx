@@ -61,9 +61,10 @@ import { Singleton } from "./utilities/Singleton";
 import { Fonts } from "./visuals/Fonts";
 import { compress, decompress } from "./workers/Compress";
 
-export async function resetToCity(city: City): Promise<void> {
+export async function resetToCity(id: string, city: City): Promise<void> {
    Transports.length = 0;
    savedGame.current = new GameState();
+   savedGame.current.id = id;
    savedGame.current.city = city;
    initializeGameState(savedGame.current, savedGame.options);
 }
