@@ -1795,4 +1795,6 @@ export const EN = {
    DestroyAllResourcesContent: "Are you sure you want to destroy all resources in this building? This cannot be undone",
    XResourceHasBeenDestroyed: "<b>%{amount} %{resource}</b> has been destroyed",
    DestroyResource: "Destroy Resource",
+   TradeMapStatistics: "Trade Map Statistics",
+   PlayerFlag: "Player Flag",
 };

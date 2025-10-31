@@ -30,7 +30,6 @@ import { ChatPanel } from "./ui/ChatPanel";
 import { GlobalModal, GlobalToast } from "./ui/GlobalModal";
 import { ResourcePanel } from "./ui/ResourcePanel";
 import { TopLeftPanel } from "./ui/TopLeftPanel";
-import { TradeMapPanel } from "./ui/TradeMapPanel";
 import { isAndroid, isIOS } from "./utilities/Platforms";
 import { Fonts } from "./visuals/Fonts";
 
@@ -54,7 +53,6 @@ createRoot(document.getElementById("ui-root")!).render(
       <TopLeftPanel />
       <ChatPanel />
       <ResourcePanel />
-      <TradeMapPanel />
       <Route event={routeChanged} />
       <GlobalModal />
       <GlobalToast />

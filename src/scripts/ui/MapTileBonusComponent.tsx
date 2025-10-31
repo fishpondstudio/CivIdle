@@ -12,8 +12,10 @@ import { PlayerMapScene } from "../scenes/PlayerMapScene";
 import { WorldScene } from "../scenes/WorldScene";
 import { refreshOnTypedEvent } from "../utilities/Hook";
 import { Singleton } from "../utilities/Singleton";
+import { showModal } from "./GlobalModal";
 import { RenderHTML } from "./RenderHTMLComponent";
 import { BuildingSpriteComponent } from "./TextureSprites";
+import { TradeMapStatModal } from "./TradeMapStatModal";
 import { WarningComponent } from "./WarningComponent";
 
 export function MapTileBonusComponent({ xy }: { xy: string }): React.ReactNode {
@@ -25,11 +27,17 @@ export function MapTileBonusComponent({ xy }: { xy: string }): React.ReactNode {
    }
    return (
       <>
-         <button className="w100 row jcc mb10" onClick={() => Singleton().sceneManager.loadScene(WorldScene)}>
+         <button className="w100 row jcc mb5" onClick={() => Singleton().sceneManager.loadScene(WorldScene)}>
             <div className="m-icon" style={{ margin: "0 5px 0 -5px", fontSize: "18px" }}>
                arrow_back
             </div>
             <div className="f1">{t(L.BackToCity)}</div>
+         </button>
+         <button className="w100 row jcc mb10" onClick={() => showModal(<TradeMapStatModal />)}>
+            <div className="m-icon" style={{ margin: "0 5px 0 -5px", fontSize: "18px" }}>
+               insights
+            </div>
+            <div className="f1">{t(L.TradeMapStatistics)}</div>
          </button>
          <TileBonusRefreshTime />
          <fieldset>
