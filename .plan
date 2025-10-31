@@ -1,15 +1,40 @@
 Todo:
 - Adjust map size
-- Swiss Bank in Trade Tiles
+
+Australian:
+- Fusion Fuel Plant
+- Fusion Power Plant
+- Great Barrier Reef: Each happiness provides +X Science Per Busy Worker and +0.5X Science Per Busy Worker. X = Current Age (Stone Age = 1, Bronze Age = 2, Information Age = 10)
+- Uluru: All buildings within 3-tile range gets +X Production Multiplier. X = number of different great people from this run
+- Random Natural Wonder
+- Great Ocean Road: This wonder can be upgraded and each level provides +1 Building Level Boost to Trade Tile Bonus buildings
+- Sydney Opera House: This wonder can be upgraded and each level increases the map size of the next rebirth by 1
+- Sydney Harbour Bridge: This wonder can be upgraded and each level provides +1 Production Multiplier to all power plants
 
 Done:
-- New Wonder: Port of Singapore (Globalization) - This wonder can be upgraded and each level provides +1 Production (affects Resource Transport Capacity) and Storage Multiplier to all warehouses and caravansaries
-- Watch Resources in Statistics Office
-- Optimize Player Trade Map: now it should be much smoother when panning or zooming in
-- Improve the performance of path finding for player trades
+- Matrioshka Brain: Now affects Clone Lab
+
+Swiss Bank:
+- Swiss Bank in Trade Tiles
 - Swiss Bank can now move Koti from Tradeable Resources into Swiss Bank (i.e. choose Koti as the input resources for Swiss Bank)
+
+Bigger Storage:
+- The following tech will now provide +100% Base Storage for Market, Warehouse and Caravansary: Enlightenment, Railway, Assembly, Globalization, Robotics
 - Level Boost now affects Warehouse/Caravansary's import capacity
+- New Wonder: Port of Singapore (Globalization) - This wonder can be upgraded and each level provides +1 Production (affects Resource Transport Capacity) and Storage Multiplier to Market, Warehouse and Caravansary
+
+Cartographer:
 - Exploration technology (Renaissance) will unlock cartographer - sending a cartographer cost Science and will explore all tiles on the map
 - Explorer Range upgrade has been moved into earlier techs: 2 Range (Geography -> Writing), 3 Range (Steam Engine -> Construction), 4 Range (Aviation -> Democracy)
-- The following tech will now provide +100% Base Storage for Warehouse and Caravansary: Enlightenment, Railway, Assembly, Globalization, Robotics
+
+Performance:
+- Optimize Player Trade Map: now it should be much smoother when panning or zooming in
+- Improve the performance of path finding for player trades
+
+QoL:
+- Watch Resources in Statistics Office
+- Add "Destroy all resources" feature to destroy the resources in a building
+- Add a feature to destroy Player Tradeable resources
+- Add "Quick UI Mode" for Warehouse/Caravansary: when you select or deselect a resource, the per cycle and max amount will be redistributed among the selected resources automatically. This will be the default option for new players
 - Progress Towards Next Great Person and Warp now shows estimated time on hover
+- Add Trade Map Stats that shows players by flag, civilization and age. It replaces the old side panel
