@@ -8,8 +8,10 @@ import { Tick } from "../../../shared/logic/TickLogic";
 import { MAP_MAX_X } from "../../../shared/utilities/Database";
 import {
    clamp,
+   cls,
    formatNumber,
    formatPercent,
+   mathSign,
    pointToXy,
    safeAdd,
    safeParseFloat,
@@ -248,7 +250,11 @@ export function FillPlayerTradeModal({
          (!requireExtraStorage() || hasEnoughStorage(tile, getStorageRequired(amount), gs))
       );
    };
-
+   const youPay = getTotalFillAmount(fills);
+   const youGet = ((1 - totalTariff) * trade.sellAmount * getTotalFillAmount(fills)) / trade.buyAmount;
+   const evChange =
+      (Config.ResourcePrice[trade.sellResource] ?? 0) * youGet -
+      (Config.ResourcePrice[trade.buyResource] ?? 0) * youPay;
    return (
       <div className="window" style={{ width: 600, maxWidth: "75vw" }}>
          <div className="title-bar">
@@ -367,7 +373,7 @@ export function FillPlayerTradeModal({
                            })}
                         </div>
                         <div>
-                           <FormatNumber value={getTotalFillAmount(fills)} />
+                           <FormatNumber value={youPay} />
                         </div>
                      </summary>
                      <ul>
@@ -433,12 +439,7 @@ export function FillPlayerTradeModal({
                            })}
                         </div>
                         <div className="text-strong">
-                           <FormatNumber
-                              value={
-                                 ((1 - totalTariff) * trade.sellAmount * getTotalFillAmount(fills)) /
-                                 trade.buyAmount
-                              }
-                           />
+                           <FormatNumber value={youGet} />
                         </div>
                      </summary>
                      <ul>
@@ -467,6 +468,13 @@ export function FillPlayerTradeModal({
                         </li>
                      </ul>
                   </details>
+               </li>
+               <li className="row">
+                  <div className="f1">{t(L.EmpireValueImpactAfterTariff)}</div>
+                  <div className={cls("text-strong", evChange >= 0 ? "text-green" : "text-red")}>
+                     {mathSign(evChange)}
+                     {formatNumber(Math.abs(evChange))}
+                  </div>
                </li>
             </ul>
             <div className="sep15"></div>

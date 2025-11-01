@@ -1805,4 +1805,5 @@ export const EN = {
    UndoUpgradesForAllPermanentGreatPeopleThatAreEligibleForAgeWisdom: "Undo upgrades for all permanent great people that are eligible for age wisdom",
    Adaptive: "Adaptive",
    ShowOnlyAdaptiveGreatPeople: "Show only adaptive great people",
+   EmpireValueImpactAfterTariff: "Empire Value Impact (After Tariff)",
 };
