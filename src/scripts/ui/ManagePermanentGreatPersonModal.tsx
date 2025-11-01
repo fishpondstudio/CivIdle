@@ -15,8 +15,11 @@ import {
    getWisdomUpgradeCost,
    isEligibleForWisdom,
    sortGreatPeople,
+   undoAllEligiblePermanentGreatPeople,
+   upgradeAllEligiblePermanentGreatPeople,
+   upgradeAllUpgradeablePermanentGreatPeople,
 } from "../../../shared/logic/RebirthLogic";
-import { keysOf, numberToRoman } from "../../../shared/utilities/Helper";
+import { cls, keysOf, numberToRoman } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import { useGameOptions, useGameState } from "../Global";
 import { isOnlineUser } from "../rpc/RPCClient";
@@ -34,8 +37,10 @@ let ageState: TechAge | null = null;
 
 export function ManagePermanentGreatPersonModal(): React.ReactNode {
    const [age, setAge] = useState<TechAge | null>(ageState);
+   const [adaptiveOnly, setAdaptiveOnly] = useState(false);
+   const options = useGameOptions();
    return (
-      <div className="window" style={{ width: "800px" }}>
+      <div className="window" style={{ width: "800px", maxWidth: "90vw" }}>
          <div className="title-bar">
             <div className="title-bar-text">{t(L.PermanentGreatPeople)}</div>
             <div className="title-bar-controls">
@@ -49,7 +54,6 @@ export function ManagePermanentGreatPersonModal(): React.ReactNode {
                </WarningComponent>
             )}
             <div className="row mb10">
-               <div className="mr10">{t(L.FilterByAge)}</div>
                <select
                   value={age ?? ""}
                   onChange={(e) => {
@@ -74,7 +78,60 @@ export function ManagePermanentGreatPersonModal(): React.ReactNode {
                      );
                   })}
                </select>
+               <div className="w5" />
+               <Tippy content={t(L.ShowOnlyAdaptiveGreatPeople)}>
+                  <button
+                     onClick={() => setAdaptiveOnly(!adaptiveOnly)}
+                     className={cls(adaptiveOnly ? "active" : null)}
+                  >
+                     {t(L.Adaptive)}
+                  </button>
+               </Tippy>
                <div className="f1"></div>
+               <Tippy content={t(L.UpgradeAllPermanentGreatPeopleThatAreEligibleForAgeWisdom)}>
+                  <button
+                     onClick={() => {
+                        playClick();
+                        upgradeAllEligiblePermanentGreatPeople(options);
+                        notifyGameOptionsUpdate(options);
+                     }}
+                  >
+                     {t(L.UpgradeWisdomEligible)}
+                  </button>
+               </Tippy>
+               <Tippy content={t(L.UpgradeAllPermanentGreatPeopleThatAreUpgradeable)}>
+                  <button
+                     onClick={() => {
+                        playClick();
+                        upgradeAllUpgradeablePermanentGreatPeople(options);
+                        notifyGameOptionsUpdate(options);
+                     }}
+                  >
+                     {t(L.UpgradeAll)}
+                  </button>
+               </Tippy>
+               <Tippy
+                  content={
+                     isOnlineUser()
+                        ? t(L.UndoUpgradesForAllPermanentGreatPeopleThatAreEligibleForAgeWisdom)
+                        : t(L.FeatureRequireQuaestorOrAbove)
+                  }
+               >
+                  <button
+                     disabled={!isOnlineUser()}
+                     onClick={() => {
+                        if (!isOnlineUser()) {
+                           playError();
+                           return;
+                        }
+                        playClick();
+                        undoAllEligiblePermanentGreatPeople(options);
+                        notifyGameOptionsUpdate(options);
+                     }}
+                  >
+                     {t(L.UndoAll)}
+                  </button>
+               </Tippy>
                <button
                   className="row"
                   onClick={() => {
@@ -82,15 +139,15 @@ export function ManagePermanentGreatPersonModal(): React.ReactNode {
                      showModal(<ManageAgeWisdomModal />);
                   }}
                >
-                  <div>{t(L.ManageAgeWisdom)}</div>
-                  <div className="m-icon" style={{ margin: "0 -5px 0 5px", fontSize: "18px" }}>
-                     arrow_forward
+                  <div className="m-icon" style={{ margin: "0 0 0 -5px", fontSize: "18px" }}>
+                     emoji_objects
                   </div>
+                  <div>{t(L.AgeWisdom)}</div>
                </button>
             </div>
             <div
                className={classNames({ "table-view": true, "sticky-header f1": true })}
-               style={{ height: "50vh" }}
+               style={{ height: "60vh" }}
             >
                <table>
                   <thead>
@@ -106,7 +163,12 @@ export function ManagePermanentGreatPersonModal(): React.ReactNode {
                   </thead>
                   <tbody>
                      {keysOf(Config.GreatPerson)
-                        .filter((gp) => age === null || Config.GreatPerson[gp].age === age)
+                        .filter((gp) => {
+                           const ageFilter = age === null || Config.GreatPerson[gp].age === age;
+                           const adaptiveFilter =
+                              !adaptiveOnly || Config.GreatPerson[gp].type === GreatPersonType.Adaptive;
+                           return ageFilter && adaptiveFilter;
+                        })
                         .sort(sortGreatPeople)
                         .map((k) => {
                            const person = Config.GreatPerson[k];
@@ -227,7 +289,7 @@ function GreatPersonNormalRow({ greatPerson }: { greatPerson: GreatPerson }): Re
             )}
          </td>
          <td>
-            {permanent ? (
+            {permanent && isEligibleForWisdom(greatPerson) ? (
                <button
                   style={{ padding: "0 3px" }}
                   disabled={!isOnlineUser()}

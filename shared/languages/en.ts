@@ -1797,4 +1797,12 @@ export const EN = {
    DestroyResource: "Destroy Resource",
    TradeMapStatistics: "Trade Map Statistics",
    PlayerFlag: "Player Flag",
+   UpgradeWisdomEligible: "Upgrade Wisdom Eligible",
+   UpgradeAll: "Upgrade All",
+   UndoAll: "Undo All",
+   UpgradeAllPermanentGreatPeopleThatAreEligibleForAgeWisdom: "Upgrade all permanent great people that are eligible for age wisdom",
+   UpgradeAllPermanentGreatPeopleThatAreUpgradeable: "Upgrade all permanent great people that can be upgraded",
+   UndoUpgradesForAllPermanentGreatPeopleThatAreEligibleForAgeWisdom: "Undo upgrades for all permanent great people that are eligible for age wisdom",
+   Adaptive: "Adaptive",
+   ShowOnlyAdaptiveGreatPeople: "Show only adaptive great people",
 };

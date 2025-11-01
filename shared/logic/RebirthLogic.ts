@@ -1,5 +1,9 @@
 import type { City } from "../definitions/CityDefinitions";
-import { GreatPersonType, type GreatPerson } from "../definitions/GreatPersonDefinitions";
+import {
+   GreatPersonType,
+   UpgradeableGreatPersonTypes,
+   type GreatPerson,
+} from "../definitions/GreatPersonDefinitions";
 import { NoPrice, type Resource } from "../definitions/ResourceDefinitions";
 import type { TechAge } from "../definitions/TechDefinitions";
 import {
@@ -128,19 +132,37 @@ export function addPermanentGreatPerson(gp: GreatPerson, amount: number): void {
    }
 }
 
-export function upgradeAllPermanentGreatPeople(options: GameOptions): void {
+export function upgradeAllUpgradeablePermanentGreatPeople(options: GameOptions): void {
    forEach(options.greatPeople, (greatPerson, inventory) => {
-      if (
-         Config.GreatPerson[greatPerson].type !== GreatPersonType.Normal &&
-         Config.GreatPerson[greatPerson].type !== GreatPersonType.Adaptive &&
-         Config.GreatPerson[greatPerson].type !== GreatPersonType.LevelBoost
-      ) {
+      if (!UpgradeableGreatPersonTypes[Config.GreatPerson[greatPerson].type]) {
          return;
       }
       while (inventory.amount >= getGreatPersonUpgradeCost(greatPerson, inventory.level + 1)) {
          inventory.amount -= getGreatPersonUpgradeCost(greatPerson, inventory.level + 1);
          ++inventory.level;
       }
+   });
+}
+
+export function upgradeAllEligiblePermanentGreatPeople(options: GameOptions): void {
+   forEach(options.greatPeople, (greatPerson, inventory) => {
+      if (!isEligibleForWisdom(greatPerson)) {
+         return;
+      }
+      while (inventory.amount >= getGreatPersonUpgradeCost(greatPerson, inventory.level + 1)) {
+         inventory.amount -= getGreatPersonUpgradeCost(greatPerson, inventory.level + 1);
+         ++inventory.level;
+      }
+   });
+}
+
+export function undoAllEligiblePermanentGreatPeople(options: GameOptions): void {
+   forEach(options.greatPeople, (greatPerson, inventory) => {
+      if (!isEligibleForWisdom(greatPerson)) {
+         return;
+      }
+      inventory.amount += getTotalGreatPeopleUpgradeCost(greatPerson, inventory.level);
+      inventory.level = 0;
    });
 }
 

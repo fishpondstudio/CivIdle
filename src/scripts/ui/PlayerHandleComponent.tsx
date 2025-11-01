@@ -8,7 +8,7 @@ import { getGameOptions, getGameState } from "../../../shared/logic/GameStateLog
 import {
    getRebirthGreatPeopleCount,
    getTribuneUpgradeMaxLevel,
-   upgradeAllPermanentGreatPeople,
+   upgradeAllUpgradeablePermanentGreatPeople,
 } from "../../../shared/logic/RebirthLogic";
 import {
    AccountLevel,
@@ -419,7 +419,7 @@ function AccountDetails(): React.ReactNode {
                                  await resetToCity(uuid4(), getGameState().city);
                                  const options = getGameOptions();
                                  options.greatPeopleChoicesV2 = [];
-                                 upgradeAllPermanentGreatPeople(options);
+                                 upgradeAllUpgradeablePermanentGreatPeople(options);
                                  forEach(options.greatPeople, (k, v) => {
                                     const maxLevel = getTribuneUpgradeMaxLevel(Config.GreatPerson[k].age);
                                     if (v.level >= maxLevel) {
