@@ -111,7 +111,7 @@ export function BuildingWorkerComponent({ gameState, xy }: IBuildingComponentPro
                               return (
                                  <li key={i} className="row">
                                     <div className="f1">{m.source}</div>
-                                    <div>{m.worker}</div>
+                                    <div>{formatNumber(m.worker)}</div>
                                  </li>
                               );
                            })}
@@ -131,7 +131,7 @@ export function BuildingWorkerComponent({ gameState, xy }: IBuildingComponentPro
                                  return (
                                     <li key={i} className="row">
                                        <div className="f1">{m.source}</div>
-                                       <div>{m.value}</div>
+                                       <div>{formatNumber(m.value)}</div>
                                     </li>
                                  );
                               })}
@@ -196,7 +196,7 @@ export function BuildingWorkerComponent({ gameState, xy }: IBuildingComponentPro
                                  // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
                                  <li key={idx} className="row">
                                     <div className="f1">{m.source}</div>
-                                    <div>{m.worker}</div>
+                                    <div>{formatNumber(m.worker)}</div>
                                  </li>
                               );
                            })}
