@@ -46,8 +46,12 @@ export function onTileExplored(xy: Tile): void {
             break;
          }
          case "MountSinai": {
-            const age = getCurrentAge(gs);
+            let age = getCurrentAge(gs);
             if (!age) return;
+            // We don't have Stone Age great people, so we default to Bronze Age
+            if (age === "StoneAge") {
+               age = "BronzeAge";
+            }
             const candidates = rollGreatPeopleThisRun(new Set([age]), gs.city, getGreatPeopleChoiceCount(gs));
             if (candidates) {
                gs.greatPeopleChoicesV2.push(candidates);
