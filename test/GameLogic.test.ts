@@ -17,7 +17,8 @@ import {
    getGreatPersonThisRunLevel,
    getTotalGreatPeopleUpgradeCost,
    getUpgradeCostFib,
-   upgradeAllPermanentGreatPeople,
+   upgradeAllEligiblePermanentGreatPeople,
+   upgradeAllUpgradeablePermanentGreatPeople,
 } from "../shared/logic/RebirthLogic";
 import {
    addResourceTo,
@@ -291,7 +292,7 @@ test("upgradeAllPermanentGreatPeople", () => {
       Dido: { level: 1, amount: 0 },
       JamesWatt: { level: 1, amount: 14 },
    };
-   upgradeAllPermanentGreatPeople(options);
+   upgradeAllUpgradeablePermanentGreatPeople(options);
 
    assert.equal(3, options.greatPeople.AdaLovelace?.level);
    assert.equal(4, options.greatPeople.AdaLovelace?.amount);
@@ -301,6 +302,39 @@ test("upgradeAllPermanentGreatPeople", () => {
 
    assert.equal(4, options.greatPeople.JamesWatt?.level);
    assert.equal(0, options.greatPeople.JamesWatt?.amount);
+});
+
+test("upgradeAllEligiblePermanentGreatPeople", () => {
+   const options = new GameOptions();
+   // 2, 4, 8
+   options.greatPeople = {
+      // Adaptive
+      SidMeier: { level: 0, amount: 11 },
+      // City specific
+      GeorgeWashington: { level: 0, amount: 11 },
+      // Wildcard
+      MahatmaGandhi: { level: 0, amount: 11 },
+      // Promotion
+      PabloPicasso: { level: 0, amount: 11 },
+      // Normal
+      Confucius: { level: 0, amount: 11 },
+   };
+   upgradeAllEligiblePermanentGreatPeople(options);
+
+   assert.equal(0, options.greatPeople.SidMeier?.level);
+   assert.equal(11, options.greatPeople.SidMeier?.amount);
+
+   assert.equal(0, options.greatPeople.GeorgeWashington?.level);
+   assert.equal(11, options.greatPeople.GeorgeWashington?.amount);
+
+   assert.equal(0, options.greatPeople.MahatmaGandhi?.level);
+   assert.equal(11, options.greatPeople.MahatmaGandhi?.amount);
+
+   assert.equal(0, options.greatPeople.PabloPicasso?.level);
+   assert.equal(11, options.greatPeople.PabloPicasso?.amount);
+
+   assert.equal(3, options.greatPeople.Confucius?.level);
+   assert.equal(4, options.greatPeople.Confucius?.amount);
 });
 
 test("isPrerequisiteOf", () => {
