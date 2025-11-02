@@ -46,7 +46,7 @@ import { GreatPersonImage } from "../visuals/GreatPersonVisual";
 import { playClick, playError } from "../visuals/Sound";
 import { hideModal, showToast } from "./GlobalModal";
 import { FormatNumber } from "./HelperComponents";
-import { RenderHTML } from "./RenderHTMLComponent";
+import { html, RenderHTML } from "./RenderHTMLComponent";
 import { TextWithHelp } from "./TextWithHelpComponent";
 import { BuildingSpriteComponent, DepositTextureComponent, MiscTextureComponent } from "./TextureSprites";
 import { WarningComponent } from "./WarningComponent";
@@ -90,6 +90,7 @@ export function RebirthModal(): React.ReactNode {
       Tick.current.specialBuildings.has("CentrePompidou") &&
       (getCurrentAge(gs) !== "InformationAge" || gs.city === nextCity);
 
+   const uniqueEffects = Config.City[nextCity].uniqueEffects();
    return (
       <div className="window" style={{ width: "700px" }}>
          <div className="title-bar">
@@ -280,6 +281,24 @@ export function RebirthModal(): React.ReactNode {
                      );
                   })}
                </div>
+               {uniqueEffects.length <= 0 ? null : (
+                  <>
+                     <div className="text-strong mt5 mb5">{t(L.UniqueEffects)}</div>
+                     <div className="inset-shallow white">
+                        {uniqueEffects.map((effect, i) => {
+                           return (
+                              <div
+                                 key={i}
+                                 className="row p5"
+                                 style={{ backgroundColor: i % 2 === 0 ? "#fff" : "#efefef" }}
+                              >
+                                 {html(effect)}
+                              </div>
+                           );
+                        })}
+                     </div>
+                  </>
+               )}
                <div className="text-strong mt5 mb5">{t(L.UniqueBuildings)}</div>
                <div className="inset-shallow white">
                   {jsxMapOf(Config.City[nextCity].uniqueBuildings, (building, tech, i) => {

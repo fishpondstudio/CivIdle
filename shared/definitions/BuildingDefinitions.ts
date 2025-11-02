@@ -139,6 +139,13 @@ export class BuildingDefinitions {
       power: true,
    };
 
+   FusionFuelPlant: IBuildingDefinition = {
+      name: () => t(L.FusionFuelPlant),
+      input: { NuclearFuelRod: 10 },
+      output: { FusionFuel: 1 },
+      power: true,
+   };
+
    OilWell: IBuildingDefinition = {
       name: () => t(L.OilWell),
       input: {},
@@ -190,6 +197,12 @@ export class BuildingDefinitions {
       input: { NuclearFuelRod: 2 },
       output: { Power: 65 },
       construction: { ReinforcedConcrete: 16, Steel: 16 },
+   };
+
+   FusionPowerPlant: IBuildingDefinition = {
+      name: () => t(L.FusionPowerPlant),
+      input: { FusionFuel: 2 },
+      output: { Power: 1140 },
    };
    // #endregion /////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -2213,6 +2226,61 @@ export class BuildingDefinitions {
       max: 1,
       special: BuildingSpecial.WorldWonder,
       wikipedia: "Port_of_Singapore",
+   };
+
+   SydneyOperaHouse: IBuildingDefinition = {
+      name: () => t(L.SydneyOperaHouse),
+      desc: () => t(L.SydneyOperaHouseDesc),
+      input: {},
+      output: {},
+      construction: { Koti: 500 },
+      max: 1,
+      special: BuildingSpecial.WorldWonder,
+      wikipedia: "Sydney_Opera_House",
+   };
+
+   SydneyHarbourBridge: IBuildingDefinition = {
+      name: () => t(L.SydneyHarbourBridge),
+      desc: () => t(L.SydneyHarbourBridgeDesc),
+      input: {},
+      output: {},
+      construction: { Koti: 500 },
+      max: 1,
+      special: BuildingSpecial.WorldWonder,
+      wikipedia: "Sydney_Harbour_Bridge",
+   };
+
+   GreatOceanRoad: IBuildingDefinition = {
+      name: () => t(L.GreatOceanRoad),
+      desc: () => t(L.GreatOceanRoadDesc),
+      input: {},
+      output: {},
+      construction: { Koti: 500 },
+      max: 1,
+      special: BuildingSpecial.WorldWonder,
+      wikipedia: "Great_Ocean_Road",
+   };
+
+   GreatBarrierReef: IBuildingDefinition = {
+      name: () => t(L.GreatBarrierReef),
+      desc: () => t(L.GreatBarrierReefDesc),
+      input: {},
+      output: {},
+      construction: {},
+      max: 0,
+      special: BuildingSpecial.NaturalWonder,
+      wikipedia: "Great_Barrier_Reef",
+   };
+
+   Uluru: IBuildingDefinition = {
+      name: () => t(L.Uluru),
+      desc: () => t(L.UluruDesc),
+      input: {},
+      output: {},
+      construction: {},
+      max: 0,
+      special: BuildingSpecial.NaturalWonder,
+      wikipedia: "Uluru",
    };
 
    // #endregion /////////////////////////////////////////////////////////////////////////////////////////////

@@ -1326,6 +1326,22 @@ export class GreatPersonDefinitions {
       type: GreatPersonType.Adaptive,
    };
 
+   JohnBradfield: IGreatPersonDefinition = {
+      name: () => t(L.JohnBradfield),
+      desc: (self, level) =>
+         t(L.PlusXLevelToXBuilding, {
+            value: formatNumber(self.value(level)),
+            building: Config.Building.SydneyHarbourBridge.name(),
+         }),
+      time: "1867 ~ 1943 AD",
+      value: (level) => level,
+      maxLevel: Number.POSITIVE_INFINITY,
+      age: "WorldWarAge",
+      tick: (self, level, source) => {},
+      type: GreatPersonType.LevelBoost,
+      city: "Australian",
+   };
+
    // Cold Wars /////////////////////////////////////////////////////////////////////////////////////////////
 
    JRobertOppenheimer: IGreatPersonDefinition = boostOf({
@@ -1721,6 +1737,19 @@ export class GreatPersonDefinitions {
       value: (level) => level,
       maxLevel: Number.POSITIVE_INFINITY,
       age: "InformationAge",
+   });
+
+   BrianSchmidt: IGreatPersonDefinition = boostOf({
+      name: () => t(L.BrianSchmidt),
+      boost: {
+         multipliers: ["output", "storage"],
+         buildings: ["FusionFuelPlant", "FusionPowerPlant"],
+      },
+      time: "1967 ~ ",
+      value: (level) => level,
+      maxLevel: Number.POSITIVE_INFINITY,
+      age: "InformationAge",
+      city: "Australian",
    });
 
    StephenHawking: IGreatPersonDefinition = {

@@ -126,6 +126,7 @@ export class ResourceDefinitions {
    Koti: IResourceDefinition = { name: () => t(L.Koti) };
    Rebar: IResourceDefinition = { name: () => t(L.Rebar) };
    ReinforcedConcrete: IResourceDefinition = { name: () => t(L.ReinforcedConcrete) };
+   FusionFuel: IResourceDefinition = { name: () => t(L.FusionFuel) };
 }
 
 export type Resource = keyof ResourceDefinitions;
