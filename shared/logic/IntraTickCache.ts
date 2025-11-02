@@ -1,5 +1,5 @@
 import type { Building, IBuildingDefinition } from "../definitions/BuildingDefinitions";
-import { NoPrice, NoStorage, type Deposit, type Resource } from "../definitions/ResourceDefinitions";
+import { NoPrice, NoStorage, type Deposit, type Material } from "../definitions/MaterialDefinitions";
 import { Grid, type IGrid } from "../utilities/Grid";
 import {
    clamp,
@@ -38,14 +38,14 @@ import { Transports } from "./Transports";
 class IntraTickCache {
    revealedDeposits: PartialSet<Deposit> | undefined;
    unlockedBuildings: PartialSet<Building> | undefined;
-   unlockedResources: PartialSet<Resource> | undefined;
+   unlockedResources: PartialSet<Material> | undefined;
    buildingsByType: Map<Building, Map<Tile, Required<ITileData>>> | undefined;
    buildingsByXy: Map<Tile, IBuildingData> | undefined;
    transportStat: ITransportStat | undefined;
-   resourceAmount: PartialTabulate<Resource> | undefined;
-   buildingIO: Map<number, Readonly<PartialTabulate<Resource>>> = new Map<
+   resourceAmount: PartialTabulate<Material> | undefined;
+   buildingIO: Map<number, Readonly<PartialTabulate<Material>>> = new Map<
       number,
-      Readonly<PartialTabulate<Resource>>
+      Readonly<PartialTabulate<Material>>
    >();
    storageFullBuildings: Tile[] | undefined;
    resourceIO: IResourceIO | undefined;
@@ -54,10 +54,10 @@ class IntraTickCache {
 }
 
 export interface IResourceIO {
-   theoreticalInput: Map<Resource, number>;
-   actualInput: Map<Resource, number>;
-   theoreticalOutput: Map<Resource, number>;
-   actualOutput: Map<Resource, number>;
+   theoreticalInput: Map<Material, number>;
+   actualInput: Map<Material, number>;
+   theoreticalOutput: Map<Material, number>;
+   actualOutput: Map<Material, number>;
 }
 
 let _cache = new IntraTickCache();
@@ -75,13 +75,13 @@ export function getBuildingIO(
    type: keyof Pick<IBuildingDefinition, "input" | "output">,
    options: IOFlags,
    gs: GameState,
-): Readonly<PartialTabulate<Resource>> {
+): Readonly<PartialTabulate<Material>> {
    const key = (tileToHash(xy) << (IOFlags.TotalUsedBits + 1)) | (options << 1) | (type === "input" ? 1 : 0);
    const cached = _cache.buildingIO.get(key);
    if (cached) {
       return cached;
    }
-   const result: PartialTabulate<Resource> = {};
+   const result: PartialTabulate<Material> = {};
    const b = gs.tiles.get(xy)?.building;
    if (b) {
       const resources = { ...Config.Building[b.type][type] };
@@ -363,7 +363,7 @@ export function unlockedBuildings(gs: GameState): PartialSet<Building> {
    return _cache.unlockedBuildings;
 }
 
-export function unlockedResources(gs: GameState, ...include: Resource[]): PartialSet<Resource> {
+export function unlockedResources(gs: GameState, ...include: Material[]): PartialSet<Material> {
    if (_cache.unlockedResources) {
       const result = { ..._cache.unlockedResources };
       include.forEach((res) => {
@@ -386,8 +386,15 @@ export function unlockedResources(gs: GameState, ...include: Resource[]): Partia
 
 let grid: IGrid | null = null;
 
+export function getCitySize(gs: GameState): number {
+   if (!Number.isFinite(gs.extraTileSize)) {
+      gs.extraTileSize = 0;
+   }
+   return Config.City[gs.city].size + gs.extraTileSize;
+}
+
 export function getGrid(gs: GameState): IGrid {
-   const size = Config.City[gs.city].size;
+   const size = getCitySize(gs);
    if (grid === null || grid.maxX !== size || grid.maxY !== size || grid.size !== TILE_SIZE) {
       grid = new Grid(size, size, TILE_SIZE);
    }
@@ -408,5 +415,5 @@ export function getGlobalMultipliers(type: MultiplierType): MultiplierWithSource
 }
 
 export function getCloneLabScienceOutput(cloneLab: ICloneBuildingData): number {
-   return ((Config.ResourcePrice[cloneLab.inputResource] ?? 0) * 2) / SCIENCE_VALUE;
+   return ((Config.MaterialPrice[cloneLab.inputResource] ?? 0) * 2) / SCIENCE_VALUE;
 }

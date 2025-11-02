@@ -1,6 +1,6 @@
 import Tippy from "@tippyjs/react";
 import type React from "react";
-import { NoPrice, NoStorage, type Resource } from "../../../shared/definitions/ResourceDefinitions";
+import { NoPrice, NoStorage, type Material } from "../../../shared/definitions/MaterialDefinitions";
 import { getMultipliersFor, totalMultiplierFor } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
 import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
@@ -37,8 +37,8 @@ export function SwissBankBuildingBody({ gameState, xy }: IBuildingComponentProps
    const electrification = Tick.current.electrified.get(xy) ?? 0;
    const effectiveLevel =
       building.level + electrification + levelBoost.reduce((acc, lb) => acc + lb.value, 0);
-   const selectData: (ISelectItem<Resource | null> | null)[] = keysOf(availableResources)
-      .sort((a, b) => Config.Resource[a].name().localeCompare(Config.Resource[b].name()))
+   const selectData: (ISelectItem<Material | null> | null)[] = keysOf(availableResources)
+      .sort((a, b) => Config.Material[a].name().localeCompare(Config.Material[b].name()))
       .map((res) => {
          if (NoPrice[res] || NoStorage[res]) {
             return null;
@@ -47,7 +47,7 @@ export function SwissBankBuildingBody({ gameState, xy }: IBuildingComponentProps
             label: (
                <div className="f1 row g5">
                   <div />
-                  <div className="f1">{Config.Resource[res].name()}</div>
+                  <div className="f1">{Config.Material[res].name()}</div>
                   <div className="text-desc">{formatNumber(availableResources[res] ?? 0)}</div>
                   <div />
                </div>
@@ -79,7 +79,7 @@ export function SwissBankBuildingBody({ gameState, xy }: IBuildingComponentProps
                         }
                         return (
                            <li key={res} className="row">
-                              <div className="f1">{Config.Resource[res].name()}</div>
+                              <div className="f1">{Config.Material[res].name()}</div>
                               <div className="text-strong">{formatNumber(amount)}</div>
                            </li>
                         );
@@ -95,7 +95,7 @@ export function SwissBankBuildingBody({ gameState, xy }: IBuildingComponentProps
                         }
                         return (
                            <li key={res} className="row">
-                              <div className="f1">{Config.Resource[res].name()}</div>
+                              <div className="f1">{Config.Material[res].name()}</div>
                               <div className="text-strong">{formatNumber(amount)}</div>
                            </li>
                         );

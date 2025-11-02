@@ -4,7 +4,7 @@ import { isSpecialBuilding } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
 import { GameStateFlags } from "../../../shared/logic/GameState";
 import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
-import { getGrid } from "../../../shared/logic/IntraTickCache";
+import { getCitySize, getGrid } from "../../../shared/logic/IntraTickCache";
 import { clearTransportSourceCache } from "../../../shared/logic/Update";
 import { pointToTile, setFlag, tileToPoint } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
@@ -38,7 +38,7 @@ export function BuildingSellComponent({ gameState, xy }: IBuildingComponentProps
             <div className="m-icon small">delete</div>
             <div>{t(L.DemolishBuilding)}</div>
          </button>
-         {[1, 2, 3, 4, 5, Config.City[gameState.city].size * 2].map((range) => {
+         {[1, 2, 3, 4, 5, getCitySize(gameState) * 2].map((range) => {
             return (
                <Tippy key={range} content={t(L.DemolishAllBuilding, { building: def.name(), tile: range })}>
                   <button

@@ -22,7 +22,7 @@ export function MontSaintMichelBuildingBody({ gameState, xy }: IBuildingComponen
    const maxAmount = getBuildingCost(building).Culture ?? 0;
    const { workersBusy, workersAfterHappiness } = getScienceFromWorkers(gameState);
    const idleWorkers = workersAfterHappiness - workersBusy;
-   const culture = idleWorkers / (Config.ResourcePrice.Culture ?? 1);
+   const culture = idleWorkers / (Config.MaterialPrice.Culture ?? 1);
    return (
       <div className="window-body">
          <SpaceshipIdleComponent gameState={gameState} type={building.type} />

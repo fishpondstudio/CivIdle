@@ -1,4 +1,4 @@
-import type { Resource } from "../../../shared/definitions/ResourceDefinitions";
+import type { Material } from "../../../shared/definitions/MaterialDefinitions";
 import { MAX_TECH_AGE } from "../../../shared/definitions/TechDefinitions";
 import { Config } from "../../../shared/logic/Config";
 import { getGameOptions, getGameState, savedGame } from "../../../shared/logic/GameStateLogic";
@@ -109,7 +109,7 @@ export async function handleChatCommand(command: string): Promise<void> {
                MAX_TECH_AGE,
                getGameState().city,
             );
-            await resetToCity(uuid4(), firstKeyOf(Config.City)!);
+            await resetToCity(uuid4(), firstKeyOf(Config.City)!, 0);
             await saveGame();
             window.location.reload();
          }
@@ -455,10 +455,10 @@ export async function handleChatCommand(command: string): Promise<void> {
          if (!parts[1] || !parts[2] || !parts[3]) {
             throw new Error("Invalid command format");
          }
-         if (!(parts[2] in Config.Resource)) {
+         if (!(parts[2] in Config.Material)) {
             throw new Error("Invalid resource");
          }
-         await client.addPendingClaim(parts[1], parts[2] as Resource, safeParseInt(parts[3], 10));
+         await client.addPendingClaim(parts[1], parts[2] as Material, safeParseInt(parts[3], 10));
          addSystemMessage("Pending claim has been added");
          break;
       }

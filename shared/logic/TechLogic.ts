@@ -1,6 +1,6 @@
 import type { Building } from "../definitions/BuildingDefinitions";
 import type { City } from "../definitions/CityDefinitions";
-import type { Deposit } from "../definitions/ResourceDefinitions";
+import type { Deposit } from "../definitions/MaterialDefinitions";
 import type { Tech, TechAge } from "../definitions/TechDefinitions";
 import {
    firstKeyOf,

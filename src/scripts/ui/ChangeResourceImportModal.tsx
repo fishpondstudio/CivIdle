@@ -1,7 +1,7 @@
 import Tippy from "@tippyjs/react";
 import classNames from "classnames";
 import { useState } from "react";
-import type { Resource } from "../../../shared/definitions/ResourceDefinitions";
+import type { Material } from "../../../shared/definitions/MaterialDefinitions";
 import { Config } from "../../../shared/logic/Config";
 import { GameFeature, hasFeature } from "../../../shared/logic/FeatureLogic";
 import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
@@ -34,7 +34,7 @@ export function ChangeResourceImportModal({
    capacity,
 }: {
    building: IResourceImportBuildingData;
-   resource: Resource;
+   resource: Material;
    storage: number;
    capacity: number;
 }): React.ReactNode {
@@ -53,7 +53,7 @@ export function ChangeResourceImportModal({
       <div className="window" style={{ width: "450px" }}>
          <div className="title-bar">
             <div className="title-bar-text">
-               {t(L.ResourceImportSettings, { res: Config.Resource[resource].name() })}
+               {t(L.ResourceImportSettings, { res: Config.Material[resource].name() })}
             </div>
             <div className="title-bar-controls">
                <button onClick={hideModal} aria-label="Close"></button>

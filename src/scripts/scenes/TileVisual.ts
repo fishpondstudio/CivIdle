@@ -1,7 +1,7 @@
 import type { SmoothGraphics } from "@pixi/graphics-smooth";
 import type { IDestroyOptions, IPointData } from "pixi.js";
 import { BitmapText, Container, Rectangle, Sprite, Texture } from "pixi.js";
-import type { Resource } from "../../../shared/definitions/ResourceDefinitions";
+import type { Material } from "../../../shared/definitions/MaterialDefinitions";
 import { getBuildingLevelLabel, getBuildingPercentage } from "../../../shared/logic/BuildingLogic";
 import {
    DarkTileTextures,
@@ -40,7 +40,7 @@ export class TileVisual extends Container {
    private _spinner: Sprite;
    private _building: Sprite;
    private readonly _grid: IPointData;
-   private readonly _deposits: Map<Resource, Sprite> = new Map();
+   private readonly _deposits: Map<Material, Sprite> = new Map();
    private readonly _tile: ITileData;
    private readonly _construction: Sprite;
    private readonly _notProducing: Sprite;

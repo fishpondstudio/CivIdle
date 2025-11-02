@@ -2,8 +2,8 @@ import type { Building } from "../definitions/BuildingDefinitions";
 import type { City } from "../definitions/CityDefinitions";
 import type { GreatPerson } from "../definitions/GreatPersonDefinitions";
 import type { Ideology } from "../definitions/IdeologyDefinitions";
+import type { Deposit, Material } from "../definitions/MaterialDefinitions";
 import type { Religion } from "../definitions/ReligionDefinitions";
-import type { Deposit, Resource } from "../definitions/ResourceDefinitions";
 import type { TechAge } from "../definitions/TechDefinitions";
 import type { Tradition } from "../definitions/TraditionDefinitions";
 import { clamp, isNullOrUndefined, type Tile } from "../utilities/Helper";
@@ -11,6 +11,7 @@ import type { PartialSet, PartialTabulate } from "../utilities/TypeDefinitions";
 import { L, t } from "../utilities/i18n";
 import { Config } from "./Config";
 import type { GameState } from "./GameState";
+import { getCitySize } from "./IntraTickCache";
 import { clearTransportSourceCache } from "./Update";
 
 export interface ITileData {
@@ -53,7 +54,7 @@ export interface IBuildingData {
    type: Building;
    level: number;
    desiredLevel: number;
-   resources: PartialTabulate<Resource>;
+   resources: PartialTabulate<Material>;
    status: BuildingStatus;
    capacity: number;
 
@@ -67,7 +68,7 @@ export interface IBuildingData {
 
    options: BuildingOptions;
 
-   suspendedInput: Map<Resource, SuspendedInput>;
+   suspendedInput: Map<Material, SuspendedInput>;
 
    inputMode: BuildingInputMode;
    maxInputDistance: number;
@@ -79,8 +80,8 @@ export enum MarketOptions {
 }
 
 export interface IMarketBuildingData extends IBuildingData {
-   sellResources: PartialSet<Resource>;
-   availableResources: Partial<Record<Resource, Resource>>;
+   sellResources: PartialSet<Material>;
+   availableResources: Partial<Record<Material, Material>>;
    marketOptions: MarketOptions;
 }
 
@@ -91,7 +92,7 @@ export interface IResourceImport {
 }
 
 export interface ICloneBuildingData extends IBuildingData {
-   inputResource: Resource;
+   inputResource: Material;
    transportedAmount: number;
 }
 
@@ -109,7 +110,7 @@ export enum SwissBankFlags {
 
 export interface IResourceImportBuildingData extends IBuildingData {
    resourceImportOptions: ResourceImportOptions;
-   resourceImports: Partial<Record<Resource, IResourceImport>>;
+   resourceImports: Partial<Record<Material, IResourceImport>>;
 }
 
 export enum WarehouseOptions {
@@ -156,7 +157,7 @@ export interface ICentrePompidouBuildingData extends IBuildingData {
 }
 
 export interface ISwissBankBuildingData extends IBuildingData {
-   resource: Resource | null;
+   resource: Material | null;
    flags: SwissBankFlags;
 }
 
@@ -329,6 +330,6 @@ export function makeBuilding(data: Pick<IBuildingData, "type"> & Partial<IBuildi
 
 export function getDepositTileCount(deposit: Deposit, gs: GameState): number {
    const city = Config.City[gs.city];
-   const tiles = city.size * city.size;
+   const tiles = getCitySize(gs) ** 2;
    return Math.round(tiles * city.deposits[deposit]);
 }

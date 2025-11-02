@@ -4,7 +4,7 @@ import {
    UpgradeableGreatPersonTypes,
    type GreatPerson,
 } from "../definitions/GreatPersonDefinitions";
-import { NoPrice, type Resource } from "../definitions/ResourceDefinitions";
+import { NoPrice, type Material } from "../definitions/MaterialDefinitions";
 import type { TechAge } from "../definitions/TechDefinitions";
 import {
    AccountLevel,
@@ -261,8 +261,8 @@ export function getPermanentGreatPeopleCount(): number {
    );
 }
 
-export function calculateEmpireValue(resource: Resource, amount: number): number {
-   return NoPrice[resource] ? 0 : amount * (Config.ResourcePrice[resource] ?? 0);
+export function calculateEmpireValue(resource: Material, amount: number): number {
+   return NoPrice[resource] ? 0 : amount * (Config.MaterialPrice[resource] ?? 0);
 }
 
 export function sortGreatPeople(a: GreatPerson, b: GreatPerson): number {

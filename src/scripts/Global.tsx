@@ -1,12 +1,14 @@
 import { Preferences } from "@capacitor/preferences";
 import { Sprite, type Application } from "pixi.js";
+import type { Building } from "../../shared/definitions/BuildingDefinitions";
 import type { City } from "../../shared/definitions/CityDefinitions";
-import { NoPrice, NoStorage } from "../../shared/definitions/ResourceDefinitions";
+import { NoPrice, NoStorage } from "../../shared/definitions/MaterialDefinitions";
 import type { TechAge } from "../../shared/definitions/TechDefinitions";
 import {
    exploreTile,
    findSpecialBuilding,
    getBuildingCost,
+   getTotalBuildingCost,
    isWorldOrNaturalWonder,
 } from "../../shared/logic/BuildingLogic";
 import { Config } from "../../shared/logic/Config";
@@ -28,6 +30,7 @@ import {
    rollGreatPeopleThisRun,
    rollPermanentGreatPeople,
 } from "../../shared/logic/RebirthLogic";
+import { getResourcesValue } from "../../shared/logic/ResourceLogic";
 import { Tick } from "../../shared/logic/TickLogic";
 import { Transports } from "../../shared/logic/Transports";
 import { AccountLevel, UserAttributes } from "../../shared/utilities/Database";
@@ -36,10 +39,12 @@ import {
    clamp,
    clearFlag,
    forEach,
+   formatNumber,
    keysOf,
    resolveIn,
    safeAdd,
    sizeOf,
+   uuid4,
 } from "../../shared/utilities/Helper";
 import { TypedEvent } from "../../shared/utilities/TypedEvent";
 import { UnicodeText } from "../../shared/utilities/UnicodeText";
@@ -62,11 +67,12 @@ import { Fonts } from "./visuals/Fonts";
 import { clearGreatPersonImageCache } from "./visuals/GreatPersonVisual";
 import { compress, decompress } from "./workers/Compress";
 
-export async function resetToCity(id: string, city: City): Promise<void> {
+export async function resetToCity(id: string, city: City, extraTileSize: number): Promise<void> {
    Transports.length = 0;
    savedGame.current = new GameState();
    savedGame.current.id = id;
    savedGame.current.city = city;
+   savedGame.current.extraTileSize = extraTileSize;
    initializeGameState(savedGame.current, savedGame.options);
 }
 
@@ -386,6 +392,11 @@ if (import.meta.env.DEV) {
    };
 
    // @ts-expect-error
+   window.getBuildingValue = (building: Building, level: number) => {
+      return formatNumber(getResourcesValue(getTotalBuildingCost({ type: building }, 0, level)));
+   };
+
+   // @ts-expect-error
    window.tickGameState = (tick: number) => {
       const gs = getGameState();
       for (let i = 0; i < tick; i++) {
@@ -409,12 +420,24 @@ if (import.meta.env.DEV) {
    };
    // @ts-expect-error
    window.addAllResources = (amount: number) => {
-      forEach(Config.Resource, (res, def) => {
+      forEach(Config.Material, (res, def) => {
          if (NoStorage[res] || NoPrice[res]) {
             return;
          }
          safeAdd(Tick.current.specialBuildings.get("Headquarter")!.building.resources, res, amount);
       });
+   };
+
+   // @ts-expect-error
+   window.loadSave = async () => {
+      const [handle] = await window.showOpenFilePicker();
+      const file = await handle.getFile();
+      const bytes = await file.arrayBuffer();
+      const save = await decompressSave(new Uint8Array(bytes));
+      save.options.userId = `web:${uuid4()}`;
+      overwriteSaveGame(save);
+      await saveGame();
+      window.location.reload();
    };
 
    // @ts-expect-error

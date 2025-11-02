@@ -2,7 +2,7 @@ import type { PartialSet } from "../utilities/TypeDefinitions";
 import { L, t } from "../utilities/i18n";
 import type { Building } from "./BuildingDefinitions";
 import type { IUnlockableMultipliers } from "./ITechDefinition";
-import type { Deposit } from "./ResourceDefinitions";
+import type { Deposit } from "./MaterialDefinitions";
 import type { Tech } from "./TechDefinitions";
 
 export class CityDefinitions {
@@ -34,6 +34,7 @@ export class CityDefinitions {
       requireGreatPeopleLevel: 0,
       requireSupporterPack: false,
       festivalDesc: () => t(L.SaturnaliaV2),
+      uniqueEffects: () => [],
    };
    Athens: ICityDefinition = {
       name: () => t(L.Greek),
@@ -60,6 +61,7 @@ export class CityDefinitions {
       requireGreatPeopleLevel: 5,
       requireSupporterPack: false,
       festivalDesc: () => t(L.Panathenaea),
+      uniqueEffects: () => [],
    };
    Memphis: ICityDefinition = {
       name: () => t(L.Egyptian),
@@ -89,6 +91,7 @@ export class CityDefinitions {
       requireGreatPeopleLevel: 10,
       requireSupporterPack: false,
       festivalDesc: () => t(L.OpetV2),
+      uniqueEffects: () => [],
    };
    Beijing: ICityDefinition = {
       name: () => t(L.Chinese),
@@ -119,6 +122,7 @@ export class CityDefinitions {
       requireGreatPeopleLevel: 15,
       requireSupporterPack: false,
       festivalDesc: () => t(L.LunarNewYear),
+      uniqueEffects: () => [],
    };
    NewYork: ICityDefinition = {
       name: () => t(L.American),
@@ -156,6 +160,7 @@ export class CityDefinitions {
       requireGreatPeopleLevel: 20,
       requireSupporterPack: true,
       festivalDesc: () => t(L.Thanksgiving),
+      uniqueEffects: () => [],
    };
    Babylon: ICityDefinition = {
       name: () => t(L.Babylonian),
@@ -186,6 +191,7 @@ export class CityDefinitions {
       requireGreatPeopleLevel: 30,
       requireSupporterPack: true,
       festivalDesc: () => t(L.Akitu),
+      uniqueEffects: () => [],
    };
    Kyoto: ICityDefinition = {
       name: () => t(L.Japanese),
@@ -216,6 +222,7 @@ export class CityDefinitions {
       requireGreatPeopleLevel: 40,
       requireSupporterPack: true,
       festivalDesc: () => t(L.AoiMatsuri),
+      uniqueEffects: () => [],
    };
    German: ICityDefinition = {
       name: () => t(L.German),
@@ -245,6 +252,7 @@ export class CityDefinitions {
       requireGreatPeopleLevel: 50,
       requireSupporterPack: true,
       festivalDesc: () => t(L.Oktoberfest),
+      uniqueEffects: () => [],
    };
 
    English: ICityDefinition = {
@@ -279,6 +287,7 @@ export class CityDefinitions {
       requireGreatPeopleLevel: 60,
       requireSupporterPack: true,
       festivalDesc: () => t(L.GuyFawkesNightV2),
+      uniqueEffects: () => [],
    };
 
    French: ICityDefinition = {
@@ -313,6 +322,7 @@ export class CityDefinitions {
       requireGreatPeopleLevel: 70,
       requireSupporterPack: true,
       festivalDesc: () => t(L.BastilleDay),
+      uniqueEffects: () => [],
    };
 
    Ottoman: ICityDefinition = {
@@ -344,6 +354,7 @@ export class CityDefinitions {
       requireGreatPeopleLevel: 80,
       requireSupporterPack: true,
       festivalDesc: () => t(L.Culus),
+      uniqueEffects: () => [],
    };
 
    Brazilian: ICityDefinition = {
@@ -378,6 +389,7 @@ export class CityDefinitions {
       requireGreatPeopleLevel: 90,
       requireSupporterPack: true,
       festivalDesc: () => t(L.Carnival),
+      uniqueEffects: () => [],
    };
 
    Indian: ICityDefinition = {
@@ -405,6 +417,41 @@ export class CityDefinitions {
       requireGreatPeopleLevel: 100,
       requireSupporterPack: true,
       festivalDesc: () => t(L.DiwaliV2),
+      uniqueEffects: () => [],
+   };
+
+   Australian: ICityDefinition = {
+      name: () => t(L.Australian),
+      deposits: {
+         Water: 0.01,
+         Copper: 0.01,
+         Iron: 0.05,
+         Wood: 0.04,
+         Stone: 0.02,
+         Gold: 0.02,
+         Coal: 0.01,
+         Oil: 0.03,
+         Aluminum: 0.01,
+         NaturalGas: 0.01,
+         Uranium: 0.01,
+      },
+      size: 45,
+      buildingNames: {
+         Headquarter: () => t(L.CanberraParliamentHouse),
+      },
+      uniqueBuildings: {
+         FusionFuelPlant: "Software",
+         FusionPowerPlant: "Genetics",
+         SydneyOperaHouse: "Television",
+         SydneyHarbourBridge: "Hydroelectricity",
+         GreatOceanRoad: "Rocketry",
+      },
+      uniqueMultipliers: {},
+      naturalWonders: { GreatBarrierReef: true, Uluru: true },
+      requireGreatPeopleLevel: 110,
+      requireSupporterPack: true,
+      festivalDesc: () => t(L.Moomba),
+      uniqueEffects: () => ["A random <b>Natural Wonder</b> from other civilizations is spawned on the map"],
    };
 }
 
@@ -418,6 +465,7 @@ interface ICityDefinition {
    buildingNames: Partial<Record<Building, () => string>>;
    uniqueBuildings: Partial<Record<Building, Tech>>;
    uniqueMultipliers: Partial<Record<Tech, IUnlockableMultipliers>>;
+   uniqueEffects: () => string[];
    requireGreatPeopleLevel: number;
    requireSupporterPack: boolean;
    festivalDesc: () => string;

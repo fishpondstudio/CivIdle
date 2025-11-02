@@ -1,6 +1,6 @@
 import type { Application, Texture } from "pixi.js";
 import type { City } from "../../shared/definitions/CityDefinitions";
-import { IsDeposit } from "../../shared/definitions/ResourceDefinitions";
+import { IsDeposit } from "../../shared/definitions/MaterialDefinitions";
 import { TimedBuildingUnlock } from "../../shared/definitions/TimedBuildingUnlock";
 import { addPetraOfflineTime, findSpecialBuilding } from "../../shared/logic/BuildingLogic";
 import { Config } from "../../shared/logic/Config";
@@ -56,10 +56,10 @@ import { LoadingPage, LoadingPageStage } from "./ui/LoadingPage";
 import { OfflineProductionModal } from "./ui/OfflineProductionModal";
 import { SaveCorruptedPage } from "./ui/SaveCorruptedPage";
 import { GameTicker } from "./utilities/GameTicker";
+import { initIAP } from "./utilities/IAP";
 import { SceneManager } from "./utilities/SceneManager";
 import { Singleton, initializeSingletons, type RouteTo } from "./utilities/Singleton";
 import { playError } from "./visuals/Sound";
-import { initIAP } from "./utilities/IAP";
 
 export async function startGame(
    app: Application,

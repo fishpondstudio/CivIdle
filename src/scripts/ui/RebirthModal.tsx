@@ -46,7 +46,7 @@ import { GreatPersonImage } from "../visuals/GreatPersonVisual";
 import { playClick, playError } from "../visuals/Sound";
 import { hideModal, showToast } from "./GlobalModal";
 import { FormatNumber } from "./HelperComponents";
-import { RenderHTML } from "./RenderHTMLComponent";
+import { html, RenderHTML } from "./RenderHTMLComponent";
 import { TextWithHelp } from "./TextWithHelpComponent";
 import { BuildingSpriteComponent, DepositTextureComponent, MiscTextureComponent } from "./TextureSprites";
 import { WarningComponent } from "./WarningComponent";
@@ -90,6 +90,10 @@ export function RebirthModal(): React.ReactNode {
       Tick.current.specialBuildings.has("CentrePompidou") &&
       (getCurrentAge(gs) !== "InformationAge" || gs.city === nextCity);
 
+   const extraTileForNextRebirth = Tick.current.specialBuildings.get("SydneyOperaHouse")?.building.level ?? 0;
+
+   const uniqueEffects = Config.City[nextCity].uniqueEffects();
+   const citySize = Config.City[nextCity].size;
    return (
       <div className="window" style={{ width: "700px" }}>
          <div className="title-bar">
@@ -259,8 +263,13 @@ export function RebirthModal(): React.ReactNode {
                <div className="row mb5">
                   <div className="text-strong">{t(L.Deposit)}</div>
                   <div className="text-desc ml5">
-                     ({Config.City[nextCity].size}x{Config.City[nextCity].size})
+                     ({citySize + extraTileForNextRebirth}x{citySize + extraTileForNextRebirth})
                   </div>
+                  {extraTileForNextRebirth > 0 && (
+                     <Tippy content={t(L.ExtraTileForNextRebirthTooltip, { count: extraTileForNextRebirth })}>
+                        <div className="m-icon small ml5 text-green">info</div>
+                     </Tippy>
+                  )}
                </div>
                <div
                   className="inset-shallow white p5"
@@ -274,12 +283,30 @@ export function RebirthModal(): React.ReactNode {
                               scale={0.25}
                               style={{ filter: "invert(0.75)", margin: "0 10px 0 0" }}
                            />
-                           <div className="f1">{Config.Resource[dep].name()}</div>
+                           <div className="f1">{Config.Material[dep].name()}</div>
                            <div className="text-strong">{formatPercent(value)}</div>
                         </div>
                      );
                   })}
                </div>
+               {uniqueEffects.length <= 0 ? null : (
+                  <>
+                     <div className="text-strong mt5 mb5">{t(L.UniqueEffects)}</div>
+                     <div className="inset-shallow white">
+                        {uniqueEffects.map((effect, i) => {
+                           return (
+                              <div
+                                 key={i}
+                                 className="row p5"
+                                 style={{ backgroundColor: i % 2 === 0 ? "#fff" : "#efefef" }}
+                              >
+                                 {html(effect)}
+                              </div>
+                           );
+                        })}
+                     </div>
+                  </>
+               )}
                <div className="text-strong mt5 mb5">{t(L.UniqueBuildings)}</div>
                <div className="inset-shallow white">
                   {jsxMapOf(Config.City[nextCity].uniqueBuildings, (building, tech, i) => {
@@ -477,7 +504,7 @@ export function RebirthModal(): React.ReactNode {
                      getGameOptions().showTutorial = false;
 
                      playClick();
-                     await resetToCity(gameId, nextCity);
+                     await resetToCity(gameId, nextCity, extraTileForNextRebirth);
 
                      const pompidou = getPompidou(gs);
                      if (currentCity !== nextCity && pompidou) {

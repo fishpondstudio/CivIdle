@@ -2,7 +2,7 @@ import Tippy from "@tippyjs/react";
 import classNames from "classnames";
 import { useCallback, useState } from "react";
 import { TableVirtuoso } from "react-virtuoso";
-import type { Resource } from "../../../shared/definitions/ResourceDefinitions";
+import type { Material } from "../../../shared/definitions/MaterialDefinitions";
 import { Config } from "../../../shared/logic/Config";
 import { TRADE_CANCEL_REFUND_PERCENT } from "../../../shared/logic/Constants";
 import { getTradePercentage, hasResourceForPlayerTrade } from "../../../shared/logic/PlayerTradeLogic";
@@ -40,8 +40,8 @@ import { PendingClaimModal } from "./PendingClaimModal";
 import { RenderHTML } from "./RenderHTMLComponent";
 import { AccountLevelComponent, MiscTextureComponent, PlayerFlagComponent } from "./TextureSprites";
 
-const savedResourceWantFilters: Set<Resource> = new Set();
-const savedResourceOfferFilters: Set<Resource> = new Set();
+const savedResourceWantFilters: Set<Material> = new Set();
+const savedResourceOfferFilters: Set<Material> = new Set();
 const savedAccountRanks: Set<string> = new Set();
 const savedPlayerFlags: Set<string> = new Set();
 let savedPlayerNameFilter = "";
@@ -96,7 +96,7 @@ export function PlayerTradeComponent({
       setTradeAmountFilter(savedMaxTradeAmountFilter);
    }, []);
 
-   const resourceSet = new Set<Resource>();
+   const resourceSet = new Set<Material>();
    trades.forEach((t) => {
       resourceSet.add(t.buyResource);
       resourceSet.add(t.sellResource);
@@ -205,17 +205,17 @@ export function PlayerTradeComponent({
                      let result = asc;
                      switch (playerTradesSortingState.column) {
                         case "buyResource":
-                           result *= Config.Resource[a.buyResource]
+                           result *= Config.Material[a.buyResource]
                               .name()
-                              .localeCompare(Config.Resource[b.buyResource].name());
+                              .localeCompare(Config.Material[b.buyResource].name());
                            break;
                         case "buyAmount":
                            result *= a.buyAmount - b.buyAmount;
                            break;
                         case "sellResource":
-                           result *= Config.Resource[a.sellResource]
+                           result *= Config.Material[a.sellResource]
                               .name()
-                              .localeCompare(Config.Resource[b.sellResource].name());
+                              .localeCompare(Config.Material[b.sellResource].name());
                            break;
                         case "sellAmount":
                            result *= a.sellAmount - b.sellAmount;
@@ -366,12 +366,12 @@ function PlayerTradeTableRow({
    return (
       <>
          <td className={cls(hasResource ? "text-strong" : null, evenodd)}>
-            {Config.Resource[trade.buyResource].name()}
+            {Config.Material[trade.buyResource].name()}
          </td>
          <td className={cls("text-right", hasResource ? "text-strong" : null, evenodd)}>
             <FormatNumber value={trade.buyAmount} />
          </td>
-         <td className={evenodd}>{Config.Resource[trade.sellResource].name()}</td>
+         <td className={evenodd}>{Config.Material[trade.sellResource].name()}</td>
          <td className={cls("text-right", evenodd)}>
             <FormatNumber value={trade.sellAmount} />
          </td>
@@ -449,7 +449,7 @@ function PlayerTradeTableRow({
                                  percent: formatPercent(1 - TRADE_CANCEL_REFUND_PERCENT),
                                  res: `${formatNumber(
                                     trade.sellAmount * TRADE_CANCEL_REFUND_PERCENT,
-                                 )} ${Config.Resource[trade.sellResource].name()}`,
+                                 )} ${Config.Material[trade.sellResource].name()}`,
                                  discard: formatNumber(storageOverflow),
                               })}
                            />
@@ -484,7 +484,7 @@ function PlayerTradeFilterModal({
    hideModal,
    resources,
    applyFilters,
-}: { hideModal: () => void; resources: Resource[]; applyFilters: () => void }): React.ReactNode {
+}: { hideModal: () => void; resources: Material[]; applyFilters: () => void }): React.ReactNode {
    const forceUpdate = useForceUpdate();
    const trades = useTrades();
    const flags = new Set<string>();
@@ -601,11 +601,11 @@ function PlayerTradeFilterModal({
                         <tbody>
                            {resources
                               .sort((a, b) =>
-                                 Config.Resource[a].name().localeCompare(Config.Resource[b].name()),
+                                 Config.Material[a].name().localeCompare(Config.Material[b].name()),
                               )
                               .map((res) => (
                                  <tr key={res}>
-                                    <td>{Config.Resource[res].name()}</td>
+                                    <td>{Config.Material[res].name()}</td>
                                     <td
                                        style={{ width: 0 }}
                                        className="text-strong"

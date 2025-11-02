@@ -1,5 +1,17 @@
-Todo:
-- Adjust map size
+Map Size Change:
+- Roman: 40 -> 45
+- Greek: 40 (no change)
+- Egyptian: 50 -> 40
+- Chinese: 50 (no change)
+- American: 30 -> 50
+- Babylonian: 35 -> 40
+- Japanese: 35 -> 40
+- German: 40 (no change)
+- English: 40 (no change)
+- French: 50 -> 40
+- Brazilian: 50 (no change)
+- Ottoman: 50 (no change)
+- Indian: 40 -> 45
 
 Australian:
 - Fusion Fuel Plant
@@ -11,8 +23,10 @@ Australian:
 - Sydney Opera House: This wonder can be upgraded and each level increases the map size of the next rebirth by 1
 - Sydney Harbour Bridge: This wonder can be upgraded and each level provides +1 Production Multiplier to all power plants
 
-Done:
+
+- Add "EV Impact After Tariff" when filling a trade. This will show the actual net EV impact after filling a trade
 - Matrioshka Brain: Now affects Clone Lab
+- Golden Gate Bridge: Now requires Reinforced Concrete instead of Steel
 
 Swiss Bank:
 - Swiss Bank in Trade Tiles

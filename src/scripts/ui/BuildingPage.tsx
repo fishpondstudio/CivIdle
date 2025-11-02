@@ -91,6 +91,9 @@ const BuildingBodyOverride: Partial<Record<Building, FunctionComponent<IBuilding
    QutbMinar: UpgradableWonderBuildingBody,
    BranCastle: BranCastleBuildingBody,
    PortOfSingapore: UpgradableWonderBuildingBody,
+   SydneyOperaHouse: UpgradableWonderBuildingBody,
+   SydneyHarbourBridge: UpgradableWonderBuildingBody,
+   GreatOceanRoad: UpgradableWonderBuildingBody,
 };
 
 export function BuildingPage(props: { tile: ITileData }): React.ReactNode {

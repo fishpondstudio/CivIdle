@@ -69,7 +69,7 @@ test("getTotalBuildingCost", () => {
 test("getBuildingValue", () => {
    calculateTierAndPrice();
    assert.equal(0, getResourcesValue(getTotalBuildingCost({ type: "CoalMine" }, 0, 0)));
-   assert.equal(4, Config.ResourcePrice.Brick);
+   assert.equal(4, Config.MaterialPrice.Brick);
    assert.equal(10 + 15 + 22.5, getTotalBuildingCost({ type: "CoalMine" }, 0, 3).Brick);
    // construction: { Iron: 1, Brick: 1, Lumber: 1 }, 8 + 4 + 4
    assert.equal(

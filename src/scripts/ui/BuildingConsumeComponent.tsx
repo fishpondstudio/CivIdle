@@ -1,5 +1,5 @@
 import type React from "react";
-import { NoPrice, NoStorage, type Resource } from "../../../shared/definitions/ResourceDefinitions";
+import { NoPrice, NoStorage, type Material } from "../../../shared/definitions/MaterialDefinitions";
 import { IOFlags } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
 import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
@@ -36,14 +36,14 @@ function ChooseResource({ gameState, xy }: IBuildingComponentProps): React.React
       const c = building as ICloneBuildingData;
       const resources = keysOf(unlockedResources(gameState))
          .filter((r) => !NoStorage[r] && !NoPrice[r])
-         .sort((a, b) => Config.Resource[a].name().localeCompare(Config.Resource[b].name()));
+         .sort((a, b) => Config.Material[a].name().localeCompare(Config.Material[b].name()));
       return (
          <>
             {building.type === "CloneFactory" ? (
                <WarningComponent icon="info" className="mb10 text-small">
                   <RenderHTML
                      html={t(L.CloneFactoryInputDescHTML, {
-                        res: Config.Resource[c.inputResource].name(),
+                        res: Config.Material[c.inputResource].name(),
                         buildings: getBuildingsThatProduce(c.inputResource)
                            .map((b) => Config.Building[b].name())
                            .join(", "),
@@ -56,7 +56,7 @@ function ChooseResource({ gameState, xy }: IBuildingComponentProps): React.React
                value={c.inputResource}
                onChange={(e) => {
                   playClick();
-                  const res = e.target.value as Resource;
+                  const res = e.target.value as Material;
                   if (c.inputResource !== res) {
                      c.inputResource = res;
                      c.transportedAmount = 0;
@@ -66,7 +66,7 @@ function ChooseResource({ gameState, xy }: IBuildingComponentProps): React.React
             >
                {resources.map((r) => (
                   <option key={r} value={r}>
-                     {Config.Resource[r].name()}
+                     {Config.Material[r].name()}
                   </option>
                ))}
             </select>

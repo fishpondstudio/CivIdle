@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import type { Resource } from "../../../shared/definitions/ResourceDefinitions";
+import type { Material } from "../../../shared/definitions/MaterialDefinitions";
 import { Config } from "../../../shared/logic/Config";
 import { MAX_OFFLINE_PRODUCTION_SEC } from "../../../shared/logic/Constants";
 import type { GameState } from "../../../shared/logic/GameState";
@@ -74,7 +74,7 @@ export function OfflineProductionModal({
                         if (!building) {
                            return null;
                         }
-                        const diff: PartialTabulate<Resource> = {};
+                        const diff: PartialTabulate<Material> = {};
                         forEach(building.resources, (res, amount) => {
                            const beforeAmount = before.tiles.get(xy)?.building?.resources[res] ?? 0;
                            if (Math.abs(amount - beforeAmount) > 1) {
@@ -101,7 +101,7 @@ export function OfflineProductionModal({
                                  {jsxMapOf(diff, (res, amount) => {
                                     return (
                                        <span key={res} className="mr10">
-                                          {Config.Resource[res].name()}:
+                                          {Config.Material[res].name()}:
                                           <span
                                              className={classNames({
                                                 "text-red": amount < 0,

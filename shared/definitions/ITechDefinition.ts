@@ -2,7 +2,7 @@ import type { GameState } from "../logic/GameState";
 import type { GlobalMultipliers, Multiplier } from "../logic/TickLogic";
 import type { PartialTabulate } from "../utilities/TypeDefinitions";
 import type { Building } from "./BuildingDefinitions";
-import type { Deposit, Resource } from "./ResourceDefinitions";
+import type { Deposit, Material } from "./MaterialDefinitions";
 import type { Tech } from "./TechDefinitions";
 
 export interface ITechDefinition extends IUnlockable {
@@ -12,7 +12,7 @@ export interface ITechDefinition extends IUnlockable {
 }
 
 export interface IUpgradeDefinition extends IUnlockable {
-   requireResources: PartialTabulate<Resource>;
+   requireResources: PartialTabulate<Material>;
    tech?: Tech;
 }
 

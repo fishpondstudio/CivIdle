@@ -126,7 +126,7 @@ function getServerAddress(): string {
 
 export function getTrades(): IClientTrade[] {
    return Array.from(trades.values()).filter((trade) => {
-      if (Config.Resource[trade.buyResource] && Config.Resource[trade.sellResource]) {
+      if (Config.Material[trade.buyResource] && Config.Material[trade.sellResource]) {
          return true;
       }
       return false;

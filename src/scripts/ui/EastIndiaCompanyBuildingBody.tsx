@@ -71,7 +71,7 @@ export function EastIndiaCompanyBuildingBody({ gameState, xy }: IBuildingCompone
                               : ""
                         }
                      >
-                        {Config.Resource.TradeValue.name()}
+                        {Config.Material.TradeValue.name()}
                         {": "}
                         {formatNumber(getEastIndiaCompanyUpgradeCost(building.level + 1))}
                      </span>

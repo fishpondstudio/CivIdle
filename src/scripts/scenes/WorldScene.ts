@@ -444,10 +444,13 @@ export class WorldScene extends Scene {
             case "Elbphilharmonie":
             case "Cappadocia":
             case "BranCastle":
+            case "GlassFrog":
+            case "PygmyMarmoset":
             case "GoldenPavilion": {
                this.highlightRange(grid, 3);
                break;
             }
+            // #region Buildings with dynamic range
             case "YellowCraneTower": {
                this.highlightRange(grid, getYellowCraneTowerRange(xy, gs));
                break;
@@ -463,11 +466,6 @@ export class WorldScene extends Scene {
                this.highlightRange(grid, isFestival(building.type, gs) ? 3 : 2);
                break;
             }
-            case "GlassFrog":
-            case "PygmyMarmoset": {
-               this.highlightRange(grid, 3);
-               break;
-            }
             case "RedFort": {
                this.highlightRange(grid, isFestival(building.type, gs) ? 5 : 3);
                break;
@@ -480,6 +478,11 @@ export class WorldScene extends Scene {
                this.highlightRange(grid, isFestival(building.type, gs) ? 2 : 1);
                break;
             }
+            case "Uluru": {
+               this.highlightRange(grid, isFestival(building.type, gs) ? 3 : 2);
+               break;
+            }
+            // #endregion
          }
       }
    }

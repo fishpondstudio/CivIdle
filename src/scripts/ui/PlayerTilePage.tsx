@@ -94,11 +94,11 @@ export function PlayerTilePage({ xy }: { xy: string }): React.ReactNode {
                               return (
                                  <tr key={trade.id}>
                                     <td>
-                                       {Config.Resource[trade.buyResource].name()} x{" "}
+                                       {Config.Material[trade.buyResource].name()} x{" "}
                                        <FormatNumber value={trade.buyAmount} />
                                     </td>
                                     <td>
-                                       {Config.Resource[trade.sellResource].name()} x{" "}
+                                       {Config.Material[trade.sellResource].name()} x{" "}
                                        <FormatNumber value={trade.sellAmount} />
                                     </td>
                                     <td>

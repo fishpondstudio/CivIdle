@@ -1,6 +1,6 @@
 import Tippy from "@tippyjs/react";
 import { Fragment, useEffect, useState } from "react";
-import type { Resource } from "../../../shared/definitions/ResourceDefinitions";
+import type { Material } from "../../../shared/definitions/MaterialDefinitions";
 import {
    getTotalBuildingCost,
    getUpgradeTargetLevels,
@@ -97,7 +97,7 @@ export function BuildingUpgradeComponent({ gameState, xy }: IBuildingComponentPr
    };
 
    const buildCost = (idx: number, level: number) => {
-      const resCost: PartialTabulate<Resource> = {};
+      const resCost: PartialTabulate<Material> = {};
 
       selected.forEach((xy) => {
          const b = gameState.tiles.get(xy)?.building;
@@ -123,7 +123,7 @@ export function BuildingUpgradeComponent({ gameState, xy }: IBuildingComponentPr
                            (Tick.current.resourceAmount.get(item) ?? 0) < resCost[item]! ? "text-red" : ""
                         }
                      >
-                        {Config.Resource[item].name()} {formatNumber(resCost[item])}
+                        {Config.Material[item].name()} {formatNumber(resCost[item])}
                      </span>
                   </Fragment>
                );

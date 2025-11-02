@@ -1,6 +1,6 @@
 import React from "react";
 import type { Building } from "../../../shared/definitions/BuildingDefinitions";
-import type { Deposit } from "../../../shared/definitions/ResourceDefinitions";
+import type { Deposit } from "../../../shared/definitions/MaterialDefinitions";
 import type { TileTexture } from "../../../shared/logic/GameState";
 import { AccountLevel } from "../../../shared/utilities/Database";
 import building from "../../images/textures_building.png";

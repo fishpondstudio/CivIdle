@@ -34,13 +34,13 @@ export function BuildingDepositComponent({ gameState, xy }: IBuildingComponentPr
                      />
                      {hasRequiredDeposit({ [k]: true }, xy, gameState) ? (
                         <>
-                           <div className="f1">{Config.Resource[k].name()}</div>
+                           <div className="f1">{Config.Material[k].name()}</div>
                            <div className="m-icon small text-green">check_circle</div>
                         </>
                      ) : (
                         <>
-                           <Tippy content={t(L.NotOnDeposit, { deposit: Config.Resource[k].name() })}>
-                              <div className="f1 text-red text-strong">{Config.Resource[k].name()}</div>
+                           <Tippy content={t(L.NotOnDeposit, { deposit: Config.Material[k].name() })}>
+                              <div className="f1 text-red text-strong">{Config.Material[k].name()}</div>
                            </Tippy>
 
                            <div className="m-icon small text-red">cancel</div>

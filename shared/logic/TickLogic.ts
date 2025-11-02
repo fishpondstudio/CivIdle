@@ -1,5 +1,5 @@
 import type { Building } from "../definitions/BuildingDefinitions";
-import { NoPrice, type Resource } from "../definitions/ResourceDefinitions";
+import { NoPrice, type Material } from "../definitions/MaterialDefinitions";
 import { forEach, type Tile } from "../utilities/Helper";
 import type { RequireAtLeastOne } from "../utilities/Type";
 import { TypedEvent } from "../utilities/TypedEvent";
@@ -27,17 +27,17 @@ interface ITickData {
    buildingMultipliers: Map<Building, MultiplierWithSource[]>;
    tileMultipliers: Map<Tile, MultiplierWithSource[]>;
    unlockedBuildings: Set<Building>;
-   workersAvailable: Map<Resource, number>;
+   workersAvailable: Map<Material, number>;
    happiness: ReturnType<typeof calculateHappiness> | null;
-   workersUsed: Map<Resource, number>;
+   workersUsed: Map<Material, number>;
    workersAssignment: Map<Tile, number>;
    electrified: Map<Tile, number>;
    notEnoughPower: Set<Tile>;
    levelBoost: Map<Tile, LevelBoost[]>;
-   resourcesByTile: Map<Resource, IBuildingIndex[]>;
+   resourcesByTile: Map<Material, IBuildingIndex[]>;
    storagePercentages: Map<Tile, number>;
-   additionalProductions: { xy: Tile; res: Resource; amount: number }[];
-   additionalConsumptions: { xy: Tile; res: Resource; amount: number }[];
+   additionalProductions: { xy: Tile; res: Material; amount: number }[];
+   additionalConsumptions: { xy: Tile; res: Material; amount: number }[];
    playerTradeBuildings: Map<Tile, IBuildingData>;
    resourceImportBuildings: Map<Tile, IResourceImportBuildingIndex>;
    globalMultipliers: GlobalMultipliers;
@@ -49,8 +49,8 @@ interface ITickData {
    powerBuildings: Set<Tile>;
    happinessExemptions: Set<Tile>;
    totalValue: number;
-   resourceAmount: Map<Resource, number>;
-   resourceValues: Map<Resource, number>;
+   resourceAmount: Map<Material, number>;
+   resourceValues: Map<Material, number>;
    buildingValues: Map<Building, number>;
    buildingValueByTile: Map<Tile, number>;
    resourceValueByTile: Map<Tile, number>;
@@ -184,7 +184,7 @@ export function totalEmpireValue(gs: GameState): number {
          value += getBuildingValue(tile.building);
          forEach(tile.building.resources, (res, amount) => {
             if (!NoPrice[res]) {
-               value += (Config.ResourcePrice[res] ?? 0) * amount;
+               value += (Config.MaterialPrice[res] ?? 0) * amount;
             }
          });
       }

@@ -128,7 +128,7 @@ export function BuildingStorageComponent({ gameState, xy }: IBuildingComponentPr
                                        delete
                                     </div>
                                  ) : null}
-                                 <div className="f1">{Config.Resource[res].name()}</div>
+                                 <div className="f1">{Config.Material[res].name()}</div>
                                  <div>
                                     <FormatNumber value={building.resources[res]} />
                                  </div>

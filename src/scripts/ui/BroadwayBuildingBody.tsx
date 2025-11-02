@@ -76,7 +76,7 @@ export function BroadwayBuildingBody({ gameState, xy }: IBuildingComponentProps)
                         if (
                            def.boost?.buildings.some((b) => {
                               const outputResources = keysOf(Config.Building[b].output).some((r) => {
-                                 return Config.Resource[r]
+                                 return Config.Material[r]
                                     .name()
                                     .toLocaleLowerCase()
                                     .includes(filter.toLowerCase());

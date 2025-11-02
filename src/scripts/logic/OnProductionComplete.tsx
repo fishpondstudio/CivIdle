@@ -94,6 +94,7 @@ import {
    round,
    safeAdd,
    setFlag,
+   sizeOf,
    tileToPoint,
    type Tile,
 } from "../../../shared/utilities/Helper";
@@ -1666,7 +1667,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
       case "MontSaintMichel": {
          const { workersBusy, workersAfterHappiness } = getScienceFromWorkers(gs);
          const idleWorkers = workersAfterHappiness - workersBusy;
-         const culture = idleWorkers / (Config.ResourcePrice.Culture ?? 1);
+         const culture = idleWorkers / (Config.MaterialPrice.Culture ?? 1);
          const value = getBuildingCost(building);
          if ((building.resources.Culture ?? 0) < (value.Culture ?? 0)) {
             safeAdd(building.resources, "Culture", culture * (isFestival("MontSaintMichel", gs) ? 2 : 1));
@@ -1777,7 +1778,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
       case "SwissBank": {
          const swissBank = building as ISwissBankBuildingData;
          const resource = swissBank.resource;
-         const price = resource ? Config.ResourcePrice[resource] : undefined;
+         const price = resource ? Config.MaterialPrice[resource] : undefined;
          if (resource && price) {
             const multiplier = totalMultiplierFor(xy, "output", 1, false, gs);
             const levelBoost = Tick.current.levelBoost.get(xy)?.reduce((acc, lb) => acc + lb.value, 0) ?? 0;
@@ -2001,6 +2002,68 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          addMultiplier("Warehouse", { output: building.level, storage: building.level }, buildingName);
          addMultiplier("Caravansary", { output: building.level, storage: building.level }, buildingName);
          addMultiplier("Market", { output: building.level, storage: building.level }, buildingName);
+         break;
+      }
+      case "SydneyHarbourBridge": {
+         const extraLevel = getWonderExtraLevel(building.type);
+         forEach(Config.Building, (b, def) => {
+            if (def.output.Power) {
+               addMultiplier(b, { output: building.level + extraLevel }, buildingName);
+            }
+         });
+         break;
+      }
+      case "GreatOceanRoad": {
+         const buildings = new Set<Building>();
+         getOwnedOrOccupiedTiles().forEach((xy, i) => {
+            const building = TileBuildings.get(xy);
+            if (building) {
+               buildings.add(building);
+            }
+         });
+
+         buildings.forEach((b) => {
+            getBuildingsByType(b, gs)?.forEach((b, xy) => {
+               mapSafePush(Tick.next.levelBoost, xy, {
+                  value: building.level,
+                  source: buildingName,
+               });
+            });
+         });
+
+         if (isFestival("GreatOceanRoad", gs)) {
+            buildings.forEach((b) => {
+               addMultiplier(b, { output: building.level, unstable: true }, buildingName);
+            });
+         }
+         break;
+      }
+      case "GreatBarrierReef": {
+         const currentHappiness = clamp(Tick.current.happiness?.value ?? 0, 0, Number.POSITIVE_INFINITY);
+         const age = Config.TechAge[getCurrentAge(gs)].idx + 1;
+         Tick.next.globalMultipliers.sciencePerBusyWorker.push({
+            value: 0.2 * age * currentHappiness,
+            source: buildingName,
+         });
+         Tick.next.globalMultipliers.sciencePerIdleWorker.push({
+            value: 0.1 * age * currentHappiness,
+            source: buildingName,
+         });
+         break;
+      }
+      case "Uluru": {
+         const range = isFestival("Uluru", gs) ? 3 : 2;
+         const greatPeople = sizeOf(gs.greatPeople);
+         for (const point of grid.getRange(tileToPoint(xy), range)) {
+            const t = pointToTile(point);
+            const building = gs.tiles.get(t)?.building;
+            if (building && !Config.Building[building.type].output.Worker) {
+               mapSafePush(Tick.next.tileMultipliers, t, {
+                  output: 0.5 * greatPeople,
+                  source: buildingName,
+               });
+            }
+         }
          break;
       }
    }

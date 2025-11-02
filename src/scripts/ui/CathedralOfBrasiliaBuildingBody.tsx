@@ -33,7 +33,7 @@ export function CathedralOfBrasiliaBuildingBody({ gameState, xy }: IBuildingComp
                   <tbody>
                      {Array.from(output).map((res) => (
                         <tr key={res}>
-                           <td>{Config.Resource[res].name()}</td>
+                           <td>{Config.Material[res].name()}</td>
                            <td style={{ width: 0 }}>
                               {input.has(res) ? (
                                  <div className="m-icon small text-green">check_circle</div>
