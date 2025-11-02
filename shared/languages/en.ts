@@ -1806,6 +1806,9 @@ export const EN = {
    Adaptive: "Adaptive",
    ShowOnlyAdaptiveGreatPeople: "Show only adaptive great people",
    EmpireValueImpactAfterTariff: "Empire Value Impact (After Tariff)",
+   RegenerateGreatPersonPortraitsDesc: "For performance reasons, great person portraits are cached. If the cached portraits are outdated (e.g. when you switch between languages), you can force regenerating them",
+   RegenerateGreatPersonPortraits: "Regenerate Great Person Portraits",
+   Regenerating: "Regenerating...",
    Australian: "Australian",
    CanberraParliamentHouse: "Canberra Parliament House",
    FusionFuelPlant: "Fusion Fuel Plant",
@@ -1823,5 +1826,5 @@ export const EN = {
    UniqueEffects: "Unique Effects",
    BrianSchmidt: "Brian Schmidt",
    JohnBradfield: "John Bradfield",
-   Moomba: "Moomba: Great Ocean Road also provides +1 Production Multiplier per level to Trade Tile Bonus buildings. Double the effect of Great Barrier Reef"
+   Moomba: "Moomba: Great Ocean Road also provides +1 Production Multiplier per level to Trade Tile Bonus buildings. Double the effect of Great Barrier Reef",
 };

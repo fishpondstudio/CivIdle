@@ -1,11 +1,12 @@
 import { BitmapText, Container, Sprite, Text } from "pixi.js";
-import { useEffect, useRef } from "react";
+import { memo, useEffect, useRef } from "react";
 import { GreatPersonType, type GreatPerson } from "../../../shared/definitions/GreatPersonDefinitions";
 import { Config } from "../../../shared/logic/Config";
-import { containsNonASCII, numberToRoman } from "../../../shared/utilities/Helper";
+import { containsNonASCII, entriesOf, numberToRoman } from "../../../shared/utilities/Helper";
+import { PromiseQueue } from "../../../shared/utilities/PromiseQueue";
 import { getBuildNumber } from "../logic/Version";
 import { getTexture } from "../logic/VisualLogic";
-import { idbGet, idbSet, Store } from "../utilities/BrowserStorage";
+import { idbClear, idbGet, idbSet, Store } from "../utilities/BrowserStorage";
 import type { ISceneContext } from "../utilities/SceneManager";
 import { Singleton } from "../utilities/Singleton";
 import { Fonts } from "./Fonts";
@@ -104,6 +105,17 @@ interface IGreatPersonImage {
    image: Blob;
 }
 
+export async function regenerateGreatPersonImages(): Promise<void> {
+   await clearGreatPersonImageCache();
+   for (const [greatPerson, def] of entriesOf(Config.GreatPerson)) {
+      await greatPersonImage(greatPerson, Singleton().sceneManager.getContext());
+   }
+}
+
+export async function clearGreatPersonImageCache(): Promise<void> {
+   await idbClear(cacheStore);
+}
+
 async function greatPersonImage(greatPerson: GreatPerson, context: ISceneContext): Promise<Blob> {
    const cache = await idbGet<IGreatPersonImage>(greatPerson, cacheStore);
    if (cache?.build === getBuildNumber()) {
@@ -137,16 +149,23 @@ interface GreatPersonImageProps extends React.HTMLAttributes<HTMLElement> {
    greatPerson: GreatPerson;
 }
 
-export function GreatPersonImage({ greatPerson, ...htmlProps }: GreatPersonImageProps): React.ReactNode {
+const queue = new PromiseQueue<Blob>(1);
+
+function _GreatPersonImage({ greatPerson, ...htmlProps }: GreatPersonImageProps): React.ReactNode {
    const imgRef = useRef<HTMLImageElement>(null);
    useEffect(() => {
-      setTimeout(() => {
-         greatPersonImage(greatPerson, Singleton().sceneManager.getContext()).then((blob) => {
+      queue
+         .enqueue(() => greatPersonImage(greatPerson, Singleton().sceneManager.getContext()))
+         .then((blob) => {
             if (imgRef.current) {
                imgRef.current.src = URL.createObjectURL(blob);
             }
          });
-      }, 0);
    }, [greatPerson]);
    return <img ref={imgRef} {...htmlProps} />;
 }
+
+export const GreatPersonImage = memo(
+   _GreatPersonImage,
+   (prev, next) => prev.greatPerson === next.greatPerson,
+);

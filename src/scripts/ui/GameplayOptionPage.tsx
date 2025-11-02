@@ -1,4 +1,5 @@
 import Tippy from "@tippyjs/react";
+import { useState } from "react";
 import { Config } from "../../../shared/logic/Config";
 import { MAX_OFFLINE_PRODUCTION_SEC } from "../../../shared/logic/Constants";
 import {
@@ -22,6 +23,7 @@ import {
    formatHM,
    formatPercent,
    keysOf,
+   resolveIn,
    safeParseInt,
    sizeOf,
 } from "../../../shared/utilities/Helper";
@@ -30,6 +32,7 @@ import { useGameOptions } from "../Global";
 import { Todo } from "../logic/Todo";
 import { jsxMapOf } from "../utilities/Helper";
 import { openUrl } from "../utilities/Platform";
+import { regenerateGreatPersonImages } from "../visuals/GreatPersonVisual";
 import { playClick } from "../visuals/Sound";
 import { ChangeSoundComponent } from "./ChangeSoundComponent";
 import { LanguageSelect } from "./LanguageSelectComponent";
@@ -432,6 +435,7 @@ export function GameplayOptionPage(): React.ReactNode {
                >
                   {t(L.ClearTransportPlanCache)}
                </button>
+               <RegenerateGreatPersonImagesButton />
             </fieldset>
             {sizeOf(options.buildingDefaults) > 0 ? (
                <fieldset>
@@ -478,5 +482,26 @@ export function GameplayOptionPage(): React.ReactNode {
             ) : null}
          </div>
       </div>
+   );
+}
+
+function RegenerateGreatPersonImagesButton(): React.ReactNode {
+   const [ongoing, setOngoing] = useState(false);
+   return (
+      <Tippy content={t(L.RegenerateGreatPersonPortraitsDesc)}>
+         <button
+            disabled={ongoing}
+            className="jcc w100 mt10"
+            onClick={async () => {
+               playClick();
+               setOngoing(true);
+               await resolveIn(1, null);
+               await regenerateGreatPersonImages();
+               setOngoing(false);
+            }}
+         >
+            {ongoing ? t(L.Regenerating) : t(L.RegenerateGreatPersonPortraits)}
+         </button>
+      </Tippy>
    );
 }
