@@ -1,17 +1,15 @@
 import type { Building } from "../definitions/BuildingDefinitions";
-import { forEach, keysOf, pointToTile, setFlag, shuffle } from "../utilities/Helper";
+import { forEach, keysOf, pointToTile, shuffle } from "../utilities/Helper";
 import { getServerNow } from "../utilities/ServerNow";
 import { applyBuildingDefaults, getRandomEmptyTiles } from "./BuildingLogic";
 import { Config } from "./Config";
-import { MigrationFlags, type GameOptions, type GameState } from "./GameState";
+import type { GameOptions, GameState } from "./GameState";
 import { getGrid } from "./IntraTickCache";
 import { unlockTech } from "./TechLogic";
 import { ensureTileFogOfWar, sortByDistance } from "./TerrainLogic";
 import { makeBuilding } from "./Tile";
 
 export function initializeGameState(gameState: GameState, options: GameOptions) {
-   options.migrationFlags = setFlag(options.migrationFlags, MigrationFlags.MapSizeMigrated);
-
    const grid = getGrid(gameState);
    const center = grid.center();
    const centerXy = pointToTile(center);

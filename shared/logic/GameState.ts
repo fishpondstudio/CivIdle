@@ -1,6 +1,6 @@
 import type { Advisor } from "../definitions/AdvisorDefinitions";
 import type { Building } from "../definitions/BuildingDefinitions";
-import type { City } from "../definitions/CityDefinitions";
+import { ROME_CITY_SIZE, type City } from "../definitions/CityDefinitions";
 import type { GreatPerson } from "../definitions/GreatPersonDefinitions";
 import type { Material } from "../definitions/MaterialDefinitions";
 import type { Tech, TechAge } from "../definitions/TechDefinitions";
@@ -68,7 +68,7 @@ export class GameState {
    lastClientTickAt = 0;
    clientOfflineSec = 0;
    watchedResources: Set<Material> = new Set();
-   mapSize = 0;
+   mapSize = ROME_CITY_SIZE;
 }
 
 export type GreatPeopleChoice = GreatPerson[];
@@ -280,7 +280,6 @@ export enum RankUpFlags {
 export enum MigrationFlags {
    None = 0,
    ZenobiaMigrated = 1 << 0,
-   MapSizeMigrated = 1 << 1,
 }
 
 export enum RebirthFlags {

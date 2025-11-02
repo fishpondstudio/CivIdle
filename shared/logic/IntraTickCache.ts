@@ -387,7 +387,7 @@ export function unlockedResources(gs: GameState, ...include: Material[]): Partia
 let grid: IGrid | null = null;
 
 export function getCitySize(gs: GameState): number {
-   if (!Number.isFinite(gs.mapSize)) {
+   if (!Number.isFinite(gs.mapSize) || gs.mapSize <= 0) {
       gs.mapSize = Config.City[gs.city].size;
    }
    return gs.mapSize;

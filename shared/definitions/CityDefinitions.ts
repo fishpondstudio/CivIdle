@@ -5,6 +5,8 @@ import type { IUnlockableMultipliers } from "./ITechDefinition";
 import type { Deposit } from "./MaterialDefinitions";
 import type { Tech } from "./TechDefinitions";
 
+export const ROME_CITY_SIZE = 45;
+
 export class CityDefinitions {
    Rome: ICityDefinition = {
       name: () => t(L.Roman),
@@ -22,7 +24,7 @@ export class CityDefinitions {
          Uranium: 0.02,
       },
       sizeOld: 40,
-      size: 45,
+      size: ROME_CITY_SIZE,
       buildingNames: {
          Headquarter: () => t(L.RomanForum),
       },
