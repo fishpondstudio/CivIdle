@@ -1806,4 +1806,7 @@ export const EN = {
    Adaptive: "Adaptive",
    ShowOnlyAdaptiveGreatPeople: "Show only adaptive great people",
    EmpireValueImpactAfterTariff: "Empire Value Impact (After Tariff)",
+   RegenerateGreatPersonPortraitsDesc: "For performance reasons, great person portraits are cached. If the cached portraits are outdated (e.g. when you switch between languages), you can force regenerating them",
+   RegenerateGreatPersonPortraits: "Regenerate Great Person Portraits",
+   Regenerating: "Regenerating...",
 };

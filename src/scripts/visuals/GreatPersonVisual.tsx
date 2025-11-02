@@ -2,10 +2,10 @@ import { BitmapText, Container, Sprite, Text } from "pixi.js";
 import { useEffect, useRef } from "react";
 import { GreatPersonType, type GreatPerson } from "../../../shared/definitions/GreatPersonDefinitions";
 import { Config } from "../../../shared/logic/Config";
-import { containsNonASCII, numberToRoman } from "../../../shared/utilities/Helper";
+import { containsNonASCII, entriesOf, numberToRoman } from "../../../shared/utilities/Helper";
 import { getBuildNumber } from "../logic/Version";
 import { getTexture } from "../logic/VisualLogic";
-import { idbGet, idbSet, Store } from "../utilities/BrowserStorage";
+import { idbClear, idbGet, idbSet, Store } from "../utilities/BrowserStorage";
 import type { ISceneContext } from "../utilities/SceneManager";
 import { Singleton } from "../utilities/Singleton";
 import { Fonts } from "./Fonts";
@@ -102,6 +102,13 @@ const cacheStore = new Store("cividle-great-person", "keyval");
 interface IGreatPersonImage {
    build: number;
    image: Blob;
+}
+
+export async function regenerateGreatPersonImages(): Promise<void> {
+   await idbClear(cacheStore);
+   for (const [greatPerson, def] of entriesOf(Config.GreatPerson)) {
+      await greatPersonImage(greatPerson, Singleton().sceneManager.getContext());
+   }
 }
 
 async function greatPersonImage(greatPerson: GreatPerson, context: ISceneContext): Promise<Blob> {
