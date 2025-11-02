@@ -19,9 +19,10 @@ import { getConstructionPriority, getProductionPriority } from "./Global";
 
 export function migrateSavedGame(save: SavedGame) {
    // This has to be before `getGrid` is called because getGrid requires extraTileSize to work correctly!
-   if (!Number.isFinite(save.current.extraTileSize)) {
-      save.current.extraTileSize = 0;
+   if (!Number.isFinite(save.current.mapSize)) {
+      save.current.mapSize = Config.City[save.current.city].sizeOld ?? Config.City[save.current.city].size;
    }
+
    const grid = getGrid(save.current);
    grid.forEach((point) => {
       const xy = pointToTile(point);

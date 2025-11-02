@@ -68,7 +68,7 @@ export class GameState {
    lastClientTickAt = 0;
    clientOfflineSec = 0;
    watchedResources: Set<Material> = new Set();
-   extraTileSize = 0;
+   mapSize = 0;
 }
 
 export type GreatPeopleChoice = GreatPerson[];
@@ -280,6 +280,7 @@ export enum RankUpFlags {
 export enum MigrationFlags {
    None = 0,
    ZenobiaMigrated = 1 << 0,
+   MapSizeMigrated = 1 << 1,
 }
 
 export enum RebirthFlags {

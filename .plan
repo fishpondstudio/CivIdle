@@ -9,8 +9,8 @@ Map Size Change:
 - German: 40 (no change)
 - English: 40 (no change)
 - French: 50 -> 40
-- Brazilian: 50 (no change)
 - Ottoman: 50 (no change)
+- Brazilian: 50 (no change)
 - Indian: 40 -> 45
 
 Australian:
@@ -23,8 +23,6 @@ Australian:
 - Sydney Opera House: This wonder can be upgraded and each level increases the map size of the next rebirth by 1
 - Sydney Harbour Bridge: This wonder can be upgraded and each level provides +1 Production Multiplier to all power plants
 
-
-- Add "EV Impact After Tariff" when filling a trade. This will show the actual net EV impact after filling a trade
 - Matrioshka Brain: Now affects Clone Lab
 - Golden Gate Bridge: Now requires Reinforced Concrete instead of Steel
 
@@ -52,3 +50,4 @@ QoL:
 - Add "Quick UI Mode" for Warehouse/Caravansary: when you select or deselect a resource, the per cycle and max amount will be redistributed among the selected resources automatically. This will be the default option for new players
 - Progress Towards Next Great Person and Warp now shows estimated time on hover
 - Add Trade Map Stats that shows players by flag, civilization and age. It replaces the old side panel
+- Add "EV Impact After Tariff" when filling a trade. This will show the actual net EV impact after filling a trade

@@ -72,7 +72,7 @@ export async function resetToCity(id: string, city: City, extraTileSize: number)
    savedGame.current = new GameState();
    savedGame.current.id = id;
    savedGame.current.city = city;
-   savedGame.current.extraTileSize = extraTileSize;
+   savedGame.current.mapSize = Config.City[city].size + extraTileSize;
    initializeGameState(savedGame.current, savedGame.options);
 }
 
