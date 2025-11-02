@@ -3,8 +3,8 @@ import { BuildingShowLevel, BuildingSpecial } from "../definitions/BuildingDefin
 import type { City } from "../definitions/CityDefinitions";
 import type { GreatPerson } from "../definitions/GreatPersonDefinitions";
 import type { IUnlockableMultipliers } from "../definitions/ITechDefinition";
+import { NoPrice, NoStorage, type Deposit, type Material } from "../definitions/MaterialDefinitions";
 import type { Religion } from "../definitions/ReligionDefinitions";
-import { NoPrice, NoStorage, type Deposit, type Resource } from "../definitions/ResourceDefinitions";
 import type { Tradition } from "../definitions/TraditionDefinitions";
 import {
    clamp,
@@ -131,8 +131,8 @@ export enum IOFlags {
    TotalUsedBits = 5,
 }
 
-export function hasEnoughResources(a: PartialTabulate<Resource>, b: PartialTabulate<Resource>): boolean {
-   let res: Resource;
+export function hasEnoughResources(a: PartialTabulate<Material>, b: PartialTabulate<Material>): boolean {
+   let res: Material;
    for (res in b) {
       if ((a[res] ?? 0) < (b[res] ?? 0)) {
          return false;
@@ -142,10 +142,10 @@ export function hasEnoughResources(a: PartialTabulate<Resource>, b: PartialTabul
 }
 
 export function deductResources(
-   a: PartialTabulate<Resource>,
-   b: PartialTabulate<Resource>,
-): PartialTabulate<Resource> {
-   let res: Resource;
+   a: PartialTabulate<Material>,
+   b: PartialTabulate<Material>,
+): PartialTabulate<Material> {
+   let res: Material;
    for (res in b) {
       if (!a[res]) {
          a[res] = 0;
@@ -160,9 +160,9 @@ export function deductResources(
    return a;
 }
 
-export function filterTransportable(resources: PartialTabulate<Resource>): PartialTabulate<Resource> {
-   const result: PartialTabulate<Resource> = {};
-   let res: Resource;
+export function filterTransportable(resources: PartialTabulate<Material>): PartialTabulate<Material> {
+   const result: PartialTabulate<Material> = {};
+   let res: Material;
    for (res in resources) {
       if (isTransportable(res)) {
          result[res] = resources[res];
@@ -213,7 +213,7 @@ export function checkBuildingMax(k: Building, gs: GameState): boolean {
    return buildingCount < (Config.Building[k].max ?? Number.POSITIVE_INFINITY);
 }
 
-export function isTransportable(res: Resource): boolean {
+export function isTransportable(res: Material): boolean {
    return !NoStorage[res] && !NoPrice[res];
 }
 
@@ -256,7 +256,7 @@ export function getMaxWarpStorage(gs: GameState): number {
 const STORAGE_TO_PRODUCTION = 3600;
 
 export function getStorageFor(xy: Tile, gs: GameState): IStorageResult {
-   const accumulate = (prev: number, k: Resource, v: number): number => {
+   const accumulate = (prev: number, k: Material, v: number): number => {
       return NoStorage[k] ? prev : prev + v;
    };
    const building = gs.tiles.get(xy)?.building;
@@ -338,7 +338,7 @@ export function getStorageFor(xy: Tile, gs: GameState): IStorageResult {
    return { base, multiplier, total: base * multiplier, used };
 }
 
-export function getStorageRequired(res: PartialTabulate<Resource>): number {
+export function getStorageRequired(res: PartialTabulate<Material>): number {
    let result = 0;
    forEach(res, (k, v) => {
       if (isTransportable(k)) {
@@ -348,11 +348,11 @@ export function getStorageRequired(res: PartialTabulate<Resource>): number {
    return result;
 }
 
-export function addWorkers(res: Resource, amount: number): void {
+export function addWorkers(res: Material, amount: number): void {
    mapSafeAdd(Tick.next.workersAvailable, res, amount);
 }
 
-export function useWorkers(res: Resource, amount: number, xy: Tile | null): void {
+export function useWorkers(res: Material, amount: number, xy: Tile | null): void {
    if (isTransportable(res)) {
       console.error("`useWorkers` can only be called with non-transportable resource!");
       return;
@@ -369,7 +369,7 @@ export function useWorkers(res: Resource, amount: number, xy: Tile | null): void
    }
 }
 
-export function getAvailableWorkers(res: Resource): number {
+export function getAvailableWorkers(res: Material): number {
    const workersAvailable = Tick.current.workersAvailable.get(res) ?? 0;
    // Normally we read from Tick.current. But this is special - because we want to know if we have enough
    // workers left - Tick.next has that information.
@@ -381,8 +381,8 @@ export function getAvailableWorkers(res: Resource): number {
    return Math.floor(workersAvailable * pct) - workersUsed;
 }
 
-export function getResourceName(r: Resource): string {
-   return Config.Resource[r].name();
+export function getResourceName(r: Material): string {
+   return Config.Material[r].name();
 }
 
 export function getBuildingName(xy: Tile, gs: GameState): string {
@@ -394,10 +394,10 @@ export function getBuildingName(xy: Tile, gs: GameState): string {
 }
 
 export function filterNonTransportable<T>(
-   resources: Partial<Record<Resource, T>>,
-): Partial<Record<Resource, T>> {
-   const result: Partial<Record<Resource, T>> = {};
-   let key: Resource;
+   resources: Partial<Record<Material, T>>,
+): Partial<Record<Material, T>> {
+   const result: Partial<Record<Material, T>> = {};
+   let key: Material;
    for (key in resources) {
       if (!isTransportable(key)) {
          result[key] = resources[key];
@@ -421,9 +421,9 @@ export function getStockpileCapacity(b: IBuildingData) {
 }
 
 export function addTransportation(
-   resource: Resource,
+   resource: Material,
    amount: number,
-   fuelResource: Resource,
+   fuelResource: Material,
    fuelPerTick: number,
    fromXy: Tile,
    toXy: Tile,
@@ -507,7 +507,7 @@ type BuildingCostInput = Pick<IBuildingData, "type" | "level"> & {
  * @param building. Level = 0 for construction cost. Level = 1 for cost of upgrading to level 1
  * @returns The cost of the building
  */
-export function getBuildingCost(building: BuildingCostInput): PartialTabulate<Resource> {
+export function getBuildingCost(building: BuildingCostInput): PartialTabulate<Material> {
    const type = building.type;
    const level = building.level;
    let cost = { ...Config.Building[type].construction };
@@ -536,7 +536,7 @@ export function getBuildingCost(building: BuildingCostInput): PartialTabulate<Re
          });
       }
       keysOf(cost).forEach((res) => {
-         const price = Config.ResourcePrice[res] ?? 1;
+         const price = Config.MaterialPrice[res] ?? 1;
          cost[res] = (Math.pow(1.5, building.level) * multiplier * cost[res]!) / price;
       });
    } else {
@@ -548,13 +548,13 @@ export function getBuildingCost(building: BuildingCostInput): PartialTabulate<Re
    return cost;
 }
 
-const totalBuildingCostCache: Map<number, Readonly<PartialTabulate<Resource>>> = new Map();
+const totalBuildingCostCache: Map<number, Readonly<PartialTabulate<Material>>> = new Map();
 
 export function getTotalBuildingCost(
    building: Omit<BuildingCostInput, "level">,
    currentLevel: number,
    desiredLevel: number,
-): PartialTabulate<Resource> {
+): PartialTabulate<Material> {
    console.assert(currentLevel <= desiredLevel);
    const hash = (Config.BuildingHash[building.type]! << 22) + (currentLevel << 11) + desiredLevel;
    const cached = totalBuildingCostCache.get(hash);
@@ -567,7 +567,7 @@ export function getTotalBuildingCost(
       tradition: building.tradition,
       religion: building.religion,
    };
-   const result: PartialTabulate<Resource> = {};
+   const result: PartialTabulate<Material> = {};
    while (start.level < desiredLevel) {
       const cost = getBuildingCost(start);
       forEach(cost, (res, amount) => safeAdd(result, res, amount));
@@ -676,7 +676,7 @@ export function getTotalBuildingUpgrades(gs: GameState): number {
 interface BuildingPercentageResult {
    percent: number;
    secondsLeft: number;
-   cost: PartialTabulate<Resource>;
+   cost: PartialTabulate<Material>;
 }
 
 export function getBuildingPercentage(xy: Tile, gs: GameState): BuildingPercentageResult {
@@ -832,14 +832,14 @@ export function applyToAllBuildings<T extends IBuildingData>(
    return count;
 }
 
-export function getMarketBaseSellAmount(sellResource: Resource, buyResource: Resource): number {
+export function getMarketBaseSellAmount(sellResource: Material, buyResource: Material): number {
    return (
-      Math.sqrt((Config.ResourcePrice[sellResource] ?? 0) * (Config.ResourcePrice[buyResource] ?? 0)) /
-      (Config.ResourcePrice[sellResource] ?? 1)
+      Math.sqrt((Config.MaterialPrice[sellResource] ?? 0) * (Config.MaterialPrice[buyResource] ?? 0)) /
+      (Config.MaterialPrice[sellResource] ?? 1)
    );
 }
 
-export function getMarketSellAmount(sellResource: Resource, xy: Tile, gs: GameState): number {
+export function getMarketSellAmount(sellResource: Material, xy: Tile, gs: GameState): number {
    const building = gs.tiles.get(xy)?.building;
    if (!building || !("availableResources" in building)) return 0;
    const market = building as IMarketBuildingData;
@@ -857,23 +857,23 @@ export function getMarketSellAmount(sellResource: Resource, xy: Tile, gs: GameSt
 }
 
 export function getMarketBuyAmount(
-   sellResource: Resource,
+   sellResource: Material,
    sellAmount: number,
-   buyResource: Resource,
+   buyResource: Material,
    xy: Tile,
    gs: GameState,
 ): number {
    const rand = srand(gs.lastPriceUpdated + xy + sellResource);
    const fluctuation =
       1 +
-      (1 + (Config.ResourceTier[buyResource] ?? 0) - (Config.ResourceTier[sellResource] ?? 0)) * rand() * 0.1;
+      (1 + (Config.MaterialTier[buyResource] ?? 0) - (Config.MaterialTier[sellResource] ?? 0)) * rand() * 0.1;
    return (
-      ((Config.ResourcePrice[sellResource] ?? 0) * sellAmount * fluctuation) /
-      (Config.ResourcePrice[buyResource] ?? 0)
+      ((Config.MaterialPrice[sellResource] ?? 0) * sellAmount * fluctuation) /
+      (Config.MaterialPrice[buyResource] ?? 0)
    );
 }
 
-export function getAvailableResource(sourceXy: Tile, destXy: Tile, res: Resource, gs: GameState): number {
+export function getAvailableResource(sourceXy: Tile, destXy: Tile, res: Material, gs: GameState): number {
    const building = getXyBuildings(gs).get(sourceXy);
 
    if (!building) {
@@ -957,7 +957,7 @@ export function canBeElectrified(b: Building): boolean {
    if (sizeOf(output) <= 0) {
       return false;
    }
-   let res: Resource;
+   let res: Material;
    for (res in output) {
       if (res === "Science" && Tick.current.specialBuildings.has("OsakaCastle")) {
          continue;
@@ -1018,7 +1018,7 @@ export function hasRequiredDeposit(
    return true;
 }
 
-export function hasEnoughResource(xy: Tile, res: Resource, amount: number, gs: GameState): boolean {
+export function hasEnoughResource(xy: Tile, res: Material, amount: number, gs: GameState): boolean {
    const resources = gs.tiles.get(xy)?.building?.resources;
    if (!resources) {
       return false;
@@ -1190,9 +1190,9 @@ export function getBuildingDescription(b: Building): string {
    const desc = building.desc?.();
    if (desc) return desc;
    return [
-      mapOf(building.input, (res, value) => `${Config.Resource[res].name()} x${value}`).join(" + "),
+      mapOf(building.input, (res, value) => `${Config.Material[res].name()} x${value}`).join(" + "),
       " => ",
-      mapOf(building.output, (res, value) => `${Config.Resource[res].name()} x${value}`).join(" + "),
+      mapOf(building.output, (res, value) => `${Config.Material[res].name()} x${value}`).join(" + "),
    ].join("");
 }
 
@@ -1326,7 +1326,7 @@ export function totalLevelBoostFor(xy: Tile): number {
 export function getCathedralOfBrasiliaResources(
    xy: Tile,
    gs: GameState,
-): { buildings: Set<Building>; input: Set<Resource>; output: Set<Resource>; unused: number } {
+): { buildings: Set<Building>; input: Set<Material>; output: Set<Material>; unused: number } {
    const buildings = new Set<Building>();
 
    const grid = getGrid(gs);
@@ -1345,8 +1345,8 @@ export function getCathedralOfBrasiliaResources(
       }
    }
 
-   const outputResources = new Set<Resource>();
-   const inputResources = new Set<Resource>();
+   const outputResources = new Set<Material>();
+   const inputResources = new Set<Material>();
 
    for (const building of buildings) {
       const def = Config.Building[building];

@@ -99,7 +99,7 @@ export class TechTreeScene extends Scene {
    }
 
    private getTechDescription(def: ITechDefinition): string {
-      const deposits = def.revealDeposit?.map((d) => Config.Resource[d].name()) ?? [];
+      const deposits = def.revealDeposit?.map((d) => Config.Material[d].name()) ?? [];
       const buildings = def.unlockBuilding?.map((b) => Config.Building[b].name()) ?? [];
       const full = deposits.concat(buildings.concat());
       if (def.column === Config.Tech.Future.column) {

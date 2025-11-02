@@ -1,5 +1,5 @@
 import { useState } from "react";
-import type { Resource } from "../../../shared/definitions/ResourceDefinitions";
+import type { Material } from "../../../shared/definitions/MaterialDefinitions";
 import { Config } from "../../../shared/logic/Config";
 import type { GameState } from "../../../shared/logic/GameState";
 import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
@@ -54,7 +54,7 @@ export function AvailableTradingResourcesComponent(): React.ReactNode {
                case 1:
                   return (availableResources[a] ?? 0) - (availableResources[b] ?? 0);
                default:
-                  return Config.Resource[a].name().localeCompare(Config.Resource[b].name());
+                  return Config.Material[a].name().localeCompare(Config.Material[b].name());
             }
          }}
          renderRow={(res) => {
@@ -75,8 +75,8 @@ function TableRowComponent({
    resource,
    amount,
    gameState,
-}: { resource: Resource; amount: number; gameState: GameState }): React.ReactNode {
-   const resourceName = Config.Resource[resource].name();
+}: { resource: Material; amount: number; gameState: GameState }): React.ReactNode {
+   const resourceName = Config.Material[resource].name();
    const [destroyAmount, setDestroyAmount] = useState(0);
    return (
       <tr>

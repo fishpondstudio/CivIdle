@@ -1,4 +1,4 @@
-import type { Deposit } from "../../../shared/definitions/ResourceDefinitions";
+import type { Deposit } from "../../../shared/definitions/MaterialDefinitions";
 import {
    applyBuildingDefaults,
    exploreTile,

@@ -1666,7 +1666,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
       case "MontSaintMichel": {
          const { workersBusy, workersAfterHappiness } = getScienceFromWorkers(gs);
          const idleWorkers = workersAfterHappiness - workersBusy;
-         const culture = idleWorkers / (Config.ResourcePrice.Culture ?? 1);
+         const culture = idleWorkers / (Config.MaterialPrice.Culture ?? 1);
          const value = getBuildingCost(building);
          if ((building.resources.Culture ?? 0) < (value.Culture ?? 0)) {
             safeAdd(building.resources, "Culture", culture * (isFestival("MontSaintMichel", gs) ? 2 : 1));
@@ -1777,7 +1777,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
       case "SwissBank": {
          const swissBank = building as ISwissBankBuildingData;
          const resource = swissBank.resource;
-         const price = resource ? Config.ResourcePrice[resource] : undefined;
+         const price = resource ? Config.MaterialPrice[resource] : undefined;
          if (resource && price) {
             const multiplier = totalMultiplierFor(xy, "output", 1, false, gs);
             const levelBoost = Tick.current.levelBoost.get(xy)?.reduce((acc, lb) => acc + lb.value, 0) ?? 0;

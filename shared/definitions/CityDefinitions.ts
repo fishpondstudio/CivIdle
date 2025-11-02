@@ -2,7 +2,7 @@ import type { PartialSet } from "../utilities/TypeDefinitions";
 import { L, t } from "../utilities/i18n";
 import type { Building } from "./BuildingDefinitions";
 import type { IUnlockableMultipliers } from "./ITechDefinition";
-import type { Deposit } from "./ResourceDefinitions";
+import type { Deposit } from "./MaterialDefinitions";
 import type { Tech } from "./TechDefinitions";
 
 export class CityDefinitions {

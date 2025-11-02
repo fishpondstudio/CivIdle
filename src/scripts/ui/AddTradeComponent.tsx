@@ -1,6 +1,6 @@
 import Tippy from "@tippyjs/react";
 import { useState } from "react";
-import { NoPrice, NoStorage, type Resource } from "../../../shared/definitions/ResourceDefinitions";
+import { NoPrice, NoStorage, type Material } from "../../../shared/definitions/MaterialDefinitions";
 import { Config } from "../../../shared/logic/Config";
 import { DISABLE_PLAYER_TRADES } from "../../../shared/logic/Constants";
 import type { GameState } from "../../../shared/logic/GameState";
@@ -95,18 +95,18 @@ export function AddTradeFormComponent({
                className="f1 mr10"
                value={trade.sellResource}
                onChange={(e) => {
-                  if (e.target.value in Config.Resource) {
-                     setTrade({ ...trade, sellResource: e.target.value as Resource });
+                  if (e.target.value in Config.Material) {
+                     setTrade({ ...trade, sellResource: e.target.value as Material });
                   }
                }}
             >
                {sellResources
                   .sort((a, b) => {
-                     return Config.Resource[a].name().localeCompare(Config.Resource[b].name());
+                     return Config.Material[a].name().localeCompare(Config.Material[b].name());
                   })
                   .map((res) => (
                      <option key={res} value={res}>
-                        {Config.Resource[res].name()}
+                        {Config.Material[res].name()}
                      </option>
                   ))}
             </select>
@@ -146,18 +146,18 @@ export function AddTradeFormComponent({
                className="f1 mr10"
                value={trade.buyResource}
                onChange={(e) => {
-                  if (e.target.value in Config.Resource) {
-                     setTrade({ ...trade, buyResource: e.target.value as Resource });
+                  if (e.target.value in Config.Material) {
+                     setTrade({ ...trade, buyResource: e.target.value as Material });
                   }
                }}
             >
                {buyResources
                   .sort((a, b) => {
-                     return Config.Resource[a].name().localeCompare(Config.Resource[b].name());
+                     return Config.Material[a].name().localeCompare(Config.Material[b].name());
                   })
                   .map((res) => (
                      <option key={res} value={res}>
-                        {Config.Resource[res].name()}
+                        {Config.Material[res].name()}
                      </option>
                   ))}
             </select>

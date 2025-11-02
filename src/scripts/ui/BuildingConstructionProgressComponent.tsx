@@ -80,7 +80,7 @@ export function BuildingConstructionProgressComponent({
                                  )}
                               </Tippy>
                            </td>
-                           <td>{Config.Resource[res].name()}</td>
+                           <td>{Config.Material[res].name()}</td>
                            <td className="text-right">
                               {building.suspendedInput.has(res) ? (
                                  0

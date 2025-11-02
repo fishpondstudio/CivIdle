@@ -1,6 +1,6 @@
 import Tippy from "@tippyjs/react";
 import classNames from "classnames";
-import { NoStorage, type Resource } from "../../../shared/definitions/ResourceDefinitions";
+import { NoStorage, type Material } from "../../../shared/definitions/MaterialDefinitions";
 import { Config } from "../../../shared/logic/Config";
 import { notifyGameOptionsUpdate, notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
 import { tileToPoint, type Tile } from "../../../shared/utilities/Helper";
@@ -84,8 +84,8 @@ export function BuildingColorComponent({ gameState, xy }: IBuildingComponentProp
    );
 }
 
-function ResourceColor({ resource, buildingColor }: { resource: Resource; buildingColor: string }) {
-   const r = Config.Resource[resource];
+function ResourceColor({ resource, buildingColor }: { resource: Material; buildingColor: string }) {
+   const r = Config.Material[resource];
    const gameOptions = useGameOptions();
    const gs = useGameState();
    if (!NoStorage[resource]) {

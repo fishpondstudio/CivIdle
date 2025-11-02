@@ -2,7 +2,7 @@ import type { Advisor } from "../definitions/AdvisorDefinitions";
 import type { Building } from "../definitions/BuildingDefinitions";
 import type { City } from "../definitions/CityDefinitions";
 import type { GreatPerson } from "../definitions/GreatPersonDefinitions";
-import type { Resource } from "../definitions/ResourceDefinitions";
+import type { Material } from "../definitions/MaterialDefinitions";
 import type { Tech, TechAge } from "../definitions/TechDefinitions";
 import type { Upgrade } from "../definitions/UpgradeDefinitions";
 import { CZ } from "../languages/cz";
@@ -68,7 +68,7 @@ export class GameState {
    flags = GameStateFlags.None;
    lastClientTickAt = 0;
    clientOfflineSec = 0;
-   watchedResources: Set<Resource> = new Set();
+   watchedResources: Set<Material> = new Set();
 }
 
 export type GreatPeopleChoice = GreatPerson[];
@@ -223,7 +223,7 @@ export class GameOptions {
    showTransportArrow = true;
    scrollSensitivity = 1;
    buildingColors: Partial<Record<Building, string>> = {};
-   resourceColors: Partial<Record<Resource, string>> = {};
+   resourceColors: Partial<Record<Material, string>> = {};
    themeColors = { ...DefaultThemeColors };
    tileTexture: TileTexture = "Tile1";
    spinnerTexture: SpinnerTexture | null = "Spinner1";

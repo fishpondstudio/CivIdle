@@ -1,6 +1,6 @@
 import type { Building } from "../definitions/BuildingDefinitions";
 import type { City } from "../definitions/CityDefinitions";
-import type { Resource } from "../definitions/ResourceDefinitions";
+import type { Material } from "../definitions/MaterialDefinitions";
 import type { TechAge } from "../definitions/TechDefinitions";
 import type { IHeartbeatData } from "../logic/GameStateLogic";
 import { HOUR } from "./Helper";
@@ -93,9 +93,9 @@ export interface IPendingClaimMessage extends IMessage {
 }
 
 export interface IAddTradeRequest {
-   buyResource: Resource;
+   buyResource: Material;
    buyAmount: number;
-   sellResource: Resource;
+   sellResource: Material;
    sellAmount: number;
 }
 
@@ -106,7 +106,7 @@ export enum PendingClaimFlag {
 
 export interface IPendingClaim {
    id: string;
-   resource: Resource;
+   resource: Material;
    amount: number;
    fillBy: string;
    flag: PendingClaimFlag;

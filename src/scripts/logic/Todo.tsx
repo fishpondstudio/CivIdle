@@ -439,7 +439,7 @@ export const _Todos = {
                         );
                         return (
                            <tr key={res}>
-                              <td>{Config.Resource[res].name()}</td>
+                              <td>{Config.Material[res].name()}</td>
                               <td className="text-right">{formatNumber(produced)}</td>
                               <td className="text-right">{formatNumber(consumed)}</td>
                               <td className="text-right">{formatNumber(surplus)}</td>

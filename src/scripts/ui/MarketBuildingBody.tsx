@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import { NoPrice, NoStorage, type Resource } from "../../../shared/definitions/ResourceDefinitions";
+import { NoPrice, NoStorage, type Material } from "../../../shared/definitions/MaterialDefinitions";
 import { getMarketBuyAmount, getMarketSellAmount } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
 import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
@@ -42,13 +42,13 @@ export function MarketBuildingBody({ gameState, xy }: IBuildingComponentProps): 
       return null;
    }
    const market = building as IMarketBuildingData;
-   const tradeValues: Map<Resource, number> = new Map();
+   const tradeValues: Map<Material, number> = new Map();
 
    forEach(market.availableResources, (sellResource, buyResource) => {
       const sellAmount = getMarketSellAmount(sellResource, xy, gameState);
       const buyAmount = getMarketBuyAmount(sellResource, sellAmount, buyResource, xy, gameState);
-      const sellValue = Config.ResourcePrice[sellResource]! * sellAmount;
-      const buyValue = Config.ResourcePrice[buyResource]! * buyAmount;
+      const sellValue = Config.MaterialPrice[sellResource]! * sellAmount;
+      const buyValue = Config.MaterialPrice[buyResource]! * buyAmount;
       const tradeValue = buyValue / sellValue - 1;
       tradeValues.set(sellResource, tradeValue);
    });
@@ -78,11 +78,11 @@ export function MarketBuildingBody({ gameState, xy }: IBuildingComponentProps): 
                compareFunc={(a, b, i) => {
                   switch (i) {
                      case 0:
-                        return Config.Resource[a].name().localeCompare(Config.Resource[b].name());
+                        return Config.Material[a].name().localeCompare(Config.Material[b].name());
                      case 1: {
                         const aRes = market.availableResources[a]!;
                         const bRes = market.availableResources[b]!;
-                        return Config.Resource[aRes].name().localeCompare(Config.Resource[bRes].name());
+                        return Config.Material[aRes].name().localeCompare(Config.Material[bRes].name());
                      }
                      case 2: {
                         return (tradeValues.get(a) ?? 0) - (tradeValues.get(b) ?? 0);
@@ -95,7 +95,7 @@ export function MarketBuildingBody({ gameState, xy }: IBuildingComponentProps): 
                   }
                }}
                renderRow={(sellResource) => {
-                  const r = Config.Resource[sellResource];
+                  const r = Config.Material[sellResource];
                   if (!r || NoPrice[sellResource] || NoStorage[sellResource]) {
                      return null;
                   }
@@ -112,7 +112,7 @@ export function MarketBuildingBody({ gameState, xy }: IBuildingComponentProps): 
                            </div>
                         </td>
                         <td>
-                           <div>{Config.Resource[buyResource].name()}</div>
+                           <div>{Config.Material[buyResource].name()}</div>
                            <div className="text-small text-desc text-strong">
                               <FormatNumber value={buyAmount} />
                            </div>

@@ -3,7 +3,7 @@ import classNames from "classnames";
 import { useState } from "react";
 import { TableVirtuoso } from "react-virtuoso";
 import { BuildingSpecial, type IBuildingDefinition } from "../../../shared/definitions/BuildingDefinitions";
-import { NoPrice, NoStorage, type Resource } from "../../../shared/definitions/ResourceDefinitions";
+import { NoPrice, NoStorage, type Material } from "../../../shared/definitions/MaterialDefinitions";
 import {
    IOFlags,
    getElectrificationStatus,
@@ -147,7 +147,7 @@ function EmpireTab({ gameState, xy }: IBuildingComponentProps): React.ReactNode 
                               }
                               return (
                                  <li key={res} className="row">
-                                    <div className="f1">{Config.Resource[res].name()}</div>
+                                    <div className="f1">{Config.Material[res].name()}</div>
                                     <FormatNumber value={Tick.current.resourceValues.get(res)} />
                                  </li>
                               );
@@ -474,14 +474,14 @@ export function ResourcesTab({ gameState }: IBuildingComponentProps): React.Reac
    };
    const [search, setSearch] = useState<string>(savedResourceSearch);
    const [showTheoreticalValue, setShowTheoreticalValue] = useState(true);
-   const unlockedResourcesList: PartialSet<Resource> = unlockedResources(gameState, "Koti");
+   const unlockedResourcesList: PartialSet<Material> = unlockedResources(gameState, "Koti");
    const io = getResourceIO(gameState);
    const inputs = showTheoreticalValue ? io.theoreticalInput : io.actualInput;
    const outputs = showTheoreticalValue ? io.theoreticalOutput : io.actualOutput;
    const gs = useGameState();
 
    const highlightResourcesUsed = (
-      res: Resource,
+      res: Material,
       type: keyof Pick<IBuildingDefinition, "input" | "output">,
    ) => {
       const inputOutputTiles: Tile[] = [];
@@ -566,12 +566,12 @@ export function ResourcesTab({ gameState }: IBuildingComponentProps): React.Reac
                let filter = (savedResourceTierFilter & 0x0fffffff) === 0;
                for (let i = 0; i < 12; i++) {
                   if (hasFlag(savedResourceTierFilter, 1 << i)) {
-                     filter ||= Config.ResourceTier[v] === i;
+                     filter ||= Config.MaterialTier[v] === i;
                   }
                }
 
                const s = search.toLowerCase();
-               return filter && Config.Resource[v].name().toLowerCase().includes(s);
+               return filter && Config.Material[v].name().toLowerCase().includes(s);
             })}
             compareFunc={(a, b, i) => {
                switch (i) {
@@ -598,15 +598,15 @@ export function ResourcesTab({ gameState }: IBuildingComponentProps): React.Reac
                            : Number.NEGATIVE_INFINITY;
                      return timeLeftA !== timeLeftB
                         ? timeLeftB - timeLeftA
-                        : Config.Resource[a].name().localeCompare(Config.Resource[b].name());
+                        : Config.Material[a].name().localeCompare(Config.Material[b].name());
                   }
                   default: {
-                     return Config.Resource[a].name().localeCompare(Config.Resource[b].name());
+                     return Config.Material[a].name().localeCompare(Config.Material[b].name());
                   }
                }
             }}
             renderRow={(res) => {
-               const r = Config.Resource[res];
+               const r = Config.Material[res];
                if (NoPrice[res] || NoStorage[res]) {
                   return null;
                }
@@ -622,7 +622,7 @@ export function ResourcesTab({ gameState }: IBuildingComponentProps): React.Reac
                         <div>{r.name()}</div>
                         <Tippy content={t(L.EmpireValue)}>
                            <span className="text-desc text-small">
-                              <FormatNumber value={Config.ResourcePrice[res]} />
+                              <FormatNumber value={Config.MaterialPrice[res]} />
                            </span>
                         </Tippy>
                      </td>

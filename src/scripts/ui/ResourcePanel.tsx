@@ -1,7 +1,7 @@
 import Tippy from "@tippyjs/react";
 import classNames from "classnames";
 import { useEffect, useRef, useState } from "react";
-import type { Resource } from "../../../shared/definitions/ResourceDefinitions";
+import type { Material } from "../../../shared/definitions/MaterialDefinitions";
 import {
    getMaxWarpSpeed,
    getScienceFromWorkers,
@@ -426,7 +426,7 @@ export function ResourcePanel(): React.ReactNode {
 
 function DeficitResources(): React.ReactNode {
    const gs = useGameState();
-   const deficit = new Map<Resource, number>();
+   const deficit = new Map<Material, number>();
    const { theoreticalInput, theoreticalOutput } = getResourceIO(gs);
    theoreticalInput.forEach((input, res) => {
       const diff = (theoreticalOutput.get(res) ?? 0) - input;
@@ -458,7 +458,7 @@ function DeficitResources(): React.ReactNode {
                               const runOutIn = formatHMS((1000 * getResourceAmount(res)) / Math.abs(amount));
                               return (
                                  <tr key={res}>
-                                    <td>{Config.Resource[res].name()}</td>
+                                    <td>{Config.Material[res].name()}</td>
                                     <td className="text-right">{formatNumber(amount)}</td>
                                     <td className="text-right">{runOutIn}</td>
                                  </tr>

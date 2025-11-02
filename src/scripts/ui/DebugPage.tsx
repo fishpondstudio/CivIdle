@@ -1,12 +1,12 @@
 import { useState } from "react";
-import type { Resource } from "../../../shared/definitions/ResourceDefinitions";
+import type { Material } from "../../../shared/definitions/MaterialDefinitions";
 import { Config } from "../../../shared/logic/Config";
 import { clamp, keysOf, mapOf, safeAdd } from "../../../shared/utilities/Helper";
 import type { PartialTabulate } from "../../../shared/utilities/TypeDefinitions";
 import { TitleBarComponent } from "./TitleBarComponent";
 
 export function DebugPage(): React.ReactNode {
-   const [selectedResource, setSelectedResource] = useState<PartialTabulate<Resource>>({});
+   const [selectedResource, setSelectedResource] = useState<PartialTabulate<Material>>({});
    return (
       <div className="window">
          <TitleBarComponent>Debug</TitleBarComponent>
@@ -22,9 +22,9 @@ export function DebugPage(): React.ReactNode {
                      </tr>
                   </thead>
                   <tbody>
-                     {keysOf(Config.ResourcePrice)
+                     {keysOf(Config.MaterialPrice)
                         .sort((a, b) => {
-                           const tier = Config.ResourceTier[a]! - Config.ResourceTier[b]!;
+                           const tier = Config.MaterialTier[a]! - Config.MaterialTier[b]!;
                            if (tier !== 0) {
                               return tier;
                            }
@@ -59,9 +59,9 @@ export function DebugPage(): React.ReactNode {
                                        indeterminate_check_box
                                     </div>
                                  </td>
-                                 <td>{Config.Resource[res].name()}</td>
-                                 <td>{Config.ResourceTier[res]}</td>
-                                 <td>{Config.ResourcePrice[res]}</td>
+                                 <td>{Config.Material[res].name()}</td>
+                                 <td>{Config.MaterialTier[res]}</td>
+                                 <td>{Config.MaterialPrice[res]}</td>
                               </tr>
                            );
                         })}
@@ -72,7 +72,7 @@ export function DebugPage(): React.ReactNode {
             <div className="row">
                <div>Selected</div>
                <div className="f1 text-right">
-                  {mapOf(selectedResource, (res, amount) => Config.ResourcePrice[res]! * amount).reduce(
+                  {mapOf(selectedResource, (res, amount) => Config.MaterialPrice[res]! * amount).reduce(
                      // biome-ignore lint/correctness/useJsxKeyInIterable: <explanation>
                      (prev, curr) => prev + curr,
                      0,

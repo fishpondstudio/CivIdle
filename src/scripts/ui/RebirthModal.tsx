@@ -275,7 +275,7 @@ export function RebirthModal(): React.ReactNode {
                               scale={0.25}
                               style={{ filter: "invert(0.75)", margin: "0 10px 0 0" }}
                            />
-                           <div className="f1">{Config.Resource[dep].name()}</div>
+                           <div className="f1">{Config.Material[dep].name()}</div>
                            <div className="text-strong">{formatPercent(value)}</div>
                         </div>
                      );

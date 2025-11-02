@@ -1,7 +1,7 @@
 import { Preferences } from "@capacitor/preferences";
 import { Sprite, type Application } from "pixi.js";
 import type { City } from "../../shared/definitions/CityDefinitions";
-import { NoPrice, NoStorage } from "../../shared/definitions/ResourceDefinitions";
+import { NoPrice, NoStorage } from "../../shared/definitions/MaterialDefinitions";
 import type { TechAge } from "../../shared/definitions/TechDefinitions";
 import {
    exploreTile,
@@ -409,7 +409,7 @@ if (import.meta.env.DEV) {
    };
    // @ts-expect-error
    window.addAllResources = (amount: number) => {
-      forEach(Config.Resource, (res, def) => {
+      forEach(Config.Material, (res, def) => {
          if (NoStorage[res] || NoPrice[res]) {
             return;
          }

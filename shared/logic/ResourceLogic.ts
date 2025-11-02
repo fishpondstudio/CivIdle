@@ -1,5 +1,5 @@
 import type { Building } from "../definitions/BuildingDefinitions";
-import { NoPrice, type Deposit, type Resource } from "../definitions/ResourceDefinitions";
+import { NoPrice, type Deposit, type Material } from "../definitions/MaterialDefinitions";
 import { clamp, forEach, reduceOf, safeAdd, type Tile } from "../utilities/Helper";
 import type { PartialTabulate } from "../utilities/TypeDefinitions";
 import { getStorageFor } from "./BuildingLogic";
@@ -8,24 +8,24 @@ import type { GameState } from "./GameState";
 import { Tick } from "./TickLogic";
 import { hashTileAndRes } from "./Update";
 
-export function getResourceAmount(res: Resource): number {
+export function getResourceAmount(res: Material): number {
    return Tick.current.resourceAmount.get(res) ?? 0;
 }
 
-export function getAmountInTransit(xy: Tile, res: Resource) {
+export function getAmountInTransit(xy: Tile, res: Material) {
    return Tick.current.amountInTransit.get(hashTileAndRes(xy, res)) ?? 0;
 }
 
-export function getResourcesValue(resources: PartialTabulate<Resource>): number {
+export function getResourcesValue(resources: PartialTabulate<Material>): number {
    return reduceOf(
       resources,
-      (prev, res, amount) => prev + (NoPrice[res] ? 0 : Config.ResourcePrice[res]! * amount),
+      (prev, res, amount) => prev + (NoPrice[res] ? 0 : Config.MaterialPrice[res]! * amount),
       0,
    );
 }
 
 export function deductResourceFrom(
-   res: Resource,
+   res: Material,
    amount: number,
    tiles: Tile[],
    gs: GameState,
@@ -62,7 +62,7 @@ export function deductResourceFrom(
 }
 
 export function addResourceTo(
-   res: Resource,
+   res: Material,
    amount: number,
    tiles: Tile[],
    gs: GameState,
@@ -113,7 +113,7 @@ export function getAvailableStorage(tiles: Tile[], gs: GameState): number {
    return result;
 }
 
-export function getBuildingsThatProduce(res: Resource): Building[] {
+export function getBuildingsThatProduce(res: Material): Building[] {
    if (res === "Koti") {
       return ["SwissBank"];
    }
@@ -134,8 +134,8 @@ export function getRevealedDeposits(gs: GameState): Deposit[] {
    return deposits;
 }
 
-export function combineResources(resources: PartialTabulate<Resource>[]): PartialTabulate<Resource> {
-   const result: PartialTabulate<Resource> = {};
+export function combineResources(resources: PartialTabulate<Material>[]): PartialTabulate<Material> {
+   const result: PartialTabulate<Material> = {};
    resources.forEach((r) => {
       forEach(r, (res, amount) => {
          safeAdd(result, res, amount);

@@ -1,4 +1,4 @@
-import type { Resource } from "../definitions/ResourceDefinitions";
+import type { Material } from "../definitions/MaterialDefinitions";
 import type { Tech } from "../definitions/TechDefinitions";
 import _WorldMap from "../definitions/WorldMap.json";
 import {
@@ -57,15 +57,15 @@ export function getMaxActiveTrades(user: IUser): number {
 
 export function getBuyAmountRange(trade: IAddTradeRequest, range: number) {
    const amount =
-      (trade.sellAmount * (Config.ResourcePrice[trade.sellResource] ?? 0)) /
-      (Config.ResourcePrice[trade.buyResource] ?? 0);
+      (trade.sellAmount * (Config.MaterialPrice[trade.sellResource] ?? 0)) /
+      (Config.MaterialPrice[trade.buyResource] ?? 0);
    return { min: Math.round(amount * (1 - range)), max: Math.round(amount * (1 + range)), amount };
 }
 
 export function getTradePercentage(trade: IAddTradeRequest): number {
    const standardAmount =
-      (trade.sellAmount * Config.ResourcePrice[trade.sellResource]!) /
-      Config.ResourcePrice[trade.buyResource]!;
+      (trade.sellAmount * Config.MaterialPrice[trade.sellResource]!) /
+      Config.MaterialPrice[trade.buyResource]!;
    return -(trade.buyAmount - standardAmount) / standardAmount;
 }
 
@@ -138,7 +138,7 @@ export function getVotingTime(): number {
    return (getVotedBoostId() + 1) * WEEK - Date.now();
 }
 
-export function hasResourceForPlayerTrade(res: Resource): boolean {
+export function hasResourceForPlayerTrade(res: Material): boolean {
    for (const [xy, building] of Tick.current.playerTradeBuildings) {
       if ((building.resources[res] ?? 0) > 0) {
          return true;

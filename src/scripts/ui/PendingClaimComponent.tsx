@@ -1,6 +1,6 @@
 import Tippy from "@tippyjs/react";
 import { TableVirtuoso } from "react-virtuoso";
-import type { Resource } from "../../../shared/definitions/ResourceDefinitions";
+import type { Material } from "../../../shared/definitions/MaterialDefinitions";
 import { Config } from "../../../shared/logic/Config";
 import type { GameState } from "../../../shared/logic/GameState";
 import { addResourceTo, getAvailableStorage } from "../../../shared/logic/ResourceLogic";
@@ -26,7 +26,7 @@ import { FormatNumber } from "./HelperComponents";
 
 export function PendingClaimComponent({ gameState }: { gameState: GameState }) {
    refreshOnTypedEvent(PendingClaimUpdated);
-   const pendingClaims = PendingClaims.filter((trade) => trade.resource in Config.Resource);
+   const pendingClaims = PendingClaims.filter((trade) => trade.resource in Config.Material);
    const claimTrades = async (trades: IPendingClaim[]) => {
       try {
          const tiles = Array.from(Tick.current.playerTradeBuildings.keys());
@@ -53,13 +53,13 @@ export function PendingClaimComponent({ gameState }: { gameState: GameState }) {
                t(L.PlayerTradeClaimAllMessageV2, {
                   resources: mapOf(
                      resources,
-                     (res, amount) => `${Config.Resource[res].name()}: ${formatNumber(amount)}`,
+                     (res, amount) => `${Config.Material[res].name()}: ${formatNumber(amount)}`,
                   ).join(", "),
                }),
             );
             const eic = Tick.current.specialBuildings.get("EastIndiaCompany");
             forEach(resources, (res, amount) => {
-               const tradeValue = amount * (Config.ResourcePrice[res] ?? 0);
+               const tradeValue = amount * (Config.MaterialPrice[res] ?? 0);
                if (eic) {
                   safeAdd(eic.building.resources, "TradeValue", tradeValue);
                }
@@ -126,7 +126,7 @@ export function PendingClaimComponent({ gameState }: { gameState: GameState }) {
                                  </Tippy>
                               ) : null}
                            </td>
-                           <td>{Config.Resource[trade.resource as Resource].name()}</td>
+                           <td>{Config.Material[trade.resource as Material].name()}</td>
                            <td>
                               <FixedLengthText text={trade.fillBy} length={10} />
                            </td>

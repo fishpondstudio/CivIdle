@@ -19,7 +19,7 @@ export function UnlockableEffectComponent({
    return (
       <>
          {definition.revealDeposit?.map((d) => {
-            const deposit = Config.Resource[d];
+            const deposit = Config.Material[d];
             return (
                <fieldset key={d}>
                   <legend>
@@ -51,7 +51,7 @@ export function UnlockableEffectComponent({
                            return (
                               <div className="row mv5" key={res}>
                                  <div className="f1">
-                                    {t(L.ConsumeResource, { resource: Config.Resource[res].name() })}
+                                    {t(L.ConsumeResource, { resource: Config.Material[res].name() })}
                                  </div>
                                  <div>
                                     <strong>{v}</strong>
@@ -63,7 +63,7 @@ export function UnlockableEffectComponent({
                            return (
                               <div className="row mv5" key={res}>
                                  <div className="f1">
-                                    {t(L.ProduceResource, { resource: Config.Resource[res].name() })}
+                                    {t(L.ProduceResource, { resource: Config.Material[res].name() })}
                                  </div>
                                  <div>
                                     <strong>{v}</strong>
@@ -82,7 +82,7 @@ export function UnlockableEffectComponent({
                            {t(L.ConstructionCost, {
                               cost: mapOf(
                                  getBuildingCost({ type: b, level: 0 }),
-                                 (res, amount) => `${Config.Resource[res].name()} x${formatNumber(amount)}`,
+                                 (res, amount) => `${Config.Material[res].name()} x${formatNumber(amount)}`,
                               ).join(", "),
                            })}
                         </div>

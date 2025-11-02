@@ -460,11 +460,11 @@ export function ThemePage(): React.ReactNode {
                   {t(L.ThemeColorResetResourceColors)}
                </div>
                {keysOf(gameOptions.resourceColors)
-                  .sort((a, b) => Config.Resource[a].name().localeCompare(Config.Resource[b].name()))
+                  .sort((a, b) => Config.Material[a].name().localeCompare(Config.Material[b].name()))
                   .map((b) => {
                      return (
                         <div key={b} className="row mv5">
-                           <div className="f1">{Config.Resource[b].name()}</div>
+                           <div className="f1">{Config.Material[b].name()}</div>
                            <ColorPicker
                               value={gameOptions.resourceColors[b] ?? "#ffffff"}
                               onChange={(v) => {

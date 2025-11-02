@@ -1,6 +1,6 @@
 import classNames from "classnames";
 import { useState } from "react";
-import type { Resource } from "../../../shared/definitions/ResourceDefinitions";
+import type { Material } from "../../../shared/definitions/MaterialDefinitions";
 import { getMarketBuyAmount, getMarketSellAmount } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
 import type { GameState } from "../../../shared/logic/GameState";
@@ -33,22 +33,22 @@ import { WarningComponent } from "./WarningComponent";
 
 interface IGrandBazaarMarketData {
    xy: Tile;
-   sellResource: Resource;
+   sellResource: Material;
    sellAmount: number;
-   buyResource: Resource;
+   buyResource: Material;
    buyAmount: number;
 }
 
 function calculateTradeValue(item: IGrandBazaarMarketData): number {
    return (
-      (item.buyAmount * Config.ResourcePrice[item.buyResource]!) /
-         (item.sellAmount * Config.ResourcePrice[item.sellResource]!) -
+      (item.buyAmount * Config.MaterialPrice[item.buyResource]!) /
+         (item.sellAmount * Config.MaterialPrice[item.sellResource]!) -
       1
    );
 }
 
-let savedBuyResourceFilter: Resource | null = null;
-let savedSellResourceFilter: Resource | null = null;
+let savedBuyResourceFilter: Material | null = null;
+let savedSellResourceFilter: Material | null = null;
 let savedNameResourceFilter = "";
 let savedNameBuyFilter = true;
 let savedNameSellFilter = true;
@@ -59,18 +59,18 @@ function TradesTab({
    gs,
 }: {
    allMarketTrades: IGrandBazaarMarketData[];
-   availableResourcesSet: Set<Resource>;
+   availableResourcesSet: Set<Material>;
    gs: GameState;
 }): React.ReactNode {
-   const [buyResourceFilter, setBuyResourceFilter] = useState<Resource | null>(savedBuyResourceFilter);
-   const [sellResourceFilter, setSellResourceFilter] = useState<Resource | null>(savedSellResourceFilter);
+   const [buyResourceFilter, setBuyResourceFilter] = useState<Material | null>(savedBuyResourceFilter);
+   const [sellResourceFilter, setSellResourceFilter] = useState<Material | null>(savedSellResourceFilter);
 
    const [nameResourceFilter, setNameResourceFilter] = useState<string>(savedNameResourceFilter);
    const [nameBuyFilter, setNameBuyFilter] = useState<boolean>(savedNameBuyFilter);
    const [nameSellFilter, setNameSellFilter] = useState<boolean>(savedNameSellFilter);
 
    const availableResources = Array.from(availableResourcesSet).sort((a, b) =>
-      Config.Resource[a].name().localeCompare(Config.Resource[b].name()),
+      Config.Material[a].name().localeCompare(Config.Material[b].name()),
    );
 
    return (
@@ -124,8 +124,8 @@ function TradesTab({
                            savedSellResourceFilter = null;
                            setSellResourceFilter(savedSellResourceFilter);
                         }
-                        if (e.target.value in Config.Resource) {
-                           savedSellResourceFilter = e.target.value as Resource;
+                        if (e.target.value in Config.Material) {
+                           savedSellResourceFilter = e.target.value as Material;
                            setSellResourceFilter(savedSellResourceFilter);
                         }
                      }}
@@ -133,7 +133,7 @@ function TradesTab({
                      <option value=""></option>
                      {availableResources.map((res) => (
                         <option key={res} value={res}>
-                           {Config.Resource[res].name()}
+                           {Config.Material[res].name()}
                         </option>
                      ))}
                   </select>
@@ -149,8 +149,8 @@ function TradesTab({
                            savedBuyResourceFilter = null;
                            setBuyResourceFilter(savedBuyResourceFilter);
                         }
-                        if (e.target.value in Config.Resource) {
-                           savedBuyResourceFilter = e.target.value as Resource;
+                        if (e.target.value in Config.Material) {
+                           savedBuyResourceFilter = e.target.value as Material;
                            setBuyResourceFilter(savedBuyResourceFilter);
                         }
                      }}
@@ -158,7 +158,7 @@ function TradesTab({
                      <option value=""></option>
                      {availableResources.map((res) => (
                         <option key={res} value={res}>
-                           {Config.Resource[res].name()}
+                           {Config.Material[res].name()}
                         </option>
                      ))}
                   </select>
@@ -202,7 +202,7 @@ function TradesTab({
                   }
                   if (
                      nameBuyFilter &&
-                     Config.Resource[m.buyResource]
+                     Config.Material[m.buyResource]
                         .name()
                         .toLowerCase()
                         .includes(nameResourceFilter.toLowerCase())
@@ -212,7 +212,7 @@ function TradesTab({
 
                   if (
                      nameSellFilter &&
-                     Config.Resource[m.sellResource]
+                     Config.Material[m.sellResource]
                         .name()
                         .toLowerCase()
                         .includes(nameResourceFilter.toLowerCase())
@@ -224,13 +224,13 @@ function TradesTab({
                compareFunc={(a, b, i) => {
                   switch (i) {
                      case 0:
-                        return Config.Resource[a.sellResource]
+                        return Config.Material[a.sellResource]
                            .name()
-                           .localeCompare(Config.Resource[b.sellResource].name());
+                           .localeCompare(Config.Material[b.sellResource].name());
                      case 1:
-                        return Config.Resource[a.buyResource]
+                        return Config.Material[a.buyResource]
                            .name()
-                           .localeCompare(Config.Resource[b.buyResource].name());
+                           .localeCompare(Config.Material[b.buyResource].name());
                      case 2:
                         return (calculateTradeValue(a) ?? 0) - (calculateTradeValue(b) ?? 0);
                      default:
@@ -239,8 +239,8 @@ function TradesTab({
                }}
                renderRow={(item) => {
                   const building = gs.tiles.get(item.xy)?.building as IMarketBuildingData;
-                  const sellResource = Config.Resource[item.sellResource];
-                  const buyResource = Config.Resource[item.buyResource];
+                  const sellResource = Config.Material[item.sellResource];
+                  const buyResource = Config.Material[item.buyResource];
                   const tradeValue = calculateTradeValue(item);
                   return (
                      <tr key={`Res:${item.sellResource}Tile:${item.xy}`}>
@@ -336,8 +336,8 @@ function ActiveTradesTab({
             })}
             renderRow={(item) => {
                const building = gs.tiles.get(item.xy)?.building as IMarketBuildingData;
-               const sellResource = Config.Resource[item.sellResource];
-               const buyResource = Config.Resource[item.buyResource];
+               const sellResource = Config.Material[item.sellResource];
+               const buyResource = Config.Material[item.buyResource];
                const tradeValue = calculateTradeValue(item);
                return (
                   <tr key={`Res:${item.sellResource}Tile:${item.xy}`}>
@@ -401,13 +401,13 @@ function ActiveTradesTab({
             compareFunc={(a, b, i) => {
                switch (i) {
                   case 0:
-                     return Config.Resource[a.sellResource]
+                     return Config.Material[a.sellResource]
                         .name()
-                        .localeCompare(Config.Resource[b.sellResource].name());
+                        .localeCompare(Config.Material[b.sellResource].name());
                   case 1:
-                     return Config.Resource[a.buyResource]
+                     return Config.Material[a.buyResource]
                         .name()
-                        .localeCompare(Config.Resource[b.buyResource].name());
+                        .localeCompare(Config.Material[b.buyResource].name());
                   case 2:
                      return (calculateTradeValue(a) ?? 0) - (calculateTradeValue(b) ?? 0);
                   default:
@@ -428,7 +428,7 @@ export function GrandBazaarBuildingBody({ gameState, xy }: IBuildingComponentPro
    }
 
    const marketBuildings = getBuildingsByType("Market", gameState);
-   const availableResourcesSet = new Set<Resource>();
+   const availableResourcesSet = new Set<Material>();
 
    const allMarketTrades: IGrandBazaarMarketData[] = [];
    marketBuildings?.forEach((tile, xy) => {

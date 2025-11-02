@@ -1,7 +1,7 @@
 import { Texture } from "pixi.js";
 import type { Building } from "../../../shared/definitions/BuildingDefinitions";
 import type { City } from "../../../shared/definitions/CityDefinitions";
-import type { Resource } from "../../../shared/definitions/ResourceDefinitions";
+import type { Material } from "../../../shared/definitions/MaterialDefinitions";
 import { NotProducingReason } from "../../../shared/logic/TickLogic";
 
 export function getBuildingTexture(b: Building, textures: Record<string, Texture>, city: City) {
@@ -27,7 +27,7 @@ export function getNotProducingTexture(reason: NotProducingReason, textures: Rec
    }
 }
 
-export function getTileTexture(r: Resource, textures: Record<string, Texture>) {
+export function getTileTexture(r: Material, textures: Record<string, Texture>) {
    return getTexture(`Tile_${r}`, textures);
 }
 

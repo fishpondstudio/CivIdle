@@ -1,4 +1,4 @@
-import type { Resource } from "../definitions/ResourceDefinitions";
+import type { Material } from "../definitions/MaterialDefinitions";
 import type { IPointData, Tile } from "../utilities/Helper";
 
 export interface ITransportationDataV2 {
@@ -9,9 +9,9 @@ export interface ITransportationDataV2 {
    toPosition: IPointData;
    ticksSpent: number;
    ticksRequired: number;
-   resource: Resource;
+   resource: Material;
    amount: number;
-   fuel: Resource;
+   fuel: Material;
    fuelPerTick: number;
    fuelCurrentTick: number;
    hasEnoughFuel: boolean;

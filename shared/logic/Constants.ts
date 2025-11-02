@@ -1,8 +1,8 @@
 import type { Building } from "../definitions/BuildingDefinitions";
 import { BuildingSpecial } from "../definitions/BuildingDefinitions";
 import type { City } from "../definitions/CityDefinitions";
-import type { Deposit, Resource } from "../definitions/ResourceDefinitions";
-import { IsDeposit, NoPrice } from "../definitions/ResourceDefinitions";
+import type { Deposit, Material } from "../definitions/MaterialDefinitions";
+import { IsDeposit, NoPrice } from "../definitions/MaterialDefinitions";
 import type { Tech, TechAge } from "../definitions/TechDefinitions";
 import { TimedBuildingUnlock } from "../definitions/TimedBuildingUnlock";
 import type { Upgrade } from "../definitions/UpgradeDefinitions";
@@ -64,19 +64,18 @@ export const EAST_INDIA_COMPANY_BOOST_PER_EV = 2000;
 export const TRADE_TILE_BONUS = 5;
 export const TRADE_TILE_NEIGHBOR_BONUS = 1;
 export const TRADE_TILE_ALLY_BONUS = 2;
-export const DISABLED_TEMPORARILY_DURING_BETA = true;
 
 interface IRecipe {
    building: Building;
-   input: PartialTabulate<Resource>;
-   output: PartialTabulate<Resource>;
+   input: PartialTabulate<Material>;
+   output: PartialTabulate<Material>;
 }
 
 export function calculateTierAndPrice(log?: (val: string) => void) {
    forEach(IsDeposit, (k) => {
-      Config.ResourceTier[k] = 1;
+      Config.MaterialTier[k] = 1;
       const tech = getDepositUnlockTech(k);
-      Config.ResourcePrice[k] = Math.round(
+      Config.MaterialPrice[k] = Math.round(
          Config.Tech[tech].column + Math.pow(Config.TechAge[getAgeForTech(tech)!].idx, 2),
       );
    });
@@ -89,15 +88,15 @@ export function calculateTierAndPrice(log?: (val: string) => void) {
       Config.BuildingHash[building] = buildingHash++;
       if (isEmpty(buildingDef.input)) {
          forEach(buildingDef.output, (res) => {
-            if (!Config.ResourceTier[res]) {
-               Config.ResourceTier[res] = 1;
+            if (!Config.MaterialTier[res]) {
+               Config.MaterialTier[res] = 1;
             }
-            if (!Config.ResourcePrice[res]) {
+            if (!Config.MaterialPrice[res]) {
                const tech = getBuildingUnlockTechSlow(building);
                if (tech) {
-                  Config.ResourcePrice[res] = 1 + Config.Tech[tech].column;
+                  Config.MaterialPrice[res] = 1 + Config.Tech[tech].column;
                } else {
-                  Config.ResourcePrice[res] = 1;
+                  Config.MaterialPrice[res] = 1;
                }
             }
          });
@@ -178,10 +177,10 @@ export function calculateTierAndPrice(log?: (val: string) => void) {
          Config.BuildingTech[b] = tech;
          Config.BuildingTechAge[b] = getAgeForTech(tech)!;
          forEach(Config.Building[b].output, (res) => {
-            if (Config.ResourceTech[res] && Config.ResourceTech[res]! > techLevel) {
+            if (Config.MaterialTech[res] && Config.MaterialTech[res]! > techLevel) {
                return;
             }
-            Config.ResourceTech[res] = techLevel;
+            Config.MaterialTech[res] = techLevel;
          });
          forEach(Config.City, (city, def) => {
             if (def.uniqueBuildings[b]) {
@@ -221,17 +220,17 @@ export function calculateTierAndPrice(log?: (val: string) => void) {
       Config.BuildingTech[building] = def.tech;
    });
 
-   const resourceTierDependency: Partial<Record<Resource, Resource>> = {};
-   const buildingTierDependency: Partial<Record<Building, Resource>> = {};
+   const resourceTierDependency: Partial<Record<Material, Material>> = {};
+   const buildingTierDependency: Partial<Record<Building, Material>> = {};
 
    while (sizeOf(Config.BuildingTier) < sizeOf(Config.Building)) {
       allRecipes.forEach(({ building, input, output }) => {
          let maxInputResourceTier = 0;
          let inputResourcesValue = 0;
-         let maxInputResource: Resource | null = null;
+         let maxInputResource: Material | null = null;
          const allInputResourcesHasTier = keysOf(input).every((r) => {
-            const tier = Config.ResourceTier[r];
-            const price = Config.ResourcePrice[r];
+            const tier = Config.MaterialTier[r];
+            const price = Config.MaterialPrice[r];
             if (tier && tier > maxInputResourceTier) {
                maxInputResourceTier = tier;
                maxInputResource = r;
@@ -251,16 +250,16 @@ export function calculateTierAndPrice(log?: (val: string) => void) {
                   notPricedResourceValue += amount * SCIENCE_VALUE;
                   return;
                }
-               if (!Config.ResourceTier[res] || targetTier < Config.ResourceTier[res]!) {
-                  const oldTier = Config.ResourceTier[res];
-                  Config.ResourceTier[res] = targetTier;
+               if (!Config.MaterialTier[res] || targetTier < Config.MaterialTier[res]!) {
+                  const oldTier = Config.MaterialTier[res];
+                  Config.MaterialTier[res] = targetTier;
                   if (maxInputResource) {
                      resourceTierDependency[res] = maxInputResource;
                   }
                   forEach(resourceTierDependency, (k, v) => {
                      if (v === res) {
                         delete resourceTierDependency[k];
-                        delete Config.ResourceTier[k];
+                        delete Config.MaterialTier[k];
                         log?.(
                            `Resource Tier of ${k} is decided by ${res}, but its tier has changed from ${
                               oldTier ?? "?"
@@ -294,15 +293,15 @@ export function calculateTierAndPrice(log?: (val: string) => void) {
                if (!Number.isFinite(price)) {
                   return;
                }
-               if (!Config.ResourcePrice[res]) {
-                  Config.ResourcePrice[res] = price;
+               if (!Config.MaterialPrice[res]) {
+                  Config.MaterialPrice[res] = price;
                   return;
                }
-               if (price > Config.ResourcePrice[res]!) {
+               if (price > Config.MaterialPrice[res]!) {
                   log?.(
-                     `Price of ${res} changed from ${Config.ResourcePrice[res]!} to ${price} by ${building}`,
+                     `Price of ${res} changed from ${Config.MaterialPrice[res]!} to ${price} by ${building}`,
                   );
-                  Config.ResourcePrice[res] = price;
+                  Config.MaterialPrice[res] = price;
                }
             });
          }
@@ -318,22 +317,22 @@ export function calculateTierAndPrice(log?: (val: string) => void) {
    Config.BuildingTier.CloneFactory = 8;
    Config.BuildingTier.CloneLab = 8;
 
-   Config.ResourceTier.Koti = 8;
-   Config.ResourcePrice.Koti = 10_000_000;
+   Config.MaterialTier.Koti = 8;
+   Config.MaterialPrice.Koti = 10_000_000;
 
    let resourceHash = 0;
-   forEach(Config.Resource, (r) => {
-      Config.ResourceHash[r] = resourceHash++;
+   forEach(Config.Material, (r) => {
+      Config.MaterialHash[r] = resourceHash++;
       if (!NoPrice[r]) {
-         console.assert(!!Config.ResourceTier[r], `Resource = ${r} does not have a tier`);
-         console.assert(!!Config.ResourcePrice[r], `Resource = ${r} does not have a price`);
+         console.assert(!!Config.MaterialTier[r], `Resource = ${r} does not have a tier`);
+         console.assert(!!Config.MaterialPrice[r], `Resource = ${r} does not have a price`);
       } else {
-         Config.ResourcePrice[r] = 1;
-         Config.ResourceTier[r] = 1;
+         Config.MaterialPrice[r] = 1;
+         Config.MaterialTier[r] = 1;
       }
    });
 
-   const resourcesUsedByBuildings = new Map<Resource, number>();
+   const resourcesUsedByBuildings = new Map<Material, number>();
    forEach(Config.Building, (b, def) => {
       if (def.special === BuildingSpecial.NaturalWonder || def.special === BuildingSpecial.HQ) {
          if (def.max !== 0) {
@@ -349,7 +348,7 @@ export function calculateTierAndPrice(log?: (val: string) => void) {
             multiplier *
                reduceOf(
                   def.input,
-                  (prev, res, amount) => prev + (Config.ResourcePrice[res] ?? 0) * amount,
+                  (prev, res, amount) => prev + (Config.MaterialPrice[res] ?? 0) * amount,
                   0,
                ),
          );
@@ -357,7 +356,7 @@ export function calculateTierAndPrice(log?: (val: string) => void) {
             reduceOf(
                def.output,
                (prev, res, amount) =>
-                  prev + (res === "Science" ? SCIENCE_VALUE : (Config.ResourcePrice[res] ?? 0)) * amount,
+                  prev + (res === "Science" ? SCIENCE_VALUE : (Config.MaterialPrice[res] ?? 0)) * amount,
                0,
             ),
          );
@@ -381,7 +380,7 @@ export function calculateTierAndPrice(log?: (val: string) => void) {
    });
 
    const wonderCost: string[] = [];
-   const resourcesUsedByWonder = new Map<Resource, number>();
+   const resourcesUsedByWonder = new Map<Material, number>();
    keysOf(Config.Building)
       .filter((b) => isWorldWonder(b))
       .sort((a, b) => {
@@ -409,7 +408,7 @@ export function calculateTierAndPrice(log?: (val: string) => void) {
                ageDiffIndicator.push("*");
             }
             cost += `${ageDiffIndicator.join("")}${res}: ${formatNumber(amount)}, `;
-            value += Config.ResourcePrice[res]! * amount;
+            value += Config.MaterialPrice[res]! * amount;
          });
          cost = `${k.padEnd(25)} ${formatNumber(value, false).padEnd(15)}${formatHMS(
             (1000 * totalAmount) / baseBuilderCapacity,
@@ -419,13 +418,13 @@ export function calculateTierAndPrice(log?: (val: string) => void) {
       });
 
    const resourcePrice: string[] = [];
-   keysOf(Config.Resource)
-      .sort((a, b) => Config.ResourceTier[a]! - Config.ResourceTier[b]!)
+   keysOf(Config.Material)
+      .sort((a, b) => Config.MaterialTier[a]! - Config.MaterialTier[b]!)
       .filter((r) => !NoPrice[r])
       .forEach((r) => {
          resourcePrice.push(
-            `${r.padEnd(20)}${numberToRoman(Config.ResourceTier[r]!)!.padEnd(10)}${String(
-               Config.ResourcePrice[r]!,
+            `${r.padEnd(20)}${numberToRoman(Config.MaterialTier[r]!)!.padEnd(10)}${String(
+               Config.MaterialPrice[r]!,
             ).padEnd(10)}${String(resourcesUsedByWonder.get(r) ?? "0*").padEnd(10)}${
                resourcesUsedByBuildings.get(r) ?? "0*"
             }`,
@@ -455,11 +454,11 @@ export function calculateTierAndPrice(log?: (val: string) => void) {
          }
          let cost = 0;
          forEach(def.input, (res, amount) => {
-            cost += Config.ResourcePrice[res]! * amount;
+            cost += Config.MaterialPrice[res]! * amount;
          });
          let construction = 0;
          forEach(def.construction, (res, amount) => {
-            construction += Config.ResourcePrice[res]! * amount;
+            construction += Config.MaterialPrice[res]! * amount;
          });
          let constructionCost = "";
          if (construction > 0) {
@@ -546,7 +545,7 @@ function getBuildingUnlockTechSlow(building: Building): Tech | null {
    return null;
 }
 
-function getResourceUnlockTechs(res: Resource): Tech[] {
+function getResourceUnlockTechs(res: Material): Tech[] {
    const buildings = getBuildingsThatProduce(res);
    return buildings
       .flatMap((a) => {
@@ -569,7 +568,7 @@ function getDepositUnlockTech(deposit: Deposit): Tech {
    throw new Error(`Deposit ${deposit} is not revealed by any technology, check TechDefinitions`);
 }
 
-function getOrderedTechThatProduce(res: Resource): Tech[] {
+function getOrderedTechThatProduce(res: Material): Tech[] {
    const tech: Tech[] = getBuildingsThatProduce(res).flatMap((b) => {
       const t = getBuildingUnlockTechSlow(b);
       return t ? [t] : [];

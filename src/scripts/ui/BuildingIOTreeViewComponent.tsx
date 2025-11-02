@@ -52,7 +52,7 @@ export function BuildingIOTreeViewComponent({
                      <summary className="row">
                         {showWarning ? <img src={warning} style={{ margin: "0 2px 0 0" }} /> : null}
                         <div className={classNames({ f1: true, "production-warning": showWarning })}>
-                           {Config.Resource[k].name()}
+                           {Config.Material[k].name()}
                         </div>
                         <div className="text-strong">
                            <FormatNumber value={v} />

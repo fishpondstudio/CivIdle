@@ -1,5 +1,5 @@
 import Tippy from "@tippyjs/react";
-import type { Resource } from "../../../shared/definitions/ResourceDefinitions";
+import type { Material } from "../../../shared/definitions/MaterialDefinitions";
 import { Config } from "../../../shared/logic/Config";
 import { Tick } from "../../../shared/logic/TickLogic";
 import { formatNumber } from "../../../shared/utilities/Helper";
@@ -12,7 +12,7 @@ export function ResourceAmountComponent({
    showLabel,
    showTooltip,
 }: {
-   resource: Resource;
+   resource: Material;
    amount: number;
    className?: string;
    showLabel: boolean;
@@ -24,13 +24,13 @@ export function ResourceAmountComponent({
    if (diff < 0) {
       className_ += " text-red";
       tooltip = t(L.ResourceNeeded, {
-         resource: Config.Resource[resource].name(),
+         resource: Config.Material[resource].name(),
          amount: formatNumber(Math.abs(diff)),
       });
    }
    const content = (
       <span className={className_}>
-         {showLabel ? Config.Resource[resource].name() : null} x{formatNumber(amount)}
+         {showLabel ? Config.Material[resource].name() : null} x{formatNumber(amount)}
       </span>
    );
 

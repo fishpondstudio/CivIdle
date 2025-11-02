@@ -165,8 +165,8 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
       return (
          filter &&
          (Config.Building[v].name().toLowerCase().includes(s) ||
-            anyOf(Config.Building[v].input, (res) => Config.Resource[res].name().toLowerCase().includes(s)) ||
-            anyOf(Config.Building[v].output, (res) => Config.Resource[res].name().toLowerCase().includes(s)))
+            anyOf(Config.Building[v].input, (res) => Config.Material[res].name().toLowerCase().includes(s)) ||
+            anyOf(Config.Building[v].output, (res) => Config.Material[res].name().toLowerCase().includes(s)))
       );
    });
 
@@ -359,7 +359,7 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
                               <div>
                                  {jsxMapOf(building.input, (res, amount) => (
                                     <span key={res} className="mr5">
-                                       {Config.Resource[res].name()} x{formatNumber(amount)}
+                                       {Config.Material[res].name()} x{formatNumber(amount)}
                                     </span>
                                  ))}
                               </div>
@@ -371,7 +371,7 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
                               <div>
                                  {jsxMapOf(building.output, (res, amount) => (
                                     <span key={res} className="mr5">
-                                       {Config.Resource[res].name()} x{formatNumber(amount)}
+                                       {Config.Material[res].name()} x{formatNumber(amount)}
                                     </span>
                                  ))}
                               </div>
@@ -428,7 +428,7 @@ export function EmptyTilePage({ tile }: { tile: ITileData }): React.ReactNode {
                                  ?.drawSelection(tileToPoint(tile.tile), result);
                            }}
                         >
-                           {Config.Resource[k].name()}
+                           {Config.Material[k].name()}
                         </button>
                      );
                   })}

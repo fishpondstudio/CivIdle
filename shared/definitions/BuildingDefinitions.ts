@@ -1,6 +1,6 @@
 import type { PartialSet, PartialTabulate } from "../utilities/TypeDefinitions";
 import { L, t } from "../utilities/i18n";
-import type { Deposit, Resource } from "./ResourceDefinitions";
+import type { Deposit, Material } from "./MaterialDefinitions";
 
 export enum BuildingSpecial {
    HQ = 0,
@@ -10,9 +10,9 @@ export enum BuildingSpecial {
 
 export interface IBuildingDefinition {
    name: () => string;
-   input: PartialTabulate<Resource>;
-   construction?: PartialTabulate<Resource>;
-   output: PartialTabulate<Resource>;
+   input: PartialTabulate<Material>;
+   construction?: PartialTabulate<Material>;
+   output: PartialTabulate<Material>;
    vision?: number;
    deposit?: PartialSet<Deposit>;
    power?: true;
