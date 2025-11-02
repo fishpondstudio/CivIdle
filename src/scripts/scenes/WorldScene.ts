@@ -516,8 +516,11 @@ export class WorldScene extends Scene {
       });
    }
 
-   updateTile(xy: Tile, dt: number): void {
-      this._tiles.get(xy)?.update(dt);
+   public update(dt: number, timeSinceLastTick: number): void {
+      for (const visual of this._tiles.values()) {
+         visual.update(dt);
+      }
+      this._updateTransportVisual(timeSinceLastTick);
    }
 
    resetTile(xy: Tile): void {
@@ -543,7 +546,7 @@ export class WorldScene extends Scene {
    private _rect = new Rectangle(0, 0, 9.75, 9.75);
    private _pos: IPointData = { x: 0, y: 0 };
 
-   updateTransportVisual(gs: GameState, timeSinceLastTick: number) {
+   private _updateTransportVisual(timeSinceLastTick: number) {
       const options = getGameOptions();
       if (!options.showTransportArrow) {
          for (const [id, sprite] of this._transport) {

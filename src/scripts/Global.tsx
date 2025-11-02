@@ -59,6 +59,7 @@ import { makeObservableHook } from "./utilities/Hook";
 import { isAndroid, isIOS } from "./utilities/Platforms";
 import { Singleton } from "./utilities/Singleton";
 import { Fonts } from "./visuals/Fonts";
+import { clearGreatPersonImageCache } from "./visuals/GreatPersonVisual";
 import { compress, decompress } from "./workers/Compress";
 
 export async function resetToCity(id: string, city: City): Promise<void> {
@@ -377,6 +378,11 @@ if (import.meta.env.DEV) {
       const gs = getGameState();
       exploreTile(xy, gs);
       Singleton().sceneManager.enqueue(WorldScene, (s) => s.revealTile(xy));
+   };
+
+   // @ts-expect-error
+   window.clearGreatPersonImageCache = () => {
+      clearGreatPersonImageCache().then(console.log).catch(console.error);
    };
 
    // @ts-expect-error
