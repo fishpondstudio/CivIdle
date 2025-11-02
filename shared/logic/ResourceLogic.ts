@@ -19,7 +19,7 @@ export function getAmountInTransit(xy: Tile, res: Material) {
 export function getResourcesValue(resources: PartialTabulate<Material>): number {
    return reduceOf(
       resources,
-      (prev, res, amount) => prev + (NoPrice[res] ? 0 : Config.MaterialPrice[res]! * amount),
+      (prev, res, amount) => prev + (NoPrice[res] ? 0 : (Config.MaterialPrice[res] ?? 0) * amount),
       0,
    );
 }
@@ -38,20 +38,28 @@ export function deductResourceFrom(
       if (!resources || !resources[res]) {
          continue;
       }
-      if (resources[res]! >= amountLeft) {
+      if (resources[res] >= amountLeft) {
          const amountToDeduct = amountLeft;
-         resources[res]! -= amountToDeduct;
+         resources[res] -= amountToDeduct;
          rollbacks.push(() => {
-            resources[res]! += amountToDeduct;
+            if (resources[res]) {
+               resources[res] += amountToDeduct;
+            } else {
+               resources[res] = amountToDeduct;
+            }
          });
          amountLeft = 0;
          break;
       }
-      const amountToDeduct = resources[res]!;
+      const amountToDeduct = resources[res];
       amountLeft -= amountToDeduct;
-      resources[res]! -= amountToDeduct;
+      resources[res] -= amountToDeduct;
       rollbacks.push(() => {
-         resources[res]! += amountToDeduct;
+         if (resources[res]) {
+            resources[res] += amountToDeduct;
+         } else {
+            resources[res] = amountToDeduct;
+         }
       });
    }
 

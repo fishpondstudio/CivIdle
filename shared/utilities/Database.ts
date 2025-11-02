@@ -241,6 +241,7 @@ export interface IUser {
    saveOwner?: string;
    lastCheckInAt?: number;
    lastRecoveredAt?: number;
+   lastTradedAt: number;
    heartbeatData?: IHeartbeatData;
 }
 
