@@ -1317,7 +1317,7 @@ export class BuildingDefinitions {
       desc: () => t(L.GoldenGateBridgeDesc),
       input: {},
       output: {},
-      construction: { Steel: 100, Movie: 100, Radio: 100 },
+      construction: { ReinforcedConcrete: 100, Movie: 100, Radio: 100 },
       max: 1,
       special: BuildingSpecial.WorldWonder,
       wikipedia: "Golden_Gate_Bridge",
@@ -1412,16 +1412,6 @@ export class BuildingDefinitions {
       special: BuildingSpecial.NaturalWonder,
       wikipedia: "Yangtze",
    };
-   // SydneyOperaHouse: IBuildingDefinition = {
-   //    name: () => t(L.SydneyOperaHouse),
-   //    desc: () => t(L.SydneyOperaHouseDescV2),
-   //    input: {},
-   //    output: {},
-   //    construction: { Forex: 300 },
-   //    max: 1,
-   //    special: BuildingSpecial.WorldWonder,
-   //    wikipedia: "Sydney_Opera_House",
-   // };
    CNTower: IBuildingDefinition = {
       name: () => t(L.CNTower),
       desc: () => t(L.CNTowerDesc),
@@ -2233,7 +2223,7 @@ export class BuildingDefinitions {
       desc: () => t(L.SydneyOperaHouseDesc),
       input: {},
       output: {},
-      construction: { Koti: 500 },
+      construction: { TV: 500, Radio: 500, Diplomacy: 500 },
       max: 1,
       special: BuildingSpecial.WorldWonder,
       wikipedia: "Sydney_Opera_House",
@@ -2244,7 +2234,7 @@ export class BuildingDefinitions {
       desc: () => t(L.SydneyHarbourBridgeDesc),
       input: {},
       output: {},
-      construction: { Koti: 500 },
+      construction: { ReinforcedConcrete: 100, Car: 100, Submarine: 100 },
       max: 1,
       special: BuildingSpecial.WorldWonder,
       wikipedia: "Sydney_Harbour_Bridge",
@@ -2255,7 +2245,7 @@ export class BuildingDefinitions {
       desc: () => t(L.GreatOceanRoadDesc),
       input: {},
       output: {},
-      construction: { Koti: 500 },
+      construction: { Battleship: 150, Rocket: 150 },
       max: 1,
       special: BuildingSpecial.WorldWonder,
       wikipedia: "Great_Ocean_Road",
@@ -2359,6 +2349,7 @@ export class BuildingDefinitions {
 }
 export type Building = keyof BuildingDefinitions;
 
+// This controls whether we should level labels.
 export const BuildingShowLevel = new Set<Building>([
    "InternationalSpaceStation",
    "MarinaBaySands",
@@ -2382,4 +2373,42 @@ export const BuildingShowLevel = new Set<Building>([
    "QutbMinar",
    "UnitedNations",
    "PortOfSingapore",
+   "SydneyOperaHouse",
+   "SydneyHarbourBridge",
+   "GreatOceanRoad",
 ] satisfies Building[]);
+
+// This controls whether we allow upgrade for multiple levels. e.g. Tradition/Religion/Ideology wonders should NOT allow this!
+export const UpgradableWorldWonders = new Set<Building>([
+   "InternationalSpaceStation",
+   "MarinaBaySands",
+   "PalmJumeirah",
+   "AldersonDisk",
+   "DysonSphere",
+   "MatrioshkaBrain",
+   "LargeHadronCollider",
+   "CologneCathedral",
+   "SantaClausVillage",
+   "YearOfTheSnake",
+   "SwissBank",
+   "ItaipuDam",
+   "UnitedNations",
+   "RedFort",
+   "QutbMinar",
+   "PortOfSingapore",
+   "SydneyOperaHouse",
+   "SydneyHarbourBridge",
+   "GreatOceanRoad",
+] satisfies Building[]);
+
+// Include buildings here that does not really cost construction resources to upgrade
+export const IgnoreBuildingUpgradeValue = new Set<Building>([
+   "Petra",
+   "EastIndiaCompany",
+   "BranCastle",
+] satisfies Building[]);
+
+// The base of the exponential cost. Default is 1.5
+export const WonderCostBase: Partial<Record<Building, number>> = {
+   SydneyOperaHouse: 5,
+};

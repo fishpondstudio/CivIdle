@@ -386,8 +386,15 @@ export function unlockedResources(gs: GameState, ...include: Material[]): Partia
 
 let grid: IGrid | null = null;
 
+export function getCitySize(gs: GameState): number {
+   if (!Number.isFinite(gs.extraTileSize)) {
+      gs.extraTileSize = 0;
+   }
+   return Config.City[gs.city].size + gs.extraTileSize;
+}
+
 export function getGrid(gs: GameState): IGrid {
-   const size = Config.City[gs.city].size;
+   const size = getCitySize(gs);
    if (grid === null || grid.maxX !== size || grid.maxY !== size || grid.size !== TILE_SIZE) {
       grid = new Grid(size, size, TILE_SIZE);
    }

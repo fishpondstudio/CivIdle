@@ -11,6 +11,7 @@ import type { PartialSet, PartialTabulate } from "../utilities/TypeDefinitions";
 import { L, t } from "../utilities/i18n";
 import { Config } from "./Config";
 import type { GameState } from "./GameState";
+import { getCitySize } from "./IntraTickCache";
 import { clearTransportSourceCache } from "./Update";
 
 export interface ITileData {
@@ -329,6 +330,6 @@ export function makeBuilding(data: Pick<IBuildingData, "type"> & Partial<IBuildi
 
 export function getDepositTileCount(deposit: Deposit, gs: GameState): number {
    const city = Config.City[gs.city];
-   const tiles = city.size * city.size;
+   const tiles = getCitySize(gs) ** 2;
    return Math.round(tiles * city.deposits[deposit]);
 }

@@ -1,5 +1,11 @@
 import type { Building } from "../definitions/BuildingDefinitions";
-import { BuildingShowLevel, BuildingSpecial } from "../definitions/BuildingDefinitions";
+import {
+   BuildingShowLevel,
+   BuildingSpecial,
+   IgnoreBuildingUpgradeValue,
+   UpgradableWorldWonders,
+   WonderCostBase,
+} from "../definitions/BuildingDefinitions";
 import type { City } from "../definitions/CityDefinitions";
 import type { GreatPerson } from "../definitions/GreatPersonDefinitions";
 import type { IUnlockableMultipliers } from "../definitions/ITechDefinition";
@@ -537,7 +543,8 @@ export function getBuildingCost(building: BuildingCostInput): PartialTabulate<Ma
       }
       keysOf(cost).forEach((res) => {
          const price = Config.MaterialPrice[res] ?? 1;
-         cost[res] = (Math.pow(1.5, building.level) * multiplier * cost[res]!) / price;
+         cost[res] =
+            (Math.pow(WonderCostBase[type] ?? 1.5, building.level) * multiplier * cost[res]!) / price;
       });
    } else {
       const multiplier = 10;
@@ -617,7 +624,7 @@ export function getWonderBaseBuilderCapacity(type: Building): number {
 
 export function getBuildingValue(building: IBuildingData): number {
    let level = building.level;
-   if (building.type === "Petra") {
+   if (IgnoreBuildingUpgradeValue.has(building.type)) {
       level = 1;
    }
    return getResourcesValue(getTotalBuildingCost(building, 0, level));
@@ -1380,6 +1387,7 @@ const WonderToGreatPerson: Partial<Record<Building, GreatPerson>> = {
    Petra: "Zenobia",
    ItaipuDam: "Pele",
    CologneCathedral: "Beethoven",
+   SydneyHarbourBridge: "JohnBradfield",
 };
 
 export function getWonderExtraLevel(building: Building): number {
@@ -1393,25 +1401,6 @@ export function getWonderExtraLevel(building: Building): number {
 export function getWonderGreatPerson(building: Building): GreatPerson | undefined {
    return WonderToGreatPerson[building];
 }
-
-const UpgradableWorldWonders = new Set<Building>([
-   "InternationalSpaceStation",
-   "MarinaBaySands",
-   "PalmJumeirah",
-   "AldersonDisk",
-   "DysonSphere",
-   "MatrioshkaBrain",
-   "LargeHadronCollider",
-   "CologneCathedral",
-   "SantaClausVillage",
-   "YearOfTheSnake",
-   "SwissBank",
-   "ItaipuDam",
-   "UnitedNations",
-   "RedFort",
-   "QutbMinar",
-   "PortOfSingapore",
-] satisfies Building[]);
 
 export function isBuildingUpgradable(building: Building): boolean {
    return !isSpecialBuilding(building) || UpgradableWorldWonders.has(building);

@@ -90,7 +90,10 @@ export function RebirthModal(): React.ReactNode {
       Tick.current.specialBuildings.has("CentrePompidou") &&
       (getCurrentAge(gs) !== "InformationAge" || gs.city === nextCity);
 
+   const extraTileForNextRebirth = Tick.current.specialBuildings.get("SydneyOperaHouse")?.building.level ?? 0;
+
    const uniqueEffects = Config.City[nextCity].uniqueEffects();
+   const citySize = Config.City[nextCity].size;
    return (
       <div className="window" style={{ width: "700px" }}>
          <div className="title-bar">
@@ -260,8 +263,13 @@ export function RebirthModal(): React.ReactNode {
                <div className="row mb5">
                   <div className="text-strong">{t(L.Deposit)}</div>
                   <div className="text-desc ml5">
-                     ({Config.City[nextCity].size}x{Config.City[nextCity].size})
+                     ({citySize + extraTileForNextRebirth}x{citySize + extraTileForNextRebirth})
                   </div>
+                  {extraTileForNextRebirth > 0 && (
+                     <Tippy content={t(L.ExtraTileForNextRebirthTooltip, { count: extraTileForNextRebirth })}>
+                        <div className="m-icon small ml5 text-green">info</div>
+                     </Tippy>
+                  )}
                </div>
                <div
                   className="inset-shallow white p5"
@@ -496,7 +504,7 @@ export function RebirthModal(): React.ReactNode {
                      getGameOptions().showTutorial = false;
 
                      playClick();
-                     await resetToCity(gameId, nextCity);
+                     await resetToCity(gameId, nextCity, extraTileForNextRebirth);
 
                      const pompidou = getPompidou(gs);
                      if (currentCity !== nextCity && pompidou) {

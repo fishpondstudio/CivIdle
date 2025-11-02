@@ -51,7 +51,6 @@ export class GameState {
    tick = 0;
    seconds = 0;
    greatPeople: PartialTabulate<GreatPerson> = {};
-   // greatPeopleChoices: GreatPeopleChoice[] = [];
    greatPeopleChoicesV2: GreatPeopleChoiceV2[] = [];
    transportId = 0;
    lastPriceUpdated = 0;
@@ -69,6 +68,7 @@ export class GameState {
    lastClientTickAt = 0;
    clientOfflineSec = 0;
    watchedResources: Set<Material> = new Set();
+   extraTileSize = 0;
 }
 
 export type GreatPeopleChoice = GreatPerson[];

@@ -416,7 +416,7 @@ function AccountDetails(): React.ReactNode {
                               try {
                                  await client.upgrade();
                                  playLevelUp();
-                                 await resetToCity(uuid4(), getGameState().city);
+                                 await resetToCity(uuid4(), getGameState().city, 0);
                                  const options = getGameOptions();
                                  options.greatPeopleChoicesV2 = [];
                                  upgradeAllUpgradeablePermanentGreatPeople(options);

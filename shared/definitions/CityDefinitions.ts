@@ -444,7 +444,7 @@ export class CityDefinitions {
          FusionPowerPlant: "Genetics",
          SydneyOperaHouse: "Television",
          SydneyHarbourBridge: "Hydroelectricity",
-         GreatOceanRoad: "Radio",
+         GreatOceanRoad: "Rocketry",
       },
       uniqueMultipliers: {},
       naturalWonders: { GreatBarrierReef: true, Uluru: true },

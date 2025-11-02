@@ -109,7 +109,7 @@ export async function handleChatCommand(command: string): Promise<void> {
                MAX_TECH_AGE,
                getGameState().city,
             );
-            await resetToCity(uuid4(), firstKeyOf(Config.City)!);
+            await resetToCity(uuid4(), firstKeyOf(Config.City)!, 0);
             await saveGame();
             window.location.reload();
          }
