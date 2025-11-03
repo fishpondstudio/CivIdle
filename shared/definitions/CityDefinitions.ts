@@ -460,7 +460,7 @@ export class CityDefinitions {
       requireGreatPeopleLevel: 110,
       requireSupporterPack: true,
       festivalDesc: () => t(L.Moomba),
-      uniqueEffects: () => ["A random <b>Natural Wonder</b> from other civilizations is spawned on the map"],
+      uniqueEffects: () => [t(L.AustralianUniqueEffectHTML)],
    };
 }
 
