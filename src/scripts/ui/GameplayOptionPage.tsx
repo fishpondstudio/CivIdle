@@ -5,6 +5,8 @@ import { MAX_OFFLINE_PRODUCTION_SEC } from "../../../shared/logic/Constants";
 import {
    ExtraTileInfoTypes,
    getTranslatedPercentage,
+   ResourcePanelSectionLabels,
+   ResourcePanelSections,
    type ExtraTileInfoType,
 } from "../../../shared/logic/GameState";
 import { notifyGameOptionsUpdate } from "../../../shared/logic/GameStateLogic";
@@ -273,6 +275,29 @@ export function GameplayOptionPage(): React.ReactNode {
                      notifyGameOptionsUpdate(options);
                   }}
                />
+            </fieldset>
+            <fieldset>
+               <legend>{t(L.ResourcePanelSections)}</legend>
+               {ResourcePanelSections.map((section) => {
+                  const label = ResourcePanelSectionLabels[section];
+                  return (
+                     <ToggleComponent
+                        key={section}
+                        title={label()}
+                        contentHTML=""
+                        value={!options.hideResourcePanelSections.has(section)}
+                        onValueChange={(value) => {
+                           playClick();
+                           if (value) {
+                              options.hideResourcePanelSections.delete(section);
+                           } else {
+                              options.hideResourcePanelSections.add(section);
+                           }
+                           notifyGameOptionsUpdate(options);
+                        }}
+                     />
+                  );
+               })}
             </fieldset>
             <fieldset>
                <legend>{t(L.OfflineProduction)}</legend>

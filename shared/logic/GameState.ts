@@ -94,6 +94,34 @@ const DefaultThemeColors = {
    SpinnerAlpha: 0.5,
 };
 
+export const ResourcePanelSections = [
+   "Happiness",
+   "Festival",
+   "Workers",
+   "Electricity",
+   "Science",
+   "Deficit",
+   "EmpireValue",
+   "GreatPeople",
+   "PlayerTrade",
+   "TimeWarp",
+] as const;
+
+export const ResourcePanelSectionLabels: Record<ResourcePanelSection, () => string> = {
+   Happiness: () => t(L.Happiness),
+   Festival: () => t(L.Festival),
+   Workers: () => t(L.Workers),
+   Electricity: () => t(L.Electricity),
+   Science: () => t(L.Science),
+   Deficit: () => t(L.StatisticsResourcesDeficit),
+   EmpireValue: () => t(L.EmpireValue),
+   GreatPeople: () => t(L.GreatPeople),
+   PlayerTrade: () => t(L.PlayerTrade),
+   TimeWarp: () => t(L.TimeWarp),
+};
+
+export type ResourcePanelSection = (typeof ResourcePanelSections)[number];
+
 export function resetThemeColor() {
    getGameOptions().themeColors = { ...DefaultThemeColors };
    notifyGameOptionsUpdate();
@@ -269,6 +297,7 @@ export class GameOptions {
    supporterPackPurchased = false;
    warehouseQuickMode = true;
    migrationFlags = MigrationFlags.None;
+   hideResourcePanelSections = new Set<ResourcePanelSection>();
 }
 
 export enum RankUpFlags {
