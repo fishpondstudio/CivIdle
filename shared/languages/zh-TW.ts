@@ -1680,7 +1680,7 @@ export const ZH_TW = {
    TV: "電視",
    TVStation: "電視台",
    Uluru: "烏魯魯",
-   UluruDesc: "周圍 2 地塊範圍內的所有建築（產出勞動者建築除外）獲得 +N 生產乘數。 N 為本輪不同的此生偉人數量的 50% ",
+   UluruDesc: "周圍 2 地塊範圍內的所有建築（產出工人建築除外）獲得 +N 生產乘數。 N 為本輪不同的此生偉人數量的 50% ",
    UnclaimedGreatPeopleThisRun: "未領取的此生偉人提示",
    UnclaimedGreatPeopleThisRunHTML: "你有 <b>%{count}</b> 未領取的此生偉人，點擊歡迎他們",
    UnclaimedGreatPersonPermanent: "你有未領取的<b>永恆偉人</b>，點擊這裡以領取。",
