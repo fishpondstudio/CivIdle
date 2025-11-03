@@ -8,7 +8,7 @@ import {
 import { Config } from "../../../shared/logic/Config";
 import { GameStateFlags, type GameState } from "../../../shared/logic/GameState";
 import { getGameOptions, getGameState } from "../../../shared/logic/GameStateLogic";
-import { getPermanentGreatPeopleLevel } from "../../../shared/logic/RebirthLogic";
+import { getPermanentGreatPeopleLevel, getRebirthGreatPeopleCount } from "../../../shared/logic/RebirthLogic";
 import { Tick } from "../../../shared/logic/TickLogic";
 import type { ICentrePompidouBuildingData } from "../../../shared/logic/Tile";
 import { OnTechUnlocked } from "../../../shared/logic/Update";
@@ -32,6 +32,9 @@ OnTechUnlocked.on((tech) => {
          }
          if ((Tick.current.workersAvailable.get("Power") ?? 0) >= 1_000_000) {
             SteamClient.unlockAchievement("PowerfulEmpire");
+         }
+         if (getRebirthGreatPeopleCount() <= 200) {
+            SteamClient.unlockAchievement("RushToFuture");
          }
          break;
       }
@@ -162,8 +165,14 @@ export function checkRebirthAchievements(extraGP: number, gs: GameState): void {
             SteamClient.unlockAchievement("KeeperOfDharma");
             break;
          }
+         case "Australian": {
+            SteamClient.unlockAchievement("WaltzingMatilda");
+            break;
+         }
       }
    }
+
+   SteamClient.unlockAchievement("AreWeThereYet");
 
    let wonders = 0;
    let maxLevel = 0;
@@ -275,6 +284,11 @@ export function checkRebirthAchievements(extraGP: number, gs: GameState): void {
    const eic = findSpecialBuilding("EastIndiaCompany", gs);
    if (eic && eic.building.level >= 10) {
       SteamClient.unlockAchievement("TradeMonopoly");
+   }
+
+   const soh = findSpecialBuilding("SydneyOperaHouse", gs);
+   if (soh && soh.building.level >= 2) {
+      SteamClient.unlockAchievement("MoreTilesMoreFun");
    }
 
    const ppd = findSpecialBuilding("CentrePompidou", gs);
