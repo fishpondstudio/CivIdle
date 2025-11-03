@@ -1524,7 +1524,7 @@ export const ZH_TW = {
    Sword: "劍",
    SwordForge: "鑄劍廠",
    SydneyHarbourBridge: "悉尼海港大橋",
-   SydneyHarbourBridgeDesc: "該奇觀可以升級，每一級為所有發電廠提供 +1 生產乘數",
+   SydneyHarbourBridgeDesc: "該奇觀可被升級，每一級為所有發電廠提供 +1 生產乘數",
    SydneyOperaHouse: "悉尼歌劇院",
    SydneyOperaHouseDesc: "該奇觀可被升級，每一級為下一次重生的地圖大小增加 1（例：1 級時為 40*40 的地圖增加至 41*41）",
    SyncToANewDevice: "同步到新裝置",
