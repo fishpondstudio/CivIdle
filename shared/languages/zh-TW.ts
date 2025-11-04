@@ -1301,6 +1301,7 @@ export const ZH_TW = {
    ResourceImportSettings: "運送資源： %{res}",
    ResourceImportStorage: "現存量",
    ResourceNeeded: "需要額外的 %{resource} x%{amount}",
+   ResourcePanelSections: "資源欄管理",
    ResourceTransportPreference: "運送偏好",
    RestorePurchases: "恢復購買",
    RevealDeposit: "顯現",
