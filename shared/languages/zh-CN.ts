@@ -1302,6 +1302,7 @@ export const ZH_CN = {
    ResourceImportSettings: "运送资源：%{res}",
    ResourceImportStorage: "现存量",
    ResourceNeeded: "需要额外的%{resource} x %{amount}",
+   ResourcePanelSections: "资源栏管理",
    ResourceTransportPreference: "运送倾向",
    RestorePurchases: "恢复购买",
    RevealDeposit: "显露",
