@@ -418,7 +418,7 @@ export const FR = {
    Egyptian: "Égyptien",
    EiffelTower: "Tour Eiffel",
    EiffelTowerDesc: "Toutes les fonderies adjacentes gagnent +N Production, Stockage et Multiplicateur d'Ouvriers. N = Nombre de fonderies adjacentes",
-   ElbphilharmonieDesc: "Tous les bâtiments dans un rayon de 3 tuiles reçoivent +1 Multiplicateur de Production pour chaque bâtiment fonctionnel adjacent ayant un niveau différent.",
+   ElbphilharmonieDesc: "tous les batiment dans un rayon de 3 cases beneficient d'un multiplicateur de production de +1 pour chaque batiment adjacent de tiers different",
    Electricity: "Électricité",
    Electrification: "Électrification",
    ElectrificationLevel: "Niveau d'électrification",
