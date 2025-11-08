@@ -11,7 +11,7 @@ export const TimedBuildingUnlock: Partial<Record<Building, ITimedBuildingUnlock>
       tech: "HolyEmpire",
       condition: isHalloween,
    },
-   SantaClausVillage: { tech: "Theocracy", condition: (now) => now.getMonth() === 11 },
+   SantaClausVillage: { tech: "Theocracy", condition: isChristmas },
    YearOfTheSnake: {
       tech: "Theater",
       condition: (now) => {
@@ -28,4 +28,8 @@ export const TimedBuildingUnlock: Partial<Record<Building, ITimedBuildingUnlock>
 
 export function isHalloween(now: Date): boolean {
    return (now.getMonth() === 9 && now.getDate() >= 15) || (now.getMonth() === 10 && now.getDate() <= 15);
+}
+
+export function isChristmas(now: Date): boolean {
+   return now.getMonth() === 11;
 }

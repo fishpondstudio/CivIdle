@@ -2411,4 +2411,5 @@ export const IgnoreBuildingUpgradeValue = new Set<Building>([
 // The base of the exponential cost. Default is 1.5
 export const WonderCostBase: Partial<Record<Building, number>> = {
    SydneyOperaHouse: 5,
+   GreatOceanRoad: 1.7,
 };

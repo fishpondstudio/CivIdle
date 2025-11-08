@@ -1828,4 +1828,6 @@ export const EN = {
    JohnBradfield: "John Bradfield",
    Moomba: "Moomba: Great Ocean Road also provides +1 Production Multiplier per level to Trade Tile Bonus buildings. Increase the range of Uluru to 3-tile",
    ExtraTileForNextRebirthTooltip: "You get %{count} extra tile(s) for the next rebirth provided by Sydney Opera House",
+   AustralianUniqueEffectHTML: "A random <b>Natural Wonder</b> from other civilizations is spawned on the map",
+   ResourcePanelSections: "Resource Panel Sections",
 };
