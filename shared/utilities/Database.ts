@@ -157,7 +157,7 @@ export enum UserAttributes {
    Banned = 1 << 6,
    TribuneOnly = 1 << 7,
    DisableRename = 1 << 8,
-   CheckTradeCancel = 1 << 9,
+   __Unused = 1 << 9,
    Suspicious = 1 << 10,
    Desynced = 1 << 11,
 }
@@ -230,7 +230,6 @@ export interface IUser {
    lastGameTick: number;
    totalPlayTime: number;
    color: UserColors;
-   empireValues: IEmpireValue[];
    tradeValues: ITradeValue[];
    level: AccountLevel;
    flag: string;
@@ -240,7 +239,6 @@ export interface IUser {
    connectionRequest?: IConnectionRequest;
    saveOwner?: string;
    lastCheckInAt?: number;
-   lastRecoveredAt?: number;
    lastTradedAt: number;
    heartbeatData?: IHeartbeatData;
 }
