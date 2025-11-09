@@ -210,7 +210,51 @@ export async function handleChatCommand(command: string): Promise<void> {
             throw new Error("Invalid command format");
          }
          const user = await client.queryPlayer(parts[1]);
-         addSystemMessage(JSON.stringify(user));
+         addSystemMessage(
+            [
+               JSON.stringify(user),
+               "\nRelated:",
+               ...(await client.queryRelatedPlayers(parts[1])).map((u) => JSON.stringify(u)),
+            ].join("\n"),
+         );
+         break;
+      }
+      case "lssp": {
+         const result = await client.listSpecialPlayers();
+         const json = JSON.stringify(result);
+         navigator.clipboard.writeText(json);
+         const rows = result.map((user) => {
+            const ev = user.heartbeatData?.empireValue ?? 0;
+            const gp = user.heartbeatData?.greatPeopleLevel ?? 0;
+            const clientTick = user.heartbeatData?.clientTick ?? 0;
+            return [
+               user.handle.padEnd(16),
+               (hasFlag(user.attr, UserAttributes.DLC1) ? "*" : " ").padEnd(2),
+               (numberToRoman(user.level + 1) ?? "").padEnd(6),
+               (hasFlag(user.attr, UserAttributes.Suspicious) ? "S" : " ").padEnd(2),
+               (hasFlag(user.attr, UserAttributes.Desynced) ? "D" : " ").padEnd(2),
+               formatNumber(ev).padStart(10),
+               formatNumber(ev / clientTick).padStart(10),
+               formatNumber(gp).padStart(10),
+               formatNumber(gp / (user.totalPlayTime / 3600)).padStart(10),
+               `${Math.floor(user.totalPlayTime / 3600)}h`.padStart(10),
+            ].join("");
+         });
+         rows.unshift(
+            [
+               "".padEnd(16),
+               "".padEnd(2),
+               "".padEnd(6),
+               "".padEnd(2),
+               "".padEnd(2),
+               "EV".padStart(10),
+               "EV/t".padStart(10),
+               "GP".padStart(10),
+               "GP/h".padStart(10),
+               "Time".padStart(10),
+            ].join(""),
+         );
+         addSystemMessage(`<code>${rows.join("\n")}<code>`);
          break;
       }
       case "playersave": {
@@ -293,21 +337,28 @@ export async function handleChatCommand(command: string): Promise<void> {
          const result = await client.getGreatPeopleLevelRank(safeParseInt(parts[1], 10));
          const json = JSON.stringify(result);
          navigator.clipboard.writeText(json);
-         addSystemMessage(
-            `<code>${result
-               .map((user) => {
-                  const gp = user.heartbeatData?.greatPeopleLevel ?? 0;
-                  return [
-                     user.handle.padEnd(16),
-                     (hasFlag(user.attr, UserAttributes.DLC1) ? "*" : " ").padEnd(2),
-                     (numberToRoman(user.level + 1) ?? "").padEnd(6),
-                     formatNumber(gp / (user.totalPlayTime / 3600)).padStart(10),
-                     gp.toString().padStart(10),
-                     `${Math.floor(user.totalPlayTime / 3600)}h`.padStart(10),
-                  ].join("");
-               })
-               .join("\n")}<code>`,
+         const rows = result.map((user) => {
+            const gp = user.heartbeatData?.greatPeopleLevel ?? 0;
+            return [
+               user.handle.padEnd(16),
+               (hasFlag(user.attr, UserAttributes.DLC1) ? "*" : " ").padEnd(2),
+               (numberToRoman(user.level + 1) ?? "").padEnd(6),
+               formatNumber(gp / (user.totalPlayTime / 3600)).padStart(10),
+               gp.toString().padStart(10),
+               `${Math.floor(user.totalPlayTime / 3600)}h`.padStart(10),
+            ].join("");
+         });
+         rows.unshift(
+            [
+               "".padEnd(16),
+               "".padEnd(2),
+               "".padEnd(6),
+               "GP/h".padStart(10),
+               "GP".padStart(10),
+               "Time".padStart(10),
+            ].join(""),
          );
+         addSystemMessage(`<code>${rows.join("\n")}<code>`);
          break;
       }
       case "evrank": {
@@ -317,24 +368,32 @@ export async function handleChatCommand(command: string): Promise<void> {
          const result = await client.getEmpireValueRank(safeParseInt(parts[1], 10));
          const json = JSON.stringify(result);
          navigator.clipboard.writeText(json);
-         addSystemMessage(
-            `<code>${result
-               .map((user) => {
-                  const ev = user.heartbeatData?.empireValue ?? 0;
-                  return [
-                     user.handle.padEnd(16),
-                     (hasFlag(user.attr, UserAttributes.DLC1) ? "*" : " ").padEnd(2),
-                     (numberToRoman(user.level + 1) ?? "").padEnd(6),
-                     formatNumber(ev).padStart(10),
-                     formatNumber(ev / user.heartbeatData!.clientTick).padStart(10),
-                     formatNumber(
-                        ev / user.heartbeatData!.clientTick / (user.heartbeatData?.greatPeopleLevel ?? 1),
-                     ).padStart(10),
-                     `${Math.floor(user.totalPlayTime / 3600)}h`.padStart(10),
-                  ].join("");
-               })
-               .join("\n")}<code>`,
+         const rows = result.map((user) => {
+            const ev = user.heartbeatData?.empireValue ?? 0;
+            return [
+               user.handle.padEnd(16),
+               (hasFlag(user.attr, UserAttributes.DLC1) ? "*" : " ").padEnd(2),
+               (numberToRoman(user.level + 1) ?? "").padEnd(6),
+               formatNumber(ev).padStart(10),
+               formatNumber(ev / user.heartbeatData!.clientTick).padStart(10),
+               formatNumber(
+                  ev / user.heartbeatData!.clientTick / (user.heartbeatData?.greatPeopleLevel ?? 1),
+               ).padStart(10),
+               `${Math.floor(user.totalPlayTime / 3600)}h`.padStart(10),
+            ].join("");
+         });
+         rows.unshift(
+            [
+               "".padEnd(16),
+               "".padEnd(2),
+               "".padEnd(6),
+               "EV".padStart(10),
+               "EV/t".padStart(10),
+               "EV/t/GP".padStart(10),
+               "Time".padStart(10),
+            ].join(""),
          );
+         addSystemMessage(`<code>${rows.join("\n")}<code>`);
          break;
       }
       case "modlist": {
