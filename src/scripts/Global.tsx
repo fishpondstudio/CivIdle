@@ -125,6 +125,7 @@ export function syncFontVariantNumeric(options: GameOptions): void {
 
 const SaveKey = "CivIdle";
 const SaveKeyNew = "CivIdleNew";
+const SaveNonceKey = "CivIdleSaveNonce";
 
 interface ISaveGameTask {
    resolve: () => void;
@@ -153,6 +154,8 @@ export async function saveGame(): Promise<void> {
 
 export async function doSaveGame(task: ISaveGameTask): Promise<void> {
    try {
+      const nonce = Math.random();
+      savedGame.current.nonce = nonce;
       if (isSteam()) {
          const serialized = serializeSave(savedGame);
          await SteamClient.fileWriteCompressed(SaveKey, serialized);
@@ -161,6 +164,7 @@ export async function doSaveGame(task: ISaveGameTask): Promise<void> {
       } else {
          await idbSet(SaveKeyNew, serializeSave(savedGame));
       }
+      await idbSet(SaveNonceKey, nonce);
       task.resolve();
    } catch (error) {
       task.reject(error);
@@ -198,26 +202,31 @@ export async function loadGame(): Promise<SavedGame | null> {
       console.time("Loading Save file");
       if (isSteam()) {
          const bytes = await SteamClient.fileReadBytes(SaveKey);
-         return await decompressSave(new Uint8Array(bytes));
+         const save = await decompressSave(new Uint8Array(bytes));
+         return await checkSaveNonce(save);
       }
       if (isAndroid() || isIOS()) {
          const string = (await Preferences.get({ key: SaveKeyNew })).value;
          if (string) {
-            return deserializeSave(string);
+            const save = deserializeSave(string);
+            return await checkSaveNonce(save);
          }
          const oldSaveString = (await Preferences.get({ key: SaveKey })).value;
          if (oldSaveString) {
-            return await decompressSave(base64ToBytes(oldSaveString));
+            const save = await decompressSave(base64ToBytes(oldSaveString));
+            return await checkSaveNonce(save);
          }
          return null;
       }
       const string = await idbGet<string>(SaveKeyNew);
       if (string) {
-         return deserializeSave(string);
+         const save = deserializeSave(string);
+         return await checkSaveNonce(save);
       }
       const oldSaveBytes = await idbGet<Uint8Array>(SaveKey);
       if (oldSaveBytes) {
-         return await decompressSave(oldSaveBytes);
+         const save = await decompressSave(oldSaveBytes);
+         return await checkSaveNonce(save);
       }
       return null;
    } catch (e) {
@@ -226,6 +235,14 @@ export async function loadGame(): Promise<SavedGame | null> {
    } finally {
       console.timeEnd("Loading Save file");
    }
+}
+
+export async function checkSaveNonce(save: SavedGame): Promise<SavedGame> {
+   const nonce = await idbGet<number>(SaveNonceKey);
+   if (nonce !== save.current.nonce) {
+      save.current.id = uuid4();
+   }
+   return save;
 }
 
 export function isGameDataCompatible(gs: SavedGame): boolean {
@@ -335,6 +352,9 @@ if (import.meta.env.DEV) {
    window.showComplete = (building: Building) => {
       showModal(<BuildingCompleteModal building={building} />);
    };
+
+   // @ts-expect-error
+   window.formatNumber = formatNumber;
 
    // @ts-expect-error
    window.showSupporterPack = () => {

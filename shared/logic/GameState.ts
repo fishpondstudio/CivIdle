@@ -69,6 +69,7 @@ export class GameState {
    clientOfflineSec = 0;
    watchedResources: Set<Material> = new Set();
    mapSize = ROME_CITY_SIZE;
+   nonce = Math.random();
 }
 
 export type GreatPeopleChoice = GreatPerson[];
