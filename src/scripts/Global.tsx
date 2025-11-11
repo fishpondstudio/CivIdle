@@ -239,7 +239,7 @@ export async function loadGame(): Promise<SavedGame | null> {
 
 export async function checkSaveNonce(save: SavedGame): Promise<SavedGame> {
    const nonce = await idbGet<number>(SaveNonceKey);
-   if (nonce !== save.current.nonce) {
+   if (nonce && nonce !== save.current.nonce) {
       save.current.id = uuid4();
    }
    return save;
