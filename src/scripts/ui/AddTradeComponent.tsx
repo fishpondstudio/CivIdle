@@ -4,7 +4,7 @@ import { NoPrice, NoStorage, type Material } from "../../../shared/definitions/M
 import { Config } from "../../../shared/logic/Config";
 import { DISABLE_PLAYER_TRADES } from "../../../shared/logic/Constants";
 import type { GameState } from "../../../shared/logic/GameState";
-import { notifyGameOptionsUpdate } from "../../../shared/logic/GameStateLogic";
+import { getGameState, notifyGameOptionsUpdate } from "../../../shared/logic/GameStateLogic";
 import { unlockedResources } from "../../../shared/logic/IntraTickCache";
 import {
    getBuyAmountRange,
@@ -250,7 +250,8 @@ export function AddTradeFormComponent({
                      const percentage = transaction.amount / trade.sellAmount;
                      trade.sellAmount *= percentage;
                      trade.buyAmount *= percentage;
-                     await client.addTrade(trade);
+                     const { token } = await client.addTradeV2(trade);
+                     getGameState().id = token;
                      playKaching();
                      showToast(t(L.PlayerTradeAddSuccess));
                      if (!options.keepNewTradeWindowOpen) {

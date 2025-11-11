@@ -1146,7 +1146,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
                }
 
                if (isValid) {
-                  let multiplier = Math.round(srand(gs.id + gs.lastPriceUpdated + t)() * 4 + 1);
+                  let multiplier = Math.round(srand(`wallstreet:${gs.lastPriceUpdated}:${t}`)() * 4 + 1);
                   if (isFestival("WallStreet", gs)) {
                      multiplier *= 2;
                   }

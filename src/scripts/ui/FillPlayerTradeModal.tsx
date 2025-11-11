@@ -2,6 +2,7 @@ import classNames from "classnames";
 import { useEffect, useState } from "react";
 import { getStorageFor, hasEnoughResource, hasEnoughStorage } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
+import { getGameState } from "../../../shared/logic/GameStateLogic";
 import { getSeaTileCost, getTotalSeaTileCost } from "../../../shared/logic/PlayerTradeLogic";
 import { deductResourceFrom } from "../../../shared/logic/ResourceLogic";
 import { Tick } from "../../../shared/logic/TickLogic";
@@ -142,13 +143,14 @@ export function FillPlayerTradeModal({
          totalAmount += r.amount;
       }
       try {
-         const result = await client.fillTrade({
+         const { resources, token } = await client.fillTradeV2({
             id: trade.id,
             amount: totalAmount,
             path: tiles,
             seaTileCost: getSeaTileCost(gs),
          });
-         const receivedAmount = result[trade.sellResource] ?? 0;
+         getGameState().id = token;
+         const receivedAmount = resources[trade.sellResource] ?? 0;
          for (const r of queue) {
             const building = allTradeBuildings.get(r.tile);
             if (building) {
