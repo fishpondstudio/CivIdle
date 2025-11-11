@@ -157,10 +157,13 @@ export enum UserAttributes {
    Banned = 1 << 6,
    TribuneOnly = 1 << 7,
    DisableRename = 1 << 8,
-   __Unused = 1 << 9,
+   SuspendTrade = 1 << 9,
    Suspicious = 1 << 10,
    Desynced = 1 << 11,
+   OverrideRankUp = 1 << 12,
 }
+
+export const UserAttributeKeys = Object.keys(UserAttributes).filter((key) => Number.isNaN(Number(key)));
 
 export enum UserColors {
    Default = 0,

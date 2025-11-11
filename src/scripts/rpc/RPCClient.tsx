@@ -352,7 +352,10 @@ export async function connectWebSocket(): Promise<IWelcomeMessage> {
                   }
                   break;
                case RankUpFlags.NotUpgraded:
-                  if (user.level > AccountLevel.Tribune) {
+                  if (
+                     !hasFlag(user.attr, UserAttributes.OverrideRankUp) &&
+                     user.level > AccountLevel.Tribune
+                  ) {
                      client.resetRank();
                   }
                   break;
