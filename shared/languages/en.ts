@@ -1832,5 +1832,5 @@ export const EN = {
    ResourcePanelSections: "Resource Panel Sections",
    MirrorServer: "Mirror Server",
    UseMirrorServer: "Use Mirror Server",
-   UseMirrorServerDescHTML: "Use a mirror server to connect to the game - this is useful if you are having trouble connecting to the main server. The main server is in Germany and the mirror server is in US East Coast. Using a mirror server does not necessarily improve your connection speed as the mirror will need to connect to the main server anyway",
+   UseMirrorServerDescHTML: "Use a mirror server to connect to the game - this is useful if you are having trouble connecting to the main server. <b>Requires restarting the game to take effect</b>",
 };
