@@ -298,6 +298,7 @@ export class GameOptions {
    warehouseQuickMode = true;
    migrationFlags = MigrationFlags.None;
    hideResourcePanelSections = new Set<ResourcePanelSection>();
+   useMirrorServer = false;
 }
 
 export enum RankUpFlags {

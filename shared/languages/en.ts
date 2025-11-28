@@ -1830,4 +1830,7 @@ export const EN = {
    ExtraTileForNextRebirthTooltip: "You get %{count} extra tile(s) for the next rebirth provided by Sydney Opera House",
    AustralianUniqueEffectHTML: "A random <b>Natural Wonder</b> from other civilizations is spawned on the map",
    ResourcePanelSections: "Resource Panel Sections",
+   MirrorServer: "Mirror Server",
+   UseMirrorServer: "Use Mirror Server",
+   UseMirrorServerDescHTML: "Use a mirror server to connect to the game - this is useful if you are having trouble connecting to the main server. The main server is in Germany and the mirror server is in US East Coast. Using a mirror server does not necessarily improve your connection speed as the mirror will need to connect to the main server anyway",
 };

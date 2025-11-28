@@ -462,6 +462,18 @@ export function GameplayOptionPage(): React.ReactNode {
                </button>
                <RegenerateGreatPersonImagesButton />
             </fieldset>
+            <fieldset>
+               <legend>{t(L.MirrorServer)}</legend>
+               <ToggleComponent
+                  title={t(L.UseMirrorServer)}
+                  contentHTML={t(L.UseMirrorServerDescHTML)}
+                  value={options.useMirrorServer}
+                  onValueChange={(value) => {
+                     options.useMirrorServer = value;
+                     notifyGameOptionsUpdate(options);
+                  }}
+               />
+            </fieldset>
             {sizeOf(options.buildingDefaults) > 0 ? (
                <fieldset>
                   <legend>{t(L.BuildingDefaults)}</legend>
