@@ -20,6 +20,7 @@ import {
    isNullOrUndefined,
    keysOf,
    safeParseInt,
+   uuid4,
 } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import { useGameOptions } from "../Global";
@@ -250,7 +251,9 @@ export function AddTradeFormComponent({
                      const percentage = transaction.amount / trade.sellAmount;
                      trade.sellAmount *= percentage;
                      trade.buyAmount *= percentage;
-                     const { token } = await client.addTradeV2(trade);
+                     await client.addTrade(trade);
+                     const token = uuid4();
+                     await client.updateGameId(token);
                      getGameState().id = token;
                      playKaching();
                      showToast(t(L.PlayerTradeAddSuccess));

@@ -16,6 +16,7 @@ import {
    pointToXy,
    safeAdd,
    safeParseFloat,
+   uuid4,
    xyToPoint,
    type Tile,
 } from "../../../shared/utilities/Helper";
@@ -143,12 +144,14 @@ export function FillPlayerTradeModal({
          totalAmount += r.amount;
       }
       try {
-         const { resources, token } = await client.fillTradeV2({
+         const resources = await client.fillTrade({
             id: trade.id,
             amount: totalAmount,
             path: tiles,
             seaTileCost: getSeaTileCost(gs),
          });
+         const token = uuid4();
+         await client.updateGameId(token);
          getGameState().id = token;
          const receivedAmount = resources[trade.sellResource] ?? 0;
          for (const r of queue) {
