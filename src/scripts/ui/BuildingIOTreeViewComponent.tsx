@@ -44,7 +44,7 @@ export function BuildingIOTreeViewComponent({
             }
             if (building && "inputResource" in building && buildingType === "CloneLab") {
                const clone = building as ICloneBuildingData;
-               baseValue = type === "input" ? 1 : getCloneLabScienceOutput(clone);
+               baseValue = type === "input" ? 1 : getCloneLabScienceOutput(clone) / 2;
             }
             return (
                <li key={k}>
