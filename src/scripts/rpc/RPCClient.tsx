@@ -87,7 +87,7 @@ let chatMessages: LocalChat[] = [];
 const trades: Map<string, IClientTrade> = new Map();
 const playerMap: Map<string, IClientMapEntry> = new Map();
 
-export function getPlayerMap() {
+export function getPlayerMap(): Map<string, IClientMapEntry> {
    return playerMap;
 }
 

@@ -318,7 +318,7 @@ function ChatInput({
    );
 }
 
-function ChatMessage({
+function _ChatMessage({
    user,
    chat,
    onImageLoaded,
@@ -424,6 +424,10 @@ function ChatMessage({
       </div>
    );
 }
+
+const ChatMessage = memo(_ChatMessage, (prev, next) => {
+   return prev.user === next.user && prev.chat === next.chat && prev.onImageLoaded === next.onImageLoaded;
+});
 
 function LatestMessage({ messages }: { messages: LocalChat[] }): React.ReactNode {
    const options = useGameOptions();

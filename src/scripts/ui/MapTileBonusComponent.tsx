@@ -1,20 +1,28 @@
 import Tippy from "@tippyjs/react";
-import { useState } from "react";
+import { memo, useState } from "react";
 import type { Building } from "../../../shared/definitions/BuildingDefinitions";
 import { Config } from "../../../shared/logic/Config";
 import { TRADE_TILE_BONUS } from "../../../shared/logic/Constants";
 import { GameStateChanged } from "../../../shared/logic/GameStateLogic";
 import { getVotingTime } from "../../../shared/logic/PlayerTradeLogic";
-import { formatHMS } from "../../../shared/utilities/Helper";
+import { UserAttributes, type IClientMapEntry } from "../../../shared/utilities/Database";
+import { formatHMS, hasFlag } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
-import { OnTileBuildingsChanged, TileBuildings } from "../rpc/RPCClient";
+import { AccountLevelNames } from "../logic/AccountLevel";
+import { getPlayerMap, OnTileBuildingsChanged, TileBuildings } from "../rpc/RPCClient";
 import { PlayerMapScene } from "../scenes/PlayerMapScene";
 import { WorldScene } from "../scenes/WorldScene";
+import { getCountryName } from "../utilities/CountryCode";
 import { refreshOnTypedEvent } from "../utilities/Hook";
 import { Singleton } from "../utilities/Singleton";
 import { showModal } from "./GlobalModal";
 import { RenderHTML } from "./RenderHTMLComponent";
-import { BuildingSpriteComponent } from "./TextureSprites";
+import {
+   AccountLevelComponent,
+   BuildingSpriteComponent,
+   MiscTextureComponent,
+   PlayerFlagComponent,
+} from "./TextureSprites";
 import { TradeMapStatModal } from "./TradeMapStatModal";
 import { WarningComponent } from "./WarningComponent";
 
@@ -39,9 +47,10 @@ export function MapTileBonusComponent({ xy }: { xy: string }): React.ReactNode {
             </div>
             <div className="f1">{t(L.TradeMapStatistics)}</div>
          </button>
-         <TileBonusRefreshTime />
+         <FindPlayerComponent />
          <fieldset>
             <legend>{t(L.PlayerMapMapTileBonus)}</legend>
+            <TileBonusRefreshTime />
             <div className="row inset-shallow white ph10 pv5">
                <div className="f1 text-strong">{Config.Building[building].name()}</div>
                <div className="mr10">
@@ -155,3 +164,69 @@ function TileBonusRefreshTime(): React.ReactNode {
       </WarningComponent>
    );
 }
+
+function _FindPlayerComponent(): React.ReactNode {
+   const [search, setSearch] = useState("");
+   const [results, setResults] = useState<Map<string, [string, IClientMapEntry]>>(new Map());
+   return (
+      <fieldset>
+         <legend>{t(L.FindPlayers)}</legend>
+         <div className="row">
+            <input type="text" className="f1" value={search} onChange={(e) => setSearch(e.target.value)} />
+            <div className="w10" />
+            {results.size > 0 ? (
+               <button
+                  style={{ padding: "0 5px" }}
+                  onClick={() => {
+                     setResults(new Map());
+                     setSearch("");
+                  }}
+               >
+                  <div className="m-icon small">clear</div>
+               </button>
+            ) : null}
+            <button
+               onClick={() => {
+                  const results = new Map<string, [string, IClientMapEntry]>();
+                  for (const [xy, entry] of getPlayerMap()) {
+                     if (entry.handle.toLowerCase().includes(search.toLowerCase())) {
+                        results.set(entry.handle, [xy, entry]);
+                     }
+                  }
+                  setResults(results);
+               }}
+            >
+               <div className="m-icon small">search</div>
+            </button>
+         </div>
+         {Array.from(results.entries()).map(([handle, [xy, entry]]) => {
+            return (
+               <div className="row mt5" key={xy}>
+                  {handle}
+                  <div className="w5" />
+                  <Tippy content={getCountryName(entry.flag)}>
+                     <PlayerFlagComponent name={entry.flag} scale={0.7} />
+                  </Tippy>
+                  {hasFlag(entry.attr, UserAttributes.DLC1) ? (
+                     <Tippy content={t(L.AccountSupporter)}>
+                        <MiscTextureComponent name="Supporter" scale={0.17} />
+                     </Tippy>
+                  ) : null}
+                  <Tippy content={AccountLevelNames[entry.level]()}>
+                     <AccountLevelComponent level={entry.level} scale={0.17} />
+                  </Tippy>
+                  <div className="f1" />
+                  <div
+                     className="m-icon small text-link"
+                     onClick={() => Singleton().sceneManager.getCurrent(PlayerMapScene)?.lookAt(xy)}
+                  >
+                     visibility
+                  </div>
+               </div>
+            );
+         })}
+      </fieldset>
+   );
+}
+
+const FindPlayerComponent = memo(_FindPlayerComponent);

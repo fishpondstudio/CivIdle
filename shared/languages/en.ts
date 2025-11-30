@@ -1833,4 +1833,5 @@ export const EN = {
    MirrorServer: "Mirror Server",
    UseMirrorServer: "Use Mirror Server",
    UseMirrorServerDescHTML: "Use a mirror server to connect to the game - this is useful if you are having trouble connecting to the main server. <b>Requires restarting the game to take effect</b>",
+   FindPlayers: "Find Players",
 };
