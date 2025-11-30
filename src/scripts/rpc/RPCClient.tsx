@@ -313,6 +313,7 @@ export async function connectWebSocket(): Promise<IWelcomeMessage> {
 
    ws.onmessage = (e) => {
       const message = decode(e.data as ArrayBuffer) as AllMessageTypes;
+      console.log(message);
       const type = message.type as MessageType;
       const options = getGameOptions();
       switch (type) {
@@ -427,7 +428,6 @@ export async function connectWebSocket(): Promise<IWelcomeMessage> {
          }
          case MessageType.PendingClaim: {
             const r = message as IPendingClaimMessage;
-            console.log(r, user);
             if (user && r.claims[user.userId]) {
                if (getGameOptions().tradeFilledSound) {
                   playKaching();

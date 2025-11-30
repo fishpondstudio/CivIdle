@@ -178,10 +178,7 @@ export class TechDefinitions {
       column: 3,
       requireTech: ["HorsebackRiding"],
       unlockBuilding: ["PaperMaker"],
-      additionalUpgrades: () => [
-         t(L.SeaTradeUpgrade, { tariff: formatPercent(SEA_TILE_COST_1) }),
-         t(L.ExplorerRangeUpgradeDesc, { range: 2 }),
-      ],
+      additionalUpgrades: () => [t(L.ExplorerRangeUpgradeDesc, { range: 2 })],
    };
 
    Iron: ITechDefinition = {
@@ -344,6 +341,7 @@ export class TechDefinitions {
       buildingMultiplier: {
          Library: { output: 1 },
       },
+      additionalUpgrades: () => [t(L.SeaTradeUpgrade, { tariff: formatPercent(SEA_TILE_COST_1) })],
    };
 
    Physics: ITechDefinition = {
