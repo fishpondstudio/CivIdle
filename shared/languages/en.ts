@@ -1834,4 +1834,9 @@ export const EN = {
    UseMirrorServer: "Use Mirror Server",
    UseMirrorServerDescHTML: "Use a mirror server to connect to the game - this is useful if you are having trouble connecting to the main server. <b>Requires restarting the game to take effect</b>",
    FindPlayers: "Find Players",
+   BackupToServer: "Backup To Server",
+   RecoverFromServer: "Recover From Server (Will Reset Current Run)",
+   ServerBackup: "Server Backup",
+   ServerBackupDescHTML: "You can back up your <b>permanent great people</b> and <b>age wisdom</b> to the server. This is done automatically when you rebirth. Server backups can be useful when your save file is corrupted and you don't have local backups",
+   OperationSuccessful: "Operation Successful",
 };

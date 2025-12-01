@@ -9,7 +9,7 @@ import {
    ResourcePanelSections,
    type ExtraTileInfoType,
 } from "../../../shared/logic/GameState";
-import { notifyGameOptionsUpdate } from "../../../shared/logic/GameStateLogic";
+import { getGameOptions, notifyGameOptionsUpdate } from "../../../shared/logic/GameStateLogic";
 import {
    MAX_ELECTRIFICATION_LEVEL,
    PRIORITY_MAX,
@@ -32,14 +32,17 @@ import {
 import { L, t } from "../../../shared/utilities/i18n";
 import { useGameOptions } from "../Global";
 import { Todo } from "../logic/Todo";
+import { client } from "../rpc/RPCClient";
 import { jsxMapOf } from "../utilities/Helper";
 import { openUrl } from "../utilities/Platform";
 import { regenerateGreatPersonImages } from "../visuals/GreatPersonVisual";
 import { playClick } from "../visuals/Sound";
 import { ChangeSoundComponent } from "./ChangeSoundComponent";
+import { showToast } from "./GlobalModal";
 import { LanguageSelect } from "./LanguageSelectComponent";
 import { MenuComponent } from "./MenuComponent";
-import { RenderHTML } from "./RenderHTMLComponent";
+import { html, RenderHTML } from "./RenderHTMLComponent";
+import { recoverFromServer } from "./SaveCorruptedPage";
 import { TextWithHelp } from "./TextWithHelpComponent";
 import { TitleBarComponent } from "./TitleBarComponent";
 import { ToggleComponent } from "./ToggleComponent";
@@ -474,6 +477,29 @@ export function GameplayOptionPage(): React.ReactNode {
                   }}
                />
             </fieldset>
+            <fieldset>
+               <legend>{t(L.ServerBackup)}</legend>
+               <div className="text-small text-desc">{html(t(L.ServerBackupDescHTML))}</div>
+               <div className="sep5" />
+               <button
+                  className="w100"
+                  onClick={async () => {
+                     playClick();
+                     const options = getGameOptions();
+                     await client.saveOptionsToServer({
+                        ageWisdom: options.ageWisdom,
+                        greatPeople: options.greatPeople,
+                     });
+                     showToast(t(L.OperationSuccessful));
+                  }}
+               >
+                  {t(L.BackupToServer)}
+               </button>
+               <div className="sep5" />
+               <button className="w100 text-red" onClick={() => recoverFromServer()}>
+                  {t(L.RecoverFromServer)}
+               </button>
+            </fieldset>
             {sizeOf(options.buildingDefaults) > 0 ? (
                <fieldset>
                   <legend>{t(L.BuildingDefaults)}</legend>
@@ -528,7 +554,7 @@ function RegenerateGreatPersonImagesButton(): React.ReactNode {
       <Tippy content={t(L.RegenerateGreatPersonPortraitsDesc)}>
          <button
             disabled={ongoing}
-            className="jcc w100 mt10"
+            className="jcc w100 mt5"
             onClick={async () => {
                playClick();
                setOngoing(true);

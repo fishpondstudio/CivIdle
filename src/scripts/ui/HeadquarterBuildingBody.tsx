@@ -369,7 +369,7 @@ function GreatPeopleComponent({
                   <ul>
                      <li className="row text-small">
                         <div className="f1">{t(L.PermanentGreatPeopleAcquired)}</div>
-                        <div className="text-strong">{getPermanentGreatPeopleCount()}</div>
+                        <div className="text-strong">{getPermanentGreatPeopleCount(options)}</div>
                      </li>
                      <li className="row text-small">
                         <div className="f1">

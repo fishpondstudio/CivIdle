@@ -13,7 +13,6 @@ import {
    type IUser,
 } from "../utilities/Database";
 import {
-   WEEK,
    clamp,
    filterOf,
    forEach,
@@ -21,9 +20,16 @@ import {
    keysOf,
    reduceOf,
    shuffle,
+   WEEK,
 } from "../utilities/Helper";
 import { Config } from "./Config";
-import type { GameOptions, GameState, GreatPeopleChoice, GreatPeopleChoiceV2 } from "./GameState";
+import type {
+   GameOptions,
+   GameOptionServer,
+   GameState,
+   GreatPeopleChoice,
+   GreatPeopleChoiceV2,
+} from "./GameState";
 import { getGameOptions, getGameState } from "./GameStateLogic";
 import { Tick } from "./TickLogic";
 
@@ -247,9 +253,9 @@ export function getPermanentGreatPeopleLevel(options: GameOptions): number {
    return level;
 }
 
-export function getPermanentGreatPeopleCount(): number {
+export function getPermanentGreatPeopleCount(options: GameOptionServer): number {
    return reduceOf(
-      getGameOptions().greatPeople,
+      options.greatPeople,
       (prev, gp, inv) => {
          let result = prev + getTotalGreatPeopleUpgradeCost(gp, inv.level) + inv.amount;
          if (isEligibleForWisdom(gp)) {

@@ -301,6 +301,8 @@ export class GameOptions {
    useMirrorServer = false;
 }
 
+export type GameOptionServer = Pick<GameOptions, "ageWisdom" | "greatPeople">;
+
 export enum RankUpFlags {
    Unset = 0,
    NotUpgraded = 1 << 0,

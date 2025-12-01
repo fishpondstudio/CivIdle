@@ -46,7 +46,12 @@
    display: block;
 }
 
-.loading-page>.row {
+.error-page .pointer:hover {
+   background: #fff;
+   color: #0608a8;
+}
+
+.loading-page > .row {
    width: 60vw;
 }
 

@@ -35,10 +35,11 @@ export function AboutModal(): React.ReactNode {
                   <div className="text-small text-desc">
                      {t(L.UserAgent, { driver: navigator.userAgent })}
                   </div>
+                  <div className="sep5" />
                   {isSteam() ? (
                      <>
                         <div
-                           className="text-small text-link mt5"
+                           className="text-small text-link"
                            onClick={() => SteamClient.openMainSaveFolder()}
                         >
                            {t(L.OpenSaveFolder)}

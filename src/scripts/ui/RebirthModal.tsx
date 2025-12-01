@@ -452,7 +452,13 @@ export function RebirthModal(): React.ReactNode {
                      const gameId = uuid4();
 
                      try {
-                        await Promise.race([client.rebirthV2(gameId), rejectIn(10)]);
+                        await Promise.race([
+                           client.rebirthV3(gameId, {
+                              ageWisdom: options.ageWisdom,
+                              greatPeople: options.greatPeople,
+                           }),
+                           rejectIn(10),
+                        ]);
                      } catch (error) {
                         console.error(error);
                         if (!import.meta.env.DEV && isOnlineUser()) {
