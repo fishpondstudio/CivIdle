@@ -1732,7 +1732,7 @@ export const ZH_CN = {
    UraniumEnrichmentPlant: "铀浓缩厂",
    UraniumMine: "铀矿",
    Urbanization: "城市化",
-   UseMirrorServer: "使镜像服务器",
+   UseMirrorServer: "使用镜像服务器",
    UseMirrorServerDescHTML: "如果在访问主服务器是遇到问题，可以改为连接到镜像服务器。<b>需要重新启动游戏才生效</b>",
    UseMonospaceNumbers: "使用单间距数字",
    UseMonospaceNumbersDescHTML: "单间距数字，即所有数字具有相同的宽度，将使数字在表和列表中对齐",
