@@ -67,8 +67,7 @@ fs.copySync(path.join(rootPath, "dist"), path.join(rootPath, "electron", "dist")
 
 console.log("========== Build Electron ==========");
 
-cmd("npm run package -- --platform=win32,linux", path.join(rootPath, "electron"));
-cmd("npm run package -- --platform=darwin --arch=universal", path.join(rootPath, "electron"));
+cmd("npm run package -- --platform=win32,linux,darwin", path.join(rootPath, "electron"));
 cmd(`rcodesign sign --p12-file local/app-sign.p12 --p12-password-file local/p12-password`
    + ` --code-signature-flags runtime`
    + ` --entitlements-xml-file local/entitlements.plist`
@@ -84,8 +83,8 @@ cmd(`rcodesign sign --p12-file local/app-sign.p12 --p12-password-file local/p12-
    + ` --entitlements-xml-file "Contents/Frameworks/Electron Framework.framework/Versions/A/Helpers/chrome_crashpad_handler":local/entitlements.plist`
    + ` --code-signature-flags "Contents/Frameworks/Squirrel.framework/Versions/A/Resources/ShipIt":runtime`
    + ` --entitlements-xml-file "Contents/Frameworks/Squirrel.framework/Versions/A/Resources/ShipIt":local/entitlements.plist`
-   + ` ./out/cividle-darwin-universal/cividle.app`, path.join(rootPath, "electron"));
-cmd(`rcodesign notary-submit --api-key-file local/app-store.json --staple out/cividle-darwin-universal/cividle.app`, path.join(rootPath, "electron"));
+   + ` ./out/cividle-darwin-x64/cividle.app`, path.join(rootPath, "electron"));
+cmd(`rcodesign notary-submit --api-key-file local/app-store.json --staple out/cividle-darwin-x64/cividle.app`, path.join(rootPath, "electron"));
 
 console.log("========== Uploading to Steam ==========");
 
@@ -96,7 +95,7 @@ if (!process.env.STEAMWORKS_PATH) {
 
 fs.removeSync(path.join(process.env.STEAMWORKS_PATH, "cividle-win32-x64"));
 fs.removeSync(path.join(process.env.STEAMWORKS_PATH, "cividle-linux-x64"));
-fs.removeSync(path.join(process.env.STEAMWORKS_PATH, "cividle-darwin-universal"));
+fs.removeSync(path.join(process.env.STEAMWORKS_PATH, "cividle-darwin-x64"));
 
 fs.copySync(
    path.join(rootPath, "electron", "out", "cividle-win32-x64"),
@@ -109,8 +108,8 @@ fs.copySync(
 );
 
 fs.copySync(
-   path.join(rootPath, "electron", "out", "cividle-darwin-universal"),
-   path.join(process.env.STEAMWORKS_PATH, "cividle-darwin-universal"),
+   path.join(rootPath, "electron", "out", "cividle-darwin-x64"),
+   path.join(process.env.STEAMWORKS_PATH, "cividle-darwin-x64"),
 );
 
 cmd(
