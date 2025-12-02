@@ -1731,7 +1731,7 @@ export const ZH_TW = {
    UraniumEnrichmentPlant: "鈾濃縮廠",
    UraniumMine: "鈾礦",
    Urbanization: "城市化",
-   UseMirrorServer: "使鏡像伺服器",
+   UseMirrorServer: "使用鏡像伺服器",
    UseMirrorServerDescHTML: "如果在訪問主伺服器是遇到問題，可以改為連接到鏡像伺服器。<b>需要重新啟動遊戲才生效</b>",
    UseMonospaceNumbers: "使用單間距數位",
    UseMonospaceNumbersDescHTML: "單間距數位，即所有數位具有相同的寬度，將使數位在表和清單中對齊",
