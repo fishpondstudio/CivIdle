@@ -14,6 +14,7 @@ import {
    type ChatChannel,
 } from "../../../shared/utilities/Database";
 import {
+   clamp,
    clearFlag,
    firstKeyOf,
    formatHM,
@@ -107,7 +108,7 @@ export async function handleChatCommand(command: string): Promise<void> {
             getGameOptions().greatPeople = {};
             getGameOptions().greatPeopleChoicesV2 = rollPermanentGreatPeople(
                number,
-               Math.floor(number / sizeOf(Config.GreatPerson)),
+               clamp(Math.floor(number / sizeOf(Config.GreatPerson)), 1, Number.POSITIVE_INFINITY),
                DEFAULT_GREAT_PEOPLE_CHOICE_COUNT,
                MAX_TECH_AGE,
                getGameState().city,

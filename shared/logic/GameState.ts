@@ -305,8 +305,8 @@ export type GameOptionServer = Pick<GameOptions, "ageWisdom" | "greatPeople">;
 
 export enum RankUpFlags {
    Unset = 0,
-   NotUpgraded = 1 << 0,
-   Upgraded = 1 << 1,
+   NotUpgraded = 1,
+   Upgraded = 2,
 }
 
 export enum MigrationFlags {
