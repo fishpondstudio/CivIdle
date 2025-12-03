@@ -430,7 +430,7 @@ export const TR = {
    CultivationLevelX: "Yetiştiricilik %{level}",
    Culture: "Kültür",
    Culus: "Cülus: Kapadokya'nın etkisini ikiye katlar. Ağrı Dağı'nın etkisi, küp kök yerine Etkili Büyük İnsan Seviyesi'nin kareköküne dayalı hale gelir",
-   CurrentLanguage: "English",
+   CurrentLanguage: "Türkçe",
    CurrentPlatform: "Mevcut Platform",
    CursorBigOldFashioned: "3D (Büyük)",
    CursorOldFashioned: "3D",
@@ -1834,4 +1834,9 @@ export const TR = {
    UseMirrorServer: "Yansıtma Sunucusu Kullan",
    UseMirrorServerDescHTML: "Oyuna bağlanmak için bir yansıtma sunucusu kullanın - bu, ana sunucuya bağlanmakta sorun yaşıyorsanız yararlıdır. <b>Etkili olması için oyunun yeniden başlatılmasını gerektirir</b>",
    FindPlayers: "Oyuncuları Bul",
+   BackupToServer: "Sunucuya Yedekle",
+   RecoverFromServer: "Sunucudan Geri Yükle (Mevcut Oyunu Sıfırlar)",
+   ServerBackup: "Sunucu Yedeği",
+   ServerBackupDescHTML: "<b>Kalıcı büyük insanlarınızı</b> ve <b>çağ bilgeliğinizi</b> sunucuya yedekleyebilirsiniz. Bu işlem yeniden doğduğunuzda otomatik olarak yapılır. Sunucu yedekleri, kayıt dosyanız bozulduğunda ve yerel yedeğiniz olmadığında yararlı olabilir",
+   OperationSuccessful: "İşlem Başarılı",
 };
