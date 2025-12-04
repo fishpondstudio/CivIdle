@@ -1,17 +1,21 @@
 import { useState } from "react";
-import { Platform } from "../../../shared/utilities/Database";
+import { CROSS_PLATFORM_SAVE_URL } from "../../../shared/logic/Constants";
+import { Platform, UserAttributes } from "../../../shared/utilities/Database";
 import { getPlatform } from "../../../shared/utilities/DatabaseShared";
-import { isNullOrUndefined } from "../../../shared/utilities/Helper";
+import { hasFlag, isNullOrUndefined } from "../../../shared/utilities/Helper";
 import { L, t } from "../../../shared/utilities/i18n";
 import "../../css/CrossPlatformSavePage.css";
 import { compressSave, decompressSave, overwriteSaveGame, saveGame } from "../Global";
 import { client, usePlatformInfo, useUser } from "../rpc/RPCClient";
+import { isSteam } from "../rpc/SteamClient";
+import { openUrl } from "../utilities/Platform";
 import { playClick, playError, playSuccess } from "../visuals/Sound";
 import { ConnectToDeviceModal } from "./ConnectToDeviceModal";
 import { showModal, showToast } from "./GlobalModal";
-import { RenderHTML } from "./RenderHTMLComponent";
+import { html, RenderHTML } from "./RenderHTMLComponent";
 import { TextWithHelp } from "./TextWithHelpComponent";
 import { TitleBarComponent } from "./TitleBarComponent";
+import { WarningComponent } from "./WarningComponent";
 
 let loadingState = false;
 
@@ -25,6 +29,18 @@ export function CrossPlatformSavePage(): React.ReactNode {
          <div className="window">
             <TitleBarComponent>{t(L.CrossPlatformSave)}</TitleBarComponent>
             <div className="window-body">
+               {isSteam() && user && !hasFlag(user.attr, UserAttributes.DLC2) ? (
+                  <WarningComponent
+                     icon="info"
+                     className="mb10 text-small pointer"
+                     onClick={() => {
+                        playClick();
+                        openUrl(CROSS_PLATFORM_SAVE_URL);
+                     }}
+                  >
+                     {html(t(L.CrossPlatformSaveDescHTML))}
+                  </WarningComponent>
+               ) : null}
                <fieldset>
                   <legend>{t(L.CrossPlatformAccount)}</legend>
                   <div className="row mv5">

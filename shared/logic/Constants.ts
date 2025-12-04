@@ -44,6 +44,7 @@ export const ANTICHEAT_FAQ_URL = "https://steamcommunity.com/app/2181940/discuss
 export const TRIBUNE_TRADE_VALUE_PER_MINUTE = 10000;
 export const STEAM_PATCH_NOTES_URL = "https://store.steampowered.com/news/app/2181940";
 export const SUPPORTER_PACK_URL = "https://store.steampowered.com/app/2788080/";
+export const CROSS_PLATFORM_SAVE_URL = "https://store.steampowered.com/app/3399010/";
 export const STEAM_GUIDE_URL = "https://steamcommunity.com/sharedfiles/filedetails/?id=3196523559";
 export const MAX_TARIFF_RATE = 0.1;
 export const OXFORD_SCIENCE_PER_UPGRADE = 5;

@@ -1839,4 +1839,5 @@ export const EN = {
    ServerBackup: "Server Backup",
    ServerBackupDescHTML: "You can back up your <b>permanent great people</b> and <b>age wisdom</b> to the server. This is done automatically when you rebirth. Server backups can be useful when your save file is corrupted and you don't have local backups",
    OperationSuccessful: "Operation Successful",
+   CrossPlatformSaveDescHTML: "To sync your progress (including account rank and supporter pack) to mobile devices, you need to purchase <b>Cross Platform Cloud Save</b> on Steam",
 };
