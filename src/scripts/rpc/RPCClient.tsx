@@ -31,7 +31,7 @@ import {
    UserAttributes,
    type ChatChannel,
 } from "../../../shared/utilities/Database";
-import { vacuumChat } from "../../../shared/utilities/DatabaseShared";
+import { isSaveOwner, vacuumChat } from "../../../shared/utilities/DatabaseShared";
 import {
    SECOND,
    WEEK,
@@ -347,24 +347,26 @@ export async function connectWebSocket(): Promise<IWelcomeMessage> {
             if (hasFlag(user.attr, UserAttributes.DLC1) && !options.supporterPackPurchased) {
                showModal(<SupporterPackModal />);
             }
-            switch (options.rankUpFlags) {
-               case RankUpFlags.Unset:
-                  if (user.level <= AccountLevel.Tribune) {
-                     options.rankUpFlags = RankUpFlags.NotUpgraded;
-                  } else {
-                     options.rankUpFlags = RankUpFlags.Upgraded;
-                  }
-                  break;
-               case RankUpFlags.NotUpgraded:
-                  if (
-                     !hasFlag(user.attr, UserAttributes.OverrideRankUp) &&
-                     user.level > AccountLevel.Tribune
-                  ) {
-                     client.resetRank();
-                  }
-                  break;
-               case RankUpFlags.Upgraded:
-                  break;
+            if (isSaveOwner(w.platformInfo, w.user)) {
+               switch (options.rankUpFlags) {
+                  case RankUpFlags.Unset:
+                     if (user.level <= AccountLevel.Tribune) {
+                        options.rankUpFlags = RankUpFlags.NotUpgraded;
+                     } else {
+                        options.rankUpFlags = RankUpFlags.Upgraded;
+                     }
+                     break;
+                  case RankUpFlags.NotUpgraded:
+                     if (
+                        !hasFlag(user.attr, UserAttributes.OverrideRankUp) &&
+                        user.level > AccountLevel.Tribune
+                     ) {
+                        client.resetRank();
+                     }
+                     break;
+                  case RankUpFlags.Upgraded:
+                     break;
+               }
             }
             saveGame().catch(console.error);
             OnUserChanged.emit(user);
