@@ -7,6 +7,7 @@ import { Config } from "../../../shared/logic/Config";
 import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
 import { L, t } from "../../../shared/utilities/i18n";
 import { jsxMapOf } from "../utilities/Helper";
+import { useShortcut } from "../utilities/Hook";
 import { playClick } from "../visuals/Sound";
 import type { IBuildingComponentProps } from "./BuildingPage";
 import { html } from "./RenderHTMLComponent";
@@ -19,6 +20,16 @@ export function UpgradeableWonderComponent({ gameState, xy }: IBuildingComponent
    }
    const extraLevel = getWonderExtraLevel(building.type);
    const greatPerson = getWonderGreatPerson(building.type);
+
+   const actionUpgrade = () => {
+      playClick();
+      building.desiredLevel = building.level + 1;
+      building.status = "upgrading";
+      notifyGameStateUpdate();
+   };
+
+   useShortcut("BuildingPageUpgrade1", () => actionUpgrade(), [xy]);
+
    return (
       <fieldset>
          <div className="row">
@@ -54,10 +65,7 @@ export function UpgradeableWonderComponent({ gameState, xy }: IBuildingComponent
          <button
             className="jcc w100 row"
             onClick={() => {
-               playClick();
-               building.desiredLevel = building.level + 1;
-               building.status = "upgrading";
-               notifyGameStateUpdate();
+               actionUpgrade();
             }}
          >
             <div className="m-icon small">assistant_navigation</div>
