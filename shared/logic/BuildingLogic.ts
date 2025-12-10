@@ -1429,3 +1429,11 @@ export function getResourceImportBuildingBaseStorageMultiplier(gs: GameState): n
    }
    return result;
 }
+
+function curve(x: number): number {
+   return 20 * (1 - Math.E ** ((Math.log(0.5) / 48) * x));
+}
+
+for (let i = 0; i < 100; i++) {
+   console.log(i, curve(i));
+}

@@ -819,6 +819,12 @@ export class BuildingDefinitions {
       output: { Bitcoin: 1 },
       power: true,
    };
+   CryptoFund: IBuildingDefinition = {
+      name: () => t(L.CryptoFund),
+      input: { HedgeFund: 4, CivTok: 2 },
+      output: { Bitcoin: 2 },
+      power: true,
+   };
    Caravansary: IBuildingDefinition = {
       name: () => t(L.Caravansary),
       desc: () => t(L.CaravansaryDesc),

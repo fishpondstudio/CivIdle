@@ -462,6 +462,36 @@ export class CityDefinitions {
       festivalDesc: () => t(L.Moomba),
       uniqueEffects: () => [t(L.AustralianUniqueEffectHTML)],
    };
+
+   Russian: ICityDefinition = {
+      name: () => t(L.Russian),
+      deposits: {
+         Water: 0.01,
+         Copper: 0.01,
+         Iron: 0.05,
+         Wood: 0.04,
+         Stone: 0.02,
+         Gold: 0.02,
+         Coal: 0.01,
+         Oil: 0.03,
+         Aluminum: 0.01,
+         NaturalGas: 0.01,
+         Uranium: 0.01,
+      },
+      size: 45,
+      buildingNames: {
+         Headquarter: () => t(L.CanberraParliamentHouse),
+      },
+      uniqueBuildings: {
+         CryptoFund: "Blockchain",
+      },
+      uniqueMultipliers: {},
+      naturalWonders: {},
+      requireGreatPeopleLevel: 110,
+      requireSupporterPack: true,
+      festivalDesc: () => t(L.Moomba),
+      uniqueEffects: () => [],
+   };
 }
 
 export type City = keyof CityDefinitions;
