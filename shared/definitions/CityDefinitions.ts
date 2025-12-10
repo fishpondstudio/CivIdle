@@ -485,9 +485,12 @@ export class CityDefinitions {
       uniqueBuildings: {
          CryptoFund: "Blockchain",
          KizhiPogost: "Alloy",
+         Hermitage: "Drilling",
       },
       uniqueMultipliers: {},
-      naturalWonders: {},
+      naturalWonders: {
+         LakeBaikal: true,
+      },
       requireGreatPeopleLevel: 110,
       requireSupporterPack: true,
       festivalDesc: () => t(L.Maslenitsa),

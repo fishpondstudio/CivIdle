@@ -2290,6 +2290,28 @@ export class BuildingDefinitions {
       wikipedia: "Kizhi_Pogost",
    };
 
+   LakeBaikal: IBuildingDefinition = {
+      name: () => t(L.LakeBaikal),
+      desc: () => t(L.LakeBaikalDesc),
+      input: {},
+      output: {},
+      construction: {},
+      max: 0,
+      special: BuildingSpecial.NaturalWonder,
+      wikipedia: "Lake_Baikal",
+   };
+
+   Hermitage: IBuildingDefinition = {
+      name: () => t(L.Hermitage),
+      desc: () => t(L.HermitageDesc),
+      input: {},
+      output: {},
+      construction: { TV: 500, Radio: 500, Diplomacy: 500 },
+      max: 1,
+      special: BuildingSpecial.WorldWonder,
+      wikipedia: "Hermitage_Museum",
+   };
+
    // #endregion /////////////////////////////////////////////////////////////////////////////////////////////
 
    // Winery: IBuildingDefinition = {

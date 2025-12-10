@@ -437,6 +437,7 @@ export class WorldScene extends Scene {
             case "MausoleumAtHalicarnassus":
             case "ItaipuDam":
             case "CathedralOfBrasilia":
+            case "Hermitage":
             case "GoldenGateBridge": {
                this.highlightRange(grid, 2);
                break;
@@ -483,6 +484,10 @@ export class WorldScene extends Scene {
                break;
             }
             case "KizhiPogost": {
+               this.highlightRange(grid, isFestival(building.type, gs) ? 4 : 2);
+               break;
+            }
+            case "LakeBaikal": {
                this.highlightRange(grid, isFestival(building.type, gs) ? 4 : 2);
                break;
             }

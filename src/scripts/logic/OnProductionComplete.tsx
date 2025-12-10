@@ -2031,7 +2031,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
             });
          });
 
-         if (isFestival("GreatOceanRoad", gs)) {
+         if (isFestival(building.type, gs)) {
             buildings.forEach((b) => {
                addMultiplier(b, { output: building.level, unstable: true }, buildingName);
             });
@@ -2052,7 +2052,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          break;
       }
       case "Uluru": {
-         const range = isFestival("Uluru", gs) ? 3 : 2;
+         const range = isFestival(building.type, gs) ? 3 : 2;
          const greatPeople = sizeOf(gs.greatPeople);
          for (const point of grid.getRange(tileToPoint(xy), range)) {
             const t = pointToTile(point);
@@ -2067,7 +2067,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          break;
       }
       case "KizhiPogost": {
-         const range = isFestival("KizhiPogost", gs) ? 4 : 2;
+         const range = isFestival(building.type, gs) ? 4 : 2;
          const multiplier = totalMultiplierFor(xy, "output", 0, false, gs);
          for (const point of grid.getRange(tileToPoint(xy), range)) {
             const targetXy = pointToTile(point);
@@ -2079,6 +2079,39 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
                source: buildingName,
             });
          }
+         break;
+      }
+      case "LakeBaikal": {
+         const range = isFestival(building.type, gs) ? 4 : 2;
+         let level = 0;
+         for (const point of grid.getRange(tileToPoint(xy), range)) {
+            const targetXy = pointToTile(point);
+            if (targetXy === xy) {
+               continue;
+            }
+            const building = gs.tiles.get(targetXy)?.building;
+            if (building && building.status !== "building" && isWorldWonder(building.type)) {
+               level += building.level;
+            }
+         }
+         Tick.next.globalMultipliers.builderCapacity.push({
+            value: level,
+            source: buildingName,
+         });
+         break;
+      }
+      case "Hermitage": {
+         const buildings = new Set<Building>();
+         for (const point of grid.getRange(tileToPoint(xy), 2)) {
+            const tile = pointToTile(point);
+            const targetBuilding = gs.tiles.get(tile)?.building;
+            if (targetBuilding) {
+               buildings.add(targetBuilding.type);
+            }
+         }
+         buildings.forEach((b) => {
+            addMultiplier(b, { storage: building.level }, buildingName);
+         });
          break;
       }
    }

@@ -1843,6 +1843,10 @@ export const EN = {
    CryptoFund: "Crypto Fund",
    Russian: "Russian",
    KizhiPogost: "Kizhi Pogost",
-   KizhiPogostDesc: "This wonder provides +X Production Multiplier to buildings within 2-tile range. X = the production multiplier this wonder receives",
-   Maslenitsa: "Double the range of Kizhi Pogost",
+   KizhiPogostDesc: "All buildings within 2-tile range get +X Production Multiplier. X = the production multiplier this wonder receives",
+   Maslenitsa: "Double the range of Kizhi Pogost and Lake Baikal",
+   LakeBaikal: "Lake Baikal",
+   LakeBaikalDesc: "+X Builder Capacity Multiplier. X = total levels of wonders within 2-tile range",
+   Hermitage: "Hermitage",
+   HermitageDesc: "This wonder can be upgraded and each level provides +1 Storage Multiplier to each type of building within 2-tile range"
 };
