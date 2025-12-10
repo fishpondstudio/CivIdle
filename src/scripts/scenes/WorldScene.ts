@@ -482,6 +482,10 @@ export class WorldScene extends Scene {
                this.highlightRange(grid, isFestival(building.type, gs) ? 3 : 2);
                break;
             }
+            case "KizhiPogost": {
+               this.highlightRange(grid, isFestival(building.type, gs) ? 4 : 2);
+               break;
+            }
             // #endregion
          }
       }

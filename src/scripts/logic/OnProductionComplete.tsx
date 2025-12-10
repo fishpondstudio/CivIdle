@@ -2066,5 +2066,20 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          }
          break;
       }
+      case "KizhiPogost": {
+         const range = isFestival("KizhiPogost", gs) ? 4 : 2;
+         const multiplier = totalMultiplierFor(xy, "output", 0, false, gs);
+         for (const point of grid.getRange(tileToPoint(xy), range)) {
+            const targetXy = pointToTile(point);
+            if (targetXy === xy) {
+               continue;
+            }
+            mapSafePush(Tick.next.tileMultipliers, targetXy, {
+               output: multiplier,
+               source: buildingName,
+            });
+         }
+         break;
+      }
    }
 }

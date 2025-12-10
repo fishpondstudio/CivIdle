@@ -2279,6 +2279,17 @@ export class BuildingDefinitions {
       wikipedia: "Uluru",
    };
 
+   KizhiPogost: IBuildingDefinition = {
+      name: () => t(L.KizhiPogost),
+      desc: () => t(L.KizhiPogostDesc),
+      input: {},
+      output: {},
+      construction: { TV: 500, Radio: 500, Diplomacy: 500 },
+      max: 1,
+      special: BuildingSpecial.WorldWonder,
+      wikipedia: "Kizhi_Pogost",
+   };
+
    // #endregion /////////////////////////////////////////////////////////////////////////////////////////////
 
    // Winery: IBuildingDefinition = {

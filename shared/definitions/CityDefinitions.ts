@@ -484,12 +484,13 @@ export class CityDefinitions {
       },
       uniqueBuildings: {
          CryptoFund: "Blockchain",
+         KizhiPogost: "Alloy",
       },
       uniqueMultipliers: {},
       naturalWonders: {},
       requireGreatPeopleLevel: 110,
       requireSupporterPack: true,
-      festivalDesc: () => t(L.Moomba),
+      festivalDesc: () => t(L.Maslenitsa),
       uniqueEffects: () => [],
    };
 }

@@ -23,6 +23,7 @@ import { HeadquarterBuildingBody } from "./HeadquarterBuildingBody";
 import { FormatNumber } from "./HelperComponents";
 import { IdeologyBuildingBody } from "./IdeologyBuildingBody";
 import { ItaipuDamBuildingBody } from "./ItaipuDamBuildingBody";
+import { KizhiPogostBuildingBody } from "./KizhiPogostBuildingBody";
 import { LoadingPage, LoadingPageStage } from "./LoadingPage";
 import { LouvreBuildingBody } from "./LouvreBuildingBody";
 import { MarketBuildingBody } from "./MarketBuildingBody";
@@ -94,6 +95,7 @@ const BuildingBodyOverride: Partial<Record<Building, FunctionComponent<IBuilding
    SydneyOperaHouse: UpgradableWonderBuildingBody,
    SydneyHarbourBridge: UpgradableWonderBuildingBody,
    GreatOceanRoad: UpgradableWonderBuildingBody,
+   KizhiPogost: KizhiPogostBuildingBody,
 };
 
 export function BuildingPage(props: { tile: ITileData }): React.ReactNode {

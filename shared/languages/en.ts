@@ -1842,4 +1842,7 @@ export const EN = {
    CrossPlatformSaveDescHTML: "To sync your progress (including account rank and supporter pack) to mobile devices, you need to purchase <b>Cross Platform Cloud Save</b> on Steam",
    CryptoFund: "Crypto Fund",
    Russian: "Russian",
+   KizhiPogost: "Kizhi Pogost",
+   KizhiPogostDesc: "This wonder provides +X Production Multiplier to buildings within 2-tile range. X = the production multiplier this wonder receives",
+   Maslenitsa: "Double the range of Kizhi Pogost",
 };
