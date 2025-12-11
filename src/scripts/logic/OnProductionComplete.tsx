@@ -2141,7 +2141,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          for (const point of grid.getRange(tileToPoint(xy), 2)) {
             Tick.next.powerGrid.add(pointToTile(point));
          }
-         mapSafeAdd(Tick.next.workersAvailable, "Power", 10_000 * building.level);
+         mapSafeAdd(Tick.next.workersAvailable, "Power", 100_000 * building.level);
          const informationAgeWisdom = options.ageWisdom.InformationAge ?? 0;
          if (informationAgeWisdom > 0) {
             addMultiplier(
