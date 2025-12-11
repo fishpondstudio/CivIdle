@@ -486,6 +486,7 @@ export class CityDefinitions {
          CryptoFund: "Blockchain",
          KizhiPogost: "Alloy",
          Hermitage: "Drilling",
+         SaviorOnSpilledBlood: "Aviation",
       },
       uniqueMultipliers: {},
       naturalWonders: {

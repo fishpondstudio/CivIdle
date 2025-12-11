@@ -20,6 +20,7 @@ import {
    isSpecialBuilding,
    isWorldOrNaturalWonder,
    isWorldWonder,
+   saviorOnSpilledBloodProductionMultiplier,
    totalMultiplierFor,
    useWorkers,
 } from "../../../shared/logic/BuildingLogic";
@@ -73,6 +74,7 @@ import type {
    IItaipuDamBuildingData,
    ILouvreBuildingData,
    IReligionBuildingData,
+   ISaviorOnSpilledBloodBuildingData,
    ISwissBankBuildingData,
    ITileData,
    ITraditionBuildingData,
@@ -2112,6 +2114,23 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          buildings.forEach((b) => {
             addMultiplier(b, { storage: building.level }, buildingName);
          });
+         break;
+      }
+      case "SaviorOnSpilledBlood": {
+         const saviorOnSpilledBlood = building as ISaviorOnSpilledBloodBuildingData;
+         const constructedHours = Math.floor((gs.tick - saviorOnSpilledBlood.constructedTick) / 3600);
+         const range = isFestival(building.type, gs) ? 4 : 2;
+         const multiplier = saviorOnSpilledBloodProductionMultiplier(constructedHours);
+         for (const point of grid.getRange(tileToPoint(xy), range)) {
+            const targetXy = pointToTile(point);
+            if (targetXy === xy) {
+               continue;
+            }
+            mapSafePush(Tick.next.tileMultipliers, targetXy, {
+               output: multiplier,
+               source: buildingName,
+            });
+         }
          break;
       }
    }

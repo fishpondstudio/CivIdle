@@ -491,6 +491,10 @@ export class WorldScene extends Scene {
                this.highlightRange(grid, isFestival(building.type, gs) ? 4 : 2);
                break;
             }
+            case "SaviorOnSpilledBlood": {
+               this.highlightRange(grid, isFestival(building.type, gs) ? 4 : 2);
+               break;
+            }
             // #endregion
          }
       }

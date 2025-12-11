@@ -2312,6 +2312,17 @@ export class BuildingDefinitions {
       wikipedia: "Hermitage_Museum",
    };
 
+   SaviorOnSpilledBlood: IBuildingDefinition = {
+      name: () => t(L.SaviorOnSpilledBlood),
+      desc: () => t(L.SaviorOnSpilledBloodDesc),
+      input: {},
+      output: {},
+      construction: { TV: 500, Radio: 500, Diplomacy: 500 },
+      max: 1,
+      special: BuildingSpecial.WorldWonder,
+      wikipedia: "Hermitage_Museum",
+   };
+
    // #endregion /////////////////////////////////////////////////////////////////////////////////////////////
 
    // Winery: IBuildingDefinition = {
@@ -2415,6 +2426,7 @@ export const BuildingShowLevel = new Set<Building>([
    "SydneyOperaHouse",
    "SydneyHarbourBridge",
    "GreatOceanRoad",
+   "Hermitage",
 ] satisfies Building[]);
 
 // This controls whether we allow upgrade for multiple levels. e.g. Tradition/Religion/Ideology wonders should NOT allow this!
@@ -2438,6 +2450,7 @@ export const UpgradableWorldWonders = new Set<Building>([
    "SydneyOperaHouse",
    "SydneyHarbourBridge",
    "GreatOceanRoad",
+   "Hermitage",
 ] satisfies Building[]);
 
 // Include buildings here that does not really cost construction resources to upgrade

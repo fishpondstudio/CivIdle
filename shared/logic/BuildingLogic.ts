@@ -1430,6 +1430,6 @@ export function getResourceImportBuildingBaseStorageMultiplier(gs: GameState): n
    return result;
 }
 
-function curve(x: number): number {
-   return 20 * (1 - Math.E ** ((Math.log(0.5) / 48) * x));
+export function saviorOnSpilledBloodProductionMultiplier(hour: number): number {
+   return Math.floor(19 * (1 - Math.E ** ((Math.log(0.5) / 48) * hour))) + 1;
 }

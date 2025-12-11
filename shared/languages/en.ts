@@ -1844,9 +1844,13 @@ export const EN = {
    Russian: "Russian",
    KizhiPogost: "Kizhi Pogost",
    KizhiPogostDesc: "All buildings within 2-tile range get +X Production Multiplier. X = the production multiplier this wonder receives",
-   Maslenitsa: "Double the range of Kizhi Pogost and Lake Baikal",
+   Maslenitsa: "Maslenitsa: Double the range of Kizhi Pogost and Lake Baikal",
    LakeBaikal: "Lake Baikal",
    LakeBaikalDesc: "+X Builder Capacity Multiplier. X = total levels of wonders within 2-tile range",
    Hermitage: "Hermitage",
-   HermitageDesc: "This wonder can be upgraded and each level provides +1 Storage Multiplier to each type of building within 2-tile range"
+   HermitageDesc: "This wonder can be upgraded and each level provides +1 Storage Multiplier to each type of building within 2-tile range",
+   SaviorOnSpilledBlood: "Savior on Spilled Blood",
+   SaviorOnSpilledBloodDesc: "All buildings within 2-tile range get +X Production Multiplier. X is based on the time since the wonder was constructed",
+   ConstructedTime: "Constructed Time",
+   ConstructedTimeHours: "Constructed Time (hours)",
 };
