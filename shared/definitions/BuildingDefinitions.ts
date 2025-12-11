@@ -2323,6 +2323,17 @@ export class BuildingDefinitions {
       wikipedia: "Hermitage_Museum",
    };
 
+   Sputnik1: IBuildingDefinition = {
+      name: () => t(L.Sputnik1),
+      desc: () => t(L.Sputnik1Desc),
+      input: {},
+      output: {},
+      construction: { TV: 500, Radio: 500, Diplomacy: 500 },
+      max: 1,
+      special: BuildingSpecial.WorldWonder,
+      wikipedia: "Sputnik_1",
+   };
+
    // #endregion /////////////////////////////////////////////////////////////////////////////////////////////
 
    // Winery: IBuildingDefinition = {

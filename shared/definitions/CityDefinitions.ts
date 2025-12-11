@@ -487,6 +487,7 @@ export class CityDefinitions {
          KizhiPogost: "Alloy",
          Hermitage: "Drilling",
          SaviorOnSpilledBlood: "Aviation",
+         Sputnik1: "Satellite",
       },
       uniqueMultipliers: {},
       naturalWonders: {

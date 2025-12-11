@@ -2133,5 +2133,13 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          }
          break;
       }
+      case "Sputnik1": {
+         forEach(Config.GreatPerson, (p, def) => {
+            if (def.age === "ColdWarAge") {
+               def.tick(p, building.level, `${buildingName}: ${def.name()}`, GreatPersonTickFlag.None);
+            }
+         });
+         break;
+      }
    }
 }

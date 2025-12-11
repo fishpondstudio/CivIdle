@@ -1844,7 +1844,7 @@ export const EN = {
    Russian: "Russian",
    KizhiPogost: "Kizhi Pogost",
    KizhiPogostDesc: "All buildings within 2-tile range get +X Production Multiplier. X = the production multiplier this wonder receives",
-   Maslenitsa: "Maslenitsa: Double the range of Kizhi Pogost and Lake Baikal",
+   Maslenitsa: "Maslenitsa: Double the range of Kizhi Pogost, Savior on Spilled Blood, and Lake Baikal",
    LakeBaikal: "Lake Baikal",
    LakeBaikalDesc: "+X Builder Capacity Multiplier. X = total levels of wonders within 2-tile range",
    Hermitage: "Hermitage",
@@ -1853,4 +1853,6 @@ export const EN = {
    SaviorOnSpilledBloodDesc: "All buildings within 2-tile range get +X Production Multiplier. X is based on the time since the wonder was constructed",
    ConstructedTime: "Constructed Time",
    ConstructedTimeHours: "Constructed Time (hours)",
+   Sputnik1: "Sputnik 1",
+   Sputnik1Desc: "This wonder can be upgraded and each level provides +1 level to all Cold War Age great people for this run (excl. Great People that provide level boost)",
 };
