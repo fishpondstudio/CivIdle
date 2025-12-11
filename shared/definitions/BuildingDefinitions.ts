@@ -2334,6 +2334,17 @@ export class BuildingDefinitions {
       wikipedia: "Sputnik_1",
    };
 
+   AkademikLomonosov: IBuildingDefinition = {
+      name: () => t(L.AkademikLomonosov),
+      desc: () => t(L.AkademikLomonosovDesc),
+      input: {},
+      output: {},
+      construction: { TV: 500, Radio: 500, Diplomacy: 500 },
+      max: 1,
+      special: BuildingSpecial.WorldWonder,
+      wikipedia: "Sputnik_1",
+   };
+
    // #endregion /////////////////////////////////////////////////////////////////////////////////////////////
 
    // Winery: IBuildingDefinition = {

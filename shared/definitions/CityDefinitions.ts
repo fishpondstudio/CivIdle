@@ -488,6 +488,7 @@ export class CityDefinitions {
          Hermitage: "Drilling",
          SaviorOnSpilledBlood: "Aviation",
          Sputnik1: "Satellite",
+         AkademikLomonosov: "Satellite",
       },
       uniqueMultipliers: {},
       naturalWonders: {
