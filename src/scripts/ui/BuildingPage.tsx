@@ -32,6 +32,7 @@ import { MontSaintMichelBuildingBody } from "./MontSaintMichelBuildingBody";
 import { PetraBuildingBody } from "./PetraBuildingBody";
 import { PlayerTradeBuildingBody } from "./PlayerTradeBuildingBody";
 import { ReligionBuildingBody } from "./ReligionBuildingBody";
+import { SaviorOnSpilledBloodBuildingBody } from "./SaviorOnSpilledBloodBuildingBody";
 import { ScienceProductionWonderBuildingBody } from "./ScienceProductionWonderBuildingBody";
 import { StatisticsBuildingBody } from "./StatisticsBuildingBody";
 import { SwissBankBuildingBody } from "./SwissBankBuildingBody";
@@ -44,7 +45,7 @@ import { UnitedNationsBuildingBody } from "./UnitedNationsBuildingBody";
 import { UpgradableWonderBuildingBody } from "./UpgradableWonderBuildingBody";
 import { WarehouseBuildingBody } from "./WarehouseBuildingBody";
 import { ZugspitzeBuildingBody } from "./ZugspitzeBuildingBody";
-import { SaviorOnSpilledBloodBuildingBody } from "./SaviorOnSpilledBloodBuildingBody";
+import { AkademikLomonosovBuildingBody } from "./AkademikLomonosovBuildingBody";
 
 const BuildingBodyOverride: Partial<Record<Building, FunctionComponent<IBuildingComponentProps>>> = {
    Headquarter: HeadquarterBuildingBody,
@@ -98,6 +99,8 @@ const BuildingBodyOverride: Partial<Record<Building, FunctionComponent<IBuilding
    GreatOceanRoad: UpgradableWonderBuildingBody,
    KizhiPogost: KizhiPogostBuildingBody,
    SaviorOnSpilledBlood: SaviorOnSpilledBloodBuildingBody,
+   Sputnik1: UpgradableWonderBuildingBody,
+   AkademikLomonosov: AkademikLomonosovBuildingBody,
 };
 
 export function BuildingPage(props: { tile: ITileData }): React.ReactNode {

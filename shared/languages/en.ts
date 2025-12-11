@@ -1857,4 +1857,5 @@ export const EN = {
    Sputnik1Desc: "This wonder can be upgraded and each level provides +1 level to all Cold War Age great people for this run (excl. Great People that provide level boost)",
    AkademikLomonosov: "Akademik Lomonosov",
    AkademikLomonosovDesc: "This wonder can be upgraded and each level provides 10kW of power. Provides +X Production and Storage Multiplier to Crypto Fund. X = Information Age Wisdom Level. Provide power to all tiles within 2 tile range. This wonder can be moved",
+   Kremlin: "Kremlin",
 };

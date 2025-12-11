@@ -480,7 +480,7 @@ export class CityDefinitions {
       },
       size: 45,
       buildingNames: {
-         Headquarter: () => t(L.CanberraParliamentHouse),
+         Headquarter: () => t(L.Kremlin),
       },
       uniqueBuildings: {
          CryptoFund: "Blockchain",
@@ -494,7 +494,7 @@ export class CityDefinitions {
       naturalWonders: {
          LakeBaikal: true,
       },
-      requireGreatPeopleLevel: 110,
+      requireGreatPeopleLevel: 120,
       requireSupporterPack: true,
       festivalDesc: () => t(L.Maslenitsa),
       uniqueEffects: () => [],

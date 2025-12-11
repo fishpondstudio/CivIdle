@@ -1827,10 +1827,6 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
             }
             Tick.next.powerGrid.add(t);
          }
-
-         for (const point of grid.getRange(tileToPoint(xy), 1)) {
-            Tick.next.powerGrid.add(pointToTile(point));
-         }
          break;
       }
       case "Capybara":
@@ -2139,6 +2135,21 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
                def.tick(p, building.level, `${buildingName}: ${def.name()}`, GreatPersonTickFlag.None);
             }
          });
+         break;
+      }
+      case "AkademikLomonosov": {
+         for (const point of grid.getRange(tileToPoint(xy), 2)) {
+            Tick.next.powerGrid.add(pointToTile(point));
+         }
+         mapSafeAdd(Tick.next.workersAvailable, "Power", 10_000 * building.level);
+         const informationAgeWisdom = options.ageWisdom.InformationAge ?? 0;
+         if (informationAgeWisdom > 0) {
+            addMultiplier(
+               "CryptoFund",
+               { output: informationAgeWisdom, storage: informationAgeWisdom },
+               buildingName,
+            );
+         }
          break;
       }
    }

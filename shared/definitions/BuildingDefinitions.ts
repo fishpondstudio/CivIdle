@@ -2342,7 +2342,7 @@ export class BuildingDefinitions {
       construction: { TV: 500, Radio: 500, Diplomacy: 500 },
       max: 1,
       special: BuildingSpecial.WorldWonder,
-      wikipedia: "Sputnik_1",
+      wikipedia: "Akademik_Lomonosov",
    };
 
    // #endregion /////////////////////////////////////////////////////////////////////////////////////////////
@@ -2449,6 +2449,8 @@ export const BuildingShowLevel = new Set<Building>([
    "SydneyHarbourBridge",
    "GreatOceanRoad",
    "Hermitage",
+   "Sputnik1",
+   "AkademikLomonosov",
 ] satisfies Building[]);
 
 // This controls whether we allow upgrade for multiple levels. e.g. Tradition/Religion/Ideology wonders should NOT allow this!
@@ -2473,6 +2475,8 @@ export const UpgradableWorldWonders = new Set<Building>([
    "SydneyHarbourBridge",
    "GreatOceanRoad",
    "Hermitage",
+   "Sputnik1",
+   "AkademikLomonosov",
 ] satisfies Building[]);
 
 // Include buildings here that does not really cost construction resources to upgrade
