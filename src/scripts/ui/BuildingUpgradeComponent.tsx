@@ -284,7 +284,7 @@ export function BuildingUpgradeComponent({ gameState, xy }: IBuildingComponentPr
                   disabled={moving || (theMet.building.resources.Teleport ?? 0) <= 0}
                   onClick={async () => {
                      playClick();
-                     showToast(t(L.MoveBuildingSelectTileToastHTML), 10000000);
+                     showToast(t(L.MoveBuildingSelectTileToastHTML), Number.POSITIVE_INFINITY);
                      setMoving(true);
                      const point = await Singleton().sceneManager.getCurrent(WorldScene)?.hijackSelectGrid();
                      hideToast();

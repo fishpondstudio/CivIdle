@@ -28,7 +28,11 @@ import {
 } from "../../../shared/logic/TechLogic";
 import { ensureTileFogOfWar } from "../../../shared/logic/TerrainLogic";
 import { Tick } from "../../../shared/logic/TickLogic";
-import { makeBuilding, type IBuildingData } from "../../../shared/logic/Tile";
+import {
+   makeBuilding,
+   type IBuildingData,
+   type ISaviorOnSpilledBloodBuildingData,
+} from "../../../shared/logic/Tile";
 import { OnBuildingComplete } from "../../../shared/logic/Update";
 import {
    clamp,
@@ -281,6 +285,11 @@ export function onBuildingComplete(xy: Tile): void {
                showModal(<ChooseGreatPersonModal permanent={false} />);
             }
          }
+         break;
+      }
+      case "SaviorOnSpilledBlood": {
+         const saviorOnSpilledBlood = building as ISaviorOnSpilledBloodBuildingData;
+         saviorOnSpilledBlood.constructedTick = gs.tick;
          break;
       }
    }

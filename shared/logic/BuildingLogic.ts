@@ -1388,6 +1388,7 @@ const WonderToGreatPerson: Partial<Record<Building, GreatPerson>> = {
    ItaipuDam: "Pele",
    CologneCathedral: "Beethoven",
    SydneyHarbourBridge: "JohnBradfield",
+   Hermitage: "Tchaikovsky",
 };
 
 export function getWonderExtraLevel(building: Building): number {
@@ -1428,4 +1429,8 @@ export function getResourceImportBuildingBaseStorageMultiplier(gs: GameState): n
       ++result;
    }
    return result;
+}
+
+export function saviorOnSpilledBloodProductionMultiplier(hour: number): number {
+   return Math.floor(19 * (1 - Math.E ** ((Math.log(0.5) / 48) * hour))) + 1;
 }

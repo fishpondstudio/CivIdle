@@ -819,6 +819,12 @@ export class BuildingDefinitions {
       output: { Bitcoin: 1 },
       power: true,
    };
+   CryptoFund: IBuildingDefinition = {
+      name: () => t(L.CryptoFund),
+      input: { HedgeFund: 4, CivTok: 2 },
+      output: { Bitcoin: 2 },
+      power: true,
+   };
    Caravansary: IBuildingDefinition = {
       name: () => t(L.Caravansary),
       desc: () => t(L.CaravansaryDesc),
@@ -1856,7 +1862,7 @@ export class BuildingDefinitions {
    };
 
    YearOfTheSnake: IBuildingDefinition = {
-      name: () => t(L.YearOfTheSnake),
+      name: () => t(L.YearOfTheSnakeV2),
       desc: () => t(L.YearOfTheSnakeDesc),
       input: {},
       output: {},
@@ -2273,6 +2279,72 @@ export class BuildingDefinitions {
       wikipedia: "Uluru",
    };
 
+   LakeBaikal: IBuildingDefinition = {
+      name: () => t(L.LakeBaikal),
+      desc: () => t(L.LakeBaikalDesc),
+      input: {},
+      output: {},
+      construction: {},
+      max: 0,
+      special: BuildingSpecial.NaturalWonder,
+      wikipedia: "Lake_Baikal",
+   };
+
+   KizhiPogost: IBuildingDefinition = {
+      name: () => t(L.KizhiPogost),
+      desc: () => t(L.KizhiPogostDesc),
+      input: {},
+      output: {},
+      construction: { Bond: 100, Law: 100, Frigate: 100 },
+      max: 1,
+      special: BuildingSpecial.WorldWonder,
+      wikipedia: "Kizhi_Pogost",
+   };
+
+   Hermitage: IBuildingDefinition = {
+      name: () => t(L.Hermitage),
+      desc: () => t(L.HermitageDesc),
+      input: {},
+      output: {},
+      construction: { Politics: 150, Newspaper: 150 },
+      max: 1,
+      special: BuildingSpecial.WorldWonder,
+      wikipedia: "Hermitage_Museum",
+   };
+
+   SaviorOnSpilledBlood: IBuildingDefinition = {
+      name: () => t(L.SaviorOnSpilledBlood),
+      desc: () => t(L.SaviorOnSpilledBloodDesc),
+      input: {},
+      output: {},
+      construction: { Tank: 100, Biplane: 100, Ironclad: 100 },
+      max: 1,
+      special: BuildingSpecial.WorldWonder,
+      wikipedia: "Church_of_the_Savior_on_Blood",
+   };
+
+   Sputnik1: IBuildingDefinition = {
+      name: () => t(L.Sputnik1),
+      desc: () => t(L.Sputnik1Desc),
+      input: {},
+      output: {},
+      construction: { Satellite: 500 },
+      max: 1,
+      special: BuildingSpecial.WorldWonder,
+      wikipedia: "Sputnik_1",
+   };
+
+   AkademikLomonosov: IBuildingDefinition = {
+      name: () => t(L.AkademikLomonosov),
+      desc: () => t(L.AkademikLomonosovDesc),
+      input: {},
+      output: {},
+      construction: { Bitcoin: 500 },
+      max: 1,
+      special: BuildingSpecial.WorldWonder,
+      wikipedia: "Akademik_Lomonosov",
+   };
+
    // #endregion /////////////////////////////////////////////////////////////////////////////////////////////
 
    // Winery: IBuildingDefinition = {
@@ -2376,6 +2448,9 @@ export const BuildingShowLevel = new Set<Building>([
    "SydneyOperaHouse",
    "SydneyHarbourBridge",
    "GreatOceanRoad",
+   "Hermitage",
+   "Sputnik1",
+   "AkademikLomonosov",
 ] satisfies Building[]);
 
 // This controls whether we allow upgrade for multiple levels. e.g. Tradition/Religion/Ideology wonders should NOT allow this!
@@ -2399,6 +2474,9 @@ export const UpgradableWorldWonders = new Set<Building>([
    "SydneyOperaHouse",
    "SydneyHarbourBridge",
    "GreatOceanRoad",
+   "Hermitage",
+   "Sputnik1",
+   "AkademikLomonosov",
 ] satisfies Building[]);
 
 // Include buildings here that does not really cost construction resources to upgrade

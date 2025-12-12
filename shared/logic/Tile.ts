@@ -165,6 +165,10 @@ export interface IItaipuDamBuildingData extends IBuildingData {
    productionMultiplier: number;
 }
 
+export interface ISaviorOnSpilledBloodBuildingData extends IBuildingData {
+   constructedTick: number;
+}
+
 export type IHaveTypeAndLevel = Pick<IBuildingData, "type" | "level">;
 
 export const STOCKPILE_CAPACITY_MIN = 0;
@@ -311,6 +315,13 @@ export function makeBuilding(data: Pick<IBuildingData, "type"> & Partial<IBuildi
          const itaipuDam = building as IItaipuDamBuildingData;
          if (!itaipuDam.productionMultiplier) {
             itaipuDam.productionMultiplier = 0;
+         }
+         break;
+      }
+      case "SaviorOnSpilledBlood": {
+         const saviorOnSpilledBlood = building as ISaviorOnSpilledBloodBuildingData;
+         if (!saviorOnSpilledBlood.constructedTick) {
+            saviorOnSpilledBlood.constructedTick = 0;
          }
          break;
       }

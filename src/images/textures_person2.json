@@ -1,8 +1,16 @@
 {
     "frames": {
-        "Person_BrianSchmidt": {
+        "Person_AndreyKolmogorov": {
             "frame": {
                 "x": 0,
+                "y": 0,
+                "w": 350,
+                "h": 350
+            }
+        },
+        "Person_BrianSchmidt": {
+            "frame": {
+                "x": 352,
                 "y": 0,
                 "w": 350,
                 "h": 350
@@ -10,15 +18,15 @@
         },
         "Person_JohnBradfield": {
             "frame": {
-                "x": 352,
-                "y": 0,
+                "x": 0,
+                "y": 352,
                 "w": 350,
                 "h": 350
             }
         },
         "Person_PaulSamuelson": {
             "frame": {
-                "x": 0,
+                "x": 352,
                 "y": 352,
                 "w": 350,
                 "h": 350
@@ -26,8 +34,8 @@
         },
         "Person_Pele": {
             "frame": {
-                "x": 352,
-                "y": 352,
+                "x": 704,
+                "y": 0,
                 "w": 350,
                 "h": 350
             }
@@ -35,22 +43,22 @@
         "Person_PeterHiggs": {
             "frame": {
                 "x": 704,
-                "y": 0,
+                "y": 352,
                 "w": 350,
                 "h": 350
             }
         },
         "Person_PhiloFarnsworth": {
             "frame": {
-                "x": 704,
-                "y": 352,
+                "x": 0,
+                "y": 704,
                 "w": 350,
                 "h": 350
             }
         },
         "Person_PierreDeCoubertin": {
             "frame": {
-                "x": 0,
+                "x": 352,
                 "y": 704,
                 "w": 350,
                 "h": 350
@@ -58,7 +66,7 @@
         },
         "Person_Plato": {
             "frame": {
-                "x": 352,
+                "x": 704,
                 "y": 704,
                 "w": 350,
                 "h": 350
@@ -66,8 +74,8 @@
         },
         "Person_QinShiHuang": {
             "frame": {
-                "x": 704,
-                "y": 704,
+                "x": 1056,
+                "y": 0,
                 "w": 350,
                 "h": 350
             }
@@ -75,7 +83,7 @@
         "Person_RabindranathTagore": {
             "frame": {
                 "x": 1056,
-                "y": 0,
+                "y": 352,
                 "w": 350,
                 "h": 350
             }
@@ -83,30 +91,30 @@
         "Person_RamessesII": {
             "frame": {
                 "x": 1056,
-                "y": 352,
+                "y": 704,
                 "w": 350,
                 "h": 350
             }
         },
         "Person_ReneDescartes": {
             "frame": {
-                "x": 1056,
-                "y": 704,
+                "x": 0,
+                "y": 1056,
                 "w": 350,
                 "h": 350
             }
         },
         "Person_RichardFeynman": {
             "frame": {
-                "x": 2112,
-                "y": 1760,
+                "x": 352,
+                "y": 2112,
                 "w": 349,
                 "h": 349
             }
         },
         "Person_RichardJordanGatling": {
             "frame": {
-                "x": 0,
+                "x": 352,
                 "y": 1056,
                 "w": 350,
                 "h": 350
@@ -114,7 +122,7 @@
         },
         "Person_RobertNoyce": {
             "frame": {
-                "x": 352,
+                "x": 704,
                 "y": 1056,
                 "w": 350,
                 "h": 350
@@ -122,7 +130,7 @@
         },
         "Person_RudolfDiesel": {
             "frame": {
-                "x": 704,
+                "x": 1056,
                 "y": 1056,
                 "w": 350,
                 "h": 350
@@ -130,8 +138,8 @@
         },
         "Person_Rurik": {
             "frame": {
-                "x": 1056,
-                "y": 1056,
+                "x": 1408,
+                "y": 0,
                 "w": 350,
                 "h": 350
             }
@@ -139,7 +147,7 @@
         "Person_Saladin": {
             "frame": {
                 "x": 1408,
-                "y": 0,
+                "y": 352,
                 "w": 350,
                 "h": 350
             }
@@ -147,7 +155,7 @@
         "Person_Samsuiluna": {
             "frame": {
                 "x": 1408,
-                "y": 352,
+                "y": 704,
                 "w": 350,
                 "h": 350
             }
@@ -155,22 +163,22 @@
         "Person_SargonOfAkkad": {
             "frame": {
                 "x": 1408,
-                "y": 704,
+                "y": 1056,
                 "w": 350,
                 "h": 350
             }
         },
         "Person_SatoshiNakamoto": {
             "frame": {
-                "x": 1408,
-                "y": 1056,
+                "x": 0,
+                "y": 1408,
                 "w": 350,
                 "h": 350
             }
         },
         "Person_SergeiKorolev": {
             "frame": {
-                "x": 0,
+                "x": 352,
                 "y": 1408,
                 "w": 350,
                 "h": 350
@@ -178,7 +186,7 @@
         },
         "Person_SidMeier": {
             "frame": {
-                "x": 352,
+                "x": 704,
                 "y": 1408,
                 "w": 350,
                 "h": 350
@@ -186,7 +194,7 @@
         },
         "Person_Socrates": {
             "frame": {
-                "x": 704,
+                "x": 1056,
                 "y": 1408,
                 "w": 350,
                 "h": 350
@@ -194,7 +202,7 @@
         },
         "Person_StephenHawking": {
             "frame": {
-                "x": 1056,
+                "x": 1408,
                 "y": 1408,
                 "w": 350,
                 "h": 350
@@ -202,8 +210,8 @@
         },
         "Person_SuleimanI": {
             "frame": {
-                "x": 1408,
-                "y": 1408,
+                "x": 1760,
+                "y": 0,
                 "w": 350,
                 "h": 350
             }
@@ -211,7 +219,15 @@
         "Person_TangOfShang": {
             "frame": {
                 "x": 1760,
-                "y": 0,
+                "y": 352,
+                "w": 350,
+                "h": 350
+            }
+        },
+        "Person_Tchaikovsky": {
+            "frame": {
+                "x": 1760,
+                "y": 704,
                 "w": 350,
                 "h": 350
             }
@@ -219,7 +235,7 @@
         "Person_ThomasEdison": {
             "frame": {
                 "x": 1760,
-                "y": 352,
+                "y": 1056,
                 "w": 350,
                 "h": 350
             }
@@ -227,28 +243,12 @@
         "Person_ThomasGresham": {
             "frame": {
                 "x": 1760,
-                "y": 704,
-                "w": 350,
-                "h": 350
-            }
-        },
-        "Person_TimBernersLee": {
-            "frame": {
-                "x": 1760,
-                "y": 1056,
-                "w": 350,
-                "h": 350
-            }
-        },
-        "Person_VeraRubin": {
-            "frame": {
-                "x": 1760,
                 "y": 1408,
                 "w": 350,
                 "h": 350
             }
         },
-        "Person_Voltaire": {
+        "Person_TimBernersLee": {
             "frame": {
                 "x": 0,
                 "y": 1760,
@@ -256,15 +256,7 @@
                 "h": 350
             }
         },
-        "Person_WaltDisney": {
-            "frame": {
-                "x": 0,
-                "y": 2112,
-                "w": 349,
-                "h": 349
-            }
-        },
-        "Person_WernherVonBraun": {
+        "Person_VeraRubin": {
             "frame": {
                 "x": 352,
                 "y": 1760,
@@ -272,7 +264,7 @@
                 "h": 350
             }
         },
-        "Person_WilliamShakespeare": {
+        "Person_Voltaire": {
             "frame": {
                 "x": 704,
                 "y": 1760,
@@ -280,7 +272,15 @@
                 "h": 350
             }
         },
-        "Person_WilliamShepherd": {
+        "Person_WaltDisney": {
+            "frame": {
+                "x": 703,
+                "y": 2112,
+                "w": 349,
+                "h": 349
+            }
+        },
+        "Person_WernherVonBraun": {
             "frame": {
                 "x": 1056,
                 "y": 1760,
@@ -288,7 +288,7 @@
                 "h": 350
             }
         },
-        "Person_WuZetian": {
+        "Person_WilliamShakespeare": {
             "frame": {
                 "x": 1408,
                 "y": 1760,
@@ -296,7 +296,7 @@
                 "h": 350
             }
         },
-        "Person_Xuanzang": {
+        "Person_WilliamShepherd": {
             "frame": {
                 "x": 1760,
                 "y": 1760,
@@ -304,7 +304,7 @@
                 "h": 350
             }
         },
-        "Person_YuriGagarin": {
+        "Person_WuZetian": {
             "frame": {
                 "x": 2112,
                 "y": 0,
@@ -312,7 +312,7 @@
                 "h": 350
             }
         },
-        "Person_ZahaHadid": {
+        "Person_Xuanzang": {
             "frame": {
                 "x": 2112,
                 "y": 352,
@@ -320,7 +320,7 @@
                 "h": 350
             }
         },
-        "Person_Zenobia": {
+        "Person_YuriGagarin": {
             "frame": {
                 "x": 2112,
                 "y": 704,
@@ -328,7 +328,7 @@
                 "h": 350
             }
         },
-        "Person_ZhengHe": {
+        "Person_ZahaHadid": {
             "frame": {
                 "x": 2112,
                 "y": 1056,
@@ -336,10 +336,26 @@
                 "h": 350
             }
         },
-        "Person_Zoroaster": {
+        "Person_Zenobia": {
             "frame": {
                 "x": 2112,
                 "y": 1408,
+                "w": 350,
+                "h": 350
+            }
+        },
+        "Person_ZhengHe": {
+            "frame": {
+                "x": 2112,
+                "y": 1760,
+                "w": 350,
+                "h": 350
+            }
+        },
+        "Person_Zoroaster": {
+            "frame": {
+                "x": 0,
+                "y": 2112,
                 "w": 350,
                 "h": 350
             }
@@ -352,7 +368,7 @@
         "scale": 1,
         "size": {
             "w": 2462,
-            "h": 2461
+            "h": 2462
         }
     }
 }
