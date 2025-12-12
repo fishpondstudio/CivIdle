@@ -2107,8 +2107,9 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
                buildings.add(targetBuilding.type);
             }
          }
+         const level = building.level + getWonderExtraLevel(building.type);
          buildings.forEach((b) => {
-            addMultiplier(b, { storage: building.level }, buildingName);
+            addMultiplier(b, { storage: level }, buildingName);
          });
          break;
       }

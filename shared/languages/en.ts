@@ -1859,4 +1859,5 @@ export const EN = {
    AkademikLomonosovDesc: "This wonder can be upgraded and each level provides 100KW of power. Provides +X Production and Storage Multiplier to Crypto Fund. X = Information Age Wisdom Level. Provide power to all tiles within 2 tile range. This wonder can be moved",
    Kremlin: "Kremlin",
    AndreyKolmogorov: "Andrey Kolmogorov",
+   Tchaikovsky: "Tchaikovsky",
 };

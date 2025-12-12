@@ -106,7 +106,7 @@
         },
         "Person_RichardFeynman": {
             "frame": {
-                "x": 0,
+                "x": 352,
                 "y": 2112,
                 "w": 349,
                 "h": 349
@@ -224,10 +224,18 @@
                 "h": 350
             }
         },
-        "Person_ThomasEdison": {
+        "Person_Tchaikovsky": {
             "frame": {
                 "x": 1760,
                 "y": 704,
+                "w": 350,
+                "h": 350
+            }
+        },
+        "Person_ThomasEdison": {
+            "frame": {
+                "x": 1760,
+                "y": 1056,
                 "w": 350,
                 "h": 350
             }
@@ -235,20 +243,12 @@
         "Person_ThomasGresham": {
             "frame": {
                 "x": 1760,
-                "y": 1056,
-                "w": 350,
-                "h": 350
-            }
-        },
-        "Person_TimBernersLee": {
-            "frame": {
-                "x": 1760,
                 "y": 1408,
                 "w": 350,
                 "h": 350
             }
         },
-        "Person_VeraRubin": {
+        "Person_TimBernersLee": {
             "frame": {
                 "x": 0,
                 "y": 1760,
@@ -256,7 +256,7 @@
                 "h": 350
             }
         },
-        "Person_Voltaire": {
+        "Person_VeraRubin": {
             "frame": {
                 "x": 352,
                 "y": 1760,
@@ -264,15 +264,7 @@
                 "h": 350
             }
         },
-        "Person_WaltDisney": {
-            "frame": {
-                "x": 351,
-                "y": 2112,
-                "w": 349,
-                "h": 349
-            }
-        },
-        "Person_WernherVonBraun": {
+        "Person_Voltaire": {
             "frame": {
                 "x": 704,
                 "y": 1760,
@@ -280,7 +272,15 @@
                 "h": 350
             }
         },
-        "Person_WilliamShakespeare": {
+        "Person_WaltDisney": {
+            "frame": {
+                "x": 703,
+                "y": 2112,
+                "w": 349,
+                "h": 349
+            }
+        },
+        "Person_WernherVonBraun": {
             "frame": {
                 "x": 1056,
                 "y": 1760,
@@ -288,7 +288,7 @@
                 "h": 350
             }
         },
-        "Person_WilliamShepherd": {
+        "Person_WilliamShakespeare": {
             "frame": {
                 "x": 1408,
                 "y": 1760,
@@ -296,7 +296,7 @@
                 "h": 350
             }
         },
-        "Person_WuZetian": {
+        "Person_WilliamShepherd": {
             "frame": {
                 "x": 1760,
                 "y": 1760,
@@ -304,7 +304,7 @@
                 "h": 350
             }
         },
-        "Person_Xuanzang": {
+        "Person_WuZetian": {
             "frame": {
                 "x": 2112,
                 "y": 0,
@@ -312,7 +312,7 @@
                 "h": 350
             }
         },
-        "Person_YuriGagarin": {
+        "Person_Xuanzang": {
             "frame": {
                 "x": 2112,
                 "y": 352,
@@ -320,7 +320,7 @@
                 "h": 350
             }
         },
-        "Person_ZahaHadid": {
+        "Person_YuriGagarin": {
             "frame": {
                 "x": 2112,
                 "y": 704,
@@ -328,7 +328,7 @@
                 "h": 350
             }
         },
-        "Person_Zenobia": {
+        "Person_ZahaHadid": {
             "frame": {
                 "x": 2112,
                 "y": 1056,
@@ -336,7 +336,7 @@
                 "h": 350
             }
         },
-        "Person_ZhengHe": {
+        "Person_Zenobia": {
             "frame": {
                 "x": 2112,
                 "y": 1408,
@@ -344,10 +344,18 @@
                 "h": 350
             }
         },
-        "Person_Zoroaster": {
+        "Person_ZhengHe": {
             "frame": {
                 "x": 2112,
                 "y": 1760,
+                "w": 350,
+                "h": 350
+            }
+        },
+        "Person_Zoroaster": {
+            "frame": {
+                "x": 0,
+                "y": 2112,
                 "w": 350,
                 "h": 350
             }
@@ -360,7 +368,7 @@
         "scale": 1,
         "size": {
             "w": 2462,
-            "h": 2461
+            "h": 2462
         }
     }
 }

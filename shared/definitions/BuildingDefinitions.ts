@@ -2279,17 +2279,6 @@ export class BuildingDefinitions {
       wikipedia: "Uluru",
    };
 
-   KizhiPogost: IBuildingDefinition = {
-      name: () => t(L.KizhiPogost),
-      desc: () => t(L.KizhiPogostDesc),
-      input: {},
-      output: {},
-      construction: { TV: 500, Radio: 500, Diplomacy: 500 },
-      max: 1,
-      special: BuildingSpecial.WorldWonder,
-      wikipedia: "Kizhi_Pogost",
-   };
-
    LakeBaikal: IBuildingDefinition = {
       name: () => t(L.LakeBaikal),
       desc: () => t(L.LakeBaikalDesc),
@@ -2301,12 +2290,23 @@ export class BuildingDefinitions {
       wikipedia: "Lake_Baikal",
    };
 
+   KizhiPogost: IBuildingDefinition = {
+      name: () => t(L.KizhiPogost),
+      desc: () => t(L.KizhiPogostDesc),
+      input: {},
+      output: {},
+      construction: { Bond: 100, Law: 100, Frigate: 100 },
+      max: 1,
+      special: BuildingSpecial.WorldWonder,
+      wikipedia: "Kizhi_Pogost",
+   };
+
    Hermitage: IBuildingDefinition = {
       name: () => t(L.Hermitage),
       desc: () => t(L.HermitageDesc),
       input: {},
       output: {},
-      construction: { TV: 500, Radio: 500, Diplomacy: 500 },
+      construction: { Politics: 150, Newspaper: 150 },
       max: 1,
       special: BuildingSpecial.WorldWonder,
       wikipedia: "Hermitage_Museum",
@@ -2317,10 +2317,10 @@ export class BuildingDefinitions {
       desc: () => t(L.SaviorOnSpilledBloodDesc),
       input: {},
       output: {},
-      construction: { TV: 500, Radio: 500, Diplomacy: 500 },
+      construction: { Tank: 100, Biplane: 100, Ironclad: 100 },
       max: 1,
       special: BuildingSpecial.WorldWonder,
-      wikipedia: "Hermitage_Museum",
+      wikipedia: "Church_of_the_Savior_on_Blood",
    };
 
    Sputnik1: IBuildingDefinition = {
@@ -2328,7 +2328,7 @@ export class BuildingDefinitions {
       desc: () => t(L.Sputnik1Desc),
       input: {},
       output: {},
-      construction: { TV: 500, Radio: 500, Diplomacy: 500 },
+      construction: { Satellite: 500 },
       max: 1,
       special: BuildingSpecial.WorldWonder,
       wikipedia: "Sputnik_1",
@@ -2339,7 +2339,7 @@ export class BuildingDefinitions {
       desc: () => t(L.AkademikLomonosovDesc),
       input: {},
       output: {},
-      construction: { TV: 500, Radio: 500, Diplomacy: 500 },
+      construction: { Bitcoin: 500 },
       max: 1,
       special: BuildingSpecial.WorldWonder,
       wikipedia: "Akademik_Lomonosov",

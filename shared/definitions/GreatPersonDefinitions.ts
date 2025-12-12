@@ -1027,6 +1027,22 @@ export class GreatPersonDefinitions {
       city: "German",
    };
 
+   Tchaikovsky: IGreatPersonDefinition = {
+      name: () => t(L.Tchaikovsky),
+      desc: (self, level) =>
+         t(L.PlusXLevelToXBuilding, {
+            value: formatNumber(self.value(level)),
+            building: Config.Building.Hermitage.name(),
+         }),
+      time: "1840 ~ 1893 AD",
+      value: (level) => level,
+      maxLevel: Number.POSITIVE_INFINITY,
+      age: "IndustrialAge",
+      tick: (self, level, source) => {},
+      type: GreatPersonType.LevelBoost,
+      city: "Russian",
+   };
+
    // World Wars /////////////////////////////////////////////////////////////////////////////////////////////
 
    JohnDRockefeller: IGreatPersonDefinition = boostOf({

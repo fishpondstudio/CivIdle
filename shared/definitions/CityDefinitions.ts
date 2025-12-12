@@ -485,10 +485,10 @@ export class CityDefinitions {
       uniqueBuildings: {
          CryptoFund: "Blockchain",
          KizhiPogost: "Alloy",
-         Hermitage: "Drilling",
+         Hermitage: "Journalism",
          SaviorOnSpilledBlood: "Aviation",
          Sputnik1: "Satellite",
-         AkademikLomonosov: "Satellite",
+         AkademikLomonosov: "Blockchain",
       },
       uniqueMultipliers: {},
       naturalWonders: {
