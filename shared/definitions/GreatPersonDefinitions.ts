@@ -1476,6 +1476,19 @@ export class GreatPersonDefinitions {
       age: "ColdWarAge",
    });
 
+   AndreyKolmogorov: IGreatPersonDefinition = boostOf({
+      name: () => t(L.AndreyKolmogorov),
+      boost: {
+         multipliers: ["output", "storage"],
+         buildings: ["ComputerLab", "CryptoFund"],
+      },
+      time: "1903 ~ 1987 AD",
+      value: (level) => level,
+      maxLevel: Number.POSITIVE_INFINITY,
+      age: "ColdWarAge",
+      city: "Russian",
+   });
+
    PaulSamuelson: IGreatPersonDefinition = {
       name: () => t(L.PaulSamuelson),
       desc: (self, level) =>

@@ -1862,7 +1862,7 @@ export class BuildingDefinitions {
    };
 
    YearOfTheSnake: IBuildingDefinition = {
-      name: () => t(L.YearOfTheSnake),
+      name: () => t(L.YearOfTheSnakeV2),
       desc: () => t(L.YearOfTheSnakeDesc),
       input: {},
       output: {},
