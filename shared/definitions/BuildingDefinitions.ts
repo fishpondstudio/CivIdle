@@ -756,6 +756,12 @@ export class BuildingDefinitions {
       output: { Spacecraft: 1 },
       power: true,
    };
+   Cosmodrome: IBuildingDefinition = {
+      name: () => t(L.Cosmodrome),
+      input: { Rocket: 4, Satellite: 4, Airplane: 4 },
+      output: { Spacecraft: 2 },
+      power: true,
+   };
    SemiconductorFab: IBuildingDefinition = {
       name: () => t(L.SemiconductorFab),
       input: { Silicon: 10, Copper: 10 },
@@ -2312,17 +2318,6 @@ export class BuildingDefinitions {
       wikipedia: "Hermitage_Museum",
    };
 
-   SaviorOnSpilledBlood: IBuildingDefinition = {
-      name: () => t(L.SaviorOnSpilledBlood),
-      desc: () => t(L.SaviorOnSpilledBloodDesc),
-      input: {},
-      output: {},
-      construction: { Tank: 100, Biplane: 100, Ironclad: 100 },
-      max: 1,
-      special: BuildingSpecial.WorldWonder,
-      wikipedia: "Church_of_the_Savior_on_Blood",
-   };
-
    Sputnik1: IBuildingDefinition = {
       name: () => t(L.Sputnik1),
       desc: () => t(L.Sputnik1Desc),
@@ -2339,10 +2334,32 @@ export class BuildingDefinitions {
       desc: () => t(L.AkademikLomonosovDesc),
       input: {},
       output: {},
-      construction: { Bitcoin: 500 },
+      construction: { Spacecraft: 500 },
       max: 1,
       special: BuildingSpecial.WorldWonder,
       wikipedia: "Akademik_Lomonosov",
+   };
+
+   AuroraBorealis: IBuildingDefinition = {
+      name: () => t(L.AuroraBorealis),
+      desc: () => t(L.AuroraBorealisDesc),
+      input: {},
+      output: {},
+      construction: {},
+      max: 0,
+      special: BuildingSpecial.NaturalWonder,
+      wikipedia: "Aurora_Borealis",
+   };
+
+   LakeLouise: IBuildingDefinition = {
+      name: () => t(L.LakeLouise),
+      desc: () => t(L.LakeLouiseDesc),
+      input: {},
+      output: {},
+      construction: {},
+      max: 0,
+      special: BuildingSpecial.NaturalWonder,
+      wikipedia: "Aurora_Borealis",
    };
 
    // #endregion /////////////////////////////////////////////////////////////////////////////////////////////

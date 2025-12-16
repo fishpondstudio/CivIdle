@@ -33,7 +33,7 @@ import { MontSaintMichelBuildingBody } from "./MontSaintMichelBuildingBody";
 import { PetraBuildingBody } from "./PetraBuildingBody";
 import { PlayerTradeBuildingBody } from "./PlayerTradeBuildingBody";
 import { ReligionBuildingBody } from "./ReligionBuildingBody";
-import { SaviorOnSpilledBloodBuildingBody } from "./SaviorOnSpilledBloodBuildingBody";
+import { SaviorOnSpilledBloodBuildingBody as AuroraBorealisBuildingBody } from "./SaviorOnSpilledBloodBuildingBody";
 import { ScienceProductionWonderBuildingBody } from "./ScienceProductionWonderBuildingBody";
 import { StatisticsBuildingBody } from "./StatisticsBuildingBody";
 import { SwissBankBuildingBody } from "./SwissBankBuildingBody";
@@ -99,7 +99,7 @@ const BuildingBodyOverride: Partial<Record<Building, FunctionComponent<IBuilding
    GreatOceanRoad: UpgradableWonderBuildingBody,
    KizhiPogost: KizhiPogostBuildingBody,
    Hermitage: UpgradableWonderBuildingBody,
-   SaviorOnSpilledBlood: SaviorOnSpilledBloodBuildingBody,
+   AuroraBorealis: AuroraBorealisBuildingBody,
    Sputnik1: UpgradableWonderBuildingBody,
    AkademikLomonosov: AkademikLomonosovBuildingBody,
 };

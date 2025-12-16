@@ -483,12 +483,11 @@ export class CityDefinitions {
          Headquarter: () => t(L.Kremlin),
       },
       uniqueBuildings: {
-         CryptoFund: "Blockchain",
+         Cosmodrome: "SpaceProgram",
          KizhiPogost: "Alloy",
          Hermitage: "Journalism",
-         SaviorOnSpilledBlood: "Aviation",
          Sputnik1: "Satellite",
-         AkademikLomonosov: "Blockchain",
+         AkademikLomonosov: "Genetics",
       },
       uniqueMultipliers: {},
       naturalWonders: {
@@ -497,6 +496,37 @@ export class CityDefinitions {
       requireGreatPeopleLevel: 120,
       requireSupporterPack: true,
       festivalDesc: () => t(L.Maslenitsa),
+      uniqueEffects: () => [],
+   };
+
+   Canadian: ICityDefinition = {
+      name: () => t(L.Canadian),
+      deposits: {
+         Water: 0.02,
+         Copper: 0.01,
+         Iron: 0.01,
+         Wood: 0.04,
+         Stone: 0.02,
+         Gold: 0.02,
+         Coal: 0.01,
+         Oil: 0.03,
+         Aluminum: 0.01,
+         NaturalGas: 0.04,
+         Uranium: 0.01,
+      },
+      size: 50,
+      buildingNames: {
+         Headquarter: () => t(L.ParliamentHill),
+      },
+      uniqueBuildings: { CryptoFund: "Blockchain" },
+      uniqueMultipliers: {},
+      naturalWonders: {
+         AuroraBorealis: true,
+         LakeLouise: true,
+      },
+      requireGreatPeopleLevel: 130,
+      requireSupporterPack: true,
+      festivalDesc: () => t(L.WinterCarnival),
       uniqueEffects: () => [],
    };
 }

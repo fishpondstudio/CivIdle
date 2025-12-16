@@ -11,6 +11,7 @@ import {
    getTechUnlockCost,
 } from "../../../shared/logic/TechLogic";
 import { Tick } from "../../../shared/logic/TickLogic";
+import type { IAuroraBorealisBuildingData } from "../../../shared/logic/Tile";
 import {
    forEach,
    isEmpty,
@@ -118,6 +119,11 @@ export function onTileExplored(xy: Tile): void {
                }
             });
             playUpgrade();
+            break;
+         }
+         case "AuroraBorealis": {
+            const auroraBorealis = building as IAuroraBorealisBuildingData;
+            auroraBorealis.startTick = gs.tick;
             break;
          }
       }
