@@ -167,7 +167,8 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          });
 
          let allyCount = 0;
-
+         const hasLakeLouise = Tick.current.specialBuildings.has("LakeLouise");
+         const levelBoosts = new Map<Building, number>();
          getNeighboringPlayers().forEach((player) => {
             let isAlly = false;
             player.forEach(([xy, tile]) => {
@@ -180,6 +181,9 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
                         { output: TRADE_TILE_ALLY_BONUS },
                         `${t(L.PlayerMapMapAllyTileBonus)} (${tile.handle})`,
                      );
+                     if (hasLakeLouise) {
+                        mapSafeAdd(levelBoosts, xy, TRADE_TILE_ALLY_BONUS);
+                     }
                   } else {
                      addMultiplier(
                         building,
@@ -193,6 +197,12 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
                ++allyCount;
             }
          });
+
+         for (const [building, level] of levelBoosts) {
+            getBuildingsByType(building, gs)?.forEach((tile, xy) => {
+               mapSafePush(Tick.next.levelBoost, xy, { value: level, source: buildingName });
+            });
+         }
 
          if (isSteam() && allyCount > 0 && !declareFriendshipAchievementUnlocked) {
             SteamClient.unlockAchievement("DeclareFriendship");
