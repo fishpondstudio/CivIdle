@@ -517,6 +517,12 @@ export class BuildingDefinitions {
       output: { CivGPT: 1 },
       power: true,
    };
+   AILab: IBuildingDefinition = {
+      name: () => t(L.AILab),
+      input: { Internet: 2, Supercomputer: 4, Radio: 2 },
+      output: { CivGPT: 2 },
+      power: true,
+   };
    CivTok: IBuildingDefinition = {
       name: () => t(L.CivTok),
       input: { Internet: 1, Politics: 1 },
@@ -825,12 +831,12 @@ export class BuildingDefinitions {
       output: { Bitcoin: 1 },
       power: true,
    };
-   CryptoFund: IBuildingDefinition = {
-      name: () => t(L.CryptoFund),
-      input: { HedgeFund: 4, CivTok: 2 },
-      output: { Bitcoin: 2 },
-      power: true,
-   };
+   // CryptoFund: IBuildingDefinition = {
+   //    name: () => t(L.CryptoFund),
+   //    input: { HedgeFund: 4, CivTok: 2 },
+   //    output: { Bitcoin: 2 },
+   //    power: true,
+   // };
    Caravansary: IBuildingDefinition = {
       name: () => t(L.Caravansary),
       desc: () => t(L.CaravansaryDesc),
@@ -2384,6 +2390,17 @@ export class BuildingDefinitions {
       wikipedia: "Dinosaur_Provincial_Park",
    };
 
+   Habitat67: IBuildingDefinition = {
+      name: () => t(L.Habitat67),
+      desc: () => t(L.Habitat67Desc),
+      input: {},
+      output: {},
+      construction: { Bitcoin: 500 },
+      max: 1,
+      special: BuildingSpecial.WorldWonder,
+      wikipedia: "Habitat_67",
+   };
+
    // #endregion /////////////////////////////////////////////////////////////////////////////////////////////
 
    // Winery: IBuildingDefinition = {
@@ -2491,6 +2508,7 @@ export const BuildingShowLevel = new Set<Building>([
    "Sputnik1",
    "AkademikLomonosov",
    "ChateauFrontenac",
+   "Habitat67",
 ] satisfies Building[]);
 
 // This controls whether we allow upgrade for multiple levels. e.g. Tradition/Religion/Ideology wonders should NOT allow this!
@@ -2518,6 +2536,7 @@ export const UpgradableWorldWonders = new Set<Building>([
    "Sputnik1",
    "AkademikLomonosov",
    "ChateauFrontenac",
+   "Habitat67",
 ] satisfies Building[]);
 
 // Include buildings here that does not really cost construction resources to upgrade

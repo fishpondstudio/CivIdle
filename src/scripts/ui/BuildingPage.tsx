@@ -106,6 +106,7 @@ const BuildingBodyOverride: Partial<Record<Building, FunctionComponent<IBuilding
    AkademikLomonosov: AkademikLomonosovBuildingBody,
    ChateauFrontenac: ChateauFrontenacBuildingBody,
    DinosaurProvincialPark: DinosaurProvincialParkBuildingBody,
+   Habitat67: UpgradableWonderBuildingBody,
 };
 
 export function BuildingPage(props: { tile: ITileData }): React.ReactNode {

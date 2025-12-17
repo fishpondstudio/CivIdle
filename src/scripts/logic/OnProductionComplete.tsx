@@ -81,7 +81,7 @@ import type {
    ITraditionBuildingData,
    IZugspitzeBuildingData,
 } from "../../../shared/logic/Tile";
-import { addMultiplier, tickUnlockable } from "../../../shared/logic/Update";
+import { addLevelBoost, addMultiplier, tickUnlockable } from "../../../shared/logic/Update";
 import { VotedBoostType, type IGetVotedBoostResponse } from "../../../shared/utilities/Database";
 import {
    MINUTE,
@@ -200,9 +200,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          });
 
          for (const [building, level] of levelBoosts) {
-            getBuildingsByType(building, gs)?.forEach((tile, xy) => {
-               mapSafePush(Tick.next.levelBoost, xy, { value: level, source: buildingName });
-            });
+            addLevelBoost(building, level, buildingName, gs);
          }
 
          if (isSteam() && allyCount > 0 && !declareFriendshipAchievementUnlocked) {
@@ -2163,6 +2161,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
                mapSafePush(Tick.next.tileMultipliers, targetXy, {
                   output: multiplier,
                   source: buildingName,
+                  unstable: true,
                });
             }
          }
@@ -2176,11 +2175,28 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
                mapSafeAdd(result, data.selected, 1);
             }
          });
+         const multiplier = isFestival(building.type, gs) ? 2 : 1;
          result.forEach((level, building) => {
-            getBuildingsByType(building, gs)?.forEach((tile, xy) => {
-               mapSafePush(Tick.next.levelBoost, xy, { value: level, source: buildingName });
-            });
+            addLevelBoost(building, level * multiplier, buildingName, gs);
          });
+         break;
+      }
+      case "Habitat67": {
+         addMultiplier(
+            "AILab",
+            {
+               output: building.level + getWonderExtraLevel(building.type),
+               worker: building.level,
+               storage: building.level,
+            },
+            buildingName,
+         );
+         const happiness = Tick.current.happiness?.value ?? 0;
+         const multiplier = isFestival(building.type, gs) ? 2 : 1;
+         const levelBoost = Math.floor(happiness / 5) * multiplier;
+         if (levelBoost > 0) {
+            addLevelBoost("AILab", levelBoost, buildingName, gs);
+         }
          break;
       }
    }

@@ -1389,6 +1389,7 @@ const WonderToGreatPerson: Partial<Record<Building, GreatPerson>> = {
    CologneCathedral: "Beethoven",
    SydneyHarbourBridge: "JohnBradfield",
    Hermitage: "Tchaikovsky",
+   Habitat67: "GeoffreyHinton",
 };
 
 export function getWonderExtraLevel(building: Building): number {
