@@ -15,7 +15,9 @@ import { BritishMuseumBuildingBody } from "./BritishMuseumBuildingBody";
 import { BroadwayBuildingBody } from "./BroadwayBuildingBody";
 import { CathedralOfBrasiliaBuildingBody } from "./CathedralOfBrasiliaBuildingBody";
 import { CentrePompidouBuildingBody } from "./CentrePompidouBuildingBody";
+import { ChateauFrontenacBuildingBody } from "./ChateauFrontenacBuildingBody";
 import { DefaultBuildingBody } from "./DefaultBuildingBody";
+import { DinosaurProvincialParkBuildingBody } from "./DinosaurProvincialParkBuildingBody";
 import { EastIndiaCompanyBuildingBody } from "./EastIndiaCompanyBuildingBody";
 import { EuphratesRiverBuildingBody } from "./EuphratesRiverBuildingBody";
 import { GrandBazaarBuildingBody } from "./GrandBazaarBuildingBody";
@@ -46,7 +48,6 @@ import { UnitedNationsBuildingBody } from "./UnitedNationsBuildingBody";
 import { UpgradableWonderBuildingBody } from "./UpgradableWonderBuildingBody";
 import { WarehouseBuildingBody } from "./WarehouseBuildingBody";
 import { ZugspitzeBuildingBody } from "./ZugspitzeBuildingBody";
-import { ChateauFrontenacBuildingBody } from "./ChateauFrontenacBuildingBody";
 
 const BuildingBodyOverride: Partial<Record<Building, FunctionComponent<IBuildingComponentProps>>> = {
    Headquarter: HeadquarterBuildingBody,
@@ -104,6 +105,7 @@ const BuildingBodyOverride: Partial<Record<Building, FunctionComponent<IBuilding
    Sputnik1: UpgradableWonderBuildingBody,
    AkademikLomonosov: AkademikLomonosovBuildingBody,
    ChateauFrontenac: ChateauFrontenacBuildingBody,
+   DinosaurProvincialPark: DinosaurProvincialParkBuildingBody,
 };
 
 export function BuildingPage(props: { tile: ITileData }): React.ReactNode {

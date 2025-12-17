@@ -526,6 +526,7 @@ export class CityDefinitions {
       naturalWonders: {
          AuroraBorealis: true,
          LakeLouise: true,
+         DinosaurProvincialPark: true,
       },
       requireGreatPeopleLevel: 130,
       requireSupporterPack: true,

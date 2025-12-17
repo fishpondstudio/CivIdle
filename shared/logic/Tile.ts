@@ -173,6 +173,10 @@ export interface IChateauFrontenacBuildingData extends IBuildingData {
    buildings: Record<number, { selected: Building | undefined; options: Building[] }>;
 }
 
+export interface IDinosaurProvincialParkBuildingData extends IBuildingData {
+   used: boolean;
+}
+
 export type IHaveTypeAndLevel = Pick<IBuildingData, "type" | "level">;
 
 export const STOCKPILE_CAPACITY_MIN = 0;
@@ -333,6 +337,13 @@ export function makeBuilding(data: Pick<IBuildingData, "type"> & Partial<IBuildi
          const chateauFrontenac = building as IChateauFrontenacBuildingData;
          if (!chateauFrontenac.buildings) {
             chateauFrontenac.buildings = {};
+         }
+         break;
+      }
+      case "DinosaurProvincialPark": {
+         const dinosaurProvincialPark = building as IDinosaurProvincialParkBuildingData;
+         if (!dinosaurProvincialPark.used) {
+            dinosaurProvincialPark.used = false;
          }
          break;
       }
