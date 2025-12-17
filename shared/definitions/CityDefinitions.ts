@@ -518,7 +518,10 @@ export class CityDefinitions {
       buildingNames: {
          Headquarter: () => t(L.ParliamentHill),
       },
-      uniqueBuildings: { CryptoFund: "Blockchain" },
+      uniqueBuildings: {
+         CryptoFund: "Blockchain",
+         ChateauFrontenac: "Combustion",
+      },
       uniqueMultipliers: {},
       naturalWonders: {
          AuroraBorealis: true,

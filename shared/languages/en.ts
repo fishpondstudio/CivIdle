@@ -1865,5 +1865,9 @@ export const EN = {
    ParliamentHill: "Parliament Hill",
    WinterCarnival: "Winter Carnival: Double the range of Aurora Borealis",
    LakeLouise: "Lake Louise",
-   LakeLouiseDesc: "All trade map neighbors become allies (regardless of civilization). Each ally tile provides +2 Building Level Boost"
+   LakeLouiseDesc: "All trade map neighbors become allies (regardless of civilization). Each ally tile provides +2 Building Level Boost",
+   ChateauFrontenac: "Chateau Frontenac",
+   ChateauFrontenacDesc: "This wonder can be upgraded. Each time it levels up, three random buildings from the current age are drawn. Select one of them to receive +1 Building Level Boost (cannot be changed once selected)",
+   DinosaurProvincialPark: "Dinosaur Provincial Park",
+   DinosaurProvincialParkDesc: "This wonder can be activated at a chosen time to gain a one-time Koti equal to 25% of the empire value at that time",
 };

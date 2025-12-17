@@ -2362,6 +2362,28 @@ export class BuildingDefinitions {
       wikipedia: "Aurora_Borealis",
    };
 
+   ChateauFrontenac: IBuildingDefinition = {
+      name: () => t(L.ChateauFrontenac),
+      desc: () => t(L.ChateauFrontenacDesc),
+      input: {},
+      output: {},
+      construction: { Tank: 100, Ironclad: 100, Train: 100 },
+      max: 0,
+      special: BuildingSpecial.WorldWonder,
+      wikipedia: "Chateau_Frontenac",
+   };
+
+   DinosaurProvincialPark: IBuildingDefinition = {
+      name: () => t(L.DinosaurProvincialPark),
+      desc: () => t(L.DinosaurProvincialParkDesc),
+      input: {},
+      output: {},
+      construction: {},
+      max: 0,
+      special: BuildingSpecial.NaturalWonder,
+      wikipedia: "Dinosaur_Provincial_Park",
+   };
+
    // #endregion /////////////////////////////////////////////////////////////////////////////////////////////
 
    // Winery: IBuildingDefinition = {
@@ -2468,6 +2490,7 @@ export const BuildingShowLevel = new Set<Building>([
    "Hermitage",
    "Sputnik1",
    "AkademikLomonosov",
+   "ChateauFrontenac",
 ] satisfies Building[]);
 
 // This controls whether we allow upgrade for multiple levels. e.g. Tradition/Religion/Ideology wonders should NOT allow this!
@@ -2494,6 +2517,7 @@ export const UpgradableWorldWonders = new Set<Building>([
    "Hermitage",
    "Sputnik1",
    "AkademikLomonosov",
+   "ChateauFrontenac",
 ] satisfies Building[]);
 
 // Include buildings here that does not really cost construction resources to upgrade

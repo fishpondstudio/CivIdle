@@ -70,6 +70,7 @@ import { NotProducingReason, Tick } from "../../../shared/logic/TickLogic";
 import type {
    IAuroraBorealisBuildingData,
    ICentrePompidouBuildingData,
+   IChateauFrontenacBuildingData,
    IGreatPeopleBuildingData,
    IIdeologyBuildingData,
    IItaipuDamBuildingData,
@@ -2165,6 +2166,21 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
                });
             }
          }
+         break;
+      }
+      case "ChateauFrontenac": {
+         const chateauFrontenac = building as IChateauFrontenacBuildingData;
+         const result = new Map<Building, number>();
+         forEach(chateauFrontenac.buildings, (_, data) => {
+            if (data.selected) {
+               mapSafeAdd(result, data.selected, 1);
+            }
+         });
+         result.forEach((level, building) => {
+            getBuildingsByType(building, gs)?.forEach((tile, xy) => {
+               mapSafePush(Tick.next.levelBoost, xy, { value: level, source: buildingName });
+            });
+         });
          break;
       }
    }

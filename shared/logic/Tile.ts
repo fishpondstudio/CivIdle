@@ -169,6 +169,10 @@ export interface IAuroraBorealisBuildingData extends IBuildingData {
    startTick: number;
 }
 
+export interface IChateauFrontenacBuildingData extends IBuildingData {
+   buildings: Record<number, { selected: Building | undefined; options: Building[] }>;
+}
+
 export type IHaveTypeAndLevel = Pick<IBuildingData, "type" | "level">;
 
 export const STOCKPILE_CAPACITY_MIN = 0;
@@ -322,6 +326,13 @@ export function makeBuilding(data: Pick<IBuildingData, "type"> & Partial<IBuildi
          const auroraBorealis = building as IAuroraBorealisBuildingData;
          if (!auroraBorealis.startTick) {
             auroraBorealis.startTick = 0;
+         }
+         break;
+      }
+      case "ChateauFrontenac": {
+         const chateauFrontenac = building as IChateauFrontenacBuildingData;
+         if (!chateauFrontenac.buildings) {
+            chateauFrontenac.buildings = {};
          }
          break;
       }
