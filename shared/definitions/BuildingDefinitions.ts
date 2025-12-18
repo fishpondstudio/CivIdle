@@ -2401,6 +2401,17 @@ export class BuildingDefinitions {
       wikipedia: "Habitat_67",
    };
 
+   WorldTradeOrganization: IBuildingDefinition = {
+      name: () => t(L.WorldTradeOrganization),
+      desc: () => t(L.WorldTradeOrganization),
+      input: {},
+      output: {},
+      construction: { MutualFund: 500 },
+      max: 1,
+      special: BuildingSpecial.WorldWonder,
+      wikipedia: "Habitat_67",
+   };
+
    // #endregion /////////////////////////////////////////////////////////////////////////////////////////////
 
    // Winery: IBuildingDefinition = {

@@ -313,6 +313,7 @@ export const DB: {
    greatPeopleRecovery: Record<string, number>;
    votedBoosts: Record<number, IVotedBoost>;
    buildHash: Record<string, string>;
+   vetoedBuildings: Record<number, { buildings: Building[]; vetoes: Record<string, Building[]> }>;
 } = {
    chat: [],
    users: {},
@@ -325,6 +326,7 @@ export const DB: {
    greatPeopleRecovery: {},
    votedBoosts: {},
    buildHash: {},
+   vetoedBuildings: {},
 };
 
 export const MoveTileCooldown = 12 * HOUR;

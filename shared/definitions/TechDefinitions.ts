@@ -854,7 +854,7 @@ export class TechDefinitions {
       name: () => t(L.FinancialLeverage),
       column: 24,
       requireTech: ["Globalization"],
-      unlockBuilding: ["MutualFund"],
+      unlockBuilding: ["MutualFund", "WorldTradeOrganization"],
    };
 
    Genetics: ITechDefinition = {
