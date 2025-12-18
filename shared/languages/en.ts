@@ -1876,5 +1876,10 @@ export const EN = {
    AILab: "AI Lab",
    GeoffreyHinton: "Geoffrey Hinton",
    WorldTradeOrganization: "World Trade Organization",
-   WorldTradeOrganizationDesc: "This wonder can be upgraded and each level provides +1 Production Multiplier to Trade Tile Bonus buildings. Participate in WTO vote each week that vetos 10 buildings from next week's Trade Tile Bonus",
+   WorldTradeOrganizationDesc: "This wonder can be upgraded and each level provides +1 Production Multiplier to Trade Tile Bonus buildings. Participate in WTO vote each week that increases the chance for the voted buildings to appear in the next week's Trade Tile Bonus",
+   WTOVoteCurrent: "Current WTO Vote #%{id}",
+   WTOVoteNext: "Upcoming WTO Vote #%{id}",
+   WTOVoteEndIn: "You can change your vote any time before the voting ends in <b>%{time}</b>",
+   UNVoteDescriptionHTML: "Buildings voted in UN General Assembly get <b>+5 Production Multiplier</b>",
+   WTOVoteDescriptionHTML: "Buildings voted in World Trade Organization has a <b>higher chance</b> to appear in Trade Tile Bonus",
 };

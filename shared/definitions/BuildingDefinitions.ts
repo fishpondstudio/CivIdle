@@ -2403,13 +2403,13 @@ export class BuildingDefinitions {
 
    WorldTradeOrganization: IBuildingDefinition = {
       name: () => t(L.WorldTradeOrganization),
-      desc: () => t(L.WorldTradeOrganization),
+      desc: () => t(L.WorldTradeOrganizationDesc),
       input: {},
       output: {},
-      construction: { MutualFund: 500 },
+      construction: { MutualFund: 100, Koti: 100, TV: 100 },
       max: 1,
       special: BuildingSpecial.WorldWonder,
-      wikipedia: "Habitat_67",
+      wikipedia: "World_Trade_Organization",
    };
 
    // #endregion /////////////////////////////////////////////////////////////////////////////////////////////
@@ -2520,6 +2520,7 @@ export const BuildingShowLevel = new Set<Building>([
    "AkademikLomonosov",
    "ChateauFrontenac",
    "Habitat67",
+   "WorldTradeOrganization",
 ] satisfies Building[]);
 
 // This controls whether we allow upgrade for multiple levels. e.g. Tradition/Religion/Ideology wonders should NOT allow this!
@@ -2548,6 +2549,7 @@ export const UpgradableWorldWonders = new Set<Building>([
    "AkademikLomonosov",
    "ChateauFrontenac",
    "Habitat67",
+   "WorldTradeOrganization",
 ] satisfies Building[]);
 
 // Include buildings here that does not really cost construction resources to upgrade
@@ -2561,4 +2563,5 @@ export const IgnoreBuildingUpgradeValue = new Set<Building>([
 export const WonderCostBase: Partial<Record<Building, number>> = {
    SydneyOperaHouse: 5,
    GreatOceanRoad: 1.7,
+   WorldTradeOrganization: 2,
 };

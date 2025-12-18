@@ -35,6 +35,7 @@ import { srand } from "../utilities/Random";
 import type { PartialSet, PartialTabulate } from "../utilities/TypeDefinitions";
 import { TypedEvent } from "../utilities/TypedEvent";
 import { L, t } from "../utilities/i18n";
+import { BetaBuildings } from "./Beta";
 import { Config } from "./Config";
 import { MANAGED_IMPORT_RANGE, MAX_PETRA_SPEED_UP } from "./Constants";
 import { GameFeature, hasFeature } from "./FeatureLogic";
@@ -1434,4 +1435,23 @@ export function getResourceImportBuildingBaseStorageMultiplier(gs: GameState): n
 
 export function saviorOnSpilledBloodProductionMultiplier(hour: number): number {
    return Math.floor(19 * (1 - Math.E ** ((Math.log(0.5) / 48) * hour))) + 1;
+}
+
+export function isEligibleForTradeTileBonus(b: Building): boolean {
+   if (b === "SwissBank") {
+      return true;
+   }
+   if (BetaBuildings.has(b)) {
+      return false;
+   }
+   if (isSpecialBuilding(b)) {
+      return false;
+   }
+   const age = Config.BuildingTechAge[b];
+
+   if (!age) {
+      return false;
+   }
+
+   return Config.TechAge[age].idx >= Config.TechAge.ClassicalAge.idx;
 }

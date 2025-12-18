@@ -50,7 +50,7 @@ import {
    getXyBuildings,
 } from "../../../shared/logic/IntraTickCache";
 import { LogicResult } from "../../../shared/logic/LogicResult";
-import { getVotedBoostId } from "../../../shared/logic/PlayerTradeLogic";
+import { getWeekId } from "../../../shared/logic/PlayerTradeLogic";
 import {
    getGreatPeopleChoiceCount,
    getGreatPeopleForWisdom,
@@ -156,12 +156,14 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
 
          populateTileBuildings();
 
+         const wtoLevel = Tick.current.specialBuildings.get("WorldTradeOrganization")?.building.level ?? 0;
+
          getOwnedOrOccupiedTiles().forEach((xy, i) => {
             const building = TileBuildings.get(xy);
             if (building) {
                addMultiplier(
                   building,
-                  { output: TRADE_TILE_BONUS },
+                  { output: TRADE_TILE_BONUS + wtoLevel, unstable: true },
                   `${t(L.PlayerMapMapTileBonus)} (${i + 1})`,
                );
             }
@@ -179,7 +181,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
                      isAlly = true;
                      addMultiplier(
                         building,
-                        { output: TRADE_TILE_ALLY_BONUS },
+                        { output: TRADE_TILE_ALLY_BONUS, unstable: true },
                         `${t(L.PlayerMapMapAllyTileBonus)} (${tile.handle})`,
                      );
                      if (hasLakeLouise) {
@@ -188,7 +190,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
                   } else {
                      addMultiplier(
                         building,
-                        { output: TRADE_TILE_NEIGHBOR_BONUS },
+                        { output: TRADE_TILE_NEIGHBOR_BONUS, unstable: true },
                         `${t(L.PlayerMapMapNeighborTileBonus)} (${tile.handle})`,
                      );
                   }
@@ -854,7 +856,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          // We update this every minute to reduce server load
          if (Date.now() - lastVotedBoostUpdatedAt > MINUTE) {
             lastVotedBoostUpdatedAt = Date.now();
-            if (votedBoost === null || getVotedBoostId() !== votedBoost.id) {
+            if (votedBoost === null || getWeekId() !== votedBoost.id) {
                client.getVotedBoosts().then((resp) => {
                   votedBoost = resp;
                });
@@ -2030,12 +2032,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          });
 
          buildings.forEach((b) => {
-            getBuildingsByType(b, gs)?.forEach((b, xy) => {
-               mapSafePush(Tick.next.levelBoost, xy, {
-                  value: building.level,
-                  source: buildingName,
-               });
-            });
+            addLevelBoost(b, building.level, buildingName, gs);
          });
 
          if (isFestival(building.type, gs)) {
