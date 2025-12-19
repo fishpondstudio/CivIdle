@@ -989,13 +989,19 @@ export function transportResource(
    return amountLeft;
 }
 
-export function addMultiplier(k: Building, multiplier: MultiplierWithStability, source: string) {
+export function addMultiplier(k: Building, multiplier: MultiplierWithStability, source: string): void {
    let m = Tick.next.buildingMultipliers.get(k);
    if (m == null) {
       m = [];
    }
    m.push({ ...multiplier, source });
    Tick.next.buildingMultipliers.set(k, m);
+}
+
+export function addLevelBoost(building: Building, value: number, source: string, gs: GameState): void {
+   getBuildingsByType(building, gs)?.forEach((_, xy) => {
+      mapSafePush(Tick.next.levelBoost, xy, { value, source });
+   });
 }
 
 function getPriceId() {

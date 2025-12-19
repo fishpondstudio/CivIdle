@@ -9,12 +9,15 @@ import type { ITileData } from "../../../shared/logic/Tile";
 import type { Tile } from "../../../shared/utilities/Helper";
 import { useGameState } from "../Global";
 import { Singleton } from "../utilities/Singleton";
+import { AkademikLomonosovBuildingBody } from "./AkademikLomonosovBuildingBody";
 import { BranCastleBuildingBody } from "./BranCastleBuildingBody";
 import { BritishMuseumBuildingBody } from "./BritishMuseumBuildingBody";
 import { BroadwayBuildingBody } from "./BroadwayBuildingBody";
 import { CathedralOfBrasiliaBuildingBody } from "./CathedralOfBrasiliaBuildingBody";
 import { CentrePompidouBuildingBody } from "./CentrePompidouBuildingBody";
+import { ChateauFrontenacBuildingBody } from "./ChateauFrontenacBuildingBody";
 import { DefaultBuildingBody } from "./DefaultBuildingBody";
+import { DinosaurProvincialParkBuildingBody } from "./DinosaurProvincialParkBuildingBody";
 import { EastIndiaCompanyBuildingBody } from "./EastIndiaCompanyBuildingBody";
 import { EuphratesRiverBuildingBody } from "./EuphratesRiverBuildingBody";
 import { GrandBazaarBuildingBody } from "./GrandBazaarBuildingBody";
@@ -23,6 +26,7 @@ import { HeadquarterBuildingBody } from "./HeadquarterBuildingBody";
 import { FormatNumber } from "./HelperComponents";
 import { IdeologyBuildingBody } from "./IdeologyBuildingBody";
 import { ItaipuDamBuildingBody } from "./ItaipuDamBuildingBody";
+import { KizhiPogostBuildingBody } from "./KizhiPogostBuildingBody";
 import { LoadingPage, LoadingPageStage } from "./LoadingPage";
 import { LouvreBuildingBody } from "./LouvreBuildingBody";
 import { MarketBuildingBody } from "./MarketBuildingBody";
@@ -31,6 +35,7 @@ import { MontSaintMichelBuildingBody } from "./MontSaintMichelBuildingBody";
 import { PetraBuildingBody } from "./PetraBuildingBody";
 import { PlayerTradeBuildingBody } from "./PlayerTradeBuildingBody";
 import { ReligionBuildingBody } from "./ReligionBuildingBody";
+import { SaviorOnSpilledBloodBuildingBody as AuroraBorealisBuildingBody } from "./SaviorOnSpilledBloodBuildingBody";
 import { ScienceProductionWonderBuildingBody } from "./ScienceProductionWonderBuildingBody";
 import { StatisticsBuildingBody } from "./StatisticsBuildingBody";
 import { SwissBankBuildingBody } from "./SwissBankBuildingBody";
@@ -43,6 +48,7 @@ import { UnitedNationsBuildingBody } from "./UnitedNationsBuildingBody";
 import { UpgradableWonderBuildingBody } from "./UpgradableWonderBuildingBody";
 import { WarehouseBuildingBody } from "./WarehouseBuildingBody";
 import { ZugspitzeBuildingBody } from "./ZugspitzeBuildingBody";
+import { WorldTradeOrganizationBuildingBody } from "./WorldTradeOrganizationBuildingBody";
 
 const BuildingBodyOverride: Partial<Record<Building, FunctionComponent<IBuildingComponentProps>>> = {
    Headquarter: HeadquarterBuildingBody,
@@ -94,6 +100,15 @@ const BuildingBodyOverride: Partial<Record<Building, FunctionComponent<IBuilding
    SydneyOperaHouse: UpgradableWonderBuildingBody,
    SydneyHarbourBridge: UpgradableWonderBuildingBody,
    GreatOceanRoad: UpgradableWonderBuildingBody,
+   KizhiPogost: KizhiPogostBuildingBody,
+   Hermitage: UpgradableWonderBuildingBody,
+   AuroraBorealis: AuroraBorealisBuildingBody,
+   Sputnik1: UpgradableWonderBuildingBody,
+   AkademikLomonosov: AkademikLomonosovBuildingBody,
+   ChateauFrontenac: ChateauFrontenacBuildingBody,
+   DinosaurProvincialPark: DinosaurProvincialParkBuildingBody,
+   Habitat67: UpgradableWonderBuildingBody,
+   WorldTradeOrganization: WorldTradeOrganizationBuildingBody,
 };
 
 export function BuildingPage(props: { tile: ITileData }): React.ReactNode {

@@ -200,6 +200,7 @@ export function calculateTierAndPrice(log?: (val: string) => void) {
       forEach(def.uniqueBuildings, (building, tech) => {
          Config.BuildingTech[building] = tech;
          Config.BuildingTechAge[building] = getAgeForTech(tech)!;
+         Config.BuildingCity[building] = city;
       });
    });
 
