@@ -31,5 +31,5 @@ export function isChristmas(now: Date): boolean {
 }
 
 export function isLunarNewYear(now: Date): boolean {
-   return (now.getMonth() === 1 && now.getDate() >= 10) || (now.getMonth() === 2 && now.getDate() <= 24);
+   return (now.getMonth() === 1 && now.getDate() >= 10) || (now.getMonth() === 1 && now.getDate() <= 24);
 }
