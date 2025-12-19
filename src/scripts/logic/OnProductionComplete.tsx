@@ -185,7 +185,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
                         `${t(L.PlayerMapMapAllyTileBonus)} (${tile.handle})`,
                      );
                      if (hasLakeLouise) {
-                        mapSafeAdd(levelBoosts, xy, TRADE_TILE_ALLY_BONUS);
+                        mapSafeAdd(levelBoosts, building, TRADE_TILE_ALLY_BONUS);
                      }
                   } else {
                      addMultiplier(
@@ -201,6 +201,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
             }
          });
 
+         console.log(levelBoosts);
          for (const [building, level] of levelBoosts) {
             addLevelBoost(building, level, buildingName, gs);
          }
