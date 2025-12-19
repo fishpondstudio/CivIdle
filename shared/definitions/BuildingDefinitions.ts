@@ -2368,17 +2368,6 @@ export class BuildingDefinitions {
       wikipedia: "Aurora_Borealis",
    };
 
-   ChateauFrontenac: IBuildingDefinition = {
-      name: () => t(L.ChateauFrontenac),
-      desc: () => t(L.ChateauFrontenacDesc),
-      input: {},
-      output: {},
-      construction: { Tank: 100, Ironclad: 100, Train: 100 },
-      max: 0,
-      special: BuildingSpecial.WorldWonder,
-      wikipedia: "Chateau_Frontenac",
-   };
-
    DinosaurProvincialPark: IBuildingDefinition = {
       name: () => t(L.DinosaurProvincialPark),
       desc: () => t(L.DinosaurProvincialParkDesc),
@@ -2388,6 +2377,17 @@ export class BuildingDefinitions {
       max: 0,
       special: BuildingSpecial.NaturalWonder,
       wikipedia: "Dinosaur_Provincial_Park",
+   };
+
+   ChateauFrontenac: IBuildingDefinition = {
+      name: () => t(L.ChateauFrontenac),
+      desc: () => t(L.ChateauFrontenacDesc),
+      input: {},
+      output: {},
+      construction: { Tank: 100, Ironclad: 100, Train: 100 },
+      max: 1,
+      special: BuildingSpecial.WorldWonder,
+      wikipedia: "Chateau_Frontenac",
    };
 
    Habitat67: IBuildingDefinition = {
