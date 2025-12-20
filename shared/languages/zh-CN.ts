@@ -144,7 +144,7 @@ export const ZH_CN = {
    Atomium: "原子塔",
    AtomiumDescV2: "周围 2 地块范围内所有产出科学的建筑，获得 +5 生产乘数。其产生的科学，等同于周围 2 地块范围内的科学总产出量（包括产出科学的奇观，例如：牛津大学）。建造完成时，生成一批科学，生成量等同于已解锁最昂贵科技所需",
    AuroraBorealis: "北极光",
-   AuroraBorealisDesc: "周围 2 地块范围内的所有建筑（产出劳动者建筑除外）获得 +N 生产乘数。N 是基于奇观持续时间",
+   AuroraBorealisDesc: "周围 2 地块范围内的所有建筑（产出劳动者建筑除外）获得 +N 生产乘数。N 是基于奇观发现后持续时间",
    Australian: "澳大利亚",
    AustralianUniqueEffectHTML: "随机一个来自其他文明的<b>自然奇观</b>将会出现在地图上",
    Autocracy: "专制",
