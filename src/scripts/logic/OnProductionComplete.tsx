@@ -163,15 +163,22 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
             if (building) {
                addMultiplier(
                   building,
-                  { output: TRADE_TILE_BONUS + wtoLevel, unstable: true },
+                  { output: TRADE_TILE_BONUS, unstable: true },
                   `${t(L.PlayerMapMapTileBonus)} (${i + 1})`,
                );
+               if (wtoLevel > 0) {
+                  addMultiplier(
+                     building,
+                     { output: wtoLevel, unstable: true },
+                     `${t(L.WorldTradeOrganization)} (${i + 1})`,
+                  );
+               }
             }
          });
 
          let allyCount = 0;
          const hasLakeLouise = Tick.current.specialBuildings.has("LakeLouise");
-         const levelBoosts = new Map<Building, number>();
+         const lakeLouiseLevelBoosts = new Map<Building, number>();
          getNeighboringPlayers().forEach((player) => {
             let isAlly = false;
             player.forEach(([xy, tile]) => {
@@ -185,7 +192,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
                         `${t(L.PlayerMapMapAllyTileBonus)} (${tile.handle})`,
                      );
                      if (hasLakeLouise) {
-                        mapSafeAdd(levelBoosts, building, TRADE_TILE_ALLY_BONUS);
+                        mapSafeAdd(lakeLouiseLevelBoosts, building, TRADE_TILE_ALLY_BONUS);
                      }
                   } else {
                      addMultiplier(
@@ -201,9 +208,8 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
             }
          });
 
-         console.log(levelBoosts);
-         for (const [building, level] of levelBoosts) {
-            addLevelBoost(building, level, buildingName, gs);
+         for (const [building, level] of lakeLouiseLevelBoosts) {
+            addLevelBoost(building, level, t(L.LakeLouise), gs);
          }
 
          if (isSteam() && allyCount > 0 && !declareFriendshipAchievementUnlocked) {
