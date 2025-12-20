@@ -310,7 +310,7 @@ export const ZH_CN = {
    ChatChannel: "聊天频道",
    ChatChannelLanguage: "语言",
    ChateauFrontenac: "弗朗特纳克城堡",
-   ChateauFrontenacDesc: "该奇观可被升级，每次升级时，将随机抽取当前时代的三种建筑。选择其中一个来获得 +1 额外建筑等级",
+   ChateauFrontenacDesc: "该奇观可被升级，每次升级时，将随机抽取三种当前时代的建筑。选择其中一种建筑来获得 +1 额外建筑等级",
    ChatHideLatestMessage: "隐藏最新消息内容",
    ChatNoMessage: "没有消息",
    ChatReconnect: "连接已断开，正在重新连接……",
