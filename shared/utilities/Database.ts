@@ -135,13 +135,6 @@ export type AllMessageTypes =
    | IMapMessage
    | IPendingClaimMessage;
 
-export interface IEmpireValue {
-   value: number;
-   time: number;
-   tick: number;
-   totalGreatPeopleLevel?: number;
-}
-
 export interface ITradeValue {
    value: number;
    time: number;
