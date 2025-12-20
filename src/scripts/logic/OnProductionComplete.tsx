@@ -2197,7 +2197,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          );
          const happiness = Tick.current.happiness?.value ?? 0;
          const multiplier = isFestival(building.type, gs) ? 2 : 1;
-         const levelBoost = Math.floor(happiness / 5) * multiplier;
+         const levelBoost = Math.round(happiness / 5) * multiplier;
          if (levelBoost > 0) {
             addLevelBoost("AILab", levelBoost, buildingName, gs);
          }
