@@ -593,7 +593,7 @@ export const ZH_TW = {
    FindPlayers: "搜索玩家(支持關鍵字，不區分大小寫)",
    Fire: "鑽木取火",
    Firearm: "火器",
-   FirstTimeGuideIntroHTML: "《放置文明》是一款<b>增量式4X /帝國建設</b>遊戲——教程將幫助你完成第一次運行。但在開始之前，這裡有一些快速設置。你應該輸入你的<b>玩家昵稱</b>（請避免使用不友好昵稱），這樣其他玩家就能認出你",
+   FirstTimeGuideIntroHTML: "《放置文明》是一款<b>增量式4X /帝國建設</b>遊戲——教程將幫助你完成第一次運行。但在開始之前，這裡有一些快速設置。你應該輸入你的<b>玩家昵稱</b>（請避免使用不友好昵稱），這樣其他玩家就能認出你（玩家交流QQ群：907371958）",
    FirstTimeGuideNext: "下一步",
    FirstTimeTutorialWelcome: "歡迎來到放置文明",
    FirstTimeTutorialWelcome1HTML:
@@ -1673,7 +1673,7 @@ export const ZH_TW = {
    TraditionHonor: "榮譽",
    Train: "火車",
    TranslationPercentage: "%{language}的翻譯進度目前為%{percentage}。可在GitHub上幫助改進此語言翻譯。（可參考簡中相關建議。）玩家交流QQ群：907371958",
-   TranslatorCredit: "HarchuN、JiaMuC(沐)、WangChenan、Neca、Captain （QQ群：907371958）",
+   TranslatorCredit: "HarchuN、JiaMuC(沐)、WangChenan、Neca、Captain （玩家交流QQ群：907371958）",
    Translators: "翻譯人員",
    TransportAllocatedCapacityTooltip: "建造者容量分配用於運送這種資源",
    TransportationWorkers: "運輸工人",
