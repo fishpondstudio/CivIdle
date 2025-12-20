@@ -593,7 +593,7 @@ export const ZH_CN = {
    FindPlayers: "搜索玩家(支持关键词，不区分大小写)",
    Fire: "火",
    Firearm: "火器",
-   FirstTimeGuideIntroHTML: "《放置文明》是一款<b>增量式4X /帝国建设</b>游戏——教程将帮助你完成第一次运行。但在开始之前，这里有一些快速设置。你应该输入你的<b>玩家昵称</b>（请避免使用不友好昵称），这样其他玩家就能认出你",
+   FirstTimeGuideIntroHTML: "《放置文明》是一款<b>增量式4X /帝国建设</b>游戏——教程将帮助你完成第一次运行。但在开始之前，这里有一些快速设置。你应该输入你的<b>玩家昵称</b>（请避免使用不友好昵称），这样其他玩家就能认出你（玩家交流QQ群：907371958）",
    FirstTimeGuideNext: "下一步",
    FirstTimeTutorialWelcome: "欢迎来到放置文明",
    FirstTimeTutorialWelcome1HTML:
