@@ -1838,7 +1838,7 @@ export const ZH_CN = {
    WorkersRequiredInput: "运输所需劳动者",
    WorkersRequiredOutput: "生产所需劳动者",
    WorldTradeOrganization: "世界贸易组织",
-   WorldTradeOrganizationDesc: "该奇观可被升级，每一级为贸易地块加成额外提供 +1 生产乘数。参加每周世界贸易组织大会，在世界贸易组织大会上获选的建筑将增加贸易地块加成数量",
+   WorldTradeOrganizationDesc: "该奇观可被升级，每一级为拥有的贸易地块加成额外提供 +1 生产乘数（相同地块同样生效，不包括相邻玩家加成）。参加每周世界贸易组织大会，在世界贸易组织大会上获选的建筑将增加贸易地块加成数量",
    WorldWarAge: "世界大战",
    WorldWideWeb: "万维网",
    WritersGuild: "作家协会",
