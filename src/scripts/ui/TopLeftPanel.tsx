@@ -1,9 +1,8 @@
 import Tippy from "@tippyjs/react";
 import { cls } from "../../../shared/utilities/Helper";
 import { useFloatingMode, useGameOptions, useGameState } from "../Global";
-import { Todo } from "../logic/Todo";
+import { Todo, TodoList } from "../logic/Todo";
 import { getCurrentTutorial } from "../logic/Tutorial";
-import { jsxMapOf } from "../utilities/Helper";
 import { playClick } from "../visuals/Sound";
 import { showModal } from "./GlobalModal";
 import { highlightElement } from "./HighlightElement";
@@ -65,7 +64,6 @@ function TutorialComponent(): React.ReactNode {
 }
 
 function TodoComponent(): React.ReactNode {
-   const gs = useGameState();
    const options = useGameOptions();
    const isFloating = useFloatingMode();
    if (options.showTutorial) {
@@ -73,43 +71,55 @@ function TodoComponent(): React.ReactNode {
    }
    return (
       <div className="row g5">
-         {jsxMapOf(Todo, (id, t) => {
-            if (options.disabledTodos.has(id)) {
-               return null;
-            }
-            if (!t.condition(gs, options)) {
-               return null;
-            }
-            const value = t.value?.(gs, options);
-            return (
-               <Tippy
-                  maxWidth={t.maxWidth}
-                  placement="bottom"
-                  key={id}
-                  content={
-                     <>
-                        <div className="text-strong">{t.name()}</div>
-                        {t.desc(gs, options)}
-                     </>
-                  }
-               >
-                  <div
-                     className={cls("todo pointer", t.className)}
-                     key={t.name()}
-                     onClick={() => {
-                        if (isFloating) {
-                           return;
-                        }
-                        playClick();
-                        t.onClick(gs, options);
-                     }}
-                  >
-                     <div className="m-icon">{t.icon}</div>
-                     {value && <div className="count">{value}</div>}
-                  </div>
-               </Tippy>
-            );
+         {Array.from(options.pinnedTodos.keys()).map((id) => {
+            return <TodoTab key={id} todo={id as Todo} disableClick={isFloating} />;
+         })}
+         {TodoList.filter((id) => !options.pinnedTodos.has(id)).map((id) => {
+            return <TodoTab key={id} todo={id as Todo} disableClick={isFloating} />;
          })}
       </div>
+   );
+}
+
+function TodoTab({ todo, disableClick }: { todo: Todo; disableClick: boolean }): React.ReactNode {
+   const gs = useGameState();
+   const options = useGameOptions();
+   const config = Todo[todo];
+   if (!config) {
+      return null;
+   }
+   if (options.disabledTodos.has(todo)) {
+      return null;
+   }
+   if (!config.condition(gs, options)) {
+      return null;
+   }
+   const value = config.value?.(gs, options);
+   return (
+      <Tippy
+         maxWidth={config.maxWidth}
+         placement="bottom"
+         content={
+            <>
+               <div className="text-strong">{config.name()}</div>
+               {config.desc(gs, options)}
+            </>
+         }
+      >
+         <div
+            className={cls("todo pointer", config.className, options.pinnedTodos.has(todo) ? "pinned" : null)}
+            key={config.name()}
+            onClick={() => {
+               if (disableClick) {
+                  return;
+               }
+               playClick();
+               config.onClick(gs, options);
+            }}
+         >
+            <div className="m-icon">{config.icon}</div>
+            {value && <div className="count">{value}</div>}
+         </div>
+      </Tippy>
    );
 }

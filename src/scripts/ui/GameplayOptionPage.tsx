@@ -237,28 +237,63 @@ export function GameplayOptionPage(): React.ReactNode {
                   }}
                />
                <div className="separator" />
-               {jsxMapOf(Todo, (id, t) => {
-                  if (id.startsWith("S")) {
-                     return null;
-                  }
-                  return (
-                     <ToggleComponent
-                        key={id}
-                        title={t.name()}
-                        contentHTML=""
-                        value={!options.disabledTodos.has(id)}
-                        onValueChange={(value) => {
-                           playClick();
-                           if (value) {
-                              options.disabledTodos.delete(id);
-                           } else {
-                              options.disabledTodos.add(id);
+               <div className="table-view">
+                  <table>
+                     <thead>
+                        <tr>
+                           <th>{t(L.TodoTabs)}</th>
+                           <th className="text-right">{t(L.EnableTodo)}</th>
+                           <th className="text-right">{t(L.PinTodo)}</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        {jsxMapOf(Todo, (id, todo) => {
+                           if (id.startsWith("S")) {
+                              return null;
                            }
-                           notifyGameOptionsUpdate(options);
-                        }}
-                     />
-                  );
-               })}
+                           return (
+                              <tr key={id}>
+                                 <td>{todo.name()}</td>
+                                 <td>
+                                    <ToggleComponent
+                                       title=""
+                                       contentHTML=""
+                                       value={!options.disabledTodos.has(id)}
+                                       onValueChange={(value) => {
+                                          playClick();
+                                          if (value) {
+                                             options.disabledTodos.delete(id);
+                                          } else {
+                                             options.disabledTodos.add(id);
+                                          }
+                                          notifyGameOptionsUpdate(options);
+                                       }}
+                                    />
+                                 </td>
+                                 <Tippy content={t(L.PinTodoTooltip)}>
+                                    <td>
+                                       <ToggleComponent
+                                          title=""
+                                          contentHTML=""
+                                          value={options.pinnedTodos.has(id)}
+                                          onValueChange={(value) => {
+                                             playClick();
+                                             if (value) {
+                                                options.pinnedTodos.add(id);
+                                             } else {
+                                                options.pinnedTodos.delete(id);
+                                             }
+                                             notifyGameOptionsUpdate(options);
+                                          }}
+                                       />
+                                    </td>
+                                 </Tippy>
+                              </tr>
+                           );
+                        })}
+                     </tbody>
+                  </table>
+               </div>
                <div className="separator" />
                <ToggleComponent
                   title={t(L.ShowWonderPopup)}

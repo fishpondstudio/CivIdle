@@ -19,6 +19,7 @@ import {
    formatHMS,
    formatNumber,
    HOUR,
+   keysOf,
    mapCount,
    mathSign,
    tileToPoint,
@@ -498,3 +499,5 @@ export const _Todos = {
 
 export type Todo = keyof typeof _Todos;
 export const Todo: Record<Todo, ITodo> = _Todos;
+
+export const TodoList = keysOf(Todo);

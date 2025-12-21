@@ -1882,4 +1882,10 @@ export const EN = {
    WTOVoteEndIn: "You can change your vote any time before the voting ends in <b>%{time}</b>",
    UNVoteDescriptionHTML: "Buildings voted in UN General Assembly get <b>+5 Production Multiplier</b>",
    WTOVoteDescriptionHTML: "Buildings voted in World Trade Organization has a <b>higher chance</b> to appear in Trade Tile Bonus",
+   PinWatchedResourceTab: "Pin Watched Resources",
+   PinWatchedResourceTabDescHTML: "Pin Watched Resources Tab to the left",
+   EnableTodo: "Enable",
+   PinTodo: "Pin",
+   PinTodoTooltip: "Pin a todo tab to the leftmost position",
+   TodoTabs: "Todo Tabs",
 };

@@ -208,6 +208,10 @@ body .tippy-box {
    position: relative;
 }
 
+.todo.pinned {
+   background-image: url("../images/NotepadAlt.png");
+}
+
 .todo .count {
    position: absolute;
    top: 4px;
