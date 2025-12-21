@@ -169,6 +169,14 @@ export function checkRebirthAchievements(extraGP: number, gs: GameState): void {
             SteamClient.unlockAchievement("WaltzingMatilda");
             break;
          }
+         case "Canadian": {
+            SteamClient.unlockAchievement("FromSeaToSea");
+            break;
+         }
+         case "Russian": {
+            SteamClient.unlockAchievement("Mir");
+            break;
+         }
       }
    }
 
