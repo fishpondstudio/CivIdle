@@ -112,43 +112,37 @@ export function ResourcePanel(): React.ReactNode {
          className={classNames({ window: true, "app-region-drag": isFloating, "is-floating": isFloating })}
          ref={ref}
       >
-         {isSteam() ? (
-            <>
-               <Tippy content={t(L.EnterExitMinimizedMode)}>
-                  <div className="menu-button app-region-none">
-                     <div
-                        className="m-icon"
-                        onClick={async () => {
-                           if (isFloating) {
-                              FloatingModeChanged.emit(false);
-                              await SteamClient.exitFloatingMode();
-                              await SteamClient.maximize();
-                              Singleton().routeTo(LoadingPage, { stage: LoadingPageStage.SteamSignIn });
-                              setTimeout(() => {
-                                 Singleton().sceneManager.loadScene(WorldScene);
-                              }, 1000);
-                           } else {
-                              FloatingModeChanged.emit(true);
-                              Singleton().sceneManager.loadScene(EmptyScene);
-                              await SteamClient.enterFloatingMode();
-                              await SteamClient.restore();
-                              if (ref.current) {
-                                 const rect = ref.current.getBoundingClientRect();
-                                 await SteamClient.setSize(
-                                    Math.round(rect.width),
-                                    Math.round(rect.height + 50),
-                                 );
-                              }
+         {isSteam() && (
+            <Tippy content={t(L.EnterExitMinimizedMode)}>
+               <div className="menu-button app-region-none">
+                  <div
+                     className="m-icon"
+                     onClick={async () => {
+                        if (isFloating) {
+                           FloatingModeChanged.emit(false);
+                           await SteamClient.exitFloatingMode();
+                           await SteamClient.maximize();
+                           Singleton().routeTo(LoadingPage, { stage: LoadingPageStage.SteamSignIn });
+                           setTimeout(() => {
+                              Singleton().sceneManager.loadScene(WorldScene);
+                           }, 1000);
+                        } else {
+                           FloatingModeChanged.emit(true);
+                           Singleton().sceneManager.loadScene(EmptyScene);
+                           await SteamClient.enterFloatingMode();
+                           await SteamClient.restore();
+                           if (ref.current) {
+                              const rect = ref.current.getBoundingClientRect();
+                              await SteamClient.setSize(Math.round(rect.width), Math.round(rect.height + 50));
                            }
-                        }}
-                     >
-                        {isFloating ? "pip_exit" : "picture_in_picture"}
-                     </div>
+                        }
+                     }}
+                  >
+                     {isFloating ? "pip_exit" : "picture_in_picture"}
                   </div>
-               </Tippy>
-               <div className="separator-vertical" />
-            </>
-         ) : null}
+               </div>
+            </Tippy>
+         )}
          {!isFloating && (
             <div className={classNames({ "menu-button": true, active: favoriteActive })}>
                <div
