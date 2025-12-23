@@ -1,15 +1,18 @@
 import { SmoothGraphics } from "@pixi/graphics-smooth";
 import { geoMercator, geoPath } from "d3-geo";
-import { Container, type ColorSource, type FederatedPointerEvent } from "pixi.js";
-import { feature, mesh, neighbors } from "topojson-client";
+import { Container, Sprite, type ColorSource, type FederatedPointerEvent } from "pixi.js";
+import { feature } from "topojson-client";
+import { Grid } from "../../../shared/utilities/Grid";
+import { pointToTile, tileToPoint, type Tile } from "../../../shared/utilities/Helper";
 import { UnicodeText } from "../../../shared/utilities/UnicodeText";
-import World from "../../images/countries-50m.json";
-import WorldLabel from "../../images/countries-label.json";
+import World from "../../images/countries-110m.json";
+import { getTexture } from "../logic/VisualLogic";
 import { ConquestPage } from "../ui/ConquestPage";
 import { calculateArea, calculateBounds, calculateCentroid } from "../utilities/SVGGraphics/SVGPathParser";
 import { Scene, type ISceneContext } from "../utilities/SceneManager";
 import { Singleton } from "../utilities/Singleton";
 import { Fonts } from "../visuals/Fonts";
+import Land from "./Land.json";
 
 export const CountryMapping: { index: number; area: SmoothGraphics; text: UnicodeText }[] = [];
 const OceanColor = 0xabd3de;
@@ -17,11 +20,14 @@ const LandColor = 0xf2efe9;
 const SelectedColor = 0xffeaa7;
 const NeighborColor = 0xfff3cc;
 const BorderColor = 0xbfaaba;
+const divider = 32;
+const grid = new Grid(289, 230, 64 / divider);
 
 export class ConquestScene extends Scene {
    private _mapContainer: Container<SmoothGraphics>;
    private _countryBorders: SmoothGraphics;
    private _countryLabels: Container<UnicodeText>;
+   private _tiles = new Map<Tile, Sprite>();
 
    constructor(context: ISceneContext) {
       super(context);
@@ -37,11 +43,10 @@ export class ConquestScene extends Scene {
 
       this._mapContainer.position.set(0, 0);
 
-      this.viewport.setWorldSize(this._mapContainer.width, this._mapContainer.height);
-      const minZoom = Math.max(
-         app.screen.width / this._mapContainer.width,
-         app.screen.height / this._mapContainer.height,
-      );
+      const max = grid.maxPosition();
+
+      this.viewport.setWorldSize(max.x, max.y);
+      const minZoom = Math.max(app.screen.width / max.x, app.screen.height / max.y);
 
       this.viewport.zoom = minZoom;
       this.viewport.setZoomRange(minZoom, this.viewport.zoom * 10);
@@ -93,7 +98,7 @@ export class ConquestScene extends Scene {
       // const labels: Record<string, { x: number; y: number; angle: number; size: number }> = JSON.parse(
       //    localStorage.getItem("CountryMapping") ?? "{}",
       // );
-      const labels: Record<string, { x: number; y: number; angle: number; size: number }> = WorldLabel;
+      // const labels: Record<string, { x: number; y: number; angle: number; size: number }> = WorldLabel;
       countries.features.forEach((feature: any, index: number) => {
          graphics = this._mapContainer.addChild(new SmoothGraphics());
          graphics.beginFill(0xffffff);
@@ -140,41 +145,72 @@ export class ConquestScene extends Scene {
                });
             });
          }
-         const cached = labels[feature.properties.name];
-         if (cached) {
-            const text = this._countryLabels.addChild(
-               new UnicodeText(
-                  feature.properties.name,
-                  {
-                     fontName: `${Fonts.Cabin}NoShadow`,
-                     tint: 0x666666,
-                  },
-                  {
-                     fontFamily: "'Inter Tight', serif",
-                     fill: 0x666666,
-                  },
-               ),
-            );
-            text.anchor.set(0.5, 0.5);
-            text.size = cached.size;
-            text.x = cached.x;
-            text.y = cached.y;
-            text.angle = cached.angle;
-            CountryMapping.push({ index, area: graphics, text });
-         } else {
-            const text = this._drawText(feature.properties.name, maxPoints);
-            CountryMapping.push({ index, area: graphics, text });
-         }
+         // const cached = labels[feature.properties.name];
+         // if (cached) {
+         //    const text = this._countryLabels.addChild(
+         //       new UnicodeText(
+         //          feature.properties.name,
+         //          {
+         //             fontName: `${Fonts.Cabin}NoShadow`,
+         //             tint: 0x666666,
+         //          },
+         //          {
+         //             fontFamily: "'Inter Tight', serif",
+         //             fill: 0x666666,
+         //          },
+         //       ),
+         //    );
+         //    text.anchor.set(0.5, 0.5);
+         //    text.size = cached.size;
+         //    text.x = cached.x;
+         //    text.y = cached.y;
+         //    text.angle = cached.angle;
+         //    CountryMapping.push({ index, area: graphics, text });
+         // } else {
+         //    const text = this._drawText(feature.properties.name, maxPoints);
+         //    CountryMapping.push({ index, area: graphics, text });
+         // }
       });
 
-      graphics = this._countryBorders;
-      graphics.lineStyle({
-         color: BorderColor,
-         width: 0.2,
-         alignment: 0.5,
+      // graphics = this._countryBorders;
+      // graphics.lineStyle({
+      //    color: BorderColor,
+      //    width: 0.2,
+      //    alignment: 0.5,
+      // });
+      // const borders = mesh(World as any, World.objects.countries as any, (a, b) => a !== b);
+      // path(borders);
+
+      // shift all tiles x by -1, and wrap around!
+      const maxX = Math.max(...Land.map((t) => tileToPoint(t).x));
+      console.log(
+         JSON.stringify(
+            Land.map((t) => {
+               const { x, y } = tileToPoint(t);
+               return pointToTile({ x: (x - 1) % maxX, y });
+            }),
+         ),
+      );
+
+      const land = new Set<Tile>(Land);
+
+      grid.forEach((g) => {
+         const tile = pointToTile(g);
+
+         const sprite = this.viewport.addChild(new Sprite(getTexture("Misc_Tile1", this.context.textures)));
+         sprite.scale.set(0.5 / divider);
+         sprite.anchor.set(0.5, 0.5);
+         const position = grid.gridToPosition(g);
+         sprite.position.set(position.x, position.y);
+
+         this._tiles.set(tile, sprite);
+
+         if (land.has(tile)) {
+            sprite.visible = true;
+         } else {
+            sprite.visible = false;
+         }
       });
-      const borders = mesh(World as any, World.objects.countries as any, (a, b) => a !== b);
-      path(borders);
    }
 
    private _drawText(label: string, projected: [number, number][]): UnicodeText {
@@ -207,32 +243,54 @@ export class ConquestScene extends Scene {
 
    override onClicked(e: FederatedPointerEvent): void {
       const pos = this.viewport.screenToWorld(e);
-      const global = this.viewport.toGlobal(pos);
+      // const global = this.viewport.toGlobal(pos);
 
-      let selectedIndex = -1;
+      const point = grid.positionToGrid(pos);
+      const tile = pointToTile(point);
 
-      CountryMapping.forEach(({ index, area, text }) => {
-         const country = area;
-         if (!country.getBounds().contains(global.x, global.y)) {
-            country.tint = LandColor;
-            return;
+      const sprite = this._tiles.get(tile);
+      if (sprite) {
+         sprite.visible = !sprite.visible;
+         const land = new Set<Tile>(Land);
+         if (sprite.visible) {
+            land.add(tile);
+         } else {
+            land.delete(tile);
          }
-         if (!country.containsPoint(global)) {
-            country.tint = LandColor;
-            return;
-         }
-         country.tint = SelectedColor;
-         selectedIndex = index;
-         Singleton().routeTo(ConquestPage, { text });
-      });
-
-      if (selectedIndex !== -1) {
-         const neighboring = neighbors(World.objects.countries.geometries as any);
-         const neighboringCountries = neighboring[selectedIndex];
-         neighboringCountries.forEach((neighbor) => {
-            CountryMapping[neighbor].area.tint = NeighborColor;
-         });
       }
+
+      console.log(
+         JSON.stringify(
+            Array.from(this._tiles)
+               .filter(([_, sprite]) => sprite.visible)
+               .map(([tile]) => tile),
+         ),
+      );
+
+      // let selectedIndex = -1;
+
+      // CountryMapping.forEach(({ index, area, text }) => {
+      //    const country = area;
+      //    if (!country.getBounds().contains(global.x, global.y)) {
+      //       country.tint = LandColor;
+      //       return;
+      //    }
+      //    if (!country.containsPoint(global)) {
+      //       country.tint = LandColor;
+      //       return;
+      //    }
+      //    country.tint = SelectedColor;
+      //    selectedIndex = index;
+      //    Singleton().routeTo(ConquestPage, { text });
+      // });
+
+      // if (selectedIndex !== -1) {
+      //    const neighboring = neighbors(World.objects.countries.geometries as any);
+      //    const neighboringCountries = neighboring[selectedIndex];
+      //    neighboringCountries.forEach((neighbor) => {
+      //       CountryMapping[neighbor].area.tint = NeighborColor;
+      //    });
+      // }
    }
 
    override backgroundColor(): ColorSource {

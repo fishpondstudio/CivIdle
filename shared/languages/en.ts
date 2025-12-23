@@ -878,7 +878,7 @@ export const EN = {
    LouisSullivan: "Louis Sullivan",
    LouisSullivanDesc: "+%{value} Builder Capacity Multiplier",
    Louvre: "Louvre",
-   LouvreDesc: "For every 10 Extra Great People at Rebirth, one great person from all unlocked ages is born",
+   LouvreDesc: "For every 10 Extra Great People at Rebirth, one great person from any of the unlocked ages is born",
    Lumber: "Lumber",
    LumberMill: "Lumber Mill",
    LunarNewYear: "Lunar New Year: Great Wall provides double the boost to buildings. Porcelain Tower provides +1 level to all great people from this run",
