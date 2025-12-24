@@ -79,7 +79,18 @@ const createWindow = async () => {
 
       mainWindow.on("close", (e) => {
          e.preventDefault();
-         mainWindow.webContents.send("close");
+         dialog
+            .showMessageBox({
+               type: "info",
+               title: "Exit CivIdle",
+               message: "Are you sure you want to exit CivIdle?",
+               buttons: ["Yes", "No"],
+            })
+            .then((result) => {
+               if (result.response === 0) {
+                  mainWindow.webContents.send("close");
+               }
+            });
       });
 
       const service = new IPCService(steam, mainWindow, checksum);
