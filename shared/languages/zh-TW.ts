@@ -1076,7 +1076,6 @@ export const ZH_TW = {
    PercentageOfProductionWorkers: "生產工人比例(Percentage of Production Workers)",
    Performance: "效能",
    PermanentGreatPeople: "永久偉人",
-   PermanentGreatPeopleAcquired: "獲得永久的偉人",
    PermanentGreatPeopleUpgradeUndo: "撤銷永久偉人升級：這將把升級等級轉回碎片，您將獲得 %{amount} 碎片",
    Persepolis: "波斯波利斯",
    PersepolisDesc: "所有銅礦、伐木場以及採石場 +1 生產、工人能力以及存儲乘數",
@@ -1873,4 +1872,6 @@ export const ZH_TW = {
    Zoroaster: "瑣羅亞斯德(查拉圖斯特拉)",
    Zugspitze: "祖格峰",
    ZugspitzeDesc: "每解鎖一個時代，獲得一個點數，可用於為本次運行中誕生的任何偉人提供一個額外等級（存儲乘數效果和奇觀偉人除外）",
+   GreatPeopleShardsAcquired: "Great People Shards Acquired",
+   UniquePermanentGreatPeople: "Unique Permanent Great People",
 };

@@ -260,7 +260,7 @@ export function HeadquarterBuildingBody({
                </table>
             </div>
          </fieldset>
-         <RebornComponent gameState={gameState} />
+         <RebirthComponent gameState={gameState} />
          <GreatPeopleComponent gameState={gameState} options={options} />
          <WonderComponent gameState={gameState} />
          <fieldset>
@@ -361,23 +361,23 @@ function GreatPeopleComponent({
             <li>
                <details>
                   <summary className="row">
-                     <div className="f1">{t(L.PermanentGreatPeople)}</div>
-                     <div className="text-strong">
-                        {sizeOf(filterOf(options.greatPeople, (k, v) => v.level > 0))}
+                     <div className="f1">
+                        <TextWithHelp content={t(L.EffectiveGreatPeopleLevelDesc)}>
+                           {t(L.EffectiveGreatPeopleLevel)}
+                        </TextWithHelp>
                      </div>
+                     <div className="text-strong">{getPermanentGreatPeopleLevel(options)}</div>
                   </summary>
                   <ul>
                      <li className="row text-small">
-                        <div className="f1">{t(L.PermanentGreatPeopleAcquired)}</div>
+                        <div className="f1">{t(L.GreatPeopleShardsAcquired)}</div>
                         <div className="text-strong">{getPermanentGreatPeopleCount(options)}</div>
                      </li>
                      <li className="row text-small">
-                        <div className="f1">
-                           <TextWithHelp content={t(L.EffectiveGreatPeopleLevelDesc)}>
-                              {t(L.EffectiveGreatPeopleLevel)}
-                           </TextWithHelp>
+                        <div className="f1">{t(L.UniquePermanentGreatPeople)}</div>
+                        <div className="text-strong">
+                           {sizeOf(filterOf(options.greatPeople, (k, v) => v.level > 0))}
                         </div>
-                        <div className="text-strong">{getPermanentGreatPeopleLevel(options)}</div>
                      </li>
                      {keysOf(options.greatPeople)
                         .sort(
@@ -451,7 +451,7 @@ function WonderComponent({ gameState }: { gameState: GameState }): React.ReactNo
    );
 }
 
-function RebornComponent({ gameState }: { gameState: GameState }): ReactNode {
+function RebirthComponent({ gameState }: { gameState: GameState }): ReactNode {
    const extraGreatPeople = getRebirthGreatPeopleCount();
    const totalPGPLevel = getPermanentGreatPeopleLevel(getGameOptions());
    return (
@@ -470,58 +470,62 @@ function RebornComponent({ gameState }: { gameState: GameState }): ReactNode {
                   )}
                </div>
             </li>
-            <li className="row">
-               <div className="f1">{t(L.TotalEmpireValue)}</div>
-               <div className="text-strong">
-                  <FormatNumber value={Tick.current.totalValue} />
-               </div>
-            </li>
-            <ul>
-               <li className="row text-small">
-                  <div className="f1">{t(L.TotalGameTimeThisRun)}</div>
-                  <div>
-                     <TextWithHelp content={getHMS(gameState.tick * SECOND).join(":")}>
-                        {formatHMS(gameState.tick * SECOND)}
-                     </TextWithHelp>
+            <details>
+               <summary className="row">
+                  <div className="f1">{t(L.TotalEmpireValue)}</div>
+                  <div className="text-strong">
+                     <FormatNumber value={Tick.current.totalValue} />
                   </div>
-               </li>
-               <li className="row text-small">
-                  <div className="f1">{t(L.TotalEmpireValuePerCycle)}</div>
-                  <FormatNumber value={Tick.current.totalValue / gameState.tick} />
-               </li>
-               <li className="row text-small">
-                  <div className="f1">{t(L.TotalEmpireValuePerCyclePerGreatPeopleLevel)}</div>
-                  <FormatNumber
-                     value={
-                        totalPGPLevel === 0 ? 0 : Tick.current.totalValue / gameState.tick / totalPGPLevel
-                     }
-                  />
-               </li>
-               <li className="row text-small">
-                  <div className="f1">
-                     <TextWithHelp content={t(L.TotalWallTimeThisRunTooltip)}>
-                        {t(L.TotalWallTimeThisRun)}
-                     </TextWithHelp>
-                  </div>
-                  <div>
-                     <TextWithHelp content={getHMS(gameState.seconds * SECOND).join(":")}>
-                        {formatHMS(gameState.seconds * SECOND)}
-                     </TextWithHelp>
-                  </div>
-               </li>
-               <li className="row text-small">
-                  <div className="f1">{t(L.TotalEmpireValuePerWallSecond)}</div>
-                  <FormatNumber value={Tick.current.totalValue / gameState.seconds} />
-               </li>
-               <li className="row text-small">
-                  <div className="f1">{t(L.TotalEmpireValuePerWallSecondPerGreatPeopleLevel)}</div>
-                  <FormatNumber
-                     value={
-                        totalPGPLevel === 0 ? 0 : Tick.current.totalValue / gameState.seconds / totalPGPLevel
-                     }
-                  />
-               </li>
-            </ul>
+               </summary>
+               <ul>
+                  <li className="row text-small">
+                     <div className="f1">{t(L.TotalGameTimeThisRun)}</div>
+                     <div>
+                        <TextWithHelp content={getHMS(gameState.tick * SECOND).join(":")}>
+                           {formatHMS(gameState.tick * SECOND)}
+                        </TextWithHelp>
+                     </div>
+                  </li>
+                  <li className="row text-small">
+                     <div className="f1">{t(L.TotalEmpireValuePerCycle)}</div>
+                     <FormatNumber value={Tick.current.totalValue / gameState.tick} />
+                  </li>
+                  <li className="row text-small">
+                     <div className="f1">{t(L.TotalEmpireValuePerCyclePerGreatPeopleLevel)}</div>
+                     <FormatNumber
+                        value={
+                           totalPGPLevel === 0 ? 0 : Tick.current.totalValue / gameState.tick / totalPGPLevel
+                        }
+                     />
+                  </li>
+                  <li className="row text-small">
+                     <div className="f1">
+                        <TextWithHelp content={t(L.TotalWallTimeThisRunTooltip)}>
+                           {t(L.TotalWallTimeThisRun)}
+                        </TextWithHelp>
+                     </div>
+                     <div>
+                        <TextWithHelp content={getHMS(gameState.seconds * SECOND).join(":")}>
+                           {formatHMS(gameState.seconds * SECOND)}
+                        </TextWithHelp>
+                     </div>
+                  </li>
+                  <li className="row text-small">
+                     <div className="f1">{t(L.TotalEmpireValuePerWallSecond)}</div>
+                     <FormatNumber value={Tick.current.totalValue / gameState.seconds} />
+                  </li>
+                  <li className="row text-small">
+                     <div className="f1">{t(L.TotalEmpireValuePerWallSecondPerGreatPeopleLevel)}</div>
+                     <FormatNumber
+                        value={
+                           totalPGPLevel === 0
+                              ? 0
+                              : Tick.current.totalValue / gameState.seconds / totalPGPLevel
+                        }
+                     />
+                  </li>
+               </ul>
+            </details>
             <li>
                <details>
                   <summary className="row">

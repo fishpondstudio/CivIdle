@@ -1078,7 +1078,6 @@ export const ZH_CN = {
    PercentageOfProductionWorkers: "生产作业劳动者所占百分比",
    Performance: "性能",
    PermanentGreatPeople: "永恒伟人",
-   PermanentGreatPeopleAcquired: "获得的永恒伟人",
    PermanentGreatPeopleUpgradeUndo: "重置永恒伟人升级：这将使已升级部分转化回碎片——你将获得 %{amount} 碎片",
    Persepolis: "波斯波利斯",
    PersepolisDesc: "所有铜矿、伐木场以及采石场，获得 +1 生产、劳动者能力以及存储乘数",
@@ -1875,4 +1874,6 @@ export const ZH_CN = {
    Zoroaster: "琐罗亚斯德",
    Zugspitze: "楚格峰",
    ZugspitzeDesc: "对于每个已解锁时代，获得一项等级点数。等级点数可被用于提升任意（本轮诞生的）此生伟人的额外等级（存储乘数效果和奇观伟人除外）",
+   GreatPeopleShardsAcquired: "Great People Shards Acquired",
+   UniquePermanentGreatPeople: "Unique Permanent Great People",
 };
