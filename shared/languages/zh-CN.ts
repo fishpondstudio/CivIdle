@@ -1672,7 +1672,7 @@ export const ZH_CN = {
    TradeValue: "贸易价值",
    TraditionCommerce: "商业",
    TraditionCultivation: "教化",
-   TraditionDescHTML: "从<b>教化、商业、扩张以及荣耀</b>中选择一项作为你的帝国传统。一旦选择，你将<b>不能更换传统</b>。每项传统，你都能解锁更多增强",
+   TraditionDescHTML: "使用<b>鼠标滚轮或右边的滚动条</b>，从<b>教化、商业、扩张以及荣耀</b>中选择一项作为你的帝国传统。一旦选择，你将<b>不能更换传统</b>。每项传统，你都能解锁更多增强",
    TraditionExpansion: "扩张（推荐）",
    TraditionHonor: "荣耀",
    Train: "火车",
