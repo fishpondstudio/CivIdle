@@ -43,7 +43,6 @@ import { getBuildNumber, getFullVersion } from "./logic/Version";
 import { getBuildingTexture, getTileTexture } from "./logic/VisualLogic";
 import type { MainBundleAssets } from "./main";
 import { connectWebSocket } from "./rpc/RPCClient";
-import { ConquestScene } from "./scenes/ConquestScene";
 import { PlayerMapScene } from "./scenes/PlayerMapScene";
 import { TechTreeScene } from "./scenes/TechTreeScene";
 import { WorldScene } from "./scenes/WorldScene";
@@ -212,10 +211,6 @@ export async function startGame(
       }
       case "trade": {
          Singleton().sceneManager.loadScene(PlayerMapScene);
-         break;
-      }
-      case "conquest": {
-         Singleton().sceneManager.loadScene(ConquestScene);
          break;
       }
       default: {

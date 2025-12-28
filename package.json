@@ -37,7 +37,6 @@
       "@tippyjs/react": "^4.2.6",
       "classnames": "^2.3.1",
       "cordova-plugin-purchase": "^13.12.1",
-      "d3-geo": "^3.1.1",
       "fflate": "^0.8.2",
       "gameanalytics": "file:./packages/gameanalytics",
       "install": "^0.13.0",
@@ -50,7 +49,6 @@
       "react-virtuoso": "^4.7.11",
       "svg-pathdata": "^8.0.0",
       "tippy.js": "^6.3.7",
-      "topojson-client": "^3.1.0",
       "uplot": "^1.6.30",
       "xp.css": "^0.3.0"
    },
