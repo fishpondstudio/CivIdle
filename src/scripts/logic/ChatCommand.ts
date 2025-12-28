@@ -204,9 +204,14 @@ export async function handleChatCommand(command: string): Promise<void> {
          addSystemMessage(JSON.stringify(resp));
          break;
       }
-      case "clearVotedBoost": {
-         await client.clearVotedBoost();
-         addSystemMessage("Voted boosts have been cleared");
+      case "rerollun": {
+         await client.rerollBoostVotes();
+         addSystemMessage("UN votes have been rerolled");
+         break;
+      }
+      case "rerollwto": {
+         await client.rerollTradeTileVotes();
+         addSystemMessage("WTO votes have been rerolled");
          break;
       }
       case "queryplayer": {

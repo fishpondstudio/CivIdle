@@ -2304,7 +2304,7 @@ export class BuildingDefinitions {
 
    KizhiPogost: IBuildingDefinition = {
       name: () => t(L.KizhiPogost),
-      desc: () => t(L.KizhiPogostDesc),
+      desc: () => t(L.KizhiPogostDescV2),
       input: {},
       output: {},
       construction: { Bond: 100, Law: 100, Frigate: 100 },
@@ -2326,7 +2326,7 @@ export class BuildingDefinitions {
 
    Sputnik1: IBuildingDefinition = {
       name: () => t(L.Sputnik1),
-      desc: () => t(L.Sputnik1Desc),
+      desc: () => t(L.Sputnik1DescV2),
       input: {},
       output: {},
       construction: { Satellite: 500 },
@@ -2392,7 +2392,7 @@ export class BuildingDefinitions {
 
    Habitat67: IBuildingDefinition = {
       name: () => t(L.Habitat67),
-      desc: () => t(L.Habitat67Desc),
+      desc: () => t(L.Habitat67DescV2),
       input: {},
       output: {},
       construction: { Bitcoin: 500 },

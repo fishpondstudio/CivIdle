@@ -2078,7 +2078,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          break;
       }
       case "KizhiPogost": {
-         const range = isFestival(building.type, gs) ? 4 : 2;
+         const range = isFestival(building.type, gs) ? 6 : 3;
          const multiplier = totalMultiplierFor(xy, "output", 0, false, gs);
          for (const point of grid.getRange(tileToPoint(xy), range)) {
             const targetXy = pointToTile(point);
@@ -2132,6 +2132,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
                def.tick(p, building.level, `${buildingName}: ${def.name()}`, GreatPersonTickFlag.None);
             }
          });
+         addMultiplier("Cosmodrome", { output: building.level, storage: building.level }, buildingName);
          break;
       }
       case "AkademikLomonosov": {
@@ -2195,6 +2196,14 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
             },
             buildingName,
          );
+         const informationAgeWisdomLevel = options.ageWisdom.InformationAge ?? 0;
+         if (informationAgeWisdomLevel > 0) {
+            addMultiplier(
+               "AILab",
+               { output: informationAgeWisdomLevel, storage: informationAgeWisdomLevel },
+               `${t(L.AgeWisdom)} (${buildingName})`,
+            );
+         }
          const happiness = Tick.current.happiness?.value ?? 0;
          const multiplier = isFestival(building.type, gs) ? 2 : 1;
          const levelBoost = Math.round(happiness / 5) * multiplier;

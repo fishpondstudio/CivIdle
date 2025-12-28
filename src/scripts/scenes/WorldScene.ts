@@ -484,7 +484,7 @@ export class WorldScene extends Scene {
                break;
             }
             case "KizhiPogost": {
-               this.highlightRange(grid, isFestival(building.type, gs) ? 4 : 2);
+               this.highlightRange(grid, isFestival(building.type, gs) ? 6 : 3);
                break;
             }
             case "LakeBaikal": {

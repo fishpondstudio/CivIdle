@@ -49,7 +49,11 @@ export function onBuildingOrUpgradeComplete(xy: Tile): void {
          const techAge = getCurrentAge(gs);
          const candidates = entriesOf(Config.BuildingTechAge)
             .filter(([building, age]) => {
-               return age === techAge && !isSpecialBuilding(building) && !Config.BuildingCity[building];
+               return (
+                  age === techAge &&
+                  !isSpecialBuilding(building) &&
+                  (!Config.BuildingCity[building] || Config.BuildingCity[building] === gs.city)
+               );
             })
             .map(([building]) => building);
          for (let i = 1; i <= building.level; i++) {
