@@ -2143,11 +2143,7 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          mapSafeAdd(Tick.next.workersAvailable, "Power", 100_000 * building.level * multiplier);
          const ageWisdomLevel = options.ageWisdom.ColdWarAge ?? 0;
          if (ageWisdomLevel > 0) {
-            addMultiplier(
-               "Cosmodrome",
-               { output: ageWisdomLevel * multiplier, storage: ageWisdomLevel * multiplier },
-               buildingName,
-            );
+            addMultiplier("Cosmodrome", { output: ageWisdomLevel, storage: ageWisdomLevel }, buildingName);
          }
          break;
       }
