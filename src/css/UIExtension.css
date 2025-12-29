@@ -777,3 +777,9 @@ table.date-table th:last-child {
 table.date-table tr:nth-child(even) td {
    background: rgba(255, 255, 255, 0.1);
 }
+
+ul.flat {
+   list-style: none;
+   padding: 0;
+   margin: 0;
+}

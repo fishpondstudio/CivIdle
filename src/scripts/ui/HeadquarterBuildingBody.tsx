@@ -2,7 +2,6 @@ import type { ReactNode } from "react";
 import { getScienceFromWorkers, isWorldWonder } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
 import type { GameOptions, GameState } from "../../../shared/logic/GameState";
-import { getGameOptions } from "../../../shared/logic/GameStateLogic";
 import { getTransportStat, getXyBuildings, unlockedBuildings } from "../../../shared/logic/IntraTickCache";
 import {
    getGreatPersonThisRunLevel,
@@ -23,7 +22,6 @@ import {
    filterOf,
    formatHMS,
    formatPercent,
-   getHMS,
    keysOf,
    mReduceOf,
    numberToRoman,
@@ -41,6 +39,7 @@ import type { IBuildingComponentProps } from "./BuildingPage";
 import { BuildingProduceComponent } from "./BuildingProduceComponent";
 import { BuildingStorageComponent } from "./BuildingStorageComponent";
 import { ChooseGreatPersonModal } from "./ChooseGreatPersonModal";
+import { CurrentRunStatsComponent } from "./CurrentRunStatsComponent";
 import { showModal } from "./GlobalModal";
 import { HallOfFameModal } from "./HallOfFameModal";
 import { HappinessComponent } from "./HappinessComponent";
@@ -453,7 +452,6 @@ function WonderComponent({ gameState }: { gameState: GameState }): React.ReactNo
 
 function RebirthComponent({ gameState }: { gameState: GameState }): ReactNode {
    const extraGreatPeople = getRebirthGreatPeopleCount();
-   const totalPGPLevel = getPermanentGreatPeopleLevel(getGameOptions());
    return (
       <fieldset>
          <legend>{t(L.Reborn)}</legend>
@@ -477,54 +475,7 @@ function RebirthComponent({ gameState }: { gameState: GameState }): ReactNode {
                      <FormatNumber value={Tick.current.totalValue} />
                   </div>
                </summary>
-               <ul>
-                  <li className="row text-small">
-                     <div className="f1">{t(L.TotalGameTimeThisRun)}</div>
-                     <div>
-                        <TextWithHelp content={getHMS(gameState.tick * SECOND).join(":")}>
-                           {formatHMS(gameState.tick * SECOND)}
-                        </TextWithHelp>
-                     </div>
-                  </li>
-                  <li className="row text-small">
-                     <div className="f1">{t(L.TotalEmpireValuePerCycle)}</div>
-                     <FormatNumber value={Tick.current.totalValue / gameState.tick} />
-                  </li>
-                  <li className="row text-small">
-                     <div className="f1">{t(L.TotalEmpireValuePerCyclePerGreatPeopleLevel)}</div>
-                     <FormatNumber
-                        value={
-                           totalPGPLevel === 0 ? 0 : Tick.current.totalValue / gameState.tick / totalPGPLevel
-                        }
-                     />
-                  </li>
-                  <li className="row text-small">
-                     <div className="f1">
-                        <TextWithHelp content={t(L.TotalWallTimeThisRunTooltip)}>
-                           {t(L.TotalWallTimeThisRun)}
-                        </TextWithHelp>
-                     </div>
-                     <div>
-                        <TextWithHelp content={getHMS(gameState.seconds * SECOND).join(":")}>
-                           {formatHMS(gameState.seconds * SECOND)}
-                        </TextWithHelp>
-                     </div>
-                  </li>
-                  <li className="row text-small">
-                     <div className="f1">{t(L.TotalEmpireValuePerWallSecond)}</div>
-                     <FormatNumber value={Tick.current.totalValue / gameState.seconds} />
-                  </li>
-                  <li className="row text-small">
-                     <div className="f1">{t(L.TotalEmpireValuePerWallSecondPerGreatPeopleLevel)}</div>
-                     <FormatNumber
-                        value={
-                           totalPGPLevel === 0
-                              ? 0
-                              : Tick.current.totalValue / gameState.seconds / totalPGPLevel
-                        }
-                     />
-                  </li>
-               </ul>
+               <CurrentRunStatsComponent className="text-small" gameState={gameState} />
             </details>
             <li>
                <details>

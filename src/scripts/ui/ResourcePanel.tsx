@@ -44,6 +44,7 @@ import { LookAtMode, WorldScene } from "../scenes/WorldScene";
 import { useTypedEvent } from "../utilities/Hook";
 import { Singleton } from "../utilities/Singleton";
 import { playClick, playError } from "../visuals/Sound";
+import { CurrentRunStatsComponent } from "./CurrentRunStatsComponent";
 import { showModal, showToast } from "./GlobalModal";
 import { FormatNumber } from "./HelperComponents";
 import { LoadingPage, LoadingPageStage } from "./LoadingPage";
@@ -198,32 +199,31 @@ export function ResourcePanel(): React.ReactNode {
          {!options.hideResourcePanelSections.has("Happiness") && tick.happiness ? (
             <>
                <div className="separator-vertical" />
-               <div
-                  id="tutorial-happiness"
-                  className="section pointer"
-                  onClick={() => {
-                     const xy = Tick.current.specialBuildings.get("Headquarter")?.tile;
-                     if (xy) {
-                        Singleton().sceneManager.getCurrent(WorldScene)?.lookAtTile(xy, LookAtMode.Select);
-                        Singleton().routeTo(TilePage, { xy, expandHappiness: true });
-                     }
-                  }}
+               <Tippy
+                  placement="bottom"
+                  content={options.resourceBarShowUncappedHappiness ? t(L.HappinessUncapped) : t(L.Happiness)}
                >
                   <div
-                     className={classNames({
-                        "m-icon": true,
-                        "text-red": tick.happiness.value < 0,
-                        "text-green": tick.happiness.value > 0,
-                     })}
+                     id="tutorial-happiness"
+                     className="section pointer"
+                     onClick={() => {
+                        const xy = Tick.current.specialBuildings.get("Headquarter")?.tile;
+                        if (xy) {
+                           Singleton().sceneManager.getCurrent(WorldScene)?.lookAtTile(xy, LookAtMode.Select);
+                           Singleton().routeTo(TilePage, { xy, expandHappiness: true });
+                        }
+                     }}
                   >
-                     {getHappinessIcon(tick.happiness.value)}
-                  </div>
-                  <Tippy
-                     placement="bottom"
-                     content={
-                        options.resourceBarShowUncappedHappiness ? t(L.HappinessUncapped) : t(L.Happiness)
-                     }
-                  >
+                     <div
+                        className={classNames({
+                           "m-icon": true,
+                           "text-red": tick.happiness.value < 0,
+                           "text-green": tick.happiness.value > 0,
+                        })}
+                     >
+                        {getHappinessIcon(tick.happiness.value)}
+                     </div>
+
                      <div style={{ width: "4rem" }}>
                         {round(
                            options.resourceBarShowUncappedHappiness
@@ -232,8 +232,8 @@ export function ResourcePanel(): React.ReactNode {
                            0,
                         )}
                      </div>
-                  </Tippy>
-               </div>
+                  </div>
+               </Tippy>
             </>
          ) : null}
          {!options.hideResourcePanelSections.has("Festival") && (
@@ -269,58 +269,60 @@ export function ResourcePanel(): React.ReactNode {
          {!options.hideResourcePanelSections.has("Workers") && (
             <>
                <div className="separator-vertical" />
-               <div className="section">
-                  <div
-                     className={classNames({
-                        "m-icon": true,
-                     })}
-                  >
-                     person
-                  </div>
-                  <Tippy content={`${t(L.WorkersBusy)} / ${t(L.TotalWorkers)}`} placement="bottom">
+               <Tippy content={`${t(L.WorkersBusy)} / ${t(L.TotalWorkers)}`} placement="bottom">
+                  <div className="section">
+                     <div
+                        className={classNames({
+                           "m-icon": true,
+                        })}
+                     >
+                        person
+                     </div>
                      <div style={{ width: "10rem" }}>
                         <FormatNumber value={workersBusy} />/<FormatNumber value={workersAfterHappiness} />
                      </div>
-                  </Tippy>
-               </div>
+                  </div>
+               </Tippy>
             </>
          )}
          {!options.hideResourcePanelSections.has("Electricity") &&
             hasFeature(GameFeature.Electricity, gs) && (
                <>
                   <div className="separator-vertical" />
-                  <div className="section">
-                     <div
-                        className={classNames({
-                           "m-icon": true,
-                           "text-red":
-                              (tick.workersAvailable.get("Power") ?? 0) <
-                              (tick.workersUsed.get("Power") ?? 0),
-                           "text-green":
-                              (tick.workersAvailable.get("Power") ?? 0) >
-                              (tick.workersUsed.get("Power") ?? 0),
-                        })}
-                     >
-                        bolt
-                     </div>
-                     <Tippy placement="bottom" content={`${t(L.PowerUsed)}/${t(L.PowerAvailable)}`}>
+                  <Tippy placement="bottom" content={`${t(L.PowerUsed)}/${t(L.PowerAvailable)}`}>
+                     <div className="section">
+                        <div
+                           className={classNames({
+                              "m-icon": true,
+                              "text-red":
+                                 (tick.workersAvailable.get("Power") ?? 0) <
+                                 (tick.workersUsed.get("Power") ?? 0),
+                              "text-green":
+                                 (tick.workersAvailable.get("Power") ?? 0) >
+                                 (tick.workersUsed.get("Power") ?? 0),
+                           })}
+                        >
+                           bolt
+                        </div>
+
                         <div style={{ width: "12rem" }}>
                            <FormatNumber value={tick.workersUsed.get("Power") ?? 0} />W{"/"}
                            <FormatNumber value={tick.workersAvailable.get("Power") ?? 0} />W
                         </div>
-                     </Tippy>
-                  </div>
+                     </div>
+                  </Tippy>
                </>
             )}
          {!options.hideResourcePanelSections.has("Science") && (
             <>
                <div className="separator-vertical" />
-               <div
-                  className="section pointer"
-                  onClick={() => Singleton().sceneManager.loadScene(TechTreeScene)}
-               >
-                  <div className={classNames({ "m-icon": true })}>science</div>
-                  <Tippy content={t(L.Science)} placement="bottom">
+               <Tippy content={t(L.Science)} placement="bottom">
+                  <div
+                     className="section pointer"
+                     onClick={() => Singleton().sceneManager.loadScene(TechTreeScene)}
+                  >
+                     <div className={classNames({ "m-icon": true })}>science</div>
+
                      <div style={{ width: "12rem" }}>
                         <FormatNumber value={TimeSeries.science[TimeSeries.science.length - 1]} />
                         <span
@@ -334,8 +336,8 @@ export function ResourcePanel(): React.ReactNode {
                            <FormatNumber value={Math.abs(scienceDelta)} />
                         </span>
                      </div>
-                  </Tippy>
-               </div>
+                  </div>
+               </Tippy>
             </>
          )}
          {!options.hideResourcePanelSections.has("Deficit") && (
@@ -347,15 +349,29 @@ export function ResourcePanel(): React.ReactNode {
          {!options.hideResourcePanelSections.has("EmpireValue") && (
             <>
                <div className="separator-vertical" />
-               <div className="section">
-                  <div
-                     className={classNames({
-                        "m-icon": true,
-                     })}
-                  >
-                     account_balance
-                  </div>
-                  <Tippy content={t(L.TotalEmpireValue)} placement="bottom">
+               <Tippy
+                  content={
+                     <>
+                        <div className="row">
+                           <div className="f1">{t(L.TotalEmpireValue)}</div>
+                           <div className="text-strong">
+                              <FormatNumber value={tick.totalValue} />
+                           </div>
+                        </div>
+                        <CurrentRunStatsComponent className="flat" gameState={gs} />
+                     </>
+                  }
+                  placement="bottom"
+               >
+                  <div className="section">
+                     <div
+                        className={classNames({
+                           "m-icon": true,
+                        })}
+                     >
+                        account_balance
+                     </div>
+
                      <div style={{ width: "12rem" }}>
                         <FormatNumber value={tick.totalValue} />
                         <span
@@ -366,34 +382,35 @@ export function ResourcePanel(): React.ReactNode {
                            <FormatNumber value={Math.abs(evDelta)} />
                         </span>
                      </div>
-                  </Tippy>
-               </div>
+                  </div>
+               </Tippy>
             </>
          )}
          {!options.hideResourcePanelSections.has("GreatPeople") && (
             <>
                <div className="separator-vertical" />
-               <div className="section">
-                  <div className="m-icon small">person_celebrate</div>
-                  <Tippy
-                     maxWidth="50vw"
-                     content={
-                        <>
-                           <div>
-                              {t(L.ExtraGreatPeopleAtReborn)}: {getRebirthGreatPeopleCount()}
-                           </div>
-                           <div>
-                              {t(L.ProgressTowardsNextGreatPerson)}:{" "}
-                              {formatPercent(
-                                 clamp(getProgressTowardsNextGreatPerson(), 0, 1),
-                                 0,
-                                 Rounding.Floor,
-                              )}{" "}
-                              ({formatHMS(timeToNextGreatPerson * 1000)})
-                           </div>
-                        </>
-                     }
-                  >
+               <Tippy
+                  maxWidth="50vw"
+                  content={
+                     <>
+                        <div>
+                           {t(L.ExtraGreatPeopleAtReborn)}: {getRebirthGreatPeopleCount()}
+                        </div>
+                        <div>
+                           {t(L.ProgressTowardsNextGreatPerson)}:{" "}
+                           {formatPercent(
+                              clamp(getProgressTowardsNextGreatPerson(), 0, 1),
+                              0,
+                              Rounding.Floor,
+                           )}{" "}
+                           ({formatHMS(timeToNextGreatPerson * 1000)})
+                        </div>
+                     </>
+                  }
+               >
+                  <div className="section">
+                     <div className="m-icon small">person_celebrate</div>
+
                      <div style={{ width: "8rem" }}>
                         <span>{getRebirthGreatPeopleCount()}</span>
                         <span className="text-desc" style={{ fontWeight: "normal", marginLeft: 5 }}>
@@ -406,8 +423,8 @@ export function ResourcePanel(): React.ReactNode {
                            )
                         </span>
                      </div>
-                  </Tippy>
-               </div>
+                  </div>
+               </Tippy>
             </>
          )}
          {!options.hideResourcePanelSections.has("PlayerTrade") &&
