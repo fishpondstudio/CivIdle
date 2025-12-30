@@ -7,6 +7,7 @@ import {
    getMultipliersDescription,
    getPompidou,
    getRandomEmptyTiles,
+   hasNotUsedDinosaurProvincialPark,
 } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
 import { SUPPORTER_PACK_URL } from "../../../shared/logic/Constants";
@@ -40,7 +41,7 @@ import { L, t } from "../../../shared/utilities/i18n";
 import { resetToCity, saveGame, useGameState } from "../Global";
 import { checkRebirthAchievements } from "../logic/Achievement";
 import { clientHeartbeat } from "../logic/Heartbeat";
-import { canEarnGreatPeopleFromReborn, client, isOnlineUser, useTrades, useUser } from "../rpc/RPCClient";
+import { client, isOnlineUser, useTrades, useUser } from "../rpc/RPCClient";
 import { jsxMapOf } from "../utilities/Helper";
 import { openUrl } from "../utilities/Platform";
 import { GreatPersonImage } from "../visuals/GreatPersonVisual";
@@ -112,50 +113,6 @@ export function RebirthModal(): React.ReactNode {
                      <RenderHTML html={t(L.RebornModalDescV3)} />
                   </WarningComponent>
                ) : null}
-               {canEarnGreatPeopleFromReborn() ? (
-                  <ul className="tree-view">
-                     <li className="row">
-                        <div className="f1">{t(L.GreatPeopleThisRun)}</div>
-                        <div className="text-strong">
-                           {reduceOf(
-                              gs.greatPeople,
-                              (prev, k, v) => {
-                                 return prev + v;
-                              },
-                              0,
-                           )}
-                        </div>
-                     </li>
-                     <li className="row">
-                        <div className="f1">{t(L.TotalEmpireValue)}</div>
-                        <div className="text-strong">
-                           <FormatNumber value={Tick.current.totalValue} />
-                        </div>
-                     </li>
-                     <li className="row">
-                        <div className="f1">{t(L.ExtraGreatPeopleAtReborn)}</div>
-                        <div className="text-strong">
-                           <TextWithHelp
-                              content={t(L.ClaimedGreatPeopleTooltip, {
-                                 total: greatPeopleAtRebirthCount,
-                                 claimed: gs.claimedGreatPeople,
-                              })}
-                           >
-                              {clamp(
-                                 greatPeopleAtRebirthCount - gs.claimedGreatPeople,
-                                 0,
-                                 Number.POSITIVE_INFINITY,
-                              )}
-                           </TextWithHelp>
-                        </div>
-                     </li>
-                  </ul>
-               ) : (
-                  <WarningComponent icon="warning">
-                     {t(L.CannotEarnPermanentGreatPeopleDesc)}
-                  </WarningComponent>
-               )}
-               <div className="sep10" />
                {hasFlag(user?.attr ?? UserAttributes.None, UserAttributes.DLC1) ? null : (
                   <WarningComponent icon="info" className="text-small mb10">
                      <RenderHTML
@@ -174,6 +131,49 @@ export function RebirthModal(): React.ReactNode {
                      />
                   </WarningComponent>
                ) : null}
+               {hasNotUsedDinosaurProvincialPark() ? (
+                  <WarningComponent icon="info" className="text-small mb10">
+                     {html(t(L.DinosaurProvincialParkNotUsedWarningHTML))}
+                  </WarningComponent>
+               ) : null}
+               <ul className="tree-view">
+                  <li className="row">
+                     <div className="f1">{t(L.GreatPeopleThisRun)}</div>
+                     <div className="text-strong">
+                        {reduceOf(
+                           gs.greatPeople,
+                           (prev, k, v) => {
+                              return prev + v;
+                           },
+                           0,
+                        )}
+                     </div>
+                  </li>
+                  <li className="row">
+                     <div className="f1">{t(L.TotalEmpireValue)}</div>
+                     <div className="text-strong">
+                        <FormatNumber value={Tick.current.totalValue} />
+                     </div>
+                  </li>
+                  <li className="row">
+                     <div className="f1">{t(L.ExtraGreatPeopleAtReborn)}</div>
+                     <div className="text-strong">
+                        <TextWithHelp
+                           content={t(L.ClaimedGreatPeopleTooltip, {
+                              total: greatPeopleAtRebirthCount,
+                              claimed: gs.claimedGreatPeople,
+                           })}
+                        >
+                           {clamp(
+                              greatPeopleAtRebirthCount - gs.claimedGreatPeople,
+                              0,
+                              Number.POSITIVE_INFINITY,
+                           )}
+                        </TextWithHelp>
+                     </div>
+                  </li>
+               </ul>
+               <div className="sep10" />
                <fieldset>
                   <div className="row">
                      <div className="f1 row">
@@ -475,7 +475,7 @@ export function RebirthModal(): React.ReactNode {
                      );
                      const currentCity = gs.city;
 
-                     if (!gs.rebirthed && canEarnGreatPeopleFromReborn()) {
+                     if (!gs.rebirthed) {
                         rollPermanentGreatPeople(
                            greatPeopleCount,
                            pickPerRoll,

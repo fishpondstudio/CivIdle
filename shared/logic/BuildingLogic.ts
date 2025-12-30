@@ -70,6 +70,7 @@ import {
    ResourceImportOptions,
    type IBuildingData,
    type ICentrePompidouBuildingData,
+   type IDinosaurProvincialParkBuildingData,
    type IHaveTypeAndLevel,
    type IMarketBuildingData,
    type IResourceImportBuildingData,
@@ -1454,4 +1455,13 @@ export function isEligibleForTradeTileBonus(b: Building): boolean {
    }
 
    return Config.TechAge[age].idx >= Config.TechAge.ClassicalAge.idx;
+}
+
+export function hasNotUsedDinosaurProvincialPark(): boolean {
+   const dino = Tick.current.specialBuildings.get("DinosaurProvincialPark")?.building;
+   if (!dino) {
+      return false;
+   }
+   const building = dino as IDinosaurProvincialParkBuildingData;
+   return !building.used;
 }

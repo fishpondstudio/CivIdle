@@ -30,24 +30,12 @@ import {
    uuid4,
 } from "../../../shared/utilities/Helper";
 import { compressSave, decompressSave, overwriteSaveGame, resetToCity, saveGame } from "../Global";
-import {
-   addSystemMessage,
-   canEarnGreatPeopleFromReborn,
-   clearSystemMessages,
-   client,
-   getPlayerMap,
-} from "../rpc/RPCClient";
+import { addSystemMessage, clearSystemMessages, client, getPlayerMap } from "../rpc/RPCClient";
 import { isSteam, SteamClient } from "../rpc/SteamClient";
 import { PlayerMapScene } from "../scenes/PlayerMapScene";
 import { WorldScene } from "../scenes/WorldScene";
 import { Singleton } from "../utilities/Singleton";
 import { randomizeBuildingAndResourceColor } from "./ThemeColor";
-
-function requireOfflineRun(): void {
-   if (canEarnGreatPeopleFromReborn()) {
-      throw new Error("Command is only available for trial run");
-   }
-}
 
 function requireDevelopment(): void {
    if (!import.meta.env.DEV) {

@@ -166,16 +166,6 @@ export function getUserLevel(): AccountLevel {
    return user?.level ?? AccountLevel.Tribune;
 }
 
-// TODO: Need to properly implement this after supporting offline run
-export function canEarnGreatPeopleFromReborn(): boolean {
-   if (isOnlineUser()) {
-      getGameState().isOffline = false;
-   } else {
-      getGameState().isOffline = true;
-   }
-   return true;
-}
-
 const _chatIds = new Map<ChatChannel | "System", number>();
 
 export function addSystemMessage(message: string): void {
