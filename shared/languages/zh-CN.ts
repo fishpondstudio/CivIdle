@@ -1670,7 +1670,7 @@ export const ZH_CN = {
    TradesCanBeClaimedHTML: "共 %{count} 项已完成订单可被认领——确保您有足够的空间来认领它们。点击查看详情",
    TradeTileBonusWillRefresh: "贸易地块加成和联合国刷新时间提示",
    TradeTileBonusWillRefreshHTML: "贸易地块加成和联合国将于 <b>%{time}</b> 后刷新",
-   TradeValue: "贸易价值",
+   TradeValue: "贸易点数（贸易价值）",
    TraditionCommerce: "商业",
    TraditionCultivation: "教化",
    TraditionDescHTML: "使用<b>鼠标滚轮或右边的滚动条</b>，从<b>教化、商业、扩张以及荣耀</b>中选择一项作为你的帝国传统。一旦选择，你将<b>不能更换传统</b>。每项传统，你都能解锁更多增强",
