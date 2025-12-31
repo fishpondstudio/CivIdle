@@ -88,7 +88,6 @@ export const ZH_TW = {
    Airplane: "飛機",
    AirplaneFactory: "飛機工廠",
    AkademikLomonosov: "羅蒙諾索夫院士號",
-   AkademikLomonosovDesc: "該奇觀可被升級，每一級提供 100 KW 電力。為航天器發射場提供 +N 生產和存儲乘數。N 為冷戰時代智慧等級。為周圍 2 地塊範圍提供電力。該奇觀可被移動",
    AkbarTheGreat: "阿克巴大帝",
    Akitu: "阿基圖 (Akitu): 烏爾大塔廟 (Ziggurat Of Ur) 和幼發拉底河 (Euphrates River) 可作用於當前時代已解鎖的建築",
    AlanTuring: "艾倫·圖靈",
@@ -266,7 +265,6 @@ export const ZH_TW = {
    CancelUpgradeDesc: "所有已被運送的資源將保留在此建築中。",
    Cannon: "大炮",
    CannonWorkshop: "大炮工廠",
-   CannotEarnPermanentGreatPeopleDesc: "因為這次是試經營，所以無法得到永久偉人。",
    Capacity: "建造者能力",
    Capitalism: "資本主義",
    Cappadocia: "卡帕多西亞",
@@ -1490,7 +1488,6 @@ export const ZH_TW = {
    SpinnerSpeedDescHTML: "調整運轉動畫的速度，作為區分現代化改造的建築運轉動畫速度為兩倍。<b>調整值必須位於0.01到100之間。默認值為1</b>（調整運轉動畫的速度不會影響每週期生產）",
    Sports: "體育運動",
    Sputnik1: "伴侶號",
-   Sputnik1DescV2: "該奇觀可被升級，每一級為所有冷戰時代的偉人（包括未擁有過的）提供 +1 等級的本輪效果（不包括奇觀偉人）。每一級為航天器發射場提供 +1 生產和存儲乘數。",
    Stable: "馬廄",
    Stadium: "體育場",
    StartFestival: "節慶狂歡！",
@@ -1874,4 +1871,8 @@ export const ZH_TW = {
    Zoroaster: "瑣羅亞斯德(查拉圖斯特拉)",
    Zugspitze: "祖格峰",
    ZugspitzeDesc: "每解鎖一個時代，獲得一個點數，可用於為本次運行中誕生的任何偉人提供一個額外等級（存儲乘數效果和奇觀偉人除外）",
+   AkademikLomonosovDescV2: "This wonder can be upgraded and each level provides 100KW of power. Provide power to all tiles within 2 tile range. This wonder can be moved",
+   DinosaurProvincialParkNotUsedWarningHTML: "You have not activated the <b>Dinosaur Provincial Park</b> yet - consider activating it before rebirth",
+   Sputnik1DescV3:
+      "This wonder can be upgraded and each level provides +1 level to all Cold War Age great people for this run (excl. Great People that provide level boost) and +1 Production, Storage Multiplier to Cosmodrome. Provides +1 Production and Storage Multiplier to Cosmodrome for each level of Cold War Age Wisdom",
 };

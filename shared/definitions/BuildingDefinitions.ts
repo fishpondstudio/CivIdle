@@ -2329,7 +2329,7 @@ export class BuildingDefinitions {
 
    Sputnik1: IBuildingDefinition = {
       name: () => t(L.Sputnik1),
-      desc: () => t(L.Sputnik1DescV2),
+      desc: () => t(L.Sputnik1DescV3),
       input: {},
       output: {},
       construction: { Satellite: 500 },
