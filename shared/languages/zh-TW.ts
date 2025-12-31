@@ -88,6 +88,7 @@ export const ZH_TW = {
    Airplane: "飛機",
    AirplaneFactory: "飛機工廠",
    AkademikLomonosov: "羅蒙諾索夫院士號",
+   AkademikLomonosovDescV2: "該奇觀可被升級，每一級提供 100 KW 電力。為周圍 2 地塊範圍提供電力。該奇觀可被移動",
    AkbarTheGreat: "阿克巴大帝",
    Akitu: "阿基圖 (Akitu): 烏爾大塔廟 (Ziggurat Of Ur) 和幼發拉底河 (Euphrates River) 可作用於當前時代已解鎖的建築",
    AlanTuring: "艾倫·圖靈",
@@ -487,7 +488,8 @@ export const ZH_TW = {
    DestroyResource: "銷毀資源",
    Dido: "狄多",
    DinosaurProvincialPark: "恐龍省立公園",
-   DinosaurProvincialParkDesc: "該奇觀可手動進行啟動，以獲得一次性💵瑞士貨幣。（價值等同於當前帝國總價值的25%）",
+   DinosaurProvincialParkDesc: "該奇觀可手動進行啟動，以獲得一次性💵瑞士貨幣。（價值等同於當前帝國總價值的 %{percent} ）",
+   DinosaurProvincialParkNotUsedWarningHTML: "您尚未啟動 <b>恐龍省立公園</b> ，請您在重生前進行啟動，以免造成不必要的損失",
    Diplomacy: "外交",
    DistanceInfinity: "無限制",
    DistanceInTiles: "距離格數",
@@ -507,7 +509,7 @@ export const ZH_TW = {
    EasterBunnyDesc: "建造完成後，重生時將複製 10％ 額外偉人將以此生偉人方式進入下輪遊玩不再以永久碎片，並在下輪遊玩中建造復活節兔子後根據已解鎖時代誕生這些偉人。此奇觀僅在 4 月可建造。",
    EastIndiaCompany: "東印度公司",
    EastIndiaCompanyDescV2:
-      "這座世界奇觀會累積您與其他玩家完成交易的總貿易價值。每累積 2000 點貿易價值可獲得一個周期，使所有建築每與一座運作中的商隊旅館相鄰，獲得 +0.5 的生產加成乘數。此奇觀可升級，每升級一次，額外獲得 +0.5 的生產加成乘數。當您完成其他玩家提出的交易請求，或您的交易請求被其他玩家完成時，透過交易所獲得的物品價值才會被計入（包含稅收部分）。多次交易可延長加成效果的持續時間，且加成效果可疊加。",
+      "當您通過貿易獲得的所有物品都會獲得相應貿易點數（包括稅收，物品的每 1 價值 = 1 貿易點數）。該奇觀累積您獲得的貿易點數。每週期自動消耗 2000 貿易點數, 使所有建築每相鄰一個運轉的商隊旅館獲得 +0.5 生產乘數。該奇觀可消耗貿易點數進行升級，並且每一次額外升級獲得 +0.5 生產乘數",
    Education: "教育學",
    EffectiveGreatPeopleLevel: "有效偉人等級",
    EffectiveGreatPeopleLevelDesc: "有效偉人等級是所有永久偉人等級與時代智慧等級的總和。此數值用來評估偉人和時代智慧提供的效果增益",
@@ -1488,6 +1490,8 @@ export const ZH_TW = {
    SpinnerSpeedDescHTML: "調整運轉動畫的速度，作為區分現代化改造的建築運轉動畫速度為兩倍。<b>調整值必須位於0.01到100之間。默認值為1</b>（調整運轉動畫的速度不會影響每週期生產）",
    Sports: "體育運動",
    Sputnik1: "伴侶號",
+   Sputnik1DescV3:
+      "該奇觀可被升級，每一級為所有冷戰時代的偉人（包括未擁有過的）提供 +1 等級的本輪效果（不包括奇觀偉人）。每一級為航天器發射場提供 +1 生產和存儲乘數。為航天器發射場提供 +N 生產和存儲乘數，N 為冷戰時代智慧等級。",
    Stable: "馬廄",
    Stadium: "體育場",
    StartFestival: "節慶狂歡！",
@@ -1871,8 +1875,4 @@ export const ZH_TW = {
    Zoroaster: "瑣羅亞斯德(查拉圖斯特拉)",
    Zugspitze: "祖格峰",
    ZugspitzeDesc: "每解鎖一個時代，獲得一個點數，可用於為本次運行中誕生的任何偉人提供一個額外等級（存儲乘數效果和奇觀偉人除外）",
-   AkademikLomonosovDescV2: "This wonder can be upgraded and each level provides 100KW of power. Provide power to all tiles within 2 tile range. This wonder can be moved",
-   DinosaurProvincialParkNotUsedWarningHTML: "You have not activated the <b>Dinosaur Provincial Park</b> yet - consider activating it before rebirth",
-   Sputnik1DescV3:
-      "This wonder can be upgraded and each level provides +1 level to all Cold War Age great people for this run (excl. Great People that provide level boost) and +1 Production, Storage Multiplier to Cosmodrome. Provides +1 Production and Storage Multiplier to Cosmodrome for each level of Cold War Age Wisdom",
 };
