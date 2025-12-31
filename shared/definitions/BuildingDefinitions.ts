@@ -1,3 +1,4 @@
+import { formatPercent } from "../utilities/Helper";
 import type { PartialSet, PartialTabulate } from "../utilities/TypeDefinitions";
 import { L, t } from "../utilities/i18n";
 import type { Deposit, Material } from "./MaterialDefinitions";
@@ -7,6 +8,8 @@ export enum BuildingSpecial {
    WorldWonder = 1,
    NaturalWonder = 2,
 }
+
+export const DinosaurProvincialParkPercent = 0.15;
 
 export interface IBuildingDefinition {
    name: () => string;
@@ -22,7 +25,7 @@ export interface IBuildingDefinition {
    special?: BuildingSpecial;
 }
 
-export const BUILDING_DEFAULT_VISION = 2;
+export const BuildingDefaultVisionRange = 2;
 
 export class BuildingDefinitions {
    // #region Workers ////////////////////////////////////////////////////////////////////////////////////////
@@ -2337,7 +2340,7 @@ export class BuildingDefinitions {
 
    AkademikLomonosov: IBuildingDefinition = {
       name: () => t(L.AkademikLomonosov),
-      desc: () => t(L.AkademikLomonosovDesc),
+      desc: () => t(L.AkademikLomonosovDescV2),
       input: {},
       output: {},
       construction: { Spacecraft: 500 },
@@ -2370,7 +2373,7 @@ export class BuildingDefinitions {
 
    DinosaurProvincialPark: IBuildingDefinition = {
       name: () => t(L.DinosaurProvincialPark),
-      desc: () => t(L.DinosaurProvincialParkDesc),
+      desc: () => t(L.DinosaurProvincialParkDesc, { percent: formatPercent(DinosaurProvincialParkPercent) }),
       input: {},
       output: {},
       construction: {},

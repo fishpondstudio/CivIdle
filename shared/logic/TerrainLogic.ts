@@ -1,4 +1,4 @@
-import { BUILDING_DEFAULT_VISION } from "../definitions/BuildingDefinitions";
+import { BuildingDefaultVisionRange } from "../definitions/BuildingDefinitions";
 import { pointToTile, tileToPoint, type Tile } from "../utilities/Helper";
 import { exploreTile, isNaturalWonder } from "./BuildingLogic";
 import { Config } from "./Config";
@@ -16,7 +16,8 @@ export function ensureTileFogOfWar(xy: Tile, extraVisionRange: number, gameState
    const result: Set<Tile> = new Set();
    exploreTile(xy, gameState);
    result.add(xy);
-   const visionRange = Config.Building[building.type]?.vision ?? BUILDING_DEFAULT_VISION + extraVisionRange;
+   const visionRange =
+      Config.Building[building.type]?.vision ?? BuildingDefaultVisionRange + extraVisionRange;
    grid.getRange(tileToPoint(xy), visionRange).forEach((n) => {
       const xy = pointToTile(n);
       const tile = gameState.tiles.get(xy);

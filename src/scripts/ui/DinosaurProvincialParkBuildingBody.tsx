@@ -1,3 +1,4 @@
+import { DinosaurProvincialParkPercent } from "../../../shared/definitions/BuildingDefinitions";
 import { Config } from "../../../shared/logic/Config";
 import { notifyGameStateUpdate } from "../../../shared/logic/GameStateLogic";
 import { Tick } from "../../../shared/logic/TickLogic";
@@ -18,7 +19,7 @@ export function DinosaurProvincialParkBuildingBody({
    if (!building) {
       return null;
    }
-   const koti = (Tick.current.totalValue * 0.25) / (Config.MaterialPrice.Koti ?? 1);
+   const koti = (Tick.current.totalValue * DinosaurProvincialParkPercent) / (Config.MaterialPrice.Koti ?? 1);
    return (
       <div className="window-body">
          <BuildingDescriptionComponent gameState={gameState} xy={xy} />

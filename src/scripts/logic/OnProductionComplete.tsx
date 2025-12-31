@@ -2133,6 +2133,14 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
             }
          });
          addMultiplier("Cosmodrome", { output: building.level, storage: building.level }, buildingName);
+         const ageWisdomLevel = options.ageWisdom.ColdWarAge ?? 0;
+         if (ageWisdomLevel > 0) {
+            addMultiplier(
+               "Cosmodrome",
+               { output: ageWisdomLevel, storage: ageWisdomLevel },
+               `${buildingName} (${t(L.AgeWisdom)})`,
+            );
+         }
          break;
       }
       case "AkademikLomonosov": {
@@ -2141,10 +2149,6 @@ export function onProductionComplete({ xy, offline }: { xy: Tile; offline: boole
          }
          const multiplier = isFestival(building.type, gs) ? 2 : 1;
          mapSafeAdd(Tick.next.workersAvailable, "Power", 100_000 * building.level * multiplier);
-         const ageWisdomLevel = options.ageWisdom.ColdWarAge ?? 0;
-         if (ageWisdomLevel > 0) {
-            addMultiplier("Cosmodrome", { output: ageWisdomLevel, storage: ageWisdomLevel }, buildingName);
-         }
          break;
       }
       case "AuroraBorealis": {
