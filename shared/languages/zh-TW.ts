@@ -1668,7 +1668,7 @@ export const ZH_TW = {
    TradesCanBeClaimedHTML: "共 %{count} 筆已完成訂單可領取——確保您有足夠的空間來領取它們。點擊查看詳情",
    TradeTileBonusWillRefresh: "貿易地塊加成和聯合國刷新時間提示",
    TradeTileBonusWillRefreshHTML: "貿易地塊加成和聯合國將於 <b>%{time}</b> 後刷新",
-   TradeValue: "貿易價值",
+   TradeValue: "貿易點數（貿易價值）",
    TraditionCommerce: "商業",
    TraditionCultivation: "耕作",
    TraditionDescHTML: "使用<b>滑鼠滾輪或右邊的滾動條</b>，從<b>耕作、商業、擴張和榮譽</b>中選擇作為您的帝國傳統。選擇傳統後，您<b>無法切換傳統</b>。您可以在每個傳統中解鎖更多提升",
