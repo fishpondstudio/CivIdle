@@ -50,7 +50,7 @@ export function ChooseGreatPersonModal({ permanent }: { permanent: boolean }): R
          notifyGameOptionsUpdate(options);
 
          if (options.greatPeopleChoicesV2.length <= 0) {
-            showModal(<ManagePermanentGreatPersonModal />);
+            showModal(<ManagePermanentGreatPersonModal adaptiveOnly={false} />);
          }
       };
    }

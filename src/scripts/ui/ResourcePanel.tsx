@@ -114,39 +114,44 @@ export function ResourcePanel(): React.ReactNode {
          ref={ref}
       >
          {isSteam() && (
-            <Tippy content={t(L.EnterExitMinimizedMode)}>
-               <div className="menu-button app-region-none">
-                  <div
-                     className="m-icon"
-                     onClick={async () => {
-                        if (isFloating) {
-                           FloatingModeChanged.emit(false);
-                           await SteamClient.exitFloatingMode();
-                           await SteamClient.maximize();
-                           Singleton().routeTo(LoadingPage, { stage: LoadingPageStage.SteamSignIn });
-                           setTimeout(() => {
-                              Singleton().sceneManager.loadScene(WorldScene);
-                           }, 1000);
-                        } else {
-                           FloatingModeChanged.emit(true);
-                           Singleton().sceneManager.loadScene(EmptyScene);
-                           await SteamClient.enterFloatingMode();
-                           await SteamClient.restore();
-                           if (ref.current) {
-                              const rect = ref.current.getBoundingClientRect();
-                              await SteamClient.setSize(Math.round(rect.width), Math.round(rect.height + 50));
+            <>
+               <Tippy content={t(L.EnterExitMinimizedMode)}>
+                  <div className="menu-button app-region-none">
+                     <div
+                        className="m-icon"
+                        onClick={async () => {
+                           if (isFloating) {
+                              FloatingModeChanged.emit(false);
+                              await SteamClient.exitFloatingMode();
+                              await SteamClient.maximize();
+                              Singleton().routeTo(LoadingPage, { stage: LoadingPageStage.SteamSignIn });
+                              setTimeout(() => {
+                                 Singleton().sceneManager.loadScene(WorldScene);
+                              }, 1000);
+                           } else {
+                              FloatingModeChanged.emit(true);
+                              Singleton().sceneManager.loadScene(EmptyScene);
+                              await SteamClient.enterFloatingMode();
+                              await SteamClient.restore();
+                              if (ref.current) {
+                                 const rect = ref.current.getBoundingClientRect();
+                                 await SteamClient.setSize(
+                                    Math.round(rect.width),
+                                    Math.round(rect.height + 50),
+                                 );
+                              }
                            }
-                        }
-                     }}
-                  >
-                     {isFloating ? "pip_exit" : "picture_in_picture"}
+                        }}
+                     >
+                        {isFloating ? "pip_exit" : "picture_in_picture"}
+                     </div>
                   </div>
-               </div>
-            </Tippy>
+               </Tippy>
+               <div className="separator-vertical" />
+            </>
          )}
          {!isFloating && (
             <>
-               <div className="separator-vertical" />
                <div className={classNames({ "menu-button": true, active: favoriteActive })}>
                   <div
                      onPointerDown={(e) => {
@@ -194,11 +199,11 @@ export function ResourcePanel(): React.ReactNode {
                         })}
                   </div>
                </div>
+               <div className="separator-vertical" />
             </>
          )}
          {!options.hideResourcePanelSections.has("Happiness") && tick.happiness ? (
             <>
-               <div className="separator-vertical" />
                <Tippy
                   placement="bottom"
                   content={options.resourceBarShowUncappedHappiness ? t(L.HappinessUncapped) : t(L.Happiness)}
@@ -234,11 +239,11 @@ export function ResourcePanel(): React.ReactNode {
                      </div>
                   </div>
                </Tippy>
+               <div className="separator-vertical" />
             </>
          ) : null}
          {!options.hideResourcePanelSections.has("Festival") && (
             <>
-               <div className="separator-vertical" />
                <Tippy disabled={isFloating} content={Config.City[gs.city].festivalDesc()}>
                   <div
                      className={classNames({
@@ -264,11 +269,11 @@ export function ResourcePanel(): React.ReactNode {
                      </div>
                   </div>
                </Tippy>
+               <div className="separator-vertical" />
             </>
          )}
          {!options.hideResourcePanelSections.has("Workers") && (
             <>
-               <div className="separator-vertical" />
                <Tippy content={`${t(L.WorkersBusy)} / ${t(L.TotalWorkers)}`} placement="bottom">
                   <div className="section">
                      <div
@@ -283,12 +288,12 @@ export function ResourcePanel(): React.ReactNode {
                      </div>
                   </div>
                </Tippy>
+               <div className="separator-vertical" />
             </>
          )}
          {!options.hideResourcePanelSections.has("Electricity") &&
             hasFeature(GameFeature.Electricity, gs) && (
                <>
-                  <div className="separator-vertical" />
                   <Tippy placement="bottom" content={`${t(L.PowerUsed)}/${t(L.PowerAvailable)}`}>
                      <div className="section">
                         <div
@@ -311,11 +316,11 @@ export function ResourcePanel(): React.ReactNode {
                         </div>
                      </div>
                   </Tippy>
+                  <div className="separator-vertical" />
                </>
             )}
          {!options.hideResourcePanelSections.has("Science") && (
             <>
-               <div className="separator-vertical" />
                <Tippy content={t(L.Science)} placement="bottom">
                   <div
                      className="section pointer"
@@ -338,17 +343,17 @@ export function ResourcePanel(): React.ReactNode {
                      </div>
                   </div>
                </Tippy>
+               <div className="separator-vertical" />
             </>
          )}
          {!options.hideResourcePanelSections.has("Deficit") && (
             <>
-               <div className="separator-vertical" />
                <DeficitResources />
+               <div className="separator-vertical" />
             </>
          )}
          {!options.hideResourcePanelSections.has("EmpireValue") && (
             <>
-               <div className="separator-vertical" />
                <Tippy
                   content={
                      <>
@@ -384,11 +389,11 @@ export function ResourcePanel(): React.ReactNode {
                      </div>
                   </div>
                </Tippy>
+               <div className="separator-vertical" />
             </>
          )}
          {!options.hideResourcePanelSections.has("GreatPeople") && (
             <>
-               <div className="separator-vertical" />
                <Tippy
                   maxWidth="50vw"
                   content={
@@ -425,13 +430,13 @@ export function ResourcePanel(): React.ReactNode {
                      </div>
                   </div>
                </Tippy>
+               <div className="separator-vertical" />
             </>
          )}
          {!options.hideResourcePanelSections.has("PlayerTrade") &&
          getOwnedTradeTile() &&
          Tick.current.playerTradeBuildings.size > 0 ? (
             <>
-               <div className="separator-vertical" />
                <Tippy content={t(L.PlayerTrade)}>
                   <div
                      className="section pointer mh10"
@@ -446,45 +451,43 @@ export function ResourcePanel(): React.ReactNode {
                      </div>
                   </div>
                </Tippy>
+               <div className="separator-vertical" />
             </>
          ) : null}
          {!options.hideResourcePanelSections.has("TimeWarp") && (
-            <>
-               <div className="separator-vertical" />
-               <Tippy
-                  content={
-                     <>
+            <Tippy
+               content={
+                  <>
+                     <div className="row g20">
+                        <div className="f1">{t(L.WarpSpeed)}</div>
+                        <div>{gs.speedUp}x</div>
+                     </div>
+                     {gs.speedUp > 1 ? (
                         <div className="row g20">
-                           <div className="f1">{t(L.WarpSpeed)}</div>
-                           <div>{gs.speedUp}x</div>
+                           <div className="f1">{t(L.EstimatedTimeLeft)}</div>
+                           <div>{formatHMS((1000 * currentWarp) / (gs.speedUp - 1))}</div>
                         </div>
-                        {gs.speedUp > 1 ? (
-                           <div className="row g20">
-                              <div className="f1">{t(L.EstimatedTimeLeft)}</div>
-                              <div>{formatHMS((1000 * currentWarp) / (gs.speedUp - 1))}</div>
-                           </div>
-                        ) : null}
-                     </>
-                  }
-               >
-                  <div className="section app-region-none" style={{ padding: "0 0.5rem" }}>
-                     <select
-                        value={gs.speedUp}
-                        onChange={(e) => {
-                           gs.speedUp = clamp(Number.parseInt(e.target.value, 10), 1, getMaxWarpSpeed(gs));
-                           notifyGameStateUpdate();
-                        }}
-                        style={{ paddingRight: "2.5rem" }}
-                     >
-                        {range(1, getMaxWarpSpeed(gs) + 1).map((i) => (
-                           <option key={i} value={i}>
-                              {i}x
-                           </option>
-                        ))}
-                     </select>
-                  </div>
-               </Tippy>
-            </>
+                     ) : null}
+                  </>
+               }
+            >
+               <div className="section app-region-none" style={{ padding: "0 0.5rem" }}>
+                  <select
+                     value={gs.speedUp}
+                     onChange={(e) => {
+                        gs.speedUp = clamp(Number.parseInt(e.target.value, 10), 1, getMaxWarpSpeed(gs));
+                        notifyGameStateUpdate();
+                     }}
+                     style={{ paddingRight: "2.5rem" }}
+                  >
+                     {range(1, getMaxWarpSpeed(gs) + 1).map((i) => (
+                        <option key={i} value={i}>
+                           {i}x
+                        </option>
+                     ))}
+                  </select>
+               </div>
+            </Tippy>
          )}
       </div>
    );

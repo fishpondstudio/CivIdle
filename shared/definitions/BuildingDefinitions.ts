@@ -413,14 +413,14 @@ export class BuildingDefinitions {
    // Science is valued at 0.2
    Library: IBuildingDefinition = {
       name: () => t(L.Library),
-      input: { Paper: 3 },
-      output: { Science: 105 },
+      input: { Paper: 4 },
+      output: { Science: 140 },
       construction: { Brick: 1 },
    };
    School: IBuildingDefinition = {
       name: () => t(L.School),
-      input: { Faith: 1, Poem: 1 },
-      output: { Science: 400 },
+      input: { Faith: 2, Poem: 2 },
+      output: { Science: 800 },
    };
    University: IBuildingDefinition = {
       name: () => t(L.University),

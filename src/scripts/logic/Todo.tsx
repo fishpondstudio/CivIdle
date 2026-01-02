@@ -336,7 +336,7 @@ export const _Todos = {
                inv.amount >= getGreatPersonUpgradeCost(gp, inv.level + 1),
          ),
       onClick: (gs, options) => {
-         showModal(<ManagePermanentGreatPersonModal />);
+         showModal(<ManagePermanentGreatPersonModal adaptiveOnly={false} />);
       },
    },
    I3: {
@@ -470,6 +470,36 @@ export const _Todos = {
                .sceneManager.getCurrent(WorldScene)
                ?.selectGrid(tileToPoint(s.tile), { tab: "resources" });
          }
+      },
+   },
+   I8: {
+      name: () => t(L.SelectAdaptiveGreatPeopleBoost),
+      icon: "checklist_rtl",
+      className: "text-green",
+      desc: (gs, options) => t(L.YouHaveAdaptiveGreatPeopleWithBoostToSelect),
+      condition: (gs, options) => {
+         for (const [gp, amount] of entriesOf(gs.greatPeople)) {
+            if (
+               Config.GreatPerson[gp].type === GreatPersonType.Adaptive &&
+               amount > 0 &&
+               !gs.adaptiveGreatPeople.has(gp)
+            ) {
+               return true;
+            }
+         }
+         for (const [gp, inv] of entriesOf(options.greatPeople)) {
+            if (
+               Config.GreatPerson[gp].type === GreatPersonType.Adaptive &&
+               inv.amount > 0 &&
+               !gs.adaptiveGreatPeople.has(gp)
+            ) {
+               return true;
+            }
+         }
+         return false;
+      },
+      onClick: (gs, options) => {
+         showModal(<ManagePermanentGreatPersonModal adaptiveOnly={true} />);
       },
    },
    S1: {

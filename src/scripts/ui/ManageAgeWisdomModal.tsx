@@ -38,7 +38,7 @@ export function ManageAgeWisdomModal(): React.ReactNode {
                className="row mb10 w100"
                onClick={() => {
                   playClick();
-                  showModal(<ManagePermanentGreatPersonModal />);
+                  showModal(<ManagePermanentGreatPersonModal adaptiveOnly={false} />);
                }}
             >
                <div className="m-icon" style={{ margin: "0 5px 0 -5px", fontSize: "18px" }}>

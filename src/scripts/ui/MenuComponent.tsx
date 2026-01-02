@@ -179,7 +179,7 @@ export function MenuComponent(): React.ReactNode {
                   <div
                      className="menu-popover-item"
                      onPointerDown={(e) => {
-                        showModal(<ManagePermanentGreatPersonModal />);
+                        showModal(<ManagePermanentGreatPersonModal adaptiveOnly={false} />);
                         setActive(null);
                      }}
                   >

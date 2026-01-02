@@ -35,9 +35,9 @@ import { WarningComponent } from "./WarningComponent";
 
 let ageState: TechAge | null = null;
 
-export function ManagePermanentGreatPersonModal(): React.ReactNode {
+export function ManagePermanentGreatPersonModal(props: { adaptiveOnly: boolean }): React.ReactNode {
    const [age, setAge] = useState<TechAge | null>(ageState);
-   const [adaptiveOnly, setAdaptiveOnly] = useState(false);
+   const [adaptiveOnly, setAdaptiveOnly] = useState(props.adaptiveOnly);
    const options = useGameOptions();
    return (
       <div className="window" style={{ width: "800px", maxWidth: "90vw" }}>
