@@ -1883,7 +1883,7 @@ export const PT_BR = {
    Xuanzang: "Xuanzang",
    YearOfTheSnakeV2: "Lunar New Year",
    YouAreOffline: "You Are Offline",
-   YouAreOfflineHTML: "You are currently not connected to the server. Check your internet connect and click to reload the game. You might need to restart Steam if reloading doesn't work",
+   YouAreOfflineHTML: "Você não está conectado ao servidor no momento. Verifique sua conexão com a internet e clique para recarregar o jogo. Caso o recarregamento não funcione, talvez seja necessário reiniciar o Steam.",
    YuriGagarin: "Yuri Gagarin",
    ZahaHadid: "Zaha Hadid",
    Zenobia: "Zenobia",
