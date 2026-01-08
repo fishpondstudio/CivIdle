@@ -22,6 +22,7 @@ import {
 import {
    copyFlag,
    forEach,
+   formatNumber,
    hasFlag,
    isNullOrUndefined,
    keysOf,
@@ -338,7 +339,7 @@ export function ResourceImportComponent({ gameState, xy }: IBuildingComponentPro
                            return (
                               <li key={idx} className="row">
                                  <div className="f1">{m.source}</div>
-                                 <div>{m.output}</div>
+                                 <div>{formatNumber(m.output)}</div>
                               </li>
                            );
                         })}
