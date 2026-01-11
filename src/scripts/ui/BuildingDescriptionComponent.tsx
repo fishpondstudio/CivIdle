@@ -1,4 +1,4 @@
-import { isWorldOrNaturalWonder } from "../../../shared/logic/BuildingLogic";
+import { isNaturalWonder, isWorldWonder } from "../../../shared/logic/BuildingLogic";
 import { Config } from "../../../shared/logic/Config";
 import { L, t } from "../../../shared/utilities/i18n";
 import type { IBuildingComponentProps } from "./BuildingPage";
@@ -15,7 +15,8 @@ export function BuildingDescriptionComponent({ gameState, xy }: IBuildingCompone
    }
    return (
       <fieldset className="row">
-         {isWorldOrNaturalWonder(type) ? <legend>{t(L.Wonder)}</legend> : null}
+         {isWorldWonder(type) ? <legend>{t(L.Wonder)}</legend> : null}
+         {isNaturalWonder(type) ? <legend>{t(L.NaturalWonder)}</legend> : null}
          <div className="mr10">
             <BuildingSpriteComponent building={type} scale={0.5} style={{ filter: "invert(0.75)" }} />
          </div>

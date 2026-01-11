@@ -1886,4 +1886,5 @@ export const EN = {
    ZugspitzeDesc: "For each unlocked age, get one point that can be used to provide one extra level to any Great Person that is born from this run. (Storage multipliers are not effective due to this multiplier being dynamic)",
    SelectAdaptiveGreatPeopleBoost: "Select Adaptive Great People Boost",
    YouHaveAdaptiveGreatPeopleWithBoostToSelect: "You have adaptive great people with boost to select",
+   NaturalWonder: "Natural Wonder",
 };
