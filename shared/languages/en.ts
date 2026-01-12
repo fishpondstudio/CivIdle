@@ -1,7 +1,7 @@
 export const EN = {
    About: "About CivIdle",
    AbuSimbel: "Abu Simbel",
-   AbuSimbelDesc: "Double the effect of Ramesses II. All Adjacent wonders get +1 Happiness",
+   AbuSimbelDesc: "Double the effect of Ramesses II. All wonders Adjacent to Abu Simbel get +1 Happiness",
    AccountActiveTrade: "Active Trade",
    AccountChatBadge: "Chat Badge",
    AccountCustomColor: "Custom Color",
