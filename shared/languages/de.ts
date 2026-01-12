@@ -681,7 +681,7 @@ export const DE = {
    PlayerMapClaimTileCondition2: "Du wurdest nicht von Anti-Cheat gebannt.",
    PlayerMapClaimTileCondition3: "Du hast die erforderliche Technologie freigeschaltet.",
    PlayerMapClaimTileCondition4: "Entweder hast Du kein Gebiet beansprucht oder zu lange fürs Ändern des Gebietes gebraucht.",
-   PlayerMapClaimTileCooldownLeft: "Abklingzeit übrig",
+   PlayerMapClaimTileCooldownLeft: "Abklingzeit übrig: %{time}",
    PlayerMapClaimTileNoLongerReserved: "Dieses Gebiet ist nicht mehr reserviert. Du kannst <b>%{name}</b> entfernen und es für dich beanspruchen.",
    PlayerMapEstablishedSince: "Gegründet am",
    PlayerMapPageGoBackToCity: "Geh zurück in die Stadt",
