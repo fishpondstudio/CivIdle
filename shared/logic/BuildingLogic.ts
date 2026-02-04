@@ -15,6 +15,7 @@ import type { Tradition } from "../definitions/TraditionDefinitions";
 import {
    clamp,
    forEach,
+   formatNumber,
    hasFlag,
    isEmpty,
    isNullOrUndefined,
@@ -724,7 +725,7 @@ export function getBuildingLevelLabel(xy: Tile, gs: GameState): string {
          return String(LogicResult.branCastleLevel);
       } else if (BuildingShowLevel.has(b.type)) {
          const extraLevel = getWonderExtraLevel(b.type);
-         return extraLevel > 0 ? `${b.level}+${extraLevel}` : String(b.level);
+         return extraLevel > 0 ? `${b.level}+${formatNumber(extraLevel)}` : String(b.level);
       } else {
          return "";
       }
@@ -735,7 +736,7 @@ export function getBuildingLevelLabel(xy: Tile, gs: GameState): string {
       levelBoost += lb.value;
    });
    if (levelBoost > 0) {
-      return `${b.level}+${levelBoost}`;
+      return `${b.level}+${formatNumber(levelBoost)}`;
    }
    return String(b.level);
 }
