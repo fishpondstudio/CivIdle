@@ -11,7 +11,6 @@ import { BuildingValueComponent } from "./BuildingValueComponent";
 import { BuildingWikipediaComponent } from "./BuildingWikipediaComponent";
 import { FormatNumber } from "./HelperComponents";
 import { ProgressBarComponent } from "./ProgressBarComponent";
-import { SpaceshipIdleComponent } from "./SpaceshipIdleComponent";
 
 export function MontSaintMichelBuildingBody({ gameState, xy }: IBuildingComponentProps): React.ReactNode {
    const building = gameState.tiles.get(xy)?.building;
@@ -25,7 +24,6 @@ export function MontSaintMichelBuildingBody({ gameState, xy }: IBuildingComponen
    const culture = idleWorkers / (Config.MaterialPrice.Culture ?? 1);
    return (
       <div className="window-body">
-         <SpaceshipIdleComponent gameState={gameState} type={building.type} />
          <BuildingDescriptionComponent gameState={gameState} xy={xy} />
          <fieldset>
             <div className="row">

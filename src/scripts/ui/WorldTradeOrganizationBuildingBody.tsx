@@ -8,7 +8,6 @@ import type { IBuildingComponentProps } from "./BuildingPage";
 import { BuildingValueComponent } from "./BuildingValueComponent";
 import { BuildingWikipediaComponent } from "./BuildingWikipediaComponent";
 import { html } from "./RenderHTMLComponent";
-import { SpaceshipIdleComponent } from "./SpaceshipIdleComponent";
 import { UpgradeableWonderComponent } from "./UpgradeableWonderComponent";
 import { VotedBoostsComponent } from "./VotedBoostsComponent";
 
@@ -28,7 +27,6 @@ export function WorldTradeOrganizationBuildingBody({
    }
    return (
       <div className="window-body">
-         <SpaceshipIdleComponent gameState={gameState} type={building.type} />
          <BuildingDescriptionComponent gameState={gameState} xy={xy} />
          <UpgradeableWonderComponent gameState={gameState} xy={xy} />
          <VotedBoostsComponent

@@ -5,10 +5,16 @@
          "type": "npm",
          "script": "watch",
          "path": ".",
-         "problemMatcher": [
-            "$tsc-watch"
-         ],
-         "label": "Watch and Compile TypeScript",
+         "problemMatcher": ["$tsc-watch"],
+         "label": "Watch and Compile",
+         "isBackground": true
+      },
+      {
+         "type": "npm",
+         "script": "watchgo",
+         "path": ".",
+         "problemMatcher": ["$tsc-watch"],
+         "label": "Watch and Compile (Go)",
          "isBackground": true,
          "runOptions": {
             "runOn": "folderOpen"
@@ -42,7 +48,7 @@
          "path": "test",
          "problemMatcher": [],
          "label": "Run Test",
-         "isBackground": true,
+         "isBackground": true
       }
    ]
 }

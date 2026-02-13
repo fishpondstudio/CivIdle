@@ -67,7 +67,7 @@ export async function handleChatCommand(command: string): Promise<void> {
          savedGame.options.userId = null;
          const bytes = await compressSave(savedGame);
          const stream = await handle.createWritable();
-         await stream.write(bytes);
+         await stream.write(new Uint8Array(bytes));
          await stream.close();
          break;
       }
@@ -262,7 +262,7 @@ export async function handleChatCommand(command: string): Promise<void> {
             const save = await client.queryPlayerSave(parts[1]);
             const newHandle = await window.showSaveFilePicker({ suggestedName: parts[1] });
             const writableStream = await newHandle.createWritable();
-            await writableStream.write(save);
+            await writableStream.write(new Uint8Array(save));
             await writableStream.close();
          } catch (error) {
             addSystemMessage(String(error));
@@ -517,7 +517,7 @@ export async function handleChatCommand(command: string): Promise<void> {
             const save = await client.queryCloudSave(parts[1]);
             const newHandle = await window.showSaveFilePicker({ suggestedName: parts[1] });
             const writableStream = await newHandle.createWritable();
-            await writableStream.write(save);
+            await writableStream.write(new Uint8Array(save));
             await writableStream.close();
          } catch (error) {
             addSystemMessage(String(error));

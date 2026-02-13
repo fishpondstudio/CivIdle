@@ -111,7 +111,7 @@ export const client = rpcClient<ServerImpl>({
             method,
             params: removeTrailingUndefs(params),
          };
-         ws.send(encode(request));
+         ws.send(encode(request) as BufferSource);
          rpcRequests[id] = { resolve, reject, time: Date.now() };
       });
    },

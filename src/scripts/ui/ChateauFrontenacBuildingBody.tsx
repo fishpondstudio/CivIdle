@@ -10,7 +10,6 @@ import { BuildingDescriptionComponent } from "./BuildingDescriptionComponent";
 import type { IBuildingComponentProps } from "./BuildingPage";
 import { BuildingValueComponent } from "./BuildingValueComponent";
 import { BuildingWikipediaComponent } from "./BuildingWikipediaComponent";
-import { SpaceshipIdleComponent } from "./SpaceshipIdleComponent";
 import { UpgradeableWonderComponent } from "./UpgradeableWonderComponent";
 
 export function ChateauFrontenacBuildingBody({ gameState, xy }: IBuildingComponentProps): React.ReactNode {
@@ -20,7 +19,6 @@ export function ChateauFrontenacBuildingBody({ gameState, xy }: IBuildingCompone
    }
    return (
       <div className="window-body">
-         <SpaceshipIdleComponent gameState={gameState} type={building.type} />
          <BuildingDescriptionComponent gameState={gameState} xy={xy} />
          <fieldset>
             {mapOf(building.buildings, (level, data) => {

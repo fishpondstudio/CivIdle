@@ -7,7 +7,6 @@ import { BuildingDescriptionComponent } from "./BuildingDescriptionComponent";
 import type { IBuildingComponentProps } from "./BuildingPage";
 import { BuildingValueComponent } from "./BuildingValueComponent";
 import { BuildingWikipediaComponent } from "./BuildingWikipediaComponent";
-import { SpaceshipIdleComponent } from "./SpaceshipIdleComponent";
 import { UpgradeableWonderComponent } from "./UpgradeableWonderComponent";
 
 export function ItaipuDamBuildingBody({ gameState, xy }: IBuildingComponentProps): React.ReactNode {
@@ -18,7 +17,6 @@ export function ItaipuDamBuildingBody({ gameState, xy }: IBuildingComponentProps
    const itaipuDam = building as IItaipuDamBuildingData;
    return (
       <div className="window-body">
-         <SpaceshipIdleComponent gameState={gameState} type={building.type} />
          <BuildingDescriptionComponent gameState={gameState} xy={xy} />
          <fieldset>
             <div className="row">

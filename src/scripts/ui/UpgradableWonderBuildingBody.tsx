@@ -3,7 +3,6 @@ import { BuildingDescriptionComponent } from "./BuildingDescriptionComponent";
 import type { IBuildingComponentProps } from "./BuildingPage";
 import { BuildingValueComponent } from "./BuildingValueComponent";
 import { BuildingWikipediaComponent } from "./BuildingWikipediaComponent";
-import { SpaceshipIdleComponent } from "./SpaceshipIdleComponent";
 import { UpgradeableWonderComponent } from "./UpgradeableWonderComponent";
 
 export function UpgradableWonderBuildingBody({ gameState, xy }: IBuildingComponentProps): React.ReactNode {
@@ -13,7 +12,6 @@ export function UpgradableWonderBuildingBody({ gameState, xy }: IBuildingCompone
    }
    return (
       <div className="window-body">
-         <SpaceshipIdleComponent gameState={gameState} type={building.type} />
          <BuildingDescriptionComponent gameState={gameState} xy={xy} />
          <UpgradeableWonderComponent gameState={gameState} xy={xy} />
          <BuildingValueComponent gameState={gameState} xy={xy} />

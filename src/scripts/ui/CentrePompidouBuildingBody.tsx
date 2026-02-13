@@ -7,7 +7,6 @@ import { BuildingDescriptionComponent } from "./BuildingDescriptionComponent";
 import type { IBuildingComponentProps } from "./BuildingPage";
 import { BuildingValueComponent } from "./BuildingValueComponent";
 import { BuildingWikipediaComponent } from "./BuildingWikipediaComponent";
-import { SpaceshipIdleComponent } from "./SpaceshipIdleComponent";
 
 export function CentrePompidouBuildingBody({ gameState, xy }: IBuildingComponentProps): React.ReactNode {
    const building = gameState.tiles.get(xy)?.building as ICentrePompidouBuildingData;
@@ -16,7 +15,6 @@ export function CentrePompidouBuildingBody({ gameState, xy }: IBuildingComponent
    }
    return (
       <div className="window-body">
-         <SpaceshipIdleComponent gameState={gameState} type={building.type} />
          <BuildingDescriptionComponent gameState={gameState} xy={xy} />
          <div className="table-view mv10">
             <table>
