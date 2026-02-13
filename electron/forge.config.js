@@ -5,6 +5,7 @@ module.exports = {
       icon: "./icons/icon",
       ignore: [
          /src\/*/,
+         /local\/*/,
          /save\/*/,
          /\.ts/,
          /steam_appid\.txt/,
