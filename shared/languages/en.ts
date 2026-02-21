@@ -947,7 +947,7 @@ export const EN = {
    MogaoCavesDescV3: "+1 happiness for every 10% of busy workers. All buildings adjacent to Mogao Caves that produce faith are exempt from -1 happiness",
    MonetarySystem: "Monetary System",
    MontSaintMichel: "Mont Saint-Michel",
-   MontSaintMichelDesc: "Generates Culture from Idle Workers. Provides +1 Storage Multiplier to all buildings within 2-tile range. This wonder can be upgraded using the generated Culture and each level provides addtional +1 Storage Multiplier",
+   MontSaintMichelDesc: "Generates Culture from Idle Workers. Provides +1 Storage Multiplier to all buildings within 2-tile range. This wonder can be upgraded using the generated Culture and each level provides additional +1 Storage Multiplier",
    Moomba: "Moomba: Great Ocean Road also provides +1 Production Multiplier per level to Trade Tile Bonus buildings. Increase the range of Uluru to 3-tile",
    MoreResourceNeeded: "More Resource Needed",
    MoreResourceNeededHTML: "%{count} buildings are not producing because they don't have enough resources, click to highlight them",
