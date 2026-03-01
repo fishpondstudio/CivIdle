@@ -51,6 +51,14 @@ const playerTradesSortingState: { column: keyof IClientTrade | "difference"; asc
    asc: true,
 };
 
+const styleMatNameCol = { width: "120px", minWidth: "120px", maxWidth: "120px", flexShrink: 0 };
+const styleMatAmountCol = { width: "60px", minWidth: "60px", maxWidth: "60px", flexShrink: 0 };
+const styleProfitCol = { width: "50px", minWidth: "50px", maxWidth: "50px", flexShrink: 0 };
+const styleIconsCol = { width: "60px", minWidth: "60px", maxWidth: "60px", flexShrink: 0 };
+const styleHandleCol = { width: "120px", minWidth: "120px", maxWidth: "120px", flexShrink: 0 };
+const styleCmdsCol = { width: "60px", minWidth: "60px", maxWidth: "60px", flexShrink: 0 };
+const styleEllipsis = { overflow: "hidden", textOverflow: "ellipsis" };
+
 export function filterPlayerName(playerName: string): void {
    clearSavedFilters();
    savedPlayerNameFilter = playerName;
@@ -160,9 +168,9 @@ export function PlayerTradeComponent({
                </button>
             </Tippy>
          </div>
-         <div className="table-view">
+         <div className="table-view" style={{}}>
             <TableVirtuoso
-               style={{ height: "70vh" }}
+               style={{ height: "70vh", width: "100%", scrollbarGutter: "stable" }}
                data={trades
                   .filter((trade) => {
                      const resourceFilter =
@@ -231,9 +239,10 @@ export function PlayerTradeComponent({
                   })}
                fixedHeaderContent={() => {
                   return (
-                     <tr>
+                     <tr style={{ tableLayout: "fixed", width: "100%" }}>
                         <th
                            className="pointer"
+                           style={{ ...styleMatNameCol, ...styleEllipsis }}
                            onClick={() => {
                               playerTradesSortingState.column = "buyResource";
                               playerTradesSortingState.asc = !playerTradesSortingState.asc;
@@ -251,6 +260,7 @@ export function PlayerTradeComponent({
                         </th>
                         <th
                            className="pointer"
+                           style={{ ...styleMatAmountCol, ...styleEllipsis }}
                            onClick={() => {
                               playerTradesSortingState.column = "buyAmount";
                               playerTradesSortingState.asc = !playerTradesSortingState.asc;
@@ -263,8 +273,10 @@ export function PlayerTradeComponent({
                               </div>
                            ) : null}
                         </th>
+
                         <th
                            className="pointer"
+                           style={{ ...styleMatNameCol, ...styleEllipsis }}
                            onClick={() => {
                               playerTradesSortingState.column = "sellResource";
                               playerTradesSortingState.asc = !playerTradesSortingState.asc;
@@ -282,6 +294,7 @@ export function PlayerTradeComponent({
                         </th>
                         <th
                            className="pointer"
+                           style={{ ...styleMatAmountCol, ...styleEllipsis }}
                            onClick={() => {
                               playerTradesSortingState.column = "sellAmount";
                               playerTradesSortingState.asc = !playerTradesSortingState.asc;
@@ -294,8 +307,10 @@ export function PlayerTradeComponent({
                               </div>
                            ) : null}
                         </th>
+
                         <th
                            className="pointer"
+                           style={{ ...styleProfitCol, ...styleEllipsis }}
                            onClick={() => {
                               playerTradesSortingState.column = "difference";
                               playerTradesSortingState.asc = !playerTradesSortingState.asc;
@@ -308,9 +323,12 @@ export function PlayerTradeComponent({
                               </div>
                            ) : null}
                         </th>
-                        <th>{t(L.PlayerTradeFrom)}</th>
+
+                        <th style={{ ...styleIconsCol, ...styleEllipsis }}>{t(L.PlayerTradeFrom)}</th>
+
                         <th
                            className="pointer"
+                           style={{ ...styleHandleCol, ...styleEllipsis }}
                            onClick={() => {
                               playerTradesSortingState.column = "from";
                               playerTradesSortingState.asc = !playerTradesSortingState.asc;
@@ -323,7 +341,8 @@ export function PlayerTradeComponent({
                               </div>
                            ) : null}
                         </th>
-                        <th></th>
+
+                        <th style={{ ...styleCmdsCol, ...styleEllipsis }}></th>
                      </tr>
                   );
                }}
@@ -363,18 +382,29 @@ function PlayerTradeTableRow({
    if (trade.fromId === user?.userId) {
       evenodd = "blue";
    }
+
    return (
       <>
-         <td className={cls(hasResource ? "text-strong" : null, evenodd)}>
+         <td
+            className={cls(hasResource ? "text-strong" : null, evenodd)}
+            style={{ ...styleMatNameCol, ...styleEllipsis }}
+         >
             {Config.Material[trade.buyResource].name()}
          </td>
-         <td className={cls("text-right", hasResource ? "text-strong" : null, evenodd)}>
+         <td
+            className={cls("text-right", hasResource ? "text-strong" : null, evenodd)}
+            style={{ ...styleMatAmountCol, ...styleEllipsis }}
+         >
             <FormatNumber value={trade.buyAmount} />
          </td>
-         <td className={evenodd}>{Config.Material[trade.sellResource].name()}</td>
-         <td className={cls("text-right", evenodd)}>
+
+         <td className={evenodd} style={{ ...styleMatNameCol, ...styleEllipsis }}>
+            {Config.Material[trade.sellResource].name()}
+         </td>
+         <td className={cls("text-right", evenodd)} style={{ ...styleMatAmountCol, ...styleEllipsis }}>
             <FormatNumber value={trade.sellAmount} />
          </td>
+
          <td
             className={classNames({
                [evenodd]: true,
@@ -383,6 +413,7 @@ function PlayerTradeTableRow({
                "text-green": percentage >= CURRENCY_PERCENT_EPSILON,
                "text-desc": Math.abs(percentage) < CURRENCY_PERCENT_EPSILON,
             })}
+            style={{ ...styleProfitCol, ...styleEllipsis }}
          >
             <Tippy content={t(L.MarketValueDesc, { value: formatPercent(percentage, 0) })}>
                <div>
@@ -391,7 +422,8 @@ function PlayerTradeTableRow({
                </div>
             </Tippy>
          </td>
-         <td className={evenodd}>
+
+         <td className={evenodd} style={{ ...styleIconsCol, ...styleEllipsis }}>
             <div className="row">
                <Tippy content={getCountryName(trade.fromFlag)}>
                   <PlayerFlagComponent name={trade.fromFlag} scale={0.7} />
@@ -408,10 +440,10 @@ function PlayerTradeTableRow({
                ) : null}
             </div>
          </td>
-         <td className={evenodd}>
+         <td className={evenodd} style={{ ...styleHandleCol, ...styleEllipsis }}>
             <FixedLengthText text={trade.from} length={16} />
          </td>
-         <td className={evenodd}>
+         <td className={evenodd} style={{ ...styleCmdsCol, ...styleEllipsis }}>
             {trade.fromId === user?.userId ? (
                <div
                   className="m-icon small text-link"
