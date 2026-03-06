@@ -10,7 +10,7 @@ export interface IdeaDefinition<T> extends IdeaConfig {
 export class CarthaginianIdeasDefinitions {
    RiseOfPunic: IdeaDefinition<CarthaginianIdea> = {
       name: () => "Rise of Punic",
-      desc: () => "+1 Science From Idle Workers",
+      desc: () => "+1 Science from Idle and Busy workers",
       parent: null,
    };
    PhoenicianAlphabet: IdeaDefinition<CarthaginianIdea> = {
@@ -25,7 +25,7 @@ export class CarthaginianIdeasDefinitions {
    };
    RitualSanctuaries: IdeaDefinition<CarthaginianIdea> = {
       name: () => "Ritual Sanctuaries",
-      desc: () => "-10% Research Cost",
+      desc: () => "-10% Building Cost",
       parent: "PhoenicianAlphabet",
    };
    HannibalSpirit: IdeaDefinition<CarthaginianIdea> = {
