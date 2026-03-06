@@ -152,7 +152,9 @@ export function completeTransport(targetBuilding: IBuildingData, resource: Mater
    safeAdd(targetBuilding.resources, resource, amount);
    if (targetBuilding.type === "CloneFactory") {
       const clone = targetBuilding as ICloneBuildingData;
-      clone.transportedAmount += amount;
+      if (clone.inputResource === resource) {
+         clone.transportedAmount += amount;
+      }
    }
 }
 
