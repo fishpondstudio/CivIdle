@@ -59,13 +59,13 @@ function getNodesAndEdges<K extends string, V>(
          data: { idea: key, definition: idea },
          type: "IdeaNode",
       });
-      if (idea.parent) {
+      idea.requires.forEach((parent) => {
          edges.push({
-            id: `${key}-${idea.parent}`,
-            source: idea.parent as string,
+            id: `${key}-${parent}`,
+            source: parent as string,
             target: key,
          });
-      }
+      });
    }
    return { nodes, edges };
 }
@@ -84,7 +84,7 @@ export function IdeaTreeModal(): React.ReactNode {
          <div className="window-body">
             <div
                className="inset-shallow white"
-               style={{ width: "1024px", height: "768px", maxWidth: "95vw", maxHeight: "95vh" }}
+               style={{ width: "1024px", height: "768px", maxWidth: "90vw", maxHeight: "90vh" }}
             >
                <ReactFlow
                   nodesConnectable={false}
