@@ -2,7 +2,7 @@
    border: 1px solid #ccc;
    border-radius: 5px;
    width: 200px;
-   height: 60px;
+   height: 70px;
    padding: 10px;
    text-align: center;
    display: flex;
@@ -21,6 +21,7 @@
    font-family: "Cabin";
    font-size: 10px;
    color: #666;
+   line-height: 1.2;
 }
 
 .idea-tree-node-handle {

@@ -9,7 +9,7 @@ import IdeaNode from "./IdeaNode";
 import "./IdeaTreeModal.css";
 
 const nodeWidth = 200;
-const nodeHeight = 60;
+const nodeHeight = 70;
 
 const dagreGraph = new dagre.graphlib.Graph().setDefaultEdgeLabel(() => ({}));
 
@@ -76,7 +76,7 @@ export function IdeaTreeModal(): React.ReactNode {
    return (
       <div className="window" style={{ width: "unset" }}>
          <div className="title-bar">
-            <div className="title-bar-text">{$t(L.CultureIdeas)}</div>
+            <div className="title-bar-text">{$t(L.CivilizationIdeas)}</div>
             <div className="title-bar-controls">
                <button onClick={hideModal} aria-label="Close"></button>
             </div>

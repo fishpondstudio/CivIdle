@@ -1888,5 +1888,5 @@ export const EN = {
    YouHaveAdaptiveGreatPeopleWithBoostToSelect: "You have adaptive great people with boost to select",
    NaturalWonder: "Natural Wonder",
    FreeMarket: "Free Market",
-   CultureIdeas: "Culture Ideas",
+   CivilizationIdeas: "Civilization Ideas",
 };
